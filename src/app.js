@@ -9,7 +9,9 @@
   var samples={update:[],render:[],frame:[]},totalFrames=0,totalSteps=0,droppedGaps=0,peakUpdate=0,peakRender=0,peakFrame=0,lastGapReason='',maxSamples=360;
   var audio={unlocked:false,music:null,shot:[],hurt:[],shotIndex:0,hurtIndex:0,lastShot:0},toastTimer=0,settingsWasPlaying=false,settingsFocus=null;
   var core=null,store=null,lastProfileRefresh=0,assetErrors=[];
-  var encounterArtPending=false,encounterArtGroup=-1;
+  var encounterArtPending=false,encounterArtGroup=-1,artLoadJob=null,artLoadGeneration=0;
+  var imageRequests=Object.create(null),imageQueue=[],imageActive=0,imageWanted=null;
+  var renderDirty=true,lastDrawnWorld=null,lastDrawnTick=-1,lastDrawnMode='',lastFitKey='',lastFitRenderer=null;
   var seenBossIntros=Object.create(null),skipIntroForRun=false;
   // Presentation summaries of the supplied first-volume route. No new story
   // events, battle logic or save fields are introduced by this ledger.
@@ -61,9 +63,9 @@
   }
   function introKey(){return world&&world.campaign?'campaign-'+world.bossIndex:'legacy';}
   function pad(n,width){return String(Math.max(0,Math.floor(n||0))).padStart(width||6,'0');}
-  function setHidden(id,value){$(id).hidden=value;}
+  function setHidden(id,value){var element=$(id),hidden=!!value;if(element.hidden!==hidden)element.hidden=hidden;}
   function syncIntroControls(){var active=mode==='playing'&&world&&world.stage==='bossIntro';setHidden('intro-skip-button',!active);safeText('pad-caption',active?'보스 등장 · 잠시 뒤 전투가 이어집니다':'여기 또는 전투 화면을 드래그하세요');}
-  function safeText(id,value){$(id).textContent=value==null?'':String(value);}
+  function safeText(id,value){var element=$(id),text=value==null?'':String(value);if(element.textContent!==text)element.textContent=text;}
   function clearInput(){keys=Object.create(null);pointer.active=false;pointer.id=null;pointer.pendingX=0;pointer.pendingY=0;pointer.lastMove=0;inputSource='keyboard';$('touch-pad').classList.remove('active');}
   function toast(message){safeText('toast',message);setHidden('toast',false);clearTimeout(toastTimer);toastTimer=setTimeout(function(){setHidden('toast',true);},2200);}
   function showError(error){ready=false;mode='error';clearInput();setHidden('title-screen',true);setHidden('pause-screen',true);setHidden('result-screen',true);setHidden('error-screen',false);safeText('error-description',error&&error.message?error.message:String(error));$('pause-button').disabled=true;stopMusic();}
@@ -78,6 +80,7 @@
   }
   function persistSettings(){syncSettings();if(store)store.saveSettings(settings).then(updateStorage);}
   function setMode(next){
+    if(mode!==next)renderDirty=true;
     mode=next;setHidden('title-screen',next!=='title');setHidden('pause-screen',next!=='paused');setHidden('result-screen',next!=='result');setHidden('error-screen',next!=='error');setHidden('battle-caption',!(next==='playing'||next==='paused'||next==='result'));$('pause-button').disabled=next!=='playing';
     if(next!=='playing'){clearInput();stopMusic();}else startMusic();
     syncIntroControls();
@@ -92,8 +95,12 @@
     else if(vh<=850)availableHeight=vh-mast.offsetHeight-28-30-38-80-25-safeInsets;
     var availableWidth=mobile?Math.min(420,mast.clientWidth):(global.innerWidth<=1050?global.innerWidth-56-2*160-56:global.innerWidth-112-2*200-112);
     var h=Math.max(180,Math.min(640,availableHeight,Math.max(130,availableWidth)*640/360)),w=h*360/640;
-    document.documentElement.style.setProperty('--arena-w',w.toFixed(2)+'px');document.documentElement.style.setProperty('--arena-h',h.toFixed(2)+'px');document.documentElement.style.setProperty('--pad-h','80px');
-    if(renderer)renderer.resize(w,h,settings.quality==='low'?1:Math.min(1.5,global.devicePixelRatio||1));
+    var dpr=settings.quality==='low'?1:Math.min(1.5,global.devicePixelRatio||1),fitKey=w.toFixed(2)+':'+h.toFixed(2)+':'+dpr;
+    if(fitKey!==lastFitKey||lastFitRenderer!==renderer){
+      document.documentElement.style.setProperty('--arena-w',w.toFixed(2)+'px');document.documentElement.style.setProperty('--arena-h',h.toFixed(2)+'px');document.documentElement.style.setProperty('--pad-h','80px');
+      if(renderer)renderer.resize(w,h,dpr);
+      lastFitKey=fitKey;lastFitRenderer=renderer;renderDirty=true;
+    }
   }
   function setSkillEmblems(media){
     if(!media.comboIcons)return;
@@ -102,26 +109,55 @@
     var positions={memory:'100% 0%',delay:'0% 100%',counter:'0% 0%',ego:'100% 100%'};
     Object.keys(positions).forEach(function(name){var emblem=$('skill-'+name+'-emblem');emblem.style.backgroundImage='url('+JSON.stringify(media.comboIcons)+')';emblem.style.backgroundPosition=positions[name];emblem.classList.add('atlas-emblem');emblem.textContent='';});
   }
-  function loadImage(name,url){
-    if(images[name])return Promise.resolve();
-    return new Promise(function(resolve){
-      if(!url){assetErrors.push(name);resolve();return;}
-      var im=new Image(),done=false,timer=setTimeout(function(){finish(false);},15000);
-      function finish(ok){if(done)return;done=true;clearTimeout(timer);im.onload=im.onerror=null;if(ok)images[name]=im;else if(assetErrors.indexOf(name)<0)assetErrors.push(name);resolve();}
-      im.onload=function(){finish(true);};im.onerror=function(){finish(false);};im.src=url;
+  function pumpImageQueue(){
+    while(imageActive<2&&imageQueue.length){
+      var task=imageQueue.shift();if(task.done)continue;
+      if(imageWanted&&!imageWanted[task.name]){task.finish(false,true);continue;}
+      task.active=true;imageActive++;
+      task.im=new Image();task.timer=setTimeout((function(item){return function(){item.finish(false);};})(task),15000);
+      task.im.onload=(function(item){return function(){item.finish(true);};})(task);
+      task.im.onerror=(function(item){return function(){item.finish(false);};})(task);
+      task.im.src=task.url;
+    }
+  }
+  function retainImageRequests(names){
+    imageWanted=Object.create(null);names.forEach(function(name){imageWanted[name]=true;});
+    Object.keys(imageRequests).forEach(function(name){
+      var task=imageRequests[name];if(!task||imageWanted[name])return;
+      task.finish(false,true);
     });
   }
-  async function loadImagesBounded(names){
-    var cursor=0;async function worker(){while(cursor<names.length){var key=names[cursor++];await loadImage(key,global.HapilMedia[key]);}}
+  function loadImage(name,url){
+    if(images[name])return Promise.resolve();
+    if(imageRequests[name])return imageRequests[name].promise;
+    if(!url){if(assetErrors.indexOf(name)<0)assetErrors.push(name);return Promise.resolve();}
+    var task={name:name,url:url,done:false,active:false,im:null,timer:null};
+    task.promise=new Promise(function(resolve){
+      task.finish=function(ok,cancelled){
+        if(task.done)return;task.done=true;clearTimeout(task.timer);
+        if(task.im){task.im.onload=task.im.onerror=null;if(!ok)try{task.im.src='';}catch(ignore){}}
+        if(ok&&(!imageWanted||imageWanted[name]))images[name]=task.im;
+        else if(!cancelled&&(!imageWanted||imageWanted[name])&&assetErrors.indexOf(name)<0)assetErrors.push(name);
+        if(imageRequests[name]===task)delete imageRequests[name];
+        if(task.active)imageActive--;resolve();pumpImageQueue();
+      };
+    });
+    imageRequests[name]=task;imageQueue.push(task);pumpImageQueue();return task.promise;
+  }
+  async function loadImagesBounded(names,isCurrent){
+    var cursor=0;async function worker(){while(cursor<names.length&&(!isCurrent||isCurrent())){var key=names[cursor++];await loadImage(key,global.HapilMedia[key]);}}
     await Promise.all([worker(),worker()]);
   }
   function mobileAssetKeys(group){
-    var names=[['Violet','Spider'],['Horn','Swamp'],['Balrog','Ember'],['Mask','Echo','Vial'],['Lucifer','Guard','Denial']][group]||['Violet','Spider'];
+    var enemyNames=[['Spider'],['Swamp'],['Ember'],['Echo','Vial'],['Guard','Denial']][group]||[];
+    var motionKeys=['bossMotionViolet','bossMotionHorn','bossMotionBalrog','bossMotionMask','bossMotionLucifer'];
+    var fxKeys=global.HapilProjectiles&&global.HapilProjectiles.assetKeysForEncounter?global.HapilProjectiles.assetKeysForEncounter(group):[];
     return Object.keys(global.HapilMedia).filter(function(k){
       if(['gunner','boss','spider','fxResonance','fxSlash','fxThorns','fxArrow','fxParry','fxSilk'].includes(k))return true;
       if(group===0&&(/^map\d+$/.test(k)||k==='violetCutin'))return true;
       if((group===-1||group===1||group===2)&&['forest','ruins','cave'].includes(k))return true;
-      return names.some(function(n){return k.indexOf('actor'+n)===0;});
+      if(k===motionKeys[group]||fxKeys.indexOf(k)>=0)return true;
+      return enemyNames.some(function(n){return k.indexOf('actor'+n)===0;});
     });
   }
   function buildAudio(media){
@@ -195,24 +231,27 @@
   function diagnostics(){
     var hazards=world&&world.hazards?world.hazards:[],heap=null;
     try{var m=performance.memory;if(m&&Number.isFinite(m.usedJSHeapSize))heap={usedBytes:m.usedJSHeapSize,totalBytes:m.totalJSHeapSize,limitBytes:m.jsHeapSizeLimit,scope:'Browser-reported JS heap estimate; excludes GPU and decoded media; GC not controlled'};}catch(e){}
-    return {version:'hapil-lucifer-v7.1-mobile',candidateRevision:7.1,mobileRuntime:mobileRuntime,loadedImages:Object.keys(images).length,mechanicsRevision:world?world.mechanicsRevision:(core?core.MECHANICS_REVISION:2),connectedMapStatus:renderer&&renderer.getMetrics?renderer.getMetrics().sourceStatus||'not-yet-reported':'not-yet-reported',capturedAt:new Date().toISOString(),mode:mode,fixedHz:60,renderTarget:settings.quality==='low'?30:60,rollingWindow:maxSamples,measurementScope:{update:'Main-thread fixed-step simulation and event processing',render:'JavaScript canvas command submission only; not GPU completion',frame:'requestAnimationFrame callback intervals during play'},updateMs:distribution(samples.update,peakUpdate),renderMs:distribution(samples.render,peakRender),frameIntervalMs:distribution(samples.frame,peakFrame),renderedFrames:totalFrames,fixedSteps:totalSteps,pausedLargeGaps:droppedGaps,lastGapReason:lastGapReason,viewport:{width:global.innerWidth,height:global.innerHeight,dpr:global.devicePixelRatio||1,arenaWidth:$('app-stage').clientWidth,arenaHeight:$('app-stage').clientHeight,padHeight:$('touch-pad').clientHeight},entities:world?{bullets:world.bullets.length,shots:world.shots.length,enemies:world.enemies.length,effects:world.effects.length,laserWarnings:hazards.filter(function(h){return h.phase==='warning';}).length,activeLasers:hazards.filter(function(h){return h.phase==='active';}).length,fadingLasers:hazards.filter(function(h){return h.phase==='fade';}).length}:null,terrain:renderer&&renderer.getMetrics?renderer.getMetrics():null,jsHeapEstimate:heap,gpuTimeMs:null,coreStats:world?JSON.parse(JSON.stringify(world.stats||{})):null,assetErrors:assetErrors.slice(),storage:store?Object.assign({},store.status):null};
+    return {version:'hapil-lucifer-v8',candidateRevision:8,mobileRuntime:mobileRuntime,loadedImages:Object.keys(images).length,imageRequestsPending:Object.keys(imageRequests).length,imageRequestsActive:imageActive,mechanicsRevision:world?world.mechanicsRevision:(core?core.MECHANICS_REVISION:2),connectedMapStatus:renderer&&renderer.getMetrics?renderer.getMetrics().sourceStatus||'not-yet-reported':'not-yet-reported',capturedAt:new Date().toISOString(),mode:mode,fixedHz:60,renderTarget:settings.quality==='low'?30:60,rollingWindow:maxSamples,measurementScope:{update:'Main-thread fixed-step simulation and event processing',render:'JavaScript canvas command submission only; not GPU completion',frame:'requestAnimationFrame callback intervals during play'},updateMs:distribution(samples.update,peakUpdate),renderMs:distribution(samples.render,peakRender),frameIntervalMs:distribution(samples.frame,peakFrame),renderedFrames:totalFrames,fixedSteps:totalSteps,pausedLargeGaps:droppedGaps,lastGapReason:lastGapReason,viewport:{width:global.innerWidth,height:global.innerHeight,dpr:global.devicePixelRatio||1,arenaWidth:$('app-stage').clientWidth,arenaHeight:$('app-stage').clientHeight,padHeight:$('touch-pad').clientHeight},entities:world?{bullets:world.bullets.length,shots:world.shots.length,enemies:world.enemies.length,effects:world.effects.length,laserWarnings:hazards.filter(function(h){return h.phase==='warning';}).length,activeLasers:hazards.filter(function(h){return h.phase==='active';}).length,fadingLasers:hazards.filter(function(h){return h.phase==='fade';}).length}:null,terrain:renderer&&renderer.getMetrics?renderer.getMetrics():null,jsHeapEstimate:heap,gpuTimeMs:null,coreStats:world?JSON.parse(JSON.stringify(world.stats||{})):null,assetErrors:assetErrors.slice(),storage:store?Object.assign({},store.status):null};
   }
   function ensureEncounterArt(){
     if(mode==='error')return false;
     var group=world?(world.campaign?world.bossIndex:-1):0;
-    if(!mobileRuntime&&group<3)return true;
+    if(artLoadJob&&artLoadJob.group!==group){artLoadJob.cancelled=true;artLoadJob=null;encounterArtPending=false;artLoadGeneration++;}
     if(encounterArtPending)return false;
     if(encounterArtGroup===group)return true;
-    var names=group===3?['Mask','Echo','Vial']:['Lucifer','Guard','Denial'];
-    var keysToLoad=mobileRuntime?mobileAssetKeys(group):Object.keys(global.HapilMedia).filter(function(k){return names.some(function(n){return k.indexOf('actor'+n)===0;});});
-    encounterArtPending=true;clearInput();accumulator=0;toast('다음 기억의 원화를 불러오는 중…');
-    if(mobileRuntime)Object.keys(images).forEach(function(k){if(keysToLoad.indexOf(k)<0)delete images[k];});
-    loadImagesBounded(keysToLoad).then(function(){
-      encounterArtPending=false;
+    var keysToLoad=mobileAssetKeys(group);
+    var job={group:group,generation:++artLoadGeneration,cancelled:false};artLoadJob=job;
+    encounterArtPending=true;encounterArtGroup=null;clearInput();accumulator=0;toast('다음 기억의 원화를 불러오는 중…');
+    retainImageRequests(keysToLoad);
+    Object.keys(images).forEach(function(k){if(keysToLoad.indexOf(k)<0)delete images[k];});
+    function current(){return artLoadJob===job&&!job.cancelled&&job.generation===artLoadGeneration;}
+    loadImagesBounded(keysToLoad,current).then(function(){
+      if(!current())return;
+      encounterArtPending=false;artLoadJob=null;
       if(keysToLoad.some(function(k){return !images[k];})){showError(new Error('다음 구간의 원화를 불러오지 못했습니다. 연결을 확인한 뒤 다시 열어주세요.'));return;}
-      Object.keys(images).forEach(function(k){if(/^actor(Lucifer|Mask|Echo|Vial|Guard|Denial)/.test(k)&&keysToLoad.indexOf(k)<0)delete images[k];});
-      encounterArtGroup=group;accumulator=0;lastStamp=performance.now();clearInput();
-    }).catch(showError);
+      Object.keys(images).forEach(function(k){if(keysToLoad.indexOf(k)<0)delete images[k];});
+      encounterArtGroup=group;accumulator=0;lastStamp=performance.now();clearInput();renderDirty=true;
+    }).catch(function(error){if(current()){encounterArtPending=false;artLoadJob=null;showError(error);}});
     return false;
   }
   function frame(stamp){
@@ -231,7 +270,9 @@
       }
     }else accumulator=0;
     var target=settings.quality==='low'?1000/30:1000/60;
-    if(!encounterArtPending&&(stamp-lastRender>=target-.7||!lastRender)){var rs=performance.now();try{renderer.draw(world,accumulator*60,visualTime,settings.quality==='low');}catch(error){showError(error);return;}var cost=performance.now()-rs;if(mode==='playing'){sample('render',cost);peakRender=Math.max(peakRender,cost);}lastRender=stamp;totalFrames++;}
+    var stableScreen=mode==='paused'||mode==='result';
+    var needsDraw=!stableScreen||renderDirty||world!==lastDrawnWorld||(world&&world.tick)!==lastDrawnTick||mode!==lastDrawnMode;
+    if(needsDraw&&!encounterArtPending&&(stamp-lastRender>=target-.7||!lastRender)){var rs=performance.now();try{renderer.draw(world,accumulator*60,visualTime,settings.quality==='low');}catch(error){showError(error);return;}var cost=performance.now()-rs;if(mode==='playing'){sample('render',cost);peakRender=Math.max(peakRender,cost);}lastRender=stamp;totalFrames++;renderDirty=false;lastDrawnWorld=world;lastDrawnTick=world&&world.tick;lastDrawnMode=mode;}
     syncIntroControls();if(stamp-lastHud>=120){updateHUD();lastHud=stamp;}
   }
   function pointerDown(e){if(mode!=='playing'||(world&&world.stage==='bossIntro')||pointer.active||e.button>0)return;e.preventDefault();unlockAudio();pointer.active=true;pointer.id=e.pointerId;pointer.lastX=e.clientX;pointer.lastY=e.clientY;pointer.pendingX=0;pointer.pendingY=0;pointer.lastMove=performance.now();inputSource='pointer';$('touch-pad').classList.add('active');try{e.currentTarget.setPointerCapture(e.pointerId);}catch(ignore){}}
@@ -269,7 +310,7 @@
     bind();fit();$('start-button').disabled=true;$('practice-button').disabled=true;
     try{
       core=global.HapilCore;store=global.HapilStore;if(!core||!core.createRun||!core.step)throw new Error('전투 엔진을 찾지 못했습니다. 압축 파일 전체를 풀거나 단일 HTML 실행 파일을 사용해주세요.');if(!global.HapilRenderer)throw new Error('화면 렌더러 파일을 찾지 못했습니다.');
-      var media=global.HapilMedia||{};setSkillEmblems(media);await loadImagesBounded(mobileRuntime?mobileAssetKeys(0):Object.keys(media).filter(function(name){return !/^actor(Lucifer|Mask|Echo|Vial|Guard|Denial)/.test(name)&&['bullet','shot','comboIcons'].indexOf(name)<0&&(/\.(webp|png|jpe?g)$/i.test(media[name].split(/[?#]/)[0])||/^data:image\//.test(media[name]));}));if(mobileRuntime)encounterArtGroup=0;
+      var media=global.HapilMedia||{};setSkillEmblems(media);var bootKeys=mobileAssetKeys(0);await loadImagesBounded(bootKeys);if(bootKeys.some(function(k){return !images[k];}))throw new Error('시작 구간의 이미지를 불러오지 못했습니다. 연결을 확인하고 다시 열어주세요.');encounterArtGroup=0;
       if(assetErrors.indexOf('gunner')>=0||assetErrors.indexOf('boss')>=0)throw new Error('캐릭터 이미지를 읽지 못했습니다. media 폴더가 포함되어 있는지 확인하거나 단일 HTML 실행 파일을 사용해주세요.');
       renderer=global.HapilRenderer.create($('game-canvas'),images);fit();buildAudio(media);raf=requestAnimationFrame(frame);
       if(store){await store.open();var data=await store.load();if(data){settings=Object.assign({},defaults,data.settings||{});profile=data.profile||{};savedCheckpoint=data.checkpoint||null;}}if(mobileRuntime)settings.quality='low';syncSettings();updateStory();fit();updateProfile();updateStorage();setHidden('continue-button',!savedCheckpoint);ready=true;booting=false;$('start-button').disabled=false;$('practice-button').disabled=false;

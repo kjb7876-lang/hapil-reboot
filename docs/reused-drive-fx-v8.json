@@ -1,0 +1,5918 @@
+{
+  "version": 8,
+  "source": "Existing Drive FINAL42 and HAPIL-combat-v2",
+  "noNewDrawingsOrAudio": true,
+  "runtimeAssetCount": 8,
+  "runtimeRGBABytesAllAtlases": 7864320,
+  "sourceArchiveEvidence": {
+    "vortex": {
+      "url": "https://drive.google.com/file/d/1w-BvHkHu1zgHaHSNo6W36p0rVt_L1rwg/view",
+      "sha256": "db02994a0b133007f71150582ea715d1adb1e45300295c5db30ac09ff0bde3ec",
+      "runtimeFileHashesVerified": 19,
+      "zipCRC": "pass"
+    },
+    "unlock": {
+      "url": "https://drive.google.com/file/d/1slqvSchvyMgqdIw3dbGPWWKBYXG_ZHqD/view",
+      "sha256": "a094883ed32683b3fb92cad71878812134e410275664656d731b9c36f85a480e",
+      "runtimeFileHashesVerified": 19,
+      "zipCRC": "pass"
+    }
+  },
+  "assets": [
+    {
+      "key": "fxV8VioletWeb",
+      "file": "media/fx-v8/violet-web.webp",
+      "sourceIndex": 130,
+      "sourceAtlas": "/workspace/scratch/70f61c8d3af3/drive-v6/fx/inspect-130/atlas.png",
+      "sourceAtlasSHA256": "8e2d08b24b6f4ea96b8c6c7a7b4329ed6b343af14896bb604709598e39730ecb",
+      "sourceContract": "/workspace/scratch/70f61c8d3af3/drive-v6/fx/inspect-130/animation.json",
+      "sourceContractSHA256": "58b38bbf532c4d55bfc3b8810c3ff5110e87b1b80ead4251fecb2facb1a3428d",
+      "sourceContractContents": {
+        "id": "animated-130-01-violet-web-seal",
+        "name": "보라 거미줄 봉인",
+        "sourceIndex": 130,
+        "status": "CPU-reviewed integration candidate; no actual game runtime test",
+        "frameCount": 16,
+        "distinctDrawingCount": 16,
+        "canvas": [
+          384,
+          384
+        ],
+        "pivot": {
+          "pixelsTopLeft": [
+            192,
+            192
+          ],
+          "normalizedTopLeft": [
+            0.5,
+            0.5
+          ],
+          "targetTuningRequired": true
+        },
+        "atlas": {
+          "file": "atlas.png",
+          "size": [
+            1536,
+            1536
+          ],
+          "columns": 4,
+          "rows": 4,
+          "trimmed": false,
+          "rotated": false
+        },
+        "frames": [
+          {
+            "index": 0,
+            "file": "frames/frame_00.png",
+            "rect": [
+              0,
+              0,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 1,
+            "file": "frames/frame_01.png",
+            "rect": [
+              384,
+              0,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 2,
+            "file": "frames/frame_02.png",
+            "rect": [
+              768,
+              0,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 3,
+            "file": "frames/frame_03.png",
+            "rect": [
+              1152,
+              0,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 4,
+            "file": "frames/frame_04.png",
+            "rect": [
+              0,
+              384,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 5,
+            "file": "frames/frame_05.png",
+            "rect": [
+              384,
+              384,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 6,
+            "file": "frames/frame_06.png",
+            "rect": [
+              768,
+              384,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 7,
+            "file": "frames/frame_07.png",
+            "rect": [
+              1152,
+              384,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 8,
+            "file": "frames/frame_08.png",
+            "rect": [
+              0,
+              768,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 9,
+            "file": "frames/frame_09.png",
+            "rect": [
+              384,
+              768,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 10,
+            "file": "frames/frame_10.png",
+            "rect": [
+              768,
+              768,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 11,
+            "file": "frames/frame_11.png",
+            "rect": [
+              1152,
+              768,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 12,
+            "file": "frames/frame_12.png",
+            "rect": [
+              0,
+              1152,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 13,
+            "file": "frames/frame_13.png",
+            "rect": [
+              384,
+              1152,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 14,
+            "file": "frames/frame_14.png",
+            "rect": [
+              768,
+              1152,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 15,
+            "file": "frames/frame_15.png",
+            "rect": [
+              1152,
+              1152,
+              384,
+              384
+            ],
+            "durationMs": 80
+          }
+        ],
+        "clips": {
+          "oneshot": {
+            "frames": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "durationMs": 1280,
+            "loop": false,
+            "end": "fade to zero on final frame then remove"
+          }
+        },
+        "phases": [
+          {
+            "name": "anchor",
+            "frameRange": [
+              0,
+              3
+            ]
+          },
+          {
+            "name": "weave",
+            "frameRange": [
+              4,
+              7
+            ]
+          },
+          {
+            "name": "seal",
+            "frameRange": [
+              8,
+              11
+            ]
+          },
+          {
+            "name": "unweave",
+            "frameRange": [
+              12,
+              15
+            ]
+          }
+        ],
+        "alpha": "straight RGBA8",
+        "blend": "normal alpha",
+        "layers": "single overlay; no exact front/back occlusion split",
+        "endpointOpacity": {
+          "firstFrame": [
+            0,
+            1
+          ],
+          "lastFrame": [
+            1,
+            0
+          ]
+        },
+        "filter": "bilinear, clamp, disable mipmaps for initial test",
+        "notes": [
+          "All16 artwork frames are different. Preview encoding repeats frames to match30fps; that is not extra artwork.",
+          "Looping preview is demonstration only; runtime oneshot is not seamless.",
+          "Per-target pivot/scale tuning required. No per-frame auto fitting.",
+          "Low-alpha soft haze may be present; inspect on intended map."
+        ]
+      },
+      "driveLinks": [
+        "https://drive.google.com/file/d/1AEcU-IthJS13nuigTZlAlDqGdy1fuysb/view?usp=drivesdk",
+        "https://drive.google.com/file/d/1MoFjuDC-XXNKQCgk5N-iSMM6o4soxRLW/view?usp=drivesdk",
+        "https://drive.google.com/file/d/1jnIZHBQxTpsS1W8OTE6Y07FoUDS1ISlB/view?usp=drivesdk"
+      ],
+      "sourceDimensions": [
+        1536,
+        1536
+      ],
+      "runtimeDimensions": [
+        512,
+        512
+      ],
+      "runtimeCell": 128,
+      "runtimePivot": [
+        64.0,
+        64.0
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "sourceRect": [
+            0,
+            0,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "8fef6bdf962116190cfa190457e9674f31d5406614dd9cc6724e9be4eee896d7",
+          "runtimeRect": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "dc9a69147841da0157d1e8ddb82daae7c090687472f9edf87af76ef98b94a79f",
+          "runtimeAlpha_SHA256": "b8073020bf7a4dc68bfafa70355e2cf43cfc882ee540496234034576c50539ed",
+          "durationMs": 80,
+          "alphaBounds": [
+            22,
+            26,
+            115,
+            116
+          ]
+        },
+        {
+          "index": 1,
+          "sourceRect": [
+            384,
+            0,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "9f03ad13d4e5e14a6375ae88d1a9a5e43c67042b08dc6dbc859f5bc58069652a",
+          "runtimeRect": [
+            128,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "3e878544a4e6a2c2e6322b92d86bd230f28cbb38bd0612770680f5d61f4a31d0",
+          "runtimeAlpha_SHA256": "45b1d2315b0c886183a99aa79e5f664116a18b6c0e88fae5b3fe66b3be69d562",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            22,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 2,
+          "sourceRect": [
+            768,
+            0,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "2a4ce5081c082f26e909ac6917a9a044f256d01435d86cd6929d4981f6ebc3f4",
+          "runtimeRect": [
+            256,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "fc35cbeb893048a152d17aba558a9e73edeefae0728e1f0a398b52afa626fe70",
+          "runtimeAlpha_SHA256": "e9ee2dcaa492a65105401cac0a2fcc04c4c99eaec218d83fe1f55adcdc08c556",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            18,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 3,
+          "sourceRect": [
+            1152,
+            0,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "41d42a57628010bced435b12cd044efe7fbbd9c0ff0ec37b4adffce4764a24bb",
+          "runtimeRect": [
+            384,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "095acc6f140cf4a60099cebef18a8803c48a946e01c8e04a192cf413acf37841",
+          "runtimeAlpha_SHA256": "b38f00222bfa09dec25afc9393313b61e1aa7be6c096fce388474caa896a8918",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            19,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 4,
+          "sourceRect": [
+            0,
+            384,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "b29a4c60238108bba640f1636870cd71959feebb835c9eaee5bf68e5f7b49461",
+          "runtimeRect": [
+            0,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "d5e4a01c041e7d05e882dbf58a2ca06bcf8f4c71e27ca871c0bf8e864d0db287",
+          "runtimeAlpha_SHA256": "06a97d2163286d29cca75433ad391023a8248fca37650ac88f6af8ce64c4d630",
+          "durationMs": 80,
+          "alphaBounds": [
+            17,
+            12,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 5,
+          "sourceRect": [
+            384,
+            384,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "522d3d6351163ea4502f412a96d5337f7fdce974cf67ce9da95b557bc350090d",
+          "runtimeRect": [
+            128,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "015340e274d4fef8607a6f85cfa476e12445c27398e639e2342e80e2a3a9c8c8",
+          "runtimeAlpha_SHA256": "84db59ffba7ce238fe6d8b878ca8f3f4a19fc2cf582f1d74ac6261fa29ed599d",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 6,
+          "sourceRect": [
+            768,
+            384,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "51b6ff9511d86ca7b2f07e7a0863d79ab2a5799c1a13969e59d86392c155d9c9",
+          "runtimeRect": [
+            256,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "94a2f91a4435b47c2c462084b8cdb56956875da88d7cdb3bfbb727c8ddd7d091",
+          "runtimeAlpha_SHA256": "fd023ba998467ddd8bff2a86a43b7d9787520695dc32b9016996b05e4d3189a0",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 7,
+          "sourceRect": [
+            1152,
+            384,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "7d98247819c649b60ed36a8610e5ddbfeaf6e58623d1747e20126d31041bac37",
+          "runtimeRect": [
+            384,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "e9621aacd76b597d4382affd4e5ecbf3879cda2be342d9ac662e1bd7f90dc286",
+          "runtimeAlpha_SHA256": "dccbcdc3ab232504aa6726af8947596f857b8cc28a13b32d955caede68697d24",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 8,
+          "sourceRect": [
+            0,
+            768,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "3ad1d2512a40889534f77615d9de96974db294a83b0fec97c94423d8e81932d3",
+          "runtimeRect": [
+            0,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "491e7708627053fb094ed75e41ade1b8862af884e63384aa213e5a67b49507fe",
+          "runtimeAlpha_SHA256": "502b69c2b79b8fc418e954eaabdd4a3ad8f0ecd207cfe32b396bcc5a35770a43",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 9,
+          "sourceRect": [
+            384,
+            768,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "16930ce2677dd383ca2ff242670f1f17025c8cab2133e48a12eb188009f5cf9e",
+          "runtimeRect": [
+            128,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "2082734add8379f4294aa2cb1d29c4393576920516205f76cb4698847fa2fa73",
+          "runtimeAlpha_SHA256": "5162ba8e885aa34f1883ca27d9aa913fcec352deb58b149acd7f3ce26fd97439",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 10,
+          "sourceRect": [
+            768,
+            768,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "51f65e0c732e5e411121f9bacef5883edfddf81f4e7653aed047b6a548a9e1b0",
+          "runtimeRect": [
+            256,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "c601e3f12d756727facd35de751e215838b827bc3356a830794bfc98890405c7",
+          "runtimeAlpha_SHA256": "23b27a51dd175da6c5a3996eb5f8ebd6ef8f30511ee9a9002b1c8e4ebb32b1e7",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 11,
+          "sourceRect": [
+            1152,
+            768,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "56694c8cba22b7fa1cfd27744edbf71c444ffbef1da1834a0de0cfc78a2e0b6e",
+          "runtimeRect": [
+            384,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "05dd9394d572e2d8d6a5253e7d4733dbe8867294b41435ef9bcae167d8e13e0f",
+          "runtimeAlpha_SHA256": "b2e454e48ffd243fe25939014b0b583f64d20d14d41d4f8cc5191c887d0fc810",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 12,
+          "sourceRect": [
+            0,
+            1152,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "70913e2eadd1b57b91112dc03e28e98b16c593e1990b5296a0c3f70d994be68c",
+          "runtimeRect": [
+            0,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "c2960f54e1321b1d95575257bdf90efd9f7a15ba085443798e50249afae571a2",
+          "runtimeAlpha_SHA256": "8a074802cec8d6e212f2c2c39dd9c64a3b9a43380b21ba1062745b24d062f1d6",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            109
+          ]
+        },
+        {
+          "index": 13,
+          "sourceRect": [
+            384,
+            1152,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "6f14afce95f1f509cc26b32d05fa094fa2634765583296a9f2c06c4711f2a9c1",
+          "runtimeRect": [
+            128,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "626396bc96e3f42a0a0de741d1e71499389bd6f66ff3bd075fa2b0f39b519d85",
+          "runtimeAlpha_SHA256": "afdac2137d668bfec14f65a2159e2473630ef6b02b7a54fff0f17538640469ab",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            111
+          ]
+        },
+        {
+          "index": 14,
+          "sourceRect": [
+            768,
+            1152,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "60311f9fbc735a6840291eb6c446ce390e1438fb75df436d8dc61a10814146ab",
+          "runtimeRect": [
+            256,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "4d8dbf8d6db625c02f5475178cab159ac5031350bdb25c049d9adb4707d92d72",
+          "runtimeAlpha_SHA256": "f9e260add7aa62318b011f30f58c28ea72c251a15811fe1e28dd969f0b628cab",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            112
+          ]
+        },
+        {
+          "index": 15,
+          "sourceRect": [
+            1152,
+            1152,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "70c03f2e4e3016117449ddd1018222c52c4fe9f7a796548dd1a1c2a05e3cc3f5",
+          "runtimeRect": [
+            384,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "6b0c9a8b5957351530cd597725c85fe12290493f8f843dd0cf4da6a587a921f8",
+          "runtimeAlpha_SHA256": "b5eee20572a6a5914586530ca6952aa92f1f7bbb05207f91fe5c5577240b060a",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            109,
+            110
+          ]
+        }
+      ],
+      "loop": false,
+      "adaptation": "Full authored cell uniformly Lanczos-resized to 128; lossless WebP exact RGBA. Body cache may sample held interior from one declared frame; not a newly drawn animation.",
+      "sha256": "2510213cd2651e81c922ac0875896c4f3bdd125f6a176387b5e25eaca5cca5a0",
+      "decodedRGBA_SHA256": "ac6715ae75db816da00304bd8b1fb0f349d18a7bd3bfdd6c5e94660c77ddbced",
+      "decodedAlpha_SHA256": "263f92d0ebab6a7e60f38b82ff4c435907bc82a8c3307ee26554d171dbe8097e",
+      "decodedRGBABytes": 1048576,
+      "bytes": 82302,
+      "sourceBytesUnchanged": true
+    },
+    {
+      "key": "fxV8SilverSlash",
+      "file": "media/fx-v8/silver-slash.webp",
+      "sourceIndex": 246,
+      "sourceAtlas": "/workspace/scratch/70f61c8d3af3/drive-v6/fx/inspect-246/atlas.png",
+      "sourceAtlasSHA256": "1ef9838c862112d169815970d47593ddd39e40e392aa6d41207dea06f3aaaf96",
+      "sourceContract": "/workspace/scratch/70f61c8d3af3/drive-v6/fx/inspect-246/animation.json",
+      "sourceContractSHA256": "a02c404ce4dc38cdc26ae194a17f11df8f8d26edf269ab57ed3b993b1337d31e",
+      "sourceContractContents": {
+        "id": "246-silver-thread-slash",
+        "sourceIndex": 246,
+        "frameCount": 16,
+        "uniquePaintedFrames": 16,
+        "reusedFrames": 0,
+        "blankFrames": 0,
+        "atlas": "atlas.png",
+        "atlasSize": [
+          1280,
+          1280
+        ],
+        "cellSize": [
+          320,
+          320
+        ],
+        "frames": [
+          {
+            "index": 0,
+            "file": "frames/frame-00.png",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 320,
+              "h": 320
+            },
+            "durationMs": 40,
+            "pivot": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "index": 1,
+            "file": "frames/frame-01.png",
+            "rect": {
+              "x": 320,
+              "y": 0,
+              "w": 320,
+              "h": 320
+            },
+            "durationMs": 40,
+            "pivot": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "index": 2,
+            "file": "frames/frame-02.png",
+            "rect": {
+              "x": 640,
+              "y": 0,
+              "w": 320,
+              "h": 320
+            },
+            "durationMs": 40,
+            "pivot": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "index": 3,
+            "file": "frames/frame-03.png",
+            "rect": {
+              "x": 960,
+              "y": 0,
+              "w": 320,
+              "h": 320
+            },
+            "durationMs": 40,
+            "pivot": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "index": 4,
+            "file": "frames/frame-04.png",
+            "rect": {
+              "x": 0,
+              "y": 320,
+              "w": 320,
+              "h": 320
+            },
+            "durationMs": 40,
+            "pivot": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "index": 5,
+            "file": "frames/frame-05.png",
+            "rect": {
+              "x": 320,
+              "y": 320,
+              "w": 320,
+              "h": 320
+            },
+            "durationMs": 40,
+            "pivot": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "index": 6,
+            "file": "frames/frame-06.png",
+            "rect": {
+              "x": 640,
+              "y": 320,
+              "w": 320,
+              "h": 320
+            },
+            "durationMs": 40,
+            "pivot": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "index": 7,
+            "file": "frames/frame-07.png",
+            "rect": {
+              "x": 960,
+              "y": 320,
+              "w": 320,
+              "h": 320
+            },
+            "durationMs": 40,
+            "pivot": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "index": 8,
+            "file": "frames/frame-08.png",
+            "rect": {
+              "x": 0,
+              "y": 640,
+              "w": 320,
+              "h": 320
+            },
+            "durationMs": 40,
+            "pivot": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "index": 9,
+            "file": "frames/frame-09.png",
+            "rect": {
+              "x": 320,
+              "y": 640,
+              "w": 320,
+              "h": 320
+            },
+            "durationMs": 40,
+            "pivot": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "index": 10,
+            "file": "frames/frame-10.png",
+            "rect": {
+              "x": 640,
+              "y": 640,
+              "w": 320,
+              "h": 320
+            },
+            "durationMs": 40,
+            "pivot": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "index": 11,
+            "file": "frames/frame-11.png",
+            "rect": {
+              "x": 960,
+              "y": 640,
+              "w": 320,
+              "h": 320
+            },
+            "durationMs": 40,
+            "pivot": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "index": 12,
+            "file": "frames/frame-12.png",
+            "rect": {
+              "x": 0,
+              "y": 960,
+              "w": 320,
+              "h": 320
+            },
+            "durationMs": 40,
+            "pivot": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "index": 13,
+            "file": "frames/frame-13.png",
+            "rect": {
+              "x": 320,
+              "y": 960,
+              "w": 320,
+              "h": 320
+            },
+            "durationMs": 40,
+            "pivot": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "index": 14,
+            "file": "frames/frame-14.png",
+            "rect": {
+              "x": 640,
+              "y": 960,
+              "w": 320,
+              "h": 320
+            },
+            "durationMs": 40,
+            "pivot": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "index": 15,
+            "file": "frames/frame-15.png",
+            "rect": {
+              "x": 960,
+              "y": 960,
+              "w": 320,
+              "h": 320
+            },
+            "durationMs": 40,
+            "pivot": [
+              0.5,
+              0.5
+            ]
+          }
+        ],
+        "durationMs": 640,
+        "fps": 25.0,
+        "loop": false,
+        "onComplete": "hide/remove; 214 may restart while projectile active only after runtime loop-seam review; 251 is bounded telegraph clip, schedule against gameplay separately",
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "blend": "normal straight alpha",
+        "premultipliedAlpha": false,
+        "filter": "linear",
+        "mipmaps": false,
+        "rgba8Bytes": 6553600,
+        "orientation": "Three-quarter top-down; ground plane horizontal, screen Y down",
+        "collision": "None supplied; art is not a collision mask. Warning ring must be calibrated against actual gameplay radius.",
+        "provenance": "Original motif exists; no verified named hero/boss ownership. Timing and deployment are proposals, not canonical lore.",
+        "runtimeStatus": "Not integrated or production GPU tested."
+      },
+      "driveLinks": [
+        "https://drive.google.com/file/d/12CzbbshE3fKPLQ9gxWVu11vsnRGksxbK/view?usp=drivesdk",
+        "https://drive.google.com/file/d/1IItICt_UVvKmHiAYFShH-cZHjMWC8jVM/view?usp=drivesdk",
+        "https://drive.google.com/file/d/1VqdkGmkXo7IBUaGJwA5vwJrixBl4PpW1/view?usp=drivesdk",
+        "https://drive.google.com/file/d/1i--ANpHxuJwQcfYLwGy4pGw8OLml-kQ4/view?usp=drivesdk"
+      ],
+      "sourceDimensions": [
+        1280,
+        1280
+      ],
+      "runtimeDimensions": [
+        512,
+        512
+      ],
+      "runtimeCell": 128,
+      "runtimePivot": [
+        64.0,
+        64.0
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "sourceRect": [
+            0,
+            0,
+            320,
+            320
+          ],
+          "sourceRGBA_SHA256": "63b131aa087532996f3cb10d8cdb4c257bc85435855beb908602c7fff46c8fda",
+          "runtimeRect": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "421f6f37bc4dcfcdaf74d50bc8523108320480cd18e24fc96afd1643f45c29af",
+          "runtimeAlpha_SHA256": "d2b5019d5478aaa6580de570197c43266c10b908c0c6bfae7a15506f088ba47f",
+          "durationMs": 40,
+          "alphaBounds": [
+            43,
+            59,
+            91,
+            92
+          ]
+        },
+        {
+          "index": 1,
+          "sourceRect": [
+            320,
+            0,
+            320,
+            320
+          ],
+          "sourceRGBA_SHA256": "a6aef22fc0278e975a6d9bd11caf4997b1f3435479bb757438b0e94a2357fe64",
+          "runtimeRect": [
+            128,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "8e59ba468c6957b725658936603818e96b7e309f40ae62858bc30607b1d152c9",
+          "runtimeAlpha_SHA256": "7e5e5c12d870175bc501fd3e561893449f67630bcb6c840de721a507ef1d3ee7",
+          "durationMs": 40,
+          "alphaBounds": [
+            35,
+            51,
+            97,
+            93
+          ]
+        },
+        {
+          "index": 2,
+          "sourceRect": [
+            640,
+            0,
+            320,
+            320
+          ],
+          "sourceRGBA_SHA256": "2f103dfa6e855b5492acf07e2e67cf307fb1a0c6c2f316afa05a37cd087afe0a",
+          "runtimeRect": [
+            256,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "8e14304590592eddc6168deb03ea365cb6f8a97837fd0b425b4b30beb0079a96",
+          "runtimeAlpha_SHA256": "dedc0e6ea6ff999828c9cbb71d2dda54c7058357daa60a4d64710defd50c8e4a",
+          "durationMs": 40,
+          "alphaBounds": [
+            28,
+            46,
+            95,
+            107
+          ]
+        },
+        {
+          "index": 3,
+          "sourceRect": [
+            960,
+            0,
+            320,
+            320
+          ],
+          "sourceRGBA_SHA256": "02204b57f1286d67d3e62a72b7bfbcfc467c3381010cf96ca9dd567f6975a2fb",
+          "runtimeRect": [
+            384,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "44143d55e830f434cc15ba69e7a859dfd67e5934e2a58a40d2f17715c78ddd1c",
+          "runtimeAlpha_SHA256": "527dfccceec76410cb1bb3b3c571dd429dea412816359ad851afb03712a5de5c",
+          "durationMs": 40,
+          "alphaBounds": [
+            25,
+            44,
+            94,
+            107
+          ]
+        },
+        {
+          "index": 4,
+          "sourceRect": [
+            0,
+            320,
+            320,
+            320
+          ],
+          "sourceRGBA_SHA256": "470f6ed8a0e953cbee2ba6da62c764b39de12af4e04c85112c45114839f6685c",
+          "runtimeRect": [
+            0,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "819e6d878eedebaf5682c581a37e7c7402a35ec719e75f7c9e7baa298de28ffa",
+          "runtimeAlpha_SHA256": "71675625707c83f0f481a4a3b8f049cb7821100750b0525b430122c3346d98ba",
+          "durationMs": 40,
+          "alphaBounds": [
+            31,
+            40,
+            99,
+            101
+          ]
+        },
+        {
+          "index": 5,
+          "sourceRect": [
+            320,
+            320,
+            320,
+            320
+          ],
+          "sourceRGBA_SHA256": "4eb5b5bbc53b578b54fe102dec8af4141e73d673c32c2a47f8f48b7349ace35b",
+          "runtimeRect": [
+            128,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "3eab8cdd9d6a5639525ef1da721f97922473ee9e65d5fd62ba1bdae835de501c",
+          "runtimeAlpha_SHA256": "cc5bcfbbcee4765d899eab3d340a15347780b9b633c4268844f5b3fb61670aeb",
+          "durationMs": 40,
+          "alphaBounds": [
+            30,
+            36,
+            99,
+            104
+          ]
+        },
+        {
+          "index": 6,
+          "sourceRect": [
+            640,
+            320,
+            320,
+            320
+          ],
+          "sourceRGBA_SHA256": "f4eec3887db4020ac25f99f841029c6ba7d5a5867ad821ffad8990d087d47b1d",
+          "runtimeRect": [
+            256,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "ae7c443e8af1ca098062ec57b80e3037b98c97d79e7521dbc4587a402089bcf5",
+          "runtimeAlpha_SHA256": "43208e3ac3e7c04750799e9d9cd8b5e28c6684533f359f82939d8596318bb014",
+          "durationMs": 40,
+          "alphaBounds": [
+            23,
+            34,
+            97,
+            105
+          ]
+        },
+        {
+          "index": 7,
+          "sourceRect": [
+            960,
+            320,
+            320,
+            320
+          ],
+          "sourceRGBA_SHA256": "3915373b91c51d5cf328a4c7390e9f73c025bdd077a9b5b1a87b9488c848ea1b",
+          "runtimeRect": [
+            384,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "0482497d53252cc33d82ca06c62c6b89b4bba821a4ffe3d7fbcf8236896e9fd3",
+          "runtimeAlpha_SHA256": "d490307f13c86e781e54236599fec42e01be34d99e9080643130019c4906c42d",
+          "durationMs": 40,
+          "alphaBounds": [
+            20,
+            33,
+            99,
+            105
+          ]
+        },
+        {
+          "index": 8,
+          "sourceRect": [
+            0,
+            640,
+            320,
+            320
+          ],
+          "sourceRGBA_SHA256": "bf6070c8e5dc54f8eae035c19af15c5a80d5461766e4dea9320813f6777a4e0c",
+          "runtimeRect": [
+            0,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "3bf3378bef136ded47e36f5ae99f5754e4f37a774d0b4c393875726216a6ee8f",
+          "runtimeAlpha_SHA256": "5a102199c34d645543031c69d31573333e0ea63a5a61bf78bf5d3c062fe0f38a",
+          "durationMs": 40,
+          "alphaBounds": [
+            34,
+            33,
+            102,
+            96
+          ]
+        },
+        {
+          "index": 9,
+          "sourceRect": [
+            320,
+            640,
+            320,
+            320
+          ],
+          "sourceRGBA_SHA256": "db3aa4dd5bd4618fd98e8ff75f63018b5e853e06937a811647851129b40e7d0c",
+          "runtimeRect": [
+            128,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "439364fb23e6916d836d50e525fc68b4c9da4c6a1466edc1b50ffb15ba025951",
+          "runtimeAlpha_SHA256": "9e071e52eb9acc20197620f7ef16c975b72d690ef5aa4ecf8bd3ee427cde1fdf",
+          "durationMs": 40,
+          "alphaBounds": [
+            33,
+            34,
+            98,
+            96
+          ]
+        },
+        {
+          "index": 10,
+          "sourceRect": [
+            640,
+            640,
+            320,
+            320
+          ],
+          "sourceRGBA_SHA256": "199f9fa7fba894dbc5bb9ade77571f44ce856af1cc610f356064b675ad468a17",
+          "runtimeRect": [
+            256,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "75ff662c4f1454ecec4d38e99304286d98069f4914fb60626c532ed5d5edb367",
+          "runtimeAlpha_SHA256": "8bf398f4f974da4667159638727db882cc63096479037be0e857b7ae4a4cf762",
+          "durationMs": 40,
+          "alphaBounds": [
+            31,
+            37,
+            93,
+            94
+          ]
+        },
+        {
+          "index": 11,
+          "sourceRect": [
+            960,
+            640,
+            320,
+            320
+          ],
+          "sourceRGBA_SHA256": "457842f3427f3e09472abd5374f222fe31bdc91b9c7ce3b0fb826cbdc9b9cd24",
+          "runtimeRect": [
+            384,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "ca85b559e25f433648b686ff5eb5b19e003081893468e0ffdcb86aa525e9cf40",
+          "runtimeAlpha_SHA256": "1b376801b5e2c4add95c38dcda6fcd7437dff87054d430db453478d35aacc82f",
+          "durationMs": 40,
+          "alphaBounds": [
+            36,
+            39,
+            89,
+            94
+          ]
+        },
+        {
+          "index": 12,
+          "sourceRect": [
+            0,
+            960,
+            320,
+            320
+          ],
+          "sourceRGBA_SHA256": "e077689c5935a783b706c7643cbdc1cf24244c922dc80dc8ecedcd4383378e20",
+          "runtimeRect": [
+            0,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "649d26a17b06e6f65688f2eb8c94775b649463306dfb4dc3c7cc104abd196a5c",
+          "runtimeAlpha_SHA256": "3f66894e7ce7ffb9b2f2b450aa31ba0a86705d9a82218cc3c8cd677b1019feb8",
+          "durationMs": 40,
+          "alphaBounds": [
+            40,
+            37,
+            86,
+            109
+          ]
+        },
+        {
+          "index": 13,
+          "sourceRect": [
+            320,
+            960,
+            320,
+            320
+          ],
+          "sourceRGBA_SHA256": "fb1e58b78c935e770097219dc691aff53597412eb09421914c1c5afce13e1452",
+          "runtimeRect": [
+            128,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "085af1d16378b1b54fd3e673b09b29447b3afa9d058d95a2f0b0038d47e80ffb",
+          "runtimeAlpha_SHA256": "d7bc87f277a1fd352a2032b90d8d38dc9bd589ce4020d1fde322b24c79083a8d",
+          "durationMs": 40,
+          "alphaBounds": [
+            31,
+            40,
+            85,
+            91
+          ]
+        },
+        {
+          "index": 14,
+          "sourceRect": [
+            640,
+            960,
+            320,
+            320
+          ],
+          "sourceRGBA_SHA256": "65f014c5dece99138ff15989a7e088ebbf0e4f2068c007100b292b90f222ef23",
+          "runtimeRect": [
+            256,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "ead6bb6d5384d7ad62f1a65b36323d65f26fc03f6f541fa067ded31a5bc2679e",
+          "runtimeAlpha_SHA256": "e35cf62e274f7487a9535e08f93fe57d544db15c84c80f34f207adee3fa01d1a",
+          "durationMs": 40,
+          "alphaBounds": [
+            26,
+            44,
+            82,
+            104
+          ]
+        },
+        {
+          "index": 15,
+          "sourceRect": [
+            960,
+            960,
+            320,
+            320
+          ],
+          "sourceRGBA_SHA256": "e3f3a3af3f36e0b5e432b62fe895cf1fc3de62261ec43ae4a0dfaad49e0f93a3",
+          "runtimeRect": [
+            384,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "1eb2accc3fb2abd919f7ba1b0ba0c9f134f4dc357b6bc8908697fb2fea9a1c37",
+          "runtimeAlpha_SHA256": "92ad79c5f649becdf8dc0246a69e31648919219336a8fc8dae9285109ba92a2d",
+          "durationMs": 40,
+          "alphaBounds": [
+            31,
+            22,
+            78,
+            99
+          ]
+        }
+      ],
+      "loop": false,
+      "adaptation": "Full authored cell uniformly Lanczos-resized to 128; lossless WebP exact RGBA. Body cache may sample held interior from one declared frame; not a newly drawn animation.",
+      "sha256": "dc9ebd4d13dc5c280321b1a33de3f443e141c407dcca2e7391240b2152b9c9dc",
+      "decodedRGBA_SHA256": "cc135c72defbcea33f316802e2c7d4251f9bd7e407289ded01d961039682048a",
+      "decodedAlpha_SHA256": "816b84352a612519415a938151e710f9fb8998dfa536a379fff165ace3f3a3a4",
+      "decodedRGBABytes": 1048576,
+      "bytes": 89626,
+      "sourceBytesUnchanged": true
+    },
+    {
+      "key": "fxV8SwampRipple",
+      "file": "media/fx-v8/swamp-ripple.webp",
+      "sourceIndex": 111,
+      "sourceAtlas": "/workspace/scratch/70f61c8d3af3/drive-v6/fx/inspect-111/atlas.png",
+      "sourceAtlasSHA256": "d9b98df621a1db35c23f8ce873f7b941629be13eb670a7b5bdccc651dfeca457",
+      "sourceContract": "/workspace/scratch/70f61c8d3af3/drive-v6/fx/inspect-111/animation.json",
+      "sourceContractSHA256": "e510bfc415786f364972e3606f8129b8cdc33fa31c68d5c5578266d9f0d83962",
+      "sourceContractContents": {
+        "id": "animated-111-02-black-swamp-grasp-ripple",
+        "name": "검은 늪 붙잡기 파문",
+        "sourceIndex": 111,
+        "status": "CPU-reviewed integration candidate; no actual game runtime test",
+        "frameCount": 16,
+        "distinctDrawingCount": 16,
+        "canvas": [
+          384,
+          384
+        ],
+        "pivot": {
+          "pixelsTopLeft": [
+            192,
+            274
+          ],
+          "normalizedTopLeft": [
+            0.5,
+            0.7135416666666666
+          ],
+          "targetTuningRequired": true
+        },
+        "atlas": {
+          "file": "atlas.png",
+          "size": [
+            1536,
+            1536
+          ],
+          "columns": 4,
+          "rows": 4,
+          "trimmed": false,
+          "rotated": false
+        },
+        "frames": [
+          {
+            "index": 0,
+            "file": "frames/frame_00.png",
+            "rect": [
+              0,
+              0,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 1,
+            "file": "frames/frame_01.png",
+            "rect": [
+              384,
+              0,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 2,
+            "file": "frames/frame_02.png",
+            "rect": [
+              768,
+              0,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 3,
+            "file": "frames/frame_03.png",
+            "rect": [
+              1152,
+              0,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 4,
+            "file": "frames/frame_04.png",
+            "rect": [
+              0,
+              384,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 5,
+            "file": "frames/frame_05.png",
+            "rect": [
+              384,
+              384,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 6,
+            "file": "frames/frame_06.png",
+            "rect": [
+              768,
+              384,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 7,
+            "file": "frames/frame_07.png",
+            "rect": [
+              1152,
+              384,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 8,
+            "file": "frames/frame_08.png",
+            "rect": [
+              0,
+              768,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 9,
+            "file": "frames/frame_09.png",
+            "rect": [
+              384,
+              768,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 10,
+            "file": "frames/frame_10.png",
+            "rect": [
+              768,
+              768,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 11,
+            "file": "frames/frame_11.png",
+            "rect": [
+              1152,
+              768,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 12,
+            "file": "frames/frame_12.png",
+            "rect": [
+              0,
+              1152,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 13,
+            "file": "frames/frame_13.png",
+            "rect": [
+              384,
+              1152,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 14,
+            "file": "frames/frame_14.png",
+            "rect": [
+              768,
+              1152,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 15,
+            "file": "frames/frame_15.png",
+            "rect": [
+              1152,
+              1152,
+              384,
+              384
+            ],
+            "durationMs": 80
+          }
+        ],
+        "clips": {
+          "oneshot": {
+            "frames": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "durationMs": 1280,
+            "loop": false,
+            "end": "fade to zero on final frame then remove"
+          }
+        },
+        "phases": [
+          {
+            "name": "ripple",
+            "frameRange": [
+              0,
+              3
+            ]
+          },
+          {
+            "name": "rise_grasp",
+            "frameRange": [
+              4,
+              7
+            ]
+          },
+          {
+            "name": "release",
+            "frameRange": [
+              8,
+              11
+            ]
+          },
+          {
+            "name": "settle",
+            "frameRange": [
+              12,
+              15
+            ]
+          }
+        ],
+        "alpha": "straight RGBA8",
+        "blend": "normal alpha",
+        "layers": "single overlay; no exact front/back occlusion split",
+        "endpointOpacity": {
+          "firstFrame": [
+            0,
+            1
+          ],
+          "lastFrame": [
+            1,
+            0
+          ]
+        },
+        "filter": "bilinear, clamp, disable mipmaps for initial test",
+        "notes": [
+          "All16 artwork frames are different. Preview encoding repeats frames to match30fps; that is not extra artwork.",
+          "Looping preview is demonstration only; runtime oneshot is not seamless.",
+          "Per-target pivot/scale tuning required. No per-frame auto fitting.",
+          "Low-alpha soft haze may be present; inspect on intended map."
+        ]
+      },
+      "driveLinks": [
+        "https://drive.google.com/file/d/1H6y-5iB-3xBwIxbMC4Wn0YAnv4vr8HtL/view?usp=drivesdk",
+        "https://drive.google.com/file/d/1O7ogUfYSHibvA8t84VrWPv3Sq6P0DTLx/view?usp=drivesdk",
+        "https://drive.google.com/file/d/1olZL7xtZ1DVPMdum-57RAAcB-7xN_fZZ/view?usp=drivesdk"
+      ],
+      "sourceDimensions": [
+        1536,
+        1536
+      ],
+      "runtimeDimensions": [
+        512,
+        512
+      ],
+      "runtimeCell": 128,
+      "runtimePivot": [
+        64.0,
+        91.33333333333333
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "sourceRect": [
+            0,
+            0,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "760fd21610b4a063e20f6d5515ff2450a359c8cef09b93e15efeea7205bf9e8e",
+          "runtimeRect": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "c39ad0c1e9fa9d745d34dc39f9ab08d464323fbb35ae9ba51c98284e1f4d1de7",
+          "runtimeAlpha_SHA256": "c5c10f61c88579c37de53acc69ee374cf68b9ebc5e0bb2af67be0cc6bd686c78",
+          "durationMs": 80,
+          "alphaBounds": [
+            17,
+            16,
+            116,
+            110
+          ]
+        },
+        {
+          "index": 1,
+          "sourceRect": [
+            384,
+            0,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "25af3548eb6d1c5cac207b62d3561873e57603989e29aa04537c7ac83b9c0626",
+          "runtimeRect": [
+            128,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "4a275261d96a3da40e5b5cdaa3eb37a3576c6ff3dc7f3e1f4ffab7febdf6a99a",
+          "runtimeAlpha_SHA256": "e58d5abddc51c08344365743bff859967e206bc2f3706fb822e9e09039b119cc",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            110
+          ]
+        },
+        {
+          "index": 2,
+          "sourceRect": [
+            768,
+            0,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "a084fffad47898bd785c795bcb20eaa764a8bdde55c9f5462f5cf02e1423970e",
+          "runtimeRect": [
+            256,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "0a23410ae0be576f722235d80207649cff32908fff3e4408b74a4678882a619a",
+          "runtimeAlpha_SHA256": "2a45e98979b1e8edf5c7b792c8d666ced38e6cb6f1622347febd3699f72ab1ae",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            110
+          ]
+        },
+        {
+          "index": 3,
+          "sourceRect": [
+            1152,
+            0,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "4d8a5c3dc99d87a290dbb0e953f62368a4990f5f15427513d598ffcd0ae2f18a",
+          "runtimeRect": [
+            384,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "bb455269d004bb14f88a5a04255cd19bffaf511d00563dd9838986c9ba2639f2",
+          "runtimeAlpha_SHA256": "fce30be4bfe5d12d6df07a76ba2c7d201b8ba8ba8d866f6d19409f13286c55e1",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            111,
+            110
+          ]
+        },
+        {
+          "index": 4,
+          "sourceRect": [
+            0,
+            384,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "e1e97ead7f762d4b315a6b6145c0620e5088d1ccce8af6cccd51fbbdaf1d8f68",
+          "runtimeRect": [
+            0,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "05eb55dc410dd980269db2229e8d2593802aaf5d42a0232307413489a19e07d0",
+          "runtimeAlpha_SHA256": "a58572deea2f66fd6e3f72e4480340b7805f4498465e3b040aad4d057f1f20a7",
+          "durationMs": 80,
+          "alphaBounds": [
+            20,
+            6,
+            109,
+            108
+          ]
+        },
+        {
+          "index": 5,
+          "sourceRect": [
+            384,
+            384,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "389247e36126013287dc06a499d7cff6d291f3632a2b0951074591ca4972ffd8",
+          "runtimeRect": [
+            128,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "bd2fbc182e155dbbcc0822400046a5235e2873970698c9f8061ffe61878b2952",
+          "runtimeAlpha_SHA256": "fe3b858b6592cbd337d72222d2b0d508608bb8a05e2649ebd214b2dbacc574bb",
+          "durationMs": 80,
+          "alphaBounds": [
+            14,
+            6,
+            116,
+            109
+          ]
+        },
+        {
+          "index": 6,
+          "sourceRect": [
+            768,
+            384,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "a8fdaf8fb119dd56f4d42652ed0c69fa393f74a929d7c84d2df758030d49d24a",
+          "runtimeRect": [
+            256,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "9732c431f6c3a30ce26ca64d6cc4a8c848d9b02c468cf88eb3000d9947cb785f",
+          "runtimeAlpha_SHA256": "8093e3b4b851b719797e24b61452a2214e505e4da7da1c48e3548e9331370ff8",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            6,
+            116,
+            109
+          ]
+        },
+        {
+          "index": 7,
+          "sourceRect": [
+            1152,
+            384,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "16d709e574a1c1788df21f73a376819297a9937add3b2a66f165a990cb5bee90",
+          "runtimeRect": [
+            384,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "6f285123c69a7c621e7b259eebbf8a9a29f93962185b6e8cb1f245935c079f07",
+          "runtimeAlpha_SHA256": "4cb2bd6c0e098729f6ede3a37e3c71c2f8f83ac3b1bc30adb4bb034dc9c1a4d7",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            6,
+            112,
+            105
+          ]
+        },
+        {
+          "index": 8,
+          "sourceRect": [
+            0,
+            768,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "bb5b7d094f2eb31eafc1d5e312dced01c25fa3fb37af5ecadb55d49128b98149",
+          "runtimeRect": [
+            0,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "ffda320b2bb0692d0fb3f82c7d1f8a4e8e274ea1bd71e2d50016aec58a90c853",
+          "runtimeAlpha_SHA256": "0a052fba49092acd82baedd1283274fa465bb4f9b7a27aada14d334f18fae1c6",
+          "durationMs": 80,
+          "alphaBounds": [
+            20,
+            9,
+            116,
+            108
+          ]
+        },
+        {
+          "index": 9,
+          "sourceRect": [
+            384,
+            768,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "5e87f835eeb049723d1527f2b5fa229ffd88f546bcce06853a03c7a4e170ade7",
+          "runtimeRect": [
+            128,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "fc95b8badaedc42c16776e1e802ccbb9d4b7f9a2f076266ef803fc4a8f70432c",
+          "runtimeAlpha_SHA256": "52d3068373549e521cc22e02f31b830a4c21837a8a64e9524aa3eadc6a72e1b9",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            9,
+            115,
+            110
+          ]
+        },
+        {
+          "index": 10,
+          "sourceRect": [
+            768,
+            768,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "c78c3835ea78b38f47850413aea35bb528c66e125b43daa7c162089dbffd29a6",
+          "runtimeRect": [
+            256,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "6e95698b660d7de96a474cbb67cacc7365135f008f07d704616360038b0a4f75",
+          "runtimeAlpha_SHA256": "10689879f1885dad1c137e5caec417fca9af97d202fd1710bde4412180191248",
+          "durationMs": 80,
+          "alphaBounds": [
+            15,
+            9,
+            116,
+            110
+          ]
+        },
+        {
+          "index": 11,
+          "sourceRect": [
+            1152,
+            768,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "5931f7cd59a27d2ae16a8a2f533f7fbf198530bb041d9e75cdebed49dc643404",
+          "runtimeRect": [
+            384,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "df7f46f87f32afa2b7ddf7ba27e95431318914ea06a1fa98717b3a37593f8fa8",
+          "runtimeAlpha_SHA256": "b59926a59d1b70ad09a54e0b13e224f80b75e9afe15ad4155d65650a7f0570a0",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            11,
+            108,
+            110
+          ]
+        },
+        {
+          "index": 12,
+          "sourceRect": [
+            0,
+            1152,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "bafed1a86ee7e108b90c311513a884f0a051be2e5c2011c88730c1c911ec6954",
+          "runtimeRect": [
+            0,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "e615b3a9390b7bd74833a61d80c36815c9f144d1156ad7d903b516da92e03f51",
+          "runtimeAlpha_SHA256": "41e6e1eaf480867f5d35d3c2ff15a732a068bbac7818d1786d532deaa60d0fd5",
+          "durationMs": 80,
+          "alphaBounds": [
+            19,
+            25,
+            116,
+            106
+          ]
+        },
+        {
+          "index": 13,
+          "sourceRect": [
+            384,
+            1152,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "7cb491c7f7acf09c2229a97184c8946267fdc9f4d2d979f85002edd545c18508",
+          "runtimeRect": [
+            128,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "d6a8250212f930545a23a5e1b548b17c9cd911645bb5cade900202bbc49b4396",
+          "runtimeAlpha_SHA256": "8186e3cc4342114f929c432fc0cd62874c638d60dbbcb49c7c46ead67e5d47da",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            27,
+            116,
+            105
+          ]
+        },
+        {
+          "index": 14,
+          "sourceRect": [
+            768,
+            1152,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "61489d9f880170f59ab4604639c8e08dde283624eb85e067422aa23b3cd8d799",
+          "runtimeRect": [
+            256,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "1f5694e9f97422e24fe42bb25c981ffa5995b432f0ee9070d7e892971239c176",
+          "runtimeAlpha_SHA256": "38ac88b646535daef3f5bb8c0fc5cb82d6d50c204040f96a95b142dbf50460c0",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            27,
+            116,
+            108
+          ]
+        },
+        {
+          "index": 15,
+          "sourceRect": [
+            1152,
+            1152,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "da34826844a69c1cc17bd7be93bdab12cda512f4217bd867b447002283332de0",
+          "runtimeRect": [
+            384,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "e8ae31b52685bbce8cbeeb6305de979fd83afc026ffe19237101c8e390303f7e",
+          "runtimeAlpha_SHA256": "3ecc2e4f5c086597162ec4bacf47b68f513928c3815997c70a32b5bf8ce324f4",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            29,
+            101,
+            105
+          ]
+        }
+      ],
+      "loop": false,
+      "adaptation": "Full authored cell uniformly Lanczos-resized to 128; lossless WebP exact RGBA. Body cache may sample held interior from one declared frame; not a newly drawn animation.",
+      "sha256": "29a72d6b90380d00282b9c2086d272eecb7b10d79ad1c3100f2e2fc5f642abf2",
+      "decodedRGBA_SHA256": "74a10a2711e8c2a1f309b1fb2d825ca8480f68eb4a1024da8abf064e0b81f85f",
+      "decodedAlpha_SHA256": "1252bec55019de05be81f068aa136741126cb31db069eca8ce29264a55b42d32",
+      "decodedRGBABytes": 1048576,
+      "bytes": 125222,
+      "sourceBytesUnchanged": true
+    },
+    {
+      "key": "fxV8Reed",
+      "file": "media/fx-v8/reed.webp",
+      "sourceIndex": 262,
+      "sourceAtlas": "/workspace/scratch/70f61c8d3af3/drive-v6/fx/inspect-262/atlas.png",
+      "sourceAtlasSHA256": "507c8c3dd2a0f3615b733e441dcf976c0d8cf88a3a96c572a4408db18a353e2d",
+      "sourceContract": "/workspace/scratch/70f61c8d3af3/drive-v6/fx/inspect-262/animation.json",
+      "sourceContractSHA256": "792c7a0e3dbf7e42728f0fd001fc69dce2725ed2875ae9e9cbce20464b9fe7a1",
+      "sourceContractContents": {
+        "id": "storyworld-262-reed-projectile",
+        "sourceIndex": 262,
+        "role": "reed-hand projectile",
+        "atlas": "atlas.png",
+        "atlasSize": {
+          "w": 1024,
+          "h": 1024
+        },
+        "frameSize": {
+          "w": 256,
+          "h": 256
+        },
+        "frameCount": 16,
+        "paintedNonemptyFrames": 16,
+        "blankFrames": 0,
+        "totalDurationMs": 800,
+        "loop": false,
+        "endBehavior": "bounded flight articulation; despawn at collision or flight end, do not loop",
+        "gameplayTimingClaim": false,
+        "alpha": "straight",
+        "blendMode": "normal",
+        "filter": "linear",
+        "mipmaps": false,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "sourceAsset": "batch01/dist02_reed_hand_projectile.png",
+        "canonicalMapping": [
+          {
+            "zone": "dist02",
+            "scene": "03",
+            "title": "늪지대의 뿔악마",
+            "objective": "뿔악마 봉인",
+            "narrator": "〈EGO의 기억〉",
+            "lore_pointer": "/records/2"
+          }
+        ],
+        "loreLimit": "Scene and boss association from existing boss catalog; r75 scene crosschecked. Attack animation, timing and shape are design interpretation.",
+        "frames": [
+          {
+            "index": 0,
+            "file": "frames/frame-00.png",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 50,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          },
+          {
+            "index": 1,
+            "file": "frames/frame-01.png",
+            "rect": {
+              "x": 256,
+              "y": 0,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 50,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          },
+          {
+            "index": 2,
+            "file": "frames/frame-02.png",
+            "rect": {
+              "x": 512,
+              "y": 0,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 50,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          },
+          {
+            "index": 3,
+            "file": "frames/frame-03.png",
+            "rect": {
+              "x": 768,
+              "y": 0,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 50,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          },
+          {
+            "index": 4,
+            "file": "frames/frame-04.png",
+            "rect": {
+              "x": 0,
+              "y": 256,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 50,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          },
+          {
+            "index": 5,
+            "file": "frames/frame-05.png",
+            "rect": {
+              "x": 256,
+              "y": 256,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 50,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          },
+          {
+            "index": 6,
+            "file": "frames/frame-06.png",
+            "rect": {
+              "x": 512,
+              "y": 256,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 50,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          },
+          {
+            "index": 7,
+            "file": "frames/frame-07.png",
+            "rect": {
+              "x": 768,
+              "y": 256,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 50,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          },
+          {
+            "index": 8,
+            "file": "frames/frame-08.png",
+            "rect": {
+              "x": 0,
+              "y": 512,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 50,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          },
+          {
+            "index": 9,
+            "file": "frames/frame-09.png",
+            "rect": {
+              "x": 256,
+              "y": 512,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 50,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          },
+          {
+            "index": 10,
+            "file": "frames/frame-10.png",
+            "rect": {
+              "x": 512,
+              "y": 512,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 50,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          },
+          {
+            "index": 11,
+            "file": "frames/frame-11.png",
+            "rect": {
+              "x": 768,
+              "y": 512,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 50,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          },
+          {
+            "index": 12,
+            "file": "frames/frame-12.png",
+            "rect": {
+              "x": 0,
+              "y": 768,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 50,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          },
+          {
+            "index": 13,
+            "file": "frames/frame-13.png",
+            "rect": {
+              "x": 256,
+              "y": 768,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 50,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          },
+          {
+            "index": 14,
+            "file": "frames/frame-14.png",
+            "rect": {
+              "x": 512,
+              "y": 768,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 50,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          },
+          {
+            "index": 15,
+            "file": "frames/frame-15.png",
+            "rect": {
+              "x": 768,
+              "y": 768,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 50,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            }
+          }
+        ]
+      },
+      "driveLinks": [
+        "https://drive.google.com/file/d/1U7XJR9tqEm6czxzCtiG-WnQMFPs9Anlf/view?usp=drivesdk"
+      ],
+      "sourceDimensions": [
+        1024,
+        1024
+      ],
+      "runtimeDimensions": [
+        512,
+        512
+      ],
+      "runtimeCell": 128,
+      "runtimePivot": [
+        64.0,
+        64.0
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "sourceRect": [
+            0,
+            0,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "7f2a08986e2d2478a81f65e35502f4e0101a68e1f98d7570818f8e887354f735",
+          "runtimeRect": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "23200c54bfe5859982fa032e2261b8aac8fa4c3fedd1703286ebc97f2d06e01e",
+          "runtimeAlpha_SHA256": "6275134989d75597005639ae99424074f29570e25263d88729c19211463a99b1",
+          "durationMs": 50,
+          "alphaBounds": [
+            19,
+            29,
+            101,
+            79
+          ]
+        },
+        {
+          "index": 1,
+          "sourceRect": [
+            256,
+            0,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "8bdb16507e98572ec076f78c38d5cc30009702f02fb8565f1e47885ad6ad0b5e",
+          "runtimeRect": [
+            128,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "3e275e0fcc1294f2843aaa8ccfcc6f8d3eb840075bc5210ab13bc096bc4c155b",
+          "runtimeAlpha_SHA256": "80426ea413fc11ef97141c89a0a646bbe33f489c5b39b1664daeb2e808ad32b0",
+          "durationMs": 50,
+          "alphaBounds": [
+            18,
+            29,
+            104,
+            78
+          ]
+        },
+        {
+          "index": 2,
+          "sourceRect": [
+            512,
+            0,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "aa972c7fd559ca1e7300b1355a96be4298350683cde91c6cce544976281b0442",
+          "runtimeRect": [
+            256,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "bfc88a3f998935e12892023866bc59a266105003049b867b47149edbed55a109",
+          "runtimeAlpha_SHA256": "7782b6bac9b7c40d03ab831f4a2d2537bbd0a46ebc1fa5b2bcf51126ce80a245",
+          "durationMs": 50,
+          "alphaBounds": [
+            16,
+            25,
+            109,
+            80
+          ]
+        },
+        {
+          "index": 3,
+          "sourceRect": [
+            768,
+            0,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "d848f7a21bf0c1be084dc9d32c55096b381e845f123df5c6c9c29d4dd4803678",
+          "runtimeRect": [
+            384,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "9660a9d25a3a5861c23ceccc483189aa30da4bb7eefea4f6738bf03b1a8a936f",
+          "runtimeAlpha_SHA256": "a17feaa48df7144582d4933da6a742379960230448c548c492a0074f6c2774d7",
+          "durationMs": 50,
+          "alphaBounds": [
+            18,
+            24,
+            108,
+            80
+          ]
+        },
+        {
+          "index": 4,
+          "sourceRect": [
+            0,
+            256,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "cfba2188c110fd898a05ffa07e00a674f97e026829164c27bc43c0469f8d6743",
+          "runtimeRect": [
+            0,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "8b0dd77e176cea0dea0513764f4e93313eadf7b551cb03c3cc80b3bbc1b8cf92",
+          "runtimeAlpha_SHA256": "4be90a03af511b2b0693edfc1976277483e33358b5b432db28afa1500a441f42",
+          "durationMs": 50,
+          "alphaBounds": [
+            18,
+            19,
+            111,
+            80
+          ]
+        },
+        {
+          "index": 5,
+          "sourceRect": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "8de3316762321fe809f2e1bf338b1d8cccdd9c397cb5a2f9b9a8f48057b3cbd4",
+          "runtimeRect": [
+            128,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "8bbbda0e3e718549ccb8cd6df34a3a1e915195f304486ea09b5312adfe24594e",
+          "runtimeAlpha_SHA256": "245fe4727e5bcd68a5fa6438b2a5e02916709562501341e25692b86997ae49bc",
+          "durationMs": 50,
+          "alphaBounds": [
+            17,
+            18,
+            110,
+            81
+          ]
+        },
+        {
+          "index": 6,
+          "sourceRect": [
+            512,
+            256,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "d9a7a3ef0323f768ae2696d5f61465165b85320f3826a6cd8b61a89c798e879e",
+          "runtimeRect": [
+            256,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "92c1642a305d19341704a7aade3039a0f4115074dff3dd08428c464753739f67",
+          "runtimeAlpha_SHA256": "8bf5c4ce9e8b7203412996b22d63a98aef9d45a484e413ee5cdb4eb566a1bb53",
+          "durationMs": 50,
+          "alphaBounds": [
+            15,
+            18,
+            111,
+            79
+          ]
+        },
+        {
+          "index": 7,
+          "sourceRect": [
+            768,
+            256,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "25182dde8746897d4504680e9e5fa913417b4db50cd71754633c4263bfa5f16c",
+          "runtimeRect": [
+            384,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "0ca4e0c84532d074d899b4696883c8950676e82a8beb460066bc8225693aa9bb",
+          "runtimeAlpha_SHA256": "aa7de8b692298f4f33a5c3650b3c94c80df84548a60e5ae9bc4e947c1a39f828",
+          "durationMs": 50,
+          "alphaBounds": [
+            15,
+            18,
+            107,
+            82
+          ]
+        },
+        {
+          "index": 8,
+          "sourceRect": [
+            0,
+            512,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "9ec0cfa1b7f59e21588b80a74893439a3a02d0a320d5e7fe0f7819c62da94a79",
+          "runtimeRect": [
+            0,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "51741312abb846e45ca9efb2b408eb6af5bbbf7adf9cc72f0163765bf9b94a2e",
+          "runtimeAlpha_SHA256": "e0f5fc7785a73e8f15af4b9eb9637e1576a8af3c2a736b4dbcad2f25d1ab9ac8",
+          "durationMs": 50,
+          "alphaBounds": [
+            18,
+            19,
+            109,
+            81
+          ]
+        },
+        {
+          "index": 9,
+          "sourceRect": [
+            256,
+            512,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "e17f7090e3a1ae907cd8a6c71ddd25870afcd1e7bddc73f2ce41814cb525f9f8",
+          "runtimeRect": [
+            128,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "5f0524064e99fb3e871b0dc826b894b4baeedce8c5c52d1bda286e8b300aaa14",
+          "runtimeAlpha_SHA256": "17052b906e981ff158417b6a7b8ab4a7e5641603ecffd8ce490dd65d888ce360",
+          "durationMs": 50,
+          "alphaBounds": [
+            17,
+            19,
+            109,
+            78
+          ]
+        },
+        {
+          "index": 10,
+          "sourceRect": [
+            512,
+            512,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "44f8166c82c40034aa7230b428fa0f07fa42225cfa503f795686520bc4374c03",
+          "runtimeRect": [
+            256,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "25625e83105ee055dbd8e66f20e9f9bcf565df2c81627e2f24787898bd39b479",
+          "runtimeAlpha_SHA256": "5c2371e0c72156681398f325c35a2bf0a34271b62c3360dbf3638d31af4e1682",
+          "durationMs": 50,
+          "alphaBounds": [
+            13,
+            22,
+            110,
+            78
+          ]
+        },
+        {
+          "index": 11,
+          "sourceRect": [
+            768,
+            512,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "ea79b46af3bffed6407acb0c25531792a95a0bab479ef225c8c8017822273eba",
+          "runtimeRect": [
+            384,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "c011ff3b941b5aac6e27fcbdb80bd096b75184b05f3203a2cf5ae5d664a474a0",
+          "runtimeAlpha_SHA256": "5361d8454b413fd7c6b1602001759c61a8fc1d228c95b36b4f27cd287e2b9064",
+          "durationMs": 50,
+          "alphaBounds": [
+            16,
+            22,
+            106,
+            76
+          ]
+        },
+        {
+          "index": 12,
+          "sourceRect": [
+            0,
+            768,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "389162d691bb7ddba889e345e33837cac3f15d8c2d47b0539c543dad47596bbe",
+          "runtimeRect": [
+            0,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "5cf02707f71b50dd2277bb44a3ba6739aedced06f0c0b280626b04007a7788a9",
+          "runtimeAlpha_SHA256": "a2ac68ea79dde52521c8e84229a3ba8e484dbbd8d0c457ddbcee00ee576d03f3",
+          "durationMs": 50,
+          "alphaBounds": [
+            17,
+            19,
+            111,
+            75
+          ]
+        },
+        {
+          "index": 13,
+          "sourceRect": [
+            256,
+            768,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "a36633e172409a56eaf5dc5d1a91ee6e9eb1ba5b2444d725fcf1dc13e5bf1f99",
+          "runtimeRect": [
+            128,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "80b1e8e2323296915bf2b5752af0fe9d99d04fc07c897a503c0769c18c044690",
+          "runtimeAlpha_SHA256": "95871c6131b57129cbc32a2328c1c38fdc2c31d4cc44d42601e2396a5998829c",
+          "durationMs": 50,
+          "alphaBounds": [
+            17,
+            20,
+            108,
+            74
+          ]
+        },
+        {
+          "index": 14,
+          "sourceRect": [
+            512,
+            768,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "41e5ae2bcfa903639f1fdfceedb348b27144956fc50e2c7ae5477f0999c22af2",
+          "runtimeRect": [
+            256,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "2eee6a38ba196b42ea0a2bcfd0d10f647eddab4c94fc69cc03bcd054e040d46f",
+          "runtimeAlpha_SHA256": "889db5568aa6c9597909e831088ce39e8f118a9d2842b76a73ff8ab28a8e4ab7",
+          "durationMs": 50,
+          "alphaBounds": [
+            17,
+            19,
+            106,
+            75
+          ]
+        },
+        {
+          "index": 15,
+          "sourceRect": [
+            768,
+            768,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "243477821de9c4b7195c1f2be46074682b43b86aa56daec728ca5162c086eaa0",
+          "runtimeRect": [
+            384,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "bab3e49be45a3173de7c8b9812b2472e25fe26cf61d4c668be207c760b3e184d",
+          "runtimeAlpha_SHA256": "2e11380ce57480fe02c20ec525d43110ff63cd5ac782125d2de0fdd81999c759",
+          "durationMs": 50,
+          "alphaBounds": [
+            16,
+            20,
+            104,
+            72
+          ]
+        }
+      ],
+      "loop": false,
+      "adaptation": "Full authored cell uniformly Lanczos-resized to 128; lossless WebP exact RGBA. Body cache may sample held interior from one declared frame; not a newly drawn animation.",
+      "sha256": "43a8435a85859075e3cd23690e23cd4584d919f9cf0b89442073a7142315af9b",
+      "decodedRGBA_SHA256": "93532d65f029adc164ab9e3910831148f2a640b474fc17985a1ddc0eebfd174e",
+      "decodedAlpha_SHA256": "2fcb545e7e6fcf71c59569c7d35cf10acfb519c16a96de10014897fb2e526951",
+      "decodedRGBABytes": 1048576,
+      "bytes": 151182,
+      "sourceBytesUnchanged": true
+    },
+    {
+      "key": "fxV8Ember",
+      "file": "media/fx-v8/ember.webp",
+      "sourceIndex": 94,
+      "sourceAtlas": "/workspace/scratch/70f61c8d3af3/drive-v6/fx/inspect-94/atlas.png",
+      "sourceAtlasSHA256": "129fd0b5324f6b23cedd0c05e056fa3a5e2c317c7906d01fa584c39bbf8c10d2",
+      "sourceContract": "/workspace/scratch/70f61c8d3af3/drive-v6/fx/inspect-94/animation.json",
+      "sourceContractSHA256": "85db04523b5c6b801659fbdde4b32851acfdbca48422590a36f0647584f73338",
+      "sourceContractContents": {
+        "id": "storyworld-94-embers",
+        "sourceIndex": 94,
+        "atlas": "atlas.png",
+        "atlasSize": {
+          "w": 1024,
+          "h": 1024
+        },
+        "frameSize": {
+          "w": 256,
+          "h": 256
+        },
+        "frameCount": 16,
+        "paintedNonemptyFrames": 15,
+        "transparentEndFrames": 1,
+        "totalDurationMs": 960,
+        "loop": false,
+        "alpha": "straight",
+        "blendMode": "normal",
+        "filter": "linear",
+        "mipmaps": false,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "sourceAsset": "new_assets/vfx-batch01/05-fire-contact-embers.png",
+        "canonicalMapping": [
+          {
+            "zone": "dist05",
+            "scene": "06",
+            "title": "일곱 기둥",
+            "objective": "일곱 기둥 연결 해제",
+            "narrator": "〈EGO의 기억〉",
+            "lore_pointer": "/records/5"
+          },
+          {
+            "zone": "last303",
+            "scene": "35",
+            "title": "한약과 불면귀",
+            "objective": "불면귀 핵 봉인",
+            "narrator": "〈환도의 기억〉",
+            "lore_pointer": "/records/35"
+          }
+        ],
+        "loreLimit": "Mechanic/source asset exists; no specific hero or boss attribution unless separately evidenced.",
+        "frames": [
+          {
+            "index": 0,
+            "file": "frames/frame-00.png",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 60,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "phase": "birth"
+          },
+          {
+            "index": 1,
+            "file": "frames/frame-01.png",
+            "rect": {
+              "x": 256,
+              "y": 0,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 60,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "phase": "birth"
+          },
+          {
+            "index": 2,
+            "file": "frames/frame-02.png",
+            "rect": {
+              "x": 512,
+              "y": 0,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 60,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "phase": "birth"
+          },
+          {
+            "index": 3,
+            "file": "frames/frame-03.png",
+            "rect": {
+              "x": 768,
+              "y": 0,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 60,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "phase": "impact"
+          },
+          {
+            "index": 4,
+            "file": "frames/frame-04.png",
+            "rect": {
+              "x": 0,
+              "y": 256,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 60,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "phase": "impact"
+          },
+          {
+            "index": 5,
+            "file": "frames/frame-05.png",
+            "rect": {
+              "x": 256,
+              "y": 256,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 60,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "phase": "impact"
+          },
+          {
+            "index": 6,
+            "file": "frames/frame-06.png",
+            "rect": {
+              "x": 512,
+              "y": 256,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 60,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "phase": "impact"
+          },
+          {
+            "index": 7,
+            "file": "frames/frame-07.png",
+            "rect": {
+              "x": 768,
+              "y": 256,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 60,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "phase": "release"
+          },
+          {
+            "index": 8,
+            "file": "frames/frame-08.png",
+            "rect": {
+              "x": 0,
+              "y": 512,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 60,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "phase": "release"
+          },
+          {
+            "index": 9,
+            "file": "frames/frame-09.png",
+            "rect": {
+              "x": 256,
+              "y": 512,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 60,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "phase": "release"
+          },
+          {
+            "index": 10,
+            "file": "frames/frame-10.png",
+            "rect": {
+              "x": 512,
+              "y": 512,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 60,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "phase": "release"
+          },
+          {
+            "index": 11,
+            "file": "frames/frame-11.png",
+            "rect": {
+              "x": 768,
+              "y": 512,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 60,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "phase": "release"
+          },
+          {
+            "index": 12,
+            "file": "frames/frame-12.png",
+            "rect": {
+              "x": 0,
+              "y": 768,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 60,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "phase": "dissipation"
+          },
+          {
+            "index": 13,
+            "file": "frames/frame-13.png",
+            "rect": {
+              "x": 256,
+              "y": 768,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 60,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "phase": "dissipation"
+          },
+          {
+            "index": 14,
+            "file": "frames/frame-14.png",
+            "rect": {
+              "x": 512,
+              "y": 768,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 60,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "phase": "dissipation"
+          },
+          {
+            "index": 15,
+            "file": "frames/frame-15.png",
+            "rect": {
+              "x": 768,
+              "y": 768,
+              "w": 256,
+              "h": 256
+            },
+            "durationMs": 60,
+            "pivot": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "phase": "transparent-end"
+          }
+        ]
+      },
+      "driveLinks": [
+        "https://drive.google.com/file/d/12-oh6BjFPMrUfSJNO7Uwd5nRBxE0ajI6/view?usp=drivesdk"
+      ],
+      "sourceDimensions": [
+        1024,
+        1024
+      ],
+      "runtimeDimensions": [
+        512,
+        512
+      ],
+      "runtimeCell": 128,
+      "runtimePivot": [
+        64.0,
+        64.0
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "sourceRect": [
+            0,
+            0,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "e96ae98d1bcf6013d9f683268b1ee18532563ca74569883ef2686a170f2acd24",
+          "runtimeRect": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "5e3f9adc995b71586d17c28ce27ac4df716387fce4ab758b98c38fe5e8cd1854",
+          "runtimeAlpha_SHA256": "f1f5d4994917783ff9aa3a606f12fc8f3abbdb0eade76acf1bb0d306bf89eceb",
+          "durationMs": 60,
+          "alphaBounds": [
+            51,
+            51,
+            105,
+            100
+          ]
+        },
+        {
+          "index": 1,
+          "sourceRect": [
+            256,
+            0,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "b429a07c455e1189f7744ffd4f07004ecde78123bad6b1ed532af9194293a427",
+          "runtimeRect": [
+            128,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "83ea786cd9f17d8748e325f94d3fedbb9e7bbfe83a84cefae5a96214d8318c49",
+          "runtimeAlpha_SHA256": "548bc6119ca61a2a0c2751dc66bfa8dd3e20d267ad91c5c7b960e064212b47fe",
+          "durationMs": 60,
+          "alphaBounds": [
+            43,
+            51,
+            102,
+            99
+          ]
+        },
+        {
+          "index": 2,
+          "sourceRect": [
+            512,
+            0,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "2e929245052c02672004040cc3731cc57d023527ff58e077ac197850b0f937d0",
+          "runtimeRect": [
+            256,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "aec3df61a36af1ae4e5d41c3662f11bc9d68597d2204cf0df671c1fb2c782bca",
+          "runtimeAlpha_SHA256": "e854badf860403c1a8dbaa767738b71a32c0a7f6eff029c76730e15ba98a7c29",
+          "durationMs": 60,
+          "alphaBounds": [
+            32,
+            42,
+            97,
+            105
+          ]
+        },
+        {
+          "index": 3,
+          "sourceRect": [
+            768,
+            0,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "ce593a92e32e60f23ba80ec7af3ee587104691983d1ea1abaee474ec66888eac",
+          "runtimeRect": [
+            384,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "2e4c2a677b89d66aedf7a3db5459575c301b0692036f63b1021fd0ddaaede498",
+          "runtimeAlpha_SHA256": "945e6555208922ad371143d8ba5b9532b795c8aeacbf30767e9750174a36c261",
+          "durationMs": 60,
+          "alphaBounds": [
+            20,
+            32,
+            101,
+            112
+          ]
+        },
+        {
+          "index": 4,
+          "sourceRect": [
+            0,
+            256,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "a7862085b858f8fbaa9031d9fc1ea9963d4d45f5ddcfa17c3a1fc81b7605ad21",
+          "runtimeRect": [
+            0,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "6078062c11e7d713c7271ac3a1120537974ef97df0c72d73e270667d41c147b8",
+          "runtimeAlpha_SHA256": "94a95edfc9200b1d5abbf70885bff5b62a60fa8e461883b52c69cd01858d3538",
+          "durationMs": 60,
+          "alphaBounds": [
+            24,
+            27,
+            111,
+            117
+          ]
+        },
+        {
+          "index": 5,
+          "sourceRect": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "0dfb0955b1031e789ccc7d513a26c10ea87a6a31a0c3ebdf50f80e810f065e32",
+          "runtimeRect": [
+            128,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "93a7beaa8027dc42e1c71bf9eb6c1bfc7cfba5c03dc150f73ea8a622ba49d5e7",
+          "runtimeAlpha_SHA256": "2f73af29ed320a19bd5daca9da77e0284204b0994b1d29c7c70a6f5d74626ee2",
+          "durationMs": 60,
+          "alphaBounds": [
+            18,
+            23,
+            112,
+            116
+          ]
+        },
+        {
+          "index": 6,
+          "sourceRect": [
+            512,
+            256,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "748027bf93874aa36914c5f71ab1a1989aff4e3c511278381d523a5d188c7f0d",
+          "runtimeRect": [
+            256,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "b5559e13fb6f0b9402ece3375760fc5c1fb3f5db4010411df11b932e6ec31f40",
+          "runtimeAlpha_SHA256": "1e8096ffba68fba9beb3eaa14fa304fa7640a991249cdfa99a4fd0b2e36a26af",
+          "durationMs": 60,
+          "alphaBounds": [
+            18,
+            26,
+            111,
+            117
+          ]
+        },
+        {
+          "index": 7,
+          "sourceRect": [
+            768,
+            256,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "a784ab8a431ea2c60dc435cd4c57a72240f5477f79d41177be755085787f26fd",
+          "runtimeRect": [
+            384,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "961af1b6ef5780225d4917064ea5833b01a9be8e419019b0b948e3d6453cb0d9",
+          "runtimeAlpha_SHA256": "d17811fa26c51fdd0637e74fd8938a1bd6d628b3fcda7a11c5611a0216ac3469",
+          "durationMs": 60,
+          "alphaBounds": [
+            18,
+            29,
+            105,
+            112
+          ]
+        },
+        {
+          "index": 8,
+          "sourceRect": [
+            0,
+            512,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "56632711c25f9c0eaaa9d4bcc767ef904d92804ce51c697c01904f3350def515",
+          "runtimeRect": [
+            0,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "462eabdd9663bd52077d4d16f285f0865449411a513a946e53e0eb7b64fd5149",
+          "runtimeAlpha_SHA256": "e99da5f2706ddcebe018d27e62e6c0b1bf1235410215d0db6859aa2f0b1078c7",
+          "durationMs": 60,
+          "alphaBounds": [
+            30,
+            27,
+            106,
+            109
+          ]
+        },
+        {
+          "index": 9,
+          "sourceRect": [
+            256,
+            512,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "0d107e1f05bc264b40f310c412a338460470a44dc263b594f4966a5743a9567f",
+          "runtimeRect": [
+            128,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "fb44a3d843e80160dbc558e5dbb744e9445bff0cd70f4eab50a78d0a57b88f09",
+          "runtimeAlpha_SHA256": "58699ca469bd4c93750d76e44440549131b3e98b03827e53a6047dcaf437ab9b",
+          "durationMs": 60,
+          "alphaBounds": [
+            21,
+            27,
+            110,
+            106
+          ]
+        },
+        {
+          "index": 10,
+          "sourceRect": [
+            512,
+            512,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "3efc821b43919afe5e0d7be15f4bce562989b2bdbd79b5d5feda2f0b05016032",
+          "runtimeRect": [
+            256,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "ed383b2744b6f403307e94e737890b290c95dee90e6172a61fd4cd8e2ab03118",
+          "runtimeAlpha_SHA256": "586e23d4508b94d790a30be84c239e2ecbd232c8d8c2bdefeef03ce08e3404f5",
+          "durationMs": 60,
+          "alphaBounds": [
+            30,
+            28,
+            103,
+            98
+          ]
+        },
+        {
+          "index": 11,
+          "sourceRect": [
+            768,
+            512,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "39d512d0b84f670c586ee75c9805a9271e7adcb33e3fb83afb77ca7f72435c7a",
+          "runtimeRect": [
+            384,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "859893fb4bbb5a7e56523c11f005428f0d72bfda122c9695f7f4e6d7cc7878b9",
+          "runtimeAlpha_SHA256": "986786c45f09e31eee7385b82c50aae20d54baa86d2f370cac1ae40b0d6a99c4",
+          "durationMs": 60,
+          "alphaBounds": [
+            30,
+            31,
+            97,
+            94
+          ]
+        },
+        {
+          "index": 12,
+          "sourceRect": [
+            0,
+            768,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "6123ec518cfdfafac650edcf8159a55166d2dc451dc3a0ab1fb34ed5a40b7663",
+          "runtimeRect": [
+            0,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "7c3035a42099fc89105dda3b5a9457e3771e90213eb8e084b35e19b6b1e92c48",
+          "runtimeAlpha_SHA256": "b6f28366c7584fee4b0a284f85cb4e98956bd82e89dca67376030608d82030a5",
+          "durationMs": 60,
+          "alphaBounds": [
+            39,
+            23,
+            101,
+            91
+          ]
+        },
+        {
+          "index": 13,
+          "sourceRect": [
+            256,
+            768,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "b2603ff9a791d1e10838b44b1b299a9e75360fb6040466839f521334fa341b42",
+          "runtimeRect": [
+            128,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "c7aaae0906f6c9934733bca88fc7982b42535f45b2786d6877414d6eb6a274a3",
+          "runtimeAlpha_SHA256": "d12375655c159e5d26c58771b3c20f798236c4ebfac7c863bedf1ad6923ba149",
+          "durationMs": 60,
+          "alphaBounds": [
+            40,
+            29,
+            93,
+            89
+          ]
+        },
+        {
+          "index": 14,
+          "sourceRect": [
+            512,
+            768,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "f16ddbec83ed80b22c1bc5d26de7cb5f365d6fa9b64c9d5befacf60c3312457d",
+          "runtimeRect": [
+            256,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "8ebe0d6dc2721562dda9e9fb75fef4f0502143fb577430ccd2b559b3143b03a0",
+          "runtimeAlpha_SHA256": "4bd0284b4893130dd0cffc59a9f3e16a13047dc82ed5da484cec56dccd0da8f4",
+          "durationMs": 60,
+          "alphaBounds": [
+            24,
+            20,
+            85,
+            107
+          ]
+        },
+        {
+          "index": 15,
+          "sourceRect": [
+            768,
+            768,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "8a39d2abd3999ab73c34db2476849cddf303ce389b35826850f9a700589b4a90",
+          "runtimeRect": [
+            384,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+          "runtimeAlpha_SHA256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe",
+          "durationMs": 60,
+          "alphaBounds": null
+        }
+      ],
+      "loop": false,
+      "adaptation": "Full authored cell uniformly Lanczos-resized to 128; lossless WebP exact RGBA. Body cache may sample held interior from one declared frame; not a newly drawn animation.",
+      "sha256": "3a37c619c84129f765d2f3703b164e15a3af69ce750d1dd3cbe8b0ae0fa571f0",
+      "decodedRGBA_SHA256": "fbea636c0caa2c306959ed3a9eecce675985654d0c69067bdc7e3bfeefeba9dd",
+      "decodedAlpha_SHA256": "6aa3d033c0ea0ceb978cef3c4621bb1bf5f531d3ffce5a63807ac8f9519477a7",
+      "decodedRGBABytes": 1048576,
+      "bytes": 139784,
+      "sourceBytesUnchanged": true
+    },
+    {
+      "key": "fxV8GoldSlash",
+      "file": "media/fx-v8/gold-slash.webp",
+      "sourceIndex": "golden-slash-8",
+      "sourceAtlas": "/workspace/scratch/70f61c8d3af3/drive-v6/fx/combat-v2/runtime/golden-slash-8-atlas.webp",
+      "sourceAtlasSHA256": "c69d44cb3dceb9c5e28c1ccee81885b8e9b0ea26b30cc5b7ac8958982963b273",
+      "sourceContract": "/workspace/scratch/70f61c8d3af3/drive-v6/fx/combat-v2/manifest.json",
+      "sourceContractSHA256": "5184e886df5e7c6e6d70cdd778b2b083cc94f558a2db3f0acd628f49abf5735d",
+      "sourceContractContents": {
+        "version": "HAPIL-combat-v2",
+        "status": "offline_animation_candidates_not_game_applied",
+        "color_space": "sRGB",
+        "alpha": "straight RGBA preserved; source-over suggested",
+        "families": [
+          {
+            "id": "golden-slash-8",
+            "source": "sources/golden-slash-8.png",
+            "source_sha256": "4d2777f24dee9f9a8f6f08578b67e1860934be1f3a7259ceab16b47b461d2745",
+            "source_size": [
+              1774,
+              887
+            ],
+            "atlas": "runtime/golden-slash-8-atlas.webp",
+            "atlas_size": [
+              1024,
+              512
+            ],
+            "decoded_rgba_bytes": 2097152,
+            "scale": 0.44,
+            "pivot": [
+              128,
+              128
+            ],
+            "anchor_semantics": "Fixed source-grid attack origin; intentional changing arc; NOT optical centroid stabilization and NOT validated circular pivot",
+            "loop": false,
+            "frames": [
+              {
+                "frame": 1,
+                "source_rect": [
+                  0,
+                  0,
+                  443,
+                  443
+                ],
+                "runtime_path": "runtime/golden-slash-8-01.webp",
+                "atlas_rect": [
+                  0,
+                  0,
+                  256,
+                  256
+                ],
+                "paste_offset": [
+                  30,
+                  30
+                ],
+                "resized_size": [
+                  195,
+                  195
+                ],
+                "detected_tip_before_translation": null,
+                "alpha_centroid": [
+                  127.323,
+                  124.281
+                ],
+                "transparent_border_px": 30,
+                "rgba_sha256": "c8a9a5f3f677b0fc4e394e4e1ae0c7048613fcac3a0b2a0a666ddb426c469ea0",
+                "duration_ms": 60
+              },
+              {
+                "frame": 2,
+                "source_rect": [
+                  443,
+                  0,
+                  887,
+                  443
+                ],
+                "runtime_path": "runtime/golden-slash-8-02.webp",
+                "atlas_rect": [
+                  256,
+                  0,
+                  256,
+                  256
+                ],
+                "paste_offset": [
+                  30,
+                  30
+                ],
+                "resized_size": [
+                  195,
+                  195
+                ],
+                "detected_tip_before_translation": null,
+                "alpha_centroid": [
+                  106.233,
+                  123.265
+                ],
+                "transparent_border_px": 30,
+                "rgba_sha256": "099adff3859688ac8948df18317d4ea419d4c60ea2ac197f2d0e0ba14da92215",
+                "duration_ms": 60
+              },
+              {
+                "frame": 3,
+                "source_rect": [
+                  887,
+                  0,
+                  1330,
+                  443
+                ],
+                "runtime_path": "runtime/golden-slash-8-03.webp",
+                "atlas_rect": [
+                  512,
+                  0,
+                  256,
+                  256
+                ],
+                "paste_offset": [
+                  30,
+                  30
+                ],
+                "resized_size": [
+                  195,
+                  195
+                ],
+                "detected_tip_before_translation": null,
+                "alpha_centroid": [
+                  129.197,
+                  100.413
+                ],
+                "transparent_border_px": 30,
+                "rgba_sha256": "18bb336b2b6eb797dc18cd8d4ac5550dcc82d700093eaa0d37d6a50d79a7b922",
+                "duration_ms": 60
+              },
+              {
+                "frame": 4,
+                "source_rect": [
+                  1330,
+                  0,
+                  1774,
+                  443
+                ],
+                "runtime_path": "runtime/golden-slash-8-04.webp",
+                "atlas_rect": [
+                  768,
+                  0,
+                  256,
+                  256
+                ],
+                "paste_offset": [
+                  30,
+                  30
+                ],
+                "resized_size": [
+                  195,
+                  195
+                ],
+                "detected_tip_before_translation": null,
+                "alpha_centroid": [
+                  152.753,
+                  151.032
+                ],
+                "transparent_border_px": 30,
+                "rgba_sha256": "5df9bfc39de58fbdc3573143e9092a1c05405fedab43c51f5b4dce871f2ba0f3",
+                "duration_ms": 70
+              },
+              {
+                "frame": 5,
+                "source_rect": [
+                  0,
+                  443,
+                  443,
+                  887
+                ],
+                "runtime_path": "runtime/golden-slash-8-05.webp",
+                "atlas_rect": [
+                  0,
+                  256,
+                  256,
+                  256
+                ],
+                "paste_offset": [
+                  30,
+                  30
+                ],
+                "resized_size": [
+                  195,
+                  195
+                ],
+                "detected_tip_before_translation": null,
+                "alpha_centroid": [
+                  125.103,
+                  147.227
+                ],
+                "transparent_border_px": 30,
+                "rgba_sha256": "3ff373d20936bd0a26a7a8acc546da34403a833aaf611a6a86deed3b639b208b",
+                "duration_ms": 70
+              },
+              {
+                "frame": 6,
+                "source_rect": [
+                  443,
+                  443,
+                  887,
+                  887
+                ],
+                "runtime_path": "runtime/golden-slash-8-06.webp",
+                "atlas_rect": [
+                  256,
+                  256,
+                  256,
+                  256
+                ],
+                "paste_offset": [
+                  30,
+                  30
+                ],
+                "resized_size": [
+                  195,
+                  195
+                ],
+                "detected_tip_before_translation": null,
+                "alpha_centroid": [
+                  103.713,
+                  142.564
+                ],
+                "transparent_border_px": 30,
+                "rgba_sha256": "6129c222ba75b28e24c9765d0863dccf506ed890b9a9081d2e7a88f7d65ae58e",
+                "duration_ms": 70
+              },
+              {
+                "frame": 7,
+                "source_rect": [
+                  887,
+                  443,
+                  1330,
+                  887
+                ],
+                "runtime_path": "runtime/golden-slash-8-07.webp",
+                "atlas_rect": [
+                  512,
+                  256,
+                  256,
+                  256
+                ],
+                "paste_offset": [
+                  30,
+                  30
+                ],
+                "resized_size": [
+                  195,
+                  195
+                ],
+                "detected_tip_before_translation": null,
+                "alpha_centroid": [
+                  113.456,
+                  134.693
+                ],
+                "transparent_border_px": 30,
+                "rgba_sha256": "7dfbf29b536e838edcab3de806d373747f82b2a46918032a52e74f4b4ebae00e",
+                "duration_ms": 90
+              },
+              {
+                "frame": 8,
+                "source_rect": [
+                  1330,
+                  443,
+                  1774,
+                  887
+                ],
+                "runtime_path": "runtime/golden-slash-8-08.webp",
+                "atlas_rect": [
+                  768,
+                  256,
+                  256,
+                  256
+                ],
+                "paste_offset": [
+                  30,
+                  30
+                ],
+                "resized_size": [
+                  195,
+                  195
+                ],
+                "detected_tip_before_translation": null,
+                "alpha_centroid": [
+                  97.177,
+                  99.749
+                ],
+                "transparent_border_px": 30,
+                "rgba_sha256": "412a6476e7e1d492d2a32908ef21cea96e63f0dd06139784fa83e5211152f243",
+                "duration_ms": 120
+              }
+            ]
+          },
+          {
+            "id": "wind-arrow-8",
+            "source": "sources/wind-arrow-8.png",
+            "source_sha256": "ad3b9da3716faf421edbd5aba31541ec7dc063926bf56c9e03636f25eaf9f852",
+            "source_size": [
+              1774,
+              887
+            ],
+            "atlas": "runtime/wind-arrow-8-atlas.webp",
+            "atlas_size": [
+              1024,
+              512
+            ],
+            "decoded_rgba_bytes": 2097152,
+            "scale": 0.44,
+            "pivot": [
+              192,
+              128
+            ],
+            "anchor_semantics": "Detected bright arrow tip, translation-only stabilized; world movement external; no collision shape implied",
+            "loop": false,
+            "frames": [
+              {
+                "frame": 1,
+                "source_rect": [
+                  0,
+                  0,
+                  443,
+                  443
+                ],
+                "runtime_path": "runtime/wind-arrow-8-01.webp",
+                "atlas_rect": [
+                  0,
+                  0,
+                  256,
+                  256
+                ],
+                "paste_offset": [
+                  40,
+                  25
+                ],
+                "resized_size": [
+                  195,
+                  195
+                ],
+                "detected_tip_before_translation": [
+                  152,
+                  103
+                ],
+                "alpha_centroid": [
+                  136.191,
+                  131.308
+                ],
+                "transparent_border_px": 21,
+                "rgba_sha256": "cd2da6e6850ed9206cf2a71d67de6d5f670eb607b06b46376ebd5bff2d02dccb",
+                "duration_ms": 80
+              },
+              {
+                "frame": 2,
+                "source_rect": [
+                  443,
+                  0,
+                  887,
+                  443
+                ],
+                "runtime_path": "runtime/wind-arrow-8-02.webp",
+                "atlas_rect": [
+                  256,
+                  0,
+                  256,
+                  256
+                ],
+                "paste_offset": [
+                  33,
+                  25
+                ],
+                "resized_size": [
+                  195,
+                  195
+                ],
+                "detected_tip_before_translation": [
+                  159,
+                  103
+                ],
+                "alpha_centroid": [
+                  138.481,
+                  129.432
+                ],
+                "transparent_border_px": 28,
+                "rgba_sha256": "a200105ad8ffaf6a6dbfb9ea2df2841780477a989c893e894d729e6b0c43e620",
+                "duration_ms": 80
+              },
+              {
+                "frame": 3,
+                "source_rect": [
+                  887,
+                  0,
+                  1330,
+                  443
+                ],
+                "runtime_path": "runtime/wind-arrow-8-03.webp",
+                "atlas_rect": [
+                  512,
+                  0,
+                  256,
+                  256
+                ],
+                "paste_offset": [
+                  43,
+                  24
+                ],
+                "resized_size": [
+                  195,
+                  195
+                ],
+                "detected_tip_before_translation": [
+                  149,
+                  104
+                ],
+                "alpha_centroid": [
+                  137.709,
+                  129.608
+                ],
+                "transparent_border_px": 18,
+                "rgba_sha256": "9013678f3b0786c59d9e56950b30874ef263c77c6866dcf4f0b274f4e94dc3f2",
+                "duration_ms": 80
+              },
+              {
+                "frame": 4,
+                "source_rect": [
+                  1330,
+                  0,
+                  1774,
+                  443
+                ],
+                "runtime_path": "runtime/wind-arrow-8-04.webp",
+                "atlas_rect": [
+                  768,
+                  0,
+                  256,
+                  256
+                ],
+                "paste_offset": [
+                  35,
+                  24
+                ],
+                "resized_size": [
+                  195,
+                  195
+                ],
+                "detected_tip_before_translation": [
+                  157,
+                  104
+                ],
+                "alpha_centroid": [
+                  128.22,
+                  127.199
+                ],
+                "transparent_border_px": 29,
+                "rgba_sha256": "85ce06f9bc22101f04ceab6cb6a12164feac76d304cd77beaed37dbec42b9130",
+                "duration_ms": 80
+              },
+              {
+                "frame": 5,
+                "source_rect": [
+                  0,
+                  443,
+                  443,
+                  887
+                ],
+                "runtime_path": "runtime/wind-arrow-8-05.webp",
+                "atlas_rect": [
+                  0,
+                  256,
+                  256,
+                  256
+                ],
+                "paste_offset": [
+                  26,
+                  27
+                ],
+                "resized_size": [
+                  195,
+                  195
+                ],
+                "detected_tip_before_translation": [
+                  166,
+                  101
+                ],
+                "alpha_centroid": [
+                  133.444,
+                  126.549
+                ],
+                "transparent_border_px": 27,
+                "rgba_sha256": "03348401bcb608cbec93d19637ebfe842ce59406b39f95d2ee8059032171584f",
+                "duration_ms": 80
+              },
+              {
+                "frame": 6,
+                "source_rect": [
+                  443,
+                  443,
+                  887,
+                  887
+                ],
+                "runtime_path": "runtime/wind-arrow-8-06.webp",
+                "atlas_rect": [
+                  256,
+                  256,
+                  256,
+                  256
+                ],
+                "paste_offset": [
+                  32,
+                  27
+                ],
+                "resized_size": [
+                  195,
+                  195
+                ],
+                "detected_tip_before_translation": [
+                  160,
+                  101
+                ],
+                "alpha_centroid": [
+                  137.046,
+                  128.752
+                ],
+                "transparent_border_px": 27,
+                "rgba_sha256": "48163c178599d65541cdf3158cf2933e052de5573229916661f438d8b147b51d",
+                "duration_ms": 80
+              },
+              {
+                "frame": 7,
+                "source_rect": [
+                  887,
+                  443,
+                  1330,
+                  887
+                ],
+                "runtime_path": "runtime/wind-arrow-8-07.webp",
+                "atlas_rect": [
+                  512,
+                  256,
+                  256,
+                  256
+                ],
+                "paste_offset": [
+                  44,
+                  26
+                ],
+                "resized_size": [
+                  195,
+                  195
+                ],
+                "detected_tip_before_translation": [
+                  148,
+                  102
+                ],
+                "alpha_centroid": [
+                  143.227,
+                  130.695
+                ],
+                "transparent_border_px": 17,
+                "rgba_sha256": "c2b514b0ee19c26a34e61dc232b46d9c21b028e8a9f6144d67af88d9471b7346",
+                "duration_ms": 80
+              },
+              {
+                "frame": 8,
+                "source_rect": [
+                  1330,
+                  443,
+                  1774,
+                  887
+                ],
+                "runtime_path": "runtime/wind-arrow-8-08.webp",
+                "atlas_rect": [
+                  768,
+                  256,
+                  256,
+                  256
+                ],
+                "paste_offset": [
+                  35,
+                  26
+                ],
+                "resized_size": [
+                  195,
+                  195
+                ],
+                "detected_tip_before_translation": [
+                  157,
+                  102
+                ],
+                "alpha_centroid": [
+                  134.555,
+                  128.771
+                ],
+                "transparent_border_px": 26,
+                "rgba_sha256": "544533de475a7b519a12f527f8a39b86bbb56c271a34c719e2203e99b0384f82",
+                "duration_ms": 80
+              }
+            ]
+          }
+        ],
+        "preview_note": "Composite GIF uses slash timing for both lanes, arrow alone proposed 80ms/frame. Slow GIF 300ms/frame. GIF looping is review-only; effects default non-looping."
+      },
+      "driveLinks": [
+        "https://drive.google.com/file/d/1Wdw2xeozWJgQfnYjM3Kf20iq8BQ1Twjg/view"
+      ],
+      "sourceDimensions": [
+        1024,
+        512
+      ],
+      "runtimeDimensions": [
+        512,
+        256
+      ],
+      "runtimeCell": 128,
+      "runtimePivot": [
+        64.0,
+        64.0
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "sourceRect": [
+            0,
+            0,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "c8a9a5f3f677b0fc4e394e4e1ae0c7048613fcac3a0b2a0a666ddb426c469ea0",
+          "runtimeRect": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "d1f6cbfe96507e81aaccfa1e88dc9b47bc9111ad59e9d86ce3872904d4c9abe4",
+          "runtimeAlpha_SHA256": "e52667ca5b36cc11b4814b42b43dcb932fa09972278fe44e784018bf4010ad7a",
+          "durationMs": 60,
+          "alphaBounds": [
+            15,
+            19,
+            113,
+            113
+          ]
+        },
+        {
+          "index": 1,
+          "sourceRect": [
+            256,
+            0,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "099adff3859688ac8948df18317d4ea419d4c60ea2ac197f2d0e0ba14da92215",
+          "runtimeRect": [
+            128,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "ba9261bf811665c266e9a22221d01f85467f59af195f92bb6a95e5ce7335e7e0",
+          "runtimeAlpha_SHA256": "2db866da924b8dbf55a0d84ce9959044bfa92554268202080914951fd60075ac",
+          "durationMs": 60,
+          "alphaBounds": [
+            15,
+            20,
+            113,
+            111
+          ]
+        },
+        {
+          "index": 2,
+          "sourceRect": [
+            512,
+            0,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "18bb336b2b6eb797dc18cd8d4ac5550dcc82d700093eaa0d37d6a50d79a7b922",
+          "runtimeRect": [
+            256,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "f81ae523fbff1fa5aeb00b87ec9d336490cd88673c7b84686940d2516b851b09",
+          "runtimeAlpha_SHA256": "7f2dd02ba8d2b7db5ed5ba146d25d6e9a79287fe4efd7ee4cee1c4791b8b137d",
+          "durationMs": 60,
+          "alphaBounds": [
+            15,
+            18,
+            113,
+            113
+          ]
+        },
+        {
+          "index": 3,
+          "sourceRect": [
+            768,
+            0,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "5df9bfc39de58fbdc3573143e9092a1c05405fedab43c51f5b4dce871f2ba0f3",
+          "runtimeRect": [
+            384,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "f31f69c4f85bd5adc33e9da9831f6f2aa6028149205dc973392151505516d572",
+          "runtimeAlpha_SHA256": "c81f0593918b1f7785c8502e365c2f4980c10eb0f4378937cc483cf39d5e4c22",
+          "durationMs": 60,
+          "alphaBounds": [
+            15,
+            19,
+            109,
+            113
+          ]
+        },
+        {
+          "index": 4,
+          "sourceRect": [
+            0,
+            256,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "3ff373d20936bd0a26a7a8acc546da34403a833aaf611a6a86deed3b639b208b",
+          "runtimeRect": [
+            0,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "366d50ba2a2b77abeadcb79da7d12f8a539c9ed6ab1f7c98edd9d12f86bb9707",
+          "runtimeAlpha_SHA256": "c9d02160c0e09a4d6663b07987e4bab792a14b392c1fe70f8c1d71f7441a152f",
+          "durationMs": 60,
+          "alphaBounds": [
+            25,
+            15,
+            112,
+            107
+          ]
+        },
+        {
+          "index": 5,
+          "sourceRect": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "6129c222ba75b28e24c9765d0863dccf506ed890b9a9081d2e7a88f7d65ae58e",
+          "runtimeRect": [
+            128,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "c346854f2791f47e3b0eaa72198478687d1a283ede6058f88405cc239c5c1007",
+          "runtimeAlpha_SHA256": "9d4b99cbe4b9cf32ad3a319d40daa687dd7ca2d2aa9f3c531ed2646539dc2857",
+          "durationMs": 60,
+          "alphaBounds": [
+            15,
+            15,
+            112,
+            104
+          ]
+        },
+        {
+          "index": 6,
+          "sourceRect": [
+            512,
+            256,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "7dfbf29b536e838edcab3de806d373747f82b2a46918032a52e74f4b4ebae00e",
+          "runtimeRect": [
+            256,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "b7b3122ba3e8f3f7c65158424e2bfe5cef1aa71553ea48b070da8e6dd7e975d0",
+          "runtimeAlpha_SHA256": "8bacf80042ec1bde8ea3bdfd4b0d055f1a45145a5308fa4657029d97b8990903",
+          "durationMs": 60,
+          "alphaBounds": [
+            18,
+            15,
+            113,
+            109
+          ]
+        },
+        {
+          "index": 7,
+          "sourceRect": [
+            768,
+            256,
+            256,
+            256
+          ],
+          "sourceRGBA_SHA256": "412a6476e7e1d492d2a32908ef21cea96e63f0dd06139784fa83e5211152f243",
+          "runtimeRect": [
+            384,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "16842d971b035ba38f1db90b04d8c378c8fe8e042752a0967e8aa65d258de4ad",
+          "runtimeAlpha_SHA256": "458325fa0fb52fee9bfb8b2dc6e13a73b3b28d8eb8d96760e0b4f8c0f107b0ac",
+          "durationMs": 60,
+          "alphaBounds": [
+            15,
+            15,
+            103,
+            113
+          ]
+        }
+      ],
+      "loop": false,
+      "adaptation": "Full authored cell uniformly Lanczos-resized to 128; lossless WebP exact RGBA. Body cache may sample held interior from one declared frame; not a newly drawn animation.",
+      "sha256": "931038b553aa55989577584dca4f5060d120ac75be03377b4da65010aefd42c2",
+      "decodedRGBA_SHA256": "e922d7739dd33400ce3487f03d7b022898e2d663c7c38dba7fa9558de3fcff3b",
+      "decodedAlpha_SHA256": "dd1f990a5c1b7743b724241ffe7711df356e4b34ac5566a51dde42a0e6e2f13c",
+      "decodedRGBABytes": 524288,
+      "bytes": 47300,
+      "sourceBytesUnchanged": true
+    },
+    {
+      "key": "fxV8Unlock",
+      "file": "media/fx-v8/unlock.webp",
+      "sourceIndex": 132,
+      "sourceAtlas": "/workspace/scratch/70f61c8d3af3/drive-v8-fx/unlock/atlas.png",
+      "sourceAtlasSHA256": "33c17637122e1440a605c6dddbf41e6400a59fbd0929c996e9b765324c79cc49",
+      "sourceContract": "/workspace/scratch/70f61c8d3af3/drive-v8-fx/unlock/animation.json",
+      "sourceContractSHA256": "bf6da81e2a4fcd06e3f926666d74ae80ff5288165df478fc6c285f11a2bc1792",
+      "sourceContractContents": {
+        "id": "animated-132-03-memory-unlock-light",
+        "name": "03-memory-unlock-light",
+        "sourceIndex": 132,
+        "status": "CPU-reviewed integration candidate; no actual game runtime test",
+        "frameCount": 16,
+        "distinctDrawingCount": 16,
+        "canvas": [
+          384,
+          384
+        ],
+        "pivot": {
+          "pixelsTopLeft": [
+            192,
+            192
+          ],
+          "normalizedTopLeft": [
+            0.5,
+            0.5
+          ],
+          "targetTuningRequired": true
+        },
+        "atlas": {
+          "file": "atlas.png",
+          "size": [
+            1536,
+            1536
+          ],
+          "columns": 4,
+          "rows": 4,
+          "trimmed": false,
+          "rotated": false
+        },
+        "frames": [
+          {
+            "index": 0,
+            "file": "frames/frame_00.png",
+            "rect": [
+              0,
+              0,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 1,
+            "file": "frames/frame_01.png",
+            "rect": [
+              384,
+              0,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 2,
+            "file": "frames/frame_02.png",
+            "rect": [
+              768,
+              0,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 3,
+            "file": "frames/frame_03.png",
+            "rect": [
+              1152,
+              0,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 4,
+            "file": "frames/frame_04.png",
+            "rect": [
+              0,
+              384,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 5,
+            "file": "frames/frame_05.png",
+            "rect": [
+              384,
+              384,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 6,
+            "file": "frames/frame_06.png",
+            "rect": [
+              768,
+              384,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 7,
+            "file": "frames/frame_07.png",
+            "rect": [
+              1152,
+              384,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 8,
+            "file": "frames/frame_08.png",
+            "rect": [
+              0,
+              768,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 9,
+            "file": "frames/frame_09.png",
+            "rect": [
+              384,
+              768,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 10,
+            "file": "frames/frame_10.png",
+            "rect": [
+              768,
+              768,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 11,
+            "file": "frames/frame_11.png",
+            "rect": [
+              1152,
+              768,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 12,
+            "file": "frames/frame_12.png",
+            "rect": [
+              0,
+              1152,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 13,
+            "file": "frames/frame_13.png",
+            "rect": [
+              384,
+              1152,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 14,
+            "file": "frames/frame_14.png",
+            "rect": [
+              768,
+              1152,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 15,
+            "file": "frames/frame_15.png",
+            "rect": [
+              1152,
+              1152,
+              384,
+              384
+            ],
+            "durationMs": 80
+          }
+        ],
+        "clips": {
+          "oneshot": {
+            "frames": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "durationMs": 1280,
+            "loop": false,
+            "end": "fade to zero on final frame then remove"
+          }
+        },
+        "phases": [
+          {
+            "name": "motes",
+            "frameRange": [
+              0,
+              3
+            ]
+          },
+          {
+            "name": "unfold",
+            "frameRange": [
+              4,
+              7
+            ]
+          },
+          {
+            "name": "memory_open",
+            "frameRange": [
+              8,
+              11
+            ]
+          },
+          {
+            "name": "disperse",
+            "frameRange": [
+              12,
+              15
+            ]
+          }
+        ],
+        "alpha": "straight RGBA8",
+        "blend": "normal alpha",
+        "layers": "single overlay; no exact front/back occlusion split",
+        "endpointOpacity": {
+          "firstFrame": [
+            0,
+            1
+          ],
+          "lastFrame": [
+            1,
+            0
+          ]
+        },
+        "filter": "bilinear, clamp, disable mipmaps for initial test",
+        "notes": [
+          "All16 artwork frames are different. Preview encoding repeats frames to match30fps; that is not extra artwork.",
+          "Looping preview is demonstration only; runtime oneshot is not seamless.",
+          "Per-target pivot/scale tuning required. No per-frame auto fitting.",
+          "Low-alpha soft haze may be present; inspect on intended map."
+        ]
+      },
+      "driveLinks": [
+        "https://drive.google.com/file/d/1HA7I3MNbPfpp4XcZZwYkUDMX4upsj9rg/view?usp=drivesdk",
+        "https://drive.google.com/file/d/1XoByNfQ4OaC5shZ2eCDTQyCihB1sEuYE/view?usp=drivesdk",
+        "https://drive.google.com/file/d/1slqvSchvyMgqdIw3dbGPWWKBYXG_ZHqD/view?usp=drivesdk"
+      ],
+      "sourceDimensions": [
+        1536,
+        1536
+      ],
+      "runtimeDimensions": [
+        512,
+        512
+      ],
+      "runtimeCell": 128,
+      "runtimePivot": [
+        64.0,
+        64.0
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "sourceRect": [
+            0,
+            0,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "081d133b5e34856662a9abaf2d7de063704141257e726098fb801aa21a7cf9f8",
+          "runtimeRect": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "74ce31c07bd57642ac94e1c0134bd605bd333fe143682315309d51943b02d108",
+          "runtimeAlpha_SHA256": "9b85f79e1231f076808709e78c3ddfb9ba47b5b131f8db314869af7770c2abde",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 1,
+          "sourceRect": [
+            384,
+            0,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "0beff2e1e93d5ed86a94b7bd2e53523fb401287b00a2e5b2c6571f72f8fb9c6e",
+          "runtimeRect": [
+            128,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "4a69ee49142a6dfbf0ef8156af494ba363e630684b784f90506bc402903fa82d",
+          "runtimeAlpha_SHA256": "13ecaf4160bf515df8271eccf64bd1436a692cd3a3d1b47898a5e59ac32e6d86",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 2,
+          "sourceRect": [
+            768,
+            0,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "5d901a4b6464d0602274327f267b758fa1f3efedc17e211e998f2d0bd16fc803",
+          "runtimeRect": [
+            256,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "056009b62031c90394f563d9b4e4b1857fdd2627045248956bb40020a3cc39d7",
+          "runtimeAlpha_SHA256": "b75476dccc297a5061fd352ad95f4149cd94f35f1cfa4ce87072e8b151efabca",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            17,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 3,
+          "sourceRect": [
+            1152,
+            0,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "3f273133a9e48698c996423dd43db17627ab413003eb0f5c7d996997435aa5c4",
+          "runtimeRect": [
+            384,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "e8a59b932b053d7f0cd1b90605ab4bcda12c06a8db6081670742df079b877850",
+          "runtimeAlpha_SHA256": "8a7cbccbb5ac9a0ef9c34e49edf88e4202d55f59d1a70eee28d0ecd079df7636",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            14,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 4,
+          "sourceRect": [
+            0,
+            384,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "99d90bd2444a992c63be187b66124b32de73d1f35dc63197f063d358db3fb819",
+          "runtimeRect": [
+            0,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "700e5365b0402a0c68f50c8f2894b9ea69733efc71b413097c152e786f62ee0c",
+          "runtimeAlpha_SHA256": "daa7b1952b6cfa21cae71579c63208f1fee975c3d1115006b818fd77b19f4b12",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 5,
+          "sourceRect": [
+            384,
+            384,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "2f32f0e435738c64f01a5f1bbd90538e3d061ec3c5f3e8484e7f36cdc38ba836",
+          "runtimeRect": [
+            128,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "6b64120f0fc0cdc64eca5da90bb2731764cedc1991d802c54d657b0db2ac6200",
+          "runtimeAlpha_SHA256": "afaa40f2b7eba3c058702dfa40e411a310e8274deec0d08588473d2ef2a433bb",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 6,
+          "sourceRect": [
+            768,
+            384,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "be8c4408c7f1c301ac4292e898b1f3374a208917665ebbee1122b5743de820e8",
+          "runtimeRect": [
+            256,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "6cd5b78b90ed659abc0725cc4fe949d935b688bacfc2fe7ad7d0cb8bb9cb4bd1",
+          "runtimeAlpha_SHA256": "221774a4a976030435c63fded9bd0ede42f4ab078487cbe24ffdd3e159b9745b",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 7,
+          "sourceRect": [
+            1152,
+            384,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "b38d5a2dad7bb50536b07531ce9aae96ede81264b3e9ee1838c522ac31cd587c",
+          "runtimeRect": [
+            384,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "1cfa7f565bb0191acc4f565214c6ef2f788b87d358ec4764e8b159648fe5061d",
+          "runtimeAlpha_SHA256": "b4601b192209efbb483be3340eb98a7659ce4ddcb2e756d7ae4bef4b5dda6f16",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            117
+          ]
+        },
+        {
+          "index": 8,
+          "sourceRect": [
+            0,
+            768,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "bcd22aef43e00125a814151f06d34bd4c4537e32f4932bc32d09402ed272923e",
+          "runtimeRect": [
+            0,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "8844944d213494ef70555bb3eeefd3b90bf44f74687f7603f60f94845685262a",
+          "runtimeAlpha_SHA256": "85e948324004ec4fa8397e95a3667000ad71ed298b97db47f0f02b08d9dacfc1",
+          "durationMs": 80,
+          "alphaBounds": [
+            11,
+            12,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 9,
+          "sourceRect": [
+            384,
+            768,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "6fafb49d7466d04e6eaff7f1a99af3d4df6b5af3d784293c388cce78f3107f4d",
+          "runtimeRect": [
+            128,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "61921f4043f812180675994cc80b512a96558f4c0b1d0081b66128c8b57efadc",
+          "runtimeAlpha_SHA256": "f2a52068ece6f4fb141ef416966847ed5bee07b7c6b746ecd433f8b56f82213a",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 10,
+          "sourceRect": [
+            768,
+            768,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "2b49f232c0af3453f73c80aede1c5e29477b1d4d1db1ce8b81a25dcf03b41e24",
+          "runtimeRect": [
+            256,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "a41c7668f3d08c980e390694c547bb84bcc4d72167eed9518ae2d296d9b1a27f",
+          "runtimeAlpha_SHA256": "de96d7d30b7a73e4f051b73a9f0acac9d1b2154f594a194d89bf2e5dd2aa696d",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 11,
+          "sourceRect": [
+            1152,
+            768,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "3088501ba733a00db8b0a09a61e0365f2bde9bfb9993e16ddf765bd73e042938",
+          "runtimeRect": [
+            384,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "b253d4e4e750fd5e3df05e79b1aa9bd4d6dcfd04ec6eb6a1c41d675472761eaf",
+          "runtimeAlpha_SHA256": "245753d9e7a98b1cd0fbaa936913fe9c251a83bba2d5d2fa3b845e38894248c6",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 12,
+          "sourceRect": [
+            0,
+            1152,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "168c838862372322cfb81f28012a85ff6b2d94c504e26a66397babb86168a0c0",
+          "runtimeRect": [
+            0,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "c64d13685a4ebb168295ebcf4eb2c32b639c644da28e7b68d3fea47a3b4a340b",
+          "runtimeAlpha_SHA256": "0a709edd34447f0d5f04c545ea465ce102b32fe5559fda537f363022ee853e3a",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            11,
+            116,
+            116
+          ]
+        },
+        {
+          "index": 13,
+          "sourceRect": [
+            384,
+            1152,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "411cbde750eb10d8c84144c42fb336547b0aa8b7b450468e09dc808b689f94c7",
+          "runtimeRect": [
+            128,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "b12476276bbd6eb938a1836a7d7c9a32e1d5ca7b177fdb9ac76115499d4a52ac",
+          "runtimeAlpha_SHA256": "340266b06679e4dc9f9921218fd11bc3e842b62fed06005c23f48dda77f82858",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            109
+          ]
+        },
+        {
+          "index": 14,
+          "sourceRect": [
+            768,
+            1152,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "ce60158de633406054246f72da657cb6712edb636aeb6bd78abd6747f9575249",
+          "runtimeRect": [
+            256,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "16d83922bf0d0194ee4ca282cc159295f7cd9015ce90555c19ae561a76344660",
+          "runtimeAlpha_SHA256": "ea90b68ce8eaf4536913273254a806224015d34520961b59a6a0330a637f62e9",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            116,
+            111
+          ]
+        },
+        {
+          "index": 15,
+          "sourceRect": [
+            1152,
+            1152,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "2807177c65e0995585478b47433536404fd8bd22bceb8a5097d9d14924cecdfd",
+          "runtimeRect": [
+            384,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "6bddce1d270c4d6689a8aca0a60d25d7bfcbe694ca96acbdbceca7549a3c69d6",
+          "runtimeAlpha_SHA256": "41b40ebe96fae721a216bf2f2c90d34f83676b02afb0e3edc544a4551ce11ef9",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            110,
+            116
+          ]
+        }
+      ],
+      "loop": false,
+      "adaptation": "Full authored cell uniformly Lanczos-resized to 128; lossless WebP exact RGBA. Body cache may sample held interior from one declared frame; not a newly drawn animation.",
+      "sha256": "b055e44ba21822ea8783bacf13d7318622400d83bde2437095ad13484607af31",
+      "decodedRGBA_SHA256": "be78eff8c815366ed3aea5f2627234dfed6410d91f531070ddd9c2456384b018",
+      "decodedAlpha_SHA256": "1691372a97cdc590d28d446bd3a75368f82573ae1393214d152f27c4e88b0241",
+      "decodedRGBABytes": 1048576,
+      "bytes": 128026,
+      "sourceBytesUnchanged": true
+    },
+    {
+      "key": "fxV8Vortex",
+      "file": "media/fx-v8/vortex.webp",
+      "sourceIndex": 114,
+      "sourceAtlas": "/workspace/scratch/70f61c8d3af3/drive-v8-fx/vortex/atlas.png",
+      "sourceAtlasSHA256": "901cce6d81792d5d7dc17259b0311735d866ae409ca54a6ced67bbb1e159bb17",
+      "sourceContract": "/workspace/scratch/70f61c8d3af3/drive-v8-fx/vortex/animation.json",
+      "sourceContractSHA256": "eab2092ce61ee0e59a136c16551d2d876e47d5b1443916f23babc127cc595c64",
+      "sourceContractContents": {
+        "id": "animated-114-05-black-collapse-vortex",
+        "name": "05-black-collapse-vortex",
+        "sourceIndex": 114,
+        "status": "CPU-reviewed integration candidate; no actual game runtime test",
+        "frameCount": 16,
+        "distinctDrawingCount": 16,
+        "canvas": [
+          384,
+          384
+        ],
+        "pivot": {
+          "pixelsTopLeft": [
+            192,
+            192
+          ],
+          "normalizedTopLeft": [
+            0.5,
+            0.5
+          ],
+          "targetTuningRequired": true
+        },
+        "atlas": {
+          "file": "atlas.png",
+          "size": [
+            1536,
+            1536
+          ],
+          "columns": 4,
+          "rows": 4,
+          "trimmed": false,
+          "rotated": false
+        },
+        "frames": [
+          {
+            "index": 0,
+            "file": "frames/frame_00.png",
+            "rect": [
+              0,
+              0,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 1,
+            "file": "frames/frame_01.png",
+            "rect": [
+              384,
+              0,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 2,
+            "file": "frames/frame_02.png",
+            "rect": [
+              768,
+              0,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 3,
+            "file": "frames/frame_03.png",
+            "rect": [
+              1152,
+              0,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 4,
+            "file": "frames/frame_04.png",
+            "rect": [
+              0,
+              384,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 5,
+            "file": "frames/frame_05.png",
+            "rect": [
+              384,
+              384,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 6,
+            "file": "frames/frame_06.png",
+            "rect": [
+              768,
+              384,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 7,
+            "file": "frames/frame_07.png",
+            "rect": [
+              1152,
+              384,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 8,
+            "file": "frames/frame_08.png",
+            "rect": [
+              0,
+              768,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 9,
+            "file": "frames/frame_09.png",
+            "rect": [
+              384,
+              768,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 10,
+            "file": "frames/frame_10.png",
+            "rect": [
+              768,
+              768,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 11,
+            "file": "frames/frame_11.png",
+            "rect": [
+              1152,
+              768,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 12,
+            "file": "frames/frame_12.png",
+            "rect": [
+              0,
+              1152,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 13,
+            "file": "frames/frame_13.png",
+            "rect": [
+              384,
+              1152,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 14,
+            "file": "frames/frame_14.png",
+            "rect": [
+              768,
+              1152,
+              384,
+              384
+            ],
+            "durationMs": 80
+          },
+          {
+            "index": 15,
+            "file": "frames/frame_15.png",
+            "rect": [
+              1152,
+              1152,
+              384,
+              384
+            ],
+            "durationMs": 80
+          }
+        ],
+        "clips": {
+          "oneshot": {
+            "frames": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "durationMs": 1280,
+            "loop": false,
+            "end": "fade to zero on final frame then remove"
+          }
+        },
+        "phases": [
+          {
+            "name": "gather",
+            "frameRange": [
+              0,
+              3
+            ]
+          },
+          {
+            "name": "aperture",
+            "frameRange": [
+              4,
+              7
+            ]
+          },
+          {
+            "name": "collapse",
+            "frameRange": [
+              8,
+              11
+            ]
+          },
+          {
+            "name": "disperse",
+            "frameRange": [
+              12,
+              15
+            ]
+          }
+        ],
+        "alpha": "straight RGBA8",
+        "blend": "normal alpha",
+        "layers": "single overlay; no exact front/back occlusion split",
+        "endpointOpacity": {
+          "firstFrame": [
+            0,
+            1
+          ],
+          "lastFrame": [
+            1,
+            0
+          ]
+        },
+        "filter": "bilinear, clamp, disable mipmaps for initial test",
+        "notes": [
+          "All16 artwork frames are different. Preview encoding repeats frames to match30fps; that is not extra artwork.",
+          "Looping preview is demonstration only; runtime oneshot is not seamless.",
+          "Per-target pivot/scale tuning required. No per-frame auto fitting.",
+          "Low-alpha soft haze may be present; inspect on intended map."
+        ]
+      },
+      "driveLinks": [
+        "https://drive.google.com/file/d/14KD4a5HsCqqJqySf0bgYIHshMP5Zmy5l/view?usp=drivesdk",
+        "https://drive.google.com/file/d/1w-BvHkHu1zgHaHSNo6W36p0rVt_L1rwg/view?usp=drivesdk",
+        "https://drive.google.com/file/d/1yP5wE02__PsTN--j0WBUgmSzKSbSII4I/view?usp=drivesdk"
+      ],
+      "sourceDimensions": [
+        1536,
+        1536
+      ],
+      "runtimeDimensions": [
+        512,
+        512
+      ],
+      "runtimeCell": 128,
+      "runtimePivot": [
+        64.0,
+        64.0
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "sourceRect": [
+            0,
+            0,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "f279ad07cef3c991299767039da934d3979ec31a253ed3cc1a9dadd8e220a82e",
+          "runtimeRect": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "3480a2fc1a103c8857c7ecc86bc3cd516ab9f8ce124c2f90f0c149024b22f3ff",
+          "runtimeAlpha_SHA256": "5940c28cfa1724e359ce1a2c4a630e04e099caa1e43f113dae3181ee8149e88e",
+          "durationMs": 80,
+          "alphaBounds": [
+            22,
+            12,
+            112,
+            110
+          ]
+        },
+        {
+          "index": 1,
+          "sourceRect": [
+            384,
+            0,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "5ed2969dddfcd2754a1e96806477a3bccc3fc7ae0e0f933e3ff8626b6fe56e5e",
+          "runtimeRect": [
+            128,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "0a438e92612ba726f1411effe74993152dc4df056bda397c8594325a91653772",
+          "runtimeAlpha_SHA256": "17fa9d3518f9f9b72edc683b9ff4603538db28b8375f92e4972d2f7854fb2e10",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            19,
+            115,
+            117
+          ]
+        },
+        {
+          "index": 2,
+          "sourceRect": [
+            768,
+            0,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "9930cabf3879dddf782836d1a6c3a2b294ca028a45caba078421b12637be8e57",
+          "runtimeRect": [
+            256,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "6dbfadf6d8918821163b1e049cc19d70a0edf713eb1d45a460771bf676c59eae",
+          "runtimeAlpha_SHA256": "3d4dad7cbea878a65cc8042293b9179e859f73cb139dafbab774dba1ddc8d6f2",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            26,
+            103,
+            116
+          ]
+        },
+        {
+          "index": 3,
+          "sourceRect": [
+            1152,
+            0,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "2115241c9aa163eb39fd91a4131cfa8be6983f81677dd1cc35e2486e49c92b5b",
+          "runtimeRect": [
+            384,
+            0,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "569dcb00483cd48c0ef0ef37120e2a912d9583a7817a58061887aace5d609b2f",
+          "runtimeAlpha_SHA256": "92f58f9394e43da1274c30b77129bb8d772df68a38bec312eea7519e9079f880",
+          "durationMs": 80,
+          "alphaBounds": [
+            17,
+            20,
+            99,
+            114
+          ]
+        },
+        {
+          "index": 4,
+          "sourceRect": [
+            0,
+            384,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "43f2b57f8ac3608c1b2fac601cb00125fa5b02e8430b7f69c005a9e8e5e1fdcd",
+          "runtimeRect": [
+            0,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "0d8036ea6eab5f2af9f060e59932a119829f828fc2ca262a0195a158024add48",
+          "runtimeAlpha_SHA256": "c0524fe10cbc4ffc72277d074f48f06d4ed446643c57ba6eaefddc50b0869848",
+          "durationMs": 80,
+          "alphaBounds": [
+            27,
+            36,
+            107,
+            119
+          ]
+        },
+        {
+          "index": 5,
+          "sourceRect": [
+            384,
+            384,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "1551ffe5364ebe00a5f0b7f0893ebbf942d41cf3bfe524e9d07d76fe1df0e261",
+          "runtimeRect": [
+            128,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "de54e4997f9824a500b921f54124dc145a71cb9a29c5658a53a61ad756cf018a",
+          "runtimeAlpha_SHA256": "fab46986a91e9ceb107cc52874cde8d0c3c19066363f8d4074f2cb3eddc988cd",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            115,
+            119
+          ]
+        },
+        {
+          "index": 6,
+          "sourceRect": [
+            768,
+            384,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "c1c1980efea550481cbbdf3d9a93a8cf0e569e2759bd37ad3151a4306dc8984c",
+          "runtimeRect": [
+            256,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "8b9186b73da8494882b23b8cc6067cc509b2d964e3504e5e20f6e7f3160504d2",
+          "runtimeAlpha_SHA256": "39fb2417ea7afacd405b363d138c24c14109b20286d3b6180f4d3acd8559bf5b",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            12,
+            108,
+            124
+          ]
+        },
+        {
+          "index": 7,
+          "sourceRect": [
+            1152,
+            384,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "bc97549c3fb9392c54efc2c7e9d4c0b53714c1144728c0996a0e1816397d6f6d",
+          "runtimeRect": [
+            384,
+            128,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "72b3d41de14d0d92500678a4968b51a13afd278c8c9f7f5ae928fb86769ebb61",
+          "runtimeAlpha_SHA256": "27ab15d47c7d9467d4e8088af2897c875abbec9575c721f04b0290c4db6979c2",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            32,
+            107,
+            124
+          ]
+        },
+        {
+          "index": 8,
+          "sourceRect": [
+            0,
+            768,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "a5bbe35443d7e0ac32fd8b442babf09730d5dd1630fa91858146b6da93ec6450",
+          "runtimeRect": [
+            0,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "b15b5cb1a3206bcf32c33aef8adff456e9797e869ef4871851a00419c1f1b693",
+          "runtimeAlpha_SHA256": "7dd6cafa7fb73043dc5b7d7823d0cd9bb96ef30d512fe9e64d580086154d065a",
+          "durationMs": 80,
+          "alphaBounds": [
+            32,
+            28,
+            113,
+            111
+          ]
+        },
+        {
+          "index": 9,
+          "sourceRect": [
+            384,
+            768,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "c5e7eb1088144a6e316c92da0125daa7c573f2a3fc35566fb5e7c9f054fcd883",
+          "runtimeRect": [
+            128,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "a177b94630c80a22afabd12d5ad2c02c3b499fb99dbffa137e9a6839190263eb",
+          "runtimeAlpha_SHA256": "b039db87092c09701df4b68778afaf0a4bafdbb975cd72cfc9bc2f2a2c6a23fe",
+          "durationMs": 80,
+          "alphaBounds": [
+            13,
+            26,
+            115,
+            116
+          ]
+        },
+        {
+          "index": 10,
+          "sourceRect": [
+            768,
+            768,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "fe4893a1d301be8917474876757f4d2bc428df4c15c7c8ab9f6d2ec5ea7eb02d",
+          "runtimeRect": [
+            256,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "6b65362dcfa99f841445ec239f569ca8f9b28ec130c8e95ee1bd3afee8ca6d56",
+          "runtimeAlpha_SHA256": "f72818a412aab504184f6f1d59a597f6a2bc1c193e9aae13c959c1e43bbced41",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            32,
+            115,
+            116
+          ]
+        },
+        {
+          "index": 11,
+          "sourceRect": [
+            1152,
+            768,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "d80de4baadbff694d4246d34b6c1ec5c76c74a15cda93d709105c5589267f311",
+          "runtimeRect": [
+            384,
+            256,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "37941078d36f30c1f77abf675bf76ad10ad79de92ce8e0f90a96dbf761465ff2",
+          "runtimeAlpha_SHA256": "061d44f25f107bd338a094b4ac03d2a244563dcae11f27bd20e4f306d5cbbf70",
+          "durationMs": 80,
+          "alphaBounds": [
+            13,
+            23,
+            101,
+            116
+          ]
+        },
+        {
+          "index": 12,
+          "sourceRect": [
+            0,
+            1152,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "ef248190eb11273647a2cfdeb109e1f5ceb7e6796b91f7b7d2146aae8fe494d7",
+          "runtimeRect": [
+            0,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "104a9d4793db83736d298ff9fca668cf7fbd1c7df18febadc81f27566f37e273",
+          "runtimeAlpha_SHA256": "152ee88f500e5ebae1bd1093af7d077e38c54b6d42d9a63881caff80e82c23b9",
+          "durationMs": 80,
+          "alphaBounds": [
+            43,
+            13,
+            99,
+            99
+          ]
+        },
+        {
+          "index": 13,
+          "sourceRect": [
+            384,
+            1152,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "9f655a471dd3a3ea0bfb48c0ed69a1afb3172dac59b228971d43223bf6cc0390",
+          "runtimeRect": [
+            128,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "f8a09b9fc71b9c66258b8878ff8891c7256908b2fe48b8649a890cf52b39e68c",
+          "runtimeAlpha_SHA256": "3a8802c63a3763a588d33a97b719ffdea8e9a87b5690b227b1d3850805399191",
+          "durationMs": 80,
+          "alphaBounds": [
+            13,
+            12,
+            111,
+            105
+          ]
+        },
+        {
+          "index": 14,
+          "sourceRect": [
+            768,
+            1152,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "0e9f1ae84cb2eac080b83962cdc8e0035f1fe913fe48ce6c9fe48ef4a645b494",
+          "runtimeRect": [
+            256,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "87d61e0db9248a4892658b9cd96698d03dc2dd29373c7580ed1d3706663d885d",
+          "runtimeAlpha_SHA256": "7314c989ed328c5c67d4366967e7a02de17b516b4132cf88e6a5d9bbcda639db",
+          "durationMs": 80,
+          "alphaBounds": [
+            12,
+            20,
+            115,
+            95
+          ]
+        },
+        {
+          "index": 15,
+          "sourceRect": [
+            1152,
+            1152,
+            384,
+            384
+          ],
+          "sourceRGBA_SHA256": "3f13be4e400fb2be5751e7367711ea6988b14169b471cb1ee207fcaafbe36813",
+          "runtimeRect": [
+            384,
+            384,
+            128,
+            128
+          ],
+          "runtimeRGBA_SHA256": "7f891b3f6fede8290d8f2e9123a82cf0badf6d9e345f9ed7e0c2f83b55834f89",
+          "runtimeAlpha_SHA256": "0cd9b6a175deae53fa6b6f0d6005ef688079fa23cc85180a0d9316217d0fc63a",
+          "durationMs": 80,
+          "alphaBounds": [
+            14,
+            14,
+            113,
+            108
+          ]
+        }
+      ],
+      "loop": false,
+      "adaptation": "Full authored cell uniformly Lanczos-resized to 128; lossless WebP exact RGBA. Body cache may sample held interior from one declared frame; not a newly drawn animation.",
+      "sha256": "72cd2f043c2f488d6b06c0b8253278f5632f0426d83ad0432908a692bfda8b68",
+      "decodedRGBA_SHA256": "0da650090c9e2fa02c0645b34bbd20f9bec065f76edae76396c4cd828c5c649f",
+      "decodedAlpha_SHA256": "9e6c4cee5ff7cb8c7bdc5a98e9b52f2b786f5ed933f700986fe449dee8025dd9",
+      "decodedRGBABytes": 1048576,
+      "bytes": 102024,
+      "sourceBytesUnchanged": true
+    }
+  ],
+  "limits": [
+    "Native CPU pixel checks only; actual browser/GPU/physical-mobile not verified.",
+    "Source timings are authored one-shots. Cast placement and tint are consumer presentation adaptations.",
+    "Raster alpha does not affect circle/capsule or laser damage."
+  ]
+}

@@ -1,0 +1,502 @@
+{
+  "sourceGuide": "https://drive.google.com/file/d/1KaI-E743hzYDdZNUbPg95I_nbWk5M_hb/view",
+  "acceptedManifestStatus": "FROZEN_ACCEPTED_KEYPOSE_CANDIDATES_NOT_CONTINUOUS_ANIMATION",
+  "archiveChecks": [
+    {
+      "file": "HAPIL-downward-five-bosses-keyposes-01-of09.zip",
+      "sha256": "f89df870816240a53c3d98005e85bbead601fef4963f7e1a34d616671fe922f4",
+      "bytes": 2602059
+    },
+    {
+      "file": "HAPIL-downward-five-bosses-keyposes-02-of09.zip",
+      "sha256": "a85c295c0ff4aa39de661869b7f6c00b0910d9fd53ae6466563932afaecfc2ca",
+      "bytes": 2678631
+    },
+    {
+      "file": "HAPIL-downward-five-bosses-keyposes-03-of09.zip",
+      "sha256": "29d47c1cccdeac2675bc4bef4a064b677c5759630fc2d30bd512ffc3a3a2b6d1",
+      "bytes": 2741679
+    },
+    {
+      "file": "HAPIL-downward-five-bosses-keyposes-04-of09.zip",
+      "sha256": "3260a60f089736584073155839ada101c03134110a69d1816af8306de0431343",
+      "bytes": 1427491
+    },
+    {
+      "file": "HAPIL-downward-five-bosses-keyposes-05-of09.zip",
+      "sha256": "e5c791427ab8a878f23bf5c0dc4c52f11c35806763b1a198bf95e07859babdd8",
+      "bytes": 2063460
+    },
+    {
+      "file": "HAPIL-downward-five-bosses-keyposes-06-of09.zip",
+      "sha256": "332275c80c34e329dfca8f18342a07545a2f599971a80ca552d0e38b779b1fd4",
+      "bytes": 2664647
+    },
+    {
+      "file": "HAPIL-downward-five-bosses-keyposes-07-of09.zip",
+      "sha256": "ae46147d44edaba9834bd9a31ebd6c475d02f87eb3ec9918a133f2a405e99c6b",
+      "bytes": 2799323
+    },
+    {
+      "file": "HAPIL-downward-five-bosses-keyposes-08-of09.zip",
+      "sha256": "4b436690107a503bc14a4add51fbd4a76f3fc412de227981cda042c8962dab57",
+      "bytes": 2748334
+    },
+    {
+      "file": "HAPIL-downward-five-bosses-keyposes-09-of09.zip",
+      "sha256": "8c49cb42ccaba8151b28d06e4c8590086208e5c78035d1d9c2976f6b05f4b916",
+      "bytes": 720055
+    }
+  ],
+  "originalFrames": 20,
+  "newFramesGeneratedHere": 0,
+  "fullAnimationCycles": 0,
+  "runtimeAdaptation": "Manually inspected upper torso registration and short pose dissolves, same identity scale. No image pixel repaint.",
+  "files": [
+    {
+      "identity": "violet",
+      "key": "bossMotionViolet",
+      "file": "media/boss-motion-v8/violet-atlas-512.png",
+      "bytes": 222113,
+      "sha256": "8271ccb891a9ea88cee33aec9052ac0b427b3b4ace0b241f2dd04cdc136f6f24",
+      "sourceFile": "derived/violet/violet-atlas-512.png",
+      "sourceAtlasBytesExact": true,
+      "framePixelComparisons": 4,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            148,
+            126
+          ],
+          "silk": [
+            148,
+            106
+          ],
+          "alpha8Bounds": [
+            65,
+            60,
+            219,
+            225
+          ],
+          "rgba_sha256": "b1c15b3884310166a7e288ea42162da519fc42785fbad725df753e992fd1742e"
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            143,
+            140
+          ],
+          "silk": [
+            143,
+            120
+          ],
+          "alpha8Bounds": [
+            51,
+            83,
+            206,
+            226
+          ],
+          "rgba_sha256": "ae3b6c3f774978bf5b5d59dd86437016d0ee949dc8ae9495538dfcfdcc930125"
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            156,
+            118
+          ],
+          "silk": [
+            156,
+            98
+          ],
+          "alpha8Bounds": [
+            68,
+            60,
+            229,
+            217
+          ],
+          "rgba_sha256": "aa6aab4333558ebf5d9be127acc6e6cc8575f77d19217647ac44e8301bed4179"
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            146,
+            120
+          ],
+          "silk": [
+            146,
+            100
+          ],
+          "alpha8Bounds": [
+            54,
+            59,
+            211,
+            204
+          ],
+          "rgba_sha256": "acbfba31ff10f75738ce4e8a1ba4ec662a31bf19de270240d6e2fc157df042ff"
+        }
+      ],
+      "scale": 0.7121
+    },
+    {
+      "identity": "horn",
+      "key": "bossMotionHorn",
+      "file": "media/boss-motion-v8/horn-atlas-512.png",
+      "bytes": 143211,
+      "sha256": "1c3853aa55e9f6cf205329f361c83eac2422cf0e85275956769e88f503529d27",
+      "sourceFile": "derived/horn/horn-atlas-512.png",
+      "sourceAtlasBytesExact": true,
+      "framePixelComparisons": 4,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            139,
+            129
+          ],
+          "silk": [
+            139,
+            109
+          ],
+          "alpha8Bounds": [
+            68,
+            63,
+            200,
+            203
+          ],
+          "rgba_sha256": "ed16f2b75d2106fbbd694b62e0bccdb708b7209a9a1d75ca947c98dad40b1c94"
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            130,
+            145
+          ],
+          "silk": [
+            130,
+            125
+          ],
+          "alpha8Bounds": [
+            57,
+            89,
+            187,
+            214
+          ],
+          "rgba_sha256": "affdd73fbc8fa5aa46b14e82c0b4662ade56dc70a76efdf151b01c958bc6a6ec"
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            134,
+            122
+          ],
+          "silk": [
+            134,
+            102
+          ],
+          "alpha8Bounds": [
+            63,
+            71,
+            200,
+            194
+          ],
+          "rgba_sha256": "ccea4196a326ac99765a4f0223a45e8adc99b3972d4b8fa5fde2df05337c3ace"
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            134,
+            121
+          ],
+          "silk": [
+            134,
+            101
+          ],
+          "alpha8Bounds": [
+            60,
+            66,
+            186,
+            192
+          ],
+          "rgba_sha256": "b32235a8332ec1d3691721f3dc9ec338789c37e85a7222e95da2f5c19cf32daf"
+        }
+      ],
+      "scale": 0.7121
+    },
+    {
+      "identity": "balrog",
+      "key": "bossMotionBalrog",
+      "file": "media/boss-motion-v8/balrog-atlas-512.png",
+      "bytes": 224437,
+      "sha256": "3300f7c753b275d8c7c96e08e084cf800418ae8763b578519dc39386625ad667",
+      "sourceFile": "derived/balrog/balrog-atlas-512.png",
+      "sourceAtlasBytesExact": true,
+      "framePixelComparisons": 4,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            139,
+            105
+          ],
+          "silk": [
+            139,
+            85
+          ],
+          "alpha8Bounds": [
+            59,
+            28,
+            221,
+            230
+          ],
+          "rgba_sha256": "efeccd68e5d2204ba6e7572fc8d573191e2dde57c9113a3197d6894fc02c4edb"
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            139,
+            123
+          ],
+          "silk": [
+            139,
+            103
+          ],
+          "alpha8Bounds": [
+            24,
+            76,
+            220,
+            237
+          ],
+          "rgba_sha256": "2183206274701b9f62690cccff0699bba197f25594677710edd2965f5ee6f5cf"
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            141,
+            110
+          ],
+          "silk": [
+            141,
+            90
+          ],
+          "alpha8Bounds": [
+            46,
+            57,
+            220,
+            234
+          ],
+          "rgba_sha256": "f818c1a0a2c9117e736a246be57be0d72d8b7beb5afbcf3d7296e094bc04ff23"
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            127,
+            99
+          ],
+          "silk": [
+            127,
+            79
+          ],
+          "alpha8Bounds": [
+            23,
+            42,
+            234,
+            213
+          ],
+          "rgba_sha256": "03b664be80c52587efea235d1820279144de8d5fc2b0dc6345bcc67a42efb28c"
+        }
+      ],
+      "scale": 0.6104
+    },
+    {
+      "identity": "mask",
+      "key": "bossMotionMask",
+      "file": "media/boss-motion-v8/mask-atlas-512.png",
+      "bytes": 336370,
+      "sha256": "460a8ea40d084791a0856a4a8d057df7f7e95817637dda3a8059e506cfe00ef1",
+      "sourceFile": "derived/mask/mask-atlas-512.png",
+      "sourceAtlasBytesExact": true,
+      "framePixelComparisons": 4,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            126,
+            86
+          ],
+          "silk": [
+            126,
+            66
+          ],
+          "alpha8Bounds": [
+            38,
+            19,
+            214,
+            236
+          ],
+          "rgba_sha256": "6225bd43b3b613d43029bebfb8a75d89d5501a042349cdd32ba12d0f4fecc166"
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            127,
+            103
+          ],
+          "silk": [
+            127,
+            83
+          ],
+          "alpha8Bounds": [
+            24,
+            32,
+            233,
+            235
+          ],
+          "rgba_sha256": "f0906597ac8e0cbbe9a27349f6f3c9d045e319259f285fbf19817e93cbacdf23"
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            131,
+            117
+          ],
+          "silk": [
+            131,
+            97
+          ],
+          "alpha8Bounds": [
+            30,
+            27,
+            236,
+            232
+          ],
+          "rgba_sha256": "53686612c529029ed38a4fb552a25c898cd2d2d37bd2d05f32cb3d6fadf071a1"
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            125,
+            83
+          ],
+          "silk": [
+            125,
+            63
+          ],
+          "alpha8Bounds": [
+            21,
+            15,
+            235,
+            232
+          ],
+          "rgba_sha256": "046c4d1f9c1528243429825f30ccd3559883d040f12be107e2863a350b920b79"
+        }
+      ],
+      "scale": 0.5222
+    },
+    {
+      "identity": "lucifer",
+      "key": "bossMotionLucifer",
+      "file": "media/boss-motion-v8/lucifer-atlas-512.png",
+      "bytes": 347054,
+      "sha256": "06716474312bafc759bba028fb42660d6b626c67fba58f690a8014ac226600cd",
+      "sourceFile": "derived/lucifer/lucifer-atlas-512.png",
+      "sourceAtlasBytesExact": true,
+      "framePixelComparisons": 4,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            132,
+            111
+          ],
+          "silk": [
+            132,
+            91
+          ],
+          "alpha8Bounds": [
+            21,
+            34,
+            243,
+            233
+          ],
+          "rgba_sha256": "cf7dafef8095e2da26ab3a94a437daaf3702c2269d1cd285b5114d0f51217607"
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            130,
+            116
+          ],
+          "silk": [
+            130,
+            96
+          ],
+          "alpha8Bounds": [
+            22,
+            43,
+            239,
+            233
+          ],
+          "rgba_sha256": "7648fda3ea27218b4fb6aea2ff53cfe46df9439892c6c7b6270bcfa1838afe93"
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            147,
+            118
+          ],
+          "silk": [
+            147,
+            98
+          ],
+          "alpha8Bounds": [
+            22,
+            26,
+            242,
+            225
+          ],
+          "rgba_sha256": "017136e583a11a1bd02a287c33ba3369912431234bd680897fd3eee02cd8d8a9"
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            128,
+            98
+          ],
+          "silk": [
+            128,
+            78
+          ],
+          "alpha8Bounds": [
+            19,
+            29,
+            241,
+            227
+          ],
+          "rgba_sha256": "a0be772a1013fa65bf268591b05399b5df8463e48866dcd321b8dbf854120e21"
+        }
+      ],
+      "scale": 0.5109
+    }
+  ]
+}

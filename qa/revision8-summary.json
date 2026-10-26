@@ -1,0 +1,43 @@
+{
+  "version": "8",
+  "priorVersionCommit": "4006df4bacf7f182fa46e4317bce3878fd3f2747",
+  "appliedBosses": 5,
+  "suppliedAuthoredKeyposes": 20,
+  "runtimeBossAtlases": 5,
+  "runtimeFXAtlases": 8,
+  "archiveChecks": {
+    "count": 9,
+    "files": 69,
+    "acceptedManifestFiles": 68,
+    "allSHA256Matched": true,
+    "allZIPCRCPassed": true
+  },
+  "tests": {
+    "total": 135,
+    "passed": 134,
+    "failed": 0,
+    "skipped": 1,
+    "lastPaletteChangeTargetedTestsPassed": 13
+  },
+  "cpu": {
+    "status": "PASS_NATIVE_REVIEW",
+    "poseFrames": 20,
+    "gameFrames": 163,
+    "coreLastChecks": 163,
+    "pauseHashChecks": 163,
+    "worldImmutableChecks": 163,
+    "finiteGeometryChecks": 291000
+  },
+  "fullAnimationCyclesGenerated": 0,
+  "newArtOrAudioGeneratedHere": false,
+  "coreAndStorageUnchanged": true,
+  "browserGPUPhysicalMobileVerified": false,
+  "sourceFingerprints": {
+    "src/boss-motion.js": "53905a900c22b08674c4e9910356aea05641e0433e1e4188379ea03c2d7493b0",
+    "src/actors.js": "8ef099be652ce69cb4fccc5ddf9d8f58a082ccd31929ed1df0dfffef9a33aca8",
+    "src/projectiles.js": "c38a4e38d500e09f7812808df22297b1c83497b7c63692084bd0fbd8cb9f2f9d",
+    "src/render.js": "84eb717a3355d6f44e2ed54bc8ba76e7296ecf8c516422b9085344ef2089822e",
+    "src/media.js": "987f9ede7aeeac0a5dae5a758b217b0b841c870864f7d450515aa9945dbbdda9",
+    "src/core.js": "545afe13ebd198da57364f0b69123015c8e6686e2a8060d8564546e773a23c0d"
+  }
+}

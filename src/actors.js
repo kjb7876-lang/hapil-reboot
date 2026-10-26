@@ -79,8 +79,10 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
   }
   function create(images) {
     images = images || {};
+    var motionPresentation=global.HapilBossMotion?global.HapilBossMotion.create(images):null;
     var metrics;
     function beginFrame() {
+      if(motionPresentation)motionPresentation.beginFrame();
       metrics = {actorDraws:0,bossDraws:0,enemyDraws:0,silkTethers:0,enemySilkTethers:0,bossSilkTethers:0,
         lastBossAsset:null,lastBossPose:null,lastBossIdentity:null,
         usedAssets:{},usedPoses:{},lastSilk:null,authoredPosesPerActor:4,
@@ -108,6 +110,10 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
       return p.key;
     }
     function drawBoss(ctx, world, x, y, width, opacity) {
+      if(motionPresentation&&motionPresentation.drawBoss(ctx,world,x,y,width,opacity)){
+        var mm=motionPresentation.getMetrics();metrics.actorDraws+=mm.spriteDraws;metrics.bossDraws++;metrics.bossSilkTethers+=mm.tethers;metrics.silkTethers+=mm.tethers;metrics.lastBossAsset=mm.lastBossAsset;metrics.lastBossPose=mm.lastPose;metrics.lastBossIdentity=mm.lastBossIdentity;metrics.lastSilk=mm.lastSilk;metrics.usedAssets[mm.lastBossAsset]=(metrics.usedAssets[mm.lastBossAsset]||0)+mm.spriteDraws;metrics.usedPoses[mm.lastPose]=(metrics.usedPoses[mm.lastPose]||0)+1;return true;
+      }
+
       if (!world || !world.campaign || !world.boss || world.stage === 'bossIntro' || !finite(x) || !finite(y)) return false;
       var b = world.boss, identity = b.kind || world.bossId || (b.artKey === 'boss' ? 'violet' : b.artKey);
       var contract = CONTRACTS[identity];
@@ -162,7 +168,7 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
       return true;
     }
     return {beginFrame:beginFrame,drawBoss:drawBoss,drawEnemy:drawEnemy,
-      getMetrics:function () { return JSON.parse(JSON.stringify(metrics)); }};
+      getMetrics:function () { return Object.assign(JSON.parse(JSON.stringify(metrics)),{downwardMotion:motionPresentation?motionPresentation.getMetrics():null}); }};
   }
   global.HapilActors = Object.freeze({create:create,contracts:CONTRACTS});
 }(typeof window !== 'undefined' ? window : globalThis));

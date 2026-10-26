@@ -1,0 +1,38 @@
+{
+  "scope": "Registered active images only; excludes browser/GPU copies, CSS badge, audio, fixed terrain caches and small stamp caches. Actual device memory unmeasured.",
+  "loadConcurrency": 2,
+  "stampCacheLimit": 96,
+  "stoppedScreensContinuouslyRendered": false,
+  "groups": [
+    {
+      "boss": "Violet",
+      "images": 29,
+      "decodedBytes": 51147408,
+      "decodedMiB": 48.78
+    },
+    {
+      "boss": "Horn",
+      "images": 19,
+      "decodedBytes": 35127696,
+      "decodedMiB": 33.5
+    },
+    {
+      "boss": "Balrog",
+      "images": 19,
+      "decodedBytes": 34604800,
+      "decodedMiB": 33.0
+    },
+    {
+      "boss": "Mask",
+      "images": 20,
+      "decodedBytes": 24622416,
+      "decodedMiB": 23.48
+    },
+    {
+      "boss": "Lucifer",
+      "images": 21,
+      "decodedBytes": 26195232,
+      "decodedMiB": 24.98
+    }
+  ]
+}
