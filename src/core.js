@@ -16,7 +16,9 @@
   var CAMPAIGN_BOSSES = Object.freeze([
     Object.freeze({ id: 'violet', name: '보라검천사', artKey: 'boss', zone: '거미동굴', waves: Object.freeze(['숲의 진입로', '악마화 나무의 정원', '거미동굴']), patterns: Object.freeze(['여덟 실의 나선', '보라검의 각인', '끊어진 날개의 결']), hp: Object.freeze([1200, 1350, 1500]) }),
     Object.freeze({ id: 'horn', name: '늪지대의 뿔악마', artKey: 'horn', zone: '검은 늪', waves: Object.freeze(['늪지대의 기억']), patterns: Object.freeze(['늪에서 번지는 기억', '붙잡는 손의 틈', '뿔에 걸린 잔상']), hp: Object.freeze([1320, 1470, 1620]) }),
-    Object.freeze({ id: 'balrog', name: '발록', artKey: 'balrog', zone: '지옥의 소환진', waves: Object.freeze(['무너진 성', '시체들이 되살아난 밤', '일곱 기둥']), patterns: Object.freeze(['공간을 가르는 검', '하늘을 덮는 불덩이', '마지막 봉인']), hp: Object.freeze([1440, 1590, 1740]) })
+    Object.freeze({ id: 'balrog', name: '발록', artKey: 'balrog', zone: '지옥의 소환진', waves: Object.freeze(['무너진 성', '시체들이 되살아난 밤', '일곱 기둥']), patterns: Object.freeze(['공간을 가르는 검', '하늘을 덮는 불덩이', '마지막 봉인']), hp: Object.freeze([1440, 1590, 1740]) }),
+    Object.freeze({ id:'mask', name:'초천사의 웃는 가면', artKey:'actorMaskIdle', zone:'거짓 천국의 문', waves:Object.freeze(['추락 · 병원 복도','주사실의 봉인 기억','환자와 중독의 도시']), patterns:Object.freeze(['흰 날개의 약속','완벽해야 한다는 명령','웃는 가면의 균열']), hp:Object.freeze([1500,1650,1800]) }),
+    Object.freeze({ id:'lucifer', name:'코스믹 가면 루시퍼', artKey:'actorLuciferIdle', zone:'가면 안의 우주', waves:Object.freeze(['부정의 행렬','오만의 흰 가면','도움을 청하는 문']), patterns:Object.freeze(['천구 · 거짓된 별자리','이면 · 수많은 나의 얼굴','합일 · J의 인장']), hp:Object.freeze([1600,1800,2000]) })
   ]);
   var runSequence = 0;
   function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
@@ -161,9 +163,9 @@
       _warnings: [], _delays: [], _deferred: [], _shotReadyAt: 0, _targetId: 0, _targetUntil: 0, _lastGraze: -9999, _boundaryTick: -1,
       _memoryBucket: 0, _memoryGain: 0, _resBucket: 0, _resGain: 0, _grazeGain: 0, _reservationSince: 0, _starvationReported: false, _checkpoint: null };
     if (options.campaign === true) {
-      if (options.bossIndex !== undefined && (!Number.isInteger(options.bossIndex) || options.bossIndex < 0 || options.bossIndex > 2)) throw new RangeError('Invalid campaign boss index');
-      w.campaign = true; w.campaignRevision = 1;
-      w.bossIndex = w.practiceBoss && Number.isInteger(options.bossIndex) ? clamp(options.bossIndex, 0, 2) : 0;
+      if (options.bossIndex !== undefined && (!Number.isInteger(options.bossIndex) || options.bossIndex < 0 || options.bossIndex >= CAMPAIGN_BOSSES.length)) throw new RangeError('Invalid campaign boss index');
+      w.campaign = true; w.campaignRevision = 2;
+      w.bossIndex = w.practiceBoss && Number.isInteger(options.bossIndex) ? clamp(options.bossIndex, 0, CAMPAIGN_BOSSES.length-1) : 0;
       w.mechanicsRevision = 4;
       campaignLabels(w);
     }
@@ -245,7 +247,7 @@
     var turret = kind === 'turret';
     var enemy = acquire(w, 'enemies', { id: ++w.idCounter, x: x, y: -24, px: x, py: -24, baseX: x, hp: turret ? 100 : 60, maxHp: turret ? 100 : 60,
       r: turret ? 18 : 15, kind: kind, age: -(delay || 0), direction: direction || 1, shotCursor: 0, wobble: rand(w) * TAU, life: turret ? 8 : 6.5 });
-    if (w.campaign && enemy) Object.assign(enemy, { archetype: ['weaver', 'wraith', 'ember'][w.bossIndex], action: 'enter', actionProgress: 0, lean: 0 });
+    if (w.campaign && enemy) Object.assign(enemy, { archetype: (w.bossIndex < 3 ? ['weaver', 'wraith', 'ember'][w.bossIndex] : w.bossIndex === 3 ? (w.wave === 1 ? 'vial' : 'echo') : (w.wave === 0 ? 'denial' : 'guard')), action: 'enter', actionProgress: 0, lean: 0 });
   }
   function startWave(w, wave) {
     while (w.shots.length) remove(w, 'shots', w.shots.length - 1);
@@ -411,7 +413,7 @@
         if (attacking && pulse % 60 === 0) ring(w, 30, 100, cycle * .31 + pulse * .0025, gap, .37, 'orb', '#a4dcb0');
         if (within === 54 || within === 174) warning(w, fanSpecs(b.x, b.y, aimAt, 3, .26, 0, 'needle', '#d7c4ed', b.id), 60, w.patternName);
       }
-    } else {
+    } else if (w.bossIndex === 2) {
       if (w.phase === 0) {
         if (within === 54 || within === 150) warning(w, fanSpecs(b.x + (within === 54 ? -32 : 32), b.y, aimAt, 3, .28, 0, 'blade', '#ffb393', b.id), 60, w.patternName);
         if (attacking && pulse % 54 === 0) campaignArc(w, b.x, b.y, 13, down + Math.sin(cycle + pulse * .007) * .22, .14, 102, 'blade', '#e6b4cb', gap, .32, 0);
@@ -425,6 +427,39 @@
         if (attacking && pulse % 60 === 0) {
           ring(w, 28, 96, cycle * .37 + pulse * .004, gap, .38, 'orb', '#f0bf8c');
           campaignArc(w, b.x, b.y, 9, down + Math.sin(t * .014) * .3, .17, 80, 'orb', '#d6b3ed', gap, .28, 16);
+        }
+      }
+    } else if (w.bossIndex === 3) {
+      // Mirrored feather fans, followed by locked rays: aim is sampled only
+      // at warning creation, and the recovery interval stays quiet.
+      if (w.phase === 0 && attacking && pulse % 42 === 0) {
+        campaignArc(w,b.x-36,b.y,9,down+.23*Math.sin(pulse*.018),.14,84,'needle','#f6e6b4',gap,.25,0);
+        campaignArc(w,b.x+36,b.y,9,down-.23*Math.sin(pulse*.018),.14,84,'needle','#a9e1ee',gap,.25,0);
+      }
+      if (w.phase === 1) {
+        if (within===54) warning(w,fanSpecs(b.x,b.y,aimAt,3,.32,0,'needle','#f5d4a0',b.id),72,w.patternName);
+        if(attacking&&pulse%66===0) ring(w,32,82,cycle*.25,gap,.36,'orb','#f6e2aa');
+      }
+      if (w.phase === 2 && attacking && pulse%48===0) {
+        ring(w,28,72,cycle*.21+pulse*.005,gap,.35,'orb','#cbb5fa');
+        campaignArc(w,b.x,b.y,7,down,.21,108,'blade','#f3c0d5',gap,.30,0);
+      }
+    } else {
+      // The three signatures differ in geometry and rhythm, not only tint.
+      if (w.phase===0 && attacking && pulse%30===0) {
+        ring(w,30,72,cycle*.29+pulse*.008,gap,.35,'orb','#bfeaff');
+      } else if (w.phase===1) {
+        if(within===54) warning(w,[{x:52,y:112,angle:Math.atan2(430,210),ownerId:b.id,color:'#d5b8ff'},
+          {x:308,y:112,angle:Math.atan2(430,-210),ownerId:b.id,color:'#ffd5b2'}],78,w.patternName);
+        if(attacking&&pulse%48===0){
+          campaignArc(w,b.x-42,b.y,8,1.18+Math.sin(pulse*.012)*.18,.16,90,'needle','#d2c0ff',gap,.28,0);
+          campaignArc(w,b.x+42,b.y,8,Math.PI-1.18-Math.sin(pulse*.012)*.18,.16,90,'needle','#ffcfb2',gap,.28,0);
+        }
+      } else if(w.phase===2) {
+        if(within===54) warning(w,fanSpecs(b.x,b.y,aimAt,3,.34,0,'blade','#e8c5ff',b.id),78,w.patternName);
+        if(attacking&&pulse%54===0){
+          ring(w,36,67,cycle*.32+pulse*.004,gap,.38,'orb','#f9dcac');
+          campaignArc(w,b.x,b.y,9,down,.20,96,'blade','#b9dbff',gap,.32,0);
         }
       }
     }
@@ -489,12 +524,12 @@
     effect(w, e.x, e.y, 'kill', e.isBoss ? 45 : 23, '#d9c4ff', 0.6);
     if (e.isBoss) {
       w.stats.phaseTicks.push(Math.round(w.phaseTime * 60));
-      if (w.phase === 2 && w.campaign && !w.practiceBoss && w.bossIndex < 2) {
+      if (w.phase === 2 && w.campaign && !w.practiceBoss && w.bossIndex < CAMPAIGN_BOSSES.length-1) {
         w.stage = 'transition'; w.stageTime = 0; w.nextPhase = null; w.nextEncounter = w.bossIndex + 1;
         w.transitionRemaining = 6.4; w.stageLabel = '남은 탄막을 지나 다음 기억으로';
         w.score += 2500;
       }
-      else if (w.phase === 2) { w.stage = 'won'; w.stageTime = 0; w.resultReason = w.campaign ? (w.practiceBoss ? w.bossName + ' · 연습 완료' : '발록을 쓰러뜨렸습니다 · 소환진이 무너지며 추락이 시작됩니다') : '기억 회랑을 돌파했습니다'; w.score += 5000 + w.player.hp * 500; event(w, 'win'); }
+      else if (w.phase === 2) { w.stage = 'won'; w.stageTime = 0; w.resultReason = w.campaign ? (w.practiceBoss ? w.bossName + ' · 연습 완료' : 'J의 인장이 빛납니다 · 루시퍼가 물러나고 도움을 청할 길이 열립니다') : '기억 회랑을 돌파했습니다'; w.score += 5000 + w.player.hp * 500; event(w, 'win'); }
       else { w.stage = 'transition'; w.stageTime = 0; w.nextPhase = w.phase + 1; w.transitionRemaining = 6.4; w.stageLabel = '남은 검편이 지나갑니다'; }
       w.reservation = false; w._reservationSince = 0;
       w._warnings.length = 0; w._deferred.length = 0;
@@ -577,7 +612,7 @@
     w.checkpointSerial++;
     var snap = {};
     ['rulesetVersion','runId','seed','difficulty','practiceBoss','checkpointSerial','tick','rngState','idCounter','stage','wave','phase','score','graze','kills','memory','resonance','autoAttack','skillRotation'].forEach(function (k) { snap[k] = w[k]; });
-    if (w.campaign) { snap.campaign = true; snap.campaignRevision = 1; snap.bossIndex = w.bossIndex; }
+    if (w.campaign) { snap.campaign = true; snap.campaignRevision = 2; snap.bossIndex = w.bossIndex; }
     snap.stageTime = 0; snap.phaseTime = 0; snap.waveTime = 0;
     snap.player = copy(w.player); snap.skills = copy(w.skills); snap.stats = copy(w.stats); snap.shotReadyAt = w._shotReadyAt;
     snap.resourceState = { memoryBucket: w._memoryBucket, memoryGain: w._memoryGain, resBucket: w._resBucket, resGain: w._resGain, grazeGain: w._grazeGain, lastGraze: w._lastGraze };
@@ -588,7 +623,7 @@
     if (!snapshot || typeof snapshot !== 'object' || JSON.stringify(snapshot).length > 131072) throw new Error('Invalid checkpoint');
     var s = copy(snapshot);
     var hasCampaign = Object.prototype.hasOwnProperty.call(s, 'campaign') || Object.prototype.hasOwnProperty.call(s, 'campaignRevision') || Object.prototype.hasOwnProperty.call(s, 'bossIndex');
-    if (hasCampaign && (s.campaign !== true || s.campaignRevision !== 1 || !Number.isInteger(s.bossIndex) || s.bossIndex < 0 || s.bossIndex > 2)) throw new Error('Invalid campaign checkpoint');
+    if (hasCampaign && (s.campaign !== true || ![1,2].includes(s.campaignRevision) || !Number.isInteger(s.bossIndex) || s.bossIndex < 0 || s.bossIndex >= (s.campaignRevision === 1 ? 3 : CAMPAIGN_BOSSES.length))) throw new Error('Invalid campaign checkpoint');
     if (hasCampaign && s.stage === 'waves' && s.wave >= CAMPAIGN_BOSSES[s.bossIndex].waves.length) throw new Error('Invalid campaign wave');
     if (s.rulesetVersion !== RULESET || typeof s.runId !== 'string' || !/^[A-Za-z0-9_.:-]{1,96}$/.test(s.runId) || !['normal','gentle'].includes(s.difficulty) || !['waves','boss'].includes(s.stage)) throw new Error('Unsupported checkpoint');
     ['tick','rngState','seed','idCounter','checkpointSerial','wave','phase','score','graze','kills','memory','resonance'].forEach(function (k) { if (!finite(s[k]) || s[k] < 0 || s[k] > (k === 'rngState' || k === 'seed' ? 4294967295 : 100000000)) throw new Error('Invalid checkpoint number: ' + k); });
@@ -602,7 +637,7 @@
     ['memoryReadyAt','delayReadyAt','counterReadyAt','egoReadyAt','globalReadyAt'].forEach(function (k) { if (!finite(s.skills[k])) throw new Error('Missing skill timer'); });
     ['hits','shots','damage','peakBullets','peakEnemies','peakParticles'].forEach(function (k) { if (!finite(s.stats[k]) || s.stats[k] < 0 || s.stats[k] > 100000000) throw new Error('Invalid checkpoint stats'); });
     ['memory','delay','counter','ego'].forEach(function (k) { if (!finite(s.stats.casts[k]) || s.stats.casts[k] < 0 || s.stats.casts[k] > 1000000) throw new Error('Invalid checkpoint casts'); });
-    if (!Array.isArray(s.stats.phaseTicks) || s.stats.phaseTicks.length > (hasCampaign ? 9 : 3) || s.stats.phaseTicks.some(function (n) { return !Number.isInteger(n) || n < 0 || n > 4500; })) throw new Error('Invalid phase history');
+    if (!Array.isArray(s.stats.phaseTicks) || s.stats.phaseTicks.length > (hasCampaign ? (s.campaignRevision === 1 ? 9 : 15) : 3) || s.stats.phaseTicks.some(function (n) { return !Number.isInteger(n) || n < 0 || n > 4500; })) throw new Error('Invalid phase history');
     var w = createRun({ difficulty: s.difficulty, seed: s.seed, practiceBoss: false, runId: s.runId, campaign: hasCampaign });
     if (hasCampaign) w.bossIndex = s.bossIndex;
     ['tick','rngState','idCounter','stage','wave','phase','score','graze','kills','memory','resonance','autoAttack','skillRotation','practiceBoss'].forEach(function (k) { w[k] = s[k]; });
@@ -660,7 +695,7 @@
     updateWarnings(w); attack(w); updateShots(w); updateBullets(w, px, py); updateLaserCollision(w, px, py);
     if (w.stage === 'transition') {
       w.transitionRemaining = Math.max(0, 6.4 - w.stageTime);
-      if (!w.bullets.length && !w.hazards.length && !w._warnings.length && !w._deferred.length) {
+      if (!w.bullets.length && !w.hazards.length && !w._warnings.length && !w._deferred.length && (!(w.campaign && w.bossIndex >= 2 && w.nextEncounter != null) || w.stageTime >= 3)) {
         if (w.campaign && w.nextEncounter != null) {
           w.bossIndex = w.nextEncounter; w.nextEncounter = null; w.boss = null; w.stage = 'waves'; w.phase = 0; w.phaseTime = 0;
           // Recover one life at a cleared encounter, never above the selected
@@ -676,7 +711,7 @@
     return w;
   }
   return Object.freeze({ W: W, H: H, FIXED_DT: FIXED_DT, RULESET_VERSION: RULESET, MECHANICS_REVISION: 2, CAPS: CAPS,
-    CAMPAIGN_BOSSES: CAMPAIGN_BOSSES, CAMPAIGN_REVISION: 1,
+    CAMPAIGN_BOSSES: CAMPAIGN_BOSSES, CAMPAIGN_REVISION: 2,
     createRun: createRun, step: step, checkpoint: checkpoint, restoreCheckpoint: restoreCheckpoint, skipBossIntro: skipBossIntro,
     geometry: Object.freeze({ segmentDistanceSquared: segmentDistanceSquared, segmentPairDistanceSquared: segmentPairDistanceSquared, sweptCircleHit: sweptCircleHit, projectileDistanceSquared: projectileDistanceSquared, hazardDistanceSquared: hazardDistanceSquared }) });
 }));

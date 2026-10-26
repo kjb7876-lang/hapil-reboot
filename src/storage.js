@@ -41,7 +41,7 @@
       if (!object(value) || value.rulesetVersion !== RULESET || !validRunId(value.runId) || !difficulty(value.difficulty)) return null;
       var campaign = value.campaign === true;
       if (campaign) {
-        if (value.campaignRevision !== 1 || !integer(value.bossIndex, 0, 2)) return null;
+        if (![1,2].includes(value.campaignRevision) || !integer(value.bossIndex, 0, value.campaignRevision === 1 ? 2 : 4)) return null;
         if (value.stage === 'waves' && value.bossIndex === 1 && value.wave !== 0) return null;
       } else if (value.campaign !== undefined || value.campaignRevision !== undefined || value.bossIndex !== undefined) return null;
       if (!integer(value.seed, 0, 4294967295) || !integer(value.rngState, 0, 4294967295) || !integer(value.idCounter, 0, 100000000)) return null;
@@ -75,7 +75,7 @@
         var stat = statKeys[j];
         if (stat === 'casts') continue;
         if (stat === 'phaseTicks') {
-          if (!Array.isArray(value.stats.phaseTicks) || value.stats.phaseTicks.length > (campaign ? 9 : 3) || !value.stats.phaseTicks.every(function (tick) { return integer(tick, 0, 4500); })) return null;
+          if (!Array.isArray(value.stats.phaseTicks) || value.stats.phaseTicks.length > (campaign ? (value.campaignRevision === 1 ? 9 : 15) : 3) || !value.stats.phaseTicks.every(function (tick) { return integer(tick, 0, 4500); })) return null;
           stats.phaseTicks = value.stats.phaseTicks.slice();
           continue;
         }
@@ -107,7 +107,7 @@
         score: value.score, graze: value.graze, kills: value.kills, memory: value.memory, resonance: value.resonance,
         autoAttack: true, skillRotation: value.skillRotation, skills: skills, stats: stats, resourceState: resourceState
       };
-      if (campaign) { clean.campaign = true; clean.campaignRevision = 1; clean.bossIndex = value.bossIndex; }
+      if (campaign) { clean.campaign = true; clean.campaignRevision = value.campaignRevision; clean.bossIndex = value.bossIndex; }
       return clean;
     } catch (_) { return null; }
   }

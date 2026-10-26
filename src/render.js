@@ -28,7 +28,7 @@
     var fg=foreground.getContext('2d');
     var strips=[],ratio=1,cached=false,edgeMask=null;
     var terrain=[{key:'forest',label:'숲의 진입로',center:.57,floorY:.38},{key:'ruins',label:'무너진 궁정',center:.50,floorY:.42},{key:'cave',label:'문지기의 동굴',center:.50,floorY:.36}];
-    var mapMetrics={zone:'forest',zoneIndex:0,segmentProgress:0,journeyProgress:0,journeySeconds:0,scrollY:640,anchored:false,terrainStripCount:0,cacheCanvasCount:2,cacheBytes:W*H*4*2,introActive:false,introProgress:0,terrainStatus:'retained-v2',sourceStatus:'retained-v2',campaignLocation:null,bossArt:null,visualRevision:6.1,dreamTheme:null,ambientGlyphs:0,decorativeCenter:'quiet',bossAccent:null,visibleMapTiles:'',visibleMapCount:0,atlasFxDraws:0,atlasFxLimit:24,atlasFxFamilies:''};
+    var mapMetrics={zone:'forest',zoneIndex:0,segmentProgress:0,journeyProgress:0,journeySeconds:0,scrollY:640,anchored:false,terrainStripCount:0,cacheCanvasCount:2,cacheBytes:W*H*4*2,introActive:false,introProgress:0,terrainStatus:'retained-v2',sourceStatus:'retained-v2',campaignLocation:null,bossArt:null,visualRevision:7,dreamTheme:null,ambientGlyphs:0,decorativeCenter:'quiet',bossAccent:null,visibleMapTiles:'',visibleMapCount:0,atlasFxDraws:0,atlasFxLimit:24,atlasFxFamilies:''};
     function clamp(value,a,b){return Math.max(a,Math.min(b,value));}
     function smooth(value){value=clamp(value,0,1);return value*value*(3-2*value);}
     function mapImage(index){return imageReady(images[terrain[index].key])?images[terrain[index].key]:images.cave;}
@@ -96,7 +96,46 @@
       mapMetrics.segmentProgress=anchored?1:local;mapMetrics.journeyProgress=progress;mapMetrics.journeySeconds=route*15;mapMetrics.scrollY=scroll;mapMetrics.anchored=anchored;
       mapMetrics.campaignLocation=world?(world.encounterName||world.bossName||null):null;mapMetrics.visibleMapTiles=visible.join(',');mapMetrics.visibleMapCount=visible.length;
     }
+    function drawExtendedTerrain(world){
+      var t=world.time||0, cosmic=world.bossIndex===4, wave=world.wave||0;
+      var anchored=world.stage!=='waves', travel=anchored?0:(world.waveTime||0)*22;
+      ctx.fillStyle=cosmic?'#090d20':'#101921';ctx.fillRect(0,0,W,H);
+      ctx.save();
+      if(!cosmic){
+        // Receding hospital architecture, no new bitmap artwork.
+        var vanX=180+Math.sin(t*.12)*8, vanY=116;
+        ctx.fillStyle='#18242c';ctx.beginPath();ctx.moveTo(124,116);ctx.lineTo(236,116);ctx.lineTo(340,640);ctx.lineTo(20,640);ctx.closePath();ctx.fill();
+        for(var i=0;i<9;i++){
+          var z=((i/9+travel/780)%1),depth=z*z,yy=vanY+depth*560,ww=52+depth*125;
+          ctx.globalAlpha=.12+depth*.16;line([[vanX-ww,yy],[vanX+ww,yy]],'#79989d',.8);
+          for(var side=0;side<2;side++){
+            var sign=side?1:-1,xx=vanX+sign*ww;
+            line([[xx,yy],[xx,yy-40-depth*170],[xx+sign*(18+depth*55),yy-55-depth*180]],'#90adb0',1.2);
+            ctx.fillStyle=wave===1?'#4d665f':'#597684';ctx.globalAlpha=.07;ctx.fillRect(side?xx:xx-22,yy-75-depth*100,22,35+depth*70);
+          }
+        }
+        ctx.globalAlpha=.16;line([[70,640],[138,116],[222,116],[290,640]],'#8ba5a8',1);
+        // Side monitors and broken ceiling lights never resemble attack rays.
+        for(var j=0;j<4;j++){ctx.globalAlpha=.1;ctx.fillStyle=wave===2?'#b88ba5':'#a7c5bb';ctx.fillRect(174,80+j*36,12,2);}
+      }else{
+        var grad=ctx.createRadialGradient(180,150,18,180,200,470);grad.addColorStop(0,'#252644');grad.addColorStop(.5,'#11162e');grad.addColorStop(1,'#090d20');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+        for(var star=0;star<52;star++){
+          var sx=(star*137.51)%360,sy=(star*83.17+t*(star%3+1)*.7)%640;
+          ctx.globalAlpha=.08+(star%5)*.025;ctx.fillStyle=star%2?'#b6bce3':'#dac9a7';ctx.fillRect(sx,sy,star%7===0?2:1,1);
+        }
+        ctx.translate(180,146);ctx.rotate(t*.025);ctx.globalAlpha=.12;
+        for(var orbit=0;orbit<3;orbit++){
+          circle(0,0,76+orbit*27,'#b6a6cf',.7);
+          for(var node=0;node<12;node++){var a=node*Math.PI/6+orbit*.13;line([[Math.cos(a)*(76+orbit*27),Math.sin(a)*(76+orbit*27)],[Math.cos(a)*(80+orbit*27),Math.sin(a)*(80+orbit*27)]],'#d1b987',1);}
+        }
+      }
+      ctx.restore();
+      // Keep the player lane dark even when the scenery is most active.
+      ctx.fillStyle='rgba(4,8,17,.22)';ctx.fillRect(48,260,264,380);
+      mapMetrics.zone=cosmic?'cosmic-vault':'hospital-corridor';mapMetrics.zoneIndex=world.bossIndex;mapMetrics.terrainStatus='code-scene-v7';mapMetrics.sourceStatus='connected-v1-plus-code-scenes-v7';mapMetrics.anchored=anchored;mapMetrics.segmentProgress=anchored?1:Math.min(1,(world.waveTime||0)/15);mapMetrics.campaignLocation=world.encounterName||world.bossName;mapMetrics.visibleMapTiles='';mapMetrics.visibleMapCount=0;
+    }
     function drawTerrain(world){
+      if(world&&world.campaign&&world.bossIndex>=3){drawExtendedTerrain(world);return;}
       if(usesConnected(world)){drawConnectedTerrain(world);return;}
       mapMetrics.terrainStatus='retained-v2';mapMetrics.sourceStatus='retained-v2';mapMetrics.visibleMapTiles='';mapMetrics.visibleMapCount=0;
       var anchored=!!(world&&(world.practiceBoss||world.boss||world.stage==='bossIntro'||world.stage==='boss'||world.stage==='transition'||world.stage==='won'));
@@ -139,7 +178,7 @@
     function line(points,stroke,width){ctx.beginPath();for(var i=0;i<points.length;i++){if(i===0)ctx.moveTo(points[i][0],points[i][1]);else ctx.lineTo(points[i][0],points[i][1]);}ctx.strokeStyle=stroke;ctx.lineWidth=width||1;ctx.stroke();}
     function dream(world){
       if(!world)return DREAMS[0];
-      if(!world.campaign)return null;
+      if(!world.campaign||world.bossIndex>=3)return null;
       var boss=clamp(world.bossIndex||0,0,2),wave=clamp(world.wave||0,0,2),anchored=mapMetrics.anchored;
       return DREAMS[boss===0?(anchored?2:wave):boss===1?3:4+(anchored?2:wave)];
     }
@@ -273,6 +312,10 @@
     function bossPortrait(world,x,y,width,opacity){
       if(actorPresentation&&actorPresentation.drawBoss(ctx,world,x,y,width,opacity)){var actorMetrics=actorPresentation.getMetrics();mapMetrics.bossArt=actorMetrics.lastBossAsset||'actor-presentation';return;}
       var info=bossIdentity(world),b=world.boss||{},action=b.action||'recover',progress=clamp(b.actionProgress||0,0,1),lean=clamp(b.lean||0,-1,1);
+      if((info.id==='mask'||info.id==='lucifer')&&actorPresentation){
+        var portraitWorld=Object.assign({},world,{stage:'boss',boss:{kind:info.id,action:'idle',actionProgress:1}});
+        if(actorPresentation.drawBoss(ctx,portraitWorld,x,y,width,opacity)){mapMetrics.bossArt=info.artKey;return;}
+      }
       mapMetrics.bossArt=info.artKey==='boss'?'existing-violet-art':'procedural-placeholder-'+info.id;
       if(info.artKey==='boss'){art(images.boss,x,y,width,width*132/230,opacity);return;}
       var rainPose=(world.phase||0)===1||((world.phase||0)===2&&progress>=.5);
@@ -510,9 +553,42 @@
     function transition(world) {
       if(world.stage!=='transition')return;
       if(world.campaign){
+        if(world.bossIndex>=2&&world.nextEncounter!=null&&!world.bullets.length&&!world.hazards.length){
+          ctx.save();ctx.fillStyle='rgba(7,10,20,.80)';ctx.fillRect(24,230,312,98);ctx.textAlign='center';ctx.fillStyle='#e6d2b4';ctx.font='16px Georgia,"Batang",serif';
+          ctx.fillText(world.bossIndex===2?'봉인 너머의 추락':'웃는 가면의 균열',180,263);ctx.font='11px Arial,"Malgun Gothic"';ctx.fillStyle='#b9c4cf';
+          ctx.fillText(world.bossIndex===2?'눈을 뜬 곳은 낯선 병원 복도였습니다.':'완벽함의 약속 뒤에서, 루시퍼가 모습을 드러냅니다.',180,294);ctx.restore();return;
+        }
         ctx.save();ctx.globalAlpha=Math.min(1,Math.max(0,world.transitionRemaining==null?1:world.transitionRemaining));ctx.fillStyle='rgba(10,11,21,.56)';ctx.fillRect(40,190,280,38);ctx.textAlign='center';ctx.font='10px Arial,"Malgun Gothic",sans-serif';ctx.fillStyle='#d8c8e2';ctx.fillText(world.stageLabel||'남은 탄막이 지나갑니다',180,213);ctx.restore();return;
       }
       var t=world.transitionRemaining==null?1:world.transitionRemaining;ctx.save();ctx.globalAlpha=Math.min(1,Math.max(0,t));ctx.fillStyle='rgba(10,11,21,.65)';ctx.fillRect(20,273,320,70);ctx.textAlign='center';ctx.fillStyle='#d4c0ec';ctx.font='9px Arial,sans-serif';ctx.fillText('MEMORY RESONANCE',180,296);ctx.fillStyle='#e9e1e7';ctx.font='15px Georgia,"Batang",serif';ctx.fillText(world.patternName||'회랑의 문지기',180,323);ctx.restore();
+    }
+    function drawSpellTheatre(world){
+      if(!world.campaign)return;
+      var b=world.boss,t=world.time||0;
+      if(b&&world.bossIndex>=3&&world.stage!=='bossIntro'){
+        ctx.save();var phase=world.phase||0;
+        ctx.globalAlpha=.18;ctx.translate(b.x,b.y-6);ctx.rotate(t*.07*(phase%2?-1:1));
+        circle(0,0,66+phase*5,world.bossIndex===4?'#b7b5ed':'#ecd5a0',.8);
+        for(var i=0;i<12;i++){var a=i*Math.PI/6;line([[Math.cos(a)*62,Math.sin(a)*62],[Math.cos(a)*70,Math.sin(a)*70]],'#c8b7d1',.7);}
+        ctx.restore();
+        if(world.bossIndex===4){
+          // Small face plate and broken orbit: bounded above combat lane.
+          var mx=b.x-2,my=b.y-20;ctx.save();ctx.globalAlpha=.85;
+          polygon([[mx-7,my-6],[mx+7,my-6],[mx+9,my+2],[mx,my+11],[mx-9,my+2]],'#15192e','#cbbbe9',.8);
+          ctx.fillStyle='#d9ecff';ctx.fillRect(mx-5,my-1,3,1);ctx.fillRect(mx+2,my-1,3,1);
+          if(phase>0)line([[mx,my-6],[mx-2,my],[mx+2,my+3],[mx,my+10]],'#f2ccab',.7);
+          ctx.restore();
+        }
+      }
+      if(world.stage==='boss'&&world.phaseTime<1.45){
+        var a=Math.min(1,world.phaseTime/.22,(1.45-world.phaseTime)/.35);ctx.save();ctx.globalAlpha=Math.max(0,a);
+        ctx.fillStyle='rgba(12,14,28,.88)';ctx.fillRect(20,204,320,45);ctx.fillStyle='#c3af85';ctx.fillRect(20,204,2,45);
+        ctx.textAlign='left';ctx.font='8px Arial';ctx.fillStyle='#b9aaca';ctx.fillText('MEMORY SIGN  /  '+((world.bossIndex||0)+1)+'—'+(world.phase+1),32,219);
+        ctx.font='13px Georgia,"Batang",serif';ctx.fillStyle='#eee1ce';ctx.fillText(world.patternName,32,238);ctx.restore();
+      }
+      if(world.stage==='won'&&!world.practiceBoss&&world.bossIndex===4){
+        ctx.save();ctx.globalAlpha=.42;circle(180,190,46,'#ead5aa',1.2);circle(180,190,53,'#b9dbed',.7);line([[180,158],[180,220],[159,178],[201,178]],'#f0e1ba',2);ctx.restore();
+      }
     }
     function draw(world,alpha,time) {
       if(actorPresentation&&actorPresentation.beginFrame)actorPresentation.beginFrame();
@@ -523,7 +599,7 @@
       if(!world||(!world.boss&&world.stage!=='bossIntro'))mapMetrics.bossArt=null;
       if(!world){titleScene(time||0);return;}
       if(world.stage==='bossIntro'){drawPlayerBody(world,world.time||0);bossEntrance(world);drawPlayerCore(world);return;}
-      drawRoute(world);drawBossAccent(world);if(projectilePresentation&&projectilePresentation.drawBossCast)projectilePresentation.drawBossCast(ctx,world);drawEffects(world);transition(world);drawEnemies(world,world.time||0);drawPlayerBody(world,world.time||0);drawShots(world);drawHazards(world);drawBullets(world);bossHud(world);
+      drawRoute(world);drawBossAccent(world);if(projectilePresentation&&projectilePresentation.drawBossCast)projectilePresentation.drawBossCast(ctx,world);drawEffects(world);transition(world);drawEnemies(world,world.time||0);drawSpellTheatre(world);drawPlayerBody(world,world.time||0);drawShots(world);drawHazards(world);drawBullets(world);bossHud(world);
       if(world.reservation){ctx.save();ctx.font='8px Arial,"Malgun Gothic",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(167,224,227,.85)';ctx.fillText(typeof world.reservation==='string'?world.reservation:'스킬 준비 중',180,621);ctx.restore();}
       drawPlayerCore(world);
     }

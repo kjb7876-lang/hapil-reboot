@@ -11,6 +11,12 @@
       silk:silkX == null ? null : Object.freeze([silkX,silkY])});
   }
   var CONTRACTS = Object.freeze({
+lucifer:Object.freeze({scale:0.23,poses:Object.freeze({walk:pose('actorLuciferWalk',768,520,400,210,400,185),idle:pose('actorLuciferIdle',768,514,394,205,394,180),hit:pose('actorLuciferHit',768,504,385,210,385,185),attack:pose('actorLuciferAttack',768,510,400,210,400,185)})}),
+mask:Object.freeze({scale:0.18,poses:Object.freeze({walk:pose('actorMaskWalk',768,545,390,265,390,240),idle:pose('actorMaskIdle',768,546,412,235,412,210),hit:pose('actorMaskHit',768,478,450,218,450,193),attack:pose('actorMaskAttack',768,479,500,215,500,190)})}),
+echo:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorEchoWalk',627,680,330,270,330,245),idle:pose('actorEchoIdle',627,680,285,270,285,245),hit:pose('actorEchoHit',627,574,320,220,320,195),attack:pose('actorEchoAttack',627,574,355,220,355,195)})}),
+vial:Object.freeze({scale:0.09,poses:Object.freeze({walk:pose('actorVialWalk',724,543,400,225,400,200),idle:pose('actorVialIdle',724,543,380,215,380,190),hit:pose('actorVialHit',724,543,400,210,400,185),attack:pose('actorVialAttack',724,543,380,215,380,190)})}),
+guard:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorGuardWalk',627,627,330,240,330,215),idle:pose('actorGuardIdle',627,627,320,245,320,220),hit:pose('actorGuardHit',627,627,370,270,370,245),attack:pose('actorGuardAttack',627,627,370,280,370,255)})}),
+denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWalk',627,627,310,275,310,250),idle:pose('actorDenialIdle',627,627,300,260,300,235),hit:pose('actorDenialHit',627,627,330,280,330,255),attack:pose('actorDenialAttack',627,627,345,290,345,265)})}),
     violet:Object.freeze({scale:.218,poses:Object.freeze({
       idle:pose('actorVioletIdle',768,512,378,220,378,195),
       walk:pose('actorVioletWalk',768,512,382,230,382,205),
@@ -105,11 +111,18 @@
       if (!world || !world.campaign || !world.boss || world.stage === 'bossIntro' || !finite(x) || !finite(y)) return false;
       var b = world.boss, identity = b.kind || world.bossId || (b.artKey === 'boss' ? 'violet' : b.artKey);
       var contract = CONTRACTS[identity];
-      if (!contract || !['violet','horn','balrog'].includes(identity) || !ready(contract)) return false;
+      if (!contract || !['violet','horn','balrog','mask','lucifer'].includes(identity) || !ready(contract)) return false;
       var state = selectedPose(world,b,true), scale = contract.scale * clamp(value(width,230)/230,.1,1);
       var angle = angleFor(world,b,true);
       drawSilk(ctx,world,b,contract.poses[state],scale,angle,x,y,true,opacity,identity);
-      var key = drawPose(ctx,contract,state,x,y,scale,angle,opacity);
+      var key;
+      if(identity==='mask'||identity==='lucifer'){
+        var progress=clamp(value(b.actionProgress,0),0,1),blend=clamp(progress*(b.action==='move'?9:b.action==='charge'?9:b.action==='attack'?26:16),0,1);
+        if(state==='hit')blend=1;
+        var prev=b.action==='attack'?'idle':b.action==='recover'?'attack':b.action==='charge'?'walk':'idle';
+        if(prev!==state&&blend<1){drawPose(ctx,contract,prev,x,y,scale,angle,(opacity==null?1:opacity)*(1-blend));}
+        key=drawPose(ctx,contract,state,x,y,scale,angle,(opacity==null?1:opacity)*(prev!==state?blend:1));
+      }else key = drawPose(ctx,contract,state,x,y,scale,angle,opacity);
       metrics.bossDraws++; metrics.lastBossAsset=key; metrics.lastBossPose=state; metrics.lastBossIdentity=identity;
       return true;
     }
@@ -139,7 +152,7 @@
     }
     function drawEnemy(ctx, world, e) {
       if (!world || !world.campaign || !e || !finite(e.x) || !finite(e.y)) return false;
-      var identity = e.archetype === 'weaver' ? 'spider' : e.archetype === 'wraith' ? 'swamp' : e.archetype === 'ember' ? 'ember' : null;
+      var identity = e.archetype === 'weaver' ? 'spider' : e.archetype === 'wraith' ? 'swamp' : e.archetype === 'ember' ? 'ember' : ['echo','vial','guard','denial'].includes(e.archetype) ? e.archetype : null;
       var contract = CONTRACTS[identity];
       if (!contract || !ready(contract)) return false;
       if (e.age < 0) return true;

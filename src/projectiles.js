@@ -50,6 +50,14 @@
       ctx.save();path(ctx,r,l);ctx.clip();
       stamp(ctx,s,frame,crop,-extent,-r,extent*2,r*2);
       ctx.restore();metrics.projectileTextureDraws++;
+      if(world.bossIndex>=3){
+        // Distinct readable interiors, entirely clipped to authoritative bodies.
+        ctx.save();path(ctx,r,l);ctx.clip();ctx.globalAlpha=1;
+        ctx.fillStyle=world.bossIndex===3?'#f5e4ba':'#c1d8fa';
+        if(l>0){ctx.fillRect(-l,-.65,l*2,1.3);ctx.fillRect(l*.35,-r*.6,1.2,r*1.2);}
+        else{ctx.beginPath();ctx.arc(0,0,r*.48,0,Math.PI*2);ctx.fill();if(world.bossIndex===4){ctx.fillStyle='#423862';ctx.fillRect(-.6,-r*.4,1.2,r*.8);}}
+        ctx.restore();
+      }
       // Rim lies on the exact radius / capsule. No bright line is added inside
       // the source art: tiny ember sparks and reed strands remain visible.
       path(ctx,r,l);ctx.strokeStyle=COLORS[b.color]||b.color||'#f8ecd4';ctx.lineWidth=.8;ctx.stroke();
