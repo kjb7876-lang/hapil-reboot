@@ -1,0 +1,30 @@
+{
+  "scope": "Image RGBA estimates only, excludes browser/GPU/audio/cache; no device measurement",
+  "groups": [
+    {
+      "encounter": 0,
+      "imageCount": 30,
+      "decodedMiB": 51.78
+    },
+    {
+      "encounter": 1,
+      "imageCount": 20,
+      "decodedMiB": 36.5
+    },
+    {
+      "encounter": 2,
+      "imageCount": 20,
+      "decodedMiB": 36.5
+    },
+    {
+      "encounter": 3,
+      "imageCount": 21,
+      "decodedMiB": 26.98
+    },
+    {
+      "encounter": 4,
+      "imageCount": 21,
+      "decodedMiB": 26.98
+    }
+  ]
+}

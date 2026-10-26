@@ -1,7 +1,8 @@
 (function (global) {
   'use strict';
   var $=function(id){return document.getElementById(id);};
-  var defaults={music:true,sfx:true,quality:'high',skillRotation:true,difficulty:'normal',sensitivity:1};
+  var mobileRuntime=global.matchMedia?global.matchMedia('(pointer: coarse)').matches:Math.min(global.innerWidth||999,global.innerHeight||999)<600;
+  var defaults={music:true,sfx:true,quality:mobileRuntime?'low':'high',skillRotation:true,difficulty:'normal',sensitivity:1};
   var settings=Object.assign({},defaults),profile={},savedCheckpoint=null,world=null,renderer=null,images={};
   var mode='title',ready=false,booting=true,lastStamp=0,accumulator=0,lastRender=0,lastHud=0,visualTime=0,checkpointSerial=-1,completed=false;
   var keys=Object.create(null),pointer={active:false,id:null,lastX:0,lastY:0,pendingX:0,pendingY:0,lastMove:0},inputSource='keyboard',raf=0;
@@ -101,7 +102,28 @@
     var positions={memory:'100% 0%',delay:'0% 100%',counter:'0% 0%',ego:'100% 100%'};
     Object.keys(positions).forEach(function(name){var emblem=$('skill-'+name+'-emblem');emblem.style.backgroundImage='url('+JSON.stringify(media.comboIcons)+')';emblem.style.backgroundPosition=positions[name];emblem.classList.add('atlas-emblem');emblem.textContent='';});
   }
-  function loadImage(name,url){return new Promise(function(resolve){if(!url){assetErrors.push(name);resolve();return;}var im=new Image();im.onload=function(){images[name]=im;resolve();};im.onerror=function(){assetErrors.push(name);resolve();};im.src=url;});}
+  function loadImage(name,url){
+    if(images[name])return Promise.resolve();
+    return new Promise(function(resolve){
+      if(!url){assetErrors.push(name);resolve();return;}
+      var im=new Image(),done=false,timer=setTimeout(function(){finish(false);},15000);
+      function finish(ok){if(done)return;done=true;clearTimeout(timer);im.onload=im.onerror=null;if(ok)images[name]=im;else if(assetErrors.indexOf(name)<0)assetErrors.push(name);resolve();}
+      im.onload=function(){finish(true);};im.onerror=function(){finish(false);};im.src=url;
+    });
+  }
+  async function loadImagesBounded(names){
+    var cursor=0;async function worker(){while(cursor<names.length){var key=names[cursor++];await loadImage(key,global.HapilMedia[key]);}}
+    await Promise.all([worker(),worker()]);
+  }
+  function mobileAssetKeys(group){
+    var names=[['Violet','Spider'],['Horn','Swamp'],['Balrog','Ember'],['Mask','Echo','Vial'],['Lucifer','Guard','Denial']][group]||['Violet','Spider'];
+    return Object.keys(global.HapilMedia).filter(function(k){
+      if(['gunner','boss','spider','fxResonance','fxSlash','fxThorns','fxArrow','fxParry','fxSilk'].includes(k))return true;
+      if(group===0&&(/^map\d+$/.test(k)||k==='violetCutin'))return true;
+      if((group===-1||group===1||group===2)&&['forest','ruins','cave'].includes(k))return true;
+      return names.some(function(n){return k.indexOf('actor'+n)===0;});
+    });
+  }
   function buildAudio(media){
     try{if(media.music){audio.music=new Audio(media.music);audio.music.loop=true;audio.music.volume=.22;audio.music.preload='none';}
       ['shot','hurt'].forEach(function(kind){var url=media[kind+'Sound'];if(!url)return;for(var i=0;i<(kind==='shot'?3:2);i++){var a=new Audio(url);a.preload='none';a.volume=kind==='shot'?.12:.36;audio[kind].push(a);}});
@@ -173,18 +195,19 @@
   function diagnostics(){
     var hazards=world&&world.hazards?world.hazards:[],heap=null;
     try{var m=performance.memory;if(m&&Number.isFinite(m.usedJSHeapSize))heap={usedBytes:m.usedJSHeapSize,totalBytes:m.totalJSHeapSize,limitBytes:m.jsHeapSizeLimit,scope:'Browser-reported JS heap estimate; excludes GPU and decoded media; GC not controlled'};}catch(e){}
-    return {version:'hapil-lucifer-v7',candidateRevision:7,mechanicsRevision:world?world.mechanicsRevision:(core?core.MECHANICS_REVISION:2),connectedMapStatus:renderer&&renderer.getMetrics?renderer.getMetrics().sourceStatus||'not-yet-reported':'not-yet-reported',capturedAt:new Date().toISOString(),mode:mode,fixedHz:60,renderTarget:settings.quality==='low'?30:60,rollingWindow:maxSamples,measurementScope:{update:'Main-thread fixed-step simulation and event processing',render:'JavaScript canvas command submission only; not GPU completion',frame:'requestAnimationFrame callback intervals during play'},updateMs:distribution(samples.update,peakUpdate),renderMs:distribution(samples.render,peakRender),frameIntervalMs:distribution(samples.frame,peakFrame),renderedFrames:totalFrames,fixedSteps:totalSteps,pausedLargeGaps:droppedGaps,lastGapReason:lastGapReason,viewport:{width:global.innerWidth,height:global.innerHeight,dpr:global.devicePixelRatio||1,arenaWidth:$('app-stage').clientWidth,arenaHeight:$('app-stage').clientHeight,padHeight:$('touch-pad').clientHeight},entities:world?{bullets:world.bullets.length,shots:world.shots.length,enemies:world.enemies.length,effects:world.effects.length,laserWarnings:hazards.filter(function(h){return h.phase==='warning';}).length,activeLasers:hazards.filter(function(h){return h.phase==='active';}).length,fadingLasers:hazards.filter(function(h){return h.phase==='fade';}).length}:null,terrain:renderer&&renderer.getMetrics?renderer.getMetrics():null,jsHeapEstimate:heap,gpuTimeMs:null,coreStats:world?JSON.parse(JSON.stringify(world.stats||{})):null,assetErrors:assetErrors.slice(),storage:store?Object.assign({},store.status):null};
+    return {version:'hapil-lucifer-v7.1-mobile',candidateRevision:7.1,mobileRuntime:mobileRuntime,loadedImages:Object.keys(images).length,mechanicsRevision:world?world.mechanicsRevision:(core?core.MECHANICS_REVISION:2),connectedMapStatus:renderer&&renderer.getMetrics?renderer.getMetrics().sourceStatus||'not-yet-reported':'not-yet-reported',capturedAt:new Date().toISOString(),mode:mode,fixedHz:60,renderTarget:settings.quality==='low'?30:60,rollingWindow:maxSamples,measurementScope:{update:'Main-thread fixed-step simulation and event processing',render:'JavaScript canvas command submission only; not GPU completion',frame:'requestAnimationFrame callback intervals during play'},updateMs:distribution(samples.update,peakUpdate),renderMs:distribution(samples.render,peakRender),frameIntervalMs:distribution(samples.frame,peakFrame),renderedFrames:totalFrames,fixedSteps:totalSteps,pausedLargeGaps:droppedGaps,lastGapReason:lastGapReason,viewport:{width:global.innerWidth,height:global.innerHeight,dpr:global.devicePixelRatio||1,arenaWidth:$('app-stage').clientWidth,arenaHeight:$('app-stage').clientHeight,padHeight:$('touch-pad').clientHeight},entities:world?{bullets:world.bullets.length,shots:world.shots.length,enemies:world.enemies.length,effects:world.effects.length,laserWarnings:hazards.filter(function(h){return h.phase==='warning';}).length,activeLasers:hazards.filter(function(h){return h.phase==='active';}).length,fadingLasers:hazards.filter(function(h){return h.phase==='fade';}).length}:null,terrain:renderer&&renderer.getMetrics?renderer.getMetrics():null,jsHeapEstimate:heap,gpuTimeMs:null,coreStats:world?JSON.parse(JSON.stringify(world.stats||{})):null,assetErrors:assetErrors.slice(),storage:store?Object.assign({},store.status):null};
   }
   function ensureEncounterArt(){
     if(mode==='error')return false;
-    var group=world&&world.campaign&&world.bossIndex>=3?world.bossIndex:0;
-    if(group===0)return true;
+    var group=world?(world.campaign?world.bossIndex:-1):0;
+    if(!mobileRuntime&&group<3)return true;
     if(encounterArtPending)return false;
     if(encounterArtGroup===group)return true;
     var names=group===3?['Mask','Echo','Vial']:['Lucifer','Guard','Denial'];
-    var keysToLoad=Object.keys(global.HapilMedia).filter(function(k){return names.some(function(n){return k.indexOf('actor'+n)===0;});});
+    var keysToLoad=mobileRuntime?mobileAssetKeys(group):Object.keys(global.HapilMedia).filter(function(k){return names.some(function(n){return k.indexOf('actor'+n)===0;});});
     encounterArtPending=true;clearInput();accumulator=0;toast('다음 기억의 원화를 불러오는 중…');
-    Promise.all(keysToLoad.map(function(k){return loadImage(k,global.HapilMedia[k]);})).then(function(){
+    if(mobileRuntime)Object.keys(images).forEach(function(k){if(keysToLoad.indexOf(k)<0)delete images[k];});
+    loadImagesBounded(keysToLoad).then(function(){
       encounterArtPending=false;
       if(keysToLoad.some(function(k){return !images[k];})){showError(new Error('다음 구간의 원화를 불러오지 못했습니다. 연결을 확인한 뒤 다시 열어주세요.'));return;}
       Object.keys(images).forEach(function(k){if(/^actor(Lucifer|Mask|Echo|Vial|Guard|Denial)/.test(k)&&keysToLoad.indexOf(k)<0)delete images[k];});
@@ -197,9 +220,9 @@
     if(!ensureEncounterArt()){lastStamp=stamp;accumulator=0;return;}
     if(!lastStamp)lastStamp=stamp;var elapsed=Math.max(0,(stamp-lastStamp)/1000);lastStamp=stamp;visualTime+=Math.min(elapsed,.05);
     if(mode==='playing'){
-      if(elapsed>.1||accumulator+elapsed>=6/60){droppedGaps++;lastGapReason='frame-gap-'+Math.round(elapsed*1000)+'ms';pause('화면이 오래 멈춰 전투를 일시정지했습니다.');}
+      if(elapsed>.75){droppedGaps++;lastGapReason='frame-gap-'+Math.round(elapsed*1000)+'ms';pause('화면이 오래 멈춰 전투를 일시정지했습니다.');}
       else {
-        sample('frame',elapsed*1000);peakFrame=Math.max(peakFrame,elapsed*1000);accumulator+=elapsed;
+        sample('frame',elapsed*1000);peakFrame=Math.max(peakFrame,elapsed*1000);if(elapsed>.08){droppedGaps++;pointer.pendingX=0;pointer.pendingY=0;}accumulator=Math.min(accumulator+elapsed,3/60);
         var startUpdate=performance.now(),steps=0;
         try{while(accumulator>=1/60&&steps<5&&mode==='playing'){if(!ensureEncounterArt()){accumulator=0;break;}var previousStage=world.stage;core.step(world,inputForStep(),1/60);accumulator-=1/60;steps++;totalSteps++;if(previousStage!=='bossIntro'&&world.stage==='bossIntro'){clearInput();if(skipIntroForRun&&seenBossIntros[introKey()]&&core.skipBossIntro)core.skipBossIntro(world);}if(previousStage==='bossIntro'&&world.stage!=='bossIntro'){seenBossIntros[introKey()]=true;clearInput();}if(world.stage==='won'||world.stage==='lost')break;}}
         catch(e){showError(e);}
@@ -208,13 +231,14 @@
       }
     }else accumulator=0;
     var target=settings.quality==='low'?1000/30:1000/60;
-    if(!encounterArtPending&&(stamp-lastRender>=target-.7||!lastRender)){var rs=performance.now();renderer.draw(world,accumulator*60,visualTime);var cost=performance.now()-rs;if(mode==='playing'){sample('render',cost);peakRender=Math.max(peakRender,cost);}lastRender=stamp;totalFrames++;}
+    if(!encounterArtPending&&(stamp-lastRender>=target-.7||!lastRender)){var rs=performance.now();try{renderer.draw(world,accumulator*60,visualTime,settings.quality==='low');}catch(error){showError(error);return;}var cost=performance.now()-rs;if(mode==='playing'){sample('render',cost);peakRender=Math.max(peakRender,cost);}lastRender=stamp;totalFrames++;}
     syncIntroControls();if(stamp-lastHud>=120){updateHUD();lastHud=stamp;}
   }
   function pointerDown(e){if(mode!=='playing'||(world&&world.stage==='bossIntro')||pointer.active||e.button>0)return;e.preventDefault();unlockAudio();pointer.active=true;pointer.id=e.pointerId;pointer.lastX=e.clientX;pointer.lastY=e.clientY;pointer.pendingX=0;pointer.pendingY=0;pointer.lastMove=performance.now();inputSource='pointer';$('touch-pad').classList.add('active');try{e.currentTarget.setPointerCapture(e.pointerId);}catch(ignore){}}
   function pointerMove(e){if(!pointer.active||pointer.id!==e.pointerId||mode!=='playing')return;e.preventDefault();var rect=$('game-canvas').getBoundingClientRect(),scale=360/rect.width*Number(settings.sensitivity),dx=(e.clientX-pointer.lastX)*scale,dy=(e.clientY-pointer.lastY)*scale;pointer.lastX=e.clientX;pointer.lastY=e.clientY;pointer.lastMove=performance.now();inputSource='pointer';pointer.pendingX=Math.max(-60,Math.min(60,pointer.pendingX+dx));pointer.pendingY=Math.max(-60,Math.min(60,pointer.pendingY+dy));}
   function pointerUp(e){if(e.pointerId!==pointer.id)return;pointer.active=false;pointer.id=null;pointer.pendingX=0;pointer.pendingY=0;inputSource='keyboard';$('touch-pad').classList.remove('active');}
-  function resize(){if(mode==='playing')pause('화면 크기가 바뀌어 전투를 일시정지했습니다.');clearInput();accumulator=0;lastStamp=0;fit();}
+  var layoutWidth=global.innerWidth;
+  function resize(){if(mobileRuntime&&Math.abs(global.innerWidth-layoutWidth)<40){fit();return;}layoutWidth=global.innerWidth;if(mode==='playing')pause('화면 크기가 바뀌어 전투를 일시정지했습니다.');clearInput();accumulator=0;lastStamp=0;fit();}
   function openSettings(){settingsFocus=document.activeElement;settingsWasPlaying=mode==='playing';if(settingsWasPlaying)pause();setHidden('settings-modal',false);$('settings-close').focus({preventScroll:true});}
   function closeSettings(){setHidden('settings-modal',true);if(settingsFocus&&settingsFocus.focus)settingsFocus.focus({preventScroll:true});if(settingsWasPlaying){settingsWasPlaying=false;toast('설정을 저장했습니다. 전투 계속하기를 눌러주세요.');}}
   async function exportDiagnostics(){
@@ -245,10 +269,10 @@
     bind();fit();$('start-button').disabled=true;$('practice-button').disabled=true;
     try{
       core=global.HapilCore;store=global.HapilStore;if(!core||!core.createRun||!core.step)throw new Error('전투 엔진을 찾지 못했습니다. 압축 파일 전체를 풀거나 단일 HTML 실행 파일을 사용해주세요.');if(!global.HapilRenderer)throw new Error('화면 렌더러 파일을 찾지 못했습니다.');
-      var media=global.HapilMedia||{};setSkillEmblems(media);await Promise.all(Object.keys(media).filter(function(name){return !/^actor(Lucifer|Mask|Echo|Vial|Guard|Denial)/.test(name)&&['bullet','shot','comboIcons'].indexOf(name)<0&&(/\.(webp|png|jpe?g)$/i.test(media[name].split(/[?#]/)[0])||/^data:image\//.test(media[name]));}).map(function(name){return loadImage(name,media[name]);}));
+      var media=global.HapilMedia||{};setSkillEmblems(media);await loadImagesBounded(mobileRuntime?mobileAssetKeys(0):Object.keys(media).filter(function(name){return !/^actor(Lucifer|Mask|Echo|Vial|Guard|Denial)/.test(name)&&['bullet','shot','comboIcons'].indexOf(name)<0&&(/\.(webp|png|jpe?g)$/i.test(media[name].split(/[?#]/)[0])||/^data:image\//.test(media[name]));}));if(mobileRuntime)encounterArtGroup=0;
       if(assetErrors.indexOf('gunner')>=0||assetErrors.indexOf('boss')>=0)throw new Error('캐릭터 이미지를 읽지 못했습니다. media 폴더가 포함되어 있는지 확인하거나 단일 HTML 실행 파일을 사용해주세요.');
       renderer=global.HapilRenderer.create($('game-canvas'),images);fit();buildAudio(media);raf=requestAnimationFrame(frame);
-      if(store){await store.open();var data=await store.load();if(data){settings=Object.assign({},defaults,data.settings||{});profile=data.profile||{};savedCheckpoint=data.checkpoint||null;}}syncSettings();updateStory();fit();updateProfile();updateStorage();setHidden('continue-button',!savedCheckpoint);ready=true;booting=false;$('start-button').disabled=false;$('practice-button').disabled=false;
+      if(store){await store.open();var data=await store.load();if(data){settings=Object.assign({},defaults,data.settings||{});profile=data.profile||{};savedCheckpoint=data.checkpoint||null;}}if(mobileRuntime)settings.quality='low';syncSettings();updateStory();fit();updateProfile();updateStorage();setHidden('continue-button',!savedCheckpoint);ready=true;booting=false;$('start-button').disabled=false;$('practice-button').disabled=false;
       if(assetErrors.length)toast('일부 이미지를 읽지 못해 기본 연출로 표시합니다.');
     }catch(e){booting=false;showError(e);}
   }

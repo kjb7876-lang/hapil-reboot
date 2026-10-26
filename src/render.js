@@ -26,6 +26,7 @@
     var bg=back.getContext('2d');
     var foreground=document.createElement('canvas');foreground.width=W;foreground.height=H;
     var fg=foreground.getContext('2d');
+    var lightweight=false;
     var strips=[],ratio=1,cached=false,edgeMask=null;
     var terrain=[{key:'forest',label:'숲의 진입로',center:.57,floorY:.38},{key:'ruins',label:'무너진 궁정',center:.50,floorY:.42},{key:'cave',label:'문지기의 동굴',center:.50,floorY:.36}];
     var mapMetrics={zone:'forest',zoneIndex:0,segmentProgress:0,journeyProgress:0,journeySeconds:0,scrollY:640,anchored:false,terrainStripCount:0,cacheCanvasCount:2,cacheBytes:W*H*4*2,introActive:false,introProgress:0,terrainStatus:'retained-v2',sourceStatus:'retained-v2',campaignLocation:null,bossArt:null,visualRevision:7,dreamTheme:null,ambientGlyphs:0,decorativeCenter:'quiet',bossAccent:null,visibleMapTiles:'',visibleMapCount:0,atlasFxDraws:0,atlasFxLimit:24,atlasFxFamilies:''};
@@ -494,7 +495,7 @@
       var bullets=world.bullets||[];ctx.lineCap='round';
       for(var i=0;i<bullets.length;i++) {
         var b=bullets[i],r=b.r||3,c=color(b.color);
-        if(projectilePresentation&&projectilePresentation.drawBullet(ctx,world,b))continue;
+        if(!lightweight&&projectilePresentation&&projectilePresentation.drawBullet(ctx,world,b))continue;
         if((b.kind==='needle'||b.kind==='blade')&&b.halfLength){
           var a=b.angle==null?Math.atan2(b.vy||0,b.vx||0):b.angle,xx=Math.cos(a)*b.halfLength,yy=Math.sin(a)*b.halfLength;
           ctx.beginPath();ctx.moveTo(b.x-xx,b.y-yy);ctx.lineTo(b.x+xx,b.y+yy);ctx.strokeStyle='#121627';ctx.lineWidth=r*2+3;ctx.stroke();ctx.strokeStyle=c;ctx.lineWidth=r*2;ctx.stroke();ctx.strokeStyle='#f4edfb';ctx.lineWidth=Math.max(.65,r*.45);ctx.stroke();
@@ -590,16 +591,17 @@
         ctx.save();ctx.globalAlpha=.42;circle(180,190,46,'#ead5aa',1.2);circle(180,190,53,'#b9dbed',.7);line([[180,158],[180,220],[159,178],[201,178]],'#f0e1ba',2);ctx.restore();
       }
     }
-    function draw(world,alpha,time) {
+    function draw(world,alpha,time,lowQuality) {
+      lightweight=!!lowQuality;
       if(actorPresentation&&actorPresentation.beginFrame)actorPresentation.beginFrame();
       if(projectilePresentation&&projectilePresentation.beginFrame)projectilePresentation.beginFrame();
-      if(!cached&&!usesConnected(world))makeBackground();ctx.setTransform(ratio,0,0,ratio,0,0);ctx.globalAlpha=1;drawTerrain(world);
+      if(!cached&&!usesConnected(world)&&!(world&&world.campaign&&world.bossIndex>=3))makeBackground();ctx.setTransform(ratio,0,0,ratio,0,0);ctx.globalAlpha=1;drawTerrain(world);
       drawDreamscape(world,time);mapMetrics.bossAccent=null;mapMetrics.atlasFxDraws=0;mapMetrics.atlasFxFamilies='';
       mapMetrics.introActive=!!(world&&world.stage==='bossIntro');mapMetrics.introProgress=mapMetrics.introActive?clamp((world.stageTime||0)/(world.bossIntroDuration||2.5),0,1):0;
       if(!world||(!world.boss&&world.stage!=='bossIntro'))mapMetrics.bossArt=null;
       if(!world){titleScene(time||0);return;}
       if(world.stage==='bossIntro'){drawPlayerBody(world,world.time||0);bossEntrance(world);drawPlayerCore(world);return;}
-      drawRoute(world);drawBossAccent(world);if(projectilePresentation&&projectilePresentation.drawBossCast)projectilePresentation.drawBossCast(ctx,world);drawEffects(world);transition(world);drawEnemies(world,world.time||0);drawSpellTheatre(world);drawPlayerBody(world,world.time||0);drawShots(world);drawHazards(world);drawBullets(world);bossHud(world);
+      drawRoute(world);drawBossAccent(world);if(!lightweight&&projectilePresentation&&projectilePresentation.drawBossCast)projectilePresentation.drawBossCast(ctx,world);drawEffects(world);transition(world);drawEnemies(world,world.time||0);drawSpellTheatre(world);drawPlayerBody(world,world.time||0);drawShots(world);drawHazards(world);drawBullets(world);bossHud(world);
       if(world.reservation){ctx.save();ctx.font='8px Arial,"Malgun Gothic",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(167,224,227,.85)';ctx.fillText(typeof world.reservation==='string'?world.reservation:'스킬 준비 중',180,621);ctx.restore();}
       drawPlayerCore(world);
     }
