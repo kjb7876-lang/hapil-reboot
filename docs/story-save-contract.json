@@ -1,0 +1,75 @@
+{
+  "contractVersion": 1,
+  "module": "src/story-storage.js",
+  "exports": {
+    "browser": "HapilStoryStorage",
+    "commonJS": "require('./src/story-storage.js')",
+    "factory": "create(storyStateInstance, {storage: localStorage})",
+    "requiredAdapterMethods": ["newState", "validate"],
+    "constants": ["KEY", "BACKUP_KEY", "QUARANTINE_KEY", "SCHEMA_VERSION", "MAX_BYTES"]
+  },
+  "storageBoundary": {
+    "mainKey": "hapil.storymode.v1",
+    "backupKey": "hapil.storymode.v1.backup",
+    "quarantineKey": "hapil.storymode.v1.quarantine",
+    "backend": "localStorage-compatible synchronous getItem/setItem object",
+    "legacyPolicy": "Never read, migrate, modify, clear, enumerate, or delete v8, campaign, first-battle, or other preexisting stores. There is no implicit migration or conversion of old clears into story progress.",
+    "allocationBound": "Three fixed slots. Each raw value is limited to 262144 UTF-16 code units. MAX_BYTES is the historical constant name for this serialized-string bound, not a measured UTF-8 byte limit.",
+    "recoveryBound": "An oversized main value remains intact; backup, quarantine and reset fail with evidence-too-large rather than silently truncating it. Each explicit backup/quarantine replaces its one previous slot."
+  },
+  "envelope": {
+    "schemaVersion": 1,
+    "revision": "Positive safe integer below Number.MAX_SAFE_INTEGER. Storage revision is independent of state.revision. Every successful save/reset increments the current valid envelope revision.",
+    "state": "A fresh normalized object returned by the provided StoryState.validate. Roster and content revision come from that instance, with no hardcoded encounter count.",
+    "checksum": "fnv1a32:<eight lowercase hexadecimal digits>",
+    "checksumInput": "Canonical JSON of {schemaVersion,revision,state}; object keys sorted recursively; array order retained; FNV-1a over JavaScript UTF-16 code units.",
+    "integrityLimit": "This unkeyed checksum detects many accidental changes. It is not encryption, a signature, cheat prevention, a trusted combat receipt, or protection against deliberate tampering. Anyone can recompute it and collisions exist. State validation checks legal structure and progression, not the authenticity of a recomputed journal."
+  },
+  "methods": {
+    "load()": {
+      "writes": false,
+      "returns": "{ok,status,reason?,revision,state}",
+      "statuses": {
+        "empty": "ok:true, revision:0, state:null; no state is implicitly created or persisted.",
+        "ok": "ok:true, revision:envelopeRevision, state:validatedSnapshot.",
+        "corrupt": "ok:false, revision:null, state:null; malformed, oversized, checksum-invalid or State-invalid data stays untouched.",
+        "version-mismatch": "ok:false, revision:null, state:null; unsupported envelope schema or state schema/content revision stays untouched.",
+        "storage-error": "ok:false, revision:null, state:null; storage is unavailable or reading failed. No success or in-memory persistence is claimed."
+      }
+    },
+    "startNew(expectedRevision)": "Explicitly create a new State.newState only when the story key is absent and expectedRevision is 0. Existing or invalid evidence is never overwritten. Returns the same success shape as load with revision 1.",
+    "save(state, expectedRevision)": "Validate and copy state, read current story envelope, require matching explicit numeric expectedRevision (0 for absent), recheck exact serialized bytes immediately before write, write the next envelope, and verify the bytes after write. Returns conflict for a stale revision/observed race. Invalid stored evidence blocks saves. Input state is never mutated on success or failure.",
+    "backup(expectedRevision)": "Explicitly copy the exact current main value to the one backup slot; never change main. For corrupt/version-mismatched values, first call load() on this same instance and pass null, then exact bytes and status must still match that load. Returns backed-up/empty, or an error.",
+    "quarantine(expectedRevision)": "Same explicit copying rules as backup, using the separate fixed quarantine slot. It does not delete, overwrite or repair main; evidence remains available for review.",
+    "reset(expectedRevision)": "Explicitly back up the exact main value before replacing main with State.newState. Failure to back up aborts replacement. Valid resets increment the existing envelope revision rather than deleting the key, preventing ordinary reset ABA. Corrupt/version-mismatched reset requires load() followed by null and exact evidence matching; a salvageable numeric envelope revision increments, otherwise the new revision starts at 1. No old store changes."
+  },
+  "progressionRules": {
+    "newStart": "Persistence never starts a story on a read. The caller must explicitly use startNew or reset.",
+    "navigation": "Loading, preview navigation, portal viewing, backup and quarantine do not mint acknowledgements, clears or combat results. Saving viewSceneId persists a view position only; the State reducer remains responsible for every progression transition.",
+    "combatValidation": "The adapter uses the actual StoryState.validate for every incoming state and load. Active/defeated run metadata can persist only when that validator accepts it. The full combat simulation is not a resumable checkpoint.",
+    "snapshots": "Nonnull top-level snapshot, activeCombat.snapshot and event snapshots are currently unsupported by StoryState. They cannot enter a save. No paused status or arbitrary simulation payload is introduced by persistence.",
+    "scope": "Canonical primary and conditional encounter scope is derived from story data through the supplied instance. This contract does not hardcode 69, 70, or any other roster count."
+  },
+  "concurrencyLimits": {
+    "guard": "Expected-revision and exact-byte checks reject ordinary stale-tab saves. Call load() explicitly to adopt a newer envelope before retrying.",
+    "atomicity": "localStorage offers no transaction or atomic compare-and-swap. A true simultaneous cross-process race can occur between the final read and setItem. These checks do not claim serializable transactions. Strong simultaneous-writer guarantees require an external lock or transactional storage.",
+    "damagedRevision": "Malformed evidence may have no recoverable monotonic revision. After explicit recovery, previously open tabs must reload; a numeric revision alone cannot prevent all ABA cases following externally erased or malformed storage."
+  },
+  "failurePolicy": "No load-time repair, silent overwrite, automatic recovery, migration, automatic backup pruning, storage.clear or key deletion. Mutating helpers return explicit errors. Backup may succeed even when the subsequent reset main write fails; original main remains unchanged under localStorage's atomic setItem behavior.",
+  "verification": {
+    "command": "node --test tests/story-storage.test.cjs",
+    "coverage": [
+      "UMD and CommonJS API",
+      "explicit new start and read-only load",
+      "save/load copies and preview/progress separation",
+      "tamper and unsupported-version evidence preservation",
+      "checksummed invalid state and nonnull snapshots",
+      "legacy keys untouched and unread",
+      "stale-tab revision conflict",
+      "read/write failure and caller immutability",
+      "active/defeated metadata and unsupported paused status",
+      "bounded explicit backup/quarantine and backed-up reset",
+      "entire current canonical roster roundtrip without fixed encounter counts"
+    ]
+  }
+}

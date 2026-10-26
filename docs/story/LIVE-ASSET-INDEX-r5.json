@@ -1,0 +1,846 @@
+{
+  "schema": "hapil.live-asset-index.v1",
+  "revision": 5,
+  "updated_utc": "2026-10-26T15:27:49.134583+00:00",
+  "generation_complete": false,
+  "scope_complete": false,
+  "source_basis": "R90 historical source roster 69 primary +3 conditional, NOT verified current R101",
+  "canonical_narrative": {
+    "library_file_id": "libfile_c6e9a59f0df88191b19d0d28cbbf9315",
+    "original_filename": "합일몽세_전체서사_총집본_네오서울추가_20261026(1).txt",
+    "bytes": 241566,
+    "sha256": "4b981a3d64c203a6b5b7d0b429aac452e22b43077a1f961a16afa5fc30406a90"
+  },
+  "roster_manifest_sha256": "7f16e287b95bda27dfc96a49ffa79457220fa9db0ef1a362b83000c07207145e",
+  "accepted_batches": [
+    {
+      "id": "initial-five-boss-keyposes",
+      "original_sheets": 5,
+      "keyposes": 20,
+      "guide_url": "https://drive.google.com/file/d/1KaI-E743hzYDdZNUbPg95I_nbWk5M_hb/view?usp=drivesdk",
+      "manifest_sha256": "cde43643343ef6bf89fef12d6388ac24bb31eeda611d903a0143d6af0586dfc2",
+      "limits": "keyposes only, root pivot/interpolation/game integration not certified by asset QA"
+    },
+    {
+      "id": "first-eight-body-keyposes",
+      "original_sheets": 8,
+      "keyposes": 32,
+      "guide_url": "https://drive.google.com/file/d/1j-6Uskk_8Gi-Gf0nF146G74FFtrxYNJv/view?usp=drivesdk",
+      "manifest_sha256": "a435ddf61c522d5395ad68ade89e8d370b3c505bc5b7904f4e9577b75e9ee957",
+      "zip_count": 14,
+      "bytes": 32978246,
+      "status": "asset_keypose_candidates_only",
+      "all_required_forms_complete": false,
+      "library_zip_files": [
+        {
+          "filename": "Storymode-first8-keyposes-01-of14.zip",
+          "library_file_id": "libfile_060ffc8facec8191a0c6a0f7abef3686"
+        },
+        {
+          "filename": "Storymode-first8-keyposes-02-of14.zip",
+          "library_file_id": "libfile_f212e9df60bc81919aa8e00c983196a3"
+        },
+        {
+          "filename": "Storymode-first8-keyposes-03-of14.zip",
+          "library_file_id": "libfile_1f9e1b9d6cec81918aecb7fcf81ca8dc"
+        },
+        {
+          "filename": "Storymode-first8-keyposes-04-of14.zip",
+          "library_file_id": "libfile_1b1ec2dd8e008191abb2b6ebfa744281"
+        },
+        {
+          "filename": "Storymode-first8-keyposes-05-of14.zip",
+          "library_file_id": "libfile_89eb4a4d53e08191bf35bc4c9e42083e"
+        },
+        {
+          "filename": "Storymode-first8-keyposes-06-of14.zip",
+          "library_file_id": "libfile_473bbc73daa881918ac00214f95d4fe2"
+        },
+        {
+          "filename": "Storymode-first8-keyposes-07-of14.zip",
+          "library_file_id": "libfile_928906bff528819194b5acd56f9d6d0e"
+        },
+        {
+          "filename": "Storymode-first8-keyposes-08-of14.zip",
+          "library_file_id": "libfile_d88c4a345adc8191b4343ab4367fbe41"
+        },
+        {
+          "filename": "Storymode-first8-keyposes-09-of14.zip",
+          "library_file_id": "libfile_922eb6d812788191bbd221d1d759aaf0"
+        },
+        {
+          "filename": "Storymode-first8-keyposes-10-of14.zip",
+          "library_file_id": "libfile_da78973c9f2481919b5f19ccc8f3cb80"
+        },
+        {
+          "filename": "Storymode-first8-keyposes-11-of14.zip",
+          "library_file_id": "libfile_d5ce8c4277fc8191a0fa76ab2de1c523"
+        },
+        {
+          "filename": "Storymode-first8-keyposes-12-of14.zip",
+          "library_file_id": "libfile_5eb768f77bac8191868ad9a95e0bc4a0"
+        },
+        {
+          "filename": "Storymode-first8-keyposes-13-of14.zip",
+          "library_file_id": "libfile_d02259522f788191ba073c81b08d4496"
+        },
+        {
+          "filename": "Storymode-first8-keyposes-14-of14.zip",
+          "library_file_id": "libfile_8047204e6c608191b8ac8291ac17675f"
+        }
+      ]
+    },
+    {
+      "id": "signature-static-fx",
+      "new_static_drawings": 7,
+      "reused_static_drawings": 6,
+      "animated_frames": 0,
+      "guide_url": "https://drive.google.com/file/d/1HY6mNHMgSr7o9og9-gNPOvr7kt8i2HTd/view?usp=drivesdk",
+      "manifest_sha256": "f447b945259bf6f973dc2de1f1dbf90bf3a62bf82082ab295d962bd726e22552",
+      "zip_count": 6,
+      "bytes": 11905901,
+      "limits": "decorative cast only, not sole damaging warning; low-contrast cases documented;game/collision/GPUunverified",
+      "library_zip_files": [
+        {
+          "filename": "HAPIL-signature-static-FX-01-of06.zip",
+          "library_file_id": "libfile_2b94c550d7b8819189877bcbac23409b"
+        },
+        {
+          "filename": "HAPIL-signature-static-FX-02-of06.zip",
+          "library_file_id": "libfile_35bc14a6cd388191beaf49ca1f288b63"
+        },
+        {
+          "filename": "HAPIL-signature-static-FX-03-of06.zip",
+          "library_file_id": "libfile_c9a0a288b0388191b9908dfa3829503f"
+        },
+        {
+          "filename": "HAPIL-signature-static-FX-04-of06.zip",
+          "library_file_id": "libfile_61b7724971848191ac2b8af0743adb96"
+        },
+        {
+          "filename": "HAPIL-signature-static-FX-05-of06.zip",
+          "library_file_id": "libfile_fe5439138dc481918ef9751e2142e7a7"
+        },
+        {
+          "filename": "HAPIL-signature-static-FX-06-of06.zip",
+          "library_file_id": "libfile_afcc8e62978081918af2cf87a1c450ef"
+        }
+      ]
+    },
+    {
+      "id": "chapter2-partial11-20261026",
+      "form_ids": [
+        "mb-ep1b01",
+        "b02-boss",
+        "mb-ep1b02",
+        "mb-ep1b04",
+        "mb-ep1b05",
+        "mb-ep1b06",
+        "b06b-boss-child",
+        "mb-ep1b06b",
+        "b07-boss-human",
+        "b08-boss-human",
+        "mb-ep1b07"
+      ],
+      "new_source_sheets": 11,
+      "keyposes": 44,
+      "guide_url": "https://drive.google.com/file/d/1dDOazbWjgcugZ2lBE-UYcNRSz1AnmUG6/view?usp=drivesdk",
+      "manifest_sha256": "072b8aa847edb4af6b46dcce27b2afc382fe9ea9341aee32cda83ee655656a69",
+      "zip_count": 17,
+      "bytes": 40391924,
+      "all_required_form_assets_complete": false,
+      "runtime_validation_status": "consumer_codex_pending",
+      "supersedes_prior_batches": false,
+      "library_zip_files": [
+        {
+          "filename": "Chapter2-partial11-keyposes-01-of17.zip",
+          "library_file_id": "libfile_68097695b520819186085cd7781ea804"
+        },
+        {
+          "filename": "Chapter2-partial11-keyposes-02-of17.zip",
+          "library_file_id": "libfile_f6d40e4949208191b7ad8e39265d7d81"
+        },
+        {
+          "filename": "Chapter2-partial11-keyposes-03-of17.zip",
+          "library_file_id": "libfile_1ebb25a5ca9c819197869bb8baa13279"
+        },
+        {
+          "filename": "Chapter2-partial11-keyposes-04-of17.zip",
+          "library_file_id": "libfile_8098de3c2984819181193033c0fea052"
+        },
+        {
+          "filename": "Chapter2-partial11-keyposes-05-of17.zip",
+          "library_file_id": "libfile_c62b6cdd969c819197349e7d959a24cb"
+        },
+        {
+          "filename": "Chapter2-partial11-keyposes-06-of17.zip",
+          "library_file_id": "libfile_4d6b87452e04819192293de9a6cb6499"
+        },
+        {
+          "filename": "Chapter2-partial11-keyposes-07-of17.zip",
+          "library_file_id": "libfile_5ef2ec13fa408191b1fdd354f01bef40"
+        },
+        {
+          "filename": "Chapter2-partial11-keyposes-08-of17.zip",
+          "library_file_id": "libfile_e27ce9fc64848191bcf317a5df77a3b4"
+        },
+        {
+          "filename": "Chapter2-partial11-keyposes-09-of17.zip",
+          "library_file_id": "libfile_652fed34aee88191b6c4841a5bab8ff1"
+        },
+        {
+          "filename": "Chapter2-partial11-keyposes-10-of17.zip",
+          "library_file_id": "libfile_6d8b7fbdb19c819193610cc2943ada13"
+        },
+        {
+          "filename": "Chapter2-partial11-keyposes-11-of17.zip",
+          "library_file_id": "libfile_b1e8763b7fe88191a8b95805b465fc6a"
+        },
+        {
+          "filename": "Chapter2-partial11-keyposes-12-of17.zip",
+          "library_file_id": "libfile_c920e7f592a88191a3ef7b50600f62a3"
+        },
+        {
+          "filename": "Chapter2-partial11-keyposes-13-of17.zip",
+          "library_file_id": "libfile_5009dd9713108191bf69dd60bf968990"
+        },
+        {
+          "filename": "Chapter2-partial11-keyposes-14-of17.zip",
+          "library_file_id": "libfile_be3731a038f08191b8e5f8ddcce1f67c"
+        },
+        {
+          "filename": "Chapter2-partial11-keyposes-15-of17.zip",
+          "library_file_id": "libfile_2132c6629ea08191b7d62d8f6f51b5ec"
+        },
+        {
+          "filename": "Chapter2-partial11-keyposes-16-of17.zip",
+          "library_file_id": "libfile_723d4f1aa4988191bc02decab35f04a4"
+        },
+        {
+          "filename": "Chapter2-partial11-keyposes-17-of17.zip",
+          "library_file_id": "libfile_3b78e73b49f88191aabe921fa85ed660"
+        }
+      ]
+    },
+    {
+      "id": "signature-first8-static-fx",
+      "new_static_drawings": 11,
+      "reused_static_drawings": 5,
+      "animated_frames": 0,
+      "derived_variants": 48,
+      "guide_url": "https://drive.google.com/file/d/1ulPFcq4GL64Zfjg0R2k6EBvvONavUqbU/view?usp=drivesdk",
+      "manifest_sha256": "809c5cb66d2d019107cda6da9175567b9870f01647f9a71f3853cb3842e852b6",
+      "zip_count": 4,
+      "bytes": 8734649,
+      "limits": "rootcore/root_hit low contrast on dark;castdecorative notsolehazard;bloodcore pointsdownleft;game/telegraph/collision/GPUunverified"
+    }
+  ],
+  "pending_batches": [
+    {
+      "id": "chapter2-body-forms",
+      "status": "source/derived review ongoing; mandatory canonical phases not all complete"
+    }
+  ],
+  "roster": [
+    {
+      "boss_id": "dist00-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "accepted_first8_keypose_candidate_not_all_forms_certified",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-dist01",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "accepted_initial_keypose_candidate_reuse",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-dist02",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "accepted_initial_keypose_candidate_reuse",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-dist03",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "accepted_first8_keypose_candidate_not_all_forms_certified",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-dist04",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "accepted_first8_keypose_candidate_not_all_forms_certified",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-dist05",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "accepted_first8_keypose_candidate_not_all_forms_certified",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "dist06-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "accepted_initial_keypose_candidate_reuse",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-dist06",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "accepted_first8_keypose_candidate_not_all_forms_certified",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-ep1a07",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "accepted_first8_keypose_candidate_not_all_forms_certified",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-ep1a08",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "accepted_first8_keypose_candidate_not_all_forms_certified",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-ep1a09",
+      "source_role": "conditional-art-only",
+      "source_status": "conditional-no-new-independent-boss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-ep1a10",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "accepted_first8_keypose_candidate_not_all_forms_certified",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "a11-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "accepted_initial_keypose_candidate_reuse",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "a11-cosmic-v31318",
+      "source_role": "conditional-art-only",
+      "source_status": "conditional-no-new-independent-boss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-ep1a11",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "accepted_initial_keypose_candidate_reuse",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-ep1b01",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "b02-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-ep1b02",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "b03-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-ep1b03",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "b04-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-ep1b04",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "b05-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-ep1b05",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "b06-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-ep1b06",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "b06b-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-ep1b06b",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "b07-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-ep1b07",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "b08-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-ep1b08",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "b09-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-ep1b09",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "u201-mid",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "u202-mid",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "u204-mid",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "u205-mid",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "u206-mid",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "u203-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "u203-mid",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "l305-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "l301-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-last302-v31231",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "l303-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-kair01-v31231",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-kair04-v31231",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "kair-great-01",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "kair-great-02",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "kair-great-04",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "kair-great-05",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-kair09-v31231",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "kair-great-06",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "kair-great-03",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "k103-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-hando01",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-hando02",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "h103-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-hando03",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-murder01",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "mb-murder02",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "murder04-mid",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "blue-executor",
+      "source_role": "conditional-art-only",
+      "source_status": "conditional-no-new-independent-boss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false,
+      "canonical_status": "REQUIRED_CANONICAL_ENCOUNTER_L804_L808_DO_NOT_MERGE_MB_MURDER03"
+    },
+    {
+      "boss_id": "mb-murder03",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "c101-mid",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "c102-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "c105-mid",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "c106-mid",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "c103-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "c103-mid",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "c104-boss",
+      "source_role": "boss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    },
+    {
+      "boss_id": "c104-mid",
+      "source_role": "midboss",
+      "source_status": "required-existing-runtime-boss-or-midboss",
+      "asset_status": "pending",
+      "implementation_status": "not_verified_by_index",
+      "all_required_forms_complete": false
+    }
+  ],
+  "consumer_rules": [
+    "Poll this same Drive file ID for new revisions. Do not infer completion from unchanged index.",
+    "Parent generates assets; consumer does not regenerate assets.",
+    "No final merge/deploy until all required assets and full story tests pass, under user authorization.",
+    "If Drive retrieval denied, stop that path; no access bypass."
+  ],
+  "required_forms_complete": false,
+  "scope_audit_status": "Required forms addendum supersedes initial conditional classification; working70 identity count,16 mandatory-form gates; not final all-assets completion.",
+  "required_forms_addendum": {
+    "url": "https://drive.google.com/file/d/1KLOdgM5_QAdf_-jWGCyOtsm_JYWooQke/view?usp=drivesdk",
+    "library_file_id": "libfile_b8ce24b621588191901c32c7dcbabda5",
+    "sha256": "fa73528c57d56ae5e1841f2c08463c3d243cc8634c48b40ce771814f24e659fb",
+    "precedence": "supersedes prior scope decisions, old frozen docs preserved",
+    "all_form_gates_complete": false
+  },
+  "required_form_assets_complete": false,
+  "runtime_validation_status": "consumer_codex_pending",
+  "completion_contract": {
+    "generation_complete": "ALL parent-required visual asset generation, independent art QA, delivery uploads complete; does NOT depend on consumer game validation",
+    "required_form_assets_complete": "mandatory canonical visual forms asset coverage only",
+    "required_forms_complete": "deprecated ambiguous flag, currently false; use required_form_assets_complete",
+    "consumer_runtime_validation": "consumer independently tests16 canonical runtime gates and full story after assets; parent art flag is NOT runtime PASS"
+  }
+}

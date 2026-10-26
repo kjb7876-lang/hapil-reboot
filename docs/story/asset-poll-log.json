@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "polls": [
+    {
+      "observedRevision": 3,
+      "providerRevisionId": "0B0bW3c3qaZ1OVmI5Sjl1aDFvQVZHdFVCSFFBWUU0WGh4V1VvPQ",
+      "sha256": "9132e32c297096d3606e20312233cf309dcb03a5c779fc4ccd7d79496058a111",
+      "snapshot": "docs/story/LIVE-ASSET-INDEX-r3.json"
+    },
+    {
+      "observedRevision": 5,
+      "providerRevisionId": "0B0bW3c3qaZ1OUVIyLzAwVVVTQ08yK2NiQ2pGa1lPcnNadkhRPQ",
+      "sha256": "88b5dda6e17854312c1cbb89657ca690683683ef224ea65b35df35fbb5b6d6a7",
+      "snapshot": "docs/story/LIVE-ASSET-INDEX-r5.json",
+      "observedAt": "2026-10-26T15:29:36.783780+00:00"
+    },
+    {
+      "observedAt": "2026-10-26T15:39:21.973249+00:00",
+      "observedRevision": 5,
+      "providerRevisionId": "0B0bW3c3qaZ1OUVIyLzAwVVVTQ08yK2NiQ2pGa1lPcnNadkhRPQ",
+      "changed": false,
+      "downloadRepeated": false
+    }
+  ],
+  "access": "authenticated connected Google Drive: successful normal file_uri transfer",
+  "generationComplete": false,
+  "doNotInferAutomaticDotConnection": true
+}

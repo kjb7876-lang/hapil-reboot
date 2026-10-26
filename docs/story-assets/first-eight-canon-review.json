@@ -1,0 +1,402 @@
+{
+  "schemaVersion": 1,
+  "reviewId": "first-eight-canon-review",
+  "reviewMethod": "Independent direct inspection of all eight actual runtime atlases, all four cells per atlas, against original canonical scene text and the required-forms addendum. No image generation.",
+  "inputIndexSHA256": "0bd15f9eaafd2c3297a4db151a1c4aab7e91f81f02a6eea03abf0beaf1245da8",
+  "canonicalOriginalSHA256": "4b981a3d64c203a6b5b7d0b429aac452e22b43077a1f961a16afa5fc30406a90",
+  "requiredFormsAddendumSHA256": "fa73528c57d56ae5e1841f2c08463c3d243cc8634c48b40ce771814f24e659fb",
+  "reviewedBodyCount": 8,
+  "reviewedPoseCount": 32,
+  "bodyUsableTrueCount": 7,
+  "bodyUsableNotDeterminedCount": 1,
+  "bodyUsableFalseCount": 0,
+  "combatQAVerified": false,
+  "gameBrowserGPUVerified": false,
+  "physicalMobileVerified": false,
+  "allStorymodeAssetsComplete": false,
+  "noNewCanonicalCharactersInferred": true,
+  "scopeCorrections": [
+    {
+      "id": "root-body-no-invented-overgrowth-requirement",
+      "combatId": "dist00-boss",
+      "observedIndexClaim": "root-bound-seraph body candidate only; separate black-root-overgrowth not supplied",
+      "canonicalResolution": "The root-bound winged body is visible. Original scene01 does not explicitly mandate an additional black-root-overgrowth body. The addendum lists no such required form. Do not reject this candidate solely for omitting an invented mandatory second body. This does not certify attack/VFX/environment completeness.",
+      "sourceRange": [
+        109,
+        115
+      ]
+    },
+    {
+      "id": "collapse-runtime-adaptation-order",
+      "combatId": "mb-ep1a07",
+      "historicalSceneId": "dist06",
+      "sceneMappingCorrect": true,
+      "historicalOrderIssue": true,
+      "issue": "The frozen scene07 group has no internal ordering and can present the memory-devourer adaptation before Balrog/circle destruction, contrary to the causal sequence of the source.",
+      "canonicalRequiredEventOrder": [
+        "pillar approach",
+        "Balrog confrontation",
+        "strike Balrog and destroy summoning circle",
+        "vortex and remembered-world collapse",
+        "fall"
+      ],
+      "runtimeAdaptationOrderCorrection": [
+        [
+          "mb-dist06"
+        ],
+        [
+          "dist06-boss"
+        ],
+        [
+          "mb-ep1a07"
+        ]
+      ],
+      "correctionLocation": "src/story-scope.js routeOrderCorrections.dist06",
+      "correctionOrigin": "original prose, not an additional requirement in the forms addendum",
+      "sourceRange": [
+        158,
+        175
+      ],
+      "separateCanonicalMemoryDevourerPersonEstablished": false,
+      "sceneOutcomeTiming": "Fall belongs to the scene ending after all encounter adaptations; a Balrog win remains a combat win."
+    }
+  ],
+  "bodies": [
+    {
+      "combatId": "dist00-boss",
+      "canonicalSceneId": "dist00",
+      "sourceZone": "dist00",
+      "atlasFile": "media/story-bodies/dist00-boss-atlas-512.png",
+      "atlasSHA256": "da0feac5035bea2ec44e201f3b390fb99027762da47c4ddb1614e41a7342267f",
+      "atlasBytesVerified": true,
+      "viewedUsing": "view_image, original 512×512 runtime atlas",
+      "viewedPoseCount": 4,
+      "fourPoseIdentityConsistent": true,
+      "visibleObservation": "Across all four cells: the same armored winged humanoid, pale feathered wing mass, dark branching roots wrapped around the head/upper body and extended root claws, red hanging cloth. Root branching, face/helmet shape, wing placement and armor remain recognizable while arm/root reach changes.",
+      "noVisibleCrossBossSubstitutionWithinReviewedBatch": true,
+      "externalNormalizedReferenceIdentityIndependentlyCertified": false,
+      "sourceAnchor": {
+        "canonicalOriginalSHA256": "4b981a3d64c203a6b5b7d0b429aac452e22b43077a1f961a16afa5fc30406a90",
+        "sourceRange": [
+          109,
+          115
+        ],
+        "exactText": "[01 · dist00] 악마화 나무의 정원\n\n궁전 정원에 서 있던 기억이 남아 있다. 검은 나무는 성벽보다 높이 자라 있었고, 뿌리는 돌바닥과 무너진 회랑을 지나 천사의 날개까지 휘감고 있었다. 뿌리 사이에 갇힌 천사는 자신의 이름을 기억하지 못했다.\n\n그곳에서는 이름을 잊는 일이 고통에서 벗어나는 길처럼 느껴졌다. 기억을 놓기만 하면 더는 괴롭지 않을 것 같았다. 그러나 무엇을 잃었는지도 모르는 평온을 구원으로 받아들일 수는 없었다. 나는 다가오는 뿌리 앞에서 검을 들었다.\n\n천사의 몸을 묶은 가장 굵은 뿌리를 베자 형상이 무너졌다. 검날에는 검은 수액이 묻었지만, 나무의 중심은 여전히 닿을 수 없는 곳에서 뛰고 있었다. 기억도 돌아오지 않았다. 그 장면이 전투의 시작이었는지, 이미 지나간 기억의 일부였는지 알 수 없었다. 다만 갈라진 뿌리 사이로 길이 열렸고, 그 너머에는 사람의 뼈로 거미줄을 짠 동굴이 있었다."
+      },
+      "historicalSourceAnchors": [
+        "portable-data.json#/mainlineRosterExpectations/zones/1/sourceActors/0",
+        "narrative-20261026.read-copy.txt:L109-L116",
+        "source-data_world-v31217.js:L179"
+      ],
+      "canonicalIdentityAssessment": "Supports the source root-bound angel presentation. The prose names roots winding around angel wings and a nameless trapped angel; it does not require a separately named black-root-overgrowth body.",
+      "addendumRequiredFormIdsForThisCombat": [],
+      "addendumAddsNoSpecificFormForThisCombat": true,
+      "bodyUsableForIntegration": true,
+      "bodyUseScope": "identity-consistent body-keypose candidate only; not a claim of final narrative/combat readiness",
+      "integrationConstraints": [
+        "The atlas alone does not show the whole palace garden, tree-center survival or the opened route.",
+        "Do not turn the visually aggressive root-bound presentation into a newly named canonical angel or claim the trapped angel knowingly chose evil."
+      ],
+      "mandatoryFormsCompleteCertified": false,
+      "combatQAVerified": false,
+      "gameBrowserGPUVerified": false,
+      "physicalMobileVerified": false,
+      "physicalPivotsCertified": false,
+      "fullyInterpolatedAnimationVerified": false
+    },
+    {
+      "combatId": "mb-dist03",
+      "canonicalSceneId": "dist03",
+      "sourceZone": "dist03",
+      "atlasFile": "media/story-bodies/mb-dist03-atlas-512.png",
+      "atlasSHA256": "816417849837d2645a650143d86ef0b48113b0f45f4a8a917c39d558d16ed1d7",
+      "atlasBytesVerified": true,
+      "viewedUsing": "view_image, original 512×512 runtime atlas",
+      "viewedPoseCount": 4,
+      "fourPoseIdentityConsistent": true,
+      "visibleObservation": "All four cells show the same dark red armored humanoid with closed helmet, ragged red cloth and long red-edged sword. Sword positions progress from raised to downward/low arcs and a reset posture; armor/helmet palette and sword silhouette remain consistent.",
+      "noVisibleCrossBossSubstitutionWithinReviewedBatch": true,
+      "externalNormalizedReferenceIdentityIndependentlyCertified": false,
+      "sourceAnchor": {
+        "canonicalOriginalSHA256": "4b981a3d64c203a6b5b7d0b429aac452e22b43077a1f961a16afa5fc30406a90",
+        "sourceRange": [
+          142,
+          148
+        ],
+        "exactText": "[04 · dist03] 무너진성\n\n북쪽으로 향하는 길에는 검은 재와 끊어진 봉인 사슬이 남아 있었다. 무너진 성의 중심에서 검은 기둥 일곱 개가 보였다. 그 사이로 불길이 솟았고, 박쥐 날개와 황소의 뿔을 지닌 거대한 형상이 어른거렸다. 발록이라는 이름이 기억보다 먼저 떠올랐다.\n\n그곳에서 나는 한 사람의 인식과 그가 살아가는 세계를 떼어 놓을 수 없다는 생각에 사로잡혔다. 내가 죽으면 내가 기억하는 사람들도 함께 사라질 것 같았다. 발록 앞에서 느끼는 공포는 목숨을 잃는 두려움만은 아니었다. 겨우 붙들고 온 모든 존재를 다시 잃을 것 같은 두려움이었다.\n\n아직 소환진의 중심까지 닿을 수는 없었다. 나는 길을 막은 핏빛 추격자들을 지나, 안쪽으로 나아갔다."
+      },
+      "historicalSourceAnchors": [
+        "portable-data.json#/mainlineRosterExpectations/zones/4/sourceActors/4",
+        "narrative-20261026.read-copy.txt:L142-L149"
+      ],
+      "canonicalIdentityAssessment": "A blood-red pursuer is compatible with the prose blood-red pursuers blocking the approach. Detailed armor, individual naming and sword design are runtime adaptation details, not canonically described anatomy.",
+      "addendumRequiredFormIdsForThisCombat": [],
+      "addendumAddsNoSpecificFormForThisCombat": true,
+      "bodyUsableForIntegration": true,
+      "bodyUseScope": "identity-consistent body-keypose candidate only; not a claim of final narrative/combat readiness",
+      "integrationConstraints": [
+        "The atlas cannot establish pursuit speed, calling dead comrades, actual hit areas, or the castle/ash/seal-chain environment."
+      ],
+      "mandatoryFormsCompleteCertified": false,
+      "combatQAVerified": false,
+      "gameBrowserGPUVerified": false,
+      "physicalMobileVerified": false,
+      "physicalPivotsCertified": false,
+      "fullyInterpolatedAnimationVerified": false
+    },
+    {
+      "combatId": "mb-dist04",
+      "canonicalSceneId": "dist04",
+      "sourceZone": "dist04",
+      "atlasFile": "media/story-bodies/mb-dist04-atlas-512.png",
+      "atlasSHA256": "0d19e8354db50002730f31a6d4c29adfb184b2d04645e7b503df8e059f8bbde3",
+      "atlasBytesVerified": true,
+      "viewedUsing": "view_image, original 512×512 runtime atlas",
+      "viewedPoseCount": 4,
+      "fourPoseIdentityConsistent": true,
+      "visibleObservation": "The same purple/blue spectral armored knight and ragged flowing cloak occupies each cell, with a bright curved violet blade. Head/helmet, shoulder treatment, spectral cloth color and weapon remain recognizable across four poses.",
+      "noVisibleCrossBossSubstitutionWithinReviewedBatch": true,
+      "externalNormalizedReferenceIdentityIndependentlyCertified": false,
+      "sourceAnchor": {
+        "canonicalOriginalSHA256": "4b981a3d64c203a6b5b7d0b429aac452e22b43077a1f961a16afa5fc30406a90",
+        "sourceRange": [
+          150,
+          156
+        ],
+        "exactText": "[05 · dist04] 시체들이 되살아난 밤\n\n불타는 성\n그리고 그곳에는 묘지들이 있었다.\n묘지라기보다는 시체들로 이루어진 언덕 같았다.\n그리고 그곳에서 익숙한 모습의 동료들을 다시 마주쳤다.\n다만, 이번에는 악마화된 적의 모습으로 그러하였다."
+      },
+      "historicalSourceAnchors": [
+        "portable-data.json#/mainlineRosterExpectations/zones/5/sourceActors/4",
+        "narrative-20261026.read-copy.txt:L150-L157"
+      ],
+      "canonicalIdentityAssessment": "Usable as the accepted runtime projection of an enemy-shaped fallen comrade. The prose specifies former companions encountered as demonized enemies, but gives no canonical purple-versus-teal palette or independent named knight.",
+      "addendumRequiredFormIdsForThisCombat": [],
+      "addendumAddsNoSpecificFormForThisCombat": true,
+      "bodyUsableForIntegration": true,
+      "bodyUseScope": "identity-consistent body-keypose candidate only; not a claim of final narrative/combat readiness",
+      "integrationConstraints": [
+        "This review does not independently certify the older reference-selection decision; only the supplied runtime atlas was viewed.",
+        "Do not replace the plural comrades event with a new unrelated named knight, or invent a specific first-comrade biography from the runtime label."
+      ],
+      "mandatoryFormsCompleteCertified": false,
+      "combatQAVerified": false,
+      "gameBrowserGPUVerified": false,
+      "physicalMobileVerified": false,
+      "physicalPivotsCertified": false,
+      "fullyInterpolatedAnimationVerified": false
+    },
+    {
+      "combatId": "mb-dist05",
+      "canonicalSceneId": "dist05",
+      "sourceZone": "dist05",
+      "atlasFile": "media/story-bodies/mb-dist05-atlas-512.png",
+      "atlasSHA256": "1666b128899a1076b4db146c52b58e66e415b01034f95ef5086039f4556b426d",
+      "atlasBytesVerified": true,
+      "viewedUsing": "view_image, original 512×512 runtime atlas",
+      "viewedPoseCount": 4,
+      "fourPoseIdentityConsistent": true,
+      "visibleObservation": "Across four cells the same hooded, faceless dark-robed figure has pale skeletal-looking hands, gold/brown trim and long ragged cloth. A pale rectangular hand-held object remains part of the presentation; arm reach and leaning direction change while the robe/head identity stays stable.",
+      "noVisibleCrossBossSubstitutionWithinReviewedBatch": true,
+      "externalNormalizedReferenceIdentityIndependentlyCertified": false,
+      "sourceAnchor": {
+        "canonicalOriginalSHA256": "4b981a3d64c203a6b5b7d0b429aac452e22b43077a1f961a16afa5fc30406a90",
+        "sourceRange": [
+          158,
+          162
+        ],
+        "exactText": "[06 · dist05] 일곱 기둥\n동료들마저 쓰러뜨리고\n소환진에 가까워질수록 일곱 기둥의 불빛이 짙어졌다. 안쪽에는 거대한 그림자가 있었지만, 불길에 가려 온전한 형체를 볼 수 없었다. 기둥에 남은 불씨와 땅을 가른 채찍 자국이 문지기의 위치를 알려 주고 있었다.\n\n나는 기둥을 지키는 악마들을 하나씩 쓰러뜨렸다. 마지막 사슬 앞에 섰을 때에도 천사의 목소리는 나를 안심시키고 있었다. 그 안도감 때문에 여기까지 올 수 있었다고 생각하곤 했었다."
+      },
+      "historicalSourceAnchors": [
+        "portable-data.json#/mainlineRosterExpectations/zones/6/sourceActors/4",
+        "narrative-20261026.read-copy.txt:L158-L163"
+      ],
+      "canonicalIdentityAssessment": "Usable as a source-roster stage-guardian adaptation in the pillar approach. The prose does not independently identify a dead messenger in this scene, so the sourceName is not evidence for a new messenger character or new speech.",
+      "addendumRequiredFormIdsForThisCombat": [],
+      "addendumAddsNoSpecificFormForThisCombat": true,
+      "bodyUsableForIntegration": true,
+      "bodyUseScope": "identity-consistent body-keypose candidate only; not a claim of final narrative/combat readiness",
+      "integrationConstraints": [
+        "The atlas does not demonstrate which pillar is guarded or its attack rules.",
+        "The held object must not be used to invent an unprovided letter, prophecy or messenger dialogue."
+      ],
+      "mandatoryFormsCompleteCertified": false,
+      "combatQAVerified": false,
+      "gameBrowserGPUVerified": false,
+      "physicalMobileVerified": false,
+      "physicalPivotsCertified": false,
+      "fullyInterpolatedAnimationVerified": false
+    },
+    {
+      "combatId": "mb-dist06",
+      "canonicalSceneId": "dist06",
+      "sourceZone": "dist06",
+      "atlasFile": "media/story-bodies/mb-dist06-atlas-512.png",
+      "atlasSHA256": "d6b57b666aca5219146cbac2198c31e0bae7a0b60da1f553c2d36ac34bfe59d9",
+      "atlasBytesVerified": true,
+      "viewedUsing": "view_image, original 512×512 runtime atlas",
+      "viewedPoseCount": 4,
+      "fourPoseIdentityConsistent": true,
+      "visibleObservation": "All cells depict the same nonhuman black plated column/totem shape, narrow bright orange fissure/core, repeated round metal/stone protrusions, claw-like lower limbs and a debris base. Upper appendages alternate raised/lowered while the central silhouette and core remain stable.",
+      "noVisibleCrossBossSubstitutionWithinReviewedBatch": true,
+      "externalNormalizedReferenceIdentityIndependentlyCertified": false,
+      "sourceAnchor": {
+        "canonicalOriginalSHA256": "4b981a3d64c203a6b5b7d0b429aac452e22b43077a1f961a16afa5fc30406a90",
+        "sourceRange": [
+          158,
+          170
+        ],
+        "exactText": "[06 · dist05] 일곱 기둥\n동료들마저 쓰러뜨리고\n소환진에 가까워질수록 일곱 기둥의 불빛이 짙어졌다. 안쪽에는 거대한 그림자가 있었지만, 불길에 가려 온전한 형체를 볼 수 없었다. 기둥에 남은 불씨와 땅을 가른 채찍 자국이 문지기의 위치를 알려 주고 있었다.\n\n나는 기둥을 지키는 악마들을 하나씩 쓰러뜨렸다. 마지막 사슬 앞에 섰을 때에도 천사의 목소리는 나를 안심시키고 있었다. 그 안도감 때문에 여기까지 올 수 있었다고 생각하곤 했었다.\n\n[07 · dist06] 추락\n마침내 궁전의 중심부 그곳!\n마지막 봉인 너머에서 발록이 모습을 드러냈다. 가까이서 마주하자, 그의 모습에 압도되었다.\n이내 전투가 펼쳐졌다.\n발록의 검이 공간을 갈랐고, 불덩이가 하늘을 뒤덮었다. 나는 무너진 기둥 뒤에서 숨을 고르고 겨우 싸우고 있었다. 그때 천사가 주던 따뜻함이 다시 찾아왔다. 그러자 소환진을 파괴하면 모든 고통이 끝날 것이라는 확신이 들었다.\n\n나는 불길 속으로 뛰어들어 발록의 가슴에 무기를 적중시켰다. 이어 소환진을 무기를 이용해 파괴하였다. 그러자 소환진이 파괴되며 바닥이 갈라졌다."
+      },
+      "historicalSourceAnchors": [
+        "portable-data.json#/mainlineRosterExpectations/zones/7/sourceActors/4",
+        "narrative-20261026.read-copy.txt:L164-L176"
+      ],
+      "canonicalIdentityAssessment": "Usable as the runtime black-pillar/summoning-defense adaptation. The source has black pillars and a summoning-circle approach; a mobile clawed column is an art/gameplay adaptation and does not establish another named demon.",
+      "addendumRequiredFormIdsForThisCombat": [],
+      "addendumAddsNoSpecificFormForThisCombat": true,
+      "bodyUsableForIntegration": true,
+      "bodyUseScope": "identity-consistent body-keypose candidate only; not a claim of final narrative/combat readiness",
+      "integrationConstraints": [
+        "A body atlas alone cannot establish seven-pillar coverage, seal progression or when the summoning circle is destroyed.",
+        "Use the explicit prose-derived runtime ordering correction: pillar encounter before Balrog, then the post-circle collapse encounter."
+      ],
+      "mandatoryFormsCompleteCertified": false,
+      "combatQAVerified": false,
+      "gameBrowserGPUVerified": false,
+      "physicalMobileVerified": false,
+      "physicalPivotsCertified": false,
+      "fullyInterpolatedAnimationVerified": false
+    },
+    {
+      "combatId": "mb-ep1a07",
+      "canonicalSceneId": "dist06",
+      "sourceZone": "ep1a07",
+      "atlasFile": "media/story-bodies/mb-ep1a07-atlas-512.png",
+      "atlasSHA256": "b2cc2e081affeaf9c0509f8b98e4894b814a95dbc0015e11403dd52d8996b9c8",
+      "atlasBytesVerified": true,
+      "viewedUsing": "view_image, original 512×512 runtime atlas",
+      "viewedPoseCount": 4,
+      "fourPoseIdentityConsistent": true,
+      "visibleObservation": "The same purple/teal spined monster with a large toothed dark mouth, small bright eyes, gold-colored protrusions and curled lower appendages appears in four cells. The lower-left cell presents a more angled/elongated body, while matching face/mouth, color pattern and protrusions preserve identity.",
+      "noVisibleCrossBossSubstitutionWithinReviewedBatch": true,
+      "externalNormalizedReferenceIdentityIndependentlyCertified": false,
+      "sourceAnchor": {
+        "canonicalOriginalSHA256": "4b981a3d64c203a6b5b7d0b429aac452e22b43077a1f961a16afa5fc30406a90",
+        "sourceRange": [
+          164,
+          175
+        ],
+        "exactText": "[07 · dist06] 추락\n마침내 궁전의 중심부 그곳!\n마지막 봉인 너머에서 발록이 모습을 드러냈다. 가까이서 마주하자, 그의 모습에 압도되었다.\n이내 전투가 펼쳐졌다.\n발록의 검이 공간을 갈랐고, 불덩이가 하늘을 뒤덮었다. 나는 무너진 기둥 뒤에서 숨을 고르고 겨우 싸우고 있었다. 그때 천사가 주던 따뜻함이 다시 찾아왔다. 그러자 소환진을 파괴하면 모든 고통이 끝날 것이라는 확신이 들었다.\n\n나는 불길 속으로 뛰어들어 발록의 가슴에 무기를 적중시켰다. 이어 소환진을 무기를 이용해 파괴하였다. 그러자 소환진이 파괴되며 바닥이 갈라졌다.\n하지만, 갈라진 것은 바닥만이 아니었다. 하늘 한가운데에 검은 소용돌이가 생기더니 돌벽과 시체, 무기와 기둥을 한꺼번에 집어삼키기 시작했다.\n\n나도 그 안으로 끌려 들어갔다. 거미동굴과 늪지대, 죽은 동료들과 발록의 모습이 차례로 부서졌다. 나는 내가 누구였는지 떠올리려 했지만, 남아 있던 기억마저 붙잡을 수 없었다.\n\n끝까지 사라지지 않은 것은 천사의 목소리였다. 내가 마지막 수호자이며 자신을 온전히 믿기만 하면 된다는 감각이 어둠 속에서도 따라왔다. 나는 그 목소리 하나만을 붙든 채 추락하게 되었다."
+      },
+      "historicalSourceAnchors": [
+        "portable-data.json#/mainlineRosterExpectations/zones/8/sourceActors/3",
+        "narrative-20261026.read-copy.txt:L164-L176"
+      ],
+      "canonicalIdentityAssessment": "Usable only as the runtime adaptation of the vortex/memory-collapse passage after the summoning circle breaks. The prose never names a separate memory-devourer person or an independent canonical battle against this creature.",
+      "addendumRequiredFormIdsForThisCombat": [],
+      "addendumAddsNoSpecificFormForThisCombat": true,
+      "bodyUsableForIntegration": true,
+      "bodyUseScope": "identity-consistent body-keypose candidate only; not a claim of final narrative/combat readiness",
+      "integrationConstraints": [
+        "Its placement in canonical scene07/dist06 is appropriate; ep1a07 is the runtime zone alias, not evidence for another numbered scene.",
+        "The historical unordered scene group could permit this presentation before Balrog. The r3 overlay now orders mb-dist06, dist06-boss, mb-ep1a07 using original prose, without changing the historical census.",
+        "Scene-level forced fall follows all scene encounters; Balrog itself must not be labeled a forced-loss fight."
+      ],
+      "mandatoryFormsCompleteCertified": false,
+      "combatQAVerified": false,
+      "gameBrowserGPUVerified": false,
+      "physicalMobileVerified": false,
+      "physicalPivotsCertified": false,
+      "fullyInterpolatedAnimationVerified": false
+    },
+    {
+      "combatId": "mb-ep1a08",
+      "canonicalSceneId": "ep1a08",
+      "sourceZone": "ep1a08",
+      "atlasFile": "media/story-bodies/mb-ep1a08-atlas-512.png",
+      "atlasSHA256": "85fa20c020862f9a73bacee5611c65db8c7bf32caae43da7233a0c588dfce868",
+      "atlasBytesVerified": true,
+      "viewedUsing": "view_image, original 512×512 runtime atlas",
+      "viewedPoseCount": 4,
+      "fourPoseIdentityConsistent": true,
+      "visibleObservation": "All four cells depict the same masked/featureless pale-faced figure wearing a stained light coat over dark limb coverings and carrying a long white blade-like implement. The coat, mask, dark arm shapes and implement persist across raised, downward, follow-through and reset-like positions.",
+      "noVisibleCrossBossSubstitutionWithinReviewedBatch": true,
+      "externalNormalizedReferenceIdentityIndependentlyCertified": false,
+      "sourceAnchor": {
+        "canonicalOriginalSHA256": "4b981a3d64c203a6b5b7d0b429aac452e22b43077a1f961a16afa5fc30406a90",
+        "sourceRange": [
+          177,
+          185
+        ],
+        "exactText": "[08 · ep1a08] 피로 물든 병원\n\n눈을 뜨자 차가운 형광등과 소독약 냄새가 나를 맞았다. 갑옷 대신 환자복을 입고 있었고, 손목은 침대에 묶여 있었다. 가까운 곳에서 가느다란 전자음이 이어졌다.\n\n복도에는 피가 흘러 있었고, 벽에는 도움을 청하는 붉은 글씨가 적혀 있었다. 의사가 다가왔지만 그의 말은 제대로 들리지 않았다. 육육육과 루시퍼, 복종이라는 말만이 서로 엉겨 내 귀에 닿았다. 천사의 존재는 여전히 머릿속에 남아 있었다. 치료를 받으면 영혼을 빼앗길 것 같은 공포가 머릿속에 밀려오곤 했다.\n\n그러다가 눈앞의 풍경이 잠깐 눈에 들어왔다. 피처럼 보이던 것이 사라지고, 악마의 얼굴 위로 의료진의 얼굴이 겹쳐졌다. 같은 복도가 번갈아 다른 곳이 되곤 하였다.  어느 쪽이 현실인지 알 수 없었다. 다만 처음 온 장소처럼 낯설지만은 않은 감각이었다.\n\n어느새 주사기를 든 간호사가 다가왔고 몸은 금세 굳어버렸다. 해치려는 것인지 도우려는 것인지 판단할 수 없었다. 그렇기에 나는 주사기를 내미는 사람보다, 내 안에서 들리는 목소리를 더욱 믿게 되어갔다."
+      },
+      "historicalSourceAnchors": [
+        "portable-data.json#/mainlineRosterExpectations/zones/9/sourceActors/4",
+        "narrative-20261026.read-copy.txt:L177-L186"
+      ],
+      "canonicalIdentityAssessment": "Identity is consistent as one frightening perception-world candidate. The original alternates apparent blood/demonic faces with healthcare workers and does not establish an actual murderous doctor or nurse.",
+      "addendumRequiredFormIdsForThisCombat": [],
+      "addendumAddsNoSpecificFormForThisCombat": true,
+      "bodyUsableForIntegration": "notdetermined",
+      "bodyUseScope": "identity-consistent body-keypose candidate only; not a claim of final narrative/combat readiness",
+      "integrationConstraints": [
+        "A static masked, blood-stained medical-looking attacker cannot itself prove the necessary hallucination/reality distinction.",
+        "Before enabling this body in the narrative encounter, verify that actual medical staff remain helpers, perception transitions are legible, and progress is not presented as harming treatment staff.",
+        "The later source explicitly shows respiration checks, care preparation, help-seeking, prolonged treatment and support; this atlas alone verifies none of those."
+      ],
+      "mandatoryFormsCompleteCertified": false,
+      "combatQAVerified": false,
+      "gameBrowserGPUVerified": false,
+      "physicalMobileVerified": false,
+      "physicalPivotsCertified": false,
+      "fullyInterpolatedAnimationVerified": false
+    },
+    {
+      "combatId": "mb-ep1a10",
+      "canonicalSceneId": "ep1a10",
+      "sourceZone": "ep1a10",
+      "atlasFile": "media/story-bodies/mb-ep1a10-atlas-512.png",
+      "atlasSHA256": "ba63da3f748dd4af52f532262efce5b83aae801843d438d4f0c20b98961a35df",
+      "atlasBytesVerified": true,
+      "viewedUsing": "view_image, original 512×512 runtime atlas",
+      "viewedPoseCount": 4,
+      "fourPoseIdentityConsistent": true,
+      "visibleObservation": "The same broad gold/brown armored humanoid with a pale face, dark rounded torso centerpiece and multiple curved pale blade-like appendages appears in all four cells. Both arms raise, strike down and reset; the head, torso disk and surrounding appendages remain recognizable.",
+      "noVisibleCrossBossSubstitutionWithinReviewedBatch": true,
+      "externalNormalizedReferenceIdentityIndependentlyCertified": false,
+      "sourceAnchor": {
+        "canonicalOriginalSHA256": "4b981a3d64c203a6b5b7d0b429aac452e22b43077a1f961a16afa5fc30406a90",
+        "sourceRange": [
+          205,
+          218
+        ],
+        "exactText": "[10 · ep1a10] 환자와 중독의 도시\n\n어느새\n정신이 돌아왔을 때는 의료진들이 내 호흡을 확인하고 처치를 준비하고 있었다. 내게 붙은 이름은 마지막 수호자가 아니었다. 오피오이드 사용장애, 펜타닐 의존증, 그리고 약물로 인한 정신병적 증상이 의심된다는 기록만이 적혀 있었다.\n\n내 이름을 생각하려 했지만 아무것도 떠오르지 않았다. 수호자와 EGO, 마지막 인간이라는 말은 기억하고 있었다. 그러나 어느 것도 내 이름은 아니었다. 그리고 천사는 여전히 내가 선택받았다고 믿게 만들고 있었다.\n\n조금씩 이상한 점이 보이기 시작했다. 천사의 목소리를 들을 때마다 몸은 약을 갈망했다. 의사가 치료를 말하면 그 목소리는 분노를 유발했고, 내가 치료를 의심하면 천사는 다시 나를 감싸 주었다. 나를 지킨다는 존재가, 나를 도우려는 사람들에게서 계속 떼어 놓고 있었다.\n\n다시 눈을 떴을 때에는 주사기가 달빛을 반사하는 폐허가 펼쳐져 있었다. 벽에는 내가 스스로를 속이던 생각들이 남아 있었다. 나는 다른 사람과 다르며, 마음만 먹으면 끊을 수 있고, 이번이 마지막이라는 믿음이었다. 거리에는 처음 약을 사용하던 나와 더 강한 자극을 찾던 나, 충고를 비웃고 거짓말하던 내가 쓰러져 있었다.\n\n나는 이 세계를 외부의 악마 탓으로만 돌리고 있었다. 그 안에는 내 오만과 호기심, 내 목숨을 가볍게 여긴 선택도 쌓여 있었다. 선택받은 수호자라는 이름을 내려놓자, 치료가 필요한 내가 남았다.\n\n그 사실을 인정하는 순간이 가장 두려웠다. 그래도 나는 의료진에게 도움을 청했다. 다시 시작할 수 있다면 치료를 받는 쪽을 선택하고 싶었다. 병원 복도에 빛이 드리우자 세상이 뒤틀렸고, 초천사의 이마에 검은 숫자 666이 떠올랐다."
+      },
+      "historicalSourceAnchors": [
+        "portable-data.json#/mainlineRosterExpectations/zones/11/sourceActors/4",
+        "narrative-20261026.read-copy.txt:L205-L219"
+      ],
+      "canonicalIdentityAssessment": "Usable as the existing runtime pride/ruin projection. The prose contains dependency, self-deception, former self images, a syringe-lit ruin and the choice to seek treatment; it does not literally describe this armored figure as a separately named person.",
+      "addendumRequiredFormIdsForThisCombat": [],
+      "addendumAddsNoSpecificFormForThisCombat": true,
+      "bodyUsableForIntegration": true,
+      "bodyUseScope": "identity-consistent body-keypose candidate only; not a claim of final narrative/combat readiness",
+      "integrationConstraints": [
+        "Do not identify the armored body as the actual patient, an evil healthcare worker or a separately canonized ruler.",
+        "The atlas is not evidence for the required craving/denial/help-seeking narrative or the 666 reveal."
+      ],
+      "mandatoryFormsCompleteCertified": false,
+      "combatQAVerified": false,
+      "gameBrowserGPUVerified": false,
+      "physicalMobileVerified": false,
+      "physicalPivotsCertified": false,
+      "fullyInterpolatedAnimationVerified": false
+    }
+  ],
+  "limits": [
+    "Pose labels describe four authored keyposes; they do not establish continuous or physically accurate animation.",
+    "Visible identity consistency does not establish attack telegraphs, collision timing, canonical narrative transitions or GPU/mobile rendering performance.",
+    "Several source encounter names are runtime adaptations without independently named prose counterparts; no new dialogue, histories or characters may be inferred from these atlases.",
+    "All eight combat IDs lack a dedicated row in the 16-entry required-forms addendum; that absence neither invents a new form requirement nor proves all other runtime requirements complete."
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "boss-scope-manifest.json": {
+    "sha256": "7f16e287b95bda27dfc96a49ffa79457220fa9db0ef1a362b83000c07207145e",
+    "bytes": 433246
+  },
+  "ROSTER.md": {
+    "sha256": "21cefb9632dff00636d891c59fac79a7c3d0c422e6d9afe229bd8e03782956eb",
+    "bytes": 18949
+  },
+  "HANDOFF.md": {
+    "sha256": "95ffab9184e7be18cba9e937ca06e6a346f8b1e979b944edf9fee7775583a003",
+    "bytes": 5956
+  },
+  "REFERENCE-INDEX.json": {
+    "sha256": "22a7e6bd9aeb16aab1ee9e7ec71eafb5aeec7ffe623f646c90eb9f3474113bcb",
+    "bytes": 172614
+  },
+  "WAVE1-FIRST8-REFERENCES.json": {
+    "sha256": "3645912d8f059ce89c75ab1f851ed69efe76d0b14af4543a57623f44730a7150",
+    "bytes": 16412
+  }
+}

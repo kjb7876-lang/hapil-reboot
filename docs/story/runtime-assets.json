@@ -1,0 +1,4113 @@
+{
+  "schemaVersion": 1,
+  "indexRevision": 5,
+  "indexSHA256": "88b5dda6e17854312c1cbb89657ca690683683ef224ea65b35df35fbb5b6d6a7",
+  "contentRevision": "storymode-canonical-1",
+  "bindings": {
+    "dist00-boss": {
+      "combatId": "dist00-boss",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "da0feac5035bea2ec44e201f3b390fb99027762da47c4ddb1614e41a7342267f",
+        "artSHA256": "8e72c1fab407502c20545d7330cf956162f4e5dcc0295687f28d48a3508010c2",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/story-bodies/dist00-boss-atlas-512.png": "da0feac5035bea2ec44e201f3b390fb99027762da47c4ddb1614e41a7342267f",
+          "media/story-first8-fx/root_core-64.png": "450c3c550e757036c7221456affce9dd60f990f6bf8801cdbc4a52b4ce0172a2",
+          "media/story-first8-fx/root_hit-96.png": "560716c7f043faa158618a302ef86c2dfa8138904f49d715b07238e256dc875b",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "media/forest.jpg": "e4d0f6a7803d51fc23b5b9af629d73f3489e1b450d294b1358499b84b6c99562"
+        }
+      },
+      "images": [
+        {
+          "key": "storyBodyDist00Boss",
+          "file": "media/story-bodies/dist00-boss-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "da0feac5035bea2ec44e201f3b390fb99027762da47c4ddb1614e41a7342267f",
+          "bytes": 284702
+        },
+        {
+          "key": "storyFirst8FxRootCore",
+          "file": "media/story-first8-fx/root_core-64.png",
+          "width": 64,
+          "height": 64,
+          "sha256": "450c3c550e757036c7221456affce9dd60f990f6bf8801cdbc4a52b4ce0172a2",
+          "bytes": 2599
+        },
+        {
+          "key": "storyFirst8FxRootHit",
+          "file": "media/story-first8-fx/root_hit-96.png",
+          "width": 96,
+          "height": 96,
+          "sha256": "560716c7f043faa158618a302ef86c2dfa8138904f49d715b07238e256dc875b",
+          "bytes": 7004
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        },
+        {
+          "key": "forest",
+          "file": "media/forest.jpg",
+          "width": 1536,
+          "height": 1024,
+          "sha256": "e4d0f6a7803d51fc23b5b9af629d73f3489e1b450d294b1358499b84b6c99562",
+          "bytes": 478555
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "dist00-boss",
+          "key": "storyBodyDist00Boss",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                140,
+                117
+              ],
+              "silk": [
+                140,
+                97
+              ],
+              "alpha8Bounds": [
+                40,
+                14,
+                238,
+                228
+              ],
+              "rgba_sha256": "f97e5d27bd551af8ae3d4f5abc5f979d0681aa1b551fde491c5b27cd31de6bfe",
+              "sourceRect": [
+                0,
+                0,
+                680,
+                642
+              ]
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                112,
+                122
+              ],
+              "silk": [
+                112,
+                102
+              ],
+              "alpha8Bounds": [
+                36,
+                38,
+                204,
+                233
+              ],
+              "rgba_sha256": "8e4e65bfe26a573ab0b0d29365d7fa406eababbf5af61047b649d219d4a9e2b3",
+              "sourceRect": [
+                680,
+                0,
+                574,
+                642
+              ]
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                140,
+                112
+              ],
+              "silk": [
+                140,
+                92
+              ],
+              "alpha8Bounds": [
+                49,
+                37,
+                233,
+                210
+              ],
+              "rgba_sha256": "d5612c0f95c16c633f3e84681efe5a9dccd6531edc9282bf56a3dd7950a95afa",
+              "sourceRect": [
+                0,
+                642,
+                680,
+                612
+              ]
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                118,
+                103
+              ],
+              "silk": [
+                118,
+                83
+              ],
+              "alpha8Bounds": [
+                20,
+                9,
+                192,
+                204
+              ],
+              "rgba_sha256": "55147044f290e2601456f151a5d4fac01d8d7f3363994ea130c672fcec93a61a",
+              "sourceRect": [
+                680,
+                642,
+                574,
+                612
+              ]
+            }
+          ],
+          "scale": 0.4619
+        },
+        "projectile": {
+          "key": "storyFirst8FxRootCore",
+          "combatId": "dist00-boss"
+        },
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": {
+          "key": "forest"
+        },
+        "effects": {
+          "bossHit": {
+            "key": "storyFirst8FxRootHit",
+            "drawWidth": 64
+          }
+        },
+        "targetKey": "storyFirst8FxRootCore"
+      }
+    },
+    "mb-dist01": {
+      "combatId": "mb-dist01",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "8271ccb891a9ea88cee33aec9052ac0b427b3b4ace0b241f2dd04cdc136f6f24",
+        "artSHA256": "0d13051f0d2b9fb3066f255391e68657f60c0cf875b6c9cd57cf8a5670dc5f9e",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/boss-motion-v8/violet-atlas-512.png": "8271ccb891a9ea88cee33aec9052ac0b427b3b4ace0b241f2dd04cdc136f6f24",
+          "media/story-signature/violet_orb_cocoon.png": "a1ffdec4096e607805fdcd03d3240b735d8a175b5a37d0a59e69fd3f826ea6f2",
+          "media/story-signature/violet_blade_spindle.png": "59f486a452a4502720c2217f6aced50b77c5fb244885a05e0e5170a769a02f23",
+          "media/story-signature/violet-knot-cast-v2-static.png": "c72f96123e091473cd5761aef62fe0d2ced7d7d5ed39ff56476b9a7e126fced5",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "media/cave.webp": "921ac7d2a2893aa53374a459b27d9ae87e4cc5c50cbdf0281259875820e72526"
+        }
+      },
+      "images": [
+        {
+          "key": "bossMotionViolet",
+          "file": "media/boss-motion-v8/violet-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "8271ccb891a9ea88cee33aec9052ac0b427b3b4ace0b241f2dd04cdc136f6f24",
+          "bytes": 222113
+        },
+        {
+          "key": "signatureVioletOrbCocoon",
+          "file": "media/story-signature/violet_orb_cocoon.png",
+          "width": 64,
+          "height": 64,
+          "sha256": "a1ffdec4096e607805fdcd03d3240b735d8a175b5a37d0a59e69fd3f826ea6f2",
+          "bytes": 6210
+        },
+        {
+          "key": "signatureVioletBladeSpindle",
+          "file": "media/story-signature/violet_blade_spindle.png",
+          "width": 64,
+          "height": 64,
+          "sha256": "59f486a452a4502720c2217f6aced50b77c5fb244885a05e0e5170a769a02f23",
+          "bytes": 2410
+        },
+        {
+          "key": "signatureVioletKnotCastV2Static",
+          "file": "media/story-signature/violet-knot-cast-v2-static.png",
+          "width": 96,
+          "height": 96,
+          "sha256": "c72f96123e091473cd5761aef62fe0d2ced7d7d5ed39ff56476b9a7e126fced5",
+          "bytes": 4563
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        },
+        {
+          "key": "cave",
+          "file": "media/cave.webp",
+          "width": 1586,
+          "height": 992,
+          "sha256": "921ac7d2a2893aa53374a459b27d9ae87e4cc5c50cbdf0281259875820e72526",
+          "bytes": 146558
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "mb-dist01",
+          "key": "bossMotionViolet",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "scale": 0.7121,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                148,
+                126
+              ],
+              "silk": [
+                148,
+                106
+              ],
+              "alpha8Bounds": [
+                65,
+                60,
+                219,
+                225
+              ],
+              "rgba_sha256": "b1c15b3884310166a7e288ea42162da519fc42785fbad725df753e992fd1742e"
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                143,
+                140
+              ],
+              "silk": [
+                143,
+                120
+              ],
+              "alpha8Bounds": [
+                51,
+                83,
+                206,
+                226
+              ],
+              "rgba_sha256": "ae3b6c3f774978bf5b5d59dd86437016d0ee949dc8ae9495538dfcfdcc930125"
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                156,
+                118
+              ],
+              "silk": [
+                156,
+                98
+              ],
+              "alpha8Bounds": [
+                68,
+                60,
+                229,
+                217
+              ],
+              "rgba_sha256": "aa6aab4333558ebf5d9be127acc6e6cc8575f77d19217647ac44e8301bed4179"
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                146,
+                120
+              ],
+              "silk": [
+                146,
+                100
+              ],
+              "alpha8Bounds": [
+                54,
+                59,
+                211,
+                204
+              ],
+              "rgba_sha256": "acbfba31ff10f75738ce4e8a1ba4ec662a31bf19de270240d6e2fc157df042ff"
+            }
+          ],
+          "manualTorsoAnchors": true,
+          "physicalPivotsCertified": false
+        },
+        "projectile": {
+          "key": "signatureVioletOrbCocoon",
+          "combatId": "mb-dist01"
+        },
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": {
+          "key": "cave"
+        },
+        "effects": {
+          "bossCharge": {
+            "key": "signatureVioletKnotCastV2Static",
+            "drawWidth": 64
+          }
+        }
+      }
+    },
+    "mb-dist02": {
+      "combatId": "mb-dist02",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "1c3853aa55e9f6cf205329f361c83eac2422cf0e85275956769e88f503529d27",
+        "artSHA256": "5979732b9d680c5531992f6cb19cfe692900f335b646abb97292f7dd9187d7fa",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/boss-motion-v8/horn-atlas-512.png": "1c3853aa55e9f6cf205329f361c83eac2422cf0e85275956769e88f503529d27",
+          "media/story-signature/swamp_orb_toxicseed.png": "8c2e7a9ee57f53ffea5114c8359d1e921d8a3f49479c21be146793f7d6869c74",
+          "media/story-signature/swamp_needle_reedthorn.png": "d6cdd0a26d587cb047f0b1d32a187c9b63be3b77fbdb3420df2bec82c58c1e35",
+          "media/story-signature/horn-swamp-cast-static.png": "a63d7814ed4a8c414c9ddbd4ccb2a083c31a8c6f94e9adcf7852e3e37358b50b",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "media/forest.jpg": "e4d0f6a7803d51fc23b5b9af629d73f3489e1b450d294b1358499b84b6c99562"
+        }
+      },
+      "images": [
+        {
+          "key": "bossMotionHorn",
+          "file": "media/boss-motion-v8/horn-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "1c3853aa55e9f6cf205329f361c83eac2422cf0e85275956769e88f503529d27",
+          "bytes": 143211
+        },
+        {
+          "key": "signatureSwampOrbToxicseed",
+          "file": "media/story-signature/swamp_orb_toxicseed.png",
+          "width": 64,
+          "height": 64,
+          "sha256": "8c2e7a9ee57f53ffea5114c8359d1e921d8a3f49479c21be146793f7d6869c74",
+          "bytes": 6611
+        },
+        {
+          "key": "signatureSwampNeedleReedthorn",
+          "file": "media/story-signature/swamp_needle_reedthorn.png",
+          "width": 64,
+          "height": 64,
+          "sha256": "d6cdd0a26d587cb047f0b1d32a187c9b63be3b77fbdb3420df2bec82c58c1e35",
+          "bytes": 1783
+        },
+        {
+          "key": "signatureHornSwampCastStatic",
+          "file": "media/story-signature/horn-swamp-cast-static.png",
+          "width": 96,
+          "height": 96,
+          "sha256": "a63d7814ed4a8c414c9ddbd4ccb2a083c31a8c6f94e9adcf7852e3e37358b50b",
+          "bytes": 5458
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        },
+        {
+          "key": "forest",
+          "file": "media/forest.jpg",
+          "width": 1536,
+          "height": 1024,
+          "sha256": "e4d0f6a7803d51fc23b5b9af629d73f3489e1b450d294b1358499b84b6c99562",
+          "bytes": 478555
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "mb-dist02",
+          "key": "bossMotionHorn",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "scale": 0.7121,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                139,
+                129
+              ],
+              "silk": [
+                139,
+                109
+              ],
+              "alpha8Bounds": [
+                68,
+                63,
+                200,
+                203
+              ],
+              "rgba_sha256": "ed16f2b75d2106fbbd694b62e0bccdb708b7209a9a1d75ca947c98dad40b1c94"
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                130,
+                145
+              ],
+              "silk": [
+                130,
+                125
+              ],
+              "alpha8Bounds": [
+                57,
+                89,
+                187,
+                214
+              ],
+              "rgba_sha256": "affdd73fbc8fa5aa46b14e82c0b4662ade56dc70a76efdf151b01c958bc6a6ec"
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                134,
+                122
+              ],
+              "silk": [
+                134,
+                102
+              ],
+              "alpha8Bounds": [
+                63,
+                71,
+                200,
+                194
+              ],
+              "rgba_sha256": "ccea4196a326ac99765a4f0223a45e8adc99b3972d4b8fa5fde2df05337c3ace"
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                134,
+                121
+              ],
+              "silk": [
+                134,
+                101
+              ],
+              "alpha8Bounds": [
+                60,
+                66,
+                186,
+                192
+              ],
+              "rgba_sha256": "b32235a8332ec1d3691721f3dc9ec338789c37e85a7222e95da2f5c19cf32daf"
+            }
+          ],
+          "manualTorsoAnchors": true,
+          "physicalPivotsCertified": false
+        },
+        "projectile": {
+          "key": "signatureSwampOrbToxicseed",
+          "combatId": "mb-dist02"
+        },
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": {
+          "key": "forest"
+        },
+        "effects": {
+          "bossCharge": {
+            "key": "signatureHornSwampCastStatic",
+            "drawWidth": 64
+          }
+        }
+      }
+    },
+    "mb-dist03": {
+      "combatId": "mb-dist03",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "816417849837d2645a650143d86ef0b48113b0f45f4a8a917c39d558d16ed1d7",
+        "artSHA256": "e72b1326c96818afa3e85b6055808f641fdaeb83bbb53a74bc2f3658b2ccb84c",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/story-bodies/mb-dist03-atlas-512.png": "816417849837d2645a650143d86ef0b48113b0f45f4a8a917c39d558d16ed1d7",
+          "media/story-first8-fx/blood_core-64.png": "0991c10cb01a1b1fcb3d328384136534b99df6f45ac8c1faf39746b7f7439c36",
+          "media/story-first8-fx/dist03-blood-oath-96.png": "d9a01d50f1e28cde7a41dc5cb3631e3665f37184631e41a7ee877a0a0663ce11",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "media/ruins.webp": "1bf412f579476a90dc6969e7d89385ca096273380d615d33e838dac5f87bec64"
+        }
+      },
+      "images": [
+        {
+          "key": "storyBodyMbDist03",
+          "file": "media/story-bodies/mb-dist03-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "816417849837d2645a650143d86ef0b48113b0f45f4a8a917c39d558d16ed1d7",
+          "bytes": 158319
+        },
+        {
+          "key": "storyFirst8FxBloodCore",
+          "file": "media/story-first8-fx/blood_core-64.png",
+          "width": 64,
+          "height": 64,
+          "sha256": "0991c10cb01a1b1fcb3d328384136534b99df6f45ac8c1faf39746b7f7439c36",
+          "bytes": 2933
+        },
+        {
+          "key": "storyFirst8FxDist03BloodOath",
+          "file": "media/story-first8-fx/dist03-blood-oath-96.png",
+          "width": 96,
+          "height": 96,
+          "sha256": "d9a01d50f1e28cde7a41dc5cb3631e3665f37184631e41a7ee877a0a0663ce11",
+          "bytes": 14580
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        },
+        {
+          "key": "ruins",
+          "file": "media/ruins.webp",
+          "width": 1280,
+          "height": 720,
+          "sha256": "1bf412f579476a90dc6969e7d89385ca096273380d615d33e838dac5f87bec64",
+          "bytes": 220828
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "mb-dist03",
+          "key": "storyBodyMbDist03",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                132,
+                102
+              ],
+              "silk": [
+                132,
+                82
+              ],
+              "alpha8Bounds": [
+                84,
+                26,
+                222,
+                237
+              ],
+              "rgba_sha256": "4277331a718ec6a9c35440c6c2d3bf4743640eb2994b6b5fb1808bb13190abf1",
+              "sourceRect": [
+                0,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                128,
+                112
+              ],
+              "silk": [
+                128,
+                92
+              ],
+              "alpha8Bounds": [
+                76,
+                62,
+                212,
+                236
+              ],
+              "rgba_sha256": "8e830d4d8b9667526072097432baab394329536f09e453d8f38ef7b85a2bdb39",
+              "sourceRect": [
+                627,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                138,
+                103
+              ],
+              "silk": [
+                138,
+                83
+              ],
+              "alpha8Bounds": [
+                79,
+                60,
+                231,
+                225
+              ],
+              "rgba_sha256": "11c1563e3cece3bcd1b613483d528793a799f91f7ecf21f8336d5e174b5c9f15",
+              "sourceRect": [
+                0,
+                627,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                140,
+                91
+              ],
+              "silk": [
+                140,
+                71
+              ],
+              "alpha8Bounds": [
+                44,
+                44,
+                220,
+                218
+              ],
+              "rgba_sha256": "a95a318136dc2c27f23a8d1c57f2ff91ba0860a665b08081b8bc2dfb5d7807b0",
+              "sourceRect": [
+                627,
+                627,
+                627,
+                627
+              ]
+            }
+          ],
+          "scale": 0.628
+        },
+        "projectile": {
+          "key": "storyFirst8FxBloodCore",
+          "combatId": "mb-dist03"
+        },
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": {
+          "key": "ruins"
+        },
+        "effects": {
+          "bossCharge": {
+            "key": "storyFirst8FxDist03BloodOath",
+            "drawWidth": 64
+          },
+          "bossHit": {
+            "key": "storyFirst8FxDist03BloodOath",
+            "drawWidth": 64
+          }
+        }
+      }
+    },
+    "mb-dist04": {
+      "combatId": "mb-dist04",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "0d19e8354db50002730f31a6d4c29adfb184b2d04645e7b503df8e059f8bbde3",
+        "artSHA256": "036bebc2eace77f5d5c3428c9e4e609ae12dbf263d0534374da32e2c994c3791",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/story-bodies/mb-dist04-atlas-512.png": "0d19e8354db50002730f31a6d4c29adfb184b2d04645e7b503df8e059f8bbde3",
+          "media/story-first8-fx/fallen_core-64.png": "ac07a6782b84b52d4d05546cf094ace712e274e575fa85cfbee6ba1ee4ffff0e",
+          "media/story-first8-fx/dist04-fallen-cross-96.png": "7e136e51baff34e99dbde709746c78a87077edb8157e982ede889bbeed824401",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "media/ruins.webp": "1bf412f579476a90dc6969e7d89385ca096273380d615d33e838dac5f87bec64"
+        }
+      },
+      "images": [
+        {
+          "key": "storyBodyMbDist04",
+          "file": "media/story-bodies/mb-dist04-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "0d19e8354db50002730f31a6d4c29adfb184b2d04645e7b503df8e059f8bbde3",
+          "bytes": 209604
+        },
+        {
+          "key": "storyFirst8FxFallenCore",
+          "file": "media/story-first8-fx/fallen_core-64.png",
+          "width": 64,
+          "height": 64,
+          "sha256": "ac07a6782b84b52d4d05546cf094ace712e274e575fa85cfbee6ba1ee4ffff0e",
+          "bytes": 2471
+        },
+        {
+          "key": "storyFirst8FxDist04FallenCross",
+          "file": "media/story-first8-fx/dist04-fallen-cross-96.png",
+          "width": 96,
+          "height": 96,
+          "sha256": "7e136e51baff34e99dbde709746c78a87077edb8157e982ede889bbeed824401",
+          "bytes": 13443
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        },
+        {
+          "key": "ruins",
+          "file": "media/ruins.webp",
+          "width": 1280,
+          "height": 720,
+          "sha256": "1bf412f579476a90dc6969e7d89385ca096273380d615d33e838dac5f87bec64",
+          "bytes": 220828
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "mb-dist04",
+          "key": "storyBodyMbDist04",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                133,
+                85
+              ],
+              "silk": [
+                133,
+                65
+              ],
+              "alpha8Bounds": [
+                61,
+                24,
+                222,
+                228
+              ],
+              "rgba_sha256": "3a407890bbd6c4060ff7fb682209279c1433684dba26626a8bf5d29166ca79a8",
+              "sourceRect": [
+                0,
+                0,
+                627,
+                655
+              ]
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                109,
+                89
+              ],
+              "silk": [
+                109,
+                69
+              ],
+              "alpha8Bounds": [
+                49,
+                40,
+                193,
+                241
+              ],
+              "rgba_sha256": "46284982da0c763f9a40f16a8f8f6f5649902798ea033f5d6f786d6992a81c6c",
+              "sourceRect": [
+                627,
+                0,
+                627,
+                655
+              ]
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                147,
+                100
+              ],
+              "silk": [
+                147,
+                80
+              ],
+              "alpha8Bounds": [
+                47,
+                43,
+                205,
+                205
+              ],
+              "rgba_sha256": "0dfa37345ed74bff22c47b40ba00c039bf16b00dd39e3c1f2e773129a0b1db6e",
+              "sourceRect": [
+                0,
+                655,
+                627,
+                599
+              ]
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                124,
+                78
+              ],
+              "silk": [
+                124,
+                58
+              ],
+              "alpha8Bounds": [
+                48,
+                18,
+                205,
+                205
+              ],
+              "rgba_sha256": "03cdf2222c39b6165f21ee4362f0c60436c8f1b6d0a039ef7bb0b151a467dcef",
+              "sourceRect": [
+                627,
+                655,
+                627,
+                599
+              ]
+            }
+          ],
+          "scale": 0.7
+        },
+        "projectile": {
+          "key": "storyFirst8FxFallenCore",
+          "combatId": "mb-dist04"
+        },
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": {
+          "key": "ruins"
+        },
+        "effects": {
+          "bossCharge": {
+            "key": "storyFirst8FxDist04FallenCross",
+            "drawWidth": 64
+          },
+          "bossHit": {
+            "key": "storyFirst8FxDist04FallenCross",
+            "drawWidth": 64
+          }
+        }
+      }
+    },
+    "mb-dist05": {
+      "combatId": "mb-dist05",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "1666b128899a1076b4db146c52b58e66e415b01034f95ef5086039f4556b426d",
+        "artSHA256": "41e27c3d94a36f136215118c523d82118b6638f8bfba1de1027bb54332ea1c2f",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/story-bodies/mb-dist05-atlas-512.png": "1666b128899a1076b4db146c52b58e66e415b01034f95ef5086039f4556b426d",
+          "media/story-first8-fx/messenger_hit-96.png": "5a43d8038304f4abcaa2cc81cddc51063af75049fbf8094d990c587da97fa75b",
+          "media/story-first8-fx/spirit-orb-64.png": "ef9b11a673ad491e0c842b142fc52e27b130c4e5dd72e7e5409c31f38c90af39",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "media/ruins.webp": "1bf412f579476a90dc6969e7d89385ca096273380d615d33e838dac5f87bec64"
+        }
+      },
+      "images": [
+        {
+          "key": "storyBodyMbDist05",
+          "file": "media/story-bodies/mb-dist05-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "1666b128899a1076b4db146c52b58e66e415b01034f95ef5086039f4556b426d",
+          "bytes": 226237
+        },
+        {
+          "key": "storyFirst8FxMessengerHit",
+          "file": "media/story-first8-fx/messenger_hit-96.png",
+          "width": 96,
+          "height": 96,
+          "sha256": "5a43d8038304f4abcaa2cc81cddc51063af75049fbf8094d990c587da97fa75b",
+          "bytes": 7775
+        },
+        {
+          "key": "storyFirst8FxSpiritOrb",
+          "file": "media/story-first8-fx/spirit-orb-64.png",
+          "width": 64,
+          "height": 64,
+          "sha256": "ef9b11a673ad491e0c842b142fc52e27b130c4e5dd72e7e5409c31f38c90af39",
+          "bytes": 2832
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        },
+        {
+          "key": "ruins",
+          "file": "media/ruins.webp",
+          "width": 1280,
+          "height": 720,
+          "sha256": "1bf412f579476a90dc6969e7d89385ca096273380d615d33e838dac5f87bec64",
+          "bytes": 220828
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "mb-dist05",
+          "key": "storyBodyMbDist05",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                133,
+                91
+              ],
+              "silk": [
+                133,
+                71
+              ],
+              "alpha8Bounds": [
+                78,
+                39,
+                222,
+                241
+              ],
+              "rgba_sha256": "1baff5664e0e8052c20e52e0eb8ae9791416e0a5d5bad010c5330761fcb7ce0e",
+              "sourceRect": [
+                0,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                121,
+                99
+              ],
+              "silk": [
+                121,
+                79
+              ],
+              "alpha8Bounds": [
+                51,
+                58,
+                211,
+                241
+              ],
+              "rgba_sha256": "9be48cab4c152e9869a2e885721b0a04de08140c767053dccf96bb3932310edf",
+              "sourceRect": [
+                627,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                141,
+                100
+              ],
+              "silk": [
+                141,
+                80
+              ],
+              "alpha8Bounds": [
+                95,
+                31,
+                231,
+                227
+              ],
+              "rgba_sha256": "d34510c1e9bb6a66825ab3b04bb87b41b5760fadad731943618ef875fe73e381",
+              "sourceRect": [
+                0,
+                627,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                131,
+                81
+              ],
+              "silk": [
+                131,
+                61
+              ],
+              "alpha8Bounds": [
+                63,
+                28,
+                206,
+                230
+              ],
+              "rgba_sha256": "c2fe761ddf6c27c9be0e60444434ff16ce67020309fd66af40fa9b4075747a74",
+              "sourceRect": [
+                627,
+                627,
+                627,
+                627
+              ]
+            }
+          ],
+          "scale": 0.6915
+        },
+        "projectile": {
+          "key": "storyFirst8FxSpiritOrb",
+          "combatId": "mb-dist05"
+        },
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": {
+          "key": "ruins"
+        },
+        "effects": {
+          "bossHit": {
+            "key": "storyFirst8FxMessengerHit",
+            "drawWidth": 64
+          }
+        }
+      }
+    },
+    "dist06-boss": {
+      "combatId": "dist06-boss",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "3300f7c753b275d8c7c96e08e084cf800418ae8763b578519dc39386625ad667",
+        "artSHA256": "256f479a90a222758e1d2df66f43a7626dd5fdf16749f7f62f08d887d60e0127",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/boss-motion-v8/balrog-atlas-512.png": "3300f7c753b275d8c7c96e08e084cf800418ae8763b578519dc39386625ad667",
+          "media/story-signature/balrog_orb_cinderheart.png": "e5ca925649b4e63b567ee1dd44002ac6f733af6a3cdd1d231f19429e2d086788",
+          "media/story-signature/balrog_blade_slagfang.png": "a07ffa6f9220660802e957423013982f10005ced0b505edbe36d12a07de536e0",
+          "media/story-signature/balrog-fire-cast-static.png": "cd57c83c262e07a13128b920e57e66d4ac2ace0a8ebf63fffc4890f5cb0fb38a",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "media/ruins.webp": "1bf412f579476a90dc6969e7d89385ca096273380d615d33e838dac5f87bec64"
+        }
+      },
+      "images": [
+        {
+          "key": "bossMotionBalrog",
+          "file": "media/boss-motion-v8/balrog-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "3300f7c753b275d8c7c96e08e084cf800418ae8763b578519dc39386625ad667",
+          "bytes": 224437
+        },
+        {
+          "key": "signatureBalrogOrbCinderheart",
+          "file": "media/story-signature/balrog_orb_cinderheart.png",
+          "width": 64,
+          "height": 64,
+          "sha256": "e5ca925649b4e63b567ee1dd44002ac6f733af6a3cdd1d231f19429e2d086788",
+          "bytes": 6047
+        },
+        {
+          "key": "signatureBalrogBladeSlagfang",
+          "file": "media/story-signature/balrog_blade_slagfang.png",
+          "width": 64,
+          "height": 64,
+          "sha256": "a07ffa6f9220660802e957423013982f10005ced0b505edbe36d12a07de536e0",
+          "bytes": 2436
+        },
+        {
+          "key": "signatureBalrogFireCastStatic",
+          "file": "media/story-signature/balrog-fire-cast-static.png",
+          "width": 96,
+          "height": 96,
+          "sha256": "cd57c83c262e07a13128b920e57e66d4ac2ace0a8ebf63fffc4890f5cb0fb38a",
+          "bytes": 7290
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        },
+        {
+          "key": "ruins",
+          "file": "media/ruins.webp",
+          "width": 1280,
+          "height": 720,
+          "sha256": "1bf412f579476a90dc6969e7d89385ca096273380d615d33e838dac5f87bec64",
+          "bytes": 220828
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "dist06-boss",
+          "key": "bossMotionBalrog",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "scale": 0.6104,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                139,
+                105
+              ],
+              "silk": [
+                139,
+                85
+              ],
+              "alpha8Bounds": [
+                59,
+                28,
+                221,
+                230
+              ],
+              "rgba_sha256": "efeccd68e5d2204ba6e7572fc8d573191e2dde57c9113a3197d6894fc02c4edb"
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                139,
+                123
+              ],
+              "silk": [
+                139,
+                103
+              ],
+              "alpha8Bounds": [
+                24,
+                76,
+                220,
+                237
+              ],
+              "rgba_sha256": "2183206274701b9f62690cccff0699bba197f25594677710edd2965f5ee6f5cf"
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                141,
+                110
+              ],
+              "silk": [
+                141,
+                90
+              ],
+              "alpha8Bounds": [
+                46,
+                57,
+                220,
+                234
+              ],
+              "rgba_sha256": "f818c1a0a2c9117e736a246be57be0d72d8b7beb5afbcf3d7296e094bc04ff23"
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                127,
+                99
+              ],
+              "silk": [
+                127,
+                79
+              ],
+              "alpha8Bounds": [
+                23,
+                42,
+                234,
+                213
+              ],
+              "rgba_sha256": "03b664be80c52587efea235d1820279144de8d5fc2b0dc6345bcc67a42efb28c"
+            }
+          ],
+          "manualTorsoAnchors": true,
+          "physicalPivotsCertified": false
+        },
+        "projectile": {
+          "key": "signatureBalrogOrbCinderheart",
+          "combatId": "dist06-boss"
+        },
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": {
+          "key": "ruins"
+        },
+        "effects": {
+          "bossCharge": {
+            "key": "signatureBalrogFireCastStatic",
+            "drawWidth": 64
+          }
+        }
+      }
+    },
+    "mb-dist06": {
+      "combatId": "mb-dist06",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "d6b57b666aca5219146cbac2198c31e0bae7a0b60da1f553c2d36ac34bfe59d9",
+        "artSHA256": "00e800d36ddfd7e37d51a2c9e819a96a658d1aef5a696d666b40766a6d3472e1",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/story-bodies/mb-dist06-atlas-512.png": "d6b57b666aca5219146cbac2198c31e0bae7a0b60da1f553c2d36ac34bfe59d9",
+          "media/story-first8-fx/pillar_hit-96.png": "74c5391435f7b121423e6a62292cbd96e57795b066443134c6606cf7db2e707d",
+          "media/story-first8-fx/inferno-meteor-64.png": "420bdf30ba9441a75f98ade73cdb6cd7db9ea6ef55415cb61c0070fef33a7f68",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "media/ruins.webp": "1bf412f579476a90dc6969e7d89385ca096273380d615d33e838dac5f87bec64"
+        }
+      },
+      "images": [
+        {
+          "key": "storyBodyMbDist06",
+          "file": "media/story-bodies/mb-dist06-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "d6b57b666aca5219146cbac2198c31e0bae7a0b60da1f553c2d36ac34bfe59d9",
+          "bytes": 283439
+        },
+        {
+          "key": "storyFirst8FxPillarHit",
+          "file": "media/story-first8-fx/pillar_hit-96.png",
+          "width": 96,
+          "height": 96,
+          "sha256": "74c5391435f7b121423e6a62292cbd96e57795b066443134c6606cf7db2e707d",
+          "bytes": 8538
+        },
+        {
+          "key": "storyFirst8FxInfernoMeteor",
+          "file": "media/story-first8-fx/inferno-meteor-64.png",
+          "width": 64,
+          "height": 64,
+          "sha256": "420bdf30ba9441a75f98ade73cdb6cd7db9ea6ef55415cb61c0070fef33a7f68",
+          "bytes": 3606
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        },
+        {
+          "key": "ruins",
+          "file": "media/ruins.webp",
+          "width": 1280,
+          "height": 720,
+          "sha256": "1bf412f579476a90dc6969e7d89385ca096273380d615d33e838dac5f87bec64",
+          "bytes": 220828
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "mb-dist06",
+          "key": "storyBodyMbDist06",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                131,
+                115
+              ],
+              "silk": [
+                131,
+                80
+              ],
+              "alpha8Bounds": [
+                35,
+                27,
+                226,
+                244
+              ],
+              "rgba_sha256": "1a95ecd6ce5506c5e41e377a9c7073539e464cd43903237c65dca206b5d7a548",
+              "sourceRect": [
+                0,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                132,
+                122
+              ],
+              "silk": [
+                132,
+                87
+              ],
+              "alpha8Bounds": [
+                28,
+                52,
+                230,
+                245
+              ],
+              "rgba_sha256": "182e8b18d8ada964f54f90c070fa832e8511e5522daa54a46153875a3eeceb29",
+              "sourceRect": [
+                627,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                135,
+                132
+              ],
+              "silk": [
+                135,
+                97
+              ],
+              "alpha8Bounds": [
+                33,
+                57,
+                231,
+                231
+              ],
+              "rgba_sha256": "5255050e85052dc69ca83a3ee03077572fc0aa1ae08eece183451b21268feeb2",
+              "sourceRect": [
+                0,
+                627,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                131,
+                117
+              ],
+              "silk": [
+                131,
+                82
+              ],
+              "alpha8Bounds": [
+                34,
+                24,
+                222,
+                234
+              ],
+              "rgba_sha256": "81f905d2ec9637e03c852ede8b43fb8e19cd799ba2e2df0db9bce970b413f494",
+              "sourceRect": [
+                627,
+                627,
+                627,
+                627
+              ]
+            }
+          ],
+          "scale": 0.5113
+        },
+        "projectile": {
+          "key": "storyFirst8FxInfernoMeteor",
+          "combatId": "mb-dist06"
+        },
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": {
+          "key": "ruins"
+        },
+        "effects": {
+          "bossHit": {
+            "key": "storyFirst8FxPillarHit",
+            "drawWidth": 64
+          }
+        }
+      }
+    },
+    "mb-ep1a07": {
+      "combatId": "mb-ep1a07",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "combat-objective-not-supported",
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "b2cc2e081affeaf9c0509f8b98e4894b814a95dbc0015e11403dd52d8996b9c8",
+        "artSHA256": "3b591d699d6a2f7c2330831fd5ac83391b6aaefb5a6315c658120542c01dcb34",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/story-bodies/mb-ep1a07-atlas-512.png": "b2cc2e081affeaf9c0509f8b98e4894b814a95dbc0015e11403dd52d8996b9c8",
+          "media/story-first8-fx/void_core-64.png": "27029edc5a719ade5e0f03d4f7799556f668fed2617776b06df18726e6ee06a7",
+          "media/story-first8-fx/ep1a07-void-maw-96.png": "ab3b6c63936216b49e9d702dac8e3af8828935da12155d982c80be75cf3bb7ec",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "media/ruins.webp": "1bf412f579476a90dc6969e7d89385ca096273380d615d33e838dac5f87bec64"
+        }
+      },
+      "images": [
+        {
+          "key": "storyBodyMbEp1a07",
+          "file": "media/story-bodies/mb-ep1a07-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "b2cc2e081affeaf9c0509f8b98e4894b814a95dbc0015e11403dd52d8996b9c8",
+          "bytes": 311831
+        },
+        {
+          "key": "storyFirst8FxVoidCore",
+          "file": "media/story-first8-fx/void_core-64.png",
+          "width": 64,
+          "height": 64,
+          "sha256": "27029edc5a719ade5e0f03d4f7799556f668fed2617776b06df18726e6ee06a7",
+          "bytes": 3439
+        },
+        {
+          "key": "storyFirst8FxEp1A07VoidMaw",
+          "file": "media/story-first8-fx/ep1a07-void-maw-96.png",
+          "width": 96,
+          "height": 96,
+          "sha256": "ab3b6c63936216b49e9d702dac8e3af8828935da12155d982c80be75cf3bb7ec",
+          "bytes": 13966
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        },
+        {
+          "key": "ruins",
+          "file": "media/ruins.webp",
+          "width": 1280,
+          "height": 720,
+          "sha256": "1bf412f579476a90dc6969e7d89385ca096273380d615d33e838dac5f87bec64",
+          "bytes": 220828
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "mb-ep1a07",
+          "key": "storyBodyMbEp1a07",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                138,
+                87
+              ],
+              "silk": [
+                138,
+                67
+              ],
+              "alpha8Bounds": [
+                38,
+                25,
+                216,
+                215
+              ],
+              "rgba_sha256": "67e94bb6094bcf323ad698b4d776b872f591660677499a4333d0eab336bb1aa2",
+              "sourceRect": [
+                0,
+                0,
+                675,
+                627
+              ]
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                137,
+                91
+              ],
+              "silk": [
+                137,
+                71
+              ],
+              "alpha8Bounds": [
+                18,
+                17,
+                203,
+                227
+              ],
+              "rgba_sha256": "6d1203817a06ef781176414bf81082576a6d242b32107defd2ac91c14733211d",
+              "sourceRect": [
+                675,
+                0,
+                579,
+                627
+              ]
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                152,
+                96
+              ],
+              "silk": [
+                152,
+                76
+              ],
+              "alpha8Bounds": [
+                28,
+                14,
+                236,
+                223
+              ],
+              "rgba_sha256": "cee4096629f8e23a904657d3ea00e10e018d36e65a7e3fb7316f2d770391957c",
+              "sourceRect": [
+                0,
+                627,
+                675,
+                627
+              ]
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                138,
+                89
+              ],
+              "silk": [
+                138,
+                69
+              ],
+              "alpha8Bounds": [
+                24,
+                23,
+                206,
+                208
+              ],
+              "rgba_sha256": "bd04e3108bc5f3c25bbe1f93018a55af70e7c2df32cf747428326ab8553ccd5c",
+              "sourceRect": [
+                675,
+                627,
+                579,
+                627
+              ]
+            }
+          ],
+          "scale": 0.5775
+        },
+        "projectile": {
+          "key": "storyFirst8FxVoidCore",
+          "combatId": "mb-ep1a07"
+        },
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": {
+          "key": "ruins"
+        },
+        "effects": {
+          "bossCharge": {
+            "key": "storyFirst8FxEp1A07VoidMaw",
+            "drawWidth": 64
+          },
+          "bossHit": {
+            "key": "storyFirst8FxEp1A07VoidMaw",
+            "drawWidth": 64
+          }
+        }
+      }
+    },
+    "mb-ep1a08": {
+      "combatId": "mb-ep1a08",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "canonical-body-review-pending",
+        "missing-canonical-context-background",
+        "combat-objective-not-supported",
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "85fa20c020862f9a73bacee5611c65db8c7bf32caae43da7233a0c588dfce868",
+        "artSHA256": "d7386484f98d0525d5a2b6a5a64e60f512cce24dbea70880f8317d8083198519",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/story-bodies/mb-ep1a08-atlas-512.png": "85fa20c020862f9a73bacee5611c65db8c7bf32caae43da7233a0c588dfce868",
+          "media/story-first8-fx/supervisor_core-64.png": "331be07fddd3e151c6ad3527891ef11f18ba7127b27133a1c4c10a50710da850",
+          "media/story-first8-fx/supervisor_cast-96.png": "faadeaa5685fa47c26503b75962c998fe50a3564ae3e9416079e30aa39e2e8d1",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6"
+        }
+      },
+      "images": [
+        {
+          "key": "storyBodyMbEp1a08",
+          "file": "media/story-bodies/mb-ep1a08-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "85fa20c020862f9a73bacee5611c65db8c7bf32caae43da7233a0c588dfce868",
+          "bytes": 179395
+        },
+        {
+          "key": "storyFirst8FxSupervisorCore",
+          "file": "media/story-first8-fx/supervisor_core-64.png",
+          "width": 64,
+          "height": 64,
+          "sha256": "331be07fddd3e151c6ad3527891ef11f18ba7127b27133a1c4c10a50710da850",
+          "bytes": 1823
+        },
+        {
+          "key": "storyFirst8FxSupervisorCast",
+          "file": "media/story-first8-fx/supervisor_cast-96.png",
+          "width": 96,
+          "height": 96,
+          "sha256": "faadeaa5685fa47c26503b75962c998fe50a3564ae3e9416079e30aa39e2e8d1",
+          "bytes": 4042
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "mb-ep1a08",
+          "key": "storyBodyMbEp1a08",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                128,
+                105
+              ],
+              "silk": [
+                128,
+                85
+              ],
+              "alpha8Bounds": [
+                74,
+                25,
+                190,
+                240
+              ],
+              "rgba_sha256": "485bfea19e224589745ce5bfa479a550c928a2759b47e3aa2ddf16a574144342",
+              "sourceRect": [
+                0,
+                0,
+                627,
+                650
+              ]
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                136,
+                115
+              ],
+              "silk": [
+                136,
+                95
+              ],
+              "alpha8Bounds": [
+                51,
+                81,
+                175,
+                239
+              ],
+              "rgba_sha256": "0ab1c3ec433dc9e06d46c1b72b712d268ab2162064e360bbc5e3cdf5e536e2fa",
+              "sourceRect": [
+                627,
+                0,
+                627,
+                650
+              ]
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                143,
+                96
+              ],
+              "silk": [
+                143,
+                76
+              ],
+              "alpha8Bounds": [
+                58,
+                45,
+                210,
+                209
+              ],
+              "rgba_sha256": "582988e4d9e2a6c3c41e9ffc5eaa82e3dda05c0b3fc4c4fbbb91a7a79b72dd12",
+              "sourceRect": [
+                0,
+                650,
+                627,
+                604
+              ]
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                140,
+                80
+              ],
+              "silk": [
+                140,
+                60
+              ],
+              "alpha8Bounds": [
+                65,
+                28,
+                195,
+                211
+              ],
+              "rgba_sha256": "982edfb5743903c19847e48508fdb9382a28a896627c68dd94481ca2bab20381",
+              "sourceRect": [
+                627,
+                650,
+                627,
+                604
+              ]
+            }
+          ],
+          "scale": 0.5963
+        },
+        "projectile": {
+          "key": "storyFirst8FxSupervisorCore",
+          "combatId": "mb-ep1a08"
+        },
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": null,
+        "effects": {
+          "bossCharge": {
+            "key": "storyFirst8FxSupervisorCast",
+            "drawWidth": 64
+          }
+        }
+      }
+    },
+    "mb-ep1a10": {
+      "combatId": "mb-ep1a10",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "missing-canonical-context-background",
+        "combat-objective-not-supported",
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "ba63da3f748dd4af52f532262efce5b83aae801843d438d4f0c20b98961a35df",
+        "artSHA256": "9f344e5eb86de64948f04b129304293137ad7f271d4ca57f530d6730adec1099",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/story-bodies/mb-ep1a10-atlas-512.png": "ba63da3f748dd4af52f532262efce5b83aae801843d438d4f0c20b98961a35df",
+          "media/story-first8-fx/pride_core-64.png": "a11691fe47cbb6ab45535ec6e950812914ef70e2bda688398ffd22396dac41b2",
+          "media/story-first8-fx/pride_hit-96.png": "6b9ea7d8c09b0e5754cbcea006651652aaac0a5e45df70d954ed609502a35220",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6"
+        }
+      },
+      "images": [
+        {
+          "key": "storyBodyMbEp1a10",
+          "file": "media/story-bodies/mb-ep1a10-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "ba63da3f748dd4af52f532262efce5b83aae801843d438d4f0c20b98961a35df",
+          "bytes": 310114
+        },
+        {
+          "key": "storyFirst8FxPrideCore",
+          "file": "media/story-first8-fx/pride_core-64.png",
+          "width": 64,
+          "height": 64,
+          "sha256": "a11691fe47cbb6ab45535ec6e950812914ef70e2bda688398ffd22396dac41b2",
+          "bytes": 2536
+        },
+        {
+          "key": "storyFirst8FxPrideHit",
+          "file": "media/story-first8-fx/pride_hit-96.png",
+          "width": 96,
+          "height": 96,
+          "sha256": "6b9ea7d8c09b0e5754cbcea006651652aaac0a5e45df70d954ed609502a35220",
+          "bytes": 6981
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "mb-ep1a10",
+          "key": "storyBodyMbEp1a10",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                129,
+                105
+              ],
+              "silk": [
+                129,
+                85
+              ],
+              "alpha8Bounds": [
+                40,
+                19,
+                217,
+                238
+              ],
+              "rgba_sha256": "07a63cf073a9832f602ceb321c323308a04e137a7c5b4237e85ca9fb49c9fbcd",
+              "sourceRect": [
+                0,
+                0,
+                627,
+                650
+              ]
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                131,
+                119
+              ],
+              "silk": [
+                131,
+                99
+              ],
+              "alpha8Bounds": [
+                30,
+                34,
+                219,
+                237
+              ],
+              "rgba_sha256": "e130d168a85108ae00d233c28122f91792e13b7cb1201647f84b87908053353a",
+              "sourceRect": [
+                627,
+                0,
+                627,
+                650
+              ]
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                134,
+                120
+              ],
+              "silk": [
+                134,
+                100
+              ],
+              "alpha8Bounds": [
+                26,
+                21,
+                237,
+                205
+              ],
+              "rgba_sha256": "7cfd3412c1500b29ea3c0465cecb76679817ccda542b5c9a54d558a1e9b30a16",
+              "sourceRect": [
+                0,
+                650,
+                627,
+                604
+              ]
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                139,
+                83
+              ],
+              "silk": [
+                139,
+                63
+              ],
+              "alpha8Bounds": [
+                31,
+                18,
+                217,
+                208
+              ],
+              "rgba_sha256": "7f65673639609520cdf83cb04f20208cc827ef8f6d8bfbccc8552f8d2c1d096f",
+              "sourceRect": [
+                627,
+                650,
+                627,
+                604
+              ]
+            }
+          ],
+          "scale": 0.4801
+        },
+        "projectile": {
+          "key": "storyFirst8FxPrideCore",
+          "combatId": "mb-ep1a10"
+        },
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": null,
+        "effects": {
+          "bossHit": {
+            "key": "storyFirst8FxPrideHit",
+            "drawWidth": 64
+          }
+        }
+      }
+    },
+    "a11-boss": {
+      "combatId": "a11-boss",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "missing-canonical-context-background",
+        "combat-objective-not-supported",
+        "browser-integration-qa-pending",
+        "canonical-required-form-proof-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "06716474312bafc759bba028fb42660d6b626c67fba58f690a8014ac226600cd",
+        "artSHA256": "cff67c3c6edecf9516d73548f4c3aacd1ba0c5327b5b5250223772d4ecbec9e5",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/boss-motion-v8/lucifer-atlas-512.png": "06716474312bafc759bba028fb42660d6b626c67fba58f690a8014ac226600cd",
+          "media/story-signature/lucifer-opal-core-static.png": "fb028ff4cc8cbc050b4267141586e1a6fde371c5a32663c45f4e5c6e5277c5d9",
+          "media/story-signature/lucifer-ring-cast-static.png": "e9106e21f663424bff962f59ef82700fb1af835a01799a450b4d585ed063bba9",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6"
+        }
+      },
+      "images": [
+        {
+          "key": "bossMotionLucifer",
+          "file": "media/boss-motion-v8/lucifer-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "06716474312bafc759bba028fb42660d6b626c67fba58f690a8014ac226600cd",
+          "bytes": 347054
+        },
+        {
+          "key": "signatureLuciferOpalCoreStatic",
+          "file": "media/story-signature/lucifer-opal-core-static.png",
+          "width": 64,
+          "height": 64,
+          "sha256": "fb028ff4cc8cbc050b4267141586e1a6fde371c5a32663c45f4e5c6e5277c5d9",
+          "bytes": 3208
+        },
+        {
+          "key": "signatureLuciferRingCastStatic",
+          "file": "media/story-signature/lucifer-ring-cast-static.png",
+          "width": 96,
+          "height": 96,
+          "sha256": "e9106e21f663424bff962f59ef82700fb1af835a01799a450b4d585ed063bba9",
+          "bytes": 5970
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "a11-boss",
+          "key": "bossMotionLucifer",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "scale": 0.5109,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                132,
+                111
+              ],
+              "silk": [
+                132,
+                91
+              ],
+              "alpha8Bounds": [
+                21,
+                34,
+                243,
+                233
+              ],
+              "rgba_sha256": "cf7dafef8095e2da26ab3a94a437daaf3702c2269d1cd285b5114d0f51217607"
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                130,
+                116
+              ],
+              "silk": [
+                130,
+                96
+              ],
+              "alpha8Bounds": [
+                22,
+                43,
+                239,
+                233
+              ],
+              "rgba_sha256": "7648fda3ea27218b4fb6aea2ff53cfe46df9439892c6c7b6270bcfa1838afe93"
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                147,
+                118
+              ],
+              "silk": [
+                147,
+                98
+              ],
+              "alpha8Bounds": [
+                22,
+                26,
+                242,
+                225
+              ],
+              "rgba_sha256": "017136e583a11a1bd02a287c33ba3369912431234bd680897fd3eee02cd8d8a9"
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                128,
+                98
+              ],
+              "silk": [
+                128,
+                78
+              ],
+              "alpha8Bounds": [
+                19,
+                29,
+                241,
+                227
+              ],
+              "rgba_sha256": "a0be772a1013fa65bf268591b05399b5df8463e48866dcd321b8dbf854120e21"
+            }
+          ],
+          "manualTorsoAnchors": true,
+          "physicalPivotsCertified": false
+        },
+        "projectile": {
+          "key": "signatureLuciferOpalCoreStatic",
+          "combatId": "a11-boss"
+        },
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": null,
+        "effects": {
+          "bossCharge": {
+            "key": "signatureLuciferRingCastStatic",
+            "drawWidth": 64
+          }
+        }
+      }
+    },
+    "mb-ep1a11": {
+      "combatId": "mb-ep1a11",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "missing-canonical-context-background",
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "460a8ea40d084791a0856a4a8d057df7f7e95817637dda3a8059e506cfe00ef1",
+        "artSHA256": "ec1a722a7e965b904e471a341a69373b5c8f1821d8290adc23fb1341b679414d",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/boss-motion-v8/mask-atlas-512.png": "460a8ea40d084791a0856a4a8d057df7f7e95817637dda3a8059e506cfe00ef1",
+          "media/story-signature/mask-feather-core-static.png": "1a0fb6d41ae74248e1c102e89d1e32b6cbfb06f542b7f9f083d29bf1973e9dff",
+          "media/story-signature/mask-fan-cast-static.png": "fbe38267c2dc0b3d3704947fc08646909d8fa6673cd8125295805d524a7e2eaa",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6"
+        }
+      },
+      "images": [
+        {
+          "key": "bossMotionMask",
+          "file": "media/boss-motion-v8/mask-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "460a8ea40d084791a0856a4a8d057df7f7e95817637dda3a8059e506cfe00ef1",
+          "bytes": 336370
+        },
+        {
+          "key": "signatureMaskFeatherCoreStatic",
+          "file": "media/story-signature/mask-feather-core-static.png",
+          "width": 64,
+          "height": 64,
+          "sha256": "1a0fb6d41ae74248e1c102e89d1e32b6cbfb06f542b7f9f083d29bf1973e9dff",
+          "bytes": 1602
+        },
+        {
+          "key": "signatureMaskFanCastStatic",
+          "file": "media/story-signature/mask-fan-cast-static.png",
+          "width": 96,
+          "height": 96,
+          "sha256": "fbe38267c2dc0b3d3704947fc08646909d8fa6673cd8125295805d524a7e2eaa",
+          "bytes": 3461
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "mb-ep1a11",
+          "key": "bossMotionMask",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "scale": 0.5222,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                126,
+                86
+              ],
+              "silk": [
+                126,
+                66
+              ],
+              "alpha8Bounds": [
+                38,
+                19,
+                214,
+                236
+              ],
+              "rgba_sha256": "6225bd43b3b613d43029bebfb8a75d89d5501a042349cdd32ba12d0f4fecc166"
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                127,
+                103
+              ],
+              "silk": [
+                127,
+                83
+              ],
+              "alpha8Bounds": [
+                24,
+                32,
+                233,
+                235
+              ],
+              "rgba_sha256": "f0906597ac8e0cbbe9a27349f6f3c9d045e319259f285fbf19817e93cbacdf23"
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                131,
+                117
+              ],
+              "silk": [
+                131,
+                97
+              ],
+              "alpha8Bounds": [
+                30,
+                27,
+                236,
+                232
+              ],
+              "rgba_sha256": "53686612c529029ed38a4fb552a25c898cd2d2d37bd2d05f32cb3d6fadf071a1"
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                125,
+                83
+              ],
+              "silk": [
+                125,
+                63
+              ],
+              "alpha8Bounds": [
+                21,
+                15,
+                235,
+                232
+              ],
+              "rgba_sha256": "046c4d1f9c1528243429825f30ccd3559883d040f12be107e2863a350b920b79"
+            }
+          ],
+          "manualTorsoAnchors": true,
+          "physicalPivotsCertified": false
+        },
+        "projectile": {
+          "key": "signatureMaskFeatherCoreStatic",
+          "combatId": "mb-ep1a11"
+        },
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": null,
+        "effects": {
+          "bossCharge": {
+            "key": "signatureMaskFanCastStatic",
+            "drawWidth": 64
+          }
+        }
+      }
+    },
+    "mb-ep1b01": {
+      "combatId": "mb-ep1b01",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "canonical-body-review-pending",
+        "missing-own-projectile-art",
+        "missing-canonical-context-background",
+        "combat-objective-not-supported",
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "2d8cf6176df5480599e6a8e033c56ef696f5823775395f3e24389ea699d8ac53",
+        "artSHA256": "4497b193841d0e29f602c4e2c664707b9ce9fd869813a1abba5a0c153f89c4bc",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/story-chapter2/mb-ep1b01-atlas-512.png": "2d8cf6176df5480599e6a8e033c56ef696f5823775395f3e24389ea699d8ac53",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6"
+        }
+      },
+      "images": [
+        {
+          "key": "storyChapter2MbEp1b01",
+          "file": "media/story-chapter2/mb-ep1b01-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "2d8cf6176df5480599e6a8e033c56ef696f5823775395f3e24389ea699d8ac53",
+          "bytes": 310530
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "mb-ep1b01",
+          "key": "storyChapter2MbEp1b01",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                128,
+                115
+              ],
+              "silk": [
+                128,
+                95
+              ],
+              "alpha8Bounds": [
+                53,
+                24,
+                228,
+                239
+              ],
+              "rgba_sha256": "06da8377f01aeb3a644839daf6b12d7f584fc13b2bc313fc92b2418c957ae5dc",
+              "sourceRect": [
+                0,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                128,
+                128
+              ],
+              "silk": [
+                128,
+                108
+              ],
+              "alpha8Bounds": [
+                31,
+                29,
+                194,
+                233
+              ],
+              "rgba_sha256": "bc56756c27285185e8e24b2ba3f03acac3cfbef9dfbca4d557d1fdae0a0a6213",
+              "sourceRect": [
+                627,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                128,
+                131
+              ],
+              "silk": [
+                128,
+                111
+              ],
+              "alpha8Bounds": [
+                57,
+                15,
+                227,
+                228
+              ],
+              "rgba_sha256": "203cb0e07ed7ca152bb3879771dadda8b6c6cbb10a098b0ec28b2f6481037eb3",
+              "sourceRect": [
+                0,
+                627,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                128,
+                111
+              ],
+              "silk": [
+                128,
+                91
+              ],
+              "alpha8Bounds": [
+                31,
+                11,
+                205,
+                227
+              ],
+              "rgba_sha256": "4a268d1b7168126df30cf69085a31a3be58c4364bd0485eaaced5ee14f523c24",
+              "sourceRect": [
+                627,
+                627,
+                627,
+                627
+              ]
+            }
+          ],
+          "scale": 0.4115
+        },
+        "projectile": null,
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": null,
+        "effects": {}
+      }
+    },
+    "b02-boss": {
+      "combatId": "b02-boss",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "canonical-body-review-pending",
+        "missing-own-projectile-art",
+        "missing-canonical-context-background",
+        "browser-integration-qa-pending",
+        "canonical-required-form-proof-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "1d025b46186a713241d901fb670476a5709e99c8e847a6a9291cb78b14c36e22",
+        "artSHA256": "a3afd7589105059c4163e3c02da2f4c59928e491f62e63e35f14d0cba5994f1e",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/story-chapter2/b02-boss-atlas-512.png": "1d025b46186a713241d901fb670476a5709e99c8e847a6a9291cb78b14c36e22",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6"
+        }
+      },
+      "images": [
+        {
+          "key": "storyChapter2B02Boss",
+          "file": "media/story-chapter2/b02-boss-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "1d025b46186a713241d901fb670476a5709e99c8e847a6a9291cb78b14c36e22",
+          "bytes": 286241
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "b02-boss",
+          "key": "storyChapter2B02Boss",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                130,
+                119
+              ],
+              "silk": [
+                130,
+                99
+              ],
+              "alpha8Bounds": [
+                66,
+                32,
+                232,
+                241
+              ],
+              "rgba_sha256": "1af9495ead9ebfd726a7a51f6520e4001f83a9eadf32121775f58b9bf9a4016b",
+              "sourceRect": [
+                0,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                129,
+                128
+              ],
+              "silk": [
+                129,
+                108
+              ],
+              "alpha8Bounds": [
+                44,
+                34,
+                209,
+                244
+              ],
+              "rgba_sha256": "c4b5c73639ed8b572d27ac6b188f07fe511ea6507c2cb78f3e12f5d140417a21",
+              "sourceRect": [
+                627,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                132,
+                131
+              ],
+              "silk": [
+                132,
+                111
+              ],
+              "alpha8Bounds": [
+                65,
+                27,
+                231,
+                227
+              ],
+              "rgba_sha256": "47835eda950024ebb34233528a46dcf47e274c3fcf223e4993c23bcd3eb1572d",
+              "sourceRect": [
+                0,
+                627,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                130,
+                125
+              ],
+              "silk": [
+                130,
+                105
+              ],
+              "alpha8Bounds": [
+                39,
+                22,
+                213,
+                228
+              ],
+              "rgba_sha256": "2a5ee868991239435fc20db9640cdcdac6635a3cc388835832c9025fa705cdbc",
+              "sourceRect": [
+                627,
+                627,
+                627,
+                627
+              ]
+            }
+          ],
+          "scale": 0.4588
+        },
+        "projectile": null,
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": null,
+        "effects": {}
+      }
+    },
+    "mb-ep1b02": {
+      "combatId": "mb-ep1b02",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "canonical-body-review-pending",
+        "missing-own-projectile-art",
+        "missing-canonical-context-background",
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "7102893cb941f3bb6e5d07cd35caf5270e3a9a1026f3a206faf0ea2b828d3b59",
+        "artSHA256": "12703ada6e1f932f04ed94435f4242243f7248f6e5c6eed01d870d6c19f046db",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/story-chapter2/mb-ep1b02-atlas-512.png": "7102893cb941f3bb6e5d07cd35caf5270e3a9a1026f3a206faf0ea2b828d3b59",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6"
+        }
+      },
+      "images": [
+        {
+          "key": "storyChapter2MbEp1b02",
+          "file": "media/story-chapter2/mb-ep1b02-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "7102893cb941f3bb6e5d07cd35caf5270e3a9a1026f3a206faf0ea2b828d3b59",
+          "bytes": 253925
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "mb-ep1b02",
+          "key": "storyChapter2MbEp1b02",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                128,
+                113
+              ],
+              "silk": [
+                128,
+                93
+              ],
+              "alpha8Bounds": [
+                68,
+                30,
+                216,
+                217
+              ],
+              "rgba_sha256": "433cabc05f2a836f3f622ba33d1edf2a2112a47e3b5accfa14f9842748abd746",
+              "sourceRect": [
+                0,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                130,
+                120
+              ],
+              "silk": [
+                130,
+                100
+              ],
+              "alpha8Bounds": [
+                19,
+                45,
+                193,
+                232
+              ],
+              "rgba_sha256": "6b14120eee33828603fcbbe6edc3e36c35692549d7a9e6e27d5dd4bc8c8335ee",
+              "sourceRect": [
+                627,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                128,
+                122
+              ],
+              "silk": [
+                128,
+                102
+              ],
+              "alpha8Bounds": [
+                47,
+                36,
+                222,
+                229
+              ],
+              "rgba_sha256": "6fdf50109b143ccedbfad6a933b32efb7c3160854f82fdbb64256469c0b302de",
+              "sourceRect": [
+                0,
+                627,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                129,
+                114
+              ],
+              "silk": [
+                129,
+                94
+              ],
+              "alpha8Bounds": [
+                49,
+                21,
+                200,
+                216
+              ],
+              "rgba_sha256": "1a0b9c0bf0752b8585d006a0ad68adcd48e3cad215e5e8f5a8848fe7597cbd87",
+              "sourceRect": [
+                627,
+                627,
+                627,
+                627
+              ]
+            }
+          ],
+          "scale": 0.5121
+        },
+        "projectile": null,
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": null,
+        "effects": {}
+      }
+    },
+    "mb-ep1b04": {
+      "combatId": "mb-ep1b04",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "canonical-body-review-pending",
+        "missing-own-projectile-art",
+        "missing-canonical-context-background",
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "9aae02eee33e4d605f3c53deca62d5aa54508c6995cf6aefb88ab1cd7c63da52",
+        "artSHA256": "b66ae010759b8da0152ebfb7a2ff615955006783113852f4cd6b8c0eed1f84d5",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/story-chapter2/mb-ep1b04-atlas-512.png": "9aae02eee33e4d605f3c53deca62d5aa54508c6995cf6aefb88ab1cd7c63da52",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6"
+        }
+      },
+      "images": [
+        {
+          "key": "storyChapter2MbEp1b04",
+          "file": "media/story-chapter2/mb-ep1b04-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "9aae02eee33e4d605f3c53deca62d5aa54508c6995cf6aefb88ab1cd7c63da52",
+          "bytes": 251764
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "mb-ep1b04",
+          "key": "storyChapter2MbEp1b04",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                128,
+                112
+              ],
+              "silk": [
+                128,
+                92
+              ],
+              "alpha8Bounds": [
+                48,
+                21,
+                211,
+                224
+              ],
+              "rgba_sha256": "7886a70e819aa04530d90dc8a933c704d7f3d14800877440af33cbac86f3aca0",
+              "sourceRect": [
+                0,
+                0,
+                680,
+                650
+              ]
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                128,
+                117
+              ],
+              "silk": [
+                128,
+                97
+              ],
+              "alpha8Bounds": [
+                28,
+                67,
+                155,
+                231
+              ],
+              "rgba_sha256": "be420f7c1ba00727d128ec379c343d8bbb657f01fd4cf145e963b2f39147e6a2",
+              "sourceRect": [
+                680,
+                0,
+                574,
+                650
+              ]
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                128,
+                114
+              ],
+              "silk": [
+                128,
+                94
+              ],
+              "alpha8Bounds": [
+                30,
+                50,
+                244,
+                203
+              ],
+              "rgba_sha256": "a72c7f69f18e87553f1dd1dc9d4caa579cda3d09aeffefd48edfdfb1e29acc9f",
+              "sourceRect": [
+                0,
+                650,
+                680,
+                604
+              ]
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                129,
+                108
+              ],
+              "silk": [
+                129,
+                88
+              ],
+              "alpha8Bounds": [
+                13,
+                14,
+                189,
+                206
+              ],
+              "rgba_sha256": "f1fa109161cf4168fdbdfb0968894251030ef4da93571f307f11aad02d949bee",
+              "sourceRect": [
+                680,
+                650,
+                574,
+                604
+              ]
+            }
+          ],
+          "scale": 0.505
+        },
+        "projectile": null,
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": null,
+        "effects": {}
+      }
+    },
+    "mb-ep1b05": {
+      "combatId": "mb-ep1b05",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "canonical-body-review-pending",
+        "missing-own-projectile-art",
+        "missing-canonical-context-background",
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "faf72409b1cb0c416a5671a6ec05e9f1150bb6205fe7f35000e83d8be12cc03f",
+        "artSHA256": "0106fd9502891cf37d49e4e744da8a86325d66829c586abd2cd960f4b6fab87a",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/story-chapter2/mb-ep1b05-atlas-512.png": "faf72409b1cb0c416a5671a6ec05e9f1150bb6205fe7f35000e83d8be12cc03f",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6"
+        }
+      },
+      "images": [
+        {
+          "key": "storyChapter2MbEp1b05",
+          "file": "media/story-chapter2/mb-ep1b05-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "faf72409b1cb0c416a5671a6ec05e9f1150bb6205fe7f35000e83d8be12cc03f",
+          "bytes": 220698
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "mb-ep1b05",
+          "key": "storyChapter2MbEp1b05",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                128,
+                111
+              ],
+              "silk": [
+                128,
+                91
+              ],
+              "alpha8Bounds": [
+                39,
+                33,
+                228,
+                230
+              ],
+              "rgba_sha256": "acaa56aba9000d07d1e4e1e80bea0ecd54e9c9a8c7ab07a62e79e08b06416c57",
+              "sourceRect": [
+                0,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                128,
+                123
+              ],
+              "silk": [
+                128,
+                103
+              ],
+              "alpha8Bounds": [
+                29,
+                29,
+                221,
+                230
+              ],
+              "rgba_sha256": "630d6149ab9e2d7ec54b16c08c7d6312fbcae7fe0e60c230fe8826d040e384fd",
+              "sourceRect": [
+                627,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                128,
+                128
+              ],
+              "silk": [
+                128,
+                108
+              ],
+              "alpha8Bounds": [
+                40,
+                42,
+                228,
+                221
+              ],
+              "rgba_sha256": "e5fffcbeeac118b6f74bd1673b5b2e2413537fbff8761d936a652a60d70a73fc",
+              "sourceRect": [
+                0,
+                627,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                128,
+                111
+              ],
+              "silk": [
+                128,
+                91
+              ],
+              "alpha8Bounds": [
+                38,
+                18,
+                221,
+                225
+              ],
+              "rgba_sha256": "1f96d8686b85c0b946e0deb9c91f42b00a8be1c0e2958139aec549e7a2a236a9",
+              "sourceRect": [
+                627,
+                627,
+                627,
+                627
+              ]
+            }
+          ],
+          "scale": 0.5058
+        },
+        "projectile": null,
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": null,
+        "effects": {}
+      }
+    },
+    "mb-ep1b06": {
+      "combatId": "mb-ep1b06",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "canonical-body-review-pending",
+        "missing-own-projectile-art",
+        "missing-canonical-context-background",
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "ab17e4a88f7acf10f26839028e76657ac095795306f612b68d72bedae4f81750",
+        "artSHA256": "0d5625dead3bcaeb04c22604a28f72895923466b052e57c275556af6bfc01873",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/story-chapter2/mb-ep1b06-atlas-512.png": "ab17e4a88f7acf10f26839028e76657ac095795306f612b68d72bedae4f81750",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6"
+        }
+      },
+      "images": [
+        {
+          "key": "storyChapter2MbEp1b06",
+          "file": "media/story-chapter2/mb-ep1b06-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "ab17e4a88f7acf10f26839028e76657ac095795306f612b68d72bedae4f81750",
+          "bytes": 222452
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "mb-ep1b06",
+          "key": "storyChapter2MbEp1b06",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                133,
+                110
+              ],
+              "silk": [
+                133,
+                90
+              ],
+              "alpha8Bounds": [
+                81,
+                36,
+                221,
+                239
+              ],
+              "rgba_sha256": "cdaf87beeb8c366ff90e4a7af86f70202f41dd53621c3d5199030dedbf2fec2c",
+              "sourceRect": [
+                0,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                132,
+                115
+              ],
+              "silk": [
+                132,
+                95
+              ],
+              "alpha8Bounds": [
+                58,
+                69,
+                212,
+                232
+              ],
+              "rgba_sha256": "d910a3d330cbfded81a3e1b2601813c00f2c1de37e2908a58e541b067e22ca8a",
+              "sourceRect": [
+                627,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                128,
+                124
+              ],
+              "silk": [
+                128,
+                104
+              ],
+              "alpha8Bounds": [
+                61,
+                60,
+                227,
+                211
+              ],
+              "rgba_sha256": "5ee80f0ec1849d88eaaef69db3a279a596fd9f78ac9264b18a341e0639912838",
+              "sourceRect": [
+                0,
+                627,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                137,
+                111
+              ],
+              "silk": [
+                137,
+                91
+              ],
+              "alpha8Bounds": [
+                65,
+                23,
+                205,
+                232
+              ],
+              "rgba_sha256": "f32e8e7ffbc95fd1765ecfdea20e5be45d492d852550225c1b6368a9b08ced44",
+              "sourceRect": [
+                627,
+                627,
+                627,
+                627
+              ]
+            }
+          ],
+          "scale": 0.5414
+        },
+        "projectile": null,
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": null,
+        "effects": {}
+      }
+    },
+    "b06b-boss": {
+      "combatId": "b06b-boss",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "canonical-body-review-pending",
+        "missing-own-projectile-art",
+        "missing-canonical-context-background",
+        "combat-objective-not-supported",
+        "browser-integration-qa-pending",
+        "canonical-required-form-proof-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "6271f3e2dbd4c18c8d078ac5351bff148483aaca26d5dcd7ed281cadc9ba4d7c",
+        "artSHA256": "42cc5922e709ade5336495c68ee3742ee4a5868868037674d87df4c1ddc58617",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/story-chapter2/b06b-boss-child-atlas-512.png": "6271f3e2dbd4c18c8d078ac5351bff148483aaca26d5dcd7ed281cadc9ba4d7c",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6"
+        }
+      },
+      "images": [
+        {
+          "key": "storyChapter2B06bBossChild",
+          "file": "media/story-chapter2/b06b-boss-child-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "6271f3e2dbd4c18c8d078ac5351bff148483aaca26d5dcd7ed281cadc9ba4d7c",
+          "bytes": 174736
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "b06b-boss",
+          "key": "storyChapter2B06bBossChild",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                134,
+                113
+              ],
+              "silk": [
+                134,
+                93
+              ],
+              "alpha8Bounds": [
+                62,
+                37,
+                200,
+                239
+              ],
+              "rgba_sha256": "a14f7c38f3698279860917726d7e9d3bd0aa689e002eefbe194c17c928f9d632",
+              "sourceRect": [
+                0,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                139,
+                119
+              ],
+              "silk": [
+                139,
+                99
+              ],
+              "alpha8Bounds": [
+                59,
+                42,
+                176,
+                239
+              ],
+              "rgba_sha256": "fd555605914119749f39e85f2961c0365a1ed66440848ff921adb1d7e0526171",
+              "sourceRect": [
+                627,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                138,
+                119
+              ],
+              "silk": [
+                138,
+                99
+              ],
+              "alpha8Bounds": [
+                67,
+                39,
+                202,
+                225
+              ],
+              "rgba_sha256": "2140d47cda8eac3a362620d5b962d370817b293cb2d0ebde55188bad42a30ded",
+              "sourceRect": [
+                0,
+                627,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                132,
+                105
+              ],
+              "silk": [
+                132,
+                85
+              ],
+              "alpha8Bounds": [
+                65,
+                27,
+                180,
+                229
+              ],
+              "rgba_sha256": "194dd7bb16dcc0b009ded46f24e75494d2f31bad8d11faf1a8ef1819f3d62b32",
+              "sourceRect": [
+                627,
+                627,
+                627,
+                627
+              ]
+            }
+          ],
+          "scale": 0.5952
+        },
+        "projectile": null,
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": null,
+        "effects": {}
+      }
+    },
+    "mb-ep1b06b": {
+      "combatId": "mb-ep1b06b",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "canonical-body-review-pending",
+        "missing-own-projectile-art",
+        "missing-canonical-context-background",
+        "combat-objective-not-supported",
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "121105ddd671016e509a48fb7c3a1505c29150c396099ba89056ac53ca61e0e3",
+        "artSHA256": "96860b1adf2831d3e1b062f72e5decdabebd1b12f422bccc5e9ae0f82b1c0a59",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/story-chapter2/mb-ep1b06b-atlas-512.png": "121105ddd671016e509a48fb7c3a1505c29150c396099ba89056ac53ca61e0e3",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6"
+        }
+      },
+      "images": [
+        {
+          "key": "storyChapter2MbEp1b06b",
+          "file": "media/story-chapter2/mb-ep1b06b-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "121105ddd671016e509a48fb7c3a1505c29150c396099ba89056ac53ca61e0e3",
+          "bytes": 324887
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "mb-ep1b06b",
+          "key": "storyChapter2MbEp1b06b",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                132,
+                115
+              ],
+              "silk": [
+                132,
+                95
+              ],
+              "alpha8Bounds": [
+                34,
+                16,
+                222,
+                232
+              ],
+              "rgba_sha256": "9f56875f4ba3ea9541f9b428a9d652f40617b1b2651e5512a065bb21bef8c9df",
+              "sourceRect": [
+                0,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                126,
+                122
+              ],
+              "silk": [
+                126,
+                102
+              ],
+              "alpha8Bounds": [
+                29,
+                35,
+                232,
+                245
+              ],
+              "rgba_sha256": "3c73251a41a1e93c78397156517c70cde6af91d038a4d617bfd98a5628357e07",
+              "sourceRect": [
+                627,
+                0,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                129,
+                123
+              ],
+              "silk": [
+                129,
+                103
+              ],
+              "alpha8Bounds": [
+                41,
+                32,
+                244,
+                234
+              ],
+              "rgba_sha256": "9fced53b2975b5674bfe57852ffba6bcc485716a73ae6bb79839fae41b96eb48",
+              "sourceRect": [
+                0,
+                627,
+                627,
+                627
+              ]
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                130,
+                116
+              ],
+              "silk": [
+                130,
+                96
+              ],
+              "alpha8Bounds": [
+                40,
+                12,
+                229,
+                221
+              ],
+              "rgba_sha256": "26f925bb16939856b61fdf47ad57aa39b59a596d99ab8ed544d1b81011fc569c",
+              "sourceRect": [
+                627,
+                627,
+                627,
+                627
+              ]
+            }
+          ],
+          "scale": 0.4579
+        },
+        "projectile": null,
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": null,
+        "effects": {}
+      }
+    },
+    "mb-ep1b07": {
+      "combatId": "mb-ep1b07",
+      "status": "pending-integration-qa",
+      "pendingReasons": [
+        "canonical-body-review-pending",
+        "missing-own-projectile-art",
+        "missing-canonical-context-background",
+        "browser-integration-qa-pending",
+        "player-skill-art-pending:memory",
+        "player-skill-art-pending:delay",
+        "player-skill-art-pending:parry",
+        "player-skill-art-pending:ego"
+      ],
+      "qaProofRequirements": {
+        "bodySHA256": "1f83f0efe71effa539bd33ff513bbb13a28391ffe55a03c91632e2fd44a07cb8",
+        "artSHA256": "3c273e645b6f10fe2da1c5c116c4b5bb0f3bf9a7477c0ed8e6716ced2a6c72d5",
+        "dependenciesSHA256": {
+          "src/story-combat.js": "d1908c26fb43b9d71bcf4f36c22e062b8b777e5531cccff70d758fb9367844ee",
+          "src/story-render.js": "9d6d146b4c7a3ae41b239bf00cc644f983b3d35787e699657c02014d3adb0f37",
+          "src/story-app.js": "9aa47a86c9910079411704f807840a0dae951defd692bfbb74af79b8df120907",
+          "media/story-chapter2/mb-ep1b07-atlas-512.png": "1f83f0efe71effa539bd33ff513bbb13a28391ffe55a03c91632e2fd44a07cb8",
+          "media/gunner.webp": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "media/shot.webp": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6"
+        }
+      },
+      "images": [
+        {
+          "key": "storyChapter2MbEp1b07",
+          "file": "media/story-chapter2/mb-ep1b07-atlas-512.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "1f83f0efe71effa539bd33ff513bbb13a28391ffe55a03c91632e2fd44a07cb8",
+          "bytes": 175405
+        },
+        {
+          "key": "gunner",
+          "file": "media/gunner.webp",
+          "width": 512,
+          "height": 512,
+          "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+          "bytes": 70104
+        },
+        {
+          "key": "shot",
+          "file": "media/shot.webp",
+          "width": 256,
+          "height": 96,
+          "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+          "bytes": 6056
+        }
+      ],
+      "art": {
+        "body": {
+          "combatId": "mb-ep1b07",
+          "key": "storyChapter2MbEp1b07",
+          "cell": 256,
+          "width": 512,
+          "height": 512,
+          "poses": [
+            {
+              "index": 0,
+              "name": "prepare",
+              "anchor": [
+                132,
+                108
+              ],
+              "silk": [
+                132,
+                88
+              ],
+              "alpha8Bounds": [
+                80,
+                16,
+                197,
+                211
+              ],
+              "rgba_sha256": "98e4d636e732a578cf6999a7bb51a22f5132ef1e3eee217d5cd680c004cc10a0",
+              "sourceRect": [
+                0,
+                0,
+                679,
+                600
+              ]
+            },
+            {
+              "index": 1,
+              "name": "downstroke",
+              "anchor": [
+                127,
+                103
+              ],
+              "silk": [
+                127,
+                83
+              ],
+              "alpha8Bounds": [
+                52,
+                65,
+                185,
+                213
+              ],
+              "rgba_sha256": "7191b6111d3861ca0c83aa9ef9c7c7c1d393ceb34deb6d3d4dda37f37fca2615",
+              "sourceRect": [
+                679,
+                0,
+                679,
+                600
+              ]
+            },
+            {
+              "index": 2,
+              "name": "follow",
+              "anchor": [
+                125,
+                109
+              ],
+              "silk": [
+                125,
+                89
+              ],
+              "alpha8Bounds": [
+                82,
+                45,
+                226,
+                187
+              ],
+              "rgba_sha256": "a88b8fc1ecdae53258580b6d23c4ebdad9b7fe38be30dd4ae4c20b3b6ab45da3",
+              "sourceRect": [
+                0,
+                600,
+                679,
+                559
+              ]
+            },
+            {
+              "index": 3,
+              "name": "recover",
+              "anchor": [
+                128,
+                105
+              ],
+              "silk": [
+                128,
+                85
+              ],
+              "alpha8Bounds": [
+                69,
+                17,
+                213,
+                186
+              ],
+              "rgba_sha256": "1575eb312576acfd44d5ca8d36cb3c24d87c6c4016937b6893d3c9d378bca062",
+              "sourceRect": [
+                679,
+                600,
+                679,
+                559
+              ]
+            }
+          ],
+          "scale": 0.519
+        },
+        "projectile": null,
+        "playerKey": "gunner",
+        "shotKey": "shot",
+        "background": null,
+        "effects": {}
+      }
+    }
+  },
+  "contextBodies": [
+    {
+      "combatId": "b07-boss",
+      "formId": "b07-boss-human",
+      "contextOnly": true,
+      "image": {
+        "key": "storyChapter2B07BossHuman",
+        "file": "media/story-chapter2/b07-boss-human-atlas-512.png",
+        "width": 512,
+        "height": 512,
+        "sha256": "d7a496865b9b7436c9e6926905f5f3b41e9fefcd3edd2f47436c77aa206b5682",
+        "bytes": 113362
+      },
+      "batch": "chapter2-partial11-20261026",
+      "reason": "human-context-does-not-replace-canonical-combat-form"
+    },
+    {
+      "combatId": "b08-boss",
+      "formId": "b08-boss-human",
+      "contextOnly": true,
+      "image": {
+        "key": "storyChapter2B08BossHuman",
+        "file": "media/story-chapter2/b08-boss-human-atlas-512.png",
+        "width": 512,
+        "height": 512,
+        "sha256": "7f4ed7ef064882d4f3f31f6592b635dac0dcec61137fe3a3758d707632d17345",
+        "bytes": 145503
+      },
+      "batch": "chapter2-partial11-20261026",
+      "reason": "human-context-does-not-replace-canonical-combat-form"
+    }
+  ],
+  "summary": {
+    "registeredBodies": 22,
+    "readyCombats": 0,
+    "primaryCount": 70,
+    "allComplete": false
+  },
+  "limits": [
+    "Partial art registrations are not permission to start a battle.",
+    "Signature drawings are static decorations, never the sole damage warning.",
+    "White six-wing Lucifer is pre-reveal only; black-wing horn form remains required.",
+    "No hospital or chapter2 background is fabricated from another context."
+  ]
+}

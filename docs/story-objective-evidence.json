@@ -1,0 +1,1986 @@
+{
+  "schemaVersion": 1,
+  "engine": "src/story-objectives.js",
+  "canonicalSHA256": "4b981a3d64c203a6b5b7d0b429aac452e22b43077a1f961a16afa5fc30406a90",
+  "api": {
+    "global": "HapilStoryObjectives",
+    "methods": [
+      "create(sceneId) -> state",
+      "step(state, event) -> {ok, state, reason}",
+      "evaluate(state) -> {complete, resolution, evidence}",
+      "describe(sceneId?) -> copied contract(s)"
+    ],
+    "state": {
+      "schemaVersion": 1,
+      "sceneId": "canonical zone/scene ID",
+      "events": "ordered canonical event journal"
+    },
+    "event": "Exact objects in stages; a stage containing multiple entries accepts those entries in either order. Duplicate accepted events are idempotent.",
+    "trustedCombatResult": false
+  },
+  "boundary": {
+    "storymodeLastLine": 919,
+    "firstExpansionLine": 922,
+    "expansionReadThroughLine": 2737,
+    "expansionContentImported": false,
+    "postEndingSceneIdsAccepted": false
+  },
+  "integration": {
+    "implementationAndApprovedArtGateRequired": true,
+    "completionDoesNotUnlockCombat": true,
+    "evaluateEvidenceCombatVerified": false,
+    "ordinaryScenesResolution": "narrative",
+    "specialSceneResultMustBeBoundToTrustedRunVerifier": true,
+    "endingRequiredEvidence": [
+      "corePreserved",
+      "commandsRemoved",
+      "coerciveCircuitRemoved",
+      "distinctWorldsPreserved",
+      "guardianRemains"
+    ]
+  },
+  "canonGuards": [
+    {
+      "lines": [
+        588,
+        606
+      ],
+      "rule": "66 total guardians = 48 ordinary + 12 advanced + 6 great; do not create 66 independent named bosses."
+    },
+    {
+      "lines": [
+        865,
+        873
+      ],
+      "rule": "c103-mid is Han Rian; c103-boss is Baek Ion. No objective identity remapping."
+    },
+    {
+      "lines": [
+        879,
+        883
+      ],
+      "rule": "Mortal injury precedes the black-neural revival in the canonical prose."
+    },
+    {
+      "lines": [
+        887,
+        900
+      ],
+      "rule": "Triplets are recovered reality memory; B and the first child remain as two consenting wills."
+    },
+    {
+      "lines": [
+        904,
+        910
+      ],
+      "rule": "Earlier core-destruction belief is superseded. Destroy-core ending actions are rejected."
+    }
+  ],
+  "contracts": [
+    {
+      "sceneId": "prologue",
+      "sourceRange": [
+        92,
+        106
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          92,
+          106
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "dist00",
+      "sourceRange": [
+        107,
+        116
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          107,
+          116
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "dist01",
+      "sourceRange": [
+        117,
+        131
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          117,
+          131
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "dist02",
+      "sourceRange": [
+        132,
+        141
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          132,
+          141
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "dist03",
+      "sourceRange": [
+        142,
+        149
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          142,
+          149
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "dist04",
+      "sourceRange": [
+        150,
+        157
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          150,
+          157
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "dist05",
+      "sourceRange": [
+        158,
+        163
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          158,
+          163
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "dist06",
+      "sourceRange": [
+        164,
+        176
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          164,
+          176
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "ep1a08",
+      "sourceRange": [
+        177,
+        186
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          177,
+          186
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "ep1a09",
+      "sourceRange": [
+        187,
+        204
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          187,
+          204
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "ep1a10",
+      "sourceRange": [
+        205,
+        219
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          205,
+          219
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "ep1a11",
+      "sourceRange": [
+        220,
+        243
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          220,
+          243
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "dreamRest",
+      "sourceRange": [
+        244,
+        259
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          244,
+          259
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "ep1b01",
+      "sourceRange": [
+        260,
+        275
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          260,
+          275
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "ep1b02",
+      "sourceRange": [
+        276,
+        289
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          276,
+          289
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "ep1b03",
+      "sourceRange": [
+        290,
+        301
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          290,
+          301
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "ep1b04",
+      "sourceRange": [
+        302,
+        313
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          302,
+          313
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "ep1b05",
+      "sourceRange": [
+        314,
+        325
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          314,
+          325
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "ep1b06",
+      "sourceRange": [
+        326,
+        333
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          326,
+          333
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "ep1b06b",
+      "sourceRange": [
+        334,
+        344
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          334,
+          344
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "ep1b07",
+      "sourceRange": [
+        345,
+        356
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          345,
+          356
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "ep1b08",
+      "sourceRange": [
+        357,
+        368
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          357,
+          368
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "ep1b09",
+      "sourceRange": [
+        369,
+        384
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          369,
+          384
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "restEp1b",
+      "sourceRange": [
+        385,
+        396
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          385,
+          396
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "u201",
+      "sourceRange": [
+        397,
+        421
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          397,
+          421
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "u202",
+      "sourceRange": [
+        422,
+        439
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          422,
+          439
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "u204",
+      "sourceRange": [
+        440,
+        457
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          440,
+          457
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "u205",
+      "sourceRange": [
+        458,
+        469
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          458,
+          469
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "u206",
+      "sourceRange": [
+        470,
+        486
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          470,
+          486
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "u203",
+      "sourceRange": [
+        487,
+        497
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          487,
+          497
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "restU2",
+      "sourceRange": [
+        498,
+        508
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          498,
+          508
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "last304",
+      "sourceRange": [
+        509,
+        516
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          509,
+          516
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "last305",
+      "sourceRange": [
+        517,
+        524
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          517,
+          524
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "last301",
+      "sourceRange": [
+        525,
+        533
+      ],
+      "resolution": "survive-and-fall",
+      "stages": [
+        [
+          {
+            "type": "sixFormsSeen"
+          }
+        ],
+        [
+          {
+            "type": "scriptedPierce"
+          }
+        ],
+        [
+          {
+            "type": "fall"
+          }
+        ]
+      ],
+      "forbidden": [
+        "ordinaryDeath",
+        "death",
+        "bossKilled",
+        "victory"
+      ],
+      "specialized": true,
+      "evidence": {
+        "lines": [
+          527,
+          532
+        ],
+        "basis": "Six learned sword forms pierce the protagonist; he retains the sword and falls into the black sea. This is scripted survival and fall, not ordinary death or a boss kill."
+      }
+    },
+    {
+      "sceneId": "last302",
+      "sourceRange": [
+        534,
+        542
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          534,
+          542
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "last303",
+      "sourceRange": [
+        543,
+        552
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          543,
+          552
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "restLast3",
+      "sourceRange": [
+        553,
+        562
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          553,
+          562
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "kair01",
+      "sourceRange": [
+        563,
+        585
+      ],
+      "resolution": "defended",
+      "stages": [
+        [
+          {
+            "type": "waveDefended",
+            "wave": 1
+          }
+        ],
+        [
+          {
+            "type": "waveDefended",
+            "wave": 2
+          }
+        ],
+        [
+          {
+            "type": "waveDefended",
+            "wave": 3
+          }
+        ],
+        [
+          {
+            "type": "waveDefended",
+            "wave": 4
+          }
+        ],
+        [
+          {
+            "type": "waveDefended",
+            "wave": 5
+          }
+        ],
+        [
+          {
+            "type": "waveDefended",
+            "wave": 6
+          }
+        ]
+      ],
+      "forbidden": [
+        "destroyCore",
+        "coreDestroyed",
+        "firstCommandCorrupted"
+      ],
+      "specialized": true,
+      "evidence": {
+        "lines": [
+          580,
+          584
+        ],
+        "basis": "The attack seeks to contaminate the first command. Seohа protects the core with turrets and a time sword through six invasion waves."
+      }
+    },
+    {
+      "sceneId": "kair04",
+      "sourceRange": [
+        586,
+        593
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          586,
+          593
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "kair05",
+      "sourceRange": [
+        594,
+        603
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          594,
+          603
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "kair06",
+      "sourceRange": [
+        604,
+        611
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          604,
+          611
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "kair07",
+      "sourceRange": [
+        612,
+        619
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          612,
+          619
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "kair08",
+      "sourceRange": [
+        620,
+        627
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          620,
+          627
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "kair09",
+      "sourceRange": [
+        628,
+        635
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          628,
+          635
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "kair10",
+      "sourceRange": [
+        636,
+        643
+      ],
+      "resolution": "cleared",
+      "stages": [
+        [
+          {
+            "type": "commandRingCut",
+            "ring": 1
+          },
+          {
+            "type": "commandRingCut",
+            "ring": 2
+          },
+          {
+            "type": "commandRingCut",
+            "ring": 3
+          },
+          {
+            "type": "commandRingCut",
+            "ring": 4
+          },
+          {
+            "type": "commandRingCut",
+            "ring": 5
+          },
+          {
+            "type": "commandRingCut",
+            "ring": 6
+          }
+        ]
+      ],
+      "forbidden": [
+        "destroyCore"
+      ],
+      "specialized": true,
+      "evidence": {
+        "lines": [
+          638,
+          642
+        ],
+        "basis": "Six command rings protect the corridor. All must be cut; prose does not number their cutting order."
+      }
+    },
+    {
+      "sceneId": "kair02",
+      "sourceRange": [
+        644,
+        653
+      ],
+      "resolution": "liberated",
+      "stages": [
+        [
+          {
+            "type": "cutCorruptionThread"
+          }
+        ],
+        [
+          {
+            "type": "arveliaSelfRewrite"
+          }
+        ],
+        [
+          {
+            "type": "ally"
+          }
+        ]
+      ],
+      "forbidden": [
+        "attackBody",
+        "killed",
+        "arveliaKilled"
+      ],
+      "specialized": true,
+      "evidence": {
+        "lines": [
+          646,
+          652
+        ],
+        "basis": "Arvelia is a recovery Archon whose command was altered. Her body is spared, the altered command thread is cut, she rewrites her first sentence and becomes an ally."
+      }
+    },
+    {
+      "sceneId": "kair03",
+      "sourceRange": [
+        654,
+        679
+      ],
+      "resolution": "cleared",
+      "stages": [
+        [
+          {
+            "type": "phaseCompleted",
+            "phase": 1
+          }
+        ],
+        [
+          {
+            "type": "arveliaSupport"
+          }
+        ],
+        [
+          {
+            "type": "phaseCompleted",
+            "phase": 2
+          }
+        ],
+        [
+          {
+            "type": "phaseCompleted",
+            "phase": 3
+          }
+        ]
+      ],
+      "forbidden": [
+        "arveliaKilled"
+      ],
+      "specialized": true,
+      "evidence": {
+        "lines": [
+          660,
+          678
+        ],
+        "basis": "Time harvest, optimized fate, free-will time are three successive phases. Arvelia grants a pause during optimized fate."
+      }
+    },
+    {
+      "sceneId": "restKairo",
+      "sourceRange": [
+        680,
+        694
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          680,
+          694
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "hando01",
+      "sourceRange": [
+        695,
+        708
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          695,
+          708
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "hando02",
+      "sourceRange": [
+        709,
+        716
+      ],
+      "resolution": "defended",
+      "stages": [
+        [
+          {
+            "type": "ownerSealOpened",
+            "owner": "second"
+          },
+          {
+            "type": "ownerSealOpened",
+            "owner": "third"
+          }
+        ]
+      ],
+      "forbidden": [
+        "proxySealOpened"
+      ],
+      "specialized": true,
+      "evidence": {
+        "lines": [
+          711,
+          715
+        ],
+        "basis": "The two owners each open one of the two seals through their own authority. Hando protects their time to decide."
+      }
+    },
+    {
+      "sceneId": "hando03",
+      "sourceRange": [
+        717,
+        726
+      ],
+      "resolution": "cleared",
+      "stages": [
+        [
+          {
+            "type": "jointChoice"
+          }
+        ],
+        [
+          {
+            "type": "coreBindingsCut"
+          }
+        ],
+        [
+          {
+            "type": "coreRecovered"
+          }
+        ],
+        [
+          {
+            "type": "laurenAlliance"
+          }
+        ]
+      ],
+      "forbidden": [
+        "destroyCore",
+        "ownersErased",
+        "forcedAlliance"
+      ],
+      "specialized": true,
+      "evidence": {
+        "lines": [
+          719,
+          725
+        ],
+        "basis": "The owners choose jointly, core bindings are cut, their shared EGO is recovered, and both choose to accompany Hando as Lauren knights."
+      }
+    },
+    {
+      "sceneId": "restHando",
+      "sourceRange": [
+        727,
+        737
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          727,
+          737
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "murder01",
+      "sourceRange": [
+        738,
+        752
+      ],
+      "resolution": "investigated",
+      "stages": [
+        [
+          {
+            "type": "viewpointEntered",
+            "person": "YunHaram"
+          }
+        ],
+        [
+          {
+            "type": "clueFound",
+            "clue": "softenedSafetyReport"
+          }
+        ],
+        [
+          {
+            "type": "clueFound",
+            "clue": "greenLightCollision"
+          }
+        ],
+        [
+          {
+            "type": "clueFound",
+            "clue": "lowElectronicTone"
+          }
+        ]
+      ],
+      "forbidden": [
+        "victimKilled",
+        "eraseRecords"
+      ],
+      "specialized": true,
+      "evidence": {
+        "lines": [
+          743,
+          751
+        ],
+        "basis": "Haram recalls softened report wording, a green-light crosswalk collision and a low electronic tone. He is a memory subject, not a new combat boss."
+      }
+    },
+    {
+      "sceneId": "murder02",
+      "sourceRange": [
+        753,
+        769
+      ],
+      "resolution": "investigated",
+      "stages": [
+        [
+          {
+            "type": "viewpointEntered",
+            "person": "JangMinjae"
+          }
+        ],
+        [
+          {
+            "type": "clueFound",
+            "clue": "fallAbsentFromCCTV"
+          }
+        ],
+        [
+          {
+            "type": "clueFound",
+            "clue": "haramDiedTwoDaysLater"
+          }
+        ],
+        [
+          {
+            "type": "clueFound",
+            "clue": "saebitReportAndAnonymousMail"
+          }
+        ],
+        [
+          {
+            "type": "clueFound",
+            "clue": "hotelFireAndDeletedEntryLog"
+          }
+        ],
+        [
+          {
+            "type": "clueFound",
+            "clue": "minjaeStairFall"
+          }
+        ]
+      ],
+      "forbidden": [
+        "victimKilled",
+        "eraseRecords",
+        "shadowDeclaredHallucination"
+      ],
+      "specialized": true,
+      "evidence": {
+        "lines": [
+          756,
+          768
+        ],
+        "basis": "Minjae recalls the falling figure absent from CCTV, Haram dying two days later, report and anonymous mail, old hotel fire and entry-record deletion, then the stair fall."
+      }
+    },
+    {
+      "sceneId": "murder04",
+      "sourceRange": [
+        770,
+        800
+      ],
+      "resolution": "investigated",
+      "stages": [
+        [
+          {
+            "type": "viewpointEntered",
+            "person": "GoSeojin"
+          }
+        ],
+        [
+          {
+            "type": "clueFound",
+            "clue": "faultyAlarmAndFireDoor"
+          }
+        ],
+        [
+          {
+            "type": "clueFound",
+            "clue": "occupiedFloorRecordedVacant"
+          }
+        ],
+        [
+          {
+            "type": "clueFound",
+            "clue": "seojinPushedAtVilla"
+          }
+        ],
+        [
+          {
+            "type": "viewpointEntered",
+            "person": "HanIkyung"
+          }
+        ],
+        [
+          {
+            "type": "clueFound",
+            "clue": "woosolOriginalReport"
+          }
+        ],
+        [
+          {
+            "type": "responsibilityRecorded",
+            "person": "YunHaram"
+          },
+          {
+            "type": "responsibilityRecorded",
+            "person": "JangMinjae"
+          },
+          {
+            "type": "responsibilityRecorded",
+            "person": "GoSeojin"
+          },
+          {
+            "type": "responsibilityRecorded",
+            "person": "HanIkyung"
+          }
+        ],
+        [
+          {
+            "type": "clueFound",
+            "clue": "ikyungSentAnonymousMail"
+          }
+        ]
+      ],
+      "forbidden": [
+        "victimKilled",
+        "eraseRecords",
+        "singleCulpritSelected"
+      ],
+      "specialized": true,
+      "evidence": {
+        "lines": [
+          773,
+          799
+        ],
+        "basis": "Seojin recalls the faulty alarm and door, vacant ledger and being pushed at the villa. Ikyung recalls Woosol original report, four separate responsibilities, and sending the mail."
+      }
+    },
+    {
+      "sceneId": "murder03",
+      "sourceRange": [
+        801,
+        822
+      ],
+      "resolution": "command-severed",
+      "stages": [
+        [
+          {
+            "type": "fourMemoriesReviewed"
+          }
+        ],
+        [
+          {
+            "type": "singleCulpritRejected"
+          }
+        ],
+        [
+          {
+            "type": "recordsPreserved"
+          }
+        ],
+        [
+          {
+            "type": "causalAnchorBroken",
+            "anchor": 1
+          }
+        ],
+        [
+          {
+            "type": "causalAnchorBroken",
+            "anchor": 2
+          }
+        ],
+        [
+          {
+            "type": "causalAnchorBroken",
+            "anchor": 3
+          }
+        ],
+        [
+          {
+            "type": "shadowRevealed",
+            "identity": "HanIkyung"
+          }
+        ],
+        [
+          {
+            "type": "causalLoopReleased"
+          }
+        ]
+      ],
+      "forbidden": [
+        "victimKilled",
+        "eraseRecords",
+        "singleCulpritSelected",
+        "shadowDeclaredHallucination"
+      ],
+      "specialized": true,
+      "evidence": {
+        "lines": [
+          804,
+          820
+        ],
+        "basis": "Hando rejects a single scapegoat, preserves records and breaks three causal stages. Only then is the falling shadow revealed as Han Ikyung and the loop released."
+      }
+    },
+    {
+      "sceneId": "cult01",
+      "sourceRange": [
+        823,
+        836
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          823,
+          836
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "cult02",
+      "sourceRange": [
+        837,
+        844
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          837,
+          844
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "cult05",
+      "sourceRange": [
+        845,
+        854
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          845,
+          854
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "cult06",
+      "sourceRange": [
+        855,
+        862
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          855,
+          862
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "cult03",
+      "sourceRange": [
+        863,
+        874
+      ],
+      "resolution": "narrative",
+      "stages": [
+        [
+          {
+            "type": "narrativeAcknowledged"
+          }
+        ]
+      ],
+      "forbidden": [],
+      "specialized": false,
+      "evidence": {
+        "lines": [
+          863,
+          874
+        ],
+        "basis": "Narrative acknowledgment only; this module does not invent or verify combat requirements for this scene."
+      }
+    },
+    {
+      "sceneId": "cult04",
+      "sourceRange": [
+        875,
+        901
+      ],
+      "resolution": "authority-severed",
+      "stages": [
+        [
+          {
+            "type": "leaderBodyDefeated"
+          }
+        ],
+        [
+          {
+            "type": "mortallyWounded"
+          }
+        ],
+        [
+          {
+            "type": "blackNeuralRevival"
+          }
+        ],
+        [
+          {
+            "type": "realityMemoryRecalled"
+          }
+        ],
+        [
+          {
+            "type": "tripletTruthRevealed"
+          }
+        ],
+        [
+          {
+            "type": "samongAwakened"
+          }
+        ],
+        [
+          {
+            "type": "bodyAndSwordReformed"
+          }
+        ],
+        [
+          {
+            "type": "consentingDualWills"
+          }
+        ],
+        [
+          {
+            "type": "leaderAuthoritySevered"
+          }
+        ],
+        [
+          {
+            "type": "corePreserved"
+          }
+        ],
+        [
+          {
+            "type": "commandsRemoved"
+          },
+          {
+            "type": "coerciveCircuitRemoved"
+          }
+        ],
+        [
+          {
+            "type": "distinctWorldsPreserved"
+          }
+        ],
+        [
+          {
+            "type": "guardianRemains"
+          }
+        ]
+      ],
+      "forbidden": [
+        "destroyCore",
+        "coreDestroyed",
+        "eraseMemories",
+        "mergeAllIdentities",
+        "forceSameWill",
+        "returnToReality",
+        "ordinaryDeath",
+        "postDeathSamong",
+        "firstChildErased",
+        "bErased",
+        "newRevivalBoss"
+      ],
+      "specialized": true,
+      "evidence": {
+        "lines": [
+          877,
+          919
+        ],
+        "basis": "One encounter: leader body falls, Hando is mortally wounded, black neural wires revive the leader, reality and triplets are recalled, living Samong awakens, consenting dual wills sever the leader authority. The core then remains intact and coercive commands alone are removed."
+      }
+    },
+    {
+      "sceneId": "ending",
+      "sourceRange": [
+        902,
+        919
+      ],
+      "resolution": "ending-preserved",
+      "stages": [
+        [
+          {
+            "type": "corePreserved"
+          }
+        ],
+        [
+          {
+            "type": "commandsRemoved"
+          },
+          {
+            "type": "coerciveCircuitRemoved"
+          }
+        ],
+        [
+          {
+            "type": "distinctWorldsPreserved"
+          }
+        ],
+        [
+          {
+            "type": "guardianRemains"
+          }
+        ]
+      ],
+      "forbidden": [
+        "destroyCore",
+        "coreDestroyed",
+        "eraseMemories",
+        "mergeAllIdentities",
+        "forceSameWill",
+        "returnToReality"
+      ],
+      "specialized": true,
+      "evidence": {
+        "lines": [
+          904,
+          919
+        ],
+        "basis": "The core is preserved, the cult commands and circuit are separated and erased, distinct worlds remain, and the protagonist remains as dream-world guardian."
+      }
+    }
+  ]
+}

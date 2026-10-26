@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "canonicalSHA256": "4b981a3d64c203a6b5b7d0b429aac452e22b43077a1f961a16afa5fc30406a90",
+  "manifestSHA256": "7f16e287b95bda27dfc96a49ffa79457220fa9db0ef1a362b83000c07207145e",
+  "priority": "canonical original prose > source encounter roster > stale world/art metadata > v8 summaries",
+  "conflicts": [
+    {
+      "id": "encounter-count-is-not-character-count",
+      "source": "HANDOFF.md and boss-scope-manifest.json",
+      "observed": "69 required source encounter IDs and 3 conditional rows; catalog union 72",
+      "resolution": "Keep every required source encounter ID. Do not invent 69 or 72 distinct people. The conditional IDs are excluded from combatOrderGroups.",
+      "conditionalIds": ["mb-ep1a09", "a11-cosmic-v31318", "blue-executor"]
+    },
+    {
+      "id": "guardian-population",
+      "sourceRange": [586, 610],
+      "observed": "예순여섯 수문장 = 일반 마흔여덟 + 상급 열둘 + 대수문장 여섯",
+      "resolution": "66 = 48 + 12 + 6 is a population/encounter-role statement, not 66 additional named bosses. Preserve the source roster without quota-based inventions."
+    },
+    {
+      "id": "manifest-scene-end-invasion",
+      "source": "boss-scope-manifest.json rows.storySection.endLine",
+      "observed": "Some ranges include the next chapter heading and narrator, for example scene11 ends246, scene23 ends399, scene29 ends500.",
+      "resolution": "Partition canonical lines92–919 without gaps. Assign each chapter heading to that chapter's first scene. End the preceding chunks at243,396,497 respectively; prose itself ends241,394,495. Canonical text is copied exactly, including blank lines.",
+      "otherAffectedScenes": ["restLast3", "restKairo", "restHando", "murder03", "cult04"]
+    },
+    {
+      "id": "c103-stale-collective-ego-label",
+      "sourceRange": [863, 874],
+      "observed": "Legacy world metadata used a generic 집단 자아 designation.",
+      "resolution": "c103-mid is 한리안; c103-boss is 백이온. They are two traitor 의목사, not a new collective entity.",
+      "sourceIds": ["c103-mid", "c103-boss"]
+    },
+    {
+      "id": "medical-perception-is-not-medical-evil",
+      "sourceRange": [177, 241],
+      "observed": "백의 안정화 감독 and other runtime enemy labels can be mistaken for actual malicious healthcare workers.",
+      "resolution": "The frightening enemies are perception-world presentations. Preserve overlapping hallucination/reality, healthcare workers checking respiration and preparing care, craving-driven self-administration, help seeking, prolonged treatment, and later candidacy. Do not present drug self-administration as treatment or killing staff as recovery."
+    },
+    {
+      "id": "runtime-adaptation-names",
+      "source": "boss-scope-manifest.json",
+      "observed": "Some source encounter labels name gameplay adaptations not individually named in the prose, including 무의 기억포식자 and stage guardians.",
+      "resolution": "Retain sourceName and source ID for gameplay traceability. A canonicalName fallback does not establish a new prose character, speaker, biography, or independent plot event."
+    },
+    {
+      "id": "same-person-forms",
+      "resolution": "The laughing mask, a11-boss and cosmic art share relationGroup lucifer. The manager and winter boy share hotel-general-manager-mammon. The chairman and bootloader share hotel-chairman. Conditional art is not an additional independent boss."
+    },
+    {
+      "id": "source-order-not-zone-sort",
+      "resolution": "Keep scene order from the original, including u201→u202→u204→u205→u206→u203 and kair01→kair04→kair05→kair06→kair07→kair08→kair09→kair10→kair02→kair03. Unspecified intra-scene order stays grouped. The explicitly assigned phase/order groups are mask→Lucifer, frame→Controller, Han Rian→Baek Ion, cultivation throne→cult leader."
+    },
+    {
+      "id": "controller-memory-preservation",
+      "sourceRange": [480, 495],
+      "resolution": "Target the connections commanding repeated pain. Preserve the memory door and the child's memories; do not force either solitary suffering or deletion of humanity as treatment. The liberated child's will and physician B's accompanying will continue into the Hando identity."
+    },
+    {
+      "id": "fallen-knight-forced-defeat",
+      "sourceRange": [525, 533],
+      "resolution": "The fallen angel knight's six forms strike the protagonist, who falls into the sea while retaining the blade. Preserve survive-and-fall rather than substituting a victory."
+    },
+    {
+      "id": "arvelia-is-restored-ally",
+      "sourceRange": [644, 653],
+      "resolution": "Cut Arvelia's altered command threads, not her body. She rewrites her first command and thereafter helps with deferred time. Preserve restore-ally; do not turn her into a malicious boss killed for progression."
+    },
+    {
+      "id": "investigation-people-not-new-bosses",
+      "sourceRange": [738, 822],
+      "resolution": "Preserve narrator changes, evidence, shared responsibility and the causal loop. 윤하람, 장민재, 고서진, 한이경 and 이우솔 must not become invented combat bosses. 한이경's fall is the initially unseen cause of the car swerve."
+    },
+    {
+      "id": "final-core-must-survive",
+      "sourceRange": [875, 919],
+      "observed": "Earlier intent at scene59 is to destroy the core. The latest ending explicitly revises that goal.",
+      "resolution": "The leader's body revival and final authority duel remain the same ending encounter. Sever his Samong authority; preserve the union core; remove his commands and the cult's coercive circuit; preserve distinct worlds and individual wills; remain as 몽세수호자. No post922 expansion is included."
+    },
+    {
+      "id": "v8-is-abbreviated-first-part",
+      "source": "v8 src/core.js CAMPAIGN_BOSSES and src/app.js routeNotes",
+      "observed": "Five fights and 13 presentation segments stop at Lucifer.",
+      "resolution": "Those summaries are not canonical chapter/scene numbering. Keep canonical 61 numbered scenes plus prologue and ending; do not turn presentation labels or cosmic art into new canonical events."
+    }
+  ]
+}

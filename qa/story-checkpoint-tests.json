@@ -1,0 +1,18 @@
+{
+  "status": "pass-with-one-optional-browser-skip",
+  "command": "node --test",
+  "execution": "native Node and native CPU canvas, not browser/GPU",
+  "total": 259,
+  "passed": 258,
+  "failed": 0,
+  "skipped": 1,
+  "skip": "existing optional local Chromium check; no sandbox retry",
+  "reportedBy": "independent story_canon_first agent after all checkpoint base files stopped changing",
+  "durationSecondsApprox": 24,
+  "scope": "checkpoint before special-combat implementation and later additions",
+  "limitations": [
+    "Fixture state/receipt roundtrips do not prove natural story progression.",
+    "All 70 encounters, physical mobile and actual GPU are not verified.",
+    "Earlier full run overlapped an in-flight render-test edit and failed with a transient undefined fixture variable; stable corrected suite and targeted renderer passed."
+  ]
+}

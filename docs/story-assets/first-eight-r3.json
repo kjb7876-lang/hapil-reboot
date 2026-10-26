@@ -1,0 +1,1252 @@
+{
+  "schema": "hapil.story-body-keyposes.v1",
+  "batch": "first-eight-body-keyposes",
+  "liveAssetIndexRevision": 3,
+  "guideURL": "https://drive.google.com/file/d/1j-6Uskk_8Gi-Gf0nF146G74FFtrxYNJv/view?usp=drivesdk",
+  "manifestSHA256": "a435ddf61c522d5395ad68ade89e8d370b3c505bc5b7904f4e9577b75e9ee957",
+  "sourceSheets": 8,
+  "authoredKeyposes": 32,
+  "fullyInterpolatedAnimation": false,
+  "allRequiredFormsComplete": false,
+  "physicalPivotsCertified": false,
+  "gameBrowserGPUPhysicalMobileVerified": false,
+  "scope": "Verified source bytes/pixels and manually inspected presentation anchors. Game integration is owned by a separate runtime adapter. No invented or substituted boss identities.",
+  "sourceValidation": {
+    "archives": [
+      {
+        "file": "Storymode-first8-keyposes-01-of14.zip",
+        "driveURL": "https://drive.google.com/file/d/1NWkZistHqbJIU2TWRSZJm10isugBQRGx/view?usp=drivesdk",
+        "bytes": 2776459,
+        "sha256": "2c547057dd9b2b16e4af0324497c3663c241d54f70259d2b3a3ca5ae8952caff"
+      },
+      {
+        "file": "Storymode-first8-keyposes-02-of14.zip",
+        "driveURL": "https://drive.google.com/file/d/1Vu2NRUOKe_rynPBrZwmhobM0eyz7ACsy/view?usp=drivesdk",
+        "bytes": 2199553,
+        "sha256": "bf2ef381fe46355eed448bb8b06e236111422acf366289f0481e1ab1314f29b5"
+      },
+      {
+        "file": "Storymode-first8-keyposes-03-of14.zip",
+        "driveURL": "https://drive.google.com/file/d/1J6DJpZai0ZMLvHW6nUy9Fe99YWFexxCk/view?usp=drivesdk",
+        "bytes": 2535932,
+        "sha256": "159bac30f7cb9d2ab775db1f332ce979ae1873a4e571a0dd9e0b9a7cc0d3ce9c"
+      },
+      {
+        "file": "Storymode-first8-keyposes-04-of14.zip",
+        "driveURL": "https://drive.google.com/file/d/1Y6_rWWJUCrGXPZMtaDZpssux_1-wll2J/view?usp=drivesdk",
+        "bytes": 2665126,
+        "sha256": "3e823dc6d197f79d75b74c7f416c1a3c4876ed863d281dcbf4b69254795a1a93"
+      },
+      {
+        "file": "Storymode-first8-keyposes-05-of14.zip",
+        "driveURL": "https://drive.google.com/file/d/1JLw5hgrVRiPeK5Re5ztblmxazXC0JSaW/view?usp=drivesdk",
+        "bytes": 2425871,
+        "sha256": "58526d166f98545372d8f09f2661d0fb6feb5e2b58152eb75b60ce6956567802"
+      },
+      {
+        "file": "Storymode-first8-keyposes-06-of14.zip",
+        "driveURL": "https://drive.google.com/file/d/1bNmXU-Q9jet88zjV280_RFVzKOL5Zc0a/view?usp=drivesdk",
+        "bytes": 2083394,
+        "sha256": "fee8400bdcdb17b99dc7c74b1d3e4d3d1a11915c7c4a7a2d6152892e289f638a"
+      },
+      {
+        "file": "Storymode-first8-keyposes-07-of14.zip",
+        "driveURL": "https://drive.google.com/file/d/19DkTtkUDR_VL7zKtfE3r85CO0A8c0LcQ/view?usp=drivesdk",
+        "bytes": 2080931,
+        "sha256": "5867e4e393228c2feca34ce38b42aaf84369203621b4a2aa495ac3fa2e25829d"
+      },
+      {
+        "file": "Storymode-first8-keyposes-08-of14.zip",
+        "driveURL": "https://drive.google.com/file/d/1C8M48uwp4Di4xtZd53yafPFsYOFd912j/view?usp=drivesdk",
+        "bytes": 2578651,
+        "sha256": "125326cce4e3540ca67d0c50a1e8041a14620263d47c0cca80c49933f7cd13f1"
+      },
+      {
+        "file": "Storymode-first8-keyposes-09-of14.zip",
+        "driveURL": "https://drive.google.com/file/d/1taY4JGQWf6Y4VWI7WAJns5u7qfkj1EUh/view?usp=drivesdk",
+        "bytes": 2468665,
+        "sha256": "b4b814eec054bfe573eedddd02b91dae92d720aacf4c515fdc17f0feb73eb45d"
+      },
+      {
+        "file": "Storymode-first8-keyposes-10-of14.zip",
+        "driveURL": "https://drive.google.com/file/d/1tUM-kCEdi4f9dD9FwFD_yDZhTZk6vGc6/view?usp=drivesdk",
+        "bytes": 2588874,
+        "sha256": "e2c3649b4cb8601ac5dd29cf4b9db143dabb5c2d2cb9c1bb0d2f713bff051719"
+      },
+      {
+        "file": "Storymode-first8-keyposes-11-of14.zip",
+        "driveURL": "https://drive.google.com/file/d/11bjn-SHIJJPTCvGUFZvxvi7VkraICNxh/view?usp=drivesdk",
+        "bytes": 2732138,
+        "sha256": "8ec160beff38e42842acad85aa433c0ca719b99fecb864f0e257f60153f5f189"
+      },
+      {
+        "file": "Storymode-first8-keyposes-12-of14.zip",
+        "driveURL": "https://drive.google.com/file/d/1ZafIr45lG6gYy3LJkq-SKdsJTdJzrkRF/view?usp=drivesdk",
+        "bytes": 2736690,
+        "sha256": "2dd02ed52978df6c26df8b8a23bad3b5251911808412fde57b421c3611405ce3"
+      },
+      {
+        "file": "Storymode-first8-keyposes-13-of14.zip",
+        "driveURL": "https://drive.google.com/file/d/1GDhkJFaUo9YlSqvIhHSUGzo2EyStCfHw/view?usp=drivesdk",
+        "bytes": 2608166,
+        "sha256": "d6b87258b8bf8ee762f07809c92b4c11cee4d0ad8e079a0553054948baacf950"
+      },
+      {
+        "file": "Storymode-first8-keyposes-14-of14.zip",
+        "driveURL": "https://drive.google.com/file/d/16uvLzX6MKGyYfokdyK56jpN7-LMANtTA/view?usp=drivesdk",
+        "bytes": 497796,
+        "sha256": "ffd5d5e1ec701db6a805220f7c25b848916a7ebbe43fc0418d05c20f154fc48b"
+      }
+    ],
+    "payloadFileCount": 119,
+    "uniqueZipPaths": 120,
+    "crcVerified": true,
+    "safePaths": true,
+    "manifestPayloadBytesAndHashesVerified": true,
+    "checks": {
+      "sourceReconstructedFrames": 64,
+      "atlasCellComparisons": 64,
+      "opaqueThreadPoints": 32,
+      "runtimeAtlasFilesCopiedByteExact": 8,
+      "runtimeRGBABytes": 8388608
+    }
+  },
+  "canonicalMappingNotes": [
+    {
+      "combatId": "mb-ep1a07",
+      "sourceZone": "ep1a07",
+      "currentStorySceneId": "dist06",
+      "sourceSection": {
+        "scene": "07",
+        "title": "추락",
+        "chapter": "제1부 — 마지막 수호자 EGO",
+        "startLine": 164,
+        "endLine": 176
+      },
+      "note": "Source ID exists in story data, but ep1a07 is currently assigned to the dist06 scene; this grouping must be explicitly reviewed in narrative integration."
+    },
+    {
+      "combatId": "mb-dist04",
+      "note": "Purple spectral knight follows accepted normalized reference; older teal skeletal variant was excluded by independent asset review. No direct prose color conflict established."
+    },
+    {
+      "combatId": "dist00-boss",
+      "note": "Root-bound seraph candidate does not certify separate black-root-overgrowth required form."
+    }
+  ],
+  "bodies": [
+    {
+      "combatId": "dist00-boss",
+      "sourceName": "뿌리의 문지기",
+      "canonicalName": "뿌리의 문지기",
+      "canonicalSceneId": "dist00",
+      "sourceZone": "dist00",
+      "sourceSection": {
+        "scene": "01",
+        "title": "악마화 나무의 정원",
+        "chapter": "제1부 — 마지막 수호자 EGO",
+        "startLine": 109,
+        "endLine": 116
+      },
+      "sourceAnchors": [
+        "portable-data.json#/mainlineRosterExpectations/zones/1/sourceActors/0",
+        "narrative-20261026.read-copy.txt:L109-L116",
+        "source-data_world-v31217.js:L179"
+      ],
+      "key": "storyBodyDist00Boss",
+      "file": "media/story-bodies/dist00-boss-atlas-512.png",
+      "sha256": "da0feac5035bea2ec44e201f3b390fb99027762da47c4ddb1614e41a7342267f",
+      "bytes": 284702,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.4619,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            140,
+            117
+          ],
+          "silk": [
+            140,
+            97
+          ],
+          "alpha8Bounds": [
+            40,
+            14,
+            238,
+            228
+          ],
+          "rgba_sha256": "f97e5d27bd551af8ae3d4f5abc5f979d0681aa1b551fde491c5b27cd31de6bfe",
+          "sourceRect": [
+            0,
+            0,
+            680,
+            642
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            112,
+            122
+          ],
+          "silk": [
+            112,
+            102
+          ],
+          "alpha8Bounds": [
+            36,
+            38,
+            204,
+            233
+          ],
+          "rgba_sha256": "8e4e65bfe26a573ab0b0d29365d7fa406eababbf5af61047b649d219d4a9e2b3",
+          "sourceRect": [
+            680,
+            0,
+            574,
+            642
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            140,
+            112
+          ],
+          "silk": [
+            140,
+            92
+          ],
+          "alpha8Bounds": [
+            49,
+            37,
+            233,
+            210
+          ],
+          "rgba_sha256": "d5612c0f95c16c633f3e84681efe5a9dccd6531edc9282bf56a3dd7950a95afa",
+          "sourceRect": [
+            0,
+            642,
+            680,
+            612
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            118,
+            103
+          ],
+          "silk": [
+            118,
+            83
+          ],
+          "alpha8Bounds": [
+            20,
+            9,
+            192,
+            204
+          ],
+          "rgba_sha256": "55147044f290e2601456f151a5d4fac01d8d7f3363994ea130c672fcec93a61a",
+          "sourceRect": [
+            680,
+            642,
+            574,
+            612
+          ]
+        }
+      ],
+      "registrationSemantic": "manually inspected upper torso display registration",
+      "manualTorsoAnchors": true,
+      "physicalPivotsCertified": false,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "allRequiredFormsComplete": false,
+      "acceptedFormScope": "root-bound-seraph body candidate only; separate black-root-overgrowth not supplied",
+      "sourceOriginalSHA256": "2c3e0cb9d3dc3358f90139d2526cc359142c090b4b045653b079cfe2398e1212",
+      "derivationSHA256": "1e2c1b30698dd46b7247945e2ffed8fb58b2ea8fe244488e024a4a44902494ae",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true
+    },
+    {
+      "combatId": "mb-dist03",
+      "sourceName": "핏빛 수호로 추격자",
+      "canonicalName": "핏빛 수호로 추격자",
+      "canonicalSceneId": "dist03",
+      "sourceZone": "dist03",
+      "sourceSection": {
+        "scene": "04",
+        "title": "무너진성",
+        "chapter": "제1부 — 마지막 수호자 EGO",
+        "startLine": 142,
+        "endLine": 149
+      },
+      "sourceAnchors": [
+        "portable-data.json#/mainlineRosterExpectations/zones/4/sourceActors/4",
+        "narrative-20261026.read-copy.txt:L142-L149"
+      ],
+      "key": "storyBodyMbDist03",
+      "file": "media/story-bodies/mb-dist03-atlas-512.png",
+      "sha256": "816417849837d2645a650143d86ef0b48113b0f45f4a8a917c39d558d16ed1d7",
+      "bytes": 158319,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.628,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            132,
+            102
+          ],
+          "silk": [
+            132,
+            82
+          ],
+          "alpha8Bounds": [
+            84,
+            26,
+            222,
+            237
+          ],
+          "rgba_sha256": "4277331a718ec6a9c35440c6c2d3bf4743640eb2994b6b5fb1808bb13190abf1",
+          "sourceRect": [
+            0,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            128,
+            112
+          ],
+          "silk": [
+            128,
+            92
+          ],
+          "alpha8Bounds": [
+            76,
+            62,
+            212,
+            236
+          ],
+          "rgba_sha256": "8e830d4d8b9667526072097432baab394329536f09e453d8f38ef7b85a2bdb39",
+          "sourceRect": [
+            627,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            138,
+            103
+          ],
+          "silk": [
+            138,
+            83
+          ],
+          "alpha8Bounds": [
+            79,
+            60,
+            231,
+            225
+          ],
+          "rgba_sha256": "11c1563e3cece3bcd1b613483d528793a799f91f7ecf21f8336d5e174b5c9f15",
+          "sourceRect": [
+            0,
+            627,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            140,
+            91
+          ],
+          "silk": [
+            140,
+            71
+          ],
+          "alpha8Bounds": [
+            44,
+            44,
+            220,
+            218
+          ],
+          "rgba_sha256": "a95a318136dc2c27f23a8d1c57f2ff91ba0860a665b08081b8bc2dfb5d7807b0",
+          "sourceRect": [
+            627,
+            627,
+            627,
+            627
+          ]
+        }
+      ],
+      "registrationSemantic": "manually inspected upper torso display registration",
+      "manualTorsoAnchors": true,
+      "physicalPivotsCertified": false,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "allRequiredFormsComplete": false,
+      "acceptedFormScope": "one accepted body-keypose candidate; mandatory form completeness not certified",
+      "sourceOriginalSHA256": "468de85fa7222208ddf3590762bf503eb35a7ece33dac48dec4048a2b4d6ffcc",
+      "derivationSHA256": "fa0a5f9a4c0e8d0a8f85abe5f801346eb5390b7c98d542af3cb9b38c9dc269d2",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true
+    },
+    {
+      "combatId": "mb-dist04",
+      "sourceName": "첫 동료의 악마잔영",
+      "canonicalName": "첫 동료의 악마잔영",
+      "canonicalSceneId": "dist04",
+      "sourceZone": "dist04",
+      "sourceSection": {
+        "scene": "05",
+        "title": "시체들이 되살아난 밤",
+        "chapter": "제1부 — 마지막 수호자 EGO",
+        "startLine": 150,
+        "endLine": 157
+      },
+      "sourceAnchors": [
+        "portable-data.json#/mainlineRosterExpectations/zones/5/sourceActors/4",
+        "narrative-20261026.read-copy.txt:L150-L157"
+      ],
+      "key": "storyBodyMbDist04",
+      "file": "media/story-bodies/mb-dist04-atlas-512.png",
+      "sha256": "0d19e8354db50002730f31a6d4c29adfb184b2d04645e7b503df8e059f8bbde3",
+      "bytes": 209604,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.7,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            133,
+            85
+          ],
+          "silk": [
+            133,
+            65
+          ],
+          "alpha8Bounds": [
+            61,
+            24,
+            222,
+            228
+          ],
+          "rgba_sha256": "3a407890bbd6c4060ff7fb682209279c1433684dba26626a8bf5d29166ca79a8",
+          "sourceRect": [
+            0,
+            0,
+            627,
+            655
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            109,
+            89
+          ],
+          "silk": [
+            109,
+            69
+          ],
+          "alpha8Bounds": [
+            49,
+            40,
+            193,
+            241
+          ],
+          "rgba_sha256": "46284982da0c763f9a40f16a8f8f6f5649902798ea033f5d6f786d6992a81c6c",
+          "sourceRect": [
+            627,
+            0,
+            627,
+            655
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            147,
+            100
+          ],
+          "silk": [
+            147,
+            80
+          ],
+          "alpha8Bounds": [
+            47,
+            43,
+            205,
+            205
+          ],
+          "rgba_sha256": "0dfa37345ed74bff22c47b40ba00c039bf16b00dd39e3c1f2e773129a0b1db6e",
+          "sourceRect": [
+            0,
+            655,
+            627,
+            599
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            124,
+            78
+          ],
+          "silk": [
+            124,
+            58
+          ],
+          "alpha8Bounds": [
+            48,
+            18,
+            205,
+            205
+          ],
+          "rgba_sha256": "03cdf2222c39b6165f21ee4362f0c60436c8f1b6d0a039ef7bb0b151a467dcef",
+          "sourceRect": [
+            627,
+            655,
+            627,
+            599
+          ]
+        }
+      ],
+      "registrationSemantic": "manually inspected upper torso display registration",
+      "manualTorsoAnchors": true,
+      "physicalPivotsCertified": false,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "allRequiredFormsComplete": false,
+      "acceptedFormScope": "one accepted body-keypose candidate; mandatory form completeness not certified",
+      "sourceOriginalSHA256": "8437cf26ac85c0426a6ba1459efa38f36869fa04dfa2420d69833f44608f766f",
+      "derivationSHA256": "4cf819c6b5bf739edffbb403393852a4f6ec0f90b963b868862d13ae6ce6779f",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true
+    },
+    {
+      "combatId": "mb-dist05",
+      "sourceName": "숨이 끊긴 전령의 그림자",
+      "canonicalName": "숨이 끊긴 전령의 그림자",
+      "canonicalSceneId": "dist05",
+      "sourceZone": "dist05",
+      "sourceSection": {
+        "scene": "06",
+        "title": "일곱 기둥",
+        "chapter": "제1부 — 마지막 수호자 EGO",
+        "startLine": 158,
+        "endLine": 163
+      },
+      "sourceAnchors": [
+        "portable-data.json#/mainlineRosterExpectations/zones/6/sourceActors/4",
+        "narrative-20261026.read-copy.txt:L158-L163"
+      ],
+      "key": "storyBodyMbDist05",
+      "file": "media/story-bodies/mb-dist05-atlas-512.png",
+      "sha256": "1666b128899a1076b4db146c52b58e66e415b01034f95ef5086039f4556b426d",
+      "bytes": 226237,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.6915,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            133,
+            91
+          ],
+          "silk": [
+            133,
+            71
+          ],
+          "alpha8Bounds": [
+            78,
+            39,
+            222,
+            241
+          ],
+          "rgba_sha256": "1baff5664e0e8052c20e52e0eb8ae9791416e0a5d5bad010c5330761fcb7ce0e",
+          "sourceRect": [
+            0,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            121,
+            99
+          ],
+          "silk": [
+            121,
+            79
+          ],
+          "alpha8Bounds": [
+            51,
+            58,
+            211,
+            241
+          ],
+          "rgba_sha256": "9be48cab4c152e9869a2e885721b0a04de08140c767053dccf96bb3932310edf",
+          "sourceRect": [
+            627,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            141,
+            100
+          ],
+          "silk": [
+            141,
+            80
+          ],
+          "alpha8Bounds": [
+            95,
+            31,
+            231,
+            227
+          ],
+          "rgba_sha256": "d34510c1e9bb6a66825ab3b04bb87b41b5760fadad731943618ef875fe73e381",
+          "sourceRect": [
+            0,
+            627,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            131,
+            81
+          ],
+          "silk": [
+            131,
+            61
+          ],
+          "alpha8Bounds": [
+            63,
+            28,
+            206,
+            230
+          ],
+          "rgba_sha256": "c2fe761ddf6c27c9be0e60444434ff16ce67020309fd66af40fa9b4075747a74",
+          "sourceRect": [
+            627,
+            627,
+            627,
+            627
+          ]
+        }
+      ],
+      "registrationSemantic": "manually inspected upper torso display registration",
+      "manualTorsoAnchors": true,
+      "physicalPivotsCertified": false,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "allRequiredFormsComplete": false,
+      "acceptedFormScope": "one accepted body-keypose candidate; mandatory form completeness not certified",
+      "sourceOriginalSHA256": "d44531202d0b6fc2c1482862fd9e711d69b69a935338a5df27791b0a10cf01cf",
+      "derivationSHA256": "85cf396e6991a00abe01d74ff4c1652a91cd11d4a9683c6e08894397c26514a5",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true
+    },
+    {
+      "combatId": "mb-dist06",
+      "sourceName": "소환진 검은기둥",
+      "canonicalName": "소환진 검은기둥",
+      "canonicalSceneId": "dist06",
+      "sourceZone": "dist06",
+      "sourceSection": {
+        "scene": "07",
+        "title": "추락",
+        "chapter": "제1부 — 마지막 수호자 EGO",
+        "startLine": 164,
+        "endLine": 176
+      },
+      "sourceAnchors": [
+        "portable-data.json#/mainlineRosterExpectations/zones/7/sourceActors/4",
+        "narrative-20261026.read-copy.txt:L164-L176"
+      ],
+      "key": "storyBodyMbDist06",
+      "file": "media/story-bodies/mb-dist06-atlas-512.png",
+      "sha256": "d6b57b666aca5219146cbac2198c31e0bae7a0b60da1f553c2d36ac34bfe59d9",
+      "bytes": 283439,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.5113,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            131,
+            115
+          ],
+          "silk": [
+            131,
+            80
+          ],
+          "alpha8Bounds": [
+            35,
+            27,
+            226,
+            244
+          ],
+          "rgba_sha256": "1a95ecd6ce5506c5e41e377a9c7073539e464cd43903237c65dca206b5d7a548",
+          "sourceRect": [
+            0,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            132,
+            122
+          ],
+          "silk": [
+            132,
+            87
+          ],
+          "alpha8Bounds": [
+            28,
+            52,
+            230,
+            245
+          ],
+          "rgba_sha256": "182e8b18d8ada964f54f90c070fa832e8511e5522daa54a46153875a3eeceb29",
+          "sourceRect": [
+            627,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            135,
+            132
+          ],
+          "silk": [
+            135,
+            97
+          ],
+          "alpha8Bounds": [
+            33,
+            57,
+            231,
+            231
+          ],
+          "rgba_sha256": "5255050e85052dc69ca83a3ee03077572fc0aa1ae08eece183451b21268feeb2",
+          "sourceRect": [
+            0,
+            627,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            131,
+            117
+          ],
+          "silk": [
+            131,
+            82
+          ],
+          "alpha8Bounds": [
+            34,
+            24,
+            222,
+            234
+          ],
+          "rgba_sha256": "81f905d2ec9637e03c852ede8b43fb8e19cd799ba2e2df0db9bce970b413f494",
+          "sourceRect": [
+            627,
+            627,
+            627,
+            627
+          ]
+        }
+      ],
+      "registrationSemantic": "central plated lava core; nonhumanoid, no anatomical torso claim",
+      "manualTorsoAnchors": true,
+      "physicalPivotsCertified": false,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "allRequiredFormsComplete": false,
+      "acceptedFormScope": "one accepted body-keypose candidate; mandatory form completeness not certified",
+      "sourceOriginalSHA256": "27ace43c1a457406cc763656d8fabb93f2f7d5bd5df31ed55c009cca763f637d",
+      "derivationSHA256": "c66eede9ccb1c742f329a7a4665611b45f42beac260b7ce2e694f3472a7bc677",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true
+    },
+    {
+      "combatId": "mb-ep1a07",
+      "sourceName": "무의 기억포식자",
+      "canonicalName": "무의 기억포식자",
+      "canonicalSceneId": "dist06",
+      "sourceZone": "ep1a07",
+      "sourceSection": {
+        "scene": "07",
+        "title": "추락",
+        "chapter": "제1부 — 마지막 수호자 EGO",
+        "startLine": 164,
+        "endLine": 176
+      },
+      "sourceAnchors": [
+        "portable-data.json#/mainlineRosterExpectations/zones/8/sourceActors/3",
+        "narrative-20261026.read-copy.txt:L164-L176"
+      ],
+      "key": "storyBodyMbEp1a07",
+      "file": "media/story-bodies/mb-ep1a07-atlas-512.png",
+      "sha256": "b2cc2e081affeaf9c0509f8b98e4894b814a95dbc0015e11403dd52d8996b9c8",
+      "bytes": 311831,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.5775,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            138,
+            87
+          ],
+          "silk": [
+            138,
+            67
+          ],
+          "alpha8Bounds": [
+            38,
+            25,
+            216,
+            215
+          ],
+          "rgba_sha256": "67e94bb6094bcf323ad698b4d776b872f591660677499a4333d0eab336bb1aa2",
+          "sourceRect": [
+            0,
+            0,
+            675,
+            627
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            137,
+            91
+          ],
+          "silk": [
+            137,
+            71
+          ],
+          "alpha8Bounds": [
+            18,
+            17,
+            203,
+            227
+          ],
+          "rgba_sha256": "6d1203817a06ef781176414bf81082576a6d242b32107defd2ac91c14733211d",
+          "sourceRect": [
+            675,
+            0,
+            579,
+            627
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            152,
+            96
+          ],
+          "silk": [
+            152,
+            76
+          ],
+          "alpha8Bounds": [
+            28,
+            14,
+            236,
+            223
+          ],
+          "rgba_sha256": "cee4096629f8e23a904657d3ea00e10e018d36e65a7e3fb7316f2d770391957c",
+          "sourceRect": [
+            0,
+            627,
+            675,
+            627
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            138,
+            89
+          ],
+          "silk": [
+            138,
+            69
+          ],
+          "alpha8Bounds": [
+            24,
+            23,
+            206,
+            208
+          ],
+          "rgba_sha256": "bd04e3108bc5f3c25bbe1f93018a55af70e7c2df32cf747428326ab8553ccd5c",
+          "sourceRect": [
+            675,
+            627,
+            579,
+            627
+          ]
+        }
+      ],
+      "registrationSemantic": "upper cranial/carapace registration; nonhumanoid, no anatomical torso claim",
+      "manualTorsoAnchors": true,
+      "physicalPivotsCertified": false,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "allRequiredFormsComplete": false,
+      "acceptedFormScope": "one accepted body-keypose candidate; mandatory form completeness not certified",
+      "sourceOriginalSHA256": "3aac8bfca86a3f867d18569e3fd287481115749e458e18f512ec3726c6ebbf43",
+      "derivationSHA256": "5f9789abaa86702020287e250cbf836be61dd383580f2bc43b44f774065c746d",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true
+    },
+    {
+      "combatId": "mb-ep1a08",
+      "sourceName": "백의 안정화 감독",
+      "canonicalName": "백의 안정화 감독",
+      "canonicalSceneId": "ep1a08",
+      "sourceZone": "ep1a08",
+      "sourceSection": {
+        "scene": "08",
+        "title": "피로 물든 병원",
+        "chapter": "제1부 — 마지막 수호자 EGO",
+        "startLine": 177,
+        "endLine": 186
+      },
+      "sourceAnchors": [
+        "portable-data.json#/mainlineRosterExpectations/zones/9/sourceActors/4",
+        "narrative-20261026.read-copy.txt:L177-L186"
+      ],
+      "key": "storyBodyMbEp1a08",
+      "file": "media/story-bodies/mb-ep1a08-atlas-512.png",
+      "sha256": "85fa20c020862f9a73bacee5611c65db8c7bf32caae43da7233a0c588dfce868",
+      "bytes": 179395,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.5963,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            128,
+            105
+          ],
+          "silk": [
+            128,
+            85
+          ],
+          "alpha8Bounds": [
+            74,
+            25,
+            190,
+            240
+          ],
+          "rgba_sha256": "485bfea19e224589745ce5bfa479a550c928a2759b47e3aa2ddf16a574144342",
+          "sourceRect": [
+            0,
+            0,
+            627,
+            650
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            136,
+            115
+          ],
+          "silk": [
+            136,
+            95
+          ],
+          "alpha8Bounds": [
+            51,
+            81,
+            175,
+            239
+          ],
+          "rgba_sha256": "0ab1c3ec433dc9e06d46c1b72b712d268ab2162064e360bbc5e3cdf5e536e2fa",
+          "sourceRect": [
+            627,
+            0,
+            627,
+            650
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            143,
+            96
+          ],
+          "silk": [
+            143,
+            76
+          ],
+          "alpha8Bounds": [
+            58,
+            45,
+            210,
+            209
+          ],
+          "rgba_sha256": "582988e4d9e2a6c3c41e9ffc5eaa82e3dda05c0b3fc4c4fbbb91a7a79b72dd12",
+          "sourceRect": [
+            0,
+            650,
+            627,
+            604
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            140,
+            80
+          ],
+          "silk": [
+            140,
+            60
+          ],
+          "alpha8Bounds": [
+            65,
+            28,
+            195,
+            211
+          ],
+          "rgba_sha256": "982edfb5743903c19847e48508fdb9382a28a896627c68dd94481ca2bab20381",
+          "sourceRect": [
+            627,
+            650,
+            627,
+            604
+          ]
+        }
+      ],
+      "registrationSemantic": "manually inspected upper torso display registration",
+      "manualTorsoAnchors": true,
+      "physicalPivotsCertified": false,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "allRequiredFormsComplete": false,
+      "acceptedFormScope": "one accepted body-keypose candidate; mandatory form completeness not certified",
+      "sourceOriginalSHA256": "e725084a2481c9753e9f8411e36945e2305bf9e4a180be51d3f24bd96ea4f8f3",
+      "derivationSHA256": "ffd35714c39e3670e45abc67ae1b7a60be5eea59672896d1bf6226b34e02c489",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true
+    },
+    {
+      "combatId": "mb-ep1a10",
+      "sourceName": "오만의 폐허핵",
+      "canonicalName": "오만의 폐허핵",
+      "canonicalSceneId": "ep1a10",
+      "sourceZone": "ep1a10",
+      "sourceSection": {
+        "scene": "10",
+        "title": "환자와 중독의 도시",
+        "chapter": "제1부 — 마지막 수호자 EGO",
+        "startLine": 205,
+        "endLine": 219
+      },
+      "sourceAnchors": [
+        "portable-data.json#/mainlineRosterExpectations/zones/11/sourceActors/4",
+        "narrative-20261026.read-copy.txt:L205-L219"
+      ],
+      "key": "storyBodyMbEp1a10",
+      "file": "media/story-bodies/mb-ep1a10-atlas-512.png",
+      "sha256": "ba63da3f748dd4af52f532262efce5b83aae801843d438d4f0c20b98961a35df",
+      "bytes": 310114,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.4801,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            129,
+            105
+          ],
+          "silk": [
+            129,
+            85
+          ],
+          "alpha8Bounds": [
+            40,
+            19,
+            217,
+            238
+          ],
+          "rgba_sha256": "07a63cf073a9832f602ceb321c323308a04e137a7c5b4237e85ca9fb49c9fbcd",
+          "sourceRect": [
+            0,
+            0,
+            627,
+            650
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            131,
+            119
+          ],
+          "silk": [
+            131,
+            99
+          ],
+          "alpha8Bounds": [
+            30,
+            34,
+            219,
+            237
+          ],
+          "rgba_sha256": "e130d168a85108ae00d233c28122f91792e13b7cb1201647f84b87908053353a",
+          "sourceRect": [
+            627,
+            0,
+            627,
+            650
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            134,
+            120
+          ],
+          "silk": [
+            134,
+            100
+          ],
+          "alpha8Bounds": [
+            26,
+            21,
+            237,
+            205
+          ],
+          "rgba_sha256": "7cfd3412c1500b29ea3c0465cecb76679817ccda542b5c9a54d558a1e9b30a16",
+          "sourceRect": [
+            0,
+            650,
+            627,
+            604
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            139,
+            83
+          ],
+          "silk": [
+            139,
+            63
+          ],
+          "alpha8Bounds": [
+            31,
+            18,
+            217,
+            208
+          ],
+          "rgba_sha256": "7f65673639609520cdf83cb04f20208cc827ef8f6d8bfbccc8552f8d2c1d096f",
+          "sourceRect": [
+            627,
+            650,
+            627,
+            604
+          ]
+        }
+      ],
+      "registrationSemantic": "manually inspected upper torso display registration",
+      "manualTorsoAnchors": true,
+      "physicalPivotsCertified": false,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "allRequiredFormsComplete": false,
+      "acceptedFormScope": "one accepted body-keypose candidate; mandatory form completeness not certified",
+      "sourceOriginalSHA256": "a7f585c9a85c5ea555f0c98997520e096303e55af411a53d63302d2f193f58ae",
+      "derivationSHA256": "5185ab8c61e0d063f5e59f417f0c161f10a0d91a14f84a934a73fd4e43fc7b22",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true
+    }
+  ]
+}

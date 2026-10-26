@@ -1,0 +1,15 @@
+{
+  "internalManifestFilesChecked": [
+    "boss-scope-manifest.json",
+    "ROSTER.md",
+    "HANDOFF.md",
+    "REFERENCE-INDEX.json",
+    "WAVE1-FIRST8-REFERENCES.json",
+    "next-waves.json"
+  ],
+  "canonicalSHA256": "4b981a3d64c203a6b5b7d0b429aac452e22b43077a1f961a16afa5fc30406a90",
+  "canonicalBytes": 241566,
+  "liveIndexCanonicalHashMatches": true,
+  "rosterHashMatchesLiveIndex": true,
+  "externalZipSHAProvided": false
+}

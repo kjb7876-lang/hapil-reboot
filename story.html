@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10131d">
+  <title>합일몽세 · 스토리모드 작업판</title>
+  <link rel="stylesheet" href="story.css">
+</head>
+<body>
+  <header class="mast"><a href="index.html">합일 세로 리부트</a><span>STORY MODE · 작업판</span><button id="portal-open">기억의 길</button></header>
+  <main>
+    <section class="reader" id="reader" aria-labelledby="scene-title">
+      <div class="eyebrow" id="chapter">합일몽세</div>
+      <h1 id="scene-title">기억을 불러오는 중</h1>
+      <p id="scene-status" class="muted" role="status"></p>
+      <article id="scene-text"></article>
+      <div class="reader-actions"><button id="acknowledge">기억을 새기기</button><button id="next-scene">다음 구역</button></div>
+      <section id="encounters" aria-label="구역의 전투"></section>
+      <nav class="history" aria-label="원문 이동"><button id="previous">이전 원문</button><button id="preview-next">다음 원문 미리보기</button></nav>
+    </section>
+    <section id="battle" class="battle" aria-label="세로 전투" hidden>
+      <div class="battle-top"><span id="battle-name"></span><button id="pause">일시정지</button></div>
+      <canvas id="story-canvas" width="360" height="640" tabindex="0" aria-label="화살표·WASD 이동, Shift 정밀 이동. 모바일 상대 드래그."></canvas>
+      <div id="touch-pad" role="application" aria-label="상대 드래그 이동">드래그하여 이동</div>
+      <div id="battle-state" aria-live="polite"></div>
+      <div class="battle-actions"><button id="resume" hidden>계속</button><button id="retry" hidden>구역 시작부터 재도전</button><button id="return-reader">기억으로 돌아가기</button></div>
+    </section>
+    <aside class="journal">
+      <div class="eyebrow">남겨진 기록</div><h2 id="progress-title">도입 → 1–8부 → 최종장</h2>
+      <p id="progress"></p><p id="save-status" role="status"></p>
+      <p class="muted">자산과 실행 검사를 진행 중입니다. 준비되지 않은 전투는 열리지 않습니다. 원문 미리보기는 전투 완료나 포탈 개방으로 기록되지 않습니다.</p>
+      <details><summary>자산 반영 상태</summary><p id="asset-status"></p><a href="docs/story/asset-ledger.json">반영 대장</a></details>
+      <button id="review-fight" hidden>자산 검수 전투 · 진행 기록 안 함</button>
+      <button id="reset-story" class="quiet">스토리 기록 백업 후 처음부터</button>
+      <p class="muted">기존 리부트 기록은 별도로 유지됩니다.</p>
+    </aside>
+  </main>
+  <dialog id="portal"><h2>기억의 길</h2><p>완료한 기억과 현재 구역으로 이동합니다.</p><div id="portal-list"></div><button id="portal-close">닫기</button></dialog>
+  <p id="notice" class="notice" role="alert" hidden></p>
+  <script src="src/story-data.js"></script><script src="src/story-scope.js"></script>
+  <script src="src/story-encounters.js"></script><script src="src/story-state.js"></script>
+  <script src="src/story-assets.js"></script><script src="src/story-storage.js"></script>
+  <script src="src/story-objectives.js"></script><script src="src/story-combat.js"></script>
+  <script src="src/story-render.js"></script><script src="src/story-session.js"></script>
+  <script src="src/story-app.js"></script>
+</body>
+</html>

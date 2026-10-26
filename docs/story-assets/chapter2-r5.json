@@ -1,0 +1,1730 @@
+{
+  "schema": "hapil.story-chapter2-keyposes.v1",
+  "batch": "chapter2-partial11-20261026",
+  "liveAssetIndexRevision": 5,
+  "liveAssetIndexSHA256": "88b5dda6e17854312c1cbb89657ca690683683ef224ea65b35df35fbb5b6d6a7",
+  "guideURL": "https://drive.google.com/file/d/1dDOazbWjgcugZ2lBE-UYcNRSz1AnmUG6/view",
+  "manifestSHA256": "072b8aa847edb4af6b46dcce27b2afc382fe9ea9341aee32cda83ee655656a69",
+  "sourceSheets": 11,
+  "authoredKeyposes": 44,
+  "sourceDerivedFrameFiles": 88,
+  "sourceDerivedAtlasFiles": 22,
+  "runtimeAtlasFiles": 11,
+  "fullyInterpolatedAnimation": false,
+  "allChapterRequiredFormsComplete": false,
+  "allRequiredFormsComplete": false,
+  "physicalPivotsCertified": false,
+  "gameBrowserGPUPhysicalMobileVerified": false,
+  "existingMediaReplaced": false,
+  "scope": "11 selected form sets, including three same-boss aliases. All source sheets and supplied atlases were visually inspected in comparison contacts; byte/RGBA reconstruction verifies packing, not topology, source approval, temporal playback or engine behavior. No image generation or repainting.",
+  "sourceValidation": {
+    "metadataReadBeforeRawFetch": true,
+    "officialDriveRawFileURIUsed": true,
+    "archives": [
+      {
+        "file": "Chapter2-partial11-keyposes-01-of17.zip",
+        "driveURL": "https://drive.google.com/file/d/1WGQvf7dKtgpUOAvrf1RAei4Lg9O_5CJ-/view?usp=drivesdk",
+        "bytes": 2165472,
+        "sha256": "74fa187da74fea57169c1f5e67d2470249b5ae0a1466ac494f0688e6c3e4e4eb"
+      },
+      {
+        "file": "Chapter2-partial11-keyposes-02-of17.zip",
+        "driveURL": "https://drive.google.com/file/d/1r7bkS45-z1n13HDJ1gCVZgK8TTHLuBIS/view?usp=drivesdk",
+        "bytes": 2750832,
+        "sha256": "96702f98f00a4e59f721696f30ff86ef9138777629cb9aae8b0e8ad22f5dce68"
+      },
+      {
+        "file": "Chapter2-partial11-keyposes-03-of17.zip",
+        "driveURL": "https://drive.google.com/file/d/1JxqYI--2sBiUyHP7yPiBt2fN4nJ0FZlM/view?usp=drivesdk",
+        "bytes": 2778759,
+        "sha256": "06d16aaf2d5e7295942c52513e58fc4a564c332780764650427bf98b4b6d9d17"
+      },
+      {
+        "file": "Chapter2-partial11-keyposes-04-of17.zip",
+        "driveURL": "https://drive.google.com/file/d/1llA078wRvmnItuxyHX_ZEYHtKHYssNqw/view?usp=drivesdk",
+        "bytes": 1981136,
+        "sha256": "e7898af936b04df4e5c705ac0de15700b9417b428662e347ebb3755707f2264a"
+      },
+      {
+        "file": "Chapter2-partial11-keyposes-05-of17.zip",
+        "driveURL": "https://drive.google.com/file/d/1sDf0yCSGyHQIuWrDadOk1IxMFr7o_1Od/view?usp=drivesdk",
+        "bytes": 2259964,
+        "sha256": "7d3690b15346d4d23ea60cd061c5cd12bf4d4e241bb15220d981b0d90368ca7e"
+      },
+      {
+        "file": "Chapter2-partial11-keyposes-06-of17.zip",
+        "driveURL": "https://drive.google.com/file/d/1cz8CqfulBSsnOXFU_zBmJ2wYDd-2K0nO/view?usp=drivesdk",
+        "bytes": 1908007,
+        "sha256": "8b4f846a62869ac5179cb0a50f60ddebbe7ae3ed11e529ef09bf90ce99e18930"
+      },
+      {
+        "file": "Chapter2-partial11-keyposes-07-of17.zip",
+        "driveURL": "https://drive.google.com/file/d/101MPGPfj-2wDtDxEolXh9vqXYnxlU8-p/view?usp=drivesdk",
+        "bytes": 2715905,
+        "sha256": "e603e23275eb01775faf8548b39afded86389c0f7e481834bf24250a393f1f47"
+      },
+      {
+        "file": "Chapter2-partial11-keyposes-08-of17.zip",
+        "driveURL": "https://drive.google.com/file/d/1J413TZzpqqIERGXzYZ2azZpafY_uXlg6/view?usp=drivesdk",
+        "bytes": 1742051,
+        "sha256": "f498b8263df15e4ba3548787f623e5bfffb5563865282498a91482ef46c09a3d"
+      },
+      {
+        "file": "Chapter2-partial11-keyposes-09-of17.zip",
+        "driveURL": "https://drive.google.com/file/d/16kIqKUXOIMoG82eOKKfeIAO0rePzy74-/view?usp=drivesdk",
+        "bytes": 2731027,
+        "sha256": "7a1fadbac2234287d905b7d920e69456b27a2289b602d4931bea8b90f8d1fb23"
+      },
+      {
+        "file": "Chapter2-partial11-keyposes-10-of17.zip",
+        "driveURL": "https://drive.google.com/file/d/15K2NcWd8zKJSERsryELiMLqtCKjT--EV/view?usp=drivesdk",
+        "bytes": 2729046,
+        "sha256": "496bf55854d9c85e9867c9ae20bdf64261e2e5a5b122c7ff732924d1c5bbc77a"
+      },
+      {
+        "file": "Chapter2-partial11-keyposes-11-of17.zip",
+        "driveURL": "https://drive.google.com/file/d/1i4h1D9uNnIWldeXLMGfrcu80qRVm4Y1E/view?usp=drivesdk",
+        "bytes": 2655592,
+        "sha256": "4ed2e7b8a1714f715193ce49390f8fd7a796851f9317364a2652624a92b36156"
+      },
+      {
+        "file": "Chapter2-partial11-keyposes-12-of17.zip",
+        "driveURL": "https://drive.google.com/file/d/1k3yvvF2debSORHKwXXNPW9NL4Gx-3yMF/view?usp=drivesdk",
+        "bytes": 1731945,
+        "sha256": "442d70a99198d7e15b0d963cf7c0c2b5675fe0d3a6852d73e907d52469da5ec0"
+      },
+      {
+        "file": "Chapter2-partial11-keyposes-13-of17.zip",
+        "driveURL": "https://drive.google.com/file/d/1Gp0Wltp8MpiLiA8869856tTay03AfCpo/view?usp=drivesdk",
+        "bytes": 2582862,
+        "sha256": "41c0454e2f88ba2eaab77e021f37315e1d43d5e1304bff9f139cec4a1457a9fe"
+      },
+      {
+        "file": "Chapter2-partial11-keyposes-14-of17.zip",
+        "driveURL": "https://drive.google.com/file/d/1jYmvE9EjHeOH9dNyfc5eYXc8AfAZauI6/view?usp=drivesdk",
+        "bytes": 2602598,
+        "sha256": "94bf919dbbbf27db03f57ab9a7548c9a506e5e3b14ef774db3d6fdfd33cbce42"
+      },
+      {
+        "file": "Chapter2-partial11-keyposes-15-of17.zip",
+        "driveURL": "https://drive.google.com/file/d/1v2ZMR0xI2zJaqEgQnbUhrH23bldSNKGh/view?usp=drivesdk",
+        "bytes": 2799742,
+        "sha256": "6fd078fce870e47721c3e3afc683eae261019ed298d3d5cf6214e9087e0ee3a2"
+      },
+      {
+        "file": "Chapter2-partial11-keyposes-16-of17.zip",
+        "driveURL": "https://drive.google.com/file/d/1aFaGyZHmoEdRODb50OGr6bwr9Qjw806e/view?usp=drivesdk",
+        "bytes": 2706139,
+        "sha256": "33d13da34124c85ee20f8ffb3aa91f66664e1c02f41270576886b093438295d9"
+      },
+      {
+        "file": "Chapter2-partial11-keyposes-17-of17.zip",
+        "driveURL": "https://drive.google.com/file/d/1a_CTdFKAVHBp_OkDbdHIvphjC9Y8mfiP/view?usp=drivesdk",
+        "bytes": 1550847,
+        "sha256": "a345cdfe2458cc4d930aa857c6be9822163d69d0699d7920101dabf6426338a8"
+      }
+    ],
+    "archiveBytes": 40391924,
+    "payloadFileCount": 166,
+    "uniqueZipPaths": 167,
+    "crcVerified": true,
+    "safePaths": true,
+    "manifestPayloadBytesAndHashesVerified": true,
+    "checks": {
+      "sourceReconstructedFrames": 88,
+      "atlasCellComparisons": 88,
+      "runtimeAtlasFilesCopiedByteExact": 11,
+      "runtimeRGBABytes": 11534336,
+      "opaqueDisplayAnchors": 44,
+      "opaqueThreadPoints": 44,
+      "zeroAlphaOuter8pxFrames": 44
+    }
+  },
+  "budget": {
+    "runtimeEncodedPNGBytes": 2479503,
+    "runtimeDecodedRGBABytesAllAtlases": 11534336,
+    "runtimeDecodedRGBABytesPerAtlas": 1048576,
+    "recommendedLoading": "Load only active form atlas; no all-atlas texture preload assumed. Numbers exclude GPU copies, browser overhead, originals, 1024 atlases and contacts.",
+    "sourceOriginalPNGBytes": 16060350
+  },
+  "aliases": [
+    {
+      "formId": "b06b-boss-child",
+      "combatId": "b06b-boss",
+      "newEncounter": false,
+      "contextOnly": false
+    },
+    {
+      "formId": "b07-boss-human",
+      "combatId": "b07-boss",
+      "newEncounter": false,
+      "contextOnly": true
+    },
+    {
+      "formId": "b08-boss-human",
+      "combatId": "b08-boss",
+      "newEncounter": false,
+      "contextOnly": true
+    }
+  ],
+  "canonicalLimits": [
+    "b06b-boss-child is an existing boss child form; no extra encounter is added.",
+    "b07-boss-human supplies janitor phase0 only, not required bear/wolf/dragon forms.",
+    "b08-boss-human supplies white-suit phase0 only, not required brain/screens form.",
+    "mb-ep1b06b snow/thorn v3 is explicit canonical selection, not parity with the retained molten/gold vault primary.",
+    "Secondary chef/director forms do not satisfy separate main-boss canonical forms.",
+    "Static body packing and qualitative identity review do not certify form behavior, motion time/root stability, damaging warning readability or GPU/mobile results."
+  ],
+  "pendingValidation": [
+    "runtime body/form binding and required-form implementation",
+    "temporal playback and root/chest drift",
+    "event synchronization and damaging-warning readability",
+    "collision and combat outcome validation",
+    "real browser GPU presentation",
+    "physical mobile performance and readability"
+  ],
+  "reviewContactFiles": [
+    "drive-story-chapter2/review/source-atlas-review-1.jpg",
+    "drive-story-chapter2/review/source-atlas-review-2.jpg",
+    "drive-story-chapter2/review/source-atlas-review-3.jpg"
+  ],
+  "bodies": [
+    {
+      "formId": "mb-ep1b01",
+      "combatId": "mb-ep1b01",
+      "nativeCombatId": true,
+      "sameBossFormAlias": false,
+      "contextFormOnly": false,
+      "key": "storyChapter2MbEp1b01",
+      "file": "media/story-chapter2/mb-ep1b01-atlas-512.png",
+      "sha256": "2d8cf6176df5480599e6a8e033c56ef696f5823775395f3e24389ea699d8ac53",
+      "bytes": 310530,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.4115,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            128,
+            115
+          ],
+          "silk": [
+            128,
+            95
+          ],
+          "alpha8Bounds": [
+            53,
+            24,
+            228,
+            239
+          ],
+          "rgba_sha256": "06da8377f01aeb3a644839daf6b12d7f584fc13b2bc313fc92b2418c957ae5dc",
+          "sourceRect": [
+            0,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            128,
+            128
+          ],
+          "silk": [
+            128,
+            108
+          ],
+          "alpha8Bounds": [
+            31,
+            29,
+            194,
+            233
+          ],
+          "rgba_sha256": "bc56756c27285185e8e24b2ba3f03acac3cfbef9dfbca4d557d1fdae0a0a6213",
+          "sourceRect": [
+            627,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            128,
+            131
+          ],
+          "silk": [
+            128,
+            111
+          ],
+          "alpha8Bounds": [
+            57,
+            15,
+            227,
+            228
+          ],
+          "rgba_sha256": "203cb0e07ed7ca152bb3879771dadda8b6c6cbb10a098b0ec28b2f6481037eb3",
+          "sourceRect": [
+            0,
+            627,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            128,
+            111
+          ],
+          "silk": [
+            128,
+            91
+          ],
+          "alpha8Bounds": [
+            31,
+            11,
+            205,
+            227
+          ],
+          "rgba_sha256": "4a268d1b7168126df30cf69085a31a3be58c4364bd0485eaaced5ee14f523c24",
+          "sourceRect": [
+            627,
+            627,
+            627,
+            627
+          ]
+        }
+      ],
+      "canonicalSceneId": "ep1b01",
+      "canonicalName": "교만의 잔향 · 제72문",
+      "sourceOriginalSHA256": "b253d798e73414923246eb27b525e5a016d4e87a231cf9985b9e5af867d7da57",
+      "sourceSheetDimensions": [
+        1254,
+        1254
+      ],
+      "derivationSHA256": "6ba550057d4b905463b1ebe4f14d0ea5dbda2677d02f0394c40a6c066fa3701c",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "manualTorsoAnchors": true,
+      "manualDisplayAnchors": true,
+      "registrationSemantic": "manually inspected upper-body display registration; shell/armor reference for nonhumanoid sentinel; not anatomical or physical pivot certification",
+      "physicalPivotsCertified": false,
+      "requiredFormsForCombat": [],
+      "requiredFormsCertifiedByThisImport": [],
+      "allRequiredFormsComplete": false,
+      "bodyCanonicalClearance": "keypose-only selected form candidate; independent of unverified required-form behavior and integration",
+      "reviewNotes": "Dark/gold masked figure with intrinsic orbiting seal plaques; four distinct upper-body/arm downcasting poses. Plaques are identity equipment, not independently authored projectile frames.",
+      "gameBrowserGPUPhysicalMobileVerified": false
+    },
+    {
+      "formId": "b02-boss",
+      "combatId": "b02-boss",
+      "nativeCombatId": true,
+      "sameBossFormAlias": false,
+      "contextFormOnly": false,
+      "key": "storyChapter2B02Boss",
+      "file": "media/story-chapter2/b02-boss-atlas-512.png",
+      "sha256": "1d025b46186a713241d901fb670476a5709e99c8e847a6a9291cb78b14c36e22",
+      "bytes": 286241,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.4588,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            130,
+            119
+          ],
+          "silk": [
+            130,
+            99
+          ],
+          "alpha8Bounds": [
+            66,
+            32,
+            232,
+            241
+          ],
+          "rgba_sha256": "1af9495ead9ebfd726a7a51f6520e4001f83a9eadf32121775f58b9bf9a4016b",
+          "sourceRect": [
+            0,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            129,
+            128
+          ],
+          "silk": [
+            129,
+            108
+          ],
+          "alpha8Bounds": [
+            44,
+            34,
+            209,
+            244
+          ],
+          "rgba_sha256": "c4b5c73639ed8b572d27ac6b188f07fe511ea6507c2cb78f3e12f5d140417a21",
+          "sourceRect": [
+            627,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            132,
+            131
+          ],
+          "silk": [
+            132,
+            111
+          ],
+          "alpha8Bounds": [
+            65,
+            27,
+            231,
+            227
+          ],
+          "rgba_sha256": "47835eda950024ebb34233528a46dcf47e274c3fcf223e4993c23bcd3eb1572d",
+          "sourceRect": [
+            0,
+            627,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            130,
+            125
+          ],
+          "silk": [
+            130,
+            105
+          ],
+          "alpha8Bounds": [
+            39,
+            22,
+            213,
+            228
+          ],
+          "rgba_sha256": "2a5ee868991239435fc20db9640cdcdac6635a3cc388835832c9025fa705cdbc",
+          "sourceRect": [
+            627,
+            627,
+            627,
+            627
+          ]
+        }
+      ],
+      "canonicalSceneId": "ep1b02",
+      "canonicalName": "나태의 귀 벨페고르",
+      "sourceOriginalSHA256": "7edaa119f1669af0d03ad7b05eb0c98aeafd287a138407c900088359cc4c5ab8",
+      "sourceSheetDimensions": [
+        1254,
+        1254
+      ],
+      "derivationSHA256": "9a1417397cf0b1721e2cdd2d831ff00bed406b37e404e01e04d23f643fde9cbb",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "manualTorsoAnchors": true,
+      "manualDisplayAnchors": true,
+      "registrationSemantic": "manually inspected upper-body display registration; shell/armor reference for nonhumanoid sentinel; not anatomical or physical pivot certification",
+      "physicalPivotsCertified": false,
+      "requiredFormsForCombat": [
+        "trash-mountain-half-human"
+      ],
+      "requiredFormsCertifiedByThisImport": [],
+      "allRequiredFormsComplete": false,
+      "bodyCanonicalClearance": "keypose-only selected form candidate; independent of unverified required-form behavior and integration",
+      "reviewNotes": "Corpulent seated human with skull/thorn throne and two reaching/recovering arms. Hand-shaped chair carvings remain furniture; no anatomical count claim about hidden structure.",
+      "gameBrowserGPUPhysicalMobileVerified": false
+    },
+    {
+      "formId": "mb-ep1b02",
+      "combatId": "mb-ep1b02",
+      "nativeCombatId": true,
+      "sameBossFormAlias": false,
+      "contextFormOnly": false,
+      "key": "storyChapter2MbEp1b02",
+      "file": "media/story-chapter2/mb-ep1b02-atlas-512.png",
+      "sha256": "7102893cb941f3bb6e5d07cd35caf5270e3a9a1026f3a206faf0ea2b828d3b59",
+      "bytes": 253925,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.5121,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            128,
+            113
+          ],
+          "silk": [
+            128,
+            93
+          ],
+          "alpha8Bounds": [
+            68,
+            30,
+            216,
+            217
+          ],
+          "rgba_sha256": "433cabc05f2a836f3f622ba33d1edf2a2112a47e3b5accfa14f9842748abd746",
+          "sourceRect": [
+            0,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            130,
+            120
+          ],
+          "silk": [
+            130,
+            100
+          ],
+          "alpha8Bounds": [
+            19,
+            45,
+            193,
+            232
+          ],
+          "rgba_sha256": "6b14120eee33828603fcbbe6edc3e36c35692549d7a9e6e27d5dd4bc8c8335ee",
+          "sourceRect": [
+            627,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            128,
+            122
+          ],
+          "silk": [
+            128,
+            102
+          ],
+          "alpha8Bounds": [
+            47,
+            36,
+            222,
+            229
+          ],
+          "rgba_sha256": "6fdf50109b143ccedbfad6a933b32efb7c3160854f82fdbb64256469c0b302de",
+          "sourceRect": [
+            0,
+            627,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            129,
+            114
+          ],
+          "silk": [
+            129,
+            94
+          ],
+          "alpha8Bounds": [
+            49,
+            21,
+            200,
+            216
+          ],
+          "rgba_sha256": "1a0b9c0bf0752b8585d006a0ad68adcd48e3cad215e5e8f5a8848fe7597cbd87",
+          "sourceRect": [
+            627,
+            627,
+            627,
+            627
+          ]
+        }
+      ],
+      "canonicalSceneId": "ep1b02",
+      "canonicalName": "나태의 껍데기 파수",
+      "sourceOriginalSHA256": "12dee93b070e31d526f02eb79bc2d508c37d863fdf31577743d4d2a48d2ec849",
+      "sourceSheetDimensions": [
+        1254,
+        1254
+      ],
+      "derivationSHA256": "7a2f75a2dc7ebb1bddf7484e5a5644d5027a2d289050eae9a2a964eaeea2fdda",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "manualTorsoAnchors": false,
+      "manualDisplayAnchors": true,
+      "registrationSemantic": "manually inspected upper-body display registration; shell/armor reference for nonhumanoid sentinel; not anatomical or physical pivot certification",
+      "physicalPivotsCertified": false,
+      "requiredFormsForCombat": [],
+      "requiredFormsCertifiedByThisImport": [],
+      "allRequiredFormsComplete": false,
+      "bodyCanonicalClearance": "keypose-only selected form candidate; independent of unverified required-form behavior and integration",
+      "reviewNotes": "Green shell sentinel with lattice/spikes and bedhead shield. Crouch, forward shield and recovery visibly differ; shell/chest registration is a display convention.",
+      "gameBrowserGPUPhysicalMobileVerified": false
+    },
+    {
+      "formId": "mb-ep1b04",
+      "combatId": "mb-ep1b04",
+      "nativeCombatId": true,
+      "sameBossFormAlias": false,
+      "contextFormOnly": false,
+      "key": "storyChapter2MbEp1b04",
+      "file": "media/story-chapter2/mb-ep1b04-atlas-512.png",
+      "sha256": "9aae02eee33e4d605f3c53deca62d5aa54508c6995cf6aefb88ab1cd7c63da52",
+      "bytes": 251764,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.505,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            128,
+            112
+          ],
+          "silk": [
+            128,
+            92
+          ],
+          "alpha8Bounds": [
+            48,
+            21,
+            211,
+            224
+          ],
+          "rgba_sha256": "7886a70e819aa04530d90dc8a933c704d7f3d14800877440af33cbac86f3aca0",
+          "sourceRect": [
+            0,
+            0,
+            680,
+            650
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            128,
+            117
+          ],
+          "silk": [
+            128,
+            97
+          ],
+          "alpha8Bounds": [
+            28,
+            67,
+            155,
+            231
+          ],
+          "rgba_sha256": "be420f7c1ba00727d128ec379c343d8bbb657f01fd4cf145e963b2f39147e6a2",
+          "sourceRect": [
+            680,
+            0,
+            574,
+            650
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            128,
+            114
+          ],
+          "silk": [
+            128,
+            94
+          ],
+          "alpha8Bounds": [
+            30,
+            50,
+            244,
+            203
+          ],
+          "rgba_sha256": "a72c7f69f18e87553f1dd1dc9d4caa579cda3d09aeffefd48edfdfb1e29acc9f",
+          "sourceRect": [
+            0,
+            650,
+            680,
+            604
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            129,
+            108
+          ],
+          "silk": [
+            129,
+            88
+          ],
+          "alpha8Bounds": [
+            13,
+            14,
+            189,
+            206
+          ],
+          "rgba_sha256": "f1fa109161cf4168fdbdfb0968894251030ef4da93571f307f11aad02d949bee",
+          "sourceRect": [
+            680,
+            650,
+            574,
+            604
+          ]
+        }
+      ],
+      "canonicalSceneId": "ep1b04",
+      "canonicalName": "폐기주방 감독",
+      "sourceOriginalSHA256": "4e336f3fa29e40ed58a4319bf6ae5f793fc5799ca0ff203a8582432975e7a11e",
+      "sourceSheetDimensions": [
+        1254,
+        1254
+      ],
+      "derivationSHA256": "983359d898e1fb3ec17d7b89152a6f57985c4b0eea4a71b5e9d9a0a8a01b70da",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "manualTorsoAnchors": true,
+      "manualDisplayAnchors": true,
+      "registrationSemantic": "manually inspected upper-body display registration; shell/armor reference for nonhumanoid sentinel; not anatomical or physical pivot certification",
+      "physicalPivotsCertified": false,
+      "requiredFormsForCombat": [],
+      "requiredFormsCertifiedByThisImport": [],
+      "allRequiredFormsComplete": false,
+      "bodyCanonicalClearance": "keypose-only selected form candidate; independent of unverified required-form behavior and integration",
+      "reviewNotes": "Secondary furnace-bellied twin-cleaver chef. Downward cleaver strokes and body compression are visible; this does not cover main b04 pig/toad required form.",
+      "gameBrowserGPUPhysicalMobileVerified": false
+    },
+    {
+      "formId": "mb-ep1b05",
+      "combatId": "mb-ep1b05",
+      "nativeCombatId": true,
+      "sameBossFormAlias": false,
+      "contextFormOnly": false,
+      "key": "storyChapter2MbEp1b05",
+      "file": "media/story-chapter2/mb-ep1b05-atlas-512.png",
+      "sha256": "faf72409b1cb0c416a5671a6ec05e9f1150bb6205fe7f35000e83d8be12cc03f",
+      "bytes": 220698,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.5058,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            128,
+            111
+          ],
+          "silk": [
+            128,
+            91
+          ],
+          "alpha8Bounds": [
+            39,
+            33,
+            228,
+            230
+          ],
+          "rgba_sha256": "acaa56aba9000d07d1e4e1e80bea0ecd54e9c9a8c7ab07a62e79e08b06416c57",
+          "sourceRect": [
+            0,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            128,
+            123
+          ],
+          "silk": [
+            128,
+            103
+          ],
+          "alpha8Bounds": [
+            29,
+            29,
+            221,
+            230
+          ],
+          "rgba_sha256": "630d6149ab9e2d7ec54b16c08c7d6312fbcae7fe0e60c230fe8826d040e384fd",
+          "sourceRect": [
+            627,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            128,
+            128
+          ],
+          "silk": [
+            128,
+            108
+          ],
+          "alpha8Bounds": [
+            40,
+            42,
+            228,
+            221
+          ],
+          "rgba_sha256": "e5fffcbeeac118b6f74bd1673b5b2e2413537fbff8761d936a652a60d70a73fc",
+          "sourceRect": [
+            0,
+            627,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            128,
+            111
+          ],
+          "silk": [
+            128,
+            91
+          ],
+          "alpha8Bounds": [
+            38,
+            18,
+            221,
+            225
+          ],
+          "rgba_sha256": "1f96d8686b85c0b946e0deb9c91f42b00a8be1c0e2958139aec549e7a2a236a9",
+          "sourceRect": [
+            627,
+            627,
+            627,
+            627
+          ]
+        }
+      ],
+      "canonicalSceneId": "ep1b05",
+      "canonicalName": "심장빛 무대감독",
+      "sourceOriginalSHA256": "8b3b88136d1c7941afa6eb8884b0a1867a2f3164d11f5e7771cfcfc616c14899",
+      "sourceSheetDimensions": [
+        1254,
+        1254
+      ],
+      "derivationSHA256": "9cf14b1bad7209e21f61f11ee865d6527e3d457157c6f514000bc142709931c0",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "manualTorsoAnchors": true,
+      "manualDisplayAnchors": true,
+      "registrationSemantic": "manually inspected upper-body display registration; shell/armor reference for nonhumanoid sentinel; not anatomical or physical pivot certification",
+      "physicalPivotsCertified": false,
+      "requiredFormsForCombat": [],
+      "requiredFormsCertifiedByThisImport": [],
+      "allRequiredFormsComplete": false,
+      "bodyCanonicalClearance": "keypose-only selected form candidate; independent of unverified required-form behavior and integration",
+      "reviewNotes": "Secondary stage director with crown, mask, red streamers and two tethered heart lanterns. Lowered hands/lanterns and torso bow differ; not main b05 form coverage.",
+      "gameBrowserGPUPhysicalMobileVerified": false
+    },
+    {
+      "formId": "mb-ep1b06",
+      "combatId": "mb-ep1b06",
+      "nativeCombatId": true,
+      "sameBossFormAlias": false,
+      "contextFormOnly": false,
+      "key": "storyChapter2MbEp1b06",
+      "file": "media/story-chapter2/mb-ep1b06-atlas-512.png",
+      "sha256": "ab17e4a88f7acf10f26839028e76657ac095795306f612b68d72bedae4f81750",
+      "bytes": 222452,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.5414,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            133,
+            110
+          ],
+          "silk": [
+            133,
+            90
+          ],
+          "alpha8Bounds": [
+            81,
+            36,
+            221,
+            239
+          ],
+          "rgba_sha256": "cdaf87beeb8c366ff90e4a7af86f70202f41dd53621c3d5199030dedbf2fec2c",
+          "sourceRect": [
+            0,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            132,
+            115
+          ],
+          "silk": [
+            132,
+            95
+          ],
+          "alpha8Bounds": [
+            58,
+            69,
+            212,
+            232
+          ],
+          "rgba_sha256": "d910a3d330cbfded81a3e1b2601813c00f2c1de37e2908a58e541b067e22ca8a",
+          "sourceRect": [
+            627,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            128,
+            124
+          ],
+          "silk": [
+            128,
+            104
+          ],
+          "alpha8Bounds": [
+            61,
+            60,
+            227,
+            211
+          ],
+          "rgba_sha256": "5ee80f0ec1849d88eaaef69db3a279a596fd9f78ac9264b18a341e0639912838",
+          "sourceRect": [
+            0,
+            627,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            137,
+            111
+          ],
+          "silk": [
+            137,
+            91
+          ],
+          "alpha8Bounds": [
+            65,
+            23,
+            205,
+            232
+          ],
+          "rgba_sha256": "f32e8e7ffbc95fd1765ecfdea20e5be45d492d852550225c1b6368a9b08ced44",
+          "sourceRect": [
+            627,
+            627,
+            627,
+            627
+          ]
+        }
+      ],
+      "canonicalSceneId": "ep1b06",
+      "canonicalName": "금고 장부감시자",
+      "sourceOriginalSHA256": "a67d31a80f20cd80c091ecd930ed2e7b4e6ddc30f16f47a22698490224f0fa4b",
+      "sourceSheetDimensions": [
+        1254,
+        1254
+      ],
+      "derivationSHA256": "60a342bfc1790c2aab30004abad0ab34ea3be60a8f1f014517488795dc1abf65",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "manualTorsoAnchors": true,
+      "manualDisplayAnchors": true,
+      "registrationSemantic": "manually inspected upper-body display registration; shell/armor reference for nonhumanoid sentinel; not anatomical or physical pivot certification",
+      "physicalPivotsCertified": false,
+      "requiredFormsForCombat": [],
+      "requiredFormsCertifiedByThisImport": [],
+      "allRequiredFormsComplete": false,
+      "bodyCanonicalClearance": "keypose-only selected form candidate; independent of unverified required-form behavior and integration",
+      "reviewNotes": "Dial-headed ledger watcher with open book, chains and claws. Book stays in the same side hand while opposite claw reaches down and recovers.",
+      "gameBrowserGPUPhysicalMobileVerified": false
+    },
+    {
+      "formId": "b06b-boss-child",
+      "combatId": "b06b-boss",
+      "nativeCombatId": false,
+      "sameBossFormAlias": true,
+      "contextFormOnly": false,
+      "key": "storyChapter2B06bBossChild",
+      "file": "media/story-chapter2/b06b-boss-child-atlas-512.png",
+      "sha256": "6271f3e2dbd4c18c8d078ac5351bff148483aaca26d5dcd7ed281cadc9ba4d7c",
+      "bytes": 174736,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.5952,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            134,
+            113
+          ],
+          "silk": [
+            134,
+            93
+          ],
+          "alpha8Bounds": [
+            62,
+            37,
+            200,
+            239
+          ],
+          "rgba_sha256": "a14f7c38f3698279860917726d7e9d3bd0aa689e002eefbe194c17c928f9d632",
+          "sourceRect": [
+            0,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            139,
+            119
+          ],
+          "silk": [
+            139,
+            99
+          ],
+          "alpha8Bounds": [
+            59,
+            42,
+            176,
+            239
+          ],
+          "rgba_sha256": "fd555605914119749f39e85f2961c0365a1ed66440848ff921adb1d7e0526171",
+          "sourceRect": [
+            627,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            138,
+            119
+          ],
+          "silk": [
+            138,
+            99
+          ],
+          "alpha8Bounds": [
+            67,
+            39,
+            202,
+            225
+          ],
+          "rgba_sha256": "2140d47cda8eac3a362620d5b962d370817b293cb2d0ebde55188bad42a30ded",
+          "sourceRect": [
+            0,
+            627,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            132,
+            105
+          ],
+          "silk": [
+            132,
+            85
+          ],
+          "alpha8Bounds": [
+            65,
+            27,
+            180,
+            229
+          ],
+          "rgba_sha256": "194dd7bb16dcc0b009ded46f24e75494d2f31bad8d11faf1a8ef1819f3d62b32",
+          "sourceRect": [
+            627,
+            627,
+            627,
+            627
+          ]
+        }
+      ],
+      "canonicalSceneId": "ep1b06b",
+      "canonicalName": "총지배인의 어린 시절 · 맘몬",
+      "sourceOriginalSHA256": "febff774488bb0861d5733de0944f20251f9b3bc987e78febc0d721cb37b22a1",
+      "sourceSheetDimensions": [
+        1254,
+        1254
+      ],
+      "derivationSHA256": "c03c27d12998526c7a153899518438ff3f5f875e24a61c1049349a2cdaf73fbf",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "manualTorsoAnchors": true,
+      "manualDisplayAnchors": true,
+      "registrationSemantic": "manually inspected upper-body display registration; shell/armor reference for nonhumanoid sentinel; not anatomical or physical pivot certification",
+      "physicalPivotsCertified": false,
+      "requiredFormsForCombat": [
+        "winter-memory-boy"
+      ],
+      "requiredFormsCertifiedByThisImport": [],
+      "allRequiredFormsComplete": false,
+      "bodyCanonicalClearance": "keypose-only selected form candidate; independent of unverified required-form behavior and integration",
+      "reviewNotes": "Existing b06b-boss child form, not a new encounter: black-haired child, scarf, candy hand, attached yo-yo and shadow tail. Adult primary placeholder is not silently replaced.",
+      "gameBrowserGPUPhysicalMobileVerified": false
+    },
+    {
+      "formId": "mb-ep1b06b",
+      "combatId": "mb-ep1b06b",
+      "nativeCombatId": true,
+      "sameBossFormAlias": false,
+      "contextFormOnly": false,
+      "key": "storyChapter2MbEp1b06b",
+      "file": "media/story-chapter2/mb-ep1b06b-atlas-512.png",
+      "sha256": "121105ddd671016e509a48fb7c3a1505c29150c396099ba89056ac53ca61e0e3",
+      "bytes": 324887,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.4579,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            132,
+            115
+          ],
+          "silk": [
+            132,
+            95
+          ],
+          "alpha8Bounds": [
+            34,
+            16,
+            222,
+            232
+          ],
+          "rgba_sha256": "9f56875f4ba3ea9541f9b428a9d652f40617b1b2651e5512a065bb21bef8c9df",
+          "sourceRect": [
+            0,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            126,
+            122
+          ],
+          "silk": [
+            126,
+            102
+          ],
+          "alpha8Bounds": [
+            29,
+            35,
+            232,
+            245
+          ],
+          "rgba_sha256": "3c73251a41a1e93c78397156517c70cde6af91d038a4d617bfd98a5628357e07",
+          "sourceRect": [
+            627,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            129,
+            123
+          ],
+          "silk": [
+            129,
+            103
+          ],
+          "alpha8Bounds": [
+            41,
+            32,
+            244,
+            234
+          ],
+          "rgba_sha256": "9fced53b2975b5674bfe57852ffba6bcc485716a73ae6bb79839fae41b96eb48",
+          "sourceRect": [
+            0,
+            627,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            130,
+            116
+          ],
+          "silk": [
+            130,
+            96
+          ],
+          "alpha8Bounds": [
+            40,
+            12,
+            229,
+            221
+          ],
+          "rgba_sha256": "26f925bb16939856b61fdf47ad57aa39b59a596d99ab8ed544d1b81011fc569c",
+          "sourceRect": [
+            627,
+            627,
+            627,
+            627
+          ]
+        }
+      ],
+      "canonicalSceneId": "ep1b06b",
+      "canonicalName": "겨울숲 가시파수",
+      "sourceOriginalSHA256": "54451dd6f7998a4e22b6ad5e312673be455d485a86c87d79f0ca79684b19cfb2",
+      "sourceSheetDimensions": [
+        1254,
+        1254
+      ],
+      "derivationSHA256": "87230cf2865e27c1acb364a4034a6f6ea0bbb1835c7c5bc11c48819aa7807a45",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "manualTorsoAnchors": false,
+      "manualDisplayAnchors": true,
+      "registrationSemantic": "manually inspected upper-body display registration; shell/armor reference for nonhumanoid sentinel; not anatomical or physical pivot certification",
+      "physicalPivotsCertified": false,
+      "requiredFormsForCombat": [],
+      "requiredFormsCertifiedByThisImport": [],
+      "allRequiredFormsComplete": false,
+      "bodyCanonicalClearance": "keypose-only selected form candidate; independent of unverified required-form behavior and integration",
+      "reviewNotes": "Selected v3 snow/thorn branch body with blue eyes and long claws. Explicit canonical selection conflicts with old molten/gold vault primary; no runtime-primary identity parity is claimed.",
+      "gameBrowserGPUPhysicalMobileVerified": false
+    },
+    {
+      "formId": "b07-boss-human",
+      "combatId": "b07-boss",
+      "nativeCombatId": false,
+      "sameBossFormAlias": true,
+      "contextFormOnly": true,
+      "key": "storyChapter2B07BossHuman",
+      "file": "media/story-chapter2/b07-boss-human-atlas-512.png",
+      "sha256": "d7a496865b9b7436c9e6926905f5f3b41e9fefcd3edd2f47436c77aa206b5682",
+      "bytes": 113362,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.4904,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            142,
+            112
+          ],
+          "silk": [
+            142,
+            92
+          ],
+          "alpha8Bounds": [
+            46,
+            15,
+            205,
+            216
+          ],
+          "rgba_sha256": "dd8c0a904be986537fab3b34bd5358a43c3145f6e15f2f62c6eb15c21b674d89",
+          "sourceRect": [
+            0,
+            0,
+            660,
+            640
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            130,
+            105
+          ],
+          "silk": [
+            130,
+            85
+          ],
+          "alpha8Bounds": [
+            79,
+            66,
+            146,
+            235
+          ],
+          "rgba_sha256": "9f236903f2305a9cb9028c3ed4597da6bfc9bf0c644f3d0699b5b44f3b61799e",
+          "sourceRect": [
+            660,
+            0,
+            594,
+            640
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            132,
+            105
+          ],
+          "silk": [
+            132,
+            85
+          ],
+          "alpha8Bounds": [
+            69,
+            53,
+            236,
+            211
+          ],
+          "rgba_sha256": "286f91242fbe144bdf873580259eef1bb7fe86c4eb3c1141b634ec5048377578",
+          "sourceRect": [
+            0,
+            640,
+            660,
+            614
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            135,
+            108
+          ],
+          "silk": [
+            134,
+            88
+          ],
+          "alpha8Bounds": [
+            76,
+            12,
+            174,
+            202
+          ],
+          "rgba_sha256": "5c7f4d2b15f63bccec6692bd26d1d564398e659ef55046371d88a7a15cc88a57",
+          "sourceRect": [
+            660,
+            640,
+            594,
+            614
+          ]
+        }
+      ],
+      "canonicalSceneId": "ep1b07",
+      "canonicalName": "청소부 · 분노의 귀",
+      "sourceOriginalSHA256": "b306ce9ac86ca16850d1f2993d3af6334aaea8ff8486df900a4913e061956e39",
+      "sourceSheetDimensions": [
+        1254,
+        1254
+      ],
+      "derivationSHA256": "8d73240fccc8b092d63a553dbef6b59bc8ad057950d58ac5da89bbd9cdb54a89",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "manualTorsoAnchors": true,
+      "manualDisplayAnchors": true,
+      "registrationSemantic": "manually inspected upper-body display registration; shell/armor reference for nonhumanoid sentinel; not anatomical or physical pivot certification",
+      "physicalPivotsCertified": false,
+      "requiredFormsForCombat": [
+        "fire-bear-wolf-dragon"
+      ],
+      "requiredFormsCertifiedByThisImport": [],
+      "allRequiredFormsComplete": false,
+      "bodyCanonicalClearance": "keypose-only selected form candidate; independent of unverified required-form behavior and integration",
+      "reviewNotes": "Human janitor phase0 context: dark clothes and intact broom. This is not demon/bear/wolf/dragon form coverage.",
+      "gameBrowserGPUPhysicalMobileVerified": false
+    },
+    {
+      "formId": "b08-boss-human",
+      "combatId": "b08-boss",
+      "nativeCombatId": false,
+      "sameBossFormAlias": true,
+      "contextFormOnly": true,
+      "key": "storyChapter2B08BossHuman",
+      "file": "media/story-chapter2/b08-boss-human-atlas-512.png",
+      "sha256": "7f4ed7ef064882d4f3f31f6592b635dac0dcec61137fe3a3758d707632d17345",
+      "bytes": 145503,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.5252,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            131,
+            105
+          ],
+          "silk": [
+            131,
+            85
+          ],
+          "alpha8Bounds": [
+            84,
+            18,
+            197,
+            239
+          ],
+          "rgba_sha256": "01b9fab536736c6045dea2c36c40b77d42385259838423e8b00f05c73f9a235b",
+          "sourceRect": [
+            0,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            134,
+            111
+          ],
+          "silk": [
+            134,
+            91
+          ],
+          "alpha8Bounds": [
+            82,
+            31,
+            173,
+            236
+          ],
+          "rgba_sha256": "59bec796cc7595d31e35772ea2c29604e74d24d441200df16837100b97ea4d37",
+          "sourceRect": [
+            627,
+            0,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            135,
+            114
+          ],
+          "silk": [
+            135,
+            94
+          ],
+          "alpha8Bounds": [
+            88,
+            43,
+            202,
+            229
+          ],
+          "rgba_sha256": "cdf0c39729ffafc92d7be9cad96a8e076eb06d5b7a6dc1f5b9fcbfdbe11794b3",
+          "sourceRect": [
+            0,
+            627,
+            627,
+            627
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            130,
+            105
+          ],
+          "silk": [
+            130,
+            85
+          ],
+          "alpha8Bounds": [
+            87,
+            14,
+            182,
+            232
+          ],
+          "rgba_sha256": "70d7284b11efc37173c6e9b852d2e7748622e2919f7b8a153bd85096e18c63ac",
+          "sourceRect": [
+            627,
+            627,
+            627,
+            627
+          ]
+        }
+      ],
+      "canonicalSceneId": "ep1b08",
+      "canonicalName": "회장",
+      "sourceOriginalSHA256": "8fcf5a6220d530df4ac0b603578efda17d89d9f8fa475627bbee18b80791cffb",
+      "sourceSheetDimensions": [
+        1254,
+        1254
+      ],
+      "derivationSHA256": "900c43b4449b3b5e26e0374ca0a3b342b3a4e7ef3cdc03904a75ce273c8d3c11",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "manualTorsoAnchors": true,
+      "manualDisplayAnchors": true,
+      "registrationSemantic": "manually inspected upper-body display registration; shell/armor reference for nonhumanoid sentinel; not anatomical or physical pivot certification",
+      "physicalPivotsCertified": false,
+      "requiredFormsForCombat": [
+        "white-suit-chairman-and-brain-core"
+      ],
+      "requiredFormsCertifiedByThisImport": [],
+      "allRequiredFormsComplete": false,
+      "bodyCanonicalClearance": "keypose-only selected form candidate; independent of unverified required-form behavior and integration",
+      "reviewNotes": "Human phase0 chairman context: gray hair and white three-piece suit, downward palm motion. No brain/screens, flying chair, sigil or demon form is supplied.",
+      "gameBrowserGPUPhysicalMobileVerified": false
+    },
+    {
+      "formId": "mb-ep1b07",
+      "combatId": "mb-ep1b07",
+      "nativeCombatId": true,
+      "sameBossFormAlias": false,
+      "contextFormOnly": false,
+      "key": "storyChapter2MbEp1b07",
+      "file": "media/story-chapter2/mb-ep1b07-atlas-512.png",
+      "sha256": "1f83f0efe71effa539bd33ff513bbb13a28391ffe55a03c91632e2fd44a07cb8",
+      "bytes": 175405,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "scale": 0.519,
+      "poses": [
+        {
+          "index": 0,
+          "name": "prepare",
+          "anchor": [
+            132,
+            108
+          ],
+          "silk": [
+            132,
+            88
+          ],
+          "alpha8Bounds": [
+            80,
+            16,
+            197,
+            211
+          ],
+          "rgba_sha256": "98e4d636e732a578cf6999a7bb51a22f5132ef1e3eee217d5cd680c004cc10a0",
+          "sourceRect": [
+            0,
+            0,
+            679,
+            600
+          ]
+        },
+        {
+          "index": 1,
+          "name": "downstroke",
+          "anchor": [
+            127,
+            103
+          ],
+          "silk": [
+            127,
+            83
+          ],
+          "alpha8Bounds": [
+            52,
+            65,
+            185,
+            213
+          ],
+          "rgba_sha256": "7191b6111d3861ca0c83aa9ef9c7c7c1d393ceb34deb6d3d4dda37f37fca2615",
+          "sourceRect": [
+            679,
+            0,
+            679,
+            600
+          ]
+        },
+        {
+          "index": 2,
+          "name": "follow",
+          "anchor": [
+            125,
+            109
+          ],
+          "silk": [
+            125,
+            89
+          ],
+          "alpha8Bounds": [
+            82,
+            45,
+            226,
+            187
+          ],
+          "rgba_sha256": "a88b8fc1ecdae53258580b6d23c4ebdad9b7fe38be30dd4ae4c20b3b6ab45da3",
+          "sourceRect": [
+            0,
+            600,
+            679,
+            559
+          ]
+        },
+        {
+          "index": 3,
+          "name": "recover",
+          "anchor": [
+            128,
+            105
+          ],
+          "silk": [
+            128,
+            85
+          ],
+          "alpha8Bounds": [
+            69,
+            17,
+            213,
+            186
+          ],
+          "rgba_sha256": "1575eb312576acfd44d5ca8d36cb3c24d87c6c4016937b6893d3c9d378bca062",
+          "sourceRect": [
+            679,
+            600,
+            679,
+            559
+          ]
+        }
+      ],
+      "canonicalSceneId": "ep1b07",
+      "canonicalName": "호텔 화염기사",
+      "sourceOriginalSHA256": "e7803422b135f7773004f91d70097cc37898a2697359909fe214626078c08a12",
+      "sourceSheetDimensions": [
+        1358,
+        1159
+      ],
+      "derivationSHA256": "5fca485355c70eb316881b5eea2f7891ee78701cbbaaa93483a477f1a38ce530",
+      "sourceBodyRGBAReconstructionExact": true,
+      "runtimeAtlasOriginalBytesPreserved": true,
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "manualTorsoAnchors": true,
+      "manualDisplayAnchors": true,
+      "registrationSemantic": "manually inspected upper-body display registration; shell/armor reference for nonhumanoid sentinel; not anatomical or physical pivot certification",
+      "physicalPivotsCertified": false,
+      "requiredFormsForCombat": [],
+      "requiredFormsCertifiedByThisImport": [],
+      "allRequiredFormsComplete": false,
+      "bodyCanonicalClearance": "keypose-only selected form candidate; independent of unverified required-form behavior and integration",
+      "reviewNotes": "Corrected v2 firefighter knight: shield stays viewer-left and nozzle viewer-right in all four poses, with backpack/hose. Furnace light is intrinsic; emitted flame/projectile art is absent.",
+      "gameBrowserGPUPhysicalMobileVerified": false
+    }
+  ]
+}

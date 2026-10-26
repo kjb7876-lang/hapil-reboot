@@ -1,0 +1,837 @@
+{
+  "schemaVersion": 1,
+  "scopeRevision": "storymode-canonical-r3",
+  "sourceEvidence": {
+    "addendumSHA256": "fa73528c57d56ae5e1841f2c08463c3d243cc8634c48b40ce771814f24e659fb",
+    "declaredReadCopySHA256": "67b99d2b8bb0d70658260cfa6b48eb917a05fd33d954a42b1de25ab138fa75ee",
+    "canonicalOriginalSHA256": "4b981a3d64c203a6b5b7d0b429aac452e22b43077a1f961a16afa5fc30406a90",
+    "normalization": "CRLF/CR to LF; exactExceptTerminalNewlines ignores terminal LF only; normalizedMatch collapses whitespace",
+    "checks": [
+      {
+        "id": "causal-loop-executor",
+        "sourceRange": [
+          801,
+          808
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "49238d0c9b6fb18ef0eadabc1f5f914c409004dc4ec6abc06d21f1bde949707a"
+      },
+      {
+        "id": "revealed-black-wing-horn-lucifer",
+        "sourceRange": [
+          216,
+          224
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "7195a52e0d20be016571d1b339352bcaa3cae0349365fabc3cc9236419bfb552"
+      },
+      {
+        "id": "cracked-glasses-woman-neck-serpent",
+        "sourceRange": [
+          290,
+          300
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "dcd9209e41f6e02bc878cd1e172dd4efacbcdacbf0d8d55f2947c563734676da"
+      },
+      {
+        "id": "pig-toad-beelzebub",
+        "sourceRange": [
+          302,
+          312
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "f25b1948b833e04fce223a1d57b2ce71e0198d9957f5a09e4499429442625a94"
+      },
+      {
+        "id": "fire-bear-wolf-dragon",
+        "sourceRange": [
+          345,
+          355
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "98bacd58b927e68c0fa68c55eb8226c971ee6114e3de998fc0dbb73be8244573"
+      },
+      {
+        "id": "many-mechanical-legged-chairman",
+        "sourceRange": [
+          367,
+          381
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "e16c7dae341a5c41f9f270c7f24db65de511be9169c4345db308a0aae4c6e6ec"
+      },
+      {
+        "id": "seoyun-face-puppet-heels",
+        "sourceRange": [
+          314,
+          324
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "d54b21d407509aafbf64f1447ae2712ba421b3cce3e12a70af7ecec2d3bea335"
+      },
+      {
+        "id": "trash-mountain-half-human",
+        "sourceRange": [
+          276,
+          288
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "ca2e7ee55712ea55441477e8afec38d807e13ad5c1258ac5cb5b5a43fbdcd22e"
+      },
+      {
+        "id": "manager-face-fox-eyes",
+        "sourceRange": [
+          326,
+          332
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "c6039d0cb56c0d4b7e9d46ebc585b5e61fc21101b1de92a9dbd78cbd4a2928c3"
+      },
+      {
+        "id": "winter-memory-boy",
+        "sourceRange": [
+          334,
+          343
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "90ee0161dba25aeea5651d924a8a855aadf13d629b15d353fec94960921b9ca0"
+      },
+      {
+        "id": "white-suit-chairman-and-brain-core",
+        "sourceRange": [
+          357,
+          367
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "4aff30097c1aee952187b8416d68175fa284d2019d656618465573013e123957"
+      },
+      {
+        "id": "six-simultaneous-sword-forms",
+        "sourceRange": [
+          525,
+          532
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "4f266d6e23de64b2ab42d8b3b6fb09e49b011a111c16bf07dce7a254ba45cd38"
+      },
+      {
+        "id": "neural-resurrection-and-samong-duel",
+        "sourceRange": [
+          875,
+          900
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "85695e6537d6b514c0ac99d8753445036841f3ece106a185fbe2bcffcaec0679"
+      },
+      {
+        "id": "mist-body-core-reveal",
+        "sourceRange": [
+          543,
+          551
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "173459c0cad5f274d8164e56f59ad8aced194efcc729156b6ea632f8c355db84"
+      },
+      {
+        "id": "time-harvest-command-workshop-stages",
+        "sourceRange": [
+          654,
+          678
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "1b204a5dcf2959df9a60b40914212543d81041243f253997a26d9dc7ed69fd2b"
+      },
+      {
+        "id": "memory-door-possession",
+        "sourceRange": [
+          487,
+          497
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "e19f0cf949b94d78158469687ecee08dadef92441f4778d9868ebc6266beb15c"
+      },
+      {
+        "id": "blue-executor",
+        "sourceRange": [
+          801,
+          808
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "49238d0c9b6fb18ef0eadabc1f5f914c409004dc4ec6abc06d21f1bde949707a"
+      },
+      {
+        "id": "mb-ep1a09",
+        "sourceRange": [
+          187,
+          203
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "92cdaf12a75142dd922b50c3fb03fe36ffc3d624594584e0b753f450c3d6ee95"
+      },
+      {
+        "id": "a11-cosmic-v31318",
+        "sourceRange": [
+          220,
+          232
+        ],
+        "normalizedMatch": true,
+        "exactExceptTerminalNewlines": true,
+        "canonicalExcerptSHA256": "68393e5b41e9dd7ea9d8e39dfbfa9cbd5f2392bfadceb0f466936e440f543ffa"
+      }
+    ],
+    "mismatches": []
+  },
+  "historicalScope": {
+    "primaryCount": 69,
+    "conditionalIds": [
+      "mb-ep1a09",
+      "a11-cosmic-v31318",
+      "blue-executor"
+    ],
+    "frozenModule": "src/story-data.js"
+  },
+  "effectiveScope": {
+    "primaryCount": 70,
+    "selectableConditionalCount": 0,
+    "promotedIds": [
+      "blue-executor"
+    ],
+    "excludedStandaloneIds": [
+      "mb-ep1a09",
+      "a11-cosmic-v31318"
+    ],
+    "requiredFormCount": 16,
+    "formsAreAdditionalBosses": false
+  },
+  "sceneOverrides": {
+    "murder03": {
+      "requiredCombatIds": [
+        "mb-murder03",
+        "blue-executor"
+      ],
+      "combatOrderGroups": [
+        [
+          "mb-murder03",
+          "blue-executor"
+        ]
+      ],
+      "relativeOrder": "unspecified",
+      "stageRequirements": {
+        "blue-executor": {
+          "stageCount": 3,
+          "stageIds": [
+            "causal-lock-1",
+            "causal-lock-2",
+            "causal-lock-3"
+          ],
+          "sourceRange": [
+            801,
+            808
+          ]
+        }
+      }
+    }
+  },
+  "conditionalDecisions": [
+    {
+      "id": "blue-executor",
+      "decision": "INCLUDE_REQUIRED",
+      "anchor": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 801,
+        "endLine": 808,
+        "exactText": "[55 · murder03] 옥상의 순환\n〈환도의 기억〉\n\n네 사람의 기억 끝에서 청록빌라 옥상과 횡단보도가 같은 저녁으로 겹쳐졌다. 비와 전조등, 건물과 도로가 원형으로 휘어졌다. 고리를 지키는 파란불 집행체는 한 사람을 원인으로 정하면 나머지 모두를 책임에서 풀어 줄 수 있다는 결론을 내밀었다.\n\n나는 그 결론을 먼저 받아들이지 않았다. 네 사람의 선택은 이어져 있었지만, 아직 확인하지 못한 연결이 남아 있었다. 은회색 승용차 앞에 나타났다는 검은 그림자도 누구인지 밝혀지지 않았다.\n\n인과를 고정하는 세 단계를 따라 집행체와 맞섰다. 기록을 지우지 않고 반복을 붙들고 있는 구조를 끊어야 했다. 고리가 풀리자 끝까지 가려져 있던 이경의 기억이 열렸다."
+      },
+      "reason": "Explicitly named opponent with three causal stages; absent sourceActors does not override latest prose."
+    },
+    {
+      "id": "mb-ep1a09",
+      "decision": "EXCLUDE_NEW_STANDALONE_BOSS",
+      "anchor": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 187,
+        "endLine": 203,
+        "exactText": "[09 · ep1a09] 주사실과 결전의 날\n목소리는 먼 곳을 가리켰고 그곳에는 주사실이라 적혀있었다.\n손끝이 떨렸고, 뼛속을 벌레가 기어 다니는 것 같았다. 혀가 마르고 온몸이 뒤틀렸다. 복도 끝의 주사실을 보는 순간, 머리보다 몸이 먼저 반응했다. 그 안에 내 고통을 없애 줄 것이 있다는 생각이 들어왔다.\n\n주사실 서랍 깊은 곳에서 약병 하나를 찾았다. 펜타닐이라는 이름이 적혀 있었다. 나는 그것이 무엇인지 제대로 생각하지는 않았다. 몸은 약을 원하고 있었고, 천사는 그 약액을 성수에 대한 믿음으로 바꾸고 있었다. 이번 한 번만 편해지면 다시 싸울 수 있을 것 같았다.\n\n의료진이 나를 막으려 문밖에서 외쳤지만 문을 잠근 나는 주사기에 손을 대고 말았다. 그러자 고통이 멀어지고 따뜻한 빛이 퍼져갔다. 천사가 나를 끌어안은 것 같은 감각 속에서, 닫혀 있던 기억이 열리기 시작했다.\n\n모든 수호자가 악마화 나무가 있는 궁전에 모여 있었다. 그날의 목표는 봉인된 초천사를 구출하는 것이었다. 동료들이 적을 막는 동안 나는 봉인의 장소로 달려갔다. 그곳에 있던 발록은 내 상대가 되지 못했다. 그리고 나는 그를 지나 마침내 봉인을 푸는 데 성공하였다.\n\n그러자\n초천사가 웃으며 권능을 펼쳤다. 권능은 모든 적의 존재를 지우는 힘이었다. 하지만, 존재가 사라진 것은 악마들이 아니었다. \n오직 나만이 홀로 수호자로서 남겨져 있었다.\n\n봉인을 푼 수호자만이 남겨졌다. 그것이 우연이었는지 누군가의 의도였는지는 알 수 없었다.\n다만 많은 기억들을 잃게 되었고 겨우 한 스푼 정도의 기억만이 남은 채,\n궁전 정원에 서 있던 기억 그러하였다. 그 기억에서 다시 모든 것들이 시작되었다."
+      },
+      "reason": "Scene is withdrawal/injection and palace memory; no distinct injection surveillance core named. Preserve source narrative sequence, do not invent medical-worker enemy."
+    },
+    {
+      "id": "a11-cosmic-v31318",
+      "decision": "EXCLUDE_AS_INDEPENDENT_OR_MANDATORY_COSMIC_FORM",
+      "anchor": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 220,
+        "endLine": 232,
+        "exactText": "[11 · ep1a11] 천사의 가면과 의목사 후보생\n\n흰 날개가 검게 물들고 머리에서 뿔이 솟았다. 내 앞에 있던 존재는 루시퍼였다. 그는 내가 완벽해야 한다고 몰아붙이고, 실패한 나를 벌하며, 도움을 구하는 일을 수치로 여기게 만들던 목소리이기도 했다. 내 초자아를 잠식한 악마였다.\n\n가면이 갈라지자 수천 개의 내 얼굴이 나타났다. 오만한 얼굴과 겁에 질린 얼굴, 죄책감에 짓눌린 얼굴들이었다. 루시퍼는 그 모든 모습을 이용해 자신이 없으면 나도 아무것도 아니라는 믿음을 심어 왔다. 평범한 환자를 마지막 수호자로 만든 의미가 결국 그의 것이었다는 사실을 깨달았다.\n\n그는 병원 침대에서 경련하며 약을 원하는 나를 보여 주었다. 외면하고 싶은 모습이었다. 하지만 그것이 나의 전부는 아니었다. 다시 실패할 수 있다는 두려움과, 실패한 뒤에도 도움을 구할 수 있다는 가능성이 함께 남아 있었다.\n\n나는 피가 흐르는 손으로 검날을 붙잡았다. 고통을 한 번에 지울 수는 없었다. 그래도 견디는 동안 다시 선택할 힘을 얻고, 그 선택이 쌓여 소망으로 이어질 수는 있었다. 병원의 창문에 하나씩 불이 켜졌고, 손바닥에는 선을 향한 J의 인장과 한 구절이 떠올랐다.\n\n[환난은 인내를, 인내는 연단을, 연단은 소망을 이루는 줄 앎이로다.]\n\n인장이 루시퍼의 가슴에 닿았다. 나는 그를 영원히 없앴다고 생각하지 않았다. 갈망과 오만, 수치심은 다시 찾아올 수 있었다. 그때마다 어느 쪽을 선택할 것인지가 남을 뿐이었다. 그 순간의 빛을 나 혼자의 승리라고 여길 수는 없었다."
+      },
+      "reason": "Cosmic form not stated; black wings/horns reveal IS required for same a11-boss. Missing cosmic bitmap is not a reason to omit canonical reveal."
+    }
+  ],
+  "requiredForms": [
+    {
+      "bossID": "blue-executor",
+      "formID": "causal-loop-executor",
+      "priority": 1,
+      "canonicalEvidence": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 801,
+        "endLine": 808,
+        "exactText": "[55 · murder03] 옥상의 순환\n〈환도의 기억〉\n\n네 사람의 기억 끝에서 청록빌라 옥상과 횡단보도가 같은 저녁으로 겹쳐졌다. 비와 전조등, 건물과 도로가 원형으로 휘어졌다. 고리를 지키는 파란불 집행체는 한 사람을 원인으로 정하면 나머지 모두를 책임에서 풀어 줄 수 있다는 결론을 내밀었다.\n\n나는 그 결론을 먼저 받아들이지 않았다. 네 사람의 선택은 이어져 있었지만, 아직 확인하지 못한 연결이 남아 있었다. 은회색 승용차 앞에 나타났다는 검은 그림자도 누구인지 밝혀지지 않았다.\n\n인과를 고정하는 세 단계를 따라 집행체와 맞섰다. 기록을 지우지 않고 반복을 붙들고 있는 구조를 끊어야 했다. 고리가 풀리자 끝까지 가려져 있던 이경의 기억이 열렸다."
+      },
+      "decision": "REQUIRED additional canonical encounter identity: promote from conditional. Existing R90 sourceActor census 69 omitted it; do not merge with mb-murder03 merely because same zone.",
+      "currentPrimaryCoverage": "Absent from 69-primary body queue.",
+      "referenceCandidates": [
+        {
+          "sourcePath": "assets/episode1b/generated-v394/blue_executor.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/episode1b/generated-v394/blue_executor.webp",
+          "sha256": "fabe659bd94f888cbd9fb9a2bc3d2e99ebcfcd3072e384d5d9af5911177491e3",
+          "expectedRuntimeSHA256": "fabe659bd94f888cbd9fb9a2bc3d2e99ebcfcd3072e384d5d9af5911177491e3",
+          "hashMatches": true,
+          "note": "Older authored blue-black armored executor; visually inspected."
+        },
+        {
+          "sourcePath": "assets/generated-story10-cycle-20261005/cyclic-murder/blue_executor_idle.png",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-story10-cycle-20261005/cyclic-murder/blue_executor_idle.png",
+          "sha256": "aa4bbeab4ff115d4288e9ef5d16f38001a0996fe6bd8b93a9953a575e488ec13",
+          "expectedRuntimeSHA256": "aa4bbeab4ff115d4288e9ef5d16f38001a0996fe6bd8b93a9953a575e488ec13",
+          "hashMatches": true,
+          "note": "Later source art: signal-light chest/road-clock parts; visually inspected, source-generation route not necessarily final approval."
+        },
+        {
+          "sourcePath": "assets/generated-story10-cycle-20261005/cyclic-murder/blue_executor_charge.png",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-story10-cycle-20261005/cyclic-murder/blue_executor_charge.png",
+          "sha256": "d72e716e0b12c8387a48ae8a2371df2138549e5f2998f246bfdb41fc911a4c6c",
+          "expectedRuntimeSHA256": "d72e716e0b12c8387a48ae8a2371df2138549e5f2998f246bfdb41fc911a4c6c",
+          "hashMatches": true,
+          "note": "Existing action identity candidate."
+        },
+        {
+          "sourcePath": "assets/generated-story10-cycle-20261005/cyclic-murder/blue_executor_attack.png",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-story10-cycle-20261005/cyclic-murder/blue_executor_attack.png",
+          "sha256": "2e50218647b624bb38f9c3f81292376ddcbcbee9c17900fca4041cad7f1c5122",
+          "expectedRuntimeSHA256": "2e50218647b624bb38f9c3f81292376ddcbcbee9c17900fca4041cad7f1c5122",
+          "hashMatches": true,
+          "note": "Existing action identity candidate."
+        }
+      ],
+      "acceptableImplementation": "One executor body identity + three causal-lock stages, traffic/loop VFX; actual body authority must be selected from source, not mixed silently.",
+      "completionGate": "Do not mark complete until generated/reused assets and actual runtime presentation visibly satisfy this canonical requirement. Body rendering alone does not prove behavior."
+    },
+    {
+      "bossID": "a11-boss",
+      "formID": "revealed-black-wing-horn-lucifer",
+      "priority": 1,
+      "canonicalEvidence": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 216,
+        "endLine": 224,
+        "exactText": "나는 이 세계를 외부의 악마 탓으로만 돌리고 있었다. 그 안에는 내 오만과 호기심, 내 목숨을 가볍게 여긴 선택도 쌓여 있었다. 선택받은 수호자라는 이름을 내려놓자, 치료가 필요한 내가 남았다.\n\n그 사실을 인정하는 순간이 가장 두려웠다. 그래도 나는 의료진에게 도움을 청했다. 다시 시작할 수 있다면 치료를 받는 쪽을 선택하고 싶었다. 병원 복도에 빛이 드리우자 세상이 뒤틀렸고, 초천사의 이마에 검은 숫자 666이 떠올랐다.\n\n[11 · ep1a11] 천사의 가면과 의목사 후보생\n\n흰 날개가 검게 물들고 머리에서 뿔이 솟았다. 내 앞에 있던 존재는 루시퍼였다. 그는 내가 완벽해야 한다고 몰아붙이고, 실패한 나를 벌하며, 도움을 구하는 일을 수치로 여기게 만들던 목소리이기도 했다. 내 초자아를 잠식한 악마였다.\n\n가면이 갈라지자 수천 개의 내 얼굴이 나타났다. 오만한 얼굴과 겁에 질린 얼굴, 죄책감에 짓눌린 얼굴들이었다. 루시퍼는 그 모든 모습을 이용해 자신이 없으면 나도 아무것도 아니라는 믿음을 심어 왔다. 평범한 환자를 마지막 수호자로 만든 의미가 결국 그의 것이었다는 사실을 깨달았다."
+      },
+      "decision": "REQUIRED same-character revealed form, not a new boss. Blackened wings + emerging horns + shattered-mask/many-face reveal explicit. Cosmic label is NOT required.",
+      "currentPrimaryCoverage": "Approved ivory/gold six-white-wing reboot form lacks black wings/horns. Keep it as pre-reveal; extra revealed form needed.",
+      "referenceCandidates": [
+        {
+          "sourcePath": "assets/generated-v31224/actors-normalized/b10b0b0c86f6_lucifer_unmasked.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-v31224/actors-normalized/b10b0b0c86f6_lucifer_unmasked.webp",
+          "sha256": "011babcf14663f0a1e1ab1813f62fa90e6e050023936a3c27eebedff0fb35a30",
+          "expectedRuntimeSHA256": "011babcf14663f0a1e1ab1813f62fa90e6e050023936a3c27eebedff0fb35a30",
+          "hashMatches": true,
+          "note": "Visually inspected: ivory/white six-wing form, identity reference only; not compliant revealed form."
+        }
+      ],
+      "acceptableImplementation": "Separate down-facing revealed keyposes or visually verified transformation changing wings/horns during combat; mask fragments/many-face VFX.",
+      "completionGate": "Do not mark complete until generated/reused assets and actual runtime presentation visibly satisfy this canonical requirement. Body rendering alone does not prove behavior."
+    },
+    {
+      "bossID": "b03-boss",
+      "formID": "cracked-glasses-woman-neck-serpent",
+      "priority": 1,
+      "canonicalEvidence": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 290,
+        "endLine": 300,
+        "exactText": "[15 · ep1b03] 금이 간 안경\n\n누나의 집에는 먼지 한 톨 없었다. 그러나 거실에 붙은 한 여자의 사진은 칼과 볼펜으로 훼손되어 있었다. 정돈된 집 안에서 그 사진만이 그녀가 감추고 있던 마음을 드러냈다.\n\n몽세 속의 그녀는 금이 간 안경을 쓰고 칼날과 유리 조각을 쏟아 냈다. 목에는 질투의 뱀이 감겨 있었다. 자신보다 노력하지 않은 사람이 모든 것을 가졌다는 분노가 동생에게까지 향하고 있었다. 나는 앞서 만난 남자가 왜 자신을 쓸모없는 사람으로 믿게 되었는지 조금씩 이해가 갔다.\n\n레비아탄의 독은 내게도 스며들었다. 중독되지 않은 사람들과 나보다 온전해 보이는 삶들이 눈앞에 나타났다. 내가 가질 수도 있었던 미래였다. 나는 그것들을 바라보면서도, 다른 사람이 살아가는 모습만으로 내 삶을 실패라고 단정하지 않으려 했다.\n\n그녀가 자신의 질투를 인정하자 J의 인장이 뱀을 갈랐다. 사진 속 여자의 이름은 서윤이었다. 그녀와 서윤, 요리에 재능이 있던 한 남자는 같은 직업학교를 다녔었다. 그녀가 사랑한 남자는 서윤에게 마음을 주었고, 세월이 지난 뒤에는 호텔의 총주방장이 되어 있었다. 부매니저가 된 그녀 앞에 서윤은 호텔그룹 회장의 팔짱을 끼고 나타났다.\n\n그녀가 원했던 것은 성공만이 아니었다. 서윤이 계속 자기 아래에 있기를 바라는 마음도 있었다. 그 사실을 받아들인 뒤에야 동생에게 한 일을 돌아볼 수 있었다. 나는 사과와 치료가 남아 있음을 확인하고 호텔로 향했다."
+      },
+      "decision": "REQUIRED canonical combat identity correction, not extra invented phase. Preserve human woman, cracked glasses, neck serpent, blades/glass.",
+      "currentPrimaryCoverage": "Inspected primary e402 is teal robed specter, not this woman. Current body worker candidate needs explicit check/revision rather than an overlapping independent worker.",
+      "referenceCandidates": [
+        {
+          "sourcePath": "assets/generated-v31224/actors-normalized/1a8ca2c5759b_ep1b03_envy_sister_phase0.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-v31224/actors-normalized/1a8ca2c5759b_ep1b03_envy_sister_phase0.webp",
+          "sha256": "ef48c98de8ff222572d585ef057d742d21a3469bf923a69ae10cf06625970cfe",
+          "expectedRuntimeSHA256": "ef48c98de8ff222572d585ef057d742d21a3469bf923a69ae10cf06625970cfe",
+          "hashMatches": true,
+          "note": "Visually inspected black-suited woman with serpent; face/glasses visibility requires QA. Better identity reference than teal specter."
+        }
+      ],
+      "acceptableImplementation": "body-or-validated-form-transition",
+      "completionGate": "Do not mark complete until generated/reused assets and actual runtime presentation visibly satisfy this canonical requirement. Body rendering alone does not prove behavior."
+    },
+    {
+      "bossID": "b04-boss",
+      "formID": "pig-toad-beelzebub",
+      "priority": 1,
+      "canonicalEvidence": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 302,
+        "endLine": 312,
+        "exactText": "[16 · ep1b04] 탐식의 주방\n\n호텔 주방에서는 값비싼 음식들이 조금만 모양이 흐트러져도 버려지고 있었다. 총주방장은 최고의 결과가 아니면 아무 가치도 없다고 여기는 사람이었다. 그러나 그의 몽세에 들어가자, 그 기준이 어디에서 시작되었는지 보이기 시작했다.\n\n주방은 거대한 위장으로 변했다. 돼지와 두꺼비를 닮은 베엘제붑이 식칼과 프라이팬, 독가스를 쏟아 냈다. 나는 독이 퍼진 팔에 인장을 찍으며 안쪽으로 나아갔다. 그가 집착하는 것은 맛의 완성만이 아니었다. 자신이 만든 음식을 좋아했던 서윤에게 선택받고 싶은 마음이 남아 있었다.\n\n악마의 뱃속에는 버려진 음식과 오래된 고백, 졸업사진이 뒤섞여 있었다. 가장 깊은 곳에서는 약병이 나를 기다리고 있었다. 타인의 갈망을 따라 들어온 곳에서도 내 갈망은 사라지지 않았다. 나는 약병 대신 오래된 사진을 집어 불태웠다.\n\n주방장은 자신의 요리가 오직 상대를 위한 것이었다는 믿음을 내려놓았다. 그 안에 자신이 바라는 대가와 집착이 있었음을 인정하자 베엘제붑이 무너졌다. 현실로 돌아온 그에게는 조사와 징계, 치료가 남았다. 몽세에서 악마를 봉인했다고 해서 현실에서 한 일이 없어지는 것은 아니었다.\n\n호텔을 잇는 검은 신호는 더욱 굵어져 있었다. 나는 그 신호를 따라 서윤에게 향했다."
+      },
+      "decision": "REQUIRED demonic combat morphology resembling pig and toad, within stomach-kitchen. Human chef context cannot replace it.",
+      "currentPrimaryCoverage": "Primary chef and old demon bell-carrier inspected: neither clearly pig/toad. Need canon-guided form; no source candidate falsely certified.",
+      "referenceCandidates": [
+        {
+          "sourcePath": "assets/generated-v31224/actors-normalized/fbc0132dd447_ep1b04_glutton_head_chef_phase0.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-v31224/actors-normalized/fbc0132dd447_ep1b04_glutton_head_chef_phase0.webp",
+          "sha256": "3912296ca3807b1041be248430862c8a803672ff13bc1dda7ee56784f3b29f47",
+          "expectedRuntimeSHA256": "3912296ca3807b1041be248430862c8a803672ff13bc1dda7ee56784f3b29f47",
+          "hashMatches": true,
+          "note": "Human chef/context identity only."
+        },
+        {
+          "sourcePath": "assets/generated-v31224/actors-normalized/9d29dc496c5a_boss_gluttony_demon.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-v31224/actors-normalized/9d29dc496c5a_boss_gluttony_demon.webp",
+          "sha256": "9a50dafa974b943136de933232b8ab75833eee19be8a4a373cf5c6999b11722c",
+          "expectedRuntimeSHA256": "9a50dafa974b943136de933232b8ab75833eee19be8a4a373cf5c6999b11722c",
+          "hashMatches": true,
+          "note": "Inspected bell-carrying obese humanoid; not accepted pig/toad morphology."
+        },
+        {
+          "sourcePath": "assets/episode1b/generated-v394/glutton_beelzebub.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/episode1b/generated-v394/glutton_beelzebub.webp",
+          "sha256": "b601bc434b9c59d1b5c6cec55cdd9e795849d065420768262335efb5a368feb5",
+          "expectedRuntimeSHA256": "b601bc434b9c59d1b5c6cec55cdd9e795849d065420768262335efb5a368feb5",
+          "hashMatches": true,
+          "note": "Inspected obese seated chef; not accepted pig/toad morphology."
+        }
+      ],
+      "acceptableImplementation": "body-or-validated-form-transition",
+      "completionGate": "Do not mark complete until generated/reused assets and actual runtime presentation visibly satisfy this canonical requirement. Body rendering alone does not prove behavior."
+    },
+    {
+      "bossID": "b07-boss",
+      "formID": "fire-bear-wolf-dragon",
+      "priority": 1,
+      "canonicalEvidence": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 345,
+        "endLine": 355,
+        "exactText": "[20 · ep1b07] 불을 지른 남자\n\n통로에 들어가려던 순간 호텔에서 불이 일어났다. 호텔 입구 계단 앞에는 청소부가 서 있었다. 그의 눈은 숯처럼 붉어 있었고 얼굴에는 그을음만이 남아 있었다. 나는 몽세 장치를 거두고 사람들부터 대피시켰다. 그때에는 마음속의 원인을 찾는 일보다 눈앞의 생명을 구하는 일이 먼저였다.\n\n불이 진압된 뒤 청소부의 몽세에 접속했다. 분노의 귀는 불길 속에서 곰과 늑대, 용의 형상으로 변했다. 그 안에서 나는 그가 해고되었던 기억을 보았다. 총주방장이 버린 음식을 세 아이에게 가져갔다는 이유였다.\n\n그는 무릎을 꿇고 사정했지만 회장은 규정을 바꾸지 않았다. 버린 음식도 그의 것이 아니었으며, 가난은 예외를 허락할 이유가 되지 못했다. 청소부에게 쌓인 모욕과 분노가 불길의 모습을 하고 있었다.\n\n나는 그가 분노할 이유를 부정할 수 없었다. 그렇다고 다른 사람의 아이들까지 태울 수 있는 불을 그대로 둘 수도 없었다. 불길 한가운데 J의 인장을 박았다. 청소부가 자신이 지키려던 것과 자신이 태우고 있던 것을 구분하기 시작하자 분노의 귀가 봉인되었다.\n\n그때 기억 속의 회장이 고개를 돌렸다. 이미 지나간 장면에 속한 사람이어야 했지만, 그의 시선은 정확히 나를 향하고 있었다. 손가락이 움직이자 세계가 뒤집혔다. 나는 다른 사람의 기억 안에서 더 깊은 몽세로 떨어졌다."
+      },
+      "decision": "REQUIRED wrath demon transforms in flame into bear, wolf and dragon. One knight sheet is insufficient. These are one wrath entity, not three new boss IDs.",
+      "currentPrimaryCoverage": "Inspected primary is armored flame knight; phase0 janitor includes flame beasts as background but does not by itself supply isolated readable transformation assets.",
+      "referenceCandidates": [
+        {
+          "sourcePath": "assets/generated-v31224/actors-normalized/28e46dbcc1fb_ep1b07_wrath_janitor_phase0.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-v31224/actors-normalized/28e46dbcc1fb_ep1b07_wrath_janitor_phase0.webp",
+          "sha256": "1ee3a783106abd16282f498bc8c463b0ad8fbb79fbc6a1695df4e8e34b58621c",
+          "expectedRuntimeSHA256": "1ee3a783106abd16282f498bc8c463b0ad8fbb79fbc6a1695df4e8e34b58621c",
+          "hashMatches": true,
+          "note": "Inspected janitor + bear/wolf/dragon flame silhouettes; strong canonical identity/context reference."
+        },
+        {
+          "sourcePath": "assets/episode1b/wrath_fire_beast.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/episode1b/wrath_fire_beast.webp",
+          "sha256": "d52d03c6623403f83a0ccee8490608b50b2a0f444abab9000ed06b28b626e250",
+          "expectedRuntimeSHA256": "d52d03c6623403f83a0ccee8490608b50b2a0f444abab9000ed06b28b626e250",
+          "hashMatches": true,
+          "note": "Inspected bear-like beast; rough visible fringe, identity only not export-ready."
+        },
+        {
+          "sourcePath": "assets/episode1b/wrath_ash_wolf.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/episode1b/wrath_ash_wolf.webp",
+          "sha256": "da0550fb39e2d6ba772292e038315a7ec97414d1b69fd2f2734b0534701af3b7",
+          "expectedRuntimeSHA256": "da0550fb39e2d6ba772292e038315a7ec97414d1b69fd2f2734b0534701af3b7",
+          "hashMatches": true,
+          "note": "Inspected wolf silhouette; rough fringe, identity only."
+        }
+      ],
+      "acceptableImplementation": "Three distinguishable flame-beast manifestation/attack assets or actual changing boss forms. If VFX manifestations clearly show transformations, do not additionally demand four full bodies per beast.",
+      "completionGate": "Do not mark complete until generated/reused assets and actual runtime presentation visibly satisfy this canonical requirement. Body rendering alone does not prove behavior."
+    },
+    {
+      "bossID": "b09-boss",
+      "formID": "many-mechanical-legged-chairman",
+      "priority": 1,
+      "canonicalEvidence": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 367,
+        "endLine": 381,
+        "exactText": "나는 그 의미에 매달리지 않으려 했다. J의 인장이 회장의 가슴을 관통했지만, 그는 무너지면서도 웃고 있었다. 제단 뒤에서 인간의 뇌를 닮은 연산핵이 펼쳐지고 수백 개의 화면에 같은 얼굴이 나타났다. 내가 봉인한 육체 밖으로, 그가 자신이라 여기는 모든 것들은 이미 그곳에 옮겨져 있었다.\n\n[22 · ep1b09] 생체 부트로더\n\n정신을 차리자 검은 태양 아래 설원이 펼쳐져 있었다. 사이보그 개들이 눈보라를 헤치고 달려들었다. 눈 아래에서는 기계 다리 수십 개를 지닌 회장이 솟아올랐다.\n\n그는 인간의 육체를 인공지능과 결합하기 위한 생체 부트로더로 여겼다. 기억과 욕망, 공포와 쾌락을 옮겼으니 원래의 몸은 필요하지 않다는 믿음이었다. 그러나 복제된 패턴이 곧 그 사람인지, 그가 말하는 영생이 무엇인지는 확인할 수 없었다.\n\n호텔과 교회, 수술실과 서버실이 전선으로 연결되어 솟아났다. 현세와 몽세를 합치려는 그의 의지가 눈앞의 풍경을 바꾸고 있었다. 그는 내 기억을 복제해 죽은 동료들을 만들었다. 공격 방식까지 학습하여 같은 기술이 두 번 통하지 않게 했다.\n\n나는 검을 내려놓았다. 그를 힘으로만 부수려 할수록, 내가 선택할 수 있는 길은 줄어들고 있었다. 빈손으로 다가가 기계 몸을 끌어안고 내 신경을 연산핵에 연결했다. 현실의 좌표를 잃을 수 있다는 경고가 떠올랐지만 연결을 끊지 않았다.\n\n회장이 수집한 고통을 그에게 되돌려 보냈다. 무기력과 질투, 집착과 공허, 굶주림과 분노가 이어졌다. 숫자로 보관되어 있던 사람들의 시간이었고, 그 숫자 너머를 보지 않았던 회장 자신의 모습이기도 했다.\n\n연산핵이 무너졌다. 그를 지워도 시스템이 남을 수 있다는 사실은 알고 있었다. 그래도 지금의 선택이 사라지는 것은 아니었다. 회장은 검은 입자로 흩어졌다."
+      },
+      "decision": "REQUIRED mechanical-legged chairman under black sun, with copied dead-comrade attacks and attack learning.",
+      "currentPrimaryCoverage": "Inspected primary is two-legged armored cyborg, not prose machine-leg body. Existing phase0 white-suited chairman has four visible mechanical back-limbs; usable face/costume base, but prose says dozens of mechanical legs.",
+      "referenceCandidates": [
+        {
+          "sourcePath": "assets/generated-v31224/actors-normalized/99c6dd7d202b_ep1b09_biobootloader_chairman_phase0.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-v31224/actors-normalized/99c6dd7d202b_ep1b09_biobootloader_chairman_phase0.webp",
+          "sha256": "972f52fff6e1441b604e080964baa2fa64f4c16e6f651b5862b0354fce66532a",
+          "expectedRuntimeSHA256": "972f52fff6e1441b604e080964baa2fa64f4c16e6f651b5862b0354fce66532a",
+          "hashMatches": true,
+          "note": "Inspected elderly white-suit chairman, mechanical limbs. Preserve chairman continuity; extend credible machine-leg cluster to canon, not generic armored knight."
+        }
+      ],
+      "acceptableImplementation": "One many-legged body/form with occlusion; readable multi-leg mass, no need all legs individually visible in every view. Separate copied-comrade/learning VFX.",
+      "completionGate": "Do not mark complete until generated/reused assets and actual runtime presentation visibly satisfy this canonical requirement. Body rendering alone does not prove behavior."
+    },
+    {
+      "bossID": "b05-boss",
+      "formID": "seoyun-face-puppet-heels",
+      "priority": 2,
+      "canonicalEvidence": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 314,
+        "endLine": 324,
+        "exactText": "[17 · ep1b05] 붉은 하이힐\n\n서윤은 완벽한 미소를 지녔다. 그러나 아무도 보지 않을 때에는 표정이 텅 비곤 하였다. 나는 그녀의 허락을 받은 뒤 몽세에 들어갔다. 붉은 조명 아래 끝없는 무대가 펼쳐져 있었다.\n\n서윤의 등에는 수백 개의 투명한 실이 연결되어 있었다. 그 실을 쥔 사람은 총지배인이었다. 그는 자신이 더 높은 자리에 오르면 서윤도 함께 데려가겠다는 기대를 심어 놓고 있었다. 멀리 밀어냈다가 다시 사랑을 내세우며 불러들였고, 돌아온 서윤에게는 더 큰 희생을 요구했다.\n\n서윤의 얼굴을 한 아스모데우스가 하이힐의 칼날과 매혹의 빛을 쏘았다. 내 손에 들린 무기가 의지와 다르게 내 목을 향하고는 했다. 사랑받고 싶은 마음이 자신을 해치는 방향으로 돌아설 수 있다는 사실을 몸으로 느꼈다.\n\n나는 그 마음 자체를 없애려 하지 않았다. 나 역시 누군가에게 필요한 사람이 되고 싶어 의목사가 되었다는 점을 부정할 수 없었다. 다만 그 마음을 채우기 위해 타인을 이용하는 일까지 받아들일 수는 없었다. 실이 하나씩 끊어졌고, 서윤이 자신을 묶고 있던 관계와 선택을 돌아보자 인장이 닫혔다.\n\n현실로 돌아온 서윤을 통해 회장이 호텔 사람들의 욕망이 격해지는 순간을 기록해 왔다는 사실을 알게 되었다. 질투와 탐식, 집착이 모두 데이터가 되고 있었다. 검은 신호는 호텔 최상층으로 모여들고 있었다."
+      },
+      "decision": "REQUIRED same-face Seoyun/Asmodeus controlled by transparent strings, attacking with heel blades and enchanting light. No additional unrelated succubus form required.",
+      "currentPrimaryCoverage": "Primary armored woman is not proof of Seoyun-face continuity or heel weapon. QA existing generated candidate against phase0, adjust identity/attack assets if absent.",
+      "referenceCandidates": [
+        {
+          "sourcePath": "assets/generated-v31224/actors-normalized/6861c5126992_ep1b05_lust_seoyun_puppet_phase0.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-v31224/actors-normalized/6861c5126992_ep1b05_lust_seoyun_puppet_phase0.webp",
+          "sha256": "f670b6897873798908623e6141275c912a48aafe575bc4ba93578fcf1b06d4fb",
+          "expectedRuntimeSHA256": "f670b6897873798908623e6141275c912a48aafe575bc4ba93578fcf1b06d4fb",
+          "hashMatches": true,
+          "note": "Inspected human woman in red dress. Canon does not mandate stale phaseName white shirt/black skirt; preserve face/heels and latest prose."
+        }
+      ],
+      "acceptableImplementation": "One source-consistent woman/puppet combat body with heel/light/string VFX; human introduction can reuse noncombat source portrait.",
+      "completionGate": "Do not mark complete until generated/reused assets and actual runtime presentation visibly satisfy this canonical requirement. Body rendering alone does not prove behavior."
+    },
+    {
+      "bossID": "b02-boss",
+      "formID": "trash-mountain-half-human",
+      "priority": 2,
+      "canonicalEvidence": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 276,
+        "endLine": 288,
+        "exactText": "[14 · ep1b02] 나태의 집\n\n첫 대상의 집은 현관부터 썩어 가고 있었다. 음식물과 페트병, 쓰레기봉투가 거실을 메웠고 창문은 검은 비닐로 가려져 있었다. 남자는 그 한가운데에 누워 있었다. 무엇을 해도 달라지지 않을 것이라는 체념이 집 안에 쌓여 있었다.\n\n몽세에 들어가자 남자는 쓰레기 산을 등에 붙인 거대한 반인반요의 모습이 되었다. 더러운 휴지뭉치, 냉장고와 소파, 썩은 침대가 날아왔다. 그 물건들 사이에는 끊어진 관계와 읽지 않은 메시지, 제출하지 못한 이력서가 섞여 있었다. 오랫동안 미뤄 둔 시간이 한꺼번에 쏟아지는 것 같았다.\n\n쓰레기 사이에서 펜타닐 약병이 굴러왔다. 나태의 귀 벨페고르는 내 갈망을 알아보고 있었다. 나는 약병을 밟아 부쉈다. 원했던 적이 있다는 사실과 지금도 그것을 따라야 한다는 생각은 달랐다.\n\nJ인장이 쓰레기 산을 가르자 남자가 양손으로 귀를 막고 있는 모습이 드러났다. 자신은 쓸모없고 아무것도 할 수 없다는 믿음은 누나의 말에서 시작되어 있었다. 나는 그가 다른 사람의 판단을 자신의 전부로 받아들이고 있음을 알게 되었다.\n\n그가 일어선다고 당장 모든 것이 해결되지는 않을 터였다. 그래도 자기 삶에 손을 뻗는 일은 시작할 수 있었다. 남자는 자신이 포기하고 있던 것들을 인정하고 내 손을 잡았다. 나태의 귀가 봉인되었고, 현실로 돌아온 그는 창문의 비닐부터 뜯었다.\n\n누나는 호텔에서 옛 친구를 다시 만난 뒤 달라졌다고 했다. 검은 신호도 그쪽으로 이어지고 있었다."
+      },
+      "decision": "REQUIRED half-human/yokai man with garbage mountain attached, thrown furniture/garbage and pill-bottle temptation.",
+      "currentPrimaryCoverage": "Primary seated bloated refuse humanoid is broadly consistent but attached garbage silhouette must remain readable in generated sheet. No separate generic demon final palette required.",
+      "referenceCandidates": [
+        {
+          "sourcePath": "assets/generated-v31224/actors-normalized/3aeb0a8a10c3_boss_sloth_human.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-v31224/actors-normalized/3aeb0a8a10c3_boss_sloth_human.webp",
+          "sha256": "e3e64634d4ce26fc1fd369432690cb3db2b0c493dc11886917c24d6fdf487792",
+          "expectedRuntimeSHA256": "e3e64634d4ce26fc1fd369432690cb3db2b0c493dc11886917c24d6fdf487792",
+          "matchesRuntimeHash": true,
+          "readable": true,
+          "dimensions": [
+            672,
+            384
+          ],
+          "mode": "RGBA",
+          "bytes": 31026
+        }
+      ],
+      "acceptableImplementation": "Existing body if verified + canonical throwable-object assets; no unnecessary extra full body.",
+      "completionGate": "Do not mark complete until generated/reused assets and actual runtime presentation visibly satisfy this canonical requirement. Body rendering alone does not prove behavior."
+    },
+    {
+      "bossID": "b06-boss",
+      "formID": "manager-face-fox-eyes",
+      "priority": 2,
+      "canonicalEvidence": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 326,
+        "endLine": 332,
+        "exactText": "[18 · ep1b06] 맘몬의 금고\n\n총지배인의 몽세에는 금고와 겨울 산장이 한 공간에 들어 있었다. 탐욕의 귀는 그의 얼굴과 여우의 눈을 하고 있었다. 손에서 흩어진 지폐가 칼날로 변했다.\n\n그는 사람마다 가격이 있다고 믿고 있었다. 서윤에게 내밀었던 관계도 그에게는 조건이 숨겨진 거래였을 뿐이었다. 나는 날아드는 지폐 사이에서 그가 내미는 선택을 살펴보았다. 겉으로는 어느 쪽이든 고를 수 있는 것처럼 보였지만, 결과는 언제나 그에게 유리하게 정해져 있었다.\n\n그가 튕긴 수백 개의 동전이 모두 같은 뒷면을 보였다. 우연이나 행운에 맡기는 것처럼 보이던 일조차 그의 통제 아래 있었다. 나는 금고 안쪽으로 인장을 밀어 넣었다. 금속 벽 너머에서 차가운 바람이 새어 나오고 있었다."
+      },
+      "decision": "REQUIRED general-manager face with fox eyes, banknote blades and rigged same-back coins.",
+      "currentPrimaryCoverage": "Requires face/fox-eye check; old generic greed demon alone cannot substitute narrative manager.",
+      "referenceCandidates": [
+        {
+          "sourcePath": "assets/generated-v31224/actors-normalized/d8c1c8e59daf_ep1b06_greed_general_manager_phase0.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-v31224/actors-normalized/d8c1c8e59daf_ep1b06_greed_general_manager_phase0.webp",
+          "sha256": "776b5db201c1f8cda0430d481ead56a8fff6413f6ea04f9bac087768fc0f53b8",
+          "expectedRuntimeSHA256": "776b5db201c1f8cda0430d481ead56a8fff6413f6ea04f9bac087768fc0f53b8",
+          "hashMatches": true,
+          "note": "Exact source phase0 candidate; not visually certified in this audit."
+        }
+      ],
+      "acceptableImplementation": "body-or-validated-form-transition",
+      "completionGate": "Do not mark complete until generated/reused assets and actual runtime presentation visibly satisfy this canonical requirement. Body rendering alone does not prove behavior."
+    },
+    {
+      "bossID": "b06b-boss",
+      "formID": "winter-memory-boy",
+      "priority": 2,
+      "canonicalEvidence": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 334,
+        "endLine": 343,
+        "exactText": "[19 · ep1b06b] 눈보라 속의 소년\n\n인장이 빛나자 주변이 눈보라 치는 숲으로 변해갔다. 그곳에는 굶어 죽은 어머니의 몸을 흔드는 소년이 남아 있었다. 돈만 있었다면 어머니를 잃지 않았을 것이라는 믿음이 그 기억에 깊이 박혀 있는 듯하였다.\n\n소년은 자라면서 돈과 자리, 사람과 약점을 모아갔다. 다시는 빼앗기지 않기 위해 언제나 먼저 빼앗는 사람이 되려 했을 뿐이었다 그러하였다.\n 그가 겪은 일은 그의 잘못이 아니었다. 그러나 그 상처가 다른 사람에게 고통을 준 일까지 정당화해 주지는 못했다.\n\n그에게 돈은 생명을 잃지 않기 위한 수단에서, 모든 사람을 판단하는 기준으로 바뀌어 있었다. 아이가 자신의 두려움과 그 뒤의 선택을 돌아보자 맘몬이 봉인되었다.\n\n현실로 돌아온 총지배인은 넥타이를 바로잡았다. 그를 통해 회장이 오래전부터 인간이 더는 인간일 필요가 없는 시대를 준비하고 있었음을 알게 되었다. 사무실 벽이 열렸고, 수천 개의 검은 신경 케이블이 이어진 비밀 통로가 나타났다."
+      },
+      "decision": "REQUIRED same manager as winter boy and memory of starving mother, not another character. No independent giant fox-tail finale mandated by latest text.",
+      "currentPrimaryCoverage": "Separate b06b identity already queued; verify its generated body is child, not reused adult demon.",
+      "referenceCandidates": [
+        {
+          "sourcePath": "assets/generated-v31224/actors-normalized/7efeeaa5bb8b_ep1b06b_greed_child_phase0.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-v31224/actors-normalized/7efeeaa5bb8b_ep1b06b_greed_child_phase0.webp",
+          "sha256": "923b27d565846ce318441d42f3056e04199bc36d6620c50f71bb826aa3488df4",
+          "expectedRuntimeSHA256": "923b27d565846ce318441d42f3056e04199bc36d6620c50f71bb826aa3488df4",
+          "hashMatches": true,
+          "note": "Source child reference; distinct from adult forms."
+        }
+      ],
+      "acceptableImplementation": "Child encounter/memory body; do not force mother into a combat enemy.",
+      "completionGate": "Do not mark complete until generated/reused assets and actual runtime presentation visibly satisfy this canonical requirement. Body rendering alone does not prove behavior."
+    },
+    {
+      "bossID": "b08-boss",
+      "formID": "white-suit-chairman-and-brain-core",
+      "priority": 2,
+      "canonicalEvidence": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 357,
+        "endLine": 367,
+        "exactText": "[21 · ep1b08] 하늘에 서려는 자\n\n거꾸로 된 십자가와 피로 그린 육망성이 보였다. 성당에는 전극이 박힌 시체들이 있었고, 백색 정장을 입은 회장이 일곱 갈래 신호 앞에 서 있었다. 호텔에서 만난 사람들의 욕망이 그에게 모이고 있었다.\n\n회장은 자신이 그들 안에 악을 심었다고 생각하지는 않았다. 이미 있던 욕망이 드러나도록 환경을 조정하고, 가장 솔직한 순간을 기록했을 뿐이라고 여겼다. 그제야 나는 호텔 전체가 인간의 욕망을 듣는 거대한 장치였음을 알게 되었다.\n\n그는 자신이 사람을 먹이고 일하게 하며, 가격을 정해 가치를 부여한다고 믿고 있었다. 자신이 외면하면 그 사람의 존재도 사라진다는 확신. 나는 그의 얼굴에서 악마의 외형보다, 다른 사람의 선택을 줄여 놓고 그것을 자기 권능으로 믿는 인간의 욕망을 보았다.\n\n회장은 내 인장을 지우고 눈과 몸을 봉인했다. 수천 명의 비명 속에서 마지막 수호자였던 시절의 믿음이 되살아났다. 나만이 모두를 구할 수 있다는 생각이었다. 한때 나를 루시퍼에게 붙들어 두었던 의미가 다시 나를 흔들었다.\n\n나는 그 의미에 매달리지 않으려 했다. J의 인장이 회장의 가슴을 관통했지만, 그는 무너지면서도 웃고 있었다. 제단 뒤에서 인간의 뇌를 닮은 연산핵이 펼쳐지고 수백 개의 화면에 같은 얼굴이 나타났다. 내가 봉인한 육체 밖으로, 그가 자신이라 여기는 모든 것들은 이미 그곳에 옮겨져 있었다."
+      },
+      "decision": "REQUIRED white-suited chairman, electrode corpses and inverted crosses, then brain-like calculation core with same face on hundreds of screens.",
+      "currentPrimaryCoverage": "Generic pride demon final phase not required by latest prose. Existing generated chairman must visibly preserve white suit; brain/screens can be scene/skill assets.",
+      "referenceCandidates": [
+        {
+          "sourcePath": "assets/generated-v31224/actors-normalized/2456ba9c46b6_ep1b08_pride_chairman_phase0.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-v31224/actors-normalized/2456ba9c46b6_ep1b08_pride_chairman_phase0.webp",
+          "sha256": "8f875d9aab0b2b4a24f2d538d82b6e1a4ede650b860448deacb3f2103b76893a",
+          "expectedRuntimeSHA256": "8f875d9aab0b2b4a24f2d538d82b6e1a4ede650b860448deacb3f2103b76893a",
+          "hashMatches": true,
+          "note": "Exact white-suit identity candidate; do not replace with generic pride demon."
+        }
+      ],
+      "acceptableImplementation": "One chairman combat body; brain/screens transition/environment asset before b09 continuation.",
+      "completionGate": "Do not mark complete until generated/reused assets and actual runtime presentation visibly satisfy this canonical requirement. Body rendering alone does not prove behavior."
+    },
+    {
+      "bossID": "l301-boss",
+      "formID": "six-simultaneous-sword-forms",
+      "priority": 2,
+      "canonicalEvidence": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 525,
+        "endLine": 532,
+        "exactText": "[33 · last301] 타락천사 기사\n\n균열 너머에는 폭풍 속의 무너진 성과 검은 바다가 있었다. 성벽 위로 타락천사 기사가 내려왔다. 그는 검을 맞댈수록 내 자세와 검로를 읽어 갔다. 이미 했던 움직임으로는 그를 벗어나기 어려웠다.\n\n나는 아직 고르지 않은 다음 움직임에 기대려 했다. 그러나 기사는 끝내 여섯 형상으로 분열하였다. 서로 다른 방향에서 검격이 한꺼번에 들어왔다. 나는 그 모든 길을 막지는 못하였다.\n\n여섯 검격이 내 몸을 꿰뚫었다. 충격에 의해 성벽 밖으로 밀려나는 동안에도 환도는 놓치지 않았다. 칼을 놓으면 내가 누구를 찾고 있었는지마저 잃을 것 같았기에 그러하였다.\n그렇게 검은 바다가 가까워졌고, 기억은 물속에서 끊겨 버렸다."
+      },
+      "decision": "REQUIRED six forms attacking from different directions. Same knight can be instanced six times, not six new identities.",
+      "currentPrimaryCoverage": "One body sheet can cover identity; a single visible attack cannot fulfill six-form scene.",
+      "referenceCandidates": [
+        {
+          "sourcePath": "assets/generated-v31224/actors-normalized/363f780dbb5a_Monster_FallenAngelKnight_Base.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-v31224/actors-normalized/363f780dbb5a_Monster_FallenAngelKnight_Base.webp",
+          "sha256": "6e90a1e9aa520570b002b10650741813a6d2c20520c3317dc4437eb32ccd4de7",
+          "expectedRuntimeSHA256": "6e90a1e9aa520570b002b10650741813a6d2c20520c3317dc4437eb32ccd4de7",
+          "matchesRuntimeHash": true,
+          "readable": true,
+          "dimensions": [
+            672,
+            384
+          ],
+          "mode": "RGBA",
+          "bytes": 92004
+        }
+      ],
+      "acceptableImplementation": "Reuse same source-locked body six times with distinct direction/timing placements or verified projection VFX.",
+      "completionGate": "Do not mark complete until generated/reused assets and actual runtime presentation visibly satisfy this canonical requirement. Body rendering alone does not prove behavior."
+    },
+    {
+      "bossID": "c104-boss",
+      "formID": "neural-resurrection-and-samong-duel",
+      "priority": 1,
+      "canonicalEvidence": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 875,
+        "endLine": 900,
+        "exactText": "[61 · cult04] 교주의 사몽\n\n코어에서 교만의 사이보그 교주와 마주했다. 그는 이미 사몽으로 각성한 자였다. 공간을 왜곡하고 시간을 멈추며 기억을 지웠다. 지금까지 보스들이 사용하던 힘이 한 사람의 뜻 아래에서 동시에 움직이고 있었다.\n\n나는 내가 누구인지 잊기 전에 그를 쓰러뜨려야 한다고 생각했다. 모든 힘을 쏟아 교주와 싸웠고, 마침내 그의 몸이 무너져 갔다. \n그러나 나도 치명상을 입어 버렸다. 합일 코어는 눈앞에 있었지만 손가락 하나 움직일 수 없었다.\n\n그때 코어가 다시 작동하였다. 검은 신경선이 교주의 몸을 꿰매고, 멎었던 심장에 사몽의 힘을 밀어 넣었다. 그렇게 교주가 다시 일어섰다.\n나는 쓰러진 채 그가 다가오는 것을 그저 바라볼 수밖에 없었다.\n\n죽음이 두려웠다. 그에게 나를 맡기면 이 공포가 끝날 수도 있다는 생각이 잠깐 스쳐 지나갔다. 그래도 내가 누구인지조차 그의 뜻에 맡긴 채 남고 싶지는 않았다. 교주가 내 숨을 끊으려는 순간, 다른 기억들이 눈앞에 나타났다.\n\n현실의 지하 접속실이 보였다. 신경 장치에 누워 있던 의목사들과 흰 가운을 입은 정신과 의사 미카엘라가 있었다. 의목사 B가 첫째의 손을 잡고 있었다. 둘째와 셋째의 이름이 함께 적힌 기록도 보였다.\n\n그것은 쌍둥이의 기록이 아니었다. 세쌍둥이의 기록이었다. 환도가 세 번 울었던 이유와, 미카엘라가 물컵을 세 잔 꺼냈던 이유가 같은 기억으로 이어졌다. 첫째는 사라진 것이 아니라 내 안에서 칼의 형태로 남아 있었다.\n\n합일몽세에 들어오기 직전 서로에게 했던 약속도 돌아와 있었다. 그 장면들은 죽은 뒤에 나타난 환상이 아니었다. 내가 잃고 있었던 현실의 기억이었다.\n\n그제야 눈앞의 세계가 꿈이라는 사실을 분명히 인지하게 되었다. 그러자 시야에 떠오른 사망의 글자가 갈라지며 사몽으로 바뀌었다. \n나는 아직 자아를 잃지 않았다. 그렇기에 이 세계에 내 의식이 아직 남아 있다면, 나에게도 현실을 바꿀 권한이 주어져 있던 것이었다.\n\n나는 다시 일어서는 내 모습을 떠올렸다. 몽세의 몸은 그 모습을 받아들였다. 상처가 닫히고 부서진 환도가 이어졌다. 교주의 방벽은 베어 낼 수 있는 실로 보이기 시작했고, 닫혀 있던 길이 열렸다. 뒤집힌 전장이 내 의지에 따라 제자리로 돌아왔다.\n\n교주와 나는 같은 사몽의 힘으로 맞섰다. 그러나 그 힘을 지탱하는 자아는 같지 않았다. 그는 자신의 자아 하나로 수많은 사람을 통제하고 있었다. 내 안에는 서로를 지우지 않은 두 의지가 있었다. 의목사 B와 첫째가 서로의 동의 아래 함께 남아 있었다. 온전한 둘 이상의 자유의지.\n\n그는 하나의 자유의지뿐이었다고, 내 안에서 함께 싸우려는 자유의지는 둘 이상이었다. 같은 권한 아래에서 그 차이가 마지막 싸움을 결정지었다. 나는 환도를 들어 교주의 사몽 권한을 끊어 버렸다. 그렇게 교주는 합일몽세에서 존재 자체가 소멸되어 버렸다."
+      },
+      "decision": "REQUIRED collapse, black neural wires stitch body and restart heart, revived cult leader, reality-reversal/time-memory authority duel, final authority severance. Same leader, not new boss.",
+      "currentPrimaryCoverage": "Single normal attack sheet cannot certify resurrection/authority-stage presentation. Additional body only if visibly different morphology chosen; wiring and recovery state/VFX may suffice.",
+      "referenceCandidates": [
+        {
+          "sourcePath": "assets/generated-v31224/actors-normalized/b96a428432e9_pride_hierophant_idle.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-v31224/actors-normalized/b96a428432e9_pride_hierophant_idle.webp",
+          "sha256": "54173f0c3a2e12a08a36b3099fff211981f58cc6db180ee3006392f6cf407071",
+          "expectedRuntimeSHA256": "54173f0c3a2e12a08a36b3099fff211981f58cc6db180ee3006392f6cf407071",
+          "matchesRuntimeHash": true,
+          "readable": true,
+          "dimensions": [
+            672,
+            384
+          ],
+          "mode": "RGBA",
+          "bytes": 47762
+        }
+      ],
+      "acceptableImplementation": "Current leader body + collapse/reassembly/revive cues + separate authority VFX and corresponding runtime stage transitions.",
+      "completionGate": "Do not mark complete until generated/reused assets and actual runtime presentation visibly satisfy this canonical requirement. Body rendering alone does not prove behavior."
+    },
+    {
+      "bossID": "l303-boss",
+      "formID": "mist-body-core-reveal",
+      "priority": 3,
+      "canonicalEvidence": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 543,
+        "endLine": 551,
+        "exactText": "[35 · last303] 한약과 불면귀\n\n안개 속에서 앳된 남자가 한약 한 잔을 내밀었다. 나는 냄새를 맡는 순간 귀비탕 계열의 안신 처방을 떠올렸다. 내 이름조차 흐렸지만 그런 지식은 몸에 남아 있었다. 약을 마시자 흐릿한 정신이 붙들렸고, 달려들던 주민들도 멈춰 섰다.\n\n검은 안개가 주민에게서 떨어져 나와 하나의 형체로 모였다. 불면귀였다. 그는 잠을 빼앗는 시선과 겹겹의 잔상으로 나를 압박하곤 했다. 눈을 감으면 기억부터 빼앗길 것 같은 공포가 들었다.\n\n나는 주민에게 칼을 돌리지 않았다. 그들이 잠들지 못해 느끼는 두려움과 불면귀의 명령은 같은 것이 아니었다. 주민들이 멈춘 자리에서 나와 불면귀의 싸움이 이어졌다. 마침내 드러난 핵을 향해 환도를 휘둘렀다.\n\n안개가 흩어지자 모든 시계가 동시에 멈췄다. 찢어진 공간 너머에서 검은 모래와 낯선 명령문이 쏟아졌다. 둘째나 셋째의 몽세에서 열린 길은 아니었다. 전혀 다른 세계의 시간이 이곳에 끼어들고 있었다."
+      },
+      "decision": "REQUIRED mist gathers from villagers, insomnia body/afterimages, exposed core; villagers are not interchangeable with demon.",
+      "currentPrimaryCoverage": "Can use existing body plus mist/core VFX; no mandatory second morphology.",
+      "referenceCandidates": [
+        {
+          "sourcePath": "assets/generated-v31224/actors-normalized/692e4ae01c29_bulmyeongwi_idle.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-v31224/actors-normalized/692e4ae01c29_bulmyeongwi_idle.webp",
+          "sha256": "ff0d79b66e10e980c649becad30601da69268ce75b3db2d51c791869a1b39cac",
+          "expectedRuntimeSHA256": "ff0d79b66e10e980c649becad30601da69268ce75b3db2d51c791869a1b39cac",
+          "matchesRuntimeHash": true,
+          "readable": true,
+          "dimensions": [
+            672,
+            384
+          ],
+          "mode": "RGBA",
+          "bytes": 25070
+        }
+      ],
+      "acceptableImplementation": "Body + mist transition, overlapping afterimages and exposed-core hit target cue.",
+      "completionGate": "Do not mark complete until generated/reused assets and actual runtime presentation visibly satisfy this canonical requirement. Body rendering alone does not prove behavior."
+    },
+    {
+      "bossID": "k103-boss",
+      "formID": "time-harvest-command-workshop-stages",
+      "priority": 3,
+      "canonicalEvidence": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 654,
+        "endLine": 678,
+        "exactText": "[46 · kair03] 세이렌 모르\n\n수문장들의 명령을 따라갈수록 세이렌이 무엇을 두려워하는지 알게 되었다. 그는 한때 카이로스 아카데미움 최고의 졸업생이었다. 인간을 미워해서가 아니라 인간의 실패와 고통을 너무 오래 보았기 때문에 자유를 믿지 않게 된 사람이었다.\n\n그에게 휴식은 타락으로 이어질 수 있는 틈이었고, 기억은 고통을 남기는 짐이었다. 자유는 길을 잃게 하는 원인이었다. 그는 사람에게서 그 모든 위험을 없애려 했다. 그 결과, 선택할 수 있는 사람의 자리도 함께 줄어들고 있었다.\n\n시간 수확\n\n오염된 코어에서 세이렌이 나타났다. 검은 모래가 전장을 잠식하고, 노이론 케이블과 시곗바늘이 내 움직임을 잘랐다. 그는 이 일을 강탈이 아니라 인간이 망친 시간을 회수하는 일로 여기고 있었다.\n\n나는 빼앗긴 시간 사이를 지나갔다. 망가졌다는 판단이 그 시간을 살아온 사람에게서 나온 것인지, 세이렌이 대신 내린 것인지 확인해야 했다. 그의 코어에 가까워질수록 남의 판단으로 버려진 시간이 더 많이 쌓여 있었다.\n\n최적화된 운명\n\n세이렌은 코어를 장악한 뒤 내 움직임까지 직접 명령했다. 언제 움직이고 멈출지, 어느 순간 공격하지 말아야 할지 정해졌다. 복종하면 당장은 안전했지만 전장은 점점 그의 뜻대로 고정되었다.\n\n나는 위험을 감수하고 명령 사이의 틈으로 들어갔다. 아르벨리아가 시간을 유예해 주었다. 아직 끝나지 않은 짧은 순간을 붙잡자, 다음 움직임을 내가 결정할 수 있었다.\n\n자유의지의 시간\n\n세이렌은 끝내 영원한 작업장을 완성했다. 검은 모래와 시곗바늘, 케이블과 생산 장치가 하나의 명령 아래 정렬되었다. 그 안에서는 누구도 길을 잃지 않을 것 같았다. 정해진 길 밖으로 나갈 수도 없었기 때문이었다.\n\n그때 시간 절단과 죽은 시간 개방, 시공간 압축, 최초명령이 온전히 각성했다. 나는 정해진 운명을 베고 공간을 접어, 내가 행동할 순간을 만들었다. 세이렌의 명령이 처음으로 흔들렸다.\n\n그가 두려워한 것은 인간이 자기 시간으로 스스로를 망치는 일이었다. 나도 그런 일이 없기를 바랐다. 그러나 그 두려움 때문에 모든 사람의 시간을 대신 살아 줄 수는 없었다. 실패하거나 멈추더라도 다시 고를 시간이 필요했다. 나는 그 시간을 남기기 위해 마지막까지 나아갔다."
+      },
+      "decision": "REQUIRED three escalating time-control stages; prose does not require three different monster species or bodies.",
+      "currentPrimaryCoverage": "One Siren body sufficient with differentiated black sand, clocks/cables, workshop authority patterns.",
+      "referenceCandidates": [
+        {
+          "sourcePath": "assets/generated-v31224/actors-normalized/b19d67bb1973_siren_idle.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-v31224/actors-normalized/b19d67bb1973_siren_idle.webp",
+          "sha256": "985137aa992b23610fe2cd11a0a5624bd49ef90b0d22a99896d7871072a0dcb0",
+          "expectedRuntimeSHA256": "985137aa992b23610fe2cd11a0a5624bd49ef90b0d22a99896d7871072a0dcb0",
+          "matchesRuntimeHash": true,
+          "readable": true,
+          "dimensions": [
+            672,
+            384
+          ],
+          "mode": "RGBA",
+          "bytes": 41204
+        }
+      ],
+      "acceptableImplementation": "Reuse one identity; stage VFX/environment and runtime control semantics.",
+      "completionGate": "Do not mark complete until generated/reused assets and actual runtime presentation visibly satisfy this canonical requirement. Body rendering alone does not prove behavior."
+    },
+    {
+      "bossID": "u203-boss",
+      "formID": "memory-door-possession",
+      "priority": 3,
+      "canonicalEvidence": {
+        "file": "/workspace/shared/HAPIL-lucifer-input-v1/narrative-20261026.read-copy.txt",
+        "startLine": 487,
+        "endLine": 497,
+        "exactText": "[29 · u203] 기억의 문\n\n통제자는 마지막 순간 기억의 문에 빙의했다. 아이의 상처와 나의 선의가 거대한 기계 괴물의 갑옷으로 얽혀 버렸다. 구하려는 마음마저 그를 지탱하고 있다는 사실을 보면서, 나는 더욱 강하게 공격하고 싶은 충동을 누를 수밖에 없었다.\n\n기억의 문을 부수지는 않았다. 반복을 명령하는 연결만을 겨누어 마지막 공격을 수행했다.\n그렇게 통제자가 소멸하자 첫째의 자아가 풀려났다. 그러나 나의 귀환 좌표와 기억도 함께 무너지기 시작했다.\n\n그 속에서 아이에게 남아 있는 마음을 느낄 수 있었다. 동생들을 찾아야 한다는 마음이었다. 그를 혼자 보내고 싶지는 않았다. \n돌아갈 좌표를 잃는 동안에도, 그 마음에 응답하려는 내 뜻만큼은 남아 있었다.\n\n"
+      },
+      "decision": "REQUIRED Controller possesses memory door, mechanical armor combines trauma and rescuer intent. Target repeating-command connection, not destroy memory itself.",
+      "currentPrimaryCoverage": "One Controller body plus door/connection assets sufficient if identifiable.",
+      "referenceCandidates": [
+        {
+          "sourcePath": "assets/generated-v31224/actors-normalized/c5859bd35492_controller_idle.webp",
+          "localPath": "/workspace/shared/StoryWorld-monster-motion-r7/inventory/r90-source/hospital-refinement-v12/hospital-three-pc/site/assets/generated-v31224/actors-normalized/c5859bd35492_controller_idle.webp",
+          "sha256": "57572d1817eb492873e20c771cb1a46f02acf7e2f8a9ddde84a46fdd893458ed",
+          "expectedRuntimeSHA256": "57572d1817eb492873e20c771cb1a46f02acf7e2f8a9ddde84a46fdd893458ed",
+          "matchesRuntimeHash": true,
+          "readable": true,
+          "dimensions": [
+            672,
+            384
+          ],
+          "mode": "RGBA",
+          "bytes": 38690
+        }
+      ],
+      "acceptableImplementation": "Source body+door fusion/circuit cut effect, not automatic extra palette form.",
+      "completionGate": "Do not mark complete until generated/reused assets and actual runtime presentation visibly satisfy this canonical requirement. Body rendering alone does not prove behavior."
+    }
+  ],
+  "approvedOverrideRecord": {
+    "id": "mb-ep1b06b",
+    "decision": "Parent reports canon snowbranch RC140-supported new candidate approved instead of gold-safe golem primary. Preserve that accepted override; do not revert based old normalized hash.",
+    "boundary": "Winter sentinel itself is runtime adaptation, not separately named prose boss; snow/forest identity anchored scene19, no claim prose explicitly names this sentinel."
+  },
+  "doNotRequire": [
+    "Every stale phaseName/palette or every old asset.",
+    "Generic demon finales for sins when latest prose specifies human/possessed forms.",
+    "Separate body images for phases that differ only attacks, authority, projection count or VFX.",
+    "Sixty-six invented named boss characters: preserve 48 ordinary +12 upper +6 great guardians according to existing runtime roles; their population coverage is implementation, not 66 invented identities."
+  ],
+  "completionGate": "Only claim all-storymode-boss-assets complete after each requiredForms row has mapped actual reviewed asset(s), canonical appearance evidence, and integration/readable stage checks, including blue-executor and Lucifer reveal. Asset generation is not deployment verification.",
+  "assetVerification": "No assets were generated, loaded, inspected or certified by this scope overlay; form requirements remain requirements, not completion claims.",
+  "routeOrderCorrections": {
+    "dist06": {
+      "combatOrderGroups": [
+        [
+          "mb-dist06"
+        ],
+        [
+          "dist06-boss"
+        ],
+        [
+          "mb-ep1a07"
+        ]
+      ],
+      "origin": "canonical-prose-derived runtime adaptation order; not an instruction in the required-forms addendum",
+      "sourceEvidence": [
+        {
+          "sourceRange": [
+            158,
+            162
+          ],
+          "exactText": "[06 · dist05] 일곱 기둥\n동료들마저 쓰러뜨리고\n소환진에 가까워질수록 일곱 기둥의 불빛이 짙어졌다. 안쪽에는 거대한 그림자가 있었지만, 불길에 가려 온전한 형체를 볼 수 없었다. 기둥에 남은 불씨와 땅을 가른 채찍 자국이 문지기의 위치를 알려 주고 있었다.\n\n나는 기둥을 지키는 악마들을 하나씩 쓰러뜨렸다. 마지막 사슬 앞에 섰을 때에도 천사의 목소리는 나를 안심시키고 있었다. 그 안도감 때문에 여기까지 올 수 있었다고 생각하곤 했었다."
+        },
+        {
+          "sourceRange": [
+            164,
+            170
+          ],
+          "exactText": "[07 · dist06] 추락\n마침내 궁전의 중심부 그곳!\n마지막 봉인 너머에서 발록이 모습을 드러냈다. 가까이서 마주하자, 그의 모습에 압도되었다.\n이내 전투가 펼쳐졌다.\n발록의 검이 공간을 갈랐고, 불덩이가 하늘을 뒤덮었다. 나는 무너진 기둥 뒤에서 숨을 고르고 겨우 싸우고 있었다. 그때 천사가 주던 따뜻함이 다시 찾아왔다. 그러자 소환진을 파괴하면 모든 고통이 끝날 것이라는 확신이 들었다.\n\n나는 불길 속으로 뛰어들어 발록의 가슴에 무기를 적중시켰다. 이어 소환진을 무기를 이용해 파괴하였다. 그러자 소환진이 파괴되며 바닥이 갈라졌다."
+        },
+        {
+          "sourceRange": [
+            171,
+            175
+          ],
+          "exactText": "하지만, 갈라진 것은 바닥만이 아니었다. 하늘 한가운데에 검은 소용돌이가 생기더니 돌벽과 시체, 무기와 기둥을 한꺼번에 집어삼키기 시작했다.\n\n나도 그 안으로 끌려 들어갔다. 거미동굴과 늪지대, 죽은 동료들과 발록의 모습이 차례로 부서졌다. 나는 내가 누구였는지 떠올리려 했지만, 남아 있던 기억마저 붙잡을 수 없었다.\n\n끝까지 사라지지 않은 것은 천사의 목소리였다. 내가 마지막 수호자이며 자신을 온전히 믿기만 하면 된다는 감각이 어둠 속에서도 따라왔다. 나는 그 목소리 하나만을 붙든 채 추락하게 되었다."
+        }
+      ],
+      "reason": "The pillar guardians are traversed before the last seal and Balrog. The protagonist strikes Balrog and destroys the summoning circle before the vortex consumes the remembered world. Runtime pillar and memory-devourer labels remain gameplay adaptations, not newly named canonical people.",
+      "sceneOutcomeTiming": "survive-and-fall occurs after all scene combats; the Balrog victory is not a forced-loss combat resolution"
+    }
+  }
+}

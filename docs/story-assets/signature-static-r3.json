@@ -1,0 +1,1314 @@
+{
+  "schema": "Hapil.story-signature-static-r3.v1",
+  "status": "VERIFIED_STATIC_DERIVATIVES_PENDING_GAME_INTEGRATION",
+  "source_guide_url": "https://drive.google.com/file/d/1HY6mNHMgSr7o9og9-gNPOvr7kt8i2HTd/view?usp=drivesdk",
+  "source_manifest_sha256": "f447b945259bf6f973dc2de1f1dbf90bf3a62bf82082ab295d962bd726e22552",
+  "source_counts": {
+    "new_static_drawings": 7,
+    "reused_static_drawings": 6,
+    "total_static_drawings": 13,
+    "published_size_derivatives": 39,
+    "animated_frames": 0
+  },
+  "verification": {
+    "archive_parts": [
+      {
+        "file": "HAPIL-signature-static-FX-01-of06.zip",
+        "drive_id": "16BfNWja9gvIL-FAuI2ulo74qsyM73mJ9",
+        "bytes": 2509928,
+        "sha256": "6a54237bd36b5bffeb31690159bfb5918b52d131bc3d6e9e920e7a6fba6e8430",
+        "zipCRC": "pass",
+        "entries": 3
+      },
+      {
+        "file": "HAPIL-signature-static-FX-02-of06.zip",
+        "drive_id": "1Okfr3UhB2gDRhUkQuvNpfGOEYxY1J4iC",
+        "bytes": 2418631,
+        "sha256": "9bdf7eec46560e6b6f32c47ca4c334f0fb5de8b27c373fa0add6184402ba4dd5",
+        "zipCRC": "pass",
+        "entries": 2
+      },
+      {
+        "file": "HAPIL-signature-static-FX-03-of06.zip",
+        "drive_id": "1hjpDZNP5JbyWqVGJjiYdYyEbrrm5YylC",
+        "bytes": 1736665,
+        "sha256": "b0c066f7992b7ae7d72a11bd3df4f0e15fbf7bd8ae9dd5e81088cb6ea775b210",
+        "zipCRC": "pass",
+        "entries": 1
+      },
+      {
+        "file": "HAPIL-signature-static-FX-04-of06.zip",
+        "drive_id": "10ZxVwkA3OaBbmClNj15SQo6igOTdAN-Y",
+        "bytes": 2112650,
+        "sha256": "e768d15a3abbc5c28f7cd29f4c0196e4618919e60177e616df7e4e3044c54e05",
+        "zipCRC": "pass",
+        "entries": 3
+      },
+      {
+        "file": "HAPIL-signature-static-FX-05-of06.zip",
+        "drive_id": "1FHc7A2Rbfk7hjiejecJf9qnT3W9fnv1A",
+        "bytes": 2798270,
+        "sha256": "33d0bc74a558c435b43d2b9da4b97247cda0086c38bcc3620a1165541fb13d1e",
+        "zipCRC": "pass",
+        "entries": 28
+      },
+      {
+        "file": "HAPIL-signature-static-FX-06-of06.zip",
+        "drive_id": "1KZqC2f8rWKfRT8F7gKJUoE_2k1DxtHTo",
+        "bytes": 329757,
+        "sha256": "cdd59422925ff7e8ff7732c4943fdcf04f45ca73cf229e26bdaddcd980792b7a",
+        "zipCRC": "pass",
+        "entries": 23
+      }
+    ],
+    "zip_total_bytes": 11905901,
+    "archive_crc_passed": 6,
+    "safe_unique_paths": 60,
+    "manifest_declared_files_sha_verified": 59,
+    "manifest_self_sha_verified": true,
+    "source_images_dimensions_alpha_and_sha_verified": 13,
+    "publisher_derivative_exact_rgba_reproductions": 39,
+    "runtime_files_sha_verified": 13
+  },
+  "runtime_summary": {
+    "asset_count": 13,
+    "decoded_rgba_bytes": 315392,
+    "encoded_bytes": 57049,
+    "cast_size_px": 96,
+    "core_art_size_px": 64,
+    "static_only": true,
+    "new_drawings_created_by_consumer": 0,
+    "new_animation_frames_created_by_consumer": 0
+  },
+  "mapping_basis": "Exact publisher boss and asset IDs only. This package supplies no R90 native boss-ID mapping and no new canonical named skills.",
+  "asset_keys_by_boss": {
+    "violet": [
+      "signatureVioletOrbCocoon",
+      "signatureVioletBladeSpindle",
+      "signatureVioletKnotCastV2Static"
+    ],
+    "horn": [
+      "signatureSwampOrbToxicseed",
+      "signatureSwampNeedleReedthorn",
+      "signatureHornSwampCastStatic"
+    ],
+    "balrog": [
+      "signatureBalrogOrbCinderheart",
+      "signatureBalrogBladeSlagfang",
+      "signatureBalrogFireCastStatic"
+    ],
+    "mask": [
+      "signatureMaskFeatherCoreStatic",
+      "signatureMaskFanCastStatic"
+    ],
+    "lucifer": [
+      "signatureLuciferOpalCoreStatic",
+      "signatureLuciferRingCastStatic"
+    ]
+  },
+  "assets": [
+    {
+      "key": "signatureVioletOrbCocoon",
+      "id": "violet_orb_cocoon",
+      "boss": "violet",
+      "publisher_role": "core-art-original",
+      "source_origin": "reused",
+      "source_file": "reused/violet_orb_cocoon.generated.png",
+      "source_sha256": "420a0127cdad015f8293e4417afb951f462751e03584d97316b5b8b27c363f4d",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "file": "media/story-signature/violet_orb_cocoon.png",
+      "sha256": "a1ffdec4096e607805fdcd03d3240b735d8a175b5a37d0a59e69fd3f826ea6f2",
+      "bytes": 6210,
+      "dimensions": [
+        64,
+        64
+      ],
+      "rgba_bytes": 16384,
+      "rgba_sha256": "245d5e2b18ef5afd5528441096aadca4fd4f964e58d4810d97a7f6e332f848f5",
+      "alpha_sha256": "d7cc3a6404ba0e21be0bf4a65bc81df05da9b88f476ef78a4015861b8ebb3170",
+      "publisher_derivative_file": "derived/violet_orb_cocoon-64.png",
+      "publisher_derivative_sha256": "a1ffdec4096e607805fdcd03d3240b735d8a175b5a37d0a59e69fd3f826ea6f2",
+      "publisher_derivative_bytes_unchanged": true,
+      "derivation": {
+        "source_canvas_cropped": false,
+        "source_rgba_repainted": false,
+        "alpha_threshold_used": false,
+        "uniform_scale": 0.044657097288676235,
+        "translation_px": [
+          4,
+          4
+        ],
+        "exact_rgba_reproduced": true
+      },
+      "frame_count": 1,
+      "animated_frames": 0,
+      "loop": false,
+      "proposed_anchor_px": [
+        32.0,
+        32.0
+      ],
+      "anchor_status": "canvas-center placement proposal, not a verified physical/contact/emitter pivot",
+      "authored_direction_radians": null,
+      "direction_status": "visual observation only; collision/flight orientation not certified",
+      "damage_geometry_status": "unverified original art; do not derive collision from raster alpha or use as sole hazard warning",
+      "cast_usage": "single static decoration with consumer-authored fade/motion only; not an authored continuous animation",
+      "game_integration_status": "pending",
+      "visual_review_caveat": "The violet knot is faint on light backgrounds, especially at 32px."
+    },
+    {
+      "key": "signatureVioletBladeSpindle",
+      "id": "violet_blade_spindle",
+      "boss": "violet",
+      "publisher_role": "core-art-original",
+      "source_origin": "reused",
+      "source_file": "reused/violet_blade_spindle.generated.png",
+      "source_sha256": "e663aa993a0d05c86f1acd942bdcec5b3c5ce37bc2f1107b3c9b559b3440d1ae",
+      "source_dimensions": [
+        1774,
+        887
+      ],
+      "file": "media/story-signature/violet_blade_spindle.png",
+      "sha256": "59f486a452a4502720c2217f6aced50b77c5fb244885a05e0e5170a769a02f23",
+      "bytes": 2410,
+      "dimensions": [
+        64,
+        64
+      ],
+      "rgba_bytes": 16384,
+      "rgba_sha256": "2c4cfe074877746c8b0d3008c732a7f43d9ecb07c965c201c289d9dd82fff3b5",
+      "alpha_sha256": "daa76005b3d0fc568d79e038ab9891415258a0804bdb53ed0e9fa5204808304c",
+      "publisher_derivative_file": "derived/violet_blade_spindle-64.png",
+      "publisher_derivative_sha256": "59f486a452a4502720c2217f6aced50b77c5fb244885a05e0e5170a769a02f23",
+      "publisher_derivative_bytes_unchanged": true,
+      "derivation": {
+        "source_canvas_cropped": false,
+        "source_rgba_repainted": false,
+        "alpha_threshold_used": false,
+        "uniform_scale": 0.03156708004509583,
+        "translation_px": [
+          4,
+          18
+        ],
+        "exact_rgba_reproduced": true
+      },
+      "frame_count": 1,
+      "animated_frames": 0,
+      "loop": false,
+      "proposed_anchor_px": [
+        32.0,
+        32.0
+      ],
+      "anchor_status": "canvas-center placement proposal, not a verified physical/contact/emitter pivot",
+      "authored_direction_radians": 0,
+      "direction_status": "visual observation only; collision/flight orientation not certified",
+      "damage_geometry_status": "unverified original art; do not derive collision from raster alpha or use as sole hazard warning",
+      "cast_usage": "single static decoration with consumer-authored fade/motion only; not an authored continuous animation",
+      "game_integration_status": "pending",
+      "visual_review_caveat": "The violet knot is faint on light backgrounds, especially at 32px."
+    },
+    {
+      "key": "signatureSwampOrbToxicseed",
+      "id": "swamp_orb_toxicseed",
+      "boss": "horn",
+      "publisher_role": "core-art-original",
+      "source_origin": "reused",
+      "source_file": "reused/swamp_orb_toxicseed.dimfix2.png",
+      "source_sha256": "26f2b0ec8bb3a239b436213efd10c51c6af839dfd3fb1e807a197ed99827b9b4",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "file": "media/story-signature/swamp_orb_toxicseed.png",
+      "sha256": "8c2e7a9ee57f53ffea5114c8359d1e921d8a3f49479c21be146793f7d6869c74",
+      "bytes": 6611,
+      "dimensions": [
+        64,
+        64
+      ],
+      "rgba_bytes": 16384,
+      "rgba_sha256": "70e63896aaea12de5da3fcedfe454add388d01b8565664774a6e565433bbcec7",
+      "alpha_sha256": "221c38ab93b2f870efdfc09c47c476710837da6a2a70c36466f8448604d9de12",
+      "publisher_derivative_file": "derived/swamp_orb_toxicseed-64.png",
+      "publisher_derivative_sha256": "8c2e7a9ee57f53ffea5114c8359d1e921d8a3f49479c21be146793f7d6869c74",
+      "publisher_derivative_bytes_unchanged": true,
+      "derivation": {
+        "source_canvas_cropped": false,
+        "source_rgba_repainted": false,
+        "alpha_threshold_used": false,
+        "uniform_scale": 0.044657097288676235,
+        "translation_px": [
+          4,
+          4
+        ],
+        "exact_rgba_reproduced": true
+      },
+      "frame_count": 1,
+      "animated_frames": 0,
+      "loop": false,
+      "proposed_anchor_px": [
+        32.0,
+        32.0
+      ],
+      "anchor_status": "canvas-center placement proposal, not a verified physical/contact/emitter pivot",
+      "authored_direction_radians": null,
+      "direction_status": "visual observation only; collision/flight orientation not certified",
+      "damage_geometry_status": "unverified original art; do not derive collision from raster alpha or use as sole hazard warning",
+      "cast_usage": "single static decoration with consumer-authored fade/motion only; not an authored continuous animation",
+      "game_integration_status": "pending",
+      "visual_review_caveat": "The swamp cast is faint on dark backgrounds, especially at 32px."
+    },
+    {
+      "key": "signatureSwampNeedleReedthorn",
+      "id": "swamp_needle_reedthorn",
+      "boss": "horn",
+      "publisher_role": "core-art-original",
+      "source_origin": "reused",
+      "source_file": "reused/swamp_needle_reedthorn.generated.png",
+      "source_sha256": "ae49d12d5f994c1f1a1cfd3efb3eb003c16e49d3fb9716c9744adae95b779ec1",
+      "source_dimensions": [
+        1774,
+        887
+      ],
+      "file": "media/story-signature/swamp_needle_reedthorn.png",
+      "sha256": "d6cdd0a26d587cb047f0b1d32a187c9b63be3b77fbdb3420df2bec82c58c1e35",
+      "bytes": 1783,
+      "dimensions": [
+        64,
+        64
+      ],
+      "rgba_bytes": 16384,
+      "rgba_sha256": "1fb4987aebce23eb8274806b72d8f9a1de2fd94d358d3d88262171e96bf32d9f",
+      "alpha_sha256": "328d7407a4ebeaa64250fdabb24cb1177c2d9d27ffeeb80d65aa33c2d9d0fce2",
+      "publisher_derivative_file": "derived/swamp_needle_reedthorn-64.png",
+      "publisher_derivative_sha256": "d6cdd0a26d587cb047f0b1d32a187c9b63be3b77fbdb3420df2bec82c58c1e35",
+      "publisher_derivative_bytes_unchanged": true,
+      "derivation": {
+        "source_canvas_cropped": false,
+        "source_rgba_repainted": false,
+        "alpha_threshold_used": false,
+        "uniform_scale": 0.03156708004509583,
+        "translation_px": [
+          4,
+          18
+        ],
+        "exact_rgba_reproduced": true
+      },
+      "frame_count": 1,
+      "animated_frames": 0,
+      "loop": false,
+      "proposed_anchor_px": [
+        32.0,
+        32.0
+      ],
+      "anchor_status": "canvas-center placement proposal, not a verified physical/contact/emitter pivot",
+      "authored_direction_radians": 0,
+      "direction_status": "visual observation only; collision/flight orientation not certified",
+      "damage_geometry_status": "unverified original art; do not derive collision from raster alpha or use as sole hazard warning",
+      "cast_usage": "single static decoration with consumer-authored fade/motion only; not an authored continuous animation",
+      "game_integration_status": "pending",
+      "visual_review_caveat": "The swamp cast is faint on dark backgrounds, especially at 32px."
+    },
+    {
+      "key": "signatureBalrogOrbCinderheart",
+      "id": "balrog_orb_cinderheart",
+      "boss": "balrog",
+      "publisher_role": "core-art-original",
+      "source_origin": "reused",
+      "source_file": "reused/balrog_orb_cinderheart.generated.png",
+      "source_sha256": "d2ecd4975d0ed9bf7a80ffc8df84dde0f86c106ae151e4db092d2cc9c57398b9",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "file": "media/story-signature/balrog_orb_cinderheart.png",
+      "sha256": "e5ca925649b4e63b567ee1dd44002ac6f733af6a3cdd1d231f19429e2d086788",
+      "bytes": 6047,
+      "dimensions": [
+        64,
+        64
+      ],
+      "rgba_bytes": 16384,
+      "rgba_sha256": "38c9fbf4b817c5ae358fd0726ff11a753d30b1bb1dd0764e72a95fefc5798610",
+      "alpha_sha256": "e6b7ae8d484cb09bde569ddda8ce6f1b10e9936b507c998aa941fef1fe459f8e",
+      "publisher_derivative_file": "derived/balrog_orb_cinderheart-64.png",
+      "publisher_derivative_sha256": "e5ca925649b4e63b567ee1dd44002ac6f733af6a3cdd1d231f19429e2d086788",
+      "publisher_derivative_bytes_unchanged": true,
+      "derivation": {
+        "source_canvas_cropped": false,
+        "source_rgba_repainted": false,
+        "alpha_threshold_used": false,
+        "uniform_scale": 0.044657097288676235,
+        "translation_px": [
+          4,
+          4
+        ],
+        "exact_rgba_reproduced": true
+      },
+      "frame_count": 1,
+      "animated_frames": 0,
+      "loop": false,
+      "proposed_anchor_px": [
+        32.0,
+        32.0
+      ],
+      "anchor_status": "canvas-center placement proposal, not a verified physical/contact/emitter pivot",
+      "authored_direction_radians": null,
+      "direction_status": "visual observation only; collision/flight orientation not certified",
+      "damage_geometry_status": "unverified original art; do not derive collision from raster alpha or use as sole hazard warning",
+      "cast_usage": "single static decoration with consumer-authored fade/motion only; not an authored continuous animation",
+      "game_integration_status": "pending",
+      "visual_review_caveat": "No contrast waiver: actual combat-screen contrast is still unverified."
+    },
+    {
+      "key": "signatureBalrogBladeSlagfang",
+      "id": "balrog_blade_slagfang",
+      "boss": "balrog",
+      "publisher_role": "core-art-original",
+      "source_origin": "reused",
+      "source_file": "reused/balrog_blade_slagfang.dimfix2.png",
+      "source_sha256": "e719329c0c21daa6c9f7be7fe1da189c57a7558c9752807c9c0596b49bd6dda9",
+      "source_dimensions": [
+        1774,
+        887
+      ],
+      "file": "media/story-signature/balrog_blade_slagfang.png",
+      "sha256": "a07ffa6f9220660802e957423013982f10005ced0b505edbe36d12a07de536e0",
+      "bytes": 2436,
+      "dimensions": [
+        64,
+        64
+      ],
+      "rgba_bytes": 16384,
+      "rgba_sha256": "fe5566d3d26815bf30c3c077cbc6871ad7a02befb2d5601df7cf6f554c300560",
+      "alpha_sha256": "27eb6caaa695ac1677448a9e15d638c5895b54e7feed78b2539c2001737da757",
+      "publisher_derivative_file": "derived/balrog_blade_slagfang-64.png",
+      "publisher_derivative_sha256": "a07ffa6f9220660802e957423013982f10005ced0b505edbe36d12a07de536e0",
+      "publisher_derivative_bytes_unchanged": true,
+      "derivation": {
+        "source_canvas_cropped": false,
+        "source_rgba_repainted": false,
+        "alpha_threshold_used": false,
+        "uniform_scale": 0.03156708004509583,
+        "translation_px": [
+          4,
+          18
+        ],
+        "exact_rgba_reproduced": true
+      },
+      "frame_count": 1,
+      "animated_frames": 0,
+      "loop": false,
+      "proposed_anchor_px": [
+        32.0,
+        32.0
+      ],
+      "anchor_status": "canvas-center placement proposal, not a verified physical/contact/emitter pivot",
+      "authored_direction_radians": 0,
+      "direction_status": "visual observation only; collision/flight orientation not certified",
+      "damage_geometry_status": "unverified original art; do not derive collision from raster alpha or use as sole hazard warning",
+      "cast_usage": "single static decoration with consumer-authored fade/motion only; not an authored continuous animation",
+      "game_integration_status": "pending",
+      "visual_review_caveat": "No contrast waiver: actual combat-screen contrast is still unverified."
+    },
+    {
+      "key": "signatureVioletKnotCastV2Static",
+      "id": "violet-knot-cast-v2-static",
+      "boss": "violet",
+      "publisher_role": "cast",
+      "source_origin": "new_static_in_publisher_pack",
+      "source_file": "raw/violet-knot-cast-v2-static.png",
+      "source_sha256": "7146115dd8afa454b5aba85dd479200ed4cd61d8df648ed094cc4f3fd9260288",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "file": "media/story-signature/violet-knot-cast-v2-static.png",
+      "sha256": "c72f96123e091473cd5761aef62fe0d2ced7d7d5ed39ff56476b9a7e126fced5",
+      "bytes": 4563,
+      "dimensions": [
+        96,
+        96
+      ],
+      "rgba_bytes": 36864,
+      "rgba_sha256": "964fa48b2a3ffdfc111aacddc41d906ce18bff8c1c474e64f3f1612c570a7c6f",
+      "alpha_sha256": "7637cd52ecdbcba54d9eeef86308d080a67cdea16e80872c5e7300d26a9a4208",
+      "publisher_derivative_file": "derived/violet-knot-cast-v2-static-96.png",
+      "publisher_derivative_sha256": "c72f96123e091473cd5761aef62fe0d2ced7d7d5ed39ff56476b9a7e126fced5",
+      "publisher_derivative_bytes_unchanged": true,
+      "derivation": {
+        "source_canvas_cropped": false,
+        "source_rgba_repainted": false,
+        "alpha_threshold_used": false,
+        "uniform_scale": 0.06698564593301436,
+        "translation_px": [
+          6,
+          6
+        ],
+        "exact_rgba_reproduced": true
+      },
+      "frame_count": 1,
+      "animated_frames": 0,
+      "loop": false,
+      "proposed_anchor_px": [
+        48.0,
+        48.0
+      ],
+      "anchor_status": "canvas-center placement proposal, not a verified physical/contact/emitter pivot",
+      "authored_direction_radians": null,
+      "direction_status": "visual observation only; collision/flight orientation not certified",
+      "damage_geometry_status": "unverified original art; do not derive collision from raster alpha or use as sole hazard warning",
+      "cast_usage": "single static decoration with consumer-authored fade/motion only; not an authored continuous animation",
+      "game_integration_status": "pending",
+      "visual_review_caveat": "The violet knot is faint on light backgrounds, especially at 32px."
+    },
+    {
+      "key": "signatureHornSwampCastStatic",
+      "id": "horn-swamp-cast-static",
+      "boss": "horn",
+      "publisher_role": "cast",
+      "source_origin": "new_static_in_publisher_pack",
+      "source_file": "raw/horn-swamp-cast-static.png",
+      "source_sha256": "4cc9d98e6c069be9b6b01e6e6cc1cae46e4d5f77bf64d3976a74ace4888fd35d",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "file": "media/story-signature/horn-swamp-cast-static.png",
+      "sha256": "a63d7814ed4a8c414c9ddbd4ccb2a083c31a8c6f94e9adcf7852e3e37358b50b",
+      "bytes": 5458,
+      "dimensions": [
+        96,
+        96
+      ],
+      "rgba_bytes": 36864,
+      "rgba_sha256": "39acbf08a33854f9c977a5e6de8bf77a690fb6c5b0ee09c78eb8f44138535008",
+      "alpha_sha256": "1a11b84b4b321748a37e85de8e874ebc1b29fe8edcb30606986ffe5106c868ac",
+      "publisher_derivative_file": "derived/horn-swamp-cast-static-96.png",
+      "publisher_derivative_sha256": "a63d7814ed4a8c414c9ddbd4ccb2a083c31a8c6f94e9adcf7852e3e37358b50b",
+      "publisher_derivative_bytes_unchanged": true,
+      "derivation": {
+        "source_canvas_cropped": false,
+        "source_rgba_repainted": false,
+        "alpha_threshold_used": false,
+        "uniform_scale": 0.06698564593301436,
+        "translation_px": [
+          6,
+          6
+        ],
+        "exact_rgba_reproduced": true
+      },
+      "frame_count": 1,
+      "animated_frames": 0,
+      "loop": false,
+      "proposed_anchor_px": [
+        48.0,
+        48.0
+      ],
+      "anchor_status": "canvas-center placement proposal, not a verified physical/contact/emitter pivot",
+      "authored_direction_radians": null,
+      "direction_status": "visual observation only; collision/flight orientation not certified",
+      "damage_geometry_status": "unverified original art; do not derive collision from raster alpha or use as sole hazard warning",
+      "cast_usage": "single static decoration with consumer-authored fade/motion only; not an authored continuous animation",
+      "game_integration_status": "pending",
+      "visual_review_caveat": "The swamp cast is faint on dark backgrounds, especially at 32px."
+    },
+    {
+      "key": "signatureBalrogFireCastStatic",
+      "id": "balrog-fire-cast-static",
+      "boss": "balrog",
+      "publisher_role": "cast",
+      "source_origin": "new_static_in_publisher_pack",
+      "source_file": "raw/balrog-fire-cast-static.png",
+      "source_sha256": "3ffa65df90e11c0efbada1f8f93949072f6cc96bf6eebd15a1ce6cb67aad792f",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "file": "media/story-signature/balrog-fire-cast-static.png",
+      "sha256": "cd57c83c262e07a13128b920e57e66d4ac2ace0a8ebf63fffc4890f5cb0fb38a",
+      "bytes": 7290,
+      "dimensions": [
+        96,
+        96
+      ],
+      "rgba_bytes": 36864,
+      "rgba_sha256": "7bcb3f22d0beb8d9d76ed373c78268c8c2821a16764b46a6d6e377d678ec2d09",
+      "alpha_sha256": "be872b7e1b1075dd9679f8a04c6eb72fd990756164ea891c272a766b0d393ca9",
+      "publisher_derivative_file": "derived/balrog-fire-cast-static-96.png",
+      "publisher_derivative_sha256": "cd57c83c262e07a13128b920e57e66d4ac2ace0a8ebf63fffc4890f5cb0fb38a",
+      "publisher_derivative_bytes_unchanged": true,
+      "derivation": {
+        "source_canvas_cropped": false,
+        "source_rgba_repainted": false,
+        "alpha_threshold_used": false,
+        "uniform_scale": 0.06698564593301436,
+        "translation_px": [
+          6,
+          6
+        ],
+        "exact_rgba_reproduced": true
+      },
+      "frame_count": 1,
+      "animated_frames": 0,
+      "loop": false,
+      "proposed_anchor_px": [
+        48.0,
+        48.0
+      ],
+      "anchor_status": "canvas-center placement proposal, not a verified physical/contact/emitter pivot",
+      "authored_direction_radians": null,
+      "direction_status": "visual observation only; collision/flight orientation not certified",
+      "damage_geometry_status": "unverified original art; do not derive collision from raster alpha or use as sole hazard warning",
+      "cast_usage": "single static decoration with consumer-authored fade/motion only; not an authored continuous animation",
+      "game_integration_status": "pending",
+      "visual_review_caveat": "No contrast waiver: actual combat-screen contrast is still unverified."
+    },
+    {
+      "key": "signatureMaskFeatherCoreStatic",
+      "id": "mask-feather-core-static",
+      "boss": "mask",
+      "publisher_role": "core-art-original",
+      "source_origin": "new_static_in_publisher_pack",
+      "source_file": "raw/mask-feather-core-static.png",
+      "source_sha256": "66e2ccd2fb41f30592ec74a92c2c60dab71234b75a7b235860c49ac203d9060f",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "file": "media/story-signature/mask-feather-core-static.png",
+      "sha256": "1a0fb6d41ae74248e1c102e89d1e32b6cbfb06f542b7f9f083d29bf1973e9dff",
+      "bytes": 1602,
+      "dimensions": [
+        64,
+        64
+      ],
+      "rgba_bytes": 16384,
+      "rgba_sha256": "d6963f1f08df2bd153816d34f6713a365e7cec868d0346ecc1dccc313a722e03",
+      "alpha_sha256": "e97f0a1054617b197e0d1aad536d817f7280b03577094fcbab248977086774e1",
+      "publisher_derivative_file": "derived/mask-feather-core-static-64.png",
+      "publisher_derivative_sha256": "1a0fb6d41ae74248e1c102e89d1e32b6cbfb06f542b7f9f083d29bf1973e9dff",
+      "publisher_derivative_bytes_unchanged": true,
+      "derivation": {
+        "source_canvas_cropped": false,
+        "source_rgba_repainted": false,
+        "alpha_threshold_used": false,
+        "uniform_scale": 0.044657097288676235,
+        "translation_px": [
+          4,
+          4
+        ],
+        "exact_rgba_reproduced": true
+      },
+      "frame_count": 1,
+      "animated_frames": 0,
+      "loop": false,
+      "proposed_anchor_px": [
+        32.0,
+        32.0
+      ],
+      "anchor_status": "canvas-center placement proposal, not a verified physical/contact/emitter pivot",
+      "authored_direction_radians": 1.5707963267948966,
+      "direction_status": "visual observation only; collision/flight orientation not certified",
+      "damage_geometry_status": "unverified original art; do not derive collision from raster alpha or use as sole hazard warning",
+      "cast_usage": "single static decoration with consumer-authored fade/motion only; not an authored continuous animation",
+      "game_integration_status": "pending",
+      "visual_review_caveat": "The ivory/red fan is faint on light backgrounds, especially at 32px."
+    },
+    {
+      "key": "signatureMaskFanCastStatic",
+      "id": "mask-fan-cast-static",
+      "boss": "mask",
+      "publisher_role": "cast",
+      "source_origin": "new_static_in_publisher_pack",
+      "source_file": "raw/mask-fan-cast-static.png",
+      "source_sha256": "fb674a8fda0c1985863bf18270edadeca30bee589b5e45c66df2fc3374d65a22",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "file": "media/story-signature/mask-fan-cast-static.png",
+      "sha256": "fbe38267c2dc0b3d3704947fc08646909d8fa6673cd8125295805d524a7e2eaa",
+      "bytes": 3461,
+      "dimensions": [
+        96,
+        96
+      ],
+      "rgba_bytes": 36864,
+      "rgba_sha256": "3be90b1d2d7d224c0679846a4207ffac2f6f48130acbdc763474418aceda6e39",
+      "alpha_sha256": "1cbb57482b97f3e142a5ce4e5b335124169465d66fae763517bfe3a4ff681977",
+      "publisher_derivative_file": "derived/mask-fan-cast-static-96.png",
+      "publisher_derivative_sha256": "fbe38267c2dc0b3d3704947fc08646909d8fa6673cd8125295805d524a7e2eaa",
+      "publisher_derivative_bytes_unchanged": true,
+      "derivation": {
+        "source_canvas_cropped": false,
+        "source_rgba_repainted": false,
+        "alpha_threshold_used": false,
+        "uniform_scale": 0.06698564593301436,
+        "translation_px": [
+          6,
+          6
+        ],
+        "exact_rgba_reproduced": true
+      },
+      "frame_count": 1,
+      "animated_frames": 0,
+      "loop": false,
+      "proposed_anchor_px": [
+        48.0,
+        48.0
+      ],
+      "anchor_status": "canvas-center placement proposal, not a verified physical/contact/emitter pivot",
+      "authored_direction_radians": null,
+      "direction_status": "visual observation only; collision/flight orientation not certified",
+      "damage_geometry_status": "unverified original art; do not derive collision from raster alpha or use as sole hazard warning",
+      "cast_usage": "single static decoration with consumer-authored fade/motion only; not an authored continuous animation",
+      "game_integration_status": "pending",
+      "visual_review_caveat": "The ivory/red fan is faint on light backgrounds, especially at 32px."
+    },
+    {
+      "key": "signatureLuciferOpalCoreStatic",
+      "id": "lucifer-opal-core-static",
+      "boss": "lucifer",
+      "publisher_role": "core-art-original",
+      "source_origin": "new_static_in_publisher_pack",
+      "source_file": "raw/lucifer-opal-core-static.png",
+      "source_sha256": "016d8e1c48c2089de5b77bcd5c525cc24cdf55d9f370b526f5ba0545a0478a0b",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "file": "media/story-signature/lucifer-opal-core-static.png",
+      "sha256": "fb028ff4cc8cbc050b4267141586e1a6fde371c5a32663c45f4e5c6e5277c5d9",
+      "bytes": 3208,
+      "dimensions": [
+        64,
+        64
+      ],
+      "rgba_bytes": 16384,
+      "rgba_sha256": "6e03bc71ef6391e5ca0f21a28b188f2673cec180abbb05c0181f7eceef8a5159",
+      "alpha_sha256": "519f2a612965a3cb1128d3dd01807acf1ff562727b3c92428325c4bf98460155",
+      "publisher_derivative_file": "derived/lucifer-opal-core-static-64.png",
+      "publisher_derivative_sha256": "fb028ff4cc8cbc050b4267141586e1a6fde371c5a32663c45f4e5c6e5277c5d9",
+      "publisher_derivative_bytes_unchanged": true,
+      "derivation": {
+        "source_canvas_cropped": false,
+        "source_rgba_repainted": false,
+        "alpha_threshold_used": false,
+        "uniform_scale": 0.044657097288676235,
+        "translation_px": [
+          4,
+          4
+        ],
+        "exact_rgba_reproduced": true
+      },
+      "frame_count": 1,
+      "animated_frames": 0,
+      "loop": false,
+      "proposed_anchor_px": [
+        32.0,
+        32.0
+      ],
+      "anchor_status": "canvas-center placement proposal, not a verified physical/contact/emitter pivot",
+      "authored_direction_radians": null,
+      "direction_status": "visual observation only; collision/flight orientation not certified",
+      "damage_geometry_status": "unverified original art; do not derive collision from raster alpha or use as sole hazard warning",
+      "cast_usage": "single static decoration with consumer-authored fade/motion only; not an authored continuous animation",
+      "game_integration_status": "pending",
+      "visual_review_caveat": "The ivory/blue ring is faint on light backgrounds, especially at 32px."
+    },
+    {
+      "key": "signatureLuciferRingCastStatic",
+      "id": "lucifer-ring-cast-static",
+      "boss": "lucifer",
+      "publisher_role": "cast",
+      "source_origin": "new_static_in_publisher_pack",
+      "source_file": "raw/lucifer-ring-cast-static.png",
+      "source_sha256": "ba90855a059fe2673a5da3a7c4b19925053f767d344b9288620f767a9d324704",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "file": "media/story-signature/lucifer-ring-cast-static.png",
+      "sha256": "e9106e21f663424bff962f59ef82700fb1af835a01799a450b4d585ed063bba9",
+      "bytes": 5970,
+      "dimensions": [
+        96,
+        96
+      ],
+      "rgba_bytes": 36864,
+      "rgba_sha256": "f438b78f6ee69db705c522d693d9d10e6d54883a88b227c97113570cfe0a8c28",
+      "alpha_sha256": "4f858fec593f4d09f1093c9e8686020ffdc70c0d1b6a71690f3f29c256a7d8ba",
+      "publisher_derivative_file": "derived/lucifer-ring-cast-static-96.png",
+      "publisher_derivative_sha256": "e9106e21f663424bff962f59ef82700fb1af835a01799a450b4d585ed063bba9",
+      "publisher_derivative_bytes_unchanged": true,
+      "derivation": {
+        "source_canvas_cropped": false,
+        "source_rgba_repainted": false,
+        "alpha_threshold_used": false,
+        "uniform_scale": 0.06698564593301436,
+        "translation_px": [
+          6,
+          6
+        ],
+        "exact_rgba_reproduced": true
+      },
+      "frame_count": 1,
+      "animated_frames": 0,
+      "loop": false,
+      "proposed_anchor_px": [
+        48.0,
+        48.0
+      ],
+      "anchor_status": "canvas-center placement proposal, not a verified physical/contact/emitter pivot",
+      "authored_direction_radians": null,
+      "direction_status": "visual observation only; collision/flight orientation not certified",
+      "damage_geometry_status": "unverified original art; do not derive collision from raster alpha or use as sole hazard warning",
+      "cast_usage": "single static decoration with consumer-authored fade/motion only; not an authored continuous animation",
+      "game_integration_status": "pending",
+      "visual_review_caveat": "The ivory/blue ring is faint on light backgrounds, especially at 32px."
+    }
+  ],
+  "source_image_checks": [
+    {
+      "id": "violet_orb_cocoon",
+      "sha256": "420a0127cdad015f8293e4417afb951f462751e03584d97316b5b8b27c363f4d",
+      "size": [
+        1254,
+        1254
+      ],
+      "rgba_sha256": "ef2a28079654a68464cb677c36e220ac5330afa6aceca3e2f3b6b8a00853e804",
+      "alpha_bbox": [
+        79,
+        71,
+        1184,
+        1214
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "violet_blade_spindle",
+      "sha256": "e663aa993a0d05c86f1acd942bdcec5b3c5ce37bc2f1107b3c9b559b3440d1ae",
+      "size": [
+        1774,
+        887
+      ],
+      "rgba_sha256": "ecc9357f2220dff6f0588f7dccd5b2cb8c218d06d1cd13e20992cd930dc43ac4",
+      "alpha_bbox": [
+        49,
+        37,
+        1728,
+        835
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "swamp_orb_toxicseed",
+      "sha256": "26f2b0ec8bb3a239b436213efd10c51c6af839dfd3fb1e807a197ed99827b9b4",
+      "size": [
+        1254,
+        1254
+      ],
+      "rgba_sha256": "068d4cf5b88615f0e588ec7f4ed91de61e634692afb5136c96730e3393eaec0f",
+      "alpha_bbox": [
+        0,
+        21,
+        1222,
+        1228
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "swamp_needle_reedthorn",
+      "sha256": "ae49d12d5f994c1f1a1cfd3efb3eb003c16e49d3fb9716c9744adae95b779ec1",
+      "size": [
+        1774,
+        887
+      ],
+      "rgba_sha256": "d8dacd45aed82d5ef40191d3cfc50d6f7ad85e0dd2424c80080e6499f8531ebe",
+      "alpha_bbox": [
+        25,
+        65,
+        1747,
+        815
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "balrog_orb_cinderheart",
+      "sha256": "d2ecd4975d0ed9bf7a80ffc8df84dde0f86c106ae151e4db092d2cc9c57398b9",
+      "size": [
+        1254,
+        1254
+      ],
+      "rgba_sha256": "859ce51733cc0fe801e51e04fc1b80fe8c106fbae1bf929261b489cd89689e59",
+      "alpha_bbox": [
+        0,
+        23,
+        1230,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "balrog_blade_slagfang",
+      "sha256": "e719329c0c21daa6c9f7be7fe1da189c57a7558c9752807c9c0596b49bd6dda9",
+      "size": [
+        1774,
+        887
+      ],
+      "rgba_sha256": "1a1c3b3dbd048ade54c3ad1a70876b375e16f2f0628bab00401add463f064c29",
+      "alpha_bbox": [
+        0,
+        45,
+        1734,
+        853
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "violet-knot-cast-v2-static",
+      "sha256": "7146115dd8afa454b5aba85dd479200ed4cd61d8df648ed094cc4f3fd9260288",
+      "size": [
+        1254,
+        1254
+      ],
+      "rgba_sha256": "c0ace38963fe38f977606ed7dec79539a53cace1e44a1e4b9a339e71c09ff458",
+      "alpha_bbox": [
+        33,
+        21,
+        1236,
+        1222
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "horn-swamp-cast-static",
+      "sha256": "4cc9d98e6c069be9b6b01e6e6cc1cae46e4d5f77bf64d3976a74ace4888fd35d",
+      "size": [
+        1254,
+        1254
+      ],
+      "rgba_sha256": "829ac1b1a442893d7c61a68678e1d15fc93b740457a8eb69817a9cee25a7048f",
+      "alpha_bbox": [
+        0,
+        21,
+        1232,
+        1213
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "balrog-fire-cast-static",
+      "sha256": "3ffa65df90e11c0efbada1f8f93949072f6cc96bf6eebd15a1ce6cb67aad792f",
+      "size": [
+        1254,
+        1254
+      ],
+      "rgba_sha256": "e1f79fffebe8d3e3184a4af2c78e7bbf83441106bea8633e065ce79b345781b3",
+      "alpha_bbox": [
+        0,
+        17,
+        1240,
+        1230
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "mask-feather-core-static",
+      "sha256": "66e2ccd2fb41f30592ec74a92c2c60dab71234b75a7b235860c49ac203d9060f",
+      "size": [
+        1254,
+        1254
+      ],
+      "rgba_sha256": "141206f5bb4a59e4267e519f9259dd5c666647db72c9310086969873c8be87cd",
+      "alpha_bbox": [
+        33,
+        51,
+        1232,
+        1228
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "mask-fan-cast-static",
+      "sha256": "fb674a8fda0c1985863bf18270edadeca30bee589b5e45c66df2fc3374d65a22",
+      "size": [
+        1254,
+        1254
+      ],
+      "rgba_sha256": "49cc36f2a4b3d5d8723acf419f5d29c1b6d5ff626ff5e7102bf7d26de50af645",
+      "alpha_bbox": [
+        55,
+        23,
+        1194,
+        1214
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "lucifer-opal-core-static",
+      "sha256": "016d8e1c48c2089de5b77bcd5c525cc24cdf55d9f370b526f5ba0545a0478a0b",
+      "size": [
+        1254,
+        1254
+      ],
+      "rgba_sha256": "c7ff8a36c39bcd0ec03090fe6651db35084b258f05eca82c368451c9e0474c08",
+      "alpha_bbox": [
+        0,
+        28,
+        1242,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "lucifer-ring-cast-static",
+      "sha256": "ba90855a059fe2673a5da3a7c4b19925053f767d344b9288620f767a9d324704",
+      "size": [
+        1254,
+        1254
+      ],
+      "rgba_sha256": "7a1cbd7481929aa55fe78c02d6fc83d7acd285a45b9c78c8f391412656a7a6ad",
+      "alpha_bbox": [
+        0,
+        28,
+        1238,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    }
+  ],
+  "publisher_variant_checks": [
+    {
+      "id": "violet_orb_cocoon",
+      "size": 32,
+      "file": "derived/violet_orb_cocoon-32.png",
+      "sha256": "c08d218950a06ab25ab99a3c5415961a143c5c3f5fe1aff852bb85717d4ad69c",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "violet_orb_cocoon",
+      "size": 64,
+      "file": "derived/violet_orb_cocoon-64.png",
+      "sha256": "a1ffdec4096e607805fdcd03d3240b735d8a175b5a37d0a59e69fd3f826ea6f2",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "violet_orb_cocoon",
+      "size": 96,
+      "file": "derived/violet_orb_cocoon-96.png",
+      "sha256": "9639bd2ca45fb185b2c56d4ae6543d5ec8b0122f572b75e2af277fe250bfd4a1",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "violet_blade_spindle",
+      "size": 32,
+      "file": "derived/violet_blade_spindle-32.png",
+      "sha256": "7dae17116506cf9256b47d2344b0bfd1c22f199bc173fceee9580f85de44a6d3",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "violet_blade_spindle",
+      "size": 64,
+      "file": "derived/violet_blade_spindle-64.png",
+      "sha256": "59f486a452a4502720c2217f6aced50b77c5fb244885a05e0e5170a769a02f23",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "violet_blade_spindle",
+      "size": 96,
+      "file": "derived/violet_blade_spindle-96.png",
+      "sha256": "00a5e2bd9cccc425efbef8910de4ff3a72aa846d00c1e1e01ac4c36668175bb4",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "swamp_orb_toxicseed",
+      "size": 32,
+      "file": "derived/swamp_orb_toxicseed-32.png",
+      "sha256": "8a2ad5df523d3fbab73ea1ec04739282b89dc9688ca9f4e7585a8fc47f22f49f",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "swamp_orb_toxicseed",
+      "size": 64,
+      "file": "derived/swamp_orb_toxicseed-64.png",
+      "sha256": "8c2e7a9ee57f53ffea5114c8359d1e921d8a3f49479c21be146793f7d6869c74",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "swamp_orb_toxicseed",
+      "size": 96,
+      "file": "derived/swamp_orb_toxicseed-96.png",
+      "sha256": "f7bea00abbac6fb6df085b17eea679fe8d69be122e8ea199e71f5018273d0495",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "swamp_needle_reedthorn",
+      "size": 32,
+      "file": "derived/swamp_needle_reedthorn-32.png",
+      "sha256": "93be7322f9657be3d7e84d6497c0057d0c28265b23f553b6b396eef5463e841a",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "swamp_needle_reedthorn",
+      "size": 64,
+      "file": "derived/swamp_needle_reedthorn-64.png",
+      "sha256": "d6cdd0a26d587cb047f0b1d32a187c9b63be3b77fbdb3420df2bec82c58c1e35",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "swamp_needle_reedthorn",
+      "size": 96,
+      "file": "derived/swamp_needle_reedthorn-96.png",
+      "sha256": "1bda9f07dc6d6424d4eee83113b283d51ed4362f7cdb4056de57d7447f1f1f82",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "balrog_orb_cinderheart",
+      "size": 32,
+      "file": "derived/balrog_orb_cinderheart-32.png",
+      "sha256": "38a314972c1f6dc1ddcf76e73a01e2283c3132a362172cdbe713f948a37ef847",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "balrog_orb_cinderheart",
+      "size": 64,
+      "file": "derived/balrog_orb_cinderheart-64.png",
+      "sha256": "e5ca925649b4e63b567ee1dd44002ac6f733af6a3cdd1d231f19429e2d086788",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "balrog_orb_cinderheart",
+      "size": 96,
+      "file": "derived/balrog_orb_cinderheart-96.png",
+      "sha256": "463be38e26d5e5e305509bad4edac2a09f276e3a5d1da818a136fad3d1a70e41",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "balrog_blade_slagfang",
+      "size": 32,
+      "file": "derived/balrog_blade_slagfang-32.png",
+      "sha256": "9ee0343d13d8492e1ceb4990c293f55090c6c2c6d4443793c3c1ed8c626e34c0",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "balrog_blade_slagfang",
+      "size": 64,
+      "file": "derived/balrog_blade_slagfang-64.png",
+      "sha256": "a07ffa6f9220660802e957423013982f10005ced0b505edbe36d12a07de536e0",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "balrog_blade_slagfang",
+      "size": 96,
+      "file": "derived/balrog_blade_slagfang-96.png",
+      "sha256": "a0dbffd6a97874c573ada038c61eb12caaa5057762b9d79e9fff44786c7af57d",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "violet-knot-cast-v2-static",
+      "size": 32,
+      "file": "derived/violet-knot-cast-v2-static-32.png",
+      "sha256": "99d81fd13ef4c9c7680daa4e787fd540c53d792f5c852a3f0371bb8a6ed46aae",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "violet-knot-cast-v2-static",
+      "size": 64,
+      "file": "derived/violet-knot-cast-v2-static-64.png",
+      "sha256": "0da61869cdb634fa7746167f7fd265f59c41ed8ca75d2ff97ac56760aaae3456",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "violet-knot-cast-v2-static",
+      "size": 96,
+      "file": "derived/violet-knot-cast-v2-static-96.png",
+      "sha256": "c72f96123e091473cd5761aef62fe0d2ced7d7d5ed39ff56476b9a7e126fced5",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "horn-swamp-cast-static",
+      "size": 32,
+      "file": "derived/horn-swamp-cast-static-32.png",
+      "sha256": "76089fdf97b2e6128f3b4867dc9811de22983c7bfebdc72b51dbe30e62b316a5",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "horn-swamp-cast-static",
+      "size": 64,
+      "file": "derived/horn-swamp-cast-static-64.png",
+      "sha256": "46a22bea74e4d5f8f41ed5e2b7e7de03357108ffb1483b884e54718469f16693",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "horn-swamp-cast-static",
+      "size": 96,
+      "file": "derived/horn-swamp-cast-static-96.png",
+      "sha256": "a63d7814ed4a8c414c9ddbd4ccb2a083c31a8c6f94e9adcf7852e3e37358b50b",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "balrog-fire-cast-static",
+      "size": 32,
+      "file": "derived/balrog-fire-cast-static-32.png",
+      "sha256": "b0bf7f0566519be81c6456e278f6035127f678977e1015bcce70b5c19c20ba6e",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "balrog-fire-cast-static",
+      "size": 64,
+      "file": "derived/balrog-fire-cast-static-64.png",
+      "sha256": "74861b1a0f15ced87b6e799d760376d41ad8e9c8c69b87102706b5849ff34783",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "balrog-fire-cast-static",
+      "size": 96,
+      "file": "derived/balrog-fire-cast-static-96.png",
+      "sha256": "cd57c83c262e07a13128b920e57e66d4ac2ace0a8ebf63fffc4890f5cb0fb38a",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "mask-feather-core-static",
+      "size": 32,
+      "file": "derived/mask-feather-core-static-32.png",
+      "sha256": "392a0b054aa1026004d3189b9b6512c2359796eb0508982ecf85e3a320b8bfbf",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "mask-feather-core-static",
+      "size": 64,
+      "file": "derived/mask-feather-core-static-64.png",
+      "sha256": "1a0fb6d41ae74248e1c102e89d1e32b6cbfb06f542b7f9f083d29bf1973e9dff",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "mask-feather-core-static",
+      "size": 96,
+      "file": "derived/mask-feather-core-static-96.png",
+      "sha256": "34052a7781f15b92f66aedcc62869635ce5d7586b096abd72d582cb458561f57",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "mask-fan-cast-static",
+      "size": 32,
+      "file": "derived/mask-fan-cast-static-32.png",
+      "sha256": "0f8e381387c0acca0960062ed45439dd17e066afa07e97866399d2ab2f577203",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "mask-fan-cast-static",
+      "size": 64,
+      "file": "derived/mask-fan-cast-static-64.png",
+      "sha256": "fce11385b01f7e89bf58d22704f02a43e14f49b09574deb669146c416c0ec974",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "mask-fan-cast-static",
+      "size": 96,
+      "file": "derived/mask-fan-cast-static-96.png",
+      "sha256": "fbe38267c2dc0b3d3704947fc08646909d8fa6673cd8125295805d524a7e2eaa",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "lucifer-opal-core-static",
+      "size": 32,
+      "file": "derived/lucifer-opal-core-static-32.png",
+      "sha256": "ad9a0df51c8cdf64747c8c39a4a5c270cb5cf9e7e73f43e4af7cd2f812954f9f",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "lucifer-opal-core-static",
+      "size": 64,
+      "file": "derived/lucifer-opal-core-static-64.png",
+      "sha256": "fb028ff4cc8cbc050b4267141586e1a6fde371c5a32663c45f4e5c6e5277c5d9",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "lucifer-opal-core-static",
+      "size": 96,
+      "file": "derived/lucifer-opal-core-static-96.png",
+      "sha256": "cc3835cc6d9dc2e7f5cd730b1328d1f6ee71189f018508d64caa4a89dfa402b5",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "lucifer-ring-cast-static",
+      "size": 32,
+      "file": "derived/lucifer-ring-cast-static-32.png",
+      "sha256": "ca4f54cda8de83cffb96c2e93987c8f754b0d3746d7d863b1f9a4b46e24b336a",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "lucifer-ring-cast-static",
+      "size": 64,
+      "file": "derived/lucifer-ring-cast-static-64.png",
+      "sha256": "3133cc80034931ea6b968906fe5921889f806e4e16f7772eeb3bda9ac38ee1f7",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    },
+    {
+      "id": "lucifer-ring-cast-static",
+      "size": 96,
+      "file": "derived/lucifer-ring-cast-static-96.png",
+      "sha256": "e9106e21f663424bff962f59ef82700fb1af835a01799a450b4d585ed063bba9",
+      "rgba_exact_to_declared_full_canvas_derivation": true
+    }
+  ],
+  "source_review": {
+    "readme_sha256": "0583ab7068865bd160595f43ab5657205fc5bc8ed4157148dc331bd1febfbe13",
+    "selected_manifest_sha256": "f2ecc1429b38ab62cf898d8e684fd65c8eb0ea168dba402b1074135b63874e1c",
+    "independent_review_sha256": "a9384d529e17d57b9264206658c74f413ea6a3a4f08783f8dffd8a06e5a17f26",
+    "source_visual_review": "All 13 selected source drawings and both provided dark/light 32/64/96px contact sheets inspected. Static families distinguish cocoon/crystal, swamp seed/reed, lava, ivory/red feather and ivory-opal/blue-gold ring. Contrast caveats retained.",
+    "actual_game_execution_verified": false,
+    "actual_browser_gpu_verified": false,
+    "physical_mobile_verified": false
+  },
+  "integration_constraints": [
+    "Cast images are decoration only and must never become the sole damaging attack or laser-warning indicator.",
+    "Keep authoritative circle/capsule/beam damage, committed warning geometry and timing independent from image alpha.",
+    "Source originals have not been certified as normalized danger-body assets.",
+    "Any static fade/translation/rotation is consumer motion, not publisher-authored continuous animation.",
+    "Actual emission/contact pivots, collision silhouette, screen overlap/contrast and game/GPU/mobile tests remain pending."
+  ]
+}
