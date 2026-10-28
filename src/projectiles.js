@@ -75,11 +75,12 @@
     function drawBossCast(ctx,world){
       if(!world||!world.campaign||!world.boss||world.stage!=='boss')return;
       var b=world.boss,action=b.action,progress=clamp(b.actionProgress||0,0,1);
-      if(action!=='charge'&&action!=='attack')return;
+      var releaseAge=Number.isFinite(b.releaseTick)&&b.releaseTick>=0?world.tick-b.releaseTick:Infinity;
+      if(action!=='charge'&&!(releaseAge>=0&&releaseAge<60))return;
       var s=world.bossIndex===2?SPECS.ember:world.bossIndex===1?SPECS.ripple:SPECS.web;
       // A single authored sequence per action, never a looping explosion or
       // a wall-clock animation. An exhausted cast disappears during attack.
-      var elapsed=progress*(action==='charge'?900:2600);
+      var elapsed=action==='charge'?progress*900:releaseAge*1000/60;
       if(oneShot(ctx,s,elapsed,b.x,Math.max(96,b.y+38),72,action==='charge'?.34:.63))metrics.bossCastDraws++;
     }
     function drawHazardDecoration(ctx,world,h){
@@ -205,11 +206,12 @@
     function drawBossCast(ctx,w,lowQuality){
       if(!w||!w.campaign||!w.boss||w.stage!=='boss')return;
       var b=w.boss,progress=clamp(b.actionProgress||0,0,1),wi=indexFor(w),names=FAMILIES[wi];
-      if(b.action!=='charge'&&b.action!=='attack')return;
+      var releaseAge=Number.isFinite(b.releaseTick)&&b.releaseTick>=0?w.tick-b.releaseTick:Infinity;
+      if(b.action!=='charge'&&!(releaseAge>=0&&releaseAge<60))return;
       var name=b.action==='charge'?names[0]:wi===4&&w.phase===2?'unlock':names[1];
       var s=FX[name];
       if(!ready(images[s.key],s)){legacy.drawBossCast(ctx,w);return;}
-      var elapsed=progress*(b.action==='charge'?900:2600);
+      var elapsed=b.action==='charge'?progress*900:releaseAge*1000/60;
       if(oneShot(ctx,s,elapsed,b.x,Math.max(88,b.y+24),lowQuality?60:72,b.action==='charge'?.48:.7)){metrics.compactCastDraws++;metrics.compactFamilies[s.key]=(metrics.compactFamilies[s.key]||0)+1;}
     }
     function drawHazardDecoration(ctx,w,h,lowQuality){

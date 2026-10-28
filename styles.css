@@ -27,3 +27,14 @@
 @media(max-width:820px){.title-heading .overline{letter-spacing:2px}.title-control-hint{font-size:7px}.edition{font-size:6px;letter-spacing:.8px}.title-menu{padding-top:0}}
 
 .skill-seal.atlas-emblem{background-size:200% 200%;background-repeat:no-repeat;border-color:#b5a17a22;filter:saturate(.65);width:28px;height:28px}.skill-entry[data-state="active"] .atlas-emblem{filter:saturate(1);background-color:#23362d}@media(max-width:1050px) and (min-width:821px){.skill-seal.atlas-emblem{width:25px;height:25px}}
+
+/* Mobile: avoid full-screen fixed gradients, shadow layers, and backdrop blur
+   around an animated canvas. Keep overlay contrast and all gameplay cues. */
+@media (max-width: 800px), (pointer: coarse) {
+  .ambient { display: none; }
+  .arena-frame { box-shadow: none; }
+  .arena-frame::after { display: none; }
+  .dim-screen { background: rgba(8, 10, 18, .94); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .modal-backdrop { background: rgba(5, 7, 13, .96); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .settings-card { box-shadow: none; }
+}

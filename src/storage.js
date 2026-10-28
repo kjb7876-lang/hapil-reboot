@@ -216,7 +216,7 @@
   function createStore(env) {
     env = env || {};
     var status = { persistent: false, message: '저장소 확인 중' };
-    var db = null, opening = null, memory = emptyState(), expectedRevision = 0, initialized = false;
+    var db = null, opening = null, memory = emptyState(), expectedRevision = 0, initialized = false, persistenceLost = false, hasStoredState = false;
     var queue = Promise.resolve();
     function enqueue(fn) {
       var next = queue.then(fn, fn);
@@ -252,7 +252,7 @@
           request.onsuccess = function () {
             if (settled) { try { request.result.close(); } catch (_) {} return; }
             db = request.result;
-            db.onversionchange = function () { memoryMode('저장소 버전 변경'); };
+            db.onversionchange = function () { persistenceLost = true; memoryMode('저장소 버전 변경 · 새로 열어주세요'); };
             persistentStatus();
             finish(true);
           };
@@ -268,7 +268,7 @@
           transaction = db.transaction(STORE_NAME, 'readonly');
           timer = setTimeout(function () { try { transaction.abort(); } catch (_) {} fail(); }, 1800);
           var request = transaction.objectStore(STORE_NAME).get(STATE_KEY);
-          request.onsuccess = function () { value = normalizeState(request.result); };
+          request.onsuccess = function () { hasStoredState = request.result !== undefined; value = normalizeState(request.result); };
           transaction.oncomplete = function () { if (timer) clearTimeout(timer); resolve(value || emptyState()); };
           transaction.onabort = transaction.onerror = fail;
         } catch (_) { fail(); }
@@ -278,7 +278,7 @@
       await openDatabase();
       if (db) {
         try { memory = await readDatabase(); }
-        catch (_) { memoryMode('저장소 읽기 실패'); }
+        catch (_) { persistenceLost = true; memoryMode('저장소 읽기 실패 · 새로 열어주세요'); }
       }
       if (refresh) {
         expectedRevision = memory.revision;
@@ -310,17 +310,18 @@
     function mutation(action) {
       return enqueue(async function () {
         await openDatabase();
+        if (persistenceLost) return { ok: false, persistent: false, reason: 'storage-error' };
         var update;
         if (db) {
           try { update = await writeDatabase(action); }
-          catch (_) { memoryMode('저장소 쓰기 실패'); }
+          catch (_) { persistenceLost = true; memoryMode('저장소 쓰기 실패 · 새로 열어주세요'); return { ok: false, persistent: false, reason: 'storage-error' }; }
         }
         if (!update) update = reduce(memory, action, expectedRevision);
         // A rejected stale write must not refresh this writer's revision. Only
         // load() explicitly adopts another tab's state and allows new writes.
         if (update.result.reason !== 'conflict') {
           memory = clone(update.state);
-          if (update.changed) expectedRevision = memory.revision;
+          if (update.changed) { expectedRevision = memory.revision; hasStoredState = true; }
         }
         if (update.result.reason === 'conflict') status.message = '다른 창의 저장이 감지되었습니다 · 새로 열어 최신 기록을 불러오세요';
         return Object.assign({}, update.result, { persistent: status.persistent });
@@ -330,7 +331,7 @@
     var api = {
       status: status,
       open: function () { return enqueue(async function () { if (!initialized) await readCurrent(true); return { ok: true, persistent: status.persistent, message: status.message }; }); },
-      load: function () { return enqueue(async function () { var state = await readCurrent(true); return { settings: state.settings, profile: state.profile, checkpoint: state.checkpoint, persistent: status.persistent }; }); },
+      load: function () { return enqueue(async function () { var state = await readCurrent(true); return { settings: state.settings, profile: state.profile, checkpoint: state.checkpoint, persistent: status.persistent, hasStoredState: hasStoredState }; }); },
       saveSettings: function (settings) {
         try { if (!object(settings)) return invalid('invalid-settings'); return mutation({ type: 'settings', value: settingsPatch(settings) }); }
         catch (_) { return invalid('invalid-settings'); }

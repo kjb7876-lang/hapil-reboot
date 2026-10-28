@@ -44,7 +44,7 @@
     var b = { id: id, x: 180, y: 116, px: 180, py: 116, hp: hp, maxHp: hp, phase: phase, opacity: 1, r: 29, isBoss: true };
     if (w.campaign) {
       var info = encounter(w);
-      Object.assign(b, { kind: info.id, name: info.name, artKey: info.artKey, action: 'move', actionProgress: 0, lean: 0 });
+      Object.assign(b, { kind: info.id, name: info.name, artKey: info.artKey, action: 'move', actionProgress: 0, lean: 0, releaseTick: -1 });
     }
     return b;
   }
@@ -119,6 +119,9 @@
         added.accelerateAt = s.accelerateAt || 0.65;
       }
     }
+    // Presentation follows actual successful emission, including deferred
+    // groups; this marker does not alter projectile or damage simulation.
+    if (specs.length && w.campaign && w.stage === 'boss' && w.boss && specs.some(function(s) { return s.ownerId === w.boss.id; })) w.boss.releaseTick = w.tick;
     return true;
   }
   function fanSpecs(x, y, angle, count, spread, speed, kind, color, ownerId) {
@@ -134,12 +137,19 @@
     specs.forEach(function (s) {
       // One committed capsule is rendered throughout warning, active and fade.
       // No projectile is substituted and its aim never follows either actor.
-      acquire(w, 'hazards', { id: ++w.idCounter, castId: castId, ownerId: s.ownerId || 0, kind: 'laser', x1: s.x, y1: s.y,
+      var hazard = acquire(w, 'hazards', { id: ++w.idCounter, castId: castId, ownerId: s.ownerId || 0, kind: 'laser', x1: s.x, y1: s.y,
         x2: s.x + Math.cos(s.angle) * 680, y2: s.y + Math.sin(s.angle) * 680,
         width: s.width || (s.kind === 'blade' ? 8 : 6), color: s.color || '#d1aaff',
         phase: 'warning', progress: 0, born: w.tick, warningTicks: warningTicks, activeTicks: activeTicks, fadeTicks: fadeTicks,
         activeAt: w.tick + warningTicks, fadeAt: w.tick + warningTicks + activeTicks,
         expireAt: w.tick + warningTicks + activeTicks + fadeTicks, grazed: false, name: name });
+      // The spatial-horror text directs attention to Balrog's traces on the
+      // floor before its moving shadow. This labels the existing committed
+      // laser warning only; geometry, timing, damage and bullet count do not change.
+      if (hazard && w.campaign && w.bossIndex === 2) {
+        hazard.telegraphKind = 'floor-scar';
+        hazard.telegraphHint = '검빛이 켜지기 전, 바닥의 흔적을 읽으세요';
+      }
     });
     return true;
   }
@@ -544,6 +554,7 @@
     for (var i = w.hazards.length - 1; i >= 0; i--) {
       var h = w.hazards[i];
       if (w.tick >= h.expireAt) { remove(w, 'hazards', i); continue; }
+      if (w.tick === h.activeAt && w.campaign && w.stage === 'boss' && w.boss && h.ownerId === w.boss.id) w.boss.releaseTick = w.tick;
       if (w.tick < h.activeAt) { h.phase = 'warning'; h.progress = clamp((w.tick - h.born) / h.warningTicks, 0, 1); }
       else if (w.tick < h.fadeAt) { h.phase = 'active'; h.progress = clamp((w.tick - h.activeAt) / h.activeTicks, 0, 1); }
       else { h.phase = 'fade'; h.progress = clamp((w.tick - h.fadeAt) / h.fadeTicks, 0, 1); }
@@ -597,10 +608,25 @@
       }
       b.x += b.vx * FIXED_DT; b.y += b.vy * FIXED_DT; b.age += FIXED_DT;
       if (w.stage !== 'won' && w.stage !== 'lost' && w.stage !== 'bossIntro') {
-        var d2 = projectileDistanceSquared(b, px, py, p.x, p.y);
-        if (d2 <= sq(p.r + b.r)) { w.stats.collisions++; hurt(w); remove(w, 'bullets', i); continue; }
-        if (!b.grazed && w.tick >= p.invulnerableUntil && d2 <= sq(13 + b.r)) {
-          b.grazed = true; w.graze++; w.score += 15; w._lastGraze = w.tick; gainResonance(w, 3, true); effect(w, p.x, p.y, 'graze', 8, '#a5ffee', 0.22);
+        // Conservative swept AABB: the projectile's half-length and the larger
+        // of hit/graze radii enclose its entire capsule. Far-away bullets need
+        // no segment-distance/trigonometry work; near bullets use the exact
+        // original continuous collision and graze calculation unchanged.
+        var halfLength = b.halfLength || 0;
+        var reach = halfLength + Math.max(p.r, 13) + b.r;
+        var x0 = b.px - px, x1 = b.x - p.x, y0 = b.py - py, y1 = b.y - p.y;
+        // Include a floating-point safety margin so rounding at the graze
+        // boundary always falls back to the original exact calculation.
+        // Invalid geometry also takes the original path, never the shortcut.
+        var valid = p.r >= 0 && b.r >= 0 && halfLength >= 0 && finite(reach);
+        var margin = valid ? 1e-9 * (1 + reach + Math.max(Math.abs(x0), Math.abs(x1), Math.abs(y0), Math.abs(y1))) : 0;
+        var far = valid && (Math.min(x0, x1) > reach + margin || Math.max(x0, x1) < -reach - margin || Math.min(y0, y1) > reach + margin || Math.max(y0, y1) < -reach - margin);
+        if (!far) {
+          var d2 = projectileDistanceSquared(b, px, py, p.x, p.y);
+          if (d2 <= sq(p.r + b.r)) { w.stats.collisions++; hurt(w); remove(w, 'bullets', i); continue; }
+          if (!b.grazed && w.tick >= p.invulnerableUntil && d2 <= sq(13 + b.r)) {
+            b.grazed = true; w.graze++; w.score += 15; w._lastGraze = w.tick; gainResonance(w, 3, true); effect(w, p.x, p.y, 'graze', 8, '#a5ffee', 0.22);
+          }
         }
       }
       if (b.age >= b.ttl || b.x < -38 || b.x > W + 38 || b.y < -38 || b.y > H + 38 || (w.stage === 'won' && w.stageTime > 0.35)) remove(w, 'bullets', i);

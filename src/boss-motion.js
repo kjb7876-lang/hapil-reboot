@@ -6,22 +6,18 @@
   function finite(n,f){return Number.isFinite(n)?n:f;}
   function mix(a,b,t){return a+(b-a)*t;}
   function smooth(t){t=clamp(t,0,1);return t*t*(3-2*t);}
-  function period(world){return [[.6,1.2,.6],[1,.8,1],[.9,.8,1],[.7,1.1,.8],[.5,.8,.9]][clamp(world.bossIndex||0,0,4)][clamp(world.phase||0,0,2)];}
-  function attackSample(seconds,span){
-    var t=((seconds%span)+span)%span;
-    if(t<.055)return {from:0,to:1,blend:smooth(t/.055)};
-    if(t<.14)return {from:1,to:1,blend:1};
-    if(t<.20)return {from:1,to:2,blend:smooth((t-.14)/.06)};
-    if(t<.29)return {from:2,to:2,blend:1};
-    if(t<.36)return {from:2,to:3,blend:smooth((t-.29)/.07)};
-    if(t<span-.09)return {from:3,to:3,blend:1};
-    return {from:3,to:0,blend:smooth((t-(span-.09))/.09)};
-  }
   function sample(world,b){
     var p=clamp(finite(b.actionProgress,0),0,1),action=b.action||'recover';
+    // A release marker is set only when a projectile actually spawns or an
+    // announced beam becomes active. Keep the strike visible for six 60 Hz
+    // ticks, then dissolve through the authored follow and recovery poses.
+    var age=finite(b.releaseTick,-1)>=0?finite(world.tick,0)-b.releaseTick:Infinity;
+    if(age>=0&&age<6)return {from:1,to:1,blend:1};
+    if(age>=6&&age<10)return {from:1,to:2,blend:smooth((age-6)/4)};
+    if(age>=10&&age<16)return {from:2,to:2,blend:1};
+    if(age>=16&&age<21)return {from:2,to:3,blend:smooth((age-16)/5)};
     if(action==='charge')return {from:3,to:0,blend:smooth(p*.9/.14)};
-    if(action==='attack')return attackSample(p*2.6,period(world));
-    if(action==='recover'&&p<.1){var end=attackSample(2.6-1/60,period(world));return {from:end.to,to:3,blend:smooth(p*1.6/.13)};}
+    if(action==='attack')return {from:0,to:0,blend:1};
     return {from:3,to:3,blend:1};
   }
   function create(images){

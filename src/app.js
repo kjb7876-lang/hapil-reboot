@@ -4,9 +4,9 @@
   var mobileRuntime=global.matchMedia?global.matchMedia('(pointer: coarse)').matches:Math.min(global.innerWidth||999,global.innerHeight||999)<600;
   var defaults={music:true,sfx:true,quality:mobileRuntime?'low':'high',skillRotation:true,difficulty:'normal',sensitivity:1};
   var settings=Object.assign({},defaults),profile={},savedCheckpoint=null,world=null,renderer=null,images={};
-  var mode='title',ready=false,booting=true,lastStamp=0,accumulator=0,lastRender=0,lastHud=0,visualTime=0,checkpointSerial=-1,completed=false;
+  var mode='title',ready=false,booting=true,lastStamp=0,accumulator=0,lastRender=0,lastHud=0,visualTime=0,checkpointSerial=-1,completed=false,checkpointPending=null,checkpointRetryAt=0;
   var keys=Object.create(null),pointer={active:false,id:null,lastX:0,lastY:0,pendingX:0,pendingY:0,lastMove:0},inputSource='keyboard',raf=0;
-  var samples={update:[],render:[],frame:[]},totalFrames=0,totalSteps=0,droppedGaps=0,peakUpdate=0,peakRender=0,peakFrame=0,lastGapReason='',maxSamples=360;
+  var samples={update:[],render:[],frame:[]},sampleCursor={update:0,render:0,frame:0},totalFrames=0,totalSteps=0,droppedGaps=0,peakUpdate=0,peakRender=0,peakFrame=0,lastGapReason='',maxSamples=360;
   var audio={unlocked:false,music:null,shot:[],hurt:[],shotIndex:0,hurtIndex:0,lastShot:0},toastTimer=0,settingsWasPlaying=false,settingsFocus=null;
   var core=null,store=null,lastProfileRefresh=0,assetErrors=[];
   var encounterArtPending=false,encounterArtGroup=-1,artLoadJob=null,artLoadGeneration=0;
@@ -15,31 +15,34 @@
   var seenBossIntros=Object.create(null),skipIntroForRun=false;
   // Presentation summaries of the supplied first-volume route. No new story
   // events, battle logic or save fields are introduced by this ledger.
+  // Spatial cues adapted from the supplied 2026-10-28 sensory narrative.
+  // These 13 gameplay sections are a first-volume adaptation, not 13 canonical scenes.
   var routeNotes=[
-    {title:'숲의 진입로',text:'검은 나무 너머로 무너진 궁전의 정원이 모습을 드러냅니다.'},
-    {title:'악마화 나무의 정원',text:'날개까지 감은 뿌리. 이름을 잃은 천사 곁에서 동굴로 향하는 길이 열립니다.'},
-    {title:'거미동굴',text:'뼈로 짠 거미줄 사이에서, 흰 날개와 여덟 다리의 그림자가 기다립니다.'},
-    {title:'늪지대의 기억',text:'검은 물에서 익숙한 얼굴들이 떠오릅니다. 붙잡는 손 너머로 북쪽을 향합니다.'},
-    {title:'무너진 성',text:'끊어진 봉인 사슬과 검은 재. 성 안쪽의 불길에 거대한 형상이 어른거립니다.'},
-    {title:'시체들이 되살아난 밤',text:'불타는 성의 묘지에서, 함께했던 동료들을 적의 모습으로 다시 마주합니다.'},
-    {title:'일곱 기둥',text:'소환진을 감싼 일곱 기둥. 문지기들을 지나 마지막 사슬 앞에 섭니다.'},
-    {title:'추락 · 병원 복도',text:'소환진 너머로 추락한 뒤 눈을 뜬 병원. 낯선 복도에서 두려움이 환각의 형상을 얻습니다.'},
-    {title:'주사실의 봉인 기억',text:'주사실에서 되돌아오는 기억. 자신이 풀어버린 봉인과 웃는 초천사의 그림자가 겹칩니다.'},
-    {title:'환자와 중독의 도시',text:'반복되는 갈망과 환자들의 행렬. 완벽해져야 한다는 속삭임 너머로 길을 찾습니다.'},
-    {title:'부정의 행렬',text:'나를 지키던 가면이 나를 가둡니다. 부정의 잔영 사이에서 자신의 목소리를 찾습니다.'},
-    {title:'오만의 흰 가면',text:'도움을 청하는 것은 부끄러움이 아닙니다. 흰 날개 뒤에서 수많은 얼굴이 모습을 드러냅니다.'},
-    {title:'도움을 청하는 문',text:'가면 안의 우주가 열립니다. 완벽함을 강요하는 루시퍼와 마주하고 J의 인장을 기억합니다.'}
+    {title:'궁전 회랑',text:'창에는 얼굴 없는 성상이 비칩니다. 나뭇잎은 고요한데, 뿌리 아래 끼인 날개만 떨립니다.',cue:'멈춘 잎 아래, 떨리는 날개'},
+    {title:'악마화 나무의 정원',text:'발등까지 온 뿌리를 피해 나아갑니다. 뿌리를 베어도 기억은 돌아오지 않습니다.',cue:'뿌리 아래로 이어지는 길'},
+    {title:'뼈의 거미동굴',text:'머리 위 뼈들이 부딪칩니다. 이름을 부르는 목소리 아래, 보라검 천사가 서 있습니다.',cue:'목소리보다 눈앞의 검을 보세요'},
+    {title:'검은 물의 늪',text:'하늘이 비치던 검은 수면에서 동료의 얼굴이 다시 떠오릅니다. 마지막 손은 북쪽을 가리킵니다.',cue:'검은 물 너머, 북쪽의 소환진'},
+    {title:'재와 사슬의 성',text:'재에 묻힌 사슬은 무너진 성으로 이어집니다. 한곳의 불빛 아래 그림자는 다른 방향으로 뻗습니다.',cue:'불빛과 어긋난 그림자'},
+    {title:'시체 언덕',text:'흙처럼 보인 언덕에서 익숙한 갑옷이 일어납니다. 얼굴보다 갑옷의 문양이 먼저 기억납니다.',cue:'잊은 얼굴, 기억나는 갑옷'},
+    {title:'일곱 기둥',text:'눈부신 기둥 사이, 바닥에는 채찍 자국과 불씨가 남았습니다. 검이 내려올 길을 읽습니다.',cue:'바닥의 점선이 켜질 길입니다'},
+    {title:'추락 뒤의 병원',text:'소환진 너머의 바닥이 꺼집니다. 추락하던 기억 뒤로 형광등과 병실의 문이 나타납니다.',cue:'형광등 아래, 낯선 병실'},
+    {title:'주사실의 기억',text:'손바닥보다 작은 약병에 시선이 갇힙니다. 되돌아온 기억 속에서 봉인을 푼 초천사가 웃습니다.',cue:'보지 않게 된 문과 창'},
+    {title:'주사기 폐허',text:'달빛에 주사기가 반짝입니다. 서로 다른 시절의 얼굴을 지나, 도움을 청할 말을 찾습니다.',cue:'혼자 견디는 대신 도움을 청하며'},
+    {title:'천사의 가면',text:'다정했던 목소리가 완벽함과 벌을 강요합니다. 가면 속 얼굴들이 한 입을 함께 움직입니다.',cue:'그 목소리는 내 판단이었을까'},
+    {title:'병원 창의 불빛',text:'날개 끝이 검게 변하고 뿔이 솟습니다. 병원 창에 불이 하나씩 켜지자, 손을 펴 봅니다.',cue:'검은 날개 너머, 켜지는 창'},
+    {title:'J의 인장',text:'인장을 루시퍼에게 댑니다. 그는 물러나지만 갈망은 남습니다. 흔들리는 날에는 다시 도움을 청해야 합니다.',cue:'물러난 목소리, 남아 있는 선택'}
   ];
   var bossNotes=[
-    '흰 날개와 여덟 다리, 보랏빛 검. 한때 천사였던 그녀의 탄막 사이를 통과하세요.',
-    '죽은 수호자의 기억을 매단 뿔. 검은 늪에서 번지는 탄막의 틈을 읽으세요.',
-    '박쥐 날개와 황소의 뿔. 공간을 가르는 검과 하늘을 덮는 불덩이가 마지막 봉인을 지킵니다.',
-    '흰 날개 아래 웃는 얼굴. 대칭의 깃털과 고정된 광선 사이에서 거짓 약속의 균열을 찾으세요.',
-    '천구의 별자리, 가면의 이면, J의 인장. 세 문양을 지나 루시퍼를 물러나게 하세요.'
+    '머리 위 뼈 소리에 시선을 빼앗기지 마세요. 눈앞의 보라색 검과 공격 예고를 읽으세요.',
+    '수면에 비친 하늘이 흐트러지고 얼굴들이 떠오릅니다. 뿔악마의 탄막 사이를 지나세요.',
+    '검이 내려오는 쪽으로 공간이 벌어집니다. 바닥에 남은 점선의 길에서 벗어나세요.',
+    '가면 속 얼굴들이 같은 입을 움직입니다. 대칭으로 뻗는 깃털과 고정된 광선을 읽으세요.',
+    '완벽함을 강요하는 목소리와 맞섭니다. 세 패턴을 지나 J의 인장으로 루시퍼를 물러나게 하세요.'
   ];
+  function routeNote(){if(!world||!world.campaign)return routeNotes[0];return routeNotes[Math.min(12,[0,3,4,7,10][world.bossIndex||0]+((world.bossIndex||0)===1?0:(world.wave||0)))];}
   var skillNames={memory:'기억 해방',delay:'시간 지연',counter:'반격',ego:'자아 각성'},lastSkill=null;
   function updateStory(){
-    if(!world){safeText('chapter-caption','기억의 길 · 13구간');safeText('chapter-number','01');safeText('encounter-kicker','THE BROKEN SEAL');safeText('encounter-title','검은 정원에서 코스믹 가면 루시퍼까지');safeText('encounter-description','이름을 잃은 천사와 돌아온 동료들. 일곱 기둥 너머의 소환진으로 나아갑니다.');$('app').setAttribute('data-encounter','violet');return;}
+    if(!world){safeText('chapter-caption','기억의 길 · 13구간');safeText('chapter-number','01');safeText('encounter-kicker','THE BROKEN SEAL');safeText('encounter-title','검은 정원에서 코스믹 가면 루시퍼까지');safeText('encounter-description','움직이지 않는 잎과 떨리는 날개. 새 공간체험형 원문을 바탕으로 정원에서 병원까지 걷는 제1부 세로 각색입니다.');$('app').setAttribute('data-encounter','violet');return;}
     if(!world.campaign){$('app').setAttribute('data-encounter','violet');safeText('chapter-caption','첫 기억');safeText('chapter-number','01');safeText('encounter-kicker','A FRAGMENT OF MEMORY');safeText('encounter-title',world.stage==='waves'?'기억의 회랑':'보라검천사');safeText('encounter-description','숲길과 폐허를 지나 거미 동굴로 이어지는 첫 기억입니다.');return;}
     var boss=world.bossIndex||0,offset=[0,3,4,7,10][boss],wave=world.wave||0,index=Math.min(12,offset+(boss===1?0:wave)),note=routeNotes[index],isWave=world.stage==='waves'||(world.stage==='lost'&&!world.boss&&!world.practiceBoss);
     $('app').setAttribute('data-encounter',['violet','horn','balrog','mask','lucifer'][boss]);
@@ -64,7 +67,7 @@
   function introKey(){return world&&world.campaign?'campaign-'+world.bossIndex:'legacy';}
   function pad(n,width){return String(Math.max(0,Math.floor(n||0))).padStart(width||6,'0');}
   function setHidden(id,value){var element=$(id),hidden=!!value;if(element.hidden!==hidden)element.hidden=hidden;}
-  function syncIntroControls(){var active=mode==='playing'&&world&&world.stage==='bossIntro';setHidden('intro-skip-button',!active);safeText('pad-caption',active?'보스 등장 · 잠시 뒤 전투가 이어집니다':'여기 또는 전투 화면을 드래그하세요');}
+  function syncIntroControls(){var active=mode==='playing'&&world&&world.stage==='bossIntro';setHidden('intro-skip-button',!active);var hint=active?'보스 등장 · 잠시 뒤 전투가 이어집니다':world&&world.campaign&&world.stage==='waves'?routeNote().cue:world&&world.bossIndex===2&&world.stage==='boss'?'바닥의 점선이 켜질 길입니다':'여기 또는 전투 화면을 드래그하세요';safeText('pad-caption',hint);}
   function safeText(id,value){var element=$(id),text=value==null?'':String(value);if(element.textContent!==text)element.textContent=text;}
   function clearInput(){keys=Object.create(null);pointer.active=false;pointer.id=null;pointer.pendingX=0;pointer.pendingY=0;pointer.lastMove=0;inputSource='keyboard';$('touch-pad').classList.remove('active');}
   function toast(message){safeText('toast',message);setHidden('toast',false);clearTimeout(toastTimer);toastTimer=setTimeout(function(){setHidden('toast',true);},2200);}
@@ -174,12 +177,26 @@
     var name=kind+'Index',a=pool[audio[name]++%pool.length];try{a.currentTime=0;var p=a.play();if(p&&p.catch)p.catch(function(){});}catch(e){}
   }
   function saveCheckpointIfChanged(){
-    if(!world||!store||world.checkpointSerial===checkpointSerial)return;checkpointSerial=world.checkpointSerial;
+    if(!world||world.practiceBoss||!store||world.checkpointSerial===checkpointSerial||checkpointPending||performance.now()<checkpointRetryAt)return;
     var snap=core.checkpoint(world);if(!snap)return;
-    store.saveCheckpoint(snap).then(function(result){if(result&&result.ok===false){updateStorage();}else if(!completed&&world&&world.runId===snap.runId){savedCheckpoint=snap;setHidden('continue-button',false);}});
+    checkpointPending=snap;
+    store.saveCheckpoint(snap).then(function(result){
+      if(checkpointPending!==snap){
+        // Practice and title never write campaign progress, but a campaign save
+        // already in flight may finish after navigating to either screen.
+        if(result&&result.ok&&(!world||world.practiceBoss)){savedCheckpoint=snap;setHidden('continue-button',false);}
+        return;
+      }
+      checkpointPending=null;
+      if(!world){if(result&&result.ok){savedCheckpoint=snap;setHidden('continue-button',false);}else updateStorage();return;}
+      if(world.runId!==snap.runId)return;
+      if(!result||!result.ok){checkpointRetryAt=performance.now()+2000;updateStorage();return;}
+      checkpointSerial=snap.checkpointSerial;checkpointRetryAt=0;
+      if(!completed){savedCheckpoint=snap;setHidden('continue-button',false);}
+    },function(){if(checkpointPending===snap){checkpointPending=null;checkpointRetryAt=performance.now()+2000;updateStorage();}});
   }
   function start(practice,retry){
-    if(!ready)return;unlockAudio();clearInput();completed=false;checkpointSerial=-1;
+    if(!ready)return;unlockAudio();clearInput();completed=false;checkpointSerial=-1;checkpointPending=null;checkpointRetryAt=0;
     lastSkill=null;skipIntroForRun=!!retry;
     if(!retry)seenBossIntros=Object.create(null);
     var retryWorld=world,selectedBoss=Number($('practice-select').value||0);
@@ -191,7 +208,7 @@
   }
   function continueRun(){
     if(!ready||!savedCheckpoint)return;unlockAudio();clearInput();
-    try{lastSkill=null;world=core.restoreCheckpoint(savedCheckpoint);world.skillRotation=settings.skillRotation;completed=false;checkpointSerial=world.checkpointSerial;accumulator=0;lastStamp=performance.now();setMode('paused');safeText('pause-title','저장된 기억의 시작점');safeText('pause-description','안전한 구간 시작점에서 이어갑니다.');updateHUD();$('resume-button').focus({preventScroll:true});}
+    try{lastSkill=null;world=core.restoreCheckpoint(savedCheckpoint);world.skillRotation=settings.skillRotation;completed=false;checkpointPending=null;checkpointRetryAt=0;checkpointSerial=world.checkpointSerial;accumulator=0;lastStamp=performance.now();setMode('paused');safeText('pause-title','저장된 기억의 시작점');safeText('pause-description','안전한 구간 시작점에서 이어갑니다.');updateHUD();$('resume-button').focus({preventScroll:true});}
     catch(e){toast('저장된 구간을 읽지 못했습니다. 새 전투를 시작해주세요.');savedCheckpoint=null;setHidden('continue-button',true);}
   }
   function skipIntro(){
@@ -203,14 +220,15 @@
   function resume(){if(mode!=='paused'||!world)return;unlockAudio();clearInput();accumulator=0;lastStamp=performance.now();lastRender=0;setMode('playing');$('game-canvas').focus({preventScroll:true});}
   function home(){setHidden('settings-modal',true);setMode('title');world=null;lastSkill=null;accumulator=0;syncSettings();updateStory();safeText('score-value','000000');safeText('resonance-value','0');document.querySelectorAll('.phase-list li').forEach(function(e){e.classList.remove('active');});setHidden('continue-button',!savedCheckpoint);$('start-button').focus({preventScroll:true});}
   function complete(){
-    if(completed||!world)return;completed=true;setMode('result');var won=world.stage==='won';safeText('result-eyebrow',won?'MEMORY RESTORED':'A MEMORY REMAINS');safeText('result-title',won?(world.practiceBoss?'보스 연습 완료':world.campaign?'가면 너머의 새벽':'첫 기억을 되찾았습니다'):'기억이 남았습니다');safeText('result-description',world.practiceBoss?(world.bossName||'보스')+' 연습 기록 · 본편은 정원에서 이어집니다.':(won?(world.campaign?'J의 인장이 빛나고 루시퍼가 물러납니다. 완벽하지 않은 자신을 받아들이고 도움을 청할 길을 찾았습니다.':'당신의 걸음이 회랑에 새겨졌습니다.'):'다음 걸음은 조금 더 멀리.'));safeText('result-score',pad(world.score));safeText('result-graze',world.graze||0);safeText('result-kills',world.kills||0);safeText('result-hits',world.stats?world.stats.hits:0);savedCheckpoint=null;setHidden('continue-button',true);
-    if(store){store.completeRun({runId:world.runId,score:world.score,graze:world.graze,kills:world.kills,difficulty:world.difficulty,won:won}).then(function(result){if(result&&result.ok===false){updateStorage();toast('기록 저장을 완료하지 못했습니다. 저장 상태를 확인해주세요.');return null;}return store.load();}).then(function(data){if(data){profile=data.profile||profile;updateProfile();updateStorage();}});}
+    if(completed||!world)return;completed=true;setMode('result');var won=world.stage==='won';safeText('result-eyebrow',won?'MEMORY RESTORED':'A MEMORY REMAINS');safeText('result-title',won?(world.practiceBoss?'보스 연습 완료':world.campaign?'가면 너머의 새벽':'첫 기억을 되찾았습니다'):'기억이 남았습니다');safeText('result-description',world.practiceBoss?(world.bossName||'보스')+' 연습 기록 · 본편은 정원에서 이어집니다.':(won?(world.campaign?'J의 인장이 빛나고 루시퍼가 물러납니다. 완벽하지 않은 자신을 받아들이고 도움을 청할 길을 찾았습니다.':'당신의 걸음이 회랑에 새겨졌습니다.'):'다음 걸음은 조금 더 멀리.'));safeText('result-score',pad(world.score));safeText('result-graze',world.graze||0);safeText('result-kills',world.kills||0);safeText('result-hits',world.stats?world.stats.hits:0);
+    var resultRunId=world.runId;
+    if(store&&!world.practiceBoss){store.completeRun({runId:world.runId,score:world.score,graze:world.graze,kills:world.kills,difficulty:world.difficulty,won:won}).then(function(result){if(result&&result.ok===false){updateStorage();toast('기록 저장을 완료하지 못했습니다. 저장 상태를 확인해주세요.');return null;}if(!world||world.runId===resultRunId||world.practiceBoss){savedCheckpoint=null;setHidden('continue-button',true);}return store.load();}).then(function(data){if(data){profile=data.profile||profile;updateProfile();updateStorage();}});}
     $('retry-button').focus({preventScroll:true});
   }
   function updateHUD(){
     if(!world)return;var p=world.player,html='';for(var i=0;i<p.maxHp;i++)html+='<span'+(i>=p.hp?' class="empty"':'')+'>'+(i<p.hp?'◆':'◇')+'</span>';if($('health-value').innerHTML!==html)$('health-value').innerHTML=html;$('health-value').setAttribute('aria-label','체력 '+p.hp+' / '+p.maxHp);
-    safeText('score-value',pad(world.score));safeText('resonance-value',Math.floor(world.resonance||0));safeText('stage-label',world.stageLabel||'기억의 입구');var chapter=world.stage==='waves'?Math.min(3,(world.wave||0)+1):Math.min(3,(world.phase||0)+1);safeText('stage-count',(world.practiceBoss?'연습 · ':'')+pad(chapter,2)+' / 05');
-    if(world.campaign){safeText('stage-count',world.stage==='waves'?'구간 '+([0,3,4,7,10][world.bossIndex||0]+(world.wave||0)+1)+' / 13':(world.practiceBoss?'연습 · ':'보스 ')+((world.bossIndex||0)+1)+' / 5');}
+    safeText('score-value',pad(world.score));safeText('resonance-value',Math.floor(world.resonance||0));safeText('stage-label',world.campaign&&world.stage==='waves'?routeNote().title:(world.stageLabel||'기억의 입구'));var chapter=world.stage==='waves'?Math.min(3,(world.wave||0)+1):Math.min(3,(world.phase||0)+1);safeText('stage-count',(world.practiceBoss?'연습 · ':'')+pad(chapter,2)+' / 05');
+    if(world.campaign){safeText('stage-count',world.practiceBoss?'패턴 '+((world.phase||0)+1)+' / 3':world.stage==='waves'?'구간 '+([0,3,4,7,10][world.bossIndex||0]+(world.wave||0)+1)+' / 13':'보스 '+((world.bossIndex||0)+1)+' / 5');}
     updateStory();updateSkills();$('phase-wave').classList.toggle('active',world.stage==='waves');$('phase-boss').classList.toggle('active',world.stage==='boss'||world.stage==='bossIntro'||world.stage==='transition');$('phase-end').classList.toggle('active',world.stage==='won');
   }
   function drainEvents(){
@@ -221,12 +239,12 @@
   function inputForStep(){
     if(world&&world.stage==='bossIntro'){clearInput();return {dx:0,dy:0,focus:false};}
     var focus=!!keys.Shift,speed=(focus?120:240)/60,x=(keys.ArrowRight||keys.d?1:0)-(keys.ArrowLeft||keys.a?1:0),y=(keys.ArrowDown||keys.s?1:0)-(keys.ArrowUp||keys.w?1:0),n=Math.hypot(x,y);if(n){x=x/n*speed;y=y/n*speed;}
-    if(performance.now()-pointer.lastMove>50){pointer.pendingX=0;pointer.pendingY=0;}
+    if(pointer.active&&performance.now()-pointer.lastMove>50){pointer.pendingX=0;pointer.pendingY=0;}
     if(inputSource!=='pointer')return {dx:x,dy:y,focus:focus};
-    var dragN=Math.hypot(pointer.pendingX,pointer.pendingY),dragScale=dragN>speed?speed/dragN:1,dx=pointer.pendingX*dragScale,dy=pointer.pendingY*dragScale;pointer.pendingX-=dx;pointer.pendingY-=dy;
+    var dragN=Math.hypot(pointer.pendingX,pointer.pendingY),dragScale=dragN>speed?speed/dragN:1,dx=pointer.pendingX*dragScale,dy=pointer.pendingY*dragScale;pointer.pendingX-=dx;pointer.pendingY-=dy;if(!pointer.active&&Math.abs(pointer.pendingX)<.001&&Math.abs(pointer.pendingY)<.001){pointer.pendingX=0;pointer.pendingY=0;inputSource='keyboard';}
     return {dx:dx,dy:dy,focus:focus};
   }
-  function sample(name,value){var list=samples[name];list.push(value);if(list.length>maxSamples)list.shift();}
+  function sample(name,value){var list=samples[name];if(list.length<maxSamples)list.push(value);else{var at=sampleCursor[name];list[at]=value;sampleCursor[name]=(at+1)%maxSamples;}}
   function distribution(values,peak){if(!values.length)return{p50:0,p95:0,peak:peak||0,samples:0};var a=values.slice().sort(function(x,y){return x-y;});return{p50:+a[Math.floor((a.length-1)*.5)].toFixed(3),p95:+a[Math.floor((a.length-1)*.95)].toFixed(3),peak:+(peak||a[a.length-1]).toFixed(3),samples:a.length};}
   function diagnostics(){
     var hazards=world&&world.hazards?world.hazards:[],heap=null;
@@ -261,7 +279,7 @@
     if(mode==='playing'){
       if(elapsed>.75){droppedGaps++;lastGapReason='frame-gap-'+Math.round(elapsed*1000)+'ms';pause('화면이 오래 멈춰 전투를 일시정지했습니다.');}
       else {
-        sample('frame',elapsed*1000);peakFrame=Math.max(peakFrame,elapsed*1000);if(elapsed>.08){droppedGaps++;pointer.pendingX=0;pointer.pendingY=0;}accumulator=Math.min(accumulator+elapsed,3/60);
+        sample('frame',elapsed*1000);peakFrame=Math.max(peakFrame,elapsed*1000);if(elapsed>.08){droppedGaps++;if(pointer.active){pointer.pendingX=0;pointer.pendingY=0;}}accumulator=Math.min(accumulator+elapsed,3/60);
         var startUpdate=performance.now(),steps=0;
         try{while(accumulator>=1/60&&steps<5&&mode==='playing'){if(!ensureEncounterArt()){accumulator=0;break;}var previousStage=world.stage;core.step(world,inputForStep(),1/60);accumulator-=1/60;steps++;totalSteps++;if(previousStage!=='bossIntro'&&world.stage==='bossIntro'){clearInput();if(skipIntroForRun&&seenBossIntros[introKey()]&&core.skipBossIntro)core.skipBossIntro(world);}if(previousStage==='bossIntro'&&world.stage!=='bossIntro'){seenBossIntros[introKey()]=true;clearInput();}if(world.stage==='won'||world.stage==='lost')break;}}
         catch(e){showError(e);}
@@ -277,7 +295,7 @@
   }
   function pointerDown(e){if(mode!=='playing'||(world&&world.stage==='bossIntro')||pointer.active||e.button>0)return;e.preventDefault();unlockAudio();pointer.active=true;pointer.id=e.pointerId;pointer.lastX=e.clientX;pointer.lastY=e.clientY;pointer.pendingX=0;pointer.pendingY=0;pointer.lastMove=performance.now();inputSource='pointer';$('touch-pad').classList.add('active');try{e.currentTarget.setPointerCapture(e.pointerId);}catch(ignore){}}
   function pointerMove(e){if(!pointer.active||pointer.id!==e.pointerId||mode!=='playing')return;e.preventDefault();var rect=$('game-canvas').getBoundingClientRect(),scale=360/rect.width*Number(settings.sensitivity),dx=(e.clientX-pointer.lastX)*scale,dy=(e.clientY-pointer.lastY)*scale;pointer.lastX=e.clientX;pointer.lastY=e.clientY;pointer.lastMove=performance.now();inputSource='pointer';pointer.pendingX=Math.max(-60,Math.min(60,pointer.pendingX+dx));pointer.pendingY=Math.max(-60,Math.min(60,pointer.pendingY+dy));}
-  function pointerUp(e){if(e.pointerId!==pointer.id)return;pointer.active=false;pointer.id=null;pointer.pendingX=0;pointer.pendingY=0;inputSource='keyboard';$('touch-pad').classList.remove('active');}
+  function pointerUp(e){if(e.pointerId!==pointer.id)return;if(e.type==='pointerup')pointerMove(e);pointer.active=false;pointer.id=null;if(e.type!=='pointerup'){pointer.pendingX=0;pointer.pendingY=0;inputSource='keyboard';}$('touch-pad').classList.remove('active');}
   var layoutWidth=global.innerWidth;
   function resize(){if(mobileRuntime&&Math.abs(global.innerWidth-layoutWidth)<40){fit();return;}layoutWidth=global.innerWidth;if(mode==='playing')pause('화면 크기가 바뀌어 전투를 일시정지했습니다.');clearInput();accumulator=0;lastStamp=0;fit();}
   function openSettings(){settingsFocus=document.activeElement;settingsWasPlaying=mode==='playing';if(settingsWasPlaying)pause();setHidden('settings-modal',false);$('settings-close').focus({preventScroll:true});}
@@ -313,7 +331,7 @@
       var media=global.HapilMedia||{};setSkillEmblems(media);var bootKeys=mobileAssetKeys(0);await loadImagesBounded(bootKeys);if(bootKeys.some(function(k){return !images[k];}))throw new Error('시작 구간의 이미지를 불러오지 못했습니다. 연결을 확인하고 다시 열어주세요.');encounterArtGroup=0;
       if(assetErrors.indexOf('gunner')>=0||assetErrors.indexOf('boss')>=0)throw new Error('캐릭터 이미지를 읽지 못했습니다. media 폴더가 포함되어 있는지 확인하거나 단일 HTML 실행 파일을 사용해주세요.');
       renderer=global.HapilRenderer.create($('game-canvas'),images);fit();buildAudio(media);raf=requestAnimationFrame(frame);
-      if(store){await store.open();var data=await store.load();if(data){settings=Object.assign({},defaults,data.settings||{});profile=data.profile||{};savedCheckpoint=data.checkpoint||null;}}if(mobileRuntime)settings.quality='low';syncSettings();updateStory();fit();updateProfile();updateStorage();setHidden('continue-button',!savedCheckpoint);ready=true;booting=false;$('start-button').disabled=false;$('practice-button').disabled=false;
+      if(store){await store.open();var data=await store.load();if(data){if(data.hasStoredState===false){await store.saveSettings(settings);}else settings=Object.assign({},defaults,data.settings||{});profile=data.profile||{};savedCheckpoint=data.checkpoint||null;}}syncSettings();updateStory();fit();updateProfile();updateStorage();setHidden('continue-button',!savedCheckpoint);ready=true;booting=false;$('start-button').disabled=false;$('practice-button').disabled=false;
       if(assetErrors.length)toast('일부 이미지를 읽지 못해 기본 연출로 표시합니다.');
     }catch(e){booting=false;showError(e);}
   }
