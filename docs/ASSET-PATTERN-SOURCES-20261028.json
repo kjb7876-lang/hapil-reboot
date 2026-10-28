@@ -1,0 +1,107 @@
+{
+  "release": "asset-patterns-v10",
+  "baseCommit": "ed84241cd8f8a1c45904277cce5cb15dcf274fd6",
+  "sourceMethod": "Official Drive metadata rediscovered 2026-10-28; prior authenticated materialized pack locally rehashed and every applied file byte-compared against ZIP and manifest. Original art unchanged.",
+  "sourcePackURL": "https://drive.google.com/file/d/19TYVctwZ3dACd2o60ILNtwnft9kQK-tt/view?usp=drivesdk",
+  "sourceManifestDriveID": "14FxF8S3P1dXLXrDMw931WPSUF75e9840",
+  "appliedAssets": [
+    {
+      "runtimePath": "media/projectiles-drive-v10/balrog_blade_slagfang.png",
+      "sourcePath": "runtime/balrog/balrog_blade_slagfang.png",
+      "sha256": "b913192ab73f912aeaf6192028b197d9c46f20d9e2ad17c6edbd63078f3e8039",
+      "bytes": 5717,
+      "dimensions": [
+        128,
+        64
+      ],
+      "sourcePackDriveID": "19TYVctwZ3dACd2o60ILNtwnft9kQK-tt",
+      "sourcePackSHA256": "d996b1b0aeb3a2c10fc7ebc1312d56e7de69ca647e053d759769a403cbcf1cf1",
+      "pixelInspected": true,
+      "playback": "static source keyframe; no new animation claim"
+    },
+    {
+      "runtimePath": "media/projectiles-drive-v10/balrog_orb_cinderheart.png",
+      "sourcePath": "runtime/balrog/balrog_orb_cinderheart.png",
+      "sha256": "59f78125f07ddcbe7ce99d5da1a0b599ffd39df2ce7ab62535381ba174578d69",
+      "bytes": 5028,
+      "dimensions": [
+        64,
+        64
+      ],
+      "sourcePackDriveID": "19TYVctwZ3dACd2o60ILNtwnft9kQK-tt",
+      "sourcePackSHA256": "d996b1b0aeb3a2c10fc7ebc1312d56e7de69ca647e053d759769a403cbcf1cf1",
+      "pixelInspected": true,
+      "playback": "static source keyframe; no new animation claim"
+    },
+    {
+      "runtimePath": "media/projectiles-drive-v10/false_angel_needle_edictfeather.png",
+      "sourcePath": "runtime/false_angel/false_angel_needle_edictfeather.png",
+      "sha256": "d04e9be769b6d88c4469c8fe938086c7b56e4fd743fcb2bee73f644d3454edb9",
+      "bytes": 2880,
+      "dimensions": [
+        128,
+        64
+      ],
+      "sourcePackDriveID": "19TYVctwZ3dACd2o60ILNtwnft9kQK-tt",
+      "sourcePackSHA256": "d996b1b0aeb3a2c10fc7ebc1312d56e7de69ca647e053d759769a403cbcf1cf1",
+      "pixelInspected": true,
+      "playback": "static source keyframe; no new animation claim"
+    },
+    {
+      "runtimePath": "media/projectiles-drive-v10/false_angel_orb_sealedpearl.png",
+      "sourcePath": "runtime/false_angel/false_angel_orb_sealedpearl.png",
+      "sha256": "518d87e07ab4851bbf4e887ecef641cd8aefae4d61454bfa4a896cf073047729",
+      "bytes": 4322,
+      "dimensions": [
+        64,
+        64
+      ],
+      "sourcePackDriveID": "19TYVctwZ3dACd2o60ILNtwnft9kQK-tt",
+      "sourcePackSHA256": "d996b1b0aeb3a2c10fc7ebc1312d56e7de69ca647e053d759769a403cbcf1cf1",
+      "pixelInspected": true,
+      "playback": "static source keyframe; no new animation claim"
+    },
+    {
+      "runtimePath": "media/projectiles-drive-v10/swamp_orb_toxicseed.png",
+      "sourcePath": "runtime/swamp/swamp_orb_toxicseed.png",
+      "sha256": "ecd6e58a16e2a02fe2d499ba0d6f82b6f9dece0974188561b7bca7ed4d095c7d",
+      "bytes": 5468,
+      "dimensions": [
+        64,
+        64
+      ],
+      "sourcePackDriveID": "19TYVctwZ3dACd2o60ILNtwnft9kQK-tt",
+      "sourcePackSHA256": "d996b1b0aeb3a2c10fc7ebc1312d56e7de69ca647e053d759769a403cbcf1cf1",
+      "pixelInspected": true,
+      "playback": "static source keyframe; no new animation claim"
+    },
+    {
+      "runtimePath": "media/projectiles-drive-v10/violet_blade_spindle.png",
+      "sourcePath": "runtime/violet/violet_blade_spindle.png",
+      "sha256": "e7f1fbacc4352a43d11da00d7f284f2892002f9f759cb315671ff59b1223ea19",
+      "bytes": 5990,
+      "dimensions": [
+        128,
+        64
+      ],
+      "sourcePackDriveID": "19TYVctwZ3dACd2o60ILNtwnft9kQK-tt",
+      "sourcePackSHA256": "d996b1b0aeb3a2c10fc7ebc1312d56e7de69ca647e053d759769a403cbcf1cf1",
+      "pixelInspected": true,
+      "playback": "static source keyframe; no new animation claim"
+    }
+  ],
+  "retainedAnimatedOrbs": "docs/DRIVE-VFX-20261028.json: Violet/Lucifer 4 phases once then hold",
+  "rendering": "Source alpha and luminance retained; cached palette recolor; authored cap pixels and stretched center band fitted to the authoritative circle/capsule. No geometric fill, stroke, or fallback danger body.",
+  "adaptations": {
+    "hornAndLuciferNeedles": "Own orb material fitted into capsules; no dedicated new needle artwork claim",
+    "mask": "Existing ivory pearl and feather material; filename false_angel is not an assertion of canonical identity or merged actors",
+    "lasers": "Own projectile material, 3 source image slices and exact damage clip; no dedicated laser atlas/new laser animation exists",
+    "friendlyShots": "Existing player wind-arrow 8-frame Drive atlas; tip anchored to existing shot location",
+    "telegraphs": "Harmless dashed warning geometry retained; all active enemy damage bodies asset-sampled"
+  },
+  "newOriginalArtCount": 0,
+  "cacheLimitEntries": 96,
+  "cacheLimitRGBABytes": 4194304,
+  "sourceDriveMutations": false,
+  "actualDeviceGPUVerified": false
+}

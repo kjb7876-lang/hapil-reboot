@@ -1,0 +1,58 @@
+{
+  "capturedAt": "2026-10-28T14:42:24.348Z",
+  "scope": "NativeCPU directprojectilemodule Lucifer controlledA/B. Same actualsourceimages,tint,bodygeometry,5warmup/20measuredframe draws. 89orb realisticcapacity vs768mixed syntheticextreme. CPUsharedhost only; noGPU/mobileclaim.",
+  "rows": [
+    {
+      "module": "old-strip",
+      "sha256": "12ea2f177df8c23df152a2d828cb3bddb9a39845c46f7f9fa3591e03d9ceba8d",
+      "bullets": 89,
+      "shape": "orb",
+      "samples": 20,
+      "p50Ms": 2.752,
+      "p95Ms": 4.193,
+      "maxMs": 4.456,
+      "sourceDraws": 89,
+      "cacheBytes": 113440,
+      "cacheMisses": 0
+    },
+    {
+      "module": "old-strip",
+      "sha256": "12ea2f177df8c23df152a2d828cb3bddb9a39845c46f7f9fa3591e03d9ceba8d",
+      "bullets": 768,
+      "shape": "mixed-orb-needle-blade",
+      "samples": 20,
+      "p50Ms": 37.009,
+      "p95Ms": 57.357,
+      "maxMs": 58.074,
+      "sourceDraws": 768,
+      "cacheBytes": 294144,
+      "cacheMisses": 0
+    },
+    {
+      "module": "new-separated-frames",
+      "sha256": "d4ff9c2e1d9dc669f94ce4b364b8e317d4fdb23fa3031251f48741ae94ee307a",
+      "bullets": 89,
+      "shape": "orb",
+      "samples": 20,
+      "p50Ms": 2.251,
+      "p95Ms": 7.529,
+      "maxMs": 10.348,
+      "sourceDraws": 89,
+      "cacheBytes": 113440,
+      "cacheMisses": 0
+    },
+    {
+      "module": "new-separated-frames",
+      "sha256": "d4ff9c2e1d9dc669f94ce4b364b8e317d4fdb23fa3031251f48741ae94ee307a",
+      "bullets": 768,
+      "shape": "mixed-orb-needle-blade",
+      "samples": 20,
+      "p50Ms": 15.744,
+      "p95Ms": 19.715,
+      "maxMs": 28.543,
+      "sourceDraws": 768,
+      "cacheBytes": 294144,
+      "cacheMisses": 0
+    }
+  ]
+}
