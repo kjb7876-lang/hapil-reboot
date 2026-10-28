@@ -137,12 +137,19 @@
     specs.forEach(function (s) {
       // One committed capsule is rendered throughout warning, active and fade.
       // No projectile is substituted and its aim never follows either actor.
-      acquire(w, 'hazards', { id: ++w.idCounter, castId: castId, ownerId: s.ownerId || 0, kind: 'laser', x1: s.x, y1: s.y,
+      var hazard = acquire(w, 'hazards', { id: ++w.idCounter, castId: castId, ownerId: s.ownerId || 0, kind: 'laser', x1: s.x, y1: s.y,
         x2: s.x + Math.cos(s.angle) * 680, y2: s.y + Math.sin(s.angle) * 680,
         width: s.width || (s.kind === 'blade' ? 8 : 6), color: s.color || '#d1aaff',
         phase: 'warning', progress: 0, born: w.tick, warningTicks: warningTicks, activeTicks: activeTicks, fadeTicks: fadeTicks,
         activeAt: w.tick + warningTicks, fadeAt: w.tick + warningTicks + activeTicks,
         expireAt: w.tick + warningTicks + activeTicks + fadeTicks, grazed: false, name: name });
+      // The spatial-horror text directs attention to Balrog's traces on the
+      // floor before its moving shadow. This labels the existing committed
+      // laser warning only; geometry, timing, damage and bullet count do not change.
+      if (hazard && w.campaign && w.bossIndex === 2) {
+        hazard.telegraphKind = 'floor-scar';
+        hazard.telegraphHint = '검빛이 켜지기 전, 바닥의 흔적을 읽으세요';
+      }
     });
     return true;
   }

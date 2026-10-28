@@ -406,7 +406,12 @@
           ctx.globalAlpha=.30*(1-progress);ctx.strokeStyle=palette?palette.secondary:'#e6c1df';ctx.lineWidth=Math.max(.5,width*(1-progress*.8));ctx.stroke();
         }else{
           ctx.globalAlpha=.13;ctx.strokeStyle=palette?palette.secondary:'#edb5db';ctx.lineWidth=width;ctx.stroke();
-          ctx.globalAlpha=.66+progress*.22;ctx.setLineDash([7,7]);ctx.lineDashOffset=-progress*14;ctx.strokeStyle=palette?palette.accent:'#f6c8e7';ctx.lineWidth=1;ctx.stroke();
+          // Balrog's floor trace is the existing authoritative laser warning.
+          // A narrow dark bed keeps its bright dashes legible on fire/lit maps;
+          // it never widens the warning footprint or changes activation time.
+          var floorScar=h.telegraphKind==='floor-scar';
+          if(floorScar){ctx.globalAlpha=.9;ctx.strokeStyle='#080b12';ctx.lineWidth=Math.min(width,3.8);ctx.stroke();}
+          ctx.globalAlpha=.66+progress*.22;ctx.setLineDash([7,7]);ctx.lineDashOffset=-progress*14;ctx.strokeStyle=floorScar?'#ffe3a0':palette?palette.accent:'#f6c8e7';ctx.lineWidth=floorScar?Math.min(width,1.5):1;ctx.stroke();
         }
         ctx.restore();
       }

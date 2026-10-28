@@ -15,31 +15,34 @@
   var seenBossIntros=Object.create(null),skipIntroForRun=false;
   // Presentation summaries of the supplied first-volume route. No new story
   // events, battle logic or save fields are introduced by this ledger.
+  // Spatial cues adapted from the supplied 2026-10-28 sensory narrative.
+  // These 13 gameplay sections are a first-volume adaptation, not 13 canonical scenes.
   var routeNotes=[
-    {title:'숲의 진입로',text:'검은 나무 너머로 무너진 궁전의 정원이 모습을 드러냅니다.'},
-    {title:'악마화 나무의 정원',text:'날개까지 감은 뿌리. 이름을 잃은 천사 곁에서 동굴로 향하는 길이 열립니다.'},
-    {title:'거미동굴',text:'뼈로 짠 거미줄 사이에서, 흰 날개와 여덟 다리의 그림자가 기다립니다.'},
-    {title:'늪지대의 기억',text:'검은 물에서 익숙한 얼굴들이 떠오릅니다. 붙잡는 손 너머로 북쪽을 향합니다.'},
-    {title:'무너진 성',text:'끊어진 봉인 사슬과 검은 재. 성 안쪽의 불길에 거대한 형상이 어른거립니다.'},
-    {title:'시체들이 되살아난 밤',text:'불타는 성의 묘지에서, 함께했던 동료들을 적의 모습으로 다시 마주합니다.'},
-    {title:'일곱 기둥',text:'소환진을 감싼 일곱 기둥. 문지기들을 지나 마지막 사슬 앞에 섭니다.'},
-    {title:'추락 · 병원 복도',text:'소환진 너머로 추락한 뒤 눈을 뜬 병원. 낯선 복도에서 두려움이 환각의 형상을 얻습니다.'},
-    {title:'주사실의 봉인 기억',text:'주사실에서 되돌아오는 기억. 자신이 풀어버린 봉인과 웃는 초천사의 그림자가 겹칩니다.'},
-    {title:'환자와 중독의 도시',text:'반복되는 갈망과 환자들의 행렬. 완벽해져야 한다는 속삭임 너머로 길을 찾습니다.'},
-    {title:'부정의 행렬',text:'나를 지키던 가면이 나를 가둡니다. 부정의 잔영 사이에서 자신의 목소리를 찾습니다.'},
-    {title:'오만의 흰 가면',text:'도움을 청하는 것은 부끄러움이 아닙니다. 흰 날개 뒤에서 수많은 얼굴이 모습을 드러냅니다.'},
-    {title:'도움을 청하는 문',text:'가면 안의 우주가 열립니다. 완벽함을 강요하는 루시퍼와 마주하고 J의 인장을 기억합니다.'}
+    {title:'궁전 회랑',text:'창에는 얼굴 없는 성상이 비칩니다. 나뭇잎은 고요한데, 뿌리 아래 끼인 날개만 떨립니다.',cue:'멈춘 잎 아래, 떨리는 날개'},
+    {title:'악마화 나무의 정원',text:'발등까지 온 뿌리를 피해 나아갑니다. 뿌리를 베어도 기억은 돌아오지 않습니다.',cue:'뿌리 아래로 이어지는 길'},
+    {title:'뼈의 거미동굴',text:'머리 위 뼈들이 부딪칩니다. 이름을 부르는 목소리 아래, 보라검 천사가 서 있습니다.',cue:'목소리보다 눈앞의 검을 보세요'},
+    {title:'검은 물의 늪',text:'하늘이 비치던 검은 수면에서 동료의 얼굴이 다시 떠오릅니다. 마지막 손은 북쪽을 가리킵니다.',cue:'검은 물 너머, 북쪽의 소환진'},
+    {title:'재와 사슬의 성',text:'재에 묻힌 사슬은 무너진 성으로 이어집니다. 한곳의 불빛 아래 그림자는 다른 방향으로 뻗습니다.',cue:'불빛과 어긋난 그림자'},
+    {title:'시체 언덕',text:'흙처럼 보인 언덕에서 익숙한 갑옷이 일어납니다. 얼굴보다 갑옷의 문양이 먼저 기억납니다.',cue:'잊은 얼굴, 기억나는 갑옷'},
+    {title:'일곱 기둥',text:'눈부신 기둥 사이, 바닥에는 채찍 자국과 불씨가 남았습니다. 검이 내려올 길을 읽습니다.',cue:'바닥의 점선이 켜질 길입니다'},
+    {title:'추락 뒤의 병원',text:'소환진 너머의 바닥이 꺼집니다. 추락하던 기억 뒤로 형광등과 병실의 문이 나타납니다.',cue:'형광등 아래, 낯선 병실'},
+    {title:'주사실의 기억',text:'손바닥보다 작은 약병에 시선이 갇힙니다. 되돌아온 기억 속에서 봉인을 푼 초천사가 웃습니다.',cue:'보지 않게 된 문과 창'},
+    {title:'주사기 폐허',text:'달빛에 주사기가 반짝입니다. 서로 다른 시절의 얼굴을 지나, 도움을 청할 말을 찾습니다.',cue:'혼자 견디는 대신 도움을 청하며'},
+    {title:'천사의 가면',text:'다정했던 목소리가 완벽함과 벌을 강요합니다. 가면 속 얼굴들이 한 입을 함께 움직입니다.',cue:'그 목소리는 내 판단이었을까'},
+    {title:'병원 창의 불빛',text:'날개 끝이 검게 변하고 뿔이 솟습니다. 병원 창에 불이 하나씩 켜지자, 손을 펴 봅니다.',cue:'검은 날개 너머, 켜지는 창'},
+    {title:'J의 인장',text:'인장을 루시퍼에게 댑니다. 그는 물러나지만 갈망은 남습니다. 흔들리는 날에는 다시 도움을 청해야 합니다.',cue:'물러난 목소리, 남아 있는 선택'}
   ];
   var bossNotes=[
-    '흰 날개와 여덟 다리, 보랏빛 검. 한때 천사였던 그녀의 탄막 사이를 통과하세요.',
-    '죽은 수호자의 기억을 매단 뿔. 검은 늪에서 번지는 탄막의 틈을 읽으세요.',
-    '박쥐 날개와 황소의 뿔. 공간을 가르는 검과 하늘을 덮는 불덩이가 마지막 봉인을 지킵니다.',
-    '흰 날개 아래 웃는 얼굴. 대칭의 깃털과 고정된 광선 사이에서 거짓 약속의 균열을 찾으세요.',
-    '천구의 별자리, 가면의 이면, J의 인장. 세 문양을 지나 루시퍼를 물러나게 하세요.'
+    '머리 위 뼈 소리에 시선을 빼앗기지 마세요. 눈앞의 보라색 검과 공격 예고를 읽으세요.',
+    '수면에 비친 하늘이 흐트러지고 얼굴들이 떠오릅니다. 뿔악마의 탄막 사이를 지나세요.',
+    '검이 내려오는 쪽으로 공간이 벌어집니다. 바닥에 남은 점선의 길에서 벗어나세요.',
+    '가면 속 얼굴들이 같은 입을 움직입니다. 대칭으로 뻗는 깃털과 고정된 광선을 읽으세요.',
+    '완벽함을 강요하는 목소리와 맞섭니다. 세 패턴을 지나 J의 인장으로 루시퍼를 물러나게 하세요.'
   ];
+  function routeNote(){if(!world||!world.campaign)return routeNotes[0];return routeNotes[Math.min(12,[0,3,4,7,10][world.bossIndex||0]+((world.bossIndex||0)===1?0:(world.wave||0)))];}
   var skillNames={memory:'기억 해방',delay:'시간 지연',counter:'반격',ego:'자아 각성'},lastSkill=null;
   function updateStory(){
-    if(!world){safeText('chapter-caption','기억의 길 · 13구간');safeText('chapter-number','01');safeText('encounter-kicker','THE BROKEN SEAL');safeText('encounter-title','검은 정원에서 코스믹 가면 루시퍼까지');safeText('encounter-description','이름을 잃은 천사와 돌아온 동료들. 일곱 기둥 너머의 소환진으로 나아갑니다.');$('app').setAttribute('data-encounter','violet');return;}
+    if(!world){safeText('chapter-caption','기억의 길 · 13구간');safeText('chapter-number','01');safeText('encounter-kicker','THE BROKEN SEAL');safeText('encounter-title','검은 정원에서 코스믹 가면 루시퍼까지');safeText('encounter-description','움직이지 않는 잎과 떨리는 날개. 새 공간체험형 원문을 바탕으로 정원에서 병원까지 걷는 제1부 세로 각색입니다.');$('app').setAttribute('data-encounter','violet');return;}
     if(!world.campaign){$('app').setAttribute('data-encounter','violet');safeText('chapter-caption','첫 기억');safeText('chapter-number','01');safeText('encounter-kicker','A FRAGMENT OF MEMORY');safeText('encounter-title',world.stage==='waves'?'기억의 회랑':'보라검천사');safeText('encounter-description','숲길과 폐허를 지나 거미 동굴로 이어지는 첫 기억입니다.');return;}
     var boss=world.bossIndex||0,offset=[0,3,4,7,10][boss],wave=world.wave||0,index=Math.min(12,offset+(boss===1?0:wave)),note=routeNotes[index],isWave=world.stage==='waves'||(world.stage==='lost'&&!world.boss&&!world.practiceBoss);
     $('app').setAttribute('data-encounter',['violet','horn','balrog','mask','lucifer'][boss]);
@@ -64,7 +67,7 @@
   function introKey(){return world&&world.campaign?'campaign-'+world.bossIndex:'legacy';}
   function pad(n,width){return String(Math.max(0,Math.floor(n||0))).padStart(width||6,'0');}
   function setHidden(id,value){var element=$(id),hidden=!!value;if(element.hidden!==hidden)element.hidden=hidden;}
-  function syncIntroControls(){var active=mode==='playing'&&world&&world.stage==='bossIntro';setHidden('intro-skip-button',!active);safeText('pad-caption',active?'보스 등장 · 잠시 뒤 전투가 이어집니다':'여기 또는 전투 화면을 드래그하세요');}
+  function syncIntroControls(){var active=mode==='playing'&&world&&world.stage==='bossIntro';setHidden('intro-skip-button',!active);var hint=active?'보스 등장 · 잠시 뒤 전투가 이어집니다':world&&world.campaign&&world.stage==='waves'?routeNote().cue:world&&world.bossIndex===2&&world.stage==='boss'?'바닥의 점선이 켜질 길입니다':'여기 또는 전투 화면을 드래그하세요';safeText('pad-caption',hint);}
   function safeText(id,value){var element=$(id),text=value==null?'':String(value);if(element.textContent!==text)element.textContent=text;}
   function clearInput(){keys=Object.create(null);pointer.active=false;pointer.id=null;pointer.pendingX=0;pointer.pendingY=0;pointer.lastMove=0;inputSource='keyboard';$('touch-pad').classList.remove('active');}
   function toast(message){safeText('toast',message);setHidden('toast',false);clearTimeout(toastTimer);toastTimer=setTimeout(function(){setHidden('toast',true);},2200);}
@@ -224,8 +227,8 @@
   }
   function updateHUD(){
     if(!world)return;var p=world.player,html='';for(var i=0;i<p.maxHp;i++)html+='<span'+(i>=p.hp?' class="empty"':'')+'>'+(i<p.hp?'◆':'◇')+'</span>';if($('health-value').innerHTML!==html)$('health-value').innerHTML=html;$('health-value').setAttribute('aria-label','체력 '+p.hp+' / '+p.maxHp);
-    safeText('score-value',pad(world.score));safeText('resonance-value',Math.floor(world.resonance||0));safeText('stage-label',world.stageLabel||'기억의 입구');var chapter=world.stage==='waves'?Math.min(3,(world.wave||0)+1):Math.min(3,(world.phase||0)+1);safeText('stage-count',(world.practiceBoss?'연습 · ':'')+pad(chapter,2)+' / 05');
-    if(world.campaign){safeText('stage-count',world.stage==='waves'?'구간 '+([0,3,4,7,10][world.bossIndex||0]+(world.wave||0)+1)+' / 13':(world.practiceBoss?'연습 · ':'보스 ')+((world.bossIndex||0)+1)+' / 5');}
+    safeText('score-value',pad(world.score));safeText('resonance-value',Math.floor(world.resonance||0));safeText('stage-label',world.campaign&&world.stage==='waves'?routeNote().title:(world.stageLabel||'기억의 입구'));var chapter=world.stage==='waves'?Math.min(3,(world.wave||0)+1):Math.min(3,(world.phase||0)+1);safeText('stage-count',(world.practiceBoss?'연습 · ':'')+pad(chapter,2)+' / 05');
+    if(world.campaign){safeText('stage-count',world.practiceBoss?'패턴 '+((world.phase||0)+1)+' / 3':world.stage==='waves'?'구간 '+([0,3,4,7,10][world.bossIndex||0]+(world.wave||0)+1)+' / 13':'보스 '+((world.bossIndex||0)+1)+' / 5');}
     updateStory();updateSkills();$('phase-wave').classList.toggle('active',world.stage==='waves');$('phase-boss').classList.toggle('active',world.stage==='boss'||world.stage==='bossIntro'||world.stage==='transition');$('phase-end').classList.toggle('active',world.stage==='won');
   }
   function drainEvents(){
