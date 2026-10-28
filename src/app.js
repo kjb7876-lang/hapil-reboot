@@ -4,7 +4,7 @@
   var mobileRuntime=global.matchMedia?global.matchMedia('(pointer: coarse)').matches:Math.min(global.innerWidth||999,global.innerHeight||999)<600;
   var defaults={music:true,sfx:true,quality:mobileRuntime?'low':'high',skillRotation:true,difficulty:'normal',sensitivity:1};
   var settings=Object.assign({},defaults),profile={},savedCheckpoint=null,world=null,renderer=null,images={};
-  var mode='title',ready=false,booting=true,lastStamp=0,accumulator=0,lastRender=0,lastHud=0,visualTime=0,checkpointSerial=-1,completed=false;
+  var mode='title',ready=false,booting=true,lastStamp=0,accumulator=0,lastRender=0,lastHud=0,visualTime=0,checkpointSerial=-1,completed=false,checkpointPending=null,checkpointRetryAt=0;
   var keys=Object.create(null),pointer={active:false,id:null,lastX:0,lastY:0,pendingX:0,pendingY:0,lastMove:0},inputSource='keyboard',raf=0;
   var samples={update:[],render:[],frame:[]},totalFrames=0,totalSteps=0,droppedGaps=0,peakUpdate=0,peakRender=0,peakFrame=0,lastGapReason='',maxSamples=360;
   var audio={unlocked:false,music:null,shot:[],hurt:[],shotIndex:0,hurtIndex:0,lastShot:0},toastTimer=0,settingsWasPlaying=false,settingsFocus=null;
@@ -174,12 +174,26 @@
     var name=kind+'Index',a=pool[audio[name]++%pool.length];try{a.currentTime=0;var p=a.play();if(p&&p.catch)p.catch(function(){});}catch(e){}
   }
   function saveCheckpointIfChanged(){
-    if(!world||!store||world.checkpointSerial===checkpointSerial)return;checkpointSerial=world.checkpointSerial;
+    if(!world||world.practiceBoss||!store||world.checkpointSerial===checkpointSerial||checkpointPending||performance.now()<checkpointRetryAt)return;
     var snap=core.checkpoint(world);if(!snap)return;
-    store.saveCheckpoint(snap).then(function(result){if(result&&result.ok===false){updateStorage();}else if(!completed&&world&&world.runId===snap.runId){savedCheckpoint=snap;setHidden('continue-button',false);}});
+    checkpointPending=snap;
+    store.saveCheckpoint(snap).then(function(result){
+      if(checkpointPending!==snap){
+        // Practice and title never write campaign progress, but a campaign save
+        // already in flight may finish after navigating to either screen.
+        if(result&&result.ok&&(!world||world.practiceBoss)){savedCheckpoint=snap;setHidden('continue-button',false);}
+        return;
+      }
+      checkpointPending=null;
+      if(!world){if(result&&result.ok){savedCheckpoint=snap;setHidden('continue-button',false);}else updateStorage();return;}
+      if(world.runId!==snap.runId)return;
+      if(!result||!result.ok){checkpointRetryAt=performance.now()+2000;updateStorage();return;}
+      checkpointSerial=snap.checkpointSerial;checkpointRetryAt=0;
+      if(!completed){savedCheckpoint=snap;setHidden('continue-button',false);}
+    },function(){if(checkpointPending===snap){checkpointPending=null;checkpointRetryAt=performance.now()+2000;updateStorage();}});
   }
   function start(practice,retry){
-    if(!ready)return;unlockAudio();clearInput();completed=false;checkpointSerial=-1;
+    if(!ready)return;unlockAudio();clearInput();completed=false;checkpointSerial=-1;checkpointPending=null;checkpointRetryAt=0;
     lastSkill=null;skipIntroForRun=!!retry;
     if(!retry)seenBossIntros=Object.create(null);
     var retryWorld=world,selectedBoss=Number($('practice-select').value||0);
@@ -191,7 +205,7 @@
   }
   function continueRun(){
     if(!ready||!savedCheckpoint)return;unlockAudio();clearInput();
-    try{lastSkill=null;world=core.restoreCheckpoint(savedCheckpoint);world.skillRotation=settings.skillRotation;completed=false;checkpointSerial=world.checkpointSerial;accumulator=0;lastStamp=performance.now();setMode('paused');safeText('pause-title','저장된 기억의 시작점');safeText('pause-description','안전한 구간 시작점에서 이어갑니다.');updateHUD();$('resume-button').focus({preventScroll:true});}
+    try{lastSkill=null;world=core.restoreCheckpoint(savedCheckpoint);world.skillRotation=settings.skillRotation;completed=false;checkpointPending=null;checkpointRetryAt=0;checkpointSerial=world.checkpointSerial;accumulator=0;lastStamp=performance.now();setMode('paused');safeText('pause-title','저장된 기억의 시작점');safeText('pause-description','안전한 구간 시작점에서 이어갑니다.');updateHUD();$('resume-button').focus({preventScroll:true});}
     catch(e){toast('저장된 구간을 읽지 못했습니다. 새 전투를 시작해주세요.');savedCheckpoint=null;setHidden('continue-button',true);}
   }
   function skipIntro(){
@@ -203,8 +217,9 @@
   function resume(){if(mode!=='paused'||!world)return;unlockAudio();clearInput();accumulator=0;lastStamp=performance.now();lastRender=0;setMode('playing');$('game-canvas').focus({preventScroll:true});}
   function home(){setHidden('settings-modal',true);setMode('title');world=null;lastSkill=null;accumulator=0;syncSettings();updateStory();safeText('score-value','000000');safeText('resonance-value','0');document.querySelectorAll('.phase-list li').forEach(function(e){e.classList.remove('active');});setHidden('continue-button',!savedCheckpoint);$('start-button').focus({preventScroll:true});}
   function complete(){
-    if(completed||!world)return;completed=true;setMode('result');var won=world.stage==='won';safeText('result-eyebrow',won?'MEMORY RESTORED':'A MEMORY REMAINS');safeText('result-title',won?(world.practiceBoss?'보스 연습 완료':world.campaign?'가면 너머의 새벽':'첫 기억을 되찾았습니다'):'기억이 남았습니다');safeText('result-description',world.practiceBoss?(world.bossName||'보스')+' 연습 기록 · 본편은 정원에서 이어집니다.':(won?(world.campaign?'J의 인장이 빛나고 루시퍼가 물러납니다. 완벽하지 않은 자신을 받아들이고 도움을 청할 길을 찾았습니다.':'당신의 걸음이 회랑에 새겨졌습니다.'):'다음 걸음은 조금 더 멀리.'));safeText('result-score',pad(world.score));safeText('result-graze',world.graze||0);safeText('result-kills',world.kills||0);safeText('result-hits',world.stats?world.stats.hits:0);savedCheckpoint=null;setHidden('continue-button',true);
-    if(store){store.completeRun({runId:world.runId,score:world.score,graze:world.graze,kills:world.kills,difficulty:world.difficulty,won:won}).then(function(result){if(result&&result.ok===false){updateStorage();toast('기록 저장을 완료하지 못했습니다. 저장 상태를 확인해주세요.');return null;}return store.load();}).then(function(data){if(data){profile=data.profile||profile;updateProfile();updateStorage();}});}
+    if(completed||!world)return;completed=true;setMode('result');var won=world.stage==='won';safeText('result-eyebrow',won?'MEMORY RESTORED':'A MEMORY REMAINS');safeText('result-title',won?(world.practiceBoss?'보스 연습 완료':world.campaign?'가면 너머의 새벽':'첫 기억을 되찾았습니다'):'기억이 남았습니다');safeText('result-description',world.practiceBoss?(world.bossName||'보스')+' 연습 기록 · 본편은 정원에서 이어집니다.':(won?(world.campaign?'J의 인장이 빛나고 루시퍼가 물러납니다. 완벽하지 않은 자신을 받아들이고 도움을 청할 길을 찾았습니다.':'당신의 걸음이 회랑에 새겨졌습니다.'):'다음 걸음은 조금 더 멀리.'));safeText('result-score',pad(world.score));safeText('result-graze',world.graze||0);safeText('result-kills',world.kills||0);safeText('result-hits',world.stats?world.stats.hits:0);
+    var resultRunId=world.runId;
+    if(store&&!world.practiceBoss){store.completeRun({runId:world.runId,score:world.score,graze:world.graze,kills:world.kills,difficulty:world.difficulty,won:won}).then(function(result){if(result&&result.ok===false){updateStorage();toast('기록 저장을 완료하지 못했습니다. 저장 상태를 확인해주세요.');return null;}if(!world||world.runId===resultRunId||world.practiceBoss){savedCheckpoint=null;setHidden('continue-button',true);}return store.load();}).then(function(data){if(data){profile=data.profile||profile;updateProfile();updateStorage();}});}
     $('retry-button').focus({preventScroll:true});
   }
   function updateHUD(){
@@ -221,9 +236,9 @@
   function inputForStep(){
     if(world&&world.stage==='bossIntro'){clearInput();return {dx:0,dy:0,focus:false};}
     var focus=!!keys.Shift,speed=(focus?120:240)/60,x=(keys.ArrowRight||keys.d?1:0)-(keys.ArrowLeft||keys.a?1:0),y=(keys.ArrowDown||keys.s?1:0)-(keys.ArrowUp||keys.w?1:0),n=Math.hypot(x,y);if(n){x=x/n*speed;y=y/n*speed;}
-    if(performance.now()-pointer.lastMove>50){pointer.pendingX=0;pointer.pendingY=0;}
+    if(pointer.active&&performance.now()-pointer.lastMove>50){pointer.pendingX=0;pointer.pendingY=0;}
     if(inputSource!=='pointer')return {dx:x,dy:y,focus:focus};
-    var dragN=Math.hypot(pointer.pendingX,pointer.pendingY),dragScale=dragN>speed?speed/dragN:1,dx=pointer.pendingX*dragScale,dy=pointer.pendingY*dragScale;pointer.pendingX-=dx;pointer.pendingY-=dy;
+    var dragN=Math.hypot(pointer.pendingX,pointer.pendingY),dragScale=dragN>speed?speed/dragN:1,dx=pointer.pendingX*dragScale,dy=pointer.pendingY*dragScale;pointer.pendingX-=dx;pointer.pendingY-=dy;if(!pointer.active&&Math.abs(pointer.pendingX)<.001&&Math.abs(pointer.pendingY)<.001){pointer.pendingX=0;pointer.pendingY=0;inputSource='keyboard';}
     return {dx:dx,dy:dy,focus:focus};
   }
   function sample(name,value){var list=samples[name];list.push(value);if(list.length>maxSamples)list.shift();}
@@ -261,7 +276,7 @@
     if(mode==='playing'){
       if(elapsed>.75){droppedGaps++;lastGapReason='frame-gap-'+Math.round(elapsed*1000)+'ms';pause('화면이 오래 멈춰 전투를 일시정지했습니다.');}
       else {
-        sample('frame',elapsed*1000);peakFrame=Math.max(peakFrame,elapsed*1000);if(elapsed>.08){droppedGaps++;pointer.pendingX=0;pointer.pendingY=0;}accumulator=Math.min(accumulator+elapsed,3/60);
+        sample('frame',elapsed*1000);peakFrame=Math.max(peakFrame,elapsed*1000);if(elapsed>.08){droppedGaps++;if(pointer.active){pointer.pendingX=0;pointer.pendingY=0;}}accumulator=Math.min(accumulator+elapsed,3/60);
         var startUpdate=performance.now(),steps=0;
         try{while(accumulator>=1/60&&steps<5&&mode==='playing'){if(!ensureEncounterArt()){accumulator=0;break;}var previousStage=world.stage;core.step(world,inputForStep(),1/60);accumulator-=1/60;steps++;totalSteps++;if(previousStage!=='bossIntro'&&world.stage==='bossIntro'){clearInput();if(skipIntroForRun&&seenBossIntros[introKey()]&&core.skipBossIntro)core.skipBossIntro(world);}if(previousStage==='bossIntro'&&world.stage!=='bossIntro'){seenBossIntros[introKey()]=true;clearInput();}if(world.stage==='won'||world.stage==='lost')break;}}
         catch(e){showError(e);}
@@ -277,7 +292,7 @@
   }
   function pointerDown(e){if(mode!=='playing'||(world&&world.stage==='bossIntro')||pointer.active||e.button>0)return;e.preventDefault();unlockAudio();pointer.active=true;pointer.id=e.pointerId;pointer.lastX=e.clientX;pointer.lastY=e.clientY;pointer.pendingX=0;pointer.pendingY=0;pointer.lastMove=performance.now();inputSource='pointer';$('touch-pad').classList.add('active');try{e.currentTarget.setPointerCapture(e.pointerId);}catch(ignore){}}
   function pointerMove(e){if(!pointer.active||pointer.id!==e.pointerId||mode!=='playing')return;e.preventDefault();var rect=$('game-canvas').getBoundingClientRect(),scale=360/rect.width*Number(settings.sensitivity),dx=(e.clientX-pointer.lastX)*scale,dy=(e.clientY-pointer.lastY)*scale;pointer.lastX=e.clientX;pointer.lastY=e.clientY;pointer.lastMove=performance.now();inputSource='pointer';pointer.pendingX=Math.max(-60,Math.min(60,pointer.pendingX+dx));pointer.pendingY=Math.max(-60,Math.min(60,pointer.pendingY+dy));}
-  function pointerUp(e){if(e.pointerId!==pointer.id)return;pointer.active=false;pointer.id=null;pointer.pendingX=0;pointer.pendingY=0;inputSource='keyboard';$('touch-pad').classList.remove('active');}
+  function pointerUp(e){if(e.pointerId!==pointer.id)return;if(e.type==='pointerup')pointerMove(e);pointer.active=false;pointer.id=null;if(e.type!=='pointerup'){pointer.pendingX=0;pointer.pendingY=0;inputSource='keyboard';}$('touch-pad').classList.remove('active');}
   var layoutWidth=global.innerWidth;
   function resize(){if(mobileRuntime&&Math.abs(global.innerWidth-layoutWidth)<40){fit();return;}layoutWidth=global.innerWidth;if(mode==='playing')pause('화면 크기가 바뀌어 전투를 일시정지했습니다.');clearInput();accumulator=0;lastStamp=0;fit();}
   function openSettings(){settingsFocus=document.activeElement;settingsWasPlaying=mode==='playing';if(settingsWasPlaying)pause();setHidden('settings-modal',false);$('settings-close').focus({preventScroll:true});}
@@ -313,7 +328,7 @@
       var media=global.HapilMedia||{};setSkillEmblems(media);var bootKeys=mobileAssetKeys(0);await loadImagesBounded(bootKeys);if(bootKeys.some(function(k){return !images[k];}))throw new Error('시작 구간의 이미지를 불러오지 못했습니다. 연결을 확인하고 다시 열어주세요.');encounterArtGroup=0;
       if(assetErrors.indexOf('gunner')>=0||assetErrors.indexOf('boss')>=0)throw new Error('캐릭터 이미지를 읽지 못했습니다. media 폴더가 포함되어 있는지 확인하거나 단일 HTML 실행 파일을 사용해주세요.');
       renderer=global.HapilRenderer.create($('game-canvas'),images);fit();buildAudio(media);raf=requestAnimationFrame(frame);
-      if(store){await store.open();var data=await store.load();if(data){settings=Object.assign({},defaults,data.settings||{});profile=data.profile||{};savedCheckpoint=data.checkpoint||null;}}if(mobileRuntime)settings.quality='low';syncSettings();updateStory();fit();updateProfile();updateStorage();setHidden('continue-button',!savedCheckpoint);ready=true;booting=false;$('start-button').disabled=false;$('practice-button').disabled=false;
+      if(store){await store.open();var data=await store.load();if(data){if(data.hasStoredState===false){await store.saveSettings(settings);}else settings=Object.assign({},defaults,data.settings||{});profile=data.profile||{};savedCheckpoint=data.checkpoint||null;}}syncSettings();updateStory();fit();updateProfile();updateStorage();setHidden('continue-button',!savedCheckpoint);ready=true;booting=false;$('start-button').disabled=false;$('practice-button').disabled=false;
       if(assetErrors.length)toast('일부 이미지를 읽지 못해 기본 연출로 표시합니다.');
     }catch(e){booting=false;showError(e);}
   }

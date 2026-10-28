@@ -77,7 +77,8 @@
       var candidate=global.HapilStoryCombat.create(currentSpec,{runId:'art-probe',seed:1,difficulty:'normal'});
       var rendered=renderer.render(candidate,currentSpec,currentArt);
       if(rendered&&rendered.ready===false)throw new Error('구역 배경 또는 시각 자산 검사를 마치지 못했습니다.');
-      if(review){reviewWorld=candidate;}else{reviewWorld=null;if(!action(retry?session.retry({difficulty:'normal'}):session.start(id,{difficulty:'normal'})))return;}
+      if(review){reviewWorld=candidate;}else{reviewWorld=null;if(!action(retry?session.retry({difficulty:'normal'}):session.start(id,{difficulty:'normal'}))){document.body.dataset.battle='false';$('reader').hidden=false;$('battle').hidden=true;return;}}
+      clearInput();
       text('battle-name',currentSpec.name||id);running=true;paused=false;last=performance.now();accumulator=0;lastPaint=0;
       $('resume').hidden=true;$('retry').hidden=true;$('return-reader').disabled=!review;text('battle-state',review?'자산 검수 전투 · 진행·저장에 반영하지 않습니다.':'자동 공격 · 화살표/WASD · Shift 정밀 이동');
       requestAnimationFrame(frame);
@@ -102,7 +103,7 @@
     }
     var w=reviewWorld||session.world();
     if(w&&w.status!=='active'){
-      running=false;paused=false;$('resume').hidden=true;$('return-reader').disabled=false;
+      running=false;paused=false;clearInput();$('resume').hidden=true;$('return-reader').disabled=false;
       $('retry').hidden=w.status!=='defeated';text('battle-state',reviewWorld?'자산 검수 종료 · 본편 진행 기록은 바뀌지 않았습니다.':w.status==='defeated'?'기억은 남아 있습니다. 구역 시작부터 다시 도전할 수 있습니다.':session.status().error?'전투 결과 저장 대기 · 다시 저장해 주세요.':'전투 완료 · 후속 기억으로 이어집니다.');refresh();return;
     }
     if(!paused)requestAnimationFrame(frame);
@@ -140,7 +141,8 @@
   [$('story-canvas'),$('touch-pad')].forEach(function(el){
     el.addEventListener('pointerdown',function(e){if(!running||paused||drag.id!==null)return;drag.id=e.pointerId;drag.x=e.clientX;drag.y=e.clientY;el.setPointerCapture(e.pointerId);});
     el.addEventListener('pointermove',function(e){if(e.pointerId!==drag.id)return;var scale=360/$('story-canvas').getBoundingClientRect().width;drag.dx+=(e.clientX-drag.x)*scale;drag.dy+=(e.clientY-drag.y)*scale;drag.x=e.clientX;drag.y=e.clientY;});
-    ['pointerup','pointercancel','lostpointercapture'].forEach(function(name){el.addEventListener(name,function(e){if(e.pointerId===drag.id){drag.id=null;drag.dx=drag.dy=0;}});});
+    el.addEventListener('pointerup',function(e){if(e.pointerId===drag.id){var scale=360/$('story-canvas').getBoundingClientRect().width;drag.dx+=(e.clientX-drag.x)*scale;drag.dy+=(e.clientY-drag.y)*scale;drag.id=null;}});
+    ['pointercancel','lostpointercapture'].forEach(function(name){el.addEventListener(name,function(e){if(e.pointerId===drag.id){drag.id=null;drag.dx=drag.dy=0;}});});
   });
   boot();
 }(window));

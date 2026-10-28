@@ -44,7 +44,7 @@
     var b = { id: id, x: 180, y: 116, px: 180, py: 116, hp: hp, maxHp: hp, phase: phase, opacity: 1, r: 29, isBoss: true };
     if (w.campaign) {
       var info = encounter(w);
-      Object.assign(b, { kind: info.id, name: info.name, artKey: info.artKey, action: 'move', actionProgress: 0, lean: 0 });
+      Object.assign(b, { kind: info.id, name: info.name, artKey: info.artKey, action: 'move', actionProgress: 0, lean: 0, releaseTick: -1 });
     }
     return b;
   }
@@ -119,6 +119,9 @@
         added.accelerateAt = s.accelerateAt || 0.65;
       }
     }
+    // Presentation follows actual successful emission, including deferred
+    // groups; this marker does not alter projectile or damage simulation.
+    if (specs.length && w.campaign && w.stage === 'boss' && w.boss && specs.some(function(s) { return s.ownerId === w.boss.id; })) w.boss.releaseTick = w.tick;
     return true;
   }
   function fanSpecs(x, y, angle, count, spread, speed, kind, color, ownerId) {
@@ -544,6 +547,7 @@
     for (var i = w.hazards.length - 1; i >= 0; i--) {
       var h = w.hazards[i];
       if (w.tick >= h.expireAt) { remove(w, 'hazards', i); continue; }
+      if (w.tick === h.activeAt && w.campaign && w.stage === 'boss' && w.boss && h.ownerId === w.boss.id) w.boss.releaseTick = w.tick;
       if (w.tick < h.activeAt) { h.phase = 'warning'; h.progress = clamp((w.tick - h.born) / h.warningTicks, 0, 1); }
       else if (w.tick < h.fadeAt) { h.phase = 'active'; h.progress = clamp((w.tick - h.activeAt) / h.activeTicks, 0, 1); }
       else { h.phase = 'fade'; h.progress = clamp((w.tick - h.fadeAt) / h.fadeTicks, 0, 1); }
