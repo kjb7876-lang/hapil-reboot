@@ -20,6 +20,15 @@
     Object.freeze({ id:'mask', name:'초천사의 웃는 가면', artKey:'actorMaskIdle', zone:'거짓 천국의 문', waves:Object.freeze(['추락 · 병원 복도','주사실의 봉인 기억','환자와 중독의 도시']), patterns:Object.freeze(['흰 날개의 약속','완벽해야 한다는 명령','웃는 가면의 균열']), hp:Object.freeze([1500,1650,1800]) }),
     Object.freeze({ id:'lucifer', name:'코스믹 가면 루시퍼', artKey:'actorLuciferIdle', zone:'가면 안의 우주', waves:Object.freeze(['부정의 행렬','오만의 흰 가면','도움을 청하는 문']), patterns:Object.freeze(['천구 · 거짓된 별자리','이면 · 수많은 나의 얼굴','합일 · J의 인장']), hp:Object.freeze([1600,1800,2000]) })
   ]);
+  // Original gameplay compositions use locked aim, alternating emission and
+  // visible recovery windows. These labels describe combat, not extra lore.
+  var CAMPAIGN_SIGNATURES = Object.freeze([
+    Object.freeze({id:'violet-thread-gate',label:'교차 직조',hint:'보라 실 사이의 넓은 틈을 따라가세요'}),
+    Object.freeze({id:'horn-memory-echo',label:'잔류 기억 고리',hint:'느린 고리가 빨라지기 전, 열린 틈으로 이동하세요'}),
+    Object.freeze({id:'balrog-seven-pillars',label:'일곱 기둥의 봉인',hint:'일곱 기둥 중 빛나지 않는 두 길을 찾으세요'}),
+    Object.freeze({id:'mask-alternating-wings',label:'엇갈린 날개의 틈',hint:'양쪽 깃 사이에서 움직이는 틈을 따라가세요'}),
+    Object.freeze({id:'lucifer-fivefold-sky',label:'다섯 겹 별자리',hint:'다섯 갈래 별빛 사이의 틈과 고정된 광선을 구분하세요'})
+  ]);
   var runSequence = 0;
   function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
   function finite(n) { return typeof n === 'number' && Number.isFinite(n); }
@@ -44,7 +53,10 @@
     var b = { id: id, x: 180, y: 116, px: 180, py: 116, hp: hp, maxHp: hp, phase: phase, opacity: 1, r: 29, isBoss: true };
     if (w.campaign) {
       var info = encounter(w);
-      Object.assign(b, { kind: info.id, name: info.name, artKey: info.artKey, action: 'move', actionProgress: 0, lean: 0, releaseTick: -1 });
+      Object.assign(b, { kind: info.id, name: info.name, artKey: info.artKey, action: 'move', actionProgress: 0, lean: 0, releaseTick: -1,
+        specialPatternId: phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].id:'',
+        specialPatternLabel: phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].label:'',
+        patternHint: phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].hint:'' });
     }
     return b;
   }
@@ -113,6 +125,7 @@
         halfLength: kind === 'blade' ? 13 : kind === 'needle' ? 9 : 0,
         angle: s.angle, kind: kind, color: s.color || '#c4a2ff', age: 0, ttl: s.ttl || 6.4,
         ownerId: s.ownerId || 0, grazed: false });
+      if (added && s.patternId) { added.patternId = s.patternId; added.paletteSlot = s.paletteSlot || 0; }
       if (added && s.acceleration) {
         added.acceleration = s.acceleration * (w.difficulty === 'gentle' ? 0.82 : 1);
         added.maxSpeed = (s.maxSpeed || 150) * (w.difficulty === 'gentle' ? 0.82 : 1);
@@ -146,6 +159,7 @@
       // The spatial-horror text directs attention to Balrog's traces on the
       // floor before its moving shadow. This labels the existing committed
       // laser warning only; geometry, timing, damage and bullet count do not change.
+      if (hazard && s.patternId) { hazard.patternId = s.patternId; hazard.paletteSlot = s.paletteSlot || 0; }
       if (hazard && w.campaign && w.bossIndex === 2) {
         hazard.telegraphKind = 'floor-scar';
         hazard.telegraphHint = '검빛이 켜지기 전, 바닥의 흔적을 읽으세요';
@@ -373,6 +387,91 @@
     if (acceleration) specs.forEach(function (s) { s.acceleration = acceleration; s.maxSpeed = 142; s.accelerateAt = .75; });
     emit(w, specs);
   }
+  function signatureMark(w, specs, slot) {
+    var id = CAMPAIGN_SIGNATURES[w.bossIndex].id;
+    specs.forEach(function(s) { s.patternId = id; s.paletteSlot = slot || 0; });
+    return specs;
+  }
+  function signatureArc(w, x, y, count, angle, spread, speed, kind, color, gapX, gapHalf, slot, accelerate) {
+    var gap = Math.atan2(540 - y, gapX - x);
+    var specs = fanSpecs(x, y, angle, count, spread, speed, kind, color, w.boss.id).filter(function(s) {
+      return Math.abs(Math.atan2(Math.sin(s.angle-gap),Math.cos(s.angle-gap))) >= gapHalf;
+    });
+    if (accelerate) specs.forEach(function(s) { s.acceleration=accelerate; s.accelerateAt=1.15; s.maxSpeed=112; });
+    emit(w,signatureMark(w,specs,slot));
+  }
+  function signatureRing(w, count, speed, angle, gapX, gapHalf, color, slot, accelerate) {
+    var b=w.boss, gap=Math.atan2(540-b.y,gapX-b.x),specs=[];
+    for(var i=0;i<count;i++) {
+      var a=angle+i*TAU/count;
+      if(Math.abs(Math.atan2(Math.sin(a-gap),Math.cos(a-gap)))<gapHalf)continue;
+      var spec={x:b.x,y:b.y+12,angle:a,speed:speed,kind:'orb',color:color,ownerId:b.id};
+      if(accelerate){spec.acceleration=accelerate;spec.accelerateAt=1.15;spec.maxSpeed=112;}
+      specs.push(spec);
+    }
+    emit(w,signatureMark(w,specs,slot));
+  }
+  function campaignSignature(w, within, cycle) {
+    var b=w.boss, down=Math.PI/2, pulse=within-108, attacking=within>=108&&within<264;
+    var gapX=180+Math.sin(cycle*.8)*100;
+    if(w.bossIndex===0) {
+      // Paired wing origins weave independently. Their aperture is committed
+      // to a scene-space lane, not continuously steered toward the player.
+      if(within===54) {
+        var a=Math.atan2(540-b.y,gapX-b.x);
+        warning(w,signatureMark(w,[
+          {x:b.x,y:b.y+8,angle:a-.42,width:6,color:'#b08adf',ownerId:b.id},
+          {x:b.x,y:b.y+8,angle:a+.42,width:6,color:'#d8eaff',ownerId:b.id}
+        ],0),66,w.patternName);
+      }
+      if(attacking&&pulse%36===0) {
+        var turn=Math.sin(pulse*.024+cycle*.7)*.28;
+        signatureArc(w,b.x-32,b.y+8,11,down+turn,.13,96,'needle','#b08adf',gapX,.20,0,0);
+        signatureArc(w,b.x+32,b.y+8,11,down-turn,.13,86,'needle','#d8eaff',gapX,.20,1,0);
+      }
+    } else if(w.bossIndex===1) {
+      // A slow afterimage accelerates only after 1.15s; a separated faster
+      // echo makes the speed change legible without a dense bullet wall.
+      if(attacking&&pulse%90===0) {
+        signatureRing(w,24,42,Math.atan2(540-b.y,180-b.x)+pulse*.0005,gapX,.17,'#80c9a5',0,34);
+        signatureRing(w,18,82,Math.atan2(540-b.y,180-b.x)+.09+pulse*.0005,gapX,.17,'#d9b86c',1,0);
+      }
+    } else if(w.bossIndex===2) {
+      // Seven authored pillar positions, five rays: two adjacent lanes stay
+      // open. The full 1.3s warning precedes every committed damaging ray.
+      if(within===54) {
+        var open=cycle%2?4:1, specs=[];
+        for(var i=0;i<7;i++)if(i!==open&&i!==open+1)specs.push({x:36+i*48,y:100,angle:down,width:8,color:'#f79858',ownerId:b.id});
+        warning(w,signatureMark(w,specs,0),78,w.patternName);
+      }
+      // Follow-up embers start after every pillar is harmless, including the
+      // longer gentle warning. They do not fill the beam's recovery interval.
+      if(within===186||within===240)signatureArc(w,b.x,b.y+12,15,down,.13,88,'orb','#ffe3a0',cycle%2?252:108,.22,1,0);
+    } else if(w.bossIndex===3) {
+      if(attacking&&pulse%52===0) {
+        var beat=Math.floor(pulse/52),lead=beat%2?1:-1;
+        // The lead changes sides on each beat. Paired gaps keep a mobile-sized
+        // route while the different flight speeds reveal the alternating wings.
+        signatureArc(w,b.x+lead*44,b.y+4,11,down+lead*.22,.13,94,'needle','#f0db9f',gapX,.21,0,0);
+        signatureArc(w,b.x-lead*44,b.y+4,9,down-lead*.22,.15,72,'needle','#e4b2cc',gapX,.21,1,0);
+      }
+    } else {
+      if(within===54) {
+        // Side rays are fixed at creation and frame the constellation opening.
+        warning(w,signatureMark(w,[
+          {x:40,y:104,angle:Math.atan2(436,54),width:6,color:'#b2a1ed',ownerId:b.id},
+          {x:320,y:104,angle:Math.atan2(436,-54),width:6,color:'#edca83',ownerId:b.id}
+        ],0),78,w.patternName);
+      }
+      if(attacking&&pulse%54===0) {
+        for(var point=0;point<5;point++) {
+          var orbit=-Math.PI/2+point*TAU/5+cycle*.22;
+          var ox=b.x+Math.cos(orbit)*38,oy=b.y+Math.sin(orbit)*22;
+          signatureArc(w,ox,oy,7,down+Math.sin(orbit+pulse*.012)*.26,.16,76+point*3,'orb',point%2?'#edca83':'#b2a1ed',gapX,.22,point%2,0);
+        }
+      }
+    }
+  }
   function campaignPattern(w) {
     var b = w.boss, t = Math.round(w.phaseTime * 60) - 1, cycle = Math.floor(t / 360), within = t % 360;
     var anchors = [180, 112, 236, 156, 218], offset = w.phase + w.bossIndex;
@@ -388,6 +487,10 @@
     var gap = down + Math.sin(cycle * 1.7 + w.phase) * .22;
     var attacking = within >= 108 && within < 264, pulse = within - 108;
     if (within === 54) effect(w, b.x, b.y, 'bossCharge', 25, w.bossIndex === 2 ? '#ffbb7e' : w.bossIndex === 1 ? '#8de0b7' : '#d1b2ff', .9);
+    b.specialPatternId=w.phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].id:'';
+    b.specialPatternLabel=w.phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].label:'';
+    b.patternHint=w.phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].hint:'';
+    if(w.phase===2){campaignSignature(w,within,cycle);return;}
     if (w.bossIndex === 0) {
       if (w.phase === 0) {
         // Two rotating petals leave an authored aperture; there is no row of
@@ -400,12 +503,6 @@
       } else if (w.phase === 1) {
         if (within === 54 || within === 150) warning(w, fanSpecs(b.x, b.y + 12, aimAt, 3, .25, 0, 'blade', '#ddb3ff', b.id), 54, w.patternName);
         if (attacking && pulse % 72 === 0) ring(w, 28, 94, cycle * .22 + pulse * .003, gap, .34, 'orb', '#bfaaff');
-      } else {
-        if (attacking && pulse % 36 === 0) {
-          campaignArc(w, b.x - 40, b.y, 5, 1.02 + Math.sin(t * .011) * .18, .14, 102, 'needle', '#d7b5ff', null, 0, 0);
-          campaignArc(w, b.x + 40, b.y, 5, Math.PI - 1.02 - Math.sin(t * .011) * .18, .14, 102, 'needle', '#9dd6ff', null, 0, 0);
-        }
-        if (within === 54) warning(w, fanSpecs(b.x, b.y, aimAt, 3, .30, 0, 'needle', '#eeb7de', b.id), 66, w.patternName);
       }
     } else if (w.bossIndex === 1) {
       if (w.phase === 0) {
@@ -419,9 +516,6 @@
           campaignArc(w, b.x - 45, b.y, 5, 1.08 + Math.sin(cycle + pulse * .01) * .16, .19, 91, 'orb', '#a6e3cb', null, 0, 0);
           campaignArc(w, b.x + 45, b.y, 5, 2.06 - Math.sin(cycle + pulse * .01) * .16, .19, 91, 'orb', '#d2b9e7', null, 0, 0);
         }
-      } else {
-        if (attacking && pulse % 60 === 0) ring(w, 30, 100, cycle * .31 + pulse * .0025, gap, .37, 'orb', '#a4dcb0');
-        if (within === 54 || within === 174) warning(w, fanSpecs(b.x, b.y, aimAt, 3, .26, 0, 'needle', '#d7c4ed', b.id), 60, w.patternName);
       }
     } else if (w.bossIndex === 2) {
       if (w.phase === 0) {
@@ -431,12 +525,6 @@
         if (attacking && pulse % 48 === 0) {
           campaignArc(w, b.x - 32, b.y, 13, down + .19 * Math.sin(t * .012), .16, 62, 'orb', '#ffb181', gap, .28, 23);
           campaignArc(w, b.x + 32, b.y, 9, down - .24 * Math.sin(t * .012), .19, 91, 'orb', '#f3d18e', gap, .28, 0);
-        }
-      } else {
-        if (within === 54) warning(w, fanSpecs(b.x, b.y + 8, aimAt, 3, .29, 0, 'blade', '#ffbf91', b.id), 66, w.patternName);
-        if (attacking && pulse % 60 === 0) {
-          ring(w, 28, 96, cycle * .37 + pulse * .004, gap, .38, 'orb', '#f0bf8c');
-          campaignArc(w, b.x, b.y, 9, down + Math.sin(t * .014) * .3, .17, 80, 'orb', '#d6b3ed', gap, .28, 16);
         }
       }
     } else if (w.bossIndex === 3) {
@@ -450,10 +538,6 @@
         if (within===54) warning(w,fanSpecs(b.x,b.y,aimAt,3,.32,0,'needle','#f5d4a0',b.id),72,w.patternName);
         if(attacking&&pulse%66===0) ring(w,32,82,cycle*.25,gap,.36,'orb','#f6e2aa');
       }
-      if (w.phase === 2 && attacking && pulse%48===0) {
-        ring(w,28,72,cycle*.21+pulse*.005,gap,.35,'orb','#cbb5fa');
-        campaignArc(w,b.x,b.y,7,down,.21,108,'blade','#f3c0d5',gap,.30,0);
-      }
     } else {
       // The three signatures differ in geometry and rhythm, not only tint.
       if (w.phase===0 && attacking && pulse%30===0) {
@@ -464,12 +548,6 @@
         if(attacking&&pulse%48===0){
           campaignArc(w,b.x-42,b.y,8,1.18+Math.sin(pulse*.012)*.18,.16,90,'needle','#d2c0ff',gap,.28,0);
           campaignArc(w,b.x+42,b.y,8,Math.PI-1.18-Math.sin(pulse*.012)*.18,.16,90,'needle','#ffcfb2',gap,.28,0);
-        }
-      } else if(w.phase===2) {
-        if(within===54) warning(w,fanSpecs(b.x,b.y,aimAt,3,.34,0,'blade','#e8c5ff',b.id),78,w.patternName);
-        if(attacking&&pulse%54===0){
-          ring(w,36,67,cycle*.32+pulse*.004,gap,.38,'orb','#f9dcac');
-          campaignArc(w,b.x,b.y,9,down,.20,96,'blade','#b9dbff',gap,.32,0);
         }
       }
     }
@@ -737,7 +815,7 @@
     return w;
   }
   return Object.freeze({ W: W, H: H, FIXED_DT: FIXED_DT, RULESET_VERSION: RULESET, MECHANICS_REVISION: 2, CAPS: CAPS,
-    CAMPAIGN_BOSSES: CAMPAIGN_BOSSES, CAMPAIGN_REVISION: 2,
+    CAMPAIGN_BOSSES: CAMPAIGN_BOSSES, CAMPAIGN_SIGNATURES: CAMPAIGN_SIGNATURES, CAMPAIGN_REVISION: 2,
     createRun: createRun, step: step, checkpoint: checkpoint, restoreCheckpoint: restoreCheckpoint, skipBossIntro: skipBossIntro,
     geometry: Object.freeze({ segmentDistanceSquared: segmentDistanceSquared, segmentPairDistanceSquared: segmentPairDistanceSquared, sweptCircleHit: sweptCircleHit, projectileDistanceSquared: projectileDistanceSquared, hazardDistanceSquared: hazardDistanceSquared }) });
 }));

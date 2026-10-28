@@ -1,0 +1,723 @@
+{
+  "capturedAt": "2026-10-28T14:42:56.580Z",
+  "codeHashes": {
+    "src/core.js": "2fa6e24276f7914334a681cd5ca13049322e9e94bf1c779f90efe02eebe75a2d",
+    "src/boss-motion.js": "e2d1bde92838884382e30b5d8de6549cf9071ac9b21c84b7f9cb8d4bc63160b1",
+    "src/actors.js": "8ef099be652ce69cb4fccc5ddf9d8f58a082ccd31929ed1df0dfffef9a33aca8",
+    "src/projectiles.js": "d4ff9c2e1d9dc669f94ce4b364b8e317d4fdb23fa3031251f48741ae94ee307a",
+    "src/render.js": "53a77fc1aef4ce1d47c0865a216bdb74082896ece2e3a42b91b25850f4a957b7"
+  },
+  "scope": "Native CPU Canvas synchronous raster at 360x640, DPR1. Actual retained Drive projectile, boss, player, and forest/ruins/cave art; connected-maptiles omitted (boss0 uses retained terrain fallback), all current presentation modules. Five warmup and fifty measured draws per case. Rendering-only fixed world snapshots.",
+  "host": {
+    "platform": "linux",
+    "arch": "x64",
+    "node": "v24.22.1",
+    "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+    "logicalCPUs": 9
+  },
+  "fixture": "Explicit phase-3 practice fixture, normal HP and collision, no autoAttack or skills. Pre-planned moving route uses ordinary focus speed. Observed peak selected over1800 simulationticks; this is not natural progression. Synthetic saturation is impossible density in the observed five specials and deliberately overlaps imagery.",
+  "exclusions": [
+    "browser",
+    "headless-browser",
+    "mobile-emulation",
+    "actual-mobile",
+    "software-GPU",
+    "hardware-GPU",
+    "natural-campaign-clear",
+    "simulation-update-timing"
+  ],
+  "rows": [
+    {
+      "boss": "violet",
+      "case": "phase-3-observed-peak",
+      "quality": "normal",
+      "bullets": 85,
+      "hazards": 0,
+      "samples": 50,
+      "p50Ms": 5.383,
+      "p95Ms": 8.546,
+      "maxMs": 15,
+      "lastFrame": {
+        "sourceBulletDraws": 85,
+        "assetLaserDraws": 0,
+        "assetLaserSlices": 0,
+        "cacheEntries": 4,
+        "cacheBytes": 38720,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 85,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "violet",
+      "case": "phase-3-observed-peak",
+      "quality": "low",
+      "bullets": 85,
+      "hazards": 0,
+      "samples": 50,
+      "p50Ms": 1.936,
+      "p95Ms": 3.431,
+      "maxMs": 5.151,
+      "lastFrame": {
+        "sourceBulletDraws": 85,
+        "assetLaserDraws": 0,
+        "assetLaserSlices": 0,
+        "cacheEntries": 4,
+        "cacheBytes": 38720,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 85,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "violet",
+      "case": "synthetic-capacity-saturation",
+      "quality": "normal",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 15.049,
+      "p95Ms": 19.096,
+      "maxMs": 57.138,
+      "lastFrame": {
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 10,
+        "cacheBytes": 182360,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 85,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "violet",
+      "case": "synthetic-capacity-saturation",
+      "quality": "low",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 9.542,
+      "p95Ms": 13.889,
+      "maxMs": 16.398,
+      "lastFrame": {
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 10,
+        "cacheBytes": 182360,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 85,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "horn",
+      "case": "phase-3-observed-peak",
+      "quality": "normal",
+      "bullets": 83,
+      "hazards": 0,
+      "samples": 50,
+      "p50Ms": 2.143,
+      "p95Ms": 3.282,
+      "maxMs": 3.474,
+      "lastFrame": {
+        "sourceBulletDraws": 83,
+        "assetLaserDraws": 0,
+        "assetLaserSlices": 0,
+        "cacheEntries": 4,
+        "cacheBytes": 28360,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 83,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "horn",
+      "case": "phase-3-observed-peak",
+      "quality": "low",
+      "bullets": 83,
+      "hazards": 0,
+      "samples": 50,
+      "p50Ms": 1.807,
+      "p95Ms": 3.586,
+      "maxMs": 6.93,
+      "lastFrame": {
+        "sourceBulletDraws": 83,
+        "assetLaserDraws": 0,
+        "assetLaserSlices": 0,
+        "cacheEntries": 4,
+        "cacheBytes": 28360,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 83,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "horn",
+      "case": "synthetic-capacity-saturation",
+      "quality": "normal",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 9.71,
+      "p95Ms": 14.668,
+      "maxMs": 16.903,
+      "lastFrame": {
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 8,
+        "cacheBytes": 73536,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 83,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "horn",
+      "case": "synthetic-capacity-saturation",
+      "quality": "low",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 9.751,
+      "p95Ms": 12.112,
+      "maxMs": 12.58,
+      "lastFrame": {
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 8,
+        "cacheBytes": 73536,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 83,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "balrog",
+      "case": "phase-3-observed-peak",
+      "quality": "normal",
+      "bullets": 18,
+      "hazards": 5,
+      "samples": 50,
+      "p50Ms": 1.559,
+      "p95Ms": 2.123,
+      "maxMs": 3.25,
+      "lastFrame": {
+        "sourceBulletDraws": 18,
+        "assetLaserDraws": 0,
+        "assetLaserSlices": 0,
+        "cacheEntries": 2,
+        "cacheBytes": 14180,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 28,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "balrog",
+      "case": "phase-3-observed-peak",
+      "quality": "low",
+      "bullets": 18,
+      "hazards": 5,
+      "samples": 50,
+      "p50Ms": 1.416,
+      "p95Ms": 2.468,
+      "maxMs": 3.694,
+      "lastFrame": {
+        "sourceBulletDraws": 18,
+        "assetLaserDraws": 0,
+        "assetLaserSlices": 0,
+        "cacheEntries": 2,
+        "cacheBytes": 14180,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 28,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "balrog",
+      "case": "synthetic-capacity-saturation",
+      "quality": "normal",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 11.674,
+      "p95Ms": 17.25,
+      "maxMs": 22.592,
+      "lastFrame": {
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 10,
+        "cacheBytes": 97280,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 28,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "balrog",
+      "case": "synthetic-capacity-saturation",
+      "quality": "low",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 10.214,
+      "p95Ms": 16.846,
+      "maxMs": 22.149,
+      "lastFrame": {
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 10,
+        "cacheBytes": 97280,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 28,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "mask",
+      "case": "phase-3-observed-peak",
+      "quality": "normal",
+      "bullets": 49,
+      "hazards": 0,
+      "samples": 50,
+      "p50Ms": 0.855,
+      "p95Ms": 1.552,
+      "maxMs": 2.063,
+      "lastFrame": {
+        "sourceBulletDraws": 49,
+        "assetLaserDraws": 0,
+        "assetLaserSlices": 0,
+        "cacheEntries": 4,
+        "cacheBytes": 28352,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 49,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "mask",
+      "case": "phase-3-observed-peak",
+      "quality": "low",
+      "bullets": 49,
+      "hazards": 0,
+      "samples": 50,
+      "p50Ms": 1.117,
+      "p95Ms": 3.779,
+      "maxMs": 4.591,
+      "lastFrame": {
+        "sourceBulletDraws": 49,
+        "assetLaserDraws": 0,
+        "assetLaserSlices": 0,
+        "cacheEntries": 4,
+        "cacheBytes": 28352,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 49,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "mask",
+      "case": "synthetic-capacity-saturation",
+      "quality": "normal",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 9.465,
+      "p95Ms": 16.727,
+      "maxMs": 22.321,
+      "lastFrame": {
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 10,
+        "cacheBytes": 86912,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 49,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "mask",
+      "case": "synthetic-capacity-saturation",
+      "quality": "low",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 10.311,
+      "p95Ms": 15.118,
+      "maxMs": 20.483,
+      "lastFrame": {
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 10,
+        "cacheBytes": 86912,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 49,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "lucifer",
+      "case": "phase-3-observed-peak",
+      "quality": "normal",
+      "bullets": 78,
+      "hazards": 2,
+      "samples": 50,
+      "p50Ms": 1.476,
+      "p95Ms": 3.899,
+      "maxMs": 5.264,
+      "lastFrame": {
+        "sourceBulletDraws": 78,
+        "assetLaserDraws": 2,
+        "assetLaserSlices": 6,
+        "cacheEntries": 4,
+        "cacheBytes": 113440,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 83,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "lucifer",
+      "case": "phase-3-observed-peak",
+      "quality": "low",
+      "bullets": 78,
+      "hazards": 2,
+      "samples": 50,
+      "p50Ms": 1.486,
+      "p95Ms": 2.451,
+      "maxMs": 5.485,
+      "lastFrame": {
+        "sourceBulletDraws": 78,
+        "assetLaserDraws": 2,
+        "assetLaserSlices": 6,
+        "cacheEntries": 4,
+        "cacheBytes": 113440,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 83,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "lucifer",
+      "case": "synthetic-capacity-saturation",
+      "quality": "normal",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 9.512,
+      "p95Ms": 13.626,
+      "maxMs": 16.942,
+      "lastFrame": {
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 8,
+        "cacheBytes": 294144,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 83,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "lucifer",
+      "case": "synthetic-capacity-saturation",
+      "quality": "low",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 8.95,
+      "p95Ms": 13.488,
+      "maxMs": 15.303,
+      "lastFrame": {
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 8,
+        "cacheBytes": 294144,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 83,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    }
+  ],
+  "sources": [
+    {
+      "key": "gunner",
+      "path": "media/gunner.webp",
+      "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111"
+    },
+    {
+      "key": "cave",
+      "path": "media/cave.webp",
+      "sha256": "921ac7d2a2893aa53374a459b27d9ae87e4cc5c50cbdf0281259875820e72526"
+    },
+    {
+      "key": "forest",
+      "path": "media/forest.jpg",
+      "sha256": "e4d0f6a7803d51fc23b5b9af629d73f3489e1b450d294b1358499b84b6c99562"
+    },
+    {
+      "key": "ruins",
+      "path": "media/ruins.webp",
+      "sha256": "1bf412f579476a90dc6969e7d89385ca096273380d615d33e838dac5f87bec64"
+    },
+    {
+      "key": "fxWindArrow8V6",
+      "path": "media/fx-v6/wind-arrow-8.webp",
+      "sha256": "0fcc33586f03cd144abe418b7774aae990336ea5d1c2f7d9ea684993d956a0f1"
+    },
+    {
+      "key": "bossMotionViolet",
+      "path": "media/boss-motion-v8/violet-atlas-512.png",
+      "sha256": "8271ccb891a9ea88cee33aec9052ac0b427b3b4ace0b241f2dd04cdc136f6f24"
+    },
+    {
+      "key": "bossMotionHorn",
+      "path": "media/boss-motion-v8/horn-atlas-512.png",
+      "sha256": "1c3853aa55e9f6cf205329f361c83eac2422cf0e85275956769e88f503529d27"
+    },
+    {
+      "key": "bossMotionBalrog",
+      "path": "media/boss-motion-v8/balrog-atlas-512.png",
+      "sha256": "3300f7c753b275d8c7c96e08e084cf800418ae8763b578519dc39386625ad667"
+    },
+    {
+      "key": "bossMotionMask",
+      "path": "media/boss-motion-v8/mask-atlas-512.png",
+      "sha256": "460a8ea40d084791a0856a4a8d057df7f7e95817637dda3a8059e506cfe00ef1"
+    },
+    {
+      "key": "bossMotionLucifer",
+      "path": "media/boss-motion-v8/lucifer-atlas-512.png",
+      "sha256": "06716474312bafc759bba028fb42660d6b626c67fba58f690a8014ac226600cd"
+    },
+    {
+      "key": "fxV8VioletWeb",
+      "path": "media/fx-v8/violet-web.webp",
+      "sha256": "2510213cd2651e81c922ac0875896c4f3bdd125f6a176387b5e25eaca5cca5a0"
+    },
+    {
+      "key": "fxV8SilverSlash",
+      "path": "media/fx-v8/silver-slash.webp",
+      "sha256": "dc9ebd4d13dc5c280321b1a33de3f443e141c407dcca2e7391240b2152b9c9dc"
+    },
+    {
+      "key": "fxV8SwampRipple",
+      "path": "media/fx-v8/swamp-ripple.webp",
+      "sha256": "29a72d6b90380d00282b9c2086d272eecb7b10d79ad1c3100f2e2fc5f642abf2"
+    },
+    {
+      "key": "fxV8Reed",
+      "path": "media/fx-v8/reed.webp",
+      "sha256": "43a8435a85859075e3cd23690e23cd4584d919f9cf0b89442073a7142315af9b"
+    },
+    {
+      "key": "fxV8Ember",
+      "path": "media/fx-v8/ember.webp",
+      "sha256": "3a37c619c84129f765d2f3703b164e15a3af69ce750d1dd3cbe8b0ae0fa571f0"
+    },
+    {
+      "key": "fxV8GoldSlash",
+      "path": "media/fx-v8/gold-slash.webp",
+      "sha256": "931038b553aa55989577584dca4f5060d120ac75be03377b4da65010aefd42c2"
+    },
+    {
+      "key": "fxV8Unlock",
+      "path": "media/fx-v8/unlock.webp",
+      "sha256": "b055e44ba21822ea8783bacf13d7318622400d83bde2437095ad13484607af31"
+    },
+    {
+      "key": "fxV8Vortex",
+      "path": "media/fx-v8/vortex.webp",
+      "sha256": "72cd2f043c2f488d6b06c0b8253278f5632f0426d83ad0432908a692bfda8b68"
+    },
+    {
+      "key": "projectileVioletOrbV9",
+      "path": "media/projectiles-drive-v9/violet-orb-cocoon-atlas.png",
+      "sha256": "03aa2075d2242b6dc0f7d35e2f04b69749256249a564175a3711dde29a9aaa2d"
+    },
+    {
+      "key": "projectileLuciferOrbV9",
+      "path": "media/projectiles-drive-v9/lucifer-orb-eclipseiris-atlas.png",
+      "sha256": "1440f50ca908f6f6c4df342ae9e6b09e97ab797e6204acad1a622505499946e5"
+    },
+    {
+      "key": "projectileHornOrbV10",
+      "path": "media/projectiles-drive-v10/swamp_orb_toxicseed.png",
+      "sha256": "ecd6e58a16e2a02fe2d499ba0d6f82b6f9dece0974188561b7bca7ed4d095c7d"
+    },
+    {
+      "key": "projectileBalrogOrbV10",
+      "path": "media/projectiles-drive-v10/balrog_orb_cinderheart.png",
+      "sha256": "59f78125f07ddcbe7ce99d5da1a0b599ffd39df2ce7ab62535381ba174578d69"
+    },
+    {
+      "key": "projectileMaskOrbV10",
+      "path": "media/projectiles-drive-v10/false_angel_orb_sealedpearl.png",
+      "sha256": "518d87e07ab4851bbf4e887ecef641cd8aefae4d61454bfa4a896cf073047729"
+    },
+    {
+      "key": "projectileVioletBladeV10",
+      "path": "media/projectiles-drive-v10/violet_blade_spindle.png",
+      "sha256": "e7f1fbacc4352a43d11da00d7f284f2892002f9f759cb315671ff59b1223ea19"
+    },
+    {
+      "key": "projectileBalrogBladeV10",
+      "path": "media/projectiles-drive-v10/balrog_blade_slagfang.png",
+      "sha256": "b913192ab73f912aeaf6192028b197d9c46f20d9e2ad17c6edbd63078f3e8039"
+    },
+    {
+      "key": "projectileMaskNeedleV10",
+      "path": "media/projectiles-drive-v10/false_angel_needle_edictfeather.png",
+      "sha256": "d04e9be769b6d88c4469c8fe938086c7b56e4fd743fcb2bee73f644d3454edb9"
+    }
+  ]
+}
