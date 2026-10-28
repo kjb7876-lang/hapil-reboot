@@ -6,7 +6,7 @@
   var settings=Object.assign({},defaults),profile={},savedCheckpoint=null,world=null,renderer=null,images={};
   var mode='title',ready=false,booting=true,lastStamp=0,accumulator=0,lastRender=0,lastHud=0,visualTime=0,checkpointSerial=-1,completed=false,checkpointPending=null,checkpointRetryAt=0;
   var keys=Object.create(null),pointer={active:false,id:null,lastX:0,lastY:0,pendingX:0,pendingY:0,lastMove:0},inputSource='keyboard',raf=0;
-  var samples={update:[],render:[],frame:[]},totalFrames=0,totalSteps=0,droppedGaps=0,peakUpdate=0,peakRender=0,peakFrame=0,lastGapReason='',maxSamples=360;
+  var samples={update:[],render:[],frame:[]},sampleCursor={update:0,render:0,frame:0},totalFrames=0,totalSteps=0,droppedGaps=0,peakUpdate=0,peakRender=0,peakFrame=0,lastGapReason='',maxSamples=360;
   var audio={unlocked:false,music:null,shot:[],hurt:[],shotIndex:0,hurtIndex:0,lastShot:0},toastTimer=0,settingsWasPlaying=false,settingsFocus=null;
   var core=null,store=null,lastProfileRefresh=0,assetErrors=[];
   var encounterArtPending=false,encounterArtGroup=-1,artLoadJob=null,artLoadGeneration=0;
@@ -241,7 +241,7 @@
     var dragN=Math.hypot(pointer.pendingX,pointer.pendingY),dragScale=dragN>speed?speed/dragN:1,dx=pointer.pendingX*dragScale,dy=pointer.pendingY*dragScale;pointer.pendingX-=dx;pointer.pendingY-=dy;if(!pointer.active&&Math.abs(pointer.pendingX)<.001&&Math.abs(pointer.pendingY)<.001){pointer.pendingX=0;pointer.pendingY=0;inputSource='keyboard';}
     return {dx:dx,dy:dy,focus:focus};
   }
-  function sample(name,value){var list=samples[name];list.push(value);if(list.length>maxSamples)list.shift();}
+  function sample(name,value){var list=samples[name];if(list.length<maxSamples)list.push(value);else{var at=sampleCursor[name];list[at]=value;sampleCursor[name]=(at+1)%maxSamples;}}
   function distribution(values,peak){if(!values.length)return{p50:0,p95:0,peak:peak||0,samples:0};var a=values.slice().sort(function(x,y){return x-y;});return{p50:+a[Math.floor((a.length-1)*.5)].toFixed(3),p95:+a[Math.floor((a.length-1)*.95)].toFixed(3),peak:+(peak||a[a.length-1]).toFixed(3),samples:a.length};}
   function diagnostics(){
     var hazards=world&&world.hazards?world.hazards:[],heap=null;

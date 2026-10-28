@@ -56,6 +56,20 @@
     return Math.min(segmentDistanceSquared(ax,ay,cx,cy,dx,dy),segmentDistanceSquared(bx,by,cx,cy,dx,dy),segmentDistanceSquared(cx,cy,ax,ay,bx,by),segmentDistanceSquared(dx,dy,ax,ay,bx,by));
   }
   function bulletDistanceSquared(b,px,py,x,y){var l=b.halfLength||0,ux=Math.cos(b.angle)*l,uy=Math.sin(b.angle)*l;return segmentPairSquared(b.px-px,b.py-py,b.x-x,b.y-y,-ux,-uy,ux,uy);}
+  // Conservative swept AABB: only skip the expensive capsule test when the
+  // whole relative motion is farther away than both the largest collision
+  // radius and the capsule's half-length. It may admit false positives, never
+  // reject a hit, graze or parry that the exact geometry would register.
+  function bulletMayReachPlayer(b,p,radius){
+    var length=b.halfLength==null?0:b.halfLength,ax=b.px-p.px,ay=b.py-p.py,bx=b.x-p.x,by=b.y-p.y;
+    // Fail open to exact geometry for malformed values. A small relative and
+    // absolute margin protects boundary hits from floating-point rounding.
+    if(!Number.isFinite(length)||length<0||!Number.isFinite(radius)||radius<0||!Number.isFinite(ax)||!Number.isFinite(ay)||!Number.isFinite(bx)||!Number.isFinite(by))return true;
+    var limit=length+radius;
+    if(!Number.isFinite(limit))return true;
+    limit+=1e-9+Number.EPSILON*16*Math.max(1,Math.abs(ax),Math.abs(ay),Math.abs(bx),Math.abs(by),limit);
+    return Math.min(ax,bx)<=limit&&Math.max(ax,bx)>=-limit&&Math.min(ay,by)<=limit&&Math.max(ay,by)>=-limit;
+  }
   function circleSwept(a,b,r){return segmentDistanceSquared(0,0,a.px-b.px,a.py-b.py,a.x-b.x,a.y-b.y)<=r*r;}
   function effect(w,kind,x,y,r,ttl,color){if(w.effects.length>=CAPS.effects)return;w.effects.push({id:++w.idCounter,kind:kind,x:x,y:y,r:r,ageTicks:0,ttlTicks:ttl,age:0,ttl:ttl/HZ,color:color||'#b8d6f1',damaging:false});}
   function cycleLength(a){return a.windupTicks+a.activeTicks+a.recoveryTicks;}
@@ -190,11 +204,11 @@
     w.memory=clamp(w.memory+2*DT,0,100);
     if(typeof input.skill==='string'){trySkill(w,rec,input.skill);return;}
     if(!w.skillRotation||w.stage!=='boss')return;
-    var hostileBullets=w.bullets.filter(function(b){return b.harmful!==false;});
-    var danger=hostileBullets.some(function(b){var dx=b.x-w.player.x,dy=b.y-w.player.y;return dx*dx+dy*dy<70*70;});
+    var hostileCount=0,danger=false;
+    for(var i=0;i<w.bullets.length;i++){var b=w.bullets[i];if(b.harmful===false)continue;hostileCount++;if(!danger){var dx=b.x-w.player.x,dy=b.y-w.player.y;danger=dx*dx+dy*dy<70*70;}}
     if(danger&&trySkill(w,rec,'parry'))return;
-    if(hostileBullets.length>12&&trySkill(w,rec,'memory'))return;
-    if(hostileBullets.length>8&&trySkill(w,rec,'delay'))return;
+    if(hostileCount>12&&trySkill(w,rec,'memory'))return;
+    if(hostileCount>8&&trySkill(w,rec,'delay'))return;
     if(w.memory>=45)trySkill(w,rec,'ego');
   }
   function hurt(w,rec){
@@ -206,13 +220,15 @@
   function updateBullets(w,rec){
     var p=w.player,slow=w.tick<p.delayUntil?.36:1;
     for(var i=w.bullets.length-1;i>=0;i--){var b=w.bullets[i];b.px=b.x;b.py=b.y;b.vx=b.baseVX*slow;b.vy=b.baseVY*slow;b.x+=b.vx*DT;b.y+=b.vy*DT;b.ageTicks++;b.age=b.ageTicks/HZ;
-      var distance=bulletDistanceSquared(b,p.px,p.py,p.x,p.y);
-      if(b.harmful!==false&&w.tick<p.parryUntil&&distance<=(b.r+30)*(b.r+30)){
+      var harmful=b.harmful!==false,reach=b.r+Math.max(p.r+12,w.tick<p.parryUntil?30:0);
+      var validRadii=Number.isFinite(b.r)&&b.r>=0&&Number.isFinite(p.r)&&p.r>=0;
+      var distance=harmful&&(!validRadii||bulletMayReachPlayer(b,p,reach))?bulletDistanceSquared(b,p.px,p.py,p.x,p.y):Infinity;
+      if(harmful&&w.tick<p.parryUntil&&distance<=(b.r+30)*(b.r+30)){
         if(addShot(w,rec,b.x,b.y,true))w.stats.reflected++;
         w.bullets.splice(i,1);continue;
       }
-      if(b.harmful!==false&&distance<=(b.r+p.r)*(b.r+p.r)&&hurt(w,rec)){w.bullets.splice(i,1);continue;}
-      if(b.harmful!==false&&!b.grazed&&distance<=(b.r+p.r+12)*(b.r+p.r+12)){b.grazed=true;w.stats.graze++;w.memory=clamp(w.memory+1,0,100);}
+      if(harmful&&distance<=(b.r+p.r)*(b.r+p.r)&&hurt(w,rec)){w.bullets.splice(i,1);continue;}
+      if(harmful&&!b.grazed&&distance<=(b.r+p.r+12)*(b.r+p.r+12)){b.grazed=true;w.stats.graze++;w.memory=clamp(w.memory+1,0,100);}
       if(b.ageTicks>420||b.x<-36||b.x>W+36||b.y<-36||b.y>H+36)w.bullets.splice(i,1);
     }
   }
@@ -272,5 +288,5 @@
       return !!(actual&&object(event)&&object(active)&&active.status==='active'&&active.combatId===actual.combatId&&active.runId===actual.runId&&event.combatId===actual.combatId&&event.runId===actual.runId&&event.resolution===actual.resolution&&event.combatVerified===true&&JSON.stringify(event.evidence)===JSON.stringify(actual.evidence));
     }catch(_){return false;}
   }
-  return Object.freeze({VERSION:VERSION,FIXED_HZ:HZ,FIXED_DT:DT,WIDTH:W,HEIGHT:H,CAPS:CAPS,PATTERNS:PATTERNS,SUPPORTED_RESOLUTIONS:RESOLUTIONS,UNSUPPORTED_OBJECTIVE_SCENES:SPECIAL_SCENES,supports:supports,create:create,step:step,result:result,verifyResult:verifyResult,geometry:Object.freeze({segmentDistanceSquared:segmentDistanceSquared,segmentPairDistanceSquared:segmentPairSquared,bulletDistanceSquared:bulletDistanceSquared,targetDistanceSquared:targetDistanceSquared})});
+  return Object.freeze({VERSION:VERSION,FIXED_HZ:HZ,FIXED_DT:DT,WIDTH:W,HEIGHT:H,CAPS:CAPS,PATTERNS:PATTERNS,SUPPORTED_RESOLUTIONS:RESOLUTIONS,UNSUPPORTED_OBJECTIVE_SCENES:SPECIAL_SCENES,supports:supports,create:create,step:step,result:result,verifyResult:verifyResult,geometry:Object.freeze({segmentDistanceSquared:segmentDistanceSquared,segmentPairDistanceSquared:segmentPairSquared,bulletDistanceSquared:bulletDistanceSquared,bulletMayReachPlayer:bulletMayReachPlayer,targetDistanceSquared:targetDistanceSquared})});
 }));

@@ -69,7 +69,7 @@
     }
     function projectile(b,art,tone){
       if(!Number.isFinite(b.x)||!Number.isFinite(b.y))throw new TypeError('Invalid story projectile position');
-      var im=image(art.projectile.key,'projectile'),r=clamp(finite(b.r,3),.5,40),l=clamp(finite(b.halfLength,0),0,100),angle=finite(b.angle,Math.atan2(finite(b.vy,0),finite(b.vx,0)));
+      var im=image(art.projectile.key,'projectile'),r=clamp(finite(b.r,3),.5,40),l=clamp(finite(b.halfLength,0),0,100),angle=Number.isFinite(b.angle)?b.angle:Math.atan2(finite(b.vy,0),finite(b.vx,0));
       ctx.save();ctx.globalAlpha=b.harmful===false?.35:1;ctx.translate(b.x,b.y);ctx.rotate(angle);path(r,l);ctx.fillStyle=b.color||tone.main;ctx.fill();
       // The backing and clip are the real collision circle/capsule. The source
       // raster cannot enlarge danger or become the only warning cue.
@@ -98,7 +98,7 @@
       ctx.save();ctx.fillStyle='rgba(8,12,22,.88)';ctx.fillRect(13,24,334,40);ctx.textAlign='left';ctx.fillStyle=tone.secondary;ctx.font='9px Arial,"Malgun Gothic",sans-serif';ctx.fillText(name,19,37);ctx.fillStyle='#343342';ctx.fillRect(19,48,322,3);ctx.fillStyle=tone.main;ctx.fillRect(19,48,322*hp,3);ctx.restore();
       if(metrics.mapMissing){ctx.save();ctx.textAlign='center';ctx.fillStyle='#a7a3ae';ctx.font='9px Arial,"Malgun Gothic",sans-serif';ctx.fillText('맵 자산 미등록 · 전투 시작 잠금',180,628);ctx.restore();}
     }
-    function render(world,spec,art){
+    function render(world,spec,art,returnMetrics){
       if(disposed)throw new Error('Story renderer disposed');if(!world||!spec)throw new TypeError('Story render requires world and spec');assertArtReady(art);if(world.commandLink)image(art.targetKey,'command-link');
       ['bullets','shots','effects','enemies'].forEach(function(k){if(world[k]&&(!Array.isArray(world[k])||world[k].length>LIMITS[k]))throw new RangeError('Story '+k+' exceeds presentation contract');});
       if(art.body.combatId&&world.combatId&&art.body.combatId!==world.combatId)throw missing('body-identity-'+world.combatId);
@@ -112,13 +112,13 @@
         if(!Number.isFinite(s.x)||!Number.isFinite(s.y))throw new TypeError('Invalid story shot position');
         // Existing shot.webp points along +X. Its luminous head is at 240/256,
         // 48/96; the dim source trail remains harmless presentation pixels.
-        var scale=Math.max(.02,finite(s.r,1.5)/14),pivot=art.shotPivot||[shotDimensions[0]*.9375,shotDimensions[1]*.5],angle=finite(s.angle,Math.atan2(finite(s.vy,-1),finite(s.vx,0)));
+        var scale=Math.max(.02,finite(s.r,1.5)/14),pivot=art.shotPivot||[shotDimensions[0]*.9375,shotDimensions[1]*.5],angle=Number.isFinite(s.angle)?s.angle:Math.atan2(finite(s.vy,-1),finite(s.vx,0));
         ctx.save();ctx.translate(s.x,s.y);ctx.rotate(angle);ctx.drawImage(shotImage,-pivot[0]*scale,-pivot[1]*scale,shotDimensions[0]*scale,shotDimensions[1]*scale);ctx.restore();metrics.shotDraws++;
       });
       (world.bullets||[]).forEach(function(b){projectile(b,art,tone);});
       var hazards=world.telegraphs||world.hazards||[];if(!Array.isArray(hazards)||hazards.length>LIMITS.hazards)throw new RangeError('Story hazards exceed presentation contract');hazards.forEach(function(h){hazard(h,tone);});hud(world,spec,tone);
       // Actual player collision core is always the last visible primitive.
-      ctx.beginPath();ctx.arc(player.x,player.y,4.7,0,TAU);ctx.fillStyle='#080e19';ctx.fill();ctx.beginPath();ctx.arc(player.x,player.y,finite(player.r,3),0,TAU);ctx.fillStyle='#fff9e9';ctx.fill();ctx.strokeStyle='#8bdce2';ctx.lineWidth=.9;ctx.stroke();metrics.playerCoreLast=true;metrics.ready=!metrics.mapMissing;return getMetrics();
+      ctx.beginPath();ctx.arc(player.x,player.y,4.7,0,TAU);ctx.fillStyle='#080e19';ctx.fill();ctx.beginPath();ctx.arc(player.x,player.y,finite(player.r,3),0,TAU);ctx.fillStyle='#fff9e9';ctx.fill();ctx.strokeStyle='#8bdce2';ctx.lineWidth=.9;ctx.stroke();metrics.playerCoreLast=true;metrics.ready=!metrics.mapMissing;return returnMetrics===false?undefined:getMetrics();
     }
     function resize(cssWidth,cssHeight,dpr){
       if(disposed)throw new Error('Story renderer disposed');if(!Number.isFinite(cssWidth)||cssWidth<=0||!Number.isFinite(cssHeight)||cssHeight<=0)throw new TypeError('Invalid story canvas size');

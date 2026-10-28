@@ -4,7 +4,7 @@ const vm = require('node:vm');
 const fs = require('node:fs');
 const code = fs.readFileSync(require('node:path').join(__dirname, '../src/story-app.js'), 'utf8');
 
-async function setup({ review = false, failStart = false, lockReason = null, loseOnTick = false, reviewAssets = false, missingReviewFile = false } = {}) {
+async function setup({ review = false, failStart = false, lockReason = null, loseOnTick = false, reviewAssets = false, missingReviewFile = false, coarse = false } = {}) {
   const elements = new Map(), raf = [], steps = [];
   function element(id) {
     if (elements.has(id)) return elements.get(id);
@@ -18,7 +18,7 @@ async function setup({ review = false, failStart = false, lockReason = null, los
   }
   const data = { scenes: [{ id:'s1', title:'Scene', sequence:0, chapter:1, text:'text', requiredCombatIds:['dist00-boss'] }], primaryCombatIds:['dist00-boss'] };
   const state = { viewSceneId:'s1', acknowledgedSceneIds:[], clearedCombatIds:[], activeCombat:null };
-  let world = null, starts=0;
+  let world = null, starts=0, renders=0;
   const session = { claimExclusive:async()=>lockReason?({ok:false,reason:lockReason}):({ok:true}),releaseExclusive(){}, state:()=>state, frontier:()=>({sceneIndex:0}), sceneStatus:()=> 'current', availableCombats:()=>['dist00-boss'], status:()=>({error:null}), dispatch:()=>({ok:true}),
     start:()=> { starts++; if(failStart) return {ok:false,reason:'write-failed'}; world = {status:'active'}; return {ok:true}; },
     retry:()=>({ok:false,reason:'write-failed'}), tick(input) { steps.push(input);if(loseOnTick)world.status='lost'; }, world:()=>world };
@@ -27,16 +27,16 @@ async function setup({ review = false, failStart = false, lockReason = null, los
   const gate = { entryStatus:()=>({ready:true,name:'Boss'}), summary:()=>({indexRevision:1,readyCount:1,primaryCount:1,generationComplete:false,readyFormCount:0,requiredFormCount:0}) };
   const document = { getElementById:element, createElement:()=>element('created'+Math.random()), body:{dataset:{}}, addEventListener() {} };
   class Image { set src(v) { if(v) queueMicrotask(()=>this.onload()); } }
-  const win = { document, Image, location:{search:review?'?review=dist00-boss':''}, matchMedia:()=>({matches:false}), innerHeight:800,innerWidth:400, devicePixelRatio:1, addEventListener(){}, scrollTo(){},
+  const win = { document, Image, location:{search:review?'?review=dist00-boss':''}, matchMedia:()=>({matches:coarse}), innerHeight:800,innerWidth:400, devicePixelRatio:1, addEventListener(){}, scrollTo(){},
     HapilStoryData:data, HapilStoryScope:{apply:()=>data}, HapilStoryEncounters:{get:id=>({id,name:'Boss',stages:[{target:id==='dist00-boss'?'command-link':'body'}]})},
     HapilStoryAssets:{create:()=>gate}, HapilStoryState:{}, HapilStoryStorage:{}, HapilStorySession:{create:()=>session},
     HapilStoryCombat:{supports:()=>true,create:()=>({status:'active'}),step:(w,i)=>steps.push(i),result:()=>null,verifyResult:()=>true},
-    HapilStoryRenderer:{create:()=>({resize(){},render(){return {ready:true}},dispose(){}})} };
+    HapilStoryRenderer:{create:()=>({resize(){},render(){renders++;return {ready:true}},dispose(){}})} };
   const context={ window:win, document, Image, URLSearchParams, performance:{now:()=>0}, requestAnimationFrame:fn=>raf.push(fn),
     fetch:async (path,options)=>({ok:!(missingReviewFile&&options&&options.method==='HEAD'&&path==='media/target.png'),json:async()=>path.includes('runtime-assets')?registry:{}}), setTimeout:()=>1,clearTimeout(){},console };
   vm.runInNewContext(code,context);
   await new Promise(setImmediate);
-  return { element, win, raf, steps, starts:()=>starts };
+  return { element, win, raf, steps, starts:()=>starts, renders:()=>renders };
 }
 
 test('a completed short touch drag survives until the next simulation tick', async () => {
@@ -103,4 +103,9 @@ test('review catalogue checks each own asset before enabling and never starts a 
  const ready=await setup({reviewAssets:true});const row=ready.element('review-list').children[0];assert.equal(row.children[1].disabled,false);
  row.children[1].listeners.click();await new Promise(setImmediate);
  assert.equal(ready.starts(),0);assert.equal(ready.win.document.body.dataset.battle,'true');assert.match(ready.element('battle-state').textContent,/진행·저장에 반영하지 않습니다/);
+});
+test('mobile frame pacing maintains about 30 draws on a 60 Hz timer without slowing simulation',async()=>{
+ const h=await setup({review:true,coarse:true});h.element('review-fight').onclick();await new Promise(setImmediate);
+ const initial=h.renders();for(let i=1;i<=120;i++){assert(h.raf.length);h.raf.shift()(i*1000/60);}
+ const paints=h.renders()-initial;assert(paints>=59&&paints<=61,`draws: ${paints}`);assert(h.steps.length>=118&&h.steps.length<=120,`ticks: ${h.steps.length}`);
 });

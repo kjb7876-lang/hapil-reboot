@@ -29,6 +29,9 @@
     var fg=foreground.getContext('2d');
     var lightweight=false;
     var strips=[],ratio=1,cached=false,edgeMask=null;
+    // The near-edge mask is unchanged during an anchored boss encounter.
+    // Reuse its pixels until the source or scroll position changes.
+    var parallaxImage=null,parallaxIndex=-1,parallaxProgress=null;
     var terrain=[{key:'forest',label:'숲의 진입로',center:.57,floorY:.38},{key:'ruins',label:'무너진 궁정',center:.50,floorY:.42},{key:'cave',label:'문지기의 동굴',center:.50,floorY:.36}];
     var mapMetrics={zone:'forest',zoneIndex:0,segmentProgress:0,journeyProgress:0,journeySeconds:0,scrollY:640,anchored:false,terrainStripCount:0,cacheCanvasCount:2,cacheBytes:W*H*4*2,introActive:false,introProgress:0,terrainStatus:'retained-v2',sourceStatus:'retained-v2',campaignLocation:null,bossArt:null,visualRevision:8,dreamTheme:null,ambientGlyphs:0,decorativeCenter:'quiet',bossAccent:null,visibleMapTiles:'',visibleMapCount:0,atlasFxDraws:0,atlasFxLimit:24,atlasFxFamilies:''};
     function clamp(value,a,b){return Math.max(a,Math.min(b,value));}
@@ -40,6 +43,7 @@
       target.drawImage(im,sx+(sw-cropW)/2,sy+(sh-cropH)/2,cropW,cropH,dx,dy,dw,dh);
     }
     function makeBackground(){
+      parallaxImage=null;parallaxIndex=-1;parallaxProgress=null;
       bg.clearRect(0,0,W,H);
       var wash=bg.createLinearGradient(0,0,0,H);wash.addColorStop(0,'rgba(6,9,17,.18)');wash.addColorStop(.5,'rgba(8,12,21,.19)');wash.addColorStop(1,'rgba(7,13,22,.33)');bg.fillStyle=wash;bg.fillRect(0,0,W,H);
       var vignette=bg.createRadialGradient(W/2,H*.46,100,W/2,H*.5,410);vignette.addColorStop(0,'rgba(5,8,15,0)');vignette.addColorStop(1,'rgba(5,8,15,.48)');bg.fillStyle=vignette;bg.fillRect(0,0,W,H);
@@ -67,10 +71,13 @@
     function parallax(index,progress,opacity){
       var im=mapImage(index);if(!imageReady(im)||opacity<=0)return;
       var iw=im.naturalWidth,ih=im.naturalHeight,sourceH=ih*.57,sourceY=ih*(.35-progress*.31);
-      fg.clearRect(0,0,W,H);fg.globalCompositeOperation='source-over';fg.globalAlpha=1;
-      fg.drawImage(im,iw*.035,sourceY,iw*.20,sourceH,0,0,70,H);
-      fg.drawImage(im,iw*.765,sourceY,iw*.20,sourceH,W-70,0,70,H);
-      fg.globalCompositeOperation='destination-in';fg.fillStyle=edgeMask;fg.fillRect(0,0,W,H);fg.globalCompositeOperation='source-over';
+      if(parallaxImage!==im||parallaxIndex!==index||parallaxProgress!==progress){
+        fg.clearRect(0,0,W,H);fg.globalCompositeOperation='source-over';fg.globalAlpha=1;
+        fg.drawImage(im,iw*.035,sourceY,iw*.20,sourceH,0,0,70,H);
+        fg.drawImage(im,iw*.765,sourceY,iw*.20,sourceH,W-70,0,70,H);
+        fg.globalCompositeOperation='destination-in';fg.fillStyle=edgeMask;fg.fillRect(0,0,W,H);fg.globalCompositeOperation='source-over';
+        parallaxImage=im;parallaxIndex=index;parallaxProgress=progress;
+      }
       ctx.globalAlpha=opacity*.36;ctx.drawImage(foreground,0,0);ctx.globalAlpha=1;
     }
     function connectedReady(){
@@ -196,6 +203,9 @@
       // A narrow quiet lane preserves contrast where the player reads gaps.
       var lane=ctx.createLinearGradient(0,0,W,0);lane.addColorStop(0,'rgba(7,10,18,0)');lane.addColorStop(.26,'rgba(7,10,18,.14)');lane.addColorStop(.74,'rgba(7,10,18,.14)');lane.addColorStop(1,'rgba(7,10,18,0)');
       ctx.globalAlpha=1;ctx.fillStyle=lane;ctx.fillRect(0,180,W,H-180);
+      // Low-quality mode removes only non-interactive edge decoration; the
+      // background grading, player, every bullet and every hazard stay intact.
+      if(lightweight&&world){ctx.restore();return;}
       if(theme.id==='moonwood'){
         var moonX=world?285:270,moonY=world?104:146;
         ctx.globalAlpha=.16;ctx.fillStyle='#b0bcc6';ctx.beginPath();ctx.arc(moonX,moonY,30,0,Math.PI*2);ctx.fill();

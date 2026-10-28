@@ -98,9 +98,14 @@
         accumulator-=1000/60;
       }
     }
-    if(stamp-lastPaint>=(coarse?1000/30:1000/60)||paused){
-      try{renderer.render(reviewWorld||session.world(),currentSpec,currentArt);}catch(e){pause(e.message);}
-      lastPaint=stamp;
+    var paintInterval=1000/(coarse?30:60),paintElapsed=stamp-lastPaint;
+    if(paintElapsed+.001>=paintInterval||paused){
+      // The normal frame loop does not consume diagnostic metrics. Avoid a
+      // JSON clone on every draw; the initial art probe still requests them.
+      try{renderer.render(reviewWorld||session.world(),currentSpec,currentArt,false);}catch(e){pause(e.message);}
+      // Keep the target cadence anchored rather than drifting when a 60 Hz
+      // display delivers a frame just under the 30 Hz boundary.
+      if(paintElapsed>=0)lastPaint+=Math.max(1,Math.floor((paintElapsed+.001)/paintInterval))*paintInterval;
     }
     var w=reviewWorld||session.world();
     if(w&&w.status!=='active'){

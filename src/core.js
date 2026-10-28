@@ -601,10 +601,25 @@
       }
       b.x += b.vx * FIXED_DT; b.y += b.vy * FIXED_DT; b.age += FIXED_DT;
       if (w.stage !== 'won' && w.stage !== 'lost' && w.stage !== 'bossIntro') {
-        var d2 = projectileDistanceSquared(b, px, py, p.x, p.y);
-        if (d2 <= sq(p.r + b.r)) { w.stats.collisions++; hurt(w); remove(w, 'bullets', i); continue; }
-        if (!b.grazed && w.tick >= p.invulnerableUntil && d2 <= sq(13 + b.r)) {
-          b.grazed = true; w.graze++; w.score += 15; w._lastGraze = w.tick; gainResonance(w, 3, true); effect(w, p.x, p.y, 'graze', 8, '#a5ffee', 0.22);
+        // Conservative swept AABB: the projectile's half-length and the larger
+        // of hit/graze radii enclose its entire capsule. Far-away bullets need
+        // no segment-distance/trigonometry work; near bullets use the exact
+        // original continuous collision and graze calculation unchanged.
+        var halfLength = b.halfLength || 0;
+        var reach = halfLength + Math.max(p.r, 13) + b.r;
+        var x0 = b.px - px, x1 = b.x - p.x, y0 = b.py - py, y1 = b.y - p.y;
+        // Include a floating-point safety margin so rounding at the graze
+        // boundary always falls back to the original exact calculation.
+        // Invalid geometry also takes the original path, never the shortcut.
+        var valid = p.r >= 0 && b.r >= 0 && halfLength >= 0 && finite(reach);
+        var margin = valid ? 1e-9 * (1 + reach + Math.max(Math.abs(x0), Math.abs(x1), Math.abs(y0), Math.abs(y1))) : 0;
+        var far = valid && (Math.min(x0, x1) > reach + margin || Math.max(x0, x1) < -reach - margin || Math.min(y0, y1) > reach + margin || Math.max(y0, y1) < -reach - margin);
+        if (!far) {
+          var d2 = projectileDistanceSquared(b, px, py, p.x, p.y);
+          if (d2 <= sq(p.r + b.r)) { w.stats.collisions++; hurt(w); remove(w, 'bullets', i); continue; }
+          if (!b.grazed && w.tick >= p.invulnerableUntil && d2 <= sq(13 + b.r)) {
+            b.grazed = true; w.graze++; w.score += 15; w._lastGraze = w.tick; gainResonance(w, 3, true); effect(w, p.x, p.y, 'graze', 8, '#a5ffee', 0.22);
+          }
         }
       }
       if (b.age >= b.ttl || b.x < -38 || b.x > W + 38 || b.y < -38 || b.y > H + 38 || (w.stage === 'won' && w.stageTime > 0.35)) remove(w, 'bullets', i);
