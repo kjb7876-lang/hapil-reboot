@@ -70,18 +70,18 @@
     function projectile(b,art,tone){
       if(!Number.isFinite(b.x)||!Number.isFinite(b.y))throw new TypeError('Invalid story projectile position');
       var im=image(art.projectile.key,'projectile'),r=clamp(finite(b.r,3),.5,40),l=clamp(finite(b.halfLength,0),0,100),angle=finite(b.angle,Math.atan2(finite(b.vy,0),finite(b.vx,0)));
-      ctx.save();ctx.globalAlpha=1;ctx.translate(b.x,b.y);ctx.rotate(angle);path(r,l);ctx.fillStyle=b.color||tone.main;ctx.fill();
+      ctx.save();ctx.globalAlpha=b.harmful===false?.35:1;ctx.translate(b.x,b.y);ctx.rotate(angle);path(r,l);ctx.fillStyle=b.color||tone.main;ctx.fill();
       // The backing and clip are the real collision circle/capsule. The source
       // raster cannot enlarge danger or become the only warning cue.
-      ctx.save();path(r,l);ctx.clip();ctx.drawImage(im,-l-r,-r,(l+r)*2,r*2);ctx.restore();path(r,l);ctx.strokeStyle=tone.secondary;ctx.lineWidth=.65;ctx.stroke();ctx.restore();metrics.projectileDraws++;
+      ctx.save();path(r,l);ctx.clip();ctx.drawImage(im,-l-r,-r,(l+r)*2,r*2);ctx.restore();path(r,l);ctx.strokeStyle=tone.secondary;ctx.lineWidth=.65;if(b.harmful===false)ctx.setLineDash([2,2]);ctx.stroke();ctx.restore();metrics.projectileDraws++;
     }
     function hazard(h,tone){
       var lineGeometry=Number.isFinite(h.x1)&&Number.isFinite(h.y1)&&Number.isFinite(h.x2)&&Number.isFinite(h.y2),circleGeometry=Number.isFinite(h.x)&&Number.isFinite(h.y)&&Number.isFinite(h.r);if(!lineGeometry&&!circleGeometry)throw new TypeError('Unsupported committed story hazard geometry');
-      var phase=h.phase||h.state||'warning',active=phase==='active',fade=phase==='fade';ctx.save();ctx.globalAlpha=fade?.16:active?1:.65;ctx.strokeStyle=h.color||tone.main;ctx.fillStyle=h.color||tone.main;
+      var phase=h.phase||h.state||'warning',active=phase==='active',fade=phase==='fade';ctx.save();ctx.globalAlpha=h.harmful===false?.28:fade?.16:active?1:.65;ctx.strokeStyle=h.color||tone.main;ctx.fillStyle=h.color||tone.main;
       if(lineGeometry){
-        ctx.lineWidth=active?Math.max(1,finite(h.width,8)):fade?Math.max(1,finite(h.width,8)):1.2;ctx.setLineDash(active||fade?[]:[5,5]);ctx.beginPath();ctx.moveTo(h.x1,h.y1);ctx.lineTo(h.x2,h.y2);ctx.stroke();
+        ctx.lineWidth=active?Math.max(1,finite(h.width,8)):fade?Math.max(1,finite(h.width,8)):1.2;ctx.setLineDash(h.harmful===false?[2,4]:active||fade?[]:[5,5]);ctx.beginPath();ctx.moveTo(h.x1,h.y1);ctx.lineTo(h.x2,h.y2);ctx.stroke();
       }else if(circleGeometry){
-        ctx.lineWidth=active?2:1;ctx.setLineDash(active||fade?[]:[4,4]);ctx.beginPath();ctx.arc(h.x,h.y,Math.max(.5,h.r),0,TAU);if(active){ctx.globalAlpha=.18;ctx.fill();ctx.globalAlpha=1;}ctx.stroke();
+        ctx.lineWidth=active?2:1;ctx.setLineDash(h.harmful===false?[2,4]:active||fade?[]:[4,4]);ctx.beginPath();ctx.arc(h.x,h.y,Math.max(.5,h.r),0,TAU);if(active){ctx.globalAlpha=h.harmful===false?.08:.18;ctx.fill();ctx.globalAlpha=h.harmful===false?.28:1;}ctx.stroke();
       }else throw new TypeError('Unsupported committed story hazard geometry');
       ctx.restore();if(active)metrics.activeHazardDraws++;else if(fade)metrics.fadingHazardDraws++;else metrics.warningDraws++;
     }
@@ -93,7 +93,9 @@
       }
     }
     function hud(world,spec,tone){
-      var b=world.boss||{},hp=clamp(finite(b.hp,0)/Math.max(1,finite(b.maxHp,1)),0,1);ctx.save();ctx.fillStyle='rgba(8,12,22,.88)';ctx.fillRect(13,24,334,40);ctx.textAlign='left';ctx.fillStyle=tone.secondary;ctx.font='9px Arial,"Malgun Gothic",sans-serif';ctx.fillText(spec.name||spec.canonicalName||world.combatId||'',19,37);ctx.fillStyle='#343342';ctx.fillRect(19,48,322,3);ctx.fillStyle=tone.main;ctx.fillRect(19,48,322*hp,3);ctx.restore();
+      var b=world.boss||{},hp=clamp(finite(b.hp,0)/Math.max(1,finite(b.maxHp,1)),0,1),name=spec.name||spec.canonicalName||world.combatId||'';
+      if(b.survival){var stage=spec.stages&&spec.stages[world.stageIndex],a=stage&&stage.adaptation,total=a&&(a.windupTicks+a.activeTicks+a.recoveryTicks);hp=world.stage==='transition'||world.stage==='won'?1:clamp(finite(world.stageTime,0)*60/Math.max(1,finite(total,1)),0,1);name='생존 · '+(stage&&stage.label||name);}
+      ctx.save();ctx.fillStyle='rgba(8,12,22,.88)';ctx.fillRect(13,24,334,40);ctx.textAlign='left';ctx.fillStyle=tone.secondary;ctx.font='9px Arial,"Malgun Gothic",sans-serif';ctx.fillText(name,19,37);ctx.fillStyle='#343342';ctx.fillRect(19,48,322,3);ctx.fillStyle=tone.main;ctx.fillRect(19,48,322*hp,3);ctx.restore();
       if(metrics.mapMissing){ctx.save();ctx.textAlign='center';ctx.fillStyle='#a7a3ae';ctx.font='9px Arial,"Malgun Gothic",sans-serif';ctx.fillText('맵 자산 미등록 · 전투 시작 잠금',180,628);ctx.restore();}
     }
     function render(world,spec,art){

@@ -10,7 +10,7 @@
   var W=360,H=640,HZ=60,DT=1/HZ,TAU=Math.PI*2,VERSION=1;
   var CAPS=Object.freeze({bullets:160,shots:64,effects:24,hazards:3});
   var PATTERNS=Object.freeze(['fan','ring','lanes','aimed','spiral','sweep']);
-  var RESOLUTIONS=Object.freeze(['cleared','victory']);
+  var RESOLUTIONS=Object.freeze(['cleared','victory','command-severed','survive-and-fall']);
   // These scenes require validated objective sequences, not ordinary boss HP.
   var SPECIAL_SCENES=Object.freeze(['last301','kair01','kair02','kair03','kair10','hando02','hando03','murder01','murder02','murder03','murder04','cult04','ending']);
   var SPECIAL_IDS=Object.freeze(['l301-boss','kair-great-03','c104-boss','c104-mid']);
@@ -26,10 +26,22 @@
     if(spec.objectiveSceneId!=null&&spec.objectiveSceneId!==spec.sceneId)return false;
     if(!Array.isArray(spec.stages)||spec.stages.length<1||spec.stages.length>16)return false;
     var rootLink=spec.id==='dist00-boss'&&spec.sceneId==='dist00'&&spec.resolution==='cleared';
+    // The controller occupies the memory door: aim at the repetitive command
+    // connection through both adapted phases, never at the door itself.
+    var controllerLink=spec.id==='u203-boss'&&spec.sceneId==='u203'&&spec.resolution==='command-severed'&&spec.stages.length===2&&spec.stages.every(function(s,i){return s.id==='u203-boss:stage:'+(i+1);});
+    // Preserve the person/medical care and represented memories: these two
+    // roster adaptations expose only the coercive structure as a target.
+    var protectedFirst8=(spec.id==='mb-ep1a08'&&spec.sceneId==='ep1a08'||spec.id==='mb-ep1a10'&&spec.sceneId==='ep1a10')&&spec.resolution==='cleared'&&spec.stages.length===1&&spec.stages[0].id===spec.id+':stage:1';
+    // This roster adaptation depicts the source vortex and fall; it is a
+    // survival sequence, not an invented boss kill or a player death.
+    var vortexSurvival=spec.id==='mb-ep1a07'&&spec.sceneId==='dist06'&&spec.resolution==='survive-and-fall'&&spec.stages.length===2&&spec.stages.every(function(s,i){return s.id==='mb-ep1a07:stage:'+(i+1);});
     if(spec.id==='dist00-boss'&&!rootLink)return false;
+    if((spec.id==='mb-ep1a08'||spec.id==='mb-ep1a10')&&!protectedFirst8)return false;
+    if((spec.id==='mb-ep1a07'||spec.resolution==='survive-and-fall')&&!vortexSurvival)return false;
+    if((spec.id==='u203-boss'||spec.sceneId==='u203'&&spec.resolution==='command-severed'||spec.resolution==='command-severed')&&!controllerLink)return false;
     var ids=new Set();
     return spec.stages.every(function(stage){
-      if(!object(stage)||!identifier(stage.id)||ids.has(stage.id)||stage.target!==(rootLink?'command-link':'body')||typeof stage.label!=='string'||stage.label.length>160||!Array.isArray(stage.sourceExplicit))return false;
+      if(!object(stage)||!identifier(stage.id)||ids.has(stage.id)||stage.target!==(vortexSurvival?'survival':rootLink||controllerLink||protectedFirst8?'command-link':'body')||typeof stage.label!=='string'||stage.label.length>160||!Array.isArray(stage.sourceExplicit))return false;
       ids.add(stage.id);var a=stage.adaptation;
       return object(a)&&PATTERNS.indexOf(a.pattern)>=0&&integer(a.windupTicks,24,180)&&integer(a.activeTicks,36,240)&&integer(a.recoveryTicks,30,180)&&integer(a.intervalTicks,12,120)&&integer(a.count,1,36)&&finite(a.speed)&&a.speed>=40&&a.speed<=240&&(a.spread==null||finite(a.spread)&&a.spread>=0&&a.spread<=TAU);
     });
@@ -57,7 +69,7 @@
       var n=Math.min(3,a.count),spread=a.spread==null?.28:a.spread;
       for(var i=0;i<n;i++){
         var angle=rec.aim+(i-(n-1)/2)*spread;
-        w.hazards.push({id:++w.idCounter,x1:b.x,y1:b.y+12,x2:b.x+Math.cos(angle)*820,y2:b.y+12+Math.sin(angle)*820,width:6,phase:'warning',progress:0,born:w.tick,activeAt:w.tick+a.windupTicks,fadeAt:w.tick+a.windupTicks+a.activeTicks,expireAt:w.tick+cycleLength(a),color:'#d1bfef'});
+        w.hazards.push({id:++w.idCounter,x1:b.x,y1:b.y+12,x2:b.x+Math.cos(angle)*820,y2:b.y+12+Math.sin(angle)*820,width:6,phase:'warning',progress:0,born:w.tick,activeAt:w.tick+a.windupTicks,fadeAt:w.tick+a.windupTicks+a.activeTicks,expireAt:w.tick+cycleLength(a),harmful:!(stageSpec(rec,w).damageSource&&stageSpec(rec,w).damageSource.harmful===false),color:'#d1bfef'});
       }
     }
     effect(w,'bossCharge',b.x,b.y+12,26,Math.min(48,a.windupTicks),'#cbb8e5');
@@ -68,6 +80,7 @@
     var s=stageSpec(rec,w),previous=w.boss;
     w.boss={id:++w.idCounter,stageId:s.id,name:s.label,x:previous?previous.x:180,y:previous?previous.y:116,px:previous?previous.x:180,py:previous?previous.y:116,r:26,hp:rec.hp,maxHp:rec.hp,action:'charge',actionProgress:0,lean:0};
     w.boss.bodyProtected=s.target==='command-link';
+    w.boss.survival=s.target==='survival';
     w.commandLink=w.boss.bodyProtected?{id:++w.idCounter,kind:'command-link',x:w.boss.x+46,y:w.boss.y+42,px:w.boss.x+46,py:w.boss.y+42,r:14,hp:rec.hp,maxHp:rec.hp,bodyProtected:true}:null;
     w.enemies=[w.boss];w.patternName=s.label;planCycle(w,rec);
   }
@@ -112,7 +125,8 @@
   }
   function emit(w,rec,specs){
     if(w.bullets.length+specs.length>CAPS.bullets){w.stats.poolPressure++;w.stats.droppedGroups++;return false;}
-    specs.forEach(function(s){var speed=s.speed*(w.difficulty==='gentle'?.80:1),l=s.kind==='needle'?7:0;w.bullets.push({id:++w.idCounter,x:s.x,y:s.y,px:s.x,py:s.y,r:l?3:3.4,halfLength:l,angle:s.angle,baseVX:Math.cos(s.angle)*speed,baseVY:Math.sin(s.angle)*speed,vx:Math.cos(s.angle)*speed,vy:Math.sin(s.angle)*speed,kind:s.kind||'orb',ageTicks:0,age:0,color:s.color||'#c1b2ec',grazed:false});});return true;
+    var harmful=!(stageSpec(rec,w).damageSource&&stageSpec(rec,w).damageSource.harmful===false);
+    specs.forEach(function(s){var speed=s.speed*(w.difficulty==='gentle'?.80:1),l=s.kind==='needle'?7:0;w.bullets.push({id:++w.idCounter,x:s.x,y:s.y,px:s.x,py:s.y,r:l?3:3.4,halfLength:l,angle:s.angle,baseVX:Math.cos(s.angle)*speed,baseVY:Math.sin(s.angle)*speed,vx:Math.cos(s.angle)*speed,vy:Math.sin(s.angle)*speed,kind:s.kind||'orb',ageTicks:0,age:0,harmful:harmful,color:s.color||'#c1b2ec',grazed:false});});return true;
   }
   function firePattern(w,rec){
     var a=stageSpec(rec,w).adaptation,pulse=w.cycleTick-a.windupTicks;
@@ -132,7 +146,7 @@
     }
     emit(w,rec,specs);
   }
-  function target(w){if(w.stage!=='boss'||!w.boss||w.boss.hp<=0)return null;var rec=records.get(w);if(rec&&stageSpec(rec,w).target==='command-link')return w.commandLink&&w.commandLink.hp>0?w.commandLink:null;return w.boss;}
+  function target(w){if(w.stage!=='boss'||!w.boss||w.boss.hp<=0)return null;var rec=records.get(w);if(rec&&stageSpec(rec,w).target==='survival')return null;if(rec&&stageSpec(rec,w).target==='command-link')return w.commandLink&&w.commandLink.hp>0?w.commandLink:null;return w.boss;}
   function targetDistanceSquared(w,s){var t=target(w);if(!t)return Infinity;return segmentDistanceSquared(0,0,s.px-t.px,s.py-t.py,s.x-t.x,s.y-t.y);}
   function addShot(w,rec,x,y,reflected){
     var b=target(w);if(!b||w.shots.length>=CAPS.shots)return false;
@@ -143,7 +157,7 @@
     if(!reflected){rec.shots++;w.stats.shots=rec.shots;}return true;
   }
   function damage(w,rec,amount){
-    if(w.stage!=='boss'||rec.hp<=0)return;
+    if(w.stage!=='boss'||rec.hp<=0||stageSpec(rec,w).target==='survival')return;
     var dealt=Math.min(rec.hp,amount);rec.hp-=dealt;rec.damageInStage+=dealt;rec.damage+=dealt;w.stats.damage=rec.damage;w.boss.hp=rec.hp;w.memory=clamp(w.memory+.85,0,100);
     if(stageSpec(rec,w).target==='command-link'){rec.commandLinkDamage+=dealt;w.stats.commandLinkDamage=rec.commandLinkDamage;if(w.commandLink)w.commandLink.hp=rec.hp;}
     else{rec.bodyDamage+=dealt;w.stats.bodyDamage=rec.bodyDamage;}
@@ -176,10 +190,11 @@
     w.memory=clamp(w.memory+2*DT,0,100);
     if(typeof input.skill==='string'){trySkill(w,rec,input.skill);return;}
     if(!w.skillRotation||w.stage!=='boss')return;
-    var danger=w.bullets.some(function(b){var dx=b.x-w.player.x,dy=b.y-w.player.y;return dx*dx+dy*dy<70*70;});
+    var hostileBullets=w.bullets.filter(function(b){return b.harmful!==false;});
+    var danger=hostileBullets.some(function(b){var dx=b.x-w.player.x,dy=b.y-w.player.y;return dx*dx+dy*dy<70*70;});
     if(danger&&trySkill(w,rec,'parry'))return;
-    if(w.bullets.length>12&&trySkill(w,rec,'memory'))return;
-    if(w.bullets.length>8&&trySkill(w,rec,'delay'))return;
+    if(hostileBullets.length>12&&trySkill(w,rec,'memory'))return;
+    if(hostileBullets.length>8&&trySkill(w,rec,'delay'))return;
     if(w.memory>=45)trySkill(w,rec,'ego');
   }
   function hurt(w,rec){
@@ -192,12 +207,12 @@
     var p=w.player,slow=w.tick<p.delayUntil?.36:1;
     for(var i=w.bullets.length-1;i>=0;i--){var b=w.bullets[i];b.px=b.x;b.py=b.y;b.vx=b.baseVX*slow;b.vy=b.baseVY*slow;b.x+=b.vx*DT;b.y+=b.vy*DT;b.ageTicks++;b.age=b.ageTicks/HZ;
       var distance=bulletDistanceSquared(b,p.px,p.py,p.x,p.y);
-      if(w.tick<p.parryUntil&&distance<=(b.r+30)*(b.r+30)){
+      if(b.harmful!==false&&w.tick<p.parryUntil&&distance<=(b.r+30)*(b.r+30)){
         if(addShot(w,rec,b.x,b.y,true))w.stats.reflected++;
         w.bullets.splice(i,1);continue;
       }
-      if(distance<=(b.r+p.r)*(b.r+p.r)&&hurt(w,rec)){w.bullets.splice(i,1);continue;}
-      if(!b.grazed&&distance<=(b.r+p.r+12)*(b.r+p.r+12)){b.grazed=true;w.stats.graze++;w.memory=clamp(w.memory+1,0,100);}
+      if(b.harmful!==false&&distance<=(b.r+p.r)*(b.r+p.r)&&hurt(w,rec)){w.bullets.splice(i,1);continue;}
+      if(b.harmful!==false&&!b.grazed&&distance<=(b.r+p.r+12)*(b.r+p.r+12)){b.grazed=true;w.stats.graze++;w.memory=clamp(w.memory+1,0,100);}
       if(b.ageTicks>420||b.x<-36||b.x>W+36||b.y<-36||b.y>H+36)w.bullets.splice(i,1);
     }
   }
@@ -206,13 +221,13 @@
     for(var i=w.hazards.length-1;i>=0;i--){var h=w.hazards[i];
       if(w.tick>=h.expireAt){w.hazards.splice(i,1);continue;}
       if(w.tick<h.activeAt){h.phase='warning';h.progress=clamp((w.tick-h.born)/(h.activeAt-h.born),0,1);}
-      else if(w.tick<h.fadeAt){h.phase='active';h.progress=clamp((w.tick-h.activeAt)/(h.fadeAt-h.activeAt),0,1);var radius=h.width/2+p.r;if(segmentPairSquared(p.px,p.py,p.x,p.y,h.x1,h.y1,h.x2,h.y2)<=radius*radius)hurt(w,rec);}
+      else if(w.tick<h.fadeAt){h.phase='active';h.progress=clamp((w.tick-h.activeAt)/(h.fadeAt-h.activeAt),0,1);var radius=h.width/2+p.r;if(h.harmful!==false&&segmentPairSquared(p.px,p.py,p.x,p.y,h.x1,h.y1,h.x2,h.y2)<=radius*radius)hurt(w,rec);}
       else{h.phase='fade';h.progress=clamp((w.tick-h.fadeAt)/(h.expireAt-h.fadeAt),0,1);}
     }
   }
   function terminalWin(w,rec){
-    if(rec.clears.length!==rec.spec.stages.length||rec.stageDamage.some(function(d,i){return d!==hpFor(i);})||w.player.hp<=0)return;
-    w.stage='won';w.status='won';w.resultReason='전투를 돌파했습니다.';rec.terminal='won';rec.terminalTick=w.tick;
+    if(rec.clears.length!==rec.spec.stages.length||rec.stageDamage.some(function(d,i){return d!==(rec.spec.stages[i].target==='survival'?0:hpFor(i));})||w.player.hp<=0)return;
+    w.stage='won';w.status='won';w.resultReason=rec.spec.resolution==='survive-and-fall'?'소용돌이를 견딘 뒤 추락했습니다.':'전투를 돌파했습니다.';rec.terminal='won';rec.terminalTick=w.tick;
     rec.result={combatId:rec.combatId,runId:rec.runId,resolution:rec.spec.resolution,evidence:{simVersion:VERSION,terminalTick:w.tick,seed:rec.seed,stageIds:rec.clears.slice(),stageDamage:rec.stageDamage.slice(),stageTicks:rec.stageTicks.slice(),damage:rec.damage,shots:rec.shots,hits:rec.hits,playerHp:w.player.hp,skillCasts:copy(rec.casts),stageTargets:rec.spec.stages.map(function(s){return s.target;}),bodyDamage:rec.bodyDamage,commandLinkDamage:rec.commandLinkDamage,commandLinkCut:rec.commandLinkCuts.length===rec.spec.stages.length,protectedBodyUntouched:rec.spec.stages.every(function(s){return s.target==='command-link';})&&rec.bodyDamage===0},combatVerified:true};
   }
   function step(w,input){
@@ -226,7 +241,12 @@
       w.cycleTick=rec.stageTick%total;w.cycleIndex=Math.floor(rec.stageTick/total);
       w.cyclePhase=w.cycleTick<a.windupTicks?'windup':w.cycleTick<a.windupTicks+a.activeTicks?'active':'recovery';
       w.cyclePhaseTick=w.cyclePhase==='windup'?w.cycleTick:w.cyclePhase==='active'?w.cycleTick-a.windupTicks:w.cycleTick-a.windupTicks-a.activeTicks;w.cyclePhaseAge=w.cyclePhaseTick/HZ;
-      updateBoss(w,rec);if(w.cycleTick===0)planCycle(w,rec);firePattern(w,rec);
+      updateBoss(w,rec);if(w.cycleTick===0&&!(stageSpec(rec,w).target==='survival'&&rec.stageTick>=total))planCycle(w,rec);firePattern(w,rec);
+      if(stageSpec(rec,w).target==='survival'&&rec.stageTick>=total){
+        rec.clears.push(stageSpec(rec,w).id);rec.stageDamage.push(0);rec.stageTicks.push(rec.stageTick);
+        w.stats.stageClears=rec.clears.length;w.stats.stageDamage=rec.stageDamage.slice();w.stats.stageTicks=rec.stageTicks.slice();
+        w.stage='transition';w.stageTime=0;w.boss.action='recover';w.boss.actionProgress=0;w.enemies=[];
+      }
     }else if(w.stage==='transition'){w.stageTime+=DT;}
     skills(w,rec,input);
     if(target(w)&&w.tick>=rec.nextShotAt){if(addShot(w,rec,w.player.x,w.player.y-9,false))rec.nextShotAt=w.tick+(w.tick<w.player.egoUntil?4:7);}
@@ -242,7 +262,7 @@
   }
   function result(w){
     var rec=records.get(w);
-    if(!rec||rec.terminal!=='won'||!rec.result||w.stage!=='won'||w.status!=='won'||w.tick!==rec.terminalTick||w.tick!==rec.actualTicks||w.runId!==rec.runId||w.combatId!==rec.combatId||w.stageIndex!==rec.spec.stages.length-1||w.player.hp!==rec.result.evidence.playerHp||w.stats.damage!==rec.damage||w.stats.stageClears!==rec.clears.length||!object(w.boss)||w.boss.hp!==0||w.stats.bodyDamage!==rec.bodyDamage||w.stats.commandLinkDamage!==rec.commandLinkDamage)return null;
+    if(!rec||rec.terminal!=='won'||!rec.result||w.stage!=='won'||w.status!=='won'||w.tick!==rec.terminalTick||w.tick!==rec.actualTicks||w.runId!==rec.runId||w.combatId!==rec.combatId||w.stageIndex!==rec.spec.stages.length-1||w.player.hp!==rec.result.evidence.playerHp||w.stats.damage!==rec.damage||w.stats.stageClears!==rec.clears.length||!object(w.boss)||(stageSpec(rec,w).target!=='survival'&&w.boss.hp!==0)||w.stats.bodyDamage!==rec.bodyDamage||w.stats.commandLinkDamage!==rec.commandLinkDamage)return null;
     if(rec.spec.stages.every(function(s){return s.target==='command-link';})&&(!w.boss.bodyProtected||!object(w.commandLink)||w.commandLink.hp!==0||rec.bodyDamage!==0))return null;
     return copy(rec.result);
   }

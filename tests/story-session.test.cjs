@@ -42,6 +42,7 @@ function fakeCombat(supportedIds=Data.primaryCombatIds) {
   step(world){
    const row=records.get(world);if(!row)return;
    if(row.command==='defeat'){world.status='defeated';row.command=null;}
+   if(row.command==='lost'){world.status='lost';row.command=null;}
    if(row.command==='clear'){
     world.status='cleared';row.command=null;
     row.terminal={combatId:world.combatId,runId:world.runId,resolution:resolutions.resolutionFor(world.combatId),evidence:clone(evidence),receipt:row.receipt};
@@ -54,7 +55,7 @@ function fakeCombat(supportedIds=Data.primaryCombatIds) {
 }
 function fixture(options={}) {
  const storage=options.storage||memory(),gate=options.gate||gateFixture(),combat=options.combat||fakeCombat();
- const session=Session.create({data:Data,assets:gate,combat:combat.api,stateAPI:State,storageAPI:Storage,storageOptions:{storage}});
+ const session=Session.create({data:Data,assets:gate,combat:combat.api,stateAPI:State,storageAPI:Storage,storageOptions:{storage},requireExclusive:!!options.requireExclusive,locks:options.locks});
  return {storage,gate,combat,session};
 }
 function dispatch(session,event){const result=session.dispatch(event);assert.equal(result.ok,true,result.reason);return result;}
@@ -148,4 +149,29 @@ test('entire effective canonical roster roundtrips through FAKE boundary without
  assert.equal(count,Data.primaryCombatIds.length);assert.equal(f.session.state().endingSeen,true);assert.deepEqual(new Set(f.session.state().clearedCombatIds),new Set(Data.primaryCombatIds));
  for(const [key,value]of Object.entries(old)){assert.equal(storage.values.get(key),value);assert.equal(storage.reads.includes(key),false);assert.equal(storage.writes.includes(key),false);}
  const restored=fixture({storage});assert.deepEqual(restored.session.state(),f.session.state());assert.equal(restored.session.status().checkpointNeedsRestart,false);
+});
+
+test('combat lost status records a defeat and permits retry without granting a clear',()=>{
+ const f=fixture(),id=enterFirst(f.session);assert.equal(f.session.start(id).ok,true);
+ f.combat.queue(f.session.world(),'lost');f.session.tick({});
+ assert.equal(f.session.state().activeCombat.status,'defeated');assert.deepEqual(f.session.state().clearedCombatIds,[]);
+ assert.equal(f.session.retry().ok,true);assert.equal(f.session.state().activeCombat.status,'active');
+});
+
+test('exclusive session holds lock until released; another tab is blocked and reloads after acquisition',async()=>{
+ let held=false;
+ const locks={request(name,opts,callback){assert.equal(name,'hapil.storymode.v1.write');assert.equal(opts.ifAvailable,true);if(held)return Promise.resolve().then(()=>callback(null));held=true;return Promise.resolve().then(()=>callback({name})).finally(()=>{held=false;});}};
+ const storage=memory(),a=fixture({storage,requireExclusive:true,locks}),b=fixture({storage,requireExclusive:true,locks});
+ assert.equal(a.session.dispatch({type:'VIEW_NEXT'}).reason,'lock-required');
+ assert.equal((await a.session.claimExclusive()).ok,true);assert.equal((await b.session.claimExclusive()).reason,'lock-busy');
+ assert.equal(b.session.dispatch({type:'VIEW_NEXT'}).reason,'lock-required');
+ const id=a.session.state().viewSceneId;assert.equal(a.session.dispatch({type:'ACK_SCENE',sceneId:id}).ok,true);
+ a.session.releaseExclusive();assert.equal((await a.session.claimExclusive()).reason,'lock-released');await new Promise(setImmediate);
+ const c=fixture({storage,requireExclusive:true,locks});assert.equal((await c.session.claimExclusive()).ok,true);
+ assert.deepEqual(c.session.state(),a.session.state());assert.equal(c.session.status().saveRevision,1);c.session.releaseExclusive();
+});
+
+test('missing Web Locks fails closed before changing storage',async()=>{
+ const f=fixture({requireExclusive:true,locks:{}});const result=await f.session.claimExclusive();
+ assert.equal(result.reason,'lock-unsupported');assert.equal(f.session.reset().reason,'lock-required');assert.equal(f.storage.writes.length,0);
 });

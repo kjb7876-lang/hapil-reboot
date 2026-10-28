@@ -1,0 +1,27 @@
+[
+  {
+    "file": "media/gunner.webp",
+    "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+    "bytes": 70104
+  },
+  {
+    "file": "media/shot.webp",
+    "sha256": "c936fb2b69b66d7b90f7de030602c8fa7a45fec6d3460310ab833b614623c9b6",
+    "bytes": 6056
+  },
+  {
+    "file": "media/forest.jpg",
+    "sha256": "e4d0f6a7803d51fc23b5b9af629d73f3489e1b450d294b1358499b84b6c99562",
+    "bytes": 478555
+  },
+  {
+    "file": "media/cave.webp",
+    "sha256": "921ac7d2a2893aa53374a459b27d9ae87e4cc5c50cbdf0281259875820e72526",
+    "bytes": 146558
+  },
+  {
+    "file": "media/ruins.webp",
+    "sha256": "1bf412f579476a90dc6969e7d89385ca096273380d615d33e838dac5f87bec64",
+    "bytes": 220828
+  }
+]

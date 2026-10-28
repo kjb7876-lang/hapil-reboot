@@ -4,10 +4,11 @@
   var running=false,paused=false,last=0,accumulator=0,lastPaint=0,keys=Object.create(null),drag={id:null,x:0,y:0,dx:0,dy:0};
   var assets=Object.create(null),loadGeneration=0,currentArt=null,currentSpec=null,noticeTimer,reviewWorld=null;
   var reviewId=new URLSearchParams(global.location.search).get('review');
+  var REVIEW_IDS=['dist00-boss','mb-dist03','mb-dist04','mb-dist05','mb-dist06'];
   var coarse=global.matchMedia&&global.matchMedia('(pointer: coarse)').matches;
   function text(id,value){$(id).textContent=value;}
   function notice(message){text('notice',message);$('notice').hidden=false;clearTimeout(noticeTimer);noticeTimer=setTimeout(function(){$('notice').hidden=true;},6000);}
-  function explain(reason){return {'asset-or-implementation-locked':'이 전투의 자산 또는 실행 검사가 아직 준비되지 않았습니다.','stale-revision':'다른 창에서 기록이 바뀌었습니다. 새로고침하여 이어 주세요.','changed-before-write':'다른 창에서 기록이 바뀌었습니다. 새로고침하여 이어 주세요.','write-failed':'기록을 저장하지 못했습니다. 저장 공간을 확인한 뒤 다시 시도해 주세요.','scene-locked':'현재 구역을 마친 뒤 이어집니다.','combat-active':'진행 중인 전투를 먼저 마쳐 주세요.','ending-locked':'모든 필수 전투를 마친 뒤 최종장이 열립니다.'}[reason]||'진행할 수 없습니다: '+reason;}
+  function explain(reason){return {'asset-or-implementation-locked':'이 전투의 자산 또는 실행 검사가 아직 준비되지 않았습니다.','stale-revision':'다른 창에서 기록이 바뀌었습니다. 새로고침하여 이어 주세요.','changed-before-write':'다른 창에서 기록이 바뀌었습니다. 새로고침하여 이어 주세요.','write-failed':'기록을 저장하지 못했습니다. 저장 공간을 확인한 뒤 다시 시도해 주세요.','lock-busy':'다른 창에서 스토리 기록을 사용 중입니다. 그 창을 닫고 새로고침해 주세요.','lock-unsupported':'이 브라우저에서는 안전한 단일 창 저장 잠금을 사용할 수 없습니다. 지원되는 브라우저에서 열어 주세요.','lock-required':'저장 잠금이 해제되었습니다. 새로고침해 주세요.','evidence-slot-occupied':'기존 백업을 보존하기 위해 새 백업이나 초기화를 중단했습니다.','restore-previous-slot-occupied':'이전 복원 전 기록이 있어 덮어쓰지 않았습니다.','nothing-to-backup':'아직 저장된 스토리 기록이 없습니다.','backup-missing':'복원할 스토리 백업이 없습니다.','backup-invalid':'백업을 검증하지 못해 복원하지 않았습니다.','scene-locked':'현재 구역을 마친 뒤 이어집니다.','combat-active':'진행 중인 전투를 먼저 마쳐 주세요.','ending-locked':'모든 필수 전투를 마친 뒤 최종장이 열립니다.'}[reason]||'진행할 수 없습니다: '+reason;}
   function action(result){if(!result.ok)notice(explain(result.reason));refresh();return result.ok;}
   function clearInput(){keys=Object.create(null);drag.id=null;drag.dx=drag.dy=0;}
   function scene(){var s=session.state();return data.scenes.find(function(row){return row.id===s.viewSceneId;});}
@@ -104,7 +105,8 @@
     var w=reviewWorld||session.world();
     if(w&&w.status!=='active'){
       running=false;paused=false;clearInput();$('resume').hidden=true;$('return-reader').disabled=false;
-      $('retry').hidden=w.status!=='defeated';text('battle-state',reviewWorld?'자산 검수 종료 · 본편 진행 기록은 바뀌지 않았습니다.':w.status==='defeated'?'기억은 남아 있습니다. 구역 시작부터 다시 도전할 수 있습니다.':session.status().error?'전투 결과 저장 대기 · 다시 저장해 주세요.':'전투 완료 · 후속 기억으로 이어집니다.');refresh();return;
+      var lost=w.status==='defeated'||w.status==='lost';
+      $('retry').hidden=!lost;text('battle-state',reviewWorld?'자산 검수 종료 · 본편 진행 기록은 바뀌지 않았습니다.':lost?'기억은 남아 있습니다. 구역 시작부터 다시 도전할 수 있습니다.':session.status().error?'전투 결과 저장 대기 · 다시 저장해 주세요.':'전투 완료 · 후속 기억으로 이어집니다.');refresh();return;
     }
     if(!paused)requestAnimationFrame(frame);
   }
@@ -113,16 +115,42 @@
     var list=$('portal-list');list.replaceChildren();
     data.scenes.forEach(function(s){var b=document.createElement('button'),status=session.sceneStatus(s.id);b.textContent=s.title;b.disabled=['locked','unknown'].indexOf(status)>=0;b.addEventListener('click',function(){if(action(session.dispatch({type:'PORTAL_ENTER',sceneId:s.id}))){$('portal').close();global.scrollTo(0,0);}});list.appendChild(b);});$('portal').showModal();
   }
+  async function listReviewBattles(combat){
+    var list=$('review-list');list.replaceChildren();
+    var checks=Object.create(null),available=0;
+    function present(file){
+      if(!/^media\/[A-Za-z0-9_./-]+\.(png|webp|jpg|jpeg)$/.test(file))return Promise.resolve(false);
+      if(!checks[file])checks[file]=fetch(file,{method:'HEAD',cache:'no-store'}).then(function(r){return r.ok;}).catch(function(){return false;});
+      return checks[file];
+    }
+    await Promise.all(REVIEW_IDS.map(async function(id){
+      var binding=registry.bindings[id],spec=encounters.get(id),art=binding&&binding.art,images=binding&&binding.images;
+      var row=document.createElement('div'),button=document.createElement('button'),label=document.createElement('span');
+      label.textContent=(spec&&spec.name||id)+' · 미완성 검수';button.textContent='별도 검수 전투';button.disabled=true;
+      row.append(label,button);list.appendChild(row);
+      if(!binding||binding.combatId!==id||!spec||!combat.supports(id)||!art||!art.body||art.body.combatId!==id||!art.projectile||art.projectile.combatId!==id||!art.background||!Array.isArray(images)||!images.length||images.length>8){label.textContent+=' · 필요한 자산 또는 전투 미구현';return;}
+      var keys=images.map(function(im){return im.key;}),needed=[art.body.key,art.projectile.key,art.background.key,art.playerKey,art.shotKey];
+      if(spec.stages.some(function(s){return s.target==='command-link';}))needed.push(art.targetKey);
+      if(needed.some(function(k){return !k||keys.indexOf(k)<0;})){label.textContent+=' · 고유 자산 미등록';return;}
+      var found=await Promise.all(images.map(function(im){return present(im.file);}));
+      if(found.some(function(ok){return !ok;})){label.textContent+=' · 자산을 불러올 수 없음';return;}
+      button.disabled=false;button.addEventListener('click',function(){startBattle(id,false,true);});available++;
+    }));
+    text('review-status',available+' / '+REVIEW_IDS.length+'개 검수 전투를 선택할 수 있습니다. 본편 기록은 바뀌지 않습니다.');
+  }
   async function boot(){
     try{
       data=global.HapilStoryScope.apply(global.HapilStoryData);encounters=global.HapilStoryEncounters;
       var files=await Promise.all(['docs/story/LIVE-ASSET-INDEX-current.json','docs/story/asset-ledger.json','docs/story/runtime-assets.json'].map(function(path){return fetch(path,{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('스토리 자료를 불러오지 못했습니다: '+path);return r.json();});}));
       registry=files[2];gate=global.HapilStoryAssets.create(data,files[0],files[1]);
       var combat={supports:function(id){var s=encounters.get(id);return !!s&&global.HapilStoryCombat.supports(s);},create:function(id,o){return global.HapilStoryCombat.create(encounters.get(id),o);},step:global.HapilStoryCombat.step,result:global.HapilStoryCombat.result,verifyResult:global.HapilStoryCombat.verifyResult};
-      session=global.HapilStorySession.create({data:data,assets:gate,combat:combat,stateAPI:global.HapilStoryState,storageAPI:global.HapilStoryStorage,resolutionFor:function(id){var s=encounters.get(id);return s&&s.resolution;}});
+      session=global.HapilStorySession.create({data:data,assets:gate,combat:combat,stateAPI:global.HapilStoryState,storageAPI:global.HapilStoryStorage,requireExclusive:true,resolutionFor:function(id){var s=encounters.get(id);return s&&s.resolution;}});
+      var lock=await session.claimExclusive();
+      if(!lock.ok){text('scene-title','스토리 기록을 열 수 없습니다');text('scene-status',explain(lock.reason));text('save-status','기록을 변경하지 않았습니다.');return;}
       if(!session.state()){text('scene-title','스토리 기록 확인이 필요합니다');text('scene-status','기록을 덮어쓰지 않았습니다. 백업 후 처음부터 시작하거나 원본을 보존해 주세요.');text('save-status',session.status().error);return;}
-      if(reviewId&&registry.bindings[reviewId]&&combat.supports(reviewId)){$('review-fight').hidden=false;$('review-fight').onclick=function(){startBattle(reviewId,false,true);};}
+      if(reviewId&&REVIEW_IDS.indexOf(reviewId)>=0&&registry.bindings[reviewId]&&combat.supports(reviewId)){$('review-fight').hidden=false;$('review-fight').onclick=function(){startBattle(reviewId,false,true);};}
       refresh();
+      listReviewBattles(combat).catch(function(){text('review-status','검수용 자산을 확인하지 못했습니다.');});
     }catch(e){text('scene-title','스토리 작업판을 열 수 없습니다');text('scene-status',e.message);notice(e.message);}
   }
   $('acknowledge').onclick=function(){action(session.dispatch({type:'ACK_SCENE',sceneId:scene().id}));};
@@ -131,13 +159,17 @@
   $('preview-next').onclick=$('next-scene').onclick;
   $('portal-open').onclick=portal;$('portal-close').onclick=function(){action(session.dispatch({type:'PORTAL_OPEN',open:false}));$('portal').close();};
   $('portal').addEventListener('cancel',function(){session.dispatch({type:'PORTAL_OPEN',open:false});});
-  $('reset-story').onclick=function(){if(session&&action(session.reset())){running=false;loadGeneration++;document.body.dataset.battle='false';$('reader').hidden=false;$('battle').hidden=true;refresh();}};
+  $('reset-story').onclick=function(){if(session&&global.confirm('현재 스토리 기록을 백업한 후 처음부터 시작할까요? 기존 백업과 다르면 초기화를 중단합니다.')&&action(session.reset())){running=false;loadGeneration++;document.body.dataset.battle='false';$('reader').hidden=false;$('battle').hidden=true;refresh();}};
+  $('backup-story').onclick=function(){if(session&&action(session.backup()))notice('스토리 기록을 백업했습니다.');};
+  $('restore-story').onclick=function(){if(session&&global.confirm('백업을 복원할까요? 현재 기록은 별도 보존하고 백업도 유지합니다.')&&action(session.restoreBackup())){running=false;loadGeneration++;document.body.dataset.battle='false';$('reader').hidden=false;$('battle').hidden=true;notice('백업을 복원했습니다.');refresh();}};
   $('pause').onclick=function(){pause();};$('resume').onclick=function(){if(!running)return;paused=false;last=performance.now();accumulator=0;$('resume').hidden=true;text('battle-state','전투를 이어갑니다.');requestAnimationFrame(frame);};
   $('retry').onclick=function(){if(reviewWorld){startBattle(reviewWorld.combatId,false,true);return;}var s=session.state();if(s.activeCombat)startBattle(s.activeCombat.combatId,true);};
   $('return-reader').onclick=function(){if(running&&!reviewWorld)return;if(reviewWorld){running=false;reviewWorld=null;loadGeneration++;}else session.settle();document.body.dataset.battle='false';$('reader').hidden=false;$('battle').hidden=true;refresh();};
   global.addEventListener('keydown',function(e){if(running&&['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Space'].indexOf(e.code)>=0)e.preventDefault();keys[e.code]=true;if(running&&(e.code==='Escape'||e.code==='Space'))pause();});
   global.addEventListener('keyup',function(e){delete keys[e.code];});global.addEventListener('blur',function(){clearInput();pause('입력 창을 벗어나 일시정지했습니다.');});
   document.addEventListener('visibilitychange',function(){if(document.hidden){clearInput();pause('화면을 벗어나 일시정지했습니다.');}});global.addEventListener('resize',fit);
+  global.addEventListener('pagehide',function(){if(session)session.releaseExclusive();});
+  global.addEventListener('pageshow',function(e){if(e.persisted)global.location.reload();});
   [$('story-canvas'),$('touch-pad')].forEach(function(el){
     el.addEventListener('pointerdown',function(e){if(!running||paused||drag.id!==null)return;drag.id=e.pointerId;drag.x=e.clientX;drag.y=e.clientY;el.setPointerCapture(e.pointerId);});
     el.addEventListener('pointermove',function(e){if(e.pointerId!==drag.id)return;var scale=360/$('story-canvas').getBoundingClientRect().width;drag.dx+=(e.clientX-drag.x)*scale;drag.dy+=(e.clientY-drag.y)*scale;drag.x=e.clientX;drag.y=e.clientY;});

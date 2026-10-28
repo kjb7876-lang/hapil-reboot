@@ -119,7 +119,7 @@ test('explicit bounded backup/quarantine copy evidence, and reset backs up befor
   assert.equal(store.backup(1).ok,true);assert.equal(store.quarantine(1).ok,true);assert.equal(storage.values.get(Storage.BACKUP_KEY),original);assert.equal(storage.values.get(Storage.QUARANTINE_KEY),original);assert.equal(storage.values.get(Storage.KEY),original);
   const reset=store.reset(1);assert.equal(reset.ok,true);assert.equal(reset.revision,2);assert.equal(storage.values.get(Storage.BACKUP_KEY),original);
   storage.values.set(Storage.KEY,'damaged evidence');assert.equal(store.reset(null).status,'corrupt','recovery requires explicit load of exact evidence');assert.equal(store.load().status,'corrupt');
-  assert.equal(store.quarantine(null).ok,true);assert.equal(store.reset(null).ok,true);assert.equal(storage.values.get(Storage.BACKUP_KEY),'damaged evidence');assert.equal(storage.values.get(Storage.QUARANTINE_KEY),'damaged evidence');
+  assert.equal(store.quarantine(null).reason,'evidence-slot-occupied');assert.equal(store.reset(null).reason,'evidence-slot-occupied');assert.equal(storage.values.get(Storage.KEY),'damaged evidence');assert.equal(storage.values.get(Storage.BACKUP_KEY),original);assert.equal(storage.values.get(Storage.QUARANTINE_KEY),original);
   storage.values.set(Storage.KEY,'x'.repeat(Storage.MAX_BYTES+1));store.load();assert.equal(store.reset(null).reason,'evidence-too-large');assert.equal(storage.values.get(Storage.KEY).length,Storage.MAX_BYTES+1);
   assert.equal(storage.values.size,3,'fixed slots prevent unbounded backup key growth');
 });
@@ -137,4 +137,35 @@ test('canonical progression roundtrips every actual roster member without hardco
     }
   }
   const final=store.save(state,revision);assert.equal(final.ok,true);assert.equal(count,Data.primaryCombatIds.length);assert.equal(final.state.endingSeen,true);assert.deepEqual(new Set(final.state.clearedCombatIds),new Set(Data.primaryCombatIds));
+});
+
+test('restore validates backup, preserves both backup and prior primary, and advances revision',()=>{
+  const {store,storage,engine}=setup();
+  const one=store.save(engine.newState(),0);assert.equal(one.ok,true);
+  const oldRaw=storage.values.get(Storage.KEY);assert.equal(store.backup(1).ok,true);
+  const next=step(engine,one.state,{type:'VIEW_NEXT'});assert.equal(store.save(next,1).ok,true);
+  const currentRaw=storage.values.get(Storage.KEY), restored=store.restoreBackup(2);
+  assert.equal(restored.ok,true);assert.equal(restored.revision,3);assert.deepEqual(restored.state,one.state);
+  assert.equal(storage.values.get(Storage.BACKUP_KEY),oldRaw);assert.equal(storage.values.get(Storage.RESTORE_PREVIOUS_KEY),currentRaw);
+  assert.equal(store.restoreBackup(3).reason,'restore-previous-slot-occupied');
+  assert.equal(storage.values.get(Storage.RESTORE_PREVIOUS_KEY),currentRaw);
+});
+
+test('damaged primary requires explicit load and backup validation before restoration',()=>{
+  const {store,storage}=setup();store.startNew(0);store.backup(1);
+  const oldBackup=storage.values.get(Storage.BACKUP_KEY);storage.values.set(Storage.KEY,'damaged original');
+  assert.equal(store.restoreBackup(null).status,'corrupt');assert.equal(store.load().status,'corrupt');
+  const restored=store.restoreBackup(null);assert.equal(restored.ok,true);
+  assert.equal(storage.values.get(Storage.RESTORE_PREVIOUS_KEY),'damaged original');assert.equal(storage.values.get(Storage.BACKUP_KEY),oldBackup);
+  storage.values.set(Storage.BACKUP_KEY,'invalid backup');const before=storage.values.get(Storage.KEY);
+  assert.equal(store.restoreBackup(restored.revision).reason,'backup-invalid');assert.equal(storage.values.get(Storage.KEY),before);
+});
+
+test('restore write failure leaves original primary and backup untouched after preserving evidence',()=>{
+ const {store,storage,engine}=setup();const initial=store.save(engine.newState(),0);store.backup(1);
+ const next=step(engine,initial.state,{type:'VIEW_NEXT'});store.save(next,1);
+ const before=storage.values.get(Storage.KEY),backup=storage.values.get(Storage.BACKUP_KEY),write=storage.setItem;
+ storage.setItem=function(key,value){if(key===Storage.KEY)throw Error('quota');return write.call(this,key,value);};
+ const result=store.restoreBackup(2);assert.equal(result.reason,'write-failed');
+ assert.equal(storage.values.get(Storage.KEY),before);assert.equal(storage.values.get(Storage.BACKUP_KEY),backup);assert.equal(storage.values.get(Storage.RESTORE_PREVIOUS_KEY),before);
 });

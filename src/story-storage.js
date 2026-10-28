@@ -6,7 +6,7 @@
   if (root) root.HapilStoryStorage = api;
 }(typeof globalThis !== 'undefined' ? globalThis : this, function (environment) {
   'use strict';
-  var KEY = 'hapil.storymode.v1', BACKUP_KEY = KEY + '.backup', QUARANTINE_KEY = KEY + '.quarantine';
+  var KEY = 'hapil.storymode.v1', BACKUP_KEY = KEY + '.backup', QUARANTINE_KEY = KEY + '.quarantine', RESTORE_PREVIOUS_KEY = KEY + '.before-restore';
   var SCHEMA = 1, MAX_BYTES = 262144;
   function object(value) { return value !== null && typeof value === 'object' && !Array.isArray(value); }
   function revision(value) { return Number.isSafeInteger(value) && value >= 0 && value < Number.MAX_SAFE_INTEGER; }
@@ -30,12 +30,7 @@
     if (!initial) throw new TypeError('Invalid StoryState instance');
     try { storage = Object.prototype.hasOwnProperty.call(options, 'storage') ? options.storage : environment.localStorage; } catch (_) {}
     function failure(status, reason) { return { ok: false, status: status, reason: reason, revision: null, state: null }; }
-    function read() {
-      var raw;
-      try {
-        if (!storage || typeof storage.getItem !== 'function') return failure('storage-error', 'unavailable');
-        raw = storage.getItem(KEY);
-      } catch (_) { return failure('storage-error', 'read-failed'); }
+    function parse(raw) {
       if (raw === null) return { ok: true, status: 'empty', revision: 0, state: null, raw: null };
       if (typeof raw !== 'string' || raw.length > MAX_BYTES) return Object.assign(failure('corrupt', 'invalid-size'), { raw: raw });
       var envelope;
@@ -48,6 +43,14 @@
       var state = storyState.validate(envelope.state);
       if (!state) return Object.assign(failure('corrupt', 'invalid-state'), { raw: raw });
       return { ok: true, status: 'ok', revision: envelope.revision, state: state, raw: raw };
+    }
+    function read() {
+      var raw;
+      try {
+        if (!storage || typeof storage.getItem !== 'function') return failure('storage-error', 'unavailable');
+        raw = storage.getItem(KEY);
+      } catch (_) { return failure('storage-error', 'read-failed'); }
+      return parse(raw);
     }
     function publicResult(result) { var out = Object.assign({}, result); delete out.raw; return out; }
     function load() { var result = read(); lastRead = result; return publicResult(result); }
@@ -95,6 +98,8 @@
       if (typeof current.raw !== 'string' || current.raw.length > MAX_BYTES) return failure('invalid-request', 'evidence-too-large');
       try {
         if (storage.getItem(KEY) !== current.raw) return { ok: false, status: 'conflict', reason: 'changed-before-backup', revision: null, state: null };
+        var previous = storage.getItem(key);
+        if (previous !== null && previous !== current.raw) return failure('preservation-required', 'evidence-slot-occupied');
         storage.setItem(key, current.raw);
         if (storage.getItem(key) !== current.raw) return failure('storage-error', 'backup-verification-failed');
       } catch (_) { return failure('storage-error', 'backup-failed'); }
@@ -116,7 +121,26 @@
       if (!revision(previous)) previous = 0;
       return write(storyState.validate(storyState.newState()), current, previous + 1);
     }
-    return Object.freeze({ load: load, save: save, startNew: startNew, backup: function (expectedRevision) { return evidence(expectedRevision, BACKUP_KEY); }, quarantine: function (expectedRevision) { return evidence(expectedRevision, QUARANTINE_KEY); }, reset: reset });
+    function restoreBackup(expectedRevision) {
+      var current = read(), error = compare(current, expectedRevision, true), backupRaw, preserved;
+      if (error) return error;
+      try { backupRaw = storage.getItem(BACKUP_KEY); preserved = storage.getItem(RESTORE_PREVIOUS_KEY); }
+      catch (_) { return failure('storage-error', 'read-failed'); }
+      var backup = parse(backupRaw);
+      if (backup.status !== 'ok') return failure('invalid-backup', backup.status === 'empty' ? 'backup-missing' : 'backup-invalid');
+      // Keep the previous primary bytes as well as the source backup. Never
+      // overwrite an earlier preserved copy without an explicit export flow.
+      if (current.raw !== null) {
+        if (preserved !== null && preserved !== current.raw) return failure('preservation-required', 'restore-previous-slot-occupied');
+        var evidenceResult = copyEvidence(current, RESTORE_PREVIOUS_KEY);
+        if (!evidenceResult.ok) return evidenceResult;
+      }
+      var previous = current.revision;
+      if (previous === null) { try { previous = JSON.parse(current.raw).revision; } catch (_) {} }
+      if (!revision(previous)) previous = 0;
+      return write(backup.state, current, Math.max(previous, backup.revision) + 1);
+    }
+    return Object.freeze({ load: load, save: save, startNew: startNew, backup: function (expectedRevision) { return evidence(expectedRevision, BACKUP_KEY); }, quarantine: function (expectedRevision) { return evidence(expectedRevision, QUARANTINE_KEY); }, reset: reset, restoreBackup: restoreBackup });
   }
-  return Object.freeze({ create: create, KEY: KEY, BACKUP_KEY: BACKUP_KEY, QUARANTINE_KEY: QUARANTINE_KEY, SCHEMA_VERSION: SCHEMA, MAX_BYTES: MAX_BYTES });
+  return Object.freeze({ create: create, KEY: KEY, BACKUP_KEY: BACKUP_KEY, QUARANTINE_KEY: QUARANTINE_KEY, RESTORE_PREVIOUS_KEY: RESTORE_PREVIOUS_KEY, SCHEMA_VERSION: SCHEMA, MAX_BYTES: MAX_BYTES });
 }));

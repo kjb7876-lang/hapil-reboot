@@ -1,0 +1,22 @@
+{
+  "media/gunner.webp": [
+    512,
+    512
+  ],
+  "media/shot.webp": [
+    256,
+    96
+  ],
+  "media/forest.jpg": [
+    1536,
+    1024
+  ],
+  "media/cave.webp": [
+    1586,
+    992
+  ],
+  "media/ruins.webp": [
+    1280,
+    720
+  ]
+}

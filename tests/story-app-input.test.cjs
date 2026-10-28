@@ -4,7 +4,7 @@ const vm = require('node:vm');
 const fs = require('node:fs');
 const code = fs.readFileSync(require('node:path').join(__dirname, '../src/story-app.js'), 'utf8');
 
-async function setup({ review = false, failStart = false } = {}) {
+async function setup({ review = false, failStart = false, lockReason = null, loseOnTick = false, reviewAssets = false, missingReviewFile = false } = {}) {
   const elements = new Map(), raf = [], steps = [];
   function element(id) {
     if (elements.has(id)) return elements.get(id);
@@ -16,26 +16,27 @@ async function setup({ review = false, failStart = false } = {}) {
       getBoundingClientRect() { return { width: 360 }; }, showModal() {}, close() {} };
     elements.set(id, node); return node;
   }
-  const data = { scenes: [{ id:'s1', title:'Scene', sequence:0, chapter:1, text:'text', requiredCombatIds:['b1'] }], primaryCombatIds:['b1'] };
+  const data = { scenes: [{ id:'s1', title:'Scene', sequence:0, chapter:1, text:'text', requiredCombatIds:['dist00-boss'] }], primaryCombatIds:['dist00-boss'] };
   const state = { viewSceneId:'s1', acknowledgedSceneIds:[], clearedCombatIds:[], activeCombat:null };
-  let world = null;
-  const session = { state:()=>state, frontier:()=>({sceneIndex:0}), sceneStatus:()=> 'current', availableCombats:()=>['b1'], status:()=>({error:null}), dispatch:()=>({ok:true}),
-    start:()=> { if(failStart) return {ok:false,reason:'write-failed'}; world = {status:'active'}; return {ok:true}; },
-    retry:()=>({ok:false,reason:'write-failed'}), tick(input) { steps.push(input); }, world:()=>world };
-  const registry = { bindings:{ b1:{ images:[{key:'body',file:'media/body.png'}], art:{} } } };
+  let world = null, starts=0;
+  const session = { claimExclusive:async()=>lockReason?({ok:false,reason:lockReason}):({ok:true}),releaseExclusive(){}, state:()=>state, frontier:()=>({sceneIndex:0}), sceneStatus:()=> 'current', availableCombats:()=>['dist00-boss'], status:()=>({error:null}), dispatch:()=>({ok:true}),
+    start:()=> { starts++; if(failStart) return {ok:false,reason:'write-failed'}; world = {status:'active'}; return {ok:true}; },
+    retry:()=>({ok:false,reason:'write-failed'}), tick(input) { steps.push(input);if(loseOnTick)world.status='lost'; }, world:()=>world };
+  const registry = { bindings:{ 'dist00-boss':{ images:[{key:'body',file:'media/body.png'}], art:{} } } };
+  if(reviewAssets)registry.bindings['dist00-boss']={combatId:'dist00-boss',images:['body','projectile','map','player','shot','target'].map(key=>({key,file:'media/'+key+'.png'})),art:{body:{combatId:'dist00-boss',key:'body'},projectile:{combatId:'dist00-boss',key:'projectile'},background:{key:'map'},playerKey:'player',shotKey:'shot',targetKey:'target'}};
   const gate = { entryStatus:()=>({ready:true,name:'Boss'}), summary:()=>({indexRevision:1,readyCount:1,primaryCount:1,generationComplete:false,readyFormCount:0,requiredFormCount:0}) };
   const document = { getElementById:element, createElement:()=>element('created'+Math.random()), body:{dataset:{}}, addEventListener() {} };
   class Image { set src(v) { if(v) queueMicrotask(()=>this.onload()); } }
-  const win = { document, Image, location:{search:review?'?review=b1':''}, matchMedia:()=>({matches:false}), innerHeight:800,innerWidth:400, devicePixelRatio:1, addEventListener(){}, scrollTo(){},
-    HapilStoryData:data, HapilStoryScope:{apply:()=>data}, HapilStoryEncounters:{get:()=>({id:'b1',name:'Boss'})},
+  const win = { document, Image, location:{search:review?'?review=dist00-boss':''}, matchMedia:()=>({matches:false}), innerHeight:800,innerWidth:400, devicePixelRatio:1, addEventListener(){}, scrollTo(){},
+    HapilStoryData:data, HapilStoryScope:{apply:()=>data}, HapilStoryEncounters:{get:id=>({id,name:'Boss',stages:[{target:id==='dist00-boss'?'command-link':'body'}]})},
     HapilStoryAssets:{create:()=>gate}, HapilStoryState:{}, HapilStoryStorage:{}, HapilStorySession:{create:()=>session},
     HapilStoryCombat:{supports:()=>true,create:()=>({status:'active'}),step:(w,i)=>steps.push(i),result:()=>null,verifyResult:()=>true},
     HapilStoryRenderer:{create:()=>({resize(){},render(){return {ready:true}},dispose(){}})} };
   const context={ window:win, document, Image, URLSearchParams, performance:{now:()=>0}, requestAnimationFrame:fn=>raf.push(fn),
-    fetch:async path=>({ok:true,json:async()=>path.includes('runtime-assets')?registry:{}}), setTimeout:()=>1,clearTimeout(){},console };
+    fetch:async (path,options)=>({ok:!(missingReviewFile&&options&&options.method==='HEAD'&&path==='media/target.png'),json:async()=>path.includes('runtime-assets')?registry:{}}), setTimeout:()=>1,clearTimeout(){},console };
   vm.runInNewContext(code,context);
   await new Promise(setImmediate);
-  return { element, win, raf, steps };
+  return { element, win, raf, steps, starts:()=>starts };
 }
 
 test('a completed short touch drag survives until the next simulation tick', async () => {
@@ -78,4 +79,28 @@ test('save failure when starting combat returns to the reader', async () => {
   assert.equal(h.element('reader').hidden,false);
   assert.equal(h.element('battle').hidden,true);
   assert.match(h.element('notice').textContent,/저장하지 못했습니다/);
+});
+
+test('a busy storage lock stops boot and tells the user without showing gameplay',async()=>{
+ const h=await setup({lockReason:'lock-busy'});
+ assert.match(h.element('scene-title').textContent,/열 수 없습니다/);
+ assert.match(h.element('scene-status').textContent,/다른 창/);
+ assert.match(h.element('save-status').textContent,/변경하지 않았습니다/);
+ assert.equal(h.element('encounters').children.length,0);
+});
+
+test('lost combat presents a retry rather than a false victory',async()=>{
+ const h=await setup({loseOnTick:true});
+ h.element('encounters').children[0].children.find(x=>x.textContent==='전투 시작').listeners.click();
+ await new Promise(setImmediate);h.raf.shift()(20);
+ assert.equal(h.element('retry').hidden,false);
+ assert.match(h.element('battle-state').textContent,/다시 도전/);
+});
+
+test('review catalogue checks each own asset before enabling and never starts a saved encounter',async()=>{
+ const absent=await setup({reviewAssets:true,missingReviewFile:true});
+ const a=absent.element('review-list').children[0];assert.equal(a.children[1].disabled,true);assert.match(a.children[0].textContent,/불러올 수 없음/);assert.equal(absent.starts(),0);
+ const ready=await setup({reviewAssets:true});const row=ready.element('review-list').children[0];assert.equal(row.children[1].disabled,false);
+ row.children[1].listeners.click();await new Promise(setImmediate);
+ assert.equal(ready.starts(),0);assert.equal(ready.win.document.body.dataset.battle,'true');assert.match(ready.element('battle-state').textContent,/진행·저장에 반영하지 않습니다/);
 });

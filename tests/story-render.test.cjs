@@ -104,3 +104,14 @@ test('native CPU renders all 32 real body poses with their exact approved projec
  write(path.join(out,'report.json'),Buffer.from(JSON.stringify({scope:'Actual native CPU Canvas source-art/registration/geometry preview only. No browser/GPU/physical-mobile or combat-balance certification. Missing scene maps stay neutral and ready=false.',rendererSHA256:hash(fs.readFileSync(path.join(project,'src/story-render.js'))),frames:frames.length,pausePixelChecks:frames.length,worldImmutableChecks:frames.length,allRequiredFormAssetsComplete:false,gameBrowserGPUVerified:false,physicalMobileVerified:false,records:frames},null,2)+'\n'));
  assert.equal(frames.length,32);
 });
+
+test('harmless objects use subdued dashed presentation distinct from damaging objects',()=>{
+ const f=fixture(),hazard={x1:50,y1:116,x2:280,y2:610,width:6,phase:'active'};
+ const w=world(undefined,{bullets:[{x:120,y:350,vx:0,vy:80,r:3,kind:'orb',harmful:false}],hazards:[{...hazard,harmful:false}]});
+ const {records}=f.draw(w),shot=records.find(r=>r.type==='image'&&r.key==='fixtureProjectile');
+ assert.equal(shot.alpha,.35);const line=records.find(r=>r.type==='stroke'&&r.path[0]?.[0]==='M'&&r.path[0][1]===50);
+ assert.equal(line.alpha,.28);assert.deepEqual(line.dash,[2,4]);
+ const dangerous=f.draw(world(undefined,{bullets:[{x:120,y:350,vx:0,vy:80,r:3,kind:'orb'}],hazards:[hazard]})).records;
+ assert.equal(dangerous.find(r=>r.type==='image'&&r.key==='fixtureProjectile').alpha,1);
+ assert.equal(dangerous.find(r=>r.type==='stroke'&&r.path[0]?.[0]==='M'&&r.path[0][1]===50).alpha,1);
+});
