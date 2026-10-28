@@ -125,7 +125,12 @@
     vortex:{key:'fxV8Vortex',frames:16,ms:80,pivot:[64,64],sample:4}
   });
   var FAMILIES=[['web','silver'],['ripple','reed'],['ember','gold'],['unlock','gold'],['vortex','silver','unlock']];
-  var CACHE_LIMIT=96, STAMP_DRAW_LIMIT=768, SCALE=3, PAD=2, CELL=128;
+  // Body textures are generic Drive FX, never actor or skill identity replacements.
+  // Exclude unlock from new bullet bodies: its compact source has unapproved color-key artifacts.
+  var BODY_FAMILIES=[['web','silver'],['ripple','reed'],['ember','gold'],['silver','gold'],['vortex','silver']];
+  var ORBS={violet:{key:'projectileVioletOrbV9',orb:true,width:296,height:80,ms:125,frames:4},lucifer:{key:'projectileLuciferOrbV9',orb:true,width:296,height:80,ms:125,frames:4}};
+  var BODY_FRAMES={web:[2,5,8,11],silver:[2,5,8,11],ripple:[2,5,8,11],reed:[2,5,8,11],ember:[2,5,8,11],gold:[1,2,4,6],vortex:[2,5,8,11]};
+  var CACHE_LIMIT=96, CACHE_BYTES=4*1024*1024, STAMP_DRAW_LIMIT=768, SCALE=3, PAD=2, CELL=128;
   function finite(n){return typeof n==='number'&&Number.isFinite(n);}
   function clamp(n,a,b){return Math.max(a,Math.min(b,n));}
   function indexFor(w){return w&&Number.isInteger(w.bossIndex)?clamp(w.bossIndex,0,4):0;}
@@ -136,8 +141,8 @@
     if(b&&b.kind==='needle')return palette.secondary;
     return b&&Number.isInteger(b.id)&&b.id%3===0?palette.secondary:palette.primary;
   }
-  function assetKeysForEncounter(i){return FAMILIES[clamp(Math.floor(i||0),0,4)].map(function(name){return FX[name].key;});}
-  function ready(im,s){return !!(im&&im.complete!==false&&im.naturalWidth===512&&im.naturalHeight===Math.ceil(s.frames/4)*CELL);}
+  function assetKeysForEncounter(i){var wi=clamp(Math.floor(i||0),0,4),out=[];FAMILIES[wi].concat(BODY_FAMILIES[wi]).forEach(function(name){if(name==='unlock')return;var key=FX[name].key;if(out.indexOf(key)<0)out.push(key);});if(wi===0)out.push(ORBS.violet.key);if(wi===4)out.push(ORBS.lucifer.key);return out;}
+  function ready(im,s){return !!(im&&im.complete!==false&&im.naturalWidth===(s.orb?s.width:512)&&im.naturalHeight===(s.orb?s.height:Math.ceil(s.frames/4)*CELL));}
   function capsule(ctx,x,y,r,l){
     ctx.beginPath();
     if(l>0){ctx.moveTo(x-l,y-r);ctx.lineTo(x+l,y-r);ctx.arc(x+l,y,r,-Math.PI/2,Math.PI/2);ctx.lineTo(x-l,y+r);ctx.arc(x-l,y,r,Math.PI/2,Math.PI*1.5);ctx.closePath();}
@@ -145,33 +150,47 @@
   }
   function create(images){
     images=images||{};
-    var legacy=Legacy.create(images),cache=new Map(),group=-1,metrics;
+    var legacy=Legacy.create(images),cache=new Map(),cacheBytes=0,group=-1,metrics;
     function release(entry){if(entry&&entry.canvas){entry.canvas.width=1;entry.canvas.height=1;}}
-    function clearCache(){cache.forEach(release);cache.clear();}
-    function beginFrame(){legacy.beginFrame();metrics={stampDraws:0,stampCacheMisses:0,stampCacheHits:0,stampCacheLimit:CACHE_LIMIT,stampCacheBytes:0,stampCacheEntries:cache.size,compactCastDraws:0,compactHazardDraws:0,compactFamilies:{}};}
-    function textureFor(w,b){var names=FAMILIES[indexFor(w)];return FX[names[b&&b.halfLength>0?1:0]];}
-    function buildStamp(w,b,s,r,l,tone){
+    function clearCache(){cache.forEach(release);cache.clear();cacheBytes=0;}
+    function beginFrame(){legacy.beginFrame();metrics={stampDraws:0,stampCacheMisses:0,stampCacheHits:0,stampCacheLimit:CACHE_LIMIT,stampCacheByteLimit:CACHE_BYTES,stampCacheBytes:cacheBytes,stampCacheEntries:cache.size,animatedBulletDraws:0,bodyAnimationPhases:0,suppressedUnapprovedFX:0,compactCastDraws:0,compactHazardDraws:0,compactFamilies:{}};}
+    function textureFor(w,b){var wi=indexFor(w),names=BODY_FAMILIES[wi],orb=wi===0?ORBS.violet:wi===4?ORBS.lucifer:null;if(orb&&b&&finite(b.r)&&b.r>0&&b.r<=5&&!(b.halfLength>0)&&ready(images[orb.key],orb))return orb;return FX[names[b&&b.halfLength>0?1:0]];}
+    function buildStamp(w,b,s,r,l,tone,lowQuality){
       if(!global.document||!global.document.createElement)return null;
       var canvas=global.document.createElement('canvas');
-      var halfX=l+r+PAD,halfY=r+PAD;
-      canvas.width=Math.ceil(halfX*2*SCALE);canvas.height=Math.ceil(halfY*2*SCALE);
+      var halfX=l+r+PAD,halfY=r+PAD,frameCount=s.orb?4:lowQuality?2:4;
+      var frameWidth=Math.ceil(halfX*2*SCALE),frameHeight=Math.ceil(halfY*2*SCALE);
+      canvas.width=frameWidth*frameCount;canvas.height=frameHeight;
       var ctx=canvas.getContext('2d');if(!ctx){release({canvas:canvas});return null;}
-      var cx=halfX*SCALE,cy=halfY*SCALE;
-      // Fully opaque backing remains throughout the source's one-shot fade.
-      capsule(ctx,cx,cy,r*SCALE,l*SCALE);ctx.fillStyle=tone;ctx.fill();
-      ctx.strokeStyle='#101323';ctx.lineWidth=1.8*SCALE;ctx.stroke();
-      ctx.save();capsule(ctx,cx,cy,r*SCALE,l*SCALE);ctx.clip();
-      ctx.globalAlpha=.34;
-      ctx.drawImage(images[s.key],s.sample%4*CELL,Math.floor(s.sample/4)*CELL,CELL,CELL,
-        cx-(l+r)*SCALE,cy-r*SCALE,(l+r)*2*SCALE,r*2*SCALE);
-      ctx.globalAlpha=1;
-      // Palette-specific core, clipped inside exactly the damaging capsule.
-      ctx.fillStyle=PALETTE_LIST[indexFor(w)].secondary;
-      if(l>0){ctx.fillRect(cx-l*SCALE,cy-.45*SCALE,l*2*SCALE,.9*SCALE);}
-      else{ctx.beginPath();ctx.arc(cx,cy,r*.35*SCALE,0,Math.PI*2);ctx.fill();}
-      ctx.restore();
-      capsule(ctx,cx,cy,r*SCALE,l*SCALE);ctx.strokeStyle='#f1e9e1';ctx.lineWidth=.5*SCALE;ctx.stroke();
-      return {canvas:canvas,width:canvas.width/SCALE,height:canvas.height/SCALE,x:halfX,y:halfY,r:r,halfLength:l,bytes:canvas.width*canvas.height*4};
+      var cx=halfX*SCALE,cy=halfY*SCALE,frames=BODY_FRAMES[Object.keys(FX).filter(function(name){return FX[name]===s;})[0]]||[s.sample,s.sample,s.sample,s.sample];
+      // Build a small strip once per shape/palette/quality. Animation selects a
+      // source rectangle from it: every bullet still costs exactly one draw.
+      for(var phase=0;phase<frameCount;phase++){
+        var sourceFrame=s.orb?phase:frames[lowQuality?phase*2+1:phase];
+        ctx.save();ctx.translate(phase*frameWidth,0);
+        capsule(ctx,cx,cy,r*SCALE,l*SCALE);ctx.fillStyle=tone;ctx.fill();
+        ctx.strokeStyle='#101323';ctx.lineWidth=1.8*SCALE;ctx.stroke();
+        ctx.save();capsule(ctx,cx,cy,r*SCALE,l*SCALE);ctx.clip();
+        if(s.orb){
+          // The source's numeric 24px circle is cropped to 48x48 and mapped
+          // to the existing r, with the same opaque backing and exact clip.
+          ctx.globalAlpha=1;
+          ctx.drawImage(images[s.key],16+sourceFrame*72,16,48,48,cx-r*SCALE,cy-r*SCALE,r*2*SCALE,r*2*SCALE);
+        }else{
+          ctx.globalAlpha=.34;
+          ctx.drawImage(images[s.key],sourceFrame%4*CELL,Math.floor(sourceFrame/4)*CELL,CELL,CELL,
+            cx-(l+r)*SCALE,cy-r*SCALE,(l+r)*2*SCALE,r*2*SCALE);
+          ctx.globalAlpha=1;
+          // Generic FX stay texture-only; the opaque core never fades.
+          ctx.fillStyle=PALETTE_LIST[indexFor(w)].secondary;
+          if(l>0){ctx.fillRect(cx-l*SCALE,cy-.45*SCALE,l*2*SCALE,.9*SCALE);}
+          else{ctx.beginPath();ctx.arc(cx,cy,r*.35*SCALE,0,Math.PI*2);ctx.fill();}
+        }
+        ctx.restore();
+        capsule(ctx,cx,cy,r*SCALE,l*SCALE);ctx.strokeStyle='#f1e9e1';ctx.lineWidth=.5*SCALE;ctx.stroke();
+        ctx.restore();
+      }
+      return {canvas:canvas,width:frameWidth/SCALE,height:frameHeight/SCALE,frameWidth:frameWidth,frameHeight:frameHeight,frameCount:frameCount,x:halfX,y:halfY,r:r,halfLength:l,bytes:canvas.width*canvas.height*4};
     }
     function drawBullet(ctx,w,b,lowQuality){
       if(!w||!w.campaign||!b)return legacy.drawBullet(ctx,w,b);
@@ -181,16 +200,20 @@
       var r=finite(b.r)&&b.r>0?b.r:3,l=finite(b.halfLength)?Math.max(0,b.halfLength):0;
       if(r>8||l>24)return false;
       var wi=indexFor(w);if(group!==wi){clearCache();group=wi;}
-      var tone=colorFor(w,b),key=s.key+'|'+r+'|'+l+'|'+tone,entry=cache.get(key);
+      var tone=colorFor(w,b),key=s.key+'|'+r+'|'+l+'|'+tone+'|'+(lowQuality?'low':'high'),entry=cache.get(key);
       if(!entry){
-        entry=buildStamp(w,b,s,r,l,tone);if(!entry)return false;
-        if(cache.size>=CACHE_LIMIT){var first=cache.keys().next().value;release(cache.get(first));cache.delete(first);}
-        cache.set(key,entry);metrics.stampCacheMisses++;
+        entry=buildStamp(w,b,s,r,l,tone,lowQuality);if(!entry)return false;
+        while(cache.size&&(cache.size>=CACHE_LIMIT||cacheBytes+entry.bytes>CACHE_BYTES)){var first=cache.keys().next().value,old=cache.get(first);cacheBytes-=old.bytes;release(old);cache.delete(first);}
+        cache.set(key,entry);cacheBytes+=entry.bytes;metrics.stampCacheMisses++;
       }else metrics.stampCacheHits++;
       ctx.save();ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
       ctx.translate(b.x,b.y);ctx.rotate(finite(b.angle)?b.angle:Math.atan2(b.vy||0,b.vx||0));
-      // Exactly one cached image for a live bullet, no translucent tail draw.
-      ctx.drawImage(entry.canvas,0,0,entry.canvas.width,entry.canvas.height,-entry.x,-entry.y,entry.width,entry.height);
+      // Deterministic simulation age, once through the authored phases then hold.
+      // No seam or continuous-loop claim: low quality samples fewer generic
+      // FX phases, while dedicated four-phase ORBs keep their 125ms contract.
+      var phase=Math.min(entry.frameCount-1,Math.floor(Math.max(0,finite(b.age)?b.age:0)*1000/(s.orb?125:s.ms*s.frames/entry.frameCount)));
+      ctx.drawImage(entry.canvas,phase*entry.frameWidth,0,entry.frameWidth,entry.frameHeight,-entry.x,-entry.y,entry.width,entry.height);
+      metrics.animatedBulletDraws++;metrics.bodyAnimationPhases=Math.max(metrics.bodyAnimationPhases,entry.frameCount);
       ctx.restore();metrics.stampDraws++;metrics.compactFamilies[s.key]=(metrics.compactFamilies[s.key]||0)+1;return true;
     }
     function oneShot(ctx,s,elapsed,x,y,size,alpha){
@@ -209,6 +232,9 @@
       var releaseAge=Number.isFinite(b.releaseTick)&&b.releaseTick>=0?w.tick-b.releaseTick:Infinity;
       if(b.action!=='charge'&&!(releaseAge>=0&&releaseAge<60))return;
       var name=b.action==='charge'?names[0]:wi===4&&w.phase===2?'unlock':names[1];
+      // The available unlock atlas has opaque color-key artifacts. Do not
+      // amplify it, replace its identity, or hide missing art with a fallback.
+      if(name==='unlock'){metrics.suppressedUnapprovedFX++;return;}
       var s=FX[name];
       if(!ready(images[s.key],s)){legacy.drawBossCast(ctx,w);return;}
       var elapsed=b.action==='charge'?progress*900:releaseAge*1000/60;
@@ -226,7 +252,7 @@
     }
     beginFrame();
     return {beginFrame:beginFrame,drawBullet:drawBullet,drawBossCast:drawBossCast,drawHazardDecoration:drawHazardDecoration,
-      getMetrics:function(){var old=legacy.getMetrics(),bytes=0;cache.forEach(function(e){bytes+=e.bytes;});return Object.assign({},old,metrics,{projectileTextureLimit:metrics.stampDraws?STAMP_DRAW_LIMIT:old.projectileTextureLimit,projectileTextureDraws:old.projectileTextureDraws+metrics.stampDraws,texturedBullets:old.texturedBullets+metrics.stampDraws,bossCastDraws:old.bossCastDraws+metrics.compactCastDraws,hazardEmitterDraws:old.hazardEmitterDraws+metrics.compactHazardDraws,stampCacheEntries:cache.size,stampCacheBytes:bytes,compactFamilies:Object.assign({},metrics.compactFamilies)});},
+      getMetrics:function(){var old=legacy.getMetrics();return Object.assign({},old,metrics,{projectileTextureLimit:metrics.stampDraws?STAMP_DRAW_LIMIT:old.projectileTextureLimit,projectileTextureDraws:old.projectileTextureDraws+metrics.stampDraws,texturedBullets:old.texturedBullets+metrics.stampDraws,bossCastDraws:old.bossCastDraws+metrics.compactCastDraws,hazardEmitterDraws:old.hazardEmitterDraws+metrics.compactHazardDraws,stampCacheEntries:cache.size,stampCacheBytes:cacheBytes,compactFamilies:Object.assign({},metrics.compactFamilies)});},
       destroy:function(){clearCache();images={};}};
   }
   global.HapilProjectiles=Object.freeze({create:create,palettes:PALETTES,paletteList:PALETTE_LIST,assetKeysForEncounter:assetKeysForEncounter,colorFor:colorFor,compactFX:FX});

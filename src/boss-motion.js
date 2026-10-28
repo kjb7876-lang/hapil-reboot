@@ -20,6 +20,18 @@
     if(action==='attack')return {from:0,to:0,blend:1};
     return {from:3,to:3,blend:1};
   }
+  // Small presentation-only weight shifts of existing authored keyposes.
+  // These do not create source frames or change the simulation/hitbox anchor.
+  function presentation(world,b){
+    var p=clamp(finite(b.actionProgress,0),0,1),tick=finite(world.tick,0);
+    var release=Number.isInteger(b.releaseTick)&&b.releaseTick>=0?b.releaseTick:-1;
+    var age=release>=0?tick-release:Infinity,dy=0;
+    if(age>=0&&age<6)dy=2.5*(1-smooth(age/6));
+    else if(b.action==='charge')dy=-1.5*smooth(p);
+    var hit=Number.isFinite(b.hitUntil)?b.hitUntil-tick:0;
+    var opacity=hit>0&&hit<=4?1-.07*Math.sin(Math.PI*hit/4):1;
+    return {dy:dy,opacity:opacity};
+  }
   function create(images){
     var metrics;
     function beginFrame(){metrics={bossDraws:0,spriteDraws:0,tethers:0,lastBossIdentity:null,lastBossAsset:null,lastPose:null,lastSample:null,lastSilk:null,authoredKeyposesPerBoss:4,fullAnimationCycles:0,sourcePivotsCertified:false};}
@@ -31,15 +43,16 @@
       if(!c||!ready(c)||!Number.isFinite(x)||!Number.isFinite(y))return false;
       var state=sample(world,b),a=c.poses[state.from],z=c.poses[state.to],blend=state.blend;
       var scale=c.scale*clamp(finite(width,230)/230,.1,1),angle=clamp(finite(b.lean,0),-1,1)*.009;
-      var alpha=clamp(finite(opacity,1),0,1),sway=Math.sin(finite(world.time,0)*1.6)*.5;
+      var weight=presentation(world,b),drawY=y+weight.dy;
+      var alpha=clamp(finite(opacity,1),0,1)*weight.opacity,sway=Math.sin(finite(world.time,0)*1.6)*.5;
       var silkA=[(a.silk[0]-a.anchor[0])*scale,(a.silk[1]-a.anchor[1])*scale],silkZ=[(z.silk[0]-z.anchor[0])*scale,(z.silk[1]-z.anchor[1])*scale];
-      var dx=mix(silkA[0],silkZ[0],blend),dy=mix(silkA[1],silkZ[1],blend),endX=x+dx*Math.cos(angle)-dy*Math.sin(angle),endY=y+dx*Math.sin(angle)+dy*Math.cos(angle);
+      var dx=mix(silkA[0],silkZ[0],blend),dy=mix(silkA[1],silkZ[1],blend),endX=x+dx*Math.cos(angle)-dy*Math.sin(angle),endY=drawY+dx*Math.sin(angle)+dy*Math.cos(angle);
       if(endY>64&&alpha>0){ctx.save();ctx.globalAlpha*=alpha*.30;ctx.strokeStyle='#c9c5b5';ctx.lineWidth=.65;ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(180,64);ctx.lineTo((180+endX)/2+sway,64+(endY-64)*.46);ctx.lineTo(endX,endY);ctx.stroke();ctx.restore();metrics.tethers=1;metrics.lastSilk={start:[180,64],end:[endX,endY],alpha:alpha*.30,damaging:false,identity:id,boss:true};}
-      function frame(p,weight){if(weight<=.001)return;ctx.save();ctx.globalAlpha*=alpha*weight;ctx.translate(x,y);ctx.rotate(angle);ctx.drawImage(images[c.key],(p.index%2)*256,Math.floor(p.index/2)*256,256,256,-p.anchor[0]*scale,-p.anchor[1]*scale,256*scale,256*scale);ctx.restore();metrics.spriteDraws++;}
+      function frame(p,weight){if(weight<=.001)return;ctx.save();ctx.globalAlpha*=alpha*weight;ctx.translate(x,drawY);ctx.rotate(angle);ctx.drawImage(images[c.key],(p.index%2)*256,Math.floor(p.index/2)*256,256,256,-p.anchor[0]*scale,-p.anchor[1]*scale,256*scale,256*scale);ctx.restore();metrics.spriteDraws++;}
       if(state.from===state.to)frame(z,1);else{frame(a,1-blend);frame(z,blend);}
-      metrics.bossDraws++;metrics.lastBossIdentity=id;metrics.lastBossAsset=c.key;metrics.lastPose=blend>=.5?z.name:a.name;metrics.lastSample={from:state.from,to:state.to,blend:blend,scale:scale,angle:angle,position:[x,y]};return true;
+      metrics.bossDraws++;metrics.lastBossIdentity=id;metrics.lastBossAsset=c.key;metrics.lastPose=blend>=.5?z.name:a.name;metrics.lastSample={from:state.from,to:state.to,blend:blend,scale:scale,angle:angle,position:[x,drawY],combatPosition:[x,y],presentationOffsetY:weight.dy,hitOpacity:weight.opacity};return true;
     }
     return {beginFrame:beginFrame,drawBoss:drawBoss,getMetrics:function(){return JSON.parse(JSON.stringify(metrics));}};
   }
-  global.HapilBossMotion=Object.freeze({contracts:CONTRACTS,create:create,sample:sample});
+  global.HapilBossMotion=Object.freeze({contracts:CONTRACTS,create:create,sample:sample,presentation:presentation});
 })(typeof window!=='undefined'?window:globalThis);
