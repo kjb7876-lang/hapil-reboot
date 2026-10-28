@@ -156,7 +156,7 @@
     var motionKeys=['bossMotionViolet','bossMotionHorn','bossMotionBalrog','bossMotionMask','bossMotionLucifer'];
     var fxKeys=global.HapilProjectiles&&global.HapilProjectiles.assetKeysForEncounter?global.HapilProjectiles.assetKeysForEncounter(group):[];
     return Object.keys(global.HapilMedia).filter(function(k){
-      if(['gunner','boss','spider','fxResonance','fxSlash','fxThorns','fxArrow','fxParry','fxSilk'].includes(k))return true;
+      if(['gunner','boss','spider','fxResonance','fxSlash','fxThorns','fxArrow','fxParry','fxSilk','fxWindArrow8V6'].includes(k))return true;
       if(group===0&&(/^map\d+$/.test(k)||k==='violetCutin'))return true;
       if((group===-1||group===1||group===2)&&['forest','ruins','cave'].includes(k))return true;
       if(k===motionKeys[group]||fxKeys.indexOf(k)>=0)return true;

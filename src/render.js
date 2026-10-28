@@ -433,8 +433,25 @@
       mapMetrics.atlasFxDraws++;
       if((','+mapMetrics.atlasFxFamilies+',').indexOf(','+key+',')<0)mapMetrics.atlasFxFamilies+=(mapMetrics.atlasFxFamilies?',':'')+key;
     }
+    function drawMemoryArrow8(e){
+      var im=images.fxWindArrow8V6;
+      if(!imageReady(im)||im.naturalWidth!==1024||im.naturalHeight!==512)return false;
+      var age=e.age||0,duration=Math.min(.4,e.ttl||.4);
+      if(age<0||age>=duration||mapMetrics.atlasFxDraws>=mapMetrics.atlasFxLimit)return true;
+      // Drive combat-v2: eight authored phases, tip pivot (192,128), rightward.
+      // Retimed once to the unchanged 400ms skill life; no looping or damage.
+      var frame=Math.min(7,Math.floor(age/duration*8)),size=62,scale=size/256;
+      ctx.save();ctx.globalCompositeOperation='source-over';
+      ctx.globalAlpha=(lightweight?.54:.62)*Math.min(1,(duration-age)/.08);
+      ctx.translate(e.x,e.y-10);ctx.rotate(-Math.PI/2);
+      ctx.drawImage(im,(frame%4)*256,Math.floor(frame/4)*256,256,256,-192*scale,-128*scale,size,size);
+      ctx.restore();mapMetrics.atlasFxDraws++;
+      if((','+mapMetrics.atlasFxFamilies+',').indexOf(',fxWindArrow8V6,')<0)mapMetrics.atlasFxFamilies+=(mapMetrics.atlasFxFamilies?',':'')+'fxWindArrow8V6';
+      return true;
+    }
     function drawAuthoredEffect(e,world){
       if(!world.campaign)return false;
+      if(e.kind==='memory'&&drawMemoryArrow8(e))return true;
       var key=null,size=72,age=e.age||0,y=e.y;
       if(e.kind==='memory'){key='fxArrow';size=62;y-=10;}
       else if(e.kind==='delayCharge'){key='fxThorns';size=68;}

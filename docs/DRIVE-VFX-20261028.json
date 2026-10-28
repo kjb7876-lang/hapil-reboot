@@ -1,0 +1,113 @@
+{
+  "source": "Google Drive official metadata and authenticated raw file transfer",
+  "drive_sources": {
+    "motion": {
+      "folder_id": "12TzL3qeEnNj5vLd_N1ruwPw1Rm4J3YdW",
+      "manifest": {
+        "id": "1aignPXwddxjBtJAKV3YaURaJ6Haiz_EC",
+        "google_drive_url": "https://drive.google.com/file/d/1aignPXwddxjBtJAKV3YaURaJ6Haiz_EC/view?usp=drivesdk",
+        "local_sha256": "758ad789464b009d9b74bb74c0189cd5868cbe679b33d6645fd043616f6abf82"
+      },
+      "packs": [
+        {
+          "filename": "StoryWorld-HAPIL-projectile-motion-v2-regular-001-of002.zip",
+          "id": "12g6TLbH5jrUoc5ByuPfQwZgNxob0NKBq",
+          "google_drive_url": "https://drive.google.com/file/d/12g6TLbH5jrUoc5ByuPfQwZgNxob0NKBq/view?usp=drivesdk",
+          "local_sha256": "58d2fa465e4f91583110ed2336be444c2abd61ff5f304561a8bda31df1005518"
+        },
+        {
+          "filename": "StoryWorld-HAPIL-projectile-motion-v2-regular-002-of002.zip",
+          "id": "1lQ6j95itCfpdebtRRbh6kufPnGxI-3e4",
+          "google_drive_url": "https://drive.google.com/file/d/1lQ6j95itCfpdebtRRbh6kufPnGxI-3e4/view?usp=drivesdk",
+          "local_sha256": "0c60602bcd649f7631f6190447210c945cf632a4ab87df800c4debdc3893d6ab"
+        }
+      ]
+    },
+    "combat": {
+      "folder_id": "1yDwnVUhM12AS82qWiIInKYaw5BcVP3Pq",
+      "manifest": {
+        "id": "1Wdw2xeozWJgQfnYjM3Kf20iq8BQ1Twjg",
+        "google_drive_url": "https://drive.google.com/file/d/1Wdw2xeozWJgQfnYjM3Kf20iq8BQ1Twjg/view?usp=drivesdk",
+        "local_sha256": "5bf47dac77301223d5df7c45ba0a04a474c0ad11e4b03006ba653c54ad0ab2f7"
+      },
+      "packs": [
+        {
+          "filename": "StoryWorld-HAPIL-combat-v2-regular-001-of002.zip",
+          "id": "1JUJkcNCjZRLRUETHXEJIBft0eQsBGp1i",
+          "google_drive_url": "https://drive.google.com/file/d/1JUJkcNCjZRLRUETHXEJIBft0eQsBGp1i/view?usp=drivesdk",
+          "local_sha256": "5d7dabec7c815ee1511c16adb7c597164dc92014425c4a7abea9097619128027"
+        },
+        {
+          "filename": "StoryWorld-HAPIL-combat-v2-regular-002-of002.zip",
+          "id": "14ZfCeK9PnaAOCsF4hjTvlTZ6iNZYki2z",
+          "google_drive_url": "https://drive.google.com/file/d/14ZfCeK9PnaAOCsF4hjTvlTZ6iNZYki2z/view?usp=drivesdk",
+          "local_sha256": "576fadf9671d53a030cd6015052698b1ce1e12dc2db4d3f2bf52eb7c59981fc9"
+        }
+      ]
+    }
+  },
+  "appliedSourceRecords": [
+    {
+      "family": "motion",
+      "relativePath": "runtime/violet_orb_cocoon-atlas.png",
+      "bytes": 21165,
+      "sha256": "03aa2075d2242b6dc0f7d35e2f04b69749256249a564175a3711dde29a9aaa2d",
+      "dimensions": [
+        296,
+        80
+      ],
+      "mode": "RGBA",
+      "originalPack": "StoryWorld-HAPIL-projectile-motion-v2-regular-001-of002.zip",
+      "packSHA256": "58d2fa465e4f91583110ed2336be444c2abd61ff5f304561a8bda31df1005518",
+      "pixelInspected": true,
+      "motionCertification": "candidate-not-complete-animation",
+      "sourceDrivePackID": "12g6TLbH5jrUoc5ByuPfQwZgNxob0NKBq",
+      "sourceDrivePackURL": "https://drive.google.com/file/d/12g6TLbH5jrUoc5ByuPfQwZgNxob0NKBq/view?usp=drivesdk"
+    },
+    {
+      "family": "motion",
+      "relativePath": "runtime/lucifer_orb_eclipseiris-atlas.png",
+      "bytes": 18450,
+      "sha256": "1440f50ca908f6f6c4df342ae9e6b09e97ab797e6204acad1a622505499946e5",
+      "dimensions": [
+        296,
+        80
+      ],
+      "mode": "RGBA",
+      "originalPack": "StoryWorld-HAPIL-projectile-motion-v2-regular-001-of002.zip",
+      "packSHA256": "58d2fa465e4f91583110ed2336be444c2abd61ff5f304561a8bda31df1005518",
+      "pixelInspected": true,
+      "motionCertification": "candidate-not-complete-animation",
+      "sourceDrivePackID": "12g6TLbH5jrUoc5ByuPfQwZgNxob0NKBq",
+      "sourceDrivePackURL": "https://drive.google.com/file/d/12g6TLbH5jrUoc5ByuPfQwZgNxob0NKBq/view?usp=drivesdk"
+    },
+    {
+      "family": "combat",
+      "relativePath": "runtime/wind-arrow-8-atlas.webp",
+      "bytes": 148190,
+      "sha256": "0fcc33586f03cd144abe418b7774aae990336ea5d1c2f7d9ea684993d956a0f1",
+      "dimensions": [
+        1024,
+        512
+      ],
+      "mode": "RGBA",
+      "originalPack": "StoryWorld-HAPIL-combat-v2-regular-001-of002.zip",
+      "packSHA256": "5d7dabec7c815ee1511c16adb7c597164dc92014425c4a7abea9097619128027",
+      "pixelInspected": true,
+      "motionCertification": "candidate-not-complete-animation",
+      "sourceDrivePackID": "1JUJkcNCjZRLRUETHXEJIBft0eQsBGp1i",
+      "sourceDrivePackURL": "https://drive.google.com/file/d/1JUJkcNCjZRLRUETHXEJIBft0eQsBGp1i/view?usp=drivesdk"
+    }
+  ],
+  "runtimeMapping": {
+    "projectileVioletOrbV9": "media/projectiles-drive-v9/violet-orb-cocoon-atlas.png",
+    "projectileLuciferOrbV9": "media/projectiles-drive-v9/lucifer-orb-eclipseiris-atlas.png",
+    "memoryArrow8": "existing media/fx-v6/wind-arrow-8.webp (byte-identical to Drive)"
+  },
+  "orbPlayback": "4 authored phases at125ms, once then phase3 hold; no loop certification",
+  "orbGeometry": "crop source numerical circle to existing core radius; opaque backing and clip; no simulation change",
+  "memoryPlayback": "8 authored phases retimed once to unchanged400ms effect life; source tip(192,128) rotated upward",
+  "newOriginalArtCount": 0,
+  "excluded": "unlock compact atlas: color-key contamination; optional cast suppressed, no ring donor replacement",
+  "deviceGPUVerified": false
+}
