@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#10131d">
   <title>합일몽세 · 스토리모드 작업판</title>
-  <link rel="stylesheet" href="story.css">
+  <link rel="stylesheet" href="story.css?v=20261028-play1">
 </head>
 <body>
   <header class="mast"><a href="index.html">합일 세로 리부트</a><span>STORY MODE · 작업판</span><button id="portal-open">기억의 길</button></header>
@@ -14,6 +14,14 @@
       <div class="eyebrow" id="chapter">합일몽세</div>
       <h1 id="scene-title">기억을 불러오는 중</h1>
       <p id="scene-status" class="muted" role="status"></p>
+      <section class="review-panel" aria-labelledby="review-title">
+        <h2 id="review-title">스토리 전투 플레이테스트</h2>
+        <p class="muted">아래 전투를 선택해 바로 플레이하세요. 검수용 미완성 전투이며 본편 진행과 저장에는 반영되지 않습니다.</p>
+        <p id="review-status" role="status">검수용 자산을 확인하는 중입니다.</p>
+        <div id="review-list"></div>
+        <button id="review-fight" hidden>선택한 자산 검수 전투 · 진행 기록 안 함</button>
+        <p class="muted">본편 전체 전투와 최종전은 아직 구현 중입니다. <a href="index.html">개선된 5보스 게임 플레이하기 ↗</a></p>
+      </section>
       <article id="scene-text"></article>
       <div class="reader-actions"><button id="acknowledge">기억을 새기기</button><button id="next-scene">다음 구역</button></div>
       <section id="encounters" aria-label="구역의 전투"></section>
@@ -31,12 +39,7 @@
       <p id="progress"></p><p id="save-status" role="status"></p>
       <p class="muted">플레이테스트 작업판입니다. 본편 필수 전투는 아직 준비되지 않아 첫 전투부터 진행이 막힙니다. 아래 검수 전투는 별도로 시험할 수 있으며, 결과는 본편에 기록되지 않습니다. 최종전과 결말은 미구현입니다.</p>
       <details><summary>자산 반영 상태</summary><p id="asset-status"></p><a href="docs/story/asset-ledger.json">반영 대장</a></details>
-      <details><summary>자산·전투 검수 (미완성)</summary>
-        <p class="muted">별도 실험 전투입니다. 공격·자세와 시각 자산은 검수 중이며, 전투 결과는 본편 진행이나 저장에 반영되지 않습니다.</p>
-        <p id="review-status" role="status">검수용 자산을 확인하는 중입니다.</p>
-        <div id="review-list"></div>
-      </details>
-      <button id="review-fight" hidden>선택한 자산 검수 전투 · 진행 기록 안 함</button>
+
       <button id="reset-story" class="quiet">스토리 기록 백업 후 처음부터</button>
       <button id="backup-story" class="quiet">스토리 기록 백업</button>
       <button id="restore-story" class="quiet">백업에서 복원</button>
