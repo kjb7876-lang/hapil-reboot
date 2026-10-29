@@ -112,6 +112,21 @@
   function indexFor(w){return slotForEncounter(w&&w.bossIndex);}
   function paletteFor(w,b){var p=PALETTE_LIST[indexFor(w)];return p?(b&&b.paletteSlot===1?{id:p.id+'-secondary',primary:p.secondary,secondary:p.primary,accent:p.accent}:p):null;}
   function colorFor(w,b){var p=paletteFor(w,b);return p?p.primary:null;}
+  // Acceleration is a property known at launch, so tint the existing authored
+  // pixels from the first frame: players get a stable cue before it speeds up.
+  // Use the boss's own two palette colors, preserve source alpha, and do not
+  // make the rendered danger capsule bigger than the collision geometry.
+  // Precompute bounded color cues from each owner's palette. These remain
+  // stable for the projectile's lifetime, including before its behavior starts.
+  var BEHAVIOR_PALETTES=PALETTE_LIST.map(function(base){return [base,{id:base.id+'-secondary',primary:base.secondary,secondary:base.primary,accent:base.accent}].map(function(p){
+    function mix(role,target,weight){var a=rgb(p.primary),q=rgb(target),color='#';for(var i=0;i<3;i++)color+=Math.round(a[i]*(1-weight)+q[i]*weight).toString(16).padStart(2,'0');return Object.freeze({id:p.id+'-'+role,primary:color,secondary:p.secondary,accent:p.accent});}
+    return {accelerating:mix('accelerating',p.secondary,.52),curving:mix('curving',p.secondary,.25),pausing:mix('pausing',p.accent,.55)};
+  });});
+  function bulletPalette(w,b){
+    var role=b&&b.pauseUntil?'pausing':b&&finite(b.curveRate)&&b.curveRate!==0?'curving':b&&finite(b.acceleration)&&b.acceleration>0?'accelerating':null;
+    if(!role)return paletteFor(w,b);
+    var index=indexFor(w);return index<0?null:BEHAVIOR_PALETTES[index][b.paletteSlot===1?1:0][role];
+  }
   function optionalAssetKeysForEncounter(i){var out=[];if(!Number.isInteger(i)||i<0||i>=ORBS.length)return out;if(CASTS[i])out.push(CASTS[i].key);if(ROTORS[i])out.push(ROTORS[i].key);if(BEAMS[i])out.push(BEAMS[i].key);return out;}
   function assetKeysForEncounter(i){
     var wi=slotForEncounter(i);if(wi<0)return [];var out=[ORBS[wi].key];
@@ -182,7 +197,7 @@
       ctx.drawImage(art.canvas,sx+sw-sr,sy,sr,sh,x+l,cy,r,diameter);
     }
     function buildStamp(w,b,s,r,l){
-      var art=tintedArt(s,paletteFor(w,b));if(!art)return null;
+      var art=tintedArt(s,bulletPalette(w,b));if(!art)return null;
       var hx=l+r+PAD,hy=r+PAD,fw=Math.ceil(hx*2*SCALE),fh=Math.ceil(hy*2*SCALE),frames=[];
       // Separate frame surfaces preserve fractional-radius edge coverage and
       // permit one direct 5-argument drawImage per live bullet. A cropped frame
@@ -244,7 +259,7 @@
       var r=finite(b.r)&&b.r>0?b.r:3,l=finite(b.halfLength)?Math.max(0,b.halfLength):0;
       if(r>128||l>640)return false;
       if(group!==wi){clearCache();group=wi;}
-      var key='body|'+s.key+'|'+r+'|'+l+'|'+paletteFor(w,b).id,e=cache.get(key);
+      var key='body|'+s.key+'|'+r+'|'+l+'|'+bulletPalette(w,b).id,e=cache.get(key);
       if(!e){e=buildStamp(w,b,s,r,l);if(!e)return false;e=remember(key,e);if(!e)return false;metrics.stampCacheMisses++;}else metrics.stampCacheHits++;
       var phase=s.frames>1?Math.min(s.frames-1,Math.floor(Math.max(0,finite(b.age)?b.age:0)*1000/s.ms)):0;
       ctx.save();ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.translate(b.x,b.y);ctx.rotate(b.kind==='hell-rotor'&&finite(b.spinAngle)?b.spinAngle:finite(b.angle)?b.angle:Math.atan2(b.vy||0,b.vx||0));
@@ -320,5 +335,5 @@
       getMetrics:function(){return Object.assign({},metrics,{projectileTextureLimit:768,projectileTextureDraws:metrics.stampDraws,texturedBullets:metrics.stampDraws,projectileTailDraws:0,bossCastDraws:metrics.compactCastDraws+metrics.signatureCastDraws,hazardEmitterDraws:0,stampCacheEntries:cache.size,stampCacheBytes:cacheBytes,compactFamilies:Object.assign({},metrics.compactFamilies)});},
       destroy:function(){clearCache();images={};}};
   }
-  global.HapilProjectiles=Object.freeze({create:create,palettes:PALETTES,paletteList:PALETTE_LIST,paletteFor:paletteFor,assetKeysForEncounter:assetKeysForEncounter,optionalAssetKeysForEncounter:optionalAssetKeysForEncounter,invalidAssetForEncounter:invalidAssetForEncounter,colorFor:colorFor,compactFX:FX});
+  global.HapilProjectiles=Object.freeze({create:create,palettes:PALETTES,paletteList:PALETTE_LIST,paletteFor:paletteFor,bulletPalette:bulletPalette,assetKeysForEncounter:assetKeysForEncounter,optionalAssetKeysForEncounter:optionalAssetKeysForEncounter,invalidAssetForEncounter:invalidAssetForEncounter,colorFor:colorFor,compactFX:FX});
 })(typeof window!=='undefined'?window:globalThis);
