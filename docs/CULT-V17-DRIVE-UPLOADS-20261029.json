@@ -1,0 +1,117 @@
+{
+  "schema": "hapil.cult04-final-drive-uploads.v1",
+  "dateUTC": "2026-10-29",
+  "scope": "Final converted WebP upload and exact byte readback, independent of gameplay/render/mobile test conclusions",
+  "assets": [
+    {
+      "runtimePath": "media/cult-v17/drive-spear.webp",
+      "localPath": "/workspace/scratch/c84ef2cd7c03/hapil-pride-v17/media/cult-v17/drive-spear.webp",
+      "bytes": 64746,
+      "sha256": "507b0455ada4be3ff8876d1686aef6362539b57782333c849c48ba21ed352dd8",
+      "dimensions": [
+        512,
+        512
+      ],
+      "pixelInspected": true,
+      "frames": 1,
+      "sourceOriginalName": "14-cult04-neural-command-spear.png",
+      "sourceOriginalSHA256": "da5bf691eb325b4995655c3671f37a96da289d32543f0baaab90f2cfa9b5b8a5",
+      "sourceDriveArchiveID": "1w7tKwEcc93b2p4jG0VqnnDIHPXfIJCbM",
+      "sourceDriveArchiveURL": "https://drive.google.com/file/d/1w7tKwEcc93b2p4jG0VqnnDIHPXfIJCbM/view?usp=drivesdk",
+      "driveFileID": "1NzrzBxAAohxss6VOl7xFsYjp6U0-18fX",
+      "driveURL": "https://drive.google.com/file/d/1NzrzBxAAohxss6VOl7xFsYjp6U0-18fX/view?usp=drivesdk",
+      "driveFileName": "cult-leader-drive-spear-v17.webp",
+      "driveParent": [
+        "0AEbW3c3qaZ1OUk9PVA"
+      ],
+      "shared": false,
+      "sharingSettingsChanged": false,
+      "uploadMode": "official upload_file to new file in My Drive root",
+      "metadataReadbackSizeMIMESharedVerified": true,
+      "authenticatedRawRedownloadSHA256Match": true
+    },
+    {
+      "runtimePath": "media/cult-v17/drive-fold.webp",
+      "localPath": "/workspace/scratch/c84ef2cd7c03/hapil-pride-v17/media/cult-v17/drive-fold.webp",
+      "bytes": 72902,
+      "sha256": "c51d89509e9e52a07b539027596b986094f5e56fdff3f587e2c19c9ffe38ed93",
+      "dimensions": [
+        512,
+        512
+      ],
+      "pixelInspected": true,
+      "frames": 1,
+      "sourceOriginalName": "13-cult04-spatial-fold-warning.png",
+      "sourceOriginalSHA256": "2b444bdbcd9398c1cda39be97107225cd0c089ceea3091fe788d966a347d3c9b",
+      "sourceDriveArchiveID": "1w7tKwEcc93b2p4jG0VqnnDIHPXfIJCbM",
+      "sourceDriveArchiveURL": "https://drive.google.com/file/d/1w7tKwEcc93b2p4jG0VqnnDIHPXfIJCbM/view?usp=drivesdk",
+      "driveFileID": "1O0ItIpiz7PUY7oy14afHintfXjTUqrDS",
+      "driveURL": "https://drive.google.com/file/d/1O0ItIpiz7PUY7oy14afHintfXjTUqrDS/view?usp=drivesdk",
+      "driveFileName": "cult-leader-drive-fold-v17.webp",
+      "driveParent": [
+        "0AEbW3c3qaZ1OUk9PVA"
+      ],
+      "shared": false,
+      "sharingSettingsChanged": false,
+      "uploadMode": "official upload_file to new file in My Drive root",
+      "metadataReadbackSizeMIMESharedVerified": true,
+      "authenticatedRawRedownloadSHA256Match": true
+    },
+    {
+      "runtimePath": "media/cult-v17/drive-impact.webp",
+      "localPath": "/workspace/scratch/c84ef2cd7c03/hapil-pride-v17/media/cult-v17/drive-impact.webp",
+      "bytes": 141070,
+      "sha256": "318c20e9dc3588e5929e619a9a8da35bfbf12c3674848752ba46127152247f57",
+      "dimensions": [
+        512,
+        512
+      ],
+      "pixelInspected": true,
+      "frames": 1,
+      "sourceOriginalName": "15-cult04-time-stopped-collision.png",
+      "sourceOriginalSHA256": "92e96bd401fe359227583bc85b3218855bcdaba63439a9eaad117d4b9c66cdca",
+      "sourceDriveArchiveID": "1w7tKwEcc93b2p4jG0VqnnDIHPXfIJCbM",
+      "sourceDriveArchiveURL": "https://drive.google.com/file/d/1w7tKwEcc93b2p4jG0VqnnDIHPXfIJCbM/view?usp=drivesdk",
+      "driveFileID": "1yO6LnERaz_BvGuZlTM2jRpScjA_Ehmg3",
+      "driveURL": "https://drive.google.com/file/d/1yO6LnERaz_BvGuZlTM2jRpScjA_Ehmg3/view?usp=drivesdk",
+      "driveFileName": "cult-leader-drive-impact-v17.webp",
+      "driveParent": [
+        "0AEbW3c3qaZ1OUk9PVA"
+      ],
+      "shared": false,
+      "sharingSettingsChanged": false,
+      "uploadMode": "official upload_file to new file in My Drive root",
+      "metadataReadbackSizeMIMESharedVerified": true,
+      "authenticatedRawRedownloadSHA256Match": true
+    },
+    {
+      "runtimePath": "media/cult-v17/drive-stitch.webp",
+      "localPath": "/workspace/scratch/c84ef2cd7c03/hapil-pride-v17/media/cult-v17/drive-stitch.webp",
+      "bytes": 90032,
+      "sha256": "6c2785664e1226250da23a2c048043ca8c3b2cfeeb4c5d1c8259c7d3d8b3649a",
+      "dimensions": [
+        512,
+        512
+      ],
+      "pixelInspected": true,
+      "frames": 1,
+      "sourceOriginalName": "16-cult04-resurrection-stitch-arc.png",
+      "sourceOriginalSHA256": "3755ba039a9695265f6425f09da129675358c04d4b151ad4c9665e5493c359f9",
+      "sourceDriveArchiveID": "1w7tKwEcc93b2p4jG0VqnnDIHPXfIJCbM",
+      "sourceDriveArchiveURL": "https://drive.google.com/file/d/1w7tKwEcc93b2p4jG0VqnnDIHPXfIJCbM/view?usp=drivesdk",
+      "driveFileID": "1mgNGKPetJJ1nxya0J6smePS9YG3OACaC",
+      "driveURL": "https://drive.google.com/file/d/1mgNGKPetJJ1nxya0J6smePS9YG3OACaC/view?usp=drivesdk",
+      "driveFileName": "cult-leader-drive-stitch-v17.webp",
+      "driveParent": [
+        "0AEbW3c3qaZ1OUk9PVA"
+      ],
+      "shared": false,
+      "sharingSettingsChanged": false,
+      "uploadMode": "official upload_file to new file in My Drive root",
+      "metadataReadbackSizeMIMESharedVerified": true,
+      "authenticatedRawRedownloadSHA256Match": true
+    }
+  ],
+  "sourceProvenance": "CULT04-DRIVE-FX-PROVENANCE.json",
+  "fullyInterpolatedAnimation": false
+}

@@ -27,6 +27,10 @@
     var spec = Object.freeze({key:row[1],width:row[2],height:row[3],crop:Object.freeze(row[4]),authoredFrames:1,turn:.22});
     return Object.freeze({id:row[0],cast:spec,release:spec,laser:spec});
   }));
+  var CULT_FOLD=Object.freeze({key:'cultDriveFold',width:512,height:512,crop:Object.freeze([0,0,512,512]),authoredFrames:1,turn:.22});
+  var CULT_IMPACT=Object.freeze({key:'cultDriveImpact',width:512,height:512,crop:Object.freeze([0,0,512,512]),authoredFrames:1,turn:.22});
+  var CULT_STITCH=Object.freeze({key:'cultDriveStitch',width:512,height:512,crop:Object.freeze([0,0,512,512]),authoredFrames:1,turn:.22});
+  var CULT_LANCE=Object.freeze({key:'cultLance',width:512,height:192,crop:Object.freeze([0,0,512,192]),authoredFrames:1,turn:.22});
   var CACHE_BYTES = 2 * 1024 * 1024, CACHE_ENTRIES = 24, STAMP_SIZE = 96;
   function finite(n) { return typeof n === 'number' && Number.isFinite(n); }
   function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
@@ -36,6 +40,7 @@
   function assetKeysForEncounter() { return []; }
   function optionalAssetKeysForEncounter(i) {
     var entry = specsFor(i), keys = [];
+    if(i===12)return ['cultDriveFold','cultDriveImpact','cultDriveStitch'];
     if (entry) ['cast', 'release', 'laser'].forEach(function (role) { var spec = entry[role]; if (spec && keys.indexOf(spec.key) < 0) keys.push(spec.key); });
     return keys;
   }
@@ -80,7 +85,7 @@
     }
     function draw(ctx, world, low) {
       if (!world || !world.campaign || world.stage !== 'boss' || !world.boss || !finite(world.tick)) return;
-      var index = world.bossIndex, entry = specsFor(index); if (!entry) return;
+      var index = world.finalPractice ? 12 : world.bossIndex, entry = world.finalPractice ? {cast:world.phase===1?CULT_STITCH:CULT_FOLD,release:world.phase===2?CULT_IMPACT:CULT_LANCE,laser:CULT_LANCE} : specsFor(index); if (!entry) return;
       if (encounter !== index) { clear(); encounter = index; }
       var limit = low ? 4 : 8; metrics.skillDrawLimit = limit;
       var b = world.boss, progress = clamp(b.actionProgress || 0, 0, 1);

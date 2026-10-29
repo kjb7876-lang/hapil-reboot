@@ -30,7 +30,7 @@ test('all fourteen exact source paintings retain manifest bytes and validate onl
   const keys=API.terrainAssetKeysForEncounter(group);assert.equal(keys.length,group===9||group===11?2:1);assert.equal(API.invalidTerrainAsset(images,group),null);
   for(const key of keys){const bad={...images};delete bad[key];assert.equal(API.invalidTerrainAsset(bad,group),key);bad[key]={complete:true,naturalWidth:1,naturalHeight:1};assert.equal(API.invalidTerrainAsset(bad,group),key);}
  }
- assert.deepEqual(API.terrainAssetKeysForEncounter(0),['h14MapViolet'],'entry group never requires the other thirteen decoded maps');assert.equal(API.invalidTerrainAsset({},12),'terrain-encounter-unsupported');assert.equal(API.invalidTerrainAsset({},-1),null);
+ assert.deepEqual(API.terrainAssetKeysForEncounter(0),['h14MapViolet'],'entry group never requires the other thirteen decoded maps');assert.equal(API.invalidTerrainAsset({},12),'cultArena');assert.equal(API.invalidTerrainAsset({},-1),null);
 });
 test('each boss and same-person phase variant uses its own scene with one bounded reusable portrait cache',async()=>{
  const f=await fixture();try{

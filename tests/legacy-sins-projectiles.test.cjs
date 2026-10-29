@@ -28,7 +28,7 @@ test('unknown encounter indices fail closed instead of borrowing the final exist
   const fx = API.create({});
   const noDraw = new Proxy({}, { get() { return () => { throw Error('unsupported encounter was drawn'); }; }, set() { return true; } });
   try {
-    for (const bossIndex of [12, 999, -2, 4.5, '5']) {
+    for (const bossIndex of [999, -2, 4.5, '5']) {
       const w = { campaign: true, bossIndex };
       assert.deepEqual(API.assetKeysForEncounter(bossIndex), []);
       assert.equal(API.invalidAssetForEncounter({}, bossIndex), 'unsupportedProjectileEncounter');
@@ -110,7 +110,8 @@ test('actual same-boss material stays visibly dense throughout the capsule and a
 test('seven material palettes keep naming priority, explicit secondary use and dense-source detail within a bounded cache', async () => {
   const f = await materialFixture();
   try {
-    assert.equal(API.paletteList.length, 12);
+    assert.equal(API.paletteList.length, 13);
+    assert.equal(API.paletteFor({bossIndex:11,finalPractice:true}).id,'cult-leader');
     assert.equal(API.paletteFor({ bossIndex: 11 }).primary, '#eee6d6', 'white-suit chairman keeps named white primary');
     const ids = ['belphegor', 'leviathan', 'beelzebub', 'asmodeus', 'mammon', 'wrath', 'pride'];
     for (let i = 5; i < 12; i++) {

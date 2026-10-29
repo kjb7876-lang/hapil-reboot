@@ -49,7 +49,8 @@ test('twelve skill sources are their exact pinned hapil1 files, single-frame art
     assert.deepEqual([spec.width, spec.height], source.dimensions);
     assert(spec.crop[0] >= 0 && spec.crop[1] >= 0 && spec.crop[0] + spec.crop[2] <= spec.width && spec.crop[1] + spec.crop[3] <= spec.height);
   }
-  for (const i of [-1, 12, 999, '3']) assert.deepEqual(Skills.optionalAssetKeysForEncounter(i), []);
+  for (const i of [-1, 999, '3']) assert.deepEqual(Skills.optionalAssetKeysForEncounter(i), []);
+  assert.deepEqual(Skills.optionalAssetKeysForEncounter(12),['cultDriveFold','cultDriveImpact','cultDriveStitch']);
   assert.deepEqual(Skills.encounters[1].release.crop, [31,67,83,151], 'Horn bone excerpt omits full surrounding circle');
   assert.deepEqual(Skills.encounters[11].release.crop, [174,142,154,267], 'Pride cross excerpt omits its outer ring');
 });
