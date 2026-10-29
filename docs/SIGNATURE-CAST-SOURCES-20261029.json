@@ -1,0 +1,97 @@
+{
+  "revision": "20261029-signature-v11",
+  "source": "Google Drive metadata and authenticated raw packs; source and runtime files byte-identical to named ZIP members; source PNGs and original light/dark contact sheets visually inspected.",
+  "items": [
+    {
+      "key": "castVioletV11",
+      "runtimePath": "media/encounter-signature-v11/violet-knot.png",
+      "sha256": "c72f96123e091473cd5761aef62fe0d2ced7d7d5ed39ff56476b9a7e126fced5",
+      "bytes": 4563,
+      "sourceZipFile": "signature05.zip",
+      "sourceZipMember": "derived/violet-knot-cast-v2-static-96.png",
+      "sourceZipDriveID": "1FHc7A2Rbfk7hjiejecJf9qnT3W9fnv1A",
+      "sourceZipURL": "https://drive.google.com/file/d/1FHc7A2Rbfk7hjiejecJf9qnT3W9fnv1A/view?usp=drivesdk",
+      "sourceZipSHA256": "33d0bc74a558c435b43d2b9da4b97247cda0086c38bcc3620a1165541fb13d1e",
+      "sourcePixelsInspected": true
+    },
+    {
+      "key": "castHornV11",
+      "runtimePath": "media/encounter-signature-v11/horn-swamp.png",
+      "sha256": "a63d7814ed4a8c414c9ddbd4ccb2a083c31a8c6f94e9adcf7852e3e37358b50b",
+      "bytes": 5458,
+      "sourceZipFile": "signature05.zip",
+      "sourceZipMember": "derived/horn-swamp-cast-static-96.png",
+      "sourceZipDriveID": "1FHc7A2Rbfk7hjiejecJf9qnT3W9fnv1A",
+      "sourceZipURL": "https://drive.google.com/file/d/1FHc7A2Rbfk7hjiejecJf9qnT3W9fnv1A/view?usp=drivesdk",
+      "sourceZipSHA256": "33d0bc74a558c435b43d2b9da4b97247cda0086c38bcc3620a1165541fb13d1e",
+      "sourcePixelsInspected": true
+    },
+    {
+      "key": "castBalrogV11",
+      "runtimePath": "media/encounter-signature-v11/balrog-fire.png",
+      "sha256": "cd57c83c262e07a13128b920e57e66d4ac2ace0a8ebf63fffc4890f5cb0fb38a",
+      "bytes": 7290,
+      "sourceZipFile": "signature06.zip",
+      "sourceZipMember": "derived/balrog-fire-cast-static-96.png",
+      "sourceZipDriveID": "1KZqC2f8rWKfRT8F7gKJUoE_2k1DxtHTo",
+      "sourceZipURL": "https://drive.google.com/file/d/1KZqC2f8rWKfRT8F7gKJUoE_2k1DxtHTo/view?usp=drivesdk",
+      "sourceZipSHA256": "cdd59422925ff7e8ff7732c4943fdcf04f45ca73cf229e26bdaddcd980792b7a",
+      "sourcePixelsInspected": true
+    },
+    {
+      "key": "castMaskV11",
+      "runtimePath": "media/encounter-signature-v11/mask-fan.png",
+      "sha256": "fbe38267c2dc0b3d3704947fc08646909d8fa6673cd8125295805d524a7e2eaa",
+      "bytes": 3461,
+      "sourceZipFile": "signature06.zip",
+      "sourceZipMember": "derived/mask-fan-cast-static-96.png",
+      "sourceZipDriveID": "1KZqC2f8rWKfRT8F7gKJUoE_2k1DxtHTo",
+      "sourceZipURL": "https://drive.google.com/file/d/1KZqC2f8rWKfRT8F7gKJUoE_2k1DxtHTo/view?usp=drivesdk",
+      "sourceZipSHA256": "cdd59422925ff7e8ff7732c4943fdcf04f45ca73cf229e26bdaddcd980792b7a",
+      "sourcePixelsInspected": true
+    },
+    {
+      "key": "castLuciferV11",
+      "runtimePath": "media/encounter-signature-v11/lucifer-ring.png",
+      "sha256": "e9106e21f663424bff962f59ef82700fb1af835a01799a450b4d585ed063bba9",
+      "bytes": 5970,
+      "sourceZipFile": "signature06.zip",
+      "sourceZipMember": "derived/lucifer-ring-cast-static-96.png",
+      "sourceZipDriveID": "1KZqC2f8rWKfRT8F7gKJUoE_2k1DxtHTo",
+      "sourceZipURL": "https://drive.google.com/file/d/1KZqC2f8rWKfRT8F7gKJUoE_2k1DxtHTo/view?usp=drivesdk",
+      "sourceZipSHA256": "cdd59422925ff7e8ff7732c4943fdcf04f45ca73cf229e26bdaddcd980792b7a",
+      "sourcePixelsInspected": true
+    },
+    {
+      "key": "projectileHornNeedleV11",
+      "runtimePath": "media/encounter-signature-v11/horn-reed-needle.png",
+      "sha256": "abcb9ae62518a4eea88f585f53cbb733fd25e1100386b8f9b56bb3044766a245",
+      "bytes": 3062,
+      "sourceZipFile": "pilot03.zip",
+      "sourceZipMember": "runtime/swamp/swamp_needle_reedthorn.png",
+      "sourceZipDriveID": "1TCbDTqd0rQ_7y9xBzb1CG5b7wPJIAo1I",
+      "sourceZipURL": "https://drive.google.com/file/d/1TCbDTqd0rQ_7y9xBzb1CG5b7wPJIAo1I/view?usp=drivesdk",
+      "sourceZipSHA256": "fed76402d0b2b42e1bbad6cdf39008082fcaff7739d305274e81588c24594ae8",
+      "sourcePixelsInspected": true
+    },
+    {
+      "key": "projectileLuciferShardV11",
+      "runtimePath": "media/encounter-signature-v11/lucifer-mask-shard.png",
+      "sha256": "5d606352ba92ad8d373d3973d81b8e3f0a42ca0d8a8f8c0536fa8afeb44cd287",
+      "bytes": 5082,
+      "sourceZipFile": "StoryWorld-HAPIL-projectile-pilot-v3-regular-009-of009.zip",
+      "sourceZipMember": "runtime/lucifer_mask/lucifer_blade_maskshard.png",
+      "sourceZipDriveID": "19TYVctwZ3dACd2o60ILNtwnft9kQK-tt",
+      "sourceZipURL": "https://drive.google.com/file/d/19TYVctwZ3dACd2o60ILNtwnft9kQK-tt/view?usp=drivesdk",
+      "sourceZipSHA256": "d996b1b0aeb3a2c10fc7ebc1312d56e7de69ca647e053d759769a403cbcf1cf1",
+      "sourcePixelsInspected": true
+    }
+  ],
+  "casting": "Five static authored cast accents, never sole warning. Source image stays static; only draw opacity follows existing charge progress (maximum .70) or 18 ticks after actual release. One extra image draw per boss per frame. Optional cast asset missing => skip decorative image, never replace; boss damage sources remain required.",
+  "palette": "Violet, Horn and Mask accents are cached palette-brightened from their own source pixels, preserving original alpha; Lucifer blue-white ring is recolored to existing crimson/ivory palette. Balrog original flame pixels are retained. No rim or geometric fallback was added. A synthetic dark/light paired-background CPU render was visually inspected; this does not certify visibility on every moving game map or real phone.",
+  "projectiles": "Horn dedicated reed and Lucifer mask-shard proposed material are fitted to existing authoritative capsule. Their source files are static pilot samples. Lucifer shard is an abstract proposed ceramic material, with no approved body master; no actor-identity or animation claim.",
+  "newOriginalDrawings": 0,
+  "driveOriginalFilesChanged": false,
+  "damageGeometryChanged": false,
+  "deviceGPUVerified": false
+}

@@ -119,7 +119,7 @@
   }
 
   function emptyState() {
-    return { version: 1, revision: 0, generation: 0, activeRunId: null, settings: clone(DEFAULT_SETTINGS),
+    return { version: 1, revision: 0, generation: 0, activeRunId: null, activeRunBaselineKills: 0, settings: clone(DEFAULT_SETTINGS),
       profile: { runs: 0, wins: 0, bestScore: 0, bestGraze: 0, totalKills: 0, lastRun: null },
       checkpoint: null, backup: null, completed: [] };
   }
@@ -158,13 +158,70 @@
     state.checkpoint = safeCheckpoint(raw.checkpoint);
     state.backup = safeCheckpoint(raw.backup);
     if (!state.checkpoint && state.backup) state.checkpoint = clone(state.backup);
+    // Old version-1 states have no baseline and mean an un-retried run.
+    // Clamp a retained baseline when recovering an older backup so only kills
+    // after the restored boundary are credited on the next completed attempt.
+    if (state.checkpoint && integer(raw.activeRunBaselineKills, 0, MAX_COUNTER))
+      state.activeRunBaselineKills = Math.min(raw.activeRunBaselineKills, state.checkpoint.kills);
     return state;
+  }
+
+  // Never rewrite unknown/corrupt stored records through a normalized empty
+  // state. A valid same-run backup can recover an invalid primary checkpoint;
+  // a corrupt backup is retained on disk and exported for recovery instead.
+  function safeStoredRecord(raw) {
+    if (raw === undefined) return true;
+    if (!object(raw) || raw.version !== 1 || !Array.isArray(raw.completed) || raw.completed.length > LEDGER_LIMIT ||
+        !integer(raw.revision, 0, Number.MAX_SAFE_INTEGER - 1) || !integer(raw.generation, 0, Number.MAX_SAFE_INTEGER - 1) ||
+        !(raw.activeRunId === null || validRunId(raw.activeRunId))) return false;
+    if (raw.activeRunBaselineKills !== undefined && !integer(raw.activeRunBaselineKills, 0, MAX_COUNTER)) return false;
+    function hasOnlyKeys(value, allowed) {
+      return object(value) && Object.keys(value).every(function (key) { return allowed.indexOf(key) >= 0; });
+    }
+    if (!hasOnlyKeys(raw, ['version','revision','generation','activeRunId','activeRunBaselineKills','settings','profile','checkpoint','backup','completed'])) return false;
+    if (raw.settings !== undefined) {
+      if (!hasOnlyKeys(raw.settings, ['music','sfx','quality','skillRotation','difficulty','sensitivity'])) return false;
+      if (['music','sfx','skillRotation'].some(function (k) { return raw.settings[k] !== undefined && typeof raw.settings[k] !== 'boolean'; })) return false;
+      if (raw.settings.quality !== undefined && raw.settings.quality !== 'high' && raw.settings.quality !== 'low') return false;
+      if (raw.settings.difficulty !== undefined && !difficulty(raw.settings.difficulty)) return false;
+      if (raw.settings.sensitivity !== undefined && !finite(raw.settings.sensitivity, .5, 2)) return false;
+    }
+    if (raw.profile !== undefined) {
+      if (!hasOnlyKeys(raw.profile, ['runs','wins','bestScore','bestGraze','totalKills','lastRun'])) return false;
+      if (['runs','wins','bestScore','bestGraze','totalKills'].some(function (k) { return raw.profile[k] !== undefined && !integer(raw.profile[k], 0, MAX_COUNTER); })) return false;
+      if (raw.profile.wins !== undefined && raw.profile.wins > (raw.profile.runs || 0)) return false;
+      if (raw.profile.lastRun != null && (!hasOnlyKeys(raw.profile.lastRun, ['runId','score','graze','kills','difficulty','won']) || !validateResult(raw.profile.lastRun))) return false;
+    }
+    var ids = new Set();
+    for (var i = 0; i < raw.completed.length; i++) {
+      var result = validateResult(raw.completed[i]);
+      if (!result || !hasOnlyKeys(raw.completed[i], ['runId','score','graze','kills','difficulty','won']) || ids.has(result.runId)) return false;
+      ids.add(result.runId);
+    }
+    function validStoredCheckpoint(value) {
+      var snapshot = validateCheckpoint(value);
+      return !!(snapshot && snapshot.runId === raw.activeRunId && !ids.has(snapshot.runId));
+    }
+    var backupPresent = raw.backup !== undefined && raw.backup !== null;
+    var checkpointPresent = raw.checkpoint !== undefined && raw.checkpoint !== null;
+    var backupValid = backupPresent && validStoredCheckpoint(raw.backup);
+    var checkpointValid = checkpointPresent && validStoredCheckpoint(raw.checkpoint);
+    if (backupPresent && !backupValid) return false;
+    if (checkpointPresent && !checkpointValid && !backupValid) return false;
+    if (checkpointValid && raw.activeRunBaselineKills !== undefined && raw.activeRunBaselineKills > raw.checkpoint.kills) return false;
+    if (!checkpointPresent && !backupPresent && raw.activeRunBaselineKills > 0) return false;
+    return true;
   }
 
   // Pure reducer: IDB always calls this after reading within the same read/write
   // transaction. An instance may refresh its revision only with an explicit load.
   function reduce(raw, action, expectedRevision) {
     var state = normalizeState(raw);
+    if (!safeStoredRecord(raw)) return { state: state, changed: false, result: { ok: false, reason: 'invalid-storage-state' } };
+    // The v1 record validator cannot represent a subsequent counter above this
+    // boundary. Keep the current bytes intact and let users export the record.
+    if (state.revision >= Number.MAX_SAFE_INTEGER - 1 || state.generation >= Number.MAX_SAFE_INTEGER - 1)
+      return { state: state, changed: false, result: { ok: false, reason: 'counter-exhausted' } };
     if (state.revision !== expectedRevision) return { state: state, changed: false, result: { ok: false, reason: 'conflict', revision: state.revision } };
     var result = { ok: true };
     if (action.type === 'settings') {
@@ -181,6 +238,7 @@
       }
       if (state.activeRunId !== snapshot.runId) {
         state.activeRunId = snapshot.runId;
+        state.activeRunBaselineKills = 0;
         state.generation += 1;
         state.backup = clone(snapshot);
       } else state.backup = state.checkpoint ? clone(state.checkpoint) : clone(snapshot);
@@ -188,24 +246,42 @@
     } else if (action.type === 'complete') {
       var summary = action.value;
       if (completed(state, summary.runId)) return { state: state, changed: false, result: { ok: true, duplicate: true } };
-      if (state.activeRunId && state.activeRunId !== summary.runId) return { state: state, changed: false, result: { ok: false, reason: 'inactive-run' } };
+      if (state.activeRunId !== summary.runId) return { state: state, changed: false, result: { ok: false, reason: 'inactive-run' } };
       state.profile.runs = safeAdd(state.profile.runs, 1);
       if (summary.won) state.profile.wins = safeAdd(state.profile.wins, 1);
       state.profile.bestScore = Math.max(state.profile.bestScore, summary.score);
       state.profile.bestGraze = Math.max(state.profile.bestGraze, summary.graze);
-      state.profile.totalKills = safeAdd(state.profile.totalKills, summary.kills);
+      // Checkpoints retain cumulative kills; the prefix from an earlier failed
+      // attempt was already counted and must not be counted a second time.
+      state.profile.totalKills = safeAdd(state.profile.totalKills, Math.max(0, summary.kills - state.activeRunBaselineKills));
       state.profile.lastRun = clone(summary);
       state.completed.push(clone(summary));
       if (state.completed.length > LEDGER_LIMIT) state.completed.splice(0, state.completed.length - LEDGER_LIMIT);
-      state.checkpoint = null;
-      state.backup = null;
-      state.activeRunId = null;
       state.generation += 1;
+      if (!summary.won && state.checkpoint) {
+        // Loss records the just-ended run exactly once, but keeps the last
+        // confirmed safe boundary and its previous backup playable. A retry
+        // needs a new run ID because the old one is now in the completed ledger.
+        var suffix = 0, retryId;
+        do { retryId = summary.runId.slice(0, 62) + '-retry-' + state.generation.toString(36) + '-' + (suffix++).toString(36); }
+        while (completed(state, retryId));
+        state.activeRunId = retryId;
+        state.activeRunBaselineKills = state.checkpoint.kills;
+        state.checkpoint.runId = retryId;
+        if (state.backup) state.backup.runId = retryId;
+        result.continuedRunId = retryId;
+      } else {
+        state.checkpoint = null;
+        state.backup = null;
+        state.activeRunId = null;
+        state.activeRunBaselineKills = 0;
+      }
       result.duplicate = false;
     } else if (action.type === 'clear') {
       state.checkpoint = null;
       state.backup = null;
       state.activeRunId = null;
+      state.activeRunBaselineKills = 0;
       state.generation += 1;
     } else return { state: state, changed: false, result: { ok: false, reason: 'invalid-action' } };
     state.revision += 1;
@@ -216,7 +292,7 @@
   function createStore(env) {
     env = env || {};
     var status = { persistent: false, message: '저장소 확인 중' };
-    var db = null, opening = null, memory = emptyState(), expectedRevision = 0, initialized = false, persistenceLost = false, hasStoredState = false;
+    var db = null, opening = null, memory = emptyState(), expectedRevision = 0, initialized = false, persistenceLost = false, hasStoredState = false, rawStoredState, storageInvalid = false;
     var queue = Promise.resolve();
     function enqueue(fn) {
       var next = queue.then(fn, fn);
@@ -231,7 +307,9 @@
     }
     function persistentStatus() {
       status.persistent = true;
-      status.message = '이 기기에 독립 저장됨';
+      status.message = storageInvalid ? '저장 데이터 오류 · 기존 기록을 보존했습니다. 내보내기로 기록을 보관해 주세요' :
+        memory.revision >= Number.MAX_SAFE_INTEGER - 1 || memory.generation >= Number.MAX_SAFE_INTEGER - 1 ?
+          '저장 데이터 오류 · 기록 번호 한도에 도달했습니다. 내보내기로 기록을 보관해 주세요' : '이 기기에 독립 저장됨';
     }
     function openDatabase() {
       if (opening) return opening;
@@ -268,7 +346,7 @@
           transaction = db.transaction(STORE_NAME, 'readonly');
           timer = setTimeout(function () { try { transaction.abort(); } catch (_) {} fail(); }, 1800);
           var request = transaction.objectStore(STORE_NAME).get(STATE_KEY);
-          request.onsuccess = function () { hasStoredState = request.result !== undefined; value = normalizeState(request.result); };
+          request.onsuccess = function () { rawStoredState = request.result; hasStoredState = request.result !== undefined; storageInvalid = !safeStoredRecord(request.result); value = normalizeState(request.result); };
           transaction.oncomplete = function () { if (timer) clearTimeout(timer); resolve(value || emptyState()); };
           transaction.onabort = transaction.onerror = fail;
         } catch (_) { fail(); }
@@ -281,7 +359,10 @@
         catch (_) { persistenceLost = true; memoryMode('저장소 읽기 실패 · 새로 열어주세요'); }
       }
       if (refresh) {
-        expectedRevision = memory.revision;
+        // A failed read or invalid record must never adopt the stale in-memory
+        // revision. Memory-only mode is still usable when IDB was unavailable
+        // from the outset, because persistenceLost remains false in that case.
+        if (!persistenceLost && !storageInvalid) expectedRevision = memory.revision;
         initialized = true;
         if (db) persistentStatus();
       }
@@ -324,28 +405,44 @@
           if (update.changed) { expectedRevision = memory.revision; hasStoredState = true; }
         }
         if (update.result.reason === 'conflict') status.message = '다른 창의 저장이 감지되었습니다 · 새로 열어 최신 기록을 불러오세요';
+        if (update.result.reason === 'invalid-storage-state') { storageInvalid = true; status.message = '저장 데이터 오류 · 기존 기록을 보존했습니다. 내보내기로 기록을 보관해 주세요'; }
+        if (update.result.reason === 'counter-exhausted') status.message = '저장 데이터 오류 · 기록 번호 한도에 도달했습니다. 내보내기로 기록을 보관해 주세요';
         return Object.assign({}, update.result, { persistent: status.persistent });
       });
     }
     function invalid(reason) { return Promise.resolve({ ok: false, persistent: status.persistent, reason: reason }); }
     var api = {
       status: status,
-      open: function () { return enqueue(async function () { if (!initialized) await readCurrent(true); return { ok: true, persistent: status.persistent, message: status.message }; }); },
-      load: function () { return enqueue(async function () { var state = await readCurrent(true); return { settings: state.settings, profile: state.profile, checkpoint: state.checkpoint, persistent: status.persistent, hasStoredState: hasStoredState }; }); },
+      open: function () { return enqueue(async function () { if (!initialized) await readCurrent(true); if (persistenceLost || storageInvalid) return { ok: false, reason: storageInvalid ? 'invalid-storage-state' : 'storage-error', persistent: status.persistent, message: status.message }; return { ok: true, persistent: status.persistent, message: status.message }; }); },
+      load: function () { return enqueue(async function () { var state = await readCurrent(true); if (persistenceLost || storageInvalid) return { ok: false, reason: storageInvalid ? 'invalid-storage-state' : 'storage-error', persistent: status.persistent }; return { settings: state.settings, profile: state.profile, checkpoint: state.checkpoint, persistent: status.persistent, hasStoredState: hasStoredState }; }); },
+      // Observation for asynchronous result UI: read the current durable state
+      // but never adopt its revision for future writes. Only explicit load()
+      // refreshes a writer after another tab has committed a change.
+      peek: function () { return enqueue(async function () { var state = await readCurrent(false); if (persistenceLost || storageInvalid) return { ok: false, reason: storageInvalid ? 'invalid-storage-state' : 'storage-error', persistent: status.persistent }; return { settings: state.settings, profile: state.profile, checkpoint: state.checkpoint, persistent: status.persistent, hasStoredState: hasStoredState }; }); },
       saveSettings: function (settings) {
         try { if (!object(settings)) return invalid('invalid-settings'); return mutation({ type: 'settings', value: settingsPatch(settings) }); }
         catch (_) { return invalid('invalid-settings'); }
       },
-      saveCheckpoint: function (snapshot) { var value = validateCheckpoint(snapshot); return value ? mutation({ type: 'checkpoint', value: value }) : invalid('invalid-checkpoint'); },
+      saveCheckpoint: function (snapshot) {
+        var value = validateCheckpoint(snapshot);
+        // Practice is ephemeral and must never replace campaign or backup,
+        // even if a future caller mistakenly asks the store to save it.
+        if (value && value.practiceBoss) return invalid('practice-checkpoint');
+        return value ? mutation({ type: 'checkpoint', value: value }) : invalid('invalid-checkpoint');
+      },
       completeRun: function (summary) {
-        try { var value = validateResult(summary); return value ? mutation({ type: 'complete', value: value }) : invalid('invalid-result'); }
+        try { if (summary && summary.practiceBoss === true) return invalid('practice-result'); var value = validateResult(summary); return value ? mutation({ type: 'complete', value: value }) : invalid('invalid-result'); }
         catch (_) { return invalid('invalid-result'); }
       },
       clearCheckpoint: function () { return mutation({ type: 'clear' }); },
       exportData: function () { return enqueue(async function () {
         var state = await readCurrent(false);
-        return JSON.stringify({ format: DB_NAME, version: 1, persistent: status.persistent, revision: state.revision, generation: state.generation,
-          settings: state.settings, profile: state.profile, checkpoint: state.checkpoint, completed: state.completed }, null, 2);
+        var result = { format: DB_NAME, version: 1, persistent: status.persistent, revision: state.revision, generation: state.generation,
+          settings: state.settings, profile: state.profile, activeRunId: state.activeRunId, activeRunBaselineKills: state.activeRunBaselineKills, checkpoint: state.checkpoint, backup: state.backup, completed: state.completed };
+        // Include the exact stored record only when normal use is blocked; the
+        // data stays local unless the user explicitly chooses to export it.
+        if (storageInvalid && hasStoredState) result.rawState = rawStoredState;
+        return JSON.stringify(result, null, 2);
       }); }
     };
     return api;
@@ -354,7 +451,7 @@
   // Test helpers are available only in CommonJS, never on the browser global.
   if (typeof module === 'object' && module.exports) Object.defineProperty(api, '_test', { value: {
     createStore: createStore, validateCheckpoint: validateCheckpoint, validateResult: validateResult,
-    settingsPatch: settingsPatch, normalizeState: normalizeState, reduce: reduce, emptyState: emptyState,
+    settingsPatch: settingsPatch, normalizeState: normalizeState, safeStoredRecord: safeStoredRecord, reduce: reduce, emptyState: emptyState,
     DB_NAME: DB_NAME, STORE_NAME: STORE_NAME, STATE_KEY: STATE_KEY, LEDGER_LIMIT: LEDGER_LIMIT
   } });
   return api;
