@@ -12,6 +12,20 @@ module.exports=function(config={},base){
   function insert(row,b){const key=Math.floor(b.x/48)+Math.floor(b.y/48)*32;let a=row.bins.get(key);if(!a)row.bins.set(key,a=[]);a.push(b);}
   for(const b of w.bullets){
    if(b.weaponMotion){const p={...b};for(let t=1;t<=H;t++){Weapon.advance(p,1/60,360);p.age+=1/60;if(t%4===0&&p.age<b.ttl&&p.x>=-38&&p.x<=398&&p.y>=-38&&p.y<=678)insert(rows[t/4-1],{x:p.x,y:p.y,r:b.r+3,ux:0,uy:0});}}
+   else if(b.curveRate || Number.isFinite(b.pauseFrom)){
+    // Forecast only the already-present projectile using the same per-tick
+    // public movement rules. This policy never edits live combat state.
+    const p={...b};for(let t=1;t<=H;t++){
+     const paused=Number.isFinite(p.pauseFrom)&&p.age>=p.pauseFrom&&p.age<p.pauseUntil;
+     if(!paused){
+      if(p.curveRate&&p.age<p.curveUntil){const speed=Math.hypot(p.vx,p.vy);p.angle+=p.curveRate/60;p.vx=Math.cos(p.angle)*speed;p.vy=Math.sin(p.angle)*speed;}
+      if(p.acceleration&&p.age>=p.accelerateAt){const speed=Math.min(p.maxSpeed,Math.hypot(p.vx,p.vy)+p.acceleration/60);p.vx=Math.cos(p.angle)*speed;p.vy=Math.sin(p.angle)*speed;}
+      p.x+=p.vx/60;p.y+=p.vy/60;
+     }
+     p.age+=1/60;
+     if(t%4===0&&p.age<b.ttl&&p.x>=-38&&p.x<=398&&p.y>=-38&&p.y<=678){const l=p.halfLength||0;insert(rows[t/4-1],{x:p.x,y:p.y,r:p.r+3,ux:Math.cos(p.angle)*l,uy:Math.sin(p.angle)*l});}
+    }
+   }
    else {
     const speed=Math.hypot(b.vx,b.vy),ax=Math.cos(b.angle),ay=Math.sin(b.angle),ux=ax*(b.halfLength||0),uy=ay*(b.halfLength||0);
     for(const row of rows){

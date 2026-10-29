@@ -27,7 +27,7 @@ test('all12 bosses and all3 phases overlap real player-lane bullets, active rays
   assert(simultaneous>=20,`${index}/${phase}: no genuine lower-lane overlap`);
   assert(peakBullets<=300,`${index}/${phase}: density regression`);assert(peakHazards<=10);
   assert.equal(w.stats.poolPressure,0);assert.equal(w.stats.droppedGroups,0);
-  assert.equal(w.boss.hellMechanicsRevision,14);assert(w.boss.skillReleases.length<=8);
+  assert.equal(w.boss.hellMechanicsRevision,15);assert(w.boss.skillReleases.length<=8);
   if(index>=5)assert(!w.bullets.some(b=>b.kind==='boss-weapon'),'new spells must not masquerade as a handheld weapon');
  }
 });
@@ -73,7 +73,7 @@ test('saturated HELLatomic rotor pair never returns late or creates a fictitious
 
 test('safe-phase HELL snapshots resume the same seeded concurrent combat without new save keys',()=>{
  const a=core.createRun({campaign:true,practiceBoss:true,bossIndex:11,difficulty:'hell',seed:42,runId:'v14-checkpoint'});
- const saved=core.checkpoint(a),b=core.restoreCheckpoint(saved);assert.equal(b.mechanicsRevision,14);assert.equal(saved.campaignRevision,3);
+ const saved=core.checkpoint(a),b=core.restoreCheckpoint(saved);assert.equal(b.mechanicsRevision,15);assert.equal(saved.campaignRevision,3);
  assert(!Object.hasOwn(saved,'hellOverlap'));assert(!Object.hasOwn(saved,'skillReleases'));
  a.player.invulnerableUntil=999999;b.player.invulnerableUntil=999999;a.autoAttack=false;b.autoAttack=false;a.skillRotation=false;b.skillRotation=false;
  for(let t=0;t<650;t++){const input={dx:Math.sin(t*.017)*1.8,dy:Math.cos(t*.013)*.8,focus:true};core.step(a,input);core.step(b,input);assert.deepEqual(snapshotState(a),snapshotState(b));}

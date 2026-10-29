@@ -23,7 +23,11 @@ test('all12 hardest phases can react only after the warning from an on-ray start
   const initial=core.createRun({campaign:true,practiceBoss:true,bossIndex:index,difficulty:'hell',seed,runId:'actual-overlap-ordinary-hp'}),s=core.checkpoint(initial);
   // Select a valid phase boundary before any attack exists. Hold its legal
   // initial on-ray position until a visible warning actually appears.
-  s.phase=2;s.player.x=[180,112,248][(index+2)%3]-54;
+  s.phase=2;
+  const scout=core.restoreCheckpoint(s);scout.autoAttack=false;scout.skillRotation=false;
+  while(scout.tick<73)core.step(scout,{});
+  const announced=scout.hazards.find(h=>h.patternId===GATE);assert(announced);
+  s.player.x=announced.x1;
   const w=core.restoreCheckpoint(s);w.autoAttack=false;w.skillRotation=false;
   assert.equal(w.player.hp,3);assert.equal(w.player.invulnerableUntil,0);
   while(w.tick<73)core.step(w,{});

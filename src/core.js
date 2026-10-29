@@ -10,7 +10,7 @@
   if (!Weapon) throw new Error('보스 무기 패턴 모듈을 찾을 수 없습니다.');
   var W = 360, H = 640, FIXED_DT = 1 / 60, TAU = Math.PI * 2;
   var RULESET = 'hapil-firstbattle-1';
-  var HELL_MECHANICS_REVISION=14;
+  var HELL_MECHANICS_REVISION=15;
   var HELL_OVERLAP_LIMITS=Object.freeze({cycleTicks:336,warningTicks:108,activeTicks:96,fanBaseSpeed:150,fanMinSpeed:198,fanMaxSpeed:234,rotorMaxDownSpeed:378,rotorMaxTotalSpeed:388,corridorHalfWidth:24});
   var CAPS = Object.freeze({ bullets: 768, shots: 96, enemies: 12, effects: 96, hazards: 40 });
   var PHASE_HP = [1700, 1850, 2000];
@@ -185,6 +185,8 @@
         ownerId: s.ownerId || 0, grazed: false });
       if (added && s.patternId) { added.patternId = s.patternId; added.paletteSlot = s.paletteSlot || 0; }
       if (added && s.hellLayer) added.hellLayer=s.hellLayer;
+      if (added && s.curveRate) { added.curveRate=s.curveRate; added.curveUntil=s.curveUntil; }
+      if (added && s.pauseUntil) { added.pauseFrom=s.pauseFrom; added.pauseUntil=s.pauseUntil; }
       if (added && s.rhythmAccelerate) added.rhythmAccelerate = true;
       if (added && s.weaponMotion) Weapon.initialize(added, s, w);
       if (added && s.acceleration) {
@@ -804,12 +806,35 @@
       }
     }
   }
+  // Each encounter changes the spacing, aim, cadence and movement of its
+  // additional material. The safe laser corridor is still committed before
+  // the rays appear. All times are fixed simulation ticks, not music timing.
+  var HELL_PROFILES = [
+    {beats:[108,138,174,216],count:9,spread:.16,aim:1,speed:150,curve:.12},
+    {beats:[108,150,174,216],count:9,spread:.13,aim:.8,speed:150,accel:36},
+    {beats:[108,132,180,216],count:7,spread:.22,aim:.65,speed:155},
+    {beats:[108,144,168,216],count:9,spread:.18,aim:.7,speed:150,curve:-.12},
+    {beats:[108,156,180,216],count:11,spread:.12,aim:.85,speed:150},
+    {beats:[108,144,186,216],count:7,spread:.18,aim:.7,speed:150,pause:true},
+    {beats:[108,150,180,216],count:9,spread:.16,aim:.65,speed:150,curve:.22},
+    {beats:[108,138,186,216],count:9,spread:.18,aim:.9,speed:150,accel:30},
+    {beats:[108,132,174,216],count:9,spread:.14,aim:.85,speed:150,curve:-.18},
+    {beats:[108,156,180,216],count:7,spread:.21,aim:.8,speed:150,pause:true},
+    {beats:[108,138,180,216],count:9,spread:.17,aim:1,speed:150,accel:22},
+    {beats:[108,150,174,216],count:9,spread:.15,aim:.75,speed:150,curve:.14}
+  ];
+  var HELL_LANES = [
+    [180,112,180,248], [112,180,248,180], [248,112,180,112],
+    [112,248,112,180], [180,248,112,248], [248,180,112,180],
+    [112,180,248,112], [180,112,248,112], [248,180,112,248],
+    [180,248,180,112], [112,248,180,248], [248,112,248,180]
+  ];
   function hellOverlap(w,within,cycle) {
     var b=w.boss,lane=w._hellProtectedLane;
     if(within===54) {
       var rays=[{x:lane.x-54,y:0,angle:Math.PI/2,width:10,ownerId:b.id,paletteSlot:0,patternId:'hell-overlap-lattice-v14'},
         {x:lane.x+54,y:0,angle:Math.PI/2,width:10,ownerId:b.id,paletteSlot:1,patternId:'hell-overlap-lattice-v14'}];
-      if(warning(w,rays,108,'헬 · 동시 전개'))b.hellOverlap={revision:14,cycle:cycle,warningTick:w.tick,pairReleaseAt:w.tick+54,laserActiveAt:w.tick+108,laserFadeAt:w.tick+204,corridorX:lane.x,corridorHalfWidth:lane.halfWidth,pairReleaseTick:-1,fanReleaseTick:-1};
+      if(warning(w,rays,108,'헬 · 동시 전개'))b.hellOverlap={revision:15,cycle:cycle,warningTick:w.tick,pairReleaseAt:w.tick+54,laserActiveAt:w.tick+108,laserFadeAt:w.tick+204,corridorX:lane.x,corridorHalfWidth:lane.halfWidth,pairReleaseTick:-1,fanReleaseTick:-1};
     }
     var cast=b.hellOverlap&&b.hellOverlap.cycle===cycle?b.hellOverlap:null;
     b.weaponTelegraph=!!(cast&&w.bossIndex<5&&within>=54&&within<108);
@@ -830,19 +855,26 @@
       try {if(w.bossIndex>=5)sinPattern(w,within,cycle);else campaignSignature(w,within,cycle);}
       finally {w.phase=phase;w._hellSignatureOnly=false;}
     }
-    if(within===108||within===144||within===180||within===216) {
-      // Aim is sampled only for this whole group. It never curves toward the
-      // player after release. At200–234px/s these bullets reach the lower
-      // dodge area while the new rays are actually active, not after them.
-      var aimAt=Math.atan2(w.player.y-b.y,w.player.x-b.x),fan=fanSpecs(b.x,b.y+14,aimAt,9,.16,150,'orb','#ffffff',b.id);
-      fan.forEach(function(s){s.patternId='hell-overlap-fan-v14';s.hellLayer='fan';s.paletteSlot=1;s._rhythmPrepared=true;});
+    var profile=HELL_PROFILES[w.bossIndex],beat=profile.beats.indexOf(within);
+    if(beat!==-1) {
+      // Aim sampled at release: curved bullets follow a fixed authored arc,
+      // never home in on the player's subsequent position.
+      var aimAt=Math.atan2(w.player.y-b.y,w.player.x-b.x);
+      var center=Math.PI/2+(aimAt-Math.PI/2)*profile.aim;
+      var originX=b.x+((beat%2?1:-1)*(w.bossIndex%3)*8);
+      var fan=fanSpecs(originX,b.y+14,center,profile.count,profile.spread,profile.speed,'orb','#ffffff',b.id);
+      fan.forEach(function(s,i){s.patternId='hell-overlap-fan-v14';s.hellLayer='fan';s.paletteSlot=1;s._rhythmPrepared=true;
+        if(profile.accel){s.acceleration=profile.accel;s.accelerateAt=.65;s.maxSpeed=160;}
+        if(profile.curve){s.curveRate=profile.curve*(beat%2?-1:1);s.curveUntil=1.2;}
+        if(profile.pause&&beat%2===1){s.pauseFrom=.55;s.pauseUntil=.85;}
+      });
       if(emit(w,fan)&&cast)cast.fanReleaseTick=w.tick;
     }
     // The signature helper updates its own presentation metadata; restore the
     // real charge previews after it, without changing the real entity phase.
     b.weaponTelegraph=!!(cast&&w.bossIndex<5&&within>=54&&within<108);
     b.rotorTelegraph=!!(cast&&w.bossIndex>=5&&within>=54&&within<108);
-    b.hellMechanicsRevision=14;
+    b.hellMechanicsRevision=15;
   }
   function campaignPattern(w) {
     if(w.difficulty!=='hell'){campaignPatternBase(w);return;}
@@ -851,7 +883,8 @@
     // This aperture is fixed for the entire cycle and announced by its two
     // visible boundary rays. Existing rays are filtered only at creation so
     // none subsequently rotates, follows, teleports or changes hit geometry.
-    w._hellProtectedLane={x:[180,112,248][(cycle+w.bossIndex+w.phase)%3],halfWidth:24,cycle:cycle};
+    var lanes=HELL_LANES[w.bossIndex];
+    w._hellProtectedLane={x:lanes[(cycle+w.phase)%lanes.length],halfWidth:24,cycle:cycle};
     campaignPatternBase(w);
     hellOverlap(w,within,cycle);
   }
@@ -992,11 +1025,16 @@
       var b = w.bullets[i]; b.px = b.x; b.py = b.y;
       if (b.weaponMotion) Weapon.advance(b, FIXED_DT, W);
       else {
-        if (b.acceleration && b.age >= b.accelerateAt) {
+        var paused=b.pauseUntil && b.age>=b.pauseFrom && b.age<b.pauseUntil;
+        if(!paused && b.curveRate && b.age<b.curveUntil){
+          var curveSpeed=Math.hypot(b.vx,b.vy);b.angle+=b.curveRate*FIXED_DT;
+          b.vx=Math.cos(b.angle)*curveSpeed;b.vy=Math.sin(b.angle)*curveSpeed;
+        }
+        if (!paused && b.acceleration && b.age >= b.accelerateAt) {
           var speed = Math.min(b.maxSpeed, Math.hypot(b.vx, b.vy) + b.acceleration * FIXED_DT);
           b.vx = Math.cos(b.angle) * speed; b.vy = Math.sin(b.angle) * speed;
         }
-        b.x += b.vx * FIXED_DT; b.y += b.vy * FIXED_DT;
+        if(!paused){b.x += b.vx * FIXED_DT; b.y += b.vy * FIXED_DT;}
       }
       b.age += FIXED_DT;
       if (w.stage !== 'won' && w.stage !== 'lost' && w.stage !== 'bossIntro') {
