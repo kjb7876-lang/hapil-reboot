@@ -627,11 +627,11 @@
     }
     function drawEnemies(world,time) {
       var enemies=world.enemies||[];
-      for(var i=0;i<enemies.length;i++){
-        var e=enemies[i],r=e.r||12;
-        if(world.campaign&&e.age<0)continue;
+      function drawOne(e){
+        var r=e.r||12;
+        if(world.campaign&&e.age<0)return;
         var actorDrawn=actorPresentation&&actorPresentation.drawEnemy(ctx,world,e);
-        if(world.campaign&&world.bossIndex>=5&&!actorDrawn)continue;
+        if(world.campaign&&(e.summoned||world.bossIndex>=5)&&!actorDrawn)return;
         if(actorDrawn){/* Real verified actor pose drawn; shared HP and charge indicators follow. */}
         else if(world.campaign&&e.archetype==='wraith'){
           var drift=Math.sin((e.age||0)*2)*2,lean=clamp(e.lean||0,-1,1)*3;
@@ -649,7 +649,11 @@
         // or laser telegraph. Do not wrap enemies in a decorative hitbox ring.
         if(e.hp<e.maxHp){ctx.fillStyle='#272235';ctx.fillRect(e.x-15,e.y-r-8,30,2);ctx.fillStyle='#bd9de9';ctx.fillRect(e.x-15,e.y-r-8,30*Math.max(0,e.hp/e.maxHp),2);}
       }
+      // Only boss-summoned support is drawn over the boss portrait. Ordinary
+      // enemies keep their previous order; hazards/player remain above both.
+      for(var i=0;i<enemies.length;i++)if(!enemies[i].summoned)drawOne(enemies[i]);
       if(world.boss&&!(world.stage==='transition'&&world.transitionNarrative)){var b=world.boss;var opacity=b.opacity==null?1:b.opacity;bossPortrait(world,b.x,b.y,230,opacity);}
+      for(var j=0;j<enemies.length;j++)if(enemies[j].summoned)drawOne(enemies[j]);
     }
     function drawShots(world) {
       var shots=world.shots||[],im=images.fxWindArrow8V6;
