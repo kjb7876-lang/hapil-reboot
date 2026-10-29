@@ -39,19 +39,47 @@
     '가면 속 얼굴들이 같은 입을 움직입니다. 대칭으로 뻗는 깃털과 고정된 광선을 읽으세요.',
     '완벽함을 강요하는 목소리와 맞섭니다. 세 패턴을 지나 J의 인장으로 루시퍼를 물러나게 하세요.'
   ];
-  function routeNote(){if(!world||!world.campaign)return routeNotes[0];return routeNotes[Math.min(12,[0,3,4,7,10][world.bossIndex||0]+((world.bossIndex||0)===1?0:(world.wave||0)))];}
+  var sinRoutes=[
+    ['창이 검은 비닐로 덮인 집에서 미뤄 둔 시간이 쏟아집니다.','쓰레기 산 사이에서 남자가 자신의 삶에 손을 뻗으려 합니다.','나태의 귀를 봉인하고 누나에게 이어진 검은 신호를 따라갑니다.'],
+    ['누나는 호텔의 부매니저가 되어 옛 친구를 다시 만났습니다.','서윤이 계속 자기 아래에 있기를 바랐던 마음을 돌아봅니다.','타인과 비교하던 시선 너머에 사과와 치료가 남습니다.'],
+    ['조금만 모양이 흐트러져도 음식들이 버려지는 주방입니다.','거대한 위장 안으로 식칼과 독가스가 쏟아집니다.','오래된 졸업사진과 집착을 마주합니다.'],
+    ['서윤의 허락을 받고 붉은 조명의 몽세에 들어갑니다.','완벽한 미소 뒤에는 텅 빈 표정이 남아 있습니다.','사랑받고 싶은 마음을 없애는 대신 자신을 해치는 연결을 끊습니다.'],
+    ['금고와 겨울 산장이 한 공간에 이어져 있습니다.','지폐가 칼날이 되고 동전은 모두 같은 뒷면을 보입니다.','눈보라 속 소년의 기억은 총지배인과 같은 사람의 과거입니다.'],
+    ['화재 속에서는 사람들의 대피가 먼저입니다.','청소부가 쌓아 온 모욕과 분노의 기억을 마주합니다.','지키려던 아이들과 자신이 태우는 생명을 구분하게 합니다.'],
+    ['백색 정장의 회장에게 일곱 갈래 신호가 모입니다.','타인의 선택을 줄이는 일을 자신의 권능으로 여겼던 사람입니다.','육체의 봉인 뒤에도 남은 같은 회장의 생체 부트로더와 맞섭니다.']
+  ];
+  bossNotes=bossNotes.concat([
+    '나태의 귀 벨페고르 · 느리게 쌓이는 탄막이 뒤늦게 가속합니다.',
+    '질투의 귀 레비아탄 · 서로 엇갈리는 대칭 탄막과 비어 있는 틈을 읽으세요.',
+    '탐식의 귀 베엘제붑 · 식칼과 독가스를 연상한 연속 공격 사이를 이동하세요.',
+    '색욕의 귀 아스모데우스 · 서윤의 몽세에서 매혹의 빛과 실의 경로를 피하세요.',
+    '탐욕의 귀 맘몬 · 지폐와 동전의 연속 공격 뒤에 같은 사람의 소년 기억이 드러납니다.',
+    '분노의 귀 · 청소부의 분노가 번지는 방향과 공격 예고를 읽으세요.',
+    '교만의 회장 · 코스믹 가면 루시퍼와 별개 인물입니다. 같은 회장의 기계 후속전까지 이어집니다.'
+  ]);
+  function roster(){return core&&core.CAMPAIGN_BOSSES||[];}
+  function runBossCount(){return world&&world.bossCount|| (world&&world.campaignRevision===1?3:world&&world.campaignRevision===2?5:roster().length||12);}
+  function routeOffset(boss){var list=roster(),sum=0;for(var i=0;i<boss;i++)sum+=list[i]?list[i].waves.length:(i===1?1:3);return sum;}
+  function routeCount(){return routeOffset(runBossCount());}
+  function routeNote(){
+    if(!world||!world.campaign)return routeNotes[0];
+    var boss=world.bossIndex||0,wave=world.wave||0,info=roster()[boss];
+    if(boss<5)return routeNotes[Math.min(12,routeOffset(boss)+wave)];
+    return {title:info&&info.waves[wave]||world.encounterName||world.bossName,text:sinRoutes[boss-5][wave],cue:info&&info.waves[wave]||'검은 신호를 따라 이동하세요'};
+  }
   var skillNames={memory:'기억 해방',delay:'시간 지연',counter:'반격',ego:'자아 각성'},lastSkill=null;
   function updateStory(){
-    if(!world){safeText('chapter-caption','기억의 길 · 13구간');safeText('chapter-number','01');safeText('encounter-kicker','THE BROKEN SEAL');safeText('encounter-title','검은 정원에서 코스믹 가면 루시퍼까지');safeText('encounter-description','움직이지 않는 잎과 떨리는 날개. 새 공간체험형 원문을 바탕으로 정원에서 병원까지 걷는 제1부 세로 각색입니다.');$('app').setAttribute('data-encounter','violet');return;}
+    if(!world){safeText('chapter-caption','기억의 길 · 7대죄 편');safeText('chapter-number','01');safeText('encounter-kicker','THE SEVEN SIGNALS');safeText('encounter-title','검은 정원에서 7대죄까지');safeText('encounter-description','루시퍼를 지나 의목사가 된 환도는 호텔로 이어지는 일곱 검은 신호를 조사합니다.');$('app').setAttribute('data-encounter','violet');return;}
     if(!world.campaign){$('app').setAttribute('data-encounter','violet');safeText('chapter-caption','첫 기억');safeText('chapter-number','01');safeText('encounter-kicker','A FRAGMENT OF MEMORY');safeText('encounter-title',world.stage==='waves'?'기억의 회랑':'보라검천사');safeText('encounter-description','숲길과 폐허를 지나 거미 동굴로 이어지는 첫 기억입니다.');return;}
-    var boss=world.bossIndex||0,offset=[0,3,4,7,10][boss],wave=world.wave||0,index=Math.min(12,offset+(boss===1?0:wave)),note=routeNotes[index],isWave=world.stage==='waves'||(world.stage==='lost'&&!world.boss&&!world.practiceBoss);
-    $('app').setAttribute('data-encounter',['violet','horn','balrog','mask','lucifer'][boss]);
-    safeText('chapter-caption',world.practiceBoss?'보스 연습 · 3패턴':isWave?'기억의 길 · 13구간':'마지막 봉인으로');
-    safeText('chapter-number',pad(world.practiceBoss?boss+1:isWave?index+1:offset+(boss===1?1:3),2));
-    safeText('encounter-kicker',isWave?'FRAGMENT '+pad(index+1,2)+' / 13':world.practiceBoss?'PATTERN STUDY':'GUARDIAN '+pad(boss+1,2)+' / 05');
+    var boss=world.bossIndex||0,offset=routeOffset(boss),wave=world.wave||0,index=offset+wave,note=routeNote(),info=roster()[boss],isWave=world.stage==='waves'||(world.stage==='lost'&&!world.boss&&!world.practiceBoss);
+    $('app').setAttribute('data-encounter',info?info.id:['violet','horn','balrog','mask','lucifer'][boss]);
+    safeText('chapter-caption',world.practiceBoss?'보스 연습 · 3패턴':isWave?'기억의 길 · '+routeCount()+'구간':boss>=5?'일곱 검은 신호':'기억의 수호자');
+    safeText('chapter-number',pad(world.practiceBoss?boss+1:isWave?index+1:offset+(info?info.waves.length:boss===1?1:3),2));
+    safeText('encounter-kicker',isWave?'FRAGMENT '+pad(index+1,2)+' / '+routeCount():world.practiceBoss?'PATTERN STUDY':'GUARDIAN '+pad(boss+1,2)+' / '+pad(runBossCount(),2));
     safeText('encounter-title',isWave?note.title:world.bossName);
     safeText('encounter-description',isWave?note.text:bossNotes[boss]);
-    if(world.stage==='won'&&!world.practiceBoss){safeText('encounter-kicker','BEYOND THE MASK');safeText('encounter-title','가면 너머의 새벽');safeText('encounter-description','J의 인장으로 루시퍼가 물러납니다. 모든 두려움이 사라진 것은 아니지만, 이제 도움을 청할 수 있습니다.');}
+    if(world.transitionNarrative){safeText('encounter-kicker','BETWEEN MEMORIES');safeText('encounter-title',world.transitionNarrative.title);safeText('encounter-description',world.transitionNarrative.body);}
+    if(world.stage==='won'&&!world.practiceBoss){var extended=world.campaignRevision>=3;safeText('encounter-kicker',extended?'THE SEVEN SIGNALS':'BEYOND THE MASK');safeText('encounter-title',extended?'일곱 검은 신호의 끝':'가면 너머의 새벽');safeText('encounter-description',extended?'회장의 생체 부트로더와 연산핵이 무너집니다. 이것으로 합일의 전체 이야기가 끝난 것은 아닙니다.':'J의 인장으로 루시퍼가 물러납니다. 이제 도움을 청할 수 있습니다.');}
   }
   function updateSkills(){
     var tick=world?world.tick:0,active=settings.skillRotation&&world&&lastSkill&&lastSkill.runId===world.runId&&tick-lastSkill.tick<90?lastSkill.name:null;
@@ -98,7 +126,7 @@
   function syncSettings(){
     $('setting-music').checked=settings.music;$('setting-sfx').checked=settings.sfx;$('setting-skills').checked=settings.skillRotation;$('setting-low').checked=settings.quality==='low';$('setting-sensitivity').value=settings.sensitivity;safeText('sensitivity-value',Number(settings.sensitivity).toFixed(1)+'×');
     document.querySelectorAll('[data-difficulty]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.difficulty===settings.difficulty));});
-    safeText('difficulty-description',settings.difficulty==='gentle'?'느린 탄속 · 체력 5 · 넉넉한 레이저 예고':'정원에서 코스믹 가면 루시퍼까지 · 탄막의 틈을 읽는 여정');safeText('skill-state',settings.skillRotation?'스킬 자동 순환':'스킬 순환 꺼짐');safeText('render-state',settings.quality==='low'?'30 FPS':'60 FPS');
+    safeText('difficulty-description',settings.difficulty==='gentle'?'느린 탄속 · 체력 5 · 넉넉한 예고':settings.difficulty==='hell'?'HELL · 체력 3 · 빠른 연속 패턴 · 매회 달라지는 탄속':'일반 웨이브를 지나 보스와 조우 · 7대죄까지');safeText('skill-state',settings.skillRotation?'스킬 자동 순환':'스킬 순환 꺼짐');safeText('render-state',settings.quality==='low'?'30 FPS':'60 FPS');
     if(world)world.skillRotation=settings.skillRotation;else safeText('health-value',settings.difficulty==='gentle'?'◇ ◇ ◇ ◇ ◇':'◇ ◇ ◇');updateSkills();
     if(!settings.music)stopMusic();else if(mode==='playing')startMusic();
   }
@@ -173,14 +201,16 @@
     await Promise.all([worker(),worker()]);
   }
   function mobileAssetKeys(group){
-    var enemyNames=[['Spider'],['Swamp'],['Ember'],['Echo','Vial'],['Guard','Denial']][group]||[];
+    var enemyNames=group>=5?['Guard','Denial']:([['Spider'],['Swamp'],['Ember'],['Echo','Vial'],['Guard','Denial']][group]||[]);
     var motionKeys=['bossMotionViolet','bossMotionHorn','bossMotionBalrog','bossMotionMask','bossMotionLucifer'];
     var fxKeys=global.HapilProjectiles&&global.HapilProjectiles.assetKeysForEncounter?global.HapilProjectiles.assetKeysForEncounter(group):[];
+    var sinKeys=group>=5&&global.HapilActors&&global.HapilActors.sinAssetKeysForEncounter?global.HapilActors.sinAssetKeysForEncounter(group):[];
     return Object.keys(global.HapilMedia).filter(function(k){
       if(['gunner','boss','spider','fxResonance','fxSlash','fxThorns','fxArrow','fxParry','fxSilk','fxWindArrow8V6'].includes(k))return true;
       if(group===0&&(/^map\d+$/.test(k)||k==='violetCutin'))return true;
+      if(group>=5&&k==='cave')return true;
       if((group===-1||group===1||group===2)&&['forest','ruins','cave'].includes(k))return true;
-      if(k===motionKeys[group]||fxKeys.indexOf(k)>=0)return true;
+      if(k===motionKeys[group]||fxKeys.indexOf(k)>=0||sinKeys.indexOf(k)>=0)return true;
       return enemyNames.some(function(n){return k.indexOf('actor'+n)===0;});
     });
   }
@@ -189,13 +219,17 @@
   // or to procedural silhouettes. Legacy (-1) uses its own older presentation.
   function invalidActorAsset(candidate,group){
     if(group===-1)return null;
-    if(!Number.isInteger(group)||group<0||group>4)return 'encounter-index';
+    if(!Number.isInteger(group)||group<0||group>11)return 'encounter-index';
+    if(group>=5){
+      if(!global.HapilActors||typeof global.HapilActors.invalidSinAssetForEncounter!=='function')return 'sin-actor-contract';
+      var sinError=global.HapilActors.invalidSinAssetForEncounter(candidate,group);if(sinError)return sinError;
+    }
     var actors=global.HapilActors, motion=global.HapilBossMotion;
     if(!actors||!actors.contracts||!motion||!motion.contracts)return 'actor-renderer';
     var bosses=['violet','horn','balrog','mask','lucifer'];
-    var enemies=[['spider'],['swamp'],['ember'],['echo','vial'],['guard','denial']][group];
+    var enemies=group>=5?['guard','denial']:[['spider'],['swamp'],['ember'],['echo','vial'],['guard','denial']][group];
     var contract=motion.contracts[bosses[group]], sprite=contract&&candidate[contract.key];
-    if(!contract||!sprite||sprite.complete===false||sprite.naturalWidth!==contract.width||sprite.naturalHeight!==contract.height)return contract&&contract.key||'boss-motion-contract';
+    if(group<5&&(!contract||!sprite||sprite.complete===false||sprite.naturalWidth!==contract.width||sprite.naturalHeight!==contract.height))return contract&&contract.key||'boss-motion-contract';
     for(var i=0;i<enemies.length;i++){
       var actor=actors.contracts[enemies[i]],names=['idle','walk','attack','hit'];
       if(!actor||!actor.poses)return 'actor-contract-'+enemies[i];
@@ -302,7 +336,7 @@
   function resume(){if(mode!=='paused'||!world)return;unlockAudio();clearInput();accumulator=0;lastStamp=performance.now();lastRender=0;setMode('playing');$('game-canvas').focus({preventScroll:true});}
   function home(){setHidden('settings-modal',true);setMode('title');world=null;lastSkill=null;accumulator=0;syncSettings();updateStory();safeText('score-value','000000');safeText('resonance-value','0');document.querySelectorAll('.phase-list li').forEach(function(e){e.classList.remove('active');});setHidden('continue-button',!savedCheckpoint);syncContinueAvailability();updateStorage();$('start-button').focus({preventScroll:true});}
   function complete(){
-    if(completed||!world)return;completed=true;setMode('result');var won=world.stage==='won';safeText('result-eyebrow',won?'MEMORY RESTORED':'A MEMORY REMAINS');safeText('result-title',won?(world.practiceBoss?'보스 연습 완료':world.campaign?'가면 너머의 새벽':'첫 기억을 되찾았습니다'):'기억이 남았습니다');safeText('result-description',world.practiceBoss?(world.bossName||'보스')+' 연습 기록 · 본편은 정원에서 이어집니다.':(won?(world.campaign?'J의 인장이 빛나고 루시퍼가 물러납니다. 완벽하지 않은 자신을 받아들이고 도움을 청할 길을 찾았습니다.':'당신의 걸음이 회랑에 새겨졌습니다.'):'다음 걸음은 조금 더 멀리.'));safeText('result-score',pad(world.score));safeText('result-graze',world.graze||0);safeText('result-kills',world.kills||0);safeText('result-hits',world.stats?world.stats.hits:0);
+    if(completed||!world)return;completed=true;setMode('result');var won=world.stage==='won';safeText('result-eyebrow',won?'MEMORY RESTORED':'A MEMORY REMAINS');safeText('result-title',won?(world.practiceBoss?'보스 연습 완료':world.campaign?(world.campaignRevision>=3?'일곱 검은 신호의 끝':'가면 너머의 새벽'):'첫 기억을 되찾았습니다'):'기억이 남았습니다');safeText('result-description',world.practiceBoss?(world.bossName||'보스')+' 연습 기록 · 본편은 정원에서 이어집니다.':(won?(world.campaign?(world.campaignRevision>=3?'회장의 생체 부트로더와 연산핵을 무너뜨렸습니다. 일곱 검은 신호 편을 마쳤습니다.':'J의 인장으로 루시퍼가 물러납니다. 도움을 청할 길을 찾았습니다.'):'당신의 걸음이 회랑에 새겨졌습니다.'):'다음 걸음은 조금 더 멀리.'));safeText('result-score',pad(world.score));safeText('result-graze',world.graze||0);safeText('result-kills',world.kills||0);safeText('result-hits',world.stats?world.stats.hits:0);
     var resultRunId=world.runId,resultGeneration=campaignGeneration;
     if(store&&!world.practiceBoss){
       // Until completion and readback settle, the old run ID might already be
@@ -332,7 +366,8 @@
   function updateHUD(){
     if(!world)return;var p=world.player,html='';for(var i=0;i<p.maxHp;i++)html+='<span'+(i>=p.hp?' class="empty"':'')+'>'+(i<p.hp?'◆':'◇')+'</span>';if($('health-value').innerHTML!==html)$('health-value').innerHTML=html;$('health-value').setAttribute('aria-label','체력 '+p.hp+' / '+p.maxHp);
     safeText('score-value',pad(world.score));safeText('resonance-value',Math.floor(world.resonance||0));safeText('stage-label',world.campaign&&world.stage==='waves'?routeNote().title:(world.stageLabel||'기억의 입구'));var chapter=world.stage==='waves'?Math.min(3,(world.wave||0)+1):Math.min(3,(world.phase||0)+1);safeText('stage-count',(world.practiceBoss?'연습 · ':'')+pad(chapter,2)+' / 05');
-    if(world.campaign){safeText('stage-count',world.practiceBoss?'패턴 '+((world.phase||0)+1)+' / 3':world.stage==='waves'?'구간 '+([0,3,4,7,10][world.bossIndex||0]+(world.wave||0)+1)+' / 13':'보스 '+((world.bossIndex||0)+1)+' / 5');}
+    if(world.campaign){safeText('stage-count',world.practiceBoss?'패턴 '+((world.phase||0)+1)+' / 3':world.stage==='waves'?'구간 '+(routeOffset(world.bossIndex||0)+(world.wave||0)+1)+' / '+routeCount():'보스 '+((world.bossIndex||0)+1)+' / '+runBossCount());}
+    if(world.difficulty==='hell')safeText('stage-count','HELL · '+$('stage-count').textContent);
     updateStory();updateSkills();$('phase-wave').classList.toggle('active',world.stage==='waves');$('phase-boss').classList.toggle('active',world.stage==='boss'||world.stage==='bossIntro'||world.stage==='transition');$('phase-end').classList.toggle('active',world.stage==='won');
   }
   function drainEvents(){
@@ -354,7 +389,7 @@
   function diagnostics(){
     var hazards=world&&world.hazards?world.hazards:[],heap=null;
     try{var m=performance.memory;if(m&&Number.isFinite(m.usedJSHeapSize))heap={usedBytes:m.usedJSHeapSize,totalBytes:m.totalJSHeapSize,limitBytes:m.jsHeapSizeLimit,scope:'Browser-reported JS heap estimate; excludes GPU and decoded media; GC not controlled'};}catch(e){}
-    return {version:'hapil-debug-detail-v11',candidateRevision:11,mobileRuntime:mobileRuntime,loadedImages:Object.keys(images).length,imageRequestsPending:Object.keys(imageRequests).length,imageRequestsActive:imageActive,mechanicsRevision:world?world.mechanicsRevision:(core?core.MECHANICS_REVISION:2),connectedMapStatus:renderer&&renderer.getMetrics?renderer.getMetrics().sourceStatus||'not-yet-reported':'not-yet-reported',capturedAt:new Date().toISOString(),mode:mode,fixedHz:60,renderTarget:settings.quality==='low'?30:60,rollingWindow:maxSamples,measurementScope:{update:'Main-thread fixed-step simulation and event processing',render:'JavaScript canvas command submission only; not GPU completion',frame:'requestAnimationFrame callback intervals during play'},updateMs:distribution(samples.update,peakUpdate),renderMs:distribution(samples.render,peakRender),frameIntervalMs:distribution(samples.frame,peakFrame),renderedFrames:totalFrames,fixedSteps:totalSteps,pausedLargeGaps:droppedGaps,lastGapReason:lastGapReason,viewport:{width:global.innerWidth,height:global.innerHeight,dpr:global.devicePixelRatio||1,arenaWidth:$('app-stage').clientWidth,arenaHeight:$('app-stage').clientHeight,padHeight:$('touch-pad').clientHeight},entities:world?{bullets:world.bullets.length,shots:world.shots.length,enemies:world.enemies.length,effects:world.effects.length,laserWarnings:hazards.filter(function(h){return h.phase==='warning';}).length,activeLasers:hazards.filter(function(h){return h.phase==='active';}).length,fadingLasers:hazards.filter(function(h){return h.phase==='fade';}).length}:null,terrain:renderer&&renderer.getMetrics?renderer.getMetrics():null,jsHeapEstimate:heap,gpuTimeMs:null,coreStats:world?JSON.parse(JSON.stringify(world.stats||{})):null,assetErrors:assetErrors.slice(),storage:store?Object.assign({},store.status):null};
+    return {version:'hapil-sins-hell-v13',candidateRevision:13,mobileRuntime:mobileRuntime,loadedImages:Object.keys(images).length,imageRequestsPending:Object.keys(imageRequests).length,imageRequestsActive:imageActive,mechanicsRevision:world?world.mechanicsRevision:(core?core.MECHANICS_REVISION:2),connectedMapStatus:renderer&&renderer.getMetrics?renderer.getMetrics().sourceStatus||'not-yet-reported':'not-yet-reported',capturedAt:new Date().toISOString(),mode:mode,fixedHz:60,renderTarget:settings.quality==='low'?30:60,rollingWindow:maxSamples,measurementScope:{update:'Main-thread fixed-step simulation and event processing',render:'JavaScript canvas command submission only; not GPU completion',frame:'requestAnimationFrame callback intervals during play'},updateMs:distribution(samples.update,peakUpdate),renderMs:distribution(samples.render,peakRender),frameIntervalMs:distribution(samples.frame,peakFrame),renderedFrames:totalFrames,fixedSteps:totalSteps,pausedLargeGaps:droppedGaps,lastGapReason:lastGapReason,viewport:{width:global.innerWidth,height:global.innerHeight,dpr:global.devicePixelRatio||1,arenaWidth:$('app-stage').clientWidth,arenaHeight:$('app-stage').clientHeight,padHeight:$('touch-pad').clientHeight},entities:world?{bullets:world.bullets.length,shots:world.shots.length,enemies:world.enemies.length,effects:world.effects.length,laserWarnings:hazards.filter(function(h){return h.phase==='warning';}).length,activeLasers:hazards.filter(function(h){return h.phase==='active';}).length,fadingLasers:hazards.filter(function(h){return h.phase==='fade';}).length}:null,terrain:renderer&&renderer.getMetrics?renderer.getMetrics():null,jsHeapEstimate:heap,gpuTimeMs:null,coreStats:world?JSON.parse(JSON.stringify(world.stats||{})):null,assetErrors:assetErrors.slice(),storage:store?Object.assign({},store.status):null};
   }
   function ensureEncounterArt(){
     if(mode==='error')return false;

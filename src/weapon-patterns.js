@@ -11,7 +11,7 @@
   var MIN_AFTER_BOUNCE_Y = 45, DOWN_ACCEL = 60, MAX_DOWN_SPEED = 225;
   var INWARD_SPEED_FACTOR = .42, SPIN_RATE = 2.6, EPS = 1e-9;
   function clamp(n,a,b){return Math.max(a,Math.min(b,n));}
-  function phaseCycle(w){return Math.floor(Math.max(0,Math.round((w.phaseTime || 0)*60)-1)/CYCLE_TICKS);}
+  function phaseCycle(w){return Math.floor(Math.max(0,Math.round((w.phaseTime || 0)*60)-1)/(w.difficulty==='hell'?336:CYCLE_TICKS));}
   function shouldThrow(w,within,cycle){
     return !!(w&&w.campaign&&w.stage==='boss'&&w.boss&&w.phase===0&&within===108&&cycle%2===0);
   }
@@ -40,7 +40,7 @@
   }
   function initialize(b,s,w){
     if(!b||!s||!s.weaponMotion)return;
-    var factor=w&&w.difficulty==='gentle'?.82:1;
+    var factor=w&&w.difficulty==='gentle'?.82:w&&w.difficulty==='hell'?1.44:1;
     b.weaponMotion=true;b.bounceCount=0;b.bounceAt=null;
     b.weaponDownAcceleration=DOWN_ACCEL*factor;b.weaponMaxDownSpeed=MAX_DOWN_SPEED*factor;
     b.weaponMinDownSpeed=MIN_AFTER_BOUNCE_Y*factor;

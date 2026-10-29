@@ -1,0 +1,595 @@
+{
+  "schema": "hapil.sins-display-contracts.v1",
+  "scope": "Current five plus seven-sin presentation through pride/cyborg; CPU source-pixel and registration review, not browser/GPU/mobile or natural progression proof.",
+  "items": [
+    {
+      "form": "belphegor",
+      "key": "sinBelphegorAtlas",
+      "file": "media/sins-v13/belphegor-atlas-512.png",
+      "sha256": "1d025b46186a713241d901fb670476a5709e99c8e847a6a9291cb78b14c36e22",
+      "scale": 0.47,
+      "manualTorsoAnchors": [
+        [
+          130,
+          119
+        ],
+        [
+          129,
+          128
+        ],
+        [
+          132,
+          131
+        ],
+        [
+          130,
+          125
+        ]
+      ],
+      "torsoAnchorAlpha": [
+        253,
+        253,
+        253,
+        252
+      ],
+      "alpha8Bounds": [
+        [
+          66,
+          32,
+          232,
+          241
+        ],
+        [
+          44,
+          34,
+          209,
+          244
+        ],
+        [
+          65,
+          27,
+          231,
+          227
+        ],
+        [
+          39,
+          22,
+          213,
+          228
+        ]
+      ],
+      "physicalPivotsCertified": false,
+      "authoredKeyposes": 4,
+      "fullyInterpolatedAnimation": false
+    },
+    {
+      "form": "leviathan",
+      "key": "sinLeviathanAtlas",
+      "file": "media/sins-v13/leviathan-atlas-512.png",
+      "sha256": "0ee8f490d281db4d4acc1d3a4b3e83401766af85b1641cd62934e7790c6431cc",
+      "scale": 0.5,
+      "manualTorsoAnchors": [
+        [
+          141,
+          100
+        ],
+        [
+          136,
+          118
+        ],
+        [
+          136,
+          122
+        ],
+        [
+          123,
+          108
+        ]
+      ],
+      "torsoAnchorAlpha": [
+        253,
+        253,
+        253,
+        253
+      ],
+      "alpha8Bounds": [
+        [
+          77,
+          12,
+          231,
+          242
+        ],
+        [
+          62,
+          28,
+          191,
+          246
+        ],
+        [
+          88,
+          29,
+          224,
+          218
+        ],
+        [
+          64,
+          10,
+          187,
+          235
+        ]
+      ],
+      "physicalPivotsCertified": false,
+      "authoredKeyposes": 4,
+      "fullyInterpolatedAnimation": false
+    },
+    {
+      "form": "beelzebub",
+      "key": "sinBeelzebubAtlas",
+      "file": "media/sins-v13/beelzebub-atlas-512.png",
+      "sha256": "69826fd54d023e70541e50247af1184472c8954fb39b4275c86942cf39dbbf7d",
+      "scale": 0.55,
+      "manualTorsoAnchors": [
+        [
+          138,
+          131
+        ],
+        [
+          129,
+          158
+        ],
+        [
+          137,
+          145
+        ],
+        [
+          129,
+          113
+        ]
+      ],
+      "torsoAnchorAlpha": [
+        252,
+        252,
+        253,
+        252
+      ],
+      "alpha8Bounds": [
+        [
+          40,
+          49,
+          230,
+          236
+        ],
+        [
+          22,
+          70,
+          223,
+          243
+        ],
+        [
+          27,
+          64,
+          234,
+          215
+        ],
+        [
+          29,
+          39,
+          225,
+          211
+        ]
+      ],
+      "physicalPivotsCertified": false,
+      "authoredKeyposes": 4,
+      "fullyInterpolatedAnimation": false
+    },
+    {
+      "form": "asmodeus",
+      "key": "sinAsmodeusAtlas",
+      "file": "media/sins-v13/asmodeus-atlas-512.png",
+      "sha256": "67024242523da096619c27e5f09d97547c8301a9d5f76b0f6c5b8390081cbe49",
+      "scale": 0.68,
+      "manualTorsoAnchors": [
+        [
+          136,
+          112
+        ],
+        [
+          129,
+          125
+        ],
+        [
+          141,
+          137
+        ],
+        [
+          126,
+          111
+        ]
+      ],
+      "torsoAnchorAlpha": [
+        253,
+        253,
+        253,
+        253
+      ],
+      "alpha8Bounds": [
+        [
+          93,
+          45,
+          198,
+          210
+        ],
+        [
+          65,
+          56,
+          188,
+          209
+        ],
+        [
+          107,
+          65,
+          214,
+          204
+        ],
+        [
+          87,
+          42,
+          163,
+          202
+        ]
+      ],
+      "physicalPivotsCertified": false,
+      "authoredKeyposes": 4,
+      "fullyInterpolatedAnimation": false
+    },
+    {
+      "form": "mammon",
+      "key": "sinMammonAtlas",
+      "file": "media/sins-v13/mammon-atlas-512.png",
+      "sha256": "d046db75c15f17fdf015f3cdffec4b213ac3ca209f14920182b34b103c26233f",
+      "scale": 0.59,
+      "manualTorsoAnchors": [
+        [
+          138,
+          112
+        ],
+        [
+          123,
+          127
+        ],
+        [
+          139,
+          129
+        ],
+        [
+          116,
+          98
+        ]
+      ],
+      "torsoAnchorAlpha": [
+        253,
+        253,
+        253,
+        253
+      ],
+      "alpha8Bounds": [
+        [
+          89,
+          29,
+          197,
+          244
+        ],
+        [
+          84,
+          45,
+          183,
+          244
+        ],
+        [
+          90,
+          46,
+          205,
+          224
+        ],
+        [
+          71,
+          17,
+          180,
+          230
+        ]
+      ],
+      "physicalPivotsCertified": false,
+      "authoredKeyposes": 4,
+      "fullyInterpolatedAnimation": false
+    },
+    {
+      "form": "mammonChild",
+      "key": "sinMammonChildAtlas",
+      "file": "media/sins-v13/mammon-child-atlas-512.png",
+      "sha256": "6271f3e2dbd4c18c8d078ac5351bff148483aaca26d5dcd7ed281cadc9ba4d7c",
+      "scale": 0.61,
+      "manualTorsoAnchors": [
+        [
+          134,
+          113
+        ],
+        [
+          139,
+          119
+        ],
+        [
+          138,
+          119
+        ],
+        [
+          132,
+          105
+        ]
+      ],
+      "torsoAnchorAlpha": [
+        252,
+        253,
+        253,
+        253
+      ],
+      "alpha8Bounds": [
+        [
+          62,
+          37,
+          200,
+          239
+        ],
+        [
+          59,
+          42,
+          176,
+          239
+        ],
+        [
+          67,
+          39,
+          202,
+          225
+        ],
+        [
+          65,
+          27,
+          180,
+          229
+        ]
+      ],
+      "physicalPivotsCertified": false,
+      "authoredKeyposes": 4,
+      "fullyInterpolatedAnimation": false
+    },
+    {
+      "form": "wrath",
+      "key": "sinWrathAtlas",
+      "file": "media/sins-v13/wrath-atlas-512.png",
+      "sha256": "d7a496865b9b7436c9e6926905f5f3b41e9fefcd3edd2f47436c77aa206b5682",
+      "scale": 0.5,
+      "manualTorsoAnchors": [
+        [
+          142,
+          112
+        ],
+        [
+          130,
+          105
+        ],
+        [
+          132,
+          105
+        ],
+        [
+          135,
+          108
+        ]
+      ],
+      "torsoAnchorAlpha": [
+        253,
+        253,
+        254,
+        252
+      ],
+      "alpha8Bounds": [
+        [
+          46,
+          15,
+          205,
+          216
+        ],
+        [
+          79,
+          66,
+          146,
+          235
+        ],
+        [
+          69,
+          53,
+          236,
+          211
+        ],
+        [
+          76,
+          12,
+          174,
+          202
+        ]
+      ],
+      "physicalPivotsCertified": false,
+      "authoredKeyposes": 4,
+      "fullyInterpolatedAnimation": false
+    },
+    {
+      "form": "pride",
+      "key": "sinPrideAtlas",
+      "file": "media/sins-v13/pride-atlas-512.png",
+      "sha256": "7f4ed7ef064882d4f3f31f6592b635dac0dcec61137fe3a3758d707632d17345",
+      "scale": 0.53,
+      "manualTorsoAnchors": [
+        [
+          131,
+          105
+        ],
+        [
+          134,
+          111
+        ],
+        [
+          135,
+          114
+        ],
+        [
+          130,
+          105
+        ]
+      ],
+      "torsoAnchorAlpha": [
+        253,
+        253,
+        253,
+        253
+      ],
+      "alpha8Bounds": [
+        [
+          84,
+          18,
+          197,
+          239
+        ],
+        [
+          82,
+          31,
+          173,
+          236
+        ],
+        [
+          88,
+          43,
+          202,
+          229
+        ],
+        [
+          87,
+          14,
+          182,
+          232
+        ]
+      ],
+      "physicalPivotsCertified": false,
+      "authoredKeyposes": 4,
+      "fullyInterpolatedAnimation": false
+    },
+    {
+      "form": "prideCyborg",
+      "key": "sinPrideCyborgAtlas",
+      "file": "media/sins-v13/pride-cyborg-atlas-512.png",
+      "sha256": "74f4875452efd814d03ea56f32fac3b1115222aea4c540ea302b0d8b0b477683",
+      "scale": 0.63,
+      "manualTorsoAnchors": [
+        [
+          127,
+          91
+        ],
+        [
+          118,
+          127
+        ],
+        [
+          133,
+          132
+        ],
+        [
+          125,
+          88
+        ]
+      ],
+      "torsoAnchorAlpha": [
+        253,
+        252,
+        253,
+        253
+      ],
+      "alpha8Bounds": [
+        [
+          32,
+          28,
+          227,
+          209
+        ],
+        [
+          22,
+          50,
+          222,
+          234
+        ],
+        [
+          32,
+          71,
+          234,
+          209
+        ],
+        [
+          28,
+          24,
+          210,
+          212
+        ]
+      ],
+      "physicalPivotsCertified": false,
+      "authoredKeyposes": 4,
+      "fullyInterpolatedAnimation": false
+    }
+  ],
+  "releaseTiming": "The source downstroke is selected only for actual releaseTick age0..5, then follow, recovery with short crossfades. Four keyposes are not a continuous animation.",
+  "terrain": {
+    "semantic": "abstract-memory-stage; not complete hotel, kitchen or vault map",
+    "source": "media/cave.webp",
+    "sha256": "921ac7d2a2893aa53374a459b27d9ae87e4cc5c50cbdf0281259875820e72526",
+    "sourceDimensions": [
+      1586,
+      992
+    ],
+    "sourcePatchNormalizedXYWH": [
+      0.43,
+      0.3,
+      0.13,
+      0.28
+    ],
+    "inspection": "Actual full image reviewed; central neutral stone-floor patch excludes cavern walls. Cached once per palette in a single360x640 surface."
+  },
+  "asmodeusAttachment": {
+    "type": "fine source-neutral decorative silk line",
+    "manualSourcePoint": "selected torsoAnchor minus20px on y; upper back",
+    "damaging": false,
+    "limitation": "Not an authored multiframe thread skill animation."
+  },
+  "wrathManifestations": {
+    "keys": [
+      "sinWrathBearV13",
+      "sinWrathWolfV13",
+      "sinWrathDragonV13"
+    ],
+    "sourceDimensions": [
+      1254,
+      1254
+    ],
+    "drawSize": [
+      104,
+      104
+    ],
+    "maxCacheBytes": 129792,
+    "phaseMapping": "bear, wolf, dragon",
+    "visible": "charge or first18ticks after actual release",
+    "damaging": false,
+    "limitation": "Three static attack manifestations, not full transformed body animation or physical body changes."
+  },
+  "limits": [
+    "Nine atlas forms are seven additional boss identities.",
+    "Existing denial/guard ordinary enemies remain memory echoes, not newly claimed hotel employees.",
+    "Pride brain/screens projection not represented by unverified substitutes.",
+    "Decorative renderer-drawn rings removed; authored sprite details, required warnings, projectile bodies and player hitpoint retained."
+  ]
+}

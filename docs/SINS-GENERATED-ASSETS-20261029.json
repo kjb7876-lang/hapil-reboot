@@ -1,0 +1,195 @@
+{
+  "schema": "hapil.sins-generated-art.v1",
+  "scope": "Static attack materials and three wrath manifestations; visual interpretations of canon, not new story characters or full animation.",
+  "items": [
+    {
+      "id": "sinProjectile-mammon",
+      "sourcePath": "/workspace/scratch/c84ef2cd7c03/generated_images/exec-51f7f400-3476-4ae6-8cca-603250cf65ac.png",
+      "file": "media/sins-v13/mammon-projectile.png",
+      "prompt": "Use case: stylized-concept. Asset type: one detailed transparent projectile sprite for an original dark fantasy vertical bullet game. An aged gold coin, one whole coin viewed almost face-on, embossed with worn ornamental grooves but no legible symbols or letters. Dense opaque gold centre; irregular nicked edge. This is Mammon the hotel general-manager's coin barrage material from the story, not a new weapon. Whole object centered, horizontally balanced and with a generous transparent margin. Painterly game-art detail readable at 24 pixels. No decorative circle around object, no halo, no detached particles, no text, no letters, no UI, no background. A single static sprite, no grid and no animation frames. Transparent background.",
+      "generator": "built-in image_gen.imagegen",
+      "referencedImage": null,
+      "transparent_background": true,
+      "frames": 1,
+      "pixelReview": "Imagegen outputs opened and inspected in current turn; compact transparent static game art, not continuous animation.",
+      "bytes": 1844314,
+      "sha256": "eab754f79f7927f2606d61e64f8069f5f64b6632592b63f44d62fee163f41609",
+      "dimensions": [
+        1295,
+        1215
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        1273,
+        1215
+      ],
+      "centerAlpha": 253,
+      "driveFileID": "14hqThTtDawPTwQ8w4GdDvC_lqLiHEIKf",
+      "driveURL": "https://drive.google.com/file/d/14hqThTtDawPTwQ8w4GdDvC_lqLiHEIKf/view?usp=drivesdk",
+      "driveMetadataSizeVerified": true
+    },
+    {
+      "id": "sinProjectile-wrath",
+      "sourcePath": "/workspace/scratch/c84ef2cd7c03/generated_images/exec-56d49241-de82-4e43-bd53-67270c5a463d.png",
+      "file": "media/sins-v13/wrath-projectile.png",
+      "prompt": "Use case: stylized-concept. Asset type: one detailed transparent projectile sprite for an original dark fantasy vertical bullet game. A single jagged charcoal ember projectile with a dense opaque coal centre, cracked glowing orange-red interior, compact licking flames attached close to the coal. This is the wrath janitor's fire attack material, not a new character. Whole object centered, horizontally balanced and with a generous transparent margin. Painterly game-art detail readable at 24 pixels. No decorative circle around object, no halo, no detached particles, no text, no letters, no UI, no background. A single static sprite, no grid and no animation frames. Transparent background.",
+      "generator": "built-in image_gen.imagegen",
+      "referencedImage": null,
+      "transparent_background": true,
+      "frames": 1,
+      "pixelReview": "Imagegen outputs opened and inspected in current turn; compact transparent static game art, not continuous animation.",
+      "bytes": 945900,
+      "sha256": "92a333e3d9159e51df4d8174bf8f3d361592540c9404e7bd7793ea657442d616",
+      "dimensions": [
+        1295,
+        1214
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        1275,
+        1214
+      ],
+      "centerAlpha": 252,
+      "driveFileID": "19YLqlKRw5sDlxuJ7M0VYeVcrndXksgLB",
+      "driveURL": "https://drive.google.com/file/d/19YLqlKRw5sDlxuJ7M0VYeVcrndXksgLB/view?usp=drivesdk",
+      "driveMetadataSizeVerified": true
+    },
+    {
+      "id": "sinProjectile-pride",
+      "sourcePath": "/workspace/scratch/c84ef2cd7c03/generated_images/exec-191e25e9-ca08-41e9-a872-d8ef08ee5fc5.png",
+      "file": "media/sins-v13/pride-projectile.png",
+      "prompt": "Use case: stylized-concept. Asset type: one detailed transparent projectile sprite for an original dark fantasy vertical bullet game. A single ivory white mechanical data spike, compact faceted porcelain and brushed-metal core, fine gold and dark-grey seams. Dense opaque centre. This is the white-suit chairman's technological attack material; avoid sacred symbols or another boss's face. Whole object centered, horizontally balanced and with a generous transparent margin. Painterly game-art detail readable at 24 pixels. No decorative circle around object, no halo, no detached particles, no text, no letters, no UI, no background. A single static sprite, no grid and no animation frames. Transparent background.",
+      "generator": "built-in image_gen.imagegen",
+      "referencedImage": null,
+      "transparent_background": true,
+      "frames": 1,
+      "pixelReview": "Imagegen outputs opened and inspected in current turn; compact transparent static game art, not continuous animation.",
+      "bytes": 1082720,
+      "sha256": "55bf337eee80cd5ce686271cb6e22e7aaf0c5e1b01455e14460861ed7e8ab8cf",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ],
+      "alphaBounds": [
+        33,
+        13,
+        1426,
+        1010
+      ],
+      "centerAlpha": 253,
+      "driveFileID": "1KYo1cI9MhRJ9kmSYgOQUF4F8dJzsPWHN",
+      "driveURL": "https://drive.google.com/file/d/1KYo1cI9MhRJ9kmSYgOQUF4F8dJzsPWHN/view?usp=drivesdk",
+      "driveMetadataSizeVerified": true
+    },
+    {
+      "id": "wrath-bear",
+      "sourcePath": "/workspace/scratch/c84ef2cd7c03/generated_images/exec-294b6a14-1643-4610-b743-15eeb461807a.png",
+      "file": "media/sins-v13/wrath-bear-manifest.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single transparent attack-manifestation sprite for the Wrath janitor boss in an original dark-fantasy vertical bullet game. Input image is style and soot-texture reference only, a four-pose janitor atlas. The story says the janitor's wrath takes three distinguishable fire-beast forms. This image is one beast manifestation, not a new character, not a full animation. Painterly realistic game sprite in the same dark, sooty palette with restrained orange-red flames and red eyes. Whole subject centered with generous transparent margin; strong silhouette readable at 90 pixels. No circle, halo, magical sigil, floor, scenery, text, UI or watermark. Transparent background. Subject: one bulky fire bear, hunched forward on four heavy paws, charcoal-black ash fur and short licking flames, facing toward the bottom of the screen in a three-quarter frontal view, mouth open in a growl.",
+      "generator": "built-in image_gen.imagegen",
+      "referencedImage": "media/sins-v13/wrath-atlas-512.png",
+      "transparent_background": true,
+      "frames": 1,
+      "pixelReview": "Imagegen outputs opened and inspected in current turn; compact transparent static game art, not continuous animation.",
+      "bytes": 2069709,
+      "sha256": "37dc272118a0e4a45bb00f1851dc1ba875ab0fd2590a10b2c3c05ff91459d631",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "centerAlpha": 252,
+      "driveFileID": "1soHuNTna1DSH_vguV9CqYEPYHJ0-b22U",
+      "driveURL": "https://drive.google.com/file/d/1soHuNTna1DSH_vguV9CqYEPYHJ0-b22U/view?usp=drivesdk",
+      "driveMetadataSizeVerified": true,
+      "referenceSHA256": "d7a496865b9b7436c9e6926905f5f3b41e9fefcd3edd2f47436c77aa206b5682"
+    },
+    {
+      "id": "wrath-wolf",
+      "sourcePath": "/workspace/scratch/c84ef2cd7c03/generated_images/exec-60f0391f-d32c-44af-9f93-c38b0544ef3c.png",
+      "file": "media/sins-v13/wrath-wolf-manifest.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single transparent attack-manifestation sprite for the Wrath janitor boss in an original dark-fantasy vertical bullet game. Input image is style and soot-texture reference only, a four-pose janitor atlas. The story says the janitor's wrath takes three distinguishable fire-beast forms. This image is one beast manifestation, not a new character, not a full animation. Painterly realistic game sprite in the same dark, sooty palette with restrained orange-red flames and red eyes. Whole subject centered with generous transparent margin; strong silhouette readable at 90 pixels. No circle, halo, magical sigil, floor, scenery, text, UI or watermark. Transparent background. Subject: one lean fire wolf, long pointed muzzle and ears, charcoal-black ash fur with a narrow fiery mane, crouched to leap toward the bottom of the screen in three-quarter frontal view. Keep distinctly wolf-shaped, not a bear or dragon.",
+      "generator": "built-in image_gen.imagegen",
+      "referencedImage": "media/sins-v13/wrath-atlas-512.png",
+      "transparent_background": true,
+      "frames": 1,
+      "pixelReview": "Imagegen outputs opened and inspected in current turn; compact transparent static game art, not continuous animation.",
+      "bytes": 1442658,
+      "sha256": "37146094be23e94ace3c4535645945af32b719e48c797132a601882e5bfda99b",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        0,
+        27,
+        1244,
+        1254
+      ],
+      "centerAlpha": 252,
+      "driveFileID": "1G4Z8NTl7WUvf0g3v2k9lT0JPfA2quUsR",
+      "driveURL": "https://drive.google.com/file/d/1G4Z8NTl7WUvf0g3v2k9lT0JPfA2quUsR/view?usp=drivesdk",
+      "driveMetadataSizeVerified": true,
+      "referenceSHA256": "d7a496865b9b7436c9e6926905f5f3b41e9fefcd3edd2f47436c77aa206b5682"
+    },
+    {
+      "id": "wrath-dragon",
+      "sourcePath": "/workspace/scratch/c84ef2cd7c03/generated_images/exec-ca65ae66-c223-4a77-9678-6b83360167fe.png",
+      "file": "media/sins-v13/wrath-dragon-manifest.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single transparent attack-manifestation sprite for the Wrath janitor boss in an original dark-fantasy vertical bullet game. Input image is style and soot-texture reference only, a four-pose janitor atlas. The story says the janitor's wrath takes three distinguishable fire-beast forms. This image is one beast manifestation, not a new character, not a full animation. Painterly realistic game sprite in the same dark, sooty palette with restrained orange-red flames and red eyes. Whole subject centered with generous transparent margin; strong silhouette readable at 90 pixels. No circle, halo, magical sigil, floor, scenery, text, UI or watermark. Transparent background. Subject: one long-necked fire dragon with reptile scales, swept horns and folded tattered wings, charcoal-black ash and restrained flames, coiled into a compact readable silhouette facing toward the bottom of the screen in three-quarter frontal view. Keep distinctly draconic, not canine.",
+      "generator": "built-in image_gen.imagegen",
+      "referencedImage": "media/sins-v13/wrath-atlas-512.png",
+      "transparent_background": true,
+      "frames": 1,
+      "pixelReview": "Imagegen outputs opened and inspected in current turn; compact transparent static game art, not continuous animation.",
+      "bytes": 1958099,
+      "sha256": "ef16f5ba70e07748193d7f330b2f793562a4ae3835bb43893ae6860a03f15faa",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        0,
+        17,
+        1240,
+        1254
+      ],
+      "centerAlpha": 252,
+      "driveFileID": "1_NVVDlkuf0iZHTUj2PTVh9PMFWbhfRm4",
+      "driveURL": "https://drive.google.com/file/d/1_NVVDlkuf0iZHTUj2PTVh9PMFWbhfRm4/view?usp=drivesdk",
+      "driveMetadataSizeVerified": true,
+      "referenceSHA256": "d7a496865b9b7436c9e6926905f5f3b41e9fefcd3edd2f47436c77aa206b5682"
+    }
+  ]
+}

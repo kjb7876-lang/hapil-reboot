@@ -55,6 +55,55 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
     })})
   });
   var STATES = ['idle','walk','attack','hit'];
+  // Source-backed chapter-II keyposes. These are manually inspected torso
+  // registrations, not source-certified physical pivots or new tween frames.
+  // One common scale is retained across each form's four source cells.
+  function sinContract(key,scale,anchors){
+    return Object.freeze({key:key,width:512,height:512,cell:256,scale:scale,
+      anchors:Object.freeze(anchors.map(function(a){return Object.freeze(a);})),
+      poseNames:Object.freeze(['prepare','downstroke','follow','recover']),
+      manualDisplayAnchors:true,sourcePivotsCertified:false,authoredKeyposes:4,fullAnimationCycles:0});
+  }
+  var SIN_CONTRACTS=Object.freeze({
+    belphegor:sinContract('sinBelphegorAtlas',.47,[[130,119],[129,128],[132,131],[130,125]]),
+    leviathan:sinContract('sinLeviathanAtlas',.50,[[141,100],[136,118],[136,122],[123,108]]),
+    beelzebub:sinContract('sinBeelzebubAtlas',.55,[[138,131],[129,158],[137,145],[129,113]]),
+    asmodeus:sinContract('sinAsmodeusAtlas',.68,[[136,112],[129,125],[141,137],[126,111]]),
+    mammon:sinContract('sinMammonAtlas',.59,[[138,112],[123,127],[139,129],[116,98]]),
+    mammonChild:sinContract('sinMammonChildAtlas',.61,[[134,113],[139,119],[138,119],[132,105]]),
+    wrath:sinContract('sinWrathAtlas',.50,[[142,112],[130,105],[132,105],[135,108]]),
+    pride:sinContract('sinPrideAtlas',.53,[[131,105],[134,111],[135,114],[130,105]]),
+    prideCyborg:sinContract('sinPrideCyborgAtlas',.63,[[127,91],[118,127],[133,132],[125,88]])
+  });
+  var SIN_ORDER=Object.freeze(['belphegor','leviathan','beelzebub','asmodeus','mammon','wrath','pride']);
+  var WRATH_MANIFESTS=Object.freeze(['sinWrathBearV13','sinWrathWolfV13','sinWrathDragonV13']);
+  function sinContractFor(world){
+    if(!world||!world.campaign||!world.boss)return null;
+    var b=world.boss,id=b.kind||world.bossId;
+    if(SIN_ORDER.indexOf(id)<0)return null;
+    var c=id==='mammon'&&(world.phase||0)===2?SIN_CONTRACTS.mammonChild:id==='pride'&&(world.phase||0)===2?SIN_CONTRACTS.prideCyborg:SIN_CONTRACTS[id];
+    return b.artKey&&b.artKey!==c.key?null:c;
+  }
+  function sinAssetKeysForEncounter(group){
+    var id=SIN_ORDER[group-5];if(!id)return [];
+    var keys=[SIN_CONTRACTS[id].key];
+    if(id==='mammon')keys.push(SIN_CONTRACTS.mammonChild.key);
+    if(id==='pride')keys.push(SIN_CONTRACTS.prideCyborg.key);
+    if(id==='wrath')keys.push.apply(keys,WRATH_MANIFESTS);
+    // The existing neutral assault/guard presentation remains on its source
+    // actors. It is never relabelled as one of the seven sins.
+    ['denial','guard'].forEach(function(name){STATES.forEach(function(state){keys.push(CONTRACTS[name].poses[state].key);});});
+    return keys;
+  }
+  function invalidSinAssetForEncounter(images,group){
+    if(!Number.isInteger(group)||group<5||group>11)return 'sin-encounter-unsupported';
+    var keys=sinAssetKeysForEncounter(group);
+    for(var i=0;i<keys.length;i++){
+      var key=keys[i],im=images&&images[key],expected=WRATH_MANIFESTS.indexOf(key)>=0?[1254,1254]:key.indexOf('sin')===0?[512,512]:[627,627];
+      if(!im||im.complete===false||im.naturalWidth!==expected[0]||im.naturalHeight!==expected[1])return key;
+    }
+    return null;
+  }
   function finite(n) { return typeof n === 'number' && Number.isFinite(n); }
   function clamp(n,a,b) { return Math.max(a,Math.min(b,n)); }
   function value(n,fallback) { return finite(n) ? n : fallback; }
@@ -80,13 +129,14 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
   function create(images) {
     images = images || {};
     var motionPresentation=global.HapilBossMotion?global.HapilBossMotion.create(images):null;
+    var wrathStamps={};
     var metrics;
     function beginFrame() {
       if(motionPresentation)motionPresentation.beginFrame();
       metrics = {actorDraws:0,bossDraws:0,enemyDraws:0,silkTethers:0,enemySilkTethers:0,bossSilkTethers:0,
         lastBossAsset:null,lastBossPose:null,lastBossIdentity:null,
         usedAssets:{},usedPoses:{},lastSilk:null,authoredPosesPerActor:4,
-        fullAnimationCycles:0,sourcePivotsCertified:false};
+        fullAnimationCycles:0,sourcePivotsCertified:false,sinBossDraws:0,lastSinSample:null,wrathManifestDraws:0,lastWrathManifest:null};
     }
     beginFrame();
     function ready(contract) {
@@ -110,6 +160,8 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
       return p.key;
     }
     function drawBoss(ctx, world, x, y, width, opacity) {
+      var sin=sinContractFor(world);
+      if(sin)return drawSinBoss(ctx,world,sin,x,y,width,opacity);
       if(motionPresentation&&motionPresentation.drawBoss(ctx,world,x,y,width,opacity)){
         var mm=motionPresentation.getMetrics();metrics.actorDraws+=mm.spriteDraws;metrics.bossDraws++;metrics.bossSilkTethers+=mm.tethers;metrics.silkTethers+=mm.tethers;metrics.lastBossAsset=mm.lastBossAsset;metrics.lastBossPose=mm.lastPose;metrics.lastBossIdentity=mm.lastBossIdentity;metrics.lastSilk=mm.lastSilk;metrics.usedAssets[mm.lastBossAsset]=(metrics.usedAssets[mm.lastBossAsset]||0)+mm.spriteDraws;metrics.usedPoses[mm.lastPose]=(metrics.usedPoses[mm.lastPose]||0)+1;return true;
       }
@@ -131,6 +183,53 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
       }else key = drawPose(ctx,contract,state,x,y,scale,angle,opacity);
       metrics.bossDraws++; metrics.lastBossAsset=key; metrics.lastBossPose=state; metrics.lastBossIdentity=identity;
       return true;
+    }
+    function drawSinBoss(ctx,world,c,x,y,width,opacity){
+      var image=images[c.key];
+      if(!image||image.complete===false||image.naturalWidth!==512||image.naturalHeight!==512||!finite(x)||!finite(y))return false;
+      var b=world.boss;
+      var sample=global.HapilBossMotion&&global.HapilBossMotion.sample?global.HapilBossMotion.sample(world,b):{from:3,to:3,blend:1};
+      var from=clamp(sample.from,0,3),to=clamp(sample.to,0,3),blend=clamp(sample.blend,0,1);
+      var scale=c.scale*clamp(value(width,230)/230,.1,world.stage==='bossIntro'?2.5:1),angle=clamp(value(b.lean,0),-1,1)*.009;
+      var weight=global.HapilBossMotion&&global.HapilBossMotion.presentation?global.HapilBossMotion.presentation(world,b):{dy:0,opacity:1};
+      var drawY=y+value(weight.dy,0),alpha=clamp(value(opacity,1),0,1)*value(weight.opacity,1);
+      if((b.kind||world.bossId)==='wrath')drawWrathManifest(ctx,world,x,y,alpha);
+      if((b.kind||world.bossId)==='asmodeus'){
+        // A fine, non-damaging attachment on the inspected upper back. It is
+        // a source-neutral tether, not an authored thread-animation claim.
+        var anchor=c.anchors[blend>=.5?to:from];
+        drawSilk(ctx,world,b,{anchor:anchor,silk:[anchor[0],anchor[1]-20]},scale,angle,x,drawY,true,alpha,'asmodeus');
+      }
+      function frame(index,a){
+        if(a<=.001)return;var p=c.anchors[index];ctx.save();ctx.globalAlpha*=alpha*a;ctx.translate(x,drawY);ctx.rotate(angle);
+        ctx.drawImage(image,index%2*256,Math.floor(index/2)*256,256,256,-p[0]*scale,-p[1]*scale,256*scale,256*scale);ctx.restore();metrics.actorDraws++;
+        metrics.usedAssets[c.key]=(metrics.usedAssets[c.key]||0)+1;
+      }
+      if(from===to)frame(to,1);else{frame(from,1-blend);frame(to,blend);}
+      var poseName=c.poseNames[blend>=.5?to:from];
+      metrics.bossDraws++;metrics.sinBossDraws++;metrics.lastBossAsset=c.key;metrics.lastBossIdentity=b.kind||world.bossId;metrics.lastBossPose=poseName;
+      metrics.usedPoses[poseName]=(metrics.usedPoses[poseName]||0)+1;
+      metrics.lastSinSample={from:from,to:to,blend:blend,scale:scale,angle:angle,position:[x,drawY],combatPosition:[x,y],anchors:[c.anchors[from],c.anchors[to]],presentationOffsetY:weight.dy};
+      return true;
+    }
+    function drawWrathManifest(ctx,world,x,y,opacity){
+      if(world.stage!=='boss')return;
+      var b=world.boss,releaseAge=finite(b.releaseTick)&&b.releaseTick>=0?value(world.tick,0)-b.releaseTick:Infinity;
+      if(b.action!=='charge'&&!(releaseAge>=0&&releaseAge<18))return;
+      var key=WRATH_MANIFESTS[clamp(world.phase||0,0,2)],source=images[key];
+      if(!source||source.complete===false||source.naturalWidth!==1254||source.naturalHeight!==1254)return;
+      var stamp=wrathStamps[key];
+      if(!stamp){
+        stamp=document.createElement('canvas');stamp.width=104;stamp.height=104;
+        stamp.getContext('2d').drawImage(source,0,0,1254,1254,0,0,104,104);wrathStamps[key]=stamp;
+      }
+      var progress=clamp(value(b.actionProgress,0),0,1),a=b.action==='charge'?.25+.4*progress:.65*(1-releaseAge/18);
+      var px=clamp(x+(x>240?-58:58),60,300),py=clamp(y+36,116,178);
+      // Source-backed, static attack manifestation. It is non-damaging and
+      // stays wholly above the player lane; real bullets/lasers draw later.
+      ctx.save();ctx.globalAlpha*=opacity*a;ctx.drawImage(stamp,px-52,py-52,104,104);ctx.restore();
+      metrics.wrathManifestDraws++;metrics.usedAssets[key]=(metrics.usedAssets[key]||0)+1;
+      metrics.lastWrathManifest={key:key,phase:world.phase||0,center:[px,py],size:104,opacity:a,damaging:false,sourceFrames:1};
     }
     function drawSilk(ctx, world, actor, p, scale, angle, x, y, boss, opacity, identity) {
       // One fine neutral puppet tether per visible actor, behind its body.
@@ -170,5 +269,6 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
     return {beginFrame:beginFrame,drawBoss:drawBoss,drawEnemy:drawEnemy,
       getMetrics:function () { return Object.assign(JSON.parse(JSON.stringify(metrics)),{downwardMotion:motionPresentation?motionPresentation.getMetrics():null}); }};
   }
-  global.HapilActors = Object.freeze({create:create,contracts:CONTRACTS});
+  global.HapilActors = Object.freeze({create:create,contracts:CONTRACTS,sinContracts:SIN_CONTRACTS,
+    sinContractFor:sinContractFor,sinAssetKeysForEncounter:sinAssetKeysForEncounter,invalidSinAssetForEncounter:invalidSinAssetForEncounter});
 }(typeof window !== 'undefined' ? window : globalThis));

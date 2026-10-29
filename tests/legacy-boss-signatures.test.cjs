@@ -12,7 +12,7 @@ function atTick(w,n){while(w.tick<n)core.step(w,{});return w;}
 function sample(w){return JSON.stringify({tick:w.tick,boss:w.boss,bullets:w.bullets,hazards:w.hazards,stats:w.stats});}
 
 test('five original signatures run from normal campaign phase 3 deterministically, with bounded density and readable recovery',()=>{
- assert.equal(new Set(core.CAMPAIGN_SIGNATURES.map(s=>s.id)).size,5);
+ assert.equal(new Set(core.CAMPAIGN_SIGNATURES.slice(0,5).map(s=>s.id)).size,5);
  for(const difficulty of ['normal','gentle'])for(let bossIndex=0;bossIndex<5;bossIndex++){
   const a=fixture(bossIndex,difficulty),b=fixture(bossIndex,difficulty),id=core.CAMPAIGN_SIGNATURES[bossIndex].id;
   // Full-clock observation only: suppress fixture damage without hiding the

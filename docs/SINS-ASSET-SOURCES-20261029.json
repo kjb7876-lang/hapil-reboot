@@ -1,0 +1,1334 @@
+{
+  "schema": "hapil.sins-asset-sources.v1",
+  "sourceCanon": {
+    "libraryFileId": "libfile_2f60cdda81d081919595d874c2af8c32",
+    "fileName": "합일몽세_전편_총집본_문체맞춤법개선.txt",
+    "fileId": "file_00000000374481f590211840df99cf06",
+    "bytes": 356906,
+    "officialRead": "2026-10-29; lines210-372 read directly; seven-sin sequence checked",
+    "roles": "ep1b02 sloth; ep1b03 envy; ep1b04 gluttony; ep1b05 lust; ep1b06 greed; ep1b06b same-manager child memory; ep1b07 wrath; ep1b08 pride chairman; ep1b09 same-chairman cyborg continuation",
+    "sha256": "ccb0bd26d2e16eb5586171ba0e197a5d0aaf76986a56f15a705f29305b6870ef",
+    "localBytesVerified": true,
+    "localVerificationPath": "/workspace/scratch/c84ef2cd7c03/sins_canon_discovery/latest-canon/canonical-latest.txt",
+    "metadataXattrsApplied": true
+  },
+  "historicalManifest": {
+    "sha256": "7f16e287b95bda27dfc96a49ffa79457220fa9db0ef1a362b83000c07207145e",
+    "rosterSHA256": "21cefb9632dff00636d891c59fac79a7c3d0c422e6d9afe229bd8e03782956eb",
+    "handoffSHA256": "95ffab9184e7be18cba9e937ca06e6a346f8b1e979b944edf9fee7775583a003",
+    "localBytesVerified": true,
+    "69Policy": "R90 sourceActor count is not number of runtime verified bosses"
+  },
+  "batches": {
+    "chapter2": {
+      "guideURL": "https://drive.google.com/file/d/1dDOazbWjgcugZ2lBE-UYcNRSz1AnmUG6/view",
+      "manifestSHA256": "072b8aa847edb4af6b46dcce27b2afc382fe9ea9341aee32cda83ee655656a69",
+      "runtimeCopiesRecheckedInCurrentEnvironment": true,
+      "priorProvenanceReport": "story_first_encounter_20261029/docs/story-assets/chapter2-r5.json",
+      "sourceValidation": {
+        "metadataReadBeforeRawFetch": true,
+        "officialDriveRawFileURIUsed": true,
+        "archives": [
+          {
+            "file": "Chapter2-partial11-keyposes-01-of17.zip",
+            "driveURL": "https://drive.google.com/file/d/1WGQvf7dKtgpUOAvrf1RAei4Lg9O_5CJ-/view?usp=drivesdk",
+            "bytes": 2165472,
+            "sha256": "74fa187da74fea57169c1f5e67d2470249b5ae0a1466ac494f0688e6c3e4e4eb"
+          },
+          {
+            "file": "Chapter2-partial11-keyposes-02-of17.zip",
+            "driveURL": "https://drive.google.com/file/d/1r7bkS45-z1n13HDJ1gCVZgK8TTHLuBIS/view?usp=drivesdk",
+            "bytes": 2750832,
+            "sha256": "96702f98f00a4e59f721696f30ff86ef9138777629cb9aae8b0e8ad22f5dce68"
+          },
+          {
+            "file": "Chapter2-partial11-keyposes-03-of17.zip",
+            "driveURL": "https://drive.google.com/file/d/1JxqYI--2sBiUyHP7yPiBt2fN4nJ0FZlM/view?usp=drivesdk",
+            "bytes": 2778759,
+            "sha256": "06d16aaf2d5e7295942c52513e58fc4a564c332780764650427bf98b4b6d9d17"
+          },
+          {
+            "file": "Chapter2-partial11-keyposes-04-of17.zip",
+            "driveURL": "https://drive.google.com/file/d/1llA078wRvmnItuxyHX_ZEYHtKHYssNqw/view?usp=drivesdk",
+            "bytes": 1981136,
+            "sha256": "e7898af936b04df4e5c705ac0de15700b9417b428662e347ebb3755707f2264a"
+          },
+          {
+            "file": "Chapter2-partial11-keyposes-05-of17.zip",
+            "driveURL": "https://drive.google.com/file/d/1sDf0yCSGyHQIuWrDadOk1IxMFr7o_1Od/view?usp=drivesdk",
+            "bytes": 2259964,
+            "sha256": "7d3690b15346d4d23ea60cd061c5cd12bf4d4e241bb15220d981b0d90368ca7e"
+          },
+          {
+            "file": "Chapter2-partial11-keyposes-06-of17.zip",
+            "driveURL": "https://drive.google.com/file/d/1cz8CqfulBSsnOXFU_zBmJ2wYDd-2K0nO/view?usp=drivesdk",
+            "bytes": 1908007,
+            "sha256": "8b4f846a62869ac5179cb0a50f60ddebbe7ae3ed11e529ef09bf90ce99e18930"
+          },
+          {
+            "file": "Chapter2-partial11-keyposes-07-of17.zip",
+            "driveURL": "https://drive.google.com/file/d/101MPGPfj-2wDtDxEolXh9vqXYnxlU8-p/view?usp=drivesdk",
+            "bytes": 2715905,
+            "sha256": "e603e23275eb01775faf8548b39afded86389c0f7e481834bf24250a393f1f47"
+          },
+          {
+            "file": "Chapter2-partial11-keyposes-08-of17.zip",
+            "driveURL": "https://drive.google.com/file/d/1J413TZzpqqIERGXzYZ2azZpafY_uXlg6/view?usp=drivesdk",
+            "bytes": 1742051,
+            "sha256": "f498b8263df15e4ba3548787f623e5bfffb5563865282498a91482ef46c09a3d"
+          },
+          {
+            "file": "Chapter2-partial11-keyposes-09-of17.zip",
+            "driveURL": "https://drive.google.com/file/d/16kIqKUXOIMoG82eOKKfeIAO0rePzy74-/view?usp=drivesdk",
+            "bytes": 2731027,
+            "sha256": "7a1fadbac2234287d905b7d920e69456b27a2289b602d4931bea8b90f8d1fb23"
+          },
+          {
+            "file": "Chapter2-partial11-keyposes-10-of17.zip",
+            "driveURL": "https://drive.google.com/file/d/15K2NcWd8zKJSERsryELiMLqtCKjT--EV/view?usp=drivesdk",
+            "bytes": 2729046,
+            "sha256": "496bf55854d9c85e9867c9ae20bdf64261e2e5a5b122c7ff732924d1c5bbc77a"
+          },
+          {
+            "file": "Chapter2-partial11-keyposes-11-of17.zip",
+            "driveURL": "https://drive.google.com/file/d/1i4h1D9uNnIWldeXLMGfrcu80qRVm4Y1E/view?usp=drivesdk",
+            "bytes": 2655592,
+            "sha256": "4ed2e7b8a1714f715193ce49390f8fd7a796851f9317364a2652624a92b36156"
+          },
+          {
+            "file": "Chapter2-partial11-keyposes-12-of17.zip",
+            "driveURL": "https://drive.google.com/file/d/1k3yvvF2debSORHKwXXNPW9NL4Gx-3yMF/view?usp=drivesdk",
+            "bytes": 1731945,
+            "sha256": "442d70a99198d7e15b0d963cf7c0c2b5675fe0d3a6852d73e907d52469da5ec0"
+          },
+          {
+            "file": "Chapter2-partial11-keyposes-13-of17.zip",
+            "driveURL": "https://drive.google.com/file/d/1Gp0Wltp8MpiLiA8869856tTay03AfCpo/view?usp=drivesdk",
+            "bytes": 2582862,
+            "sha256": "41c0454e2f88ba2eaab77e021f37315e1d43d5e1304bff9f139cec4a1457a9fe"
+          },
+          {
+            "file": "Chapter2-partial11-keyposes-14-of17.zip",
+            "driveURL": "https://drive.google.com/file/d/1jYmvE9EjHeOH9dNyfc5eYXc8AfAZauI6/view?usp=drivesdk",
+            "bytes": 2602598,
+            "sha256": "94bf919dbbbf27db03f57ab9a7548c9a506e5e3b14ef774db3d6fdfd33cbce42"
+          },
+          {
+            "file": "Chapter2-partial11-keyposes-15-of17.zip",
+            "driveURL": "https://drive.google.com/file/d/1v2ZMR0xI2zJaqEgQnbUhrH23bldSNKGh/view?usp=drivesdk",
+            "bytes": 2799742,
+            "sha256": "6fd078fce870e47721c3e3afc683eae261019ed298d3d5cf6214e9087e0ee3a2"
+          },
+          {
+            "file": "Chapter2-partial11-keyposes-16-of17.zip",
+            "driveURL": "https://drive.google.com/file/d/1aFaGyZHmoEdRODb50OGr6bwr9Qjw806e/view?usp=drivesdk",
+            "bytes": 2706139,
+            "sha256": "33d13da34124c85ee20f8ffb3aa91f66664e1c02f41270576886b093438295d9"
+          },
+          {
+            "file": "Chapter2-partial11-keyposes-17-of17.zip",
+            "driveURL": "https://drive.google.com/file/d/1a_CTdFKAVHBp_OkDbdHIvphjC9Y8mfiP/view?usp=drivesdk",
+            "bytes": 1550847,
+            "sha256": "a345cdfe2458cc4d930aa857c6be9822163d69d0699d7920101dabf6426338a8"
+          }
+        ],
+        "archiveBytes": 40391924,
+        "payloadFileCount": 166,
+        "uniqueZipPaths": 167,
+        "crcVerified": true,
+        "safePaths": true,
+        "manifestPayloadBytesAndHashesVerified": true,
+        "checks": {
+          "sourceReconstructedFrames": 88,
+          "atlasCellComparisons": 88,
+          "runtimeAtlasFilesCopiedByteExact": 11,
+          "runtimeRGBABytes": 11534336,
+          "opaqueDisplayAnchors": 44,
+          "opaqueThreadPoints": 44,
+          "zeroAlphaOuter8pxFrames": 44
+        }
+      }
+    },
+    "c5": {
+      "guideURL": "https://drive.google.com/file/d/1wEkWoyvlHk4fDDc3lD2m8udrERiHSE11/view?usp=drivesdk",
+      "archiveId": "15SfXE5bq5rYuUYuE8mbLvFI0n_NNJlrK",
+      "archiveBytes": 1534575,
+      "archiveSHA256": "8211648da0588be50d4b690640ea8746d4f0d999b2b4da00793f288d9698d76d",
+      "archiveCRCVerified": true,
+      "retrieval": "official Drive metadata then authenticated raw file reference materialized in current environment",
+      "sourceOriginalSHA256Verified": true
+    },
+    "b12": {
+      "guideURL": "https://drive.google.com/file/d/1AzSZD34uNRGLsM1YF2AgslnX-ZsqKEMW/view?usp=drivesdk",
+      "all11ArchivesBytesSHA256CRCVerified": true,
+      "manifestSHA256": "1fd64abb85eb66baafc237d6fc21c79c3ecf0e961f8d27710fa4a6cd4c889f04",
+      "retrieval": "official Drive metadata then authenticated raw file references materialized in current environment",
+      "archives": [
+        {
+          "id": "1WiAW7md_4hYszWhFx3Rgxv_gBpj_6qhE",
+          "bytes": 1964407,
+          "sha256": "a8e61e70d2d3acda324ed783c86cd064f53a8decfd688b2073a4f167a2e1fed2",
+          "n": 1
+        },
+        {
+          "id": "1C6v88Y4zPtex7aelbGRnSM__JVRgMpH6",
+          "bytes": 2555514,
+          "sha256": "d6df5491464a1bf7b72d9b40920917c938611d77933fe5cee445eb7e1a4c4320",
+          "n": 2
+        },
+        {
+          "id": "1P27IR0LTTcEZLQhIU8LFYPks7eiQucqH",
+          "bytes": 1892806,
+          "sha256": "85d6bf2b4fcbfc04f095c77b51860dbfc15d8c024dcea1d3a92c1e2b1434bdaa",
+          "n": 3
+        },
+        {
+          "id": "1LBbp0PZFe44aQpNG6JftXHllSJBNovjt",
+          "bytes": 2350274,
+          "sha256": "a56b45da727cda88d29736a7e9a3e7e95dc39928d9aad6f2717b766a803be12e",
+          "n": 4
+        },
+        {
+          "id": "1CWZvUGFDEetT2tzB3Q7_PsmkulkavTQR",
+          "bytes": 1660238,
+          "sha256": "513ec6badc424cdf9bc1f440ef71c3d866b52bfff19aba1803f16909277834ba",
+          "n": 5
+        },
+        {
+          "id": "14IVc0zL708RrRTSUDks15qIA7hXw77Tv",
+          "bytes": 2516873,
+          "sha256": "473c692dd0a513ed19d0df7f52e5f1880440e0caa0a8975c69afb2c62f9652c7",
+          "n": 6
+        },
+        {
+          "id": "1jgHu6LzYX53zJkZhhycHE3M1wLA4MS1E",
+          "bytes": 2767946,
+          "sha256": "ef6f9a7745bd5ece834a244d653227f674b40ea24ba99a8f5c38bfaa22935bff",
+          "n": 7
+        },
+        {
+          "id": "1vVJ1fj1ckrPhgNWYkas-38_7shnnupN9",
+          "bytes": 2543631,
+          "sha256": "6da3332fbc9c1948c72738782dd648290123dc471c23e767c4a0459baded1725",
+          "n": 8
+        },
+        {
+          "id": "1_BvX336M083IFFaJ5WCXmSaszW5JHXSY",
+          "bytes": 2488623,
+          "sha256": "97aee8b82022847585e4f6020bef8f5e3354620710280dd04b5d3a9750d355e4",
+          "n": 9
+        },
+        {
+          "id": "1hNztXo3sxF_BntZBXPhwzCPTchsZ-xIc",
+          "bytes": 2780227,
+          "sha256": "bc1c69c5fc3527eea385be19bcbb777d87825c83604fccb652b5bf98c170de4b",
+          "n": 10
+        },
+        {
+          "id": "1JQQ9PbO4ODopNzRrax3kX3DTjdxDV80j",
+          "bytes": 457251,
+          "sha256": "8549af813208977ab68cb88012178a849e9ff2fcbd37ff46d65cb2050159ba83",
+          "n": 11
+        }
+      ],
+      "allManifestPayloadFileHashesVerified": 117
+    },
+    "source6": {
+      "guideURL": "https://drive.google.com/file/d/1E9j2yvPt_N-IahYwGovJGuQcbRUWSyAi/view?usp=drivesdk",
+      "archiveIds": [
+        "1g7Px4H89Frqxa2b28PosMz12R9tkzOqN",
+        "1FesE10gBbEipFDEshsD_6jXO_Dlry_xc"
+      ],
+      "archiveSHA256": [
+        "7c17ea8bdf78229fba8f8c29eee36d944d8d5105e384e92781d2059835b3a8da",
+        "11d488a92a91fdfd6eeaa5021f6449a2629d9ec2c0fb5b82acbbb18bf27cc209"
+      ],
+      "archiveCRCVerified": true,
+      "manifestSHA256": "df167615f7a20f36e392c9e9f781becde216cad8b4254178a185b1593898d0b0"
+    }
+  },
+  "items": [
+    {
+      "key": "sinBelphegorAtlas",
+      "sourceActor": "b02-boss",
+      "formId": "b02-boss",
+      "batch": "chapter2",
+      "file": "media/sins-v13/belphegor-atlas-512.png",
+      "bytes": 286241,
+      "sha256": "1d025b46186a713241d901fb670476a5709e99c8e847a6a9291cb78b14c36e22",
+      "sourceOriginalSHA256": "7edaa119f1669af0d03ad7b05eb0c98aeafd287a138407c900088359cc4c5ab8",
+      "dimensions": [
+        512,
+        512
+      ],
+      "cell": [
+        256,
+        256
+      ],
+      "authoredKeyposes": 4,
+      "poseNames": [
+        "prepare",
+        "downstroke",
+        "follow",
+        "recover"
+      ],
+      "displayAnchors": [
+        [
+          130,
+          119
+        ],
+        [
+          129,
+          128
+        ],
+        [
+          132,
+          131
+        ],
+        [
+          130,
+          125
+        ]
+      ],
+      "sourceDerivation": null,
+      "pixelReview": "Actual atlas contact sheet opened in current environment; same identity and four independent poses visually inspected.",
+      "canonicalNote": "나태: 쓰레기산의 반인반요",
+      "fullyInterpolatedAnimation": false
+    },
+    {
+      "key": "sinLeviathanAtlas",
+      "sourceActor": "b03-boss",
+      "formId": "b03-boss-canonical",
+      "batch": "c5",
+      "file": "media/sins-v13/leviathan-atlas-512.png",
+      "bytes": 182127,
+      "sha256": "0ee8f490d281db4d4acc1d3a4b3e83401766af85b1641cd62934e7790c6431cc",
+      "sourceOriginalSHA256": "ba9c461a653844d4a5ca57662d534652648e896849e4c3477c3137894af16b8c",
+      "dimensions": [
+        512,
+        512
+      ],
+      "cell": [
+        256,
+        256
+      ],
+      "authoredKeyposes": 4,
+      "poseNames": [
+        "prepare",
+        "downstroke",
+        "follow",
+        "recover"
+      ],
+      "displayAnchors": null,
+      "sourceDerivation": {
+        "source": "/workspace/shared/HAPIL-storymode-downward-wave2a/b03-boss-canonical-raw-v4.png",
+        "source_sha256": "ba9c461a653844d4a5ca57662d534652648e896849e4c3477c3137894af16b8c",
+        "source_count": 1,
+        "authored_keyposes": 4,
+        "fully_interpolated_animation": false,
+        "pivot_status": "UNVERIFIED; fixed canvas center only, chest/root not motion stabilized",
+        "timing_ms_candidate": [
+          100,
+          160,
+          80,
+          180
+        ],
+        "loop": false,
+        "frames": [
+          {
+            "path": "b03-boss-canonical-pose-1-256.png",
+            "source_rect": [
+              0,
+              0,
+              627,
+              642
+            ],
+            "common_canvas": [
+              642,
+              642
+            ],
+            "rect_translation": [
+              0,
+              0
+            ],
+            "uniform_scale": 0.37383177570093457,
+            "translation": [
+              8,
+              8
+            ],
+            "size": 256,
+            "alpha_bbox": [
+              75,
+              8,
+              241,
+              245
+            ],
+            "sha256": "3a4367500ea7286cf401812f96975e9c5376ed0ee6d9ed6ccf04f22595bd4881"
+          },
+          {
+            "path": "b03-boss-canonical-pose-2-256.png",
+            "source_rect": [
+              627,
+              0,
+              627,
+              642
+            ],
+            "common_canvas": [
+              642,
+              642
+            ],
+            "rect_translation": [
+              0,
+              0
+            ],
+            "uniform_scale": 0.37383177570093457,
+            "translation": [
+              8,
+              8
+            ],
+            "size": 256,
+            "alpha_bbox": [
+              17,
+              26,
+              207,
+              248
+            ],
+            "sha256": "cf4082fe7ec1683b94bb3196bd92ae3b5c9254adcf519c0187ec0328747cb739"
+          },
+          {
+            "path": "b03-boss-canonical-pose-3-256.png",
+            "source_rect": [
+              0,
+              642,
+              627,
+              612
+            ],
+            "common_canvas": [
+              642,
+              642
+            ],
+            "rect_translation": [
+              0,
+              0
+            ],
+            "uniform_scale": 0.37383177570093457,
+            "translation": [
+              8,
+              8
+            ],
+            "size": 256,
+            "alpha_bbox": [
+              30,
+              26,
+              226,
+              220
+            ],
+            "sha256": "ed5d699b01b09fe6db4847cdf76d55adfa919820e512d0c6d09ce8da341ae830"
+          },
+          {
+            "path": "b03-boss-canonical-pose-4-256.png",
+            "source_rect": [
+              627,
+              642,
+              627,
+              612
+            ],
+            "common_canvas": [
+              642,
+              642
+            ],
+            "rect_translation": [
+              0,
+              0
+            ],
+            "uniform_scale": 0.37383177570093457,
+            "translation": [
+              8,
+              8
+            ],
+            "size": 256,
+            "alpha_bbox": [
+              9,
+              8,
+              210,
+              237
+            ],
+            "sha256": "8f82fb5171b4d5aa897516a381792934a5813520ce7bbc44d76d63f93a8a0f82"
+          }
+        ]
+      },
+      "pixelReview": "Actual atlas contact sheet opened in current environment; same identity and four independent poses visually inspected.",
+      "canonicalNote": "질투: 금이 간 안경의 누나와 목의 뱀",
+      "fullyInterpolatedAnimation": false
+    },
+    {
+      "key": "sinBeelzebubAtlas",
+      "sourceActor": "b04-boss",
+      "formId": "b04-boss-canonical",
+      "batch": "b12",
+      "file": "media/sins-v13/beelzebub-atlas-512.png",
+      "bytes": 276648,
+      "sha256": "69826fd54d023e70541e50247af1184472c8954fb39b4275c86942cf39dbbf7d",
+      "sourceOriginalSHA256": "3151ad70efa0daeb55ed560176a93e20c94503691b05c695b43457817b423bee",
+      "dimensions": [
+        512,
+        512
+      ],
+      "cell": [
+        256,
+        256
+      ],
+      "authoredKeyposes": 4,
+      "poseNames": [
+        "prepare",
+        "downstroke",
+        "follow",
+        "recover"
+      ],
+      "displayAnchors": null,
+      "sourceDerivation": {
+        "source": "/workspace/shared/HAPIL-storymode-downward-wave2a/b04-boss-canonical-raw-v1.png",
+        "source_sha256": "3151ad70efa0daeb55ed560176a93e20c94503691b05c695b43457817b423bee",
+        "source_count": 1,
+        "authored_keyposes": 4,
+        "fully_interpolated_animation": false,
+        "pivot_status": "UNVERIFIED; fixed canvas center only, chest/root not motion stabilized",
+        "timing_ms_candidate": [
+          160,
+          100,
+          80,
+          180
+        ],
+        "loop": false,
+        "frames": [
+          {
+            "path": "b04-boss-canonical-pose-1-256.png",
+            "source_rect": [
+              0,
+              0,
+              627,
+              627
+            ],
+            "uniform_scale": 0.3827751196172249,
+            "translation": [
+              8,
+              8
+            ],
+            "size": 256,
+            "alpha_bbox": [
+              20,
+              11,
+              240,
+              247
+            ],
+            "sha256": "64515e6690c10132450d4b8550e186af0bae34effa54215d94857aa354909b4a"
+          },
+          {
+            "path": "b04-boss-canonical-pose-2-256.png",
+            "source_rect": [
+              627,
+              0,
+              627,
+              627
+            ],
+            "uniform_scale": 0.3827751196172249,
+            "translation": [
+              8,
+              8
+            ],
+            "size": 256,
+            "alpha_bbox": [
+              11,
+              24,
+              234,
+              245
+            ],
+            "sha256": "2ac0fa8d41efd3cdc195dae227fe1a6001f96b7855ac91330040e56db60fe01e"
+          },
+          {
+            "path": "b04-boss-canonical-pose-3-256.png",
+            "source_rect": [
+              0,
+              627,
+              627,
+              627
+            ],
+            "uniform_scale": 0.3827751196172249,
+            "translation": [
+              8,
+              8
+            ],
+            "size": 256,
+            "alpha_bbox": [
+              8,
+              8,
+              248,
+              240
+            ],
+            "sha256": "6f8a3b582dea251a2bea5f0b379d49b59d7be75e994a3e4387782d9f817bd31e"
+          },
+          {
+            "path": "b04-boss-canonical-pose-4-256.png",
+            "source_rect": [
+              627,
+              627,
+              627,
+              627
+            ],
+            "uniform_scale": 0.3827751196172249,
+            "translation": [
+              8,
+              8
+            ],
+            "size": 256,
+            "alpha_bbox": [
+              8,
+              19,
+              239,
+              244
+            ],
+            "sha256": "4642f286c04d55baeceb623774705164bebe9a21bda79628da33daa0b0028421"
+          }
+        ]
+      },
+      "pixelReview": "Actual atlas contact sheet opened in current environment; same identity and four independent poses visually inspected.",
+      "canonicalNote": "탐식: 돼지와 두꺼비, 식칼과 프라이팬",
+      "fullyInterpolatedAnimation": false
+    },
+    {
+      "key": "sinAsmodeusAtlas",
+      "sourceActor": "b05-boss",
+      "formId": "b05-boss-body-only",
+      "batch": "source6",
+      "file": "media/sins-v13/asmodeus-atlas-512.png",
+      "bytes": 100791,
+      "sha256": "67024242523da096619c27e5f09d97547c8301a9d5f76b0f6c5b8390081cbe49",
+      "sourceOriginalSHA256": "cca01a183f21dde3776f34eda655a4e346f12b0cff90962e441aba06692b3e34",
+      "dimensions": [
+        512,
+        512
+      ],
+      "cell": [
+        256,
+        256
+      ],
+      "authoredKeyposes": 4,
+      "poseNames": [
+        "prepare",
+        "downstroke",
+        "follow",
+        "recover"
+      ],
+      "displayAnchors": null,
+      "sourceDerivation": {
+        "source": "/workspace/shared/HAPIL-storymode-downward-wave2a/b05-boss-canonical-body-only-raw-v4.png",
+        "source_sha256": "cca01a183f21dde3776f34eda655a4e346f12b0cff90962e441aba06692b3e34",
+        "authored_keyposes": 4,
+        "fully_interpolated_animation": false,
+        "pivot_status": "NOT_STABILIZED; fixed canvas only, no anatomical registration",
+        "timing_status": "UNVERIFIED; no runtime timing provided",
+        "loop": false,
+        "status": "DERIVED_PENDING_PARENT_VISUAL_APPROVAL",
+        "frames": [
+          {
+            "path": "b05-boss-body-only-pose-1-256.png",
+            "source_rect_xyxy": [
+              0,
+              0,
+              665,
+              591
+            ],
+            "common_canvas": [
+              665,
+              665
+            ],
+            "uniform_scale": 0.3609022556390977,
+            "translation": [
+              8,
+              8
+            ],
+            "sha256": "5d24f86b7d9c138440a8484e339161226591911ae44d2fb7c0ae6c3755095795",
+            "outer8_alpha_zero": true
+          },
+          {
+            "path": "b05-boss-body-only-pose-2-256.png",
+            "source_rect_xyxy": [
+              665,
+              0,
+              1330,
+              591
+            ],
+            "common_canvas": [
+              665,
+              665
+            ],
+            "uniform_scale": 0.3609022556390977,
+            "translation": [
+              8,
+              8
+            ],
+            "sha256": "994ae73cf7f1596a506c673006c5c08fa4bd98c9a6bf58d3874bb3d326269ec4",
+            "outer8_alpha_zero": true
+          },
+          {
+            "path": "b05-boss-body-only-pose-3-256.png",
+            "source_rect_xyxy": [
+              0,
+              591,
+              665,
+              1182
+            ],
+            "common_canvas": [
+              665,
+              665
+            ],
+            "uniform_scale": 0.3609022556390977,
+            "translation": [
+              8,
+              8
+            ],
+            "sha256": "6dd854a4bf2012361ef7b4fcd1f6c94dcfecc8024e9576ac99b9cb3de5539e08",
+            "outer8_alpha_zero": true
+          },
+          {
+            "path": "b05-boss-body-only-pose-4-256.png",
+            "source_rect_xyxy": [
+              665,
+              591,
+              1330,
+              1182
+            ],
+            "common_canvas": [
+              665,
+              665
+            ],
+            "uniform_scale": 0.3609022556390977,
+            "translation": [
+              8,
+              8
+            ],
+            "sha256": "75c7dbb0ccd25a0f66888ab4dc88ea806136fb6fd11d802bbc34ee719a0a2fcf",
+            "outer8_alpha_zero": true
+          }
+        ]
+      },
+      "pixelReview": "Actual atlas contact sheet opened in current environment; same identity and four independent poses visually inspected.",
+      "canonicalNote": "색욕: 서윤. 실줄은 별도 부착 필요",
+      "fullyInterpolatedAnimation": false
+    },
+    {
+      "key": "sinMammonAtlas",
+      "sourceActor": "b06-boss",
+      "formId": "b06-boss-canonical",
+      "batch": "b12",
+      "file": "media/sins-v13/mammon-atlas-512.png",
+      "bytes": 127471,
+      "sha256": "d046db75c15f17fdf015f3cdffec4b213ac3ca209f14920182b34b103c26233f",
+      "sourceOriginalSHA256": "89d3cc85e2c83bcad996aab90329f4021de7ddb73a4c4bfdde4ca1abd484d24f",
+      "dimensions": [
+        512,
+        512
+      ],
+      "cell": [
+        256,
+        256
+      ],
+      "authoredKeyposes": 4,
+      "poseNames": [
+        "prepare",
+        "downstroke",
+        "follow",
+        "recover"
+      ],
+      "displayAnchors": null,
+      "sourceDerivation": {
+        "source": "/workspace/shared/HAPIL-storymode-downward-wave2a/b06-boss-canonical-raw-v1.png",
+        "source_sha256": "89d3cc85e2c83bcad996aab90329f4021de7ddb73a4c4bfdde4ca1abd484d24f",
+        "source_count": 1,
+        "authored_keyposes": 4,
+        "fully_interpolated_animation": false,
+        "pivot_status": "UNVERIFIED; fixed canvas center only, chest/root not motion stabilized",
+        "timing_ms_candidate": [
+          160,
+          100,
+          80,
+          180
+        ],
+        "loop": false,
+        "frames": [
+          {
+            "path": "b06-boss-canonical-pose-1-256.png",
+            "source_rect": [
+              0,
+              0,
+              627,
+              627
+            ],
+            "uniform_scale": 0.3827751196172249,
+            "translation": [
+              8,
+              8
+            ],
+            "size": 256,
+            "alpha_bbox": [
+              45,
+              23,
+              211,
+              246
+            ],
+            "sha256": "b33b2752737fc3d833195cb7936bf5063bbb71dfa26c545bf763e00b862013b8"
+          },
+          {
+            "path": "b06-boss-canonical-pose-2-256.png",
+            "source_rect": [
+              627,
+              0,
+              627,
+              627
+            ],
+            "uniform_scale": 0.3827751196172249,
+            "translation": [
+              8,
+              8
+            ],
+            "size": 256,
+            "alpha_bbox": [
+              27,
+              18,
+              240,
+              246
+            ],
+            "sha256": "0e2c665470bac16af8e05a0b823825454fb38621a7e7878a7ad5e92058af54e8"
+          },
+          {
+            "path": "b06-boss-canonical-pose-3-256.png",
+            "source_rect": [
+              0,
+              627,
+              627,
+              627
+            ],
+            "uniform_scale": 0.3827751196172249,
+            "translation": [
+              8,
+              8
+            ],
+            "size": 256,
+            "alpha_bbox": [
+              88,
+              9,
+              234,
+              226
+            ],
+            "sha256": "af8e46ec7b471e9851bc4fb6c23589563c77aa1a1af2bc8491d00d07191f5f14"
+          },
+          {
+            "path": "b06-boss-canonical-pose-4-256.png",
+            "source_rect": [
+              627,
+              627,
+              627,
+              627
+            ],
+            "uniform_scale": 0.3827751196172249,
+            "translation": [
+              8,
+              8
+            ],
+            "size": 256,
+            "alpha_bbox": [
+              9,
+              15,
+              235,
+              232
+            ],
+            "sha256": "f1922b94eb5bfc09730c4902d3cda3c5cef78024302cc8f4576ce526b113d3b5"
+          }
+        ]
+      },
+      "pixelReview": "Actual atlas contact sheet opened in current environment; same identity and four independent poses visually inspected.",
+      "canonicalNote": "탐욕: 여우눈의 총지배인",
+      "fullyInterpolatedAnimation": false
+    },
+    {
+      "key": "sinMammonChildAtlas",
+      "sourceActor": "b06b-boss",
+      "formId": "b06b-boss-child",
+      "batch": "chapter2",
+      "file": "media/sins-v13/mammon-child-atlas-512.png",
+      "bytes": 174736,
+      "sha256": "6271f3e2dbd4c18c8d078ac5351bff148483aaca26d5dcd7ed281cadc9ba4d7c",
+      "sourceOriginalSHA256": "febff774488bb0861d5733de0944f20251f9b3bc987e78febc0d721cb37b22a1",
+      "dimensions": [
+        512,
+        512
+      ],
+      "cell": [
+        256,
+        256
+      ],
+      "authoredKeyposes": 4,
+      "poseNames": [
+        "prepare",
+        "downstroke",
+        "follow",
+        "recover"
+      ],
+      "displayAnchors": [
+        [
+          134,
+          113
+        ],
+        [
+          139,
+          119
+        ],
+        [
+          138,
+          119
+        ],
+        [
+          132,
+          105
+        ]
+      ],
+      "sourceDerivation": null,
+      "pixelReview": "Actual atlas contact sheet opened in current environment; same identity and four independent poses visually inspected.",
+      "canonicalNote": "같은 총지배인의 소년 기억. 새 인물 아님",
+      "fullyInterpolatedAnimation": false
+    },
+    {
+      "key": "sinWrathAtlas",
+      "sourceActor": "b07-boss",
+      "formId": "b07-boss-human",
+      "batch": "chapter2",
+      "file": "media/sins-v13/wrath-atlas-512.png",
+      "bytes": 113362,
+      "sha256": "d7a496865b9b7436c9e6926905f5f3b41e9fefcd3edd2f47436c77aa206b5682",
+      "sourceOriginalSHA256": "b306ce9ac86ca16850d1f2993d3af6334aaea8ff8486df900a4913e061956e39",
+      "dimensions": [
+        512,
+        512
+      ],
+      "cell": [
+        256,
+        256
+      ],
+      "authoredKeyposes": 4,
+      "poseNames": [
+        "prepare",
+        "downstroke",
+        "follow",
+        "recover"
+      ],
+      "displayAnchors": [
+        [
+          142,
+          112
+        ],
+        [
+          130,
+          105
+        ],
+        [
+          132,
+          105
+        ],
+        [
+          135,
+          108
+        ]
+      ],
+      "sourceDerivation": null,
+      "pixelReview": "Actual atlas contact sheet opened in current environment; same identity and four independent poses visually inspected.",
+      "canonicalNote": "청소부 인간형만. 곰/늑대/용은 별도",
+      "fullyInterpolatedAnimation": false
+    },
+    {
+      "key": "sinPrideAtlas",
+      "sourceActor": "b08-boss",
+      "formId": "b08-boss-human",
+      "batch": "chapter2",
+      "file": "media/sins-v13/pride-atlas-512.png",
+      "bytes": 145503,
+      "sha256": "7f4ed7ef064882d4f3f31f6592b635dac0dcec61137fe3a3758d707632d17345",
+      "sourceOriginalSHA256": "8fcf5a6220d530df4ac0b603578efda17d89d9f8fa475627bbee18b80791cffb",
+      "dimensions": [
+        512,
+        512
+      ],
+      "cell": [
+        256,
+        256
+      ],
+      "authoredKeyposes": 4,
+      "poseNames": [
+        "prepare",
+        "downstroke",
+        "follow",
+        "recover"
+      ],
+      "displayAnchors": [
+        [
+          131,
+          105
+        ],
+        [
+          134,
+          111
+        ],
+        [
+          135,
+          114
+        ],
+        [
+          130,
+          105
+        ]
+      ],
+      "sourceDerivation": null,
+      "pixelReview": "Actual atlas contact sheet opened in current environment; same identity and four independent poses visually inspected.",
+      "canonicalNote": "백색정장 회장. 제1부 루시퍼와 다른 인물",
+      "fullyInterpolatedAnimation": false
+    },
+    {
+      "key": "sinPrideCyborgAtlas",
+      "sourceActor": "b09-boss",
+      "formId": "b09-boss-manylegs",
+      "batch": "b12",
+      "file": "media/sins-v13/pride-cyborg-atlas-512.png",
+      "bytes": 277545,
+      "sha256": "74f4875452efd814d03ea56f32fac3b1115222aea4c540ea302b0d8b0b477683",
+      "sourceOriginalSHA256": "939434fa454515fae9f4cd8d259c7c5c85786072fb4d3d3892b5bd860ddb6c35",
+      "dimensions": [
+        512,
+        512
+      ],
+      "cell": [
+        256,
+        256
+      ],
+      "authoredKeyposes": 4,
+      "poseNames": [
+        "prepare",
+        "downstroke",
+        "follow",
+        "recover"
+      ],
+      "displayAnchors": null,
+      "sourceDerivation": {
+        "source": "/workspace/shared/HAPIL-storymode-downward-wave2b/b09-boss-manylegs-keyposes-raw-v1.png",
+        "source_sha256": "939434fa454515fae9f4cd8d259c7c5c85786072fb4d3d3892b5bd860ddb6c35",
+        "source_count": 1,
+        "authored_keyposes": 4,
+        "fully_interpolated_animation": false,
+        "pivot_status": "UNVERIFIED; fixed canvas center only, chest/root not motion stabilized",
+        "timing_ms_candidate": [
+          160,
+          100,
+          80,
+          180
+        ],
+        "loop": false,
+        "frames": [
+          {
+            "path": "b09-boss-manylegs-pose-1-512.png",
+            "source_rect": [
+              0,
+              0,
+              635,
+              620
+            ],
+            "common_canvas": [
+              635,
+              635
+            ],
+            "rect_translation": [
+              0,
+              0
+            ],
+            "uniform_scale": 0.7559055118110236,
+            "translation": [
+              16,
+              16
+            ],
+            "size": 512,
+            "alpha_bbox": [
+              16,
+              29,
+              496,
+              485
+            ],
+            "sha256": "d32b8fc56a6b80cc5887edfe8930b0a02b06486b6dbfa3e86aa1c1af386e4537"
+          },
+          {
+            "path": "b09-boss-manylegs-pose-2-512.png",
+            "source_rect": [
+              635,
+              0,
+              634,
+              620
+            ],
+            "common_canvas": [
+              635,
+              635
+            ],
+            "rect_translation": [
+              0,
+              0
+            ],
+            "uniform_scale": 0.7559055118110236,
+            "translation": [
+              16,
+              16
+            ],
+            "size": 512,
+            "alpha_bbox": [
+              16,
+              41,
+              488,
+              485
+            ],
+            "sha256": "a7620ae1750732c9b4fa595505497a407abcd8b80c4a6ede24a4a20951f1a751"
+          },
+          {
+            "path": "b09-boss-manylegs-pose-3-512.png",
+            "source_rect": [
+              0,
+              620,
+              635,
+              620
+            ],
+            "common_canvas": [
+              635,
+              635
+            ],
+            "rect_translation": [
+              0,
+              0
+            ],
+            "uniform_scale": 0.7559055118110236,
+            "translation": [
+              16,
+              16
+            ],
+            "size": 512,
+            "alpha_bbox": [
+              16,
+              16,
+              496,
+              485
+            ],
+            "sha256": "cf39d249a2030ca533235456baae473bdb89bb42a89acffbbb41850d19716d82"
+          },
+          {
+            "path": "b09-boss-manylegs-pose-4-512.png",
+            "source_rect": [
+              635,
+              620,
+              634,
+              620
+            ],
+            "common_canvas": [
+              635,
+              635
+            ],
+            "rect_translation": [
+              0,
+              0
+            ],
+            "uniform_scale": 0.7559055118110236,
+            "translation": [
+              16,
+              16
+            ],
+            "size": 512,
+            "alpha_bbox": [
+              16,
+              16,
+              491,
+              485
+            ],
+            "sha256": "7e459e3da6c77dc84c2d9944dcc494821962a1f3f5b55b40b83fcc2bd980df76"
+          },
+          {
+            "path": "b09-boss-manylegs-pose-1-256.png",
+            "source_rect": [
+              0,
+              0,
+              635,
+              620
+            ],
+            "common_canvas": [
+              635,
+              635
+            ],
+            "rect_translation": [
+              0,
+              0
+            ],
+            "uniform_scale": 0.3779527559055118,
+            "translation": [
+              8,
+              8
+            ],
+            "size": 256,
+            "alpha_bbox": [
+              17,
+              14,
+              248,
+              242
+            ],
+            "sha256": "a615ded3837a59fa5e816c119932a72face140b42504f0fe7061395191e303f5"
+          },
+          {
+            "path": "b09-boss-manylegs-pose-2-256.png",
+            "source_rect": [
+              635,
+              0,
+              634,
+              620
+            ],
+            "common_canvas": [
+              635,
+              635
+            ],
+            "rect_translation": [
+              0,
+              0
+            ],
+            "uniform_scale": 0.3779527559055118,
+            "translation": [
+              8,
+              8
+            ],
+            "size": 256,
+            "alpha_bbox": [
+              8,
+              21,
+              243,
+              242
+            ],
+            "sha256": "f772b9f4721e9449fa4868db5a36db5cfe96e434e0601f4d67e22b75007af4da"
+          },
+          {
+            "path": "b09-boss-manylegs-pose-3-256.png",
+            "source_rect": [
+              0,
+              620,
+              635,
+              620
+            ],
+            "common_canvas": [
+              635,
+              635
+            ],
+            "rect_translation": [
+              0,
+              0
+            ],
+            "uniform_scale": 0.3779527559055118,
+            "translation": [
+              8,
+              8
+            ],
+            "size": 256,
+            "alpha_bbox": [
+              15,
+              8,
+              248,
+              240
+            ],
+            "sha256": "37234ca7ddc56a63eacfd9f10262fff4fe8b9ae7c400d8bbe41586a77e77cd77"
+          },
+          {
+            "path": "b09-boss-manylegs-pose-4-256.png",
+            "source_rect": [
+              635,
+              620,
+              634,
+              620
+            ],
+            "common_canvas": [
+              635,
+              635
+            ],
+            "rect_translation": [
+              0,
+              0
+            ],
+            "uniform_scale": 0.3779527559055118,
+            "translation": [
+              8,
+              8
+            ],
+            "size": 256,
+            "alpha_bbox": [
+              8,
+              8,
+              243,
+              239
+            ],
+            "sha256": "9f309065bf3aabd9e107c0bc14a752703a0de13e0ba4db8ccfcdab8a533126e9"
+          }
+        ]
+      },
+      "pixelReview": "Actual atlas contact sheet opened in current environment; same identity and four independent poses visually inspected.",
+      "canonicalNote": "같은 회장의 사이보그 후속형. 새 죄악인물 아님",
+      "fullyInterpolatedAnimation": false
+    }
+  ],
+  "limits": [
+    "Nine source-backed form atlases represent seven additional sins, not nine new people.",
+    "Four independent poses are not continuous animation.",
+    "Source sheets preserved unchanged; runtime files are author-supplied512 atlases copied byte-identically.",
+    "Fixed canvas/display anchor is not physical pivot certification. Gameplay, telegraph/collision and GPU/mobile validation remain runtime owners responsibility.",
+    "Wrath beast forms, Asmodeus transparent thread attachment and Pride brain/screens projection remain integration requirements; body coverage is not completed behavior."
+  ],
+  "liveIndex": {
+    "driveFileId": "1h2kobPQNLj57MSn-Jfd6yrT5Rri89v3v",
+    "bytes": 41843,
+    "sha256": "75effbd42c2f9e05ea14cf1dda7307c8ca047403bcd7c681eeabc5f54376a165",
+    "revision": 15,
+    "updatedUTC": "2026-10-26T22:57:39.266205+00:00",
+    "complete": false,
+    "note": "Index source assets stop at chapter2A partial18; no chapter2B main greed/wrath/pride FX batch found. Current source narrative is newer than this index."
+  },
+  "canonicalConflictDecisions": [
+    {
+      "actor": "b03-boss",
+      "oldReference": "teal-robed spectral primary",
+      "selection": "current canonical woman with cracked glasses and neck-serpent C5v4"
+    },
+    {
+      "actor": "b04-boss",
+      "oldReference": "generic glutton humanoid/demon primary",
+      "selection": "B12 pig-toad canonical form with cleaver and pan"
+    },
+    {
+      "actor": "b05-boss",
+      "oldReference": "armored or unrelated succubus variants",
+      "selection": "Source6 same-face Seoyun body-only; actual upper-back threads require runtime layer"
+    },
+    {
+      "actor": "b06-boss",
+      "oldReference": "generic gold golem primary",
+      "selection": "B12 fox-eye human general manager; child memory belongs to same person"
+    },
+    {
+      "actor": "b07-boss",
+      "oldReference": "armored flame knight and proper name Satan in R90",
+      "selection": "latest prose janitor and wrath manifestation; latest chapter does not name Satan; need bear/wolves/dragon form assets"
+    },
+    {
+      "actor": "b08-boss",
+      "oldReference": "generic pride demon or stale seventh-ear Lucifer phase label",
+      "selection": "white-suit chairman, distinct from chapter1 Lucifer; brain/screens needed before cyborg continuation"
+    },
+    {
+      "actor": "b09-boss",
+      "oldReference": "generic humanoid cyborg",
+      "selection": "B12 human upperbody and many mechanical legs; same chairman"
+    }
+  ]
+}

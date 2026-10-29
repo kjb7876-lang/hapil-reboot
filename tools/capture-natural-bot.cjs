@@ -15,16 +15,17 @@ function move(w){let p=w.player,best=0,bscore=Infinity;for(let a=0;a<dirs.length
 const out=path.join(__dirname,'../tests/fixtures/natural-bot'),corePath=path.join(__dirname,'../src/core.js');fs.mkdirSync(out,{recursive:true});
 const codeHash=crypto.createHash('sha256').update(fs.readFileSync(corePath)).digest('hex');
 const weaponPath=path.join(__dirname,'../src/weapon-patterns.js'),weaponHash=crypto.createHash('sha256').update(fs.readFileSync(weaponPath)).digest('hex');
-const records=[];
-for(const difficulty of ['gentle','normal'])for(const seed of [813,42]){
+const records=[],pending=[];
+for(const difficulty of ['gentle','normal','hell'])for(const seed of [813,42]){
  const w=core.createRun({campaign:true,difficulty,seed,runId:'natural-bot-'+difficulty+'-'+seed}),marks=[];let seen=w.checkpointSerial,sequence='';
- for(let n=0;n<110000&&!['lost','won'].includes(w.stage);n++){
+ for(let n=0;n<180000&&!['lost','won'].includes(w.stage);n++){
   const key=move(w);sequence+=String(key);const dir=dirs[key];core.step(w,{dx:dir[0],dy:dir[1]});
   if(w.checkpointSerial!==seen){seen=w.checkpointSerial;marks.push([w.tick,w.bossIndex,w.stage,w.wave,w.phase,w.player.hp]);}
  }
  if(w.stage!=='won')throw Error(`Natural bot did not clear ${difficulty}/${seed}: ${w.stage} tick ${w.tick}`);
- const file=`${difficulty}-${seed}.moves.gz`,bytes=zlib.gzipSync(Buffer.from(sequence),{mtime:0});fs.writeFileSync(path.join(out,file),bytes);
+ const file=`${difficulty}-${seed}.moves.gz`,bytes=zlib.gzipSync(Buffer.from(sequence),{mtime:0});pending.push({file,bytes});
  const rec={difficulty,seed,runId:w.runId,stage:w.stage,tick:w.tick,hits:w.stats.hits,hp:w.player.hp,score:w.score,killCount:w.kills,checkpointCount:w.checkpointSerial,phaseTicks:w.stats.phaseTicks,marks,file,sha256:crypto.createHash('sha256').update(bytes).digest('hex')};records.push(rec);console.log(JSON.stringify({difficulty,seed,tick:w.tick,hits:w.stats.hits,hp:w.player.hp,file,bytes:bytes.length}));
 }
 if(crypto.createHash('sha256').update(fs.readFileSync(corePath)).digest('hex')!==codeHash||crypto.createHash('sha256').update(fs.readFileSync(weaponPath)).digest('hex')!==weaponHash)throw Error('Simulation module changed during recording: regenerate replays');
-fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify({method:'Recorded from state-aware deterministic avoidance policy with ordinary 8-direction 240 px/sec movement, normal damage, auto-attack and skills. No modifications to run state, invulnerability, health, damage, or RNG. These are CPU bot simulations, not human/browser/mobile/GPU play.',directions:dirs,recordedCoreSha256:codeHash,recordedWeaponPatternsSha256:weaponHash,records},null,2)+'\n');
+for(const {file,bytes} of pending)fs.writeFileSync(path.join(out,file),bytes);
+fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify({method:'Recorded from state-aware deterministic avoidance policy with ordinary 8-direction 240 px/sec movement, normal damage, auto-attack and skills. No modifications to run state, invulnerability, health, damage, or RNG. These are CPU bot simulations, not human/browser/mobile/GPU play.',bossIds:core.CAMPAIGN_BOSSES.map(b=>b.id),directions:dirs,recordedCoreSha256:codeHash,recordedWeaponPatternsSha256:weaponHash,records},null,2)+'\n');
