@@ -1,11 +1,13 @@
 /* HAPIL: memory corridor. Pure deterministic 60 Hz combat; no DOM, timers or input automation. */
 (function (root, factory) {
   'use strict';
-  var api = factory();
+  var dependency = typeof module === 'object' && module.exports ? require('./weapon-patterns.js') : root && root.HapilWeaponPatterns;
+  var api = factory(dependency);
   if (typeof module === 'object' && module.exports) module.exports = api;
   if (root) root.HapilCore = api;
-}(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+}(typeof globalThis !== 'undefined' ? globalThis : this, function (Weapon) {
   'use strict';
+  if (!Weapon) throw new Error('보스 무기 패턴 모듈을 찾을 수 없습니다.');
   var W = 360, H = 640, FIXED_DT = 1 / 60, TAU = Math.PI * 2;
   var RULESET = 'hapil-firstbattle-1';
   var CAPS = Object.freeze({ bullets: 768, shots: 96, enemies: 12, effects: 96, hazards: 40 });
@@ -111,6 +113,7 @@
     acquire(w, 'effects', { x: x, y: y, kind: kind, r: r || 12, color: color || '#88ffed', age: 0, ttl: ttl || 0.35 });
   }
   function emit(w, specs) {
+    Weapon.prepareEmission(w, specs);
     if (w.bullets.length + specs.length > CAPS.bullets) {
       w.stats.poolPressure++; // Caller retains or reports the whole group; no live projectile is evicted.
       if (w._deferred.length < 16) w._deferred.push(specs);
@@ -126,6 +129,8 @@
         angle: s.angle, kind: kind, color: s.color || '#c4a2ff', age: 0, ttl: s.ttl || 6.4,
         ownerId: s.ownerId || 0, grazed: false });
       if (added && s.patternId) { added.patternId = s.patternId; added.paletteSlot = s.paletteSlot || 0; }
+      if (added && s.rhythmAccelerate) added.rhythmAccelerate = true;
+      if (added && s.weaponMotion) Weapon.initialize(added, s, w);
       if (added && s.acceleration) {
         added.acceleration = s.acceleration * (w.difficulty === 'gentle' ? 0.82 : 1);
         added.maxSpeed = (s.maxSpeed || 150) * (w.difficulty === 'gentle' ? 0.82 : 1);
@@ -472,17 +477,38 @@
       }
     }
   }
+  // A committed # of two vertical and two horizontal rays. Its four lines
+  // have the same warning and activation boundary; the empty cells are real
+  // navigable space, and color selection belongs to the renderer's boss palette.
+  // This replaces one ordinary attack cycle rather than stacking on top of it.
+  function campaignGrid(w, within, cycle) {
+    if (within !== 54) return;
+    var b=w.boss, offset=((cycle+w.bossIndex)%3-1)*12;
+    var left=108+offset,right=252+offset,upper=420+(w.bossIndex%3-1)*12,lower=540+(w.bossIndex%3-1)*12;
+    var width=[12,10,14,10,12][w.bossIndex];
+    var specs=[
+      {x:left,y:0,angle:Math.PI/2,width:width,ownerId:b.id,paletteSlot:0},
+      {x:right,y:0,angle:Math.PI/2,width:width,ownerId:b.id,paletteSlot:0},
+      {x:0,y:upper,angle:0,width:width,ownerId:b.id,paletteSlot:1},
+      {x:0,y:lower,angle:0,width:width,ownerId:b.id,paletteSlot:1}
+    ];
+    specs.forEach(function(s){s.patternId='boss-grid-v1';});
+    warning(w,specs,96,'교차 광선 격자');
+  }
   function campaignPattern(w) {
-    var b = w.boss, t = Math.round(w.phaseTime * 60) - 1, cycle = Math.floor(t / 360), within = t % 360;
+    var b = w.boss, t = Math.round(w.phaseTime * 60) - 1, cycle = Math.floor(t / 420), rawWithin = t % 420;
+    // The move lasts72 instead of54 ticks. Attack timing keeps its authored
+    // logical ticks after that move, while the remainder is a longer recovery.
+    var within = rawWithin < 72 ? Math.floor(rawWithin * 54 / 72) : rawWithin - 18;
     var anchors = [180, 112, 236, 156, 218], offset = w.phase + w.bossIndex;
     var destination = anchors[(cycle + offset) % anchors.length], origin = cycle ? anchors[(cycle - 1 + offset) % anchors.length] : 180;
     b.px = b.x; b.py = b.y;
-    var move = clamp(within / 54, 0, 1), easing = move * move * (3 - 2 * move);
+    var move = clamp(rawWithin / 72, 0, 1), easing = move * move * (3 - 2 * move);
     b.x = origin + (destination - origin) * easing;
     b.y = 116 + Math.sin(move * Math.PI) * 16;
     b.lean = clamp((b.x - b.px) / 2.5, -1, 1);
     b.action = within < 54 ? 'move' : within < 108 ? 'charge' : within < 264 ? 'attack' : 'recover';
-    b.actionProgress = within < 54 ? within / 54 : within < 108 ? (within - 54) / 54 : within < 264 ? (within - 108) / 156 : (within - 264) / 96;
+    b.actionProgress = within < 54 ? move : within < 108 ? (within - 54) / 54 : within < 264 ? (within - 108) / 156 : clamp((within - 264) / 138, 0, 1);
     var aimAt = Math.atan2(w.player.y - b.y, w.player.x - b.x), down = Math.PI / 2;
     var gap = down + Math.sin(cycle * 1.7 + w.phase) * .22;
     var attacking = within >= 108 && within < 264, pulse = within - 108;
@@ -490,7 +516,21 @@
     b.specialPatternId=w.phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].id:'';
     b.specialPatternLabel=w.phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].label:'';
     b.patternHint=w.phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].hint:'';
-    if(w.phase===2){campaignSignature(w,within,cycle);return;}
+    if(w.phase===2){b.weaponTelegraph=false;campaignSignature(w,within,cycle);return;}
+    if(w.phase===1&&cycle%2===1){
+      b.specialPatternId='boss-grid-v1';b.specialPatternLabel='교차 광선 격자';
+      b.patternHint='가로와 세로 광선 사이의 빈 칸으로 이동하세요';
+      b.weaponTelegraph=false;
+      campaignGrid(w,within,cycle);return;
+    }
+    b.weaponTelegraph=w.phase===0&&cycle%2===0&&within>=54&&within<108;
+    // A telegraphed pair replaces the normal first volley, keeping the number
+    // of damaging objects and collision work bounded during a large attack.
+    if(Weapon.shouldThrow(w,within,cycle)){
+      if(w.bullets.length+2<=CAPS.bullets)emit(w,Weapon.createPair(w,b,cycle));
+      else{w.stats.poolPressure++;w.stats.droppedGroups++;}
+      return;
+    }
     if (w.bossIndex === 0) {
       if (w.phase === 0) {
         // Two rotating petals leave an authored aperture; there is no row of
@@ -680,11 +720,15 @@
     var p = w.player;
     for (var i = w.bullets.length - 1; i >= 0; i--) {
       var b = w.bullets[i]; b.px = b.x; b.py = b.y;
-      if (b.acceleration && b.age >= b.accelerateAt) {
-        var speed = Math.min(b.maxSpeed, Math.hypot(b.vx, b.vy) + b.acceleration * FIXED_DT);
-        b.vx = Math.cos(b.angle) * speed; b.vy = Math.sin(b.angle) * speed;
+      if (b.weaponMotion) Weapon.advance(b, FIXED_DT, W);
+      else {
+        if (b.acceleration && b.age >= b.accelerateAt) {
+          var speed = Math.min(b.maxSpeed, Math.hypot(b.vx, b.vy) + b.acceleration * FIXED_DT);
+          b.vx = Math.cos(b.angle) * speed; b.vy = Math.sin(b.angle) * speed;
+        }
+        b.x += b.vx * FIXED_DT; b.y += b.vy * FIXED_DT;
       }
-      b.x += b.vx * FIXED_DT; b.y += b.vy * FIXED_DT; b.age += FIXED_DT;
+      b.age += FIXED_DT;
       if (w.stage !== 'won' && w.stage !== 'lost' && w.stage !== 'bossIntro') {
         // Conservative swept AABB: the projectile's half-length and the larger
         // of hit/graze radii enclose its entire capsule. Far-away bullets need
@@ -699,8 +743,9 @@
         var valid = p.r >= 0 && b.r >= 0 && halfLength >= 0 && finite(reach);
         var margin = valid ? 1e-9 * (1 + reach + Math.max(Math.abs(x0), Math.abs(x1), Math.abs(y0), Math.abs(y1))) : 0;
         var far = valid && (Math.min(x0, x1) > reach + margin || Math.max(x0, x1) < -reach - margin || Math.min(y0, y1) > reach + margin || Math.max(y0, y1) < -reach - margin);
+        if (b.weaponMotion && b.bouncePoint) far = false;
         if (!far) {
-          var d2 = projectileDistanceSquared(b, px, py, p.x, p.y);
+          var d2 = b.weaponMotion ? Weapon.distanceSquared(b, px, py, p.x, p.y) : projectileDistanceSquared(b, px, py, p.x, p.y);
           if (d2 <= sq(p.r + b.r)) { w.stats.collisions++; hurt(w); remove(w, 'bullets', i); continue; }
           if (!b.grazed && w.tick >= p.invulnerableUntil && d2 <= sq(13 + b.r)) {
             b.grazed = true; w.graze++; w.score += 15; w._lastGraze = w.tick; gainResonance(w, 3, true); effect(w, p.x, p.y, 'graze', 8, '#a5ffee', 0.22);
