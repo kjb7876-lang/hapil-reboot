@@ -1,5 +1,8 @@
 'use strict';
-// Explicit phase-combat fixtures, not natural campaign-clear or mobile GPU tests.
+// Explicit isolated signature fixtures, not natural campaign-clear or mobile GPU tests.
+// Summons are separately tested with actual damage and normal HP in boss-summons-v16.test.cjs.
+// Remove entering summons before they can shoot to keep these original tests
+// focused on the boss-only timing and original five-cycle movement route.
 // The dodge test uses normal HP/collision, without 777 or invulnerability.
 const test=require('node:test'),assert=require('node:assert/strict');
 const core=require('../src/core.js');
@@ -21,6 +24,7 @@ test('five original signatures run from normal campaign phase 3 deterministicall
   let releases=0,beams=0;
   for(let n=0;n<2100;n++){
    core.step(a,{});core.step(b,{});
+   a.enemies.length=0;b.enemies.length=0;
    const fresh=a.bullets.filter(b=>Math.abs(b.age-1/60)<1e-8);
    const active=a.hazards.filter(h=>h.activeAt===a.tick);
    if(fresh.length||active.length){
@@ -53,6 +57,7 @@ test('all signatures have a collision-free moving route at ordinary focus speed 
    const target=bossIndex===2?(cycle%2?252:108):180+Math.sin(Math.floor(Math.max(0,n-258)/420)*.8)*100;
    const previousX=w.player.x;
    core.step(w,{dx:target-w.player.x,focus:true});
+   w.enemies.length=0;
    assert(Math.abs(w.player.x-previousX)<=2.00000001,'ordinary focus-speed movement only');
   }
   assert.equal(w.player.hp,hp,`${bossIndex}/${difficulty}`);assert.equal(w.stats.hits,0);

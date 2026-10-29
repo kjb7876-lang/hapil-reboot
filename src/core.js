@@ -275,7 +275,7 @@
     return w;
   }
   function target(w) {
-    var p = w.player, candidates = w.enemies.filter(function (e) { return e.hp > 0 && e.y >= 0 && e.y < p.y && e.x >= 0 && e.x <= W; });
+    var p = w.player, candidates = w.enemies.filter(function (e) { return e.hp > 0 && e.y >= 0 && e.y < p.y && e.x >= 0 && e.x <= W && !(w.stage === 'boss' && e.summoned && Math.abs(Math.atan2(e.x-p.x,p.y-e.y)) > 55 * Math.PI / 180); });
     if (w.stage === 'boss' && w.boss && w.boss.hp > 0 && w.boss.y < p.y) candidates.push(w.boss);
     var locked = candidates.find(function (e) { return e.id === w._targetId; });
     if (locked && w.tick < w._targetUntil) return locked;
@@ -349,6 +349,20 @@
     var enemy = acquire(w, 'enemies', { id: ++w.idCounter, x: x, y: -24, px: x, py: -24, baseX: x, hp: turret ? 100 : 60, maxHp: turret ? 100 : 60,
       r: turret ? 18 : 15, kind: kind, age: -(delay || 0), direction: direction || 1, shotCursor: 0, wobble: rand(w) * TAU, life: turret ? 8 : 6.5 });
     if (w.campaign && enemy) Object.assign(enemy, { archetype: (w.bossIndex < 3 ? ['weaver', 'wraith', 'ember'][w.bossIndex] : w.bossIndex === 3 ? (w.wave === 1 ? 'vial' : 'echo') : (w.wave === 0 ? 'denial' : 'guard')), action: 'enter', actionProgress: 0, lean: 0 });
+    return enemy;
+  }
+  // Reinforcements reuse the current encounter's already-loaded ordinary
+  // enemies. They enter visibly before their first attack and never exceed two.
+  function summonBossAllies(w) {
+    if (!w.campaign || w.campaignRevision < 3 || !w.boss || w.boss.hp <= 0) return;
+    var t = Math.round(w.phaseTime * 60);
+    if (t < 240 || (t - 240) % 660 !== 0 || w.enemies.length > 0) return;
+    var side = ((w.bossIndex + w.phase + Math.floor((t - 240) / 660)) % 2) ? -1 : 1;
+    for (var i = 0; i < 2; i++) {
+      var enemy = spawnEnemy(w, i ? 290 : 70, 'scout', i ? -side : side, i * .22);
+      if (enemy) { enemy.summoned = true; if (w.bossIndex >= 4) enemy.archetype = i ? 'guard' : 'denial'; }
+    }
+    event(w, 'summon', '지원군 출현');
   }
   function startWave(w, wave) {
     while (w.shots.length) remove(w, 'shots', w.shots.length - 1);
@@ -417,7 +431,7 @@
       var cadence = w.campaign || e.kind === 'turret' ? 1.65 : 1.5;
       var shootStart = w.campaign ? (e.kind === 'turret' ? 1.2 : 2.1) : .8;
       var shoot = Math.floor((e.age - shootStart) / cadence);
-      if (e.age >= shootStart && e.age < e.life - 1.7 && shoot >= e.shotCursor && waveCombatTime(w) < 10.2) {
+      if (e.age >= shootStart && e.age < e.life - 1.7 && shoot >= e.shotCursor && (e.summoned && w.stage === 'boss' || !e.summoned && waveCombatTime(w) < 10.2)) {
         e.shotCursor = shoot + 1;
         var a = Math.atan2(w.player.y - e.y, w.player.x - e.x);
         if (e.kind === 'turret') warning(w, fanSpecs(e.x, e.y, a, 3, 0.2, 110, 'needle', '#f5b5d3', e.id), 54, '겨냥 레이저');
@@ -961,6 +975,9 @@
       else if (w.phase === 2) { w.stage = 'won'; w.stageTime = 0; w.resultReason = w.campaign ? (w.practiceBoss ? w.bossName + ' · 연습 완료' : w.bossIndex>=5 ? '일곱 검은 신호 · 봉인 조사 구간을 마쳤습니다' : w.bossIndex===4 ? 'J의 인장이 빛납니다 · 루시퍼가 물러나고 도움을 청할 길이 열립니다' : '첫 기억의 조사 구간을 마쳤습니다') : '기억 회랑을 돌파했습니다'; w.score += 5000 + w.player.hp * 500; event(w, 'win'); }
       else { w.stage = 'transition'; w.stageTime = 0; w.nextPhase = w.phase + 1; w.transitionRemaining = 6.4; w.stageLabel = e.sealTarget ? '남은 파동이 지나갑니다' : '남은 검편이 지나갑니다'; }
       w.reservation = false; w._reservationSince = 0;
+      // A phase boundary contains no surviving support actors. Their already
+      // fired bullets remain subject to the ordinary transition drain.
+      while (w.enemies.length) remove(w, 'enemies', w.enemies.length - 1);
       w._warnings.length = 0; w._deferred.length = 0;
       // Already announced lasers complete on their committed paths during the
       // drain. A phase change never erases an active beam or creates a shortcut.
@@ -1140,7 +1157,7 @@
     else if (w.stage === 'boss') {
       w.phaseTime += FIXED_DT;
       if (w.phaseTime >= w.phaseTimeout) { w.stage = 'lost'; w.resultReason = '시간 안에 기억을 되찾지 못했습니다'; event(w, 'lose', w.resultReason); }
-      else bossPattern(w);
+      else { bossPattern(w); summonBossAllies(w); updateEnemies(w); }
     }
     // A cached boundary is an entire tick. Its original and restored successor
     // both start with no friendly shots, enemies from a previous wave or hazards.
