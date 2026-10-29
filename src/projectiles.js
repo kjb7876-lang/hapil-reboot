@@ -83,6 +83,28 @@
     {key:'weaponMaskV12',width:1774,height:887,crop:[265,236,1309,448]},
     {key:'weaponLuciferV12',width:1254,height:1254,crop:[348,134,800,979]}
   ];
+  // Actual hapil1 own-actor attack sprites, only for the two large HELL
+  // rotors. These are projectile/skill materials, not newly asserted held
+  // weapons. Their ornament is cosmetic; the proven same-boss dense material
+  // below still paints the complete, core-owned circular damage region.
+  var ROTORS=[null,null,null,null,null,
+    {key:'h14SkillSloth',width:512,height:512,crop:[21,21,469,470]},
+    {key:'h14SkillEnvy',width:512,height:512,crop:[26,105,460,303]},
+    {key:'h14RotorGlutton',width:512,height:512,crop:[40,59,447,398]},
+    {key:'h14SkillLust',width:512,height:512,crop:[21,35,470,443]},
+    {key:'h14SkillGreed',width:512,height:512,crop:[28,70,456,373]},
+    {key:'h14SkillWrath',width:512,height:512,crop:[21,26,469,460]},
+    {key:'h14SkillPride',width:512,height:512,crop:[174,142,154,267]}
+  ];
+  var BEAMS=[null,null,null,null,null,
+    {key:'h14BeamSloth',width:2172,height:724,crop:[543,181,1086,362]},
+    {key:'h14BeamEnvy',width:2172,height:724,crop:[543,181,1086,362]},
+    {key:'h14BeamGlutton',width:2172,height:724,crop:[543,181,1086,362]},
+    {key:'h14BeamLust',width:2172,height:724,crop:[543,181,1086,362]},
+    {key:'h14BeamGreed',width:2172,height:724,crop:[543,181,1086,362]},
+    {key:'h14BeamWrath',width:2172,height:724,crop:[543,181,1086,362]},
+    {key:'h14BeamPride',width:2172,height:724,crop:[543,181,1086,362]}
+  ];
   var CACHE_LIMIT=96,CACHE_BYTES=4*1024*1024,SCALE=3,PAD=1,CELL=128;
   function finite(n){return typeof n==='number'&&Number.isFinite(n);}
   function clamp(n,a,b){return Math.max(a,Math.min(b,n));}
@@ -90,7 +112,7 @@
   function indexFor(w){return slotForEncounter(w&&w.bossIndex);}
   function paletteFor(w,b){var p=PALETTE_LIST[indexFor(w)];return p?(b&&b.paletteSlot===1?{id:p.id+'-secondary',primary:p.secondary,secondary:p.primary,accent:p.accent}:p):null;}
   function colorFor(w,b){var p=paletteFor(w,b);return p?p.primary:null;}
-  function optionalAssetKeysForEncounter(i){return Number.isInteger(i)&&i>=0&&i<CASTS.length?[CASTS[i].key]:[];}
+  function optionalAssetKeysForEncounter(i){var out=[];if(!Number.isInteger(i)||i<0||i>=ORBS.length)return out;if(CASTS[i])out.push(CASTS[i].key);if(ROTORS[i])out.push(ROTORS[i].key);if(BEAMS[i])out.push(BEAMS[i].key);return out;}
   function assetKeysForEncounter(i){
     var wi=slotForEncounter(i);if(wi<0)return [];var out=[ORBS[wi].key];
     if(BLADES[wi]&&out.indexOf(BLADES[wi].key)<0)out.push(BLADES[wi].key);
@@ -112,7 +134,7 @@
     var cache=new Map(),cacheBytes=0,group=-1,metrics;
     function release(e){if(!e)return;if(e.canvases)e.canvases.forEach(function(c){c.width=1;c.height=1;});if(e.canvas){e.canvas.width=1;e.canvas.height=1;}}
     function clearCache(){cache.forEach(release);cache.clear();cacheBytes=0;}
-    function beginFrame(){metrics={stampDraws:0,stampCacheMisses:0,stampCacheHits:0,stampCacheLimit:CACHE_LIMIT,stampCacheByteLimit:CACHE_BYTES,stampCacheBytes:cacheBytes,stampCacheEntries:cache.size,animatedBulletDraws:0,bodyAnimationPhases:0,suppressedUnapprovedFX:0,compactCastDraws:0,compactHazardDraws:0,assetLaserDraws:0,assetLaserSlices:0,signatureCastDraws:0,weaponVisualDraws:0,weaponTelegraphDraws:0,missingProjectileAssets:0,compactFamilies:{}};}
+    function beginFrame(){metrics={stampDraws:0,stampCacheMisses:0,stampCacheHits:0,stampCacheLimit:CACHE_LIMIT,stampCacheByteLimit:CACHE_BYTES,stampCacheBytes:cacheBytes,stampCacheEntries:cache.size,animatedBulletDraws:0,bodyAnimationPhases:0,suppressedUnapprovedFX:0,compactCastDraws:0,compactHazardDraws:0,assetLaserDraws:0,assetLaserSlices:0,signatureCastDraws:0,weaponVisualDraws:0,weaponTelegraphDraws:0,rotorVisualDraws:0,rotorTelegraphDraws:0,sourceBeamOverlayDraws:0,missingOptionalRotorAssets:0,missingOptionalBeamAssets:0,missingProjectileAssets:0,compactFamilies:{}};}
     function remember(key,e){
       if(e.bytes>CACHE_BYTES){release(e);return null;}
       while(cache.size&&(cache.size>=CACHE_LIMIT||cacheBytes+e.bytes>CACHE_BYTES)){var first=cache.keys().next().value,old=cache.get(first);cacheBytes-=old.bytes;release(old);cache.delete(first);}
@@ -188,6 +210,31 @@
       ctx.save();ctx.globalCompositeOperation='source-over';ctx.globalAlpha=alpha;
       ctx.translate(x,y);ctx.rotate(angle);ctx.drawImage(art.canvas,-size/2,-size/2,size,size);ctx.restore();return true;
     }
+    function rotorSurface(w){
+      var s=ROTORS[indexFor(w)];if(!s||!ready(images[s.key],s))return null;
+      var key='rotor|'+s.key,e=cache.get(key);if(e)return e;
+      var c=canvas(96,96),ctx=c&&c.getContext('2d');if(!ctx){release({canvas:c});return null;}
+      var crop=s.crop,scale=88/Math.max(crop[2],crop[3]),width=crop[2]*scale,height=crop[3]*scale;
+      ctx.drawImage(images[s.key],crop[0],crop[1],crop[2],crop[3],(96-width)/2,(96-height)/2,width,height);
+      return remember(key,{canvas:c,bytes:96*96*4});
+    }
+    function drawRotorIcon(ctx,w,x,y,angle,size,alpha){
+      var art=rotorSurface(w);if(!art){metrics.missingOptionalRotorAssets++;return false;}
+      ctx.save();ctx.globalCompositeOperation='source-over';ctx.globalAlpha=alpha;ctx.translate(x,y);ctx.rotate(angle);
+      ctx.drawImage(art.canvas,-size/2,-size/2,size,size);ctx.restore();return true;
+    }
+    function beamSurface(w,h){
+      var s=BEAMS[indexFor(w)];if(!s||!ready(images[s.key],s))return null;
+      var palette=paletteFor(w,h),key='beam|'+s.key+'|'+palette.id,e=cache.get(key);if(e)return e;
+      // The authoritative hapil1 connected-laser crop is the central half of
+      // each panorama. Downsample once; never recolor the 6MiB raw file each
+      // frame or load all seven families for a single encounter.
+      var c=canvas(384,128),ctx=c&&c.getContext('2d');if(!ctx){release({canvas:c});return null;}
+      var crop=s.crop;ctx.drawImage(images[s.key],crop[0],crop[1],crop[2],crop[3],0,0,384,128);
+      var data=ctx.getImageData(0,0,384,128),d=data.data,p=rgb(palette.primary),q=rgb(palette.secondary);
+      for(var i=0;i<d.length;i+=4){if(!d[i+3])continue;var value=Math.max(d[i],d[i+1],d[i+2])/255,highlight=clamp((value-.64)/.36,0,1)*.55,level=.62+value*.5;for(var channel=0;channel<3;channel++)d[i+channel]=clamp(Math.round((p[channel]*(1-highlight)+q[channel]*highlight)*level),0,255);}
+      ctx.putImageData(data,0,0);return remember(key,{canvas:c,bytes:384*128*4});
+    }
     function drawBullet(ctx,w,b,lowQuality){
       if(!w||!b||!finite(b.x)||!finite(b.y))return false;
       var wi=indexFor(w),weapon=WEAPONS[wi];
@@ -200,11 +247,12 @@
       var key='body|'+s.key+'|'+r+'|'+l+'|'+paletteFor(w,b).id,e=cache.get(key);
       if(!e){e=buildStamp(w,b,s,r,l);if(!e)return false;e=remember(key,e);if(!e)return false;metrics.stampCacheMisses++;}else metrics.stampCacheHits++;
       var phase=s.frames>1?Math.min(s.frames-1,Math.floor(Math.max(0,finite(b.age)?b.age:0)*1000/s.ms)):0;
-      ctx.save();ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.translate(b.x,b.y);ctx.rotate(finite(b.angle)?b.angle:Math.atan2(b.vy||0,b.vx||0));
+      ctx.save();ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.translate(b.x,b.y);ctx.rotate(b.kind==='hell-rotor'&&finite(b.spinAngle)?b.spinAngle:finite(b.angle)?b.angle:Math.atan2(b.vy||0,b.vx||0));
       ctx.drawImage(e.canvases[phase],-e.x,-e.y,e.width,e.height);ctx.restore();
       // The owner's opaque, authored ORB covers the actual r=11 damage body;
       // the separate transparent weapon is a cosmetic rotating layer on it.
       if(b.kind==='boss-weapon'&&drawWeaponIcon(ctx,w,b.x,b.y,finite(b.spinAngle)?b.spinAngle:0,34,1))metrics.weaponVisualDraws++;
+      if(b.kind==='hell-rotor'&&drawRotorIcon(ctx,w,b.x,b.y,finite(b.spinAngle)?b.spinAngle:0,36,1))metrics.rotorVisualDraws++;
       metrics.stampDraws++;metrics.animatedBulletDraws++;metrics.bodyAnimationPhases=Math.max(metrics.bodyAnimationPhases,e.frameCount);metrics.compactFamilies[s.key]=(metrics.compactFamilies[s.key]||0)+1;return true;
     }
     function drawHazardBody(ctx,w,h,lowQuality){
@@ -214,7 +262,9 @@
       var dx=h.x2-h.x1,dy=h.y2-h.y1,len=Math.sqrt(dx*dx+dy*dy),r=h.width/2;
       var progress=clamp(h.progress||0,0,1),phase=s.frames>1?Math.min(s.frames-1,Math.floor(Math.max(0,finite(h.age)?h.age:0)*1000/s.ms)):0;
       ctx.save();ctx.globalCompositeOperation='source-over';ctx.globalAlpha=h.phase==='active'?1:Math.max(0,1-progress)*.35;
-      ctx.translate((h.x1+h.x2)/2,(h.y1+h.y2)/2);ctx.rotate(Math.atan2(dy,dx));capsule(ctx,0,0,r,len/2);ctx.clip();slices(ctx,art,phase,0,0,r,len/2);ctx.restore();
+      ctx.translate((h.x1+h.x2)/2,(h.y1+h.y2)/2);ctx.rotate(Math.atan2(dy,dx));capsule(ctx,0,0,r,len/2);ctx.clip();slices(ctx,art,phase,0,0,r,len/2);
+      if(BEAMS[indexFor(w)]){var overlay=beamSurface(w,h);if(overlay){ctx.globalAlpha*=lowQuality?.32:.45;ctx.drawImage(overlay.canvas,-len/2-r,-r,len+r*2,r*2);metrics.sourceBeamOverlayDraws++;}else metrics.missingOptionalBeamAssets++;}
+      ctx.restore();
       metrics.assetLaserDraws++;metrics.assetLaserSlices+=len>0?3:2;return true;
     }
     function oneShot(ctx,s,elapsed,x,y,size,alpha){
@@ -227,13 +277,19 @@
       if(!w||!w.campaign||!w.boss||w.stage!=='boss')return;
       var b=w.boss,progress=clamp(b.actionProgress||0,0,1),wi=indexFor(w),names=FAMILIES[wi];if(wi<0||!names)return;
       var releaseAge=Number.isFinite(b.releaseTick)&&b.releaseTick>=0?w.tick-b.releaseTick:Infinity;
-      if(b.action!=='charge'&&!(releaseAge>=0&&releaseAge<60))return;
+      if(b.action!=='charge'&&!(releaseAge>=0&&releaseAge<60)&&!b.rotorTelegraph&&!b.weaponTelegraph)return;
       // The pair appears during this particular charge only; its retained art
       // previews the two actual throws and never replaces damage warnings.
       if(b.weaponTelegraph){
         var a=.55+.25*progress;
         if(drawWeaponIcon(ctx,w,b.x-36,b.y+38,-.45,27,a))metrics.weaponTelegraphDraws++;
         if(drawWeaponIcon(ctx,w,b.x+36,b.y+38,.45,27,a))metrics.weaponTelegraphDraws++;
+      }
+      if(b.rotorTelegraph){
+        var marker=b.hellOverlap,p=marker&&finite(marker.warningTick)&&finite(marker.pairReleaseAt)?clamp((w.tick-marker.warningTick)/Math.max(1,marker.pairReleaseAt-marker.warningTick),0,1):progress;
+        var rotorAlpha=.5+.25*p;
+        if(drawRotorIcon(ctx,w,b.x-36,b.y+38,-.45,28,rotorAlpha))metrics.rotorTelegraphDraws++;
+        if(drawRotorIcon(ctx,w,b.x+36,b.y+38,.45,28,rotorAlpha))metrics.rotorTelegraphDraws++;
       }
       // Static accents are purely decorative, underneath all actors, warnings,
       // and damage bodies; they never replace the existing damage telegraphs.

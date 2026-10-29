@@ -1,0 +1,402 @@
+{
+  "media/actors-v7/denial-attack.png": [
+    627,
+    627
+  ],
+  "media/actors-v7/denial-hit.png": [
+    627,
+    627
+  ],
+  "media/actors-v7/denial-idle.png": [
+    627,
+    627
+  ],
+  "media/actors-v7/denial-walk.png": [
+    627,
+    627
+  ],
+  "media/actors-v7/guard-attack.png": [
+    627,
+    627
+  ],
+  "media/actors-v7/guard-hit.png": [
+    627,
+    627
+  ],
+  "media/actors-v7/guard-idle.png": [
+    627,
+    627
+  ],
+  "media/actors-v7/guard-walk.png": [
+    627,
+    627
+  ],
+  "media/boss-motion-v8/balrog-atlas-512.png": [
+    512,
+    512
+  ],
+  "media/boss-motion-v8/horn-atlas-512.png": [
+    512,
+    512
+  ],
+  "media/boss-motion-v8/lucifer-atlas-512.png": [
+    512,
+    512
+  ],
+  "media/boss-motion-v8/mask-atlas-512.png": [
+    512,
+    512
+  ],
+  "media/boss-motion-v8/violet-atlas-512.png": [
+    512,
+    512
+  ],
+  "media/cave.webp": [
+    1586,
+    992
+  ],
+  "media/encounter-signature-v11/balrog-fire.png": [
+    96,
+    96
+  ],
+  "media/encounter-signature-v11/horn-reed-needle.png": [
+    128,
+    64
+  ],
+  "media/encounter-signature-v11/horn-swamp.png": [
+    96,
+    96
+  ],
+  "media/encounter-signature-v11/lucifer-mask-shard.png": [
+    128,
+    64
+  ],
+  "media/encounter-signature-v11/lucifer-ring.png": [
+    96,
+    96
+  ],
+  "media/encounter-signature-v11/mask-fan.png": [
+    96,
+    96
+  ],
+  "media/encounter-signature-v11/violet-knot.png": [
+    96,
+    96
+  ],
+  "media/forest.jpg": [
+    1536,
+    1024
+  ],
+  "media/fx-v6/wind-arrow-8.webp": [
+    1024,
+    512
+  ],
+  "media/fx-v8/ember.webp": [
+    512,
+    512
+  ],
+  "media/fx-v8/gold-slash.webp": [
+    512,
+    256
+  ],
+  "media/fx-v8/reed.webp": [
+    512,
+    512
+  ],
+  "media/fx-v8/silver-slash.webp": [
+    512,
+    512
+  ],
+  "media/fx-v8/swamp-ripple.webp": [
+    512,
+    512
+  ],
+  "media/fx-v8/unlock.webp": [
+    512,
+    512
+  ],
+  "media/fx-v8/violet-web.webp": [
+    512,
+    512
+  ],
+  "media/fx-v8/vortex.webp": [
+    512,
+    512
+  ],
+  "media/gunner.webp": [
+    512,
+    512
+  ],
+  "media/hapil1-v14/fx/balrog-secondary.webp": [
+    512,
+    512
+  ],
+  "media/hapil1-v14/fx/beam-envy.webp": [
+    2172,
+    724
+  ],
+  "media/hapil1-v14/fx/beam-gluttony.webp": [
+    2172,
+    724
+  ],
+  "media/hapil1-v14/fx/beam-greed.webp": [
+    2172,
+    724
+  ],
+  "media/hapil1-v14/fx/beam-lust.webp": [
+    2172,
+    724
+  ],
+  "media/hapil1-v14/fx/beam-pride.webp": [
+    2172,
+    724
+  ],
+  "media/hapil1-v14/fx/beam-sloth.webp": [
+    2172,
+    724
+  ],
+  "media/hapil1-v14/fx/beam-wrath.webp": [
+    2172,
+    724
+  ],
+  "media/hapil1-v14/fx/envy-primary.webp": [
+    512,
+    512
+  ],
+  "media/hapil1-v14/fx/glutton-primary.webp": [
+    512,
+    512
+  ],
+  "media/hapil1-v14/fx/glutton-secondary.webp": [
+    512,
+    512
+  ],
+  "media/hapil1-v14/fx/greed-primary.webp": [
+    512,
+    512
+  ],
+  "media/hapil1-v14/fx/horn-primary.webp": [
+    256,
+    256
+  ],
+  "media/hapil1-v14/fx/lucifer-secondary.webp": [
+    512,
+    512
+  ],
+  "media/hapil1-v14/fx/lust-primary.webp": [
+    512,
+    512
+  ],
+  "media/hapil1-v14/fx/mask-secondary.webp": [
+    512,
+    512
+  ],
+  "media/hapil1-v14/fx/pride-primary.webp": [
+    512,
+    512
+  ],
+  "media/hapil1-v14/fx/sloth-secondary.webp": [
+    512,
+    512
+  ],
+  "media/hapil1-v14/fx/violet-primary.webp": [
+    512,
+    512
+  ],
+  "media/hapil1-v14/fx/wrath-primary.webp": [
+    512,
+    512
+  ],
+  "media/hapil1-v14/maps/balrog.webp": [
+    1586,
+    992
+  ],
+  "media/hapil1-v14/maps/envy.jpg": [
+    1600,
+    900
+  ],
+  "media/hapil1-v14/maps/gluttony.png": [
+    1672,
+    941
+  ],
+  "media/hapil1-v14/maps/greed-snow.jpg": [
+    960,
+    600
+  ],
+  "media/hapil1-v14/maps/greed.jpg": [
+    1600,
+    900
+  ],
+  "media/hapil1-v14/maps/horn.webp": [
+    1586,
+    992
+  ],
+  "media/hapil1-v14/maps/lucifer.webp": [
+    1586,
+    992
+  ],
+  "media/hapil1-v14/maps/lust.png": [
+    1672,
+    941
+  ],
+  "media/hapil1-v14/maps/mask.png": [
+    1672,
+    941
+  ],
+  "media/hapil1-v14/maps/pride-core.jpg": [
+    1600,
+    900
+  ],
+  "media/hapil1-v14/maps/pride.jpg": [
+    1600,
+    900
+  ],
+  "media/hapil1-v14/maps/sloth.jpg": [
+    1600,
+    900
+  ],
+  "media/hapil1-v14/maps/violet.webp": [
+    1586,
+    992
+  ],
+  "media/hapil1-v14/maps/wrath.png": [
+    1672,
+    941
+  ],
+  "media/maps/map01.webp": [
+    720,
+    904
+  ],
+  "media/projectiles-drive-v10/balrog_blade_slagfang.png": [
+    128,
+    64
+  ],
+  "media/projectiles-drive-v10/balrog_orb_cinderheart.png": [
+    64,
+    64
+  ],
+  "media/projectiles-drive-v10/false_angel_needle_edictfeather.png": [
+    128,
+    64
+  ],
+  "media/projectiles-drive-v10/false_angel_orb_sealedpearl.png": [
+    64,
+    64
+  ],
+  "media/projectiles-drive-v10/swamp_orb_toxicseed.png": [
+    64,
+    64
+  ],
+  "media/projectiles-drive-v10/violet_blade_spindle.png": [
+    128,
+    64
+  ],
+  "media/projectiles-drive-v9/lucifer-orb-eclipseiris-atlas.png": [
+    296,
+    80
+  ],
+  "media/projectiles-drive-v9/violet-orb-cocoon-atlas.png": [
+    296,
+    80
+  ],
+  "media/ruins.webp": [
+    1280,
+    720
+  ],
+  "media/sins-v13/asmodeus-atlas-512.png": [
+    512,
+    512
+  ],
+  "media/sins-v13/beelzebub-atlas-512.png": [
+    512,
+    512
+  ],
+  "media/sins-v13/belphegor-atlas-512.png": [
+    512,
+    512
+  ],
+  "media/sins-v13/envy-core.png": [
+    1254,
+    1254
+  ],
+  "media/sins-v13/glutton-core.png": [
+    1254,
+    1254
+  ],
+  "media/sins-v13/leviathan-atlas-512.png": [
+    512,
+    512
+  ],
+  "media/sins-v13/mammon-atlas-512.png": [
+    512,
+    512
+  ],
+  "media/sins-v13/mammon-child-atlas-512.png": [
+    512,
+    512
+  ],
+  "media/sins-v13/mammon-projectile.png": [
+    1295,
+    1215
+  ],
+  "media/sins-v13/pride-atlas-512.png": [
+    512,
+    512
+  ],
+  "media/sins-v13/pride-cyborg-atlas-512.png": [
+    512,
+    512
+  ],
+  "media/sins-v13/pride-projectile.png": [
+    1536,
+    1024
+  ],
+  "media/sins-v13/seoyun-core.png": [
+    1254,
+    1254
+  ],
+  "media/sins-v13/sloth-core.png": [
+    1254,
+    1254
+  ],
+  "media/sins-v13/wrath-atlas-512.png": [
+    512,
+    512
+  ],
+  "media/sins-v13/wrath-bear-manifest.png": [
+    1254,
+    1254
+  ],
+  "media/sins-v13/wrath-dragon-manifest.png": [
+    1254,
+    1254
+  ],
+  "media/sins-v13/wrath-projectile.png": [
+    1295,
+    1214
+  ],
+  "media/sins-v13/wrath-wolf-manifest.png": [
+    1254,
+    1254
+  ],
+  "media/weapon-v12/balrog-sword.png": [
+    1774,
+    887
+  ],
+  "media/weapon-v12/horn-cleaver.png": [
+    1774,
+    887
+  ],
+  "media/weapon-v12/lucifer-shard.png": [
+    1254,
+    1254
+  ],
+  "media/weapon-v12/mask-feather.png": [
+    1774,
+    887
+  ],
+  "media/weapon-v12/violet-sword.png": [
+    1774,
+    887
+  ]
+}
