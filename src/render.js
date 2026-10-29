@@ -16,10 +16,61 @@
   function color(value) { return COLORS[value] || value || '#c2a4f4'; }
   function paletteFor(world){return global.HapilProjectiles&&global.HapilProjectiles.paletteFor?global.HapilProjectiles.paletteFor(world):null;}
   function imageReady(im) { return im && im.complete && im.naturalWidth > 0; }
+  // These are whole, precomposed source paintings, not a tile atlas. The
+  // portrait adaptation preserves one uniformly scaled architectural view and
+  // an inspected floor patch from the same scene. It adds no collision walls.
+  var H14_TERRAIN=Object.freeze({
+    h14MapViolet:Object.freeze({width:1586,height:992,scene:'dist01',floor:Object.freeze([523,278,539,268])}),
+    h14MapHorn:Object.freeze({width:1586,height:992,scene:'dist02',floor:Object.freeze([523,278,539,268])}),
+    h14MapBalrog:Object.freeze({width:1586,height:992,scene:'dist06',floor:Object.freeze([508,278,571,298])}),
+    h14MapMask:Object.freeze({width:1672,height:941,scene:'ep1a08',floor:Object.freeze([585,282,568,301])}),
+    h14MapLucifer:Object.freeze({width:1586,height:992,scene:'ep1a11',floor:Object.freeze([508,278,571,298])}),
+    h14MapSloth:Object.freeze({width:1600,height:900,scene:'ep1b02',floor:Object.freeze([620,570,360,160])}),
+    h14MapEnvy:Object.freeze({width:1600,height:900,scene:'ep1b03',floor:Object.freeze([640,540,360,90])}),
+    h14MapGluttony:Object.freeze({width:1672,height:941,scene:'ep1b04',floor:Object.freeze([550,260,600,190])}),
+    h14MapLust:Object.freeze({width:1672,height:941,scene:'ep1b05',floor:Object.freeze([552,380,552,179])}),
+    h14MapGreed:Object.freeze({width:1600,height:900,scene:'ep1b06',floor:Object.freeze([600,290,420,150])}),
+    h14MapGreedSnow:Object.freeze({width:960,height:600,scene:'ep1b06b',floor:Object.freeze([288,180,403,222])}),
+    h14MapWrath:Object.freeze({width:1672,height:941,scene:'ep1b07',floor:Object.freeze([580,360,540,290])}),
+    h14MapPride:Object.freeze({width:1600,height:900,scene:'ep1b08',floor:Object.freeze([400,240,400,140])}),
+    h14MapPrideCore:Object.freeze({width:1600,height:900,scene:'ep1b09',floor:Object.freeze([600,250,400,120])})
+  });
+  var H14_GROUP_KEYS=Object.freeze([
+    Object.freeze(['h14MapViolet']),Object.freeze(['h14MapHorn']),Object.freeze(['h14MapBalrog']),
+    Object.freeze(['h14MapMask']),Object.freeze(['h14MapLucifer']),Object.freeze(['h14MapSloth']),
+    Object.freeze(['h14MapEnvy']),Object.freeze(['h14MapGluttony']),Object.freeze(['h14MapLust']),
+    Object.freeze(['h14MapGreed','h14MapGreedSnow']),Object.freeze(['h14MapWrath']),Object.freeze(['h14MapPride','h14MapPrideCore'])
+  ]);
+  function terrainAssetKeysForEncounter(group){return H14_GROUP_KEYS[group]?H14_GROUP_KEYS[group].slice():[];}
+  function readyTerrainImage(images,key){
+    var c=H14_TERRAIN[key],im=images&&images[key];
+    return !!(c&&imageReady(im)&&im.naturalWidth===c.width&&im.naturalHeight===c.height);
+  }
+  function invalidTerrainAsset(images,group){
+    if(group===-1)return null;
+    if(!Number.isInteger(group)||!H14_GROUP_KEYS[group])return 'terrain-encounter-unsupported';
+    var keys=H14_GROUP_KEYS[group];
+    for(var i=0;i<keys.length;i++){
+      var key=keys[i];if(!readyTerrainImage(images,key))return key;
+    }
+    return null;
+  }
+  function h14TerrainKey(world){
+    if(!world||!world.campaign)return null;
+    var group=world.bossIndex||0,keys=H14_GROUP_KEYS[group];if(!keys)return null;
+    // Keep the original connected first approach and Balrog's three approach
+    // scenes. Their own new paintings are used for the anchored boss arenas.
+    if(world.stage==='waves'&&(group===0||group===2))return null;
+    // The child memory and bio-bootloader are same-person followups after the
+    // adult form is sealed. Ordinary approach waves must not jump into them.
+    var later=world.stage!=='waves'&&(world.phase||0)===2;
+    return keys[later&&keys.length>1?1:0];
+  }
   function create(canvas, images) {
     var ctx = canvas.getContext('2d', {alpha:false});
     var actorPresentation=global.HapilActors?global.HapilActors.create(images):null;
     var projectilePresentation=global.HapilProjectiles?global.HapilProjectiles.create(images):null;
+    var bossSkillPresentation=global.HapilBossSkills?global.HapilBossSkills.create(images):null;
     if (!ctx) throw new Error('이 브라우저에서 2D 전투 화면을 만들 수 없습니다.');
     // Three bounded portrait strips are built once from existing map pixels.
     // The two viewport canvases are reused for masks and near-edge parallax.
@@ -30,6 +81,7 @@
     var lightweight=false;
     var strips=[],ratio=1,cached=false,edgeMask=null;
     var sinFloor=null,sinFloorSource=null,sinFloorTone=null;
+    var sourceScene=null,sourceSceneImage=null,sourceSceneKey=null,sourceSceneTone=null,sourceSceneBuilds=0;
     // The near-edge mask is unchanged during an anchored boss encounter.
     // Reuse its pixels until the source or scroll position changes.
     var parallaxImage=null,parallaxIndex=-1,parallaxProgress=null;
@@ -67,7 +119,7 @@
         strips.push(strip);
       }
       edgeMask=fg.createLinearGradient(0,0,W,0);edgeMask.addColorStop(0,'rgba(0,0,0,.72)');edgeMask.addColorStop(.18,'rgba(0,0,0,0)');edgeMask.addColorStop(.82,'rgba(0,0,0,0)');edgeMask.addColorStop(1,'rgba(0,0,0,.72)');
-      mapMetrics.terrainStripCount=strips.length;mapMetrics.cacheCanvasCount=strips.length+2+(sinFloor?1:0);mapMetrics.cacheBytes=(strips.length*W*1280+(2+(sinFloor?1:0))*W*H)*4;cached=true;
+      mapMetrics.terrainStripCount=strips.length;mapMetrics.cacheCanvasCount=strips.length+2+(sinFloor?1:0)+(sourceScene?1:0);mapMetrics.cacheBytes=(strips.length*W*1280+(2+(sinFloor?1:0))*W*H+(sourceScene?W*720:0))*4;cached=true;
     }
     function parallax(index,progress,opacity){
       var im=mapImage(index);if(!imageReady(im)||opacity<=0)return;
@@ -158,9 +210,59 @@
       mapMetrics.zone='abstract-memory-stage';mapMetrics.zoneIndex=world.bossIndex;mapMetrics.terrainStatus='retained-neutral-floor-crop';mapMetrics.sourceStatus=imageReady(source)?'existing-cave-floor-patch':'unavailable-neutral-floor';
       mapMetrics.anchored=world.stage!=='waves';mapMetrics.segmentProgress=mapMetrics.anchored?1:clamp((world.waveTime||0)/(world.waveDuration||15),0,1);
       mapMetrics.campaignLocation=world.encounterName||world.bossName;mapMetrics.visibleMapTiles='';mapMetrics.visibleMapCount=0;
-      mapMetrics.cacheCanvasCount=strips.length+3;mapMetrics.cacheBytes=(strips.length*W*1280+3*W*H)*4;
+      mapMetrics.cacheCanvasCount=strips.length+3+(sourceScene?1:0);mapMetrics.cacheBytes=(strips.length*W*1280+3*W*H+(sourceScene?W*720:0))*4;
+    }
+    function drawSourceTerrain(world,key){
+      var contract=H14_TERRAIN[key],im=images[key];
+      if(!readyTerrainImage(images,key))return false;
+      var palette=paletteFor(world),tone=palette?palette.primary:'#8798af';
+      if(!sourceScene){sourceScene=document.createElement('canvas');sourceScene.width=W;sourceScene.height=720;}
+      if(sourceSceneImage!==im||sourceSceneKey!==key||sourceSceneTone!==tone){
+        var sc=sourceScene.getContext('2d',{alpha:false}),p=contract.floor;
+        sc.globalAlpha=1;sc.fillStyle='#111722';sc.fillRect(0,0,W,720);
+        cover(sc,im,p[0],p[1],p[2],p[3],0,0,W,720);
+        // The floor swatch is not authored as a seamless tile. Feather its
+        // repeated copies once at native detail instead of enlarging a tiny
+        // patch across the whole portrait lane. This is a derived background.
+        fg.clearRect(0,0,W,H);fg.globalAlpha=1;fg.globalCompositeOperation='source-over';
+        var tileHeight=W*p[3]/p[2];fg.drawImage(im,p[0],p[1],p[2],p[3],0,0,W,tileHeight);
+        var seam=fg.createLinearGradient(0,0,0,tileHeight);seam.addColorStop(0,'rgba(0,0,0,0)');seam.addColorStop(.12,'rgba(0,0,0,1)');seam.addColorStop(.88,'rgba(0,0,0,1)');seam.addColorStop(1,'rgba(0,0,0,0)');
+        fg.globalCompositeOperation='destination-in';fg.fillStyle=seam;fg.fillRect(0,0,W,H);fg.globalCompositeOperation='source-over';
+        for(var fy=-tileHeight*.5;fy<720;fy+=tileHeight*.78)sc.drawImage(foreground,0,0,W,tileHeight,0,fy,W,tileHeight);
+        sc.fillStyle='rgba(5,9,18,.43)';sc.fillRect(0,0,W,720);
+        // Reuse the existing temporary foreground surface only while baking.
+        // No source-resolution canvas or per-frame map recomposition is made.
+        fg.clearRect(0,0,W,H);fg.globalAlpha=1;fg.globalCompositeOperation='source-over';
+        var dw=648,dh=dw*im.naturalHeight/im.naturalWidth;
+        fg.drawImage(im,0,0,im.naturalWidth,im.naturalHeight,(W-dw)/2,96,dw,dh);
+        var fade=fg.createLinearGradient(0,0,0,H);fade.addColorStop(0,'rgba(0,0,0,1)');fade.addColorStop(.38,'rgba(0,0,0,1)');fade.addColorStop(.66,'rgba(0,0,0,0)');fade.addColorStop(1,'rgba(0,0,0,0)');
+        fg.globalCompositeOperation='destination-in';fg.fillStyle=fade;fg.fillRect(0,0,W,H);fg.globalCompositeOperation='source-over';
+        sc.drawImage(foreground,0,0);parallaxImage=null;parallaxIndex=-1;parallaxProgress=null;
+        sc.globalAlpha=.08;sc.fillStyle=tone;sc.fillRect(0,0,W,720);sc.globalAlpha=1;
+        var shade=sc.createLinearGradient(0,0,W,0);shade.addColorStop(0,'rgba(3,7,15,.38)');shade.addColorStop(.24,'rgba(3,7,15,.08)');shade.addColorStop(.76,'rgba(3,7,15,.08)');shade.addColorStop(1,'rgba(3,7,15,.38)');sc.fillStyle=shade;sc.fillRect(0,0,W,720);
+        sc.fillStyle='rgba(3,7,15,.15)';sc.fillRect(0,300,W,420);
+        sourceSceneImage=im;sourceSceneKey=key;sourceSceneTone=tone;sourceSceneBuilds++;
+      }
+      var anchored=world.stage!=='waves',count=world.bossIndex===1?1:3,local=clamp((world.waveTime||0)/(world.waveDuration||15),0,1);
+      var progress=anchored?1:clamp(((world.wave||0)+local)/count,0,1),scroll=progress*80;
+      ctx.globalAlpha=1;ctx.drawImage(sourceScene,0,scroll,W,H,0,0,W,H);
+      mapMetrics.zone='source-'+contract.scene;mapMetrics.zoneIndex=world.bossIndex;mapMetrics.terrainStatus='hapil1-source-portrait-composite';mapMetrics.sourceStatus='whole-painting-and-feathered-own-floor-swatch';
+      mapMetrics.anchored=anchored;mapMetrics.segmentProgress=anchored?1:local;mapMetrics.journeyProgress=progress;mapMetrics.scrollY=scroll;mapMetrics.campaignLocation=world.encounterName||world.bossName;
+      mapMetrics.visibleMapTiles='';mapMetrics.visibleMapCount=0;mapMetrics.sceneAsset=key;mapMetrics.sceneSourceSize=[contract.width,contract.height];mapMetrics.sceneFloorPatch=contract.floor.slice();mapMetrics.sceneArchitecturalScale=648/contract.width;
+      mapMetrics.sceneCacheBuilds=sourceSceneBuilds;mapMetrics.sceneCacheEntries=1;mapMetrics.sceneCacheBytes=W*720*4;mapMetrics.sceneForegroundDraws=0;mapMetrics.sceneCollisionGeometry=false;
+      mapMetrics.cacheCanvasCount=strips.length+2+(sinFloor?1:0)+1;mapMetrics.cacheBytes=(strips.length*W*1280+(2+(sinFloor?1:0))*W*H+W*720)*4;
+      return true;
+    }
+    function releaseSourceTerrain(){
+      if(sourceScene){sourceScene.width=1;sourceScene.height=1;sourceScene=null;}
+      sourceSceneImage=null;sourceSceneKey=null;sourceSceneTone=null;
+      mapMetrics.sceneCacheEntries=0;mapMetrics.sceneCacheBytes=0;
+      mapMetrics.cacheCanvasCount=strips.length+2+(sinFloor?1:0);mapMetrics.cacheBytes=(strips.length*W*1280+(2+(sinFloor?1:0))*W*H)*4;
     }
     function drawTerrain(world){
+      mapMetrics.sceneAsset=null;mapMetrics.sceneSourceSize=null;mapMetrics.sceneFloorPatch=null;mapMetrics.sceneArchitecturalScale=null;mapMetrics.sceneForegroundDraws=0;mapMetrics.sceneCollisionGeometry=false;
+      var sourceKey=h14TerrainKey(world);if(sourceKey&&drawSourceTerrain(world,sourceKey))return;
+      releaseSourceTerrain();
       if(world&&world.campaign&&world.bossIndex>=5){drawSinTerrain(world);return;}
       if(world&&world.campaign&&world.bossIndex>=3){drawExtendedTerrain(world);return;}
       if(usesConnected(world)){drawConnectedTerrain(world);return;}
@@ -670,17 +772,19 @@
       lightweight=!!lowQuality;mapMetrics.atlasFxLimit=lightweight?12:24;
       if(actorPresentation&&actorPresentation.beginFrame)actorPresentation.beginFrame();
       if(projectilePresentation&&projectilePresentation.beginFrame)projectilePresentation.beginFrame();
-      if(!cached&&!usesConnected(world)&&!(world&&world.campaign&&world.bossIndex>=3))makeBackground();ctx.setTransform(ratio,0,0,ratio,0,0);ctx.globalAlpha=1;drawTerrain(world);
+      if(bossSkillPresentation&&bossSkillPresentation.beginFrame)bossSkillPresentation.beginFrame();
+      var sourceKey=h14TerrainKey(world),sourceReady=sourceKey&&readyTerrainImage(images,sourceKey);
+      if(!cached&&!sourceReady&&!usesConnected(world)&&!(world&&world.campaign&&world.bossIndex>=3))makeBackground();ctx.setTransform(ratio,0,0,ratio,0,0);ctx.globalAlpha=1;drawTerrain(world);
       drawDreamscape(world,time);mapMetrics.bossAccent=null;mapMetrics.atlasFxDraws=0;mapMetrics.atlasFxFamilies='';
       mapMetrics.introActive=!!(world&&world.stage==='bossIntro');mapMetrics.introProgress=mapMetrics.introActive?clamp((world.stageTime||0)/(world.bossIntroDuration||2.5),0,1):0;
       if(!world||(!world.boss&&world.stage!=='bossIntro'))mapMetrics.bossArt=null;
       if(!world){titleScene(time||0);return;}
       if(world.stage==='bossIntro'){drawPlayerBody(world,world.time||0);bossEntrance(world);drawPlayerCore(world);return;}
-      drawRoute(world);drawBossAccent(world);if(projectilePresentation&&projectilePresentation.drawBossCast)projectilePresentation.drawBossCast(ctx,world,lightweight);drawEffects(world);transition(world);drawEnemies(world,world.time||0);drawSpellTheatre(world);drawPlayerBody(world,world.time||0);drawShots(world);drawHazards(world);drawBullets(world);bossHud(world);
+      drawRoute(world);drawBossAccent(world);if(projectilePresentation&&projectilePresentation.drawBossCast)projectilePresentation.drawBossCast(ctx,world,lightweight);drawEffects(world);if(bossSkillPresentation)bossSkillPresentation.draw(ctx,world,lightweight);transition(world);drawEnemies(world,world.time||0);drawSpellTheatre(world);drawPlayerBody(world,world.time||0);drawShots(world);drawHazards(world);drawBullets(world);bossHud(world);
       if(world.reservation){ctx.save();ctx.font='8px Arial,"Malgun Gothic",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(167,224,227,.85)';ctx.fillText(typeof world.reservation==='string'?world.reservation:'스킬 준비 중',180,621);ctx.restore();}
       drawPlayerCore(world);
     }
-    return {resize:function(cssW,cssH,dpr){ratio=Math.min(1.5,Math.max(1,dpr||1))*cssW/W;var nextWidth=Math.max(1,Math.round(W*ratio)),nextHeight=Math.max(1,Math.round(H*ratio));if(canvas.width!==nextWidth)canvas.width=nextWidth;if(canvas.height!==nextHeight)canvas.height=nextHeight;canvas.style.width='100%';canvas.style.height='100%';ctx.imageSmoothingEnabled=true;},draw:draw,getMetrics:function(){return Object.assign({},mapMetrics,{actorPresentation:actorPresentation?actorPresentation.getMetrics():null,projectilePresentation:projectilePresentation?projectilePresentation.getMetrics():null});},destroy:function(){if(projectilePresentation&&projectilePresentation.destroy)projectilePresentation.destroy();cached=false;canvas.width=1;canvas.height=1;back.width=1;back.height=1;foreground.width=1;foreground.height=1;if(sinFloor){sinFloor.width=1;sinFloor.height=1;sinFloor=null;}sinFloorSource=null;sinFloorTone=null;for(var i=0;i<strips.length;i++){strips[i].width=1;strips[i].height=1;}strips.length=0;actorPresentation=null;projectilePresentation=null;images={};}};
+    return {resize:function(cssW,cssH,dpr){ratio=Math.min(1.5,Math.max(1,dpr||1))*cssW/W;var nextWidth=Math.max(1,Math.round(W*ratio)),nextHeight=Math.max(1,Math.round(H*ratio));if(canvas.width!==nextWidth)canvas.width=nextWidth;if(canvas.height!==nextHeight)canvas.height=nextHeight;canvas.style.width='100%';canvas.style.height='100%';ctx.imageSmoothingEnabled=true;},draw:draw,getMetrics:function(){return Object.assign({},mapMetrics,{actorPresentation:actorPresentation?actorPresentation.getMetrics():null,projectilePresentation:projectilePresentation?projectilePresentation.getMetrics():null,bossSkillsPresentation:bossSkillPresentation?bossSkillPresentation.getMetrics():null});},destroy:function(){if(projectilePresentation&&projectilePresentation.destroy)projectilePresentation.destroy();if(bossSkillPresentation&&bossSkillPresentation.destroy)bossSkillPresentation.destroy();bossSkillPresentation=null;releaseSourceTerrain();cached=false;canvas.width=1;canvas.height=1;back.width=1;back.height=1;foreground.width=1;foreground.height=1;if(sinFloor){sinFloor.width=1;sinFloor.height=1;sinFloor=null;}sinFloorSource=null;sinFloorTone=null;for(var i=0;i<strips.length;i++){strips[i].width=1;strips[i].height=1;}strips.length=0;actorPresentation=null;projectilePresentation=null;images={};}};
   }
-  global.HapilRenderer={create:create};
+  global.HapilRenderer={create:create,terrainContracts:H14_TERRAIN,terrainAssetKeysForEncounter:terrainAssetKeysForEncounter,invalidTerrainAsset:invalidTerrainAsset};
 })(typeof window!=='undefined'?window:globalThis);

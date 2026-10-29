@@ -6,7 +6,7 @@
   if (root) root.HapilWeaponPatterns = api;
 }(typeof globalThis !== 'undefined' ? globalThis : this, function () {
   'use strict';
-  var CYCLE_TICKS = 420, BOSS_WEAPON_KIND = 'boss-weapon';
+  var CYCLE_TICKS = 420, BOSS_WEAPON_KIND = 'boss-weapon', HELL_ROTOR_KIND = 'hell-rotor';
   var RADIUS = 11, INITIAL_X_SPEED = 130, INITIAL_Y_SPEED = 30;
   var MIN_AFTER_BOUNCE_Y = 45, DOWN_ACCEL = 60, MAX_DOWN_SPEED = 225;
   var INWARD_SPEED_FACTOR = .42, SPIN_RATE = 2.6, EPS = 1e-9;
@@ -24,6 +24,11 @@
         weaponMotion:true,spinRate:side*SPIN_RATE,spinAngle:side*.25,throwCycle:cycle};
     });
   }
+  function createHellPair(w,boss,cycle){
+    var pair=createPair(w,boss,cycle),kind=w&&w.bossIndex>=5?HELL_ROTOR_KIND:BOSS_WEAPON_KIND;
+    pair.forEach(function(s){s.kind=kind;s.patternId='hell-overlap-rotor-v14';s.hellLayer='rotor';});
+    return pair;
+  }
   // Called once before the deferred-group capacity check; _rhythmPrepared
   // prevents a queued group being slowed a second time during later retries.
   function prepareEmission(w,specs){
@@ -40,7 +45,7 @@
   }
   function initialize(b,s,w){
     if(!b||!s||!s.weaponMotion)return;
-    var factor=w&&w.difficulty==='gentle'?.82:w&&w.difficulty==='hell'?1.44:1;
+    var factor=w&&w.difficulty==='gentle'?.82:w&&w.difficulty==='hell'?1.68:1;
     b.weaponMotion=true;b.bounceCount=0;b.bounceAt=null;
     b.weaponDownAcceleration=DOWN_ACCEL*factor;b.weaponMaxDownSpeed=MAX_DOWN_SPEED*factor;
     b.weaponMinDownSpeed=MIN_AFTER_BOUNCE_Y*factor;
@@ -84,7 +89,7 @@
     return Math.min(segmentDistanceSquared(b.px-px,b.py-py,point.x-mx,point.y-my),
       segmentDistanceSquared(point.x-mx,point.y-my,b.x-x,b.y-y));
   }
-  return Object.freeze({CYCLE_TICKS:CYCLE_TICKS,KIND:BOSS_WEAPON_KIND,RADIUS:RADIUS,
-    shouldThrow:shouldThrow,createPair:createPair,prepareEmission:prepareEmission,initialize:initialize,
+  return Object.freeze({CYCLE_TICKS:CYCLE_TICKS,KIND:BOSS_WEAPON_KIND,HELL_ROTOR_KIND:HELL_ROTOR_KIND,RADIUS:RADIUS,
+    shouldThrow:shouldThrow,createPair:createPair,createHellPair:createHellPair,prepareEmission:prepareEmission,initialize:initialize,
     advance:advance,distanceSquared:distanceSquared,constants:Object.freeze({INITIAL_X_SPEED:INITIAL_X_SPEED,INITIAL_Y_SPEED:INITIAL_Y_SPEED,MIN_AFTER_BOUNCE_Y:MIN_AFTER_BOUNCE_Y,DOWN_ACCEL:DOWN_ACCEL,MAX_DOWN_SPEED:MAX_DOWN_SPEED,INWARD_SPEED_FACTOR:INWARD_SPEED_FACTOR,SPIN_RATE:SPIN_RATE})});
 }));

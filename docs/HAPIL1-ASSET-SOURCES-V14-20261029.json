@@ -1,0 +1,1448 @@
+{
+  "schema": "hapil.hapil1-asset-sources.v14",
+  "status": "source-bytes-and-pixels-verified-pending-runtime-validation",
+  "sourceRepository": "kjb7876-lang/hapil1",
+  "sourceCommit": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+  "sourceTreeSHA": "ff02bb454f1d62b65945e0724e6c55382bfec6e5",
+  "sourceRepositoryReadOnly": true,
+  "targetRepository": "kjb7876-lang/hapil-reboot",
+  "retrieval": "Official GitHub connector base64 for supported-size files; legitimate read-only partial Git clone and explicit pinned source restore for four large maps. No network, policy or credential change.",
+  "sourceCodeContracts": [
+    {
+      "path": "assets/rc138/map-data.js",
+      "gitBlobSHA": "4c58c76812dc5fdbf1e9b46ee97509a5e22c63ff",
+      "role": "Active map path and floor-center selection"
+    },
+    {
+      "path": "assets/rc138/map-format.js",
+      "gitBlobSHA": "2fcb448dbaaf44014ff98246f4e88dddfc9815d1",
+      "role": "Whole-source uniform map presentation; not a tile atlas"
+    },
+    {
+      "path": "qa/rc210/glutton-stomach-kitchen-manifest.json",
+      "gitBlobSHA": "0012f7564379256b4b8201284936b606590c4374",
+      "role": "Latest organic kitchen map source provenance and floor reference"
+    }
+  ],
+  "mapInterpretation": "Source assets are opaque full-scene isometric illustrations with architecture and floor. No separate wall/roof/tile layer is implied. Vertical presentation must preserve source pixels and visibly distinguish the derived composite from a newly authored top-down map.",
+  "maps": [
+    {
+      "slug": "violet",
+      "key": "h14MapViolet",
+      "path": "assets/maps/rc53/dist01-spider-cave.webp",
+      "mode": "RGB",
+      "type": "blob",
+      "sha": "be0f4d281c9efcd452741504d49d8ec0e776fda0",
+      "size": 146558,
+      "url": "https://api.github.com/repos/kjb7876-lang/hapil1/git/blobs/be0f4d281c9efcd452741504d49d8ec0e776fda0",
+      "bytes": 146558,
+      "gitBlobSHA": "be0f4d281c9efcd452741504d49d8ec0e776fda0",
+      "sha256": "921ac7d2a2893aa53374a459b27d9ae87e4cc5c50cbdf0281259875820e72526",
+      "dimensions": [
+        1586,
+        992
+      ],
+      "localPath": "/workspace/scratch/c84ef2cd7c03/hapil1_assets_hell_v14_20261029/media/hapil1-v14/maps/violet.webp",
+      "runtimeFile": "media/hapil1-v14/maps/violet.webp",
+      "retrieval": "official GitHub fetch_file encoding base64 pinned immutable commit; decoded locally",
+      "pixelInspected": true,
+      "pixelInspection": "Opened full14 source contact and inspected each actual image: correct source scene, architecture and clear central floor. Portrait integration remains separately validated.",
+      "runtimeDecodedRGBABytes": 6293248
+    },
+    {
+      "slug": "horn",
+      "key": "h14MapHorn",
+      "path": "assets/v31345/maps/dist02.webp",
+      "mode": "RGB",
+      "type": "blob",
+      "sha": "06ccff56180e6038731c4a005ed1c28ecb46992a",
+      "size": 598440,
+      "url": "https://api.github.com/repos/kjb7876-lang/hapil1/git/blobs/06ccff56180e6038731c4a005ed1c28ecb46992a",
+      "bytes": 598440,
+      "gitBlobSHA": "06ccff56180e6038731c4a005ed1c28ecb46992a",
+      "sha256": "def470ccf337bdfdaff1b1277b16db768e573950de15a969d65a15da93d3f4c6",
+      "dimensions": [
+        1586,
+        992
+      ],
+      "localPath": "/workspace/scratch/c84ef2cd7c03/hapil1_assets_hell_v14_20261029/media/hapil1-v14/maps/horn.webp",
+      "runtimeFile": "media/hapil1-v14/maps/horn.webp",
+      "retrieval": "official GitHub fetch_file encoding base64 pinned immutable commit; decoded locally",
+      "pixelInspected": true,
+      "pixelInspection": "Opened full14 source contact and inspected each actual image: correct source scene, architecture and clear central floor. Portrait integration remains separately validated.",
+      "runtimeDecodedRGBABytes": 6293248
+    },
+    {
+      "slug": "balrog",
+      "key": "h14MapBalrog",
+      "path": "assets/v31345/maps/dist06.webp",
+      "mode": "RGB",
+      "type": "blob",
+      "sha": "6b5d235e66a752ce21804fcdea3c6344796d53ca",
+      "size": 620682,
+      "url": "https://api.github.com/repos/kjb7876-lang/hapil1/git/blobs/6b5d235e66a752ce21804fcdea3c6344796d53ca",
+      "bytes": 620682,
+      "gitBlobSHA": "6b5d235e66a752ce21804fcdea3c6344796d53ca",
+      "sha256": "4ccb43cfbcf03a45f4179da7b8a68a73d9c420ab3e2d8e77fb76c8bc57c7699f",
+      "dimensions": [
+        1586,
+        992
+      ],
+      "localPath": "/workspace/scratch/c84ef2cd7c03/hapil1_assets_hell_v14_20261029/media/hapil1-v14/maps/balrog.webp",
+      "runtimeFile": "media/hapil1-v14/maps/balrog.webp",
+      "retrieval": "official GitHub fetch_file encoding base64 pinned immutable commit; decoded locally",
+      "pixelInspected": true,
+      "pixelInspection": "Opened full14 source contact and inspected each actual image: correct source scene, architecture and clear central floor. Portrait integration remains separately validated.",
+      "runtimeDecodedRGBABytes": 6293248
+    },
+    {
+      "slug": "lucifer",
+      "key": "h14MapLucifer",
+      "path": "assets/v31345/maps/ep1a11.webp",
+      "mode": "RGB",
+      "type": "blob",
+      "sha": "dba6178f75dc9443ee8f3580db36b3b357febe6e",
+      "size": 682294,
+      "url": "https://api.github.com/repos/kjb7876-lang/hapil1/git/blobs/dba6178f75dc9443ee8f3580db36b3b357febe6e",
+      "bytes": 682294,
+      "gitBlobSHA": "dba6178f75dc9443ee8f3580db36b3b357febe6e",
+      "sha256": "e96f1f020965b4dc8996706d9214b4a95e15a69c9df86c5779350e7a9eb49315",
+      "dimensions": [
+        1586,
+        992
+      ],
+      "localPath": "/workspace/scratch/c84ef2cd7c03/hapil1_assets_hell_v14_20261029/media/hapil1-v14/maps/lucifer.webp",
+      "runtimeFile": "media/hapil1-v14/maps/lucifer.webp",
+      "retrieval": "official GitHub fetch_file encoding base64 pinned immutable commit; decoded locally",
+      "pixelInspected": true,
+      "pixelInspection": "Opened full14 source contact and inspected each actual image: correct source scene, architecture and clear central floor. Portrait integration remains separately validated.",
+      "runtimeDecodedRGBABytes": 6293248
+    },
+    {
+      "slug": "sloth",
+      "key": "h14MapSloth",
+      "path": "assets/maps/ep1b_02_sloth_house.jpg",
+      "mode": "RGB",
+      "type": "blob",
+      "sha": "568293e9684bd7275d087e78e3769fe8a7cdddc4",
+      "size": 348025,
+      "url": "https://api.github.com/repos/kjb7876-lang/hapil1/git/blobs/568293e9684bd7275d087e78e3769fe8a7cdddc4",
+      "bytes": 348025,
+      "gitBlobSHA": "568293e9684bd7275d087e78e3769fe8a7cdddc4",
+      "sha256": "21b2d1f6fbdeeb873e378735b29678f6891d38b1c8f365d5a87f572ffe3b4859",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "localPath": "/workspace/scratch/c84ef2cd7c03/hapil1_assets_hell_v14_20261029/media/hapil1-v14/maps/sloth.jpg",
+      "runtimeFile": "media/hapil1-v14/maps/sloth.jpg",
+      "retrieval": "official GitHub fetch_file encoding base64 pinned immutable commit; decoded locally",
+      "pixelInspected": true,
+      "pixelInspection": "Opened full14 source contact and inspected each actual image: correct source scene, architecture and clear central floor. Portrait integration remains separately validated.",
+      "runtimeDecodedRGBABytes": 5760000
+    },
+    {
+      "slug": "envy",
+      "key": "h14MapEnvy",
+      "path": "assets/maps/ep1b_03_cracked_glasses.jpg",
+      "mode": "RGB",
+      "type": "blob",
+      "sha": "07fc1fc3ca77a74e5e6fe537d626c2d2e55224fe",
+      "size": 402580,
+      "url": "https://api.github.com/repos/kjb7876-lang/hapil1/git/blobs/07fc1fc3ca77a74e5e6fe537d626c2d2e55224fe",
+      "bytes": 402580,
+      "gitBlobSHA": "07fc1fc3ca77a74e5e6fe537d626c2d2e55224fe",
+      "sha256": "5b3bb7190c93cca8922f1b5cc44170a44e35395ff645b62f4f87bf9259f6b9a5",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "localPath": "/workspace/scratch/c84ef2cd7c03/hapil1_assets_hell_v14_20261029/media/hapil1-v14/maps/envy.jpg",
+      "runtimeFile": "media/hapil1-v14/maps/envy.jpg",
+      "retrieval": "official GitHub fetch_file encoding base64 pinned immutable commit; decoded locally",
+      "pixelInspected": true,
+      "pixelInspection": "Opened full14 source contact and inspected each actual image: correct source scene, architecture and clear central floor. Portrait integration remains separately validated.",
+      "runtimeDecodedRGBABytes": 5760000
+    },
+    {
+      "slug": "greed",
+      "key": "h14MapGreed",
+      "path": "assets/maps/ep1b_06_mammon_vault.jpg",
+      "mode": "RGB",
+      "type": "blob",
+      "sha": "cac377f681305bd3bd921002a2dcf78c6b029c93",
+      "size": 839126,
+      "url": "https://api.github.com/repos/kjb7876-lang/hapil1/git/blobs/cac377f681305bd3bd921002a2dcf78c6b029c93",
+      "bytes": 839126,
+      "gitBlobSHA": "cac377f681305bd3bd921002a2dcf78c6b029c93",
+      "sha256": "4104cfad195705c6a662b595774f2d37d50deea6c31a6b00ec94ccf345930ed2",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "localPath": "/workspace/scratch/c84ef2cd7c03/hapil1_assets_hell_v14_20261029/media/hapil1-v14/maps/greed.jpg",
+      "runtimeFile": "media/hapil1-v14/maps/greed.jpg",
+      "retrieval": "official GitHub fetch_file encoding base64 pinned immutable commit; decoded locally",
+      "pixelInspected": true,
+      "pixelInspection": "Opened full14 source contact and inspected each actual image: correct source scene, architecture and clear central floor. Portrait integration remains separately validated.",
+      "runtimeDecodedRGBABytes": 5760000
+    },
+    {
+      "slug": "greed-snow",
+      "key": "h14MapGreedSnow",
+      "path": "assets/maps/ep1b_06b_mammon_winter_forest_v3110.jpg",
+      "mode": "RGB",
+      "type": "blob",
+      "sha": "63717c5540b825ab42a84c807149f77a77115fce",
+      "size": 196687,
+      "url": "https://api.github.com/repos/kjb7876-lang/hapil1/git/blobs/63717c5540b825ab42a84c807149f77a77115fce",
+      "bytes": 196687,
+      "gitBlobSHA": "63717c5540b825ab42a84c807149f77a77115fce",
+      "sha256": "872aeb22f625a05abb407ba141c771169c1bc4fc477cc8c460ce84295c4eef83",
+      "dimensions": [
+        960,
+        600
+      ],
+      "localPath": "/workspace/scratch/c84ef2cd7c03/hapil1_assets_hell_v14_20261029/media/hapil1-v14/maps/greed-snow.jpg",
+      "runtimeFile": "media/hapil1-v14/maps/greed-snow.jpg",
+      "retrieval": "official GitHub fetch_file encoding base64 pinned immutable commit; decoded locally",
+      "pixelInspected": true,
+      "pixelInspection": "Opened full14 source contact and inspected each actual image: correct source scene, architecture and clear central floor. Portrait integration remains separately validated.",
+      "runtimeDecodedRGBABytes": 2304000
+    },
+    {
+      "slug": "pride",
+      "key": "h14MapPride",
+      "path": "assets/maps/ep1b_08_pride_cathedral.jpg",
+      "mode": "RGB",
+      "type": "blob",
+      "sha": "a81022ca195170ea25007af834175b7635ca44e8",
+      "size": 357657,
+      "url": "https://api.github.com/repos/kjb7876-lang/hapil1/git/blobs/a81022ca195170ea25007af834175b7635ca44e8",
+      "bytes": 357657,
+      "gitBlobSHA": "a81022ca195170ea25007af834175b7635ca44e8",
+      "sha256": "9ca552fb60bbcc669364be8f1055af3761c9160a2d6f08d2b98b6454de017e65",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "localPath": "/workspace/scratch/c84ef2cd7c03/hapil1_assets_hell_v14_20261029/media/hapil1-v14/maps/pride.jpg",
+      "runtimeFile": "media/hapil1-v14/maps/pride.jpg",
+      "retrieval": "official GitHub fetch_file encoding base64 pinned immutable commit; decoded locally",
+      "pixelInspected": true,
+      "pixelInspection": "Opened full14 source contact and inspected each actual image: correct source scene, architecture and clear central floor. Portrait integration remains separately validated.",
+      "runtimeDecodedRGBABytes": 5760000
+    },
+    {
+      "slug": "pride-core",
+      "key": "h14MapPrideCore",
+      "path": "assets/maps/ep1b_09_black_sun_core.jpg",
+      "mode": "RGB",
+      "type": "blob",
+      "sha": "b3a6cb2e8b4680e0745148c58510fc69a52592ee",
+      "size": 351130,
+      "url": "https://api.github.com/repos/kjb7876-lang/hapil1/git/blobs/b3a6cb2e8b4680e0745148c58510fc69a52592ee",
+      "bytes": 351130,
+      "gitBlobSHA": "b3a6cb2e8b4680e0745148c58510fc69a52592ee",
+      "sha256": "4ef5a25e89a26609094e5bbe34c67d2246ca082c1412d10f63a83464a43d1e60",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "localPath": "/workspace/scratch/c84ef2cd7c03/hapil1_assets_hell_v14_20261029/media/hapil1-v14/maps/pride-core.jpg",
+      "runtimeFile": "media/hapil1-v14/maps/pride-core.jpg",
+      "retrieval": "official GitHub fetch_file encoding base64 pinned immutable commit; decoded locally",
+      "pixelInspected": true,
+      "pixelInspection": "Opened full14 source contact and inspected each actual image: correct source scene, architecture and clear central floor. Portrait integration remains separately validated.",
+      "runtimeDecodedRGBABytes": 5760000
+    },
+    {
+      "slug": "mask",
+      "key": "h14MapMask",
+      "path": "assets/rc138/map-ep1a08.png",
+      "mode": "RGB",
+      "type": "blob",
+      "sha": "058fe1fed0055eeb27286f39eb17c5e460cf304c",
+      "size": 2989497,
+      "url": "https://api.github.com/repos/kjb7876-lang/hapil1/git/blobs/058fe1fed0055eeb27286f39eb17c5e460cf304c",
+      "bytes": 2989497,
+      "gitBlobSHA": "058fe1fed0055eeb27286f39eb17c5e460cf304c",
+      "sha256": "c7c8e0577cbb5e2152c01d6e7ba90c929b8f45043077302ddfe55ae73aca4690",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "localPath": "/workspace/scratch/c84ef2cd7c03/hapil1_assets_hell_v14_20261029/media/hapil1-v14/maps/mask.png",
+      "runtimeFile": "media/hapil1-v14/maps/mask.png",
+      "retrieval": "legitimate Git partial clone and immutable pinned source restore, local Gitblob/bytes verified before atomic copy",
+      "pixelInspected": true,
+      "pixelInspection": "Opened full14 source contact and inspected each actual image: correct source scene, architecture and clear central floor. Portrait integration remains separately validated.",
+      "runtimeDecodedRGBABytes": 6293408
+    },
+    {
+      "slug": "gluttony",
+      "key": "h14MapGluttony",
+      "path": "assets/rc210/glutton-stomach-kitchen.png",
+      "mode": "RGB",
+      "type": "blob",
+      "sha": "2b5cc07ea01f44392f2e06c11d90c82ff52fcdd2",
+      "size": 3039379,
+      "url": "https://api.github.com/repos/kjb7876-lang/hapil1/git/blobs/2b5cc07ea01f44392f2e06c11d90c82ff52fcdd2",
+      "bytes": 3039379,
+      "gitBlobSHA": "2b5cc07ea01f44392f2e06c11d90c82ff52fcdd2",
+      "sha256": "ac1aae5477998840708e144415dcc40ac593a17bb1881164fb4d6230e70ca1a8",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "localPath": "/workspace/scratch/c84ef2cd7c03/hapil1_assets_hell_v14_20261029/media/hapil1-v14/maps/gluttony.png",
+      "runtimeFile": "media/hapil1-v14/maps/gluttony.png",
+      "retrieval": "legitimate Git partial clone and immutable pinned source restore, local Gitblob/bytes verified before atomic copy",
+      "pixelInspected": true,
+      "pixelInspection": "Opened full14 source contact and inspected each actual image: correct source scene, architecture and clear central floor. Portrait integration remains separately validated.",
+      "runtimeDecodedRGBABytes": 6293408
+    },
+    {
+      "slug": "lust",
+      "key": "h14MapLust",
+      "path": "assets/maps/ep1b_05_asmodai_stage_rc24.png",
+      "mode": "RGB",
+      "type": "blob",
+      "sha": "ca3d7e1009cd7326a5eb7950acddc99f14f540dc",
+      "size": 3099718,
+      "url": "https://api.github.com/repos/kjb7876-lang/hapil1/git/blobs/ca3d7e1009cd7326a5eb7950acddc99f14f540dc",
+      "bytes": 3099718,
+      "gitBlobSHA": "ca3d7e1009cd7326a5eb7950acddc99f14f540dc",
+      "sha256": "061115250c0999659a19d1a2013c4ec0779e59d7396720086a34f577cd311593",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "localPath": "/workspace/scratch/c84ef2cd7c03/hapil1_assets_hell_v14_20261029/media/hapil1-v14/maps/lust.png",
+      "runtimeFile": "media/hapil1-v14/maps/lust.png",
+      "retrieval": "legitimate Git partial clone and immutable pinned source restore, local Gitblob/bytes verified before atomic copy",
+      "pixelInspected": true,
+      "pixelInspection": "Opened full14 source contact and inspected each actual image: correct source scene, architecture and clear central floor. Portrait integration remains separately validated.",
+      "runtimeDecodedRGBABytes": 6293408
+    },
+    {
+      "slug": "wrath",
+      "key": "h14MapWrath",
+      "path": "assets/rc138/map-ep1b07.png",
+      "mode": "RGB",
+      "type": "blob",
+      "sha": "c64baf276741f4cce13c95e53caca9f4b3783820",
+      "size": 3198428,
+      "url": "https://api.github.com/repos/kjb7876-lang/hapil1/git/blobs/c64baf276741f4cce13c95e53caca9f4b3783820",
+      "bytes": 3198428,
+      "gitBlobSHA": "c64baf276741f4cce13c95e53caca9f4b3783820",
+      "sha256": "88c59fac3a5affe32c790f1123ac77683f0380d7841556319b5a45141ab30d32",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "localPath": "/workspace/scratch/c84ef2cd7c03/hapil1_assets_hell_v14_20261029/media/hapil1-v14/maps/wrath.png",
+      "runtimeFile": "media/hapil1-v14/maps/wrath.png",
+      "retrieval": "legitimate Git partial clone and immutable pinned source restore, local Gitblob/bytes verified before atomic copy",
+      "pixelInspected": true,
+      "pixelInspection": "Opened full14 source contact and inspected each actual image: correct source scene, architecture and clear central floor. Portrait integration remains separately validated.",
+      "runtimeDecodedRGBABytes": 6293408
+    }
+  ],
+  "pendingLargeMaps": [],
+  "sourceAssetIntegrityNote": "Two partial copies were detected during transfer and repaired with unique private sequential staging before use. After atomic final copies, the complete45-file set passed separate size, GitblobSHA1, SHA256 and pixel-decode verification.",
+  "fxSourceManifest": "docs/HAPIL1-FX-CANDIDATES-V14-20261029.json",
+  "boundaries": [
+    "Existing latest canonical 7-sin body atlases remain authoritative; older body art in source repository is not substituted.",
+    "No hapil1 or m0 mutation; source bytes are copied only to target staging/media paths.",
+    "Source visual QA is separate from runtime collision, telegraph, input, actual-browser, GPU and mobile tests."
+  ],
+  "files": [
+    {
+      "category": "map",
+      "key": "h14MapViolet",
+      "source": "assets/maps/rc53/dist01-spider-cave.webp",
+      "file": "media/hapil1-v14/maps/violet.webp",
+      "bytes": 146558,
+      "gitBlobSHA": "be0f4d281c9efcd452741504d49d8ec0e776fda0",
+      "sha256": "921ac7d2a2893aa53374a459b27d9ae87e4cc5c50cbdf0281259875820e72526",
+      "dimensions": [
+        1586,
+        992
+      ]
+    },
+    {
+      "category": "map",
+      "key": "h14MapHorn",
+      "source": "assets/v31345/maps/dist02.webp",
+      "file": "media/hapil1-v14/maps/horn.webp",
+      "bytes": 598440,
+      "gitBlobSHA": "06ccff56180e6038731c4a005ed1c28ecb46992a",
+      "sha256": "def470ccf337bdfdaff1b1277b16db768e573950de15a969d65a15da93d3f4c6",
+      "dimensions": [
+        1586,
+        992
+      ]
+    },
+    {
+      "category": "map",
+      "key": "h14MapBalrog",
+      "source": "assets/v31345/maps/dist06.webp",
+      "file": "media/hapil1-v14/maps/balrog.webp",
+      "bytes": 620682,
+      "gitBlobSHA": "6b5d235e66a752ce21804fcdea3c6344796d53ca",
+      "sha256": "4ccb43cfbcf03a45f4179da7b8a68a73d9c420ab3e2d8e77fb76c8bc57c7699f",
+      "dimensions": [
+        1586,
+        992
+      ]
+    },
+    {
+      "category": "map",
+      "key": "h14MapLucifer",
+      "source": "assets/v31345/maps/ep1a11.webp",
+      "file": "media/hapil1-v14/maps/lucifer.webp",
+      "bytes": 682294,
+      "gitBlobSHA": "dba6178f75dc9443ee8f3580db36b3b357febe6e",
+      "sha256": "e96f1f020965b4dc8996706d9214b4a95e15a69c9df86c5779350e7a9eb49315",
+      "dimensions": [
+        1586,
+        992
+      ]
+    },
+    {
+      "category": "map",
+      "key": "h14MapSloth",
+      "source": "assets/maps/ep1b_02_sloth_house.jpg",
+      "file": "media/hapil1-v14/maps/sloth.jpg",
+      "bytes": 348025,
+      "gitBlobSHA": "568293e9684bd7275d087e78e3769fe8a7cdddc4",
+      "sha256": "21b2d1f6fbdeeb873e378735b29678f6891d38b1c8f365d5a87f572ffe3b4859",
+      "dimensions": [
+        1600,
+        900
+      ]
+    },
+    {
+      "category": "map",
+      "key": "h14MapEnvy",
+      "source": "assets/maps/ep1b_03_cracked_glasses.jpg",
+      "file": "media/hapil1-v14/maps/envy.jpg",
+      "bytes": 402580,
+      "gitBlobSHA": "07fc1fc3ca77a74e5e6fe537d626c2d2e55224fe",
+      "sha256": "5b3bb7190c93cca8922f1b5cc44170a44e35395ff645b62f4f87bf9259f6b9a5",
+      "dimensions": [
+        1600,
+        900
+      ]
+    },
+    {
+      "category": "map",
+      "key": "h14MapGreed",
+      "source": "assets/maps/ep1b_06_mammon_vault.jpg",
+      "file": "media/hapil1-v14/maps/greed.jpg",
+      "bytes": 839126,
+      "gitBlobSHA": "cac377f681305bd3bd921002a2dcf78c6b029c93",
+      "sha256": "4104cfad195705c6a662b595774f2d37d50deea6c31a6b00ec94ccf345930ed2",
+      "dimensions": [
+        1600,
+        900
+      ]
+    },
+    {
+      "category": "map",
+      "key": "h14MapGreedSnow",
+      "source": "assets/maps/ep1b_06b_mammon_winter_forest_v3110.jpg",
+      "file": "media/hapil1-v14/maps/greed-snow.jpg",
+      "bytes": 196687,
+      "gitBlobSHA": "63717c5540b825ab42a84c807149f77a77115fce",
+      "sha256": "872aeb22f625a05abb407ba141c771169c1bc4fc477cc8c460ce84295c4eef83",
+      "dimensions": [
+        960,
+        600
+      ]
+    },
+    {
+      "category": "map",
+      "key": "h14MapPride",
+      "source": "assets/maps/ep1b_08_pride_cathedral.jpg",
+      "file": "media/hapil1-v14/maps/pride.jpg",
+      "bytes": 357657,
+      "gitBlobSHA": "a81022ca195170ea25007af834175b7635ca44e8",
+      "sha256": "9ca552fb60bbcc669364be8f1055af3761c9160a2d6f08d2b98b6454de017e65",
+      "dimensions": [
+        1600,
+        900
+      ]
+    },
+    {
+      "category": "map",
+      "key": "h14MapPrideCore",
+      "source": "assets/maps/ep1b_09_black_sun_core.jpg",
+      "file": "media/hapil1-v14/maps/pride-core.jpg",
+      "bytes": 351130,
+      "gitBlobSHA": "b3a6cb2e8b4680e0745148c58510fc69a52592ee",
+      "sha256": "4ef5a25e89a26609094e5bbe34c67d2246ca082c1412d10f63a83464a43d1e60",
+      "dimensions": [
+        1600,
+        900
+      ]
+    },
+    {
+      "category": "map",
+      "key": "h14MapMask",
+      "source": "assets/rc138/map-ep1a08.png",
+      "file": "media/hapil1-v14/maps/mask.png",
+      "bytes": 2989497,
+      "gitBlobSHA": "058fe1fed0055eeb27286f39eb17c5e460cf304c",
+      "sha256": "c7c8e0577cbb5e2152c01d6e7ba90c929b8f45043077302ddfe55ae73aca4690",
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "category": "map",
+      "key": "h14MapGluttony",
+      "source": "assets/rc210/glutton-stomach-kitchen.png",
+      "file": "media/hapil1-v14/maps/gluttony.png",
+      "bytes": 3039379,
+      "gitBlobSHA": "2b5cc07ea01f44392f2e06c11d90c82ff52fcdd2",
+      "sha256": "ac1aae5477998840708e144415dcc40ac593a17bb1881164fb4d6230e70ca1a8",
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "category": "map",
+      "key": "h14MapLust",
+      "source": "assets/maps/ep1b_05_asmodai_stage_rc24.png",
+      "file": "media/hapil1-v14/maps/lust.png",
+      "bytes": 3099718,
+      "gitBlobSHA": "ca3d7e1009cd7326a5eb7950acddc99f14f540dc",
+      "sha256": "061115250c0999659a19d1a2013c4ec0779e59d7396720086a34f577cd311593",
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "category": "map",
+      "key": "h14MapWrath",
+      "source": "assets/rc138/map-ep1b07.png",
+      "file": "media/hapil1-v14/maps/wrath.png",
+      "bytes": 3198428,
+      "gitBlobSHA": "c64baf276741f4cce13c95e53caca9f4b3783820",
+      "sha256": "88c59fac3a5affe32c790f1123ac77683f0380d7841556319b5a45141ab30d32",
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 0,
+      "bossId": "mb-dist01",
+      "role": "primary",
+      "source": "assets/generated-v31306/projectiles/dist01-purple-web-blade.webp",
+      "size": 111666,
+      "gitBlobSHA": "02b4aada39778f419ad6d796d0964191b1a9e8d2",
+      "sha256": "237953c7bb81d53450f3ae5f63b0b81986eab37a124d929bced022b14a3addd8",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ],
+      "alpha8BBoxXYXY": [
+        10,
+        158,
+        505,
+        342
+      ],
+      "file": "media/hapil1-v14/fx/violet-primary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/generated-v31306/projectiles/dist01-purple-web-blade.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 111666
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 0,
+      "bossId": "mb-dist01",
+      "role": "secondary",
+      "source": "assets/vfx/bosses/v312/mb-dist01.webp",
+      "size": 22540,
+      "gitBlobSHA": "e8a0419baf22c6f3a1621c5fb3750cd2848759cf",
+      "sha256": "c0fe0624aacbf298d56145288af4d036ecdb22ef65ae0420ea64c98068e84b7e",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        30,
+        32,
+        251,
+        243
+      ],
+      "file": "media/hapil1-v14/fx/violet-secondary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v312/mb-dist01.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 22540
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 1,
+      "bossId": "mb-dist02",
+      "role": "primary",
+      "source": "assets/vfx/bosses/v312/mb-dist02.webp",
+      "size": 24420,
+      "gitBlobSHA": "9a35917a0bc0c97394dfea8595ffa1477ead9bda",
+      "sha256": "f798a6599bcd55e37b9b1dfceda41a0b20610a92cbfe3c6181a7397c88c549d0",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        24,
+        29,
+        239,
+        252
+      ],
+      "file": "media/hapil1-v14/fx/horn-primary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v312/mb-dist02.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 24420
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 1,
+      "bossId": "mb-dist02",
+      "role": "secondary",
+      "source": "assets/vfx/bosses/v312/mb-dist02.webp",
+      "size": 24420,
+      "gitBlobSHA": "9a35917a0bc0c97394dfea8595ffa1477ead9bda",
+      "sha256": "f798a6599bcd55e37b9b1dfceda41a0b20610a92cbfe3c6181a7397c88c549d0",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        24,
+        29,
+        239,
+        252
+      ],
+      "file": "media/hapil1-v14/fx/horn-secondary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v312/mb-dist02.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 24420
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 2,
+      "bossId": "dist06-boss",
+      "role": "primary",
+      "source": "assets/generated-v31224/boss-vfx/balrog_chain_whip_wave.webp",
+      "size": 178348,
+      "gitBlobSHA": "7505f59a6c25d9e49242be4620e8558ddef8925f",
+      "sha256": "a14c81a226699efa9fe0060ce98c25562925fd70d1867267fad8fbae8a1e6227",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        26,
+        132,
+        485,
+        381
+      ],
+      "file": "media/hapil1-v14/fx/balrog-primary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/generated-v31224/boss-vfx/balrog_chain_whip_wave.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 178348
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 2,
+      "bossId": "dist06-boss",
+      "role": "secondary",
+      "source": "assets/generated-v31224/boss-vfx/balrog_gate_meteor.webp",
+      "size": 207986,
+      "gitBlobSHA": "d2b4638a1c8e74b9fb18cd5cba8d8331d7cfcf5e",
+      "sha256": "f6f9b989f5c6e33094440268a7888c71548ac2c6948d0cf4254b2e04aea3d762",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        26,
+        93,
+        485,
+        418
+      ],
+      "file": "media/hapil1-v14/fx/balrog-secondary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/generated-v31224/boss-vfx/balrog_gate_meteor.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 207986
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 3,
+      "bossId": "mb-ep1a11",
+      "role": "primary",
+      "source": "assets/vfx/bosses/v393/ep1a11-false-halo.webp",
+      "size": 72826,
+      "gitBlobSHA": "43a8766c0641a4814d1a4bb95694a4170fcfae69",
+      "sha256": "1588f7ab59ff2a10b6c80d63f93e9c6f40d9a0cbf22dbb06aa9c5a05bd8e3a5e",
+      "dimensions": [
+        418,
+        418
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        58,
+        16,
+        398,
+        418
+      ],
+      "file": "media/hapil1-v14/fx/mask-primary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v393/ep1a11-false-halo.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 72826
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 3,
+      "bossId": "mb-ep1a11",
+      "role": "secondary",
+      "source": "assets/vfx/v31323/boss/mb-ep1a11/lucifer_feather_lance.webp",
+      "size": 60564,
+      "gitBlobSHA": "62048cdd659a84f2d2565c3f977f681e14c24fbe",
+      "sha256": "2772a1df9aee03a04d75786218e5834e60aa2c4dc8dc7bd5372065e93287eee4",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        26,
+        134,
+        486,
+        379
+      ],
+      "file": "media/hapil1-v14/fx/mask-secondary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/v31323/boss/mb-ep1a11/lucifer_feather_lance.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 60564
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 4,
+      "bossId": "a11-boss",
+      "role": "primary",
+      "source": "assets/generated-v31224/boss-vfx/lucifer_judgment_sigil.webp",
+      "size": 282842,
+      "gitBlobSHA": "b050b82fa00b470503ab2d63f7a00a3561d0e046",
+      "sha256": "bc7500350a06169b54e59e7524488e895009a8c0b88f2878c5e09b3f1ce0d4f9",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        26,
+        41,
+        486,
+        470
+      ],
+      "file": "media/hapil1-v14/fx/lucifer-primary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/generated-v31224/boss-vfx/lucifer_judgment_sigil.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 282842
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 4,
+      "bossId": "a11-boss",
+      "role": "secondary",
+      "source": "assets/generated-v31224/boss-vfx/lucifer_feather_lance.webp",
+      "size": 143392,
+      "gitBlobSHA": "498ee215ccd77458ad64a0bff181c7c2fd30dff8",
+      "sha256": "c0f4cf47147fccb62714d909749e79a72e893b2976943c53e441e8deb9dfc93d",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        26,
+        134,
+        486,
+        379
+      ],
+      "file": "media/hapil1-v14/fx/lucifer-secondary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/generated-v31224/boss-vfx/lucifer_feather_lance.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 143392
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 5,
+      "bossId": "b02-boss",
+      "role": "primary",
+      "source": "assets/vfx/bosses/v393/ep1b-sloth-field.webp",
+      "size": 67840,
+      "gitBlobSHA": "52db788b2ee1f79b255929a953e0220354c59420",
+      "sha256": "8529473e1d9a946be7858446f218edc1aae73072f569c4df1dd29ac4980b4e9b",
+      "dimensions": [
+        418,
+        418
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        24,
+        18,
+        398,
+        381
+      ],
+      "file": "media/hapil1-v14/fx/sloth-primary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v393/ep1b-sloth-field.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 67840
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 5,
+      "bossId": "b02-boss",
+      "role": "secondary",
+      "source": "assets/vfx/bosses/v3110/ep1b02_deferred_life_debris.webp",
+      "size": 273476,
+      "gitBlobSHA": "050598a2e5284381132bed8747bfe99eeee83469",
+      "sha256": "fd0df92278a5e74d4c2421ffc2c3fcce8b35c2455bd2407ce9b71bd067489486",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        21,
+        21,
+        490,
+        491
+      ],
+      "file": "media/hapil1-v14/fx/sloth-secondary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v3110/ep1b02_deferred_life_debris.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 273476
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 6,
+      "bossId": "b03-boss",
+      "role": "primary",
+      "source": "assets/generated-v31224/boss-vfx/envy_mirror_shard.webp",
+      "size": 179378,
+      "gitBlobSHA": "3d348fbbe745d5cbea93d78eef2d84ed55fae58a",
+      "sha256": "79feb01463759f28a1e5ede94586b944a5c97062f21d54df097d0c6f306fedd6",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        26,
+        105,
+        486,
+        408
+      ],
+      "file": "media/hapil1-v14/fx/envy-primary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/generated-v31224/boss-vfx/envy_mirror_shard.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 179378
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 6,
+      "bossId": "b03-boss",
+      "role": "secondary",
+      "source": "assets/vfx/bosses/v3110/ep1b03_knife_glass_photo_rain.webp",
+      "size": 332566,
+      "gitBlobSHA": "807c66a99f9f54c55cbdc4fbb3bc54080a3f2890",
+      "sha256": "65eb3909e3b7a20509a7d3c312b0e16486d3b94dab27cf5bd2ed65b691b64fb7",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        24,
+        21,
+        488,
+        491
+      ],
+      "file": "media/hapil1-v14/fx/envy-secondary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v3110/ep1b03_knife_glass_photo_rain.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 332566
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 7,
+      "bossId": "b04-boss",
+      "role": "primary",
+      "source": "assets/generated-v31224/boss-vfx/gluttony_maw_wave.webp",
+      "size": 295074,
+      "gitBlobSHA": "810bd2db3a1869d148053a463947c594de4fd7ce",
+      "sha256": "a30a2c20dbd1adf968d0f737b8836149ce28a62ad68dbf9452ee63c5df4b27fc",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        33,
+        27,
+        477,
+        486
+      ],
+      "file": "media/hapil1-v14/fx/glutton-primary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/generated-v31224/boss-vfx/gluttony_maw_wave.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 295074
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 7,
+      "bossId": "b04-boss",
+      "role": "secondary",
+      "source": "assets/vfx/bosses/v3102/ep1b04_glutton_kitchen_cluster.webp",
+      "size": 233902,
+      "gitBlobSHA": "fdc53e2f8b66970e8299cf84beeecc7fd53bfa4c",
+      "sha256": "bcd58373009e6e28e1521f42b44f4c080f02d1767729e8669f45fee22cd8c942",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        40,
+        59,
+        487,
+        457
+      ],
+      "file": "media/hapil1-v14/fx/glutton-secondary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v3102/ep1b04_glutton_kitchen_cluster.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 233902
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 8,
+      "bossId": "b05-boss",
+      "role": "primary",
+      "source": "assets/vfx/bosses/v3110/ep1b05_lipstick_heel_control_strings.webp",
+      "size": 214228,
+      "gitBlobSHA": "170d8770ae63408be213a8aaf7f5c543ba0bb482",
+      "sha256": "50854e6326ef0bf88e41dc396551fe337741cae7d85389bc94f5e624395760e1",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        21,
+        35,
+        491,
+        478
+      ],
+      "file": "media/hapil1-v14/fx/lust-primary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v3110/ep1b05_lipstick_heel_control_strings.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 214228
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 8,
+      "bossId": "b05-boss",
+      "role": "secondary",
+      "source": "assets/vfx/bosses/v393/ep1b-lust-strings.webp",
+      "size": 90204,
+      "gitBlobSHA": "315e799c84eb2eb7c81c02b78145f04668a3ddd8",
+      "sha256": "f1adf237a1b28fd33da67833060d7700f466da0766e89ddf04c180620c390ab9",
+      "dimensions": [
+        418,
+        418
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        35,
+        0,
+        397,
+        363
+      ],
+      "file": "media/hapil1-v14/fx/lust-secondary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v393/ep1b-lust-strings.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 90204
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 9,
+      "bossId": "b06-boss",
+      "role": "primary",
+      "source": "assets/generated-v31224/boss-vfx/greed_coin_saw.webp",
+      "size": 267494,
+      "gitBlobSHA": "5f752b7afa90132d4074f4d78880c8f3b018f5a7",
+      "sha256": "36355530ef13f3727b36c0458f3b8a40bb31e1c5fd11ad0f58e4c2f4fcfeeb4b",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        28,
+        70,
+        484,
+        443
+      ],
+      "file": "media/hapil1-v14/fx/greed-primary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/generated-v31224/boss-vfx/greed_coin_saw.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 267494
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 9,
+      "bossId": "b06-boss",
+      "role": "secondary",
+      "source": "assets/vfx/bosses/v3110/ep1b06_money_blades_rigged_coin.webp",
+      "size": 263516,
+      "gitBlobSHA": "7bc5db3b60972138cd4fc532d04b3339aeb3d02d",
+      "sha256": "7ec452f524bd097fb5c6e0b984435f97537fd6163bd37d034c43c8a297c01bd7",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        28,
+        21,
+        482,
+        487
+      ],
+      "file": "media/hapil1-v14/fx/greed-secondary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v3110/ep1b06_money_blades_rigged_coin.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 263516
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 10,
+      "bossId": "b07-boss",
+      "role": "primary",
+      "source": "assets/vfx/bosses/v3110/ep1b07_mop_lighter_fire_beasts.webp",
+      "size": 276340,
+      "gitBlobSHA": "022d0c7688a8467bed3a734492f0d8034e2daf26",
+      "sha256": "fe91e446954c9d3367e194c2884264a0b428b01d40c17d1b3556f58cceacff95",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        21,
+        26,
+        490,
+        486
+      ],
+      "file": "media/hapil1-v14/fx/wrath-primary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v3110/ep1b07_mop_lighter_fire_beasts.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 276340
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 10,
+      "bossId": "b07-boss",
+      "role": "secondary",
+      "source": "assets/vfx/bosses/v393/ep1b-wrath-fire.webp",
+      "size": 68056,
+      "gitBlobSHA": "11ba4b2fb9e7dcec5059c7f692e937c0c04255e8",
+      "sha256": "4a76a4423765f785ed695135e0a58a924bdd036c03a5296c18cc594a2599a533",
+      "dimensions": [
+        418,
+        418
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        5,
+        0,
+        381,
+        369
+      ],
+      "file": "media/hapil1-v14/fx/wrath-secondary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v393/ep1b-wrath-fire.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 68056
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 11,
+      "bossId": "b08-boss",
+      "role": "primary",
+      "source": "assets/vfx/bosses/v3110/ep1b08_inverted_cross_telekinesis.webp",
+      "size": 282626,
+      "gitBlobSHA": "b43fa36bce96e7b1c0b1981523d14be7cb0b84db",
+      "sha256": "83ed7b152d1c8d28cf9c3797738c42184ed02cf6100e976ef5886b5f76f69c85",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        34,
+        21,
+        478,
+        491
+      ],
+      "file": "media/hapil1-v14/fx/pride-primary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v3110/ep1b08_inverted_cross_telekinesis.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 282626
+    },
+    {
+      "category": "bossFX",
+      "bossIndex": 11,
+      "bossId": "b08-boss",
+      "role": "secondary",
+      "source": "assets/vfx/bosses/v393/ep1b-pride-seal.webp",
+      "size": 87450,
+      "gitBlobSHA": "96453cdd7cd87868a217424f8ba494d09f68c2b2",
+      "sha256": "17a4bd3207e0a9bbafd388d4ed508a922e974d701a8d95f8bbf073f3dd79ddc5",
+      "dimensions": [
+        418,
+        418
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alpha8BBoxXYXY": [
+        31,
+        28,
+        399,
+        418
+      ],
+      "file": "media/hapil1-v14/fx/pride-secondary.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v393/ep1b-pride-seal.webp",
+      "staticArtwork": true,
+      "pixelReviewed": true,
+      "bytes": 87450
+    },
+    {
+      "category": "beam",
+      "source": "assets/vfx/rc33/boss-laser-families/sloth.webp",
+      "gitBlobSHA": "358fc45d9f27914b28fa3221bcb5ec633836581f",
+      "bytes": 350630,
+      "sha256": "73a9174dd6fffda1282c92202f44a87735f2ede546937ebc8514c12ccec8593a",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sourceCentralCropXYWH": [
+        543,
+        181,
+        1086,
+        362
+      ],
+      "centerCropAlphaExtrema": [
+        0,
+        253
+      ],
+      "centerCropOpaque255Fraction": 0,
+      "family": "sloth",
+      "file": "media/hapil1-v14/fx/beam-sloth.webp",
+      "pixelReviewed": true,
+      "ownershipEvidence": "assets/rc33/boss-laser-render.js OWNER_FAMILY routing",
+      "cropEvidence": "assets/rc77/connected-laser.js source central crop at25%,25%,50%,50%",
+      "usageLimit": "Decorative source overlay clipped to exact beam hazard; current proven own-material damage body remains. Alpha holes mean full-width danger coverage is not certified by this artwork alone."
+    },
+    {
+      "category": "beam",
+      "source": "assets/vfx/rc33/boss-laser-families/envy.webp",
+      "gitBlobSHA": "a97402e2024b6359eb8e87cbb897c0b99eb1c5c5",
+      "bytes": 419044,
+      "sha256": "983634b08cecb22aff03cf10bf3cc80d5b948d27366fb30ef4fb55d99214e853",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sourceCentralCropXYWH": [
+        543,
+        181,
+        1086,
+        362
+      ],
+      "centerCropAlphaExtrema": [
+        0,
+        253
+      ],
+      "centerCropOpaque255Fraction": 0,
+      "family": "envy",
+      "file": "media/hapil1-v14/fx/beam-envy.webp",
+      "pixelReviewed": true,
+      "ownershipEvidence": "assets/rc33/boss-laser-render.js OWNER_FAMILY routing",
+      "cropEvidence": "assets/rc77/connected-laser.js source central crop at25%,25%,50%,50%",
+      "usageLimit": "Decorative source overlay clipped to exact beam hazard; current proven own-material damage body remains. Alpha holes mean full-width danger coverage is not certified by this artwork alone."
+    },
+    {
+      "category": "beam",
+      "source": "assets/vfx/rc33/boss-laser-families/gluttony.webp",
+      "gitBlobSHA": "694892e60df9f312696e25aaf5c361c4e83eaa6d",
+      "bytes": 368580,
+      "sha256": "c74954f94e3460f92138bdd599146646021fc64d0a38eaac4c832f30fe1ff5db",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sourceCentralCropXYWH": [
+        543,
+        181,
+        1086,
+        362
+      ],
+      "centerCropAlphaExtrema": [
+        0,
+        255
+      ],
+      "centerCropOpaque255Fraction": 1.7805724285990456e-05,
+      "family": "gluttony",
+      "file": "media/hapil1-v14/fx/beam-gluttony.webp",
+      "pixelReviewed": true,
+      "ownershipEvidence": "assets/rc33/boss-laser-render.js OWNER_FAMILY routing",
+      "cropEvidence": "assets/rc77/connected-laser.js source central crop at25%,25%,50%,50%",
+      "usageLimit": "Decorative source overlay clipped to exact beam hazard; current proven own-material damage body remains. Alpha holes mean full-width danger coverage is not certified by this artwork alone."
+    },
+    {
+      "category": "beam",
+      "source": "assets/vfx/rc33/boss-laser-families/lust.webp",
+      "gitBlobSHA": "6353809d233f37a28b938752ab9b1b277297dd17",
+      "bytes": 399528,
+      "sha256": "8a8becae13684a40f322ba2d14f6a49f5f7ccd11a7cf62fb6e5a5d579448442e",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sourceCentralCropXYWH": [
+        543,
+        181,
+        1086,
+        362
+      ],
+      "centerCropAlphaExtrema": [
+        0,
+        255
+      ],
+      "centerCropOpaque255Fraction": 1.7805724285990456e-05,
+      "family": "lust",
+      "file": "media/hapil1-v14/fx/beam-lust.webp",
+      "pixelReviewed": true,
+      "ownershipEvidence": "assets/rc33/boss-laser-render.js OWNER_FAMILY routing",
+      "cropEvidence": "assets/rc77/connected-laser.js source central crop at25%,25%,50%,50%",
+      "usageLimit": "Decorative source overlay clipped to exact beam hazard; current proven own-material damage body remains. Alpha holes mean full-width danger coverage is not certified by this artwork alone."
+    },
+    {
+      "category": "beam",
+      "source": "assets/vfx/rc33/boss-laser-families/greed.webp",
+      "gitBlobSHA": "8eed4feb6257ddce2e408e7f38f9390bed552f2d",
+      "bytes": 317012,
+      "sha256": "64aa2111ae49c238fff935e21a2e6bf04724169f998d4512137c1224a8451c71",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sourceCentralCropXYWH": [
+        543,
+        181,
+        1086,
+        362
+      ],
+      "centerCropAlphaExtrema": [
+        0,
+        254
+      ],
+      "centerCropOpaque255Fraction": 0,
+      "family": "greed",
+      "file": "media/hapil1-v14/fx/beam-greed.webp",
+      "pixelReviewed": true,
+      "ownershipEvidence": "assets/rc33/boss-laser-render.js OWNER_FAMILY routing",
+      "cropEvidence": "assets/rc77/connected-laser.js source central crop at25%,25%,50%,50%",
+      "usageLimit": "Decorative source overlay clipped to exact beam hazard; current proven own-material damage body remains. Alpha holes mean full-width danger coverage is not certified by this artwork alone."
+    },
+    {
+      "category": "beam",
+      "source": "assets/vfx/rc33/boss-laser-families/wrath.webp",
+      "gitBlobSHA": "85c93abae682c668d41eddd046bdc0527eac5468",
+      "bytes": 404864,
+      "sha256": "5bf97aaff9d372eeeb30033404301d9531af7eedcb35d0d618e884a333309e38",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sourceCentralCropXYWH": [
+        543,
+        181,
+        1086,
+        362
+      ],
+      "centerCropAlphaExtrema": [
+        0,
+        254
+      ],
+      "centerCropOpaque255Fraction": 0,
+      "family": "wrath",
+      "file": "media/hapil1-v14/fx/beam-wrath.webp",
+      "pixelReviewed": true,
+      "ownershipEvidence": "assets/rc33/boss-laser-render.js OWNER_FAMILY routing",
+      "cropEvidence": "assets/rc77/connected-laser.js source central crop at25%,25%,50%,50%",
+      "usageLimit": "Decorative source overlay clipped to exact beam hazard; current proven own-material damage body remains. Alpha holes mean full-width danger coverage is not certified by this artwork alone."
+    },
+    {
+      "category": "beam",
+      "source": "assets/vfx/rc33/boss-laser-families/pride.webp",
+      "gitBlobSHA": "d48e064bca5d82f6972ecc39a3233f8189bf9ce6",
+      "bytes": 382092,
+      "sha256": "319cde0f6ec2aa2449a7a5e76e1bffbed9497b36d244fc8bcfede2570d1c508e",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sourceCentralCropXYWH": [
+        543,
+        181,
+        1086,
+        362
+      ],
+      "centerCropAlphaExtrema": [
+        0,
+        254
+      ],
+      "centerCropOpaque255Fraction": 0,
+      "family": "pride",
+      "file": "media/hapil1-v14/fx/beam-pride.webp",
+      "pixelReviewed": true,
+      "ownershipEvidence": "assets/rc33/boss-laser-render.js OWNER_FAMILY routing",
+      "cropEvidence": "assets/rc77/connected-laser.js source central crop at25%,25%,50%,50%",
+      "usageLimit": "Decorative source overlay clipped to exact beam hazard; current proven own-material damage body remains. Alpha holes mean full-width danger coverage is not certified by this artwork alone."
+    }
+  ],
+  "validation": {
+    "sourceFileCopies": 45,
+    "mapCopies": 14,
+    "effectRoleCopies": 24,
+    "beamCopies": 7,
+    "allFinalByteSizeGitBlobSHA1SHA256AndDecodeVerifiedAgain": true,
+    "rawEncodedBytes": 23573105,
+    "mapAllResidentRGBAEstimate": 81450624,
+    "memoryLimit": "Do not preload all maps or all beam originals. Lazy active encounter source; cache compact derived surfaces only.",
+    "pixelReviewContact": "h14-map-contact-full.jpg; source QA artifact, not runtime game screenshot",
+    "runtimeTests": "Owned by root/gameplay/render agents; source QA does not assert gameplay, browser, GPU or actual mobile pass"
+  }
+}

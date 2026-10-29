@@ -1,0 +1,9 @@
+{
+  "sourceRepository": "kjb7876-lang/hapil1",
+  "assetPin": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+  "headObservedBeforePublish": "8629bd82fc1d8baf41183395c054fd83775e96df",
+  "comparison": "ahead by four commits; no selected source image changed",
+  "observedChangeScope": "Input ownership, legacy save restoration, source runtime extension and tests/workflows. The source changes were compared read-only. They are not this portrait app implementation and were not copied wholesale.",
+  "sourceWasModifiedByThisWork": false,
+  "decision": "Keep verified byte-exact source-image pin. Preserve other contributors changes; no reset or push to hapil1 or m0."
+}

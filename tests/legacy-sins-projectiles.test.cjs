@@ -9,6 +9,10 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { createCanvas, loadImage } = require(require.resolve('@napi-rs/canvas', { paths: [process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES || '', path.resolve(__dirname, '..')] }));
 const materialKeys = ['projectileBelphegorV13', 'projectileLeviathanV13', 'projectileBeelzebubV13', 'projectileAsmodeusV13', 'projectileMammonV13', 'projectileWrathV13', 'projectilePrideV13'];
+const ownOptionalKeys = [
+  ['h14SkillSloth', 'h14BeamSloth'], ['h14SkillEnvy', 'h14BeamEnvy'], ['h14RotorGlutton', 'h14BeamGlutton'],
+  ['h14SkillLust', 'h14BeamLust'], ['h14SkillGreed', 'h14BeamGreed'], ['h14SkillWrath', 'h14BeamWrath'], ['h14SkillPride', 'h14BeamPride']
+];
 async function materialFixture() {
   const original = global.document;
   const allocated = [];
@@ -51,9 +55,9 @@ test('all seven sins require their own checked static material, with no Lucifer 
   const f = await materialFixture();
   try {
     for (let i = 5; i < 12; i++) {
-      assert.deepEqual(API.assetKeysForEncounter(i), [materialKeys[i - 5]]);
+      assert.deepEqual(API.assetKeysForEncounter(i), [materialKeys[i - 5], ...ownOptionalKeys[i - 5]]);
       assert.equal(API.invalidAssetForEncounter(f.images, i), null);
-      assert.deepEqual(API.optionalAssetKeysForEncounter(i), []);
+      assert.deepEqual(API.optionalAssetKeysForEncounter(i), ownOptionalKeys[i - 5]);
       const missing = { ...f.images }; delete missing[materialKeys[i - 5]];
       assert.equal(API.invalidAssetForEncounter(missing, i), materialKeys[i - 5]);
       missing[materialKeys[i - 5]] = { complete: true, naturalWidth: 1, naturalHeight: 1 };

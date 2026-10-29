@@ -1,0 +1,566 @@
+{
+  "capturedAt": "2026-10-29T02:51:50.898Z",
+  "scope": "Byte-exact pinned public baseline versus v14 production candidate; controlled CPU combat-physics comparison only. Not natural progression, human play, browser/mobile/GPU verification.",
+  "source": {
+    "repository": "kjb7876-lang/hapil-reboot",
+    "ref": "41497a7338b3949ddcefb5d00e2e2279db42468c",
+    "transfer": "Official GitHub fetch_file encoding=base64; decoded bytes written unchanged; both local Git blob IDs independently verified.",
+    "core": {
+      "path": "src/core.js",
+      "bytes": 75956,
+      "gitBlob": "e181e495030c5a1a989e2b80cb8fa6df40a7d05b",
+      "sha256": "7fa882cf6c6fb4a20f3f33868386b5c1cb6bebb0e23594ff20d8dec75e7c2b22"
+    },
+    "weaponPatterns": {
+      "path": "src/weapon-patterns.js",
+      "bytes": 5224,
+      "gitBlob": "60f3b0cb02e1de7b109eb45c069ed61047de7eaa",
+      "sha256": "0903853075103c15261cbfebe9e00c4da47f36113160000593d16be31c381f29"
+    }
+  },
+  "candidate": {
+    "coreSHA256": "3a7ee833b2db378bc68c6c4658d189965849fba0a61106b4f87d4c8de1878c8e",
+    "weaponSHA256": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f"
+  },
+  "method": {
+    "modes": [
+      "normal",
+      "gentle"
+    ],
+    "seed": 813,
+    "bossCount": 12,
+    "phasesPerBoss": 3,
+    "ticksPerCase": 1000,
+    "fixtures": {
+      "bossHP": 1000000000,
+      "playerInvulnerableUntil": 999999,
+      "autoAttack": false,
+      "skillRotation": false
+    },
+    "input": "Ordinary legal focus movement: dx=sin(t*.017)*1.8, dy=cos(t*.013)*.8, focus=true.",
+    "compared": [
+      "tick",
+      "rngState",
+      "stage",
+      "player",
+      "stats",
+      "bullets",
+      "hazards",
+      "shots",
+      "score",
+      "graze",
+      "boss position/HP/phase/identity/artKey/action/actionProgress/lean/releaseTick"
+    ],
+    "excluded": "Runtime presentation-only skillReleases/_lastLaserReleaseCast metadata. All compared values are deeply equal every tick."
+  },
+  "cases": 72,
+  "ticks": 72000,
+  "pass": true,
+  "rows": [
+    {
+      "difficulty": "normal",
+      "bossIndex": 0,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 0,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 0,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 1,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 1,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 1,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 2,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 2,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 2,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 3,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 3,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 3,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 4,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 4,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 4,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 5,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 5,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 5,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 6,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 6,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 6,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 7,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 7,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 7,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 8,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 8,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 8,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 9,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 9,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 9,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 10,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 10,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 10,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 11,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 11,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "normal",
+      "bossIndex": 11,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 0,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 0,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 0,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 1,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 1,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 1,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 2,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 2,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 2,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 3,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 3,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 3,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 4,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 4,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 4,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 5,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 5,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 5,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 6,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 6,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 6,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 7,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 7,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 7,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 8,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 8,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 8,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 9,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 9,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 9,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 10,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 10,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 10,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 11,
+      "phase": 0,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 11,
+      "phase": 1,
+      "ticks": 1000,
+      "pass": true
+    },
+    {
+      "difficulty": "gentle",
+      "bossIndex": 11,
+      "phase": 2,
+      "ticks": 1000,
+      "pass": true
+    }
+  ],
+  "provenanceCorrection": "The earlier text-materialized scratch baseline had exactly one extra trailing LF per module. This report replaces that comparison with a fresh run using the byte-exact official base64-decoded source; the source hashes above are the evaluated bytes."
+}

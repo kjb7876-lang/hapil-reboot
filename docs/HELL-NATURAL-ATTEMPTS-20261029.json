@@ -1,0 +1,355 @@
+{
+  "schema": "hapil.v14.natural-attempts.v1",
+  "scope": "QA input policies with ordinary engine health, damage, skills and legal directional input. Failed attempts remain recorded; no production balancing change was made to make the bot pass.",
+  "attempts": [
+    {
+      "policy": "linear-velocity-v13",
+      "policySHA256": "d9a6f9afa02ba666bc54055b02a67b54d6b7e14ecadcbeb0c54a63a19306708d",
+      "coreSHA256": "3a7ee833b2db378bc68c6c4658d189965849fba0a61106b4f87d4c8de1878c8e",
+      "weaponSHA256": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+      "difficulty": "hell",
+      "seed": 813,
+      "stage": "lost",
+      "tick": 14013,
+      "bossIndex": 1,
+      "bossId": "horn",
+      "phase": 2,
+      "hits": 4,
+      "hp": 0,
+      "peakBullets": 211,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "note": "First v14 fullcapture stopped at this genuine failure, after normal/gentle four records matched previous counts; atomic fixture write did not run."
+    },
+    {
+      "policy": "acceleration-and-bounce-prediction-v14",
+      "policySHA256": "d5b0050e94e97a0f8039ddf2f0a993bfa9d0573f8a5507233583c6a212eb80ac",
+      "coreSHA256": "3a7ee833b2db378bc68c6c4658d189965849fba0a61106b4f87d4c8de1878c8e",
+      "weaponSHA256": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+      "difficulty": "hell",
+      "seed": 813,
+      "stage": "lost",
+      "tick": 25405,
+      "bossIndex": 3,
+      "bossId": "mask",
+      "phase": 0,
+      "hits": 6,
+      "hp": 0,
+      "peakBullets": 210,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "checkpointCount": 20
+    },
+    {
+      "policy": "acceleration-and-bounce-prediction-v14",
+      "policySHA256": "d5b0050e94e97a0f8039ddf2f0a993bfa9d0573f8a5507233583c6a212eb80ac",
+      "coreSHA256": "3a7ee833b2db378bc68c6c4658d189965849fba0a61106b4f87d4c8de1878c8e",
+      "weaponSHA256": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+      "difficulty": "hell",
+      "seed": 42,
+      "stage": "lost",
+      "tick": 3584,
+      "bossIndex": 0,
+      "bossId": "violet",
+      "phase": 0,
+      "hits": 3,
+      "hp": 0,
+      "peakBullets": 210,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "checkpointCount": 4
+    },
+    {
+      "policy": "predictive-outer-route-v14b",
+      "policySHA256": "a09e739a09e74fa184fde48033563866e945e06be9a699b0499ab78f4bb39d6e",
+      "coreSHA256": "3a7ee833b2db378bc68c6c4658d189965849fba0a61106b4f87d4c8de1878c8e",
+      "weaponSHA256": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+      "difficulty": "hell",
+      "seed": 813,
+      "stage": "lost",
+      "tick": 3154,
+      "bossIndex": 0,
+      "bossId": "violet",
+      "phase": 0,
+      "hits": 3,
+      "hp": 0,
+      "peakBullets": 206,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "checkpointCount": 4
+    },
+    {
+      "policy": "predictive-outer-route-v14b",
+      "policySHA256": "a09e739a09e74fa184fde48033563866e945e06be9a699b0499ab78f4bb39d6e",
+      "coreSHA256": "3a7ee833b2db378bc68c6c4658d189965849fba0a61106b4f87d4c8de1878c8e",
+      "weaponSHA256": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+      "difficulty": "hell",
+      "seed": 42,
+      "stage": "lost",
+      "tick": 36185,
+      "bossIndex": 4,
+      "bossId": "lucifer",
+      "phase": 1,
+      "hits": 4,
+      "hp": 0,
+      "peakBullets": 238,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "checkpointCount": 27
+    },
+    {
+      "policy": "predictive-boss-outer-route-v14c",
+      "policySHA256": "f93094044cc8bc5d64091f741a4913d1bd43bee6948b90d1bc7e7ce320ce1db4",
+      "coreSHA256": "3a7ee833b2db378bc68c6c4658d189965849fba0a61106b4f87d4c8de1878c8e",
+      "weaponSHA256": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+      "difficulty": "hell",
+      "seed": 813,
+      "stage": "lost",
+      "tick": 6646,
+      "bossIndex": 0,
+      "bossId": "violet",
+      "phase": 2,
+      "hits": 3,
+      "hp": 0,
+      "peakBullets": 209,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "checkpointCount": 6
+    },
+    {
+      "policy": "predictive-boss-outer-route-v14c",
+      "policySHA256": "f93094044cc8bc5d64091f741a4913d1bd43bee6948b90d1bc7e7ce320ce1db4",
+      "coreSHA256": "3a7ee833b2db378bc68c6c4658d189965849fba0a61106b4f87d4c8de1878c8e",
+      "weaponSHA256": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+      "difficulty": "hell",
+      "seed": 42,
+      "stage": "lost",
+      "tick": 3639,
+      "bossIndex": 0,
+      "bossId": "violet",
+      "phase": 0,
+      "hits": 3,
+      "hp": 0,
+      "peakBullets": 207,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "checkpointCount": 4
+    }
+  ],
+  "parallelPolicyProbes": {
+    "method": "Independent QA input-policy probes: normal unmodified HP, damage, auto-attack, skill rotation, RNG and production modules. No live-state overrides or engine future forks. Greedy and curved beam-search helpers forecast only live projectile acceleration/bounce and already-announced lasers. The curved planner considers legal eight-direction plus stationary inputs every4frames; it accounts for invulnerability earned by actual hits, never assigns it.",
+    "coreSHA256": "3a7ee833b2db378bc68c6c4658d189965849fba0a61106b4f87d4c8de1878c8e",
+    "weaponSHA256": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "greedyPolicySHA256": "2cf5557cbcfdabd95d4b91da9da8dd60a9e61e4e7380fcbd6ba4909b5eb2eddb",
+    "beamPolicySHA256": "549c96be45c8eccba586fa4250760e8a022a8be9a2a5209873ff155ad0fbc07f",
+    "attempts": [
+      {
+        "file": "centre-580-20-4-42.json",
+        "config": {
+          "route": "centre",
+          "y": 580,
+          "beam": 20,
+          "commit": 4
+        },
+        "seed": 42,
+        "stage": "won",
+        "tick": 97105,
+        "boss": 11,
+        "phase": 2,
+        "hp": 3,
+        "hits": 4,
+        "peak": 245,
+        "pressure": 0
+      },
+      {
+        "file": "centre-580-20-4-813.json",
+        "config": {
+          "route": "centre",
+          "y": 580,
+          "beam": 20,
+          "commit": 4
+        },
+        "seed": 813,
+        "stage": "won",
+        "tick": 97412,
+        "boss": 11,
+        "phase": 2,
+        "hp": 3,
+        "hits": 4,
+        "peak": 238,
+        "pressure": 0
+      },
+      {
+        "file": "centre-580-813.json",
+        "config": {
+          "route": "centre",
+          "y": 580
+        },
+        "seed": 813,
+        "stage": "lost",
+        "tick": 30270,
+        "boss": 3,
+        "phase": 2,
+        "hp": 0,
+        "hits": 6,
+        "peak": 211,
+        "pressure": 0
+      },
+      {
+        "file": "centre-580-true-813.json",
+        "config": {
+          "route": "centre",
+          "y": 580,
+          "respectImmunity": true
+        },
+        "seed": 813,
+        "stage": "lost",
+        "tick": 54291,
+        "boss": 6,
+        "phase": 2,
+        "hp": 0,
+        "hits": 8,
+        "peak": 240,
+        "pressure": 0
+      },
+      {
+        "file": "corridor-550-0.04-813.json",
+        "config": {
+          "route": "corridor",
+          "y": 550,
+          "xWeight": 0.04
+        },
+        "seed": 813,
+        "stage": "lost",
+        "tick": 6547,
+        "boss": 0,
+        "phase": 2,
+        "hp": 0,
+        "hits": 3,
+        "peak": 211,
+        "pressure": 0
+      },
+      {
+        "file": "corridor-580-813.json",
+        "config": {
+          "route": "corridor",
+          "y": 580
+        },
+        "seed": 813,
+        "stage": "lost",
+        "tick": 24725,
+        "boss": 3,
+        "phase": 0,
+        "hp": 0,
+        "hits": 6,
+        "peak": 211,
+        "pressure": 0
+      },
+      {
+        "file": "corridor-580-true-42.json",
+        "config": {
+          "route": "corridor",
+          "y": 580,
+          "respectImmunity": true
+        },
+        "seed": 42,
+        "stage": "lost",
+        "tick": 3801,
+        "boss": 0,
+        "phase": 0,
+        "hp": 0,
+        "hits": 3,
+        "peak": 209,
+        "pressure": 0
+      },
+      {
+        "file": "left-585-813.json",
+        "config": {
+          "route": "left",
+          "y": 585
+        },
+        "seed": 813,
+        "stage": "lost",
+        "tick": 3886,
+        "boss": 0,
+        "phase": 0,
+        "hp": 0,
+        "hits": 3,
+        "peak": 210,
+        "pressure": 0
+      }
+    ]
+  },
+  "officialRecordedWins": [
+    {
+      "difficulty": "gentle",
+      "seed": 813,
+      "tick": 98814,
+      "hits": 5,
+      "hp": 5,
+      "file": "gentle-813.moves.gz",
+      "sha256": "cecf983e0f4468ed788fc4ac15a460ef895735b0ecc58eb7b74b99acf5f0ef8f"
+    },
+    {
+      "difficulty": "gentle",
+      "seed": 42,
+      "tick": 97888,
+      "hits": 6,
+      "hp": 4,
+      "file": "gentle-42.moves.gz",
+      "sha256": "d7ef41ace25551ae80c980a54798a928d8a79289a1b0ad4ec69a9cd6a0d8b450"
+    },
+    {
+      "difficulty": "normal",
+      "seed": 813,
+      "tick": 98346,
+      "hits": 1,
+      "hp": 3,
+      "file": "normal-813.moves.gz",
+      "sha256": "26c8e482685fd9bccd66be4a295974fdbf4dd48798c6d3b662bdaa5b5d006d6d"
+    },
+    {
+      "difficulty": "normal",
+      "seed": 42,
+      "tick": 97988,
+      "hits": 7,
+      "hp": 3,
+      "file": "normal-42.moves.gz",
+      "sha256": "a3abae9003a17c901724a6177f892be655a6e106dc35a765152f38ab7ef2d0c3"
+    },
+    {
+      "difficulty": "hell",
+      "seed": 813,
+      "tick": 97412,
+      "hits": 4,
+      "hp": 3,
+      "file": "hell-813.moves.gz",
+      "sha256": "bea09dab4fccf5decd578544b4e56a1ce1632af923a4ba4a2f8446228d7b59a4"
+    },
+    {
+      "difficulty": "hell",
+      "seed": 42,
+      "tick": 97105,
+      "hits": 4,
+      "hp": 3,
+      "file": "hell-42.moves.gz",
+      "sha256": "3681c775a41a0f9c24f98c510474ba7f2b67f855d947103bd8b37aca2acffc59"
+    }
+  ],
+  "finalPolicy": {
+    "id": "curved-beam-live-forecast-v14",
+    "files": {
+      "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+      "tools/hell-forecast-policy.cjs": "532153e9d1f0b384dbcf8d6038858d314e918dfc62e178c362cb517ee1f6e07f"
+    },
+    "config": {
+      "route": "centre",
+      "y": 580,
+      "beam": 20,
+      "commit": 4
+    },
+    "forecastHorizonTicks": 96,
+    "segmentTicks": 8,
+    "scope": "Read-only forecasts of already live bullets and announced laser geometry; no future-emission or RNG oracle and no production changes."
+  }
+}

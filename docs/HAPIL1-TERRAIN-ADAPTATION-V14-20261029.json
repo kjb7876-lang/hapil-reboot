@@ -1,0 +1,498 @@
+{
+  "schema": "hapil.source-terrain-portrait-adaptation.v14",
+  "sourceRepository": "kjb7876-lang/hapil1",
+  "sourceCommit": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+  "sourceReadOnly": true,
+  "implementationSHA256": "ab4f8308682ce636164cd040d19ff220de853c90a1b1084b44be16f05c0b4d24",
+  "scope": "Presentation/background adaptation for the existing vertical battle world; no newly authored collision walls, roof occlusion, or connected tilemap.",
+  "sourceInterpretation": "Fourteen source paintings already contain floor, walls, roofs, architecture and scenery. They are whole paintings, not individual tile atlases. Original repository image bytes are unchanged.",
+  "sceneContracts": {
+    "h14MapViolet": {
+      "width": 1586,
+      "height": 992,
+      "scene": "dist01",
+      "floor": [
+        523,
+        278,
+        539,
+        268
+      ],
+      "floorUnit": "source-pixels XYWH",
+      "source": {
+        "category": "map",
+        "key": "h14MapViolet",
+        "source": "assets/maps/rc53/dist01-spider-cave.webp",
+        "file": "media/hapil1-v14/maps/violet.webp",
+        "bytes": 146558,
+        "gitBlobSHA": "be0f4d281c9efcd452741504d49d8ec0e776fda0",
+        "sha256": "921ac7d2a2893aa53374a459b27d9ae87e4cc5c50cbdf0281259875820e72526",
+        "dimensions": [
+          1586,
+          992
+        ]
+      }
+    },
+    "h14MapHorn": {
+      "width": 1586,
+      "height": 992,
+      "scene": "dist02",
+      "floor": [
+        523,
+        278,
+        539,
+        268
+      ],
+      "floorUnit": "source-pixels XYWH",
+      "source": {
+        "category": "map",
+        "key": "h14MapHorn",
+        "source": "assets/v31345/maps/dist02.webp",
+        "file": "media/hapil1-v14/maps/horn.webp",
+        "bytes": 598440,
+        "gitBlobSHA": "06ccff56180e6038731c4a005ed1c28ecb46992a",
+        "sha256": "def470ccf337bdfdaff1b1277b16db768e573950de15a969d65a15da93d3f4c6",
+        "dimensions": [
+          1586,
+          992
+        ]
+      }
+    },
+    "h14MapBalrog": {
+      "width": 1586,
+      "height": 992,
+      "scene": "dist06",
+      "floor": [
+        508,
+        278,
+        571,
+        298
+      ],
+      "floorUnit": "source-pixels XYWH",
+      "source": {
+        "category": "map",
+        "key": "h14MapBalrog",
+        "source": "assets/v31345/maps/dist06.webp",
+        "file": "media/hapil1-v14/maps/balrog.webp",
+        "bytes": 620682,
+        "gitBlobSHA": "6b5d235e66a752ce21804fcdea3c6344796d53ca",
+        "sha256": "4ccb43cfbcf03a45f4179da7b8a68a73d9c420ab3e2d8e77fb76c8bc57c7699f",
+        "dimensions": [
+          1586,
+          992
+        ]
+      }
+    },
+    "h14MapMask": {
+      "width": 1672,
+      "height": 941,
+      "scene": "ep1a08",
+      "floor": [
+        585,
+        282,
+        568,
+        301
+      ],
+      "floorUnit": "source-pixels XYWH",
+      "source": {
+        "category": "map",
+        "key": "h14MapMask",
+        "source": "assets/rc138/map-ep1a08.png",
+        "file": "media/hapil1-v14/maps/mask.png",
+        "bytes": 2989497,
+        "gitBlobSHA": "058fe1fed0055eeb27286f39eb17c5e460cf304c",
+        "sha256": "c7c8e0577cbb5e2152c01d6e7ba90c929b8f45043077302ddfe55ae73aca4690",
+        "dimensions": [
+          1672,
+          941
+        ]
+      }
+    },
+    "h14MapLucifer": {
+      "width": 1586,
+      "height": 992,
+      "scene": "ep1a11",
+      "floor": [
+        508,
+        278,
+        571,
+        298
+      ],
+      "floorUnit": "source-pixels XYWH",
+      "source": {
+        "category": "map",
+        "key": "h14MapLucifer",
+        "source": "assets/v31345/maps/ep1a11.webp",
+        "file": "media/hapil1-v14/maps/lucifer.webp",
+        "bytes": 682294,
+        "gitBlobSHA": "dba6178f75dc9443ee8f3580db36b3b357febe6e",
+        "sha256": "e96f1f020965b4dc8996706d9214b4a95e15a69c9df86c5779350e7a9eb49315",
+        "dimensions": [
+          1586,
+          992
+        ]
+      }
+    },
+    "h14MapSloth": {
+      "width": 1600,
+      "height": 900,
+      "scene": "ep1b02",
+      "floor": [
+        620,
+        570,
+        360,
+        160
+      ],
+      "floorUnit": "source-pixels XYWH",
+      "source": {
+        "category": "map",
+        "key": "h14MapSloth",
+        "source": "assets/maps/ep1b_02_sloth_house.jpg",
+        "file": "media/hapil1-v14/maps/sloth.jpg",
+        "bytes": 348025,
+        "gitBlobSHA": "568293e9684bd7275d087e78e3769fe8a7cdddc4",
+        "sha256": "21b2d1f6fbdeeb873e378735b29678f6891d38b1c8f365d5a87f572ffe3b4859",
+        "dimensions": [
+          1600,
+          900
+        ]
+      }
+    },
+    "h14MapEnvy": {
+      "width": 1600,
+      "height": 900,
+      "scene": "ep1b03",
+      "floor": [
+        640,
+        540,
+        360,
+        90
+      ],
+      "floorUnit": "source-pixels XYWH",
+      "source": {
+        "category": "map",
+        "key": "h14MapEnvy",
+        "source": "assets/maps/ep1b_03_cracked_glasses.jpg",
+        "file": "media/hapil1-v14/maps/envy.jpg",
+        "bytes": 402580,
+        "gitBlobSHA": "07fc1fc3ca77a74e5e6fe537d626c2d2e55224fe",
+        "sha256": "5b3bb7190c93cca8922f1b5cc44170a44e35395ff645b62f4f87bf9259f6b9a5",
+        "dimensions": [
+          1600,
+          900
+        ]
+      }
+    },
+    "h14MapGluttony": {
+      "width": 1672,
+      "height": 941,
+      "scene": "ep1b04",
+      "floor": [
+        550,
+        260,
+        600,
+        190
+      ],
+      "floorUnit": "source-pixels XYWH",
+      "source": {
+        "category": "map",
+        "key": "h14MapGluttony",
+        "source": "assets/rc210/glutton-stomach-kitchen.png",
+        "file": "media/hapil1-v14/maps/gluttony.png",
+        "bytes": 3039379,
+        "gitBlobSHA": "2b5cc07ea01f44392f2e06c11d90c82ff52fcdd2",
+        "sha256": "ac1aae5477998840708e144415dcc40ac593a17bb1881164fb4d6230e70ca1a8",
+        "dimensions": [
+          1672,
+          941
+        ]
+      }
+    },
+    "h14MapLust": {
+      "width": 1672,
+      "height": 941,
+      "scene": "ep1b05",
+      "floor": [
+        552,
+        380,
+        552,
+        179
+      ],
+      "floorUnit": "source-pixels XYWH",
+      "source": {
+        "category": "map",
+        "key": "h14MapLust",
+        "source": "assets/maps/ep1b_05_asmodai_stage_rc24.png",
+        "file": "media/hapil1-v14/maps/lust.png",
+        "bytes": 3099718,
+        "gitBlobSHA": "ca3d7e1009cd7326a5eb7950acddc99f14f540dc",
+        "sha256": "061115250c0999659a19d1a2013c4ec0779e59d7396720086a34f577cd311593",
+        "dimensions": [
+          1672,
+          941
+        ]
+      }
+    },
+    "h14MapGreed": {
+      "width": 1600,
+      "height": 900,
+      "scene": "ep1b06",
+      "floor": [
+        600,
+        290,
+        420,
+        150
+      ],
+      "floorUnit": "source-pixels XYWH",
+      "source": {
+        "category": "map",
+        "key": "h14MapGreed",
+        "source": "assets/maps/ep1b_06_mammon_vault.jpg",
+        "file": "media/hapil1-v14/maps/greed.jpg",
+        "bytes": 839126,
+        "gitBlobSHA": "cac377f681305bd3bd921002a2dcf78c6b029c93",
+        "sha256": "4104cfad195705c6a662b595774f2d37d50deea6c31a6b00ec94ccf345930ed2",
+        "dimensions": [
+          1600,
+          900
+        ]
+      }
+    },
+    "h14MapGreedSnow": {
+      "width": 960,
+      "height": 600,
+      "scene": "ep1b06b",
+      "floor": [
+        288,
+        180,
+        403,
+        222
+      ],
+      "floorUnit": "source-pixels XYWH",
+      "source": {
+        "category": "map",
+        "key": "h14MapGreedSnow",
+        "source": "assets/maps/ep1b_06b_mammon_winter_forest_v3110.jpg",
+        "file": "media/hapil1-v14/maps/greed-snow.jpg",
+        "bytes": 196687,
+        "gitBlobSHA": "63717c5540b825ab42a84c807149f77a77115fce",
+        "sha256": "872aeb22f625a05abb407ba141c771169c1bc4fc477cc8c460ce84295c4eef83",
+        "dimensions": [
+          960,
+          600
+        ]
+      }
+    },
+    "h14MapWrath": {
+      "width": 1672,
+      "height": 941,
+      "scene": "ep1b07",
+      "floor": [
+        580,
+        360,
+        540,
+        290
+      ],
+      "floorUnit": "source-pixels XYWH",
+      "source": {
+        "category": "map",
+        "key": "h14MapWrath",
+        "source": "assets/rc138/map-ep1b07.png",
+        "file": "media/hapil1-v14/maps/wrath.png",
+        "bytes": 3198428,
+        "gitBlobSHA": "c64baf276741f4cce13c95e53caca9f4b3783820",
+        "sha256": "88c59fac3a5affe32c790f1123ac77683f0380d7841556319b5a45141ab30d32",
+        "dimensions": [
+          1672,
+          941
+        ]
+      }
+    },
+    "h14MapPride": {
+      "width": 1600,
+      "height": 900,
+      "scene": "ep1b08",
+      "floor": [
+        400,
+        240,
+        400,
+        140
+      ],
+      "floorUnit": "source-pixels XYWH",
+      "source": {
+        "category": "map",
+        "key": "h14MapPride",
+        "source": "assets/maps/ep1b_08_pride_cathedral.jpg",
+        "file": "media/hapil1-v14/maps/pride.jpg",
+        "bytes": 357657,
+        "gitBlobSHA": "a81022ca195170ea25007af834175b7635ca44e8",
+        "sha256": "9ca552fb60bbcc669364be8f1055af3761c9160a2d6f08d2b98b6454de017e65",
+        "dimensions": [
+          1600,
+          900
+        ]
+      }
+    },
+    "h14MapPrideCore": {
+      "width": 1600,
+      "height": 900,
+      "scene": "ep1b09",
+      "floor": [
+        600,
+        250,
+        400,
+        120
+      ],
+      "floorUnit": "source-pixels XYWH",
+      "source": {
+        "category": "map",
+        "key": "h14MapPrideCore",
+        "source": "assets/maps/ep1b_09_black_sun_core.jpg",
+        "file": "media/hapil1-v14/maps/pride-core.jpg",
+        "bytes": 351130,
+        "gitBlobSHA": "b3a6cb2e8b4680e0745148c58510fc69a52592ee",
+        "sha256": "4ef5a25e89a26609094e5bbe34c67d2246ca082c1412d10f63a83464a43d1e60",
+        "dimensions": [
+          1600,
+          900
+        ]
+      }
+    }
+  },
+  "groups": [
+    {
+      "bossIndex": 0,
+      "requiredMapKeys": [
+        "h14MapViolet"
+      ]
+    },
+    {
+      "bossIndex": 1,
+      "requiredMapKeys": [
+        "h14MapHorn"
+      ]
+    },
+    {
+      "bossIndex": 2,
+      "requiredMapKeys": [
+        "h14MapBalrog"
+      ]
+    },
+    {
+      "bossIndex": 3,
+      "requiredMapKeys": [
+        "h14MapMask"
+      ]
+    },
+    {
+      "bossIndex": 4,
+      "requiredMapKeys": [
+        "h14MapLucifer"
+      ]
+    },
+    {
+      "bossIndex": 5,
+      "requiredMapKeys": [
+        "h14MapSloth"
+      ]
+    },
+    {
+      "bossIndex": 6,
+      "requiredMapKeys": [
+        "h14MapEnvy"
+      ]
+    },
+    {
+      "bossIndex": 7,
+      "requiredMapKeys": [
+        "h14MapGluttony"
+      ]
+    },
+    {
+      "bossIndex": 8,
+      "requiredMapKeys": [
+        "h14MapLust"
+      ]
+    },
+    {
+      "bossIndex": 9,
+      "requiredMapKeys": [
+        "h14MapGreed",
+        "h14MapGreedSnow"
+      ]
+    },
+    {
+      "bossIndex": 10,
+      "requiredMapKeys": [
+        "h14MapWrath"
+      ]
+    },
+    {
+      "bossIndex": 11,
+      "requiredMapKeys": [
+        "h14MapPride",
+        "h14MapPrideCore"
+      ]
+    }
+  ],
+  "composition": {
+    "portraitCache": [
+      360,
+      720
+    ],
+    "activeCacheLimit": 1,
+    "activeCacheBytes": 1036800,
+    "architecturalPainting": {
+      "destinationWidth": 648,
+      "destinationY": 96,
+      "uniformScale": true,
+      "source": "entire own scene image, portrait-clipped",
+      "verticalFadePx": [
+        243.2,
+        422.4
+      ]
+    },
+    "floor": {
+      "source": "inspected floor swatch from the same scene, exact source XYWH in each contract",
+      "derivedRepeat": true,
+      "authoredSeamlessTile": false,
+      "uniformDestinationWidth": 360,
+      "overlapFraction": 0.22,
+      "featherFraction": 0.12,
+      "sourceSamplingPerCacheBuild": 3,
+      "perFrameSourceRecomposition": false
+    },
+    "camera": {
+      "finiteScrollPx": [
+        0,
+        80
+      ],
+      "waveProgress": "original wave index plus current fractional wave duration, normalized over existing wave count",
+      "bossPracticeIntroTransitionWonLost": "anchored at80"
+    },
+    "foregroundAboveDanger": false,
+    "changesCollisionGeometry": false
+  },
+  "chronology": {
+    "preservedApproaches": [
+      "boss0 original forest/garden/cave connected route",
+      "boss2 original three approach scenes"
+    ],
+    "followupMaps": "Mammon child winter and Pride cyborg core only activate in actual phase2 outside ordinary waves. Ordinary wave2 remains on adult vault/cathedral backgrounds."
+  },
+  "loader": {
+    "api": "terrainAssetKeysForEncounter(group), invalidTerrainAsset(images,group)",
+    "strategy": "required map source(s) only for the active encounter group, including same-person phase variants; never all fourteen at boot",
+    "missingRequiredAsset": "exact dimension and readiness validation rejects the relevant key; no completion claim from a substitute"
+  },
+  "renderOrder": "cached background; optional source skill effects; actors; player; committed hazard and bullet bodies; player hitpoint",
+  "validation": {
+    "mode": "controlled native CPU Canvas static and timed render fixtures, not browser/GPU/mobile/natural progression",
+    "sourceIntegrity": "all14 byte size, Git blob SHA-1, SHA-256 and native dimensions match source provenance manifest",
+    "cache": "one source portrait surface reused across all14 scenes and released on return home;40 redraws allocate/recompose nothing",
+    "limits": [
+      "The existing combat movement rectangle remains unchanged; painting walls and furniture are non-colliding background art.",
+      "The floor swatch repeat is a runtime derivation, not an authored seamless tile set or a complete connected map.",
+      "Actual browser, GPU and mobile device behavior must be reported by separate validation."
+    ]
+  }
+}

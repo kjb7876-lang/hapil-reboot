@@ -126,7 +126,7 @@
   function syncSettings(){
     $('setting-music').checked=settings.music;$('setting-sfx').checked=settings.sfx;$('setting-skills').checked=settings.skillRotation;$('setting-low').checked=settings.quality==='low';$('setting-sensitivity').value=settings.sensitivity;safeText('sensitivity-value',Number(settings.sensitivity).toFixed(1)+'×');
     document.querySelectorAll('[data-difficulty]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.difficulty===settings.difficulty));});
-    safeText('difficulty-description',settings.difficulty==='gentle'?'느린 탄속 · 체력 5 · 넉넉한 예고':settings.difficulty==='hell'?'HELL · 체력 3 · 빠른 연속 패턴 · 매회 달라지는 탄속':'일반 웨이브를 지나 보스와 조우 · 7대죄까지');safeText('skill-state',settings.skillRotation?'스킬 자동 순환':'스킬 순환 꺼짐');safeText('render-state',settings.quality==='low'?'30 FPS':'60 FPS');
+    safeText('difficulty-description',settings.difficulty==='gentle'?'느린 탄속 · 체력 5 · 넉넉한 예고':settings.difficulty==='hell'?'HELL · 고속 탄막 · 광선·전용기·회전탄 중첩':'일반 웨이브를 지나 보스와 조우 · 7대죄까지');safeText('skill-state',settings.skillRotation?'스킬 자동 순환':'스킬 순환 꺼짐');safeText('render-state',settings.quality==='low'?'30 FPS':'60 FPS');
     if(world)world.skillRotation=settings.skillRotation;else safeText('health-value',settings.difficulty==='gentle'?'◇ ◇ ◇ ◇ ◇':'◇ ◇ ◇');updateSkills();
     if(!settings.music)stopMusic();else if(mode==='playing')startMusic();
   }
@@ -205,12 +205,15 @@
     var motionKeys=['bossMotionViolet','bossMotionHorn','bossMotionBalrog','bossMotionMask','bossMotionLucifer'];
     var fxKeys=global.HapilProjectiles&&global.HapilProjectiles.assetKeysForEncounter?global.HapilProjectiles.assetKeysForEncounter(group):[];
     var sinKeys=group>=5&&global.HapilActors&&global.HapilActors.sinAssetKeysForEncounter?global.HapilActors.sinAssetKeysForEncounter(group):[];
+    var terrainKeys=global.HapilRenderer&&global.HapilRenderer.terrainAssetKeysForEncounter?global.HapilRenderer.terrainAssetKeysForEncounter(group):[];
+    var skillKeys=global.HapilBossSkills&&global.HapilBossSkills.assetKeysForEncounter?global.HapilBossSkills.assetKeysForEncounter(group):[];
+    if(global.HapilBossSkills&&global.HapilBossSkills.optionalAssetKeysForEncounter)skillKeys=skillKeys.concat(global.HapilBossSkills.optionalAssetKeysForEncounter(group));
     return Object.keys(global.HapilMedia).filter(function(k){
       if(['gunner','boss','spider','fxResonance','fxSlash','fxThorns','fxArrow','fxParry','fxSilk','fxWindArrow8V6'].includes(k))return true;
       if(group===0&&(/^map\d+$/.test(k)||k==='violetCutin'))return true;
       if(group>=5&&k==='cave')return true;
       if((group===-1||group===1||group===2)&&['forest','ruins','cave'].includes(k))return true;
-      if(k===motionKeys[group]||fxKeys.indexOf(k)>=0||sinKeys.indexOf(k)>=0)return true;
+      if(k===motionKeys[group]||fxKeys.indexOf(k)>=0||sinKeys.indexOf(k)>=0||terrainKeys.indexOf(k)>=0||skillKeys.indexOf(k)>=0)return true;
       return enemyNames.some(function(n){return k.indexOf('actor'+n)===0;});
     });
   }
@@ -249,8 +252,11 @@
     if(!arrow||arrow.complete===false||arrow.naturalWidth!==1024||arrow.naturalHeight!==512)return 'fxWindArrow8V6';
     return projectiles.invalidAssetForEncounter(candidate,group);
   }
+  function invalidTerrainAsset(candidate,group){return global.HapilRenderer&&global.HapilRenderer.invalidTerrainAsset?global.HapilRenderer.invalidTerrainAsset(candidate,group):null;}
   function optionalAssetKeys(group){
-    return global.HapilProjectiles&&global.HapilProjectiles.optionalAssetKeysForEncounter?global.HapilProjectiles.optionalAssetKeysForEncounter(group):[];
+    var keys=global.HapilProjectiles&&global.HapilProjectiles.optionalAssetKeysForEncounter?global.HapilProjectiles.optionalAssetKeysForEncounter(group):[];
+    if(global.HapilBossSkills&&global.HapilBossSkills.optionalAssetKeysForEncounter)keys=keys.concat(global.HapilBossSkills.optionalAssetKeysForEncounter(group));
+    return keys.filter(function(k,i){return keys.indexOf(k)===i;});
   }
   function requiredAssetKeys(keys,group){var optional=optionalAssetKeys(group);return keys.filter(function(k){return optional.indexOf(k)<0;});}
   function queueOptionalAssets(keys,group){
@@ -389,7 +395,7 @@
   function diagnostics(){
     var hazards=world&&world.hazards?world.hazards:[],heap=null;
     try{var m=performance.memory;if(m&&Number.isFinite(m.usedJSHeapSize))heap={usedBytes:m.usedJSHeapSize,totalBytes:m.totalJSHeapSize,limitBytes:m.jsHeapSizeLimit,scope:'Browser-reported JS heap estimate; excludes GPU and decoded media; GC not controlled'};}catch(e){}
-    return {version:'hapil-sins-hell-v13',candidateRevision:13,mobileRuntime:mobileRuntime,loadedImages:Object.keys(images).length,imageRequestsPending:Object.keys(imageRequests).length,imageRequestsActive:imageActive,mechanicsRevision:world?world.mechanicsRevision:(core?core.MECHANICS_REVISION:2),connectedMapStatus:renderer&&renderer.getMetrics?renderer.getMetrics().sourceStatus||'not-yet-reported':'not-yet-reported',capturedAt:new Date().toISOString(),mode:mode,fixedHz:60,renderTarget:settings.quality==='low'?30:60,rollingWindow:maxSamples,measurementScope:{update:'Main-thread fixed-step simulation and event processing',render:'JavaScript canvas command submission only; not GPU completion',frame:'requestAnimationFrame callback intervals during play'},updateMs:distribution(samples.update,peakUpdate),renderMs:distribution(samples.render,peakRender),frameIntervalMs:distribution(samples.frame,peakFrame),renderedFrames:totalFrames,fixedSteps:totalSteps,pausedLargeGaps:droppedGaps,lastGapReason:lastGapReason,viewport:{width:global.innerWidth,height:global.innerHeight,dpr:global.devicePixelRatio||1,arenaWidth:$('app-stage').clientWidth,arenaHeight:$('app-stage').clientHeight,padHeight:$('touch-pad').clientHeight},entities:world?{bullets:world.bullets.length,shots:world.shots.length,enemies:world.enemies.length,effects:world.effects.length,laserWarnings:hazards.filter(function(h){return h.phase==='warning';}).length,activeLasers:hazards.filter(function(h){return h.phase==='active';}).length,fadingLasers:hazards.filter(function(h){return h.phase==='fade';}).length}:null,terrain:renderer&&renderer.getMetrics?renderer.getMetrics():null,jsHeapEstimate:heap,gpuTimeMs:null,coreStats:world?JSON.parse(JSON.stringify(world.stats||{})):null,assetErrors:assetErrors.slice(),storage:store?Object.assign({},store.status):null};
+    return {version:'hapil-source-overlap-hell-v14',candidateRevision:14,mobileRuntime:mobileRuntime,loadedImages:Object.keys(images).length,imageRequestsPending:Object.keys(imageRequests).length,imageRequestsActive:imageActive,mechanicsRevision:world?world.mechanicsRevision:(core?core.MECHANICS_REVISION:2),connectedMapStatus:renderer&&renderer.getMetrics?renderer.getMetrics().sourceStatus||'not-yet-reported':'not-yet-reported',capturedAt:new Date().toISOString(),mode:mode,fixedHz:60,renderTarget:settings.quality==='low'?30:60,rollingWindow:maxSamples,measurementScope:{update:'Main-thread fixed-step simulation and event processing',render:'JavaScript canvas command submission only; not GPU completion',frame:'requestAnimationFrame callback intervals during play'},updateMs:distribution(samples.update,peakUpdate),renderMs:distribution(samples.render,peakRender),frameIntervalMs:distribution(samples.frame,peakFrame),renderedFrames:totalFrames,fixedSteps:totalSteps,pausedLargeGaps:droppedGaps,lastGapReason:lastGapReason,viewport:{width:global.innerWidth,height:global.innerHeight,dpr:global.devicePixelRatio||1,arenaWidth:$('app-stage').clientWidth,arenaHeight:$('app-stage').clientHeight,padHeight:$('touch-pad').clientHeight},entities:world?{bullets:world.bullets.length,shots:world.shots.length,enemies:world.enemies.length,effects:world.effects.length,laserWarnings:hazards.filter(function(h){return h.phase==='warning';}).length,activeLasers:hazards.filter(function(h){return h.phase==='active';}).length,fadingLasers:hazards.filter(function(h){return h.phase==='fade';}).length}:null,terrain:renderer&&renderer.getMetrics?renderer.getMetrics():null,jsHeapEstimate:heap,gpuTimeMs:null,coreStats:world?JSON.parse(JSON.stringify(world.stats||{})):null,assetErrors:assetErrors.slice(),storage:store?Object.assign({},store.status):null};
   }
   function ensureEncounterArt(){
     if(mode==='error')return false;
@@ -406,7 +412,7 @@
     loadImagesBounded(requiredKeys,current).then(function(){
       if(!current())return;
       encounterArtPending=false;artLoadJob=null;
-      if(requiredKeys.some(function(k){return !images[k];})||invalidActorAsset(images,group)||invalidDamageAsset(images,group)){showError(new Error('다음 구간의 원화를 불러오지 못했습니다. 연결을 확인한 뒤 다시 열어주세요.'));return;}
+      if(requiredKeys.some(function(k){return !images[k];})||invalidActorAsset(images,group)||invalidDamageAsset(images,group)||invalidTerrainAsset(images,group)){showError(new Error('다음 구간의 원화를 불러오지 못했습니다. 연결을 확인한 뒤 다시 열어주세요.'));return;}
       Object.keys(images).forEach(function(k){if(keysToLoad.indexOf(k)<0)delete images[k];});
       encounterArtGroup=group;accumulator=0;lastStamp=performance.now();clearInput();renderDirty=true;queueOptionalAssets(keysToLoad,group);
     }).catch(function(error){if(current()){encounterArtPending=false;artLoadJob=null;showError(error);}});
@@ -468,7 +474,7 @@
     bind();fit();$('start-button').disabled=true;$('practice-button').disabled=true;
     try{
       core=global.HapilCore;store=global.HapilStore;if(!core||!core.createRun||!core.step)throw new Error('전투 엔진을 찾지 못했습니다. 압축 파일 전체를 풀거나 단일 HTML 실행 파일을 사용해주세요.');if(!global.HapilRenderer)throw new Error('화면 렌더러 파일을 찾지 못했습니다.');
-      var media=global.HapilMedia||{};setSkillEmblems(media);var bootKeys=mobileAssetKeys(0),bootRequired=requiredAssetKeys(bootKeys,0);retainImageRequests(bootKeys);await loadImagesBounded(bootRequired);if(bootRequired.some(function(k){return !images[k];})||invalidActorAsset(images,0)||invalidDamageAsset(images,0))throw new Error('시작 구간의 이미지를 불러오지 못했습니다. 연결을 확인하고 다시 열어주세요.');encounterArtGroup=0;queueOptionalAssets(bootKeys,0);
+      var media=global.HapilMedia||{};setSkillEmblems(media);var bootKeys=mobileAssetKeys(0),bootRequired=requiredAssetKeys(bootKeys,0);retainImageRequests(bootKeys);await loadImagesBounded(bootRequired);if(bootRequired.some(function(k){return !images[k];})||invalidActorAsset(images,0)||invalidDamageAsset(images,0)||invalidTerrainAsset(images,0))throw new Error('시작 구간의 이미지를 불러오지 못했습니다. 연결을 확인하고 다시 열어주세요.');encounterArtGroup=0;queueOptionalAssets(bootKeys,0);
       if(assetErrors.indexOf('gunner')>=0||assetErrors.indexOf('boss')>=0)throw new Error('캐릭터 이미지를 읽지 못했습니다. media 폴더가 포함되어 있는지 확인하거나 단일 HTML 실행 파일을 사용해주세요.');
       renderer=global.HapilRenderer.create($('game-canvas'),images);fit();buildAudio(media);raf=requestAnimationFrame(frame);
       if(store){

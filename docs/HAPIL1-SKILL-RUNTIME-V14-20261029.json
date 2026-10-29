@@ -1,0 +1,756 @@
+{
+  "schema": "hapil.source-skill-runtime.v14",
+  "sourceRepository": "kjb7876-lang/hapil1",
+  "sourceCommit": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+  "sourceTree": "ff02bb454f1d62b65945e0724e6c55382bfec6e5",
+  "candidateEvidence": "HAPIL1-FX-CANDIDATES-V14-20261029.json",
+  "skills": [
+    {
+      "runtimeIndex": 0,
+      "sourceOwnerId": "mb-dist01",
+      "runtimeKey": "h14SkillViolet",
+      "runtimePath": "media/hapil1-v14/fx/violet-primary.webp",
+      "originalSourcePath": "assets/generated-v31306/projectiles/dist01-purple-web-blade.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/generated-v31306/projectiles/dist01-purple-web-blade.webp",
+      "gitBlobSHA": "02b4aada39778f419ad6d796d0964191b1a9e8d2",
+      "sha256": "237953c7bb81d53450f3ae5f63b0b81986eab37a124d929bced022b14a3addd8",
+      "bytes": 111666,
+      "dimensions": [
+        512,
+        512
+      ],
+      "cropXYWH": [
+        10,
+        158,
+        495,
+        184
+      ],
+      "authoredFrames": 1,
+      "roles": [
+        "charge-accent",
+        "confirmed-release-accent",
+        "confirmed-laser-activation-accent"
+      ],
+      "pixelReview": "Actual source contact and transparent-on-dark composites opened in this execution environment. Hidden RGB at alpha0 is never made opaque.",
+      "note": "Whole own static projectile/effect crop; no new animation or character master is claimed."
+    },
+    {
+      "runtimeIndex": 1,
+      "sourceOwnerId": "mb-dist02",
+      "runtimeKey": "h14SkillHorn",
+      "runtimePath": "media/hapil1-v14/fx/horn-primary.webp",
+      "originalSourcePath": "assets/vfx/bosses/v312/mb-dist02.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v312/mb-dist02.webp",
+      "gitBlobSHA": "9a35917a0bc0c97394dfea8595ffa1477ead9bda",
+      "sha256": "f798a6599bcd55e37b9b1dfceda41a0b20610a92cbfe3c6181a7397c88c549d0",
+      "bytes": 24420,
+      "dimensions": [
+        256,
+        256
+      ],
+      "cropXYWH": [
+        31,
+        67,
+        83,
+        151
+      ],
+      "authoredFrames": 1,
+      "roles": [
+        "charge-accent",
+        "confirmed-release-accent",
+        "confirmed-laser-activation-accent"
+      ],
+      "pixelReview": "Actual source contact and transparent-on-dark composites opened in this execution environment. Hidden RGB at alpha0 is never made opaque.",
+      "note": "Left bone/branch excerpt, not the full circular swirl."
+    },
+    {
+      "runtimeIndex": 2,
+      "sourceOwnerId": "dist06-boss",
+      "runtimeKey": "h14SkillBalrog",
+      "runtimePath": "media/hapil1-v14/fx/balrog-secondary.webp",
+      "originalSourcePath": "assets/generated-v31224/boss-vfx/balrog_gate_meteor.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/generated-v31224/boss-vfx/balrog_gate_meteor.webp",
+      "gitBlobSHA": "d2b4638a1c8e74b9fb18cd5cba8d8331d7cfcf5e",
+      "sha256": "f6f9b989f5c6e33094440268a7888c71548ac2c6948d0cf4254b2e04aea3d762",
+      "bytes": 207986,
+      "dimensions": [
+        512,
+        512
+      ],
+      "cropXYWH": [
+        26,
+        93,
+        459,
+        325
+      ],
+      "authoredFrames": 1,
+      "roles": [
+        "charge-accent",
+        "confirmed-release-accent",
+        "confirmed-laser-activation-accent"
+      ],
+      "pixelReview": "Actual source contact and transparent-on-dark composites opened in this execution environment. Hidden RGB at alpha0 is never made opaque.",
+      "note": "Whole own static projectile/effect crop; no new animation or character master is claimed."
+    },
+    {
+      "runtimeIndex": 3,
+      "sourceOwnerId": "mb-ep1a11",
+      "runtimeKey": "h14SkillMask",
+      "runtimePath": "media/hapil1-v14/fx/mask-secondary.webp",
+      "originalSourcePath": "assets/vfx/v31323/boss/mb-ep1a11/lucifer_feather_lance.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/v31323/boss/mb-ep1a11/lucifer_feather_lance.webp",
+      "gitBlobSHA": "62048cdd659a84f2d2565c3f977f681e14c24fbe",
+      "sha256": "2772a1df9aee03a04d75786218e5834e60aa2c4dc8dc7bd5372065e93287eee4",
+      "bytes": 60564,
+      "dimensions": [
+        512,
+        512
+      ],
+      "cropXYWH": [
+        26,
+        134,
+        460,
+        245
+      ],
+      "authoredFrames": 1,
+      "roles": [
+        "charge-accent",
+        "confirmed-release-accent",
+        "confirmed-laser-activation-accent"
+      ],
+      "pixelReview": "Actual source contact and transparent-on-dark composites opened in this execution environment. Hidden RGB at alpha0 is never made opaque.",
+      "note": "Own mb-ep1a11 namespace feather source. Filename resemblance to Lucifer does not substitute another actor source."
+    },
+    {
+      "runtimeIndex": 4,
+      "sourceOwnerId": "a11-boss",
+      "runtimeKey": "h14SkillLucifer",
+      "runtimePath": "media/hapil1-v14/fx/lucifer-secondary.webp",
+      "originalSourcePath": "assets/generated-v31224/boss-vfx/lucifer_feather_lance.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/generated-v31224/boss-vfx/lucifer_feather_lance.webp",
+      "gitBlobSHA": "498ee215ccd77458ad64a0bff181c7c2fd30dff8",
+      "sha256": "c0f4cf47147fccb62714d909749e79a72e893b2976943c53e441e8deb9dfc93d",
+      "bytes": 143392,
+      "dimensions": [
+        512,
+        512
+      ],
+      "cropXYWH": [
+        26,
+        134,
+        460,
+        245
+      ],
+      "authoredFrames": 1,
+      "roles": [
+        "charge-accent",
+        "confirmed-release-accent",
+        "confirmed-laser-activation-accent"
+      ],
+      "pixelReview": "Actual source contact and transparent-on-dark composites opened in this execution environment. Hidden RGB at alpha0 is never made opaque.",
+      "note": "Feather lance only. Judgment-sigil ring is not used."
+    },
+    {
+      "runtimeIndex": 5,
+      "sourceOwnerId": "b02-boss",
+      "runtimeKey": "h14SkillSloth",
+      "runtimePath": "media/hapil1-v14/fx/sloth-secondary.webp",
+      "originalSourcePath": "assets/vfx/bosses/v3110/ep1b02_deferred_life_debris.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v3110/ep1b02_deferred_life_debris.webp",
+      "gitBlobSHA": "050598a2e5284381132bed8747bfe99eeee83469",
+      "sha256": "fd0df92278a5e74d4c2421ffc2c3fcce8b35c2455bd2407ce9b71bd067489486",
+      "bytes": 273476,
+      "dimensions": [
+        512,
+        512
+      ],
+      "cropXYWH": [
+        21,
+        21,
+        469,
+        470
+      ],
+      "authoredFrames": 1,
+      "roles": [
+        "charge-accent",
+        "confirmed-release-accent",
+        "confirmed-laser-activation-accent"
+      ],
+      "pixelReview": "Actual source contact and transparent-on-dark composites opened in this execution environment. Hidden RGB at alpha0 is never made opaque.",
+      "note": "Own debris source, excluding the circular blue field."
+    },
+    {
+      "runtimeIndex": 6,
+      "sourceOwnerId": "b03-boss",
+      "runtimeKey": "h14SkillEnvy",
+      "runtimePath": "media/hapil1-v14/fx/envy-primary.webp",
+      "originalSourcePath": "assets/generated-v31224/boss-vfx/envy_mirror_shard.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/generated-v31224/boss-vfx/envy_mirror_shard.webp",
+      "gitBlobSHA": "3d348fbbe745d5cbea93d78eef2d84ed55fae58a",
+      "sha256": "79feb01463759f28a1e5ede94586b944a5c97062f21d54df097d0c6f306fedd6",
+      "bytes": 179378,
+      "dimensions": [
+        512,
+        512
+      ],
+      "cropXYWH": [
+        26,
+        105,
+        460,
+        303
+      ],
+      "authoredFrames": 1,
+      "roles": [
+        "charge-accent",
+        "confirmed-release-accent",
+        "confirmed-laser-activation-accent"
+      ],
+      "pixelReview": "Actual source contact and transparent-on-dark composites opened in this execution environment. Hidden RGB at alpha0 is never made opaque.",
+      "note": "Whole own static projectile/effect crop; no new animation or character master is claimed."
+    },
+    {
+      "runtimeIndex": 7,
+      "sourceOwnerId": "b04-boss",
+      "runtimeKey": "h14SkillGlutton",
+      "runtimePath": "media/hapil1-v14/fx/glutton-primary.webp",
+      "originalSourcePath": "assets/generated-v31224/boss-vfx/gluttony_maw_wave.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/generated-v31224/boss-vfx/gluttony_maw_wave.webp",
+      "gitBlobSHA": "810bd2db3a1869d148053a463947c594de4fd7ce",
+      "sha256": "a30a2c20dbd1adf968d0f737b8836149ce28a62ad68dbf9452ee63c5df4b27fc",
+      "bytes": 295074,
+      "dimensions": [
+        512,
+        512
+      ],
+      "cropXYWH": [
+        33,
+        27,
+        444,
+        459
+      ],
+      "authoredFrames": 1,
+      "roles": [
+        "charge-accent",
+        "confirmed-release-accent",
+        "confirmed-laser-activation-accent"
+      ],
+      "pixelReview": "Actual source contact and transparent-on-dark composites opened in this execution environment. Hidden RGB at alpha0 is never made opaque.",
+      "note": "Whole own static projectile/effect crop; no new animation or character master is claimed."
+    },
+    {
+      "runtimeIndex": 8,
+      "sourceOwnerId": "b05-boss",
+      "runtimeKey": "h14SkillLust",
+      "runtimePath": "media/hapil1-v14/fx/lust-primary.webp",
+      "originalSourcePath": "assets/vfx/bosses/v3110/ep1b05_lipstick_heel_control_strings.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v3110/ep1b05_lipstick_heel_control_strings.webp",
+      "gitBlobSHA": "170d8770ae63408be213a8aaf7f5c543ba0bb482",
+      "sha256": "50854e6326ef0bf88e41dc396551fe337741cae7d85389bc94f5e624395760e1",
+      "bytes": 214228,
+      "dimensions": [
+        512,
+        512
+      ],
+      "cropXYWH": [
+        21,
+        35,
+        470,
+        443
+      ],
+      "authoredFrames": 1,
+      "roles": [
+        "charge-accent",
+        "confirmed-release-accent",
+        "confirmed-laser-activation-accent"
+      ],
+      "pixelReview": "Actual source contact and transparent-on-dark composites opened in this execution environment. Hidden RGB at alpha0 is never made opaque.",
+      "note": "Whole own static projectile/effect crop; no new animation or character master is claimed."
+    },
+    {
+      "runtimeIndex": 9,
+      "sourceOwnerId": "b06-boss",
+      "runtimeKey": "h14SkillGreed",
+      "runtimePath": "media/hapil1-v14/fx/greed-primary.webp",
+      "originalSourcePath": "assets/generated-v31224/boss-vfx/greed_coin_saw.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/generated-v31224/boss-vfx/greed_coin_saw.webp",
+      "gitBlobSHA": "5f752b7afa90132d4074f4d78880c8f3b018f5a7",
+      "sha256": "36355530ef13f3727b36c0458f3b8a40bb31e1c5fd11ad0f58e4c2f4fcfeeb4b",
+      "bytes": 267494,
+      "dimensions": [
+        512,
+        512
+      ],
+      "cropXYWH": [
+        28,
+        70,
+        456,
+        373
+      ],
+      "authoredFrames": 1,
+      "roles": [
+        "charge-accent",
+        "confirmed-release-accent",
+        "confirmed-laser-activation-accent"
+      ],
+      "pixelReview": "Actual source contact and transparent-on-dark composites opened in this execution environment. Hidden RGB at alpha0 is never made opaque.",
+      "note": "Whole own static projectile/effect crop; no new animation or character master is claimed."
+    },
+    {
+      "runtimeIndex": 10,
+      "sourceOwnerId": "b07-boss",
+      "runtimeKey": "h14SkillWrath",
+      "runtimePath": "media/hapil1-v14/fx/wrath-primary.webp",
+      "originalSourcePath": "assets/vfx/bosses/v3110/ep1b07_mop_lighter_fire_beasts.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v3110/ep1b07_mop_lighter_fire_beasts.webp",
+      "gitBlobSHA": "022d0c7688a8467bed3a734492f0d8034e2daf26",
+      "sha256": "fe91e446954c9d3367e194c2884264a0b428b01d40c17d1b3556f58cceacff95",
+      "bytes": 276340,
+      "dimensions": [
+        512,
+        512
+      ],
+      "cropXYWH": [
+        21,
+        26,
+        469,
+        460
+      ],
+      "authoredFrames": 1,
+      "roles": [
+        "charge-accent",
+        "confirmed-release-accent",
+        "confirmed-laser-activation-accent"
+      ],
+      "pixelReview": "Actual source contact and transparent-on-dark composites opened in this execution environment. Hidden RGB at alpha0 is never made opaque.",
+      "note": "Whole own static projectile/effect crop; no new animation or character master is claimed."
+    },
+    {
+      "runtimeIndex": 11,
+      "sourceOwnerId": "b08-boss",
+      "runtimeKey": "h14SkillPride",
+      "runtimePath": "media/hapil1-v14/fx/pride-primary.webp",
+      "originalSourcePath": "assets/vfx/bosses/v3110/ep1b08_inverted_cross_telekinesis.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81/assets/vfx/bosses/v3110/ep1b08_inverted_cross_telekinesis.webp",
+      "gitBlobSHA": "b43fa36bce96e7b1c0b1981523d14be7cb0b84db",
+      "sha256": "83ed7b152d1c8d28cf9c3797738c42184ed02cf6100e976ef5886b5f76f69c85",
+      "bytes": 282626,
+      "dimensions": [
+        512,
+        512
+      ],
+      "cropXYWH": [
+        174,
+        142,
+        154,
+        267
+      ],
+      "authoredFrames": 1,
+      "roles": [
+        "charge-accent",
+        "confirmed-release-accent",
+        "confirmed-laser-activation-accent"
+      ],
+      "pixelReview": "Actual source contact and transparent-on-dark composites opened in this execution environment. Hidden RGB at alpha0 is never made opaque.",
+      "note": "Central inverted-cross fragment, omitting the outer surrounding ring."
+    }
+  ],
+  "largeHellRotors": [
+    {
+      "runtimeIndex": 5,
+      "runtimeKey": "h14SkillSloth",
+      "runtimePath": "media/hapil1-v14/fx/sloth-secondary.webp",
+      "sourceOwnerId": "b02-boss",
+      "gitBlobSHA": "050598a2e5284381132bed8747bfe99eeee83469",
+      "sha256": "fd0df92278a5e74d4c2421ffc2c3fcce8b35c2455bd2407ce9b71bd067489486",
+      "dimensions": [
+        512,
+        512
+      ],
+      "cropXYWH": [
+        21,
+        21,
+        469,
+        470
+      ],
+      "use": "Only the two large hell-rotor ornaments and their accepted charge previews. Spin transforms are cosmetic; the own dense material continues to cover the r=11 damage circle. No handheld-weapon claim."
+    },
+    {
+      "runtimeIndex": 6,
+      "runtimeKey": "h14SkillEnvy",
+      "runtimePath": "media/hapil1-v14/fx/envy-primary.webp",
+      "sourceOwnerId": "b03-boss",
+      "gitBlobSHA": "3d348fbbe745d5cbea93d78eef2d84ed55fae58a",
+      "sha256": "79feb01463759f28a1e5ede94586b944a5c97062f21d54df097d0c6f306fedd6",
+      "dimensions": [
+        512,
+        512
+      ],
+      "cropXYWH": [
+        26,
+        105,
+        460,
+        303
+      ],
+      "use": "Only the two large hell-rotor ornaments and their accepted charge previews. Spin transforms are cosmetic; the own dense material continues to cover the r=11 damage circle. No handheld-weapon claim."
+    },
+    {
+      "runtimeIndex": 7,
+      "runtimeKey": "h14RotorGlutton",
+      "runtimePath": "media/hapil1-v14/fx/glutton-secondary.webp",
+      "sourceOwnerId": "b04-boss",
+      "gitBlobSHA": "fdc53e2f8b66970e8299cf84beeecc7fd53bfa4c",
+      "sha256": "bcd58373009e6e28e1521f42b44f4c080f02d1767729e8669f45fee22cd8c942",
+      "dimensions": [
+        512,
+        512
+      ],
+      "cropXYWH": [
+        40,
+        59,
+        447,
+        398
+      ],
+      "use": "Only the two large hell-rotor ornaments and their accepted charge previews. Spin transforms are cosmetic; the own dense material continues to cover the r=11 damage circle. No handheld-weapon claim."
+    },
+    {
+      "runtimeIndex": 8,
+      "runtimeKey": "h14SkillLust",
+      "runtimePath": "media/hapil1-v14/fx/lust-primary.webp",
+      "sourceOwnerId": "b05-boss",
+      "gitBlobSHA": "170d8770ae63408be213a8aaf7f5c543ba0bb482",
+      "sha256": "50854e6326ef0bf88e41dc396551fe337741cae7d85389bc94f5e624395760e1",
+      "dimensions": [
+        512,
+        512
+      ],
+      "cropXYWH": [
+        21,
+        35,
+        470,
+        443
+      ],
+      "use": "Only the two large hell-rotor ornaments and their accepted charge previews. Spin transforms are cosmetic; the own dense material continues to cover the r=11 damage circle. No handheld-weapon claim."
+    },
+    {
+      "runtimeIndex": 9,
+      "runtimeKey": "h14SkillGreed",
+      "runtimePath": "media/hapil1-v14/fx/greed-primary.webp",
+      "sourceOwnerId": "b06-boss",
+      "gitBlobSHA": "5f752b7afa90132d4074f4d78880c8f3b018f5a7",
+      "sha256": "36355530ef13f3727b36c0458f3b8a40bb31e1c5fd11ad0f58e4c2f4fcfeeb4b",
+      "dimensions": [
+        512,
+        512
+      ],
+      "cropXYWH": [
+        28,
+        70,
+        456,
+        373
+      ],
+      "use": "Only the two large hell-rotor ornaments and their accepted charge previews. Spin transforms are cosmetic; the own dense material continues to cover the r=11 damage circle. No handheld-weapon claim."
+    },
+    {
+      "runtimeIndex": 10,
+      "runtimeKey": "h14SkillWrath",
+      "runtimePath": "media/hapil1-v14/fx/wrath-primary.webp",
+      "sourceOwnerId": "b07-boss",
+      "gitBlobSHA": "022d0c7688a8467bed3a734492f0d8034e2daf26",
+      "sha256": "fe91e446954c9d3367e194c2884264a0b428b01d40c17d1b3556f58cceacff95",
+      "dimensions": [
+        512,
+        512
+      ],
+      "cropXYWH": [
+        21,
+        26,
+        469,
+        460
+      ],
+      "use": "Only the two large hell-rotor ornaments and their accepted charge previews. Spin transforms are cosmetic; the own dense material continues to cover the r=11 damage circle. No handheld-weapon claim."
+    },
+    {
+      "runtimeIndex": 11,
+      "runtimeKey": "h14SkillPride",
+      "runtimePath": "media/hapil1-v14/fx/pride-primary.webp",
+      "sourceOwnerId": "b08-boss",
+      "gitBlobSHA": "b43fa36bce96e7b1c0b1981523d14be7cb0b84db",
+      "sha256": "83ed7b152d1c8d28cf9c3797738c42184ed02cf6100e976ef5886b5f76f69c85",
+      "dimensions": [
+        512,
+        512
+      ],
+      "cropXYWH": [
+        174,
+        142,
+        154,
+        267
+      ],
+      "use": "Only the two large hell-rotor ornaments and their accepted charge previews. Spin transforms are cosmetic; the own dense material continues to cover the r=11 damage circle. No handheld-weapon claim."
+    }
+  ],
+  "beamOrnaments": [
+    {
+      "runtimeIndex": 5,
+      "runtimeKey": "h14BeamSloth",
+      "source": "assets/vfx/rc33/boss-laser-families/sloth.webp",
+      "gitBlobSHA": "358fc45d9f27914b28fa3221bcb5ec633836581f",
+      "bytes": 350630,
+      "sha256": "73a9174dd6fffda1282c92202f44a87735f2ede546937ebc8514c12ccec8593a",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sourceCentralCropXYWH": [
+        543,
+        181,
+        1086,
+        362
+      ],
+      "centerCropAlphaExtrema": [
+        0,
+        253
+      ],
+      "centerCropOpaque255Fraction": 0,
+      "family": "sloth",
+      "file": "media/hapil1-v14/fx/beam-sloth.webp",
+      "pixelReviewed": true,
+      "ownershipEvidence": "assets/rc33/boss-laser-render.js OWNER_FAMILY routing",
+      "cropEvidence": "assets/rc77/connected-laser.js source central crop at25%,25%,50%,50%",
+      "usageLimit": "Decorative source overlay clipped to exact beam hazard; current proven own-material damage body remains. Alpha holes mean full-width danger coverage is not certified by this artwork alone.",
+      "cacheDimensions": [
+        384,
+        128
+      ],
+      "use": "Optional exact-capsule-clipped source ornament above the retained own dense material beam. Source alpha holes cannot remove damage coverage. RGB is retinted to current named/body palette, preserving sampled alpha; source family native hue constants are not trusted."
+    },
+    {
+      "runtimeIndex": 6,
+      "runtimeKey": "h14BeamEnvy",
+      "source": "assets/vfx/rc33/boss-laser-families/envy.webp",
+      "gitBlobSHA": "a97402e2024b6359eb8e87cbb897c0b99eb1c5c5",
+      "bytes": 419044,
+      "sha256": "983634b08cecb22aff03cf10bf3cc80d5b948d27366fb30ef4fb55d99214e853",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sourceCentralCropXYWH": [
+        543,
+        181,
+        1086,
+        362
+      ],
+      "centerCropAlphaExtrema": [
+        0,
+        253
+      ],
+      "centerCropOpaque255Fraction": 0,
+      "family": "envy",
+      "file": "media/hapil1-v14/fx/beam-envy.webp",
+      "pixelReviewed": true,
+      "ownershipEvidence": "assets/rc33/boss-laser-render.js OWNER_FAMILY routing",
+      "cropEvidence": "assets/rc77/connected-laser.js source central crop at25%,25%,50%,50%",
+      "usageLimit": "Decorative source overlay clipped to exact beam hazard; current proven own-material damage body remains. Alpha holes mean full-width danger coverage is not certified by this artwork alone.",
+      "cacheDimensions": [
+        384,
+        128
+      ],
+      "use": "Optional exact-capsule-clipped source ornament above the retained own dense material beam. Source alpha holes cannot remove damage coverage. RGB is retinted to current named/body palette, preserving sampled alpha; source family native hue constants are not trusted."
+    },
+    {
+      "runtimeIndex": 7,
+      "runtimeKey": "h14BeamGlutton",
+      "source": "assets/vfx/rc33/boss-laser-families/gluttony.webp",
+      "gitBlobSHA": "694892e60df9f312696e25aaf5c361c4e83eaa6d",
+      "bytes": 368580,
+      "sha256": "c74954f94e3460f92138bdd599146646021fc64d0a38eaac4c832f30fe1ff5db",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sourceCentralCropXYWH": [
+        543,
+        181,
+        1086,
+        362
+      ],
+      "centerCropAlphaExtrema": [
+        0,
+        255
+      ],
+      "centerCropOpaque255Fraction": 1.7805724285990456e-05,
+      "family": "gluttony",
+      "file": "media/hapil1-v14/fx/beam-gluttony.webp",
+      "pixelReviewed": true,
+      "ownershipEvidence": "assets/rc33/boss-laser-render.js OWNER_FAMILY routing",
+      "cropEvidence": "assets/rc77/connected-laser.js source central crop at25%,25%,50%,50%",
+      "usageLimit": "Decorative source overlay clipped to exact beam hazard; current proven own-material damage body remains. Alpha holes mean full-width danger coverage is not certified by this artwork alone.",
+      "cacheDimensions": [
+        384,
+        128
+      ],
+      "use": "Optional exact-capsule-clipped source ornament above the retained own dense material beam. Source alpha holes cannot remove damage coverage. RGB is retinted to current named/body palette, preserving sampled alpha; source family native hue constants are not trusted."
+    },
+    {
+      "runtimeIndex": 8,
+      "runtimeKey": "h14BeamLust",
+      "source": "assets/vfx/rc33/boss-laser-families/lust.webp",
+      "gitBlobSHA": "6353809d233f37a28b938752ab9b1b277297dd17",
+      "bytes": 399528,
+      "sha256": "8a8becae13684a40f322ba2d14f6a49f5f7ccd11a7cf62fb6e5a5d579448442e",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sourceCentralCropXYWH": [
+        543,
+        181,
+        1086,
+        362
+      ],
+      "centerCropAlphaExtrema": [
+        0,
+        255
+      ],
+      "centerCropOpaque255Fraction": 1.7805724285990456e-05,
+      "family": "lust",
+      "file": "media/hapil1-v14/fx/beam-lust.webp",
+      "pixelReviewed": true,
+      "ownershipEvidence": "assets/rc33/boss-laser-render.js OWNER_FAMILY routing",
+      "cropEvidence": "assets/rc77/connected-laser.js source central crop at25%,25%,50%,50%",
+      "usageLimit": "Decorative source overlay clipped to exact beam hazard; current proven own-material damage body remains. Alpha holes mean full-width danger coverage is not certified by this artwork alone.",
+      "cacheDimensions": [
+        384,
+        128
+      ],
+      "use": "Optional exact-capsule-clipped source ornament above the retained own dense material beam. Source alpha holes cannot remove damage coverage. RGB is retinted to current named/body palette, preserving sampled alpha; source family native hue constants are not trusted."
+    },
+    {
+      "runtimeIndex": 9,
+      "runtimeKey": "h14BeamGreed",
+      "source": "assets/vfx/rc33/boss-laser-families/greed.webp",
+      "gitBlobSHA": "8eed4feb6257ddce2e408e7f38f9390bed552f2d",
+      "bytes": 317012,
+      "sha256": "64aa2111ae49c238fff935e21a2e6bf04724169f998d4512137c1224a8451c71",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sourceCentralCropXYWH": [
+        543,
+        181,
+        1086,
+        362
+      ],
+      "centerCropAlphaExtrema": [
+        0,
+        254
+      ],
+      "centerCropOpaque255Fraction": 0,
+      "family": "greed",
+      "file": "media/hapil1-v14/fx/beam-greed.webp",
+      "pixelReviewed": true,
+      "ownershipEvidence": "assets/rc33/boss-laser-render.js OWNER_FAMILY routing",
+      "cropEvidence": "assets/rc77/connected-laser.js source central crop at25%,25%,50%,50%",
+      "usageLimit": "Decorative source overlay clipped to exact beam hazard; current proven own-material damage body remains. Alpha holes mean full-width danger coverage is not certified by this artwork alone.",
+      "cacheDimensions": [
+        384,
+        128
+      ],
+      "use": "Optional exact-capsule-clipped source ornament above the retained own dense material beam. Source alpha holes cannot remove damage coverage. RGB is retinted to current named/body palette, preserving sampled alpha; source family native hue constants are not trusted."
+    },
+    {
+      "runtimeIndex": 10,
+      "runtimeKey": "h14BeamWrath",
+      "source": "assets/vfx/rc33/boss-laser-families/wrath.webp",
+      "gitBlobSHA": "85c93abae682c668d41eddd046bdc0527eac5468",
+      "bytes": 404864,
+      "sha256": "5bf97aaff9d372eeeb30033404301d9531af7eedcb35d0d618e884a333309e38",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sourceCentralCropXYWH": [
+        543,
+        181,
+        1086,
+        362
+      ],
+      "centerCropAlphaExtrema": [
+        0,
+        254
+      ],
+      "centerCropOpaque255Fraction": 0,
+      "family": "wrath",
+      "file": "media/hapil1-v14/fx/beam-wrath.webp",
+      "pixelReviewed": true,
+      "ownershipEvidence": "assets/rc33/boss-laser-render.js OWNER_FAMILY routing",
+      "cropEvidence": "assets/rc77/connected-laser.js source central crop at25%,25%,50%,50%",
+      "usageLimit": "Decorative source overlay clipped to exact beam hazard; current proven own-material damage body remains. Alpha holes mean full-width danger coverage is not certified by this artwork alone.",
+      "cacheDimensions": [
+        384,
+        128
+      ],
+      "use": "Optional exact-capsule-clipped source ornament above the retained own dense material beam. Source alpha holes cannot remove damage coverage. RGB is retinted to current named/body palette, preserving sampled alpha; source family native hue constants are not trusted."
+    },
+    {
+      "runtimeIndex": 11,
+      "runtimeKey": "h14BeamPride",
+      "source": "assets/vfx/rc33/boss-laser-families/pride.webp",
+      "gitBlobSHA": "d48e064bca5d82f6972ecc39a3233f8189bf9ce6",
+      "bytes": 382092,
+      "sha256": "319cde0f6ec2aa2449a7a5e76e1bffbed9497b36d244fc8bcfede2570d1c508e",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sourceCentralCropXYWH": [
+        543,
+        181,
+        1086,
+        362
+      ],
+      "centerCropAlphaExtrema": [
+        0,
+        254
+      ],
+      "centerCropOpaque255Fraction": 0,
+      "family": "pride",
+      "file": "media/hapil1-v14/fx/beam-pride.webp",
+      "pixelReviewed": true,
+      "ownershipEvidence": "assets/rc33/boss-laser-render.js OWNER_FAMILY routing",
+      "cropEvidence": "assets/rc77/connected-laser.js source central crop at25%,25%,50%,50%",
+      "usageLimit": "Decorative source overlay clipped to exact beam hazard; current proven own-material damage body remains. Alpha holes mean full-width danger coverage is not certified by this artwork alone.",
+      "cacheDimensions": [
+        384,
+        128
+      ],
+      "use": "Optional exact-capsule-clipped source ornament above the retained own dense material beam. Source alpha holes cannot remove damage coverage. RGB is retinted to current named/body palette, preserving sampled alpha; source family native hue constants are not trusted."
+    }
+  ],
+  "timing": "Read-only world tick and max8 boss.skillReleases records written only by successful own-boss projectile emission or laser activation. Future, negative, expired and missing releases do not create release effects. Legacy fallback requires releaseTick>=0. Optional charge accents do not replace geometric damage warnings.",
+  "renderOrder": "Source accents are drawn below actors, warnings, damage bodies and player. Actual release anchors outside the upper battle area are omitted, not teleported onto another target.",
+  "limits": {
+    "skillNormalDraws": 8,
+    "skillLowDraws": 4,
+    "skillCacheBytes": 2097152,
+    "skillCacheEntries": 24,
+    "skillStampPixels": [
+      96,
+      96
+    ],
+    "projectileCacheBytes": 4194304,
+    "projectileCacheEntries": 96,
+    "beamCachePixels": [
+      384,
+      128
+    ],
+    "ordinaryBulletLiveSourceDraws": 1,
+    "largeRotorLiveSourceDraws": 2,
+    "rawBeamDecodedBytesPerLoadedFamily": 6290112
+  },
+  "failures": "Skill, rotor ornament and beam ornament sources are optional and are omitted on missing/wrong dimensions. Existing required same-boss material damage sources remain mandatory and fail closed if missing. There is no geometric or foreign-actor visual fallback.",
+  "animationClaim": "All reused images are static single-frame art. A bounded pulse/fade, spin, or nine-slice texture fit does not establish authored animation frames. No complete continuous animation is claimed.",
+  "validation": "tests/legacy-h14-source-skills.test.cjs uses exact pinned source hashes and native CPU Canvas: 12 own source contracts, release timing, read-only rendering, draw/cache caps, transparent hidden RGB, seven large rotor spin/previews, exact beam clip and dense alpha coverage. This is not a GPU/mobile/browser/natural-clear result."
+}

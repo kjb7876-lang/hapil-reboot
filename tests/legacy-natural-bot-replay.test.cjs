@@ -7,6 +7,7 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const core=require('../src/core.js'),store=require('../src/storage.js')._test;
 const dir=path.join(__dirname,'fixtures/natural-bot'),manifest=JSON.parse(fs.readFileSync(path.join(dir,'manifest.json'),'utf8'));
 for(const [file,expected] of [['../src/core.js',manifest.recordedCoreSha256],['../src/weapon-patterns.js',manifest.recordedWeaponPatternsSha256]])assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,file))).digest('hex'),expected,`recorded simulation module changed: ${file}`);
+for(const [file,expected] of Object.entries(manifest.recordedPolicyFiles||{}))assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,'..',file))).digest('hex'),expected,`recorded input policy changed: ${file}`);
 assert.deepEqual(manifest.bossIds,core.CAMPAIGN_BOSSES.map(b=>b.id));
 assert.deepEqual(manifest.records.map(r=>`${r.difficulty}:${r.seed}`).sort(),['gentle:813','gentle:42','normal:813','normal:42','hell:813','hell:42'].sort());
 const fields=['tick','stage','wave','phase','bossIndex','bossCount','campaignRevision','waveDuration','idCounter','rngState','player','boss','enemies','bullets','shots','hazards','memory','resonance','score','graze','kills','skills','stats','_delays','_warnings','_deferred','_shotReadyAt','_memoryBucket','_memoryGain','_resBucket','_resGain','_grazeGain','_lastGraze'];
