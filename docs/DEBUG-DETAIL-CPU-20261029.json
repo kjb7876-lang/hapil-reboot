@@ -1,0 +1,778 @@
+{
+  "capturedAt": "2026-10-29T00:00:55.582Z",
+  "codeHashes": {
+    "src/core.js": "2fa6e24276f7914334a681cd5ca13049322e9e94bf1c779f90efe02eebe75a2d",
+    "src/boss-motion.js": "e2d1bde92838884382e30b5d8de6549cf9071ac9b21c84b7f9cb8d4bc63160b1",
+    "src/actors.js": "8ef099be652ce69cb4fccc5ddf9d8f58a082ccd31929ed1df0dfffef9a33aca8",
+    "src/projectiles.js": "c9cf758e52484051b2e643973cd5b03ea67c89299013c5d594dd9b1522eace78",
+    "src/render.js": "53a77fc1aef4ce1d47c0865a216bdb74082896ece2e3a42b91b25850f4a957b7"
+  },
+  "scope": "Native CPU Canvas synchronous raster at 360x640, DPR1. Actual retained Drive projectile, boss, player, and forest/ruins/cave art; connected-maptiles omitted (boss0 uses retained terrain fallback), all current presentation modules. Five warmup and fifty measured draws per case. Render-only fixed snapshots force boss charge to exercise optional signature casts; no collision or play claim.",
+  "host": {
+    "platform": "linux",
+    "arch": "x64",
+    "node": "v24.22.1",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalCPUs": 9
+  },
+  "fixture": "Explicit phase-3 practice fixture, normal HP and collision, no autoAttack or skills. Pre-planned moving route uses ordinary focus speed. Observed peak selected over1800 simulationticks; this is not natural progression. Synthetic saturation is impossible density in the observed five specials and deliberately overlaps imagery.",
+  "exclusions": [
+    "browser",
+    "headless-browser",
+    "mobile-emulation",
+    "actual-mobile",
+    "software-GPU",
+    "hardware-GPU",
+    "natural-campaign-clear",
+    "simulation-update-timing"
+  ],
+  "rows": [
+    {
+      "boss": "violet",
+      "case": "phase-3-observed-peak",
+      "quality": "normal",
+      "bullets": 85,
+      "hazards": 0,
+      "samples": 50,
+      "p50Ms": 2.541,
+      "p95Ms": 3.309,
+      "maxMs": 7.078,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 85,
+        "assetLaserDraws": 0,
+        "assetLaserSlices": 0,
+        "cacheEntries": 5,
+        "cacheBytes": 78720,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 85,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "violet",
+      "case": "phase-3-observed-peak",
+      "quality": "low",
+      "bullets": 85,
+      "hazards": 0,
+      "samples": 50,
+      "p50Ms": 1.058,
+      "p95Ms": 1.375,
+      "maxMs": 1.532,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 85,
+        "assetLaserDraws": 0,
+        "assetLaserSlices": 0,
+        "cacheEntries": 5,
+        "cacheBytes": 78720,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 85,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "violet",
+      "case": "synthetic-capacity-saturation",
+      "quality": "normal",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 9.743,
+      "p95Ms": 13.937,
+      "maxMs": 21.489,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 11,
+        "cacheBytes": 222360,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 85,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "violet",
+      "case": "synthetic-capacity-saturation",
+      "quality": "low",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 6.603,
+      "p95Ms": 8.832,
+      "maxMs": 11.357,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 11,
+        "cacheBytes": 222360,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 85,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "horn",
+      "case": "phase-3-observed-peak",
+      "quality": "normal",
+      "bullets": 83,
+      "hazards": 0,
+      "samples": 50,
+      "p50Ms": 1.164,
+      "p95Ms": 1.749,
+      "maxMs": 2.228,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 83,
+        "assetLaserDraws": 0,
+        "assetLaserSlices": 0,
+        "cacheEntries": 5,
+        "cacheBytes": 68360,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 83,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "horn",
+      "case": "phase-3-observed-peak",
+      "quality": "low",
+      "bullets": 83,
+      "hazards": 0,
+      "samples": 50,
+      "p50Ms": 0.945,
+      "p95Ms": 1.205,
+      "maxMs": 1.598,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 83,
+        "assetLaserDraws": 0,
+        "assetLaserSlices": 0,
+        "cacheEntries": 5,
+        "cacheBytes": 68360,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 83,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "horn",
+      "case": "synthetic-capacity-saturation",
+      "quality": "normal",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 6.975,
+      "p95Ms": 8.141,
+      "maxMs": 9.663,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 11,
+        "cacheBytes": 126912,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 83,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "horn",
+      "case": "synthetic-capacity-saturation",
+      "quality": "low",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 6.237,
+      "p95Ms": 6.953,
+      "maxMs": 8.042,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 11,
+        "cacheBytes": 126912,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 83,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "balrog",
+      "case": "phase-3-observed-peak",
+      "quality": "normal",
+      "bullets": 18,
+      "hazards": 5,
+      "samples": 50,
+      "p50Ms": 0.813,
+      "p95Ms": 0.971,
+      "maxMs": 1.292,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 18,
+        "assetLaserDraws": 0,
+        "assetLaserSlices": 0,
+        "cacheEntries": 2,
+        "cacheBytes": 14180,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 28,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "balrog",
+      "case": "phase-3-observed-peak",
+      "quality": "low",
+      "bullets": 18,
+      "hazards": 5,
+      "samples": 50,
+      "p50Ms": 0.624,
+      "p95Ms": 0.842,
+      "maxMs": 1.362,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 18,
+        "assetLaserDraws": 0,
+        "assetLaserSlices": 0,
+        "cacheEntries": 2,
+        "cacheBytes": 14180,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 28,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "balrog",
+      "case": "synthetic-capacity-saturation",
+      "quality": "normal",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 6.313,
+      "p95Ms": 6.945,
+      "maxMs": 7.354,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 10,
+        "cacheBytes": 97280,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 28,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "balrog",
+      "case": "synthetic-capacity-saturation",
+      "quality": "low",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 6.124,
+      "p95Ms": 6.741,
+      "maxMs": 9.894,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 10,
+        "cacheBytes": 97280,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 28,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "mask",
+      "case": "phase-3-observed-peak",
+      "quality": "normal",
+      "bullets": 49,
+      "hazards": 0,
+      "samples": 50,
+      "p50Ms": 0.555,
+      "p95Ms": 0.734,
+      "maxMs": 1.047,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 49,
+        "assetLaserDraws": 0,
+        "assetLaserSlices": 0,
+        "cacheEntries": 5,
+        "cacheBytes": 68352,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 49,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "mask",
+      "case": "phase-3-observed-peak",
+      "quality": "low",
+      "bullets": 49,
+      "hazards": 0,
+      "samples": 50,
+      "p50Ms": 0.551,
+      "p95Ms": 0.684,
+      "maxMs": 0.836,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 49,
+        "assetLaserDraws": 0,
+        "assetLaserSlices": 0,
+        "cacheEntries": 5,
+        "cacheBytes": 68352,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 49,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "mask",
+      "case": "synthetic-capacity-saturation",
+      "quality": "normal",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 5.898,
+      "p95Ms": 6.675,
+      "maxMs": 8.404,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 11,
+        "cacheBytes": 126912,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 49,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "mask",
+      "case": "synthetic-capacity-saturation",
+      "quality": "low",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 5.916,
+      "p95Ms": 6.676,
+      "maxMs": 6.933,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 11,
+        "cacheBytes": 126912,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 49,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "lucifer",
+      "case": "phase-3-observed-peak",
+      "quality": "normal",
+      "bullets": 78,
+      "hazards": 2,
+      "samples": 50,
+      "p50Ms": 0.911,
+      "p95Ms": 1.079,
+      "maxMs": 1.497,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 78,
+        "assetLaserDraws": 2,
+        "assetLaserSlices": 6,
+        "cacheEntries": 6,
+        "cacheBytes": 165312,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 83,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "lucifer",
+      "case": "phase-3-observed-peak",
+      "quality": "low",
+      "bullets": 78,
+      "hazards": 2,
+      "samples": 50,
+      "p50Ms": 0.911,
+      "p95Ms": 1.209,
+      "maxMs": 1.506,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 78,
+        "assetLaserDraws": 2,
+        "assetLaserSlices": 6,
+        "cacheEntries": 6,
+        "cacheBytes": 165312,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 83,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "lucifer",
+      "case": "synthetic-capacity-saturation",
+      "quality": "normal",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 6.12,
+      "p95Ms": 8.972,
+      "maxMs": 11.163,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 11,
+        "cacheBytes": 222360,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 83,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "boss": "lucifer",
+      "case": "synthetic-capacity-saturation",
+      "quality": "low",
+      "bullets": 768,
+      "hazards": 40,
+      "samples": 50,
+      "p50Ms": 6.21,
+      "p95Ms": 6.944,
+      "maxMs": 8.578,
+      "lastFrame": {
+        "signatureCastDraws": 1,
+        "sourceBulletDraws": 768,
+        "assetLaserDraws": 40,
+        "assetLaserSlices": 120,
+        "cacheEntries": 11,
+        "cacheBytes": 222360,
+        "cacheMisses": 0,
+        "missingAssets": 0
+      },
+      "phaseObservation": {
+        "frames": 1800,
+        "phasePeakBullets": 83,
+        "hits": 0,
+        "endStage": "boss",
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    }
+  ],
+  "sources": [
+    {
+      "key": "gunner",
+      "path": "media/gunner.webp",
+      "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111"
+    },
+    {
+      "key": "cave",
+      "path": "media/cave.webp",
+      "sha256": "921ac7d2a2893aa53374a459b27d9ae87e4cc5c50cbdf0281259875820e72526"
+    },
+    {
+      "key": "forest",
+      "path": "media/forest.jpg",
+      "sha256": "e4d0f6a7803d51fc23b5b9af629d73f3489e1b450d294b1358499b84b6c99562"
+    },
+    {
+      "key": "ruins",
+      "path": "media/ruins.webp",
+      "sha256": "1bf412f579476a90dc6969e7d89385ca096273380d615d33e838dac5f87bec64"
+    },
+    {
+      "key": "fxWindArrow8V6",
+      "path": "media/fx-v6/wind-arrow-8.webp",
+      "sha256": "0fcc33586f03cd144abe418b7774aae990336ea5d1c2f7d9ea684993d956a0f1"
+    },
+    {
+      "key": "bossMotionViolet",
+      "path": "media/boss-motion-v8/violet-atlas-512.png",
+      "sha256": "8271ccb891a9ea88cee33aec9052ac0b427b3b4ace0b241f2dd04cdc136f6f24"
+    },
+    {
+      "key": "bossMotionHorn",
+      "path": "media/boss-motion-v8/horn-atlas-512.png",
+      "sha256": "1c3853aa55e9f6cf205329f361c83eac2422cf0e85275956769e88f503529d27"
+    },
+    {
+      "key": "bossMotionBalrog",
+      "path": "media/boss-motion-v8/balrog-atlas-512.png",
+      "sha256": "3300f7c753b275d8c7c96e08e084cf800418ae8763b578519dc39386625ad667"
+    },
+    {
+      "key": "bossMotionMask",
+      "path": "media/boss-motion-v8/mask-atlas-512.png",
+      "sha256": "460a8ea40d084791a0856a4a8d057df7f7e95817637dda3a8059e506cfe00ef1"
+    },
+    {
+      "key": "bossMotionLucifer",
+      "path": "media/boss-motion-v8/lucifer-atlas-512.png",
+      "sha256": "06716474312bafc759bba028fb42660d6b626c67fba58f690a8014ac226600cd"
+    },
+    {
+      "key": "fxV8VioletWeb",
+      "path": "media/fx-v8/violet-web.webp",
+      "sha256": "2510213cd2651e81c922ac0875896c4f3bdd125f6a176387b5e25eaca5cca5a0"
+    },
+    {
+      "key": "fxV8SilverSlash",
+      "path": "media/fx-v8/silver-slash.webp",
+      "sha256": "dc9ebd4d13dc5c280321b1a33de3f443e141c407dcca2e7391240b2152b9c9dc"
+    },
+    {
+      "key": "fxV8SwampRipple",
+      "path": "media/fx-v8/swamp-ripple.webp",
+      "sha256": "29a72d6b90380d00282b9c2086d272eecb7b10d79ad1c3100f2e2fc5f642abf2"
+    },
+    {
+      "key": "fxV8Reed",
+      "path": "media/fx-v8/reed.webp",
+      "sha256": "43a8435a85859075e3cd23690e23cd4584d919f9cf0b89442073a7142315af9b"
+    },
+    {
+      "key": "fxV8Ember",
+      "path": "media/fx-v8/ember.webp",
+      "sha256": "3a37c619c84129f765d2f3703b164e15a3af69ce750d1dd3cbe8b0ae0fa571f0"
+    },
+    {
+      "key": "fxV8GoldSlash",
+      "path": "media/fx-v8/gold-slash.webp",
+      "sha256": "931038b553aa55989577584dca4f5060d120ac75be03377b4da65010aefd42c2"
+    },
+    {
+      "key": "fxV8Unlock",
+      "path": "media/fx-v8/unlock.webp",
+      "sha256": "b055e44ba21822ea8783bacf13d7318622400d83bde2437095ad13484607af31"
+    },
+    {
+      "key": "fxV8Vortex",
+      "path": "media/fx-v8/vortex.webp",
+      "sha256": "72cd2f043c2f488d6b06c0b8253278f5632f0426d83ad0432908a692bfda8b68"
+    },
+    {
+      "key": "projectileVioletOrbV9",
+      "path": "media/projectiles-drive-v9/violet-orb-cocoon-atlas.png",
+      "sha256": "03aa2075d2242b6dc0f7d35e2f04b69749256249a564175a3711dde29a9aaa2d"
+    },
+    {
+      "key": "projectileLuciferOrbV9",
+      "path": "media/projectiles-drive-v9/lucifer-orb-eclipseiris-atlas.png",
+      "sha256": "1440f50ca908f6f6c4df342ae9e6b09e97ab797e6204acad1a622505499946e5"
+    },
+    {
+      "key": "projectileHornOrbV10",
+      "path": "media/projectiles-drive-v10/swamp_orb_toxicseed.png",
+      "sha256": "ecd6e58a16e2a02fe2d499ba0d6f82b6f9dece0974188561b7bca7ed4d095c7d"
+    },
+    {
+      "key": "projectileBalrogOrbV10",
+      "path": "media/projectiles-drive-v10/balrog_orb_cinderheart.png",
+      "sha256": "59f78125f07ddcbe7ce99d5da1a0b599ffd39df2ce7ab62535381ba174578d69"
+    },
+    {
+      "key": "projectileMaskOrbV10",
+      "path": "media/projectiles-drive-v10/false_angel_orb_sealedpearl.png",
+      "sha256": "518d87e07ab4851bbf4e887ecef641cd8aefae4d61454bfa4a896cf073047729"
+    },
+    {
+      "key": "projectileVioletBladeV10",
+      "path": "media/projectiles-drive-v10/violet_blade_spindle.png",
+      "sha256": "e7f1fbacc4352a43d11da00d7f284f2892002f9f759cb315671ff59b1223ea19"
+    },
+    {
+      "key": "projectileBalrogBladeV10",
+      "path": "media/projectiles-drive-v10/balrog_blade_slagfang.png",
+      "sha256": "b913192ab73f912aeaf6192028b197d9c46f20d9e2ad17c6edbd63078f3e8039"
+    },
+    {
+      "key": "projectileMaskNeedleV10",
+      "path": "media/projectiles-drive-v10/false_angel_needle_edictfeather.png",
+      "sha256": "d04e9be769b6d88c4469c8fe938086c7b56e4fd743fcb2bee73f644d3454edb9"
+    },
+    {
+      "key": "castVioletV11",
+      "path": "media/encounter-signature-v11/violet-knot.png",
+      "sha256": "c72f96123e091473cd5761aef62fe0d2ced7d7d5ed39ff56476b9a7e126fced5"
+    },
+    {
+      "key": "castHornV11",
+      "path": "media/encounter-signature-v11/horn-swamp.png",
+      "sha256": "a63d7814ed4a8c414c9ddbd4ccb2a083c31a8c6f94e9adcf7852e3e37358b50b"
+    },
+    {
+      "key": "castBalrogV11",
+      "path": "media/encounter-signature-v11/balrog-fire.png",
+      "sha256": "cd57c83c262e07a13128b920e57e66d4ac2ace0a8ebf63fffc4890f5cb0fb38a"
+    },
+    {
+      "key": "castMaskV11",
+      "path": "media/encounter-signature-v11/mask-fan.png",
+      "sha256": "fbe38267c2dc0b3d3704947fc08646909d8fa6673cd8125295805d524a7e2eaa"
+    },
+    {
+      "key": "castLuciferV11",
+      "path": "media/encounter-signature-v11/lucifer-ring.png",
+      "sha256": "e9106e21f663424bff962f59ef82700fb1af835a01799a450b4d585ed063bba9"
+    },
+    {
+      "key": "projectileHornNeedleV11",
+      "path": "media/encounter-signature-v11/horn-reed-needle.png",
+      "sha256": "abcb9ae62518a4eea88f585f53cbb733fd25e1100386b8f9b56bb3044766a245"
+    },
+    {
+      "key": "projectileLuciferShardV11",
+      "path": "media/encounter-signature-v11/lucifer-mask-shard.png",
+      "sha256": "5d606352ba92ad8d373d3973d81b8e3f0a42ca0d8a8f8c0536fa8afeb44cd287"
+    }
+  ]
+}

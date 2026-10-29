@@ -36,22 +36,32 @@
   ];
   var BLADES=[
     {key:'projectileVioletBladeV10',width:128,height:64,frames:1,crop:[13,20,102,24],r:12,l:39},
-    null,
+    {key:'projectileHornNeedleV11',width:128,height:64,frames:1,crop:[28,23,72,18],r:9,l:27},
     {key:'projectileBalrogBladeV10',width:128,height:64,frames:1,crop:[13,20,102,24],r:12,l:39},
     {key:'projectileMaskNeedleV10',width:128,height:64,frames:1,crop:[28,23,72,18],r:9,l:27},
-    null
+    {key:'projectileLuciferShardV11',width:128,height:64,frames:1,crop:[13,20,102,24],r:12,l:39}
   ];
-  // Missing dedicated Horn/Lucifer needles are explicitly adapted from their
-  // own orb material, never another boss's projectile or a vector substitute.
+  // Horn reed and Lucifer mask shard are static own-encounter source art.
+  // The shard is a proposed ceramic material, not a canonical actor/body master.
+  // Both are fitted to the existing core-owned capsule without changing damage.
+  var CASTS=[
+    {key:'castVioletV11',width:96,height:96},
+    {key:'castHornV11',width:96,height:96},
+    {key:'castBalrogV11',width:96,height:96},
+    {key:'castMaskV11',width:96,height:96},
+    {key:'castLuciferV11',width:96,height:96}
+  ];
   var CACHE_LIMIT=96,CACHE_BYTES=4*1024*1024,SCALE=3,PAD=1,CELL=128;
   function finite(n){return typeof n==='number'&&Number.isFinite(n);}
   function clamp(n,a,b){return Math.max(a,Math.min(b,n));}
   function indexFor(w){return w&&Number.isInteger(w.bossIndex)?clamp(w.bossIndex,0,4):0;}
   function paletteFor(w,b){var p=PALETTE_LIST[indexFor(w)];return b&&b.paletteSlot===1?{id:p.id+'-secondary',primary:p.secondary,secondary:p.primary,accent:p.accent}:p;}
   function colorFor(w,b){return paletteFor(w,b).primary;}
+  function optionalAssetKeysForEncounter(i){return Number.isInteger(i)&&i>=0&&i<CASTS.length?[CASTS[i].key]:[];}
   function assetKeysForEncounter(i){
     var wi=clamp(Math.floor(i||0),0,4),out=[ORBS[wi].key];
     if(BLADES[wi])out.push(BLADES[wi].key);
+    out=out.concat(optionalAssetKeysForEncounter(i));
     FAMILIES[wi].forEach(function(name){if(name!=='unlock'&&out.indexOf(FX[name].key)<0)out.push(FX[name].key);});
     return out;
   }
@@ -68,7 +78,7 @@
     var cache=new Map(),cacheBytes=0,group=-1,metrics;
     function release(e){if(!e)return;if(e.canvases)e.canvases.forEach(function(c){c.width=1;c.height=1;});if(e.canvas){e.canvas.width=1;e.canvas.height=1;}}
     function clearCache(){cache.forEach(release);cache.clear();cacheBytes=0;}
-    function beginFrame(){metrics={stampDraws:0,stampCacheMisses:0,stampCacheHits:0,stampCacheLimit:CACHE_LIMIT,stampCacheByteLimit:CACHE_BYTES,stampCacheBytes:cacheBytes,stampCacheEntries:cache.size,animatedBulletDraws:0,bodyAnimationPhases:0,suppressedUnapprovedFX:0,compactCastDraws:0,compactHazardDraws:0,assetLaserDraws:0,assetLaserSlices:0,missingProjectileAssets:0,compactFamilies:{}};}
+    function beginFrame(){metrics={stampDraws:0,stampCacheMisses:0,stampCacheHits:0,stampCacheLimit:CACHE_LIMIT,stampCacheByteLimit:CACHE_BYTES,stampCacheBytes:cacheBytes,stampCacheEntries:cache.size,animatedBulletDraws:0,bodyAnimationPhases:0,suppressedUnapprovedFX:0,compactCastDraws:0,compactHazardDraws:0,assetLaserDraws:0,assetLaserSlices:0,signatureCastDraws:0,missingProjectileAssets:0,compactFamilies:{}};}
     function remember(key,e){
       if(e.bytes>CACHE_BYTES){release(e);return null;}
       while(cache.size&&(cache.size>=CACHE_LIMIT||cacheBytes+e.bytes>CACHE_BYTES)){var first=cache.keys().next().value,old=cache.get(first);cacheBytes-=old.bytes;release(old);cache.delete(first);}
@@ -91,8 +101,12 @@
         // alone treats them as dark. Preserve their authored value contrast as
         // ivory highlights while the dark iris remains readable crimson.
         var value=isLucifer?.85*Math.max(d[i],d[i+1],d[i+2])/255+.15*lum:lum;
-        var hi=isLucifer?clamp((value-.45)/.55,0,1)*.9:clamp((lum-.64)/.36,0,1)*.72;
-        var mid=isLucifer?1.15+Math.min(value,.64)*.35:.38+Math.min(lum,.64)*1.03;
+        // Small static cast accents are sometimes exceptionally dark or pale.
+        // Raise their existing pixels into the encounter's identity palette;
+        // retain source alpha and source-value variation without adding a rim.
+        var castValue=s.cast?Math.max(d[i],d[i+1],d[i+2])/255:0;
+        var hi=s.cast?clamp((castValue-.5)/.5,0,1)*.28:isLucifer?clamp((value-.45)/.55,0,1)*.9:clamp((lum-.64)/.36,0,1)*.72;
+        var mid=s.cast?.80+castValue*.35:isLucifer?1.15+Math.min(value,.64)*.35:.38+Math.min(lum,.64)*1.03;
         for(var j=0;j<3;j++)d[i+j]=clamp(Math.round(p[j]*mid*(1-hi)+q[j]*hi+(a[j]-p[j])*.045),0,255);
       }
       ctx.putImageData(data,0,0);
@@ -156,6 +170,24 @@
       var b=w.boss,progress=clamp(b.actionProgress||0,0,1),wi=indexFor(w),names=FAMILIES[wi];
       var releaseAge=Number.isFinite(b.releaseTick)&&b.releaseTick>=0?w.tick-b.releaseTick:Infinity;
       if(b.action!=='charge'&&!(releaseAge>=0&&releaseAge<60))return;
+      // Static accents are purely decorative, underneath all actors, warnings,
+      // and damage bodies; they never replace the existing damage telegraphs.
+      // One image per frame, visible during charge or the 18 ticks following a
+      // real owned-projectile/laser release. No new animated loop is implied.
+      var cast=CASTS[wi],fade=b.action==='charge'?.25+.45*progress:(releaseAge<18?.70*(1-releaseAge/18):0);
+      if(fade>0&&ready(images[cast.key],cast)){
+        var source=images[cast.key];
+        if(wi!==2){
+          // Recolor existing pixels once to boss-derived colors. The Lucifer
+          // ring uses its blue-value-aware tint; the dim Horn and faint Violet/
+          // Mask accents use a readable decorative tint, preserving source alpha.
+          var recolored=tintedArt({key:cast.key,width:96,height:96,frames:1,crop:[0,0,96,96],r:48,l:0,cast:wi!==4},PALETTE_LIST[wi]);
+          source=recolored&&recolored.canvas;
+        }
+        if(source){var size=lowQuality?60:72;ctx.save();ctx.globalCompositeOperation='source-over';ctx.globalAlpha=fade;
+          ctx.drawImage(source,b.x-size/2,Math.max(88,b.y+70)-size/2,size,size);ctx.restore();metrics.signatureCastDraws++;
+          metrics.compactFamilies[cast.key]=(metrics.compactFamilies[cast.key]||0)+1;}
+      }
       var name=b.action==='charge'?names[0]:wi===4&&w.phase===2?'unlock':names[1];if(name==='unlock'){metrics.suppressedUnapprovedFX++;return;}
       var s=FX[name];if(!ready(images[s.key],s))return;
       var elapsed=b.action==='charge'?progress*900:releaseAge*1000/60;
@@ -164,8 +196,8 @@
     function drawHazardDecoration(ctx,w,h,lowQuality){return false;}
     beginFrame();
     return {beginFrame:beginFrame,drawBullet:drawBullet,drawBossCast:drawBossCast,drawHazardBody:drawHazardBody,drawHazardDecoration:drawHazardDecoration,
-      getMetrics:function(){return Object.assign({},metrics,{projectileTextureLimit:768,projectileTextureDraws:metrics.stampDraws,texturedBullets:metrics.stampDraws,projectileTailDraws:0,bossCastDraws:metrics.compactCastDraws,hazardEmitterDraws:0,stampCacheEntries:cache.size,stampCacheBytes:cacheBytes,compactFamilies:Object.assign({},metrics.compactFamilies)});},
+      getMetrics:function(){return Object.assign({},metrics,{projectileTextureLimit:768,projectileTextureDraws:metrics.stampDraws,texturedBullets:metrics.stampDraws,projectileTailDraws:0,bossCastDraws:metrics.compactCastDraws+metrics.signatureCastDraws,hazardEmitterDraws:0,stampCacheEntries:cache.size,stampCacheBytes:cacheBytes,compactFamilies:Object.assign({},metrics.compactFamilies)});},
       destroy:function(){clearCache();images={};}};
   }
-  global.HapilProjectiles=Object.freeze({create:create,palettes:PALETTES,paletteList:PALETTE_LIST,paletteFor:paletteFor,assetKeysForEncounter:assetKeysForEncounter,invalidAssetForEncounter:invalidAssetForEncounter,colorFor:colorFor,compactFX:FX});
+  global.HapilProjectiles=Object.freeze({create:create,palettes:PALETTES,paletteList:PALETTE_LIST,paletteFor:paletteFor,assetKeysForEncounter:assetKeysForEncounter,optionalAssetKeysForEncounter:optionalAssetKeysForEncounter,invalidAssetForEncounter:invalidAssetForEncounter,colorFor:colorFor,compactFX:FX});
 })(typeof window!=='undefined'?window:globalThis);
