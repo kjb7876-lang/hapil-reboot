@@ -53,9 +53,10 @@ test('a changed imported asset causes manifest assembly to fail closed',()=>{
  try{assert.throws(()=>Builder.assemble(),/Asset hash mismatch: media\/story-bodies\/dist00-boss-atlas-512.png/);}finally{fs.readFileSync=original;}
 });
 
-test('root command target uses its own core and player skill atlases stay explicitly unmapped',()=>{
+test('first encounter selects explicit atlas frames while all skill visual QA remains pending',()=>{
  const {ledger,registry}=Builder.assemble(),binding=registry.bindings['dist00-boss'];assert.equal(binding.art.targetKey,'storyFirst8FxRootCore');assert.ok(binding.images.some(i=>i.key===binding.art.targetKey));
- for(const entry of ledger.entries)for(const name of ['memory','delay','parry','ego']){assert.equal(entry.skillVisuals[name].ready,false);assert.ok(entry.pendingReasons.includes('player-skill-art-pending:'+name));const registered=registry.bindings[entry.combatId];if(registered)assert.equal(registered.art.effects[name],undefined,'full player atlas is never drawn as an unselected single frame');}
+ for(const entry of ledger.entries)for(const name of ['memory','delay','parry','ego']){assert.equal(entry.skillVisuals[name].ready,false);assert.ok(entry.pendingReasons.includes('player-skill-art-pending:'+name));const registered=registry.bindings[entry.combatId];if(registered&&entry.combatId==='dist00-boss'){const fx=registered.art.effects[name];assert(fx&&fx.atlas&&fx.atlas.frameEndsMs.length>0);assert(registered.images.some(i=>i.key===fx.key));}else if(registered)assert.equal(registered.art.effects[name],undefined);}
+ assert.equal(binding.images.length,10);assert.equal(registry.summary.readyCombats,0);
 });
 
 test('browser proof is invalidated by stale art, code, images or missing dependency keys, and does not infer GPU',()=>{

@@ -36,6 +36,34 @@ function fixture(body=first8.bodies[0]){
 function world(id=first8.bodies[0].combatId,extra={}){return Object.assign({combatId:id,tick:120,stageIndex:0,phase:0,cyclePhase:'windup',cyclePhaseAge:.2,player:{x:180,y:540,r:3,hp:3,maxHp:3},boss:{id:1,x:180,y:116,hp:800,maxHp:1000,lean:0},enemies:[],bullets:[],shots:[],effects:[],hazards:[]},extra);}
 function registration(record,anchor,cell){const [sx,sy,sw,sh,dx,dy,dw,dh]=record.args,lx=dx+anchor[0]*dw/sw,ly=dy+anchor[1]*dh/sh,[a,b,c,d,e,f]=record.m;assert.equal(sw,cell);assert.equal(sh,cell);return[a*lx+c*ly+e,b*lx+d*ly+f];}
 
+test('first encounter player skills select authored atlas cells once with fixed pivots and no gameplay mutation',()=>{
+ const binding=JSON.parse(fs.readFileSync(path.join(__dirname,'../docs/story/runtime-assets.json'),'utf8')).bindings['dist00-boss'],f=fixture();
+ f.art.effects=structuredClone(binding.art.effects);
+ for(const item of binding.images)if(Object.values(f.art.effects).some(e=>e.key===item.key))f.assets[item.key]={id:item.key,complete:true,naturalWidth:item.width,naturalHeight:item.height};
+ for(const name of ['memory','delay','parry','ego']){
+  const spec=f.art.effects[name],a=spec.atlas;
+  for(let i=0;i<a.frameEndsMs.length;i++){
+   const age=(i? a.frameEndsMs[i-1]+1 : 10)/1000,w=world('dist00-boss',{effects:[{kind:name,x:180,y:540,age,ttl:1}]}),{records,metrics}=f.draw(w);
+   const sample=records.find(r=>r.type==='image'&&r.key===spec.key);assert(sample,`${name} frame ${i}`);
+   assert.deepEqual(sample.args.slice(0,4),[(i%a.cols)*a.cell,Math.floor(i/a.cols)*a.cell,a.cell,a.cell]);
+   const point=registration(sample,a.pivot,a.cell);assert(Math.abs(point[0]-(180+a.offset[0]))<1e-7);assert(Math.abs(point[1]-(540+a.offset[1]))<1e-7);
+   assert.equal(metrics.atlasEffectDraws,1);assert.equal(metrics.playerCoreLast,true);
+  }
+  const expired=f.draw(world('dist00-boss',{effects:[{kind:name,x:180,y:540,age:1,ttl:2}]}));
+  assert(!expired.records.some(r=>r.type==='image'&&r.key===spec.key));assert.equal(expired.metrics.atlasEffectDraws,0);
+ }
+});
+
+test('a missing, malformed or mismatched player-skill atlas blocks rendering before the first draw',()=>{
+ const b=JSON.parse(fs.readFileSync(path.join(__dirname,'../docs/story/runtime-assets.json'),'utf8')).bindings['dist00-boss'];
+ for(const issue of ['missing','size','order']){
+  const f=fixture();f.art.effects={memory:structuredClone(b.art.effects.memory)};
+  if(issue!=='missing')f.assets[f.art.effects.memory.key]={id:f.art.effects.memory.key,complete:true,naturalWidth:issue==='size'?512:1024,naturalHeight:512};
+  if(issue==='order')f.art.effects.memory.atlas.frameEndsMs[2]=f.art.effects.memory.atlas.frameEndsMs[1];
+  assert.throws(()=>f.draw(world('dist00-boss')),e=>e.code==='MISSING_STORY_ART');assert.equal(f.ctx.records.length,0);
+ }
+});
+
 test('all eight unchanged source atlases have complete four-pose registration contracts',()=>{
  assert.equal(first8.bodies.length,8);assert.equal(first8.allRequiredFormsComplete,false);assert.equal(first8.physicalPivotsCertified,false);
  for(const b of first8.bodies){const data=fs.readFileSync(path.join(__dirname,'..',b.file));assert.equal(crypto.createHash('sha256').update(data).digest('hex'),b.sha256);assert.equal(data.readUInt32BE(16),512);assert.equal(data.readUInt32BE(20),512);assert.equal(b.poses.length,4);assert(b.scale>0&&b.scale<=.7);}

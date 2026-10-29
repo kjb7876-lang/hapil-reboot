@@ -54,9 +54,20 @@
   }
   function showBattle(){document.body.dataset.battle='true';$('reader').hidden=true;$('battle').hidden=false;fit();$('story-canvas').focus({preventScroll:true});}
   function pause(message){if(!running)return;paused=true;clearInput();$('resume').hidden=false;text('battle-state',message||'일시정지');}
+  function imageListAllowed(items){
+    if(!Array.isArray(items)||!items.length||items.length>12)return false;
+    var keys=Object.create(null),bytes=0;
+    for(var i=0;i<items.length;i++){
+      var item=items[i];if(!item||typeof item.key!=='string'||keys[item.key])return false;keys[item.key]=true;
+      if(item.width!==undefined||item.height!==undefined){
+        if(!Number.isInteger(item.width)||!Number.isInteger(item.height)||item.width<=0||item.height<=0)return false;
+        bytes+=item.width*item.height*4;if(!Number.isSafeInteger(bytes)||bytes>24*1024*1024)return false;
+      }
+    }return true;
+  }
   async function loadArt(binding){
     var generation=++loadGeneration,wanted=binding.images||[],next=Object.create(null),cursor=0;
-    if(!wanted.length||wanted.length>8)throw new Error('전투 이미지 계약이 없습니다.');
+    if(!imageListAllowed(wanted))throw new Error('전투 이미지 계약이 없거나 이미지 용량이 너무 큽니다.');
     function load(item){return new Promise(function(resolve,reject){
       if(!/^media\/[A-Za-z0-9_./-]+\.(png|webp|jpg|jpeg)$/.test(item.file))return reject(new Error('잘못된 자산 경로'));
       if(assets[item.key]){next[item.key]=assets[item.key];resolve();return;}
@@ -133,7 +144,7 @@
       var row=document.createElement('div'),button=document.createElement('button'),label=document.createElement('span');
       label.textContent=(spec&&spec.name||id)+' · 미완성 검수';button.textContent='별도 검수 전투';button.disabled=true;
       row.append(label,button);list.appendChild(row);
-      if(!binding||binding.combatId!==id||!spec||!combat.supports(id)||!art||!art.body||art.body.combatId!==id||!art.projectile||art.projectile.combatId!==id||!art.background||!Array.isArray(images)||!images.length||images.length>8){label.textContent+=' · 필요한 자산 또는 전투 미구현';return;}
+      if(!binding||binding.combatId!==id||!spec||!combat.supports(id)||!art||!art.body||art.body.combatId!==id||!art.projectile||art.projectile.combatId!==id||!art.background||!imageListAllowed(images)){label.textContent+=' · 필요한 자산 또는 전투 미구현';return;}
       var keys=images.map(function(im){return im.key;}),needed=[art.body.key,art.projectile.key,art.background.key,art.playerKey,art.shotKey];
       if(spec.stages.some(function(s){return s.target==='command-link';}))needed.push(art.targetKey);
       if(needed.some(function(k){return !k||keys.indexOf(k)<0;})){label.textContent+=' · 고유 자산 미등록';return;}

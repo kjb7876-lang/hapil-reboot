@@ -26,7 +26,7 @@
     options=options||{};if(!canvas||typeof canvas.getContext!=='function')throw new TypeError('Story renderer requires a canvas');
     var ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error('Canvas 2D unavailable');
     var assets=options.assets||{},ratio=1,disposed=false,lastWidth=0,lastHeight=0,metrics;
-    function reset(){metrics={bodyDraws:0,bodyLayers:0,commandTargetDraws:0,projectileDraws:0,shotDraws:0,effectDraws:0,threadDraws:0,warningDraws:0,activeHazardDraws:0,fadingHazardDraws:0,playerCoreLast:false,mapMissing:false,ready:false,lastBody:null,lastPose:null,lastThread:null,skippedEffectKinds:[],fullAnimationCycles:0,physicalPivotsCertified:false,cacheCanvasCount:0};}
+    function reset(){metrics={bodyDraws:0,bodyLayers:0,commandTargetDraws:0,projectileDraws:0,shotDraws:0,effectDraws:0,atlasEffectDraws:0,threadDraws:0,warningDraws:0,activeHazardDraws:0,fadingHazardDraws:0,playerCoreLast:false,mapMissing:false,ready:false,lastBody:null,lastPose:null,lastThread:null,skippedEffectKinds:[],fullAnimationCycles:0,physicalPivotsCertified:false,cacheCanvasCount:0};}
     reset();
     function image(key,label){if(typeof key!=='string'||!usable(assets[key]))throw missing(label||key||'unregistered-key');return assets[key];}
     function bodyContract(c,label){
@@ -35,9 +35,19 @@
       c.poses.forEach(function(p,i){if(!p||p.index!==i||!Array.isArray(p.anchor)||!Array.isArray(p.silk)||p.anchor.length!==2||p.silk.length!==2||!p.anchor.concat(p.silk).every(Number.isFinite))throw missing((label||c.key)+'-pose-'+i);});
       return im;
     }
+    function effectAtlasContract(spec,label){
+      var a=spec&&spec.atlas,im=image(spec&&spec.key,label),d=dimensions(im);
+      var valid=a&&Number.isInteger(a.cols)&&Number.isInteger(a.rows)&&a.cols>0&&a.rows>0&&Number.isInteger(a.cell)&&a.cell>0&&
+        d[0]===a.cols*a.cell&&d[1]===a.rows*a.cell&&Array.isArray(a.frameEndsMs)&&a.frameEndsMs.length>0&&a.frameEndsMs.length<=a.cols*a.rows&&
+        a.frameEndsMs.every(function(n,i){return Number.isFinite(n)&&n>0&&(!i||n>a.frameEndsMs[i-1]);})&&
+        Array.isArray(a.pivot)&&a.pivot.length===2&&a.pivot.every(function(n){return Number.isFinite(n)&&n>=0&&n<=a.cell;})&&
+        Array.isArray(a.offset)&&a.offset.length===2&&a.offset.every(Number.isFinite)&&Number.isFinite(a.rotation);
+      if(!valid)throw missing(label+'-atlas-contract');return im;
+    }
     function assertArtReady(art){
       if(!art)throw missing('registry');bodyContract(art.body,'body');image(art.projectile&&art.projectile.key,'projectile');image(art.playerKey,'player');image(art.shotKey,'player-shot');
-      if(art.background&&art.background.key)image(art.background.key,'background');return true;
+      if(art.background&&art.background.key)image(art.background.key,'background');
+      Object.keys(art.effects||{}).forEach(function(kind){var spec=art.effects[kind];if(spec&&spec.atlas)effectAtlasContract(spec,'effect-'+kind);});return true;
     }
     function path(r,l){
       ctx.beginPath();if(l>0){ctx.moveTo(-l,-r);ctx.lineTo(l,-r);ctx.arc(l,0,r,-Math.PI/2,Math.PI/2);ctx.lineTo(-l,r);ctx.arc(-l,0,r,Math.PI/2,Math.PI*1.5);ctx.closePath();}else ctx.arc(0,0,r,0,TAU);
@@ -89,7 +99,15 @@
       var list=world.effects||[];for(var i=0;i<list.length;i++){
         var e=list[i],spec=art.effects&&art.effects[e.kind],key=e.assetKey||(spec&&spec.key);if(!key){if(metrics.skippedEffectKinds.indexOf(e.kind)<0)metrics.skippedEffectKinds.push(e.kind||'unknown');continue;}
         var im=image(key,'effect-'+(e.kind||key)),age=Math.max(0,finite(e.age,0)),ttl=Math.max(.001,finite(e.ttl,.4)),size=clamp(finite(e.size,spec&&spec.drawWidth||48),1,96);
-        if(age>=ttl)continue;ctx.save();ctx.globalAlpha=Math.min(1,age/.04,(ttl-age)/.08)*.55;ctx.drawImage(im,finite(e.x,180)-size/2,finite(e.y,116)-size/2,size,size);ctx.restore();metrics.effectDraws++;
+        if(age>=ttl)continue;
+        if(spec&&spec.atlas&&key===spec.key){
+          var a=spec.atlas,end=a.frameEndsMs[a.frameEndsMs.length-1]/1000,duration=Math.min(ttl,end);
+          if(age>=duration)continue;var frame=0;while(frame<a.frameEndsMs.length-1&&age*1000>=a.frameEndsMs[frame])frame++;
+          var scale=size/a.cell;ctx.save();ctx.globalAlpha=Math.min(1,age/.04,(duration-age)/.08)*.55;
+          ctx.translate(finite(e.x,180)+a.offset[0],finite(e.y,116)+a.offset[1]);ctx.rotate(a.rotation);
+          ctx.drawImage(im,(frame%a.cols)*a.cell,Math.floor(frame/a.cols)*a.cell,a.cell,a.cell,-a.pivot[0]*scale,-a.pivot[1]*scale,size,size);ctx.restore();metrics.atlasEffectDraws++;
+        }else{ctx.save();ctx.globalAlpha=Math.min(1,age/.04,(ttl-age)/.08)*.55;ctx.drawImage(im,finite(e.x,180)-size/2,finite(e.y,116)-size/2,size,size);ctx.restore();}
+        metrics.effectDraws++;
       }
     }
     function hud(world,spec,tone){

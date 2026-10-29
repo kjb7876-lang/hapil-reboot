@@ -4,7 +4,7 @@ const vm = require('node:vm');
 const fs = require('node:fs');
 const code = fs.readFileSync(require('node:path').join(__dirname, '../src/story-app.js'), 'utf8');
 
-async function setup({ review = false, failStart = false, lockReason = null, loseOnTick = false, reviewAssets = false, missingReviewFile = false, coarse = false } = {}) {
+async function setup({ review = false, failStart = false, lockReason = null, loseOnTick = false, reviewAssets = false, missingReviewFile = false, coarse = false, extraImages = 0, oversizeImage = false } = {}) {
   const elements = new Map(), raf = [], steps = [];
   function element(id) {
     if (elements.has(id)) return elements.get(id);
@@ -24,6 +24,7 @@ async function setup({ review = false, failStart = false, lockReason = null, los
     retry:()=>({ok:false,reason:'write-failed'}), tick(input) { steps.push(input);if(loseOnTick)world.status='lost'; }, world:()=>world };
   const registry = { bindings:{ 'dist00-boss':{ images:[{key:'body',file:'media/body.png'}], art:{} } } };
   if(reviewAssets)registry.bindings['dist00-boss']={combatId:'dist00-boss',images:['body','projectile','map','player','shot','target'].map(key=>({key,file:'media/'+key+'.png'})),art:{body:{combatId:'dist00-boss',key:'body'},projectile:{combatId:'dist00-boss',key:'projectile'},background:{key:'map'},playerKey:'player',shotKey:'shot',targetKey:'target'}};
+  if(reviewAssets){for(let i=0;i<extraImages;i++)registry.bindings['dist00-boss'].images.push({key:'extra'+i,file:'media/extra'+i+'.png',width:oversizeImage?4096:512,height:oversizeImage?4096:512});}
   const gate = { entryStatus:()=>({ready:true,name:'Boss'}), summary:()=>({indexRevision:1,readyCount:1,primaryCount:1,generationComplete:false,readyFormCount:0,requiredFormCount:0}) };
   const document = { getElementById:element, createElement:()=>element('created'+Math.random()), body:{dataset:{}}, addEventListener() {} };
   class Image { set src(v) { if(v) queueMicrotask(()=>this.onload()); } }
@@ -103,6 +104,11 @@ test('review catalogue checks each own asset before enabling and never starts a 
  const ready=await setup({reviewAssets:true});const row=ready.element('review-list').children[0];assert.equal(row.children[1].disabled,false);
  row.children[1].listeners.click();await new Promise(setImmediate);
  assert.equal(ready.starts(),0);assert.equal(ready.win.document.body.dataset.battle,'true');assert.match(ready.element('battle-state').textContent,/진행·저장에 반영하지 않습니다/);
+});
+test('review accepts ten bounded first-encounter images and rejects unbounded count or decoded size',async()=>{
+ const bounded=await setup({reviewAssets:true,extraImages:4});assert.equal(bounded.element('review-list').children[0].children[1].disabled,false);
+ const tooMany=await setup({reviewAssets:true,extraImages:7});assert.equal(tooMany.element('review-list').children[0].children[1].disabled,true);
+ const tooLarge=await setup({reviewAssets:true,extraImages:1,oversizeImage:true});assert.equal(tooLarge.element('review-list').children[0].children[1].disabled,true);
 });
 test('mobile frame pacing maintains about 30 draws on a 60 Hz timer without slowing simulation',async()=>{
  const h=await setup({review:true,coarse:true});h.element('review-fight').onclick();await new Promise(setImmediate);
