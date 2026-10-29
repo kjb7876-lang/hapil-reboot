@@ -12,6 +12,13 @@
   var LEDGER_LIMIT = 256;
   var RULESET = 'hapil-firstbattle-1';
   var MAX_COUNTER = 1000000000;
+  // Checkpoint routes are immutable by revision. Extending the live roster must
+  // not turn an invalid old save into a new encounter or reinterpret its wave.
+  var CAMPAIGN_CONTRACTS = Object.freeze({
+    1: Object.freeze({ bosses: 3, phases: 9 }),
+    2: Object.freeze({ bosses: 5, phases: 15 }),
+    3: Object.freeze({ bosses: 12, phases: 36 })
+  });
   var DEFAULT_SETTINGS = { music: true, sfx: true, quality: 'high', skillRotation: true, difficulty: 'normal', sensitivity: 1 };
 
   function clone(value) { return JSON.parse(JSON.stringify(value)); }
@@ -19,7 +26,7 @@
   function finite(value, min, max) { return typeof value === 'number' && Number.isFinite(value) && value >= min && value <= max; }
   function integer(value, min, max) { return finite(value, min, max) && Math.floor(value) === value; }
   function validRunId(value) { return typeof value === 'string' && /^[A-Za-z0-9_.:-]{1,96}$/.test(value); }
-  function difficulty(value) { return value === 'normal' || value === 'gentle'; }
+  function difficulty(value) { return value === 'normal' || value === 'gentle' || value === 'hell'; }
 
   function settingsPatch(value) {
     var out = {};
@@ -40,8 +47,12 @@
       var value = JSON.parse(encoded);
       if (!object(value) || value.rulesetVersion !== RULESET || !validRunId(value.runId) || !difficulty(value.difficulty)) return null;
       var campaign = value.campaign === true;
+      var campaignContract = null;
       if (campaign) {
-        if (![1,2].includes(value.campaignRevision) || !integer(value.bossIndex, 0, value.campaignRevision === 1 ? 2 : 4)) return null;
+        if (!integer(value.campaignRevision, 1, 3)) return null;
+        campaignContract = CAMPAIGN_CONTRACTS[value.campaignRevision];
+        if (!integer(value.bossIndex, 0, campaignContract.bosses - 1)) return null;
+        if (value.difficulty === 'hell' && value.campaignRevision < 3) return null;
         if (value.stage === 'waves' && value.bossIndex === 1 && value.wave !== 0) return null;
       } else if (value.campaign !== undefined || value.campaignRevision !== undefined || value.bossIndex !== undefined) return null;
       if (!integer(value.seed, 0, 4294967295) || !integer(value.rngState, 0, 4294967295) || !integer(value.idCounter, 0, 100000000)) return null;
@@ -75,7 +86,7 @@
         var stat = statKeys[j];
         if (stat === 'casts') continue;
         if (stat === 'phaseTicks') {
-          if (!Array.isArray(value.stats.phaseTicks) || value.stats.phaseTicks.length > (campaign ? (value.campaignRevision === 1 ? 9 : 15) : 3) || !value.stats.phaseTicks.every(function (tick) { return integer(tick, 0, 4500); })) return null;
+          if (!Array.isArray(value.stats.phaseTicks) || value.stats.phaseTicks.length > (campaign ? campaignContract.phases : 3) || !value.stats.phaseTicks.every(function (tick) { return integer(tick, 0, 4500); })) return null;
           stats.phaseTicks = value.stats.phaseTicks.slice();
           continue;
         }

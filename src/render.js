@@ -29,6 +29,7 @@
     var fg=foreground.getContext('2d');
     var lightweight=false;
     var strips=[],ratio=1,cached=false,edgeMask=null;
+    var sinFloor=null,sinFloorSource=null,sinFloorTone=null;
     // The near-edge mask is unchanged during an anchored boss encounter.
     // Reuse its pixels until the source or scroll position changes.
     var parallaxImage=null,parallaxIndex=-1,parallaxProgress=null;
@@ -66,7 +67,7 @@
         strips.push(strip);
       }
       edgeMask=fg.createLinearGradient(0,0,W,0);edgeMask.addColorStop(0,'rgba(0,0,0,.72)');edgeMask.addColorStop(.18,'rgba(0,0,0,0)');edgeMask.addColorStop(.82,'rgba(0,0,0,0)');edgeMask.addColorStop(1,'rgba(0,0,0,.72)');
-      mapMetrics.terrainStripCount=strips.length;mapMetrics.cacheCanvasCount=strips.length+2;mapMetrics.cacheBytes=(strips.length*W*1280+2*W*H)*4;cached=true;
+      mapMetrics.terrainStripCount=strips.length;mapMetrics.cacheCanvasCount=strips.length+2+(sinFloor?1:0);mapMetrics.cacheBytes=(strips.length*W*1280+(2+(sinFloor?1:0))*W*H)*4;cached=true;
     }
     function parallax(index,progress,opacity){
       var im=mapImage(index);if(!imageReady(im)||opacity<=0)return;
@@ -88,7 +89,7 @@
     function drawConnectedTerrain(world){
       var wave=world?clamp(world.wave||0,0,2):0;
       var anchored=!!(world&&(world.practiceBoss||world.boss||world.stage==='bossIntro'||world.stage==='boss'||world.stage==='transition'||world.stage==='won'));
-      var local=world?clamp((world.waveTime||0)/15,0,1):0;
+      var local=world?clamp((world.waveTime||0)/(world.waveDuration||15),0,1):0;
       // The verified artwork is a forest/ruins/cave corridor, so its twelve
       // tiles cover the first three waves only. It is not a swamp/castle map.
       var route=world?(anchored?3:wave+local):0;
@@ -132,18 +133,35 @@
           var sx=(star*137.51)%360,sy=(star*83.17+t*(star%3+1)*.7)%640;
           ctx.globalAlpha=.08+(star%5)*.025;ctx.fillStyle=star%2?'#b6bce3':'#dac9a7';ctx.fillRect(sx,sy,star%7===0?2:1,1);
         }
-        ctx.translate(180,146);ctx.rotate(t*.025);ctx.globalAlpha=.12;
-        for(var orbit=0;orbit<3;orbit++){
-          circle(0,0,76+orbit*27,'#b6a6cf',.7);
-          for(var node=0;node<12;node++){var a=node*Math.PI/6+orbit*.13;line([[Math.cos(a)*(76+orbit*27),Math.sin(a)*(76+orbit*27)],[Math.cos(a)*(80+orbit*27),Math.sin(a)*(80+orbit*27)]],'#d1b987',1);}
-        }
+        // Keep the starfield quiet: the old concentric scenery orbits were
+        // centered behind the boss and looked like a second enemy hitbox.
       }
       ctx.restore();
       // Keep the player lane dark even when the scenery is most active.
       ctx.fillStyle='rgba(4,8,17,.22)';ctx.fillRect(48,260,264,380);
-      mapMetrics.zone=cosmic?'cosmic-vault':'hospital-corridor';mapMetrics.zoneIndex=world.bossIndex;mapMetrics.terrainStatus='code-scene-v7';mapMetrics.sourceStatus='connected-v1-plus-code-scenes-v7';mapMetrics.anchored=anchored;mapMetrics.segmentProgress=anchored?1:Math.min(1,(world.waveTime||0)/15);mapMetrics.campaignLocation=world.encounterName||world.bossName;mapMetrics.visibleMapTiles='';mapMetrics.visibleMapCount=0;
+      mapMetrics.zone=cosmic?'cosmic-vault':'hospital-corridor';mapMetrics.zoneIndex=world.bossIndex;mapMetrics.terrainStatus='code-scene-v7';mapMetrics.sourceStatus='connected-v1-plus-code-scenes-v7';mapMetrics.anchored=anchored;mapMetrics.segmentProgress=anchored?1:Math.min(1,(world.waveTime||0)/(world.waveDuration||15));mapMetrics.campaignLocation=world.encounterName||world.bossName;mapMetrics.visibleMapTiles='';mapMetrics.visibleMapCount=0;
+    }
+    function drawSinTerrain(world){
+      // A neutral, inspected stone-floor patch from retained cave art. The
+      // patch excludes its cavern walls and is an abstract memory arena,
+      // never represented as a newly authored hotel, kitchen, or vault map.
+      var source=images.cave,palette=paletteFor(world),tone=palette?palette.primary:'#8798af';
+      if(!sinFloor){sinFloor=document.createElement('canvas');sinFloor.width=W;sinFloor.height=H;}
+      if(sinFloorSource!==source||sinFloorTone!==tone){
+        var sc=sinFloor.getContext('2d',{alpha:false});sc.globalAlpha=1;sc.fillStyle='#101621';sc.fillRect(0,0,W,H);
+        if(imageReady(source))cover(sc,source,source.naturalWidth*.43,source.naturalHeight*.30,source.naturalWidth*.13,source.naturalHeight*.28,0,0,W,H);
+        sc.fillStyle='rgba(5,9,18,.60)';sc.fillRect(0,0,W,H);sc.globalAlpha=.10;sc.fillStyle=tone;sc.fillRect(0,0,W,H);sc.globalAlpha=1;
+        var edge=sc.createLinearGradient(0,0,W,0);edge.addColorStop(0,'rgba(4,8,16,.58)');edge.addColorStop(.25,'rgba(4,8,16,.08)');edge.addColorStop(.75,'rgba(4,8,16,.08)');edge.addColorStop(1,'rgba(4,8,16,.58)');sc.fillStyle=edge;sc.fillRect(0,0,W,H);
+        sinFloorSource=source;sinFloorTone=tone;
+      }
+      ctx.globalAlpha=1;ctx.drawImage(sinFloor,0,0);
+      mapMetrics.zone='abstract-memory-stage';mapMetrics.zoneIndex=world.bossIndex;mapMetrics.terrainStatus='retained-neutral-floor-crop';mapMetrics.sourceStatus=imageReady(source)?'existing-cave-floor-patch':'unavailable-neutral-floor';
+      mapMetrics.anchored=world.stage!=='waves';mapMetrics.segmentProgress=mapMetrics.anchored?1:clamp((world.waveTime||0)/(world.waveDuration||15),0,1);
+      mapMetrics.campaignLocation=world.encounterName||world.bossName;mapMetrics.visibleMapTiles='';mapMetrics.visibleMapCount=0;
+      mapMetrics.cacheCanvasCount=strips.length+3;mapMetrics.cacheBytes=(strips.length*W*1280+3*W*H)*4;
     }
     function drawTerrain(world){
+      if(world&&world.campaign&&world.bossIndex>=5){drawSinTerrain(world);return;}
       if(world&&world.campaign&&world.bossIndex>=3){drawExtendedTerrain(world);return;}
       if(usesConnected(world)){drawConnectedTerrain(world);return;}
       mapMetrics.terrainStatus='retained-v2';mapMetrics.sourceStatus='retained-v2';mapMetrics.visibleMapTiles='';mapMetrics.visibleMapCount=0;
@@ -154,7 +172,7 @@
         // Later encounters retain the three earlier verified pictures. The
         // connected corridor is only used for its forest-to-cave chapter.
         var encounter=clamp(world.bossIndex||0,0,2),wave=clamp(world.wave||0,0,2);
-        local=anchored?1:clamp((world.waveTime||0)/15,0,1);
+        local=anchored?1:clamp((world.waveTime||0)/(world.waveDuration||15),0,1);
         index=encounter===0?(anchored?2:wave):encounter===1?0:(anchored?1:[1,2,1][wave]);
         scroll=640*(1-local);mix=0;
         journey=(encounter===1?0:wave)*15+local*15;
@@ -293,7 +311,7 @@
     function tFor(world){return world.time||0;}
     function drawBossAccent(world){
       mapMetrics.bossAccent=null;
-      if(!world.campaign||!world.boss||world.stage==='bossIntro')return;
+      if(!world.campaign||!world.boss||world.bossIndex>=5||world.stage==='bossIntro'||world.stage==='transition'&&world.transitionNarrative)return;
       var b=world.boss,info=bossIdentity(world),p=clamp(b.actionProgress||0,0,1),action=b.action||'recover';
       var strength=action==='charge'?.13+.15*p:action==='attack'?.25*(1-p*.7):.09;
       var r=action==='charge'?60-13*p:action==='attack'?48+p*15:53;
@@ -306,15 +324,10 @@
           line([[b.x+ax*r*.63,b.y+ay*r*.48],[b.x+ax*r,b.y+ay*r*.70],[b.x+ax*(r+11),b.y+ay*(r+11)*.70]],info.tone,.8);
         }
       }else if(info.id==='horn'){
-        for(var arc=0;arc<3;arc++){
-          ctx.beginPath();ctx.arc(b.x,b.y+11,r-arc*11,Math.PI*.16,Math.PI*.84);ctx.strokeStyle=info.tone;ctx.lineWidth=.8;ctx.stroke();
-        }
         line([[b.x-43,b.y+4],[b.x-49,b.y-13],[b.x-44,b.y-25]],info.tone,1);line([[b.x+43,b.y+4],[b.x+49,b.y-13],[b.x+44,b.y-25]],info.tone,1);
       }else if(info.id==='mask'){
-        circle(b.x,b.y,Math.min(62,r),'#d7c6a0',.8);
         for(var feather=0;feather<6;feather++){var fa=feather*Math.PI/3+tFor(world)*.025;line([[b.x+Math.cos(fa)*(r-5),b.y+Math.sin(fa)*(r-5)*.7],[b.x+Math.cos(fa)*(r+5),b.y+Math.sin(fa)*(r+5)*.7]],info.tone,.8);}
       }else if(info.id==='lucifer'){
-        circle(b.x,b.y,r,info.tone,.65);circle(b.x,b.y,r-9,'#d7b775',.6);
         for(var facet=0;facet<6;facet++){var ca=facet*Math.PI/3+.2,cx=b.x+Math.cos(ca)*r,cy=b.y+Math.sin(ca)*r*.7;polygon([[cx,cy-3],[cx+2,cy],[cx,cy+3],[cx-2,cy]],null,info.tone,.7);}
       }else{
         for(var ember=0;ember<7;ember++){
@@ -331,6 +344,12 @@
     function bossPortrait(world,x,y,width,opacity){
       if(actorPresentation&&actorPresentation.drawBoss(ctx,world,x,y,width,opacity)){var actorMetrics=actorPresentation.getMetrics();mapMetrics.bossArt=actorMetrics.lastBossAsset||'actor-presentation';return;}
       var info=bossIdentity(world),b=world.boss||{},action=b.action||'recover',progress=clamp(b.actionProgress||0,0,1),lean=clamp(b.lean||0,-1,1);
+      if(world.campaign&&world.bossIndex>=5){
+        // New encounters require their own verified atlas. A missing form is
+        // rejected at load time; never paint Balrog or a geometric silhouette
+        // under another canonical name if a renderer is called directly.
+        mapMetrics.bossArt='missing-own-source-'+info.id;return;
+      }
       if(((global.HapilBossMotion&&global.HapilBossMotion.contracts[info.id])||info.id==='mask'||info.id==='lucifer')&&actorPresentation){
         var portraitWorld=Object.assign({},world,{stage:'boss',boss:{kind:info.id,action:'recover',actionProgress:1}});
         if(actorPresentation.drawBoss(ctx,portraitWorld,x,y,width,opacity)){mapMetrics.bossArt=info.artKey;return;}
@@ -510,6 +529,7 @@
         var e=enemies[i],r=e.r||12;
         if(world.campaign&&e.age<0)continue;
         var actorDrawn=actorPresentation&&actorPresentation.drawEnemy(ctx,world,e);
+        if(world.campaign&&world.bossIndex>=5&&!actorDrawn)continue;
         if(actorDrawn){/* Real verified actor pose drawn; shared HP and charge indicators follow. */}
         else if(world.campaign&&e.archetype==='wraith'){
           var drift=Math.sin((e.age||0)*2)*2,lean=clamp(e.lean||0,-1,1)*3;
@@ -523,10 +543,11 @@
           var stretch=world.campaign?(e.action==='charge'?.94:e.action==='attack'?1.06:1+Math.sin((e.age||0)*4)*.018):1;
           art(images.spider,e.x,e.y,53/stretch,53*stretch,.95);
         }
-        if(world.campaign&&e.action==='charge'){ctx.globalAlpha=.5;circle(e.x,e.y,e.r+5,'#d1b5d8',.8);ctx.globalAlpha=1;}
+        // Charging is communicated by the actor pose and the real projectile
+        // or laser telegraph. Do not wrap enemies in a decorative hitbox ring.
         if(e.hp<e.maxHp){ctx.fillStyle='#272235';ctx.fillRect(e.x-15,e.y-r-8,30,2);ctx.fillStyle='#bd9de9';ctx.fillRect(e.x-15,e.y-r-8,30*Math.max(0,e.hp/e.maxHp),2);}
       }
-      if(world.boss){var b=world.boss;var opacity=b.opacity==null?1:b.opacity;bossPortrait(world,b.x,b.y,230,opacity);}
+      if(world.boss&&!(world.stage==='transition'&&world.transitionNarrative)){var b=world.boss;var opacity=b.opacity==null?1:b.opacity;bossPortrait(world,b.x,b.y,230,opacity);}
     }
     function drawShots(world) {
       var shots=world.shots||[],im=images.fxWindArrow8V6;
@@ -554,6 +575,7 @@
     }
     function bossHud(world) {
       if(!world.boss || (world.stage!=='boss'&&world.stage!=='bossIntro'&&world.stage!=='transition'))return;
+      if(world.stage==='transition'&&world.transitionNarrative)return;
       var b=world.boss;ctx.save();
       if(world.campaign){
         var info=bossIdentity(world),action={move:'이동',charge:'준비',attack:'공격',recover:'회복'}[b.action]||'';
@@ -561,6 +583,7 @@
         ctx.font='9px Arial,"Malgun Gothic",sans-serif';ctx.fillStyle=info.tone;ctx.textAlign='left';ctx.fillText(info.name,19,36);
         ctx.textAlign='right';ctx.fillStyle='#c1b9bf';ctx.font='8px Arial,"Malgun Gothic",sans-serif';ctx.fillText('문양 '+((world.phase||0)+1)+' / 3'+(action?' · '+action:''),341,36);
         ctx.textAlign='left';ctx.fillStyle='#d7d3dc';ctx.fillText(world.patternName||'',19,49);
+        if(b.healthLabel){ctx.textAlign='right';ctx.font='7px Arial,"Malgun Gothic",sans-serif';ctx.fillStyle='#bfc5d2';ctx.fillText(b.healthLabel,341,49);}
         ctx.fillStyle='#343047';ctx.fillRect(19,56,322,3);ctx.fillStyle=info.tone;ctx.fillRect(19,56,322*clamp(b.hp/b.maxHp,0,1),3);ctx.restore();return;
       }
       ctx.fillStyle='rgba(9,11,21,.72)';ctx.fillRect(13,27,334,34);
@@ -589,11 +612,30 @@
     }
     function transition(world) {
       if(world.stage!=='transition')return;
+      if(Array.isArray(world.transitionNarrative)&&world.transitionNarrative.length){
+        // The bridge stays above the movable player lane (y260..614). Drawn
+        // before hazards and bullets, it cannot conceal an uncleared attack.
+        var page=clamp(Math.floor((world.stageTime||0)/3),0,world.transitionNarrative.length-1);
+        ctx.save();ctx.fillStyle='rgba(7,10,20,.91)';ctx.fillRect(24,82,312,152);
+        ctx.textAlign='left';ctx.font='14px Georgia,"Batang","Malgun Gothic",serif';ctx.fillStyle='#e6d2b4';
+        ctx.fillText(world.stageLabel||'다음 기억으로',40,106);
+        ctx.font='12px Arial,"Malgun Gothic",sans-serif';ctx.fillStyle='#c7c6ce';
+        var text=String(world.transitionNarrative[page]),lines=[],lineText='';
+        for(var ch of Array.from(text)){
+          var next=lineText+ch;
+          if(lineText&&(Array.from(next).length>32||ctx.measureText(next).width>278)){lines.push(lineText.trim());lineText=ch===' '?'':ch;}
+          else lineText=next;
+        }
+        if(lineText)lines.push(lineText.trim());
+        for(var li=0;li<lines.length;li++)ctx.fillText(lines[li],40,132+li*18);
+        ctx.font='9px Arial,"Malgun Gothic",sans-serif';ctx.fillStyle='#8e9aa7';ctx.textAlign='right';ctx.fillText((page+1)+' / '+world.transitionNarrative.length,320,221);
+        ctx.restore();return;
+      }
       if(world.campaign){
         if(world.bossIndex>=2&&world.nextEncounter!=null&&!world.bullets.length&&!world.hazards.length){
           ctx.save();ctx.fillStyle='rgba(7,10,20,.80)';ctx.fillRect(24,230,312,98);ctx.textAlign='center';ctx.fillStyle='#e6d2b4';ctx.font='16px Georgia,"Batang",serif';
-          ctx.fillText(world.bossIndex===2?'봉인 너머의 추락':'웃는 가면의 균열',180,263);ctx.font='11px Arial,"Malgun Gothic"';ctx.fillStyle='#b9c4cf';
-          ctx.fillText(world.bossIndex===2?'눈을 뜬 곳은 낯선 병원 복도였습니다.':'완벽함의 약속 뒤에서, 루시퍼가 모습을 드러냅니다.',180,294);ctx.restore();return;
+          ctx.fillText(world.bossIndex>=5?'다음 검은 신호를 향해':world.bossIndex===2?'봉인 너머의 추락':'웃는 가면의 균열',180,263);ctx.font='11px Arial,"Malgun Gothic"';ctx.fillStyle='#b9c4cf';
+          ctx.fillText(world.bossIndex>=5?'남은 탄막을 지나 다음 기억으로 이어집니다.':world.bossIndex===2?'눈을 뜬 곳은 낯선 병원 복도였습니다.':'완벽함의 약속 뒤에서, 루시퍼가 모습을 드러냅니다.',180,294);ctx.restore();return;
         }
         ctx.save();ctx.globalAlpha=Math.min(1,Math.max(0,world.transitionRemaining==null?1:world.transitionRemaining));ctx.fillStyle='rgba(10,11,21,.56)';ctx.fillRect(40,190,280,38);ctx.textAlign='center';ctx.font='10px Arial,"Malgun Gothic",sans-serif';ctx.fillStyle='#d8c8e2';ctx.fillText(world.stageLabel||'남은 탄막이 지나갑니다',180,213);ctx.restore();return;
       }
@@ -601,13 +643,10 @@
     }
     function drawSpellTheatre(world){
       if(!world.campaign)return;
+      if(world.stage==='transition'&&world.transitionNarrative)return;
       var b=world.boss,t=world.time||0;
       if(b&&world.bossIndex>=3&&world.stage!=='bossIntro'){
-        ctx.save();var phase=world.phase||0;
-        ctx.globalAlpha=.18;ctx.translate(b.x,b.y-6);ctx.rotate(t*.07*(phase%2?-1:1));
-        circle(0,0,66+phase*5,world.bossIndex===4?'#b7b5ed':'#ecd5a0',.8);
-        for(var i=0;i<12;i++){var a=i*Math.PI/6;line([[Math.cos(a)*62,Math.sin(a)*62],[Math.cos(a)*70,Math.sin(a)*70]],'#c8b7d1',.7);}
-        ctx.restore();
+        var phase=world.phase||0;
         if(world.bossIndex===4){
           // Small face plate and broken orbit: bounded above combat lane.
           var mx=b.x-2,my=b.y-20;ctx.save();ctx.globalAlpha=.85;
@@ -641,7 +680,7 @@
       if(world.reservation){ctx.save();ctx.font='8px Arial,"Malgun Gothic",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(167,224,227,.85)';ctx.fillText(typeof world.reservation==='string'?world.reservation:'스킬 준비 중',180,621);ctx.restore();}
       drawPlayerCore(world);
     }
-    return {resize:function(cssW,cssH,dpr){ratio=Math.min(1.5,Math.max(1,dpr||1))*cssW/W;var nextWidth=Math.max(1,Math.round(W*ratio)),nextHeight=Math.max(1,Math.round(H*ratio));if(canvas.width!==nextWidth)canvas.width=nextWidth;if(canvas.height!==nextHeight)canvas.height=nextHeight;canvas.style.width='100%';canvas.style.height='100%';ctx.imageSmoothingEnabled=true;},draw:draw,getMetrics:function(){return Object.assign({},mapMetrics,{actorPresentation:actorPresentation?actorPresentation.getMetrics():null,projectilePresentation:projectilePresentation?projectilePresentation.getMetrics():null});},destroy:function(){if(projectilePresentation&&projectilePresentation.destroy)projectilePresentation.destroy();cached=false;canvas.width=1;canvas.height=1;back.width=1;back.height=1;foreground.width=1;foreground.height=1;for(var i=0;i<strips.length;i++){strips[i].width=1;strips[i].height=1;}strips.length=0;actorPresentation=null;projectilePresentation=null;images={};}};
+    return {resize:function(cssW,cssH,dpr){ratio=Math.min(1.5,Math.max(1,dpr||1))*cssW/W;var nextWidth=Math.max(1,Math.round(W*ratio)),nextHeight=Math.max(1,Math.round(H*ratio));if(canvas.width!==nextWidth)canvas.width=nextWidth;if(canvas.height!==nextHeight)canvas.height=nextHeight;canvas.style.width='100%';canvas.style.height='100%';ctx.imageSmoothingEnabled=true;},draw:draw,getMetrics:function(){return Object.assign({},mapMetrics,{actorPresentation:actorPresentation?actorPresentation.getMetrics():null,projectilePresentation:projectilePresentation?projectilePresentation.getMetrics():null});},destroy:function(){if(projectilePresentation&&projectilePresentation.destroy)projectilePresentation.destroy();cached=false;canvas.width=1;canvas.height=1;back.width=1;back.height=1;foreground.width=1;foreground.height=1;if(sinFloor){sinFloor.width=1;sinFloor.height=1;sinFloor=null;}sinFloorSource=null;sinFloorTone=null;for(var i=0;i<strips.length;i++){strips[i].width=1;strips[i].height=1;}strips.length=0;actorPresentation=null;projectilePresentation=null;images={};}};
   }
   global.HapilRenderer={create:create};
 })(typeof window!=='undefined'?window:globalThis);

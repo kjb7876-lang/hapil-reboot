@@ -1,0 +1,312 @@
+{
+  "schema": "hapil.sins-projectile-sources.v1",
+  "date": "2026-10-29",
+  "sourceBatch": "signature-chapter2A-partial18",
+  "sourceManifestSHA256": "199468c98a72a4775c65b7e30569c1fd71fa425841c5b7bd155289dedd0f809f",
+  "sourceReview": "APPROVED_PARTIAL_STATIC_ART_CANDIDATES_ONLY; parent-independent static review retained in source delivery. In-game readability/collision checks are separate.",
+  "alphaPolicy": "Original source files are byte-identical. Tint preserves authored alpha and luminance detail; no backing body, duplicate-opacity pass, edge fill, other-character portrait, or per-frame pixel processing. Interior source alpha is 250..253, visibly dense but not asserted 255.",
+  "cachePolicy": "One encounter at a time; bounded 96-entry, 4MiB cached cropped material/stamps. Full original PNG decoding still uses additional memory until encounter release.",
+  "palettePolicy": "Name color first when explicit (white-suited chairman), then prominent image colors and supporting colors, with readable brightness adaptation. Palettes are not claimed exact unmodified samples.",
+  "items": [
+    {
+      "boss": "belphegor",
+      "sourceActor": "b02-boss",
+      "runtimeKey": "projectileBelphegorV13",
+      "runtimePath": "media/sins-v13/sloth-core.png",
+      "sourceDrawing": "sloth_core",
+      "archiveMembership": [
+        {
+          "localFile": "chapter2a-01.zip",
+          "bytes": 2242131,
+          "sha256": "78f8a1ae2ece7627f29ce6f104819c268b734df27b75900aeac52f8e97e3cdc6",
+          "member": "raw/sloth_core-static.png"
+        }
+      ],
+      "sha256": "cd7f3b5ee70664d42b0deaa5002443af7b285dea2decbfc9c9e4768d92558001",
+      "bytes": 912877,
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "materialCropXYWH": [
+        453,
+        448,
+        384,
+        384
+      ],
+      "materialRadius": 192,
+      "sourceAlphaInteriorMin": 251,
+      "frames": 1,
+      "pixelInspected": true,
+      "runtimeUse": "A dense region of the same boss static attack artwork is recolored and nine-slice fitted to core-owned orb/capsule geometry. This is a texture-material adaptation, not whole-object animation or an independently animated weapon."
+    },
+    {
+      "boss": "leviathan",
+      "sourceActor": "b03-boss",
+      "runtimeKey": "projectileLeviathanV13",
+      "runtimePath": "media/sins-v13/envy-core.png",
+      "sourceDrawing": "envy_core",
+      "archiveMembership": [
+        {
+          "localFile": "chapter2a-02.zip",
+          "bytes": 2732939,
+          "sha256": "49208e0aab3fb8896a42b83df91953b4fa0e65aace8e0b912b0ce26995f99e51",
+          "member": "raw/envy_core-static.png"
+        }
+      ],
+      "sha256": "e6d1b0dcdff9663f93daca8843191ef9561afbb830b0bcb0f1db3af314b2aa93",
+      "bytes": 288084,
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "materialCropXYWH": [
+        598,
+        608,
+        104,
+        104
+      ],
+      "materialRadius": 52,
+      "sourceAlphaInteriorMin": 252,
+      "frames": 1,
+      "pixelInspected": true,
+      "runtimeUse": "A dense region of the same boss static attack artwork is recolored and nine-slice fitted to core-owned orb/capsule geometry. This is a texture-material adaptation, not whole-object animation or an independently animated weapon."
+    },
+    {
+      "boss": "beelzebub",
+      "sourceActor": "b04-boss",
+      "runtimeKey": "projectileBeelzebubV13",
+      "runtimePath": "media/sins-v13/glutton-core.png",
+      "sourceDrawing": "glutton_core",
+      "archiveMembership": [
+        {
+          "localFile": "chapter2a-03.zip",
+          "bytes": 2743784,
+          "sha256": "9a1cf3443d3b76d63f23e5647c28167e087c3aea3087d767a1ce7cf345aa51df",
+          "member": "raw/glutton_core-static.png"
+        }
+      ],
+      "sha256": "027c1ce6572541490f23ba3a10463ddb7771f2ab3af7cf9c3a7b27cc1575a1f6",
+      "bytes": 828086,
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "materialCropXYWH": [
+        434,
+        635,
+        384,
+        384
+      ],
+      "materialRadius": 192,
+      "sourceAlphaInteriorMin": 250,
+      "frames": 1,
+      "pixelInspected": true,
+      "runtimeUse": "A dense region of the same boss static attack artwork is recolored and nine-slice fitted to core-owned orb/capsule geometry. This is a texture-material adaptation, not whole-object animation or an independently animated weapon."
+    },
+    {
+      "boss": "asmodeus",
+      "sourceActor": "b05-boss",
+      "runtimeKey": "projectileAsmodeusV13",
+      "runtimePath": "media/sins-v13/seoyun-core.png",
+      "sourceDrawing": "seoyun_core",
+      "archiveMembership": [
+        {
+          "localFile": "chapter2a-03.zip",
+          "bytes": 2743784,
+          "sha256": "9a1cf3443d3b76d63f23e5647c28167e087c3aea3087d767a1ce7cf345aa51df",
+          "member": "raw/seoyun_core-static.png"
+        }
+      ],
+      "sha256": "7b902512dcefa6e7307f888845845d938b0e5cbaf84669998394df7f7dcf8142",
+      "bytes": 350216,
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "materialCropXYWH": [
+        810,
+        278,
+        148,
+        148
+      ],
+      "materialRadius": 74,
+      "sourceAlphaInteriorMin": 252,
+      "frames": 1,
+      "pixelInspected": true,
+      "runtimeUse": "A dense region of the same boss static attack artwork is recolored and nine-slice fitted to core-owned orb/capsule geometry. This is a texture-material adaptation, not whole-object animation or an independently animated weapon."
+    }
+  ],
+  "generatedMissingOwnMaterials": [
+    {
+      "boss": "mammon",
+      "sourceActor": "b06-boss",
+      "runtimeKey": "projectileMammonV13",
+      "runtimePath": "media/sins-v13/mammon-projectile.png",
+      "generator": "built-in image_gen.imagegen",
+      "promptRecord": "SINS-GENERATED-ASSETS-20261029.json#sinProjectile-mammon",
+      "sha256": "eab754f79f7927f2606d61e64f8069f5f64b6632592b63f44d62fee163f41609",
+      "bytes": 1844314,
+      "dimensions": [
+        1295,
+        1215
+      ],
+      "materialCropXYWH": [
+        461,
+        419,
+        384,
+        384
+      ],
+      "materialRadius": 192,
+      "sourceAlphaInteriorMin": 250,
+      "frames": 1,
+      "pixelInspected": true,
+      "runtimeUse": "Dense own-boss material crop fitted to core-owned orb/capsule/laser geometry. Full original sprite includes object silhouette that is not asserted to match the damage body. No continuous animation or extra handweapon is claimed."
+    },
+    {
+      "boss": "wrath",
+      "sourceActor": "b07-boss",
+      "runtimeKey": "projectileWrathV13",
+      "runtimePath": "media/sins-v13/wrath-projectile.png",
+      "generator": "built-in image_gen.imagegen",
+      "promptRecord": "SINS-GENERATED-ASSETS-20261029.json#sinProjectile-wrath",
+      "sha256": "92a333e3d9159e51df4d8174bf8f3d361592540c9404e7bd7793ea657442d616",
+      "bytes": 945900,
+      "dimensions": [
+        1295,
+        1214
+      ],
+      "materialCropXYWH": [
+        482,
+        481,
+        340,
+        340
+      ],
+      "materialRadius": 170,
+      "sourceAlphaInteriorMin": 250,
+      "frames": 1,
+      "pixelInspected": true,
+      "runtimeUse": "Dense own-boss material crop fitted to core-owned orb/capsule/laser geometry. Full original sprite includes object silhouette that is not asserted to match the damage body. No continuous animation or extra handweapon is claimed."
+    },
+    {
+      "boss": "pride",
+      "sourceActor": "b08-boss",
+      "runtimeKey": "projectilePrideV13",
+      "runtimePath": "media/sins-v13/pride-projectile.png",
+      "generator": "built-in image_gen.imagegen",
+      "promptRecord": "SINS-GENERATED-ASSETS-20261029.json#sinProjectile-pride",
+      "sha256": "55bf337eee80cd5ce686271cb6e22e7aaf0c5e1b01455e14460861ed7e8ab8cf",
+      "bytes": 1082720,
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "materialCropXYWH": [
+        680,
+        452,
+        176,
+        176
+      ],
+      "materialRadius": 88,
+      "sourceAlphaInteriorMin": 252,
+      "frames": 1,
+      "pixelInspected": true,
+      "runtimeUse": "Dense own-boss material crop fitted to core-owned orb/capsule/laser geometry. Full original sprite includes object silhouette that is not asserted to match the damage body. No continuous animation or extra handweapon is claimed."
+    }
+  ],
+  "palettes": [
+    {
+      "id": "belphegor",
+      "primary": "#b8a36f",
+      "secondary": "#ded5b5",
+      "accent": "#7e9865"
+    },
+    {
+      "id": "leviathan",
+      "primary": "#43b7b6",
+      "secondary": "#d3d9d3",
+      "accent": "#6f7f92"
+    },
+    {
+      "id": "beelzebub",
+      "primary": "#c79b52",
+      "secondary": "#ebd8b0",
+      "accent": "#87965c"
+    },
+    {
+      "id": "asmodeus",
+      "primary": "#d24a4a",
+      "secondary": "#f4d9ca",
+      "accent": "#bc9363"
+    },
+    {
+      "id": "mammon",
+      "primary": "#7985aa",
+      "secondary": "#e0bb65",
+      "accent": "#dfd6c7"
+    },
+    {
+      "id": "wrath",
+      "primary": "#a8927c",
+      "secondary": "#f6a153",
+      "accent": "#d75a43"
+    },
+    {
+      "id": "pride",
+      "primary": "#eee6d6",
+      "secondary": "#c9ad67",
+      "accent": "#76818c"
+    }
+  ],
+  "readability": "Only authored RGB values are raised into each identity palette; source luminance detail and original alpha are retained. Material tint floor prevents dark coal/steel surfaces from disappearing into dark maps. No backing/rim fill is added.",
+  "providerProvenance": {
+    "guide": {
+      "id": "1tURwksn3sojNQRzs71oEpejfk9j8MGnY",
+      "title": "다운로드안내.md",
+      "bytes": 1640,
+      "url": "https://drive.google.com/file/d/1tURwksn3sojNQRzs71oEpejfk9j8MGnY/view?usp=drivesdk"
+    },
+    "manifestSHA256": "199468c98a72a4775c65b7e30569c1fd71fa425841c5b7bd155289dedd0f809f",
+    "archives": [
+      {
+        "seq": 1,
+        "id": "1Yx74OWl45lw-kP1RHA_cmzQjhu6eYkAZ",
+        "url": "https://drive.google.com/file/d/1Yx74OWl45lw-kP1RHA_cmzQjhu6eYkAZ/view?usp=drivesdk",
+        "bytes": 2242131,
+        "sha256": "78f8a1ae2ece7627f29ce6f104819c268b734df27b75900aeac52f8e97e3cdc6",
+        "title": "Chapter2A-partial18-staticFX-01-of04.zip"
+      },
+      {
+        "seq": 2,
+        "id": "1ZOAaH4cmQ_T2TkSOmD_uK2fncxieyXbd",
+        "url": "https://drive.google.com/file/d/1ZOAaH4cmQ_T2TkSOmD_uK2fncxieyXbd/view?usp=drivesdk",
+        "bytes": 2732939,
+        "sha256": "49208e0aab3fb8896a42b83df91953b4fa0e65aace8e0b912b0ce26995f99e51",
+        "title": "Chapter2A-partial18-staticFX-02-of04.zip"
+      },
+      {
+        "seq": 3,
+        "id": "1HVdX8ZuJrnRzZ_RpG2aYv4fmXn_zmYVZ",
+        "url": "https://drive.google.com/file/d/1HVdX8ZuJrnRzZ_RpG2aYv4fmXn_zmYVZ/view?usp=drivesdk",
+        "bytes": 2743784,
+        "sha256": "9a1cf3443d3b76d63f23e5647c28167e087c3aea3087d767a1ce7cf345aa51df",
+        "title": "Chapter2A-partial18-staticFX-03-of04.zip"
+      },
+      {
+        "seq": 4,
+        "id": "1PsNoRNs1IrFUHRZQ2MeN410zSoafRbr7",
+        "url": "https://drive.google.com/file/d/1PsNoRNs1IrFUHRZQ2MeN410zSoafRbr7/view?usp=drivesdk",
+        "bytes": 710294,
+        "sha256": "9024d3c88c102f6fd109841e49126ebe4fb4bf2a89dfe441f47953b10bae6b5f",
+        "title": "Chapter2A-partial18-staticFX-04-of04.zip"
+      }
+    ],
+    "membership": {
+      "raw/sloth_core-static.png": 1,
+      "raw/envy_core-static.png": 2,
+      "raw/glutton_core-static.png": 3,
+      "raw/seoyun_core-static.png": 3
+    },
+    "verification": "Official metadata before raw fetch; top-level file_uri transfer; exact byte sizes and SHA256 of all4archives; ZIP CRC and unique safe paths; all manifest-payload byte sizes and SHA256 match. Actual raw art reviewed."
+  }
+}

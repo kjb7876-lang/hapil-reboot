@@ -13,9 +13,18 @@
     Object.freeze({id:'horn',primary:'#b39a51',secondary:'#88944f',accent:'#c58252'}),
     Object.freeze({id:'balrog',primary:'#f46b2c',secondary:'#f4c55b',accent:'#78645e'}),
     Object.freeze({id:'mask',primary:'#d34b35',secondary:'#f0ddc4',accent:'#c7a054'}),
-    Object.freeze({id:'lucifer',primary:'#be2442',secondary:'#eee0cf',accent:'#cea24c'})
+    Object.freeze({id:'lucifer',primary:'#be2442',secondary:'#eee0cf',accent:'#cea24c'}),
+    // Readable adaptations of the actual retained Chapter-2 boss pixels.
+    // The white-suited chairman's explicit named white takes precedence.
+    Object.freeze({id:'belphegor',primary:'#b8a36f',secondary:'#ded5b5',accent:'#7e9865'}),
+    Object.freeze({id:'leviathan',primary:'#43b7b6',secondary:'#d3d9d3',accent:'#6f7f92'}),
+    Object.freeze({id:'beelzebub',primary:'#c79b52',secondary:'#ebd8b0',accent:'#87965c'}),
+    Object.freeze({id:'asmodeus',primary:'#d24a4a',secondary:'#f4d9ca',accent:'#bc9363'}),
+    Object.freeze({id:'mammon',primary:'#7985aa',secondary:'#e0bb65',accent:'#dfd6c7'}),
+    Object.freeze({id:'wrath',primary:'#a8927c',secondary:'#f6a153',accent:'#d75a43'}),
+    Object.freeze({id:'pride',primary:'#eee6d6',secondary:'#c9ad67',accent:'#76818c'})
   ]);
-  var PALETTES=Object.freeze({violet:PALETTE_LIST[0],horn:PALETTE_LIST[1],balrog:PALETTE_LIST[2],mask:PALETTE_LIST[3],lucifer:PALETTE_LIST[4]});
+  var PALETTES=Object.freeze({violet:PALETTE_LIST[0],horn:PALETTE_LIST[1],balrog:PALETTE_LIST[2],mask:PALETTE_LIST[3],lucifer:PALETTE_LIST[4],belphegor:PALETTE_LIST[5],leviathan:PALETTE_LIST[6],beelzebub:PALETTE_LIST[7],asmodeus:PALETTE_LIST[8],mammon:PALETTE_LIST[9],wrath:PALETTE_LIST[10],pride:PALETTE_LIST[11]});
   var FX=Object.freeze({
     web:{key:'fxV8VioletWeb',frames:16,ms:80,pivot:[64,64],sample:4},
     silver:{key:'fxV8SilverSlash',frames:16,ms:40,pivot:[64,64],sample:4},
@@ -26,20 +35,32 @@
     unlock:{key:'fxV8Unlock',frames:16,ms:80,pivot:[64,64],sample:4},
     vortex:{key:'fxV8Vortex',frames:16,ms:80,pivot:[64,64],sample:4}
   });
-  var FAMILIES=[['web','silver'],['ripple','reed'],['ember','gold'],['unlock','gold'],['vortex','silver','unlock']];
+  var FAMILIES=[['web','silver'],['ripple','reed'],['ember','gold'],['unlock','gold'],['vortex','silver','unlock'],[],[],[],[],[],[],[]];
   var ORBS=[
     {key:'projectileVioletOrbV9',width:296,height:80,frames:4,ms:125,crop:[16,16,48,48],step:72,r:24,l:0},
     {key:'projectileHornOrbV10',width:64,height:64,frames:1,crop:[8,8,48,48],r:24,l:0},
     {key:'projectileBalrogOrbV10',width:64,height:64,frames:1,crop:[8,8,48,48],r:24,l:0},
     {key:'projectileMaskOrbV10',width:64,height:64,frames:1,crop:[8,8,48,48],r:24,l:0},
-    {key:'projectileLuciferOrbV9',width:296,height:80,frames:4,ms:125,crop:[16,16,48,48],step:72,r:24,l:0}
+    {key:'projectileLuciferOrbV9',width:296,height:80,frames:4,ms:125,crop:[16,16,48,48],step:72,r:24,l:0},
+    // These are dense material crops from that boss's own approved static
+    // attack source. They are not separate full-object flight animations.
+    // Source alpha (250..253 in these interiors) is retained, never backed by
+    // a generated shape. See SINS-PROJECTILE-SOURCES-20261029.json.
+    {key:'projectileBelphegorV13',width:1254,height:1254,frames:1,crop:[453,448,384,384],r:192,l:0,encounterMaterial:true},
+    {key:'projectileLeviathanV13',width:1254,height:1254,frames:1,crop:[598,608,104,104],r:52,l:0,encounterMaterial:true},
+    {key:'projectileBeelzebubV13',width:1254,height:1254,frames:1,crop:[434,635,384,384],r:192,l:0,encounterMaterial:true},
+    {key:'projectileAsmodeusV13',width:1254,height:1254,frames:1,crop:[810,278,148,148],r:74,l:0,encounterMaterial:true},
+    {key:'projectileMammonV13',width:1295,height:1215,frames:1,crop:[461,419,384,384],r:192,l:0,encounterMaterial:true},
+    {key:'projectileWrathV13',width:1295,height:1214,frames:1,crop:[482,481,340,340],r:170,l:0,encounterMaterial:true},
+    {key:'projectilePrideV13',width:1536,height:1024,frames:1,crop:[680,452,176,176],r:88,l:0,encounterMaterial:true}
   ];
   var BLADES=[
     {key:'projectileVioletBladeV10',width:128,height:64,frames:1,crop:[13,20,102,24],r:12,l:39},
     {key:'projectileHornNeedleV11',width:128,height:64,frames:1,crop:[28,23,72,18],r:9,l:27},
     {key:'projectileBalrogBladeV10',width:128,height:64,frames:1,crop:[13,20,102,24],r:12,l:39},
     {key:'projectileMaskNeedleV10',width:128,height:64,frames:1,crop:[28,23,72,18],r:9,l:27},
-    {key:'projectileLuciferShardV11',width:128,height:64,frames:1,crop:[13,20,102,24],r:12,l:39}
+    {key:'projectileLuciferShardV11',width:128,height:64,frames:1,crop:[13,20,102,24],r:12,l:39},
+    ORBS[5],ORBS[6],ORBS[7],ORBS[8],ORBS[9],ORBS[10],ORBS[11]
   ];
   // Horn reed and Lucifer mask shard are static own-encounter source art.
   // The shard is a proposed ceramic material, not a canonical actor/body master.
@@ -65,20 +86,21 @@
   var CACHE_LIMIT=96,CACHE_BYTES=4*1024*1024,SCALE=3,PAD=1,CELL=128;
   function finite(n){return typeof n==='number'&&Number.isFinite(n);}
   function clamp(n,a,b){return Math.max(a,Math.min(b,n));}
-  function indexFor(w){return w&&Number.isInteger(w.bossIndex)?clamp(w.bossIndex,0,4):0;}
-  function paletteFor(w,b){var p=PALETTE_LIST[indexFor(w)];return b&&b.paletteSlot===1?{id:p.id+'-secondary',primary:p.secondary,secondary:p.primary,accent:p.accent}:p;}
-  function colorFor(w,b){return paletteFor(w,b).primary;}
+  function slotForEncounter(i){return i===undefined||i===-1?0:Number.isInteger(i)&&i>=0&&i<ORBS.length&&ORBS[i]?i:-1;}
+  function indexFor(w){return slotForEncounter(w&&w.bossIndex);}
+  function paletteFor(w,b){var p=PALETTE_LIST[indexFor(w)];return p?(b&&b.paletteSlot===1?{id:p.id+'-secondary',primary:p.secondary,secondary:p.primary,accent:p.accent}:p):null;}
+  function colorFor(w,b){var p=paletteFor(w,b);return p?p.primary:null;}
   function optionalAssetKeysForEncounter(i){return Number.isInteger(i)&&i>=0&&i<CASTS.length?[CASTS[i].key]:[];}
   function assetKeysForEncounter(i){
-    var wi=clamp(Math.floor(i||0),0,4),out=[ORBS[wi].key];
-    if(BLADES[wi])out.push(BLADES[wi].key);
-    if(Number.isInteger(i)&&i>=0)out.push(WEAPONS[wi].key);
+    var wi=slotForEncounter(i);if(wi<0)return [];var out=[ORBS[wi].key];
+    if(BLADES[wi]&&out.indexOf(BLADES[wi].key)<0)out.push(BLADES[wi].key);
+    if(Number.isInteger(i)&&i>=0&&WEAPONS[wi])out.push(WEAPONS[wi].key);
     out=out.concat(optionalAssetKeysForEncounter(i));
     FAMILIES[wi].forEach(function(name){if(name!=='unlock'&&out.indexOf(FX[name].key)<0)out.push(FX[name].key);});
     return out;
   }
   function ready(im,s){return !!(im&&im.complete!==false&&im.naturalWidth===(s.width||512)&&im.naturalHeight===(s.height||Math.ceil(s.frames/4)*CELL));}
-  function invalidAssetForEncounter(images,i){var wi=clamp(Math.floor(i||0),0,4),specs=[ORBS[wi]];if(BLADES[wi])specs.push(BLADES[wi]);if(Number.isInteger(i)&&i>=0)specs.push(WEAPONS[wi]);for(var k=0;k<specs.length;k++)if(!ready(images&&images[specs[k].key],specs[k]))return specs[k].key;return null;}
+  function invalidAssetForEncounter(images,i){var wi=slotForEncounter(i);if(wi<0)return 'unsupportedProjectileEncounter';var specs=[ORBS[wi]];if(BLADES[wi])specs.push(BLADES[wi]);if(Number.isInteger(i)&&i>=0&&WEAPONS[wi])specs.push(WEAPONS[wi]);for(var k=0;k<specs.length;k++)if(!ready(images&&images[specs[k].key],specs[k]))return specs[k].key;return null;}
   function capsule(ctx,x,y,r,l){
     ctx.beginPath();
     if(l>0){ctx.moveTo(x-l,y-r);ctx.lineTo(x+l,y-r);ctx.arc(x+l,y,r,-Math.PI/2,Math.PI/2);ctx.lineTo(x-l,y+r);ctx.arc(x-l,y,r,Math.PI/2,Math.PI*1.5);ctx.closePath();}
@@ -97,7 +119,7 @@
       cache.set(key,e);cacheBytes+=e.bytes;return e;
     }
     function canvas(w,h){if(!global.document||!global.document.createElement)return null;var c=global.document.createElement('canvas');c.width=w;c.height=h;return c;}
-    function textureFor(w,b){var wi=indexFor(w);return b&&b.halfLength>0&&BLADES[wi]?BLADES[wi]:ORBS[wi];}
+    function textureFor(w,b){var wi=indexFor(w);return wi<0?null:b&&b.halfLength>0&&BLADES[wi]?BLADES[wi]:ORBS[wi];}
     function tintedArt(s,palette){
       var key='art|'+s.key+'|'+palette.id,e=cache.get(key);if(e)return e;
       var crop=s.crop,fw=crop[2],fh=crop[3],gutter=2,c=canvas((fw+gutter*2)*s.frames,fh+gutter*2);if(!c)return null;
@@ -117,8 +139,11 @@
         // Raise their existing pixels into the encounter's identity palette;
         // retain source alpha and source-value variation without adding a rim.
         var castValue=s.cast?Math.max(d[i],d[i+1],d[i+2])/255:0;
-        var hi=s.cast?clamp((castValue-.5)/.5,0,1)*.28:isLucifer?clamp((value-.45)/.55,0,1)*.9:clamp((lum-.64)/.36,0,1)*.72;
-        var mid=s.cast?.80+castValue*.35:isLucifer?1.15+Math.min(value,.64)*.35:.38+Math.min(lum,.64)*1.03;
+        var hi=s.cast?clamp((castValue-.5)/.5,0,1)*.28:s.encounterMaterial?clamp((lum-.52)/.48,0,1)*.55:isLucifer?clamp((value-.45)/.55,0,1)*.9:clamp((lum-.64)/.36,0,1)*.72;
+        // Coal, steel and fabric contain dark source detail. Lift their own
+        // pixels into the readable encounter palette without adding alpha,
+        // contour strokes or an opaque replacement danger body.
+        var mid=s.cast?.80+castValue*.35:s.encounterMaterial?.88+Math.min(lum,.75)*.55:isLucifer?1.15+Math.min(value,.64)*.35:.38+Math.min(lum,.64)*1.03;
         for(var j=0;j<3;j++)d[i+j]=clamp(Math.round(p[j]*mid*(1-hi)+q[j]*hi+(a[j]-p[j])*.045),0,255);
       }
       ctx.putImageData(data,0,0);
@@ -150,7 +175,7 @@
     // One small, bounded per-encounter cache is baked from the generated
     // source pixels; rotating it never changes physics or collision direction.
     function weaponSurface(w){
-      var wi=indexFor(w),spec=WEAPONS[wi],key='weapon|'+spec.key,e=cache.get(key);
+      var wi=indexFor(w),spec=WEAPONS[wi];if(!spec)return null;var key='weapon|'+spec.key,e=cache.get(key);
       if(e)return e;
       if(!ready(images[spec.key],spec))return null;
       var c=canvas(96,96),ctx=c&&c.getContext('2d');if(!ctx){release({canvas:c});return null;}
@@ -165,12 +190,13 @@
     }
     function drawBullet(ctx,w,b,lowQuality){
       if(!w||!b||!finite(b.x)||!finite(b.y))return false;
-      if(b.kind==='boss-weapon'&&!ready(images[WEAPONS[indexFor(w)].key],WEAPONS[indexFor(w)])){metrics.missingProjectileAssets++;return false;}
+      var wi=indexFor(w),weapon=WEAPONS[wi];
+      if(b.kind==='boss-weapon'&&(!weapon||!ready(images[weapon.key],weapon))){metrics.missingProjectileAssets++;return false;}
       var s=textureFor(w,b);
-      if(!ready(images[s.key],s)){metrics.missingProjectileAssets++;return false;}
+      if(!s||!ready(images[s.key],s)){metrics.missingProjectileAssets++;return false;}
       var r=finite(b.r)&&b.r>0?b.r:3,l=finite(b.halfLength)?Math.max(0,b.halfLength):0;
       if(r>128||l>640)return false;
-      var wi=indexFor(w);if(group!==wi){clearCache();group=wi;}
+      if(group!==wi){clearCache();group=wi;}
       var key='body|'+s.key+'|'+r+'|'+l+'|'+paletteFor(w,b).id,e=cache.get(key);
       if(!e){e=buildStamp(w,b,s,r,l);if(!e)return false;e=remember(key,e);if(!e)return false;metrics.stampCacheMisses++;}else metrics.stampCacheHits++;
       var phase=s.frames>1?Math.min(s.frames-1,Math.floor(Math.max(0,finite(b.age)?b.age:0)*1000/s.ms)):0;
@@ -183,7 +209,7 @@
     }
     function drawHazardBody(ctx,w,h,lowQuality){
       if(!w||!h||(h.phase!=='active'&&h.phase!=='fade')||![h.x1,h.x2,h.y1,h.y2,h.width].every(finite)||h.width<=0)return false;
-      var s=textureFor(w,{halfLength:1});if(!ready(images[s.key],s)){metrics.missingProjectileAssets++;return false;}
+      var s=textureFor(w,{halfLength:1});if(!s||!ready(images[s.key],s)){metrics.missingProjectileAssets++;return false;}
       var art=tintedArt(s,paletteFor(w,h));if(!art)return false;
       var dx=h.x2-h.x1,dy=h.y2-h.y1,len=Math.sqrt(dx*dx+dy*dy),r=h.width/2;
       var progress=clamp(h.progress||0,0,1),phase=s.frames>1?Math.min(s.frames-1,Math.floor(Math.max(0,finite(h.age)?h.age:0)*1000/s.ms)):0;
@@ -199,7 +225,7 @@
     }
     function drawBossCast(ctx,w,lowQuality){
       if(!w||!w.campaign||!w.boss||w.stage!=='boss')return;
-      var b=w.boss,progress=clamp(b.actionProgress||0,0,1),wi=indexFor(w),names=FAMILIES[wi];
+      var b=w.boss,progress=clamp(b.actionProgress||0,0,1),wi=indexFor(w),names=FAMILIES[wi];if(wi<0||!names)return;
       var releaseAge=Number.isFinite(b.releaseTick)&&b.releaseTick>=0?w.tick-b.releaseTick:Infinity;
       if(b.action!=='charge'&&!(releaseAge>=0&&releaseAge<60))return;
       // The pair appears during this particular charge only; its retained art
@@ -214,7 +240,7 @@
       // One image per frame, visible during charge or the 18 ticks following a
       // real owned-projectile/laser release. No new animated loop is implied.
       var cast=CASTS[wi],fade=b.action==='charge'?.25+.45*progress:(releaseAge<18?.70*(1-releaseAge/18):0);
-      if(fade>0&&ready(images[cast.key],cast)){
+      if(fade>0&&cast&&ready(images[cast.key],cast)){
         var source=images[cast.key];
         if(wi!==2){
           // Recolor existing pixels once to boss-derived colors. The Lucifer
@@ -228,7 +254,7 @@
           metrics.compactFamilies[cast.key]=(metrics.compactFamilies[cast.key]||0)+1;}
       }
       var name=b.action==='charge'?names[0]:wi===4&&w.phase===2?'unlock':names[1];if(name==='unlock'){metrics.suppressedUnapprovedFX++;return;}
-      var s=FX[name];if(!ready(images[s.key],s))return;
+      var s=FX[name];if(!s||!ready(images[s.key],s))return;
       var elapsed=b.action==='charge'?progress*900:releaseAge*1000/60;
       if(oneShot(ctx,s,elapsed,b.x,Math.max(88,b.y+24),lowQuality?60:72,b.action==='charge'?.48:.7)){metrics.compactCastDraws++;metrics.compactFamilies[s.key]=(metrics.compactFamilies[s.key]||0)+1;}
     }

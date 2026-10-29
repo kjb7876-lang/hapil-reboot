@@ -20,7 +20,14 @@
     Object.freeze({ id: 'horn', name: '늪지대의 뿔악마', artKey: 'horn', zone: '검은 늪', waves: Object.freeze(['늪지대의 기억']), patterns: Object.freeze(['늪에서 번지는 기억', '붙잡는 손의 틈', '뿔에 걸린 잔상']), hp: Object.freeze([1320, 1470, 1620]) }),
     Object.freeze({ id: 'balrog', name: '발록', artKey: 'balrog', zone: '지옥의 소환진', waves: Object.freeze(['무너진 성', '시체들이 되살아난 밤', '일곱 기둥']), patterns: Object.freeze(['공간을 가르는 검', '하늘을 덮는 불덩이', '마지막 봉인']), hp: Object.freeze([1440, 1590, 1740]) }),
     Object.freeze({ id:'mask', name:'초천사의 웃는 가면', artKey:'actorMaskIdle', zone:'거짓 천국의 문', waves:Object.freeze(['추락 · 병원 복도','주사실의 봉인 기억','환자와 중독의 도시']), patterns:Object.freeze(['흰 날개의 약속','완벽해야 한다는 명령','웃는 가면의 균열']), hp:Object.freeze([1500,1650,1800]) }),
-    Object.freeze({ id:'lucifer', name:'코스믹 가면 루시퍼', artKey:'actorLuciferIdle', zone:'가면 안의 우주', waves:Object.freeze(['부정의 행렬','오만의 흰 가면','도움을 청하는 문']), patterns:Object.freeze(['천구 · 거짓된 별자리','이면 · 수많은 나의 얼굴','합일 · J의 인장']), hp:Object.freeze([1600,1800,2000]) })
+    Object.freeze({ id:'lucifer', name:'코스믹 가면 루시퍼', artKey:'actorLuciferIdle', zone:'가면 안의 우주', waves:Object.freeze(['부정의 행렬','오만의 흰 가면','도움을 청하는 문']), patterns:Object.freeze(['천구 · 거짓된 별자리','이면 · 수많은 나의 얼굴','합일 · J의 인장']), hp:Object.freeze([1600,1800,2000]) }),
+    Object.freeze({id:'belphegor',name:'나태의 귀 벨페고르',artKey:'sinBelphegorAtlas',zone:'나태의 집',sceneIds:Object.freeze(['ep1b02']),phaseRoles:Object.freeze(['sloth-man','sloth-man','sloth-man']),waves:Object.freeze(['현관의 쓰레기','검은 비닐의 창','미뤄 둔 시간']),patterns:Object.freeze(['늦게 움직이는 고리','멈춘 틈의 광선','미뤄진 파동']),hp:Object.freeze([1450,1600,1750])}),
+    Object.freeze({id:'leviathan',name:'질투의 귀 레비아탄',artKey:'sinLeviathanAtlas',zone:'질투의 몽세',sceneIds:Object.freeze(['ep1b03']),phaseRoles:Object.freeze(['older-sister-deputy-manager','older-sister-deputy-manager','older-sister-deputy-manager']),waves:Object.freeze(['호텔의 검은 신호','같은 직업학교의 기억','서윤을 향한 질투']),patterns:Object.freeze(['서로 다른 두 흐름','엇갈린 시선','뒤집힌 반영']),hp:Object.freeze([1500,1650,1800])}),
+    Object.freeze({id:'beelzebub',name:'탐식의 귀 베엘제붑',artKey:'sinBeelzebubAtlas',zone:'탐식의 주방',sceneIds:Object.freeze(['ep1b04']),phaseRoles:Object.freeze(['head-chef','head-chef','head-chef']),waves:Object.freeze(['버려지는 음식','거대한 위장','오래된 졸업사진']),patterns:Object.freeze(['크기가 다른 물결','주방의 교차로','겹쳐 벌어지는 입']),hp:Object.freeze([1600,1750,1900])}),
+    Object.freeze({id:'asmodeus',name:'색욕의 귀 아스모데우스',artKey:'sinAsmodeusAtlas',zone:'붉은 조명의 무대',sceneIds:Object.freeze(['ep1b05']),phaseRoles:Object.freeze(['seoyun-stage','seoyun-stage','seoyun-stage']),waves:Object.freeze(['완벽한 미소','끝없는 무대','등에 연결된 실']),patterns:Object.freeze(['붉은 무대의 박자','고정된 조명의 실','엇갈린 실의 장막']),hp:Object.freeze([1520,1680,1840])}),
+    Object.freeze({id:'mammon',name:'탐욕의 귀 맘몬',artKey:'sinMammonAtlas',phaseArtKeys:Object.freeze(['sinMammonAtlas','sinMammonAtlas','sinMammonChildAtlas']),zone:'맘몬의 금고',sceneIds:Object.freeze(['ep1b06','ep1b06b']),phaseRoles:Object.freeze(['general-manager','general-manager','child-memory']),waves:Object.freeze(['가격이 매겨진 관계','금고의 지폐','겨울 산장의 바람']),patterns:Object.freeze(['값이 매겨진 갈래','금고의 잠금선','겨울 기억의 바람']),hp:Object.freeze([1600,1800,1700])}),
+    Object.freeze({id:'wrath',name:'분노의 귀',artKey:'sinWrathAtlas',zone:'불타는 호텔 입구',sceneIds:Object.freeze(['ep1b07']),phaseRoles:Object.freeze(['janitor','janitor','janitor']),waves:Object.freeze(['호텔 화재의 대피','해고된 청소부','아이들에게 가져간 음식']),patterns:Object.freeze(['번지는 불의 박자','불길 사이의 대피로','세 차례의 분노']),hp:Object.freeze([1750,1900,2050])}),
+    Object.freeze({id:'pride',name:'교만의 회장',artKey:'sinPrideAtlas',phaseArtKeys:Object.freeze(['sinPrideAtlas','sinPrideAtlas','sinPrideCyborgAtlas']),zone:'거꾸로 된 성당',sceneIds:Object.freeze(['ep1b08','ep1b09']),phaseRoles:Object.freeze(['white-suit-chairman','white-suit-chairman','cyborg-biobootloader']),waves:Object.freeze(['일곱 갈래 신호','전극이 박힌 기억','회장의 연산핵']),patterns:Object.freeze(['일곱 갈래 계산','연산의 고정선','생체 부트로더']),hp:Object.freeze([1800,1950,2150])})
   ]);
   // Original gameplay compositions use locked aim, alternating emission and
   // visible recovery windows. These labels describe combat, not extra lore.
@@ -29,9 +36,31 @@
     Object.freeze({id:'horn-memory-echo',label:'잔류 기억 고리',hint:'느린 고리가 빨라지기 전, 열린 틈으로 이동하세요'}),
     Object.freeze({id:'balrog-seven-pillars',label:'일곱 기둥의 봉인',hint:'일곱 기둥 중 빛나지 않는 두 길을 찾으세요'}),
     Object.freeze({id:'mask-alternating-wings',label:'엇갈린 날개의 틈',hint:'양쪽 깃 사이에서 움직이는 틈을 따라가세요'}),
-    Object.freeze({id:'lucifer-fivefold-sky',label:'다섯 겹 별자리',hint:'다섯 갈래 별빛 사이의 틈과 고정된 광선을 구분하세요'})
+    Object.freeze({id:'lucifer-fivefold-sky',label:'다섯 겹 별자리',hint:'다섯 갈래 별빛 사이의 틈과 고정된 광선을 구분하세요'}),
+    Object.freeze({id:'belphegor-delayed-rings',label:'미뤄진 파동',hint:'느린 고리가 빨라지기 전에 열린 틈으로 이동하세요'}),
+    Object.freeze({id:'leviathan-mirrored-ribbons',label:'뒤집힌 반영',hint:'서로 다른 속도로 오는 양쪽 흐름의 틈을 읽으세요'}),
+    Object.freeze({id:'beelzebub-layered-maw',label:'겹쳐 벌어지는 입',hint:'크기와 속도가 다른 고리의 같은 틈을 통과하세요'}),
+    Object.freeze({id:'asmodeus-string-curtain',label:'엇갈린 실의 장막',hint:'먼저 예고된 조명이 꺼진 뒤 다음 흐름을 피하세요'}),
+    Object.freeze({id:'mammon-winter-memory',label:'겨울 기억의 바람',hint:'맘몬의 어린 기억 속에서 엇갈린 바람 사이를 지나세요'}),
+    Object.freeze({id:'wrath-three-beat-fire',label:'세 차례의 분노',hint:'세 차례 벌어지는 불길과 마지막 쉬는 박자를 구분하세요'}),
+    Object.freeze({id:'pride-bio-bootloader',label:'생체 부트로더',hint:'연산핵의 고정 광선과 그 사이의 통로를 읽으세요'})
   ]);
   var runSequence = 0;
+  var PRIEST_BRIDGE = Object.freeze([
+    '병원에서 눈을 뜬 환도는 미카엘라의 치료를 받는다.',
+    '오랜 치료를 거친 뒤 의목사 후보생이 되어 배운다.',
+    '쉼터에서 미카엘라가 자신의 과거를 기억하지 못한다는 사실을 알게 된다.',
+    '솔로몬의 봉인 자격시험에서 72개의 트라우마 형상을 마주한다. 욕망이 행동을 끌고 가지 못하도록 봉인한다.',
+    '의목사 자격을 얻은 뒤 일곱 검은 신호를 조사하는 첫 임무를 맡는다.'
+  ]);
+  // Revisions retain their original route boundary meaning. A resumed v1/v2
+  // run does not silently gain later encounters or lengthen a saved wave.
+  function campaignBossCount(revision) { return revision === 1 ? 3 : revision === 2 ? 5 : CAMPAIGN_BOSSES.length; }
+  function waveDuration(w) {
+    if (!w.campaign || w.campaignRevision < 3) return 15;
+    return 45 / encounter(w).waves.length;
+  }
+  function waveCombatTime(w) { return w.waveDuration > 15 ? (w.waveTime >= w.waveDuration ? 15 : w.waveTime % 15) : w.waveTime; }
   function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
   function finite(n) { return typeof n === 'number' && Number.isFinite(n); }
   function sq(n) { return n * n; }
@@ -40,7 +69,8 @@
   function campaignLabels(w) {
     if (!w.campaign) return;
     var info = encounter(w);
-    w.bossId = info.id; w.bossName = info.name; w.bossCount = CAMPAIGN_BOSSES.length;
+    w.bossId = info.id; w.bossName = info.name; w.bossCount = campaignBossCount(w.campaignRevision);
+    w.waveDuration = waveDuration(w);
     w.encounterName = w.stage === 'waves' ? info.waves[w.wave] : info.zone;
     if (w.stage === 'waves') {
       w.patternName = info.waves[w.wave];
@@ -55,7 +85,10 @@
     var b = { id: id, x: 180, y: 116, px: 180, py: 116, hp: hp, maxHp: hp, phase: phase, opacity: 1, r: 29, isBoss: true };
     if (w.campaign) {
       var info = encounter(w);
-      Object.assign(b, { kind: info.id, name: info.name, artKey: info.artKey, action: 'move', actionProgress: 0, lean: 0, releaseTick: -1,
+      Object.assign(b, { kind: info.id, name: info.name, artKey: info.phaseArtKeys ? info.phaseArtKeys[phase] : info.artKey,
+        phaseRole: info.phaseRoles ? info.phaseRoles[phase] : '', presentationVariant: info.phaseRoles ? info.phaseRoles[phase] : '',
+        sealTarget: w.bossIndex >= 5, healthLabel: w.bossIndex >= 5 ? '봉인 저항' : '체력',
+        action: 'move', actionProgress: 0, lean: 0, releaseTick: -1,
         specialPatternId: phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].id:'',
         specialPatternLabel: phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].label:'',
         patternHint: phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].hint:'' });
@@ -114,6 +147,19 @@
   }
   function emit(w, specs) {
     Weapon.prepareEmission(w, specs);
+    // One bounded variation per volley preserves a readable shape. Sampling
+    // once before capacity handling also makes delayed retries deterministic.
+    if (w.difficulty === 'hell' && !specs._hellPrepared) {
+      specs._hellPrepared = true;
+      var hellSpeed = 1.32 + rand(w) * .24, hellAngle = (rand(w) - .5) * .036;
+      specs.forEach(function(s) {
+        if (s._hellPrepared) return;
+        s._hellPrepared = true; s.speed *= hellSpeed;
+        // Boss weapons must still reach their own side wall symmetrically.
+        if (!s.weaponMotion) s.angle += hellAngle;
+        if (s.acceleration) { s.acceleration *= hellSpeed; s.maxSpeed = (s.maxSpeed || 150) * hellSpeed; }
+      });
+    }
     if (w.bullets.length + specs.length > CAPS.bullets) {
       w.stats.poolPressure++; // Caller retains or reports the whole group; no live projectile is evicted.
       if (w._deferred.length < 16) w._deferred.push(specs);
@@ -180,9 +226,9 @@
     options = options || {};
     var seed = finite(options.seed) ? options.seed >>> 0 : 12345;
     if (!seed) seed = 0x6d2b79f5;
-    var gentle = options.difficulty === 'gentle';
+    var gentle = options.difficulty === 'gentle', hell = options.difficulty === 'hell';
     var runId = typeof options.runId === 'string' && /^[A-Za-z0-9_.:-]{1,96}$/.test(options.runId) ? options.runId : 'hapil-' + Date.now().toString(36) + '-' + (++runSequence).toString(36);
-    var w = { rulesetVersion: RULESET, mechanicsRevision: 2, runId: runId, seed: seed, rngState: seed, difficulty: gentle ? 'gentle' : 'normal', practiceBoss: !!options.practiceBoss,
+    var w = { rulesetVersion: RULESET, mechanicsRevision: 2, runId: runId, seed: seed, rngState: seed, difficulty: gentle ? 'gentle' : hell ? 'hell' : 'normal', practiceBoss: !!options.practiceBoss,
       tick: 0, time: 0, stage: 'waves', stageTime: 0, bossIntroDuration: 2.5, wave: 0, waveTime: 0, waveDuration: 15, phase: 0, phaseTime: 0, phaseTargetDuration: 25, phaseTimeout: 75,
       patternName: '세 갈래의 기억', stageLabel: '기억 회랑 · 1/3', phaseProgress: 0, player: { x: 180, y: 540, hp: gentle ? 5 : 3, maxHp: gentle ? 5 : 3, r: 3, invulnerableUntil: 0, egoUntil: 0 },
       boss: null, enemies: [], bullets: [], shots: [], effects: [], hazards: [], score: 0, graze: 0, kills: 0, memory: 0, resonance: 0,
@@ -193,7 +239,10 @@
       _memoryBucket: 0, _memoryGain: 0, _resBucket: 0, _resGain: 0, _grazeGain: 0, _reservationSince: 0, _starvationReported: false, _checkpoint: null };
     if (options.campaign === true) {
       if (options.bossIndex !== undefined && (!Number.isInteger(options.bossIndex) || options.bossIndex < 0 || options.bossIndex >= CAMPAIGN_BOSSES.length)) throw new RangeError('Invalid campaign boss index');
-      w.campaign = true; w.campaignRevision = 2;
+      var revision = options.campaignRevision === undefined ? 3 : options.campaignRevision;
+      if (![1,2,3].includes(revision) || (hell && revision < 3)) throw new RangeError('Invalid campaign revision');
+      w.campaign = true; w.campaignRevision = revision;
+      if (options.bossIndex !== undefined && options.bossIndex >= campaignBossCount(revision)) throw new RangeError('Invalid campaign boss index');
       w.bossIndex = w.practiceBoss && Number.isInteger(options.bossIndex) ? clamp(options.bossIndex, 0, CAMPAIGN_BOSSES.length-1) : 0;
       w.mechanicsRevision = 4;
       campaignLabels(w);
@@ -288,7 +337,10 @@
     cacheCheckpoint(w); event(w, 'phase', w.stageLabel);
   }
   function waveSchedule(w) {
-    var t = Math.round(w.waveTime * 60), wave = w.wave;
+    var elapsed = Math.round(w.waveTime * 60), wave = w.wave;
+    // Single-location routes repeat ordinary-enemy beats for 45 seconds,
+    // keeping the old location's index instead of inventing two new scenes.
+    var t = w.waveDuration > 15 ? (elapsed < Math.round(w.waveDuration*60) ? elapsed % 900 : 900) : elapsed;
     if (t === 60 || t === 270 || t === 480) {
       var side = (t === 270 ? -1 : 1) * (wave % 2 ? -1 : 1);
       for (var i = 0; i < 3; i++) spawnEnemy(w, side > 0 ? 62 + i * 58 : 298 - i * 58, 'scout', side, i * 0.22);
@@ -304,7 +356,7 @@
         { x: 332, y: 108, angle: Math.atan2(532, -272), kind: 'needle', color: '#ecb0fa' }
       ], 60, '교차하는 검빛');
     }
-    if (t >= 900 && !w.bullets.length && !w.hazards.length && !w.enemies.length && !w._warnings.length && !w._deferred.length && !w._delays.length) {
+    if (elapsed >= Math.round(w.waveDuration * 60) && !w.bullets.length && !w.hazards.length && !w.enemies.length && !w._warnings.length && !w._deferred.length && !w._delays.length) {
       if (wave < (w.campaign ? encounter(w).waves.length - 1 : 2)) startWave(w, wave + 1);
       else {
         w.stage = 'bossIntro'; w.stageTime = 0; w.boss = null;
@@ -342,7 +394,7 @@
       var cadence = w.campaign || e.kind === 'turret' ? 1.65 : 1.5;
       var shootStart = w.campaign ? (e.kind === 'turret' ? 1.2 : 2.1) : .8;
       var shoot = Math.floor((e.age - shootStart) / cadence);
-      if (e.age >= shootStart && e.age < e.life - 1.7 && shoot >= e.shotCursor && w.waveTime < 10.2) {
+      if (e.age >= shootStart && e.age < e.life - 1.7 && shoot >= e.shotCursor && waveCombatTime(w) < 10.2) {
         e.shotCursor = shoot + 1;
         var a = Math.atan2(w.player.y - e.y, w.player.x - e.x);
         if (e.kind === 'turret') warning(w, fanSpecs(e.x, e.y, a, 3, 0.2, 110, 'needle', '#f5b5d3', e.id), 54, '겨냥 레이저');
@@ -495,8 +547,135 @@
     specs.forEach(function(s){s.patternId='boss-grid-v1';});
     warning(w,specs,96,'교차 광선 격자');
   }
+  // These are original combat compositions fitted to each source character's
+  // role. They do not reproduce named attacks or assets from another game.
+  function sinMark(w, specs, slot) {
+    var patternId=w.phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].id:encounter(w).id+'-phase-'+(w.phase+1);
+    specs.forEach(function(s){s.patternId=patternId;s.paletteSlot=slot||0;});
+    return specs;
+  }
+  function sinFan(w,x,y,count,angle,spread,speed,gapX,gapHalf,slot,acceleration,radius) {
+    var gap=Math.atan2(540-y,gapX-x),specs=fanSpecs(x,y,angle,count,spread,speed,'orb','#ffffff',w.boss.id).filter(function(s){return Math.abs(Math.atan2(Math.sin(s.angle-gap),Math.cos(s.angle-gap)))>=gapHalf;});
+    specs.forEach(function(s){if(radius)s.r=radius;if(acceleration){s.acceleration=acceleration;s.accelerateAt=1.05;s.maxSpeed=128;}});
+    emit(w,sinMark(w,specs,slot));
+  }
+  function sinRing(w,count,speed,angle,gapX,gapHalf,slot,acceleration,radius) {
+    var b=w.boss,gap=Math.atan2(540-b.y,gapX-b.x),specs=[];
+    for(var i=0;i<count;i++) {
+      var a=angle+i*TAU/count;
+      if(Math.abs(Math.atan2(Math.sin(a-gap),Math.cos(a-gap)))<gapHalf)continue;
+      var s={x:b.x,y:b.y+12,angle:a,speed:speed,kind:'orb',color:'#ffffff',ownerId:b.id,r:radius||4.2};
+      if(acceleration){s.acceleration=acceleration;s.accelerateAt=1.05;s.maxSpeed=128;}
+      specs.push(s);
+    }
+    emit(w,sinMark(w,specs,slot));
+  }
+  function sinRays(w,specs,delay,slot) { warning(w,sinMark(w,specs,slot),delay,w.patternName); }
+  function sinPattern(w,within,cycle) {
+    var b=w.boss,id=encounter(w).id,down=Math.PI/2,pulse=within-108,attacking=within>=108&&within<264;
+    var gapX=180+Math.sin(cycle*.74+w.bossIndex*.3)*74;
+    b.weaponTelegraph=false;
+    b.specialPatternId=w.phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].id:id+'-phase-'+(w.phase+1);
+    b.specialPatternLabel=encounter(w).patterns[w.phase];
+    b.patternHint=w.phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].hint:'예고된 길을 벗어나 탄환 사이의 틈을 읽으세요';
+    if(id==='belphegor') {
+      if(w.phase===0&&attacking&&pulse%66===0)sinRing(w,24,34,cycle*.16+pulse*.002,gapX,.26,0,36);
+      if(w.phase===1) {
+        if(within===54)sinRays(w,[{x:72,y:88,angle:down,width:9,ownerId:b.id},{x:288,y:88,angle:down,width:9,ownerId:b.id}],78,0);
+        if(within===186||within===240)sinRing(w,22,72,cycle*.2,gapX,.30,1,0);
+      }
+      if(w.phase===2&&attacking&&pulse%54===0) {
+        var beat=Math.floor(pulse/54);
+        sinRing(w,26,36+beat*17,cycle*.17+beat*.06,gapX,.28,beat%2,beat===0?34:0);
+      }
+    } else if(id==='leviathan') {
+      if(w.phase===0&&attacking&&pulse%54===0) {
+        sinFan(w,b.x-40,b.y,9,down+.19,.14,78,gapX,.23,0,0);
+        sinFan(w,b.x+40,b.y,9,down-.19,.14,96,gapX,.23,1,0);
+      }
+      if(w.phase===1) {
+        if(within===54)sinRays(w,[{x:44,y:104,angle:1.20,width:7,ownerId:b.id},{x:316,y:104,angle:Math.PI-1.20,width:7,ownerId:b.id}],78,0);
+        if(within===186||within===240)sinFan(w,b.x,b.y,17,down+Math.sin(cycle)*.2,.12,86,gapX,.27,1,0);
+      }
+      if(w.phase===2&&attacking&&pulse%48===0) {
+        var mirror=Math.floor(pulse/48)%2?1:-1;
+        sinFan(w,44,112,11,1.18+mirror*.1,.12,82,gapX,.26,0,0);
+        sinFan(w,316,112,11,Math.PI-1.18-mirror*.1,.12,60,gapX,.26,1,24);
+      }
+    } else if(id==='beelzebub') {
+      if(w.phase===0&&attacking&&pulse%72===0) {
+        sinRing(w,18,52,cycle*.2,gapX,.33,0,0,6);
+        sinRing(w,24,84,cycle*.2+.08,gapX,.33,1,0,4);
+      }
+      if(w.phase===1) {
+        if(within===54) {
+          var mouth=[];for(var lane=0;lane<5;lane++)if(lane!==(cycle%3+1))mouth.push({x:36+lane*72,y:96,angle:down,width:10,ownerId:b.id});
+          sinRays(w,mouth,78,0);
+        }
+        if(within===192||within===246)sinFan(w,b.x,b.y+12,15,down,.14,84,gapX,.29,1,0,5);
+      }
+      if(w.phase===2&&attacking&&pulse%60===0) {
+        sinRing(w,28,78,cycle*.19+pulse*.002,gapX,.33,0,0,5.5);
+        sinRing(w,20,40,cycle*.19+.12+pulse*.002,gapX,.33,1,30,4);
+      }
+    } else if(id==='asmodeus') {
+      if(w.phase===0&&attacking&&pulse%52===0) {
+        var side=Math.floor(pulse/52)%2?1:-1;
+        sinFan(w,b.x+side*42,b.y,11,down+side*.17,.13,90,gapX,.26,0,0);
+        sinFan(w,b.x-side*42,b.y,9,down-side*.17,.15,68,gapX,.26,1,0);
+      }
+      if(w.phase===1) {
+        if(within===54)sinRays(w,fanSpecs(b.x,b.y+12,Math.atan2(w.player.y-b.y,w.player.x-b.x),3,.36,0,'orb','#ffffff',b.id),78,0);
+        if(within===192||within===246)sinRing(w,26,80,cycle*.18,gapX,.34,1,0);
+      }
+      if(w.phase===2) {
+        if(within===54)sinRays(w,[{x:96,y:80,angle:down,width:8,ownerId:b.id},{x:264,y:80,angle:down,width:8,ownerId:b.id}],66,0);
+        if(within===174||within===216||within===258) {
+          var lead=Math.floor((within-174)/42)%2?1:-1;
+          sinFan(w,b.x+lead*44,b.y,13,down+lead*.2,.12,88,gapX,.26,lead>0?0:1,0);
+        }
+      }
+    } else if(id==='mammon') {
+      if(w.phase===0&&attacking&&pulse%48===0)sinFan(w,b.x,b.y+14,11,down+Math.sin(pulse*.02)*.16,.18,102,gapX,.30,Math.floor(pulse/48)%2,0);
+      if(w.phase===1) {
+        if(within===54)sinRays(w,[{x:90,y:80,angle:down,width:9,ownerId:b.id},{x:270,y:80,angle:down,width:9,ownerId:b.id},{x:0,y:438,angle:0,width:8,ownerId:b.id}],96,0);
+        if(within===210)sinRing(w,26,84,cycle*.18,gapX,.34,1,0);
+      }
+      if(w.phase===2&&attacking&&pulse%54===0) {
+        sinFan(w,20,112,8,1.12+Math.sin(pulse*.012)*.09,.13,70,gapX,.28,0,23);
+        sinFan(w,340,112,8,Math.PI-1.12-Math.sin(pulse*.012)*.09,.13,88,gapX,.28,1,0);
+      }
+    } else if(id==='wrath') {
+      if(w.phase===0&&attacking&&pulse%72===0) {
+        sinRing(w,24,96,cycle*.21+pulse*.002,gapX,.34,0,0);
+        sinFan(w,b.x,b.y+14,11,down,.14,110,gapX,.29,1,0);
+      }
+      if(w.phase===1) {
+        if(within===54)sinRays(w,fanSpecs(b.x,b.y,down,3,.50,0,'orb','#ffffff',b.id),78,0);
+        if(within===186||within===240)sinFan(w,b.x,b.y+14,17,down+Math.sin(cycle)*.18,.12,98,gapX,.30,1,0);
+      }
+      if(w.phase===2&&attacking&&pulse%54===0) {
+        var fireBeat=Math.floor(pulse/54);
+        sinRing(w,28,86+fireBeat*10,cycle*.13+fireBeat*.07,gapX,.33,fireBeat%2,0);
+      }
+    } else if(id==='pride') {
+      if(w.phase===0&&attacking&&pulse%48===0) {
+        sinFan(w,b.x-28,b.y,9,down+.20,.18,92,gapX,.30,0,0);
+        sinFan(w,b.x+28,b.y,9,down-.20,.18,78,gapX,.30,1,0);
+      }
+      if(w.phase===1) {
+        if(within===54)sinRays(w,[{x:52,y:88,angle:1.29,width:8,ownerId:b.id},{x:308,y:88,angle:Math.PI-1.29,width:8,ownerId:b.id},{x:0,y:414,angle:0,width:8,ownerId:b.id}],96,0);
+        if(within===210||within===258)sinRing(w,30,84,cycle*.16,gapX,.34,1,0);
+      }
+      if(w.phase===2) {
+        if(within===54)sinRays(w,[{x:84,y:80,angle:down,width:12,ownerId:b.id},{x:276,y:80,angle:down,width:12,ownerId:b.id},{x:0,y:390,angle:0,width:9,ownerId:b.id}],78,0);
+        if(within===186||within===234)for(var node=0;node<3;node++)sinFan(w,72+node*108,104,7,down,.17,82+node*8,gapX,.30,node%2,0);
+      }
+    }
+  }
   function campaignPattern(w) {
-    var b = w.boss, t = Math.round(w.phaseTime * 60) - 1, cycle = Math.floor(t / 420), rawWithin = t % 420;
+    var cycleTicks = w.difficulty === 'hell' ? 336 : 420;
+    var b = w.boss, t = Math.round(w.phaseTime * 60) - 1, cycle = Math.floor(t / cycleTicks), rawWithin = t % cycleTicks;
     // The move lasts72 instead of54 ticks. Attack timing keeps its authored
     // logical ticks after that move, while the remainder is a longer recovery.
     var within = rawWithin < 72 ? Math.floor(rawWithin * 54 / 72) : rawWithin - 18;
@@ -513,6 +692,7 @@
     var gap = down + Math.sin(cycle * 1.7 + w.phase) * .22;
     var attacking = within >= 108 && within < 264, pulse = within - 108;
     if (within === 54) effect(w, b.x, b.y, 'bossCharge', 25, w.bossIndex === 2 ? '#ffbb7e' : w.bossIndex === 1 ? '#8de0b7' : '#d1b2ff', .9);
+    if(w.bossIndex>=5){sinPattern(w,within,cycle);return;}
     b.specialPatternId=w.phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].id:'';
     b.specialPatternLabel=w.phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].label:'';
     b.patternHint=w.phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].hint:'';
@@ -524,6 +704,22 @@
       campaignGrid(w,within,cycle);return;
     }
     b.weaponTelegraph=w.phase===0&&cycle%2===0&&within>=54&&within<108;
+    if (w.difficulty === 'hell' && w.phase === 0 && cycle % 2 === 0) {
+      // A full second charge leads the relay. The first pair and this fan
+      // are two legible beats, rather than an unannounced pile of projectiles.
+      if (Weapon.shouldThrow(w,within,cycle)) {
+        if(w.bullets.length+2<=CAPS.bullets)emit(w,Weapon.createPair(w,b,cycle));
+        else{w.stats.poolPressure++;w.stats.droppedGroups++;}
+      }
+      if (within === 162) effect(w,b.x,b.y,'bossCharge',25,'#d1b2ff',.9);
+      if (within >= 162 && within < 216) { b.action='charge';b.actionProgress=(within-162)/54; }
+      if (within === 216) {
+        var relay = fanSpecs(b.x,b.y+16,down,9,.16,92,'orb','#d1b2ff',b.id).filter(function(s){return Math.abs(s.angle-down)>.20;});
+        relay.forEach(function(s){s.patternId='hell-relay-v1';s.paletteSlot=1;});
+        emit(w,relay);b.action='attack';b.actionProgress=0;
+      }
+      return;
+    }
     // A telegraphed pair replaces the normal first volley, keeping the number
     // of damaging objects and collision work bounded during a large attack.
     if(Weapon.shouldThrow(w,within,cycle)){
@@ -651,14 +847,19 @@
     if (e.hp > 0) return;
     effect(w, e.x, e.y, 'kill', e.isBoss ? 45 : 23, '#d9c4ff', 0.6);
     if (e.isBoss) {
+      if (e.sealTarget) event(w,'seal',e.name);
       w.stats.phaseTicks.push(Math.round(w.phaseTime * 60));
-      if (w.phase === 2 && w.campaign && !w.practiceBoss && w.bossIndex < CAMPAIGN_BOSSES.length-1) {
+      if (w.phase === 2 && w.campaign && !w.practiceBoss && w.bossIndex < campaignBossCount(w.campaignRevision)-1) {
         w.stage = 'transition'; w.stageTime = 0; w.nextPhase = null; w.nextEncounter = w.bossIndex + 1;
         w.transitionRemaining = 6.4; w.stageLabel = '남은 탄막을 지나 다음 기억으로';
+        if (w.campaignRevision >= 3 && w.bossIndex === 4) {
+          w.transitionNarrative = PRIEST_BRIDGE.slice(); w.transitionMinimum = 15;
+          w.stageLabel = '병원에서 의목사의 첫 임무로';
+        }
         w.score += 2500;
       }
-      else if (w.phase === 2) { w.stage = 'won'; w.stageTime = 0; w.resultReason = w.campaign ? (w.practiceBoss ? w.bossName + ' · 연습 완료' : 'J의 인장이 빛납니다 · 루시퍼가 물러나고 도움을 청할 길이 열립니다') : '기억 회랑을 돌파했습니다'; w.score += 5000 + w.player.hp * 500; event(w, 'win'); }
-      else { w.stage = 'transition'; w.stageTime = 0; w.nextPhase = w.phase + 1; w.transitionRemaining = 6.4; w.stageLabel = '남은 검편이 지나갑니다'; }
+      else if (w.phase === 2) { w.stage = 'won'; w.stageTime = 0; w.resultReason = w.campaign ? (w.practiceBoss ? w.bossName + ' · 연습 완료' : w.bossIndex>=5 ? '일곱 검은 신호 · 봉인 조사 구간을 마쳤습니다' : w.bossIndex===4 ? 'J의 인장이 빛납니다 · 루시퍼가 물러나고 도움을 청할 길이 열립니다' : '첫 기억의 조사 구간을 마쳤습니다') : '기억 회랑을 돌파했습니다'; w.score += 5000 + w.player.hp * 500; event(w, 'win'); }
+      else { w.stage = 'transition'; w.stageTime = 0; w.nextPhase = w.phase + 1; w.transitionRemaining = 6.4; w.stageLabel = e.sealTarget ? '남은 파동이 지나갑니다' : '남은 검편이 지나갑니다'; }
       w.reservation = false; w._reservationSince = 0;
       w._warnings.length = 0; w._deferred.length = 0;
       // Already announced lasers complete on their committed paths during the
@@ -761,7 +962,7 @@
     w.checkpointSerial++;
     var snap = {};
     ['rulesetVersion','runId','seed','difficulty','practiceBoss','checkpointSerial','tick','rngState','idCounter','stage','wave','phase','score','graze','kills','memory','resonance','autoAttack','skillRotation'].forEach(function (k) { snap[k] = w[k]; });
-    if (w.campaign) { snap.campaign = true; snap.campaignRevision = 2; snap.bossIndex = w.bossIndex; }
+    if (w.campaign) { snap.campaign = true; snap.campaignRevision = w.campaignRevision; snap.bossIndex = w.bossIndex; }
     snap.stageTime = 0; snap.phaseTime = 0; snap.waveTime = 0;
     snap.player = copy(w.player); snap.skills = copy(w.skills); snap.stats = copy(w.stats); snap.shotReadyAt = w._shotReadyAt;
     snap.resourceState = { memoryBucket: w._memoryBucket, memoryGain: w._memoryGain, resBucket: w._resBucket, resGain: w._resGain, grazeGain: w._grazeGain, lastGraze: w._lastGraze };
@@ -772,9 +973,9 @@
     if (!snapshot || typeof snapshot !== 'object' || JSON.stringify(snapshot).length > 131072) throw new Error('Invalid checkpoint');
     var s = copy(snapshot);
     var hasCampaign = Object.prototype.hasOwnProperty.call(s, 'campaign') || Object.prototype.hasOwnProperty.call(s, 'campaignRevision') || Object.prototype.hasOwnProperty.call(s, 'bossIndex');
-    if (hasCampaign && (s.campaign !== true || ![1,2].includes(s.campaignRevision) || !Number.isInteger(s.bossIndex) || s.bossIndex < 0 || s.bossIndex >= (s.campaignRevision === 1 ? 3 : CAMPAIGN_BOSSES.length))) throw new Error('Invalid campaign checkpoint');
+    if (hasCampaign && (s.campaign !== true || ![1,2,3].includes(s.campaignRevision) || !Number.isInteger(s.bossIndex) || s.bossIndex < 0 || s.bossIndex >= campaignBossCount(s.campaignRevision) || (s.difficulty === 'hell' && s.campaignRevision < 3))) throw new Error('Invalid campaign checkpoint');
     if (hasCampaign && s.stage === 'waves' && s.wave >= CAMPAIGN_BOSSES[s.bossIndex].waves.length) throw new Error('Invalid campaign wave');
-    if (s.rulesetVersion !== RULESET || typeof s.runId !== 'string' || !/^[A-Za-z0-9_.:-]{1,96}$/.test(s.runId) || !['normal','gentle'].includes(s.difficulty) || !['waves','boss'].includes(s.stage)) throw new Error('Unsupported checkpoint');
+    if (s.rulesetVersion !== RULESET || typeof s.runId !== 'string' || !/^[A-Za-z0-9_.:-]{1,96}$/.test(s.runId) || !['normal','gentle','hell'].includes(s.difficulty) || !['waves','boss'].includes(s.stage)) throw new Error('Unsupported checkpoint');
     ['tick','rngState','seed','idCounter','checkpointSerial','wave','phase','score','graze','kills','memory','resonance'].forEach(function (k) { if (!finite(s[k]) || s[k] < 0 || s[k] > (k === 'rngState' || k === 'seed' ? 4294967295 : 100000000)) throw new Error('Invalid checkpoint number: ' + k); });
     if (!Number.isInteger(s.tick) || s.tick > 1000000 || !Number.isInteger(s.wave) || s.wave > 2 || !Number.isInteger(s.phase) || s.phase > 2 || s.memory > 100 || s.resonance > 100 || s.stageTime !== 0 || s.phaseTime !== 0 || s.waveTime !== 0) throw new Error('Invalid checkpoint boundary');
     if (!Number.isInteger(s.seed) || !Number.isInteger(s.rngState) || !Number.isInteger(s.idCounter) || !Number.isInteger(s.checkpointSerial) || s.checkpointSerial < 1 || s.checkpointSerial > 100 || typeof s.autoAttack !== 'boolean' || typeof s.skillRotation !== 'boolean' || typeof s.practiceBoss !== 'boolean') throw new Error('Invalid checkpoint identity');
@@ -786,8 +987,8 @@
     ['memoryReadyAt','delayReadyAt','counterReadyAt','egoReadyAt','globalReadyAt'].forEach(function (k) { if (!finite(s.skills[k])) throw new Error('Missing skill timer'); });
     ['hits','shots','damage','peakBullets','peakEnemies','peakParticles'].forEach(function (k) { if (!finite(s.stats[k]) || s.stats[k] < 0 || s.stats[k] > 100000000) throw new Error('Invalid checkpoint stats'); });
     ['memory','delay','counter','ego'].forEach(function (k) { if (!finite(s.stats.casts[k]) || s.stats.casts[k] < 0 || s.stats.casts[k] > 1000000) throw new Error('Invalid checkpoint casts'); });
-    if (!Array.isArray(s.stats.phaseTicks) || s.stats.phaseTicks.length > (hasCampaign ? (s.campaignRevision === 1 ? 9 : 15) : 3) || s.stats.phaseTicks.some(function (n) { return !Number.isInteger(n) || n < 0 || n > 4500; })) throw new Error('Invalid phase history');
-    var w = createRun({ difficulty: s.difficulty, seed: s.seed, practiceBoss: false, runId: s.runId, campaign: hasCampaign });
+    if (!Array.isArray(s.stats.phaseTicks) || s.stats.phaseTicks.length > (hasCampaign ? campaignBossCount(s.campaignRevision)*3 : 3) || s.stats.phaseTicks.some(function (n) { return !Number.isInteger(n) || n < 0 || n > 4500; })) throw new Error('Invalid phase history');
+    var w = createRun({ difficulty: s.difficulty, seed: s.seed, practiceBoss: false, runId: s.runId, campaign: hasCampaign, campaignRevision: hasCampaign ? s.campaignRevision : undefined });
     if (hasCampaign) w.bossIndex = s.bossIndex;
     ['tick','rngState','idCounter','stage','wave','phase','score','graze','kills','memory','resonance','autoAttack','skillRotation','practiceBoss'].forEach(function (k) { w[k] = s[k]; });
     w.time = w.tick / 60; w.player = p; w.skills = s.skills; w.stats = s.stats; w.checkpointSerial = s.checkpointSerial;
@@ -843,10 +1044,11 @@
     }
     updateWarnings(w); attack(w); updateShots(w); updateBullets(w, px, py); updateLaserCollision(w, px, py);
     if (w.stage === 'transition') {
-      w.transitionRemaining = Math.max(0, 6.4 - w.stageTime);
-      if (!w.bullets.length && !w.hazards.length && !w._warnings.length && !w._deferred.length && (!(w.campaign && w.bossIndex >= 2 && w.nextEncounter != null) || w.stageTime >= 3)) {
+      w.transitionRemaining = Math.max(0, (w.transitionMinimum || 6.4) - w.stageTime);
+      if (!w.bullets.length && !w.hazards.length && !w._warnings.length && !w._deferred.length && (!(w.campaign && w.bossIndex >= 2 && w.nextEncounter != null) || w.stageTime >= (w.transitionMinimum || 3))) {
         if (w.campaign && w.nextEncounter != null) {
           w.bossIndex = w.nextEncounter; w.nextEncounter = null; w.boss = null; w.stage = 'waves'; w.phase = 0; w.phaseTime = 0;
+          w.transitionNarrative = null; w.transitionMinimum = 0;
           // Recover one life at a cleared encounter, never above the selected
           // difficulty's maximum. No health or damage is changed by the tests.
           w.player.hp = Math.min(w.player.maxHp, w.player.hp + 1);
@@ -860,7 +1062,7 @@
     return w;
   }
   return Object.freeze({ W: W, H: H, FIXED_DT: FIXED_DT, RULESET_VERSION: RULESET, MECHANICS_REVISION: 2, CAPS: CAPS,
-    CAMPAIGN_BOSSES: CAMPAIGN_BOSSES, CAMPAIGN_SIGNATURES: CAMPAIGN_SIGNATURES, CAMPAIGN_REVISION: 2,
+    CAMPAIGN_BOSSES: CAMPAIGN_BOSSES, CAMPAIGN_SIGNATURES: CAMPAIGN_SIGNATURES, CAMPAIGN_REVISION: 3,
     createRun: createRun, step: step, checkpoint: checkpoint, restoreCheckpoint: restoreCheckpoint, skipBossIntro: skipBossIntro,
     geometry: Object.freeze({ segmentDistanceSquared: segmentDistanceSquared, segmentPairDistanceSquared: segmentPairDistanceSquared, sweptCircleHit: sweptCircleHit, projectileDistanceSquared: projectileDistanceSquared, hazardDistanceSquared: hazardDistanceSquared }) });
 }));

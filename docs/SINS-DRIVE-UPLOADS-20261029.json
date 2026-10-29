@@ -1,0 +1,150 @@
+{
+  "folder": {
+    "success": true,
+    "id": "1f9ZVsKxETt9jOIAvG8gbTh9IlJmPBD8D",
+    "url": "https://drive.google.com/drive/folders/1f9ZVsKxETt9jOIAvG8gbTh9IlJmPBD8D",
+    "title": "7대죄_헬모드_자산_20261029",
+    "parent_id": "1xaT78ofmxTjZYqfK7HYMoPxZE0JdvIrv"
+  },
+  "readback": "Official Drive metadata verifies ID, title, MIME, size and parent. Remote checksum was not exposed; SHA-256 values in generated-art manifest are local byte hashes.",
+  "files": [
+    {
+      "id": "sinProjectile-mammon",
+      "data": {
+        "id": "14hqThTtDawPTwQ8w4GdDvC_lqLiHEIKf",
+        "title": "mammon-projectile.png",
+        "mime_type": "image/png",
+        "size": "1844314",
+        "url": "https://drive.google.com/file/d/14hqThTtDawPTwQ8w4GdDvC_lqLiHEIKf/view?usp=drivesdk",
+        "display_url": "https://drive.google.com/file/d/14hqThTtDawPTwQ8w4GdDvC_lqLiHEIKf/view?usp=drivesdk",
+        "file_or_folder": "file",
+        "created_time": null,
+        "modified_time": null,
+        "parent_ids": [
+          "1f9ZVsKxETt9jOIAvG8gbTh9IlJmPBD8D"
+        ],
+        "drive_id": null,
+        "current_user_can_share": null,
+        "has_augmented_permissions": null,
+        "shared": null,
+        "permissions": null,
+        "source_visibility_status": "access_not_verified"
+      }
+    },
+    {
+      "id": "sinProjectile-wrath",
+      "data": {
+        "id": "19YLqlKRw5sDlxuJ7M0VYeVcrndXksgLB",
+        "title": "wrath-projectile.png",
+        "mime_type": "image/png",
+        "size": "945900",
+        "url": "https://drive.google.com/file/d/19YLqlKRw5sDlxuJ7M0VYeVcrndXksgLB/view?usp=drivesdk",
+        "display_url": "https://drive.google.com/file/d/19YLqlKRw5sDlxuJ7M0VYeVcrndXksgLB/view?usp=drivesdk",
+        "file_or_folder": "file",
+        "created_time": null,
+        "modified_time": null,
+        "parent_ids": [
+          "1f9ZVsKxETt9jOIAvG8gbTh9IlJmPBD8D"
+        ],
+        "drive_id": null,
+        "current_user_can_share": null,
+        "has_augmented_permissions": null,
+        "shared": null,
+        "permissions": null,
+        "source_visibility_status": "access_not_verified"
+      }
+    },
+    {
+      "id": "sinProjectile-pride",
+      "data": {
+        "id": "1KYo1cI9MhRJ9kmSYgOQUF4F8dJzsPWHN",
+        "title": "pride-projectile.png",
+        "mime_type": "image/png",
+        "size": "1082720",
+        "url": "https://drive.google.com/file/d/1KYo1cI9MhRJ9kmSYgOQUF4F8dJzsPWHN/view?usp=drivesdk",
+        "display_url": "https://drive.google.com/file/d/1KYo1cI9MhRJ9kmSYgOQUF4F8dJzsPWHN/view?usp=drivesdk",
+        "file_or_folder": "file",
+        "created_time": null,
+        "modified_time": null,
+        "parent_ids": [
+          "1f9ZVsKxETt9jOIAvG8gbTh9IlJmPBD8D"
+        ],
+        "drive_id": null,
+        "current_user_can_share": null,
+        "has_augmented_permissions": null,
+        "shared": null,
+        "permissions": null,
+        "source_visibility_status": "access_not_verified"
+      }
+    },
+    {
+      "id": "wrath-bear",
+      "data": {
+        "id": "1soHuNTna1DSH_vguV9CqYEPYHJ0-b22U",
+        "title": "wrath-bear-manifest.png",
+        "mime_type": "image/png",
+        "size": "2069709",
+        "url": "https://drive.google.com/file/d/1soHuNTna1DSH_vguV9CqYEPYHJ0-b22U/view?usp=drivesdk",
+        "display_url": "https://drive.google.com/file/d/1soHuNTna1DSH_vguV9CqYEPYHJ0-b22U/view?usp=drivesdk",
+        "file_or_folder": "file",
+        "created_time": null,
+        "modified_time": null,
+        "parent_ids": [
+          "1f9ZVsKxETt9jOIAvG8gbTh9IlJmPBD8D"
+        ],
+        "drive_id": null,
+        "current_user_can_share": null,
+        "has_augmented_permissions": null,
+        "shared": null,
+        "permissions": null,
+        "source_visibility_status": "access_not_verified"
+      }
+    },
+    {
+      "id": "wrath-wolf",
+      "data": {
+        "id": "1G4Z8NTl7WUvf0g3v2k9lT0JPfA2quUsR",
+        "title": "wrath-wolf-manifest.png",
+        "mime_type": "image/png",
+        "size": "1442658",
+        "url": "https://drive.google.com/file/d/1G4Z8NTl7WUvf0g3v2k9lT0JPfA2quUsR/view?usp=drivesdk",
+        "display_url": "https://drive.google.com/file/d/1G4Z8NTl7WUvf0g3v2k9lT0JPfA2quUsR/view?usp=drivesdk",
+        "file_or_folder": "file",
+        "created_time": null,
+        "modified_time": null,
+        "parent_ids": [
+          "1f9ZVsKxETt9jOIAvG8gbTh9IlJmPBD8D"
+        ],
+        "drive_id": null,
+        "current_user_can_share": null,
+        "has_augmented_permissions": null,
+        "shared": null,
+        "permissions": null,
+        "source_visibility_status": "access_not_verified"
+      }
+    },
+    {
+      "id": "wrath-dragon",
+      "data": {
+        "id": "1_NVVDlkuf0iZHTUj2PTVh9PMFWbhfRm4",
+        "title": "wrath-dragon-manifest.png",
+        "mime_type": "image/png",
+        "size": "1958099",
+        "url": "https://drive.google.com/file/d/1_NVVDlkuf0iZHTUj2PTVh9PMFWbhfRm4/view?usp=drivesdk",
+        "display_url": "https://drive.google.com/file/d/1_NVVDlkuf0iZHTUj2PTVh9PMFWbhfRm4/view?usp=drivesdk",
+        "file_or_folder": "file",
+        "created_time": null,
+        "modified_time": null,
+        "parent_ids": [
+          "1f9ZVsKxETt9jOIAvG8gbTh9IlJmPBD8D"
+        ],
+        "drive_id": null,
+        "current_user_can_share": null,
+        "has_augmented_permissions": null,
+        "shared": null,
+        "permissions": null,
+        "source_visibility_status": "access_not_verified"
+      }
+    }
+  ]
+}

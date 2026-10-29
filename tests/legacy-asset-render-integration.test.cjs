@@ -5,6 +5,7 @@ const test=require('node:test'),assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path');
 const {createCanvas,loadImage}=require(require.resolve('@napi-rs/canvas',{paths:[process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES||'',path.resolve(__dirname,'..')]}));
 const core=require('../src/core.js');
+const encounterIndices=Array.from({length:core.CAMPAIGN_BOSSES.length},(_,i)=>i);
 require('../src/projectiles.js');require('../src/render.js');
 const API=global.HapilProjectiles;
 const raw=fs.readFileSync(path.join(__dirname,'../src/media.js'),'utf8');
@@ -22,7 +23,7 @@ function world(index,campaign=true){const w=core.createRun({campaign,practiceBos
 function changed(a,b,x,y){const p=(y*360+x)*4;return a[p]!==b[p]||a[p+1]!==b[p+1]||a[p+2]!==b[p+2];}
 test('full renderer paints all 768 real-asset enemy bullets for every encounter and legacy mode in both qualities',async()=>{
  const f=await fixture();try{
-  for(const campaign of [true,false])for(const index of (campaign?[0,1,2,3,4]:[0]))for(const low of [false,true]){
+  for(const campaign of [true,false])for(const index of (campaign?encounterIndices:[0]))for(const low of [false,true]){
    const w=world(index,campaign),before=Buffer.from(f.pixels(w,low));
    w.bullets=Array.from({length:768},(_,i)=>({id:i+1,x:12+i%48*7,y:280+Math.floor(i/48)*19,r:2.5,halfLength:0,kind:'orb',angle:Math.PI/2,age:.26,vx:0,vy:90}));
    const after=f.pixels(w,low),metrics=f.renderer.getMetrics().projectilePresentation;
@@ -34,7 +35,7 @@ test('full renderer paints all 768 real-asset enemy bullets for every encounter 
 });
 test('full renderer paints 40 visible source-textured active beams without silently dropping a hazard',async()=>{
  const f=await fixture();try{
-  for(const index of [0,1,2,3,4])for(const low of [false,true]){
+  for(const index of encounterIndices)for(const low of [false,true]){
    const w=world(index),before=Buffer.from(f.pixels(w,low));
    w.hazards=Array.from({length:40},(_,i)=>({id:i+1,phase:'active',x1:30,y1:260+i*8,x2:330,y2:260+i*8,width:4,progress:.3}));
    const after=f.pixels(w,low);
@@ -45,7 +46,7 @@ test('full renderer paints 40 visible source-textured active beams without silen
 test('image loader contract rejects every missing or malformed damage-body source before play',async()=>{
  const f=await fixture();try{
   assert.equal(typeof API.invalidAssetForEncounter,'function');
-  for(const index of [-1,0,1,2,3,4]){
+  for(const index of [-1,...encounterIndices]){
    assert.equal(API.invalidAssetForEncounter(f.images,index),null);
    const required=API.assetKeysForEncounter(index).filter(k=>/^(projectile|weapon)/.test(k));assert(required.length>0);
    for(const key of required){const bad={...f.images};delete bad[key];assert.equal(API.invalidAssetForEncounter(bad,index),key);bad[key]={complete:true,naturalWidth:1,naturalHeight:1};assert.equal(API.invalidAssetForEncounter(bad,index),key);}
