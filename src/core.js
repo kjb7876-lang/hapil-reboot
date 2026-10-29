@@ -47,6 +47,11 @@
     Object.freeze({id:'wrath-three-beat-fire',label:'세 차례의 분노',hint:'세 차례 벌어지는 불길과 마지막 쉬는 박자를 구분하세요'}),
     Object.freeze({id:'pride-bio-bootloader',label:'생체 부트로더',hint:'연산핵의 고정 광선과 그 사이의 통로를 읽으세요'})
   ]);
+  // Standalone practice; the intervening story chapters are not skipped or
+  // added to the persisted 12-encounter campaign. This leader is not asserted
+  // to be the earlier chairman or cosmic mask Lucifer.
+  var CULT_FINAL = Object.freeze({id:'cult-leader',name:'교만의 사이보그 교주',artKey:'cultLeaderAtlas',zone:'사이비 합일 코어',waves:Object.freeze(['마지막 코어']),patterns:Object.freeze(['사몽의 권한','되살아난 교주','두 사몽의 격돌']),phaseRoles:Object.freeze(['samong-awakened','core-restored','authority-duel']),hp:Object.freeze([1800,1950,2150])});
+  var CULT_SIGNATURE = Object.freeze({id:'cult-leader-samong',label:'두 사몽의 격돌',hint:'고정된 예고선과 이동하는 탄막 사이의 길을 찾으세요'});
   var runSequence = 0;
   var PRIEST_BRIDGE = Object.freeze([
     '병원에서 눈을 뜬 환도는 미카엘라의 치료를 받는다.',
@@ -67,7 +72,8 @@
   function finite(n) { return typeof n === 'number' && Number.isFinite(n); }
   function sq(n) { return n * n; }
   function copy(o) { return JSON.parse(JSON.stringify(o)); }
-  function encounter(w) { return CAMPAIGN_BOSSES[w.bossIndex || 0]; }
+  function encounter(w) { return w.finalPractice ? CULT_FINAL : CAMPAIGN_BOSSES[w.bossIndex || 0]; }
+  function signature(w) { return w.finalPractice ? CULT_SIGNATURE : CAMPAIGN_SIGNATURES[w.bossIndex]; }
   function campaignLabels(w) {
     if (!w.campaign) return;
     var info = encounter(w);
@@ -89,11 +95,11 @@
       var info = encounter(w);
       Object.assign(b, { kind: info.id, name: info.name, artKey: info.phaseArtKeys ? info.phaseArtKeys[phase] : info.artKey,
         phaseRole: info.phaseRoles ? info.phaseRoles[phase] : '', presentationVariant: info.phaseRoles ? info.phaseRoles[phase] : '',
-        sealTarget: w.bossIndex >= 5, healthLabel: w.bossIndex >= 5 ? '봉인 저항' : '체력',
+        sealTarget: w.bossIndex >= 5 && !w.finalPractice, healthLabel: w.bossIndex >= 5 && !w.finalPractice ? '봉인 저항' : '체력',
         action: 'move', actionProgress: 0, lean: 0, releaseTick: -1,
-        specialPatternId: phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].id:'',
-        specialPatternLabel: phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].label:'',
-        patternHint: phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].hint:'' });
+        specialPatternId: phase===2?signature(w).id:'',
+        specialPatternLabel: phase===2?signature(w).label:'',
+        patternHint: phase===2?signature(w).hint:'' });
     }
     return b;
   }
@@ -260,6 +266,8 @@
       nextPhase: null, transitionRemaining: 0, resultReason: '', _pools: { bullets: [], shots: [], enemies: [], effects: [], hazards: [] },
       _warnings: [], _delays: [], _deferred: [], _shotReadyAt: 0, _targetId: 0, _targetUntil: 0, _lastGraze: -9999, _boundaryTick: -1,
       _memoryBucket: 0, _memoryGain: 0, _resBucket: 0, _resGain: 0, _grazeGain: 0, _reservationSince: 0, _starvationReported: false, _checkpoint: null };
+    if (options.finalPractice === true && (options.campaign !== true || options.practiceBoss !== true || options.bossIndex !== 11 || options.campaignRevision !== undefined && options.campaignRevision !== 3)) throw new RangeError('Final battle is a separate practice only');
+    if (options.finalPractice === true) w.finalPractice = true;
     if (options.campaign === true) {
       if (options.bossIndex !== undefined && (!Number.isInteger(options.bossIndex) || options.bossIndex < 0 || options.bossIndex >= CAMPAIGN_BOSSES.length)) throw new RangeError('Invalid campaign boss index');
       var revision = options.campaignRevision === undefined ? 3 : options.campaignRevision;
@@ -354,7 +362,7 @@
   // Reinforcements reuse the current encounter's already-loaded ordinary
   // enemies. They enter visibly before their first attack and never exceed two.
   function summonBossAllies(w) {
-    if (!w.campaign || w.campaignRevision < 3 || !w.boss || w.boss.hp <= 0) return;
+    if (!w.campaign || w.finalPractice || w.campaignRevision < 3 || !w.boss || w.boss.hp <= 0) return;
     var t = Math.round(w.phaseTime * 60);
     if (t < 240 || (t - 240) % 660 !== 0 || w.enemies.length > 0) return;
     var side = ((w.bossIndex + w.phase + Math.floor((t - 240) / 660)) % 2) ? -1 : 1;
@@ -442,6 +450,7 @@
   function startBossPhase(w, phase, notify) {
     while (w.shots.length) remove(w, 'shots', w.shots.length - 1);
     w.stage = 'boss'; w.stageTime = 0; w.waveTime = 0; w.phase = phase; w.phaseTime = 0; w.phaseProgress = 0;
+    if (w.finalPractice) { w.transitionNarrative=null; w.transitionMinimum=0; if (phase===1) w.player.hp=w.player.maxHp; }
     w.patternName = NAMES[phase]; w.stageLabel = '보라검천사 · ' + (phase + 1) + '/3' + (w.practiceBoss ? ' · 연습' : '');
     w.boss = makeBoss(w, phase, ++w.idCounter);
     campaignLabels(w);
@@ -587,7 +596,7 @@
   // These are original combat compositions fitted to each source character's
   // role. They do not reproduce named attacks or assets from another game.
   function sinMark(w, specs, slot) {
-    var patternId=w.phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].id:encounter(w).id+'-phase-'+(w.phase+1);
+    var patternId=w.phase===2?signature(w).id:encounter(w).id+'-phase-'+(w.phase+1);
     specs.forEach(function(s){s.patternId=patternId;s.paletteSlot=slot||0;});
     return specs;
   }
@@ -612,9 +621,9 @@
     var b=w.boss,id=encounter(w).id,down=Math.PI/2,pulse=within-108,attacking=within>=108&&within<264;
     var gapX=180+Math.sin(cycle*.74+w.bossIndex*.3)*74;
     b.weaponTelegraph=false;
-    b.specialPatternId=w.phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].id:id+'-phase-'+(w.phase+1);
+    b.specialPatternId=w.phase===2?signature(w).id:id+'-phase-'+(w.phase+1);
     b.specialPatternLabel=encounter(w).patterns[w.phase];
-    b.patternHint=w.phase===2?CAMPAIGN_SIGNATURES[w.bossIndex].hint:'예고된 길을 벗어나 탄환 사이의 틈을 읽으세요';
+    b.patternHint=w.phase===2?signature(w).hint:'예고된 길을 벗어나 탄환 사이의 틈을 읽으세요';
     if(id==='belphegor') {
       if(w.phase===0&&attacking&&pulse%66===0)sinRing(w,24,34,cycle*.16+pulse*.002,gapX,.26,0,36);
       if(w.phase===1) {
@@ -694,6 +703,15 @@
       if(w.phase===2&&attacking&&pulse%54===0) {
         var fireBeat=Math.floor(pulse/54);
         sinRing(w,28,86+fireBeat*10,cycle*.13+fireBeat*.07,gapX,.33,fireBeat%2,0);
+      }
+    } else if(id==='cult-leader') {
+      // Adaptation of combined threats; no claim that the visual motifs or
+      // patterns are literal frames from the text. Fixed announced corridors.
+      if(within===54)sinRays(w,[{x:88,y:80,angle:down,width:9,ownerId:b.id},{x:272,y:80,angle:down,width:9,ownerId:b.id}],90,0);
+      if(attacking&&pulse%54===0) {
+        var beat=Math.floor(pulse/54),side=beat%2?1:-1;
+        sinFan(w,b.x+side*24,b.y,11,down+side*.16,.14,78+12*w.phase,gapX,.33,beat%2,beat===0?20:0);
+        if(w.phase>=1)sinFan(w,b.x-side*24,b.y,9,down-side*.16,.16,67+9*w.phase,gapX,.35,(beat+1)%2,0);
       }
     } else if(id==='pride') {
       if(w.phase===0&&attacking&&pulse%48===0) {
@@ -972,8 +990,10 @@
         }
         w.score += 2500;
       }
-      else if (w.phase === 2) { w.stage = 'won'; w.stageTime = 0; w.resultReason = w.campaign ? (w.practiceBoss ? w.bossName + ' · 연습 완료' : w.bossIndex>=5 ? '일곱 검은 신호 · 봉인 조사 구간을 마쳤습니다' : w.bossIndex===4 ? 'J의 인장이 빛납니다 · 루시퍼가 물러나고 도움을 청할 길이 열립니다' : '첫 기억의 조사 구간을 마쳤습니다') : '기억 회랑을 돌파했습니다'; w.score += 5000 + w.player.hp * 500; event(w, 'win'); }
-      else { w.stage = 'transition'; w.stageTime = 0; w.nextPhase = w.phase + 1; w.transitionRemaining = 6.4; w.stageLabel = e.sealTarget ? '남은 파동이 지나갑니다' : '남은 검편이 지나갑니다'; }
+      else if (w.phase === 2) { w.stage = 'won'; w.stageTime = 0; w.resultReason = w.finalPractice ? '교주의 사몽 권한이 끊어졌다. 합일 코어는 남기고 지배 명령과 사이비 회로만 분리한다. 환도는 몽세수호자로 남는다.' : w.campaign ? (w.practiceBoss ? w.bossName + ' · 연습 완료' : w.bossIndex>=5 ? '일곱 검은 신호 · 봉인 조사 구간을 마쳤습니다' : w.bossIndex===4 ? 'J의 인장이 빛납니다 · 루시퍼가 물러나고 도움을 청할 길이 열립니다' : '첫 기억의 조사 구간을 마쳤습니다') : '기억 회랑을 돌파했습니다'; w.score += 5000 + w.player.hp * 500; event(w, 'win'); }
+      else { w.stage = 'transition'; w.stageTime = 0; w.nextPhase = w.phase + 1; w.transitionRemaining = 6.4; w.stageLabel = e.sealTarget ? '남은 파동이 지나갑니다' : '남은 검편이 지나갑니다';
+        if(w.finalPractice && w.phase===0) { w.transitionNarrative=['교주가 무너졌지만 코어의 신경선이 그의 몸을 다시 잇는다.', '환도는 돌아온 현실의 기억 속에서 여기가 꿈임을 알아차린다.', '사몽의 권한으로 일어서서 교주에게 맞선다.'];w.transitionMinimum=9;w.stageLabel='사몽 각성'; }
+      }
       w.reservation = false; w._reservationSince = 0;
       // A phase boundary contains no surviving support actors. Their already
       // fired bullets remain subject to the ordinary transition drain.
@@ -1087,6 +1107,7 @@
     var snap = {};
     ['rulesetVersion','runId','seed','difficulty','practiceBoss','checkpointSerial','tick','rngState','idCounter','stage','wave','phase','score','graze','kills','memory','resonance','autoAttack','skillRotation'].forEach(function (k) { snap[k] = w[k]; });
     if (w.campaign) { snap.campaign = true; snap.campaignRevision = w.campaignRevision; snap.bossIndex = w.bossIndex; }
+    if (w.finalPractice) snap.finalPractice=true;
     snap.stageTime = 0; snap.phaseTime = 0; snap.waveTime = 0;
     snap.player = copy(w.player); snap.skills = copy(w.skills); snap.stats = copy(w.stats); snap.shotReadyAt = w._shotReadyAt;
     snap.resourceState = { memoryBucket: w._memoryBucket, memoryGain: w._memoryGain, resBucket: w._resBucket, resGain: w._resGain, grazeGain: w._grazeGain, lastGraze: w._lastGraze };
@@ -1096,6 +1117,7 @@
   function restoreCheckpoint(snapshot) {
     if (!snapshot || typeof snapshot !== 'object' || JSON.stringify(snapshot).length > 131072) throw new Error('Invalid checkpoint');
     var s = copy(snapshot);
+    if (s.finalPractice !== undefined && (s.finalPractice !== true || s.practiceBoss !== true || s.campaign !== true || s.bossIndex !== 11 || s.campaignRevision !== 3 || s.stage !== 'boss')) throw new Error('Invalid separate final practice');
     var hasCampaign = Object.prototype.hasOwnProperty.call(s, 'campaign') || Object.prototype.hasOwnProperty.call(s, 'campaignRevision') || Object.prototype.hasOwnProperty.call(s, 'bossIndex');
     if (hasCampaign && (s.campaign !== true || ![1,2,3].includes(s.campaignRevision) || !Number.isInteger(s.bossIndex) || s.bossIndex < 0 || s.bossIndex >= campaignBossCount(s.campaignRevision) || (s.difficulty === 'hell' && s.campaignRevision < 3))) throw new Error('Invalid campaign checkpoint');
     if (hasCampaign && s.stage === 'waves' && s.wave >= CAMPAIGN_BOSSES[s.bossIndex].waves.length) throw new Error('Invalid campaign wave');
@@ -1114,6 +1136,7 @@
     if (!Array.isArray(s.stats.phaseTicks) || s.stats.phaseTicks.length > (hasCampaign ? campaignBossCount(s.campaignRevision)*3 : 3) || s.stats.phaseTicks.some(function (n) { return !Number.isInteger(n) || n < 0 || n > 4500; })) throw new Error('Invalid phase history');
     var w = createRun({ difficulty: s.difficulty, seed: s.seed, practiceBoss: false, runId: s.runId, campaign: hasCampaign, campaignRevision: hasCampaign ? s.campaignRevision : undefined });
     if (hasCampaign) w.bossIndex = s.bossIndex;
+    if (s.finalPractice === true) w.finalPractice = true;
     ['tick','rngState','idCounter','stage','wave','phase','score','graze','kills','memory','resonance','autoAttack','skillRotation','practiceBoss'].forEach(function (k) { w[k] = s[k]; });
     w.time = w.tick / 60; w.player = p; w.skills = s.skills; w.stats = s.stats; w.checkpointSerial = s.checkpointSerial;
     w._shotReadyAt = finite(s.shotReadyAt) ? s.shotReadyAt : w.tick; w.events.length = 0;
@@ -1169,7 +1192,7 @@
     updateWarnings(w); attack(w); updateShots(w); updateBullets(w, px, py); updateLaserCollision(w, px, py);
     if (w.stage === 'transition') {
       w.transitionRemaining = Math.max(0, (w.transitionMinimum || 6.4) - w.stageTime);
-      if (!w.bullets.length && !w.hazards.length && !w._warnings.length && !w._deferred.length && (!(w.campaign && w.bossIndex >= 2 && w.nextEncounter != null) || w.stageTime >= (w.transitionMinimum || 3))) {
+      if (!w.bullets.length && !w.hazards.length && !w._warnings.length && !w._deferred.length && (!(w.campaign && w.bossIndex >= 2 && w.nextEncounter != null) || w.stageTime >= (w.transitionMinimum || 3)) && (!w.finalPractice || !w.transitionNarrative || w.stageTime >= (w.transitionMinimum || 0))) {
         if (w.campaign && w.nextEncounter != null) {
           w.bossIndex = w.nextEncounter; w.nextEncounter = null; w.boss = null; w.stage = 'waves'; w.phase = 0; w.phaseTime = 0;
           w.transitionNarrative = null; w.transitionMinimum = 0;

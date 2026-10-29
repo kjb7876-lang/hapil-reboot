@@ -35,15 +35,16 @@
     h14MapPride:Object.freeze({width:1600,height:900,scene:'ep1b08',floor:Object.freeze([400,240,400,140])}),
     h14MapPrideCore:Object.freeze({width:1600,height:900,scene:'ep1b09',floor:Object.freeze([600,250,400,120])})
   });
+  var CULT_TERRAIN=Object.freeze({cultArena:Object.freeze({width:1600,height:1000,scene:'cult04-throne',floor:Object.freeze([500,270,600,300])})});
   var H14_GROUP_KEYS=Object.freeze([
     Object.freeze(['h14MapViolet']),Object.freeze(['h14MapHorn']),Object.freeze(['h14MapBalrog']),
     Object.freeze(['h14MapMask']),Object.freeze(['h14MapLucifer']),Object.freeze(['h14MapSloth']),
     Object.freeze(['h14MapEnvy']),Object.freeze(['h14MapGluttony']),Object.freeze(['h14MapLust']),
-    Object.freeze(['h14MapGreed','h14MapGreedSnow']),Object.freeze(['h14MapWrath']),Object.freeze(['h14MapPride','h14MapPrideCore'])
+    Object.freeze(['h14MapGreed','h14MapGreedSnow']),Object.freeze(['h14MapWrath']),Object.freeze(['h14MapPride','h14MapPrideCore']),Object.freeze(['cultArena'])
   ]);
   function terrainAssetKeysForEncounter(group){return H14_GROUP_KEYS[group]?H14_GROUP_KEYS[group].slice():[];}
   function readyTerrainImage(images,key){
-    var c=H14_TERRAIN[key],im=images&&images[key];
+    var c=H14_TERRAIN[key]||CULT_TERRAIN[key],im=images&&images[key];
     return !!(c&&imageReady(im)&&im.naturalWidth===c.width&&im.naturalHeight===c.height);
   }
   function invalidTerrainAsset(images,group){
@@ -57,7 +58,7 @@
   }
   function h14TerrainKey(world){
     if(!world||!world.campaign)return null;
-    var group=world.bossIndex||0,keys=H14_GROUP_KEYS[group];if(!keys)return null;
+    var group=world.finalPractice?12:world.bossIndex||0,keys=H14_GROUP_KEYS[group];if(!keys)return null;
     // Keep the original connected first approach and Balrog's three approach
     // scenes. Their own new paintings are used for the anchored boss arenas.
     if(world.stage==='waves'&&(group===0||group===2))return null;
@@ -213,7 +214,7 @@
       mapMetrics.cacheCanvasCount=strips.length+3+(sourceScene?1:0);mapMetrics.cacheBytes=(strips.length*W*1280+3*W*H+(sourceScene?W*720:0))*4;
     }
     function drawSourceTerrain(world,key){
-      var contract=H14_TERRAIN[key],im=images[key];
+      var contract=H14_TERRAIN[key]||CULT_TERRAIN[key],im=images[key];
       if(!readyTerrainImage(images,key))return false;
       var palette=paletteFor(world),tone=palette?palette.primary:'#8798af';
       if(!sourceScene){sourceScene=document.createElement('canvas');sourceScene.width=W;sourceScene.height=720;}
@@ -263,6 +264,7 @@
       mapMetrics.sceneAsset=null;mapMetrics.sceneSourceSize=null;mapMetrics.sceneFloorPatch=null;mapMetrics.sceneArchitecturalScale=null;mapMetrics.sceneForegroundDraws=0;mapMetrics.sceneCollisionGeometry=false;
       var sourceKey=h14TerrainKey(world);if(sourceKey&&drawSourceTerrain(world,sourceKey))return;
       releaseSourceTerrain();
+      if(world&&world.finalPractice){ctx.clearRect(0,0,W,H);mapMetrics.terrainStatus='missing-own-source-cultArena';mapMetrics.sourceStatus='missing-own-source';return;}
       if(world&&world.campaign&&world.bossIndex>=5){drawSinTerrain(world);return;}
       if(world&&world.campaign&&world.bossIndex>=3){drawExtendedTerrain(world);return;}
       if(usesConnected(world)){drawConnectedTerrain(world);return;}
@@ -718,6 +720,7 @@
     }
     function transition(world) {
       if(world.stage!=='transition')return;
+      if(world.finalPractice&&world.nextPhase===1&&imageReady(images.cultDriveStitch)&&images.cultDriveStitch.naturalWidth===512&&images.cultDriveStitch.naturalHeight===512){ctx.save();ctx.globalAlpha=.60;ctx.drawImage(images.cultDriveStitch,280,2,72,72);ctx.restore();}
       if(Array.isArray(world.transitionNarrative)&&world.transitionNarrative.length){
         // The bridge stays above the movable player lane (y260..614). Drawn
         // before hazards and bullets, it cannot conceal an uncleared attack.
@@ -765,7 +768,7 @@
       if(world.stage==='boss'&&world.phaseTime<1.45){
         var a=Math.min(1,world.phaseTime/.22,(1.45-world.phaseTime)/.35);ctx.save();ctx.globalAlpha=Math.max(0,a);
         ctx.fillStyle='rgba(12,14,28,.88)';ctx.fillRect(20,204,320,45);ctx.fillStyle='#c3af85';ctx.fillRect(20,204,2,45);
-        ctx.textAlign='left';ctx.font='8px Arial';ctx.fillStyle='#b9aaca';ctx.fillText('MEMORY SIGN  /  '+((world.bossIndex||0)+1)+'—'+(world.phase+1),32,219);
+        ctx.textAlign='left';ctx.font='8px Arial';ctx.fillStyle='#b9aaca';ctx.fillText('MEMORY SIGN  /  '+(world.finalPractice?'FINAL':((world.bossIndex||0)+1))+'—'+(world.phase+1),32,219);
         ctx.font='13px Georgia,"Batang",serif';ctx.fillStyle='#eee1ce';ctx.fillText(world.patternName+(world.phase===2&&b&&b.specialPatternLabel?' · '+b.specialPatternLabel:''),32,238);ctx.restore();
       }
       if(world.stage==='won'&&!world.practiceBoss&&world.bossIndex===4){
@@ -790,5 +793,5 @@
     }
     return {resize:function(cssW,cssH,dpr){ratio=Math.min(1.5,Math.max(1,dpr||1))*cssW/W;var nextWidth=Math.max(1,Math.round(W*ratio)),nextHeight=Math.max(1,Math.round(H*ratio));if(canvas.width!==nextWidth)canvas.width=nextWidth;if(canvas.height!==nextHeight)canvas.height=nextHeight;canvas.style.width='100%';canvas.style.height='100%';ctx.imageSmoothingEnabled=true;},draw:draw,getMetrics:function(){return Object.assign({},mapMetrics,{actorPresentation:actorPresentation?actorPresentation.getMetrics():null,projectilePresentation:projectilePresentation?projectilePresentation.getMetrics():null,bossSkillsPresentation:bossSkillPresentation?bossSkillPresentation.getMetrics():null});},destroy:function(){if(projectilePresentation&&projectilePresentation.destroy)projectilePresentation.destroy();if(bossSkillPresentation&&bossSkillPresentation.destroy)bossSkillPresentation.destroy();bossSkillPresentation=null;releaseSourceTerrain();cached=false;canvas.width=1;canvas.height=1;back.width=1;back.height=1;foreground.width=1;foreground.height=1;if(sinFloor){sinFloor.width=1;sinFloor.height=1;sinFloor=null;}sinFloorSource=null;sinFloorTone=null;for(var i=0;i<strips.length;i++){strips[i].width=1;strips[i].height=1;}strips.length=0;actorPresentation=null;projectilePresentation=null;images={};}};
   }
-  global.HapilRenderer={create:create,terrainContracts:H14_TERRAIN,terrainAssetKeysForEncounter:terrainAssetKeysForEncounter,invalidTerrainAsset:invalidTerrainAsset};
+  global.HapilRenderer={create:create,terrainContracts:H14_TERRAIN,cultTerrainContracts:CULT_TERRAIN,terrainAssetKeysForEncounter:terrainAssetKeysForEncounter,invalidTerrainAsset:invalidTerrainAsset};
 })(typeof window!=='undefined'?window:globalThis);

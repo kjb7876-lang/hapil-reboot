@@ -84,6 +84,14 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
     var c=id==='mammon'&&(world.phase||0)===2?SIN_CONTRACTS.mammonChild:id==='pride'&&(world.phase||0)===2?SIN_CONTRACTS.prideCyborg:SIN_CONTRACTS[id];
     return b.artKey&&b.artKey!==c.key?null:c;
   }
+  // Four generated keyposes derived from the verified c104 source, not an
+  // interpolated animation. Torso anchors are manually estimated.
+  var CULT_KEYS=Object.freeze(['cultLeaderAtlas']);
+  function cultAssetKeysForEncounter(group){return group===12?CULT_KEYS.slice():[];}
+  function invalidCultAssetForEncounter(images,group){
+    if(group!==12)return 'cult-encounter-unsupported';
+    for(var i=0;i<CULT_KEYS.length;i++){var im=images&&images[CULT_KEYS[i]];if(!im||im.complete===false||im.naturalWidth!==1536||im.naturalHeight!==1024)return CULT_KEYS[i];}return null;
+  }
   function sinAssetKeysForEncounter(group){
     var id=SIN_ORDER[group-5];if(!id)return [];
     var keys=[SIN_CONTRACTS[id].key];
@@ -160,6 +168,7 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
       return p.key;
     }
     function drawBoss(ctx, world, x, y, width, opacity) {
+      if(world&&world.finalPractice&&world.boss&&world.boss.kind==='cult-leader')return drawCultBoss(ctx,world,x,y,width,opacity);
       var sin=sinContractFor(world);
       if(sin)return drawSinBoss(ctx,world,sin,x,y,width,opacity);
       if(motionPresentation&&motionPresentation.drawBoss(ctx,world,x,y,width,opacity)){
@@ -183,6 +192,17 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
       }else key = drawPose(ctx,contract,state,x,y,scale,angle,opacity);
       metrics.bossDraws++; metrics.lastBossAsset=key; metrics.lastBossPose=state; metrics.lastBossIdentity=identity;
       return true;
+    }
+    function drawCultBoss(ctx,world,x,y,width,opacity){
+      if(!finite(x)||!finite(y)||invalidCultAssetForEncounter(images,12))return false;
+      var b=world.boss,age=finite(b.releaseTick)&&b.releaseTick>=0?world.tick-b.releaseTick:Infinity;
+      var frame=age>=0&&age<12?2:b.action==='charge'?1:b.action==='recover'?3:0,key=CULT_KEYS[0],anchors=[[424,160],[373,198],[415,205],[381,157]],anchor=anchors[frame];
+      var scale=.30*clamp(value(width,230)/230,.1,world.stage==='bossIntro'?2.5:1),angle=clamp(value(b.lean,0),-1,1)*.009;
+      ctx.save();ctx.globalAlpha*=clamp(value(opacity,1),0,1);ctx.translate(x,y);ctx.rotate(angle);
+      // All four sprites share the same fixed canvas; this torso registration
+      // is manual and not a certified source pivot.
+      ctx.drawImage(images[key],frame%2*768,Math.floor(frame/2)*512,768,512,-anchor[0]*scale,-anchor[1]*scale,768*scale,512*scale);ctx.restore();
+      metrics.actorDraws++;metrics.bossDraws++;metrics.lastBossAsset=key;metrics.lastBossPose=['idle','charge','down-attack','recover'][frame];metrics.lastBossIdentity='cult-leader';metrics.usedAssets[key]=(metrics.usedAssets[key]||0)+1;return true;
     }
     function drawSinBoss(ctx,world,c,x,y,width,opacity){
       var image=images[c.key];
@@ -270,5 +290,5 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
       getMetrics:function () { return Object.assign(JSON.parse(JSON.stringify(metrics)),{downwardMotion:motionPresentation?motionPresentation.getMetrics():null}); }};
   }
   global.HapilActors = Object.freeze({create:create,contracts:CONTRACTS,sinContracts:SIN_CONTRACTS,
-    sinContractFor:sinContractFor,sinAssetKeysForEncounter:sinAssetKeysForEncounter,invalidSinAssetForEncounter:invalidSinAssetForEncounter});
+    sinContractFor:sinContractFor,sinAssetKeysForEncounter:sinAssetKeysForEncounter,invalidSinAssetForEncounter:invalidSinAssetForEncounter,cultAssetKeysForEncounter:cultAssetKeysForEncounter,invalidCultAssetForEncounter:invalidCultAssetForEncounter});
 }(typeof window !== 'undefined' ? window : globalThis));

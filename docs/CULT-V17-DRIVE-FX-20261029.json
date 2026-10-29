@@ -1,0 +1,68 @@
+{
+  "driveZipFileId": "1w7tKwEcc93b2p4jG0VqnnDIHPXfIJCbM",
+  "sourceZipSha256": "b02dae03af680e51030cecaa12f2f72b0b766879cde03128a8204fdf9a79ab2a",
+  "catalog": "Refined FULL318 PART47; cult04 scene61 Cyborg cult leader",
+  "conversion": "Pillow Lanczos resize 1254x1254 to 512x512 and lossless RGBA WebP; decoded pixel equality checked. Four static frames, not continuous animation. No collision changes.",
+  "items": [
+    {
+      "source": "13-cult04-spatial-fold-warning.png",
+      "sourceSHA256": "2b444bdbcd9398c1cda39be97107225cd0c089ceea3091fe788d966a347d3c9b",
+      "file": "media/cult-v17/drive-fold.webp",
+      "resultSHA256": "c51d89509e9e52a07b539027596b986094f5e56fdff3f587e2c19c9ffe38ed93",
+      "bytes": 72902,
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "source": "14-cult04-neural-command-spear.png",
+      "sourceSHA256": "da5bf691eb325b4995655c3671f37a96da289d32543f0baaab90f2cfa9b5b8a5",
+      "file": "media/cult-v17/drive-spear.webp",
+      "resultSHA256": "507b0455ada4be3ff8876d1686aef6362539b57782333c849c48ba21ed352dd8",
+      "bytes": 64746,
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "source": "15-cult04-time-stopped-collision.png",
+      "sourceSHA256": "92e96bd401fe359227583bc85b3218855bcdaba63439a9eaad117d4b9c66cdca",
+      "file": "media/cult-v17/drive-impact.webp",
+      "resultSHA256": "318c20e9dc3588e5929e619a9a8da35bfbf12c3674848752ba46127152247f57",
+      "bytes": 141070,
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "source": "16-cult04-resurrection-stitch-arc.png",
+      "sourceSHA256": "3755ba039a9695265f6425f09da129675358c04d4b151ad4c9665e5493c359f9",
+      "file": "media/cult-v17/drive-stitch.webp",
+      "resultSHA256": "6c2785664e1226250da23a2c048043ca8c3b2cfeeb4c5d1c8259c7d3d8b3649a",
+      "bytes": 90032,
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaRange": [
+        0,
+        255
+      ]
+    }
+  ]
+}

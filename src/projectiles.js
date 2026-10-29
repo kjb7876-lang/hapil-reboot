@@ -22,7 +22,8 @@
     Object.freeze({id:'asmodeus',primary:'#d24a4a',secondary:'#f4d9ca',accent:'#bc9363'}),
     Object.freeze({id:'mammon',primary:'#7985aa',secondary:'#e0bb65',accent:'#dfd6c7'}),
     Object.freeze({id:'wrath',primary:'#a8927c',secondary:'#f6a153',accent:'#d75a43'}),
-    Object.freeze({id:'pride',primary:'#eee6d6',secondary:'#c9ad67',accent:'#76818c'})
+    Object.freeze({id:'pride',primary:'#eee6d6',secondary:'#c9ad67',accent:'#76818c'}),
+    Object.freeze({id:'cult-leader',primary:'#eee4dc',secondary:'#a73545',accent:'#897a7c'})
   ]);
   var PALETTES=Object.freeze({violet:PALETTE_LIST[0],horn:PALETTE_LIST[1],balrog:PALETTE_LIST[2],mask:PALETTE_LIST[3],lucifer:PALETTE_LIST[4],belphegor:PALETTE_LIST[5],leviathan:PALETTE_LIST[6],beelzebub:PALETTE_LIST[7],asmodeus:PALETTE_LIST[8],mammon:PALETTE_LIST[9],wrath:PALETTE_LIST[10],pride:PALETTE_LIST[11]});
   var FX=Object.freeze({
@@ -35,7 +36,7 @@
     unlock:{key:'fxV8Unlock',frames:16,ms:80,pivot:[64,64],sample:4},
     vortex:{key:'fxV8Vortex',frames:16,ms:80,pivot:[64,64],sample:4}
   });
-  var FAMILIES=[['web','silver'],['ripple','reed'],['ember','gold'],['unlock','gold'],['vortex','silver','unlock'],[],[],[],[],[],[],[]];
+  var FAMILIES=[['web','silver'],['ripple','reed'],['ember','gold'],['unlock','gold'],['vortex','silver','unlock'],[],[],[],[],[],[],[],[]];
   var ORBS=[
     {key:'projectileVioletOrbV9',width:296,height:80,frames:4,ms:125,crop:[16,16,48,48],step:72,r:24,l:0},
     {key:'projectileHornOrbV10',width:64,height:64,frames:1,crop:[8,8,48,48],r:24,l:0},
@@ -52,7 +53,8 @@
     {key:'projectileAsmodeusV13',width:1254,height:1254,frames:1,crop:[810,278,148,148],r:74,l:0,encounterMaterial:true},
     {key:'projectileMammonV13',width:1295,height:1215,frames:1,crop:[461,419,384,384],r:192,l:0,encounterMaterial:true},
     {key:'projectileWrathV13',width:1295,height:1214,frames:1,crop:[482,481,340,340],r:170,l:0,encounterMaterial:true},
-    {key:'projectilePrideV13',width:1536,height:1024,frames:1,crop:[680,452,176,176],r:88,l:0,encounterMaterial:true}
+    {key:'projectilePrideV13',width:1536,height:1024,frames:1,crop:[680,452,176,176],r:88,l:0,encounterMaterial:true},
+    {key:'cultBeam',width:768,height:144,frames:1,crop:[360,56,48,32],r:16,l:8,encounterMaterial:true}
   ];
   var BLADES=[
     {key:'projectileVioletBladeV10',width:128,height:64,frames:1,crop:[13,20,102,24],r:12,l:39},
@@ -60,7 +62,7 @@
     {key:'projectileBalrogBladeV10',width:128,height:64,frames:1,crop:[13,20,102,24],r:12,l:39},
     {key:'projectileMaskNeedleV10',width:128,height:64,frames:1,crop:[28,23,72,18],r:9,l:27},
     {key:'projectileLuciferShardV11',width:128,height:64,frames:1,crop:[13,20,102,24],r:12,l:39},
-    ORBS[5],ORBS[6],ORBS[7],ORBS[8],ORBS[9],ORBS[10],ORBS[11]
+    ORBS[5],ORBS[6],ORBS[7],ORBS[8],ORBS[9],ORBS[10],ORBS[11],ORBS[12]
   ];
   // Horn reed and Lucifer mask shard are static own-encounter source art.
   // The shard is a proposed ceramic material, not a canonical actor/body master.
@@ -94,7 +96,8 @@
     {key:'h14SkillLust',width:512,height:512,crop:[21,35,470,443]},
     {key:'h14SkillGreed',width:512,height:512,crop:[28,70,456,373]},
     {key:'h14SkillWrath',width:512,height:512,crop:[21,26,469,460]},
-    {key:'h14SkillPride',width:512,height:512,crop:[174,142,154,267]}
+    {key:'h14SkillPride',width:512,height:512,crop:[174,142,154,267]},
+    {key:'cultDriveSpear',width:512,height:512,crop:[0,0,512,512]}
   ];
   var BEAMS=[null,null,null,null,null,
     {key:'h14BeamSloth',width:2172,height:724,crop:[543,181,1086,362]},
@@ -103,13 +106,14 @@
     {key:'h14BeamLust',width:2172,height:724,crop:[543,181,1086,362]},
     {key:'h14BeamGreed',width:2172,height:724,crop:[543,181,1086,362]},
     {key:'h14BeamWrath',width:2172,height:724,crop:[543,181,1086,362]},
-    {key:'h14BeamPride',width:2172,height:724,crop:[543,181,1086,362]}
+    {key:'h14BeamPride',width:2172,height:724,crop:[543,181,1086,362]},
+    {key:'cultBeam',width:768,height:144,crop:[0,0,768,144]}
   ];
   var CACHE_LIMIT=96,CACHE_BYTES=4*1024*1024,SCALE=3,PAD=1,CELL=128;
   function finite(n){return typeof n==='number'&&Number.isFinite(n);}
   function clamp(n,a,b){return Math.max(a,Math.min(b,n));}
   function slotForEncounter(i){return i===undefined||i===-1?0:Number.isInteger(i)&&i>=0&&i<ORBS.length&&ORBS[i]?i:-1;}
-  function indexFor(w){return slotForEncounter(w&&w.bossIndex);}
+  function indexFor(w){if(w&&w.finalPractice)return 12;var i=w&&w.bossIndex;return i===12?-1:slotForEncounter(i);}
   function paletteFor(w,b){var p=PALETTE_LIST[indexFor(w)];return p?(b&&b.paletteSlot===1?{id:p.id+'-secondary',primary:p.secondary,secondary:p.primary,accent:p.accent}:p):null;}
   function colorFor(w,b){var p=paletteFor(w,b);return p?p.primary:null;}
   // Acceleration is a property known at launch, so tint the existing authored
@@ -127,17 +131,17 @@
     if(!role)return paletteFor(w,b);
     var index=indexFor(w);return index<0?null:BEHAVIOR_PALETTES[index][b.paletteSlot===1?1:0][role];
   }
-  function optionalAssetKeysForEncounter(i){var out=[];if(!Number.isInteger(i)||i<0||i>=ORBS.length)return out;if(CASTS[i])out.push(CASTS[i].key);if(ROTORS[i])out.push(ROTORS[i].key);if(BEAMS[i])out.push(BEAMS[i].key);return out;}
+  function optionalAssetKeysForEncounter(i){var out=[];if(!Number.isInteger(i)||i<0||i>=ORBS.length)return out;if(i===12)return out;if(CASTS[i])out.push(CASTS[i].key);if(ROTORS[i])out.push(ROTORS[i].key);if(BEAMS[i])out.push(BEAMS[i].key);return out;}
   function assetKeysForEncounter(i){
-    var wi=slotForEncounter(i);if(wi<0)return [];var out=[ORBS[wi].key];
+    var wi=slotForEncounter(i);if(wi<0)return [];var out=[ORBS[wi].key];if(wi===12)out.push('cultLance','cultDriveSpear');
     if(BLADES[wi]&&out.indexOf(BLADES[wi].key)<0)out.push(BLADES[wi].key);
     if(Number.isInteger(i)&&i>=0&&WEAPONS[wi])out.push(WEAPONS[wi].key);
     out=out.concat(optionalAssetKeysForEncounter(i));
-    FAMILIES[wi].forEach(function(name){if(name!=='unlock'&&out.indexOf(FX[name].key)<0)out.push(FX[name].key);});
+    (FAMILIES[wi]||[]).forEach(function(name){if(name!=='unlock'&&out.indexOf(FX[name].key)<0)out.push(FX[name].key);});
     return out;
   }
   function ready(im,s){return !!(im&&im.complete!==false&&im.naturalWidth===(s.width||512)&&im.naturalHeight===(s.height||Math.ceil(s.frames/4)*CELL));}
-  function invalidAssetForEncounter(images,i){var wi=slotForEncounter(i);if(wi<0)return 'unsupportedProjectileEncounter';var specs=[ORBS[wi]];if(BLADES[wi])specs.push(BLADES[wi]);if(Number.isInteger(i)&&i>=0&&WEAPONS[wi])specs.push(WEAPONS[wi]);for(var k=0;k<specs.length;k++)if(!ready(images&&images[specs[k].key],specs[k]))return specs[k].key;return null;}
+  function invalidAssetForEncounter(images,i){var wi=slotForEncounter(i);if(wi<0)return 'unsupportedProjectileEncounter';var specs=[ORBS[wi]];if(wi===12)specs.push({key:'cultLance',width:512,height:192},{key:'cultDriveSpear',width:512,height:512});if(BLADES[wi])specs.push(BLADES[wi]);if(Number.isInteger(i)&&i>=0&&WEAPONS[wi])specs.push(WEAPONS[wi]);for(var k=0;k<specs.length;k++)if(!ready(images&&images[specs[k].key],specs[k]))return specs[k].key;return null;}
   function capsule(ctx,x,y,r,l){
     ctx.beginPath();
     if(l>0){ctx.moveTo(x-l,y-r);ctx.lineTo(x+l,y-r);ctx.arc(x+l,y,r,-Math.PI/2,Math.PI/2);ctx.lineTo(x-l,y+r);ctx.arc(x-l,y,r,Math.PI/2,Math.PI*1.5);ctx.closePath();}
@@ -205,7 +209,12 @@
       for(var phase=0;phase<s.frames;phase++){
         var c=canvas(fw,fh),ctx=c&&c.getContext('2d');if(!ctx){release({canvas:c,canvases:frames});return null;}
         ctx.save();capsule(ctx,hx*SCALE,hy*SCALE,r*SCALE,l*SCALE);ctx.clip();
-        slices(ctx,art,phase,hx*SCALE,hy*SCALE,r*SCALE,l*SCALE);ctx.restore();frames.push(c);
+        slices(ctx,art,phase,hx*SCALE,hy*SCALE,r*SCALE,l*SCALE);
+        if(w.finalPractice&&images.cultDriveSpear&&ready(images.cultDriveSpear,{width:512,height:512})){
+          // Reorient the diagonal authored spear within the exact damage clip.
+          ctx.save();ctx.translate(hx*SCALE,hy*SCALE);ctx.rotate(Math.PI/4);ctx.drawImage(images.cultDriveSpear,0,0,512,512,(-l-r)*SCALE,-r*SCALE,(2*l+2*r)*SCALE,2*r*SCALE);ctx.restore();
+        }
+        ctx.restore();frames.push(c);
       }
       return {canvases:frames,width:fw/SCALE,height:fh/SCALE,frameWidth:fw,frameHeight:fh,frameCount:s.frames,x:hx,y:hy,r:r,halfLength:l,bytes:fw*fh*s.frames*4};
     }

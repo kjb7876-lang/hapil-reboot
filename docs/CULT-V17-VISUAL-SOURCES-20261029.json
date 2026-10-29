@@ -1,0 +1,43 @@
+{
+  "items": [
+    {
+      "role": "actor",
+      "file": "media/cult-v17/cult-leader-atlas.png",
+      "source": "Docs generated 2x2 keyposes based on c104-boss actor ref1, source RGBA 672x384 SHA-256 54173f0c3a2e12a08a36b3099fff211981f58cc6db180ee3006392f6cf407071",
+      "sourceCommit": null,
+      "sha256": "d76c925bd52b367aaac41473b234b35a0b5aecde42201324b187af5408f1a2de",
+      "gitBlobSHA": "490693f346911b9a01b06083a27db24bf5961901",
+      "size": 2304249,
+      "drive_url": "https://drive.google.com/file/d/12b2rB4fJC_QgcUGhMM53qasU_mVnJczD/view?usp=drivesdk",
+      "generation": "Built-in imagegen, transparent 2x2 sprite sheet, ready/charge/downward attack/recover of supplied c104 source; no text or background. Four independent key poses; no continuous animation; manually estimated anchors."
+    },
+    {
+      "role": "arena",
+      "file": "media/cult-v17/arena.jpg",
+      "source": "assets/maps/generated-v31213/cult04_antichrist_final_throne.jpg",
+      "sourceCommit": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+      "sha256": "9f23361f00f184e73e963784176d6c0979fe8b4375e45cdd8e06539d4776a53b",
+      "gitBlobSHA": "9c58daf70d57021a5cd13dc5b4ef7daf82f07788",
+      "size": 530534
+    },
+    {
+      "role": "beam",
+      "file": "media/cult-v17/beam.webp",
+      "source": "assets/vfx/v31330/c104-boss/beam.webp",
+      "sourceCommit": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+      "sha256": "2b2cfae52803b7b7b1d4311aa98d7e37ebcc2876e8c3b15dfb1c596bac8dfb59",
+      "gitBlobSHA": "a16b1a60f527079e92cb386b64f4031fbdc01ef9",
+      "size": 50944
+    },
+    {
+      "role": "lance",
+      "file": "media/cult-v17/lance.webp",
+      "source": "assets/vfx/v31323/boss/c104-boss/control-lance.webp",
+      "sourceCommit": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+      "sha256": "b1c98912111f3c661c418567e1d304d606705d7e3eb87c643caeaf8402f4acf7",
+      "gitBlobSHA": "eb1aaf9a8d7e369c6639d395b1d8f5e7550607f1",
+      "size": 27866
+    }
+  ],
+  "scope": "Distinct cult04 final boss source, no episode 2 chairman substitution. Actor is four generated keyposes, manual registration, not continuous animation. Four keypose source original 672x384 ref1 idle from c104-boss; collision geometry remains core-owned. Arena portrait visual composite of full source plus own floor swatch, no collision map. Beam crop alpha inspected; lance overlay clipped to damage capsule, baked once, not a newly authored animation. These three retained source bytes come from hapil1 GitHub; not claimed as Drive output."
+}
