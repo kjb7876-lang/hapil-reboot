@@ -36,9 +36,10 @@ test('warning does not itself trigger a release pose',()=>{
 
 test('a deferred group marks the actual emission tick instead of the saturated request tick',()=>{
  const w=core.createRun({campaign:true,practiceBoss:true,bossIndex:0});
- w.autoAttack=false;w.player.invulnerableUntil=99999;
+ w.autoAttack=false;w.player.invulnerableUntil=99999;w.phaseTime=7;
+ // An odd first-phase cycle uses the ordinary (non-weapon) group.
  for(let i=0;i<core.CAPS.bullets;i++)w.bullets.push({x:16,y:20,px:16,py:20,vx:0,vy:0,r:1,angle:0,age:0,ttl:100,ownerId:0});
- for(let i=0;i<109;i++)core.step(w,{});
+ for(let i=0;i<127;i++)core.step(w,{});
  assert(w._deferred.length>0);assert.equal(w.boss.releaseTick,-1);
  w.bullets.splice(0,64);core.step(w,{});
  assert.equal(w.boss.releaseTick,w.tick);assert(w.bullets.some(b=>b.ownerId===w.boss.id));

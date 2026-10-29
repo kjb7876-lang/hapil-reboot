@@ -11,6 +11,7 @@ function fixture(){
  for(const key of keys){const h=key==='fxV8GoldSlash'?256:512,c=createCanvas(512,h),ctx=c.getContext('2d');for(let i=0;i<h/128*4;i++){ctx.fillStyle=`rgb(${25+i*10},${50+i*7},${220-i*9})`;ctx.fillRect(i%4*128,Math.floor(i/4)*128,128,128)}c.complete=true;c.naturalWidth=512;c.naturalHeight=h;images[key]=c;}
  for(const key of ['projectileVioletOrbV9','projectileLuciferOrbV9']){const c=createCanvas(296,80),ctx=c.getContext('2d');for(let i=0;i<4;i++){ctx.fillStyle=['#8d3acb','#aaa7db','#42a6bc','#daa4a0'][i];ctx.fillRect(8+i*72,8,64,64)}c.complete=true;c.naturalWidth=296;c.naturalHeight=80;images[key]=c;}
  for(const key of ['projectileHornOrbV10','projectileBalrogOrbV10','projectileMaskOrbV10','projectileVioletBladeV10','projectileBalrogBladeV10','projectileMaskNeedleV10','projectileHornNeedleV11','projectileLuciferShardV11']){const w=/Blade|Needle|Shard/.test(key)?128:64,c=createCanvas(w,64),ctx=c.getContext('2d');ctx.fillStyle='#e3a459';ctx.fillRect(0,0,w,64);c.complete=true;c.naturalWidth=w;c.naturalHeight=64;images[key]=c;}
+ for(const [key,width,height] of [['weaponVioletV12',1774,887],['weaponHornV12',1774,887],['weaponBalrogV12',1774,887],['weaponMaskV12',1774,887],['weaponLuciferV12',1254,1254]])images[key]={complete:true,naturalWidth:width,naturalHeight:height};
  const c=createCanvas(48,48),ctx=c.getContext('2d'),fx=API.create(images);return {c,ctx,fx,images,generated,close(){fx.destroy();global.document=old}};
 }
 function bullet(age=0,r=4,l=0){return {id:3,x:24,y:24,r,halfLength:l,age,angle:0,vx:0,vy:100};}
@@ -45,7 +46,7 @@ test('palette priority follows explicit purple name then retained image colors; 
  for(let i=0;i<5;i++){const w={campaign:true,bossIndex:i},p=API.paletteFor(w);for(const kind of ['orb','needle','blade'])assert.equal(API.colorFor(w,{kind,id:3}),p.primary);assert.equal(API.colorFor(w,{paletteSlot:1}),p.secondary);assert.equal(API.colorFor(w,{paletteSlot:9}),p.primary);}
 });
 test('missing or malformed authored bodies are reported instead of replaced with procedural shapes',()=>{
- const f=fixture();try{for(let i=0;i<5;i++){assert.equal(API.invalidAssetForEncounter(f.images,i),null);const required=API.assetKeysForEncounter(i).filter(k=>k.startsWith('projectile'));for(const key of required){const original=f.images[key];delete f.images[key];assert.equal(API.invalidAssetForEncounter(f.images,i),key);f.images[key]=original;}}
+ const f=fixture();try{for(let i=0;i<5;i++){assert.equal(API.invalidAssetForEncounter(f.images,i),null);const required=API.assetKeysForEncounter(i).filter(k=>/^(projectile|weapon)/.test(k));for(const key of required){const original=f.images[key];delete f.images[key];assert.equal(API.invalidAssetForEncounter(f.images,i),key);f.images[key]=original;}}
  const missing=API.create({});f.fx.beginFrame();let calls=0;const ctx=new Proxy({}, {get(){return ()=>calls++;},set(){return true;}});assert.equal(missing.drawBullet(ctx,{campaign:false},bullet()),false);assert.equal(calls,0);assert.equal(missing.getMetrics().missingProjectileAssets,1);missing.destroy();
  }finally{f.close();}
 });

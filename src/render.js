@@ -403,10 +403,11 @@
         var width=h.width||2,progress=clamp(h.progress||0,0,1),palette=paletteFor(world),tone=palette?palette.primary:color(h.color);
         ctx.save();ctx.lineCap='round';ctx.beginPath();ctx.moveTo(h.x1,h.y1);ctx.lineTo(h.x2,h.y2);
         // Dashed, harmless telegraphs retain the committed damage footprint.
-        ctx.globalAlpha=.13;ctx.strokeStyle=tone;ctx.lineWidth=width;ctx.stroke();
+        var grid=h.patternId==='boss-grid-v1';
+        ctx.globalAlpha=grid?.24:.13;ctx.strokeStyle=tone;ctx.lineWidth=width;ctx.stroke();
         var floorScar=h.telegraphKind==='floor-scar';
         if(floorScar){ctx.globalAlpha=.9;ctx.strokeStyle='#080b12';ctx.lineWidth=Math.min(width,3.8);ctx.stroke();}
-        ctx.globalAlpha=.66+progress*.22;ctx.setLineDash([7,7]);ctx.lineDashOffset=-progress*14;ctx.strokeStyle=palette?palette.secondary:color(h.color);ctx.lineWidth=floorScar?Math.min(width,1.5):1;ctx.stroke();
+        ctx.globalAlpha=grid?.85:.66+progress*.22;ctx.setLineDash([7,7]);ctx.lineDashOffset=-progress*14;ctx.strokeStyle=palette?palette.secondary:color(h.color);ctx.lineWidth=floorScar?Math.min(width,1.5):grid?Math.min(width,2):1;ctx.stroke();
         ctx.restore();
       }
     }

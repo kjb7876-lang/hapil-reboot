@@ -14,6 +14,7 @@ function move(w){let p=w.player,best=0,bscore=Infinity;for(let a=0;a<dirs.length
  return best;}
 const out=path.join(__dirname,'../tests/fixtures/natural-bot'),corePath=path.join(__dirname,'../src/core.js');fs.mkdirSync(out,{recursive:true});
 const codeHash=crypto.createHash('sha256').update(fs.readFileSync(corePath)).digest('hex');
+const weaponPath=path.join(__dirname,'../src/weapon-patterns.js'),weaponHash=crypto.createHash('sha256').update(fs.readFileSync(weaponPath)).digest('hex');
 const records=[];
 for(const difficulty of ['gentle','normal'])for(const seed of [813,42]){
  const w=core.createRun({campaign:true,difficulty,seed,runId:'natural-bot-'+difficulty+'-'+seed}),marks=[];let seen=w.checkpointSerial,sequence='';
@@ -25,5 +26,5 @@ for(const difficulty of ['gentle','normal'])for(const seed of [813,42]){
  const file=`${difficulty}-${seed}.moves.gz`,bytes=zlib.gzipSync(Buffer.from(sequence),{mtime:0});fs.writeFileSync(path.join(out,file),bytes);
  const rec={difficulty,seed,runId:w.runId,stage:w.stage,tick:w.tick,hits:w.stats.hits,hp:w.player.hp,score:w.score,killCount:w.kills,checkpointCount:w.checkpointSerial,phaseTicks:w.stats.phaseTicks,marks,file,sha256:crypto.createHash('sha256').update(bytes).digest('hex')};records.push(rec);console.log(JSON.stringify({difficulty,seed,tick:w.tick,hits:w.stats.hits,hp:w.player.hp,file,bytes:bytes.length}));
 }
-if(crypto.createHash('sha256').update(fs.readFileSync(corePath)).digest('hex')!==codeHash)throw Error('Core changed during recording: regenerate replays');
-fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify({method:'Recorded from state-aware deterministic avoidance policy with ordinary 8-direction 240 px/sec movement, normal damage, auto-attack and skills. No modifications to run state, invulnerability, health, damage, or RNG. These are CPU bot simulations, not human/browser/mobile/GPU play.',directions:dirs,recordedCoreSha256:codeHash,records},null,2)+'\n');
+if(crypto.createHash('sha256').update(fs.readFileSync(corePath)).digest('hex')!==codeHash||crypto.createHash('sha256').update(fs.readFileSync(weaponPath)).digest('hex')!==weaponHash)throw Error('Simulation module changed during recording: regenerate replays');
+fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify({method:'Recorded from state-aware deterministic avoidance policy with ordinary 8-direction 240 px/sec movement, normal damage, auto-attack and skills. No modifications to run state, invulnerability, health, damage, or RNG. These are CPU bot simulations, not human/browser/mobile/GPU play.',directions:dirs,recordedCoreSha256:codeHash,recordedWeaponPatternsSha256:weaponHash,records},null,2)+'\n');

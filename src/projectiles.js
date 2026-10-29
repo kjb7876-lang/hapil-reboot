@@ -51,6 +51,17 @@
     {key:'castMaskV11',width:96,height:96},
     {key:'castLuciferV11',width:96,height:96}
   ];
+  // Individually generated transparent weapon/attack-material candidates.
+  // Source crops trim faint detached alpha noise, never alter original bytes.
+  // Mask's feather and Lucifer's shard are presentation motifs, not claims
+  // that those bosses canonically carry a handheld weapon.
+  var WEAPONS=[
+    {key:'weaponVioletV12',width:1774,height:887,crop:[225,309,1323,296]},
+    {key:'weaponHornV12',width:1774,height:887,crop:[66,264,1664,354]},
+    {key:'weaponBalrogV12',width:1774,height:887,crop:[41,184,1689,522]},
+    {key:'weaponMaskV12',width:1774,height:887,crop:[265,236,1309,448]},
+    {key:'weaponLuciferV12',width:1254,height:1254,crop:[348,134,800,979]}
+  ];
   var CACHE_LIMIT=96,CACHE_BYTES=4*1024*1024,SCALE=3,PAD=1,CELL=128;
   function finite(n){return typeof n==='number'&&Number.isFinite(n);}
   function clamp(n,a,b){return Math.max(a,Math.min(b,n));}
@@ -61,12 +72,13 @@
   function assetKeysForEncounter(i){
     var wi=clamp(Math.floor(i||0),0,4),out=[ORBS[wi].key];
     if(BLADES[wi])out.push(BLADES[wi].key);
+    if(Number.isInteger(i)&&i>=0)out.push(WEAPONS[wi].key);
     out=out.concat(optionalAssetKeysForEncounter(i));
     FAMILIES[wi].forEach(function(name){if(name!=='unlock'&&out.indexOf(FX[name].key)<0)out.push(FX[name].key);});
     return out;
   }
   function ready(im,s){return !!(im&&im.complete!==false&&im.naturalWidth===(s.width||512)&&im.naturalHeight===(s.height||Math.ceil(s.frames/4)*CELL));}
-  function invalidAssetForEncounter(images,i){var wi=clamp(Math.floor(i||0),0,4),specs=[ORBS[wi]];if(BLADES[wi])specs.push(BLADES[wi]);for(var k=0;k<specs.length;k++)if(!ready(images&&images[specs[k].key],specs[k]))return specs[k].key;return null;}
+  function invalidAssetForEncounter(images,i){var wi=clamp(Math.floor(i||0),0,4),specs=[ORBS[wi]];if(BLADES[wi])specs.push(BLADES[wi]);if(Number.isInteger(i)&&i>=0)specs.push(WEAPONS[wi]);for(var k=0;k<specs.length;k++)if(!ready(images&&images[specs[k].key],specs[k]))return specs[k].key;return null;}
   function capsule(ctx,x,y,r,l){
     ctx.beginPath();
     if(l>0){ctx.moveTo(x-l,y-r);ctx.lineTo(x+l,y-r);ctx.arc(x+l,y,r,-Math.PI/2,Math.PI/2);ctx.lineTo(x-l,y+r);ctx.arc(x-l,y,r,Math.PI/2,Math.PI*1.5);ctx.closePath();}
@@ -78,7 +90,7 @@
     var cache=new Map(),cacheBytes=0,group=-1,metrics;
     function release(e){if(!e)return;if(e.canvases)e.canvases.forEach(function(c){c.width=1;c.height=1;});if(e.canvas){e.canvas.width=1;e.canvas.height=1;}}
     function clearCache(){cache.forEach(release);cache.clear();cacheBytes=0;}
-    function beginFrame(){metrics={stampDraws:0,stampCacheMisses:0,stampCacheHits:0,stampCacheLimit:CACHE_LIMIT,stampCacheByteLimit:CACHE_BYTES,stampCacheBytes:cacheBytes,stampCacheEntries:cache.size,animatedBulletDraws:0,bodyAnimationPhases:0,suppressedUnapprovedFX:0,compactCastDraws:0,compactHazardDraws:0,assetLaserDraws:0,assetLaserSlices:0,signatureCastDraws:0,missingProjectileAssets:0,compactFamilies:{}};}
+    function beginFrame(){metrics={stampDraws:0,stampCacheMisses:0,stampCacheHits:0,stampCacheLimit:CACHE_LIMIT,stampCacheByteLimit:CACHE_BYTES,stampCacheBytes:cacheBytes,stampCacheEntries:cache.size,animatedBulletDraws:0,bodyAnimationPhases:0,suppressedUnapprovedFX:0,compactCastDraws:0,compactHazardDraws:0,assetLaserDraws:0,assetLaserSlices:0,signatureCastDraws:0,weaponVisualDraws:0,weaponTelegraphDraws:0,missingProjectileAssets:0,compactFamilies:{}};}
     function remember(key,e){
       if(e.bytes>CACHE_BYTES){release(e);return null;}
       while(cache.size&&(cache.size>=CACHE_LIMIT||cacheBytes+e.bytes>CACHE_BYTES)){var first=cache.keys().next().value,old=cache.get(first);cacheBytes-=old.bytes;release(old);cache.delete(first);}
@@ -135,8 +147,25 @@
       }
       return {canvases:frames,width:fw/SCALE,height:fh/SCALE,frameWidth:fw,frameHeight:fh,frameCount:s.frames,x:hx,y:hy,r:r,halfLength:l,bytes:fw*fh*s.frames*4};
     }
+    // One small, bounded per-encounter cache is baked from the generated
+    // source pixels; rotating it never changes physics or collision direction.
+    function weaponSurface(w){
+      var wi=indexFor(w),spec=WEAPONS[wi],key='weapon|'+spec.key,e=cache.get(key);
+      if(e)return e;
+      if(!ready(images[spec.key],spec))return null;
+      var c=canvas(96,96),ctx=c&&c.getContext('2d');if(!ctx){release({canvas:c});return null;}
+      var crop=spec.crop,scale=84/Math.max(crop[2],crop[3]),dw=crop[2]*scale,dh=crop[3]*scale;
+      ctx.drawImage(images[spec.key],crop[0],crop[1],crop[2],crop[3],(96-dw)/2,(96-dh)/2,dw,dh);
+      return remember(key,{canvas:c,bytes:96*96*4});
+    }
+    function drawWeaponIcon(ctx,w,x,y,angle,size,alpha){
+      var art=weaponSurface(w);if(!art)return false;
+      ctx.save();ctx.globalCompositeOperation='source-over';ctx.globalAlpha=alpha;
+      ctx.translate(x,y);ctx.rotate(angle);ctx.drawImage(art.canvas,-size/2,-size/2,size,size);ctx.restore();return true;
+    }
     function drawBullet(ctx,w,b,lowQuality){
       if(!w||!b||!finite(b.x)||!finite(b.y))return false;
+      if(b.kind==='boss-weapon'&&!ready(images[WEAPONS[indexFor(w)].key],WEAPONS[indexFor(w)])){metrics.missingProjectileAssets++;return false;}
       var s=textureFor(w,b);
       if(!ready(images[s.key],s)){metrics.missingProjectileAssets++;return false;}
       var r=finite(b.r)&&b.r>0?b.r:3,l=finite(b.halfLength)?Math.max(0,b.halfLength):0;
@@ -147,6 +176,9 @@
       var phase=s.frames>1?Math.min(s.frames-1,Math.floor(Math.max(0,finite(b.age)?b.age:0)*1000/s.ms)):0;
       ctx.save();ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.translate(b.x,b.y);ctx.rotate(finite(b.angle)?b.angle:Math.atan2(b.vy||0,b.vx||0));
       ctx.drawImage(e.canvases[phase],-e.x,-e.y,e.width,e.height);ctx.restore();
+      // The owner's opaque, authored ORB covers the actual r=11 damage body;
+      // the separate transparent weapon is a cosmetic rotating layer on it.
+      if(b.kind==='boss-weapon'&&drawWeaponIcon(ctx,w,b.x,b.y,finite(b.spinAngle)?b.spinAngle:0,34,1))metrics.weaponVisualDraws++;
       metrics.stampDraws++;metrics.animatedBulletDraws++;metrics.bodyAnimationPhases=Math.max(metrics.bodyAnimationPhases,e.frameCount);metrics.compactFamilies[s.key]=(metrics.compactFamilies[s.key]||0)+1;return true;
     }
     function drawHazardBody(ctx,w,h,lowQuality){
@@ -170,6 +202,13 @@
       var b=w.boss,progress=clamp(b.actionProgress||0,0,1),wi=indexFor(w),names=FAMILIES[wi];
       var releaseAge=Number.isFinite(b.releaseTick)&&b.releaseTick>=0?w.tick-b.releaseTick:Infinity;
       if(b.action!=='charge'&&!(releaseAge>=0&&releaseAge<60))return;
+      // The pair appears during this particular charge only; its retained art
+      // previews the two actual throws and never replaces damage warnings.
+      if(b.weaponTelegraph){
+        var a=.55+.25*progress;
+        if(drawWeaponIcon(ctx,w,b.x-36,b.y+38,-.45,27,a))metrics.weaponTelegraphDraws++;
+        if(drawWeaponIcon(ctx,w,b.x+36,b.y+38,.45,27,a))metrics.weaponTelegraphDraws++;
+      }
       // Static accents are purely decorative, underneath all actors, warnings,
       // and damage bodies; they never replace the existing damage telegraphs.
       // One image per frame, visible during charge or the 18 ticks following a

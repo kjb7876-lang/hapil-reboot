@@ -1,0 +1,132 @@
+{
+  "generator": "built-in image_gen.imagegen; no external API credentials",
+  "generation": "2026-10-29",
+  "scope": "3 hand-weapon interpretations and 2 non-handheld attack-material candidates, generated individually against current boss keypose atlases",
+  "sourceGuideDriveID": "1KaI-E743hzYDdZNUbPg95I_nbWk5M_hb",
+  "driveFolderID": "1xaT78ofmxTjZYqfK7HYMoPxZE0JdvIrv",
+  "driveFolderURL": "https://drive.google.com/drive/folders/1xaT78ofmxTjZYqfK7HYMoPxZE0JdvIrv",
+  "readback": "Drive file ID, name, MIME and byte size verified after upload; no remote checksum value was exposed by metadata. Local originals and runtime copies are byte-identical.",
+  "runtime": "Original unchanged PNGs, one loaded per encounter; 96px offscreen crop at runtime. Each large weapon uses its own boss ORB as opaque damage core, with transparent generated artwork rotating separately. Core circle owns damage geometry.",
+  "items": [
+    {
+      "boss": "violet",
+      "runtimeKey": "weaponVioletV12",
+      "sourceReference": "media/boss-motion-v8/violet-atlas-512.png",
+      "sourceSHA256": "8271ccb891a9ea88cee33aec9052ac0b427b3b4ace0b241f2dd04cdc136f6f24",
+      "generatedFile": "media/weapon-v12/violet-sword.png",
+      "sha256": "e91c2ddfa14e2edf2cb6c3a13f1dad150770164003fdee1aecb98a43c1a7bc56",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "bytes": 371193,
+      "visibleMainCropXYWH": [
+        225,
+        309,
+        1323,
+        296
+      ],
+      "driveFileID": "10PW-cb2u6FglgCvGJNk_52by8CvXjuuc",
+      "driveURL": "https://drive.google.com/file/d/10PW-cb2u6FglgCvGJNk_52by8CvXjuuc/view?usp=drivesdk",
+      "prompt": "Use case: stylized-concept. Asset type: transparent rotating projectile sprite for a dark fantasy 2D vertical game. The reference is a 2x2 boss keypose atlas, for reference only. Isolate and faithfully reconstruct ONLY the recognizable long purple straight sword the purple sword angel holds: slim lavender glowing blade, small metallic hilt, same silhouette and restrained colors as reference. One whole sword, centered horizontally, pointing right, clear gap all around, no character, no hands, no text, no decorative ring, transparent background. Detailed hand-painted sprite, readable at 40 pixels, no animation frames.",
+      "pixelInspected": true,
+      "transparentBackground": true
+    },
+    {
+      "boss": "horn",
+      "runtimeKey": "weaponHornV12",
+      "sourceReference": "media/boss-motion-v8/horn-atlas-512.png",
+      "sourceSHA256": "1c3853aa55e9f6cf205329f361c83eac2422cf0e85275956769e88f503529d27",
+      "generatedFile": "media/weapon-v12/horn-cleaver.png",
+      "sha256": "de5e22d4d6ad9f3283eb62ee52047242ba850213c2149d41695bd388cfbf26a7",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "bytes": 1128521,
+      "visibleMainCropXYWH": [
+        66,
+        264,
+        1664,
+        354
+      ],
+      "driveFileID": "1Pb4BooznxE2_0bknid2YjaJImDvLv8k_",
+      "driveURL": "https://drive.google.com/file/d/1Pb4BooznxE2_0bknid2YjaJImDvLv8k_/view?usp=drivesdk",
+      "prompt": "Use case: stylized-concept. Asset type: transparent rotating projectile sprite for dark fantasy 2D game. Reference is 2x2 boss keypose atlas. Isolate and faithfully reconstruct ONLY the horn demon's visible broad rectangular rusty reddish-brown cleaver-like hand weapon with dark worn iron and plain hilt. One whole weapon centered horizontally and pointing right, matching source material and silhouette, readable at 40 pixels, no character or hand, no text, no ring, no background. Transparent background, painterly sprite, no animation frames.",
+      "pixelInspected": true,
+      "transparentBackground": true
+    },
+    {
+      "boss": "balrog",
+      "runtimeKey": "weaponBalrogV12",
+      "sourceReference": "media/boss-motion-v8/balrog-atlas-512.png",
+      "sourceSHA256": "3300f7c753b275d8c7c96e08e084cf800418ae8763b578519dc39386625ad667",
+      "generatedFile": "media/weapon-v12/balrog-sword.png",
+      "sha256": "6ba955cb2d3b171406b4a987e3c481f665fb7da74f17613d5825976ad3e9fcf3",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "bytes": 852927,
+      "visibleMainCropXYWH": [
+        41,
+        184,
+        1689,
+        522
+      ],
+      "driveFileID": "1dYXR0hNP0HKzTL5jRV4siHEHhx1_M738",
+      "driveURL": "https://drive.google.com/file/d/1dYXR0hNP0HKzTL5jRV4siHEHhx1_M738/view?usp=drivesdk",
+      "prompt": "Use case: stylized-concept. Asset type: transparent rotating projectile sprite for dark fantasy 2D vertical game. Reference image is a 2x2 boss keypose atlas. Isolate and faithfully reconstruct ONLY the large sword of the depicted Balrog, long broad orange-red molten blade and dark metal guard, as actually seen in the reference. One whole weapon horizontally centered and pointing right with space on all sides. Preserve orange/gold/black palette, crisp hand-painted detail visible at 40 pixels. No character, no hand, no extra flames detached from sword, no ring, no text, transparent background, no animation frames.",
+      "pixelInspected": true,
+      "transparentBackground": true
+    },
+    {
+      "boss": "mask",
+      "runtimeKey": "weaponMaskV12",
+      "sourceReference": "media/boss-motion-v8/mask-atlas-512.png",
+      "sourceSHA256": "460a8ea40d084791a0856a4a8d057df7f7e95817637dda3a8059e506cfe00ef1",
+      "generatedFile": "media/weapon-v12/mask-feather.png",
+      "sha256": "e8d30eaa562ee139da17138a1eb0a6236a27b6c93c8d886ca4d88b6fb6bdacdd",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "bytes": 665062,
+      "visibleMainCropXYWH": [
+        265,
+        236,
+        1309,
+        448
+      ],
+      "driveFileID": "1vACsIUhu1vz8kvqFZeOZD0ZUCPnOrzzc",
+      "driveURL": "https://drive.google.com/file/d/1vACsIUhu1vz8kvqFZeOZD0ZUCPnOrzzc/view?usp=drivesdk",
+      "prompt": "Use case: stylized-concept. Asset type: independently rotating attack sprite for a dark fantasy 2D vertical game. Reference is a 2x2 image atlas of a white-red feathered mask angel. The character has no confirmed handheld weapon; create only one detached ivory and red-edged feather-shaped attack shard derived from its visible wing, without inventing a held weapon or changing character canon. One complete feather, horizontal pointing right, centered with clear space, detailed painterly game sprite readable at 40 pixels. No character, no hand, no halo or ring, no text, transparent background, no animation frames.",
+      "pixelInspected": true,
+      "transparentBackground": true
+    },
+    {
+      "boss": "lucifer",
+      "runtimeKey": "weaponLuciferV12",
+      "sourceReference": "media/boss-motion-v8/lucifer-atlas-512.png",
+      "sourceSHA256": "06716474312bafc759bba028fb42660d6b626c67fba58f690a8014ac226600cd",
+      "generatedFile": "media/weapon-v12/lucifer-shard.png",
+      "sha256": "90d92f10c32311ab43573c6a07b5151ef941061fdc0610c43342e809043ebcdf",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "bytes": 937312,
+      "visibleMainCropXYWH": [
+        348,
+        134,
+        800,
+        979
+      ],
+      "driveFileID": "1VSsTBMeYAwm-1lzp6b_6NR2k1g0Hu7gl",
+      "driveURL": "https://drive.google.com/file/d/1VSsTBMeYAwm-1lzp6b_6NR2k1g0Hu7gl/view?usp=drivesdk",
+      "prompt": "Use case: stylized-concept. Asset type: independently rotating attack sprite for a dark fantasy 2D vertical game. Reference is a 2x2 boss keypose atlas of Lucifer with ivory and crimson design. No handheld weapon is confirmed; create a single broken ivory porcelain mask shard with dark crack and restrained crimson edge based on his existing mask-projectile material, not a sword or person. Center it horizontally, readable silhouette at 40 pixels, clear space all around, one object only, no character, no text, no halo, transparent background, no animation frames.",
+      "pixelInspected": true,
+      "transparentBackground": true
+    }
+  ]
+}
