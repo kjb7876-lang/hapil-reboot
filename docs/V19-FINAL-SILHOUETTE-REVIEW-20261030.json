@@ -1,0 +1,107 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "verdict": "PASS: no remaining concrete opaque rectangular crop-card blocker observed in this final representative sweep.",
+  "sourceHashes": {
+    "src/projectiles.js": "ade13c42dfa02534d57a1fc59fc58282617cc7983421720fcb27bc5ed1aca98b",
+    "src/story-assets.js": "c0081d5ca408be6d6a7d495d6651430113320aaeb43655a6646ad713730c0910",
+    "src/media.js": "0057a4d28e4d8bd35eb1598ea48207ff9cf21ead2906cc75d66c405ed6de110c"
+  },
+  "capturer": "tools/review-all-projectile-glyphs-v19.cjs",
+  "groupRange": [
+    0,
+    35
+  ],
+  "presentationVariants": 37,
+  "reasonFor37": "35 campaign encounter configurations plus independent cult practice asset group and the second separate HanRian/BaekIon owner branch. This is not 37 canonical boss people.",
+  "actualStampRenders": 148,
+  "displayedAt": [
+    "native1x",
+    "nearest-neighbor4x"
+  ],
+  "cases": [
+    {
+      "r": 3,
+      "halfLength": 0
+    },
+    {
+      "r": 6,
+      "halfLength": 0
+    },
+    {
+      "r": 3,
+      "halfLength": 7
+    },
+    {
+      "r": 6,
+      "halfLength": 7
+    }
+  ],
+  "angle": 0,
+  "age": 0.25,
+  "paletteSlot": 0,
+  "pages": [
+    {
+      "path": "docs/v19-projectile-pixels/full-sweep-page1.jpg",
+      "sha256": "0b6f1e64b7d1d3684700521e372e8b12dc3ad9e6a19d8a02450792cc07d9863d",
+      "bytes": 169821,
+      "groups": [
+        0,
+        12
+      ]
+    },
+    {
+      "path": "docs/v19-projectile-pixels/full-sweep-page2.jpg",
+      "sha256": "1a34d5b08886dc752a8adbc5a81573235a9b8f8fb344b88ac01b054dfd03a425",
+      "bytes": 144877,
+      "groups": [
+        13,
+        25
+      ]
+    },
+    {
+      "path": "docs/v19-projectile-pixels/full-sweep-page3.jpg",
+      "sha256": "fea1334d4ec73bdac69102773c60d2fea0449bb13dd868d0e71fe01fbd6e19e3",
+      "bytes": 142628,
+      "groups": [
+        26,
+        35
+      ]
+    }
+  ],
+  "resolvedConcreteDefects": [
+    {
+      "group": 1,
+      "before": "Partial round skill-field crop had a visibly straight cut edge.",
+      "after": "Complete own vortex material preserves the painted fringed contour."
+    },
+    {
+      "group": 20,
+      "before": "Interior sword jewel/guard crop cut an opaque material edge.",
+      "after": "Whole closed owner sword has tip and guard silhouette."
+    },
+    {
+      "group": 31,
+      "before": "Spectral field/hilt crops showed straight opaque cut edges.",
+      "after": "Own actor lower scythe blade presents a clean curved weapon silhouette, with declared cosmetic margin."
+    },
+    {
+      "group": 35,
+      "alsoGroup": 12,
+      "before": "Clipped shaft/interior material looked like a rectangular card.",
+      "after": "Own closed braided spear-core material retains a diagonal irregular contour."
+    }
+  ],
+  "otherFindings": [
+    "Groups13–18 share the same controller source family as one control-system identity; palette/role changes do not certify six new people.",
+    "Round painted source objects remain round; the verdict addresses opaque crop cards and source contour preservation, not a ban on every round object.",
+    "Tiny r3 glyphs cannot expose all the source painting details; native and enlarged representations were inspected separately."
+  ],
+  "limits": [
+    "CPU Canvas representative static glyph inspection only.",
+    "Not GPU completion, actual mobile device, sustained FPS, browser natural play or collision proof.",
+    "This one sweep does not certify all ages/animation frames/angles/palette states; those require their own tests.",
+    "No production source or game asset was edited by this reviewer. Previously frozen79runtimeimages and Drive asset ZIPs remain unchanged."
+  ],
+  "repeatPolicy": "Single locked-source sweep completed after final source freeze; do not broaden or repeat absent a new concrete defect or source change."
+}

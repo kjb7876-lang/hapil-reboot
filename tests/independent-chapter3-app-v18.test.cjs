@@ -29,11 +29,11 @@ function assertOwnRequired(h,group){
  for(const key of keys)assert(h.requests.includes(h.g.HapilMedia[key]),`missing own asset ${group}:${key}`);
  assert.equal(h.g.HapilApp.getState().mode,'playing',group+': '+h.el('error-description').textContent);assert(h.world().tick>0);assert(h.peak<=2,'more than two image requests');for(const key of ['boss','spider','cave'])assert.equal(h.images[key],undefined,`unused legacy image retained in group ${group}: ${key}`);
 }
-test('new campaign starts revision four; retry preserves the selected campaign contract',async()=>{
- const h=harness();await boot(h);h.click('start-button');await advance(h);assert.equal(h.createOptions[0].campaignRevision,4);assert.equal(h.world().bossCount,18);assert.equal(h.world().practiceBoss,false);
+test('new campaign starts revision five; retry preserves the selected campaign contract',async()=>{
+ const h=harness();await boot(h);h.click('start-button');await advance(h);assert.equal(h.createOptions[0].campaignRevision,5);assert.equal(h.world().bossCount,35);assert.equal(h.world().practiceBoss,false);
  // Deliberate loss fixture checks result navigation only, not natural survival.
  h.world().stage='lost';await advance(h);h.el('practice-select').value='0';h.click('retry-button');await advance(h);
- assert.equal(h.world().campaignRevision,4);assert.equal(h.world().bossCount,18);assert.equal(h.world().practiceBoss,false);
+ assert.equal(h.world().campaignRevision,5);assert.equal(h.world().bossCount,35);assert.equal(h.world().practiceBoss,false);
 });
 test('continuing revision three and retrying it does not silently upgrade its route',async()=>{
  const old=core.createRun({campaign:true,campaignRevision:3,difficulty:'normal',seed:813,runId:'existing-revision-three'}),snap=core.checkpoint(old),bytes=JSON.stringify(snap),h=harness({checkpoint:snap});await boot(h);h.click('continue-button');for(let i=0;i<8;i++)await flush();

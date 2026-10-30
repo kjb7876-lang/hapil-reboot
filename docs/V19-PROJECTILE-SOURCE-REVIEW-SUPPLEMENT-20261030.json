@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "reason": "Actual runtime stamp crops inside whole Goblin/Siren field retained broad alpha and appeared as rectangle cards when alpha boosted. Whole source field remains valid as a large boss skill visual.",
+  "sourceReview": [
+    {
+      "alternativeSourcePath": "assets/vfx/v31323/boss/l305-boss/goblin-flute-sonic-wave.webp",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "alternativeSHA256": "e79fe9d5036b563800381bb713c1e800007a308152137448b7497490b45ac6f8",
+      "currentRuntimePath": "media/story-v19/goblin-wave.webp",
+      "alphaBytesIdentical": true,
+      "alternativeAlphaSHA256": "79c7fbe67fb7fde9b093ea460e7539ed64484b063ca2018d2e32ced2cc76b66d",
+      "result": "Rejected as a cleaner independent projectile: alpha is identical whole-field alpha; RGB recolor does not remove crop card background."
+    },
+    {
+      "alternativeSourcePath": "assets/vfx/v31323/boss/k103-boss/siren-choir-chorus-wave.webp",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "alternativeSHA256": "16b96d25912ac38560cab502ea0d578c6e40d68a13ffeaad77aaee07a1b3c3bc",
+      "currentRuntimePath": "media/story-v19/siren-wave.webp",
+      "alphaBytesIdentical": true,
+      "alternativeAlphaSHA256": "4824da9b5e3b60e7007a4e8e0f3064e0104e9315af3797824cf5fecbe0e25b48",
+      "result": "Rejected as a cleaner independent projectile: alpha is identical whole-field alpha; RGB recolor does not remove crop card background."
+    }
+  ],
+  "sameOwnerCandidateCrops": [
+    {
+      "key": "storyGoblin",
+      "runtimePath": "media/story-v19/goblin.webp",
+      "runtimeSHA256": "09db8af84705584d6f44b2de6542593d63a6b6d37b126cc5c38917ccd918b996",
+      "crop": [
+        192,
+        180,
+        52,
+        55
+      ],
+      "sourceMaterial": "Own flute bell/barrel portion",
+      "cornerAlpha": [
+        0,
+        3,
+        0,
+        0
+      ],
+      "alphaNonzeroPixels": 716,
+      "cropPixels": 2860,
+      "claim": "Candidate material crop from the same actor image. Not a newly created complete weapon or animation. Runtime pixel readability and damage alignment still require separate validation."
+    },
+    {
+      "key": "storySirenAttack",
+      "runtimePath": "media/story-v19/siren-attack.webp",
+      "runtimeSHA256": "d6d18565aa6b49f321508796151fba54662ed46f347da58aeb10edfd884d0038",
+      "crop": [
+        425,
+        60,
+        90,
+        130
+      ],
+      "sourceMaterial": "Own spear-tip and command glyph from attack pose",
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaNonzeroPixels": 3395,
+      "cropPixels": 11700,
+      "claim": "Candidate material crop from the same actor image. Not a newly created complete weapon or animation. Runtime pixel readability and damage alignment still require separate validation."
+    }
+  ],
+  "driveReadChecks": [
+    {
+      "id": "1auXSfIFFMyk8_50SEGCRJijh6R0BMrYf",
+      "title": "Chapter5-last4 keypose download guide",
+      "result": "Siren body keyposes; guide does not supply an independently isolated voice projectile."
+    },
+    {
+      "id": "1HY6mNHMgSr7o9og9-gNPOvr7kt8i2HTd",
+      "title": "Five-boss signature static FX guide",
+      "result": "Scope is earlier five bosses, not Goblin/Siren."
+    },
+    {
+      "id": "1ulPFcq4GL64Zfjg0R2k6EBvvONavUqbU",
+      "title": "First-new8 signature static FX guide",
+      "result": "Scope does not identify a clean Goblin/Siren isolated material."
+    }
+  ],
+  "runtimeAssetMutations": [],
+  "limitations": [
+    "These are source/crop candidates; final renderer may select another justified crop after visual checks.",
+    "No geometry mask, new paid generation, credentials or security changes were performed in this source review.",
+    "Previously frozen79files and Drive ZIPs remain unchanged."
+  ]
+}

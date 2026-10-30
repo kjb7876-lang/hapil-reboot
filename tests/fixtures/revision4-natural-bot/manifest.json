@@ -5594,5 +5594,14 @@
       "file": "hell-42.moves.gz",
       "sha256": "a825f0d0223faa65849ba2df441ee412778077f391ca13cb7965e0f06b5d3d3a"
     }
-  ]
+  ],
+  "replayValidatedModuleSha256": {
+    "src/core.js": "c48cba834ec15c0adaa60006c2f0a1fa0b75c4de0dfea9023c1aa7b4a7a358ee",
+    "src/storage.js": "6b00a9d98a8f1f9b29887bb88d457b80bf5bcb2b38758f8a2100a7adfb21e21a",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d",
+    "tools/capture-revision4-natural.cjs": "bbbb8af159e6e63eae9a1918e6c719ede8b68a522ab2a18ad3fce86cf8064f35"
+  },
+  "replayValidationScope": "Six unchanged ordinary-health revision-four full input files; exact end state and all105 changed boundaries/run plus180 subsequent actual inputs; no engine, health, damage, immunity, RNG or timer overrides. Original recordedModuleSha256 remains recording provenance."
 }

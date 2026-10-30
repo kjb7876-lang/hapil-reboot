@@ -37,10 +37,10 @@
   function finite(n) { return typeof n === 'number' && Number.isFinite(n); }
   function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
   function validIndex(i) { return Number.isInteger(i) && i >= 0 && i < ENCOUNTERS.length; }
-  function specsFor(i) { return validIndex(i) ? ENCOUNTERS[i] : null; }
+  function specsFor(i) { if(i>=19){var story=global.HapilStoryAssets&&global.HapilStoryAssets.lookup(i);return story&&story.skills||null;}return validIndex(i) ? ENCOUNTERS[i] : null; }
   function chapterSpecs(i){return Number.isInteger(i)&&i>=13&&i<=18?{cast:CH3_LANCE,release:CH3_LANCE,laser:CH3_BEAM}:null;}
   function ready(images, s) { var im = s && images && images[s.key]; return !!(im && im.complete !== false && im.naturalWidth === s.width && im.naturalHeight === s.height); }
-  function assetKeysForEncounter() { return []; }
+  function assetKeysForEncounter(i) { return i>=19&&global.HapilStoryAssets?global.HapilStoryAssets.skillKeysForEncounter(i):[]; }
   function optionalAssetKeysForEncounter(i) {
     var entry = specsFor(i), keys = [];
     if(i===12)return ['cultDriveFold','cultDriveImpact','cultDriveStitch'];
@@ -51,6 +51,7 @@
     return keys;
   }
   function invalidOptionalAssetForEncounter(images, i) {
+    if(i>=19)return null;
     var entry = specsFor(i); if (!entry) return null;
     var roles = ['cast', 'release', 'laser'];
     for (var n = 0; n < roles.length; n++) { var s = entry[roles[n]]; if (s && !ready(images, s)) return s.key; }
@@ -92,11 +93,15 @@
     function draw(ctx, world, low) {
       if (!world || !world.campaign || world.stage !== 'boss' || !world.boss || !finite(world.tick)) return;
       var chapter=world.campaignRevision>=4&&world.bossIndex>=12&&world.bossIndex<=17;
-      var index = world.finalPractice ? 12 : chapter?world.bossIndex+1:world.bossIndex, entry = world.finalPractice ? {cast:world.phase===1?CULT_STITCH:CULT_FOLD,release:world.phase===2?CULT_IMPACT:CULT_LANCE,laser:CULT_LANCE} : chapter?chapterSpecs(index):specsFor(index); if (!entry) return;
+      var story=world.campaignRevision>=5&&world.bossIndex>=18&&!world.finalPractice;
+      var index = world.finalPractice ? 12 : chapter||story?world.bossIndex+1:world.bossIndex, entry = world.finalPractice ? {cast:world.phase===1?CULT_STITCH:CULT_FOLD,release:world.phase===2?CULT_IMPACT:CULT_LANCE,laser:CULT_LANCE} : chapter?chapterSpecs(index):specsFor(index); if (!entry) return;
       if (encounter !== index) { clear(); encounter = index; }
       var limit = low ? 4 : 8; metrics.skillDrawLimit = limit;
       var b = world.boss, progress = clamp(b.actionProgress || 0, 0, 1);
-      if (b.action === 'charge' && entry.cast && metrics.skillSourceDraws < limit) paint(ctx, entry.cast, 'cast', b.x, b.y + 24, progress, 2, progress, low);
+      function specFor(role,event){var source=event&&event.sourceActorId,owner=source&&entry.participants&&entry.participants[source]||entry,spec=owner[role];return Array.isArray(spec)?spec[Math.min(world.phase||0,spec.length-1)]:spec;}
+      var cast=specFor('cast');
+      if (b.action === 'charge' && cast && metrics.skillSourceDraws < limit) paint(ctx, cast, 'cast', b.x, b.y + 24, progress, 2, progress, low);
+      if(story&&Array.isArray(b.participants))b.participants.forEach(function(p){var spec=specFor('cast',{sourceActorId:p.id}),pr=clamp(p.actionProgress||0,0,1);if(p.action==='charge'&&spec&&metrics.skillSourceDraws<limit)paint(ctx,spec,'cast',p.x,p.y+24,pr,2,pr,low);});
       // The bounded records are emitted only after a real projectile group or
       // laser activation succeeds. A dropped group creates no release accent.
       var events = Array.isArray(b.skillReleases) ? b.skillReleases : null;
@@ -107,12 +112,12 @@
           var age = world.tick - e.tick, identity = e.tick + '|' + e.kind + '|' + e.patternId;
           if (identity === lastIdentity || age < 0 || age >= 30) continue;
           lastIdentity = identity;
-          var laser = e.kind === 'laser', spec = laser ? entry.laser || entry.release : entry.release;
-          if (paint(ctx, spec, laser ? 'laser' : 'release', e.x, e.y, age, 30, 0, low)) metrics.representedReleases.push({ tick: e.tick, kind: e.kind, patternId: e.patternId || '' });
+          var laser = e.kind === 'laser', spec = laser ? specFor('laser',e) || specFor('release',e) : specFor('release',e);
+          if (paint(ctx, spec, laser ? 'laser' : 'release', e.x, e.y, age, 30, 0, low)) {var represented={ tick:e.tick,kind:e.kind,patternId:e.patternId||'' };if(story&&e.sourceActorId)represented.sourceActorId=e.sourceActorId;metrics.representedReleases.push(represented);}
         }
       } else if (finite(b.releaseTick) && b.releaseTick >= 0) {
         var releaseAge = world.tick - b.releaseTick;
-        if (metrics.skillSourceDraws < limit && paint(ctx, entry.release, 'release', b.x, b.y + 20, releaseAge, 24, 0, low)) metrics.representedReleases.push({ tick: b.releaseTick, kind: 'legacy-release', patternId: '' });
+        if (metrics.skillSourceDraws < limit && paint(ctx, specFor('release'), 'release', b.x, b.y + 20, releaseAge, 24, 0, low)) metrics.representedReleases.push({ tick: b.releaseTick, kind: 'legacy-release', patternId: '' });
       }
     }
     beginFrame();

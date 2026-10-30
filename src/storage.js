@@ -18,7 +18,8 @@
     1: Object.freeze({ bosses: 3, phases: 9 }),
     2: Object.freeze({ bosses: 5, phases: 15 }),
     3: Object.freeze({ bosses: 12, phases: 36 }),
-    4: Object.freeze({ bosses: 18, phases: 54, checkpoints: 106 })
+    4: Object.freeze({ bosses: 18, phases: 54, checkpoints: 106 }),
+    5: Object.freeze({ bosses: 35, phases: 105, checkpoints: 208 })
   });
   var DEFAULT_SETTINGS = { music: true, sfx: true, quality: 'high', skillRotation: true, difficulty: 'normal', sensitivity: 1 };
 
@@ -50,7 +51,7 @@
       var campaign = value.campaign === true;
       var campaignContract = null;
       if (campaign) {
-        if (!integer(value.campaignRevision, 1, 4)) return null;
+        if (!integer(value.campaignRevision, 1, 5)) return null;
         campaignContract = CAMPAIGN_CONTRACTS[value.campaignRevision];
         if (!integer(value.bossIndex, 0, campaignContract.bosses - 1)) return null;
         if (value.difficulty === 'hell' && value.campaignRevision < 3) return null;

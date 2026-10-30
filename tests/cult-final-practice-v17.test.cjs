@@ -3,8 +3,8 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const core=require('../src/core.js');
 function make(){return core.createRun({campaign:true,practiceBoss:true,bossIndex:11,finalPractice:true,difficulty:'normal',seed:813,runId:'cult-practice-test'});}
-test('the cult leader is a separate practice and never expands the campaign',()=>{
- assert.equal(core.createRun({campaign:true,campaignRevision:3}).bossCount,12);assert(!core.CAMPAIGN_BOSSES.some(b=>b.id==='cult-leader'));assert.notEqual(core.CAMPAIGN_BOSSES[11].id,'cult-leader');
+test('the cult leader remains a separate practice for historical campaigns',()=>{
+ assert.equal(core.createRun({campaign:true,campaignRevision:3}).bossCount,12);assert(!core.CAMPAIGN_BOSSES.slice(0,18).some(b=>b.id==='cult-leader'));assert.notEqual(core.CAMPAIGN_BOSSES[11].id,'cult-leader');
  assert.throws(()=>core.createRun({campaign:true,practiceBoss:false,bossIndex:11,finalPractice:true}));
  assert.throws(()=>core.createRun({campaign:true,practiceBoss:true,bossIndex:0,finalPractice:true}));
  const w=make();assert.equal(w.bossId,'cult-leader');assert.equal(w.boss.kind,'cult-leader');assert.equal(w.boss.artKey,'cultLeaderAtlas');assert.equal(w.boss.phaseRole,'samong-awakened');

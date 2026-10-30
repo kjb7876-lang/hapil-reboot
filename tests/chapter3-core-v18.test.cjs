@@ -10,10 +10,10 @@ function finalBoundary(index,revision,phase=2){
 function finishCurrent(w){w.boss.hp=1;w.player.invulnerableUntil=999999;for(let n=0;n<360&&w.stage==='boss';n++)core.step(w,{});assert.notEqual(w.stage,'boss');}
 
 test('revision four adds the six chronological controller-system scenes while old endpoints stay fixed',()=>{
- assert.equal(core.CAMPAIGN_REVISION,3);assert.equal(core.LATEST_CAMPAIGN_REVISION,4);
+ assert.equal(core.CAMPAIGN_REVISION,3);assert(core.LATEST_CAMPAIGN_REVISION>=4);
  assert.deepEqual([1,2,3,4].map(core.campaignBossCount),[3,5,12,18]);
  assert.equal(core.createRun({campaign:true}).campaignRevision,3);
- const scenes=core.CAMPAIGN_BOSSES.slice(12);assert.deepEqual(scenes.map(e=>e.sceneIds[0]),['u201','u202','u204','u205','u206','u203']);
+ const scenes=core.CAMPAIGN_BOSSES.slice(12,18);assert.deepEqual(scenes.map(e=>e.sceneIds[0]),['u201','u202','u204','u205','u206','u203']);
  assert.deepEqual(scenes.flatMap(e=>e.storySteps),Array.from({length:17},(_,i)=>i+1));
  assert(scenes.every(e=>e.identityGroup==='controller-system'&&e.chapter===3));
  for(let i=12;i<18;i++){

@@ -1,0 +1,956 @@
+{
+  "scope": "Read-only Git source objects and Pillow decoded runtime images. Actual source commit/path/blob/SHA checks, exact copy or documented visible-pixel conversions. No network/security/config changes; not browser/GPU/mobile/natural-play validation.",
+  "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+  "files": 79,
+  "exactCopies": 76,
+  "rows": [
+    {
+      "key": "storyGoblin",
+      "runtimePath": "media/story-v19/goblin.webp",
+      "sourcePath": "assets/actors/v31317/goblin-flute-king.webp",
+      "sourceSHA256": "ddb705803077855e331411f2cb97db5f85b58593c2b820a2b73f5a67d913bbf5",
+      "runtimeSHA256": "09db8af84705584d6f44b2de6542593d63a6b6d37b126cc5c38917ccd918b996",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "Lanczos resize matches every displayed premultiplied RGBA pixel"
+    },
+    {
+      "key": "storyKnightIdle",
+      "runtimePath": "media/story-v19/knight-idle.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/363f780dbb5a_Monster_FallenAngelKnight_Base.webp",
+      "sourceSHA256": "6e90a1e9aa520570b002b10650741813a6d2c20520c3317dc4437eb32ccd4de7",
+      "runtimeSHA256": "6e90a1e9aa520570b002b10650741813a6d2c20520c3317dc4437eb32ccd4de7",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyKnightCharge",
+      "runtimePath": "media/story-v19/knight-charge.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/9756e6d5958a_Monster_FallenAngelKnight_Guard.webp",
+      "sourceSHA256": "99b4fd76ae881d97288011f3dc2b690b3a69e28ad9365e7a631f2cb7f5f85213",
+      "runtimeSHA256": "99b4fd76ae881d97288011f3dc2b690b3a69e28ad9365e7a631f2cb7f5f85213",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyKnightAttack",
+      "runtimePath": "media/story-v19/knight-attack.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/aca8f8c4bd76_Monster_FallenAngelKnight_Attack.webp",
+      "sourceSHA256": "5fce8b6b86045551839b908ac79a960f58a6b5e6f345ad20ab97d80df0b3c1c0",
+      "runtimeSHA256": "5fce8b6b86045551839b908ac79a960f58a6b5e6f345ad20ab97d80df0b3c1c0",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyKnightRecover",
+      "runtimePath": "media/story-v19/knight-recover.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/353a813314bc_Monster_FallenAngelKnight_MoveSide.webp",
+      "sourceSHA256": "01d39a69e2f50fc74091d42fb52effc2de9cbff7b5c067e60e66a64f51fd9a8f",
+      "runtimeSHA256": "01d39a69e2f50fc74091d42fb52effc2de9cbff7b5c067e60e66a64f51fd9a8f",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyInsomniaIdle",
+      "runtimePath": "media/story-v19/insomnia-idle.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/692e4ae01c29_bulmyeongwi_idle.webp",
+      "sourceSHA256": "ff0d79b66e10e980c649becad30601da69268ce75b3db2d51c791869a1b39cac",
+      "runtimeSHA256": "ff0d79b66e10e980c649becad30601da69268ce75b3db2d51c791869a1b39cac",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyInsomniaCharge",
+      "runtimePath": "media/story-v19/insomnia-charge.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/35526bcfa1c2_bulmyeongwi_rain.webp",
+      "sourceSHA256": "ba0462c00c0e28bbcf9212d57049a1176147b53d549e15369fc7611693ff3a30",
+      "runtimeSHA256": "ba0462c00c0e28bbcf9212d57049a1176147b53d549e15369fc7611693ff3a30",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyInsomniaAttack",
+      "runtimePath": "media/story-v19/insomnia-attack.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/115b7fcea51e_bulmyeongwi_attack.webp",
+      "sourceSHA256": "cf051397efd21161c7d518fb03f578ed6b613fd77dba8541be26b3b4e85c666f",
+      "runtimeSHA256": "cf051397efd21161c7d518fb03f578ed6b613fd77dba8541be26b3b4e85c666f",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyInsomniaRecover",
+      "runtimePath": "media/story-v19/insomnia-recover.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/de4c1414da0d_bulmyeongwi_transition.webp",
+      "sourceSHA256": "42d1ad57110123c9fab2260269fb9edc74e64efe41abfef7da9ddfb3c91f3a07",
+      "runtimeSHA256": "42d1ad57110123c9fab2260269fb9edc74e64efe41abfef7da9ddfb3c91f3a07",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storySirenIdle",
+      "runtimePath": "media/story-v19/siren-idle.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/b19d67bb1973_siren_idle.webp",
+      "sourceSHA256": "985137aa992b23610fe2cd11a0a5624bd49ef90b0d22a99896d7871072a0dcb0",
+      "runtimeSHA256": "985137aa992b23610fe2cd11a0a5624bd49ef90b0d22a99896d7871072a0dcb0",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storySirenCharge",
+      "runtimePath": "media/story-v19/siren-charge.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/031f3256e738_siren_rain.webp",
+      "sourceSHA256": "6af2e81ebbbc0975367c2750a9b502170dee5a5f105b444ef2b2a01550abfaa2",
+      "runtimeSHA256": "6af2e81ebbbc0975367c2750a9b502170dee5a5f105b444ef2b2a01550abfaa2",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storySirenAttack",
+      "runtimePath": "media/story-v19/siren-attack.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/6fa537121597_siren_attack.webp",
+      "sourceSHA256": "d6d18565aa6b49f321508796151fba54662ed46f347da58aeb10edfd884d0038",
+      "runtimeSHA256": "d6d18565aa6b49f321508796151fba54662ed46f347da58aeb10edfd884d0038",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storySirenRecover",
+      "runtimePath": "media/story-v19/siren-recover.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/792c9e0a61b9_siren_transition.webp",
+      "sourceSHA256": "483de4f98f06de3dc2693b3b19b2cbbfc8bdaededdc265e20d10fa6d0ca3e07a",
+      "runtimeSHA256": "483de4f98f06de3dc2693b3b19b2cbbfc8bdaededdc265e20d10fa6d0ca3e07a",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyChiefIdle",
+      "runtimePath": "media/story-v19/chief-idle.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/fae708429341_hando_idle.webp",
+      "sourceSHA256": "9db8f0ba682ff380d7238a7a5a82d64adff29bbf2781b920bb9b497038c6f869",
+      "runtimeSHA256": "9db8f0ba682ff380d7238a7a5a82d64adff29bbf2781b920bb9b497038c6f869",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyChiefCharge",
+      "runtimePath": "media/story-v19/chief-charge.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/bd5d6438697f_hando_rain.webp",
+      "sourceSHA256": "aaeb2ec97bcd0f382969c66c2e84f7a25999a1562d8e844152930fe06c22512a",
+      "runtimeSHA256": "aaeb2ec97bcd0f382969c66c2e84f7a25999a1562d8e844152930fe06c22512a",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyChiefAttack",
+      "runtimePath": "media/story-v19/chief-attack.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/c2965b85cb2e_hando_attack.webp",
+      "sourceSHA256": "ae240d4dcc5456b75662a6bd71a1e8be24f4c2d7d469b0625ad72c5e36cbe720",
+      "runtimeSHA256": "ae240d4dcc5456b75662a6bd71a1e8be24f4c2d7d469b0625ad72c5e36cbe720",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyChiefRecover",
+      "runtimePath": "media/story-v19/chief-recover.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/9f29878c4e6b_hando_transition.webp",
+      "sourceSHA256": "fd127d9246838f0deca122d369671a4315105bb815dcec2040c3ec474c1e460a",
+      "runtimeSHA256": "fd127d9246838f0deca122d369671a4315105bb815dcec2040c3ec474c1e460a",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyExecutorIdle",
+      "runtimePath": "media/story-v19/executor-idle.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/c5b5ea2b085c_cycle_idle.webp",
+      "sourceSHA256": "13c0592eb3ff5e2f883f103c6cde62803aa4c3dc53c69f786db9364b1a921cd3",
+      "runtimeSHA256": "13c0592eb3ff5e2f883f103c6cde62803aa4c3dc53c69f786db9364b1a921cd3",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyExecutorCharge",
+      "runtimePath": "media/story-v19/executor-charge.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/d41753d7f946_cycle_rain.webp",
+      "sourceSHA256": "18b29b9d13d539674b375e9b9edeba470f3e3db25e73dc50ac9e19a98c6981cc",
+      "runtimeSHA256": "18b29b9d13d539674b375e9b9edeba470f3e3db25e73dc50ac9e19a98c6981cc",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyExecutorAttack",
+      "runtimePath": "media/story-v19/executor-attack.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/73d004108259_cycle_attack.webp",
+      "sourceSHA256": "a814ac8bd25fe58aa0c299d7a1dc4fff6566b68e0cfdae7b4bd7e8b86e95297d",
+      "runtimeSHA256": "a814ac8bd25fe58aa0c299d7a1dc4fff6566b68e0cfdae7b4bd7e8b86e95297d",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyExecutorRecover",
+      "runtimePath": "media/story-v19/executor-recover.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/eb265bc1fd04_cycle_transition.webp",
+      "sourceSHA256": "98571d36888ad8bd566e2faccc8ed92d57814bc1b0ce01acca3db9312b591c0b",
+      "runtimeSHA256": "98571d36888ad8bd566e2faccc8ed92d57814bc1b0ce01acca3db9312b591c0b",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyArbeliaIdle",
+      "runtimePath": "media/story-v19/arbelia-idle.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/b9b65cd61430_arvelia_delay_archon.webp",
+      "sourceSHA256": "e5d5026f859f6e6b0c9607c4b8883456fa13afa0fc22bc18ec9590d35e7fa134",
+      "runtimeSHA256": "e5d5026f859f6e6b0c9607c4b8883456fa13afa0fc22bc18ec9590d35e7fa134",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyArbeliaCharge",
+      "runtimePath": "media/story-v19/arbelia-charge.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/a5b3ff549ec2_arvelia_delay_archon_windup.webp",
+      "sourceSHA256": "08bd700cb1432ef8cb43b49629a9956d72811651e706b0b228d7ded1f5798c4b",
+      "runtimeSHA256": "08bd700cb1432ef8cb43b49629a9956d72811651e706b0b228d7ded1f5798c4b",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyArbeliaAttack",
+      "runtimePath": "media/story-v19/arbelia-attack.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/822930c614eb_arvelia_delay_archon_attack.webp",
+      "sourceSHA256": "72dcb02f95b9df050efb386e24e72669c9393c3377a858e27b145cf9f590b72c",
+      "runtimeSHA256": "72dcb02f95b9df050efb386e24e72669c9393c3377a858e27b145cf9f590b72c",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyArbeliaRecover",
+      "runtimePath": "media/story-v19/arbelia-recover.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/44fa887e7bcc_arvelia_delay_archon_transition.webp",
+      "sourceSHA256": "05e07d32e72954dce117fa51be8438aa11c88a9d1f422fe734d12a128f69a035",
+      "runtimeSHA256": "05e07d32e72954dce117fa51be8438aa11c88a9d1f422fe734d12a128f69a035",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyLowerGuardian",
+      "runtimePath": "media/story-v19/lower-guardian.webp",
+      "sourcePath": "assets/generated-v3125/kair-guardians/guardian_01.webp",
+      "sourceSHA256": "f140ad813fd1200f853b74e96c33f9370f483e1397f98075e8baf77fa3b18d54",
+      "runtimeSHA256": "f140ad813fd1200f853b74e96c33f9370f483e1397f98075e8baf77fa3b18d54",
+      "dimensions": [
+        192,
+        192
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyUpperGuardian",
+      "runtimePath": "media/story-v19/upper-guardian.webp",
+      "sourcePath": "assets/generated-v31224/actors-normalized/66b3a07672a9_great_02.webp",
+      "sourceSHA256": "2ffb11da9ff623b78b9f80e56180e58231103457c17734ea8fe6e1375993b8ee",
+      "runtimeSHA256": "2ffb11da9ff623b78b9f80e56180e58231103457c17734ea8fe6e1375993b8ee",
+      "dimensions": [
+        672,
+        384
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyTimeCollector",
+      "runtimePath": "media/story-v19/time-collector.png",
+      "sourcePath": "assets/kair/enemies/time-collector.png",
+      "sourceSHA256": "0027c67dd883ffa3897df40f7a83305d368d588aedbaec2bf0d17aeccfad39a9",
+      "runtimeSHA256": "0027c67dd883ffa3897df40f7a83305d368d588aedbaec2bf0d17aeccfad39a9",
+      "dimensions": [
+        362,
+        362
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyChronoEngine",
+      "runtimePath": "media/story-v19/chrono-engine.webp",
+      "sourcePath": "assets/props/v290/chrono_engine.webp",
+      "sourceSHA256": "a26168c1e967c99212579add17627cea06c85de11e1627408cbcd0e7fb304269",
+      "runtimeSHA256": "a26168c1e967c99212579add17627cea06c85de11e1627408cbcd0e7fb304269",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyNeuralObelisk",
+      "runtimePath": "media/story-v19/neural-obelisk.webp",
+      "sourcePath": "assets/props/v290/time_obelisk.webp",
+      "sourceSHA256": "18ef070275d6cc287a8088e9dd6b92fcf4453013cc41feb336f8a2548078006f",
+      "runtimeSHA256": "18ef070275d6cc287a8088e9dd6b92fcf4453013cc41feb336f8a2548078006f",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyDeletionObelisk",
+      "runtimePath": "media/story-v19/deletion-obelisk.webp",
+      "sourcePath": "assets/props/v31307/deletion-command-obelisk.webp",
+      "sourceSHA256": "db3b18311ce771e77690eb1a6e4943d8d8a217fce3bd8ae2ff14d46158b6a56e",
+      "runtimeSHA256": "db3b18311ce771e77690eb1a6e4943d8d8a217fce3bd8ae2ff14d46158b6a56e",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyCommandRing",
+      "runtimePath": "media/story-v19/command-ring.webp",
+      "sourcePath": "assets/vfx/generated/v300/time-ring.webp",
+      "sourceSHA256": "337c866b9cb64eae70701c21fd87353f111be7ed9bf9f126ba60571ae0603eab",
+      "runtimeSHA256": "337c866b9cb64eae70701c21fd87353f111be7ed9bf9f126ba60571ae0603eab",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyCultCircuit",
+      "runtimePath": "media/story-v19/cult-circuit.webp",
+      "sourcePath": "assets/props/v31313/union-circuit-idol.webp",
+      "sourceSHA256": "f705c72eb4d0e4501767034c84c102771130c634b893e811073d75cb8d085229",
+      "runtimeSHA256": "f705c72eb4d0e4501767034c84c102771130c634b893e811073d75cb8d085229",
+      "dimensions": [
+        341,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyRianIdle",
+      "runtimePath": "media/story-v19/rian-idle.webp",
+      "sourcePath": "assets/heroes/normalized/directions/rian-front.webp",
+      "sourceSHA256": "cb109d4677baaf3ea90e14b3fd216e0ed94db8b7db3ef8f4a6ec8130c7d72d47",
+      "runtimeSHA256": "cb109d4677baaf3ea90e14b3fd216e0ed94db8b7db3ef8f4a6ec8130c7d72d47",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyRianAttack",
+      "runtimePath": "media/story-v19/rian-attack.webp",
+      "sourcePath": "assets/heroes/normalized/actions-consistent/rian-attack-front.webp",
+      "sourceSHA256": "107b3bc0a4a84edb4f14f3d50f69e7aef11ac782e51d16209e725bfdfecf737d",
+      "runtimeSHA256": "107b3bc0a4a84edb4f14f3d50f69e7aef11ac782e51d16209e725bfdfecf737d",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyIonIdle",
+      "runtimePath": "media/story-v19/ion-idle.webp",
+      "sourcePath": "assets/heroes/normalized/directions/ion-front.webp",
+      "sourceSHA256": "e7f447ebdf74e95ee4db3e72449e509662341caa0e301783cd7094e3a3d5dc14",
+      "runtimeSHA256": "e7f447ebdf74e95ee4db3e72449e509662341caa0e301783cd7094e3a3d5dc14",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyIonAttack",
+      "runtimePath": "media/story-v19/ion-attack.webp",
+      "sourcePath": "assets/heroes/normalized/actions-consistent/ion-attack-front.webp",
+      "sourceSHA256": "799191f1fe1152f7bbd97c7cca40e3857401b33a6d52e36aef5a6ade5de7588f",
+      "runtimeSHA256": "799191f1fe1152f7bbd97c7cca40e3857401b33a6d52e36aef5a6ade5de7588f",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyGoblinMap",
+      "runtimePath": "media/story-v19/goblin-map.jpg",
+      "sourcePath": "assets/generated-v3125/maps/fusion_goblin_forest.jpg",
+      "sourceSHA256": "e4d0f6a7803d51fc23b5b9af629d73f3489e1b450d294b1358499b84b6c99562",
+      "runtimeSHA256": "e4d0f6a7803d51fc23b5b9af629d73f3489e1b450d294b1358499b84b6c99562",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyKnightMap",
+      "runtimePath": "media/story-v19/knight-map.jpg",
+      "sourcePath": "assets/maps/last3_03_fallen_court.jpg",
+      "sourceSHA256": "0cb02b60cf0caeddd6d88e7d0e21ca4652d395fd11541f2e5f5ce1c0b1ea4d4e",
+      "runtimeSHA256": "0cb02b60cf0caeddd6d88e7d0e21ca4652d395fd11541f2e5f5ce1c0b1ea4d4e",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyInsomniaMap",
+      "runtimePath": "media/story-v19/insomnia-map.jpg",
+      "sourcePath": "assets/maps/last3_01_village.jpg",
+      "sourceSHA256": "5e778be1a8ccca6a9827ba1835b8e32a8853c88c940a9805b1c9db92c08db7eb",
+      "runtimeSHA256": "5e778be1a8ccca6a9827ba1835b8e32a8853c88c940a9805b1c9db92c08db7eb",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyAcademyMap",
+      "runtimePath": "media/story-v19/academy-map.jpg",
+      "sourcePath": "assets/maps/kair_01_academy.jpg",
+      "sourceSHA256": "dd8d234d074f07c31186a892d83963579fd70ee8791f6851b4ecaf53e1716662",
+      "runtimeSHA256": "dd8d234d074f07c31186a892d83963579fd70ee8791f6851b4ecaf53e1716662",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyLowerMap",
+      "runtimePath": "media/story-v19/lower-map.jpg",
+      "sourcePath": "assets/generated-v3125/maps/kair_time_forest.jpg",
+      "sourceSHA256": "1d593d509597d67a09c89cf53a259f987a853c06de35c0b1e632efeed0fad2fb",
+      "runtimeSHA256": "1d593d509597d67a09c89cf53a259f987a853c06de35c0b1e632efeed0fad2fb",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyUpperMap",
+      "runtimePath": "media/story-v19/upper-map.jpg",
+      "sourcePath": "assets/generated-v3125/maps/kair_polluted_waterway.jpg",
+      "sourceSHA256": "de4e56cc1b05a78ba08dfaef1396f3456bacf4585265f4c0fbba3708c39f5f89",
+      "runtimeSHA256": "de4e56cc1b05a78ba08dfaef1396f3456bacf4585265f4c0fbba3708c39f5f89",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyWorkshopMap",
+      "runtimePath": "media/story-v19/workshop-map.jpg",
+      "sourcePath": "assets/generated-v3125/maps/kair_black_workshop.jpg",
+      "sourceSHA256": "5a48219bc80e5af1de4008d1e0e82f40047817891fd60adafca9de9d4feeaea8",
+      "runtimeSHA256": "5a48219bc80e5af1de4008d1e0e82f40047817891fd60adafca9de9d4feeaea8",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyNeuralMap",
+      "runtimePath": "media/story-v19/neural-map.jpg",
+      "sourcePath": "assets/generated-v3125/maps/kair_neuron_gate.jpg",
+      "sourceSHA256": "5e3021144fe9d2a7aac075ec9cd8ff935fa5f9bc5d99b965e1b2968e66104471",
+      "runtimeSHA256": "5e3021144fe9d2a7aac075ec9cd8ff935fa5f9bc5d99b965e1b2968e66104471",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyDeletionMap",
+      "runtimePath": "media/story-v19/deletion-map.jpg",
+      "sourcePath": "assets/generated-v3125/maps/kair_oblivion_cemetery.jpg",
+      "sourceSHA256": "3195bc1b1ed5a8fb0f015f11b54343e822ef2695d90e9628a6b468cc82ef9cd5",
+      "runtimeSHA256": "3195bc1b1ed5a8fb0f015f11b54343e822ef2695d90e9628a6b468cc82ef9cd5",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyRingsMap",
+      "runtimePath": "media/story-v19/rings-map.jpg",
+      "sourcePath": "assets/generated-v3125/maps/kair_collapsed_ritual.jpg",
+      "sourceSHA256": "6e43bc9ea78d787c019222da8c50b1671e74c0cc76aa8fa5ad1cc29d11abbd45",
+      "runtimeSHA256": "6e43bc9ea78d787c019222da8c50b1671e74c0cc76aa8fa5ad1cc29d11abbd45",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyArbeliaMap",
+      "runtimePath": "media/story-v19/arbelia-map.jpg",
+      "sourcePath": "assets/generated-v3125/maps/kair_sealed_corridor.jpg",
+      "sourceSHA256": "8f8d783b1718b6e80469b489688b71acaa190e6be413b2892ae27b293d3a1cbb",
+      "runtimeSHA256": "8f8d783b1718b6e80469b489688b71acaa190e6be413b2892ae27b293d3a1cbb",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storySirenMap",
+      "runtimePath": "media/story-v19/siren-map.webp",
+      "sourcePath": "assets/maps/rc53/kair03-siren-timeway.webp",
+      "sourceSHA256": "832aaa38766ecf20a6c79064195103fec24a7957a5c0ba7ca4580ea2bc5cc136",
+      "runtimeSHA256": "832aaa38766ecf20a6c79064195103fec24a7957a5c0ba7ca4580ea2bc5cc136",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyChiefMap",
+      "runtimePath": "media/story-v19/chief-map.jpg",
+      "sourcePath": "assets/maps/generated-v31213/hando03_ego_mirror_throne.jpg",
+      "sourceSHA256": "de3390d9eebc3a1263413f9e6782b70c3b6d3ea9a1a937c6682b207214381a23",
+      "runtimeSHA256": "de3390d9eebc3a1263413f9e6782b70c3b6d3ea9a1a937c6682b207214381a23",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyExecutorMap",
+      "runtimePath": "media/story-v19/executor-map.jpg",
+      "sourcePath": "assets/maps/generated-v31213/murder03_executor_signal_rooftop.jpg",
+      "sourceSHA256": "01497d039854ed97190ce04f22ccabd7cdf704f5618ae0181ec4a074cba7ff7c",
+      "runtimeSHA256": "01497d039854ed97190ce04f22ccabd7cdf704f5618ae0181ec4a074cba7ff7c",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyCultMap",
+      "runtimePath": "media/story-v19/cult-map.jpg",
+      "sourcePath": "assets/maps/v3121/cult_01_black_rose_infiltration.jpg",
+      "sourceSHA256": "eb670fd956840879cae85c58e88f70bc6883e91e33c78963f0ca22c259714212",
+      "runtimeSHA256": "eb670fd956840879cae85c58e88f70bc6883e91e33c78963f0ca22c259714212",
+      "dimensions": [
+        960,
+        600
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyPairMap",
+      "runtimePath": "media/story-v19/pair-map.jpg",
+      "sourcePath": "assets/maps/generated-v31213/cult03_triune_ego_extraction_arena.jpg",
+      "sourceSHA256": "9df293ea34b10f041410137beec97f9dfab9e8fc4605547dae3ed0fdfa31d2a3",
+      "runtimeSHA256": "9df293ea34b10f041410137beec97f9dfab9e8fc4605547dae3ed0fdfa31d2a3",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyGoblinWave",
+      "runtimePath": "media/story-v19/goblin-wave.webp",
+      "sourcePath": "assets/vfx/generated/v31309/goblin-flute-sonic-wave.webp",
+      "sourceSHA256": "20e5c4152bd1c99c49c175ab36d3fa7c4d414accba1b729e83d2023cbd617e88",
+      "runtimeSHA256": "20e5c4152bd1c99c49c175ab36d3fa7c4d414accba1b729e83d2023cbd617e88",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyKnightSword",
+      "runtimePath": "media/story-v19/knight-sword.png",
+      "sourcePath": "assets/last3/FallenAngel_Sword.png",
+      "sourceSHA256": "d14b4babd804f490b31d2f1cf8bf8fba23bd72f5605329c1c88acd5b74fa4841",
+      "runtimeSHA256": "d14b4babd804f490b31d2f1cf8bf8fba23bd72f5605329c1c88acd5b74fa4841",
+      "dimensions": [
+        512,
+        341
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyKnightSlash",
+      "runtimePath": "media/story-v19/knight-slash.webp",
+      "sourcePath": "assets/generated-v31224/boss-vfx/sleepless_six_sword_wave.webp",
+      "sourceSHA256": "b1da051a0a55f847892eb299708b9d825fdb87a89cb51f37ad9d1afc68da3637",
+      "runtimeSHA256": "b1da051a0a55f847892eb299708b9d825fdb87a89cb51f37ad9d1afc68da3637",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyInsomniaSoul",
+      "runtimePath": "media/story-v19/insomnia-soul.webp",
+      "sourcePath": "assets/generated-v3128/projectiles/sleepless_soul.webp",
+      "sourceSHA256": "7d8201643bc8c1af38f76db2b9bd668db124afb4312c1f2ba6c3d720b98390c0",
+      "runtimeSHA256": "7d8201643bc8c1af38f76db2b9bd668db124afb4312c1f2ba6c3d720b98390c0",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyInsomniaGaze",
+      "runtimePath": "media/story-v19/insomnia-gaze.webp",
+      "sourcePath": "assets/generated-v31224/boss-vfx/sleepless_gaze_sigil.webp",
+      "sourceSHA256": "9116b32bb478da14f817150371eb507e5dc4cf71b25ebedf53f910fe89fe6c60",
+      "runtimeSHA256": "9116b32bb478da14f817150371eb507e5dc4cf71b25ebedf53f910fe89fe6c60",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyChronoShard",
+      "runtimePath": "media/story-v19/chrono-shard.webp",
+      "sourcePath": "assets/vfx/v31315/chrono-shard.webp",
+      "sourceSHA256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+      "runtimeSHA256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+      "dimensions": [
+        512,
+        256
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyChronoCrescent",
+      "runtimePath": "media/story-v19/chrono-crescent.webp",
+      "sourcePath": "assets/generated-v31224/boss-vfx/kair_chrono_crescent.webp",
+      "sourceSHA256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+      "runtimeSHA256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyNeuralOrb",
+      "runtimePath": "media/story-v19/neural-orb.webp",
+      "sourcePath": "assets/vfx/generated/v31309/kair-neuron-synapse-orb.webp",
+      "sourceSHA256": "ab952675f90cacfb213d40e736994fd54fdfb731245bc28f444b8409123759ce",
+      "runtimeSHA256": "ab952675f90cacfb213d40e736994fd54fdfb731245bc28f444b8409123759ce",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storySirenWave",
+      "runtimePath": "media/story-v19/siren-wave.webp",
+      "sourcePath": "assets/vfx/generated/v31309/siren-choir-chorus-wave.webp",
+      "sourceSHA256": "6b21e41ea6e373f7b6b9852ab565f9fdfe21246c5b4f431fd780adf9a61f67f1",
+      "runtimeSHA256": "6b21e41ea6e373f7b6b9852ab565f9fdfe21246c5b4f431fd780adf9a61f67f1",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyChiefWave",
+      "runtimePath": "media/story-v19/chief-wave.webp",
+      "sourcePath": "assets/generated-v31224/boss-vfx/hando_phantom_reclaim_wave.webp",
+      "sourceSHA256": "e6abe23efe8940dfa19dba8324cc4656757823a1b362b9600beec861780e7221",
+      "runtimeSHA256": "e6abe23efe8940dfa19dba8324cc4656757823a1b362b9600beec861780e7221",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyChiefBlade",
+      "runtimePath": "media/story-v19/chief-blade.webp",
+      "sourcePath": "assets/vfx/v31323/boss/h103-boss/control-blades-clean.webp",
+      "sourceSHA256": "a621a06b3688129f1113e41ea32ce8a466361680f1fc4fb0b843eed829e6b939",
+      "runtimeSHA256": "a621a06b3688129f1113e41ea32ce8a466361680f1fc4fb0b843eed829e6b939",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyExecutorPrism",
+      "runtimePath": "media/story-v19/executor-prism.webp",
+      "sourcePath": "assets/generated-v3128/projectiles/causality_prism.webp",
+      "sourceSHA256": "6fd6c4d2f0e3915bb315873a70c7e9f09975c8fd1b7816f2ee184b594f12341a",
+      "runtimeSHA256": "6fd6c4d2f0e3915bb315873a70c7e9f09975c8fd1b7816f2ee184b594f12341a",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyExecutorRoad",
+      "runtimePath": "media/story-v19/executor-road.webp",
+      "sourcePath": "assets/generated-v31224/boss-vfx/murder_causality_road.webp",
+      "sourceSHA256": "f9c9378d33bbb827682d82537785c18c786242a3dd8ce1e174d18fc05f7d78a5",
+      "runtimeSHA256": "f9c9378d33bbb827682d82537785c18c786242a3dd8ce1e174d18fc05f7d78a5",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyCultRose",
+      "runtimePath": "media/story-v19/cult-rose.webp",
+      "sourcePath": "assets/generated-v31224/boss-vfx/cult_triune_rose_sigil.webp",
+      "sourceSHA256": "6a6604e0239c8ecdc5cad0f94136acdb7da4e970e71335dbe543a0eabc9a5308",
+      "runtimeSHA256": "6a6604e0239c8ecdc5cad0f94136acdb7da4e970e71335dbe543a0eabc9a5308",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyRianCross",
+      "runtimePath": "media/story-v19/rian-cross.webp",
+      "sourcePath": "assets/vfx/generated/v315/rian-reverse-cross-barrage.webp",
+      "sourceSHA256": "c3087e2e8611efff6e8844c3b3c571457a4458552a4c85af36c37657d0f00620",
+      "runtimeSHA256": "c3087e2e8611efff6e8844c3b3c571457a4458552a4c85af36c37657d0f00620",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyIonShield",
+      "runtimePath": "media/story-v19/ion-shield.webp",
+      "sourcePath": "assets/vfx/generated/v315/ion-order-shield-charge.webp",
+      "sourceSHA256": "f56c5acaf90884bbf5c18a94691105360ccb00f87b30e9b44212aef159bb59d9",
+      "runtimeSHA256": "f56c5acaf90884bbf5c18a94691105360ccb00f87b30e9b44212aef159bb59d9",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyPlayerHando",
+      "runtimePath": "media/story-v19/player-hando.png",
+      "sourcePath": "assets/hero_direction337/hwando/s.webp",
+      "sourceSHA256": "4e747a580bf802276d0a6ebbd39eb733c587f16d30396563620a9ecbf3ba71b5",
+      "runtimeSHA256": "7aad591310bb93367825e0e47ca9a487cbd6b88e53637ce6316e8d5976f2c569",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "decoded RGBA pixels equal original source"
+    },
+    {
+      "key": "storyPlayerSeoha",
+      "runtimePath": "media/story-v19/player-seoha.png",
+      "sourcePath": "assets/kair/heroes/yun-seoha.png",
+      "sourceSHA256": "5faf5cd8c5d2b00d96a349e9617100d50730d291948de3ddb993179eb8c4bb8e",
+      "runtimeSHA256": "5faf5cd8c5d2b00d96a349e9617100d50730d291948de3ddb993179eb8c4bb8e",
+      "dimensions": [
+        362,
+        362
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyMobGoblin",
+      "runtimePath": "media/story-v19/mob-goblin.png",
+      "sourcePath": "assets/last3/Monster_Goblin.png",
+      "sourceSHA256": "4b97bb140b31477f2f645a7a96e66320052fb7274829987aa0fe36bceabfafc2",
+      "runtimeSHA256": "4b97bb140b31477f2f645a7a96e66320052fb7274829987aa0fe36bceabfafc2",
+      "dimensions": [
+        341,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyMobWolf",
+      "runtimePath": "media/story-v19/mob-wolf.png",
+      "sourcePath": "assets/last3/Monster_Wolf.png",
+      "sourceSHA256": "7f50b5cfd9c3fb0e5d99e236f2432204994fa77c628564e59a346766771a99bb",
+      "runtimeSHA256": "7f50b5cfd9c3fb0e5d99e236f2432204994fa77c628564e59a346766771a99bb",
+      "dimensions": [
+        341,
+        512
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyMobNightmare",
+      "runtimePath": "media/story-v19/mob-nightmare.webp",
+      "sourcePath": "assets/hando-v3123/silverless_shadow.webp",
+      "sourceSHA256": "759c50538aed6df051ef44d79e7238041bf7d03cb872a97e0927b1aa7b8f4b5b",
+      "runtimeSHA256": "759c50538aed6df051ef44d79e7238041bf7d03cb872a97e0927b1aa7b8f4b5b",
+      "dimensions": [
+        418,
+        418
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyPlayerHandoSlash",
+      "runtimePath": "media/story-v19/player-hando-slash.png",
+      "sourcePath": "assets/last3/MeleeHitSlash.png",
+      "sourceSHA256": "0f811aa201f2317bfea07d48109989942b3f84d3348ec8e871c50e5c086bc424",
+      "runtimeSHA256": "0f811aa201f2317bfea07d48109989942b3f84d3348ec8e871c50e5c086bc424",
+      "dimensions": [
+        512,
+        341
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyPlayerSeohaSlash",
+      "runtimePath": "media/story-v19/player-seoha-slash.png",
+      "sourcePath": "assets/kair/skills/time-severance.png",
+      "sourceSHA256": "cf767d2600a48dda2c40a110ff7e6e86e3da1588764459a268b1ac97f49d4ece",
+      "runtimeSHA256": "cf767d2600a48dda2c40a110ff7e6e86e3da1588764459a268b1ac97f49d4ece",
+      "dimensions": [
+        362,
+        362
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyMemoryFragment",
+      "runtimePath": "media/story-v19/memory-fragment.webp",
+      "sourcePath": "assets/items/ego-fragment.webp",
+      "sourceSHA256": "19ace585f16604f969c2d3cefc17c05c37455c848490c45270ce35c5b39e621b",
+      "runtimeSHA256": "19ace585f16604f969c2d3cefc17c05c37455c848490c45270ce35c5b39e621b",
+      "dimensions": [
+        256,
+        256
+      ],
+      "verification": "source bytes equal runtime bytes"
+    },
+    {
+      "key": "storyPlayerAwakening",
+      "runtimePath": "media/story-v19/player-awakening.webp",
+      "sourcePath": "assets/rc91/awakening/hwando.png",
+      "sourceSHA256": "d6e8d76413333323034aeb50552e054467a0f87515efb20f8d0d9c83ae910230",
+      "runtimeSHA256": "3e06474a67fbf83e5ee625b305e168870bb675c2d51618e2cd327e237f696553",
+      "dimensions": [
+        512,
+        512
+      ],
+      "verification": "Lanczos resize matches every displayed premultiplied RGBA pixel"
+    },
+    {
+      "key": "storyMobCultLeech",
+      "runtimePath": "media/story-v19/mob-cult-leech.webp",
+      "sourcePath": "assets/cult-v3121/c101_ego_leech.webp",
+      "sourceSHA256": "07099111f8bf7ae0f43c965752de5dd156ce70a283c3d15b21f8039eb0d81ef8",
+      "runtimeSHA256": "07099111f8bf7ae0f43c965752de5dd156ce70a283c3d15b21f8039eb0d81ef8",
+      "dimensions": [
+        418,
+        418
+      ],
+      "verification": "source bytes equal runtime bytes"
+    }
+  ]
+}

@@ -8,7 +8,7 @@ const sha=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const hashes=()=>Object.fromEntries(codeFiles.map(file=>[file,sha(fs.readFileSync(path.join(root,file)))]));
 const initialHashes=hashes(),core=require('../src/core.js');
 require('../src/boss-motion.js');require('../src/actors.js');require('../src/projectiles.js');require('../src/render.js');
-const raw=fs.readFileSync(path.join(root,'src/media.js'),'utf8'),media=JSON.parse(raw.slice(raw.indexOf('{'),raw.lastIndexOf('}')+1));
+const raw=fs.readFileSync(path.join(root,'src/media.js'),'utf8'),media=require('./read-media-registry.cjs')();
 function distribution(times){const sorted=[...times].sort((a,b)=>a-b);return{samples:sorted.length,p50Ms:+sorted[Math.floor((sorted.length-1)*.5)].toFixed(3),p95Ms:+sorted[Math.floor((sorted.length-1)*.95)].toFixed(3),maxMs:+sorted.at(-1).toFixed(3)};}
 function worldFor(index,difficulty){
  const initial=core.createRun({campaign:true,practiceBoss:true,bossIndex:index,difficulty,seed:813,runId:'cpu-sins-phase3-fixture'});

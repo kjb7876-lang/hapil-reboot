@@ -48,13 +48,16 @@
     Object.freeze(['h14MapEnvy']),Object.freeze(['h14MapGluttony']),Object.freeze(['h14MapLust']),
     Object.freeze(['h14MapGreed','h14MapGreedSnow']),Object.freeze(['h14MapWrath']),Object.freeze(['h14MapPride','h14MapPrideCore']),Object.freeze(['cultArena']),Object.freeze(['chapter3WarMap']),Object.freeze(['chapter3WarMap']),Object.freeze(['chapter3NexusMap']),Object.freeze(['chapter3WarMap']),Object.freeze(['chapter3MigrationMap']),Object.freeze(['chapter3GateMap'])
   ]);
-  function terrainAssetKeysForEncounter(group){return H14_GROUP_KEYS[group]?H14_GROUP_KEYS[group].slice():[];}
+  function storyTerrainContract(key){return global.HapilStoryAssets&&global.HapilStoryAssets.terrainContract(key);}
+  function sourceTerrainContract(key){return H14_TERRAIN[key]||CULT_TERRAIN[key]||CHAPTER3_TERRAIN[key]||storyTerrainContract(key);}
+  function terrainAssetKeysForEncounter(group){if(group>=19)return global.HapilStoryAssets?global.HapilStoryAssets.terrainKeysForEncounter(group):[];return H14_GROUP_KEYS[group]?H14_GROUP_KEYS[group].slice():[];}
   function readyTerrainImage(images,key){
-    var c=H14_TERRAIN[key]||CULT_TERRAIN[key]||CHAPTER3_TERRAIN[key],im=images&&images[key];
+    var c=sourceTerrainContract(key),im=images&&images[key];
     return !!(c&&imageReady(im)&&im.naturalWidth===c.width&&im.naturalHeight===c.height);
   }
   function invalidTerrainAsset(images,group){
     if(group===-1)return null;
+    if(group>=19)return global.HapilStoryAssets?global.HapilStoryAssets.invalidAsset(images,group,'terrain'):'story-terrain-contract';
     if(!Number.isInteger(group)||!H14_GROUP_KEYS[group])return 'terrain-encounter-unsupported';
     var keys=H14_GROUP_KEYS[group];
     for(var i=0;i<keys.length;i++){
@@ -64,6 +67,7 @@
   }
   function h14TerrainKey(world){
     if(!world||!world.campaign)return null;
+    if(world.campaignRevision>=5&&world.bossIndex>=18&&!world.finalPractice){var storyTerrain=global.HapilStoryAssets&&global.HapilStoryAssets.terrainForWorld(world);return storyTerrain&&storyTerrain.key;}
     var group=world.finalPractice?12:world.campaignRevision>=4&&world.bossIndex>=12?world.bossIndex+1:world.bossIndex||0,keys=H14_GROUP_KEYS[group];if(!keys)return null;
     // Keep the original connected first approach and Balrog's three approach
     // scenes. Their own new paintings are used for the anchored boss arenas.
@@ -89,6 +93,7 @@
     var strips=[],ratio=1,cached=false,edgeMask=null;
     var sinFloor=null,sinFloorSource=null,sinFloorTone=null;
     var sourceScene=null,sourceSceneImage=null,sourceSceneKey=null,sourceSceneTone=null,sourceSceneBuilds=0;
+    var playerShotStamp=null,playerShotStampKey=null;
     // The near-edge mask is unchanged during an anchored boss encounter.
     // Reuse its pixels until the source or scroll position changes.
     var parallaxImage=null,parallaxIndex=-1,parallaxProgress=null;
@@ -220,7 +225,7 @@
       mapMetrics.cacheCanvasCount=strips.length+3+(sourceScene?1:0);mapMetrics.cacheBytes=(strips.length*W*1280+3*W*H+(sourceScene?W*720:0))*4;
     }
     function drawSourceTerrain(world,key){
-      var contract=H14_TERRAIN[key]||CULT_TERRAIN[key]||CHAPTER3_TERRAIN[key],im=images[key];
+      var contract=sourceTerrainContract(key),im=images[key];
       if(!readyTerrainImage(images,key))return false;
       var palette=paletteFor(world),tone=palette?palette.primary:'#8798af';
       if(!sourceScene){sourceScene=document.createElement('canvas');sourceScene.width=W;sourceScene.height=720;}
@@ -557,6 +562,22 @@
       mapMetrics.atlasFxDraws++;
       if((','+mapMetrics.atlasFxFamilies+',').indexOf(','+key+',')<0)mapMetrics.atlasFxFamilies+=(mapMetrics.atlasFxFamilies?',':'')+key;
     }
+    function ownPlayerShot(world){
+      var entry=global.HapilStoryAssets&&global.HapilStoryAssets.forWorld(world),spec=entry&&entry.playerShot;if(!spec)return null;
+      var im=images[spec.key];if(!imageReady(im)||im.naturalWidth!==spec.width||im.naturalHeight!==spec.height)return null;
+      var crop=spec.crop||[0,0,spec.width,spec.height],key=spec.key+'|'+crop.join(',');
+      if(key!==playerShotStampKey){
+        if(playerShotStamp){playerShotStamp.width=1;playerShotStamp.height=1;}
+        playerShotStamp=document.createElement('canvas');playerShotStamp.width=96;playerShotStamp.height=64;
+        var pc=playerShotStamp.getContext('2d'),scale=Math.min(92/crop[2],60/crop[3]),dw=crop[2]*scale,dh=crop[3]*scale;
+        pc.drawImage(im,crop[0],crop[1],crop[2],crop[3],(96-dw)/2,(64-dh)/2,dw,dh);playerShotStampKey=key;
+      }return {spec:spec,canvas:playerShotStamp};
+    }
+    function drawStoryMemory(e,world){
+      var entry=global.HapilStoryAssets&&global.HapilStoryAssets.forWorld(world);if(!entry||!entry.playerShot)return false;
+      var shot=ownPlayerShot(world),age=e.age||0,duration=Math.min(.4,e.ttl||.4);if(!shot||age<0||age>=duration||mapMetrics.atlasFxDraws>=mapMetrics.atlasFxLimit)return true;
+      ctx.save();ctx.translate(e.x,e.y-10);ctx.rotate(-Math.PI/2);ctx.globalAlpha=(lightweight?.58:.68)*Math.min(1,(duration-age)/.08);ctx.drawImage(shot.canvas,-31,-21,62,42);ctx.restore();mapMetrics.atlasFxDraws++;return true;
+    }
     function drawMemoryArrow8(e){
       var im=images.fxWindArrow8V6;
       if(!imageReady(im)||im.naturalWidth!==1024||im.naturalHeight!==512)return false;
@@ -575,7 +596,7 @@
     }
     function drawAuthoredEffect(e,world){
       if(!world.campaign)return false;
-      if(e.kind==='memory'&&drawMemoryArrow8(e))return true;
+      if(e.kind==='memory'&&(drawStoryMemory(e,world)||drawMemoryArrow8(e)))return true;
       var key=null,size=72,age=e.age||0,y=e.y;
       if(e.kind==='memory'){key='fxArrow';size=62;y-=10;}
       else if(e.kind==='delayCharge'){key='fxThorns';size=68;}
@@ -664,7 +685,13 @@
       for(var j=0;j<enemies.length;j++)if(enemies[j].summoned)drawOne(enemies[j]);
     }
     function drawShots(world) {
-      var shots=world.shots||[],im=images.fxWindArrow8V6;
+      var shots=world.shots||[],entry=global.HapilStoryAssets&&global.HapilStoryAssets.forWorld(world);
+      if(entry&&entry.playerShot){
+        var own=ownPlayerShot(world);if(!own)return;
+        for(var si=0;si<shots.length;si++){var ss=shots[si],dw=own.spec.displayWidth||26,dh=dw*2/3;ctx.save();ctx.translate(ss.x,ss.y);ctx.rotate(Number.isFinite(ss.angle)?ss.angle:Math.atan2(ss.vy||-1,ss.vx||0));ctx.drawImage(own.canvas,-dw*.8,-dh/2,dw,dh);ctx.restore();mapMetrics.playerShotDraws++;}
+        mapMetrics.playerShotAsset=own.spec.key;mapMetrics.playerShotCacheBytes=96*64*4;return;
+      }
+      var im=images.fxWindArrow8V6;
       if(!imageReady(im)||im.naturalWidth!==1024||im.naturalHeight!==512)return;
       for(var i=0;i<shots.length;i++){
         var s=shots[i],frame=Math.min(7,Math.floor(Math.max(0,s.age||0)*1000/80));
@@ -680,6 +707,8 @@
     function drawPlayerBody(world,time) {
       var p=world.player,inv=(p.invulnerableUntil||0)>world.tick,ego=(p.egoUntil||0)>world.tick;
       if(ego)circle(p.x,p.y,25,'rgba(164,222,228,.45)',1);
+      var story=global.HapilStoryAssets&&global.HapilStoryAssets.forWorld(world);
+      if(story&&story.player){if(actorPresentation&&actorPresentation.drawPlayer)actorPresentation.drawPlayer(ctx,world,inv?(.55+Math.sin(world.tick*.6)*.2):.95);return;}
       if(imageReady(images.gunner)){ctx.globalAlpha=inv?(.55+Math.sin(world.tick*.6)*.2):.95;ctx.drawImage(images.gunner,p.x-258.5369*57/512,p.y-283.8754*57/512,57,57);ctx.globalAlpha=1;}
     }
     function drawPlayerCore(world) {
@@ -711,7 +740,7 @@
       ctx.save();
       ctx.fillStyle='rgba(7,9,17,'+(.45*envelope)+')';ctx.fillRect(0,0,W,H);
       ctx.fillStyle='rgba(5,7,13,'+(.84*envelope)+')';ctx.fillRect(0,0,W,30*envelope);ctx.fillRect(0,H-30*envelope,W,30*envelope);
-      var portraitW=620+(230-620)*settle,portraitY=(160+120*enter)+(116-280)*settle;
+      var targetY=world.boss&&Number.isFinite(world.boss.y)?world.boss.y:116,portraitW=620+(230-620)*settle,portraitY=(160+120*enter)+(targetY-280)*settle;
       var info=bossIdentity(world);
       if(world.campaign&&info.id==='violet'&&atlasReady('violetCutin')){
         // This is a static authored cut-in with a transform, not newly drawn
@@ -760,6 +789,7 @@
       if(!world.campaign)return;
       if(world.stage==='transition'&&world.transitionNarrative)return;
       var b=world.boss,t=world.time||0;
+      mapMetrics.specialPatternCue=null;
       if(b&&world.bossIndex>=3&&world.stage!=='bossIntro'){
         var phase=world.phase||0;
         if(world.bossIndex===4){
@@ -777,12 +807,24 @@
         ctx.textAlign='left';ctx.font='8px Arial';ctx.fillStyle='#b9aaca';ctx.fillText('MEMORY SIGN  /  '+(world.finalPractice?'FINAL':((world.bossIndex||0)+1))+'—'+(world.phase+1),32,219);
         ctx.font='13px Georgia,"Batang",serif';ctx.fillStyle='#eee1ce';ctx.fillText(world.patternName+(world.phase===2&&b&&b.specialPatternLabel?' · '+b.specialPatternLabel:''),32,238);ctx.restore();
       }
+      if(world.stage==='boss'&&world.phaseTime>=1.45&&b&&b.specialPatternLabel){
+        // A persistent reading cue stays above the player lane. The actual
+        // hazard and bullet pixels draw later, so this panel cannot mask an
+        // uncleared attack. Text names the engine's current pattern only.
+        var palette=paletteFor(world),tone=palette?palette.primary:'#c3af85',hint=String(b.patternHint||''),lines=[],lineText='';
+        ctx.save();ctx.fillStyle='rgba(9,13,24,.86)';ctx.fillRect(20,203,320,47);ctx.fillStyle=tone;ctx.fillRect(20,203,3,47);
+        ctx.textAlign='left';ctx.font='10px Arial,"Malgun Gothic",sans-serif';ctx.fillStyle='#f0e5d7';ctx.fillText('특수 패턴 · '+b.specialPatternLabel,30,217);
+        ctx.font='9px Arial,"Malgun Gothic",sans-serif';ctx.fillStyle='#d1d6de';
+        for(var ch of Array.from(hint)){var next=lineText+ch;if(lineText&&ctx.measureText(next).width>299){lines.push(lineText.trim());lineText=ch===' '?'':ch;}else lineText=next;}
+        if(lineText)lines.push(lineText.trim());for(var li=0;li<Math.min(2,lines.length);li++)ctx.fillText(lines[li],30,232+li*11);ctx.restore();
+        mapMetrics.specialPatternCue={id:b.specialPatternId||'',label:b.specialPatternLabel,hint:hint,box:[20,203,320,47],damageGeometryOwnedByCore:true};
+      }
       if(world.stage==='won'&&!world.practiceBoss&&world.bossIndex===4){
         ctx.save();ctx.globalAlpha=.42;circle(180,190,46,'#ead5aa',1.2);circle(180,190,53,'#b9dbed',.7);line([[180,158],[180,220],[159,178],[201,178]],'#f0e1ba',2);ctx.restore();
       }
     }
     function draw(world,alpha,time,lowQuality) {
-      lightweight=!!lowQuality;mapMetrics.atlasFxLimit=lightweight?12:24;
+      lightweight=!!lowQuality;mapMetrics.atlasFxLimit=lightweight?12:24;mapMetrics.specialPatternCue=null;mapMetrics.playerShotDraws=0;mapMetrics.playerShotAsset=null;mapMetrics.playerShotCacheBytes=playerShotStamp?96*64*4:0;
       if(actorPresentation&&actorPresentation.beginFrame)actorPresentation.beginFrame();
       if(projectilePresentation&&projectilePresentation.beginFrame)projectilePresentation.beginFrame();
       if(bossSkillPresentation&&bossSkillPresentation.beginFrame)bossSkillPresentation.beginFrame();
@@ -793,11 +835,11 @@
       if(!world||(!world.boss&&world.stage!=='bossIntro'))mapMetrics.bossArt=null;
       if(!world){titleScene(time||0);return;}
       if(world.stage==='bossIntro'){drawPlayerBody(world,world.time||0);bossEntrance(world);drawPlayerCore(world);return;}
-      drawRoute(world);drawBossAccent(world);if(projectilePresentation&&projectilePresentation.drawBossCast)projectilePresentation.drawBossCast(ctx,world,lightweight);drawEffects(world);if(bossSkillPresentation)bossSkillPresentation.draw(ctx,world,lightweight);transition(world);drawEnemies(world,world.time||0);drawSpellTheatre(world);drawPlayerBody(world,world.time||0);drawShots(world);drawHazards(world);drawBullets(world);bossHud(world);
+      drawRoute(world);drawBossAccent(world);if(projectilePresentation&&projectilePresentation.drawBossCast)projectilePresentation.drawBossCast(ctx,world,lightweight);drawEffects(world);if(bossSkillPresentation)bossSkillPresentation.draw(ctx,world,lightweight);transition(world);if(actorPresentation&&actorPresentation.drawSceneObjects)actorPresentation.drawSceneObjects(ctx,world);drawEnemies(world,world.time||0);drawSpellTheatre(world);drawPlayerBody(world,world.time||0);drawShots(world);drawHazards(world);drawBullets(world);bossHud(world);
       if(world.reservation){ctx.save();ctx.font='8px Arial,"Malgun Gothic",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(167,224,227,.85)';ctx.fillText(typeof world.reservation==='string'?world.reservation:'스킬 준비 중',180,621);ctx.restore();}
       drawPlayerCore(world);
     }
-    return {resize:function(cssW,cssH,dpr){ratio=Math.min(1.5,Math.max(1,dpr||1))*cssW/W;var nextWidth=Math.max(1,Math.round(W*ratio)),nextHeight=Math.max(1,Math.round(H*ratio));if(canvas.width!==nextWidth)canvas.width=nextWidth;if(canvas.height!==nextHeight)canvas.height=nextHeight;canvas.style.width='100%';canvas.style.height='100%';ctx.imageSmoothingEnabled=true;},draw:draw,getMetrics:function(){return Object.assign({},mapMetrics,{actorPresentation:actorPresentation?actorPresentation.getMetrics():null,projectilePresentation:projectilePresentation?projectilePresentation.getMetrics():null,bossSkillsPresentation:bossSkillPresentation?bossSkillPresentation.getMetrics():null});},destroy:function(){if(projectilePresentation&&projectilePresentation.destroy)projectilePresentation.destroy();if(bossSkillPresentation&&bossSkillPresentation.destroy)bossSkillPresentation.destroy();bossSkillPresentation=null;releaseSourceTerrain();cached=false;canvas.width=1;canvas.height=1;back.width=1;back.height=1;foreground.width=1;foreground.height=1;if(sinFloor){sinFloor.width=1;sinFloor.height=1;sinFloor=null;}sinFloorSource=null;sinFloorTone=null;for(var i=0;i<strips.length;i++){strips[i].width=1;strips[i].height=1;}strips.length=0;actorPresentation=null;projectilePresentation=null;images={};}};
+    return {resize:function(cssW,cssH,dpr){ratio=Math.min(1.5,Math.max(1,dpr||1))*cssW/W;var nextWidth=Math.max(1,Math.round(W*ratio)),nextHeight=Math.max(1,Math.round(H*ratio));if(canvas.width!==nextWidth)canvas.width=nextWidth;if(canvas.height!==nextHeight)canvas.height=nextHeight;canvas.style.width='100%';canvas.style.height='100%';ctx.imageSmoothingEnabled=true;},draw:draw,getMetrics:function(){return Object.assign({},mapMetrics,{actorPresentation:actorPresentation?actorPresentation.getMetrics():null,projectilePresentation:projectilePresentation?projectilePresentation.getMetrics():null,bossSkillsPresentation:bossSkillPresentation?bossSkillPresentation.getMetrics():null});},destroy:function(){if(playerShotStamp){playerShotStamp.width=1;playerShotStamp.height=1;playerShotStamp=null;}playerShotStampKey=null;if(projectilePresentation&&projectilePresentation.destroy)projectilePresentation.destroy();if(bossSkillPresentation&&bossSkillPresentation.destroy)bossSkillPresentation.destroy();bossSkillPresentation=null;releaseSourceTerrain();cached=false;canvas.width=1;canvas.height=1;back.width=1;back.height=1;foreground.width=1;foreground.height=1;if(sinFloor){sinFloor.width=1;sinFloor.height=1;sinFloor=null;}sinFloorSource=null;sinFloorTone=null;for(var i=0;i<strips.length;i++){strips[i].width=1;strips[i].height=1;}strips.length=0;actorPresentation=null;projectilePresentation=null;images={};}};
   }
   global.HapilRenderer={create:create,terrainContracts:H14_TERRAIN,cultTerrainContracts:CULT_TERRAIN,chapter3TerrainContracts:CHAPTER3_TERRAIN,terrainAssetKeysForEncounter:terrainAssetKeysForEncounter,invalidTerrainAsset:invalidTerrainAsset};
 })(typeof window!=='undefined'?window:globalThis);

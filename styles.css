@@ -40,3 +40,21 @@
 }
 
 #difficulty-hell[aria-pressed=true]{background:#542c35;color:#ffdfcf}.difficulty-picker button small{display:block;margin:4px 0 0;letter-spacing:.7px}
+
+/* Keep the complete canonical ending readable without covering navigation. */
+#result-description{white-space:pre-line;max-height:clamp(88px,18vh,145px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding-right:4px}
+#encounter-description{white-space:pre-line;max-height:320px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+
+.practice-row{gap:6px}.practice-row #practice-select{min-width:100px;max-width:48%;flex:1}.practice-row .text-button{font-size:10px}.practice-row button:disabled{opacity:.45;cursor:wait}
+@media(max-width:820px) and (max-height:680px){.practice-row .text-button{font-size:8px}.practice-row #practice-select{min-width:88px}}
+
+#result-screen .result-card{max-height:100%;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+/* Result cards fit the portrait arena; long endings scroll within the text. */
+.result-card .overline{margin-bottom:8px}
+.result-card .result-symbol{font-size:35px}
+.result-card h2{font-size:21px;line-height:1.35;margin:8px 0}
+.result-card>p:not(.overline){margin-bottom:12px}
+.result-card .result-score{font-size:34px}
+.result-card .result-stats{margin:14px 0;padding:10px 0}
+
+.ending-nav{display:flex;align-items:center;justify-content:center;gap:12px;margin:0 0 12px;font-size:10px;color:var(--muted)}.ending-nav[hidden]{display:none}.ending-nav button{background:transparent;border:1px solid var(--line);color:var(--paper);font:inherit;padding:6px 8px;min-height:28px;cursor:pointer}.ending-nav button:disabled{opacity:.35;cursor:default}

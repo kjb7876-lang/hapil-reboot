@@ -1,7 +1,8 @@
 /* Asset-only enemy projectiles. Simulation geometry belongs to core.js.
- * Drive source sprites are nine-slice fitted to the existing danger capsule.
- * Tinting preserves source alpha and luminance detail; no geometric backing,
- * stroke, fallback body, particle tail, or per-frame pixel processing is used.
+ * Regular bullets retain the authored object silhouette rather than clipping
+ * everything to a capsule. Their visible fins/points extend 3..4 CSS pixels
+ * beyond the smaller collision core, as ornamental bullet art normally does.
+ * No geometric backing, stroke, fallback body or per-frame pixel processing.
  */
 (function(global){
   'use strict';
@@ -109,51 +110,99 @@
     {key:'h14BeamPride',width:2172,height:724,crop:[543,181,1086,362]},
     {key:'cultBeam',width:768,height:144,crop:[0,0,768,144]}
   ];
+  // Small source crops previously erased whole objects into indistinguishable
+  // circles. These are the owner's actual objects, with authored alpha intact.
+  // Orb/needle are gameplay roles, not claims about canonical handheld weapons.
+  function natural(key,width,height,crop,extra){return Object.assign({key:key,width:width,height:height,crop:crop,frames:1,natural:true,downsample:[96,96]},extra||{});}
+  var NATURAL_ORBS=[
+    natural('projectileVioletOrbV9',296,80,[8,8,64,64],{frames:4,ms:125,step:72}),
+    natural('projectileHornOrbV10',64,64,[0,0,64,64]),
+    natural('projectileBalrogOrbV10',64,64,[0,0,64,64]),
+    natural('projectileMaskOrbV10',64,64,[0,0,64,64]),
+    natural('projectileLuciferOrbV9',296,80,[8,8,64,64],{frames:4,ms:125,step:72}),
+    natural('projectileBelphegorV13',1254,1254,[203,296,851,673]),
+    natural('h14SkillEnvy',512,512,[169,157,275,196]),
+    natural('projectileBeelzebubV13',1254,1254,[308,122,637,1007]),
+    natural('h14SkillLust',512,512,[22,71,469,406]),
+    natural('projectileMammonV13',1295,1215,[189,146,922,920]),
+    natural('projectileWrathV13',1295,1214,[366,27,575,1125]),
+    natural('projectilePrideV13',1536,1024,[604,16,328,991]),
+    natural('cultDriveSpear',512,512,[252,207,84,84])
+  ];
+  var NATURAL_BLADES=[
+    natural('weaponVioletV12',1774,887,[225,309,1323,296],{downsample:[128,48]}),
+    natural('h14SkillHorn',256,256,[23,26,219,227],{downsample:[128,48]}),
+    natural('weaponBalrogV12',1774,887,[41,184,1689,522],{downsample:[128,48]}),
+    natural('weaponMaskV12',1774,887,[265,236,1309,448],{downsample:[128,48]}),
+    natural('weaponLuciferV12',1254,1254,[348,134,800,979],{downsample:[128,48]}),
+    natural('h14SkillSloth',512,512,[21,22,469,467]),
+    natural('projectileLeviathanV13',1254,1254,[561,171,164,880],{rotation:-Math.PI/2,downsample:[128,64]}),
+    natural('h14SkillGlutton',512,512,[33,28,443,458]),
+    natural('h14SkillLust',512,512,[22,71,469,406]),
+    natural('h14SkillGreed',512,512,[31,71,451,371]),
+    natural('h14SkillWrath',512,512,[21,31,469,455]),
+    natural('h14SkillPride',512,512,[35,24,443,467]),
+    natural('cultLance',512,192,[9,41,493,115],{downsample:[128,48]})
+  ];
+  var ownEarlyBeams=[['h14SkillViolet',512,512,[32,161,468,177]],['h14SkillHorn',256,256,[27,30,211,219]],['h14SkillBalrog',512,512,[27,94,457,323]],['h14SkillMask',512,512,[28,135,456,242]],['h14SkillLucifer',512,512,[28,135,456,242]]];
+  ownEarlyBeams.forEach(function(a,i){BEAMS[i]={key:a[0],width:a[1],height:a[2],crop:a[3]};});
   // Chapter III reuses only this control system's own source material.
   // The six entries are encounter roles, not six invented people.
   var CH3_MATERIAL={key:'chapter3Beam',width:768,height:144,frames:1,crop:[360,56,48,32],r:16,l:8,encounterMaterial:true};
   var CH3_LANCE={key:'chapter3Lance',width:512,height:192,crop:[0,0,512,192]};
-  var CH3_LANCE_TINT={key:'chapter3Lance',width:512,height:192,crop:[0,0,512,192],frames:1,downsample:[96,36],encounterMaterial:true};
   var CH3_PALETTES=[['#80b9c5','#c8ab75','#4b4e51'],['#80bfc5','#c2ad7c','#373d46'],['#8fcbd0','#b7a078','#424853'],['#7fbdca','#a99574','#3f444b'],['#4fd8df','#b5e9e7','#576477'],['#bd78cb','#7db7d3','#575170']];
   for(var chapterSlot=13;chapterSlot<=18;chapterSlot++){
     var chapterPalette=CH3_PALETTES[chapterSlot-13];
     PALETTE_LIST=Object.freeze(PALETTE_LIST.concat([Object.freeze({id:'controller-system-'+chapterSlot,primary:chapterPalette[0],secondary:chapterPalette[1],accent:chapterPalette[2]})]));
     ORBS[chapterSlot]=CH3_MATERIAL;BLADES[chapterSlot]=CH3_MATERIAL;
     ROTORS[chapterSlot]=CH3_LANCE;BEAMS[chapterSlot]={key:'chapter3Beam',width:768,height:144,crop:[0,0,768,144]};FAMILIES[chapterSlot]=[];
+    NATURAL_ORBS[chapterSlot]=natural('chapter3Beam',768,144,[0,0,144,144]);
+    NATURAL_BLADES[chapterSlot]=natural('chapter3Lance',512,192,[9,41,493,115],{downsample:[128,48]});
   }
   var CACHE_LIMIT=96,CACHE_BYTES=4*1024*1024,SCALE=3,PAD=1,CELL=128;
   function finite(n){return typeof n==='number'&&Number.isFinite(n);}
   function clamp(n,a,b){return Math.max(a,Math.min(b,n));}
-  function slotForEncounter(i){return i===undefined||i===-1?0:Number.isInteger(i)&&i>=0&&i<ORBS.length&&ORBS[i]?i:-1;}
-  function indexFor(w){if(w&&w.finalPractice)return 12;var i=w&&w.bossIndex;if(w&&w.campaignRevision>=4&&Number.isInteger(i)&&i>=12&&i<=17)return i+1;return i>=12?-1:slotForEncounter(i);}
-  function paletteFor(w,b){var p=PALETTE_LIST[indexFor(w)];return p?(b&&b.paletteSlot===1?{id:p.id+'-secondary',primary:p.secondary,secondary:p.primary,accent:p.accent}:p):null;}
+  function storySpec(i,owner){var s=Number.isInteger(i)&&i>=19&&i<=35&&global.HapilStoryAssets&&global.HapilStoryAssets.projectilesForEncounter?global.HapilStoryAssets.projectilesForEncounter(i):null;var id=owner&&typeof owner==='object'?owner.sourceActorId:owner;return s&&id&&s.participants&&s.participants[id]?s.participants[id]:s;}
+  function slotForEncounter(i){return i===undefined||i===-1?0:Number.isInteger(i)&&i>=0&&((i<ORBS.length&&ORBS[i])||storySpec(i))?i:-1;}
+  function indexFor(w){if(w&&w.finalPractice)return 12;var i=w&&w.bossIndex;if(w&&w.campaignRevision>=5&&Number.isInteger(i)&&i>=18&&i<=34)return slotForEncounter(i+1);if(w&&w.campaignRevision>=4&&Number.isInteger(i)&&i>=12&&i<=17)return i+1;return i>=12?-1:slotForEncounter(i);}
+  function paletteAt(i,owner){var story=storySpec(i,owner);return story?story.palette:PALETTE_LIST[i];}
+  function paletteFor(w,b){var p=paletteAt(indexFor(w),b);return p?(b&&b.paletteSlot===1?{id:p.id+'-secondary',primary:p.secondary,secondary:p.primary,accent:p.accent}:p):null;}
   function colorFor(w,b){var p=paletteFor(w,b);return p?p.primary:null;}
   // Acceleration is a property known at launch, so tint the existing authored
   // pixels from the first frame: players get a stable cue before it speeds up.
   // Use the boss's own two palette colors, preserve source alpha, and do not
-  // make the rendered danger capsule bigger than the collision geometry.
+  // change collision geometry. The authored silhouette has a bounded cosmetic
+  // extent outside that smaller hit core; there is no painted capsule behind it.
   // Precompute bounded color cues from each owner's palette. These remain
   // stable for the projectile's lifetime, including before its behavior starts.
   var BEHAVIOR_PALETTES=PALETTE_LIST.map(function(base){return [base,{id:base.id+'-secondary',primary:base.secondary,secondary:base.primary,accent:base.accent}].map(function(p){
     function mix(role,target,weight){var a=rgb(p.primary),q=rgb(target),color='#';for(var i=0;i<3;i++)color+=Math.round(a[i]*(1-weight)+q[i]*weight).toString(16).padStart(2,'0');return Object.freeze({id:p.id+'-'+role,primary:color,secondary:p.secondary,accent:p.accent});}
     return {accelerating:mix('accelerating',p.secondary,.52),curving:mix('curving',p.secondary,.25),pausing:mix('pausing',p.accent,.55)};
   });});
+  var STORY_BEHAVIOR_PALETTES=Object.create(null);
   function bulletPalette(w,b){
     var role=b&&b.pauseUntil?'pausing':b&&finite(b.curveRate)&&b.curveRate!==0?'curving':b&&finite(b.acceleration)&&b.acceleration>0?'accelerating':null;
     if(!role)return paletteFor(w,b);
-    var index=indexFor(w);return index<0?null:BEHAVIOR_PALETTES[index][b.paletteSlot===1?1:0][role];
+    var index=indexFor(w);if(index<0)return null;
+    if(storySpec(index,b)){var base=paletteFor(w,b);if(!base)return null;var id=base.id+'-'+role,known=STORY_BEHAVIOR_PALETTES[id];if(known)return known;var target=rgb(role==='pausing'?base.accent:base.secondary),p=rgb(base.primary),weight=role==='accelerating'?.52:role==='curving'?.25:.55,color='#';for(var c=0;c<3;c++)color+=Math.round(p[c]*(1-weight)+target[c]*weight).toString(16).padStart(2,'0');return STORY_BEHAVIOR_PALETTES[id]=Object.freeze({id:id,primary:color,secondary:base.secondary,accent:base.accent});}
+    return BEHAVIOR_PALETTES[index][b.paletteSlot===1?1:0][role];
   }
-  function optionalAssetKeysForEncounter(i){var out=[];if(!Number.isInteger(i)||i<0||i>=ORBS.length)return out;if(i>=12)return out;if(CASTS[i])out.push(CASTS[i].key);if(ROTORS[i])out.push(ROTORS[i].key);if(BEAMS[i])out.push(BEAMS[i].key);return out;}
+  var NATURAL_SPEC_CACHE=new WeakMap(),DENSE_SPEC_CACHE=new WeakMap(),SIGNATURE_CACHE=new WeakMap();
+  function naturalSpec(i,blade,owner){var story=storySpec(i,owner),s=story?(blade?story.blade:story.orb):(blade?NATURAL_BLADES[i]:NATURAL_ORBS[i]);if(!s||s.natural)return s||null;var cached=NATURAL_SPEC_CACHE.get(s);if(cached)return cached;cached=Object.assign(natural(s.key,s.width,s.height,s.objectCrop||s.crop),s,{natural:true,crop:s.objectCrop||s.crop,frames:s.frames||1});NATURAL_SPEC_CACHE.set(s,cached);return cached;}
+  function sourceSignature(s){var cached=SIGNATURE_CACHE.get(s);if(cached)return cached;cached=[s.key,s.crop.join(','),s.rotation||0,s.frames||1,s.step||0,s.ms||0,s.downsample?s.downsample.join(','):'original',s.anchor?s.anchor.join(','):'center',s.fixedOrientation?'fixed':'aimed',s.visualOutset||0,s.alphaBoost?'readable':'original',s.sourceKey||'authored-alpha',s.cast?'cast':'body',s.encounterMaterial?'material':'object',s.natural?'natural':'dense'].join('|');SIGNATURE_CACHE.set(s,cached);return cached;}
+  function optionalAssetKeysForEncounter(i){var out=[];if(!Number.isInteger(i)||i<0||i>=ORBS.length)return out;if(i>=12)return out;if(CASTS[i])out.push(CASTS[i].key);if(ROTORS[i])out.push(ROTORS[i].key);if(BEAMS[i])out.push(BEAMS[i].key);var orb=naturalSpec(i,false),blade=naturalSpec(i,true);return out.filter(function(k){return (!orb||k!==orb.key)&&(!blade||k!==blade.key);});}
   function assetKeysForEncounter(i){
-    var wi=slotForEncounter(i);if(wi<0)return [];var out=[ORBS[wi].key];if(wi===12)out.push('cultLance','cultDriveSpear');if(wi>=13)out.push('chapter3Lance');
+    var wi=slotForEncounter(i);if(wi<0)return [];var story=storySpec(wi);if(story)return global.HapilStoryAssets.assetKeysForEncounter(wi,'projectiles');
+    var out=[ORBS[wi].key];if(wi===12)out.push('cultLance','cultDriveSpear');if(wi>=13)out.push('chapter3Lance');
     if(BLADES[wi]&&out.indexOf(BLADES[wi].key)<0)out.push(BLADES[wi].key);
+    [naturalSpec(wi,false),naturalSpec(wi,true)].forEach(function(s){if(s&&out.indexOf(s.key)<0)out.push(s.key);});
     if(Number.isInteger(i)&&i>=0&&WEAPONS[wi])out.push(WEAPONS[wi].key);
     out=out.concat(optionalAssetKeysForEncounter(i));
     (FAMILIES[wi]||[]).forEach(function(name){if(name!=='unlock'&&out.indexOf(FX[name].key)<0)out.push(FX[name].key);});
-    return out;
+    return out.filter(function(k,n){return out.indexOf(k)===n;});
   }
   function ready(im,s){return !!(im&&im.complete!==false&&im.naturalWidth===(s.width||512)&&im.naturalHeight===(s.height||Math.ceil(s.frames/4)*CELL));}
-  function invalidAssetForEncounter(images,i){var wi=slotForEncounter(i);if(wi<0)return 'unsupportedProjectileEncounter';var specs=[ORBS[wi]];if(wi>=13)specs.push(CH3_LANCE);if(wi===12)specs.push({key:'cultLance',width:512,height:192},{key:'cultDriveSpear',width:512,height:512});if(BLADES[wi])specs.push(BLADES[wi]);if(Number.isInteger(i)&&i>=0&&WEAPONS[wi])specs.push(WEAPONS[wi]);for(var k=0;k<specs.length;k++)if(!ready(images&&images[specs[k].key],specs[k]))return specs[k].key;return null;}
+  function invalidAssetForEncounter(images,i){var wi=slotForEncounter(i);if(wi<0)return 'unsupportedProjectileEncounter';var story=storySpec(wi);if(story)return global.HapilStoryAssets.invalidAsset(images,wi,'projectiles');var specs=[ORBS[wi],naturalSpec(wi,false),naturalSpec(wi,true)].filter(Boolean);if(wi>=13)specs.push(CH3_LANCE);if(wi===12)specs.push({key:'cultLance',width:512,height:192},{key:'cultDriveSpear',width:512,height:512});if(BLADES[wi])specs.push(BLADES[wi]);if(Number.isInteger(i)&&i>=0&&WEAPONS[wi])specs.push(WEAPONS[wi]);for(var k=0;k<specs.length;k++)if(!ready(images&&images[specs[k].key],specs[k]))return specs[k].key;return null;}
   function capsule(ctx,x,y,r,l){
     ctx.beginPath();
     if(l>0){ctx.moveTo(x-l,y-r);ctx.lineTo(x+l,y-r);ctx.arc(x+l,y,r,-Math.PI/2,Math.PI/2);ctx.lineTo(x-l,y+r);ctx.arc(x-l,y,r,Math.PI/2,Math.PI*1.5);ctx.closePath();}
@@ -165,21 +214,25 @@
     var cache=new Map(),cacheBytes=0,group=-1,metrics;
     function release(e){if(!e)return;if(e.canvases)e.canvases.forEach(function(c){c.width=1;c.height=1;});if(e.canvas){e.canvas.width=1;e.canvas.height=1;}}
     function clearCache(){cache.forEach(release);cache.clear();cacheBytes=0;}
-    function beginFrame(){metrics={stampDraws:0,stampCacheMisses:0,stampCacheHits:0,stampCacheLimit:CACHE_LIMIT,stampCacheByteLimit:CACHE_BYTES,stampCacheBytes:cacheBytes,stampCacheEntries:cache.size,animatedBulletDraws:0,bodyAnimationPhases:0,suppressedUnapprovedFX:0,compactCastDraws:0,compactHazardDraws:0,assetLaserDraws:0,assetLaserSlices:0,signatureCastDraws:0,weaponVisualDraws:0,weaponTelegraphDraws:0,rotorVisualDraws:0,rotorTelegraphDraws:0,sourceBeamOverlayDraws:0,missingOptionalRotorAssets:0,missingOptionalBeamAssets:0,missingProjectileAssets:0,compactFamilies:{}};}
+    function beginFrame(){metrics={stampDraws:0,stampCacheMisses:0,stampCacheHits:0,stampCacheLimit:CACHE_LIMIT,stampCacheByteLimit:CACHE_BYTES,stampCacheBytes:cacheBytes,stampCacheEntries:cache.size,animatedBulletDraws:0,bodyAnimationPhases:0,naturalSilhouetteDraws:0,maxVisualOutset:0,suppressedUnapprovedFX:0,compactCastDraws:0,compactHazardDraws:0,assetLaserDraws:0,assetLaserSlices:0,signatureCastDraws:0,weaponVisualDraws:0,weaponTelegraphDraws:0,rotorVisualDraws:0,rotorTelegraphDraws:0,sourceBeamOverlayDraws:0,missingOptionalRotorAssets:0,missingOptionalBeamAssets:0,missingProjectileAssets:0,compactFamilies:{}};}
     function remember(key,e){
       if(e.bytes>CACHE_BYTES){release(e);return null;}
       while(cache.size&&(cache.size>=CACHE_LIMIT||cacheBytes+e.bytes>CACHE_BYTES)){var first=cache.keys().next().value,old=cache.get(first);cacheBytes-=old.bytes;release(old);cache.delete(first);}
       cache.set(key,e);cacheBytes+=e.bytes;return e;
     }
     function canvas(w,h){if(!global.document||!global.document.createElement)return null;var c=global.document.createElement('canvas');c.width=w;c.height=h;return c;}
-    function textureFor(w,b){var wi=indexFor(w);return wi<0?null:b&&b.halfLength>0&&BLADES[wi]?BLADES[wi]:ORBS[wi];}
+    function beamMaterialFor(w,b){var wi=indexFor(w),story=storySpec(wi,b);if(wi<0)return null;if(story){var s=story.beam||story.blade,cached=DENSE_SPEC_CACHE.get(s);if(cached)return cached;var c=s.denseCrop||s.crop;cached=Object.assign({frames:1,r:Math.min(c[2],c[3])/2,l:Math.max(0,(c[2]-c[3])/2)},s,{crop:c});DENSE_SPEC_CACHE.set(s,cached);return cached;}return BLADES[wi]||ORBS[wi];}
     function tintedArt(s,palette){
-      var key='art|'+s.key+'|'+palette.id,e=cache.get(key);if(e)return e;
+      var key='art|'+sourceSignature(s)+'|'+palette.id,e=cache.get(key);if(e)return e;
       var crop=s.crop,fw=s.downsample?s.downsample[0]:crop[2],fh=s.downsample?s.downsample[1]:crop[3],gutter=2,c=canvas((fw+gutter*2)*s.frames,fh+gutter*2);if(!c)return null;
       var ctx=c.getContext('2d');if(!ctx){release({canvas:c});return null;}
-      for(var f=0;f<s.frames;f++)ctx.drawImage(images[s.key],crop[0]+f*(s.step||0),crop[1],crop[2],crop[3],f*(fw+gutter*2)+gutter,gutter,fw,fh);
+      for(var f=0;f<s.frames;f++){
+        if(s.rotation){ctx.save();ctx.translate(f*(fw+gutter*2)+gutter+fw/2,gutter+fh/2);ctx.rotate(s.rotation);ctx.drawImage(images[s.key],crop[0]+f*(s.step||0),crop[1],crop[2],crop[3],-fh/2,-fw/2,fh,fw);ctx.restore();}
+        else ctx.drawImage(images[s.key],crop[0]+f*(s.step||0),crop[1],crop[2],crop[3],f*(fw+gutter*2)+gutter,gutter,fw,fh);
+      }
       // Recolor only existing authored pixels. Dark details and bright patches
-      // remain source-controlled. No new opacity is introduced by tinting.
+      // remain source-controlled. A few translucent spell sheets request a
+      // readability remap on existing authored pixels only, never outside alpha.
       var data=ctx.getImageData(0,0,c.width,c.height),d=data.data,p=rgb(palette.primary),q=rgb(palette.secondary),a=rgb(palette.accent);
       for(var i=0;i<d.length;i+=4){
         if(!d[i+3])continue;
@@ -192,12 +245,13 @@
         // Raise their existing pixels into the encounter's identity palette;
         // retain source alpha and source-value variation without adding a rim.
         var castValue=s.cast?Math.max(d[i],d[i+1],d[i+2])/255:0;
-        var hi=s.cast?clamp((castValue-.5)/.5,0,1)*.28:s.encounterMaterial?clamp((lum-.52)/.48,0,1)*.55:isLucifer?clamp((value-.45)/.55,0,1)*.9:clamp((lum-.64)/.36,0,1)*.72;
+        var hi=s.cast?clamp((castValue-.5)/.5,0,1)*.28:s.natural&&!isLucifer?clamp((lum-.25)/.75,0,1)*.9:s.encounterMaterial?clamp((lum-.52)/.48,0,1)*.55:isLucifer?clamp((value-.45)/.55,0,1)*.9:clamp((lum-.64)/.36,0,1)*.72;
         // Coal, steel and fabric contain dark source detail. Lift their own
         // pixels into the readable encounter palette without adding alpha,
         // contour strokes or an opaque replacement danger body.
-        var mid=s.cast?.80+castValue*.35:s.encounterMaterial?.88+Math.min(lum,.75)*.55:isLucifer?1.15+Math.min(value,.64)*.35:.38+Math.min(lum,.64)*1.03;
+        var mid=s.cast?.80+castValue*.35:s.natural&&!isLucifer?.90+Math.min(lum,.9)*.45:s.encounterMaterial?.88+Math.min(lum,.75)*.55:isLucifer?1.15+Math.min(value,.64)*.35:.38+Math.min(lum,.64)*1.03;
         for(var j=0;j<3;j++)d[i+j]=clamp(Math.round(p[j]*mid*(1-hi)+q[j]*hi+(a[j]-p[j])*.045),0,255);
+        if(s.natural&&s.alphaBoost&&d[i+3]>64)d[i+3]=Math.round(64+191*Math.pow((d[i+3]-64)/191,.25));
       }
       ctx.putImageData(data,0,0);
       return remember(key,{canvas:c,frameWidth:fw+gutter*2,frameHeight:fh+gutter*2,sourceWidth:fw,sourceHeight:fh,gutter:gutter,frames:s.frames,r:s.r,l:s.l,bytes:c.width*c.height*4});
@@ -214,27 +268,21 @@
     }
     function buildStamp(w,b,s,r,l){
       var art=tintedArt(s,bulletPalette(w,b));if(!art)return null;
-      var controllerLance=indexFor(w)>=13&&ready(images.chapter3Lance,CH3_LANCE)?tintedArt(CH3_LANCE_TINT,bulletPalette(w,b)):null;
-      var hx=l+r+PAD,hy=r+PAD,fw=Math.ceil(hx*2*SCALE),fh=Math.ceil(hy*2*SCALE),frames=[];
+      var outset=Math.min(4,Math.max(3,finite(s.visualOutset)?s.visualOutset:r*.5)),hx=l+r+outset+PAD,hy=r+outset+PAD,fw=Math.ceil(hx*2*SCALE),fh=Math.ceil(hy*2*SCALE),frames=[];
       // Separate frame surfaces preserve fractional-radius edge coverage and
       // permit one direct 5-argument drawImage per live bullet. A cropped frame
       // in a long strip was measurably expensive in native CPU Canvas.
       for(var phase=0;phase<s.frames;phase++){
         var c=canvas(fw,fh),ctx=c&&c.getContext('2d');if(!ctx){release({canvas:c,canvases:frames});return null;}
-        ctx.save();capsule(ctx,hx*SCALE,hy*SCALE,r*SCALE,l*SCALE);ctx.clip();
-        slices(ctx,art,phase,hx*SCALE,hy*SCALE,r*SCALE,l*SCALE);
-        if(w.finalPractice&&images.cultDriveSpear&&ready(images.cultDriveSpear,{width:512,height:512})){
-          // Reorient the diagonal authored spear within the exact damage clip.
-          ctx.save();ctx.translate(hx*SCALE,hy*SCALE);ctx.rotate(Math.PI/4);ctx.drawImage(images.cultDriveSpear,0,0,512,512,(-l-r)*SCALE,-r*SCALE,(2*l+2*r)*SCALE,2*r*SCALE);ctx.restore();
-        }
-        ctx.restore();
-        // Retain the complete authored point, fins and lightning silhouette.
-        // Its transparent margins are cosmetic. The dense own-beam material
-        // below still covers the entire authoritative damage capsule.
-        if(controllerLance)ctx.drawImage(controllerLance.canvas,controllerLance.gutter,controllerLance.gutter,controllerLance.sourceWidth,controllerLance.sourceHeight,(hx-l-r)*SCALE,(hy-r)*SCALE,(2*l+2*r)*SCALE,2*r*SCALE);
+        // Preserve the actual transparent contour, cloth edge, blade point or
+        // mechanical fins. No capsule clipping and no opaque backing is drawn.
+        var ax=s.anchor?clamp((s.anchor[0]-s.crop[0])/s.crop[2],0,1):.5,ay=s.anchor?clamp((s.anchor[1]-s.crop[1])/s.crop[3],0,1):.5;
+        if(s.rotation){var ca=Math.cos(s.rotation),sa=Math.sin(s.rotation),nx=ca*(ax-.5)-sa*(ay-.5)+.5,ny=sa*(ax-.5)+ca*(ay-.5)+.5;ax=clamp(nx,0,1);ay=clamp(ny,0,1);}
+        var dw=(l+r+outset)/Math.max(ax,1-ax),dh=(r+outset)/Math.max(ay,1-ay);
+        ctx.drawImage(art.canvas,phase*art.frameWidth+art.gutter,art.gutter,art.sourceWidth,art.sourceHeight,(hx-ax*dw)*SCALE,(hy-ay*dh)*SCALE,dw*SCALE,dh*SCALE);
         frames.push(c);
       }
-      return {canvases:frames,width:fw/SCALE,height:fh/SCALE,frameWidth:fw,frameHeight:fh,frameCount:s.frames,x:hx,y:hy,r:r,halfLength:l,bytes:fw*fh*s.frames*4};
+      return {canvases:frames,width:fw/SCALE,height:fh/SCALE,frameWidth:fw,frameHeight:fh,frameCount:s.frames,x:hx,y:hy,r:r,halfLength:l,outset:outset,bytes:fw*fh*s.frames*4};
     }
     // One small, bounded per-encounter cache is baked from the generated
     // source pixels; rotating it never changes physics or collision direction.
@@ -252,21 +300,21 @@
       ctx.save();ctx.globalCompositeOperation='source-over';ctx.globalAlpha=alpha;
       ctx.translate(x,y);ctx.rotate(angle);ctx.drawImage(art.canvas,-size/2,-size/2,size,size);ctx.restore();return true;
     }
-    function rotorSurface(w){
-      var s=ROTORS[indexFor(w)];if(!s||!ready(images[s.key],s))return null;
+    function rotorSurface(w,owner){
+      var wi=indexFor(w),story=storySpec(wi,owner),s=story?story.rotor:ROTORS[wi];if(!s||!ready(images[s.key],s))return null;
       var key='rotor|'+s.key,e=cache.get(key);if(e)return e;
       var c=canvas(96,96),ctx=c&&c.getContext('2d');if(!ctx){release({canvas:c});return null;}
       var crop=s.crop,scale=88/Math.max(crop[2],crop[3]),width=crop[2]*scale,height=crop[3]*scale;
       ctx.drawImage(images[s.key],crop[0],crop[1],crop[2],crop[3],(96-width)/2,(96-height)/2,width,height);
       return remember(key,{canvas:c,bytes:96*96*4});
     }
-    function drawRotorIcon(ctx,w,x,y,angle,size,alpha){
-      var art=rotorSurface(w);if(!art){metrics.missingOptionalRotorAssets++;return false;}
+    function drawRotorIcon(ctx,w,x,y,angle,size,alpha,owner){
+      var art=rotorSurface(w,owner);if(!art){metrics.missingOptionalRotorAssets++;return false;}
       ctx.save();ctx.globalCompositeOperation='source-over';ctx.globalAlpha=alpha;ctx.translate(x,y);ctx.rotate(angle);
       ctx.drawImage(art.canvas,-size/2,-size/2,size,size);ctx.restore();return true;
     }
     function beamSurface(w,h){
-      var s=BEAMS[indexFor(w)];if(!s||!ready(images[s.key],s))return null;
+      var wi=indexFor(w),story=storySpec(wi,h),s=story?story.beam:BEAMS[wi];if(!s||!ready(images[s.key],s))return null;
       var palette=paletteFor(w,h),key='beam|'+s.key+'|'+palette.id,e=cache.get(key);if(e)return e;
       // The authoritative hapil1 connected-laser crop is the central half of
       // each panorama. Downsample once; never recolor the 6MiB raw file each
@@ -281,31 +329,31 @@
       if(!w||!b||!finite(b.x)||!finite(b.y))return false;
       var wi=indexFor(w),weapon=WEAPONS[wi];
       if(b.kind==='boss-weapon'&&(!weapon||!ready(images[weapon.key],weapon))){metrics.missingProjectileAssets++;return false;}
-      var s=textureFor(w,b);
+      var s=naturalSpec(wi,b&&b.halfLength>0,b);
       if(!s||!ready(images[s.key],s)){metrics.missingProjectileAssets++;return false;}
       var r=finite(b.r)&&b.r>0?b.r:3,l=finite(b.halfLength)?Math.max(0,b.halfLength):0;
       if(r>128||l>640)return false;
       if(group!==wi){clearCache();group=wi;}
-      var key='body|'+s.key+'|'+r+'|'+l+'|'+bulletPalette(w,b).id,e=cache.get(key);
+      var key='body|'+sourceSignature(s)+'|'+r+'|'+l+'|'+bulletPalette(w,b).id,e=cache.get(key);
       if(!e){e=buildStamp(w,b,s,r,l);if(!e)return false;e=remember(key,e);if(!e)return false;metrics.stampCacheMisses++;}else metrics.stampCacheHits++;
       var phase=s.frames>1?Math.min(s.frames-1,Math.floor(Math.max(0,finite(b.age)?b.age:0)*1000/s.ms)):0;
-      ctx.save();ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.translate(b.x,b.y);ctx.rotate(b.kind==='hell-rotor'&&finite(b.spinAngle)?b.spinAngle:finite(b.angle)?b.angle:Math.atan2(b.vy||0,b.vx||0));
+      ctx.save();ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.translate(b.x,b.y);ctx.rotate(s.fixedOrientation?0:b.kind==='hell-rotor'&&finite(b.spinAngle)?b.spinAngle:finite(b.angle)?b.angle:Math.atan2(b.vy||0,b.vx||0));
       ctx.drawImage(e.canvases[phase],-e.x,-e.y,e.width,e.height);ctx.restore();
       // The owner's opaque, authored ORB covers the actual r=11 damage body;
       // the separate transparent weapon is a cosmetic rotating layer on it.
       if(b.kind==='boss-weapon'&&drawWeaponIcon(ctx,w,b.x,b.y,finite(b.spinAngle)?b.spinAngle:0,34,1))metrics.weaponVisualDraws++;
-      if(b.kind==='hell-rotor'&&drawRotorIcon(ctx,w,b.x,b.y,finite(b.spinAngle)?b.spinAngle:0,36,1))metrics.rotorVisualDraws++;
-      metrics.stampDraws++;metrics.animatedBulletDraws++;metrics.bodyAnimationPhases=Math.max(metrics.bodyAnimationPhases,e.frameCount);metrics.compactFamilies[s.key]=(metrics.compactFamilies[s.key]||0)+1;return true;
+      if(b.kind==='hell-rotor'&&drawRotorIcon(ctx,w,b.x,b.y,finite(b.spinAngle)?b.spinAngle:0,36,1,b))metrics.rotorVisualDraws++;
+      metrics.stampDraws++;metrics.animatedBulletDraws++;metrics.naturalSilhouetteDraws++;metrics.maxVisualOutset=Math.max(metrics.maxVisualOutset,e.outset);metrics.bodyAnimationPhases=Math.max(metrics.bodyAnimationPhases,e.frameCount);metrics.compactFamilies[s.key]=(metrics.compactFamilies[s.key]||0)+1;return true;
     }
     function drawHazardBody(ctx,w,h,lowQuality){
       if(!w||!h||(h.phase!=='active'&&h.phase!=='fade')||![h.x1,h.x2,h.y1,h.y2,h.width].every(finite)||h.width<=0)return false;
-      var s=textureFor(w,{halfLength:1});if(!s||!ready(images[s.key],s)){metrics.missingProjectileAssets++;return false;}
+      var s=beamMaterialFor(w,h);if(!s||!ready(images[s.key],s)){metrics.missingProjectileAssets++;return false;}
       var art=tintedArt(s,paletteFor(w,h));if(!art)return false;
       var dx=h.x2-h.x1,dy=h.y2-h.y1,len=Math.sqrt(dx*dx+dy*dy),r=h.width/2;
       var progress=clamp(h.progress||0,0,1),phase=s.frames>1?Math.min(s.frames-1,Math.floor(Math.max(0,finite(h.age)?h.age:0)*1000/s.ms)):0;
       ctx.save();ctx.globalCompositeOperation='source-over';ctx.globalAlpha=h.phase==='active'?1:Math.max(0,1-progress)*.35;
       ctx.translate((h.x1+h.x2)/2,(h.y1+h.y2)/2);ctx.rotate(Math.atan2(dy,dx));capsule(ctx,0,0,r,len/2);ctx.clip();slices(ctx,art,phase,0,0,r,len/2);
-      if(BEAMS[indexFor(w)]){var overlay=beamSurface(w,h);if(overlay){ctx.globalAlpha*=lowQuality?.32:.45;ctx.drawImage(overlay.canvas,-len/2-r,-r,len+r*2,r*2);metrics.sourceBeamOverlayDraws++;}else metrics.missingOptionalBeamAssets++;}
+      if(BEAMS[indexFor(w)]||storySpec(indexFor(w))){var overlay=beamSurface(w,h);if(overlay){ctx.globalAlpha*=lowQuality?.92:1;ctx.drawImage(overlay.canvas,-len/2-r,-r,len+r*2,r*2);metrics.sourceBeamOverlayDraws++;}else metrics.missingOptionalBeamAssets++;}
       ctx.restore();
       metrics.assetLaserDraws++;metrics.assetLaserSlices+=len>0?3:2;return true;
     }
@@ -317,7 +365,7 @@
     }
     function drawBossCast(ctx,w,lowQuality){
       if(!w||!w.campaign||!w.boss||w.stage!=='boss')return;
-      var b=w.boss,progress=clamp(b.actionProgress||0,0,1),wi=indexFor(w),names=FAMILIES[wi];if(wi<0||!names)return;
+      var b=w.boss,progress=clamp(b.actionProgress||0,0,1),wi=indexFor(w),names=FAMILIES[wi]||(storySpec(wi)?[]:null);if(wi<0||!names)return;
       var releaseAge=Number.isFinite(b.releaseTick)&&b.releaseTick>=0?w.tick-b.releaseTick:Infinity;
       if(b.action!=='charge'&&!(releaseAge>=0&&releaseAge<60)&&!b.rotorTelegraph&&!b.weaponTelegraph)return;
       // The pair appears during this particular charge only; its retained art

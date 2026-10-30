@@ -1,0 +1,3489 @@
+{
+  "scope": "Actual source images and projectile APIs on native CPU Canvas. Fixed r3/r6 orb and needle presentation fixtures, 19 historical asset groups, one live draw per bullet; not timing/GPU/mobile/natural gameplay.",
+  "baselineCommit": "878419a75189ea82db21ae4b696a150d4280b354",
+  "baselineProjectileSHA256": "c76f60f03f2bb6e961a9e066d1d89b08eabacc5a7ba4824975e0d23a99404723",
+  "candidateProjectileSHA256": "ade13c42dfa02534d57a1fc59fc58282617cc7983421720fcb27bc5ed1aca98b",
+  "candidateStoryAssetsSHA256": "c0081d5ca408be6d6a7d495d6651430113320aaeb43655a6646ad713730c0910",
+  "sources": [
+    {
+      "key": "projectileVioletOrbV9",
+      "path": "media/projectiles-drive-v9/violet-orb-cocoon-atlas.png",
+      "bytes": 21165,
+      "sha256": "03aa2075d2242b6dc0f7d35e2f04b69749256249a564175a3711dde29a9aaa2d",
+      "dimensions": [
+        296,
+        80
+      ]
+    },
+    {
+      "key": "projectileVioletBladeV10",
+      "path": "media/projectiles-drive-v10/violet_blade_spindle.png",
+      "bytes": 5990,
+      "sha256": "e7f1fbacc4352a43d11da00d7f284f2892002f9f759cb315671ff59b1223ea19",
+      "dimensions": [
+        128,
+        64
+      ]
+    },
+    {
+      "key": "weaponVioletV12",
+      "path": "media/weapon-v12/violet-sword.png",
+      "bytes": 371193,
+      "sha256": "e91c2ddfa14e2edf2cb6c3a13f1dad150770164003fdee1aecb98a43c1a7bc56",
+      "dimensions": [
+        1774,
+        887
+      ]
+    },
+    {
+      "key": "castVioletV11",
+      "path": "media/encounter-signature-v11/violet-knot.png",
+      "bytes": 4563,
+      "sha256": "c72f96123e091473cd5761aef62fe0d2ced7d7d5ed39ff56476b9a7e126fced5",
+      "dimensions": [
+        96,
+        96
+      ]
+    },
+    {
+      "key": "fxV8VioletWeb",
+      "path": "media/fx-v8/violet-web.webp",
+      "bytes": 82302,
+      "sha256": "2510213cd2651e81c922ac0875896c4f3bdd125f6a176387b5e25eaca5cca5a0",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "fxV8SilverSlash",
+      "path": "media/fx-v8/silver-slash.webp",
+      "bytes": 89626,
+      "sha256": "dc9ebd4d13dc5c280321b1a33de3f443e141c407dcca2e7391240b2152b9c9dc",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "h14SkillViolet",
+      "path": "media/hapil1-v14/fx/violet-primary.webp",
+      "bytes": 111666,
+      "sha256": "237953c7bb81d53450f3ae5f63b0b81986eab37a124d929bced022b14a3addd8",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "projectileHornOrbV10",
+      "path": "media/projectiles-drive-v10/swamp_orb_toxicseed.png",
+      "bytes": 5468,
+      "sha256": "ecd6e58a16e2a02fe2d499ba0d6f82b6f9dece0974188561b7bca7ed4d095c7d",
+      "dimensions": [
+        64,
+        64
+      ]
+    },
+    {
+      "key": "projectileHornNeedleV11",
+      "path": "media/encounter-signature-v11/horn-reed-needle.png",
+      "bytes": 3062,
+      "sha256": "abcb9ae62518a4eea88f585f53cbb733fd25e1100386b8f9b56bb3044766a245",
+      "dimensions": [
+        128,
+        64
+      ]
+    },
+    {
+      "key": "weaponHornV12",
+      "path": "media/weapon-v12/horn-cleaver.png",
+      "bytes": 1128521,
+      "sha256": "de5e22d4d6ad9f3283eb62ee52047242ba850213c2149d41695bd388cfbf26a7",
+      "dimensions": [
+        1774,
+        887
+      ]
+    },
+    {
+      "key": "castHornV11",
+      "path": "media/encounter-signature-v11/horn-swamp.png",
+      "bytes": 5458,
+      "sha256": "a63d7814ed4a8c414c9ddbd4ccb2a083c31a8c6f94e9adcf7852e3e37358b50b",
+      "dimensions": [
+        96,
+        96
+      ]
+    },
+    {
+      "key": "fxV8SwampRipple",
+      "path": "media/fx-v8/swamp-ripple.webp",
+      "bytes": 125222,
+      "sha256": "29a72d6b90380d00282b9c2086d272eecb7b10d79ad1c3100f2e2fc5f642abf2",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "fxV8Reed",
+      "path": "media/fx-v8/reed.webp",
+      "bytes": 151182,
+      "sha256": "43a8435a85859075e3cd23690e23cd4584d919f9cf0b89442073a7142315af9b",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "h14SkillHorn",
+      "path": "media/hapil1-v14/fx/horn-primary.webp",
+      "bytes": 24420,
+      "sha256": "f798a6599bcd55e37b9b1dfceda41a0b20610a92cbfe3c6181a7397c88c549d0",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "key": "projectileBalrogOrbV10",
+      "path": "media/projectiles-drive-v10/balrog_orb_cinderheart.png",
+      "bytes": 5028,
+      "sha256": "59f78125f07ddcbe7ce99d5da1a0b599ffd39df2ce7ab62535381ba174578d69",
+      "dimensions": [
+        64,
+        64
+      ]
+    },
+    {
+      "key": "projectileBalrogBladeV10",
+      "path": "media/projectiles-drive-v10/balrog_blade_slagfang.png",
+      "bytes": 5717,
+      "sha256": "b913192ab73f912aeaf6192028b197d9c46f20d9e2ad17c6edbd63078f3e8039",
+      "dimensions": [
+        128,
+        64
+      ]
+    },
+    {
+      "key": "weaponBalrogV12",
+      "path": "media/weapon-v12/balrog-sword.png",
+      "bytes": 852927,
+      "sha256": "6ba955cb2d3b171406b4a987e3c481f665fb7da74f17613d5825976ad3e9fcf3",
+      "dimensions": [
+        1774,
+        887
+      ]
+    },
+    {
+      "key": "castBalrogV11",
+      "path": "media/encounter-signature-v11/balrog-fire.png",
+      "bytes": 7290,
+      "sha256": "cd57c83c262e07a13128b920e57e66d4ac2ace0a8ebf63fffc4890f5cb0fb38a",
+      "dimensions": [
+        96,
+        96
+      ]
+    },
+    {
+      "key": "fxV8Ember",
+      "path": "media/fx-v8/ember.webp",
+      "bytes": 139784,
+      "sha256": "3a37c619c84129f765d2f3703b164e15a3af69ce750d1dd3cbe8b0ae0fa571f0",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "fxV8GoldSlash",
+      "path": "media/fx-v8/gold-slash.webp",
+      "bytes": 47300,
+      "sha256": "931038b553aa55989577584dca4f5060d120ac75be03377b4da65010aefd42c2",
+      "dimensions": [
+        512,
+        256
+      ]
+    },
+    {
+      "key": "h14SkillBalrog",
+      "path": "media/hapil1-v14/fx/balrog-secondary.webp",
+      "bytes": 207986,
+      "sha256": "f6f9b989f5c6e33094440268a7888c71548ac2c6948d0cf4254b2e04aea3d762",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "projectileMaskOrbV10",
+      "path": "media/projectiles-drive-v10/false_angel_orb_sealedpearl.png",
+      "bytes": 4322,
+      "sha256": "518d87e07ab4851bbf4e887ecef641cd8aefae4d61454bfa4a896cf073047729",
+      "dimensions": [
+        64,
+        64
+      ]
+    },
+    {
+      "key": "projectileMaskNeedleV10",
+      "path": "media/projectiles-drive-v10/false_angel_needle_edictfeather.png",
+      "bytes": 2880,
+      "sha256": "d04e9be769b6d88c4469c8fe938086c7b56e4fd743fcb2bee73f644d3454edb9",
+      "dimensions": [
+        128,
+        64
+      ]
+    },
+    {
+      "key": "weaponMaskV12",
+      "path": "media/weapon-v12/mask-feather.png",
+      "bytes": 665062,
+      "sha256": "e8d30eaa562ee139da17138a1eb0a6236a27b6c93c8d886ca4d88b6fb6bdacdd",
+      "dimensions": [
+        1774,
+        887
+      ]
+    },
+    {
+      "key": "castMaskV11",
+      "path": "media/encounter-signature-v11/mask-fan.png",
+      "bytes": 3461,
+      "sha256": "fbe38267c2dc0b3d3704947fc08646909d8fa6673cd8125295805d524a7e2eaa",
+      "dimensions": [
+        96,
+        96
+      ]
+    },
+    {
+      "key": "h14SkillMask",
+      "path": "media/hapil1-v14/fx/mask-secondary.webp",
+      "bytes": 60564,
+      "sha256": "2772a1df9aee03a04d75786218e5834e60aa2c4dc8dc7bd5372065e93287eee4",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "projectileLuciferOrbV9",
+      "path": "media/projectiles-drive-v9/lucifer-orb-eclipseiris-atlas.png",
+      "bytes": 18450,
+      "sha256": "1440f50ca908f6f6c4df342ae9e6b09e97ab797e6204acad1a622505499946e5",
+      "dimensions": [
+        296,
+        80
+      ]
+    },
+    {
+      "key": "projectileLuciferShardV11",
+      "path": "media/encounter-signature-v11/lucifer-mask-shard.png",
+      "bytes": 5082,
+      "sha256": "5d606352ba92ad8d373d3973d81b8e3f0a42ca0d8a8f8c0536fa8afeb44cd287",
+      "dimensions": [
+        128,
+        64
+      ]
+    },
+    {
+      "key": "weaponLuciferV12",
+      "path": "media/weapon-v12/lucifer-shard.png",
+      "bytes": 937312,
+      "sha256": "90d92f10c32311ab43573c6a07b5151ef941061fdc0610c43342e809043ebcdf",
+      "dimensions": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "key": "castLuciferV11",
+      "path": "media/encounter-signature-v11/lucifer-ring.png",
+      "bytes": 5970,
+      "sha256": "e9106e21f663424bff962f59ef82700fb1af835a01799a450b4d585ed063bba9",
+      "dimensions": [
+        96,
+        96
+      ]
+    },
+    {
+      "key": "fxV8Vortex",
+      "path": "media/fx-v8/vortex.webp",
+      "bytes": 102024,
+      "sha256": "72cd2f043c2f488d6b06c0b8253278f5632f0426d83ad0432908a692bfda8b68",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "h14SkillLucifer",
+      "path": "media/hapil1-v14/fx/lucifer-secondary.webp",
+      "bytes": 143392,
+      "sha256": "c0f4cf47147fccb62714d909749e79a72e893b2976943c53e441e8deb9dfc93d",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "projectileBelphegorV13",
+      "path": "media/sins-v13/sloth-core.png",
+      "bytes": 912877,
+      "sha256": "cd7f3b5ee70664d42b0deaa5002443af7b285dea2decbfc9c9e4768d92558001",
+      "dimensions": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "key": "h14SkillSloth",
+      "path": "media/hapil1-v14/fx/sloth-secondary.webp",
+      "bytes": 273476,
+      "sha256": "fd0df92278a5e74d4c2421ffc2c3fcce8b35c2455bd2407ce9b71bd067489486",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "h14BeamSloth",
+      "path": "media/hapil1-v14/fx/beam-sloth.webp",
+      "bytes": 350630,
+      "sha256": "73a9174dd6fffda1282c92202f44a87735f2ede546937ebc8514c12ccec8593a",
+      "dimensions": [
+        2172,
+        724
+      ]
+    },
+    {
+      "key": "projectileLeviathanV13",
+      "path": "media/sins-v13/envy-core.png",
+      "bytes": 288084,
+      "sha256": "e6d1b0dcdff9663f93daca8843191ef9561afbb830b0bcb0f1db3af314b2aa93",
+      "dimensions": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "key": "h14SkillEnvy",
+      "path": "media/hapil1-v14/fx/envy-primary.webp",
+      "bytes": 179378,
+      "sha256": "79feb01463759f28a1e5ede94586b944a5c97062f21d54df097d0c6f306fedd6",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "h14BeamEnvy",
+      "path": "media/hapil1-v14/fx/beam-envy.webp",
+      "bytes": 419044,
+      "sha256": "983634b08cecb22aff03cf10bf3cc80d5b948d27366fb30ef4fb55d99214e853",
+      "dimensions": [
+        2172,
+        724
+      ]
+    },
+    {
+      "key": "projectileBeelzebubV13",
+      "path": "media/sins-v13/glutton-core.png",
+      "bytes": 828086,
+      "sha256": "027c1ce6572541490f23ba3a10463ddb7771f2ab3af7cf9c3a7b27cc1575a1f6",
+      "dimensions": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "key": "h14RotorGlutton",
+      "path": "media/hapil1-v14/fx/glutton-secondary.webp",
+      "bytes": 233902,
+      "sha256": "bcd58373009e6e28e1521f42b44f4c080f02d1767729e8669f45fee22cd8c942",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "h14BeamGlutton",
+      "path": "media/hapil1-v14/fx/beam-gluttony.webp",
+      "bytes": 368580,
+      "sha256": "c74954f94e3460f92138bdd599146646021fc64d0a38eaac4c832f30fe1ff5db",
+      "dimensions": [
+        2172,
+        724
+      ]
+    },
+    {
+      "key": "h14SkillGlutton",
+      "path": "media/hapil1-v14/fx/glutton-primary.webp",
+      "bytes": 295074,
+      "sha256": "a30a2c20dbd1adf968d0f737b8836149ce28a62ad68dbf9452ee63c5df4b27fc",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "projectileAsmodeusV13",
+      "path": "media/sins-v13/seoyun-core.png",
+      "bytes": 350216,
+      "sha256": "7b902512dcefa6e7307f888845845d938b0e5cbaf84669998394df7f7dcf8142",
+      "dimensions": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "key": "h14SkillLust",
+      "path": "media/hapil1-v14/fx/lust-primary.webp",
+      "bytes": 214228,
+      "sha256": "50854e6326ef0bf88e41dc396551fe337741cae7d85389bc94f5e624395760e1",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "h14BeamLust",
+      "path": "media/hapil1-v14/fx/beam-lust.webp",
+      "bytes": 399528,
+      "sha256": "8a8becae13684a40f322ba2d14f6a49f5f7ccd11a7cf62fb6e5a5d579448442e",
+      "dimensions": [
+        2172,
+        724
+      ]
+    },
+    {
+      "key": "projectileMammonV13",
+      "path": "media/sins-v13/mammon-projectile.png",
+      "bytes": 1844314,
+      "sha256": "eab754f79f7927f2606d61e64f8069f5f64b6632592b63f44d62fee163f41609",
+      "dimensions": [
+        1295,
+        1215
+      ]
+    },
+    {
+      "key": "h14SkillGreed",
+      "path": "media/hapil1-v14/fx/greed-primary.webp",
+      "bytes": 267494,
+      "sha256": "36355530ef13f3727b36c0458f3b8a40bb31e1c5fd11ad0f58e4c2f4fcfeeb4b",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "h14BeamGreed",
+      "path": "media/hapil1-v14/fx/beam-greed.webp",
+      "bytes": 317012,
+      "sha256": "64aa2111ae49c238fff935e21a2e6bf04724169f998d4512137c1224a8451c71",
+      "dimensions": [
+        2172,
+        724
+      ]
+    },
+    {
+      "key": "projectileWrathV13",
+      "path": "media/sins-v13/wrath-projectile.png",
+      "bytes": 945900,
+      "sha256": "92a333e3d9159e51df4d8174bf8f3d361592540c9404e7bd7793ea657442d616",
+      "dimensions": [
+        1295,
+        1214
+      ]
+    },
+    {
+      "key": "h14SkillWrath",
+      "path": "media/hapil1-v14/fx/wrath-primary.webp",
+      "bytes": 276340,
+      "sha256": "fe91e446954c9d3367e194c2884264a0b428b01d40c17d1b3556f58cceacff95",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "h14BeamWrath",
+      "path": "media/hapil1-v14/fx/beam-wrath.webp",
+      "bytes": 404864,
+      "sha256": "5bf97aaff9d372eeeb30033404301d9531af7eedcb35d0d618e884a333309e38",
+      "dimensions": [
+        2172,
+        724
+      ]
+    },
+    {
+      "key": "projectilePrideV13",
+      "path": "media/sins-v13/pride-projectile.png",
+      "bytes": 1082720,
+      "sha256": "55bf337eee80cd5ce686271cb6e22e7aaf0c5e1b01455e14460861ed7e8ab8cf",
+      "dimensions": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "key": "h14SkillPride",
+      "path": "media/hapil1-v14/fx/pride-primary.webp",
+      "bytes": 282626,
+      "sha256": "83ed7b152d1c8d28cf9c3797738c42184ed02cf6100e976ef5886b5f76f69c85",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "h14BeamPride",
+      "path": "media/hapil1-v14/fx/beam-pride.webp",
+      "bytes": 382092,
+      "sha256": "319cde0f6ec2aa2449a7a5e76e1bffbed9497b36d244fc8bcfede2570d1c508e",
+      "dimensions": [
+        2172,
+        724
+      ]
+    },
+    {
+      "key": "cultBeam",
+      "path": "media/cult-v17/beam.webp",
+      "bytes": 50944,
+      "sha256": "2b2cfae52803b7b7b1d4311aa98d7e37ebcc2876e8c3b15dfb1c596bac8dfb59",
+      "dimensions": [
+        768,
+        144
+      ]
+    },
+    {
+      "key": "cultLance",
+      "path": "media/cult-v17/lance.webp",
+      "bytes": 27866,
+      "sha256": "b1c98912111f3c661c418567e1d304d606705d7e3eb87c643caeaf8402f4acf7",
+      "dimensions": [
+        512,
+        192
+      ]
+    },
+    {
+      "key": "cultDriveSpear",
+      "path": "media/cult-v17/drive-spear.webp",
+      "bytes": 64746,
+      "sha256": "507b0455ada4be3ff8876d1686aef6362539b57782333c849c48ba21ed352dd8",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "chapter3Beam",
+      "path": "media/chapter3-v18/beam.webp",
+      "bytes": 52734,
+      "sha256": "630a74006bc13b02614445ce91aa87d12ca32f0e17a54100360629a2fb3d0be2",
+      "dimensions": [
+        768,
+        144
+      ]
+    },
+    {
+      "key": "chapter3Lance",
+      "path": "media/chapter3-v18/lance.webp",
+      "bytes": 29140,
+      "sha256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+      "dimensions": [
+        512,
+        192
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "group": 0,
+      "id": "violet",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 24,
+        "opaqueLuminanceStd": 47.30370709253835
+      },
+      "cacheBytes": 52480,
+      "missing": 0
+    },
+    {
+      "group": 0,
+      "id": "violet",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 94,
+        "opaqueLuminanceStd": 45.90985156259497
+      },
+      "cacheBytes": 80704,
+      "missing": 0
+    },
+    {
+      "group": 0,
+      "id": "violet",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 89,
+        "opaqueLuminanceStd": 22.93370552652525
+      },
+      "cacheBytes": 98912,
+      "missing": 0
+    },
+    {
+      "group": 0,
+      "id": "violet",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 284,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 173,
+        "opaqueLuminanceStd": 24.7857726579308
+      },
+      "cacheBytes": 113024,
+      "missing": 0
+    },
+    {
+      "group": 0,
+      "id": "violet",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 64,
+        "outsideOriginalHitCapsulePixels": 20,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 49,
+        "opaqueLuminanceStd": 37.53545877691005
+      },
+      "cacheBytes": 188224,
+      "missing": 0
+    },
+    {
+      "group": 0,
+      "id": "violet",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 152,
+        "outsideOriginalHitCapsulePixels": 2,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 103,
+        "opaqueLuminanceStd": 36.28071226283004
+      },
+      "cacheBytes": 245824,
+      "missing": 0
+    },
+    {
+      "group": 0,
+      "id": "violet",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 107,
+        "outsideOriginalHitCapsulePixels": 13,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.8333333333333334,
+        "opaqueRGBColors": 72,
+        "opaqueLuminanceStd": 24.154489230884504
+      },
+      "cacheBytes": 287392,
+      "missing": 0
+    },
+    {
+      "group": 0,
+      "id": "violet",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 175,
+        "outsideOriginalHitCapsulePixels": 14,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 141,
+        "opaqueLuminanceStd": 25.518007014634534
+      },
+      "cacheBytes": 311872,
+      "missing": 0
+    },
+    {
+      "group": 1,
+      "id": "horn",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 23,
+        "opaqueLuminanceStd": 28.707749159009214
+      },
+      "cacheBytes": 13120,
+      "missing": 0
+    },
+    {
+      "group": 1,
+      "id": "horn",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 87,
+        "opaqueLuminanceStd": 30.044946210037665
+      },
+      "cacheBytes": 20176,
+      "missing": 0
+    },
+    {
+      "group": 1,
+      "id": "horn",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 114,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 82,
+        "opaqueLuminanceStd": 24.827998230042283
+      },
+      "cacheBytes": 33200,
+      "missing": 0
+    },
+    {
+      "group": 1,
+      "id": "horn",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 284,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 156,
+        "opaqueLuminanceStd": 25.17150609002548
+      },
+      "cacheBytes": 47312,
+      "missing": 0
+    },
+    {
+      "group": 1,
+      "id": "horn",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 64,
+        "outsideOriginalHitCapsulePixels": 20,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 48,
+        "opaqueLuminanceStd": 6.796845834770012
+      },
+      "cacheBytes": 47056,
+      "missing": 0
+    },
+    {
+      "group": 1,
+      "id": "horn",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 152,
+        "outsideOriginalHitCapsulePixels": 2,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 78,
+        "opaqueLuminanceStd": 6.626121930455824
+      },
+      "cacheBytes": 61456,
+      "missing": 0
+    },
+    {
+      "group": 1,
+      "id": "horn",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 197,
+        "outsideOriginalHitCapsulePixels": 37,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 81,
+        "opaqueLuminanceStd": 5.704584827122586
+      },
+      "cacheBytes": 103024,
+      "missing": 0
+    },
+    {
+      "group": 1,
+      "id": "horn",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 367,
+        "outsideOriginalHitCapsulePixels": 39,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 149,
+        "opaqueLuminanceStd": 5.7570766740614285
+      },
+      "cacheBytes": 127504,
+      "missing": 0
+    },
+    {
+      "group": 2,
+      "id": "balrog",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 23,
+        "opaqueLuminanceStd": 28.66942144457398
+      },
+      "cacheBytes": 13120,
+      "missing": 0
+    },
+    {
+      "group": 2,
+      "id": "balrog",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 84,
+        "opaqueLuminanceStd": 29.29201539836626
+      },
+      "cacheBytes": 20176,
+      "missing": 0
+    },
+    {
+      "group": 2,
+      "id": "balrog",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 79,
+        "opaqueLuminanceStd": 25.444128538812247
+      },
+      "cacheBytes": 38384,
+      "missing": 0
+    },
+    {
+      "group": 2,
+      "id": "balrog",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 284,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 133,
+        "opaqueLuminanceStd": 26.10620117886392
+      },
+      "cacheBytes": 52496,
+      "missing": 0
+    },
+    {
+      "group": 2,
+      "id": "balrog",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 64,
+        "outsideOriginalHitCapsulePixels": 20,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 41,
+        "opaqueLuminanceStd": 19.968578940145175
+      },
+      "cacheBytes": 47056,
+      "missing": 0
+    },
+    {
+      "group": 2,
+      "id": "balrog",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 152,
+        "outsideOriginalHitCapsulePixels": 2,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 85,
+        "opaqueLuminanceStd": 19.867293776275027
+      },
+      "cacheBytes": 61456,
+      "missing": 0
+    },
+    {
+      "group": 2,
+      "id": "balrog",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 127,
+        "outsideOriginalHitCapsulePixels": 18,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 96,
+        "opaqueLuminanceStd": 18.073432614303922
+      },
+      "cacheBytes": 103024,
+      "missing": 0
+    },
+    {
+      "group": 2,
+      "id": "balrog",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 242,
+        "outsideOriginalHitCapsulePixels": 20,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 173,
+        "opaqueLuminanceStd": 19.20611161650594
+      },
+      "cacheBytes": 127504,
+      "missing": 0
+    },
+    {
+      "group": 3,
+      "id": "mask",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 22,
+        "opaqueLuminanceStd": 38.87645612187913
+      },
+      "cacheBytes": 13120,
+      "missing": 0
+    },
+    {
+      "group": 3,
+      "id": "mask",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 91,
+        "opaqueLuminanceStd": 35.471424811272044
+      },
+      "cacheBytes": 20176,
+      "missing": 0
+    },
+    {
+      "group": 3,
+      "id": "mask",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 114,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 86,
+        "opaqueLuminanceStd": 35.74909346522944
+      },
+      "cacheBytes": 33200,
+      "missing": 0
+    },
+    {
+      "group": 3,
+      "id": "mask",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 284,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 179,
+        "opaqueLuminanceStd": 37.454177139523715
+      },
+      "cacheBytes": 47312,
+      "missing": 0
+    },
+    {
+      "group": 3,
+      "id": "mask",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 64,
+        "outsideOriginalHitCapsulePixels": 20,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 49,
+        "opaqueLuminanceStd": 28.647327983864287
+      },
+      "cacheBytes": 47056,
+      "missing": 0
+    },
+    {
+      "group": 3,
+      "id": "mask",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 152,
+        "outsideOriginalHitCapsulePixels": 2,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 106,
+        "opaqueLuminanceStd": 28.64408363138526
+      },
+      "cacheBytes": 61456,
+      "missing": 0
+    },
+    {
+      "group": 3,
+      "id": "mask",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 138,
+        "outsideOriginalHitCapsulePixels": 10,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 103,
+        "opaqueLuminanceStd": 35.68382890676087
+      },
+      "cacheBytes": 103024,
+      "missing": 0
+    },
+    {
+      "group": 3,
+      "id": "mask",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 245,
+        "outsideOriginalHitCapsulePixels": 6,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 180,
+        "opaqueLuminanceStd": 38.06628062740856
+      },
+      "cacheBytes": 127504,
+      "missing": 0
+    },
+    {
+      "group": 4,
+      "id": "lucifer",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 23,
+        "opaqueLuminanceStd": 50.69705526249279
+      },
+      "cacheBytes": 52480,
+      "missing": 0
+    },
+    {
+      "group": 4,
+      "id": "lucifer",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 77,
+        "opaqueLuminanceStd": 49.5342326972774
+      },
+      "cacheBytes": 80704,
+      "missing": 0
+    },
+    {
+      "group": 4,
+      "id": "lucifer",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 90,
+        "opaqueLuminanceStd": 44.978543226997225
+      },
+      "cacheBytes": 98912,
+      "missing": 0
+    },
+    {
+      "group": 4,
+      "id": "lucifer",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 284,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 163,
+        "opaqueLuminanceStd": 44.900718208106284
+      },
+      "cacheBytes": 113024,
+      "missing": 0
+    },
+    {
+      "group": 4,
+      "id": "lucifer",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 64,
+        "outsideOriginalHitCapsulePixels": 20,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 48,
+        "opaqueLuminanceStd": 49.48595069854357
+      },
+      "cacheBytes": 188224,
+      "missing": 0
+    },
+    {
+      "group": 4,
+      "id": "lucifer",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 152,
+        "outsideOriginalHitCapsulePixels": 2,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 85,
+        "opaqueLuminanceStd": 49.578268159256936
+      },
+      "cacheBytes": 245824,
+      "missing": 0
+    },
+    {
+      "group": 4,
+      "id": "lucifer",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 141,
+        "outsideOriginalHitCapsulePixels": 33,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 111,
+        "opaqueLuminanceStd": 32.876015154135914
+      },
+      "cacheBytes": 287392,
+      "missing": 0
+    },
+    {
+      "group": 4,
+      "id": "lucifer",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 262,
+        "outsideOriginalHitCapsulePixels": 42,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 198,
+        "opaqueLuminanceStd": 35.28001102381451
+      },
+      "cacheBytes": 311872,
+      "missing": 0
+    },
+    {
+      "group": 5,
+      "id": "belphegor",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 21,
+        "opaqueLuminanceStd": 11.082363824385338
+      },
+      "cacheBytes": 604480,
+      "missing": 0
+    },
+    {
+      "group": 5,
+      "id": "belphegor",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 120,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 79,
+        "opaqueLuminanceStd": 13.988865163629905
+      },
+      "cacheBytes": 611536,
+      "missing": 0
+    },
+    {
+      "group": 5,
+      "id": "belphegor",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 47,
+        "opaqueLuminanceStd": 12.516896914576305
+      },
+      "cacheBytes": 617872,
+      "missing": 0
+    },
+    {
+      "group": 5,
+      "id": "belphegor",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 288,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 108,
+        "opaqueLuminanceStd": 14.918208954814952
+      },
+      "cacheBytes": 631984,
+      "missing": 0
+    },
+    {
+      "group": 5,
+      "id": "belphegor",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 92,
+        "outsideOriginalHitCapsulePixels": 48,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 78,
+        "opaqueLuminanceStd": 15.092485751936007
+      },
+      "cacheBytes": 47056,
+      "missing": 0
+    },
+    {
+      "group": 5,
+      "id": "belphegor",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 211,
+        "outsideOriginalHitCapsulePixels": 62,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 133,
+        "opaqueLuminanceStd": 15.697057859284891
+      },
+      "cacheBytes": 61456,
+      "missing": 0
+    },
+    {
+      "group": 5,
+      "id": "belphegor",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 183,
+        "outsideOriginalHitCapsulePixels": 28,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 106,
+        "opaqueLuminanceStd": 13.39979976359171
+      },
+      "cacheBytes": 115568,
+      "missing": 0
+    },
+    {
+      "group": 5,
+      "id": "belphegor",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 324,
+        "outsideOriginalHitCapsulePixels": 28,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 158,
+        "opaqueLuminanceStd": 14.983409267977843
+      },
+      "cacheBytes": 140048,
+      "missing": 0
+    },
+    {
+      "group": 6,
+      "id": "leviathan",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 21,
+        "opaqueLuminanceStd": 9.886603085653979
+      },
+      "cacheBytes": 48960,
+      "missing": 0
+    },
+    {
+      "group": 6,
+      "id": "leviathan",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 120,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 68,
+        "opaqueLuminanceStd": 10.010584715545876
+      },
+      "cacheBytes": 56016,
+      "missing": 0
+    },
+    {
+      "group": 6,
+      "id": "leviathan",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 33,
+        "opaqueLuminanceStd": 6.156737633021978
+      },
+      "cacheBytes": 62352,
+      "missing": 0
+    },
+    {
+      "group": 6,
+      "id": "leviathan",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 288,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 78,
+        "opaqueLuminanceStd": 8.53921545139858
+      },
+      "cacheBytes": 76464,
+      "missing": 0
+    },
+    {
+      "group": 6,
+      "id": "leviathan",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 107,
+        "outsideOriginalHitCapsulePixels": 61,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 90,
+        "opaqueLuminanceStd": 19.660063068890878
+      },
+      "cacheBytes": 47056,
+      "missing": 0
+    },
+    {
+      "group": 6,
+      "id": "leviathan",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 232,
+        "outsideOriginalHitCapsulePixels": 84,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 167,
+        "opaqueLuminanceStd": 20.810050563850467
+      },
+      "cacheBytes": 61456,
+      "missing": 0
+    },
+    {
+      "group": 6,
+      "id": "leviathan",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 225,
+        "outsideOriginalHitCapsulePixels": 72,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 133,
+        "opaqueLuminanceStd": 23.37804693763544
+      },
+      "cacheBytes": 111472,
+      "missing": 0
+    },
+    {
+      "group": 6,
+      "id": "leviathan",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 415,
+        "outsideOriginalHitCapsulePixels": 83,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 209,
+        "opaqueLuminanceStd": 23.23175680921995
+      },
+      "cacheBytes": 135952,
+      "missing": 0
+    },
+    {
+      "group": 7,
+      "id": "beelzebub",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 21,
+        "opaqueLuminanceStd": 13.605770112957952
+      },
+      "cacheBytes": 604480,
+      "missing": 0
+    },
+    {
+      "group": 7,
+      "id": "beelzebub",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 120,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 59,
+        "opaqueLuminanceStd": 12.908949130592797
+      },
+      "cacheBytes": 611536,
+      "missing": 0
+    },
+    {
+      "group": 7,
+      "id": "beelzebub",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 32,
+        "opaqueLuminanceStd": 8.237465659654918
+      },
+      "cacheBytes": 617872,
+      "missing": 0
+    },
+    {
+      "group": 7,
+      "id": "beelzebub",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 288,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 70,
+        "opaqueLuminanceStd": 10.013519558612114
+      },
+      "cacheBytes": 631984,
+      "missing": 0
+    },
+    {
+      "group": 7,
+      "id": "beelzebub",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 79,
+        "outsideOriginalHitCapsulePixels": 43,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 59,
+        "opaqueLuminanceStd": 14.227013447875898
+      },
+      "cacheBytes": 47056,
+      "missing": 0
+    },
+    {
+      "group": 7,
+      "id": "beelzebub",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 176,
+        "outsideOriginalHitCapsulePixels": 64,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 88,
+        "opaqueLuminanceStd": 15.026126883582142
+      },
+      "cacheBytes": 61456,
+      "missing": 0
+    },
+    {
+      "group": 7,
+      "id": "beelzebub",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 196,
+        "outsideOriginalHitCapsulePixels": 59,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 140,
+        "opaqueLuminanceStd": 20.33980573372951
+      },
+      "cacheBytes": 115568,
+      "missing": 0
+    },
+    {
+      "group": 7,
+      "id": "beelzebub",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 359,
+        "outsideOriginalHitCapsulePixels": 62,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 224,
+        "opaqueLuminanceStd": 22.20722041223667
+      },
+      "cacheBytes": 140048,
+      "missing": 0
+    },
+    {
+      "group": 8,
+      "id": "asmodeus",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 18,
+        "opaqueLuminanceStd": 23.052627307808233
+      },
+      "cacheBytes": 94720,
+      "missing": 0
+    },
+    {
+      "group": 8,
+      "id": "asmodeus",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 120,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 62,
+        "opaqueLuminanceStd": 18.578855022895688
+      },
+      "cacheBytes": 101776,
+      "missing": 0
+    },
+    {
+      "group": 8,
+      "id": "asmodeus",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 40,
+        "opaqueLuminanceStd": 20.3551960550194
+      },
+      "cacheBytes": 108112,
+      "missing": 0
+    },
+    {
+      "group": 8,
+      "id": "asmodeus",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 288,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 97,
+        "opaqueLuminanceStd": 13.22702262363868
+      },
+      "cacheBytes": 122224,
+      "missing": 0
+    },
+    {
+      "group": 8,
+      "id": "asmodeus",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 72,
+        "outsideOriginalHitCapsulePixels": 34,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.9166666666666666,
+        "opaqueRGBColors": 27,
+        "opaqueLuminanceStd": 8.542210430704126
+      },
+      "cacheBytes": 47056,
+      "missing": 0
+    },
+    {
+      "group": 8,
+      "id": "asmodeus",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 149,
+        "outsideOriginalHitCapsulePixels": 39,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.9166666666666666,
+        "opaqueRGBColors": 56,
+        "opaqueLuminanceStd": 15.13094069295236
+      },
+      "cacheBytes": 61456,
+      "missing": 0
+    },
+    {
+      "group": 8,
+      "id": "asmodeus",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 144,
+        "outsideOriginalHitCapsulePixels": 33,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.9166666666666666,
+        "opaqueRGBColors": 48,
+        "opaqueLuminanceStd": 13.624780694259442
+      },
+      "cacheBytes": 75568,
+      "missing": 0
+    },
+    {
+      "group": 8,
+      "id": "asmodeus",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 253,
+        "outsideOriginalHitCapsulePixels": 48,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 76,
+        "opaqueLuminanceStd": 14.25011495413857
+      },
+      "cacheBytes": 100048,
+      "missing": 0
+    },
+    {
+      "group": 9,
+      "id": "mammon",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 20,
+        "opaqueLuminanceStd": 14.663035314913156
+      },
+      "cacheBytes": 604480,
+      "missing": 0
+    },
+    {
+      "group": 9,
+      "id": "mammon",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 120,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 82,
+        "opaqueLuminanceStd": 15.489703342046987
+      },
+      "cacheBytes": 611536,
+      "missing": 0
+    },
+    {
+      "group": 9,
+      "id": "mammon",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 81,
+        "opaqueLuminanceStd": 12.594254484902384
+      },
+      "cacheBytes": 617872,
+      "missing": 0
+    },
+    {
+      "group": 9,
+      "id": "mammon",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 288,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 143,
+        "opaqueLuminanceStd": 13.562081166001144
+      },
+      "cacheBytes": 631984,
+      "missing": 0
+    },
+    {
+      "group": 9,
+      "id": "mammon",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 68,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 102,
+        "opaqueLuminanceStd": 16.63092659451483
+      },
+      "cacheBytes": 47056,
+      "missing": 0
+    },
+    {
+      "group": 9,
+      "id": "mammon",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 255,
+        "outsideOriginalHitCapsulePixels": 106,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 220,
+        "opaqueLuminanceStd": 16.375106856177197
+      },
+      "cacheBytes": 61456,
+      "missing": 0
+    },
+    {
+      "group": 9,
+      "id": "mammon",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 215,
+        "outsideOriginalHitCapsulePixels": 64,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 144,
+        "opaqueLuminanceStd": 15.202144592186283
+      },
+      "cacheBytes": 115568,
+      "missing": 0
+    },
+    {
+      "group": 9,
+      "id": "mammon",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 396,
+        "outsideOriginalHitCapsulePixels": 70,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 206,
+        "opaqueLuminanceStd": 17.026347121504923
+      },
+      "cacheBytes": 140048,
+      "missing": 0
+    },
+    {
+      "group": 10,
+      "id": "wrath",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 21,
+        "opaqueLuminanceStd": 10.415710405490538
+      },
+      "cacheBytes": 475648,
+      "missing": 0
+    },
+    {
+      "group": 10,
+      "id": "wrath",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 120,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 75,
+        "opaqueLuminanceStd": 14.658467673704568
+      },
+      "cacheBytes": 482704,
+      "missing": 0
+    },
+    {
+      "group": 10,
+      "id": "wrath",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 49,
+        "opaqueLuminanceStd": 10.30780871962627
+      },
+      "cacheBytes": 489040,
+      "missing": 0
+    },
+    {
+      "group": 10,
+      "id": "wrath",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 288,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 103,
+        "opaqueLuminanceStd": 11.05788011499649
+      },
+      "cacheBytes": 503152,
+      "missing": 0
+    },
+    {
+      "group": 10,
+      "id": "wrath",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 80,
+        "outsideOriginalHitCapsulePixels": 35,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 63,
+        "opaqueLuminanceStd": 10.171974906937018
+      },
+      "cacheBytes": 47056,
+      "missing": 0
+    },
+    {
+      "group": 10,
+      "id": "wrath",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 175,
+        "outsideOriginalHitCapsulePixels": 30,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 123,
+        "opaqueLuminanceStd": 11.866340800758087
+      },
+      "cacheBytes": 61456,
+      "missing": 0
+    },
+    {
+      "group": 10,
+      "id": "wrath",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 172,
+        "outsideOriginalHitCapsulePixels": 38,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 82,
+        "opaqueLuminanceStd": 9.103173605861636
+      },
+      "cacheBytes": 115568,
+      "missing": 0
+    },
+    {
+      "group": 10,
+      "id": "wrath",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 303,
+        "outsideOriginalHitCapsulePixels": 29,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 145,
+        "opaqueLuminanceStd": 10.229462730204483
+      },
+      "cacheBytes": 140048,
+      "missing": 0
+    },
+    {
+      "group": 11,
+      "id": "pride",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 24,
+        "opaqueLuminanceStd": 14.977831445942504
+      },
+      "cacheBytes": 131904,
+      "missing": 0
+    },
+    {
+      "group": 11,
+      "id": "pride",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 120,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 86,
+        "opaqueLuminanceStd": 13.212561647003508
+      },
+      "cacheBytes": 138960,
+      "missing": 0
+    },
+    {
+      "group": 11,
+      "id": "pride",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 50,
+        "opaqueLuminanceStd": 10.55870655105883
+      },
+      "cacheBytes": 145296,
+      "missing": 0
+    },
+    {
+      "group": 11,
+      "id": "pride",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 288,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 122,
+        "opaqueLuminanceStd": 10.493533975464741
+      },
+      "cacheBytes": 159408,
+      "missing": 0
+    },
+    {
+      "group": 11,
+      "id": "pride",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 62,
+        "outsideOriginalHitCapsulePixels": 18,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 56,
+        "opaqueLuminanceStd": 11.656448863186341
+      },
+      "cacheBytes": 47056,
+      "missing": 0
+    },
+    {
+      "group": 11,
+      "id": "pride",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 144,
+        "outsideOriginalHitCapsulePixels": 12,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 116,
+        "opaqueLuminanceStd": 11.598710195892139
+      },
+      "cacheBytes": 61456,
+      "missing": 0
+    },
+    {
+      "group": 11,
+      "id": "pride",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 159,
+        "outsideOriginalHitCapsulePixels": 59,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.9166666666666666,
+        "opaqueRGBColors": 66,
+        "opaqueLuminanceStd": 5.47343960631143
+      },
+      "cacheBytes": 115568,
+      "missing": 0
+    },
+    {
+      "group": 11,
+      "id": "pride",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 289,
+        "outsideOriginalHitCapsulePixels": 66,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 110,
+        "opaqueLuminanceStd": 6.958208180958329
+      },
+      "cacheBytes": 140048,
+      "missing": 0
+    },
+    {
+      "group": 12,
+      "id": "cult practice",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 15,
+        "opaqueLuminanceStd": 57.023089554281015
+      },
+      "cacheBytes": 9792,
+      "missing": 0
+    },
+    {
+      "group": 12,
+      "id": "cult practice",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 120,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 46,
+        "opaqueLuminanceStd": 39.784481480048775
+      },
+      "cacheBytes": 16848,
+      "missing": 0
+    },
+    {
+      "group": 12,
+      "id": "cult practice",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 42,
+        "opaqueLuminanceStd": 35.08825436139069
+      },
+      "cacheBytes": 23184,
+      "missing": 0
+    },
+    {
+      "group": 12,
+      "id": "cult practice",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 288,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 98,
+        "opaqueLuminanceStd": 37.00873469089965
+      },
+      "cacheBytes": 37296,
+      "missing": 0
+    },
+    {
+      "group": 12,
+      "id": "cult practice",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 112,
+        "outsideOriginalHitCapsulePixels": 63,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 79,
+        "opaqueLuminanceStd": 23.47771197670314
+      },
+      "cacheBytes": 47056,
+      "missing": 0
+    },
+    {
+      "group": 12,
+      "id": "cult practice",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 251,
+        "outsideOriginalHitCapsulePixels": 105,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 150,
+        "opaqueLuminanceStd": 24.33447725906209
+      },
+      "cacheBytes": 61456,
+      "missing": 0
+    },
+    {
+      "group": 12,
+      "id": "cult practice",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 105,
+        "outsideOriginalHitCapsulePixels": 15,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.8333333333333334,
+        "opaqueRGBColors": 65,
+        "opaqueLuminanceStd": 32.41149186507085
+      },
+      "cacheBytes": 103024,
+      "missing": 0
+    },
+    {
+      "group": 12,
+      "id": "cult practice",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 187,
+        "outsideOriginalHitCapsulePixels": 13,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.9166666666666666,
+        "opaqueRGBColors": 118,
+        "opaqueLuminanceStd": 32.45544943318822
+      },
+      "cacheBytes": 127504,
+      "missing": 0
+    },
+    {
+      "group": 13,
+      "id": "controller army",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 16,
+        "opaqueLuminanceStd": 12.674775199968373
+      },
+      "cacheBytes": 25792,
+      "missing": 0
+    },
+    {
+      "group": 13,
+      "id": "controller army",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 120,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 49,
+        "opaqueLuminanceStd": 9.51323737222259
+      },
+      "cacheBytes": 32848,
+      "missing": 0
+    },
+    {
+      "group": 13,
+      "id": "controller army",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 56,
+        "opaqueLuminanceStd": 10.39503057094359
+      },
+      "cacheBytes": 39184,
+      "missing": 0
+    },
+    {
+      "group": 13,
+      "id": "controller army",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 288,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 104,
+        "opaqueLuminanceStd": 10.777272497049003
+      },
+      "cacheBytes": 53296,
+      "missing": 0
+    },
+    {
+      "group": 13,
+      "id": "controller army",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 85,
+        "outsideOriginalHitCapsulePixels": 37,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 39,
+        "opaqueLuminanceStd": 7.918847882565381
+      },
+      "cacheBytes": 47056,
+      "missing": 0
+    },
+    {
+      "group": 13,
+      "id": "controller army",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 177,
+        "outsideOriginalHitCapsulePixels": 38,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 79,
+        "opaqueLuminanceStd": 8.282233173015552
+      },
+      "cacheBytes": 61456,
+      "missing": 0
+    },
+    {
+      "group": 13,
+      "id": "controller army",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 105,
+        "outsideOriginalHitCapsulePixels": 15,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.8333333333333334,
+        "opaqueRGBColors": 59,
+        "opaqueLuminanceStd": 10.131935371076894
+      },
+      "cacheBytes": 103024,
+      "missing": 0
+    },
+    {
+      "group": 13,
+      "id": "controller army",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 187,
+        "outsideOriginalHitCapsulePixels": 13,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.9166666666666666,
+        "opaqueRGBColors": 101,
+        "opaqueLuminanceStd": 9.29475673980702
+      },
+      "cacheBytes": 127504,
+      "missing": 0
+    },
+    {
+      "group": 14,
+      "id": "controller rescue",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 15,
+        "opaqueLuminanceStd": 12.925354847221218
+      },
+      "cacheBytes": 25792,
+      "missing": 0
+    },
+    {
+      "group": 14,
+      "id": "controller rescue",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 120,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 45,
+        "opaqueLuminanceStd": 9.644031183490158
+      },
+      "cacheBytes": 32848,
+      "missing": 0
+    },
+    {
+      "group": 14,
+      "id": "controller rescue",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 57,
+        "opaqueLuminanceStd": 10.418101097588632
+      },
+      "cacheBytes": 39184,
+      "missing": 0
+    },
+    {
+      "group": 14,
+      "id": "controller rescue",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 288,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 100,
+        "opaqueLuminanceStd": 10.929836264544292
+      },
+      "cacheBytes": 53296,
+      "missing": 0
+    },
+    {
+      "group": 14,
+      "id": "controller rescue",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 85,
+        "outsideOriginalHitCapsulePixels": 37,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 39,
+        "opaqueLuminanceStd": 7.620240366116986
+      },
+      "cacheBytes": 47056,
+      "missing": 0
+    },
+    {
+      "group": 14,
+      "id": "controller rescue",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 177,
+        "outsideOriginalHitCapsulePixels": 38,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 74,
+        "opaqueLuminanceStd": 7.878721129559232
+      },
+      "cacheBytes": 61456,
+      "missing": 0
+    },
+    {
+      "group": 14,
+      "id": "controller rescue",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 105,
+        "outsideOriginalHitCapsulePixels": 15,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.8333333333333334,
+        "opaqueRGBColors": 63,
+        "opaqueLuminanceStd": 9.552799479285838
+      },
+      "cacheBytes": 103024,
+      "missing": 0
+    },
+    {
+      "group": 14,
+      "id": "controller rescue",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 187,
+        "outsideOriginalHitCapsulePixels": 13,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.9166666666666666,
+        "opaqueRGBColors": 103,
+        "opaqueLuminanceStd": 8.843753548877181
+      },
+      "cacheBytes": 127504,
+      "missing": 0
+    },
+    {
+      "group": 15,
+      "id": "controller veto",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 13,
+        "opaqueLuminanceStd": 13.58003087305972
+      },
+      "cacheBytes": 25792,
+      "missing": 0
+    },
+    {
+      "group": 15,
+      "id": "controller veto",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 120,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 44,
+        "opaqueLuminanceStd": 10.063786133463932
+      },
+      "cacheBytes": 32848,
+      "missing": 0
+    },
+    {
+      "group": 15,
+      "id": "controller veto",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 54,
+        "opaqueLuminanceStd": 10.842200187614246
+      },
+      "cacheBytes": 39184,
+      "missing": 0
+    },
+    {
+      "group": 15,
+      "id": "controller veto",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 288,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 95,
+        "opaqueLuminanceStd": 11.330283851546946
+      },
+      "cacheBytes": 53296,
+      "missing": 0
+    },
+    {
+      "group": 15,
+      "id": "controller veto",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 85,
+        "outsideOriginalHitCapsulePixels": 37,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 37,
+        "opaqueLuminanceStd": 5.14177245529486
+      },
+      "cacheBytes": 47056,
+      "missing": 0
+    },
+    {
+      "group": 15,
+      "id": "controller veto",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 177,
+        "outsideOriginalHitCapsulePixels": 38,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 80,
+        "opaqueLuminanceStd": 5.113881104884673
+      },
+      "cacheBytes": 61456,
+      "missing": 0
+    },
+    {
+      "group": 15,
+      "id": "controller veto",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 105,
+        "outsideOriginalHitCapsulePixels": 15,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.8333333333333334,
+        "opaqueRGBColors": 63,
+        "opaqueLuminanceStd": 6.202639834965843
+      },
+      "cacheBytes": 103024,
+      "missing": 0
+    },
+    {
+      "group": 15,
+      "id": "controller veto",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 187,
+        "outsideOriginalHitCapsulePixels": 13,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.9166666666666666,
+        "opaqueRGBColors": 109,
+        "opaqueLuminanceStd": 5.494975214248918
+      },
+      "cacheBytes": 127504,
+      "missing": 0
+    },
+    {
+      "group": 16,
+      "id": "controller authority",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 15,
+        "opaqueLuminanceStd": 12.66336944609396
+      },
+      "cacheBytes": 25792,
+      "missing": 0
+    },
+    {
+      "group": 16,
+      "id": "controller authority",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 120,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 47,
+        "opaqueLuminanceStd": 9.348831772334748
+      },
+      "cacheBytes": 32848,
+      "missing": 0
+    },
+    {
+      "group": 16,
+      "id": "controller authority",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 58,
+        "opaqueLuminanceStd": 10.020737738143392
+      },
+      "cacheBytes": 39184,
+      "missing": 0
+    },
+    {
+      "group": 16,
+      "id": "controller authority",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 288,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 103,
+        "opaqueLuminanceStd": 10.550400273133981
+      },
+      "cacheBytes": 53296,
+      "missing": 0
+    },
+    {
+      "group": 16,
+      "id": "controller authority",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 85,
+        "outsideOriginalHitCapsulePixels": 37,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 39,
+        "opaqueLuminanceStd": 4.810097325904323
+      },
+      "cacheBytes": 47056,
+      "missing": 0
+    },
+    {
+      "group": 16,
+      "id": "controller authority",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 177,
+        "outsideOriginalHitCapsulePixels": 38,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 79,
+        "opaqueLuminanceStd": 4.82763597622163
+      },
+      "cacheBytes": 61456,
+      "missing": 0
+    },
+    {
+      "group": 16,
+      "id": "controller authority",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 105,
+        "outsideOriginalHitCapsulePixels": 15,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.8333333333333334,
+        "opaqueRGBColors": 59,
+        "opaqueLuminanceStd": 5.804220372274276
+      },
+      "cacheBytes": 103024,
+      "missing": 0
+    },
+    {
+      "group": 16,
+      "id": "controller authority",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 187,
+        "outsideOriginalHitCapsulePixels": 13,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.9166666666666666,
+        "opaqueRGBColors": 106,
+        "opaqueLuminanceStd": 5.095501761419602
+      },
+      "cacheBytes": 127504,
+      "missing": 0
+    },
+    {
+      "group": 17,
+      "id": "controller migration",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 17,
+        "opaqueLuminanceStd": 13.98758575004671
+      },
+      "cacheBytes": 25792,
+      "missing": 0
+    },
+    {
+      "group": 17,
+      "id": "controller migration",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 120,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 48,
+        "opaqueLuminanceStd": 10.734396248066231
+      },
+      "cacheBytes": 32848,
+      "missing": 0
+    },
+    {
+      "group": 17,
+      "id": "controller migration",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 53,
+        "opaqueLuminanceStd": 11.472621242579025
+      },
+      "cacheBytes": 39184,
+      "missing": 0
+    },
+    {
+      "group": 17,
+      "id": "controller migration",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 288,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 101,
+        "opaqueLuminanceStd": 11.910743754629054
+      },
+      "cacheBytes": 53296,
+      "missing": 0
+    },
+    {
+      "group": 17,
+      "id": "controller migration",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 85,
+        "outsideOriginalHitCapsulePixels": 37,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 43,
+        "opaqueLuminanceStd": 13.130695207283548
+      },
+      "cacheBytes": 47056,
+      "missing": 0
+    },
+    {
+      "group": 17,
+      "id": "controller migration",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 177,
+        "outsideOriginalHitCapsulePixels": 38,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 84,
+        "opaqueLuminanceStd": 13.906861046161556
+      },
+      "cacheBytes": 61456,
+      "missing": 0
+    },
+    {
+      "group": 17,
+      "id": "controller migration",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 105,
+        "outsideOriginalHitCapsulePixels": 15,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.8333333333333334,
+        "opaqueRGBColors": 64,
+        "opaqueLuminanceStd": 18.69015606696729
+      },
+      "cacheBytes": 103024,
+      "missing": 0
+    },
+    {
+      "group": 17,
+      "id": "controller migration",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 187,
+        "outsideOriginalHitCapsulePixels": 13,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.9166666666666666,
+        "opaqueRGBColors": 104,
+        "opaqueLuminanceStd": 17.769161175316743
+      },
+      "cacheBytes": 127504,
+      "missing": 0
+    },
+    {
+      "group": 18,
+      "id": "memory gate",
+      "version": "baseline",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 32,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 16,
+        "opaqueLuminanceStd": 10.402433966301828
+      },
+      "cacheBytes": 25792,
+      "missing": 0
+    },
+    {
+      "group": 18,
+      "id": "memory gate",
+      "version": "baseline",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 120,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 45,
+        "opaqueLuminanceStd": 8.334412903118407
+      },
+      "cacheBytes": 32848,
+      "missing": 0
+    },
+    {
+      "group": 18,
+      "id": "memory gate",
+      "version": "baseline",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 116,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 55,
+        "opaqueLuminanceStd": 8.753323004978638
+      },
+      "cacheBytes": 39184,
+      "missing": 0
+    },
+    {
+      "group": 18,
+      "id": "memory gate",
+      "version": "baseline",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 288,
+        "outsideOriginalHitCapsulePixels": 0,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 106,
+        "opaqueLuminanceStd": 9.177879801983973
+      },
+      "cacheBytes": 53296,
+      "missing": 0
+    },
+    {
+      "group": 18,
+      "id": "memory gate",
+      "version": "candidate",
+      "case": "orb r3",
+      "r": 3,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 85,
+        "outsideOriginalHitCapsulePixels": 37,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 42,
+        "opaqueLuminanceStd": 10.666594050525076
+      },
+      "cacheBytes": 47056,
+      "missing": 0
+    },
+    {
+      "group": 18,
+      "id": "memory gate",
+      "version": "candidate",
+      "case": "orb r6",
+      "r": 6,
+      "halfLength": 0,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 177,
+        "outsideOriginalHitCapsulePixels": 38,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 1,
+        "opaqueRGBColors": 71,
+        "opaqueLuminanceStd": 11.288496835712467
+      },
+      "cacheBytes": 61456,
+      "missing": 0
+    },
+    {
+      "group": 18,
+      "id": "memory gate",
+      "version": "candidate",
+      "case": "needle r3 l7",
+      "r": 3,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 105,
+        "outsideOriginalHitCapsulePixels": 15,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.8333333333333334,
+        "opaqueRGBColors": 62,
+        "opaqueLuminanceStd": 15.505419720114784
+      },
+      "cacheBytes": 103024,
+      "missing": 0
+    },
+    {
+      "group": 18,
+      "id": "memory gate",
+      "version": "candidate",
+      "case": "needle r6 l7",
+      "r": 6,
+      "halfLength": 7,
+      "draws": 1,
+      "metrics": {
+        "visiblePixels": 187,
+        "outsideOriginalHitCapsulePixels": 13,
+        "centralCorePixels": 12,
+        "centralCoreVisibleFraction": 0.9166666666666666,
+        "opaqueRGBColors": 109,
+        "opaqueLuminanceStd": 14.732121609597973
+      },
+      "cacheBytes": 127504,
+      "missing": 0
+    }
+  ]
+}

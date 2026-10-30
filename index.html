@@ -6,22 +6,22 @@
   <meta name="theme-color" content="#0a0b14">
   <meta name="description" content="합일: 기억 회랑. 이동만으로 플레이하는 세로 탄막 슈팅.">
   <title>합일 — 기억 회랑</title>
-  <link rel="stylesheet" href="styles.css?v=20261030-controller18">
+  <link rel="stylesheet" href="styles.css?v=20261030-samong19">
 </head>
 <body>
   <div class="ambient" aria-hidden="true"></div>
   <div id="app" class="app-shell">
     <header class="masthead">
       <a class="wordmark" href="#" aria-label="합일 기억 회랑 홈"><span class="brand-symbol" aria-hidden="true">⌖</span><span>H A P I L <small>기억 회랑</small></span></a>
-      <div class="header-actions"><span class="edition">THE MEMORY GATE <i>III</i></span><button id="settings-button" class="icon-button" type="button" aria-label="설정 열기" title="설정">⚙</button></div>
+      <div class="header-actions"><span class="edition">STORY MODE <i>VIII</i></span><button id="settings-button" class="icon-button" type="button" aria-label="설정 열기" title="설정">⚙</button></div>
     </header>
 
     <main class="stage-layout">
       <aside class="intro-rail">
         <div class="rail-line"><span class="tiny-diamond"></span><span>PORTRAIT DANMAKU</span></div>
-        <p class="overline">원문 기반 세로 각색 · 통제자의 열일곱 단계</p>
+        <p class="overline">원문 기반 세로 각색 · 프롤로그~최종장</p>
         <h2>검은 동화의 밤,<br>기억을 겨누다<span>.</span></h2>
-        <p class="intro-copy">멈춘 잎 아래 떨리는 날개, 검은 물 아래 익숙한 얼굴.<br>정원과 병원, 호텔을 지나 반복 명령의 연결을 찾아가세요.</p>
+        <p class="intro-copy">멈춘 잎 아래 떨리는 날개, 검은 물 아래 익숙한 얼굴.<br>정원과 병원, 뒤섞인 시간을 지나 강제 명령의 연결을 끊으세요.</p>
         <div class="guide-card"><span class="guide-number">01 / CONTROL</span><h3>이동에 집중하세요</h3><p>공격 · 조준 · 스킬은 자동으로 이어집니다.</p><div class="key-row"><kbd>W A S D</kbd><span>또는</span><kbd>방향키</kbd></div><div class="guide-foot"><span><kbd>Shift</kbd> 정밀 이동</span><span><kbd>Space</kbd> 일시정지</span></div></div>
         <p class="small-note">작은 흰 점이 피격 판정입니다.<br>점선 예고 뒤 같은 경로에 레이저가 켜집니다.</p>
         <section class="skill-ledger" aria-label="자동 스킬 상태" aria-live="off">
@@ -49,15 +49,15 @@
             <div class="title-menu">
               <p class="menu-kicker">오직, 당신의 움직임으로.</p>
               <div class="difficulty-picker" role="group" aria-label="난이도 선택"><button id="difficulty-normal" type="button" data-difficulty="normal" aria-pressed="true">기본 <small>NORMAL</small></button><button id="difficulty-gentle" type="button" data-difficulty="gentle" aria-pressed="false">여유 <small>GENTLE</small></button><button id="difficulty-hell" type="button" data-difficulty="hell" aria-pressed="false">지옥 <small>HELL</small></button></div>
-              <p id="difficulty-description" class="difficulty-description">일반 구간을 지나 기억의 문까지 · 제3부</p>
+              <p id="difficulty-description" class="difficulty-description">일반 구간 · 제8부 사몽 각성과 최종장까지</p>
               <button id="start-button" class="primary-button" type="button"><span>공간체험 여정 시작</span><span aria-hidden="true">↗</span></button>
               <button id="continue-button" class="secondary-button" type="button" hidden>저장된 구간에서 이어하기</button>
-              <div class="practice-row"><select id="practice-select" aria-label="연습할 보스"><option value="0">보라검천사</option><option value="1">늪지대 뿔악마</option><option value="2">발록</option><option value="3">초천사의 웃는 가면</option><option value="4">코스믹 가면 루시퍼</option><option value="5">나태 · 벨페고르</option><option value="6">질투 · 레비아탄</option><option value="7">탐식 · 베엘제붑</option><option value="8">색욕 · 아스모데우스</option><option value="9">탐욕 · 맘몬</option><option value="10">분노의 귀</option><option value="11">교만의 회장</option><option value="12">제8부 최종전 연습 · 교주</option><option value="13">제3부 · 방어의 군단</option><option value="14">제3부 · 잔인한 구원</option><option value="15">제3부 · 시스템의 거부권</option><option value="16">제3부 · 관리자 권한</option><option value="17">제3부 · 중앙 코어 이주실</option><option value="18">제3부 · 기억의 문</option></select><button id="practice-button" class="text-button" type="button">보스 연습 ↗</button></div>
+              <div class="practice-row"><select id="practice-select" aria-label="연습할 보스"><option value="0">보라검천사</option><option value="1">늪지대 뿔악마</option><option value="2">발록</option><option value="3">초천사의 웃는 가면</option><option value="4">코스믹 가면 루시퍼</option><option value="5">나태 · 벨페고르</option><option value="6">질투 · 레비아탄</option><option value="7">탐식 · 베엘제붑</option><option value="8">색욕 · 아스모데우스</option><option value="9">탐욕 · 맘몬</option><option value="10">분노의 귀</option><option value="11">교만의 회장</option><option value="12">제8부 최종전 연습 · 교주</option><option value="13">제3부 · 방어의 군단</option><option value="14">제3부 · 잔인한 구원</option><option value="15">제3부 · 시스템의 거부권</option><option value="16">제3부 · 관리자 권한</option><option value="17">제3부 · 중앙 코어 이주실</option><option value="18">제3부 · 기억의 문</option><option value="19">제4부 · 고블린 두목</option><option value="20">제4부 · 타락천사 기사</option><option value="21">제4부 · 불면귀</option><option value="22">제5부 · 최초명령 코어 방어</option><option value="23">제5부 · 일반 수문장의 연결</option><option value="24">제5부 · 상급 수문장 명령 교차</option><option value="25">제5부 · 검은 공방 동력 접점</option><option value="26">제5부 · 뉴런 게이트</option><option value="27">제5부 · 망각의 묘지 삭제 명령</option><option value="28">제5부 · 여섯 명령 고리</option><option value="29">제5부 · 아르벨리아 변조 명령</option><option value="30">제5부 · 세이렌 모르</option><option value="31">제6부 · 악몽의 우두머리</option><option value="32">제7부 · 파란불 집행체</option><option value="33">제8부 · 외곽 지배 회로</option><option value="34">제8부 · 한리안 / 백이온</option><option value="35">제8부 · 교주와 사몽 각성</option></select><button id="practice-button" class="text-button" type="button">보스 연습 ↗</button><button id="special-practice-button" class="text-button" type="button" disabled>특수 패턴 ↗</button></div>
               <p class="title-control-hint">PC 방향키 / 모바일 화면을 상대 드래그</p>
             </div>
           </div>
           <div id="pause-screen" class="screen dim-screen" hidden><div class="overlay-card"><p class="overline">A MOMENT OF STILLNESS</p><span class="pause-ornament" aria-hidden="true">◇</span><h2 id="pause-title">잠시, 숨을 고르기</h2><p id="pause-description">준비되면 기억을 이어가세요.</p><button id="resume-button" class="primary-button" type="button">전투 계속하기 <span aria-hidden="true">↗</span></button><button id="pause-settings-button" class="secondary-button" type="button">설정</button><button id="home-button" class="text-button" type="button">시작 화면으로</button></div></div>
-          <div id="result-screen" class="screen dim-screen" hidden><div class="overlay-card result-card"><p id="result-eyebrow" class="overline">MEMORY RECORDED</p><span class="result-symbol" aria-hidden="true">◇</span><h2 id="result-title">기억이 남았습니다</h2><p id="result-description">다음 걸음은 조금 더 멀리.</p><strong id="result-score" class="result-score">000000</strong><span class="result-score-label">FINAL SCORE</span><div class="result-stats"><span>스친 탄 <b id="result-graze">0</b></span><span>격파 <b id="result-kills">0</b></span><span>피격 <b id="result-hits">0</b></span></div><button id="retry-button" class="primary-button" type="button">다시 도전하기 <span aria-hidden="true">↗</span></button><button id="result-home-button" class="text-button" type="button">시작 화면으로</button></div></div>
+          <div id="result-screen" class="screen dim-screen" hidden><div class="overlay-card result-card"><p id="result-eyebrow" class="overline">MEMORY RECORDED</p><span class="result-symbol" aria-hidden="true">◇</span><h2 id="result-title">기억이 남았습니다</h2><p id="result-description" tabindex="0">다음 걸음은 조금 더 멀리.</p><div id="ending-nav" class="ending-nav" aria-label="결말 문단" hidden><button id="ending-prev" type="button">이전 문단</button><span id="ending-progress" aria-live="polite">1 / 8</span><button id="ending-next" type="button">다음 문단</button></div><strong id="result-score" class="result-score">000000</strong><span class="result-score-label">FINAL SCORE</span><div class="result-stats"><span>스친 탄 <b id="result-graze">0</b></span><span>격파 <b id="result-kills">0</b></span><span>피격 <b id="result-hits">0</b></span></div><button id="retry-button" class="primary-button" type="button">다시 도전하기 <span aria-hidden="true">↗</span></button><button id="result-home-button" class="text-button" type="button">시작 화면으로</button></div></div>
           <div id="error-screen" class="screen dim-screen" hidden><div class="overlay-card error-card"><p class="overline">CORRIDOR INTERRUPTED</p><h2>회랑을 열지 못했습니다</h2><p id="error-description">필요한 게임 파일을 불러오지 못했습니다.</p><button id="reload-button" class="primary-button" type="button">다시 불러오기 ↗</button></div></div>
           <button id="intro-skip-button" class="intro-skip-button" type="button" hidden>등장 연출 건너뛰기 ↗</button>
           <div id="toast" class="toast" role="status" hidden></div>
@@ -68,27 +68,28 @@
       </section>
 
       <aside class="detail-rail">
-        <div class="chapter-marker"><span id="chapter-caption">기억의 길 · 통제자의 열일곱 단계</span><strong id="chapter-number">01</strong><div class="chapter-orbit" aria-hidden="true"></div></div>
-        <div class="encounter-copy"><p id="encounter-kicker" class="overline">THE MEMORY GATE</p><h3 id="encounter-title">검은 정원에서<br>기억의 문까지</h3><p id="encounter-description">정원과 병원, 호텔을 지나 아이의 꿈으로.<br>기억을 지키며 반복을 강제하는 연결을 끊습니다.</p></div>
-        <ol class="phase-list"><li id="phase-wave"><span>Ⅰ</span><div><strong>기억의 파편</strong><small>정원 · 동굴 · 검은 늪</small></div><i></i></li><li id="phase-boss"><span>Ⅱ</span><div><strong>루시퍼 · 7대죄 · 통제자</strong><small>전투 18구간 · 54페이즈</small></div><i></i></li><li id="phase-end"><span>Ⅲ</span><div><strong>기억의 문 너머</strong><small>방어의 군단 · 기억의 문</small></div><i></i></li></ol>
+        <div class="chapter-marker"><span id="chapter-caption">스토리모드 · 프롤로그~제8부</span><strong id="chapter-number">01</strong><div class="chapter-orbit" aria-hidden="true"></div></div>
+        <div class="encounter-copy"><p id="encounter-kicker" class="overline">THE DREAM GUARDIAN</p><h3 id="encounter-title">검은 정원에서<br>사몽의 최종전까지</h3><p id="encounter-description" tabindex="0">환도와 윤서하의 기억을 따라 마지막 코어로.<br>사람들의 몽세를 남기고 강제 명령과 사이비 회로를 분리합니다.</p></div>
+        <ol class="phase-list"><li id="phase-wave"><span>Ⅰ</span><div><strong>기억의 파편</strong><small>정원 · 동굴 · 검은 늪</small></div><i></i></li><li id="phase-boss"><span>Ⅱ</span><div><strong>각 장의 전투와 보호 임무</strong><small>전투 구성 35개 · 105페이즈</small></div><i></i></li><li id="phase-end"><span>Ⅲ</span><div><strong>남겨진 몽세</strong><small>제8부 사몽 각성 · 몽세수호자</small></div><i></i></li></ol>
         <div class="profile-card"><span class="guide-number">이 독립 실행판의 기록</span><div><span>최고 점수</span><strong id="best-score">000000</strong></div><p id="profile-summary">아직 기록된 기억이 없습니다.</p></div>
         <p id="storage-status" class="storage-status">기록 보관함을 여는 중…</p>
       </aside>
     </main>
-    <footer class="page-footer"><span>합일 / 기억 회랑</span><span>MOVE. GRAZE. REMEMBER.</span><span>THE MEMORY GATE · 18</span></footer>
+    <footer class="page-footer"><span>합일 / 기억 회랑</span><span>MOVE. GRAZE. REMEMBER.</span><span>STORY MODE · 35</span></footer>
   </div>
 
   <div id="settings-modal" class="modal-backdrop" hidden><section class="settings-card" role="dialog" aria-modal="true" aria-labelledby="settings-title"><div class="settings-heading"><div><p class="overline">YOUR CORRIDOR</p><h2 id="settings-title">플레이 설정</h2></div><button id="settings-close" class="icon-button" type="button" aria-label="설정 닫기">×</button></div><label class="setting-row"><span><strong>배경 음악</strong><small>기존 회랑의 테마</small></span><input id="setting-music" type="checkbox" checked><i aria-hidden="true"></i></label><label class="setting-row"><span><strong>효과음</strong><small>사격 · 피격 · 전투 알림</small></span><input id="setting-sfx" type="checkbox" checked><i aria-hidden="true"></i></label><label class="setting-row"><span><strong>스킬 자동 순환</strong><small>기억 · 지연 · 반격 · 자아</small></span><input id="setting-skills" type="checkbox" checked><i aria-hidden="true"></i></label><label class="setting-row"><span><strong>절전 렌더링 · 30 FPS</strong><small>전투 판정은 항상 60 Hz</small></span><input id="setting-low" type="checkbox"><i aria-hidden="true"></i></label><label class="sensitivity-row" for="setting-sensitivity"><span>드래그 감도 <output id="sensitivity-value">1.0×</output></span><input id="setting-sensitivity" type="range" min="0.5" max="2" step="0.1" value="1"></label><p class="settings-note">자동 사격과 조준은 항상 켜져 있습니다.<br><kbd>C</kbd> 스킬 순환 · <kbd>Esc</kbd> / <kbd>Space</kbd> 일시정지</p><button id="export-button" class="secondary-button" type="button">측정값 · 플레이 기록 내보내기 ↓</button><p id="settings-storage" class="settings-note">이 독립 실행판은 별도 저장 공간을 사용합니다.</p></section></div>
   <noscript><div class="noscript">이 게임은 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜주세요.</div></noscript>
-  <script src="src/media.js?v=20261030-controller18"></script>
-  <script src="src/weapon-patterns.js?v=20261030-controller18"></script>
-  <script src="src/core.js?v=20261030-controller18"></script>
-  <script src="src/storage.js?v=20261030-controller18"></script>
-  <script src="src/boss-motion.js?v=20261030-controller18"></script>
-  <script src="src/actors.js?v=20261030-controller18"></script>
-  <script src="src/projectiles.js?v=20261030-controller18"></script>
-  <script src="src/boss-skills.js?v=20261030-controller18"></script>
-  <script src="src/render.js?v=20261030-controller18"></script>
-  <script src="src/app.js?v=20261030-controller18"></script>
+  <script src="src/media.js?v=20261030-samong19"></script>
+  <script src="src/weapon-patterns.js?v=20261030-samong19"></script>
+  <script src="src/core.js?v=20261030-samong19"></script>
+  <script src="src/storage.js?v=20261030-samong19"></script>
+  <script src="src/boss-motion.js?v=20261030-samong19"></script>
+  <script src="src/story-assets.js?v=20261030-samong19"></script>
+  <script src="src/actors.js?v=20261030-samong19"></script>
+  <script src="src/projectiles.js?v=20261030-samong19"></script>
+  <script src="src/boss-skills.js?v=20261030-samong19"></script>
+  <script src="src/render.js?v=20261030-samong19"></script>
+  <script src="src/app.js?v=20261030-samong19"></script>
 </body>
 </html>

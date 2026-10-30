@@ -6,7 +6,7 @@ const {createCanvas,loadImage}=require(require.resolve('@napi-rs/canvas',{paths:
 const root=path.resolve(__dirname,'..'),files=['src/core.js','src/weapon-patterns.js','src/boss-motion.js','src/actors.js','src/projectiles.js','src/boss-skills.js','src/render.js','src/media.js'];
 const sha=b=>crypto.createHash('sha256').update(b).digest('hex'),hashes=()=>Object.fromEntries(files.map(p=>[p,sha(fs.readFileSync(path.join(root,p)))]));
 const initialHashes=hashes(),core=require('../src/core.js');require('../src/boss-motion.js');require('../src/actors.js');require('../src/projectiles.js');require('../src/boss-skills.js');require('../src/render.js');
-const raw=fs.readFileSync(path.join(root,'src/media.js'),'utf8'),media=JSON.parse(raw.slice(raw.indexOf('{'),raw.lastIndexOf('}')+1));
+const raw=fs.readFileSync(path.join(root,'src/media.js'),'utf8'),media=require('./read-media-registry.cjs')();
 function distribution(values){const a=[...values].sort((x,y)=>x-y);return{samples:a.length,p50Ms:+a[Math.floor((a.length-1)*.5)].toFixed(3),p95Ms:+a[Math.floor((a.length-1)*.95)].toFixed(3),maxMs:+a.at(-1).toFixed(3)};}
 function observe(index,difficulty){
  const first=core.createRun({campaign:true,practiceBoss:true,bossIndex:index,difficulty,seed:813,runId:'v14-render-observation'}),s=core.checkpoint(first);s.phase=2;

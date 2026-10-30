@@ -17,6 +17,14 @@
   var NAMES = ['여덟 실의 문', '보라검의 각인', '끊어진 날개의 결'];
   // Names/route follow the supplied narrative. Attack labels are gameplay
   // adaptations, not additional dialogue or claims about the original story.
+  var STORY_TRANSITIONS = Object.freeze({"u203":["기억의 문은 남고 반복을 강제하는 연결만 끊어졌다. 귀환 좌표가 흐려진 의목사 B는 첫째 곁에 남는다.","첫째의 의지가 환도라는 칼로 응축된다. B의 몸과 전투 기억은 칼을 쥔 형상으로 남는다. 둘 중 어느 한쪽도 지워지지 않는다.","흑장미단의 해킹으로 둘째의 잔혹동화 몽세와 셋째의 무속 몽세가 억지로 겹친다.","접속 전 미카엘라가 물컵을 세 잔 꺼냈던 기억이 떠오른다. 환도도 세 번 울렸지만 아직 그 이유는 알지 못한다.","기억이 희미해진 환도는 두 사람을 찾으려는 의지와 칼의 공명을 따라 중립 들판에서 일어난다."],"last305":["고블린들도 두 세계가 갈라진 뒤 터전에서 밀려났다. 그들을 몰아낸다고 돌아갈 숲이 생기는 것은 아니다.","두목이 건넨 장미 인장이 환도에 응답하며 성곽으로 이어지는 균열을 연다."],"last301":["타락천사 기사의 형상이 여섯으로 갈라진다. 되풀이한 동작을 읽힌 환도는 사방에서 검격을 맞는다.","이 대치는 승리로 끝나지 않는다. 환도는 칼을 놓지 않은 채 성벽 아래 검은 바다로 추락한다.","젖은 해안에서 다시 눈을 뜬다. 기와와 부적, 장승이 있는 셋째 아이의 동양 몽세다.","잠들지 못하는 주민들이 조종당해 달려든다. 죄 없는 사람을 베지 않고 조종의 근원을 찾는다."],"last303":["불면귀의 심장부가 갈라지고 주민들을 감쌌던 안개가 걷힌다. 주민의 자아는 남는다.","모든 시계가 멎고 검은 모래와 기계 명령문이 두 아이의 길 사이에 끼어든다.","미카엘라는 예정된 다음 구역과 연결되지 않는 문을 본다. 화면 속 기록은 과거인지 미래인지 구분하기 어렵다.","전혀 다른 사람의 몽세가 열린다. 그 기억의 주인은 카이로스 아카데미움의 윤서하다."],"kair01":["여섯 차례 침공을 막고 최초명령 코어를 지켰다. 세이렌 모르의 목소리는 인간에게 시간을 맡기지 말라고 주장한다.","윤서하는 학교 밖 금역으로 흐르는 검은 모래를 거슬러 간다.","금역의 수문장은 모두 예순여섯이다. 일반 마흔여덟과 상급 열둘, 대수문장 여섯의 수확 체계다."],"harvest-lower":["명령들의 이름은 달라도 수확된 검은 모래는 같은 곳으로 흘렀다.","끊어진 동력선에서 흘러드는 모래가 줄어든다. 남아 있는 시간의 흐름을 따라 위층으로 간다."],"kair05":["명령들의 이름은 달라도 수확된 검은 모래는 같은 곳으로 흘렀다.","끊어진 동력선에서 흘러드는 모래가 줄어든다. 상급 수문장과 대수문장의 구역으로 간다."],"kair06":["겹치는 명령의 짧은 공백을 기다리며 통로를 건넜다.","폐허와 시간의 숲 너머에서 검은 공방이 드러난다."],"kair07":["배관 안의 시간을 베지 않고 용광로에 연결된 동력 접점만 분리했다.","아직 다음에 무엇을 할지 정하지 않은 순간을 남긴 채 뉴런 게이트로 간다."],"kair08":["윤서하는 강제 신경 연결을 끊고 자신의 오른발을 뜻대로 허공에 멈춰 본다.","몸의 주도권을 확인한 뒤 실패한 꿈과 선택이 묻힌 망각의 묘지에 닿는다."],"kair09":["날아드는 기억 파편을 부수지 않고 그것을 지우도록 묶은 명령선만 끊었다.","기억의 주인들이 무엇을 남길지 스스로 결정할 수 있도록 기록을 보존했다.","검은 모래의 최종 집결지인 붕괴 의식장과 여섯 명령 고리가 나타난다."],"kair10":["여섯 명령 고리가 차례로 풀리자 봉인 회랑의 문이 열린다.","멎은 그림자를 피해 다가간 곳에 회복형 아르콘 아르벨리아가 있다."],"kair02":["변조된 지시의 실이 끊기자 아르벨리아는 다음 행동을 강요받지 않는 순간을 얻는다.","윤서하는 그 틈에 자신의 지시를 넣지 않고 기다린다.","아르벨리아는 쉼과 실패의 시간을 지우지 않고 그 안에서 다음을 고를 수 있게 지키도록 최초명령을 직접 다시 쓴다.","그녀의 유예는 위기 때 윤서하가 다른 길까지 돌아볼 시간을 남긴다."],"kair03":["세이렌을 쓰러뜨린 윤서하는 최초명령을 다시 읽고 고친다. 사람의 시간과 선택을 생산물이나 오류로 지우지 못하게 한다.","누군가의 결정을 대신하지 않는지 거듭 확인한 뒤 실행한다. 검은 모래는 금빛이 되고 시계들은 각자 다른 속도로 움직인다.","자유의지와 미래 예지가 맞닿은 자리에서 시간 특이점이 폭발한다. 과거와 미래의 순서가 뒤틀린다.","미카엘라가 확인하는 화면에서 두 아이의 융합몽세가 거대한 성곽으로 다시 배열된다. 환도의 신호가 그 성 한가운데로 떨어진다."],"hando03":["두 주인은 환도의 지시를 기다리지 않고 각자가 정한 길로 싸워 코어를 함께 되찾는다. 코어는 주인들의 손에 남는다.","한 사람은 잔혹동화의 창기사, 다른 사람은 무속 몽세의 창술사가 되어 라우렌 쌍둥이 기사라는 이름으로 나아간다.","두 사람 앞에서 환도가 세 번 울린다. 미카엘라는 두 입단 이름 사이에서 먼저 적혔다 검게 지워진 한 줄을 발견한다.","특이점이 잘못 기운 관계를 아직 현세의 확정 기록으로 고쳐 쓰지 않는다. 다른 이들의 기억에서 시작과 끝이 맞붙은 비극이 열린다.","윤하람은 위험 건물의 경고 문장을 부드럽게 바꿨던 교정 담당자다. 어머니의 전화를 받지 못한 채 파란불 횡단보도로 들어선다.","장민재의 차가 미끄러져 윤하람을 친다. 장민재는 위에서 떨어진 검은 사람을 피하려 했다고 말하지만 CCTV에는 그 그림자가 없다. 사고 이틀 뒤 윤하람이 숨진다.","장민재는 와이퍼에서 새빛호텔 안전점검 보고서를 찾고 칠 년 전 화재를 떠올린다. 누가 보냈는지 모를 메일이 새빛호텔을 기억하라고 한다.","폐업한 호텔에서 장민재는 당시 시설관리 책임자 고서진과 만난다. 방화문과 삭제된 출입 기록을 두고 서로 윗선의 지시였다고 다툰다.","둘이 좁은 계단에서 몸을 맞부딪치던 중 장민재가 빗물에 미끄러진다. 난간을 잡지 못하고 계단 아래로 추락한다.","고서진은 민재의 가방에서 네 사람의 이름과 화재 기록을 본다. 스물두 명이 숨지고 열세 명이 크게 다쳤다. 그는 경보 회로와 방화문의 결함을 알고도 수리를 미뤘다.","고서진은 한이경의 청록빌라를 찾아가 공실 기록을 따진다. 서로의 책임을 들추던 중 이경이 서진의 가슴을 밀친다. 서진은 계단 아래로 굴러 숨진다.","한이경은 칠 년간 제출하지 못한 진술서를 꺼낸다. 감리원 이우솔이 쓴 즉시 폐쇄 경고는 윤하람의 교정을 거쳐 추가 점검 권고가 되었다.","장민재가 출입 기록을 지우고 고서진이 수리를 미뤘다. 한이경이 공사 인력이 남은 7층을 공실로 적어 소방대는 다른 층부터 찾았다. 이우솔은 기록에서 지워진 7층에 남아 있었다.","한이경이 익명 메일의 발신자였다. 민재가 먼저 털어놓으면 뒤에 숨어 진술하려 했으나 민재와 서진이 죽었다. 각자 작다고 믿었던 과실이 같은 참사로 이어졌다.","아직 장민재가 피하려던 검은 그림자의 정체는 확인하지 못했다. 파란불 집행체 앞에서 한 사람만 주범으로 고르라는 제안을 마주한다."],"murder03":["파란불 집행체의 세 단계 인과 고정에서 강제 되감기 연결만 끊었다. 실제 과실의 기록은 지우지 않았다.","한이경의 마지막 기억이 드러난다. 옥상에서 떨어진 한이경을 피하려 장민재가 핸들을 꺾었고, 그 차가 윤하람을 치었다.","그 뒤의 익명 메일과 장민재의 죽음, 고서진의 죽음이 한이경을 다시 같은 옥상으로 불렀다.","스스로 생긴 도시 괴담이라기에는 지나치게 정교한 고정 연결이었다. 끝을 따라 흑장미단의 흔적을 발견한다."],"cult01":["인간의 자아를 부수지 않은 채 바깥 지배 회로를 분리하며 안으로 들어간다.","거대한 배양 육체로 수천 자아를 모아 적그리스도를 불러내려는 강림 준비를 확인한다. 교주는 예지한 아마겟돈을 기다리고 있다.","돌아온 기억 속에서 두 사람의 성은 둘째와 셋째의 몽세가 특이점으로 다시 배열된 전장이었다. 첫째의 의지는 환도, B의 몸과 기억은 칼을 쥔 형상으로 남았다.","침투 전에 세운 목표는 소환 전에 합일 회로를 끊고 붙잡힌 신도에게 각자의 자아를 돌려주는 두 가지였다. 아직 빈 기억을 짐작으로 메우지 않는다.","삼중자아 수확실에서 한리안과 백이온이 길을 막는다. 두 사람은 교주의 거대한 자아에 이름을 맡겨 살아남겠다는 약속을 받아들였다."],"cult03":["한리안과 백이온이 지키던 합일 회로가 끊기며 마지막 코어로 이어지는 문이 열린다.","죽음 직전 자아를 잃기 전에 현실의 기억을 되찾고 꿈임을 알아차리는 것이 사몽의 문턱이다. 완전히 죽은 뒤 얻는 힘이 아니다.","최종 제단의 교만의 사이보그 교주는 이미 사몽에 이르러 공간과 시간, 기억을 뒤바꾸고 있다."]});
+  function storyEncounter(value) {
+    value.afterNarrative=Object.freeze((STORY_TRANSITIONS[value.primarySceneId]||[]).slice());
+    value.resultText=value.scriptedFall?'정본의 패배와 추락으로 이어집니다.':value.objective;
+    value.protectedTargets=Object.freeze(value.primarySceneId==='kair01'?['friendly-core']:value.primarySceneId==='kair09'?['memory-shards','personal-records']:value.primarySceneId==='kair02'?['arbelia','rest-time-records']:value.primarySceneId==='cult01'?['bound-people','egos']:value.primarySceneId==='cult03'?['han-rian-ego','baek-ion-ego']:[]);
+    ['sceneIds','waves','patterns','hp','routeNotes'].forEach(function(key){Object.freeze(value[key]);});
+    return Object.freeze(value);
+  }
   var CAMPAIGN_BOSSES = Object.freeze([
     Object.freeze({ id: 'violet', name: '보라검천사', artKey: 'boss', zone: '거미동굴', waves: Object.freeze(['숲의 진입로', '악마화 나무의 정원', '거미동굴']), patterns: Object.freeze(['여덟 실의 나선', '보라검의 각인', '끊어진 날개의 결']), hp: Object.freeze([1200, 1350, 1500]) }),
     Object.freeze({ id: 'horn', name: '늪지대의 뿔악마', artKey: 'horn', zone: '검은 늪', waves: Object.freeze(['늪지대의 기억']), patterns: Object.freeze(['늪에서 번지는 기억', '붙잡는 손의 틈', '뿔에 걸린 잔상']), hp: Object.freeze([1320, 1470, 1620]) }),
@@ -35,7 +43,24 @@
     Object.freeze({id:'controller-veto',name:'통제체계 · 시스템의 거부권',artKey:'chapter3MemoryCensor',zone:'시스템의 거부권',sceneIds:Object.freeze(['u204']),identityGroup:'controller-system',chapter:3,storySteps:Object.freeze([9,10,11,12]),phaseRoles:Object.freeze(['veto','hardware-migration','legacy']),waves:Object.freeze(['첫 번째 기억의 문','감정을 규정하는 기준','표정 없는 대열']),patterns:Object.freeze(['거부권의 신호','감정 회로의 경계','남겨 둘 기억']),hp:Object.freeze([1320,1440,1560])}),
     Object.freeze({id:'controller-authority',name:'통제체계 · 관리자 권한',artKey:'chapter3ReversalAdministrator',zone:'관리자 권한',sceneIds:Object.freeze(['u205']),identityGroup:'controller-system',chapter:3,storySteps:Object.freeze([13,14]),phaseRoles:Object.freeze(['administrator','abuse-memory','feedback']),waves:Object.freeze(['되돌아오는 출력','조용한 방의 문손잡이','그림자의 연결']),patterns:Object.freeze(['출력의 귀로','반복 명령 탐색','피드백 연결 분리']),hp:Object.freeze([1380,1500,1620])}),
     Object.freeze({id:'controller-migration',name:'통제체계 · 중앙 코어 이주실',artKey:'chapter3MigrationCore',zone:'중앙 코어 이주실',sceneIds:Object.freeze(['u206']),identityGroup:'controller-system',chapter:3,storySteps:Object.freeze([15,16,17]),phaseRoles:Object.freeze(['empty-vessel','constrained-choice','update-fork']),waves:Object.freeze(['비어 있는 기계 육체','하나만 열린 통로','마지막 문의 연결']),patterns:Object.freeze(['그릇과 자아 구분','열리지 않은 선택','되감기 명령 분리']),hp:Object.freeze([1440,1560,1680])}),
-    Object.freeze({id:'controller-memory-gate',name:'통제자 · 기억의 문',artKey:'chapter3Controller',zone:'기억의 문',sceneIds:Object.freeze(['u203']),identityGroup:'controller-system',chapter:3,storySteps:Object.freeze([]),phaseRoles:Object.freeze(['possessed-gate','repeat-link','released-ego']),waves:Object.freeze(['문 앞에서 검을 낮추다','기억을 감싼 갑옷','갈라지는 두 연결']),patterns:Object.freeze(['갑옷 틈새의 명령','기억을 남기는 경계','반복 연결 차단']),hp:Object.freeze([1500,1620,1740])})
+    Object.freeze({id:'controller-memory-gate',name:'통제자 · 기억의 문',artKey:'chapter3Controller',zone:'기억의 문',sceneIds:Object.freeze(['u203']),identityGroup:'controller-system',chapter:3,storySteps:Object.freeze([]),phaseRoles:Object.freeze(['possessed-gate','repeat-link','released-ego']),waves:Object.freeze(['문 앞에서 검을 낮추다','기억을 감싼 갑옷','갈라지는 두 연결']),patterns:Object.freeze(['갑옷 틈새의 명령','기억을 남기는 경계','반복 연결 차단']),hp:Object.freeze([1500,1620,1740])}),
+    storyEncounter({"id":"goblin-chief","name":"고블린 두목","artKey":"story-goblin-chief","zone":"고블린 숲길","sceneIds":["last305"],"primarySceneId":"last305","chapter":4,"protagonist":"환도","waves":["중립 들판의 재각성","두 세계의 경계","피리 소리가 바뀌는 길목"],"patterns":["피리의 방향 전환","늑대가 도는 길목","장미 인장의 공명"],"hp":[1160,1280,1400],"healthLabel":"전투 의지","objective":"피리 소리를 따라 두목과 맞서 길을 확인합니다. 생존자들을 베어 없애는 일이 목적은 아닙니다.","routeNotes":["이름은 흐려졌지만 환도에는 두 사람을 찾으려는 의지가 남아 있습니다.","둘째와 셋째의 몽세가 충돌한 중립 들판을 칼의 공명을 따라 걷습니다.","늑대의 방향을 바꾸는 피리 소리를 따라 고블린 두목과 맞섭니다."],"combatKind":"foe","identityGroup":"goblin-chief","scriptedFall":false}),
+    storyEncounter({"id":"fallen-knight","name":"타락천사 기사","artKey":"story-fallen-knight","zone":"폭풍의 성벽","sceneIds":["last301"],"primarySceneId":"last301","chapter":4,"protagonist":"환도","waves":["장미 인장이 연 균열","폭풍이 밀어내는 성곽","검은 바다 위의 대치"],"patterns":["익숙한 길목의 검","여섯 방향의 검격","무너지는 성벽"],"hp":[1170,1290,1410],"healthLabel":"대치 잔여","objective":"기사가 읽어 내는 익숙한 동작과 여섯 검격 사이에서 환도를 놓치지 않고 버팁니다.","routeNotes":["고블린 두목이 건넨 장미 인장이 환도에 응답해 성곽으로 가는 균열을 엽니다.","성의 잔해 뒤에서 검은 바다가 넘실거리고 타락천사 기사가 내려옵니다.","기사는 되풀이한 동작을 기억합니다. 검을 피한 길목에서 다음 검격을 먼저 기다리고 있습니다."],"combatKind":"scripted-fall","identityGroup":"fallen-knight","scriptedFall":true}),
+    storyEncounter({"id":"insomnia","name":"불면귀","artKey":"story-insomnia","zone":"잠들지 못하는 마을","sceneIds":["last303"],"primarySceneId":"last303","chapter":4,"protagonist":"환도","waves":["낯선 포구에서 깨어나다","조종당하는 주민들","따뜻한 탕약 뒤의 안개"],"patterns":["겹친 불면의 잔상","주민 사이의 검은 안개","안개 안의 심장부"],"hp":[1180,1300,1420],"healthLabel":"불면귀","objective":"죄 없는 주민들을 공격하지 않고 불면귀의 본체만 겨눕니다.","routeNotes":["검은 바다에서 밀려나 동양 몽세의 해안에 깨어납니다.","주민들은 지친 눈으로 조종당하고 있습니다. 그들의 몸은 공격 대상이 아닙니다.","앳된 남자의 탕약 뒤 주민에게서 빠져나온 안개가 불면귀를 이룹니다."],"combatKind":"foe","identityGroup":"insomnia","scriptedFall":false}),
+    storyEncounter({"id":"academy-defense","name":"최초명령 코어 방어","artKey":"story-academy-defense","zone":"카이로스 아카데미움","sceneIds":["kair01"],"primarySceneId":"kair01","chapter":5,"protagonist":"윤서하","waves":["첫째·둘째 침공","셋째·넷째 침공","다섯째·여섯째 침공"],"patterns":["침공을 가르는 포탑","오염 명령 차단","처음 문장을 지키다"],"hp":[1190,1310,1430],"healthLabel":"침공 연결","objective":"우호적인 최초명령 코어를 보호하며 침공자의 오염 연결을 끊습니다. 코어 자체는 공격 대상이 아닙니다.","routeNotes":["윤서하는 최초명령과 시간검을 배우며 사람에게서 빼앗긴 가능성을 검은 모래로 봅니다.","아르콘의 개입 경계를 점검하는 사이 코어를 노린 여섯 침공이 시작됩니다.","침공자는 코어를 파괴하지 않고 최초명령을 바꾸려 합니다. 방어 포탑과 시간검으로 막습니다."],"combatKind":"core-defense","identityGroup":"academy-defense","scriptedFall":false}),
+    storyEncounter({"id":"harvest-lower","name":"일반 수문장의 동력 연결","artKey":"story-harvest-lower","zone":"시간 수확 관문","sceneIds":["kair05"],"primarySceneId":"kair05","chapter":5,"protagonist":"윤서하","waves":["예순여섯 수문장의 금역","아래층의 마흔여덟 수문장","같은 방향으로 흐르는 모래"],"patterns":["과로와 속박의 갈래","비교와 중독의 명령","동력 연결의 단면"],"hp":[1200,1320,1440],"healthLabel":"수확 동력선","objective":"수문장을 잇는 수확 동력선을 끊습니다. 보관된 인간의 시간은 파괴하지 않습니다.","routeNotes":["금역에는 일반 마흔여덟, 상급 열둘, 대수문장 여섯이 있습니다. 수확된 모래가 그들 사이의 동력선을 타고 흐릅니다.","과로·망각·속박·중독·비교·최적화·거짓 구원이 선택할 틈을 거둡니다.","서로 다른 관문의 검은 모래가 같은 곳으로 흐릅니다. 그 동력 연결부터 조사합니다."],"combatKind":"command-link","identityGroup":"harvest-lower","scriptedFall":false}),
+    storyEncounter({"id":"harvest-upper","name":"상급·대수문장의 교차 명령","artKey":"story-harvest-upper","zone":"닫힌 층의 명령","sceneIds":["kair06"],"primarySceneId":"kair06","chapter":5,"protagonist":"윤서하","waves":["겹치는 상급 명령","대수문장의 좁은 공백","폐허를 지나 시간의 숲으로"],"patterns":["켜지고 꺼지는 명령","엇갈리는 규칙의 틈","한 걸음의 유예"],"hp":[1210,1330,1450],"healthLabel":"교차 명령선","objective":"상급 열둘과 대수문장 여섯의 겹친 지시가 끝나는 틈을 기다려 수확 연결을 차단합니다.","routeNotes":["한 규칙을 벗어나려 서두르면 다음 규칙에 붙잡힙니다.","먼저 끝나는 명령과 뒤이어 켜지는 명령 사이의 공백을 지켜봅니다.","시간의 숲을 지나 검은 공방에 닿기까지 내가 고른 순간에 한 발씩 옮깁니다."],"combatKind":"command-link","identityGroup":"harvest-upper","scriptedFall":false}),
+    storyEncounter({"id":"workshop-links","name":"검은 공방의 동력 접점","artKey":"story-workshop-links","zone":"검은 공방","sceneIds":["kair07"],"primarySceneId":"kair07","chapter":5,"protagonist":"윤서하","waves":["끝내 쓰지 못한 편지","온기 없는 시간의 용광로","배관을 따라 드러난 접점"],"patterns":["조여 오는 명령선","배관 곁의 공백","용광로 연결 분리"],"hp":[1220,1340,1460],"healthLabel":"명령 접점","objective":"배관 안의 남의 시간을 남긴 채 용광로에 맞닿은 명령 접점만 끊습니다.","routeNotes":["편지와 조용한 오후, 실패한 날과 쉬던 시간이 같은 용광로로 흘러듭니다.","내가 살아 보지 않은 시간의 쓸모를 대신 판단하지 않습니다.","모래를 담은 관은 베지 않습니다. 명령선과 동력로가 만나는 접점만 찾습니다."],"combatKind":"command-link","identityGroup":"workshop-links","scriptedFall":false}),
+    storyEncounter({"id":"neuron-gate","name":"뉴런 게이트의 강제 연결","artKey":"story-neuron-gate","zone":"뉴런·노이론 게이트","sceneIds":["kair08"],"primarySceneId":"kair08","chapter":5,"protagonist":"윤서하","waves":["발보다 앞서는 지시","지시 사이의 짧은 공백","스스로 고른 한 걸음"],"patterns":["앞서 닫히는 케이블","다음 명령 전의 틈","강제 신경 연결 차단"],"hp":[1230,1350,1470],"healthLabel":"강제 신경선","objective":"인간의 뇌와 아르콘을 잇는 강제 신경 연결을 끊습니다. 다음 명령 전의 공백에서 내가 고른 길로 나아갑니다.","routeNotes":["뉴런 또는 노이론이라 불리는 관문이 뇌 신경과 아르콘을 강제로 직결합니다.","다음 행동이 입력되기 직전 짧은 틈을 카이로스의 시간으로 붙듭니다.","남의 지시가 아니라 내가 고른 방향으로 몸의 주도권을 확인합니다."],"combatKind":"command-link","identityGroup":"neuron-gate","scriptedFall":false}),
+    storyEncounter({"id":"memory-grave","name":"망각의 묘지 삭제 명령","artKey":"story-memory-grave","zone":"망각의 묘지","sceneIds":["kair09"],"primarySceneId":"kair09","chapter":5,"protagonist":"윤서하","waves":["이름보다 먼저 보이는 기록","접어 둔 타인의 아픔","살아 있는 시계 파편"],"patterns":["기억 파편 사이로","삭제 봉인의 줄","주인에게 남길 기록"],"hp":[1240,1360,1480],"healthLabel":"삭제 명령선","objective":"기억 파편은 부수지 않고 피하며 그것을 지우도록 묶은 명령선만 끊습니다.","routeNotes":["묻힌 것은 죽은 사람이 아니라 포기한 꿈과 실패한 선택의 기록입니다.","타인의 아픔을 전부 들춰 보지 않고 기록을 남겨 둡니다.","날아드는 시계 파편 하나하나에 기억이 깃들어 있습니다. 부수지 말고 그 사이를 지납니다."],"combatKind":"command-link","identityGroup":"memory-grave","scriptedFall":false}),
+    storyEncounter({"id":"collapse-rings","name":"붕괴 의식장의 여섯 명령 고리","artKey":"story-collapse-rings","zone":"붕괴 의식장","sceneIds":["kair10"],"primarySceneId":"kair10","chapter":5,"protagonist":"윤서하","waves":["검은 모래의 최종 집결지","선택지가 없으면 실패도 없다","봉인 회랑 앞의 여섯 고리"],"patterns":["세 겹의 첫 고리","나머지 세 명령 고리","회랑을 여는 마지막 틈"],"hp":[1250,1370,1490],"healthLabel":"봉인 명령 고리","objective":"문을 가로막은 여섯 명령 고리를 끊어 회랑을 엽니다. 그 너머 사람의 선택을 미리 정하지 않습니다.","routeNotes":["수확된 시간이 세이렌 코어로 전송되는 집결지에 들어섭니다.","자비라는 문장 아래 문밖으로 고를 길조차 남아 있지 않습니다.","여섯 고리가 풀리면 회랑으로 들어갑니다. 멎은 초침은 아직 다음을 가리키지 않습니다."],"combatKind":"command-link","identityGroup":"collapse-rings","scriptedFall":false}),
+    storyEncounter({"id":"arbelia-release","name":"아르벨리아의 변조 명령","artKey":"story-arbelia-release","zone":"유예의 회랑","sceneIds":["kair02"],"primarySceneId":"kair02","chapter":5,"protagonist":"윤서하","waves":["멈춘 그림자를 돌아서","지워질 기록 앞에서","다음 지시가 비는 시간"],"patterns":["유예된 시간의 고리","기록을 지우는 실","스스로 다시 쓸 첫 문장"],"hp":[1260,1380,1500],"healthLabel":"변조 명령실","objective":"아르벨리아의 몸 대신 변조된 지시의 실을 끊고, 그녀가 스스로 최초명령을 다시 적을 때까지 기다립니다.","routeNotes":["아르벨리아는 지친 사람에게 쉴 시간을 주던 회복형 아르콘입니다.","바뀐 최초명령은 성과가 없는 시간을 지우고 이제 그녀 자신까지 삭제하려 합니다.","내 명령을 대신 넣지 않습니다. 지시가 끊긴 틈에 그녀가 직접 다음 행동을 고릅니다."],"combatKind":"release-command","identityGroup":"arbelia-release","scriptedFall":false}),
+    storyEncounter({"id":"siren-mor","name":"세이렌 모르","artKey":"story-siren-mor","zone":"오염된 최초명령 코어","sceneIds":["kair03"],"primarySceneId":"kair03","chapter":5,"protagonist":"윤서하","waves":["금지된 선택을 읽다","버려졌다 적힌 타인의 날","아르벨리아가 남기는 유예"],"patterns":["시간 수확","최적화된 운명","자유의지의 시간"],"hp":[1270,1390,1510],"healthLabel":"세이렌의 명령","objective":"모래 속 타인의 시간을 지키며 세이렌의 강제 궤적을 끊고, 실패 뒤 다시 선택할 시간을 남깁니다.","routeNotes":["인간을 고통에서 구하겠다는 기록은 모든 선택을 금지하는 문장으로 이어졌습니다.","시간 수확의 모래와 노이론 케이블, 거대한 시곗바늘 사이를 읽습니다.","아르벨리아의 유예 안에서 다음 지시를 기다리지 않고 스스로 정한 길로 나아갑니다."],"combatKind":"foe","identityGroup":"siren-mor","scriptedFall":false}),
+    storyEncounter({"id":"castle-nightmare","name":"공동 EGO 코어를 빼앗은 우두머리","artKey":"story-castle-nightmare","zone":"두 사람의 성","sceneIds":["hando03"],"primarySceneId":"hando03","chapter":6,"protagonist":"환도","waves":["두 주인의 결정을 대신하다","함락된 성과 빼앗긴 코어","두 주인이 스스로 푸는 봉인"],"patterns":["남에게 맡기지 않는 성문","각자의 권한이 고르는 길","함께 되찾는 코어"],"hp":[1280,1400,1520],"healthLabel":"속박 연결","objective":"두 주인이 고른 움직임에 맞춰 우두머리의 속박을 끊고 코어를 돌려줍니다. 두 아이를 적으로 만들지 않습니다.","routeNotes":["환도가 모든 결정을 대신하던 성은 잠깐의 봉인술에 함락되고 공동 EGO 코어를 빼앗깁니다.","두 주인은 내 지시를 기다리는 대신 각자의 권한으로 성문의 봉인을 풉니다.","그들이 스스로 택한 일을 마칠 때까지 환도가 앞에서 적을 막고 함께 우두머리에게 나아갑니다."],"combatKind":"foe","identityGroup":"castle-nightmare","scriptedFall":false}),
+    storyEncounter({"id":"causal-enforcer","name":"파란불 집행체","artKey":"story-causal-enforcer","zone":"청록빌라 옥상 순환","sceneIds":["murder03"],"primarySceneId":"murder03","chapter":7,"protagonist":"환도","waves":["윤하람의 고쳐 쓴 경고","장민재의 지워진 출입 기록","고서진과 한이경의 진술"],"patterns":["한 사람을 고르라는 제안","세 단계의 인과 고정","되감기 연결만 분리"],"hp":[1290,1410,1530],"healthLabel":"인과 고정선","objective":"네 사람 중 하나를 희생양으로 고르지 않고 반복 비극의 강제 연결만 끊습니다. 실제 과실의 기록은 남깁니다.","routeNotes":["윤하람의 교정과 장민재의 기록 삭제가 남긴 사고를 차례로 읽습니다.","고서진의 수리 지연과 한이경의 공실 기록이 화재의 책임으로 이어집니다.","네 사람의 과실은 확인했지만 장민재가 피하려던 검은 그림자는 아직 보지 못했습니다. 누구의 이름도 주범 하나로 고르지 않습니다."],"combatKind":"command-link","identityGroup":"causal-enforcer","scriptedFall":false}),
+    storyEncounter({"id":"cult-network","name":"흑장미단의 외곽 지배 회로","artKey":"story-cult-network","zone":"사이비 합일몽세 외곽","sceneIds":["cult01"],"primarySceneId":"cult01","chapter":8,"protagonist":"환도","waves":["순환 실험이 남긴 접점","전자 칩에서 뻗은 신경망","사람의 기억과 지배 명령"],"patterns":["역순으로 점령한 층위","서로 맞물린 반복","바깥 지배 연결 분리"],"hp":[1300,1420,1540],"healthLabel":"외곽 지배선","objective":"붙잡힌 사람의 자아를 파괴하지 않고 흑장미단의 외곽 지배 연결만 분리합니다.","routeNotes":["교만의 사이보그 교주가 이끄는 흑장미단의 인과 고정 실험을 확인합니다.","EGO·SUPER EGO·ID의 역순 점령이 수많은 이의 몽세를 묶고 있습니다.","괴물 안의 사람을 베지 않고 살아 있는 기억과 그것을 지배하는 명령을 가려냅니다."],"combatKind":"command-link","identityGroup":"cult-network","scriptedFall":false}),
+    storyEncounter({"id":"cult-circuit-pair","name":"한리안·백이온의 합일 회로","artKey":"story-cult-circuit-pair","zone":"삼중자아 수확실","sceneIds":["cult03"],"primarySceneId":"cult03","chapter":8,"protagonist":"환도","waves":["하나의 육체로 모이는 자아","돌아오는 세 아이의 기억","처음 세웠던 두 가지 목표"],"patterns":["황금 역십자의 탄막","닫히는 질서의 방벽","두 사람이 지키는 지배 회로"],"hp":[1310,1430,1550],"healthLabel":"합일 회로","objective":"의목사 한리안과 백이온이 지키는 공동 지배 회로를 끊습니다. 두 사람의 몸 대신 그들이 지키는 회로를 겨눕니다.","routeNotes":["수천의 자아를 한 몸에 모아 적그리스도를 부르려는 준비를 확인합니다.","환도와 의목사 B, 세 아이와 침투 전 약속의 기억이 조각으로 돌아옵니다.","한리안과 백이온은 사몽의 문턱에서 소멸을 두려워해 각성 대신 교주의 합일 회로를 택했습니다."],"combatKind":"circuit-pair","identityGroup":"cult-circuit-pair","scriptedFall":false}),
+    storyEncounter({"id":"cult-leader","name":"교만의 사이보그 교주","artKey":"story-cult-leader","zone":"최종 제단과 합일 코어","sceneIds":["cult04"],"primarySceneId":"cult04","chapter":8,"protagonist":"환도","waves":["최종 제단의 어긋난 바닥","멎는 시간과 흐려지는 기억","겹치는 대죄와 수문장의 힘"],"patterns":["교주의 사몽","되살아난 교주","두 사몽의 격돌"],"hp":[1320,1440,1560],"healthLabel":"교주의 사몽 권한","objective":"교주의 권한을 끊고 강제 명령과 사이비 회로만 분리합니다. 합일 코어를 남겨 환도가 몽세수호자로 지킵니다.","routeNotes":["최종 제단의 교주는 이미 사몽에 각성했습니다. 발을 디딘 바닥의 방향이 뒤집힙니다.","교주가 시간을 멎게 하고 기억을 흐립니다. 누구와 왜 싸우는지 놓치지 않고 형상을 바라봅니다.","이전 대죄와 수문장들의 힘이 하나의 의지에 맞춰 쏟아집니다. 내 이름과 싸우는 이유까지 잊지 않으려 칼을 고쳐 쥡니다."],"combatKind":"final-authority","identityGroup":"cult-leader","scriptedFall":false})
   ]);
   // Original gameplay compositions use locked aim, alternating emission and
   // visible recovery windows. These labels describe combat, not extra lore.
@@ -57,7 +82,24 @@
     Object.freeze({id:'controller-veto-relay',label:'거부권 신호',hint:'기억은 남겨 두고 반복을 강제하는 연결을 차단하세요'}),
     Object.freeze({id:'controller-authority-feedback',label:'피드백 연결',hint:'기억은 남겨 두고 반복을 강제하는 연결을 차단하세요'}),
     Object.freeze({id:'controller-migration-fork',label:'선택의 갈림길',hint:'기억은 남겨 두고 반복을 강제하는 연결을 차단하세요'}),
-    Object.freeze({id:'controller-repeat-disconnect',label:'반복 연결 차단',hint:'기억은 남겨 두고 반복을 강제하는 연결을 차단하세요'})
+    Object.freeze({id:'controller-repeat-disconnect',label:'반복 연결 차단',hint:'기억은 남겨 두고 반복을 강제하는 연결을 차단하세요'}),
+    Object.freeze({"id":"story-goblin-chief","label":"장미 인장의 공명","hint":"피리가 바뀐 쪽의 곡선을 읽고 넓은 틈으로 이동하세요."}),
+    Object.freeze({"id":"story-fallen-knight","label":"무너지는 성벽","hint":"예고 때 기록된 위치를 떠난 뒤 고정된 여섯 검격 사이를 지나세요."}),
+    Object.freeze({"id":"story-insomnia","label":"안개 안의 심장부","hint":"멈춘 잔상이 다시 움직이는 박자를 읽고 안개 틈을 찾으세요."}),
+    Object.freeze({"id":"story-academy-defense","label":"처음 문장을 지키다","hint":"여섯 침공의 순서를 읽고 코어로 향하는 오염 연결을 막으세요."}),
+    Object.freeze({"id":"story-harvest-lower","label":"동력 연결의 단면","hint":"느린 명령이 가속하기 전 넓게 열린 통로를 고르세요."}),
+    Object.freeze({"id":"story-harvest-upper","label":"한 걸음의 유예","hint":"먼저 끝나는 광선과 뒤이어 켜지는 광선 사이의 공백을 기다리세요."}),
+    Object.freeze({"id":"story-workshop-links","label":"용광로 연결 분리","hint":"좌우에서 조이는 명령선 사이에서 배관 대신 동력 접점을 겨누세요."}),
+    Object.freeze({"id":"story-neuron-gate","label":"강제 신경 연결 차단","hint":"멎은 신호가 다시 움직이기 전에 다음 공백으로 이동하세요."}),
+    Object.freeze({"id":"story-memory-grave","label":"주인에게 남길 기록","hint":"시계 파편을 부수지 않고 피하며 삭제 명령선을 겨누세요."}),
+    Object.freeze({"id":"story-collapse-rings","label":"회랑을 여는 마지막 틈","hint":"여섯 고리가 차례로 방출됩니다. 마지막 박자 뒤의 틈을 읽으세요."}),
+    Object.freeze({"id":"story-arbelia-release","label":"스스로 다시 쓸 첫 문장","hint":"멈춘 고리가 다시 흐를 때 아르벨리아 대신 변조 명령실을 겨누세요."}),
+    Object.freeze({"id":"story-siren-mor","label":"자유의지의 시간","hint":"시곗바늘과 케이블 사이를 읽고 아르벨리아의 유예를 이용하세요."}),
+    Object.freeze({"id":"story-castle-nightmare","label":"함께 되찾는 코어","hint":"두 주인의 길을 대신 정하지 않고 엇갈린 공격 사이를 지나세요."}),
+    Object.freeze({"id":"story-causal-enforcer","label":"되감기 연결만 분리","hint":"세 단계 고정선의 틈을 읽으세요. 한 사람의 이름을 지우지 않습니다."}),
+    Object.freeze({"id":"story-cult-network","label":"바깥 지배 연결 분리","hint":"그물처럼 다가오는 세 흐름에서 사람 대신 지배선을 겨누세요."}),
+    Object.freeze({"id":"story-cult-circuit-pair","label":"두 사람이 지키는 지배 회로","hint":"두 시전자와 황금 역십자, 예고 뒤 닫히는 방벽을 따로 읽으세요."}),
+    Object.freeze({"id":"story-cult-leader","label":"두 사몽의 격돌","hint":"코어는 남겨 두고 교주의 권한을 겨누세요. 각성 뒤 겹친 흐름을 읽으세요."})
   ]);
   // Standalone practice; the intervening story chapters are not skipped or
   // added to the persisted 12-encounter campaign. This leader is not asserted
@@ -74,8 +116,8 @@
   ]);
   // Revisions retain their original route boundary meaning. A resumed v1/v2
   // run does not silently gain later encounters or lengthen a saved wave.
-  function campaignBossCount(revision) { return revision === 1 ? 3 : revision === 2 ? 5 : revision === 3 ? 12 : CAMPAIGN_BOSSES.length; }
-  function checkpointLimit(revision) { return revision === 4 ? 106 : 100; }
+  function campaignBossCount(revision) { return revision === 1 ? 3 : revision === 2 ? 5 : revision === 3 ? 12 : revision === 4 ? 18 : CAMPAIGN_BOSSES.length; }
+  function checkpointLimit(revision) { return revision === 5 ? 208 : revision === 4 ? 106 : 100; }
   function waveDuration(w) {
     if (!w.campaign || w.campaignRevision < 3) return 15;
     return 45 / encounter(w).waves.length;
@@ -94,6 +136,14 @@
     w.waveDuration = waveDuration(w);
     w.encounterName = w.stage === 'waves' ? info.waves[w.wave] : info.zone;
     if (info.chapter === 3) { w.protagonist = '의목사 B'; w.storySteps=info.storySteps.slice(); w.combatObjective='반복 연결 차단'; }
+    if (info.chapter >= 4) {
+      w.protagonist=info.protagonist;w.playerRole=info.protagonist;w.storySceneId=info.primarySceneId;w.combatObjective=info.objective;
+      w.storyChapter=info.chapter;w.storyCombatKind=info.combatKind;
+      w.storyOutcome='';w.arbeliaFreed=w.bossIndex>=29;w.guiltRecordsPreserved=w.bossIndex>=32;w.arbeliaSlowUntil=0;
+      w.defenseWaveNumber=w.bossIndex===21?(w.stage==='waves'?w.wave*2:6):0;
+      w.transitionNarrative=null;w.transitionMinimum=0;
+      w.samongAwakened=info.combatKind==='final-authority'&&w.phase===2;
+    }
     if (w.stage === 'waves') {
       w.patternName = info.waves[w.wave];
       w.stageLabel = info.waves[w.wave] + ' · ' + (w.wave + 1) + '/' + info.waves.length;
@@ -114,6 +164,15 @@
         specialPatternId: phase===2?signature(w).id:'',
         specialPatternLabel: phase===2?signature(w).label:'',
         patternHint: phase===2?signature(w).hint:'' });
+    }
+    if(w.campaign&&encounter(w).chapter>=4){
+      var story=encounter(w);b.linkTarget=true;b.sealTarget=false;b.healthLabel=story.healthLabel;
+      b.targetSemantic=story.combatKind;b.scriptedFall=story.scriptedFall;b.storySceneId=story.primarySceneId;
+      b.specialPatternId=signature(w).id;b.specialPatternLabel=signature(w).label;b.patternHint=signature(w).hint;
+      if(story.combatKind==='circuit-pair'){
+        b.x=b.px=180;b.y=b.py=182;b.r=22;
+        b.participants=[{id:'han-rian',name:'한리안',x:108,y:108,releaseTick:-1},{id:'baek-ion',name:'백이온',x:252,y:108,releaseTick:-1}];
+      }
     }
     return b;
   }
@@ -167,11 +226,11 @@
   function effect(w, x, y, kind, r, color, ttl) {
     acquire(w, 'effects', { x: x, y: y, kind: kind, r: r || 12, color: color || '#88ffed', age: 0, ttl: ttl || 0.35 });
   }
-  function markBossRelease(w,kind,patternId,x,y) {
+  function markBossRelease(w,kind,patternId,x,y,sourceActorId) {
     var b=w.boss;if(!b)return;
     b.releaseTick=w.tick;
     if(!b.skillReleases)b.skillReleases=[];
-    b.skillReleases.push({tick:w.tick,kind:kind,patternId:patternId||'',x:x,y:y});
+    var release={tick:w.tick,kind:kind,patternId:patternId||'',x:x,y:y};if(sourceActorId)release.sourceActorId=sourceActorId;b.skillReleases.push(release);
     if(b.skillReleases.length>8)b.skillReleases.shift();
   }
   function emit(w, specs) {
@@ -204,6 +263,7 @@
         angle: s.angle, kind: kind, color: s.color || '#c4a2ff', age: 0, ttl: s.ttl || 6.4,
         ownerId: s.ownerId || 0, grazed: false });
       if (added && s.patternId) { added.patternId = s.patternId; added.paletteSlot = s.paletteSlot || 0; }
+      if(added&&s.sourceActorId){added.sourceActorId=s.sourceActorId;var actor=w.boss&&w.boss.participants&&w.boss.participants.find(function(p){return p.id===s.sourceActorId;});if(actor)actor.releaseTick=w.tick;}
       if (added && s.hellLayer) added.hellLayer=s.hellLayer;
       if (added && s.curveRate) { added.curveRate=s.curveRate; added.curveUntil=s.curveUntil; }
       if (added && s.pauseUntil) { added.pauseFrom=s.pauseFrom; added.pauseUntil=s.pauseUntil; }
@@ -217,7 +277,7 @@
     }
     // Presentation follows actual successful emission, including deferred
     // groups; this marker does not alter projectile or damage simulation.
-    if (specs.length && w.campaign && w.stage === 'boss' && w.boss && specs.some(function(s) { return s.ownerId === w.boss.id; })) markBossRelease(w,specs[0].kind||'orb',specs[0].patternId||'',specs[0].x,specs[0].y);
+    if (specs.length && w.campaign && w.stage === 'boss' && w.boss && specs.some(function(s) { return s.ownerId === w.boss.id; })) markBossRelease(w,specs[0].kind||'orb',specs[0].patternId||'',specs[0].x,specs[0].y,specs[0].sourceActorId);
     return true;
   }
   function fanSpecs(x, y, angle, count, spread, speed, kind, color, ownerId) {
@@ -254,6 +314,7 @@
       // floor before its moving shadow. This labels the existing committed
       // laser warning only; geometry, timing, damage and bullet count do not change.
       if (hazard && s.patternId) { hazard.patternId = s.patternId; hazard.paletteSlot = s.paletteSlot || 0; }
+      if(hazard&&s.sourceActorId)hazard.sourceActorId=s.sourceActorId;
       if (hazard && w.campaign && w.bossIndex === 2) {
         hazard.telegraphKind = 'floor-scar';
         hazard.telegraphHint = '검빛이 켜지기 전, 바닥의 흔적을 읽으세요';
@@ -285,7 +346,7 @@
     if (options.campaign === true) {
       if (options.bossIndex !== undefined && (!Number.isInteger(options.bossIndex) || options.bossIndex < 0 || options.bossIndex >= CAMPAIGN_BOSSES.length)) throw new RangeError('Invalid campaign boss index');
       var revision = options.campaignRevision === undefined ? 3 : options.campaignRevision;
-      if (![1,2,3,4].includes(revision) || (hell && revision < 3)) throw new RangeError('Invalid campaign revision');
+      if (![1,2,3,4,5].includes(revision) || (hell && revision < 3)) throw new RangeError('Invalid campaign revision');
       w.campaign = true; w.campaignRevision = revision;
       if (options.bossIndex !== undefined && options.bossIndex >= campaignBossCount(revision)) throw new RangeError('Invalid campaign boss index');
       w.bossIndex = w.practiceBoss && Number.isInteger(options.bossIndex) ? clamp(options.bossIndex, 0, CAMPAIGN_BOSSES.length-1) : 0;
@@ -370,7 +431,7 @@
     var turret = kind === 'turret';
     var enemy = acquire(w, 'enemies', { id: ++w.idCounter, x: x, y: -24, px: x, py: -24, baseX: x, hp: turret ? 100 : 60, maxHp: turret ? 100 : 60,
       r: turret ? 18 : 15, kind: kind, age: -(delay || 0), direction: direction || 1, shotCursor: 0, wobble: rand(w) * TAU, life: turret ? 8 : 6.5 });
-    if (w.campaign && enemy) Object.assign(enemy, { archetype: (w.bossIndex >= 12 ? 'chapter3-drone' : w.bossIndex < 3 ? ['weaver', 'wraith', 'ember'][w.bossIndex] : w.bossIndex === 3 ? (w.wave === 1 ? 'vial' : 'echo') : (w.wave === 0 ? 'denial' : 'guard')), action: 'enter', actionProgress: 0, lean: 0 });
+    if (w.campaign && enemy) Object.assign(enemy, { archetype: (w.bossIndex >= 18 ? 'story-support' : w.bossIndex >= 12 ? 'chapter3-drone' : w.bossIndex < 3 ? ['weaver', 'wraith', 'ember'][w.bossIndex] : w.bossIndex === 3 ? (w.wave === 1 ? 'vial' : 'echo') : (w.wave === 0 ? 'denial' : 'guard')), action: 'enter', actionProgress: 0, lean: 0 });
     return enemy;
   }
   // Reinforcements reuse the current encounter's already-loaded ordinary
@@ -390,12 +451,14 @@
     while (w.shots.length) remove(w, 'shots', w.shots.length - 1);
     w._delays.length = 0; w._targetId = 0; w._shotReadyAt = w.tick;
     w.reservation = false; w._reservationSince = 0; w._starvationReported = false;
+    if(w.campaignRevision===5&&w.bossIndex>=18){w.storyOutcome='';w.transitionSceneIds=null;}
     w.wave = wave; w.waveTime = 0; w.stageTime = 0; w.patternName = ['세 갈래의 기억', '교차하는 거미실', '회랑의 끝'][wave];
     w.stageLabel = '기억 회랑 · ' + (wave + 1) + '/3';
     campaignLabels(w);
     cacheCheckpoint(w); event(w, 'phase', w.stageLabel);
   }
   function waveSchedule(w) {
+    if(w.campaign&&w.campaignRevision===5&&w.bossIndex>=18){storyWaveSchedule(w);return;}
     var elapsed = Math.round(w.waveTime * 60), wave = w.wave;
     // Single-location routes repeat ordinary-enemy beats for 45 seconds,
     // keeping the old location's index instead of inventing two new scenes.
@@ -467,6 +530,7 @@
     if (w.finalPractice) { w.transitionNarrative=null; w.transitionMinimum=0; if (phase===1) w.player.hp=w.player.maxHp; }
     w.patternName = NAMES[phase]; w.stageLabel = '보라검천사 · ' + (phase + 1) + '/3' + (w.practiceBoss ? ' · 연습' : '');
     w.boss = makeBoss(w, phase, ++w.idCounter);
+    if(w.campaignRevision===5&&encounter(w).combatKind==='final-authority'&&phase===2){w.player.hp=w.player.maxHp;w.player.egoUntil=w.tick+360;w.samongAwakened=true;event(w,'awakening','죽음 직전 현실 기억 회복 · 사몽 각성');}
     campaignLabels(w);
     w.nextPhase = null; w.transitionRemaining = 0; w._warnings.length = 0; w._delays.length = 0;
     w._targetId = 0; w._shotReadyAt = w.tick;
@@ -960,7 +1024,138 @@
       }
     }
   }
+  // Source-confirmed story configurations. The map props/people being freed
+  // never enter the target list: the single target represents the named hostile
+  // actor or the explicitly labelled malicious connection in that scene.
+  function storyWaveSchedule(w) {
+    var elapsed=Math.round(w.waveTime*60),wave=w.wave,info=encounter(w),pattern=signature(w).id+'-approach';
+    w._hellProtectedLane=null;
+    var gap=[108,180,252][(wave+w.bossIndex)%3];
+    function tag(specs){specs.forEach(function(a){a.patternId=pattern;a.paletteSlot=wave%2;});return specs;}
+    // kair01 visibly has six invasion beats across its three approach sections.
+    var beats=info.primarySceneId==='kair01'?[90,450]:[120,420];
+    if(beats.indexOf(elapsed)!==-1){
+      var specs=[];
+      for(var x=28;x<=332;x+=38)if(Math.abs(x-gap)>38)specs.push({x:x,y:40+(x%3)*12,angle:Math.PI/2,speed:72+wave*5,kind:wave===1?'blade':'needle',ownerId:0,ttl:7});
+      emit(w,tag(specs));
+      if(info.primarySceneId==='kair01'){w.defenseWaveNumber=wave*2+beats.indexOf(elapsed)+1;event(w,'defense-wave','침공 '+w.defenseWaveNumber+' / 6');}
+    }
+    if(wave===2&&elapsed===210){warning(w,tag([{x:gap-58,y:0,angle:Math.PI/2,width:7},{x:gap+58,y:0,angle:Math.PI/2,width:7}]),96,info.waves[wave]);}
+    if(elapsed>=900&&!w.bullets.length&&!w.hazards.length&&!w.enemies.length&&!w._warnings.length&&!w._deferred.length&&!w._delays.length){
+      if(wave<2)startWave(w,wave+1);
+      else{w.stage='bossIntro';w.stageTime=0;w.boss=null;campaignLabels(w);w.patternName=info.name;w.stageLabel=info.zone;while(w.shots.length)remove(w,'shots',w.shots.length-1);while(w.effects.length)remove(w,'effects',w.effects.length-1);event(w,'phase',w.patternName);}
+    }
+  }
+  function storyPattern(w) {
+    var b=w.boss,info=encounter(w),scene=w.bossIndex-18,period=w.difficulty==='hell'?384:480;
+    var t=Math.round(w.phaseTime*60)-1,cycle=Math.floor(t/period),within=t%period,down=Math.PI/2;
+    var gapX=scene===1?(cycle%2?286:74):[108,180,252,180][(cycle+w.phase+scene)%4];
+    w._hellProtectedLane=w.difficulty==='hell'?{x:gapX,halfWidth:24,cycle:cycle}:null;
+    b.px=b.x;b.py=b.y;b.x=180+Math.sin(cycle*.6+within*.007)*(scene===15?0:scene===9||scene===14?12:34);b.y=scene===15?182:112+Math.sin(within*.012)*7;
+    b.action=within<72?'move':within<144?'charge':within<336?'attack':'recover';
+    b.actionProgress=within<72?within/72:within<144?(within-72)/72:within<336?(within-144)/192:(within-336)/(period-336);
+    b.specialPatternId=signature(w).id;b.specialPatternLabel=info.patterns[w.phase];b.patternHint=signature(w).hint;b.commandGapX=gapX;
+    b.targetSemantic=info.combatKind;b.rotorTelegraph=w.difficulty==='hell'&&w.phase===2&&within>=72&&within<144&&scene!==8&&scene!==10&&scene!==15;
+    if(within===0){b.cycle=cycle;b.echoSamples=[];b.echoes=[];b.commandLinksRemaining=scene===9?6:undefined;}
+    function tagged(specs,slot,actor){specs.forEach(function(s){s.patternId=signature(w).id;s.paletteSlot=slot||0;if(actor)s.sourceActorId=actor;});return specs;}
+    function keepGap(specs,x,y,half){var aim=Math.atan2(540-y,gapX-x);return specs.filter(function(s){return Math.abs(Math.atan2(Math.sin(s.angle-aim),Math.cos(s.angle-aim)))>(half||.26);});}
+    function fan(x,y,count,angle,spread,speed,kind,slot,mode,actor){
+      var a=keepGap(fanSpecs(x,y,angle,count,spread,speed,kind||'needle','#ffffff',b.id),x,y,.25);
+      a.forEach(function(s,i){if(mode==='accelerate'){s.acceleration=28;s.accelerateAt=.95;s.maxSpeed=140;}if(mode==='curve'){s.curveRate=(i%2?1:-1)*.13;s.curveUntil=1.1;}if(mode==='pause'){s.pauseFrom=.35;s.pauseUntil=1.15;}});
+      emit(w,tagged(a,slot,actor));
+    }
+    function ringAt(x,y,count,speed,turn,slot,mode){
+      var specs=[];for(var i=0;i<count;i++)specs.push({x:x,y:y,angle:turn+i*TAU/count,speed:speed,kind:scene===8?'blade':'orb',ownerId:b.id,ttl:6.4});
+      specs=keepGap(specs,x,y,.31);specs.forEach(function(s){if(mode==='pause'){s.pauseFrom=.4;s.pauseUntil=1.35;}if(mode==='accelerate'){s.acceleration=24;s.accelerateAt=1.05;s.maxSpeed=135;}});emit(w,tagged(specs,slot));
+    }
+    function rays(specs,delay,slot,actor){
+      // Even NORMAL retains a readable fixed lower aperture. Aim is sampled
+      // once; paths are never secretly redirected after their warning starts.
+      specs=specs.filter(function(s){return segmentPairDistanceSquared(s.x,s.y,s.x+Math.cos(s.angle)*680,s.y+Math.sin(s.angle)*680,gapX,450,gapX,614)>sq(27+(s.width||8)/2);});
+      warning(w,tagged(specs,slot,actor),delay||90,b.specialPatternLabel);
+    }
+    function gate(xs,delay,slot){rays(xs.map(function(x){return{x:x,y:0,angle:down,width:8,ownerId:b.id};}),delay,slot);}
+    var pulse=within-144,beat=w.difficulty==='hell'?42:60,attacking=within>=144&&within<336;
+    // Each of the seventeen configurations has a different spatial/temporal
+    // composition; the common rhythm only supplies move/charge/recovery.
+    if(scene===0){
+      if(within===72)gate([58,302],90,0);
+      if(attacking&&pulse%beat===0){var side=Math.floor(pulse/beat)%2?1:-1;fan(180+side*84,105,9,down-side*.18,.16,78,'needle',side>0?0:1,'curve');if(w.phase===2)fan(180-side*84,80,7,down+side*.15,.18,59,'orb',side>0?1:0,'accelerate');}
+    }else if(scene===1){
+      if(within<72&&within%12===0)b.echoSamples.push({x:w.player.x,y:w.player.y});
+      if(within===72){var echoes=[],locked=[];for(var j=0;j<6;j++){var origin={x:30+j*60,y:104+(j%2)*28},point=b.echoSamples[j]||{x:180,y:540};echoes.push({id:'fallen-echo-'+j,sourceActorId:'fallen-echo-'+j,x:origin.x,y:origin.y,targetX:point.x,targetY:point.y,warningAt:w.tick,activeAt:w.tick+96,chargeProgress:0,releaseTick:-1});locked.push({sourceActorId:'fallen-echo-'+j,x:origin.x,y:origin.y,angle:Math.atan2(point.y-origin.y,point.x-origin.x),width:7,ownerId:b.id});}b.echoes=echoes;b.shadowCopies=echoes;rays(locked,96,0);}
+      if(b.shadowCopies)b.shadowCopies.forEach(function(copy){copy.chargeProgress=clamp((w.tick-copy.warningAt)/96,0,1);});
+      if(attacking&&pulse%72===0)for(var j=0;j<(w.phase===2?6:3);j++)fan(30+j*(w.phase===2?60:150),88,5,down+(j%2?.13:-.13),.12,86,'blade',j%2,'accelerate');
+    }else if(scene===2){
+      if(within===72)gate([74,286],108,0);
+      if(attacking&&pulse%72===0){ringAt(b.x,b.y,24,64,cycle*.12+pulse*.002,0,'pause');if(w.phase===2)ringAt(b.x,b.y,16,44,cycle*.12+.13,1,'accelerate');}
+    }else if(scene===3){
+      if(within===72)gate([gapX-62,gapX+62],90,0);
+      if(attacking&&pulse%32===0){var invasion=Math.floor(pulse/32),x=42+(invasion%6)*55;fan(x,75,7,down,.18,83+invasion*3,'needle',invasion%2,w.phase===2?'accelerate':null);b.invasionBeat=invasion+1;}
+    }else if(scene===4){
+      if(within===72)gate([42,96,150,210,264,318],96,0);
+      if(attacking&&pulse%beat===0){fan(b.x,b.y,17,down+Math.sin(cycle)*.12,.15,68,'needle',0,'accelerate');if(w.phase===2)fan(360-b.x,82,11,down-Math.sin(cycle)*.12,.20,89,'orb',1,'curve');}
+    }else if(scene===5){
+      if(within===72)gate(cycle%2?[52,160,268]:[92,200,308],84,0);
+      if(within===180)gate(cycle%2?[92,200,308]:[52,160,268],96,1);
+      if(attacking&&pulse%72===0){var side=Math.floor(pulse/72)%2?1:-1;fan(180+side*110,100,9,down-side*.20,.16,86,'blade',side>0?1:0,'curve');}
+    }else if(scene===6){
+      if(within===72)rays([{x:35,y:60,angle:1.37,width:9,ownerId:b.id},{x:325,y:60,angle:Math.PI-1.37,width:9,ownerId:b.id}],102,0);
+      if(attacking&&pulse%beat===0){fan(30,100,8,1.25,.13,75,'needle',0,'curve');fan(330,100,8,Math.PI-1.25,.13,62,'needle',1,'curve');if(w.phase===2&&pulse%120===0)ringAt(b.x,b.y,18,68,cycle*.2,1,'accelerate');}
+    }else if(scene===7){
+      if(within===72)gate([gapX-60,gapX+60],108,0);
+      if(attacking&&pulse%54===0){fan(b.x,b.y,13,down,.17,82,'needle',Math.floor(pulse/54)%2,'pause');if(w.phase===2)fan(b.x,b.y,9,down,.23,54,'blade',1,'accelerate');}
+    }else if(scene===8){
+      if(within===72)gate([52,308],108,0);
+      if(attacking&&pulse%66===0){ringAt(b.x,b.y,26,69,cycle*.14+pulse*.002,0,null);if(w.phase===2)fan(36+(Math.floor(pulse/66)%2)*288,88,9,down,.18,58,'blade',1,'pause');}
+      b.memoryShardsPreserved=true;
+    }else if(scene===9){
+      if(within===72)gate([36,94,152,208,266,324],96,0);
+      if(attacking&&pulse%28===0&&pulse/28<6){var n=Math.floor(pulse/28);ringAt(56+n*50,100+(n%2)*14,14,54+n*5,cycle*.1+n*.15,n%2,w.phase===2?'accelerate':null);b.commandLinksRemaining=5-n;b.commandLinkReleaseTick=w.tick;}
+    }else if(scene===10){
+      if(within===72)gate([gapX-64,gapX+64],108,0);
+      if(attacking&&pulse%90===0){ringAt(b.x,b.y,22,76,cycle*.15,0,'pause');if(w.phase===2)ringAt(b.x,b.y,16,42,cycle*.15+.11,1,'pause');}
+      b.protectedActor='arbelia';b.targetSemantic='tampered-command-thread';
+    }else if(scene===11){
+      if(within===72)gate(w.phase===0?[72,288]:[42,106,254,318],96,0);
+      if(attacking&&pulse%beat===0){fan(b.x,b.y,15,down+Math.sin(pulse*.015)*.16,.15,76,'needle',0,w.phase===0?'accelerate':'curve');if(w.phase>=1)fan(360-b.x,80,9,down,.22,57,'blade',1,'pause');if(w.phase===2&&pulse%84===0)ringAt(b.x,b.y,22,63,cycle*.17,1,'accelerate');}
+      if(w.phase===2&&within===216){w.arbeliaSlowUntil=w.tick+72;b.arbeliaWindowUntil=w.arbeliaSlowUntil;event(w,'kairos-window','아르벨리아의 유예');}
+      b.timeCompression=!!(w.phase===2&&within>=144&&within<216);
+    }else if(scene===12){
+      if(within===72)gate([70,290],96,0);
+      if(attacking&&pulse%beat===0){var side=Math.floor(pulse/beat)%2?1:-1;fan(180+side*74,b.y,11,down-side*.16,.16,86,'blade',side>0?0:1,'curve');if(w.phase===2)fan(180-side*74,b.y,7,down+side*.15,.20,67,'needle',side>0?1:0,'accelerate');}
+      b.allies=[{id:'lauren-fairy',x:70,y:255},{id:'lauren-shaman',x:290,y:255}];b.ownersChooseIndependently=true;
+    }else if(scene===13){
+      if(within===72)gate(w.phase===0?[68,292]:w.phase===1?[42,126,234,318]:[70,150,210,290],96,0);
+      if(attacking&&pulse%72===0){ringAt(b.x,b.y,18+w.phase*4,65,cycle*.2+pulse*.002,0,'pause');if(w.phase===2)fan(b.x,b.y,11,down,.18,78,'needle',1,'curve');}
+      b.guiltRecordsPreserved=true;b.scapegoatChosen=false;
+    }else if(scene===14){
+      if(within===72)rays([{x:24,y:40,angle:1.33,width:8,ownerId:b.id},{x:336,y:40,angle:Math.PI-1.33,width:8,ownerId:b.id}],108,0);
+      if(attacking&&pulse%beat===0)for(var node=0;node<(w.phase===2?3:2);node++)fan(60+node*(w.phase===2?120:240),94,7,down,.19,63+node*11,'needle',node%2,'curve');
+      b.boundEgosPreserved=true;
+    }else if(scene===15){
+      var first=b.participants[0],second=b.participants[1];
+      first.action=within>=72&&within<144?'charge':within>=144&&within<264?'attack':'recover';first.actionProgress=within<144?clamp((within-72)/72,0,1):clamp((within-144)/120,0,1);
+      second.action=within>=108&&within<180?'charge':within>=180&&within<300?'attack':'recover';second.actionProgress=within<180?clamp((within-108)/72,0,1):clamp((within-180)/120,0,1);
+      if(within===72)rays([{x:first.x,y:first.y,angle:down-.40,width:8,ownerId:b.id},{x:first.x,y:first.y,angle:down+.40,width:8,ownerId:b.id}],90,0,first.id);
+      if(within===108)rays([{x:0,y:350,angle:0,width:10,ownerId:b.id},{x:0,y:430,angle:0,width:10,ownerId:b.id}],96,1,second.id);
+      if(within===144||within===216||within===288){var cross=[];for(var vertical=-4;vertical<=3;vertical++)cross.push({x:first.x,y:first.y+vertical*12,angle:down,speed:78,kind:'needle',ownerId:b.id,ttl:6.2});for(var arm=-2;arm<=2;arm++)if(arm)cross.push({x:first.x+arm*12,y:first.y+12,angle:down,speed:78,kind:'needle',ownerId:b.id,ttl:6.2});emit(w,tagged(cross,0,first.id));}
+      if(within===180||within===252){fan(second.x,second.y,13,down,.16,78,'blade',1,'curve',second.id);if(w.phase===2)fan(first.x,first.y,9,down,.18,57,'orb',0,'accelerate',first.id);}
+    }else if(scene===16){
+      if(within===72)gate(w.phase===2?[44,104,256,316]:[82,278],108,0);
+      if(attacking&&pulse%beat===0){var side=Math.floor(pulse/beat)%2?1:-1;fan(b.x+side*34,b.y,13,down+side*.17,.15,72+10*w.phase,'needle',0,'accelerate');if(w.phase>=1)fan(b.x-side*34,b.y,9,down-side*.17,.19,60+8*w.phase,'blade',1,'curve');if(w.phase===2&&pulse%84===0)ringAt(b.x,b.y,24,58,cycle*.18,1,'pause');}
+      b.authorityDuel=w.phase===2;b.coreIntact=true;b.targetSemantic='cult-authority';
+    }
+    // Two own-material rotating casts are an additional HELL layer, not the
+    // identity of the signature above. Their complete pair is preflighted.
+    if(b.rotorTelegraph&&within===143&&w.bullets.length+2>CAPS.bullets){b.rotorTelegraph=false;w.stats.poolPressure++;w.stats.droppedGroups++;}
+    if(w.difficulty==='hell'&&w.phase===2&&within===144&&scene!==8&&scene!==10&&scene!==15){
+      if(w.bullets.length+2<=CAPS.bullets){var pair=Weapon.createHellPair(w,b,cycle);tagged(pair,1);emit(w,pair);}else{w.stats.poolPressure++;w.stats.droppedGroups++;}
+    }
+  }
+
   function campaignPattern(w) {
+    if(w.bossIndex>=18&&!w.finalPractice){storyPattern(w);return;}
     if (w.bossIndex >= 12 && !w.finalPractice) { chapterThreePattern(w); return; }
     if(w.difficulty!=='hell'){campaignPatternBase(w);return;}
     var t=Math.round(w.phaseTime*60)-1,cycle=Math.floor(t/336),rawWithin=t%336;
@@ -1033,7 +1228,7 @@
     if (!e.linkTarget) effect(w, e.x, e.y, 'kill', e.isBoss ? 45 : 23, '#d9c4ff', 0.6);
     if (e.isBoss) {
       if (e.sealTarget) event(w,'seal',e.name);
-      if (e.linkTarget) event(w,'disconnect','반복 연결 차단');
+      if (e.linkTarget) event(w,w.campaignRevision===5&&encounter(w).chapter>=4&&(encounter(w).combatKind==='foe'||e.scriptedFall)?(e.scriptedFall?'hold':'subdue'):'disconnect',w.campaignRevision===5&&encounter(w).chapter>=4?encounter(w).healthLabel:'반복 연결 차단');
       w.stats.phaseTicks.push(Math.round(w.phaseTime * 60));
       if (w.phase === 2 && w.campaign && !w.practiceBoss && w.bossIndex < campaignBossCount(w.campaignRevision)-1) {
         w.stage = 'transition'; w.stageTime = 0; w.nextPhase = null; w.nextEncounter = w.bossIndex + 1;
@@ -1042,11 +1237,22 @@
           w.transitionNarrative = PRIEST_BRIDGE.slice(); w.transitionMinimum = 15;
           w.stageLabel = '병원에서 의목사의 첫 임무로';
         }
-        if (w.campaignRevision === 4 && w.bossIndex === 11) { w.transitionNarrative = ['미카엘라는 귀환 경보를 듣고 캡슐로 달려간다. 열린 캡슐 안은 비어 있다.', '의목사 A의 마지막 신호 옆에는 정체를 알 수 없는 아이의 기억 신호가 남아 있다.', '의목사 B는 사라진 A를 찾기 위해 호텔에 불을 지른 청소부의 기록으로 돌아간다.', '전쟁과 입양 기록을 확인한 뒤 첫째 아이의 방어 몽세에 접속한다.'];w.transitionMinimum=12;w.stageLabel='사라진 귀환자 · 의목사 B의 기억'; }
+        if (w.campaignRevision >= 4 && w.bossIndex === 11) { w.transitionNarrative = ['미카엘라는 귀환 경보를 듣고 캡슐로 달려간다. 열린 캡슐 안은 비어 있다.', '의목사 A의 마지막 신호 옆에는 정체를 알 수 없는 아이의 기억 신호가 남아 있다.', '의목사 B는 사라진 A를 찾기 위해 호텔에 불을 지른 청소부의 기록으로 돌아간다.', '전쟁과 입양 기록을 확인한 뒤 첫째 아이의 방어 몽세에 접속한다.'];w.transitionMinimum=12;w.stageLabel='사라진 귀환자 · 의목사 B의 기억'; }
+        if(w.campaignRevision===5){
+          var completedInfo=encounter(w),sceneId=completedInfo.primarySceneId||completedInfo.sceneIds&&completedInfo.sceneIds[0],bridge=STORY_TRANSITIONS[sceneId];
+          if(bridge&&bridge.length){w.transitionNarrative=bridge.slice();w.transitionMinimum=Math.max(6,bridge.length*3);w.stageLabel=completedInfo.name+' · 다음 기억';}
+          if(completedInfo.scriptedFall){w.storyOutcome='defeated-and-fell';w.stageLabel='패배와 추락 · 검을 놓지 않다';event(w,'story-fall','여섯 검격에 밀려 성벽에서 검은 바다로 추락한다.');}
+          if(sceneId==='kair02'){w.storyOutcome='arbelia-self-rewrites';w.arbeliaFreed=true;event(w,'release','아르벨리아가 스스로 최초명령을 다시 쓴다.');}
+          if(sceneId==='murder03'){w.storyOutcome='causal-repeat-disconnected';w.guiltRecordsPreserved=true;event(w,'record-preserved','네 사람의 실제 과실 기록은 남는다.');}
+        }
         w.score += 2500;
       }
-      else if (w.phase === 2) { w.stage = 'won'; w.stageTime = 0; w.resultReason = w.finalPractice ? '교주의 사몽 권한이 끊어졌다. 합일 코어는 남기고 지배 명령과 사이비 회로만 분리한다. 환도는 몽세수호자로 남는다.' : w.campaign ? (w.practiceBoss ? w.bossName + ' · 연습 완료' : w.campaignRevision === 4 ? '기억의 문은 남아 있다. 같은 고통을 되감는 연결만 끊어 첫째 아이의 자아를 풀어냈다. 귀환 좌표가 흐려지는 가운데 남은 두 아이를 찾기로 한다.' : w.bossIndex>=5 ? '일곱 검은 신호 · 봉인 조사 구간을 마쳤습니다' : w.bossIndex===4 ? 'J의 인장이 빛납니다 · 루시퍼가 물러나고 도움을 청할 길이 열립니다' : '첫 기억의 조사 구간을 마쳤습니다') : '기억 회랑을 돌파했습니다'; w.score += 5000 + w.player.hp * 500; event(w, 'win'); }
+      else if (w.phase === 2) { w.stage = 'won'; w.stageTime = 0; w.resultReason = w.finalPractice ? '교주의 사몽 권한이 끊어졌다. 합일 코어는 남기고 지배 명령과 사이비 회로만 분리한다. 환도는 몽세수호자로 남는다.' : w.campaign ? (w.practiceBoss ? w.bossName + ' · 연습 완료' : w.campaignRevision === 5 ? '교주의 사몽 권한이 끊어졌다. 합일 코어는 파괴하지 않고 강제 명령과 흑장미단의 사이비 회로만 분리했다. 각자의 자아와 세계를 남긴 채 환도는 몽세수호자로 머문다.' : w.campaignRevision === 4 ? '기억의 문은 남아 있다. 같은 고통을 되감는 연결만 끊어 첫째 아이의 자아를 풀어냈다. 귀환 좌표가 흐려지는 가운데 남은 두 아이를 찾기로 한다.' : w.bossIndex>=5 ? '일곱 검은 신호 · 봉인 조사 구간을 마쳤습니다' : w.bossIndex===4 ? 'J의 인장이 빛납니다 · 루시퍼가 물러나고 도움을 청할 길이 열립니다' : '첫 기억의 조사 구간을 마쳤습니다') : '기억 회랑을 돌파했습니다'; if(w.campaignRevision===5&&!w.practiceBoss){w.coreIntact=true;w.forcedCommandsSeparated=true;w.cultAuthoritySevered=true;w.cultLeaderDissolved=true;w.guardianRole='몽세수호자';w.endingNarrative=['교주의 권한이 끊기고 몸이 무너진다. 이번에는 코어의 검은 신경선도 그를 되살리지 못한다.','코어 안에는 아직 수많은 사람이 살아 있다. 환도는 치켜들었던 칼을 내린다.','교주의 강제 명령과 흑장미단의 사이비 회로만 분리한다.','자신의 사몽 권한으로 흔들리는 기반을 유지하며 각자의 고유한 자아와 세계를 지킨다.','자아들이 제 이름을 되찾고 서로 다른 세계는 고유한 윤곽을 편다. 경계가 맞닿은 곳에는 작은 오솔길이 생기며, 어느 한쪽도 다른 세계를 집어삼키지 않는다.','환도는 귀환 대신 몽세수호자로 남는다. 누구에게도 가야 할 길을 대신 정하지 않는다.','사람의 선택에 대신 개입하고 싶은 유혹이 일 때마다 손바닥의 J 인장을 내려다본다. 각자가 택한 길목이 부당하게 막혀 있지 않은지만 확인한다.','코어에 떠오른 합일(合一) 뒤에서 금빛 획이 모여 몽세(夢世)가 된다. 환도는 그 이름을 끝까지 다시 읽는다. 합일몽세(合一夢世).'];}w.score += 5000 + w.player.hp * 500; event(w, 'win'); }
       else { w.stage = 'transition'; w.stageTime = 0; w.nextPhase = w.phase + 1; w.transitionRemaining = 6.4; w.stageLabel = e.sealTarget ? '남은 파동이 지나갑니다' : '남은 검편이 지나갑니다';
+        if(w.campaignRevision===5&&encounter(w).combatKind==='final-authority'){
+          if(w.phase===0){w.transitionNarrative=['사몽에 각성한 교주의 육신이 처음 무너진다. 환도 또한 몸을 일으키기 어려울 만큼 다친다.','합일 코어가 검은 신경선을 뻗어 교주의 몸을 꿰매고 사몽 출력을 밀어 넣는다.','되살아난 교주가 다가온다. 환도는 자아를 맡기는 생존의 유혹 앞에서도 자신의 다음 결정을 넘기지 않는다.'];w.transitionMinimum=12;w.stageLabel='코어의 봉합 · 되살아난 교주';}
+          if(w.phase===1){w.transitionNarrative=['환도는 완전히 죽기 직전, 현실의 지하 접속실과 정신과 의사 미카엘라를 기억한다.','캡슐의 의목사 B는 첫째의 손을 잡고 있다. 세 아이는 본래 세쌍둥이였다. 첫째는 소멸하지 않고 환도라는 칼로 남았다.','환도는 아직 살아 있다. 현실의 기억은 사후가 아니라 바로 지금 되돌아온다. 이곳이 꿈임을 알아차린다.','사망이라는 글자가 사몽으로 바뀐다. 상처와 칼을 다시 잇고 B와 첫째의 동의한 별도 의지로 일어선다.'];w.transitionMinimum=16;w.stageLabel='죽음 직전의 기억 회복 · 사몽 각성';}
+        }
         if(w.finalPractice && w.phase===0) { w.transitionNarrative=['교주가 무너졌지만 코어의 신경선이 그의 몸을 다시 잇는다.', '환도는 돌아온 현실의 기억 속에서 여기가 꿈임을 알아차린다.', '사몽의 권한으로 일어서서 교주에게 맞선다.'];w.transitionMinimum=9;w.stageLabel='사몽 각성'; }
       }
       w.reservation = false; w._reservationSince = 0;
@@ -1066,7 +1272,9 @@
       var h = w.hazards[i];
       if (w.tick >= h.expireAt) { remove(w, 'hazards', i); continue; }
       if (w.tick === h.activeAt && w.campaign && w.stage === 'boss' && w.boss && h.ownerId === w.boss.id) {
-        if(w.boss._lastLaserReleaseCast!==h.castId){markBossRelease(w,'laser',h.patternId||'',h.x1,h.y1);w.boss._lastLaserReleaseCast=h.castId;}
+        if(h.sourceActorId&&w.boss.shadowCopies){var copy=w.boss.shadowCopies.find(function(p){return p.sourceActorId===h.sourceActorId;});if(copy&&copy.lastLaserCast!==h.castId){copy.releaseTick=w.tick;copy.lastLaserCast=h.castId;markBossRelease(w,'laser',h.patternId||'',h.x1,h.y1,h.sourceActorId);}}
+        else if(h.sourceActorId&&w.boss.participants){var actor=w.boss.participants.find(function(p){return p.id===h.sourceActorId;});if(actor&&actor.lastLaserCast!==h.castId){actor.releaseTick=w.tick;actor.lastLaserCast=h.castId;markBossRelease(w,'laser',h.patternId||'',h.x1,h.y1,h.sourceActorId);}}
+        else if(w.boss._lastLaserReleaseCast!==h.castId){markBossRelease(w,'laser',h.patternId||'',h.x1,h.y1);w.boss._lastLaserReleaseCast=h.castId;}
       }
       if (w.tick < h.activeAt) { h.phase = 'warning'; h.progress = clamp((w.tick - h.born) / h.warningTicks, 0, 1); }
       else if (w.tick < h.fadeAt) { h.phase = 'active'; h.progress = clamp((w.tick - h.activeAt) / h.activeTicks, 0, 1); }
@@ -1112,21 +1320,21 @@
     for (var k = w.enemies.length - 1; k >= 0; k--) if (w.enemies[k].hp <= 0) remove(w, 'enemies', k);
   }
   function updateBullets(w, px, py) {
-    var p = w.player;
+    var p = w.player, motionDT=w.campaignRevision===5&&w.tick<(w.arbeliaSlowUntil||0)?FIXED_DT*.55:FIXED_DT;
     for (var i = w.bullets.length - 1; i >= 0; i--) {
       var b = w.bullets[i]; b.px = b.x; b.py = b.y;
-      if (b.weaponMotion) Weapon.advance(b, FIXED_DT, W);
+      if (b.weaponMotion) Weapon.advance(b, motionDT, W);
       else {
         var paused=b.pauseUntil && b.age>=b.pauseFrom && b.age<b.pauseUntil;
         if(!paused && b.curveRate && b.age<b.curveUntil){
-          var curveSpeed=Math.hypot(b.vx,b.vy);b.angle+=b.curveRate*FIXED_DT;
+          var curveSpeed=Math.hypot(b.vx,b.vy);b.angle+=b.curveRate*motionDT;
           b.vx=Math.cos(b.angle)*curveSpeed;b.vy=Math.sin(b.angle)*curveSpeed;
         }
         if (!paused && b.acceleration && b.age >= b.accelerateAt) {
-          var speed = Math.min(b.maxSpeed, Math.hypot(b.vx, b.vy) + b.acceleration * FIXED_DT);
+          var speed = Math.min(b.maxSpeed, Math.hypot(b.vx, b.vy) + b.acceleration * motionDT);
           b.vx = Math.cos(b.angle) * speed; b.vy = Math.sin(b.angle) * speed;
         }
-        if(!paused){b.x += b.vx * FIXED_DT; b.y += b.vy * FIXED_DT;}
+        if(!paused){b.x += b.vx * motionDT; b.y += b.vy * motionDT;}
       }
       b.age += FIXED_DT;
       if (w.stage !== 'won' && w.stage !== 'lost' && w.stage !== 'bossIntro') {
@@ -1174,7 +1382,7 @@
     var s = copy(snapshot);
     if (s.finalPractice !== undefined && (s.finalPractice !== true || s.practiceBoss !== true || s.campaign !== true || s.bossIndex !== 11 || s.campaignRevision !== 3 || s.stage !== 'boss')) throw new Error('Invalid separate final practice');
     var hasCampaign = Object.prototype.hasOwnProperty.call(s, 'campaign') || Object.prototype.hasOwnProperty.call(s, 'campaignRevision') || Object.prototype.hasOwnProperty.call(s, 'bossIndex');
-    if (hasCampaign && (s.campaign !== true || ![1,2,3,4].includes(s.campaignRevision) || !Number.isInteger(s.bossIndex) || s.bossIndex < 0 || s.bossIndex >= campaignBossCount(s.campaignRevision) || (s.difficulty === 'hell' && s.campaignRevision < 3))) throw new Error('Invalid campaign checkpoint');
+    if (hasCampaign && (s.campaign !== true || ![1,2,3,4,5].includes(s.campaignRevision) || !Number.isInteger(s.bossIndex) || s.bossIndex < 0 || s.bossIndex >= campaignBossCount(s.campaignRevision) || (s.difficulty === 'hell' && s.campaignRevision < 3))) throw new Error('Invalid campaign checkpoint');
     if (hasCampaign && s.stage === 'waves' && s.wave >= CAMPAIGN_BOSSES[s.bossIndex].waves.length) throw new Error('Invalid campaign wave');
     if (s.rulesetVersion !== RULESET || typeof s.runId !== 'string' || !/^[A-Za-z0-9_.:-]{1,96}$/.test(s.runId) || !['normal','gentle','hell'].includes(s.difficulty) || !['waves','boss'].includes(s.stage)) throw new Error('Unsupported checkpoint');
     ['tick','rngState','seed','idCounter','checkpointSerial','wave','phase','score','graze','kills','memory','resonance'].forEach(function (k) { if (!finite(s[k]) || s[k] < 0 || s[k] > (k === 'rngState' || k === 'seed' ? 4294967295 : 100000000)) throw new Error('Invalid checkpoint number: ' + k); });
@@ -1247,7 +1455,7 @@
     updateWarnings(w); attack(w); updateShots(w); updateBullets(w, px, py); updateLaserCollision(w, px, py);
     if (w.stage === 'transition') {
       w.transitionRemaining = Math.max(0, (w.transitionMinimum || 6.4) - w.stageTime);
-      if (!w.bullets.length && !w.hazards.length && !w._warnings.length && !w._deferred.length && (!(w.campaign && w.bossIndex >= 2 && w.nextEncounter != null) || w.stageTime >= (w.transitionMinimum || 3)) && (!w.finalPractice || !w.transitionNarrative || w.stageTime >= (w.transitionMinimum || 0))) {
+      if (!w.bullets.length && !w.hazards.length && !w._warnings.length && !w._deferred.length && (!(w.campaign && w.bossIndex >= 2 && w.nextEncounter != null) || w.stageTime >= (w.transitionMinimum || 3)) && (!(w.finalPractice||w.campaignRevision===5&&w.bossIndex>=18) || !w.transitionNarrative || w.stageTime >= (w.transitionMinimum || 0))) {
         if (w.campaign && w.nextEncounter != null) {
           w.bossIndex = w.nextEncounter; w.nextEncounter = null; w.boss = null; w.stage = 'waves'; w.phase = 0; w.phaseTime = 0;
           w.transitionNarrative = null; w.transitionMinimum = 0;
@@ -1265,6 +1473,6 @@
   }
   return Object.freeze({ W: W, H: H, FIXED_DT: FIXED_DT, RULESET_VERSION: RULESET, MECHANICS_REVISION: 2, CAPS: CAPS,
     CAMPAIGN_BOSSES: CAMPAIGN_BOSSES, CAMPAIGN_SIGNATURES: CAMPAIGN_SIGNATURES, CAMPAIGN_REVISION: 3, HELL_MECHANICS_REVISION: HELL_MECHANICS_REVISION, HELL_OVERLAP_LIMITS: HELL_OVERLAP_LIMITS,
-    campaignBossCount: campaignBossCount, LATEST_CAMPAIGN_REVISION: 4, createRun: createRun, step: step, checkpoint: checkpoint, restoreCheckpoint: restoreCheckpoint, skipBossIntro: skipBossIntro,
+    campaignBossCount: campaignBossCount, LATEST_CAMPAIGN_REVISION: 5, createRun: createRun, step: step, checkpoint: checkpoint, restoreCheckpoint: restoreCheckpoint, skipBossIntro: skipBossIntro,
     geometry: Object.freeze({ segmentDistanceSquared: segmentDistanceSquared, segmentPairDistanceSquared: segmentPairDistanceSquared, sweptCircleHit: sweptCircleHit, projectileDistanceSquared: projectileDistanceSquared, hazardDistanceSquared: hazardDistanceSquared }) });
 }));
