@@ -1,0 +1,2013 @@
+{
+  "scope": "Actual Chrome render of controlled ordinary-code immunity/no-autoattack fixtures, not natural play or sustained FPS",
+  "scenes": [
+    {
+      "group": 19,
+      "tick": 1081,
+      "bullets": 47,
+      "textured": 47,
+      "missing": 0,
+      "images": 6,
+      "hud": {
+        "phase": 2,
+        "remainingSeconds": 56.98333333333308,
+        "warningLasers": 0,
+        "activeLasers": 0,
+        "fadingLasers": 0,
+        "nearestWarningTicks": null,
+        "nearestWarningSeconds": null,
+        "enemyBullets": 47,
+        "liveThreats": 47,
+        "status": "탄막 47 · 흐름을 읽으세요",
+        "statusKind": "bullets",
+        "timerWarning": false,
+        "geometryOwnedByCore": true,
+        "box": [
+          13,
+          19,
+          334,
+          45
+        ],
+        "timerText": "57초",
+        "displayName": "고블린 두목",
+        "displayPattern": "장미 인장의 공명",
+        "textLayoutBuilds": 1
+      },
+      "label": "장미 인장의 공명",
+      "hintInsideArena": false
+    },
+    {
+      "group": 20,
+      "tick": 169,
+      "bullets": 18,
+      "textured": 18,
+      "missing": 0,
+      "images": 9,
+      "hud": {
+        "phase": 2,
+        "remainingSeconds": 72.18333333333334,
+        "warningLasers": 0,
+        "activeLasers": 6,
+        "fadingLasers": 0,
+        "nearestWarningTicks": null,
+        "nearestWarningSeconds": null,
+        "enemyBullets": 18,
+        "liveThreats": 24,
+        "status": "광선 활성 6",
+        "statusKind": "laser-active",
+        "timerWarning": false,
+        "geometryOwnedByCore": true,
+        "box": [
+          13,
+          19,
+          334,
+          45
+        ],
+        "timerText": "73초",
+        "displayName": "타락천사 기사",
+        "displayPattern": "무너지는 성벽",
+        "textLayoutBuilds": 1
+      },
+      "label": "무너지는 성벽",
+      "hintInsideArena": false
+    },
+    {
+      "group": 21,
+      "tick": 289,
+      "bullets": 106,
+      "textured": 106,
+      "missing": 0,
+      "images": 10,
+      "hud": {
+        "phase": 2,
+        "remainingSeconds": 70.18333333333335,
+        "warningLasers": 0,
+        "activeLasers": 0,
+        "fadingLasers": 0,
+        "nearestWarningTicks": null,
+        "nearestWarningSeconds": null,
+        "enemyBullets": 106,
+        "liveThreats": 106,
+        "status": "탄막 106 · 흐름을 읽으세요",
+        "statusKind": "bullets",
+        "timerWarning": false,
+        "geometryOwnedByCore": true,
+        "box": [
+          13,
+          19,
+          334,
+          45
+        ],
+        "timerText": "71초",
+        "displayName": "불면귀",
+        "displayPattern": "안개 안의 심장부",
+        "textLayoutBuilds": 1
+      },
+      "label": "안개 안의 심장부",
+      "hintInsideArena": false
+    },
+    {
+      "group": 22,
+      "tick": 177,
+      "bullets": 11,
+      "textured": 11,
+      "missing": 0,
+      "images": 8,
+      "hud": {
+        "phase": 2,
+        "remainingSeconds": 72.05000000000001,
+        "warningLasers": 0,
+        "activeLasers": 2,
+        "fadingLasers": 0,
+        "nearestWarningTicks": null,
+        "nearestWarningSeconds": null,
+        "enemyBullets": 11,
+        "liveThreats": 13,
+        "status": "광선 활성 2",
+        "statusKind": "laser-active",
+        "timerWarning": false,
+        "geometryOwnedByCore": true,
+        "box": [
+          13,
+          19,
+          334,
+          45
+        ],
+        "timerText": "73초",
+        "displayName": "최초명령 코어 방어",
+        "displayPattern": "처음 문장을 지키다",
+        "textLayoutBuilds": 1
+      },
+      "label": "처음 문장을 지키다",
+      "hintInsideArena": false
+    },
+    {
+      "group": 23,
+      "tick": 697,
+      "bullets": 95,
+      "textured": 95,
+      "missing": 0,
+      "images": 7,
+      "hud": {
+        "phase": 2,
+        "remainingSeconds": 63.38333333333318,
+        "warningLasers": 0,
+        "activeLasers": 0,
+        "fadingLasers": 0,
+        "nearestWarningTicks": null,
+        "nearestWarningSeconds": null,
+        "enemyBullets": 95,
+        "liveThreats": 95,
+        "status": "탄막 95 · 흐름을 읽으세요",
+        "statusKind": "bullets",
+        "timerWarning": false,
+        "geometryOwnedByCore": true,
+        "box": [
+          13,
+          19,
+          334,
+          45
+        ],
+        "timerText": "64초",
+        "displayName": "일반 수문장의 동력 연결",
+        "displayPattern": "동력 연결의 단면",
+        "textLayoutBuilds": 1
+      },
+      "label": "동력 연결의 단면",
+      "hintInsideArena": false
+    },
+    {
+      "group": 24,
+      "tick": 541,
+      "bullets": 9,
+      "textured": 9,
+      "missing": 0,
+      "images": 7,
+      "hud": {
+        "phase": 2,
+        "remainingSeconds": 65.9833333333333,
+        "warningLasers": 0,
+        "activeLasers": 3,
+        "fadingLasers": 0,
+        "nearestWarningTicks": null,
+        "nearestWarningSeconds": null,
+        "enemyBullets": 9,
+        "liveThreats": 12,
+        "status": "광선 활성 3",
+        "statusKind": "laser-active",
+        "timerWarning": false,
+        "geometryOwnedByCore": true,
+        "box": [
+          13,
+          19,
+          334,
+          45
+        ],
+        "timerText": "66초",
+        "displayName": "상급·대수문장의 교차 명령",
+        "displayPattern": "한 걸음의 유예",
+        "textLayoutBuilds": 1
+      },
+      "label": "한 걸음의 유예",
+      "hintInsideArena": false
+    },
+    {
+      "group": 25,
+      "tick": 571,
+      "bullets": 48,
+      "textured": 48,
+      "missing": 0,
+      "images": 8,
+      "hud": {
+        "phase": 2,
+        "remainingSeconds": 65.48333333333328,
+        "warningLasers": 0,
+        "activeLasers": 2,
+        "fadingLasers": 0,
+        "nearestWarningTicks": null,
+        "nearestWarningSeconds": null,
+        "enemyBullets": 48,
+        "liveThreats": 50,
+        "status": "광선 활성 2",
+        "statusKind": "laser-active",
+        "timerWarning": false,
+        "geometryOwnedByCore": true,
+        "box": [
+          13,
+          19,
+          334,
+          45
+        ],
+        "timerText": "66초",
+        "displayName": "검은 공방의 동력 접점",
+        "displayPattern": "용광로 연결 분리",
+        "textLayoutBuilds": 1
+      },
+      "label": "용광로 연결 분리",
+      "hintInsideArena": false
+    },
+    {
+      "group": 26,
+      "tick": 307,
+      "bullets": 68,
+      "textured": 68,
+      "missing": 0,
+      "images": 7,
+      "hud": {
+        "phase": 2,
+        "remainingSeconds": 69.88333333333334,
+        "warningLasers": 0,
+        "activeLasers": 0,
+        "fadingLasers": 0,
+        "nearestWarningTicks": null,
+        "nearestWarningSeconds": null,
+        "enemyBullets": 68,
+        "liveThreats": 68,
+        "status": "탄막 68 · 흐름을 읽으세요",
+        "statusKind": "bullets",
+        "timerWarning": false,
+        "geometryOwnedByCore": true,
+        "box": [
+          13,
+          19,
+          334,
+          45
+        ],
+        "timerText": "70초",
+        "displayName": "뉴런 게이트의 강제 연결",
+        "displayPattern": "강제 신경 연결 차단",
+        "textLayoutBuilds": 1
+      },
+      "label": "강제 신경 연결 차단",
+      "hintInsideArena": false
+    },
+    {
+      "group": 27,
+      "tick": 277,
+      "bullets": 80,
+      "textured": 80,
+      "missing": 0,
+      "images": 8,
+      "hud": {
+        "phase": 2,
+        "remainingSeconds": 70.38333333333334,
+        "warningLasers": 0,
+        "activeLasers": 0,
+        "fadingLasers": 0,
+        "nearestWarningTicks": null,
+        "nearestWarningSeconds": null,
+        "enemyBullets": 80,
+        "liveThreats": 80,
+        "status": "탄막 80 · 흐름을 읽으세요",
+        "statusKind": "bullets",
+        "timerWarning": false,
+        "geometryOwnedByCore": true,
+        "box": [
+          13,
+          19,
+          334,
+          45
+        ],
+        "timerText": "71초",
+        "displayName": "망각의 묘지 삭제 명령",
+        "displayPattern": "주인에게 남길 기록",
+        "textLayoutBuilds": 1
+      },
+      "label": "주인에게 남길 기록",
+      "hintInsideArena": false
+    },
+    {
+      "group": 28,
+      "tick": 557,
+      "bullets": 28,
+      "textured": 28,
+      "missing": 0,
+      "images": 7,
+      "hud": {
+        "phase": 2,
+        "remainingSeconds": 65.71666666666663,
+        "warningLasers": 0,
+        "activeLasers": 5,
+        "fadingLasers": 0,
+        "nearestWarningTicks": null,
+        "nearestWarningSeconds": null,
+        "enemyBullets": 28,
+        "liveThreats": 33,
+        "status": "광선 활성 5",
+        "statusKind": "laser-active",
+        "timerWarning": false,
+        "geometryOwnedByCore": true,
+        "box": [
+          13,
+          19,
+          334,
+          45
+        ],
+        "timerText": "66초",
+        "displayName": "붕괴 의식장의 여섯 명령 고리",
+        "displayPattern": "회랑을 여는 마지막 틈",
+        "textLayoutBuilds": 1
+      },
+      "label": "회랑을 여는 마지막 틈",
+      "hintInsideArena": false
+    },
+    {
+      "group": 29,
+      "tick": 325,
+      "bullets": 93,
+      "textured": 93,
+      "missing": 0,
+      "images": 8,
+      "hud": {
+        "phase": 2,
+        "remainingSeconds": 69.58333333333334,
+        "warningLasers": 0,
+        "activeLasers": 0,
+        "fadingLasers": 0,
+        "nearestWarningTicks": null,
+        "nearestWarningSeconds": null,
+        "enemyBullets": 93,
+        "liveThreats": 93,
+        "status": "탄막 93 · 흐름을 읽으세요",
+        "statusKind": "bullets",
+        "timerWarning": false,
+        "geometryOwnedByCore": true,
+        "box": [
+          13,
+          19,
+          334,
+          45
+        ],
+        "timerText": "70초",
+        "displayName": "아르벨리아의 변조 명령",
+        "displayPattern": "스스로 다시 쓸 첫 문장",
+        "textLayoutBuilds": 1
+      },
+      "label": "스스로 다시 쓸 첫 문장",
+      "hintInsideArena": false
+    },
+    {
+      "group": 30,
+      "tick": 313,
+      "bullets": 141,
+      "textured": 141,
+      "missing": 0,
+      "images": 9,
+      "hud": {
+        "phase": 2,
+        "remainingSeconds": 69.78333333333335,
+        "warningLasers": 0,
+        "activeLasers": 0,
+        "fadingLasers": 0,
+        "nearestWarningTicks": null,
+        "nearestWarningSeconds": null,
+        "enemyBullets": 141,
+        "liveThreats": 141,
+        "status": "탄막 141 · 흐름을 읽으세요",
+        "statusKind": "bullets",
+        "timerWarning": false,
+        "geometryOwnedByCore": true,
+        "box": [
+          13,
+          19,
+          334,
+          45
+        ],
+        "timerText": "70초",
+        "displayName": "세이렌 모르",
+        "displayPattern": "자유의지의 시간",
+        "textLayoutBuilds": 1
+      },
+      "label": "자유의지의 시간",
+      "hintInsideArena": false
+    },
+    {
+      "group": 31,
+      "tick": 697,
+      "bullets": 56,
+      "textured": 56,
+      "missing": 0,
+      "images": 9,
+      "hud": {
+        "phase": 2,
+        "remainingSeconds": 63.38333333333318,
+        "warningLasers": 0,
+        "activeLasers": 0,
+        "fadingLasers": 0,
+        "nearestWarningTicks": null,
+        "nearestWarningSeconds": null,
+        "enemyBullets": 56,
+        "liveThreats": 56,
+        "status": "탄막 56 · 흐름을 읽으세요",
+        "statusKind": "bullets",
+        "timerWarning": false,
+        "geometryOwnedByCore": true,
+        "box": [
+          13,
+          19,
+          334,
+          45
+        ],
+        "timerText": "64초",
+        "displayName": "공동 EGO 코어를 빼앗은 우두머리",
+        "displayPattern": "함께 되찾는 코어",
+        "textLayoutBuilds": 1
+      },
+      "label": "함께 되찾는 코어",
+      "hintInsideArena": false
+    },
+    {
+      "group": 32,
+      "tick": 289,
+      "bullets": 97,
+      "textured": 97,
+      "missing": 0,
+      "images": 10,
+      "hud": {
+        "phase": 2,
+        "remainingSeconds": 70.18333333333335,
+        "warningLasers": 0,
+        "activeLasers": 0,
+        "fadingLasers": 0,
+        "nearestWarningTicks": null,
+        "nearestWarningSeconds": null,
+        "enemyBullets": 97,
+        "liveThreats": 97,
+        "status": "탄막 97 · 흐름을 읽으세요",
+        "statusKind": "bullets",
+        "timerWarning": false,
+        "geometryOwnedByCore": true,
+        "box": [
+          13,
+          19,
+          334,
+          45
+        ],
+        "timerText": "71초",
+        "displayName": "파란불 집행체",
+        "displayPattern": "되감기 연결만 분리",
+        "textLayoutBuilds": 1
+      },
+      "label": "되감기 연결만 분리",
+      "hintInsideArena": false
+    },
+    {
+      "group": 33,
+      "tick": 697,
+      "bullets": 64,
+      "textured": 64,
+      "missing": 0,
+      "images": 7,
+      "hud": {
+        "phase": 2,
+        "remainingSeconds": 63.38333333333318,
+        "warningLasers": 0,
+        "activeLasers": 0,
+        "fadingLasers": 0,
+        "nearestWarningTicks": null,
+        "nearestWarningSeconds": null,
+        "enemyBullets": 64,
+        "liveThreats": 64,
+        "status": "탄막 64 · 흐름을 읽으세요",
+        "statusKind": "bullets",
+        "timerWarning": false,
+        "geometryOwnedByCore": true,
+        "box": [
+          13,
+          19,
+          334,
+          45
+        ],
+        "timerText": "64초",
+        "displayName": "흑장미단의 외곽 지배 회로",
+        "displayPattern": "바깥 지배 연결 분리",
+        "textLayoutBuilds": 1
+      },
+      "label": "바깥 지배 연결 분리",
+      "hintInsideArena": false
+    },
+    {
+      "group": 34,
+      "tick": 289,
+      "bullets": 67,
+      "textured": 67,
+      "missing": 0,
+      "images": 11,
+      "hud": {
+        "phase": 2,
+        "remainingSeconds": 70.18333333333335,
+        "warningLasers": 0,
+        "activeLasers": 0,
+        "fadingLasers": 0,
+        "nearestWarningTicks": null,
+        "nearestWarningSeconds": null,
+        "enemyBullets": 67,
+        "liveThreats": 67,
+        "status": "탄막 67 · 흐름을 읽으세요",
+        "statusKind": "bullets",
+        "timerWarning": false,
+        "geometryOwnedByCore": true,
+        "box": [
+          13,
+          19,
+          334,
+          45
+        ],
+        "timerText": "71초",
+        "displayName": "한리안·백이온의 합일 회로",
+        "displayPattern": "두 사람이 지키는 지배 회로",
+        "textLayoutBuilds": 1
+      },
+      "label": "두 사람이 지키는 지배 회로",
+      "hintInsideArena": false
+    },
+    {
+      "group": 35,
+      "tick": 697,
+      "bullets": 139,
+      "textured": 139,
+      "missing": 0,
+      "images": 11,
+      "hud": {
+        "phase": 2,
+        "remainingSeconds": 63.38333333333318,
+        "warningLasers": 0,
+        "activeLasers": 0,
+        "fadingLasers": 0,
+        "nearestWarningTicks": null,
+        "nearestWarningSeconds": null,
+        "enemyBullets": 139,
+        "liveThreats": 139,
+        "status": "탄막 139 · 흐름을 읽으세요",
+        "statusKind": "bullets",
+        "timerWarning": false,
+        "geometryOwnedByCore": true,
+        "box": [
+          13,
+          19,
+          334,
+          45
+        ],
+        "timerText": "64초",
+        "displayName": "교만의 사이보그 교주",
+        "displayPattern": "두 사몽의 격돌",
+        "textLayoutBuilds": 1
+      },
+      "label": "두 사몽의 격돌",
+      "hintInsideArena": false
+    }
+  ],
+  "laserBefore": {
+    "requestedMode": "beforeActive",
+    "mode": "beforeActive",
+    "group": 20,
+    "boss": "타락천사 기사",
+    "tick": 168,
+    "bullets": 18,
+    "hazards": [
+      "warning",
+      "warning",
+      "warning",
+      "warning",
+      "warning",
+      "warning"
+    ],
+    "hp": 3,
+    "assets": 9,
+    "actor": {
+      "actorDraws": 7,
+      "bossDraws": 1,
+      "enemyDraws": 0,
+      "silkTethers": 0,
+      "enemySilkTethers": 0,
+      "bossSilkTethers": 0,
+      "lastBossAsset": "storyKnightCharge",
+      "lastBossPose": "charge",
+      "lastBossIdentity": "fallen-knight",
+      "usedAssets": {
+        "storyKnightCharge": 6,
+        "storyKnightSword": 1,
+        "storyPlayerHando": 1
+      },
+      "usedPoses": {
+        "charge": 6,
+        "idle": 1
+      },
+      "lastSilk": null,
+      "authoredPosesPerActor": 4,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false,
+      "sinBossDraws": 0,
+      "lastSinSample": null,
+      "wrathManifestDraws": 0,
+      "lastWrathManifest": null,
+      "chapter3BossDraws": 0,
+      "chapter3DroneDraws": 0,
+      "chapter3GateDraws": 0,
+      "lastChapter3Sample": null,
+      "storyBossDraws": 6,
+      "storyParticipantDraws": 0,
+      "storyMinionDraws": 0,
+      "storyPlayerDraws": 1,
+      "storySupportDraws": 0,
+      "storyEchoDraws": 6,
+      "storyTargetMarkerDraws": 1,
+      "lastStoryTargetMarker": {
+        "key": "storyKnightSword",
+        "position": [
+          211.29223951521413,
+          118.35337898684071
+        ],
+        "sourceCrop": [
+          109,
+          2,
+          89,
+          329
+        ],
+        "sourceAnchor": [
+          154,
+          164
+        ],
+        "displaySize": [
+          20,
+          48
+        ],
+        "label": "검격 표식",
+        "damaging": false,
+        "aimTarget": true
+      },
+      "lastStorySamples": [
+        {
+          "id": "fallen-echo-0",
+          "key": "storyKnightCharge",
+          "role": "echo",
+          "frame": 1,
+          "pose": "charge",
+          "sourceRect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "scale": 0.27,
+          "position": [
+            30,
+            104
+          ],
+          "combatPosition": [
+            30,
+            104
+          ],
+          "authoredKeyposes": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": -1,
+          "releaseAge": null
+        },
+        {
+          "id": "fallen-echo-1",
+          "key": "storyKnightCharge",
+          "role": "echo",
+          "frame": 1,
+          "pose": "charge",
+          "sourceRect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "scale": 0.27,
+          "position": [
+            90,
+            132
+          ],
+          "combatPosition": [
+            90,
+            132
+          ],
+          "authoredKeyposes": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": -1,
+          "releaseAge": null
+        },
+        {
+          "id": "fallen-echo-2",
+          "key": "storyKnightCharge",
+          "role": "echo",
+          "frame": 1,
+          "pose": "charge",
+          "sourceRect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "scale": 0.27,
+          "position": [
+            150,
+            104
+          ],
+          "combatPosition": [
+            150,
+            104
+          ],
+          "authoredKeyposes": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": -1,
+          "releaseAge": null
+        },
+        {
+          "id": "fallen-echo-3",
+          "key": "storyKnightCharge",
+          "role": "echo",
+          "frame": 1,
+          "pose": "charge",
+          "sourceRect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "scale": 0.27,
+          "position": [
+            210,
+            132
+          ],
+          "combatPosition": [
+            210,
+            132
+          ],
+          "authoredKeyposes": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": -1,
+          "releaseAge": null
+        },
+        {
+          "id": "fallen-echo-4",
+          "key": "storyKnightCharge",
+          "role": "echo",
+          "frame": 1,
+          "pose": "charge",
+          "sourceRect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "scale": 0.27,
+          "position": [
+            270,
+            104
+          ],
+          "combatPosition": [
+            270,
+            104
+          ],
+          "authoredKeyposes": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": -1,
+          "releaseAge": null
+        },
+        {
+          "id": "fallen-echo-5",
+          "key": "storyKnightCharge",
+          "role": "echo",
+          "frame": 1,
+          "pose": "charge",
+          "sourceRect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "scale": 0.27,
+          "position": [
+            330,
+            132
+          ],
+          "combatPosition": [
+            330,
+            132
+          ],
+          "authoredKeyposes": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": -1,
+          "releaseAge": null
+        },
+        {
+          "id": "playerhando",
+          "key": "storyPlayerHando",
+          "role": "player",
+          "frame": 0,
+          "pose": "idle",
+          "sourceRect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "anchor": [
+            256,
+            241
+          ],
+          "scale": 0.111328125,
+          "position": [
+            180,
+            540
+          ],
+          "combatPosition": [
+            180,
+            540
+          ],
+          "authoredKeyposes": 1,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": -1,
+          "releaseAge": null
+        }
+      ],
+      "downwardMotion": {
+        "bossDraws": 0,
+        "spriteDraws": 0,
+        "tethers": 0,
+        "lastBossIdentity": null,
+        "lastBossAsset": null,
+        "lastPose": null,
+        "lastSample": null,
+        "lastSilk": null,
+        "authoredKeyposesPerBoss": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false
+      }
+    },
+    "projectiles": {
+      "stampDraws": 18,
+      "stampCacheMisses": 0,
+      "stampCacheHits": 18,
+      "stampCacheLimit": 96,
+      "stampCacheByteLimit": 4194304,
+      "stampCacheBytes": 247808,
+      "stampCacheEntries": 7,
+      "animatedBulletDraws": 18,
+      "bodyAnimationPhases": 1,
+      "naturalSilhouetteDraws": 18,
+      "maxVisualOutset": 4,
+      "suppressedUnapprovedFX": 0,
+      "compactCastDraws": 0,
+      "compactHazardDraws": 0,
+      "assetLaserDraws": 0,
+      "assetLaserSlices": 0,
+      "signatureCastDraws": 0,
+      "weaponVisualDraws": 0,
+      "weaponTelegraphDraws": 0,
+      "rotorVisualDraws": 2,
+      "rotorTelegraphDraws": 0,
+      "sourceBeamOverlayDraws": 0,
+      "missingOptionalRotorAssets": 0,
+      "missingOptionalBeamAssets": 0,
+      "missingProjectileAssets": 0,
+      "compactFamilies": {
+        "storyKnightSword": 18
+      },
+      "projectileTextureLimit": 768,
+      "projectileTextureDraws": 18,
+      "texturedBullets": 18,
+      "projectileTailDraws": 0,
+      "bossCastDraws": 0,
+      "hazardEmitterDraws": 0
+    },
+    "skills": {
+      "skillSourceDraws": 7,
+      "skillCastDraws": 0,
+      "skillReleaseDraws": 7,
+      "skillLaserDraws": 0,
+      "skillMissingAssets": 0,
+      "skillDrawLimit": 8,
+      "skillReleaseCandidates": 7,
+      "skillReleaseEmitters": 7,
+      "sourceKeys": {
+        "storyKnightSword": 7
+      },
+      "representedReleases": [
+        {
+          "tick": 145,
+          "kind": "hell-rotor",
+          "patternId": "story-fallen-knight",
+          "x": 201.75605862752383,
+          "y": 141.91368250148525,
+          "sourceKey": "storyKnightSword"
+        },
+        {
+          "tick": 145,
+          "kind": "blade",
+          "patternId": "story-fallen-knight",
+          "x": 330,
+          "y": 88,
+          "sourceKey": "storyKnightSword"
+        },
+        {
+          "tick": 145,
+          "kind": "blade",
+          "patternId": "story-fallen-knight",
+          "x": 270,
+          "y": 88,
+          "sourceKey": "storyKnightSword"
+        },
+        {
+          "tick": 145,
+          "kind": "blade",
+          "patternId": "story-fallen-knight",
+          "x": 210,
+          "y": 88,
+          "sourceKey": "storyKnightSword"
+        },
+        {
+          "tick": 145,
+          "kind": "blade",
+          "patternId": "story-fallen-knight",
+          "x": 150,
+          "y": 88,
+          "sourceKey": "storyKnightSword"
+        },
+        {
+          "tick": 145,
+          "kind": "blade",
+          "patternId": "story-fallen-knight",
+          "x": 90,
+          "y": 88,
+          "sourceKey": "storyKnightSword"
+        },
+        {
+          "tick": 145,
+          "kind": "blade",
+          "patternId": "story-fallen-knight",
+          "x": 30,
+          "y": 88,
+          "sourceKey": "storyKnightSword"
+        }
+      ],
+      "skillCacheEntries": 1,
+      "skillCacheBytes": 36864,
+      "skillCacheByteLimit": 2097152,
+      "skillCacheEntryLimit": 24
+    },
+    "map": "storyKnightMap",
+    "signature": {
+      "id": "story-fallen-knight",
+      "label": "무너지는 성벽",
+      "displayLabel": "무너지는 성벽",
+      "hint": "예고 때 기록된 위치를 떠난 뒤 고정된 여섯 검격 사이를 지나세요.",
+      "box": [
+        19,
+        35,
+        220,
+        12
+      ],
+      "hintRenderedInArena": false,
+      "hintLocation": "external-pad-caption",
+      "damageGeometryOwnedByCore": true
+    },
+    "combatHud": {
+      "phase": 2,
+      "remainingSeconds": 72.2,
+      "warningLasers": 6,
+      "activeLasers": 0,
+      "fadingLasers": 0,
+      "nearestWarningTicks": 1,
+      "nearestWarningSeconds": 0.016666666666666666,
+      "enemyBullets": 18,
+      "liveThreats": 24,
+      "status": "광선 예고 · 0.1초",
+      "statusKind": "laser-warning",
+      "timerWarning": false,
+      "geometryOwnedByCore": true,
+      "box": [
+        13,
+        19,
+        334,
+        45
+      ],
+      "timerText": "73초",
+      "displayName": "타락천사 기사",
+      "displayPattern": "무너지는 성벽",
+      "textLayoutBuilds": 1
+    },
+    "phaseEntry": null,
+    "warningContrastStrokes": 6
+  },
+  "laserActive": {
+    "requestedMode": "active",
+    "mode": "active",
+    "group": 20,
+    "boss": "타락천사 기사",
+    "tick": 169,
+    "bullets": 18,
+    "hazards": [
+      "active",
+      "active",
+      "active",
+      "active",
+      "active",
+      "active"
+    ],
+    "hp": 3,
+    "assets": 9,
+    "actor": {
+      "actorDraws": 7,
+      "bossDraws": 1,
+      "enemyDraws": 0,
+      "silkTethers": 0,
+      "enemySilkTethers": 0,
+      "bossSilkTethers": 0,
+      "lastBossAsset": "storyKnightAttack",
+      "lastBossPose": "release",
+      "lastBossIdentity": "fallen-knight",
+      "usedAssets": {
+        "storyKnightAttack": 6,
+        "storyKnightSword": 1,
+        "storyPlayerHando": 1
+      },
+      "usedPoses": {
+        "release": 6,
+        "idle": 1
+      },
+      "lastSilk": null,
+      "authoredPosesPerActor": 4,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false,
+      "sinBossDraws": 0,
+      "lastSinSample": null,
+      "wrathManifestDraws": 0,
+      "lastWrathManifest": null,
+      "chapter3BossDraws": 0,
+      "chapter3DroneDraws": 0,
+      "chapter3GateDraws": 0,
+      "lastChapter3Sample": null,
+      "storyBossDraws": 6,
+      "storyParticipantDraws": 0,
+      "storyMinionDraws": 0,
+      "storyPlayerDraws": 1,
+      "storySupportDraws": 0,
+      "storyEchoDraws": 6,
+      "storyTargetMarkerDraws": 1,
+      "lastStoryTargetMarker": {
+        "key": "storyKnightSword",
+        "position": [
+          211.38454729140736,
+          118.31766081757439
+        ],
+        "sourceCrop": [
+          109,
+          2,
+          89,
+          329
+        ],
+        "sourceAnchor": [
+          154,
+          164
+        ],
+        "displaySize": [
+          20,
+          48
+        ],
+        "label": "검격 표식",
+        "damaging": false,
+        "aimTarget": true
+      },
+      "lastStorySamples": [
+        {
+          "id": "fallen-echo-0",
+          "key": "storyKnightAttack",
+          "role": "echo",
+          "frame": 2,
+          "pose": "release",
+          "sourceRect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "scale": 0.27,
+          "position": [
+            30,
+            104
+          ],
+          "combatPosition": [
+            30,
+            104
+          ],
+          "authoredKeyposes": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": 169,
+          "releaseAge": 0
+        },
+        {
+          "id": "fallen-echo-1",
+          "key": "storyKnightAttack",
+          "role": "echo",
+          "frame": 2,
+          "pose": "release",
+          "sourceRect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "scale": 0.27,
+          "position": [
+            90,
+            132
+          ],
+          "combatPosition": [
+            90,
+            132
+          ],
+          "authoredKeyposes": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": 169,
+          "releaseAge": 0
+        },
+        {
+          "id": "fallen-echo-2",
+          "key": "storyKnightAttack",
+          "role": "echo",
+          "frame": 2,
+          "pose": "release",
+          "sourceRect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "scale": 0.27,
+          "position": [
+            150,
+            104
+          ],
+          "combatPosition": [
+            150,
+            104
+          ],
+          "authoredKeyposes": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": 169,
+          "releaseAge": 0
+        },
+        {
+          "id": "fallen-echo-3",
+          "key": "storyKnightAttack",
+          "role": "echo",
+          "frame": 2,
+          "pose": "release",
+          "sourceRect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "scale": 0.27,
+          "position": [
+            210,
+            132
+          ],
+          "combatPosition": [
+            210,
+            132
+          ],
+          "authoredKeyposes": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": 169,
+          "releaseAge": 0
+        },
+        {
+          "id": "fallen-echo-4",
+          "key": "storyKnightAttack",
+          "role": "echo",
+          "frame": 2,
+          "pose": "release",
+          "sourceRect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "scale": 0.27,
+          "position": [
+            270,
+            104
+          ],
+          "combatPosition": [
+            270,
+            104
+          ],
+          "authoredKeyposes": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": 169,
+          "releaseAge": 0
+        },
+        {
+          "id": "fallen-echo-5",
+          "key": "storyKnightAttack",
+          "role": "echo",
+          "frame": 2,
+          "pose": "release",
+          "sourceRect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "scale": 0.27,
+          "position": [
+            330,
+            132
+          ],
+          "combatPosition": [
+            330,
+            132
+          ],
+          "authoredKeyposes": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": 169,
+          "releaseAge": 0
+        },
+        {
+          "id": "playerhando",
+          "key": "storyPlayerHando",
+          "role": "player",
+          "frame": 0,
+          "pose": "idle",
+          "sourceRect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "anchor": [
+            256,
+            241
+          ],
+          "scale": 0.111328125,
+          "position": [
+            180,
+            540
+          ],
+          "combatPosition": [
+            180,
+            540
+          ],
+          "authoredKeyposes": 1,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": -1,
+          "releaseAge": null
+        }
+      ],
+      "downwardMotion": {
+        "bossDraws": 0,
+        "spriteDraws": 0,
+        "tethers": 0,
+        "lastBossIdentity": null,
+        "lastBossAsset": null,
+        "lastPose": null,
+        "lastSample": null,
+        "lastSilk": null,
+        "authoredKeyposesPerBoss": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false
+      }
+    },
+    "projectiles": {
+      "stampDraws": 18,
+      "stampCacheMisses": 0,
+      "stampCacheHits": 18,
+      "stampCacheLimit": 96,
+      "stampCacheByteLimit": 4194304,
+      "stampCacheBytes": 445440,
+      "stampCacheEntries": 9,
+      "animatedBulletDraws": 18,
+      "bodyAnimationPhases": 1,
+      "naturalSilhouetteDraws": 18,
+      "maxVisualOutset": 4,
+      "suppressedUnapprovedFX": 0,
+      "compactCastDraws": 0,
+      "compactHazardDraws": 0,
+      "assetLaserDraws": 6,
+      "assetLaserSlices": 18,
+      "signatureCastDraws": 0,
+      "weaponVisualDraws": 0,
+      "weaponTelegraphDraws": 0,
+      "rotorVisualDraws": 2,
+      "rotorTelegraphDraws": 0,
+      "sourceBeamOverlayDraws": 6,
+      "missingOptionalRotorAssets": 0,
+      "missingOptionalBeamAssets": 0,
+      "missingProjectileAssets": 0,
+      "compactFamilies": {
+        "storyKnightSword": 18
+      },
+      "projectileTextureLimit": 768,
+      "projectileTextureDraws": 18,
+      "texturedBullets": 18,
+      "projectileTailDraws": 0,
+      "bossCastDraws": 0,
+      "hazardEmitterDraws": 0
+    },
+    "skills": {
+      "skillSourceDraws": 8,
+      "skillCastDraws": 0,
+      "skillReleaseDraws": 2,
+      "skillLaserDraws": 6,
+      "skillMissingAssets": 0,
+      "skillDrawLimit": 8,
+      "skillReleaseCandidates": 8,
+      "skillReleaseEmitters": 8,
+      "sourceKeys": {
+        "storyKnightSword": 8
+      },
+      "representedReleases": [
+        {
+          "tick": 169,
+          "kind": "laser",
+          "patternId": "story-fallen-knight",
+          "x": 30,
+          "y": 104,
+          "sourceKey": "storyKnightSword",
+          "sourceActorId": "fallen-echo-0"
+        },
+        {
+          "tick": 169,
+          "kind": "laser",
+          "patternId": "story-fallen-knight",
+          "x": 90,
+          "y": 132,
+          "sourceKey": "storyKnightSword",
+          "sourceActorId": "fallen-echo-1"
+        },
+        {
+          "tick": 169,
+          "kind": "laser",
+          "patternId": "story-fallen-knight",
+          "x": 150,
+          "y": 104,
+          "sourceKey": "storyKnightSword",
+          "sourceActorId": "fallen-echo-2"
+        },
+        {
+          "tick": 169,
+          "kind": "laser",
+          "patternId": "story-fallen-knight",
+          "x": 210,
+          "y": 132,
+          "sourceKey": "storyKnightSword",
+          "sourceActorId": "fallen-echo-3"
+        },
+        {
+          "tick": 169,
+          "kind": "laser",
+          "patternId": "story-fallen-knight",
+          "x": 270,
+          "y": 104,
+          "sourceKey": "storyKnightSword",
+          "sourceActorId": "fallen-echo-4"
+        },
+        {
+          "tick": 169,
+          "kind": "laser",
+          "patternId": "story-fallen-knight",
+          "x": 330,
+          "y": 132,
+          "sourceKey": "storyKnightSword",
+          "sourceActorId": "fallen-echo-5"
+        },
+        {
+          "tick": 145,
+          "kind": "hell-rotor",
+          "patternId": "story-fallen-knight",
+          "x": 201.75605862752383,
+          "y": 141.91368250148525,
+          "sourceKey": "storyKnightSword"
+        },
+        {
+          "tick": 145,
+          "kind": "blade",
+          "patternId": "story-fallen-knight",
+          "x": 330,
+          "y": 88,
+          "sourceKey": "storyKnightSword"
+        }
+      ],
+      "skillCacheEntries": 1,
+      "skillCacheBytes": 36864,
+      "skillCacheByteLimit": 2097152,
+      "skillCacheEntryLimit": 24
+    },
+    "map": "storyKnightMap",
+    "signature": {
+      "id": "story-fallen-knight",
+      "label": "무너지는 성벽",
+      "displayLabel": "무너지는 성벽",
+      "hint": "예고 때 기록된 위치를 떠난 뒤 고정된 여섯 검격 사이를 지나세요.",
+      "box": [
+        19,
+        35,
+        220,
+        12
+      ],
+      "hintRenderedInArena": false,
+      "hintLocation": "external-pad-caption",
+      "damageGeometryOwnedByCore": true
+    },
+    "combatHud": {
+      "phase": 2,
+      "remainingSeconds": 72.18333333333334,
+      "warningLasers": 0,
+      "activeLasers": 6,
+      "fadingLasers": 0,
+      "nearestWarningTicks": null,
+      "nearestWarningSeconds": null,
+      "enemyBullets": 18,
+      "liveThreats": 24,
+      "status": "광선 활성 6",
+      "statusKind": "laser-active",
+      "timerWarning": false,
+      "geometryOwnedByCore": true,
+      "box": [
+        13,
+        19,
+        334,
+        45
+      ],
+      "timerText": "73초",
+      "displayName": "타락천사 기사",
+      "displayPattern": "무너지는 성벽",
+      "textLayoutBuilds": 1
+    },
+    "phaseEntry": null,
+    "warningContrastStrokes": 0
+  },
+  "laserFade": {
+    "requestedMode": "fade",
+    "mode": "fade",
+    "group": 20,
+    "boss": "타락천사 기사",
+    "tick": 193,
+    "bullets": 18,
+    "hazards": [
+      "fade",
+      "fade",
+      "fade",
+      "fade",
+      "fade",
+      "fade"
+    ],
+    "hp": 3,
+    "assets": 9,
+    "actor": {
+      "actorDraws": 7,
+      "bossDraws": 1,
+      "enemyDraws": 0,
+      "silkTethers": 0,
+      "enemySilkTethers": 0,
+      "bossSilkTethers": 0,
+      "lastBossAsset": "storyKnightIdle",
+      "lastBossPose": "recover",
+      "lastBossIdentity": "fallen-knight",
+      "usedAssets": {
+        "storyKnightIdle": 6,
+        "storyKnightSword": 1,
+        "storyPlayerHando": 1
+      },
+      "usedPoses": {
+        "recover": 6,
+        "idle": 1
+      },
+      "lastSilk": null,
+      "authoredPosesPerActor": 4,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false,
+      "sinBossDraws": 0,
+      "lastSinSample": null,
+      "wrathManifestDraws": 0,
+      "lastWrathManifest": null,
+      "chapter3BossDraws": 0,
+      "chapter3DroneDraws": 0,
+      "chapter3GateDraws": 0,
+      "lastChapter3Sample": null,
+      "storyBossDraws": 6,
+      "storyParticipantDraws": 0,
+      "storyMinionDraws": 0,
+      "storyPlayerDraws": 1,
+      "storySupportDraws": 0,
+      "storyEchoDraws": 6,
+      "storyTargetMarkerDraws": 1,
+      "lastStoryTargetMarker": {
+        "key": "storyKnightSword",
+        "position": [
+          213.12931992909955,
+          117.20123904695357
+        ],
+        "sourceCrop": [
+          109,
+          2,
+          89,
+          329
+        ],
+        "sourceAnchor": [
+          154,
+          164
+        ],
+        "displaySize": [
+          20,
+          48
+        ],
+        "label": "검격 표식",
+        "damaging": false,
+        "aimTarget": true
+      },
+      "lastStorySamples": [
+        {
+          "id": "fallen-echo-0",
+          "key": "storyKnightIdle",
+          "role": "echo",
+          "frame": 0,
+          "pose": "recover",
+          "sourceRect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "scale": 0.27,
+          "position": [
+            30,
+            104
+          ],
+          "combatPosition": [
+            30,
+            104
+          ],
+          "authoredKeyposes": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": 169,
+          "releaseAge": 24
+        },
+        {
+          "id": "fallen-echo-1",
+          "key": "storyKnightIdle",
+          "role": "echo",
+          "frame": 0,
+          "pose": "recover",
+          "sourceRect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "scale": 0.27,
+          "position": [
+            90,
+            132
+          ],
+          "combatPosition": [
+            90,
+            132
+          ],
+          "authoredKeyposes": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": 169,
+          "releaseAge": 24
+        },
+        {
+          "id": "fallen-echo-2",
+          "key": "storyKnightIdle",
+          "role": "echo",
+          "frame": 0,
+          "pose": "recover",
+          "sourceRect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "scale": 0.27,
+          "position": [
+            150,
+            104
+          ],
+          "combatPosition": [
+            150,
+            104
+          ],
+          "authoredKeyposes": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": 169,
+          "releaseAge": 24
+        },
+        {
+          "id": "fallen-echo-3",
+          "key": "storyKnightIdle",
+          "role": "echo",
+          "frame": 0,
+          "pose": "recover",
+          "sourceRect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "scale": 0.27,
+          "position": [
+            210,
+            132
+          ],
+          "combatPosition": [
+            210,
+            132
+          ],
+          "authoredKeyposes": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": 169,
+          "releaseAge": 24
+        },
+        {
+          "id": "fallen-echo-4",
+          "key": "storyKnightIdle",
+          "role": "echo",
+          "frame": 0,
+          "pose": "recover",
+          "sourceRect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "scale": 0.27,
+          "position": [
+            270,
+            104
+          ],
+          "combatPosition": [
+            270,
+            104
+          ],
+          "authoredKeyposes": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": 169,
+          "releaseAge": 24
+        },
+        {
+          "id": "fallen-echo-5",
+          "key": "storyKnightIdle",
+          "role": "echo",
+          "frame": 0,
+          "pose": "recover",
+          "sourceRect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "scale": 0.27,
+          "position": [
+            330,
+            132
+          ],
+          "combatPosition": [
+            330,
+            132
+          ],
+          "authoredKeyposes": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": 169,
+          "releaseAge": 24
+        },
+        {
+          "id": "playerhando",
+          "key": "storyPlayerHando",
+          "role": "player",
+          "frame": 0,
+          "pose": "idle",
+          "sourceRect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "anchor": [
+            256,
+            241
+          ],
+          "scale": 0.111328125,
+          "position": [
+            180,
+            540
+          ],
+          "combatPosition": [
+            180,
+            540
+          ],
+          "authoredKeyposes": 1,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false,
+          "actualReleaseTick": -1,
+          "releaseAge": null
+        }
+      ],
+      "downwardMotion": {
+        "bossDraws": 0,
+        "spriteDraws": 0,
+        "tethers": 0,
+        "lastBossIdentity": null,
+        "lastBossAsset": null,
+        "lastPose": null,
+        "lastSample": null,
+        "lastSilk": null,
+        "authoredKeyposesPerBoss": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false
+      }
+    },
+    "projectiles": {
+      "stampDraws": 18,
+      "stampCacheMisses": 0,
+      "stampCacheHits": 18,
+      "stampCacheLimit": 96,
+      "stampCacheByteLimit": 4194304,
+      "stampCacheBytes": 445440,
+      "stampCacheEntries": 9,
+      "animatedBulletDraws": 18,
+      "bodyAnimationPhases": 1,
+      "naturalSilhouetteDraws": 18,
+      "maxVisualOutset": 4,
+      "suppressedUnapprovedFX": 0,
+      "compactCastDraws": 0,
+      "compactHazardDraws": 0,
+      "assetLaserDraws": 6,
+      "assetLaserSlices": 18,
+      "signatureCastDraws": 0,
+      "weaponVisualDraws": 0,
+      "weaponTelegraphDraws": 0,
+      "rotorVisualDraws": 2,
+      "rotorTelegraphDraws": 0,
+      "sourceBeamOverlayDraws": 6,
+      "missingOptionalRotorAssets": 0,
+      "missingOptionalBeamAssets": 0,
+      "missingProjectileAssets": 0,
+      "compactFamilies": {
+        "storyKnightSword": 18
+      },
+      "projectileTextureLimit": 768,
+      "projectileTextureDraws": 18,
+      "texturedBullets": 18,
+      "projectileTailDraws": 0,
+      "bossCastDraws": 0,
+      "hazardEmitterDraws": 0
+    },
+    "skills": {
+      "skillSourceDraws": 6,
+      "skillCastDraws": 0,
+      "skillReleaseDraws": 0,
+      "skillLaserDraws": 6,
+      "skillMissingAssets": 0,
+      "skillDrawLimit": 8,
+      "skillReleaseCandidates": 6,
+      "skillReleaseEmitters": 6,
+      "sourceKeys": {
+        "storyKnightSword": 6
+      },
+      "representedReleases": [
+        {
+          "tick": 169,
+          "kind": "laser",
+          "patternId": "story-fallen-knight",
+          "x": 30,
+          "y": 104,
+          "sourceKey": "storyKnightSword",
+          "sourceActorId": "fallen-echo-0"
+        },
+        {
+          "tick": 169,
+          "kind": "laser",
+          "patternId": "story-fallen-knight",
+          "x": 90,
+          "y": 132,
+          "sourceKey": "storyKnightSword",
+          "sourceActorId": "fallen-echo-1"
+        },
+        {
+          "tick": 169,
+          "kind": "laser",
+          "patternId": "story-fallen-knight",
+          "x": 150,
+          "y": 104,
+          "sourceKey": "storyKnightSword",
+          "sourceActorId": "fallen-echo-2"
+        },
+        {
+          "tick": 169,
+          "kind": "laser",
+          "patternId": "story-fallen-knight",
+          "x": 210,
+          "y": 132,
+          "sourceKey": "storyKnightSword",
+          "sourceActorId": "fallen-echo-3"
+        },
+        {
+          "tick": 169,
+          "kind": "laser",
+          "patternId": "story-fallen-knight",
+          "x": 270,
+          "y": 104,
+          "sourceKey": "storyKnightSword",
+          "sourceActorId": "fallen-echo-4"
+        },
+        {
+          "tick": 169,
+          "kind": "laser",
+          "patternId": "story-fallen-knight",
+          "x": 330,
+          "y": 132,
+          "sourceKey": "storyKnightSword",
+          "sourceActorId": "fallen-echo-5"
+        }
+      ],
+      "skillCacheEntries": 1,
+      "skillCacheBytes": 36864,
+      "skillCacheByteLimit": 2097152,
+      "skillCacheEntryLimit": 24
+    },
+    "map": "storyKnightMap",
+    "signature": {
+      "id": "story-fallen-knight",
+      "label": "무너지는 성벽",
+      "displayLabel": "무너지는 성벽",
+      "hint": "예고 때 기록된 위치를 떠난 뒤 고정된 여섯 검격 사이를 지나세요.",
+      "box": [
+        19,
+        35,
+        220,
+        12
+      ],
+      "hintRenderedInArena": false,
+      "hintLocation": "external-pad-caption",
+      "damageGeometryOwnedByCore": true
+    },
+    "combatHud": {
+      "phase": 2,
+      "remainingSeconds": 71.78333333333335,
+      "warningLasers": 0,
+      "activeLasers": 0,
+      "fadingLasers": 6,
+      "nearestWarningTicks": null,
+      "nearestWarningSeconds": null,
+      "enemyBullets": 18,
+      "liveThreats": 18,
+      "status": "탄막 18 · 흐름을 읽으세요",
+      "statusKind": "bullets",
+      "timerWarning": false,
+      "geometryOwnedByCore": true,
+      "box": [
+        13,
+        19,
+        334,
+        45
+      ],
+      "timerText": "72초",
+      "displayName": "타락천사 기사",
+      "displayPattern": "무너지는 성벽",
+      "textLayoutBuilds": 1
+    },
+    "phaseEntry": null,
+    "warningContrastStrokes": 0
+  }
+}

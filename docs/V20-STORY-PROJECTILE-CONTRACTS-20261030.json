@@ -1,0 +1,2668 @@
+{
+  "19": {
+    "orb": {
+      "key": "storyGoblin",
+      "width": 672,
+      "height": 384,
+      "crop": [
+        190,
+        175,
+        60,
+        65
+      ],
+      "objectCrop": [
+        198,
+        182,
+        39,
+        34
+      ],
+      "denseCrop": [
+        210,
+        199,
+        8,
+        8
+      ],
+      "anchor": [
+        214,
+        202
+      ],
+      "r": 4,
+      "l": 0,
+      "frames": 1,
+      "rotation": 0
+    },
+    "blade": {
+      "key": "storyGoblin",
+      "width": 672,
+      "height": 384,
+      "crop": [
+        190,
+        175,
+        60,
+        65
+      ],
+      "objectCrop": [
+        190,
+        175,
+        60,
+        65
+      ],
+      "denseCrop": [
+        210,
+        199,
+        8,
+        8
+      ],
+      "anchor": [
+        216,
+        201
+      ],
+      "r": 4,
+      "l": 0,
+      "frames": 1,
+      "rotation": -1.5707963267948966
+    },
+    "beam": {
+      "key": "storyGoblinWave",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        58,
+        60,
+        410,
+        398
+      ],
+      "objectCrop": [
+        58,
+        60,
+        410,
+        398
+      ],
+      "denseCrop": [
+        253,
+        252,
+        12,
+        12
+      ],
+      "anchor": [
+        259,
+        258
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 244,
+      "sourcePatchMeanValue": 91.76,
+      "rotation": 0
+    },
+    "rotor": {
+      "key": "storyGoblinWave",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        58,
+        60,
+        410,
+        398
+      ],
+      "objectCrop": [
+        58,
+        60,
+        410,
+        398
+      ],
+      "denseCrop": [
+        253,
+        252,
+        12,
+        12
+      ],
+      "anchor": [
+        259,
+        258
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 244,
+      "sourcePatchMeanValue": 91.76,
+      "rotation": 0
+    },
+    "palette": {
+      "id": "story-19",
+      "primary": "#d0bb65",
+      "secondary": "#9fd87d",
+      "accent": "#65513b"
+    }
+  },
+  "20": {
+    "orb": {
+      "key": "storyKnightSword",
+      "width": 512,
+      "height": 341,
+      "crop": [
+        109,
+        2,
+        89,
+        329
+      ],
+      "objectCrop": [
+        109,
+        2,
+        89,
+        329
+      ],
+      "denseCrop": [
+        148,
+        158,
+        12,
+        12
+      ],
+      "anchor": [
+        154,
+        160
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 235,
+      "sourcePatchMeanValue": 97.96,
+      "rotation": 0
+    },
+    "blade": {
+      "key": "storyKnightSword",
+      "width": 512,
+      "height": 341,
+      "crop": [
+        109,
+        2,
+        89,
+        329
+      ],
+      "objectCrop": [
+        109,
+        2,
+        89,
+        329
+      ],
+      "denseCrop": [
+        148,
+        158,
+        12,
+        12
+      ],
+      "anchor": [
+        154,
+        164
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 235,
+      "sourcePatchMeanValue": 97.96,
+      "rotation": -1.5707963267948966
+    },
+    "beam": {
+      "key": "storyKnightSword",
+      "width": 512,
+      "height": 341,
+      "crop": [
+        109,
+        2,
+        89,
+        329
+      ],
+      "objectCrop": [
+        109,
+        2,
+        89,
+        329
+      ],
+      "denseCrop": [
+        148,
+        158,
+        12,
+        12
+      ],
+      "anchor": [
+        154,
+        164
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 235,
+      "sourcePatchMeanValue": 97.96,
+      "rotation": 0
+    },
+    "rotor": {
+      "key": "storyKnightSword",
+      "width": 512,
+      "height": 341,
+      "crop": [
+        109,
+        2,
+        89,
+        329
+      ],
+      "objectCrop": [
+        109,
+        2,
+        89,
+        329
+      ],
+      "denseCrop": [
+        148,
+        158,
+        12,
+        12
+      ],
+      "anchor": [
+        154,
+        164
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 235,
+      "sourcePatchMeanValue": 97.96,
+      "rotation": 0
+    },
+    "palette": {
+      "id": "story-20",
+      "primary": "#b8a4a1",
+      "secondary": "#d07e69",
+      "accent": "#6e7294"
+    }
+  },
+  "21": {
+    "orb": {
+      "key": "storyInsomniaSoul",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        20,
+        31,
+        472,
+        450
+      ],
+      "objectCrop": [
+        20,
+        31,
+        472,
+        450
+      ],
+      "denseCrop": [
+        236,
+        241,
+        12,
+        12
+      ],
+      "anchor": [
+        242,
+        247
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 255,
+      "sourcePatchMeanValue": 68.12,
+      "rotation": 0
+    },
+    "blade": {
+      "key": "storyInsomniaGaze",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        30,
+        31,
+        455,
+        444
+      ],
+      "objectCrop": [
+        30,
+        31,
+        455,
+        444
+      ],
+      "denseCrop": [
+        255,
+        247,
+        12,
+        12
+      ],
+      "anchor": [
+        261,
+        253
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 252,
+      "sourcePatchMeanValue": 65.41,
+      "rotation": 0
+    },
+    "beam": {
+      "key": "storyInsomniaGaze",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        30,
+        31,
+        455,
+        444
+      ],
+      "objectCrop": [
+        30,
+        31,
+        455,
+        444
+      ],
+      "denseCrop": [
+        255,
+        247,
+        12,
+        12
+      ],
+      "anchor": [
+        261,
+        253
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 252,
+      "sourcePatchMeanValue": 65.41,
+      "rotation": 0
+    },
+    "rotor": {
+      "key": "storyInsomniaGaze",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        30,
+        31,
+        455,
+        444
+      ],
+      "objectCrop": [
+        30,
+        31,
+        455,
+        444
+      ],
+      "denseCrop": [
+        255,
+        247,
+        12,
+        12
+      ],
+      "anchor": [
+        261,
+        253
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 252,
+      "sourcePatchMeanValue": 65.41,
+      "rotation": 0
+    },
+    "palette": {
+      "id": "story-21",
+      "primary": "#c1c5ce",
+      "secondary": "#9387ad",
+      "accent": "#776291"
+    }
+  },
+  "22": {
+    "orb": {
+      "key": "storyChronoShard",
+      "width": 512,
+      "height": 256,
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "objectCrop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "denseCrop": [
+        250,
+        126,
+        12,
+        12
+      ],
+      "anchor": [
+        256,
+        130
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 249,
+      "sourcePatchMeanValue": 140.9,
+      "rotation": 0
+    },
+    "blade": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "beam": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "rotor": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "palette": {
+      "id": "story-22",
+      "primary": "#80cbe1",
+      "secondary": "#d2bd7b",
+      "accent": "#79769d"
+    }
+  },
+  "23": {
+    "orb": {
+      "key": "storyChronoShard",
+      "width": 512,
+      "height": 256,
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "objectCrop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "denseCrop": [
+        250,
+        126,
+        12,
+        12
+      ],
+      "anchor": [
+        256,
+        130
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 249,
+      "sourcePatchMeanValue": 140.9,
+      "rotation": 0
+    },
+    "blade": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "beam": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "rotor": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "palette": {
+      "id": "story-23",
+      "primary": "#9cadde",
+      "secondary": "#d2bd7b",
+      "accent": "#80b9c6"
+    }
+  },
+  "24": {
+    "orb": {
+      "key": "storyChronoShard",
+      "width": 512,
+      "height": 256,
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "objectCrop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "denseCrop": [
+        250,
+        126,
+        12,
+        12
+      ],
+      "anchor": [
+        256,
+        130
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 249,
+      "sourcePatchMeanValue": 140.9,
+      "rotation": 0
+    },
+    "blade": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "beam": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "rotor": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "palette": {
+      "id": "story-24",
+      "primary": "#c571b4",
+      "secondary": "#ddd0be",
+      "accent": "#648fa7"
+    }
+  },
+  "25": {
+    "orb": {
+      "key": "storyChronoShard",
+      "width": 512,
+      "height": 256,
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "objectCrop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "denseCrop": [
+        250,
+        126,
+        12,
+        12
+      ],
+      "anchor": [
+        256,
+        130
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 249,
+      "sourcePatchMeanValue": 140.9,
+      "rotation": 0
+    },
+    "blade": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "beam": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "rotor": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "palette": {
+      "id": "story-25",
+      "primary": "#a4a9df",
+      "secondary": "#d4bf87",
+      "accent": "#80b9c6"
+    }
+  },
+  "26": {
+    "orb": {
+      "key": "storyNeuralOrb",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        47,
+        45,
+        421,
+        415
+      ],
+      "objectCrop": [
+        47,
+        45,
+        421,
+        415
+      ],
+      "denseCrop": [
+        251,
+        246,
+        12,
+        12
+      ],
+      "anchor": [
+        257,
+        252
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 112.53,
+      "rotation": 0
+    },
+    "blade": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "beam": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "rotor": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "palette": {
+      "id": "story-26",
+      "primary": "#82d9e5",
+      "secondary": "#d7be83",
+      "accent": "#68988e"
+    }
+  },
+  "27": {
+    "orb": {
+      "key": "storyChronoShard",
+      "width": 512,
+      "height": 256,
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "objectCrop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "denseCrop": [
+        250,
+        126,
+        12,
+        12
+      ],
+      "anchor": [
+        256,
+        130
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 249,
+      "sourcePatchMeanValue": 140.9,
+      "rotation": 0
+    },
+    "blade": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "beam": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "rotor": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "palette": {
+      "id": "story-27",
+      "primary": "#ac87d1",
+      "secondary": "#cdc8dc",
+      "accent": "#b8a777"
+    }
+  },
+  "28": {
+    "orb": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "blade": {
+      "key": "storyChronoShard",
+      "width": 512,
+      "height": 256,
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "objectCrop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "denseCrop": [
+        250,
+        126,
+        12,
+        12
+      ],
+      "anchor": [
+        256,
+        130
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 249,
+      "sourcePatchMeanValue": 140.9,
+      "rotation": 0
+    },
+    "beam": {
+      "key": "storyChronoShard",
+      "width": 512,
+      "height": 256,
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "objectCrop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "denseCrop": [
+        250,
+        126,
+        12,
+        12
+      ],
+      "anchor": [
+        256,
+        132
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 249,
+      "sourcePatchMeanValue": 140.9,
+      "rotation": 0
+    },
+    "rotor": {
+      "key": "storyChronoShard",
+      "width": 512,
+      "height": 256,
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "objectCrop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "denseCrop": [
+        250,
+        126,
+        12,
+        12
+      ],
+      "anchor": [
+        256,
+        132
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 249,
+      "sourcePatchMeanValue": 140.9,
+      "rotation": 0
+    },
+    "palette": {
+      "id": "story-28",
+      "primary": "#d5bb75",
+      "secondary": "#8bd2e5",
+      "accent": "#847da8"
+    }
+  },
+  "29": {
+    "orb": {
+      "key": "storyChronoShard",
+      "width": 512,
+      "height": 256,
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "objectCrop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "denseCrop": [
+        250,
+        126,
+        12,
+        12
+      ],
+      "anchor": [
+        256,
+        130
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 249,
+      "sourcePatchMeanValue": 140.9,
+      "rotation": 0
+    },
+    "blade": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "beam": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "rotor": {
+      "key": "storyChronoCrescent",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "objectCrop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "denseCrop": [
+        252,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        258,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 250,
+      "sourcePatchMeanValue": 179.98,
+      "rotation": 0
+    },
+    "palette": {
+      "id": "story-29",
+      "primary": "#dec68a",
+      "secondary": "#eee6d6",
+      "accent": "#86bfc9"
+    }
+  },
+  "30": {
+    "orb": {
+      "key": "storySirenAttack",
+      "width": 672,
+      "height": 384,
+      "crop": [
+        445,
+        106,
+        51,
+        39
+      ],
+      "objectCrop": [
+        445,
+        106,
+        51,
+        39
+      ],
+      "denseCrop": [
+        465,
+        120,
+        8,
+        8
+      ],
+      "anchor": [
+        469,
+        124
+      ],
+      "r": 4,
+      "l": 0,
+      "frames": 1,
+      "rotation": 0
+    },
+    "blade": {
+      "key": "storyChronoShard",
+      "width": 512,
+      "height": 256,
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "objectCrop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "denseCrop": [
+        250,
+        126,
+        12,
+        12
+      ],
+      "anchor": [
+        256,
+        130
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 249,
+      "sourcePatchMeanValue": 140.9,
+      "rotation": 0
+    },
+    "beam": {
+      "key": "storyChronoShard",
+      "width": 512,
+      "height": 256,
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "objectCrop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "denseCrop": [
+        250,
+        126,
+        12,
+        12
+      ],
+      "anchor": [
+        256,
+        132
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 249,
+      "sourcePatchMeanValue": 140.9,
+      "rotation": 0
+    },
+    "rotor": {
+      "key": "storyChronoShard",
+      "width": 512,
+      "height": 256,
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "objectCrop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "denseCrop": [
+        250,
+        126,
+        12,
+        12
+      ],
+      "anchor": [
+        256,
+        132
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 249,
+      "sourcePatchMeanValue": 140.9,
+      "rotation": 0
+    },
+    "palette": {
+      "id": "story-30",
+      "primary": "#c65b7e",
+      "secondary": "#e5c38c",
+      "accent": "#8875bb"
+    }
+  },
+  "31": {
+    "orb": {
+      "key": "storyChiefIdle",
+      "width": 672,
+      "height": 384,
+      "crop": [
+        268,
+        212,
+        31,
+        109
+      ],
+      "objectCrop": [
+        268,
+        212,
+        31,
+        109
+      ],
+      "denseCrop": [
+        282,
+        263,
+        8,
+        8
+      ],
+      "anchor": [
+        288,
+        269
+      ],
+      "r": 4,
+      "l": 0,
+      "frames": 1,
+      "rotation": 0,
+      "motifDescription": "actual isolated curved lower blade from the same owner body pose",
+      "visualOutset": 4
+    },
+    "blade": {
+      "key": "storyChiefIdle",
+      "width": 672,
+      "height": 384,
+      "crop": [
+        268,
+        212,
+        31,
+        109
+      ],
+      "objectCrop": [
+        268,
+        212,
+        31,
+        109
+      ],
+      "denseCrop": [
+        282,
+        263,
+        8,
+        8
+      ],
+      "anchor": [
+        288.5,
+        269
+      ],
+      "r": 4,
+      "l": 0,
+      "frames": 1,
+      "rotation": -1.5707963267948966,
+      "motifDescription": "actual isolated curved lower blade from the same owner body pose",
+      "visualOutset": 4
+    },
+    "beam": {
+      "key": "storyChiefBlade",
+      "width": 1254,
+      "height": 1254,
+      "crop": [
+        46,
+        78,
+        1175,
+        1088
+      ],
+      "objectCrop": [
+        46,
+        78,
+        1175,
+        1088
+      ],
+      "denseCrop": [
+        625,
+        615,
+        12,
+        12
+      ],
+      "anchor": [
+        631,
+        621
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 249,
+      "sourcePatchMeanValue": 137.94,
+      "rotation": 0
+    },
+    "rotor": {
+      "key": "storyChiefBlade",
+      "width": 1254,
+      "height": 1254,
+      "crop": [
+        46,
+        78,
+        1175,
+        1088
+      ],
+      "objectCrop": [
+        46,
+        78,
+        1175,
+        1088
+      ],
+      "denseCrop": [
+        625,
+        615,
+        12,
+        12
+      ],
+      "anchor": [
+        631,
+        621
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 249,
+      "sourcePatchMeanValue": 137.94,
+      "rotation": 0
+    },
+    "palette": {
+      "id": "story-31",
+      "primary": "#b3a9a5",
+      "secondary": "#c98983",
+      "accent": "#6b748b"
+    }
+  },
+  "32": {
+    "orb": {
+      "key": "storyExecutorPrism",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        20,
+        39,
+        472,
+        433
+      ],
+      "objectCrop": [
+        20,
+        39,
+        472,
+        433
+      ],
+      "denseCrop": [
+        251,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        257,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 255,
+      "sourcePatchMeanValue": 244.73,
+      "rotation": 0
+    },
+    "blade": {
+      "key": "storyExecutorRoad",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        32,
+        84,
+        453,
+        346
+      ],
+      "objectCrop": [
+        32,
+        84,
+        453,
+        346
+      ],
+      "denseCrop": [
+        251,
+        252,
+        12,
+        12
+      ],
+      "anchor": [
+        257,
+        258
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 252,
+      "sourcePatchMeanValue": 87.8,
+      "rotation": 0
+    },
+    "beam": {
+      "key": "storyExecutorRoad",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        32,
+        84,
+        453,
+        346
+      ],
+      "objectCrop": [
+        32,
+        84,
+        453,
+        346
+      ],
+      "denseCrop": [
+        251,
+        252,
+        12,
+        12
+      ],
+      "anchor": [
+        257,
+        258
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 252,
+      "sourcePatchMeanValue": 87.8,
+      "rotation": 0
+    },
+    "rotor": {
+      "key": "storyExecutorRoad",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        32,
+        84,
+        453,
+        346
+      ],
+      "objectCrop": [
+        32,
+        84,
+        453,
+        346
+      ],
+      "denseCrop": [
+        251,
+        252,
+        12,
+        12
+      ],
+      "anchor": [
+        257,
+        258
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 252,
+      "sourcePatchMeanValue": 87.8,
+      "rotation": 0
+    },
+    "palette": {
+      "id": "story-32",
+      "primary": "#64a9ed",
+      "secondary": "#91dbe8",
+      "accent": "#bf8dd3"
+    }
+  },
+  "33": {
+    "orb": {
+      "key": "storyCultRose",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        31,
+        26,
+        450,
+        464
+      ],
+      "objectCrop": [
+        31,
+        26,
+        450,
+        464
+      ],
+      "denseCrop": [
+        250,
+        251,
+        12,
+        12
+      ],
+      "anchor": [
+        256,
+        257
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 251,
+      "sourcePatchMeanValue": 206.54,
+      "rotation": 0
+    },
+    "blade": {
+      "key": "cultLance",
+      "width": 512,
+      "height": 192,
+      "crop": [
+        4,
+        36,
+        503,
+        124
+      ],
+      "objectCrop": [
+        9,
+        41,
+        493,
+        115
+      ],
+      "denseCrop": [
+        250,
+        93,
+        12,
+        12
+      ],
+      "anchor": [
+        257.5,
+        98.5
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 251,
+      "sourcePatchMeanValue": 162.9,
+      "rotation": 0,
+      "downsample": [
+        128,
+        48
+      ]
+    },
+    "beam": {
+      "key": "cultLance",
+      "width": 512,
+      "height": 192,
+      "crop": [
+        4,
+        36,
+        503,
+        124
+      ],
+      "objectCrop": [
+        4,
+        36,
+        503,
+        124
+      ],
+      "denseCrop": [
+        250,
+        93,
+        12,
+        12
+      ],
+      "anchor": [
+        256,
+        99
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 251,
+      "sourcePatchMeanValue": 162.9,
+      "rotation": 0
+    },
+    "rotor": {
+      "key": "cultLance",
+      "width": 512,
+      "height": 192,
+      "crop": [
+        4,
+        36,
+        503,
+        124
+      ],
+      "objectCrop": [
+        4,
+        36,
+        503,
+        124
+      ],
+      "denseCrop": [
+        250,
+        93,
+        12,
+        12
+      ],
+      "anchor": [
+        256,
+        99
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 251,
+      "sourcePatchMeanValue": 162.9,
+      "rotation": 0
+    },
+    "palette": {
+      "id": "story-33",
+      "primary": "#c66676",
+      "secondary": "#d6b8a0",
+      "accent": "#a36e77"
+    }
+  },
+  "34": {
+    "orb": {
+      "key": "storyRianCross",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        145,
+        0,
+        223,
+        201
+      ],
+      "objectCrop": [
+        145,
+        0,
+        223,
+        201
+      ],
+      "denseCrop": [
+        248,
+        92,
+        12,
+        12
+      ],
+      "anchor": [
+        254,
+        98
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 236,
+      "sourcePatchMeanValue": 236.86,
+      "rotation": 3.141592653589793,
+      "fixedOrientation": true
+    },
+    "blade": {
+      "key": "storyRianCross",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        145,
+        0,
+        223,
+        201
+      ],
+      "objectCrop": [
+        145,
+        0,
+        223,
+        201
+      ],
+      "denseCrop": [
+        248,
+        92,
+        12,
+        12
+      ],
+      "anchor": [
+        254,
+        98
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 236,
+      "sourcePatchMeanValue": 236.86,
+      "rotation": 3.141592653589793,
+      "fixedOrientation": true
+    },
+    "beam": {
+      "key": "storyRianCross",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        44,
+        0,
+        424,
+        509
+      ],
+      "objectCrop": [
+        44,
+        0,
+        424,
+        509
+      ],
+      "denseCrop": [
+        248,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        254,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 236,
+      "sourcePatchMeanValue": 236.86,
+      "rotation": 0
+    },
+    "rotor": {
+      "key": "storyRianCross",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        44,
+        0,
+        424,
+        509
+      ],
+      "objectCrop": [
+        44,
+        0,
+        424,
+        509
+      ],
+      "denseCrop": [
+        248,
+        249,
+        12,
+        12
+      ],
+      "anchor": [
+        254,
+        255
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 236,
+      "sourcePatchMeanValue": 236.86,
+      "rotation": 0
+    },
+    "palette": {
+      "id": "story-han-rian",
+      "primary": "#d4bb69",
+      "secondary": "#ede3bd",
+      "accent": "#715e4a"
+    },
+    "participants": {
+      "han-rian": {
+        "orb": {
+          "key": "storyRianCross",
+          "width": 512,
+          "height": 512,
+          "crop": [
+            145,
+            0,
+            223,
+            201
+          ],
+          "objectCrop": [
+            145,
+            0,
+            223,
+            201
+          ],
+          "denseCrop": [
+            248,
+            92,
+            12,
+            12
+          ],
+          "anchor": [
+            254,
+            98
+          ],
+          "r": 6,
+          "l": 0,
+          "frames": 1,
+          "sourcePatchAlphaMin": 236,
+          "sourcePatchMeanValue": 236.86,
+          "rotation": 3.141592653589793,
+          "fixedOrientation": true
+        },
+        "blade": {
+          "key": "storyRianCross",
+          "width": 512,
+          "height": 512,
+          "crop": [
+            145,
+            0,
+            223,
+            201
+          ],
+          "objectCrop": [
+            145,
+            0,
+            223,
+            201
+          ],
+          "denseCrop": [
+            248,
+            92,
+            12,
+            12
+          ],
+          "anchor": [
+            254,
+            98
+          ],
+          "r": 6,
+          "l": 0,
+          "frames": 1,
+          "sourcePatchAlphaMin": 236,
+          "sourcePatchMeanValue": 236.86,
+          "rotation": 3.141592653589793,
+          "fixedOrientation": false
+        },
+        "beam": {
+          "key": "storyRianCross",
+          "width": 512,
+          "height": 512,
+          "crop": [
+            44,
+            0,
+            424,
+            509
+          ],
+          "objectCrop": [
+            44,
+            0,
+            424,
+            509
+          ],
+          "denseCrop": [
+            248,
+            249,
+            12,
+            12
+          ],
+          "anchor": [
+            254,
+            255
+          ],
+          "r": 6,
+          "l": 0,
+          "frames": 1,
+          "sourcePatchAlphaMin": 236,
+          "sourcePatchMeanValue": 236.86,
+          "rotation": 0
+        },
+        "rotor": {
+          "key": "storyRianCross",
+          "width": 512,
+          "height": 512,
+          "crop": [
+            44,
+            0,
+            424,
+            509
+          ],
+          "objectCrop": [
+            44,
+            0,
+            424,
+            509
+          ],
+          "denseCrop": [
+            248,
+            249,
+            12,
+            12
+          ],
+          "anchor": [
+            254,
+            255
+          ],
+          "r": 6,
+          "l": 0,
+          "frames": 1,
+          "sourcePatchAlphaMin": 236,
+          "sourcePatchMeanValue": 236.86,
+          "rotation": 0
+        },
+        "palette": {
+          "id": "story-han-rian",
+          "primary": "#d4bb69",
+          "secondary": "#ede3bd",
+          "accent": "#715e4a"
+        }
+      },
+      "baek-ion": {
+        "orb": {
+          "key": "storyIonShield",
+          "width": 512,
+          "height": 512,
+          "crop": [
+            16,
+            63,
+            473,
+            363
+          ],
+          "objectCrop": [
+            16,
+            63,
+            473,
+            363
+          ],
+          "denseCrop": [
+            247,
+            246,
+            12,
+            12
+          ],
+          "anchor": [
+            253,
+            242
+          ],
+          "r": 6,
+          "l": 0,
+          "frames": 1,
+          "sourcePatchAlphaMin": 252,
+          "sourcePatchMeanValue": 207.85,
+          "rotation": 0
+        },
+        "blade": {
+          "key": "storyIonShield",
+          "width": 512,
+          "height": 512,
+          "crop": [
+            16,
+            63,
+            473,
+            363
+          ],
+          "objectCrop": [
+            16,
+            63,
+            473,
+            363
+          ],
+          "denseCrop": [
+            247,
+            246,
+            12,
+            12
+          ],
+          "anchor": [
+            253,
+            242
+          ],
+          "r": 6,
+          "l": 0,
+          "frames": 1,
+          "sourcePatchAlphaMin": 252,
+          "sourcePatchMeanValue": 207.85,
+          "rotation": 0
+        },
+        "beam": {
+          "key": "storyIonShield",
+          "width": 512,
+          "height": 512,
+          "crop": [
+            16,
+            63,
+            473,
+            363
+          ],
+          "objectCrop": [
+            16,
+            63,
+            473,
+            363
+          ],
+          "denseCrop": [
+            247,
+            246,
+            12,
+            12
+          ],
+          "anchor": [
+            253,
+            252
+          ],
+          "r": 6,
+          "l": 0,
+          "frames": 1,
+          "sourcePatchAlphaMin": 252,
+          "sourcePatchMeanValue": 207.85,
+          "rotation": 0
+        },
+        "rotor": {
+          "key": "storyIonShield",
+          "width": 512,
+          "height": 512,
+          "crop": [
+            16,
+            63,
+            473,
+            363
+          ],
+          "objectCrop": [
+            16,
+            63,
+            473,
+            363
+          ],
+          "denseCrop": [
+            247,
+            246,
+            12,
+            12
+          ],
+          "anchor": [
+            253,
+            252
+          ],
+          "r": 6,
+          "l": 0,
+          "frames": 1,
+          "sourcePatchAlphaMin": 252,
+          "sourcePatchMeanValue": 207.85,
+          "rotation": 0
+        },
+        "palette": {
+          "id": "story-baek-ion",
+          "primary": "#9fd9f4",
+          "secondary": "#e5edf2",
+          "accent": "#b8a97d"
+        }
+      }
+    }
+  },
+  "35": {
+    "orb": {
+      "key": "cultDriveSpear",
+      "width": 512,
+      "height": 512,
+      "crop": [
+        252,
+        207,
+        84,
+        84
+      ],
+      "objectCrop": [
+        252,
+        207,
+        84,
+        84
+      ],
+      "denseCrop": [
+        290,
+        245,
+        8,
+        8
+      ],
+      "anchor": [
+        294,
+        249
+      ],
+      "r": 4,
+      "l": 0,
+      "frames": 1,
+      "motifDescription": "same-owner braided magic core already retained by standalone cult practice"
+    },
+    "blade": {
+      "key": "cultLance",
+      "width": 512,
+      "height": 192,
+      "crop": [
+        4,
+        36,
+        503,
+        124
+      ],
+      "objectCrop": [
+        9,
+        41,
+        493,
+        115
+      ],
+      "denseCrop": [
+        250,
+        93,
+        12,
+        12
+      ],
+      "anchor": [
+        257.5,
+        98.5
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 251,
+      "sourcePatchMeanValue": 162.9,
+      "rotation": 0,
+      "downsample": [
+        128,
+        48
+      ]
+    },
+    "beam": {
+      "key": "cultLance",
+      "width": 512,
+      "height": 192,
+      "crop": [
+        4,
+        36,
+        503,
+        124
+      ],
+      "objectCrop": [
+        4,
+        36,
+        503,
+        124
+      ],
+      "denseCrop": [
+        250,
+        93,
+        12,
+        12
+      ],
+      "anchor": [
+        256,
+        99
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 251,
+      "sourcePatchMeanValue": 162.9,
+      "rotation": 0
+    },
+    "rotor": {
+      "key": "cultLance",
+      "width": 512,
+      "height": 192,
+      "crop": [
+        4,
+        36,
+        503,
+        124
+      ],
+      "objectCrop": [
+        4,
+        36,
+        503,
+        124
+      ],
+      "denseCrop": [
+        250,
+        93,
+        12,
+        12
+      ],
+      "anchor": [
+        256,
+        99
+      ],
+      "r": 6,
+      "l": 0,
+      "frames": 1,
+      "sourcePatchAlphaMin": 251,
+      "sourcePatchMeanValue": 162.9,
+      "rotation": 0
+    },
+    "palette": {
+      "id": "story-35",
+      "primary": "#eee4dc",
+      "secondary": "#a73545",
+      "accent": "#897a7c"
+    }
+  }
+}

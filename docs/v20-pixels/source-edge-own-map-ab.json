@@ -1,0 +1,62 @@
+{
+  "capturedAt": "2026-10-30T04:02:52.511Z",
+  "scope": "CPU native-size source-image A/B, current metadata shared by both renderers, eight actual shapes on two details from their own source paintings; not natural progression, complete scene screenshots, browser, GPU or device measurement",
+  "baselineCommit": "079c830e40d607d9944215a107003d66e85367ce",
+  "baselineProjectileSHA256": "ade13c42dfa02534d57a1fc59fc58282617cc7983421720fcb27bc5ed1aca98b",
+  "sourceHashes": {
+    "src/projectiles.js": "05a1233cfad835b81db70348a3f5acebed59c22059d74719adf756e838825b93",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033",
+    "src/media.js": "0057a4d28e4d8bd35eb1598ea48207ff9cf21ead2906cc75d66c405ed6de110c"
+  },
+  "cases": [
+    {
+      "group": 19,
+      "r": 3,
+      "halfLength": 9,
+      "sourceActorId": null
+    },
+    {
+      "group": 23,
+      "r": 3.8,
+      "halfLength": 0,
+      "sourceActorId": null
+    },
+    {
+      "group": 25,
+      "r": 3.8,
+      "halfLength": 0,
+      "sourceActorId": null
+    },
+    {
+      "group": 29,
+      "r": 3.8,
+      "halfLength": 0,
+      "sourceActorId": null
+    },
+    {
+      "group": 31,
+      "r": 3,
+      "halfLength": 9,
+      "sourceActorId": null
+    },
+    {
+      "group": 31,
+      "r": 4,
+      "halfLength": 13,
+      "sourceActorId": null
+    },
+    {
+      "group": 34,
+      "r": 4,
+      "halfLength": 13,
+      "sourceActorId": "baek-ion"
+    },
+    {
+      "group": 35,
+      "r": 3.8,
+      "halfLength": 0,
+      "sourceActorId": null
+    }
+  ],
+  "imageSHA256": "3b92ae55d787e381201539afee0a2139155b59906eb4591c63d4dd4dfde3177a"
+}

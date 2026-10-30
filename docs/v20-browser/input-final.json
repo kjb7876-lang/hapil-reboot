@@ -1,0 +1,756 @@
+{
+  "scope": "Final frozen preview source; short actual Chrome native input, no immunity, ordinary-health practice; not sustained FPS or device certification",
+  "keyboard": {
+    "state": {
+      "mode": "paused",
+      "paused": true,
+      "ready": true,
+      "booting": false,
+      "settings": {
+        "music": true,
+        "sfx": true,
+        "quality": "high",
+        "skillRotation": true,
+        "difficulty": "normal",
+        "sensitivity": 1
+      },
+      "world": {
+        "tick": 22,
+        "time": 0.36666666666666664,
+        "stage": "boss",
+        "runId": "hapil-mvugi1uq-1",
+        "player": {
+          "x": 192,
+          "y": 540,
+          "hp": 3,
+          "maxHp": 3,
+          "r": 3
+        },
+        "skillRotation": true,
+        "difficulty": "normal",
+        "phase": 2,
+        "wave": 0,
+        "stageTime": 0.36666666666666664,
+        "bossIntroDuration": 2.5,
+        "checkpointSerial": 1,
+        "practiceBoss": true,
+        "practiceStartPhase": 2,
+        "campaign": true,
+        "campaignRevision": 5,
+        "protagonist": "윤서하",
+        "samongAwakened": false,
+        "bossIndex": 29,
+        "bossName": "세이렌 모르",
+        "score": 0
+      },
+      "pointer": {
+        "active": false,
+        "pendingX": 0,
+        "pendingY": 0
+      }
+    },
+    "diagnostics": {
+      "version": "hapil-battle-readability-v20",
+      "loadedImages": 15,
+      "assetErrors": [],
+      "lastGap": "frame-gap-1017ms",
+      "actor": {
+        "actorDraws": 2,
+        "bossDraws": 1,
+        "enemyDraws": 0,
+        "silkTethers": 0,
+        "enemySilkTethers": 0,
+        "bossSilkTethers": 0,
+        "lastBossAsset": "storySirenIdle",
+        "lastBossPose": "idle",
+        "lastBossIdentity": "siren-mor",
+        "usedAssets": {
+          "storySirenIdle": 1,
+          "storyPlayerSeoha": 1
+        },
+        "usedPoses": {
+          "idle": 2
+        },
+        "lastSilk": null,
+        "authoredPosesPerActor": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "sinBossDraws": 0,
+        "lastSinSample": null,
+        "wrathManifestDraws": 0,
+        "lastWrathManifest": null,
+        "chapter3BossDraws": 0,
+        "chapter3DroneDraws": 0,
+        "chapter3GateDraws": 0,
+        "lastChapter3Sample": null,
+        "storyBossDraws": 1,
+        "storyParticipantDraws": 0,
+        "storyMinionDraws": 0,
+        "storyPlayerDraws": 1,
+        "storySupportDraws": 0,
+        "storyEchoDraws": 0,
+        "storyTargetMarkerDraws": 0,
+        "lastStoryTargetMarker": null,
+        "lastStorySamples": [
+          {
+            "id": "siren-mor",
+            "key": "storySirenIdle",
+            "role": "boss",
+            "frame": 0,
+            "pose": "idle",
+            "sourceRect": [
+              0,
+              0,
+              672,
+              384
+            ],
+            "anchor": [
+              336,
+              180
+            ],
+            "scale": 0.45,
+            "position": [
+              184.98001914141767,
+              113.74538901598815
+            ],
+            "combatPosition": [
+              184.98001914141767,
+              113.74538901598815
+            ],
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false,
+            "actualReleaseTick": -1,
+            "releaseAge": null
+          },
+          {
+            "id": "playerseoha",
+            "key": "storyPlayerSeoha",
+            "role": "player",
+            "frame": 0,
+            "pose": "idle",
+            "sourceRect": [
+              0,
+              0,
+              362,
+              362
+            ],
+            "anchor": [
+              181,
+              170
+            ],
+            "scale": 0.1574585635359116,
+            "position": [
+              192,
+              540
+            ],
+            "combatPosition": [
+              192,
+              540
+            ],
+            "authoredKeyposes": 1,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false,
+            "actualReleaseTick": -1,
+            "releaseAge": null
+          }
+        ],
+        "downwardMotion": {
+          "bossDraws": 0,
+          "spriteDraws": 0,
+          "tethers": 0,
+          "lastBossIdentity": null,
+          "lastBossAsset": null,
+          "lastPose": null,
+          "lastSample": null,
+          "lastSilk": null,
+          "authoredKeyposesPerBoss": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false
+        }
+      },
+      "projectiles": {
+        "stampDraws": 0,
+        "stampCacheMisses": 0,
+        "stampCacheHits": 0,
+        "stampCacheLimit": 96,
+        "stampCacheByteLimit": 4194304,
+        "stampCacheBytes": 0,
+        "stampCacheEntries": 0,
+        "animatedBulletDraws": 0,
+        "bodyAnimationPhases": 0,
+        "naturalSilhouetteDraws": 0,
+        "maxVisualOutset": 0,
+        "suppressedUnapprovedFX": 0,
+        "compactCastDraws": 0,
+        "compactHazardDraws": 0,
+        "assetLaserDraws": 0,
+        "assetLaserSlices": 0,
+        "signatureCastDraws": 0,
+        "weaponVisualDraws": 0,
+        "weaponTelegraphDraws": 0,
+        "rotorVisualDraws": 0,
+        "rotorTelegraphDraws": 0,
+        "sourceBeamOverlayDraws": 0,
+        "missingOptionalRotorAssets": 0,
+        "missingOptionalBeamAssets": 0,
+        "missingProjectileAssets": 0,
+        "compactFamilies": {},
+        "projectileTextureLimit": 768,
+        "projectileTextureDraws": 0,
+        "texturedBullets": 0,
+        "projectileTailDraws": 0,
+        "bossCastDraws": 0,
+        "hazardEmitterDraws": 0
+      },
+      "map": "storySirenMap",
+      "skills": {
+        "skillSourceDraws": 0,
+        "skillCastDraws": 0,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "sourceKeys": {},
+        "representedReleases": [],
+        "skillCacheEntries": 0,
+        "skillCacheBytes": 0,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "storage": {
+        "persistent": true,
+        "message": "이 기기에 독립 저장됨"
+      }
+    },
+    "saved": {
+      "revision": 4,
+      "runId": "hapil-mvudhoht-1",
+      "checkpoint": {
+        "rulesetVersion": "hapil-firstbattle-1",
+        "runId": "hapil-mvudhoht-1",
+        "seed": 2343498087,
+        "difficulty": "normal",
+        "practiceBoss": false,
+        "checkpointSerial": 1,
+        "tick": 0,
+        "shotReadyAt": 0,
+        "rngState": 2343498087,
+        "idCounter": 0,
+        "stage": "waves",
+        "wave": 0,
+        "phase": 0,
+        "stageTime": 0,
+        "phaseTime": 0,
+        "waveTime": 0,
+        "player": {
+          "x": 180,
+          "y": 540,
+          "hp": 3,
+          "maxHp": 3,
+          "r": 3,
+          "invulnerableUntil": 0,
+          "egoUntil": 0
+        },
+        "score": 0,
+        "graze": 0,
+        "kills": 0,
+        "memory": 0,
+        "resonance": 0,
+        "autoAttack": true,
+        "skillRotation": true,
+        "skills": {
+          "memoryReadyAt": 0,
+          "delayReadyAt": 360,
+          "counterReadyAt": 0,
+          "egoReadyAt": 0,
+          "globalReadyAt": 0
+        },
+        "stats": {
+          "hits": 0,
+          "shots": 0,
+          "damage": 0,
+          "peakBullets": 0,
+          "peakEnemies": 0,
+          "peakParticles": 0,
+          "poolPressure": 0,
+          "droppedGroups": 0,
+          "missedEnemies": 0,
+          "resourceStarvation": 0,
+          "bossDamage": 0,
+          "phaseTicks": [],
+          "collisions": 0,
+          "casts": {
+            "memory": 0,
+            "delay": 0,
+            "counter": 0,
+            "ego": 0
+          }
+        },
+        "resourceState": {
+          "memoryBucket": 0,
+          "memoryGain": 0,
+          "resBucket": 0,
+          "resGain": 0,
+          "grazeGain": 0,
+          "lastGraze": -9999
+        },
+        "campaign": true,
+        "campaignRevision": 5,
+        "bossIndex": 0
+      },
+      "backup": {
+        "rulesetVersion": "hapil-firstbattle-1",
+        "runId": "hapil-mvudhoht-1",
+        "seed": 2343498087,
+        "difficulty": "normal",
+        "practiceBoss": false,
+        "checkpointSerial": 1,
+        "tick": 0,
+        "shotReadyAt": 0,
+        "rngState": 2343498087,
+        "idCounter": 0,
+        "stage": "waves",
+        "wave": 0,
+        "phase": 0,
+        "stageTime": 0,
+        "phaseTime": 0,
+        "waveTime": 0,
+        "player": {
+          "x": 180,
+          "y": 540,
+          "hp": 3,
+          "maxHp": 3,
+          "r": 3,
+          "invulnerableUntil": 0,
+          "egoUntil": 0
+        },
+        "score": 0,
+        "graze": 0,
+        "kills": 0,
+        "memory": 0,
+        "resonance": 0,
+        "autoAttack": true,
+        "skillRotation": true,
+        "skills": {
+          "memoryReadyAt": 0,
+          "delayReadyAt": 360,
+          "counterReadyAt": 0,
+          "egoReadyAt": 0,
+          "globalReadyAt": 0
+        },
+        "stats": {
+          "hits": 0,
+          "shots": 0,
+          "damage": 0,
+          "peakBullets": 0,
+          "peakEnemies": 0,
+          "peakParticles": 0,
+          "poolPressure": 0,
+          "droppedGroups": 0,
+          "missedEnemies": 0,
+          "resourceStarvation": 0,
+          "bossDamage": 0,
+          "phaseTicks": [],
+          "collisions": 0,
+          "casts": {
+            "memory": 0,
+            "delay": 0,
+            "counter": 0,
+            "ego": 0
+          }
+        },
+        "resourceState": {
+          "memoryBucket": 0,
+          "memoryGain": 0,
+          "resBucket": 0,
+          "resGain": 0,
+          "grazeGain": 0,
+          "lastGraze": -9999
+        },
+        "campaign": true,
+        "campaignRevision": 5,
+        "bossIndex": 0
+      }
+    }
+  },
+  "drag": {
+    "state": {
+      "mode": "paused",
+      "paused": true,
+      "ready": true,
+      "booting": false,
+      "settings": {
+        "music": true,
+        "sfx": true,
+        "quality": "high",
+        "skillRotation": true,
+        "difficulty": "normal",
+        "sensitivity": 1
+      },
+      "world": {
+        "tick": 25,
+        "time": 0.4166666666666667,
+        "stage": "boss",
+        "runId": "hapil-mvugi1uq-1",
+        "player": {
+          "x": 192,
+          "y": 540,
+          "hp": 3,
+          "maxHp": 3,
+          "r": 3
+        },
+        "skillRotation": true,
+        "difficulty": "normal",
+        "phase": 2,
+        "wave": 0,
+        "stageTime": 0.41666666666666663,
+        "bossIntroDuration": 2.5,
+        "checkpointSerial": 1,
+        "practiceBoss": true,
+        "practiceStartPhase": 2,
+        "campaign": true,
+        "campaignRevision": 5,
+        "protagonist": "윤서하",
+        "samongAwakened": false,
+        "bossIndex": 29,
+        "bossName": "세이렌 모르",
+        "score": 0
+      },
+      "pointer": {
+        "active": false,
+        "pendingX": 0,
+        "pendingY": 0
+      }
+    },
+    "diagnostics": {
+      "version": "hapil-battle-readability-v20",
+      "loadedImages": 15,
+      "assetErrors": [],
+      "lastGap": "frame-gap-1017ms",
+      "actor": {
+        "actorDraws": 2,
+        "bossDraws": 1,
+        "enemyDraws": 0,
+        "silkTethers": 0,
+        "enemySilkTethers": 0,
+        "bossSilkTethers": 0,
+        "lastBossAsset": "storySirenIdle",
+        "lastBossPose": "idle",
+        "lastBossIdentity": "siren-mor",
+        "usedAssets": {
+          "storySirenIdle": 1,
+          "storyPlayerSeoha": 1
+        },
+        "usedPoses": {
+          "idle": 2
+        },
+        "lastSilk": null,
+        "authoredPosesPerActor": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "sinBossDraws": 0,
+        "lastSinSample": null,
+        "wrathManifestDraws": 0,
+        "lastWrathManifest": null,
+        "chapter3BossDraws": 0,
+        "chapter3DroneDraws": 0,
+        "chapter3GateDraws": 0,
+        "lastChapter3Sample": null,
+        "storyBossDraws": 1,
+        "storyParticipantDraws": 0,
+        "storyMinionDraws": 0,
+        "storyPlayerDraws": 1,
+        "storySupportDraws": 0,
+        "storyEchoDraws": 0,
+        "storyTargetMarkerDraws": 0,
+        "lastStoryTargetMarker": null,
+        "lastStorySamples": [
+          {
+            "id": "siren-mor",
+            "key": "storySirenIdle",
+            "role": "boss",
+            "frame": 0,
+            "pose": "idle",
+            "sourceRect": [
+              0,
+              0,
+              672,
+              384
+            ],
+            "anchor": [
+              336,
+              180
+            ],
+            "scale": 0.45,
+            "position": [
+              185.68516864441196,
+              113.98824616709047
+            ],
+            "combatPosition": [
+              185.68516864441196,
+              113.98824616709047
+            ],
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false,
+            "actualReleaseTick": -1,
+            "releaseAge": null
+          },
+          {
+            "id": "playerseoha",
+            "key": "storyPlayerSeoha",
+            "role": "player",
+            "frame": 0,
+            "pose": "idle",
+            "sourceRect": [
+              0,
+              0,
+              362,
+              362
+            ],
+            "anchor": [
+              181,
+              170
+            ],
+            "scale": 0.1574585635359116,
+            "position": [
+              192,
+              540
+            ],
+            "combatPosition": [
+              192,
+              540
+            ],
+            "authoredKeyposes": 1,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false,
+            "actualReleaseTick": -1,
+            "releaseAge": null
+          }
+        ],
+        "downwardMotion": {
+          "bossDraws": 0,
+          "spriteDraws": 0,
+          "tethers": 0,
+          "lastBossIdentity": null,
+          "lastBossAsset": null,
+          "lastPose": null,
+          "lastSample": null,
+          "lastSilk": null,
+          "authoredKeyposesPerBoss": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false
+        }
+      },
+      "projectiles": {
+        "stampDraws": 0,
+        "stampCacheMisses": 0,
+        "stampCacheHits": 0,
+        "stampCacheLimit": 96,
+        "stampCacheByteLimit": 4194304,
+        "stampCacheBytes": 0,
+        "stampCacheEntries": 0,
+        "animatedBulletDraws": 0,
+        "bodyAnimationPhases": 0,
+        "naturalSilhouetteDraws": 0,
+        "maxVisualOutset": 0,
+        "suppressedUnapprovedFX": 0,
+        "compactCastDraws": 0,
+        "compactHazardDraws": 0,
+        "assetLaserDraws": 0,
+        "assetLaserSlices": 0,
+        "signatureCastDraws": 0,
+        "weaponVisualDraws": 0,
+        "weaponTelegraphDraws": 0,
+        "rotorVisualDraws": 0,
+        "rotorTelegraphDraws": 0,
+        "sourceBeamOverlayDraws": 0,
+        "missingOptionalRotorAssets": 0,
+        "missingOptionalBeamAssets": 0,
+        "missingProjectileAssets": 0,
+        "compactFamilies": {},
+        "projectileTextureLimit": 768,
+        "projectileTextureDraws": 0,
+        "texturedBullets": 0,
+        "projectileTailDraws": 0,
+        "bossCastDraws": 0,
+        "hazardEmitterDraws": 0
+      },
+      "map": "storySirenMap",
+      "skills": {
+        "skillSourceDraws": 0,
+        "skillCastDraws": 0,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "sourceKeys": {},
+        "representedReleases": [],
+        "skillCacheEntries": 0,
+        "skillCacheBytes": 0,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "storage": {
+        "persistent": true,
+        "message": "이 기기에 독립 저장됨"
+      }
+    },
+    "saved": {
+      "revision": 4,
+      "runId": "hapil-mvudhoht-1",
+      "checkpoint": {
+        "rulesetVersion": "hapil-firstbattle-1",
+        "runId": "hapil-mvudhoht-1",
+        "seed": 2343498087,
+        "difficulty": "normal",
+        "practiceBoss": false,
+        "checkpointSerial": 1,
+        "tick": 0,
+        "shotReadyAt": 0,
+        "rngState": 2343498087,
+        "idCounter": 0,
+        "stage": "waves",
+        "wave": 0,
+        "phase": 0,
+        "stageTime": 0,
+        "phaseTime": 0,
+        "waveTime": 0,
+        "player": {
+          "x": 180,
+          "y": 540,
+          "hp": 3,
+          "maxHp": 3,
+          "r": 3,
+          "invulnerableUntil": 0,
+          "egoUntil": 0
+        },
+        "score": 0,
+        "graze": 0,
+        "kills": 0,
+        "memory": 0,
+        "resonance": 0,
+        "autoAttack": true,
+        "skillRotation": true,
+        "skills": {
+          "memoryReadyAt": 0,
+          "delayReadyAt": 360,
+          "counterReadyAt": 0,
+          "egoReadyAt": 0,
+          "globalReadyAt": 0
+        },
+        "stats": {
+          "hits": 0,
+          "shots": 0,
+          "damage": 0,
+          "peakBullets": 0,
+          "peakEnemies": 0,
+          "peakParticles": 0,
+          "poolPressure": 0,
+          "droppedGroups": 0,
+          "missedEnemies": 0,
+          "resourceStarvation": 0,
+          "bossDamage": 0,
+          "phaseTicks": [],
+          "collisions": 0,
+          "casts": {
+            "memory": 0,
+            "delay": 0,
+            "counter": 0,
+            "ego": 0
+          }
+        },
+        "resourceState": {
+          "memoryBucket": 0,
+          "memoryGain": 0,
+          "resBucket": 0,
+          "resGain": 0,
+          "grazeGain": 0,
+          "lastGraze": -9999
+        },
+        "campaign": true,
+        "campaignRevision": 5,
+        "bossIndex": 0
+      },
+      "backup": {
+        "rulesetVersion": "hapil-firstbattle-1",
+        "runId": "hapil-mvudhoht-1",
+        "seed": 2343498087,
+        "difficulty": "normal",
+        "practiceBoss": false,
+        "checkpointSerial": 1,
+        "tick": 0,
+        "shotReadyAt": 0,
+        "rngState": 2343498087,
+        "idCounter": 0,
+        "stage": "waves",
+        "wave": 0,
+        "phase": 0,
+        "stageTime": 0,
+        "phaseTime": 0,
+        "waveTime": 0,
+        "player": {
+          "x": 180,
+          "y": 540,
+          "hp": 3,
+          "maxHp": 3,
+          "r": 3,
+          "invulnerableUntil": 0,
+          "egoUntil": 0
+        },
+        "score": 0,
+        "graze": 0,
+        "kills": 0,
+        "memory": 0,
+        "resonance": 0,
+        "autoAttack": true,
+        "skillRotation": true,
+        "skills": {
+          "memoryReadyAt": 0,
+          "delayReadyAt": 360,
+          "counterReadyAt": 0,
+          "egoReadyAt": 0,
+          "globalReadyAt": 0
+        },
+        "stats": {
+          "hits": 0,
+          "shots": 0,
+          "damage": 0,
+          "peakBullets": 0,
+          "peakEnemies": 0,
+          "peakParticles": 0,
+          "poolPressure": 0,
+          "droppedGroups": 0,
+          "missedEnemies": 0,
+          "resourceStarvation": 0,
+          "bossDamage": 0,
+          "phaseTicks": [],
+          "collisions": 0,
+          "casts": {
+            "memory": 0,
+            "delay": 0,
+            "counter": 0,
+            "ego": 0
+          }
+        },
+        "resourceState": {
+          "memoryBucket": 0,
+          "memoryGain": 0,
+          "resBucket": 0,
+          "resGain": 0,
+          "grazeGain": 0,
+          "lastGraze": -9999
+        },
+        "campaign": true,
+        "campaignRevision": 5,
+        "bossIndex": 0
+      }
+    }
+  },
+  "events": "[{\"type\":\"keydown\",\"key\":\"ArrowRight\",\"code\":\"ArrowRight\",\"t\":14606.60000000149},{\"type\":\"keyup\",\"key\":\"ArrowRight\",\"code\":\"ArrowRight\",\"t\":14791},{\"type\":\"pointerdown\",\"x\":1312.5078125,\"y\":894,\"t\":15705.5},{\"type\":\"pointerup\",\"x\":1312.5078125,\"y\":894,\"t\":15711.5},{\"type\":\"pointerdown\",\"x\":681.484375,\"y\":517.6875,\"t\":40331.70000000112},{\"type\":\"pointerup\",\"x\":681.484375,\"y\":517.6875,\"t\":40336.40000000037},{\"type\":\"pointerdown\",\"x\":681,\"y\":799,\"t\":40490.40000000037},{\"type\":\"pointermove\",\"x\":684,\"y\":797.5,\"t\":41492.60000000149},{\"type\":\"pointermove\",\"x\":687,\"y\":796,\"t\":42513.5},{\"type\":\"pointermove\",\"x\":690,\"y\":794.5,\"t\":43526},{\"type\":\"pointermove\",\"x\":693,\"y\":793,\"t\":43742.60000000149},{\"type\":\"pointermove\",\"x\":696,\"y\":791.5,\"t\":43758.90000000037},{\"type\":\"pointermove\",\"x\":699,\"y\":790,\"t\":43775.70000000112},{\"type\":\"pointermove\",\"x\":702,\"y\":788.5,\"t\":43792.60000000149},{\"type\":\"pointermove\",\"x\":705,\"y\":787,\"t\":43808.40000000037},{\"type\":\"pointerup\",\"x\":705,\"y\":787,\"t\":43823},{\"type\":\"pointerdown\",\"x\":1071.8359375,\"y\":704,\"t\":44878.70000000112},{\"type\":\"pointerup\",\"x\":1071.8359375,\"y\":704,\"t\":44883}]"
+}

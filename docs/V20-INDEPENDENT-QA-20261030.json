@@ -1,0 +1,489 @@
+{
+  "schema": 1,
+  "verifiedAt": "2026-10-30T04:10:07.562865+00:00",
+  "status": "passed-within-independent-CPU-DOM-pixel-scope",
+  "baselineCommit": "079c830e40d607d9944215a107003d66e85367ce",
+  "canonicalNarrativeSHA256": "e069b22f4ee33c80e1b8e2e407583a865efec5d01b6440408f0e3389d82cabaa",
+  "scope": "Presentation and source-pixel readability only; combat rules, narrative, save format and original inputs unchanged. No new enemy or canon scope.",
+  "productionHashes": {
+    "index.html": "1c054e39fee1a2e0dd425e05de0e3c33a8253ca19804854ad6a48b80fa4d6ace",
+    "src/actors.js": "fe405bc21894a34cd6709848a3e16ea482f9dacfe4f934460ba608e8e7517c1e",
+    "src/app.js": "6e5d24c03905a85de30794e29e920ce4fd0167218f97bfaf2175280eb7d58163",
+    "src/boss-motion.js": "e2d1bde92838884382e30b5d8de6549cf9071ac9b21c84b7f9cb8d4bc63160b1",
+    "src/boss-skills.js": "671a593f2ac849afb90e1bdcb37238fe7d60c79f36f9e3fb46a30b4825769755",
+    "src/core.js": "c48cba834ec15c0adaa60006c2f0a1fa0b75c4de0dfea9023c1aa7b4a7a358ee",
+    "src/media.js": "0057a4d28e4d8bd35eb1598ea48207ff9cf21ead2906cc75d66c405ed6de110c",
+    "src/projectiles.js": "05a1233cfad835b81db70348a3f5acebed59c22059d74719adf756e838825b93",
+    "src/render.js": "cd0c236a2635c379c205b96a83290383ba5ba53461d3d9993e969c29f21abcfe",
+    "src/storage.js": "6b00a9d98a8f1f9b29887bb88d457b80bf5bcb2b38758f8a2100a7adfb21e21a",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "styles.css": "43042c3bcf503ef0cc2ed9bbade22b689a2c20c0a2c922dd942800c74387262d"
+  },
+  "allProductionHashesUnchangedDuringRun": true,
+  "testRun": {
+    "command": "npm test",
+    "node": "v24.22.1",
+    "exitCode": 0,
+    "tests": 266,
+    "pass": 266,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "durationMs": 64938.211369,
+    "rawOutputPath": "docs/v20-qa/npm-test-final.log",
+    "rawOutputSHA256": "82e343bda6868ef324758c2bd89354aeb3111b994bbb01cc4d4bdad1bd855445",
+    "skippedRequiredChecks": false
+  },
+  "ordinaryHealthCPU": {
+    "method": "Full18 existing ordinary-health input replays run again in npm test on unchanged core/storage; no new recordings or invincibility/777 used in these replay tests. Controlled presentation fixtures below are separate.",
+    "routes": [
+      {
+        "revision": 3,
+        "difficulty": "gentle",
+        "seed": 813,
+        "inputFile": "tests/fixtures/natural-bot/gentle-813.moves.gz",
+        "sha256": "c3f50b0731cd4600f821a71f9c25af222426955a7e47cca76e57b2077a3b94e1",
+        "stage": "won",
+        "tick": 134012,
+        "hp": 5,
+        "hits": 4,
+        "checkpointCount": 70,
+        "changedBoundariesCompared": 69,
+        "subsequentInputsPerBoundary": 180
+      },
+      {
+        "revision": 3,
+        "difficulty": "gentle",
+        "seed": 42,
+        "inputFile": "tests/fixtures/natural-bot/gentle-42.moves.gz",
+        "sha256": "b91b3d869473847cc9228dac0a3edcd54a511ca659dc2cb6850cf91c6ba19886",
+        "stage": "won",
+        "tick": 132148,
+        "hp": 5,
+        "hits": 6,
+        "checkpointCount": 70,
+        "changedBoundariesCompared": 69,
+        "subsequentInputsPerBoundary": 180
+      },
+      {
+        "revision": 3,
+        "difficulty": "normal",
+        "seed": 813,
+        "inputFile": "tests/fixtures/natural-bot/normal-813.moves.gz",
+        "sha256": "902c9327515f88095ff850ee655587c50f38c399e7057da30eb0d8737512701d",
+        "stage": "won",
+        "tick": 132297,
+        "hp": 3,
+        "hits": 6,
+        "checkpointCount": 70,
+        "changedBoundariesCompared": 69,
+        "subsequentInputsPerBoundary": 180
+      },
+      {
+        "revision": 3,
+        "difficulty": "normal",
+        "seed": 42,
+        "inputFile": "tests/fixtures/natural-bot/normal-42.moves.gz",
+        "sha256": "d5c636c0f6913f71129d3ef435c6c43a66db60d89c32ded846470ac582124823",
+        "stage": "won",
+        "tick": 133273,
+        "hp": 3,
+        "hits": 5,
+        "checkpointCount": 70,
+        "changedBoundariesCompared": 69,
+        "subsequentInputsPerBoundary": 180
+      },
+      {
+        "revision": 3,
+        "difficulty": "hell",
+        "seed": 813,
+        "inputFile": "tests/fixtures/natural-bot/hell-813.moves.gz",
+        "sha256": "fc306d1fdd2af389bce528fa651ba5d7bce5e254b0a3f07978a32c03c6dd8381",
+        "stage": "won",
+        "tick": 132534,
+        "hp": 2,
+        "hits": 4,
+        "checkpointCount": 70,
+        "changedBoundariesCompared": 69,
+        "subsequentInputsPerBoundary": 180
+      },
+      {
+        "revision": 3,
+        "difficulty": "hell",
+        "seed": 42,
+        "inputFile": "tests/fixtures/natural-bot/hell-42.moves.gz",
+        "sha256": "158edf1a7d1617383c6648d633f8e27ba15b5eb7ea308030ea5fa42ef089205a",
+        "stage": "won",
+        "tick": 132992,
+        "hp": 3,
+        "hits": 3,
+        "checkpointCount": 70,
+        "changedBoundariesCompared": 69,
+        "subsequentInputsPerBoundary": 180
+      },
+      {
+        "revision": 4,
+        "difficulty": "gentle",
+        "seed": 813,
+        "inputFile": "tests/fixtures/revision4-natural-bot/gentle-813.moves.gz",
+        "sha256": "d1d25d3bf2d1e37c982a27ba8fc41b36195e0c59b629157e7d221b5dde67b6fb",
+        "stage": "won",
+        "tick": 180221,
+        "hp": 5,
+        "hits": 4,
+        "checkpointCount": 106,
+        "changedBoundariesCompared": 105,
+        "subsequentInputsPerBoundary": 180
+      },
+      {
+        "revision": 4,
+        "difficulty": "gentle",
+        "seed": 42,
+        "inputFile": "tests/fixtures/revision4-natural-bot/gentle-42.moves.gz",
+        "sha256": "25e315d292dda72b95e2622ad772977880de758426ae313ed8163e2810853470",
+        "stage": "won",
+        "tick": 178663,
+        "hp": 5,
+        "hits": 7,
+        "checkpointCount": 106,
+        "changedBoundariesCompared": 105,
+        "subsequentInputsPerBoundary": 180
+      },
+      {
+        "revision": 4,
+        "difficulty": "normal",
+        "seed": 813,
+        "inputFile": "tests/fixtures/revision4-natural-bot/normal-813.moves.gz",
+        "sha256": "9e404fa5ecd09cd5b8b2db29f71faa706bdab60677f2d7706f54ea311c04b8eb",
+        "stage": "won",
+        "tick": 178077,
+        "hp": 3,
+        "hits": 10,
+        "checkpointCount": 106,
+        "changedBoundariesCompared": 105,
+        "subsequentInputsPerBoundary": 180
+      },
+      {
+        "revision": 4,
+        "difficulty": "normal",
+        "seed": 42,
+        "inputFile": "tests/fixtures/revision4-natural-bot/normal-42.moves.gz",
+        "sha256": "95f68c9af88c7d9b47a3d3c8b7cae760f816c740dcc5761a18830b08c4531dea",
+        "stage": "won",
+        "tick": 179231,
+        "hp": 3,
+        "hits": 8,
+        "checkpointCount": 106,
+        "changedBoundariesCompared": 105,
+        "subsequentInputsPerBoundary": 180
+      },
+      {
+        "revision": 4,
+        "difficulty": "hell",
+        "seed": 813,
+        "inputFile": "tests/fixtures/revision4-natural-bot/hell-813.moves.gz",
+        "sha256": "e883a35861da3ccff9b6fe18cdb57ccf1f2b255ebaa65fbaea2340d39eeaeaf9",
+        "stage": "won",
+        "tick": 176677,
+        "hp": 2,
+        "hits": 8,
+        "checkpointCount": 106,
+        "changedBoundariesCompared": 105,
+        "subsequentInputsPerBoundary": 180
+      },
+      {
+        "revision": 4,
+        "difficulty": "hell",
+        "seed": 42,
+        "inputFile": "tests/fixtures/revision4-natural-bot/hell-42.moves.gz",
+        "sha256": "a825f0d0223faa65849ba2df441ee412778077f391ca13cb7965e0f06b5d3d3a",
+        "stage": "won",
+        "tick": 177363,
+        "hp": 2,
+        "hits": 8,
+        "checkpointCount": 106,
+        "changedBoundariesCompared": 105,
+        "subsequentInputsPerBoundary": 180
+      },
+      {
+        "revision": 5,
+        "difficulty": "gentle",
+        "seed": 813,
+        "inputFile": "tests/fixtures/revision5-natural-bot/gentle-813.moves.gz",
+        "sha256": "0504048ca956606b8a4bb0409ff02e2566bf1a52a6c2767853ae1aa96c2fb12f",
+        "stage": "won",
+        "tick": 306134,
+        "hp": 5,
+        "hits": 4,
+        "checkpointCount": 208,
+        "changedBoundariesCompared": 207,
+        "subsequentInputsPerBoundary": 180
+      },
+      {
+        "revision": 5,
+        "difficulty": "gentle",
+        "seed": 42,
+        "inputFile": "tests/fixtures/revision5-natural-bot/gentle-42.moves.gz",
+        "sha256": "1d33bb21c8f99d852f508b18e8a9df6259a94fd7a6b378543b2b3d295c83dbbe",
+        "stage": "won",
+        "tick": 305192,
+        "hp": 5,
+        "hits": 7,
+        "checkpointCount": 208,
+        "changedBoundariesCompared": 207,
+        "subsequentInputsPerBoundary": 180
+      },
+      {
+        "revision": 5,
+        "difficulty": "normal",
+        "seed": 813,
+        "inputFile": "tests/fixtures/revision5-natural-bot/normal-813.moves.gz",
+        "sha256": "36515213d56109119004896539e329d7ff5c90564e672814cb8dbbb3e79fc9ea",
+        "stage": "won",
+        "tick": 304514,
+        "hp": 3,
+        "hits": 10,
+        "checkpointCount": 208,
+        "changedBoundariesCompared": 207,
+        "subsequentInputsPerBoundary": 180
+      },
+      {
+        "revision": 5,
+        "difficulty": "normal",
+        "seed": 42,
+        "inputFile": "tests/fixtures/revision5-natural-bot/normal-42.moves.gz",
+        "sha256": "b7c69fe1502145960744cb83154da062a79ebe3ab5fdb65d72eacfeb7e74eb80",
+        "stage": "won",
+        "tick": 305667,
+        "hp": 3,
+        "hits": 8,
+        "checkpointCount": 208,
+        "changedBoundariesCompared": 207,
+        "subsequentInputsPerBoundary": 180
+      },
+      {
+        "revision": 5,
+        "difficulty": "hell",
+        "seed": 813,
+        "inputFile": "tests/fixtures/revision5-natural-bot/hell-813.moves.gz",
+        "sha256": "f93ddfdef461edef60b1af2ee48eba3d8d166723e416d60791da5f71a86ee259",
+        "stage": "won",
+        "tick": 305028,
+        "hp": 3,
+        "hits": 8,
+        "checkpointCount": 208,
+        "changedBoundariesCompared": 207,
+        "subsequentInputsPerBoundary": 180
+      },
+      {
+        "revision": 5,
+        "difficulty": "hell",
+        "seed": 42,
+        "inputFile": "tests/fixtures/revision5-natural-bot/hell-42.moves.gz",
+        "sha256": "fcb63a8cbfd1e84000c0778bb49e7781c868b9e8b4d5d559eb24cf9822a98f95",
+        "stage": "won",
+        "tick": 305837,
+        "hp": 3,
+        "hits": 9,
+        "checkpointCount": 208,
+        "changedBoundariesCompared": 207,
+        "subsequentInputsPerBoundary": 180
+      }
+    ],
+    "changedBoundaryRestores": 2286,
+    "futureInputsEach": 180,
+    "futureInputComparisons": 411480
+  },
+  "retainedInputBytes": [
+    {
+      "path": "tests/fixtures/natural-bot/gentle-42.moves.gz",
+      "bytes": 8118,
+      "sha256": "b91b3d869473847cc9228dac0a3edcd54a511ca659dc2cb6850cf91c6ba19886",
+      "unchangedFromDeployedV19": true,
+      "alsoUnchangedFromOriginalV18": true
+    },
+    {
+      "path": "tests/fixtures/natural-bot/gentle-813.moves.gz",
+      "bytes": 8052,
+      "sha256": "c3f50b0731cd4600f821a71f9c25af222426955a7e47cca76e57b2077a3b94e1",
+      "unchangedFromDeployedV19": true,
+      "alsoUnchangedFromOriginalV18": true
+    },
+    {
+      "path": "tests/fixtures/natural-bot/hell-42.moves.gz",
+      "bytes": 11238,
+      "sha256": "158edf1a7d1617383c6648d633f8e27ba15b5eb7ea308030ea5fa42ef089205a",
+      "unchangedFromDeployedV19": true,
+      "alsoUnchangedFromOriginalV18": true
+    },
+    {
+      "path": "tests/fixtures/natural-bot/hell-813.moves.gz",
+      "bytes": 11180,
+      "sha256": "fc306d1fdd2af389bce528fa651ba5d7bce5e254b0a3f07978a32c03c6dd8381",
+      "unchangedFromDeployedV19": true,
+      "alsoUnchangedFromOriginalV18": true
+    },
+    {
+      "path": "tests/fixtures/natural-bot/normal-42.moves.gz",
+      "bytes": 8459,
+      "sha256": "d5c636c0f6913f71129d3ef435c6c43a66db60d89c32ded846470ac582124823",
+      "unchangedFromDeployedV19": true,
+      "alsoUnchangedFromOriginalV18": true
+    },
+    {
+      "path": "tests/fixtures/natural-bot/normal-813.moves.gz",
+      "bytes": 8243,
+      "sha256": "902c9327515f88095ff850ee655587c50f38c399e7057da30eb0d8737512701d",
+      "unchangedFromDeployedV19": true,
+      "alsoUnchangedFromOriginalV18": true
+    },
+    {
+      "path": "tests/fixtures/revision4-natural-bot/gentle-42.moves.gz",
+      "bytes": 10109,
+      "sha256": "25e315d292dda72b95e2622ad772977880de758426ae313ed8163e2810853470",
+      "unchangedFromDeployedV19": true,
+      "alsoUnchangedFromOriginalV18": true
+    },
+    {
+      "path": "tests/fixtures/revision4-natural-bot/gentle-813.moves.gz",
+      "bytes": 9954,
+      "sha256": "d1d25d3bf2d1e37c982a27ba8fc41b36195e0c59b629157e7d221b5dde67b6fb",
+      "unchangedFromDeployedV19": true,
+      "alsoUnchangedFromOriginalV18": true
+    },
+    {
+      "path": "tests/fixtures/revision4-natural-bot/hell-42.moves.gz",
+      "bytes": 13128,
+      "sha256": "a825f0d0223faa65849ba2df441ee412778077f391ca13cb7965e0f06b5d3d3a",
+      "unchangedFromDeployedV19": true,
+      "alsoUnchangedFromOriginalV18": true
+    },
+    {
+      "path": "tests/fixtures/revision4-natural-bot/hell-813.moves.gz",
+      "bytes": 13103,
+      "sha256": "e883a35861da3ccff9b6fe18cdb57ccf1f2b255ebaa65fbaea2340d39eeaeaf9",
+      "unchangedFromDeployedV19": true,
+      "alsoUnchangedFromOriginalV18": true
+    },
+    {
+      "path": "tests/fixtures/revision4-natural-bot/normal-42.moves.gz",
+      "bytes": 10380,
+      "sha256": "95f68c9af88c7d9b47a3d3c8b7cae760f816c740dcc5761a18830b08c4531dea",
+      "unchangedFromDeployedV19": true,
+      "alsoUnchangedFromOriginalV18": true
+    },
+    {
+      "path": "tests/fixtures/revision4-natural-bot/normal-813.moves.gz",
+      "bytes": 10252,
+      "sha256": "9e404fa5ecd09cd5b8b2db29f71faa706bdab60677f2d7706f54ea311c04b8eb",
+      "unchangedFromDeployedV19": true,
+      "alsoUnchangedFromOriginalV18": true
+    },
+    {
+      "path": "tests/fixtures/revision5-natural-bot/gentle-42.moves.gz",
+      "bytes": 12030,
+      "sha256": "1d33bb21c8f99d852f508b18e8a9df6259a94fd7a6b378543b2b3d295c83dbbe",
+      "unchangedFromDeployedV19": true,
+      "alsoUnchangedFromOriginalV18": false
+    },
+    {
+      "path": "tests/fixtures/revision5-natural-bot/gentle-813.moves.gz",
+      "bytes": 11886,
+      "sha256": "0504048ca956606b8a4bb0409ff02e2566bf1a52a6c2767853ae1aa96c2fb12f",
+      "unchangedFromDeployedV19": true,
+      "alsoUnchangedFromOriginalV18": false
+    },
+    {
+      "path": "tests/fixtures/revision5-natural-bot/hell-42.moves.gz",
+      "bytes": 15806,
+      "sha256": "fcb63a8cbfd1e84000c0778bb49e7781c868b9e8b4d5d559eb24cf9822a98f95",
+      "unchangedFromDeployedV19": true,
+      "alsoUnchangedFromOriginalV18": false
+    },
+    {
+      "path": "tests/fixtures/revision5-natural-bot/hell-813.moves.gz",
+      "bytes": 15789,
+      "sha256": "f93ddfdef461edef60b1af2ee48eba3d8d166723e416d60791da5f71a86ee259",
+      "unchangedFromDeployedV19": true,
+      "alsoUnchangedFromOriginalV18": false
+    },
+    {
+      "path": "tests/fixtures/revision5-natural-bot/normal-42.moves.gz",
+      "bytes": 12873,
+      "sha256": "b7c69fe1502145960744cb83154da062a79ebe3ab5fdb65d72eacfeb7e74eb80",
+      "unchangedFromDeployedV19": true,
+      "alsoUnchangedFromOriginalV18": false
+    },
+    {
+      "path": "tests/fixtures/revision5-natural-bot/normal-813.moves.gz",
+      "bytes": 12790,
+      "sha256": "36515213d56109119004896539e329d7ff5c90564e672814cb8dbbb3e79fc9ea",
+      "unchangedFromDeployedV19": true,
+      "alsoUnchangedFromOriginalV18": false
+    }
+  ],
+  "actualEmissionPixelAudit": {
+    "controlledEngineCases": 216,
+    "uniqueGeometryOwnerShapes": 94,
+    "rotationSubpixelPaletteRows": 940,
+    "retainedFourFrameAdditionalCases": 160,
+    "sourceRecord": "docs/V20-ACTUAL-PROJECTILE-PIXELS-20261030.json",
+    "summary": {
+      "baselineAlphaCoreBelow80Percent": 78,
+      "currentAlphaCoreBelow80Percent": 0,
+      "currentMinimumAlphaCore": 0.8333333333333334,
+      "currentMaximumDangerBodyRasterOutset": 4.6852813742385715,
+      "baselineBelowDiagnosticLuminance50": 181,
+      "currentBelowDiagnosticLuminance50": 103
+    },
+    "requiredCoreAlpha180Fraction": 0.8,
+    "maximumDangerBodyRasterOutset": 4.75,
+    "fourOriginallyFailingCentersAlsoRequireColoredLuma50Fraction": 0.8,
+    "allOtherColorAndShaftCoverageDiagnosticOnly": true,
+    "separateLargeWeaponRotorIconExcludedFromSmallDangerBodyOutset": true,
+    "secondaryPaletteReuse": {
+      "cases": 37,
+      "repeatedCalls": 370,
+      "identityStable": true,
+      "correctSwappedOwnerValues": true,
+      "distinctParticipantReferences": true
+    }
+  },
+  "meaningfulNewRegressionChecks": [
+    "Actual emitted r3.8/4.2/4/5/5.5/6/11 and halfLength9/13; owners, palette slots, rotations and subpixel positions.",
+    "Actual four-frame Violet/Lucifer sources at ages0/.125/.25/.375 and final-frame hold.",
+    "Six real same-tick fallen-knight emitters at tick145 and real simultaneous Rian/Ion sources at tick181.",
+    "Exact actual warning→active→fade→expiry169/193/208 clock boundaries, immutable world and cached text.",
+    "No permanent center-panel; brief deduplicated entry only before live threats; bounded timer at timeout.",
+    "Real app full hint destinations, phases0/1/2, residual-threat guidance and practice save isolation."
+  ],
+  "validationCategories": {
+    "implementation": "source and runtime checks passed",
+    "CPU": "actual engine replay and actual source pixels passed; separate renderer timing report",
+    "DOMFixtures": "8 new focused checks and retained full suite passed; not actual browser",
+    "headless": "not run by this QA",
+    "actualBrowser": "separate root V20 browser record; not replaced by CPU/DOM data",
+    "softwareGPU": "not certified",
+    "hardwareGPU": "not certified",
+    "mobileEmulation": "not run by this QA; CSS width is separate",
+    "actualDevice": "not certified"
+  },
+  "separateReports": {
+    "browser": "docs/V20-BROWSER-QA-20261030.md",
+    "renderCPU": "docs/V20-VISUAL-REVIEW-20261030.json"
+  },
+  "proofHashes": {
+    "docs/v20-qa/npm-test-final.log": "82e343bda6868ef324758c2bd89354aeb3111b994bbb01cc4d4bdad1bd855445",
+    "tests/independent-battle-readability-v20.test.cjs": "3641ffc1b7fe05f04b9648248cb0794ddcd2052fced988f1db8b786d91e6a8fa",
+    "tools/audit-actual-projectiles-v20.cjs": "e993e5a6c2ec6e8f288081f806d6ae6df46f144b7564592c5eef9d9631fc9f2d",
+    "docs/V20-ACTUAL-PROJECTILE-PIXELS-20261030.json": "98fb0d230f103dc8455001ed646b2a3340268e87c3f4ebef22bda066cc298374",
+    "docs/v20-pixels/actual-shapes-contact.jpg": "7a0ec87274d1e5ac1f0cad16c5343c15ea87dc67199a207f69fff7f7510f019b",
+    "docs/V20-STORY-PROJECTILE-CONTRACTS-20261030.json": "7944862474b060cee9d1c069fdbbfa19c906f10d8fc1d4fe1c195de5693da787",
+    "docs/V20-PROJECTILE-IMAGE-REVIEW-20261030.md": "3d3f619d9987cd4554880be576960377cacc9483da94673875a0cba3af522cbc",
+    "docs/V20-PROJECTILE-COLD-CACHE-CPU-20261030.json": "f2aa296979019ab436504280dc13f022a6cf1026b00dd07ba0c0c6df506014bc",
+    "docs/v20-pixels/source-edge-own-map-ab.json": "07fa6b3c7a506592ac293785368872106d3192606f9eec58df42f50f61df9d71",
+    "docs/v20-pixels/source-edge-own-map-ab.jpg": "3b92ae55d787e381201539afee0a2139155b59906eb4591c63d4dd4dfde3177a"
+  }
+}
