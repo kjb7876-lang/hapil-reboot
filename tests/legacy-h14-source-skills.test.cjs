@@ -7,7 +7,7 @@ const { createCanvas, loadImage } = require(require.resolve('@napi-rs/canvas', {
 require('../src/projectiles.js'); require('../src/boss-skills.js');
 const Projectiles = global.HapilProjectiles, Skills = global.HapilBossSkills;
 const mediaText = fs.readFileSync(path.join(__dirname, '../src/media.js'), 'utf8');
-const media = JSON.parse(mediaText.slice(mediaText.indexOf('{'), mediaText.lastIndexOf('}') + 1));
+const media = require('../tools/read-media-registry.cjs')();
 const skillKeys = ['h14SkillViolet','h14SkillHorn','h14SkillBalrog','h14SkillMask','h14SkillLucifer','h14SkillSloth','h14SkillEnvy','h14SkillGlutton','h14SkillLust','h14SkillGreed','h14SkillWrath','h14SkillPride'];
 const materialKeys = ['projectileBelphegorV13','projectileLeviathanV13','projectileBeelzebubV13','projectileAsmodeusV13','projectileMammonV13','projectileWrathV13','projectilePrideV13'];
 const beamKeys = ['h14BeamSloth','h14BeamEnvy','h14BeamGlutton','h14BeamLust','h14BeamGreed','h14BeamWrath','h14BeamPride'];
@@ -134,7 +134,7 @@ test('all seven large HELL rotors use their own full source image and visual spi
   } finally { f.close(); }
 });
 
-test('new seven-rotor warning previews two own sources, then disappears; absent optional art retains the visible same-boss danger core', async () => {
+test('seven rotor warnings preview owned art; required natural bodies fail closed and absent ornaments never borrow another boss', async () => {
   const f=await fixture([...materialKeys,...skillKeys.slice(5),'h14RotorGlutton']);
   try {
     for(let i=5;i<12;i++) {
@@ -147,9 +147,10 @@ test('new seven-rotor warning previews two own sources, then disappears; absent 
       const ownKey=i===7?'h14RotorGlutton':skillKeys[i],saved=f.images[ownKey]; delete f.images[ownKey];
       // A fresh renderer cannot retain an earlier cached ornament after failure.
       const missing=Projectiles.create(f.images);f.ctx.clearRect(0,0,360,260);missing.beginFrame();
-      assert.equal(missing.drawBullet(f.ctx,w,{x:180,y:120,r:11,halfLength:0,kind:'hell-rotor',spinAngle:0,angle:0},false),true);
-      assert(f.ctx.getImageData(180,120,1,1).data[3]>=240,'same-boss damage remains visible');
-      assert.equal(missing.getMetrics().rotorVisualDraws,0);assert.equal(missing.getMetrics().missingOptionalRotorAssets,1);missing.destroy();f.images[ownKey]=saved;
+      if(i!==7)assert.equal(Projectiles.invalidAssetForEncounter(f.images,i),ownKey,'a complete encounter cannot start without a newly required own source');
+      if(i===6||i===8){assert.equal(missing.drawBullet(f.ctx,w,{x:180,y:120,r:11,halfLength:0,kind:'hell-rotor',spinAngle:0,angle:0},false),false);assert.equal(f.ctx.getImageData(180,120,1,1).data[3],0);assert.equal(missing.getMetrics().missingProjectileAssets,1,'missing mirror/heart body must not fall back to a geometric/material orb');}
+      else{assert.equal(missing.drawBullet(f.ctx,w,{x:180,y:120,r:11,halfLength:0,kind:'hell-rotor',spinAngle:0,angle:0},false),true);assert(f.ctx.getImageData(180,120,1,1).data[3]>=240,'still-present owned orb remains visible');assert.equal(missing.getMetrics().missingOptionalRotorAssets,1);}
+      assert.equal(missing.getMetrics().rotorVisualDraws,0);missing.destroy();f.images[ownKey]=saved;
     }
   } finally { f.close(); }
 });

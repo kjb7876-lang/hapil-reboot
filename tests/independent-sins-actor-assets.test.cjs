@@ -5,7 +5,7 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const {createCanvas,loadImage}=require(require.resolve('@napi-rs/canvas',{paths:[process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES||'',path.resolve(__dirname,'..')]}));
 const core=require('../src/core.js');require('../src/boss-motion.js');require('../src/actors.js');const API=global.HapilActors;
 const root=path.join(__dirname,'..'),source=JSON.parse(fs.readFileSync(path.join(root,'docs/SINS-ASSET-SOURCES-20261029.json'),'utf8'));
-const raw=fs.readFileSync(path.join(root,'src/media.js'),'utf8'),media=JSON.parse(raw.slice(raw.indexOf('{'),raw.lastIndexOf('}')+1));
+const raw=fs.readFileSync(path.join(root,'src/media.js'),'utf8'),media=require('../tools/read-media-registry.cjs')();
 const contracts=Object.values(API.sinContracts);
 async function imagesFor(keys){const images={};for(const key of keys)images[key]=await loadImage(path.join(root,media[key]));return images;}
 test('nine actual seven-sin form PNGs decode, match recorded original hashes and have visible source pixels at every manual torso anchor',async()=>{

@@ -6,7 +6,7 @@ const {performance}=require('node:perf_hooks');
 const {createCanvas,loadImage}=require(require.resolve('@napi-rs/canvas',{paths:[process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES||'',path.resolve(__dirname,'..')]}));
 const root=path.resolve(__dirname,'..'),core=require('../src/core.js');
 require('../src/boss-motion.js');require('../src/actors.js');require('../src/projectiles.js');require('../src/render.js');
-const raw=fs.readFileSync(path.join(root,'src/media.js'),'utf8'),media=JSON.parse(raw.slice(raw.indexOf('{'),raw.lastIndexOf('}')+1));
+const raw=fs.readFileSync(path.join(root,'src/media.js'),'utf8'),media=require('./read-media-registry.cjs')();
 function dist(a){const b=[...a].sort((x,y)=>x-y);return{samples:b.length,p50Ms:+b[Math.floor((b.length-1)*.5)].toFixed(3),p95Ms:+b[Math.floor((b.length-1)*.95)].toFixed(3),maxMs:+b[b.length-1].toFixed(3)};}
 function phaseWorld(index){const w=core.createRun({campaign:true,practiceBoss:true,bossIndex:index,seed:813,runId:'cpu-phase-fixture'});w.phase=2;w.phaseTime=0;w.boss.phase=2;w.autoAttack=false;w.skillRotation=false;return w;}
 function observedPeak(index){const w=phaseWorld(index);let peak=null,maxCost=-1;for(let n=0;n<1800;n++){const cycle=Math.floor(n/360),target=index===2?(cycle%2?252:108):180+Math.sin(Math.floor(Math.max(0,n-240)/360)*.8)*100;core.step(w,{dx:target-w.player.x,focus:true});const cost=w.bullets.length+w.hazards.length*3;if(cost>maxCost){maxCost=cost;peak=JSON.parse(JSON.stringify(w));}}return{world:peak,phasePeakBullets:w.stats.peakBullets,phaseFixtureHits:w.stats.hits,phaseEndStage:w.stage,poolPressure:w.stats.poolPressure,droppedGroups:w.stats.droppedGroups};}

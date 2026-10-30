@@ -11,7 +11,9 @@ function fixture(){
  for(const key of keys){const h=key==='fxV8GoldSlash'?256:512,c=createCanvas(512,h),ctx=c.getContext('2d');for(let i=0;i<h/128*4;i++){ctx.fillStyle=`rgb(${25+i*10},${50+i*7},${220-i*9})`;ctx.fillRect(i%4*128,Math.floor(i/4)*128,128,128)}c.complete=true;c.naturalWidth=512;c.naturalHeight=h;images[key]=c;}
  for(const key of ['projectileVioletOrbV9','projectileLuciferOrbV9']){const c=createCanvas(296,80),ctx=c.getContext('2d');for(let i=0;i<4;i++){ctx.fillStyle=['#8d3acb','#aaa7db','#42a6bc','#daa4a0'][i];ctx.fillRect(8+i*72,8,64,64)}c.complete=true;c.naturalWidth=296;c.naturalHeight=80;images[key]=c;}
  for(const key of ['projectileHornOrbV10','projectileBalrogOrbV10','projectileMaskOrbV10','projectileVioletBladeV10','projectileBalrogBladeV10','projectileMaskNeedleV10','projectileHornNeedleV11','projectileLuciferShardV11']){const w=/Blade|Needle|Shard/.test(key)?128:64,c=createCanvas(w,64),ctx=c.getContext('2d');ctx.fillStyle='#e3a459';ctx.fillRect(0,0,w,64);c.complete=true;c.naturalWidth=w;c.naturalHeight=64;images[key]=c;}
- for(const [key,width,height] of [['weaponVioletV12',1774,887],['weaponHornV12',1774,887],['weaponBalrogV12',1774,887],['weaponMaskV12',1774,887],['weaponLuciferV12',1254,1254]])images[key]={complete:true,naturalWidth:width,naturalHeight:height};
+ // Natural regular needles now draw these already-owned sources. The unit
+ // fixture therefore needs actual drawable canvases, not dimension-only stubs.
+ for(const [key,width,height] of [['h14SkillHorn',256,256],['weaponVioletV12',1774,887],['weaponHornV12',1774,887],['weaponBalrogV12',1774,887],['weaponMaskV12',1774,887],['weaponLuciferV12',1254,1254]]){const c=createCanvas(width,height),ctx=c.getContext('2d');ctx.fillStyle='#e3a459';ctx.fillRect(0,0,width,height);c.complete=true;c.naturalWidth=width;c.naturalHeight=height;images[key]=c;}
  const c=createCanvas(48,48),ctx=c.getContext('2d'),fx=API.create(images);return {c,ctx,fx,images,generated,close(){fx.destroy();global.document=old}};
 }
 function bullet(age=0,r=4,l=0){return {id:3,x:24,y:24,r,halfLength:l,age,angle:0,vx:0,vy:100};}

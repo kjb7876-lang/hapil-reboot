@@ -1,0 +1,457 @@
+{
+  "scope": "Alpha occupancy only. Body alignment/attack timing must still be checked by runtime renderer.",
+  "count": 45,
+  "minimumAlpha": 244,
+  "samples": [
+    {
+      "actor": "Goblin",
+      "key": "storyGoblin",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 254,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "Knight",
+      "key": "storyKnightIdle",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 255,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "Knight",
+      "key": "storyKnightCharge",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 255,
+      "sourcePose": "charge"
+    },
+    {
+      "actor": "Knight",
+      "key": "storyKnightAttack",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 255,
+      "sourcePose": "attack"
+    },
+    {
+      "actor": "Knight",
+      "key": "storyKnightRecover",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 255,
+      "sourcePose": "move"
+    },
+    {
+      "actor": "Insomnia",
+      "key": "storyInsomniaIdle",
+      "anchor": [
+        335,
+        179
+      ],
+      "alpha": 244,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "Insomnia",
+      "key": "storyInsomniaCharge",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 255,
+      "sourcePose": "charge"
+    },
+    {
+      "actor": "Insomnia",
+      "key": "storyInsomniaAttack",
+      "anchor": [
+        307,
+        209
+      ],
+      "alpha": 252,
+      "sourcePose": "attack"
+    },
+    {
+      "actor": "Insomnia",
+      "key": "storyInsomniaRecover",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 255,
+      "sourcePose": "transition"
+    },
+    {
+      "actor": "Siren",
+      "key": "storySirenIdle",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 255,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "Siren",
+      "key": "storySirenCharge",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 255,
+      "sourcePose": "charge"
+    },
+    {
+      "actor": "Siren",
+      "key": "storySirenAttack",
+      "anchor": [
+        338,
+        183
+      ],
+      "alpha": 249,
+      "sourcePose": "attack"
+    },
+    {
+      "actor": "Siren",
+      "key": "storySirenRecover",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 255,
+      "sourcePose": "transition"
+    },
+    {
+      "actor": "Chief",
+      "key": "storyChiefIdle",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 255,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "Chief",
+      "key": "storyChiefCharge",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 255,
+      "sourcePose": "charge"
+    },
+    {
+      "actor": "Chief",
+      "key": "storyChiefAttack",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 255,
+      "sourcePose": "attack"
+    },
+    {
+      "actor": "Chief",
+      "key": "storyChiefRecover",
+      "anchor": [
+        336,
+        179
+      ],
+      "alpha": 251,
+      "sourcePose": "transition"
+    },
+    {
+      "actor": "Executor",
+      "key": "storyExecutorIdle",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 254,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "Executor",
+      "key": "storyExecutorCharge",
+      "anchor": [
+        337,
+        181
+      ],
+      "alpha": 246,
+      "sourcePose": "charge"
+    },
+    {
+      "actor": "Executor",
+      "key": "storyExecutorAttack",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 255,
+      "sourcePose": "attack"
+    },
+    {
+      "actor": "Executor",
+      "key": "storyExecutorRecover",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 255,
+      "sourcePose": "transition"
+    },
+    {
+      "actor": "Arbelia",
+      "key": "storyArbeliaIdle",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 252,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "Arbelia",
+      "key": "storyArbeliaCharge",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 255,
+      "sourcePose": "charge"
+    },
+    {
+      "actor": "Arbelia",
+      "key": "storyArbeliaAttack",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 255,
+      "sourcePose": "attack"
+    },
+    {
+      "actor": "Arbelia",
+      "key": "storyArbeliaRecover",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 252,
+      "sourcePose": "transition"
+    },
+    {
+      "actor": "LowerGuardian",
+      "key": "storyLowerGuardian",
+      "anchor": [
+        96,
+        90
+      ],
+      "alpha": 255,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "UpperGuardian",
+      "key": "storyUpperGuardian",
+      "anchor": [
+        336,
+        180
+      ],
+      "alpha": 255,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "TimeCollector",
+      "key": "storyTimeCollector",
+      "anchor": [
+        181,
+        170
+      ],
+      "alpha": 255,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "ChronoEngine",
+      "key": "storyChronoEngine",
+      "anchor": [
+        250,
+        235
+      ],
+      "alpha": 255,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "NeuralObelisk",
+      "key": "storyNeuralObelisk",
+      "anchor": [
+        256,
+        241
+      ],
+      "alpha": 255,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "DeletionObelisk",
+      "key": "storyDeletionObelisk",
+      "anchor": [
+        256,
+        241
+      ],
+      "alpha": 253,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "CommandRing",
+      "key": "storyCommandRing",
+      "anchor": [
+        256,
+        241
+      ],
+      "alpha": 255,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "CultCircuit",
+      "key": "storyCultCircuit",
+      "anchor": [
+        170,
+        241
+      ],
+      "alpha": 253,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "Rian",
+      "key": "storyRianIdle",
+      "anchor": [
+        256,
+        220
+      ],
+      "alpha": 255,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "Rian",
+      "key": "storyRianAttack",
+      "anchor": [
+        256,
+        220
+      ],
+      "alpha": 255,
+      "sourcePose": "attack"
+    },
+    {
+      "actor": "Ion",
+      "key": "storyIonIdle",
+      "anchor": [
+        256,
+        220
+      ],
+      "alpha": 255,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "Ion",
+      "key": "storyIonAttack",
+      "anchor": [
+        256,
+        220
+      ],
+      "alpha": 255,
+      "sourcePose": "attack"
+    },
+    {
+      "actor": "PlayerHando",
+      "key": "storyPlayerHando",
+      "anchor": [
+        256,
+        241
+      ],
+      "alpha": 255,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "PlayerSeoha",
+      "key": "storyPlayerSeoha",
+      "anchor": [
+        181,
+        170
+      ],
+      "alpha": 255,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "PlayerAwakening",
+      "key": "storyPlayerAwakening",
+      "anchor": [
+        256,
+        241
+      ],
+      "alpha": 252,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "MobGoblin",
+      "key": "storyMobGoblin",
+      "anchor": [
+        170,
+        241
+      ],
+      "alpha": 254,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "MobWolf",
+      "key": "storyMobWolf",
+      "anchor": [
+        170,
+        241
+      ],
+      "alpha": 254,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "MobNightmare",
+      "key": "storyMobNightmare",
+      "anchor": [
+        209,
+        196
+      ],
+      "alpha": 255,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "MobCultLeech",
+      "key": "storyMobCultLeech",
+      "anchor": [
+        209,
+        196
+      ],
+      "alpha": 255,
+      "sourcePose": "idle"
+    },
+    {
+      "actor": "MemoryFragment",
+      "key": "storyMemoryFragment",
+      "anchor": [
+        128,
+        120
+      ],
+      "alpha": 255,
+      "sourcePose": "idle"
+    }
+  ]
+}

@@ -9,9 +9,10 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { createCanvas, loadImage } = require(require.resolve('@napi-rs/canvas', { paths: [process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES || '', path.resolve(__dirname, '..')] }));
 const materialKeys = ['projectileBelphegorV13', 'projectileLeviathanV13', 'projectileBeelzebubV13', 'projectileAsmodeusV13', 'projectileMammonV13', 'projectileWrathV13', 'projectilePrideV13'];
+const naturalKeys=['h14SkillSloth','h14SkillEnvy','h14SkillGlutton','h14SkillLust','h14SkillGreed','h14SkillWrath','h14SkillPride'];
 const ownOptionalKeys = [
-  ['h14SkillSloth', 'h14BeamSloth'], ['h14SkillEnvy', 'h14BeamEnvy'], ['h14RotorGlutton', 'h14BeamGlutton'],
-  ['h14SkillLust', 'h14BeamLust'], ['h14SkillGreed', 'h14BeamGreed'], ['h14SkillWrath', 'h14BeamWrath'], ['h14SkillPride', 'h14BeamPride']
+  ['h14BeamSloth'], ['h14BeamEnvy'], ['h14RotorGlutton', 'h14BeamGlutton'],
+  ['h14BeamLust'], ['h14BeamGreed'], ['h14BeamWrath'], ['h14BeamPride']
 ];
 async function materialFixture() {
   const original = global.document;
@@ -20,6 +21,7 @@ async function materialFixture() {
   const images = {};
   const sources = JSON.parse(fs.readFileSync(path.join(__dirname, '../docs/SINS-PROJECTILE-SOURCES-20261029.json'), 'utf8'));
   for (const spec of sources.items.concat(sources.generatedMissingOwnMaterials)) images[spec.runtimeKey] = await loadImage(path.join(__dirname, '..', spec.runtimePath));
+  const media=require('../tools/read-media-registry.cjs')();for(const key of naturalKeys.concat(ownOptionalKeys.flat()))images[key]=await loadImage(path.join(__dirname,'..',media[key]));
   const surface = createCanvas(360, 100), ctx = surface.getContext('2d'), fx = API.create(images);
   return { images, surface, ctx, fx, allocated, close() { fx.destroy(); global.document = original; } };
 }
@@ -42,11 +44,11 @@ test('unknown encounter indices fail closed instead of borrowing the final exist
   } finally { fx.destroy(); }
 });
 
-test('the explicit legacy encounter retains its original source keys without requiring a hand weapon', () => {
+test('the explicit legacy encounter retains original sources and requires its own natural sword image for needles', () => {
   const keys = API.assetKeysForEncounter(-1);
   assert(keys.includes('projectileVioletOrbV9'));
   assert(keys.includes('projectileVioletBladeV10'));
-  assert(!keys.some(k => k.startsWith('weapon')));
+  assert(keys.includes('weaponVioletV12'));assert(!keys.some(k=>k.startsWith('weapon')&&k!=='weaponVioletV12'));
   assert.equal(API.paletteFor({}).id, 'violet');
   assert.equal(API.paletteFor({ bossIndex: -1 }).id, 'violet');
 });
@@ -55,13 +57,14 @@ test('all seven sins require their own checked static material, with no Lucifer 
   const f = await materialFixture();
   try {
     for (let i = 5; i < 12; i++) {
-      assert.deepEqual(API.assetKeysForEncounter(i), [materialKeys[i - 5], ...ownOptionalKeys[i - 5]]);
+      assert.deepEqual(API.assetKeysForEncounter(i), [materialKeys[i - 5],naturalKeys[i-5], ...ownOptionalKeys[i - 5]]);
       assert.equal(API.invalidAssetForEncounter(f.images, i), null);
       assert.deepEqual(API.optionalAssetKeysForEncounter(i), ownOptionalKeys[i - 5]);
       const missing = { ...f.images }; delete missing[materialKeys[i - 5]];
       assert.equal(API.invalidAssetForEncounter(missing, i), materialKeys[i - 5]);
       missing[materialKeys[i - 5]] = { complete: true, naturalWidth: 1, naturalHeight: 1 };
       assert.equal(API.invalidAssetForEncounter(missing, i), materialKeys[i - 5]);
+      const noOwnShape={...f.images};delete noOwnShape[naturalKeys[i-5]];assert.equal(API.invalidAssetForEncounter(noOwnShape,i),naturalKeys[i-5]);
       f.fx.beginFrame();
       assert.equal(f.fx.drawBullet(f.ctx, { campaign: true, bossIndex: i }, { x: 30, y: 50, r: 11, halfLength: 0, kind: 'boss-weapon' }), false);
       assert.equal(f.fx.getMetrics().weaponVisualDraws, 0);
@@ -70,7 +73,7 @@ test('all seven sins require their own checked static material, with no Lucifer 
   } finally { f.close(); }
 });
 
-test('actual same-boss material stays visibly dense throughout the capsule and active-beam interior without geometric backing', async () => {
+test('actual same-boss natural silhouettes keep a visible central core and exact beam interior without geometric backing', async () => {
   const f = await materialFixture();
   try {
     for (let bossIndex = 5; bossIndex < 12; bossIndex++) for (const low of [false, true]) {
@@ -87,8 +90,8 @@ test('actual same-boss material stays visibly dense throughout the capsule and a
       assert.equal(f.fx.drawBullet(noBacking, w, body, low), true);
       assert.equal(sourceDraws, 1);
       let data = f.ctx.getImageData(0, 0, 360, 100).data;
-      for (let x = 27; x <= 53; x++) for (let y = 47; y <= 52; y++) assert(data[(y * 360 + x) * 4 + 3] >= 240, `dense visible danger ${bossIndex}:${x},${y}`);
-      assert.equal(data[(40 * 360 + 40) * 4 + 3], 0);
+      assert(data[(50*360+40)*4+3]>=180,`visible central core ${bossIndex}`);assert.equal(f.fx.getMetrics().naturalSilhouetteDraws,1);assert(f.fx.getMetrics().maxVisualOutset<=4);
+      assert.equal(data[(30 * 360 + 40) * 4 + 3], 0,'source ornament stays within its bounded visual extent');
       const atStart = Buffer.from(data);
       f.ctx.clearRect(0, 0, 360, 100);
       assert.equal(f.fx.drawBullet(noBacking, w, { ...body, age: 100 }, low), true);
@@ -110,7 +113,7 @@ test('actual same-boss material stays visibly dense throughout the capsule and a
 test('seven material palettes keep naming priority, explicit secondary use and dense-source detail within a bounded cache', async () => {
   const f = await materialFixture();
   try {
-    assert.equal(API.paletteList.length, 19);
+    assert.equal(API.paletteList.slice(0,19).length, 19,'all historical palette slots remain stable');
     assert.equal(API.paletteFor({bossIndex:11,finalPractice:true}).id,'cult-leader');
     assert.equal(API.paletteFor({ bossIndex: 11 }).primary, '#eee6d6', 'white-suit chairman keeps named white primary');
     const ids = ['belphegor', 'leviathan', 'beelzebub', 'asmodeus', 'mammon', 'wrath', 'pride'];

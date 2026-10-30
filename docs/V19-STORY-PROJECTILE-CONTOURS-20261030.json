@@ -1,0 +1,2989 @@
+{
+  "scope": "Actual retained source pixels,72 fixed shapes from17 new encounters plus both cult actors; native CPU Canvas. Each high/low output is byte equal. Not simulation/browser/GPU/mobile/natural play.",
+  "codeHashes": {
+    "src/projectiles.js": "ade13c42dfa02534d57a1fc59fc58282617cc7983421720fcb27bc5ed1aca98b",
+    "src/story-assets.js": "c0081d5ca408be6d6a7d495d6651430113320aaeb43655a6646ad713730c0910",
+    "src/media.js": "0057a4d28e4d8bd35eb1598ea48207ff9cf21ead2906cc75d66c405ed6de110c"
+  },
+  "sources": [
+    {
+      "key": "storyGoblin",
+      "path": "media/story-v19/goblin.webp",
+      "sha256": "09db8af84705584d6f44b2de6542593d63a6b6d37b126cc5c38917ccd918b996",
+      "bytes": 116776
+    },
+    {
+      "key": "storyGoblinWave",
+      "path": "media/story-v19/goblin-wave.webp",
+      "sha256": "20e5c4152bd1c99c49c175ab36d3fa7c4d414accba1b729e83d2023cbd617e88",
+      "bytes": 272580
+    },
+    {
+      "key": "storyKnightSword",
+      "path": "media/story-v19/knight-sword.png",
+      "sha256": "d14b4babd804f490b31d2f1cf8bf8fba23bd72f5605329c1c88acd5b74fa4841",
+      "bytes": 44486
+    },
+    {
+      "key": "storyInsomniaSoul",
+      "path": "media/story-v19/insomnia-soul.webp",
+      "sha256": "7d8201643bc8c1af38f76db2b9bd668db124afb4312c1f2ba6c3d720b98390c0",
+      "bytes": 37204
+    },
+    {
+      "key": "storyInsomniaGaze",
+      "path": "media/story-v19/insomnia-gaze.webp",
+      "sha256": "9116b32bb478da14f817150371eb507e5dc4cf71b25ebedf53f910fe89fe6c60",
+      "bytes": 329590
+    },
+    {
+      "key": "storyChronoShard",
+      "path": "media/story-v19/chrono-shard.webp",
+      "sha256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+      "bytes": 54898
+    },
+    {
+      "key": "storyChronoCrescent",
+      "path": "media/story-v19/chrono-crescent.webp",
+      "sha256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+      "bytes": 242800
+    },
+    {
+      "key": "storyNeuralOrb",
+      "path": "media/story-v19/neural-orb.webp",
+      "sha256": "ab952675f90cacfb213d40e736994fd54fdfb731245bc28f444b8409123759ce",
+      "bytes": 316272
+    },
+    {
+      "key": "storySirenAttack",
+      "path": "media/story-v19/siren-attack.webp",
+      "sha256": "d6d18565aa6b49f321508796151fba54662ed46f347da58aeb10edfd884d0038",
+      "bytes": 57414
+    },
+    {
+      "key": "storyChiefIdle",
+      "path": "media/story-v19/chief-idle.webp",
+      "sha256": "9db8f0ba682ff380d7238a7a5a82d64adff29bbf2781b920bb9b497038c6f869",
+      "bytes": 44926
+    },
+    {
+      "key": "storyChiefBlade",
+      "path": "media/story-v19/chief-blade.webp",
+      "sha256": "a621a06b3688129f1113e41ea32ce8a466361680f1fc4fb0b843eed829e6b939",
+      "bytes": 246500
+    },
+    {
+      "key": "storyExecutorPrism",
+      "path": "media/story-v19/executor-prism.webp",
+      "sha256": "6fd6c4d2f0e3915bb315873a70c7e9f09975c8fd1b7816f2ee184b594f12341a",
+      "bytes": 37096
+    },
+    {
+      "key": "storyExecutorRoad",
+      "path": "media/story-v19/executor-road.webp",
+      "sha256": "f9c9378d33bbb827682d82537785c18c786242a3dd8ce1e174d18fc05f7d78a5",
+      "bytes": 249200
+    },
+    {
+      "key": "storyCultRose",
+      "path": "media/story-v19/cult-rose.webp",
+      "sha256": "6a6604e0239c8ecdc5cad0f94136acdb7da4e970e71335dbe543a0eabc9a5308",
+      "bytes": 369890
+    },
+    {
+      "key": "cultLance",
+      "path": "media/cult-v17/lance.webp",
+      "sha256": "b1c98912111f3c661c418567e1d304d606705d7e3eb87c643caeaf8402f4acf7",
+      "bytes": 27866
+    },
+    {
+      "key": "storyRianCross",
+      "path": "media/story-v19/rian-cross.webp",
+      "sha256": "c3087e2e8611efff6e8844c3b3c571457a4458552a4c85af36c37657d0f00620",
+      "bytes": 84602
+    },
+    {
+      "key": "storyIonShield",
+      "path": "media/story-v19/ion-shield.webp",
+      "sha256": "f56c5acaf90884bbf5c18a94691105360ccb00f87b30e9b44212aef159bb59d9",
+      "bytes": 70068
+    },
+    {
+      "key": "cultDriveSpear",
+      "path": "media/cult-v17/drive-spear.webp",
+      "sha256": "507b0455ada4be3ff8876d1686aef6362539b57782333c849c48ba21ed352dd8",
+      "bytes": 64746
+    }
+  ],
+  "sourceObjectBoundaries": [
+    {
+      "group": 19,
+      "kind": "orb",
+      "key": "storyGoblin",
+      "crop": [
+        198,
+        182,
+        39,
+        34
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0.08823529411764706,
+        0.3076923076923077,
+        0
+      ]
+    },
+    {
+      "group": 19,
+      "kind": "blade",
+      "key": "storyGoblin",
+      "crop": [
+        190,
+        175,
+        60,
+        65
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0.046153846153846156,
+        0.35,
+        0
+      ]
+    },
+    {
+      "group": 20,
+      "kind": "orb",
+      "key": "storyKnightSword",
+      "crop": [
+        109,
+        2,
+        89,
+        329
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 20,
+      "kind": "blade",
+      "key": "storyKnightSword",
+      "crop": [
+        109,
+        2,
+        89,
+        329
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 21,
+      "kind": "orb",
+      "key": "storyInsomniaSoul",
+      "crop": [
+        20,
+        31,
+        472,
+        450
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 21,
+      "kind": "blade",
+      "key": "storyInsomniaGaze",
+      "crop": [
+        30,
+        31,
+        455,
+        444
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 22,
+      "kind": "orb",
+      "key": "storyChronoShard",
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 22,
+      "kind": "blade",
+      "key": "storyChronoCrescent",
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 23,
+      "kind": "orb",
+      "key": "storyChronoShard",
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 23,
+      "kind": "blade",
+      "key": "storyChronoCrescent",
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 24,
+      "kind": "orb",
+      "key": "storyChronoShard",
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 24,
+      "kind": "blade",
+      "key": "storyChronoCrescent",
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 25,
+      "kind": "orb",
+      "key": "storyChronoShard",
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 25,
+      "kind": "blade",
+      "key": "storyChronoCrescent",
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 26,
+      "kind": "orb",
+      "key": "storyNeuralOrb",
+      "crop": [
+        47,
+        45,
+        421,
+        415
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 26,
+      "kind": "blade",
+      "key": "storyChronoCrescent",
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 27,
+      "kind": "orb",
+      "key": "storyChronoShard",
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 27,
+      "kind": "blade",
+      "key": "storyChronoCrescent",
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 28,
+      "kind": "orb",
+      "key": "storyChronoCrescent",
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 28,
+      "kind": "blade",
+      "key": "storyChronoShard",
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 29,
+      "kind": "orb",
+      "key": "storyChronoShard",
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 29,
+      "kind": "blade",
+      "key": "storyChronoCrescent",
+      "crop": [
+        24,
+        63,
+        466,
+        385
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 30,
+      "kind": "orb",
+      "key": "storySirenAttack",
+      "crop": [
+        445,
+        106,
+        51,
+        39
+      ],
+      "opaqueEdgeFill": [
+        0.3333333333333333,
+        0.05128205128205128,
+        0.0392156862745098,
+        0.13725490196078433
+      ]
+    },
+    {
+      "group": 30,
+      "kind": "blade",
+      "key": "storyChronoShard",
+      "crop": [
+        22,
+        78,
+        468,
+        105
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 31,
+      "kind": "orb",
+      "key": "storyChiefIdle",
+      "crop": [
+        268,
+        212,
+        31,
+        109
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0.26605504587155965,
+        0,
+        0.06451612903225806
+      ]
+    },
+    {
+      "group": 31,
+      "kind": "blade",
+      "key": "storyChiefIdle",
+      "crop": [
+        268,
+        212,
+        31,
+        109
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0.26605504587155965,
+        0,
+        0.06451612903225806
+      ]
+    },
+    {
+      "group": 32,
+      "kind": "orb",
+      "key": "storyExecutorPrism",
+      "crop": [
+        20,
+        39,
+        472,
+        433
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 32,
+      "kind": "blade",
+      "key": "storyExecutorRoad",
+      "crop": [
+        32,
+        84,
+        453,
+        346
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 33,
+      "kind": "orb",
+      "key": "storyCultRose",
+      "crop": [
+        31,
+        26,
+        450,
+        464
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 33,
+      "kind": "blade",
+      "key": "cultLance",
+      "crop": [
+        9,
+        41,
+        493,
+        115
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0.02028397565922921,
+        0.02434077079107505
+      ]
+    },
+    {
+      "group": 34,
+      "sourceActorId": "han-rian",
+      "kind": "orb",
+      "key": "storyRianCross",
+      "crop": [
+        145,
+        0,
+        223,
+        201
+      ],
+      "opaqueEdgeFill": [
+        0.05472636815920398,
+        0,
+        0,
+        0.31390134529147984
+      ]
+    },
+    {
+      "group": 34,
+      "sourceActorId": "han-rian",
+      "kind": "blade",
+      "key": "storyRianCross",
+      "crop": [
+        145,
+        0,
+        223,
+        201
+      ],
+      "opaqueEdgeFill": [
+        0.05472636815920398,
+        0,
+        0,
+        0.31390134529147984
+      ]
+    },
+    {
+      "group": 35,
+      "kind": "orb",
+      "key": "cultDriveSpear",
+      "crop": [
+        252,
+        207,
+        84,
+        84
+      ],
+      "opaqueEdgeFill": [
+        0.4880952380952381,
+        0.47619047619047616,
+        0.2619047619047619,
+        0.34523809523809523
+      ]
+    },
+    {
+      "group": 35,
+      "kind": "blade",
+      "key": "cultLance",
+      "crop": [
+        9,
+        41,
+        493,
+        115
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0.02028397565922921,
+        0.02434077079107505
+      ]
+    },
+    {
+      "group": 34,
+      "sourceActorId": "baek-ion",
+      "kind": "orb",
+      "key": "storyIonShield",
+      "crop": [
+        16,
+        63,
+        473,
+        363
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": 34,
+      "sourceActorId": "baek-ion",
+      "kind": "blade",
+      "key": "storyIonShield",
+      "crop": [
+        16,
+        63,
+        473,
+        363
+      ],
+      "opaqueEdgeFill": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "assertions": {
+    "centralAlpha180MinimumFraction": 0.8,
+    "opaqueColorsMinimum": 12,
+    "luminanceStdMinimum": 3,
+    "affectedGlyphBBoxFillMaximum": 0.9,
+    "affectedGlyphTranslucentBBoxCornersMinimum": 2,
+    "knightCultOrbOpaqueBBoxEdgeMaximum": 0.75,
+    "selectedSourceOpaqueCropEdgeMaximum": 0.75,
+    "oneLiveImageDraw": true,
+    "noGeometricBacking": true
+  },
+  "rows": [
+    {
+      "group": 19,
+      "r": 3,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 16,
+        "opaqueColors": 29,
+        "opaqueLuminanceStd": 10.835944970602297,
+        "opaqueBBox": [
+          29,
+          26,
+          37,
+          34
+        ],
+        "opaqueBBoxFill": 0.43209876543209874,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          250,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.2222222222222222,
+          0.1111111111111111,
+          0.3333333333333333,
+          0.1111111111111111
+        ]
+      }
+    },
+    {
+      "group": 19,
+      "r": 6,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 24,
+        "opaqueColors": 57,
+        "opaqueLuminanceStd": 12.000485370687173,
+        "opaqueBBox": [
+          28,
+          23,
+          40,
+          35
+        ],
+        "opaqueBBoxFill": 0.48520710059171596,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          250,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.23076923076923078,
+          0.07692307692307693,
+          0.38461538461538464,
+          0.23076923076923078
+        ]
+      }
+    },
+    {
+      "group": 19,
+      "r": 3,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 4,
+        "opaqueColors": 33,
+        "opaqueLuminanceStd": 12.980292132273057,
+        "opaqueBBox": [
+          23,
+          26,
+          34,
+          33
+        ],
+        "opaqueBBoxFill": 0.3854166666666667,
+        "opaqueBBoxCornerAlpha": [
+          250,
+          0,
+          0,
+          2
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.5,
+          0.25,
+          0.08333333333333333,
+          0.3333333333333333
+        ]
+      }
+    },
+    {
+      "group": 19,
+      "r": 6,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 6,
+        "opaqueColors": 46,
+        "opaqueLuminanceStd": 12.289121694194227,
+        "opaqueBBox": [
+          21,
+          23,
+          35,
+          34
+        ],
+        "opaqueBBoxFill": 0.35,
+        "opaqueBBoxCornerAlpha": [
+          249,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.4166666666666667,
+          0.16666666666666666,
+          0.06666666666666667,
+          0.26666666666666666
+        ]
+      }
+    },
+    {
+      "group": 20,
+      "r": 3,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 16,
+        "opaqueColors": 33,
+        "opaqueLuminanceStd": 7.724813917326287,
+        "opaqueBBox": [
+          29,
+          27,
+          35,
+          36
+        ],
+        "opaqueBBoxFill": 0.5142857142857142,
+        "opaqueBBoxCornerAlpha": [
+          19,
+          1,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.1,
+          0.1,
+          0.2857142857142857,
+          0.42857142857142855
+        ]
+      }
+    },
+    {
+      "group": 20,
+      "r": 6,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 16,
+        "opaqueColors": 65,
+        "opaqueLuminanceStd": 7.2066342982724265,
+        "opaqueBBox": [
+          28,
+          24,
+          37,
+          39
+        ],
+        "opaqueBBoxFill": 0.50625,
+        "opaqueBBoxCornerAlpha": [
+          14,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.0625,
+          0.0625,
+          0.4,
+          0.2
+        ]
+      }
+    },
+    {
+      "group": 20,
+      "r": 3,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 11,
+        "opaqueColors": 65,
+        "opaqueLuminanceStd": 7.275319018181077,
+        "opaqueBBox": [
+          20,
+          28,
+          42,
+          34
+        ],
+        "opaqueBBoxFill": 0.5031055900621118,
+        "opaqueBBoxCornerAlpha": [
+          1,
+          0,
+          6,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.2857142857142857,
+          0.2857142857142857,
+          0.08695652173913043,
+          0.08695652173913043
+        ]
+      }
+    },
+    {
+      "group": 20,
+      "r": 6,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 10,
+        "opaqueColors": 111,
+        "opaqueLuminanceStd": 7.149425768130566,
+        "opaqueBBox": [
+          17,
+          26,
+          46,
+          37
+        ],
+        "opaqueBBoxFill": 0.4166666666666667,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.08333333333333333,
+          0.08333333333333333,
+          0.03333333333333333,
+          0.03333333333333333
+        ]
+      }
+    },
+    {
+      "group": 21,
+      "r": 3,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 34,
+        "opaqueColors": 53,
+        "opaqueLuminanceStd": 5.955886383114651,
+        "opaqueBBox": [
+          27,
+          27,
+          35,
+          37
+        ],
+        "opaqueBBoxFill": 0.6060606060606061,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          212,
+          255,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.5454545454545454,
+          0.45454545454545453,
+          0.2222222222222222,
+          0.1111111111111111
+        ]
+      }
+    },
+    {
+      "group": 21,
+      "r": 6,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 35,
+        "opaqueColors": 97,
+        "opaqueLuminanceStd": 8.409819402204779,
+        "opaqueBBox": [
+          24,
+          25,
+          40,
+          40
+        ],
+        "opaqueBBoxFill": 0.5183823529411765,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.25,
+          0.125,
+          0.23529411764705882,
+          0.11764705882352941
+        ]
+      }
+    },
+    {
+      "group": 21,
+      "r": 3,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 74,
+        "opaqueColors": 153,
+        "opaqueLuminanceStd": 8.117991908759022,
+        "opaqueBBox": [
+          19,
+          26,
+          43,
+          37
+        ],
+        "opaqueBBoxFill": 0.7266666666666667,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.08333333333333333,
+          0.16666666666666666,
+          0.56,
+          0.12
+        ]
+      }
+    },
+    {
+      "group": 21,
+      "r": 6,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 81,
+        "opaqueColors": 220,
+        "opaqueLuminanceStd": 9.054698484082898,
+        "opaqueBBox": [
+          17,
+          23,
+          45,
+          39
+        ],
+        "opaqueBBoxFill": 0.8052738336713996,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.23529411764705882,
+          0.29411764705882354,
+          0.5862068965517241,
+          0.1724137931034483
+        ]
+      }
+    },
+    {
+      "group": 22,
+      "r": 3,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 16,
+        "opaqueColors": 35,
+        "opaqueLuminanceStd": 6.346168945193661,
+        "opaqueBBox": [
+          28,
+          28,
+          37,
+          36
+        ],
+        "opaqueBBoxFill": 0.4111111111111111,
+        "opaqueBBoxCornerAlpha": [
+          3,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.1111111111111111,
+          0.1111111111111111,
+          0.1,
+          0.1
+        ]
+      }
+    },
+    {
+      "group": 22,
+      "r": 6,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 16,
+        "opaqueColors": 80,
+        "opaqueLuminanceStd": 5.83611134826396,
+        "opaqueBBox": [
+          24,
+          24,
+          40,
+          38
+        ],
+        "opaqueBBoxFill": 0.32941176470588235,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.06666666666666667,
+          0.06666666666666667,
+          0.058823529411764705,
+          0.058823529411764705
+        ]
+      }
+    },
+    {
+      "group": 22,
+      "r": 3,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 33,
+        "opaqueColors": 98,
+        "opaqueLuminanceStd": 7.630468659715909,
+        "opaqueBBox": [
+          19,
+          26,
+          42,
+          36
+        ],
+        "opaqueBBoxFill": 0.4090909090909091,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.09090909090909091,
+          0.09090909090909091,
+          0.20833333333333334,
+          0.3333333333333333
+        ]
+      }
+    },
+    {
+      "group": 22,
+      "r": 6,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 26,
+        "opaqueColors": 177,
+        "opaqueLuminanceStd": 7.227984282191652,
+        "opaqueBBox": [
+          18,
+          23,
+          45,
+          39
+        ],
+        "opaqueBBoxFill": 0.41386554621848737,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.11764705882352941,
+          0.058823529411764705,
+          0.10714285714285714,
+          0.21428571428571427
+        ]
+      }
+    },
+    {
+      "group": 23,
+      "r": 3,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 16,
+        "opaqueColors": 34,
+        "opaqueLuminanceStd": 8.187468733863199,
+        "opaqueBBox": [
+          28,
+          28,
+          37,
+          36
+        ],
+        "opaqueBBoxFill": 0.4111111111111111,
+        "opaqueBBoxCornerAlpha": [
+          3,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.1111111111111111,
+          0.1111111111111111,
+          0.1,
+          0.1
+        ]
+      }
+    },
+    {
+      "group": 23,
+      "r": 6,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 16,
+        "opaqueColors": 77,
+        "opaqueLuminanceStd": 7.855669834382292,
+        "opaqueBBox": [
+          24,
+          24,
+          40,
+          38
+        ],
+        "opaqueBBoxFill": 0.32941176470588235,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.06666666666666667,
+          0.06666666666666667,
+          0.058823529411764705,
+          0.058823529411764705
+        ]
+      }
+    },
+    {
+      "group": 23,
+      "r": 3,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 33,
+        "opaqueColors": 101,
+        "opaqueLuminanceStd": 9.926127633955065,
+        "opaqueBBox": [
+          19,
+          26,
+          42,
+          36
+        ],
+        "opaqueBBoxFill": 0.4090909090909091,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.09090909090909091,
+          0.09090909090909091,
+          0.20833333333333334,
+          0.3333333333333333
+        ]
+      }
+    },
+    {
+      "group": 23,
+      "r": 6,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 26,
+        "opaqueColors": 177,
+        "opaqueLuminanceStd": 9.546111367936179,
+        "opaqueBBox": [
+          18,
+          23,
+          45,
+          39
+        ],
+        "opaqueBBoxFill": 0.41386554621848737,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.11764705882352941,
+          0.058823529411764705,
+          0.10714285714285714,
+          0.21428571428571427
+        ]
+      }
+    },
+    {
+      "group": 24,
+      "r": 3,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 16,
+        "opaqueColors": 35,
+        "opaqueLuminanceStd": 16.69361717468284,
+        "opaqueBBox": [
+          28,
+          28,
+          37,
+          36
+        ],
+        "opaqueBBoxFill": 0.4111111111111111,
+        "opaqueBBoxCornerAlpha": [
+          3,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.1111111111111111,
+          0.1111111111111111,
+          0.1,
+          0.1
+        ]
+      }
+    },
+    {
+      "group": 24,
+      "r": 6,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 16,
+        "opaqueColors": 75,
+        "opaqueLuminanceStd": 18.97846101589373,
+        "opaqueBBox": [
+          24,
+          24,
+          40,
+          38
+        ],
+        "opaqueBBoxFill": 0.32941176470588235,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.06666666666666667,
+          0.06666666666666667,
+          0.058823529411764705,
+          0.058823529411764705
+        ]
+      }
+    },
+    {
+      "group": 24,
+      "r": 3,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 33,
+        "opaqueColors": 98,
+        "opaqueLuminanceStd": 20.97101683495234,
+        "opaqueBBox": [
+          19,
+          26,
+          42,
+          36
+        ],
+        "opaqueBBoxFill": 0.4090909090909091,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.09090909090909091,
+          0.09090909090909091,
+          0.20833333333333334,
+          0.3333333333333333
+        ]
+      }
+    },
+    {
+      "group": 24,
+      "r": 6,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 26,
+        "opaqueColors": 174,
+        "opaqueLuminanceStd": 21.02833571434154,
+        "opaqueBBox": [
+          18,
+          23,
+          45,
+          39
+        ],
+        "opaqueBBoxFill": 0.41386554621848737,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.11764705882352941,
+          0.058823529411764705,
+          0.10714285714285714,
+          0.21428571428571427
+        ]
+      }
+    },
+    {
+      "group": 25,
+      "r": 3,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 16,
+        "opaqueColors": 35,
+        "opaqueLuminanceStd": 8.740984942460841,
+        "opaqueBBox": [
+          28,
+          28,
+          37,
+          36
+        ],
+        "opaqueBBoxFill": 0.4111111111111111,
+        "opaqueBBoxCornerAlpha": [
+          3,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.1111111111111111,
+          0.1111111111111111,
+          0.1,
+          0.1
+        ]
+      }
+    },
+    {
+      "group": 25,
+      "r": 6,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 16,
+        "opaqueColors": 75,
+        "opaqueLuminanceStd": 8.530110712316016,
+        "opaqueBBox": [
+          24,
+          24,
+          40,
+          38
+        ],
+        "opaqueBBoxFill": 0.32941176470588235,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.06666666666666667,
+          0.06666666666666667,
+          0.058823529411764705,
+          0.058823529411764705
+        ]
+      }
+    },
+    {
+      "group": 25,
+      "r": 3,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 33,
+        "opaqueColors": 94,
+        "opaqueLuminanceStd": 10.632723083140057,
+        "opaqueBBox": [
+          19,
+          26,
+          42,
+          36
+        ],
+        "opaqueBBoxFill": 0.4090909090909091,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.09090909090909091,
+          0.09090909090909091,
+          0.20833333333333334,
+          0.3333333333333333
+        ]
+      }
+    },
+    {
+      "group": 25,
+      "r": 6,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 26,
+        "opaqueColors": 181,
+        "opaqueLuminanceStd": 10.302318492753821,
+        "opaqueBBox": [
+          18,
+          23,
+          45,
+          39
+        ],
+        "opaqueBBoxFill": 0.41386554621848737,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.11764705882352941,
+          0.058823529411764705,
+          0.10714285714285714,
+          0.21428571428571427
+        ]
+      }
+    },
+    {
+      "group": 26,
+      "r": 3,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 52,
+        "opaqueColors": 69,
+        "opaqueLuminanceStd": 3.921802902732043,
+        "opaqueBBox": [
+          27,
+          27,
+          37,
+          36
+        ],
+        "opaqueBBoxFill": 0.7181818181818181,
+        "opaqueBBoxCornerAlpha": [
+          13,
+          0,
+          2,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.4,
+          0.1,
+          0.36363636363636365,
+          0.36363636363636365
+        ]
+      }
+    },
+    {
+      "group": 26,
+      "r": 6,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 65,
+        "opaqueColors": 149,
+        "opaqueLuminanceStd": 5.040321784331295,
+        "opaqueBBox": [
+          24,
+          24,
+          39,
+          39
+        ],
+        "opaqueBBoxFill": 0.71875,
+        "opaqueBBoxCornerAlpha": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.1875,
+          0.3125,
+          0.25,
+          0.125
+        ]
+      }
+    },
+    {
+      "group": 26,
+      "r": 3,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 33,
+        "opaqueColors": 96,
+        "opaqueLuminanceStd": 6.863733415742639,
+        "opaqueBBox": [
+          19,
+          26,
+          42,
+          36
+        ],
+        "opaqueBBoxFill": 0.4090909090909091,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.09090909090909091,
+          0.09090909090909091,
+          0.20833333333333334,
+          0.3333333333333333
+        ]
+      }
+    },
+    {
+      "group": 26,
+      "r": 6,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 26,
+        "opaqueColors": 174,
+        "opaqueLuminanceStd": 6.3526000874563255,
+        "opaqueBBox": [
+          18,
+          23,
+          45,
+          39
+        ],
+        "opaqueBBoxFill": 0.41386554621848737,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.11764705882352941,
+          0.058823529411764705,
+          0.10714285714285714,
+          0.21428571428571427
+        ]
+      }
+    },
+    {
+      "group": 27,
+      "r": 3,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 16,
+        "opaqueColors": 35,
+        "opaqueLuminanceStd": 13.828171316427248,
+        "opaqueBBox": [
+          28,
+          28,
+          37,
+          36
+        ],
+        "opaqueBBoxFill": 0.4111111111111111,
+        "opaqueBBoxCornerAlpha": [
+          3,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.1111111111111111,
+          0.1111111111111111,
+          0.1,
+          0.1
+        ]
+      }
+    },
+    {
+      "group": 27,
+      "r": 6,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 16,
+        "opaqueColors": 74,
+        "opaqueLuminanceStd": 15.016894889298504,
+        "opaqueBBox": [
+          24,
+          24,
+          40,
+          38
+        ],
+        "opaqueBBoxFill": 0.32941176470588235,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.06666666666666667,
+          0.06666666666666667,
+          0.058823529411764705,
+          0.058823529411764705
+        ]
+      }
+    },
+    {
+      "group": 27,
+      "r": 3,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 33,
+        "opaqueColors": 97,
+        "opaqueLuminanceStd": 17.06103148933168,
+        "opaqueBBox": [
+          19,
+          26,
+          42,
+          36
+        ],
+        "opaqueBBoxFill": 0.4090909090909091,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.09090909090909091,
+          0.09090909090909091,
+          0.20833333333333334,
+          0.3333333333333333
+        ]
+      }
+    },
+    {
+      "group": 27,
+      "r": 6,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 26,
+        "opaqueColors": 165,
+        "opaqueLuminanceStd": 17.057664157258888,
+        "opaqueBBox": [
+          18,
+          23,
+          45,
+          39
+        ],
+        "opaqueBBoxFill": 0.41386554621848737,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.11764705882352941,
+          0.058823529411764705,
+          0.10714285714285714,
+          0.21428571428571427
+        ]
+      }
+    },
+    {
+      "group": 28,
+      "r": 3,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 0.9166666666666666,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 27,
+        "opaqueColors": 42,
+        "opaqueLuminanceStd": 9.121760814487017,
+        "opaqueBBox": [
+          27,
+          26,
+          36,
+          36
+        ],
+        "opaqueBBoxFill": 0.4090909090909091,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.09090909090909091,
+          0.09090909090909091,
+          0.2,
+          0.2
+        ]
+      }
+    },
+    {
+      "group": 28,
+      "r": 6,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 26,
+        "opaqueColors": 107,
+        "opaqueLuminanceStd": 8.26225631615867,
+        "opaqueBBox": [
+          24,
+          23,
+          39,
+          39
+        ],
+        "opaqueBBoxFill": 0.43014705882352944,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.17647058823529413,
+          0.058823529411764705,
+          0.1875,
+          0.25
+        ]
+      }
+    },
+    {
+      "group": 28,
+      "r": 3,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 8,
+        "opaqueColors": 75,
+        "opaqueLuminanceStd": 7.673401085743434,
+        "opaqueBBox": [
+          23,
+          27,
+          44,
+          36
+        ],
+        "opaqueBBoxFill": 0.36818181818181817,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.1,
+          0.1,
+          0.045454545454545456,
+          0.045454545454545456
+        ]
+      }
+    },
+    {
+      "group": 28,
+      "r": 6,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 0.9166666666666666,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 8,
+        "opaqueColors": 128,
+        "opaqueLuminanceStd": 7.53644899745051,
+        "opaqueBBox": [
+          18,
+          24,
+          46,
+          38
+        ],
+        "opaqueBBoxFill": 0.3586206896551724,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.06666666666666667,
+          0.13333333333333333,
+          0.034482758620689655,
+          0.06896551724137931
+        ]
+      }
+    },
+    {
+      "group": 29,
+      "r": 3,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 16,
+        "opaqueColors": 37,
+        "opaqueLuminanceStd": 11.711347770028825,
+        "opaqueBBox": [
+          28,
+          28,
+          37,
+          36
+        ],
+        "opaqueBBoxFill": 0.4111111111111111,
+        "opaqueBBoxCornerAlpha": [
+          3,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.1111111111111111,
+          0.1111111111111111,
+          0.1,
+          0.1
+        ]
+      }
+    },
+    {
+      "group": 29,
+      "r": 6,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 16,
+        "opaqueColors": 70,
+        "opaqueLuminanceStd": 11.579263125586564,
+        "opaqueBBox": [
+          24,
+          24,
+          40,
+          38
+        ],
+        "opaqueBBoxFill": 0.32941176470588235,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.06666666666666667,
+          0.06666666666666667,
+          0.058823529411764705,
+          0.058823529411764705
+        ]
+      }
+    },
+    {
+      "group": 29,
+      "r": 3,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 33,
+        "opaqueColors": 97,
+        "opaqueLuminanceStd": 14.182786754495616,
+        "opaqueBBox": [
+          19,
+          26,
+          42,
+          36
+        ],
+        "opaqueBBoxFill": 0.4090909090909091,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.09090909090909091,
+          0.09090909090909091,
+          0.20833333333333334,
+          0.3333333333333333
+        ]
+      }
+    },
+    {
+      "group": 29,
+      "r": 6,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 26,
+        "opaqueColors": 167,
+        "opaqueLuminanceStd": 13.85168951975188,
+        "opaqueBBox": [
+          18,
+          23,
+          45,
+          39
+        ],
+        "opaqueBBoxFill": 0.41386554621848737,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.11764705882352941,
+          0.058823529411764705,
+          0.10714285714285714,
+          0.21428571428571427
+        ]
+      }
+    },
+    {
+      "group": 30,
+      "r": 3,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 25,
+        "opaqueColors": 40,
+        "opaqueLuminanceStd": 19.446033733788074,
+        "opaqueBBox": [
+          27,
+          28,
+          37,
+          36
+        ],
+        "opaqueBBoxFill": 0.47474747474747475,
+        "opaqueBBoxCornerAlpha": [
+          2,
+          0,
+          3,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.3333333333333333,
+          0.1111111111111111,
+          0.09090909090909091,
+          0.09090909090909091
+        ]
+      }
+    },
+    {
+      "group": 30,
+      "r": 6,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 0.9166666666666666,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 30,
+        "opaqueColors": 79,
+        "opaqueLuminanceStd": 19.961770070638444,
+        "opaqueBBox": [
+          24,
+          24,
+          40,
+          40
+        ],
+        "opaqueBBoxFill": 0.3460207612456747,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          1,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.29411764705882354,
+          0.058823529411764705,
+          0.058823529411764705,
+          0.058823529411764705
+        ]
+      }
+    },
+    {
+      "group": 30,
+      "r": 3,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 8,
+        "opaqueColors": 69,
+        "opaqueLuminanceStd": 20.643794677853986,
+        "opaqueBBox": [
+          23,
+          27,
+          44,
+          36
+        ],
+        "opaqueBBoxFill": 0.36818181818181817,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.1,
+          0.1,
+          0.045454545454545456,
+          0.045454545454545456
+        ]
+      }
+    },
+    {
+      "group": 30,
+      "r": 6,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 0.9166666666666666,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 8,
+        "opaqueColors": 121,
+        "opaqueLuminanceStd": 21.301184721543393,
+        "opaqueBBox": [
+          18,
+          24,
+          46,
+          38
+        ],
+        "opaqueBBoxFill": 0.3586206896551724,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.06666666666666667,
+          0.13333333333333333,
+          0.034482758620689655,
+          0.06896551724137931
+        ]
+      }
+    },
+    {
+      "group": 31,
+      "r": 3,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 13,
+        "opaqueColors": 24,
+        "opaqueLuminanceStd": 5.635952298581267,
+        "opaqueBBox": [
+          31,
+          26,
+          35,
+          37
+        ],
+        "opaqueBBoxFill": 0.5333333333333333,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          188,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.5,
+          0.3333333333333333,
+          0.4,
+          0.2
+        ]
+      }
+    },
+    {
+      "group": 31,
+      "r": 6,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 16,
+        "opaqueColors": 43,
+        "opaqueLuminanceStd": 5.832376809517649,
+        "opaqueBBox": [
+          31,
+          24,
+          36,
+          40
+        ],
+        "opaqueBBoxFill": 0.5490196078431373,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          251,
+          0,
+          1
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.47058823529411764,
+          0.35294117647058826,
+          0.3333333333333333,
+          0.16666666666666666
+        ]
+      }
+    },
+    {
+      "group": 31,
+      "r": 3,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 8,
+        "opaqueColors": 49,
+        "opaqueLuminanceStd": 6.178752369274652,
+        "opaqueBBox": [
+          21,
+          28,
+          44,
+          32
+        ],
+        "opaqueBBoxFill": 0.475,
+        "opaqueBBoxCornerAlpha": [
+          254,
+          1,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.4,
+          0.2,
+          0.2916666666666667,
+          0.4166666666666667
+        ]
+      }
+    },
+    {
+      "group": 31,
+      "r": 6,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 8,
+        "opaqueColors": 65,
+        "opaqueLuminanceStd": 5.924636460843127,
+        "opaqueBBox": [
+          18,
+          27,
+          46,
+          32
+        ],
+        "opaqueBBoxFill": 0.5402298850574713,
+        "opaqueBBoxCornerAlpha": [
+          65,
+          1,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.16666666666666666,
+          0.16666666666666666,
+          0.3103448275862069,
+          0.4827586206896552
+        ]
+      }
+    },
+    {
+      "group": 32,
+      "r": 3,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 43,
+        "opaqueColors": 73,
+        "opaqueLuminanceStd": 17.828276786429093,
+        "opaqueBBox": [
+          26,
+          26,
+          37,
+          37
+        ],
+        "opaqueBBoxFill": 0.5555555555555556,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          249,
+          206,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.16666666666666666,
+          0.16666666666666666,
+          0.16666666666666666,
+          0.08333333333333333
+        ]
+      }
+    },
+    {
+      "group": 32,
+      "r": 6,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 59,
+        "opaqueColors": 144,
+        "opaqueLuminanceStd": 18.150824868047003,
+        "opaqueBBox": [
+          24,
+          24,
+          40,
+          39
+        ],
+        "opaqueBBoxFill": 0.6544117647058824,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          255,
+          255,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.1875,
+          0.0625,
+          0.47058823529411764,
+          0.35294117647058826
+        ]
+      }
+    },
+    {
+      "group": 32,
+      "r": 3,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 27,
+        "opaqueColors": 123,
+        "opaqueLuminanceStd": 17.75685240377293,
+        "opaqueBBox": [
+          20,
+          26,
+          43,
+          35
+        ],
+        "opaqueBBoxFill": 0.5708333333333333,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          244,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.5,
+          0.1,
+          0.041666666666666664,
+          0.5
+        ]
+      }
+    },
+    {
+      "group": 32,
+      "r": 6,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 39,
+        "opaqueColors": 206,
+        "opaqueLuminanceStd": 17.485871508082912,
+        "opaqueBBox": [
+          17,
+          25,
+          46,
+          39
+        ],
+        "opaqueBBoxFill": 0.5488888888888889,
+        "opaqueBBoxCornerAlpha": [
+          238,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.5333333333333333,
+          0.06666666666666667,
+          0.03333333333333333,
+          0.06666666666666667
+        ]
+      }
+    },
+    {
+      "group": 33,
+      "r": 3,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 54,
+        "opaqueColors": 72,
+        "opaqueLuminanceStd": 15.504772729741065,
+        "opaqueBBox": [
+          26,
+          27,
+          36,
+          36
+        ],
+        "opaqueBBoxFill": 0.7818181818181819,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.1,
+          0.7,
+          0.45454545454545453,
+          0.45454545454545453
+        ]
+      }
+    },
+    {
+      "group": 33,
+      "r": 6,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 73,
+        "opaqueColors": 140,
+        "opaqueLuminanceStd": 18.302807784214007,
+        "opaqueBBox": [
+          24,
+          24,
+          40,
+          39
+        ],
+        "opaqueBBoxFill": 0.7058823529411765,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.1875,
+          0.125,
+          0.35294117647058826,
+          0.23529411764705882
+        ]
+      }
+    },
+    {
+      "group": 33,
+      "r": 3,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 15,
+        "opaqueColors": 59,
+        "opaqueLuminanceStd": 23.441763693180608,
+        "opaqueBBox": [
+          23,
+          26,
+          43,
+          37
+        ],
+        "opaqueBBoxFill": 0.29365079365079366,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.25,
+          0.08333333333333333,
+          0.047619047619047616,
+          0.047619047619047616
+        ]
+      }
+    },
+    {
+      "group": 33,
+      "r": 6,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 0.9166666666666666,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 12,
+        "opaqueColors": 110,
+        "opaqueLuminanceStd": 22.570446078357797,
+        "opaqueBBox": [
+          21,
+          23,
+          46,
+          40
+        ],
+        "opaqueBBoxFill": 0.2799145299145299,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.2222222222222222,
+          0.05555555555555555,
+          0.07692307692307693,
+          0.07692307692307693
+        ]
+      }
+    },
+    {
+      "group": 34,
+      "sourceActorId": "han-rian",
+      "r": 3,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 24,
+        "opaqueColors": 38,
+        "opaqueLuminanceStd": 5.047006758394877,
+        "opaqueBBox": [
+          26,
+          26,
+          36,
+          35
+        ],
+        "opaqueBBoxFill": 0.38181818181818183,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          172,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.1,
+          0.1,
+          0.2727272727272727,
+          0.09090909090909091
+        ]
+      }
+    },
+    {
+      "group": 34,
+      "sourceActorId": "han-rian",
+      "r": 6,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 38,
+        "opaqueColors": 88,
+        "opaqueLuminanceStd": 9.2917537060347,
+        "opaqueBBox": [
+          25,
+          23,
+          40,
+          38
+        ],
+        "opaqueBBoxFill": 0.3984375,
+        "opaqueBBoxCornerAlpha": [
+          255,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.125,
+          0.0625,
+          0.25,
+          0.125
+        ]
+      }
+    },
+    {
+      "group": 34,
+      "sourceActorId": "han-rian",
+      "r": 3,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 35,
+        "opaqueColors": 74,
+        "opaqueLuminanceStd": 9.655848776398713,
+        "opaqueBBox": [
+          20,
+          26,
+          41,
+          36
+        ],
+        "opaqueBBoxFill": 0.40082644628099173,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          231,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.09090909090909091,
+          0.09090909090909091,
+          0.5,
+          0.09090909090909091
+        ]
+      }
+    },
+    {
+      "group": 34,
+      "sourceActorId": "han-rian",
+      "r": 6,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 45,
+        "opaqueColors": 130,
+        "opaqueLuminanceStd": 8.439512660187146,
+        "opaqueBBox": [
+          17,
+          23,
+          44,
+          39
+        ],
+        "opaqueBBoxFill": 0.39285714285714285,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          128,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.058823529411764705,
+          0.058823529411764705,
+          0.2857142857142857,
+          0.03571428571428571
+        ]
+      }
+    },
+    {
+      "group": 35,
+      "r": 3,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 63,
+        "opaqueColors": 79,
+        "opaqueLuminanceStd": 23.47771197670314,
+        "opaqueBBox": [
+          26,
+          26,
+          37,
+          37
+        ],
+        "opaqueBBoxFill": 0.7013888888888888,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          252,
+          252,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.4166666666666667,
+          0.5833333333333334,
+          0.3333333333333333,
+          0.5
+        ]
+      }
+    },
+    {
+      "group": 35,
+      "r": 6,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 105,
+        "opaqueColors": 150,
+        "opaqueLuminanceStd": 24.33447725906209,
+        "opaqueBBox": [
+          23,
+          23,
+          40,
+          40
+        ],
+        "opaqueBBoxFill": 0.6975308641975309,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          252,
+          252,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.3888888888888889,
+          0.5,
+          0.3333333333333333,
+          0.4444444444444444
+        ]
+      }
+    },
+    {
+      "group": 35,
+      "r": 3,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 0.8333333333333334,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 15,
+        "opaqueColors": 63,
+        "opaqueLuminanceStd": 31.94160695896694,
+        "opaqueBBox": [
+          23,
+          26,
+          43,
+          37
+        ],
+        "opaqueBBoxFill": 0.29365079365079366,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.25,
+          0.08333333333333333,
+          0.047619047619047616,
+          0.047619047619047616
+        ]
+      }
+    },
+    {
+      "group": 35,
+      "r": 6,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 0.9166666666666666,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 12,
+        "opaqueColors": 118,
+        "opaqueLuminanceStd": 32.33102577234627,
+        "opaqueBBox": [
+          21,
+          23,
+          46,
+          40
+        ],
+        "opaqueBBoxFill": 0.2799145299145299,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.2222222222222222,
+          0.05555555555555555,
+          0.07692307692307693,
+          0.07692307692307693
+        ]
+      }
+    },
+    {
+      "group": 34,
+      "sourceActorId": "baek-ion",
+      "r": 3,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 50,
+        "opaqueColors": 74,
+        "opaqueLuminanceStd": 9.868696267131083,
+        "opaqueBBox": [
+          26,
+          27,
+          36,
+          37
+        ],
+        "opaqueBBoxFill": 0.6776859504132231,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.09090909090909091,
+          0.6363636363636364,
+          0.18181818181818182,
+          0.2727272727272727
+        ]
+      }
+    },
+    {
+      "group": 34,
+      "sourceActorId": "baek-ion",
+      "r": 6,
+      "halfLength": 0,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 67,
+        "opaqueColors": 145,
+        "opaqueLuminanceStd": 11.510994386651443,
+        "opaqueBBox": [
+          24,
+          25,
+          39,
+          40
+        ],
+        "opaqueBBoxFill": 0.6953125,
+        "opaqueBBoxCornerAlpha": [
+          244,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.625,
+          0.0625,
+          0.25,
+          0.0625
+        ]
+      }
+    },
+    {
+      "group": 34,
+      "sourceActorId": "baek-ion",
+      "r": 3,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 58,
+        "opaqueColors": 142,
+        "opaqueLuminanceStd": 9.769608093772849,
+        "opaqueBBox": [
+          20,
+          27,
+          43,
+          37
+        ],
+        "opaqueBBoxFill": 0.6704545454545454,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.5454545454545454,
+          0.09090909090909091,
+          0.16666666666666666,
+          0.2916666666666667
+        ]
+      }
+    },
+    {
+      "group": 34,
+      "sourceActorId": "baek-ion",
+      "r": 6,
+      "halfLength": 7,
+      "metrics": {
+        "centralAlpha180Fraction": 1,
+        "centralSamplePixels": 12,
+        "outsideHitCapsulePixels": 56,
+        "opaqueColors": 229,
+        "opaqueLuminanceStd": 11.395632530573895,
+        "opaqueBBox": [
+          17,
+          25,
+          46,
+          40
+        ],
+        "opaqueBBoxFill": 0.6895833333333333,
+        "opaqueBBoxCornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBoxEdgeFill": [
+          0.25,
+          0.0625,
+          0.23333333333333334,
+          0.06666666666666667
+        ]
+      }
+    }
+  ]
+}

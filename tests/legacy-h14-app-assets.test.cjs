@@ -32,9 +32,12 @@ test('missing or malformed own scene art stops before the new encounter can adva
   assert.equal(h.g.HapilApp.getState().mode,'error');assert.equal(h.world().tick,0);assert.equal(h.el('error-screen').hidden,false);
  }
 });
-test('a failed optional source skill never hides the verified damage material or blocks gameplay',async()=>{
- const h=harness({fail:'media/hapil1-v14/fx/pride-primary.webp'});await flush();h.el('practice-select').value='11';h.click('practice-button');h.tick();await flush();h.tick();h.tick();
- assert(h.requests.includes('media/hapil1-v14/fx/pride-primary.webp'));assert.equal(h.g.HapilApp.getState().mode,'playing');assert(h.world().tick>0);assert(h.peak<=2);
+test('a failed source used only as an optional skill/beam accent does not block its verified damage sprites',async()=>{
+ const media=require('../tools/read-media-registry.cjs')(),url=media.h14SkillViolet,h=harness({fail:url});await flush();h.el('practice-select').value='0';h.click('practice-button');h.tick();await flush();h.tick();h.tick();
+ assert(h.requests.includes(url));assert.equal(h.g.HapilApp.getState().mode,'playing');assert(h.world().tick>0);assert(h.peak<=2);
+});
+test('a skill source promoted to a required natural bullet body must fail closed before simulation',async()=>{
+ const media=require('../tools/read-media-registry.cjs')();for(const [group,key] of [[1,'h14SkillHorn'],[11,'h14SkillPride']]){const h=harness({fail:media[key]});await flush();assert(h.g.HapilApp.getState().ready);h.el('practice-select').value=String(group);h.click('practice-button');h.tick();await flush();h.tick();h.tick();assert(h.requests.includes(media[key]));assert.equal(h.g.HapilApp.getState().mode,'error');assert.equal(h.world().tick,0);assert(h.peak<=2);}
 });
 test('the new skill renderer and changed modules share the browser cache revision, with skill definitions before the renderer',()=>{
  const html=fs.readFileSync(path.join(root,'index.html'),'utf8');

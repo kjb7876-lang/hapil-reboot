@@ -1,0 +1,189 @@
+[
+  {
+    "group": 19,
+    "tick": 1081,
+    "bullets": 47,
+    "assets": 6,
+    "textured": 47,
+    "missing": 0,
+    "label": "장미 인장의 공명",
+    "echoes": 0,
+    "marker": 0
+  },
+  {
+    "group": 20,
+    "tick": 169,
+    "bullets": 18,
+    "assets": 9,
+    "textured": 18,
+    "missing": 0,
+    "label": "무너지는 성벽",
+    "echoes": 6,
+    "marker": 1
+  },
+  {
+    "group": 21,
+    "tick": 289,
+    "bullets": 106,
+    "assets": 10,
+    "textured": 106,
+    "missing": 0,
+    "label": "안개 안의 심장부",
+    "echoes": 0,
+    "marker": 0
+  },
+  {
+    "group": 22,
+    "tick": 177,
+    "bullets": 11,
+    "assets": 8,
+    "textured": 11,
+    "missing": 0,
+    "label": "처음 문장을 지키다",
+    "echoes": 0,
+    "marker": 0
+  },
+  {
+    "group": 23,
+    "tick": 697,
+    "bullets": 95,
+    "assets": 7,
+    "textured": 95,
+    "missing": 0,
+    "label": "동력 연결의 단면",
+    "echoes": 0,
+    "marker": 0
+  },
+  {
+    "group": 24,
+    "tick": 541,
+    "bullets": 9,
+    "assets": 7,
+    "textured": 9,
+    "missing": 0,
+    "label": "한 걸음의 유예",
+    "echoes": 0,
+    "marker": 0
+  },
+  {
+    "group": 25,
+    "tick": 571,
+    "bullets": 48,
+    "assets": 8,
+    "textured": 48,
+    "missing": 0,
+    "label": "용광로 연결 분리",
+    "echoes": 0,
+    "marker": 0
+  },
+  {
+    "group": 26,
+    "tick": 307,
+    "bullets": 68,
+    "assets": 7,
+    "textured": 68,
+    "missing": 0,
+    "label": "강제 신경 연결 차단",
+    "echoes": 0,
+    "marker": 0
+  },
+  {
+    "group": 27,
+    "tick": 277,
+    "bullets": 80,
+    "assets": 8,
+    "textured": 80,
+    "missing": 0,
+    "label": "주인에게 남길 기록",
+    "echoes": 0,
+    "marker": 0
+  },
+  {
+    "group": 28,
+    "tick": 557,
+    "bullets": 28,
+    "assets": 7,
+    "textured": 28,
+    "missing": 0,
+    "label": "회랑을 여는 마지막 틈",
+    "echoes": 0,
+    "marker": 0
+  },
+  {
+    "group": 29,
+    "tick": 325,
+    "bullets": 93,
+    "assets": 8,
+    "textured": 93,
+    "missing": 0,
+    "label": "스스로 다시 쓸 첫 문장",
+    "echoes": 0,
+    "marker": 0
+  },
+  {
+    "group": 30,
+    "tick": 313,
+    "bullets": 141,
+    "assets": 9,
+    "textured": 141,
+    "missing": 0,
+    "label": "자유의지의 시간",
+    "echoes": 0,
+    "marker": 0
+  },
+  {
+    "group": 31,
+    "tick": 697,
+    "bullets": 56,
+    "assets": 9,
+    "textured": 56,
+    "missing": 0,
+    "label": "함께 되찾는 코어",
+    "echoes": 0,
+    "marker": 0
+  },
+  {
+    "group": 32,
+    "tick": 289,
+    "bullets": 97,
+    "assets": 10,
+    "textured": 97,
+    "missing": 0,
+    "label": "되감기 연결만 분리",
+    "echoes": 0,
+    "marker": 0
+  },
+  {
+    "group": 33,
+    "tick": 697,
+    "bullets": 64,
+    "assets": 7,
+    "textured": 64,
+    "missing": 0,
+    "label": "바깥 지배 연결 분리",
+    "echoes": 0,
+    "marker": 0
+  },
+  {
+    "group": 34,
+    "tick": 289,
+    "bullets": 67,
+    "assets": 11,
+    "textured": 67,
+    "missing": 0,
+    "label": "두 사람이 지키는 지배 회로",
+    "echoes": 0,
+    "marker": 0
+  },
+  {
+    "group": 35,
+    "tick": 697,
+    "bullets": 139,
+    "assets": 11,
+    "textured": 139,
+    "missing": 0,
+    "label": "두 사몽의 격돌",
+    "echoes": 0,
+    "marker": 0
+  }
+]

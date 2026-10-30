@@ -1,0 +1,74 @@
+{
+  "baselineCommit": "878419a75189ea82db21ae4b696a150d4280b354",
+  "baselineTree": "bee71680dbb3ad797580bce8586ecc480957049c",
+  "priorValidatedNodeTests": 223,
+  "priorValidationScope": "Prior root turn validation only, not the pending v19 candidate result",
+  "retainedOrdinaryInputFiles": [
+    {
+      "path": "tests/fixtures/natural-bot/gentle-42.moves.gz",
+      "bytes": 8118,
+      "sha256": "b91b3d869473847cc9228dac0a3edcd54a511ca659dc2cb6850cf91c6ba19886"
+    },
+    {
+      "path": "tests/fixtures/natural-bot/gentle-813.moves.gz",
+      "bytes": 8052,
+      "sha256": "c3f50b0731cd4600f821a71f9c25af222426955a7e47cca76e57b2077a3b94e1"
+    },
+    {
+      "path": "tests/fixtures/natural-bot/hell-42.moves.gz",
+      "bytes": 11238,
+      "sha256": "158edf1a7d1617383c6648d633f8e27ba15b5eb7ea308030ea5fa42ef089205a"
+    },
+    {
+      "path": "tests/fixtures/natural-bot/hell-813.moves.gz",
+      "bytes": 11180,
+      "sha256": "fc306d1fdd2af389bce528fa651ba5d7bce5e254b0a3f07978a32c03c6dd8381"
+    },
+    {
+      "path": "tests/fixtures/natural-bot/normal-42.moves.gz",
+      "bytes": 8459,
+      "sha256": "d5c636c0f6913f71129d3ef435c6c43a66db60d89c32ded846470ac582124823"
+    },
+    {
+      "path": "tests/fixtures/natural-bot/normal-813.moves.gz",
+      "bytes": 8243,
+      "sha256": "902c9327515f88095ff850ee655587c50f38c399e7057da30eb0d8737512701d"
+    },
+    {
+      "path": "tests/fixtures/revision4-natural-bot/gentle-42.moves.gz",
+      "bytes": 10109,
+      "sha256": "25e315d292dda72b95e2622ad772977880de758426ae313ed8163e2810853470"
+    },
+    {
+      "path": "tests/fixtures/revision4-natural-bot/gentle-813.moves.gz",
+      "bytes": 9954,
+      "sha256": "d1d25d3bf2d1e37c982a27ba8fc41b36195e0c59b629157e7d221b5dde67b6fb"
+    },
+    {
+      "path": "tests/fixtures/revision4-natural-bot/hell-42.moves.gz",
+      "bytes": 13128,
+      "sha256": "a825f0d0223faa65849ba2df441ee412778077f391ca13cb7965e0f06b5d3d3a"
+    },
+    {
+      "path": "tests/fixtures/revision4-natural-bot/hell-813.moves.gz",
+      "bytes": 13103,
+      "sha256": "e883a35861da3ccff9b6fe18cdb57ccf1f2b255ebaa65fbaea2340d39eeaeaf9"
+    },
+    {
+      "path": "tests/fixtures/revision4-natural-bot/normal-42.moves.gz",
+      "bytes": 10380,
+      "sha256": "95f68c9af88c7d9b47a3d3c8b7cae760f816c740dcc5761a18830b08c4531dea"
+    },
+    {
+      "path": "tests/fixtures/revision4-natural-bot/normal-813.moves.gz",
+      "bytes": 10252,
+      "sha256": "9e404fa5ecd09cd5b8b2db29f71faa706bdab60677f2d7706f54ea311c04b8eb"
+    }
+  ],
+  "expectedOldRoutes": {
+    "1": 3,
+    "2": 5,
+    "3": 12,
+    "4": 18
+  }
+}

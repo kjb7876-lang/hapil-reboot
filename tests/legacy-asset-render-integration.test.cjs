@@ -10,11 +10,12 @@ const encounterIndices=Array.from({length:12},(_,i)=>i);
 require('../src/projectiles.js');require('../src/render.js');
 const API=global.HapilProjectiles;
 const raw=fs.readFileSync(path.join(__dirname,'../src/media.js'),'utf8');
-const media=JSON.parse(raw.slice(raw.indexOf('{'),raw.lastIndexOf('}')+1));
+const media=require('../tools/read-media-registry.cjs')();
 async function fixture(){
  const previous=global.document;global.document={createElement(name){assert.equal(name,'canvas');return createCanvas(1,1);}};
  const images={};
- for(const key of Object.keys(media).filter(k=>/^(projectile|weapon|fxV8|fxWindArrow8V6$)/.test(k)))images[key]=await loadImage(path.join(__dirname,'..',media[key]));
+ const retainedKeys=[...new Set(['fxWindArrow8V6',...[-1,...encounterIndices].flatMap(i=>API.assetKeysForEncounter(i))])];
+ for(const key of retainedKeys)images[key]=await loadImage(path.join(__dirname,'..',media[key]));
  for(const [i,key] of ['forest','ruins','cave'].entries()){const c=createCanvas(720,904);c.getContext('2d').fillStyle=['#3b5646','#625347','#303a4c'][i];c.getContext('2d').fillRect(0,0,720,904);c.complete=true;c.naturalWidth=720;c.naturalHeight=904;images[key]=c;}
  const main=createCanvas(360,640);main.style={};const renderer=global.HapilRenderer.create(main,images);renderer.resize(360,640,1);
  function pixels(world,low){renderer.draw(world,0,0,low);return main.getContext('2d').getImageData(0,0,360,640).data;}
@@ -49,7 +50,7 @@ test('image loader contract rejects every missing or malformed damage-body sourc
   assert.equal(typeof API.invalidAssetForEncounter,'function');
   for(const index of [-1,...encounterIndices]){
    assert.equal(API.invalidAssetForEncounter(f.images,index),null);
-   const required=API.assetKeysForEncounter(index).filter(k=>/^(projectile|weapon)/.test(k));assert(required.length>0);
+   const optional=API.optionalAssetKeysForEncounter(index),required=API.assetKeysForEncounter(index).filter(k=>!optional.includes(k)&&!k.startsWith('fxV8'));assert(required.length>0);
    for(const key of required){const bad={...f.images};delete bad[key];assert.equal(API.invalidAssetForEncounter(bad,index),key);bad[key]={complete:true,naturalWidth:1,naturalHeight:1};assert.equal(API.invalidAssetForEncounter(bad,index),key);}
   }
  }finally{f.close();}

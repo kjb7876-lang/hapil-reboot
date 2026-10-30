@@ -1,0 +1,2357 @@
+{
+  "images": {
+    "storyGoblin": {
+      "key": "storyGoblin",
+      "path": "media/story-v19/goblin.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "09db8af84705584d6f44b2de6542593d63a6b6d37b126cc5c38917ccd918b996",
+      "bytes": 116776,
+      "sourcePath": "assets/actors/v31317/goblin-flute-king.webp",
+      "kind": "actor"
+    },
+    "storyKnightIdle": {
+      "key": "storyKnightIdle",
+      "path": "media/story-v19/knight-idle.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "6e90a1e9aa520570b002b10650741813a6d2c20520c3317dc4437eb32ccd4de7",
+      "bytes": 92004,
+      "sourcePath": "assets/generated-v31224/actors-normalized/363f780dbb5a_Monster_FallenAngelKnight_Base.webp",
+      "kind": "actor"
+    },
+    "storyKnightCharge": {
+      "key": "storyKnightCharge",
+      "path": "media/story-v19/knight-charge.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "99b4fd76ae881d97288011f3dc2b690b3a69e28ad9365e7a631f2cb7f5f85213",
+      "bytes": 102056,
+      "sourcePath": "assets/generated-v31224/actors-normalized/9756e6d5958a_Monster_FallenAngelKnight_Guard.webp",
+      "kind": "actor"
+    },
+    "storyKnightAttack": {
+      "key": "storyKnightAttack",
+      "path": "media/story-v19/knight-attack.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "5fce8b6b86045551839b908ac79a960f58a6b5e6f345ad20ab97d80df0b3c1c0",
+      "bytes": 83118,
+      "sourcePath": "assets/generated-v31224/actors-normalized/aca8f8c4bd76_Monster_FallenAngelKnight_Attack.webp",
+      "kind": "actor"
+    },
+    "storyKnightRecover": {
+      "key": "storyKnightRecover",
+      "path": "media/story-v19/knight-recover.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "01d39a69e2f50fc74091d42fb52effc2de9cbff7b5c067e60e66a64f51fd9a8f",
+      "bytes": 172778,
+      "sourcePath": "assets/generated-v31224/actors-normalized/353a813314bc_Monster_FallenAngelKnight_MoveSide.webp",
+      "kind": "actor"
+    },
+    "storyInsomniaIdle": {
+      "key": "storyInsomniaIdle",
+      "path": "media/story-v19/insomnia-idle.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "ff0d79b66e10e980c649becad30601da69268ce75b3db2d51c791869a1b39cac",
+      "bytes": 25070,
+      "sourcePath": "assets/generated-v31224/actors-normalized/692e4ae01c29_bulmyeongwi_idle.webp",
+      "kind": "actor"
+    },
+    "storyInsomniaCharge": {
+      "key": "storyInsomniaCharge",
+      "path": "media/story-v19/insomnia-charge.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "ba0462c00c0e28bbcf9212d57049a1176147b53d549e15369fc7611693ff3a30",
+      "bytes": 41424,
+      "sourcePath": "assets/generated-v31224/actors-normalized/35526bcfa1c2_bulmyeongwi_rain.webp",
+      "kind": "actor"
+    },
+    "storyInsomniaAttack": {
+      "key": "storyInsomniaAttack",
+      "path": "media/story-v19/insomnia-attack.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "cf051397efd21161c7d518fb03f578ed6b613fd77dba8541be26b3b4e85c666f",
+      "bytes": 52428,
+      "sourcePath": "assets/generated-v31224/actors-normalized/115b7fcea51e_bulmyeongwi_attack.webp",
+      "kind": "actor"
+    },
+    "storyInsomniaRecover": {
+      "key": "storyInsomniaRecover",
+      "path": "media/story-v19/insomnia-recover.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "42d1ad57110123c9fab2260269fb9edc74e64efe41abfef7da9ddfb3c91f3a07",
+      "bytes": 47072,
+      "sourcePath": "assets/generated-v31224/actors-normalized/de4c1414da0d_bulmyeongwi_transition.webp",
+      "kind": "actor"
+    },
+    "storySirenIdle": {
+      "key": "storySirenIdle",
+      "path": "media/story-v19/siren-idle.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "985137aa992b23610fe2cd11a0a5624bd49ef90b0d22a99896d7871072a0dcb0",
+      "bytes": 41204,
+      "sourcePath": "assets/generated-v31224/actors-normalized/b19d67bb1973_siren_idle.webp",
+      "kind": "actor"
+    },
+    "storySirenCharge": {
+      "key": "storySirenCharge",
+      "path": "media/story-v19/siren-charge.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "6af2e81ebbbc0975367c2750a9b502170dee5a5f105b444ef2b2a01550abfaa2",
+      "bytes": 51608,
+      "sourcePath": "assets/generated-v31224/actors-normalized/031f3256e738_siren_rain.webp",
+      "kind": "actor"
+    },
+    "storySirenAttack": {
+      "key": "storySirenAttack",
+      "path": "media/story-v19/siren-attack.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "d6d18565aa6b49f321508796151fba54662ed46f347da58aeb10edfd884d0038",
+      "bytes": 57414,
+      "sourcePath": "assets/generated-v31224/actors-normalized/6fa537121597_siren_attack.webp",
+      "kind": "actor"
+    },
+    "storySirenRecover": {
+      "key": "storySirenRecover",
+      "path": "media/story-v19/siren-recover.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "483de4f98f06de3dc2693b3b19b2cbbfc8bdaededdc265e20d10fa6d0ca3e07a",
+      "bytes": 49646,
+      "sourcePath": "assets/generated-v31224/actors-normalized/792c9e0a61b9_siren_transition.webp",
+      "kind": "actor"
+    },
+    "storyChiefIdle": {
+      "key": "storyChiefIdle",
+      "path": "media/story-v19/chief-idle.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "9db8f0ba682ff380d7238a7a5a82d64adff29bbf2781b920bb9b497038c6f869",
+      "bytes": 44926,
+      "sourcePath": "assets/generated-v31224/actors-normalized/fae708429341_hando_idle.webp",
+      "kind": "actor"
+    },
+    "storyChiefCharge": {
+      "key": "storyChiefCharge",
+      "path": "media/story-v19/chief-charge.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "aaeb2ec97bcd0f382969c66c2e84f7a25999a1562d8e844152930fe06c22512a",
+      "bytes": 55050,
+      "sourcePath": "assets/generated-v31224/actors-normalized/bd5d6438697f_hando_rain.webp",
+      "kind": "actor"
+    },
+    "storyChiefAttack": {
+      "key": "storyChiefAttack",
+      "path": "media/story-v19/chief-attack.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "ae240d4dcc5456b75662a6bd71a1e8be24f4c2d7d469b0625ad72c5e36cbe720",
+      "bytes": 46088,
+      "sourcePath": "assets/generated-v31224/actors-normalized/c2965b85cb2e_hando_attack.webp",
+      "kind": "actor"
+    },
+    "storyChiefRecover": {
+      "key": "storyChiefRecover",
+      "path": "media/story-v19/chief-recover.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "fd127d9246838f0deca122d369671a4315105bb815dcec2040c3ec474c1e460a",
+      "bytes": 39014,
+      "sourcePath": "assets/generated-v31224/actors-normalized/9f29878c4e6b_hando_transition.webp",
+      "kind": "actor"
+    },
+    "storyExecutorIdle": {
+      "key": "storyExecutorIdle",
+      "path": "media/story-v19/executor-idle.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "13c0592eb3ff5e2f883f103c6cde62803aa4c3dc53c69f786db9364b1a921cd3",
+      "bytes": 64054,
+      "sourcePath": "assets/generated-v31224/actors-normalized/c5b5ea2b085c_cycle_idle.webp",
+      "kind": "actor"
+    },
+    "storyExecutorCharge": {
+      "key": "storyExecutorCharge",
+      "path": "media/story-v19/executor-charge.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "18b29b9d13d539674b375e9b9edeba470f3e3db25e73dc50ac9e19a98c6981cc",
+      "bytes": 86250,
+      "sourcePath": "assets/generated-v31224/actors-normalized/d41753d7f946_cycle_rain.webp",
+      "kind": "actor"
+    },
+    "storyExecutorAttack": {
+      "key": "storyExecutorAttack",
+      "path": "media/story-v19/executor-attack.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "a814ac8bd25fe58aa0c299d7a1dc4fff6566b68e0cfdae7b4bd7e8b86e95297d",
+      "bytes": 73200,
+      "sourcePath": "assets/generated-v31224/actors-normalized/73d004108259_cycle_attack.webp",
+      "kind": "actor"
+    },
+    "storyExecutorRecover": {
+      "key": "storyExecutorRecover",
+      "path": "media/story-v19/executor-recover.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "98571d36888ad8bd566e2faccc8ed92d57814bc1b0ce01acca3db9312b591c0b",
+      "bytes": 70068,
+      "sourcePath": "assets/generated-v31224/actors-normalized/eb265bc1fd04_cycle_transition.webp",
+      "kind": "actor"
+    },
+    "storyArbeliaIdle": {
+      "key": "storyArbeliaIdle",
+      "path": "media/story-v19/arbelia-idle.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "e5d5026f859f6e6b0c9607c4b8883456fa13afa0fc22bc18ec9590d35e7fa134",
+      "bytes": 48864,
+      "sourcePath": "assets/generated-v31224/actors-normalized/b9b65cd61430_arvelia_delay_archon.webp",
+      "kind": "actor"
+    },
+    "storyArbeliaCharge": {
+      "key": "storyArbeliaCharge",
+      "path": "media/story-v19/arbelia-charge.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "08bd700cb1432ef8cb43b49629a9956d72811651e706b0b228d7ded1f5798c4b",
+      "bytes": 40734,
+      "sourcePath": "assets/generated-v31224/actors-normalized/a5b3ff549ec2_arvelia_delay_archon_windup.webp",
+      "kind": "actor"
+    },
+    "storyArbeliaAttack": {
+      "key": "storyArbeliaAttack",
+      "path": "media/story-v19/arbelia-attack.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "72dcb02f95b9df050efb386e24e72669c9393c3377a858e27b145cf9f590b72c",
+      "bytes": 40008,
+      "sourcePath": "assets/generated-v31224/actors-normalized/822930c614eb_arvelia_delay_archon_attack.webp",
+      "kind": "actor"
+    },
+    "storyArbeliaRecover": {
+      "key": "storyArbeliaRecover",
+      "path": "media/story-v19/arbelia-recover.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "05e07d32e72954dce117fa51be8438aa11c88a9d1f422fe734d12a128f69a035",
+      "bytes": 55002,
+      "sourcePath": "assets/generated-v31224/actors-normalized/44fa887e7bcc_arvelia_delay_archon_transition.webp",
+      "kind": "actor"
+    },
+    "storyLowerGuardian": {
+      "key": "storyLowerGuardian",
+      "path": "media/story-v19/lower-guardian.webp",
+      "width": 192,
+      "height": 192,
+      "sha256": "f140ad813fd1200f853b74e96c33f9370f483e1397f98075e8baf77fa3b18d54",
+      "bytes": 22654,
+      "sourcePath": "assets/generated-v3125/kair-guardians/guardian_01.webp",
+      "kind": "actor"
+    },
+    "storyUpperGuardian": {
+      "key": "storyUpperGuardian",
+      "path": "media/story-v19/upper-guardian.webp",
+      "width": 672,
+      "height": 384,
+      "sha256": "2ffb11da9ff623b78b9f80e56180e58231103457c17734ea8fe6e1375993b8ee",
+      "bytes": 54098,
+      "sourcePath": "assets/generated-v31224/actors-normalized/66b3a07672a9_great_02.webp",
+      "kind": "actor"
+    },
+    "storyTimeCollector": {
+      "key": "storyTimeCollector",
+      "path": "media/story-v19/time-collector.png",
+      "width": 362,
+      "height": 362,
+      "sha256": "0027c67dd883ffa3897df40f7a83305d368d588aedbaec2bf0d17aeccfad39a9",
+      "bytes": 136719,
+      "sourcePath": "assets/kair/enemies/time-collector.png",
+      "kind": "actor"
+    },
+    "storyChronoEngine": {
+      "key": "storyChronoEngine",
+      "path": "media/story-v19/chrono-engine.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "a26168c1e967c99212579add17627cea06c85de11e1627408cbcd0e7fb304269",
+      "bytes": 28930,
+      "sourcePath": "assets/props/v290/chrono_engine.webp",
+      "kind": "actor"
+    },
+    "storyNeuralObelisk": {
+      "key": "storyNeuralObelisk",
+      "path": "media/story-v19/neural-obelisk.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "18ef070275d6cc287a8088e9dd6b92fcf4453013cc41feb336f8a2548078006f",
+      "bytes": 18164,
+      "sourcePath": "assets/props/v290/time_obelisk.webp",
+      "kind": "actor"
+    },
+    "storyDeletionObelisk": {
+      "key": "storyDeletionObelisk",
+      "path": "media/story-v19/deletion-obelisk.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "db3b18311ce771e77690eb1a6e4943d8d8a217fce3bd8ae2ff14d46158b6a56e",
+      "bytes": 105014,
+      "sourcePath": "assets/props/v31307/deletion-command-obelisk.webp",
+      "kind": "actor"
+    },
+    "storyCommandRing": {
+      "key": "storyCommandRing",
+      "path": "media/story-v19/command-ring.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "337c866b9cb64eae70701c21fd87353f111be7ed9bf9f126ba60571ae0603eab",
+      "bytes": 38242,
+      "sourcePath": "assets/vfx/generated/v300/time-ring.webp",
+      "kind": "actor"
+    },
+    "storyCultCircuit": {
+      "key": "storyCultCircuit",
+      "path": "media/story-v19/cult-circuit.webp",
+      "width": 341,
+      "height": 512,
+      "sha256": "f705c72eb4d0e4501767034c84c102771130c634b893e811073d75cb8d085229",
+      "bytes": 127570,
+      "sourcePath": "assets/props/v31313/union-circuit-idol.webp",
+      "kind": "actor"
+    },
+    "storyRianIdle": {
+      "key": "storyRianIdle",
+      "path": "media/story-v19/rian-idle.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "cb109d4677baaf3ea90e14b3fd216e0ed94db8b7db3ef8f4a6ec8130c7d72d47",
+      "bytes": 13628,
+      "sourcePath": "assets/heroes/normalized/directions/rian-front.webp",
+      "kind": "actor"
+    },
+    "storyRianAttack": {
+      "key": "storyRianAttack",
+      "path": "media/story-v19/rian-attack.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "107b3bc0a4a84edb4f14f3d50f69e7aef11ac782e51d16209e725bfdfecf737d",
+      "bytes": 25178,
+      "sourcePath": "assets/heroes/normalized/actions-consistent/rian-attack-front.webp",
+      "kind": "actor"
+    },
+    "storyIonIdle": {
+      "key": "storyIonIdle",
+      "path": "media/story-v19/ion-idle.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "e7f447ebdf74e95ee4db3e72449e509662341caa0e301783cd7094e3a3d5dc14",
+      "bytes": 24388,
+      "sourcePath": "assets/heroes/normalized/directions/ion-front.webp",
+      "kind": "actor"
+    },
+    "storyIonAttack": {
+      "key": "storyIonAttack",
+      "path": "media/story-v19/ion-attack.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "799191f1fe1152f7bbd97c7cca40e3857401b33a6d52e36aef5a6ade5de7588f",
+      "bytes": 43708,
+      "sourcePath": "assets/heroes/normalized/actions-consistent/ion-attack-front.webp",
+      "kind": "actor"
+    },
+    "storyGoblinMap": {
+      "key": "storyGoblinMap",
+      "path": "media/story-v19/goblin-map.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "e4d0f6a7803d51fc23b5b9af629d73f3489e1b450d294b1358499b84b6c99562",
+      "bytes": 478555,
+      "sourcePath": "assets/generated-v3125/maps/fusion_goblin_forest.jpg",
+      "kind": "terrain"
+    },
+    "storyKnightMap": {
+      "key": "storyKnightMap",
+      "path": "media/story-v19/knight-map.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "0cb02b60cf0caeddd6d88e7d0e21ca4652d395fd11541f2e5f5ce1c0b1ea4d4e",
+      "bytes": 661132,
+      "sourcePath": "assets/maps/last3_03_fallen_court.jpg",
+      "kind": "terrain"
+    },
+    "storyInsomniaMap": {
+      "key": "storyInsomniaMap",
+      "path": "media/story-v19/insomnia-map.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "5e778be1a8ccca6a9827ba1835b8e32a8853c88c940a9805b1c9db92c08db7eb",
+      "bytes": 440077,
+      "sourcePath": "assets/maps/last3_01_village.jpg",
+      "kind": "terrain"
+    },
+    "storyAcademyMap": {
+      "key": "storyAcademyMap",
+      "path": "media/story-v19/academy-map.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "dd8d234d074f07c31186a892d83963579fd70ee8791f6851b4ecaf53e1716662",
+      "bytes": 546546,
+      "sourcePath": "assets/maps/kair_01_academy.jpg",
+      "kind": "terrain"
+    },
+    "storyLowerMap": {
+      "key": "storyLowerMap",
+      "path": "media/story-v19/lower-map.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "1d593d509597d67a09c89cf53a259f987a853c06de35c0b1e632efeed0fad2fb",
+      "bytes": 562448,
+      "sourcePath": "assets/generated-v3125/maps/kair_time_forest.jpg",
+      "kind": "terrain"
+    },
+    "storyUpperMap": {
+      "key": "storyUpperMap",
+      "path": "media/story-v19/upper-map.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "de4e56cc1b05a78ba08dfaef1396f3456bacf4585265f4c0fbba3708c39f5f89",
+      "bytes": 513983,
+      "sourcePath": "assets/generated-v3125/maps/kair_polluted_waterway.jpg",
+      "kind": "terrain"
+    },
+    "storyWorkshopMap": {
+      "key": "storyWorkshopMap",
+      "path": "media/story-v19/workshop-map.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "5a48219bc80e5af1de4008d1e0e82f40047817891fd60adafca9de9d4feeaea8",
+      "bytes": 486697,
+      "sourcePath": "assets/generated-v3125/maps/kair_black_workshop.jpg",
+      "kind": "terrain"
+    },
+    "storyNeuralMap": {
+      "key": "storyNeuralMap",
+      "path": "media/story-v19/neural-map.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "5e3021144fe9d2a7aac075ec9cd8ff935fa5f9bc5d99b965e1b2968e66104471",
+      "bytes": 499122,
+      "sourcePath": "assets/generated-v3125/maps/kair_neuron_gate.jpg",
+      "kind": "terrain"
+    },
+    "storyDeletionMap": {
+      "key": "storyDeletionMap",
+      "path": "media/story-v19/deletion-map.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "3195bc1b1ed5a8fb0f015f11b54343e822ef2695d90e9628a6b468cc82ef9cd5",
+      "bytes": 348215,
+      "sourcePath": "assets/generated-v3125/maps/kair_oblivion_cemetery.jpg",
+      "kind": "terrain"
+    },
+    "storyRingsMap": {
+      "key": "storyRingsMap",
+      "path": "media/story-v19/rings-map.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "6e43bc9ea78d787c019222da8c50b1671e74c0cc76aa8fa5ad1cc29d11abbd45",
+      "bytes": 498484,
+      "sourcePath": "assets/generated-v3125/maps/kair_collapsed_ritual.jpg",
+      "kind": "terrain"
+    },
+    "storyArbeliaMap": {
+      "key": "storyArbeliaMap",
+      "path": "media/story-v19/arbelia-map.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "8f8d783b1718b6e80469b489688b71acaa190e6be413b2892ae27b293d3a1cbb",
+      "bytes": 480644,
+      "sourcePath": "assets/generated-v3125/maps/kair_sealed_corridor.jpg",
+      "kind": "terrain"
+    },
+    "storySirenMap": {
+      "key": "storySirenMap",
+      "path": "media/story-v19/siren-map.webp",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "832aaa38766ecf20a6c79064195103fec24a7957a5c0ba7ca4580ea2bc5cc136",
+      "bytes": 341232,
+      "sourcePath": "assets/maps/rc53/kair03-siren-timeway.webp",
+      "kind": "terrain"
+    },
+    "storyChiefMap": {
+      "key": "storyChiefMap",
+      "path": "media/story-v19/chief-map.jpg",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "de3390d9eebc3a1263413f9e6782b70c3b6d3ea9a1a937c6682b207214381a23",
+      "bytes": 475181,
+      "sourcePath": "assets/maps/generated-v31213/hando03_ego_mirror_throne.jpg",
+      "kind": "terrain"
+    },
+    "storyExecutorMap": {
+      "key": "storyExecutorMap",
+      "path": "media/story-v19/executor-map.jpg",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "01497d039854ed97190ce04f22ccabd7cdf704f5618ae0181ec4a074cba7ff7c",
+      "bytes": 385946,
+      "sourcePath": "assets/maps/generated-v31213/murder03_executor_signal_rooftop.jpg",
+      "kind": "terrain"
+    },
+    "storyCultMap": {
+      "key": "storyCultMap",
+      "path": "media/story-v19/cult-map.jpg",
+      "width": 960,
+      "height": 600,
+      "sha256": "eb670fd956840879cae85c58e88f70bc6883e91e33c78963f0ca22c259714212",
+      "bytes": 113022,
+      "sourcePath": "assets/maps/v3121/cult_01_black_rose_infiltration.jpg",
+      "kind": "terrain"
+    },
+    "storyPairMap": {
+      "key": "storyPairMap",
+      "path": "media/story-v19/pair-map.jpg",
+      "width": 1600,
+      "height": 1000,
+      "sha256": "9df293ea34b10f041410137beec97f9dfab9e8fc4605547dae3ed0fdfa31d2a3",
+      "bytes": 391977,
+      "sourcePath": "assets/maps/generated-v31213/cult03_triune_ego_extraction_arena.jpg",
+      "kind": "terrain"
+    },
+    "storyGoblinWave": {
+      "key": "storyGoblinWave",
+      "path": "media/story-v19/goblin-wave.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "20e5c4152bd1c99c49c175ab36d3fa7c4d414accba1b729e83d2023cbd617e88",
+      "bytes": 272580,
+      "sourcePath": "assets/vfx/generated/v31309/goblin-flute-sonic-wave.webp",
+      "kind": "skill"
+    },
+    "storyKnightSword": {
+      "key": "storyKnightSword",
+      "path": "media/story-v19/knight-sword.png",
+      "width": 512,
+      "height": 341,
+      "sha256": "d14b4babd804f490b31d2f1cf8bf8fba23bd72f5605329c1c88acd5b74fa4841",
+      "bytes": 44486,
+      "sourcePath": "assets/last3/FallenAngel_Sword.png",
+      "kind": "skill"
+    },
+    "storyKnightSlash": {
+      "key": "storyKnightSlash",
+      "path": "media/story-v19/knight-slash.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "b1da051a0a55f847892eb299708b9d825fdb87a89cb51f37ad9d1afc68da3637",
+      "bytes": 304428,
+      "sourcePath": "assets/generated-v31224/boss-vfx/sleepless_six_sword_wave.webp",
+      "kind": "skill"
+    },
+    "storyInsomniaSoul": {
+      "key": "storyInsomniaSoul",
+      "path": "media/story-v19/insomnia-soul.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "7d8201643bc8c1af38f76db2b9bd668db124afb4312c1f2ba6c3d720b98390c0",
+      "bytes": 37204,
+      "sourcePath": "assets/generated-v3128/projectiles/sleepless_soul.webp",
+      "kind": "skill"
+    },
+    "storyInsomniaGaze": {
+      "key": "storyInsomniaGaze",
+      "path": "media/story-v19/insomnia-gaze.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "9116b32bb478da14f817150371eb507e5dc4cf71b25ebedf53f910fe89fe6c60",
+      "bytes": 329590,
+      "sourcePath": "assets/generated-v31224/boss-vfx/sleepless_gaze_sigil.webp",
+      "kind": "skill"
+    },
+    "storyChronoShard": {
+      "key": "storyChronoShard",
+      "path": "media/story-v19/chrono-shard.webp",
+      "width": 512,
+      "height": 256,
+      "sha256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+      "bytes": 54898,
+      "sourcePath": "assets/vfx/v31315/chrono-shard.webp",
+      "kind": "skill"
+    },
+    "storyChronoCrescent": {
+      "key": "storyChronoCrescent",
+      "path": "media/story-v19/chrono-crescent.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+      "bytes": 242800,
+      "sourcePath": "assets/generated-v31224/boss-vfx/kair_chrono_crescent.webp",
+      "kind": "skill"
+    },
+    "storyNeuralOrb": {
+      "key": "storyNeuralOrb",
+      "path": "media/story-v19/neural-orb.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "ab952675f90cacfb213d40e736994fd54fdfb731245bc28f444b8409123759ce",
+      "bytes": 316272,
+      "sourcePath": "assets/vfx/generated/v31309/kair-neuron-synapse-orb.webp",
+      "kind": "skill"
+    },
+    "storySirenWave": {
+      "key": "storySirenWave",
+      "path": "media/story-v19/siren-wave.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "6b21e41ea6e373f7b6b9852ab565f9fdfe21246c5b4f431fd780adf9a61f67f1",
+      "bytes": 300464,
+      "sourcePath": "assets/vfx/generated/v31309/siren-choir-chorus-wave.webp",
+      "kind": "skill"
+    },
+    "storyChiefWave": {
+      "key": "storyChiefWave",
+      "path": "media/story-v19/chief-wave.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "e6abe23efe8940dfa19dba8324cc4656757823a1b362b9600beec861780e7221",
+      "bytes": 327836,
+      "sourcePath": "assets/generated-v31224/boss-vfx/hando_phantom_reclaim_wave.webp",
+      "kind": "skill"
+    },
+    "storyChiefBlade": {
+      "key": "storyChiefBlade",
+      "path": "media/story-v19/chief-blade.webp",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "a621a06b3688129f1113e41ea32ce8a466361680f1fc4fb0b843eed829e6b939",
+      "bytes": 246500,
+      "sourcePath": "assets/vfx/v31323/boss/h103-boss/control-blades-clean.webp",
+      "kind": "skill"
+    },
+    "storyExecutorPrism": {
+      "key": "storyExecutorPrism",
+      "path": "media/story-v19/executor-prism.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "6fd6c4d2f0e3915bb315873a70c7e9f09975c8fd1b7816f2ee184b594f12341a",
+      "bytes": 37096,
+      "sourcePath": "assets/generated-v3128/projectiles/causality_prism.webp",
+      "kind": "skill"
+    },
+    "storyExecutorRoad": {
+      "key": "storyExecutorRoad",
+      "path": "media/story-v19/executor-road.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "f9c9378d33bbb827682d82537785c18c786242a3dd8ce1e174d18fc05f7d78a5",
+      "bytes": 249200,
+      "sourcePath": "assets/generated-v31224/boss-vfx/murder_causality_road.webp",
+      "kind": "skill"
+    },
+    "storyCultRose": {
+      "key": "storyCultRose",
+      "path": "media/story-v19/cult-rose.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "6a6604e0239c8ecdc5cad0f94136acdb7da4e970e71335dbe543a0eabc9a5308",
+      "bytes": 369890,
+      "sourcePath": "assets/generated-v31224/boss-vfx/cult_triune_rose_sigil.webp",
+      "kind": "skill"
+    },
+    "storyRianCross": {
+      "key": "storyRianCross",
+      "path": "media/story-v19/rian-cross.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "c3087e2e8611efff6e8844c3b3c571457a4458552a4c85af36c37657d0f00620",
+      "bytes": 84602,
+      "sourcePath": "assets/vfx/generated/v315/rian-reverse-cross-barrage.webp",
+      "kind": "skill"
+    },
+    "storyIonShield": {
+      "key": "storyIonShield",
+      "path": "media/story-v19/ion-shield.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "f56c5acaf90884bbf5c18a94691105360ccb00f87b30e9b44212aef159bb59d9",
+      "bytes": 70068,
+      "sourcePath": "assets/vfx/generated/v315/ion-order-shield-charge.webp",
+      "kind": "skill"
+    },
+    "storyPlayerHando": {
+      "key": "storyPlayerHando",
+      "path": "media/story-v19/player-hando.png",
+      "width": 512,
+      "height": 512,
+      "sha256": "7aad591310bb93367825e0e47ca9a487cbd6b88e53637ce6316e8d5976f2c569",
+      "bytes": 267883,
+      "sourcePath": "assets/hero_direction337/hwando/s.webp",
+      "kind": "player"
+    },
+    "storyPlayerSeoha": {
+      "key": "storyPlayerSeoha",
+      "path": "media/story-v19/player-seoha.png",
+      "width": 362,
+      "height": 362,
+      "sha256": "5faf5cd8c5d2b00d96a349e9617100d50730d291948de3ddb993179eb8c4bb8e",
+      "bytes": 139193,
+      "sourcePath": "assets/kair/heroes/yun-seoha.png",
+      "kind": "player"
+    },
+    "storyMobGoblin": {
+      "key": "storyMobGoblin",
+      "path": "media/story-v19/mob-goblin.png",
+      "width": 341,
+      "height": 512,
+      "sha256": "4b97bb140b31477f2f645a7a96e66320052fb7274829987aa0fe36bceabfafc2",
+      "bytes": 209252,
+      "sourcePath": "assets/last3/Monster_Goblin.png",
+      "kind": "minion"
+    },
+    "storyMobWolf": {
+      "key": "storyMobWolf",
+      "path": "media/story-v19/mob-wolf.png",
+      "width": 341,
+      "height": 512,
+      "sha256": "7f50b5cfd9c3fb0e5d99e236f2432204994fa77c628564e59a346766771a99bb",
+      "bytes": 188513,
+      "sourcePath": "assets/last3/Monster_Wolf.png",
+      "kind": "minion"
+    },
+    "storyMobNightmare": {
+      "key": "storyMobNightmare",
+      "path": "media/story-v19/mob-nightmare.webp",
+      "width": 418,
+      "height": 418,
+      "sha256": "759c50538aed6df051ef44d79e7238041bf7d03cb872a97e0927b1aa7b8f4b5b",
+      "bytes": 188086,
+      "sourcePath": "assets/hando-v3123/silverless_shadow.webp",
+      "kind": "minion"
+    },
+    "storyPlayerHandoSlash": {
+      "key": "storyPlayerHandoSlash",
+      "path": "media/story-v19/player-hando-slash.png",
+      "width": 512,
+      "height": 341,
+      "sha256": "0f811aa201f2317bfea07d48109989942b3f84d3348ec8e871c50e5c086bc424",
+      "bytes": 85262,
+      "sourcePath": "assets/last3/MeleeHitSlash.png",
+      "kind": "player-skill"
+    },
+    "storyPlayerSeohaSlash": {
+      "key": "storyPlayerSeohaSlash",
+      "path": "media/story-v19/player-seoha-slash.png",
+      "width": 362,
+      "height": 362,
+      "sha256": "cf767d2600a48dda2c40a110ff7e6e86e3da1588764459a268b1ac97f49d4ece",
+      "bytes": 153437,
+      "sourcePath": "assets/kair/skills/time-severance.png",
+      "kind": "player-skill"
+    },
+    "storyMemoryFragment": {
+      "key": "storyMemoryFragment",
+      "path": "media/story-v19/memory-fragment.webp",
+      "width": 256,
+      "height": 256,
+      "sha256": "19ace585f16604f969c2d3cefc17c05c37455c848490c45270ce35c5b39e621b",
+      "bytes": 9182,
+      "sourcePath": "assets/items/ego-fragment.webp",
+      "kind": "protected"
+    },
+    "storyPlayerAwakening": {
+      "key": "storyPlayerAwakening",
+      "path": "media/story-v19/player-awakening.webp",
+      "width": 512,
+      "height": 512,
+      "sha256": "3e06474a67fbf83e5ee625b305e168870bb675c2d51618e2cd327e237f696553",
+      "bytes": 290478,
+      "sourcePath": "assets/rc91/awakening/hwando.png",
+      "kind": "player"
+    },
+    "storyMobCultLeech": {
+      "key": "storyMobCultLeech",
+      "path": "media/story-v19/mob-cult-leech.webp",
+      "width": 418,
+      "height": 418,
+      "sha256": "07099111f8bf7ae0f43c965752de5dd156ce70a283c3d15b21f8039eb0d81ef8",
+      "bytes": 40264,
+      "sourcePath": "assets/cult-v3121/c101_ego_leech.webp",
+      "kind": "minion"
+    }
+  },
+  "actorContracts": {
+    "Goblin": {
+      "id": "goblin",
+      "key": "storyGoblin",
+      "width": 672,
+      "height": 384,
+      "frames": [
+        {
+          "key": "storyGoblin",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "idle"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 0,
+        "recover": 0
+      },
+      "scale": 0.45,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 1,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "Knight": {
+      "id": "knight",
+      "key": "storyKnightIdle",
+      "width": 672,
+      "height": 384,
+      "frames": [
+        {
+          "key": "storyKnightIdle",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "idle"
+        },
+        {
+          "key": "storyKnightCharge",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "charge"
+        },
+        {
+          "key": "storyKnightAttack",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "attack"
+        },
+        {
+          "key": "storyKnightRecover",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "move"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 1,
+        "release": 2,
+        "recover": 0
+      },
+      "scale": 0.45,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "Insomnia": {
+      "id": "insomnia",
+      "key": "storyInsomniaIdle",
+      "width": 672,
+      "height": 384,
+      "frames": [
+        {
+          "key": "storyInsomniaIdle",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            335,
+            179
+          ],
+          "pose": "idle"
+        },
+        {
+          "key": "storyInsomniaCharge",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "charge"
+        },
+        {
+          "key": "storyInsomniaAttack",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            307,
+            209
+          ],
+          "pose": "attack"
+        },
+        {
+          "key": "storyInsomniaRecover",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "transition"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 1,
+        "release": 2,
+        "recover": 0
+      },
+      "scale": 0.45,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "Siren": {
+      "id": "siren",
+      "key": "storySirenIdle",
+      "width": 672,
+      "height": 384,
+      "frames": [
+        {
+          "key": "storySirenIdle",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "idle"
+        },
+        {
+          "key": "storySirenCharge",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "charge"
+        },
+        {
+          "key": "storySirenAttack",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            338,
+            183
+          ],
+          "pose": "attack"
+        },
+        {
+          "key": "storySirenRecover",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "transition"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 1,
+        "release": 2,
+        "recover": 0
+      },
+      "scale": 0.45,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "Chief": {
+      "id": "chief",
+      "key": "storyChiefIdle",
+      "width": 672,
+      "height": 384,
+      "frames": [
+        {
+          "key": "storyChiefIdle",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "idle"
+        },
+        {
+          "key": "storyChiefCharge",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "charge"
+        },
+        {
+          "key": "storyChiefAttack",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "attack"
+        },
+        {
+          "key": "storyChiefRecover",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            179
+          ],
+          "pose": "transition"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 1,
+        "release": 2,
+        "recover": 0
+      },
+      "scale": 0.45,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "Executor": {
+      "id": "executor",
+      "key": "storyExecutorIdle",
+      "width": 672,
+      "height": 384,
+      "frames": [
+        {
+          "key": "storyExecutorIdle",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "idle"
+        },
+        {
+          "key": "storyExecutorCharge",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            337,
+            181
+          ],
+          "pose": "charge"
+        },
+        {
+          "key": "storyExecutorAttack",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "attack"
+        },
+        {
+          "key": "storyExecutorRecover",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "transition"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 1,
+        "release": 2,
+        "recover": 0
+      },
+      "scale": 0.45,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "Arbelia": {
+      "id": "arbelia",
+      "key": "storyArbeliaIdle",
+      "width": 672,
+      "height": 384,
+      "frames": [
+        {
+          "key": "storyArbeliaIdle",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "idle"
+        },
+        {
+          "key": "storyArbeliaCharge",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "charge"
+        },
+        {
+          "key": "storyArbeliaAttack",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "attack"
+        },
+        {
+          "key": "storyArbeliaRecover",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "transition"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 1,
+        "release": 2,
+        "recover": 0
+      },
+      "scale": 0.45,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "LowerGuardian": {
+      "id": "lowerguardian",
+      "key": "storyLowerGuardian",
+      "width": 192,
+      "height": 192,
+      "frames": [
+        {
+          "key": "storyLowerGuardian",
+          "width": 192,
+          "height": 192,
+          "rect": [
+            0,
+            0,
+            192,
+            192
+          ],
+          "anchor": [
+            96,
+            90
+          ],
+          "pose": "idle"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 0,
+        "recover": 0
+      },
+      "scale": 0.45,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 1,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "UpperGuardian": {
+      "id": "upperguardian",
+      "key": "storyUpperGuardian",
+      "width": 672,
+      "height": 384,
+      "frames": [
+        {
+          "key": "storyUpperGuardian",
+          "width": 672,
+          "height": 384,
+          "rect": [
+            0,
+            0,
+            672,
+            384
+          ],
+          "anchor": [
+            336,
+            180
+          ],
+          "pose": "idle"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 0,
+        "recover": 0
+      },
+      "scale": 0.45,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 1,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "TimeCollector": {
+      "id": "timecollector",
+      "key": "storyTimeCollector",
+      "width": 362,
+      "height": 362,
+      "frames": [
+        {
+          "key": "storyTimeCollector",
+          "width": 362,
+          "height": 362,
+          "rect": [
+            0,
+            0,
+            362,
+            362
+          ],
+          "anchor": [
+            181,
+            170
+          ],
+          "pose": "idle"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 0,
+        "recover": 0
+      },
+      "scale": 0.45,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 1,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "ChronoEngine": {
+      "id": "chronoengine",
+      "key": "storyChronoEngine",
+      "width": 512,
+      "height": 512,
+      "frames": [
+        {
+          "key": "storyChronoEngine",
+          "width": 512,
+          "height": 512,
+          "rect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "anchor": [
+            250,
+            235
+          ],
+          "pose": "idle"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 0,
+        "recover": 0
+      },
+      "scale": 0.45,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 1,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "NeuralObelisk": {
+      "id": "neuralobelisk",
+      "key": "storyNeuralObelisk",
+      "width": 512,
+      "height": 512,
+      "frames": [
+        {
+          "key": "storyNeuralObelisk",
+          "width": 512,
+          "height": 512,
+          "rect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "anchor": [
+            256,
+            241
+          ],
+          "pose": "idle"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 0,
+        "recover": 0
+      },
+      "scale": 0.45,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 1,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "DeletionObelisk": {
+      "id": "deletionobelisk",
+      "key": "storyDeletionObelisk",
+      "width": 512,
+      "height": 512,
+      "frames": [
+        {
+          "key": "storyDeletionObelisk",
+          "width": 512,
+          "height": 512,
+          "rect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "anchor": [
+            256,
+            241
+          ],
+          "pose": "idle"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 0,
+        "recover": 0
+      },
+      "scale": 0.45,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 1,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "CommandRing": {
+      "id": "commandring",
+      "key": "storyCommandRing",
+      "width": 512,
+      "height": 512,
+      "frames": [
+        {
+          "key": "storyCommandRing",
+          "width": 512,
+          "height": 512,
+          "rect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "anchor": [
+            256,
+            241
+          ],
+          "pose": "idle"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 0,
+        "recover": 0
+      },
+      "scale": 0.45,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 1,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "CultCircuit": {
+      "id": "cultcircuit",
+      "key": "storyCultCircuit",
+      "width": 341,
+      "height": 512,
+      "frames": [
+        {
+          "key": "storyCultCircuit",
+          "width": 341,
+          "height": 512,
+          "rect": [
+            0,
+            0,
+            341,
+            512
+          ],
+          "anchor": [
+            170,
+            241
+          ],
+          "pose": "idle"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 0,
+        "recover": 0
+      },
+      "scale": 0.45,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 1,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "Rian": {
+      "id": "han-rian",
+      "key": "storyRianIdle",
+      "width": 512,
+      "height": 512,
+      "frames": [
+        {
+          "key": "storyRianIdle",
+          "width": 512,
+          "height": 512,
+          "rect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "anchor": [
+            256,
+            220
+          ],
+          "pose": "idle"
+        },
+        {
+          "key": "storyRianAttack",
+          "width": 512,
+          "height": 512,
+          "rect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "anchor": [
+            256,
+            220
+          ],
+          "pose": "attack"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 1,
+        "recover": 0
+      },
+      "scale": 0.32,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 2,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "Ion": {
+      "id": "baek-ion",
+      "key": "storyIonIdle",
+      "width": 512,
+      "height": 512,
+      "frames": [
+        {
+          "key": "storyIonIdle",
+          "width": 512,
+          "height": 512,
+          "rect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "anchor": [
+            256,
+            220
+          ],
+          "pose": "idle"
+        },
+        {
+          "key": "storyIonAttack",
+          "width": 512,
+          "height": 512,
+          "rect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "anchor": [
+            256,
+            220
+          ],
+          "pose": "attack"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 1,
+        "recover": 0
+      },
+      "scale": 0.32,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 2,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "PlayerHando": {
+      "id": "playerhando",
+      "key": "storyPlayerHando",
+      "width": 512,
+      "height": 512,
+      "frames": [
+        {
+          "key": "storyPlayerHando",
+          "width": 512,
+          "height": 512,
+          "rect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "anchor": [
+            256,
+            241
+          ],
+          "pose": "idle"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 0,
+        "recover": 0
+      },
+      "scale": 0.111328125,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 1,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "PlayerSeoha": {
+      "id": "playerseoha",
+      "key": "storyPlayerSeoha",
+      "width": 362,
+      "height": 362,
+      "frames": [
+        {
+          "key": "storyPlayerSeoha",
+          "width": 362,
+          "height": 362,
+          "rect": [
+            0,
+            0,
+            362,
+            362
+          ],
+          "anchor": [
+            181,
+            170
+          ],
+          "pose": "idle"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 0,
+        "recover": 0
+      },
+      "scale": 0.1574585635359116,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 1,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "PlayerAwakening": {
+      "id": "playerawakening",
+      "key": "storyPlayerAwakening",
+      "width": 512,
+      "height": 512,
+      "frames": [
+        {
+          "key": "storyPlayerAwakening",
+          "width": 512,
+          "height": 512,
+          "rect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "anchor": [
+            256,
+            241
+          ],
+          "pose": "idle"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 0,
+        "recover": 0
+      },
+      "scale": 0.111328125,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 1,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "MobGoblin": {
+      "id": "mobgoblin",
+      "key": "storyMobGoblin",
+      "width": 341,
+      "height": 512,
+      "frames": [
+        {
+          "key": "storyMobGoblin",
+          "width": 341,
+          "height": 512,
+          "rect": [
+            0,
+            0,
+            341,
+            512
+          ],
+          "anchor": [
+            170,
+            241
+          ],
+          "pose": "idle"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 0,
+        "recover": 0
+      },
+      "scale": 0.111328125,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 1,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "MobWolf": {
+      "id": "mobwolf",
+      "key": "storyMobWolf",
+      "width": 341,
+      "height": 512,
+      "frames": [
+        {
+          "key": "storyMobWolf",
+          "width": 341,
+          "height": 512,
+          "rect": [
+            0,
+            0,
+            341,
+            512
+          ],
+          "anchor": [
+            170,
+            241
+          ],
+          "pose": "idle"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 0,
+        "recover": 0
+      },
+      "scale": 0.111328125,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 1,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "MobNightmare": {
+      "id": "mobnightmare",
+      "key": "storyMobNightmare",
+      "width": 418,
+      "height": 418,
+      "frames": [
+        {
+          "key": "storyMobNightmare",
+          "width": 418,
+          "height": 418,
+          "rect": [
+            0,
+            0,
+            418,
+            418
+          ],
+          "anchor": [
+            209,
+            196
+          ],
+          "pose": "idle"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 0,
+        "recover": 0
+      },
+      "scale": 0.13636363636363635,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 1,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "MobCultLeech": {
+      "id": "mobcultleech",
+      "key": "storyMobCultLeech",
+      "width": 418,
+      "height": 418,
+      "frames": [
+        {
+          "key": "storyMobCultLeech",
+          "width": 418,
+          "height": 418,
+          "rect": [
+            0,
+            0,
+            418,
+            418
+          ],
+          "anchor": [
+            209,
+            196
+          ],
+          "pose": "idle"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 0,
+        "recover": 0
+      },
+      "scale": 0.13636363636363635,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 1,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    },
+    "MemoryFragment": {
+      "id": "memoryfragment",
+      "key": "storyMemoryFragment",
+      "width": 256,
+      "height": 256,
+      "frames": [
+        {
+          "key": "storyMemoryFragment",
+          "width": 256,
+          "height": 256,
+          "rect": [
+            0,
+            0,
+            256,
+            256
+          ],
+          "anchor": [
+            128,
+            120
+          ],
+          "pose": "idle"
+        }
+      ],
+      "poseMap": {
+        "idle": 0,
+        "charge": 0,
+        "release": 0,
+        "recover": 0
+      },
+      "scale": 0.22265625,
+      "offset": [
+        0,
+        0
+      ],
+      "authoredKeyposes": 1,
+      "fullAnimationCycles": 0,
+      "sourcePivotsCertified": false
+    }
+  },
+  "terrains": {
+    "storyGoblinMap": {
+      "key": "storyGoblinMap",
+      "width": 1536,
+      "height": 1024,
+      "floor": [
+        614,
+        543,
+        307,
+        123
+      ],
+      "scene": "storyGoblinMap",
+      "floorInspection": "manual whole-image review of own ground; decorative terrain only"
+    },
+    "storyKnightMap": {
+      "key": "storyKnightMap",
+      "width": 1536,
+      "height": 1024,
+      "floor": [
+        614,
+        543,
+        307,
+        123
+      ],
+      "scene": "storyKnightMap",
+      "floorInspection": "manual whole-image review of own ground; decorative terrain only"
+    },
+    "storyInsomniaMap": {
+      "key": "storyInsomniaMap",
+      "width": 1536,
+      "height": 1024,
+      "floor": [
+        614,
+        543,
+        307,
+        123
+      ],
+      "scene": "storyInsomniaMap",
+      "floorInspection": "manual whole-image review of own ground; decorative terrain only"
+    },
+    "storyAcademyMap": {
+      "key": "storyAcademyMap",
+      "width": 1536,
+      "height": 1024,
+      "floor": [
+        614,
+        543,
+        307,
+        123
+      ],
+      "scene": "storyAcademyMap",
+      "floorInspection": "manual whole-image review of own ground; decorative terrain only"
+    },
+    "storyLowerMap": {
+      "key": "storyLowerMap",
+      "width": 1536,
+      "height": 1024,
+      "floor": [
+        614,
+        543,
+        307,
+        123
+      ],
+      "scene": "storyLowerMap",
+      "floorInspection": "manual whole-image review of own ground; decorative terrain only"
+    },
+    "storyUpperMap": {
+      "key": "storyUpperMap",
+      "width": 1536,
+      "height": 1024,
+      "floor": [
+        614,
+        543,
+        307,
+        123
+      ],
+      "scene": "storyUpperMap",
+      "floorInspection": "manual whole-image review of own ground; decorative terrain only"
+    },
+    "storyWorkshopMap": {
+      "key": "storyWorkshopMap",
+      "width": 1536,
+      "height": 1024,
+      "floor": [
+        614,
+        543,
+        307,
+        123
+      ],
+      "scene": "storyWorkshopMap",
+      "floorInspection": "manual whole-image review of own ground; decorative terrain only"
+    },
+    "storyNeuralMap": {
+      "key": "storyNeuralMap",
+      "width": 1536,
+      "height": 1024,
+      "floor": [
+        614,
+        543,
+        307,
+        123
+      ],
+      "scene": "storyNeuralMap",
+      "floorInspection": "manual whole-image review of own ground; decorative terrain only"
+    },
+    "storyDeletionMap": {
+      "key": "storyDeletionMap",
+      "width": 1536,
+      "height": 1024,
+      "floor": [
+        614,
+        543,
+        307,
+        123
+      ],
+      "scene": "storyDeletionMap",
+      "floorInspection": "manual whole-image review of own ground; decorative terrain only"
+    },
+    "storyRingsMap": {
+      "key": "storyRingsMap",
+      "width": 1536,
+      "height": 1024,
+      "floor": [
+        614,
+        543,
+        307,
+        123
+      ],
+      "scene": "storyRingsMap",
+      "floorInspection": "manual whole-image review of own ground; decorative terrain only"
+    },
+    "storyArbeliaMap": {
+      "key": "storyArbeliaMap",
+      "width": 1536,
+      "height": 1024,
+      "floor": [
+        614,
+        543,
+        307,
+        123
+      ],
+      "scene": "storyArbeliaMap",
+      "floorInspection": "manual whole-image review of own ground; decorative terrain only"
+    },
+    "storySirenMap": {
+      "key": "storySirenMap",
+      "width": 1536,
+      "height": 1024,
+      "floor": [
+        614,
+        543,
+        307,
+        123
+      ],
+      "scene": "storySirenMap",
+      "floorInspection": "manual whole-image review of own ground; decorative terrain only"
+    },
+    "storyChiefMap": {
+      "key": "storyChiefMap",
+      "width": 1600,
+      "height": 1000,
+      "floor": [
+        640,
+        530,
+        320,
+        120
+      ],
+      "scene": "storyChiefMap",
+      "floorInspection": "manual whole-image review of own ground; decorative terrain only"
+    },
+    "storyExecutorMap": {
+      "key": "storyExecutorMap",
+      "width": 1600,
+      "height": 1000,
+      "floor": [
+        640,
+        530,
+        320,
+        120
+      ],
+      "scene": "storyExecutorMap",
+      "floorInspection": "manual whole-image review of own ground; decorative terrain only"
+    },
+    "storyCultMap": {
+      "key": "storyCultMap",
+      "width": 960,
+      "height": 600,
+      "floor": [
+        384,
+        318,
+        192,
+        72
+      ],
+      "scene": "storyCultMap",
+      "floorInspection": "manual whole-image review of own ground; decorative terrain only"
+    },
+    "storyPairMap": {
+      "key": "storyPairMap",
+      "width": 1600,
+      "height": 1000,
+      "floor": [
+        640,
+        530,
+        320,
+        120
+      ],
+      "scene": "storyPairMap",
+      "floorInspection": "manual whole-image review of own ground; decorative terrain only"
+    }
+  },
+  "media": {
+    "storyGoblin": "media/story-v19/goblin.webp",
+    "storyKnightIdle": "media/story-v19/knight-idle.webp",
+    "storyKnightCharge": "media/story-v19/knight-charge.webp",
+    "storyKnightAttack": "media/story-v19/knight-attack.webp",
+    "storyKnightRecover": "media/story-v19/knight-recover.webp",
+    "storyInsomniaIdle": "media/story-v19/insomnia-idle.webp",
+    "storyInsomniaCharge": "media/story-v19/insomnia-charge.webp",
+    "storyInsomniaAttack": "media/story-v19/insomnia-attack.webp",
+    "storyInsomniaRecover": "media/story-v19/insomnia-recover.webp",
+    "storySirenIdle": "media/story-v19/siren-idle.webp",
+    "storySirenCharge": "media/story-v19/siren-charge.webp",
+    "storySirenAttack": "media/story-v19/siren-attack.webp",
+    "storySirenRecover": "media/story-v19/siren-recover.webp",
+    "storyChiefIdle": "media/story-v19/chief-idle.webp",
+    "storyChiefCharge": "media/story-v19/chief-charge.webp",
+    "storyChiefAttack": "media/story-v19/chief-attack.webp",
+    "storyChiefRecover": "media/story-v19/chief-recover.webp",
+    "storyExecutorIdle": "media/story-v19/executor-idle.webp",
+    "storyExecutorCharge": "media/story-v19/executor-charge.webp",
+    "storyExecutorAttack": "media/story-v19/executor-attack.webp",
+    "storyExecutorRecover": "media/story-v19/executor-recover.webp",
+    "storyArbeliaIdle": "media/story-v19/arbelia-idle.webp",
+    "storyArbeliaCharge": "media/story-v19/arbelia-charge.webp",
+    "storyArbeliaAttack": "media/story-v19/arbelia-attack.webp",
+    "storyArbeliaRecover": "media/story-v19/arbelia-recover.webp",
+    "storyLowerGuardian": "media/story-v19/lower-guardian.webp",
+    "storyUpperGuardian": "media/story-v19/upper-guardian.webp",
+    "storyTimeCollector": "media/story-v19/time-collector.png",
+    "storyChronoEngine": "media/story-v19/chrono-engine.webp",
+    "storyNeuralObelisk": "media/story-v19/neural-obelisk.webp",
+    "storyDeletionObelisk": "media/story-v19/deletion-obelisk.webp",
+    "storyCommandRing": "media/story-v19/command-ring.webp",
+    "storyCultCircuit": "media/story-v19/cult-circuit.webp",
+    "storyRianIdle": "media/story-v19/rian-idle.webp",
+    "storyRianAttack": "media/story-v19/rian-attack.webp",
+    "storyIonIdle": "media/story-v19/ion-idle.webp",
+    "storyIonAttack": "media/story-v19/ion-attack.webp",
+    "storyGoblinMap": "media/story-v19/goblin-map.jpg",
+    "storyKnightMap": "media/story-v19/knight-map.jpg",
+    "storyInsomniaMap": "media/story-v19/insomnia-map.jpg",
+    "storyAcademyMap": "media/story-v19/academy-map.jpg",
+    "storyLowerMap": "media/story-v19/lower-map.jpg",
+    "storyUpperMap": "media/story-v19/upper-map.jpg",
+    "storyWorkshopMap": "media/story-v19/workshop-map.jpg",
+    "storyNeuralMap": "media/story-v19/neural-map.jpg",
+    "storyDeletionMap": "media/story-v19/deletion-map.jpg",
+    "storyRingsMap": "media/story-v19/rings-map.jpg",
+    "storyArbeliaMap": "media/story-v19/arbelia-map.jpg",
+    "storySirenMap": "media/story-v19/siren-map.webp",
+    "storyChiefMap": "media/story-v19/chief-map.jpg",
+    "storyExecutorMap": "media/story-v19/executor-map.jpg",
+    "storyCultMap": "media/story-v19/cult-map.jpg",
+    "storyPairMap": "media/story-v19/pair-map.jpg",
+    "storyGoblinWave": "media/story-v19/goblin-wave.webp",
+    "storyKnightSword": "media/story-v19/knight-sword.png",
+    "storyKnightSlash": "media/story-v19/knight-slash.webp",
+    "storyInsomniaSoul": "media/story-v19/insomnia-soul.webp",
+    "storyInsomniaGaze": "media/story-v19/insomnia-gaze.webp",
+    "storyChronoShard": "media/story-v19/chrono-shard.webp",
+    "storyChronoCrescent": "media/story-v19/chrono-crescent.webp",
+    "storyNeuralOrb": "media/story-v19/neural-orb.webp",
+    "storySirenWave": "media/story-v19/siren-wave.webp",
+    "storyChiefWave": "media/story-v19/chief-wave.webp",
+    "storyChiefBlade": "media/story-v19/chief-blade.webp",
+    "storyExecutorPrism": "media/story-v19/executor-prism.webp",
+    "storyExecutorRoad": "media/story-v19/executor-road.webp",
+    "storyCultRose": "media/story-v19/cult-rose.webp",
+    "storyRianCross": "media/story-v19/rian-cross.webp",
+    "storyIonShield": "media/story-v19/ion-shield.webp",
+    "storyPlayerHando": "media/story-v19/player-hando.png",
+    "storyPlayerSeoha": "media/story-v19/player-seoha.png",
+    "storyMobGoblin": "media/story-v19/mob-goblin.png",
+    "storyMobWolf": "media/story-v19/mob-wolf.png",
+    "storyMobNightmare": "media/story-v19/mob-nightmare.webp",
+    "storyPlayerHandoSlash": "media/story-v19/player-hando-slash.png",
+    "storyPlayerSeohaSlash": "media/story-v19/player-seoha-slash.png",
+    "storyMemoryFragment": "media/story-v19/memory-fragment.webp",
+    "storyPlayerAwakening": "media/story-v19/player-awakening.webp",
+    "storyMobCultLeech": "media/story-v19/mob-cult-leech.webp"
+  }
+}

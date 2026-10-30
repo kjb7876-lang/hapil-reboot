@@ -9,15 +9,15 @@ const expectedSteps=[[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14],[15,16,17],[]];
 function make(index,options={}){return core.createRun({campaign:true,campaignRevision:4,practiceBoss:true,bossIndex:index,difficulty:'normal',seed:1896,runId:'chapter3-contract',...options});}
 function lethal(w){const b=w.boss;w.shots.push({id:++w.idCounter,x:b.x,y:b.y,px:b.x,py:b.y,vx:0,vy:0,r:2,age:0,ttl:1,damage:b.hp,kind:'basic',angle:-Math.PI/2});core.step(w,{});}
 test('revision four follows six canonical scenes and seventeen story stages without inventing six people',()=>{
- assert.equal(core.LATEST_CAMPAIGN_REVISION,4);assert.equal(core.campaignBossCount(4),18);
- const additions=core.CAMPAIGN_BOSSES.slice(12);assert.equal(additions.length,6);
+ assert(core.LATEST_CAMPAIGN_REVISION>=4);assert.equal(core.campaignBossCount(4),18);
+ const additions=core.CAMPAIGN_BOSSES.slice(12,18);assert.equal(additions.length,6);
  assert.deepEqual(additions.map(b=>b.id),expectedIds);assert.deepEqual(additions.map(b=>b.sceneIds),scenes.map(s=>[s]));
  assert.deepEqual(additions.map(b=>b.storySteps),expectedSteps);assert.deepEqual(additions.flatMap(b=>b.storySteps),Array.from({length:17},(_,i)=>i+1));
  for(const [offset,b] of additions.entries()){
   assert.equal(b.chapter,3);assert.equal(b.identityGroup,'controller-system');assert.equal(b.patterns.length,3);
   const w=make(offset+12);assert.equal(w.protagonist,'의목사 B');assert.equal(w.boss.identityGroup,'controller-system');assert.equal(w.boss.linkTarget,true);assert.equal(w.boss.healthLabel,'반복 연결');
  }
- assert(!core.CAMPAIGN_BOSSES.some(b=>b.id==='cult-leader'),'separate part-eight practice is not inserted before missing chapters');
+ assert(!core.CAMPAIGN_BOSSES.slice(0,18).some(b=>b.id==='cult-leader'),'separate part-eight practice is not inserted into historical routes before missing chapters');
 });
 test('all earlier revision endpoints retain their bounds and reject overflow while revision four admits its complete safe schema',()=>{
  for(const [revision,count,phases] of [[1,3,9],[2,5,15],[3,12,36],[4,18,54]]){

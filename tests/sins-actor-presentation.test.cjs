@@ -4,7 +4,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {createCanvas,loadImage}=require(require.resolve('@napi-rs/canvas',{paths:[process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES||'',path.resolve(__dirname,'..')]}));
 const core=require('../src/core.js');require('../src/boss-motion.js');require('../src/actors.js');require('../src/render.js');
-const API=global.HapilActors,raw=fs.readFileSync(path.resolve(__dirname,'../src/media.js'),'utf8'),media=JSON.parse(raw.slice(raw.indexOf('{'),raw.lastIndexOf('}')+1));
+const API=global.HapilActors,raw=fs.readFileSync(path.resolve(__dirname,'../src/media.js'),'utf8'),media=require('../tools/read-media-registry.cjs')();
 async function fixture(){
  const images={};for(const key of Object.keys(media).filter(k=>k.startsWith('sin')||['cave','bossMotionBalrog'].includes(k)))images[key]=await loadImage(path.resolve(__dirname,'..',media[key]));
  const previous=global.document,allocated=[],floorDraws=[];

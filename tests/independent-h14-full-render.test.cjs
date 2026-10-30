@@ -3,7 +3,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {createCanvas,loadImage}=require(require.resolve('@napi-rs/canvas',{paths:[process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES||'',path.resolve(__dirname,'..')]}));
 const core=require('../src/core.js');require('../src/boss-motion.js');require('../src/actors.js');require('../src/projectiles.js');require('../src/boss-skills.js');require('../src/render.js');
-const raw=fs.readFileSync(path.join(__dirname,'../src/media.js'),'utf8'),media=JSON.parse(raw.slice(raw.indexOf('{'),raw.lastIndexOf('}')+1));
+const raw=fs.readFileSync(path.join(__dirname,'../src/media.js'),'utf8'),media=require('../tools/read-media-registry.cjs')();
 async function fixture(){
  const previous=global.document,allocated=[];global.document={createElement(name){assert.equal(name,'canvas');const c=createCanvas(1,1);allocated.push(c);return c;}};
  const keys=Object.keys(media).filter(k=>/^(projectile|fxV8|bossMotion|cast|weapon|sin|h14)/.test(k)||['gunner','forest','ruins','cave','fxWindArrow8V6'].includes(k)),images={};

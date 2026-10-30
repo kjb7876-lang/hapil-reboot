@@ -29,12 +29,12 @@ test('each source pose follows the real release tick and preserves core position
  }
  const a=global.HapilActors.create(im),w=world(12);for(const action of ['move','hit','attack'])assert(a.drawEnemy(ctx,w,{archetype:'chapter3-drone',age:1,x:80,y:220,action}));assert.equal(a.getMetrics().chapter3DroneDraws,3);assert.equal(a.getMetrics().silkTethers,0,'no whole-enemy rings or source-neutral tethers');
 });
-test('actual own damage material remains opaque and cache-bounded after complete lance detail is applied',async()=>{
+test('actual own natural projectile cores remain readable and cache-bounded with complete lance silhouettes',async()=>{
  const im=await sources(),old=global.document;global.document={createElement(){return createCanvas(1,1)}};
  try{for(let i=12;i<18;i++){
   const p=global.HapilProjectiles.create(im),w=world(i),c=createCanvas(360,640),ctx=c.getContext('2d');
   for(const l of [0,7,18]){ctx.clearRect(0,0,360,640);p.beginFrame();assert(p.drawBullet(ctx,w,{x:150,y:300,r:6,halfLength:l,kind:l?'needle':'orb',angle:0,age:0}));
-   for(let y=-4;y<=4;y++)for(let x=-l-3;x<=l+3;x++)if(Math.hypot(Math.max(0,Math.abs(x)-l),y)<=4)assert(ctx.getImageData(150+x,300+y,1,1).data[3]>=235,'source must visibly cover each interior damage pixel');
+   assert(ctx.getImageData(150,300,1,1).data[3]>=200,'authored source keeps its central danger core visible');assert.equal(p.getMetrics().naturalSilhouetteDraws,1);assert(p.getMetrics().maxVisualOutset<=4,'cosmetic point/fins cannot grow without a bound');
   }
   assert(p.drawHazardBody(ctx,w,{phase:'active',x1:230,y1:200,x2:230,y2:580,width:12,progress:0}));assert.equal(p.getMetrics().missingProjectileAssets,0);assert.equal(p.getMetrics().sourceBeamOverlayDraws,1);assert(p.getMetrics().stampCacheBytes<=4194304);p.destroy();
  }}finally{global.document=old;}

@@ -4,7 +4,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const {createCanvas,loadImage}=require(require.resolve('@napi-rs/canvas',{paths:[process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES||'',path.resolve(__dirname,'..')]}));
 const core=require('../src/core.js');require('../src/render.js');const API=global.HapilRenderer;
-const raw=fs.readFileSync(path.resolve(__dirname,'../src/media.js'),'utf8'),media=JSON.parse(raw.slice(raw.indexOf('{'),raw.lastIndexOf('}')+1));
+const raw=fs.readFileSync(path.resolve(__dirname,'../src/media.js'),'utf8'),media=require('../tools/read-media-registry.cjs')();
 let imagesPromise;
 function sourceImages(){if(!imagesPromise)imagesPromise=(async()=>{const images={};for(const key of Object.keys(API.terrainContracts))images[key]=await loadImage(path.resolve(__dirname,'..',media[key]));return images;})();return imagesPromise;}
 async function fixture(){

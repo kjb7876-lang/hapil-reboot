@@ -23,7 +23,7 @@ test('an unready actor never draws another enemy or a geometric substitute in ac
 
 test('decoded actual guard poses draw ordinary enemies below and summoned enemies above the boss',async()=>{
  const fs=require('node:fs'),path=require('node:path');const {createCanvas,loadImage}=require(require.resolve('@napi-rs/canvas',{paths:[process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES||'',path.resolve(__dirname,'..')]}));
- const core=require('../src/core.js');require('../src/render.js');const raw=fs.readFileSync(path.resolve(__dirname,'../src/media.js'),'utf8'),media=JSON.parse(raw.slice(raw.indexOf('{'),raw.lastIndexOf('}')+1));
+ const core=require('../src/core.js');require('../src/render.js');const raw=fs.readFileSync(path.resolve(__dirname,'../src/media.js'),'utf8'),media=require('../tools/read-media-registry.cjs')();
  const keys=['sinPrideAtlas','gunner','h14MapPride',...Object.values(API.contracts.guard.poses).map(p=>p.key)],images={};
  for(const k of keys)images[k]=await loadImage(path.resolve(__dirname,'..',media[k]));
  const previous=global.document;global.document={createElement:()=>createCanvas(1,1)};const canvas=createCanvas(360,640);canvas.style={};const ctx=canvas.getContext('2d'),draw=ctx.drawImage.bind(ctx),events=[];
