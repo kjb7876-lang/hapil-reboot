@@ -42,12 +42,12 @@ test('old campaign revisions retain their three- and five-boss bounds and phase 
   }
 });
 
-test('revision three admits the twelfth boss and 36 bounded phases but rejects overflow and future revisions', () => {
+test('revision three admits the twelfth boss and 36 bounded phases but rejects its own overflow and unknown revisions', () => {
   const good = checkpoint(3, 'hell', 11);
   good.stage = 'boss'; good.phase = 2; good.checkpointSerial = 70;
   good.stats.phaseTicks = Array(36).fill(4500);
   assert.deepEqual(Store.validateCheckpoint(good), good);
-  for (const patch of [{ bossIndex: 12 }, { bossIndex: -1 }, { campaignRevision: 4 }, { campaignRevision: '3' },
+  for (const patch of [{ bossIndex: 12 }, { bossIndex: -1 }, { campaignRevision: 99 }, { campaignRevision: '3' },
     { wave: 3 }, { phase: 3 }, { checkpointSerial: 101 }]) {
     assert.equal(Store.validateCheckpoint({ ...good, ...patch }), null, JSON.stringify(patch));
   }

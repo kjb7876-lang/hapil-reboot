@@ -57,30 +57,50 @@
     '분노의 귀 · 청소부의 분노가 번지는 방향과 공격 예고를 읽으세요.',
     '교만의 회장 · 코스믹 가면 루시퍼와 별개 인물입니다. 같은 회장의 기계 후속전까지 이어집니다.'
   ]);
+  // Latest supplied story, SHA-256 e069b22f4ee33c80e1b8e2e407583a865efec5d01b6440408f0e3389d82cabaa.
+  // These are six places within one controller system, not six new people.
+  var controllerRoutes=[
+    ['의목사 B는 귀환하지 못한 의목사 A의 기록을 따라 아이의 몽세로 들어갑니다.','군단을 부수자 방어가 더 단단해집니다. 공격보다 반복의 시작점을 살핍니다.','통제자는 아이가 살아남으려고 만든 방어기제입니다.'],
+    ['현실로 돌아가자는 말이 아이에게는 다시 다치러 가자는 말일 수도 있습니다.','분노를 쏟을수록 성벽은 높아집니다. 무기가 가리는 곳을 살핍니다.','기억을 지우지 않고 폭격을 되감는 명령을 찾습니다.'],
+    ['기억의 문턱에 다가가자 방어 장치가 총구를 돌립니다.','아이를 끌어내려던 팔을 거두고 곁에 남을 길을 찾습니다.','감정을 바꾸겠다는 약속에는 아이가 다르게 느낄 자리가 없습니다.'],
+    ['축귀 출력을 높일수록 통제자가 또렷해집니다. 힘이 닿는 회로를 찾습니다.','문손잡이가 돌아가자 아이의 몸이 굳습니다. 전쟁 뒤에도 안전하지 않았던 방입니다.','괴롭다는 이유로 아이의 기억을 지워 구원이라 부를 수는 없습니다.'],
+    ['빈 기계 육체를 부수려던 검을 내립니다. 인간으로 남으라는 판단도 명령일 수 있습니다.','기계 몸으로 향하는 길만 열려 있습니다. 거부할 길이 있는지 묻습니다.','기억을 남긴 채 고통을 되감는 연결만 분리할 경계를 찾습니다.'],
+    ['통제자가 기억의 문에 빙의해 기계 괴물로 일어납니다.','기억과 반복 명령이 갈라지는 경계를 찾습니다. 아이나 기억의 문은 공격 목표가 아닙니다.','같은 고통을 처음부터 되풀이하게 만드는 연결 고리만 끊습니다.']
+  ];
+  var controllerNotes=[
+    '방어의 군단 · 틈을 읽으며 반복을 시작시키는 연결을 조사합니다.',
+    '잔인한 구원 · 구하려는 확신보다 아이가 두려워하는 방향을 살핍니다.',
+    '시스템의 거부권 · 기억 접근과 감정 통제의 경계를 구분합니다.',
+    '관리자 권한 · 축귀 출력이 흘러드는 연결을 분리합니다.',
+    '중앙 코어 이주실 · 기계 육체를 부수지 않고 강요된 선택의 회로를 찾습니다.',
+    '기억의 문 · 기억 자체는 남기고 반복 명령의 연결만 끊습니다.'
+  ];
   function roster(){return core&&core.CAMPAIGN_BOSSES||[];}
-  function runBossCount(){return world&&world.bossCount|| (world&&world.campaignRevision===1?3:world&&world.campaignRevision===2?5:roster().length||12);}
+  function runBossCount(){return world&&world.bossCount|| (world&&world.campaignRevision===1?3:world&&world.campaignRevision===2?5:world&&world.campaignRevision===3?12:roster().length||18);}
   function routeOffset(boss){var list=roster(),sum=0;for(var i=0;i<boss;i++)sum+=list[i]?list[i].waves.length:(i===1?1:3);return sum;}
   function routeCount(){return routeOffset(runBossCount());}
   function routeNote(){
     if(!world||!world.campaign)return routeNotes[0];
     var boss=world.bossIndex||0,wave=world.wave||0,info=roster()[boss];
     if(boss<5)return routeNotes[Math.min(12,routeOffset(boss)+wave)];
+    if(boss>=12)return {title:info&&info.waves[wave]||world.encounterName||world.bossName,text:controllerRoutes[boss-12][Math.min(wave,2)],cue:'의목사 B · 반복 명령의 연결을 살피세요'};
     return {title:info&&info.waves[wave]||world.encounterName||world.bossName,text:sinRoutes[boss-5][wave],cue:info&&info.waves[wave]||'검은 신호를 따라 이동하세요'};
   }
   var skillNames={memory:'기억 해방',delay:'시간 지연',counter:'반격',ego:'자아 각성'},lastSkill=null;
   function updateStory(){
-    if(!world){safeText('chapter-caption','기억의 길 · 7대죄 편');safeText('chapter-number','01');safeText('encounter-kicker','THE SEVEN SIGNALS');safeText('encounter-title','검은 정원에서 7대죄까지');safeText('encounter-description','루시퍼를 지나 의목사가 된 환도는 호텔로 이어지는 일곱 검은 신호를 조사합니다.');$('app').setAttribute('data-encounter','violet');return;}
+    if(!world){safeText('chapter-caption','기억의 길 · 통제자의 열일곱 단계');safeText('chapter-number','01');safeText('encounter-kicker','THE MEMORY GATE');safeText('encounter-title','검은 정원에서 기억의 문까지');safeText('encounter-description','의목사 A의 실종을 따라 의목사 B가 아이의 방어 체계로 들어갑니다.');$('app').setAttribute('data-encounter','violet');return;}
     if(!world.campaign){$('app').setAttribute('data-encounter','violet');safeText('chapter-caption','첫 기억');safeText('chapter-number','01');safeText('encounter-kicker','A FRAGMENT OF MEMORY');safeText('encounter-title',world.stage==='waves'?'기억의 회랑':'보라검천사');safeText('encounter-description','숲길과 폐허를 지나 거미 동굴로 이어지는 첫 기억입니다.');return;}
     var boss=world.bossIndex||0,offset=routeOffset(boss),wave=world.wave||0,index=offset+wave,note=routeNote(),info=roster()[boss],isWave=world.stage==='waves'||(world.stage==='lost'&&!world.boss&&!world.practiceBoss);
     $('app').setAttribute('data-encounter',info?info.id:['violet','horn','balrog','mask','lucifer'][boss]);
-    safeText('chapter-caption',world.practiceBoss?'보스 연습 · 3패턴':isWave?'기억의 길 · '+routeCount()+'구간':boss>=5?'일곱 검은 신호':'기억의 수호자');
+    safeText('chapter-caption',world.practiceBoss?'보스 연습 · 3패턴':isWave?'기억의 길 · '+routeCount()+'구간':boss>=12?'의목사 B · 통제자의 열일곱 단계':boss>=5?'의목사 A · 일곱 검은 신호':'마지막 수호자 EGO');
     safeText('chapter-number',pad(world.practiceBoss?boss+1:isWave?index+1:offset+(info?info.waves.length:boss===1?1:3),2));
     safeText('encounter-kicker',isWave?'FRAGMENT '+pad(index+1,2)+' / '+routeCount():world.practiceBoss?'PATTERN STUDY':'GUARDIAN '+pad(boss+1,2)+' / '+pad(runBossCount(),2));
     safeText('encounter-title',isWave?note.title:world.bossName);
-    safeText('encounter-description',isWave?note.text:bossNotes[boss]);
+    safeText('encounter-description',isWave?note.text:boss>=12?controllerNotes[boss-12]:bossNotes[boss]);
     if(world.transitionNarrative){safeText('encounter-kicker','BETWEEN MEMORIES');if(Array.isArray(world.transitionNarrative)){safeText('encounter-title',world.stageLabel);safeText('encounter-description',world.transitionNarrative[Math.min(world.transitionNarrative.length-1,Math.floor((world.stageTime||0)/3))]);}else{safeText('encounter-title',world.transitionNarrative.title);safeText('encounter-description',world.transitionNarrative.body);}}
     if(world.finalPractice){safeText('chapter-caption','제8부 최종전 · 독립 연습');safeText('chapter-number','08');if(world.stage!=='transition'){safeText('encounter-kicker','FINAL PRACTICE');safeText('encounter-title','교만의 사이보그 교주');safeText('encounter-description','교주의 사몽에 맞서고, 되살아난 기억으로 권한을 되찾으세요.');}}
-    if(world.stage==='won'&&!world.practiceBoss){var extended=world.campaignRevision>=3;safeText('encounter-kicker',extended?'THE SEVEN SIGNALS':'BEYOND THE MASK');safeText('encounter-title',extended?'일곱 검은 신호의 끝':'가면 너머의 새벽');safeText('encounter-description',extended?'회장의 생체 부트로더와 연산핵이 무너집니다. 이것으로 합일의 전체 이야기가 끝난 것은 아닙니다.':'J의 인장으로 루시퍼가 물러납니다. 이제 도움을 청할 수 있습니다.');}
+    if(world.stage==='won'&&!world.practiceBoss&&world.campaignRevision===4){safeText('encounter-kicker','AFTER THE MEMORY GATE');safeText('encounter-title','환도 자아의 탄생');safeText('encounter-description','기억의 문은 남았습니다. 의목사 B는 아이 곁에 남고, 첫째의 의지가 환도라는 칼로 응축됩니다. 몸과 칼은 각자의 뜻을 지닌 채 함께 움직입니다.');}
+    else if(world.stage==='won'&&!world.practiceBoss){var extended=world.campaignRevision>=3;safeText('encounter-kicker',extended?'THE SEVEN SIGNALS':'BEYOND THE MASK');safeText('encounter-title',extended?'일곱 검은 신호의 끝':'가면 너머의 새벽');safeText('encounter-description',extended?'회장의 생체 부트로더와 연산핵이 무너집니다. 이것으로 합일의 전체 이야기가 끝난 것은 아닙니다.':'J의 인장으로 루시퍼가 물러납니다. 이제 도움을 청할 수 있습니다.');}
   }
   function updateSkills(){
     var tick=world?world.tick:0,active=settings.skillRotation&&world&&lastSkill&&lastSkill.runId===world.runId&&tick-lastSkill.tick<90?lastSkill.name:null;
@@ -127,7 +147,7 @@
   function syncSettings(){
     $('setting-music').checked=settings.music;$('setting-sfx').checked=settings.sfx;$('setting-skills').checked=settings.skillRotation;$('setting-low').checked=settings.quality==='low';$('setting-sensitivity').value=settings.sensitivity;safeText('sensitivity-value',Number(settings.sensitivity).toFixed(1)+'×');
     document.querySelectorAll('[data-difficulty]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.difficulty===settings.difficulty));});
-    safeText('difficulty-description',settings.difficulty==='gentle'?'느린 탄속 · 체력 5 · 넉넉한 예고':settings.difficulty==='hell'?'HELL · 고속 탄막 · 광선·전용기·회전탄 중첩':'일반 웨이브를 지나 보스와 조우 · 7대죄까지');safeText('skill-state',settings.skillRotation?'스킬 자동 순환':'스킬 순환 꺼짐');safeText('render-state',settings.quality==='low'?'30 FPS':'60 FPS');
+    safeText('difficulty-description',settings.difficulty==='gentle'?'느린 탄속 · 체력 5 · 넉넉한 예고':settings.difficulty==='hell'?'HELL · 고속 탄막 · 광선·전용기·회전탄 중첩':'일반 구간을 지나 기억의 문까지 · 제3부');safeText('skill-state',settings.skillRotation?'스킬 자동 순환':'스킬 순환 꺼짐');safeText('render-state',settings.quality==='low'?'30 FPS':'60 FPS');
     if(world)world.skillRotation=settings.skillRotation;else safeText('health-value',settings.difficulty==='gentle'?'◇ ◇ ◇ ◇ ◇':'◇ ◇ ◇');updateSkills();
     if(!settings.music)stopMusic();else if(mode==='playing')startMusic();
   }
@@ -202,14 +222,16 @@
     await Promise.all([worker(),worker()]);
   }
   function mobileAssetKeys(group){
-    var enemyNames=group===12?[]:group>=5?['Guard','Denial']:([['Spider'],['Swamp'],['Ember'],['Echo','Vial'],['Guard','Denial']][group]||[]);
+    var enemyNames=group>=12?[]:group>=5?['Guard','Denial']:([['Spider'],['Swamp'],['Ember'],['Echo','Vial'],['Guard','Denial']][group]||[]);
     var motionKeys=['bossMotionViolet','bossMotionHorn','bossMotionBalrog','bossMotionMask','bossMotionLucifer'];
     var fxKeys=global.HapilProjectiles&&global.HapilProjectiles.assetKeysForEncounter?global.HapilProjectiles.assetKeysForEncounter(group):[];
-    var sinKeys=group===12&&global.HapilActors&&global.HapilActors.cultAssetKeysForEncounter?global.HapilActors.cultAssetKeysForEncounter(group):group>=5&&global.HapilActors&&global.HapilActors.sinAssetKeysForEncounter?global.HapilActors.sinAssetKeysForEncounter(group):[];
+    var sinKeys=group>=13&&global.HapilActors&&global.HapilActors.chapter3AssetKeysForEncounter?global.HapilActors.chapter3AssetKeysForEncounter(group):group===12&&global.HapilActors&&global.HapilActors.cultAssetKeysForEncounter?global.HapilActors.cultAssetKeysForEncounter(group):group>=5&&global.HapilActors&&global.HapilActors.sinAssetKeysForEncounter?global.HapilActors.sinAssetKeysForEncounter(group):[];
     var terrainKeys=global.HapilRenderer&&global.HapilRenderer.terrainAssetKeysForEncounter?global.HapilRenderer.terrainAssetKeysForEncounter(group):[];
     var skillKeys=global.HapilBossSkills&&global.HapilBossSkills.assetKeysForEncounter?global.HapilBossSkills.assetKeysForEncounter(group):[];
     if(global.HapilBossSkills&&global.HapilBossSkills.optionalAssetKeysForEncounter)skillKeys=skillKeys.concat(global.HapilBossSkills.optionalAssetKeysForEncounter(group));
     return Object.keys(global.HapilMedia).filter(function(k){
+      // These legacy body/floor images are unused by the source-backed controller scenes.
+      if(group>=13&&['boss','spider','cave'].includes(k))return false;
       if(['gunner','boss','spider','fxResonance','fxSlash','fxThorns','fxArrow','fxParry','fxSilk','fxWindArrow8V6'].includes(k))return true;
       if(group===0&&(/^map\d+$/.test(k)||k==='violetCutin'))return true;
       if(group>=5&&k==='cave')return true;
@@ -223,6 +245,7 @@
   // or to procedural silhouettes. Legacy (-1) uses its own older presentation.
   function invalidActorAsset(candidate,group){
     if(group===-1)return null;
+    if(group>=13&&group<=18)return global.HapilActors&&global.HapilActors.invalidChapter3AssetForEncounter?global.HapilActors.invalidChapter3AssetForEncounter(candidate,group):'controller-actor-contract';
     if(group===12)return global.HapilActors&&global.HapilActors.invalidCultAssetForEncounter?global.HapilActors.invalidCultAssetForEncounter(candidate,group):'cult-actor-contract';
     if(!Number.isInteger(group)||group<0||group>11)return 'encounter-index';
     if(group>=5){
@@ -307,10 +330,11 @@
     if(!retry)seenBossIntros=Object.create(null);
     var retryWorld=world,selectedBoss=Number($('practice-select').value||0);
     var finalPractice=!!practice&&(retry&&retryWorld?!!retryWorld.finalPractice:selectedBoss===12);
-    var practiceIndex=finalPractice?11:retry&&retryWorld&&retryWorld.practiceBoss?(retryWorld.bossIndex||0):selectedBoss;
+    var practiceIndex=finalPractice?11:retry&&retryWorld&&retryWorld.practiceBoss?(retryWorld.bossIndex||0):selectedBoss>=13?selectedBoss-1:selectedBoss;
+    var campaignRevision=retry&&retryWorld?retryWorld.campaignRevision:!practice||selectedBoss>=13?4:3;
     var campaign=retry&&retryWorld?!!retryWorld.campaign:true;
     var seed=(Date.now()^Math.floor(performance.now()*1000))>>>0;
-    try{world=core.createRun({difficulty:settings.difficulty,seed:seed,practiceBoss:!!practice,campaign:campaign,bossIndex:practice?practiceIndex:0,finalPractice:finalPractice});world.skillRotation=settings.skillRotation;setMode('playing');accumulator=0;lastStamp=performance.now();lastRender=0;updateHUD();saveCheckpointIfChanged();if(practice)toast((world.bossName||'보스')+' 연습 · 해당 전투만 진행합니다');$('game-canvas').focus({preventScroll:true});}
+    try{world=core.createRun({difficulty:settings.difficulty,seed:seed,practiceBoss:!!practice,campaign:campaign,campaignRevision:campaign?campaignRevision:undefined,bossIndex:practice?practiceIndex:0,finalPractice:finalPractice});world.skillRotation=settings.skillRotation;setMode('playing');accumulator=0;lastStamp=performance.now();lastRender=0;updateHUD();saveCheckpointIfChanged();if(practice)toast((world.bossName||'보스')+' 연습 · 해당 전투만 진행합니다');$('game-canvas').focus({preventScroll:true});}
     catch(e){showError(e);}
   }
   function continueRun(){
@@ -345,7 +369,8 @@
   function resume(){if(mode!=='paused'||!world)return;unlockAudio();clearInput();accumulator=0;lastStamp=performance.now();lastRender=0;setMode('playing');$('game-canvas').focus({preventScroll:true});}
   function home(){setHidden('settings-modal',true);setMode('title');world=null;lastSkill=null;accumulator=0;syncSettings();updateStory();safeText('score-value','000000');safeText('resonance-value','0');document.querySelectorAll('.phase-list li').forEach(function(e){e.classList.remove('active');});setHidden('continue-button',!savedCheckpoint);syncContinueAvailability();updateStorage();$('start-button').focus({preventScroll:true});}
   function complete(){
-    if(completed||!world)return;completed=true;setMode('result');var won=world.stage==='won';safeText('result-eyebrow',won?'MEMORY RESTORED':'A MEMORY REMAINS');safeText('result-title',won?(world.practiceBoss?'보스 연습 완료':world.campaign?(world.campaignRevision>=3?'일곱 검은 신호의 끝':'가면 너머의 새벽'):'첫 기억을 되찾았습니다'):'기억이 남았습니다');safeText('result-description',world.finalPractice?(won?world.resultReason:'제8부 최종전 독립 연습입니다. 본편 기록은 유지됩니다.'):world.practiceBoss?(world.bossName||'보스')+' 연습 기록 · 본편은 정원에서 이어집니다.':(won?(world.campaign?(world.campaignRevision>=3?'회장의 생체 부트로더와 연산핵을 무너뜨렸습니다. 일곱 검은 신호 편을 마쳤습니다.':'J의 인장으로 루시퍼가 물러납니다. 도움을 청할 길을 찾았습니다.'):'당신의 걸음이 회랑에 새겨졌습니다.'):'다음 걸음은 조금 더 멀리.'));safeText('result-score',pad(world.score));safeText('result-graze',world.graze||0);safeText('result-kills',world.kills||0);safeText('result-hits',world.stats?world.stats.hits:0);
+    if(completed||!world)return;completed=true;setMode('result');var won=world.stage==='won';safeText('result-eyebrow',won?'MEMORY RESTORED':'A MEMORY REMAINS');safeText('result-title',won?(world.practiceBoss?'보스 연습 완료':world.campaign?(world.campaignRevision>=3?'일곱 검은 신호의 끝':'가면 너머의 새벽'):'첫 기억을 되찾았습니다'):'기억이 남았습니다');safeText('result-description',world.finalPractice?(won?world.resultReason:'제8부 최종전 독립 연습입니다. 본편 기록은 유지됩니다.'):world.practiceBoss?(world.bossName||'보스')+' 연습 기록 · 본편은 정원에서 이어집니다.':(won?(world.campaign?(world.campaignRevision>=3?'회장의 생체 부트로더와 연산핵을 무너뜨렸습니다. 일곱 검은 신호 편을 마쳤습니다.':'J의 인장으로 루시퍼가 물러납니다. 도움을 청할 길을 찾았습니다.'):'당신의 걸음이 회랑에 새겨졌습니다.'):'다음 걸음은 조금 더 멀리.'));if(world.campaignRevision===4&&!world.practiceBoss&&won){safeText('result-title','환도 자아의 탄생');safeText('result-description',world.resultReason);}
+    safeText('result-score',pad(world.score));safeText('result-graze',world.graze||0);safeText('result-kills',world.kills||0);safeText('result-hits',world.stats?world.stats.hits:0);
     var resultRunId=world.runId,resultGeneration=campaignGeneration;
     if(store&&!world.practiceBoss){
       // Until completion and readback settle, the old run ID might already be
@@ -375,7 +400,7 @@
   function updateHUD(){
     if(!world)return;var p=world.player,html='';for(var i=0;i<p.maxHp;i++)html+='<span'+(i>=p.hp?' class="empty"':'')+'>'+(i<p.hp?'◆':'◇')+'</span>';if($('health-value').innerHTML!==html)$('health-value').innerHTML=html;$('health-value').setAttribute('aria-label','체력 '+p.hp+' / '+p.maxHp);
     safeText('score-value',pad(world.score));safeText('resonance-value',Math.floor(world.resonance||0));safeText('stage-label',world.campaign&&world.stage==='waves'?routeNote().title:(world.stageLabel||'기억의 입구'));var chapter=world.stage==='waves'?Math.min(3,(world.wave||0)+1):Math.min(3,(world.phase||0)+1);safeText('stage-count',(world.practiceBoss?'연습 · ':'')+pad(chapter,2)+' / 05');
-    if(world.campaign){safeText('stage-count',world.practiceBoss?'패턴 '+((world.phase||0)+1)+' / 3':world.stage==='waves'?'구간 '+(routeOffset(world.bossIndex||0)+(world.wave||0)+1)+' / '+routeCount():'보스 '+((world.bossIndex||0)+1)+' / '+runBossCount());}
+    if(world.campaign){safeText('stage-count',world.practiceBoss?'패턴 '+((world.phase||0)+1)+' / 3':world.stage==='waves'?'구간 '+(routeOffset(world.bossIndex||0)+(world.wave||0)+1)+' / '+routeCount():'전투 구간 '+((world.bossIndex||0)+1)+' / '+runBossCount());}
     if(world.difficulty==='hell')safeText('stage-count','HELL · '+$('stage-count').textContent);
     updateStory();updateSkills();$('phase-wave').classList.toggle('active',world.stage==='waves');$('phase-boss').classList.toggle('active',world.stage==='boss'||world.stage==='bossIntro'||world.stage==='transition');$('phase-end').classList.toggle('active',world.stage==='won');
   }
@@ -398,11 +423,11 @@
   function diagnostics(){
     var hazards=world&&world.hazards?world.hazards:[],heap=null;
     try{var m=performance.memory;if(m&&Number.isFinite(m.usedJSHeapSize))heap={usedBytes:m.usedJSHeapSize,totalBytes:m.totalJSHeapSize,limitBytes:m.jsHeapSizeLimit,scope:'Browser-reported JS heap estimate; excludes GPU and decoded media; GC not controlled'};}catch(e){}
-    return {version:'hapil-cult-practice-v17',candidateRevision:17,mobileRuntime:mobileRuntime,loadedImages:Object.keys(images).length,imageRequestsPending:Object.keys(imageRequests).length,imageRequestsActive:imageActive,mechanicsRevision:world?world.mechanicsRevision:(core?core.MECHANICS_REVISION:2),connectedMapStatus:renderer&&renderer.getMetrics?renderer.getMetrics().sourceStatus||'not-yet-reported':'not-yet-reported',capturedAt:new Date().toISOString(),mode:mode,fixedHz:60,renderTarget:settings.quality==='low'?30:60,rollingWindow:maxSamples,measurementScope:{update:'Main-thread fixed-step simulation and event processing',render:'JavaScript canvas command submission only; not GPU completion',frame:'requestAnimationFrame callback intervals during play'},updateMs:distribution(samples.update,peakUpdate),renderMs:distribution(samples.render,peakRender),frameIntervalMs:distribution(samples.frame,peakFrame),renderedFrames:totalFrames,fixedSteps:totalSteps,pausedLargeGaps:droppedGaps,lastGapReason:lastGapReason,viewport:{width:global.innerWidth,height:global.innerHeight,dpr:global.devicePixelRatio||1,arenaWidth:$('app-stage').clientWidth,arenaHeight:$('app-stage').clientHeight,padHeight:$('touch-pad').clientHeight},entities:world?{bullets:world.bullets.length,shots:world.shots.length,enemies:world.enemies.length,effects:world.effects.length,laserWarnings:hazards.filter(function(h){return h.phase==='warning';}).length,activeLasers:hazards.filter(function(h){return h.phase==='active';}).length,fadingLasers:hazards.filter(function(h){return h.phase==='fade';}).length}:null,terrain:renderer&&renderer.getMetrics?renderer.getMetrics():null,jsHeapEstimate:heap,gpuTimeMs:null,coreStats:world?JSON.parse(JSON.stringify(world.stats||{})):null,assetErrors:assetErrors.slice(),storage:store?Object.assign({},store.status):null};
+    return {version:'hapil-controller-story-v18',candidateRevision:18,mobileRuntime:mobileRuntime,loadedImages:Object.keys(images).length,imageRequestsPending:Object.keys(imageRequests).length,imageRequestsActive:imageActive,mechanicsRevision:world?world.mechanicsRevision:(core?core.MECHANICS_REVISION:2),connectedMapStatus:renderer&&renderer.getMetrics?renderer.getMetrics().sourceStatus||'not-yet-reported':'not-yet-reported',capturedAt:new Date().toISOString(),mode:mode,fixedHz:60,renderTarget:settings.quality==='low'?30:60,rollingWindow:maxSamples,measurementScope:{update:'Main-thread fixed-step simulation and event processing',render:'JavaScript canvas command submission only; not GPU completion',frame:'requestAnimationFrame callback intervals during play'},updateMs:distribution(samples.update,peakUpdate),renderMs:distribution(samples.render,peakRender),frameIntervalMs:distribution(samples.frame,peakFrame),renderedFrames:totalFrames,fixedSteps:totalSteps,pausedLargeGaps:droppedGaps,lastGapReason:lastGapReason,viewport:{width:global.innerWidth,height:global.innerHeight,dpr:global.devicePixelRatio||1,arenaWidth:$('app-stage').clientWidth,arenaHeight:$('app-stage').clientHeight,padHeight:$('touch-pad').clientHeight},entities:world?{bullets:world.bullets.length,shots:world.shots.length,enemies:world.enemies.length,effects:world.effects.length,laserWarnings:hazards.filter(function(h){return h.phase==='warning';}).length,activeLasers:hazards.filter(function(h){return h.phase==='active';}).length,fadingLasers:hazards.filter(function(h){return h.phase==='fade';}).length}:null,terrain:renderer&&renderer.getMetrics?renderer.getMetrics():null,jsHeapEstimate:heap,gpuTimeMs:null,coreStats:world?JSON.parse(JSON.stringify(world.stats||{})):null,assetErrors:assetErrors.slice(),storage:store?Object.assign({},store.status):null};
   }
   function ensureEncounterArt(){
     if(mode==='error')return false;
-    var group=world?(world.finalPractice?12:world.campaign?world.bossIndex:-1):0;
+    var group=world?(world.finalPractice?12:world.campaign?(world.bossIndex>=12?world.bossIndex+1:world.bossIndex):-1):0;
     if(artLoadJob&&artLoadJob.group!==group){artLoadJob.cancelled=true;artLoadJob=null;encounterArtPending=false;artLoadGeneration++;}
     if(encounterArtPending)return false;
     if(encounterArtGroup===group)return true;

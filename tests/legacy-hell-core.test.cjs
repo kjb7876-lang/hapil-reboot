@@ -66,8 +66,8 @@ test('legacy routes end at their own final boss, while new Lucifer clear shows a
 });
 
 test('seven sins preserve actual identities, shared memory forms and sealing semantics',()=>{
- assert.equal(core.CAMPAIGN_BOSSES.length,12);assert.equal(core.CAMPAIGN_SIGNATURES.length,12);
- assert.deepEqual(core.CAMPAIGN_BOSSES.slice(5).map(x=>x.id),['belphegor','leviathan','beelzebub','asmodeus','mammon','wrath','pride']);
+ assert.equal(core.createRun({campaign:true,campaignRevision:3}).bossCount,12);assert.equal(core.CAMPAIGN_SIGNATURES.slice(0,12).length,12);
+ assert.deepEqual(core.CAMPAIGN_BOSSES.slice(5,12).map(x=>x.id),['belphegor','leviathan','beelzebub','asmodeus','mammon','wrath','pride']);
  assert.notEqual(core.CAMPAIGN_BOSSES[4].id,core.CAMPAIGN_BOSSES[11].id);
  for(const index of [9,11]){
   const source=core.createRun({campaign:true,practiceBoss:true,bossIndex:index,seed:10});

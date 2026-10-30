@@ -77,6 +77,37 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
   });
   var SIN_ORDER=Object.freeze(['belphegor','leviathan','beelzebub','asmodeus','mammon','wrath','pride']);
   var WRATH_MANIFESTS=Object.freeze(['sinWrathBearV13','sinWrathWolfV13','sinWrathDragonV13']);
+  // Six chronological encounters in one controller system, not six new people.
+  // The four Drive atlases contain four authored keyposes. The migration core
+  // has three original side-facing keyposes, not a new down-facing animation.
+  function chapterContract(identity,key,scale,anchors,width,height,cell,columns){
+    return Object.freeze({identity:identity,key:key,scale:scale,width:width||512,height:height||512,
+      cell:cell||256,columns:columns||2,anchors:Object.freeze(anchors.map(function(a){return Object.freeze(a);})),
+      authoredKeyposes:anchors.length,fullAnimationCycles:0,manualDisplayAnchors:true,sourcePivotsCertified:false});
+  }
+  var CHAPTER3_CONTRACTS=Object.freeze([
+    chapterContract('chapter3WarManager','chapter3U201Atlas',.67,[[139,127],[141,140],[122,132],[143,118]]),
+    chapterContract('chapter3MercyCorrector','chapter3U202Atlas',.64,[[120,122],[146,117],[124,111],[121,126]]),
+    chapterContract('chapter3MemoryCensor','chapter3U204Atlas',.68,[[139,126],[129,131],[138,139],[129,117]]),
+    chapterContract('chapter3ReversalAdministrator','chapter3U205Atlas',.71,[[135,119],[132,119],[139,121],[130,120]]),
+    chapterContract('chapter3MigrationCore','chapter3MigrationCoreAtlas',.23,[[362,370],[362,370],[362,370]],2172,724,724,3),
+    Object.freeze({identity:'chapter3Controller',key:'chapter3ControllerIdle',width:672,height:384,scale:.47,
+      keys:Object.freeze(['chapter3ControllerIdle','chapter3ControllerRain','chapter3ControllerAttack','chapter3ControllerTransition']),
+      anchors:Object.freeze([[367,163],[342,183],[349,184],[325,149]]),authoredKeyposes:4,fullAnimationCycles:0,manualDisplayAnchors:true,sourcePivotsCertified:false})
+  ]);
+  var CHAPTER3_DRONE_KEYS=Object.freeze(['chapter3DroneIdle','chapter3DroneAttack','chapter3DroneDestroyed']);
+  function chapter3AssetKeysForEncounter(group){
+    var c=CHAPTER3_CONTRACTS[group-13];if(!c)return [];
+    return (c.keys?c.keys.slice():[c.key]).concat(group===18?['chapter3MemoryGate']:[],CHAPTER3_DRONE_KEYS);
+  }
+  function invalidChapter3AssetForEncounter(images,group){
+    var c=CHAPTER3_CONTRACTS[group-13];if(!c)return 'chapter3-encounter-unsupported';
+    var keys=chapter3AssetKeysForEncounter(group);
+    for(var i=0;i<keys.length;i++){
+      var key=keys[i],im=images&&images[key],size=key==='chapter3MemoryGate'?[1671,941]:CHAPTER3_DRONE_KEYS.indexOf(key)>=0?[512,512]:[c.width,c.height];
+      if(!im||im.complete===false||im.naturalWidth!==size[0]||im.naturalHeight!==size[1])return key;
+    }return null;
+  }
   function sinContractFor(world){
     if(!world||!world.campaign||!world.boss)return null;
     var b=world.boss,id=b.kind||world.bossId;
@@ -144,7 +175,8 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
       metrics = {actorDraws:0,bossDraws:0,enemyDraws:0,silkTethers:0,enemySilkTethers:0,bossSilkTethers:0,
         lastBossAsset:null,lastBossPose:null,lastBossIdentity:null,
         usedAssets:{},usedPoses:{},lastSilk:null,authoredPosesPerActor:4,
-        fullAnimationCycles:0,sourcePivotsCertified:false,sinBossDraws:0,lastSinSample:null,wrathManifestDraws:0,lastWrathManifest:null};
+        fullAnimationCycles:0,sourcePivotsCertified:false,sinBossDraws:0,lastSinSample:null,wrathManifestDraws:0,lastWrathManifest:null,
+        chapter3BossDraws:0,chapter3DroneDraws:0,chapter3GateDraws:0,lastChapter3Sample:null};
     }
     beginFrame();
     function ready(contract) {
@@ -169,6 +201,7 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
     }
     function drawBoss(ctx, world, x, y, width, opacity) {
       if(world&&world.finalPractice&&world.boss&&world.boss.kind==='cult-leader')return drawCultBoss(ctx,world,x,y,width,opacity);
+      if(world&&world.campaignRevision>=4&&world.bossIndex>=12&&world.bossIndex<=17)return drawChapter3Boss(ctx,world,x,y,width,opacity);
       var sin=sinContractFor(world);
       if(sin)return drawSinBoss(ctx,world,sin,x,y,width,opacity);
       if(motionPresentation&&motionPresentation.drawBoss(ctx,world,x,y,width,opacity)){
@@ -192,6 +225,27 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
       }else key = drawPose(ctx,contract,state,x,y,scale,angle,opacity);
       metrics.bossDraws++; metrics.lastBossAsset=key; metrics.lastBossPose=state; metrics.lastBossIdentity=identity;
       return true;
+    }
+    function drawChapter3Boss(ctx,world,x,y,width,opacity){
+      var c=CHAPTER3_CONTRACTS[world.bossIndex-12],b=world.boss,group=world.bossIndex+1;
+      if(!c||!b||b.artKey!==c.identity||!finite(x)||!finite(y)||invalidChapter3AssetForEncounter(images,group))return false;
+      var age=finite(b.releaseTick)&&b.releaseTick>=0?world.tick-b.releaseTick:Infinity;
+      var frame=age>=0&&age<12?2:b.action==='charge'?1:b.action==='recover'?3:0;
+      if(c.authoredKeyposes===3&&frame===3)frame=0;
+      var key=c.keys?c.keys[frame]:c.key,anchor=c.anchors[frame],scale=c.scale*clamp(value(width,230)/230,.1,world.stage==='bossIntro'?2.5:1);
+      var cell=c.cell||c.width,sx=c.keys?0:frame%c.columns*cell,sy=c.keys?0:Math.floor(frame/c.columns)*cell,sw=c.keys?c.width:cell,sh=c.keys?c.height:cell;
+      ctx.save();ctx.globalAlpha*=clamp(value(opacity,1),0,1);ctx.translate(x,y);
+      if(group===18){
+        // Intact, non-damaging source overlay behind the controller. No door
+        // destruction, break-up, substitute body or invented guardian persona.
+        ctx.save();ctx.globalAlpha*=.48;ctx.drawImage(images.chapter3MemoryGate,0,0,1671,941,-126,-60,252,142);ctx.restore();metrics.chapter3GateDraws++;
+      }
+      ctx.rotate(clamp(value(b.lean,0),-1,1)*.007);
+      ctx.drawImage(images[key],sx,sy,sw,sh,-anchor[0]*scale,-anchor[1]*scale,sw*scale,sh*scale);ctx.restore();
+      var poseName=['prepare','charge','release','recover'][frame];metrics.actorDraws++;metrics.bossDraws++;metrics.chapter3BossDraws++;
+      metrics.lastBossAsset=key;metrics.lastBossIdentity=b.kind||world.bossId;metrics.lastBossPose=poseName;
+      metrics.usedAssets[key]=(metrics.usedAssets[key]||0)+1;metrics.usedPoses[poseName]=(metrics.usedPoses[poseName]||0)+1;
+      metrics.lastChapter3Sample={frame:frame,key:key,sourceRect:[sx,sy,sw,sh],anchor:anchor,scale:scale,position:[x,y],combatPosition:[x,y],authoredKeyposes:c.authoredKeyposes,fullAnimationCycles:0,sourcePivotsCertified:false,actualReleaseTick:b.releaseTick,releaseAge:finite(age)?age:null};return true;
     }
     function drawCultBoss(ctx,world,x,y,width,opacity){
       if(!finite(x)||!finite(y)||invalidCultAssetForEncounter(images,12))return false;
@@ -277,6 +331,14 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
     }
     function drawEnemy(ctx, world, e) {
       if (!world || !world.campaign || !e || !finite(e.x) || !finite(e.y)) return false;
+      if(e.archetype==='chapter3-drone'){
+        // Three authored states only. Moving and hit states retain idle art.
+        var key=e.action==='destroyed'?'chapter3DroneDestroyed':e.action==='attack'?'chapter3DroneAttack':'chapter3DroneIdle',im=images[key];
+        if(!im||im.complete===false||im.naturalWidth!==512||im.naturalHeight!==512)return false;
+        if(e.age<0)return true;
+        ctx.save();ctx.translate(e.x,e.y);ctx.rotate(clamp(value(e.lean,0),-1,1)*.025);ctx.drawImage(im,0,0,512,512,-64,-64,128,128);ctx.restore();
+        metrics.actorDraws++;metrics.enemyDraws++;metrics.chapter3DroneDraws++;metrics.usedAssets[key]=(metrics.usedAssets[key]||0)+1;return true;
+      }
       var identity = e.archetype === 'weaver' ? 'spider' : e.archetype === 'wraith' ? 'swamp' : e.archetype === 'ember' ? 'ember' : ['echo','vial','guard','denial'].includes(e.archetype) ? e.archetype : null;
       var contract = CONTRACTS[identity];
       if (!contract || !ready(contract)) return false;
@@ -289,6 +351,7 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
     return {beginFrame:beginFrame,drawBoss:drawBoss,drawEnemy:drawEnemy,
       getMetrics:function () { return Object.assign(JSON.parse(JSON.stringify(metrics)),{downwardMotion:motionPresentation?motionPresentation.getMetrics():null}); }};
   }
-  global.HapilActors = Object.freeze({create:create,contracts:CONTRACTS,sinContracts:SIN_CONTRACTS,
+  global.HapilActors = Object.freeze({create:create,contracts:CONTRACTS,sinContracts:SIN_CONTRACTS,chapter3Contracts:CHAPTER3_CONTRACTS,
+    chapter3AssetKeysForEncounter:chapter3AssetKeysForEncounter,invalidChapter3AssetForEncounter:invalidChapter3AssetForEncounter,
     sinContractFor:sinContractFor,sinAssetKeysForEncounter:sinAssetKeysForEncounter,invalidSinAssetForEncounter:invalidSinAssetForEncounter,cultAssetKeysForEncounter:cultAssetKeysForEncounter,invalidCultAssetForEncounter:invalidCultAssetForEncounter});
 }(typeof window !== 'undefined' ? window : globalThis));

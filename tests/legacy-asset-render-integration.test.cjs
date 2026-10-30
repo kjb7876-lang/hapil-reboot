@@ -5,7 +5,8 @@ const test=require('node:test'),assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path');
 const {createCanvas,loadImage}=require(require.resolve('@napi-rs/canvas',{paths:[process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES||'',path.resolve(__dirname,'..')]}));
 const core=require('../src/core.js');
-const encounterIndices=Array.from({length:core.CAMPAIGN_BOSSES.length},(_,i)=>i);
+// Historical revision-three rendering matrix; revision-four sources have their own full contract tests.
+const encounterIndices=Array.from({length:12},(_,i)=>i);
 require('../src/projectiles.js');require('../src/render.js');
 const API=global.HapilProjectiles;
 const raw=fs.readFileSync(path.join(__dirname,'../src/media.js'),'utf8');

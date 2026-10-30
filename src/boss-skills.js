@@ -31,16 +31,22 @@
   var CULT_IMPACT=Object.freeze({key:'cultDriveImpact',width:512,height:512,crop:Object.freeze([0,0,512,512]),authoredFrames:1,turn:.22});
   var CULT_STITCH=Object.freeze({key:'cultDriveStitch',width:512,height:512,crop:Object.freeze([0,0,512,512]),authoredFrames:1,turn:.22});
   var CULT_LANCE=Object.freeze({key:'cultLance',width:512,height:192,crop:Object.freeze([0,0,512,192]),authoredFrames:1,turn:.22});
+  var CH3_LANCE=Object.freeze({key:'chapter3Lance',width:512,height:192,crop:Object.freeze([0,0,512,192]),authoredFrames:1,turn:.16});
+  var CH3_BEAM=Object.freeze({key:'chapter3Beam',width:768,height:144,crop:Object.freeze([0,0,768,144]),authoredFrames:1,turn:0});
   var CACHE_BYTES = 2 * 1024 * 1024, CACHE_ENTRIES = 24, STAMP_SIZE = 96;
   function finite(n) { return typeof n === 'number' && Number.isFinite(n); }
   function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
   function validIndex(i) { return Number.isInteger(i) && i >= 0 && i < ENCOUNTERS.length; }
   function specsFor(i) { return validIndex(i) ? ENCOUNTERS[i] : null; }
+  function chapterSpecs(i){return Number.isInteger(i)&&i>=13&&i<=18?{cast:CH3_LANCE,release:CH3_LANCE,laser:CH3_BEAM}:null;}
   function ready(images, s) { var im = s && images && images[s.key]; return !!(im && im.complete !== false && im.naturalWidth === s.width && im.naturalHeight === s.height); }
   function assetKeysForEncounter() { return []; }
   function optionalAssetKeysForEncounter(i) {
     var entry = specsFor(i), keys = [];
     if(i===12)return ['cultDriveFold','cultDriveImpact','cultDriveStitch'];
+    // These are already required damage materials. Do not classify them as
+    // optional here: app's optional filter must never drop required images.
+    if(i>=13)return [];
     if (entry) ['cast', 'release', 'laser'].forEach(function (role) { var spec = entry[role]; if (spec && keys.indexOf(spec.key) < 0) keys.push(spec.key); });
     return keys;
   }
@@ -85,7 +91,8 @@
     }
     function draw(ctx, world, low) {
       if (!world || !world.campaign || world.stage !== 'boss' || !world.boss || !finite(world.tick)) return;
-      var index = world.finalPractice ? 12 : world.bossIndex, entry = world.finalPractice ? {cast:world.phase===1?CULT_STITCH:CULT_FOLD,release:world.phase===2?CULT_IMPACT:CULT_LANCE,laser:CULT_LANCE} : specsFor(index); if (!entry) return;
+      var chapter=world.campaignRevision>=4&&world.bossIndex>=12&&world.bossIndex<=17;
+      var index = world.finalPractice ? 12 : chapter?world.bossIndex+1:world.bossIndex, entry = world.finalPractice ? {cast:world.phase===1?CULT_STITCH:CULT_FOLD,release:world.phase===2?CULT_IMPACT:CULT_LANCE,laser:CULT_LANCE} : chapter?chapterSpecs(index):specsFor(index); if (!entry) return;
       if (encounter !== index) { clear(); encounter = index; }
       var limit = low ? 4 : 8; metrics.skillDrawLimit = limit;
       var b = world.boss, progress = clamp(b.actionProgress || 0, 0, 1);

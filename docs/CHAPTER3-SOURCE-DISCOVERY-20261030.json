@@ -1,0 +1,899 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "canonicalSource": {
+    "filename": "스토리월드_최종본_통합_20261029(1).txt",
+    "sha256": "e069b22f4ee33c80e1b8e2e407583a865efec5d01b6440408f0e3389d82cabaa",
+    "chapter3Order": [
+      "scene24/u201",
+      "scene25/u202",
+      "scene26/u204",
+      "scene27/u205",
+      "scene28/u206",
+      "scene29/u203"
+    ],
+    "authority": "Latest attached canonical narrative overrides historical role names and route aliases."
+  },
+  "sourceRepository": {
+    "name": "kjb7876-lang/hapil1",
+    "commit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+    "readOnly": true,
+    "method": "Official GitHub connector for metadata/smallfiles and normal read-only filtered clone for >1MB source blobs. No source remote mutation."
+  },
+  "repositoryAssets": [
+    {
+      "source": "assets/generated-v31224/actors-normalized/c4c64ee058cc_controller_attack.webp",
+      "gitBlobSHA": "499da4b89be2a44c8fadba2228efb4d2ed37e409",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/c4c64ee058cc_controller_attack.webp",
+      "sha256": "ee7a2d409dab8df05a1455f314d07ead6c507730e4c13f6fd1944701edcc56e5",
+      "bytes": 51488,
+      "dimensions": [
+        672,
+        384
+      ],
+      "mode": "RGBA",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/generated-v31224/actors-normalized/c5859bd35492_controller_idle.webp",
+      "gitBlobSHA": "24e9c98f5ef3571d67ea08e576ed611d282a7ba2",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/c5859bd35492_controller_idle.webp",
+      "sha256": "57572d1817eb492873e20c771cb1a46f02acf7e2f8a9ddde84a46fdd893458ed",
+      "bytes": 38690,
+      "dimensions": [
+        672,
+        384
+      ],
+      "mode": "RGBA",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/generated-v31224/actors-normalized/12ca1a97fb0a_controller_rain.webp",
+      "gitBlobSHA": "1bd4a963cb6a2698cd52a2f6649ee2b809f49fa2",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/12ca1a97fb0a_controller_rain.webp",
+      "sha256": "f883e208c90ed4e4173f23563f037eb75e4eb977297d7f5e64cebe936338da1c",
+      "bytes": 45882,
+      "dimensions": [
+        672,
+        384
+      ],
+      "mode": "RGBA",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/generated-v31224/actors-normalized/543a490d2cf2_controller_transition.webp",
+      "gitBlobSHA": "10723563c4e9d2f7d8a5a2c9d47d2cb4a95cead0",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/543a490d2cf2_controller_transition.webp",
+      "sha256": "7a2ea2a9cef73f8c84d67317ef99305be2b878d57fd32b0ac9eaea50de5015b9",
+      "bytes": 56132,
+      "dimensions": [
+        672,
+        384
+      ],
+      "mode": "RGBA",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/generated-v31224/actors-normalized/85f150dbf0f7_controller_guardian.webp",
+      "gitBlobSHA": "9cf720e552a67af25d0b158b1dbe368b73bca8bd",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/85f150dbf0f7_controller_guardian.webp",
+      "sha256": "0ba5ea7e8b1defd7e488e790c940c8f8f6310732fbef6411f4d87e2615f283f4",
+      "bytes": 77588,
+      "dimensions": [
+        672,
+        384
+      ],
+      "mode": "RGBA",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/vfx/v31323/boss/u203-boss/control-lance.webp",
+      "gitBlobSHA": "4b1f924bc4691cd38e3ade4ba8122bd458bbd476",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/control-lance.webp",
+      "sha256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+      "bytes": 29140,
+      "dimensions": [
+        512,
+        192
+      ],
+      "mode": "RGBA",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/vfx/v31330/u203-boss/beam.webp",
+      "gitBlobSHA": "f335cafe44b64c5dbf2dee75ae48b01dbd4a31f1",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/beam.webp",
+      "sha256": "630a74006bc13b02614445ce91aa87d12ca32f0e17a54100360629a2fb3d0be2",
+      "bytes": 52734,
+      "dimensions": [
+        768,
+        144
+      ],
+      "mode": "RGBA",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/maps/generated-v31213/u203_controller_memory_nexus.jpg",
+      "gitBlobSHA": "11b2ea6dfeb6bedd2cfae820c963045fb11b0353",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/u203_controller_memory_nexus.jpg",
+      "sha256": "afa5dab58544cf1294e278e98ee74a30df99854ff984183051435893d5dedf83",
+      "bytes": 448814,
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "mode": "RGB",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/u2/demon_drone_idle.png",
+      "gitBlobSHA": "568f839a54871e32a73311377c20075d49d988da",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/demon_drone_idle.png",
+      "sha256": "fe5a1aee2cac38719ccb40e319ea455f876b2bdb20ff36577505d5a3a31f702a",
+      "bytes": 58007,
+      "dimensions": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/u2/demon_drone_attack.png",
+      "gitBlobSHA": "e59159a1d46937c8f59c9105793f831ee3d91903",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/demon_drone_attack.png",
+      "sha256": "b70abecbf2f1dc6b02da9378a1b098be992729297c2b8dade9dd14a956915874",
+      "bytes": 54125,
+      "dimensions": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/u2/demon_drone_destroyed.png",
+      "gitBlobSHA": "82d8f010b9d87fcec3768c4448b48a72d09cade6",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/demon_drone_destroyed.png",
+      "sha256": "5b571612ca80e062235231b16ee2828f68a38452cd32b822fabff30409961b64",
+      "bytes": 70878,
+      "dimensions": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/rc210/controller-memory-gate.png",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "gitBlobSHA": "677b8efb91bcd4db11b5391a449e273f755ce010",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/controller-memory-gate.png",
+      "sha256": "ce3bfa2b39fc64d3f886fb286e1b836b7562728c8ab84005d49a91c9fbfb7fb8",
+      "bytes": 414247,
+      "dimensions": [
+        1671,
+        941
+      ],
+      "mode": "RGBA",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/u2/door.png",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "gitBlobSHA": "cc5bdc89173b313ead79a357baf1eac91782ea41",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/door.png",
+      "sha256": "50e6275c12f2da4d39095113f0c84d8a5b44186539c2b40a6197016eb9ab8b23",
+      "bytes": 327902,
+      "dimensions": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/rc140/story-cycle-motions/u206-mid.png",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "gitBlobSHA": "2f8f01cdc6b5c59e7986f02b604682dd94d48dd2",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/hapil1-readonly/assets/rc140/story-cycle-motions/u206-mid.png",
+      "sha256": "101ab5a8742368d192b585fe4a909ef39213f122bcbe5bee1d934b0838b1efa4",
+      "bytes": 1227321,
+      "dimensions": [
+        2172,
+        724
+      ],
+      "mode": "RGBA",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/rc140/story-cycle-motions/u201-mid.png",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "gitBlobSHA": "5308bd0fe56684fe89f57becd876ecf275a0a39c",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/hapil1-readonly/assets/rc140/story-cycle-motions/u201-mid.png",
+      "sha256": "c68a766dee2cda53a61d82c5925f966df280a06dab51acf23d62770b7132d238",
+      "bytes": 1659560,
+      "dimensions": [
+        2172,
+        724
+      ],
+      "mode": "RGBA",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/rc140/story-cycle-motions/u203-mid.png",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "gitBlobSHA": "9e1a44ea4952238d94b732b8f1e80f1db1d6c501",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/hapil1-readonly/assets/rc140/story-cycle-motions/u203-mid.png",
+      "sha256": "ca61d11a547144d2221e49d4a1416271e9e74b8355952ae88259e4932127b8a6",
+      "bytes": 1174181,
+      "dimensions": [
+        2172,
+        724
+      ],
+      "mode": "RGBA",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/rc140/story-cycle-motions/u202-mid.png",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "gitBlobSHA": "f35c66fa9566a7c5a5e688500d13e7c1b4a858c2",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/hapil1-readonly/assets/rc140/story-cycle-motions/u202-mid.png",
+      "sha256": "2dae881d555a259288bcfe857d8fa32d3fe8fceb1b459326822c731fba6cc02e",
+      "bytes": 1162982,
+      "dimensions": [
+        2172,
+        724
+      ],
+      "mode": "RGBA",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/generated-v3128/maps/u2_memory_gate_v3128.jpg",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "gitBlobSHA": "02b065a810d26ce0350df81fe54d558b6ee4071a",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/hapil1-readonly/assets/generated-v3128/maps/u2_memory_gate_v3128.jpg",
+      "sha256": "0eedfd6b9ec263de1a43af5af6b8eadd2327d30cbf0c2783e167833516a49ac6",
+      "bytes": 251516,
+      "dimensions": [
+        960,
+        600
+      ],
+      "mode": "RGB",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/generated-v3125/maps/u2_memory_migration.jpg",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "gitBlobSHA": "910a55d0ceb45cd94bd9d9f1b52a32d399fd4de5",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/hapil1-readonly/assets/generated-v3125/maps/u2_memory_migration.jpg",
+      "sha256": "7f2ca446df7548ed3914b5f0603ed945d306a0393da7bf15fcea05e646a042d1",
+      "bytes": 438792,
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "decoded": true,
+      "pixelsInspected": true
+    },
+    {
+      "source": "assets/generated-v3125/maps/u2_war_loop.jpg",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "gitBlobSHA": "872139b7a9508e2f5a1ff39a3e1c19d013465dce",
+      "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/hapil1-readonly/assets/generated-v3125/maps/u2_war_loop.jpg",
+      "sha256": "50652acebcb60c2f2e51363cf3253a0a097706b43bffb017d4f4a5c750b338e4",
+      "bytes": 435547,
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "decoded": true,
+      "pixelsInspected": true
+    }
+  ],
+  "drive": {
+    "folderId": "11a6asLJUYINwK-aTaaEcGl5irACB44wR",
+    "guideId": "1AzSZD34uNRGLsM1YF2AgslnX-ZsqKEMW",
+    "method": "Official Drive fetch(download_raw_file=true,include_base64=false), followed provided streamed download URL. Metadata read first.",
+    "archives": [
+      {
+        "part": 5,
+        "driveId": "1CWZvUGFDEetT2tzB3Q7_PsmkulkavTQR",
+        "url": "https://drive.google.com/file/d/1CWZvUGFDEetT2tzB3Q7_PsmkulkavTQR/view",
+        "sha256": "513ec6badc424cdf9bc1f440ef71c3d866b52bfff19aba1803f16909277834ba",
+        "bytes": 1660238,
+        "archiveCRC": "pass"
+      },
+      {
+        "part": 6,
+        "driveId": "14IVc0zL708RrRTSUDks15qIA7hXw77Tv",
+        "url": "https://drive.google.com/file/d/14IVc0zL708RrRTSUDks15qIA7hXw77Tv/view",
+        "sha256": "473c692dd0a513ed19d0df7f52e5f1880440e0caa0a8975c69afb2c62f9652c7",
+        "bytes": 2516873,
+        "archiveCRC": "pass"
+      },
+      {
+        "part": 7,
+        "driveId": "1jgHu6LzYX53zJkZhhycHE3M1wLA4MS1E",
+        "url": "https://drive.google.com/file/d/1jgHu6LzYX53zJkZhhycHE3M1wLA4MS1E/view",
+        "sha256": "ef6f9a7745bd5ece834a244d653227f674b40ea24ba99a8f5c38bfaa22935bff",
+        "bytes": 2767946,
+        "archiveCRC": "pass"
+      },
+      {
+        "part": 8,
+        "driveId": "1vVJ1fj1ckrPhgNWYkas-38_7shnnupN9",
+        "url": "https://drive.google.com/file/d/1vVJ1fj1ckrPhgNWYkas-38_7shnnupN9/view",
+        "sha256": "6da3332fbc9c1948c72738782dd648290123dc471c23e767c4a0459baded1725",
+        "bytes": 2543631,
+        "archiveCRC": "pass"
+      },
+      {
+        "part": 11,
+        "driveId": "1JQQ9PbO4ODopNzRrax3kX3DTjdxDV80j",
+        "url": "https://drive.google.com/file/d/1JQQ9PbO4ODopNzRrax3kX3DTjdxDV80j/view",
+        "sha256": "8549af813208977ab68cb88012178a849e9ff2fcbd37ff46d65cb2050159ba83",
+        "bytes": 457251,
+        "archiveCRC": "pass"
+      }
+    ],
+    "members": [
+      {
+        "sourceMember": "originals/u205-mid.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/originals/u205-mid.png",
+        "sha256": "2da445db102a6bafc45fb61b8c38e6235891cd99c843d895dcf2c26e31b903b5",
+        "bytes": 1250211,
+        "dimensions": [
+          1254,
+          1254
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": false
+      },
+      {
+        "sourceMember": "originals/u201-mid.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/originals/u201-mid.png",
+        "sha256": "6c1f61bb3e9a1853e3e1d561cb3ed91055d349d2884a8e2b8db44eca617aff5b",
+        "bytes": 1204014,
+        "dimensions": [
+          1254,
+          1254
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": false
+      },
+      {
+        "sourceMember": "originals/u204-mid.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/originals/u204-mid.png",
+        "sha256": "34d2973b5608ea7c281169efbc2f090949a6e51658816f6debc72248298af3cd",
+        "bytes": 1149454,
+        "dimensions": [
+          1254,
+          1254
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": false
+      },
+      {
+        "sourceMember": "originals/u202-mid.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/originals/u202-mid.png",
+        "sha256": "ad0fe85e68cb63b95917b5cb26f4aa971da2f780add23e185f7863106a437c8c",
+        "bytes": 1808694,
+        "dimensions": [
+          1254,
+          1254
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": false
+      },
+      {
+        "sourceMember": "provenance/u204-mid/u204-mid.prompt.txt",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/provenance/u204-mid/u204-mid.prompt.txt",
+        "sha256": "b40166384bb6310b2d2a281c90b5054345de36763419aae3d3b59dd140be0e94",
+        "bytes": 1511
+      },
+      {
+        "sourceMember": "provenance/u201-mid/u201-mid-v2.prompt.txt",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/provenance/u201-mid/u201-mid-v2.prompt.txt",
+        "sha256": "9c427daa119bd3b1c142014dd2a771cf7f1a2c527e5e8a8e7ee8882b033d9136",
+        "bytes": 636
+      },
+      {
+        "sourceMember": "provenance/u201-mid/u201-mid.prompt.txt",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/provenance/u201-mid/u201-mid.prompt.txt",
+        "sha256": "e79587f16da388da5eecfc02db461c05f8ae7672f97b4b84f39074ac5e7cf405",
+        "bytes": 1537
+      },
+      {
+        "sourceMember": "provenance/u201-mid/u201-mid-v3.prompt.txt",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/provenance/u201-mid/u201-mid-v3.prompt.txt",
+        "sha256": "1f3a3e26141575af0ac307434aedcdc78e419a4ddf7fd980fd535a036a06c2c1",
+        "bytes": 896
+      },
+      {
+        "sourceMember": "provenance/u205-mid/u205-mid.prompt.txt",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/provenance/u205-mid/u205-mid.prompt.txt",
+        "sha256": "a1309e9997817ce3f8cc62e7f03db55a4bc923fd03255f257bcf2023f1ad8f32",
+        "bytes": 1410
+      },
+      {
+        "sourceMember": "provenance/u202-mid/u202-mid-v3.prompt.txt",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/provenance/u202-mid/u202-mid-v3.prompt.txt",
+        "sha256": "ca604a465c97e837a1cd5c528a098493ed45693a2532dc4499d41dc5a378d54d",
+        "bytes": 611
+      },
+      {
+        "sourceMember": "provenance/u202-mid/u202-mid.prompt.txt",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/provenance/u202-mid/u202-mid.prompt.txt",
+        "sha256": "8decab7c05546a49176162e86495f6c9eac5ebd09e5a409c32cbb8f5f44a2d5c",
+        "bytes": 1466
+      },
+      {
+        "sourceMember": "provenance/u202-mid/u202-mid-v2.prompt.txt",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/provenance/u202-mid/u202-mid-v2.prompt.txt",
+        "sha256": "997a027740bfa6f581290a47837ac7becd91b7ca4b3a66fcb643ba9961725619",
+        "bytes": 603
+      },
+      {
+        "sourceMember": "derived/u204-mid/u204-mid-pose-4-256.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u204-mid/u204-mid-pose-4-256.png",
+        "sha256": "c7431866c94a01e49c25d40ee64bb64e789e13eb422de4f2054d375ce94545a8",
+        "bytes": 42512,
+        "dimensions": [
+          256,
+          256
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u204-mid/u204-mid-pose-1-256.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u204-mid/u204-mid-pose-1-256.png",
+        "sha256": "1ef44578a3b4ba405627f34644d53ac5574f0c5195329e56f8a7b835f56d1b13",
+        "bytes": 44484,
+        "dimensions": [
+          256,
+          256
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u204-mid/u204-mid-pose-2-256.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u204-mid/u204-mid-pose-2-256.png",
+        "sha256": "35d426e69bb26aeff7a3b1168af9638f2ad9095dd5cd71262212148a86f6ef39",
+        "bytes": 46978,
+        "dimensions": [
+          256,
+          256
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u204-mid/u204-mid-pose-3-256.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u204-mid/u204-mid-pose-3-256.png",
+        "sha256": "2f3b43025a04915844ef8b577e24b9a8a17cfc60a8b0ee4b5c9c57819a40ed38",
+        "bytes": 40115,
+        "dimensions": [
+          256,
+          256
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u204-mid/u204-mid-contact-offline.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u204-mid/u204-mid-contact-offline.png",
+        "sha256": "cb9b6d7198489d0323b1e0c5b47cdfe14a385bcba3368d65f8b9b9aeeb5ce8bf",
+        "bytes": 130232,
+        "dimensions": [
+          512,
+          512
+        ],
+        "mode": "RGB",
+        "decoded": true,
+        "pixelsInspected": false
+      },
+      {
+        "sourceMember": "derived/u204-mid/DERIVATION.json",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u204-mid/DERIVATION.json",
+        "sha256": "cbd8bc14906c271e82e7faa9cda0b25f6a2e246472140f6ebba9ef7a8ed85473",
+        "bytes": 2217
+      },
+      {
+        "sourceMember": "derived/u204-mid/u204-mid-atlas-512.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u204-mid/u204-mid-atlas-512.png",
+        "sha256": "2a70b0bd57b5909788141abd0f8681f4c4f72cc97dfff35634a4fa06fc04c34b",
+        "bytes": 172996,
+        "dimensions": [
+          512,
+          512
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u201-mid/u201-mid-atlas-512.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u201-mid/u201-mid-atlas-512.png",
+        "sha256": "80f7321f14b7ebcb199e752ee81c875c7f7e5d3ad522ed88d96f0a3e14d69080",
+        "bytes": 185407,
+        "dimensions": [
+          512,
+          512
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u201-mid/u201-mid-contact-offline.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u201-mid/u201-mid-contact-offline.png",
+        "sha256": "12be8822cb09f76b77583a6fc94c3a9f82e64a074cfb669262e7542721f16212",
+        "bytes": 137163,
+        "dimensions": [
+          512,
+          512
+        ],
+        "mode": "RGB",
+        "decoded": true,
+        "pixelsInspected": false
+      },
+      {
+        "sourceMember": "derived/u201-mid/u201-mid-pose-2-256.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u201-mid/u201-mid-pose-2-256.png",
+        "sha256": "d1d6ea63488662bdf247c889b232cf916e756b87ff7bb0c1348d838aa82e146f",
+        "bytes": 40185,
+        "dimensions": [
+          256,
+          256
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u201-mid/u201-mid-pose-4-256.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u201-mid/u201-mid-pose-4-256.png",
+        "sha256": "1fe6ffee510f46dcab0fb6041ec9e20f3b93e3ac46bb77663700ece920db959c",
+        "bytes": 49909,
+        "dimensions": [
+          256,
+          256
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u201-mid/u201-mid-pose-3-256.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u201-mid/u201-mid-pose-3-256.png",
+        "sha256": "13259b5099a78d5297c2b0bc7ee3e2a44b7a5a7a8d52ad37a28c8217c71af2e4",
+        "bytes": 46974,
+        "dimensions": [
+          256,
+          256
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u201-mid/DERIVATION.json",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u201-mid/DERIVATION.json",
+        "sha256": "4aed3a43855a9e7a101b2e155cd9c0747adc391c9bef583601ac0015db5ffbd6",
+        "bytes": 3776
+      },
+      {
+        "sourceMember": "derived/u201-mid/u201-mid-pose-1-256.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u201-mid/u201-mid-pose-1-256.png",
+        "sha256": "b3e08d2a0ccad1e016d285e0f0bcf516227a73f2490f858ee73e55a881a63103",
+        "bytes": 49185,
+        "dimensions": [
+          256,
+          256
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u205-mid/u205-mid-atlas-512.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u205-mid/u205-mid-atlas-512.png",
+        "sha256": "8db8887ccff85d983414676e0d6e1761ca51aa6acf9991783a7cea2a6b92570f",
+        "bytes": 184436,
+        "dimensions": [
+          512,
+          512
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u205-mid/u205-mid-pose-1-256.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u205-mid/u205-mid-pose-1-256.png",
+        "sha256": "62fdd2e9f62e45f17f5d6ee8f3bc052e2ff923bfecd9f3fcd22a1be7d5b13eb8",
+        "bytes": 46979,
+        "dimensions": [
+          256,
+          256
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u205-mid/u205-mid-contact-offline.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u205-mid/u205-mid-contact-offline.png",
+        "sha256": "69e17f46db09befee45a7e45610fcbe32a0c64c665d65a894dedb85c841bec89",
+        "bytes": 137668,
+        "dimensions": [
+          512,
+          512
+        ],
+        "mode": "RGB",
+        "decoded": true,
+        "pixelsInspected": false
+      },
+      {
+        "sourceMember": "derived/u205-mid/u205-mid-pose-2-256.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u205-mid/u205-mid-pose-2-256.png",
+        "sha256": "45424383eef368960e74c294d788809e4256cfbb179fc55839dec0107fca2a68",
+        "bytes": 45404,
+        "dimensions": [
+          256,
+          256
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u205-mid/u205-mid-pose-4-256.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u205-mid/u205-mid-pose-4-256.png",
+        "sha256": "766af9a9a8423e7bd5117e8a85c63738760e99f69bdacef318f0fee179b32108",
+        "bytes": 47385,
+        "dimensions": [
+          256,
+          256
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u205-mid/u205-mid-pose-3-256.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u205-mid/u205-mid-pose-3-256.png",
+        "sha256": "8e0bd70236c34f2a20f203ce2a0ff30b4ea63fd04d053e540ac6409c4735ab5f",
+        "bytes": 45716,
+        "dimensions": [
+          256,
+          256
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u205-mid/DERIVATION.json",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u205-mid/DERIVATION.json",
+        "sha256": "2f623ad5f9ba0f2c72df18474f0faddb033d026a39515877ffc31d15f90c1944",
+        "bytes": 2204
+      },
+      {
+        "sourceMember": "derived/u202-mid/u202-mid-atlas-512.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u202-mid/u202-mid-atlas-512.png",
+        "sha256": "2996937c9ebd04cff93798d143ef7b51734e21385788b2dac0ed1c7b9009e8e5",
+        "bytes": 270537,
+        "dimensions": [
+          512,
+          512
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u202-mid/u202-mid-pose-1-256.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u202-mid/u202-mid-pose-1-256.png",
+        "sha256": "c694f29a33e36bf92d70b35542f64405f3bedd4c029ce1966714d28d3c752008",
+        "bytes": 63415,
+        "dimensions": [
+          256,
+          256
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u202-mid/u202-mid-pose-4-256.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u202-mid/u202-mid-pose-4-256.png",
+        "sha256": "886c98fff47b575f53cddf604008c9f03e1b654e5dbc6f4a74a304be8973ecf3",
+        "bytes": 71966,
+        "dimensions": [
+          256,
+          256
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u202-mid/u202-mid-pose-3-256.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u202-mid/u202-mid-pose-3-256.png",
+        "sha256": "080f970ae85b857e272b2cbb5a659176dfc376987a353e09d4d1d67c3c1015fa",
+        "bytes": 61850,
+        "dimensions": [
+          256,
+          256
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u202-mid/u202-mid-contact-offline.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u202-mid/u202-mid-contact-offline.png",
+        "sha256": "8757d99f55ab9a7456a1c444370bc10f7b42b256c4623ed7831dfb748344989a",
+        "bytes": 210804,
+        "dimensions": [
+          512,
+          512
+        ],
+        "mode": "RGB",
+        "decoded": true,
+        "pixelsInspected": false
+      },
+      {
+        "sourceMember": "derived/u202-mid/u202-mid-pose-2-256.png",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u202-mid/u202-mid-pose-2-256.png",
+        "sha256": "6cfa0a21bf34f149cdfed1db8effcc22e1b8b5d53340811f41a816211c0ab315",
+        "bytes": 73779,
+        "dimensions": [
+          256,
+          256
+        ],
+        "mode": "RGBA",
+        "decoded": true,
+        "pixelsInspected": true
+      },
+      {
+        "sourceMember": "derived/u202-mid/DERIVATION.json",
+        "materializedPath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u202-mid/DERIVATION.json",
+        "sha256": "a60436c0a14dbc3749db7fcf6be507f808898a342915133fd0a07741b1b6a7dc",
+        "bytes": 2679
+      }
+    ],
+    "claim": "Four authored downward keyposes per u201/u202/u204/u205. Not fully interpolated animation. Upstream center pivots and timing unverified; gameplay conversion must inspect anchors and tie release to actual damage.",
+    "frameAtlasPixelEquality": "pass: all16 individual256 frames match corresponding2x2 atlasquadrants exactly"
+  },
+  "sourceRoleMappings": [
+    {
+      "routes": [
+        "u201",
+        "u205"
+      ],
+      "actorIds": [
+        "u201-mid",
+        "u205-mid"
+      ],
+      "name": "제4단계 전쟁관리자",
+      "atlas": {
+        "path": "./assets/rc140/story-cycle-motions/u201-mid.png",
+        "width": 2172,
+        "height": 724,
+        "sha256": "c68a766dee2cda53a61d82c5925f966df280a06dab51acf23d62770b7132d238"
+      },
+      "baseHeight": 574,
+      "sourceActor": "u201-mid"
+    },
+    {
+      "routes": [
+        "u202",
+        "u204"
+      ],
+      "actorIds": [
+        "u202-mid",
+        "u204-mid"
+      ],
+      "name": "제8단계 자비 교정관",
+      "atlas": {
+        "path": "./assets/rc140/story-cycle-motions/u202-mid.png",
+        "width": 2172,
+        "height": 724,
+        "sha256": "2dae881d555a259288bcfe857d8fa32d3fe8fceb1b459326822c731fba6cc02e"
+      },
+      "baseHeight": 503,
+      "sourceActor": "u202-mid"
+    },
+    {
+      "routes": [
+        "u203"
+      ],
+      "actorIds": [
+        "u203-mid"
+      ],
+      "name": "기억의 문 수호 프레임",
+      "atlas": {
+        "path": "./assets/rc140/story-cycle-motions/u203-mid.png",
+        "width": 2172,
+        "height": 724,
+        "sha256": "ca61d11a547144d2221e49d4a1416271e9e74b8355952ae88259e4932127b8a6"
+      },
+      "baseHeight": 501,
+      "sourceActor": "u203-mid"
+    },
+    {
+      "routes": [
+        "u206"
+      ],
+      "actorIds": [
+        "u206-mid"
+      ],
+      "name": "제17단계 중앙이주 코어",
+      "atlas": {
+        "path": "./assets/rc140/story-cycle-motions/u206-mid.png",
+        "width": 2172,
+        "height": 724,
+        "sha256": "101ab5a8742368d192b585fe4a909ef39213f122bcbe5bee1d934b0838b1efa4"
+      },
+      "baseHeight": 437,
+      "sourceActor": "u206-mid"
+    }
+  ],
+  "pixelFindings": [
+    "Controller normalized idle/attack/rain/transition are one humanoid; controller_guardian is a separate gray mechanical frame, not its pose.",
+    "RC210 gate is a transparent gate/control-thread overlay behind original controller, not a standalone monster body.",
+    "RC140 u203-mid is gray guardian frame with 3 keyposes. u206-mid is cyan migration core with 3 keyposes. Their attacks face mostly sideways; do not claim authored downward animation.",
+    "Drive B12 u201/u202/u204/u205 each has distinct 4 keyposes; release pose points toward screen bottom. Do not claim continuity from four keyposes.",
+    "Maps are authored background paintings. They do not establish terrain collision.",
+    "No new keyposes were generated during discovery; these are verified existing user-authorized assets."
+  ],
+  "limitations": [
+    "This discovery is asset-level decode/hash/pixel review, not gameplay, GPU, mobile or full-story validation.",
+    "Drive keyword searches controller, 통제, dream and Chapter3 yielded no image matches; this is not proof of absence across Drive. Body checkpoint discovery supplied relevant assets.",
+    "No paid API, extra credits, credential changes, security changes or network policy changes."
+  ]
+}

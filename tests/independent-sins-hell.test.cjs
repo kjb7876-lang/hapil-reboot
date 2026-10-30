@@ -3,6 +3,8 @@
 // These do not replace normal-health natural replays or actual device QA.
 const test=require('node:test'),assert=require('node:assert/strict');
 const core=require('../src/core.js'),store=require('../src/storage.js')._test;
+// Historical revision-three contract is immutable even when the live roster grows.
+const revisionThreeBosses=core.CAMPAIGN_BOSSES.slice(0,12),revisionThreeSignatures=core.CAMPAIGN_SIGNATURES.slice(0,12);
 const clone=x=>structuredClone(x);
 function fixture(index,phase,difficulty='normal',seed=591){
  const w=core.createRun({campaign:true,practiceBoss:true,bossIndex:index,difficulty,seed,runId:'independent-sins-fixture'});
@@ -15,13 +17,13 @@ function sample(w){return JSON.stringify({tick:w.tick,stage:w.stage,boss:w.boss,
 test('revision three extends rather than renames the five published encounters and owns twelve distinct signature identities',()=>{
  assert.equal(core.CAMPAIGN_REVISION,3);
  assert.deepEqual(core.CAMPAIGN_BOSSES.slice(0,5).map(b=>b.id),['violet','horn','balrog','mask','lucifer']);
- assert.equal(core.CAMPAIGN_BOSSES.length,12);
- assert.deepEqual(core.CAMPAIGN_BOSSES.slice(5).map(b=>b.id),['belphegor','leviathan','beelzebub','asmodeus','mammon','wrath','pride']);
- assert.deepEqual(core.CAMPAIGN_BOSSES.slice(5).map(b=>b.sceneIds),[['ep1b02'],['ep1b03'],['ep1b04'],['ep1b05'],['ep1b06','ep1b06b'],['ep1b07'],['ep1b08','ep1b09']]);
- assert.equal(new Set(core.CAMPAIGN_BOSSES.map(b=>b.id)).size,12);
- assert.equal(core.CAMPAIGN_SIGNATURES.length,12);
- assert.equal(new Set(core.CAMPAIGN_SIGNATURES.map(b=>b.id)).size,12);
- for(const b of core.CAMPAIGN_BOSSES){assert(b.name&&b.zone&&b.artKey);assert.equal(b.patterns.length,3);assert.equal(b.hp.length,3);assert(b.waves.length>=1&&b.waves.length<=3);}
+ assert.equal(revisionThreeBosses.length,12);
+ assert.deepEqual(revisionThreeBosses.slice(5).map(b=>b.id),['belphegor','leviathan','beelzebub','asmodeus','mammon','wrath','pride']);
+ assert.deepEqual(revisionThreeBosses.slice(5).map(b=>b.sceneIds),[['ep1b02'],['ep1b03'],['ep1b04'],['ep1b05'],['ep1b06','ep1b06b'],['ep1b07'],['ep1b08','ep1b09']]);
+ assert.equal(new Set(revisionThreeBosses.map(b=>b.id)).size,12);
+ assert.equal(revisionThreeSignatures.length,12);
+ assert.equal(new Set(revisionThreeSignatures.map(b=>b.id)).size,12);
+ for(const b of revisionThreeBosses){assert(b.name&&b.zone&&b.artKey);assert.equal(b.patterns.length,3);assert.equal(b.hp.length,3);assert(b.waves.length>=1&&b.waves.length<=3);}
 });
 
 test('Mammon child memory and chairman cyborg keep actor identity while restoring their own phase artwork',()=>{
@@ -39,7 +41,7 @@ test('Mammon child memory and chairman cyborg keep actor identity while restorin
 test('normal and gentle route fixtures require 45 seconds of ordinary-enemy time before each boss introduction',()=>{
  // Select each encounter only by a validated safe-boundary save. Immunity is
  // set after restoration solely to isolate the route timer from dodge skill.
- for(const difficulty of ['normal','gentle'])for(let index=0;index<core.CAMPAIGN_BOSSES.length;index++){
+ for(const difficulty of ['normal','gentle'])for(let index=0;index<revisionThreeBosses.length;index++){
   const s=core.checkpoint(core.createRun({campaign:true,difficulty,seed:96,runId:'route-duration-fixture'}));
   s.bossIndex=index;const validated=store.validateCheckpoint(s);assert(validated);
   const w=core.restoreCheckpoint(validated);w.player.invulnerableUntil=999999;
@@ -104,7 +106,7 @@ test('a synthetic lethal-shot fixture ends legacy routes at their own final boss
 
 test('all extended combat phases and modes are seeded, bounded and keep committed laser geometry through activation',()=>{
  let measured=0,extendedPatterns=new Set();
- for(const difficulty of ['normal','gentle','hell'])for(let index=0;index<core.CAMPAIGN_BOSSES.length;index++)for(let phase=0;phase<3;phase++){
+ for(const difficulty of ['normal','gentle','hell'])for(let index=0;index<revisionThreeBosses.length;index++)for(let phase=0;phase<3;phase++){
   const a=fixture(index,phase,difficulty),b=fixture(index,phase,difficulty),hazards=new Map();let births=0;
   for(let t=0;t<1000;t++){
    core.step(a,{});core.step(b,{});measured++;
@@ -124,5 +126,5 @@ test('all extended combat phases and modes are seeded, bounded and keep committe
   assert.equal(a.stats.poolPressure,0,`${index}/${phase}/${difficulty}: pool pressure`);assert.equal(a.stats.droppedGroups,0);assert.equal(a._deferred.length,0);
  }
  assert.equal(measured,108000);
- for(const signature of core.CAMPAIGN_SIGNATURES.slice(5))assert(extendedPatterns.has(signature.id),`missing actual sin signature ${signature.id}`);
+ for(const signature of revisionThreeSignatures.slice(5))assert(extendedPatterns.has(signature.id),`missing actual sin signature ${signature.id}`);
 });

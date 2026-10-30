@@ -110,7 +110,7 @@ test('actual same-boss material stays visibly dense throughout the capsule and a
 test('seven material palettes keep naming priority, explicit secondary use and dense-source detail within a bounded cache', async () => {
   const f = await materialFixture();
   try {
-    assert.equal(API.paletteList.length, 13);
+    assert.equal(API.paletteList.length, 19);
     assert.equal(API.paletteFor({bossIndex:11,finalPractice:true}).id,'cult-leader');
     assert.equal(API.paletteFor({ bossIndex: 11 }).primary, '#eee6d6', 'white-suit chairman keeps named white primary');
     const ids = ['belphegor', 'leviathan', 'beelzebub', 'asmodeus', 'mammon', 'wrath', 'pride'];
