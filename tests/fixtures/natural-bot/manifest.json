@@ -3697,6 +3697,6 @@
       "sha256": "158edf1a7d1617383c6648d633f8e27ba15b5eb7ea308030ea5fa42ef089205a"
     }
   ],
-  "replayValidatedCoreSha256": "c48cba834ec15c0adaa60006c2f0a1fa0b75c4de0dfea9023c1aa7b4a7a358ee",
+  "replayValidatedCoreSha256": "52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a",
   "replayValidationScope": "All six unchanged ordinary-health revision-three input files, exact end state and every checkpoint plus 180 subsequent real inputs; no engine or health override. Original recordedCoreSha256 is retained as recording provenance."
 }

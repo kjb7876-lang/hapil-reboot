@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "createdAt": "2026-10-30T06:27:22.996Z",
+  "scope": "Ordinary-health CPU isolated special-practice, product checkpoint-selected starting phase. Legal directional inputs with unmodified HP/damage/autoattack/skills; no777/no external immunity. Not fullstory, naturalhuman/browser/GPU/mobile.",
+  "policyConfig": {
+    "route": "centre",
+    "y": 420,
+    "beam": 36,
+    "commit": 4,
+    "horizon": 144
+  },
+  "policy": "Existing public-current-threat curved forecast,9legal directions. Read-only proxy selects this forecast in NORMAL too; actualworld difficulty remains unchanged. No future emissions or RNG are read. With no current bullets or announced hazards, the policy stands still.",
+  "directions": [
+    [
+      0,
+      0
+    ],
+    [
+      4,
+      0
+    ],
+    [
+      -4,
+      0
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      0,
+      -4
+    ],
+    [
+      2.828,
+      2.828
+    ],
+    [
+      2.828,
+      -2.828
+    ],
+    [
+      -2.828,
+      2.828
+    ],
+    [
+      -2.828,
+      -2.828
+    ]
+  ],
+  "sourceHashes": {
+    "src/core.js": "52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d",
+    "tools/probe-v21-natural-health.cjs": "41e88ee2b878063cc955cf4ba78ac767dbf4cefff8044d9f5a3e4564a9356c4e"
+  },
+  "sourceHashesAfter": {
+    "src/core.js": "52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d",
+    "tools/probe-v21-natural-health.cjs": "41e88ee2b878063cc955cf4ba78ac767dbf4cefff8044d9f5a3e4564a9356c4e"
+  },
+  "sourceHashGuardPassed": true,
+  "summary": {
+    "cases": 1,
+    "won": 1,
+    "lost": 0,
+    "unfinished": 0,
+    "poolPressure": 0,
+    "droppedGroups": 0
+  },
+  "records": [
+    {
+      "elapsedSeconds": 5.549,
+      "bossIndex": 6,
+      "bossId": "leviathan",
+      "difficulty": "hell",
+      "phase": 2,
+      "seed": 813,
+      "runId": "v21-natural-hell-6-2-813",
+      "combatRevision": 21,
+      "stage": "won",
+      "ticks": 2484,
+      "startHP": 3,
+      "hp": 1,
+      "hits": 2,
+      "score": 6820,
+      "phaseTicks": [
+        2484
+      ],
+      "enteredPhases": [
+        2
+      ],
+      "maxCopiesObserved": 2,
+      "distinctCopyRecords": 18,
+      "newPatternIds": [
+        "pressure-boss-v21",
+        "pressure-envy-crossflow-v21"
+      ],
+      "peakBullets": 172,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "질투의 귀 레비아탄 · 연습 완료",
+      "input": {
+        "file": "v21-natural-inputs/boss-06-hell-phase-2-seed-813.moves.gz",
+        "bytes": 422,
+        "sha256": "4a55e5edb0d26ebeff27cf5c330c2a8a2ef648ba73524779ca2b7811e7a70f82",
+        "ticks": 2484
+      }
+    }
+  ]
+}

@@ -688,8 +688,22 @@
       // Only boss-summoned support is drawn over the boss portrait. Ordinary
       // enemies keep their previous order; hazards/player remain above both.
       for(var i=0;i<enemies.length;i++)if(!enemies[i].summoned)drawOne(enemies[i]);
+      drawCombatCopies(world);
       if(world.boss&&!(world.stage==='transition'&&world.transitionNarrative)){var b=world.boss;var opacity=b.opacity==null?1:b.opacity;bossPortrait(world,b.x,b.y,230,opacity);}
       for(var j=0;j<enemies.length;j++)if(enemies[j].summoned)drawOne(enemies[j]);
+    }
+    function drawCombatCopies(world){
+      if(world.stage!=='boss'||!world.boss||!actorPresentation||!actorPresentation.drawCombatCopy)return;
+      var copies=world.boss.combatCopies||[],tick=world.tick||0;
+      // Core owns the two-projector budget, exact positions, lifetime and
+      // release ticks. The cosmetic fade never moves an emitter or hides a
+      // released projectile/laser; all real attacks are drawn above bodies.
+      for(var i=0;i<Math.min(2,copies.length);i++){
+        var copy=copies[i];if(!Number.isFinite(copy.born)||!Number.isFinite(copy.expireAt)||tick<copy.born||tick>=copy.expireAt)continue;
+        var progress=clamp((tick-copy.born)/12,0,1),base=Number.isFinite(copy.opacity)?clamp(copy.opacity,.45,.85):copy.kind==='illusion'?.58:.72;
+        var age=Number.isFinite(copy.releaseTick)&&copy.releaseTick>=0?tick-copy.releaseTick:Infinity,opacity=age>=0&&age<6?.92:base*(.4+.6*progress);
+        if(actorPresentation.drawCombatCopy(ctx,world,copy,opacity))mapMetrics.combatCopyDraws++;
+      }
     }
     function drawShots(world) {
       var shots=world.shots||[],entry=global.HapilStoryAssets&&global.HapilStoryAssets.forWorld(world);
@@ -779,7 +793,7 @@
       ctx.textAlign='right';ctx.font=hudTextLayout.healthFit.font;ctx.fillStyle='#bfc5d2';ctx.fillText(hudTextLayout.healthFit.text,341,55,93);
       ctx.fillStyle='#343047';ctx.fillRect(19,59,322,3);ctx.fillStyle=info.tone;ctx.fillRect(19,59,322*clamp(b.hp/b.maxHp,0,1),3);
       readability.box=[13,19,334,45];readability.timerText=timerText;readability.displayName=hudTextLayout.nameFit.text;readability.displayPattern=hudTextLayout.labelFit.text;readability.textLayoutBuilds=textLayoutBuilds;mapMetrics.battleReadability=readability;
-      if(world.stage==='boss'&&b.specialPatternLabel){mapMetrics.specialPatternCue={id:b.specialPatternId||'',label:b.specialPatternLabel,displayLabel:hudTextLayout.labelFit.text,hint:String(b.patternHint||''),box:[19,35,220,12],hintRenderedInArena:false,hintLocation:b.patternHint?'external-pad-caption':null,damageGeometryOwnedByCore:true};}
+      if(world.stage==='boss'&&b.specialPatternLabel){mapMetrics.specialPatternCue={id:b.specialPatternId||'',label:b.specialPatternLabel,displayLabel:hudTextLayout.labelFit.text,hint:String(b.patternHint||''),box:[19,35,220,12],hintRenderedInArena:false,hintLocation:null,damageGeometryOwnedByCore:true};}
       ctx.restore();
     }
     function bossEntrance(world){
@@ -866,7 +880,7 @@
       }
     }
     function draw(world,alpha,time,lowQuality) {
-      lightweight=!!lowQuality;mapMetrics.atlasFxLimit=lightweight?12:24;mapMetrics.specialPatternCue=null;mapMetrics.patternEntryCue=null;mapMetrics.battleReadability=null;mapMetrics.warningContrastStrokes=0;mapMetrics.playerShotDraws=0;mapMetrics.playerShotAsset=null;mapMetrics.playerShotCacheBytes=playerShotStamp?96*64*4:0;
+      lightweight=!!lowQuality;mapMetrics.atlasFxLimit=lightweight?12:24;mapMetrics.specialPatternCue=null;mapMetrics.patternEntryCue=null;mapMetrics.battleReadability=null;mapMetrics.warningContrastStrokes=0;mapMetrics.combatCopyDraws=0;mapMetrics.playerShotDraws=0;mapMetrics.playerShotAsset=null;mapMetrics.playerShotCacheBytes=playerShotStamp?96*64*4:0;
       if(actorPresentation&&actorPresentation.beginFrame)actorPresentation.beginFrame();
       if(projectilePresentation&&projectilePresentation.beginFrame)projectilePresentation.beginFrame();
       if(bossSkillPresentation&&bossSkillPresentation.beginFrame)bossSkillPresentation.beginFrame();

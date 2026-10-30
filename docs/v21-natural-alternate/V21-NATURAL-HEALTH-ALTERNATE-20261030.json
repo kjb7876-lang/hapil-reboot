@@ -1,0 +1,340 @@
+{
+  "schema": 1,
+  "createdAt": "2026-10-30T06:26:54.583Z",
+  "scope": "Ordinary-health CPU isolated special-practice, product checkpoint-selected starting phase. Legal directional inputs with unmodified HP/damage/autoattack/skills; no777/no external immunity. Not fullstory, naturalhuman/browser/GPU/mobile.",
+  "policyConfig": {
+    "route": "left",
+    "y": 500,
+    "beam": 20,
+    "commit": 4,
+    "horizon": 96
+  },
+  "policy": "Existing public-current-threat curved forecast,9legal directions. Read-only proxy selects this forecast in NORMAL too; actualworld difficulty remains unchanged. No future emissions or RNG are read. With no current bullets or announced hazards, the policy stands still.",
+  "directions": [
+    [
+      0,
+      0
+    ],
+    [
+      4,
+      0
+    ],
+    [
+      -4,
+      0
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      0,
+      -4
+    ],
+    [
+      2.828,
+      2.828
+    ],
+    [
+      2.828,
+      -2.828
+    ],
+    [
+      -2.828,
+      2.828
+    ],
+    [
+      -2.828,
+      -2.828
+    ]
+  ],
+  "sourceHashes": {
+    "src/core.js": "52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d",
+    "tools/probe-v21-natural-health.cjs": "41e88ee2b878063cc955cf4ba78ac767dbf4cefff8044d9f5a3e4564a9356c4e"
+  },
+  "sourceHashesAfter": {
+    "src/core.js": "52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d",
+    "tools/probe-v21-natural-health.cjs": "41e88ee2b878063cc955cf4ba78ac767dbf4cefff8044d9f5a3e4564a9356c4e"
+  },
+  "sourceHashGuardPassed": true,
+  "summary": {
+    "cases": 7,
+    "won": 6,
+    "lost": 1,
+    "unfinished": 0,
+    "poolPressure": 0,
+    "droppedGroups": 0
+  },
+  "records": [
+    {
+      "elapsedSeconds": 1.882,
+      "bossIndex": 1,
+      "bossId": "horn",
+      "difficulty": "hell",
+      "phase": 2,
+      "seed": 813,
+      "runId": "v21-natural-hell-1-2-813",
+      "combatRevision": 21,
+      "stage": "won",
+      "ticks": 2102,
+      "startHP": 3,
+      "hp": 2,
+      "hits": 1,
+      "score": 7080,
+      "phaseTicks": [
+        2102
+      ],
+      "enteredPhases": [
+        2
+      ],
+      "maxCopiesObserved": 2,
+      "distinctCopyRecords": 16,
+      "newPatternIds": [
+        "pressure-boss-v21",
+        "pressure-sinking-memory-v21"
+      ],
+      "peakBullets": 188,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "늪지대의 뿔악마 · 연습 완료",
+      "input": {
+        "file": "v21-natural-inputs/boss-01-hell-phase-2-seed-813.moves.gz",
+        "bytes": 375,
+        "sha256": "4f961b209db128c385d88f1f11cd370a4bdbf7e3574445b3ab5b24939d441f16",
+        "ticks": 2102
+      }
+    },
+    {
+      "elapsedSeconds": 2.325,
+      "bossIndex": 3,
+      "bossId": "mask",
+      "difficulty": "hell",
+      "phase": 2,
+      "seed": 813,
+      "runId": "v21-natural-hell-3-2-813",
+      "combatRevision": 21,
+      "stage": "won",
+      "ticks": 2471,
+      "startHP": 3,
+      "hp": 3,
+      "hits": 0,
+      "score": 7745,
+      "phaseTicks": [
+        2471
+      ],
+      "enteredPhases": [
+        2
+      ],
+      "maxCopiesObserved": 2,
+      "distinctCopyRecords": 18,
+      "newPatternIds": [
+        "pressure-boss-v21",
+        "pressure-mirror-feathers-v21"
+      ],
+      "peakBullets": 168,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "초천사의 웃는 가면 · 연습 완료",
+      "input": {
+        "file": "v21-natural-inputs/boss-03-hell-phase-2-seed-813.moves.gz",
+        "bytes": 408,
+        "sha256": "860eaab86e07f6fe77495ab2775b0f88812ece40fc40d65fa623dafb035d9366",
+        "ticks": 2471
+      }
+    },
+    {
+      "elapsedSeconds": 2.265,
+      "bossIndex": 4,
+      "bossId": "lucifer",
+      "difficulty": "hell",
+      "phase": 2,
+      "seed": 813,
+      "runId": "v21-natural-hell-4-2-813",
+      "combatRevision": 21,
+      "stage": "won",
+      "ticks": 2811,
+      "startHP": 3,
+      "hp": 1,
+      "hits": 2,
+      "score": 6775,
+      "phaseTicks": [
+        2811
+      ],
+      "enteredPhases": [
+        2
+      ],
+      "maxCopiesObserved": 2,
+      "distinctCopyRecords": 20,
+      "newPatternIds": [
+        "pressure-boss-v21",
+        "pressure-orbit-faces-v21"
+      ],
+      "peakBullets": 190,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "코스믹 가면 루시퍼 · 연습 완료",
+      "input": {
+        "file": "v21-natural-inputs/boss-04-hell-phase-2-seed-813.moves.gz",
+        "bytes": 466,
+        "sha256": "9044d72f886999f35b527cfbec9d3e0daf7a20df0f67d0d8c0b34a6c216f09cb",
+        "ticks": 2811
+      }
+    },
+    {
+      "elapsedSeconds": 1.843,
+      "bossIndex": 6,
+      "bossId": "leviathan",
+      "difficulty": "hell",
+      "phase": 2,
+      "seed": 813,
+      "runId": "v21-natural-hell-6-2-813",
+      "combatRevision": 21,
+      "stage": "lost",
+      "ticks": 2042,
+      "startHP": 3,
+      "hp": 0,
+      "hits": 3,
+      "score": 1065,
+      "phaseTicks": [],
+      "enteredPhases": [
+        2
+      ],
+      "maxCopiesObserved": 2,
+      "distinctCopyRecords": 16,
+      "newPatternIds": [
+        "pressure-boss-v21",
+        "pressure-envy-crossflow-v21"
+      ],
+      "peakBullets": 168,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "기억이 흐려졌습니다",
+      "input": {
+        "file": "v21-natural-inputs/boss-06-hell-phase-2-seed-813.moves.gz",
+        "bytes": 352,
+        "sha256": "f58260d18a7816ecd08cca65b446ec4215821006b75c1658139825d57c8a6d6c",
+        "ticks": 2042
+      }
+    },
+    {
+      "elapsedSeconds": 1.84,
+      "bossIndex": 8,
+      "bossId": "asmodeus",
+      "difficulty": "hell",
+      "phase": 2,
+      "seed": 813,
+      "runId": "v21-natural-hell-8-2-813",
+      "combatRevision": 21,
+      "stage": "won",
+      "ticks": 2797,
+      "startHP": 3,
+      "hp": 1,
+      "hits": 2,
+      "score": 6610,
+      "phaseTicks": [
+        2797
+      ],
+      "enteredPhases": [
+        2
+      ],
+      "maxCopiesObserved": 2,
+      "distinctCopyRecords": 20,
+      "newPatternIds": [
+        "pressure-boss-v21",
+        "pressure-red-stage-v21"
+      ],
+      "peakBullets": 128,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "색욕의 귀 아스모데우스 · 연습 완료",
+      "input": {
+        "file": "v21-natural-inputs/boss-08-hell-phase-2-seed-813.moves.gz",
+        "bytes": 459,
+        "sha256": "617bbff0fa8fc2cac5c0cc70ceeef27313a28c69cd5f8b79e03a977987bb91f5",
+        "ticks": 2797
+      }
+    },
+    {
+      "elapsedSeconds": 1.907,
+      "bossIndex": 10,
+      "bossId": "wrath",
+      "difficulty": "hell",
+      "phase": 2,
+      "seed": 813,
+      "runId": "v21-natural-hell-10-2-813",
+      "combatRevision": 21,
+      "stage": "won",
+      "ticks": 2598,
+      "startHP": 3,
+      "hp": 1,
+      "hits": 2,
+      "score": 6835,
+      "phaseTicks": [
+        2598
+      ],
+      "enteredPhases": [
+        2
+      ],
+      "maxCopiesObserved": 2,
+      "distinctCopyRecords": 20,
+      "newPatternIds": [
+        "pressure-boss-v21",
+        "pressure-fire-beats-v21"
+      ],
+      "peakBullets": 188,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "분노의 귀 · 연습 완료",
+      "input": {
+        "file": "v21-natural-inputs/boss-10-hell-phase-2-seed-813.moves.gz",
+        "bytes": 400,
+        "sha256": "ded26a3e8cbc17020344738c3491616ef441e0a0ae1147ad78c00201c198174b",
+        "ticks": 2598
+      }
+    },
+    {
+      "elapsedSeconds": 1.217,
+      "bossIndex": 34,
+      "bossId": "cult-leader",
+      "difficulty": "hell",
+      "phase": 2,
+      "seed": 813,
+      "runId": "v21-natural-hell-34-2-813",
+      "combatRevision": 21,
+      "stage": "won",
+      "ticks": 1310,
+      "startHP": 3,
+      "hp": 2,
+      "hits": 1,
+      "score": 6135,
+      "phaseTicks": [
+        1310
+      ],
+      "enteredPhases": [
+        2
+      ],
+      "maxCopiesObserved": 2,
+      "distinctCopyRecords": 10,
+      "newPatternIds": [
+        "pressure-boss-v21",
+        "pressure-samong-authority-v21"
+      ],
+      "peakBullets": 227,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "교만의 사이보그 교주 · 연습 완료",
+      "input": {
+        "file": "v21-natural-inputs/boss-34-hell-phase-2-seed-813.moves.gz",
+        "bytes": 213,
+        "sha256": "1a6a1629b5af88cb00f2e730eeeb212eae40213a8984a30e46b859670fe146fc",
+        "ticks": 1310
+      }
+    }
+  ]
+}

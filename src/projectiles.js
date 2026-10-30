@@ -162,7 +162,7 @@
   var CACHE_LIMIT=96,CACHE_BYTES=4*1024*1024,SCALE=3,PAD=1,CELL=128;
   function finite(n){return typeof n==='number'&&Number.isFinite(n);}
   function clamp(n,a,b){return Math.max(a,Math.min(b,n));}
-  function storySpec(i,owner){var s=Number.isInteger(i)&&i>=19&&i<=35&&global.HapilStoryAssets&&global.HapilStoryAssets.projectilesForEncounter?global.HapilStoryAssets.projectilesForEncounter(i):null;var id=owner&&typeof owner==='object'?owner.sourceActorId:owner;return s&&id&&s.participants&&s.participants[id]?s.participants[id]:s;}
+  function storySpec(i,owner){var s=Number.isInteger(i)&&i>=19&&i<=35&&global.HapilStoryAssets&&global.HapilStoryAssets.projectilesForEncounter?global.HapilStoryAssets.projectilesForEncounter(i):null;var id=owner&&typeof owner==='object'?(owner.modelActorId||owner.sourceActorId):owner;return s&&id&&s.participants&&s.participants[id]?s.participants[id]:s;}
   function slotForEncounter(i){return i===undefined||i===-1?0:Number.isInteger(i)&&i>=0&&((i<ORBS.length&&ORBS[i])||storySpec(i))?i:-1;}
   function indexFor(w){if(w&&w.finalPractice)return 12;var i=w&&w.bossIndex;if(w&&w.campaignRevision>=5&&Number.isInteger(i)&&i>=18&&i<=34)return slotForEncounter(i+1);if(w&&w.campaignRevision>=4&&Number.isInteger(i)&&i>=12&&i<=17)return i+1;return i>=12?-1:slotForEncounter(i);}
   function paletteAt(i,owner){var story=storySpec(i,owner);return story?story.palette:PALETTE_LIST[i];}
@@ -373,7 +373,11 @@
       var art=tintedArt(s,paletteFor(w,h));if(!art)return false;
       var dx=h.x2-h.x1,dy=h.y2-h.y1,len=Math.sqrt(dx*dx+dy*dy),r=h.width/2;
       var progress=clamp(h.progress||0,0,1),phase=s.frames>1?Math.min(s.frames-1,Math.floor(Math.max(0,finite(h.age)?h.age:0)*1000/s.ms)):0;
-      ctx.save();ctx.globalCompositeOperation='source-over';ctx.globalAlpha=h.phase==='active'?1:Math.max(0,1-progress)*.35;
+      // Broad pressure ribbons retain their complete source-painted damage
+      // footprint while letting separate projectile centers read above them.
+      // Narrow lasers keep full opacity; afterglow remains harmless and uses
+      // only the original fade clock, never a premature active-beam fade.
+      ctx.save();ctx.globalCompositeOperation='source-over';ctx.globalAlpha=h.phase==='active'?(h.pressureCurtain?.72:1):Math.max(0,1-progress)*.35;
       ctx.translate((h.x1+h.x2)/2,(h.y1+h.y2)/2);ctx.rotate(Math.atan2(dy,dx));capsule(ctx,0,0,r,len/2);ctx.clip();slices(ctx,art,phase,0,0,r,len/2);
       if(BEAMS[indexFor(w)]||storySpec(indexFor(w))){var overlay=beamSurface(w,h);if(overlay){ctx.globalAlpha*=lowQuality?.92:1;ctx.drawImage(overlay.canvas,-len/2-r,-r,len+r*2,r*2);metrics.sourceBeamOverlayDraws++;}else metrics.missingOptionalBeamAssets++;}
       ctx.restore();

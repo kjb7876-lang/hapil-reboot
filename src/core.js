@@ -11,6 +11,10 @@
   var W = 360, H = 640, FIXED_DT = 1 / 60, TAU = Math.PI * 2;
   var RULESET = 'hapil-firstbattle-1';
   var HELL_MECHANICS_REVISION=15;
+  // Explicit opt-in: old boundary saves have no combatRevision and retain
+  // their original deterministic encounter. New app runs request revision21.
+  var COMBAT_REVISION=21;
+  var PRESSURE_LIMITS=Object.freeze({cycleTicks:600,warningTicks:90,bossActiveTicks:360,waveActiveTicks:180,bossHellCoverage:.66,bossNormalCoverage:.44,bossGentleCoverage:.22,waveMultiplier:.70,maxCopies:2,cloneTicks:360,illusionTicks:120});
   var HELL_OVERLAP_LIMITS=Object.freeze({cycleTicks:336,warningTicks:108,activeTicks:96,fanBaseSpeed:150,fanMinSpeed:198,fanMaxSpeed:234,rotorMaxDownSpeed:378,rotorMaxTotalSpeed:388,corridorHalfWidth:24});
   var CAPS = Object.freeze({ bullets: 768, shots: 96, enemies: 12, effects: 96, hazards: 40 });
   var PHASE_HP = [1700, 1850, 2000];
@@ -231,6 +235,7 @@
     b.releaseTick=w.tick;
     if(!b.skillReleases)b.skillReleases=[];
     var release={tick:w.tick,kind:kind,patternId:patternId||'',x:x,y:y};if(sourceActorId)release.sourceActorId=sourceActorId;b.skillReleases.push(release);
+    if(sourceActorId&&b.combatCopies){var copySource=b.combatCopies.find(function(c){return c.sourceActorId===sourceActorId;});if(copySource&&copySource.modelActorId)release.modelActorId=copySource.modelActorId;}
     if(b.skillReleases.length>8)b.skillReleases.shift();
   }
   function emit(w, specs) {
@@ -263,7 +268,9 @@
         angle: s.angle, kind: kind, color: s.color || '#c4a2ff', age: 0, ttl: s.ttl || 6.4,
         ownerId: s.ownerId || 0, grazed: false });
       if (added && s.patternId) { added.patternId = s.patternId; added.paletteSlot = s.paletteSlot || 0; }
+      if (added && s.modelActorId) added.modelActorId=s.modelActorId;
       if(added&&s.sourceActorId){added.sourceActorId=s.sourceActorId;var actor=w.boss&&w.boss.participants&&w.boss.participants.find(function(p){return p.id===s.sourceActorId;});if(actor)actor.releaseTick=w.tick;}
+      if(added&&s.sourceActorId&&w.boss&&w.boss.combatCopies){var emittingCopy=w.boss.combatCopies.find(function(c){return c.sourceActorId===s.sourceActorId;});if(emittingCopy)emittingCopy.releaseTick=w.tick;}
       if (added && s.hellLayer) added.hellLayer=s.hellLayer;
       if (added && s.curveRate) { added.curveRate=s.curveRate; added.curveUntil=s.curveUntil; }
       if (added && s.pauseUntil) { added.pauseFrom=s.pauseFrom; added.pauseUntil=s.pauseUntil; }
@@ -289,7 +296,17 @@
     // HELL's additional signature layer contributes its actual bullet
     // composition, without duplicating that signature's own laser cast.
     if(w._hellSignatureOnly)return false;
-    if(w.difficulty==='hell'&&w.stage==='boss'&&w._hellProtectedLane){
+    if(w.combatRevision===COMBAT_REVISION&&w._pressurePlan&&w.tick<w._pressurePlan.expireAt){
+      var protectedPlan=w._pressurePlan;
+      specs=specs.filter(function(s){
+        if(s.pressureCurtain)return true;
+        // One of the two changing passages remains traversable by lasers;
+        // aimed projectiles contest both passages rather than granting immunity.
+        var route=protectedPlan.route;
+        return segmentPairDistanceSquared(s.x,s.y,s.x+Math.cos(s.angle)*680,s.y+Math.sin(s.angle)*680,route.x1,route.y1,route.x2,route.y2)>sq(route.halfWidth+(s.width||8)/2);
+      });
+    }
+    if(w.combatRevision!==COMBAT_REVISION&&w.difficulty==='hell'&&w.stage==='boss'&&w._hellProtectedLane){
       var lane=w._hellProtectedLane;
       specs=specs.filter(function(s){
         return segmentPairDistanceSquared(s.x,s.y,s.x+Math.cos(s.angle)*680,s.y+Math.sin(s.angle)*680,lane.x,450,lane.x,614)>sq(lane.halfWidth+(s.width||(s.kind==='blade'?8:6))/2);
@@ -301,7 +318,7 @@
     var warningTicks = Math.max(54, delay || 54) + (w.difficulty === 'gentle' ? 12 : 0);
     var defaultActiveTicks = w.difficulty === 'gentle' ? 18 : 24, fadeTicks = 15;
     specs.forEach(function (s) {
-      var activeTicks=w.difficulty==='hell'&&s.patternId==='hell-overlap-lattice-v14'?96:defaultActiveTicks;
+      var activeTicks=w.combatRevision===COMBAT_REVISION&&s.pressureCurtain?s.activeTicks:w.difficulty==='hell'&&s.patternId==='hell-overlap-lattice-v14'?96:defaultActiveTicks;
       // One committed capsule is rendered throughout warning, active and fade.
       // No projectile is substituted and its aim never follows either actor.
       var hazard = acquire(w, 'hazards', { id: ++w.idCounter, castId: castId, ownerId: s.ownerId || 0, kind: 'laser', x1: s.x, y1: s.y,
@@ -315,6 +332,8 @@
       // laser warning only; geometry, timing, damage and bullet count do not change.
       if (hazard && s.patternId) { hazard.patternId = s.patternId; hazard.paletteSlot = s.paletteSlot || 0; }
       if(hazard&&s.sourceActorId)hazard.sourceActorId=s.sourceActorId;
+      if(hazard&&s.pressureCurtain)hazard.pressureCurtain=true;
+      if(hazard&&s.modelActorId)hazard.modelActorId=s.modelActorId;
       if (hazard && w.campaign && w.bossIndex === 2) {
         hazard.telegraphKind = 'floor-scar';
         hazard.telegraphHint = '검빛이 켜지기 전, 바닥의 흔적을 읽으세요';
@@ -331,6 +350,7 @@
     var seed = finite(options.seed) ? options.seed >>> 0 : 12345;
     if (!seed) seed = 0x6d2b79f5;
     var gentle = options.difficulty === 'gentle', hell = options.difficulty === 'hell';
+    if(options.combatRevision!==undefined&&options.combatRevision!==COMBAT_REVISION)throw new RangeError('Unsupported combat revision');
     var runId = typeof options.runId === 'string' && /^[A-Za-z0-9_.:-]{1,96}$/.test(options.runId) ? options.runId : 'hapil-' + Date.now().toString(36) + '-' + (++runSequence).toString(36);
     var w = { rulesetVersion: RULESET, mechanicsRevision: 2, runId: runId, seed: seed, rngState: seed, difficulty: gentle ? 'gentle' : hell ? 'hell' : 'normal', practiceBoss: !!options.practiceBoss,
       tick: 0, time: 0, stage: 'waves', stageTime: 0, bossIntroDuration: 2.5, wave: 0, waveTime: 0, waveDuration: 15, phase: 0, phaseTime: 0, phaseTargetDuration: 25, phaseTimeout: 75,
@@ -341,6 +361,7 @@
       nextPhase: null, transitionRemaining: 0, resultReason: '', _pools: { bullets: [], shots: [], enemies: [], effects: [], hazards: [] },
       _warnings: [], _delays: [], _deferred: [], _shotReadyAt: 0, _targetId: 0, _targetUntil: 0, _lastGraze: -9999, _boundaryTick: -1,
       _memoryBucket: 0, _memoryGain: 0, _resBucket: 0, _resGain: 0, _grazeGain: 0, _reservationSince: 0, _starvationReported: false, _checkpoint: null };
+    if(options.combatRevision===COMBAT_REVISION)w.combatRevision=COMBAT_REVISION;
     if (options.finalPractice === true && (options.campaign !== true || options.practiceBoss !== true || options.bossIndex !== 11 || options.campaignRevision !== undefined && options.campaignRevision !== 3)) throw new RangeError('Final battle is a separate practice only');
     if (options.finalPractice === true) w.finalPractice = true;
     if (options.campaign === true) {
@@ -1168,8 +1189,144 @@
     campaignPatternBase(w);
     hellOverlap(w,within,cycle);
   }
+
+  // Revision21 pressure is a real, bounded collision layer. Wide source-art
+  // ribbons occupy66/44 percent of the actual360x640 map while active. These
+  // numbers are geometry targets during the announced pressure window, not
+  // an assertion about windup, recovery or the union of future bullet paths.
+  function pressureCoverageTarget(w,wave) {
+    var target=w.difficulty==='hell'?PRESSURE_LIMITS.bossHellCoverage:w.difficulty==='gentle'?PRESSURE_LIMITS.bossGentleCoverage:PRESSURE_LIMITS.bossNormalCoverage;
+    return target*(wave?PRESSURE_LIMITS.waveMultiplier:1);
+  }
+  function pressureCast(w,ownerId,cycle,wave) {
+    var target=pressureCoverageTarget(w,wave),profile=(cycle+(w.bossIndex||0)+(wave?w.wave:w.phase))%3;
+    var mode=['vertical','horizontal','lattice'][profile];
+    var verticalCoverage=profile===1?0:profile===2?target*.55:target;
+    var horizontalCoverage=profile===0?0:profile===2?(target-verticalCoverage)/(1-verticalCoverage):target;
+    var gaps=[],horizontalGaps=[],specs=[];
+    var id='pressure-'+(wave?'wave':'boss')+'-v21',activeTicks=wave?PRESSURE_LIMITS.waveActiveTicks:PRESSURE_LIMITS.bossActiveTicks;
+    function bands(axis,coverage){
+      var extent=axis==='x'?W:H,gap=extent*(1-coverage)/2;
+      var shift=[-18,18,-6,10][(cycle+(w.bossIndex||0)+w.phase)%4];
+      var first=axis==='x'?90:160,second=axis==='x'?270:520;
+      first=clamp(first+shift,gap/2+2,extent-gap/2-2);
+      second=clamp(second+shift,gap/2+2,extent-gap/2-2);
+      var channel=[{x:axis==='x'?first:180,y:axis==='x'?480:first,halfWidth:gap/2},{x:axis==='x'?second:180,y:axis==='x'?480:second,halfWidth:gap/2}];
+      var intervals=[[0,first-gap/2],[first+gap/2,second-gap/2],[second+gap/2,extent]];
+      intervals.forEach(function(range,i){specs.push({x:axis==='x'?(range[0]+range[1])/2:0,y:axis==='x'?0:(range[0]+range[1])/2,angle:axis==='x'?Math.PI/2:0,width:range[1]-range[0],ownerId:ownerId,paletteSlot:i%2,patternId:id,pressureCurtain:true,activeTicks:activeTicks});});
+      return channel;
+    }
+    if(verticalCoverage)gaps=bands('x',verticalCoverage);
+    if(horizontalCoverage)horizontalGaps=bands('y',horizontalCoverage);
+    var chosen=verticalCoverage?gaps[(cycle+(w.bossIndex||0))%2]:horizontalGaps[1];
+    var lower=horizontalCoverage?horizontalGaps[1]:null;
+    var route=profile===1?{x1:120,y1:lower.y,x2:240,y2:lower.y,halfWidth:Math.min(24,lower.halfWidth-6)}:
+      {x1:chosen.x,y1:lower?Math.max(260,lower.y-lower.halfWidth+6):260,x2:chosen.x,y2:lower?Math.min(614,lower.y+lower.halfWidth-6):614,halfWidth:Math.min(24,chosen.halfWidth-6)};
+    var warningTicks=PRESSURE_LIMITS.warningTicks+(w.difficulty==='gentle'?12:0);
+    var plan={cycle:cycle,born:w.tick,activeAt:w.tick+warningTicks,fadeAt:w.tick+warningTicks+activeTicks,expireAt:w.tick+warningTicks+activeTicks+15,
+      targetCoverage:target,profile:mode,verticalCoverage:verticalCoverage,horizontalCoverage:horizontalCoverage,gaps:gaps,horizontalGaps:horizontalGaps,route:route,routeX:chosen.x,routeY:lower?lower.y:null,routeHalfWidth:route.halfWidth,patternId:id};
+    var previous=w._pressurePlan;w._pressurePlan=plan;
+    if(!warning(w,specs,PRESSURE_LIMITS.warningTicks,wave?'진입로의 교차 압박':'겹쳐 닫히는 압박')){w._pressurePlan=previous;return null;}
+    if(w.boss&&!wave)w.boss.combatPressure=plan;
+    return plan;
+  }
+  function allowsCombatCopies(w) {
+    if(w.finalPractice)return true;
+    // Copies are attacks by an existing hostile actor, never new people or
+    // duplicated protected memories/cores/command-line objects.
+    return w.bossIndex<12||[18,19,20,29,30,33,34].indexOf(w.bossIndex)!==-1;
+  }
+  var PRESSURE_STYLES=['woven-petals','sinking-memory','sword-rain','mirror-feathers','orbit-faces','late-pulse','envy-crossflow','hungry-jaws','red-stage','vault-branches','fire-beats','seven-calculations','defense-relay','mercy-boundary','veto-trace','feedback-return','migration-gates','memory-separation','flute-turn','six-swords','insomnia-veil','defense-intercept','harvest-lower','upper-command','workshop-junction','neural-cable','memory-preserving','six-command-rings','release-thread','time-harvest','castle-ownership','causal-rewind','cult-network','two-circuit-casters','samong-authority'];
+  function pressureStyle(w){return PRESSURE_STYLES[w.finalPractice?34:w.bossIndex]||'woven-petals';}
+  function makeCombatCopies(w,kind,cycle) {
+    var b=w.boss;if(!b||!allowsCombatCopies(w))return;
+    b.combatCopies=[];
+    for(var i=0;i<2;i++){
+      var pair=b.participants&&b.participants[i],id='combat-copy-'+b.id+'-'+cycle+'-'+kind+'-'+i;
+      var destination=kind==='illusion'?(i?312:48):(i?270:90);
+      var c={id:id,sourceActorId:id,x:kind==='illusion'?b.x:destination,y:kind==='illusion'?b.y:166,px:b.x,py:b.y,originX:b.x,originY:b.y,destinationX:destination,
+        artKey:b.artKey,born:w.tick,expireAt:w.tick+(kind==='clone'?PRESSURE_LIMITS.cloneTicks:PRESSURE_LIMITS.illusionTicks),action:'charge',actionProgress:0,releaseTick:-1,opacity:kind==='clone'?.62:.5,kind:kind};
+      if(pair)c.modelActorId=pair.id;
+      b.combatCopies.push(c);
+    }
+  }
+  function pressureFan(w,x,y,source,beat,copy) {
+    var b=w.boss,hell=w.difficulty==='hell',index=w.finalPractice?34:w.bossIndex,style=index%7;
+    var aimAt=Math.atan2(w.player.y-y,w.player.x-x),count=hell?7:w.difficulty==='gentle'?3:5,spread=hell?.115:.15;
+    var kind=style===2||style===6?'blade':style===3||style===5?'needle':'orb';
+    var center=style===0?Math.PI/2+Math.sin(beat*.7+index)*.32:aimAt;
+    var specs=fanSpecs(x,y,center,count,spread,hell?100:88,kind,'#ffffff',b.id);
+    specs.forEach(function(s,i){
+      s.patternId='pressure-'+pressureStyle(w)+'-v21';s.paletteSlot=(beat+(copy?1:0))%2;s._rhythmPrepared=true;s.ttl=5.5;
+      if(source)s.sourceActorId=source;if(copy&&copy.modelActorId)s.modelActorId=copy.modelActorId;
+      if(style===1||style===4){s.speed*=.56;s.acceleration=hell?70:45;s.accelerateAt=.75;s.maxSpeed=hell?205:145;}
+      if(style===2||style===6){s.curveRate=(i%2?1:-1)*(style===2?.20:.13);s.curveUntil=.95;}
+      if(style===5){s.pauseFrom=.40;s.pauseUntil=.76;}
+    });
+    emit(w,specs);
+  }
+  function updateCombatCopies(w) {
+    var b=w.boss;if(!b||!b.combatCopies)return;
+    for(var i=b.combatCopies.length-1;i>=0;i--){
+      var c=b.combatCopies[i],age=w.tick-c.born;
+      if(w.tick>=c.expireAt){b.combatCopies.splice(i,1);continue;}
+      c.px=c.x;c.py=c.y;
+      if(c.kind==='illusion'){
+        var move=clamp(age/60,0,1),ease=move*move*(3-2*move);
+        c.x=c.originX+(c.destinationX-c.originX)*ease;c.y=c.originY+(188-c.originY)*ease;
+        c.action=age<72?'charge':age<84?'attack':'recover';c.actionProgress=clamp(age/72,0,1);
+        if(age===72)pressureFan(w,c.x,c.y,c.sourceActorId,i,c);
+      }else{
+        var cadence=w.difficulty==='hell'?60:w.difficulty==='gentle'?120:90,first=42+i*18;
+        c.action=age<first?'charge':(age-first)%cadence<12?'attack':'recover';c.actionProgress=age<first?age/first:((age-first)%cadence)/cadence;
+        if(age>=first&&(age-first)%cadence===0&&w.tick<c.expireAt-18)pressureFan(w,c.x,c.y,c.sourceActorId,Math.floor((age-first)/cadence)+i,c);
+      }
+    }
+  }
+  function bossPressure(w) {
+    if(w.combatRevision!==COMBAT_REVISION||!w.campaign||!w.boss)return;
+    var t=Math.round(w.phaseTime*60)-1,cycle=Math.floor(t/PRESSURE_LIMITS.cycleTicks),within=t%PRESSURE_LIMITS.cycleTicks,b=w.boss;
+    b.pressureStyle=pressureStyle(w);
+    if(within===30)makeCombatCopies(w,'illusion',cycle);
+    if(within===150)makeCombatCopies(w,'clone',cycle);
+    updateCombatCopies(w);
+    // An actor's own signature continues between these pressure beats. The
+    // additional beat varies its geometry, acceleration and phase by owner.
+    if(within>=150&&within<510){
+      var cadence=w.difficulty==='hell'?42+(w.bossIndex%3)*6:w.difficulty==='gentle'?114+(w.bossIndex%3)*6:78+(w.bossIndex%3)*6;
+      if((within-150)%cadence===0)pressureFan(w,b.x,b.y+18,null,Math.floor((within-150)/cadence),null);
+    }
+  }
+  function wavePressure(w) {
+    if(w.combatRevision!==COMBAT_REVISION||!w.campaign||w.stage!=='waves')return;
+    var t=Math.round(waveCombatTime(w)*60),actor=w.enemies.find(function(e){return e.age>=1.2&&e.y>=0&&e.y<230;});
+    // Later story approaches already emit hostile command/shard material
+    // directly instead of inventing ordinary people as enemies. Those real
+    // existing attacks may cast the same lower-pressure field with owner0.
+    var commandApproach=w.bossIndex>=18&&w.bullets.length>0;
+    if((actor||commandApproach)&&(t===150||t===480))pressureCast(w,actor?actor.id:0,Math.floor(w.waveTime/15)*2+(t===480?1:0),true);
+  }
+  // Diagnostics only; never called by the60Hz loop. Union is instantaneous
+  // collision geometry, excludes warnings/fades and does not inflate for the
+  // player hit radius. Independent QA uses a separately implemented raster.
+  function attackCoverage(w,options) {
+    options=options||{};var step=clamp(Math.floor(options.step||8),2,32),region=options.region||[0,0,W,H],n=0,hit=0;
+    var live=w.hazards.filter(function(h){return h.phase==='active';});
+    for(var y=region[1]+step/2;y<region[1]+region[3];y+=step)for(var x=region[0]+step/2;x<region[0]+region[2];x+=step){
+      n++;var covered=live.some(function(h){return segmentDistanceSquared(x,y,h.x1,h.y1,h.x2,h.y2)<=sq(h.width/2);});
+      if(!covered)covered=w.bullets.some(function(b){var l=b.halfLength||0,dx=Math.cos(b.angle||0)*l,dy=Math.sin(b.angle||0)*l;return segmentDistanceSquared(x,y,b.x-dx,b.y-dy,b.x+dx,b.y+dy)<=sq(b.r);});
+      if(covered)hit++;
+    }
+    return{ratio:n?hit/n:0,coveredCells:hit,totalCells:n,step:step,region:region.slice(),measure:'instantaneous-active-collision-union'};
+  }
   function bossPattern(w) {
-    if (w.campaign) { campaignPattern(w); return; }
+    if (w.campaign) {
+      // Commit this cycle's gate before an authored signature can warn on the
+      // same tick (chapter3's first cast is exactly logicaltick60). No already
+      // announced path is removed or redirected after its warning has begun.
+      if(w.combatRevision===COMBAT_REVISION&&(Math.round(w.phaseTime*60)-1)%PRESSURE_LIMITS.cycleTicks===60)pressureCast(w,w.boss.id,Math.floor((Math.round(w.phaseTime*60)-1)/PRESSURE_LIMITS.cycleTicks),false);
+      campaignPattern(w); bossPressure(w); return;
+    }
     var b = w.boss, t = Math.round(w.phaseTime * 60) - 1, cycle, within, gap, specs, i, a;
     b.px = b.x; b.py = b.y;
     b.x = 180 + Math.sin(w.phaseTime * 0.6) * (w.phase === 1 ? 58 : 38);
@@ -1370,6 +1527,7 @@
     var snap = {};
     ['rulesetVersion','runId','seed','difficulty','practiceBoss','checkpointSerial','tick','rngState','idCounter','stage','wave','phase','score','graze','kills','memory','resonance','autoAttack','skillRotation'].forEach(function (k) { snap[k] = w[k]; });
     if (w.campaign) { snap.campaign = true; snap.campaignRevision = w.campaignRevision; snap.bossIndex = w.bossIndex; }
+    if(w.combatRevision===COMBAT_REVISION)snap.combatRevision=COMBAT_REVISION;
     if (w.finalPractice) snap.finalPractice=true;
     snap.stageTime = 0; snap.phaseTime = 0; snap.waveTime = 0;
     snap.player = copy(w.player); snap.skills = copy(w.skills); snap.stats = copy(w.stats); snap.shotReadyAt = w._shotReadyAt;
@@ -1379,6 +1537,7 @@
   function checkpoint(w) { return w && w._checkpoint ? copy(w._checkpoint) : null; }
   function restoreCheckpoint(snapshot) {
     if (!snapshot || typeof snapshot !== 'object' || JSON.stringify(snapshot).length > 131072) throw new Error('Invalid checkpoint');
+    if(Object.prototype.hasOwnProperty.call(snapshot,'combatRevision')&&snapshot.combatRevision!==COMBAT_REVISION)throw new Error('Unsupported combat revision');
     var s = copy(snapshot);
     if (s.finalPractice !== undefined && (s.finalPractice !== true || s.practiceBoss !== true || s.campaign !== true || s.bossIndex !== 11 || s.campaignRevision !== 3 || s.stage !== 'boss')) throw new Error('Invalid separate final practice');
     var hasCampaign = Object.prototype.hasOwnProperty.call(s, 'campaign') || Object.prototype.hasOwnProperty.call(s, 'campaignRevision') || Object.prototype.hasOwnProperty.call(s, 'bossIndex');
@@ -1397,7 +1556,7 @@
     ['hits','shots','damage','peakBullets','peakEnemies','peakParticles'].forEach(function (k) { if (!finite(s.stats[k]) || s.stats[k] < 0 || s.stats[k] > 100000000) throw new Error('Invalid checkpoint stats'); });
     ['memory','delay','counter','ego'].forEach(function (k) { if (!finite(s.stats.casts[k]) || s.stats.casts[k] < 0 || s.stats.casts[k] > 1000000) throw new Error('Invalid checkpoint casts'); });
     if (!Array.isArray(s.stats.phaseTicks) || s.stats.phaseTicks.length > (hasCampaign ? campaignBossCount(s.campaignRevision)*3 : 3) || s.stats.phaseTicks.some(function (n) { return !Number.isInteger(n) || n < 0 || n > 4500; })) throw new Error('Invalid phase history');
-    var w = createRun({ difficulty: s.difficulty, seed: s.seed, practiceBoss: false, runId: s.runId, campaign: hasCampaign, campaignRevision: hasCampaign ? s.campaignRevision : undefined });
+    var w = createRun({ difficulty: s.difficulty, seed: s.seed, practiceBoss: false, runId: s.runId, campaign: hasCampaign, campaignRevision: hasCampaign ? s.campaignRevision : undefined,combatRevision:s.combatRevision });
     if (hasCampaign) w.bossIndex = s.bossIndex;
     if (s.finalPractice === true) w.finalPractice = true;
     ['tick','rngState','idCounter','stage','wave','phase','score','graze','kills','memory','resonance','autoAttack','skillRotation','practiceBoss'].forEach(function (k) { w[k] = s[k]; });
@@ -1439,6 +1598,7 @@
       w.waveTime += FIXED_DT; waveSchedule(w);
       if (w.stage === 'bossIntro') { p.x = px; p.y = py; freezeIntroTimers(w); return w; }
       updateEnemies(w);
+      wavePressure(w);
     }
     else if (w.stage === 'boss') {
       w.phaseTime += FIXED_DT;
@@ -1472,6 +1632,7 @@
     return w;
   }
   return Object.freeze({ W: W, H: H, FIXED_DT: FIXED_DT, RULESET_VERSION: RULESET, MECHANICS_REVISION: 2, CAPS: CAPS,
+    COMBAT_REVISION:COMBAT_REVISION,PRESSURE_LIMITS:PRESSURE_LIMITS,attackCoverage:attackCoverage,
     CAMPAIGN_BOSSES: CAMPAIGN_BOSSES, CAMPAIGN_SIGNATURES: CAMPAIGN_SIGNATURES, CAMPAIGN_REVISION: 3, HELL_MECHANICS_REVISION: HELL_MECHANICS_REVISION, HELL_OVERLAP_LIMITS: HELL_OVERLAP_LIMITS,
     campaignBossCount: campaignBossCount, LATEST_CAMPAIGN_REVISION: 5, createRun: createRun, step: step, checkpoint: checkpoint, restoreCheckpoint: restoreCheckpoint, skipBossIntro: skipBossIntro,
     geometry: Object.freeze({ segmentDistanceSquared: segmentDistanceSquared, segmentPairDistanceSquared: segmentPairDistanceSquared, sweptCircleHit: sweptCircleHit, projectileDistanceSquared: projectileDistanceSquared, hazardDistanceSquared: hazardDistanceSquared }) });

@@ -1,0 +1,402 @@
+{
+  "schema": 1,
+  "createdAt": "2026-10-30T06:28:56.828Z",
+  "scope": "Pure CPU, ordinary-health isolated phase2 special practice;35canonical encounter configurations×3actual difficulties×seed813. Product checkpoint API selects the starting phase; only legal directions follow. No777, external immunity, health/damage/timer/world edits, future emissions or RNG lookahead. Not a fullcampaign/human/browser/GPU/mobile verification.",
+  "attemptBound": {
+    "maxAlternatePoliciesPerFailedCase": 3,
+    "actualAlternatePoliciesPerFailedCaseMax": 2,
+    "actualExtraAttempts": 8,
+    "basePolicy": "centre/y575/96ticks/beam20",
+    "alternate1": "staticleft/y500/96ticks/beam20;7cases",
+    "alternate2": "centre/y420/144ticks/beam36;Leviathanonly",
+    "gameplayChangesDuringFollowup": false
+  },
+  "summary": {
+    "primaryAttempts": 105,
+    "primaryWins": 98,
+    "primaryLosses": 7,
+    "followupAttempts": 8,
+    "followupWins": 7,
+    "followupLosses": 1,
+    "totalAttempts": 113,
+    "totalReplayedTicks": 198933,
+    "uniqueEncounterDifficultyCases": 105,
+    "casesWithAtLeastOneLegalClear": 105,
+    "unresolvedCases": 0,
+    "allActualHELLBossesHaveLegalPhase2Clear": true,
+    "poolPressure": 0,
+    "droppedGroups": 0
+  },
+  "sourceHashGuardPassed": true,
+  "sourceHashes": {
+    "src/core.js": "52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d",
+    "tools/probe-v21-natural-health.cjs": "41e88ee2b878063cc955cf4ba78ac767dbf4cefff8044d9f5a3e4564a9356c4e"
+  },
+  "proofs": [
+    {
+      "id": "primary",
+      "file": "docs/V21-NATURAL-HEALTH-20261030.json",
+      "replayFile": "docs/V21-NATURAL-HEALTH-REPLAY-20261030.json",
+      "sha256": "a02f7007d30c3021637f08ce15a1c72f2b3ba323b6fe38c73b9e70c163119711",
+      "replaySHA256": "b438725b1aa19dc658ee948f71031d7719638e306e3dc8f0b9842b4ca929465d",
+      "policyConfig": {
+        "route": "centre",
+        "y": 575,
+        "beam": 20,
+        "commit": 4,
+        "horizon": 96
+      },
+      "summary": {
+        "cases": 105,
+        "won": 98,
+        "lost": 7,
+        "unfinished": 0,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "id": "alternate1",
+      "file": "docs/v21-natural-alternate/V21-NATURAL-HEALTH-ALTERNATE-20261030.json",
+      "replayFile": "docs/v21-natural-alternate/V21-NATURAL-HEALTH-ALTERNATE-REPLAY-20261030.json",
+      "sha256": "cacf2f58033ab986be4d9550622955a8c9620e8eef7ee7caa0140e02d0efd97d",
+      "replaySHA256": "7a2ebc159c841f4e2b667cababa56431feb01f0a635afd2edcd65228dce2d903",
+      "policyConfig": {
+        "route": "left",
+        "y": 500,
+        "beam": 20,
+        "commit": 4,
+        "horizon": 96
+      },
+      "summary": {
+        "cases": 7,
+        "won": 6,
+        "lost": 1,
+        "unfinished": 0,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "id": "alternate2",
+      "file": "docs/v21-natural-alternate/leviathan144/V21-NATURAL-LEVIATHAN-20261030.json",
+      "replayFile": "docs/v21-natural-alternate/leviathan144/V21-NATURAL-LEVIATHAN-REPLAY-20261030.json",
+      "sha256": "52b7127b81fda49a87140f08c27d739d22d6e7f427b2691c5c558328bc671681",
+      "replaySHA256": "bbf9fa7e8cb5650c1c22a74d619ecddaf72bdc881384c06a3951365927135e46",
+      "policyConfig": {
+        "route": "centre",
+        "y": 420,
+        "beam": 36,
+        "commit": 4,
+        "horizon": 144
+      },
+      "summary": {
+        "cases": 1,
+        "won": 1,
+        "lost": 0,
+        "unfinished": 0,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    }
+  ],
+  "followups": [
+    {
+      "bossIndex": 1,
+      "bossId": "horn",
+      "difficulty": "hell",
+      "phase": 2,
+      "seed": 813,
+      "primary": {
+        "stage": "lost",
+        "ticks": 2178,
+        "hits": 3,
+        "hp": 0,
+        "inputSHA256": "4b95632136b16a8ee779530d616f0c4f1631c86510730175f245c8666c3962f0"
+      },
+      "alternates": [
+        {
+          "policyId": "alternate1",
+          "policyConfig": {
+            "route": "left",
+            "y": 500,
+            "beam": 20,
+            "commit": 4,
+            "horizon": 96
+          },
+          "report": "docs/v21-natural-alternate/V21-NATURAL-HEALTH-ALTERNATE-20261030.json",
+          "stage": "won",
+          "ticks": 2102,
+          "hits": 1,
+          "hp": 2,
+          "input": {
+            "file": "v21-natural-inputs/boss-01-hell-phase-2-seed-813.moves.gz",
+            "bytes": 375,
+            "sha256": "4f961b209db128c385d88f1f11cd370a4bdbf7e3574445b3ab5b24939d441f16",
+            "ticks": 2102
+          }
+        }
+      ],
+      "hasLegalClear": true
+    },
+    {
+      "bossIndex": 3,
+      "bossId": "mask",
+      "difficulty": "hell",
+      "phase": 2,
+      "seed": 813,
+      "primary": {
+        "stage": "lost",
+        "ticks": 1955,
+        "hits": 3,
+        "hp": 0,
+        "inputSHA256": "784795d6a4950fed0d08232b03f32294e7f049dd8f22f5eb2d00c4e9ede0cdfe"
+      },
+      "alternates": [
+        {
+          "policyId": "alternate1",
+          "policyConfig": {
+            "route": "left",
+            "y": 500,
+            "beam": 20,
+            "commit": 4,
+            "horizon": 96
+          },
+          "report": "docs/v21-natural-alternate/V21-NATURAL-HEALTH-ALTERNATE-20261030.json",
+          "stage": "won",
+          "ticks": 2471,
+          "hits": 0,
+          "hp": 3,
+          "input": {
+            "file": "v21-natural-inputs/boss-03-hell-phase-2-seed-813.moves.gz",
+            "bytes": 408,
+            "sha256": "860eaab86e07f6fe77495ab2775b0f88812ece40fc40d65fa623dafb035d9366",
+            "ticks": 2471
+          }
+        }
+      ],
+      "hasLegalClear": true
+    },
+    {
+      "bossIndex": 4,
+      "bossId": "lucifer",
+      "difficulty": "hell",
+      "phase": 2,
+      "seed": 813,
+      "primary": {
+        "stage": "lost",
+        "ticks": 374,
+        "hits": 3,
+        "hp": 0,
+        "inputSHA256": "ea5a0db1f9a0d8ef3a1de5b02875aeaac52c7f0354b66e1a5f5365a04008592c"
+      },
+      "alternates": [
+        {
+          "policyId": "alternate1",
+          "policyConfig": {
+            "route": "left",
+            "y": 500,
+            "beam": 20,
+            "commit": 4,
+            "horizon": 96
+          },
+          "report": "docs/v21-natural-alternate/V21-NATURAL-HEALTH-ALTERNATE-20261030.json",
+          "stage": "won",
+          "ticks": 2811,
+          "hits": 2,
+          "hp": 1,
+          "input": {
+            "file": "v21-natural-inputs/boss-04-hell-phase-2-seed-813.moves.gz",
+            "bytes": 466,
+            "sha256": "9044d72f886999f35b527cfbec9d3e0daf7a20df0f67d0d8c0b34a6c216f09cb",
+            "ticks": 2811
+          }
+        }
+      ],
+      "hasLegalClear": true
+    },
+    {
+      "bossIndex": 6,
+      "bossId": "leviathan",
+      "difficulty": "hell",
+      "phase": 2,
+      "seed": 813,
+      "primary": {
+        "stage": "lost",
+        "ticks": 1078,
+        "hits": 3,
+        "hp": 0,
+        "inputSHA256": "f9ddec056f419a4060256c8a62e1dc4448d61f11056324f7900c7806ad72a940"
+      },
+      "alternates": [
+        {
+          "policyId": "alternate1",
+          "policyConfig": {
+            "route": "left",
+            "y": 500,
+            "beam": 20,
+            "commit": 4,
+            "horizon": 96
+          },
+          "report": "docs/v21-natural-alternate/V21-NATURAL-HEALTH-ALTERNATE-20261030.json",
+          "stage": "lost",
+          "ticks": 2042,
+          "hits": 3,
+          "hp": 0,
+          "input": {
+            "file": "v21-natural-inputs/boss-06-hell-phase-2-seed-813.moves.gz",
+            "bytes": 352,
+            "sha256": "f58260d18a7816ecd08cca65b446ec4215821006b75c1658139825d57c8a6d6c",
+            "ticks": 2042
+          }
+        },
+        {
+          "policyId": "alternate2",
+          "policyConfig": {
+            "route": "centre",
+            "y": 420,
+            "beam": 36,
+            "commit": 4,
+            "horizon": 144
+          },
+          "report": "docs/v21-natural-alternate/leviathan144/V21-NATURAL-LEVIATHAN-20261030.json",
+          "stage": "won",
+          "ticks": 2484,
+          "hits": 2,
+          "hp": 1,
+          "input": {
+            "file": "v21-natural-inputs/boss-06-hell-phase-2-seed-813.moves.gz",
+            "bytes": 422,
+            "sha256": "4a55e5edb0d26ebeff27cf5c330c2a8a2ef648ba73524779ca2b7811e7a70f82",
+            "ticks": 2484
+          }
+        }
+      ],
+      "hasLegalClear": true
+    },
+    {
+      "bossIndex": 8,
+      "bossId": "asmodeus",
+      "difficulty": "hell",
+      "phase": 2,
+      "seed": 813,
+      "primary": {
+        "stage": "lost",
+        "ticks": 2614,
+        "hits": 3,
+        "hp": 0,
+        "inputSHA256": "cca8a8aead9eb8029078efe4fbe09550646873fd2c3831b4706b217fef8dcb1c"
+      },
+      "alternates": [
+        {
+          "policyId": "alternate1",
+          "policyConfig": {
+            "route": "left",
+            "y": 500,
+            "beam": 20,
+            "commit": 4,
+            "horizon": 96
+          },
+          "report": "docs/v21-natural-alternate/V21-NATURAL-HEALTH-ALTERNATE-20261030.json",
+          "stage": "won",
+          "ticks": 2797,
+          "hits": 2,
+          "hp": 1,
+          "input": {
+            "file": "v21-natural-inputs/boss-08-hell-phase-2-seed-813.moves.gz",
+            "bytes": 459,
+            "sha256": "617bbff0fa8fc2cac5c0cc70ceeef27313a28c69cd5f8b79e03a977987bb91f5",
+            "ticks": 2797
+          }
+        }
+      ],
+      "hasLegalClear": true
+    },
+    {
+      "bossIndex": 10,
+      "bossId": "wrath",
+      "difficulty": "hell",
+      "phase": 2,
+      "seed": 813,
+      "primary": {
+        "stage": "lost",
+        "ticks": 2198,
+        "hits": 3,
+        "hp": 0,
+        "inputSHA256": "41f85075196aed722e01f2eaca4d22d8636d0acca6a7035d7603e23b830e240b"
+      },
+      "alternates": [
+        {
+          "policyId": "alternate1",
+          "policyConfig": {
+            "route": "left",
+            "y": 500,
+            "beam": 20,
+            "commit": 4,
+            "horizon": 96
+          },
+          "report": "docs/v21-natural-alternate/V21-NATURAL-HEALTH-ALTERNATE-20261030.json",
+          "stage": "won",
+          "ticks": 2598,
+          "hits": 2,
+          "hp": 1,
+          "input": {
+            "file": "v21-natural-inputs/boss-10-hell-phase-2-seed-813.moves.gz",
+            "bytes": 400,
+            "sha256": "ded26a3e8cbc17020344738c3491616ef441e0a0ae1147ad78c00201c198174b",
+            "ticks": 2598
+          }
+        }
+      ],
+      "hasLegalClear": true
+    },
+    {
+      "bossIndex": 34,
+      "bossId": "cult-leader",
+      "difficulty": "hell",
+      "phase": 2,
+      "seed": 813,
+      "primary": {
+        "stage": "lost",
+        "ticks": 502,
+        "hits": 3,
+        "hp": 0,
+        "inputSHA256": "816061a41f0edc318b2d42d83b68af7d13ecbe44510d2577ddf675f8d38f5aea"
+      },
+      "alternates": [
+        {
+          "policyId": "alternate1",
+          "policyConfig": {
+            "route": "left",
+            "y": 500,
+            "beam": 20,
+            "commit": 4,
+            "horizon": 96
+          },
+          "report": "docs/v21-natural-alternate/V21-NATURAL-HEALTH-ALTERNATE-20261030.json",
+          "stage": "won",
+          "ticks": 1310,
+          "hits": 1,
+          "hp": 2,
+          "input": {
+            "file": "v21-natural-inputs/boss-34-hell-phase-2-seed-813.moves.gz",
+            "bytes": 213,
+            "sha256": "1a6a1629b5af88cb00f2e730eeeb212eae40213a8984a30e46b859670fe146fc",
+            "ticks": 1310
+          }
+        }
+      ],
+      "hasLegalClear": true
+    }
+  ],
+  "unresolved": [],
+  "limitations": [
+    "All starts are isolated third-pattern practice; this is not newmechanics fullstory completion.",
+    "Successful legal CPU routes establish possibility; they do not establish human difficulty, realdevice FPS, reaction fairness, or browser input stability.",
+    "Primary policy failed7HELLcases; onefollowupalsofailed. All failures and exactinputbytes are retained, never marked as wins.",
+    "Onlyseed813andstartingphase2are covered. Phases0/1newmechanicsnaturalplay and moreseeds are outside this report."
+  ]
+}

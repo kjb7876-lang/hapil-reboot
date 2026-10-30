@@ -1,0 +1,15 @@
+✔ no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: gentle/813 (2889.18891ms)
+✔ no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: gentle/42 (3126.466856ms)
+✔ no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: normal/813 (2587.685408ms)
+✔ no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: normal/42 (2795.331672ms)
+✔ no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: hell/813 (4627.037351ms)
+✔ no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: hell/42 (4809.695913ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 21033.019159
+{"validatedCoreSha256":"52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a","originalRecordingCoreSha256":"fc45c2fd29a35084676d9bbbed31627c2b314e6950cd200356ec377fa839ecf1","inputFilesUnchanged":true,"tests":6}

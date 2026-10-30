@@ -1,0 +1,1801 @@
+{
+  "schema": 1,
+  "scope": "Native CPU Canvas own-source display fixtures only; no timing/occupancy/natural-play/GPU/phone certification",
+  "codeHashes": {
+    "index.html": "5023252ca57071b6c1a1013affcea80502b91a6906cde2d20378ccbb0e3912f8",
+    "styles.css": "aaeb395a309ff51c1269da69fb4d338206c14effcb01dda4fb1831740e2dc2e9",
+    "src/actors.js": "be2c1999692f5ba7ce60d75a4d03c09abc9d07563102bd39b9eedae0327449f8",
+    "src/app.js": "6e6391d6707d0b95c77f0722b509ac689f9bbc3eb3309bf49d7399fdf08825a1",
+    "src/boss-motion.js": "e2d1bde92838884382e30b5d8de6549cf9071ac9b21c84b7f9cb8d4bc63160b1",
+    "src/boss-skills.js": "af990bbcad9348722269bdfa881028eeea35711782cbdafb06ef321c27a01b5c",
+    "src/core.js": "52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a",
+    "src/media.js": "0057a4d28e4d8bd35eb1598ea48207ff9cf21ead2906cc75d66c405ed6de110c",
+    "src/projectiles.js": "c55d1f0cbb623b21f3a06f94b42215db63cd185435afc117d7432f9ac178bc0c",
+    "src/render.js": "e52bfc5a1236d6b600ee28756411e27e5b3625e86def26dc10f4be1df8b82c80",
+    "src/storage.js": "ec1010c11aaf3f49240f3fa8f46d5b85f922b6373bd4a29a5bd89a7ef282e71c",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f"
+  },
+  "copiesPerCase": 2,
+  "width": 155,
+  "ordinaryBossWidth": 230,
+  "cases": [
+    {
+      "group": 0,
+      "label": "VIOLET",
+      "scope": "two explicitly authored copy presentation records, current actual boss state and owned source pixels",
+      "metrics": {
+        "actorDraws": 3,
+        "bossDraws": 1,
+        "enemyDraws": 0,
+        "silkTethers": 1,
+        "enemySilkTethers": 0,
+        "bossSilkTethers": 1,
+        "lastBossAsset": "bossMotionViolet",
+        "lastBossPose": "downstroke",
+        "lastBossIdentity": "violet",
+        "usedAssets": {
+          "bossMotionViolet": 3
+        },
+        "usedPoses": {
+          "downstroke": 1
+        },
+        "lastSilk": {
+          "start": [
+            180,
+            64
+          ],
+          "end": [
+            180,
+            100.258
+          ],
+          "alpha": 0.3,
+          "damaging": false,
+          "identity": "violet",
+          "boss": true
+        },
+        "authoredPosesPerActor": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "sinBossDraws": 0,
+        "lastSinSample": null,
+        "wrathManifestDraws": 0,
+        "lastWrathManifest": null,
+        "chapter3BossDraws": 0,
+        "chapter3DroneDraws": 0,
+        "chapter3GateDraws": 0,
+        "lastChapter3Sample": null,
+        "storyBossDraws": 0,
+        "storyParticipantDraws": 0,
+        "storyMinionDraws": 0,
+        "storyPlayerDraws": 0,
+        "storySupportDraws": 0,
+        "storyEchoDraws": 0,
+        "storyTargetMarkerDraws": 0,
+        "lastStoryTargetMarker": null,
+        "lastStorySamples": [],
+        "combatCopyDraws": 2,
+        "combatCopyMissingAssets": 0,
+        "lastCombatCopySamples": [
+          {
+            "id": "review-0-0",
+            "sourceActorId": "review-0-0",
+            "modelActorId": null,
+            "identity": "violet",
+            "key": "bossMotionViolet",
+            "pose": "prepare",
+            "sourceRect": [
+              0,
+              0,
+              256,
+              256
+            ],
+            "anchor": [
+              148,
+              126
+            ],
+            "scale": 0.47989347826086953,
+            "position": [
+              90,
+              185
+            ],
+            "born": 0,
+            "expireAt": 360,
+            "releaseTick": -1,
+            "opacity": 0.58,
+            "kind": "illusion",
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          },
+          {
+            "id": "review-0-1",
+            "sourceActorId": "review-0-1",
+            "modelActorId": null,
+            "identity": "violet",
+            "key": "bossMotionViolet",
+            "pose": "downstroke",
+            "sourceRect": [
+              256,
+              0,
+              256,
+              256
+            ],
+            "anchor": [
+              143,
+              140
+            ],
+            "scale": 0.47989347826086953,
+            "position": [
+              270,
+              185
+            ],
+            "born": 0,
+            "expireAt": 360,
+            "releaseTick": 60,
+            "opacity": 0.92,
+            "kind": "clone",
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          }
+        ],
+        "downwardMotion": {
+          "bossDraws": 1,
+          "spriteDraws": 1,
+          "tethers": 1,
+          "lastBossIdentity": "violet",
+          "lastBossAsset": "bossMotionViolet",
+          "lastPose": "downstroke",
+          "lastSample": {
+            "from": 1,
+            "to": 1,
+            "blend": 1,
+            "scale": 0.7121,
+            "angle": 0,
+            "position": [
+              180,
+              114.5
+            ],
+            "combatPosition": [
+              180,
+              112
+            ],
+            "presentationOffsetY": 2.5,
+            "hitOpacity": 1
+          },
+          "lastSilk": {
+            "start": [
+              180,
+              64
+            ],
+            "end": [
+              180,
+              100.258
+            ],
+            "alpha": 0.3,
+            "damaging": false,
+            "identity": "violet",
+            "boss": true
+          },
+          "authoredKeyposesPerBoss": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false
+        }
+      }
+    },
+    {
+      "group": 5,
+      "label": "SLOTH",
+      "scope": "two explicitly authored copy presentation records, current actual boss state and owned source pixels",
+      "metrics": {
+        "actorDraws": 3,
+        "bossDraws": 1,
+        "enemyDraws": 0,
+        "silkTethers": 0,
+        "enemySilkTethers": 0,
+        "bossSilkTethers": 0,
+        "lastBossAsset": "sinBelphegorAtlas",
+        "lastBossPose": "downstroke",
+        "lastBossIdentity": "belphegor",
+        "usedAssets": {
+          "sinBelphegorAtlas": 3
+        },
+        "usedPoses": {
+          "downstroke": 1
+        },
+        "lastSilk": null,
+        "authoredPosesPerActor": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "sinBossDraws": 1,
+        "lastSinSample": {
+          "from": 1,
+          "to": 1,
+          "blend": 1,
+          "scale": 0.47,
+          "angle": 0,
+          "position": [
+            180,
+            114.5
+          ],
+          "combatPosition": [
+            180,
+            112
+          ],
+          "anchors": [
+            [
+              129,
+              128
+            ],
+            [
+              129,
+              128
+            ]
+          ],
+          "presentationOffsetY": 2.5
+        },
+        "wrathManifestDraws": 0,
+        "lastWrathManifest": null,
+        "chapter3BossDraws": 0,
+        "chapter3DroneDraws": 0,
+        "chapter3GateDraws": 0,
+        "lastChapter3Sample": null,
+        "storyBossDraws": 0,
+        "storyParticipantDraws": 0,
+        "storyMinionDraws": 0,
+        "storyPlayerDraws": 0,
+        "storySupportDraws": 0,
+        "storyEchoDraws": 0,
+        "storyTargetMarkerDraws": 0,
+        "lastStoryTargetMarker": null,
+        "lastStorySamples": [],
+        "combatCopyDraws": 2,
+        "combatCopyMissingAssets": 0,
+        "lastCombatCopySamples": [
+          {
+            "id": "review-5-0",
+            "sourceActorId": "review-5-0",
+            "modelActorId": null,
+            "identity": "belphegor",
+            "key": "sinBelphegorAtlas",
+            "pose": "prepare",
+            "sourceRect": [
+              0,
+              0,
+              256,
+              256
+            ],
+            "anchor": [
+              130,
+              119
+            ],
+            "scale": 0.3167391304347826,
+            "position": [
+              90,
+              185
+            ],
+            "born": 0,
+            "expireAt": 360,
+            "releaseTick": -1,
+            "opacity": 0.58,
+            "kind": "illusion",
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          },
+          {
+            "id": "review-5-1",
+            "sourceActorId": "review-5-1",
+            "modelActorId": null,
+            "identity": "belphegor",
+            "key": "sinBelphegorAtlas",
+            "pose": "downstroke",
+            "sourceRect": [
+              256,
+              0,
+              256,
+              256
+            ],
+            "anchor": [
+              129,
+              128
+            ],
+            "scale": 0.3167391304347826,
+            "position": [
+              270,
+              185
+            ],
+            "born": 0,
+            "expireAt": 360,
+            "releaseTick": 60,
+            "opacity": 0.92,
+            "kind": "clone",
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          }
+        ],
+        "downwardMotion": {
+          "bossDraws": 0,
+          "spriteDraws": 0,
+          "tethers": 0,
+          "lastBossIdentity": null,
+          "lastBossAsset": null,
+          "lastPose": null,
+          "lastSample": null,
+          "lastSilk": null,
+          "authoredKeyposesPerBoss": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false
+        }
+      }
+    },
+    {
+      "group": 11,
+      "label": "PRIDE CYBORG",
+      "scope": "two explicitly authored copy presentation records, current actual boss state and owned source pixels",
+      "metrics": {
+        "actorDraws": 3,
+        "bossDraws": 1,
+        "enemyDraws": 0,
+        "silkTethers": 0,
+        "enemySilkTethers": 0,
+        "bossSilkTethers": 0,
+        "lastBossAsset": "sinPrideCyborgAtlas",
+        "lastBossPose": "downstroke",
+        "lastBossIdentity": "pride",
+        "usedAssets": {
+          "sinPrideCyborgAtlas": 3
+        },
+        "usedPoses": {
+          "downstroke": 1
+        },
+        "lastSilk": null,
+        "authoredPosesPerActor": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "sinBossDraws": 1,
+        "lastSinSample": {
+          "from": 1,
+          "to": 1,
+          "blend": 1,
+          "scale": 0.63,
+          "angle": 0,
+          "position": [
+            180,
+            114.5
+          ],
+          "combatPosition": [
+            180,
+            112
+          ],
+          "anchors": [
+            [
+              118,
+              127
+            ],
+            [
+              118,
+              127
+            ]
+          ],
+          "presentationOffsetY": 2.5
+        },
+        "wrathManifestDraws": 0,
+        "lastWrathManifest": null,
+        "chapter3BossDraws": 0,
+        "chapter3DroneDraws": 0,
+        "chapter3GateDraws": 0,
+        "lastChapter3Sample": null,
+        "storyBossDraws": 0,
+        "storyParticipantDraws": 0,
+        "storyMinionDraws": 0,
+        "storyPlayerDraws": 0,
+        "storySupportDraws": 0,
+        "storyEchoDraws": 0,
+        "storyTargetMarkerDraws": 0,
+        "lastStoryTargetMarker": null,
+        "lastStorySamples": [],
+        "combatCopyDraws": 2,
+        "combatCopyMissingAssets": 0,
+        "lastCombatCopySamples": [
+          {
+            "id": "review-11-0",
+            "sourceActorId": "review-11-0",
+            "modelActorId": null,
+            "identity": "pride",
+            "key": "sinPrideCyborgAtlas",
+            "pose": "prepare",
+            "sourceRect": [
+              0,
+              0,
+              256,
+              256
+            ],
+            "anchor": [
+              127,
+              91
+            ],
+            "scale": 0.4245652173913044,
+            "position": [
+              90,
+              185
+            ],
+            "born": 0,
+            "expireAt": 360,
+            "releaseTick": -1,
+            "opacity": 0.58,
+            "kind": "illusion",
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          },
+          {
+            "id": "review-11-1",
+            "sourceActorId": "review-11-1",
+            "modelActorId": null,
+            "identity": "pride",
+            "key": "sinPrideCyborgAtlas",
+            "pose": "downstroke",
+            "sourceRect": [
+              256,
+              0,
+              256,
+              256
+            ],
+            "anchor": [
+              118,
+              127
+            ],
+            "scale": 0.4245652173913044,
+            "position": [
+              270,
+              185
+            ],
+            "born": 0,
+            "expireAt": 360,
+            "releaseTick": 60,
+            "opacity": 0.92,
+            "kind": "clone",
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          }
+        ],
+        "downwardMotion": {
+          "bossDraws": 0,
+          "spriteDraws": 0,
+          "tethers": 0,
+          "lastBossIdentity": null,
+          "lastBossAsset": null,
+          "lastPose": null,
+          "lastSample": null,
+          "lastSilk": null,
+          "authoredKeyposesPerBoss": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false
+        }
+      }
+    },
+    {
+      "group": 20,
+      "label": "FALLEN KNIGHT",
+      "scope": "two explicitly authored copy presentation records, current actual boss state and owned source pixels",
+      "metrics": {
+        "actorDraws": 3,
+        "bossDraws": 1,
+        "enemyDraws": 0,
+        "silkTethers": 0,
+        "enemySilkTethers": 0,
+        "bossSilkTethers": 0,
+        "lastBossAsset": "storyKnightAttack",
+        "lastBossPose": "release",
+        "lastBossIdentity": "fallen-knight",
+        "usedAssets": {
+          "storyKnightCharge": 1,
+          "storyKnightAttack": 2
+        },
+        "usedPoses": {
+          "charge": 1,
+          "release": 2
+        },
+        "lastSilk": null,
+        "authoredPosesPerActor": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "sinBossDraws": 0,
+        "lastSinSample": null,
+        "wrathManifestDraws": 0,
+        "lastWrathManifest": null,
+        "chapter3BossDraws": 0,
+        "chapter3DroneDraws": 0,
+        "chapter3GateDraws": 0,
+        "lastChapter3Sample": null,
+        "storyBossDraws": 1,
+        "storyParticipantDraws": 0,
+        "storyMinionDraws": 0,
+        "storyPlayerDraws": 0,
+        "storySupportDraws": 0,
+        "storyEchoDraws": 0,
+        "storyTargetMarkerDraws": 0,
+        "lastStoryTargetMarker": null,
+        "lastStorySamples": [
+          {
+            "id": "fallen-knight",
+            "key": "storyKnightCharge",
+            "role": "combat-copy",
+            "frame": 1,
+            "pose": "charge",
+            "sourceRect": [
+              0,
+              0,
+              672,
+              384
+            ],
+            "anchor": [
+              336,
+              180
+            ],
+            "scale": 0.3032608695652174,
+            "position": [
+              90,
+              185
+            ],
+            "combatPosition": [
+              90,
+              185
+            ],
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false,
+            "actualReleaseTick": -1,
+            "releaseAge": null
+          },
+          {
+            "id": "fallen-knight",
+            "key": "storyKnightAttack",
+            "role": "combat-copy",
+            "frame": 2,
+            "pose": "release",
+            "sourceRect": [
+              0,
+              0,
+              672,
+              384
+            ],
+            "anchor": [
+              336,
+              180
+            ],
+            "scale": 0.3032608695652174,
+            "position": [
+              270,
+              185
+            ],
+            "combatPosition": [
+              270,
+              185
+            ],
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false,
+            "actualReleaseTick": 60,
+            "releaseAge": 0
+          },
+          {
+            "id": "fallen-knight",
+            "key": "storyKnightAttack",
+            "role": "boss",
+            "frame": 2,
+            "pose": "release",
+            "sourceRect": [
+              0,
+              0,
+              672,
+              384
+            ],
+            "anchor": [
+              336,
+              180
+            ],
+            "scale": 0.45,
+            "position": [
+              180,
+              112
+            ],
+            "combatPosition": [
+              180,
+              112
+            ],
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false,
+            "actualReleaseTick": 60,
+            "releaseAge": 0
+          }
+        ],
+        "combatCopyDraws": 2,
+        "combatCopyMissingAssets": 0,
+        "lastCombatCopySamples": [
+          {
+            "id": "review-20-0",
+            "sourceActorId": "review-20-0",
+            "modelActorId": null,
+            "identity": "fallen-knight",
+            "key": "storyKnightCharge",
+            "pose": "charge",
+            "sourceRect": [
+              0,
+              0,
+              672,
+              384
+            ],
+            "anchor": [
+              336,
+              180
+            ],
+            "scale": 0.3032608695652174,
+            "position": [
+              90,
+              185
+            ],
+            "born": 0,
+            "expireAt": 360,
+            "releaseTick": -1,
+            "opacity": 0.58,
+            "kind": "illusion",
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          },
+          {
+            "id": "review-20-1",
+            "sourceActorId": "review-20-1",
+            "modelActorId": null,
+            "identity": "fallen-knight",
+            "key": "storyKnightAttack",
+            "pose": "release",
+            "sourceRect": [
+              0,
+              0,
+              672,
+              384
+            ],
+            "anchor": [
+              336,
+              180
+            ],
+            "scale": 0.3032608695652174,
+            "position": [
+              270,
+              185
+            ],
+            "born": 0,
+            "expireAt": 360,
+            "releaseTick": 60,
+            "opacity": 0.92,
+            "kind": "clone",
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          }
+        ],
+        "downwardMotion": {
+          "bossDraws": 0,
+          "spriteDraws": 0,
+          "tethers": 0,
+          "lastBossIdentity": null,
+          "lastBossAsset": null,
+          "lastPose": null,
+          "lastSample": null,
+          "lastSilk": null,
+          "authoredKeyposesPerBoss": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false
+        }
+      }
+    },
+    {
+      "group": 30,
+      "label": "SIREN",
+      "scope": "two explicitly authored copy presentation records, current actual boss state and owned source pixels",
+      "metrics": {
+        "actorDraws": 3,
+        "bossDraws": 1,
+        "enemyDraws": 0,
+        "silkTethers": 0,
+        "enemySilkTethers": 0,
+        "bossSilkTethers": 0,
+        "lastBossAsset": "storySirenAttack",
+        "lastBossPose": "release",
+        "lastBossIdentity": "siren-mor",
+        "usedAssets": {
+          "storySirenCharge": 1,
+          "storySirenAttack": 2
+        },
+        "usedPoses": {
+          "charge": 1,
+          "release": 2
+        },
+        "lastSilk": null,
+        "authoredPosesPerActor": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "sinBossDraws": 0,
+        "lastSinSample": null,
+        "wrathManifestDraws": 0,
+        "lastWrathManifest": null,
+        "chapter3BossDraws": 0,
+        "chapter3DroneDraws": 0,
+        "chapter3GateDraws": 0,
+        "lastChapter3Sample": null,
+        "storyBossDraws": 1,
+        "storyParticipantDraws": 0,
+        "storyMinionDraws": 0,
+        "storyPlayerDraws": 0,
+        "storySupportDraws": 0,
+        "storyEchoDraws": 0,
+        "storyTargetMarkerDraws": 0,
+        "lastStoryTargetMarker": null,
+        "lastStorySamples": [
+          {
+            "id": "siren-mor",
+            "key": "storySirenCharge",
+            "role": "combat-copy",
+            "frame": 1,
+            "pose": "charge",
+            "sourceRect": [
+              0,
+              0,
+              672,
+              384
+            ],
+            "anchor": [
+              336,
+              180
+            ],
+            "scale": 0.3032608695652174,
+            "position": [
+              90,
+              185
+            ],
+            "combatPosition": [
+              90,
+              185
+            ],
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false,
+            "actualReleaseTick": -1,
+            "releaseAge": null
+          },
+          {
+            "id": "siren-mor",
+            "key": "storySirenAttack",
+            "role": "combat-copy",
+            "frame": 2,
+            "pose": "release",
+            "sourceRect": [
+              0,
+              0,
+              672,
+              384
+            ],
+            "anchor": [
+              338,
+              183
+            ],
+            "scale": 0.3032608695652174,
+            "position": [
+              270,
+              185
+            ],
+            "combatPosition": [
+              270,
+              185
+            ],
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false,
+            "actualReleaseTick": 60,
+            "releaseAge": 0
+          },
+          {
+            "id": "siren-mor",
+            "key": "storySirenAttack",
+            "role": "boss",
+            "frame": 2,
+            "pose": "release",
+            "sourceRect": [
+              0,
+              0,
+              672,
+              384
+            ],
+            "anchor": [
+              338,
+              183
+            ],
+            "scale": 0.45,
+            "position": [
+              180,
+              112
+            ],
+            "combatPosition": [
+              180,
+              112
+            ],
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false,
+            "actualReleaseTick": 60,
+            "releaseAge": 0
+          }
+        ],
+        "combatCopyDraws": 2,
+        "combatCopyMissingAssets": 0,
+        "lastCombatCopySamples": [
+          {
+            "id": "review-30-0",
+            "sourceActorId": "review-30-0",
+            "modelActorId": null,
+            "identity": "siren-mor",
+            "key": "storySirenCharge",
+            "pose": "charge",
+            "sourceRect": [
+              0,
+              0,
+              672,
+              384
+            ],
+            "anchor": [
+              336,
+              180
+            ],
+            "scale": 0.3032608695652174,
+            "position": [
+              90,
+              185
+            ],
+            "born": 0,
+            "expireAt": 360,
+            "releaseTick": -1,
+            "opacity": 0.58,
+            "kind": "illusion",
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          },
+          {
+            "id": "review-30-1",
+            "sourceActorId": "review-30-1",
+            "modelActorId": null,
+            "identity": "siren-mor",
+            "key": "storySirenAttack",
+            "pose": "release",
+            "sourceRect": [
+              0,
+              0,
+              672,
+              384
+            ],
+            "anchor": [
+              338,
+              183
+            ],
+            "scale": 0.3032608695652174,
+            "position": [
+              270,
+              185
+            ],
+            "born": 0,
+            "expireAt": 360,
+            "releaseTick": 60,
+            "opacity": 0.92,
+            "kind": "clone",
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          }
+        ],
+        "downwardMotion": {
+          "bossDraws": 0,
+          "spriteDraws": 0,
+          "tethers": 0,
+          "lastBossIdentity": null,
+          "lastBossAsset": null,
+          "lastPose": null,
+          "lastSample": null,
+          "lastSilk": null,
+          "authoredKeyposesPerBoss": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false
+        }
+      }
+    },
+    {
+      "group": 34,
+      "label": "RIAN / ION",
+      "scope": "two explicitly authored copy presentation records, current actual boss state and owned source pixels",
+      "metrics": {
+        "actorDraws": 5,
+        "bossDraws": 1,
+        "enemyDraws": 0,
+        "silkTethers": 0,
+        "enemySilkTethers": 0,
+        "bossSilkTethers": 0,
+        "lastBossAsset": "storyCultCircuit",
+        "lastBossPose": "release",
+        "lastBossIdentity": "cult-circuit-pair",
+        "usedAssets": {
+          "storyRianIdle": 2,
+          "storyIonAttack": 1,
+          "storyIonIdle": 1,
+          "storyCultCircuit": 1
+        },
+        "usedPoses": {
+          "charge": 1,
+          "release": 2,
+          "idle": 2
+        },
+        "lastSilk": null,
+        "authoredPosesPerActor": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "sinBossDraws": 0,
+        "lastSinSample": null,
+        "wrathManifestDraws": 0,
+        "lastWrathManifest": null,
+        "chapter3BossDraws": 0,
+        "chapter3DroneDraws": 0,
+        "chapter3GateDraws": 0,
+        "lastChapter3Sample": null,
+        "storyBossDraws": 3,
+        "storyParticipantDraws": 2,
+        "storyMinionDraws": 0,
+        "storyPlayerDraws": 0,
+        "storySupportDraws": 0,
+        "storyEchoDraws": 0,
+        "storyTargetMarkerDraws": 0,
+        "lastStoryTargetMarker": null,
+        "lastStorySamples": [
+          {
+            "id": "han-rian",
+            "key": "storyRianIdle",
+            "role": "combat-copy",
+            "frame": 0,
+            "pose": "charge",
+            "sourceRect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "anchor": [
+              256,
+              220
+            ],
+            "scale": 0.18869565217391307,
+            "position": [
+              90,
+              185
+            ],
+            "combatPosition": [
+              90,
+              185
+            ],
+            "authoredKeyposes": 2,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false,
+            "actualReleaseTick": -1,
+            "releaseAge": null
+          },
+          {
+            "id": "baek-ion",
+            "key": "storyIonAttack",
+            "role": "combat-copy",
+            "frame": 1,
+            "pose": "release",
+            "sourceRect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "anchor": [
+              256,
+              220
+            ],
+            "scale": 0.18869565217391307,
+            "position": [
+              270,
+              185
+            ],
+            "combatPosition": [
+              270,
+              185
+            ],
+            "authoredKeyposes": 2,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false,
+            "actualReleaseTick": 60,
+            "releaseAge": 0
+          },
+          {
+            "id": "han-rian",
+            "key": "storyRianIdle",
+            "role": "participant",
+            "frame": 0,
+            "pose": "idle",
+            "sourceRect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "anchor": [
+              256,
+              220
+            ],
+            "scale": 0.28,
+            "position": [
+              108,
+              108
+            ],
+            "combatPosition": [
+              108,
+              108
+            ],
+            "authoredKeyposes": 2,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false,
+            "actualReleaseTick": -1,
+            "releaseAge": null
+          },
+          {
+            "id": "baek-ion",
+            "key": "storyIonIdle",
+            "role": "participant",
+            "frame": 0,
+            "pose": "idle",
+            "sourceRect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "anchor": [
+              256,
+              220
+            ],
+            "scale": 0.28,
+            "position": [
+              252,
+              108
+            ],
+            "combatPosition": [
+              252,
+              108
+            ],
+            "authoredKeyposes": 2,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false,
+            "actualReleaseTick": -1,
+            "releaseAge": null
+          },
+          {
+            "id": "cult-circuit-pair",
+            "key": "storyCultCircuit",
+            "role": "boss",
+            "frame": 0,
+            "pose": "release",
+            "sourceRect": [
+              0,
+              0,
+              341,
+              512
+            ],
+            "anchor": [
+              170,
+              241
+            ],
+            "scale": 0.13,
+            "position": [
+              180,
+              182
+            ],
+            "combatPosition": [
+              180,
+              182
+            ],
+            "authoredKeyposes": 1,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false,
+            "actualReleaseTick": 60,
+            "releaseAge": 0
+          }
+        ],
+        "combatCopyDraws": 2,
+        "combatCopyMissingAssets": 0,
+        "lastCombatCopySamples": [
+          {
+            "id": "review-34-0",
+            "sourceActorId": "review-34-0",
+            "modelActorId": "han-rian",
+            "identity": "han-rian",
+            "key": "storyRianIdle",
+            "pose": "charge",
+            "sourceRect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "anchor": [
+              256,
+              220
+            ],
+            "scale": 0.18869565217391307,
+            "position": [
+              90,
+              185
+            ],
+            "born": 0,
+            "expireAt": 360,
+            "releaseTick": -1,
+            "opacity": 0.58,
+            "kind": "illusion",
+            "authoredKeyposes": 2,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          },
+          {
+            "id": "review-34-1",
+            "sourceActorId": "review-34-1",
+            "modelActorId": "baek-ion",
+            "identity": "baek-ion",
+            "key": "storyIonAttack",
+            "pose": "release",
+            "sourceRect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "anchor": [
+              256,
+              220
+            ],
+            "scale": 0.18869565217391307,
+            "position": [
+              270,
+              185
+            ],
+            "born": 0,
+            "expireAt": 360,
+            "releaseTick": 60,
+            "opacity": 0.92,
+            "kind": "clone",
+            "authoredKeyposes": 2,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          }
+        ],
+        "downwardMotion": {
+          "bossDraws": 0,
+          "spriteDraws": 0,
+          "tethers": 0,
+          "lastBossIdentity": null,
+          "lastBossAsset": null,
+          "lastPose": null,
+          "lastSample": null,
+          "lastSilk": null,
+          "authoredKeyposesPerBoss": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false
+        }
+      }
+    },
+    {
+      "group": 35,
+      "label": "CULT LEADER",
+      "scope": "two explicitly authored copy presentation records, current actual boss state and owned source pixels",
+      "metrics": {
+        "actorDraws": 3,
+        "bossDraws": 1,
+        "enemyDraws": 0,
+        "silkTethers": 0,
+        "enemySilkTethers": 0,
+        "bossSilkTethers": 0,
+        "lastBossAsset": "cultLeaderAtlas",
+        "lastBossPose": "release",
+        "lastBossIdentity": "cult-leader",
+        "usedAssets": {
+          "cultLeaderAtlas": 3
+        },
+        "usedPoses": {
+          "charge": 1,
+          "release": 2
+        },
+        "lastSilk": null,
+        "authoredPosesPerActor": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "sinBossDraws": 0,
+        "lastSinSample": null,
+        "wrathManifestDraws": 0,
+        "lastWrathManifest": null,
+        "chapter3BossDraws": 0,
+        "chapter3DroneDraws": 0,
+        "chapter3GateDraws": 0,
+        "lastChapter3Sample": null,
+        "storyBossDraws": 1,
+        "storyParticipantDraws": 0,
+        "storyMinionDraws": 0,
+        "storyPlayerDraws": 0,
+        "storySupportDraws": 0,
+        "storyEchoDraws": 0,
+        "storyTargetMarkerDraws": 0,
+        "lastStoryTargetMarker": null,
+        "lastStorySamples": [
+          {
+            "id": "cult-leader",
+            "key": "cultLeaderAtlas",
+            "role": "combat-copy",
+            "frame": 1,
+            "pose": "charge",
+            "sourceRect": [
+              768,
+              0,
+              768,
+              512
+            ],
+            "anchor": [
+              373,
+              198
+            ],
+            "scale": 0.20217391304347826,
+            "position": [
+              90,
+              185
+            ],
+            "combatPosition": [
+              90,
+              185
+            ],
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false,
+            "actualReleaseTick": -1,
+            "releaseAge": null
+          },
+          {
+            "id": "cult-leader",
+            "key": "cultLeaderAtlas",
+            "role": "combat-copy",
+            "frame": 2,
+            "pose": "release",
+            "sourceRect": [
+              0,
+              512,
+              768,
+              512
+            ],
+            "anchor": [
+              415,
+              205
+            ],
+            "scale": 0.20217391304347826,
+            "position": [
+              270,
+              185
+            ],
+            "combatPosition": [
+              270,
+              185
+            ],
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false,
+            "actualReleaseTick": 60,
+            "releaseAge": 0
+          },
+          {
+            "id": "cult-leader",
+            "key": "cultLeaderAtlas",
+            "role": "boss",
+            "frame": 2,
+            "pose": "release",
+            "sourceRect": [
+              0,
+              512,
+              768,
+              512
+            ],
+            "anchor": [
+              415,
+              205
+            ],
+            "scale": 0.3,
+            "position": [
+              180,
+              112
+            ],
+            "combatPosition": [
+              180,
+              112
+            ],
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false,
+            "actualReleaseTick": 60,
+            "releaseAge": 0
+          }
+        ],
+        "combatCopyDraws": 2,
+        "combatCopyMissingAssets": 0,
+        "lastCombatCopySamples": [
+          {
+            "id": "review-35-0",
+            "sourceActorId": "review-35-0",
+            "modelActorId": null,
+            "identity": "cult-leader",
+            "key": "cultLeaderAtlas",
+            "pose": "charge",
+            "sourceRect": [
+              768,
+              0,
+              768,
+              512
+            ],
+            "anchor": [
+              373,
+              198
+            ],
+            "scale": 0.20217391304347826,
+            "position": [
+              90,
+              185
+            ],
+            "born": 0,
+            "expireAt": 360,
+            "releaseTick": -1,
+            "opacity": 0.58,
+            "kind": "illusion",
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          },
+          {
+            "id": "review-35-1",
+            "sourceActorId": "review-35-1",
+            "modelActorId": null,
+            "identity": "cult-leader",
+            "key": "cultLeaderAtlas",
+            "pose": "release",
+            "sourceRect": [
+              0,
+              512,
+              768,
+              512
+            ],
+            "anchor": [
+              415,
+              205
+            ],
+            "scale": 0.20217391304347826,
+            "position": [
+              270,
+              185
+            ],
+            "born": 0,
+            "expireAt": 360,
+            "releaseTick": 60,
+            "opacity": 0.92,
+            "kind": "clone",
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          }
+        ],
+        "downwardMotion": {
+          "bossDraws": 0,
+          "spriteDraws": 0,
+          "tethers": 0,
+          "lastBossIdentity": null,
+          "lastBossAsset": null,
+          "lastPose": null,
+          "lastSample": null,
+          "lastSilk": null,
+          "authoredKeyposesPerBoss": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false
+        }
+      }
+    },
+    {
+      "group": 12,
+      "label": "LEADER PRACTICE",
+      "scope": "two explicitly authored copy presentation records, current actual boss state and owned source pixels",
+      "metrics": {
+        "actorDraws": 3,
+        "bossDraws": 1,
+        "enemyDraws": 0,
+        "silkTethers": 0,
+        "enemySilkTethers": 0,
+        "bossSilkTethers": 0,
+        "lastBossAsset": "cultLeaderAtlas",
+        "lastBossPose": "down-attack",
+        "lastBossIdentity": "cult-leader",
+        "usedAssets": {
+          "cultLeaderAtlas": 3
+        },
+        "usedPoses": {},
+        "lastSilk": null,
+        "authoredPosesPerActor": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "sinBossDraws": 0,
+        "lastSinSample": null,
+        "wrathManifestDraws": 0,
+        "lastWrathManifest": null,
+        "chapter3BossDraws": 0,
+        "chapter3DroneDraws": 0,
+        "chapter3GateDraws": 0,
+        "lastChapter3Sample": null,
+        "storyBossDraws": 0,
+        "storyParticipantDraws": 0,
+        "storyMinionDraws": 0,
+        "storyPlayerDraws": 0,
+        "storySupportDraws": 0,
+        "storyEchoDraws": 0,
+        "storyTargetMarkerDraws": 0,
+        "lastStoryTargetMarker": null,
+        "lastStorySamples": [],
+        "combatCopyDraws": 2,
+        "combatCopyMissingAssets": 0,
+        "lastCombatCopySamples": [
+          {
+            "id": "review-12-0",
+            "sourceActorId": "review-12-0",
+            "modelActorId": null,
+            "identity": "cult-leader",
+            "key": "cultLeaderAtlas",
+            "pose": "charge",
+            "sourceRect": [
+              768,
+              0,
+              768,
+              512
+            ],
+            "anchor": [
+              373,
+              198
+            ],
+            "scale": 0.20217391304347826,
+            "position": [
+              90,
+              185
+            ],
+            "born": 0,
+            "expireAt": 360,
+            "releaseTick": -1,
+            "opacity": 0.58,
+            "kind": "illusion",
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          },
+          {
+            "id": "review-12-1",
+            "sourceActorId": "review-12-1",
+            "modelActorId": null,
+            "identity": "cult-leader",
+            "key": "cultLeaderAtlas",
+            "pose": "down-attack",
+            "sourceRect": [
+              0,
+              512,
+              768,
+              512
+            ],
+            "anchor": [
+              415,
+              205
+            ],
+            "scale": 0.20217391304347826,
+            "position": [
+              270,
+              185
+            ],
+            "born": 0,
+            "expireAt": 360,
+            "releaseTick": 60,
+            "opacity": 0.92,
+            "kind": "clone",
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          }
+        ],
+        "downwardMotion": {
+          "bossDraws": 0,
+          "spriteDraws": 0,
+          "tethers": 0,
+          "lastBossIdentity": null,
+          "lastBossAsset": null,
+          "lastPose": null,
+          "lastSample": null,
+          "lastSilk": null,
+          "authoredKeyposesPerBoss": 4,
+          "fullAnimationCycles": 0,
+          "sourcePivotsCertified": false
+        }
+      }
+    }
+  ],
+  "sources": {
+    "bossMotionViolet": {
+      "path": "media/boss-motion-v8/violet-atlas-512.png",
+      "bytes": 222113,
+      "sha256": "8271ccb891a9ea88cee33aec9052ac0b427b3b4ace0b241f2dd04cdc136f6f24"
+    },
+    "sinBelphegorAtlas": {
+      "path": "media/sins-v13/belphegor-atlas-512.png",
+      "bytes": 286241,
+      "sha256": "1d025b46186a713241d901fb670476a5709e99c8e847a6a9291cb78b14c36e22"
+    },
+    "actorDenialIdle": {
+      "path": "media/actors-v7/denial-idle.png",
+      "bytes": 396962,
+      "sha256": "60c3a216597ca0efbfca2ff01aaef78799094231aa5fd89f2cb8f96df5faa492"
+    },
+    "actorDenialWalk": {
+      "path": "media/actors-v7/denial-walk.png",
+      "bytes": 370627,
+      "sha256": "c4dc998c8177f1d47fe13478d0731558737130609b66472c3bbfe3e46292474f"
+    },
+    "actorDenialAttack": {
+      "path": "media/actors-v7/denial-attack.png",
+      "bytes": 380106,
+      "sha256": "15fc82950715f2e368dab8b8101751ddad8c170dc58c3f57fd31d68ff7f320c4"
+    },
+    "actorDenialHit": {
+      "path": "media/actors-v7/denial-hit.png",
+      "bytes": 365973,
+      "sha256": "573f330b8b23d81cda189194897b672285992efcf71cd4050311dd61dd7447be"
+    },
+    "actorGuardIdle": {
+      "path": "media/actors-v7/guard-idle.png",
+      "bytes": 615191,
+      "sha256": "a8b09b9597c3a66261acc38149109bdd12f5f8e4e2ee5ce9428cba6e3163bd76"
+    },
+    "actorGuardWalk": {
+      "path": "media/actors-v7/guard-walk.png",
+      "bytes": 456923,
+      "sha256": "e7d947d0885f0451c8217e4a83402794265c347c12fbfe6e4b5757025d2b74de"
+    },
+    "actorGuardAttack": {
+      "path": "media/actors-v7/guard-attack.png",
+      "bytes": 543671,
+      "sha256": "d84c5044eb8e0faee8b6549f899bf69588b01b88f2e63d53a6bc9765271f4165"
+    },
+    "actorGuardHit": {
+      "path": "media/actors-v7/guard-hit.png",
+      "bytes": 505266,
+      "sha256": "f94291b0fafb423adee4b153dea844fea012ed6a504abd0c2afe9b6c9dbeb387"
+    },
+    "sinPrideAtlas": {
+      "path": "media/sins-v13/pride-atlas-512.png",
+      "bytes": 145503,
+      "sha256": "7f4ed7ef064882d4f3f31f6592b635dac0dcec61137fe3a3758d707632d17345"
+    },
+    "sinPrideCyborgAtlas": {
+      "path": "media/sins-v13/pride-cyborg-atlas-512.png",
+      "bytes": 277545,
+      "sha256": "74f4875452efd814d03ea56f32fac3b1115222aea4c540ea302b0d8b0b477683"
+    },
+    "storyKnightIdle": {
+      "path": "media/story-v19/knight-idle.webp",
+      "bytes": 92004,
+      "sha256": "6e90a1e9aa520570b002b10650741813a6d2c20520c3317dc4437eb32ccd4de7"
+    },
+    "storyKnightCharge": {
+      "path": "media/story-v19/knight-charge.webp",
+      "bytes": 102056,
+      "sha256": "99b4fd76ae881d97288011f3dc2b690b3a69e28ad9365e7a631f2cb7f5f85213"
+    },
+    "storyKnightAttack": {
+      "path": "media/story-v19/knight-attack.webp",
+      "bytes": 83118,
+      "sha256": "5fce8b6b86045551839b908ac79a960f58a6b5e6f345ad20ab97d80df0b3c1c0"
+    },
+    "storyKnightRecover": {
+      "path": "media/story-v19/knight-recover.webp",
+      "bytes": 172778,
+      "sha256": "01d39a69e2f50fc74091d42fb52effc2de9cbff7b5c067e60e66a64f51fd9a8f"
+    },
+    "storyPlayerHando": {
+      "path": "media/story-v19/player-hando.png",
+      "bytes": 267883,
+      "sha256": "7aad591310bb93367825e0e47ca9a487cbd6b88e53637ce6316e8d5976f2c569"
+    },
+    "storyMobGoblin": {
+      "path": "media/story-v19/mob-goblin.png",
+      "bytes": 209252,
+      "sha256": "4b97bb140b31477f2f645a7a96e66320052fb7274829987aa0fe36bceabfafc2"
+    },
+    "storyKnightSword": {
+      "path": "media/story-v19/knight-sword.png",
+      "bytes": 44486,
+      "sha256": "d14b4babd804f490b31d2f1cf8bf8fba23bd72f5605329c1c88acd5b74fa4841"
+    },
+    "storyKnightMap": {
+      "path": "media/story-v19/knight-map.jpg",
+      "bytes": 661132,
+      "sha256": "0cb02b60cf0caeddd6d88e7d0e21ca4652d395fd11541f2e5f5ce1c0b1ea4d4e"
+    },
+    "storyPlayerHandoSlash": {
+      "path": "media/story-v19/player-hando-slash.png",
+      "bytes": 85262,
+      "sha256": "0f811aa201f2317bfea07d48109989942b3f84d3348ec8e871c50e5c086bc424"
+    },
+    "storySirenIdle": {
+      "path": "media/story-v19/siren-idle.webp",
+      "bytes": 41204,
+      "sha256": "985137aa992b23610fe2cd11a0a5624bd49ef90b0d22a99896d7871072a0dcb0"
+    },
+    "storySirenCharge": {
+      "path": "media/story-v19/siren-charge.webp",
+      "bytes": 51608,
+      "sha256": "6af2e81ebbbc0975367c2750a9b502170dee5a5f105b444ef2b2a01550abfaa2"
+    },
+    "storySirenAttack": {
+      "path": "media/story-v19/siren-attack.webp",
+      "bytes": 57414,
+      "sha256": "d6d18565aa6b49f321508796151fba54662ed46f347da58aeb10edfd884d0038"
+    },
+    "storySirenRecover": {
+      "path": "media/story-v19/siren-recover.webp",
+      "bytes": 49646,
+      "sha256": "483de4f98f06de3dc2693b3b19b2cbbfc8bdaededdc265e20d10fa6d0ca3e07a"
+    },
+    "storyPlayerSeoha": {
+      "path": "media/story-v19/player-seoha.png",
+      "bytes": 139193,
+      "sha256": "5faf5cd8c5d2b00d96a349e9617100d50730d291948de3ddb993179eb8c4bb8e"
+    },
+    "storyTimeCollector": {
+      "path": "media/story-v19/time-collector.png",
+      "bytes": 136719,
+      "sha256": "0027c67dd883ffa3897df40f7a83305d368d588aedbaec2bf0d17aeccfad39a9"
+    },
+    "storySirenMap": {
+      "path": "media/story-v19/siren-map.webp",
+      "bytes": 341232,
+      "sha256": "832aaa38766ecf20a6c79064195103fec24a7957a5c0ba7ca4580ea2bc5cc136"
+    },
+    "storyChronoShard": {
+      "path": "media/story-v19/chrono-shard.webp",
+      "bytes": 54898,
+      "sha256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5"
+    },
+    "storyPlayerSeohaSlash": {
+      "path": "media/story-v19/player-seoha-slash.png",
+      "bytes": 153437,
+      "sha256": "cf767d2600a48dda2c40a110ff7e6e86e3da1588764459a268b1ac97f49d4ece"
+    },
+    "storyRianIdle": {
+      "path": "media/story-v19/rian-idle.webp",
+      "bytes": 13628,
+      "sha256": "cb109d4677baaf3ea90e14b3fd216e0ed94db8b7db3ef8f4a6ec8130c7d72d47"
+    },
+    "storyRianAttack": {
+      "path": "media/story-v19/rian-attack.webp",
+      "bytes": 25178,
+      "sha256": "107b3bc0a4a84edb4f14f3d50f69e7aef11ac782e51d16209e725bfdfecf737d"
+    },
+    "storyIonIdle": {
+      "path": "media/story-v19/ion-idle.webp",
+      "bytes": 24388,
+      "sha256": "e7f447ebdf74e95ee4db3e72449e509662341caa0e301783cd7094e3a3d5dc14"
+    },
+    "storyIonAttack": {
+      "path": "media/story-v19/ion-attack.webp",
+      "bytes": 43708,
+      "sha256": "799191f1fe1152f7bbd97c7cca40e3857401b33a6d52e36aef5a6ade5de7588f"
+    },
+    "storyCultCircuit": {
+      "path": "media/story-v19/cult-circuit.webp",
+      "bytes": 127570,
+      "sha256": "f705c72eb4d0e4501767034c84c102771130c634b893e811073d75cb8d085229"
+    },
+    "storyMobCultLeech": {
+      "path": "media/story-v19/mob-cult-leech.webp",
+      "bytes": 40264,
+      "sha256": "07099111f8bf7ae0f43c965752de5dd156ce70a283c3d15b21f8039eb0d81ef8"
+    },
+    "storyPairMap": {
+      "path": "media/story-v19/pair-map.jpg",
+      "bytes": 391977,
+      "sha256": "9df293ea34b10f041410137beec97f9dfab9e8fc4605547dae3ed0fdfa31d2a3"
+    },
+    "storyRianCross": {
+      "path": "media/story-v19/rian-cross.webp",
+      "bytes": 84602,
+      "sha256": "c3087e2e8611efff6e8844c3b3c571457a4458552a4c85af36c37657d0f00620"
+    },
+    "storyIonShield": {
+      "path": "media/story-v19/ion-shield.webp",
+      "bytes": 70068,
+      "sha256": "f56c5acaf90884bbf5c18a94691105360ccb00f87b30e9b44212aef159bb59d9"
+    },
+    "cultLeaderAtlas": {
+      "path": "media/cult-v17/cult-leader-atlas.png",
+      "bytes": 2304249,
+      "sha256": "d76c925bd52b367aaac41473b234b35a0b5aecde42201324b187af5408f1a2de"
+    },
+    "storyPlayerAwakening": {
+      "path": "media/story-v19/player-awakening.webp",
+      "bytes": 290478,
+      "sha256": "3e06474a67fbf83e5ee625b305e168870bb675c2d51618e2cd327e237f696553"
+    },
+    "cultArena": {
+      "path": "media/cult-v17/arena.jpg",
+      "bytes": 530534,
+      "sha256": "9f23361f00f184e73e963784176d6c0979fe8b4375e45cdd8e06539d4776a53b"
+    },
+    "cultDriveFold": {
+      "path": "media/cult-v17/drive-fold.webp",
+      "bytes": 72902,
+      "sha256": "c51d89509e9e52a07b539027596b986094f5e56fdff3f587e2c19c9ffe38ed93"
+    },
+    "cultDriveStitch": {
+      "path": "media/cult-v17/drive-stitch.webp",
+      "bytes": 90032,
+      "sha256": "6c2785664e1226250da23a2c048043ca8c3b2cfeeb4c5d1c8259c7d3d8b3649a"
+    },
+    "cultLance": {
+      "path": "media/cult-v17/lance.webp",
+      "bytes": 27866,
+      "sha256": "b1c98912111f3c661c418567e1d304d606705d7e3eb87c643caeaf8402f4acf7"
+    },
+    "cultDriveImpact": {
+      "path": "media/cult-v17/drive-impact.webp",
+      "bytes": 141070,
+      "sha256": "318c20e9dc3588e5929e619a9a8da35bfbf12c3674848752ba46127152247f57"
+    },
+    "cultDriveSpear": {
+      "path": "media/cult-v17/drive-spear.webp",
+      "bytes": 64746,
+      "sha256": "507b0455ada4be3ff8876d1686aef6362539b57782333c849c48ba21ed352dd8"
+    }
+  },
+  "image": {
+    "path": "docs/v21-copy-pixels/source-own-projections.jpg",
+    "bytes": 128723,
+    "sha256": "6d0cf447f71ef938c9b8a3b54a0047a04251316217618eca70551fc0eb67b6b0"
+  },
+  "reviewStatus": "final direct pixel review completed within the declared CPU-fixture scope",
+  "directReview": {
+    "reviewer": "Docs combat-copy presentation owner",
+    "scope": "Directly viewed final contact image pixels; this is not an automatic image-review assertion.",
+    "findings": [
+      "Eight own-source identity/form composites retain original atlas registrations and authored poses.",
+      "A paired projection selects exactly one original actor model, without protected support duplication.",
+      "Original47 source-image dependency hashes are recorded; the contact review covers the visible actor composites, not a claim that every unused dependency was separately visually reviewed."
+    ],
+    "notCertified": [
+      "natural input or progression",
+      "Korean font appearance (native CPU Canvas has no certified Korean font)",
+      "actual browser",
+      "headless browser",
+      "software GPU",
+      "hardware GPU",
+      "mobile emulation",
+      "real phone",
+      "sustained FPS"
+    ]
+  }
+}

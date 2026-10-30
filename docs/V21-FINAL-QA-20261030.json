@@ -1,0 +1,92 @@
+{
+  "schema": "hapil-v21-final-qa-1",
+  "date": "2026-10-30",
+  "baseCommit": "d2f5fddff2f12118d5c97a9a24e1111c16a1c771",
+  "sourceHashes": {
+    "index.html": "5023252ca57071b6c1a1013affcea80502b91a6906cde2d20378ccbb0e3912f8",
+    "styles.css": "aaeb395a309ff51c1269da69fb4d338206c14effcb01dda4fb1831740e2dc2e9",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "src/render.js": "e52bfc5a1236d6b600ee28756411e27e5b3625e86def26dc10f4be1df8b82c80",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033",
+    "src/storage.js": "ec1010c11aaf3f49240f3fa8f46d5b85f922b6373bd4a29a5bd89a7ef282e71c",
+    "src/core.js": "52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a",
+    "src/actors.js": "be2c1999692f5ba7ce60d75a4d03c09abc9d07563102bd39b9eedae0327449f8",
+    "src/boss-motion.js": "e2d1bde92838884382e30b5d8de6549cf9071ac9b21c84b7f9cb8d4bc63160b1",
+    "src/projectiles.js": "c55d1f0cbb623b21f3a06f94b42215db63cd185435afc117d7432f9ac178bc0c",
+    "src/boss-skills.js": "af990bbcad9348722269bdfa881028eeea35711782cbdafb06ef321c27a01b5c",
+    "src/media.js": "0057a4d28e4d8bd35eb1598ea48207ff9cf21ead2906cc75d66c405ed6de110c",
+    "src/app.js": "6e6391d6707d0b95c77f0722b509ac689f9bbc3eb3309bf49d7399fdf08825a1"
+  },
+  "sourceHashGuardPassed": true,
+  "previewMatchesSource": true,
+  "automaticTests": {
+    "passed": 285,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 54821.458014,
+    "log": "docs/v21-qa/npm-test-final.log"
+  },
+  "combatCoverage": {
+    "bossCases": 315,
+    "waveCases": 105,
+    "bossActiveBodyTargets": {
+      "hell": 0.66,
+      "normal": 0.44,
+      "gentle": 0.22
+    },
+    "waveMultiplier": 0.7,
+    "measure": "Real instantaneous active collision body union, excluding warnings/fade/forecasts/player-radius inflation; target applies during announced pressure windows only",
+    "peakBullets": 306,
+    "poolPressure": 0,
+    "droppedGroups": 0
+  },
+  "naturalHealth": {
+    "scope": "CPU isolated product special-practice phase3; no external immunity/777/HP/damage edits",
+    "uniqueBossDifficultyCases": 105,
+    "primary": {
+      "wins": 98,
+      "losses": 7
+    },
+    "followups": {
+      "attempts": 8,
+      "wins": 7,
+      "losses": 1
+    },
+    "everyCaseHasLegalClear": true,
+    "replayedInputTicks": 198933,
+    "fullNewRuleStoryRouteVerified": false
+  },
+  "legacyCompatibility": {
+    "fullRouteReplays": 18,
+    "ordinaryHealthInputTicks": 3699860,
+    "changedSaveBoundaries": 2286,
+    "newSaveTests": 8,
+    "oldV20WriterProtection": "Exact old storage code in VM rejects newer top-level contract and performs zero writes; not an actual old-version browser-tab test"
+  },
+  "browser": {
+    "kind": "Actual Chrome CDP",
+    "controlledSceneReview": "3 real geometry profiles and lattice pressure tick150warning/151active; immune fixture; own assets present",
+    "ordinaryInput": "Real ArrowRight keydown/up187ms moves x180to196; HP3",
+    "drag": "Attempt recorded with zero displacement after frame-gap auto-pause; not passed",
+    "saveRestore": "Real browser IndexedDB checkpoint+backup21 persisted and restored tick0; second tab settings revision7 retained same run/checkpoint/backup21",
+    "layout": "375px CSS iframe of actual index; blank80px movementpad; not device emulation"
+  },
+  "unverified": [
+    "Human full-story clear under new combat revision",
+    "New combat phase1/2 ordinary-health full matrix",
+    "Sustained browser input/FPS; observed cloud RAF gaps around1s trigger safety pause",
+    "Software GPU classification and GPU-completion timing",
+    "Actual hardware GPU",
+    "Mobile device emulation",
+    "Actual phone/touch-device/FPS"
+  ],
+  "proofSha256": {
+    "docs/v21-qa/npm-test-final.log": "59cab9e4973c3801a211a1967d4de17473ff3ae8ba86f16a95fa00c018a471be",
+    "docs/V21-ATTACK-COVERAGE-20261030.json": "843f08bdc739e26b1c1407828fcc48af939575d5825bdb79e5deabf735733688",
+    "docs/V21-NATURAL-HEALTH-FOLLOWUP-20261030.json": "7ef074e4f369b63e09b46f405a1aa2b6241d7506e1cf6a3e9645c3821c03406f",
+    "docs/V21-LEGACY-SAVE-COMPATIBILITY-20261030.json": "b43b51c68678177eea70fd6dda351b53d055c56d8d8038ccef101e27b505a520",
+    "docs/V21-PRESSURE-PIXEL-REVIEW-20261030.json": "2cf6e526c8ba98b3d714716a88acc41b474566c0108d0c15d794c4a0e919d871",
+    "docs/V21-COPY-SOURCE-REVIEW-20261030.json": "44f938defce92a5b1c003876b82f498f9e3b35714f7dc7b19c6d8c3a50562ca2",
+    "docs/v21-browser/browser-review.json": "1b6bfe428fb6383e1a51e90f98edd6641b6c3c8d049eaad20dd84fa06e371c66"
+  }
+}

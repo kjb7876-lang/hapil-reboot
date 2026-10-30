@@ -130,15 +130,6 @@
   function setHidden(id,value){var element=$(id),hidden=!!value;if(element.hidden!==hidden)element.hidden=hidden;}
   function syncIntroControls(){
     var active=mode==='playing'&&world&&world.stage==='bossIntro';setHidden('intro-skip-button',!active);
-    var pattern=world&&world.stage==='boss'&&world.boss&&world.boss.patternHint;
-    var residual=false;
-    if(world&&world.stage==='transition'){
-      residual=!!(world.bullets&&world.bullets.length);
-      for(var hi=0;!residual&&world.hazards&&hi<world.hazards.length;hi++)residual=world.tick<world.hazards[hi].fadeAt;
-    }
-    var hint=active?'보스 등장 · 잠시 뒤 전투가 이어집니다':pattern?world.boss.patternHint:residual?'공격은 멈췄어도 남은 탄환과 광선은 아직 위험합니다.':world&&world.campaign&&world.stage==='waves'?routeNote().cue:world&&world.bossIndex===2&&world.stage==='boss'?'바닥의 점선이 켜질 길입니다':'여기 또는 전투 화면을 드래그하세요';
-    safeText('pad-caption',hint);
-    safeText('pad-title',active?'상대가 모습을 드러냅니다':pattern?'패턴 읽기 · '+((world.phase||0)+1)+' / 3':residual?'남은 탄막에 집중하세요':'손끝으로, 한 걸음');
   }
   function safeText(id,value){var element=$(id),text=value==null?'':String(value);if(element.textContent!==text)element.textContent=text;}
   function clearInput(){keys=Object.create(null);pointer.active=false;pointer.id=null;pointer.pendingX=0;pointer.pendingY=0;pointer.lastMove=0;inputSource='keyboard';$('touch-pad').classList.remove('active');}
@@ -156,6 +147,7 @@
     $('mobile-storage-status').classList.toggle('warning',warning);safeText('settings-storage',message+' 기존 합일의 저장 데이터와 분리됩니다.');
   }
   function syncContinueAvailability(){
+    safeText('continue-button',savedCheckpoint&&savedCheckpoint.combatRevision!==21?'기존 전투로 이어하기':'저장된 구간에서 이어하기');
     $('continue-button').disabled=completionJobs>0||completionUncertain||restorePending;
     $('start-button').disabled=!ready||restorePending;
     $('practice-button').disabled=!ready||restorePending;
@@ -171,7 +163,7 @@
   function syncSettings(){
     $('setting-music').checked=settings.music;$('setting-sfx').checked=settings.sfx;$('setting-skills').checked=settings.skillRotation;$('setting-low').checked=settings.quality==='low';$('setting-sensitivity').value=settings.sensitivity;safeText('sensitivity-value',Number(settings.sensitivity).toFixed(1)+'×');
     document.querySelectorAll('[data-difficulty]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.difficulty===settings.difficulty));});
-    safeText('difficulty-description',settings.difficulty==='gentle'?'느린 탄속 · 체력 5 · 넉넉한 예고':settings.difficulty==='hell'?'HELL · 고속 탄막 · 광선·전용기·회전탄 중첩':'일반 구간 · 제8부 사몽 각성과 최종장까지');safeText('skill-state',settings.skillRotation?'스킬 자동 순환':'스킬 순환 꺼짐');safeText('render-state',settings.quality==='low'?'30 FPS':'60 FPS');
+    safeText('difficulty-description',settings.difficulty==='gentle'?'느린 탄속 · 낮은 공격 밀도 · 체력 5':settings.difficulty==='hell'?'HELL · 다중 공격 · 환영과 6초 분신':'탄막과 광선의 교차 · 제8부 사몽 최종전까지');safeText('skill-state',settings.skillRotation?'스킬 자동 순환':'스킬 순환 꺼짐');safeText('render-state',settings.quality==='low'?'30 FPS':'60 FPS');
     if(world)world.skillRotation=settings.skillRotation;else safeText('health-value',settings.difficulty==='gentle'?'◇ ◇ ◇ ◇ ◇':'◇ ◇ ◇');updateSkills();
     if(!settings.music)stopMusic();else if(mode==='playing')startMusic();
   }
@@ -375,7 +367,7 @@
     var campaign=retry&&retryWorld?!!retryWorld.campaign:true;
     var practiceStartPhase=practice?(retry&&retryWorld?retryWorld.practiceStartPhase||0:specialPhase===2?2:0):0;
     var seed=(Date.now()^Math.floor(performance.now()*1000))>>>0;
-    try{world=core.createRun({difficulty:settings.difficulty,seed:seed,practiceBoss:!!practice,campaign:campaign,campaignRevision:campaign?campaignRevision:undefined,bossIndex:practice?practiceIndex:0,finalPractice:finalPractice});if(practice&&practiceStartPhase){var practiceSnapshot=core.checkpoint(world);practiceSnapshot.phase=practiceStartPhase;world=core.restoreCheckpoint(practiceSnapshot);if(!world)throw new Error('특수 패턴 연습을 시작하지 못했습니다.');}if(practice)world.practiceStartPhase=practiceStartPhase;world.skillRotation=settings.skillRotation;setMode('playing');accumulator=0;lastStamp=performance.now();lastRender=0;updateHUD();saveCheckpointIfChanged();if(practice)toast((world.bossName||'보스')+(practiceStartPhase===2?' 특수 패턴 연습 · 본편 기록은 유지됩니다':' 연습 · 해당 전투만 진행합니다'));$('game-canvas').focus({preventScroll:true});}
+    try{world=core.createRun({difficulty:settings.difficulty,seed:seed,practiceBoss:!!practice,combatRevision:21,campaign:campaign,campaignRevision:campaign?campaignRevision:undefined,bossIndex:practice?practiceIndex:0,finalPractice:finalPractice});if(practice&&practiceStartPhase){var practiceSnapshot=core.checkpoint(world);practiceSnapshot.phase=practiceStartPhase;world=core.restoreCheckpoint(practiceSnapshot);if(!world)throw new Error('특수 패턴 연습을 시작하지 못했습니다.');}if(practice)world.practiceStartPhase=practiceStartPhase;world.skillRotation=settings.skillRotation;setMode('playing');accumulator=0;lastStamp=performance.now();lastRender=0;updateHUD();saveCheckpointIfChanged();if(practice)toast((world.bossName||'보스')+(practiceStartPhase===2?' 특수 패턴 연습 · 본편 기록은 유지됩니다':' 연습 · 해당 전투만 진행합니다'));$('game-canvas').focus({preventScroll:true});}
     catch(e){showError(e);}
   }
   function continueRun(){
@@ -392,7 +384,7 @@
       if(!data.checkpoint){savedCheckpoint=null;setHidden('continue-button',true);toast('이어갈 저장 구간이 없습니다.');return;}
       // Restore exactly the checkpoint whose revision load just adopted.
       var restored=core.restoreCheckpoint(data.checkpoint);
-      savedCheckpoint=data.checkpoint;lastSkill=null;world=restored;world.skillRotation=settings.skillRotation;completed=false;checkpointPending=null;checkpointRetryAt=0;checkpointSerial=world.checkpointSerial;accumulator=0;lastStamp=performance.now();setMode('paused');safeText('pause-title','저장된 기억의 시작점');safeText('pause-description','안전한 구간 시작점에서 이어갑니다.');updateHUD();$('resume-button').focus({preventScroll:true});
+      savedCheckpoint=data.checkpoint;lastSkill=null;world=restored;world.skillRotation=settings.skillRotation;completed=false;checkpointPending=null;checkpointRetryAt=0;checkpointSerial=world.checkpointSerial;accumulator=0;lastStamp=performance.now();setMode('paused');safeText('pause-title','저장된 기억의 시작점');safeText('pause-description',world.combatRevision===21?'안전한 구간 시작점에서 이어갑니다.':'이 기록은 기존 전투를 유지합니다. 새 패턴은 새 게임이나 보스 연습에서 시작하세요.');updateHUD();$('resume-button').focus({preventScroll:true});
     }).catch(function(){
       if(generation!==campaignGeneration)return;
       restoreError=true;toast('저장 구간을 확인하지 못했습니다. 다시 시도하거나 기록을 내보내 주세요.');
@@ -466,7 +458,7 @@
   function diagnostics(){
     var hazards=world&&world.hazards?world.hazards:[],heap=null;
     try{var m=performance.memory;if(m&&Number.isFinite(m.usedJSHeapSize))heap={usedBytes:m.usedJSHeapSize,totalBytes:m.totalJSHeapSize,limitBytes:m.jsHeapSizeLimit,scope:'Browser-reported JS heap estimate; excludes GPU and decoded media; GC not controlled'};}catch(e){}
-    return {version:'hapil-battle-readability-v20',candidateRevision:20,mobileRuntime:mobileRuntime,loadedImages:Object.keys(images).length,imageRequestsPending:Object.keys(imageRequests).length,imageRequestsActive:imageActive,mechanicsRevision:world?world.mechanicsRevision:(core?core.MECHANICS_REVISION:2),connectedMapStatus:renderer&&renderer.getMetrics?renderer.getMetrics().sourceStatus||'not-yet-reported':'not-yet-reported',capturedAt:new Date().toISOString(),mode:mode,fixedHz:60,renderTarget:settings.quality==='low'?30:60,rollingWindow:maxSamples,measurementScope:{update:'Main-thread fixed-step simulation and event processing',render:'JavaScript canvas command submission only; not GPU completion',frame:'requestAnimationFrame callback intervals during play'},updateMs:distribution(samples.update,peakUpdate),renderMs:distribution(samples.render,peakRender),frameIntervalMs:distribution(samples.frame,peakFrame),renderedFrames:totalFrames,fixedSteps:totalSteps,pausedLargeGaps:droppedGaps,lastGapReason:lastGapReason,viewport:{width:global.innerWidth,height:global.innerHeight,dpr:global.devicePixelRatio||1,arenaWidth:$('app-stage').clientWidth,arenaHeight:$('app-stage').clientHeight,padHeight:$('touch-pad').clientHeight},entities:world?{bullets:world.bullets.length,shots:world.shots.length,enemies:world.enemies.length,effects:world.effects.length,laserWarnings:hazards.filter(function(h){return h.phase==='warning';}).length,activeLasers:hazards.filter(function(h){return h.phase==='active';}).length,fadingLasers:hazards.filter(function(h){return h.phase==='fade';}).length}:null,terrain:renderer&&renderer.getMetrics?renderer.getMetrics():null,jsHeapEstimate:heap,gpuTimeMs:null,coreStats:world?JSON.parse(JSON.stringify(world.stats||{})):null,assetErrors:assetErrors.slice(),storage:store?Object.assign({},store.status):null};
+    return {version:'hapil-hell-pressure-v21',candidateRevision:21,mobileRuntime:mobileRuntime,loadedImages:Object.keys(images).length,imageRequestsPending:Object.keys(imageRequests).length,imageRequestsActive:imageActive,mechanicsRevision:world?world.mechanicsRevision:(core?core.MECHANICS_REVISION:2),combatRevision:world?world.combatRevision||0:21,connectedMapStatus:renderer&&renderer.getMetrics?renderer.getMetrics().sourceStatus||'not-yet-reported':'not-yet-reported',capturedAt:new Date().toISOString(),mode:mode,fixedHz:60,renderTarget:settings.quality==='low'?30:60,rollingWindow:maxSamples,measurementScope:{update:'Main-thread fixed-step simulation and event processing',render:'JavaScript canvas command submission only; not GPU completion',frame:'requestAnimationFrame callback intervals during play'},updateMs:distribution(samples.update,peakUpdate),renderMs:distribution(samples.render,peakRender),frameIntervalMs:distribution(samples.frame,peakFrame),renderedFrames:totalFrames,fixedSteps:totalSteps,pausedLargeGaps:droppedGaps,lastGapReason:lastGapReason,viewport:{width:global.innerWidth,height:global.innerHeight,dpr:global.devicePixelRatio||1,arenaWidth:$('app-stage').clientWidth,arenaHeight:$('app-stage').clientHeight,padHeight:$('touch-pad').clientHeight},entities:world?{bullets:world.bullets.length,shots:world.shots.length,enemies:world.enemies.length,effects:world.effects.length,laserWarnings:hazards.filter(function(h){return h.phase==='warning';}).length,activeLasers:hazards.filter(function(h){return h.phase==='active';}).length,fadingLasers:hazards.filter(function(h){return h.phase==='fade';}).length}:null,terrain:renderer&&renderer.getMetrics?renderer.getMetrics():null,jsHeapEstimate:heap,gpuTimeMs:null,coreStats:world?JSON.parse(JSON.stringify(world.stats||{})):null,assetErrors:assetErrors.slice(),storage:store?Object.assign({},store.status):null};
   }
   function ensureEncounterArt(){
     if(mode==='error')return false;
@@ -564,6 +556,6 @@
       // Optional cast art may fail without replacing it with another visual.
     }catch(e){booting=false;showError(e);}
   }
-  global.HapilApp={invalidActorAsset:invalidActorAsset,getState:function(){return {mode:mode,paused:mode==='paused',ready:ready,booting:booting,settings:Object.assign({},settings),world:world?{tick:world.tick,time:world.time,stage:world.stage,runId:world.runId,player:{x:world.player.x,y:world.player.y,hp:world.player.hp,maxHp:world.player.maxHp,r:world.player.r},skillRotation:world.skillRotation,difficulty:world.difficulty,phase:world.phase,wave:world.wave,stageTime:world.stageTime,bossIntroDuration:world.bossIntroDuration,checkpointSerial:world.checkpointSerial,practiceBoss:!!world.practiceBoss,practiceStartPhase:world.practiceStartPhase||0,campaign:!!world.campaign,campaignRevision:world.campaignRevision,protagonist:world.protagonist,samongAwakened:!!world.samongAwakened,bossIndex:world.bossIndex,bossName:world.bossName,score:world.score}:null,pointer:{active:pointer.active,pendingX:pointer.pendingX,pendingY:pointer.pendingY}};},diagnostics:diagnostics,exportDiagnostics:exportDiagnostics,pause:pause,resume:resume};
+  global.HapilApp={invalidActorAsset:invalidActorAsset,getState:function(){return {mode:mode,paused:mode==='paused',ready:ready,booting:booting,settings:Object.assign({},settings),world:world?{tick:world.tick,time:world.time,stage:world.stage,runId:world.runId,player:{x:world.player.x,y:world.player.y,hp:world.player.hp,maxHp:world.player.maxHp,r:world.player.r},skillRotation:world.skillRotation,difficulty:world.difficulty,combatRevision:world.combatRevision||0,phase:world.phase,wave:world.wave,stageTime:world.stageTime,bossIntroDuration:world.bossIntroDuration,checkpointSerial:world.checkpointSerial,practiceBoss:!!world.practiceBoss,practiceStartPhase:world.practiceStartPhase||0,campaign:!!world.campaign,campaignRevision:world.campaignRevision,protagonist:world.protagonist,samongAwakened:!!world.samongAwakened,bossIndex:world.bossIndex,bossName:world.bossName,score:world.score}:null,pointer:{active:pointer.active,pendingX:pointer.pendingX,pendingY:pointer.pendingY}};},diagnostics:diagnostics,exportDiagnostics:exportDiagnostics,pause:pause,resume:resume};
   boot();
 })(window);
