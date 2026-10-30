@@ -1,0 +1,968 @@
+{
+  "schema": 1,
+  "createdAt": "2026-10-30T10:08:51.552Z",
+  "method": "Pure CPU deterministic replays of all recorded legal directions, unmodified engine health and damage; start via actual special-practice checkpoint API. Failed attempts remain failed. No policy execution or direct world edits after start. Not fullcampaign/browser/mobile.",
+  "recordingReportSHA256": "a02f7007d30c3021637f08ce15a1c72f2b3ba323b6fe38c73b9e70c163119711",
+  "sourceHashes": {
+    "src/core.js": "52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d",
+    "tools/probe-v21-natural-health.cjs": "41e88ee2b878063cc955cf4ba78ac767dbf4cefff8044d9f5a3e4564a9356c4e"
+  },
+  "replayToolSHA256": "26877164e4b056d598764476ca081cc4760b69b6e6da2060b7b6928d38ed53c6",
+  "sourceHashGuardPassed": true,
+  "summary": {
+    "cases": 105,
+    "ticks": 180318,
+    "won": 98,
+    "lost": 7
+  },
+  "cases": [
+    {
+      "bossIndex": 0,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 2100,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "6e808f66fb866ac7c2bb1bb76225f6f3a9791da212d0d872834828054d8255dd"
+    },
+    {
+      "bossIndex": 0,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 2146,
+      "hp": 2,
+      "hits": 1,
+      "inputSHA256": "d63030cd2f14185efa67022dc3a336d711c5bf417bf6b2068447ed550d64500d"
+    },
+    {
+      "bossIndex": 0,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 2155,
+      "hp": 1,
+      "hits": 2,
+      "inputSHA256": "ca136b8e5d32b040b34c6ddd696f788a8c2e00e56fe7ef4e91cc535a1cab73bc"
+    },
+    {
+      "bossIndex": 1,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 2598,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "6754db36c5a3bc39b2f900fdfcbbff4849b995d6a9f26141a94d2633e852c0b8"
+    },
+    {
+      "bossIndex": 1,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 2612,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "b0e22821878c717a99ccbc50a0a2f6a6175ee1b6d0a7f610f4388289ee457b12"
+    },
+    {
+      "bossIndex": 1,
+      "difficulty": "hell",
+      "stage": "lost",
+      "ticks": 2178,
+      "hp": 0,
+      "hits": 3,
+      "inputSHA256": "4b95632136b16a8ee779530d616f0c4f1631c86510730175f245c8666c3962f0"
+    },
+    {
+      "bossIndex": 2,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 2756,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "596eeb5b526e241ffc13462ff8b43b4d70ee99fcb85784c19f5a70c8444669c1"
+    },
+    {
+      "bossIndex": 2,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 2634,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "bdb1e7fb8b02cb94a692c307c9019156ff03e0af5a69ba6b2622ebe7e818b1bb"
+    },
+    {
+      "bossIndex": 2,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 2184,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "7e37a3db9602fa98f1da29796fbfe259d7f7fcd5ab78f941f5b7e615e452a1bd"
+    },
+    {
+      "bossIndex": 3,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 2921,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "40d76f6ed66a93087cfbd56c8434cccf06600454092f17af6a8ebb96d0961ceb"
+    },
+    {
+      "bossIndex": 3,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 2776,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "d150f9681dba9f393d2864fe4e459c9a84cf6332254d96e887cbd683aa5919a0"
+    },
+    {
+      "bossIndex": 3,
+      "difficulty": "hell",
+      "stage": "lost",
+      "ticks": 1955,
+      "hp": 0,
+      "hits": 3,
+      "inputSHA256": "784795d6a4950fed0d08232b03f32294e7f049dd8f22f5eb2d00c4e9ede0cdfe"
+    },
+    {
+      "bossIndex": 4,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 2904,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "67e42138815943715a446867283c5e1c24f90824f8861b6a60a2358d2e941ca5"
+    },
+    {
+      "bossIndex": 4,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 3306,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "e26e8a2bdcaee2c38858ca1b3c0c3ecb76404312869b6ab482c8d04884913a20"
+    },
+    {
+      "bossIndex": 4,
+      "difficulty": "hell",
+      "stage": "lost",
+      "ticks": 374,
+      "hp": 0,
+      "hits": 3,
+      "inputSHA256": "ea5a0db1f9a0d8ef3a1de5b02875aeaac52c7f0354b66e1a5f5365a04008592c"
+    },
+    {
+      "bossIndex": 5,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 2783,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "4053b7eb49f8058a4ace1fa7af9d908524b4aecb9357c952fc95055a754e8800"
+    },
+    {
+      "bossIndex": 5,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 2895,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "ab14c9477f8dc9b932cf0d898880b572b2c8ce2d07e3bf66a46df299eb25a867"
+    },
+    {
+      "bossIndex": 5,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 2293,
+      "hp": 2,
+      "hits": 1,
+      "inputSHA256": "5b5d7164ed12779b0f61549d5026440a5c1fd11cd832d95794f742f099fb5598"
+    },
+    {
+      "bossIndex": 6,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 2620,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "4a82bdf03f894f42dc56713792285e48d66f087054b669a96d7d414dc73573df"
+    },
+    {
+      "bossIndex": 6,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 2551,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "8e48f16cb1ef983cfc8719ff9875bdb7dfaa385ffe1079cdcbbadcf2cfb2b8fe"
+    },
+    {
+      "bossIndex": 6,
+      "difficulty": "hell",
+      "stage": "lost",
+      "ticks": 1078,
+      "hp": 0,
+      "hits": 3,
+      "inputSHA256": "f9ddec056f419a4060256c8a62e1dc4448d61f11056324f7900c7806ad72a940"
+    },
+    {
+      "bossIndex": 7,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 2893,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "fcba49229ec368e13b5101ff9fd44f132044749e03205ed632c0d259c57530b5"
+    },
+    {
+      "bossIndex": 7,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 2756,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "1332f828f1ca711a777f271c24bebb070a06c94a6aba8c40c5003924fc7d73a5"
+    },
+    {
+      "bossIndex": 7,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 2638,
+      "hp": 2,
+      "hits": 1,
+      "inputSHA256": "8045d998e3652533a503eb057b75eaf20d2c35304ad80b8089a4f597fed01398"
+    },
+    {
+      "bossIndex": 8,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 2712,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "fdd3252738891ea0cdce423e2b4b43b7908ac4cc97d4bd3d975ecd3c426114d3"
+    },
+    {
+      "bossIndex": 8,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 2768,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "be2378d14336bf9b813210b03d63214ad9b82c11ff441d2652f77f60f388668c"
+    },
+    {
+      "bossIndex": 8,
+      "difficulty": "hell",
+      "stage": "lost",
+      "ticks": 2614,
+      "hp": 0,
+      "hits": 3,
+      "inputSHA256": "cca8a8aead9eb8029078efe4fbe09550646873fd2c3831b4706b217fef8dcb1c"
+    },
+    {
+      "bossIndex": 9,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 2803,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "60ba9c17191801d99e5dc92fd477c31a5ffa93c99448f19f930ac10e8938b289"
+    },
+    {
+      "bossIndex": 9,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 2685,
+      "hp": 2,
+      "hits": 1,
+      "inputSHA256": "d7050a2569c1052a9d907cc21c5d0052518034e2b1fdace9dc8c0aaa5701f4e1"
+    },
+    {
+      "bossIndex": 9,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 2618,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "084cad20027f49fa1398e1a222bfcf813908ea437d6c2fe5c822d5f381d08672"
+    },
+    {
+      "bossIndex": 10,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 3333,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "a54ab915065204ae115fb7d32dc0e707eb1928d2e5eebb05b8fa1c6a7148291a"
+    },
+    {
+      "bossIndex": 10,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 2785,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "f726500023ff77b1fca25f031838177ef18cf69baaa04e91749e4e5466b0f319"
+    },
+    {
+      "bossIndex": 10,
+      "difficulty": "hell",
+      "stage": "lost",
+      "ticks": 2198,
+      "hp": 0,
+      "hits": 3,
+      "inputSHA256": "41f85075196aed722e01f2eaca4d22d8636d0acca6a7035d7603e23b830e240b"
+    },
+    {
+      "bossIndex": 11,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 3360,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "15eb64fd4816834f668b564baf0a9dbe6f8ce41bc329eb189f7a051e9b60ab06"
+    },
+    {
+      "bossIndex": 11,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 3271,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "010c6387de06bcd1c70dc43b25dfc429655e8bfce7dc207a04af795689c3dea5"
+    },
+    {
+      "bossIndex": 11,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 2801,
+      "hp": 1,
+      "hits": 2,
+      "inputSHA256": "51c0ff42961c24bca4734207325363430605464d1c66371152909ab4205e40fc"
+    },
+    {
+      "bossIndex": 12,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1255,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "9fcb1ca29113dff2845313df8a07174aef053900b8b714d1cf911bea917e3474"
+    },
+    {
+      "bossIndex": 12,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1255,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "061737fe8a2966e45517b133c6e953c26891153d37aa1d9310b50bf555620d36"
+    },
+    {
+      "bossIndex": 12,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1238,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "7307f458c68ff69281a9598b06c7d02cfae4c6a64c5a286114b3db7139f2d41f"
+    },
+    {
+      "bossIndex": 13,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1344,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "19514fc5383912e76be1610d684d7560d6288927bad3046b8ae34f07131a06fc"
+    },
+    {
+      "bossIndex": 13,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1353,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "d3a4e7ca64347615789c92f7b60a24f064f0d7fba14dc394c1a817e7ca4799a2"
+    },
+    {
+      "bossIndex": 13,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1261,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "8df012c1694100111efc67d8ae262021e321e83c574ed8823e013a2f57253c95"
+    },
+    {
+      "bossIndex": 14,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1352,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "c9ba677e9e754e67af57e0d721ae918b9fdd59d6041bcc0f82353a6048038c21"
+    },
+    {
+      "bossIndex": 14,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1344,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "590df3386b91b5af23bbff90261ee93d720fa59162e7ce41a26c14a0d7d6d836"
+    },
+    {
+      "bossIndex": 14,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1325,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "cd0b6b370ab2190698470d51e661de0dff8aeabeefc9f6c5aff0d7ea054bf15a"
+    },
+    {
+      "bossIndex": 15,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1406,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "61ae725eb2fc4612c27215d2ee5211bad8947bd36bb588debb9e850fc98c5a83"
+    },
+    {
+      "bossIndex": 15,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1406,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "809282fc231082b10822d0178a6cd4fffd8fc8e0818cdb1e753e17e5c722e483"
+    },
+    {
+      "bossIndex": 15,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1422,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "39c5aef666dc8c3ae164725b9d3b613e55f2deb2b3adbbc4b6f03b6c1963becf"
+    },
+    {
+      "bossIndex": 16,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1434,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "448db596b8e9e92e96dafb1577fbd461f40451673577898acfc1f37678c46f5a"
+    },
+    {
+      "bossIndex": 16,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1434,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "3570f777125b1b0f9b1a6c3f7c3c8aee15db41fda0e37d11242640a350e34607"
+    },
+    {
+      "bossIndex": 16,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1404,
+      "hp": 1,
+      "hits": 2,
+      "inputSHA256": "ec6ab3197eb161852215b32bf1d2645e9cbafce1c852010d92b56a92059c3854"
+    },
+    {
+      "bossIndex": 17,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1495,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "924f617649d36aea3f9292fee78611c4bf6df58dd5e0f454af474e65b98b7f0f"
+    },
+    {
+      "bossIndex": 17,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1496,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "27b7c8aee7987d7d9dbfe363ed4abb0b6274bf63f931bc1f785ee6166398b39c"
+    },
+    {
+      "bossIndex": 17,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1486,
+      "hp": 2,
+      "hits": 1,
+      "inputSHA256": "907f7799335285a218bdf2cc2f0b0d8fd3cc4cf494220aa3b52b247d3fde8f43"
+    },
+    {
+      "bossIndex": 18,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1200,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "7d01b53849f742157f1d0f9826fb9107342561de3ba222e35de9517f504c5bb7"
+    },
+    {
+      "bossIndex": 18,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1201,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "53007f1bf5598874c5342c4b068052667d3982afe6242fabdcaa2f058bf6cacb"
+    },
+    {
+      "bossIndex": 18,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1239,
+      "hp": 2,
+      "hits": 1,
+      "inputSHA256": "54ac9fe353504cb5fea19f410e93e99b1e203af2e695bf5fe16493ceb118069d"
+    },
+    {
+      "bossIndex": 19,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1218,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "6dde38e92bd4578d170e360ca6aa36ed972199f73d3b606ec5ef4ad45dfeb919"
+    },
+    {
+      "bossIndex": 19,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1230,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "3a44217d3e454e94565052114e75c16e8d243c2807bbffa9a39ca1c4968eab1b"
+    },
+    {
+      "bossIndex": 19,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1221,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "d72098909c4787cfbf0b0d70fee63ee6d2e45de1029719a5dc2b0cdbb48c52ff"
+    },
+    {
+      "bossIndex": 20,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1218,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "fdd169f2a1a0d3c1047a8696bb60e0a1e279846dda81e757337698ef5567555d"
+    },
+    {
+      "bossIndex": 20,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1228,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "e10a3b573e8de8e0ccabdbf0b3edea4f9eb48c1af201a6cf3144dc22b09b0cdf"
+    },
+    {
+      "bossIndex": 20,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1254,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "07ec133b7f8b0ff102cf2f833e304a9066f392536cc5506439c649f05acfe726"
+    },
+    {
+      "bossIndex": 21,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1235,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "e6f04ae51d73fff581a99852ee482a48b3a800e12184691719000c0c1b22c811"
+    },
+    {
+      "bossIndex": 21,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1237,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "1f72b8b9e9b6092ec180fd1b0af499a6a3a98f43415f1ff936a1378983220acc"
+    },
+    {
+      "bossIndex": 21,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1245,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "b58696ec19238b6011e5bc605466001a21efd6f79fc47191b3ddd510b421dfb1"
+    },
+    {
+      "bossIndex": 22,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1237,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "0ebfd2869f52f0b329d4dd2055a56fce40c0e45d6ae621db0b00e87681f19ef3"
+    },
+    {
+      "bossIndex": 22,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1236,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "5ed8a7c674e00363c8af8502a76747e7aed1e5dceb0ff0b08dbae517b3b4faa0"
+    },
+    {
+      "bossIndex": 22,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1263,
+      "hp": 2,
+      "hits": 1,
+      "inputSHA256": "cb262bdcf8b2854942fe39f8b1fe68189671cfec367f49c847c581199daeb952"
+    },
+    {
+      "bossIndex": 23,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1254,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "0b455765c50af2bf62587be72b0b8a0758e8fbd1ae38eb65ec6ef73d03de518c"
+    },
+    {
+      "bossIndex": 23,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1246,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "707d583d40698136c74f0df0ec085ab9a82e92da13fe0e73b8709a0a7930189e"
+    },
+    {
+      "bossIndex": 23,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1280,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "83dec5f84f7db2dc91fc753c822e79bcb9435b7a97e9fdb003fec0704d1d12bc"
+    },
+    {
+      "bossIndex": 24,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1262,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "a99ea6b5f0a3ba1d738a2b8aac96e352654d0818f2e569f0d757c9e258336eb6"
+    },
+    {
+      "bossIndex": 24,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1274,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "b797a12bc8653344f3c9ac53972ac3c811e489c3b7835517968ac66c400463ea"
+    },
+    {
+      "bossIndex": 24,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1284,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "fc010499364d399b1f163d617c27c644594f68146f3ba06d21f50c4c04c59b4d"
+    },
+    {
+      "bossIndex": 25,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1273,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "72554da9f18ecbfbbc9a1fba6e941e8b5b450697a368d9e19ecef5ea5c3a5251"
+    },
+    {
+      "bossIndex": 25,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1282,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "8e086d78585bc95a35aecef96d9c07f8a17517c83d5a39d71daa2ef03669e545"
+    },
+    {
+      "bossIndex": 25,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1280,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "9192add51d4cb17a5b66bb4fc6506878e98ba8c45591cee895034bc4837b1b59"
+    },
+    {
+      "bossIndex": 26,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1281,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "cef8cddda3248570095512bc977f3bf45c55eb190e361140670b2c5902b29111"
+    },
+    {
+      "bossIndex": 26,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1274,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "bbf8061bc1ebb8da2c60967c98b6c43db3b08e4d62b4804820bc63b1a52c0753"
+    },
+    {
+      "bossIndex": 26,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1310,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "c04942b9e23b1049964769674887de3d01a51aea820a16ab2183d99efa93f5d6"
+    },
+    {
+      "bossIndex": 27,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1244,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "fc31b39455cba3099c1a316ebedfad3117983324c6b8d47aeaae7e76426d8fcf"
+    },
+    {
+      "bossIndex": 27,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1245,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "00da68f7c7c6479ca4a9cb57b28541a2a83c270131d98422bfd1c3bbb304da45"
+    },
+    {
+      "bossIndex": 27,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1244,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "6c8ddb457fb3f3ec988bfc2fc273e05cb04dd26156212c62a395c53c0976b90f"
+    },
+    {
+      "bossIndex": 28,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1281,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "b18ecf31ff84dbead5af29ba461afb9c622cb39a3cf9672ca1839c6c19c6335c"
+    },
+    {
+      "bossIndex": 28,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1284,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "979cb89b56eab89b76b8d2ca5a0b0d993642961230e5bc63cedf18fabc6ef854"
+    },
+    {
+      "bossIndex": 28,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1293,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "7aa0e9326f29e2c6a66271e5d485b1f881cbb74b61c00eedc6afa3b1d202a628"
+    },
+    {
+      "bossIndex": 29,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1294,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "83a9b1b80612afd93d483aca725cc7ba2a345ed31beced8ab6adf7fc8147dbd7"
+    },
+    {
+      "bossIndex": 29,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1273,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "5fe27f2d15cfb99b4fc35843bc0a2ee8a0228a3feed0bbeb48f710415c94a9c7"
+    },
+    {
+      "bossIndex": 29,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1300,
+      "hp": 2,
+      "hits": 1,
+      "inputSHA256": "152d39b457b8c76fbb019315f8990a8195f5e2331c3ce86121f9aa5d9eef1bee"
+    },
+    {
+      "bossIndex": 30,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1292,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "4a9653afbeb1d495e2892cfce5727345ece710c4d338951e8acc2626d981825c"
+    },
+    {
+      "bossIndex": 30,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1292,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "bf1d536889b30795394f5a2eeb0afe73e0bbe7a8214d193d4455859f5ed6e949"
+    },
+    {
+      "bossIndex": 30,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1318,
+      "hp": 2,
+      "hits": 1,
+      "inputSHA256": "3d00e557162365c464016694fb9c9a93c1539c9933be2b86be30bf5a39f693bc"
+    },
+    {
+      "bossIndex": 31,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1281,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "e5e6412dcc146e744a86c784b73b4965c93d1857ad254dd4e85d38fae7f32337"
+    },
+    {
+      "bossIndex": 31,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1292,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "9c55e8519b95b95e6a8a44ab191ae3ed8e7f6e3c43f07b70ad38b4717cd85a49"
+    },
+    {
+      "bossIndex": 31,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1308,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "c8b7e151808735b5d45da552f23e1e1ccf85feda6138cefa63132fc9fe53968c"
+    },
+    {
+      "bossIndex": 32,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1256,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "def61020b47cd2667d5e0596ff590e4ef35472c0ac4dae844788c4ddbdc0f30a"
+    },
+    {
+      "bossIndex": 32,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1257,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "0eb64c3a7da3a71206ea8d8e064592f17bc11970da885862641a98519f1f3eb5"
+    },
+    {
+      "bossIndex": 32,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1245,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "2cd591a49303309f3992687c81b3e58814c6db27cc2efcab88e55efd575965cc"
+    },
+    {
+      "bossIndex": 33,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1241,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "44bd909b310d4fbaead0e7df660d6f28e5820c84a7abe2f93662eea7dce9d182"
+    },
+    {
+      "bossIndex": 33,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1243,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "74eb1e225aa703918abd20389d816e98aa1a5adcb72a95dab20f5d99e498b403"
+    },
+    {
+      "bossIndex": 33,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1223,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "348837b9c8e3e42227b45ed0cb10357a9b29381370772fbcaecdd03184987728"
+    },
+    {
+      "bossIndex": 34,
+      "difficulty": "gentle",
+      "stage": "won",
+      "ticks": 1292,
+      "hp": 5,
+      "hits": 0,
+      "inputSHA256": "d00b11456b53a5128e08551d63a16a2fa6029e6e4f28ecba8b38287ddcec30a1"
+    },
+    {
+      "bossIndex": 34,
+      "difficulty": "normal",
+      "stage": "won",
+      "ticks": 1292,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "5260119c06776da30e2a79ad161436b011e3641b0ccce4a078bf3d53619c7a97"
+    },
+    {
+      "bossIndex": 34,
+      "difficulty": "hell",
+      "stage": "lost",
+      "ticks": 502,
+      "hp": 0,
+      "hits": 3,
+      "inputSHA256": "816061a41f0edc318b2d42d83b68af7d13ecbe44510d2577ddf675f8d38f5aea"
+    }
+  ]
+}

@@ -14,7 +14,7 @@
     {id:'seven-seals',ink:'#261822',mist:'#b58179',trim:'#c1a484',motif:'chain'}
   ];
   function color(value) { return COLORS[value] || value || '#c2a4f4'; }
-  function paletteFor(world){return global.HapilProjectiles&&global.HapilProjectiles.paletteFor?global.HapilProjectiles.paletteFor(world):null;}
+  function paletteFor(world,owner){return global.HapilProjectiles&&global.HapilProjectiles.paletteFor?global.HapilProjectiles.paletteFor(world,owner):null;}
   function imageReady(im) { return im && im.complete && im.naturalWidth > 0; }
   // These are whole, precomposed source paintings, not a tile atlas. The
   // portrait adaptation preserves one uniformly scaled architectural view and
@@ -94,6 +94,7 @@
     var sinFloor=null,sinFloorSource=null,sinFloorTone=null;
     var sourceScene=null,sourceSceneImage=null,sourceSceneKey=null,sourceSceneTone=null,sourceSceneBuilds=0;
     var playerShotStamp=null,playerShotStampKey=null;
+    var warningFootprints=[],warningFootprintPool=[],warningFootprintBuilds=0;
     // Text layouts depend on the actual phase names, not on every render tick.
     // One current HUD/entry/narrative layout keeps memory bounded per renderer.
     var hudTextLayout=null,entryTextLayout=null,narrativeTextLayout=null,textLayoutBuilds=0;
@@ -527,6 +528,23 @@
       var glow=ctx.createRadialGradient(180,315,0,180,315,100);glow.addColorStop(0,'rgba(152,109,201,.09)');glow.addColorStop(1,'rgba(152,109,201,0)');ctx.fillStyle=glow;ctx.fillRect(75,210,210,210);
       for(var i=0;i<18;i++){var x=(i*79+17)%W,y=(i*113-t*(3+i%3))%H;if(y<0)y+=H;ctx.globalAlpha=.15+(i%4)*.05;ctx.fillStyle=i%3?'#b6a0db':'#8edee0';ctx.fillRect(x,y,i%4===0?2:1,i%4===0?2:1);}ctx.globalAlpha=1;
     }
+    function warningBoundary(h,palette) {
+      var dx=h.x2-h.x1,dy=h.y2-h.y1,len=Math.hypot(dx,dy),inset=1.25,r=h.width/2-inset;
+      // The entire contour remains inside the committed capsule. The dark
+      // 2.5px keyline reaches its edge; the thin owner-coloured line sits
+      // within it. Neither is a new damage body, forecast path or moving aim.
+      ctx.save();ctx.translate((h.x1+h.x2)/2,(h.y1+h.y2)/2);ctx.rotate(Math.atan2(dy,dx));
+      ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(-len/2,-r);ctx.lineTo(len/2,-r);
+      ctx.arc(len/2,0,r,-Math.PI/2,Math.PI/2);ctx.lineTo(-len/2,r);ctx.arc(-len/2,0,r,Math.PI/2,Math.PI*1.5);ctx.closePath();
+      ctx.globalAlpha=.9;ctx.strokeStyle='#080b12';ctx.lineWidth=2.5;ctx.stroke();
+      ctx.globalAlpha=.9;ctx.strokeStyle=palette?palette.secondary:color(h.color);ctx.lineWidth=1.4;ctx.stroke();ctx.restore();
+      var slot=mapMetrics.warningFootprintDraws++,record=warningFootprintPool[slot];
+      if(!record){record=warningFootprintPool[slot]={};warningFootprintBuilds++;}
+      record.id=h.id;record.x1=h.x1;record.y1=h.y1;record.x2=h.x2;record.y2=h.y2;record.width=h.width;
+      record.boundaryInset=inset;record.boundaryDarkWidth=2.5;record.boundaryLightWidth=1.4;
+      record.paletteId=palette?palette.id:null;record.activeAt=h.activeAt;record.damageGeometryOwnedByCore=true;
+      warningFootprints.push(record);mapMetrics.warningFootprintBuilds=warningFootprintBuilds;
+    }
     function drawHazards(world) {
       var hazards=world.hazards||[];
       for(var i=0;i<hazards.length;i++){
@@ -537,7 +555,7 @@
           if(projectilePresentation&&projectilePresentation.drawHazardBody)projectilePresentation.drawHazardBody(ctx,world,h,lightweight);
           continue;
         }
-        var width=h.width||2,progress=clamp(h.progress||0,0,1),palette=paletteFor(world),tone=palette?palette.primary:color(h.color);
+        var width=h.width||2,progress=clamp(h.progress||0,0,1),palette=paletteFor(world,h),tone=palette?palette.primary:color(h.color);
         ctx.save();ctx.lineCap='round';ctx.beginPath();ctx.moveTo(h.x1,h.y1);ctx.lineTo(h.x2,h.y2);
         // Dashed, harmless telegraphs retain the committed damage footprint.
         var grid=h.patternId==='boss-grid-v1';
@@ -550,6 +568,7 @@
         mapMetrics.warningContrastStrokes++;
         ctx.globalAlpha=grid?.85:.66+progress*.22;ctx.setLineDash([7,7]);ctx.lineDashOffset=-progress*14;ctx.strokeStyle=palette?palette.secondary:color(h.color);ctx.lineWidth=floorScar?Math.min(width,1.5):grid?Math.min(width,2):1;ctx.stroke();
         ctx.restore();
+        if(width>=18)warningBoundary(h,palette);
       }
     }
     function atlasReady(key){return imageReady(images[key])&&images[key].naturalWidth===512&&images[key].naturalHeight===512;}
@@ -880,7 +899,7 @@
       }
     }
     function draw(world,alpha,time,lowQuality) {
-      lightweight=!!lowQuality;mapMetrics.atlasFxLimit=lightweight?12:24;mapMetrics.specialPatternCue=null;mapMetrics.patternEntryCue=null;mapMetrics.battleReadability=null;mapMetrics.warningContrastStrokes=0;mapMetrics.combatCopyDraws=0;mapMetrics.playerShotDraws=0;mapMetrics.playerShotAsset=null;mapMetrics.playerShotCacheBytes=playerShotStamp?96*64*4:0;
+      lightweight=!!lowQuality;mapMetrics.atlasFxLimit=lightweight?12:24;mapMetrics.specialPatternCue=null;mapMetrics.patternEntryCue=null;mapMetrics.battleReadability=null;mapMetrics.warningContrastStrokes=0;mapMetrics.warningFootprintDraws=0;mapMetrics.warningFootprintBuilds=warningFootprintBuilds;warningFootprints.length=0;mapMetrics.warningFootprints=warningFootprints;mapMetrics.combatCopyDraws=0;mapMetrics.playerShotDraws=0;mapMetrics.playerShotAsset=null;mapMetrics.playerShotCacheBytes=playerShotStamp?96*64*4:0;
       if(actorPresentation&&actorPresentation.beginFrame)actorPresentation.beginFrame();
       if(projectilePresentation&&projectilePresentation.beginFrame)projectilePresentation.beginFrame();
       if(bossSkillPresentation&&bossSkillPresentation.beginFrame)bossSkillPresentation.beginFrame();
@@ -895,7 +914,7 @@
       if(world.reservation){ctx.save();ctx.font='8px Arial,"Malgun Gothic",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(167,224,227,.85)';ctx.fillText(typeof world.reservation==='string'?world.reservation:'스킬 준비 중',180,621);ctx.restore();}
       drawPlayerCore(world);
     }
-    return {resize:function(cssW,cssH,dpr){ratio=Math.min(1.5,Math.max(1,dpr||1))*cssW/W;var nextWidth=Math.max(1,Math.round(W*ratio)),nextHeight=Math.max(1,Math.round(H*ratio));if(canvas.width!==nextWidth)canvas.width=nextWidth;if(canvas.height!==nextHeight)canvas.height=nextHeight;canvas.style.width='100%';canvas.style.height='100%';ctx.imageSmoothingEnabled=true;},draw:draw,getMetrics:function(){return Object.assign({},mapMetrics,{actorPresentation:actorPresentation?actorPresentation.getMetrics():null,projectilePresentation:projectilePresentation?projectilePresentation.getMetrics():null,bossSkillsPresentation:bossSkillPresentation?bossSkillPresentation.getMetrics():null});},destroy:function(){if(playerShotStamp){playerShotStamp.width=1;playerShotStamp.height=1;playerShotStamp=null;}playerShotStampKey=null;hudTextLayout=null;entryTextLayout=null;narrativeTextLayout=null;if(projectilePresentation&&projectilePresentation.destroy)projectilePresentation.destroy();if(bossSkillPresentation&&bossSkillPresentation.destroy)bossSkillPresentation.destroy();bossSkillPresentation=null;releaseSourceTerrain();cached=false;canvas.width=1;canvas.height=1;back.width=1;back.height=1;foreground.width=1;foreground.height=1;if(sinFloor){sinFloor.width=1;sinFloor.height=1;sinFloor=null;}sinFloorSource=null;sinFloorTone=null;for(var i=0;i<strips.length;i++){strips[i].width=1;strips[i].height=1;}strips.length=0;actorPresentation=null;projectilePresentation=null;images={};}};
+    return {resize:function(cssW,cssH,dpr){ratio=Math.min(1.5,Math.max(1,dpr||1))*cssW/W;var nextWidth=Math.max(1,Math.round(W*ratio)),nextHeight=Math.max(1,Math.round(H*ratio));if(canvas.width!==nextWidth)canvas.width=nextWidth;if(canvas.height!==nextHeight)canvas.height=nextHeight;canvas.style.width='100%';canvas.style.height='100%';ctx.imageSmoothingEnabled=true;},draw:draw,getMetrics:function(){return Object.assign({},mapMetrics,{warningFootprints:warningFootprints.map(function(record){return Object.assign({},record);}),actorPresentation:actorPresentation?actorPresentation.getMetrics():null,projectilePresentation:projectilePresentation?projectilePresentation.getMetrics():null,bossSkillsPresentation:bossSkillPresentation?bossSkillPresentation.getMetrics():null});},destroy:function(){if(playerShotStamp){playerShotStamp.width=1;playerShotStamp.height=1;playerShotStamp=null;}playerShotStampKey=null;hudTextLayout=null;entryTextLayout=null;narrativeTextLayout=null;warningFootprints.length=0;warningFootprintPool.length=0;if(projectilePresentation&&projectilePresentation.destroy)projectilePresentation.destroy();if(bossSkillPresentation&&bossSkillPresentation.destroy)bossSkillPresentation.destroy();bossSkillPresentation=null;releaseSourceTerrain();cached=false;canvas.width=1;canvas.height=1;back.width=1;back.height=1;foreground.width=1;foreground.height=1;if(sinFloor){sinFloor.width=1;sinFloor.height=1;sinFloor=null;}sinFloorSource=null;sinFloorTone=null;for(var i=0;i<strips.length;i++){strips[i].width=1;strips[i].height=1;}strips.length=0;actorPresentation=null;projectilePresentation=null;images={};}};
   }
   global.HapilRenderer={create:create,terrainContracts:H14_TERRAIN,cultTerrainContracts:CULT_TERRAIN,chapter3TerrainContracts:CHAPTER3_TERRAIN,terrainAssetKeysForEncounter:terrainAssetKeysForEncounter,invalidTerrainAsset:invalidTerrainAsset};
 })(typeof window!=='undefined'?window:globalThis);

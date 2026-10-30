@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "createdAt": "2026-10-30T10:08:52.535Z",
+  "method": "Pure CPU deterministic replays of all recorded legal directions, unmodified engine health and damage; start via actual special-practice checkpoint API. Failed attempts remain failed. No policy execution or direct world edits after start. Not fullcampaign/browser/mobile.",
+  "recordingReportSHA256": "cacf2f58033ab986be4d9550622955a8c9620e8eef7ee7caa0140e02d0efd97d",
+  "sourceHashes": {
+    "src/core.js": "52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d",
+    "tools/probe-v21-natural-health.cjs": "41e88ee2b878063cc955cf4ba78ac767dbf4cefff8044d9f5a3e4564a9356c4e"
+  },
+  "replayToolSHA256": "26877164e4b056d598764476ca081cc4760b69b6e6da2060b7b6928d38ed53c6",
+  "sourceHashGuardPassed": true,
+  "summary": {
+    "cases": 7,
+    "ticks": 16131,
+    "won": 6,
+    "lost": 1
+  },
+  "cases": [
+    {
+      "bossIndex": 1,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 2102,
+      "hp": 2,
+      "hits": 1,
+      "inputSHA256": "4f961b209db128c385d88f1f11cd370a4bdbf7e3574445b3ab5b24939d441f16"
+    },
+    {
+      "bossIndex": 3,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 2471,
+      "hp": 3,
+      "hits": 0,
+      "inputSHA256": "860eaab86e07f6fe77495ab2775b0f88812ece40fc40d65fa623dafb035d9366"
+    },
+    {
+      "bossIndex": 4,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 2811,
+      "hp": 1,
+      "hits": 2,
+      "inputSHA256": "9044d72f886999f35b527cfbec9d3e0daf7a20df0f67d0d8c0b34a6c216f09cb"
+    },
+    {
+      "bossIndex": 6,
+      "difficulty": "hell",
+      "stage": "lost",
+      "ticks": 2042,
+      "hp": 0,
+      "hits": 3,
+      "inputSHA256": "f58260d18a7816ecd08cca65b446ec4215821006b75c1658139825d57c8a6d6c"
+    },
+    {
+      "bossIndex": 8,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 2797,
+      "hp": 1,
+      "hits": 2,
+      "inputSHA256": "617bbff0fa8fc2cac5c0cc70ceeef27313a28c69cd5f8b79e03a977987bb91f5"
+    },
+    {
+      "bossIndex": 10,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 2598,
+      "hp": 1,
+      "hits": 2,
+      "inputSHA256": "ded26a3e8cbc17020344738c3491616ef441e0a0ae1147ad78c00201c198174b"
+    },
+    {
+      "bossIndex": 34,
+      "difficulty": "hell",
+      "stage": "won",
+      "ticks": 1310,
+      "hp": 2,
+      "hits": 1,
+      "inputSHA256": "1a6a1629b5af88cb00f2e730eeeb212eae40213a8984a30e46b859670fe146fc"
+    }
+  ]
+}

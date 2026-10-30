@@ -1,0 +1,44 @@
+{
+  "scope": "Actual Chrome CDP final-preview source. Controlled immune scene fixture, not natural play/input/GPU/mobile performance. Summary transcribed from returned DOM observations; raw auxiliary JSON did not materialize in shared path and is not cited.",
+  "knight": {
+    "warningTick": 150,
+    "activeTick": 151,
+    "committedWidthsBeforeAndAfter": [
+      77.4,
+      118.79999999999998,
+      41.39999999999998
+    ],
+    "lightBoundaryWidth": 1.4,
+    "activeWarningFootprints": 0,
+    "missingProjectileAssets": 0
+  },
+  "violetClone": {
+    "beforeTick": 252,
+    "originalAction": "recover",
+    "presentationAction": "charge",
+    "pose": "prepare",
+    "nextAt": 253,
+    "releaseTick": 253,
+    "releasePose": "downstroke"
+  },
+  "pair": {
+    "tick": 109,
+    "casters": [
+      "han-rian",
+      "baek-ion"
+    ],
+    "actualWidths": [
+      8,
+      10
+    ],
+    "paletteSlots": [
+      0,
+      1
+    ],
+    "missingProjectileAssets": 0
+  },
+  "screenshot": {
+    "path": "docs/v22-browser/knight-warning.jpg",
+    "sha256": "ad631dc81651f12777c104fb09a83d2e04e7b489612ea447971200d64bf7b4fc"
+  }
+}

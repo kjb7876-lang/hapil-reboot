@@ -1,0 +1,3785 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "scope": "Independent native CPU pixel differences from actual pressure warnings at activeAt-1. Explicit external immunity and attacks/skills off. Not natural/human/browser/GPU/mobile/FPS certification.",
+  "baselineCommit": "03c0f984b2e709f2946a56794eaa97d29dba89f5",
+  "auditToolSHA256": "9591cf485f60a8ec733d96b95a39cfb796007fe3702967a8256e6df42d3e9be6",
+  "codeHashes": {
+    "index.html": "4a7f88e34f6ba88f879a6068fffc2ccd72e029d1c114fc1afb8990cc14e99e61",
+    "styles.css": "aaeb395a309ff51c1269da69fb4d338206c14effcb01dda4fb1831740e2dc2e9",
+    "src/actors.js": "c5d707a96b4a0d7be33762924782a20451d7da2099f1555af026962ce89792f4",
+    "src/app.js": "003765d3734dd664b702b74fd4e69aec1bb09c1fdbdb411f941627ac7d23c469",
+    "src/boss-motion.js": "e2d1bde92838884382e30b5d8de6549cf9071ac9b21c84b7f9cb8d4bc63160b1",
+    "src/boss-skills.js": "af990bbcad9348722269bdfa881028eeea35711782cbdafb06ef321c27a01b5c",
+    "src/core.js": "52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a",
+    "src/media.js": "0057a4d28e4d8bd35eb1598ea48207ff9cf21ead2906cc75d66c405ed6de110c",
+    "src/projectiles.js": "c55d1f0cbb623b21f3a06f94b42215db63cd185435afc117d7432f9ac178bc0c",
+    "src/render.js": "31343c761317f772ccf22891210eda5db6eb2e269e7831395665b6eee6aae4a1",
+    "src/storage.js": "ec1010c11aaf3f49240f3fa8f46d5b85f922b6373bd4a29a5bd89a7ef282e71c",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f"
+  },
+  "sourceHashGuardPassed": true,
+  "sources": {
+    "gunner": {
+      "path": "media/gunner.webp",
+      "bytes": 70104,
+      "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111"
+    },
+    "boss": {
+      "path": "media/boss.webp",
+      "bytes": 63748,
+      "sha256": "46b6f5ffff8dd9a041fa250d4be1975cc0f40d37f4676c4cdecfb2506bcbc2ab"
+    },
+    "spider": {
+      "path": "media/spider.webp",
+      "bytes": 32060,
+      "sha256": "445b2b100400028b994cf1c12f1fc42ff246e930bc71090e6385b317336372d8"
+    },
+    "map01": {
+      "path": "media/maps/map01.webp",
+      "bytes": 1045720,
+      "sha256": "f2807df1e06bc61cb3d838614046041e7ad7d5b8fa87490844cfdc314cf74d89"
+    },
+    "map02": {
+      "path": "media/maps/map02.webp",
+      "bytes": 1117014,
+      "sha256": "1a831096bcc6aa23b5b3d25652777fd3b8e46f4d0b59aa0fb86c133186c1ba75"
+    },
+    "map03": {
+      "path": "media/maps/map03.webp",
+      "bytes": 1096304,
+      "sha256": "634b61b2d38c9be2bd8f266fafb0740bf28a172bc0d499de414d102ef2fcf35c"
+    },
+    "map04": {
+      "path": "media/maps/map04.webp",
+      "bytes": 1123284,
+      "sha256": "60906be4362f89e79e2a4d8d545c8478e57d25083c9d96e7fa3a4198e44985ec"
+    },
+    "map05": {
+      "path": "media/maps/map05.webp",
+      "bytes": 1138614,
+      "sha256": "22c6a97bf5059cb783a804c8c8d037db44d33f3773474ba944093ee7fe26668a"
+    },
+    "map06": {
+      "path": "media/maps/map06.webp",
+      "bytes": 1122612,
+      "sha256": "51feede830a41a7b3d6a2babd4e1966d289f7eeed6231af437ff7e707c3ae0d0"
+    },
+    "map07": {
+      "path": "media/maps/map07.webp",
+      "bytes": 1057472,
+      "sha256": "fb2ec9dd483aadc3df5dc44196b5dcffea7954aa8bf9b2c1f1c035d76f0395dd"
+    },
+    "map08": {
+      "path": "media/maps/map08.webp",
+      "bytes": 1062082,
+      "sha256": "ee4685d38951c5931add4c23939ec4dca866f4691e8602657a6a569a77ec07da"
+    },
+    "map09": {
+      "path": "media/maps/map09.webp",
+      "bytes": 1033054,
+      "sha256": "59b045619db6eb22aed90a9c3c48d4838ca15c6b6157a6df9cc976b3fb8792c9"
+    },
+    "map10": {
+      "path": "media/maps/map10.webp",
+      "bytes": 1020590,
+      "sha256": "31e3fe1a034e2d78c16914d66b832781d9d04048d8ee6461aae718975ec88623"
+    },
+    "map11": {
+      "path": "media/maps/map11.webp",
+      "bytes": 1036682,
+      "sha256": "efdbea7ba74633920ea3a65e854a6551b0f79875191d886a133383943b4e254b"
+    },
+    "map12": {
+      "path": "media/maps/map12.webp",
+      "bytes": 1027966,
+      "sha256": "23d4adda4d28a85075e71e9be5e181d4bb8f85662ffea526b01ff2141e9aed70"
+    },
+    "fxResonance": {
+      "path": "media/combat/fx01-resonance-impact-v2-atlas.webp",
+      "bytes": 174016,
+      "sha256": "ab9646a1264e7a05b4b5b2dd49cdb26ef060d71447510d2df367bc26134faf73"
+    },
+    "fxSlash": {
+      "path": "media/combat/fx02-golden-slash-atlas.webp",
+      "bytes": 96476,
+      "sha256": "a390e460a16502215c3dde682d8ff205809dbdd3a5f5e33d99225bb153439bc2"
+    },
+    "fxThorns": {
+      "path": "media/combat/fx03-violet-thorns-atlas.webp",
+      "bytes": 106596,
+      "sha256": "a8f5cf52e5458543ff0d78635c6c1c0b0e9263b98313d24e0b6f3d079e470a2e"
+    },
+    "fxArrow": {
+      "path": "media/combat/fx04-wind-arrow-atlas.webp",
+      "bytes": 187972,
+      "sha256": "097c9acc0ad8ded58a372421a809b3176690c32b3e3961b2905f91f255c3a279"
+    },
+    "fxParry": {
+      "path": "media/combat/fx05-parry-ring-atlas.webp",
+      "bytes": 120108,
+      "sha256": "f83f4bbc41c6d1a9c206a8a08d5005a4b8738b49625d16f392d0ffb5ae032433"
+    },
+    "fxSilk": {
+      "path": "media/combat/fx06-spider-silk-atlas.webp",
+      "bytes": 76428,
+      "sha256": "b09fdb9837a51d56c73ca219a901617a9c783de84b7b0e1d55b8e81ca680e5c0"
+    },
+    "violetCutin": {
+      "path": "media/combat/boss01-purple-sword-spider-angel-cutin.webp",
+      "bytes": 337072,
+      "sha256": "90c90dcdfa45bd499226830aecb6fe2542fbca858c54d859986e178cefc2870c"
+    },
+    "actorSpiderIdle": {
+      "path": "media/actors-v6/spider-idle.png",
+      "bytes": 393377,
+      "sha256": "47a5b89cffc1b2402c9dfa6ec2396feac7cbb9c235f01e6e97e64cb246634dc7"
+    },
+    "actorSpiderWalk": {
+      "path": "media/actors-v6/spider-walk.png",
+      "bytes": 366573,
+      "sha256": "27aa46bf430545c5c168d5bae2065611d39a0b96e5f7dbc76f4b63c8781d2926"
+    },
+    "actorSpiderAttack": {
+      "path": "media/actors-v6/spider-attack.png",
+      "bytes": 351297,
+      "sha256": "b91b7dd47392c01151f17aac72a72e493e41321e614bf98d6c8bc2ed7c5b304d"
+    },
+    "actorSpiderHit": {
+      "path": "media/actors-v6/spider-hit.png",
+      "bytes": 341136,
+      "sha256": "ffb6916094674df8dcb54b0138155c1e462182cbb1d222a9bb82797c1cc444f6"
+    },
+    "fxWindArrow8V6": {
+      "path": "media/fx-v6/wind-arrow-8.webp",
+      "bytes": 148190,
+      "sha256": "0fcc33586f03cd144abe418b7774aae990336ea5d1c2f7d9ea684993d956a0f1"
+    },
+    "bossMotionViolet": {
+      "path": "media/boss-motion-v8/violet-atlas-512.png",
+      "bytes": 222113,
+      "sha256": "8271ccb891a9ea88cee33aec9052ac0b427b3b4ace0b241f2dd04cdc136f6f24"
+    },
+    "fxV8VioletWeb": {
+      "path": "media/fx-v8/violet-web.webp",
+      "bytes": 82302,
+      "sha256": "2510213cd2651e81c922ac0875896c4f3bdd125f6a176387b5e25eaca5cca5a0"
+    },
+    "fxV8SilverSlash": {
+      "path": "media/fx-v8/silver-slash.webp",
+      "bytes": 89626,
+      "sha256": "dc9ebd4d13dc5c280321b1a33de3f443e141c407dcca2e7391240b2152b9c9dc"
+    },
+    "projectileVioletOrbV9": {
+      "path": "media/projectiles-drive-v9/violet-orb-cocoon-atlas.png",
+      "bytes": 21165,
+      "sha256": "03aa2075d2242b6dc0f7d35e2f04b69749256249a564175a3711dde29a9aaa2d"
+    },
+    "projectileVioletBladeV10": {
+      "path": "media/projectiles-drive-v10/violet_blade_spindle.png",
+      "bytes": 5990,
+      "sha256": "e7f1fbacc4352a43d11da00d7f284f2892002f9f759cb315671ff59b1223ea19"
+    },
+    "castVioletV11": {
+      "path": "media/encounter-signature-v11/violet-knot.png",
+      "bytes": 4563,
+      "sha256": "c72f96123e091473cd5761aef62fe0d2ced7d7d5ed39ff56476b9a7e126fced5"
+    },
+    "weaponVioletV12": {
+      "path": "media/weapon-v12/violet-sword.png",
+      "bytes": 371193,
+      "sha256": "e91c2ddfa14e2edf2cb6c3a13f1dad150770164003fdee1aecb98a43c1a7bc56"
+    },
+    "h14MapViolet": {
+      "path": "media/hapil1-v14/maps/violet.webp",
+      "bytes": 146558,
+      "sha256": "921ac7d2a2893aa53374a459b27d9ae87e4cc5c50cbdf0281259875820e72526"
+    },
+    "h14SkillViolet": {
+      "path": "media/hapil1-v14/fx/violet-primary.webp",
+      "bytes": 111666,
+      "sha256": "237953c7bb81d53450f3ae5f63b0b81986eab37a124d929bced022b14a3addd8"
+    },
+    "cave": {
+      "path": "media/cave.webp",
+      "bytes": 146558,
+      "sha256": "921ac7d2a2893aa53374a459b27d9ae87e4cc5c50cbdf0281259875820e72526"
+    },
+    "forest": {
+      "path": "media/forest.jpg",
+      "bytes": 478555,
+      "sha256": "e4d0f6a7803d51fc23b5b9af629d73f3489e1b450d294b1358499b84b6c99562"
+    },
+    "ruins": {
+      "path": "media/ruins.webp",
+      "bytes": 220828,
+      "sha256": "1bf412f579476a90dc6969e7d89385ca096273380d615d33e838dac5f87bec64"
+    },
+    "actorSwampIdle": {
+      "path": "media/actors-v6/swamp-idle.png",
+      "bytes": 221538,
+      "sha256": "933e8ea8cfd724426262070e1eedf0b6d3c317520373c74c575abaf9c8c3f8cd"
+    },
+    "actorSwampWalk": {
+      "path": "media/actors-v6/swamp-walk.png",
+      "bytes": 230517,
+      "sha256": "97511731c5927420c54421f5c4d6ce7e19a634fb006ed783a48ff3f2dd34c88c"
+    },
+    "actorSwampAttack": {
+      "path": "media/actors-v6/swamp-attack.png",
+      "bytes": 214235,
+      "sha256": "29969d9eca200946f9c9c42389de1752e83862a920c6be0d64c916ae980936c6"
+    },
+    "actorSwampHit": {
+      "path": "media/actors-v6/swamp-hit.png",
+      "bytes": 229239,
+      "sha256": "11a9c9c26201137a08645cb214528be10340936a32334460b6dc3d36e8e4edd4"
+    },
+    "bossMotionHorn": {
+      "path": "media/boss-motion-v8/horn-atlas-512.png",
+      "bytes": 143211,
+      "sha256": "1c3853aa55e9f6cf205329f361c83eac2422cf0e85275956769e88f503529d27"
+    },
+    "fxV8SwampRipple": {
+      "path": "media/fx-v8/swamp-ripple.webp",
+      "bytes": 125222,
+      "sha256": "29a72d6b90380d00282b9c2086d272eecb7b10d79ad1c3100f2e2fc5f642abf2"
+    },
+    "fxV8Reed": {
+      "path": "media/fx-v8/reed.webp",
+      "bytes": 151182,
+      "sha256": "43a8435a85859075e3cd23690e23cd4584d919f9cf0b89442073a7142315af9b"
+    },
+    "projectileHornOrbV10": {
+      "path": "media/projectiles-drive-v10/swamp_orb_toxicseed.png",
+      "bytes": 5468,
+      "sha256": "ecd6e58a16e2a02fe2d499ba0d6f82b6f9dece0974188561b7bca7ed4d095c7d"
+    },
+    "castHornV11": {
+      "path": "media/encounter-signature-v11/horn-swamp.png",
+      "bytes": 5458,
+      "sha256": "a63d7814ed4a8c414c9ddbd4ccb2a083c31a8c6f94e9adcf7852e3e37358b50b"
+    },
+    "projectileHornNeedleV11": {
+      "path": "media/encounter-signature-v11/horn-reed-needle.png",
+      "bytes": 3062,
+      "sha256": "abcb9ae62518a4eea88f585f53cbb733fd25e1100386b8f9b56bb3044766a245"
+    },
+    "weaponHornV12": {
+      "path": "media/weapon-v12/horn-cleaver.png",
+      "bytes": 1128521,
+      "sha256": "de5e22d4d6ad9f3283eb62ee52047242ba850213c2149d41695bd388cfbf26a7"
+    },
+    "h14MapHorn": {
+      "path": "media/hapil1-v14/maps/horn.webp",
+      "bytes": 598440,
+      "sha256": "def470ccf337bdfdaff1b1277b16db768e573950de15a969d65a15da93d3f4c6"
+    },
+    "h14SkillHorn": {
+      "path": "media/hapil1-v14/fx/horn-primary.webp",
+      "bytes": 24420,
+      "sha256": "f798a6599bcd55e37b9b1dfceda41a0b20610a92cbfe3c6181a7397c88c549d0"
+    },
+    "actorEmberIdle": {
+      "path": "media/actors-v6/ember-idle.png",
+      "bytes": 485279,
+      "sha256": "b4f2ea45b5784bc94b41916c0a25257223bd7b3e002dfa8e7874957cb865b70a"
+    },
+    "actorEmberWalk": {
+      "path": "media/actors-v6/ember-walk.png",
+      "bytes": 436274,
+      "sha256": "9cb698d780d29b849d9ad87610f470c282fe084712e311750b4c8f7168eaeb01"
+    },
+    "actorEmberAttack": {
+      "path": "media/actors-v6/ember-attack.png",
+      "bytes": 479990,
+      "sha256": "66963650ec0dbfa1cc8d8483b7a1c2ab21aaf370f7302c6fa5f7308ca46973ea"
+    },
+    "actorEmberHit": {
+      "path": "media/actors-v6/ember-hit.png",
+      "bytes": 465585,
+      "sha256": "0b8075ef268b76fc80b86e043ef88a21b9fc18b9eb2fa44b83712d54fba8d7bd"
+    },
+    "bossMotionBalrog": {
+      "path": "media/boss-motion-v8/balrog-atlas-512.png",
+      "bytes": 224437,
+      "sha256": "3300f7c753b275d8c7c96e08e084cf800418ae8763b578519dc39386625ad667"
+    },
+    "fxV8Ember": {
+      "path": "media/fx-v8/ember.webp",
+      "bytes": 139784,
+      "sha256": "3a37c619c84129f765d2f3703b164e15a3af69ce750d1dd3cbe8b0ae0fa571f0"
+    },
+    "fxV8GoldSlash": {
+      "path": "media/fx-v8/gold-slash.webp",
+      "bytes": 47300,
+      "sha256": "931038b553aa55989577584dca4f5060d120ac75be03377b4da65010aefd42c2"
+    },
+    "projectileBalrogOrbV10": {
+      "path": "media/projectiles-drive-v10/balrog_orb_cinderheart.png",
+      "bytes": 5028,
+      "sha256": "59f78125f07ddcbe7ce99d5da1a0b599ffd39df2ce7ab62535381ba174578d69"
+    },
+    "projectileBalrogBladeV10": {
+      "path": "media/projectiles-drive-v10/balrog_blade_slagfang.png",
+      "bytes": 5717,
+      "sha256": "b913192ab73f912aeaf6192028b197d9c46f20d9e2ad17c6edbd63078f3e8039"
+    },
+    "castBalrogV11": {
+      "path": "media/encounter-signature-v11/balrog-fire.png",
+      "bytes": 7290,
+      "sha256": "cd57c83c262e07a13128b920e57e66d4ac2ace0a8ebf63fffc4890f5cb0fb38a"
+    },
+    "weaponBalrogV12": {
+      "path": "media/weapon-v12/balrog-sword.png",
+      "bytes": 852927,
+      "sha256": "6ba955cb2d3b171406b4a987e3c481f665fb7da74f17613d5825976ad3e9fcf3"
+    },
+    "h14MapBalrog": {
+      "path": "media/hapil1-v14/maps/balrog.webp",
+      "bytes": 620682,
+      "sha256": "4ccb43cfbcf03a45f4179da7b8a68a73d9c420ab3e2d8e77fb76c8bc57c7699f"
+    },
+    "h14SkillBalrog": {
+      "path": "media/hapil1-v14/fx/balrog-secondary.webp",
+      "bytes": 207986,
+      "sha256": "f6f9b989f5c6e33094440268a7888c71548ac2c6948d0cf4254b2e04aea3d762"
+    },
+    "actorGuardWalk": {
+      "path": "media/actors-v7/guard-walk.png",
+      "bytes": 456923,
+      "sha256": "e7d947d0885f0451c8217e4a83402794265c347c12fbfe6e4b5757025d2b74de"
+    },
+    "actorGuardIdle": {
+      "path": "media/actors-v7/guard-idle.png",
+      "bytes": 615191,
+      "sha256": "a8b09b9597c3a66261acc38149109bdd12f5f8e4e2ee5ce9428cba6e3163bd76"
+    },
+    "actorGuardHit": {
+      "path": "media/actors-v7/guard-hit.png",
+      "bytes": 505266,
+      "sha256": "f94291b0fafb423adee4b153dea844fea012ed6a504abd0c2afe9b6c9dbeb387"
+    },
+    "actorGuardAttack": {
+      "path": "media/actors-v7/guard-attack.png",
+      "bytes": 543671,
+      "sha256": "d84c5044eb8e0faee8b6549f899bf69588b01b88f2e63d53a6bc9765271f4165"
+    },
+    "actorDenialWalk": {
+      "path": "media/actors-v7/denial-walk.png",
+      "bytes": 370627,
+      "sha256": "c4dc998c8177f1d47fe13478d0731558737130609b66472c3bbfe3e46292474f"
+    },
+    "actorDenialIdle": {
+      "path": "media/actors-v7/denial-idle.png",
+      "bytes": 396962,
+      "sha256": "60c3a216597ca0efbfca2ff01aaef78799094231aa5fd89f2cb8f96df5faa492"
+    },
+    "actorDenialHit": {
+      "path": "media/actors-v7/denial-hit.png",
+      "bytes": 365973,
+      "sha256": "573f330b8b23d81cda189194897b672285992efcf71cd4050311dd61dd7447be"
+    },
+    "actorDenialAttack": {
+      "path": "media/actors-v7/denial-attack.png",
+      "bytes": 380106,
+      "sha256": "15fc82950715f2e368dab8b8101751ddad8c170dc58c3f57fd31d68ff7f320c4"
+    },
+    "sinPrideAtlas": {
+      "path": "media/sins-v13/pride-atlas-512.png",
+      "bytes": 145503,
+      "sha256": "7f4ed7ef064882d4f3f31f6592b635dac0dcec61137fe3a3758d707632d17345"
+    },
+    "sinPrideCyborgAtlas": {
+      "path": "media/sins-v13/pride-cyborg-atlas-512.png",
+      "bytes": 277545,
+      "sha256": "74f4875452efd814d03ea56f32fac3b1115222aea4c540ea302b0d8b0b477683"
+    },
+    "projectilePrideV13": {
+      "path": "media/sins-v13/pride-projectile.png",
+      "bytes": 1082720,
+      "sha256": "55bf337eee80cd5ce686271cb6e22e7aaf0c5e1b01455e14460861ed7e8ab8cf"
+    },
+    "h14MapPride": {
+      "path": "media/hapil1-v14/maps/pride.jpg",
+      "bytes": 357657,
+      "sha256": "9ca552fb60bbcc669364be8f1055af3761c9160a2d6f08d2b98b6454de017e65"
+    },
+    "h14MapPrideCore": {
+      "path": "media/hapil1-v14/maps/pride-core.jpg",
+      "bytes": 351130,
+      "sha256": "4ef5a25e89a26609094e5bbe34c67d2246ca082c1412d10f63a83464a43d1e60"
+    },
+    "h14SkillPride": {
+      "path": "media/hapil1-v14/fx/pride-primary.webp",
+      "bytes": 282626,
+      "sha256": "83ed7b152d1c8d28cf9c3797738c42184ed02cf6100e976ef5886b5f76f69c85"
+    },
+    "h14BeamPride": {
+      "path": "media/hapil1-v14/fx/beam-pride.webp",
+      "bytes": 382092,
+      "sha256": "319cde0f6ec2aa2449a7a5e76e1bffbed9497b36d244fc8bcfede2570d1c508e"
+    },
+    "storyKnightIdle": {
+      "path": "media/story-v19/knight-idle.webp",
+      "bytes": 92004,
+      "sha256": "6e90a1e9aa520570b002b10650741813a6d2c20520c3317dc4437eb32ccd4de7"
+    },
+    "storyKnightCharge": {
+      "path": "media/story-v19/knight-charge.webp",
+      "bytes": 102056,
+      "sha256": "99b4fd76ae881d97288011f3dc2b690b3a69e28ad9365e7a631f2cb7f5f85213"
+    },
+    "storyKnightAttack": {
+      "path": "media/story-v19/knight-attack.webp",
+      "bytes": 83118,
+      "sha256": "5fce8b6b86045551839b908ac79a960f58a6b5e6f345ad20ab97d80df0b3c1c0"
+    },
+    "storyKnightRecover": {
+      "path": "media/story-v19/knight-recover.webp",
+      "bytes": 172778,
+      "sha256": "01d39a69e2f50fc74091d42fb52effc2de9cbff7b5c067e60e66a64f51fd9a8f"
+    },
+    "storyKnightMap": {
+      "path": "media/story-v19/knight-map.jpg",
+      "bytes": 661132,
+      "sha256": "0cb02b60cf0caeddd6d88e7d0e21ca4652d395fd11541f2e5f5ce1c0b1ea4d4e"
+    },
+    "storyKnightSword": {
+      "path": "media/story-v19/knight-sword.png",
+      "bytes": 44486,
+      "sha256": "d14b4babd804f490b31d2f1cf8bf8fba23bd72f5605329c1c88acd5b74fa4841"
+    },
+    "storyPlayerHando": {
+      "path": "media/story-v19/player-hando.png",
+      "bytes": 267883,
+      "sha256": "7aad591310bb93367825e0e47ca9a487cbd6b88e53637ce6316e8d5976f2c569"
+    },
+    "storyMobGoblin": {
+      "path": "media/story-v19/mob-goblin.png",
+      "bytes": 209252,
+      "sha256": "4b97bb140b31477f2f645a7a96e66320052fb7274829987aa0fe36bceabfafc2"
+    },
+    "storyPlayerHandoSlash": {
+      "path": "media/story-v19/player-hando-slash.png",
+      "bytes": 85262,
+      "sha256": "0f811aa201f2317bfea07d48109989942b3f84d3348ec8e871c50e5c086bc424"
+    },
+    "storySirenIdle": {
+      "path": "media/story-v19/siren-idle.webp",
+      "bytes": 41204,
+      "sha256": "985137aa992b23610fe2cd11a0a5624bd49ef90b0d22a99896d7871072a0dcb0"
+    },
+    "storySirenCharge": {
+      "path": "media/story-v19/siren-charge.webp",
+      "bytes": 51608,
+      "sha256": "6af2e81ebbbc0975367c2750a9b502170dee5a5f105b444ef2b2a01550abfaa2"
+    },
+    "storySirenAttack": {
+      "path": "media/story-v19/siren-attack.webp",
+      "bytes": 57414,
+      "sha256": "d6d18565aa6b49f321508796151fba54662ed46f347da58aeb10edfd884d0038"
+    },
+    "storySirenRecover": {
+      "path": "media/story-v19/siren-recover.webp",
+      "bytes": 49646,
+      "sha256": "483de4f98f06de3dc2693b3b19b2cbbfc8bdaededdc265e20d10fa6d0ca3e07a"
+    },
+    "storyTimeCollector": {
+      "path": "media/story-v19/time-collector.png",
+      "bytes": 136719,
+      "sha256": "0027c67dd883ffa3897df40f7a83305d368d588aedbaec2bf0d17aeccfad39a9"
+    },
+    "storySirenMap": {
+      "path": "media/story-v19/siren-map.webp",
+      "bytes": 341232,
+      "sha256": "832aaa38766ecf20a6c79064195103fec24a7957a5c0ba7ca4580ea2bc5cc136"
+    },
+    "storyChronoShard": {
+      "path": "media/story-v19/chrono-shard.webp",
+      "bytes": 54898,
+      "sha256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5"
+    },
+    "storyPlayerSeoha": {
+      "path": "media/story-v19/player-seoha.png",
+      "bytes": 139193,
+      "sha256": "5faf5cd8c5d2b00d96a349e9617100d50730d291948de3ddb993179eb8c4bb8e"
+    },
+    "storyPlayerSeohaSlash": {
+      "path": "media/story-v19/player-seoha-slash.png",
+      "bytes": 153437,
+      "sha256": "cf767d2600a48dda2c40a110ff7e6e86e3da1588764459a268b1ac97f49d4ece"
+    },
+    "storyCultCircuit": {
+      "path": "media/story-v19/cult-circuit.webp",
+      "bytes": 127570,
+      "sha256": "f705c72eb4d0e4501767034c84c102771130c634b893e811073d75cb8d085229"
+    },
+    "storyRianIdle": {
+      "path": "media/story-v19/rian-idle.webp",
+      "bytes": 13628,
+      "sha256": "cb109d4677baaf3ea90e14b3fd216e0ed94db8b7db3ef8f4a6ec8130c7d72d47"
+    },
+    "storyRianAttack": {
+      "path": "media/story-v19/rian-attack.webp",
+      "bytes": 25178,
+      "sha256": "107b3bc0a4a84edb4f14f3d50f69e7aef11ac782e51d16209e725bfdfecf737d"
+    },
+    "storyIonIdle": {
+      "path": "media/story-v19/ion-idle.webp",
+      "bytes": 24388,
+      "sha256": "e7f447ebdf74e95ee4db3e72449e509662341caa0e301783cd7094e3a3d5dc14"
+    },
+    "storyIonAttack": {
+      "path": "media/story-v19/ion-attack.webp",
+      "bytes": 43708,
+      "sha256": "799191f1fe1152f7bbd97c7cca40e3857401b33a6d52e36aef5a6ade5de7588f"
+    },
+    "storyPairMap": {
+      "path": "media/story-v19/pair-map.jpg",
+      "bytes": 391977,
+      "sha256": "9df293ea34b10f041410137beec97f9dfab9e8fc4605547dae3ed0fdfa31d2a3"
+    },
+    "storyRianCross": {
+      "path": "media/story-v19/rian-cross.webp",
+      "bytes": 84602,
+      "sha256": "c3087e2e8611efff6e8844c3b3c571457a4458552a4c85af36c37657d0f00620"
+    },
+    "storyIonShield": {
+      "path": "media/story-v19/ion-shield.webp",
+      "bytes": 70068,
+      "sha256": "f56c5acaf90884bbf5c18a94691105360ccb00f87b30e9b44212aef159bb59d9"
+    },
+    "storyMobCultLeech": {
+      "path": "media/story-v19/mob-cult-leech.webp",
+      "bytes": 40264,
+      "sha256": "07099111f8bf7ae0f43c965752de5dd156ce70a283c3d15b21f8039eb0d81ef8"
+    },
+    "cultLeaderAtlas": {
+      "path": "media/cult-v17/cult-leader-atlas.png",
+      "bytes": 2304249,
+      "sha256": "d76c925bd52b367aaac41473b234b35a0b5aecde42201324b187af5408f1a2de"
+    },
+    "cultLance": {
+      "path": "media/cult-v17/lance.webp",
+      "bytes": 27866,
+      "sha256": "b1c98912111f3c661c418567e1d304d606705d7e3eb87c643caeaf8402f4acf7"
+    },
+    "cultArena": {
+      "path": "media/cult-v17/arena.jpg",
+      "bytes": 530534,
+      "sha256": "9f23361f00f184e73e963784176d6c0979fe8b4375e45cdd8e06539d4776a53b"
+    },
+    "cultDriveSpear": {
+      "path": "media/cult-v17/drive-spear.webp",
+      "bytes": 64746,
+      "sha256": "507b0455ada4be3ff8876d1686aef6362539b57782333c849c48ba21ed352dd8"
+    },
+    "cultDriveFold": {
+      "path": "media/cult-v17/drive-fold.webp",
+      "bytes": 72902,
+      "sha256": "c51d89509e9e52a07b539027596b986094f5e56fdff3f587e2c19c9ffe38ed93"
+    },
+    "cultDriveImpact": {
+      "path": "media/cult-v17/drive-impact.webp",
+      "bytes": 141070,
+      "sha256": "318c20e9dc3588e5929e619a9a8da35bfbf12c3674848752ba46127152247f57"
+    },
+    "cultDriveStitch": {
+      "path": "media/cult-v17/drive-stitch.webp",
+      "bytes": 90032,
+      "sha256": "6c2785664e1226250da23a2c048043ca8c3b2cfeeb4c5d1c8259c7d3d8b3649a"
+    },
+    "storyPlayerAwakening": {
+      "path": "media/story-v19/player-awakening.webp",
+      "bytes": 290478,
+      "sha256": "3e06474a67fbf83e5ee625b305e168870bb675c2d51618e2cd327e237f696553"
+    }
+  },
+  "method": {
+    "region": [
+      4,
+      260,
+      352,
+      372
+    ],
+    "edgeMetric": "MaxRGBdifference>=40 on exposed pixels0.7..2.6px inside actual committed collision boundary; overlapping hazards/bullets/player exclude occluded samples",
+    "outside": "NoRGBchange>1 beyond actual capsule+1.1px native antialias tolerance; other threats excluded",
+    "thresholdRationale": "A13%-opacity-only fill changes each8bit channel by at most34, so40 distinguishes newly readable contour from faint uniform fill; contour occupies at least45% of the2px inside strip."
+  },
+  "rows": [
+    {
+      "group": 0,
+      "difficulty": "gentle",
+      "quality": "high",
+      "tick": 162,
+      "profile": "lattice",
+      "hazard": {
+        "id": 7,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 325.01023890784984,
+        "x2": 680,
+        "y2": 325.01023890784984,
+        "width": 58.061433447099034,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9901960784313726,
+        "born": 61,
+        "warningTicks": 102,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 163,
+        "fadeAt": 523,
+        "expireAt": 538,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1142,
+        "strongEdgeSamples": 571,
+        "strongEdgeFraction": 0.5,
+        "meanEdgeDelta": 77.5954465849387,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 109824,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1142,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 21.802977232924693,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 109824,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 2,
+      "missingAssets": 0
+    },
+    {
+      "group": 0,
+      "difficulty": "gentle",
+      "quality": "low",
+      "tick": 162,
+      "profile": "lattice",
+      "hazard": {
+        "id": 7,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 325.01023890784984,
+        "x2": 680,
+        "y2": 325.01023890784984,
+        "width": 58.061433447099034,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9901960784313726,
+        "born": 61,
+        "warningTicks": 102,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 163,
+        "fadeAt": 523,
+        "expireAt": 538,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1142,
+        "strongEdgeSamples": 571,
+        "strongEdgeFraction": 0.5,
+        "meanEdgeDelta": 77.74781085814361,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 109824,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1142,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 21.84325744308231,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 109824,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 2,
+      "missingAssets": 0
+    },
+    {
+      "group": 0,
+      "difficulty": "normal",
+      "quality": "high",
+      "tick": 150,
+      "profile": "lattice",
+      "hazard": {
+        "id": 7,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 334,
+        "x2": 680,
+        "y2": 334,
+        "width": 123.58839050131928,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 965,
+        "strongEdgeSamples": 482,
+        "strongEdgeFraction": 0.49948186528497407,
+        "meanEdgeDelta": 83.66321243523316,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 86592,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 965,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 21.51502590673575,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 86592,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 4,
+      "missingAssets": 0
+    },
+    {
+      "group": 0,
+      "difficulty": "normal",
+      "quality": "low",
+      "tick": 150,
+      "profile": "lattice",
+      "hazard": {
+        "id": 7,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 334,
+        "x2": 680,
+        "y2": 334,
+        "width": 123.58839050131928,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 965,
+        "strongEdgeSamples": 482,
+        "strongEdgeFraction": 0.49948186528497407,
+        "meanEdgeDelta": 83.66424870466321,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 86592,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 965,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 21.51502590673575,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 86592,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 4,
+      "missingAssets": 0
+    },
+    {
+      "group": 0,
+      "difficulty": "hell",
+      "quality": "high",
+      "tick": 150,
+      "profile": "lattice",
+      "hazard": {
+        "id": 7,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 334,
+        "x2": 680,
+        "y2": 334,
+        "width": 189.1993720565149,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 319,
+        "strongEdgeSamples": 159,
+        "strongEdgeFraction": 0.49843260188087773,
+        "meanEdgeDelta": 81.46394984326018,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 71104,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 319,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 21.88087774294671,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 71104,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 6,
+      "missingAssets": 0
+    },
+    {
+      "group": 0,
+      "difficulty": "hell",
+      "quality": "low",
+      "tick": 150,
+      "profile": "lattice",
+      "hazard": {
+        "id": 7,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 334,
+        "x2": 680,
+        "y2": 334,
+        "width": 189.1993720565149,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 319,
+        "strongEdgeSamples": 159,
+        "strongEdgeFraction": 0.49843260188087773,
+        "meanEdgeDelta": 81.46394984326018,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 71104,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 319,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 21.88087774294671,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 71104,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 6,
+      "missingAssets": 0
+    },
+    {
+      "group": 1,
+      "difficulty": "gentle",
+      "quality": "high",
+      "tick": 162,
+      "profile": "vertical",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 190,
+        "y1": 0,
+        "x2": 190.00000000000003,
+        "y2": 680,
+        "width": 39.60000000000002,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9901960784313726,
+        "born": 61,
+        "warningTicks": 102,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 163,
+        "fadeAt": 523,
+        "expireAt": 538,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1442,
+        "strongEdgeSamples": 724,
+        "strongEdgeFraction": 0.5020804438280166,
+        "meanEdgeDelta": 64.92649098474341,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 115320,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1442,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 17.837725381414703,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 115320,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 2,
+      "missingAssets": 0
+    },
+    {
+      "group": 1,
+      "difficulty": "gentle",
+      "quality": "low",
+      "tick": 162,
+      "profile": "vertical",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 190,
+        "y1": 0,
+        "x2": 190.00000000000003,
+        "y2": 680,
+        "width": 39.60000000000002,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9901960784313726,
+        "born": 61,
+        "warningTicks": 102,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 163,
+        "fadeAt": 523,
+        "expireAt": 538,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1442,
+        "strongEdgeSamples": 724,
+        "strongEdgeFraction": 0.5020804438280166,
+        "meanEdgeDelta": 64.92649098474341,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 115320,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1442,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 17.837725381414703,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 115320,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 2,
+      "missingAssets": 0
+    },
+    {
+      "group": 1,
+      "difficulty": "normal",
+      "quality": "high",
+      "tick": 150,
+      "profile": "vertical",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 190,
+        "y1": 0,
+        "x2": 190.00000000000003,
+        "y2": 680,
+        "width": 79.19999999999999,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1488,
+        "strongEdgeSamples": 748,
+        "strongEdgeFraction": 0.5026881720430108,
+        "meanEdgeDelta": 75.25067204301075,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 100440,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1488,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 17.830645161290324,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 100440,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 1,
+      "difficulty": "normal",
+      "quality": "low",
+      "tick": 150,
+      "profile": "vertical",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 190,
+        "y1": 0,
+        "x2": 190.00000000000003,
+        "y2": 680,
+        "width": 79.19999999999999,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1488,
+        "strongEdgeSamples": 748,
+        "strongEdgeFraction": 0.5026881720430108,
+        "meanEdgeDelta": 75.25067204301075,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 100440,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1488,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 17.830645161290324,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 100440,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 1,
+      "difficulty": "hell",
+      "quality": "high",
+      "tick": 150,
+      "profile": "vertical",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 190,
+        "y1": 0,
+        "x2": 190.00000000000003,
+        "y2": 680,
+        "width": 118.80000000000001,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1488,
+        "strongEdgeSamples": 1486,
+        "strongEdgeFraction": 0.9986559139784946,
+        "meanEdgeDelta": 77.4260752688172,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 85932,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1488,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 17.736559139784948,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 85932,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 1,
+      "difficulty": "hell",
+      "quality": "low",
+      "tick": 150,
+      "profile": "vertical",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 190,
+        "y1": 0,
+        "x2": 190.00000000000003,
+        "y2": 680,
+        "width": 118.80000000000001,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1488,
+        "strongEdgeSamples": 1486,
+        "strongEdgeFraction": 0.9986559139784946,
+        "meanEdgeDelta": 77.4260752688172,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 85932,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1488,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 17.736559139784948,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 85932,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 2,
+      "difficulty": "gentle",
+      "quality": "high",
+      "tick": 162,
+      "profile": "horizontal",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 322,
+        "x2": 680,
+        "y2": 322,
+        "width": 110.39999999999998,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9901960784313726,
+        "born": 61,
+        "warningTicks": 102,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 163,
+        "fadeAt": 523,
+        "expireAt": 538,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true,
+        "telegraphKind": "floor-scar",
+        "telegraphHint": "검빛이 켜지기 전, 바닥의 흔적을 읽으세요"
+      },
+      "current": {
+        "edgeSamples": 540,
+        "strongEdgeSamples": 540,
+        "strongEdgeFraction": 1,
+        "meanEdgeDelta": 128.06851851851852,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 91520,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 540,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 26.653703703703705,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 91520,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 1,
+      "missingAssets": 0
+    },
+    {
+      "group": 2,
+      "difficulty": "gentle",
+      "quality": "low",
+      "tick": 162,
+      "profile": "horizontal",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 322,
+        "x2": 680,
+        "y2": 322,
+        "width": 110.39999999999998,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9901960784313726,
+        "born": 61,
+        "warningTicks": 102,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 163,
+        "fadeAt": 523,
+        "expireAt": 538,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true,
+        "telegraphKind": "floor-scar",
+        "telegraphHint": "검빛이 켜지기 전, 바닥의 흔적을 읽으세요"
+      },
+      "current": {
+        "edgeSamples": 540,
+        "strongEdgeSamples": 540,
+        "strongEdgeFraction": 1,
+        "meanEdgeDelta": 127.05925925925926,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 91520,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 540,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 26.46851851851852,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 91520,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 1,
+      "missingAssets": 0
+    },
+    {
+      "group": 2,
+      "difficulty": "normal",
+      "quality": "high",
+      "tick": 150,
+      "profile": "horizontal",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 322,
+        "x2": 680,
+        "y2": 322,
+        "width": 180.79999999999995,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true,
+        "telegraphKind": "floor-scar",
+        "telegraphHint": "검빛이 켜지기 전, 바닥의 흔적을 읽으세요"
+      },
+      "current": {
+        "edgeSamples": 608,
+        "strongEdgeSamples": 608,
+        "strongEdgeFraction": 1,
+        "meanEdgeDelta": 105.38486842105263,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 77088,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 608,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 27.11513157894737,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 77088,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 2,
+      "difficulty": "normal",
+      "quality": "low",
+      "tick": 150,
+      "profile": "horizontal",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 322,
+        "x2": 680,
+        "y2": 322,
+        "width": 180.79999999999995,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true,
+        "telegraphKind": "floor-scar",
+        "telegraphHint": "검빛이 켜지기 전, 바닥의 흔적을 읽으세요"
+      },
+      "current": {
+        "edgeSamples": 608,
+        "strongEdgeSamples": 608,
+        "strongEdgeFraction": 1,
+        "meanEdgeDelta": 104.34868421052632,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 77088,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 608,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 26.919407894736842,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 77088,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 2,
+      "difficulty": "hell",
+      "quality": "high",
+      "tick": 150,
+      "profile": "horizontal",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 322,
+        "x2": 680,
+        "y2": 322,
+        "width": 251.20000000000005,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true,
+        "telegraphKind": "floor-scar",
+        "telegraphHint": "검빛이 켜지기 전, 바닥의 흔적을 읽으세요"
+      },
+      "current": {
+        "edgeSamples": 608,
+        "strongEdgeSamples": 314,
+        "strongEdgeFraction": 0.5164473684210527,
+        "meanEdgeDelta": 102.60690789473684,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 64416,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 608,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 26.80921052631579,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 64416,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 2,
+      "difficulty": "hell",
+      "quality": "low",
+      "tick": 150,
+      "profile": "horizontal",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 322,
+        "x2": 680,
+        "y2": 322,
+        "width": 251.20000000000005,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true,
+        "telegraphKind": "floor-scar",
+        "telegraphHint": "검빛이 켜지기 전, 바닥의 흔적을 읽으세요"
+      },
+      "current": {
+        "edgeSamples": 608,
+        "strongEdgeSamples": 304,
+        "strongEdgeFraction": 0.5,
+        "meanEdgeDelta": 102.11677631578948,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 64416,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 608,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 26.73519736842105,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 64416,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 11,
+      "difficulty": "gentle",
+      "quality": "high",
+      "tick": 162,
+      "profile": "horizontal",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 345.6,
+        "x2": 680,
+        "y2": 345.6,
+        "width": 85.60000000000002,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9901960784313726,
+        "born": 61,
+        "warningTicks": 102,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 163,
+        "fadeAt": 523,
+        "expireAt": 538,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 312,
+        "strongEdgeSamples": 312,
+        "strongEdgeFraction": 1,
+        "meanEdgeDelta": 118.75320512820512,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 99968,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 312,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 24.932692307692307,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 99968,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 2,
+      "missingAssets": 0
+    },
+    {
+      "group": 11,
+      "difficulty": "gentle",
+      "quality": "low",
+      "tick": 162,
+      "profile": "horizontal",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 345.6,
+        "x2": 680,
+        "y2": 345.6,
+        "width": 85.60000000000002,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9901960784313726,
+        "born": 61,
+        "warningTicks": 102,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 163,
+        "fadeAt": 523,
+        "expireAt": 538,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 312,
+        "strongEdgeSamples": 312,
+        "strongEdgeFraction": 1,
+        "meanEdgeDelta": 118.75320512820512,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 99968,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 312,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 24.932692307692307,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 99968,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 2,
+      "missingAssets": 0
+    },
+    {
+      "group": 11,
+      "difficulty": "normal",
+      "quality": "high",
+      "tick": 150,
+      "profile": "horizontal",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 358,
+        "x2": 680,
+        "y2": 358,
+        "width": 180.79999999999995,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1248,
+        "strongEdgeSamples": 1177,
+        "strongEdgeFraction": 0.9431089743589743,
+        "meanEdgeDelta": 84.11538461538461,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 66880,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1248,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 23.67628205128205,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 66880,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 2,
+      "missingAssets": 0
+    },
+    {
+      "group": 11,
+      "difficulty": "normal",
+      "quality": "low",
+      "tick": 150,
+      "profile": "horizontal",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 358,
+        "x2": 680,
+        "y2": 358,
+        "width": 180.79999999999995,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1248,
+        "strongEdgeSamples": 1177,
+        "strongEdgeFraction": 0.9431089743589743,
+        "meanEdgeDelta": 84.11538461538461,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 66880,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1248,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 23.67628205128205,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 66880,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 2,
+      "missingAssets": 0
+    },
+    {
+      "group": 11,
+      "difficulty": "hell",
+      "quality": "high",
+      "tick": 150,
+      "profile": "horizontal",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 358,
+        "x2": 680,
+        "y2": 358,
+        "width": 251.20000000000005,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 588,
+        "strongEdgeSamples": 301,
+        "strongEdgeFraction": 0.5119047619047619,
+        "meanEdgeDelta": 98.37925170068027,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 51744,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 588,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 25.392857142857142,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 51744,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 11,
+      "difficulty": "hell",
+      "quality": "low",
+      "tick": 150,
+      "profile": "horizontal",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 358,
+        "x2": 680,
+        "y2": 358,
+        "width": 251.20000000000005,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 588,
+        "strongEdgeSamples": 301,
+        "strongEdgeFraction": 0.5119047619047619,
+        "meanEdgeDelta": 98.37925170068027,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 51744,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 588,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 25.392857142857142,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 51744,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 20,
+      "difficulty": "gentle",
+      "quality": "high",
+      "tick": 162,
+      "profile": "vertical",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 197.9,
+        "y1": 0,
+        "x2": 197.90000000000003,
+        "y2": 680,
+        "width": 39.400000000000034,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9901960784313726,
+        "born": 61,
+        "warningTicks": 102,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 163,
+        "fadeAt": 523,
+        "expireAt": 538,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 909,
+        "strongEdgeSamples": 505,
+        "strongEdgeFraction": 0.5555555555555556,
+        "meanEdgeDelta": 62.515951595159514,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 115320,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 909,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 15.31903190319032,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 115320,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 2,
+      "missingAssets": 0
+    },
+    {
+      "group": 20,
+      "difficulty": "gentle",
+      "quality": "low",
+      "tick": 162,
+      "profile": "vertical",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 197.9,
+        "y1": 0,
+        "x2": 197.90000000000003,
+        "y2": 680,
+        "width": 39.400000000000034,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9901960784313726,
+        "born": 61,
+        "warningTicks": 102,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 163,
+        "fadeAt": 523,
+        "expireAt": 538,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 909,
+        "strongEdgeSamples": 505,
+        "strongEdgeFraction": 0.5555555555555556,
+        "meanEdgeDelta": 62.515951595159514,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 115320,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 909,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 15.31903190319032,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 115320,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 2,
+      "missingAssets": 0
+    },
+    {
+      "group": 20,
+      "difficulty": "normal",
+      "quality": "high",
+      "tick": 150,
+      "profile": "vertical",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 198,
+        "y1": 0,
+        "x2": 198.00000000000003,
+        "y2": 680,
+        "width": 79.19999999999999,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 955,
+        "strongEdgeSamples": 495,
+        "strongEdgeFraction": 0.518324607329843,
+        "meanEdgeDelta": 63.55497382198953,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 100440,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 955,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 15.671204188481676,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 100440,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 20,
+      "difficulty": "normal",
+      "quality": "low",
+      "tick": 150,
+      "profile": "vertical",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 198,
+        "y1": 0,
+        "x2": 198.00000000000003,
+        "y2": 680,
+        "width": 79.19999999999999,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 955,
+        "strongEdgeSamples": 495,
+        "strongEdgeFraction": 0.518324607329843,
+        "meanEdgeDelta": 63.55497382198953,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 100440,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 955,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 15.671204188481676,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 100440,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 20,
+      "difficulty": "hell",
+      "quality": "high",
+      "tick": 150,
+      "profile": "vertical",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 198,
+        "y1": 0,
+        "x2": 198.00000000000003,
+        "y2": 680,
+        "width": 118.79999999999998,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1257,
+        "strongEdgeSamples": 827,
+        "strongEdgeFraction": 0.6579156722354813,
+        "meanEdgeDelta": 57.19331742243437,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 85932,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1257,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 15.648369132856006,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 85932,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 20,
+      "difficulty": "hell",
+      "quality": "low",
+      "tick": 150,
+      "profile": "vertical",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 198,
+        "y1": 0,
+        "x2": 198.00000000000003,
+        "y2": 680,
+        "width": 118.79999999999998,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1257,
+        "strongEdgeSamples": 827,
+        "strongEdgeFraction": 0.6579156722354813,
+        "meanEdgeDelta": 57.19331742243437,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 85932,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1257,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 15.648369132856006,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 85932,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 30,
+      "difficulty": "gentle",
+      "quality": "high",
+      "tick": 162,
+      "profile": "horizontal",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 341.6,
+        "x2": 680,
+        "y2": 341.6,
+        "width": 93.60000000000002,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9901960784313726,
+        "born": 61,
+        "warningTicks": 102,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 163,
+        "fadeAt": 523,
+        "expireAt": 538,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 960,
+        "strongEdgeSamples": 925,
+        "strongEdgeFraction": 0.9635416666666666,
+        "meanEdgeDelta": 88.57604166666667,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 97152,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 960,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 21.344791666666666,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 97152,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 2,
+      "missingAssets": 0
+    },
+    {
+      "group": 30,
+      "difficulty": "gentle",
+      "quality": "low",
+      "tick": 162,
+      "profile": "horizontal",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 341.6,
+        "x2": 680,
+        "y2": 341.6,
+        "width": 93.60000000000002,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9901960784313726,
+        "born": 61,
+        "warningTicks": 102,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 163,
+        "fadeAt": 523,
+        "expireAt": 538,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 960,
+        "strongEdgeSamples": 925,
+        "strongEdgeFraction": 0.9635416666666666,
+        "meanEdgeDelta": 88.57604166666667,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 97152,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 960,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 21.344791666666666,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 97152,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 2,
+      "missingAssets": 0
+    },
+    {
+      "group": 30,
+      "difficulty": "normal",
+      "quality": "high",
+      "tick": 150,
+      "profile": "horizontal",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 350,
+        "x2": 680,
+        "y2": 350,
+        "width": 180.79999999999995,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1280,
+        "strongEdgeSamples": 1226,
+        "strongEdgeFraction": 0.9578125,
+        "meanEdgeDelta": 76.51953125,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 67232,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1280,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 20.6578125,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 67232,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 30,
+      "difficulty": "normal",
+      "quality": "low",
+      "tick": 150,
+      "profile": "horizontal",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 350,
+        "x2": 680,
+        "y2": 350,
+        "width": 180.79999999999995,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1280,
+        "strongEdgeSamples": 1226,
+        "strongEdgeFraction": 0.9578125,
+        "meanEdgeDelta": 76.51953125,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 67232,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1280,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 20.6578125,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 67232,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 30,
+      "difficulty": "hell",
+      "quality": "high",
+      "tick": 150,
+      "profile": "horizontal",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 350,
+        "x2": 680,
+        "y2": 350,
+        "width": 251.20000000000005,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 640,
+        "strongEdgeSamples": 339,
+        "strongEdgeFraction": 0.5296875,
+        "meanEdgeDelta": 87.1796875,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 54560,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 640,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 21.6375,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 54560,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 30,
+      "difficulty": "hell",
+      "quality": "low",
+      "tick": 150,
+      "profile": "horizontal",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 350,
+        "x2": 680,
+        "y2": 350,
+        "width": 251.20000000000005,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 640,
+        "strongEdgeSamples": 339,
+        "strongEdgeFraction": 0.5296875,
+        "meanEdgeDelta": 87.1796875,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 54560,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 640,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 21.6375,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 54560,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 34,
+      "difficulty": "gentle",
+      "quality": "high",
+      "tick": 162,
+      "profile": "lattice",
+      "hazard": {
+        "id": 7,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 333.01023890784984,
+        "x2": 680,
+        "y2": 333.01023890784984,
+        "width": 42.061433447099034,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9901960784313726,
+        "born": 61,
+        "warningTicks": 102,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 163,
+        "fadeAt": 523,
+        "expireAt": 538,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1191,
+        "strongEdgeSamples": 595,
+        "strongEdgeFraction": 0.4995801847187238,
+        "meanEdgeDelta": 84.45088161209068,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 115456,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1191,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 23.38371116708648,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 115456,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 4,
+      "missingAssets": 0
+    },
+    {
+      "group": 34,
+      "difficulty": "gentle",
+      "quality": "low",
+      "tick": 162,
+      "profile": "lattice",
+      "hazard": {
+        "id": 7,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 333.01023890784984,
+        "x2": 680,
+        "y2": 333.01023890784984,
+        "width": 42.061433447099034,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9901960784313726,
+        "born": 61,
+        "warningTicks": 102,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 163,
+        "fadeAt": 523,
+        "expireAt": 538,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1191,
+        "strongEdgeSamples": 595,
+        "strongEdgeFraction": 0.4995801847187238,
+        "meanEdgeDelta": 84.45088161209068,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 115456,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1191,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 23.38371116708648,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 115456,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 4,
+      "missingAssets": 0
+    },
+    {
+      "group": 34,
+      "difficulty": "normal",
+      "quality": "high",
+      "tick": 150,
+      "profile": "lattice",
+      "hazard": {
+        "id": 7,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 344.8970976253298,
+        "x2": 680,
+        "y2": 344.8970976253298,
+        "width": 113.38258575197892,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1016,
+        "strongEdgeSamples": 557,
+        "strongEdgeFraction": 0.5482283464566929,
+        "meanEdgeDelta": 96.81594488188976,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 90112,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1016,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 23.156496062992126,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 90112,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 4,
+      "missingAssets": 0
+    },
+    {
+      "group": 34,
+      "difficulty": "normal",
+      "quality": "low",
+      "tick": 150,
+      "profile": "lattice",
+      "hazard": {
+        "id": 7,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 344.8970976253298,
+        "x2": 680,
+        "y2": 344.8970976253298,
+        "width": 113.38258575197892,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1016,
+        "strongEdgeSamples": 557,
+        "strongEdgeFraction": 0.5482283464566929,
+        "meanEdgeDelta": 96.81594488188976,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 90112,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1016,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 23.156496062992126,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 90112,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 4,
+      "missingAssets": 0
+    },
+    {
+      "group": 34,
+      "difficulty": "hell",
+      "quality": "high",
+      "tick": 150,
+      "profile": "lattice",
+      "hazard": {
+        "id": 7,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 350,
+        "x2": 680,
+        "y2": 350,
+        "width": 189.1993720565149,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 424,
+        "strongEdgeSamples": 212,
+        "strongEdgeFraction": 0.5,
+        "meanEdgeDelta": 95.40566037735849,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 65472,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 424,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 23.30424528301887,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 65472,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 6,
+      "missingAssets": 0
+    },
+    {
+      "group": 34,
+      "difficulty": "hell",
+      "quality": "low",
+      "tick": 150,
+      "profile": "lattice",
+      "hazard": {
+        "id": 7,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 0,
+        "y1": 350,
+        "x2": 680,
+        "y2": 350,
+        "width": 189.1993720565149,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 424,
+        "strongEdgeSamples": 212,
+        "strongEdgeFraction": 0.5,
+        "meanEdgeDelta": 95.40566037735849,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 65472,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 424,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 23.30424528301887,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 65472,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 6,
+      "missingAssets": 0
+    },
+    {
+      "group": 35,
+      "difficulty": "gentle",
+      "quality": "high",
+      "tick": 162,
+      "profile": "vertical",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 162.10000000000002,
+        "y1": 0,
+        "x2": 162.10000000000005,
+        "y2": 680,
+        "width": 39.400000000000006,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9901960784313726,
+        "born": 61,
+        "warningTicks": 102,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 163,
+        "fadeAt": 523,
+        "expireAt": 538,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1432,
+        "strongEdgeSamples": 805,
+        "strongEdgeFraction": 0.5621508379888268,
+        "meanEdgeDelta": 87.67737430167598,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 115320,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1432,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 23.247206703910614,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 115320,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 2,
+      "missingAssets": 0
+    },
+    {
+      "group": 35,
+      "difficulty": "gentle",
+      "quality": "low",
+      "tick": 162,
+      "profile": "vertical",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 162.10000000000002,
+        "y1": 0,
+        "x2": 162.10000000000005,
+        "y2": 680,
+        "width": 39.400000000000006,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9901960784313726,
+        "born": 61,
+        "warningTicks": 102,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 163,
+        "fadeAt": 523,
+        "expireAt": 538,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1432,
+        "strongEdgeSamples": 805,
+        "strongEdgeFraction": 0.5621508379888268,
+        "meanEdgeDelta": 87.67737430167598,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 115320,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1432,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 23.247206703910614,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 115320,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 2,
+      "missingAssets": 0
+    },
+    {
+      "group": 35,
+      "difficulty": "normal",
+      "quality": "high",
+      "tick": 150,
+      "profile": "vertical",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 162,
+        "y1": 0,
+        "x2": 162.00000000000003,
+        "y2": 680,
+        "width": 79.19999999999999,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1488,
+        "strongEdgeSamples": 975,
+        "strongEdgeFraction": 0.655241935483871,
+        "meanEdgeDelta": 94.34879032258064,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 100440,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1488,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 23.206317204301076,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 100440,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 35,
+      "difficulty": "normal",
+      "quality": "low",
+      "tick": 150,
+      "profile": "vertical",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 162,
+        "y1": 0,
+        "x2": 162.00000000000003,
+        "y2": 680,
+        "width": 79.19999999999999,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 1488,
+        "strongEdgeSamples": 975,
+        "strongEdgeFraction": 0.655241935483871,
+        "meanEdgeDelta": 94.34879032258064,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 100440,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 1488,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 23.206317204301076,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 100440,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 35,
+      "difficulty": "hell",
+      "quality": "high",
+      "tick": 150,
+      "profile": "vertical",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 162,
+        "y1": 0,
+        "x2": 162.00000000000003,
+        "y2": 680,
+        "width": 118.80000000000001,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 744,
+        "strongEdgeSamples": 744,
+        "strongEdgeFraction": 1,
+        "meanEdgeDelta": 93.25403225806451,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 85932,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 744,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 22.870967741935484,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 85932,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    },
+    {
+      "group": 35,
+      "difficulty": "hell",
+      "quality": "low",
+      "tick": 150,
+      "profile": "vertical",
+      "hazard": {
+        "id": 4,
+        "castId": 2,
+        "ownerId": 1,
+        "kind": "laser",
+        "x1": 162,
+        "y1": 0,
+        "x2": 162.00000000000003,
+        "y2": 680,
+        "width": 118.80000000000001,
+        "color": "#d1aaff",
+        "phase": "warning",
+        "progress": 0.9888888888888889,
+        "born": 61,
+        "warningTicks": 90,
+        "activeTicks": 360,
+        "fadeTicks": 15,
+        "activeAt": 151,
+        "fadeAt": 511,
+        "expireAt": 526,
+        "grazed": false,
+        "name": "겹쳐 닫히는 압박",
+        "patternId": "pressure-boss-v21",
+        "paletteSlot": 1,
+        "pressureCurtain": true
+      },
+      "current": {
+        "edgeSamples": 744,
+        "strongEdgeSamples": 744,
+        "strongEdgeFraction": 1,
+        "meanEdgeDelta": 93.25403225806451,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 85932,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "baseline": {
+        "edgeSamples": 744,
+        "strongEdgeSamples": 0,
+        "strongEdgeFraction": 0,
+        "meanEdgeDelta": 22.870967741935484,
+        "contrastThreshold": 40,
+        "insideBoundaryBand": [
+          0.7,
+          2.6
+        ],
+        "outsideAntialiasTolerance": 1.1,
+        "outsideSamples": 85932,
+        "outsideChanged": 0,
+        "maxOutsideDelta": 0
+      },
+      "warningFootprintDraws": 3,
+      "missingAssets": 0
+    }
+  ],
+  "summary": {
+    "cases": 48,
+    "profiles": [
+      "lattice",
+      "vertical",
+      "horizontal"
+    ],
+    "minimumStrongEdgeFraction": 0.49843260188087773,
+    "maximumOutsideChanged": 0
+  },
+  "proof": {
+    "path": "docs/v22-warning-pixels/baseline-current.jpg",
+    "bytes": 336919,
+    "sha256": "1733738ad2c2e66bea60714ee22ceb208fd670d74c8d6d541f9833dd3a3bf727"
+  },
+  "reviewStatus": "final: all48 gates passed and before/after actual pixels directly inspected",
+  "directReview": {
+    "proof": "docs/v22-warning-pixels/baseline-current.jpg",
+    "reviewer": "independent QA agent",
+    "observations": [
+      "All8HELL columns compare the same actual committed warning states against deployedv21.",
+      "Broadvertical/horizontal/lattice borders show the real unsafe space before activation; no extra arena caption or active source beam is introduced.",
+      "Darkstone knight warning initially failed25.78% strong-edge strip criterion. The unchanged criterion passed65.79% after the owner widened its own-colour inner contour to1.4px.",
+      "Existing sourceart, warning geometry and simulation state were not changed by this review."
+    ],
+    "limitations": [
+      "CPU font availability does not certify Korean glyph rendering.",
+      "Threshold is a defined8bit RGB contrast diagnostic; not a psychophysical visibility guarantee or danger-area percentage.",
+      "No browser, GPU, mobile or natural-play certification is inferred."
+    ]
+  },
+  "firstFailedCandidate": {
+    "renderSHA256": "c51650ca1e3d66c5a63375c89d43699f93264f4b054aed52a792085f9cba84c4",
+    "group": 20,
+    "difficulty": "hell",
+    "strongEdgeFraction": 0.2577565632458234,
+    "unchangedRequiredMinimum": 0.45,
+    "log": "docs/v22-qa/warning-edge-first-failure.log",
+    "logSHA256": "b3a4ad10d8a180078f9ddd83cf72aaa5ab9bfa71016639add5f3e4a5f0651897"
+  }
+}
