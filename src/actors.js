@@ -179,7 +179,7 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
         usedAssets:{},usedPoses:{},lastSilk:null,authoredPosesPerActor:4,
         fullAnimationCycles:0,sourcePivotsCertified:false,sinBossDraws:0,lastSinSample:null,wrathManifestDraws:0,lastWrathManifest:null,
         chapter3BossDraws:0,chapter3DroneDraws:0,chapter3GateDraws:0,lastChapter3Sample:null,
-        storyBossDraws:0,storyParticipantDraws:0,storyMinionDraws:0,storyPlayerDraws:0,storySupportDraws:0,storyEchoDraws:0,storyTargetMarkerDraws:0,lastStoryTargetMarker:null,lastStorySamples:[]};
+        storyBossDraws:0,storyParticipantDraws:0,storyMinionDraws:0,storyPlayerDraws:0,storySupportDraws:0,storyEchoDraws:0,storyTargetMarkerDraws:0,lastStoryTargetMarker:null,lastStorySamples:[],combatCopyDraws:0,combatCopyMissingAssets:0,lastCombatCopySamples:[]};
     }
     beginFrame();
     function ready(contract) {
@@ -289,6 +289,51 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
         }
       }
       if(drew){metrics.bossDraws++;return true;}return false;
+    }
+    function drawCombatCopy(ctx,world,copy,opacity){
+      // Combat copies are projections of the current combatant, never new
+      // characters. Reuse its inspected source registration without drawing
+      // support people, protected objects, paired partners or puppet tethers.
+      var b=world&&world.boss,tick=value(world&&world.tick,0);
+      if(!b||!copy||world.stage!=='boss'||!finite(copy.x)||!finite(copy.y)||!finite(copy.born)||!finite(copy.expireAt)||tick<copy.born||tick>=copy.expireAt)return false;
+      var width=155,entry=storyEntry(world),model=null,key=null,poseName=null,sourceRect=null,anchor=null,scale=null;
+      var identity=copy.modelActorId||b.kind||world.bossId,actor=Object.assign({},b,copy,{kind:b.kind,artKey:b.artKey,hitUntil:0});
+      if(entry){
+        var models=entry.actors||[];
+        model=copy.modelActorId?models.find(function(a){return a.participantId===copy.modelActorId||a.id===copy.modelActorId;}):models.length===1?models[0]:null;
+        if(model){
+          var sample=storyFrame(model,world,actor),frame=sample&&sample.frame;
+          if(frame){
+            key=frame.key||model.key;sourceRect=frame.rect||[0,0,frame.width||model.width,frame.height||model.height];anchor=frame.anchor||model.anchor||[sourceRect[2]/2,sourceRect[3]/2];scale=(frame.scale||model.scale)*width/230;poseName=sample.state;
+            var neutral=Object.assign({},model,{offset:[0,0]});
+            if(!drawStoryActor(ctx,world,neutral,actor,copy.x,copy.y,width,opacity,'combat-copy'))key=null;
+          }
+        }
+      }else{
+        var id=b.kind||world.bossId,c=global.HapilBossMotion&&global.HapilBossMotion.contracts[id],sin=sinContractFor(world),cult=world.finalPractice&&id==='cult-leader';
+        var motion=global.HapilBossMotion&&global.HapilBossMotion.sample?global.HapilBossMotion.sample(world,actor):{from:3,to:3,blend:1};
+        if(c||sin){
+          var contract=c||sin;key=contract.key;scale=contract.scale*width/230;
+          var image=images[key];if(!image||image.complete===false||image.naturalWidth!==512||image.naturalHeight!==512)key=null;
+          else{
+            var from=clamp(motion.from,0,3),to=clamp(motion.to,0,3),blend=clamp(motion.blend,0,1),chosen=blend>=.5?to:from;
+            function cell(index,weight){
+              if(weight<=.001)return;var a=c?c.poses[index].anchor:sin.anchors[index];
+              ctx.save();ctx.globalAlpha*=clamp(value(opacity,1),0,1)*weight;ctx.translate(copy.x,copy.y);ctx.drawImage(image,index%2*256,Math.floor(index/2)*256,256,256,-a[0]*scale,-a[1]*scale,256*scale,256*scale);ctx.restore();
+              metrics.actorDraws++;metrics.usedAssets[key]=(metrics.usedAssets[key]||0)+1;
+            }
+            if(from===to)cell(to,1);else{cell(from,1-blend);cell(to,blend);}
+            anchor=c?c.poses[chosen].anchor:sin.anchors[chosen];sourceRect=[chosen%2*256,Math.floor(chosen/2)*256,256,256];poseName=c?c.poses[chosen].name:sin.poseNames[chosen];
+          }
+        }else if(cult){
+          key='cultLeaderAtlas';var im=images[key],age=finite(actor.releaseTick)&&actor.releaseTick>=0?tick-actor.releaseTick:Infinity,index=age>=0&&age<12?2:actor.action==='charge'?1:actor.action==='recover'?3:0;
+          var anchors=[[424,160],[373,198],[415,205],[381,157]];anchor=anchors[index];scale=.30*width/230;sourceRect=[index%2*768,Math.floor(index/2)*512,768,512];poseName=['idle','charge','down-attack','recover'][index];
+          if(!im||im.complete===false||im.naturalWidth!==1536||im.naturalHeight!==1024)key=null;
+          else{ctx.save();ctx.globalAlpha*=clamp(value(opacity,1),0,1);ctx.drawImage(im,sourceRect[0],sourceRect[1],sourceRect[2],sourceRect[3],copy.x-anchor[0]*scale,copy.y-anchor[1]*scale,768*scale,512*scale);ctx.restore();metrics.actorDraws++;metrics.usedAssets[key]=(metrics.usedAssets[key]||0)+1;}
+        }
+      }
+      if(!key){metrics.combatCopyMissingAssets++;return false;}
+      metrics.combatCopyDraws++;metrics.lastCombatCopySamples.push({id:copy.id,sourceActorId:copy.sourceActorId,modelActorId:copy.modelActorId||null,identity:identity,key:key,pose:poseName,sourceRect:sourceRect.slice(),anchor:anchor.slice(),scale:scale,position:[copy.x,copy.y],born:copy.born,expireAt:copy.expireAt,releaseTick:copy.releaseTick,opacity:opacity,kind:copy.kind,authoredKeyposes:model?(model.frames||[]).length:4,fullAnimationCycles:0,sourcePivotsCertified:false});return true;
     }
     function drawSceneObjects(ctx,world){
       var entry=storyEntry(world);if(!entry||invalidStoryAssetForEncounter(images,world.bossIndex+1))return;
@@ -424,7 +469,7 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
       drawPose(ctx,contract,state,e.x,e.y,scale,angle,.96); metrics.enemyDraws++;
       return true;
     }
-    return {beginFrame:beginFrame,drawBoss:drawBoss,drawEnemy:drawEnemy,drawSceneObjects:drawSceneObjects,drawPlayer:drawPlayer,
+    return {beginFrame:beginFrame,drawBoss:drawBoss,drawCombatCopy:drawCombatCopy,drawEnemy:drawEnemy,drawSceneObjects:drawSceneObjects,drawPlayer:drawPlayer,
       getMetrics:function () { return Object.assign(JSON.parse(JSON.stringify(metrics)),{downwardMotion:motionPresentation?motionPresentation.getMetrics():null}); }};
   }
   global.HapilActors = Object.freeze({create:create,contracts:CONTRACTS,sinContracts:SIN_CONTRACTS,chapter3Contracts:CHAPTER3_CONTRACTS,

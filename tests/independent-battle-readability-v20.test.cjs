@@ -72,14 +72,17 @@ test('brief deduplicated entry titles disappear before live threats and timeout 
   for(const phaseTime of [w.phaseTimeout-15,w.phaseTimeout-.05,w.phaseTimeout,w.phaseTimeout+1]){const fixture=structuredClone(w);fixture.phaseTime=phaseTime;renderer.draw(fixture,0,fixture.time,false);const hud=renderer.getMetrics().battleReadability;assert.equal(hud.remainingSeconds,Math.max(0,fixture.phaseTimeout-phaseTime));assert.equal(hud.timerWarning,true);assert(!hud.timerText.includes('-'));}
  }finally{renderer.destroy();global.document=previous;}
 });
-test('the real app exposes full phase hints outside the arena and retains residual-threat guidance without practice writes',async()=>{
- const html=fs.readFileSync(path.join(root,'index.html'),'utf8');for(const id of ['pad-title','pad-caption'])assert.equal((html.match(new RegExp('id="'+id+'"','g'))||[]).length,1,'real HTML contains the fixture-observed destination');
- const h=harness();await boot(h);await practice(h,19);const w=h.world();assert(w.boss.patternHint);const original=w.boss.patternHint;
- // UI-only phase labels are isolated here; ordinary progression/replays are
- // separate tests. Changing this fixture does not represent natural progress.
- for(const phase of [0,1,2]){w.phase=phase;await advance(h);assert.equal(h.el('pad-caption').textContent,original);assert.equal(h.el('pad-title').textContent,'패턴 읽기 · '+(phase+1)+' / 3');}
- w.autoAttack=false;w.skillRotation=false;w.stage='transition';w.transitionRemaining=2;w.nextPhase=0;w.bullets.length=0;w.hazards.length=0;w.bullets.push({id:99999,x:24,y:24,px:24,py:24,vx:0,vy:10,r:3.8,halfLength:0,angle:Math.PI/2,kind:'orb',age:0,ttl:10,grazed:false});await advance(h);assert.equal(h.el('pad-title').textContent,'남은 탄막에 집중하세요');assert.match(h.el('pad-caption').textContent,/아직 위험/);assert.equal(h.saveCalls.length,0);assert.equal(h.completeCalls.length,0);assert.equal(h.g.HapilApp.diagnostics().candidateRevision,20);assert.equal(h.g.HapilApp.diagnostics().version,'hapil-battle-readability-v20');
+test('the real app keeps the movement surface free of map/pattern copy during combat and residual threats',async()=>{
+ const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+ assert.match(html,/id="touch-pad"[^>]*aria-label="상대 드래그 이동 패드"/);
+ for(const id of ['pad-title','pad-caption'])assert.equal((html.match(new RegExp('id="'+id+'"','g'))||[]).length,0,'removed visible guidance destination');
+ const h=harness();await boot(h);await practice(h,19);const w=h.world();assert(w.boss.patternHint);
+ for(const phase of [0,1,2]){w.phase=phase;await advance(h);assert.equal(String(h.el('pad-caption').textContent||''),'');assert.equal(String(h.el('pad-title').textContent||''),'');}
+ w.autoAttack=false;w.skillRotation=false;w.stage='transition';w.transitionRemaining=2;w.nextPhase=0;w.bullets.length=0;w.hazards.length=0;w.bullets.push({id:99999,x:24,y:24,px:24,py:24,vx:0,vy:10,r:3.8,halfLength:0,angle:Math.PI/2,kind:'orb',age:0,ttl:10,grazed:false});await advance(h);
+ assert.equal(String(h.el('pad-title').textContent||''),'');assert.equal(String(h.el('pad-caption').textContent||''),'');assert.equal(h.saveCalls.length,0);assert.equal(h.completeCalls.length,0);
+ assert.equal(w.combatRevision,21,'actual product opts new runs into v21 attacks');
+ assert.equal(h.g.HapilApp.diagnostics().candidateRevision,21);assert.equal(h.g.HapilApp.diagnostics().version,'hapil-hell-pressure-v21');
 });
-test('presentation changes retain the exact previously validated combat and storage implementations',()=>{
- for(const file of ['src/core.js','src/storage.js'])assert.deepEqual(fs.readFileSync(path.join(root,file)),cp.execFileSync('git',['show',audit.baseline+':'+file],{cwd:root}),file+' is byte-identical to the deployed v19 mechanics');
+test('combat expansion retains the exact previously reviewed original source media and collision art metadata',()=>{
+ for(const file of ['src/media.js','src/story-assets.js'])assert.deepEqual(fs.readFileSync(path.join(root,file)),cp.execFileSync('git',['show','d2f5fddff2f12118d5c97a9a24e1111c16a1c771:'+file],{cwd:root}),file+' is byte-identical to deployed v20 source art');
 });

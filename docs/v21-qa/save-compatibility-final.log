@@ -1,0 +1,16 @@
+✔ new combat revision survives strict save validation and deterministic ordinary-health restore (114.217407ms)
+✔ legacy absent-field boundaries stay byte-compatible and never select new combat on restore (2.206361ms)
+✔ unknown or malformed combat selectors cannot silently downgrade a saved run (1.192818ms)
+✔ same-run checkpoint writes cannot switch combat revision in either direction or overwrite backup (3.618833ms)
+✔ v21 backup recovery retains combat and a stale emulated tab cannot replace it with a legacy run (6.090836ms)
+✔ practice and malformed v21 backup data cannot overwrite confirmed legacy or v21 progress (3.04699ms)
+✔ an already-open deployed v20 storage client fails closed instead of stripping a newer v21 checkpoint selector (25.35383ms)
+✔ v21 forward-compatibility marker is required for new records and remains present in exports and loss retries (1.233067ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 363.220077

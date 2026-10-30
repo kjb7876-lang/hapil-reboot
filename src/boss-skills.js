@@ -98,7 +98,7 @@
       if (encounter !== index) { clear(); encounter = index; }
       var limit = low ? 4 : 8; metrics.skillDrawLimit = limit;
       var b = world.boss, progress = clamp(b.actionProgress || 0, 0, 1);
-      function specFor(role,event){var source=event&&event.sourceActorId,owner=source&&entry.participants&&entry.participants[source]||entry,spec=owner[role];return Array.isArray(spec)?spec[Math.min(world.phase||0,spec.length-1)]:spec;}
+      function specFor(role,event){var source=event&&(event.modelActorId||event.sourceActorId),owner=source&&entry.participants&&entry.participants[source]||entry,spec=owner[role];return Array.isArray(spec)?spec[Math.min(world.phase||0,spec.length-1)]:spec;}
       // The bounded records are emitted only after a real projectile group or
       // laser activation succeeds. A dropped group creates no release accent.
       var events = Array.isArray(b.skillReleases) ? b.skillReleases : null;
@@ -128,7 +128,7 @@
         for(var j=0;j<selected.length&&metrics.skillSourceDraws<limit;j++){
           var e=selected[j],age=world.tick-e.tick;
           var laser = e.kind === 'laser', spec = laser ? specFor('laser',e) || specFor('release',e) : specFor('release',e);
-          if (paint(ctx, spec, laser ? 'laser' : 'release', e.x, e.y, age, 30, 0, low)) {var represented={ tick:e.tick,kind:e.kind,patternId:e.patternId||'',x:e.x,y:e.y,sourceKey:spec.key };if(e.sourceActorId)represented.sourceActorId=e.sourceActorId;metrics.representedReleases.push(represented);}
+          if (paint(ctx, spec, laser ? 'laser' : 'release', e.x, e.y, age, 30, 0, low)) {var represented={ tick:e.tick,kind:e.kind,patternId:e.patternId||'',x:e.x,y:e.y,sourceKey:spec.key };if(e.sourceActorId)represented.sourceActorId=e.sourceActorId;if(e.modelActorId)represented.modelActorId=e.modelActorId;metrics.representedReleases.push(represented);}
         }
       } else if (finite(b.releaseTick) && b.releaseTick >= 0) {
         var releaseAge = world.tick - b.releaseTick;

@@ -44,6 +44,7 @@
   // arrays, arbitrary object keys, unbounded strings, or nonfinite numbers survive.
   function validateCheckpoint(input) {
     try {
+      if(input&&Object.prototype.hasOwnProperty.call(input,'combatRevision')&&input.combatRevision!==21)return null;
       var encoded = JSON.stringify(input);
       if (typeof encoded !== 'string' || encoded.length > 16384) return null;
       var value = JSON.parse(encoded);
@@ -121,6 +122,7 @@
         autoAttack: true, skillRotation: value.skillRotation, skills: skills, stats: stats, resourceState: resourceState
       };
       if (campaign) { clean.campaign = true; clean.campaignRevision = value.campaignRevision; clean.bossIndex = value.bossIndex; }
+      if(value.combatRevision===21)clean.combatRevision=21;
       return clean;
     } catch (_) { return null; }
   }
@@ -142,6 +144,7 @@
   function normalizeState(raw) {
     var state = emptyState();
     if (!object(raw) || raw.version !== 1) return state;
+    if(raw.combatContract===21)state.combatContract=21;
     if (integer(raw.revision, 0, Number.MAX_SAFE_INTEGER - 1)) state.revision = raw.revision;
     if (integer(raw.generation, 0, Number.MAX_SAFE_INTEGER - 1)) state.generation = raw.generation;
     state.settings = Object.assign(state.settings, settingsPatch(raw.settings));
@@ -188,10 +191,12 @@
         !integer(raw.revision, 0, Number.MAX_SAFE_INTEGER - 1) || !integer(raw.generation, 0, Number.MAX_SAFE_INTEGER - 1) ||
         !(raw.activeRunId === null || validRunId(raw.activeRunId))) return false;
     if (raw.activeRunBaselineKills !== undefined && !integer(raw.activeRunBaselineKills, 0, MAX_COUNTER)) return false;
+    if(raw.combatContract!==undefined&&raw.combatContract!==21)return false;
+    if((raw.checkpoint&&raw.checkpoint.combatRevision===21||raw.backup&&raw.backup.combatRevision===21)&&raw.combatContract!==21)return false;
     function hasOnlyKeys(value, allowed) {
       return object(value) && Object.keys(value).every(function (key) { return allowed.indexOf(key) >= 0; });
     }
-    if (!hasOnlyKeys(raw, ['version','revision','generation','activeRunId','activeRunBaselineKills','settings','profile','checkpoint','backup','completed'])) return false;
+    if (!hasOnlyKeys(raw, ['version','revision','generation','activeRunId','activeRunBaselineKills','settings','profile','checkpoint','backup','completed','combatContract'])) return false;
     if (raw.settings !== undefined) {
       if (!hasOnlyKeys(raw.settings, ['music','sfx','quality','skillRotation','difficulty','sensitivity'])) return false;
       if (['music','sfx','skillRotation'].some(function (k) { return raw.settings[k] !== undefined && typeof raw.settings[k] !== 'boolean'; })) return false;
@@ -243,6 +248,7 @@
       var snapshot = action.value;
       if (completed(state, snapshot.runId)) return { state: state, changed: false, result: { ok: false, reason: 'completed' } };
       if (state.activeRunId === snapshot.runId && state.checkpoint) {
+        if(snapshot.combatRevision!==state.checkpoint.combatRevision)return { state: state, changed: false, result: { ok: false, reason: 'combat-revision-mismatch' } };
         if (snapshot.checkpointSerial < state.checkpoint.checkpointSerial || snapshot.tick < state.checkpoint.tick) return { state: state, changed: false, result: { ok: false, reason: 'stale-checkpoint' } };
         if (snapshot.checkpointSerial === state.checkpoint.checkpointSerial) {
           var identical = JSON.stringify(snapshot) === JSON.stringify(state.checkpoint);
@@ -256,6 +262,10 @@
         state.backup = clone(snapshot);
       } else state.backup = state.checkpoint ? clone(state.checkpoint) : clone(snapshot);
       state.checkpoint = clone(snapshot);
+      // Old clients reject unknown top-level keys before any write. Retaining
+      // this marker stops an already-open v20 tab from stripping revision21
+      // out of a newly saved checkpoint while saving unrelated settings.
+      if(snapshot.combatRevision===21)state.combatContract=21;
     } else if (action.type === 'complete') {
       var summary = action.value;
       if (completed(state, summary.runId)) return { state: state, changed: false, result: { ok: true, duplicate: true } };
@@ -452,6 +462,7 @@
         var state = await readCurrent(false);
         var result = { format: DB_NAME, version: 1, persistent: status.persistent, revision: state.revision, generation: state.generation,
           settings: state.settings, profile: state.profile, activeRunId: state.activeRunId, activeRunBaselineKills: state.activeRunBaselineKills, checkpoint: state.checkpoint, backup: state.backup, completed: state.completed };
+        if(state.combatContract===21)result.combatContract=21;
         // Include the exact stored record only when normal use is blocked; the
         // data stays local unless the user explicitly chooses to export it.
         if (storageInvalid && hasStoredState) result.rawState = rawStoredState;

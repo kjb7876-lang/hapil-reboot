@@ -1,0 +1,271 @@
+{
+  "candidateRevision": 21,
+  "capturedAt": "2026-10-30T15:25:12.628164+09:00",
+  "baseline": "d2f5fddff2f12118d5c97a9a24e1111c16a1c771",
+  "runtime": "v24.22.1",
+  "scope": "Independent CPU ordinary-health legacy replays and CPU/emulated IndexedDB save compatibility. This report does not certify new-combat full-route completion, actual browser/IndexedDB/GPU/mobile-device performance.",
+  "productionSHA256": {
+    "src/core.js": "52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a",
+    "src/storage.js": "ec1010c11aaf3f49240f3fa8f46d5b85f922b6373bd4a29a5bd89a7ef282e71c"
+  },
+  "proofSourceSHA256": {
+    "tests/independent-save-compatibility-v21.test.cjs": "28f2dd9345bfa70557a72b3d53a6fc73108b5c9d2b632518f525c048d9596a47",
+    "tests/revision5-natural-bot-replay-v19.test.cjs": "163d64a26097f21b01585d289efba3e2b4ed8d558991d3cf7fe518d292a47257",
+    "tools/validate-legacy-replays.cjs": "39517d04078a98c4fcccab1a8fcc84da4bb7b3ea5b06b28bb44ed0cd6c4bdf62",
+    "tools/validate-revision4-replays.cjs": "32b2f0c896ef25ac94f78d8a3622f25e0a646b980fa5e7b24905069795d9c9aa",
+    "tools/validate-revision5-replays.cjs": "fc7a23c57843ab304eb8582abcb280803b7d2151ebed84bb0b91853def326ef6"
+  },
+  "legacyReplays": [
+    {
+      "campaignRevision": 3,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 21033.019159,
+      "primaryInputTicks": 797256,
+      "changedBoundariesReplayed": 414,
+      "futureInputsPerBoundary": "up to180 unchanged actual recorded direction inputs",
+      "ordinaryHealth": true,
+      "combatRevisionSelectorPresent": false,
+      "recordingMetadataAndExpectedResultsUnchanged": true,
+      "inputFiles": [
+        {
+          "file": "tests/fixtures/natural-bot/gentle-813.moves.gz",
+          "bytes": 8052,
+          "sha256": "c3f50b0731cd4600f821a71f9c25af222426955a7e47cca76e57b2077a3b94e1",
+          "difficulty": "gentle",
+          "seed": 813,
+          "ticks": 134012,
+          "changedCheckpointBoundaries": 69
+        },
+        {
+          "file": "tests/fixtures/natural-bot/gentle-42.moves.gz",
+          "bytes": 8118,
+          "sha256": "b91b3d869473847cc9228dac0a3edcd54a511ca659dc2cb6850cf91c6ba19886",
+          "difficulty": "gentle",
+          "seed": 42,
+          "ticks": 132148,
+          "changedCheckpointBoundaries": 69
+        },
+        {
+          "file": "tests/fixtures/natural-bot/normal-813.moves.gz",
+          "bytes": 8243,
+          "sha256": "902c9327515f88095ff850ee655587c50f38c399e7057da30eb0d8737512701d",
+          "difficulty": "normal",
+          "seed": 813,
+          "ticks": 132297,
+          "changedCheckpointBoundaries": 69
+        },
+        {
+          "file": "tests/fixtures/natural-bot/normal-42.moves.gz",
+          "bytes": 8459,
+          "sha256": "d5c636c0f6913f71129d3ef435c6c43a66db60d89c32ded846470ac582124823",
+          "difficulty": "normal",
+          "seed": 42,
+          "ticks": 133273,
+          "changedCheckpointBoundaries": 69
+        },
+        {
+          "file": "tests/fixtures/natural-bot/hell-813.moves.gz",
+          "bytes": 11180,
+          "sha256": "fc306d1fdd2af389bce528fa651ba5d7bce5e254b0a3f07978a32c03c6dd8381",
+          "difficulty": "hell",
+          "seed": 813,
+          "ticks": 132534,
+          "changedCheckpointBoundaries": 69
+        },
+        {
+          "file": "tests/fixtures/natural-bot/hell-42.moves.gz",
+          "bytes": 11238,
+          "sha256": "158edf1a7d1617383c6648d633f8e27ba15b5eb7ea308030ea5fa42ef089205a",
+          "difficulty": "hell",
+          "seed": 42,
+          "ticks": 132992,
+          "changedCheckpointBoundaries": 69
+        }
+      ],
+      "log": "docs/v21-qa/legacy-replays-final.log",
+      "logSHA256": "74d0b6f5fb5a0c43115abf6fb0815f99a2df01647392c013e9f7c33da8b60805"
+    },
+    {
+      "campaignRevision": 4,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 27673.961379,
+      "primaryInputTicks": 1070232,
+      "changedBoundariesReplayed": 630,
+      "futureInputsPerBoundary": "up to180 unchanged actual recorded direction inputs",
+      "ordinaryHealth": true,
+      "combatRevisionSelectorPresent": false,
+      "recordingMetadataAndExpectedResultsUnchanged": true,
+      "inputFiles": [
+        {
+          "file": "tests/fixtures/revision4-natural-bot/gentle-813.moves.gz",
+          "bytes": 9954,
+          "sha256": "d1d25d3bf2d1e37c982a27ba8fc41b36195e0c59b629157e7d221b5dde67b6fb",
+          "difficulty": "gentle",
+          "seed": 813,
+          "ticks": 180221,
+          "changedCheckpointBoundaries": 105
+        },
+        {
+          "file": "tests/fixtures/revision4-natural-bot/gentle-42.moves.gz",
+          "bytes": 10109,
+          "sha256": "25e315d292dda72b95e2622ad772977880de758426ae313ed8163e2810853470",
+          "difficulty": "gentle",
+          "seed": 42,
+          "ticks": 178663,
+          "changedCheckpointBoundaries": 105
+        },
+        {
+          "file": "tests/fixtures/revision4-natural-bot/normal-813.moves.gz",
+          "bytes": 10252,
+          "sha256": "9e404fa5ecd09cd5b8b2db29f71faa706bdab60677f2d7706f54ea311c04b8eb",
+          "difficulty": "normal",
+          "seed": 813,
+          "ticks": 178077,
+          "changedCheckpointBoundaries": 105
+        },
+        {
+          "file": "tests/fixtures/revision4-natural-bot/normal-42.moves.gz",
+          "bytes": 10380,
+          "sha256": "95f68c9af88c7d9b47a3d3c8b7cae760f816c740dcc5761a18830b08c4531dea",
+          "difficulty": "normal",
+          "seed": 42,
+          "ticks": 179231,
+          "changedCheckpointBoundaries": 105
+        },
+        {
+          "file": "tests/fixtures/revision4-natural-bot/hell-813.moves.gz",
+          "bytes": 13103,
+          "sha256": "e883a35861da3ccff9b6fe18cdb57ccf1f2b255ebaa65fbaea2340d39eeaeaf9",
+          "difficulty": "hell",
+          "seed": 813,
+          "ticks": 176677,
+          "changedCheckpointBoundaries": 105
+        },
+        {
+          "file": "tests/fixtures/revision4-natural-bot/hell-42.moves.gz",
+          "bytes": 13128,
+          "sha256": "a825f0d0223faa65849ba2df441ee412778077f391ca13cb7965e0f06b5d3d3a",
+          "difficulty": "hell",
+          "seed": 42,
+          "ticks": 177363,
+          "changedCheckpointBoundaries": 105
+        }
+      ],
+      "log": "docs/v21-qa/revision4-replays-final.log",
+      "logSHA256": "77285d259d8751bf3dd175bd6ad6f540752ed9c77b9568708b96c69d4c530999"
+    },
+    {
+      "campaignRevision": 5,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 43608.62569,
+      "primaryInputTicks": 1832372,
+      "changedBoundariesReplayed": 1242,
+      "futureInputsPerBoundary": "up to180 unchanged actual recorded direction inputs",
+      "ordinaryHealth": true,
+      "combatRevisionSelectorPresent": false,
+      "recordingMetadataAndExpectedResultsUnchanged": true,
+      "inputFiles": [
+        {
+          "file": "tests/fixtures/revision5-natural-bot/gentle-813.moves.gz",
+          "bytes": 11886,
+          "sha256": "0504048ca956606b8a4bb0409ff02e2566bf1a52a6c2767853ae1aa96c2fb12f",
+          "difficulty": "gentle",
+          "seed": 813,
+          "ticks": 306134,
+          "changedCheckpointBoundaries": 207
+        },
+        {
+          "file": "tests/fixtures/revision5-natural-bot/gentle-42.moves.gz",
+          "bytes": 12030,
+          "sha256": "1d33bb21c8f99d852f508b18e8a9df6259a94fd7a6b378543b2b3d295c83dbbe",
+          "difficulty": "gentle",
+          "seed": 42,
+          "ticks": 305192,
+          "changedCheckpointBoundaries": 207
+        },
+        {
+          "file": "tests/fixtures/revision5-natural-bot/normal-813.moves.gz",
+          "bytes": 12790,
+          "sha256": "36515213d56109119004896539e329d7ff5c90564e672814cb8dbbb3e79fc9ea",
+          "difficulty": "normal",
+          "seed": 813,
+          "ticks": 304514,
+          "changedCheckpointBoundaries": 207
+        },
+        {
+          "file": "tests/fixtures/revision5-natural-bot/normal-42.moves.gz",
+          "bytes": 12873,
+          "sha256": "b7c69fe1502145960744cb83154da062a79ebe3ab5fdb65d72eacfeb7e74eb80",
+          "difficulty": "normal",
+          "seed": 42,
+          "ticks": 305667,
+          "changedCheckpointBoundaries": 207
+        },
+        {
+          "file": "tests/fixtures/revision5-natural-bot/hell-813.moves.gz",
+          "bytes": 15789,
+          "sha256": "f93ddfdef461edef60b1af2ee48eba3d8d166723e416d60791da5f71a86ee259",
+          "difficulty": "hell",
+          "seed": 813,
+          "ticks": 305028,
+          "changedCheckpointBoundaries": 207
+        },
+        {
+          "file": "tests/fixtures/revision5-natural-bot/hell-42.moves.gz",
+          "bytes": 15806,
+          "sha256": "fcb63a8cbfd1e84000c0778bb49e7781c868b9e8b4d5d559eb24cf9822a98f95",
+          "difficulty": "hell",
+          "seed": 42,
+          "ticks": 305837,
+          "changedCheckpointBoundaries": 207
+        }
+      ],
+      "log": "docs/v21-qa/revision5-replays-final.log",
+      "logSHA256": "100225778b34810eb41194098ca2fe248c97a8a834be49c1059ec0e8ce8086e3"
+    }
+  ],
+  "summary": {
+    "legacyNaturalReplaysPassed": 18,
+    "legacyPrimaryInputTicks": 3699860,
+    "legacyChangedBoundariesReplayed": 2286,
+    "saveCompatibilityTestsPassed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "inputsAndRecordingMetadataUnchanged": true,
+    "newCombatFullRouteCompletionClaim": false
+  },
+  "saveCompatibility": {
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 363.220077,
+    "checks": [
+      "new combat revision survives strict save validation and deterministic ordinary-health restore",
+      "legacy absent-field boundaries stay byte-compatible and never select new combat on restore",
+      "unknown or malformed combat selectors cannot silently downgrade a saved run",
+      "same-run checkpoint writes cannot switch combat revision in either direction or overwrite backup",
+      "v21 backup recovery retains combat and a stale emulated tab cannot replace it with a legacy run",
+      "practice and malformed v21 backup data cannot overwrite confirmed legacy or v21 progress",
+      "an already-open deployed v20 storage client fails closed instead of stripping a newer v21 checkpoint selector",
+      "v21 forward-compatibility marker is required for new records and remains present in exports and loss retries"
+    ],
+    "log": "docs/v21-qa/save-compatibility-final.log",
+    "logSHA256": "c93fb215c81df525341e7fc144b1eab02eb27aab29d4eef40460f11cca793045",
+    "oldClientRegression": {
+      "exactDeployedSource": "d2f5fddff2f12118d5c97a9a24e1111c16a1c771:src/storage.js",
+      "sourceSHA256": "6b00a9d98a8f1f9b29887bb88d457b80bf5bcb2b38758f8a2100a7adfb21e21a",
+      "method": "VM runs exact deployed v20 storage code with an emulated shared IndexedDB. It opens a valid legacy record before a current client saves21, then attempts an unrelated settings write. Old and reopened clients reject the unknown top-level combatContract21, make zero additional writes and retain raw newer data; current client restores21.",
+      "actualBrowserIndexedDB": false
+    },
+    "newBoundaryRestore": "900 scheduled ordinary direction-input state comparisons between a newly created21 world and its validated safe-boundary restore; no immunity/777/health override or full-clear claim.",
+    "markerPolicy": "New21 records retain combatContract21 through settings, export and loss retry; it blocks old deployed clients from silently stripping the unknown checkpoint selector. Legacy absent-field records remain marker-free.",
+    "sameRunPolicy": "A same-run checkpoint cannot change between absent legacy combat and21 in either direction."
+  },
+  "sourceHashGuardPassed": true
+}

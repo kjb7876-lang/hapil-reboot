@@ -5596,8 +5596,8 @@
     }
   ],
   "replayValidatedModuleSha256": {
-    "src/core.js": "c48cba834ec15c0adaa60006c2f0a1fa0b75c4de0dfea9023c1aa7b4a7a358ee",
-    "src/storage.js": "6b00a9d98a8f1f9b29887bb88d457b80bf5bcb2b38758f8a2100a7adfb21e21a",
+    "src/core.js": "52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a",
+    "src/storage.js": "ec1010c11aaf3f49240f3fa8f46d5b85f922b6373bd4a29a5bd89a7ef282e71c",
     "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
     "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
     "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d",
