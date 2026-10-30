@@ -81,7 +81,7 @@ test('the real app keeps the movement surface free of map/pattern copy during co
  w.autoAttack=false;w.skillRotation=false;w.stage='transition';w.transitionRemaining=2;w.nextPhase=0;w.bullets.length=0;w.hazards.length=0;w.bullets.push({id:99999,x:24,y:24,px:24,py:24,vx:0,vy:10,r:3.8,halfLength:0,angle:Math.PI/2,kind:'orb',age:0,ttl:10,grazed:false});await advance(h);
  assert.equal(String(h.el('pad-title').textContent||''),'');assert.equal(String(h.el('pad-caption').textContent||''),'');assert.equal(h.saveCalls.length,0);assert.equal(h.completeCalls.length,0);
  assert.equal(w.combatRevision,21,'actual product opts new runs into v21 attacks');
- assert.equal(h.g.HapilApp.diagnostics().candidateRevision,21);assert.equal(h.g.HapilApp.diagnostics().version,'hapil-hell-pressure-v21');
+ assert.equal(h.g.HapilApp.diagnostics().candidateRevision,22);assert.equal(h.g.HapilApp.diagnostics().version,'hapil-telegraph-readability-v22');
 });
 test('combat expansion retains the exact previously reviewed original source media and collision art metadata',()=>{
  for(const file of ['src/media.js','src/story-assets.js'])assert.deepEqual(fs.readFileSync(path.join(root,file)),cp.execFileSync('git',['show','d2f5fddff2f12118d5c97a9a24e1111c16a1c771:'+file],{cwd:root}),file+' is byte-identical to deployed v20 source art');

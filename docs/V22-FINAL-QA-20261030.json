@@ -1,0 +1,123 @@
+{
+  "schema": "hapil-v22-final-qa-1",
+  "date": "2026-10-30",
+  "baseline": "03c0f984b2e709f2946a56794eaa97d29dba89f5",
+  "sourceHashes": {
+    "index.html": "4a7f88e34f6ba88f879a6068fffc2ccd72e029d1c114fc1afb8990cc14e99e61",
+    "styles.css": "aaeb395a309ff51c1269da69fb4d338206c14effcb01dda4fb1831740e2dc2e9",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "src/render.js": "31343c761317f772ccf22891210eda5db6eb2e269e7831395665b6eee6aae4a1",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033",
+    "src/storage.js": "ec1010c11aaf3f49240f3fa8f46d5b85f922b6373bd4a29a5bd89a7ef282e71c",
+    "src/core.js": "52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a",
+    "src/actors.js": "c5d707a96b4a0d7be33762924782a20451d7da2099f1555af026962ce89792f4",
+    "src/boss-motion.js": "e2d1bde92838884382e30b5d8de6549cf9071ac9b21c84b7f9cb8d4bc63160b1",
+    "src/projectiles.js": "c55d1f0cbb623b21f3a06f94b42215db63cd185435afc117d7432f9ac178bc0c",
+    "src/boss-skills.js": "af990bbcad9348722269bdfa881028eeea35711782cbdafb06ef321c27a01b5c",
+    "src/media.js": "0057a4d28e4d8bd35eb1598ea48207ff9cf21ead2906cc75d66c405ed6de110c",
+    "src/app.js": "003765d3734dd664b702b74fd4e69aec1bb09c1fdbdb411f941627ac7d23c469"
+  },
+  "previewMatchesSource": true,
+  "sourceHashGuardPassed": true,
+  "automaticTests": {
+    "pass": 293,
+    "fail": 0,
+    "skip": 0,
+    "cancel": 0,
+    "durationMs": 57745.310599
+  },
+  "pixelCPU": {
+    "cases": 48,
+    "fullRenders": 192,
+    "directlyViewedHELLPairs": 8,
+    "minimumStrongEdgeFraction": 0.49843260188087773,
+    "minimumRequirement": 0.45,
+    "RGBDeltaRequirement": 40,
+    "outsideBodyAATolerancePx": 1.1,
+    "outsideToleranceChangedPixels": 0,
+    "sourceHashes": 115,
+    "missingAssets": 0,
+    "performanceTimingClaim": false
+  },
+  "copyReview": {
+    "realCases": 6,
+    "sourceImages": 37,
+    "newFocusedTests": 4,
+    "staticPoseLimit": "HanRian/BaekIon have no new authored charge frame; their body stays idle. Do not claim all actors have visible new poses."
+  },
+  "unchangedCombat": {
+    "byteIdentical": [
+      "src/core.js",
+      "src/storage.js",
+      "src/media.js",
+      "src/story-assets.js",
+      "src/weapon-patterns.js",
+      "src/projectiles.js"
+    ],
+    "ordinaryHealthReplayedInputs": 113,
+    "ordinaryHealthTicks": 198933,
+    "exactWins": 105,
+    "exactLosses": 8,
+    "failedAttemptsRetained": true,
+    "unchangedV21EvidenceFiles": 150,
+    "fullNewHumanStoryClear": false
+  },
+  "browser": {
+    "scope": "Actual Chrome CDP final-preview source. Controlled immune scene fixture, not natural play/input/GPU/mobile performance. Summary transcribed from returned DOM observations; raw auxiliary JSON did not materialize in shared path and is not cited.",
+    "knight": {
+      "warningTick": 150,
+      "activeTick": 151,
+      "committedWidthsBeforeAndAfter": [
+        77.4,
+        118.79999999999998,
+        41.39999999999998
+      ],
+      "lightBoundaryWidth": 1.4,
+      "activeWarningFootprints": 0,
+      "missingProjectileAssets": 0
+    },
+    "violetClone": {
+      "beforeTick": 252,
+      "originalAction": "recover",
+      "presentationAction": "charge",
+      "pose": "prepare",
+      "nextAt": 253,
+      "releaseTick": 253,
+      "releasePose": "downstroke"
+    },
+    "pair": {
+      "tick": 109,
+      "casters": [
+        "han-rian",
+        "baek-ion"
+      ],
+      "actualWidths": [
+        8,
+        10
+      ],
+      "paletteSlots": [
+        0,
+        1
+      ],
+      "missingProjectileAssets": 0
+    },
+    "screenshot": {
+      "path": "docs/v22-browser/knight-warning.jpg",
+      "sha256": "ad631dc81651f12777c104fb09a83d2e04e7b489612ea447971200d64bf7b4fc"
+    }
+  },
+  "limits": [
+    "No new natural human/fullstory clear",
+    "No sustained actual-browser input/FPS certification",
+    "No headless browser or software GPU classification",
+    "No real hardware GPU timing",
+    "No mobile device emulation or physical phone FPS"
+  ],
+  "proofHashes": {
+    "docs/v22-qa/npm-test-final.log": "e6d6e075792f0b34ec2b5f66e5d176eb87d1f166ec5c9fb181cbfa811bb3d9c6",
+    "docs/V22-WARNING-PIXEL-REVIEW-20261030.json": "6430b7ccd862149b6979af071d6aa667ca784fff48fdb2d51ae4ea7354e0abda",
+    "docs/V22-COPY-ANTICIPATION-20261030.json": "add087187df7d59bdd44a335e533c478e075eff20d0c5df90eea75a0c7479344",
+    "docs/V22-UNCHANGED-COMBAT-20261030.json": "e0fb560febfb234825654a1165e4ef65b3d99fc1f3ee10ab75043da172273e10",
+    "docs/v22-browser/OBSERVATIONS-20261030.json": "52c4eed3118b55e6b22ecaf804665557e3897f843655c33fef24ed0dff09d8ff"
+  }
+}

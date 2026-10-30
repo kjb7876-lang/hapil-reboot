@@ -1,0 +1,1436 @@
+{
+  "schema": 1,
+  "scope": "Native CPU source-body comparison at actual current-core controlled clone ticks. No source art, HP, bullet, warning or release-clock edits; not natural play or GPU/device timing.",
+  "baseline": "03c0f984b2e709f2946a56794eaa97d29dba89f5",
+  "baselineActorSHA256": "be2c1999692f5ba7ce60d75a4d03c09abc9d07563102bd39b9eedae0327449f8",
+  "codeHashes": {
+    "src/core.js": "52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a",
+    "src/actors.js": "c5d707a96b4a0d7be33762924782a20451d7da2099f1555af026962ce89792f4",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033",
+    "src/boss-motion.js": "e2d1bde92838884382e30b5d8de6549cf9071ac9b21c84b7f9cb8d4bc63160b1"
+  },
+  "sourceHashGuardPassed": true,
+  "cases": [
+    {
+      "group": 0,
+      "tick": 244,
+      "label": "VIOLET",
+      "ordinaryHealth": false,
+      "actualCoreCopyRecords": [
+        {
+          "id": "combat-copy-1-0-clone-0",
+          "sourceActorId": "combat-copy-1-0-clone-0",
+          "x": 90,
+          "y": 166,
+          "px": 90,
+          "py": 166,
+          "originX": 236,
+          "originY": 116,
+          "destinationX": 90,
+          "artKey": "boss",
+          "born": 151,
+          "expireAt": 511,
+          "action": "recover",
+          "actionProgress": 0.85,
+          "releaseTick": 193,
+          "opacity": 0.62,
+          "kind": "clone"
+        },
+        {
+          "id": "combat-copy-1-0-clone-1",
+          "sourceActorId": "combat-copy-1-0-clone-1",
+          "x": 270,
+          "y": 166,
+          "px": 270,
+          "py": 166,
+          "originX": 236,
+          "originY": 116,
+          "destinationX": 270,
+          "artKey": "boss",
+          "born": 151,
+          "expireAt": 511,
+          "action": "recover",
+          "actionProgress": 0.55,
+          "releaseTick": 211,
+          "opacity": 0.62,
+          "kind": "clone"
+        }
+      ],
+      "comparison": [
+        {
+          "version": "before",
+          "actor": [
+            {
+              "id": "combat-copy-1-0-clone-0",
+              "sourceActorId": "combat-copy-1-0-clone-0",
+              "modelActorId": null,
+              "identity": "violet",
+              "key": "bossMotionViolet",
+              "pose": "recover",
+              "sourceRect": [
+                256,
+                256,
+                256,
+                256
+              ],
+              "anchor": [
+                146,
+                120
+              ],
+              "scale": 0.47989347826086953,
+              "position": [
+                90,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 193,
+              "opacity": 0.72,
+              "kind": "clone",
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            },
+            {
+              "id": "combat-copy-1-0-clone-1",
+              "sourceActorId": "combat-copy-1-0-clone-1",
+              "modelActorId": null,
+              "identity": "violet",
+              "key": "bossMotionViolet",
+              "pose": "recover",
+              "sourceRect": [
+                256,
+                256,
+                256,
+                256
+              ],
+              "anchor": [
+                146,
+                120
+              ],
+              "scale": 0.47989347826086953,
+              "position": [
+                270,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 211,
+              "opacity": 0.72,
+              "kind": "clone",
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            }
+          ],
+          "pixelsSHA256": "0aa6a7ef1e21f0dcd5a0ed122ede1b0db8ea59823ca48f31b10a46687aefc227"
+        },
+        {
+          "version": "current",
+          "actor": [
+            {
+              "id": "combat-copy-1-0-clone-0",
+              "sourceActorId": "combat-copy-1-0-clone-0",
+              "modelActorId": null,
+              "identity": "violet",
+              "key": "bossMotionViolet",
+              "pose": "prepare",
+              "sourceRect": [
+                0,
+                0,
+                256,
+                256
+              ],
+              "anchor": [
+                148,
+                126
+              ],
+              "scale": 0.47989347826086953,
+              "position": [
+                90,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 193,
+              "opacity": 0.72,
+              "kind": "clone",
+              "originalAction": "recover",
+              "presentationAction": "charge",
+              "repeatCue": {
+                "active": true,
+                "nextAt": 253,
+                "remainingTicks": 9,
+                "windowTicks": 18,
+                "reason": "scheduled-repeat-anticipation"
+              },
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            },
+            {
+              "id": "combat-copy-1-0-clone-1",
+              "sourceActorId": "combat-copy-1-0-clone-1",
+              "modelActorId": null,
+              "identity": "violet",
+              "key": "bossMotionViolet",
+              "pose": "recover",
+              "sourceRect": [
+                256,
+                256,
+                256,
+                256
+              ],
+              "anchor": [
+                146,
+                120
+              ],
+              "scale": 0.47989347826086953,
+              "position": [
+                270,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 211,
+              "opacity": 0.72,
+              "kind": "clone",
+              "originalAction": "recover",
+              "presentationAction": "recover",
+              "repeatCue": {
+                "active": false,
+                "nextAt": 271,
+                "remainingTicks": 27,
+                "windowTicks": 18,
+                "reason": "outside-repeat-window"
+              },
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            }
+          ],
+          "pixelsSHA256": "ded4c2f3dfca486f38446eb585d9473c74d25b0987def0fe109d81f83a1eb083"
+        }
+      ]
+    },
+    {
+      "group": 5,
+      "tick": 244,
+      "label": "SLOTH",
+      "ordinaryHealth": false,
+      "actualCoreCopyRecords": [
+        {
+          "id": "combat-copy-1-0-clone-0",
+          "sourceActorId": "combat-copy-1-0-clone-0",
+          "x": 90,
+          "y": 166,
+          "px": 90,
+          "py": 166,
+          "originX": 236,
+          "originY": 116,
+          "destinationX": 90,
+          "artKey": "sinBelphegorAtlas",
+          "born": 151,
+          "expireAt": 511,
+          "action": "recover",
+          "actionProgress": 0.85,
+          "releaseTick": 193,
+          "opacity": 0.62,
+          "kind": "clone"
+        },
+        {
+          "id": "combat-copy-1-0-clone-1",
+          "sourceActorId": "combat-copy-1-0-clone-1",
+          "x": 270,
+          "y": 166,
+          "px": 270,
+          "py": 166,
+          "originX": 236,
+          "originY": 116,
+          "destinationX": 270,
+          "artKey": "sinBelphegorAtlas",
+          "born": 151,
+          "expireAt": 511,
+          "action": "recover",
+          "actionProgress": 0.55,
+          "releaseTick": 211,
+          "opacity": 0.62,
+          "kind": "clone"
+        }
+      ],
+      "comparison": [
+        {
+          "version": "before",
+          "actor": [
+            {
+              "id": "combat-copy-1-0-clone-0",
+              "sourceActorId": "combat-copy-1-0-clone-0",
+              "modelActorId": null,
+              "identity": "belphegor",
+              "key": "sinBelphegorAtlas",
+              "pose": "recover",
+              "sourceRect": [
+                256,
+                256,
+                256,
+                256
+              ],
+              "anchor": [
+                130,
+                125
+              ],
+              "scale": 0.3167391304347826,
+              "position": [
+                90,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 193,
+              "opacity": 0.72,
+              "kind": "clone",
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            },
+            {
+              "id": "combat-copy-1-0-clone-1",
+              "sourceActorId": "combat-copy-1-0-clone-1",
+              "modelActorId": null,
+              "identity": "belphegor",
+              "key": "sinBelphegorAtlas",
+              "pose": "recover",
+              "sourceRect": [
+                256,
+                256,
+                256,
+                256
+              ],
+              "anchor": [
+                130,
+                125
+              ],
+              "scale": 0.3167391304347826,
+              "position": [
+                270,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 211,
+              "opacity": 0.72,
+              "kind": "clone",
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            }
+          ],
+          "pixelsSHA256": "78dc4241c396d1c1a08b22a4b96aa338718d5674d3234cb24f7d21504babeb96"
+        },
+        {
+          "version": "current",
+          "actor": [
+            {
+              "id": "combat-copy-1-0-clone-0",
+              "sourceActorId": "combat-copy-1-0-clone-0",
+              "modelActorId": null,
+              "identity": "belphegor",
+              "key": "sinBelphegorAtlas",
+              "pose": "prepare",
+              "sourceRect": [
+                0,
+                0,
+                256,
+                256
+              ],
+              "anchor": [
+                130,
+                119
+              ],
+              "scale": 0.3167391304347826,
+              "position": [
+                90,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 193,
+              "opacity": 0.72,
+              "kind": "clone",
+              "originalAction": "recover",
+              "presentationAction": "charge",
+              "repeatCue": {
+                "active": true,
+                "nextAt": 253,
+                "remainingTicks": 9,
+                "windowTicks": 18,
+                "reason": "scheduled-repeat-anticipation"
+              },
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            },
+            {
+              "id": "combat-copy-1-0-clone-1",
+              "sourceActorId": "combat-copy-1-0-clone-1",
+              "modelActorId": null,
+              "identity": "belphegor",
+              "key": "sinBelphegorAtlas",
+              "pose": "recover",
+              "sourceRect": [
+                256,
+                256,
+                256,
+                256
+              ],
+              "anchor": [
+                130,
+                125
+              ],
+              "scale": 0.3167391304347826,
+              "position": [
+                270,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 211,
+              "opacity": 0.72,
+              "kind": "clone",
+              "originalAction": "recover",
+              "presentationAction": "recover",
+              "repeatCue": {
+                "active": false,
+                "nextAt": 271,
+                "remainingTicks": 27,
+                "windowTicks": 18,
+                "reason": "outside-repeat-window"
+              },
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            }
+          ],
+          "pixelsSHA256": "5c92985b417c5e3d7d4cba70b8964c4b25d2108ac85b9c55e02d100875b8813c"
+        }
+      ]
+    },
+    {
+      "group": 20,
+      "tick": 244,
+      "label": "FALLEN KNIGHT",
+      "ordinaryHealth": false,
+      "actualCoreCopyRecords": [
+        {
+          "id": "combat-copy-1-0-clone-0",
+          "sourceActorId": "combat-copy-1-0-clone-0",
+          "x": 90,
+          "y": 166,
+          "px": 90,
+          "py": 166,
+          "originX": 209.4923896701966,
+          "originY": 118.81693341614736,
+          "destinationX": 90,
+          "artKey": "story-fallen-knight",
+          "born": 151,
+          "expireAt": 511,
+          "action": "recover",
+          "actionProgress": 0.85,
+          "releaseTick": 193,
+          "opacity": 0.62,
+          "kind": "clone"
+        },
+        {
+          "id": "combat-copy-1-0-clone-1",
+          "sourceActorId": "combat-copy-1-0-clone-1",
+          "x": 270,
+          "y": 166,
+          "px": 270,
+          "py": 166,
+          "originX": 209.4923896701966,
+          "originY": 118.81693341614736,
+          "destinationX": 270,
+          "artKey": "story-fallen-knight",
+          "born": 151,
+          "expireAt": 511,
+          "action": "recover",
+          "actionProgress": 0.55,
+          "releaseTick": 211,
+          "opacity": 0.62,
+          "kind": "clone"
+        }
+      ],
+      "comparison": [
+        {
+          "version": "before",
+          "actor": [
+            {
+              "id": "combat-copy-1-0-clone-0",
+              "sourceActorId": "combat-copy-1-0-clone-0",
+              "modelActorId": null,
+              "identity": "fallen-knight",
+              "key": "storyKnightIdle",
+              "pose": "recover",
+              "sourceRect": [
+                0,
+                0,
+                672,
+                384
+              ],
+              "anchor": [
+                336,
+                180
+              ],
+              "scale": 0.3032608695652174,
+              "position": [
+                90,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 193,
+              "opacity": 0.72,
+              "kind": "clone",
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            },
+            {
+              "id": "combat-copy-1-0-clone-1",
+              "sourceActorId": "combat-copy-1-0-clone-1",
+              "modelActorId": null,
+              "identity": "fallen-knight",
+              "key": "storyKnightIdle",
+              "pose": "recover",
+              "sourceRect": [
+                0,
+                0,
+                672,
+                384
+              ],
+              "anchor": [
+                336,
+                180
+              ],
+              "scale": 0.3032608695652174,
+              "position": [
+                270,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 211,
+              "opacity": 0.72,
+              "kind": "clone",
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            }
+          ],
+          "pixelsSHA256": "a9c625454310aace9305d522d6d2605ba3af7fd76611f92ced841b7068a2e2fc"
+        },
+        {
+          "version": "current",
+          "actor": [
+            {
+              "id": "combat-copy-1-0-clone-0",
+              "sourceActorId": "combat-copy-1-0-clone-0",
+              "modelActorId": null,
+              "identity": "fallen-knight",
+              "key": "storyKnightCharge",
+              "pose": "charge",
+              "sourceRect": [
+                0,
+                0,
+                672,
+                384
+              ],
+              "anchor": [
+                336,
+                180
+              ],
+              "scale": 0.3032608695652174,
+              "position": [
+                90,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 193,
+              "opacity": 0.72,
+              "kind": "clone",
+              "originalAction": "recover",
+              "presentationAction": "charge",
+              "repeatCue": {
+                "active": true,
+                "nextAt": 253,
+                "remainingTicks": 9,
+                "windowTicks": 18,
+                "reason": "scheduled-repeat-anticipation"
+              },
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            },
+            {
+              "id": "combat-copy-1-0-clone-1",
+              "sourceActorId": "combat-copy-1-0-clone-1",
+              "modelActorId": null,
+              "identity": "fallen-knight",
+              "key": "storyKnightIdle",
+              "pose": "recover",
+              "sourceRect": [
+                0,
+                0,
+                672,
+                384
+              ],
+              "anchor": [
+                336,
+                180
+              ],
+              "scale": 0.3032608695652174,
+              "position": [
+                270,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 211,
+              "opacity": 0.72,
+              "kind": "clone",
+              "originalAction": "recover",
+              "presentationAction": "recover",
+              "repeatCue": {
+                "active": false,
+                "nextAt": 271,
+                "remainingTicks": 27,
+                "windowTicks": 18,
+                "reason": "outside-repeat-window"
+              },
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            }
+          ],
+          "pixelsSHA256": "2ec2977124b66b923dfd942b058905435deb792723dc2fd01451401e73c01173"
+        }
+      ]
+    },
+    {
+      "group": 30,
+      "tick": 244,
+      "label": "SIREN",
+      "ordinaryHealth": false,
+      "actualCoreCopyRecords": [
+        {
+          "id": "combat-copy-1-0-clone-0",
+          "sourceActorId": "combat-copy-1-0-clone-0",
+          "x": 90,
+          "y": 166,
+          "px": 90,
+          "py": 166,
+          "originX": 209.4923896701966,
+          "originY": 118.81693341614736,
+          "destinationX": 90,
+          "artKey": "story-siren-mor",
+          "born": 151,
+          "expireAt": 511,
+          "action": "recover",
+          "actionProgress": 0.85,
+          "releaseTick": 193,
+          "opacity": 0.62,
+          "kind": "clone"
+        },
+        {
+          "id": "combat-copy-1-0-clone-1",
+          "sourceActorId": "combat-copy-1-0-clone-1",
+          "x": 270,
+          "y": 166,
+          "px": 270,
+          "py": 166,
+          "originX": 209.4923896701966,
+          "originY": 118.81693341614736,
+          "destinationX": 270,
+          "artKey": "story-siren-mor",
+          "born": 151,
+          "expireAt": 511,
+          "action": "recover",
+          "actionProgress": 0.55,
+          "releaseTick": 211,
+          "opacity": 0.62,
+          "kind": "clone"
+        }
+      ],
+      "comparison": [
+        {
+          "version": "before",
+          "actor": [
+            {
+              "id": "combat-copy-1-0-clone-0",
+              "sourceActorId": "combat-copy-1-0-clone-0",
+              "modelActorId": null,
+              "identity": "siren-mor",
+              "key": "storySirenIdle",
+              "pose": "recover",
+              "sourceRect": [
+                0,
+                0,
+                672,
+                384
+              ],
+              "anchor": [
+                336,
+                180
+              ],
+              "scale": 0.3032608695652174,
+              "position": [
+                90,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 193,
+              "opacity": 0.72,
+              "kind": "clone",
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            },
+            {
+              "id": "combat-copy-1-0-clone-1",
+              "sourceActorId": "combat-copy-1-0-clone-1",
+              "modelActorId": null,
+              "identity": "siren-mor",
+              "key": "storySirenIdle",
+              "pose": "recover",
+              "sourceRect": [
+                0,
+                0,
+                672,
+                384
+              ],
+              "anchor": [
+                336,
+                180
+              ],
+              "scale": 0.3032608695652174,
+              "position": [
+                270,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 211,
+              "opacity": 0.72,
+              "kind": "clone",
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            }
+          ],
+          "pixelsSHA256": "87f1a1054f7cdaeac27de58cb05bcd19e9b2399e8d7b44cf5945d7fdfc62efe8"
+        },
+        {
+          "version": "current",
+          "actor": [
+            {
+              "id": "combat-copy-1-0-clone-0",
+              "sourceActorId": "combat-copy-1-0-clone-0",
+              "modelActorId": null,
+              "identity": "siren-mor",
+              "key": "storySirenCharge",
+              "pose": "charge",
+              "sourceRect": [
+                0,
+                0,
+                672,
+                384
+              ],
+              "anchor": [
+                336,
+                180
+              ],
+              "scale": 0.3032608695652174,
+              "position": [
+                90,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 193,
+              "opacity": 0.72,
+              "kind": "clone",
+              "originalAction": "recover",
+              "presentationAction": "charge",
+              "repeatCue": {
+                "active": true,
+                "nextAt": 253,
+                "remainingTicks": 9,
+                "windowTicks": 18,
+                "reason": "scheduled-repeat-anticipation"
+              },
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            },
+            {
+              "id": "combat-copy-1-0-clone-1",
+              "sourceActorId": "combat-copy-1-0-clone-1",
+              "modelActorId": null,
+              "identity": "siren-mor",
+              "key": "storySirenIdle",
+              "pose": "recover",
+              "sourceRect": [
+                0,
+                0,
+                672,
+                384
+              ],
+              "anchor": [
+                336,
+                180
+              ],
+              "scale": 0.3032608695652174,
+              "position": [
+                270,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 211,
+              "opacity": 0.72,
+              "kind": "clone",
+              "originalAction": "recover",
+              "presentationAction": "recover",
+              "repeatCue": {
+                "active": false,
+                "nextAt": 271,
+                "remainingTicks": 27,
+                "windowTicks": 18,
+                "reason": "outside-repeat-window"
+              },
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            }
+          ],
+          "pixelsSHA256": "9c6cc079fd60baf274830db4a3e455c48539d60e769d90ce85dfabdb8f550adc"
+        }
+      ]
+    },
+    {
+      "group": 34,
+      "tick": 244,
+      "label": "RIAN / ION",
+      "ordinaryHealth": false,
+      "actualCoreCopyRecords": [
+        {
+          "id": "combat-copy-1-0-clone-0",
+          "sourceActorId": "combat-copy-1-0-clone-0",
+          "x": 90,
+          "y": 166,
+          "px": 90,
+          "py": 166,
+          "originX": 180,
+          "originY": 182,
+          "destinationX": 90,
+          "artKey": "story-cult-circuit-pair",
+          "born": 151,
+          "expireAt": 511,
+          "action": "recover",
+          "actionProgress": 0.85,
+          "releaseTick": 193,
+          "opacity": 0.62,
+          "kind": "clone",
+          "modelActorId": "han-rian"
+        },
+        {
+          "id": "combat-copy-1-0-clone-1",
+          "sourceActorId": "combat-copy-1-0-clone-1",
+          "x": 270,
+          "y": 166,
+          "px": 270,
+          "py": 166,
+          "originX": 180,
+          "originY": 182,
+          "destinationX": 270,
+          "artKey": "story-cult-circuit-pair",
+          "born": 151,
+          "expireAt": 511,
+          "action": "recover",
+          "actionProgress": 0.55,
+          "releaseTick": 211,
+          "opacity": 0.62,
+          "kind": "clone",
+          "modelActorId": "baek-ion"
+        }
+      ],
+      "comparison": [
+        {
+          "version": "before",
+          "actor": [
+            {
+              "id": "combat-copy-1-0-clone-0",
+              "sourceActorId": "combat-copy-1-0-clone-0",
+              "modelActorId": "han-rian",
+              "identity": "han-rian",
+              "key": "storyRianIdle",
+              "pose": "recover",
+              "sourceRect": [
+                0,
+                0,
+                512,
+                512
+              ],
+              "anchor": [
+                256,
+                220
+              ],
+              "scale": 0.18869565217391307,
+              "position": [
+                90,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 193,
+              "opacity": 0.72,
+              "kind": "clone",
+              "authoredKeyposes": 2,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            },
+            {
+              "id": "combat-copy-1-0-clone-1",
+              "sourceActorId": "combat-copy-1-0-clone-1",
+              "modelActorId": "baek-ion",
+              "identity": "baek-ion",
+              "key": "storyIonIdle",
+              "pose": "recover",
+              "sourceRect": [
+                0,
+                0,
+                512,
+                512
+              ],
+              "anchor": [
+                256,
+                220
+              ],
+              "scale": 0.18869565217391307,
+              "position": [
+                270,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 211,
+              "opacity": 0.72,
+              "kind": "clone",
+              "authoredKeyposes": 2,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            }
+          ],
+          "pixelsSHA256": "91cccaeebad00c122b8c4455a293689c4135fe1cf6244895623b01b136bc56db"
+        },
+        {
+          "version": "current",
+          "actor": [
+            {
+              "id": "combat-copy-1-0-clone-0",
+              "sourceActorId": "combat-copy-1-0-clone-0",
+              "modelActorId": "han-rian",
+              "identity": "han-rian",
+              "key": "storyRianIdle",
+              "pose": "charge",
+              "sourceRect": [
+                0,
+                0,
+                512,
+                512
+              ],
+              "anchor": [
+                256,
+                220
+              ],
+              "scale": 0.18869565217391307,
+              "position": [
+                90,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 193,
+              "opacity": 0.72,
+              "kind": "clone",
+              "originalAction": "recover",
+              "presentationAction": "charge",
+              "repeatCue": {
+                "active": true,
+                "nextAt": 253,
+                "remainingTicks": 9,
+                "windowTicks": 18,
+                "reason": "scheduled-repeat-anticipation"
+              },
+              "authoredKeyposes": 2,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            },
+            {
+              "id": "combat-copy-1-0-clone-1",
+              "sourceActorId": "combat-copy-1-0-clone-1",
+              "modelActorId": "baek-ion",
+              "identity": "baek-ion",
+              "key": "storyIonIdle",
+              "pose": "recover",
+              "sourceRect": [
+                0,
+                0,
+                512,
+                512
+              ],
+              "anchor": [
+                256,
+                220
+              ],
+              "scale": 0.18869565217391307,
+              "position": [
+                270,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 211,
+              "opacity": 0.72,
+              "kind": "clone",
+              "originalAction": "recover",
+              "presentationAction": "recover",
+              "repeatCue": {
+                "active": false,
+                "nextAt": 271,
+                "remainingTicks": 27,
+                "windowTicks": 18,
+                "reason": "outside-repeat-window"
+              },
+              "authoredKeyposes": 2,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            }
+          ],
+          "pixelsSHA256": "91cccaeebad00c122b8c4455a293689c4135fe1cf6244895623b01b136bc56db"
+        }
+      ]
+    },
+    {
+      "group": 0,
+      "tick": 502,
+      "label": "VIOLET / SKIPPED FINAL SHOT",
+      "ordinaryHealth": false,
+      "actualCoreCopyRecords": [
+        {
+          "id": "combat-copy-1-0-clone-0",
+          "sourceActorId": "combat-copy-1-0-clone-0",
+          "x": 90,
+          "y": 166,
+          "px": 90,
+          "py": 166,
+          "originX": 236,
+          "originY": 116,
+          "destinationX": 90,
+          "artKey": "boss",
+          "born": 151,
+          "expireAt": 511,
+          "action": "attack",
+          "actionProgress": 0.15,
+          "releaseTick": 433,
+          "opacity": 0.62,
+          "kind": "clone"
+        },
+        {
+          "id": "combat-copy-1-0-clone-1",
+          "sourceActorId": "combat-copy-1-0-clone-1",
+          "x": 270,
+          "y": 166,
+          "px": 270,
+          "py": 166,
+          "originX": 236,
+          "originY": 116,
+          "destinationX": 270,
+          "artKey": "boss",
+          "born": 151,
+          "expireAt": 511,
+          "action": "recover",
+          "actionProgress": 0.85,
+          "releaseTick": 451,
+          "opacity": 0.62,
+          "kind": "clone"
+        }
+      ],
+      "comparison": [
+        {
+          "version": "before",
+          "actor": [
+            {
+              "id": "combat-copy-1-0-clone-0",
+              "sourceActorId": "combat-copy-1-0-clone-0",
+              "modelActorId": null,
+              "identity": "violet",
+              "key": "bossMotionViolet",
+              "pose": "prepare",
+              "sourceRect": [
+                0,
+                0,
+                256,
+                256
+              ],
+              "anchor": [
+                148,
+                126
+              ],
+              "scale": 0.47989347826086953,
+              "position": [
+                90,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 433,
+              "opacity": 0.72,
+              "kind": "clone",
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            },
+            {
+              "id": "combat-copy-1-0-clone-1",
+              "sourceActorId": "combat-copy-1-0-clone-1",
+              "modelActorId": null,
+              "identity": "violet",
+              "key": "bossMotionViolet",
+              "pose": "recover",
+              "sourceRect": [
+                256,
+                256,
+                256,
+                256
+              ],
+              "anchor": [
+                146,
+                120
+              ],
+              "scale": 0.47989347826086953,
+              "position": [
+                270,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 451,
+              "opacity": 0.72,
+              "kind": "clone",
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            }
+          ],
+          "pixelsSHA256": "ded4c2f3dfca486f38446eb585d9473c74d25b0987def0fe109d81f83a1eb083"
+        },
+        {
+          "version": "current",
+          "actor": [
+            {
+              "id": "combat-copy-1-0-clone-0",
+              "sourceActorId": "combat-copy-1-0-clone-0",
+              "modelActorId": null,
+              "identity": "violet",
+              "key": "bossMotionViolet",
+              "pose": "recover",
+              "sourceRect": [
+                256,
+                256,
+                256,
+                256
+              ],
+              "anchor": [
+                146,
+                120
+              ],
+              "scale": 0.47989347826086953,
+              "position": [
+                90,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 433,
+              "opacity": 0.72,
+              "kind": "clone",
+              "originalAction": "attack",
+              "presentationAction": "recover",
+              "repeatCue": {
+                "active": false,
+                "nextAt": null,
+                "remainingTicks": null,
+                "windowTicks": 18,
+                "reason": "no-later-volley"
+              },
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            },
+            {
+              "id": "combat-copy-1-0-clone-1",
+              "sourceActorId": "combat-copy-1-0-clone-1",
+              "modelActorId": null,
+              "identity": "violet",
+              "key": "bossMotionViolet",
+              "pose": "recover",
+              "sourceRect": [
+                256,
+                256,
+                256,
+                256
+              ],
+              "anchor": [
+                146,
+                120
+              ],
+              "scale": 0.47989347826086953,
+              "position": [
+                270,
+                166
+              ],
+              "born": 151,
+              "expireAt": 511,
+              "releaseTick": 451,
+              "opacity": 0.72,
+              "kind": "clone",
+              "originalAction": "recover",
+              "presentationAction": "recover",
+              "repeatCue": {
+                "active": false,
+                "nextAt": null,
+                "remainingTicks": null,
+                "windowTicks": 18,
+                "reason": "no-later-volley"
+              },
+              "authoredKeyposes": 4,
+              "fullAnimationCycles": 0,
+              "sourcePivotsCertified": false
+            }
+          ],
+          "pixelsSHA256": "0aa6a7ef1e21f0dcd5a0ed122ede1b0db8ea59823ca48f31b10a46687aefc227"
+        }
+      ]
+    }
+  ],
+  "sources": {
+    "bossMotionViolet": {
+      "path": "media/boss-motion-v8/violet-atlas-512.png",
+      "bytes": 222113,
+      "sha256": "8271ccb891a9ea88cee33aec9052ac0b427b3b4ace0b241f2dd04cdc136f6f24"
+    },
+    "sinBelphegorAtlas": {
+      "path": "media/sins-v13/belphegor-atlas-512.png",
+      "bytes": 286241,
+      "sha256": "1d025b46186a713241d901fb670476a5709e99c8e847a6a9291cb78b14c36e22"
+    },
+    "actorDenialIdle": {
+      "path": "media/actors-v7/denial-idle.png",
+      "bytes": 396962,
+      "sha256": "60c3a216597ca0efbfca2ff01aaef78799094231aa5fd89f2cb8f96df5faa492"
+    },
+    "actorDenialWalk": {
+      "path": "media/actors-v7/denial-walk.png",
+      "bytes": 370627,
+      "sha256": "c4dc998c8177f1d47fe13478d0731558737130609b66472c3bbfe3e46292474f"
+    },
+    "actorDenialAttack": {
+      "path": "media/actors-v7/denial-attack.png",
+      "bytes": 380106,
+      "sha256": "15fc82950715f2e368dab8b8101751ddad8c170dc58c3f57fd31d68ff7f320c4"
+    },
+    "actorDenialHit": {
+      "path": "media/actors-v7/denial-hit.png",
+      "bytes": 365973,
+      "sha256": "573f330b8b23d81cda189194897b672285992efcf71cd4050311dd61dd7447be"
+    },
+    "actorGuardIdle": {
+      "path": "media/actors-v7/guard-idle.png",
+      "bytes": 615191,
+      "sha256": "a8b09b9597c3a66261acc38149109bdd12f5f8e4e2ee5ce9428cba6e3163bd76"
+    },
+    "actorGuardWalk": {
+      "path": "media/actors-v7/guard-walk.png",
+      "bytes": 456923,
+      "sha256": "e7d947d0885f0451c8217e4a83402794265c347c12fbfe6e4b5757025d2b74de"
+    },
+    "actorGuardAttack": {
+      "path": "media/actors-v7/guard-attack.png",
+      "bytes": 543671,
+      "sha256": "d84c5044eb8e0faee8b6549f899bf69588b01b88f2e63d53a6bc9765271f4165"
+    },
+    "actorGuardHit": {
+      "path": "media/actors-v7/guard-hit.png",
+      "bytes": 505266,
+      "sha256": "f94291b0fafb423adee4b153dea844fea012ed6a504abd0c2afe9b6c9dbeb387"
+    },
+    "storyKnightIdle": {
+      "path": "media/story-v19/knight-idle.webp",
+      "bytes": 92004,
+      "sha256": "6e90a1e9aa520570b002b10650741813a6d2c20520c3317dc4437eb32ccd4de7"
+    },
+    "storyKnightCharge": {
+      "path": "media/story-v19/knight-charge.webp",
+      "bytes": 102056,
+      "sha256": "99b4fd76ae881d97288011f3dc2b690b3a69e28ad9365e7a631f2cb7f5f85213"
+    },
+    "storyKnightAttack": {
+      "path": "media/story-v19/knight-attack.webp",
+      "bytes": 83118,
+      "sha256": "5fce8b6b86045551839b908ac79a960f58a6b5e6f345ad20ab97d80df0b3c1c0"
+    },
+    "storyKnightRecover": {
+      "path": "media/story-v19/knight-recover.webp",
+      "bytes": 172778,
+      "sha256": "01d39a69e2f50fc74091d42fb52effc2de9cbff7b5c067e60e66a64f51fd9a8f"
+    },
+    "storyPlayerHando": {
+      "path": "media/story-v19/player-hando.png",
+      "bytes": 267883,
+      "sha256": "7aad591310bb93367825e0e47ca9a487cbd6b88e53637ce6316e8d5976f2c569"
+    },
+    "storyMobGoblin": {
+      "path": "media/story-v19/mob-goblin.png",
+      "bytes": 209252,
+      "sha256": "4b97bb140b31477f2f645a7a96e66320052fb7274829987aa0fe36bceabfafc2"
+    },
+    "storyKnightSword": {
+      "path": "media/story-v19/knight-sword.png",
+      "bytes": 44486,
+      "sha256": "d14b4babd804f490b31d2f1cf8bf8fba23bd72f5605329c1c88acd5b74fa4841"
+    },
+    "storyKnightMap": {
+      "path": "media/story-v19/knight-map.jpg",
+      "bytes": 661132,
+      "sha256": "0cb02b60cf0caeddd6d88e7d0e21ca4652d395fd11541f2e5f5ce1c0b1ea4d4e"
+    },
+    "storyPlayerHandoSlash": {
+      "path": "media/story-v19/player-hando-slash.png",
+      "bytes": 85262,
+      "sha256": "0f811aa201f2317bfea07d48109989942b3f84d3348ec8e871c50e5c086bc424"
+    },
+    "storySirenIdle": {
+      "path": "media/story-v19/siren-idle.webp",
+      "bytes": 41204,
+      "sha256": "985137aa992b23610fe2cd11a0a5624bd49ef90b0d22a99896d7871072a0dcb0"
+    },
+    "storySirenCharge": {
+      "path": "media/story-v19/siren-charge.webp",
+      "bytes": 51608,
+      "sha256": "6af2e81ebbbc0975367c2750a9b502170dee5a5f105b444ef2b2a01550abfaa2"
+    },
+    "storySirenAttack": {
+      "path": "media/story-v19/siren-attack.webp",
+      "bytes": 57414,
+      "sha256": "d6d18565aa6b49f321508796151fba54662ed46f347da58aeb10edfd884d0038"
+    },
+    "storySirenRecover": {
+      "path": "media/story-v19/siren-recover.webp",
+      "bytes": 49646,
+      "sha256": "483de4f98f06de3dc2693b3b19b2cbbfc8bdaededdc265e20d10fa6d0ca3e07a"
+    },
+    "storyPlayerSeoha": {
+      "path": "media/story-v19/player-seoha.png",
+      "bytes": 139193,
+      "sha256": "5faf5cd8c5d2b00d96a349e9617100d50730d291948de3ddb993179eb8c4bb8e"
+    },
+    "storyTimeCollector": {
+      "path": "media/story-v19/time-collector.png",
+      "bytes": 136719,
+      "sha256": "0027c67dd883ffa3897df40f7a83305d368d588aedbaec2bf0d17aeccfad39a9"
+    },
+    "storySirenMap": {
+      "path": "media/story-v19/siren-map.webp",
+      "bytes": 341232,
+      "sha256": "832aaa38766ecf20a6c79064195103fec24a7957a5c0ba7ca4580ea2bc5cc136"
+    },
+    "storyChronoShard": {
+      "path": "media/story-v19/chrono-shard.webp",
+      "bytes": 54898,
+      "sha256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5"
+    },
+    "storyPlayerSeohaSlash": {
+      "path": "media/story-v19/player-seoha-slash.png",
+      "bytes": 153437,
+      "sha256": "cf767d2600a48dda2c40a110ff7e6e86e3da1588764459a268b1ac97f49d4ece"
+    },
+    "storyRianIdle": {
+      "path": "media/story-v19/rian-idle.webp",
+      "bytes": 13628,
+      "sha256": "cb109d4677baaf3ea90e14b3fd216e0ed94db8b7db3ef8f4a6ec8130c7d72d47"
+    },
+    "storyRianAttack": {
+      "path": "media/story-v19/rian-attack.webp",
+      "bytes": 25178,
+      "sha256": "107b3bc0a4a84edb4f14f3d50f69e7aef11ac782e51d16209e725bfdfecf737d"
+    },
+    "storyIonIdle": {
+      "path": "media/story-v19/ion-idle.webp",
+      "bytes": 24388,
+      "sha256": "e7f447ebdf74e95ee4db3e72449e509662341caa0e301783cd7094e3a3d5dc14"
+    },
+    "storyIonAttack": {
+      "path": "media/story-v19/ion-attack.webp",
+      "bytes": 43708,
+      "sha256": "799191f1fe1152f7bbd97c7cca40e3857401b33a6d52e36aef5a6ade5de7588f"
+    },
+    "storyCultCircuit": {
+      "path": "media/story-v19/cult-circuit.webp",
+      "bytes": 127570,
+      "sha256": "f705c72eb4d0e4501767034c84c102771130c634b893e811073d75cb8d085229"
+    },
+    "storyMobCultLeech": {
+      "path": "media/story-v19/mob-cult-leech.webp",
+      "bytes": 40264,
+      "sha256": "07099111f8bf7ae0f43c965752de5dd156ce70a283c3d15b21f8039eb0d81ef8"
+    },
+    "storyPairMap": {
+      "path": "media/story-v19/pair-map.jpg",
+      "bytes": 391977,
+      "sha256": "9df293ea34b10f041410137beec97f9dfab9e8fc4605547dae3ed0fdfa31d2a3"
+    },
+    "storyRianCross": {
+      "path": "media/story-v19/rian-cross.webp",
+      "bytes": 84602,
+      "sha256": "c3087e2e8611efff6e8844c3b3c571457a4458552a4c85af36c37657d0f00620"
+    },
+    "storyIonShield": {
+      "path": "media/story-v19/ion-shield.webp",
+      "bytes": 70068,
+      "sha256": "f56c5acaf90884bbf5c18a94691105360ccb00f87b30e9b44212aef159bb59d9"
+    }
+  },
+  "image": {
+    "path": "docs/v22-copy-pixels/repeat-source-before-after.jpg",
+    "bytes": 100719,
+    "sha256": "7ff63097604e7458ecda0198b1c047082883497784e6a9e0a649188e4f229fe1"
+  },
+  "reviewStatus": "direct-pixel-review-complete",
+  "directReview": {
+    "image": "docs/v22-copy-pixels/repeat-source-before-after.jpg",
+    "observations": [
+      "Violet, Sloth, Fallen Knight and Siren retain exact own art and switch to available authored charge state before repeat release.",
+      "Paired Han Rian and Baek Ion retain their individual static owned bodies; absence of a charge-specific source pose is not disguised as a new animation.",
+      "Violet tick502 now shows authored recovery instead of a skipped final-volley attack pose. Actual core release marker remains433 and lifetime remains511."
+    ],
+    "missingAssets": 0,
+    "coreMutation": 0,
+    "limitations": [
+      "Native CPU source-pose controlled fixtures, not natural play, browser, GPU or phone timing",
+      "Authored keyposes only; no new source artwork or continuous animation created"
+    ]
+  }
+}

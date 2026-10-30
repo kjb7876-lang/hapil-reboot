@@ -1,0 +1,152 @@
+{
+  "schema": "hapil-v22-drive-review-1",
+  "folderId": "19rG1HfzsIHmSeRwnN8csKESx6l0KQF1i",
+  "folderURL": "https://drive.google.com/drive/folders/19rG1HfzsIHmSeRwnN8csKESx6l0KQF1i",
+  "scope": "Changedsource+tests+V22CPU/actual-browserproofs. No new gameplay rasterasset; retainedsourcebytes unchanged. This metadata record is excluded from its own archive.",
+  "packages": [
+    {
+      "name": "HAPIL-V22-REVIEW-PART01-20261030.zip",
+      "bytes": 656816,
+      "sha256": "f32cb0a7a7632c25495305eea9d6c7c55419083033a780725eeb771ce4f5d553",
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "24d98825e5c047c7a63068825fc8770818319ac341862e219fed780816e46e82"
+        },
+        {
+          "path": "docs/V22-COPY-ANTICIPATION-20261030.json",
+          "sha256": "add087187df7d59bdd44a335e533c478e075eff20d0c5df90eea75a0c7479344"
+        },
+        {
+          "path": "docs/V22-COPY-ANTICIPATION-20261030.md",
+          "sha256": "f0bebe03899ce85de14687df26cbbf81db0729cc65c9d453f0d1bba93f4c7504"
+        },
+        {
+          "path": "docs/V22-DESIGN-REFERENCES-20261030.md",
+          "sha256": "91508e4e1f3d8b1ff2b624390f4d199fa97676307cecc71fda2557987d86c9a8"
+        },
+        {
+          "path": "docs/V22-FINAL-QA-20261030.json",
+          "sha256": "303ebf37daf1e664cfb0504c08516f54221e28ad4a6a7f0b1e7e65d54b1de9e7"
+        },
+        {
+          "path": "docs/V22-FINAL-QA-20261030.md",
+          "sha256": "deb3adad8948a32e220a8c67b236c4764476b61b001f2bb1ec9212fc30751923"
+        },
+        {
+          "path": "docs/V22-INDEPENDENT-WARNING-QA-20261030.md",
+          "sha256": "bf034fa1fc557be9e7ca14321dfaf5d23d7030f2d71fa4cb228008daf562e8a3"
+        },
+        {
+          "path": "docs/V22-UNCHANGED-COMBAT-20261030.json",
+          "sha256": "e0fb560febfb234825654a1165e4ef65b3d99fc1f3ee10ab75043da172273e10"
+        },
+        {
+          "path": "docs/V22-UNCHANGED-COMBAT-20261030.md",
+          "sha256": "88facc022c1dd3a496aa67c0a5f2005a64573c25748b6f9ce664fc56ecc5a82a"
+        },
+        {
+          "path": "docs/V22-WARNING-PIXEL-REVIEW-20261030.json",
+          "sha256": "6430b7ccd862149b6979af071d6aa667ca784fff48fdb2d51ae4ea7354e0abda"
+        },
+        {
+          "path": "docs/V22-WARNING-PRESENTATION-20261030.md",
+          "sha256": "c9720d3b2760e800bea1f97372034201ef7a30a1eb7af2b6b9f4912b3ef73b8d"
+        },
+        {
+          "path": "docs/v22-browser/OBSERVATIONS-20261030.json",
+          "sha256": "52c4eed3118b55e6b22ecaf804665557e3897f843655c33fef24ed0dff09d8ff"
+        },
+        {
+          "path": "docs/v22-browser/knight-warning.jpg",
+          "sha256": "ad631dc81651f12777c104fb09a83d2e04e7b489612ea447971200d64bf7b4fc"
+        },
+        {
+          "path": "docs/v22-copy-pixels/repeat-source-before-after.jpg",
+          "sha256": "7ff63097604e7458ecda0198b1c047082883497784e6a9e0a649188e4f229fe1"
+        },
+        {
+          "path": "docs/v22-qa/V22-NATURAL-HEALTH-ALTERNATE1-REPLAY-20261030.json",
+          "sha256": "478ea43aa3887d5afdcf142d61adf44e7dba12cebb9b318786e64a7c4ba99d46"
+        },
+        {
+          "path": "docs/v22-qa/V22-NATURAL-HEALTH-ALTERNATE2-REPLAY-20261030.json",
+          "sha256": "ccf78e8c98028bf48a3fafd04cb83464f0a2f7659fa7fead3857d4b48d1603b8"
+        },
+        {
+          "path": "docs/v22-qa/V22-NATURAL-HEALTH-PRIMARY-REPLAY-20261030.json",
+          "sha256": "a6c10366731c3322369ed19d903dd8039161112ed2c70d7c41661f100010eb3d"
+        },
+        {
+          "path": "docs/v22-qa/npm-test-final.log",
+          "sha256": "e6d6e075792f0b34ec2b5f66e5d176eb87d1f166ec5c9fb181cbfa811bb3d9c6"
+        },
+        {
+          "path": "docs/v22-qa/warning-edge-first-failure.log",
+          "sha256": "b3a4ad10d8a180078f9ddd83cf72aaa5ab9bfa71016639add5f3e4a5f0651897"
+        },
+        {
+          "path": "docs/v22-qa/warning-pixel-audit-final.log",
+          "sha256": "3cc56f0f479b1f97e6888f96ed8db5c00e6b39287f1a067775b3f5361553251b"
+        },
+        {
+          "path": "docs/v22-qa/warning-pixel-tests-final.log",
+          "sha256": "514ca75cee7c47a873479c0ac9de3ca713756173e35e912fe1777760c853fe55"
+        },
+        {
+          "path": "docs/v22-warning-pixels/baseline-current.jpg",
+          "sha256": "1733738ad2c2e66bea60714ee22ceb208fd670d74c8d6d541f9833dd3a3bf727"
+        },
+        {
+          "path": "index.html",
+          "sha256": "4a7f88e34f6ba88f879a6068fffc2ccd72e029d1c114fc1afb8990cc14e99e61"
+        },
+        {
+          "path": "src/actors.js",
+          "sha256": "c5d707a96b4a0d7be33762924782a20451d7da2099f1555af026962ce89792f4"
+        },
+        {
+          "path": "src/app.js",
+          "sha256": "003765d3734dd664b702b74fd4e69aec1bb09c1fdbdb411f941627ac7d23c469"
+        },
+        {
+          "path": "src/render.js",
+          "sha256": "31343c761317f772ccf22891210eda5db6eb2e269e7831395665b6eee6aae4a1"
+        },
+        {
+          "path": "tests/combat-copy-anticipation-v22.test.cjs",
+          "sha256": "fb988bcc4ccdb9163e9d48a92680ad26757a1a8f6b0238a6dbb9f6d220f085f1"
+        },
+        {
+          "path": "tests/independent-battle-readability-v20.test.cjs",
+          "sha256": "b574be801951f61c3f9f5915974529454638b0f9eecaa03057545224255ab5e3"
+        },
+        {
+          "path": "tests/independent-warning-pixels-v22.test.cjs",
+          "sha256": "274742dfd5674841880c68623bfc5655849066789007d91a1529284dc363c25a"
+        },
+        {
+          "path": "tests/warning-presentation-v22.test.cjs",
+          "sha256": "67722362d6748b267c8800b5c97cd8335af20bbe8f3c4023ceea7973f152fb38"
+        },
+        {
+          "path": "tools/audit-warning-footprints-v22.cjs",
+          "sha256": "9591cf485f60a8ec733d96b95a39cfb796007fe3702967a8256e6df42d3e9be6"
+        },
+        {
+          "path": "tools/review-copy-anticipation-v22.cjs",
+          "sha256": "413f7ddd3271e4058b38e8993b92da84ff52bc33edebc57379300bc7b9deabc1"
+        },
+        {
+          "path": "tools/verify-unchanged-combat-v22.cjs",
+          "sha256": "333f003308d851d69b2bca2dbebbca56e88ebbd7bdeb4fa39fa02a76337f2d68"
+        }
+      ],
+      "fileId": "169YcTRzV_Kpt50WD5Qe0ao48_FtbB1U4",
+      "url": "https://drive.google.com/file/d/169YcTRzV_Kpt50WD5Qe0ao48_FtbB1U4/view?usp=drivesdk",
+      "metadataSizeVerified": true,
+      "localCRCVerified": true,
+      "remoteDownloadSHA256Verified": false
+    }
+  ]
+}

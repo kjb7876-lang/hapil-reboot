@@ -1,0 +1,10 @@
+✔ actual vertical/horizontal/lattice warnings expose their committed outer edges on both qualities and all three modes (13993.078096ms)
+✔ full-width boundary cues stop at actual activation and do not reappear during harmless fading (3179.528796ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17529.795574

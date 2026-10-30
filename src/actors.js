@@ -290,6 +290,31 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
       }
       if(drew){metrics.bossDraws++;return true;}return false;
     }
+    function repeatCopyCue(world,copy,actor){
+      // The repeat clock is already fixed by the active clone's birth/slot.
+      // Read it for authored anticipation poses only; never advance emission,
+      // change aim, mutate the copy or imply a new charge after its last shot.
+      var slot=/-([01])$/.exec(String(copy.id||copy.sourceActorId||'')),tick=world.tick;
+      if(world.combatRevision!==21||copy.kind!=='clone'||!slot||!Number.isInteger(tick)||!Number.isInteger(copy.born))return null;
+      var age=tick-copy.born,first=42+Number(slot[1])*18,cadence=world.difficulty==='hell'?60:world.difficulty==='gentle'?120:90;
+      var next=copy.born+first+(age<first?0:Math.floor((age-first)/cadence)+1)*cadence;
+      if(next>=copy.expireAt-18){
+        var releaseAge=finite(copy.releaseTick)&&copy.releaseTick>=0?tick-copy.releaseTick:Infinity;
+        // Core retains its nominal attack clock even when the final volley is
+        // outside the release cutoff. Keep real recent strikes, but do not
+        // paint a preparation/attack pose for an intentionally skipped shot.
+        if(actor.action==='attack'&&!(releaseAge>=0&&releaseAge<21))actor.action='recover';
+        return {active:false,nextAt:null,remainingTicks:null,windowTicks:18,reason:'no-later-volley'};
+      }
+      var remaining=next-tick,cue={active:false,nextAt:next,remainingTicks:remaining,windowTicks:18,reason:age<first?'initial-core-charge':'outside-repeat-window'};
+      if(age<first||remaining>18||remaining<=0||!finite(copy.releaseTick)||copy.releaseTick<0)return cue;
+      var pending=(world._deferred||[]).some(function(group){return Array.isArray(group)&&group.some(function(spec){return spec.sourceActorId===copy.sourceActorId;});});
+      var count=world.difficulty==='hell'?7:world.difficulty==='gentle'?3:5;
+      var cap=global.HapilCore&&global.HapilCore.CAPS&&global.HapilCore.CAPS.bullets||768;
+      if(pending||(world.bullets||[]).length+count>cap){cue.reason=pending?'pending-deferred-release':'capacity-blocked';return cue;}
+      if(tick-copy.releaseTick>=0&&tick-copy.releaseTick<21){cue.reason='actual-release-pose';return cue;}
+      actor.action='charge';actor.actionProgress=(18-remaining)/18;cue.active=true;cue.reason='scheduled-repeat-anticipation';return cue;
+    }
     function drawCombatCopy(ctx,world,copy,opacity){
       // Combat copies are projections of the current combatant, never new
       // characters. Reuse its inspected source registration without drawing
@@ -298,6 +323,7 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
       if(!b||!copy||world.stage!=='boss'||!finite(copy.x)||!finite(copy.y)||!finite(copy.born)||!finite(copy.expireAt)||tick<copy.born||tick>=copy.expireAt)return false;
       var width=155,entry=storyEntry(world),model=null,key=null,poseName=null,sourceRect=null,anchor=null,scale=null;
       var identity=copy.modelActorId||b.kind||world.bossId,actor=Object.assign({},b,copy,{kind:b.kind,artKey:b.artKey,hitUntil:0});
+      var repeatCue=repeatCopyCue(world,copy,actor);
       if(entry){
         var models=entry.actors||[];
         model=copy.modelActorId?models.find(function(a){return a.participantId===copy.modelActorId||a.id===copy.modelActorId;}):models.length===1?models[0]:null;
@@ -333,7 +359,7 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
         }
       }
       if(!key){metrics.combatCopyMissingAssets++;return false;}
-      metrics.combatCopyDraws++;metrics.lastCombatCopySamples.push({id:copy.id,sourceActorId:copy.sourceActorId,modelActorId:copy.modelActorId||null,identity:identity,key:key,pose:poseName,sourceRect:sourceRect.slice(),anchor:anchor.slice(),scale:scale,position:[copy.x,copy.y],born:copy.born,expireAt:copy.expireAt,releaseTick:copy.releaseTick,opacity:opacity,kind:copy.kind,authoredKeyposes:model?(model.frames||[]).length:4,fullAnimationCycles:0,sourcePivotsCertified:false});return true;
+      metrics.combatCopyDraws++;metrics.lastCombatCopySamples.push({id:copy.id,sourceActorId:copy.sourceActorId,modelActorId:copy.modelActorId||null,identity:identity,key:key,pose:poseName,sourceRect:sourceRect.slice(),anchor:anchor.slice(),scale:scale,position:[copy.x,copy.y],born:copy.born,expireAt:copy.expireAt,releaseTick:copy.releaseTick,opacity:opacity,kind:copy.kind,originalAction:copy.action,presentationAction:actor.action,repeatCue:repeatCue,authoredKeyposes:model?(model.frames||[]).length:4,fullAnimationCycles:0,sourcePivotsCertified:false});return true;
     }
     function drawSceneObjects(ctx,world){
       var entry=storyEntry(world);if(!entry||invalidStoryAssetForEncounter(images,world.bossIndex+1))return;
