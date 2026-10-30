@@ -3,12 +3,14 @@
 // default auto attack/skills, and only ordinary directional inputs. No state,
 // damage, RNG, HP, speed, 777, or invulnerability was altered by the bot.
 // These are deterministic automated runs, not browser or human playtests.
+// The original recording hash remains provenance. A later candidate may be
+// certified only by replaying every input and every saved boundary below.
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),zlib=require('node:zlib'),crypto=require('node:crypto');
 const core=require('../src/core.js'),store=require('../src/storage.js')._test;
 const dir=path.join(__dirname,'fixtures/natural-bot'),manifest=JSON.parse(fs.readFileSync(path.join(dir,'manifest.json'),'utf8'));
-for(const [file,expected] of [['../src/core.js',manifest.recordedCoreSha256],['../src/weapon-patterns.js',manifest.recordedWeaponPatternsSha256]])assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,file))).digest('hex'),expected,`recorded simulation module changed: ${file}`);
+for(const [file,expected] of [['../src/core.js',manifest.replayValidatedCoreSha256||manifest.recordedCoreSha256],['../src/weapon-patterns.js',manifest.recordedWeaponPatternsSha256]])assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,file))).digest('hex'),expected,`recorded simulation module changed: ${file}`);
 for(const [file,expected] of Object.entries(manifest.recordedPolicyFiles||{}))assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,'..',file))).digest('hex'),expected,`recorded input policy changed: ${file}`);
-assert.deepEqual(manifest.bossIds,core.CAMPAIGN_BOSSES.map(b=>b.id));
+assert.deepEqual(manifest.bossIds,core.CAMPAIGN_BOSSES.slice(0,12).map(b=>b.id));
 assert.deepEqual(manifest.records.map(r=>`${r.difficulty}:${r.seed}`).sort(),['gentle:813','gentle:42','normal:813','normal:42','hell:813','hell:42'].sort());
 const fields=['tick','stage','wave','phase','bossIndex','bossCount','campaignRevision','waveDuration','idCounter','rngState','player','boss','enemies','bullets','shots','hazards','memory','resonance','score','graze','kills','skills','stats','_delays','_warnings','_deferred','_shotReadyAt','_memoryBucket','_memoryGain','_resBucket','_resGain','_grazeGain','_lastGraze'];
 function state(w){const o={};for(const key of fields)o[key]=w[key];return o;}
@@ -17,7 +19,7 @@ for(const expected of manifest.records){
  test(`no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: ${expected.difficulty}/${expected.seed}`,()=>{
   const raw=fs.readFileSync(path.join(dir,expected.file));assert.equal(crypto.createHash('sha256').update(raw).digest('hex'),expected.sha256);
   const moves=zlib.gunzipSync(raw).toString('ascii');assert.equal(moves.length,expected.tick);
-  const w=core.createRun({campaign:true,difficulty:expected.difficulty,seed:expected.seed,runId:expected.runId});
+  const w=core.createRun({campaign:true,campaignRevision:3,difficulty:expected.difficulty,seed:expected.seed,runId:expected.runId});
   assert.equal(w.practiceBoss,false);assert.equal(w.autoAttack,true);assert.equal(w.skillRotation,true);assert.equal(w.player.hp,w.player.maxHp);
   const phases=new Set(),marks=[],naturalWeapons=new Set(),naturalBounces=new Set(),naturalGridWarnings=new Set(),naturalGridActive=new Set(),sinSignatures=new Set();let serial=w.checkpointSerial;
   for(let tick=0;tick<moves.length;tick++){
@@ -40,11 +42,11 @@ for(const expected of manifest.records){
     }
    }
   }
-  const everyPhase=Array.from({length:core.CAMPAIGN_BOSSES.length},(_,b)=>Array.from({length:3},(_,p)=>`${b}:${p}`)).flat();
+  const everyPhase=Array.from({length:12},(_,b)=>Array.from({length:3},(_,p)=>`${b}:${p}`)).flat();
   assert.deepEqual([...phases].sort(),everyPhase.sort());
   for(const seen of [naturalWeapons,naturalBounces,naturalGridWarnings,naturalGridActive])assert.deepEqual([...seen].filter(i=>i<5).sort((a,b)=>a-b),[0,1,2,3,4],'all five published bosses still execute their requested pattern during normal progression');
   assert.deepEqual([...sinSignatures].sort((a,b)=>a-b),[5,6,7,8,9,10,11],'seven sins execute their own signatures during natural progression');
-  assert.equal(w.stage,'won');assert.equal(w.bossIndex,core.CAMPAIGN_BOSSES.length-1);assert.equal(w.phase,2);
+  assert.equal(w.stage,'won');assert.equal(w.bossIndex,11);assert.equal(w.phase,2);
   assert.equal(w.tick,expected.tick);assert.equal(w.player.hp,expected.hp);assert.equal(w.stats.hits,expected.hits);
   assert.equal(w.score,expected.score);assert.equal(w.kills,expected.killCount);assert.equal(w.checkpointSerial,expected.checkpointCount);
   assert.equal(w.stats.poolPressure,0);assert.equal(w.stats.droppedGroups,0);

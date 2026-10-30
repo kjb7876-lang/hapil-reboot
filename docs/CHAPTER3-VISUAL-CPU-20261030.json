@@ -1,0 +1,2868 @@
+{
+  "capturedAt": "2026-10-30T00:45:01.345Z",
+  "scope": "Synchronous native CPU Canvas 360x640DPR1;48snapshots ×5warmup+30measured repeated draws. Six actual controller encounters, NORMAL/HELL, observedphase3peak/release, high/low quality.",
+  "fixture": "checkpointphase3, attacksandrotationdisabled, explicitdamageimmunity,1800actualsimulationticks perencounter/difficulty. Notnaturalprogress.",
+  "exclusions": [
+    "browser",
+    "headless-browser",
+    "software-GPU",
+    "hardware-GPU",
+    "mobile-emulation",
+    "actual-mobile-device",
+    "natural-progress",
+    "download/decode timing",
+    "simulation timing"
+  ],
+  "codeHashes": {
+    "src/core.js": "3ae3417a3b3b64f51fddfd4189719a590ea3a28f588ff6b51a4853216f92fbea",
+    "src/actors.js": "4713e96f4f75462872ddef3d0f0709c93c359acc6fe2c1c100da38ef73e3fb1d",
+    "src/projectiles.js": "c76f60f03f2bb6e961a9e066d1d89b08eabacc5a7ba4824975e0d23a99404723",
+    "src/boss-skills.js": "9e825136fdb3a8cb3406e1e3a481eaadd6eab43c55be9e77608de9a57d358238",
+    "src/render.js": "3a01171b1538dc6298cdc3c02613fdea98e99900baeeb823f92e5aa3d19ae7e0",
+    "src/media.js": "594dc9a42bbc110d45ebc641e9a31c4e3634d583fe0556b2301977657a3e2525"
+  },
+  "sources": [
+    {
+      "key": "gunner",
+      "path": "media/gunner.webp",
+      "bytes": 70104,
+      "sha256": "8f21f6f0e90a9b44fc336de7f3cde193b06317102a7bd0271c36096bb000c111",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "chapter3ControllerIdle",
+      "path": "media/chapter3-v18/controller-idle.webp",
+      "bytes": 38690,
+      "sha256": "57572d1817eb492873e20c771cb1a46f02acf7e2f8a9ddde84a46fdd893458ed",
+      "dimensions": [
+        672,
+        384
+      ]
+    },
+    {
+      "key": "chapter3ControllerAttack",
+      "path": "media/chapter3-v18/controller-attack.webp",
+      "bytes": 51488,
+      "sha256": "ee7a2d409dab8df05a1455f314d07ead6c507730e4c13f6fd1944701edcc56e5",
+      "dimensions": [
+        672,
+        384
+      ]
+    },
+    {
+      "key": "chapter3ControllerRain",
+      "path": "media/chapter3-v18/controller-rain.webp",
+      "bytes": 45882,
+      "sha256": "f883e208c90ed4e4173f23563f037eb75e4eb977297d7f5e64cebe936338da1c",
+      "dimensions": [
+        672,
+        384
+      ]
+    },
+    {
+      "key": "chapter3ControllerTransition",
+      "path": "media/chapter3-v18/controller-transition.webp",
+      "bytes": 56132,
+      "sha256": "7a2ea2a9cef73f8c84d67317ef99305be2b878d57fd32b0ac9eaea50de5015b9",
+      "dimensions": [
+        672,
+        384
+      ]
+    },
+    {
+      "key": "chapter3DroneIdle",
+      "path": "media/chapter3-v18/drone-idle.png",
+      "bytes": 58007,
+      "sha256": "fe5a1aee2cac38719ccb40e319ea455f876b2bdb20ff36577505d5a3a31f702a",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "chapter3DroneAttack",
+      "path": "media/chapter3-v18/drone-attack.png",
+      "bytes": 54125,
+      "sha256": "b70abecbf2f1dc6b02da9378a1b098be992729297c2b8dade9dd14a956915874",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "chapter3DroneDestroyed",
+      "path": "media/chapter3-v18/drone-destroyed.png",
+      "bytes": 70878,
+      "sha256": "5b571612ca80e062235231b16ee2828f68a38452cd32b822fabff30409961b64",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "chapter3Beam",
+      "path": "media/chapter3-v18/beam.webp",
+      "bytes": 52734,
+      "sha256": "630a74006bc13b02614445ce91aa87d12ca32f0e17a54100360629a2fb3d0be2",
+      "dimensions": [
+        768,
+        144
+      ]
+    },
+    {
+      "key": "chapter3Lance",
+      "path": "media/chapter3-v18/lance.webp",
+      "bytes": 29140,
+      "sha256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+      "dimensions": [
+        512,
+        192
+      ]
+    },
+    {
+      "key": "chapter3MemoryGate",
+      "path": "media/chapter3-v18/memory-gate.png",
+      "bytes": 414247,
+      "sha256": "ce3bfa2b39fc64d3f886fb286e1b836b7562728c8ab84005d49a91c9fbfb7fb8",
+      "dimensions": [
+        1671,
+        941
+      ]
+    },
+    {
+      "key": "chapter3WarMap",
+      "path": "media/chapter3-v18/war.jpg",
+      "bytes": 435547,
+      "sha256": "50652acebcb60c2f2e51363cf3253a0a097706b43bffb017d4f4a5c750b338e4",
+      "dimensions": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "key": "chapter3MigrationMap",
+      "path": "media/chapter3-v18/migration.jpg",
+      "bytes": 438792,
+      "sha256": "7f2ca446df7548ed3914b5f0603ed945d306a0393da7bf15fcea05e646a042d1",
+      "dimensions": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "key": "chapter3GateMap",
+      "path": "media/chapter3-v18/gate.jpg",
+      "bytes": 251516,
+      "sha256": "0eedfd6b9ec263de1a43af5af6b8eadd2327d30cbf0c2783e167833516a49ac6",
+      "dimensions": [
+        960,
+        600
+      ]
+    },
+    {
+      "key": "chapter3NexusMap",
+      "path": "media/chapter3-v18/nexus.jpg",
+      "bytes": 448814,
+      "sha256": "afa5dab58544cf1294e278e98ee74a30df99854ff984183051435893d5dedf83",
+      "dimensions": [
+        1600,
+        1000
+      ]
+    },
+    {
+      "key": "chapter3U201Atlas",
+      "path": "media/chapter3-v18/u201-atlas.png",
+      "bytes": 185407,
+      "sha256": "80f7321f14b7ebcb199e752ee81c875c7f7e5d3ad522ed88d96f0a3e14d69080",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "chapter3U202Atlas",
+      "path": "media/chapter3-v18/u202-atlas.png",
+      "bytes": 270537,
+      "sha256": "2996937c9ebd04cff93798d143ef7b51734e21385788b2dac0ed1c7b9009e8e5",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "chapter3U204Atlas",
+      "path": "media/chapter3-v18/u204-atlas.png",
+      "bytes": 172996,
+      "sha256": "2a70b0bd57b5909788141abd0f8681f4c4f72cc97dfff35634a4fa06fc04c34b",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "chapter3U205Atlas",
+      "path": "media/chapter3-v18/u205-atlas.png",
+      "bytes": 184436,
+      "sha256": "8db8887ccff85d983414676e0d6e1761ca51aa6acf9991783a7cea2a6b92570f",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "key": "chapter3MigrationCoreAtlas",
+      "path": "media/chapter3-v18/migration-core.png",
+      "bytes": 1227321,
+      "sha256": "101ab5a8742368d192b585fe4a909ef39213f122bcbe5bee1d934b0838b1efa4",
+      "dimensions": [
+        2172,
+        724
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "bossIndex": 12,
+      "scene": "u201",
+      "difficulty": "normal",
+      "case": "peak",
+      "quality": "high",
+      "tick": 235,
+      "bullets": 67,
+      "visibleLasers": 0,
+      "p50Ms": 1.7005679999999757,
+      "p95Ms": 6.438939000000005,
+      "maxMs": 6.673935000000029,
+      "sourceBody": "chapter3U201Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U201Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          122,
+          132
+        ],
+        "scale": 0.67,
+        "position": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "combatPosition": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 235,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 65316,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 67,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 12,
+      "scene": "u201",
+      "difficulty": "normal",
+      "case": "peak",
+      "quality": "low",
+      "tick": 235,
+      "bullets": 67,
+      "visibleLasers": 0,
+      "p50Ms": 0.9773910000000114,
+      "p95Ms": 1.9043990000000122,
+      "maxMs": 2.129852000000028,
+      "sourceBody": "chapter3U201Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U201Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          122,
+          132
+        ],
+        "scale": 0.67,
+        "position": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "combatPosition": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 235,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 65316,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 67,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 12,
+      "scene": "u201",
+      "difficulty": "normal",
+      "case": "release",
+      "quality": "high",
+      "tick": 127,
+      "bullets": 29,
+      "visibleLasers": 0,
+      "p50Ms": 0.6412260000000742,
+      "p95Ms": 0.7243079999999509,
+      "maxMs": 0.7440179999999827,
+      "sourceBody": "chapter3U201Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U201Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          122,
+          132
+        ],
+        "scale": 0.67,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 67,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 12,
+      "scene": "u201",
+      "difficulty": "normal",
+      "case": "release",
+      "quality": "low",
+      "tick": 127,
+      "bullets": 29,
+      "visibleLasers": 0,
+      "p50Ms": 0.6021879999998418,
+      "p95Ms": 0.6736039999998411,
+      "maxMs": 1.0878150000000915,
+      "sourceBody": "chapter3U201Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U201Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          122,
+          132
+        ],
+        "scale": 0.67,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 67,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 13,
+      "scene": "u202",
+      "difficulty": "normal",
+      "case": "peak",
+      "quality": "high",
+      "tick": 235,
+      "bullets": 73,
+      "visibleLasers": 0,
+      "p50Ms": 1.0429079999998976,
+      "p95Ms": 6.4617030000001705,
+      "maxMs": 6.740573999999924,
+      "sourceBody": "chapter3U202Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U202Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          124,
+          111
+        ],
+        "scale": 0.64,
+        "position": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "combatPosition": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 235,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 88804,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 73,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 13,
+      "scene": "u202",
+      "difficulty": "normal",
+      "case": "peak",
+      "quality": "low",
+      "tick": 235,
+      "bullets": 73,
+      "visibleLasers": 0,
+      "p50Ms": 1.0406149999998888,
+      "p95Ms": 1.6203299999999672,
+      "maxMs": 1.880914999999959,
+      "sourceBody": "chapter3U202Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U202Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          124,
+          111
+        ],
+        "scale": 0.64,
+        "position": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "combatPosition": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 235,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 88804,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 73,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 13,
+      "scene": "u202",
+      "difficulty": "normal",
+      "case": "release",
+      "quality": "high",
+      "tick": 127,
+      "bullets": 31,
+      "visibleLasers": 0,
+      "p50Ms": 0.6356780000000981,
+      "p95Ms": 0.8473400000000311,
+      "maxMs": 1.1927149999999074,
+      "sourceBody": "chapter3U202Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U202Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          124,
+          111
+        ],
+        "scale": 0.64,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 73,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 13,
+      "scene": "u202",
+      "difficulty": "normal",
+      "case": "release",
+      "quality": "low",
+      "tick": 127,
+      "bullets": 31,
+      "visibleLasers": 0,
+      "p50Ms": 0.6140550000000076,
+      "p95Ms": 0.7019159999999829,
+      "maxMs": 0.7695959999998649,
+      "sourceBody": "chapter3U202Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U202Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          124,
+          111
+        ],
+        "scale": 0.64,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 73,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 14,
+      "scene": "u204",
+      "difficulty": "normal",
+      "case": "peak",
+      "quality": "high",
+      "tick": 235,
+      "bullets": 73,
+      "visibleLasers": 0,
+      "p50Ms": 1.0280370000000403,
+      "p95Ms": 1.2601489999999558,
+      "maxMs": 1.2699629999999615,
+      "sourceBody": "chapter3U204Atlas",
+      "sourceTerrain": "chapter3NexusMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U204Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          138,
+          139
+        ],
+        "scale": 0.68,
+        "position": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "combatPosition": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 235,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 88804,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 73,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 14,
+      "scene": "u204",
+      "difficulty": "normal",
+      "case": "peak",
+      "quality": "low",
+      "tick": 235,
+      "bullets": 73,
+      "visibleLasers": 0,
+      "p50Ms": 1.0238510000001497,
+      "p95Ms": 1.378783999999996,
+      "maxMs": 1.6751910000000407,
+      "sourceBody": "chapter3U204Atlas",
+      "sourceTerrain": "chapter3NexusMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U204Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          138,
+          139
+        ],
+        "scale": 0.68,
+        "position": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "combatPosition": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 235,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 88804,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 73,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 14,
+      "scene": "u204",
+      "difficulty": "normal",
+      "case": "release",
+      "quality": "high",
+      "tick": 127,
+      "bullets": 31,
+      "visibleLasers": 0,
+      "p50Ms": 0.5969010000001163,
+      "p95Ms": 0.6880750000000262,
+      "maxMs": 0.7025860000001103,
+      "sourceBody": "chapter3U204Atlas",
+      "sourceTerrain": "chapter3NexusMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U204Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          138,
+          139
+        ],
+        "scale": 0.68,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 73,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 14,
+      "scene": "u204",
+      "difficulty": "normal",
+      "case": "release",
+      "quality": "low",
+      "tick": 127,
+      "bullets": 31,
+      "visibleLasers": 0,
+      "p50Ms": 0.6075559999999314,
+      "p95Ms": 2.6593129999998837,
+      "maxMs": 3.8496990000001006,
+      "sourceBody": "chapter3U204Atlas",
+      "sourceTerrain": "chapter3NexusMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U204Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          138,
+          139
+        ],
+        "scale": 0.68,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 73,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 15,
+      "scene": "u205",
+      "difficulty": "normal",
+      "case": "peak",
+      "quality": "high",
+      "tick": 235,
+      "bullets": 73,
+      "visibleLasers": 0,
+      "p50Ms": 1.008737999999994,
+      "p95Ms": 4.659654000000046,
+      "maxMs": 5.256595000000061,
+      "sourceBody": "chapter3U205Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U205Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          139,
+          121
+        ],
+        "scale": 0.71,
+        "position": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "combatPosition": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 235,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 88804,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 73,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 15,
+      "scene": "u205",
+      "difficulty": "normal",
+      "case": "peak",
+      "quality": "low",
+      "tick": 235,
+      "bullets": 73,
+      "visibleLasers": 0,
+      "p50Ms": 0.9960499999999683,
+      "p95Ms": 1.1551739999999882,
+      "maxMs": 1.2701640000000225,
+      "sourceBody": "chapter3U205Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U205Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          139,
+          121
+        ],
+        "scale": 0.71,
+        "position": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "combatPosition": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 235,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 88804,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 73,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 15,
+      "scene": "u205",
+      "difficulty": "normal",
+      "case": "release",
+      "quality": "high",
+      "tick": 127,
+      "bullets": 31,
+      "visibleLasers": 0,
+      "p50Ms": 0.5866449999998622,
+      "p95Ms": 0.7857490000001235,
+      "maxMs": 1.1422350000000279,
+      "sourceBody": "chapter3U205Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U205Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          139,
+          121
+        ],
+        "scale": 0.71,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 73,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 15,
+      "scene": "u205",
+      "difficulty": "normal",
+      "case": "release",
+      "quality": "low",
+      "tick": 127,
+      "bullets": 31,
+      "visibleLasers": 0,
+      "p50Ms": 0.5878370000000359,
+      "p95Ms": 0.6663530000000719,
+      "maxMs": 0.9974110000002838,
+      "sourceBody": "chapter3U205Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U205Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          139,
+          121
+        ],
+        "scale": 0.71,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 73,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 16,
+      "scene": "u206",
+      "difficulty": "normal",
+      "case": "peak",
+      "quality": "high",
+      "tick": 235,
+      "bullets": 78,
+      "visibleLasers": 0,
+      "p50Ms": 1.0116829999997208,
+      "p95Ms": 1.2881200000001627,
+      "maxMs": 5.7691500000000815,
+      "sourceBody": "chapter3MigrationCoreAtlas",
+      "sourceTerrain": "chapter3MigrationMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3MigrationCoreAtlas",
+        "sourceRect": [
+          1448,
+          0,
+          724,
+          724
+        ],
+        "anchor": [
+          362,
+          370
+        ],
+        "scale": 0.23,
+        "position": [
+          202.91952209754157,
+          114.6195178581571
+        ],
+        "combatPosition": [
+          202.91952209754157,
+          114.6195178581571
+        ],
+        "authoredKeyposes": 3,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 235,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 65316,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 78,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 16,
+      "scene": "u206",
+      "difficulty": "normal",
+      "case": "peak",
+      "quality": "low",
+      "tick": 235,
+      "bullets": 78,
+      "visibleLasers": 0,
+      "p50Ms": 1.011232000000291,
+      "p95Ms": 1.3089410000002317,
+      "maxMs": 1.8204860000000735,
+      "sourceBody": "chapter3MigrationCoreAtlas",
+      "sourceTerrain": "chapter3MigrationMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3MigrationCoreAtlas",
+        "sourceRect": [
+          1448,
+          0,
+          724,
+          724
+        ],
+        "anchor": [
+          362,
+          370
+        ],
+        "scale": 0.23,
+        "position": [
+          202.91952209754157,
+          114.6195178581571
+        ],
+        "combatPosition": [
+          202.91952209754157,
+          114.6195178581571
+        ],
+        "authoredKeyposes": 3,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 235,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 65316,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 78,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 16,
+      "scene": "u206",
+      "difficulty": "normal",
+      "case": "release",
+      "quality": "high",
+      "tick": 127,
+      "bullets": 32,
+      "visibleLasers": 0,
+      "p50Ms": 0.49689300000000003,
+      "p95Ms": 0.7245990000001257,
+      "maxMs": 0.7371229999998832,
+      "sourceBody": "chapter3MigrationCoreAtlas",
+      "sourceTerrain": "chapter3MigrationMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3MigrationCoreAtlas",
+        "sourceRect": [
+          1448,
+          0,
+          724,
+          724
+        ],
+        "anchor": [
+          362,
+          370
+        ],
+        "scale": 0.23,
+        "position": [
+          200.29839432531094,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          200.29839432531094,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 3,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 78,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 16,
+      "scene": "u206",
+      "difficulty": "normal",
+      "case": "release",
+      "quality": "low",
+      "tick": 127,
+      "bullets": 32,
+      "visibleLasers": 0,
+      "p50Ms": 0.582589999999982,
+      "p95Ms": 0.7126909999997224,
+      "maxMs": 4.182168999999703,
+      "sourceBody": "chapter3MigrationCoreAtlas",
+      "sourceTerrain": "chapter3MigrationMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3MigrationCoreAtlas",
+        "sourceRect": [
+          1448,
+          0,
+          724,
+          724
+        ],
+        "anchor": [
+          362,
+          370
+        ],
+        "scale": 0.23,
+        "position": [
+          200.29839432531094,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          200.29839432531094,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 3,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 78,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 17,
+      "scene": "u203",
+      "difficulty": "normal",
+      "case": "peak",
+      "quality": "high",
+      "tick": 235,
+      "bullets": 73,
+      "visibleLasers": 0,
+      "p50Ms": 0.9971909999999298,
+      "p95Ms": 1.044130000000223,
+      "maxMs": 1.0684159999996155,
+      "sourceBody": "chapter3ControllerAttack",
+      "sourceTerrain": "chapter3GateMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3ControllerAttack",
+        "sourceRect": [
+          0,
+          0,
+          672,
+          384
+        ],
+        "anchor": [
+          349,
+          184
+        ],
+        "scale": 0.47,
+        "position": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "combatPosition": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 235,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 88804,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 73,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 17,
+      "scene": "u203",
+      "difficulty": "normal",
+      "case": "peak",
+      "quality": "low",
+      "tick": 235,
+      "bullets": 73,
+      "visibleLasers": 0,
+      "p50Ms": 0.9865649999997004,
+      "p95Ms": 1.4648500000002969,
+      "maxMs": 2.697855000000345,
+      "sourceBody": "chapter3ControllerAttack",
+      "sourceTerrain": "chapter3GateMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3ControllerAttack",
+        "sourceRect": [
+          0,
+          0,
+          672,
+          384
+        ],
+        "anchor": [
+          349,
+          184
+        ],
+        "scale": 0.47,
+        "position": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "combatPosition": [
+          220.10916367069774,
+          114.6195178581571
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 235,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 88804,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 73,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 17,
+      "scene": "u203",
+      "difficulty": "normal",
+      "case": "release",
+      "quality": "high",
+      "tick": 127,
+      "bullets": 31,
+      "visibleLasers": 0,
+      "p50Ms": 0.568569000000025,
+      "p95Ms": 0.6478959999999461,
+      "maxMs": 0.7221650000001318,
+      "sourceBody": "chapter3ControllerAttack",
+      "sourceTerrain": "chapter3GateMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3ControllerAttack",
+        "sourceRect": [
+          0,
+          0,
+          672,
+          384
+        ],
+        "anchor": [
+          349,
+          184
+        ],
+        "scale": 0.47,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 73,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 17,
+      "scene": "u203",
+      "difficulty": "normal",
+      "case": "release",
+      "quality": "low",
+      "tick": 127,
+      "bullets": 31,
+      "visibleLasers": 0,
+      "p50Ms": 0.5826900000001842,
+      "p95Ms": 0.656778999999915,
+      "maxMs": 2.5739870000002156,
+      "sourceBody": "chapter3ControllerAttack",
+      "sourceTerrain": "chapter3GateMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3ControllerAttack",
+        "sourceRect": [
+          0,
+          0,
+          672,
+          384
+        ],
+        "anchor": [
+          349,
+          184
+        ],
+        "scale": 0.47,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 73,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 12,
+      "scene": "u201",
+      "difficulty": "hell",
+      "case": "peak",
+      "quality": "high",
+      "tick": 1261,
+      "bullets": 72,
+      "visibleLasers": 0,
+      "p50Ms": 1.0185719999999492,
+      "p95Ms": 1.171839000000091,
+      "maxMs": 1.3449040000000423,
+      "sourceBody": "chapter3U201Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U201Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          122,
+          132
+        ],
+        "scale": 0.67,
+        "position": [
+          149.1658888299874,
+          112.9385746272557
+        ],
+        "combatPosition": [
+          149.1658888299874,
+          112.9385746272557
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 1261,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 1,
+      "cache": {
+        "projectile": 65316,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 72,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 12,
+      "scene": "u201",
+      "difficulty": "hell",
+      "case": "peak",
+      "quality": "low",
+      "tick": 1261,
+      "bullets": 72,
+      "visibleLasers": 0,
+      "p50Ms": 0.9860539999999673,
+      "p95Ms": 1.3179639999998471,
+      "maxMs": 1.7965009999998074,
+      "sourceBody": "chapter3U201Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U201Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          122,
+          132
+        ],
+        "scale": 0.67,
+        "position": [
+          149.1658888299874,
+          112.9385746272557
+        ],
+        "combatPosition": [
+          149.1658888299874,
+          112.9385746272557
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 1261,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 1,
+      "cache": {
+        "projectile": 65316,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 72,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 12,
+      "scene": "u201",
+      "difficulty": "hell",
+      "case": "release",
+      "quality": "high",
+      "tick": 127,
+      "bullets": 29,
+      "visibleLasers": 0,
+      "p50Ms": 0.551003000000037,
+      "p95Ms": 0.6242110000002867,
+      "maxMs": 0.6250319999999192,
+      "sourceBody": "chapter3U201Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U201Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          122,
+          132
+        ],
+        "scale": 0.67,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 72,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 12,
+      "scene": "u201",
+      "difficulty": "hell",
+      "case": "release",
+      "quality": "low",
+      "tick": 127,
+      "bullets": 29,
+      "visibleLasers": 0,
+      "p50Ms": 0.5696800000000621,
+      "p95Ms": 0.6875439999998889,
+      "maxMs": 0.694735000000037,
+      "sourceBody": "chapter3U201Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U201Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          122,
+          132
+        ],
+        "scale": 0.67,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 72,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 13,
+      "scene": "u202",
+      "difficulty": "hell",
+      "case": "peak",
+      "quality": "high",
+      "tick": 1261,
+      "bullets": 77,
+      "visibleLasers": 0,
+      "p50Ms": 1.1198919999997088,
+      "p95Ms": 2.1081100000001243,
+      "maxMs": 4.91394900000023,
+      "sourceBody": "chapter3U202Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U202Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          124,
+          111
+        ],
+        "scale": 0.64,
+        "position": [
+          149.1658888299874,
+          112.9385746272557
+        ],
+        "combatPosition": [
+          149.1658888299874,
+          112.9385746272557
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 1261,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 1,
+      "cache": {
+        "projectile": 88804,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 77,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 13,
+      "scene": "u202",
+      "difficulty": "hell",
+      "case": "peak",
+      "quality": "low",
+      "tick": 1261,
+      "bullets": 77,
+      "visibleLasers": 0,
+      "p50Ms": 1.0314210000001367,
+      "p95Ms": 1.2775950000000194,
+      "maxMs": 1.6244660000002114,
+      "sourceBody": "chapter3U202Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U202Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          124,
+          111
+        ],
+        "scale": 0.64,
+        "position": [
+          149.1658888299874,
+          112.9385746272557
+        ],
+        "combatPosition": [
+          149.1658888299874,
+          112.9385746272557
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 1261,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 1,
+      "cache": {
+        "projectile": 88804,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 77,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 13,
+      "scene": "u202",
+      "difficulty": "hell",
+      "case": "release",
+      "quality": "high",
+      "tick": 127,
+      "bullets": 31,
+      "visibleLasers": 0,
+      "p50Ms": 0.6415759999999864,
+      "p95Ms": 0.7589889999999286,
+      "maxMs": 0.7918479999998453,
+      "sourceBody": "chapter3U202Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U202Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          124,
+          111
+        ],
+        "scale": 0.64,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 77,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 13,
+      "scene": "u202",
+      "difficulty": "hell",
+      "case": "release",
+      "quality": "low",
+      "tick": 127,
+      "bullets": 31,
+      "visibleLasers": 0,
+      "p50Ms": 0.719861999999921,
+      "p95Ms": 0.8344810000003235,
+      "maxMs": 0.8545410000001539,
+      "sourceBody": "chapter3U202Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U202Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          124,
+          111
+        ],
+        "scale": 0.64,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 77,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 14,
+      "scene": "u204",
+      "difficulty": "hell",
+      "case": "peak",
+      "quality": "high",
+      "tick": 253,
+      "bullets": 74,
+      "visibleLasers": 0,
+      "p50Ms": 0.9912220000001071,
+      "p95Ms": 1.18769199999997,
+      "maxMs": 1.2349119999998948,
+      "sourceBody": "chapter3U204Atlas",
+      "sourceTerrain": "chapter3NexusMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U204Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          138,
+          139
+        ],
+        "scale": 0.68,
+        "position": [
+          217.90596490544633,
+          112.9385746272557
+        ],
+        "combatPosition": [
+          217.90596490544633,
+          112.9385746272557
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 253,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 1,
+      "cache": {
+        "projectile": 88804,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 74,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 14,
+      "scene": "u204",
+      "difficulty": "hell",
+      "case": "peak",
+      "quality": "low",
+      "tick": 253,
+      "bullets": 74,
+      "visibleLasers": 0,
+      "p50Ms": 1.0033100000000559,
+      "p95Ms": 1.0638199999998506,
+      "maxMs": 1.084309999999732,
+      "sourceBody": "chapter3U204Atlas",
+      "sourceTerrain": "chapter3NexusMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U204Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          138,
+          139
+        ],
+        "scale": 0.68,
+        "position": [
+          217.90596490544633,
+          112.9385746272557
+        ],
+        "combatPosition": [
+          217.90596490544633,
+          112.9385746272557
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 253,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 1,
+      "cache": {
+        "projectile": 88804,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 74,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 14,
+      "scene": "u204",
+      "difficulty": "hell",
+      "case": "release",
+      "quality": "high",
+      "tick": 127,
+      "bullets": 31,
+      "visibleLasers": 0,
+      "p50Ms": 0.5877970000001369,
+      "p95Ms": 0.6557370000000446,
+      "maxMs": 0.8374850000000151,
+      "sourceBody": "chapter3U204Atlas",
+      "sourceTerrain": "chapter3NexusMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U204Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          138,
+          139
+        ],
+        "scale": 0.68,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 74,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 14,
+      "scene": "u204",
+      "difficulty": "hell",
+      "case": "release",
+      "quality": "low",
+      "tick": 127,
+      "bullets": 31,
+      "visibleLasers": 0,
+      "p50Ms": 0.5810169999999744,
+      "p95Ms": 0.6282670000000508,
+      "maxMs": 0.6498590000001059,
+      "sourceBody": "chapter3U204Atlas",
+      "sourceTerrain": "chapter3NexusMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U204Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          138,
+          139
+        ],
+        "scale": 0.68,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 74,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 15,
+      "scene": "u205",
+      "difficulty": "hell",
+      "case": "peak",
+      "quality": "high",
+      "tick": 547,
+      "bullets": 74,
+      "visibleLasers": 0,
+      "p50Ms": 1.0211460000000443,
+      "p95Ms": 1.0682659999997668,
+      "maxMs": 4.560998000000382,
+      "sourceBody": "chapter3U205Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U205Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          139,
+          121
+        ],
+        "scale": 0.71,
+        "position": [
+          210.46614427360643,
+          116.65864519619265
+        ],
+        "combatPosition": [
+          210.46614427360643,
+          116.65864519619265
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 547,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 88804,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 74,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 15,
+      "scene": "u205",
+      "difficulty": "hell",
+      "case": "peak",
+      "quality": "low",
+      "tick": 547,
+      "bullets": 74,
+      "visibleLasers": 0,
+      "p50Ms": 1.0167900000001282,
+      "p95Ms": 1.117189000000053,
+      "maxMs": 1.3681990000000042,
+      "sourceBody": "chapter3U205Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U205Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          139,
+          121
+        ],
+        "scale": 0.71,
+        "position": [
+          210.46614427360643,
+          116.65864519619265
+        ],
+        "combatPosition": [
+          210.46614427360643,
+          116.65864519619265
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 547,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 88804,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 74,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 15,
+      "scene": "u205",
+      "difficulty": "hell",
+      "case": "release",
+      "quality": "high",
+      "tick": 127,
+      "bullets": 31,
+      "visibleLasers": 0,
+      "p50Ms": 0.5848329999998896,
+      "p95Ms": 0.6663530000000719,
+      "maxMs": 0.6838390000002619,
+      "sourceBody": "chapter3U205Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U205Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          139,
+          121
+        ],
+        "scale": 0.71,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 74,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 15,
+      "scene": "u205",
+      "difficulty": "hell",
+      "case": "release",
+      "quality": "low",
+      "tick": 127,
+      "bullets": 31,
+      "visibleLasers": 0,
+      "p50Ms": 0.5730049999997391,
+      "p95Ms": 0.6727729999997791,
+      "maxMs": 1.4827479999999014,
+      "sourceBody": "chapter3U205Atlas",
+      "sourceTerrain": "chapter3WarMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3U205Atlas",
+        "sourceRect": [
+          0,
+          256,
+          256,
+          256
+        ],
+        "anchor": [
+          139,
+          121
+        ],
+        "scale": 0.71,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 74,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 16,
+      "scene": "u206",
+      "difficulty": "hell",
+      "case": "peak",
+      "quality": "high",
+      "tick": 211,
+      "bullets": 78,
+      "visibleLasers": 0,
+      "p50Ms": 1.0231289999996989,
+      "p95Ms": 1.1131020000002536,
+      "maxMs": 5.595264000000043,
+      "sourceBody": "chapter3MigrationCoreAtlas",
+      "sourceTerrain": "chapter3MigrationMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3MigrationCoreAtlas",
+        "sourceRect": [
+          1448,
+          0,
+          724,
+          724
+        ],
+        "anchor": [
+          362,
+          370
+        ],
+        "scale": 0.23,
+        "position": [
+          203.85703685275382,
+          116.65864519619265
+        ],
+        "combatPosition": [
+          203.85703685275382,
+          116.65864519619265
+        ],
+        "authoredKeyposes": 3,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 211,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 65316,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 78,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 16,
+      "scene": "u206",
+      "difficulty": "hell",
+      "case": "peak",
+      "quality": "low",
+      "tick": 211,
+      "bullets": 78,
+      "visibleLasers": 0,
+      "p50Ms": 1.010211000000254,
+      "p95Ms": 1.1524699999999939,
+      "maxMs": 1.455797000000075,
+      "sourceBody": "chapter3MigrationCoreAtlas",
+      "sourceTerrain": "chapter3MigrationMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3MigrationCoreAtlas",
+        "sourceRect": [
+          1448,
+          0,
+          724,
+          724
+        ],
+        "anchor": [
+          362,
+          370
+        ],
+        "scale": 0.23,
+        "position": [
+          203.85703685275382,
+          116.65864519619265
+        ],
+        "combatPosition": [
+          203.85703685275382,
+          116.65864519619265
+        ],
+        "authoredKeyposes": 3,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 211,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 65316,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 78,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 16,
+      "scene": "u206",
+      "difficulty": "hell",
+      "case": "release",
+      "quality": "high",
+      "tick": 127,
+      "bullets": 32,
+      "visibleLasers": 0,
+      "p50Ms": 0.5883180000000721,
+      "p95Ms": 0.6391120000002957,
+      "maxMs": 0.667884999999842,
+      "sourceBody": "chapter3MigrationCoreAtlas",
+      "sourceTerrain": "chapter3MigrationMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3MigrationCoreAtlas",
+        "sourceRect": [
+          1448,
+          0,
+          724,
+          724
+        ],
+        "anchor": [
+          362,
+          370
+        ],
+        "scale": 0.23,
+        "position": [
+          200.29839432531094,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          200.29839432531094,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 3,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 78,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 16,
+      "scene": "u206",
+      "difficulty": "hell",
+      "case": "release",
+      "quality": "low",
+      "tick": 127,
+      "bullets": 32,
+      "visibleLasers": 0,
+      "p50Ms": 0.5928340000000389,
+      "p95Ms": 0.6693269999996119,
+      "maxMs": 1.2090839999996206,
+      "sourceBody": "chapter3MigrationCoreAtlas",
+      "sourceTerrain": "chapter3MigrationMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3MigrationCoreAtlas",
+        "sourceRect": [
+          1448,
+          0,
+          724,
+          724
+        ],
+        "anchor": [
+          362,
+          370
+        ],
+        "scale": 0.23,
+        "position": [
+          200.29839432531094,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          200.29839432531094,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 3,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 78,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 17,
+      "scene": "u203",
+      "difficulty": "hell",
+      "case": "peak",
+      "quality": "high",
+      "tick": 211,
+      "bullets": 72,
+      "visibleLasers": 0,
+      "p50Ms": 0.9806359999997767,
+      "p95Ms": 1.053704999999809,
+      "maxMs": 1.1730610000004162,
+      "sourceBody": "chapter3ControllerAttack",
+      "sourceTerrain": "chapter3GateMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3ControllerAttack",
+        "sourceRect": [
+          0,
+          0,
+          672,
+          384
+        ],
+        "anchor": [
+          349,
+          184
+        ],
+        "scale": 0.47,
+        "position": [
+          221.7498144923192,
+          116.65864519619265
+        ],
+        "combatPosition": [
+          221.7498144923192,
+          116.65864519619265
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 211,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 88804,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 72,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 17,
+      "scene": "u203",
+      "difficulty": "hell",
+      "case": "peak",
+      "quality": "low",
+      "tick": 211,
+      "bullets": 72,
+      "visibleLasers": 0,
+      "p50Ms": 0.9585040000001754,
+      "p95Ms": 1.0265250000002197,
+      "maxMs": 1.0465240000003178,
+      "sourceBody": "chapter3ControllerAttack",
+      "sourceTerrain": "chapter3GateMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3ControllerAttack",
+        "sourceRect": [
+          0,
+          0,
+          672,
+          384
+        ],
+        "anchor": [
+          349,
+          184
+        ],
+        "scale": 0.47,
+        "position": [
+          221.7498144923192,
+          116.65864519619265
+        ],
+        "combatPosition": [
+          221.7498144923192,
+          116.65864519619265
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 211,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 88804,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 72,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 17,
+      "scene": "u203",
+      "difficulty": "hell",
+      "case": "release",
+      "quality": "high",
+      "tick": 127,
+      "bullets": 31,
+      "visibleLasers": 0,
+      "p50Ms": 0.5943170000000464,
+      "p95Ms": 0.6647410000005038,
+      "maxMs": 1.2224340000002485,
+      "sourceBody": "chapter3ControllerAttack",
+      "sourceTerrain": "chapter3GateMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3ControllerAttack",
+        "sourceRect": [
+          0,
+          0,
+          672,
+          384
+        ],
+        "anchor": [
+          349,
+          184
+        ],
+        "scale": 0.47,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 72,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "bossIndex": 17,
+      "scene": "u203",
+      "difficulty": "hell",
+      "case": "release",
+      "quality": "low",
+      "tick": 127,
+      "bullets": 31,
+      "visibleLasers": 0,
+      "p50Ms": 0.5962790000003224,
+      "p95Ms": 0.6660620000002382,
+      "maxMs": 0.7131920000001628,
+      "sourceBody": "chapter3ControllerAttack",
+      "sourceTerrain": "chapter3GateMap",
+      "actorSample": {
+        "frame": 2,
+        "key": "chapter3ControllerAttack",
+        "sourceRect": [
+          0,
+          0,
+          672,
+          384
+        ],
+        "anchor": [
+          349,
+          184
+        ],
+        "scale": 0.47,
+        "position": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "combatPosition": [
+          215.52219006929414,
+          119.98617595099756
+        ],
+        "authoredKeyposes": 4,
+        "fullAnimationCycles": 0,
+        "sourcePivotsCertified": false,
+        "actualReleaseTick": 127,
+        "releaseAge": 0
+      },
+      "sourceSkillDraws": 2,
+      "cache": {
+        "projectile": 57828,
+        "skills": 36864,
+        "scene": 1036800
+      },
+      "observation": {
+        "ticks": 1800,
+        "peakBullets": 72,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    }
+  ]
+}

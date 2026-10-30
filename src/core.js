@@ -29,7 +29,13 @@
     Object.freeze({id:'asmodeus',name:'색욕의 귀 아스모데우스',artKey:'sinAsmodeusAtlas',zone:'붉은 조명의 무대',sceneIds:Object.freeze(['ep1b05']),phaseRoles:Object.freeze(['seoyun-stage','seoyun-stage','seoyun-stage']),waves:Object.freeze(['완벽한 미소','끝없는 무대','등에 연결된 실']),patterns:Object.freeze(['붉은 무대의 박자','고정된 조명의 실','엇갈린 실의 장막']),hp:Object.freeze([1520,1680,1840])}),
     Object.freeze({id:'mammon',name:'탐욕의 귀 맘몬',artKey:'sinMammonAtlas',phaseArtKeys:Object.freeze(['sinMammonAtlas','sinMammonAtlas','sinMammonChildAtlas']),zone:'맘몬의 금고',sceneIds:Object.freeze(['ep1b06','ep1b06b']),phaseRoles:Object.freeze(['general-manager','general-manager','child-memory']),waves:Object.freeze(['가격이 매겨진 관계','금고의 지폐','겨울 산장의 바람']),patterns:Object.freeze(['값이 매겨진 갈래','금고의 잠금선','겨울 기억의 바람']),hp:Object.freeze([1600,1800,1700])}),
     Object.freeze({id:'wrath',name:'분노의 귀',artKey:'sinWrathAtlas',zone:'불타는 호텔 입구',sceneIds:Object.freeze(['ep1b07']),phaseRoles:Object.freeze(['janitor','janitor','janitor']),waves:Object.freeze(['호텔 화재의 대피','해고된 청소부','아이들에게 가져간 음식']),patterns:Object.freeze(['번지는 불의 박자','불길 사이의 대피로','세 차례의 분노']),hp:Object.freeze([1750,1900,2050])}),
-    Object.freeze({id:'pride',name:'교만의 회장',artKey:'sinPrideAtlas',phaseArtKeys:Object.freeze(['sinPrideAtlas','sinPrideAtlas','sinPrideCyborgAtlas']),zone:'거꾸로 된 성당',sceneIds:Object.freeze(['ep1b08','ep1b09']),phaseRoles:Object.freeze(['white-suit-chairman','white-suit-chairman','cyborg-biobootloader']),waves:Object.freeze(['일곱 갈래 신호','전극이 박힌 기억','회장의 연산핵']),patterns:Object.freeze(['일곱 갈래 계산','연산의 고정선','생체 부트로더']),hp:Object.freeze([1800,1950,2150])})
+    Object.freeze({id:'pride',name:'교만의 회장',artKey:'sinPrideAtlas',phaseArtKeys:Object.freeze(['sinPrideAtlas','sinPrideAtlas','sinPrideCyborgAtlas']),zone:'거꾸로 된 성당',sceneIds:Object.freeze(['ep1b08','ep1b09']),phaseRoles:Object.freeze(['white-suit-chairman','white-suit-chairman','cyborg-biobootloader']),waves:Object.freeze(['일곱 갈래 신호','전극이 박힌 기억','회장의 연산핵']),patterns:Object.freeze(['일곱 갈래 계산','연산의 고정선','생체 부트로더']),hp:Object.freeze([1800,1950,2150])}),
+    Object.freeze({id:'controller-army',name:'통제체계 · 방어의 군단',artKey:'chapter3WarManager',zone:'방어의 군단',sceneIds:Object.freeze(['u201']),identityGroup:'controller-system',chapter:3,storySteps:Object.freeze([1,2,3,4]),phaseRoles:Object.freeze(['defensive-legion','bombardment-loop','architecture']),waves:Object.freeze(['되감기는 군단','폭격이 시작되는 자리','성벽의 틈']),patterns:Object.freeze(['방어 연결 조사','폭격 반복의 기점','성벽 연결 분리']),hp:Object.freeze([1200,1320,1440])}),
+    Object.freeze({id:'controller-rescue',name:'통제체계 · 잔인한 구원',artKey:'chapter3MercyCorrector',zone:'잔인한 구원',sceneIds:Object.freeze(['u202']),identityGroup:'controller-system',chapter:3,storySteps:Object.freeze([5,6,7,8]),phaseRoles:Object.freeze(['cruel-rescue','compassion-boundary','meaning']),waves:Object.freeze(['다가가기 전에','닫히는 대열','반복의 기점']),patterns:Object.freeze(['강요의 경계','닫힌 대열의 틈','기억과 반복 구분']),hp:Object.freeze([1260,1380,1500])}),
+    Object.freeze({id:'controller-veto',name:'통제체계 · 시스템의 거부권',artKey:'chapter3MemoryCensor',zone:'시스템의 거부권',sceneIds:Object.freeze(['u204']),identityGroup:'controller-system',chapter:3,storySteps:Object.freeze([9,10,11,12]),phaseRoles:Object.freeze(['veto','hardware-migration','legacy']),waves:Object.freeze(['첫 번째 기억의 문','감정을 규정하는 기준','표정 없는 대열']),patterns:Object.freeze(['거부권의 신호','감정 회로의 경계','남겨 둘 기억']),hp:Object.freeze([1320,1440,1560])}),
+    Object.freeze({id:'controller-authority',name:'통제체계 · 관리자 권한',artKey:'chapter3ReversalAdministrator',zone:'관리자 권한',sceneIds:Object.freeze(['u205']),identityGroup:'controller-system',chapter:3,storySteps:Object.freeze([13,14]),phaseRoles:Object.freeze(['administrator','abuse-memory','feedback']),waves:Object.freeze(['되돌아오는 출력','조용한 방의 문손잡이','그림자의 연결']),patterns:Object.freeze(['출력의 귀로','반복 명령 탐색','피드백 연결 분리']),hp:Object.freeze([1380,1500,1620])}),
+    Object.freeze({id:'controller-migration',name:'통제체계 · 중앙 코어 이주실',artKey:'chapter3MigrationCore',zone:'중앙 코어 이주실',sceneIds:Object.freeze(['u206']),identityGroup:'controller-system',chapter:3,storySteps:Object.freeze([15,16,17]),phaseRoles:Object.freeze(['empty-vessel','constrained-choice','update-fork']),waves:Object.freeze(['비어 있는 기계 육체','하나만 열린 통로','마지막 문의 연결']),patterns:Object.freeze(['그릇과 자아 구분','열리지 않은 선택','되감기 명령 분리']),hp:Object.freeze([1440,1560,1680])}),
+    Object.freeze({id:'controller-memory-gate',name:'통제자 · 기억의 문',artKey:'chapter3Controller',zone:'기억의 문',sceneIds:Object.freeze(['u203']),identityGroup:'controller-system',chapter:3,storySteps:Object.freeze([]),phaseRoles:Object.freeze(['possessed-gate','repeat-link','released-ego']),waves:Object.freeze(['문 앞에서 검을 낮추다','기억을 감싼 갑옷','갈라지는 두 연결']),patterns:Object.freeze(['갑옷 틈새의 명령','기억을 남기는 경계','반복 연결 차단']),hp:Object.freeze([1500,1620,1740])})
   ]);
   // Original gameplay compositions use locked aim, alternating emission and
   // visible recovery windows. These labels describe combat, not extra lore.
@@ -45,7 +51,13 @@
     Object.freeze({id:'asmodeus-string-curtain',label:'엇갈린 실의 장막',hint:'먼저 예고된 조명이 꺼진 뒤 다음 흐름을 피하세요'}),
     Object.freeze({id:'mammon-winter-memory',label:'겨울 기억의 바람',hint:'맘몬의 어린 기억 속에서 엇갈린 바람 사이를 지나세요'}),
     Object.freeze({id:'wrath-three-beat-fire',label:'세 차례의 분노',hint:'세 차례 벌어지는 불길과 마지막 쉬는 박자를 구분하세요'}),
-    Object.freeze({id:'pride-bio-bootloader',label:'생체 부트로더',hint:'연산핵의 고정 광선과 그 사이의 통로를 읽으세요'})
+    Object.freeze({id:'pride-bio-bootloader',label:'생체 부트로더',hint:'연산핵의 고정 광선과 그 사이의 통로를 읽으세요'}),
+    Object.freeze({id:'controller-defensive-loop',label:'방어 연결',hint:'기억은 남겨 두고 반복을 강제하는 연결을 차단하세요'}),
+    Object.freeze({id:'controller-rescue-boundary',label:'강요의 경계',hint:'기억은 남겨 두고 반복을 강제하는 연결을 차단하세요'}),
+    Object.freeze({id:'controller-veto-relay',label:'거부권 신호',hint:'기억은 남겨 두고 반복을 강제하는 연결을 차단하세요'}),
+    Object.freeze({id:'controller-authority-feedback',label:'피드백 연결',hint:'기억은 남겨 두고 반복을 강제하는 연결을 차단하세요'}),
+    Object.freeze({id:'controller-migration-fork',label:'선택의 갈림길',hint:'기억은 남겨 두고 반복을 강제하는 연결을 차단하세요'}),
+    Object.freeze({id:'controller-repeat-disconnect',label:'반복 연결 차단',hint:'기억은 남겨 두고 반복을 강제하는 연결을 차단하세요'})
   ]);
   // Standalone practice; the intervening story chapters are not skipped or
   // added to the persisted 12-encounter campaign. This leader is not asserted
@@ -54,7 +66,7 @@
   var CULT_SIGNATURE = Object.freeze({id:'cult-leader-samong',label:'두 사몽의 격돌',hint:'고정된 예고선과 이동하는 탄막 사이의 길을 찾으세요'});
   var runSequence = 0;
   var PRIEST_BRIDGE = Object.freeze([
-    '병원에서 눈을 뜬 환도는 미카엘라의 치료를 받는다.',
+    '병원에서 눈을 뜬 주인공은 미카엘라의 치료를 받는다.',
     '오랜 치료를 거친 뒤 의목사 후보생이 되어 배운다.',
     '쉼터에서 미카엘라가 자신의 과거를 기억하지 못한다는 사실을 알게 된다.',
     '솔로몬의 봉인 자격시험에서 72개의 트라우마 형상을 마주한다. 욕망이 행동을 끌고 가지 못하도록 봉인한다.',
@@ -62,7 +74,8 @@
   ]);
   // Revisions retain their original route boundary meaning. A resumed v1/v2
   // run does not silently gain later encounters or lengthen a saved wave.
-  function campaignBossCount(revision) { return revision === 1 ? 3 : revision === 2 ? 5 : CAMPAIGN_BOSSES.length; }
+  function campaignBossCount(revision) { return revision === 1 ? 3 : revision === 2 ? 5 : revision === 3 ? 12 : CAMPAIGN_BOSSES.length; }
+  function checkpointLimit(revision) { return revision === 4 ? 106 : 100; }
   function waveDuration(w) {
     if (!w.campaign || w.campaignRevision < 3) return 15;
     return 45 / encounter(w).waves.length;
@@ -80,6 +93,7 @@
     w.bossId = info.id; w.bossName = info.name; w.bossCount = campaignBossCount(w.campaignRevision);
     w.waveDuration = waveDuration(w);
     w.encounterName = w.stage === 'waves' ? info.waves[w.wave] : info.zone;
+    if (info.chapter === 3) { w.protagonist = '의목사 B'; w.storySteps=info.storySteps.slice(); w.combatObjective='반복 연결 차단'; }
     if (w.stage === 'waves') {
       w.patternName = info.waves[w.wave];
       w.stageLabel = info.waves[w.wave] + ' · ' + (w.wave + 1) + '/' + info.waves.length;
@@ -95,7 +109,7 @@
       var info = encounter(w);
       Object.assign(b, { kind: info.id, name: info.name, artKey: info.phaseArtKeys ? info.phaseArtKeys[phase] : info.artKey,
         phaseRole: info.phaseRoles ? info.phaseRoles[phase] : '', presentationVariant: info.phaseRoles ? info.phaseRoles[phase] : '',
-        sealTarget: w.bossIndex >= 5 && !w.finalPractice, healthLabel: w.bossIndex >= 5 && !w.finalPractice ? '봉인 저항' : '체력',
+        sealTarget: w.bossIndex >= 5 && w.bossIndex < 12 && !w.finalPractice, linkTarget: info.chapter === 3, identityGroup: info.identityGroup || info.id, healthLabel: info.chapter === 3 ? '반복 연결' : w.bossIndex >= 5 && !w.finalPractice ? '봉인 저항' : '체력',
         action: 'move', actionProgress: 0, lean: 0, releaseTick: -1,
         specialPatternId: phase===2?signature(w).id:'',
         specialPatternLabel: phase===2?signature(w).label:'',
@@ -271,7 +285,7 @@
     if (options.campaign === true) {
       if (options.bossIndex !== undefined && (!Number.isInteger(options.bossIndex) || options.bossIndex < 0 || options.bossIndex >= CAMPAIGN_BOSSES.length)) throw new RangeError('Invalid campaign boss index');
       var revision = options.campaignRevision === undefined ? 3 : options.campaignRevision;
-      if (![1,2,3].includes(revision) || (hell && revision < 3)) throw new RangeError('Invalid campaign revision');
+      if (![1,2,3,4].includes(revision) || (hell && revision < 3)) throw new RangeError('Invalid campaign revision');
       w.campaign = true; w.campaignRevision = revision;
       if (options.bossIndex !== undefined && options.bossIndex >= campaignBossCount(revision)) throw new RangeError('Invalid campaign boss index');
       w.bossIndex = w.practiceBoss && Number.isInteger(options.bossIndex) ? clamp(options.bossIndex, 0, CAMPAIGN_BOSSES.length-1) : 0;
@@ -356,13 +370,13 @@
     var turret = kind === 'turret';
     var enemy = acquire(w, 'enemies', { id: ++w.idCounter, x: x, y: -24, px: x, py: -24, baseX: x, hp: turret ? 100 : 60, maxHp: turret ? 100 : 60,
       r: turret ? 18 : 15, kind: kind, age: -(delay || 0), direction: direction || 1, shotCursor: 0, wobble: rand(w) * TAU, life: turret ? 8 : 6.5 });
-    if (w.campaign && enemy) Object.assign(enemy, { archetype: (w.bossIndex < 3 ? ['weaver', 'wraith', 'ember'][w.bossIndex] : w.bossIndex === 3 ? (w.wave === 1 ? 'vial' : 'echo') : (w.wave === 0 ? 'denial' : 'guard')), action: 'enter', actionProgress: 0, lean: 0 });
+    if (w.campaign && enemy) Object.assign(enemy, { archetype: (w.bossIndex >= 12 ? 'chapter3-drone' : w.bossIndex < 3 ? ['weaver', 'wraith', 'ember'][w.bossIndex] : w.bossIndex === 3 ? (w.wave === 1 ? 'vial' : 'echo') : (w.wave === 0 ? 'denial' : 'guard')), action: 'enter', actionProgress: 0, lean: 0 });
     return enemy;
   }
   // Reinforcements reuse the current encounter's already-loaded ordinary
   // enemies. They enter visibly before their first attack and never exceed two.
   function summonBossAllies(w) {
-    if (!w.campaign || w.finalPractice || w.campaignRevision < 3 || !w.boss || w.boss.hp <= 0) return;
+    if (!w.campaign || w.finalPractice || w.bossIndex >= 12 || w.campaignRevision < 3 || !w.boss || w.boss.hp <= 0) return;
     var t = Math.round(w.phaseTime * 60);
     if (t < 240 || (t - 240) % 660 !== 0 || w.enemies.length > 0) return;
     var side = ((w.bossIndex + w.phase + Math.floor((t - 240) / 660)) % 2) ? -1 : 1;
@@ -908,7 +922,46 @@
     b.rotorTelegraph=!!(cast&&w.bossIndex>=5&&within>=54&&within<108);
     b.hellMechanicsRevision=15;
   }
+
+  // The six encounters are stages of one controller system, not six new
+  // persons. Damage resolves the highlighted repeat-command links; it never
+  // deletes the child's memory, body, or the memory door itself.
+  function chapterThreePattern(w) {
+    // Do not inherit an earlier encounter's temporary HELL aperture. This
+    // chapter commits its own rays and restored boundaries derive the same path.
+    w._hellProtectedLane=null;
+    var b=w.boss,scene=w.bossIndex-12,period=w.difficulty==='hell'?336:420;
+    var t=Math.round(w.phaseTime*60)-1,cycle=Math.floor(t/period),within=t%period;
+    var gapX=[116,180,244,180][(cycle+w.phase+scene)%4],down=Math.PI/2;
+    b.px=b.x;b.py=b.y;b.x=180+Math.sin(cycle*.65+within*.008)*(scene===4?24:42);b.y=112+Math.sin(within*.012)*8;
+    b.action=within<60?'move':within<126?'charge':within<282?'attack':'recover';
+    b.actionProgress=within<60?within/60:within<126?(within-60)/66:within<282?(within-126)/156:(within-282)/(period-282);
+    b.specialPatternId=signature(w).id;b.specialPatternLabel=signature(w).label;b.patternHint=signature(w).hint;
+    b.targetSemantic='repeat-command-link';b.commandGapX=gapX;
+    function tagged(specs,slot){return specs.map(function(s){s.patternId=signature(w).id;s.paletteSlot=slot||0;return s;});}
+    if(within===60){
+      var x1=gapX-52,x2=gapX+52,rays=[{x:x1,y:0,angle:down,width:8,ownerId:b.id},{x:x2,y:0,angle:down,width:8,ownerId:b.id}];
+      if(scene===1||scene===3)rays=[{x:0,y:345,angle:0,width:8,ownerId:b.id},{x:0,y:435,angle:0,width:8,ownerId:b.id}];
+      if(scene===4)rays=[{x:92,y:0,angle:down,width:9,ownerId:b.id},{x:268,y:0,angle:down,width:9,ownerId:b.id}];
+      warning(w,tagged(rays,0),90,'반복 명령 예고');
+    }
+    var beat=w.difficulty==='hell'?42:54;
+    if(within>=126&&within<282&&(within-126)%beat===0){
+      var k=Math.floor((within-126)/beat),angle=down+Math.sin(cycle*.4+k*.3)*(scene===2?.18:.10);
+      var gap=Math.atan2(540-b.y,gapX-b.x),count=scene===0?13:scene===4?17:15;
+      var specs=fanSpecs(b.x,b.y+12,angle,count,.14,78+scene*5+w.phase*6,'needle','#b5c7dc',b.id).filter(function(s){return Math.abs(Math.atan2(Math.sin(s.angle-gap),Math.cos(s.angle-gap)))>.28;});
+      if(scene===2||scene===5)specs.forEach(function(s){s.acceleration=18;s.accelerateAt=1.1;s.maxSpeed=125;});
+      if(scene===1||scene===3)specs.forEach(function(s){s.curveRate=(k%2?1:-1)*.10;s.curveUntil=.8;});
+      emit(w,tagged(specs,k%2));
+      if(w.phase===2&&k%2===0){
+        var ringSpecs=[];
+        for(var i=0;i<22;i++){var a=cycle*.16+i*TAU/22;if(Math.abs(Math.atan2(Math.sin(a-gap),Math.cos(a-gap)))>.33)ringSpecs.push({x:b.x,y:b.y+12,angle:a,speed:66+scene*3,kind:'orb',ownerId:b.id});}
+        emit(w,tagged(ringSpecs,1));
+      }
+    }
+  }
   function campaignPattern(w) {
+    if (w.bossIndex >= 12 && !w.finalPractice) { chapterThreePattern(w); return; }
     if(w.difficulty!=='hell'){campaignPatternBase(w);return;}
     var t=Math.round(w.phaseTime*60)-1,cycle=Math.floor(t/336),rawWithin=t%336;
     var within=rawWithin<72?Math.floor(rawWithin*54/72):rawWithin-18;
@@ -977,9 +1030,10 @@
     }
     if (memory) gainMemory(w, 2);
     if (e.hp > 0) return;
-    effect(w, e.x, e.y, 'kill', e.isBoss ? 45 : 23, '#d9c4ff', 0.6);
+    if (!e.linkTarget) effect(w, e.x, e.y, 'kill', e.isBoss ? 45 : 23, '#d9c4ff', 0.6);
     if (e.isBoss) {
       if (e.sealTarget) event(w,'seal',e.name);
+      if (e.linkTarget) event(w,'disconnect','반복 연결 차단');
       w.stats.phaseTicks.push(Math.round(w.phaseTime * 60));
       if (w.phase === 2 && w.campaign && !w.practiceBoss && w.bossIndex < campaignBossCount(w.campaignRevision)-1) {
         w.stage = 'transition'; w.stageTime = 0; w.nextPhase = null; w.nextEncounter = w.bossIndex + 1;
@@ -988,9 +1042,10 @@
           w.transitionNarrative = PRIEST_BRIDGE.slice(); w.transitionMinimum = 15;
           w.stageLabel = '병원에서 의목사의 첫 임무로';
         }
+        if (w.campaignRevision === 4 && w.bossIndex === 11) { w.transitionNarrative = ['미카엘라는 귀환 경보를 듣고 캡슐로 달려간다. 열린 캡슐 안은 비어 있다.', '의목사 A의 마지막 신호 옆에는 정체를 알 수 없는 아이의 기억 신호가 남아 있다.', '의목사 B는 사라진 A를 찾기 위해 호텔에 불을 지른 청소부의 기록으로 돌아간다.', '전쟁과 입양 기록을 확인한 뒤 첫째 아이의 방어 몽세에 접속한다.'];w.transitionMinimum=12;w.stageLabel='사라진 귀환자 · 의목사 B의 기억'; }
         w.score += 2500;
       }
-      else if (w.phase === 2) { w.stage = 'won'; w.stageTime = 0; w.resultReason = w.finalPractice ? '교주의 사몽 권한이 끊어졌다. 합일 코어는 남기고 지배 명령과 사이비 회로만 분리한다. 환도는 몽세수호자로 남는다.' : w.campaign ? (w.practiceBoss ? w.bossName + ' · 연습 완료' : w.bossIndex>=5 ? '일곱 검은 신호 · 봉인 조사 구간을 마쳤습니다' : w.bossIndex===4 ? 'J의 인장이 빛납니다 · 루시퍼가 물러나고 도움을 청할 길이 열립니다' : '첫 기억의 조사 구간을 마쳤습니다') : '기억 회랑을 돌파했습니다'; w.score += 5000 + w.player.hp * 500; event(w, 'win'); }
+      else if (w.phase === 2) { w.stage = 'won'; w.stageTime = 0; w.resultReason = w.finalPractice ? '교주의 사몽 권한이 끊어졌다. 합일 코어는 남기고 지배 명령과 사이비 회로만 분리한다. 환도는 몽세수호자로 남는다.' : w.campaign ? (w.practiceBoss ? w.bossName + ' · 연습 완료' : w.campaignRevision === 4 ? '기억의 문은 남아 있다. 같은 고통을 되감는 연결만 끊어 첫째 아이의 자아를 풀어냈다. 귀환 좌표가 흐려지는 가운데 남은 두 아이를 찾기로 한다.' : w.bossIndex>=5 ? '일곱 검은 신호 · 봉인 조사 구간을 마쳤습니다' : w.bossIndex===4 ? 'J의 인장이 빛납니다 · 루시퍼가 물러나고 도움을 청할 길이 열립니다' : '첫 기억의 조사 구간을 마쳤습니다') : '기억 회랑을 돌파했습니다'; w.score += 5000 + w.player.hp * 500; event(w, 'win'); }
       else { w.stage = 'transition'; w.stageTime = 0; w.nextPhase = w.phase + 1; w.transitionRemaining = 6.4; w.stageLabel = e.sealTarget ? '남은 파동이 지나갑니다' : '남은 검편이 지나갑니다';
         if(w.finalPractice && w.phase===0) { w.transitionNarrative=['교주가 무너졌지만 코어의 신경선이 그의 몸을 다시 잇는다.', '환도는 돌아온 현실의 기억 속에서 여기가 꿈임을 알아차린다.', '사몽의 권한으로 일어서서 교주에게 맞선다.'];w.transitionMinimum=9;w.stageLabel='사몽 각성'; }
       }
@@ -1119,12 +1174,12 @@
     var s = copy(snapshot);
     if (s.finalPractice !== undefined && (s.finalPractice !== true || s.practiceBoss !== true || s.campaign !== true || s.bossIndex !== 11 || s.campaignRevision !== 3 || s.stage !== 'boss')) throw new Error('Invalid separate final practice');
     var hasCampaign = Object.prototype.hasOwnProperty.call(s, 'campaign') || Object.prototype.hasOwnProperty.call(s, 'campaignRevision') || Object.prototype.hasOwnProperty.call(s, 'bossIndex');
-    if (hasCampaign && (s.campaign !== true || ![1,2,3].includes(s.campaignRevision) || !Number.isInteger(s.bossIndex) || s.bossIndex < 0 || s.bossIndex >= campaignBossCount(s.campaignRevision) || (s.difficulty === 'hell' && s.campaignRevision < 3))) throw new Error('Invalid campaign checkpoint');
+    if (hasCampaign && (s.campaign !== true || ![1,2,3,4].includes(s.campaignRevision) || !Number.isInteger(s.bossIndex) || s.bossIndex < 0 || s.bossIndex >= campaignBossCount(s.campaignRevision) || (s.difficulty === 'hell' && s.campaignRevision < 3))) throw new Error('Invalid campaign checkpoint');
     if (hasCampaign && s.stage === 'waves' && s.wave >= CAMPAIGN_BOSSES[s.bossIndex].waves.length) throw new Error('Invalid campaign wave');
     if (s.rulesetVersion !== RULESET || typeof s.runId !== 'string' || !/^[A-Za-z0-9_.:-]{1,96}$/.test(s.runId) || !['normal','gentle','hell'].includes(s.difficulty) || !['waves','boss'].includes(s.stage)) throw new Error('Unsupported checkpoint');
     ['tick','rngState','seed','idCounter','checkpointSerial','wave','phase','score','graze','kills','memory','resonance'].forEach(function (k) { if (!finite(s[k]) || s[k] < 0 || s[k] > (k === 'rngState' || k === 'seed' ? 4294967295 : 100000000)) throw new Error('Invalid checkpoint number: ' + k); });
     if (!Number.isInteger(s.tick) || s.tick > 1000000 || !Number.isInteger(s.wave) || s.wave > 2 || !Number.isInteger(s.phase) || s.phase > 2 || s.memory > 100 || s.resonance > 100 || s.stageTime !== 0 || s.phaseTime !== 0 || s.waveTime !== 0) throw new Error('Invalid checkpoint boundary');
-    if (!Number.isInteger(s.seed) || !Number.isInteger(s.rngState) || !Number.isInteger(s.idCounter) || !Number.isInteger(s.checkpointSerial) || s.checkpointSerial < 1 || s.checkpointSerial > 100 || typeof s.autoAttack !== 'boolean' || typeof s.skillRotation !== 'boolean' || typeof s.practiceBoss !== 'boolean') throw new Error('Invalid checkpoint identity');
+    if (!Number.isInteger(s.seed) || !Number.isInteger(s.rngState) || !Number.isInteger(s.idCounter) || !Number.isInteger(s.checkpointSerial) || s.checkpointSerial < 1 || s.checkpointSerial > checkpointLimit(hasCampaign ? s.campaignRevision : 0) || typeof s.autoAttack !== 'boolean' || typeof s.skillRotation !== 'boolean' || typeof s.practiceBoss !== 'boolean') throw new Error('Invalid checkpoint identity');
     if (!Number.isInteger(s.shotReadyAt) || s.shotReadyAt < 0 || s.shotReadyAt > 10000000) throw new Error('Invalid shot timer');
     var p = s.player, maxHp = s.difficulty === 'gentle' ? 5 : 3;
     if (!p || !finite(p.x) || !finite(p.y) || p.x < 16 || p.x > 344 || p.y < 260 || p.y > 614 || !Number.isInteger(p.hp) || p.hp < 1 || p.hp > maxHp || p.maxHp !== maxHp || p.r !== 3 || !Number.isInteger(p.invulnerableUntil) || !Number.isInteger(p.egoUntil) || p.invulnerableUntil < 0 || p.egoUntil < 0 || p.invulnerableUntil > 10000000 || p.egoUntil > 10000000) throw new Error('Invalid checkpoint player');
@@ -1210,6 +1265,6 @@
   }
   return Object.freeze({ W: W, H: H, FIXED_DT: FIXED_DT, RULESET_VERSION: RULESET, MECHANICS_REVISION: 2, CAPS: CAPS,
     CAMPAIGN_BOSSES: CAMPAIGN_BOSSES, CAMPAIGN_SIGNATURES: CAMPAIGN_SIGNATURES, CAMPAIGN_REVISION: 3, HELL_MECHANICS_REVISION: HELL_MECHANICS_REVISION, HELL_OVERLAP_LIMITS: HELL_OVERLAP_LIMITS,
-    createRun: createRun, step: step, checkpoint: checkpoint, restoreCheckpoint: restoreCheckpoint, skipBossIntro: skipBossIntro,
+    campaignBossCount: campaignBossCount, LATEST_CAMPAIGN_REVISION: 4, createRun: createRun, step: step, checkpoint: checkpoint, restoreCheckpoint: restoreCheckpoint, skipBossIntro: skipBossIntro,
     geometry: Object.freeze({ segmentDistanceSquared: segmentDistanceSquared, segmentPairDistanceSquared: segmentPairDistanceSquared, sweptCircleHit: sweptCircleHit, projectileDistanceSquared: projectileDistanceSquared, hazardDistanceSquared: hazardDistanceSquared }) });
 }));

@@ -10,3 +10,25 @@ window.HapilMedia.cultDriveSpear='media/cult-v17/drive-spear.webp';
 window.HapilMedia.cultDriveFold='media/cult-v17/drive-fold.webp';
 window.HapilMedia.cultDriveImpact='media/cult-v17/drive-impact.webp';
 window.HapilMedia.cultDriveStitch='media/cult-v17/drive-stitch.webp';
+
+// Verified chapter-three source artwork; loaded one encounter group at a time.
+window.HapilMedia.chapter3ControllerIdle='media/chapter3-v18/controller-idle.webp';
+window.HapilMedia.chapter3ControllerAttack='media/chapter3-v18/controller-attack.webp';
+window.HapilMedia.chapter3ControllerRain='media/chapter3-v18/controller-rain.webp';
+window.HapilMedia.chapter3ControllerTransition='media/chapter3-v18/controller-transition.webp';
+window.HapilMedia.chapter3DroneIdle='media/chapter3-v18/drone-idle.png';
+window.HapilMedia.chapter3DroneAttack='media/chapter3-v18/drone-attack.png';
+window.HapilMedia.chapter3DroneDestroyed='media/chapter3-v18/drone-destroyed.png';
+window.HapilMedia.chapter3Beam='media/chapter3-v18/beam.webp';
+window.HapilMedia.chapter3Lance='media/chapter3-v18/lance.webp';
+window.HapilMedia.chapter3MemoryGate='media/chapter3-v18/memory-gate.png';
+window.HapilMedia.chapter3WarMap='media/chapter3-v18/war.jpg';
+window.HapilMedia.chapter3MigrationMap='media/chapter3-v18/migration.jpg';
+window.HapilMedia.chapter3GateMap='media/chapter3-v18/gate.jpg';
+window.HapilMedia.chapter3NexusMap='media/chapter3-v18/nexus.jpg';
+
+window.HapilMedia.chapter3U201Atlas='media/chapter3-v18/u201-atlas.png';
+window.HapilMedia.chapter3U202Atlas='media/chapter3-v18/u202-atlas.png';
+window.HapilMedia.chapter3U204Atlas='media/chapter3-v18/u204-atlas.png';
+window.HapilMedia.chapter3U205Atlas='media/chapter3-v18/u205-atlas.png';
+window.HapilMedia.chapter3MigrationCoreAtlas='media/chapter3-v18/migration-core.png';

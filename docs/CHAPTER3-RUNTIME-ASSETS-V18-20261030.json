@@ -1,0 +1,1016 @@
+{
+  "schema": 1,
+  "capturedAt": "2026-10-30",
+  "sourceManifest": "docs/CHAPTER3-SOURCE-DISCOVERY-20261030.json",
+  "canonicalNarrativeSHA256": "e069b22f4ee33c80e1b8e2e407583a865efec5d01b6440408f0e3389d82cabaa",
+  "runtimeFiles": [
+    {
+      "runtimePath": "media/chapter3-v18/controller-idle.webp",
+      "runtimeSHA256": "57572d1817eb492873e20c771cb1a46f02acf7e2f8a9ddde84a46fdd893458ed",
+      "bytes": 38690,
+      "dimensions": [
+        672,
+        384
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/c5859bd35492_controller_idle.webp",
+      "sourceSHA256": "57572d1817eb492873e20c771cb1a46f02acf7e2f8a9ddde84a46fdd893458ed",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    },
+    {
+      "runtimePath": "media/chapter3-v18/controller-attack.webp",
+      "runtimeSHA256": "ee7a2d409dab8df05a1455f314d07ead6c507730e4c13f6fd1944701edcc56e5",
+      "bytes": 51488,
+      "dimensions": [
+        672,
+        384
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/c4c64ee058cc_controller_attack.webp",
+      "sourceSHA256": "ee7a2d409dab8df05a1455f314d07ead6c507730e4c13f6fd1944701edcc56e5",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    },
+    {
+      "runtimePath": "media/chapter3-v18/controller-rain.webp",
+      "runtimeSHA256": "f883e208c90ed4e4173f23563f037eb75e4eb977297d7f5e64cebe936338da1c",
+      "bytes": 45882,
+      "dimensions": [
+        672,
+        384
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/12ca1a97fb0a_controller_rain.webp",
+      "sourceSHA256": "f883e208c90ed4e4173f23563f037eb75e4eb977297d7f5e64cebe936338da1c",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    },
+    {
+      "runtimePath": "media/chapter3-v18/controller-transition.webp",
+      "runtimeSHA256": "7a2ea2a9cef73f8c84d67317ef99305be2b878d57fd32b0ac9eaea50de5015b9",
+      "bytes": 56132,
+      "dimensions": [
+        672,
+        384
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/543a490d2cf2_controller_transition.webp",
+      "sourceSHA256": "7a2ea2a9cef73f8c84d67317ef99305be2b878d57fd32b0ac9eaea50de5015b9",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    },
+    {
+      "runtimePath": "media/chapter3-v18/drone-idle.png",
+      "runtimeSHA256": "fe5a1aee2cac38719ccb40e319ea455f876b2bdb20ff36577505d5a3a31f702a",
+      "bytes": 58007,
+      "dimensions": [
+        512,
+        512
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/demon_drone_idle.png",
+      "sourceSHA256": "fe5a1aee2cac38719ccb40e319ea455f876b2bdb20ff36577505d5a3a31f702a",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    },
+    {
+      "runtimePath": "media/chapter3-v18/drone-attack.png",
+      "runtimeSHA256": "b70abecbf2f1dc6b02da9378a1b098be992729297c2b8dade9dd14a956915874",
+      "bytes": 54125,
+      "dimensions": [
+        512,
+        512
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/demon_drone_attack.png",
+      "sourceSHA256": "b70abecbf2f1dc6b02da9378a1b098be992729297c2b8dade9dd14a956915874",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    },
+    {
+      "runtimePath": "media/chapter3-v18/drone-destroyed.png",
+      "runtimeSHA256": "5b571612ca80e062235231b16ee2828f68a38452cd32b822fabff30409961b64",
+      "bytes": 70878,
+      "dimensions": [
+        512,
+        512
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/demon_drone_destroyed.png",
+      "sourceSHA256": "5b571612ca80e062235231b16ee2828f68a38452cd32b822fabff30409961b64",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    },
+    {
+      "runtimePath": "media/chapter3-v18/lance.webp",
+      "runtimeSHA256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+      "bytes": 29140,
+      "dimensions": [
+        512,
+        192
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/control-lance.webp",
+      "sourceSHA256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    },
+    {
+      "runtimePath": "media/chapter3-v18/beam.webp",
+      "runtimeSHA256": "630a74006bc13b02614445ce91aa87d12ca32f0e17a54100360629a2fb3d0be2",
+      "bytes": 52734,
+      "dimensions": [
+        768,
+        144
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/beam.webp",
+      "sourceSHA256": "630a74006bc13b02614445ce91aa87d12ca32f0e17a54100360629a2fb3d0be2",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    },
+    {
+      "runtimePath": "media/chapter3-v18/memory-gate.png",
+      "runtimeSHA256": "ce3bfa2b39fc64d3f886fb286e1b836b7562728c8ab84005d49a91c9fbfb7fb8",
+      "bytes": 414247,
+      "dimensions": [
+        1671,
+        941
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/controller-memory-gate.png",
+      "sourceSHA256": "ce3bfa2b39fc64d3f886fb286e1b836b7562728c8ab84005d49a91c9fbfb7fb8",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    },
+    {
+      "runtimePath": "media/chapter3-v18/nexus.jpg",
+      "runtimeSHA256": "afa5dab58544cf1294e278e98ee74a30df99854ff984183051435893d5dedf83",
+      "bytes": 448814,
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/source/u203_controller_memory_nexus.jpg",
+      "sourceSHA256": "afa5dab58544cf1294e278e98ee74a30df99854ff984183051435893d5dedf83",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    },
+    {
+      "runtimePath": "media/chapter3-v18/war.jpg",
+      "runtimeSHA256": "50652acebcb60c2f2e51363cf3253a0a097706b43bffb017d4f4a5c750b338e4",
+      "bytes": 435547,
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/hapil1-readonly/assets/generated-v3125/maps/u2_war_loop.jpg",
+      "sourceSHA256": "50652acebcb60c2f2e51363cf3253a0a097706b43bffb017d4f4a5c750b338e4",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    },
+    {
+      "runtimePath": "media/chapter3-v18/migration.jpg",
+      "runtimeSHA256": "7f2ca446df7548ed3914b5f0603ed945d306a0393da7bf15fcea05e646a042d1",
+      "bytes": 438792,
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/hapil1-readonly/assets/generated-v3125/maps/u2_memory_migration.jpg",
+      "sourceSHA256": "7f2ca446df7548ed3914b5f0603ed945d306a0393da7bf15fcea05e646a042d1",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    },
+    {
+      "runtimePath": "media/chapter3-v18/gate.jpg",
+      "runtimeSHA256": "0eedfd6b9ec263de1a43af5af6b8eadd2327d30cbf0c2783e167833516a49ac6",
+      "bytes": 251516,
+      "dimensions": [
+        960,
+        600
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/hapil1-readonly/assets/generated-v3128/maps/u2_memory_gate_v3128.jpg",
+      "sourceSHA256": "0eedfd6b9ec263de1a43af5af6b8eadd2327d30cbf0c2783e167833516a49ac6",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    },
+    {
+      "runtimePath": "media/chapter3-v18/migration-core.png",
+      "runtimeSHA256": "101ab5a8742368d192b585fe4a909ef39213f122bcbe5bee1d934b0838b1efa4",
+      "bytes": 1227321,
+      "dimensions": [
+        2172,
+        724
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/hapil1-readonly/assets/rc140/story-cycle-motions/u206-mid.png",
+      "sourceSHA256": "101ab5a8742368d192b585fe4a909ef39213f122bcbe5bee1d934b0838b1efa4",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    },
+    {
+      "runtimePath": "media/chapter3-v18/u201-atlas.png",
+      "runtimeSHA256": "80f7321f14b7ebcb199e752ee81c875c7f7e5d3ad522ed88d96f0a3e14d69080",
+      "bytes": 185407,
+      "dimensions": [
+        512,
+        512
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u201-mid/u201-mid-atlas-512.png",
+      "sourceSHA256": "80f7321f14b7ebcb199e752ee81c875c7f7e5d3ad522ed88d96f0a3e14d69080",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    },
+    {
+      "runtimePath": "media/chapter3-v18/u202-atlas.png",
+      "runtimeSHA256": "2996937c9ebd04cff93798d143ef7b51734e21385788b2dac0ed1c7b9009e8e5",
+      "bytes": 270537,
+      "dimensions": [
+        512,
+        512
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u202-mid/u202-mid-atlas-512.png",
+      "sourceSHA256": "2996937c9ebd04cff93798d143ef7b51734e21385788b2dac0ed1c7b9009e8e5",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    },
+    {
+      "runtimePath": "media/chapter3-v18/u204-atlas.png",
+      "runtimeSHA256": "2a70b0bd57b5909788141abd0f8681f4c4f72cc97dfff35634a4fa06fc04c34b",
+      "bytes": 172996,
+      "dimensions": [
+        512,
+        512
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u204-mid/u204-mid-atlas-512.png",
+      "sourceSHA256": "2a70b0bd57b5909788141abd0f8681f4c4f72cc97dfff35634a4fa06fc04c34b",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    },
+    {
+      "runtimePath": "media/chapter3-v18/u205-atlas.png",
+      "runtimeSHA256": "8db8887ccff85d983414676e0d6e1761ca51aa6acf9991783a7cea2a6b92570f",
+      "bytes": 184436,
+      "dimensions": [
+        512,
+        512
+      ],
+      "materializedSourcePath": "/workspace/scratch/c84ef2cd7c03/assets-chapter3/drive-b12/derived/u205-mid/u205-mid-atlas-512.png",
+      "sourceSHA256": "8db8887ccff85d983414676e0d6e1761ca51aa6acf9991783a7cea2a6b92570f",
+      "transformation": "byte-preserving copy; runtime uses canvas crop/scale/tint only",
+      "pixelsInspected": true
+    }
+  ],
+  "atlasDerivations": {
+    "u201": {
+      "source": "/workspace/shared/HAPIL-storymode-downward-wave3/u201-mid-downward-keyposes-v3.png",
+      "source_sha256": "6c1f61bb3e9a1853e3e1d561cb3ed91055d349d2884a8e2b8db44eca617aff5b",
+      "source_count": 1,
+      "authored_keyposes": 4,
+      "fully_interpolated_animation": false,
+      "pivot_status": "UNVERIFIED; fixed canvas center only, chest/root not motion stabilized",
+      "timing_ms_candidate": [
+        160,
+        100,
+        80,
+        180
+      ],
+      "loop": false,
+      "frames": [
+        {
+          "path": "u201-mid-pose-1-512.png",
+          "source_rect": [
+            0,
+            0,
+            627,
+            627
+          ],
+          "uniform_scale": 0.7655502392344498,
+          "translation": [
+            16,
+            16
+          ],
+          "size": 512,
+          "alpha_bbox": [
+            16,
+            32,
+            496,
+            496
+          ],
+          "sha256": "2453895e4dfc9b8df15a5d5df3bd54683cf217507206c7958bc5bc467b0b5a87"
+        },
+        {
+          "path": "u201-mid-pose-2-512.png",
+          "source_rect": [
+            627,
+            0,
+            627,
+            627
+          ],
+          "uniform_scale": 0.7655502392344498,
+          "translation": [
+            16,
+            16
+          ],
+          "size": 512,
+          "alpha_bbox": [
+            17,
+            27,
+            471,
+            496
+          ],
+          "sha256": "1ab6af0bc68a453186ea6ee94018f7b86ecd9b345a966da37c7375ace7b19ae3"
+        },
+        {
+          "path": "u201-mid-pose-3-512.png",
+          "source_rect": [
+            0,
+            627,
+            627,
+            627
+          ],
+          "uniform_scale": 0.7655502392344498,
+          "translation": [
+            16,
+            16
+          ],
+          "size": 512,
+          "alpha_bbox": [
+            46,
+            16,
+            496,
+            496
+          ],
+          "sha256": "40bc3e1a44b132b97bcf1f0a2b8414d4c2b2ce927c65526399ac347bef2f15a4"
+        },
+        {
+          "path": "u201-mid-pose-4-512.png",
+          "source_rect": [
+            627,
+            627,
+            627,
+            627
+          ],
+          "uniform_scale": 0.7655502392344498,
+          "translation": [
+            16,
+            16
+          ],
+          "size": 512,
+          "alpha_bbox": [
+            17,
+            17,
+            488,
+            496
+          ],
+          "sha256": "02bb626dc763ed2882c0366af087855ee1f4727719d2980859ad5cb5bcec981c"
+        },
+        {
+          "path": "u201-mid-pose-1-256.png",
+          "source_rect": [
+            0,
+            0,
+            627,
+            627
+          ],
+          "uniform_scale": 0.3827751196172249,
+          "translation": [
+            8,
+            8
+          ],
+          "size": 256,
+          "alpha_bbox": [
+            8,
+            16,
+            236,
+            248
+          ],
+          "sha256": "b3e08d2a0ccad1e016d285e0f0bcf516227a73f2490f858ee73e55a881a63103"
+        },
+        {
+          "path": "u201-mid-pose-2-256.png",
+          "source_rect": [
+            627,
+            0,
+            627,
+            627
+          ],
+          "uniform_scale": 0.3827751196172249,
+          "translation": [
+            8,
+            8
+          ],
+          "size": 256,
+          "alpha_bbox": [
+            9,
+            39,
+            235,
+            248
+          ],
+          "sha256": "d1d6ea63488662bdf247c889b232cf916e756b87ff7bb0c1348d838aa82e146f"
+        },
+        {
+          "path": "u201-mid-pose-3-256.png",
+          "source_rect": [
+            0,
+            627,
+            627,
+            627
+          ],
+          "uniform_scale": 0.3827751196172249,
+          "translation": [
+            8,
+            8
+          ],
+          "size": 256,
+          "alpha_bbox": [
+            49,
+            8,
+            242,
+            240
+          ],
+          "sha256": "13259b5099a78d5297c2b0bc7ee3e2a44b7a5a7a8d52ad37a28c8217c71af2e4"
+        },
+        {
+          "path": "u201-mid-pose-4-256.png",
+          "source_rect": [
+            627,
+            627,
+            627,
+            627
+          ],
+          "uniform_scale": 0.3827751196172249,
+          "translation": [
+            8,
+            8
+          ],
+          "size": 256,
+          "alpha_bbox": [
+            9,
+            34,
+            242,
+            241
+          ],
+          "sha256": "1fe6ffee510f46dcab0fb6041ec9e20f3b93e3ac46bb77663700ece920db959c"
+        }
+      ]
+    },
+    "u202": {
+      "source": "/workspace/shared/HAPIL-storymode-downward-wave3/u202-mid-downward-keyposes-v3.png",
+      "source_sha256": "ad0fe85e68cb63b95917b5cb26f4aa971da2f780add23e185f7863106a437c8c",
+      "source_count": 1,
+      "authored_keyposes": 4,
+      "fully_interpolated_animation": false,
+      "pivot_status": "UNVERIFIED; fixed canvas center only, chest/root not motion stabilized",
+      "phase_order": [
+        "ready",
+        "anticipation",
+        "downstrike",
+        "recovery"
+      ],
+      "timing_ms_candidate": [
+        100,
+        160,
+        80,
+        180
+      ],
+      "loop": false,
+      "frames": [
+        {
+          "path": "u202-mid-pose-1-256.png",
+          "source_rect": [
+            0,
+            0,
+            627,
+            650
+          ],
+          "common_canvas": [
+            650,
+            650
+          ],
+          "rect_translation": [
+            0,
+            0
+          ],
+          "uniform_scale": 0.36923076923076925,
+          "translation": [
+            8,
+            8
+          ],
+          "size": 256,
+          "alpha_bbox": [
+            24,
+            30,
+            212,
+            242
+          ],
+          "sha256": "c694f29a33e36bf92d70b35542f64405f3bedd4c029ce1966714d28d3c752008"
+        },
+        {
+          "path": "u202-mid-pose-2-256.png",
+          "source_rect": [
+            627,
+            0,
+            627,
+            650
+          ],
+          "common_canvas": [
+            650,
+            650
+          ],
+          "rect_translation": [
+            0,
+            0
+          ],
+          "uniform_scale": 0.36923076923076925,
+          "translation": [
+            8,
+            8
+          ],
+          "size": 256,
+          "alpha_bbox": [
+            9,
+            8,
+            240,
+            246
+          ],
+          "sha256": "6cfa0a21bf34f149cdfed1db8effcc22e1b8b5d53340811f41a816211c0ab315"
+        },
+        {
+          "path": "u202-mid-pose-3-256.png",
+          "source_rect": [
+            0,
+            650,
+            627,
+            604
+          ],
+          "common_canvas": [
+            650,
+            650
+          ],
+          "rect_translation": [
+            0,
+            0
+          ],
+          "uniform_scale": 0.36923076923076925,
+          "translation": [
+            8,
+            8
+          ],
+          "size": 256,
+          "alpha_bbox": [
+            8,
+            12,
+            212,
+            219
+          ],
+          "sha256": "080f970ae85b857e272b2cbb5a659176dfc376987a353e09d4d1d67c3c1015fa"
+        },
+        {
+          "path": "u202-mid-pose-4-256.png",
+          "source_rect": [
+            627,
+            650,
+            627,
+            604
+          ],
+          "common_canvas": [
+            650,
+            650
+          ],
+          "rect_translation": [
+            0,
+            0
+          ],
+          "uniform_scale": 0.36923076923076925,
+          "translation": [
+            8,
+            8
+          ],
+          "size": 256,
+          "alpha_bbox": [
+            15,
+            11,
+            218,
+            204
+          ],
+          "sha256": "886c98fff47b575f53cddf604008c9f03e1b654e5dbc6f4a74a304be8973ecf3"
+        }
+      ]
+    },
+    "u204": {
+      "source": "/workspace/shared/HAPIL-storymode-downward-wave3/u204-mid-downward-keyposes-v1.png",
+      "source_sha256": "34d2973b5608ea7c281169efbc2f090949a6e51658816f6debc72248298af3cd",
+      "source_count": 1,
+      "authored_keyposes": 4,
+      "fully_interpolated_animation": false,
+      "pivot_status": "UNVERIFIED; fixed canvas center only, chest/root not motion stabilized",
+      "phase_order": [
+        "ready",
+        "downward_preparation",
+        "downstrike",
+        "recovery"
+      ],
+      "timing_ms_candidate": [
+        100,
+        160,
+        80,
+        180
+      ],
+      "loop": false,
+      "frames": [
+        {
+          "path": "u204-mid-pose-1-256.png",
+          "source_rect": [
+            0,
+            0,
+            627,
+            627
+          ],
+          "uniform_scale": 0.3827751196172249,
+          "translation": [
+            8,
+            8
+          ],
+          "size": 256,
+          "alpha_bbox": [
+            15,
+            32,
+            248,
+            245
+          ],
+          "sha256": "1ef44578a3b4ba405627f34644d53ac5574f0c5195329e56f8a7b835f56d1b13"
+        },
+        {
+          "path": "u204-mid-pose-2-256.png",
+          "source_rect": [
+            627,
+            0,
+            627,
+            627
+          ],
+          "uniform_scale": 0.3827751196172249,
+          "translation": [
+            8,
+            8
+          ],
+          "size": 256,
+          "alpha_bbox": [
+            9,
+            29,
+            241,
+            234
+          ],
+          "sha256": "35d426e69bb26aeff7a3b1168af9638f2ad9095dd5cd71262212148a86f6ef39"
+        },
+        {
+          "path": "u204-mid-pose-3-256.png",
+          "source_rect": [
+            0,
+            627,
+            627,
+            627
+          ],
+          "uniform_scale": 0.3827751196172249,
+          "translation": [
+            8,
+            8
+          ],
+          "size": 256,
+          "alpha_bbox": [
+            24,
+            23,
+            247,
+            235
+          ],
+          "sha256": "2f3b43025a04915844ef8b577e24b9a8a17cfc60a8b0ee4b5c9c57819a40ed38"
+        },
+        {
+          "path": "u204-mid-pose-4-256.png",
+          "source_rect": [
+            627,
+            627,
+            627,
+            627
+          ],
+          "uniform_scale": 0.3827751196172249,
+          "translation": [
+            8,
+            8
+          ],
+          "size": 256,
+          "alpha_bbox": [
+            11,
+            20,
+            235,
+            234
+          ],
+          "sha256": "c7431866c94a01e49c25d40ee64bb64e789e13eb422de4f2054d375ce94545a8"
+        }
+      ]
+    },
+    "u205": {
+      "source": "/workspace/shared/HAPIL-storymode-downward-wave3/u205-mid-downward-keyposes-v1.png",
+      "source_sha256": "2da445db102a6bafc45fb61b8c38e6235891cd99c843d895dcf2c26e31b903b5",
+      "source_count": 1,
+      "authored_keyposes": 4,
+      "fully_interpolated_animation": false,
+      "pivot_status": "UNVERIFIED; fixed canvas center only, chest/root not motion stabilized",
+      "phase_order": [
+        "ready",
+        "parry",
+        "down_counter",
+        "recovery"
+      ],
+      "timing_ms_candidate": [
+        100,
+        160,
+        80,
+        180
+      ],
+      "loop": false,
+      "frames": [
+        {
+          "path": "u205-mid-pose-1-256.png",
+          "source_rect": [
+            0,
+            0,
+            627,
+            627
+          ],
+          "uniform_scale": 0.3827751196172249,
+          "translation": [
+            8,
+            8
+          ],
+          "size": 256,
+          "alpha_bbox": [
+            15,
+            17,
+            240,
+            233
+          ],
+          "sha256": "62fdd2e9f62e45f17f5d6ee8f3bc052e2ff923bfecd9f3fcd22a1be7d5b13eb8"
+        },
+        {
+          "path": "u205-mid-pose-2-256.png",
+          "source_rect": [
+            627,
+            0,
+            627,
+            627
+          ],
+          "uniform_scale": 0.3827751196172249,
+          "translation": [
+            8,
+            8
+          ],
+          "size": 256,
+          "alpha_bbox": [
+            19,
+            34,
+            235,
+            245
+          ],
+          "sha256": "45424383eef368960e74c294d788809e4256cfbb179fc55839dec0107fca2a68"
+        },
+        {
+          "path": "u205-mid-pose-3-256.png",
+          "source_rect": [
+            0,
+            627,
+            627,
+            627
+          ],
+          "uniform_scale": 0.3827751196172249,
+          "translation": [
+            8,
+            8
+          ],
+          "size": 256,
+          "alpha_bbox": [
+            32,
+            10,
+            248,
+            241
+          ],
+          "sha256": "8e0bd70236c34f2a20f203ce2a0ff30b4ea63fd04d053e540ac6409c4735ab5f"
+        },
+        {
+          "path": "u205-mid-pose-4-256.png",
+          "source_rect": [
+            627,
+            627,
+            627,
+            627
+          ],
+          "uniform_scale": 0.3827751196172249,
+          "translation": [
+            8,
+            8
+          ],
+          "size": 256,
+          "alpha_bbox": [
+            10,
+            8,
+            241,
+            238
+          ],
+          "sha256": "766af9a9a8423e7bd5117e8a85c63738760e99f69bdacef318f0fee179b32108"
+        }
+      ]
+    }
+  },
+  "claims": {
+    "newImageGeneration": false,
+    "newDirectionArtForU206": false,
+    "fullAnimationCycles": 0,
+    "sourcePivotsCertified": false,
+    "pivotMethod": "manual visually inspected torso registrations, native uniform scale per body; no independent alpha-bounds fitting",
+    "attackSync": "release pose active for ticks0..11 after successful core boss.releaseTick; preparation/charge/recovery choose authored source keyposes",
+    "battleGoal": "disconnect enforced repetition links; keep body/memorygate intact",
+    "sourceGuardianUsedAsBoss": false,
+    "sourceGuardianUsedAsNewPerson": false,
+    "arenaMethod": "four exact source paintings, portrait canvas composites with source floor repeats; not connected collision maps",
+    "assetUpload": "separate existing Drive archive; runtime copies/metadata unchanged from verified source except display transforms; no new raster sources created"
+  },
+  "runtimeBodyContracts": [
+    {
+      "identity": "chapter3WarManager",
+      "key": "chapter3U201Atlas",
+      "scale": 0.67,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "columns": 2,
+      "anchors": [
+        [
+          139,
+          127
+        ],
+        [
+          141,
+          140
+        ],
+        [
+          122,
+          132
+        ],
+        [
+          143,
+          118
+        ]
+      ],
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "manualDisplayAnchors": true,
+      "sourcePivotsCertified": false
+    },
+    {
+      "identity": "chapter3MercyCorrector",
+      "key": "chapter3U202Atlas",
+      "scale": 0.64,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "columns": 2,
+      "anchors": [
+        [
+          120,
+          122
+        ],
+        [
+          146,
+          117
+        ],
+        [
+          124,
+          111
+        ],
+        [
+          121,
+          126
+        ]
+      ],
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "manualDisplayAnchors": true,
+      "sourcePivotsCertified": false
+    },
+    {
+      "identity": "chapter3MemoryCensor",
+      "key": "chapter3U204Atlas",
+      "scale": 0.68,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "columns": 2,
+      "anchors": [
+        [
+          139,
+          126
+        ],
+        [
+          129,
+          131
+        ],
+        [
+          138,
+          139
+        ],
+        [
+          129,
+          117
+        ]
+      ],
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "manualDisplayAnchors": true,
+      "sourcePivotsCertified": false
+    },
+    {
+      "identity": "chapter3ReversalAdministrator",
+      "key": "chapter3U205Atlas",
+      "scale": 0.71,
+      "width": 512,
+      "height": 512,
+      "cell": 256,
+      "columns": 2,
+      "anchors": [
+        [
+          135,
+          119
+        ],
+        [
+          132,
+          119
+        ],
+        [
+          139,
+          121
+        ],
+        [
+          130,
+          120
+        ]
+      ],
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "manualDisplayAnchors": true,
+      "sourcePivotsCertified": false
+    },
+    {
+      "identity": "chapter3MigrationCore",
+      "key": "chapter3MigrationCoreAtlas",
+      "scale": 0.23,
+      "width": 2172,
+      "height": 724,
+      "cell": 724,
+      "columns": 3,
+      "anchors": [
+        [
+          362,
+          370
+        ],
+        [
+          362,
+          370
+        ],
+        [
+          362,
+          370
+        ]
+      ],
+      "authoredKeyposes": 3,
+      "fullAnimationCycles": 0,
+      "manualDisplayAnchors": true,
+      "sourcePivotsCertified": false
+    },
+    {
+      "identity": "chapter3Controller",
+      "key": "chapter3ControllerIdle",
+      "width": 672,
+      "height": 384,
+      "scale": 0.47,
+      "keys": [
+        "chapter3ControllerIdle",
+        "chapter3ControllerRain",
+        "chapter3ControllerAttack",
+        "chapter3ControllerTransition"
+      ],
+      "anchors": [
+        [
+          367,
+          163
+        ],
+        [
+          342,
+          183
+        ],
+        [
+          349,
+          184
+        ],
+        [
+          325,
+          149
+        ]
+      ],
+      "authoredKeyposes": 4,
+      "fullAnimationCycles": 0,
+      "manualDisplayAnchors": true,
+      "sourcePivotsCertified": false
+    }
+  ]
+}

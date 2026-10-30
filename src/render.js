@@ -36,15 +36,21 @@
     h14MapPrideCore:Object.freeze({width:1600,height:900,scene:'ep1b09',floor:Object.freeze([600,250,400,120])})
   });
   var CULT_TERRAIN=Object.freeze({cultArena:Object.freeze({width:1600,height:1000,scene:'cult04-throne',floor:Object.freeze([500,270,600,300])})});
+  var CHAPTER3_TERRAIN=Object.freeze({
+    chapter3WarMap:Object.freeze({width:1536,height:1024,scene:'u201-war-loop',floor:Object.freeze([560,280,420,160])}),
+    chapter3MigrationMap:Object.freeze({width:1536,height:1024,scene:'u206-migration',floor:Object.freeze([560,650,420,160])}),
+    chapter3GateMap:Object.freeze({width:960,height:600,scene:'u203-memory-gate',floor:Object.freeze([330,260,320,120])}),
+    chapter3NexusMap:Object.freeze({width:1600,height:1000,scene:'u203-memory-nexus',floor:Object.freeze([620,270,360,180])})
+  });
   var H14_GROUP_KEYS=Object.freeze([
     Object.freeze(['h14MapViolet']),Object.freeze(['h14MapHorn']),Object.freeze(['h14MapBalrog']),
     Object.freeze(['h14MapMask']),Object.freeze(['h14MapLucifer']),Object.freeze(['h14MapSloth']),
     Object.freeze(['h14MapEnvy']),Object.freeze(['h14MapGluttony']),Object.freeze(['h14MapLust']),
-    Object.freeze(['h14MapGreed','h14MapGreedSnow']),Object.freeze(['h14MapWrath']),Object.freeze(['h14MapPride','h14MapPrideCore']),Object.freeze(['cultArena'])
+    Object.freeze(['h14MapGreed','h14MapGreedSnow']),Object.freeze(['h14MapWrath']),Object.freeze(['h14MapPride','h14MapPrideCore']),Object.freeze(['cultArena']),Object.freeze(['chapter3WarMap']),Object.freeze(['chapter3WarMap']),Object.freeze(['chapter3NexusMap']),Object.freeze(['chapter3WarMap']),Object.freeze(['chapter3MigrationMap']),Object.freeze(['chapter3GateMap'])
   ]);
   function terrainAssetKeysForEncounter(group){return H14_GROUP_KEYS[group]?H14_GROUP_KEYS[group].slice():[];}
   function readyTerrainImage(images,key){
-    var c=H14_TERRAIN[key]||CULT_TERRAIN[key],im=images&&images[key];
+    var c=H14_TERRAIN[key]||CULT_TERRAIN[key]||CHAPTER3_TERRAIN[key],im=images&&images[key];
     return !!(c&&imageReady(im)&&im.naturalWidth===c.width&&im.naturalHeight===c.height);
   }
   function invalidTerrainAsset(images,group){
@@ -58,7 +64,7 @@
   }
   function h14TerrainKey(world){
     if(!world||!world.campaign)return null;
-    var group=world.finalPractice?12:world.bossIndex||0,keys=H14_GROUP_KEYS[group];if(!keys)return null;
+    var group=world.finalPractice?12:world.campaignRevision>=4&&world.bossIndex>=12?world.bossIndex+1:world.bossIndex||0,keys=H14_GROUP_KEYS[group];if(!keys)return null;
     // Keep the original connected first approach and Balrog's three approach
     // scenes. Their own new paintings are used for the anchored boss arenas.
     if(world.stage==='waves'&&(group===0||group===2))return null;
@@ -214,7 +220,7 @@
       mapMetrics.cacheCanvasCount=strips.length+3+(sourceScene?1:0);mapMetrics.cacheBytes=(strips.length*W*1280+3*W*H+(sourceScene?W*720:0))*4;
     }
     function drawSourceTerrain(world,key){
-      var contract=H14_TERRAIN[key]||CULT_TERRAIN[key],im=images[key];
+      var contract=H14_TERRAIN[key]||CULT_TERRAIN[key]||CHAPTER3_TERRAIN[key],im=images[key];
       if(!readyTerrainImage(images,key))return false;
       var palette=paletteFor(world),tone=palette?palette.primary:'#8798af';
       if(!sourceScene){sourceScene=document.createElement('canvas');sourceScene.width=W;sourceScene.height=720;}
@@ -264,7 +270,7 @@
       mapMetrics.sceneAsset=null;mapMetrics.sceneSourceSize=null;mapMetrics.sceneFloorPatch=null;mapMetrics.sceneArchitecturalScale=null;mapMetrics.sceneForegroundDraws=0;mapMetrics.sceneCollisionGeometry=false;
       var sourceKey=h14TerrainKey(world);if(sourceKey&&drawSourceTerrain(world,sourceKey))return;
       releaseSourceTerrain();
-      if(world&&world.finalPractice){ctx.clearRect(0,0,W,H);mapMetrics.terrainStatus='missing-own-source-cultArena';mapMetrics.sourceStatus='missing-own-source';return;}
+      if(world&&(world.finalPractice||world.campaignRevision>=4&&world.bossIndex>=12)){ctx.clearRect(0,0,W,H);mapMetrics.terrainStatus='missing-own-source-'+(world.finalPractice?'cultArena':'chapter3');mapMetrics.sourceStatus='missing-own-source';return;}
       if(world&&world.campaign&&world.bossIndex>=5){drawSinTerrain(world);return;}
       if(world&&world.campaign&&world.bossIndex>=3){drawExtendedTerrain(world);return;}
       if(usesConnected(world)){drawConnectedTerrain(world);return;}
@@ -793,5 +799,5 @@
     }
     return {resize:function(cssW,cssH,dpr){ratio=Math.min(1.5,Math.max(1,dpr||1))*cssW/W;var nextWidth=Math.max(1,Math.round(W*ratio)),nextHeight=Math.max(1,Math.round(H*ratio));if(canvas.width!==nextWidth)canvas.width=nextWidth;if(canvas.height!==nextHeight)canvas.height=nextHeight;canvas.style.width='100%';canvas.style.height='100%';ctx.imageSmoothingEnabled=true;},draw:draw,getMetrics:function(){return Object.assign({},mapMetrics,{actorPresentation:actorPresentation?actorPresentation.getMetrics():null,projectilePresentation:projectilePresentation?projectilePresentation.getMetrics():null,bossSkillsPresentation:bossSkillPresentation?bossSkillPresentation.getMetrics():null});},destroy:function(){if(projectilePresentation&&projectilePresentation.destroy)projectilePresentation.destroy();if(bossSkillPresentation&&bossSkillPresentation.destroy)bossSkillPresentation.destroy();bossSkillPresentation=null;releaseSourceTerrain();cached=false;canvas.width=1;canvas.height=1;back.width=1;back.height=1;foreground.width=1;foreground.height=1;if(sinFloor){sinFloor.width=1;sinFloor.height=1;sinFloor=null;}sinFloorSource=null;sinFloorTone=null;for(var i=0;i<strips.length;i++){strips[i].width=1;strips[i].height=1;}strips.length=0;actorPresentation=null;projectilePresentation=null;images={};}};
   }
-  global.HapilRenderer={create:create,terrainContracts:H14_TERRAIN,cultTerrainContracts:CULT_TERRAIN,terrainAssetKeysForEncounter:terrainAssetKeysForEncounter,invalidTerrainAsset:invalidTerrainAsset};
+  global.HapilRenderer={create:create,terrainContracts:H14_TERRAIN,cultTerrainContracts:CULT_TERRAIN,chapter3TerrainContracts:CHAPTER3_TERRAIN,terrainAssetKeysForEncounter:terrainAssetKeysForEncounter,invalidTerrainAsset:invalidTerrainAsset};
 })(typeof window!=='undefined'?window:globalThis);

@@ -17,7 +17,8 @@
   var CAMPAIGN_CONTRACTS = Object.freeze({
     1: Object.freeze({ bosses: 3, phases: 9 }),
     2: Object.freeze({ bosses: 5, phases: 15 }),
-    3: Object.freeze({ bosses: 12, phases: 36 })
+    3: Object.freeze({ bosses: 12, phases: 36 }),
+    4: Object.freeze({ bosses: 18, phases: 54, checkpoints: 106 })
   });
   var DEFAULT_SETTINGS = { music: true, sfx: true, quality: 'high', skillRotation: true, difficulty: 'normal', sensitivity: 1 };
 
@@ -49,14 +50,14 @@
       var campaign = value.campaign === true;
       var campaignContract = null;
       if (campaign) {
-        if (!integer(value.campaignRevision, 1, 3)) return null;
+        if (!integer(value.campaignRevision, 1, 4)) return null;
         campaignContract = CAMPAIGN_CONTRACTS[value.campaignRevision];
         if (!integer(value.bossIndex, 0, campaignContract.bosses - 1)) return null;
         if (value.difficulty === 'hell' && value.campaignRevision < 3) return null;
         if (value.stage === 'waves' && value.bossIndex === 1 && value.wave !== 0) return null;
       } else if (value.campaign !== undefined || value.campaignRevision !== undefined || value.bossIndex !== undefined) return null;
       if (!integer(value.seed, 0, 4294967295) || !integer(value.rngState, 0, 4294967295) || !integer(value.idCounter, 0, 100000000)) return null;
-      if (!integer(value.checkpointSerial, 1, 100) || !integer(value.tick, 0, 1000000) || typeof value.practiceBoss !== 'boolean') return null;
+      if (!integer(value.checkpointSerial, 1, campaignContract && campaignContract.checkpoints || 100) || !integer(value.tick, 0, 1000000) || typeof value.practiceBoss !== 'boolean') return null;
       if (!integer(value.shotReadyAt, 0, 1003600)) return null;
       if (value.stage !== 'waves' && value.stage !== 'boss') return null;
       if (!integer(value.wave, 0, 2) || !integer(value.phase, 0, 2)) return null;
