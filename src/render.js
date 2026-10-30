@@ -94,11 +94,14 @@
     var sinFloor=null,sinFloorSource=null,sinFloorTone=null;
     var sourceScene=null,sourceSceneImage=null,sourceSceneKey=null,sourceSceneTone=null,sourceSceneBuilds=0;
     var playerShotStamp=null,playerShotStampKey=null;
+    // Text layouts depend on the actual phase names, not on every render tick.
+    // One current HUD/entry/narrative layout keeps memory bounded per renderer.
+    var hudTextLayout=null,entryTextLayout=null,narrativeTextLayout=null,textLayoutBuilds=0;
     // The near-edge mask is unchanged during an anchored boss encounter.
     // Reuse its pixels until the source or scroll position changes.
     var parallaxImage=null,parallaxIndex=-1,parallaxProgress=null;
     var terrain=[{key:'forest',label:'숲의 진입로',center:.57,floorY:.38},{key:'ruins',label:'무너진 궁정',center:.50,floorY:.42},{key:'cave',label:'문지기의 동굴',center:.50,floorY:.36}];
-    var mapMetrics={zone:'forest',zoneIndex:0,segmentProgress:0,journeyProgress:0,journeySeconds:0,scrollY:640,anchored:false,terrainStripCount:0,cacheCanvasCount:2,cacheBytes:W*H*4*2,introActive:false,introProgress:0,terrainStatus:'retained-v2',sourceStatus:'retained-v2',campaignLocation:null,bossArt:null,visualRevision:10,dreamTheme:null,ambientGlyphs:0,decorativeCenter:'quiet',bossAccent:null,visibleMapTiles:'',visibleMapCount:0,atlasFxDraws:0,atlasFxLimit:24,atlasFxFamilies:''};
+    var mapMetrics={zone:'forest',zoneIndex:0,segmentProgress:0,journeyProgress:0,journeySeconds:0,scrollY:640,anchored:false,terrainStripCount:0,cacheCanvasCount:2,cacheBytes:W*H*4*2,introActive:false,introProgress:0,terrainStatus:'retained-v2',sourceStatus:'retained-v2',campaignLocation:null,bossArt:null,visualRevision:11,dreamTheme:null,ambientGlyphs:0,decorativeCenter:'quiet',bossAccent:null,visibleMapTiles:'',visibleMapCount:0,atlasFxDraws:0,atlasFxLimit:24,atlasFxFamilies:''};
     function clamp(value,a,b){return Math.max(a,Math.min(b,value));}
     function smooth(value){value=clamp(value,0,1);return value*value*(3-2*value);}
     function mapImage(index){return imageReady(images[terrain[index].key])?images[terrain[index].key]:images.cave;}
@@ -540,7 +543,11 @@
         var grid=h.patternId==='boss-grid-v1';
         ctx.globalAlpha=grid?.24:.13;ctx.strokeStyle=tone;ctx.lineWidth=width;ctx.stroke();
         var floorScar=h.telegraphKind==='floor-scar';
-        if(floorScar){ctx.globalAlpha=.9;ctx.strokeStyle='#080b12';ctx.lineWidth=Math.min(width,3.8);ctx.stroke();}
+        // The dark keyline uses this same committed path and stays inside its
+        // warning footprint. It improves contrast on pale source paintings;
+        // it is not a damaging beam, new aim line or a changed warning clock.
+        ctx.globalAlpha=floorScar?.9:.76;ctx.strokeStyle='#080b12';ctx.lineWidth=Math.min(width,floorScar?3.8:3);ctx.stroke();
+        mapMetrics.warningContrastStrokes++;
         ctx.globalAlpha=grid?.85:.66+progress*.22;ctx.setLineDash([7,7]);ctx.lineDashOffset=-progress*14;ctx.strokeStyle=palette?palette.secondary:color(h.color);ctx.lineWidth=floorScar?Math.min(width,1.5):grid?Math.min(width,2):1;ctx.stroke();
         ctx.restore();
       }
@@ -716,23 +723,64 @@
       ctx.beginPath();ctx.arc(p.x,p.y,(p.r||3)+1.7,0,Math.PI*2);ctx.fillStyle='#080e19';ctx.fill();
       ctx.beginPath();ctx.arc(p.x,p.y,p.r||3,0,Math.PI*2);ctx.fillStyle='#fff9e9';ctx.fill();ctx.strokeStyle='#8bdce2';ctx.lineWidth=.9;ctx.stroke();
     }
+    function fittedText(text,maxWidth,size,minSize,family) {
+      text=String(text||'');var fontSize=size,shown=text;ctx.save();
+      ctx.font=fontSize+'px '+family;
+      while(fontSize>minSize&&ctx.measureText(shown).width>maxWidth){fontSize--;ctx.font=fontSize+'px '+family;}
+      if(ctx.measureText(shown).width>maxWidth){
+        var chars=Array.from(shown);while(chars.length&&ctx.measureText(chars.join('')+'…').width>maxWidth)chars.pop();shown=chars.join('')+'…';
+      }
+      var result={text:shown,font:fontSize+'px '+family,maxWidth:maxWidth};ctx.restore();return result;
+    }
+    function combatReadability(world) {
+      var warningCount=0,activeCount=0,fadeCount=0,nearestAt=Infinity,hazards=world.hazards||[];
+      for(var hi=0;hi<hazards.length;hi++){
+        var hazard=hazards[hi];
+        if(hazard.phase==='warning'){warningCount++;if(Number.isFinite(hazard.activeAt)&&hazard.activeAt<nearestAt)nearestAt=hazard.activeAt;}
+        else if(hazard.phase==='active')activeCount++;
+        else if(hazard.phase==='fade')fadeCount++;
+      }
+      var ticks=nearestAt===Infinity?null:Math.max(0,nearestAt-(world.tick||0));
+      var seconds=ticks===null?null:ticks/60,bulletCount=world.bullets?world.bullets.length:0,live=bulletCount+warningCount+activeCount;
+      var timeout=Number.isFinite(world.phaseTimeout)?Math.max(0,world.phaseTimeout):75;
+      var remaining=world.stage==='boss'?Math.max(0,timeout-Math.max(0,world.phaseTime||0)):null;
+      var status='',kind='';
+      if(world.stage==='transition'){
+        kind=live?'residual-danger':'phase-change';
+        status=live?'잔탄 회피 · 탄환 '+bulletCount+' / 광선 '+(warningCount+activeCount):'다음 기억 준비';
+      }else if(activeCount){
+        kind='laser-active';status='광선 활성 '+activeCount+(warningCount&&seconds!==null?' · 추가 예고 '+(Math.ceil(seconds*10)/10).toFixed(1)+'초':'');
+      }else if(warningCount){
+        kind='laser-warning';status=seconds===null?'광선 예고':ticks===0?'광선 발사 직전':'광선 예고 · '+(Math.ceil(seconds*10)/10).toFixed(1)+'초';
+      }else if(bulletCount){kind='bullets';status='탄막 '+bulletCount+' · 흐름을 읽으세요';}
+      else if(world.stage==='bossIntro'){kind='entrance';status='등장 · 잠시 뒤 전투';}
+      else if(fadeCount){kind='laser-afterglow';status='광선 잔광 · 다음 공세 준비';}
+      else {kind='preparing';status='다음 공세 준비';}
+      return {phase:world.phase||0,remainingSeconds:remaining,warningLasers:warningCount,activeLasers:activeCount,fadingLasers:fadeCount,nearestWarningTicks:ticks,nearestWarningSeconds:seconds,enemyBullets:bulletCount,liveThreats:live,status:status,statusKind:kind,timerWarning:remaining!==null&&remaining<=15,geometryOwnedByCore:true};
+    }
     function bossHud(world) {
       if(!world.boss || (world.stage!=='boss'&&world.stage!=='bossIntro'&&world.stage!=='transition'))return;
-      if(world.stage==='transition'&&world.transitionNarrative)return;
-      var b=world.boss;ctx.save();
-      if(world.campaign){
-        var info=bossIdentity(world),action={move:'이동',charge:'준비',attack:'공격',recover:'회복'}[b.action]||'';
-        ctx.fillStyle='rgba(9,11,21,.75)';ctx.fillRect(13,24,334,40);
-        ctx.font='9px Arial,"Malgun Gothic",sans-serif';ctx.fillStyle=info.tone;ctx.textAlign='left';ctx.fillText(info.name,19,36);
-        ctx.textAlign='right';ctx.fillStyle='#c1b9bf';ctx.font='8px Arial,"Malgun Gothic",sans-serif';ctx.fillText('문양 '+((world.phase||0)+1)+' / 3'+(action?' · '+action:''),341,36);
-        ctx.textAlign='left';ctx.fillStyle='#d7d3dc';ctx.fillText(world.patternName||'',19,49);
-        if(b.healthLabel){ctx.textAlign='right';ctx.font='7px Arial,"Malgun Gothic",sans-serif';ctx.fillStyle='#bfc5d2';ctx.fillText(b.healthLabel,341,49);}
-        ctx.fillStyle='#343047';ctx.fillRect(19,56,322,3);ctx.fillStyle=info.tone;ctx.fillRect(19,56,322*clamp(b.hp/b.maxHp,0,1),3);ctx.restore();return;
+      var b=world.boss,readability=combatReadability(world);ctx.save();
+      var info=bossIdentity(world),family='Arial,"Malgun Gothic",sans-serif',label=b.specialPatternLabel||world.patternName||'',health=String(b.healthLabel||'체력');
+      if(!hudTextLayout||hudTextLayout.name!==info.name||hudTextLayout.label!==label||hudTextLayout.health!==health){
+        hudTextLayout={name:info.name,label:label,health:health,nameFit:fittedText(info.name,254,9,8,family),labelFit:fittedText(label,220,9,8,family),healthFit:fittedText(health,93,8,7,family)};textLayoutBuilds++;
       }
-      ctx.fillStyle='rgba(9,11,21,.72)';ctx.fillRect(13,27,334,34);
-      ctx.font='8px Arial,"Malgun Gothic",sans-serif';ctx.fillStyle='#dfd3e9';ctx.textAlign='left';ctx.fillText(world.patternName||'기억의 문지기',19,40);ctx.textAlign='right';ctx.fillStyle='#a797bc';ctx.fillText('SPELL '+((world.phase||0)+1)+' / 3',341,40);
-      ctx.fillStyle='#343047';ctx.fillRect(19,48,322,3);ctx.fillStyle='#c9acd8';ctx.fillRect(19,48,322*Math.max(0,Math.min(1,b.hp/b.maxHp)),3);
-      for(var i=1;i<3;i++){ctx.fillStyle='#161420';ctx.fillRect(19+322*i/3,48,1,3);}ctx.restore();
+      // All persistent information stays in the existing top HUD footprint.
+      // No opaque panel remains in the middle of the bullet field.
+      ctx.fillStyle='rgba(9,11,21,.86)';ctx.fillRect(13,19,334,45);
+      ctx.textAlign='left';ctx.font=hudTextLayout.nameFit.font;ctx.fillStyle=info.tone;ctx.fillText(hudTextLayout.nameFit.text,19,31,254);
+      ctx.textAlign='right';ctx.font='11px '+family;ctx.fillStyle=readability.timerWarning?'#ffd4a8':'#eee7dc';
+      var remaining=readability.remainingSeconds,timerText=remaining===null?(world.stage==='bossIntro'?'등장':'전환'):(remaining<10?remaining.toFixed(1):String(Math.ceil(remaining)))+'초';
+      ctx.fillText(timerText,341,31);
+      ctx.textAlign='left';ctx.font=hudTextLayout.labelFit.font;ctx.fillStyle='#e6e1e9';ctx.fillText(hudTextLayout.labelFit.text,19,44,220);
+      var action=world.stage==='transition'?'전환':world.stage==='bossIntro'?'등장':{move:'이동',charge:'준비',attack:'공격',recover:'회복'}[b.action]||'';
+      ctx.textAlign='right';ctx.font='8px '+family;ctx.fillStyle='#c1b9bf';ctx.fillText(((world.phase||0)+1)+' / 3'+(action?' · '+action:''),341,44);
+      ctx.textAlign='left';ctx.font='8px '+family;ctx.fillStyle=readability.activeLasers?'#ffe3c9':readability.warningLasers?'#d8e8f0':'#b6c2cf';ctx.fillText(readability.status,19,55,220);
+      ctx.textAlign='right';ctx.font=hudTextLayout.healthFit.font;ctx.fillStyle='#bfc5d2';ctx.fillText(hudTextLayout.healthFit.text,341,55,93);
+      ctx.fillStyle='#343047';ctx.fillRect(19,59,322,3);ctx.fillStyle=info.tone;ctx.fillRect(19,59,322*clamp(b.hp/b.maxHp,0,1),3);
+      readability.box=[13,19,334,45];readability.timerText=timerText;readability.displayName=hudTextLayout.nameFit.text;readability.displayPattern=hudTextLayout.labelFit.text;readability.textLayoutBuilds=textLayoutBuilds;mapMetrics.battleReadability=readability;
+      if(world.stage==='boss'&&b.specialPatternLabel){mapMetrics.specialPatternCue={id:b.specialPatternId||'',label:b.specialPatternLabel,displayLabel:hudTextLayout.labelFit.text,hint:String(b.patternHint||''),box:[19,35,220,12],hintRenderedInArena:false,hintLocation:b.patternHint?'external-pad-caption':null,damageGeometryOwnedByCore:true};}
+      ctx.restore();
     }
     function bossEntrance(world){
       var progress=clamp((world.stageTime||0)/(world.bossIntroDuration||2.5),0,1);
@@ -764,14 +812,17 @@
         ctx.textAlign='left';ctx.font='14px Georgia,"Batang","Malgun Gothic",serif';ctx.fillStyle='#e6d2b4';
         ctx.fillText(world.stageLabel||'다음 기억으로',40,106);
         ctx.font='12px Arial,"Malgun Gothic",sans-serif';ctx.fillStyle='#c7c6ce';
-        var text=String(world.transitionNarrative[page]),lines=[],lineText='';
-        for(var ch of Array.from(text)){
-          var next=lineText+ch;
-          if(lineText&&(Array.from(next).length>32||ctx.measureText(next).width>278)){lines.push(lineText.trim());lineText=ch===' '?'':ch;}
-          else lineText=next;
+        var text=String(world.transitionNarrative[page]);
+        if(!narrativeTextLayout||narrativeTextLayout.text!==text){
+          var lines=[],lineText='';
+          for(var ch of Array.from(text)){
+            var next=lineText+ch;
+            if(lineText&&(Array.from(next).length>32||ctx.measureText(next).width>278)){lines.push(lineText.trim());lineText=ch===' '?'':ch;}
+            else lineText=next;
+          }
+          if(lineText)lines.push(lineText.trim());narrativeTextLayout={text:text,lines:lines};textLayoutBuilds++;
         }
-        if(lineText)lines.push(lineText.trim());
-        for(var li=0;li<lines.length;li++)ctx.fillText(lines[li],40,132+li*18);
+        for(var li=0;li<narrativeTextLayout.lines.length;li++)ctx.fillText(narrativeTextLayout.lines[li],40,132+li*18);
         ctx.font='9px Arial,"Malgun Gothic",sans-serif';ctx.fillStyle='#8e9aa7';ctx.textAlign='right';ctx.fillText((page+1)+' / '+world.transitionNarrative.length,320,221);
         ctx.restore();return;
       }
@@ -801,30 +852,21 @@
           ctx.restore();
         }
       }
-      if(world.stage==='boss'&&world.phaseTime<1.45){
-        var a=Math.min(1,world.phaseTime/.22,(1.45-world.phaseTime)/.35);ctx.save();ctx.globalAlpha=Math.max(0,a);
+      if(world.stage==='boss'&&world.phaseTime<1.1&&!(world.bullets&&world.bullets.length)&&!(world.hazards&&world.hazards.length)){
+        var primary=String(world.patternName||''),extra=world.phase===2&&b?String(b.specialPatternLabel||''):'',entryTitle=primary+(extra&&extra!==primary?' · '+extra:'');
+        if(!entryTextLayout||entryTextLayout.title!==entryTitle){entryTextLayout={title:entryTitle,fit:fittedText(entryTitle,296,13,10,'Georgia,"Batang","Malgun Gothic",serif')};textLayoutBuilds++;}
+        var a=Math.min(1,world.phaseTime/.16,(1.1-world.phaseTime)/.25);ctx.save();ctx.globalAlpha=Math.max(0,a);
         ctx.fillStyle='rgba(12,14,28,.88)';ctx.fillRect(20,204,320,45);ctx.fillStyle='#c3af85';ctx.fillRect(20,204,2,45);
         ctx.textAlign='left';ctx.font='8px Arial';ctx.fillStyle='#b9aaca';ctx.fillText('MEMORY SIGN  /  '+(world.finalPractice?'FINAL':((world.bossIndex||0)+1))+'—'+(world.phase+1),32,219);
-        ctx.font='13px Georgia,"Batang",serif';ctx.fillStyle='#eee1ce';ctx.fillText(world.patternName+(world.phase===2&&b&&b.specialPatternLabel?' · '+b.specialPatternLabel:''),32,238);ctx.restore();
-      }
-      if(world.stage==='boss'&&world.phaseTime>=1.45&&b&&b.specialPatternLabel){
-        // A persistent reading cue stays above the player lane. The actual
-        // hazard and bullet pixels draw later, so this panel cannot mask an
-        // uncleared attack. Text names the engine's current pattern only.
-        var palette=paletteFor(world),tone=palette?palette.primary:'#c3af85',hint=String(b.patternHint||''),lines=[],lineText='';
-        ctx.save();ctx.fillStyle='rgba(9,13,24,.86)';ctx.fillRect(20,203,320,47);ctx.fillStyle=tone;ctx.fillRect(20,203,3,47);
-        ctx.textAlign='left';ctx.font='10px Arial,"Malgun Gothic",sans-serif';ctx.fillStyle='#f0e5d7';ctx.fillText('특수 패턴 · '+b.specialPatternLabel,30,217);
-        ctx.font='9px Arial,"Malgun Gothic",sans-serif';ctx.fillStyle='#d1d6de';
-        for(var ch of Array.from(hint)){var next=lineText+ch;if(lineText&&ctx.measureText(next).width>299){lines.push(lineText.trim());lineText=ch===' '?'':ch;}else lineText=next;}
-        if(lineText)lines.push(lineText.trim());for(var li=0;li<Math.min(2,lines.length);li++)ctx.fillText(lines[li],30,232+li*11);ctx.restore();
-        mapMetrics.specialPatternCue={id:b.specialPatternId||'',label:b.specialPatternLabel,hint:hint,box:[20,203,320,47],damageGeometryOwnedByCore:true};
+        ctx.font=entryTextLayout.fit.font;ctx.fillStyle='#eee1ce';ctx.fillText(entryTextLayout.fit.text,32,238,296);ctx.restore();
+        mapMetrics.patternEntryCue={title:entryTitle,displayTitle:entryTextLayout.fit.text,box:[20,204,320,45],expiresAtPhaseSeconds:1.1,opacity:Math.max(0,a),suppressedByLiveThreats:true};
       }
       if(world.stage==='won'&&!world.practiceBoss&&world.bossIndex===4){
         ctx.save();ctx.globalAlpha=.42;circle(180,190,46,'#ead5aa',1.2);circle(180,190,53,'#b9dbed',.7);line([[180,158],[180,220],[159,178],[201,178]],'#f0e1ba',2);ctx.restore();
       }
     }
     function draw(world,alpha,time,lowQuality) {
-      lightweight=!!lowQuality;mapMetrics.atlasFxLimit=lightweight?12:24;mapMetrics.specialPatternCue=null;mapMetrics.playerShotDraws=0;mapMetrics.playerShotAsset=null;mapMetrics.playerShotCacheBytes=playerShotStamp?96*64*4:0;
+      lightweight=!!lowQuality;mapMetrics.atlasFxLimit=lightweight?12:24;mapMetrics.specialPatternCue=null;mapMetrics.patternEntryCue=null;mapMetrics.battleReadability=null;mapMetrics.warningContrastStrokes=0;mapMetrics.playerShotDraws=0;mapMetrics.playerShotAsset=null;mapMetrics.playerShotCacheBytes=playerShotStamp?96*64*4:0;
       if(actorPresentation&&actorPresentation.beginFrame)actorPresentation.beginFrame();
       if(projectilePresentation&&projectilePresentation.beginFrame)projectilePresentation.beginFrame();
       if(bossSkillPresentation&&bossSkillPresentation.beginFrame)bossSkillPresentation.beginFrame();
@@ -839,7 +881,7 @@
       if(world.reservation){ctx.save();ctx.font='8px Arial,"Malgun Gothic",sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(167,224,227,.85)';ctx.fillText(typeof world.reservation==='string'?world.reservation:'스킬 준비 중',180,621);ctx.restore();}
       drawPlayerCore(world);
     }
-    return {resize:function(cssW,cssH,dpr){ratio=Math.min(1.5,Math.max(1,dpr||1))*cssW/W;var nextWidth=Math.max(1,Math.round(W*ratio)),nextHeight=Math.max(1,Math.round(H*ratio));if(canvas.width!==nextWidth)canvas.width=nextWidth;if(canvas.height!==nextHeight)canvas.height=nextHeight;canvas.style.width='100%';canvas.style.height='100%';ctx.imageSmoothingEnabled=true;},draw:draw,getMetrics:function(){return Object.assign({},mapMetrics,{actorPresentation:actorPresentation?actorPresentation.getMetrics():null,projectilePresentation:projectilePresentation?projectilePresentation.getMetrics():null,bossSkillsPresentation:bossSkillPresentation?bossSkillPresentation.getMetrics():null});},destroy:function(){if(playerShotStamp){playerShotStamp.width=1;playerShotStamp.height=1;playerShotStamp=null;}playerShotStampKey=null;if(projectilePresentation&&projectilePresentation.destroy)projectilePresentation.destroy();if(bossSkillPresentation&&bossSkillPresentation.destroy)bossSkillPresentation.destroy();bossSkillPresentation=null;releaseSourceTerrain();cached=false;canvas.width=1;canvas.height=1;back.width=1;back.height=1;foreground.width=1;foreground.height=1;if(sinFloor){sinFloor.width=1;sinFloor.height=1;sinFloor=null;}sinFloorSource=null;sinFloorTone=null;for(var i=0;i<strips.length;i++){strips[i].width=1;strips[i].height=1;}strips.length=0;actorPresentation=null;projectilePresentation=null;images={};}};
+    return {resize:function(cssW,cssH,dpr){ratio=Math.min(1.5,Math.max(1,dpr||1))*cssW/W;var nextWidth=Math.max(1,Math.round(W*ratio)),nextHeight=Math.max(1,Math.round(H*ratio));if(canvas.width!==nextWidth)canvas.width=nextWidth;if(canvas.height!==nextHeight)canvas.height=nextHeight;canvas.style.width='100%';canvas.style.height='100%';ctx.imageSmoothingEnabled=true;},draw:draw,getMetrics:function(){return Object.assign({},mapMetrics,{actorPresentation:actorPresentation?actorPresentation.getMetrics():null,projectilePresentation:projectilePresentation?projectilePresentation.getMetrics():null,bossSkillsPresentation:bossSkillPresentation?bossSkillPresentation.getMetrics():null});},destroy:function(){if(playerShotStamp){playerShotStamp.width=1;playerShotStamp.height=1;playerShotStamp=null;}playerShotStampKey=null;hudTextLayout=null;entryTextLayout=null;narrativeTextLayout=null;if(projectilePresentation&&projectilePresentation.destroy)projectilePresentation.destroy();if(bossSkillPresentation&&bossSkillPresentation.destroy)bossSkillPresentation.destroy();bossSkillPresentation=null;releaseSourceTerrain();cached=false;canvas.width=1;canvas.height=1;back.width=1;back.height=1;foreground.width=1;foreground.height=1;if(sinFloor){sinFloor.width=1;sinFloor.height=1;sinFloor=null;}sinFloorSource=null;sinFloorTone=null;for(var i=0;i<strips.length;i++){strips[i].width=1;strips[i].height=1;}strips.length=0;actorPresentation=null;projectilePresentation=null;images={};}};
   }
   global.HapilRenderer={create:create,terrainContracts:H14_TERRAIN,cultTerrainContracts:CULT_TERRAIN,chapter3TerrainContracts:CHAPTER3_TERRAIN,terrainAssetKeysForEncounter:terrainAssetKeysForEncounter,invalidTerrainAsset:invalidTerrainAsset};
 })(typeof window!=='undefined'?window:globalThis);

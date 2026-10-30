@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-30",
+  "folder": "https://drive.google.com/drive/folders/1ET0BPwKJgfY7Eq2cXCcDRkDUEqRdLqMy",
+  "parentSourceAssetFolder": "https://drive.google.com/drive/folders/1EODip0XxzrfYwi0APkRA66HFr8wuCU6g",
+  "scope": "V20 changed source contracts, code and repeated-review evidence. Original79 image files unchanged; this is not a standalone game archive. Local ZIP CRC/SHA256 checked and official upload/readback sizes matched; remote byte-download SHA is not claimed.",
+  "parts": [
+    {
+      "fileName": "HAPIL-V20-REVIEW-PART01-20261030.zip",
+      "bytes": 2303411,
+      "sha256": "9614a2e4db13c617205e1c981458100a894afda94eba31f29ae3934a4aa21230",
+      "files": [
+        "README.md",
+        "docs/V20-ACTUAL-PROJECTILE-PIXELS-20261030.json",
+        "docs/V20-BROWSER-QA-20261030.md",
+        "docs/V20-INDEPENDENT-QA-20261030.json",
+        "docs/V20-INDEPENDENT-QA-20261030.md",
+        "docs/V20-PROJECTILE-COLD-CACHE-CPU-20261030.json",
+        "docs/V20-PROJECTILE-IMAGE-REVIEW-20261030.md",
+        "docs/V20-REVIEW-PASSES-20261030.md",
+        "docs/V20-STORY-PROJECTILE-CONTRACTS-20261030.json",
+        "docs/V20-VISUAL-REVIEW-20261030.json",
+        "docs/V20-VISUAL-REVIEW-20261030.md",
+        "docs/v20-battle-pixels/all36-active.jpg",
+        "docs/v20-battle-pixels/all36-peak.jpg",
+        "docs/v20-battle-pixels/all36-warning.jpg"
+      ],
+      "id": "1tpcVX22vipgI5uIQODoHxtdYaVP4p0nS",
+      "url": "https://drive.google.com/file/d/1tpcVX22vipgI5uIQODoHxtdYaVP4p0nS/view?usp=drivesdk"
+    },
+    {
+      "fileName": "HAPIL-V20-REVIEW-PART02-20261030.zip",
+      "bytes": 2231924,
+      "sha256": "88d94a824cfdec5f297018b7bf653b698f1194baf245db03058b67b33a1ba0bf",
+      "files": [
+        "docs/v20-battle-pixels/baseline-candidate-contact.jpg",
+        "docs/v20-battle-pixels/compare-group-01.jpg",
+        "docs/v20-battle-pixels/compare-group-07.jpg",
+        "docs/v20-battle-pixels/compare-group-19.jpg",
+        "docs/v20-battle-pixels/compare-group-20.jpg",
+        "docs/v20-battle-pixels/compare-group-30.jpg",
+        "docs/v20-battle-pixels/compare-group-31.jpg",
+        "docs/v20-battle-pixels/compare-group-34.jpg",
+        "docs/v20-battle-pixels/compare-group-35.jpg",
+        "docs/v20-browser/input-after-cpu.json",
+        "docs/v20-browser/input-final.json",
+        "docs/v20-browser/input-initial.json",
+        "docs/v20-browser/laser-active.jpg",
+        "docs/v20-browser/laser-before.jpg",
+        "docs/v20-browser/scenes-final.json",
+        "docs/v20-pixels/actual-shapes-contact.jpg",
+        "docs/v20-pixels/source-edge-own-map-ab.jpg",
+        "docs/v20-pixels/source-edge-own-map-ab.json",
+        "docs/v20-qa/npm-test-final.log",
+        "index.html",
+        "src/app.js",
+        "src/boss-skills.js",
+        "src/projectiles.js",
+        "src/render.js",
+        "src/story-assets.js",
+        "styles.css",
+        "tests/independent-battle-readability-v20.test.cjs",
+        "tools/audit-actual-projectiles-v20.cjs",
+        "tools/measure-battle-readability-v20.cjs",
+        "tools/review-source-edge-v20.cjs"
+      ],
+      "id": "1lOlmKfCO3xTdYH73Qit62y0RehLnd56G",
+      "url": "https://drive.google.com/file/d/1lOlmKfCO3xTdYH73Qit62y0RehLnd56G/view?usp=drivesdk"
+    }
+  ]
+}

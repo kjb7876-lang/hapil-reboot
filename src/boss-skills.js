@@ -62,7 +62,7 @@
     var cache = new Map(), bytes = 0, encounter = -1, metrics;
     function release(item) { if (item && item.canvas) { item.canvas.width = 1; item.canvas.height = 1; } }
     function clear() { cache.forEach(release); cache.clear(); bytes = 0; }
-    function beginFrame() { metrics = { skillSourceDraws: 0, skillCastDraws: 0, skillReleaseDraws: 0, skillLaserDraws: 0, skillMissingAssets: 0, skillDrawLimit: 8, sourceKeys: {}, representedReleases: [] }; }
+    function beginFrame() { metrics = { skillSourceDraws: 0, skillCastDraws: 0, skillReleaseDraws: 0, skillLaserDraws: 0, skillMissingAssets: 0, skillDrawLimit: 8, skillReleaseCandidates: 0, skillReleaseEmitters: 0, sourceKeys: {}, representedReleases: [] }; }
     function remember(key, item) {
       if (item.bytes > CACHE_BYTES) { release(item); return null; }
       while (cache.size && (cache.size >= CACHE_ENTRIES || bytes + item.bytes > CACHE_BYTES)) { var first = cache.keys().next().value, old = cache.get(first); bytes -= old.bytes; release(old); cache.delete(first); }
@@ -99,26 +99,47 @@
       var limit = low ? 4 : 8; metrics.skillDrawLimit = limit;
       var b = world.boss, progress = clamp(b.actionProgress || 0, 0, 1);
       function specFor(role,event){var source=event&&event.sourceActorId,owner=source&&entry.participants&&entry.participants[source]||entry,spec=owner[role];return Array.isArray(spec)?spec[Math.min(world.phase||0,spec.length-1)]:spec;}
-      var cast=specFor('cast');
-      if (b.action === 'charge' && cast && metrics.skillSourceDraws < limit) paint(ctx, cast, 'cast', b.x, b.y + 24, progress, 2, progress, low);
-      if(story&&Array.isArray(b.participants))b.participants.forEach(function(p){var spec=specFor('cast',{sourceActorId:p.id}),pr=clamp(p.actionProgress||0,0,1);if(p.action==='charge'&&spec&&metrics.skillSourceDraws<limit)paint(ctx,spec,'cast',p.x,p.y+24,pr,2,pr,low);});
       // The bounded records are emitted only after a real projectile group or
       // laser activation succeeds. A dropped group creates no release accent.
       var events = Array.isArray(b.skillReleases) ? b.skillReleases : null;
-      var lastIdentity = '';
       if (events) {
-        for (var i = events.length - 1, visited = 0; i >= 0 && visited < 8 && metrics.skillSourceDraws < limit; i--, visited++) {
+        // Several real emitters can fire the same kind on the same tick. Keep
+        // their committed positions instead of treating the whole volley as
+        // one effect. Give each origin one accent before spending the bounded
+        // budget on additional kinds from an already represented origin.
+        var primary=[],secondary=[],seenEvents=Object.create(null),seenEmitters=Object.create(null);
+        for (var i = events.length - 1, visited = 0; i >= 0 && visited < 8; i--, visited++) {
           var e = events[i]; if (!e || !finite(e.tick) || e.tick < 0) continue;
-          var age = world.tick - e.tick, identity = e.tick + '|' + e.kind + '|' + e.patternId;
-          if (identity === lastIdentity || age < 0 || age >= 30) continue;
-          lastIdentity = identity;
+          var age = world.tick - e.tick,origin=e.sourceActorId||e.x+'|'+e.y,identity=e.tick+'|'+e.kind+'|'+e.patternId+'|'+origin+'|'+e.x+'|'+e.y;
+          if (seenEvents[identity] || age < 0 || age >= 30 || !finite(e.x) || !finite(e.y)) continue;
+          seenEvents[identity]=true;metrics.skillReleaseCandidates++;
+          if(seenEmitters[origin])secondary.push(e);else{seenEmitters[origin]=true;metrics.skillReleaseEmitters++;primary.push(e);}
+        }
+        // On the four-draw path, sample a crowded set of origins evenly. This
+        // depends only on the release records, not wall time or frame parity,
+        // so a paused/repeated frame cannot make accents jump between emitters.
+        var selected=primary;
+        if(primary.length>limit){
+          selected=[];var sampled=Object.create(null);
+          for(var n=0;n<limit;n++){var pick=Math.floor(n*(primary.length-1)/Math.max(1,limit-1));sampled[pick]=true;selected.push(primary[pick]);}
+          for(var n=0;n<primary.length;n++)if(!sampled[n])selected.push(primary[n]);
+        }
+        selected=selected.concat(secondary);
+        for(var j=0;j<selected.length&&metrics.skillSourceDraws<limit;j++){
+          var e=selected[j],age=world.tick-e.tick;
           var laser = e.kind === 'laser', spec = laser ? specFor('laser',e) || specFor('release',e) : specFor('release',e);
-          if (paint(ctx, spec, laser ? 'laser' : 'release', e.x, e.y, age, 30, 0, low)) {var represented={ tick:e.tick,kind:e.kind,patternId:e.patternId||'' };if(story&&e.sourceActorId)represented.sourceActorId=e.sourceActorId;metrics.representedReleases.push(represented);}
+          if (paint(ctx, spec, laser ? 'laser' : 'release', e.x, e.y, age, 30, 0, low)) {var represented={ tick:e.tick,kind:e.kind,patternId:e.patternId||'',x:e.x,y:e.y,sourceKey:spec.key };if(e.sourceActorId)represented.sourceActorId=e.sourceActorId;metrics.representedReleases.push(represented);}
         }
       } else if (finite(b.releaseTick) && b.releaseTick >= 0) {
         var releaseAge = world.tick - b.releaseTick;
-        if (metrics.skillSourceDraws < limit && paint(ctx, specFor('release'), 'release', b.x, b.y + 20, releaseAge, 24, 0, low)) metrics.representedReleases.push({ tick: b.releaseTick, kind: 'legacy-release', patternId: '' });
+        var releaseSpec=specFor('release');
+        if (metrics.skillSourceDraws < limit && paint(ctx, releaseSpec, 'release', b.x, b.y + 20, releaseAge, 24, 0, low)) metrics.representedReleases.push({ tick: b.releaseTick, kind: 'legacy-release', patternId: '',x:b.x,y:b.y+20,sourceKey:releaseSpec.key });
       }
+      // Confirmed releases take priority over a preparation accent that may
+      // overlap their attack clock. Any remaining cast budget is still capped.
+      var cast=specFor('cast');
+      if (b.action === 'charge' && cast && metrics.skillSourceDraws < limit) paint(ctx, cast, 'cast', b.x, b.y + 24, progress, 2, progress, low);
+      if(story&&Array.isArray(b.participants))b.participants.forEach(function(p){var spec=specFor('cast',{sourceActorId:p.id}),pr=clamp(p.actionProgress||0,0,1);if(p.action==='charge'&&spec&&metrics.skillSourceDraws<limit)paint(ctx,spec,'cast',p.x,p.y+24,pr,2,pr,low);});
     }
     beginFrame();
     return { beginFrame: beginFrame, draw: draw, getMetrics: function () { return Object.assign({}, metrics, { sourceKeys: Object.assign({}, metrics.sourceKeys), representedReleases: metrics.representedReleases.slice(), skillCacheEntries: cache.size, skillCacheBytes: bytes, skillCacheByteLimit: CACHE_BYTES, skillCacheEntryLimit: CACHE_ENTRIES }); }, destroy: function () { clear(); images = {}; } };

@@ -166,7 +166,13 @@
   function slotForEncounter(i){return i===undefined||i===-1?0:Number.isInteger(i)&&i>=0&&((i<ORBS.length&&ORBS[i])||storySpec(i))?i:-1;}
   function indexFor(w){if(w&&w.finalPractice)return 12;var i=w&&w.bossIndex;if(w&&w.campaignRevision>=5&&Number.isInteger(i)&&i>=18&&i<=34)return slotForEncounter(i+1);if(w&&w.campaignRevision>=4&&Number.isInteger(i)&&i>=12&&i<=17)return i+1;return i>=12?-1:slotForEncounter(i);}
   function paletteAt(i,owner){var story=storySpec(i,owner);return story?story.palette:PALETTE_LIST[i];}
-  function paletteFor(w,b){var p=paletteAt(indexFor(w),b);return p?(b&&b.paletteSlot===1?{id:p.id+'-secondary',primary:p.secondary,secondary:p.primary,accent:p.accent}:p):null;}
+  var SECONDARY_PALETTE_CACHE=new WeakMap();
+  function paletteFor(w,b){
+    var p=paletteAt(indexFor(w),b);if(!p||!b||b.paletteSlot!==1)return p||null;
+    var swapped=SECONDARY_PALETTE_CACHE.get(p);
+    if(!swapped){swapped=Object.freeze({id:p.id+'-secondary',primary:p.secondary,secondary:p.primary,accent:p.accent});SECONDARY_PALETTE_CACHE.set(p,swapped);}
+    return swapped;
+  }
   function colorFor(w,b){var p=paletteFor(w,b);return p?p.primary:null;}
   // Acceleration is a property known at launch, so tint the existing authored
   // pixels from the first frame: players get a stable cue before it speeds up.
@@ -268,7 +274,10 @@
     }
     function buildStamp(w,b,s,r,l){
       var art=tintedArt(s,bulletPalette(w,b));if(!art)return null;
-      var outset=Math.min(4,Math.max(3,finite(s.visualOutset)?s.visualOutset:r*.5)),hx=l+r+outset+PAD,hy=r+outset+PAD,fw=Math.ceil(hx*2*SCALE),fh=Math.ceil(hy*2*SCALE),frames=[];
+      var sourceOutset=Math.min(4-Math.SQRT2/SCALE,Math.max(3,finite(s.visualOutset)?s.visualOutset:r*.5)),outset=sourceOutset+Math.SQRT2/SCALE,fw=Math.ceil((l+r+outset+PAD)*2*SCALE/2)*2,fh=Math.ceil((r+outset+PAD)*2*SCALE/2)*2,hx=fw/(2*SCALE),hy=fh/(2*SCALE),frames=[];
+      // Fractional hit radii must still land on the exact center of the cached
+      // surface. Even cache dimensions avoid a second asymmetric half-pixel
+      // resampling when its authored center is drawn back at native size.
       // Separate frame surfaces preserve fractional-radius edge coverage and
       // permit one direct 5-argument drawImage per live bullet. A cropped frame
       // in a long strip was measurably expensive in native CPU Canvas.
@@ -278,8 +287,21 @@
         // mechanical fins. No capsule clipping and no opaque backing is drawn.
         var ax=s.anchor?clamp((s.anchor[0]-s.crop[0])/s.crop[2],0,1):.5,ay=s.anchor?clamp((s.anchor[1]-s.crop[1])/s.crop[3],0,1):.5;
         if(s.rotation){var ca=Math.cos(s.rotation),sa=Math.sin(s.rotation),nx=ca*(ax-.5)-sa*(ay-.5)+.5,ny=sa*(ax-.5)+ca*(ay-.5)+.5;ax=clamp(nx,0,1);ay=clamp(ny,0,1);}
-        var dw=(l+r+outset)/Math.max(ax,1-ax),dh=(r+outset)/Math.max(ay,1-ay);
+        var dw=(l+r+sourceOutset)/Math.max(ax,1-ax),dh=(r+sourceOutset)/Math.max(ay,1-ay);
         ctx.drawImage(art.canvas,phase*art.frameWidth+art.gutter,art.gutter,art.sourceWidth,art.sourceHeight,(hx-ax*dw)*SCALE,(hy-ay*dh)*SCALE,dw*SCALE,dh*SCALE);
+        // A single cached source-alpha edge separates authored silhouettes
+        // from bright map detail. It follows existing alpha rather than any
+        // hitbox shape; its furthest diagonal is <0.48 CSS px and fits inside
+        // the same four-pixel total ornament budget. Live bullets still draw
+        // once, without shadow/filter work or added geometric backing.
+        var pixels=ctx.getImageData(0,0,fw,fh),original=new Uint8ClampedArray(pixels.data),d=pixels.data;
+        for(var y=1;y<fh-1;y++)for(var x=1;x<fw-1;x++){
+          var at=(y*fw+x)*4,a=original[at+3]/255;if(a===1)continue;
+          var edge=0;for(var ey=-1;ey<=1;ey++)for(var ex=-1;ex<=1;ex++)if(ex||ey)edge=Math.max(edge,original[((y+ey)*fw+x+ex)*4+3]);
+          var under=edge/255*.94*(1-a),alpha=a+under;if(!under||!alpha)continue;
+          d[at]=Math.round((original[at]*a+7*under)/alpha);d[at+1]=Math.round((original[at+1]*a+11*under)/alpha);d[at+2]=Math.round((original[at+2]*a+19*under)/alpha);d[at+3]=Math.round(alpha*255);
+        }
+        ctx.putImageData(pixels,0,0);
         frames.push(c);
       }
       return {canvases:frames,width:fw/SCALE,height:fh/SCALE,frameWidth:fw,frameHeight:fh,frameCount:s.frames,x:hx,y:hy,r:r,halfLength:l,outset:outset,bytes:fw*fh*s.frames*4};

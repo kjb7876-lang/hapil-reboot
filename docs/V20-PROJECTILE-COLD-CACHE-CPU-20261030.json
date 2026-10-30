@@ -1,0 +1,71 @@
+{
+  "scope": "Separate native Node processes, same current metadata and predecoded images; 6coldstamps per sample;CPU cache-build timing only, not mobile/GPU or sustainedFPS",
+  "comparisonCaveat": "Separate sequential processes with the same current metadata; sampled cache-build cost, not a stable cross-device speedup claim. The earlier VM/native comparison is invalid and excluded.",
+  "rows": [
+    {
+      "group": 19,
+      "baselineMedianMs": 3.288,
+      "currentMedianMs": 5.543,
+      "deltaMedianMs": 2.256,
+      "baselineP90Ms": 3.876,
+      "currentP90Ms": 7.504
+    },
+    {
+      "group": 23,
+      "baselineMedianMs": 2.95,
+      "currentMedianMs": 4.09,
+      "deltaMedianMs": 1.14,
+      "baselineP90Ms": 4.133,
+      "currentP90Ms": 7.251
+    },
+    {
+      "group": 25,
+      "baselineMedianMs": 2.499,
+      "currentMedianMs": 4.124,
+      "deltaMedianMs": 1.624,
+      "baselineP90Ms": 2.789,
+      "currentP90Ms": 5.188
+    },
+    {
+      "group": 29,
+      "baselineMedianMs": 3.4,
+      "currentMedianMs": 4.228,
+      "deltaMedianMs": 0.828,
+      "baselineP90Ms": 4.016,
+      "currentP90Ms": 4.599
+    },
+    {
+      "group": 31,
+      "baselineMedianMs": 1.859,
+      "currentMedianMs": 4.452,
+      "deltaMedianMs": 2.593,
+      "baselineP90Ms": 2.198,
+      "currentP90Ms": 4.712
+    },
+    {
+      "group": 34,
+      "baselineMedianMs": 1.824,
+      "currentMedianMs": 3.07,
+      "deltaMedianMs": 1.246,
+      "baselineP90Ms": 2.228,
+      "currentP90Ms": 4.964
+    },
+    {
+      "group": 35,
+      "baselineMedianMs": 2.331,
+      "currentMedianMs": 4.234,
+      "deltaMedianMs": 1.903,
+      "baselineP90Ms": 4.696,
+      "currentP90Ms": 4.623
+    }
+  ],
+  "productionHashes": {
+    "src/projectiles.js": "05a1233cfad835b81db70348a3f5acebed59c22059d74719adf756e838825b93",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033"
+  },
+  "baselineCommit": "079c830e40d607d9944215a107003d66e85367ce",
+  "samplesPerGroupPerRenderer": 20,
+  "coldStampsPerSample": 6,
+  "warmupSamples": 4,
+  "sourceProtocol": "Both renderers were run in separate native Node processes with current source metadata, predecoded source images and fresh per-sample cache. No VM-vs-native times are used."
+}
