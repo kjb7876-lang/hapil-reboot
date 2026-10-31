@@ -1,0 +1,178 @@
+{
+  "date": "2026-10-31",
+  "folderId": "1fP9T45bxmWh9G3FzARZ2lXxbUQuuTz1b",
+  "url": "https://drive.google.com/drive/folders/1fP9T45bxmWh9G3FzARZ2lXxbUQuuTz1b",
+  "archive": {
+    "name": "HAPIL-V23-REVIEW-PART01-20261031.zip",
+    "bytes": 927612,
+    "sha256": "aaff1b148701ce945aa9768bd7e524c60691576bde92fb20227da40fe32cf053",
+    "driveId": "1yQTkZjOMkKgxVRkESzto78biNdOo1sc7",
+    "url": "https://drive.google.com/file/d/1yQTkZjOMkKgxVRkESzto78biNdOo1sc7/view?usp=drivesdk",
+    "remoteVerification": "Drive metadata readback size927612; remote SHA256 download not performed"
+  },
+  "contents": [
+    {
+      "path": "README.md",
+      "bytes": 15536,
+      "sha256": "b59fce78f7f0f46e85856b42dd96f74d175524ecd7d974febf853bac06d1459f",
+      "blobSha": "252828b57149eb109fc95bae4730de784a2451a2"
+    },
+    {
+      "path": "docs/V23-COMBAT-GUARD-20261031.json",
+      "bytes": 103006,
+      "sha256": "47baaa545ca35557946cfa4fe28be1c90c40ef3232559239952eb9faed8b7a90",
+      "blobSha": "68132509b818ea38cafcc686942594cbc2141086"
+    },
+    {
+      "path": "docs/V23-COMBAT-GUARD-20261031.md",
+      "bytes": 1324,
+      "sha256": "f3b5b6f966e80e2c39f3927afd451f276d6e92822ad1571ef33b093ba4ee6977",
+      "blobSha": "78acf90c53b9ec23fef6b6d3ccd8ddfa893e9ff3"
+    },
+    {
+      "path": "docs/V23-FINAL-QA-20261031.json",
+      "bytes": 24868,
+      "sha256": "b0ccc3e188c06020ce06ec60fef15300979b8a3aae5dfcc8be1d91e8af839a59",
+      "blobSha": "bffb7806f1ebb1c7c69a98b81e89582a8f3abda8"
+    },
+    {
+      "path": "docs/V23-FINAL-QA-20261031.md",
+      "bytes": 3615,
+      "sha256": "73ec333907daeebd3c4e1e6bb32fffb71bcaee4dd3a2ba36f1d262fcd39bd6be",
+      "blobSha": "b21da54642b94ee13ecdac72c04b994901a421b4"
+    },
+    {
+      "path": "docs/V23-INDEPENDENT-LASER-QA-20261031.md",
+      "bytes": 5601,
+      "sha256": "2e8e52b297aa1471c3c48ce8102624db735c23147473ab12b7d5e1c80fc63410",
+      "blobSha": "28df0a4c794878e0213d4f8bee286cab62cdbf98"
+    },
+    {
+      "path": "docs/V23-LASER-MATERIAL-IMPLEMENTATION-20261031.md",
+      "bytes": 4773,
+      "sha256": "a9164aba094a12e80985091cd6244e4c81441e5e9950516822e3b043c7f83a7d",
+      "blobSha": "6d0dbd599f651401823f23d995876233ecd55a6e"
+    },
+    {
+      "path": "docs/V23-LASER-PIXEL-REVIEW-20261031.json",
+      "bytes": 781829,
+      "sha256": "3875bf5d7dd56edefc0d364278044f555d48c743c39453a69b2ea33531192d28",
+      "blobSha": "6aa2e336dae309827b0f9ff95c400a2feecceb07"
+    },
+    {
+      "path": "docs/v23-browser/hapil-v23-balrog-high.jpg",
+      "bytes": 75969,
+      "sha256": "04b2de85278a92eea6f89ed2695af6e60427f036e4c84416cba03a34605c0acf",
+      "blobSha": "43000dd5dac67a94c0d35a5de7cbb3b8abdf1e36"
+    },
+    {
+      "path": "docs/v23-browser/hapil-v23-browser-observations.json",
+      "bytes": 17336,
+      "sha256": "bbc6f66204f629640bb7005fe35fd7f3b999616f7197882354d8731b621b3a74",
+      "blobSha": "322ac3bc86b5a44d48c6ddb8d2f66ac123fa29c5"
+    },
+    {
+      "path": "docs/v23-browser/hapil-v23-violet-high.jpg",
+      "bytes": 81844,
+      "sha256": "b1b21a4d6e6ac11974c54112dc272c4230b580802e522da40166e6d2b8b48047",
+      "blobSha": "1cde6246914fa4d3e30c777c4e4271434a6faea9"
+    },
+    {
+      "path": "docs/v23-laser-palette-test-initial-criterion-20261031.log",
+      "bytes": 1060,
+      "sha256": "6c2ebad4c354faf2b2dfeef06bf671893bfa59a29816d34074f16bd2530f4980",
+      "blobSha": "204b0cbdafd32b3286747a9b213f4d1699cd7912"
+    },
+    {
+      "path": "docs/v23-laser-pixels-final-audit-20261031.log",
+      "bytes": 260,
+      "sha256": "a86657bf245d4687b92eedea28dcbfc81c175ec1d0831dfc99dc3d7094b90541",
+      "blobSha": "c766eed0281c6ae41bb3a6022979c27efaf81db0"
+    },
+    {
+      "path": "docs/v23-laser-pixels-tests-candidate2-20261031.log",
+      "bytes": 700,
+      "sha256": "a2ce14a374a9ef80890757cb6b13321c109877bd3006b530d0c5911a4bce625f",
+      "blobSha": "3ded47aa365b01395a7543bd0d0a4d09af72bb70"
+    },
+    {
+      "path": "docs/v23-laser-pixels/actual-combat-before-after.jpg",
+      "bytes": 365388,
+      "sha256": "c4a3ad6a130a958bc1cb1be73d1c411162aa5951bb5276b0d51e209fab91c27b",
+      "blobSha": "38f8e83bea201f67cd2273ef4d57fbe5f3ba17e5"
+    },
+    {
+      "path": "docs/v23-laser-pixels/baseline-current.jpg",
+      "bytes": 128802,
+      "sha256": "5ac8dd1f24ee0a1dc3b0e3fd540b0b086201491a4469809306714e01642aad1b",
+      "blobSha": "f4b6900bac2fa9bb7f12c785eccd82b8b80e847d"
+    },
+    {
+      "path": "docs/v23-laser-pixels/graded-material-cache.jpg",
+      "bytes": 147767,
+      "sha256": "332549e7edc9f18ed06f5e62802a9c768857ec58ca0a43a25505e13f23d2436f",
+      "blobSha": "7565b1a6f6435518c779a2d8af3786f89e6da068"
+    },
+    {
+      "path": "docs/v23-qa/npm-test-final.log",
+      "bytes": 34920,
+      "sha256": "3ead86122c939d93ba032490f1d4dfb40c76c77d71a1804b8a370cb54085ca10",
+      "blobSha": "0de41d43be4a4a17984b8a322dd9bf3b5dd76bf8"
+    },
+    {
+      "path": "index.html",
+      "bytes": 15412,
+      "sha256": "469604cb88be0f0f2e6f75d06422ca7f5cb8d954873dcee85fd288676655d666",
+      "blobSha": "dfd61baa6123feef8e654ad711361602bf24bcda"
+    },
+    {
+      "path": "src/app.js",
+      "bytes": 67289,
+      "sha256": "cce05bdf558397fcd93b9b7683b24629fa1b9ee1bd8d948da9c904332f265af0",
+      "blobSha": "e92887d00dfe8f5dc31864eb8debe15a9b0a9e5b"
+    },
+    {
+      "path": "src/projectiles.js",
+      "bytes": 44520,
+      "sha256": "72e42480e7aec149bceaf0fa355674cf6cf6100587a4221c661906fcdc56be90",
+      "blobSha": "e7792a8d09f00ca13bdbce440df8d93e77986cc3"
+    },
+    {
+      "path": "tests/combat-copy-presentation-v21.test.cjs",
+      "bytes": 8362,
+      "sha256": "aae2132c7ae514325dda368b30206850224cb892e148e08051e257b93c7821f6",
+      "blobSha": "61702b326fbf9e0036ed5ef9bf1d3854452eca9a"
+    },
+    {
+      "path": "tests/independent-battle-readability-v20.test.cjs",
+      "bytes": 14104,
+      "sha256": "2be9ab7e402a88d02de7bb3bece151501fc664e6329827198010bc3e6e61759d",
+      "blobSha": "bf7c28c43cf12f12092979985dcc66e8af6a28ca"
+    },
+    {
+      "path": "tests/independent-laser-pixels-v23.test.cjs",
+      "bytes": 5453,
+      "sha256": "3f2686384a2ae6bf1ac037ca77e4318fb660b7f2067c02cb3b32d593d05ba7ff",
+      "blobSha": "b6fbbdef7d1ab0b9f77079bd78899a3d191928b0"
+    },
+    {
+      "path": "tests/laser-material-v23.test.cjs",
+      "bytes": 5157,
+      "sha256": "44c5e1dc309003402e3b26b882b88c787b6b13f2af0b600c88b1485ad5298dd5",
+      "blobSha": "bda5086255a4d44ad8af4d51682b7557afb319bd"
+    },
+    {
+      "path": "tools/audit-laser-pixels-v23.cjs",
+      "bytes": 19012,
+      "sha256": "327fa0cb7b7c7c7f0802195d17726190b2005385446c598fd69acdfbf21fd7cc",
+      "blobSha": "eda3becc69174bd588acb3f8e0f1067b58b01d83"
+    },
+    {
+      "path": "tools/verify-combat-guard-v23.cjs",
+      "bytes": 8347,
+      "sha256": "9cb42c111d813f488e781376f64c14f253ceccdc07fdaa2e29cb043f60abfc0a",
+      "blobSha": "7be10ac6c0f1cc2511de3f53bfa473ef318fc279"
+    }
+  ],
+  "selfReference": "This metadata file is intentionally outside that archive"
+}

@@ -1,0 +1,25 @@
+'use strict';
+// Native CPU Canvas source-presentation tests; not mobile/GPU performance proof.
+const test=require('node:test'),assert=require('node:assert/strict'),path=require('node:path');
+const {createCanvas,loadImage}=require(require.resolve('@napi-rs/canvas',{paths:[process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES||'',path.resolve(__dirname,'..')]}));
+require('../src/story-assets.js');require('../src/projectiles.js');
+const media=require('../tools/read-media-registry.cjs')(),root=path.resolve(__dirname,'..');
+async function fixture(group=0){const images={};for(const key of global.HapilProjectiles.assetKeysForEncounter(group))images[key]=await loadImage(path.join(root,media[key]));const allocated=[],previous=global.document;global.document={createElement(){const c=createCanvas(1,1);allocated.push(c);return c;}};const p=global.HapilProjectiles.create(images),surface=createCanvas(360,640),ctx=surface.getContext('2d'),w={campaign:true,campaignRevision:group>=19?5:3,bossIndex:group>=19?group-1:group,tick:171},h={id:91,x1:30,y1:200,x2:330,y2:200,width:20,phase:'active',progress:.2,activeAt:151,age:.3};return{p,ctx,surface,w,h,allocated,close(){p.destroy();global.document=previous;}};}
+test('v23 source material warms once and all forty beams retain art within bounded high/low cosmetic work',async()=>{
+ const f=await fixture();try{f.p.beginFrame();assert(f.p.drawHazardBody(f.ctx,f.w,f.h,false));const first=f.p.getMetrics(),count=f.allocated.length;assert.equal(first.laserArtRevision,23);assert.equal(first.beamFrameCacheBuilds,1);assert.equal(first.beamMaterialDraws,1);assert(first.stampCacheBytes<=4194304);
+  for(const low of [false,true]){f.p.beginFrame();for(let i=0;i<40;i++){const h={...f.h,id:91+i,y1:150+i*8,y2:150+i*8},before=structuredClone(h);assert(f.p.drawHazardBody(f.ctx,f.w,h,low));assert.deepEqual(h,before);}const m=f.p.getMetrics();assert.equal(m.assetLaserDraws,40);assert.equal(m.sourceBeamOverlayDraws,40);assert.equal(m.beamMaterialDraws,40);assert.equal(m.beamCacheBuilds,1);assert.equal(m.beamFrameCacheBuilds,0);assert.equal(f.allocated.length,count,'warm beam rendering allocates no canvases');assert.equal(m.beamDetailedLasers,low?0:12);assert.equal(m.beamFlowDraws,low?0:24);assert.equal(m.beamEmitterDraws,low?0:12);assert.equal(m.hazardEmitterDraws,m.beamEmitterDraws);assert.equal(m.beamDetailLimit,low?0:12);assert.equal(m.missingProjectileAssets,0);assert.equal(m.missingOptionalBeamAssets,0);assert(m.stampCacheBytes<=4194304);}
+ }finally{f.close();assert(f.allocated.every(c=>c.width===1&&c.height===1),'every retained/temporary surface releases pixels');}
+});
+test('flow uses source art only during actual active phase and harmless afterglow follows the core fade clock',async()=>{
+ const f=await fixture();try{const immutable=structuredClone(f.w);for(const phase of ['warning','active','fade']){f.ctx.clearRect(0,0,360,640);f.p.beginFrame();const h={...f.h,phase,progress:.5},before=structuredClone(h),drawn=f.p.drawHazardBody(f.ctx,f.w,h,false),m=f.p.getMetrics();assert.equal(drawn,phase!=='warning');assert.equal(m.beamEmitterDraws,phase==='active'?1:0);assert.equal(m.beamFlowDraws,phase==='active'?2:0);const alpha=f.ctx.getImageData(180,200,1,1).data[3];if(phase==='warning')assert.equal(alpha,0);if(phase==='active')assert(alpha>=240);if(phase==='fade')assert(alpha>0&&alpha<120);assert.deepEqual(h,before);}assert.deepEqual(f.w,immutable);
+ }finally{f.close();}
+});
+test('paired laser caches retain actual original owner and secondary palette identity',async()=>{
+ const f=await fixture(34);try{const owners=[['han-rian','storyRianCross'],['baek-ion','storyIonShield']],samples=[];for(const [owner,key]of owners){f.ctx.clearRect(0,0,360,640);f.p.beginFrame();const h={...f.h,sourceActorId:'cloned-'+owner,modelActorId:owner};assert(f.p.drawHazardBody(f.ctx,f.w,h,false));const m=f.p.getMetrics();assert.equal(m.beamSourceKeys[key],1);assert.equal(m.missingProjectileAssets,0);samples.push(Array.from(f.ctx.getImageData(180,200,1,1).data));}assert.notDeepEqual(samples[0],samples[1],'goldcross andblueshield do not share a recolouredcache entry');
+  const h={...f.h,sourceActorId:'baek-ion',paletteSlot:1};f.p.beginFrame();assert(f.p.drawHazardBody(f.ctx,f.w,h,true));assert.equal(f.p.getMetrics().beamCacheBuilds,3,'secondary palette has its own bounded immutable material');
+ }finally{f.close();}
+});
+test('named Violet keeps purple shoulders and a brighter core for both committed palette slots',async()=>{
+ const f=await fixture();try{for(const paletteSlot of[0,1])for(const low of[false,true]){f.ctx.clearRect(0,0,360,640);f.p.beginFrame();assert(f.p.drawHazardBody(f.ctx,f.w,{...f.h,width:80,paletteSlot},low));const edge=Array.from(f.ctx.getImageData(180,225,1,1).data),core=Array.from(f.ctx.getImageData(180,200,1,1).data);assert(edge[2]>edge[0]+8&&edge[2]>edge[1]+12,'a wide side layer retains named purple rather than a full-width ivory card');const luma=p=>.2126*p[0]+.7152*p[1]+.0722*p[2];assert(luma(core)>luma(edge)+35,'brightness concentrates in the narrow core');assert(edge[3]>=100,'darker colour is still a visibly occupied damaging shoulder');}}
+ finally{f.close();}
+});
