@@ -111,7 +111,7 @@
     var cache = new Map(), bytes = 0, encounter = -1, metrics;
     function release(item) { if (item && item.canvas) { item.canvas.width = 1; item.canvas.height = 1; } }
     function clear() { cache.forEach(release); cache.clear(); bytes = 0; }
-    function beginFrame() { metrics = { skillSourceDraws: 0, skillCastDraws: 0, skillReleaseDraws: 0, skillLaserDraws: 0, skillMissingAssets: 0, skillDrawLimit: 8, skillReleaseCandidates: 0, skillReleaseEmitters: 0, skillWarningCandidates:0, skillWarningDraws:0, skillChargeSuppressed:0, skillProfileId:'', sourceKeys: {}, skillCueIds:{}, representedReleases: [], representedCasts: [] }; }
+    function beginFrame() { metrics = { skillSourceDraws: 0, skillCastDraws: 0, skillReleaseDraws: 0, skillLaserDraws: 0, skillMissingAssets: 0, skillDrawLimit: 8, skillReleaseCandidates: 0, skillReleaseEmitters: 0, skillWarningCandidates:0, skillWarningDraws:0, skillChargeSuppressed:0, skillDetachedDraws:0, skillProfileId:'', sourceKeys: {}, skillCueIds:{}, representedReleases: [], representedCasts: [] }; }
     function remember(key, item) {
       if (item.bytes > CACHE_BYTES) { release(item); return null; }
       while (cache.size && (cache.size >= CACHE_ENTRIES || bytes + item.bytes > CACHE_BYTES)) { var first = cache.keys().next().value, old = cache.get(first); bytes -= old.bytes; release(old); cache.delete(first); }
@@ -161,6 +161,40 @@
       metrics.sourceKeys[spec.key] = (metrics.sourceKeys[spec.key] || 0) + 1;metrics.skillCueIds[cueId]=(metrics.skillCueIds[cueId]||0)+1;
       return {cueId:cueId,phaseRole:phaseRole,rotation:rotation,displaySize:size,releaseAge:age};
     }
+    function detachedSurface(spec, origins, low, profile) {
+      if(!spec||!Array.isArray(origins)||!origins.length||origins.length>7)return null;
+      var valid=origins.every(function(o){return o&&[o.x,o.y,o.angle].every(finite)&&o.x>=0&&o.x<=360&&o.y>=0&&o.y<=440;});
+      if(!valid)return null;
+      var key='detached|'+spec.key+'|'+spec.crop.join(',')+'|'+(low?'low':'high')+'|'+profile.id+'|'+origins.map(function(o){return[o.x,o.y,o.angle].join(',');}).join(';'),known=cache.get(key);
+      if(known)return known;
+      var art=surface(spec);if(!art)return null;
+      // Several shots emerge from one narrow turret/pipe. Cluster only points
+      // within 24px of every other member: one compact source icon identifies
+      // that emitter without stacking seven opaque pictures over the playfield.
+      var groups=[];
+      origins.forEach(function(o){var group=groups.find(function(g){return g.every(function(p){return Math.hypot(p.x-o.x,p.y-o.y)<=24;});});if(group)group.push(o);else groups.push([o]);});
+      var emitters=groups.map(function(g){var x=0,y=0,sin=0,cos=0;g.forEach(function(o){x+=o.x;y+=o.y;sin+=Math.sin(o.angle);cos+=Math.cos(o.angle);});return {x:x/g.length,y:y/g.length,angle:Math.atan2(sin,cos),shotCount:g.length};});
+      var size=(low?44:54)*profile.scale,pad=Math.ceil(size*Math.SQRT2/2)+2;
+      var left=Math.floor(Math.min.apply(null,emitters.map(function(o){return o.x;}))-pad),top=Math.floor(Math.min.apply(null,emitters.map(function(o){return o.y;}))-pad);
+      var width=Math.ceil(Math.max.apply(null,emitters.map(function(o){return o.x;}))+pad-left),height=Math.ceil(Math.max.apply(null,emitters.map(function(o){return o.y;}))+pad-top);
+      if(width>440||height>520||!global.document||!global.document.createElement)return null;
+      var c=global.document.createElement('canvas');c.width=width;c.height=height;var context=c.getContext('2d');
+      if(!context){release({canvas:c});return null;}
+      var native=finite(SOURCE_HEADINGS[spec.key])?SOURCE_HEADINGS[spec.key]:Math.PI/2;
+      emitters.forEach(function(o){context.save();context.translate(o.x-left,o.y-top);context.rotate(o.angle-native);context.drawImage(art.canvas,-size/2,-size/2,size,size);context.restore();});
+      // Bake the complete detached volley once. Its live warning/release costs
+      // one draw even on the four-draw path; opacity never moves its origins.
+      return remember(key,{canvas:c,bytes:width*height*4,x:left,y:top,emitters:emitters,size:size});
+    }
+    function paintDetached(ctx,spec,role,event,age,duration,progress,low,profile,phase){
+      var art=detachedSurface(spec,event.emissionOrigins,low,profile);
+      if(!art){metrics.skillMissingAssets++;return false;}
+      var phaseRole=profile.phaseRoles[phase],cueId=profile.id+':'+phaseRole+':'+(event.identityRole||event.kind||role);
+      ctx.save();ctx.globalCompositeOperation='source-over';ctx.globalAlpha=role==='cast'?.23+.37*clamp(progress,0,1):.56*Math.min(1,(1-age/duration)*2);ctx.drawImage(art.canvas,art.x,art.y);ctx.restore();
+      metrics.skillSourceDraws++;metrics[role==='cast'?'skillCastDraws':'skillReleaseDraws']++;metrics.skillDetachedDraws++;
+      metrics.sourceKeys[spec.key]=(metrics.sourceKeys[spec.key]||0)+1;metrics.skillCueIds[cueId]=(metrics.skillCueIds[cueId]||0)+1;
+      return {cueId:cueId,phaseRole:phaseRole,rotation:0,displaySize:art.size,releaseAge:age,detached:true,x:art.emitters[0].x,y:art.emitters[0].y,emissionOrigins:art.emitters.map(function(o){return Object.assign({},o);})};
+    }
     function draw(ctx, world, low) {
       if (!world || !world.campaign || world.stage !== 'boss' || !world.boss || !finite(world.tick)) return;
       var chapter=world.campaignRevision>=4&&world.bossIndex>=12&&world.bossIndex<=17;
@@ -194,7 +228,7 @@
       for(var q=0;q<plans.length&&metrics.skillSourceDraws<limit;q++){
         var plan=plans[q];if(!plan||plan.cancelled||![plan.x,plan.y,plan.warningAt,plan.activeAt].every(finite)||plan.activeAt<=plan.warningAt||world.tick<plan.warningAt||world.tick>=plan.activeAt)continue;
         metrics.skillWarningCandidates++;var pr=clamp((world.tick-plan.warningAt)/(plan.activeAt-plan.warningAt),0,1),castSpec=specFor('cast',plan)||specFor('release',plan);
-        var shown=paint(ctx,castSpec,'cast',plan.x,plan.y,pr,2,pr,low,profile,phaseFor(plan),plan);
+        var shown=plan.emissionOrigins?paintDetached(ctx,castSpec,'cast',plan,pr,2,pr,low,profile,phaseFor(plan)):paint(ctx,castSpec,'cast',plan.x,plan.y,pr,2,pr,low,profile,phaseFor(plan),plan);
         if(shown){metrics.skillWarningDraws++;recordCast(Object.assign({},plan,{planned:true}),castSpec,shown,pr);}
       }
       // The bounded records are emitted only after a real projectile group or
@@ -226,7 +260,7 @@
         for(var j=0;j<selected.length&&metrics.skillSourceDraws<limit;j++){
           var e=selected[j],age=world.tick-e.tick;
           var laser = e.kind === 'laser', spec = laser ? specFor('laser',e) || specFor('release',e) : specFor('release',e);
-          var shown=paint(ctx, spec, laser ? 'laser' : 'release', e.x, e.y, age, 30, 0, low,profile,phaseFor(e),e);
+          var shown=e.emissionOrigins&&!laser?paintDetached(ctx,spec,'release',e,age,30,0,low,profile,phaseFor(e)):paint(ctx, spec, laser ? 'laser' : 'release', e.x, e.y, age, 30, 0, low,profile,phaseFor(e),e);
           if (shown) {var represented=Object.assign({ tick:e.tick,kind:e.kind,patternId:e.patternId||'',identityRole:e.identityRole||'',x:e.x,y:e.y,sourceKey:spec.key },shown);if(e.sourceActorId)represented.sourceActorId=e.sourceActorId;if(e.modelActorId)represented.modelActorId=e.modelActorId;metrics.representedReleases.push(represented);}
         }
       } else if (finite(b.releaseTick) && b.releaseTick >= 0) {
@@ -236,7 +270,7 @@
       }
       // Confirmed releases take priority over a preparation accent that may
       // overlap their attack clock. Any remaining cast budget is still capped.
-      function hasPlannedCharge(id,x,y){return metrics.representedCasts.some(function(c){return c.planned&&(!c.sourceActorId||c.sourceActorId===id)&&Math.hypot(c.x-x,c.y-y)<32;});}
+      function hasPlannedCharge(id,x,y){return metrics.representedCasts.some(function(c){return c.planned&&(!c.sourceActorId||c.sourceActorId===id)&&(c.detached||Math.hypot(c.x-x,c.y-y)<32);});}
       var cast=specFor('cast');
       if (b.action === 'charge' && cast && metrics.skillSourceDraws < limit) {if(hasPlannedCharge(null,b.x,b.y+24))metrics.skillChargeSuppressed++;else recordCast({x:b.x,y:b.y+24,patternId:b.specialPatternId},cast,paint(ctx, cast, 'cast', b.x, b.y + 24, progress, 2, progress, low,profile,world.phase),progress);}
       if(story&&Array.isArray(b.participants))b.participants.forEach(function(p){var event={sourceActorId:p.id},spec=specFor('cast',event),pr=clamp(p.actionProgress||0,0,1);if(p.action==='charge'&&spec&&metrics.skillSourceDraws<limit){if(hasPlannedCharge(p.id,p.x,p.y+24))metrics.skillChargeSuppressed++;else recordCast({x:p.x,y:p.y+24,sourceActorId:p.id,patternId:b.specialPatternId},spec,paint(ctx,spec,'cast',p.x,p.y+24,pr,2,pr,low,profile,world.phase,event),pr);}});

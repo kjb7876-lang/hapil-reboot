@@ -240,7 +240,11 @@
     var release={tick:w.tick,kind:kind,patternId:patternId||'',x:x,y:y};if(sourceActorId)release.sourceActorId=sourceActorId;b.skillReleases.push(release);
     if(sourceActorId&&b.combatCopies){var copySource=b.combatCopies.find(function(c){return c.sourceActorId===sourceActorId;});if(copySource&&copySource.modelActorId)release.modelActorId=copySource.modelActorId;}
     if(identityEnabled(w)){release.sourcePhase=w.phase;if(identitySpec&&finite(identitySpec.angle))release.angle=identitySpec.angle;}
-    if(identitySpec&&identitySpec.identityRole){['identityRole','identityCastId','identityWarningAt','identityActiveAt'].forEach(function(k){release[k]=identitySpec[k];});}
+    if(identitySpec&&identitySpec.identityRole){
+      ['identityRole','identityCastId','identityWarningAt','identityActiveAt'].forEach(function(k){release[k]=identitySpec[k];});
+      var committed=(b.identityCasts||[]).find(function(c){return c.id===identitySpec.identityCastId;});
+      if(committed&&committed.emissionOrigins)release.emissionOrigins=committed.emissionOrigins;
+    }
     if(b.skillReleases.length>8)b.skillReleases.shift();
   }
   function emit(w, specs) {
@@ -1340,6 +1344,10 @@
     if(!specs.length)return;
     var activeAt=w.tick+54,id='identity-'+b.id+'-'+w.tick+'-'+(source||'boss')+'-'+beat;
     var cast={id:id,patternId:specs[0].patternId,identityRole:specs[0].identityRole,kind:specs[0].kind,sourcePhase:w.phase,x:x,y:y,angle:specs.reduce(function(sum,s){return sum+s.angle;},0)/specs.length,warningAt:w.tick,activeAt:activeAt,expireAt:activeAt+12};
+    // Academy turrets and workshop pipes emit away from the boss. Keep their
+    // filtered, committed shot origins for presentation rather than warning at
+    // the unrelated boss centre. These records never participate in physics.
+    if(!copy&&(w.bossIndex===21||w.bossIndex===24))cast.emissionOrigins=Object.freeze(specs.map(function(s){return Object.freeze({x:s.x,y:s.y,angle:s.angle});}));
     if(source)cast.sourceActorId=source;if(copy&&copy.modelActorId)cast.modelActorId=copy.modelActorId;
     if(route)cast.escapeRoute=copyRoute(route);
     specs.forEach(function(s){s.identityCastId=id;s.identityWarningAt=w.tick;s.identityActiveAt=activeAt;});

@@ -1,6 +1,6 @@
 {
   "schema": "hapil-v25-historic-input-replay-attestation-1",
-  "createdAt": "2026-10-31T06:28:23.482Z",
+  "createdAt": "2026-10-31T11:29:59.401Z",
   "complete": true,
   "scope": "Current candidate replay verification of ALL unchanged archived ordinary-health legal directions for campaign revisions3/4/5. No new capture, policy execution,777, external immunity, HP/damage/RNG/timer/phase modification. This does not validate new25 natural-route completion, human play, browser/GPU/mobileFPS.",
   "attestationLoaderSha256": "6378ab7acaf55673ec8a78a480c6b2f6ac531abdd83404ff969598488d494bc1",
@@ -12,7 +12,7 @@
     "tests/revision5-natural-bot-replay-v19.test.cjs": "431f68aebe4841d57ddeda09a4f10d25d78fac03f24e510ae3252a4ae6228725"
   },
   "candidateModuleSha256": {
-    "src/core.js": "0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851",
+    "src/core.js": "c6634f02342240efa4826a0b12e3176ddeb17746a636a52a17fa6512d598383e",
     "src/storage.js": "b753b883ca10b3f116c0bac9a1ed5551d3c87aab3f9e87227af6235f09d34c12",
     "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
     "tools/capture-revision4-natural.cjs": "bbbb8af159e6e63eae9a1918e6c719ede8b68a522ab2a18ad3fce86cf8064f35",
@@ -21,7 +21,7 @@
     "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079"
   },
   "sourceHashesAfter": {
-    "src/core.js": "0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851",
+    "src/core.js": "c6634f02342240efa4826a0b12e3176ddeb17746a636a52a17fa6512d598383e",
     "src/storage.js": "b753b883ca10b3f116c0bac9a1ed5551d3c87aab3f9e87227af6235f09d34c12",
     "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
     "tools/capture-revision4-natural.cjs": "bbbb8af159e6e63eae9a1918e6c719ede8b68a522ab2a18ad3fce86cf8064f35",

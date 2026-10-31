@@ -290,6 +290,33 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
       }
       if(drew){metrics.bossDraws++;return true;}return false;
     }
+    function committedCopyCue(world,copy,actor){
+      // Revision25 can filter a whole volley out of the protected passage.
+      // Only an admitted, live cast can prepare a clone; its nominal clock
+      // alone is not evidence that anything will be fired. Lust keeps its
+      // reference presentation because it does not use the identity scheduler.
+      if(world.combatRevision!==25||copy.kind!=='clone'||(!world.finalPractice&&world.bossIndex===8)||!Number.isInteger(world.tick))return null;
+      var tick=world.tick,source=copy.sourceActorId||copy.id,casts=world.boss&&world.boss.identityCasts||[],next=null;
+      for(var i=0;i<casts.length;i++){
+        var c=casts[i];
+        if(!c||c.cancelled||c.sourceActorId!==source||copy.modelActorId&&c.modelActorId!==copy.modelActorId||![c.warningAt,c.activeAt].every(finite)||c.activeAt<=c.warningAt||tick<c.warningAt||tick>=c.activeAt||c.activeAt>=copy.expireAt)continue;
+        if(Number.isInteger(c.sourcePhase)&&c.sourcePhase!==world.phase)continue;
+        if(!next||c.activeAt<next.activeAt)next=c;
+      }
+      var age=finite(copy.releaseTick)&&copy.releaseTick>=0?tick-copy.releaseTick:Infinity;
+      var cue={active:false,nextAt:next?next.activeAt:null,remainingTicks:next?next.activeAt-tick:null,windowTicks:next?next.activeAt-next.warningAt:54,reason:'no-committed-volley'};
+      // The actual release gets its authored strike and follow-through before
+      // a later cast may begin. All changes stay on the local display actor.
+      if(age>=0&&age<21){
+        actor.action=age<12?'attack':'recover';actor.actionProgress=age<12?age/12:(age-12)/9;
+        cue.reason=age<12?'actual-release-pose':'actual-release-recovery';return cue;
+      }
+      if(next){
+        actor.action='charge';actor.actionProgress=clamp((tick-next.warningAt)/(next.activeAt-next.warningAt),0,1);
+        cue.active=true;cue.reason='committed-identity-anticipation';return cue;
+      }
+      actor.action='recover';actor.actionProgress=1;return cue;
+    }
     function repeatCopyCue(world,copy,actor){
       // The repeat clock is already fixed by the active clone's birth/slot.
       // Read it for authored anticipation poses only; never advance emission,
@@ -323,7 +350,7 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
       if(!b||!copy||world.stage!=='boss'||!finite(copy.x)||!finite(copy.y)||!finite(copy.born)||!finite(copy.expireAt)||tick<copy.born||tick>=copy.expireAt)return false;
       var width=155,entry=storyEntry(world),model=null,key=null,poseName=null,sourceRect=null,anchor=null,scale=null;
       var identity=copy.modelActorId||b.kind||world.bossId,actor=Object.assign({},b,copy,{kind:b.kind,artKey:b.artKey,hitUntil:0});
-      var repeatCue=repeatCopyCue(world,copy,actor);
+      var repeatCue=committedCopyCue(world,copy,actor)||repeatCopyCue(world,copy,actor);
       if(entry){
         var models=entry.actors||[];
         model=copy.modelActorId?models.find(function(a){return a.participantId===copy.modelActorId||a.id===copy.modelActorId;}):models.length===1?models[0]:null;
