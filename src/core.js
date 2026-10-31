@@ -2,10 +2,11 @@
 (function (root, factory) {
   'use strict';
   var dependency = typeof module === 'object' && module.exports ? require('./weapon-patterns.js') : root && root.HapilWeaponPatterns;
-  var api = factory(dependency);
+  var patterns = typeof module === 'object' && module.exports ? require('./boss-patterns-v27.js') : root && root.HapilBossPatternsV27;
+  var api = factory(dependency,patterns);
   if (typeof module === 'object' && module.exports) module.exports = api;
   if (root) root.HapilCore = api;
-}(typeof globalThis !== 'undefined' ? globalThis : this, function (Weapon) {
+}(typeof globalThis !== 'undefined' ? globalThis : this, function (Weapon,Patterns) {
   'use strict';
   if (!Weapon) throw new Error('보스 무기 패턴 모듈을 찾을 수 없습니다.');
   var W = 360, H = 640, FIXED_DT = 1 / 60, TAU = Math.PI * 2;
@@ -13,10 +14,28 @@
   var HELL_MECHANICS_REVISION=15;
   // Explicit opt-in: old boundary saves have no combatRevision and retain
   // their original deterministic encounter. Revision25 is a separate opt-in.
-  var COMBAT_REVISION=21, IDENTITY_COMBAT_REVISION=25;
-  function supportedCombatRevision(value){return value===COMBAT_REVISION||value===IDENTITY_COMBAT_REVISION;}
+  var COMBAT_REVISION=21, IDENTITY_COMBAT_REVISION=25, PATTERN_COMBAT_REVISION=27;
+  function patternEnabled(w){return w.combatRevision===PATTERN_COMBAT_REVISION;}
+  function supportedCombatRevision(value){return value===COMBAT_REVISION||value===IDENTITY_COMBAT_REVISION||value===PATTERN_COMBAT_REVISION;}
   function pressureEnabled(w){return supportedCombatRevision(w.combatRevision);}
-  function identityEnabled(w){return w.combatRevision===IDENTITY_COMBAT_REVISION&&w.campaign&&(w.finalPractice||w.bossIndex!==8);}
+  function identityEnabled(w){return (w.combatRevision===IDENTITY_COMBAT_REVISION||patternEnabled(w))&&w.campaign&&(patternEnabled(w)||w.finalPractice||w.bossIndex!==8);}
+  var BULLET_SLOW=Object.freeze({factor:.14,rampTicks:6,recoverTicks:36,durations:Object.freeze({memory:24,counter:54,delay:108,ego:90})});
+  // Existing ready timers preserve the cast clocks at every safe checkpoint.
+  // Slow motion therefore needs no hidden transient state or new save fields.
+  function bulletTimeScale(w){
+    if(!patternEnabled(w)||!w.skills||!w.stats||!w.stats.casts)return 1;
+    var cooldowns={memory:144,counter:180,delay:480,ego:1800},factor=1;
+    Object.keys(cooldowns).forEach(function(name){
+      if(!w.stats.casts[name])return;
+      var age=w.tick-(w.skills[name+'ReadyAt']-cooldowns[name]),duration=BULLET_SLOW.durations[name],value=1;
+      if(age<0||age>=duration+BULLET_SLOW.recoverTicks)return;
+      if(age<BULLET_SLOW.rampTicks){var down=clamp(age/BULLET_SLOW.rampTicks,0,1);down=down*down*(3-2*down);value=1-(1-BULLET_SLOW.factor)*down;}
+      else if(age<=duration)value=BULLET_SLOW.factor;
+      else{var up=clamp((age-duration)/BULLET_SLOW.recoverTicks,0,1);up=up*up*(3-2*up);value=BULLET_SLOW.factor+(1-BULLET_SLOW.factor)*up;}
+      factor=Math.min(factor,value);
+    });
+    return factor;
+  }
   var PRESSURE_LIMITS=Object.freeze({cycleTicks:600,warningTicks:90,bossActiveTicks:360,waveActiveTicks:180,bossHellCoverage:.66,bossNormalCoverage:.44,bossGentleCoverage:.22,waveMultiplier:.70,maxCopies:2,cloneTicks:360,illusionTicks:120});
   var HELL_OVERLAP_LIMITS=Object.freeze({cycleTicks:336,warningTicks:108,activeTicks:96,fanBaseSpeed:150,fanMinSpeed:198,fanMaxSpeed:234,rotorMaxDownSpeed:378,rotorMaxTotalSpeed:388,corridorHalfWidth:24});
   var CAPS = Object.freeze({ bullets: 768, shots: 96, enemies: 12, effects: 96, hazards: 40 });
@@ -248,6 +267,7 @@
     if(b.skillReleases.length>8)b.skillReleases.shift();
   }
   function emit(w, specs) {
+    if(patternEnabled(w)&&Patterns)Patterns.decorate(w,specs);
     Weapon.prepareEmission(w, specs);
     // One bounded variation per volley preserves a readable shape. Sampling
     // once before capacity handling also makes delayed retries deterministic.
@@ -264,6 +284,7 @@
     }
     if (w.bullets.length + specs.length > CAPS.bullets) {
       w.stats.poolPressure++; // Caller retains or reports the whole group; no live projectile is evicted.
+      if(patternEnabled(w)){w.stats.droppedGroups++;return false;}
       if (w._deferred.length < 16) w._deferred.push(specs);
       else w.stats.droppedGroups++;
       return false;
@@ -278,7 +299,7 @@
         ownerId: s.ownerId || 0, grazed: false });
       if (added && s.patternId) { added.patternId = s.patternId; added.paletteSlot = s.paletteSlot || 0; }
       if (added && s.modelActorId) added.modelActorId=s.modelActorId;
-      if(added&&identityEnabled(w))added.sourcePhase=w.phase;
+      if(added&&identityEnabled(w))added.sourcePhase=patternEnabled(w)&&s.v27Child&&Number.isInteger(s.sourcePhase)&&s.sourcePhase>=0&&s.sourcePhase<=2?s.sourcePhase:w.phase;
       if(added&&s.identityRole){['identityRole','identityCastId','identityWarningAt','identityActiveAt'].forEach(function(k){added[k]=s[k];});}
       if(added&&s.sourceActorId){added.sourceActorId=s.sourceActorId;var actor=w.boss&&w.boss.participants&&w.boss.participants.find(function(p){return p.id===s.sourceActorId;});if(actor)actor.releaseTick=w.tick;}
       if(added&&s.sourceActorId&&w.boss&&w.boss.combatCopies){var emittingCopy=w.boss.combatCopies.find(function(c){return c.sourceActorId===s.sourceActorId;});if(emittingCopy)emittingCopy.releaseTick=w.tick;}
@@ -287,6 +308,7 @@
       if (added && s.pauseUntil) { added.pauseFrom=s.pauseFrom; added.pauseUntil=s.pauseUntil; }
       if (added && s.rhythmAccelerate) added.rhythmAccelerate = true;
       if (added && s.weaponMotion) Weapon.initialize(added, s, w);
+      if(added&&patternEnabled(w)&&Patterns)Patterns.initialize(added,s,w);
       if (added && s.acceleration) {
         added.acceleration = s.acceleration * (w.difficulty === 'gentle' ? 0.82 : 1);
         added.maxSpeed = (s.maxSpeed || 150) * (w.difficulty === 'gentle' ? 0.82 : 1);
@@ -295,7 +317,7 @@
     }
     // Presentation follows actual successful emission, including deferred
     // groups; this marker does not alter projectile or damage simulation.
-    if (specs.length && w.campaign && w.stage === 'boss' && w.boss && specs.some(function(s) { return s.ownerId === w.boss.id; })) markBossRelease(w,specs[0].kind||'orb',specs[0].patternId||'',specs[0].x,specs[0].y,specs[0].sourceActorId,specs[0]);
+    if (specs.length && !specs[0].v27Child && w.campaign && w.stage === 'boss' && w.boss && specs.some(function(s) { return s.ownerId === w.boss.id; })) markBossRelease(w,specs[0].kind||'orb',specs[0].patternId||'',specs[0].x,specs[0].y,specs[0].sourceActorId,specs[0]);
     return true;
   }
   function fanSpecs(x, y, angle, count, spread, speed, kind, color, ownerId) {
@@ -362,6 +384,7 @@
     if (!seed) seed = 0x6d2b79f5;
     var gentle = options.difficulty === 'gentle', hell = options.difficulty === 'hell';
     if(options.combatRevision!==undefined&&!supportedCombatRevision(options.combatRevision))throw new RangeError('Unsupported combat revision');
+    if(options.combatRevision===PATTERN_COMBAT_REVISION&&!Patterns)throw new Error('새 보스 패턴 모듈을 불러오지 못했습니다. 새로고침해 주세요.');
     var runId = typeof options.runId === 'string' && /^[A-Za-z0-9_.:-]{1,96}$/.test(options.runId) ? options.runId : 'hapil-' + Date.now().toString(36) + '-' + (++runSequence).toString(36);
     var w = { rulesetVersion: RULESET, mechanicsRevision: 2, runId: runId, seed: seed, rngState: seed, difficulty: gentle ? 'gentle' : hell ? 'hell' : 'normal', practiceBoss: !!options.practiceBoss,
       tick: 0, time: 0, stage: 'waves', stageTime: 0, bossIntroDuration: 2.5, wave: 0, waveTime: 0, waveDuration: 15, phase: 0, phaseTime: 0, phaseTargetDuration: 25, phaseTimeout: 75,
@@ -1275,7 +1298,7 @@
     ['furnace-junction','needle',6],['neural-packet','needle',12],['deletion-seal','blade',18],['six-command-rings','orb',6],['tampered-thread','needle',24],['time-hand','needle',6],
     ['castle-boundary','blade',12],['causal-lock','needle',18],['reverse-domination','needle',6],['circuit-duet','needle',12],['authority-fold','needle',0]
   ].map(function(p,index){return p&&Object.freeze({index:index,role:p[0],kind:p[1],cadenceAdd:p[2]});}));
-  function identityProfile(w){return IDENTITY_PROFILES[w.finalPractice?34:w.bossIndex];}
+  function identityProfile(w){return patternEnabled(w)?Patterns.profiles[w.finalPractice?34:w.bossIndex]:IDENTITY_PROFILES[w.finalPractice?34:w.bossIndex];}
   function identitySpecs(w,x,y,beat,copy,source){
     var p=identityProfile(w),index=p.index,hell=w.difficulty==='hell',count=hell?7:w.difficulty==='gentle'?3:5;
     var down=Math.PI/2,aimAt=Math.atan2(w.player.y-y,w.player.x-x),center=down+(aimAt-down)*.45;
@@ -1336,7 +1359,7 @@
     // Four simultaneous warnings fit even the lowest source-preview budget.
     if(w._identityPlans.length>=4){w.stats.poolPressure++;w.stats.droppedGroups++;return;}
     if(!source&&b.participants){var actor=b.participants[beat%b.participants.length];source=actor.id;x=actor.x;y=actor.y;}
-    var specs=identitySpecs(w,x,y,beat,copy,source),route=w._pressurePlan&&w.tick<w._pressurePlan.expireAt?w._pressurePlan.route:null;
+    var specs=patternEnabled(w)?Patterns.makeVolley(w,{x:x,y:y,sourceActorId:source,modelActorId:copy&&copy.modelActorId},beat,{copy:!!copy,phase:w.phase}):identitySpecs(w,x,y,beat,copy,source),route=w._pressurePlan&&w.tick<w._pressurePlan.expireAt?w._pressurePlan.route:null;
     if(route)specs=specs.filter(function(s){
       var extra=s.r+(s.kind==='blade'?13:s.kind==='needle'?9:0)+3;
       return segmentPairDistanceSquared(s.x,s.y,s.x+Math.cos(s.angle)*1600,s.y+Math.sin(s.angle)*1600,route.x1,route.y1,route.x2,route.y2)>sq(route.halfWidth+extra);
@@ -1344,12 +1367,19 @@
     if(!specs.length)return;
     var activeAt=w.tick+54,id='identity-'+b.id+'-'+w.tick+'-'+(source||'boss')+'-'+beat;
     var cast={id:id,patternId:specs[0].patternId,identityRole:specs[0].identityRole,kind:specs[0].kind,sourcePhase:w.phase,x:x,y:y,angle:specs.reduce(function(sum,s){return sum+s.angle;},0)/specs.length,warningAt:w.tick,activeAt:activeAt,expireAt:activeAt+12};
+    if(patternEnabled(w)){
+      cast.v27Pattern=specs[0].v27Pattern;cast.v27Motion=specs[0].v27Motion;
+      cast.emissionOrigins=Object.freeze(specs.map(function(s){return Object.freeze({x:s.x,y:s.y,angle:s.angle,v27Motion:s.v27Motion,r:s.r,kind:s.kind});}));
+    }
     // Academy turrets and workshop pipes emit away from the boss. Keep their
     // filtered, committed shot origins for presentation rather than warning at
     // the unrelated boss centre. These records never participate in physics.
-    if(!copy&&(w.bossIndex===21||w.bossIndex===24))cast.emissionOrigins=Object.freeze(specs.map(function(s){return Object.freeze({x:s.x,y:s.y,angle:s.angle});}));
+    if(!patternEnabled(w)&&!copy&&(w.bossIndex===21||w.bossIndex===24))cast.emissionOrigins=Object.freeze(specs.map(function(s){return Object.freeze({x:s.x,y:s.y,angle:s.angle});}));
     if(source)cast.sourceActorId=source;if(copy&&copy.modelActorId)cast.modelActorId=copy.modelActorId;
-    if(route)cast.escapeRoute=copyRoute(route);
+    // The v25 straight-ray layer can promise a complete open route. V27
+    // explicitly turns/reflects later, so its initial-ray filter is not a
+    // promise about all future positions of a dynamic projectile.
+    if(route&&!patternEnabled(w))cast.escapeRoute=copyRoute(route);
     specs.forEach(function(s){s.identityCastId=id;s.identityWarningAt=w.tick;s.identityActiveAt=activeAt;});
     // HELL speed and heading are authored at warning time. No later random
     // rotation or rhythm preparation can change the announced committed path.
@@ -1441,7 +1471,7 @@
     var live=w.hazards.filter(function(h){return h.phase==='active';});
     for(var y=region[1]+step/2;y<region[1]+region[3];y+=step)for(var x=region[0]+step/2;x<region[0]+region[2];x+=step){
       n++;var covered=live.some(function(h){return segmentDistanceSquared(x,y,h.x1,h.y1,h.x2,h.y2)<=sq(h.width/2);});
-      if(!covered)covered=w.bullets.some(function(b){var l=b.halfLength||0,dx=Math.cos(b.angle||0)*l,dy=Math.sin(b.angle||0)*l;return segmentDistanceSquared(x,y,b.x-dx,b.y-dy,b.x+dx,b.y+dy)<=sq(b.r);});
+      if(!covered)covered=w.bullets.some(function(b){if(b.retiring)return false;var l=b.halfLength||0,dx=Math.cos(b.angle||0)*l,dy=Math.sin(b.angle||0)*l;return segmentDistanceSquared(x,y,b.x-dx,b.y-dy,b.x+dx,b.y+dy)<=sq(b.r);});
       if(covered)hit++;
     }
     return{ratio:n?hit/n:0,coveredCells:hit,totalCells:n,step:step,region:region.slice(),measure:'instantaneous-active-collision-union'};
@@ -1604,12 +1634,23 @@
     }
     for (var k = w.enemies.length - 1; k >= 0; k--) if (w.enemies[k].hp <= 0) remove(w, 'enemies', k);
   }
+  function patternDistanceSquared(b,px,py,x,y){
+    var point=b.v27BouncePoint;if(!point)return projectileDistanceSquared(b,px,py,x,y);
+    var f=clamp(point.fraction,0,1),mx=px+(x-px)*f,my=py+(y-py)*f,l=b.halfLength||0;
+    var before=finite(b.v27PreviousAngle)?b.v27PreviousAngle:Math.atan2(point.y-b.py,point.x-b.px),after=b.angle||0;
+    var ax=Math.cos(before)*l,ay=Math.sin(before)*l,bx=Math.cos(after)*l,by=Math.sin(after)*l;
+    return Math.min(segmentPairDistanceSquared(b.px-px,b.py-py,point.x-mx,point.y-my,-ax,-ay,ax,ay),segmentPairDistanceSquared(point.x-mx,point.y-my,b.x-x,b.y-y,-bx,-by,bx,by));
+  }
   function updateBullets(w, px, py) {
-    var p = w.player, motionDT=w.campaignRevision===5&&w.tick<(w.arbeliaSlowUntil||0)?FIXED_DT*.55:FIXED_DT;
+    var p = w.player, modern=patternEnabled(w),motionDT=w.campaignRevision===5&&w.tick<(w.arbeliaSlowUntil||0)?FIXED_DT*.55:FIXED_DT;
+    if(modern)motionDT*=bulletTimeScale(w);
     for (var i = w.bullets.length - 1; i >= 0; i--) {
       var b = w.bullets[i]; b.px = b.x; b.py = b.y;
+      if(modern)b.v27PreviousAngle=b.angle;
       if (b.weaponMotion) Weapon.advance(b, motionDT, W);
-      else {
+      else if(modern&&Patterns&&Patterns.advance(b,motionDT,W)){
+        // Reflective capsule collisions retain both sides of the bent path.
+      }else {
         var paused=b.pauseUntil && b.age>=b.pauseFrom && b.age<b.pauseUntil;
         if(!paused && b.curveRate && b.age<b.curveUntil){
           var curveSpeed=Math.hypot(b.vx,b.vy);b.angle+=b.curveRate*motionDT;
@@ -1621,8 +1662,13 @@
         }
         if(!paused){b.x += b.vx * motionDT; b.y += b.vy * motionDT;}
       }
-      b.age += FIXED_DT;
-      if (w.stage !== 'won' && w.stage !== 'lost' && w.stage !== 'bossIntro') {
+      b.age += modern?motionDT:FIXED_DT;
+      if(modern)b.v27Age=b.age;
+      var margin=modern?Math.max(38,(b.halfLength||0)+b.r+50):38;
+      var outside=b.x < -margin || b.x > W+margin || b.y < -margin || b.y > H+margin;
+      if(modern&&b.age>=b.ttl&&!outside&&!b.retiring){b.retiring=true;b.retireAge=0;b.retireDuration=.35;}
+      else if(modern&&b.retiring)b.retireAge+=FIXED_DT;
+      if (!b.retiring && w.stage !== 'won' && w.stage !== 'lost' && w.stage !== 'bossIntro') {
         // Conservative swept AABB: the projectile's half-length and the larger
         // of hit/graze radii enclose its entire capsule. Far-away bullets need
         // no segment-distance/trigonometry work; near bullets use the exact
@@ -1636,16 +1682,25 @@
         var valid = p.r >= 0 && b.r >= 0 && halfLength >= 0 && finite(reach);
         var margin = valid ? 1e-9 * (1 + reach + Math.max(Math.abs(x0), Math.abs(x1), Math.abs(y0), Math.abs(y1))) : 0;
         var far = valid && (Math.min(x0, x1) > reach + margin || Math.max(x0, x1) < -reach - margin || Math.min(y0, y1) > reach + margin || Math.max(y0, y1) < -reach - margin);
-        if (b.weaponMotion && b.bouncePoint) far = false;
+        if (b.weaponMotion && b.bouncePoint || modern&&b.v27BouncePoint) far = false;
         if (!far) {
-          var d2 = b.weaponMotion ? Weapon.distanceSquared(b, px, py, p.x, p.y) : projectileDistanceSquared(b, px, py, p.x, p.y);
-          if (d2 <= sq(p.r + b.r)) { w.stats.collisions++; hurt(w); remove(w, 'bullets', i); continue; }
+          var d2 = b.weaponMotion ? Weapon.distanceSquared(b, px, py, p.x, p.y) : modern?patternDistanceSquared(b,px,py,p.x,p.y):projectileDistanceSquared(b, px, py, p.x, p.y);
+          if (d2 <= sq(p.r + b.r)) { w.stats.collisions++; var damaged=hurt(w);if(!modern||damaged){remove(w, 'bullets', i); continue;} }
           if (!b.grazed && w.tick >= p.invulnerableUntil && d2 <= sq(13 + b.r)) {
             b.grazed = true; w.graze++; w.score += 15; w._lastGraze = w.tick; gainResonance(w, 3, true); effect(w, p.x, p.y, 'graze', 8, '#a5ffee', 0.22);
           }
         }
       }
-      if (b.age >= b.ttl || b.x < -38 || b.x > W + 38 || b.y < -38 || b.y > H + 38 || (w.stage === 'won' && w.stageTime > 0.35)) remove(w, 'bullets', i);
+      if ((!modern&&b.age>=b.ttl) || modern&&b.retiring&&b.retireAge>=b.retireDuration || outside || (w.stage === 'won' && w.stageTime > 0.35)){remove(w,'bullets',i);continue;}
+      if(modern&&!b.retiring&&Patterns&&(w.stage==='boss'||w.stage==='waves')&&!b.v27SplitDone){
+        var children=Patterns.splitChildren(w,b);
+        if(Array.isArray(children)){
+          // A split preserves the visible parent. Children are admitted as a
+          // single bounded group and never split recursively or emit late.
+          b.v27SplitDone=true;
+          if(children.length){if(w.bullets.length+children.length<=CAPS.bullets)emit(w,children);else{w.stats.poolPressure++;w.stats.droppedGroups++;}}
+        }
+      }
     }
   }
   function cacheCheckpoint(w) {
@@ -1761,8 +1816,8 @@
     return w;
   }
   return Object.freeze({ W: W, H: H, FIXED_DT: FIXED_DT, RULESET_VERSION: RULESET, MECHANICS_REVISION: 2, CAPS: CAPS,
-    COMBAT_REVISION:COMBAT_REVISION,IDENTITY_COMBAT_REVISION:IDENTITY_COMBAT_REVISION,IDENTITY_PROFILES:IDENTITY_PROFILES,PRESSURE_LIMITS:PRESSURE_LIMITS,attackCoverage:attackCoverage,
+    COMBAT_REVISION:COMBAT_REVISION,IDENTITY_COMBAT_REVISION:IDENTITY_COMBAT_REVISION,PATTERN_COMBAT_REVISION:PATTERN_COMBAT_REVISION,LATEST_COMBAT_REVISION:PATTERN_COMBAT_REVISION,BULLET_SLOW:BULLET_SLOW,bulletTimeScale:bulletTimeScale,IDENTITY_PROFILES:IDENTITY_PROFILES,PRESSURE_LIMITS:PRESSURE_LIMITS,attackCoverage:attackCoverage,
     CAMPAIGN_BOSSES: CAMPAIGN_BOSSES, CAMPAIGN_SIGNATURES: CAMPAIGN_SIGNATURES, CAMPAIGN_REVISION: 3, HELL_MECHANICS_REVISION: HELL_MECHANICS_REVISION, HELL_OVERLAP_LIMITS: HELL_OVERLAP_LIMITS,
     campaignBossCount: campaignBossCount, LATEST_CAMPAIGN_REVISION: 5, createRun: createRun, step: step, checkpoint: checkpoint, restoreCheckpoint: restoreCheckpoint, skipBossIntro: skipBossIntro,
-    geometry: Object.freeze({ segmentDistanceSquared: segmentDistanceSquared, segmentPairDistanceSquared: segmentPairDistanceSquared, sweptCircleHit: sweptCircleHit, projectileDistanceSquared: projectileDistanceSquared, hazardDistanceSquared: hazardDistanceSquared }) });
+    geometry: Object.freeze({ segmentDistanceSquared: segmentDistanceSquared, segmentPairDistanceSquared: segmentPairDistanceSquared, sweptCircleHit: sweptCircleHit, projectileDistanceSquared: projectileDistanceSquared, patternDistanceSquared:patternDistanceSquared, hazardDistanceSquared: hazardDistanceSquared }) });
 }));

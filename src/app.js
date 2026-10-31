@@ -133,8 +133,9 @@
   }
   function safeText(id,value){var element=$(id),text=value==null?'':String(value);if(element.textContent!==text)element.textContent=text;}
   function clearInput(){keys=Object.create(null);pointer.active=false;pointer.id=null;pointer.pendingX=0;pointer.pendingY=0;pointer.lastMove=0;inputSource='keyboard';$('touch-pad').classList.remove('active');}
-  function toast(message){safeText('toast',message);setHidden('toast',false);clearTimeout(toastTimer);toastTimer=setTimeout(function(){setHidden('toast',true);},2200);}
-  function showError(error){ready=false;mode='error';clearInput();setHidden('title-screen',true);setHidden('pause-screen',true);setHidden('result-screen',true);setHidden('error-screen',false);safeText('error-description',error&&error.message?error.message:String(error));$('pause-button').disabled=true;stopMusic();}
+  function clearToast(){clearTimeout(toastTimer);toastTimer=0;setHidden('toast',true);}
+  function toast(message){safeText('toast',message);setHidden('toast',false);clearTimeout(toastTimer);toastTimer=setTimeout(clearToast,2200);}
+  function showError(error){ready=false;mode='error';$('app').setAttribute('data-mode','error');clearToast();clearInput();setHidden('title-screen',true);setHidden('pause-screen',true);setHidden('result-screen',true);setHidden('error-screen',false);safeText('error-description',error&&error.message?error.message:String(error));$('pause-button').disabled=true;stopMusic();}
   function updateStorage(){
     var status=store&&store.status?store.status:{persistent:false,message:'이 세션에서만 기록됩니다.'};
     var message=(status.persistent?'':'임시 기록 · ')+(status.message|| (status.persistent?'이 독립 실행판에 자동 저장됩니다.':'브라우저가 영구 저장을 허용하지 않았습니다.'));
@@ -170,6 +171,8 @@
   function persistSettings(){syncSettings();if(store)store.saveSettings(settings).then(updateStorage);}
   function setMode(next){
     if(mode!==next)renderDirty=true;
+    $('app').setAttribute('data-mode',next);
+    if(next==='playing')clearToast();
     mode=next;setHidden('title-screen',next!=='title');setHidden('pause-screen',next!=='paused');setHidden('result-screen',next!=='result');setHidden('error-screen',next!=='error');setHidden('battle-caption',!(next==='playing'||next==='paused'||next==='result'));$('pause-button').disabled=next!=='playing';
     if(next!=='playing'){clearInput();stopMusic();}else startMusic();
     syncIntroControls();
@@ -367,7 +370,7 @@
     var campaign=retry&&retryWorld?!!retryWorld.campaign:true;
     var practiceStartPhase=practice?(retry&&retryWorld?retryWorld.practiceStartPhase||0:specialPhase===2?2:0):0;
     var seed=(Date.now()^Math.floor(performance.now()*1000))>>>0;
-    try{world=core.createRun({difficulty:settings.difficulty,seed:seed,practiceBoss:!!practice,combatRevision:25,campaign:campaign,campaignRevision:campaign?campaignRevision:undefined,bossIndex:practice?practiceIndex:0,finalPractice:finalPractice});if(practice&&practiceStartPhase){var practiceSnapshot=core.checkpoint(world);practiceSnapshot.phase=practiceStartPhase;world=core.restoreCheckpoint(practiceSnapshot);if(!world)throw new Error('특수 패턴 연습을 시작하지 못했습니다.');}if(practice)world.practiceStartPhase=practiceStartPhase;world.skillRotation=settings.skillRotation;setMode('playing');accumulator=0;lastStamp=performance.now();lastRender=0;updateHUD();saveCheckpointIfChanged();if(practice)toast((world.bossName||'보스')+(practiceStartPhase===2?' 특수 패턴 연습 · 본편 기록은 유지됩니다':' 연습 · 해당 전투만 진행합니다'));$('game-canvas').focus({preventScroll:true});}
+    try{world=core.createRun({difficulty:settings.difficulty,seed:seed,practiceBoss:!!practice,combatRevision:27,campaign:campaign,campaignRevision:campaign?campaignRevision:undefined,bossIndex:practice?practiceIndex:0,finalPractice:finalPractice});if(practice&&practiceStartPhase){var practiceSnapshot=core.checkpoint(world);practiceSnapshot.phase=practiceStartPhase;world=core.restoreCheckpoint(practiceSnapshot);if(!world)throw new Error('특수 패턴 연습을 시작하지 못했습니다.');}if(practice)world.practiceStartPhase=practiceStartPhase;world.skillRotation=settings.skillRotation;setMode('playing');accumulator=0;lastStamp=performance.now();lastRender=0;updateHUD();saveCheckpointIfChanged();$('game-canvas').focus({preventScroll:true});}
     catch(e){showError(e);}
   }
   function continueRun(){
@@ -441,7 +444,9 @@
   }
   function drainEvents(){
     if(!world||!world.events)return;var events=world.events.splice(0,world.events.length),shot=false,hurt=false;
-    for(var i=0;i<events.length;i++){var e=events[i];if(e.type==='shot')shot=true;else if(e.type==='hurt')hurt=true;else if(e.type==='skill'){if(skillNames[e.name]){lastSkill={name:e.name,tick:world.tick,runId:world.runId};updateSkills();}}else if(e.type==='phase')toast(world.patternName||'새로운 기억이 펼쳐집니다');else if(e.type==='summon')toast('적 증원 출현');}
+    // Phase names and reinforcement notices already have their own combat
+    // cues. Do not cover the movement field with repeated text messages.
+    for(var i=0;i<events.length;i++){var e=events[i];if(e.type==='shot')shot=true;else if(e.type==='hurt')hurt=true;else if(e.type==='skill'){if(skillNames[e.name]){lastSkill={name:e.name,tick:world.tick,runId:world.runId};updateSkills();}}}
     if(hurt)sound('hurt');else if(shot)sound('shot');
   }
   function inputForStep(){
@@ -458,7 +463,7 @@
   function diagnostics(){
     var hazards=world&&world.hazards?world.hazards:[],heap=null;
     try{var m=performance.memory;if(m&&Number.isFinite(m.usedJSHeapSize))heap={usedBytes:m.usedJSHeapSize,totalBytes:m.totalJSHeapSize,limitBytes:m.jsHeapSizeLimit,scope:'Browser-reported JS heap estimate; excludes GPU and decoded media; GC not controlled'};}catch(e){}
-    return {version:'hapil-boss-identities-v25',candidateRevision:25,mobileRuntime:mobileRuntime,loadedImages:Object.keys(images).length,imageRequestsPending:Object.keys(imageRequests).length,imageRequestsActive:imageActive,mechanicsRevision:world?world.mechanicsRevision:(core?core.MECHANICS_REVISION:2),combatRevision:world?world.combatRevision||0:25,connectedMapStatus:renderer&&renderer.getMetrics?renderer.getMetrics().sourceStatus||'not-yet-reported':'not-yet-reported',capturedAt:new Date().toISOString(),mode:mode,fixedHz:60,renderTarget:settings.quality==='low'?30:60,rollingWindow:maxSamples,measurementScope:{update:'Main-thread fixed-step simulation and event processing',render:'JavaScript canvas command submission only; not GPU completion',frame:'requestAnimationFrame callback intervals during play'},updateMs:distribution(samples.update,peakUpdate),renderMs:distribution(samples.render,peakRender),frameIntervalMs:distribution(samples.frame,peakFrame),renderedFrames:totalFrames,fixedSteps:totalSteps,pausedLargeGaps:droppedGaps,lastGapReason:lastGapReason,viewport:{width:global.innerWidth,height:global.innerHeight,dpr:global.devicePixelRatio||1,arenaWidth:$('app-stage').clientWidth,arenaHeight:$('app-stage').clientHeight,padHeight:$('touch-pad').clientHeight},entities:world?{bullets:world.bullets.length,shots:world.shots.length,enemies:world.enemies.length,effects:world.effects.length,laserWarnings:hazards.filter(function(h){return h.phase==='warning';}).length,activeLasers:hazards.filter(function(h){return h.phase==='active';}).length,fadingLasers:hazards.filter(function(h){return h.phase==='fade';}).length}:null,terrain:renderer&&renderer.getMetrics?renderer.getMetrics():null,jsHeapEstimate:heap,gpuTimeMs:null,coreStats:world?JSON.parse(JSON.stringify(world.stats||{})):null,assetErrors:assetErrors.slice(),storage:store?Object.assign({},store.status):null};
+    return {version:'hapil-boss-patterns-v27',candidateRevision:27,mobileRuntime:mobileRuntime,loadedImages:Object.keys(images).length,imageRequestsPending:Object.keys(imageRequests).length,imageRequestsActive:imageActive,mechanicsRevision:world?world.mechanicsRevision:(core?core.MECHANICS_REVISION:2),combatRevision:world?world.combatRevision||0:27,connectedMapStatus:renderer&&renderer.getMetrics?renderer.getMetrics().sourceStatus||'not-yet-reported':'not-yet-reported',capturedAt:new Date().toISOString(),mode:mode,fixedHz:60,renderTarget:settings.quality==='low'?30:60,rollingWindow:maxSamples,measurementScope:{update:'Main-thread fixed-step simulation and event processing',render:'JavaScript canvas command submission only; not GPU completion',frame:'requestAnimationFrame callback intervals during play'},updateMs:distribution(samples.update,peakUpdate),renderMs:distribution(samples.render,peakRender),frameIntervalMs:distribution(samples.frame,peakFrame),renderedFrames:totalFrames,fixedSteps:totalSteps,pausedLargeGaps:droppedGaps,lastGapReason:lastGapReason,viewport:{width:global.innerWidth,height:global.innerHeight,dpr:global.devicePixelRatio||1,arenaWidth:$('app-stage').clientWidth,arenaHeight:$('app-stage').clientHeight,padHeight:$('touch-pad').clientHeight},entities:world?{bullets:world.bullets.length,shots:world.shots.length,enemies:world.enemies.length,effects:world.effects.length,laserWarnings:hazards.filter(function(h){return h.phase==='warning';}).length,activeLasers:hazards.filter(function(h){return h.phase==='active';}).length,fadingLasers:hazards.filter(function(h){return h.phase==='fade';}).length}:null,terrain:renderer&&renderer.getMetrics?renderer.getMetrics():null,jsHeapEstimate:heap,gpuTimeMs:null,coreStats:world?JSON.parse(JSON.stringify(world.stats||{})):null,assetErrors:assetErrors.slice(),storage:store?Object.assign({},store.status):null};
   }
   function ensureEncounterArt(){
     if(mode==='error')return false;
@@ -476,6 +481,7 @@
       if(!current())return;
       encounterArtPending=false;artLoadJob=null;
       if(requiredKeys.some(function(k){return !images[k];})||invalidActorAsset(images,group)||invalidDamageAsset(images,group)||invalidTerrainAsset(images,group)){showError(new Error('다음 구간의 원화를 불러오지 못했습니다. 연결을 확인한 뒤 다시 열어주세요.'));return;}
+      if($('toast').textContent==='다음 기억의 원화를 불러오는 중…')clearToast();
       Object.keys(images).forEach(function(k){if(keysToLoad.indexOf(k)<0)delete images[k];});
       encounterArtGroup=group;accumulator=0;lastStamp=performance.now();clearInput();renderDirty=true;queueOptionalAssets(keysToLoad,group);
     }).catch(function(error){if(current()){encounterArtPending=false;artLoadJob=null;showError(error);}});

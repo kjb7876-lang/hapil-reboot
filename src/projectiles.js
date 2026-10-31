@@ -547,15 +547,18 @@
       var key='body|'+sourceSignature(s)+'|'+r+'|'+l+'|'+bulletPalette(w,b).id,e=cache.get(key);
       if(!e){e=buildStamp(w,b,s,r,l);if(!e)return false;e=remember(key,e);if(!e)return false;metrics.stampCacheMisses++;}else metrics.stampCacheHits++;
       var phase=s.frames>1?Math.min(s.frames-1,Math.floor(Math.max(0,finite(b.age)?b.age:0)*1000/s.ms)):0;
-      ctx.save();ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.translate(b.x,b.y);ctx.rotate(s.fixedOrientation?0:b.kind==='hell-rotor'&&finite(b.spinAngle)?b.spinAngle:finite(b.angle)?b.angle:Math.atan2(b.vy||0,b.vx||0));
+      // Expired v27 bullets are harmless before this finite source-art fade.
+      // Active damage bodies always remain fully opaque, including slow time.
+      var alpha=w.combatRevision===27&&b.retiring&&finite(b.retireAge)&&finite(b.retireDuration)&&b.retireDuration>0?clamp(1-b.retireAge/b.retireDuration,0,1):1;
+      ctx.save();ctx.globalAlpha=alpha;ctx.globalCompositeOperation='source-over';ctx.translate(b.x,b.y);ctx.rotate(s.fixedOrientation?0:b.kind==='hell-rotor'&&finite(b.spinAngle)?b.spinAngle:l===0&&finite(b.visualSpinAngle)?b.visualSpinAngle:finite(b.angle)?b.angle:Math.atan2(b.vy||0,b.vx||0));
       ctx.drawImage(e.canvases[phase],-e.x,-e.y,e.width,e.height);ctx.restore();
       // Legacy weapons retain an authored ORB beneath their cosmetic layer.
       // Lust instead has its one whole prop, fitted around its measured solid
       // source mass; never restore a hidden mixed-effect backing beneath it.
-      if(b.kind==='boss-weapon'&&!s.sourceSolidRadius&&drawWeaponIcon(ctx,w,b.x,b.y,finite(b.spinAngle)?b.spinAngle:0,34,1))metrics.weaponVisualDraws++;
+      if(b.kind==='boss-weapon'&&!s.sourceSolidRadius&&drawWeaponIcon(ctx,w,b.x,b.y,finite(b.spinAngle)?b.spinAngle:0,34,alpha))metrics.weaponVisualDraws++;
       // Lust's rotor is already its one complete heel/lipstick body. Do not
       // draw the old mixed heart/prop effect over that independent object.
-      if(b.kind==='hell-rotor'&&(wi===8||s.sourceSolidRadius||drawRotorIcon(ctx,w,b.x,b.y,finite(b.spinAngle)?b.spinAngle:0,36,1,b)))metrics.rotorVisualDraws++;
+      if(b.kind==='hell-rotor'&&(wi===8||s.sourceSolidRadius||drawRotorIcon(ctx,w,b.x,b.y,finite(b.spinAngle)?b.spinAngle:0,36,alpha,b)))metrics.rotorVisualDraws++;
       if(s.variant){metrics.projectileVariantDraws[s.variant]=(metrics.projectileVariantDraws[s.variant]||0)+1;metrics.projectileVariantSourceKeys[s.key]=(metrics.projectileVariantSourceKeys[s.key]||0)+1;}
       if(e.ownedObject){metrics.ownedObjectDraws++;metrics.maxOwnedObjectPixels=Math.max(metrics.maxOwnedObjectPixels,e.objectDiameter);metrics.ownedObjectExtentByVariant[s.variant]=Math.max(metrics.ownedObjectExtentByVariant[s.variant]||0,e.outset);}else metrics.legacyMaxVisualOutset=Math.max(metrics.legacyMaxVisualOutset,e.outset);
       metrics.stampDraws++;metrics.animatedBulletDraws++;metrics.naturalSilhouetteDraws++;metrics.maxVisualOutset=Math.max(metrics.maxVisualOutset,e.outset);metrics.bodyAnimationPhases=Math.max(metrics.bodyAnimationPhases,e.frameCount);metrics.compactFamilies[s.key]=(metrics.compactFamilies[s.key]||0)+1;return true;

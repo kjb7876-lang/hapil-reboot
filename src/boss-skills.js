@@ -162,7 +162,7 @@
       return {cueId:cueId,phaseRole:phaseRole,rotation:rotation,displaySize:size,releaseAge:age};
     }
     function detachedSurface(spec, origins, low, profile) {
-      if(!spec||!Array.isArray(origins)||!origins.length||origins.length>7)return null;
+      if(!spec||!Array.isArray(origins)||!origins.length||origins.length>12)return null;
       var valid=origins.every(function(o){return o&&[o.x,o.y,o.angle].every(finite)&&o.x>=0&&o.x<=360&&o.y>=0&&o.y<=440;});
       if(!valid)return null;
       var key='detached|'+spec.key+'|'+spec.crop.join(',')+'|'+(low?'low':'high')+'|'+profile.id+'|'+origins.map(function(o){return[o.x,o.y,o.angle].join(',');}).join(';'),known=cache.get(key);

@@ -1,0 +1,2119 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "scope": "Actual combatRevision27, Hell, phases0/2, seed813,24 immune tick580 snapshots; player attacks and skill rotation disabled. Native CPU source-only fullPaint images and repeated fixed-frame caches. Not human play, natural health, real browser/GPU/mobile FPS.",
+  "productSHA256": {
+    "src/core.js": "789cd5e5ff503a95d05b2362039edeac7fa81d21bbff7ac1992db3c87582e1dd",
+    "src/boss-patterns-v27.js": "93c6e6b2d8f7ccfa3310d6fb37e20610a50dce04b02777c1f7711ce0c08f6517",
+    "src/projectiles.js": "a0a114c1c645172e11906bddece174b0eaf6057403ab05879b521e768bf81606",
+    "src/boss-skills.js": "f1a51e7a30487e1e702f4257b748b0a578f7d768df6bfa94124ca949edce26a9",
+    "src/actors.js": "4ce33e074c607006bd956e6784b6cfb00dbcb2b081c8c2a66d988f116c2e3a07",
+    "src/render.js": "a4b58d4c9b5d9900b5705b429280fd9b3f47f61e77e870f1999ab60ab15e8afc"
+  },
+  "toolSHA256": "3404f9f925c799fda272f58a56b28f209f5e899f9d7dedafd4f03a262bd0b01c",
+  "proof": {
+    "path": "docs/v27-pattern-review/contact.jpg",
+    "width": 1080,
+    "height": 1384,
+    "bytes": 582395,
+    "sha256": "36d50bb5251f490b7b2095896de0ee200345a5b2dfe069421e4662cb182aa8ea"
+  },
+  "summary": {
+    "bosses": 12,
+    "actualWorlds": 24,
+    "qualityChecks": 48,
+    "missingProjectileAssets": 0,
+    "missingSkillAssets": 0,
+    "warmStampMisses": 0,
+    "warmBeamBuilds": 0,
+    "maxStampCacheBytes": 3749216,
+    "maxSkillCacheBytes": 73728
+  },
+  "visualReview": {
+    "status": "reviewed with listed limitations",
+    "reviewers": "visual_audit agent and root direct contact-sheet inspection",
+    "notes": [
+      "The 12 sampled encounters show clear owner-specific prop and palette differences; no lower-centre HUD text or obvious geometric fallback is visible.",
+      "Glutton phase 1 is visually crowded by overlapping knife cosmetics (327 live bullets at tick 580); damage-edge readability in that dense field remains a qualitative limitation.",
+      "Neuron and Final authority phase 1 are substantially more open at the shared tick 580 (35 and 29 live bullets); this snapshot does not establish their full-fight difficulty.",
+      "Curving, pauses, reflection and splitting are distinguished through committed warnings and actual travel; a static contact sheet cannot certify motion readability, and there are no separately authored motion icons or animation frames.",
+      "Warm metrics are taken on the third complete repeated frame. The first bullet pass establishes the encounter cache group after early cues, so the second startup frame can finish warming beam material. This startup work is not counted as steady-state cache churn.",
+      "These are immune CPU phase-practice observations with player attacks and skill rotation disabled, not natural-health completion, real browser/GPU timing or phone FPS."
+    ]
+  },
+  "rows": [
+    {
+      "bossIndex": 0,
+      "assetGroup": 0,
+      "name": "보라검천사",
+      "phase": 0,
+      "tick": 580,
+      "profile": "violet-wing-loom",
+      "phaseMotion": "curve",
+      "worldSHA256": "b47f27f71d0f273373afce35472e3ee24934cd4664e48a605ab46911c7ece5a8",
+      "current": {
+        "bullets": 192,
+        "hazards": 1,
+        "motions": {
+          "curve": 178
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 219,
+        "peakHazards": 5,
+        "identityWarnings": 16,
+        "uniquePatternBullets": 504,
+        "motions": {
+          "curve": 504
+        },
+        "radii": [
+          2.7,
+          3.344
+        ],
+        "observedPaused": 0,
+        "turning": 504,
+        "wallReflections": 0,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 192,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 1189408,
+        "stampCacheEntries": 14,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 5,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "castVioletV11",
+          "fxV8SilverSlash",
+          "projectileVioletOrbV9",
+          "weaponVioletV12"
+        ],
+        "skillSources": [
+          "h14SkillViolet"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 192,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 1189408,
+        "stampCacheEntries": 14,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 4,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "castVioletV11",
+          "fxV8SilverSlash",
+          "projectileVioletOrbV9",
+          "weaponVioletV12"
+        ],
+        "skillSources": [
+          "h14SkillViolet"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 0,
+      "assetGroup": 0,
+      "name": "보라검천사",
+      "phase": 2,
+      "tick": 580,
+      "profile": "violet-wing-loom",
+      "phaseMotion": "curve",
+      "worldSHA256": "ed81411ec3d83d32ddcbf277dd34d5bf511aee5f1a24c3a8bb6660e62590be2a",
+      "current": {
+        "bullets": 110,
+        "hazards": 2,
+        "motions": {
+          "curve": 96
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 126,
+        "peakHazards": 10,
+        "identityWarnings": 21,
+        "uniquePatternBullets": 349,
+        "motions": {
+          "curve": 349
+        },
+        "radii": [
+          2.7,
+          3.2
+        ],
+        "observedPaused": 0,
+        "turning": 349,
+        "wallReflections": 0,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 110,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 1594496,
+        "stampCacheEntries": 15,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 3,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "castVioletV11",
+          "fxV8SilverSlash",
+          "projectileVioletOrbV9",
+          "weaponVioletV12"
+        ],
+        "skillSources": [
+          "h14SkillViolet"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 110,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 1594496,
+        "stampCacheEntries": 15,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 3,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "castVioletV11",
+          "fxV8SilverSlash",
+          "projectileVioletOrbV9",
+          "weaponVioletV12"
+        ],
+        "skillSources": [
+          "h14SkillViolet"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 1,
+      "assetGroup": 1,
+      "name": "늪지대의 뿔악마",
+      "phase": 0,
+      "tick": 580,
+      "profile": "horn-sinking-boulders",
+      "phaseMotion": "pulse",
+      "worldSHA256": "fe8752d6f4d1d1d3b1d73ad09c5aaf9e564b0ec350bc23eec4cfec2bb8b01e7c",
+      "current": {
+        "bullets": 208,
+        "hazards": 0,
+        "motions": {
+          "split": 15,
+          "pulse": 97,
+          "comet": 63,
+          "straight": 21
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 222,
+        "peakHazards": 4,
+        "identityWarnings": 18,
+        "uniquePatternBullets": 461,
+        "motions": {
+          "pulse": 239,
+          "split": 28,
+          "comet": 131,
+          "straight": 63
+        },
+        "radii": [
+          3.809,
+          6.144,
+          6.536,
+          7.74,
+          11
+        ],
+        "observedPaused": 230,
+        "turning": 0,
+        "wallReflections": 0,
+        "splitParents": 21,
+        "splitChildren": 63,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 208,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 717856,
+        "stampCacheEntries": 21,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 2,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "castHornV11",
+          "fxV8Reed",
+          "projectileHornOrbV10",
+          "h14SkillHorn"
+        ],
+        "skillSources": [
+          "h14SkillHorn"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 208,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 717856,
+        "stampCacheEntries": 21,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 2,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "castHornV11",
+          "fxV8Reed",
+          "projectileHornOrbV10",
+          "h14SkillHorn"
+        ],
+        "skillSources": [
+          "h14SkillHorn"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 1,
+      "assetGroup": 1,
+      "name": "늪지대의 뿔악마",
+      "phase": 2,
+      "tick": 580,
+      "profile": "horn-sinking-boulders",
+      "phaseMotion": "split",
+      "worldSHA256": "df253352358e8177c648817ed914b265e602f3d4ad151bdbf086a9331e35a3a6",
+      "current": {
+        "bullets": 234,
+        "hazards": 2,
+        "motions": {
+          "split": 44,
+          "straight": 84,
+          "comet": 92
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 237,
+        "peakHazards": 5,
+        "identityWarnings": 13,
+        "uniquePatternBullets": 478,
+        "motions": {
+          "split": 81,
+          "comet": 187,
+          "straight": 210
+        },
+        "radii": [
+          3.809,
+          4.2,
+          6.144,
+          7.276,
+          11
+        ],
+        "observedPaused": 0,
+        "turning": 0,
+        "wallReflections": 0,
+        "splitParents": 70,
+        "splitChildren": 210,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 234,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 1572224,
+        "stampCacheEntries": 25,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 2,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "castHornV11",
+          "fxV8Reed",
+          "projectileHornOrbV10",
+          "h14SkillHorn"
+        ],
+        "skillSources": [
+          "h14SkillHorn"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 234,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 1572224,
+        "stampCacheEntries": 25,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 2,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "castHornV11",
+          "fxV8Reed",
+          "projectileHornOrbV10",
+          "h14SkillHorn"
+        ],
+        "skillSources": [
+          "h14SkillHorn"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 3,
+      "assetGroup": 3,
+      "name": "초천사의 웃는 가면",
+      "phase": 0,
+      "tick": 580,
+      "profile": "mask-feather-mirrors",
+      "phaseMotion": "mirror",
+      "worldSHA256": "df033a8d4add92c501dd6c7a5ddc080e47f1b2cd754bb40765a1052a77774a73",
+      "current": {
+        "bullets": 200,
+        "hazards": 1,
+        "motions": {
+          "mirror": 186
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 209,
+        "peakHazards": 5,
+        "identityWarnings": 20,
+        "uniquePatternBullets": 388,
+        "motions": {
+          "mirror": 388
+        },
+        "radii": [
+          2.7,
+          3.2
+        ],
+        "observedPaused": 0,
+        "turning": 0,
+        "wallReflections": 267,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 200,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 788336,
+        "stampCacheEntries": 15,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 3,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "castMaskV11",
+          "fxV8GoldSlash",
+          "weaponMaskV12",
+          "projectileMaskOrbV10"
+        ],
+        "skillSources": [
+          "h14SkillMask"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 200,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 788336,
+        "stampCacheEntries": 15,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 3,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "castMaskV11",
+          "fxV8GoldSlash",
+          "weaponMaskV12",
+          "projectileMaskOrbV10"
+        ],
+        "skillSources": [
+          "h14SkillMask"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 3,
+      "assetGroup": 3,
+      "name": "초천사의 웃는 가면",
+      "phase": 2,
+      "tick": 580,
+      "profile": "mask-feather-mirrors",
+      "phaseMotion": "mirror",
+      "worldSHA256": "cbc27d3c20387ffe134aafb7d7ef33fe5bcd9cc0dff2fc07540f2d95180df9ae",
+      "current": {
+        "bullets": 144,
+        "hazards": 2,
+        "motions": {
+          "mirror": 130
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 154,
+        "peakHazards": 8,
+        "identityWarnings": 20,
+        "uniquePatternBullets": 321,
+        "motions": {
+          "mirror": 321
+        },
+        "radii": [
+          2.7,
+          3.2
+        ],
+        "observedPaused": 0,
+        "turning": 0,
+        "wallReflections": 238,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 144,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 1175888,
+        "stampCacheEntries": 15,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 3,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "castMaskV11",
+          "fxV8GoldSlash",
+          "weaponMaskV12",
+          "projectileMaskOrbV10"
+        ],
+        "skillSources": [
+          "h14SkillMask"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 144,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 1175888,
+        "stampCacheEntries": 15,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 3,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "castMaskV11",
+          "fxV8GoldSlash",
+          "weaponMaskV12",
+          "projectileMaskOrbV10"
+        ],
+        "skillSources": [
+          "h14SkillMask"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 4,
+      "assetGroup": 4,
+      "name": "코스믹 가면 루시퍼",
+      "phase": 0,
+      "tick": 580,
+      "profile": "lucifer-orbiting-masks",
+      "phaseMotion": "curve",
+      "worldSHA256": "58f700bb3e38a76a66d44f50239ce1965f094e875ef0798e6ec0a74a24815283",
+      "current": {
+        "bullets": 291,
+        "hazards": 1,
+        "motions": {
+          "curve": 213,
+          "comet": 64
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 307,
+        "peakHazards": 4,
+        "identityWarnings": 19,
+        "uniquePatternBullets": 607,
+        "motions": {
+          "curve": 479,
+          "comet": 128
+        },
+        "radii": [
+          3.91,
+          4.108,
+          4.37,
+          7.82
+        ],
+        "observedPaused": 0,
+        "turning": 479,
+        "wallReflections": 0,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 291,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 1807328,
+        "stampCacheEntries": 18,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 7,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "castLuciferV11",
+          "fxV8SilverSlash",
+          "projectileLuciferOrbV9"
+        ],
+        "skillSources": [
+          "h14SkillLucifer"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 291,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 1807328,
+        "stampCacheEntries": 18,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 4,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "castLuciferV11",
+          "fxV8SilverSlash",
+          "projectileLuciferOrbV9"
+        ],
+        "skillSources": [
+          "h14SkillLucifer"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 4,
+      "assetGroup": 4,
+      "name": "코스믹 가면 루시퍼",
+      "phase": 2,
+      "tick": 580,
+      "profile": "lucifer-orbiting-masks",
+      "phaseMotion": "split",
+      "worldSHA256": "1ec05a1ced1c64992415415fdcad1243c303d922269dc1f3a2c5684979e16053",
+      "current": {
+        "bullets": 165,
+        "hazards": 2,
+        "motions": {
+          "split": 12,
+          "straight": 30,
+          "comet": 109
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 167,
+        "peakHazards": 6,
+        "identityWarnings": 15,
+        "uniquePatternBullets": 327,
+        "motions": {
+          "split": 28,
+          "comet": 215,
+          "straight": 84
+        },
+        "radii": [
+          2.5,
+          3.675,
+          4.108,
+          4.2,
+          7.351
+        ],
+        "observedPaused": 0,
+        "turning": 0,
+        "wallReflections": 0,
+        "splitParents": 28,
+        "splitChildren": 84,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 165,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 2249344,
+        "stampCacheEntries": 21,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 6,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "castLuciferV11",
+          "projectileLuciferOrbV9"
+        ],
+        "skillSources": [
+          "h14SkillLucifer"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 165,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 2249344,
+        "stampCacheEntries": 21,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 4,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "castLuciferV11",
+          "projectileLuciferOrbV9"
+        ],
+        "skillSources": [
+          "h14SkillLucifer"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 5,
+      "assetGroup": 5,
+      "name": "나태의 귀 벨페고르",
+      "phase": 0,
+      "tick": 580,
+      "profile": "sloth-delayed-collapse",
+      "phaseMotion": "pulse",
+      "worldSHA256": "22a1c86e1fc400256838a0fa7611094173ff3cc89a6fba7661e5d93eceb8f1e4",
+      "current": {
+        "bullets": 192,
+        "hazards": 2,
+        "motions": {
+          "pulse": 109,
+          "comet": 69
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 195,
+        "peakHazards": 8,
+        "identityWarnings": 12,
+        "uniquePatternBullets": 403,
+        "motions": {
+          "pulse": 260,
+          "comet": 143
+        },
+        "radii": [
+          6.916,
+          7.185,
+          7.644,
+          11
+        ],
+        "observedPaused": 253,
+        "turning": 0,
+        "wallReflections": 0,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 192,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 2579856,
+        "stampCacheEntries": 16,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 2,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "h25SlothTissue"
+        ],
+        "skillSources": [
+          "h14SkillSloth"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 192,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 2579856,
+        "stampCacheEntries": 16,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 2,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "h25SlothTissue"
+        ],
+        "skillSources": [
+          "h14SkillSloth"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 5,
+      "assetGroup": 5,
+      "name": "나태의 귀 벨페고르",
+      "phase": 2,
+      "tick": 580,
+      "profile": "sloth-delayed-collapse",
+      "phaseMotion": "comet",
+      "worldSHA256": "883f988617d46c4cc4bbdc3db2590483c35d4d7efe4a51ce6371599e73a7c44f",
+      "current": {
+        "bullets": 121,
+        "hazards": 0,
+        "motions": {
+          "comet": 109
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 121,
+        "peakHazards": 4,
+        "identityWarnings": 16,
+        "uniquePatternBullets": 238,
+        "motions": {
+          "comet": 238
+        },
+        "radii": [
+          6.501,
+          7.185,
+          11
+        ],
+        "observedPaused": 21,
+        "turning": 0,
+        "wallReflections": 0,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 121,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 387552,
+        "stampCacheEntries": 10,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 2,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "h25SlothTissue"
+        ],
+        "skillSources": [
+          "h14SkillSloth"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 121,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 387552,
+        "stampCacheEntries": 10,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 2,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "h25SlothTissue"
+        ],
+        "skillSources": [
+          "h14SkillSloth"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 6,
+      "assetGroup": 6,
+      "name": "질투의 귀 레비아탄",
+      "phase": 0,
+      "tick": 580,
+      "profile": "envy-opposite-reflections",
+      "phaseMotion": "mirror",
+      "worldSHA256": "a46efaf1bf4c2d8c0d34cfdacd26ae85cbef1c8e2759cdc4d804c850a797f106",
+      "current": {
+        "bullets": 213,
+        "hazards": 2,
+        "motions": {
+          "mirror": 158,
+          "weave": 41
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 216,
+        "peakHazards": 5,
+        "identityWarnings": 21,
+        "uniquePatternBullets": 412,
+        "motions": {
+          "mirror": 317,
+          "weave": 95
+        },
+        "radii": [
+          3.358,
+          3.478,
+          3.572
+        ],
+        "observedPaused": 0,
+        "turning": 95,
+        "wallReflections": 228,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 213,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 1654272,
+        "stampCacheEntries": 21,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 5,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "h14SkillEnvy",
+          "projectileLeviathanV13"
+        ],
+        "skillSources": [
+          "h14SkillEnvy"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 213,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 1654272,
+        "stampCacheEntries": 21,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 4,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "h14SkillEnvy",
+          "projectileLeviathanV13"
+        ],
+        "skillSources": [
+          "h14SkillEnvy"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 6,
+      "assetGroup": 6,
+      "name": "질투의 귀 레비아탄",
+      "phase": 2,
+      "tick": 580,
+      "profile": "envy-opposite-reflections",
+      "phaseMotion": "weave",
+      "worldSHA256": "7d6835bcf5524d6f2bbebfcd1a3790d5cd19e3f6e788c659d7fca37348319189",
+      "current": {
+        "bullets": 94,
+        "hazards": 1,
+        "motions": {
+          "weave": 80
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 129,
+        "peakHazards": 8,
+        "identityWarnings": 21,
+        "uniquePatternBullets": 347,
+        "motions": {
+          "weave": 347
+        },
+        "radii": [
+          3.269,
+          3.358
+        ],
+        "observedPaused": 0,
+        "turning": 347,
+        "wallReflections": 0,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 94,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 1023808,
+        "stampCacheEntries": 16,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 3,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "h14SkillEnvy",
+          "projectileLeviathanV13"
+        ],
+        "skillSources": [
+          "h14SkillEnvy"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 94,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 1023808,
+        "stampCacheEntries": 16,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 3,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "h14SkillEnvy",
+          "projectileLeviathanV13"
+        ],
+        "skillSources": [
+          "h14SkillEnvy"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 7,
+      "assetGroup": 7,
+      "name": "탐식의 귀 베엘제붑",
+      "phase": 0,
+      "tick": 580,
+      "profile": "glutton-dividing-maw",
+      "phaseMotion": "split",
+      "worldSHA256": "b517dc09c8930264cf357d02245581ccee3719a6fca0a7cd01d06b815bc9a376",
+      "current": {
+        "bullets": 327,
+        "hazards": 1,
+        "motions": {
+          "split": 59,
+          "straight": 96,
+          "comet": 158
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 360,
+        "peakHazards": 4,
+        "identityWarnings": 18,
+        "uniquePatternBullets": 805,
+        "motions": {
+          "split": 119,
+          "comet": 386,
+          "straight": 300
+        },
+        "radii": [
+          3.823,
+          3.864,
+          4.067,
+          4.2,
+          6.166,
+          6.232,
+          6.56,
+          6.888,
+          8.479,
+          9.84,
+          11
+        ],
+        "observedPaused": 0,
+        "turning": 0,
+        "wallReflections": 0,
+        "splitParents": 100,
+        "splitChildren": 300,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 327,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 3393280,
+        "stampCacheEntries": 27,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 1,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "h25GluttonKnife",
+          "h14SkillGlutton"
+        ],
+        "skillSources": [
+          "h14SkillGlutton"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 327,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 3393280,
+        "stampCacheEntries": 27,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 1,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "h25GluttonKnife",
+          "h14SkillGlutton"
+        ],
+        "skillSources": [
+          "h14SkillGlutton"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 7,
+      "assetGroup": 7,
+      "name": "탐식의 귀 베엘제붑",
+      "phase": 2,
+      "tick": 580,
+      "profile": "glutton-dividing-maw",
+      "phaseMotion": "split",
+      "worldSHA256": "4920da3304bcc1d876766f40562644b96823bfd042633f2e499fd0a291b7d1ae",
+      "current": {
+        "bullets": 215,
+        "hazards": 2,
+        "motions": {
+          "split": 40,
+          "straight": 66,
+          "comet": 95
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 240,
+        "peakHazards": 5,
+        "identityWarnings": 13,
+        "uniquePatternBullets": 522,
+        "motions": {
+          "split": 82,
+          "comet": 230,
+          "straight": 210
+        },
+        "radii": [
+          3.632,
+          3.823,
+          4.014,
+          4.2,
+          5.858,
+          6.166,
+          6.475,
+          8.479,
+          11
+        ],
+        "observedPaused": 0,
+        "turning": 0,
+        "wallReflections": 0,
+        "splitParents": 70,
+        "splitChildren": 210,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 215,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 3749216,
+        "stampCacheEntries": 25,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 1,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "h25GluttonKnife",
+          "h14SkillGlutton"
+        ],
+        "skillSources": [
+          "h14SkillGlutton"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 215,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 3749216,
+        "stampCacheEntries": 25,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 1,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "h25GluttonKnife",
+          "h14SkillGlutton"
+        ],
+        "skillSources": [
+          "h14SkillGlutton"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 8,
+      "assetGroup": 8,
+      "name": "색욕의 귀 아스모데우스",
+      "phase": 0,
+      "tick": 580,
+      "profile": "lust-stage-prop-waltz",
+      "phaseMotion": "curve",
+      "worldSHA256": "10bddf12b68223edd1d91e489005c3b62c17f67dfc65dc173b0c2e06505141f5",
+      "current": {
+        "bullets": 144,
+        "hazards": 2,
+        "motions": {
+          "curve": 112,
+          "weave": 18
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 150,
+        "peakHazards": 8,
+        "identityWarnings": 19,
+        "uniquePatternBullets": 317,
+        "motions": {
+          "curve": 273,
+          "weave": 44
+        },
+        "radii": [
+          3.786,
+          4.028,
+          5.936
+        ],
+        "observedPaused": 0,
+        "turning": 317,
+        "wallReflections": 0,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 144,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 2367088,
+        "stampCacheEntries": 19,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 4,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "h24LustLipstick",
+          "h24LustHeel",
+          "h24LustBrokenHeart"
+        ],
+        "skillSources": [
+          "h14SkillLust"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 144,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 2367088,
+        "stampCacheEntries": 19,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 4,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "h24LustLipstick",
+          "h24LustHeel",
+          "h24LustBrokenHeart"
+        ],
+        "skillSources": [
+          "h14SkillLust"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 8,
+      "assetGroup": 8,
+      "name": "색욕의 귀 아스모데우스",
+      "phase": 2,
+      "tick": 580,
+      "profile": "lust-stage-prop-waltz",
+      "phaseMotion": "weave",
+      "worldSHA256": "3c7e81a7816e85f769909e3ed9a40ddc501a0a446e455e78c28d7ad13d7f5543",
+      "current": {
+        "bullets": 91,
+        "hazards": 1,
+        "motions": {
+          "weave": 77
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 96,
+        "peakHazards": 4,
+        "identityWarnings": 19,
+        "uniquePatternBullets": 219,
+        "motions": {
+          "weave": 219
+        },
+        "radii": [
+          3.786,
+          5.58
+        ],
+        "observedPaused": 0,
+        "turning": 219,
+        "wallReflections": 0,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 91,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 1703248,
+        "stampCacheEntries": 15,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 2,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "h24LustLipstick",
+          "h24LustBrokenHeart",
+          "h24LustHeel"
+        ],
+        "skillSources": [
+          "h14SkillLust"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 91,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 1703248,
+        "stampCacheEntries": 15,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 2,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "h24LustLipstick",
+          "h24LustBrokenHeart",
+          "h24LustHeel"
+        ],
+        "skillSources": [
+          "h14SkillLust"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 9,
+      "assetGroup": 9,
+      "name": "탐욕의 귀 맘몬",
+      "phase": 0,
+      "tick": 580,
+      "profile": "mammon-vault-dividends",
+      "phaseMotion": "piano",
+      "worldSHA256": "c4f15f77054d46e270d01e401fea6f70ad709c5aed1ad2337ab5f3caeafd3286",
+      "current": {
+        "bullets": 169,
+        "hazards": 1,
+        "motions": {
+          "piano": 134,
+          "pulse": 21
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 173,
+        "peakHazards": 5,
+        "identityWarnings": 19,
+        "uniquePatternBullets": 279,
+        "motions": {
+          "piano": 236,
+          "pulse": 43
+        },
+        "radii": [
+          4.929,
+          5.244,
+          6.072,
+          8.97
+        ],
+        "observedPaused": 144,
+        "turning": 0,
+        "wallReflections": 0,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          11
+        ]
+      },
+      "high": {
+        "bulletsDrawn": 169,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 2226992,
+        "stampCacheEntries": 19,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 4,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "h25GreedMoney",
+          "h25GreedTreasure",
+          "h14SkillGreed"
+        ],
+        "skillSources": [
+          "h14SkillGreed"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 169,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 2226992,
+        "stampCacheEntries": 19,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 4,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "h25GreedMoney",
+          "h25GreedTreasure",
+          "h14SkillGreed"
+        ],
+        "skillSources": [
+          "h14SkillGreed"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 9,
+      "assetGroup": 9,
+      "name": "탐욕의 귀 맘몬",
+      "phase": 2,
+      "tick": 580,
+      "profile": "mammon-vault-dividends",
+      "phaseMotion": "pulse",
+      "worldSHA256": "53f5a027e64ad836fa8f47c2ec3b5b444a41a2a41b97246b2f0375f499359472",
+      "current": {
+        "bullets": 106,
+        "hazards": 2,
+        "motions": {
+          "pulse": 92
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 109,
+        "peakHazards": 8,
+        "identityWarnings": 19,
+        "uniquePatternBullets": 219,
+        "motions": {
+          "pulse": 219
+        },
+        "radii": [
+          4.929,
+          5.708,
+          8.432
+        ],
+        "observedPaused": 205,
+        "turning": 0,
+        "wallReflections": 0,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 106,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 2317024,
+        "stampCacheEntries": 14,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 3,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "h14SkillGreed"
+        ],
+        "skillSources": [
+          "h14SkillGreed"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 106,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 2317024,
+        "stampCacheEntries": 14,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 3,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "h14SkillGreed"
+        ],
+        "skillSources": [
+          "h14SkillGreed"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 11,
+      "assetGroup": 11,
+      "name": "교만의 회장",
+      "phase": 0,
+      "tick": 580,
+      "profile": "pride-calculated-keyboard",
+      "phaseMotion": "piano",
+      "worldSHA256": "2b01abefe85fa7958369e36ca28503537eb4e57c3526efdb98a9e81a9e7a3894",
+      "current": {
+        "bullets": 137,
+        "hazards": 2,
+        "motions": {
+          "mirror": 12,
+          "piano": 111
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 141,
+        "peakHazards": 8,
+        "identityWarnings": 18,
+        "uniquePatternBullets": 282,
+        "motions": {
+          "piano": 251,
+          "mirror": 31
+        },
+        "radii": [
+          3.06,
+          3.643,
+          3.876,
+          4.692
+        ],
+        "observedPaused": 68,
+        "turning": 0,
+        "wallReflections": 20,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          11
+        ]
+      },
+      "high": {
+        "bulletsDrawn": 137,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 1563216,
+        "stampCacheEntries": 21,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 3,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "projectilePrideV13",
+          "h14SkillPride"
+        ],
+        "skillSources": [
+          "h14SkillPride"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 137,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 1563216,
+        "stampCacheEntries": 21,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 3,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "projectilePrideV13",
+          "h14SkillPride"
+        ],
+        "skillSources": [
+          "h14SkillPride"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 11,
+      "assetGroup": 11,
+      "name": "교만의 회장",
+      "phase": 2,
+      "tick": 580,
+      "profile": "pride-calculated-keyboard",
+      "phaseMotion": "mirror",
+      "worldSHA256": "72f4cf26e4feede6c23202a8bcff2bfa0a79ffc2a4726f3dc3ba93a7daa98e43",
+      "current": {
+        "bullets": 65,
+        "hazards": 0,
+        "motions": {
+          "mirror": 53
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 73,
+        "peakHazards": 7,
+        "identityWarnings": 12,
+        "uniquePatternBullets": 135,
+        "motions": {
+          "mirror": 135
+        },
+        "radii": [
+          2.876,
+          3.643,
+          4.41
+        ],
+        "observedPaused": 0,
+        "turning": 0,
+        "wallReflections": 46,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 65,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 281728,
+        "stampCacheEntries": 11,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 1,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "projectilePrideV13",
+          "h14SkillPride"
+        ],
+        "skillSources": [
+          "h14SkillPride"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 65,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 281728,
+        "stampCacheEntries": 11,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 1,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "projectilePrideV13",
+          "h14SkillPride"
+        ],
+        "skillSources": [
+          "h14SkillPride"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 25,
+      "assetGroup": 26,
+      "name": "뉴런 게이트의 강제 연결",
+      "phase": 0,
+      "tick": 580,
+      "profile": "neural-command-serpents",
+      "phaseMotion": "weave",
+      "worldSHA256": "806248afc461fc0964dc43df31cb00e31530abda33cfef373c309702da3ee86c",
+      "current": {
+        "bullets": 35,
+        "hazards": 1,
+        "motions": {
+          "weave": 35
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 57,
+        "peakHazards": 4,
+        "identityWarnings": 7,
+        "uniquePatternBullets": 82,
+        "motions": {
+          "weave": 82
+        },
+        "radii": [
+          2.7,
+          3.362
+        ],
+        "observedPaused": 50,
+        "turning": 82,
+        "wallReflections": 0,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 35,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 662432,
+        "stampCacheEntries": 10,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 1,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "storyChronoCrescent"
+        ],
+        "skillSources": [
+          "storyChronoCrescent"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 35,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 662432,
+        "stampCacheEntries": 10,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 1,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "storyChronoCrescent"
+        ],
+        "skillSources": [
+          "storyChronoCrescent"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 25,
+      "assetGroup": 26,
+      "name": "뉴런 게이트의 강제 연결",
+      "phase": 2,
+      "tick": 580,
+      "profile": "neural-command-serpents",
+      "phaseMotion": "curve",
+      "worldSHA256": "67aceb06a9d75e42bc40f377081925babba787ff4d0026f8927e1300ddd9b96c",
+      "current": {
+        "bullets": 32,
+        "hazards": 2,
+        "motions": {
+          "curve": 30
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 92,
+        "peakHazards": 5,
+        "identityWarnings": 7,
+        "uniquePatternBullets": 134,
+        "motions": {
+          "curve": 134
+        },
+        "radii": [
+          2.7,
+          3.16
+        ],
+        "observedPaused": 50,
+        "turning": 134,
+        "wallReflections": 0,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 32,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 808112,
+        "stampCacheEntries": 14,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 1,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "storyChronoCrescent",
+          "storyNeuralOrb"
+        ],
+        "skillSources": [
+          "storyChronoCrescent"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 32,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 808112,
+        "stampCacheEntries": 14,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 1,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "storyChronoCrescent",
+          "storyNeuralOrb"
+        ],
+        "skillSources": [
+          "storyChronoCrescent"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 34,
+      "assetGroup": 35,
+      "name": "교만의 사이보그 교주",
+      "phase": 0,
+      "tick": 580,
+      "profile": "authority-fold-stitch-impact",
+      "phaseMotion": "curve",
+      "worldSHA256": "4947a5882e47376aada030cb54b37839780d67eda8b5a4dcf24a2e5f9c55a693",
+      "current": {
+        "bullets": 29,
+        "hazards": 2,
+        "motions": {
+          "curve": 29
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 64,
+        "peakHazards": 5,
+        "identityWarnings": 20,
+        "uniquePatternBullets": 153,
+        "motions": {
+          "curve": 153
+        },
+        "radii": [
+          4.44,
+          5.2
+        ],
+        "observedPaused": 0,
+        "turning": 153,
+        "wallReflections": 0,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": []
+      },
+      "high": {
+        "bulletsDrawn": 29,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 591520,
+        "stampCacheEntries": 8,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 2,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "cultLance"
+        ],
+        "skillSources": [
+          "cultLance"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 29,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 591520,
+        "stampCacheEntries": 8,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 36864,
+        "skillCacheEntries": 1,
+        "skillDraws": 2,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "cultLance"
+        ],
+        "skillSources": [
+          "cultLance"
+        ],
+        "patternEntryCue": null
+      }
+    },
+    {
+      "bossIndex": 34,
+      "assetGroup": 35,
+      "name": "교만의 사이보그 교주",
+      "phase": 2,
+      "tick": 580,
+      "profile": "authority-fold-stitch-impact",
+      "phaseMotion": "piano",
+      "worldSHA256": "c9e16c438bbac3da0ae2523e8d34620fd5b9609df1cc5c98c6ee18f3c199d2b8",
+      "current": {
+        "bullets": 104,
+        "hazards": 3,
+        "motions": {
+          "piano": 102
+        }
+      },
+      "observation": {
+        "ticks": 580,
+        "peakBullets": 188,
+        "peakHazards": 6,
+        "identityWarnings": 20,
+        "uniquePatternBullets": 308,
+        "motions": {
+          "piano": 308
+        },
+        "radii": [
+          4.174,
+          5.2,
+          5.287
+        ],
+        "observedPaused": 196,
+        "turning": 0,
+        "wallReflections": 0,
+        "splitParents": 0,
+        "splitChildren": 0,
+        "pianoLanes": [
+          0,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      "high": {
+        "bulletsDrawn": 104,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 809408,
+        "stampCacheEntries": 14,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 73728,
+        "skillCacheEntries": 2,
+        "skillDraws": 3,
+        "skillDrawLimit": 8,
+        "sourceKeys": [
+          "cultDriveSpear",
+          "cultLance"
+        ],
+        "skillSources": [
+          "cultDriveImpact",
+          "cultLance"
+        ],
+        "patternEntryCue": null
+      },
+      "low": {
+        "bulletsDrawn": 104,
+        "missingProjectileAssets": 0,
+        "missingSkillAssets": 0,
+        "missingCombatCopyAssets": 0,
+        "stampCacheBytes": 809408,
+        "stampCacheEntries": 14,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "skillCacheBytes": 73728,
+        "skillCacheEntries": 2,
+        "skillDraws": 3,
+        "skillDrawLimit": 4,
+        "sourceKeys": [
+          "cultDriveSpear",
+          "cultLance"
+        ],
+        "skillSources": [
+          "cultDriveImpact",
+          "cultLance"
+        ],
+        "patternEntryCue": null
+      }
+    }
+  ]
+}

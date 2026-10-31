@@ -72,9 +72,9 @@ test('the battle HUD follows exact real laser boundaries and never treats residu
   const residual=structuredClone(w);residual.stage='transition';residual.transitionNarrative=null;residual.transitionRemaining=2;residual.nextPhase=0;const immutable=structuredClone(residual);renderer.draw(residual,0,residual.time,false);assert.equal(renderer.getMetrics().battleReadability.statusKind,'residual-danger');assert.deepEqual(residual,immutable);
  }finally{renderer.destroy();global.document=previous;}
 });
-test('brief deduplicated entry titles disappear before live threats and timeout labels stay bounded',async()=>{
+test('pattern names stay in the top HUD without middle entry banners and timeout labels stay bounded',async()=>{
  const previous=global.document;installPresentation();const images=await storyImages(35),canvas=createCanvas(360,640);canvas.style={};const renderer=global.HapilRenderer.create(canvas,images);renderer.resize(360,640,1);
- try{const w=at(35,40);renderer.draw(w,0,w.time,false);const cue=renderer.getMetrics().patternEntryCue;assert(cue);assert.equal(cue.title,'두 사몽의 격돌');assert(!cue.title.includes('두 사몽의 격돌 · 두 사몽의 격돌'));assert.equal(cue.expiresAtPhaseSeconds,1.1);while(w.tick<67)core.step(w,{});renderer.draw(w,0,w.time,false);assert.equal(renderer.getMetrics().patternEntryCue,null);
+ try{const w=at(35,40);renderer.draw(w,0,w.time,false);const initial=renderer.getMetrics();assert.equal(initial.patternEntryCue,null,'quiet opening beats also keep the centre clear');assert.equal(initial.battleReadability.displayPattern,'두 사몽의 격돌');assert(initial.battleReadability.box[1]+initial.battleReadability.box[3]<=64,'the existing top HUD retains the pattern name');while(w.tick<67)core.step(w,{});renderer.draw(w,0,w.time,false);assert.equal(renderer.getMetrics().patternEntryCue,null);
   for(const phaseTime of [w.phaseTimeout-15,w.phaseTimeout-.05,w.phaseTimeout,w.phaseTimeout+1]){const fixture=structuredClone(w);fixture.phaseTime=phaseTime;renderer.draw(fixture,0,fixture.time,false);const hud=renderer.getMetrics().battleReadability;assert.equal(hud.remainingSeconds,Math.max(0,fixture.phaseTimeout-phaseTime));assert.equal(hud.timerWarning,true);assert(!hud.timerText.includes('-'));}
  }finally{renderer.destroy();global.document=previous;}
 });
@@ -86,8 +86,8 @@ test('the real app keeps the movement surface free of map/pattern copy during co
  for(const phase of [0,1,2]){w.phase=phase;await advance(h);assert.equal(String(h.el('pad-caption').textContent||''),'');assert.equal(String(h.el('pad-title').textContent||''),'');}
  w.autoAttack=false;w.skillRotation=false;w.stage='transition';w.transitionRemaining=2;w.nextPhase=0;w.bullets.length=0;w.hazards.length=0;w.bullets.push({id:99999,x:24,y:24,px:24,py:24,vx:0,vy:10,r:3.8,halfLength:0,angle:Math.PI/2,kind:'orb',age:0,ttl:10,grazed:false});await advance(h);
  assert.equal(String(h.el('pad-title').textContent||''),'');assert.equal(String(h.el('pad-caption').textContent||''),'');assert.equal(h.saveCalls.length,0);assert.equal(h.completeCalls.length,0);
- assert.equal(w.combatRevision,25,'actual product opts new runs into v25 attacks while checkpoint restores retain their revision');
- assert.equal(h.g.HapilApp.diagnostics().candidateRevision,25);assert.equal(h.g.HapilApp.diagnostics().version,'hapil-boss-identities-v25');
+ assert.equal(w.combatRevision,27,'actual product opts new runs into v27 attacks while checkpoint restores retain their revision');
+ assert.equal(h.g.HapilApp.diagnostics().candidateRevision,27);assert.equal(h.g.HapilApp.diagnostics().version,'hapil-boss-patterns-v27');
 });
 test('combat expansion retains every reviewed media alias and collision contract, with the approved V24 and V25 props appended',()=>{
  const prior=cp.execFileSync('git',['show','d2f5fddff2f12118d5c97a9a24e1111c16a1c771:src/media.js'],{cwd:root}),current=fs.readFileSync(path.join(root,'src/media.js'));
