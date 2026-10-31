@@ -1,0 +1,120 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "scope": "Separate ordinary-health follow-up attempts for the preserved initialMaskHELLphase3failure. Only read-only input-policy target/beam settings changed; identical seed813, selected practice phase and ordinary product health/damage/autoattack/skills. All directions recorded and exactly replayed. Does not replace the initial105attemptreport or its loss.",
+  "sourceHashes": {
+    "src/core.js": "789cd5e5ff503a95d05b2362039edeac7fa81d21bbff7ac1992db3c87582e1dd",
+    "src/boss-patterns-v27.js": "93c6e6b2d8f7ccfa3310d6fb37e20610a50dce04b02777c1f7711ce0c08f6517",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "src/projectiles.js": "a0a114c1c645172e11906bddece174b0eaf6057403ab05879b521e768bf81606",
+    "src/boss-skills.js": "f1a51e7a30487e1e702f4257b748b0a578f7d768df6bfa94124ca949edce26a9",
+    "src/storage.js": "e4462c1766dfbe2fdb082f9e7e44a7199777eefce5fd2eb21f6d3aff37255cd7",
+    "src/app.js": "6c1ada3a156912c01063f89adfa5ffdcd102b4a64a7953a66af2e7502fecea98",
+    "src/render.js": "a4b58d4c9b5d9900b5705b429280fd9b3f47f61e77e870f1999ab60ab15e8afc",
+    "src/actors.js": "4ce33e074c607006bd956e6784b6cfb00dbcb2b081c8c2a66d988f116c2e3a07",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033",
+    "src/media.js": "ac5e0e2497f242e2515873ee157f06b979b2659d6f2dc02f66349161a50bce2e",
+    "index.html": "6267f8e146ba904a3f868953d5d1fcf570b596628de71525cf1f02767aa80786",
+    "styles.css": "8a2f8527a0a8dec263bb578d316c3b4339b4d18ea046486bb501d25ed223d3e9",
+    "tools/audit-patterns-v27.cjs": "2b95820bc7e284a35642d60bb5ccc7487eea8998b036c6771bc935042a5d9eb9",
+    "tests/independent-patterns-v27.test.cjs": "64811eefcfecb5f3d18e27d191bbf4695423cfdbd67aee64184d632286e6f6e2",
+    "tools/probe-identities-v25-natural.cjs": "18433dffe03accc00d128f501bf8a03a1844c534965b6596aedb05853db198b7",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d"
+  },
+  "sourceHashGuardPassed": true,
+  "directions": [
+    [
+      0,
+      0
+    ],
+    [
+      4,
+      0
+    ],
+    [
+      -4,
+      0
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      0,
+      -4
+    ],
+    [
+      2.828,
+      2.828
+    ],
+    [
+      2.828,
+      -2.828
+    ],
+    [
+      -2.828,
+      2.828
+    ],
+    [
+      -2.828,
+      -2.828
+    ]
+  ],
+  "initialReport": "V27-NATURAL-HEALTH-20261031.json",
+  "summary": {
+    "attempts": 1,
+    "won": 1,
+    "lost": 0,
+    "exactReplayedTicks": 2304
+  },
+  "records": [
+    {
+      "policyConfig": {
+        "route": "left",
+        "y": 575,
+        "beam": 24,
+        "commit": 4,
+        "horizon": 96
+      },
+      "bossIndex": 3,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 27,
+      "bossId": "mask",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2304,
+      "hp": 1,
+      "hits": 2,
+      "score": 6310,
+      "phaseTicks": [
+        2304
+      ],
+      "peakBullets": 252,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "초천사의 웃는 가면 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-mask-feather-mirrors-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v27-natural-inputs/followup-1/boss-03-hell-phase-2.moves.gz",
+        "bytes": 333,
+        "sha256": "b2a8f6139af64153f8a12707ed35b5b34fe3b13a781e903182ca28b014ebb685",
+        "ticks": 2304
+      }
+    }
+  ],
+  "inputPathCanonicalisation": [
+    {
+      "original": "v27-natural-followup-1/boss-03-hell-phase-2.moves.gz",
+      "canonical": "v27-natural-inputs/followup-1/boss-03-hell-phase-2.moves.gz",
+      "contentUnchanged": true
+    }
+  ]
+}

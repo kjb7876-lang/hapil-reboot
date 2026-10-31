@@ -295,7 +295,7 @@ denial:Object.freeze({scale:0.095,poses:Object.freeze({walk:pose('actorDenialWal
       // Only an admitted, live cast can prepare a clone; its nominal clock
       // alone is not evidence that anything will be fired. Lust keeps its
       // reference presentation because it does not use the identity scheduler.
-      if(world.combatRevision!==25||copy.kind!=='clone'||(!world.finalPractice&&world.bossIndex===8)||!Number.isInteger(world.tick))return null;
+      if((world.combatRevision!==25&&world.combatRevision!==27)||copy.kind!=='clone'||(world.combatRevision===25&&!world.finalPractice&&world.bossIndex===8)||!Number.isInteger(world.tick))return null;
       var tick=world.tick,source=copy.sourceActorId||copy.id,casts=world.boss&&world.boss.identityCasts||[],next=null;
       for(var i=0;i<casts.length;i++){
         var c=casts[i];

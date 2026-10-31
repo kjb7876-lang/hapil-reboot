@@ -29,7 +29,7 @@
   function integer(value, min, max) { return finite(value, min, max) && Math.floor(value) === value; }
   function validRunId(value) { return typeof value === 'string' && /^[A-Za-z0-9_.:-]{1,96}$/.test(value); }
   function difficulty(value) { return value === 'normal' || value === 'gentle' || value === 'hell'; }
-  function combatRevision(value) { return value === 21 || value === 25; }
+  function combatRevision(value) { return value === 21 || value === 25 || value === 27; }
 
   function settingsPatch(value) {
     var out = {};
@@ -229,9 +229,9 @@
     var checkpointValid = checkpointPresent && validStoredCheckpoint(raw.checkpoint);
     if (backupPresent && !backupValid) return false;
     if (checkpointPresent && !checkpointValid && !backupValid) return false;
-    // Legitimate same-run writes never change selectors. A mixed25 record
+    // Legitimate same-run writes never change selectors. A mixed25/27 record
     // cannot safely choose another ruleset when recovering its older boundary.
-    if(backupValid&&checkpointValid&&(raw.backup.combatRevision===25||raw.checkpoint.combatRevision===25)&&raw.backup.combatRevision!==raw.checkpoint.combatRevision)return false;
+    if(backupValid&&checkpointValid&&(raw.backup.combatRevision>=25||raw.checkpoint.combatRevision>=25)&&raw.backup.combatRevision!==raw.checkpoint.combatRevision)return false;
     if (checkpointValid && raw.activeRunBaselineKills !== undefined && raw.activeRunBaselineKills > raw.checkpoint.kills) return false;
     if (!checkpointPresent && !backupPresent && raw.activeRunBaselineKills > 0) return false;
     return true;
