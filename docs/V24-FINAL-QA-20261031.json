@@ -1,0 +1,287 @@
+{
+  "date": "2026-10-31",
+  "baselineDeployedMain": "72f1b2657d1a340fdad22b3179cbcc474628c993",
+  "version": "hapil-source-projectiles-v24",
+  "candidateRevision": 24,
+  "combatRevision": 21,
+  "sourceHashes": {
+    "index.html": "6dbcfd11b09ddf8735eb3ceda8f649baf09fdc0d1938e48afbb5d77b53c85336",
+    "styles.css": "aaeb395a309ff51c1269da69fb4d338206c14effcb01dda4fb1831740e2dc2e9",
+    "src/actors.js": "c5d707a96b4a0d7be33762924782a20451d7da2099f1555af026962ce89792f4",
+    "src/app.js": "ddb1cfc23929dca09a33ee30b3cb9d5fc3c41c7e1b8b4ae36b2f213d9bc9eb60",
+    "src/boss-motion.js": "e2d1bde92838884382e30b5d8de6549cf9071ac9b21c84b7f9cb8d4bc63160b1",
+    "src/boss-skills.js": "af990bbcad9348722269bdfa881028eeea35711782cbdafb06ef321c27a01b5c",
+    "src/core.js": "52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a",
+    "src/media.js": "1579d82a998680add0fb5abb9917b7a0ceecd9a65c4823f015b756b2e8acc1fc",
+    "src/projectiles.js": "3e4938f4d03bd6c1154313a813a5253334a1d45caeab00afdffe5d9a6f0bcebc",
+    "src/render.js": "31343c761317f772ccf22891210eda5db6eb2e269e7831395665b6eee6aae4a1",
+    "src/storage.js": "ec1010c11aaf3f49240f3fa8f46d5b85f922b6373bd4a29a5bd89a7ef282e71c",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f"
+  },
+  "automatedTests": {
+    "command": "npm test",
+    "tests": 314,
+    "pass": 314,
+    "fail": 0,
+    "skip": 0,
+    "cancel": 0,
+    "durationMs": 112211.550382,
+    "sourceHashStable": true
+  },
+  "independent": {
+    "objectCases": 24,
+    "extraOrbCases": 16,
+    "unchangedOtherBossBullets": 140,
+    "unchangedV23Lasers": 148,
+    "coreRuns": 18,
+    "coreTicks": 15120,
+    "gifFrames": 20,
+    "mixedCacheCases": 4,
+    "minimumFullDamageVisibility": 0.9821428571428571,
+    "missingAssets": 0,
+    "geometricLiveBodyDraws": 0
+  },
+  "additionalUnchangedEnvyGreedRotors": 8,
+  "immutableScope": {
+    "files": 301,
+    "originalMediaAliases": 281,
+    "newMediaAliases": 3,
+    "sourceGeneration": "3lossless256pxWebPderivatives139850bytes; original/source/decoded/outputSHAandGitblobverified",
+    "coreStorageStoryActorsControls": "byte-identical to deployedv23"
+  },
+  "nativeBrowser": {
+    "environment": "Existing Chrome actual native UI via supported CDP browser; immune phase3 fixture",
+    "canvasCSS": [
+      360,
+      640
+    ],
+    "currentExport": {
+      "tick": 235,
+      "bullets": 96,
+      "images": 27,
+      "heart": 77,
+      "heel": 10,
+      "lipstick": 9,
+      "wallBouncesEach": 1,
+      "missing": 0
+    },
+    "observedDOMScenes": [
+      "HELLmixedhigh",
+      "HELLafterbouncehigh",
+      "HELLafterbouncelow",
+      "NORMALphase3low"
+    ],
+    "export": "Actual native canvas PNG and DOM-backedJSON downloaded successfully through visible export controls",
+    "viewportScreenshotTransfer": "Native viewport capture pixels were inspected but fs-basedsharedtransfer failed; no missing screenshot link used. ExportedcanvasPNG is labelledascanvasoutput."
+  },
+  "safetyOfVisualFit": {
+    "fullDamageVisibleFractionMinimum": 0.9821428571428571,
+    "minimumRequired": 0.9,
+    "centralAlphaMinimum": 1,
+    "ornamentBudgets": "Only new Lustobjects and EnvyORB have48pxnormal/100pxlarge maximumcompleteobjectdiameter; otherlegacy4pxmargin unchanged. New decorativeoutertipsarenon-damaging; the oldcircleiscontainedinauthoredsolidmaterial.",
+    "physicsCountTimings": "unchanged"
+  },
+  "cpuCost": {
+    "date": "2026-10-31",
+    "scope": "Native CPU360x640 DPR1 complete source scenes at one frozen immune practice snapshot;5warmups+25measured synchronous draws per row/runtime on a shared host. Not browser, GPU completion, sustained gameFPS or phone measurement.",
+    "baseline": "894682f2cc56b3e578dc042b54490eab3c20097b",
+    "projectileSHA256": "3e4938f4d03bd6c1154313a813a5253334a1d45caeab00afdffe5d9a6f0bcebc",
+    "rows": [
+      {
+        "group": 6,
+        "tick": 235,
+        "quality": "high",
+        "bullets": 125,
+        "hazards": 8,
+        "baseline": {
+          "samples": 25,
+          "p50Ms": 4.59714699999995,
+          "p95Ms": 5.735310000000027,
+          "maxMs": 13.963001000000077,
+          "cacheBytes": 1303088,
+          "sourceDraws": 125
+        },
+        "current": {
+          "samples": 25,
+          "p50Ms": 2.8484269999999015,
+          "p95Ms": 3.9664590000002136,
+          "maxMs": 4.4479230000001735,
+          "cacheBytes": 1473408,
+          "sourceDraws": 125
+        }
+      },
+      {
+        "group": 6,
+        "tick": 235,
+        "quality": "low",
+        "bullets": 125,
+        "hazards": 8,
+        "baseline": {
+          "samples": 25,
+          "p50Ms": 2.256515000000036,
+          "p95Ms": 2.9729839999999967,
+          "maxMs": 3.008346999999958,
+          "cacheBytes": 1303088,
+          "sourceDraws": 125
+        },
+        "current": {
+          "samples": 25,
+          "p50Ms": 2.384128000000601,
+          "p95Ms": 3.9865289999997913,
+          "maxMs": 4.926478999999745,
+          "cacheBytes": 1473408,
+          "sourceDraws": 125
+        }
+      },
+      {
+        "group": 8,
+        "tick": 235,
+        "quality": "high",
+        "bullets": 96,
+        "hazards": 4,
+        "baseline": {
+          "samples": 25,
+          "p50Ms": 2.2468189999999595,
+          "p95Ms": 3.966856999999436,
+          "maxMs": 4.446797999999035,
+          "cacheBytes": 1368720,
+          "sourceDraws": 96
+        },
+        "current": {
+          "samples": 25,
+          "p50Ms": 2.192798000000039,
+          "p95Ms": 3.259663000000728,
+          "maxMs": 7.154359999998633,
+          "cacheBytes": 2124928,
+          "sourceDraws": 96
+        }
+      },
+      {
+        "group": 8,
+        "tick": 235,
+        "quality": "low",
+        "bullets": 96,
+        "hazards": 4,
+        "baseline": {
+          "samples": 25,
+          "p50Ms": 1.8091509999994742,
+          "p95Ms": 2.3382170000004407,
+          "maxMs": 2.382573000000775,
+          "cacheBytes": 1368720,
+          "sourceDraws": 96
+        },
+        "current": {
+          "samples": 25,
+          "p50Ms": 1.6427120000007562,
+          "p95Ms": 1.8618420000002516,
+          "maxMs": 1.9995880000005855,
+          "cacheBytes": 2124928,
+          "sourceDraws": 96
+        }
+      },
+      {
+        "group": 9,
+        "tick": 235,
+        "quality": "high",
+        "bullets": 100,
+        "hazards": 8,
+        "baseline": {
+          "samples": 25,
+          "p50Ms": 2.6786399999982677,
+          "p95Ms": 3.843872999997984,
+          "maxMs": 5.782008999998652,
+          "cacheBytes": 2462320,
+          "sourceDraws": 100
+        },
+        "current": {
+          "samples": 25,
+          "p50Ms": 2.3238560000027064,
+          "p95Ms": 2.7288950000001932,
+          "maxMs": 9.235224000000017,
+          "cacheBytes": 2441920,
+          "sourceDraws": 100
+        }
+      },
+      {
+        "group": 9,
+        "tick": 235,
+        "quality": "low",
+        "bullets": 100,
+        "hazards": 8,
+        "baseline": {
+          "samples": 25,
+          "p50Ms": 1.8913360000005923,
+          "p95Ms": 3.884974999997212,
+          "maxMs": 3.912898000002315,
+          "cacheBytes": 2462320,
+          "sourceDraws": 100
+        },
+        "current": {
+          "samples": 25,
+          "p50Ms": 1.7919260000016948,
+          "p95Ms": 2.0165240000023914,
+          "maxMs": 2.2358839999978954,
+          "cacheBytes": 2441920,
+          "sourceDraws": 100
+        }
+      }
+    ]
+  },
+  "notNewlyVerified": [
+    "headlessbrowser",
+    "softwareGPUidentity",
+    "physicalGPUidentity",
+    "mobiledeviceemulation",
+    "physicalphoneFPS/touch",
+    "newactualbrowsermultitabsave/backupmatrix",
+    "newmanualordinaryhealthfullstoryplaythrough"
+  ],
+  "initialFailures": "Initial311checks308pass3fail retained. Heartcentre/requiredassetfixture/approvedmediaappendguards fixed; clip and transparenthitregion additionally measured and corrected. Corecentre>=.8criterion retained; independentfullcollision>=.9criterion added.",
+  "proofs": {
+    "docs/v24-qa/npm-test-final.log": {
+      "bytes": 36300,
+      "sha256": "e10b9f5f40b9aa6d144330549ea721796ba3b239396e656fab831fbaa9b202d0"
+    },
+    "docs/V24-INDEPENDENT-OBJECT-REVIEW-20261031.json": {
+      "bytes": 486869,
+      "sha256": "ddb949dc72ecaad6cd79bc2383bd3c8119fea257b62e09bd83c5abc135b7edd7"
+    },
+    "docs/V24-COMBAT-GUARD-20261031.json": {
+      "bytes": 79964,
+      "sha256": "c2cbec3508d8851ff8afde664c554f44f64682ae3760266e0632f798765f55c8"
+    },
+    "docs/V24-RUNTIME-PROJECTILE-ASSETS-20261031.json": {
+      "bytes": 4763,
+      "sha256": "42b5e0b4d94bc5752fd5388363876a89e369e52daa278a7a9dbdb613fb1992ed"
+    },
+    "docs/V24-SOURCE-ASSET-AUDIT-20261031.json": {
+      "bytes": 14009,
+      "sha256": "79152b0ae30b6335c8a320f618e4b4528455ae21a39690543c8a96135a3c6d81"
+    },
+    "docs/v24-browser/lust-mixed-chrome-canvas.png": {
+      "bytes": 430047,
+      "sha256": "5de2e66cc1bae73bb10572e2cafbea92c001a7c7556099df9107eb009a51ac8e"
+    },
+    "docs/v24-browser/lust-mixed-chrome-observations.json": {
+      "bytes": 3531,
+      "sha256": "2766f08e06953356d453dc7ba94b2ea1879085d32575398de04e5b35d575124e"
+    },
+    "docs/v24-object-pixels/individual-before-after.jpg": {
+      "bytes": 47264,
+      "sha256": "cfb5cb7ab3bae63605a97050733371e6467a3e080d78b05d5e79c79841e55f76"
+    },
+    "docs/v24-object-pixels/combat-before-after.jpg": {
+      "bytes": 228972,
+      "sha256": "74c0e8a1fd75fe900eda54b9a1c55fc4ece97aa07b3f67ef80172d675dc926c2"
+    },
+    "docs/v24-object-pixels/lust-actual-core-review.gif": {
+      "bytes": 2354128,
+      "sha256": "7f117e5f655514c2152ac02985d6e9b69f1a5e790eb1fb19e21ac8a6a201461a"
+    },
+    "docs/v24-qa/actual-scene-cpu-cost.json": {
+      "bytes": 3746,
+      "sha256": "5053a7a0e9b9527225e597b46f81cc717b043054ce8222770417b96408e2cf20"
+    }
+  }
+}

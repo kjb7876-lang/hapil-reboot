@@ -1,0 +1,11 @@
+✔ all three independent Lust props are mandatory and never requested by another encounter (122.160732ms)
+✔ actual existing pattern roles select one complete independent prop, with stable source colours in both qualities (144.869303ms)
+✔ variant choice is independent of age, bounce direction and redraws; warmed caches stay bounded and release all surfaces (71.0347ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 658.139189

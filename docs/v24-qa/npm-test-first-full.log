@@ -1,0 +1,755 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node --test tests/*.test.cjs
+
+✔ all campaign bosses visibly summon at most two local encounter enemies that fire only after entering (820.695266ms)
+✔ summons leave no actor at boss phase boundary and snapshot replay matches (39.590672ms)
+✔ five original bosses have a real five-cycle no-hit focus route while summons fire (8219.735582ms)
+✔ revision four adds the six chronological controller-system scenes while old endpoints stay fixed (3.641793ms)
+✔ old chairman endpoint is retained; only explicit revision four reaches the missing-return bridge (9.732257ms)
+✔ revision-four command links release the child and leave the memory door intact (4.001974ms)
+✔ revision-four save limits admit all106 boundaries and54 phase records without widening old saves (1.452203ms)
+✔ each new scene commits its laser path, emits its own bounded bullets and restores the same combat (384.088773ms)
+✔ six role contracts require each actual body, own beam/lance, own map and three source drone states (267.138066ms)
+✔ each source pose follows the real release tick and preserves core position; missing own bodies fail closed (3.47975ms)
+✔ actual own natural projectile cores remain readable and cache-bounded with complete lance silhouettes (220.988237ms)
+✔ repeat anticipation uses the real stable clone slot and points at actual emitted volleys in all three modes (235.709732ms)
+✔ repeat preparation is bounded to18ticks and stops before the core final-volley cutoff (87.186163ms)
+✔ pending or capacity-blocked emissions do not promise an imminent repeat pose (38.508615ms)
+✔ authored preparation pixels change on a repeat while actual source bytes, release and legacy records remain intact (36.15611ms)
+✔ combat projections reuse the exact active owner source and actual authored release poses without support bodies (535.381264ms)
+✔ two paired projections retain separate original models and material ownership after unique emitter IDs (68.661953ms)
+✔ projection body begins and expires at exact core ticks and never invents geometry for missing own art (82.638759ms)
+✔ copy skill accents resolve the original paired owner but keep distinct committed emitter identities (78.310435ms)
+✔ wide source pressure ribbons retain their full active footprint in both qualities while ordinary lasers stay fully opaque (129.981772ms)
+✔ the cult leader remains a separate practice for historical campaigns (8.514788ms)
+✔ separate practice tells revival and awakening, preserves the core at its conclusion (9.78078ms)
+✔ separate leader attacks are bounded and have their own IDs and no other encounter reinforcements (16.757145ms)
+✔ separate final practice requires its own actual actor, projectile and arena images (95.387349ms)
+✔ final actor action, attack release, warning and collision use the actual own art (148.992743ms)
+✔ real five-boss portraits have no renderer-drawn ring around their combat pivot (110.459435ms)
+✔ enemy charge does not add a surrounding ring; player hitpoint and laser telegraph remain (38.631265ms)
+✔ source skill presentation lifecycle is bounded to the renderer and draws beneath actors, warnings, and the player (28.43794ms)
+✔ all fourteen exact source paintings retain manifest bytes and validate only their own encounter group (601.250649ms)
+✔ each boss and same-person phase variant uses its own scene with one bounded reusable portrait cache (266.796419ms)
+✔ finite route scroll, camera anchoring, and repeated draws never recompose or allocate map surfaces per frame (55.909887ms)
+✔ new terrain remains behind committed warnings and the player; first and Balrog approaches retain their existing route renderer (23.073353ms)
+✔ acceleration cue is stable from launch and uses only its owner palette (1.86299ms)
+✔ curve and pause cues are determined at birth and keep owner color channels (0.73873ms)
+✔ independent occupancy counts real active danger once and excludes warning/fade and empty visual space (15.027705ms)
+✔ all35 encounters and105phase configurations have real66/44/22 active curtains with bounded pools (4429.467072ms)
+✔ a committed pressure warning keeps exact geometry until its six-second active window ends (70.420752ms)
+✔ own-body send-out illusions and two real-firing clones have exact lifetime and never copy protected link targets (540.55455ms)
+✔ ordinary enemies commit exactly70percent of each difficulty boss curtain area after an existing hostile source is present (114.457449ms)
+✔ standing in the real central curtain takes damage on activeAt and never during its warning (15.546771ms)
+✖ actual emitted radii and capsule lengths keep readable own-source centers at real rotations and subpixel positions (11054.24627ms)
+✔ the four real-size center holes are fixed with colored source pixels, not an opaque dark substitute (1150.981544ms)
+✔ the two retained four-frame orb sources remain readable in every actual authored frame (712.631131ms)
+✔ actual simultaneous emitters and separate cult participants retain their own release positions within stable quality budgets (139.957634ms)
+✔ the battle HUD follows exact real laser boundaries and never treats residual threats as a cleared phase (146.195123ms)
+✔ brief deduplicated entry titles disappear before live threats and timeout labels stay bounded (87.346177ms)
+✔ the real app keeps the movement surface free of map/pattern copy during combat and residual threats (80.214094ms)
+✖ combat expansion retains the exact previously reviewed original source media and collision art metadata (115.19232ms)
+✔ each encounter naturally creates living support actors that take auto-shot damage, fire, and can be defeated (394.986953ms)
+✔ all five original signatures with live firing support retain a five-cycle focus-speed no-hit route (7883.554663ms)
+✔ new campaign starts revision five; retry preserves the selected campaign contract (52.284558ms)
+✔ continuing revision three and retrying it does not silently upgrade its route (10.468897ms)
+✔ all six chapter-three practice selections load their own assets without replacing campaign saves (95.518551ms)
+✔ missing or malformed chapter-three required assets stop simulation instead of substituting another boss (382.787604ms)
+✔ revision four follows six canonical scenes and seventeen story stages without inventing six people (3.727118ms)
+✔ all earlier revision endpoints retain their bounds and reject overflow while revision four admits its complete safe schema (4.629458ms)
+✔ a fresh revision-four run does not overwrite or reinterpret an old save and backup (3.385937ms)
+✔ the memory-gate conclusion disconnects repetition and keeps the memory and gate (3.333159ms)
+✔ every retained chapter-three runtime image is byte-identical to a documented authorized source (13.971018ms)
+✔ separate final-practice only loads own required cult assets, never writes the campaign checkpoint, and retry preserves identity (29.037319ms)
+✔ missing or malformed mandatory cult artwork stops the final-practice before simulation (45.20105ms)
+✔ the separate final-practice result reports the specified conclusion without writing a completed campaign (10.105254ms)
+✔ the final-practice awakening bridge is displayed instead of a pride-chairman description (8.230628ms)
+✔ each optional cult Drive ornament failure leaves the required combat assets playable (50.797025ms)
+✔ separate cult finale naturally reaches awakening and core-preserving conclusion in all difficulties (9522.97228ms)
+✖ all12 actual HELL overlap frames paint every damage body, own rotor, source scene and current release in both qualities (2581.39453ms)
+✔ a warmed real overlap frame reuses its scene, material and skill caches within the declared bounds (2619.541431ms)
+✔ HELL is measurably faster, denser and more continuous for all12 signatures rather than only relabelled (1224.979076ms)
+✔ all12 hardest phases can react only after the warning from an on-ray start with legal input and no immunity fixture (3556.524371ms)
+✔ the physical rotating layer of everyboss damages via its live swept-circle body, including the seven spell rotors (82.437596ms)
+✔ source laser detail materially improves original, sins, controller, late and paired beams in both quality levels while remaining inside committed geometry (17876.592759ms)
+✔ actual immune phase3 core observations switch warning, active and harmless afterglow at exactly their committed clocks (14984.515809ms)
+✔ paired Han Rian and Baek Ion beams retain independently warm and cool source colours in both palette slots and quality levels (1245.125779ms)
+✔ warm laser draws and forty-source saturation allocate no per-frame surfaces and release every cached canvas (1762.102763ms)
+✔ afterglow follows the retained fade fraction and never invents a visible damage warning or a missing-asset replacement (2028.570467ms)
+✔ every boss creates a committed # from two vertical and two horizontal lasers with explicit full warning (6.582263ms)
+✔ grid warning causes no damage and its first active tick damages exactly on the committed ray (23.597325ms)
+✔ normal HP and legal focus speed can escape the # intersection before activation (8.30444ms)
+✔ both boss-owned rotating weapon shots bounce once then accelerate downward with bounded pools (322.487716ms)
+✔ rhythm volleys travel slowly first, then accelerate after their delay without changing heading (8.830022ms)
+✔ three independently sourced Lust objects retain closed transparent sprites and documented runtime bytes (228.126504ms)
+✔ real-size heel, lipstick, broken-heart and opposite thrown objects remain individually readable without composite backing (1327.430881ms)
+✔ actual seeded Lust shots expose all three source objects while simulation and checkpoint output remain exactly v23 (6750.613063ms)
+✔ unrelated boss shots and v23 laser pixels are unchanged across representative source owners and qualities (63980.010838ms)
+✔ source objects keep native red/gold material and spin without changing fixed hit geometry or rebuilding warmed stamps (339.662831ms)
+✔ approved main-boss mirror shard and coin saw use complete own-source orb silhouettes with readable pivots in both qualities (6811.652507ms)
+✔ all36 encounter selections and both cult actors show natural contours and internal contrast at real sizes in both qualities, with one bounded draw (1055.856085ms)
+✔ all new source objects have closed boundaries and formerly rectangular Goblin/Siren/knight/cult stamps preserve irregular contours (200.06785ms)
+✔ new combat revision survives strict save validation and deterministic ordinary-health restore (75.635803ms)
+✔ legacy absent-field boundaries stay byte-compatible and never select new combat on restore (1.920663ms)
+✔ unknown or malformed combat selectors cannot silently downgrade a saved run (0.937432ms)
+✔ same-run checkpoint writes cannot switch combat revision in either direction or overwrite backup (2.303009ms)
+✔ v21 backup recovery retains combat and a stale emulated tab cannot replace it with a legacy run (4.060226ms)
+✔ practice and malformed v21 backup data cannot overwrite confirmed legacy or v21 progress (2.349549ms)
+✔ an already-open deployed v20 storage client fails closed instead of stripping a newer v21 checkpoint selector (13.451756ms)
+✔ v21 forward-compatibility marker is required for new records and remains present in exports and loss retries (1.233197ms)
+✔ nine actual seven-sin form PNGs decode, match recorded original hashes and have visible source pixels at every manual torso anchor (76.246472ms)
+✔ all seven encounters reject missing or malformed own forms before play, including child and cyborg alternatives (240.989515ms)
+✔ every form draws its own four source poses without added rings or combat-state mutations (193.190346ms)
+✔ seven actual projectile originals match provenance bytes and retain their recorded dense authored alpha in each material crop (354.542711ms)
+✔ Wrath bear, wolf and dragon are three checked static manifestations above the player lane, not extra damage geometry or actors (69.752686ms)
+✔ revision three extends rather than renames the five published encounters and owns twelve distinct signature identities (2.086382ms)
+✔ Mammon child memory and chairman cyborg keep actor identity while restoring their own phase artwork (3.072558ms)
+✔ normal and gentle route fixtures require 45 seconds of ordinary-enemy time before each boss introduction (1112.452399ms)
+✔ legacy revision boundaries keep their saved wave timing, boss count and revision after restore (24.372131ms)
+✔ HELL actually varies volley speed by seed and remains faster than normal without breaking weapon pair symmetry (8.965604ms)
+✔ a synthetic lethal-shot fixture ends legacy routes at their own final boss instead of silently extending the saved campaign (2.401397ms)
+✔ all extended combat phases and modes are seeded, bounded and keep committed laser geometry through activation (4395.574349ms)
+✔ all new story practice selections start the intended revision-five encounter with own mandatory sources and bounded image requests (284.364954ms)
+✔ revision-four continue and retry keep the historical memory-gate endpoint instead of upgrading an existing save (9.212737ms)
+✔ every new required source fails closed before tick one if unavailable or dimensionally malformed (2111.727588ms)
+✔ the special-pattern shortcut reaches phase three for all36 selections, preserves retry identity and never writes campaign data (323.876855ms)
+✔ ordinary historical practice still waits for every newly required natural body and starts phase one (91.605762ms)
+✔ the actual final-engine ending is reachable in eight ordered pages without writing extra progress, and practice hides ending navigation (8.639114ms)
+✔ all79 new retained story images have pinned source/runtime hashes, documented conversions, real decoded dimensions and no untraced extra files (706.053729ms)
+✔ every new scene uses traced own sources, protects non-targets and keeps two cult actors separate (39.667419ms)
+✔ revision-five combat order follows the independent canonical scene map without treating civilians or 66 guards as new named bosses (3.482936ms)
+✔ revision-five save history expands to105 phases/208 boundaries without widening any revision-one-through-four record (4.213436ms)
+✔ creating the new campaign leaves retained revision-three/four raw records untouched and restores their exact checkpoint/backup values (3.191488ms)
+✔ all twelve retained ordinary input files remain exactly the original repository bytes (1.445116ms)
+✔ the knight boundary is a canonical defeat/fall, while Arbelia and the causal records are preserved (2.627838ms)
+✔ the final story has revival, alive-before-death awakening and a protected-core guardian conclusion (4.665578ms)
+✔ actual vertical/horizontal/lattice warnings expose their committed outer edges on both qualities and all three modes (17661.834289ms)
+✔ full-width boundary cues stop at actual activation and do not reappear during harmless fading (7168.900735ms)
+✔ v23 source material warms once and all forty beams retain art within bounded high/low cosmetic work (79.225776ms)
+✔ flow uses source art only during actual active phase and harmless afterglow follows the core fade clock (41.964089ms)
+✔ paired laser caches retain actual original owner and secondary palette identity (61.249959ms)
+✔ named Violet keeps purple shoulders and a brighter core for both committed palette slots (74.51881ms)
+✔ mobile remembers chosen FPS; practice does not touch campaign checkpoint or result (22.236869ms)
+✔ failed checkpoint retries, and a delayed previous run cannot update the new run UI (9.553189ms)
+✔ short touch drag survives release until a simulation step consumes it (2.601238ms)
+✔ fresh mobile defaults to 30 FPS and persists it; an existing 60 FPS preference stays selected (3.586432ms)
+✔ successful in-flight save updates continue after returning home (2.563332ms)
+✔ held touch drag is consumed at bounded speed even when the finger stops (2.943925ms)
+✔ pausing a held drag clears remaining input rather than moving after resume (2.646867ms)
+✔ campaign loss reloads the confirmed retry checkpoint, while a win removes continue (4.963175ms)
+✔ practice loss leaves the confirmed campaign checkpoint untouched (4.142209ms)
+✔ a late completion load cannot replace a newer campaign checkpoint, even after returning home (2.53594ms)
+✔ missing or malformed authored actor poses stop before combat, legacy keeps its own artwork (4.659789ms)
+✔ a still-loading optional cast effect never blocks required game start (1.729115ms)
+✔ a failed optional cast effect is omitted without blocking or falsely claiming replacement artwork (4.422301ms)
+✔ loss waits for completion and readback before enabling the rekeyed checkpoint (2.126173ms)
+✔ failed completion keeps old continue disabled and warns until a newer checkpoint is confirmed (2.074164ms)
+✔ persistent storage error is visible on mobile instead of claiming automatic save (2.799236ms)
+✔ completion after a newer campaign begins never requests old-generation storage readback (1.784608ms)
+✔ a failed completion readback cannot enable an old checkpoint (6.894244ms)
+✔ a checkpoint callback delayed past loss cannot overwrite confirmed rekeyed progress (2.789471ms)
+✔ explicit continue loads the latest other-tab checkpoint and restores that exact snapshot (10.522348ms)
+✔ new campaign, practice, and repeated continue cannot race an explicit checkpoint read (2.314106ms)
+✔ failed explicit checkpoint load warns without restoring or discarding the last safe checkpoint (4.104963ms)
+✔ explicit continue observes a checkpoint cleared by another tab (1.685058ms)
+✔ a missing projectile renderer stops combat instead of exposing invisible damage (1.417505ms)
+✔ missing or wrong-size player arrow atlas blocks combat instead of hiding friendly shots (2.186123ms)
+✔ storage open or boot read failures keep gameplay available but show a warning and never invent progress (2.385203ms)
+✔ full renderer paints all 768 real-asset enemy bullets for every encounter and legacy mode in both qualities (1019.483949ms)
+✔ full renderer paints 40 visible source-textured active beams without silently dropping a hazard (1267.017711ms)
+✔ image loader contract rejects every missing or malformed damage-body source before play (473.489188ms)
+✔ real-source laser covers every interior damage pixel; fade and warning remain harmless presentation phases (656.963195ms)
+✔ player wind-arrow source tip stays on the simulated shot and faces its actual velocity (668.534109ms)
+✔ each boss renders its own actual rotating weapon above an opaque circular danger body (732.62626ms)
+✔ each boss weapon telegraph uses two separate source-art images before the actual throw (460.752299ms)
+✔ each boss commits a four-ray # with one shared warning, exact positions and long enough reaction (15.083069ms)
+✔ every grid has a reachable cell using ordinary focus movement and unmodified health (7.928382ms)
+✔ the grid cycle replaces ordinary emissions and preserves the other cycle and phase3 signature (10.077709ms)
+✔ boss strike pose follows actual owned projectile and beam activation in all five encounters and phases (168.088617ms)
+✔ warning does not itself trigger a release pose (0.373513ms)
+✔ a deferred group marks the actual emission tick instead of the saturated request tick (24.859054ms)
+✔ five original signatures run from normal campaign phase 3 deterministically, with bounded density and readable recovery (969.265087ms)
+✔ all signatures have a collision-free moving route at ordinary focus speed over five cycles (379.771827ms)
+✔ stationary centre is not a universal safe spot in any signature (257.044457ms)
+✔ Balrog commits five of seven pillar rays, warns first, then deals damage only at activation (1.974825ms)
+✔ Horn slow memory ring accelerates only after its announced delay and remains speed capped (1.284986ms)
+✔ distant-bullet fast path preserves exact swept hit and graze boundaries (48.396103ms)
+✔ floating-point graze boundary and invalid half-length preserve exact geometry (0.527685ms)
+✔ Drive ORB phases advance once at 125ms and hold without changing danger alpha at 6–10px (94.722888ms)
+✔ animation phase changes reuse one bounded cached strip and one live draw per bullet (110.071481ms)
+✔ static source bodies remain fixed and source-less effects never replace warning geometry (15.256808ms)
+✔ unapproved unlock source is neither requested nor drawn as another effect (1.859784ms)
+✔ all enemy modes, bullet shapes, and cap pressure stay source-only with zero geometric body draws (247.584118ms)
+✔ palette priority follows explicit purple name then retained image colors; secondary layer requires an explicit slot (0.366182ms)
+✔ missing or malformed authored bodies are reported instead of replaced with procedural shapes (2.342722ms)
+✔ Lucifer dark source pixels stay readable crimson on dark maps without adding a backing shape (6.191906ms)
+✔ Lucifer blue source petals retain bright ivory structure after crimson recoloring (9.601385ms)
+✔ cache eviction and destroy release every separate animation frame surface (52.364469ms)
+✔ floor-scar keeps a visible warning in both render qualities and stays inside the original footprint (88.791276ms)
+✔ floor-scar metadata cannot change the active beam or harmless fade pixels (423.983932ms)
+✔ encounter media stays lazy and bounded while its exact source map and phase variant load before simulation (30.863189ms)
+✔ missing or malformed own scene art stops before the new encounter can advance (14.202963ms)
+✔ a failed source used only as an optional skill/beam accent does not block its verified damage sprites (12.095248ms)
+✔ a skill source promoted to a required natural bullet body must fail closed before simulation (11.549297ms)
+✔ the new skill renderer and changed modules share the browser cache revision, with skill definitions before the renderer (0.777561ms)
+✔ twelve skill sources are their exact pinned hapil1 files, single-frame artwork with explicit dimensions and no foreign fallback (8.219311ms)
+✔ source skill release appears only on a confirmed current event, not before firing, on a future event, or after its finite lifetime (70.526322ms)
+✔ compact skill presentation is bounded, source-only, below the player region, and releases its own cache (64.086812ms)
+✔ missing optional skill pixels are omitted without shapes and transparent hidden RGB never becomes visible stripes (6.426289ms)
+✔ all seven large HELL rotors use their own full source image and visual spin without changing physics or duplicating ordinary bullet draws (277.537733ms)
+✔ seven rotor warnings preview owned art; required natural bodies fail closed and absent ornaments never borrow another boss (238.592315ms)
+✔ seven own-source beam ornaments obey the exact damage clip, retain dense material coverage, and use the current encounter palette (858.392565ms)
+✔ HELL randomness is seeded, bounded per pair and unchanged by presentation spin (42.499867ms)
+✔ HELL emits its second rhythm only after an additional full charge (8.838385ms)
+✔ new Horn route keeps fighting ordinary waves for45seconds then drains; old snapshots retain15seconds (66.561724ms)
+✔ legacy routes end at their own final boss, while new Lucifer clear shows an ordered15second bridge (6.226617ms)
+✔ seven sins preserve actual identities, shared memory forms and sealing semantics (2.011132ms)
+✔ all12 bosses and all3 phases overlap real player-lane bullets, active rays, own signature and physical rotors (1337.236033ms)
+✔ HELL gate has108 harmless warning ticks, fixed geometry and96 genuinely damaging ticks (1.784531ms)
+✔ every announced ray aperture is reachable with legal focus movement and unchanged HP (24.20488ms)
+✔ saturated HELLatomic rotor pair never returns late or creates a fictitious release record (20.888129ms)
+✔ safe-phase HELL snapshots resume the same seeded concurrent combat without new save keys (146.927011ms)
+✔ all encounter-specific added fans differ in cadence or geometry while keeping real overlap (249.043313ms)
+✔ curve is fixed after release and paused fan resumes movement without changing collision identity (3.63491ms)
+✔ hell settings and results roundtrip without accepting unknown difficulty names (7.501149ms)
+✔ old campaign revisions retain their three- and five-boss bounds and phase history limits (4.37726ms)
+✔ revision three admits the twelfth boss and 36 bounded phases but rejects its own overflow and unknown revisions (1.411949ms)
+✔ hell checkpoints use three HP and retain the noncampaign three-phase limit (0.543459ms)
+✔ changing to hell settings preserves existing revision-two checkpoint and backup verbatim (5.86996ms)
+✔ hell loss and stale-client rejection keep the full-route checkpoint and its previous backup (2.478387ms)
+✔ Drive eight-phase memory effect keeps the authored tip fixed and plays once within the skill lifetime (45.021327ms)
+✔ keypose weight stays bounded and uses the real release tick without changing pose timing (3.688291ms)
+✔ sprite and tether use the same small offset, preserving the combat anchor and world state (1.812813ms)
+✔ actual hit feedback is a subtle opacity pulse with no extra sprite or attack-pose override (0.442066ms)
+✔ no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: gentle/813 (3554.227208ms)
+✔ no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: gentle/42 (2664.144668ms)
+✔ no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: normal/813 (2357.648875ms)
+✔ no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: normal/42 (2533.362399ms)
+✔ no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: hell/813 (3784.909708ms)
+✔ no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: hell/42 (3521.764442ms)
+✔ naturally reached wave and first boss checkpoints restore deterministically through real enemies, bullets and warnings (337.158412ms)
+✔ reducer rejects another tab’s stale revision and restores only the active run’s intact backup (69.769194ms)
+✔ stationary boss scenery reuses cached foreground and invalidates on map change (44.562841ms)
+✔ low quality keeps warning dash and opaque active beam and bullet cores (40.619911ms)
+✔ storage and app load the same cache revision so a stale API cannot disable saved progress (1.288448ms)
+✔ each boss draws its own real static Drive accent during charge and genuine release only (40.342142ms)
+✔ optional missing or wrong-size casts create no fallback or blocking projectile asset requirement (4.474771ms)
+✔ Lucifer accent preserves source alpha while its cyan source is recolored to crimson and ivory (16.353189ms)
+✔ boss accents retain source alpha and use only one screen draw without an added outline (42.645857ms)
+✔ dim horn decoration is brightened within its existing source alpha (11.513039ms)
+✔ unknown encounter indices fail closed instead of borrowing the final existing boss artwork (3.040583ms)
+✔ the explicit legacy encounter retains original sources and requires its own natural sword image for needles (0.36562ms)
+✔ all seven sins require their own checked static material, with no Lucifer source or invented weapon (378.754472ms)
+✔ actual same-boss natural silhouettes keep a visible central core and exact beam interior without geometric backing (858.842696ms)
+✔ seven material palettes keep naming priority, explicit secondary use and dense-source detail within a bounded cache (670.478171ms)
+✔ Balrog floor-trace cue labels only real committed laser warnings (8.238312ms)
+✔ floor trace remains the same capsule when aim moves and activates at its original tick (2.534883ms)
+✔ other bosses retain their own warnings without inheriting a Balrog floor-trace label (31.561785ms)
+✔ legacy v1 without baseline restores and retries 96-character run IDs with bounded, collision-free IDs (196.009472ms)
+✔ a damaged main checkpoint can restore from same-run backup without deleting it (3.425172ms)
+✔ corrupt metadata and corrupt backup block writes and preserve original bytes for export (8.332654ms)
+✔ valid boundary generation and revision remain loadable but reject overflowing mutation (2.960974ms)
+✔ two emulated clients cannot overwrite the newer confirmed run; explicit reload adopts it (2.542354ms)
+✔ automatic peek reads another client without authorizing the old world to overwrite it (2.111026ms)
+✔ a later IndexedDB read error never reports an old memory snapshot as a successful load (1.223861ms)
+✔ a failed persistent write reports failure and does not silently commit to memory (2.625489ms)
+✔ empty store is distinguishable from settings saved in this session (1.086805ms)
+✔ loss keeps the confirmed campaign checkpoint and backup, allows retry, and never counts a duplicate result (16.150024ms)
+✔ a practice result without a flag cannot create or replace a campaign record (1.178363ms)
+✔ a pending checkpoint write commits before a queued loss and the loss retains that checkpoint (9.895124ms)
+✔ a stale tab cannot complete over a newer checkpoint or corrupt its backup (0.710959ms)
+✔ corrupt or future stored records cannot be overwritten; recoverable raw bytes are included in export (3.256999ms)
+✔ counter exhaustion is readable/exportable but cannot overflow a version-1 record (0.349736ms)
+✔ peek observes another writer without silently granting this tab its revision (3.570451ms)
+✔ load reports a persistent read error instead of exposing stale in-memory progress (1.608554ms)
+✔ load and open report malformed saved state while leaving a true memory-only session usable (0.800485ms)
+✔ five bosses announce their own two shots, release on the real tick and bounce once in both difficulties (127.200346ms)
+✔ a full pool skips the whole warned pair, never later emits an unseen deferred throw (4.287298ms)
+✔ core collision follows the bent bounce path even when both chord endpoints miss (0.306631ms)
+✔ odd-beat slow bullets actually speed up after their delay in the game core (115.879931ms)
+✔ Horn keeps its existing slow-to-fast acceleration instead of stacking the new beat transform (5.592547ms)
+✔ weapon volleys contain exactly two symmetrical own-boss shots after a completed charge (1.56879ms)
+✔ both shots bounce at their own wall once, remain within bounds, then accelerate downward with a speed cap (6.071954ms)
+✔ spin is visual only: it never changes translational velocity or circular collision geometry (0.68482ms)
+✔ bent wall path tests both temporally matched collision segments rather than only endpoint chord (0.368565ms)
+✔ odd beat volleys become slow-to-fast once and preserve pre-existing authored acceleration (0.405821ms)
+✔ all three independent Lust props are mandatory and never requested by another encounter (145.06683ms)
+✔ actual existing pattern roles select one complete independent prop, with stable source colours in both qualities (192.526573ms)
+✔ variant choice is independent of age, bounce direction and redraws; warmed caches stay bounded and release all surfaces (114.083079ms)
+✔ ordinary-health natural revision-four CPU route and every saved boundary: gentle/813 (4490.223024ms)
+✔ ordinary-health natural revision-four CPU route and every saved boundary: gentle/42 (3566.685171ms)
+✔ ordinary-health natural revision-four CPU route and every saved boundary: normal/813 (3058.355432ms)
+✔ ordinary-health natural revision-four CPU route and every saved boundary: normal/42 (2762.113661ms)
+✔ ordinary-health natural revision-four CPU route and every saved boundary: hell/813 (4370.990311ms)
+✔ ordinary-health natural revision-four CPU route and every saved boundary: hell/42 (4369.329775ms)
+✔ ordinary-health revision-five complete route/save restoration: gentle/813 (6282.470297ms)
+✔ ordinary-health revision-five complete route/save restoration: gentle/42 (5990.277709ms)
+✔ ordinary-health revision-five complete route/save restoration: normal/813 (5016.06969ms)
+✔ ordinary-health revision-five complete route/save restoration: normal/42 (6183.11396ms)
+✔ ordinary-health revision-five complete route/save restoration: hell/813 (7653.962754ms)
+✔ ordinary-health revision-five complete route/save restoration: hell/42 (7935.171393ms)
+✔ all seven sin identities and both same-person followup forms render only their own real source atlas (159.532901ms)
+✔ every registered source keypose has an opaque torso anchor, fixed per-form scale, and stays below the HUD (284.780555ms)
+✔ missing own forms and invalid own form dimensions fail closed without painting another boss (138.387173ms)
+✔ Wrath shows one source-backed harmless beast manifestation only on charge and actual release ticks (127.031366ms)
+✔ abstract floor cache reuses one bounded surface and does not allocate or resample source art every frame (131.679994ms)
+✔ the extended single-wave approach displays its real fraction rather than finishing its route bar at fifteen seconds (164.285144ms)
+✔ revision five has17 canonical configurations and does not widen old route endpoints or saves (7.60237ms)
+✔ scripted fallen-knight defeat continues the living route and Arbelia is freed rather than killed (4.993055ms)
+✔ all17 real signatures commit source-owned geometry, remain bounded and have distinct mechanical traces (2528.425337ms)
+✔ six fallen echoes aim at already sampled positions and release on their committed activation tick (1.472159ms)
+✔ two cult guardians keep independent real origins/charge/release while only a shared circuit is targetable (4.73693ms)
+✔ six academy invasion beats are observed without a shootable friendly core or borrowed support actor (14.052472ms)
+✔ Siren compression provides Arbelia motion relief without locking or reversing player input (2.249491ms)
+✔ final awakening happens before death and ending separates coercion while leaving the core and selves intact (5.754925ms)
+✔ all seventeen story image contracts use actual own dimensions, correct protagonist and separated protected targets (917.17685ms)
+✔ the two cult people retain separate real bodies and release clocks; their intro translates without overscaling or jumping (73.844404ms)
+✔ six knight manifestations use six real origins plus a source-owned logical aim marker, never a seventh body (70.141159ms)
+✔ own Hwandō and Seoha shots render without the old gunner arrow, and the canonical final awakening changes only own player art (273.734352ms)
+✔ every existing wave actor paints its own verified four-pose image during a boss battle without an enemy ring (2.691032ms)
+✔ an unready actor never draws another enemy or a geometric substitute in actor presentation (0.92306ms)
+✔ decoded actual guard poses draw ordinary enemies below and summoned enemies above the boss (327.395795ms)
+✔ chronological bridge wraps Korean above the player lane and leaves the actual hazard on top (25.635236ms)
+✔ actual paired warnings retain the committed caster and palette slot used by their source beam (118.244623ms)
+✔ wide warnings expose exact capsule edges in all3 real profiles and retain their harmless-to-active boundary (1418.39196ms)
+ℹ tests 311
+ℹ suites 0
+ℹ pass 308
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 87359.378774
+
+✖ failing tests:
+
+test at tests/independent-battle-readability-v20.test.cjs:13:1
+✖ actual emitted radii and capsule lengths keep readable own-source centers at real rotations and subpixel positions (11054.24627ms)
+  AssertionError [ERR_ASSERTION]: actual emitted center is readable {"group":8,"r":3.8,"l":0,"angle":0,"offset":0,"paletteSlot":0} 0.6666666666666666
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/independent-battle-readability-v20.test.cjs:18:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/independent-battle-readability-v20.test.cjs:86:1
+✖ combat expansion retains the exact previously reviewed original source media and collision art metadata (115.19232ms)
+  AssertionError [ERR_ASSERTION]: src/media.js is byte-identical to deployed v20 source art
+  + actual - expected
+  ... Skipped lines
+  
+  + Buffer(16094) [Uint8Array] [
+  - Buffer(15728) [Uint8Array] [
+      47,
+      42,
+      32,
+      86,
+      101,
+  ...
+      10,
+  +   10,
+  +   47,
+  +   47,
+  +   32,
+  +   80,
+  +   105,
+  +   110,
+  +   110,
+  +   101,
+  +   100,
+  +   32,
+  +   104,
+  +   97,
+  +   112,
+  +   105,
+  +   108,
+  +   49,
+  +   32,
+  +   105,
+  +   110,
+  +   100,
+  +   105,
+  +   118,
+  +   105,
+  +   100,
+  +   117,
+  +   97,
+  +   108,
+  +   32,
+  +   112,
+  +   114,
+  +   111,
+  +   112,
+  +   115,
+  +   59,
+  +   32,
+  +   115,
+  +   111,
+  +   117,
+  +   114,
+  +   99,
+  +   101,
+  +   32,
+  +   97,
+  +   110,
+  +   100,
+  +   32,
+  +   100,
+  +   101,
+  +   114,
+  +   105,
+  +   118,
+  +   101,
+  +   100,
+  +   32,
+  +   104,
+  +   97,
+  +   115,
+  +   104,
+  +   101,
+  +   115,
+  +   58,
+  +   32,
+  +   100,
+  +   111,
+  +   99,
+  +   115,
+  +   47,
+  +   86,
+  +   50,
+  +   52,
+  +   45,
+  +   82,
+  +   85,
+  +   78,
+  +   84,
+  +   73,
+  +   77,
+  +   69,
+  +   45,
+  +   80,
+  +   82,
+  +   79,
+  +   74,
+  +   69,
+  +   67,
+  +   84,
+  +   73,
+  +   76,
+  +   69,
+  +   45,
+  +   65,
+  +   83,
+  +   83,
+  +   69,
+  +   84,
+  +   83,
+  +   45,
+  +   50,
+  +   48,
+  +   50,
+  +   54,
+  +   49,
+  +   48,
+  +   51,
+  +   49,
+  +   46,
+  +   106,
+  +   115,
+  +   111,
+  +   110,
+  +   10,
+  +   119,
+  +   105,
+  +   110,
+  +   100,
+  +   111,
+  +   119,
+  +   46,
+  +   72,
+  +   97,
+  +   112,
+  +   105,
+  +   108,
+  +   77,
+  +   101,
+  +   100,
+  +   105,
+  +   97,
+  +   46,
+  +   104,
+  +   50,
+  +   52,
+  +   76,
+  +   117,
+  +   115,
+  +   116,
+  +   72,
+  +   101,
+  +   101,
+  +   108,
+  +   61,
+  +   39,
+  +   109,
+  +   101,
+  +   100,
+  +   105,
+  +   97,
+  +   47,
+  +   112,
+  +   114,
+  +   111,
+  +   106,
+  +   101,
+  +   99,
+  +   116,
+  +   105,
+  +   108,
+  +   101,
+  +   115,
+  +   45,
+  +   104,
+  +   97,
+  +   112,
+  +   105,
+  +   108,
+  +   49,
+  +   45,
+  +   118,
+  +   50,
+  +   52,
+  +   47,
+  +   108,
+  +   117,
+  +   115,
+  +   116,
+  +   45,
+  +   104,
+  +   101,
+  +   101,
+  +   108,
+  +   46,
+  +   119,
+  +   101,
+  +   98,
+  +   112,
+  +   39,
+  +   59,
+  +   10,
+  +   119,
+  +   105,
+  +   110,
+  +   100,
+  +   111,
+  +   119,
+  +   46,
+  +   72,
+  +   97,
+  +   112,
+  +   105,
+  +   108,
+  +   77,
+  +   101,
+  +   100,
+  +   105,
+  +   97,
+  +   46,
+  +   104,
+  +   50,
+  +   52,
+  +   76,
+  +   117,
+  +   115,
+  +   116,
+  +   76,
+  +   105,
+  +   112,
+  +   115,
+  +   116,
+  +   105,
+  +   99,
+  +   107,
+  +   61,
+  +   39,
+  +   109,
+  +   101,
+  +   100,
+  +   105,
+  +   97,
+  +   47,
+  +   112,
+  +   114,
+  +   111,
+  +   106,
+  +   101,
+  +   99,
+  +   116,
+  +   105,
+  +   108,
+  +   101,
+  +   115,
+  +   45,
+  +   104,
+  +   97,
+  +   112,
+  +   105,
+  +   108,
+  +   49,
+  +   45,
+  +   118,
+  +   50,
+  +   52,
+  +   47,
+  +   108,
+  +   117,
+  +   115,
+  +   116,
+  +   45,
+  +   108,
+  +   105,
+  +   112,
+  +   115,
+  +   116,
+  +   105,
+  +   99,
+  +   107,
+  +   46,
+  +   119,
+  +   101,
+  +   98,
+  +   112,
+  +   39,
+  +   59,
+  +   10,
+  +   119,
+  +   105,
+  +   110,
+  +   100,
+  +   111,
+  +   119,
+  +   46,
+  +   72,
+  +   97,
+  +   112,
+  +   105,
+  +   108,
+  +   77,
+  +   101,
+  +   100,
+  +   105,
+  +   97,
+  +   46,
+  +   104,
+  +   50,
+  +   52,
+  +   76,
+  +   117,
+  +   115,
+  +   116,
+  +   66,
+  +   114,
+  +   111,
+  +   107,
+  +   101,
+  +   110,
+  +   72,
+  +   101,
+  +   97,
+  +   114,
+  +   116,
+  +   61,
+  +   39,
+  +   109,
+  +   101,
+  +   100,
+  +   105,
+  +   97,
+  +   47,
+  +   112,
+  +   114,
+  +   111,
+  +   106,
+  +   101,
+  +   99,
+  +   116,
+  +   105,
+  +   108,
+  +   101,
+  +   115,
+  +   45,
+  +   104,
+  +   97,
+  +   112,
+  +   105,
+  +   108,
+  +   49,
+  +   45,
+  +   118,
+  +   50,
+  +   52,
+  +   47,
+  +   108,
+  +   117,
+  +   115,
+  +   116,
+  +   45,
+  +   98,
+  +   114,
+  +   111,
+  +   107,
+  +   101,
+  +   110,
+  +   45,
+  +   104,
+  +   101,
+  +   97,
+  +   114,
+  +   116,
+  +   46,
+  +   119,
+  +   101,
+  +   98,
+  +   112,
+  +   39,
+  +   59,
+  +   10
+    ]
+  
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/independent-battle-readability-v20.test.cjs:87:66)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: <Buffer 2f 2a 20 56 65 72 69 66 69 65 64 20 44 72 69 76 65 20 61 6e 64 20 70 69 6e 6e 65 64 20 68 61 70 69 6c 31 20 6d 65 64 69 61 3b 20 73 6f 75 72 63 65 20 ... 16044 more bytes>,
+    expected: <Buffer 2f 2a 20 56 65 72 69 66 69 65 64 20 44 72 69 76 65 20 61 6e 64 20 70 69 6e 6e 65 64 20 68 61 70 69 6c 31 20 6d 65 64 69 61 3b 20 73 6f 75 72 63 65 20 ... 15678 more bytes>,
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/independent-h14-full-render.test.cjs:18:1
+✖ all12 actual HELL overlap frames paint every damage body, own rotor, source scene and current release in both qualities (2581.39453ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 54
+  
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/independent-h14-full-render.test.cjs:27:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 54,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

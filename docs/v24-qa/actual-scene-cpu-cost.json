@@ -1,0 +1,146 @@
+{
+  "date": "2026-10-31",
+  "scope": "Native CPU360x640 DPR1 complete source scenes at one frozen immune practice snapshot;5warmups+25measured synchronous draws per row/runtime on a shared host. Not browser, GPU completion, sustained gameFPS or phone measurement.",
+  "baseline": "894682f2cc56b3e578dc042b54490eab3c20097b",
+  "projectileSHA256": "3e4938f4d03bd6c1154313a813a5253334a1d45caeab00afdffe5d9a6f0bcebc",
+  "rows": [
+    {
+      "group": 6,
+      "tick": 235,
+      "quality": "high",
+      "bullets": 125,
+      "hazards": 8,
+      "baseline": {
+        "samples": 25,
+        "p50Ms": 4.59714699999995,
+        "p95Ms": 5.735310000000027,
+        "maxMs": 13.963001000000077,
+        "cacheBytes": 1303088,
+        "sourceDraws": 125
+      },
+      "current": {
+        "samples": 25,
+        "p50Ms": 2.8484269999999015,
+        "p95Ms": 3.9664590000002136,
+        "maxMs": 4.4479230000001735,
+        "cacheBytes": 1473408,
+        "sourceDraws": 125
+      }
+    },
+    {
+      "group": 6,
+      "tick": 235,
+      "quality": "low",
+      "bullets": 125,
+      "hazards": 8,
+      "baseline": {
+        "samples": 25,
+        "p50Ms": 2.256515000000036,
+        "p95Ms": 2.9729839999999967,
+        "maxMs": 3.008346999999958,
+        "cacheBytes": 1303088,
+        "sourceDraws": 125
+      },
+      "current": {
+        "samples": 25,
+        "p50Ms": 2.384128000000601,
+        "p95Ms": 3.9865289999997913,
+        "maxMs": 4.926478999999745,
+        "cacheBytes": 1473408,
+        "sourceDraws": 125
+      }
+    },
+    {
+      "group": 8,
+      "tick": 235,
+      "quality": "high",
+      "bullets": 96,
+      "hazards": 4,
+      "baseline": {
+        "samples": 25,
+        "p50Ms": 2.2468189999999595,
+        "p95Ms": 3.966856999999436,
+        "maxMs": 4.446797999999035,
+        "cacheBytes": 1368720,
+        "sourceDraws": 96
+      },
+      "current": {
+        "samples": 25,
+        "p50Ms": 2.192798000000039,
+        "p95Ms": 3.259663000000728,
+        "maxMs": 7.154359999998633,
+        "cacheBytes": 2124928,
+        "sourceDraws": 96
+      }
+    },
+    {
+      "group": 8,
+      "tick": 235,
+      "quality": "low",
+      "bullets": 96,
+      "hazards": 4,
+      "baseline": {
+        "samples": 25,
+        "p50Ms": 1.8091509999994742,
+        "p95Ms": 2.3382170000004407,
+        "maxMs": 2.382573000000775,
+        "cacheBytes": 1368720,
+        "sourceDraws": 96
+      },
+      "current": {
+        "samples": 25,
+        "p50Ms": 1.6427120000007562,
+        "p95Ms": 1.8618420000002516,
+        "maxMs": 1.9995880000005855,
+        "cacheBytes": 2124928,
+        "sourceDraws": 96
+      }
+    },
+    {
+      "group": 9,
+      "tick": 235,
+      "quality": "high",
+      "bullets": 100,
+      "hazards": 8,
+      "baseline": {
+        "samples": 25,
+        "p50Ms": 2.6786399999982677,
+        "p95Ms": 3.843872999997984,
+        "maxMs": 5.782008999998652,
+        "cacheBytes": 2462320,
+        "sourceDraws": 100
+      },
+      "current": {
+        "samples": 25,
+        "p50Ms": 2.3238560000027064,
+        "p95Ms": 2.7288950000001932,
+        "maxMs": 9.235224000000017,
+        "cacheBytes": 2441920,
+        "sourceDraws": 100
+      }
+    },
+    {
+      "group": 9,
+      "tick": 235,
+      "quality": "low",
+      "bullets": 100,
+      "hazards": 8,
+      "baseline": {
+        "samples": 25,
+        "p50Ms": 1.8913360000005923,
+        "p95Ms": 3.884974999997212,
+        "maxMs": 3.912898000002315,
+        "cacheBytes": 2462320,
+        "sourceDraws": 100
+      },
+      "current": {
+        "samples": 25,
+        "p50Ms": 1.7919260000016948,
+        "p95Ms": 2.0165240000023914,
+        "maxMs": 2.2358839999978954,
+        "cacheBytes": 2441920,
+        "sourceDraws": 100
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+✔ three independently sourced Lust objects retain closed transparent sprites and documented runtime bytes (235.996584ms)
+✔ real-size heel, lipstick, broken-heart and opposite thrown objects remain individually readable without composite backing (1466.41139ms)
+✔ actual seeded Lust shots expose all three source objects while simulation and checkpoint output remain exactly v23 (6478.349012ms)
+✔ unrelated boss shots and v23 laser pixels are unchanged across representative source owners and qualities (59594.569502ms)
+✔ source objects keep native red/gold material and spin without changing fixed hit geometry or rebuilding warmed stamps (361.789537ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 68513.271178

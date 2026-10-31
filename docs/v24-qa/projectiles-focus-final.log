@@ -1,0 +1,22 @@
+✔ all36 encounter selections and both cult actors show natural contours and internal contrast at real sizes in both qualities, with one bounded draw (928.592618ms)
+✔ all new source objects have closed boundaries and formerly rectangular Goblin/Siren/knight/cult stamps preserve irregular contours (159.867645ms)
+✔ twelve skill sources are their exact pinned hapil1 files, single-frame artwork with explicit dimensions and no foreign fallback (8.966904ms)
+✔ source skill release appears only on a confirmed current event, not before firing, on a future event, or after its finite lifetime (67.21534ms)
+✔ compact skill presentation is bounded, source-only, below the player region, and releases its own cache (60.450028ms)
+✔ missing optional skill pixels are omitted without shapes and transparent hidden RGB never becomes visible stripes (5.841601ms)
+✔ all seven large HELL rotors use their own full source image and visual spin without changing physics or duplicating ordinary bullet draws (206.03003ms)
+✔ seven rotor warnings preview owned art; required natural bodies fail closed and absent ornaments never borrow another boss (186.567216ms)
+✔ seven own-source beam ornaments obey the exact damage clip, retain dense material coverage, and use the current encounter palette (646.885685ms)
+✔ unknown encounter indices fail closed instead of borrowing the final existing boss artwork (2.12484ms)
+✔ the explicit legacy encounter retains original sources and requires its own natural sword image for needles (0.277307ms)
+✔ all seven sins require their own checked static material, with no Lucifer source or invented weapon (327.482595ms)
+✔ actual same-boss natural silhouettes keep a visible central core and exact beam interior without geometric backing (722.294656ms)
+✔ seven material palettes keep naming priority, explicit secondary use and dense-source detail within a bounded cache (431.661491ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1814.072576

@@ -1,0 +1,13 @@
+{
+  "scope": "Initial candidate40cb93; not final pass",
+  "tests": 311,
+  "pass": 308,
+  "fail": 3,
+  "failed": [
+    "actual emitted center visibility Lustr3.8=.666<.8",
+    "old media byte-exact expectation needs approved appended aliases guard",
+    "full-render fixture omitted3newrequiredprops"
+  ],
+  "durationMs": 87359.378774,
+  "retainedLog": "docs/v24-qa/npm-test-first-full.log"
+}

@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-31",
+  "sourceSHA256": "40cb93cde2ebba0142dd4fb965f1a978aa3e96bcac997b06f33d3ce52d677cdc",
+  "summary": {
+    "objectCases": 24,
+    "extraOrbCases": 16,
+    "unchangedOtherBossBullets": 140,
+    "unchangedV23Lasers": 148,
+    "coreRuns": 18,
+    "coreTicks": 15120,
+    "gifFrames": 20,
+    "missingAssets": 0,
+    "geometricLiveBodyDraws": 0
+  },
+  "status": "Superseded, not final acceptance. Initial centre-only visibility gates passed but later whole-circle visibility probes exposed invisible hit regions. See hitbody-visibility-initial.json. Rotation clipping also failed a later independent complete-alpha check. Final audit replaces these proof images/GIF."
+}

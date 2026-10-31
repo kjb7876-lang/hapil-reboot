@@ -1,0 +1,117 @@
+✔ all36 encounter selections and both cult actors show natural contours and internal contrast at real sizes in both qualities, with one bounded draw (1583.957372ms)
+✔ all new source objects have closed boundaries and formerly rectangular Goblin/Siren/knight/cult stamps preserve irregular contours (181.630898ms)
+✔ twelve skill sources are their exact pinned hapil1 files, single-frame artwork with explicit dimensions and no foreign fallback (29.695267ms)
+✔ source skill release appears only on a confirmed current event, not before firing, on a future event, or after its finite lifetime (159.389357ms)
+✔ compact skill presentation is bounded, source-only, below the player region, and releases its own cache (123.182072ms)
+✔ missing optional skill pixels are omitted without shapes and transparent hidden RGB never becomes visible stripes (11.192215ms)
+✖ all seven large HELL rotors use their own full source image and visual spin without changing physics or duplicating ordinary bullet draws (377.086662ms)
+✖ seven rotor warnings preview owned art; required natural bodies fail closed and absent ornaments never borrow another boss (207.338478ms)
+✔ seven own-source beam ornaments obey the exact damage clip, retain dense material coverage, and use the current encounter palette (979.920054ms)
+✔ unknown encounter indices fail closed instead of borrowing the final existing boss artwork (2.465462ms)
+✔ the explicit legacy encounter retains original sources and requires its own natural sword image for needles (0.342404ms)
+✖ all seven sins require their own checked static material, with no Lucifer source or invented weapon (884.238829ms)
+✖ actual same-boss natural silhouettes keep a visible central core and exact beam interior without geometric backing (672.162532ms)
+✖ seven material palettes keep naming priority, explicit secondary use and dense-source detail within a bounded cache (410.739082ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 9
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2396.01902
+
+✖ failing tests:
+
+test at tests/legacy-h14-source-skills.test.cjs:116:1
+✖ all seven large HELL rotors use their own full source image and visual spin without changing physics or duplicating ordinary bullet draws (377.086662ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/legacy-h14-source-skills.test.cjs:122:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/legacy-h14-source-skills.test.cjs:137:1
+✖ seven rotor warnings preview owned art; required natural bodies fail closed and absent ornaments never borrow another boss (207.338478ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 2
+  
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/legacy-h14-source-skills.test.cjs:143:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/legacy-sins-projectiles.test.cjs:56:1
+✖ all seven sins require their own checked static material, with no Lucifer source or invented weapon (884.238829ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      'projectileAsmodeusV13',
+  +   'h24LustHeel',
+  +   'h24LustLipstick',
+  +   'h24LustBrokenHeart',
+      'h14SkillLust',
+      'h14BeamLust'
+    ]
+  
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/legacy-sins-projectiles.test.cjs:60:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'projectileAsmodeusV13', 'h24LustHeel', 'h24LustLipstick', 'h24LustBrokenHeart', 'h14SkillLust', 'h14BeamLust' ],
+    expected: [ 'projectileAsmodeusV13', 'h14SkillLust', 'h14BeamLust' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/legacy-sins-projectiles.test.cjs:76:1
+✖ actual same-boss natural silhouettes keep a visible central core and exact beam interior without geometric backing (672.162532ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/legacy-sins-projectiles.test.cjs:90:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/legacy-sins-projectiles.test.cjs:113:1
+✖ seven material palettes keep naming priority, explicit secondary use and dense-source detail within a bounded cache (410.739082ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/legacy-sins-projectiles.test.cjs:126:44)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
