@@ -25,11 +25,11 @@ test('a still-open27 client cannot reinterpret or overwrite a28 saved combat con
 
 test('all previous saved selectors still validate and reduce exactly as the27 client',()=>{
  const old=previousStore();for(const revision of [undefined,21,25,27]){const cp=boundary(revision,'laser28-old-'+String(revision));assert.equal(cp.combatRevision,revision);assert.deepEqual(S.validateCheckpoint(cp),cp);assert.deepEqual(json(old.validateCheckpoint(cp)),cp);assert.deepEqual(json(S.reduce(undefined,{type:'checkpoint',value:cp},0)),json(old.reduce(undefined,{type:'checkpoint',value:cp},0)));}
- const cp=boundary(28),state=S.reduce(undefined,{type:'checkpoint',value:cp},0).state;state.backup.combatRevision=27;assert.equal(S.safeStoredRecord(state),false,'recovery cannot substitute an older laser ruleset');assert.equal(S.validateCheckpoint({...cp,combatRevision:29}),null);
+ const cp=boundary(28),state=S.reduce(undefined,{type:'checkpoint',value:cp},0).state;state.backup.combatRevision=27;assert.equal(S.safeStoredRecord(state),false,'recovery cannot substitute an older laser ruleset');assert.equal(S.validateCheckpoint({...cp,combatRevision:30}),null);
 });
 
 test('browser loads both motion modules before core with one coherent cache revision',()=>{
  const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');const scripts=[...html.matchAll(/src="src\/([^"?]+)\.js\?v=([^"&]+)"/g)].map(m=>({name:m[1],revision:m[2]}));
- for(const name of ['boss-patterns-v27','boss-lasers-v28'])assert(scripts.findIndex(s=>s.name===name)>=0&&scripts.findIndex(s=>s.name===name)<scripts.findIndex(s=>s.name==='core'));
- assert.equal(new Set(scripts.map(s=>s.revision)).size,1);assert.equal(scripts[0].revision,'20261031-laser28');
+ for(const name of ['boss-patterns-v27','boss-lasers-v28','boss-flow-v29'])assert(scripts.findIndex(s=>s.name===name)>=0&&scripts.findIndex(s=>s.name===name)<scripts.findIndex(s=>s.name==='core'));
+ assert.equal(new Set(scripts.map(s=>s.revision)).size,1);assert.equal(scripts[0].revision,'20261101-flow29');
 });

@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "date": "2026-11-01",
+  "seed": 813,
+  "scope": "Bounded existing legal-direction policy alternatives for the preserved original Migration16 HELL phase3 loss. Ordinary selected-mode HP/damage/automatic skills. No game state edits after product checkpoint phase selection; each original attempt remains in the main report. Not human/browser/phoneFPS.",
+  "sourceHashes": {
+    "src/actors.js": "8a602db1f899f822fa161f1080ece4da379228df31b66801395c804c36b712f5",
+    "src/app.js": "d882d79298010baea4d17b36b98cba515a96fdf1821823d57fe72981ed320153",
+    "src/boss-flow-v29.js": "c8b6790c7129f1829b96cb36944ae16aa42070a74f72328ba8ab2caf808ec657",
+    "src/boss-lasers-v28.js": "22eeaa9196ab417e09f0475024d83e76336ceec55c4562e2217e0e6a69dccaaf",
+    "src/boss-motion.js": "e2d1bde92838884382e30b5d8de6549cf9071ac9b21c84b7f9cb8d4bc63160b1",
+    "src/boss-patterns-v27.js": "c47e830ecd934230752b65c8abf0d599afd1946b0b162ad0b8bfd2f285ee0910",
+    "src/boss-skills.js": "f1a51e7a30487e1e702f4257b748b0a578f7d768df6bfa94124ca949edce26a9",
+    "src/core.js": "ecc40a2d557576340be88bcaa71f20c346fb5165012061e3657a9d6a7ebd92ea",
+    "src/media.js": "ac5e0e2497f242e2515873ee157f06b979b2659d6f2dc02f66349161a50bce2e",
+    "src/projectiles.js": "8bd084b964b5176c1b4483d310b49b50556a79a2042ef052ca7fad66a4e2fe84",
+    "src/render.js": "c59ba9f2416cb3c7e3477b056ad1de1df96353efe171ecb5288cd57b938159ff",
+    "src/storage.js": "a6773f7930d6da6b7b3bbdec6e9d3b2667b80393e57120be16bf0fe5c4535ecb",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "index.html": "a5ee9bb9a5d7dc1e601d6cec4bf216befcf91affc5cedc42baa2ba8a0fe051b1",
+    "styles.css": "fc412933d33fc8f83167095c174e15b79a931886298a0828ebc4cf6b311f5589",
+    "tools/audit-danmaku-flow-v29.cjs": "21c4546d8625dcb8c5f342e2437ab52d0f6b718fc116ea06b87d277a41f96870",
+    "tests/independent-danmaku-flow-v29.test.cjs": "d5309abba9d361cf26d74f1643216cdc2c284cfe54e5ddcb90efccae8cba2bbb",
+    "tools/audit-boss-identities-v25.cjs": "88e1d4e3afd9d314d3de2cb723d145105a3da7e3793ae4d82c76ce71f08dd20c",
+    "tools/probe-identities-v25-natural.cjs": "18433dffe03accc00d128f501bf8a03a1844c534965b6596aedb05853db198b7",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d"
+  },
+  "sourceHashGuardPassed": true,
+  "summary": {
+    "cases": 1,
+    "won": 1,
+    "lost": 0,
+    "recordedInputTicks": 1449,
+    "exactlyReplayedInputTicks": 1449,
+    "poolPressure": 0,
+    "droppedGroups": 0
+  },
+  "records": [
+    {
+      "bossIndex": 16,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 29,
+      "bossId": "controller-migration",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1449,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1449
+      ],
+      "peakBullets": 103,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 중앙 코어 이주실 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-migration-branch-gates-v27"
+      ],
+      "firstIdentityTick": 397,
+      "input": {
+        "file": "v29-natural-inputs/followup-1/boss-16-hell-phase-2.moves.gz",
+        "bytes": 156,
+        "sha256": "58fe7eeab691c5cf4cd7c5ff42fe8851086ce08ad252f62af20247f1fdc4fb65",
+        "ticks": 1449
+      },
+      "policyConfig": {
+        "route": "left",
+        "y": 575,
+        "beam": 24,
+        "commit": 4,
+        "horizon": 96
+      },
+      "inputMovement": {
+        "ticks": 1449,
+        "idleTicks": 1121,
+        "movingTicks": 328,
+        "idleFraction": 0.7736369910282954,
+        "directionChanges": 87,
+        "directionChangesPerSecond": 3.6024844720496896
+      }
+    }
+  ]
+}

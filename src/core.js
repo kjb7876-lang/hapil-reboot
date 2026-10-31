@@ -4,10 +4,11 @@
   var dependency = typeof module === 'object' && module.exports ? require('./weapon-patterns.js') : root && root.HapilWeaponPatterns;
   var patterns = typeof module === 'object' && module.exports ? require('./boss-patterns-v27.js') : root && root.HapilBossPatternsV27;
   var lasers = typeof module === 'object' && module.exports ? require('./boss-lasers-v28.js') : root && root.HapilBossLasersV28;
-  var api = factory(dependency,patterns,lasers);
+  var flow = typeof module === 'object' && module.exports ? require('./boss-flow-v29.js') : root && root.HapilBossFlowV29;
+  var api = factory(dependency,patterns,lasers,flow);
   if (typeof module === 'object' && module.exports) module.exports = api;
   if (root) root.HapilCore = api;
-}(typeof globalThis !== 'undefined' ? globalThis : this, function (Weapon,Patterns,Lasers) {
+}(typeof globalThis !== 'undefined' ? globalThis : this, function (Weapon,Patterns,Lasers,Flow) {
   'use strict';
   if (!Weapon) throw new Error('보스 무기 패턴 모듈을 찾을 수 없습니다.');
   var W = 360, H = 640, FIXED_DT = 1 / 60, TAU = Math.PI * 2;
@@ -15,10 +16,11 @@
   var HELL_MECHANICS_REVISION=15;
   // Explicit opt-in: old boundary saves have no combatRevision and retain
   // their original deterministic encounter. Revision25 is a separate opt-in.
-  var COMBAT_REVISION=21, IDENTITY_COMBAT_REVISION=25, PATTERN_COMBAT_REVISION=27,LASER_COMBAT_REVISION=28;
-  function laserEnabled(w){return w.combatRevision===LASER_COMBAT_REVISION;}
+  var COMBAT_REVISION=21, IDENTITY_COMBAT_REVISION=25, PATTERN_COMBAT_REVISION=27,LASER_COMBAT_REVISION=28,FLOW_COMBAT_REVISION=29;
+  function flowEnabled(w){return w.combatRevision===FLOW_COMBAT_REVISION;}
+  function laserEnabled(w){return w.combatRevision===LASER_COMBAT_REVISION||flowEnabled(w);}
   function patternEnabled(w){return w.combatRevision===PATTERN_COMBAT_REVISION||laserEnabled(w);}
-  function supportedCombatRevision(value){return value===COMBAT_REVISION||value===IDENTITY_COMBAT_REVISION||value===PATTERN_COMBAT_REVISION||value===LASER_COMBAT_REVISION;}
+  function supportedCombatRevision(value){return value===COMBAT_REVISION||value===IDENTITY_COMBAT_REVISION||value===PATTERN_COMBAT_REVISION||value===LASER_COMBAT_REVISION||value===FLOW_COMBAT_REVISION;}
   function pressureEnabled(w){return supportedCombatRevision(w.combatRevision);}
   function identityEnabled(w){return (w.combatRevision===IDENTITY_COMBAT_REVISION||patternEnabled(w))&&w.campaign&&(patternEnabled(w)||w.finalPractice||w.bossIndex!==8);}
   var BULLET_SLOW=Object.freeze({factor:.14,rampTicks:6,recoverTicks:36,durations:Object.freeze({memory:24,counter:54,delay:108,ego:90})});
@@ -266,6 +268,7 @@
       release.laserBarrage=true;['v28BarrageId','v28Pattern','v28Mode','v28RayGroup','v28Segment','v28Reflected','chainId'].forEach(function(k){if(identitySpec[k]!==undefined)release[k]=identitySpec[k];});
       if(identitySpec.modelActorId)release.modelActorId=identitySpec.modelActorId;
     }
+    if(flowEnabled(w)&&identitySpec&&identitySpec.v29Role){['v29Role','v29PulseIndex','v29PulseCount','v29TargetX','v29TargetY','v29AimSampleTick','v29OriginX','v29OriginY','v29MovementX','v29MovementY'].forEach(function(k){if(identitySpec[k]!==undefined)release[k]=identitySpec[k];});if(identitySpec.modelActorId)release.modelActorId=identitySpec.modelActorId;}
     if(identitySpec&&identitySpec.identityRole){
       ['identityRole','identityCastId','identityWarningAt','identityActiveAt'].forEach(function(k){release[k]=identitySpec[k];});
       var committed=(b.identityCasts||[]).find(function(c){return c.id===identitySpec.identityCastId;});
@@ -274,6 +277,7 @@
     if(b.skillReleases.length>8)b.skillReleases.shift();
   }
   function emit(w, specs) {
+    if(flowEnabled(w)&&w.stage==='boss'&&flowWithin(w)>=526&&!specs._v29Promise&&!specs.some(function(s){return s.identityCastId||s.v27Child;}))return false;
     if(patternEnabled(w)&&Patterns)Patterns.decorate(w,specs);
     Weapon.prepareEmission(w, specs);
     // One bounded variation per volley preserves a readable shape. Sampling
@@ -289,7 +293,7 @@
         if (s.acceleration) { s.acceleration *= hellSpeed; s.maxSpeed = (s.maxSpeed || 150) * hellSpeed; }
       });
     }
-    if (w.bullets.length + specs.length > CAPS.bullets) {
+    if (w.bullets.length + specs.length + (flowEnabled(w)?flowReserved(w):0) > CAPS.bullets) {
       w.stats.poolPressure++; // Caller retains or reports the whole group; no live projectile is evicted.
       if(patternEnabled(w)){w.stats.droppedGroups++;return false;}
       if (w._deferred.length < 16) w._deferred.push(specs);
@@ -308,6 +312,7 @@
       if (added && s.modelActorId) added.modelActorId=s.modelActorId;
       if(added&&identityEnabled(w))added.sourcePhase=patternEnabled(w)&&s.v27Child&&Number.isInteger(s.sourcePhase)&&s.sourcePhase>=0&&s.sourcePhase<=2?s.sourcePhase:w.phase;
       if(added&&s.identityRole){['identityRole','identityCastId','identityWarningAt','identityActiveAt'].forEach(function(k){added[k]=s[k];});}
+      if(added&&flowEnabled(w)){['v29Role','v29PulseIndex','v29PulseCount','v29TargetX','v29TargetY','v29AimSampleTick','v29OriginX','v29OriginY','v29MovementX','v29MovementY'].forEach(function(k){if(s[k]!==undefined)added[k]=s[k];});}
       if(added&&s.sourceActorId){added.sourceActorId=s.sourceActorId;var actor=w.boss&&w.boss.participants&&w.boss.participants.find(function(p){return p.id===s.sourceActorId;});if(actor)actor.releaseTick=w.tick;}
       if(added&&s.sourceActorId&&w.boss&&w.boss.combatCopies){var emittingCopy=w.boss.combatCopies.find(function(c){return c.sourceActorId===s.sourceActorId;});if(emittingCopy)emittingCopy.releaseTick=w.tick;}
       if (added && s.hellLayer) added.hellLayer=s.hellLayer;
@@ -324,7 +329,7 @@
     }
     // Presentation follows actual successful emission, including deferred
     // groups; this marker does not alter projectile or damage simulation.
-    if (specs.length && !specs[0].v27Child && w.campaign && w.stage === 'boss' && w.boss && specs.some(function(s) { return s.ownerId === w.boss.id; })) markBossRelease(w,specs[0].kind||'orb',specs[0].patternId||'',specs[0].x,specs[0].y,specs[0].sourceActorId,specs[0]);
+    if (specs.length && !specs[0].v27Child && w.campaign && (w.stage === 'boss'||flowEnabled(w)&&specs._v29Promise&&w.stage==='transition') && w.boss && specs.some(function(s) { return s.ownerId === w.boss.id; })) markBossRelease(w,specs[0].kind||'orb',specs[0].patternId||'',specs[0].x,specs[0].y,specs[0].sourceActorId,specs[0]);
     return true;
   }
   function fanSpecs(x, y, angle, count, spread, speed, kind, color, ownerId) {
@@ -332,7 +337,25 @@
     for (var i = 0; i < count; i++) specs.push({ x: x, y: y, angle: angle + (i - (count - 1) / 2) * spread, speed: speed, kind: kind, color: color, ownerId: ownerId });
     return specs;
   }
+  function flowWithin(w){return (Math.round(w.phaseTime*60)-1)%PRESSURE_LIMITS.cycleTicks;}
+  function flowReserved(w){
+    return (w._identityPlans||[]).reduce(function(total,p){
+      if(!p.v29Plan)return total+(p.specs?p.specs.length:0);
+      for(var i=p.cursor;i<p.pulses.length;i++)total+=p.pulses[i].specs.length;
+      return total;
+    },0);
+  }
   function warning(w, specs, delay, name) {
+    if(flowEnabled(w)&&w.stage==='boss'){
+      var flowSlot=flowWithin(w),gentle=w.difficulty==='gentle';
+      // Admission happens before a warning exists. A non-curtain cast must
+      // finish its complete fade before the final recovery interval begins.
+      if(specs.some(function(s){
+        if(s.pressureCurtain)return false;
+        var lifetime=s.laserBarrage?s.warningTicks+s.staggerTicks+s.activeTicks+s.fadeTicks:Math.max(54,delay||54)+(gentle?12:0)+(w.difficulty==='hell'&&s.patternId==='hell-overlap-lattice-v14'?96:gentle?18:24)+15;
+        return flowSlot>=526||flowSlot+lifetime>526;
+      }))return false;
+    }
     if(laserEnabled(w)&&specs.length&&specs[0].laserBarrage)return warningLaserBarrage(w,specs,name);
     // HELL's additional signature layer contributes its actual bullet
     // composition, without duplicating that signature's own laser cast.
@@ -428,8 +451,9 @@
     if (!seed) seed = 0x6d2b79f5;
     var gentle = options.difficulty === 'gentle', hell = options.difficulty === 'hell';
     if(options.combatRevision!==undefined&&!supportedCombatRevision(options.combatRevision))throw new RangeError('Unsupported combat revision');
-    if((options.combatRevision===PATTERN_COMBAT_REVISION||options.combatRevision===LASER_COMBAT_REVISION)&&!Patterns)throw new Error('새 보스 패턴 모듈을 불러오지 못했습니다. 새로고침해 주세요.');
-    if(options.combatRevision===LASER_COMBAT_REVISION&&!Lasers)throw new Error('보스 광선 패턴 모듈을 불러오지 못했습니다. 새로고침해 주세요.');
+    if((options.combatRevision===PATTERN_COMBAT_REVISION||options.combatRevision===LASER_COMBAT_REVISION||options.combatRevision===FLOW_COMBAT_REVISION)&&!Patterns)throw new Error('새 보스 패턴 모듈을 불러오지 못했습니다. 새로고침해 주세요.');
+    if((options.combatRevision===LASER_COMBAT_REVISION||options.combatRevision===FLOW_COMBAT_REVISION)&&!Lasers)throw new Error('보스 광선 패턴 모듈을 불러오지 못했습니다. 새로고침해 주세요.');
+    if(options.combatRevision===FLOW_COMBAT_REVISION&&!Flow)throw new Error('전투 박자 모듈을 불러오지 못했습니다. 새로고침해 주세요.');
     var runId = typeof options.runId === 'string' && /^[A-Za-z0-9_.:-]{1,96}$/.test(options.runId) ? options.runId : 'hapil-' + Date.now().toString(36) + '-' + (++runSequence).toString(36);
     var w = { rulesetVersion: RULESET, mechanicsRevision: 2, runId: runId, seed: seed, rngState: seed, difficulty: gentle ? 'gentle' : hell ? 'hell' : 'normal', practiceBoss: !!options.practiceBoss,
       tick: 0, time: 0, stage: 'waves', stageTime: 0, bossIntroDuration: 2.5, wave: 0, waveTime: 0, waveDuration: 15, phase: 0, phaseTime: 0, phaseTargetDuration: 25, phaseTimeout: 75,
@@ -1437,13 +1461,73 @@
     var b=w.boss;if(!b)return;
     if(b.identityCasts)b.identityCasts=b.identityCasts.filter(function(c){return w.tick<c.expireAt;});
     var plans=w._identityPlans||[];
-    for(var i=plans.length-1;i>=0;i--){var p=plans[i];if(w.tick<p.cast.activeAt)continue;
+    for(var i=plans.length-1;i>=0;i--){var p=plans[i];
+      if(flowEnabled(w)&&p.v29Plan){
+        var pulse=p.pulses[p.cursor];if(!pulse||w.tick<pulse.at)continue;
+        if(w.tick!==pulse.at){p.cast.cancelled=true;plans.splice(i,1);continue;}
+        // The complete stream was reserved before its warning. Advance this
+        // cursor first, freeing only this pulse's slots for its real emission.
+        p.cursor++;pulse.specs._v29Promise=true;
+        if(emit(w,pulse.specs)){p.cast.releaseTick=w.tick;if(!p.cast.releasedPulses)p.cast.releasedPulses=[];p.cast.releasedPulses.push({index:p.cursor-1,tick:w.tick,count:pulse.specs.length});}
+        else{p.cast.cancelled=true;plans.splice(i,1);continue;}
+        if(p.cursor>=p.pulses.length)plans.splice(i,1);
+        continue;
+      }
+      if(w.tick<p.cast.activeAt)continue;
       plans.splice(i,1);
       // A warned volley either releases at its committed tick or is cancelled
       // as one group. Capacity cannot silently turn it into a delayed attack.
       if(w.tick!==p.cast.activeAt||w.bullets.length+p.specs.length>CAPS.bullets){p.cast.cancelled=true;w.stats.poolPressure++;w.stats.droppedGroups++;continue;}
       if(emit(w,p.specs))p.cast.releaseTick=w.tick;else p.cast.cancelled=true;
     }
+  }
+  function commitFlowPlan(w,groups,meta){
+    var b=w.boss;if(!b||!groups.length)return false;
+    if(!w._identityPlans)w._identityPlans=[];
+    var total=groups.reduce(function(n,g){return n+g.specs.length;},0);
+    if(w._identityPlans.length>=4||!total||w.bullets.length+flowReserved(w)+total>CAPS.bullets)return false;
+    var valid=groups.every(function(g){return Number.isInteger(g.offset)&&g.offset>=54&&g.offset<=90&&g.specs.length&&g.specs.every(function(s){return s&&[s.x,s.y,s.angle,s.speed,s.r,s.ttl].every(finite)&&s.x>=0&&s.x<=W&&s.y>=0&&s.y<=240&&s.speed>0&&s.speed<=300&&s.r>0&&s.r<=12&&s.ttl>0&&s.ttl<=12;});});
+    if(!valid)return false;
+    var first=groups[0].specs[0],id='flow-'+b.id+'-'+w.tick+'-'+(meta.sourceActorId||'main')+'-'+meta.beat,lastAt=w.tick+groups[groups.length-1].offset;
+    var cast={id:id,patternId:first.patternId,identityRole:first.identityRole,kind:first.kind,sourcePhase:w.phase,x:meta.x,y:meta.y,angle:first.angle,warningAt:w.tick,activeAt:w.tick+groups[0].offset,expireAt:lastAt+12,v27Pattern:first.v27Pattern,v27Motion:first.v27Motion,v29Role:meta.role,v29PulseCount:groups.length,v29PulseTicks:groups.map(function(g){return w.tick+g.offset;})};
+    if(meta.targetSnapshot)cast.targetSnapshot=Object.freeze(Object.assign({},meta.targetSnapshot));
+    if(meta.sourceActorId)cast.sourceActorId=meta.sourceActorId;if(meta.modelActorId)cast.modelActorId=meta.modelActorId;
+    cast.emissionOrigins=Object.freeze(groups.reduce(function(all,g){return all.concat(g.specs.map(function(s){return Object.freeze({x:s.x,y:s.y,angle:s.angle,v27Motion:s.v27Motion,r:s.r,kind:s.kind});}));},[]));
+    var pulses=groups.map(function(g,index){g.specs._hellPrepared=true;g.specs.forEach(function(s){s.identityCastId=id;s.identityWarningAt=w.tick;s.identityActiveAt=w.tick+g.offset;if(s.v29Role===undefined)s.v29Role=meta.role;if(s.v29PulseIndex===undefined)s.v29PulseIndex=index;if(s.v29PulseCount===undefined)s.v29PulseCount=groups.length;});return {at:w.tick+g.offset,specs:g.specs};});
+    w._identityPlans.push({v29Plan:true,cast:cast,pulses:pulses,cursor:0});
+    if(!b.identityCasts)b.identityCasts=[];b.identityCasts.push(cast);if(b.identityCasts.length>8)b.identityCasts.shift();return true;
+  }
+  function flowEmitter(w,beat,copy){
+    if(copy)return {x:copy.x,y:copy.y,sourceActorId:copy.sourceActorId,modelActorId:copy.modelActorId};
+    var b=w.boss,actor=b.participants&&b.participants[beat%b.participants.length];
+    return actor?{x:actor.x,y:actor.y,sourceActorId:actor.id,modelActorId:actor.id}:{x:b.x,y:b.y+18};
+  }
+  function makeFlowCopy(w,cycle,slot){
+    var b=w.boss;if(!allowsCombatCopies(w)||(b.combatCopies||[]).length>=2)return null;
+    var pair=b.participants&&b.participants[slot%b.participants.length],id='combat-copy-'+b.id+'-flow-'+cycle+'-'+slot,x=slot?270:90;
+    if((b.combatCopies||[]).some(function(c){return c.id===id||c.destinationX===x;}))return null;
+    var c={id:id,sourceActorId:id,x:x,y:166,px:x,py:166,originX:b.x,originY:b.y,destinationX:x,artKey:b.artKey,born:w.tick,expireAt:w.tick+PRESSURE_LIMITS.cloneTicks,action:'charge',actionProgress:0,releaseTick:-1,opacity:.62,kind:'clone'};
+    if(pair)c.modelActorId=pair.id;return c;
+  }
+  function bossFlow(w,cycle,within){
+    var action=Flow.actionAt(w,within,cycle);if(!action)return;
+    if(action.kind==='laser'){bossLaserBarrage(w,cycle,within,true,action.beat);return;}
+    var copy=action.source==='copy'?makeFlowCopy(w,cycle,action.copySlot||0):null;
+    if(action.source==='copy'&&!copy)copy=makeFlowCopy(w,cycle,1-(action.copySlot||0));
+    if(action.source==='copy'&&!copy)return;
+    var emitter=flowEmitter(w,action.beat,copy),groups,role,targetSnapshot;
+    if(action.kind==='stream'){
+      var stream=Flow.makeStream(w,emitter,action.beat,{motionX:0,motionY:0});if(!stream)return;groups=stream.pulses;role='aimed-stream';targetSnapshot=stream.targetSnapshot;
+    }else{
+      var route=w._pressurePlan&&w.tick<w._pressurePlan.expireAt?w._pressurePlan.route:null;
+      function ownedSpecs(origin){var authored=Patterns.makeVolley(w,origin,action.beat,{copy:!!copy,phase:w.phase});return route?authored.filter(function(s){var extra=s.r+(s.kind==='blade'?13:s.kind==='needle'?9:0)+3;return segmentPairDistanceSquared(s.x,s.y,s.x+Math.cos(s.angle)*1600,s.y+Math.sin(s.angle)*1600,route.x1,route.y1,route.x2,route.y2)>sq(route.halfWidth+extra);}):authored;}
+      var specs=ownedSpecs(emitter);
+      // Try the other already-authored copy position before promising any
+      // shot. Once a cue exists its source, geometry and clocks never move.
+      if(!specs.length&&copy){var alternate=makeFlowCopy(w,cycle,copy.destinationX===90?1:0);if(alternate){copy=alternate;emitter=flowEmitter(w,action.beat,copy);specs=ownedSpecs(emitter);}}
+      if(!specs.length)return;groups=[{offset:54,specs:specs}];role=copy?'copy-fixed':'owned-fixed';
+    }
+    if(commitFlowPlan(w,groups,{x:emitter.x,y:emitter.y,sourceActorId:emitter.sourceActorId,modelActorId:emitter.modelActorId,beat:action.beat,role:role,targetSnapshot:targetSnapshot})&&copy){if(!w.boss.combatCopies)w.boss.combatCopies=[];w.boss.combatCopies.push(copy);}
   }
   function pressureFan(w,x,y,source,beat,copy) {
     var b=w.boss,hell=w.difficulty==='hell',index=w.finalPractice?34:w.bossIndex,style=index%7;
@@ -1466,6 +1550,12 @@
       var c=b.combatCopies[i],age=w.tick-c.born;
       if(w.tick>=c.expireAt){b.combatCopies.splice(i,1);continue;}
       c.px=c.x;c.py=c.y;
+      if(flowEnabled(w)){
+        var pending=(b.identityCasts||[]).find(function(cast){return !cast.cancelled&&cast.sourceActorId===c.sourceActorId&&w.tick>=cast.warningAt&&w.tick<cast.activeAt;}),ageSinceRelease=c.releaseTick>=0?w.tick-c.releaseTick:Infinity;
+        c.action=ageSinceRelease<12?'attack':pending?'charge':'recover';
+        c.actionProgress=ageSinceRelease<12?ageSinceRelease/12:pending?clamp((w.tick-pending.warningAt)/(pending.activeAt-pending.warningAt),0,1):1;
+        continue;
+      }
       if(c.kind==='illusion'){
         var move=clamp(age/60,0,1),ease=move*move*(3-2*move);
         c.x=c.originX+(c.destinationX-c.originX)*ease;c.y=c.originY+(188-c.originY)*ease;
@@ -1483,6 +1573,7 @@
     if(!pressureEnabled(w)||!w.campaign||!w.boss)return;
     var t=Math.round(w.phaseTime*60)-1,cycle=Math.floor(t/PRESSURE_LIMITS.cycleTicks),within=t%PRESSURE_LIMITS.cycleTicks,b=w.boss;
     b.pressureStyle=pressureStyle(w);
+    if(flowEnabled(w)){flushIdentityFans(w);updateCombatCopies(w);bossFlow(w,cycle,within);if(within>=526){b.action='recover';b.actionProgress=(within-526)/74;}return;}
     if(laserEnabled(w))bossLaserBarrage(w,cycle,within);
     if(identityEnabled(w))flushIdentityFans(w);
     if(within===30)makeCombatCopies(w,'illusion',cycle);
@@ -1500,13 +1591,13 @@
       if((within-150)%cadence===0)pressureFan(w,b.x,b.y+18,null,Math.floor((within-150)/cadence),null);
     }
   }
-  function bossLaserBarrage(w,cycle,within){
+  function bossLaserBarrage(w,cycle,within,forced,flowBeat){
     // Route selection occurs at tick60 of each600tick pressure cycle. Start
     // only afterwards, and finish every promise before the next route exists.
     // This prevents old warned beams crossing a later unannounced safe gate.
     if(within<LASER_BARRAGE_LIMITS.firstTick||within>LASER_BARRAGE_LIMITS.lastTick)return;
-    var cadence=Lasers.cadenceFor(w);if(!Number.isInteger(cadence)||cadence<1||(within-LASER_BARRAGE_LIMITS.firstTick)%cadence!==0)return;
-    var beat=cycle*16+Math.floor((within-LASER_BARRAGE_LIMITS.firstTick)/cadence),b=w.boss,actor=b.participants&&b.participants[beat%b.participants.length];
+    var cadence=Lasers.cadenceFor(w);if(!forced&&(!Number.isInteger(cadence)||cadence<1||(within-LASER_BARRAGE_LIMITS.firstTick)%cadence!==0))return;
+    var beat=forced?flowBeat:cycle*16+Math.floor((within-LASER_BARRAGE_LIMITS.firstTick)/cadence),b=w.boss,actor=b.participants&&b.participants[beat%b.participants.length];
     var emitter=actor?{x:actor.x,y:actor.y,sourceActorId:actor.id,modelActorId:actor.id}:{x:b.x,y:b.y+18};
     var route=w._pressurePlan&&w.tick<w._pressurePlan.expireAt?w._pressurePlan.route:null;
     var specs=Lasers.makeBarrage(w,emitter,beat,{phase:w.phase,escapeRoute:route,playerRadius:w.player.r});
@@ -1600,7 +1691,7 @@
     if (e.hp > 0) return;
     if (!e.linkTarget) effect(w, e.x, e.y, 'kill', e.isBoss ? 45 : 23, '#d9c4ff', 0.6);
     if (e.isBoss) {
-      if(identityEnabled(w)){w._identityPlans=[];if(e.identityCasts)e.identityCasts.forEach(function(c){if(w.tick<c.activeAt)c.cancelled=true;});}
+      if(identityEnabled(w)&&!flowEnabled(w)){w._identityPlans=[];if(e.identityCasts)e.identityCasts.forEach(function(c){if(w.tick<c.activeAt)c.cancelled=true;});}
       if (e.sealTarget) event(w,'seal',e.name);
       if (e.linkTarget) event(w,w.campaignRevision===5&&encounter(w).chapter>=4&&(encounter(w).combatKind==='foe'||e.scriptedFall)?(e.scriptedFall?'hold':'subdue'):'disconnect',w.campaignRevision===5&&encounter(w).chapter>=4?encounter(w).healthLabel:'반복 연결 차단');
       w.stats.phaseTicks.push(Math.round(w.phaseTime * 60));
@@ -1629,6 +1720,9 @@
         }
         if(w.finalPractice && w.phase===0) { w.transitionNarrative=['교주가 무너졌지만 코어의 신경선이 그의 몸을 다시 잇는다.', '환도는 돌아온 현실의 기억 속에서 여기가 꿈임을 알아차린다.', '사몽의 권한으로 일어서서 교주에게 맞선다.'];w.transitionMinimum=9;w.stageLabel='사몽 각성'; }
       }
+      // Terminal victory stops combat in the app. Cancel only its remaining
+      // projectile promises; an ordinary phase transition drains them below.
+      if(flowEnabled(w)&&w.stage==='won'){(w._identityPlans||[]).forEach(function(plan){plan.cast.cancelled=true;});w._identityPlans=[];}
       w.reservation = false; w._reservationSince = 0;
       // A phase boundary contains no surviving support actors. Their already
       // fired bullets remain subject to the ordinary transition drain.
@@ -1861,10 +1955,14 @@
       var group = w._deferred[0];
       if (w.bullets.length + group.length <= CAPS.bullets) { w._deferred.shift(); emit(w, group); }
     }
+    // Only already-committed29 pulses drain after a real boss defeat. Their
+    // warning-time targets and capacity reservations survive the transition;
+    // no conductor or base attack is scheduled outside the boss stage.
+    if(flowEnabled(w)&&w.stage==='transition'){flushIdentityFans(w);updateCombatCopies(w);}
     updateWarnings(w); attack(w); updateShots(w); updateBullets(w, px, py); updateLaserCollision(w, px, py);
     if (w.stage === 'transition') {
       w.transitionRemaining = Math.max(0, (w.transitionMinimum || 6.4) - w.stageTime);
-      if (!w.bullets.length && !w.hazards.length && !w._warnings.length && !w._deferred.length && (!(w.campaign && w.bossIndex >= 2 && w.nextEncounter != null) || w.stageTime >= (w.transitionMinimum || 3)) && (!(w.finalPractice||w.campaignRevision===5&&w.bossIndex>=18) || !w.transitionNarrative || w.stageTime >= (w.transitionMinimum || 0))) {
+      if (!w.bullets.length && !w.hazards.length && !w._warnings.length && !w._deferred.length && (!flowEnabled(w)||!w._identityPlans.length) && (!(w.campaign && w.bossIndex >= 2 && w.nextEncounter != null) || w.stageTime >= (w.transitionMinimum || 3)) && (!(w.finalPractice||w.campaignRevision===5&&w.bossIndex>=18) || !w.transitionNarrative || w.stageTime >= (w.transitionMinimum || 0))) {
         if (w.campaign && w.nextEncounter != null) {
           w.bossIndex = w.nextEncounter; w.nextEncounter = null; w.boss = null; w.stage = 'waves'; w.phase = 0; w.phaseTime = 0;
           w.transitionNarrative = null; w.transitionMinimum = 0;
@@ -1881,7 +1979,7 @@
     return w;
   }
   return Object.freeze({ W: W, H: H, FIXED_DT: FIXED_DT, RULESET_VERSION: RULESET, MECHANICS_REVISION: 2, CAPS: CAPS,
-    COMBAT_REVISION:COMBAT_REVISION,IDENTITY_COMBAT_REVISION:IDENTITY_COMBAT_REVISION,PATTERN_COMBAT_REVISION:PATTERN_COMBAT_REVISION,LASER_COMBAT_REVISION:LASER_COMBAT_REVISION,LATEST_COMBAT_REVISION:LASER_COMBAT_REVISION,LASER_BARRAGE_LIMITS:LASER_BARRAGE_LIMITS,BULLET_SLOW:BULLET_SLOW,bulletTimeScale:bulletTimeScale,IDENTITY_PROFILES:IDENTITY_PROFILES,PRESSURE_LIMITS:PRESSURE_LIMITS,attackCoverage:attackCoverage,
+    COMBAT_REVISION:COMBAT_REVISION,IDENTITY_COMBAT_REVISION:IDENTITY_COMBAT_REVISION,PATTERN_COMBAT_REVISION:PATTERN_COMBAT_REVISION,LASER_COMBAT_REVISION:LASER_COMBAT_REVISION,FLOW_COMBAT_REVISION:FLOW_COMBAT_REVISION,LATEST_COMBAT_REVISION:FLOW_COMBAT_REVISION,LASER_BARRAGE_LIMITS:LASER_BARRAGE_LIMITS,BULLET_SLOW:BULLET_SLOW,bulletTimeScale:bulletTimeScale,IDENTITY_PROFILES:IDENTITY_PROFILES,PRESSURE_LIMITS:PRESSURE_LIMITS,attackCoverage:attackCoverage,
     CAMPAIGN_BOSSES: CAMPAIGN_BOSSES, CAMPAIGN_SIGNATURES: CAMPAIGN_SIGNATURES, CAMPAIGN_REVISION: 3, HELL_MECHANICS_REVISION: HELL_MECHANICS_REVISION, HELL_OVERLAP_LIMITS: HELL_OVERLAP_LIMITS,
     campaignBossCount: campaignBossCount, LATEST_CAMPAIGN_REVISION: 5, createRun: createRun, step: step, checkpoint: checkpoint, restoreCheckpoint: restoreCheckpoint, skipBossIntro: skipBossIntro,
     geometry: Object.freeze({ segmentDistanceSquared: segmentDistanceSquared, segmentPairDistanceSquared: segmentPairDistanceSquared, sweptCircleHit: sweptCircleHit, projectileDistanceSquared: projectileDistanceSquared, patternDistanceSquared:patternDistanceSquared, hazardDistanceSquared: hazardDistanceSquared }) });

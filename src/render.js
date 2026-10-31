@@ -94,7 +94,8 @@
     var sinFloor=null,sinFloorSource=null,sinFloorTone=null;
     var sourceScene=null,sourceSceneImage=null,sourceSceneKey=null,sourceSceneTone=null,sourceSceneBuilds=0;
     var playerShotStamp=null,playerShotStampKey=null;
-    var warningFootprints=[],warningFootprintPool=[],warningFootprintBuilds=0;
+    var warningFootprints=[],warningFootprintPool=[],warningFootprintBuilds=0,imminentWarnings=[];
+    var playerFeedbackRecord={hitRadius:3,precise:false,focusRadius:null,grazeAge:null,grazePulse:0,cosmeticOnly:true};
     // Text layouts depend on the actual phase names, not on every render tick.
     // One current HUD/narrative layout keeps memory bounded per renderer.
     var hudTextLayout=null,narrativeTextLayout=null,textLayoutBuilds=0;
@@ -570,6 +571,21 @@
         ctx.restore();
         if(width>=18)warningBoundary(h,palette);
       }
+      if(world.combatRevision===29&&projectilePresentation&&projectilePresentation.drawHazardWarningCue){
+        var limit=lightweight?4:8;imminentWarnings.length=0;
+        // The earliest committed rays get the bounded accent budget. Reuse
+        // eight references instead of sorting/allocating every warning frame.
+        for(var i=0;i<hazards.length;i++){
+          var h=hazards[i];if(!h||h.phase!=='warning'||!Number.isFinite(h.activeAt)||!Number.isFinite(h.x1)||!Number.isFinite(h.y1)||!Number.isFinite(h.x2)||!Number.isFinite(h.y2)||!Number.isFinite(h.width)||h.width<=0)continue;
+          var remaining=h.activeAt-world.tick;if(remaining<1||remaining>12)continue;mapMetrics.imminentWarningCandidates++;
+          var at=imminentWarnings.length;
+          while(at>0){var earlier=imminentWarnings[at-1];if(h.activeAt>earlier.activeAt||h.activeAt===earlier.activeAt&&(h.id||0)>=(earlier.id||0))break;at--;}
+          if(at>=limit)continue;
+          if(imminentWarnings.length<limit)imminentWarnings.length++;
+          for(var j=imminentWarnings.length-1;j>at;j--)imminentWarnings[j]=imminentWarnings[j-1];imminentWarnings[at]=h;
+        }
+        for(var i=0;i<imminentWarnings.length;i++)projectilePresentation.drawHazardWarningCue(ctx,world,imminentWarnings[i],lightweight);
+      }
     }
     function atlasReady(key){return imageReady(images[key])&&images[key].naturalWidth===512&&images[key].naturalHeight===512;}
     function atlasPhase(key,x,y,size,age,opacity){
@@ -651,6 +667,9 @@
       var effects=world.effects||[];
       for(var i=0;i<effects.length;i++){
         var e=effects[i],life=Math.max(0,1-(e.age||0)/(e.ttl||.5)),r=e.r||10,p=1-life;
+        // Revision29 coalesces successful grazes at the final player-core
+        // layer, so dense grazes do not add rings under every live projectile.
+        if(world.combatRevision===29&&e.kind==='graze')continue;
         if(drawAuthoredEffect(e,world))continue;
         ctx.globalAlpha=life*.65;
         if(e.kind==='memory'){
@@ -751,9 +770,17 @@
       if(story&&story.player){if(actorPresentation&&actorPresentation.drawPlayer)actorPresentation.drawPlayer(ctx,world,inv?(.55+Math.sin(world.tick*.6)*.2):.95);return;}
       if(imageReady(images.gunner)){ctx.globalAlpha=inv?(.55+Math.sin(world.tick*.6)*.2):.95;ctx.drawImage(images.gunner,p.x-258.5369*57/512,p.y-283.8754*57/512,57,57);ctx.globalAlpha=1;}
     }
-    function drawPlayerCore(world) {
-      var p=world.player;
+    function drawPlayerCore(world,presentation) {
+      var p=world.player,r=p.r||3;
       ctx.beginPath();ctx.arc(p.x,p.y,(p.r||3)+1.7,0,Math.PI*2);ctx.fillStyle='#080e19';ctx.fill();
+      if(world.combatRevision===29&&(world.stage==='boss'||world.stage==='waves'||world.stage==='transition')){
+        var precise=!!(presentation&&presentation.precise===true),age=Number.isInteger(world.tick)&&Number.isInteger(world._lastGraze)&&world._lastGraze>=0?world.tick-world._lastGraze:-1;
+        var pulse=age>=0&&age<12&&!((p.invulnerableUntil||0)>world.tick)?1-age/12:0;
+        playerFeedbackRecord.hitRadius=r;playerFeedbackRecord.precise=precise;playerFeedbackRecord.focusRadius=precise?r+3:null;playerFeedbackRecord.grazeAge=pulse>0?age:null;playerFeedbackRecord.grazePulse=pulse;mapMetrics.playerFeedback=playerFeedbackRecord;
+        if(precise){ctx.save();ctx.globalAlpha=.92;circle(p.x,p.y,r+3,'#080e19',1.8);circle(p.x,p.y,r+3,'#8bdce2',.8);ctx.restore();}
+        if(pulse>0){ctx.save();ctx.globalAlpha=.25+pulse*.70;circle(p.x,p.y,r+1.6,'#a1f1ed',.8+pulse*.5);ctx.restore();}
+      }
+      // The authoritative small white hitpoint remains the final centre draw.
       ctx.beginPath();ctx.arc(p.x,p.y,p.r||3,0,Math.PI*2);ctx.fillStyle='#fff9e9';ctx.fill();ctx.strokeStyle='#8bdce2';ctx.lineWidth=.9;ctx.stroke();
     }
     function fittedText(text,maxWidth,size,minSize,family) {
@@ -891,8 +918,8 @@
         ctx.save();ctx.globalAlpha=.42;circle(180,190,46,'#ead5aa',1.2);circle(180,190,53,'#b9dbed',.7);line([[180,158],[180,220],[159,178],[201,178]],'#f0e1ba',2);ctx.restore();
       }
     }
-    function draw(world,alpha,time,lowQuality) {
-      lightweight=!!lowQuality;mapMetrics.atlasFxLimit=lightweight?12:24;mapMetrics.specialPatternCue=null;mapMetrics.patternEntryCue=null;mapMetrics.battleReadability=null;mapMetrics.warningContrastStrokes=0;mapMetrics.warningFootprintDraws=0;mapMetrics.warningFootprintBuilds=warningFootprintBuilds;warningFootprints.length=0;mapMetrics.warningFootprints=warningFootprints;mapMetrics.combatCopyDraws=0;mapMetrics.playerShotDraws=0;mapMetrics.playerShotAsset=null;mapMetrics.playerShotCacheBytes=playerShotStamp?96*64*4:0;
+    function draw(world,alpha,time,lowQuality,presentation) {
+      lightweight=!!lowQuality;mapMetrics.atlasFxLimit=lightweight?12:24;mapMetrics.specialPatternCue=null;mapMetrics.patternEntryCue=null;mapMetrics.battleReadability=null;mapMetrics.playerFeedback=null;mapMetrics.imminentWarningCandidates=0;mapMetrics.warningContrastStrokes=0;mapMetrics.warningFootprintDraws=0;mapMetrics.warningFootprintBuilds=warningFootprintBuilds;warningFootprints.length=0;mapMetrics.warningFootprints=warningFootprints;mapMetrics.combatCopyDraws=0;mapMetrics.playerShotDraws=0;mapMetrics.playerShotAsset=null;mapMetrics.playerShotCacheBytes=playerShotStamp?96*64*4:0;
       if(actorPresentation&&actorPresentation.beginFrame)actorPresentation.beginFrame();
       if(projectilePresentation&&projectilePresentation.beginFrame)projectilePresentation.beginFrame();
       if(bossSkillPresentation&&bossSkillPresentation.beginFrame)bossSkillPresentation.beginFrame();
@@ -902,11 +929,11 @@
       mapMetrics.introActive=!!(world&&world.stage==='bossIntro');mapMetrics.introProgress=mapMetrics.introActive?clamp((world.stageTime||0)/(world.bossIntroDuration||2.5),0,1):0;
       if(!world||(!world.boss&&world.stage!=='bossIntro'))mapMetrics.bossArt=null;
       if(!world){titleScene(time||0);return;}
-      if(world.stage==='bossIntro'){drawPlayerBody(world,world.time||0);bossEntrance(world);drawPlayerCore(world);return;}
+      if(world.stage==='bossIntro'){drawPlayerBody(world,world.time||0);bossEntrance(world);drawPlayerCore(world,presentation);return;}
       drawRoute(world);drawBossAccent(world);if(projectilePresentation&&projectilePresentation.drawBossCast)projectilePresentation.drawBossCast(ctx,world,lightweight);drawEffects(world);if(bossSkillPresentation)bossSkillPresentation.draw(ctx,world,lightweight);transition(world);if(actorPresentation&&actorPresentation.drawSceneObjects)actorPresentation.drawSceneObjects(ctx,world);drawEnemies(world,world.time||0);drawSpellTheatre(world);drawPlayerBody(world,world.time||0);drawShots(world);drawHazards(world);drawBullets(world);bossHud(world);
-      drawPlayerCore(world);
+      drawPlayerCore(world,presentation);
     }
-    return {resize:function(cssW,cssH,dpr){ratio=Math.min(1.5,Math.max(1,dpr||1))*cssW/W;var nextWidth=Math.max(1,Math.round(W*ratio)),nextHeight=Math.max(1,Math.round(H*ratio));if(canvas.width!==nextWidth)canvas.width=nextWidth;if(canvas.height!==nextHeight)canvas.height=nextHeight;canvas.style.width='100%';canvas.style.height='100%';ctx.imageSmoothingEnabled=true;},draw:draw,getMetrics:function(){return Object.assign({},mapMetrics,{warningFootprints:warningFootprints.map(function(record){return Object.assign({},record);}),actorPresentation:actorPresentation?actorPresentation.getMetrics():null,projectilePresentation:projectilePresentation?projectilePresentation.getMetrics():null,bossSkillsPresentation:bossSkillPresentation?bossSkillPresentation.getMetrics():null});},destroy:function(){if(playerShotStamp){playerShotStamp.width=1;playerShotStamp.height=1;playerShotStamp=null;}playerShotStampKey=null;hudTextLayout=null;narrativeTextLayout=null;warningFootprints.length=0;warningFootprintPool.length=0;if(projectilePresentation&&projectilePresentation.destroy)projectilePresentation.destroy();if(bossSkillPresentation&&bossSkillPresentation.destroy)bossSkillPresentation.destroy();bossSkillPresentation=null;releaseSourceTerrain();cached=false;canvas.width=1;canvas.height=1;back.width=1;back.height=1;foreground.width=1;foreground.height=1;if(sinFloor){sinFloor.width=1;sinFloor.height=1;sinFloor=null;}sinFloorSource=null;sinFloorTone=null;for(var i=0;i<strips.length;i++){strips[i].width=1;strips[i].height=1;}strips.length=0;actorPresentation=null;projectilePresentation=null;images={};}};
+    return {resize:function(cssW,cssH,dpr){ratio=Math.min(1.5,Math.max(1,dpr||1))*cssW/W;var nextWidth=Math.max(1,Math.round(W*ratio)),nextHeight=Math.max(1,Math.round(H*ratio));if(canvas.width!==nextWidth)canvas.width=nextWidth;if(canvas.height!==nextHeight)canvas.height=nextHeight;canvas.style.width='100%';canvas.style.height='100%';ctx.imageSmoothingEnabled=true;},draw:draw,getMetrics:function(){return Object.assign({},mapMetrics,{warningFootprints:warningFootprints.map(function(record){return Object.assign({},record);}),playerFeedback:mapMetrics.playerFeedback?Object.assign({},mapMetrics.playerFeedback):null,actorPresentation:actorPresentation?actorPresentation.getMetrics():null,projectilePresentation:projectilePresentation?projectilePresentation.getMetrics():null,bossSkillsPresentation:bossSkillPresentation?bossSkillPresentation.getMetrics():null});},destroy:function(){if(playerShotStamp){playerShotStamp.width=1;playerShotStamp.height=1;playerShotStamp=null;}playerShotStampKey=null;hudTextLayout=null;narrativeTextLayout=null;warningFootprints.length=0;warningFootprintPool.length=0;imminentWarnings.length=0;if(projectilePresentation&&projectilePresentation.destroy)projectilePresentation.destroy();if(bossSkillPresentation&&bossSkillPresentation.destroy)bossSkillPresentation.destroy();bossSkillPresentation=null;releaseSourceTerrain();cached=false;canvas.width=1;canvas.height=1;back.width=1;back.height=1;foreground.width=1;foreground.height=1;if(sinFloor){sinFloor.width=1;sinFloor.height=1;sinFloor=null;}sinFloorSource=null;sinFloorTone=null;for(var i=0;i<strips.length;i++){strips[i].width=1;strips[i].height=1;}strips.length=0;actorPresentation=null;projectilePresentation=null;images={};}};
   }
   global.HapilRenderer={create:create,terrainContracts:H14_TERRAIN,cultTerrainContracts:CULT_TERRAIN,chapter3TerrainContracts:CHAPTER3_TERRAIN,terrainAssetKeysForEncounter:terrainAssetKeysForEncounter,invalidTerrainAsset:invalidTerrainAsset};
 })(typeof window!=='undefined'?window:globalThis);

@@ -29,7 +29,7 @@
   function integer(value, min, max) { return finite(value, min, max) && Math.floor(value) === value; }
   function validRunId(value) { return typeof value === 'string' && /^[A-Za-z0-9_.:-]{1,96}$/.test(value); }
   function difficulty(value) { return value === 'normal' || value === 'gentle' || value === 'hell'; }
-  function combatRevision(value) { return value === 21 || value === 25 || value === 27 || value === 28; }
+  function combatRevision(value) { return value === 21 || value === 25 || value === 27 || value === 28 || value === 29; }
 
   function settingsPatch(value) {
     var out = {};
