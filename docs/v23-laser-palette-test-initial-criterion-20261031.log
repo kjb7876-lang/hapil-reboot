@@ -1,0 +1,25 @@
+✖ paired Han Rian and Baek Ion beams retain independently warm and cool source colours in both palette slots and quality levels (1208.40384ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1567.114389
+
+✖ failing tests:
+
+test at tests/independent-laser-pixels-v23.test.cjs:14:1
+✖ paired Han Rian and Baek Ion beams retain independently warm and cool source colours in both palette slots and quality levels (1208.40384ms)
+  AssertionError [ERR_ASSERTION]: baek-ion/slot1/true: actual pixels retain owner hue instead of another caster or a white wash; red-blue=-8.937604166666667
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/independent-laser-pixels-v23.test.cjs:16:456)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
