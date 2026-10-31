@@ -1,0 +1,76 @@
+✖ identity25 phase boundaries retain the exact selector and ordinary-health deterministic restore (4.823785ms)
+✔ legacy and21 boundaries remain exact; same-run selector replacement cannot overwrite primary or backup (5.058238ms)
+✔ an already-open deployed21 client rejects25 before settings, checkpoint, clear or completion writes (21.414751ms)
+✔ 25 marker is required for25 backup/primary and never falls back through retry, settings, clear or an older new run (4.003642ms)
+✔ serialized25 writes preserve pending boundaries, backups and stale-tab rejection until explicit load (2.567001ms)
+✔ failed25 durable writes preserve bytes and prohibit later memory commits; valid25 backup recovers damaged primary (2.721043ms)
+✔ identity25 practice cannot alter campaign checkpoints, backups or completion ledger (1.274326ms)
+✔ new combat revision survives strict save validation and deterministic ordinary-health restore (89.097537ms)
+✔ legacy absent-field boundaries stay byte-compatible and never select new combat on restore (1.935782ms)
+✔ unknown or malformed combat selectors cannot silently downgrade a saved run (1.291012ms)
+✔ same-run checkpoint writes cannot switch combat revision in either direction or overwrite backup (3.413955ms)
+✔ v21 backup recovery retains combat and a stale emulated tab cannot replace it with a legacy run (5.934507ms)
+✔ practice and malformed v21 backup data cannot overwrite confirmed legacy or v21 progress (2.807022ms)
+✔ an already-open deployed v20 storage client fails closed instead of stripping a newer v21 checkpoint selector (13.156159ms)
+✔ v21 forward-compatibility marker is required for new records and remains present in exports and loss retries (1.567498ms)
+✔ legacy v1 without baseline restores and retries 96-character run IDs with bounded, collision-free IDs (181.170028ms)
+✔ a damaged main checkpoint can restore from same-run backup without deleting it (2.679501ms)
+✔ corrupt metadata and corrupt backup block writes and preserve original bytes for export (5.140862ms)
+✔ valid boundary generation and revision remain loadable but reject overflowing mutation (2.287421ms)
+✔ two emulated clients cannot overwrite the newer confirmed run; explicit reload adopts it (1.804794ms)
+✔ automatic peek reads another client without authorizing the old world to overwrite it (1.558193ms)
+✔ a later IndexedDB read error never reports an old memory snapshot as a successful load (0.972343ms)
+✔ a failed persistent write reports failure and does not silently commit to memory (2.53937ms)
+✔ empty store is distinguishable from settings saved in this session (0.874416ms)
+✔ loss keeps the confirmed campaign checkpoint and backup, allows retry, and never counts a duplicate result (14.227731ms)
+✔ a practice result without a flag cannot create or replace a campaign record (0.801396ms)
+✔ a pending checkpoint write commits before a queued loss and the loss retains that checkpoint (8.971415ms)
+✔ a stale tab cannot complete over a newer checkpoint or corrupt its backup (0.807935ms)
+✔ corrupt or future stored records cannot be overwritten; recoverable raw bytes are included in export (3.810472ms)
+✔ counter exhaustion is readable/exportable but cannot overflow a version-1 record (0.399972ms)
+✔ peek observes another writer without silently granting this tab its revision (2.943217ms)
+✔ load reports a persistent read error instead of exposing stale in-memory progress (0.921556ms)
+✔ load and open report malformed saved state while leaving a true memory-only session usable (0.90436ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 32
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 298.501308
+
+✖ failing tests:
+
+test at tests/identity-save-compatibility-v25.test.cjs:74:1
+✖ identity25 phase boundaries retain the exact selector and ordinary-health deterministic restore (4.823785ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    {
+      _boundaryTick: 0,
+      _checkpoint: {
+        autoAttack: true,
+        bossIndex: 9,
+  ...
+      _grazeGain: 0,
+  -   _identityPlans: [],
+      _lastGraze: -9999,
+      _memoryBucket: 0,
+      _memoryGain: 0,
+      _pools: {
+        bullets: [],
+  
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/identity-save-compatibility-v25.test.cjs:85:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { rulesetVersion: 'hapil-firstbattle-1', mechanicsRevision: 15, runId: 'identity25-restore', seed: 813, rngState: 813, difficulty: 'hell', practiceBoss: true, tick: 0, time: 0, stage: 'boss', stageTime: 0, bossIntroDuration: 2.5, wave: 0, waveTime: 0, waveDuration: 15, phase: 0, phaseTime: 0, phaseTargetDuration: 25, phaseTimeout: 75, patternName: '값이 매겨진 갈래', stageLabel: '탐욕의 귀 맘몬 · 1/3 · 연습', phaseProgress: 0, player: { x: 180, y: 540, hp: 3, maxHp: 3, r: 3, invulnerableUntil: 0, egoUntil: 0 }, boss: { id: 1, x: 180, y: 116, px: 180, py: 116, hp: 1600, maxHp: 1600, phase: 0, opacity: 1, r: 29, isBoss: true, kind: 'mammon', name: '탐욕의 귀 맘몬', artKey: 'sinMammonAtlas', phaseRole: 'general-manager', presentationVariant: 'general-manager', sealTarget: true, linkTarget: false, identityGroup: 'mammon', healthLabel: '봉인 저항', action: 'move', actionProgress: 0, lean: 0, releaseTick: -1, specialPatternId: '', specialPatternLabel: '', patternHint: '' }, enemies: [], bullets: [], shots: [], effects: [], hazards: [], score: 0, graze: 0, kills: 0, memory: 0, resonance: 0, autoAttack: true, skillRotation: true, reservation: false, stats: { hits: 0, shots: 0, damage: 0, peakBullets: 0, peakEnemies: 0, peakParticles: 0, poolPressure: 0, droppedGroups: 0, missedEnemies: 0, resourceStarvation: 0, bossDamage: 0, phaseTicks: [], collisions: 0, casts: [Object] }, events: [], checkpointSerial: 1, idCounter: 1, skills: { memoryReadyAt: 0, delayReadyAt: 360, counterReadyAt: 0, egoReadyAt: 0, globalReadyAt: 0 }, nextPhase: null, transitionRemaining: 0, resultReason: '', _pools: { bullets: [], shots: [], enemies: [], effects: [], hazards: [] }, _warnings: [], _delays: [], _deferred: [], _shotReadyAt: 0, _targetId: 0, _targetUntil: 0, _lastGraze: -9999, _boundaryTick: 0, _memoryBucket: 0, _memoryGain: 0, _resBucket: 0, _resGain: 0, _grazeGain: 0, _reservationSince: 0, _starvationReported: false, _checkpoint: { rulesetVersion: 'hapil-firstbattle-1', runId: 'identity25-restore', seed: 813, difficulty: 'hell', practiceBoss: true, checkpointSerial: 1, tick: 0, shotReadyAt: 0, rngState: 813, idCounter: 1, stage: 'boss', wave: 0, phase: 0, stageTime: 0, phaseTime: 0, waveTime: 0, player: [Object], score: 0, graze: 0, kills: 0, memory: 0, resonance: 0, autoAttack: true, skillRotation: true, skills: [Object], stats: [Object], resourceState: [Object], campaign: true, campaignRevision: 5, bossIndex: 9, combatRevision: 25 }, combatRevision: 25, campaign: true, campaignRevision: 5, bossIndex: 9, bossId: 'mammon', bossName: '탐욕의 귀 맘몬', bossCount: 35, encounterName: '맘몬의 금고' },
+    expected: { rulesetVersion: 'hapil-firstbattle-1', mechanicsRevision: 15, runId: 'identity25-restore', seed: 813, rngState: 813, difficulty: 'hell', practiceBoss: true, tick: 0, time: 0, stage: 'boss', stageTime: 0, bossIntroDuration: 2.5, wave: 0, waveTime: 0, waveDuration: 15, phase: 0, phaseTime: 0, phaseTargetDuration: 25, phaseTimeout: 75, patternName: '값이 매겨진 갈래', stageLabel: '탐욕의 귀 맘몬 · 1/3 · 연습', phaseProgress: 0, player: { x: 180, y: 540, hp: 3, maxHp: 3, r: 3, invulnerableUntil: 0, egoUntil: 0 }, boss: { id: 1, x: 180, y: 116, px: 180, py: 116, hp: 1600, maxHp: 1600, phase: 0, opacity: 1, r: 29, isBoss: true, kind: 'mammon', name: '탐욕의 귀 맘몬', artKey: 'sinMammonAtlas', phaseRole: 'general-manager', presentationVariant: 'general-manager', sealTarget: true, linkTarget: false, identityGroup: 'mammon', healthLabel: '봉인 저항', action: 'move', actionProgress: 0, lean: 0, releaseTick: -1, specialPatternId: '', specialPatternLabel: '', patternHint: '' }, enemies: [], bullets: [], shots: [], effects: [], hazards: [], score: 0, graze: 0, kills: 0, memory: 0, resonance: 0, autoAttack: true, skillRotation: true, reservation: false, stats: { hits: 0, shots: 0, damage: 0, casts: [Object], peakBullets: 0, peakEnemies: 0, peakParticles: 0, poolPressure: 0, droppedGroups: 0, missedEnemies: 0, resourceStarvation: 0, bossDamage: 0, phaseTicks: [], collisions: 0 }, events: [], checkpointSerial: 1, idCounter: 1, skills: { memoryReadyAt: 0, delayReadyAt: 360, counterReadyAt: 0, egoReadyAt: 0, globalReadyAt: 0 }, nextPhase: null, transitionRemaining: 0, resultReason: '', _pools: { bullets: [], shots: [], enemies: [], effects: [], hazards: [] }, _warnings: [], _delays: [], _deferred: [], _shotReadyAt: 0, _targetId: 0, _targetUntil: 0, _lastGraze: -9999, _boundaryTick: 0, _memoryBucket: 0, _memoryGain: 0, _resBucket: 0, _resGain: 0, _grazeGain: 0, _reservationSince: 0, _starvationReported: false, _checkpoint: { rulesetVersion: 'hapil-firstbattle-1', runId: 'identity25-restore', seed: 813, difficulty: 'hell', practiceBoss: true, checkpointSerial: 1, tick: 0, rngState: 813, idCounter: 1, stage: 'boss', wave: 0, phase: 0, score: 0, graze: 0, kills: 0, memory: 0, resonance: 0, autoAttack: true, skillRotation: true, campaign: true, campaignRevision: 5, bossIndex: 9, combatRevision: 25, stageTime: 0, phaseTime: 0, waveTime: 0, player: [Object], skills: [Object], stats: [Object], shotReadyAt: 0, resourceState: [Object] }, combatRevision: 25, campaign: true, campaignRevision: 5, bossIndex: 9, bossId: 'mammon', bossName: '탐욕의 귀 맘몬', bossCount: 35, encounterName: '맘몬의 금고', _identityPlans: [] },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

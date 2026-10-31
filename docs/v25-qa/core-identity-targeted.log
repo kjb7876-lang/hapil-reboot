@@ -1,0 +1,15 @@
+✔ 25 is an explicit supported opt-in and preserves the incoming safe boundary revision (3.557445ms)
+✔ all 34 changed configurations have explicit owned roles; Lust remains excluded (0.233333ms)
+✔ Lust 25 retains the entire 21 combat world, including all three phases and difficulties (524.097811ms)
+✔ actual 25 warnings commit for 54 ticks and release the same locked source and phase (1491.903306ms)
+✔ every changed configuration actually releases its identity in all three phases within bounded capacity (2985.144ms)
+✔ protected command/record configurations receive neither new actors nor combat copies (186.471002ms)
+✔ the 34 new compositions differ in actual geometry/rhythm rather than role labels alone (18.362938ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5323.436541

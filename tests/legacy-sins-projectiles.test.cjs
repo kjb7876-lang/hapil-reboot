@@ -21,7 +21,7 @@ async function materialFixture() {
   const images = {};
   const sources = JSON.parse(fs.readFileSync(path.join(__dirname, '../docs/SINS-PROJECTILE-SOURCES-20261029.json'), 'utf8'));
   for (const spec of sources.items.concat(sources.generatedMissingOwnMaterials)) images[spec.runtimeKey] = await loadImage(path.join(__dirname, '..', spec.runtimePath));
-  const media=require('../tools/read-media-registry.cjs')();for(const key of naturalKeys.concat(ownOptionalKeys.flat(),['h24LustHeel','h24LustLipstick','h24LustBrokenHeart']))images[key]=await loadImage(path.join(__dirname,'..',media[key]));
+  const media=require('../tools/read-media-registry.cjs')();for(const key of naturalKeys.concat(ownOptionalKeys.flat(),['h24LustHeel','h24LustLipstick','h24LustBrokenHeart','h25SlothTissue','h25GluttonKnife','h25GreedMoney','h25GreedTreasure']))images[key]=await loadImage(path.join(__dirname,'..',media[key]));
   const surface = createCanvas(360, 100), ctx = surface.getContext('2d'), fx = API.create(images);
   return { images, surface, ctx, fx, allocated, close() { fx.destroy(); global.document = original; } };
 }
@@ -57,14 +57,16 @@ test('all seven sins require their own checked static material, with no Lucifer 
   const f = await materialFixture();
   try {
     for (let i = 5; i < 12; i++) {
-      assert.deepEqual(API.assetKeysForEncounter(i), i===8?[materialKeys[i-5],'h24LustHeel','h24LustLipstick','h24LustBrokenHeart',...ownOptionalKeys[i-5]]:[materialKeys[i-5],naturalKeys[i-5],...ownOptionalKeys[i-5]]);
+      const additions=i===5?['h25SlothTissue']:i===7?['h25GluttonKnife']:i===9?['h25GreedMoney','h25GreedTreasure']:[];
+      const expected=i===8?[materialKeys[i-5],'h24LustHeel','h24LustLipstick','h24LustBrokenHeart',...ownOptionalKeys[i-5]]:[materialKeys[i-5],naturalKeys[i-5],...ownOptionalKeys[i-5],...additions];
+      assert.deepEqual(API.assetKeysForEncounter(i).slice().sort(),expected.slice().sort(),'all original own sources plus explicitly audited v25 props, no foreign substitutions');
       assert.equal(API.invalidAssetForEncounter(f.images, i), null);
       assert.deepEqual(API.optionalAssetKeysForEncounter(i), ownOptionalKeys[i - 5]);
       const missing = { ...f.images }; delete missing[materialKeys[i - 5]];
       assert.equal(API.invalidAssetForEncounter(missing, i), materialKeys[i - 5]);
       missing[materialKeys[i - 5]] = { complete: true, naturalWidth: 1, naturalHeight: 1 };
       assert.equal(API.invalidAssetForEncounter(missing, i), materialKeys[i - 5]);
-      const ownShape=i===8?'h24LustBrokenHeart':naturalKeys[i-5],noOwnShape={...f.images};delete noOwnShape[ownShape];assert.equal(API.invalidAssetForEncounter(noOwnShape,i),ownShape);
+      const ownShape=i===8?'h24LustBrokenHeart':i===5?'h25SlothTissue':i===7?'h25GluttonKnife':i===9?'h25GreedMoney':naturalKeys[i-5],noOwnShape={...f.images};delete noOwnShape[ownShape];assert.equal(API.invalidAssetForEncounter(noOwnShape,i),ownShape);
       f.fx.beginFrame();
       assert.equal(f.fx.drawBullet(f.ctx, { campaign: true, bossIndex: i }, { x: 30, y: 50, r: 11, halfLength: 0, kind: 'boss-weapon' }), false);
       assert.equal(f.fx.getMetrics().weaponVisualDraws, 0);

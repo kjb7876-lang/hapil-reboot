@@ -17,7 +17,7 @@ test('actual existing pattern roles select one complete independent prop, with s
  [8,bullet({kind:'needle',halfLength:7}),'lust-lipstick','h24LustLipstick'],
  [8,bullet({kind:'hell-rotor',r:11,spinRate:-2.6,spinAngle:.4,paletteSlot:0}),'lust-heel','h24LustHeel'],
  [8,bullet({kind:'hell-rotor',r:11,spinRate:2.6,spinAngle:.4,paletteSlot:0}),'lust-lipstick','h24LustLipstick'],
- [6,bullet(),'envy-mirror-shard','h14SkillEnvy'],[9,bullet(),'greed-coin-saw','h14SkillGreed']];
+ [6,bullet(),'envy-mirror-shard','h14SkillEnvy'],[9,bullet({sourcePhase:2}),'greed-coin-saw','h14SkillGreed']];
  const pictures=new Map();for(const [group,b,variant,key]of cases){let high;for(const low of[false,true]){const result=paint(f,group,b,low);assert.equal(result.draws,1,'independent props have no old mixed-object overlay');assert.deepEqual(result.metrics.projectileVariantDraws,{[variant]:1});assert.deepEqual(result.metrics.projectileVariantSourceKeys,{[key]:1});assert.equal(result.metrics.missingProjectileAssets,0);if(group===8||group===6){assert(result.metrics.maxOwnedObjectPixels<=(b.r<=6?48:100),'named whole prop stays within its explicit rotated-object budget');assert(result.metrics.legacyMaxVisualOutset<=4);}else assert(result.metrics.maxVisualOutset<=4);if(low)assert.deepEqual(result.pixels,high,'quality never substitutes the actual danger prop');else high=result.pixels;}pictures.set(variant,high);}
  assert.notDeepEqual(pictures.get('lust-heel'),pictures.get('lust-lipstick'));assert.notDeepEqual(pictures.get('lust-lipstick'),pictures.get('lust-broken-heart'));
  // Material contrast is sampled at actual large-throw size, without asserting

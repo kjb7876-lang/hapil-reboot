@@ -1,0 +1,3 @@
+# Large QA outputs are stored byte-exact in the adjacent .json.gz archives.
+/docs/v25-qa/actual-source-pixels.json
+/docs/v25-qa/actual-emitted-routes.json

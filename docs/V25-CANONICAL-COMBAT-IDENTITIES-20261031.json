@@ -1,0 +1,5106 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "purpose": "V25 canonical combat identity/source audit. Design rows do not claim runtime/test/deployment completion.",
+  "canonical": {
+    "path": "/workspace/scratch/c84ef2cd7c03/upload/스토리월드_최종본_통합_20261029(1).txt",
+    "sha256": "e069b22f4ee33c80e1b8e2e407583a865efec5d01b6440408f0e3389d82cabaa",
+    "scope": "Prologue, parts1..8, finalSamongawakening and preserved-coreguardianending; part9 startsline834 and is excluded"
+  },
+  "counts": {
+    "runtimeEncounterConfigurations": 35,
+    "unchangedLustReference": 1,
+    "remainingConfigurationsToImprove": 34,
+    "canonicalDistinctBossCount": "not inferred from configuration/sourceActor count"
+  },
+  "approvedNewSourceObjects": [
+    {
+      "file": "/workspace/scratch/c84ef2cd7c03/v25-hapil1-sources/dirty_tissue_projectile_bloodied.webp",
+      "bytes": 203616,
+      "sha256": "e408aa2b2317a96036d59ab692f6f4c56489e35bc1571808f14b307efc80273f",
+      "gitBlobSHA": "b5cca9f38cbe1ce85e2be7681ac6f1b52a7e711f",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "alphaBBox": [
+        65,
+        32,
+        1390,
+        984
+      ],
+      "sourceRepository": "kjb7876-lang/hapil1",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "sourcePath": "assets/generated-v31342-rc39/dirty_tissue_projectile_bloodied.webp",
+      "canonicalScene": "ep1b02",
+      "proposedRuntimeKey": "h25SlothTissue",
+      "ownershipEvidence": {
+        "path": "assets/generated-v31342-rc39/README_KO.md",
+        "gitBlobSHA": "dde98a9ab45245110dfa81b5273259bb639acfe7",
+        "kind": "explicit narrative-placement table, not filename inference"
+      },
+      "pixelInspection": "Source audit agent directly viewed all four originals in contact sheet; root separately viewed and approved ownership/derivation. Root owns derivative production.",
+      "derivativeStatus": "not produced by this source-audit agent"
+    },
+    {
+      "file": "/workspace/scratch/c84ef2cd7c03/v25-hapil1-sources/golden_treasure_projectile_bloodied.webp",
+      "bytes": 342290,
+      "sha256": "7af71a4498e60dbd2da4e19e41f34926a5ae379746876344335bef8f61875bd8",
+      "gitBlobSHA": "79b1ba15ccbaa917fb31a34ba8d00855a53793b5",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "alphaBBox": [
+        0,
+        33,
+        1505,
+        984
+      ],
+      "sourceRepository": "kjb7876-lang/hapil1",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "sourcePath": "assets/generated-v31342-rc39/golden_treasure_projectile_bloodied.webp",
+      "canonicalScene": "ep1b06",
+      "proposedRuntimeKey": "h25GreedTreasure",
+      "ownershipEvidence": {
+        "path": "assets/generated-v31342-rc39/README_KO.md",
+        "gitBlobSHA": "dde98a9ab45245110dfa81b5273259bb639acfe7",
+        "kind": "explicit narrative-placement table, not filename inference"
+      },
+      "pixelInspection": "Source audit agent directly viewed all four originals in contact sheet; root separately viewed and approved ownership/derivation. Root owns derivative production.",
+      "derivativeStatus": "not produced by this source-audit agent"
+    },
+    {
+      "file": "/workspace/scratch/c84ef2cd7c03/v25-hapil1-sources/kitchen_knife_projectile_bloodied.webp",
+      "bytes": 180108,
+      "sha256": "5558c302ebca20482050ccab47fdd92ef54134bdf684ce082b78c4e9196ac97e",
+      "gitBlobSHA": "e5dda2939602c65f1583843d486357247db4d8e0",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "alphaBBox": [
+        0,
+        21,
+        1468,
+        1000
+      ],
+      "sourceRepository": "kjb7876-lang/hapil1",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "sourcePath": "assets/generated-v31342-rc39/kitchen_knife_projectile_bloodied.webp",
+      "canonicalScene": "ep1b04",
+      "proposedRuntimeKey": "h25GluttonKnife",
+      "ownershipEvidence": {
+        "path": "assets/generated-v31342-rc39/README_KO.md",
+        "gitBlobSHA": "dde98a9ab45245110dfa81b5273259bb639acfe7",
+        "kind": "explicit narrative-placement table, not filename inference"
+      },
+      "pixelInspection": "Source audit agent directly viewed all four originals in contact sheet; root separately viewed and approved ownership/derivation. Root owns derivative production.",
+      "derivativeStatus": "not produced by this source-audit agent"
+    },
+    {
+      "file": "/workspace/scratch/c84ef2cd7c03/v25-hapil1-sources/paper_money_projectile_bloodied.webp",
+      "bytes": 233638,
+      "sha256": "ba64565641ffb5f4e96fb62b63149c8404ff5501030e3621ad907990278fabb1",
+      "gitBlobSHA": "e27d95e9c83ff596e24de6c3905d0bc416300c0c",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "alphaBBox": [
+        43,
+        21,
+        1502,
+        994
+      ],
+      "sourceRepository": "kjb7876-lang/hapil1",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "sourcePath": "assets/generated-v31342-rc39/paper_money_projectile_bloodied.webp",
+      "canonicalScene": "ep1b06",
+      "proposedRuntimeKey": "h25GreedMoney",
+      "ownershipEvidence": {
+        "path": "assets/generated-v31342-rc39/README_KO.md",
+        "gitBlobSHA": "dde98a9ab45245110dfa81b5273259bb639acfe7",
+        "kind": "explicit narrative-placement table, not filename inference"
+      },
+      "pixelInspection": "Source audit agent directly viewed all four originals in contact sheet; root separately viewed and approved ownership/derivation. Root owns derivative production.",
+      "derivativeStatus": "not produced by this source-audit agent"
+    }
+  ],
+  "rows": [
+    {
+      "runtimeIndex": 0,
+      "visualGroup": 0,
+      "id": "violet",
+      "name": "보라검천사",
+      "canonScene": "01 dist01",
+      "canonicalRole": "거미의 여덟 다리를 가진 보라검 천사",
+      "kind": "foe",
+      "identityGroup": "violet",
+      "phaseRoles": [],
+      "protectedTargets": [],
+      "protectionRule": "천사 모습은 전투 상대이며 인류 전부가 악이라는 단정으로 확장하지 않는다",
+      "proposedRhythm": [
+        "여덟 갈래 검흔",
+        "보라검 각인",
+        "끊어진 날개의 잔광"
+      ],
+      "objectBinding": "보라검 자산으로 방사 검격과 긴 베기 구분",
+      "baselineAssets": [
+        {
+          "key": "h14SkillViolet",
+          "path": "media/hapil1-v14/fx/violet-primary.webp",
+          "sha256": "237953c7bb81d53450f3ae5f63b0b81986eab37a124d929bced022b14a3addd8",
+          "bytes": 111666,
+          "source": "assets/generated-v31306/projectiles/dist01-purple-web-blade.webp",
+          "sourceCommit": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+          "gitBlobSHA": "02b4aada39778f419ad6d796d0964191b1a9e8d2"
+        }
+      ],
+      "baselineStoryContracts": null,
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 1,
+      "visualGroup": 1,
+      "id": "horn",
+      "name": "늪지대의 뿔악마",
+      "canonScene": "02 dist02",
+      "canonicalRole": "검은 늪과 죽은 동료 얼굴로 기억을 혼란시키는 뿔악마",
+      "kind": "foe",
+      "identityGroup": "horn",
+      "phaseRoles": [],
+      "protectedTargets": [],
+      "protectionRule": "동료의 얼굴을 새 보스나 실제 죽음의 확정 증거로 만들지 않는다",
+      "proposedRhythm": [
+        "늪 바깥에서 안으로 번짐",
+        "붙잡는 간격",
+        "반사된 잔상"
+      ],
+      "objectBinding": "자신의 늪/뿔 자산을 느린 유입과 되감긴 흐름으로 구분",
+      "baselineAssets": [
+        {
+          "key": "h14SkillHorn",
+          "path": "media/hapil1-v14/fx/horn-primary.webp",
+          "sha256": "f798a6599bcd55e37b9b1dfceda41a0b20610a92cbfe3c6181a7397c88c549d0",
+          "bytes": 24420,
+          "source": "assets/vfx/bosses/v312/mb-dist02.webp",
+          "sourceCommit": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+          "gitBlobSHA": "9a35917a0bc0c97394dfea8595ffa1477ead9bda"
+        }
+      ],
+      "baselineStoryContracts": null,
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 2,
+      "visualGroup": 2,
+      "id": "balrog",
+      "name": "발록",
+      "canonScene": "07 dist06",
+      "canonicalRole": "소환진의 발록; 공간을 가르는 검과 하늘의 불덩이",
+      "kind": "foe",
+      "identityGroup": "balrog",
+      "phaseRoles": [],
+      "protectedTargets": [],
+      "protectionRule": "소환진 붕괴 뒤 추락 서사 유지",
+      "proposedRhythm": [
+        "공간 베기",
+        "위에서 내리는 운석",
+        "봉인 사이의 틈"
+      ],
+      "objectBinding": "검격/채찍과 운석의 서로 다른 자체 원본 유지",
+      "baselineAssets": [
+        {
+          "key": "h14SkillBalrog",
+          "path": "media/hapil1-v14/fx/balrog-secondary.webp",
+          "sha256": "f6f9b989f5c6e33094440268a7888c71548ac2c6948d0cf4254b2e04aea3d762",
+          "bytes": 207986,
+          "source": "assets/generated-v31224/boss-vfx/balrog_gate_meteor.webp",
+          "sourceCommit": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+          "gitBlobSHA": "d2b4638a1c8e74b9fb18cd5cba8d8331d7cfcf5e"
+        }
+      ],
+      "baselineStoryContracts": null,
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 3,
+      "visualGroup": 3,
+      "id": "mask",
+      "name": "초천사의 웃는 가면",
+      "canonScene": "08~11 ep1a08~11",
+      "canonicalRole": "완벽과 복종을 강요하는 초천사의 웃는 가면",
+      "kind": "foe",
+      "identityGroup": "mask",
+      "phaseRoles": [],
+      "protectedTargets": [],
+      "protectionRule": "의료진이나 환자를 공격 대상으로 바꾸지 않는다",
+      "proposedRhythm": [
+        "흰 날개 부채",
+        "경직된 고정선",
+        "가면이 갈라진 흐름"
+      ],
+      "objectBinding": "가면 소유 깃털 창과 가짜 후광은 예고/발사 역할 분리",
+      "baselineAssets": [
+        {
+          "key": "h14SkillMask",
+          "path": "media/hapil1-v14/fx/mask-secondary.webp",
+          "sha256": "2772a1df9aee03a04d75786218e5834e60aa2c4dc8dc7bd5372065e93287eee4",
+          "bytes": 60564,
+          "source": "assets/vfx/v31323/boss/mb-ep1a11/lucifer_feather_lance.webp",
+          "sourceCommit": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+          "gitBlobSHA": "62048cdd659a84f2d2565c3f977f681e14c24fbe"
+        }
+      ],
+      "baselineStoryContracts": null,
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 4,
+      "visualGroup": 4,
+      "id": "lucifer",
+      "name": "코스믹 가면 루시퍼",
+      "canonScene": "11 ep1a11",
+      "canonicalRole": "많은 자기 얼굴로 약물 갈망·수치를 이용하는 루시퍼",
+      "kind": "foe",
+      "identityGroup": "lucifer",
+      "phaseRoles": [],
+      "protectedTargets": [],
+      "protectionRule": "J 인장은 환자의 선택과 도움 요청이며 악마의 투척 무기로 새로 주장하지 않는다",
+      "proposedRhythm": [
+        "천구의 회전",
+        "반대 위상 반사",
+        "권능의 균열"
+      ],
+      "objectBinding": "루시퍼 자체 깃털 창과 심판 인장으로 두 흐름 분리",
+      "baselineAssets": [
+        {
+          "key": "h14SkillLucifer",
+          "path": "media/hapil1-v14/fx/lucifer-secondary.webp",
+          "sha256": "c0f4cf47147fccb62714d909749e79a72e893b2976943c53e441e8deb9dfc93d",
+          "bytes": 143392,
+          "source": "assets/generated-v31224/boss-vfx/lucifer_feather_lance.webp",
+          "sourceCommit": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+          "gitBlobSHA": "498ee215ccd77458ad64a0bff181c7c2fd30dff8"
+        }
+      ],
+      "baselineStoryContracts": null,
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 5,
+      "visualGroup": 5,
+      "id": "belphegor",
+      "name": "나태의 귀 벨페고르",
+      "canonScene": "14 ep1b02",
+      "canonicalRole": "쓰레기 산에 갇힌 남자와 나태의 귀",
+      "kind": "foe",
+      "identityGroup": "belphegor",
+      "phaseRoles": [
+        "sloth-man",
+        "sloth-man",
+        "sloth-man"
+      ],
+      "protectedTargets": [],
+      "protectionRule": "남자를 강제로 일으켜 세우는 승리 연출 금지",
+      "proposedRhythm": [
+        "한 박자 늦은 휴지",
+        "멈춘 광선",
+        "지연된 잔해 파동"
+      ],
+      "objectBinding": "h25SlothTissue 휴지 뭉치와 h14SkillSloth 잔해를 구분",
+      "baselineAssets": [
+        {
+          "key": "h14SkillSloth",
+          "path": "media/hapil1-v14/fx/sloth-secondary.webp",
+          "sha256": "fd0df92278a5e74d4c2421ffc2c3fcce8b35c2455bd2407ce9b71bd067489486",
+          "bytes": 273476,
+          "source": "assets/vfx/bosses/v3110/ep1b02_deferred_life_debris.webp",
+          "sourceCommit": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+          "gitBlobSHA": "050598a2e5284381132bed8747bfe99eeee83469"
+        }
+      ],
+      "baselineStoryContracts": null,
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 6,
+      "visualGroup": 6,
+      "id": "leviathan",
+      "name": "질투의 귀 레비아탄",
+      "canonScene": "15 ep1b03",
+      "canonicalRole": "서윤 사진을 노려보는 누나·호텔 부매니저와 질투의 귀",
+      "kind": "foe",
+      "identityGroup": "leviathan",
+      "phaseRoles": [
+        "older-sister-deputy-manager",
+        "older-sister-deputy-manager",
+        "older-sister-deputy-manager"
+      ],
+      "protectedTargets": [],
+      "protectionRule": "서윤/동생을 소환한 새 적으로 만들지 않는다",
+      "proposedRhythm": [
+        "서로 다른 두 거울 흐름",
+        "사진 쪽 교차 시선",
+        "뒤집힌 반영"
+      ],
+      "objectBinding": "전체 거울 칼날과 날씬한 유리 조각을 다른 역할로 사용",
+      "baselineAssets": [
+        {
+          "key": "h14SkillEnvy",
+          "path": "media/hapil1-v14/fx/envy-primary.webp",
+          "sha256": "79feb01463759f28a1e5ede94586b944a5c97062f21d54df097d0c6f306fedd6",
+          "bytes": 179378,
+          "source": "assets/generated-v31224/boss-vfx/envy_mirror_shard.webp",
+          "sourceCommit": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+          "gitBlobSHA": "3d348fbbe745d5cbea93d78eef2d84ed55fae58a"
+        }
+      ],
+      "baselineStoryContracts": null,
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 7,
+      "visualGroup": 7,
+      "id": "beelzebub",
+      "name": "탐식의 귀 베엘제붑",
+      "canonScene": "16 ep1b04",
+      "canonicalRole": "총주방장의 보상 집착과 탐식의 귀",
+      "kind": "foe",
+      "identityGroup": "beelzebub",
+      "phaseRoles": [
+        "head-chef",
+        "head-chef",
+        "head-chef"
+      ],
+      "protectedTargets": [],
+      "protectionRule": "정본의 조사·징계·치료가 악몽 승리로 취소되지 않는다",
+      "proposedRhythm": [
+        "식칼 투척",
+        "주방 교차",
+        "벌어지는 위장 파동"
+      ],
+      "objectBinding": "h25GluttonKnife 식칼과 h14RotorGlutton 주방 원본/입 파동 분리",
+      "baselineAssets": [
+        {
+          "key": "h14SkillGlutton",
+          "path": "media/hapil1-v14/fx/glutton-primary.webp",
+          "sha256": "a30a2c20dbd1adf968d0f737b8836149ce28a62ad68dbf9452ee63c5df4b27fc",
+          "bytes": 295074,
+          "source": "assets/generated-v31224/boss-vfx/gluttony_maw_wave.webp",
+          "sourceCommit": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+          "gitBlobSHA": "810bd2db3a1869d148053a463947c594de4fd7ce"
+        }
+      ],
+      "baselineStoryContracts": null,
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 8,
+      "visualGroup": 8,
+      "id": "asmodeus",
+      "name": "색욕의 귀 아스모데우스",
+      "canonScene": "17 ep1b05",
+      "canonicalRole": "실에 조종되는 서윤과 색욕의 귀; v24 기준 전투",
+      "kind": "foe",
+      "identityGroup": "asmodeus",
+      "phaseRoles": [
+        "seoyun-stage",
+        "seoyun-stage",
+        "seoyun-stage"
+      ],
+      "protectedTargets": [],
+      "protectionRule": "이번 개선의 기준; 색욕 자산을 다른 보스에 재사용하지 않는다",
+      "proposedRhythm": [
+        "하이힐·립스틱",
+        "깨진 하트",
+        "무대의 제어 실"
+      ],
+      "objectBinding": "v24의 실제 단독 하이힐·립스틱·깨진 하트 그대로 보존",
+      "baselineAssets": [
+        {
+          "key": "h14SkillLust",
+          "path": "media/hapil1-v14/fx/lust-primary.webp",
+          "sha256": "50854e6326ef0bf88e41dc396551fe337741cae7d85389bc94f5e624395760e1",
+          "bytes": 214228,
+          "source": "assets/vfx/bosses/v3110/ep1b05_lipstick_heel_control_strings.webp",
+          "sourceCommit": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+          "gitBlobSHA": "170d8770ae63408be213a8aaf7f5c543ba0bb482"
+        }
+      ],
+      "baselineStoryContracts": null,
+      "status": "v24 reference: keep unchanged"
+    },
+    {
+      "runtimeIndex": 9,
+      "visualGroup": 9,
+      "id": "mammon",
+      "name": "탐욕의 귀 맘몬",
+      "canonScene": "18~19 ep1b06~06b",
+      "canonicalRole": "총지배인의 금고·탐욕; 마지막은 산장 속 소년의 기억",
+      "kind": "foe",
+      "identityGroup": "mammon",
+      "phaseRoles": [
+        "general-manager",
+        "general-manager",
+        "child-memory"
+      ],
+      "protectedTargets": [],
+      "protectionRule": "어린 소년을 악의적 돈 공격자로 재해석하지 않는다; 어머니 죽음 책임을 아이에게 묻지 않는다",
+      "proposedRhythm": [
+        "돈 묶음/금화 갈래",
+        "금고 잠금",
+        "겨울 기억의 바람"
+      ],
+      "objectBinding": "성인 두 단계만 h25GreedMoney/h25GreedTreasure; 마지막은 기존 own-memory 표현",
+      "baselineAssets": [
+        {
+          "key": "h14SkillGreed",
+          "path": "media/hapil1-v14/fx/greed-primary.webp",
+          "sha256": "36355530ef13f3727b36c0458f3b8a40bb31e1c5fd11ad0f58e4c2f4fcfeeb4b",
+          "bytes": 267494,
+          "source": "assets/generated-v31224/boss-vfx/greed_coin_saw.webp",
+          "sourceCommit": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+          "gitBlobSHA": "5f752b7afa90132d4074f4d78880c8f3b018f5a7"
+        }
+      ],
+      "baselineStoryContracts": null,
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 10,
+      "visualGroup": 10,
+      "id": "wrath",
+      "name": "분노의 귀",
+      "canonScene": "20 ep1b07",
+      "canonicalRole": "화재 대피 뒤 청소부의 분노; 곰·늑대 무리·용의 변형",
+      "kind": "foe",
+      "identityGroup": "wrath",
+      "phaseRoles": [
+        "janitor",
+        "janitor",
+        "janitor"
+      ],
+      "protectedTargets": [],
+      "protectionRule": "먼저 대피하는 사람들과 세 아이는 적이 아니다",
+      "proposedRhythm": [
+        "넓은 한 번의 발톱",
+        "늑대식 엇갈림",
+        "긴 용불길"
+      ],
+      "objectBinding": "h14SkillWrath의 청소부 불/짐승 자산; 위상별 발사 윤곽 분리",
+      "baselineAssets": [
+        {
+          "key": "h14SkillWrath",
+          "path": "media/hapil1-v14/fx/wrath-primary.webp",
+          "sha256": "fe91e446954c9d3367e194c2884264a0b428b01d40c17d1b3556f58cceacff95",
+          "bytes": 276340,
+          "source": "assets/vfx/bosses/v3110/ep1b07_mop_lighter_fire_beasts.webp",
+          "sourceCommit": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+          "gitBlobSHA": "022d0c7688a8467bed3a734492f0d8034e2daf26"
+        }
+      ],
+      "baselineStoryContracts": null,
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 11,
+      "visualGroup": 11,
+      "id": "pride",
+      "name": "교만의 회장",
+      "canonScene": "21~22 ep1b08~09",
+      "canonicalRole": "백색 정장 회장의 일곱 신호와 생체 부트로더 사이보그",
+      "kind": "foe",
+      "identityGroup": "pride",
+      "phaseRoles": [
+        "white-suit-chairman",
+        "white-suit-chairman",
+        "cyborg-biobootloader"
+      ],
+      "protectedTargets": [],
+      "protectionRule": "제2부 회장과 제8부 최종 교주는 런타임 단계·서사 위치를 합치지 않는다",
+      "proposedRhythm": [
+        "일곱 갈래 역십자",
+        "전극 고정선",
+        "연산의 반송"
+      ],
+      "objectBinding": "h14SkillPride/own 전극·역십자; 사이보그 단계의 기계 연결 강조",
+      "baselineAssets": [
+        {
+          "key": "h14SkillPride",
+          "path": "media/hapil1-v14/fx/pride-primary.webp",
+          "sha256": "83ed7b152d1c8d28cf9c3797738c42184ed02cf6100e976ef5886b5f76f69c85",
+          "bytes": 282626,
+          "source": "assets/vfx/bosses/v3110/ep1b08_inverted_cross_telekinesis.webp",
+          "sourceCommit": "43f9b257199f3cb25d81bf0ef3fdc8243f8dbd81",
+          "gitBlobSHA": "b43fa36bce96e7b1c0b1981523d14be7cb0b84db"
+        }
+      ],
+      "baselineStoryContracts": null,
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 12,
+      "visualGroup": 13,
+      "id": "controller-army",
+      "name": "통제체계 · 방어의 군단",
+      "canonScene": "24 u201",
+      "canonicalRole": "한 통제체계의 방어 군단·폭격 루프·벽",
+      "kind": "controller-system-role",
+      "identityGroup": "controller-system",
+      "phaseRoles": [
+        "defensive-legion",
+        "bombardment-loop",
+        "architecture"
+      ],
+      "protectedTargets": [],
+      "protectionRule": "공격으로 방어가 강화됨은 압박 단서; 아이·방어기제 자체의 영구 소멸을 목표로 하지 않는다",
+      "proposedRhythm": [
+        "간격 있는 군단",
+        "같은 지점 폭격",
+        "성벽 연결"
+      ],
+      "objectBinding": "chapter3Lance 대열과 chapter3Beam 폭격을 규칙적 박자로 구분",
+      "baselineAssets": [
+        {
+          "key": "chapter3Lance",
+          "path": "media/chapter3-v18/lance.webp",
+          "sha256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+          "bytes": 29140,
+          "source": "assets/vfx/v31323/boss/u203-boss/control-lance.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceGitBlob": "4b1f924bc4691cd38e3ade4ba8122bd458bbd476",
+          "sourceSHA256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+          "ownershipNote": "Same controller-system scene family; route/model aliases are roles, not new canonical people."
+        },
+        {
+          "key": "chapter3Beam",
+          "path": "media/chapter3-v18/beam.webp",
+          "sha256": "630a74006bc13b02614445ce91aa87d12ca32f0e17a54100360629a2fb3d0be2",
+          "bytes": 52734,
+          "source": "assets/vfx/v31330/u203-boss/beam.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceGitBlob": "f335cafe44b64c5dbf2dee75ae48b01dbd4a31f1",
+          "sourceSHA256": "630a74006bc13b02614445ce91aa87d12ca32f0e17a54100360629a2fb3d0be2",
+          "ownershipNote": "Same controller-system scene family; route/model aliases are roles, not new canonical people."
+        }
+      ],
+      "baselineStoryContracts": null,
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 13,
+      "visualGroup": 14,
+      "id": "controller-rescue",
+      "name": "통제체계 · 잔인한 구원",
+      "canonScene": "25 u202",
+      "canonicalRole": "같은 통제체계의 잔인한 구원·연민의 폭력",
+      "kind": "controller-system-role",
+      "identityGroup": "controller-system",
+      "phaseRoles": [
+        "cruel-rescue",
+        "compassion-boundary",
+        "meaning"
+      ],
+      "protectedTargets": [],
+      "protectionRule": "기억 자체를 지우지 않는다; 통제자를 별개 네 명으로 분할하지 않는다",
+      "proposedRhythm": [
+        "좁아지는 대열",
+        "닫히는 틈",
+        "반복 시작점"
+      ],
+      "objectBinding": "같은 chapter3 원본으로 압박 후 비는 틈을 보여 준다",
+      "baselineAssets": [
+        {
+          "key": "chapter3Lance",
+          "path": "media/chapter3-v18/lance.webp",
+          "sha256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+          "bytes": 29140,
+          "source": "assets/vfx/v31323/boss/u203-boss/control-lance.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceGitBlob": "4b1f924bc4691cd38e3ade4ba8122bd458bbd476",
+          "sourceSHA256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+          "ownershipNote": "Same controller-system scene family; route/model aliases are roles, not new canonical people."
+        },
+        {
+          "key": "chapter3Beam",
+          "path": "media/chapter3-v18/beam.webp",
+          "sha256": "630a74006bc13b02614445ce91aa87d12ca32f0e17a54100360629a2fb3d0be2",
+          "bytes": 52734,
+          "source": "assets/vfx/v31330/u203-boss/beam.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceGitBlob": "f335cafe44b64c5dbf2dee75ae48b01dbd4a31f1",
+          "sourceSHA256": "630a74006bc13b02614445ce91aa87d12ca32f0e17a54100360629a2fb3d0be2",
+          "ownershipNote": "Same controller-system scene family; route/model aliases are roles, not new canonical people."
+        }
+      ],
+      "baselineStoryContracts": null,
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 14,
+      "visualGroup": 15,
+      "id": "controller-veto",
+      "name": "통제체계 · 시스템의 거부권",
+      "canonScene": "26 u204",
+      "canonicalRole": "같은 통제체계의 거부권·감정 회로·레거시",
+      "kind": "controller-system-role",
+      "identityGroup": "controller-system",
+      "phaseRoles": [
+        "veto",
+        "hardware-migration",
+        "legacy"
+      ],
+      "protectedTargets": [],
+      "protectionRule": "인간성을 오류로 처리하거나 치료를 폭력의 정답으로 고정하지 않는다",
+      "proposedRhythm": [
+        "문 앞 거부선",
+        "두 규칙의 충돌",
+        "표정 없는 동기화"
+      ],
+      "objectBinding": "chapter3Lance로 동기화·엇갈림 구분; Beam의 끝나는 순간 표시",
+      "baselineAssets": [
+        {
+          "key": "chapter3Lance",
+          "path": "media/chapter3-v18/lance.webp",
+          "sha256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+          "bytes": 29140,
+          "source": "assets/vfx/v31323/boss/u203-boss/control-lance.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceGitBlob": "4b1f924bc4691cd38e3ade4ba8122bd458bbd476",
+          "sourceSHA256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+          "ownershipNote": "Same controller-system scene family; route/model aliases are roles, not new canonical people."
+        },
+        {
+          "key": "chapter3Beam",
+          "path": "media/chapter3-v18/beam.webp",
+          "sha256": "630a74006bc13b02614445ce91aa87d12ca32f0e17a54100360629a2fb3d0be2",
+          "bytes": 52734,
+          "source": "assets/vfx/v31330/u203-boss/beam.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceGitBlob": "f335cafe44b64c5dbf2dee75ae48b01dbd4a31f1",
+          "sourceSHA256": "630a74006bc13b02614445ce91aa87d12ca32f0e17a54100360629a2fb3d0be2",
+          "ownershipNote": "Same controller-system scene family; route/model aliases are roles, not new canonical people."
+        }
+      ],
+      "baselineStoryContracts": null,
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 15,
+      "visualGroup": 16,
+      "id": "controller-authority",
+      "name": "통제체계 · 관리자 권한",
+      "canonScene": "27 u205",
+      "canonicalRole": "같은 통제체계의 관리자 권한·학대의 방",
+      "kind": "controller-system-role",
+      "identityGroup": "controller-system",
+      "phaseRoles": [
+        "administrator",
+        "abuse-memory",
+        "feedback"
+      ],
+      "protectedTargets": [],
+      "protectionRule": "학대 기억과 아이의 자아는 지울 대상이 아니다",
+      "proposedRhythm": [
+        "출력 되돌림",
+        "문손잡이 앞 정지",
+        "피드백 귀로"
+      ],
+      "objectBinding": "반송되는 Lance와 연결 고리의 개폐 주기",
+      "baselineAssets": [
+        {
+          "key": "chapter3Lance",
+          "path": "media/chapter3-v18/lance.webp",
+          "sha256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+          "bytes": 29140,
+          "source": "assets/vfx/v31323/boss/u203-boss/control-lance.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceGitBlob": "4b1f924bc4691cd38e3ade4ba8122bd458bbd476",
+          "sourceSHA256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+          "ownershipNote": "Same controller-system scene family; route/model aliases are roles, not new canonical people."
+        },
+        {
+          "key": "chapter3Beam",
+          "path": "media/chapter3-v18/beam.webp",
+          "sha256": "630a74006bc13b02614445ce91aa87d12ca32f0e17a54100360629a2fb3d0be2",
+          "bytes": 52734,
+          "source": "assets/vfx/v31330/u203-boss/beam.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceGitBlob": "f335cafe44b64c5dbf2dee75ae48b01dbd4a31f1",
+          "sourceSHA256": "630a74006bc13b02614445ce91aa87d12ca32f0e17a54100360629a2fb3d0be2",
+          "ownershipNote": "Same controller-system scene family; route/model aliases are roles, not new canonical people."
+        }
+      ],
+      "baselineStoryContracts": null,
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 16,
+      "visualGroup": 17,
+      "id": "controller-migration",
+      "name": "통제체계 · 중앙 코어 이주실",
+      "canonScene": "28 u206",
+      "canonicalRole": "같은 통제체계의 빈 기계 그릇·강요된 선택·갈림길",
+      "kind": "controller-system-role",
+      "identityGroup": "controller-system",
+      "phaseRoles": [
+        "empty-vessel",
+        "constrained-choice",
+        "update-fork"
+      ],
+      "protectedTargets": [],
+      "protectionRule": "빈 육체 자체를 새 악마로 만들지 않는다; 인간으로 돌아가라는 강요도 피한다",
+      "proposedRhythm": [
+        "한 길만 남기는 봉쇄",
+        "갈림의 유예",
+        "되감기 선 분리"
+      ],
+      "objectBinding": "chapter3Beam의 닫힌 길과 작은 대체 통로 표시",
+      "baselineAssets": [
+        {
+          "key": "chapter3Lance",
+          "path": "media/chapter3-v18/lance.webp",
+          "sha256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+          "bytes": 29140,
+          "source": "assets/vfx/v31323/boss/u203-boss/control-lance.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceGitBlob": "4b1f924bc4691cd38e3ade4ba8122bd458bbd476",
+          "sourceSHA256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+          "ownershipNote": "Same controller-system scene family; route/model aliases are roles, not new canonical people."
+        },
+        {
+          "key": "chapter3Beam",
+          "path": "media/chapter3-v18/beam.webp",
+          "sha256": "630a74006bc13b02614445ce91aa87d12ca32f0e17a54100360629a2fb3d0be2",
+          "bytes": 52734,
+          "source": "assets/vfx/v31330/u203-boss/beam.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceGitBlob": "f335cafe44b64c5dbf2dee75ae48b01dbd4a31f1",
+          "sourceSHA256": "630a74006bc13b02614445ce91aa87d12ca32f0e17a54100360629a2fb3d0be2",
+          "ownershipNote": "Same controller-system scene family; route/model aliases are roles, not new canonical people."
+        }
+      ],
+      "baselineStoryContracts": null,
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 17,
+      "visualGroup": 18,
+      "id": "controller-memory-gate",
+      "name": "통제자 · 기억의 문",
+      "canonScene": "29 u203",
+      "canonicalRole": "통제자가 기억의 문에 빙의한 최종 대치",
+      "kind": "controller-system-role",
+      "identityGroup": "controller-system",
+      "phaseRoles": [
+        "possessed-gate",
+        "repeat-link",
+        "released-ego"
+      ],
+      "protectedTargets": [],
+      "protectionRule": "기억의 문은 베지 않는다; 반복 명령 연결만 끊고 첫째 아이 해방",
+      "proposedRhythm": [
+        "갑옷 틈새",
+        "두 연결의 분기",
+        "반복선 절단"
+      ],
+      "objectBinding": "chapter3Lance/Beam의 분기와 정지로 기억과 반복 구별",
+      "baselineAssets": [
+        {
+          "key": "chapter3Lance",
+          "path": "media/chapter3-v18/lance.webp",
+          "sha256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+          "bytes": 29140,
+          "source": "assets/vfx/v31323/boss/u203-boss/control-lance.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceGitBlob": "4b1f924bc4691cd38e3ade4ba8122bd458bbd476",
+          "sourceSHA256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+          "ownershipNote": "Same controller-system scene family; route/model aliases are roles, not new canonical people."
+        },
+        {
+          "key": "chapter3Beam",
+          "path": "media/chapter3-v18/beam.webp",
+          "sha256": "630a74006bc13b02614445ce91aa87d12ca32f0e17a54100360629a2fb3d0be2",
+          "bytes": 52734,
+          "source": "assets/vfx/v31330/u203-boss/beam.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceGitBlob": "f335cafe44b64c5dbf2dee75ae48b01dbd4a31f1",
+          "sourceSHA256": "630a74006bc13b02614445ce91aa87d12ca32f0e17a54100360629a2fb3d0be2",
+          "ownershipNote": "Same controller-system scene family; route/model aliases are roles, not new canonical people."
+        }
+      ],
+      "baselineStoryContracts": null,
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 18,
+      "visualGroup": 19,
+      "id": "goblin-chief",
+      "name": "고블린 두목",
+      "canonScene": "32 last305",
+      "canonicalRole": "터전을 잃은 고블린 두목과 피리에 방향을 바꾸는 늑대",
+      "kind": "foe",
+      "identityGroup": "goblin-chief",
+      "phaseRoles": [],
+      "protectedTargets": [],
+      "protectionRule": "고블린 전멸이 목표가 아니다; 두목에게서 장미 인장 받기 유지",
+      "proposedRhythm": [
+        "피리 응답 방향 전환",
+        "늑대 선회",
+        "장미 공명"
+      ],
+      "objectBinding": "storyGoblin 소유 무기와 storyGoblinWave 전환 파동",
+      "baselineAssets": [
+        {
+          "key": "storyGoblin",
+          "path": "media/story-v19/goblin.webp",
+          "sha256": "09db8af84705584d6f44b2de6542593d63a6b6d37b126cc5c38917ccd918b996",
+          "bytes": 116776,
+          "source": "assets/actors/v31317/goblin-flute-king.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "ddb705803077855e331411f2cb97db5f85b58593c2b820a2b73f5a67d913bbf5",
+          "sourceGitBlob": "0dec8e1e1aab37d84a2a6daf62eb160271d9c876"
+        },
+        {
+          "key": "storyGoblinWave",
+          "path": "media/story-v19/goblin-wave.webp",
+          "sha256": "20e5c4152bd1c99c49c175ab36d3fa7c4d414accba1b729e83d2023cbd617e88",
+          "bytes": 272580,
+          "source": "assets/vfx/generated/v31309/goblin-flute-sonic-wave.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "20e5c4152bd1c99c49c175ab36d3fa7c4d414accba1b729e83d2023cbd617e88",
+          "sourceGitBlob": "2ee8e412ed2f240dbe2406f93ff9c94313bc3c0a"
+        }
+      ],
+      "baselineStoryContracts": {
+        "projectiles": {
+          "orb": {
+            "key": "storyGoblin",
+            "width": 672,
+            "height": 384,
+            "crop": [
+              190,
+              175,
+              60,
+              65
+            ],
+            "objectCrop": [
+              198,
+              182,
+              39,
+              34
+            ],
+            "denseCrop": [
+              210,
+              199,
+              8,
+              8
+            ],
+            "anchor": [
+              214,
+              202
+            ],
+            "r": 4,
+            "l": 0,
+            "frames": 1,
+            "rotation": 0
+          },
+          "blade": {
+            "key": "storyGoblin",
+            "width": 672,
+            "height": 384,
+            "crop": [
+              190,
+              175,
+              60,
+              65
+            ],
+            "objectCrop": [
+              190,
+              175,
+              60,
+              65
+            ],
+            "denseCrop": [
+              210,
+              199,
+              8,
+              8
+            ],
+            "anchor": [
+              216,
+              201
+            ],
+            "r": 4,
+            "l": 0,
+            "frames": 1,
+            "rotation": -1.5707963267948966
+          },
+          "beam": {
+            "key": "storyGoblinWave",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              58,
+              60,
+              410,
+              398
+            ],
+            "objectCrop": [
+              58,
+              60,
+              410,
+              398
+            ],
+            "denseCrop": [
+              253,
+              252,
+              12,
+              12
+            ],
+            "anchor": [
+              259,
+              258
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 244,
+            "sourcePatchMeanValue": 91.76,
+            "rotation": 0
+          },
+          "rotor": {
+            "key": "storyGoblinWave",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              58,
+              60,
+              410,
+              398
+            ],
+            "objectCrop": [
+              58,
+              60,
+              410,
+              398
+            ],
+            "denseCrop": [
+              253,
+              252,
+              12,
+              12
+            ],
+            "anchor": [
+              259,
+              258
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 244,
+            "sourcePatchMeanValue": 91.76,
+            "rotation": 0
+          },
+          "palette": {
+            "id": "story-19",
+            "primary": "#d0bb65",
+            "secondary": "#9fd87d",
+            "accent": "#65513b"
+          }
+        },
+        "skills": {
+          "cast": {
+            "key": "storyGoblinWave",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              58,
+              60,
+              410,
+              398
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "release": {
+            "key": "storyGoblin",
+            "width": 672,
+            "height": 384,
+            "crop": [
+              190,
+              175,
+              60,
+              65
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "laser": {
+            "key": "storyGoblinWave",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              58,
+              60,
+              410,
+              398
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          }
+        }
+      },
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 19,
+      "visualGroup": 20,
+      "id": "fallen-knight",
+      "name": "타락천사 기사",
+      "canonScene": "33 last301",
+      "canonicalRole": "동작을 읽고 여섯으로 갈라지는 타락천사 기사",
+      "kind": "scripted-fall",
+      "identityGroup": "fallen-knight",
+      "phaseRoles": [],
+      "protectedTargets": [],
+      "protectionRule": "정본의 패배·바다 추락 유지; 신규 승리 결말 금지",
+      "proposedRhythm": [
+        "익숙한 길목 추적",
+        "여섯 검격",
+        "성벽 붕괴"
+      ],
+      "objectBinding": "storyKnightSword 검격을 큰 방향성 있는 실루엣으로 표시",
+      "baselineAssets": [
+        {
+          "key": "storyKnightSword",
+          "path": "media/story-v19/knight-sword.png",
+          "sha256": "d14b4babd804f490b31d2f1cf8bf8fba23bd72f5605329c1c88acd5b74fa4841",
+          "bytes": 44486,
+          "source": "assets/last3/FallenAngel_Sword.png",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "d14b4babd804f490b31d2f1cf8bf8fba23bd72f5605329c1c88acd5b74fa4841",
+          "sourceGitBlob": "a7cee1065faa5d567868ce1a512d7a60a7f5252f"
+        }
+      ],
+      "baselineStoryContracts": {
+        "projectiles": {
+          "orb": {
+            "key": "storyKnightSword",
+            "width": 512,
+            "height": 341,
+            "crop": [
+              109,
+              2,
+              89,
+              329
+            ],
+            "objectCrop": [
+              109,
+              2,
+              89,
+              329
+            ],
+            "denseCrop": [
+              148,
+              158,
+              12,
+              12
+            ],
+            "anchor": [
+              154,
+              160
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 235,
+            "sourcePatchMeanValue": 97.96,
+            "rotation": 0
+          },
+          "blade": {
+            "key": "storyKnightSword",
+            "width": 512,
+            "height": 341,
+            "crop": [
+              109,
+              2,
+              89,
+              329
+            ],
+            "objectCrop": [
+              109,
+              2,
+              89,
+              329
+            ],
+            "denseCrop": [
+              148,
+              158,
+              12,
+              12
+            ],
+            "anchor": [
+              154,
+              164
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 235,
+            "sourcePatchMeanValue": 97.96,
+            "rotation": -1.5707963267948966
+          },
+          "beam": {
+            "key": "storyKnightSword",
+            "width": 512,
+            "height": 341,
+            "crop": [
+              109,
+              2,
+              89,
+              329
+            ],
+            "objectCrop": [
+              109,
+              2,
+              89,
+              329
+            ],
+            "denseCrop": [
+              148,
+              158,
+              12,
+              12
+            ],
+            "anchor": [
+              154,
+              164
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 235,
+            "sourcePatchMeanValue": 97.96,
+            "rotation": 0
+          },
+          "rotor": {
+            "key": "storyKnightSword",
+            "width": 512,
+            "height": 341,
+            "crop": [
+              109,
+              2,
+              89,
+              329
+            ],
+            "objectCrop": [
+              109,
+              2,
+              89,
+              329
+            ],
+            "denseCrop": [
+              148,
+              158,
+              12,
+              12
+            ],
+            "anchor": [
+              154,
+              164
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 235,
+            "sourcePatchMeanValue": 97.96,
+            "rotation": 0
+          },
+          "palette": {
+            "id": "story-20",
+            "primary": "#b8a4a1",
+            "secondary": "#d07e69",
+            "accent": "#6e7294"
+          }
+        },
+        "skills": {
+          "cast": {
+            "key": "storyKnightSword",
+            "width": 512,
+            "height": 341,
+            "crop": [
+              109,
+              2,
+              89,
+              329
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "release": {
+            "key": "storyKnightSword",
+            "width": 512,
+            "height": 341,
+            "crop": [
+              109,
+              2,
+              89,
+              329
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "laser": {
+            "key": "storyKnightSword",
+            "width": 512,
+            "height": 341,
+            "crop": [
+              109,
+              2,
+              89,
+              329
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          }
+        }
+      },
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 20,
+      "visualGroup": 21,
+      "id": "insomnia",
+      "name": "불면귀",
+      "canonScene": "35 last303",
+      "canonicalRole": "조종당한 주민에서 빠져나온 불면귀",
+      "kind": "foe",
+      "identityGroup": "insomnia",
+      "phaseRoles": [],
+      "protectedTargets": [],
+      "protectionRule": "주민 몸이 공격 대상이 아니다; 본체와 안개 연결 겨누기",
+      "proposedRhythm": [
+        "겹친 잔상",
+        "시선의 검은 안개",
+        "안쪽 심장"
+      ],
+      "objectBinding": "storyInsomniaSoul과 storyInsomniaGaze를 서로 다른 사건에 결합",
+      "baselineAssets": [
+        {
+          "key": "storyInsomniaSoul",
+          "path": "media/story-v19/insomnia-soul.webp",
+          "sha256": "7d8201643bc8c1af38f76db2b9bd668db124afb4312c1f2ba6c3d720b98390c0",
+          "bytes": 37204,
+          "source": "assets/generated-v3128/projectiles/sleepless_soul.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "7d8201643bc8c1af38f76db2b9bd668db124afb4312c1f2ba6c3d720b98390c0",
+          "sourceGitBlob": "087bce6181c692655c7e42b752baba15993c82a0"
+        },
+        {
+          "key": "storyInsomniaGaze",
+          "path": "media/story-v19/insomnia-gaze.webp",
+          "sha256": "9116b32bb478da14f817150371eb507e5dc4cf71b25ebedf53f910fe89fe6c60",
+          "bytes": 329590,
+          "source": "assets/generated-v31224/boss-vfx/sleepless_gaze_sigil.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "9116b32bb478da14f817150371eb507e5dc4cf71b25ebedf53f910fe89fe6c60",
+          "sourceGitBlob": "e751a997ebd8460a6691763f05dcc910835bc484"
+        }
+      ],
+      "baselineStoryContracts": {
+        "projectiles": {
+          "orb": {
+            "key": "storyInsomniaSoul",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              20,
+              31,
+              472,
+              450
+            ],
+            "objectCrop": [
+              20,
+              31,
+              472,
+              450
+            ],
+            "denseCrop": [
+              236,
+              241,
+              12,
+              12
+            ],
+            "anchor": [
+              242,
+              247
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 255,
+            "sourcePatchMeanValue": 68.12,
+            "rotation": 0
+          },
+          "blade": {
+            "key": "storyInsomniaGaze",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              30,
+              31,
+              455,
+              444
+            ],
+            "objectCrop": [
+              30,
+              31,
+              455,
+              444
+            ],
+            "denseCrop": [
+              255,
+              247,
+              12,
+              12
+            ],
+            "anchor": [
+              261,
+              253
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 252,
+            "sourcePatchMeanValue": 65.41,
+            "rotation": 0
+          },
+          "beam": {
+            "key": "storyInsomniaGaze",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              30,
+              31,
+              455,
+              444
+            ],
+            "objectCrop": [
+              30,
+              31,
+              455,
+              444
+            ],
+            "denseCrop": [
+              255,
+              247,
+              12,
+              12
+            ],
+            "anchor": [
+              261,
+              253
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 252,
+            "sourcePatchMeanValue": 65.41,
+            "rotation": 0
+          },
+          "rotor": {
+            "key": "storyInsomniaGaze",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              30,
+              31,
+              455,
+              444
+            ],
+            "objectCrop": [
+              30,
+              31,
+              455,
+              444
+            ],
+            "denseCrop": [
+              255,
+              247,
+              12,
+              12
+            ],
+            "anchor": [
+              261,
+              253
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 252,
+            "sourcePatchMeanValue": 65.41,
+            "rotation": 0
+          },
+          "palette": {
+            "id": "story-21",
+            "primary": "#c1c5ce",
+            "secondary": "#9387ad",
+            "accent": "#776291"
+          }
+        },
+        "skills": {
+          "cast": {
+            "key": "storyInsomniaGaze",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              30,
+              31,
+              455,
+              444
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "release": {
+            "key": "storyInsomniaGaze",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              30,
+              31,
+              455,
+              444
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "laser": {
+            "key": "storyInsomniaGaze",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              30,
+              31,
+              455,
+              444
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          }
+        }
+      },
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 21,
+      "visualGroup": 22,
+      "id": "academy-defense",
+      "name": "최초명령 코어 방어",
+      "canonScene": "37 kair01",
+      "canonicalRole": "윤서하의 최초명령 코어 방어; 여섯 침공",
+      "kind": "core-defense",
+      "identityGroup": "academy-defense",
+      "phaseRoles": [],
+      "protectedTargets": [
+        "friendly-core"
+      ],
+      "protectionRule": "코어 파괴가 목표가 아니다; 적의 목표도 코어 오염이지 코어 분쇄가 아니다",
+      "proposedRhythm": [
+        "침공 분할",
+        "오염 명령의 교차",
+        "최초 문장 방어"
+      ],
+      "objectBinding": "storyChronoShard·Crescent의 기계 명령; friendly core는 별도 보호",
+      "baselineAssets": [
+        {
+          "key": "storyChronoShard",
+          "path": "media/story-v19/chrono-shard.webp",
+          "sha256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+          "bytes": 54898,
+          "source": "assets/vfx/v31315/chrono-shard.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+          "sourceGitBlob": "3b629b533586606eb5de64dca529d7dae480757f"
+        },
+        {
+          "key": "storyChronoCrescent",
+          "path": "media/story-v19/chrono-crescent.webp",
+          "sha256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+          "bytes": 242800,
+          "source": "assets/generated-v31224/boss-vfx/kair_chrono_crescent.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+          "sourceGitBlob": "b2e52bdb22d72c200f713a3ba7b158d92c7e42ef"
+        }
+      ],
+      "baselineStoryContracts": {
+        "projectiles": {
+          "orb": {
+            "key": "storyChronoShard",
+            "width": 512,
+            "height": 256,
+            "crop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "objectCrop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "denseCrop": [
+              250,
+              126,
+              12,
+              12
+            ],
+            "anchor": [
+              256,
+              130
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 249,
+            "sourcePatchMeanValue": 140.9,
+            "rotation": 0
+          },
+          "blade": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "beam": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "rotor": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "palette": {
+            "id": "story-22",
+            "primary": "#80cbe1",
+            "secondary": "#d2bd7b",
+            "accent": "#79769d"
+          }
+        },
+        "skills": {
+          "cast": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "release": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "laser": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          }
+        }
+      },
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 22,
+      "visualGroup": 23,
+      "id": "harvest-lower",
+      "name": "일반 수문장의 동력 연결",
+      "canonScene": "39 kair05",
+      "canonicalRole": "48 일반 수문장으로 이어진 수확 동력의 전투 대표",
+      "kind": "command-link",
+      "identityGroup": "harvest-lower",
+      "phaseRoles": [],
+      "protectedTargets": [],
+      "protectionRule": "48개 모두 별도 애니메이션 보스로 구현됐다고 주장하지 않는다",
+      "proposedRhythm": [
+        "과로·속박",
+        "비교·중독",
+        "동력 단면"
+      ],
+      "objectBinding": "ChronoShard 흐름과 Crescent 절단 위상을 구분",
+      "baselineAssets": [
+        {
+          "key": "storyChronoShard",
+          "path": "media/story-v19/chrono-shard.webp",
+          "sha256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+          "bytes": 54898,
+          "source": "assets/vfx/v31315/chrono-shard.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+          "sourceGitBlob": "3b629b533586606eb5de64dca529d7dae480757f"
+        },
+        {
+          "key": "storyChronoCrescent",
+          "path": "media/story-v19/chrono-crescent.webp",
+          "sha256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+          "bytes": 242800,
+          "source": "assets/generated-v31224/boss-vfx/kair_chrono_crescent.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+          "sourceGitBlob": "b2e52bdb22d72c200f713a3ba7b158d92c7e42ef"
+        }
+      ],
+      "baselineStoryContracts": {
+        "projectiles": {
+          "orb": {
+            "key": "storyChronoShard",
+            "width": 512,
+            "height": 256,
+            "crop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "objectCrop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "denseCrop": [
+              250,
+              126,
+              12,
+              12
+            ],
+            "anchor": [
+              256,
+              130
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 249,
+            "sourcePatchMeanValue": 140.9,
+            "rotation": 0
+          },
+          "blade": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "beam": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "rotor": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "palette": {
+            "id": "story-23",
+            "primary": "#9cadde",
+            "secondary": "#d2bd7b",
+            "accent": "#80b9c6"
+          }
+        },
+        "skills": {
+          "cast": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "release": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "laser": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          }
+        }
+      },
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 23,
+      "visualGroup": 24,
+      "id": "harvest-upper",
+      "name": "상급·대수문장의 교차 명령",
+      "canonScene": "40 kair06",
+      "canonicalRole": "12 상급·6 대수문장 교차 명령의 전투 대표",
+      "kind": "command-link",
+      "identityGroup": "harvest-upper",
+      "phaseRoles": [],
+      "protectedTargets": [],
+      "protectionRule": "66 수문장이 66 런타임 독립 보스라는 주장 금지",
+      "proposedRhythm": [
+        "켜짐/꺼짐",
+        "짧은 공백",
+        "한 걸음의 유예"
+      ],
+      "objectBinding": "같은 장면의 Chrono 자산을 교차 주기로 구분",
+      "baselineAssets": [
+        {
+          "key": "storyChronoShard",
+          "path": "media/story-v19/chrono-shard.webp",
+          "sha256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+          "bytes": 54898,
+          "source": "assets/vfx/v31315/chrono-shard.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+          "sourceGitBlob": "3b629b533586606eb5de64dca529d7dae480757f"
+        },
+        {
+          "key": "storyChronoCrescent",
+          "path": "media/story-v19/chrono-crescent.webp",
+          "sha256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+          "bytes": 242800,
+          "source": "assets/generated-v31224/boss-vfx/kair_chrono_crescent.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+          "sourceGitBlob": "b2e52bdb22d72c200f713a3ba7b158d92c7e42ef"
+        }
+      ],
+      "baselineStoryContracts": {
+        "projectiles": {
+          "orb": {
+            "key": "storyChronoShard",
+            "width": 512,
+            "height": 256,
+            "crop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "objectCrop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "denseCrop": [
+              250,
+              126,
+              12,
+              12
+            ],
+            "anchor": [
+              256,
+              130
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 249,
+            "sourcePatchMeanValue": 140.9,
+            "rotation": 0
+          },
+          "blade": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "beam": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "rotor": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "palette": {
+            "id": "story-24",
+            "primary": "#c571b4",
+            "secondary": "#ddd0be",
+            "accent": "#648fa7"
+          }
+        },
+        "skills": {
+          "cast": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "release": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "laser": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          }
+        }
+      },
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 24,
+      "visualGroup": 25,
+      "id": "workshop-links",
+      "name": "검은 공방의 동력 접점",
+      "canonScene": "41 kair07",
+      "canonicalRole": "쉬고 실패한 시간을 태우는 공방의 동력 접점",
+      "kind": "command-link",
+      "identityGroup": "workshop-links",
+      "phaseRoles": [],
+      "protectedTargets": [],
+      "protectionRule": "유용한 시간만 구하는 심사 추가 금지; 공방의 개인 시간은 모두 보존",
+      "proposedRhythm": [
+        "조여 오는 배관",
+        "배관 옆 공백",
+        "용광로 링크 분리"
+      ],
+      "objectBinding": "공방 소유 CommandRing·ChronoShard·Crescent",
+      "baselineAssets": [
+        {
+          "key": "storyChronoShard",
+          "path": "media/story-v19/chrono-shard.webp",
+          "sha256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+          "bytes": 54898,
+          "source": "assets/vfx/v31315/chrono-shard.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+          "sourceGitBlob": "3b629b533586606eb5de64dca529d7dae480757f"
+        },
+        {
+          "key": "storyChronoCrescent",
+          "path": "media/story-v19/chrono-crescent.webp",
+          "sha256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+          "bytes": 242800,
+          "source": "assets/generated-v31224/boss-vfx/kair_chrono_crescent.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+          "sourceGitBlob": "b2e52bdb22d72c200f713a3ba7b158d92c7e42ef"
+        }
+      ],
+      "baselineStoryContracts": {
+        "projectiles": {
+          "orb": {
+            "key": "storyChronoShard",
+            "width": 512,
+            "height": 256,
+            "crop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "objectCrop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "denseCrop": [
+              250,
+              126,
+              12,
+              12
+            ],
+            "anchor": [
+              256,
+              130
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 249,
+            "sourcePatchMeanValue": 140.9,
+            "rotation": 0
+          },
+          "blade": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "beam": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "rotor": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "palette": {
+            "id": "story-25",
+            "primary": "#a4a9df",
+            "secondary": "#d4bf87",
+            "accent": "#80b9c6"
+          }
+        },
+        "skills": {
+          "cast": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "release": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "laser": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          }
+        }
+      },
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 25,
+      "visualGroup": 26,
+      "id": "neuron-gate",
+      "name": "뉴런 게이트의 강제 연결",
+      "canonScene": "42 kair08",
+      "canonicalRole": "생각 전에 닫히는 뉴런 게이트 강제 연결",
+      "kind": "command-link",
+      "identityGroup": "neuron-gate",
+      "phaseRoles": [],
+      "protectedTargets": [],
+      "protectionRule": "연결된 인간을 공격 주체의 새 캐릭터로 만들지 않는다",
+      "proposedRhythm": [
+        "앞서 닫히는 케이블",
+        "다음 명령의 틈",
+        "신경 연결 절단"
+      ],
+      "objectBinding": "storyNeuralOrb·ChronoCrescent를 신경/시간 명령 역할 분리",
+      "baselineAssets": [
+        {
+          "key": "storyNeuralOrb",
+          "path": "media/story-v19/neural-orb.webp",
+          "sha256": "ab952675f90cacfb213d40e736994fd54fdfb731245bc28f444b8409123759ce",
+          "bytes": 316272,
+          "source": "assets/vfx/generated/v31309/kair-neuron-synapse-orb.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "ab952675f90cacfb213d40e736994fd54fdfb731245bc28f444b8409123759ce",
+          "sourceGitBlob": "3c681010e03d02d686b93d533d02383c70ad8777"
+        },
+        {
+          "key": "storyChronoCrescent",
+          "path": "media/story-v19/chrono-crescent.webp",
+          "sha256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+          "bytes": 242800,
+          "source": "assets/generated-v31224/boss-vfx/kair_chrono_crescent.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+          "sourceGitBlob": "b2e52bdb22d72c200f713a3ba7b158d92c7e42ef"
+        }
+      ],
+      "baselineStoryContracts": {
+        "projectiles": {
+          "orb": {
+            "key": "storyNeuralOrb",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              47,
+              45,
+              421,
+              415
+            ],
+            "objectCrop": [
+              47,
+              45,
+              421,
+              415
+            ],
+            "denseCrop": [
+              251,
+              246,
+              12,
+              12
+            ],
+            "anchor": [
+              257,
+              252
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 112.53,
+            "rotation": 0
+          },
+          "blade": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "beam": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "rotor": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "palette": {
+            "id": "story-26",
+            "primary": "#82d9e5",
+            "secondary": "#d7be83",
+            "accent": "#68988e"
+          }
+        },
+        "skills": {
+          "cast": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "release": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "laser": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          }
+        }
+      },
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 26,
+      "visualGroup": 27,
+      "id": "memory-grave",
+      "name": "망각의 묘지 삭제 명령",
+      "canonScene": "43 kair09",
+      "canonicalRole": "타인의 살아 있는 기억을 지우는 묘지의 명령",
+      "kind": "command-link",
+      "identityGroup": "memory-grave",
+      "phaseRoles": [],
+      "protectedTargets": [
+        "memory-shards",
+        "personal-records"
+      ],
+      "protectionRule": "memory-shards/personal-records 보호; 파편 부수기 보상 금지",
+      "proposedRhythm": [
+        "기억 파편 피하기",
+        "삭제 봉인",
+        "기록 주인에게 남김"
+      ],
+      "objectBinding": "ChronoShard는 위험하나 파괴하지 않는 기억 표현; 삭제선만 목표",
+      "baselineAssets": [
+        {
+          "key": "storyChronoShard",
+          "path": "media/story-v19/chrono-shard.webp",
+          "sha256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+          "bytes": 54898,
+          "source": "assets/vfx/v31315/chrono-shard.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+          "sourceGitBlob": "3b629b533586606eb5de64dca529d7dae480757f"
+        },
+        {
+          "key": "storyChronoCrescent",
+          "path": "media/story-v19/chrono-crescent.webp",
+          "sha256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+          "bytes": 242800,
+          "source": "assets/generated-v31224/boss-vfx/kair_chrono_crescent.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+          "sourceGitBlob": "b2e52bdb22d72c200f713a3ba7b158d92c7e42ef"
+        }
+      ],
+      "baselineStoryContracts": {
+        "projectiles": {
+          "orb": {
+            "key": "storyChronoShard",
+            "width": 512,
+            "height": 256,
+            "crop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "objectCrop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "denseCrop": [
+              250,
+              126,
+              12,
+              12
+            ],
+            "anchor": [
+              256,
+              130
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 249,
+            "sourcePatchMeanValue": 140.9,
+            "rotation": 0
+          },
+          "blade": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "beam": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "rotor": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "palette": {
+            "id": "story-27",
+            "primary": "#ac87d1",
+            "secondary": "#cdc8dc",
+            "accent": "#b8a777"
+          }
+        },
+        "skills": {
+          "cast": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "release": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "laser": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          }
+        }
+      },
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 27,
+      "visualGroup": 28,
+      "id": "collapse-rings",
+      "name": "붕괴 의식장의 여섯 명령 고리",
+      "canonScene": "44 kair10",
+      "canonicalRole": "수확한 시간을 집결하는 여섯 명령 고리",
+      "kind": "command-link",
+      "identityGroup": "collapse-rings",
+      "phaseRoles": [],
+      "protectedTargets": [],
+      "protectionRule": "여섯 명령을 새로운 여섯 인물로 확정하지 않는다",
+      "proposedRhythm": [
+        "세 고리",
+        "다음 세 고리",
+        "회랑 열기"
+      ],
+      "objectBinding": "storyCommandRing과 ChronoShard의 3+3 방향 리듬",
+      "baselineAssets": [
+        {
+          "key": "storyChronoCrescent",
+          "path": "media/story-v19/chrono-crescent.webp",
+          "sha256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+          "bytes": 242800,
+          "source": "assets/generated-v31224/boss-vfx/kair_chrono_crescent.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+          "sourceGitBlob": "b2e52bdb22d72c200f713a3ba7b158d92c7e42ef"
+        },
+        {
+          "key": "storyChronoShard",
+          "path": "media/story-v19/chrono-shard.webp",
+          "sha256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+          "bytes": 54898,
+          "source": "assets/vfx/v31315/chrono-shard.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+          "sourceGitBlob": "3b629b533586606eb5de64dca529d7dae480757f"
+        }
+      ],
+      "baselineStoryContracts": {
+        "projectiles": {
+          "orb": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "blade": {
+            "key": "storyChronoShard",
+            "width": 512,
+            "height": 256,
+            "crop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "objectCrop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "denseCrop": [
+              250,
+              126,
+              12,
+              12
+            ],
+            "anchor": [
+              256,
+              130
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 249,
+            "sourcePatchMeanValue": 140.9,
+            "rotation": 0
+          },
+          "beam": {
+            "key": "storyChronoShard",
+            "width": 512,
+            "height": 256,
+            "crop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "objectCrop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "denseCrop": [
+              250,
+              126,
+              12,
+              12
+            ],
+            "anchor": [
+              256,
+              132
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 249,
+            "sourcePatchMeanValue": 140.9,
+            "rotation": 0
+          },
+          "rotor": {
+            "key": "storyChronoShard",
+            "width": 512,
+            "height": 256,
+            "crop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "objectCrop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "denseCrop": [
+              250,
+              126,
+              12,
+              12
+            ],
+            "anchor": [
+              256,
+              132
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 249,
+            "sourcePatchMeanValue": 140.9,
+            "rotation": 0
+          },
+          "palette": {
+            "id": "story-28",
+            "primary": "#d5bb75",
+            "secondary": "#8bd2e5",
+            "accent": "#847da8"
+          }
+        },
+        "skills": {
+          "cast": {
+            "key": "storyChronoShard",
+            "width": 512,
+            "height": 256,
+            "crop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "release": {
+            "key": "storyChronoShard",
+            "width": 512,
+            "height": 256,
+            "crop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "laser": {
+            "key": "storyChronoShard",
+            "width": 512,
+            "height": 256,
+            "crop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          }
+        }
+      },
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 28,
+      "visualGroup": 29,
+      "id": "arbelia-release",
+      "name": "아르벨리아의 변조 명령",
+      "canonScene": "45 kair02",
+      "canonicalRole": "변조된 명령에 갇힌 회복형 아르콘 아르벨리아",
+      "kind": "release-command",
+      "identityGroup": "arbelia-release",
+      "phaseRoles": [],
+      "protectedTargets": [
+        "arbelia",
+        "rest-time-records"
+      ],
+      "protectionRule": "아르벨리아와 쉼의 기록을 공격/삭제하지 않는다; 그녀 스스로 재작성",
+      "proposedRhythm": [
+        "유예 고리",
+        "삭제 명령의 실",
+        "다시 쓰는 첫 문장"
+      ],
+      "objectBinding": "적의 storyCommandRing/Crescent와 보호 Arbelia를 분리",
+      "baselineAssets": [
+        {
+          "key": "storyChronoShard",
+          "path": "media/story-v19/chrono-shard.webp",
+          "sha256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+          "bytes": 54898,
+          "source": "assets/vfx/v31315/chrono-shard.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+          "sourceGitBlob": "3b629b533586606eb5de64dca529d7dae480757f"
+        },
+        {
+          "key": "storyChronoCrescent",
+          "path": "media/story-v19/chrono-crescent.webp",
+          "sha256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+          "bytes": 242800,
+          "source": "assets/generated-v31224/boss-vfx/kair_chrono_crescent.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+          "sourceGitBlob": "b2e52bdb22d72c200f713a3ba7b158d92c7e42ef"
+        }
+      ],
+      "baselineStoryContracts": {
+        "projectiles": {
+          "orb": {
+            "key": "storyChronoShard",
+            "width": 512,
+            "height": 256,
+            "crop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "objectCrop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "denseCrop": [
+              250,
+              126,
+              12,
+              12
+            ],
+            "anchor": [
+              256,
+              130
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 249,
+            "sourcePatchMeanValue": 140.9,
+            "rotation": 0
+          },
+          "blade": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "beam": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "rotor": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "objectCrop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "denseCrop": [
+              252,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              258,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 250,
+            "sourcePatchMeanValue": 179.98,
+            "rotation": 0
+          },
+          "palette": {
+            "id": "story-29",
+            "primary": "#dec68a",
+            "secondary": "#eee6d6",
+            "accent": "#86bfc9"
+          }
+        },
+        "skills": {
+          "cast": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "release": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "laser": {
+            "key": "storyChronoCrescent",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              24,
+              63,
+              466,
+              385
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          }
+        }
+      },
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 29,
+      "visualGroup": 30,
+      "id": "siren-mor",
+      "name": "세이렌 모르",
+      "canonScene": "46 kair03",
+      "canonicalRole": "시간 수확·예측·최적화된 운명을 강요하는 세이렌 모르",
+      "kind": "foe",
+      "identityGroup": "siren-mor",
+      "phaseRoles": [],
+      "protectedTargets": [],
+      "protectionRule": "검은 모래 속 타인의 시간 파괴 금지; 실패 뒤 다시 선택하는 시간 남김",
+      "proposedRhythm": [
+        "수확 궤적",
+        "미리 닫힌 운명",
+        "다시 선택할 틈"
+      ],
+      "objectBinding": "storySirenAttack와 ChronoShard를 본체 공격/수확 궤적으로 구분",
+      "baselineAssets": [
+        {
+          "key": "storySirenAttack",
+          "path": "media/story-v19/siren-attack.webp",
+          "sha256": "d6d18565aa6b49f321508796151fba54662ed46f347da58aeb10edfd884d0038",
+          "bytes": 57414,
+          "source": "assets/generated-v31224/actors-normalized/6fa537121597_siren_attack.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "d6d18565aa6b49f321508796151fba54662ed46f347da58aeb10edfd884d0038",
+          "sourceGitBlob": "c8cfb8ec4b71c1fb3aaceef4f6acb1fa365da5d8"
+        },
+        {
+          "key": "storyChronoShard",
+          "path": "media/story-v19/chrono-shard.webp",
+          "sha256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+          "bytes": 54898,
+          "source": "assets/vfx/v31315/chrono-shard.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+          "sourceGitBlob": "3b629b533586606eb5de64dca529d7dae480757f"
+        }
+      ],
+      "baselineStoryContracts": {
+        "projectiles": {
+          "orb": {
+            "key": "storySirenAttack",
+            "width": 672,
+            "height": 384,
+            "crop": [
+              445,
+              106,
+              51,
+              39
+            ],
+            "objectCrop": [
+              445,
+              106,
+              51,
+              39
+            ],
+            "denseCrop": [
+              465,
+              120,
+              8,
+              8
+            ],
+            "anchor": [
+              469,
+              124
+            ],
+            "r": 4,
+            "l": 0,
+            "frames": 1,
+            "rotation": 0
+          },
+          "blade": {
+            "key": "storyChronoShard",
+            "width": 512,
+            "height": 256,
+            "crop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "objectCrop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "denseCrop": [
+              250,
+              126,
+              12,
+              12
+            ],
+            "anchor": [
+              256,
+              130
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 249,
+            "sourcePatchMeanValue": 140.9,
+            "rotation": 0
+          },
+          "beam": {
+            "key": "storyChronoShard",
+            "width": 512,
+            "height": 256,
+            "crop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "objectCrop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "denseCrop": [
+              250,
+              126,
+              12,
+              12
+            ],
+            "anchor": [
+              256,
+              132
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 249,
+            "sourcePatchMeanValue": 140.9,
+            "rotation": 0
+          },
+          "rotor": {
+            "key": "storyChronoShard",
+            "width": 512,
+            "height": 256,
+            "crop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "objectCrop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "denseCrop": [
+              250,
+              126,
+              12,
+              12
+            ],
+            "anchor": [
+              256,
+              132
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 249,
+            "sourcePatchMeanValue": 140.9,
+            "rotation": 0
+          },
+          "palette": {
+            "id": "story-30",
+            "primary": "#c65b7e",
+            "secondary": "#e5c38c",
+            "accent": "#8875bb"
+          }
+        },
+        "skills": {
+          "cast": {
+            "key": "storyChronoShard",
+            "width": 512,
+            "height": 256,
+            "crop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "release": {
+            "key": "storyChronoShard",
+            "width": 512,
+            "height": 256,
+            "crop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "laser": {
+            "key": "storyChronoShard",
+            "width": 512,
+            "height": 256,
+            "crop": [
+              22,
+              78,
+              468,
+              105
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          }
+        }
+      },
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 30,
+      "visualGroup": 31,
+      "id": "castle-nightmare",
+      "name": "공동 EGO 코어를 빼앗은 우두머리",
+      "canonScene": "50 hando03",
+      "canonicalRole": "두 주인의 공동 EGO 코어를 빼앗은 악몽 우두머리",
+      "kind": "foe",
+      "identityGroup": "castle-nightmare",
+      "phaseRoles": [],
+      "protectedTargets": [],
+      "protectionRule": "두 아이를 적으로 바꾸거나 되찾은 코어를 환도 소유로 바꾸지 않는다",
+      "proposedRhythm": [
+        "두 성문",
+        "서로 다른 경로",
+        "함께 끊는 속박"
+      ],
+      "objectBinding": "storyChiefBlade와 본인 무기; 두 주인은 독립 지원 위치",
+      "baselineAssets": [
+        {
+          "key": "storyChiefIdle",
+          "path": "media/story-v19/chief-idle.webp",
+          "sha256": "9db8f0ba682ff380d7238a7a5a82d64adff29bbf2781b920bb9b497038c6f869",
+          "bytes": 44926,
+          "source": "assets/generated-v31224/actors-normalized/fae708429341_hando_idle.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "9db8f0ba682ff380d7238a7a5a82d64adff29bbf2781b920bb9b497038c6f869",
+          "sourceGitBlob": "7d8efdae50af9906f5a0f8939891c3ce59615cce"
+        },
+        {
+          "key": "storyChiefBlade",
+          "path": "media/story-v19/chief-blade.webp",
+          "sha256": "a621a06b3688129f1113e41ea32ce8a466361680f1fc4fb0b843eed829e6b939",
+          "bytes": 246500,
+          "source": "assets/vfx/v31323/boss/h103-boss/control-blades-clean.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "a621a06b3688129f1113e41ea32ce8a466361680f1fc4fb0b843eed829e6b939",
+          "sourceGitBlob": "04497161bae799d15ee43f862ef650836df95cdc"
+        }
+      ],
+      "baselineStoryContracts": {
+        "projectiles": {
+          "orb": {
+            "key": "storyChiefIdle",
+            "width": 672,
+            "height": 384,
+            "crop": [
+              268,
+              212,
+              31,
+              109
+            ],
+            "objectCrop": [
+              268,
+              212,
+              31,
+              109
+            ],
+            "denseCrop": [
+              282,
+              263,
+              8,
+              8
+            ],
+            "anchor": [
+              288,
+              269
+            ],
+            "r": 4,
+            "l": 0,
+            "frames": 1,
+            "rotation": 0,
+            "motifDescription": "actual isolated curved lower blade from the same owner body pose",
+            "visualOutset": 4
+          },
+          "blade": {
+            "key": "storyChiefIdle",
+            "width": 672,
+            "height": 384,
+            "crop": [
+              268,
+              212,
+              31,
+              109
+            ],
+            "objectCrop": [
+              268,
+              212,
+              31,
+              109
+            ],
+            "denseCrop": [
+              282,
+              263,
+              8,
+              8
+            ],
+            "anchor": [
+              288.5,
+              269
+            ],
+            "r": 4,
+            "l": 0,
+            "frames": 1,
+            "rotation": -1.5707963267948966,
+            "motifDescription": "actual isolated curved lower blade from the same owner body pose",
+            "visualOutset": 4
+          },
+          "beam": {
+            "key": "storyChiefBlade",
+            "width": 1254,
+            "height": 1254,
+            "crop": [
+              46,
+              78,
+              1175,
+              1088
+            ],
+            "objectCrop": [
+              46,
+              78,
+              1175,
+              1088
+            ],
+            "denseCrop": [
+              625,
+              615,
+              12,
+              12
+            ],
+            "anchor": [
+              631,
+              621
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 249,
+            "sourcePatchMeanValue": 137.94,
+            "rotation": 0
+          },
+          "rotor": {
+            "key": "storyChiefBlade",
+            "width": 1254,
+            "height": 1254,
+            "crop": [
+              46,
+              78,
+              1175,
+              1088
+            ],
+            "objectCrop": [
+              46,
+              78,
+              1175,
+              1088
+            ],
+            "denseCrop": [
+              625,
+              615,
+              12,
+              12
+            ],
+            "anchor": [
+              631,
+              621
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 249,
+            "sourcePatchMeanValue": 137.94,
+            "rotation": 0
+          },
+          "palette": {
+            "id": "story-31",
+            "primary": "#b3a9a5",
+            "secondary": "#c98983",
+            "accent": "#6b748b"
+          }
+        },
+        "skills": {
+          "cast": {
+            "key": "storyChiefBlade",
+            "width": 1254,
+            "height": 1254,
+            "crop": [
+              46,
+              78,
+              1175,
+              1088
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "release": {
+            "key": "storyChiefIdle",
+            "width": 672,
+            "height": 384,
+            "crop": [
+              268,
+              212,
+              31,
+              109
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "laser": {
+            "key": "storyChiefBlade",
+            "width": 1254,
+            "height": 1254,
+            "crop": [
+              46,
+              78,
+              1175,
+              1088
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          }
+        }
+      },
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 31,
+      "visualGroup": 32,
+      "id": "causal-enforcer",
+      "name": "파란불 집행체",
+      "canonScene": "55 murder03",
+      "canonicalRole": "네 사람의 비극을 세 단계로 고정하는 파란불 집행체",
+      "kind": "command-link",
+      "identityGroup": "causal-enforcer",
+      "phaseRoles": [],
+      "protectedTargets": [],
+      "protectionRule": "한 명만 주범 선택 금지; 실제 과실 기록 보존",
+      "proposedRhythm": [
+        "주범 선택 유혹",
+        "세 인과 잠금",
+        "되감기 연결 분리"
+      ],
+      "objectBinding": "storyExecutorPrism·Road를 프리즘/순환 도로 역할 분리",
+      "baselineAssets": [
+        {
+          "key": "storyExecutorPrism",
+          "path": "media/story-v19/executor-prism.webp",
+          "sha256": "6fd6c4d2f0e3915bb315873a70c7e9f09975c8fd1b7816f2ee184b594f12341a",
+          "bytes": 37096,
+          "source": "assets/generated-v3128/projectiles/causality_prism.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "6fd6c4d2f0e3915bb315873a70c7e9f09975c8fd1b7816f2ee184b594f12341a",
+          "sourceGitBlob": "bbf90c7022c9c73e4ed761feed58be1e8e470fa2"
+        },
+        {
+          "key": "storyExecutorRoad",
+          "path": "media/story-v19/executor-road.webp",
+          "sha256": "f9c9378d33bbb827682d82537785c18c786242a3dd8ce1e174d18fc05f7d78a5",
+          "bytes": 249200,
+          "source": "assets/generated-v31224/boss-vfx/murder_causality_road.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "f9c9378d33bbb827682d82537785c18c786242a3dd8ce1e174d18fc05f7d78a5",
+          "sourceGitBlob": "524c34c125baa82192b8619be983f1e124448553"
+        }
+      ],
+      "baselineStoryContracts": {
+        "projectiles": {
+          "orb": {
+            "key": "storyExecutorPrism",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              20,
+              39,
+              472,
+              433
+            ],
+            "objectCrop": [
+              20,
+              39,
+              472,
+              433
+            ],
+            "denseCrop": [
+              251,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              257,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 255,
+            "sourcePatchMeanValue": 244.73,
+            "rotation": 0
+          },
+          "blade": {
+            "key": "storyExecutorRoad",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              32,
+              84,
+              453,
+              346
+            ],
+            "objectCrop": [
+              32,
+              84,
+              453,
+              346
+            ],
+            "denseCrop": [
+              251,
+              252,
+              12,
+              12
+            ],
+            "anchor": [
+              257,
+              258
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 252,
+            "sourcePatchMeanValue": 87.8,
+            "rotation": 0
+          },
+          "beam": {
+            "key": "storyExecutorRoad",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              32,
+              84,
+              453,
+              346
+            ],
+            "objectCrop": [
+              32,
+              84,
+              453,
+              346
+            ],
+            "denseCrop": [
+              251,
+              252,
+              12,
+              12
+            ],
+            "anchor": [
+              257,
+              258
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 252,
+            "sourcePatchMeanValue": 87.8,
+            "rotation": 0
+          },
+          "rotor": {
+            "key": "storyExecutorRoad",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              32,
+              84,
+              453,
+              346
+            ],
+            "objectCrop": [
+              32,
+              84,
+              453,
+              346
+            ],
+            "denseCrop": [
+              251,
+              252,
+              12,
+              12
+            ],
+            "anchor": [
+              257,
+              258
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 252,
+            "sourcePatchMeanValue": 87.8,
+            "rotation": 0
+          },
+          "palette": {
+            "id": "story-32",
+            "primary": "#64a9ed",
+            "secondary": "#91dbe8",
+            "accent": "#bf8dd3"
+          }
+        },
+        "skills": {
+          "cast": {
+            "key": "storyExecutorRoad",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              32,
+              84,
+              453,
+              346
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "release": {
+            "key": "storyExecutorRoad",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              32,
+              84,
+              453,
+              346
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "laser": {
+            "key": "storyExecutorRoad",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              32,
+              84,
+              453,
+              346
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          }
+        }
+      },
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 32,
+      "visualGroup": 33,
+      "id": "cult-network",
+      "name": "흑장미단의 외곽 지배 회로",
+      "canonScene": "56 cult01",
+      "canonicalRole": "사람의 EGO·SUPER EGO·ID를 역순 지배하는 외곽 회로",
+      "kind": "command-link",
+      "identityGroup": "cult-network",
+      "phaseRoles": [],
+      "protectedTargets": [
+        "bound-people",
+        "egos"
+      ],
+      "protectionRule": "bound-people/egos 보호; 괴물 형상 안 기억 소멸 금지",
+      "proposedRhythm": [
+        "역순 세 층",
+        "맞물린 반복",
+        "바깥 연결 절단"
+      ],
+      "objectBinding": "storyCultRose·cultLance; 회로 공격과 갇힌 사람 보호 구분",
+      "baselineAssets": [
+        {
+          "key": "storyCultRose",
+          "path": "media/story-v19/cult-rose.webp",
+          "sha256": "6a6604e0239c8ecdc5cad0f94136acdb7da4e970e71335dbe543a0eabc9a5308",
+          "bytes": 369890,
+          "source": "assets/generated-v31224/boss-vfx/cult_triune_rose_sigil.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "6a6604e0239c8ecdc5cad0f94136acdb7da4e970e71335dbe543a0eabc9a5308",
+          "sourceGitBlob": "534eb20e34d33027d89373d1fa781fcfebdfcd8a"
+        },
+        {
+          "key": "cultLance",
+          "path": "media/cult-v17/lance.webp",
+          "sha256": "b1c98912111f3c661c418567e1d304d606705d7e3eb87c643caeaf8402f4acf7",
+          "bytes": 27866
+        }
+      ],
+      "baselineStoryContracts": {
+        "projectiles": {
+          "orb": {
+            "key": "storyCultRose",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              31,
+              26,
+              450,
+              464
+            ],
+            "objectCrop": [
+              31,
+              26,
+              450,
+              464
+            ],
+            "denseCrop": [
+              250,
+              251,
+              12,
+              12
+            ],
+            "anchor": [
+              256,
+              257
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 251,
+            "sourcePatchMeanValue": 206.54,
+            "rotation": 0
+          },
+          "blade": {
+            "key": "cultLance",
+            "width": 512,
+            "height": 192,
+            "crop": [
+              4,
+              36,
+              503,
+              124
+            ],
+            "objectCrop": [
+              9,
+              41,
+              493,
+              115
+            ],
+            "denseCrop": [
+              250,
+              93,
+              12,
+              12
+            ],
+            "anchor": [
+              257.5,
+              98.5
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 251,
+            "sourcePatchMeanValue": 162.9,
+            "rotation": 0,
+            "downsample": [
+              128,
+              48
+            ]
+          },
+          "beam": {
+            "key": "cultLance",
+            "width": 512,
+            "height": 192,
+            "crop": [
+              4,
+              36,
+              503,
+              124
+            ],
+            "objectCrop": [
+              4,
+              36,
+              503,
+              124
+            ],
+            "denseCrop": [
+              250,
+              93,
+              12,
+              12
+            ],
+            "anchor": [
+              256,
+              99
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 251,
+            "sourcePatchMeanValue": 162.9,
+            "rotation": 0
+          },
+          "rotor": {
+            "key": "cultLance",
+            "width": 512,
+            "height": 192,
+            "crop": [
+              4,
+              36,
+              503,
+              124
+            ],
+            "objectCrop": [
+              4,
+              36,
+              503,
+              124
+            ],
+            "denseCrop": [
+              250,
+              93,
+              12,
+              12
+            ],
+            "anchor": [
+              256,
+              99
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 251,
+            "sourcePatchMeanValue": 162.9,
+            "rotation": 0
+          },
+          "palette": {
+            "id": "story-33",
+            "primary": "#c66676",
+            "secondary": "#d6b8a0",
+            "accent": "#a36e77"
+          }
+        },
+        "skills": {
+          "cast": {
+            "key": "cultLance",
+            "width": 512,
+            "height": 192,
+            "crop": [
+              4,
+              36,
+              503,
+              124
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "release": {
+            "key": "cultLance",
+            "width": 512,
+            "height": 192,
+            "crop": [
+              9,
+              41,
+              493,
+              115
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "laser": {
+            "key": "cultLance",
+            "width": 512,
+            "height": 192,
+            "crop": [
+              4,
+              36,
+              503,
+              124
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          }
+        }
+      },
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 33,
+      "visualGroup": 34,
+      "id": "cult-circuit-pair",
+      "name": "한리안·백이온의 합일 회로",
+      "canonScene": "60 cult03",
+      "canonicalRole": "한리안·백이온이 지키는 합일 회로",
+      "kind": "circuit-pair",
+      "identityGroup": "cult-circuit-pair",
+      "phaseRoles": [],
+      "protectedTargets": [
+        "han-rian-ego",
+        "baek-ion-ego"
+      ],
+      "protectionRule": "세 번째 회로 배우는 새 인물이 아니다; 두 의목사 자아 보호",
+      "proposedRhythm": [
+        "한리안 황금 역십자",
+        "백이온 질서 방벽",
+        "공동 지배선"
+      ],
+      "objectBinding": "participant han-rian=storyRianCross, baek-ion=storyIonShield",
+      "baselineAssets": [
+        {
+          "key": "storyRianCross",
+          "path": "media/story-v19/rian-cross.webp",
+          "sha256": "c3087e2e8611efff6e8844c3b3c571457a4458552a4c85af36c37657d0f00620",
+          "bytes": 84602,
+          "source": "assets/vfx/generated/v315/rian-reverse-cross-barrage.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "c3087e2e8611efff6e8844c3b3c571457a4458552a4c85af36c37657d0f00620",
+          "sourceGitBlob": "15176ff6688feb432a8bbc686d9451cee7b560f1"
+        },
+        {
+          "key": "storyIonShield",
+          "path": "media/story-v19/ion-shield.webp",
+          "sha256": "f56c5acaf90884bbf5c18a94691105360ccb00f87b30e9b44212aef159bb59d9",
+          "bytes": 70068,
+          "source": "assets/vfx/generated/v315/ion-order-shield-charge.webp",
+          "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+          "sourceSHA256": "f56c5acaf90884bbf5c18a94691105360ccb00f87b30e9b44212aef159bb59d9",
+          "sourceGitBlob": "9137f27db5adbf6edf3676cf74364bf519cc7e5f"
+        }
+      ],
+      "baselineStoryContracts": {
+        "projectiles": {
+          "orb": {
+            "key": "storyRianCross",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              145,
+              0,
+              223,
+              201
+            ],
+            "objectCrop": [
+              145,
+              0,
+              223,
+              201
+            ],
+            "denseCrop": [
+              248,
+              92,
+              12,
+              12
+            ],
+            "anchor": [
+              254,
+              98
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 236,
+            "sourcePatchMeanValue": 236.86,
+            "rotation": 3.141592653589793,
+            "fixedOrientation": true
+          },
+          "blade": {
+            "key": "storyRianCross",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              145,
+              0,
+              223,
+              201
+            ],
+            "objectCrop": [
+              145,
+              0,
+              223,
+              201
+            ],
+            "denseCrop": [
+              248,
+              92,
+              12,
+              12
+            ],
+            "anchor": [
+              254,
+              98
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 236,
+            "sourcePatchMeanValue": 236.86,
+            "rotation": 3.141592653589793,
+            "fixedOrientation": true
+          },
+          "beam": {
+            "key": "storyRianCross",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              44,
+              0,
+              424,
+              509
+            ],
+            "objectCrop": [
+              44,
+              0,
+              424,
+              509
+            ],
+            "denseCrop": [
+              248,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              254,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 236,
+            "sourcePatchMeanValue": 236.86,
+            "rotation": 0
+          },
+          "rotor": {
+            "key": "storyRianCross",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              44,
+              0,
+              424,
+              509
+            ],
+            "objectCrop": [
+              44,
+              0,
+              424,
+              509
+            ],
+            "denseCrop": [
+              248,
+              249,
+              12,
+              12
+            ],
+            "anchor": [
+              254,
+              255
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 236,
+            "sourcePatchMeanValue": 236.86,
+            "rotation": 0
+          },
+          "palette": {
+            "id": "story-han-rian",
+            "primary": "#d4bb69",
+            "secondary": "#ede3bd",
+            "accent": "#715e4a"
+          },
+          "participants": {
+            "han-rian": {
+              "orb": {
+                "key": "storyRianCross",
+                "width": 512,
+                "height": 512,
+                "crop": [
+                  145,
+                  0,
+                  223,
+                  201
+                ],
+                "objectCrop": [
+                  145,
+                  0,
+                  223,
+                  201
+                ],
+                "denseCrop": [
+                  248,
+                  92,
+                  12,
+                  12
+                ],
+                "anchor": [
+                  254,
+                  98
+                ],
+                "r": 6,
+                "l": 0,
+                "frames": 1,
+                "sourcePatchAlphaMin": 236,
+                "sourcePatchMeanValue": 236.86,
+                "rotation": 3.141592653589793,
+                "fixedOrientation": true
+              },
+              "blade": {
+                "key": "storyRianCross",
+                "width": 512,
+                "height": 512,
+                "crop": [
+                  145,
+                  0,
+                  223,
+                  201
+                ],
+                "objectCrop": [
+                  145,
+                  0,
+                  223,
+                  201
+                ],
+                "denseCrop": [
+                  248,
+                  92,
+                  12,
+                  12
+                ],
+                "anchor": [
+                  254,
+                  98
+                ],
+                "r": 6,
+                "l": 0,
+                "frames": 1,
+                "sourcePatchAlphaMin": 236,
+                "sourcePatchMeanValue": 236.86,
+                "rotation": 3.141592653589793,
+                "fixedOrientation": false
+              },
+              "beam": {
+                "key": "storyRianCross",
+                "width": 512,
+                "height": 512,
+                "crop": [
+                  44,
+                  0,
+                  424,
+                  509
+                ],
+                "objectCrop": [
+                  44,
+                  0,
+                  424,
+                  509
+                ],
+                "denseCrop": [
+                  248,
+                  249,
+                  12,
+                  12
+                ],
+                "anchor": [
+                  254,
+                  255
+                ],
+                "r": 6,
+                "l": 0,
+                "frames": 1,
+                "sourcePatchAlphaMin": 236,
+                "sourcePatchMeanValue": 236.86,
+                "rotation": 0
+              },
+              "rotor": {
+                "key": "storyRianCross",
+                "width": 512,
+                "height": 512,
+                "crop": [
+                  44,
+                  0,
+                  424,
+                  509
+                ],
+                "objectCrop": [
+                  44,
+                  0,
+                  424,
+                  509
+                ],
+                "denseCrop": [
+                  248,
+                  249,
+                  12,
+                  12
+                ],
+                "anchor": [
+                  254,
+                  255
+                ],
+                "r": 6,
+                "l": 0,
+                "frames": 1,
+                "sourcePatchAlphaMin": 236,
+                "sourcePatchMeanValue": 236.86,
+                "rotation": 0
+              },
+              "palette": {
+                "id": "story-han-rian",
+                "primary": "#d4bb69",
+                "secondary": "#ede3bd",
+                "accent": "#715e4a"
+              }
+            },
+            "baek-ion": {
+              "orb": {
+                "key": "storyIonShield",
+                "width": 512,
+                "height": 512,
+                "crop": [
+                  16,
+                  63,
+                  473,
+                  363
+                ],
+                "objectCrop": [
+                  16,
+                  63,
+                  473,
+                  363
+                ],
+                "denseCrop": [
+                  247,
+                  246,
+                  12,
+                  12
+                ],
+                "anchor": [
+                  253,
+                  242
+                ],
+                "r": 6,
+                "l": 0,
+                "frames": 1,
+                "sourcePatchAlphaMin": 252,
+                "sourcePatchMeanValue": 207.85,
+                "rotation": 0
+              },
+              "blade": {
+                "key": "storyIonShield",
+                "width": 512,
+                "height": 512,
+                "crop": [
+                  16,
+                  63,
+                  473,
+                  363
+                ],
+                "objectCrop": [
+                  16,
+                  63,
+                  473,
+                  363
+                ],
+                "denseCrop": [
+                  247,
+                  246,
+                  12,
+                  12
+                ],
+                "anchor": [
+                  253,
+                  242
+                ],
+                "r": 6,
+                "l": 0,
+                "frames": 1,
+                "sourcePatchAlphaMin": 252,
+                "sourcePatchMeanValue": 207.85,
+                "rotation": 0
+              },
+              "beam": {
+                "key": "storyIonShield",
+                "width": 512,
+                "height": 512,
+                "crop": [
+                  16,
+                  63,
+                  473,
+                  363
+                ],
+                "objectCrop": [
+                  16,
+                  63,
+                  473,
+                  363
+                ],
+                "denseCrop": [
+                  247,
+                  246,
+                  12,
+                  12
+                ],
+                "anchor": [
+                  253,
+                  252
+                ],
+                "r": 6,
+                "l": 0,
+                "frames": 1,
+                "sourcePatchAlphaMin": 252,
+                "sourcePatchMeanValue": 207.85,
+                "rotation": 0
+              },
+              "rotor": {
+                "key": "storyIonShield",
+                "width": 512,
+                "height": 512,
+                "crop": [
+                  16,
+                  63,
+                  473,
+                  363
+                ],
+                "objectCrop": [
+                  16,
+                  63,
+                  473,
+                  363
+                ],
+                "denseCrop": [
+                  247,
+                  246,
+                  12,
+                  12
+                ],
+                "anchor": [
+                  253,
+                  252
+                ],
+                "r": 6,
+                "l": 0,
+                "frames": 1,
+                "sourcePatchAlphaMin": 252,
+                "sourcePatchMeanValue": 207.85,
+                "rotation": 0
+              },
+              "palette": {
+                "id": "story-baek-ion",
+                "primary": "#9fd9f4",
+                "secondary": "#e5edf2",
+                "accent": "#b8a97d"
+              }
+            }
+          }
+        },
+        "skills": {
+          "release": {
+            "key": "storyRianCross",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              145,
+              0,
+              223,
+              201
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "laser": {
+            "key": "storyRianCross",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              44,
+              0,
+              424,
+              509
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          },
+          "participants": {
+            "han-rian": {
+              "cast": {
+                "key": "storyRianCross",
+                "width": 512,
+                "height": 512,
+                "crop": [
+                  44,
+                  0,
+                  424,
+                  509
+                ],
+                "authoredFrames": 1,
+                "turn": 0.12
+              },
+              "release": {
+                "key": "storyRianCross",
+                "width": 512,
+                "height": 512,
+                "crop": [
+                  145,
+                  0,
+                  223,
+                  201
+                ],
+                "authoredFrames": 1,
+                "turn": 0.12
+              },
+              "laser": {
+                "key": "storyRianCross",
+                "width": 512,
+                "height": 512,
+                "crop": [
+                  44,
+                  0,
+                  424,
+                  509
+                ],
+                "authoredFrames": 1,
+                "turn": 0.12
+              }
+            },
+            "baek-ion": {
+              "cast": {
+                "key": "storyIonShield",
+                "width": 512,
+                "height": 512,
+                "crop": [
+                  16,
+                  63,
+                  473,
+                  363
+                ],
+                "authoredFrames": 1,
+                "turn": 0.12
+              },
+              "release": {
+                "key": "storyIonShield",
+                "width": 512,
+                "height": 512,
+                "crop": [
+                  16,
+                  63,
+                  473,
+                  363
+                ],
+                "authoredFrames": 1,
+                "turn": 0.12
+              },
+              "laser": {
+                "key": "storyIonShield",
+                "width": 512,
+                "height": 512,
+                "crop": [
+                  16,
+                  63,
+                  473,
+                  363
+                ],
+                "authoredFrames": 1,
+                "turn": 0.12
+              }
+            }
+          }
+        }
+      },
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    },
+    {
+      "runtimeIndex": 34,
+      "visualGroup": 35,
+      "id": "cult-leader",
+      "name": "교만의 사이보그 교주",
+      "canonScene": "61 cult04",
+      "canonicalRole": "이미 사몽에 각성한 교주·부활·두 사몽의 격돌",
+      "kind": "final-authority",
+      "identityGroup": "cult-leader",
+      "phaseRoles": [],
+      "protectedTargets": [],
+      "protectionRule": "합일 코어 보존; 강제 명령/사이비 회로만 분리; 환도 몽세수호자 결말",
+      "proposedRhythm": [
+        "공간 Fold",
+        "봉합 Stitch",
+        "맞부딪히는 Impact"
+      ],
+      "objectBinding": "cultDriveFold/Stitch/Impact·Spear·Lance의 실제 단계 소유 표현",
+      "baselineAssets": [
+        {
+          "key": "cultDriveSpear",
+          "path": "media/cult-v17/drive-spear.webp",
+          "sha256": "507b0455ada4be3ff8876d1686aef6362539b57782333c849c48ba21ed352dd8",
+          "bytes": 64746
+        },
+        {
+          "key": "cultLance",
+          "path": "media/cult-v17/lance.webp",
+          "sha256": "b1c98912111f3c661c418567e1d304d606705d7e3eb87c643caeaf8402f4acf7",
+          "bytes": 27866
+        },
+        {
+          "key": "cultDriveFold",
+          "path": "media/cult-v17/drive-fold.webp",
+          "sha256": "c51d89509e9e52a07b539027596b986094f5e56fdff3f587e2c19c9ffe38ed93",
+          "bytes": 72902
+        },
+        {
+          "key": "cultDriveStitch",
+          "path": "media/cult-v17/drive-stitch.webp",
+          "sha256": "6c2785664e1226250da23a2c048043ca8c3b2cfeeb4c5d1c8259c7d3d8b3649a",
+          "bytes": 90032
+        },
+        {
+          "key": "cultDriveImpact",
+          "path": "media/cult-v17/drive-impact.webp",
+          "sha256": "318c20e9dc3588e5929e619a9a8da35bfbf12c3674848752ba46127152247f57",
+          "bytes": 141070
+        }
+      ],
+      "baselineStoryContracts": {
+        "projectiles": {
+          "orb": {
+            "key": "cultDriveSpear",
+            "width": 512,
+            "height": 512,
+            "crop": [
+              252,
+              207,
+              84,
+              84
+            ],
+            "objectCrop": [
+              252,
+              207,
+              84,
+              84
+            ],
+            "denseCrop": [
+              290,
+              245,
+              8,
+              8
+            ],
+            "anchor": [
+              294,
+              249
+            ],
+            "r": 4,
+            "l": 0,
+            "frames": 1,
+            "motifDescription": "same-owner braided magic core already retained by standalone cult practice"
+          },
+          "blade": {
+            "key": "cultLance",
+            "width": 512,
+            "height": 192,
+            "crop": [
+              4,
+              36,
+              503,
+              124
+            ],
+            "objectCrop": [
+              9,
+              41,
+              493,
+              115
+            ],
+            "denseCrop": [
+              250,
+              93,
+              12,
+              12
+            ],
+            "anchor": [
+              257.5,
+              98.5
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 251,
+            "sourcePatchMeanValue": 162.9,
+            "rotation": 0,
+            "downsample": [
+              128,
+              48
+            ]
+          },
+          "beam": {
+            "key": "cultLance",
+            "width": 512,
+            "height": 192,
+            "crop": [
+              4,
+              36,
+              503,
+              124
+            ],
+            "objectCrop": [
+              4,
+              36,
+              503,
+              124
+            ],
+            "denseCrop": [
+              250,
+              93,
+              12,
+              12
+            ],
+            "anchor": [
+              256,
+              99
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 251,
+            "sourcePatchMeanValue": 162.9,
+            "rotation": 0
+          },
+          "rotor": {
+            "key": "cultLance",
+            "width": 512,
+            "height": 192,
+            "crop": [
+              4,
+              36,
+              503,
+              124
+            ],
+            "objectCrop": [
+              4,
+              36,
+              503,
+              124
+            ],
+            "denseCrop": [
+              250,
+              93,
+              12,
+              12
+            ],
+            "anchor": [
+              256,
+              99
+            ],
+            "r": 6,
+            "l": 0,
+            "frames": 1,
+            "sourcePatchAlphaMin": 251,
+            "sourcePatchMeanValue": 162.9,
+            "rotation": 0
+          },
+          "palette": {
+            "id": "story-35",
+            "primary": "#eee4dc",
+            "secondary": "#a73545",
+            "accent": "#897a7c"
+          }
+        },
+        "skills": {
+          "cast": [
+            {
+              "key": "cultDriveFold",
+              "width": 512,
+              "height": 512,
+              "crop": [
+                0,
+                0,
+                512,
+                512
+              ],
+              "authoredFrames": 1,
+              "turn": 0.12
+            },
+            {
+              "key": "cultDriveStitch",
+              "width": 512,
+              "height": 512,
+              "crop": [
+                0,
+                0,
+                512,
+                512
+              ],
+              "authoredFrames": 1,
+              "turn": 0.12
+            },
+            {
+              "key": "cultDriveFold",
+              "width": 512,
+              "height": 512,
+              "crop": [
+                0,
+                0,
+                512,
+                512
+              ],
+              "authoredFrames": 1,
+              "turn": 0.12
+            }
+          ],
+          "release": [
+            {
+              "key": "cultLance",
+              "width": 512,
+              "height": 192,
+              "crop": [
+                0,
+                0,
+                512,
+                192
+              ],
+              "authoredFrames": 1,
+              "turn": 0.12
+            },
+            {
+              "key": "cultDriveStitch",
+              "width": 512,
+              "height": 512,
+              "crop": [
+                0,
+                0,
+                512,
+                512
+              ],
+              "authoredFrames": 1,
+              "turn": 0.12
+            },
+            {
+              "key": "cultDriveImpact",
+              "width": 512,
+              "height": 512,
+              "crop": [
+                0,
+                0,
+                512,
+                512
+              ],
+              "authoredFrames": 1,
+              "turn": 0.12
+            }
+          ],
+          "laser": {
+            "key": "cultLance",
+            "width": 512,
+            "height": 192,
+            "crop": [
+              0,
+              0,
+              512,
+              192
+            ],
+            "authoredFrames": 1,
+            "turn": 0.12
+          }
+        }
+      },
+      "status": "design/source constraint: runtime implementation and QA tracked separately"
+    }
+  ],
+  "knownGaps": [
+    "No claim of new continuous sprite animation. Original five bosses20keyposes retained.",
+    "Shared own-scene Chrono imagery does not establish individually authored art for66guardians. Choreography can distinguish roles within the confirmed scene family.",
+    "The four small generic v3128 candidates envy_mirror/greed_coin/pride_cross/wrath_beast remain unadopted for mainbosses; greed_coin has miniboss ownership.",
+    "No independently confirmed frying-pan/pillow original added in this audit. Existing own scene/art may be retained; do not invent missing bitmap assets.",
+    "Exact danger geometry/opaque pivot/beam alpha and real mobile performance need separate runtime QA. Source alpha alone does not certify collision visibility."
+  ],
+  "sourceDocuments": [
+    "docs/HAPIL1-ASSET-SOURCES-V14-20261029.json",
+    "docs/SINS-PROJECTILE-SOURCES-20261029.json",
+    "docs/CHAPTER3-SOURCE-DISCOVERY-20261030.json",
+    "docs/CHAPTER3-RUNTIME-ASSETS-V18-20261030.json",
+    "docs/V19-STORY-ASSET-PROVENANCE-20261030.json",
+    "docs/V24-SOURCE-ASSET-AUDIT-20261031.json"
+  ],
+  "baselineCapture": {
+    "core": "HEAD prior to v25 implementation, read from independent temporary copy because core was concurrently edited",
+    "media": "current local media registry at source-audit capture",
+    "runtimeStateClaim": "No v25 behavior pass asserted by this snapshot"
+  }
+}

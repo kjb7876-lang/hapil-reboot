@@ -1,0 +1,3 @@
+{"bossIndex":8,"phase":2,"difficulty":"hell","stage":"won","ticks":2797,"hp":1,"hits":2,"score":6610,"phaseTicks":[2797],"peakBullets":128,"poolPressure":0,"droppedGroups":0,"resultReason":"색욕의 귀 아스모데우스 · 연습 완료","identityPatternIds":[]}
+{"bossIndex":10,"phase":2,"difficulty":"hell","stage":"won","ticks":2768,"hp":3,"hits":0,"score":7505,"phaseTicks":[2768],"peakBullets":152,"poolPressure":0,"droppedGroups":0,"resultReason":"분노의 귀 · 연습 완료","identityPatternIds":["identity-fire-beats-v25"]}
+{"report":"/workspace/scratch/c84ef2cd7c03/hapil-reboot/docs/v25-qa/natural-health-legal-alternate.json","sourceHashGuardPassed":true,"cases":2,"won":2,"lost":0,"unfinished":0,"poolPressure":0,"droppedGroups":0}

@@ -1,0 +1,17 @@
+core.js:372
+    if (options.finalPractice === true && (options.campaign !== true || options.practiceBoss !== true || options.bossIndex !== 11 || options.campaignRevision !== undefined && options.campaignRevision !== 3)) throw new RangeError('Final battle is a separate practice only');
+                                                                                                                                                                                                                ^
+
+RangeError: Final battle is a separate practice only
+    at Object.createRun (core.js:372:215)
+    at practice (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tools/audit-boss-identities-v25.cjs:14:14)
+    at Object.collectRoutes (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tools/audit-boss-identities-v25.cjs:73:101)
+    at [stdin]:2:141
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [stdin]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+
+Node.js v24.22.1

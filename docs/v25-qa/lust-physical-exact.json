@@ -1,0 +1,72 @@
+{
+  "sourceHashes": {
+    "core": "0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851",
+    "weapon": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f"
+  },
+  "normalisation": "Only optional combatRevision field at world root and its nested product _checkpoint boundary is removed; no simulated properties are omitted.",
+  "rows": [
+    {
+      "phase": 0,
+      "difficulty": "gentle",
+      "ticks": 840,
+      "normalisedWorldSHA256": "d55dd3d7e26ca08b739b47ff2b4deb42c5827dcd3706243f8ab745a9cabbd308",
+      "normalisedCheckpointSHA256": "1c9e0d77e992833f6faea375db8cc16eb2945245dc3d819faab69e6bd437e571"
+    },
+    {
+      "phase": 0,
+      "difficulty": "normal",
+      "ticks": 840,
+      "normalisedWorldSHA256": "4fbe67e18b4e3ba9b442a5192251f548e4a37169323745ffa4b89093fcc16421",
+      "normalisedCheckpointSHA256": "a9290efa175014967f92d229725a8b1f2896de03f436653f64aa984fdc42d182"
+    },
+    {
+      "phase": 0,
+      "difficulty": "hell",
+      "ticks": 840,
+      "normalisedWorldSHA256": "37428440aafc4a0d8f6abd8a72625ea77ea6b4f43a79e55dc62c9207a984e01c",
+      "normalisedCheckpointSHA256": "e4819d8299f6417fe1971261f6e9de27417fe60cfeb6c921a84890a62dab5c4f"
+    },
+    {
+      "phase": 1,
+      "difficulty": "gentle",
+      "ticks": 840,
+      "normalisedWorldSHA256": "47bf852fd304cd5a7862b2068f0f953ac2a0d765e8b2751a655e20df63af5cb4",
+      "normalisedCheckpointSHA256": "f35d7f54d19613b1777dfa04428fe49f05f345376156b96807027f5533611dae"
+    },
+    {
+      "phase": 1,
+      "difficulty": "normal",
+      "ticks": 840,
+      "normalisedWorldSHA256": "c4acd26103c83d24afef386b8926fe9bbaf0654ee5a1929148b1ca1ed5f91c1d",
+      "normalisedCheckpointSHA256": "c368afb0a4e7ec6521dd7d6b38c64b64ee5c5841325dd98027c21ec67bf29066"
+    },
+    {
+      "phase": 1,
+      "difficulty": "hell",
+      "ticks": 840,
+      "normalisedWorldSHA256": "e2c3ccac9168459b304e6754ccbe5f8a782b6537c72f45c4140b8900721d73c1",
+      "normalisedCheckpointSHA256": "6dc97b2922a77f4443ca0d0b270f0843e94e4487887f6ef3ecaa83c26153f08b"
+    },
+    {
+      "phase": 2,
+      "difficulty": "gentle",
+      "ticks": 840,
+      "normalisedWorldSHA256": "23d61505a23d669cb191dcaa8a3e91d5e90cad9d82a2b9a28bf7379aa3511450",
+      "normalisedCheckpointSHA256": "6cfe714f58857279e51ec1c52fc1e7cebfcb87978c3831e79bf26445471c7746"
+    },
+    {
+      "phase": 2,
+      "difficulty": "normal",
+      "ticks": 840,
+      "normalisedWorldSHA256": "e99a6b691862ceac090dbf7bc8123557256462cd554ae4a351197806b318fd03",
+      "normalisedCheckpointSHA256": "347f08b8ad4222e7c751729cef531bfb3dd18948916cbd86676406c62df6fccb"
+    },
+    {
+      "phase": 2,
+      "difficulty": "hell",
+      "ticks": 840,
+      "normalisedWorldSHA256": "e363c5cefbea1a99e2ddb26130e90678a4116d3bcab06e2a236fe7d404dfb834",
+      "normalisedCheckpointSHA256": "43a389091f456196006f5a27aebccace9c18cc5b4c0d981c815c64f677ee7c61"
+    }
+  ]
+}

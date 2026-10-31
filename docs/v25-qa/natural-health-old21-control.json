@@ -1,0 +1,135 @@
+{
+  "schema": 1,
+  "scope": "Ordinary-health CPU isolated special-practice attempts. Actual product checkpoint-selected phase starts, legal inputs only afterward, unmodified HP/damage/autoattack/skills. No777/no external immunity. Not human/fullstory/browser/GPU/mobile.",
+  "policy": "Public-current-threat forecast including existing announced hazards; read-only view selects the same forecast for all actual difficulties. No future emissions or RNG reads. Stands still before a visible threat.",
+  "policyConfig": {
+    "route": "centre",
+    "y": 575,
+    "beam": 20,
+    "commit": 4,
+    "horizon": 96
+  },
+  "directions": [
+    [
+      0,
+      0
+    ],
+    [
+      4,
+      0
+    ],
+    [
+      -4,
+      0
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      0,
+      -4
+    ],
+    [
+      2.828,
+      2.828
+    ],
+    [
+      2.828,
+      -2.828
+    ],
+    [
+      -2.828,
+      2.828
+    ],
+    [
+      -2.828,
+      -2.828
+    ]
+  ],
+  "sourceHashes": {
+    "src/core.js": "0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d",
+    "tools/audit-boss-identities-v25.cjs": "88e1d4e3afd9d314d3de2cb723d145105a3da7e3793ae4d82c76ce71f08dd20c",
+    "tools/probe-identities-v25-natural.cjs": "18433dffe03accc00d128f501bf8a03a1844c534965b6596aedb05853db198b7"
+  },
+  "sourceHashesAfter": {
+    "src/core.js": "0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d",
+    "tools/audit-boss-identities-v25.cjs": "88e1d4e3afd9d314d3de2cb723d145105a3da7e3793ae4d82c76ce71f08dd20c",
+    "tools/probe-identities-v25-natural.cjs": "18433dffe03accc00d128f501bf8a03a1844c534965b6596aedb05853db198b7"
+  },
+  "sourceHashGuardPassed": true,
+  "summary": {
+    "cases": 2,
+    "won": 0,
+    "lost": 2,
+    "unfinished": 0,
+    "poolPressure": 0,
+    "droppedGroups": 0
+  },
+  "records": [
+    {
+      "bossIndex": 8,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 21,
+      "bossId": "asmodeus",
+      "startHP": 3,
+      "stage": "lost",
+      "ticks": 2614,
+      "hp": 0,
+      "hits": 3,
+      "score": 1125,
+      "phaseTicks": [],
+      "peakBullets": 126,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "기억이 흐려졌습니다",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [],
+      "firstIdentityTick": null,
+      "input": {
+        "file": "natural-health-old21-control-inputs/boss-08-hell-phase-2.moves.gz",
+        "bytes": 434,
+        "sha256": "cca8a8aead9eb8029078efe4fbe09550646873fd2c3831b4706b217fef8dcb1c",
+        "ticks": 2614
+      }
+    },
+    {
+      "bossIndex": 10,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 21,
+      "bossId": "wrath",
+      "startHP": 3,
+      "stage": "lost",
+      "ticks": 2198,
+      "hp": 0,
+      "hits": 3,
+      "score": 1020,
+      "phaseTicks": [],
+      "peakBullets": 180,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "기억이 흐려졌습니다",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [],
+      "firstIdentityTick": null,
+      "input": {
+        "file": "natural-health-old21-control-inputs/boss-10-hell-phase-2.moves.gz",
+        "bytes": 364,
+        "sha256": "41f85075196aed722e01f2eaca4d22d8636d0acca6a7035d7603e23b830e240b",
+        "ticks": 2198
+      }
+    }
+  ]
+}

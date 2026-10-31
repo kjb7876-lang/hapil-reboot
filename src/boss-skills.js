@@ -33,6 +33,55 @@
   var CULT_LANCE=Object.freeze({key:'cultLance',width:512,height:192,crop:Object.freeze([0,0,512,192]),authoredFrames:1,turn:.22});
   var CH3_LANCE=Object.freeze({key:'chapter3Lance',width:512,height:192,crop:Object.freeze([0,0,512,192]),authoredFrames:1,turn:.16});
   var CH3_BEAM=Object.freeze({key:'chapter3Beam',width:768,height:144,crop:Object.freeze([0,0,768,144]),authoredFrames:1,turn:0});
+  // One presentation contract per runtime configuration (12 is the separate
+  // final-practice route). These are source-art keypose transforms, not new
+  // attacks or authored animation cycles. In particular, the six controller
+  // rows remain stages of the same system and point at its repeat-command
+  // links; a preserved memory/person/core never becomes a bursting target.
+  var PROFILE_ROWS = [
+    ['violet-eight-sword-threads',['woven-sword','inscribed-sword','severed-thread'],.32,7,1.04,2],
+    ['horn-swamp-grasp',['sinking-grasp','closing-hands','horn-echo'],-.23,9,.98,3],
+    ['balrog-space-fire',['space-cut','sky-fire','seven-seals'],.46,12,1.12,0],
+    ['mask-false-white-promise',['white-promise','perfect-command','mask-crack'],-.38,6,1.02,1],
+    ['lucifer-many-selves',['false-constellation','many-faces','j-seal'],.63,4,1.08,4],
+    ['belphegor-postponed-pulse',['late-trash','held-pulse','postponed-wave'],-.13,3,1.06,5],
+    ['leviathan-crossed-reflections',['unequal-flows','crossed-gaze','reversed-reflection'],-.52,8,1.02,1],
+    ['beelzebub-hungry-kitchen',['large-small-waves','kitchen-crossing','layered-maw'],.26,10,1.13,3],
+    ['asmodeus-red-stage',['stage-beat','locked-spotlight','string-curtain'],.22,0,1,0],
+    ['mammon-vault-winter-memory',['priced-branches','vault-lock','preserved-winter-memory'],.40,5,1.04,5],
+    ['wrath-three-fire-beats',['spreading-fire','escape-corridor','bear-wolves-dragon'],-.66,11,1.14,2],
+    ['pride-seven-calculations',['seven-branches','electrode-line','cyborg-bootloader'],.14,3,1.12,4],
+    ['cult-practice-authority',['samong-fold','revival-stitch','authority-impact'],.54,8,1.10,2],
+    ['controller-defensive-legion',['defensive-legion','bombardment-loop','architecture-link'],.18,11,.98,2],
+    ['controller-coercive-rescue',['cruel-rescue','compassion-boundary','meaning-link'],-.43,5,1.03,3],
+    ['controller-veto-signal',['veto-signal','hardware-migration','legacy-link'],.08,7,.96,4],
+    ['controller-feedback-return',['administrator-output','abuse-repeat-link','feedback-link'],-.58,9,1.06,1],
+    ['controller-choice-fork',['empty-vessel-link','constrained-choice','update-fork'],.37,4,1.01,5],
+    ['controller-repeat-disconnect',['possessed-gate-link','repeat-link','released-ego-boundary'],-.21,6,1.07,0],
+    ['goblin-flute-turn',['flute-turn','wolf-path','rose-resonance'],.49,6,.98,4],
+    ['fallen-knight-six-swords',['familiar-path','six-sword-positions','falling-wall'],-.44,12,1.12,2],
+    ['insomnia-black-mist',['sleepless-echo','resident-safe-mist','mist-heart'],.10,2,1.14,5],
+    ['academy-six-invasions',['intercepting-turret','polluted-command','protected-first-command'],.24,8,.99,2],
+    ['harvest-lower-power-links',['overwork-bonds','comparison-command','power-junction'],-.31,10,1.04,0],
+    ['harvest-upper-crossed-orders',['alternating-orders','crossed-rule-gap','chosen-step'],.57,5,1.01,1],
+    ['workshop-power-junction',['tightening-order','preserved-time-pipe','furnace-junction'],-.36,7,1.08,3],
+    ['neuron-forced-cable',['preceding-cable','next-command-gap','forced-neural-link'],.17,4,1.03,5],
+    ['memory-grave-deletion-link',['preserved-clock-shards','deletion-order','owners-records'],-.11,3,1.09,4],
+    ['collapse-six-command-rings',['first-three-links','last-three-links','corridor-opening'],.72,9,.97,4],
+    ['arbelia-tampered-thread',['deferred-time','tampered-record-thread','autonomous-first-command'],-.17,2,1.06,5],
+    ['siren-time-harvest',['time-harvest','optimized-fate','free-choice-window'],.60,10,1.11,1],
+    ['castle-returned-ego-core',['chosen-gate','owners-authority','returned-core'],-.47,9,1.07,2],
+    ['causal-repeat-links',['scapegoat-refusal','three-causal-locks','preserved-guilt-records'],.05,5,1.02,4],
+    ['cult-outer-command-network',['reverse-ego-occupation','interlocked-repeat','outer-command-link'],-.64,8,1.09,3],
+    ['cult-two-circuit-casters',['rian-inverse-cross','ion-order-wall','shared-command-circuit'],.28,6,1.05,1],
+    ['cult-final-samong-authority',['samong-fold','revival-stitch','authority-impact'],.54,8,1.10,2]
+  ];
+  var PRESENTATION_PROFILES = Object.freeze(PROFILE_ROWS.map(function(row,index){return Object.freeze({index:index,id:row[0],phaseRoles:Object.freeze(row[1]),swing:row[2],recoil:row[3],scale:row[4],envelope:row[5],configuration:index!==12});}));
+  // Native artwork headings were reviewed in the retained source pixels. A
+  // horizontal spear becomes a downward strike by rotation, never stretching
+  // its silhouette into a beam. Symmetric apparatus uses a stable upright axis.
+  var SOURCE_HEADINGS = Object.freeze({h14SkillViolet:0,h14SkillHorn:Math.PI/2,h14SkillBalrog:.20,h14SkillMask:0,h14SkillLucifer:0,h14SkillSloth:Math.PI/2,h14SkillEnvy:0,h14SkillGlutton:0,h14SkillLust:Math.PI/2,h14SkillGreed:Math.PI/2,h14SkillWrath:-Math.PI/4,h14SkillPride:Math.PI/2,h25SlothTissue:Math.PI/2,h25GluttonKnife:.36,h25GreedMoney:0,h25GreedTreasure:0,cultDriveFold:.82,cultDriveImpact:Math.PI/2,cultDriveStitch:Math.PI/2,cultLance:0,chapter3Lance:0,chapter3Beam:0,storyGoblinWave:-.40,storyGoblin:Math.PI/2,storyKnightSword:Math.PI/2,storyInsomniaGaze:Math.PI/2,storyChronoCrescent:0,storyChronoShard:0,storyChiefBlade:2.25,storyChiefIdle:Math.PI/2,storyExecutorRoad:0,storyRianCross:Math.PI/2,storyIonShield:Math.PI/2});
+  function profileFor(i){return Number.isInteger(i)&&PRESENTATION_PROFILES[i]||null;}
   var CACHE_BYTES = 2 * 1024 * 1024, CACHE_ENTRIES = 24, STAMP_SIZE = 96;
   function finite(n) { return typeof n === 'number' && Number.isFinite(n); }
   function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
@@ -62,7 +111,7 @@
     var cache = new Map(), bytes = 0, encounter = -1, metrics;
     function release(item) { if (item && item.canvas) { item.canvas.width = 1; item.canvas.height = 1; } }
     function clear() { cache.forEach(release); cache.clear(); bytes = 0; }
-    function beginFrame() { metrics = { skillSourceDraws: 0, skillCastDraws: 0, skillReleaseDraws: 0, skillLaserDraws: 0, skillMissingAssets: 0, skillDrawLimit: 8, skillReleaseCandidates: 0, skillReleaseEmitters: 0, sourceKeys: {}, representedReleases: [] }; }
+    function beginFrame() { metrics = { skillSourceDraws: 0, skillCastDraws: 0, skillReleaseDraws: 0, skillLaserDraws: 0, skillMissingAssets: 0, skillDrawLimit: 8, skillReleaseCandidates: 0, skillReleaseEmitters: 0, skillWarningCandidates:0, skillWarningDraws:0, skillChargeSuppressed:0, skillProfileId:'', sourceKeys: {}, skillCueIds:{}, representedReleases: [], representedCasts: [] }; }
     function remember(key, item) {
       if (item.bytes > CACHE_BYTES) { release(item); return null; }
       while (cache.size && (cache.size >= CACHE_ENTRIES || bytes + item.bytes > CACHE_BYTES)) { var first = cache.keys().next().value, old = cache.get(first); bytes -= old.bytes; release(old); cache.delete(first); }
@@ -78,17 +127,39 @@
       ctx.drawImage(images[spec.key], crop[0], crop[1], crop[2], crop[3], (STAMP_SIZE - width) / 2, (STAMP_SIZE - height) / 2, width, height);
       return remember(key, { canvas: c, bytes: STAMP_SIZE * STAMP_SIZE * 4 });
     }
-    function paint(ctx, spec, role, x, y, age, duration, progress, low) {
+    function paint(ctx, spec, role, x, y, age, duration, progress, low, profile, phase, event) {
       if (!spec || ![x, y, age, duration].every(finite) || age < 0 || duration <= 0 || age >= duration) return false;
-      if (x < 0 || x > 360 || y < 0 || y > 220) return false;
+      // Some actual controller lasers originate at the side at y345/435.
+      // Keep those compact source muzzles at the true origin, never relocate
+      // them to the boss or project their art over the player's lower region.
+      if (x < 0 || x > 360 || y < 0 || y > 440) return false;
       var art = surface(spec); if (!art) { metrics.skillMissingAssets++; return false; }
-      var p = clamp(age / duration, 0, 1), alpha = role === 'cast' ? .18 + clamp(progress || 0, 0, 1) * .22 : .48 * Math.min(1, (1 - p) * 2);
-      var size = (low ? 44 : 54) * (role === 'cast' ? .86 + .12 * clamp(progress || 0, 0, 1) : .94 + p * .10);
+      profile=profile||PRESENTATION_PROFILES[0];phase=clamp(Math.floor(phase||0),0,2);event=event||{};
+      var p = clamp(age / duration, 0, 1), charge=clamp(progress||0,0,1), envelope=profile.envelope;
+      var semantic=event.identityRole||event.kind||role,phaseRole=profile.phaseRoles[phase],cueId=profile.id+':'+phaseRole+':'+semantic;
+      // The artwork follows the recorded heading for planned casts. Earlier
+      // release records have no heading; their compact downward recoil is an
+      // origin accent, not a claim about an individual projectile trajectory.
+      var heading=finite(event.angle)?event.angle:Math.PI/2,native=finite(SOURCE_HEADINGS[spec.key])?SOURCE_HEADINGS[spec.key]:Math.PI/2;
+      var side=x<180?-1:1,held=envelope===5?charge*charge*charge:envelope===2?Math.sqrt(charge):charge;
+      var rotation=heading-native+(role==='cast'?(1-held)*profile.swing*side:profile.swing*side*Math.sin(p*Math.PI)*.45);
+      if(semantic==='circuit-shield')rotation=(role==='cast'?(1-charge)*-.12:p*.12);
+      // No explosion/dissolve is applied to memory/core/record ownership. The
+      // finite accent recoils at the hostile command's own emission point.
+      var recoil=role==='cast'?-profile.recoil*(1-held)*.35:profile.recoil*Math.sin(p*Math.PI)*(envelope===1?-1:1);
+      var size = (low ? 44 : 54)*profile.scale*(role==='cast'? .72+.28*held:.96+.10*Math.sin(p*Math.PI));
+      if(semantic==='hell-rotor'||semantic==='weapon')size*=1.12;
+      if(role==='laser')size*=1.06;
+      var alpha=role==='cast'?.23+.37*charge:.56*Math.min(1,(1-p)*2);
+      // v24's separately reviewed Lust props, stage clocks and accent remain
+      // the reference battle; this pass changes the other 34 configurations.
+      if(profile.index===8){rotation=role==='cast'?0:(spec.turn||0)*p;recoil=0;size=(low?44:54)*(role==='cast'?.86+.12*charge:.94+p*.10);alpha=role==='cast'?.18+charge*.22:.48*Math.min(1,(1-p)*2);}
       ctx.save(); ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = alpha;
-      ctx.translate(x, y); ctx.rotate(role === 'cast' ? 0 : (spec.turn || 0) * p);
+      ctx.translate(x+Math.cos(heading)*recoil,y+Math.sin(heading)*recoil); ctx.rotate(rotation);
       ctx.drawImage(art.canvas, -size / 2, -size / 2, size, size); ctx.restore();
       metrics.skillSourceDraws++; metrics[role === 'cast' ? 'skillCastDraws' : role === 'laser' ? 'skillLaserDraws' : 'skillReleaseDraws']++;
-      metrics.sourceKeys[spec.key] = (metrics.sourceKeys[spec.key] || 0) + 1; return true;
+      metrics.sourceKeys[spec.key] = (metrics.sourceKeys[spec.key] || 0) + 1;metrics.skillCueIds[cueId]=(metrics.skillCueIds[cueId]||0)+1;
+      return {cueId:cueId,phaseRole:phaseRole,rotation:rotation,displaySize:size,releaseAge:age};
     }
     function draw(ctx, world, low) {
       if (!world || !world.campaign || world.stage !== 'boss' || !world.boss || !finite(world.tick)) return;
@@ -98,7 +169,34 @@
       if (encounter !== index) { clear(); encounter = index; }
       var limit = low ? 4 : 8; metrics.skillDrawLimit = limit;
       var b = world.boss, progress = clamp(b.actionProgress || 0, 0, 1);
-      function specFor(role,event){var source=event&&(event.modelActorId||event.sourceActorId),owner=source&&entry.participants&&entry.participants[source]||entry,spec=owner[role];return Array.isArray(spec)?spec[Math.min(world.phase||0,spec.length-1)]:spec;}
+      var profile=profileFor(index);metrics.skillProfileId=profile.id;
+      function phaseFor(event){return event&&Number.isInteger(event.sourcePhase)&&event.sourcePhase>=0&&event.sourcePhase<=2?event.sourcePhase:clamp(Math.floor(world.phase||0),0,2);}
+      function specFor(role,event){
+        var source=event&&(event.modelActorId||event.sourceActorId),owner=source&&entry.participants&&entry.participants[source]||entry,spec=owner[role];
+        var identity=event&&event.identityRole,phase=phaseFor(event),prop=identity==='late-pulse'?'h25SlothTissue':identity==='hungry-jaw'?'h25GluttonKnife':identity==='vault-branch'&&phase<2?(phase===1?'h25GreedTreasure':'h25GreedMoney'):null;
+        // These inspected whole props are also the required projectile source
+        // for the same committed identity cast. Missing pixels omit the cue;
+        // they never borrow a different owner's art or a geometric fallback.
+        if(prop)return {key:prop,width:256,height:256,crop:[0,0,256,256],authoredFrames:1,turn:0};
+        if(identity==='authority-fold')return CULT_FOLD;
+        if(identity==='authority-stitch')return CULT_STITCH;
+        if(identity==='authority-impact')return CULT_IMPACT;
+        return Array.isArray(spec)?spec[Math.min(phase,spec.length-1)]:spec;
+      }
+      function recordCast(plan,spec,drawn,progress){
+        if(!drawn)return;var record=Object.assign({id:plan.id||'',sourceKey:spec.key,x:plan.x,y:plan.y,progress:progress,warningAt:plan.warningAt,activeAt:plan.activeAt,patternId:plan.patternId||'',identityRole:plan.identityRole||'',planned:!!plan.planned},drawn);
+        if(plan.sourceActorId)record.sourceActorId=plan.sourceActorId;if(plan.modelActorId)record.modelActorId=plan.modelActorId;metrics.representedCasts.push(record);
+      }
+      // The actual locked 54-tick identity warnings take precedence over the
+      // generic boss charge and cosmetic release echoes. Core admits at most
+      // four live plans, so even the low path can show every pending origin.
+      var plans=Array.isArray(b.identityCasts)?b.identityCasts:[];
+      for(var q=0;q<plans.length&&metrics.skillSourceDraws<limit;q++){
+        var plan=plans[q];if(!plan||plan.cancelled||![plan.x,plan.y,plan.warningAt,plan.activeAt].every(finite)||plan.activeAt<=plan.warningAt||world.tick<plan.warningAt||world.tick>=plan.activeAt)continue;
+        metrics.skillWarningCandidates++;var pr=clamp((world.tick-plan.warningAt)/(plan.activeAt-plan.warningAt),0,1),castSpec=specFor('cast',plan)||specFor('release',plan);
+        var shown=paint(ctx,castSpec,'cast',plan.x,plan.y,pr,2,pr,low,profile,phaseFor(plan),plan);
+        if(shown){metrics.skillWarningDraws++;recordCast(Object.assign({},plan,{planned:true}),castSpec,shown,pr);}
+      }
       // The bounded records are emitted only after a real projectile group or
       // laser activation succeeds. A dropped group creates no release accent.
       var events = Array.isArray(b.skillReleases) ? b.skillReleases : null;
@@ -128,21 +226,23 @@
         for(var j=0;j<selected.length&&metrics.skillSourceDraws<limit;j++){
           var e=selected[j],age=world.tick-e.tick;
           var laser = e.kind === 'laser', spec = laser ? specFor('laser',e) || specFor('release',e) : specFor('release',e);
-          if (paint(ctx, spec, laser ? 'laser' : 'release', e.x, e.y, age, 30, 0, low)) {var represented={ tick:e.tick,kind:e.kind,patternId:e.patternId||'',x:e.x,y:e.y,sourceKey:spec.key };if(e.sourceActorId)represented.sourceActorId=e.sourceActorId;if(e.modelActorId)represented.modelActorId=e.modelActorId;metrics.representedReleases.push(represented);}
+          var shown=paint(ctx, spec, laser ? 'laser' : 'release', e.x, e.y, age, 30, 0, low,profile,phaseFor(e),e);
+          if (shown) {var represented=Object.assign({ tick:e.tick,kind:e.kind,patternId:e.patternId||'',identityRole:e.identityRole||'',x:e.x,y:e.y,sourceKey:spec.key },shown);if(e.sourceActorId)represented.sourceActorId=e.sourceActorId;if(e.modelActorId)represented.modelActorId=e.modelActorId;metrics.representedReleases.push(represented);}
         }
       } else if (finite(b.releaseTick) && b.releaseTick >= 0) {
         var releaseAge = world.tick - b.releaseTick;
         var releaseSpec=specFor('release');
-        if (metrics.skillSourceDraws < limit && paint(ctx, releaseSpec, 'release', b.x, b.y + 20, releaseAge, 24, 0, low)) metrics.representedReleases.push({ tick: b.releaseTick, kind: 'legacy-release', patternId: '',x:b.x,y:b.y+20,sourceKey:releaseSpec.key });
+        if (metrics.skillSourceDraws < limit) {var legacy=paint(ctx, releaseSpec, 'release', b.x, b.y + 20, releaseAge, 24, 0, low,profile,world.phase);if(legacy)metrics.representedReleases.push(Object.assign({ tick: b.releaseTick, kind: 'legacy-release', patternId: '',x:b.x,y:b.y+20,sourceKey:releaseSpec.key },legacy));}
       }
       // Confirmed releases take priority over a preparation accent that may
       // overlap their attack clock. Any remaining cast budget is still capped.
+      function hasPlannedCharge(id,x,y){return metrics.representedCasts.some(function(c){return c.planned&&(!c.sourceActorId||c.sourceActorId===id)&&Math.hypot(c.x-x,c.y-y)<32;});}
       var cast=specFor('cast');
-      if (b.action === 'charge' && cast && metrics.skillSourceDraws < limit) paint(ctx, cast, 'cast', b.x, b.y + 24, progress, 2, progress, low);
-      if(story&&Array.isArray(b.participants))b.participants.forEach(function(p){var spec=specFor('cast',{sourceActorId:p.id}),pr=clamp(p.actionProgress||0,0,1);if(p.action==='charge'&&spec&&metrics.skillSourceDraws<limit)paint(ctx,spec,'cast',p.x,p.y+24,pr,2,pr,low);});
+      if (b.action === 'charge' && cast && metrics.skillSourceDraws < limit) {if(hasPlannedCharge(null,b.x,b.y+24))metrics.skillChargeSuppressed++;else recordCast({x:b.x,y:b.y+24,patternId:b.specialPatternId},cast,paint(ctx, cast, 'cast', b.x, b.y + 24, progress, 2, progress, low,profile,world.phase),progress);}
+      if(story&&Array.isArray(b.participants))b.participants.forEach(function(p){var event={sourceActorId:p.id},spec=specFor('cast',event),pr=clamp(p.actionProgress||0,0,1);if(p.action==='charge'&&spec&&metrics.skillSourceDraws<limit){if(hasPlannedCharge(p.id,p.x,p.y+24))metrics.skillChargeSuppressed++;else recordCast({x:p.x,y:p.y+24,sourceActorId:p.id,patternId:b.specialPatternId},spec,paint(ctx,spec,'cast',p.x,p.y+24,pr,2,pr,low,profile,world.phase,event),pr);}});
     }
     beginFrame();
-    return { beginFrame: beginFrame, draw: draw, getMetrics: function () { return Object.assign({}, metrics, { sourceKeys: Object.assign({}, metrics.sourceKeys), representedReleases: metrics.representedReleases.slice(), skillCacheEntries: cache.size, skillCacheBytes: bytes, skillCacheByteLimit: CACHE_BYTES, skillCacheEntryLimit: CACHE_ENTRIES }); }, destroy: function () { clear(); images = {}; } };
+    return { beginFrame: beginFrame, draw: draw, getMetrics: function () { return Object.assign({}, metrics, { sourceKeys: Object.assign({}, metrics.sourceKeys), skillCueIds:Object.assign({},metrics.skillCueIds), representedReleases: metrics.representedReleases.slice(), representedCasts:metrics.representedCasts.slice(), skillCacheEntries: cache.size, skillCacheBytes: bytes, skillCacheByteLimit: CACHE_BYTES, skillCacheEntryLimit: CACHE_ENTRIES }); }, destroy: function () { clear(); images = {}; } };
   }
-  global.HapilBossSkills = Object.freeze({ create: create, assetKeysForEncounter: assetKeysForEncounter, optionalAssetKeysForEncounter: optionalAssetKeysForEncounter, invalidOptionalAssetForEncounter: invalidOptionalAssetForEncounter, encounters: ENCOUNTERS });
+  global.HapilBossSkills = Object.freeze({ create: create, assetKeysForEncounter: assetKeysForEncounter, optionalAssetKeysForEncounter: optionalAssetKeysForEncounter, invalidOptionalAssetForEncounter: invalidOptionalAssetForEncounter, encounters: ENCOUNTERS, presentationProfiles:PRESENTATION_PROFILES, presentationForEncounter:profileFor });
 })(typeof window !== 'undefined' ? window : globalThis);

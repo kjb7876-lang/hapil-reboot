@@ -2,8 +2,8 @@
  * Regular bullets retain the authored object silhouette rather than clipping
  * everything to a capsule. Their visible fins/points extend 3..4 CSS pixels
  * beyond the smaller collision core, as ornamental bullet art normally does.
- * Explicit Lust whole props and the full Envy mirror instead use measured
- * solid-source pivots and48/100px cosmetic budgets; only the original physics
+ * Explicit approved whole props instead use measured solid-source pivots and
+ *48/100px cosmetic budgets; only the original physics
  * circle/capsule damages, never the extra shoe, handle or mirror decoration.
  * No geometric backing, stroke, fallback body or per-frame pixel processing.
  */
@@ -190,6 +190,62 @@
     if(b.patternId==='asmodeus-phase-1'||b.patternId==='asmodeus-string-curtain')return b.paletteSlot===1?LUST_OBJECTS.lipstick:LUST_OBJECTS.heel;
     return LUST_OBJECTS.heart;
   }
+  // V25 keeps each owner's native material. Only measured compact objects
+  // use uniform whole-object fitting. Thin capsule sources keep their proven
+  // legacy fit until the existing physical capsule is fully visible; there is
+  // never a second dense orb underneath a new prop.
+  var V25_FULL_OBJECTS=Object.freeze({
+    tissue:Object.freeze(natural('h25SlothTissue',256,256,[0,0,256,256],{variant:'sloth-tissue',sourceColor:true,preserveAspect:true,anchor:[99,139],sourceSolidRadius:72.4})),
+    knife:Object.freeze(natural('h25GluttonKnife',256,256,[0,0,256,256],{variant:'glutton-kitchen-knife',sourceColor:true,preserveAspect:true,anchor:[199,157],sourceSolidRadius:26.257,rotation:-.36})),
+    money:Object.freeze(natural('h25GreedMoney',256,256,[0,0,256,256],{variant:'greed-paper-money',sourceColor:true,preserveAspect:true,anchor:[189,103],sourceSolidRadius:36.819})),
+    treasure:Object.freeze(natural('h25GreedTreasure',256,256,[0,0,256,256],{variant:'greed-treasure',sourceColor:true,preserveAspect:true,anchor:[131,127],sourceSolidRadius:55.671})),
+    horn:Object.freeze(natural('h14SkillHorn',256,256,[23,26,219,227],{variant:'horn-toxic-reed',sourceColor:true,preserveAspect:true,anchor:[127,147],sourceSolidRadius:64.883,downsample:[93,96]})),
+    balrog:Object.freeze(natural('h14SkillBalrog',512,512,[27,94,457,323],{variant:'balrog-flame-head',sourceColor:true,preserveAspect:true,anchor:[358,286],sourceSolidRadius:95.187,downsample:[96,68]})),
+    glutton:Object.freeze(natural('h14SkillGlutton',512,512,[33,28,443,458],{variant:'glutton-hungry-maw',sourceColor:true,preserveAspect:true,anchor:[250,334],sourceSolidRadius:98.78,downsample:[93,96]})),
+    wrath:Object.freeze(natural('h14SkillWrath',512,512,[21,31,469,455],{variant:'wrath-burning-rake',sourceColor:true,preserveAspect:true,anchor:[222,266],sourceSolidRadius:66.657,downsample:[96,93]})),
+    command:Object.freeze(natural('chapter3Beam',768,144,[0,0,144,144],{variant:'controller-command-emitter',sourceColor:true,preserveAspect:true,anchor:[63,69],sourceSolidRadius:37.626})),
+    cult:Object.freeze(natural('cultDriveSpear',512,512,[252,207,84,84],{variant:'cult-braided-command',sourceColor:true,preserveAspect:true,anchor:[293.016,246.703],sourceSolidRadius:26.389}))
+  });
+  var V25_STORY_SOLID=Object.freeze({
+    storyInsomniaSoul:{anchor:[184.094,276.287],sourceSolidRadius:124.416},
+    storyInsomniaGaze:{anchor:[259.277,231.688],sourceSolidRadius:190.715},
+    storyNeuralOrb:{anchor:[252.566,250.853],sourceSolidRadius:155.518},
+    storyChronoCrescent:{anchor:[313.43,210.099],sourceSolidRadius:67.116},
+    storyExecutorPrism:{anchor:[257.844,270.303],sourceSolidRadius:134.084},
+    storyExecutorRoad:{anchor:[377.059,276.418],sourceSolidRadius:60.18},
+    storyCultRose:{anchor:[257.815,256.188],sourceSolidRadius:171.44}
+  });
+  var V25_ENCOUNTER_ROLES=['wing-weave','bog-drag','sword-rake','feather-fork','constellation-orbit','late-pulse','mirror-reflection','hungry-jaw','lust-retained','vault-branch','fire-fuse','calculation-column','authority-command','defense-relay','mercy-boundary','veto-packet','feedback-return','migration-fork','repeat-disconnect','flute-phrase','six-swords','insomnia-veil','defense-intercept','harvest-tier','command-alternation','furnace-junction','neural-packet','deletion-seal','six-command-rings','tampered-thread','time-hand','castle-boundary','causal-lock','reverse-domination','circuit-pair','authority-command'];
+  var V25_SPEC_CACHE=new WeakMap();
+  function v25Source(s,i,blade,owner){
+    if(!s)return null;var role=V25_ENCOUNTER_ROLES[i]||'owned-attack',id=owner&&(owner.modelActorId||owner.sourceActorId),cacheKey=(blade?'capsule':'circle')+'|'+role+'|'+(id==='han-rian'||id==='baek-ion'?id:'owner'),known=V25_SPEC_CACHE.get(s);
+    if(known&&known[cacheKey])return known[cacheKey];
+    var crop=s.objectCrop||s.crop,extra={variant:role+'-'+(id==='han-rian'||id==='baek-ion'?id+'-':'')+(blade?'capsule':'circle'),sourceColor:true},solid=V25_STORY_SOLID[s.key];
+    // Their animated authored iris/petals retain the already proven owner
+    // palette grade (including Lucifer's blue-value-aware ivory contrast).
+    if(!blade&&(i===0||i===4))extra.sourceColor=false;
+    // Preserve the cyan/ivory source hues while lifting dark authored detail
+    // in these two thin mechanical materials. Alpha and silhouette stay exact;
+    // this is a cached source-only exposure grade, never a danger-core backing.
+    if(s.key==='storyChronoShard'||s.key==='storyIonShield'){extra.sourceExposure=1.5;extra.sourceLift=90;}
+    // Existing narrow weapons are kept at the proven capsule fit. Compact
+    // machinery/spell masses can contain a circular hit core in native aspect.
+    if(!blade&&solid){extra.preserveAspect=true;extra.anchor=solid.anchor;extra.sourceSolidRadius=solid.sourceSolidRadius;extra.downsample=[96,Math.max(1,Math.round(96*crop[3]/crop[2]))];}
+    var out=Object.assign(natural(s.key,s.width,s.height,crop),s,extra,{natural:true,crop:crop,frames:s.frames||1});if(!known){known=Object.create(null);V25_SPEC_CACHE.set(s,known);}known[cacheKey]=out;return out;
+  }
+  function ownedObject(i,blade,owner,world){
+    var b=owner&&typeof owner==='object'?owner:{},large=b.kind==='hell-rotor'||b.kind==='boss-weapon';
+    if(blade)return null;
+    if(i===5)return V25_FULL_OBJECTS.tissue;
+    if(i===7)return large?V25_FULL_OBJECTS.glutton:V25_FULL_OBJECTS.knife;
+    if(i===9){var phase=finite(b.sourcePhase)?b.sourcePhase:world&&finite(world.phase)?world.phase:null;if(phase===2||/mammon-phase-3|winter-memory/.test(b.patternId||''))return OWN_OBJECT_ORBS[9];if(large)return V25_FULL_OBJECTS.treasure;return phase===1?V25_FULL_OBJECTS.treasure:V25_FULL_OBJECTS.money;}
+    if(i===1&&b.identityRole==='bog-drag')return V25_FULL_OBJECTS.horn;
+    if(i===2&&!large)return V25_FULL_OBJECTS.balrog;
+    if(i===10&&!large)return V25_FULL_OBJECTS.wrath;
+    if(i>=13&&i<=18)return V25_FULL_OBJECTS.command;
+    if(i===12||i===35)return V25_FULL_OBJECTS.cult;
+    return null;
+  }
   var CACHE_LIMIT=96,CACHE_BYTES=4*1024*1024,SCALE=3,PAD=1,CELL=128;
   function finite(n){return typeof n==='number'&&Number.isFinite(n);}
   function clamp(n,a,b){return Math.max(a,Math.min(b,n));}
@@ -225,12 +281,12 @@
     return BEHAVIOR_PALETTES[index][b.paletteSlot===1?1:0][role];
   }
   var NATURAL_SPEC_CACHE=new WeakMap(),DENSE_SPEC_CACHE=new WeakMap(),SIGNATURE_CACHE=new WeakMap();
-  function naturalSpec(i,blade,owner){if(i===8)return lustObject(owner,blade);if(!blade&&OWN_OBJECT_ORBS[i]&&(!owner||(owner.kind!=='hell-rotor'&&owner.kind!=='boss-weapon')))return OWN_OBJECT_ORBS[i];var story=storySpec(i,owner),s=story?(blade?story.blade:story.orb):(blade?NATURAL_BLADES[i]:NATURAL_ORBS[i]);if(!s||s.natural)return s||null;var cached=NATURAL_SPEC_CACHE.get(s);if(cached)return cached;cached=Object.assign(natural(s.key,s.width,s.height,s.objectCrop||s.crop),s,{natural:true,crop:s.objectCrop||s.crop,frames:s.frames||1});NATURAL_SPEC_CACHE.set(s,cached);return cached;}
-  function sourceSignature(s){var cached=SIGNATURE_CACHE.get(s);if(cached)return cached;cached=[s.key,s.crop.join(','),s.rotation||0,s.frames||1,s.step||0,s.ms||0,s.downsample?s.downsample.join(','):'original',s.anchor?s.anchor.join(','):'center',s.fixedOrientation?'fixed':'aimed',s.visualOutset||0,s.alphaBoost?'readable':'original',s.sourceKey||'authored-alpha',s.cast?'cast':'body',s.encounterMaterial?'material':'object',s.natural?'natural':'dense',s.sourceColor?'source-rgb':'owner-tint',s.preserveAspect?'uniform-object':'fitted',s.sourceSolidRadius||'legacy-extent'].join('|');SIGNATURE_CACHE.set(s,cached);return cached;}
-  function optionalAssetKeysForEncounter(i){var out=[];if(!Number.isInteger(i)||i<0||i>=ORBS.length)return out;if(i>=12)return out;if(CASTS[i])out.push(CASTS[i].key);if(i!==8&&ROTORS[i])out.push(ROTORS[i].key);if(BEAMS[i])out.push(BEAMS[i].key);var orb=naturalSpec(i,false),blade=naturalSpec(i,true);return out.filter(function(k){return (!orb||k!==orb.key)&&(!blade||k!==blade.key);});}
+  function naturalSpec(i,blade,owner,world){if(i===8)return lustObject(owner,blade);var owned=ownedObject(i,blade,owner,world);if(owned)return owned;if(!blade&&OWN_OBJECT_ORBS[i]&&(!owner||(owner.kind!=='hell-rotor'&&owner.kind!=='boss-weapon')))return OWN_OBJECT_ORBS[i];var story=storySpec(i,owner),s=story?(blade?story.blade:story.orb):(blade?NATURAL_BLADES[i]:NATURAL_ORBS[i]);return v25Source(s,i,blade,owner);}
+  function sourceSignature(s){var cached=SIGNATURE_CACHE.get(s);if(cached)return cached;cached=[s.key,s.crop.join(','),s.rotation||0,s.frames||1,s.step||0,s.ms||0,s.downsample?s.downsample.join(','):'original',s.anchor?s.anchor.join(','):'center',s.fixedOrientation?'fixed':'aimed',s.visualOutset||0,s.alphaBoost?'readable':'original',s.sourceKey||'authored-alpha',s.cast?'cast':'body',s.encounterMaterial?'material':'object',s.natural?'natural':'dense',s.sourceColor?'source-rgb':'owner-tint',s.preserveAspect?'uniform-object':'fitted',s.sourceSolidRadius||'legacy-extent',s.sourceExposure||1,s.sourceLift||0].join('|');SIGNATURE_CACHE.set(s,cached);return cached;}
+  function optionalAssetKeysForEncounter(i){var out=[];if(!Number.isInteger(i)||i<0||i>=ORBS.length)return out;if(i>=12)return out;if(CASTS[i])out.push(CASTS[i].key);if(i!==8&&ROTORS[i])out.push(ROTORS[i].key);if(BEAMS[i])out.push(BEAMS[i].key);var orb=naturalSpec(i,false),blade=naturalSpec(i,true);return out.filter(function(k){return (!orb||k!==orb.key)&&(!blade||k!==blade.key)&&!(i===2&&k===V25_FULL_OBJECTS.balrog.key);});}
   function assetKeysForEncounter(i){
     var wi=slotForEncounter(i);if(wi<0)return [];var story=storySpec(wi);if(story)return global.HapilStoryAssets.assetKeysForEncounter(wi,'projectiles');
-    var out=[ORBS[wi].key];if(wi===8)out.push(LUST_OBJECTS.heel.key,LUST_OBJECTS.lipstick.key,LUST_OBJECTS.heart.key);if(wi===12)out.push('cultLance','cultDriveSpear');if(wi>=13)out.push('chapter3Lance');
+    var out=[ORBS[wi].key];if(wi===8)out.push(LUST_OBJECTS.heel.key,LUST_OBJECTS.lipstick.key,LUST_OBJECTS.heart.key);if(wi===5)out.push('h25SlothTissue');if(wi===7)out.push('h25GluttonKnife','h14SkillGlutton');if(wi===9)out.push('h25GreedMoney','h25GreedTreasure','h14SkillGreed');if(wi===1)out.push('h14SkillHorn');if(wi===2)out.push('h14SkillBalrog');if(wi===12)out.push('cultLance','cultDriveSpear');if(wi>=13)out.push('chapter3Lance');
     if(BLADES[wi]&&out.indexOf(BLADES[wi].key)<0)out.push(BLADES[wi].key);
     [naturalSpec(wi,false),naturalSpec(wi,true)].forEach(function(s){if(s&&out.indexOf(s.key)<0)out.push(s.key);});
     if(Number.isInteger(i)&&i>=0&&WEAPONS[wi])out.push(WEAPONS[wi].key);
@@ -239,7 +295,7 @@
     return out.filter(function(k,n){return out.indexOf(k)===n;});
   }
   function ready(im,s){return !!(im&&im.complete!==false&&im.naturalWidth===(s.width||512)&&im.naturalHeight===(s.height||Math.ceil(s.frames/4)*CELL));}
-  function invalidAssetForEncounter(images,i){var wi=slotForEncounter(i);if(wi<0)return 'unsupportedProjectileEncounter';var story=storySpec(wi);if(story)return global.HapilStoryAssets.invalidAsset(images,wi,'projectiles');var specs=[ORBS[wi],naturalSpec(wi,false),naturalSpec(wi,true)].filter(Boolean);if(wi===8)specs.push(LUST_OBJECTS.heel,LUST_OBJECTS.lipstick,LUST_OBJECTS.heart);if(wi>=13)specs.push(CH3_LANCE);if(wi===12)specs.push({key:'cultLance',width:512,height:192},{key:'cultDriveSpear',width:512,height:512});if(BLADES[wi])specs.push(BLADES[wi]);if(Number.isInteger(i)&&i>=0&&WEAPONS[wi])specs.push(WEAPONS[wi]);for(var k=0;k<specs.length;k++)if(!ready(images&&images[specs[k].key],specs[k]))return specs[k].key;return null;}
+  function invalidAssetForEncounter(images,i){var wi=slotForEncounter(i);if(wi<0)return 'unsupportedProjectileEncounter';var story=storySpec(wi);if(story)return global.HapilStoryAssets.invalidAsset(images,wi,'projectiles');var specs=[ORBS[wi],naturalSpec(wi,false),naturalSpec(wi,true)].filter(Boolean);if(wi===5)specs.push(V25_FULL_OBJECTS.tissue);if(wi===7)specs.push(V25_FULL_OBJECTS.knife,V25_FULL_OBJECTS.glutton);if(wi===9)specs.push(V25_FULL_OBJECTS.money,V25_FULL_OBJECTS.treasure,OWN_OBJECT_ORBS[9]);if(wi===1)specs.push(V25_FULL_OBJECTS.horn);if(wi===2)specs.push(V25_FULL_OBJECTS.balrog);if(wi===8)specs.push(LUST_OBJECTS.heel,LUST_OBJECTS.lipstick,LUST_OBJECTS.heart);if(wi>=13)specs.push(CH3_LANCE);if(wi===12)specs.push({key:'cultLance',width:512,height:192},{key:'cultDriveSpear',width:512,height:512});if(BLADES[wi])specs.push(BLADES[wi]);if(Number.isInteger(i)&&i>=0&&WEAPONS[wi])specs.push(WEAPONS[wi]);for(var k=0;k<specs.length;k++)if(!ready(images&&images[specs[k].key],specs[k]))return specs[k].key;return null;}
   function capsule(ctx,x,y,r,l){
     ctx.beginPath();
     if(l>0){ctx.moveTo(x-l,y-r);ctx.lineTo(x+l,y-r);ctx.arc(x+l,y,r,-Math.PI/2,Math.PI/2);ctx.lineTo(x-l,y+r);ctx.arc(x-l,y,r,Math.PI/2,Math.PI*1.5);ctx.closePath();}
@@ -251,7 +307,7 @@
     var cache=new Map(),cacheBytes=0,group=-1,metrics,beamCacheBuilds=0;
     function release(e){if(!e)return;if(e.canvases)e.canvases.forEach(function(c){c.width=1;c.height=1;});if(e.canvas){e.canvas.width=1;e.canvas.height=1;}}
     function clearCache(){cache.forEach(release);cache.clear();cacheBytes=0;}
-    function beginFrame(){metrics={stampDraws:0,stampCacheMisses:0,stampCacheHits:0,stampCacheLimit:CACHE_LIMIT,stampCacheByteLimit:CACHE_BYTES,stampCacheBytes:cacheBytes,stampCacheEntries:cache.size,animatedBulletDraws:0,bodyAnimationPhases:0,naturalSilhouetteDraws:0,maxVisualOutset:0,suppressedUnapprovedFX:0,compactCastDraws:0,compactHazardDraws:0,assetLaserDraws:0,assetLaserSlices:0,signatureCastDraws:0,weaponVisualDraws:0,weaponTelegraphDraws:0,rotorVisualDraws:0,rotorTelegraphDraws:0,sourceBeamOverlayDraws:0,laserArtRevision:23,beamMaterialDraws:0,beamFlowDraws:0,beamEmitterDraws:0,beamDetailedLasers:0,beamDetailLimit:12,beamCacheBuilds:beamCacheBuilds,beamFrameCacheBuilds:0,beamSourceKeys:{},projectileArtRevision:24,projectileVariantDraws:{},projectileVariantSourceKeys:{},legacyMaxVisualOutset:0,ownedObjectDraws:0,ownedObjectMaxNormalPixels:48,ownedObjectMaxLargePixels:100,maxOwnedObjectPixels:0,ownedObjectExtentByVariant:{},missingOptionalRotorAssets:0,missingOptionalBeamAssets:0,missingProjectileAssets:0,compactFamilies:{}};}
+    function beginFrame(){metrics={stampDraws:0,stampCacheMisses:0,stampCacheHits:0,stampCacheLimit:CACHE_LIMIT,stampCacheByteLimit:CACHE_BYTES,stampCacheBytes:cacheBytes,stampCacheEntries:cache.size,animatedBulletDraws:0,bodyAnimationPhases:0,naturalSilhouetteDraws:0,maxVisualOutset:0,suppressedUnapprovedFX:0,compactCastDraws:0,compactHazardDraws:0,assetLaserDraws:0,assetLaserSlices:0,signatureCastDraws:0,weaponVisualDraws:0,weaponTelegraphDraws:0,rotorVisualDraws:0,rotorTelegraphDraws:0,sourceBeamOverlayDraws:0,laserArtRevision:23,beamMaterialDraws:0,beamFlowDraws:0,beamEmitterDraws:0,beamDetailedLasers:0,beamDetailLimit:12,beamCacheBuilds:beamCacheBuilds,beamFrameCacheBuilds:0,beamSourceKeys:{},projectileArtRevision:25,projectileVariantDraws:{},projectileVariantSourceKeys:{},legacyMaxVisualOutset:0,ownedObjectDraws:0,ownedObjectMaxNormalPixels:48,ownedObjectMaxLargePixels:100,maxOwnedObjectPixels:0,ownedObjectExtentByVariant:{},missingOptionalRotorAssets:0,missingOptionalBeamAssets:0,missingProjectileAssets:0,compactFamilies:{}};}
     function remember(key,e){
       if(e.bytes>CACHE_BYTES){release(e);return null;}
       while(cache.size&&(cache.size>=CACHE_LIMIT||cacheBytes+e.bytes>CACHE_BYTES)){var first=cache.keys().next().value,old=cache.get(first);cacheBytes-=old.bytes;release(old);cache.delete(first);}
@@ -296,7 +352,7 @@
         var mid=s.cast?.80+castValue*.35:s.natural&&!isLucifer?.90+Math.min(lum,.9)*.45:s.encounterMaterial?.88+Math.min(lum,.75)*.55:isLucifer?1.15+Math.min(value,.64)*.35:.38+Math.min(lum,.64)*1.03;
         for(var j=0;j<3;j++)d[i+j]=clamp(Math.round(p[j]*mid*(1-hi)+q[j]*hi+(a[j]-p[j])*.045),0,255);
         if(s.sourceColor&&!laserMode){
-          // Preserve the actual red lacquer, gold casing and pink fractured
+          // Preserve the actual owner's lacquer, fabric, steel, gold and spell
           // material. Behaviour cues mix only a small stable amount of the
           // owner's established colour into source pixels; never replace the
           // whole object with a flat encounter tint.
@@ -305,6 +361,7 @@
           d[i]=clamp(Math.round(sourceR*lift*(1-cue)+cueRGB[0]*cue),0,255);
           d[i+1]=clamp(Math.round(sourceG*lift*(1-cue)+cueRGB[1]*cue),0,255);
           d[i+2]=clamp(Math.round(sourceB*lift*(1-cue)+cueRGB[2]*cue),0,255);
+          if(s.sourceExposure||s.sourceLift)for(var ec=0;ec<3;ec++)d[i+ec]=clamp(Math.round(d[i+ec]*(s.sourceExposure||1)+(s.sourceLift||0)),0,255);
         }
         if(laserMode){
           // Laser-only grade: retain the dense source alpha that makes every
@@ -423,7 +480,7 @@
       ctx.translate(x,y);ctx.rotate(angle);ctx.drawImage(art.canvas,-size/2,-size/2,size,size);ctx.restore();return true;
     }
     function rotorSurface(w,owner){
-      var wi=indexFor(w),story=storySpec(wi,owner),s=wi===8?(owner&&owner.spinRate>0?LUST_OBJECTS.lipstick:LUST_OBJECTS.heel):story?story.rotor:ROTORS[wi];if(!s||!ready(images[s.key],s))return null;
+      var wi=indexFor(w),story=storySpec(wi,owner),whole=wi===8?null:ownedObject(wi,false,{kind:'hell-rotor',sourcePhase:w.phase,spinRate:owner&&owner.spinRate},w),s=wi===8?(owner&&owner.spinRate>0?LUST_OBJECTS.lipstick:LUST_OBJECTS.heel):whole&&whole.sourceSolidRadius?whole:story?story.rotor:ROTORS[wi];if(!s||!ready(images[s.key],s))return null;
       var key='rotor|'+s.key,e=cache.get(key);if(e)return e;
       var c=canvas(96,96),ctx=c&&c.getContext('2d');if(!ctx){release({canvas:c});return null;}
       var crop=s.crop,scale=88/Math.max(crop[2],crop[3]),width=crop[2]*scale,height=crop[3]*scale;
@@ -482,7 +539,7 @@
       if(!w||!b||!finite(b.x)||!finite(b.y))return false;
       var wi=indexFor(w),weapon=WEAPONS[wi];
       if(b.kind==='boss-weapon'&&(!weapon||!ready(images[weapon.key],weapon))){metrics.missingProjectileAssets++;return false;}
-      var s=naturalSpec(wi,b&&b.halfLength>0,b);
+      var s=naturalSpec(wi,b&&b.halfLength>0,b,w);
       if(!s||!ready(images[s.key],s)){metrics.missingProjectileAssets++;return false;}
       var r=finite(b.r)&&b.r>0?b.r:3,l=finite(b.halfLength)?Math.max(0,b.halfLength):0;
       if(r>128||l>640)return false;
@@ -495,10 +552,10 @@
       // Legacy weapons retain an authored ORB beneath their cosmetic layer.
       // Lust instead has its one whole prop, fitted around its measured solid
       // source mass; never restore a hidden mixed-effect backing beneath it.
-      if(b.kind==='boss-weapon'&&drawWeaponIcon(ctx,w,b.x,b.y,finite(b.spinAngle)?b.spinAngle:0,34,1))metrics.weaponVisualDraws++;
+      if(b.kind==='boss-weapon'&&!s.sourceSolidRadius&&drawWeaponIcon(ctx,w,b.x,b.y,finite(b.spinAngle)?b.spinAngle:0,34,1))metrics.weaponVisualDraws++;
       // Lust's rotor is already its one complete heel/lipstick body. Do not
       // draw the old mixed heart/prop effect over that independent object.
-      if(b.kind==='hell-rotor'&&(wi===8||drawRotorIcon(ctx,w,b.x,b.y,finite(b.spinAngle)?b.spinAngle:0,36,1,b)))metrics.rotorVisualDraws++;
+      if(b.kind==='hell-rotor'&&(wi===8||s.sourceSolidRadius||drawRotorIcon(ctx,w,b.x,b.y,finite(b.spinAngle)?b.spinAngle:0,36,1,b)))metrics.rotorVisualDraws++;
       if(s.variant){metrics.projectileVariantDraws[s.variant]=(metrics.projectileVariantDraws[s.variant]||0)+1;metrics.projectileVariantSourceKeys[s.key]=(metrics.projectileVariantSourceKeys[s.key]||0)+1;}
       if(e.ownedObject){metrics.ownedObjectDraws++;metrics.maxOwnedObjectPixels=Math.max(metrics.maxOwnedObjectPixels,e.objectDiameter);metrics.ownedObjectExtentByVariant[s.variant]=Math.max(metrics.ownedObjectExtentByVariant[s.variant]||0,e.outset);}else metrics.legacyMaxVisualOutset=Math.max(metrics.legacyMaxVisualOutset,e.outset);
       metrics.stampDraws++;metrics.animatedBulletDraws++;metrics.naturalSilhouetteDraws++;metrics.maxVisualOutset=Math.max(metrics.maxVisualOutset,e.outset);metrics.bodyAnimationPhases=Math.max(metrics.bodyAnimationPhases,e.frameCount);metrics.compactFamilies[s.key]=(metrics.compactFamilies[s.key]||0)+1;return true;

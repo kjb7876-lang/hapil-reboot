@@ -1,0 +1,3040 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "scope": "Source-only native CPU presentation fixtures. These are actual retained pixels but not natural play, browser/GPU/mobile FPS or authored continuous animation.",
+  "baseline": "ef95fc227506162b5203092da9e1734e2f43ef58",
+  "productFile": "src/boss-skills.js",
+  "productSHA256": "d3a61215ad24c66747b057dc06200e6c5091f22953e5e753abf676f50b2da863",
+  "counts": {
+    "canonicalConfigurations": 35,
+    "improvedRemaining": 34,
+    "separateFinalPractice": 1,
+    "lustExactPixelCases": 72,
+    "focusedTests": 6
+  },
+  "constraints": {
+    "lowDrawLimit": 4,
+    "highDrawLimit": 8,
+    "cacheByteLimit": 2097152,
+    "cacheEntryLimit": 24,
+    "livePendingPlansFromCoreMax": 4,
+    "geometryReplacement": false,
+    "paidImageGeneration": false
+  },
+  "rows": [
+    {
+      "runtimeIndex": 0,
+      "visualGroup": 0,
+      "id": "violet",
+      "name": "보라검천사",
+      "canonicalRole": "거미의 여덟 다리를 가진 보라검 천사",
+      "profile": {
+        "index": 0,
+        "id": "violet-eight-sword-threads",
+        "phaseRoles": [
+          "woven-sword",
+          "inscribed-sword",
+          "severed-thread"
+        ],
+        "swing": 0.32,
+        "recoil": 7,
+        "scale": 1.04,
+        "envelope": 2,
+        "configuration": true
+      },
+      "identityRole": "wing-weave",
+      "actualPreviewSource": "h14SkillViolet",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "violet-eight-sword-threads",
+        "sourceKeys": {
+          "h14SkillViolet": 1
+        },
+        "skillCueIds": {
+          "violet-eight-sword-threads:woven-sword:wing-weave": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-0",
+            "sourceKey": "h14SkillViolet",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "wing-weave",
+            "planned": true,
+            "cueId": "violet-eight-sword-threads:woven-sword:wing-weave",
+            "phaseRole": "woven-sword",
+            "rotation": 1.5828761832270961,
+            "displaySize": 55.566395854921716,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "천사 모습은 전투 상대이며 인류 전부가 악이라는 단정으로 확장하지 않는다",
+      "sourceKeys": [
+        "h14SkillViolet"
+      ],
+      "beforeRGBA_SHA256": "f2360055c3f1880d1c2986ad16ed7341f753094cc5d979b5dff287b60e6bd7b6",
+      "afterRGBA_SHA256": "d40ce476291895a06bd971bf13a9c398af8d838846d8ae52af30ed50d2ac85c6",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 1,
+      "visualGroup": 1,
+      "id": "horn",
+      "name": "늪지대의 뿔악마",
+      "canonicalRole": "검은 늪과 죽은 동료 얼굴로 기억을 혼란시키는 뿔악마",
+      "profile": {
+        "index": 1,
+        "id": "horn-swamp-grasp",
+        "phaseRoles": [
+          "sinking-grasp",
+          "closing-hands",
+          "horn-echo"
+        ],
+        "swing": -0.23,
+        "recoil": 9,
+        "scale": 0.98,
+        "envelope": 3,
+        "configuration": true
+      },
+      "identityRole": "bog-drag",
+      "actualPreviewSource": "h14SkillHorn",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "horn-swamp-grasp",
+        "sourceKeys": {
+          "h14SkillHorn": 1
+        },
+        "skillCueIds": {
+          "horn-swamp-grasp:sinking-grasp:bog-drag": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-1",
+            "sourceKey": "h14SkillHorn",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "bog-drag",
+            "planned": true,
+            "cueId": "horn-swamp-grasp:sinking-grasp:bog-drag",
+            "phaseRole": "sinking-grasp",
+            "rotation": -0.017037037037037038,
+            "displaySize": 51.8224,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "동료의 얼굴을 새 보스나 실제 죽음의 확정 증거로 만들지 않는다",
+      "sourceKeys": [
+        "h14SkillHorn"
+      ],
+      "beforeRGBA_SHA256": "610e5737e70a098d009abacd6fa9bfe28536fed59542b88321ae4d2691de105e",
+      "afterRGBA_SHA256": "b026e44bbd554121b8c650aefbeac967fbba56c88a961678f1a69bcbebd4ac2c",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 2,
+      "visualGroup": 2,
+      "id": "balrog",
+      "name": "발록",
+      "canonicalRole": "소환진의 발록; 공간을 가르는 검과 하늘의 불덩이",
+      "profile": {
+        "index": 2,
+        "id": "balrog-space-fire",
+        "phaseRoles": [
+          "space-cut",
+          "sky-fire",
+          "seven-seals"
+        ],
+        "swing": 0.46,
+        "recoil": 12,
+        "scale": 1.12,
+        "envelope": 0,
+        "configuration": true
+      },
+      "identityRole": "sword-rake",
+      "actualPreviewSource": "h14SkillBalrog",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "balrog-space-fire",
+        "sourceKeys": {
+          "h14SkillBalrog": 1
+        },
+        "skillCueIds": {
+          "balrog-space-fire:space-cut:sword-rake": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-2",
+            "sourceKey": "h14SkillBalrog",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "sword-rake",
+            "planned": true,
+            "cueId": "balrog-space-fire:space-cut:sword-rake",
+            "phaseRole": "space-cut",
+            "rotation": 1.4048704008689707,
+            "displaySize": 59.22560000000001,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "소환진 붕괴 뒤 추락 서사 유지",
+      "sourceKeys": [
+        "h14SkillBalrog"
+      ],
+      "beforeRGBA_SHA256": "1271932c1cadbcf6e4f78e40344139b43d09ac3b6d4507148a20edc2463660ad",
+      "afterRGBA_SHA256": "8f7dd12236229dbdc829ffcb8cd35d5d55e2fa79e81651e8be10133c46fa7778",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 3,
+      "visualGroup": 3,
+      "id": "mask",
+      "name": "초천사의 웃는 가면",
+      "canonicalRole": "완벽과 복종을 강요하는 초천사의 웃는 가면",
+      "profile": {
+        "index": 3,
+        "id": "mask-false-white-promise",
+        "phaseRoles": [
+          "white-promise",
+          "perfect-command",
+          "mask-crack"
+        ],
+        "swing": -0.38,
+        "recoil": 6,
+        "scale": 1.02,
+        "envelope": 1,
+        "configuration": true
+      },
+      "identityRole": "feather-fork",
+      "actualPreviewSource": "h14SkillMask",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "mask-false-white-promise",
+        "sourceKeys": {
+          "h14SkillMask": 1
+        },
+        "skillCueIds": {
+          "mask-false-white-promise:white-promise:feather-fork": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-3",
+            "sourceKey": "h14SkillMask",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "feather-fork",
+            "planned": true,
+            "cueId": "mask-false-white-promise:white-promise:feather-fork",
+            "phaseRole": "white-promise",
+            "rotation": 1.5426481786467483,
+            "displaySize": 53.937599999999996,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "의료진이나 환자를 공격 대상으로 바꾸지 않는다",
+      "sourceKeys": [
+        "h14SkillMask"
+      ],
+      "beforeRGBA_SHA256": "4ff62bd2490441f01e2f90cbc5cac2466a28b859c0351137d5fcf45613b28598",
+      "afterRGBA_SHA256": "f041c72edba2f9e6a931552274eb397283ee0b804c90a928d8e3c9468315005d",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 4,
+      "visualGroup": 4,
+      "id": "lucifer",
+      "name": "코스믹 가면 루시퍼",
+      "canonicalRole": "많은 자기 얼굴로 약물 갈망·수치를 이용하는 루시퍼",
+      "profile": {
+        "index": 4,
+        "id": "lucifer-many-selves",
+        "phaseRoles": [
+          "false-constellation",
+          "many-faces",
+          "j-seal"
+        ],
+        "swing": 0.63,
+        "recoil": 4,
+        "scale": 1.08,
+        "envelope": 4,
+        "configuration": true
+      },
+      "identityRole": "constellation-orbit",
+      "actualPreviewSource": "h14SkillLucifer",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "lucifer-many-selves",
+        "sourceKeys": {
+          "h14SkillLucifer": 1
+        },
+        "skillCueIds": {
+          "lucifer-many-selves:false-constellation:constellation-orbit": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-4",
+            "sourceKey": "h14SkillLucifer",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "constellation-orbit",
+            "planned": true,
+            "cueId": "lucifer-many-selves:false-constellation:constellation-orbit",
+            "phaseRole": "false-constellation",
+            "rotation": 1.6174629934615632,
+            "displaySize": 57.110400000000006,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "J 인장은 환자의 선택과 도움 요청이며 악마의 투척 무기로 새로 주장하지 않는다",
+      "sourceKeys": [
+        "h14SkillLucifer"
+      ],
+      "beforeRGBA_SHA256": "1ba350cca060957ed03789180dd1078a4c10127f6d77f9f904c852e8232b7485",
+      "afterRGBA_SHA256": "8465f80bd6388ffc1ff8a22fd4f1b9a93d76bf652b066f816213cb717e7c9667",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 5,
+      "visualGroup": 5,
+      "id": "belphegor",
+      "name": "나태의 귀 벨페고르",
+      "canonicalRole": "쓰레기 산에 갇힌 남자와 나태의 귀",
+      "profile": {
+        "index": 5,
+        "id": "belphegor-postponed-pulse",
+        "phaseRoles": [
+          "late-trash",
+          "held-pulse",
+          "postponed-wave"
+        ],
+        "swing": -0.13,
+        "recoil": 3,
+        "scale": 1.06,
+        "envelope": 5,
+        "configuration": true
+      },
+      "identityRole": "late-pulse",
+      "actualPreviewSource": "h25SlothTissue",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "belphegor-postponed-pulse",
+        "sourceKeys": {
+          "h25SlothTissue": 1
+        },
+        "skillCueIds": {
+          "belphegor-postponed-pulse:late-trash:late-pulse": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-5",
+            "sourceKey": "h25SlothTissue",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "late-pulse",
+            "planned": true,
+            "cueId": "belphegor-postponed-pulse:late-trash:late-pulse",
+            "phaseRole": "late-trash",
+            "rotation": -0.02680180866737794,
+            "displaySize": 53.935708093278464,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "남자를 강제로 일으켜 세우는 승리 연출 금지",
+      "sourceKeys": [
+        "h14SkillSloth"
+      ],
+      "beforeRGBA_SHA256": "8ed6386f3179580d2c7f4e483b66549f5e223b53866033486fad11bf5e71b8f6",
+      "afterRGBA_SHA256": "263e5aee28174981af5a8ae67a3ec360a7453dac68ef2c7ba9236611f80fabb3",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 6,
+      "visualGroup": 6,
+      "id": "leviathan",
+      "name": "질투의 귀 레비아탄",
+      "canonicalRole": "서윤 사진을 노려보는 누나·호텔 부매니저와 질투의 귀",
+      "profile": {
+        "index": 6,
+        "id": "leviathan-crossed-reflections",
+        "phaseRoles": [
+          "unequal-flows",
+          "crossed-gaze",
+          "reversed-reflection"
+        ],
+        "swing": -0.52,
+        "recoil": 8,
+        "scale": 1.02,
+        "envelope": 1,
+        "configuration": true
+      },
+      "identityRole": "mirror-reflection",
+      "actualPreviewSource": "h14SkillEnvy",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "leviathan-crossed-reflections",
+        "sourceKeys": {
+          "h14SkillEnvy": 1
+        },
+        "skillCueIds": {
+          "leviathan-crossed-reflections:unequal-flows:mirror-reflection": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-6",
+            "sourceKey": "h14SkillEnvy",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "mirror-reflection",
+            "planned": true,
+            "cueId": "leviathan-crossed-reflections:unequal-flows:mirror-reflection",
+            "phaseRole": "unequal-flows",
+            "rotation": 1.532277808276378,
+            "displaySize": 53.937599999999996,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "서윤/동생을 소환한 새 적으로 만들지 않는다",
+      "sourceKeys": [
+        "h14SkillEnvy"
+      ],
+      "beforeRGBA_SHA256": "f3c025aa2b3568c9da0e259940bcf2c43cc340e883cc15f5da3dea36eb9e7355",
+      "afterRGBA_SHA256": "a6656c8fce2b461364e39529306079f723ed4aa868aaf2136abb501ea10f4104",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 7,
+      "visualGroup": 7,
+      "id": "beelzebub",
+      "name": "탐식의 귀 베엘제붑",
+      "canonicalRole": "총주방장의 보상 집착과 탐식의 귀",
+      "profile": {
+        "index": 7,
+        "id": "beelzebub-hungry-kitchen",
+        "phaseRoles": [
+          "large-small-waves",
+          "kitchen-crossing",
+          "layered-maw"
+        ],
+        "swing": 0.26,
+        "recoil": 10,
+        "scale": 1.13,
+        "envelope": 3,
+        "configuration": true
+      },
+      "identityRole": "hungry-jaw",
+      "actualPreviewSource": "h25GluttonKnife",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "beelzebub-hungry-kitchen",
+        "sourceKeys": {
+          "h25GluttonKnife": 1
+        },
+        "skillCueIds": {
+          "beelzebub-hungry-kitchen:large-small-waves:hungry-jaw": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-7",
+            "sourceKey": "h25GluttonKnife",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "hungry-jaw",
+            "planned": true,
+            "cueId": "beelzebub-hungry-kitchen:large-small-waves:hungry-jaw",
+            "phaseRole": "large-small-waves",
+            "rotation": 1.230055586054156,
+            "displaySize": 59.7544,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "정본의 조사·징계·치료가 악몽 승리로 취소되지 않는다",
+      "sourceKeys": [
+        "h14SkillGlutton"
+      ],
+      "beforeRGBA_SHA256": "ce99e235d22e18929521bb6f412a05272ceac91ab6372f47a96d06db26ab2edc",
+      "afterRGBA_SHA256": "50d8178f5b7406888d9bd6e17064f770b0d43ffbbad00cf50cb30f38a213e751",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 8,
+      "visualGroup": 8,
+      "id": "asmodeus",
+      "name": "색욕의 귀 아스모데우스",
+      "canonicalRole": "실에 조종되는 서윤과 색욕의 귀; v24 기준 전투",
+      "profile": {
+        "index": 8,
+        "id": "asmodeus-red-stage",
+        "phaseRoles": [
+          "stage-beat",
+          "locked-spotlight",
+          "string-curtain"
+        ],
+        "swing": 0.22,
+        "recoil": 0,
+        "scale": 1,
+        "envelope": 0,
+        "configuration": true
+      },
+      "identityRole": "red-stage",
+      "actualPreviewSource": "h14SkillLust",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 0,
+        "skillWarningDraws": 0,
+        "skillChargeSuppressed": 0,
+        "skillProfileId": "asmodeus-red-stage",
+        "sourceKeys": {
+          "h14SkillLust": 1
+        },
+        "skillCueIds": {
+          "asmodeus-red-stage:stage-beat:cast": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "",
+            "sourceKey": "h14SkillLust",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "patternId": "",
+            "identityRole": "",
+            "planned": false,
+            "cueId": "asmodeus-red-stage:stage-beat:cast",
+            "phaseRole": "stage-beat",
+            "rotation": 0,
+            "displaySize": 52.44,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "이번 개선의 기준; 색욕 자산을 다른 보스에 재사용하지 않는다",
+      "sourceKeys": [
+        "h14SkillLust"
+      ],
+      "beforeRGBA_SHA256": "a6625c346b229d3fe93d6857dae1428bc409c067d218915cb55569d522aa4bb5",
+      "afterRGBA_SHA256": "a6625c346b229d3fe93d6857dae1428bc409c067d218915cb55569d522aa4bb5",
+      "changed": false,
+      "status": "Lust reference retained; 72 exact cue pixel comparisons pass"
+    },
+    {
+      "runtimeIndex": 9,
+      "visualGroup": 9,
+      "id": "mammon",
+      "name": "탐욕의 귀 맘몬",
+      "canonicalRole": "총지배인의 금고·탐욕; 마지막은 산장 속 소년의 기억",
+      "profile": {
+        "index": 9,
+        "id": "mammon-vault-winter-memory",
+        "phaseRoles": [
+          "priced-branches",
+          "vault-lock",
+          "preserved-winter-memory"
+        ],
+        "swing": 0.4,
+        "recoil": 5,
+        "scale": 1.04,
+        "envelope": 5,
+        "configuration": true
+      },
+      "identityRole": "vault-branch",
+      "actualPreviewSource": "h25GreedTreasure",
+      "phase": 1,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "mammon-vault-winter-memory",
+        "sourceKeys": {
+          "h25GreedTreasure": 1
+        },
+        "skillCueIds": {
+          "mammon-vault-winter-memory:vault-lock:vault-branch": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-9",
+            "sourceKey": "h25GreedTreasure",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "vault-branch",
+            "planned": true,
+            "cueId": "mammon-vault-winter-memory:vault-lock:vault-branch",
+            "phaseRole": "vault-lock",
+            "rotation": 1.6532634303868288,
+            "displaySize": 52.918053223593965,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "어린 소년을 악의적 돈 공격자로 재해석하지 않는다; 어머니 죽음 책임을 아이에게 묻지 않는다",
+      "sourceKeys": [
+        "h14SkillGreed"
+      ],
+      "beforeRGBA_SHA256": "f7ccdd14097a0e819f1afc9f686d3b80aaea14819f25ee22f3dded37aa4cd201",
+      "afterRGBA_SHA256": "97895515eb8cedceba011a672e6a04ddd73ae86f6b67afe657dac2cb5ea35500",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 10,
+      "visualGroup": 10,
+      "id": "wrath",
+      "name": "분노의 귀",
+      "canonicalRole": "화재 대피 뒤 청소부의 분노; 곰·늑대 무리·용의 변형",
+      "profile": {
+        "index": 10,
+        "id": "wrath-three-fire-beats",
+        "phaseRoles": [
+          "spreading-fire",
+          "escape-corridor",
+          "bear-wolves-dragon"
+        ],
+        "swing": -0.66,
+        "recoil": 11,
+        "scale": 1.14,
+        "envelope": 2,
+        "configuration": true
+      },
+      "identityRole": "fire-fuse",
+      "actualPreviewSource": "h14SkillWrath",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "wrath-three-fire-beats",
+        "sourceKeys": {
+          "h14SkillWrath": 1
+        },
+        "skillCueIds": {
+          "wrath-three-fire-beats:spreading-fire:fire-fuse": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-10",
+            "sourceKey": "h14SkillWrath",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "fire-fuse",
+            "planned": true,
+            "cueId": "wrath-three-fire-beats:spreading-fire:fire-fuse",
+            "phaseRole": "spreading-fire",
+            "rotation": 2.331279786300933,
+            "displaySize": 60.90931853327957,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "먼저 대피하는 사람들과 세 아이는 적이 아니다",
+      "sourceKeys": [
+        "h14SkillWrath"
+      ],
+      "beforeRGBA_SHA256": "7ef77f2b16e0ff673e9eeb5c72e5cd7b67f7cbf83624a10ab486dffbd08ca5be",
+      "afterRGBA_SHA256": "a98058258c989448dde7a5110cec6bd16204be4a2860b8b0d606f09ec73e38a2",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 11,
+      "visualGroup": 11,
+      "id": "pride",
+      "name": "교만의 회장",
+      "canonicalRole": "백색 정장 회장의 일곱 신호와 생체 부트로더 사이보그",
+      "profile": {
+        "index": 11,
+        "id": "pride-seven-calculations",
+        "phaseRoles": [
+          "seven-branches",
+          "electrode-line",
+          "cyborg-bootloader"
+        ],
+        "swing": 0.14,
+        "recoil": 3,
+        "scale": 1.12,
+        "envelope": 4,
+        "configuration": true
+      },
+      "identityRole": "calculation-column",
+      "actualPreviewSource": "h14SkillPride",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "pride-seven-calculations",
+        "sourceKeys": {
+          "h14SkillPride": 1
+        },
+        "skillCueIds": {
+          "pride-seven-calculations:seven-branches:calculation-column": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-11",
+            "sourceKey": "h14SkillPride",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "calculation-column",
+            "planned": true,
+            "cueId": "pride-seven-calculations:seven-branches:calculation-column",
+            "phaseRole": "seven-branches",
+            "rotation": 0.01037037037037037,
+            "displaySize": 59.22560000000001,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "제2부 회장과 제8부 최종 교주는 런타임 단계·서사 위치를 합치지 않는다",
+      "sourceKeys": [
+        "h14SkillPride"
+      ],
+      "beforeRGBA_SHA256": "0bc479de7bb4a6fb54d044afb0d060f4202a179bbbd04b706a3eb72c035def77",
+      "afterRGBA_SHA256": "7a3eaa2e9c5784faca8dcb5feed1f8107011f6d16e42f5f090c5df62b5f9eb23",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 12,
+      "visualGroup": 13,
+      "id": "controller-army",
+      "name": "통제체계 · 방어의 군단",
+      "canonicalRole": "한 통제체계의 방어 군단·폭격 루프·벽",
+      "profile": {
+        "index": 13,
+        "id": "controller-defensive-legion",
+        "phaseRoles": [
+          "defensive-legion",
+          "bombardment-loop",
+          "architecture-link"
+        ],
+        "swing": 0.18,
+        "recoil": 11,
+        "scale": 0.98,
+        "envelope": 2,
+        "configuration": true
+      },
+      "identityRole": "defense-relay",
+      "actualPreviewSource": "chapter3Lance",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "controller-defensive-legion",
+        "sourceKeys": {
+          "chapter3Lance": 1
+        },
+        "skillCueIds": {
+          "controller-defensive-legion:defensive-legion:defense-relay": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-13",
+            "sourceKey": "chapter3Lance",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "defense-relay",
+            "planned": true,
+            "cueId": "controller-defensive-legion:defensive-legion:defense-relay",
+            "phaseRole": "defensive-legion",
+            "rotation": 1.5775912460380088,
+            "displaySize": 52.360642247907,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "공격으로 방어가 강화됨은 압박 단서; 아이·방어기제 자체의 영구 소멸을 목표로 하지 않는다",
+      "sourceKeys": [
+        "chapter3Lance",
+        "chapter3Beam"
+      ],
+      "beforeRGBA_SHA256": "b0b18e6a071cf90c4a0d1fb68b1c6f6bdc9073fc149798ffd76c3370e8468369",
+      "afterRGBA_SHA256": "e186a0bbe5e8b75e874f128f8388c229d290aae54e8db135e4405a8df58c6c11",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 13,
+      "visualGroup": 14,
+      "id": "controller-rescue",
+      "name": "통제체계 · 잔인한 구원",
+      "canonicalRole": "같은 통제체계의 잔인한 구원·연민의 폭력",
+      "profile": {
+        "index": 14,
+        "id": "controller-coercive-rescue",
+        "phaseRoles": [
+          "cruel-rescue",
+          "compassion-boundary",
+          "meaning-link"
+        ],
+        "swing": -0.43,
+        "recoil": 5,
+        "scale": 1.03,
+        "envelope": 3,
+        "configuration": true
+      },
+      "identityRole": "mercy-boundary",
+      "actualPreviewSource": "chapter3Lance",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "controller-coercive-rescue",
+        "sourceKeys": {
+          "chapter3Lance": 1
+        },
+        "skillCueIds": {
+          "controller-coercive-rescue:cruel-rescue:mercy-boundary": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-14",
+            "sourceKey": "chapter3Lance",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "mercy-boundary",
+            "planned": true,
+            "cueId": "controller-coercive-rescue:cruel-rescue:mercy-boundary",
+            "phaseRole": "cruel-rescue",
+            "rotation": 1.5389444749430448,
+            "displaySize": 54.46640000000001,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "기억 자체를 지우지 않는다; 통제자를 별개 네 명으로 분할하지 않는다",
+      "sourceKeys": [
+        "chapter3Lance",
+        "chapter3Beam"
+      ],
+      "beforeRGBA_SHA256": "b0b18e6a071cf90c4a0d1fb68b1c6f6bdc9073fc149798ffd76c3370e8468369",
+      "afterRGBA_SHA256": "7117cea1adf3e0c55c4eda64af90c733a3e13b01f49d853db7207c31de280f92",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 14,
+      "visualGroup": 15,
+      "id": "controller-veto",
+      "name": "통제체계 · 시스템의 거부권",
+      "canonicalRole": "같은 통제체계의 거부권·감정 회로·레거시",
+      "profile": {
+        "index": 15,
+        "id": "controller-veto-signal",
+        "phaseRoles": [
+          "veto-signal",
+          "hardware-migration",
+          "legacy-link"
+        ],
+        "swing": 0.08,
+        "recoil": 7,
+        "scale": 0.96,
+        "envelope": 4,
+        "configuration": true
+      },
+      "identityRole": "veto-packet",
+      "actualPreviewSource": "chapter3Lance",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "controller-veto-signal",
+        "sourceKeys": {
+          "chapter3Lance": 1
+        },
+        "skillCueIds": {
+          "controller-veto-signal:veto-signal:veto-packet": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-15",
+            "sourceKey": "chapter3Lance",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "veto-packet",
+            "planned": true,
+            "cueId": "controller-veto-signal:veto-signal:veto-packet",
+            "phaseRole": "veto-signal",
+            "rotation": 1.5767222527208224,
+            "displaySize": 50.764799999999994,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "인간성을 오류로 처리하거나 치료를 폭력의 정답으로 고정하지 않는다",
+      "sourceKeys": [
+        "chapter3Lance",
+        "chapter3Beam"
+      ],
+      "beforeRGBA_SHA256": "b0b18e6a071cf90c4a0d1fb68b1c6f6bdc9073fc149798ffd76c3370e8468369",
+      "afterRGBA_SHA256": "230a243e111b8e0a406b3275c61fbbeeae709de7afbc84c02017fb92643c19aa",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 15,
+      "visualGroup": 16,
+      "id": "controller-authority",
+      "name": "통제체계 · 관리자 권한",
+      "canonicalRole": "같은 통제체계의 관리자 권한·학대의 방",
+      "profile": {
+        "index": 16,
+        "id": "controller-feedback-return",
+        "phaseRoles": [
+          "administrator-output",
+          "abuse-repeat-link",
+          "feedback-link"
+        ],
+        "swing": -0.58,
+        "recoil": 9,
+        "scale": 1.06,
+        "envelope": 1,
+        "configuration": true
+      },
+      "identityRole": "feedback-return",
+      "actualPreviewSource": "chapter3Lance",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "controller-feedback-return",
+        "sourceKeys": {
+          "chapter3Lance": 1
+        },
+        "skillCueIds": {
+          "controller-feedback-return:administrator-output:feedback-return": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-16",
+            "sourceKey": "chapter3Lance",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "feedback-return",
+            "planned": true,
+            "cueId": "controller-feedback-return:administrator-output:feedback-return",
+            "phaseRole": "administrator-output",
+            "rotation": 1.5278333638319337,
+            "displaySize": 56.052800000000005,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "학대 기억과 아이의 자아는 지울 대상이 아니다",
+      "sourceKeys": [
+        "chapter3Lance",
+        "chapter3Beam"
+      ],
+      "beforeRGBA_SHA256": "b0b18e6a071cf90c4a0d1fb68b1c6f6bdc9073fc149798ffd76c3370e8468369",
+      "afterRGBA_SHA256": "f661606574db2b46b6afc0e4801978c849d97b8780d744ed4b6d9bb2ef6766ba",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 16,
+      "visualGroup": 17,
+      "id": "controller-migration",
+      "name": "통제체계 · 중앙 코어 이주실",
+      "canonicalRole": "같은 통제체계의 빈 기계 그릇·강요된 선택·갈림길",
+      "profile": {
+        "index": 17,
+        "id": "controller-choice-fork",
+        "phaseRoles": [
+          "empty-vessel-link",
+          "constrained-choice",
+          "update-fork"
+        ],
+        "swing": 0.37,
+        "recoil": 4,
+        "scale": 1.01,
+        "envelope": 5,
+        "configuration": true
+      },
+      "identityRole": "migration-fork",
+      "actualPreviewSource": "chapter3Lance",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "controller-choice-fork",
+        "sourceKeys": {
+          "chapter3Lance": 1
+        },
+        "skillCueIds": {
+          "controller-choice-fork:empty-vessel-link:migration-fork": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-17",
+            "sourceKey": "chapter3Lance",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "migration-fork",
+            "planned": true,
+            "cueId": "controller-choice-fork:empty-vessel-link:migration-fork",
+            "phaseRole": "empty-vessel-link",
+            "rotation": 1.6470783976174337,
+            "displaySize": 51.39157091906721,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "빈 육체 자체를 새 악마로 만들지 않는다; 인간으로 돌아가라는 강요도 피한다",
+      "sourceKeys": [
+        "chapter3Lance",
+        "chapter3Beam"
+      ],
+      "beforeRGBA_SHA256": "b0b18e6a071cf90c4a0d1fb68b1c6f6bdc9073fc149798ffd76c3370e8468369",
+      "afterRGBA_SHA256": "9f1efdfa19b83016d8138d2ed87467faa3535d8bba45b6f0a93c5644e95aa1b9",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 17,
+      "visualGroup": 18,
+      "id": "controller-memory-gate",
+      "name": "통제자 · 기억의 문",
+      "canonicalRole": "통제자가 기억의 문에 빙의한 최종 대치",
+      "profile": {
+        "index": 18,
+        "id": "controller-repeat-disconnect",
+        "phaseRoles": [
+          "possessed-gate-link",
+          "repeat-link",
+          "released-ego-boundary"
+        ],
+        "swing": -0.21,
+        "recoil": 6,
+        "scale": 1.07,
+        "envelope": 0,
+        "configuration": true
+      },
+      "identityRole": "repeat-disconnect",
+      "actualPreviewSource": "chapter3Lance",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "controller-repeat-disconnect",
+        "sourceKeys": {
+          "chapter3Lance": 1
+        },
+        "skillCueIds": {
+          "controller-repeat-disconnect:possessed-gate-link:repeat-disconnect": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-18",
+            "sourceKey": "chapter3Lance",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "repeat-disconnect",
+            "planned": true,
+            "cueId": "controller-repeat-disconnect:possessed-gate-link:repeat-disconnect",
+            "phaseRole": "possessed-gate-link",
+            "rotation": 1.555240771239341,
+            "displaySize": 56.5816,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "기억의 문은 베지 않는다; 반복 명령 연결만 끊고 첫째 아이 해방",
+      "sourceKeys": [
+        "chapter3Lance",
+        "chapter3Beam"
+      ],
+      "beforeRGBA_SHA256": "b0b18e6a071cf90c4a0d1fb68b1c6f6bdc9073fc149798ffd76c3370e8468369",
+      "afterRGBA_SHA256": "46dc41f7e4ee67835781718db765af8df44323c11bf842f4a171ce07fb1cce2a",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 18,
+      "visualGroup": 19,
+      "id": "goblin-chief",
+      "name": "고블린 두목",
+      "canonicalRole": "터전을 잃은 고블린 두목과 피리에 방향을 바꾸는 늑대",
+      "profile": {
+        "index": 19,
+        "id": "goblin-flute-turn",
+        "phaseRoles": [
+          "flute-turn",
+          "wolf-path",
+          "rose-resonance"
+        ],
+        "swing": 0.49,
+        "recoil": 6,
+        "scale": 0.98,
+        "envelope": 4,
+        "configuration": true
+      },
+      "identityRole": "flute-phrase",
+      "actualPreviewSource": "storyGoblinWave",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "goblin-flute-turn",
+        "sourceKeys": {
+          "storyGoblinWave": 1
+        },
+        "skillCueIds": {
+          "goblin-flute-turn:flute-turn:flute-phrase": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-19",
+            "sourceKey": "storyGoblinWave",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "flute-phrase",
+            "planned": true,
+            "cueId": "goblin-flute-turn:flute-turn:flute-phrase",
+            "phaseRole": "flute-turn",
+            "rotation": 2.007092623091193,
+            "displaySize": 51.8224,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "고블린 전멸이 목표가 아니다; 두목에게서 장미 인장 받기 유지",
+      "sourceKeys": [
+        "storyGoblin",
+        "storyGoblinWave"
+      ],
+      "beforeRGBA_SHA256": "7efdbcc12e1fc9e95ba3aa34bf1e38c3d8500fb90bee82c2e0e253d05f60b6c7",
+      "afterRGBA_SHA256": "3ee718187ff6b278d2d6d5da3403d36ecc274896b6890c8544effcf5f75a3867",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 19,
+      "visualGroup": 20,
+      "id": "fallen-knight",
+      "name": "타락천사 기사",
+      "canonicalRole": "동작을 읽고 여섯으로 갈라지는 타락천사 기사",
+      "profile": {
+        "index": 20,
+        "id": "fallen-knight-six-swords",
+        "phaseRoles": [
+          "familiar-path",
+          "six-sword-positions",
+          "falling-wall"
+        ],
+        "swing": -0.44,
+        "recoil": 12,
+        "scale": 1.12,
+        "envelope": 2,
+        "configuration": true
+      },
+      "identityRole": "six-swords",
+      "actualPreviewSource": "storyKnightSword",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "fallen-knight-six-swords",
+        "sourceKeys": {
+          "storyKnightSword": 1
+        },
+        "skillCueIds": {
+          "fallen-knight-six-swords:familiar-path:six-swords": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-20",
+            "sourceKey": "storyKnightSword",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "six-swords",
+            "planned": true,
+            "cueId": "fallen-knight-six-swords:familiar-path:six-swords",
+            "phaseRole": "familiar-path",
+            "rotation": -0.01660980259427445,
+            "displaySize": 59.840733997608005,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "정본의 패배·바다 추락 유지; 신규 승리 결말 금지",
+      "sourceKeys": [
+        "storyKnightSword"
+      ],
+      "beforeRGBA_SHA256": "abad9f4f63213d5dd267670fc145e421ba55b0aa56aceefda97557908d9b6dfa",
+      "afterRGBA_SHA256": "a39fd898c1e348ac1a9df4a9718f8c613c29adfa415a86da1c9a46f769424ba6",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 20,
+      "visualGroup": 21,
+      "id": "insomnia",
+      "name": "불면귀",
+      "canonicalRole": "조종당한 주민에서 빠져나온 불면귀",
+      "profile": {
+        "index": 21,
+        "id": "insomnia-black-mist",
+        "phaseRoles": [
+          "sleepless-echo",
+          "resident-safe-mist",
+          "mist-heart"
+        ],
+        "swing": 0.1,
+        "recoil": 2,
+        "scale": 1.14,
+        "envelope": 5,
+        "configuration": true
+      },
+      "identityRole": "insomnia-veil",
+      "actualPreviewSource": "storyInsomniaGaze",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "insomnia-black-mist",
+        "sourceKeys": {
+          "storyInsomniaGaze": 1
+        },
+        "skillCueIds": {
+          "insomnia-black-mist:sleepless-echo:insomnia-veil": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-21",
+            "sourceKey": "storyInsomniaGaze",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "insomnia-veil",
+            "planned": true,
+            "cueId": "insomnia-black-mist:sleepless-echo:insomnia-veil",
+            "phaseRole": "sleepless-echo",
+            "rotation": 0.020616775897983032,
+            "displaySize": 58.00632757201645,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "주민 몸이 공격 대상이 아니다; 본체와 안개 연결 겨누기",
+      "sourceKeys": [
+        "storyInsomniaSoul",
+        "storyInsomniaGaze"
+      ],
+      "beforeRGBA_SHA256": "ddd264c257bdde3500b462302f05ac7af36d3cfdd823a265f75cca911487dd7b",
+      "afterRGBA_SHA256": "2561b7e77da07d4661173a5f829c375be0d67eb876ef261d0a79b0265e738c08",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 21,
+      "visualGroup": 22,
+      "id": "academy-defense",
+      "name": "최초명령 코어 방어",
+      "canonicalRole": "윤서하의 최초명령 코어 방어; 여섯 침공",
+      "profile": {
+        "index": 22,
+        "id": "academy-six-invasions",
+        "phaseRoles": [
+          "intercepting-turret",
+          "polluted-command",
+          "protected-first-command"
+        ],
+        "swing": 0.24,
+        "recoil": 8,
+        "scale": 0.99,
+        "envelope": 2,
+        "configuration": true
+      },
+      "identityRole": "defense-intercept",
+      "actualPreviewSource": "storyChronoCrescent",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "academy-six-invasions",
+        "sourceKeys": {
+          "storyChronoCrescent": 1
+        },
+        "skillCueIds": {
+          "academy-six-invasions:intercepting-turret:defense-intercept": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-22",
+            "sourceKey": "storyChronoCrescent",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "defense-intercept",
+            "planned": true,
+            "cueId": "academy-six-invasions:intercepting-turret:defense-intercept",
+            "phaseRole": "intercepting-turret",
+            "rotation": 1.5798562191190462,
+            "displaySize": 52.89493451574279,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "코어 파괴가 목표가 아니다; 적의 목표도 코어 오염이지 코어 분쇄가 아니다",
+      "sourceKeys": [
+        "storyChronoShard",
+        "storyChronoCrescent"
+      ],
+      "beforeRGBA_SHA256": "30e92fa8b07761f75fab286cd178de82683b17df0cd98094db368dfdfcf6a3b1",
+      "afterRGBA_SHA256": "9e888ec111132e847cd131e735bec9a1d605cc6b63af895e2425b1b16ba5c2de",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 22,
+      "visualGroup": 23,
+      "id": "harvest-lower",
+      "name": "일반 수문장의 동력 연결",
+      "canonicalRole": "48 일반 수문장으로 이어진 수확 동력의 전투 대표",
+      "profile": {
+        "index": 23,
+        "id": "harvest-lower-power-links",
+        "phaseRoles": [
+          "overwork-bonds",
+          "comparison-command",
+          "power-junction"
+        ],
+        "swing": -0.31,
+        "recoil": 10,
+        "scale": 1.04,
+        "envelope": 0,
+        "configuration": true
+      },
+      "identityRole": "harvest-tier",
+      "actualPreviewSource": "storyChronoCrescent",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "harvest-lower-power-links",
+        "sourceKeys": {
+          "storyChronoCrescent": 1
+        },
+        "skillCueIds": {
+          "harvest-lower-power-links:overwork-bonds:harvest-tier": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-23",
+            "sourceKey": "storyChronoCrescent",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "harvest-tier",
+            "planned": true,
+            "cueId": "harvest-lower-power-links:overwork-bonds:harvest-tier",
+            "phaseRole": "overwork-bonds",
+            "rotation": 1.5478333638319337,
+            "displaySize": 54.995200000000004,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "48개 모두 별도 애니메이션 보스로 구현됐다고 주장하지 않는다",
+      "sourceKeys": [
+        "storyChronoShard",
+        "storyChronoCrescent"
+      ],
+      "beforeRGBA_SHA256": "30e92fa8b07761f75fab286cd178de82683b17df0cd98094db368dfdfcf6a3b1",
+      "afterRGBA_SHA256": "7d77c2627cb4694fe0620b673aace1916324361f1018ebf45dcd57b476ed0e2b",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 23,
+      "visualGroup": 24,
+      "id": "harvest-upper",
+      "name": "상급·대수문장의 교차 명령",
+      "canonicalRole": "12 상급·6 대수문장 교차 명령의 전투 대표",
+      "profile": {
+        "index": 24,
+        "id": "harvest-upper-crossed-orders",
+        "phaseRoles": [
+          "alternating-orders",
+          "crossed-rule-gap",
+          "chosen-step"
+        ],
+        "swing": 0.57,
+        "recoil": 5,
+        "scale": 1.01,
+        "envelope": 1,
+        "configuration": true
+      },
+      "identityRole": "command-alternation",
+      "actualPreviewSource": "storyChronoCrescent",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "harvest-upper-crossed-orders",
+        "sourceKeys": {
+          "storyChronoCrescent": 1
+        },
+        "skillCueIds": {
+          "harvest-upper-crossed-orders:alternating-orders:command-alternation": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-24",
+            "sourceKey": "storyChronoCrescent",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "command-alternation",
+            "planned": true,
+            "cueId": "harvest-upper-crossed-orders:alternating-orders:command-alternation",
+            "phaseRole": "alternating-orders",
+            "rotation": 1.6130185490171187,
+            "displaySize": 53.4088,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "66 수문장이 66 런타임 독립 보스라는 주장 금지",
+      "sourceKeys": [
+        "storyChronoShard",
+        "storyChronoCrescent"
+      ],
+      "beforeRGBA_SHA256": "30e92fa8b07761f75fab286cd178de82683b17df0cd98094db368dfdfcf6a3b1",
+      "afterRGBA_SHA256": "56f8b746c27742600d1790db7ac75b215d0de1650b58c128cbb0588cc106ca57",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 24,
+      "visualGroup": 25,
+      "id": "workshop-links",
+      "name": "검은 공방의 동력 접점",
+      "canonicalRole": "쉬고 실패한 시간을 태우는 공방의 동력 접점",
+      "profile": {
+        "index": 25,
+        "id": "workshop-power-junction",
+        "phaseRoles": [
+          "tightening-order",
+          "preserved-time-pipe",
+          "furnace-junction"
+        ],
+        "swing": -0.36,
+        "recoil": 7,
+        "scale": 1.08,
+        "envelope": 3,
+        "configuration": true
+      },
+      "identityRole": "furnace-junction",
+      "actualPreviewSource": "storyChronoCrescent",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "workshop-power-junction",
+        "sourceKeys": {
+          "storyChronoCrescent": 1
+        },
+        "skillCueIds": {
+          "workshop-power-junction:tightening-order:furnace-junction": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-25",
+            "sourceKey": "storyChronoCrescent",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "furnace-junction",
+            "planned": true,
+            "cueId": "workshop-power-junction:tightening-order:furnace-junction",
+            "phaseRole": "tightening-order",
+            "rotation": 1.54412966012823,
+            "displaySize": 57.110400000000006,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "유용한 시간만 구하는 심사 추가 금지; 공방의 개인 시간은 모두 보존",
+      "sourceKeys": [
+        "storyChronoShard",
+        "storyChronoCrescent"
+      ],
+      "beforeRGBA_SHA256": "30e92fa8b07761f75fab286cd178de82683b17df0cd98094db368dfdfcf6a3b1",
+      "afterRGBA_SHA256": "ce243e46458a58db20fa2109146a38d2432391d178302d4cccda4d8a537882fe",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 25,
+      "visualGroup": 26,
+      "id": "neuron-gate",
+      "name": "뉴런 게이트의 강제 연결",
+      "canonicalRole": "생각 전에 닫히는 뉴런 게이트 강제 연결",
+      "profile": {
+        "index": 26,
+        "id": "neuron-forced-cable",
+        "phaseRoles": [
+          "preceding-cable",
+          "next-command-gap",
+          "forced-neural-link"
+        ],
+        "swing": 0.17,
+        "recoil": 4,
+        "scale": 1.03,
+        "envelope": 5,
+        "configuration": true
+      },
+      "identityRole": "neural-packet",
+      "actualPreviewSource": "storyChronoCrescent",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "neuron-forced-cable",
+        "sourceKeys": {
+          "storyChronoCrescent": 1
+        },
+        "skillCueIds": {
+          "neuron-forced-cable:preceding-cable:neural-packet": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-26",
+            "sourceKey": "storyChronoCrescent",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "neural-packet",
+            "planned": true,
+            "cueId": "neuron-forced-cable:preceding-cable:neural-packet",
+            "phaseRole": "preceding-cable",
+            "rotation": 1.6058448458214678,
+            "displaySize": 52.40922578875171,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "연결된 인간을 공격 주체의 새 캐릭터로 만들지 않는다",
+      "sourceKeys": [
+        "storyNeuralOrb",
+        "storyChronoCrescent"
+      ],
+      "beforeRGBA_SHA256": "30e92fa8b07761f75fab286cd178de82683b17df0cd98094db368dfdfcf6a3b1",
+      "afterRGBA_SHA256": "8768484b93459c2951457b1d6ea8eeff134686875b832fdbbb44c34463250f1e",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 26,
+      "visualGroup": 27,
+      "id": "memory-grave",
+      "name": "망각의 묘지 삭제 명령",
+      "canonicalRole": "타인의 살아 있는 기억을 지우는 묘지의 명령",
+      "profile": {
+        "index": 27,
+        "id": "memory-grave-deletion-link",
+        "phaseRoles": [
+          "preserved-clock-shards",
+          "deletion-order",
+          "owners-records"
+        ],
+        "swing": -0.11,
+        "recoil": 3,
+        "scale": 1.09,
+        "envelope": 4,
+        "configuration": true
+      },
+      "identityRole": "deletion-seal",
+      "actualPreviewSource": "storyChronoCrescent",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "memory-grave-deletion-link",
+        "sourceKeys": {
+          "storyChronoCrescent": 1
+        },
+        "skillCueIds": {
+          "memory-grave-deletion-link:preserved-clock-shards:deletion-seal": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-27",
+            "sourceKey": "storyChronoCrescent",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "deletion-seal",
+            "planned": true,
+            "cueId": "memory-grave-deletion-link:preserved-clock-shards:deletion-seal",
+            "phaseRole": "preserved-clock-shards",
+            "rotation": 1.5626481786467483,
+            "displaySize": 57.63920000000001,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "memory-shards/personal-records 보호; 파편 부수기 보상 금지",
+      "sourceKeys": [
+        "storyChronoShard",
+        "storyChronoCrescent"
+      ],
+      "beforeRGBA_SHA256": "30e92fa8b07761f75fab286cd178de82683b17df0cd98094db368dfdfcf6a3b1",
+      "afterRGBA_SHA256": "540212b31a981ce798f8beca73df34d266fde99faa62e173edf78fe1075f8961",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 27,
+      "visualGroup": 28,
+      "id": "collapse-rings",
+      "name": "붕괴 의식장의 여섯 명령 고리",
+      "canonicalRole": "수확한 시간을 집결하는 여섯 명령 고리",
+      "profile": {
+        "index": 28,
+        "id": "collapse-six-command-rings",
+        "phaseRoles": [
+          "first-three-links",
+          "last-three-links",
+          "corridor-opening"
+        ],
+        "swing": 0.72,
+        "recoil": 9,
+        "scale": 0.97,
+        "envelope": 4,
+        "configuration": true
+      },
+      "identityRole": "six-command-rings",
+      "actualPreviewSource": "storyChronoShard",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "collapse-six-command-rings",
+        "sourceKeys": {
+          "storyChronoShard": 1
+        },
+        "skillCueIds": {
+          "collapse-six-command-rings:first-three-links:six-command-rings": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-28",
+            "sourceKey": "storyChronoShard",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "six-command-rings",
+            "planned": true,
+            "cueId": "collapse-six-command-rings:first-three-links:six-command-rings",
+            "phaseRole": "first-three-links",
+            "rotation": 1.6241296601282298,
+            "displaySize": 51.2936,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "여섯 명령을 새로운 여섯 인물로 확정하지 않는다",
+      "sourceKeys": [
+        "storyChronoCrescent",
+        "storyChronoShard"
+      ],
+      "beforeRGBA_SHA256": "a9d70b2374513bcc5893b60d30bfa2b4fa228b18295cbef724855d6fe683501d",
+      "afterRGBA_SHA256": "5abdc968cb5096c464da63c2197b3e5974eb672e1e5e1be70cdf467baf49df22",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 28,
+      "visualGroup": 29,
+      "id": "arbelia-release",
+      "name": "아르벨리아의 변조 명령",
+      "canonicalRole": "변조된 명령에 갇힌 회복형 아르콘 아르벨리아",
+      "profile": {
+        "index": 29,
+        "id": "arbelia-tampered-thread",
+        "phaseRoles": [
+          "deferred-time",
+          "tampered-record-thread",
+          "autonomous-first-command"
+        ],
+        "swing": -0.17,
+        "recoil": 2,
+        "scale": 1.06,
+        "envelope": 5,
+        "configuration": true
+      },
+      "identityRole": "tampered-thread",
+      "actualPreviewSource": "storyChronoCrescent",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "arbelia-tampered-thread",
+        "sourceKeys": {
+          "storyChronoCrescent": 1
+        },
+        "skillCueIds": {
+          "arbelia-tampered-thread:deferred-time:tampered-thread": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-29",
+            "sourceKey": "storyChronoCrescent",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "tampered-thread",
+            "planned": true,
+            "cueId": "arbelia-tampered-thread:deferred-time:tampered-thread",
+            "phaseRole": "deferred-time",
+            "rotation": 1.5357478077683253,
+            "displaySize": 53.935708093278464,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "아르벨리아와 쉼의 기록을 공격/삭제하지 않는다; 그녀 스스로 재작성",
+      "sourceKeys": [
+        "storyChronoShard",
+        "storyChronoCrescent"
+      ],
+      "beforeRGBA_SHA256": "30e92fa8b07761f75fab286cd178de82683b17df0cd98094db368dfdfcf6a3b1",
+      "afterRGBA_SHA256": "fecb557f6e580258dfdd5a895019037ffb024d0a260b6041442f4e62535d0e76",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 29,
+      "visualGroup": 30,
+      "id": "siren-mor",
+      "name": "세이렌 모르",
+      "canonicalRole": "시간 수확·예측·최적화된 운명을 강요하는 세이렌 모르",
+      "profile": {
+        "index": 30,
+        "id": "siren-time-harvest",
+        "phaseRoles": [
+          "time-harvest",
+          "optimized-fate",
+          "free-choice-window"
+        ],
+        "swing": 0.6,
+        "recoil": 10,
+        "scale": 1.11,
+        "envelope": 1,
+        "configuration": true
+      },
+      "identityRole": "time-hand",
+      "actualPreviewSource": "storyChronoShard",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "siren-time-harvest",
+        "sourceKeys": {
+          "storyChronoShard": 1
+        },
+        "skillCueIds": {
+          "siren-time-harvest:time-harvest:time-hand": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-30",
+            "sourceKey": "storyChronoShard",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "time-hand",
+            "planned": true,
+            "cueId": "siren-time-harvest:time-harvest:time-hand",
+            "phaseRole": "time-harvest",
+            "rotation": 1.615240771239341,
+            "displaySize": 58.6968,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "검은 모래 속 타인의 시간 파괴 금지; 실패 뒤 다시 선택하는 시간 남김",
+      "sourceKeys": [
+        "storySirenAttack",
+        "storyChronoShard"
+      ],
+      "beforeRGBA_SHA256": "a9d70b2374513bcc5893b60d30bfa2b4fa228b18295cbef724855d6fe683501d",
+      "afterRGBA_SHA256": "a024889b331602fc21da665851fa215c892b7c0a1aca0518d14737ba552e5445",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 30,
+      "visualGroup": 31,
+      "id": "castle-nightmare",
+      "name": "공동 EGO 코어를 빼앗은 우두머리",
+      "canonicalRole": "두 주인의 공동 EGO 코어를 빼앗은 악몽 우두머리",
+      "profile": {
+        "index": 31,
+        "id": "castle-returned-ego-core",
+        "phaseRoles": [
+          "chosen-gate",
+          "owners-authority",
+          "returned-core"
+        ],
+        "swing": -0.47,
+        "recoil": 9,
+        "scale": 1.07,
+        "envelope": 2,
+        "configuration": true
+      },
+      "identityRole": "castle-boundary",
+      "actualPreviewSource": "storyChiefBlade",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "castle-returned-ego-core",
+        "sourceKeys": {
+          "storyChiefBlade": 1
+        },
+        "skillCueIds": {
+          "castle-returned-ego-core:chosen-gate:castle-boundary": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-31",
+            "sourceKey": "storyChiefBlade",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "castle-boundary",
+            "planned": true,
+            "cueId": "castle-returned-ego-core:chosen-gate:castle-boundary",
+            "phaseRole": "chosen-gate",
+            "rotation": -0.6969459623398966,
+            "displaySize": 57.16927265842907,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "두 아이를 적으로 바꾸거나 되찾은 코어를 환도 소유로 바꾸지 않는다",
+      "sourceKeys": [
+        "storyChiefIdle",
+        "storyChiefBlade"
+      ],
+      "beforeRGBA_SHA256": "f57097f139cc73741f7f42aa1d5e1395430d58ca21c2a175ebd3c40ac57f5e57",
+      "afterRGBA_SHA256": "477f727d7d0d897fc76e32d9ce2a883030bd94d2fd8bba7318689e2e90a1d836",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 31,
+      "visualGroup": 32,
+      "id": "causal-enforcer",
+      "name": "파란불 집행체",
+      "canonicalRole": "네 사람의 비극을 세 단계로 고정하는 파란불 집행체",
+      "profile": {
+        "index": 32,
+        "id": "causal-repeat-links",
+        "phaseRoles": [
+          "scapegoat-refusal",
+          "three-causal-locks",
+          "preserved-guilt-records"
+        ],
+        "swing": 0.05,
+        "recoil": 5,
+        "scale": 1.02,
+        "envelope": 4,
+        "configuration": true
+      },
+      "identityRole": "causal-lock",
+      "actualPreviewSource": "storyExecutorRoad",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "causal-repeat-links",
+        "sourceKeys": {
+          "storyExecutorRoad": 1
+        },
+        "skillCueIds": {
+          "causal-repeat-links:scapegoat-refusal:causal-lock": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-32",
+            "sourceKey": "storyExecutorRoad",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "causal-lock",
+            "planned": true,
+            "cueId": "causal-repeat-links:scapegoat-refusal:causal-lock",
+            "phaseRole": "scapegoat-refusal",
+            "rotation": 1.5745000304986003,
+            "displaySize": 53.937599999999996,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "한 명만 주범 선택 금지; 실제 과실 기록 보존",
+      "sourceKeys": [
+        "storyExecutorPrism",
+        "storyExecutorRoad"
+      ],
+      "beforeRGBA_SHA256": "cd52d4bcdbd6eb9a61716ae021350d166b258396a1fcbe3cf5a6f96c907832fc",
+      "afterRGBA_SHA256": "904ae8b023cc329d0c7dc4a76b2091fc7da4ddf1a50ef27a97ee7e6290a4bf64",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 32,
+      "visualGroup": 33,
+      "id": "cult-network",
+      "name": "흑장미단의 외곽 지배 회로",
+      "canonicalRole": "사람의 EGO·SUPER EGO·ID를 역순 지배하는 외곽 회로",
+      "profile": {
+        "index": 33,
+        "id": "cult-outer-command-network",
+        "phaseRoles": [
+          "reverse-ego-occupation",
+          "interlocked-repeat",
+          "outer-command-link"
+        ],
+        "swing": -0.64,
+        "recoil": 8,
+        "scale": 1.09,
+        "envelope": 3,
+        "configuration": true
+      },
+      "identityRole": "reverse-domination",
+      "actualPreviewSource": "cultLance",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "cult-outer-command-network",
+        "sourceKeys": {
+          "cultLance": 1
+        },
+        "skillCueIds": {
+          "cult-outer-command-network:reverse-ego-occupation:reverse-domination": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-33",
+            "sourceKey": "cultLance",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "reverse-domination",
+            "planned": true,
+            "cueId": "cult-outer-command-network:reverse-ego-occupation:reverse-domination",
+            "phaseRole": "reverse-ego-occupation",
+            "rotation": 1.5233889193874892,
+            "displaySize": 57.63920000000001,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "bound-people/egos 보호; 괴물 형상 안 기억 소멸 금지",
+      "sourceKeys": [
+        "storyCultRose",
+        "cultLance"
+      ],
+      "beforeRGBA_SHA256": "37b26df2b10af1c9bf79a734f7cec7c7e99140a97d35d8d3fedbbc6f0732c632",
+      "afterRGBA_SHA256": "6968eedd1e8c1135a5878542450b3bdb7d0dc49800e0aaf3bffa4783c7e7f5ac",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 33,
+      "visualGroup": 34,
+      "id": "cult-circuit-pair",
+      "name": "한리안·백이온의 합일 회로",
+      "canonicalRole": "한리안·백이온이 지키는 합일 회로",
+      "profile": {
+        "index": 34,
+        "id": "cult-two-circuit-casters",
+        "phaseRoles": [
+          "rian-inverse-cross",
+          "ion-order-wall",
+          "shared-command-circuit"
+        ],
+        "swing": 0.28,
+        "recoil": 6,
+        "scale": 1.05,
+        "envelope": 1,
+        "configuration": true
+      },
+      "identityRole": "circuit-cross",
+      "actualPreviewSource": "storyRianCross",
+      "phase": 0,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 0,
+        "skillProfileId": "cult-two-circuit-casters",
+        "sourceKeys": {
+          "storyRianCross": 1
+        },
+        "skillCueIds": {
+          "cult-two-circuit-casters:rian-inverse-cross:circuit-cross": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-34",
+            "sourceKey": "storyRianCross",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "circuit-cross",
+            "planned": true,
+            "cueId": "cult-two-circuit-casters:rian-inverse-cross:circuit-cross",
+            "phaseRole": "rian-inverse-cross",
+            "rotation": 0.02074074074074074,
+            "displaySize": 55.524,
+            "releaseAge": 0.9259259259259259,
+            "sourceActorId": "han-rian"
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "세 번째 회로 배우는 새 인물이 아니다; 두 의목사 자아 보호",
+      "sourceKeys": [
+        "storyRianCross",
+        "storyIonShield"
+      ],
+      "beforeRGBA_SHA256": "0b150fd32588b1daca5569992ebe559c0102c837306b1af4c44d35128ec58366",
+      "afterRGBA_SHA256": "471b8f563b86fa1bfa572d393ac63bf44074316aa3a974ccff333678895f25db",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    },
+    {
+      "runtimeIndex": 34,
+      "visualGroup": 35,
+      "id": "cult-leader",
+      "name": "교만의 사이보그 교주",
+      "canonicalRole": "이미 사몽에 각성한 교주·부활·두 사몽의 격돌",
+      "profile": {
+        "index": 35,
+        "id": "cult-final-samong-authority",
+        "phaseRoles": [
+          "samong-fold",
+          "revival-stitch",
+          "authority-impact"
+        ],
+        "swing": 0.54,
+        "recoil": 8,
+        "scale": 1.1,
+        "envelope": 2,
+        "configuration": true
+      },
+      "identityRole": "authority-impact",
+      "actualPreviewSource": "cultDriveImpact",
+      "phase": 2,
+      "previewMetrics": {
+        "skillSourceDraws": 1,
+        "skillCastDraws": 1,
+        "skillReleaseDraws": 0,
+        "skillLaserDraws": 0,
+        "skillMissingAssets": 0,
+        "skillDrawLimit": 8,
+        "skillReleaseCandidates": 0,
+        "skillReleaseEmitters": 0,
+        "skillWarningCandidates": 1,
+        "skillWarningDraws": 1,
+        "skillChargeSuppressed": 1,
+        "skillProfileId": "cult-final-samong-authority",
+        "sourceKeys": {
+          "cultDriveImpact": 1
+        },
+        "skillCueIds": {
+          "cult-final-samong-authority:authority-impact:authority-impact": 1
+        },
+        "representedReleases": [],
+        "representedCasts": [
+          {
+            "id": "source-review-35",
+            "sourceKey": "cultDriveImpact",
+            "x": 180,
+            "y": 136,
+            "progress": 0.9259259259259259,
+            "warningAt": 450,
+            "activeAt": 504,
+            "patternId": "identity-source-review-v25",
+            "identityRole": "authority-impact",
+            "planned": true,
+            "cueId": "cult-final-samong-authority:authority-impact:authority-impact",
+            "phaseRole": "authority-impact",
+            "rotation": 0.020384757729336823,
+            "displaySize": 58.772149461936436,
+            "releaseAge": 0.9259259259259259
+          }
+        ],
+        "skillCacheEntries": 1,
+        "skillCacheBytes": 36864,
+        "skillCacheByteLimit": 2097152,
+        "skillCacheEntryLimit": 24
+      },
+      "protectionRule": "합일 코어 보존; 강제 명령/사이비 회로만 분리; 환도 몽세수호자 결말",
+      "sourceKeys": [
+        "cultDriveSpear",
+        "cultLance",
+        "cultDriveFold",
+        "cultDriveStitch",
+        "cultDriveImpact"
+      ],
+      "beforeRGBA_SHA256": "e471a1b2d1affb977341c6685afd222cf75abf8fb46df548da9acc5064848df0",
+      "afterRGBA_SHA256": "9b8f772ee67b2830a6e6e59872a0e8209a45f07c8132a8af15d973836155220b",
+      "changed": true,
+      "status": "Owned semantic cue implemented; distinct attack geometry/clock checked separately in core/independent QA"
+    }
+  ],
+  "sources": {
+    "cultDriveFold": {
+      "path": "media/cult-v17/drive-fold.webp",
+      "sha256": "c51d89509e9e52a07b539027596b986094f5e56fdff3f587e2c19c9ffe38ed93",
+      "bytes": 72902,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "cultDriveStitch": {
+      "path": "media/cult-v17/drive-stitch.webp",
+      "sha256": "6c2785664e1226250da23a2c048043ca8c3b2cfeeb4c5d1c8259c7d3d8b3649a",
+      "bytes": 90032,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "cultDriveImpact": {
+      "path": "media/cult-v17/drive-impact.webp",
+      "sha256": "318c20e9dc3588e5929e619a9a8da35bfbf12c3674848752ba46127152247f57",
+      "bytes": 141070,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "cultLance": {
+      "path": "media/cult-v17/lance.webp",
+      "sha256": "b1c98912111f3c661c418567e1d304d606705d7e3eb87c643caeaf8402f4acf7",
+      "bytes": 27866,
+      "dimensions": [
+        512,
+        192
+      ]
+    },
+    "chapter3Lance": {
+      "path": "media/chapter3-v18/lance.webp",
+      "sha256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+      "bytes": 29140,
+      "dimensions": [
+        512,
+        192
+      ]
+    },
+    "chapter3Beam": {
+      "path": "media/chapter3-v18/beam.webp",
+      "sha256": "630a74006bc13b02614445ce91aa87d12ca32f0e17a54100360629a2fb3d0be2",
+      "bytes": 52734,
+      "dimensions": [
+        768,
+        144
+      ]
+    },
+    "h25SlothTissue": {
+      "path": "media/projectiles-hapil1-v25/sloth-tissue.webp",
+      "sha256": "bffd46f57d2b164e564796c52cb0822138088ea99e99d7de338eb878947c9558",
+      "bytes": 56378,
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    "h25GluttonKnife": {
+      "path": "media/projectiles-hapil1-v25/glutton-knife.webp",
+      "sha256": "c64c4bb84efe1e65a805ff4938d272114a87d9706bbf8c5c124f1c5a8e004bbd",
+      "bytes": 27128,
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    "h25GreedMoney": {
+      "path": "media/projectiles-hapil1-v25/greed-money.webp",
+      "sha256": "dd67661274b28f6d4185d6d024667382de2e7e5c08912d53383292a1f3cb586b",
+      "bytes": 39750,
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    "h25GreedTreasure": {
+      "path": "media/projectiles-hapil1-v25/greed-treasure.webp",
+      "sha256": "21e826e4189e1e393bdc9a7c43df2c4c5496cce9b6b966ec7b83f68f0ff92551",
+      "bytes": 59848,
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    "h14SkillViolet": {
+      "path": "media/hapil1-v14/fx/violet-primary.webp",
+      "sha256": "237953c7bb81d53450f3ae5f63b0b81986eab37a124d929bced022b14a3addd8",
+      "bytes": 111666,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "h14SkillHorn": {
+      "path": "media/hapil1-v14/fx/horn-primary.webp",
+      "sha256": "f798a6599bcd55e37b9b1dfceda41a0b20610a92cbfe3c6181a7397c88c549d0",
+      "bytes": 24420,
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    "h14SkillBalrog": {
+      "path": "media/hapil1-v14/fx/balrog-secondary.webp",
+      "sha256": "f6f9b989f5c6e33094440268a7888c71548ac2c6948d0cf4254b2e04aea3d762",
+      "bytes": 207986,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "h14SkillMask": {
+      "path": "media/hapil1-v14/fx/mask-secondary.webp",
+      "sha256": "2772a1df9aee03a04d75786218e5834e60aa2c4dc8dc7bd5372065e93287eee4",
+      "bytes": 60564,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "h14SkillLucifer": {
+      "path": "media/hapil1-v14/fx/lucifer-secondary.webp",
+      "sha256": "c0f4cf47147fccb62714d909749e79a72e893b2976943c53e441e8deb9dfc93d",
+      "bytes": 143392,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "h14SkillSloth": {
+      "path": "media/hapil1-v14/fx/sloth-secondary.webp",
+      "sha256": "fd0df92278a5e74d4c2421ffc2c3fcce8b35c2455bd2407ce9b71bd067489486",
+      "bytes": 273476,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "h14SkillEnvy": {
+      "path": "media/hapil1-v14/fx/envy-primary.webp",
+      "sha256": "79feb01463759f28a1e5ede94586b944a5c97062f21d54df097d0c6f306fedd6",
+      "bytes": 179378,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "h14SkillGlutton": {
+      "path": "media/hapil1-v14/fx/glutton-primary.webp",
+      "sha256": "a30a2c20dbd1adf968d0f737b8836149ce28a62ad68dbf9452ee63c5df4b27fc",
+      "bytes": 295074,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "h14SkillLust": {
+      "path": "media/hapil1-v14/fx/lust-primary.webp",
+      "sha256": "50854e6326ef0bf88e41dc396551fe337741cae7d85389bc94f5e624395760e1",
+      "bytes": 214228,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "h14SkillGreed": {
+      "path": "media/hapil1-v14/fx/greed-primary.webp",
+      "sha256": "36355530ef13f3727b36c0458f3b8a40bb31e1c5fd11ad0f58e4c2f4fcfeeb4b",
+      "bytes": 267494,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "h14SkillWrath": {
+      "path": "media/hapil1-v14/fx/wrath-primary.webp",
+      "sha256": "fe91e446954c9d3367e194c2884264a0b428b01d40c17d1b3556f58cceacff95",
+      "bytes": 276340,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "h14SkillPride": {
+      "path": "media/hapil1-v14/fx/pride-primary.webp",
+      "sha256": "83ed7b152d1c8d28cf9c3797738c42184ed02cf6100e976ef5886b5f76f69c85",
+      "bytes": 282626,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "storyGoblinWave": {
+      "path": "media/story-v19/goblin-wave.webp",
+      "sha256": "20e5c4152bd1c99c49c175ab36d3fa7c4d414accba1b729e83d2023cbd617e88",
+      "bytes": 272580,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "storyGoblin": {
+      "path": "media/story-v19/goblin.webp",
+      "sha256": "09db8af84705584d6f44b2de6542593d63a6b6d37b126cc5c38917ccd918b996",
+      "bytes": 116776,
+      "dimensions": [
+        672,
+        384
+      ]
+    },
+    "storyPlayerHandoSlash": {
+      "path": "media/story-v19/player-hando-slash.png",
+      "sha256": "0f811aa201f2317bfea07d48109989942b3f84d3348ec8e871c50e5c086bc424",
+      "bytes": 85262,
+      "dimensions": [
+        512,
+        341
+      ]
+    },
+    "storyKnightSword": {
+      "path": "media/story-v19/knight-sword.png",
+      "sha256": "d14b4babd804f490b31d2f1cf8bf8fba23bd72f5605329c1c88acd5b74fa4841",
+      "bytes": 44486,
+      "dimensions": [
+        512,
+        341
+      ]
+    },
+    "storyInsomniaGaze": {
+      "path": "media/story-v19/insomnia-gaze.webp",
+      "sha256": "9116b32bb478da14f817150371eb507e5dc4cf71b25ebedf53f910fe89fe6c60",
+      "bytes": 329590,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "storyChronoCrescent": {
+      "path": "media/story-v19/chrono-crescent.webp",
+      "sha256": "c659a2ef583ec2b25257a16e74217871f358aea0de28452141d8ce2bafa200a0",
+      "bytes": 242800,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "storyPlayerSeohaSlash": {
+      "path": "media/story-v19/player-seoha-slash.png",
+      "sha256": "cf767d2600a48dda2c40a110ff7e6e86e3da1588764459a268b1ac97f49d4ece",
+      "bytes": 153437,
+      "dimensions": [
+        362,
+        362
+      ]
+    },
+    "storyChronoShard": {
+      "path": "media/story-v19/chrono-shard.webp",
+      "sha256": "85cd0218d4f85b92eb524791283c8a38454094ebbb276439b1e74621e29597c5",
+      "bytes": 54898,
+      "dimensions": [
+        512,
+        256
+      ]
+    },
+    "storyChiefBlade": {
+      "path": "media/story-v19/chief-blade.webp",
+      "sha256": "a621a06b3688129f1113e41ea32ce8a466361680f1fc4fb0b843eed829e6b939",
+      "bytes": 246500,
+      "dimensions": [
+        1254,
+        1254
+      ]
+    },
+    "storyChiefIdle": {
+      "path": "media/story-v19/chief-idle.webp",
+      "sha256": "9db8f0ba682ff380d7238a7a5a82d64adff29bbf2781b920bb9b497038c6f869",
+      "bytes": 44926,
+      "dimensions": [
+        672,
+        384
+      ]
+    },
+    "storyExecutorRoad": {
+      "path": "media/story-v19/executor-road.webp",
+      "sha256": "f9c9378d33bbb827682d82537785c18c786242a3dd8ce1e174d18fc05f7d78a5",
+      "bytes": 249200,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "storyRianCross": {
+      "path": "media/story-v19/rian-cross.webp",
+      "sha256": "c3087e2e8611efff6e8844c3b3c571457a4458552a4c85af36c37657d0f00620",
+      "bytes": 84602,
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "storyIonShield": {
+      "path": "media/story-v19/ion-shield.webp",
+      "sha256": "f56c5acaf90884bbf5c18a94691105360ccb00f87b30e9b44212aef159bb59d9",
+      "bytes": 70068,
+      "dimensions": [
+        512,
+        512
+      ]
+    }
+  },
+  "proof": {
+    "path": "docs/v25-skill-pixels/owned-cues-v24-v25.jpg",
+    "bytes": 145002,
+    "sha256": "7cce151e155d2a4cc33a483d3b4be4fa8c9a93334d77a3a6d7c52cd9387f9235"
+  },
+  "knownGaps": [
+    "First five retained four keyposes are not full continuous animations; no poses were regenerated.",
+    "Most later skills are one static source drawing with finite source-only transforms, not newly authored frame cycles.",
+    "Six controller rows share the same controller-system source arsenal; their casts and command-link roles differ without inventing six people.",
+    "Chapter V configurations retain the same source-owned time machinery arsenal. No unsupported bespoke boss weapon artwork was invented.",
+    "Skill accents are decorative origin cues. Projectile damage coverage and laser warnings remain independently owned by core/projectiles.",
+    "This report does not certify ordinary-health progression, real GPU or real mobile device performance."
+  ]
+}

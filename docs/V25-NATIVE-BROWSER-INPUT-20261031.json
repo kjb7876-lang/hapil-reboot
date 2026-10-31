@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "scope": "Actual Chrome native UI actions on the unchanged product app, wrapped only with isolated QA storage bootstrap and a visible readonly public-state panel. Ordinary HP3, normal automatic attacks/skills; no simulation or input injection. Not a campaign completion or mobile FPS certification.",
+  "fixture": "docs/v25-browser/app-input25.html",
+  "fixtureSHA256": "bb1777e94e6e285bf11d67eedabb6ba7e7ac1c1445c64571f3f40efc33831ce8",
+  "sourceHashes": {
+    "src/core.js": "0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851",
+    "src/storage.js": "b753b883ca10b3f116c0bac9a1ed5551d3c87aab3f9e87227af6235f09d34c12",
+    "src/app.js": "7b749289485641547c6414400329d1e6d333b576e6d28dcadc9ed41041b90039",
+    "src/projectiles.js": "2c831a71ca5b2c7c1a5424855fcf903714dfe6921ac4d62546d3e2e6c881beea",
+    "index.html": "6b8f18ad5f4970169ef9b8963419fe81f17ea580d17f3e381229e628af76dda0"
+  },
+  "observations": [
+    {
+      "action": "HELL Balrog special practice via actual menu",
+      "mode": "playing",
+      "bossIndex": 2,
+      "phase": 2,
+      "combatRevision": 25,
+      "hp": 3,
+      "maxHp": 3,
+      "player": [
+        180,
+        540
+      ],
+      "loadedImagesAfterSettled": 26,
+      "assetErrors": []
+    },
+    {
+      "action": "Native trusted ArrowRight held450ms after UI resume",
+      "tickBefore": 24,
+      "tickAfter": 40,
+      "playerBefore": [
+        180,
+        540
+      ],
+      "playerAfter": [
+        244,
+        540
+      ],
+      "hp": 3
+    },
+    {
+      "action": "Native trusted ArrowLeft held450ms after UI resume",
+      "tickBefore": 46,
+      "tickAfter": 49,
+      "playerBefore": [
+        244,
+        540
+      ],
+      "playerAfter": [
+        232,
+        540
+      ],
+      "hp": 3
+    },
+    {
+      "action": "Native mouse drag on actual movement pad from650,800 to690,790",
+      "pointerType": "mouse",
+      "trusted": true,
+      "playerBefore": [
+        232,
+        540
+      ],
+      "afterReleaseAtTick65": [
+        266.92513000523184,
+        531.2687174986918
+      ],
+      "remainingInputAtTick65": [
+        7.359797730487264,
+        -1.839949432621816
+      ],
+      "afterDrainAtTick72": [
+        274.28492773571907,
+        529.4287680660699
+      ],
+      "pointerActiveAfterDrain": false,
+      "pendingAfterDrain": [
+        0,
+        0
+      ],
+      "hp": 3,
+      "assetErrors": []
+    }
+  ],
+  "limits": [
+    "Browser frame gaps around1017ms triggered the existing protective auto-pause between tool actions. No sustained browser FPS or GPU-completion pass is claimed.",
+    "Native mouse drag is not an emulated touch event or a physical mobile touchscreen test.",
+    "Root directly inspected visible DOM and native screenshots. Browser file synchronization did not provide downloadable evidence within the documented window; no missing screenshot/export file is linked."
+  ]
+}

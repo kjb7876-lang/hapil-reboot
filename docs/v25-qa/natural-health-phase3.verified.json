@@ -1,0 +1,3532 @@
+{
+  "schema": 1,
+  "scope": "Ordinary-health CPU isolated special-practice attempts. Actual product checkpoint-selected phase starts, legal inputs only afterward, unmodified HP/damage/autoattack/skills. No777/no external immunity. Not human/fullstory/browser/GPU/mobile.",
+  "policy": "Public-current-threat forecast including existing announced hazards; read-only view selects the same forecast for all actual difficulties. No future emissions or RNG reads. Stands still before a visible threat.",
+  "policyConfig": {
+    "route": "centre",
+    "y": 575,
+    "beam": 20,
+    "commit": 4,
+    "horizon": 96
+  },
+  "directions": [
+    [
+      0,
+      0
+    ],
+    [
+      4,
+      0
+    ],
+    [
+      -4,
+      0
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      0,
+      -4
+    ],
+    [
+      2.828,
+      2.828
+    ],
+    [
+      2.828,
+      -2.828
+    ],
+    [
+      -2.828,
+      2.828
+    ],
+    [
+      -2.828,
+      -2.828
+    ]
+  ],
+  "sourceHashes": {
+    "src/core.js": "0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d",
+    "tools/audit-boss-identities-v25.cjs": "88e1d4e3afd9d314d3de2cb723d145105a3da7e3793ae4d82c76ce71f08dd20c",
+    "tools/probe-identities-v25-natural.cjs": "18433dffe03accc00d128f501bf8a03a1844c534965b6596aedb05853db198b7"
+  },
+  "sourceHashesAfter": {
+    "src/core.js": "0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d",
+    "tools/audit-boss-identities-v25.cjs": "88e1d4e3afd9d314d3de2cb723d145105a3da7e3793ae4d82c76ce71f08dd20c",
+    "tools/probe-identities-v25-natural.cjs": "18433dffe03accc00d128f501bf8a03a1844c534965b6596aedb05853db198b7"
+  },
+  "sourceHashGuardPassed": true,
+  "summary": {
+    "cases": 105,
+    "won": 103,
+    "lost": 2,
+    "unfinished": 0,
+    "poolPressure": 0,
+    "droppedGroups": 0
+  },
+  "records": [
+    {
+      "bossIndex": 0,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "violet",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2100,
+      "hp": 5,
+      "hits": 0,
+      "score": 8115,
+      "phaseTicks": [
+        2100
+      ],
+      "peakBullets": 105,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "보라검천사 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-woven-petals-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-00-gentle-phase-2.moves.gz",
+        "bytes": 185,
+        "sha256": "dc97fb9ed73d45d4c535b5abb0e67badd9de3c43b3f0460d4bc6f146e14cf54c",
+        "ticks": 2100
+      }
+    },
+    {
+      "bossIndex": 0,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "violet",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2090,
+      "hp": 2,
+      "hits": 1,
+      "score": 6660,
+      "phaseTicks": [
+        2090
+      ],
+      "peakBullets": 113,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "보라검천사 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-woven-petals-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-00-normal-phase-2.moves.gz",
+        "bytes": 234,
+        "sha256": "dcf3806c71f03a931742525310670436026b23c27e399dfbbe1767f9906d9aff",
+        "ticks": 2090
+      }
+    },
+    {
+      "bossIndex": 0,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "violet",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2512,
+      "hp": 2,
+      "hits": 1,
+      "score": 6825,
+      "phaseTicks": [
+        2512
+      ],
+      "peakBullets": 177,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "보라검천사 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-woven-petals-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-00-hell-phase-2.moves.gz",
+        "bytes": 373,
+        "sha256": "b152edc213caf38fbd32a48af1f21cafbf35bd4e7580dd0a880675711c0edad3",
+        "ticks": 2512
+      }
+    },
+    {
+      "bossIndex": 1,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "horn",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2183,
+      "hp": 5,
+      "hits": 0,
+      "score": 8265,
+      "phaseTicks": [
+        2183
+      ],
+      "peakBullets": 102,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "늪지대의 뿔악마 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-sinking-memory-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-01-gentle-phase-2.moves.gz",
+        "bytes": 227,
+        "sha256": "0d947ab8a92e7b286819d63764a862c71d77dace73a7f40e458399fcd46caa31",
+        "ticks": 2183
+      }
+    },
+    {
+      "bossIndex": 1,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "horn",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2265,
+      "hp": 3,
+      "hits": 0,
+      "score": 7025,
+      "phaseTicks": [
+        2265
+      ],
+      "peakBullets": 110,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "늪지대의 뿔악마 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-sinking-memory-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-01-normal-phase-2.moves.gz",
+        "bytes": 301,
+        "sha256": "c75b6972e05974edda00035423631e4693415bdbbf4305e7c1719aea491d1fb2",
+        "ticks": 2265
+      }
+    },
+    {
+      "bossIndex": 1,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "horn",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2108,
+      "hp": 3,
+      "hits": 0,
+      "score": 7385,
+      "phaseTicks": [
+        2108
+      ],
+      "peakBullets": 163,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "늪지대의 뿔악마 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-sinking-memory-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-01-hell-phase-2.moves.gz",
+        "bytes": 344,
+        "sha256": "acd660df5b3cf7ac189df1297d91da1940a72493e4b8581f8cf2aa99bc509b22",
+        "ticks": 2108
+      }
+    },
+    {
+      "bossIndex": 2,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "balrog",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2666,
+      "hp": 5,
+      "hits": 0,
+      "score": 8460,
+      "phaseTicks": [
+        2666
+      ],
+      "peakBullets": 48,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "발록 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-sword-rain-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-02-gentle-phase-2.moves.gz",
+        "bytes": 184,
+        "sha256": "e1106adf0903042c280688d2d13353839d5d9479018668a654c5860159dec085",
+        "ticks": 2666
+      }
+    },
+    {
+      "bossIndex": 2,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "balrog",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2621,
+      "hp": 3,
+      "hits": 0,
+      "score": 7490,
+      "phaseTicks": [
+        2621
+      ],
+      "peakBullets": 75,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "발록 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-sword-rain-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-02-normal-phase-2.moves.gz",
+        "bytes": 247,
+        "sha256": "ba0e502d1bc6a594a54a9d1d8cba93e6ebf15be06cf78d68b886b1e4bfe32f15",
+        "ticks": 2621
+      }
+    },
+    {
+      "bossIndex": 2,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "balrog",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2629,
+      "hp": 2,
+      "hits": 1,
+      "score": 6855,
+      "phaseTicks": [
+        2629
+      ],
+      "peakBullets": 106,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "발록 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-sword-rain-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-02-hell-phase-2.moves.gz",
+        "bytes": 349,
+        "sha256": "9c83af5d031e085a04f412de4ea625f3efbeba3cbaf021ee9c4ad372e920d8ec",
+        "ticks": 2629
+      }
+    },
+    {
+      "bossIndex": 3,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "mask",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2811,
+      "hp": 5,
+      "hits": 0,
+      "score": 8355,
+      "phaseTicks": [
+        2811
+      ],
+      "peakBullets": 67,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "초천사의 웃는 가면 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-mirror-feathers-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-03-gentle-phase-2.moves.gz",
+        "bytes": 195,
+        "sha256": "ccb0551330040efaa253c173b6a7fad3f173478ca2b99110b7f66228c636df0c",
+        "ticks": 2811
+      }
+    },
+    {
+      "bossIndex": 3,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "mask",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2819,
+      "hp": 3,
+      "hits": 0,
+      "score": 7385,
+      "phaseTicks": [
+        2819
+      ],
+      "peakBullets": 83,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "초천사의 웃는 가면 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-mirror-feathers-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-03-normal-phase-2.moves.gz",
+        "bytes": 285,
+        "sha256": "7498d96562ccc1f54a1c6e9a7697f93b0f99eb27bee9532febe224496a85a63b",
+        "ticks": 2819
+      }
+    },
+    {
+      "bossIndex": 3,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "mask",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2670,
+      "hp": 2,
+      "hits": 1,
+      "score": 7035,
+      "phaseTicks": [
+        2670
+      ],
+      "peakBullets": 137,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "초천사의 웃는 가면 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-mirror-feathers-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-03-hell-phase-2.moves.gz",
+        "bytes": 368,
+        "sha256": "0f8e8a29c6d85b11c1f32bf1412edb83faca209452ace2f8f0f590ae72cd8613",
+        "ticks": 2670
+      }
+    },
+    {
+      "bossIndex": 4,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "lucifer",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 3288,
+      "hp": 5,
+      "hits": 0,
+      "score": 8340,
+      "phaseTicks": [
+        3288
+      ],
+      "peakBullets": 92,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "코스믹 가면 루시퍼 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-orbit-faces-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-04-gentle-phase-2.moves.gz",
+        "bytes": 125,
+        "sha256": "8f94da9a034d98b80120f629dabf466026e287652468a127fa53bb5e7615555d",
+        "ticks": 3288
+      }
+    },
+    {
+      "bossIndex": 4,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "lucifer",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2900,
+      "hp": 3,
+      "hits": 0,
+      "score": 7490,
+      "phaseTicks": [
+        2900
+      ],
+      "peakBullets": 104,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "코스믹 가면 루시퍼 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-orbit-faces-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-04-normal-phase-2.moves.gz",
+        "bytes": 260,
+        "sha256": "86135214e5810ddcfae8a42a553fe5e02bb595dc3cd83e145e692b8b39d5b4e1",
+        "ticks": 2900
+      }
+    },
+    {
+      "bossIndex": 4,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "lucifer",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2905,
+      "hp": 1,
+      "hits": 2,
+      "score": 6430,
+      "phaseTicks": [
+        2905
+      ],
+      "peakBullets": 175,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "코스믹 가면 루시퍼 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-orbit-faces-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-04-hell-phase-2.moves.gz",
+        "bytes": 456,
+        "sha256": "61741a8ad6315d2c5488a4c40fd86f18bd6129f9e882cc0ead6f9c562e13c304",
+        "ticks": 2905
+      }
+    },
+    {
+      "bossIndex": 5,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "belphegor",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2739,
+      "hp": 5,
+      "hits": 0,
+      "score": 8355,
+      "phaseTicks": [
+        2739
+      ],
+      "peakBullets": 99,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "나태의 귀 벨페고르 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-late-pulse-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-05-gentle-phase-2.moves.gz",
+        "bytes": 187,
+        "sha256": "2f7530e59061306294a86ae1523eb7f227c734ad53903915f8ed97afff48b0cc",
+        "ticks": 2739
+      }
+    },
+    {
+      "bossIndex": 5,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "belphegor",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2740,
+      "hp": 3,
+      "hits": 0,
+      "score": 7340,
+      "phaseTicks": [
+        2740
+      ],
+      "peakBullets": 115,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "나태의 귀 벨페고르 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-late-pulse-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-05-normal-phase-2.moves.gz",
+        "bytes": 276,
+        "sha256": "3eb25f28c5404bd685e455de427de93e1d6aeafadc2bc205873a7622af1fc711",
+        "ticks": 2740
+      }
+    },
+    {
+      "bossIndex": 5,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "belphegor",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2605,
+      "hp": 3,
+      "hits": 0,
+      "score": 7265,
+      "phaseTicks": [
+        2605
+      ],
+      "peakBullets": 151,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "나태의 귀 벨페고르 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-late-pulse-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-05-hell-phase-2.moves.gz",
+        "bytes": 345,
+        "sha256": "27fff928b61b5d4633cfee0c80925610a1cde0ae3ef7fd22ad82703ecd3bdd68",
+        "ticks": 2605
+      }
+    },
+    {
+      "bossIndex": 6,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "leviathan",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2710,
+      "hp": 5,
+      "hits": 0,
+      "score": 8355,
+      "phaseTicks": [
+        2710
+      ],
+      "peakBullets": 80,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "질투의 귀 레비아탄 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-envy-crossflow-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-06-gentle-phase-2.moves.gz",
+        "bytes": 196,
+        "sha256": "d59ae1977cf70a814bee505847e7f87a023d3d9183eeb5cb8eec3a87766e4eb1",
+        "ticks": 2710
+      }
+    },
+    {
+      "bossIndex": 6,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "leviathan",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2243,
+      "hp": 3,
+      "hits": 0,
+      "score": 7265,
+      "phaseTicks": [
+        2243
+      ],
+      "peakBullets": 93,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "질투의 귀 레비아탄 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-envy-crossflow-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-06-normal-phase-2.moves.gz",
+        "bytes": 260,
+        "sha256": "c20ea322e3a686efa159cb8a09898a465dbd7b26cb8d3b1a6f5bc05a728a89cf",
+        "ticks": 2243
+      }
+    },
+    {
+      "bossIndex": 6,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "leviathan",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2153,
+      "hp": 2,
+      "hits": 1,
+      "score": 7005,
+      "phaseTicks": [
+        2153
+      ],
+      "peakBullets": 129,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "질투의 귀 레비아탄 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-envy-crossflow-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-06-hell-phase-2.moves.gz",
+        "bytes": 350,
+        "sha256": "305fbb2e46bed8fcc45d7f2af228dd9aa6da1faec081b888ab782dda7d7536f5",
+        "ticks": 2153
+      }
+    },
+    {
+      "bossIndex": 7,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "beelzebub",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2783,
+      "hp": 5,
+      "hits": 0,
+      "score": 8340,
+      "phaseTicks": [
+        2783
+      ],
+      "peakBullets": 152,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "탐식의 귀 베엘제붑 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-hungry-jaws-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-07-gentle-phase-2.moves.gz",
+        "bytes": 135,
+        "sha256": "8db300f681f6033fa151662397a517f82fae384ad6550526b0ce6337ef32ee7f",
+        "ticks": 2783
+      }
+    },
+    {
+      "bossIndex": 7,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "beelzebub",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2910,
+      "hp": 3,
+      "hits": 0,
+      "score": 7340,
+      "phaseTicks": [
+        2910
+      ],
+      "peakBullets": 163,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "탐식의 귀 베엘제붑 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-hungry-jaws-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-07-normal-phase-2.moves.gz",
+        "bytes": 211,
+        "sha256": "09cc209b00cb91dfb0ca84fac2acb009b915632899838850b9e9f28a825f4004",
+        "ticks": 2910
+      }
+    },
+    {
+      "bossIndex": 7,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "beelzebub",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2854,
+      "hp": 3,
+      "hits": 0,
+      "score": 7370,
+      "phaseTicks": [
+        2854
+      ],
+      "peakBullets": 203,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "탐식의 귀 베엘제붑 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-hungry-jaws-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-07-hell-phase-2.moves.gz",
+        "bytes": 374,
+        "sha256": "2f4d99e9ec4431e30613b67c29969db1092e9119b3cbdb9abde55f95998a1222",
+        "ticks": 2854
+      }
+    },
+    {
+      "bossIndex": 8,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "asmodeus",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2712,
+      "hp": 5,
+      "hits": 0,
+      "score": 8460,
+      "phaseTicks": [
+        2712
+      ],
+      "peakBullets": 63,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "색욕의 귀 아스모데우스 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [],
+      "firstIdentityTick": null,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-08-gentle-phase-2.moves.gz",
+        "bytes": 311,
+        "sha256": "fdd3252738891ea0cdce423e2b4b43b7908ac4cc97d4bd3d975ecd3c426114d3",
+        "ticks": 2712
+      }
+    },
+    {
+      "bossIndex": 8,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "asmodeus",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2768,
+      "hp": 3,
+      "hits": 0,
+      "score": 7100,
+      "phaseTicks": [
+        2768
+      ],
+      "peakBullets": 83,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "색욕의 귀 아스모데우스 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [],
+      "firstIdentityTick": null,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-08-normal-phase-2.moves.gz",
+        "bytes": 386,
+        "sha256": "be2378d14336bf9b813210b03d63214ad9b82c11ff441d2652f77f60f388668c",
+        "ticks": 2768
+      }
+    },
+    {
+      "bossIndex": 8,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "asmodeus",
+      "startHP": 3,
+      "stage": "lost",
+      "ticks": 2614,
+      "hp": 0,
+      "hits": 3,
+      "score": 1125,
+      "phaseTicks": [],
+      "peakBullets": 126,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "기억이 흐려졌습니다",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [],
+      "firstIdentityTick": null,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-08-hell-phase-2.moves.gz",
+        "bytes": 434,
+        "sha256": "cca8a8aead9eb8029078efe4fbe09550646873fd2c3831b4706b217fef8dcb1c",
+        "ticks": 2614
+      }
+    },
+    {
+      "bossIndex": 9,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "mammon",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2703,
+      "hp": 4,
+      "hits": 1,
+      "score": 7870,
+      "phaseTicks": [
+        2703
+      ],
+      "peakBullets": 51,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "탐욕의 귀 맘몬 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-vault-branches-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-09-gentle-phase-2.moves.gz",
+        "bytes": 162,
+        "sha256": "826bec90bfbe81a7185491639aa3295036be39d22bd02a10ee7b5c46352ead5d",
+        "ticks": 2703
+      }
+    },
+    {
+      "bossIndex": 9,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "mammon",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2280,
+      "hp": 3,
+      "hits": 0,
+      "score": 7220,
+      "phaseTicks": [
+        2280
+      ],
+      "peakBullets": 66,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "탐욕의 귀 맘몬 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-vault-branches-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-09-normal-phase-2.moves.gz",
+        "bytes": 229,
+        "sha256": "795489e1fc10cdcc6684d89cf26c0cf991e471eed8db2e2504f2602d7e57bc1b",
+        "ticks": 2280
+      }
+    },
+    {
+      "bossIndex": 9,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "mammon",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2696,
+      "hp": 3,
+      "hits": 0,
+      "score": 7295,
+      "phaseTicks": [
+        2696
+      ],
+      "peakBullets": 120,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "탐욕의 귀 맘몬 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-vault-branches-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-09-hell-phase-2.moves.gz",
+        "bytes": 428,
+        "sha256": "c69f74fd5134b1b8e7416574f8920d402a78b8d6ad2f000bbda780a25871fe14",
+        "ticks": 2696
+      }
+    },
+    {
+      "bossIndex": 10,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "wrath",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2911,
+      "hp": 5,
+      "hits": 0,
+      "score": 8340,
+      "phaseTicks": [
+        2911
+      ],
+      "peakBullets": 100,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "분노의 귀 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-fire-beats-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-10-gentle-phase-2.moves.gz",
+        "bytes": 277,
+        "sha256": "7d9739e13687d76a0eebe79e3e9b6c1e03594567df9ad794b9c2da21c9b6156f",
+        "ticks": 2911
+      }
+    },
+    {
+      "bossIndex": 10,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "wrath",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2898,
+      "hp": 3,
+      "hits": 0,
+      "score": 7355,
+      "phaseTicks": [
+        2898
+      ],
+      "peakBullets": 105,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "분노의 귀 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-fire-beats-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-10-normal-phase-2.moves.gz",
+        "bytes": 336,
+        "sha256": "1e874cd65b0edd951325e6f9529cb3822ca89e82225e16e8b290f68a0009eb5d",
+        "ticks": 2898
+      }
+    },
+    {
+      "bossIndex": 10,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "wrath",
+      "startHP": 3,
+      "stage": "lost",
+      "ticks": 2263,
+      "hp": 0,
+      "hits": 3,
+      "score": 645,
+      "phaseTicks": [],
+      "peakBullets": 154,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "기억이 흐려졌습니다",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-fire-beats-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-10-hell-phase-2.moves.gz",
+        "bytes": 341,
+        "sha256": "3c64cb7ff5e83e12a223b6d83ae1da819a0cd336489828ba23e03f458283ef7b",
+        "ticks": 2263
+      }
+    },
+    {
+      "bossIndex": 11,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "pride",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 3288,
+      "hp": 5,
+      "hits": 0,
+      "score": 8580,
+      "phaseTicks": [
+        3288
+      ],
+      "peakBullets": 51,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "교만의 회장 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-seven-calculations-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-11-gentle-phase-2.moves.gz",
+        "bytes": 169,
+        "sha256": "dd5f011621d2a4d8b2af04c3dc9244d6a698549045348d0f95f11c72b5327641",
+        "ticks": 3288
+      }
+    },
+    {
+      "bossIndex": 11,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "pride",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 3226,
+      "hp": 3,
+      "hits": 0,
+      "score": 7340,
+      "phaseTicks": [
+        3226
+      ],
+      "peakBullets": 73,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "교만의 회장 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-seven-calculations-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-11-normal-phase-2.moves.gz",
+        "bytes": 270,
+        "sha256": "57fc3e66a104dd127d67661953cd66287e7fba4e11abc5c9af09bd08fab9ff59",
+        "ticks": 3226
+      }
+    },
+    {
+      "bossIndex": 11,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "pride",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2769,
+      "hp": 3,
+      "hits": 0,
+      "score": 7550,
+      "phaseTicks": [
+        2769
+      ],
+      "peakBullets": 102,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "교만의 회장 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-seven-calculations-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-11-hell-phase-2.moves.gz",
+        "bytes": 356,
+        "sha256": "0a3c1b83efc6556192c0a6f79c639086bcdd3cef4e424a17b0db3a56197afe56",
+        "ticks": 2769
+      }
+    },
+    {
+      "bossIndex": 12,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "controller-army",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1255,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1255
+      ],
+      "peakBullets": 73,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 방어의 군단 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-defense-relay-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-12-gentle-phase-2.moves.gz",
+        "bytes": 82,
+        "sha256": "9fcb1ca29113dff2845313df8a07174aef053900b8b714d1cf911bea917e3474",
+        "ticks": 1255
+      }
+    },
+    {
+      "bossIndex": 12,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "controller-army",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1254,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1254
+      ],
+      "peakBullets": 79,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 방어의 군단 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-defense-relay-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-12-normal-phase-2.moves.gz",
+        "bytes": 110,
+        "sha256": "11d2ac27896ee7fe5017fbeda3d9ee294bd4d21c9e15e051db5cde8fa87d8d30",
+        "ticks": 1254
+      }
+    },
+    {
+      "bossIndex": 12,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "controller-army",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1228,
+      "hp": 2,
+      "hits": 1,
+      "score": 6045,
+      "phaseTicks": [
+        1228
+      ],
+      "peakBullets": 103,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 방어의 군단 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-defense-relay-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-12-hell-phase-2.moves.gz",
+        "bytes": 166,
+        "sha256": "ced26abbb53e38ff74c8671d84bef13a1c1da35d2733625767d0f2f45dcf8e3c",
+        "ticks": 1228
+      }
+    },
+    {
+      "bossIndex": 13,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "controller-rescue",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1344,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1344
+      ],
+      "peakBullets": 75,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 잔인한 구원 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-mercy-boundary-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-13-gentle-phase-2.moves.gz",
+        "bytes": 67,
+        "sha256": "19514fc5383912e76be1610d684d7560d6288927bad3046b8ae34f07131a06fc",
+        "ticks": 1344
+      }
+    },
+    {
+      "bossIndex": 13,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "controller-rescue",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1343,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1343
+      ],
+      "peakBullets": 80,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 잔인한 구원 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-mercy-boundary-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-13-normal-phase-2.moves.gz",
+        "bytes": 78,
+        "sha256": "d3d54b59a204fd1c507657e96a03103031ce41d61cc5cb5c710d584a3a155c5b",
+        "ticks": 1343
+      }
+    },
+    {
+      "bossIndex": 13,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "controller-rescue",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1261,
+      "hp": 3,
+      "hits": 0,
+      "score": 6530,
+      "phaseTicks": [
+        1261
+      ],
+      "peakBullets": 86,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 잔인한 구원 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-mercy-boundary-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-13-hell-phase-2.moves.gz",
+        "bytes": 121,
+        "sha256": "54ac395f66e0fb01f2c5ce5ce82b9047ad4f78d1e27f9d0269e536758a2cc909",
+        "ticks": 1261
+      }
+    },
+    {
+      "bossIndex": 14,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "controller-veto",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1352,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1352
+      ],
+      "peakBullets": 80,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 시스템의 거부권 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-veto-trace-v25"
+      ],
+      "firstIdentityTick": 751,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-14-gentle-phase-2.moves.gz",
+        "bytes": 71,
+        "sha256": "c9ba677e9e754e67af57e0d721ae918b9fdd59d6041bcc0f82353a6048038c21",
+        "ticks": 1352
+      }
+    },
+    {
+      "bossIndex": 14,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "controller-veto",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1342,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1342
+      ],
+      "peakBullets": 87,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 시스템의 거부권 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-veto-trace-v25"
+      ],
+      "firstIdentityTick": 751,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-14-normal-phase-2.moves.gz",
+        "bytes": 80,
+        "sha256": "fd759f0dfe3f610a94aa7925632418929cd04114d0b5d455345a267064e3c906",
+        "ticks": 1342
+      }
+    },
+    {
+      "bossIndex": 14,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "controller-veto",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1329,
+      "hp": 3,
+      "hits": 0,
+      "score": 6515,
+      "phaseTicks": [
+        1329
+      ],
+      "peakBullets": 89,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 시스템의 거부권 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-veto-trace-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-14-hell-phase-2.moves.gz",
+        "bytes": 161,
+        "sha256": "11b20d943015fb54122f14b2739e0a755edd7d0b81040c21f7aeb44a631ca08c",
+        "ticks": 1329
+      }
+    },
+    {
+      "bossIndex": 15,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "controller-authority",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1415,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1415
+      ],
+      "peakBullets": 80,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 관리자 권한 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-feedback-return-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-15-gentle-phase-2.moves.gz",
+        "bytes": 102,
+        "sha256": "8fee1d29ab78947843a1ed4060938d5c18b05d97435ea2357fed7236dad97ca7",
+        "ticks": 1415
+      }
+    },
+    {
+      "bossIndex": 15,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "controller-authority",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1415,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1415
+      ],
+      "peakBullets": 87,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 관리자 권한 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-feedback-return-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-15-normal-phase-2.moves.gz",
+        "bytes": 126,
+        "sha256": "90c8210d54fb6410963c9e4bdf2f8c9b0f6eaa2494375d0283a140ef56552ae0",
+        "ticks": 1415
+      }
+    },
+    {
+      "bossIndex": 15,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "controller-authority",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1413,
+      "hp": 3,
+      "hits": 0,
+      "score": 6545,
+      "phaseTicks": [
+        1413
+      ],
+      "peakBullets": 88,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 관리자 권한 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-feedback-return-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-15-hell-phase-2.moves.gz",
+        "bytes": 148,
+        "sha256": "8cfaa055141c9512f2c6c4c71e684d59c8f321ccd8304769e02d99cbe48478e0",
+        "ticks": 1413
+      }
+    },
+    {
+      "bossIndex": 16,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "controller-migration",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1432,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1432
+      ],
+      "peakBullets": 82,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 중앙 코어 이주실 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-migration-gates-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-16-gentle-phase-2.moves.gz",
+        "bytes": 72,
+        "sha256": "8f3a688fb6840113b818584045acc751dce2b3ef8a2bd51ab332b33969b33889",
+        "ticks": 1432
+      }
+    },
+    {
+      "bossIndex": 16,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "controller-migration",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1442,
+      "hp": 3,
+      "hits": 0,
+      "score": 6515,
+      "phaseTicks": [
+        1442
+      ],
+      "peakBullets": 86,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 중앙 코어 이주실 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-migration-gates-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-16-normal-phase-2.moves.gz",
+        "bytes": 89,
+        "sha256": "150fff6a36e43f7838c111c8e833fad8bb0ae9766ccaf400b369112288583387",
+        "ticks": 1442
+      }
+    },
+    {
+      "bossIndex": 16,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "controller-migration",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1414,
+      "hp": 1,
+      "hits": 2,
+      "score": 5515,
+      "phaseTicks": [
+        1414
+      ],
+      "peakBullets": 98,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 중앙 코어 이주실 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-migration-gates-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-16-hell-phase-2.moves.gz",
+        "bytes": 156,
+        "sha256": "c74bf2668ee107b59a57f33f11de829edead6044eaa2a292858a7d0e158a4188",
+        "ticks": 1414
+      }
+    },
+    {
+      "bossIndex": 17,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "controller-memory-gate",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1506,
+      "hp": 5,
+      "hits": 0,
+      "score": 7515,
+      "phaseTicks": [
+        1506
+      ],
+      "peakBullets": 82,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제자 · 기억의 문 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-memory-separation-v25"
+      ],
+      "firstIdentityTick": 751,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-17-gentle-phase-2.moves.gz",
+        "bytes": 116,
+        "sha256": "081a5f8c3dfb125d0382d9f04363640b9727edb7ddb9add6d26c2e9c031c5b94",
+        "ticks": 1506
+      }
+    },
+    {
+      "bossIndex": 17,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "controller-memory-gate",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1497,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1497
+      ],
+      "peakBullets": 92,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제자 · 기억의 문 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-memory-separation-v25"
+      ],
+      "firstIdentityTick": 259,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-17-normal-phase-2.moves.gz",
+        "bytes": 147,
+        "sha256": "0cbd6de93a43eab915a27d505869bc2a16d5bd1ead786b504d74525ad9dd600a",
+        "ticks": 1497
+      }
+    },
+    {
+      "bossIndex": 17,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "controller-memory-gate",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1486,
+      "hp": 3,
+      "hits": 0,
+      "score": 6560,
+      "phaseTicks": [
+        1486
+      ],
+      "peakBullets": 85,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제자 · 기억의 문 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-memory-separation-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-17-hell-phase-2.moves.gz",
+        "bytes": 181,
+        "sha256": "80b4f67aa906728815a62661b90ed29fb5fc6a0d363d21341709cb10619d44ae",
+        "ticks": 1486
+      }
+    },
+    {
+      "bossIndex": 18,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "goblin-chief",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1199,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1199
+      ],
+      "peakBullets": 54,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "고블린 두목 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-flute-turn-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-18-gentle-phase-2.moves.gz",
+        "bytes": 85,
+        "sha256": "132cdbb2863c016e73cff920af88039332e55d0a62b33755b490b1e2667fdbc3",
+        "ticks": 1199
+      }
+    },
+    {
+      "bossIndex": 18,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "goblin-chief",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1201,
+      "hp": 2,
+      "hits": 1,
+      "score": 6015,
+      "phaseTicks": [
+        1201
+      ],
+      "peakBullets": 69,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "고블린 두목 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-flute-turn-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-18-normal-phase-2.moves.gz",
+        "bytes": 166,
+        "sha256": "866a560aff7d9044d9264eb0cd8867f0d762b18c8cba97904473e33dd450579d",
+        "ticks": 1201
+      }
+    },
+    {
+      "bossIndex": 18,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "goblin-chief",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1236,
+      "hp": 2,
+      "hits": 1,
+      "score": 6075,
+      "phaseTicks": [
+        1236
+      ],
+      "peakBullets": 112,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "고블린 두목 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-flute-turn-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-18-hell-phase-2.moves.gz",
+        "bytes": 217,
+        "sha256": "1b10c42dda3074399c4c2bb50c8da91b749220e1bd67f4071493a9a3b16957e6",
+        "ticks": 1236
+      }
+    },
+    {
+      "bossIndex": 19,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "fallen-knight",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1216,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1216
+      ],
+      "peakBullets": 63,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "타락천사 기사 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-six-swords-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-19-gentle-phase-2.moves.gz",
+        "bytes": 116,
+        "sha256": "99640dadaae6f12937501d1763ac3ff0aca7f7bdd285f01a2d90026ea2677c06",
+        "ticks": 1216
+      }
+    },
+    {
+      "bossIndex": 19,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "fallen-knight",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1226,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1226
+      ],
+      "peakBullets": 75,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "타락천사 기사 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-six-swords-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-19-normal-phase-2.moves.gz",
+        "bytes": 122,
+        "sha256": "c587803480d2ce79cbae0a31deed79e4c75f72827d1842a7367d831dbf221c58",
+        "ticks": 1226
+      }
+    },
+    {
+      "bossIndex": 19,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "fallen-knight",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1234,
+      "hp": 3,
+      "hits": 0,
+      "score": 6605,
+      "phaseTicks": [
+        1234
+      ],
+      "peakBullets": 84,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "타락천사 기사 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-six-swords-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-19-hell-phase-2.moves.gz",
+        "bytes": 139,
+        "sha256": "426c1e553d078ec9424fab0e5ccabe81075b0a0b08dcdc6d5dc6059cfe7c928d",
+        "ticks": 1234
+      }
+    },
+    {
+      "bossIndex": 20,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "insomnia",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1226,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1226
+      ],
+      "peakBullets": 117,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "불면귀 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-insomnia-veil-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-20-gentle-phase-2.moves.gz",
+        "bytes": 71,
+        "sha256": "e28bdbc4fac30e7ec8820dd0337b3741c7beacd603cc7fe8b5f14b8114e59864",
+        "ticks": 1226
+      }
+    },
+    {
+      "bossIndex": 20,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "insomnia",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1226,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1226
+      ],
+      "peakBullets": 124,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "불면귀 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-insomnia-veil-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-20-normal-phase-2.moves.gz",
+        "bytes": 55,
+        "sha256": "25a679b40238bfd57ce3b5145257cd7831ca65521200ea00e2ee2b6c42b9e27b",
+        "ticks": 1226
+      }
+    },
+    {
+      "bossIndex": 20,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "insomnia",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1245,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1245
+      ],
+      "peakBullets": 180,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "불면귀 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-insomnia-veil-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-20-hell-phase-2.moves.gz",
+        "bytes": 142,
+        "sha256": "5b6a2a71cb8b8e4d247e32f469645863757f8be99021d395b0f28af7d25d1f49",
+        "ticks": 1245
+      }
+    },
+    {
+      "bossIndex": 21,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "academy-defense",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1235,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1235
+      ],
+      "peakBullets": 31,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "최초명령 코어 방어 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-defense-intercept-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-21-gentle-phase-2.moves.gz",
+        "bytes": 97,
+        "sha256": "e6f04ae51d73fff581a99852ee482a48b3a800e12184691719000c0c1b22c811",
+        "ticks": 1235
+      }
+    },
+    {
+      "bossIndex": 21,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "academy-defense",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1236,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1236
+      ],
+      "peakBullets": 39,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "최초명령 코어 방어 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-defense-intercept-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-21-normal-phase-2.moves.gz",
+        "bytes": 105,
+        "sha256": "dfd279c55f628c4873fc54a7b73a80ff4f5f3984609aa287e7a1a3d28f5dae9a",
+        "ticks": 1236
+      }
+    },
+    {
+      "bossIndex": 21,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "academy-defense",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1244,
+      "hp": 3,
+      "hits": 0,
+      "score": 6515,
+      "phaseTicks": [
+        1244
+      ],
+      "peakBullets": 53,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "최초명령 코어 방어 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-defense-intercept-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-21-hell-phase-2.moves.gz",
+        "bytes": 201,
+        "sha256": "ca9c6d27f88b1c9d971aea6e9fd3df0077b08a472bc5bd2f437f385fc3c45e1b",
+        "ticks": 1244
+      }
+    },
+    {
+      "bossIndex": 22,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "harvest-lower",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1236,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1236
+      ],
+      "peakBullets": 90,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "일반 수문장의 동력 연결 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-harvest-lower-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-22-gentle-phase-2.moves.gz",
+        "bytes": 104,
+        "sha256": "22fa71528863229ed8e4a05d1130f7556522af9901a7c2bcb570c7fbee0833ff",
+        "ticks": 1236
+      }
+    },
+    {
+      "bossIndex": 22,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "harvest-lower",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1235,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1235
+      ],
+      "peakBullets": 91,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "일반 수문장의 동력 연결 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-harvest-lower-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-22-normal-phase-2.moves.gz",
+        "bytes": 132,
+        "sha256": "13420d02a455a2ff2aede09ee5dafa3ae521686d9dbde3d5c89c2e6c646f13e3",
+        "ticks": 1235
+      }
+    },
+    {
+      "bossIndex": 22,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "harvest-lower",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1271,
+      "hp": 3,
+      "hits": 0,
+      "score": 6515,
+      "phaseTicks": [
+        1271
+      ],
+      "peakBullets": 114,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "일반 수문장의 동력 연결 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-harvest-lower-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-22-hell-phase-2.moves.gz",
+        "bytes": 143,
+        "sha256": "9fbf5549ffc70a269e1c0b7495b6d2123c2efecb6bcde7376be394a64d4dd8eb",
+        "ticks": 1271
+      }
+    },
+    {
+      "bossIndex": 23,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "harvest-upper",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1253,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1253
+      ],
+      "peakBullets": 21,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "상급·대수문장의 교차 명령 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-upper-command-v25"
+      ],
+      "firstIdentityTick": 751,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-23-gentle-phase-2.moves.gz",
+        "bytes": 89,
+        "sha256": "1c78005cf0616162d85ff5b7ce3b50c32a943f4e212d2088065e2d20eed565d3",
+        "ticks": 1253
+      }
+    },
+    {
+      "bossIndex": 23,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "harvest-upper",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1255,
+      "hp": 3,
+      "hits": 0,
+      "score": 6515,
+      "phaseTicks": [
+        1255
+      ],
+      "peakBullets": 23,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "상급·대수문장의 교차 명령 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-upper-command-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-23-normal-phase-2.moves.gz",
+        "bytes": 126,
+        "sha256": "7df80dc7a32b166025f5a8bf22fe9fcd8214edaa23b90f2215bd7a9eb9c83a1a",
+        "ticks": 1255
+      }
+    },
+    {
+      "bossIndex": 23,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "harvest-upper",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1277,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1277
+      ],
+      "peakBullets": 40,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "상급·대수문장의 교차 명령 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-upper-command-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-23-hell-phase-2.moves.gz",
+        "bytes": 118,
+        "sha256": "3125b90897b08a161a22c75fd610902e21e071017c4af8d30cd9c4322953c783",
+        "ticks": 1277
+      }
+    },
+    {
+      "bossIndex": 24,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "workshop-links",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1262,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1262
+      ],
+      "peakBullets": 61,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "검은 공방의 동력 접점 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-workshop-junction-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-24-gentle-phase-2.moves.gz",
+        "bytes": 84,
+        "sha256": "c8c3759b52ff471373732ce0f56864d8d003a51a77539848414f4e68e7d35dc4",
+        "ticks": 1262
+      }
+    },
+    {
+      "bossIndex": 24,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "workshop-links",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1273,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1273
+      ],
+      "peakBullets": 67,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "검은 공방의 동력 접점 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-workshop-junction-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-24-normal-phase-2.moves.gz",
+        "bytes": 125,
+        "sha256": "d6dde783248fc39d563a39f501576843defffdf4471d6d17fb4bd1ed75e8274a",
+        "ticks": 1273
+      }
+    },
+    {
+      "bossIndex": 24,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "workshop-links",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1293,
+      "hp": 3,
+      "hits": 0,
+      "score": 6530,
+      "phaseTicks": [
+        1293
+      ],
+      "peakBullets": 79,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "검은 공방의 동력 접점 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-workshop-junction-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-24-hell-phase-2.moves.gz",
+        "bytes": 146,
+        "sha256": "d072adf7f3f9cc6ecb7a85796ffb62b2856334b569991991f1fbf61ea0e07569",
+        "ticks": 1293
+      }
+    },
+    {
+      "bossIndex": 25,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "neuron-gate",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1271,
+      "hp": 5,
+      "hits": 0,
+      "score": 7515,
+      "phaseTicks": [
+        1271
+      ],
+      "peakBullets": 74,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "뉴런 게이트의 강제 연결 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-neural-cable-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-25-gentle-phase-2.moves.gz",
+        "bytes": 88,
+        "sha256": "08f7920f6d5c3c11417e4d06b47404101e826d519845830654b79e442f3efa62",
+        "ticks": 1271
+      }
+    },
+    {
+      "bossIndex": 25,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "neuron-gate",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1280,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1280
+      ],
+      "peakBullets": 82,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "뉴런 게이트의 강제 연결 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-neural-cable-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-25-normal-phase-2.moves.gz",
+        "bytes": 91,
+        "sha256": "1d84d3272a09bfe065475cdab0176fc28ef66c424886bd1337e369e3ce93a8b8",
+        "ticks": 1280
+      }
+    },
+    {
+      "bossIndex": 25,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "neuron-gate",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1297,
+      "hp": 3,
+      "hits": 0,
+      "score": 6515,
+      "phaseTicks": [
+        1297
+      ],
+      "peakBullets": 94,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "뉴런 게이트의 강제 연결 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-neural-cable-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-25-hell-phase-2.moves.gz",
+        "bytes": 157,
+        "sha256": "8c5eb10f5f6e8ca1749f39dc35e7f64920d7ebd2683e1bf2823205671375df1f",
+        "ticks": 1297
+      }
+    },
+    {
+      "bossIndex": 26,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "memory-grave",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1281,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1281
+      ],
+      "peakBullets": 92,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "망각의 묘지 삭제 명령 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-memory-preserving-v25"
+      ],
+      "firstIdentityTick": 751,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-26-gentle-phase-2.moves.gz",
+        "bytes": 66,
+        "sha256": "cef8cddda3248570095512bc977f3bf45c55eb190e361140670b2c5902b29111",
+        "ticks": 1281
+      }
+    },
+    {
+      "bossIndex": 26,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "memory-grave",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1280,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1280
+      ],
+      "peakBullets": 97,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "망각의 묘지 삭제 명령 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-memory-preserving-v25"
+      ],
+      "firstIdentityTick": 751,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-26-normal-phase-2.moves.gz",
+        "bytes": 73,
+        "sha256": "3e159c493dded158651a066b92091cf75a6059b1be00150253d85d9ba0ef6a37",
+        "ticks": 1280
+      }
+    },
+    {
+      "bossIndex": 26,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "memory-grave",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1300,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1300
+      ],
+      "peakBullets": 99,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "망각의 묘지 삭제 명령 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-memory-preserving-v25"
+      ],
+      "firstIdentityTick": 751,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-26-hell-phase-2.moves.gz",
+        "bytes": 138,
+        "sha256": "15a4c606f81e773b494f1efc21947e0cfb90cb05288b736dc51de58bb1249260",
+        "ticks": 1300
+      }
+    },
+    {
+      "bossIndex": 27,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "collapse-rings",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1244,
+      "hp": 5,
+      "hits": 0,
+      "score": 7515,
+      "phaseTicks": [
+        1244
+      ],
+      "peakBullets": 76,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "붕괴 의식장의 여섯 명령 고리 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-six-command-rings-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-27-gentle-phase-2.moves.gz",
+        "bytes": 95,
+        "sha256": "fc31b39455cba3099c1a316ebedfad3117983324c6b8d47aeaae7e76426d8fcf",
+        "ticks": 1244
+      }
+    },
+    {
+      "bossIndex": 27,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "collapse-rings",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1245,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1245
+      ],
+      "peakBullets": 80,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "붕괴 의식장의 여섯 명령 고리 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-six-command-rings-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-27-normal-phase-2.moves.gz",
+        "bytes": 101,
+        "sha256": "eedd573833d55190cc22e1aa7e2e372c3e23781a6a9845de8dc31cae41e36b33",
+        "ticks": 1245
+      }
+    },
+    {
+      "bossIndex": 27,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "collapse-rings",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1244,
+      "hp": 1,
+      "hits": 2,
+      "score": 5515,
+      "phaseTicks": [
+        1244
+      ],
+      "peakBullets": 93,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "붕괴 의식장의 여섯 명령 고리 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-six-command-rings-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-27-hell-phase-2.moves.gz",
+        "bytes": 161,
+        "sha256": "94eaf1b2ec26861c0835a207aa57c0093e49c6d98987b1f947431b5eb90e8f33",
+        "ticks": 1244
+      }
+    },
+    {
+      "bossIndex": 28,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "arbelia-release",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1281,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1281
+      ],
+      "peakBullets": 108,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "아르벨리아의 변조 명령 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-release-thread-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-28-gentle-phase-2.moves.gz",
+        "bytes": 57,
+        "sha256": "b18ecf31ff84dbead5af29ba461afb9c622cb39a3cf9672ca1839c6c19c6335c",
+        "ticks": 1281
+      }
+    },
+    {
+      "bossIndex": 28,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "arbelia-release",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1281,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1281
+      ],
+      "peakBullets": 110,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "아르벨리아의 변조 명령 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-release-thread-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-28-normal-phase-2.moves.gz",
+        "bytes": 76,
+        "sha256": "9e09650cedcb5bed8483bac0c6501397d0a37572dccbd2283932a320a445db9b",
+        "ticks": 1281
+      }
+    },
+    {
+      "bossIndex": 28,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "arbelia-release",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1298,
+      "hp": 3,
+      "hits": 0,
+      "score": 6515,
+      "phaseTicks": [
+        1298
+      ],
+      "peakBullets": 111,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "아르벨리아의 변조 명령 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-release-thread-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-28-hell-phase-2.moves.gz",
+        "bytes": 75,
+        "sha256": "48ad4cee35f2f6e3e4dcd7fce0eafa68e46ed2fed1059076216c2247201307a8",
+        "ticks": 1298
+      }
+    },
+    {
+      "bossIndex": 29,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "siren-mor",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1300,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1300
+      ],
+      "peakBullets": 102,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "세이렌 모르 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-time-harvest-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-29-gentle-phase-2.moves.gz",
+        "bytes": 85,
+        "sha256": "f4c7a1e35656ed279f2615134bf94e2a7d5d03cd41e996f44236580d22ee744f",
+        "ticks": 1300
+      }
+    },
+    {
+      "bossIndex": 29,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "siren-mor",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1293,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1293
+      ],
+      "peakBullets": 108,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "세이렌 모르 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-time-harvest-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-29-normal-phase-2.moves.gz",
+        "bytes": 127,
+        "sha256": "14110bde8fddac9fdbe8a59a3992d9eacf357b4b0569498e3f07f3f00c938f9c",
+        "ticks": 1293
+      }
+    },
+    {
+      "bossIndex": 29,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "siren-mor",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1301,
+      "hp": 3,
+      "hits": 0,
+      "score": 6515,
+      "phaseTicks": [
+        1301
+      ],
+      "peakBullets": 215,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "세이렌 모르 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-time-harvest-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-29-hell-phase-2.moves.gz",
+        "bytes": 187,
+        "sha256": "85ada3cdf38f573e416db0e4a91897d918ac6133c4bfdd14cdef634b6add1c80",
+        "ticks": 1301
+      }
+    },
+    {
+      "bossIndex": 30,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "castle-nightmare",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1274,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1274
+      ],
+      "peakBullets": 62,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "공동 EGO 코어를 빼앗은 우두머리 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-castle-ownership-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-30-gentle-phase-2.moves.gz",
+        "bytes": 105,
+        "sha256": "bb7c6529cd12886f5b7c822df304dbf6bbbabfab1ed4eb8857fc4a0d1ca597c3",
+        "ticks": 1274
+      }
+    },
+    {
+      "bossIndex": 30,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "castle-nightmare",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1274,
+      "hp": 2,
+      "hits": 1,
+      "score": 6030,
+      "phaseTicks": [
+        1274
+      ],
+      "peakBullets": 81,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "공동 EGO 코어를 빼앗은 우두머리 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-castle-ownership-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-30-normal-phase-2.moves.gz",
+        "bytes": 191,
+        "sha256": "7d92c6238d37244d6e7740e359da11817ad5d4db91dc41170ca5720b1afa483e",
+        "ticks": 1274
+      }
+    },
+    {
+      "bossIndex": 30,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "castle-nightmare",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1263,
+      "hp": 2,
+      "hits": 1,
+      "score": 6270,
+      "phaseTicks": [
+        1263
+      ],
+      "peakBullets": 105,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "공동 EGO 코어를 빼앗은 우두머리 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-castle-ownership-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-30-hell-phase-2.moves.gz",
+        "bytes": 226,
+        "sha256": "1c7f44d8d782ab36e3935e81386f7a2fce0e37dcaad171ae38738645842610a5",
+        "ticks": 1263
+      }
+    },
+    {
+      "bossIndex": 31,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "causal-enforcer",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1281,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1281
+      ],
+      "peakBullets": 101,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "파란불 집행체 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-causal-rewind-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-31-gentle-phase-2.moves.gz",
+        "bytes": 77,
+        "sha256": "e5e6412dcc146e744a86c784b73b4965c93d1857ad254dd4e85d38fae7f32337",
+        "ticks": 1281
+      }
+    },
+    {
+      "bossIndex": 31,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "causal-enforcer",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1290,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1290
+      ],
+      "peakBullets": 103,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "파란불 집행체 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-causal-rewind-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-31-normal-phase-2.moves.gz",
+        "bytes": 94,
+        "sha256": "5372860ececa621345e2dcaba69831a13d920a711d0049ba0b4f6fe1e62c5e3e",
+        "ticks": 1290
+      }
+    },
+    {
+      "bossIndex": 31,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "causal-enforcer",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1288,
+      "hp": 3,
+      "hits": 0,
+      "score": 6530,
+      "phaseTicks": [
+        1288
+      ],
+      "peakBullets": 110,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "파란불 집행체 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-causal-rewind-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-31-hell-phase-2.moves.gz",
+        "bytes": 152,
+        "sha256": "2c186a0478363299c5348ede758eb311682f9645301c071bb68978777e0405bb",
+        "ticks": 1288
+      }
+    },
+    {
+      "bossIndex": 32,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "cult-network",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1255,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1255
+      ],
+      "peakBullets": 58,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "흑장미단의 외곽 지배 회로 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-cult-network-v25"
+      ],
+      "firstIdentityTick": 751,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-32-gentle-phase-2.moves.gz",
+        "bytes": 81,
+        "sha256": "11785603283bacea45140ecbb47768a0e7d7fd2db2e621a7c6f33e66504827ff",
+        "ticks": 1255
+      }
+    },
+    {
+      "bossIndex": 32,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "cult-network",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1254,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1254
+      ],
+      "peakBullets": 60,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "흑장미단의 외곽 지배 회로 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-cult-network-v25"
+      ],
+      "firstIdentityTick": 751,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-32-normal-phase-2.moves.gz",
+        "bytes": 78,
+        "sha256": "771ab040abbc785cb0dfb49333b38d6e8e8bce0a9c2b18c4790167da288dee56",
+        "ticks": 1254
+      }
+    },
+    {
+      "bossIndex": 32,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "cult-network",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1247,
+      "hp": 3,
+      "hits": 0,
+      "score": 6530,
+      "phaseTicks": [
+        1247
+      ],
+      "peakBullets": 85,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "흑장미단의 외곽 지배 회로 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-cult-network-v25"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-32-hell-phase-2.moves.gz",
+        "bytes": 153,
+        "sha256": "2e1f5afc9a36939f819489a71f6d26169412b2270a54d82c8fe534b128164fd7",
+        "ticks": 1247
+      }
+    },
+    {
+      "bossIndex": 33,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "cult-circuit-pair",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1240,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1240
+      ],
+      "peakBullets": 82,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "한리안·백이온의 합일 회로 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-two-circuit-casters-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-33-gentle-phase-2.moves.gz",
+        "bytes": 83,
+        "sha256": "80c06a9b888b70569351cf70f4bb904dbd75a980fbd48258cb6e4346db59ab35",
+        "ticks": 1240
+      }
+    },
+    {
+      "bossIndex": 33,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "cult-circuit-pair",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1240,
+      "hp": 3,
+      "hits": 0,
+      "score": 6530,
+      "phaseTicks": [
+        1240
+      ],
+      "peakBullets": 98,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "한리안·백이온의 합일 회로 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-two-circuit-casters-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-33-normal-phase-2.moves.gz",
+        "bytes": 111,
+        "sha256": "7202b4fea15d7f8502f6574add1889ebff62dd305e170658d23a86618316f188",
+        "ticks": 1240
+      }
+    },
+    {
+      "bossIndex": 33,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "cult-circuit-pair",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1243,
+      "hp": 2,
+      "hits": 1,
+      "score": 6060,
+      "phaseTicks": [
+        1243
+      ],
+      "peakBullets": 130,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "한리안·백이온의 합일 회로 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-two-circuit-casters-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-33-hell-phase-2.moves.gz",
+        "bytes": 197,
+        "sha256": "b5bdfcbcaa1ed92bf8592b67d92a9dafcf4e9f7901cd70a00e7178a7ddfbe5ea",
+        "ticks": 1243
+      }
+    },
+    {
+      "bossIndex": 34,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 25,
+      "bossId": "cult-leader",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1289,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1289
+      ],
+      "peakBullets": 100,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "교만의 사이보그 교주 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-samong-authority-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-34-gentle-phase-2.moves.gz",
+        "bytes": 100,
+        "sha256": "8d3818eb9ec2505150d74b00e784417edc24f761bdc5aa9c881db7f474d5eda7",
+        "ticks": 1289
+      }
+    },
+    {
+      "bossIndex": 34,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 25,
+      "bossId": "cult-leader",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1289,
+      "hp": 3,
+      "hits": 0,
+      "score": 6515,
+      "phaseTicks": [
+        1289
+      ],
+      "peakBullets": 115,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "교만의 사이보그 교주 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-samong-authority-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-34-normal-phase-2.moves.gz",
+        "bytes": 146,
+        "sha256": "e595b739b3468ded4b033b0de50464df8c83b0cd497021f78e891cb9b7eb10c6",
+        "ticks": 1289
+      }
+    },
+    {
+      "bossIndex": 34,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 25,
+      "bossId": "cult-leader",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1315,
+      "hp": 3,
+      "hits": 0,
+      "score": 6545,
+      "phaseTicks": [
+        1315
+      ],
+      "peakBullets": 173,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "교만의 사이보그 교주 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-samong-authority-v25"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "natural-health-phase3.verified-inputs/boss-34-hell-phase-2.moves.gz",
+        "bytes": 188,
+        "sha256": "0258c4af464d795ab0ad92169a0e262d9f3b3370464210be4c8e3438e5e71f3f",
+        "ticks": 1315
+      }
+    }
+  ]
+}

@@ -29,6 +29,7 @@
   function integer(value, min, max) { return finite(value, min, max) && Math.floor(value) === value; }
   function validRunId(value) { return typeof value === 'string' && /^[A-Za-z0-9_.:-]{1,96}$/.test(value); }
   function difficulty(value) { return value === 'normal' || value === 'gentle' || value === 'hell'; }
+  function combatRevision(value) { return value === 21 || value === 25; }
 
   function settingsPatch(value) {
     var out = {};
@@ -44,7 +45,7 @@
   // arrays, arbitrary object keys, unbounded strings, or nonfinite numbers survive.
   function validateCheckpoint(input) {
     try {
-      if(input&&Object.prototype.hasOwnProperty.call(input,'combatRevision')&&input.combatRevision!==21)return null;
+      if(input&&Object.prototype.hasOwnProperty.call(input,'combatRevision')&&!combatRevision(input.combatRevision))return null;
       var encoded = JSON.stringify(input);
       if (typeof encoded !== 'string' || encoded.length > 16384) return null;
       var value = JSON.parse(encoded);
@@ -122,7 +123,7 @@
         autoAttack: true, skillRotation: value.skillRotation, skills: skills, stats: stats, resourceState: resourceState
       };
       if (campaign) { clean.campaign = true; clean.campaignRevision = value.campaignRevision; clean.bossIndex = value.bossIndex; }
-      if(value.combatRevision===21)clean.combatRevision=21;
+      if(combatRevision(value.combatRevision))clean.combatRevision=value.combatRevision;
       return clean;
     } catch (_) { return null; }
   }
@@ -144,7 +145,7 @@
   function normalizeState(raw) {
     var state = emptyState();
     if (!object(raw) || raw.version !== 1) return state;
-    if(raw.combatContract===21)state.combatContract=21;
+    if(combatRevision(raw.combatContract))state.combatContract=raw.combatContract;
     if (integer(raw.revision, 0, Number.MAX_SAFE_INTEGER - 1)) state.revision = raw.revision;
     if (integer(raw.generation, 0, Number.MAX_SAFE_INTEGER - 1)) state.generation = raw.generation;
     state.settings = Object.assign(state.settings, settingsPatch(raw.settings));
@@ -191,8 +192,10 @@
         !integer(raw.revision, 0, Number.MAX_SAFE_INTEGER - 1) || !integer(raw.generation, 0, Number.MAX_SAFE_INTEGER - 1) ||
         !(raw.activeRunId === null || validRunId(raw.activeRunId))) return false;
     if (raw.activeRunBaselineKills !== undefined && !integer(raw.activeRunBaselineKills, 0, MAX_COUNTER)) return false;
-    if(raw.combatContract!==undefined&&raw.combatContract!==21)return false;
-    if((raw.checkpoint&&raw.checkpoint.combatRevision===21||raw.backup&&raw.backup.combatRevision===21)&&raw.combatContract!==21)return false;
+    if(raw.combatContract!==undefined&&!combatRevision(raw.combatContract))return false;
+    // A record may retain an older boundary, but its writer contract cannot
+    // be older than either saved selector. Never downgrade a retained marker.
+    if([raw.checkpoint,raw.backup].some(function(snapshot){return snapshot&&combatRevision(snapshot.combatRevision)&&(!combatRevision(raw.combatContract)||snapshot.combatRevision>raw.combatContract);}))return false;
     function hasOnlyKeys(value, allowed) {
       return object(value) && Object.keys(value).every(function (key) { return allowed.indexOf(key) >= 0; });
     }
@@ -226,6 +229,9 @@
     var checkpointValid = checkpointPresent && validStoredCheckpoint(raw.checkpoint);
     if (backupPresent && !backupValid) return false;
     if (checkpointPresent && !checkpointValid && !backupValid) return false;
+    // Legitimate same-run writes never change selectors. A mixed25 record
+    // cannot safely choose another ruleset when recovering its older boundary.
+    if(backupValid&&checkpointValid&&(raw.backup.combatRevision===25||raw.checkpoint.combatRevision===25)&&raw.backup.combatRevision!==raw.checkpoint.combatRevision)return false;
     if (checkpointValid && raw.activeRunBaselineKills !== undefined && raw.activeRunBaselineKills > raw.checkpoint.kills) return false;
     if (!checkpointPresent && !backupPresent && raw.activeRunBaselineKills > 0) return false;
     return true;
@@ -262,10 +268,10 @@
         state.backup = clone(snapshot);
       } else state.backup = state.checkpoint ? clone(state.checkpoint) : clone(snapshot);
       state.checkpoint = clone(snapshot);
-      // Old clients reject unknown top-level keys before any write. Retaining
-      // this marker stops an already-open v20 tab from stripping revision21
-      // out of a newly saved checkpoint while saving unrelated settings.
-      if(snapshot.combatRevision===21)state.combatContract=21;
+      // Old clients validate the record inside their transaction before writing.
+      // v20 rejects this key; v21 rejects value25. Retain the highest contract
+      // even after clear/retry so old tabs cannot strip a newer saved selector.
+      if(combatRevision(snapshot.combatRevision))state.combatContract=Math.max(state.combatContract||0,snapshot.combatRevision);
     } else if (action.type === 'complete') {
       var summary = action.value;
       if (completed(state, summary.runId)) return { state: state, changed: false, result: { ok: true, duplicate: true } };
@@ -462,7 +468,7 @@
         var state = await readCurrent(false);
         var result = { format: DB_NAME, version: 1, persistent: status.persistent, revision: state.revision, generation: state.generation,
           settings: state.settings, profile: state.profile, activeRunId: state.activeRunId, activeRunBaselineKills: state.activeRunBaselineKills, checkpoint: state.checkpoint, backup: state.backup, completed: state.completed };
-        if(state.combatContract===21)result.combatContract=21;
+        if(combatRevision(state.combatContract))result.combatContract=state.combatContract;
         // Include the exact stored record only when normal use is blocked; the
         // data stays local unless the user explicitly chooses to export it.
         if (storageInvalid && hasStoredState) result.rawState = rawStoredState;

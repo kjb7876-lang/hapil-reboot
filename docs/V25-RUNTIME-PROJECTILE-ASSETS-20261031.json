@@ -1,0 +1,186 @@
+{
+  "date": "2026-10-31",
+  "scope": "Main-agent source-pixel preparation; no AI image generation or paid API.",
+  "assets": [
+    {
+      "name": "sloth-tissue",
+      "sourceRepository": "kjb7876-lang/hapil1",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "sourcePath": "assets/generated-v31342-rc39/dirty_tissue_projectile_bloodied.webp",
+      "sourceBytes": 203616,
+      "sourceSHA256": "e408aa2b2317a96036d59ab692f6f4c56489e35bc1571808f14b307efc80273f",
+      "sourceGitBlob": "b5cca9f38cbe1ce85e2be7681ac6f1b52a7e711f",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "sourceAlpha8BBox": [
+        349,
+        77,
+        1382,
+        932
+      ],
+      "crop": [
+        345,
+        73,
+        1386,
+        936
+      ],
+      "resizedObject": [
+        240,
+        199
+      ],
+      "runtimePath": "media/projectiles-hapil1-v25/sloth-tissue.webp",
+      "runtimeSize": [
+        256,
+        256
+      ],
+      "runtimeBytes": 56378,
+      "runtimeSHA256": "bffd46f57d2b164e564796c52cb0822138088ea99e99d7de338eb878947c9558",
+      "decodedRGBA_SHA256": "7b635d2557e9f2836db5f5b6f6ae930d2766afea648b1ed535b0d4073facdb63",
+      "preparationCenter": [
+        128,
+        128
+      ],
+      "preparationCenterAlpha": 253,
+      "renderPivotContract": "Actual fitted collision pivots are independently defined and tested in src/projectiles.js; this preparation centre is not a runtime collision promise.",
+      "operation": "Own-source RGBA crop: alpha>8 bbox plus4sourcepx; uniform Lanczos fit240px inside256square; transparent padding; lossless WebP. No repaint or other-actor material."
+    },
+    {
+      "name": "glutton-knife",
+      "sourceRepository": "kjb7876-lang/hapil1",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "sourcePath": "assets/generated-v31342-rc39/kitchen_knife_projectile_bloodied.webp",
+      "sourceBytes": 180108,
+      "sourceSHA256": "5558c302ebca20482050ccab47fdd92ef54134bdf684ce082b78c4e9196ac97e",
+      "sourceGitBlob": "e5dda2939602c65f1583843d486357247db4d8e0",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "sourceAlpha8BBox": [
+        91,
+        90,
+        1448,
+        920
+      ],
+      "crop": [
+        87,
+        86,
+        1452,
+        924
+      ],
+      "resizedObject": [
+        240,
+        147
+      ],
+      "runtimePath": "media/projectiles-hapil1-v25/glutton-knife.webp",
+      "runtimeSize": [
+        256,
+        256
+      ],
+      "runtimeBytes": 27128,
+      "runtimeSHA256": "c64c4bb84efe1e65a805ff4938d272114a87d9706bbf8c5c124f1c5a8e004bbd",
+      "decodedRGBA_SHA256": "16c0f2b6613b8b209bc55d9691ab2200bd48c645737ce0b373e7b8e8f642fe8e",
+      "preparationCenter": [
+        128,
+        128
+      ],
+      "preparationCenterAlpha": 253,
+      "renderPivotContract": "Actual fitted collision pivots are independently defined and tested in src/projectiles.js; this preparation centre is not a runtime collision promise.",
+      "operation": "Own-source RGBA crop: alpha>8 bbox plus4sourcepx; uniform Lanczos fit240px inside256square; transparent padding; lossless WebP. No repaint or other-actor material."
+    },
+    {
+      "name": "greed-money",
+      "sourceRepository": "kjb7876-lang/hapil1",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "sourcePath": "assets/generated-v31342-rc39/paper_money_projectile_bloodied.webp",
+      "sourceBytes": 233638,
+      "sourceSHA256": "ba64565641ffb5f4e96fb62b63149c8404ff5501030e3621ad907990278fabb1",
+      "sourceGitBlob": "e27d95e9c83ff596e24de6c3905d0bc416300c0c",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "sourceAlpha8BBox": [
+        46,
+        73,
+        1470,
+        978
+      ],
+      "crop": [
+        42,
+        69,
+        1474,
+        982
+      ],
+      "resizedObject": [
+        240,
+        153
+      ],
+      "runtimePath": "media/projectiles-hapil1-v25/greed-money.webp",
+      "runtimeSize": [
+        256,
+        256
+      ],
+      "runtimeBytes": 39750,
+      "runtimeSHA256": "dd67661274b28f6d4185d6d024667382de2e7e5c08912d53383292a1f3cb586b",
+      "decodedRGBA_SHA256": "b46235a0b1cf2bef19eb528a5e386365eb585fff7040f1cd6b26cd56285be912",
+      "preparationCenter": [
+        128,
+        128
+      ],
+      "preparationCenterAlpha": 253,
+      "renderPivotContract": "Actual fitted collision pivots are independently defined and tested in src/projectiles.js; this preparation centre is not a runtime collision promise.",
+      "operation": "Own-source RGBA crop: alpha>8 bbox plus4sourcepx; uniform Lanczos fit240px inside256square; transparent padding; lossless WebP. No repaint or other-actor material."
+    },
+    {
+      "name": "greed-treasure",
+      "sourceRepository": "kjb7876-lang/hapil1",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "sourcePath": "assets/generated-v31342-rc39/golden_treasure_projectile_bloodied.webp",
+      "sourceBytes": 342290,
+      "sourceSHA256": "7af71a4498e60dbd2da4e19e41f34926a5ae379746876344335bef8f61875bd8",
+      "sourceGitBlob": "79b1ba15ccbaa917fb31a34ba8d00855a53793b5",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "sourceAlpha8BBox": [
+        127,
+        37,
+        1494,
+        944
+      ],
+      "crop": [
+        123,
+        33,
+        1498,
+        948
+      ],
+      "resizedObject": [
+        240,
+        160
+      ],
+      "runtimePath": "media/projectiles-hapil1-v25/greed-treasure.webp",
+      "runtimeSize": [
+        256,
+        256
+      ],
+      "runtimeBytes": 59848,
+      "runtimeSHA256": "21e826e4189e1e393bdc9a7c43df2c4c5496cce9b6b966ec7b83f68f0ff92551",
+      "decodedRGBA_SHA256": "e930af2408c2101b5f39f7702622c5d563aef3cf3ec196911f40473ac80f4464",
+      "preparationCenter": [
+        128,
+        128
+      ],
+      "preparationCenterAlpha": 253,
+      "renderPivotContract": "Actual fitted collision pivots are independently defined and tested in src/projectiles.js; this preparation centre is not a runtime collision promise.",
+      "operation": "Own-source RGBA crop: alpha>8 bbox plus4sourcepx; uniform Lanczos fit240px inside256square; transparent padding; lossless WebP. No repaint or other-actor material."
+    }
+  ],
+  "proof": {
+    "path": "docs/v25-projectile-pixels/runtime-source-props.jpg",
+    "sha256": "60c934da08cb0a9b71f0cfeb814fc8b6859ebf843ad80ae78c87c13dbc3a895d"
+  }
+}

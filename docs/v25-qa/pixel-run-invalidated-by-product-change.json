@@ -1,0 +1,7 @@
+{
+  "scope": "Aborted provisional pixel/render-only run; no final pass result, source snapshot began80dddf75 but product changed while running.",
+  "expectedProjectileSHA256": "80dddf75f3b0bdec06c3de6ad63029a23f6e95861b740f2e7b28e8ea50e637af",
+  "observedProjectileSHA256": "2c831a71ca5b2c7c1a5424855fcf903714dfe6921ac4d62546d3e2e6c881beea",
+  "sourceHashGuardPassed": false,
+  "invalidated": true
+}

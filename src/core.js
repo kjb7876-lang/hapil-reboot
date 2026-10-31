@@ -12,8 +12,11 @@
   var RULESET = 'hapil-firstbattle-1';
   var HELL_MECHANICS_REVISION=15;
   // Explicit opt-in: old boundary saves have no combatRevision and retain
-  // their original deterministic encounter. New app runs request revision21.
-  var COMBAT_REVISION=21;
+  // their original deterministic encounter. Revision25 is a separate opt-in.
+  var COMBAT_REVISION=21, IDENTITY_COMBAT_REVISION=25;
+  function supportedCombatRevision(value){return value===COMBAT_REVISION||value===IDENTITY_COMBAT_REVISION;}
+  function pressureEnabled(w){return supportedCombatRevision(w.combatRevision);}
+  function identityEnabled(w){return w.combatRevision===IDENTITY_COMBAT_REVISION&&w.campaign&&(w.finalPractice||w.bossIndex!==8);}
   var PRESSURE_LIMITS=Object.freeze({cycleTicks:600,warningTicks:90,bossActiveTicks:360,waveActiveTicks:180,bossHellCoverage:.66,bossNormalCoverage:.44,bossGentleCoverage:.22,waveMultiplier:.70,maxCopies:2,cloneTicks:360,illusionTicks:120});
   var HELL_OVERLAP_LIMITS=Object.freeze({cycleTicks:336,warningTicks:108,activeTicks:96,fanBaseSpeed:150,fanMinSpeed:198,fanMaxSpeed:234,rotorMaxDownSpeed:378,rotorMaxTotalSpeed:388,corridorHalfWidth:24});
   var CAPS = Object.freeze({ bullets: 768, shots: 96, enemies: 12, effects: 96, hazards: 40 });
@@ -230,12 +233,14 @@
   function effect(w, x, y, kind, r, color, ttl) {
     acquire(w, 'effects', { x: x, y: y, kind: kind, r: r || 12, color: color || '#88ffed', age: 0, ttl: ttl || 0.35 });
   }
-  function markBossRelease(w,kind,patternId,x,y,sourceActorId) {
+  function markBossRelease(w,kind,patternId,x,y,sourceActorId,identitySpec) {
     var b=w.boss;if(!b)return;
     b.releaseTick=w.tick;
     if(!b.skillReleases)b.skillReleases=[];
     var release={tick:w.tick,kind:kind,patternId:patternId||'',x:x,y:y};if(sourceActorId)release.sourceActorId=sourceActorId;b.skillReleases.push(release);
     if(sourceActorId&&b.combatCopies){var copySource=b.combatCopies.find(function(c){return c.sourceActorId===sourceActorId;});if(copySource&&copySource.modelActorId)release.modelActorId=copySource.modelActorId;}
+    if(identityEnabled(w)){release.sourcePhase=w.phase;if(identitySpec&&finite(identitySpec.angle))release.angle=identitySpec.angle;}
+    if(identitySpec&&identitySpec.identityRole){['identityRole','identityCastId','identityWarningAt','identityActiveAt'].forEach(function(k){release[k]=identitySpec[k];});}
     if(b.skillReleases.length>8)b.skillReleases.shift();
   }
   function emit(w, specs) {
@@ -269,6 +274,8 @@
         ownerId: s.ownerId || 0, grazed: false });
       if (added && s.patternId) { added.patternId = s.patternId; added.paletteSlot = s.paletteSlot || 0; }
       if (added && s.modelActorId) added.modelActorId=s.modelActorId;
+      if(added&&identityEnabled(w))added.sourcePhase=w.phase;
+      if(added&&s.identityRole){['identityRole','identityCastId','identityWarningAt','identityActiveAt'].forEach(function(k){added[k]=s[k];});}
       if(added&&s.sourceActorId){added.sourceActorId=s.sourceActorId;var actor=w.boss&&w.boss.participants&&w.boss.participants.find(function(p){return p.id===s.sourceActorId;});if(actor)actor.releaseTick=w.tick;}
       if(added&&s.sourceActorId&&w.boss&&w.boss.combatCopies){var emittingCopy=w.boss.combatCopies.find(function(c){return c.sourceActorId===s.sourceActorId;});if(emittingCopy)emittingCopy.releaseTick=w.tick;}
       if (added && s.hellLayer) added.hellLayer=s.hellLayer;
@@ -284,7 +291,7 @@
     }
     // Presentation follows actual successful emission, including deferred
     // groups; this marker does not alter projectile or damage simulation.
-    if (specs.length && w.campaign && w.stage === 'boss' && w.boss && specs.some(function(s) { return s.ownerId === w.boss.id; })) markBossRelease(w,specs[0].kind||'orb',specs[0].patternId||'',specs[0].x,specs[0].y,specs[0].sourceActorId);
+    if (specs.length && w.campaign && w.stage === 'boss' && w.boss && specs.some(function(s) { return s.ownerId === w.boss.id; })) markBossRelease(w,specs[0].kind||'orb',specs[0].patternId||'',specs[0].x,specs[0].y,specs[0].sourceActorId,specs[0]);
     return true;
   }
   function fanSpecs(x, y, angle, count, spread, speed, kind, color, ownerId) {
@@ -296,7 +303,7 @@
     // HELL's additional signature layer contributes its actual bullet
     // composition, without duplicating that signature's own laser cast.
     if(w._hellSignatureOnly)return false;
-    if(w.combatRevision===COMBAT_REVISION&&w._pressurePlan&&w.tick<w._pressurePlan.expireAt){
+    if(pressureEnabled(w)&&w._pressurePlan&&w.tick<w._pressurePlan.expireAt){
       var protectedPlan=w._pressurePlan;
       specs=specs.filter(function(s){
         if(s.pressureCurtain)return true;
@@ -306,7 +313,7 @@
         return segmentPairDistanceSquared(s.x,s.y,s.x+Math.cos(s.angle)*680,s.y+Math.sin(s.angle)*680,route.x1,route.y1,route.x2,route.y2)>sq(route.halfWidth+(s.width||8)/2);
       });
     }
-    if(w.combatRevision!==COMBAT_REVISION&&w.difficulty==='hell'&&w.stage==='boss'&&w._hellProtectedLane){
+    if(!pressureEnabled(w)&&w.difficulty==='hell'&&w.stage==='boss'&&w._hellProtectedLane){
       var lane=w._hellProtectedLane;
       specs=specs.filter(function(s){
         return segmentPairDistanceSquared(s.x,s.y,s.x+Math.cos(s.angle)*680,s.y+Math.sin(s.angle)*680,lane.x,450,lane.x,614)>sq(lane.halfWidth+(s.width||(s.kind==='blade'?8:6))/2);
@@ -318,7 +325,7 @@
     var warningTicks = Math.max(54, delay || 54) + (w.difficulty === 'gentle' ? 12 : 0);
     var defaultActiveTicks = w.difficulty === 'gentle' ? 18 : 24, fadeTicks = 15;
     specs.forEach(function (s) {
-      var activeTicks=w.combatRevision===COMBAT_REVISION&&s.pressureCurtain?s.activeTicks:w.difficulty==='hell'&&s.patternId==='hell-overlap-lattice-v14'?96:defaultActiveTicks;
+      var activeTicks=pressureEnabled(w)&&s.pressureCurtain?s.activeTicks:w.difficulty==='hell'&&s.patternId==='hell-overlap-lattice-v14'?96:defaultActiveTicks;
       // One committed capsule is rendered throughout warning, active and fade.
       // No projectile is substituted and its aim never follows either actor.
       var hazard = acquire(w, 'hazards', { id: ++w.idCounter, castId: castId, ownerId: s.ownerId || 0, kind: 'laser', x1: s.x, y1: s.y,
@@ -350,7 +357,7 @@
     var seed = finite(options.seed) ? options.seed >>> 0 : 12345;
     if (!seed) seed = 0x6d2b79f5;
     var gentle = options.difficulty === 'gentle', hell = options.difficulty === 'hell';
-    if(options.combatRevision!==undefined&&options.combatRevision!==COMBAT_REVISION)throw new RangeError('Unsupported combat revision');
+    if(options.combatRevision!==undefined&&!supportedCombatRevision(options.combatRevision))throw new RangeError('Unsupported combat revision');
     var runId = typeof options.runId === 'string' && /^[A-Za-z0-9_.:-]{1,96}$/.test(options.runId) ? options.runId : 'hapil-' + Date.now().toString(36) + '-' + (++runSequence).toString(36);
     var w = { rulesetVersion: RULESET, mechanicsRevision: 2, runId: runId, seed: seed, rngState: seed, difficulty: gentle ? 'gentle' : hell ? 'hell' : 'normal', practiceBoss: !!options.practiceBoss,
       tick: 0, time: 0, stage: 'waves', stageTime: 0, bossIntroDuration: 2.5, wave: 0, waveTime: 0, waveDuration: 15, phase: 0, phaseTime: 0, phaseTargetDuration: 25, phaseTimeout: 75,
@@ -361,7 +368,7 @@
       nextPhase: null, transitionRemaining: 0, resultReason: '', _pools: { bullets: [], shots: [], enemies: [], effects: [], hazards: [] },
       _warnings: [], _delays: [], _deferred: [], _shotReadyAt: 0, _targetId: 0, _targetUntil: 0, _lastGraze: -9999, _boundaryTick: -1,
       _memoryBucket: 0, _memoryGain: 0, _resBucket: 0, _resGain: 0, _grazeGain: 0, _reservationSince: 0, _starvationReported: false, _checkpoint: null };
-    if(options.combatRevision===COMBAT_REVISION)w.combatRevision=COMBAT_REVISION;
+    if(supportedCombatRevision(options.combatRevision))w.combatRevision=options.combatRevision;
     if (options.finalPractice === true && (options.campaign !== true || options.practiceBoss !== true || options.bossIndex !== 11 || options.campaignRevision !== undefined && options.campaignRevision !== 3)) throw new RangeError('Final battle is a separate practice only');
     if (options.finalPractice === true) w.finalPractice = true;
     if (options.campaign === true) {
@@ -374,6 +381,7 @@
       w.mechanicsRevision = hell ? HELL_MECHANICS_REVISION : 4;
       campaignLabels(w);
     }
+    if(identityEnabled(w))w._identityPlans=[];
     if (w.practiceBoss) startBossPhase(w, 0, false);
     else cacheCheckpoint(w);
     return w;
@@ -469,6 +477,7 @@
     event(w, 'summon', '지원군 출현');
   }
   function startWave(w, wave) {
+    if(identityEnabled(w))w._identityPlans=[];
     while (w.shots.length) remove(w, 'shots', w.shots.length - 1);
     w._delays.length = 0; w._targetId = 0; w._shotReadyAt = w.tick;
     w.reservation = false; w._reservationSince = 0; w._starvationReported = false;
@@ -551,6 +560,7 @@
     if (w.finalPractice) { w.transitionNarrative=null; w.transitionMinimum=0; if (phase===1) w.player.hp=w.player.maxHp; }
     w.patternName = NAMES[phase]; w.stageLabel = '보라검천사 · ' + (phase + 1) + '/3' + (w.practiceBoss ? ' · 연습' : '');
     w.boss = makeBoss(w, phase, ++w.idCounter);
+    if(identityEnabled(w))w._identityPlans=[];
     if(w.campaignRevision===5&&encounter(w).combatKind==='final-authority'&&phase===2){w.player.hp=w.player.maxHp;w.player.egoUntil=w.tick+360;w.samongAwakened=true;event(w,'awakening','죽음 직전 현실 기억 회복 · 사몽 각성');}
     campaignLabels(w);
     w.nextPhase = null; w.transitionRemaining = 0; w._warnings.length = 0; w._delays.length = 0;
@@ -1250,6 +1260,108 @@
       b.combatCopies.push(c);
     }
   }
+  // Revision25 replaces the shared pressure fan with owned choreography. These
+  // are gameplay motifs, not additional people or quotations from the canon.
+  // The original encounter attacks, protected targets and endings stay intact.
+  var IDENTITY_PROFILES=Object.freeze([
+    ['wing-weave','needle',0],['bog-drag','orb',6],['sword-rake','blade',0],['feather-fork','needle',6],['constellation-orbit','orb',12],
+    ['late-pulse','orb',18],['mirror-reflection','blade',6],['hungry-jaw','orb',12],null,['vault-branch','orb',6],['fire-fuse','orb',0],['calculation-column','needle',12],
+    ['defense-relay','needle',0],['mercy-boundary','needle',12],['veto-packet','needle',6],['feedback-return','needle',12],['migration-fork','needle',6],['repeat-disconnect','needle',18],
+    ['flute-phrase','needle',6],['six-swords','blade',12],['insomnia-veil','orb',18],['defense-intercept','needle',0],['harvest-tier','needle',6],['command-alternation','blade',12],
+    ['furnace-junction','needle',6],['neural-packet','needle',12],['deletion-seal','blade',18],['six-command-rings','orb',6],['tampered-thread','needle',24],['time-hand','needle',6],
+    ['castle-boundary','blade',12],['causal-lock','needle',18],['reverse-domination','needle',6],['circuit-duet','needle',12],['authority-fold','needle',0]
+  ].map(function(p,index){return p&&Object.freeze({index:index,role:p[0],kind:p[1],cadenceAdd:p[2]});}));
+  function identityProfile(w){return IDENTITY_PROFILES[w.finalPractice?34:w.bossIndex];}
+  function identitySpecs(w,x,y,beat,copy,source){
+    var p=identityProfile(w),index=p.index,hell=w.difficulty==='hell',count=hell?7:w.difficulty==='gentle'?3:5;
+    var down=Math.PI/2,aimAt=Math.atan2(w.player.y-y,w.player.x-x),center=down+(aimAt-down)*.45;
+    var baseSpeed=hell?146:94,role=p.role,kind=p.kind,specs=[],sideBeat=beat%2?1:-1;
+    var second=index===33&&(source==='baek-ion'||copy&&copy.modelActorId==='baek-ion');
+    if(index===33){role=second?'circuit-shield':'circuit-cross';kind=second?'blade':'needle';}
+    if(index===34)role=['authority-fold','authority-stitch','authority-impact'][w.phase];
+    for(var i=0;i<count;i++){
+      var u=i-(count-1)/2,side=i%2?1:-1,rank=Math.floor(i/2),ox=x,oy=y,angle=center+u*.13,speed=baseSpeed;
+      var acceleration=0,accelerateAt=1.05,maxSpeed=hell?218:148,pauseFrom=0,pauseUntil=0;
+      // Every branch changes a visible origin, spacing or flight rhythm. All
+      // headings remain straight after this commit; none homes or turns later.
+      if(index===0){ox+=side*(22+rank*3);angle=down+side*(.16+rank*.075)+Math.sin(beat*.6)*.09;}
+      else if(index===1){oy+=rank*9;angle=center+u*.10;speed*=.38;acceleration=hell?82:48;accelerateAt=1.25+rank*.07;}
+      else if(index===2){ox+=u*12;oy-=Math.abs(u)*7;angle=center+u*.062;speed*=1+rank*.065;}
+      else if(index===3){ox+=side*(30+rank*4);oy-=rank*5;angle=down+side*(.22+rank*.085)+sideBeat*.08;speed*=i%2?.78:1;}
+      else if(index===4){var orbit=-Math.PI/2+i*TAU/count+beat*.28;ox+=Math.cos(orbit)*37;oy+=Math.sin(orbit)*20;angle=down+Math.cos(orbit)*.36;speed*=.78+rank*.06;}
+      else if(index===5){angle=down+u*.17;speed*=.46;pauseFrom=.35;pauseUntil=1.15+rank*.08;acceleration=hell?76:44;accelerateAt=pauseUntil;}
+      else if(index===6){ox+=side*42;angle=down+side*(.15+rank*.105)+sideBeat*.055;speed*=i%2?.70:1;acceleration=i%2?(hell?38:24):0;}
+      else if(index===7){ox+=side*(38-rank*5);oy+=rank*6;angle=down+side*(.28+rank*.085);speed*=.66+rank*.12;}
+      else if(index===9){ox+=side*(18+rank*12);angle=down+side*(.13+rank*.10);speed*=.68+rank*.12;acceleration=hell?38:24;accelerateAt=1.2;}
+      else if(index===10){ox+=u*9;angle=down+u*.145+sideBeat*.08;speed*=.62+rank*.14;acceleration=hell?58:32;accelerateAt=.8+rank*.13;}
+      else if(index===11){ox+=u*17;oy-=rank*8;angle=down+sideBeat*.13+u*.045;speed*=.84+(i%3)*.08;}
+      else if(index===12){ox+=side*(24+rank*9);oy-=rank*10;angle=down+side*.21+sideBeat*.06;speed*=.78+(beat%3)*.09;}
+      else if(index===13){ox+=side*(30+rank*12);angle=down+side*(.26+rank*.075);speed*=.70;pauseFrom=.5;pauseUntil=.95;}
+      else if(index===14){ox+=u*10;angle=center+u*.12;speed*=.82;pauseFrom=.42;pauseUntil=.88+(beat%3)*.12;}
+      else if(index===15){ox+=side*(18+rank*8);angle=down+side*(.20+rank*.09);speed*=i%2?.64:1;acceleration=i%2?(hell?54:32):0;accelerateAt=1.2;}
+      else if(index===16){ox+=side*42;oy-=rank*6;angle=down+side*(.18+rank*.065)+sideBeat*.08;speed*=.84;}
+      else if(index===17){ox+=u*13;angle=down+u*.105;speed*=.62;pauseFrom=.45;pauseUntil=.85+(i%2)*.3;acceleration=hell?46:28;accelerateAt=1.3;}
+      else if(index===18){ox+=u*9;oy+=u*3;angle=down+Math.sin(beat*.8+u*.5)*.32;speed*=.79+rank*.055;}
+      else if(index===19){ox+=u*14;oy-=rank*5;angle=down+sideBeat*.16+u*.035;speed*=1+rank*.055;}
+      else if(index===20){ox+=u*9;angle=down+u*.16;speed*=.58;pauseFrom=.4;pauseUntil=1.10+rank*.06;}
+      else if(index===21){if(!copy){ox=42+(beat%6)*55+u*4;oy=85;}angle=down+sideBeat*.14+u*.09;speed*=.82+(beat%6)*.035;}
+      else if(index===22){oy-=rank*12;angle=down+u*.12;speed*=.44+rank*.08;acceleration=hell?58:34;accelerateAt=1.15+rank*.1;}
+      else if(index===23){ox+=side*(24+rank*15);angle=down+sideBeat*.15+u*.025;speed*=i%2?.73:1;pauseFrom=i%2?.45:0;pauseUntil=i%2?1:0;}
+      else if(index===24){if(!copy){ox=side>0?318-rank*5:42+rank*5;oy=108;}angle=down+side*(.21+rank*.06);speed*=.76+rank*.07;}
+      else if(index===25){ox+=u*7;oy-=i*7;angle=center+u*.045;speed*=.79;pauseFrom=.38+(i%3)*.04;pauseUntil=.98+(i%3)*.06;}
+      else if(index===26){var seal=i*TAU/count+beat*.19;ox+=Math.cos(seal)*31;oy+=Math.sin(seal)*14;angle=down+Math.cos(seal)*.25;speed*=.68;pauseFrom=.5;pauseUntil=1.16;}
+      else if(index===27){var command=(beat%6),triplet=command%3;ox+=(triplet-1)*23;oy-=(command>=3?12:0);angle=down+u*.16+(triplet-1)*.06;speed*=.70+command*.045;}
+      else if(index===28){ox+=side*(12+rank*4);oy-=rank*9;angle=down+u*.09;speed*=.50;pauseFrom=.4;pauseUntil=1.4;}
+      else if(index===29){var hand=-Math.PI/2+(beat%6)*Math.PI/3;ox+=Math.cos(hand)*33+u*4;oy+=Math.sin(hand)*18;angle=down+u*.105+Math.cos(hand)*.17;speed*=i%2?.64:1;pauseFrom=i%2?.42:0;pauseUntil=i%2?.94:0;}
+      else if(index===30){ox+=side*(32+rank*5);angle=down+side*(.18+rank*.07);speed*=side===sideBeat?1:.70;acceleration=side===sideBeat?0:(hell?34:20);accelerateAt=1.2;}
+      else if(index===31){ox+=u*11;angle=down+u*.115;speed*=.75;pauseFrom=.35;pauseUntil=.75+(beat%3)*.2;}
+      else if(index===32){ox+=((2-beat%3)-1)*26+u*4;angle=down+u*.115+((2-beat%3)-1)*.08;speed*=.68+(beat%3)*.12;}
+      else if(index===33){if(second){ox+=u*13;angle=down+u*.09;speed*=.78;pauseFrom=.4;pauseUntil=.95;}else{ox+=i<Math.ceil(count/2)?0:u*10;oy-=i<Math.ceil(count/2)?i*9:0;angle=down+u*.055;speed*=.88;}}
+      else if(index===34){if(w.phase===0){ox+=side*(36+rank*3);angle=down+side*(.20+rank*.075);speed*=.86;}else if(w.phase===1){ox+=u*9;oy-=rank*11;angle=center+u*.08;speed*=.62;pauseFrom=.4;pauseUntil=1.05+(i%2)*.16;}else{ox+=side*(24+rank*5);angle=down+side*(.15+rank*.10);speed*=.64+rank*.08;acceleration=hell?68:40;accelerateAt=.9;}}
+      var s={x:ox,y:oy,angle:angle,speed:speed,r:kind==='blade'?4:kind==='needle'?3:3.8,kind:kind,color:'#ffffff',ownerId:w.boss.id,ttl:5.5,patternId:'identity-'+pressureStyle(w)+'-v25',paletteSlot:(beat+(copy?1:0))%2,identityRole:role,_rhythmPrepared:true,_hellPrepared:true};
+      if(acceleration){s.acceleration=acceleration;s.accelerateAt=accelerateAt;s.maxSpeed=maxSpeed;}
+      if(pauseUntil){s.pauseFrom=pauseFrom;s.pauseUntil=pauseUntil;}
+      if(source)s.sourceActorId=source;if(copy&&copy.modelActorId)s.modelActorId=copy.modelActorId;
+      specs.push(s);
+    }
+    return specs;
+  }
+  function scheduleIdentityFan(w,x,y,source,beat,copy){
+    var b=w.boss;if(!b)return;
+    if(!w._identityPlans)w._identityPlans=[];
+    // Four simultaneous warnings fit even the lowest source-preview budget.
+    if(w._identityPlans.length>=4){w.stats.poolPressure++;w.stats.droppedGroups++;return;}
+    if(!source&&b.participants){var actor=b.participants[beat%b.participants.length];source=actor.id;x=actor.x;y=actor.y;}
+    var specs=identitySpecs(w,x,y,beat,copy,source),route=w._pressurePlan&&w.tick<w._pressurePlan.expireAt?w._pressurePlan.route:null;
+    if(route)specs=specs.filter(function(s){
+      var extra=s.r+(s.kind==='blade'?13:s.kind==='needle'?9:0)+3;
+      return segmentPairDistanceSquared(s.x,s.y,s.x+Math.cos(s.angle)*1600,s.y+Math.sin(s.angle)*1600,route.x1,route.y1,route.x2,route.y2)>sq(route.halfWidth+extra);
+    });
+    if(!specs.length)return;
+    var activeAt=w.tick+54,id='identity-'+b.id+'-'+w.tick+'-'+(source||'boss')+'-'+beat;
+    var cast={id:id,patternId:specs[0].patternId,identityRole:specs[0].identityRole,kind:specs[0].kind,sourcePhase:w.phase,x:x,y:y,angle:specs.reduce(function(sum,s){return sum+s.angle;},0)/specs.length,warningAt:w.tick,activeAt:activeAt,expireAt:activeAt+12};
+    if(source)cast.sourceActorId=source;if(copy&&copy.modelActorId)cast.modelActorId=copy.modelActorId;
+    if(route)cast.escapeRoute=copyRoute(route);
+    specs.forEach(function(s){s.identityCastId=id;s.identityWarningAt=w.tick;s.identityActiveAt=activeAt;});
+    // HELL speed and heading are authored at warning time. No later random
+    // rotation or rhythm preparation can change the announced committed path.
+    specs._hellPrepared=true;
+    w._identityPlans.push({cast:cast,specs:specs});
+    if(!b.identityCasts)b.identityCasts=[];b.identityCasts.push(cast);if(b.identityCasts.length>8)b.identityCasts.shift();
+  }
+  function copyRoute(route){return{x1:route.x1,y1:route.y1,x2:route.x2,y2:route.y2,halfWidth:route.halfWidth};}
+  function flushIdentityFans(w){
+    var b=w.boss;if(!b)return;
+    if(b.identityCasts)b.identityCasts=b.identityCasts.filter(function(c){return w.tick<c.expireAt;});
+    var plans=w._identityPlans||[];
+    for(var i=plans.length-1;i>=0;i--){var p=plans[i];if(w.tick<p.cast.activeAt)continue;
+      plans.splice(i,1);
+      // A warned volley either releases at its committed tick or is cancelled
+      // as one group. Capacity cannot silently turn it into a delayed attack.
+      if(w.tick!==p.cast.activeAt||w.bullets.length+p.specs.length>CAPS.bullets){p.cast.cancelled=true;w.stats.poolPressure++;w.stats.droppedGroups++;continue;}
+      if(emit(w,p.specs))p.cast.releaseTick=w.tick;else p.cast.cancelled=true;
+    }
+  }
   function pressureFan(w,x,y,source,beat,copy) {
     var b=w.boss,hell=w.difficulty==='hell',index=w.finalPractice?34:w.bossIndex,style=index%7;
     var aimAt=Math.atan2(w.player.y-y,w.player.x-x),count=hell?7:w.difficulty==='gentle'?3:5,spread=hell?.115:.15;
@@ -1275,30 +1387,37 @@
         var move=clamp(age/60,0,1),ease=move*move*(3-2*move);
         c.x=c.originX+(c.destinationX-c.originX)*ease;c.y=c.originY+(188-c.originY)*ease;
         c.action=age<72?'charge':age<84?'attack':'recover';c.actionProgress=clamp(age/72,0,1);
-        if(age===72)pressureFan(w,c.x,c.y,c.sourceActorId,i,c);
+        if(identityEnabled(w)){if(age===18)scheduleIdentityFan(w,c.destinationX,188,c.sourceActorId,i,c);}else if(age===72)pressureFan(w,c.x,c.y,c.sourceActorId,i,c);
       }else{
-        var cadence=w.difficulty==='hell'?60:w.difficulty==='gentle'?120:90,first=42+i*18;
+        var cadence=w.difficulty==='hell'?60:w.difficulty==='gentle'?120:90,first=(identityEnabled(w)?72:42)+i*18;
         c.action=age<first?'charge':(age-first)%cadence<12?'attack':'recover';c.actionProgress=age<first?age/first:((age-first)%cadence)/cadence;
-        if(age>=first&&(age-first)%cadence===0&&w.tick<c.expireAt-18)pressureFan(w,c.x,c.y,c.sourceActorId,Math.floor((age-first)/cadence)+i,c);
+        if(identityEnabled(w)){if(age>=first-54&&(age-first+54)%cadence===0&&w.tick+54<c.expireAt-18)scheduleIdentityFan(w,c.x,c.y,c.sourceActorId,Math.floor((age-first+54)/cadence)+i,c);}
+        else if(age>=first&&(age-first)%cadence===0&&w.tick<c.expireAt-18)pressureFan(w,c.x,c.y,c.sourceActorId,Math.floor((age-first)/cadence)+i,c);
       }
     }
   }
   function bossPressure(w) {
-    if(w.combatRevision!==COMBAT_REVISION||!w.campaign||!w.boss)return;
+    if(!pressureEnabled(w)||!w.campaign||!w.boss)return;
     var t=Math.round(w.phaseTime*60)-1,cycle=Math.floor(t/PRESSURE_LIMITS.cycleTicks),within=t%PRESSURE_LIMITS.cycleTicks,b=w.boss;
     b.pressureStyle=pressureStyle(w);
+    if(identityEnabled(w))flushIdentityFans(w);
     if(within===30)makeCombatCopies(w,'illusion',cycle);
     if(within===150)makeCombatCopies(w,'clone',cycle);
     updateCombatCopies(w);
     // An actor's own signature continues between these pressure beats. The
     // additional beat varies its geometry, acceleration and phase by owner.
+    if(identityEnabled(w)){
+      var p=identityProfile(w),identityCadence=(w.difficulty==='hell'?42+(w.bossIndex%3)*6:w.difficulty==='gentle'?114+(w.bossIndex%3)*6:78+(w.bossIndex%3)*6)+p.cadenceAdd;
+      if(within>=96&&within<456&&(within-96)%identityCadence===0)scheduleIdentityFan(w,b.x,b.y+18,null,Math.floor((within-96)/identityCadence),null);
+      return;
+    }
     if(within>=150&&within<510){
       var cadence=w.difficulty==='hell'?42+(w.bossIndex%3)*6:w.difficulty==='gentle'?114+(w.bossIndex%3)*6:78+(w.bossIndex%3)*6;
       if((within-150)%cadence===0)pressureFan(w,b.x,b.y+18,null,Math.floor((within-150)/cadence),null);
     }
   }
   function wavePressure(w) {
-    if(w.combatRevision!==COMBAT_REVISION||!w.campaign||w.stage!=='waves')return;
+    if(!pressureEnabled(w)||!w.campaign||w.stage!=='waves')return;
     var t=Math.round(waveCombatTime(w)*60),actor=w.enemies.find(function(e){return e.age>=1.2&&e.y>=0&&e.y<230;});
     // Later story approaches already emit hostile command/shard material
     // directly instead of inventing ordinary people as enemies. Those real
@@ -1324,7 +1443,7 @@
       // Commit this cycle's gate before an authored signature can warn on the
       // same tick (chapter3's first cast is exactly logicaltick60). No already
       // announced path is removed or redirected after its warning has begun.
-      if(w.combatRevision===COMBAT_REVISION&&(Math.round(w.phaseTime*60)-1)%PRESSURE_LIMITS.cycleTicks===60)pressureCast(w,w.boss.id,Math.floor((Math.round(w.phaseTime*60)-1)/PRESSURE_LIMITS.cycleTicks),false);
+      if(pressureEnabled(w)&&(Math.round(w.phaseTime*60)-1)%PRESSURE_LIMITS.cycleTicks===60)pressureCast(w,w.boss.id,Math.floor((Math.round(w.phaseTime*60)-1)/PRESSURE_LIMITS.cycleTicks),false);
       campaignPattern(w); bossPressure(w); return;
     }
     var b = w.boss, t = Math.round(w.phaseTime * 60) - 1, cycle, within, gap, specs, i, a;
@@ -1384,6 +1503,7 @@
     if (e.hp > 0) return;
     if (!e.linkTarget) effect(w, e.x, e.y, 'kill', e.isBoss ? 45 : 23, '#d9c4ff', 0.6);
     if (e.isBoss) {
+      if(identityEnabled(w)){w._identityPlans=[];if(e.identityCasts)e.identityCasts.forEach(function(c){if(w.tick<c.activeAt)c.cancelled=true;});}
       if (e.sealTarget) event(w,'seal',e.name);
       if (e.linkTarget) event(w,w.campaignRevision===5&&encounter(w).chapter>=4&&(encounter(w).combatKind==='foe'||e.scriptedFall)?(e.scriptedFall?'hold':'subdue'):'disconnect',w.campaignRevision===5&&encounter(w).chapter>=4?encounter(w).healthLabel:'반복 연결 차단');
       w.stats.phaseTicks.push(Math.round(w.phaseTime * 60));
@@ -1527,7 +1647,7 @@
     var snap = {};
     ['rulesetVersion','runId','seed','difficulty','practiceBoss','checkpointSerial','tick','rngState','idCounter','stage','wave','phase','score','graze','kills','memory','resonance','autoAttack','skillRotation'].forEach(function (k) { snap[k] = w[k]; });
     if (w.campaign) { snap.campaign = true; snap.campaignRevision = w.campaignRevision; snap.bossIndex = w.bossIndex; }
-    if(w.combatRevision===COMBAT_REVISION)snap.combatRevision=COMBAT_REVISION;
+    if(pressureEnabled(w))snap.combatRevision=w.combatRevision;
     if (w.finalPractice) snap.finalPractice=true;
     snap.stageTime = 0; snap.phaseTime = 0; snap.waveTime = 0;
     snap.player = copy(w.player); snap.skills = copy(w.skills); snap.stats = copy(w.stats); snap.shotReadyAt = w._shotReadyAt;
@@ -1537,7 +1657,7 @@
   function checkpoint(w) { return w && w._checkpoint ? copy(w._checkpoint) : null; }
   function restoreCheckpoint(snapshot) {
     if (!snapshot || typeof snapshot !== 'object' || JSON.stringify(snapshot).length > 131072) throw new Error('Invalid checkpoint');
-    if(Object.prototype.hasOwnProperty.call(snapshot,'combatRevision')&&snapshot.combatRevision!==COMBAT_REVISION)throw new Error('Unsupported combat revision');
+    if(Object.prototype.hasOwnProperty.call(snapshot,'combatRevision')&&!supportedCombatRevision(snapshot.combatRevision))throw new Error('Unsupported combat revision');
     var s = copy(snapshot);
     if (s.finalPractice !== undefined && (s.finalPractice !== true || s.practiceBoss !== true || s.campaign !== true || s.bossIndex !== 11 || s.campaignRevision !== 3 || s.stage !== 'boss')) throw new Error('Invalid separate final practice');
     var hasCampaign = Object.prototype.hasOwnProperty.call(s, 'campaign') || Object.prototype.hasOwnProperty.call(s, 'campaignRevision') || Object.prototype.hasOwnProperty.call(s, 'bossIndex');
@@ -1559,6 +1679,7 @@
     var w = createRun({ difficulty: s.difficulty, seed: s.seed, practiceBoss: false, runId: s.runId, campaign: hasCampaign, campaignRevision: hasCampaign ? s.campaignRevision : undefined,combatRevision:s.combatRevision });
     if (hasCampaign) w.bossIndex = s.bossIndex;
     if (s.finalPractice === true) w.finalPractice = true;
+    if(identityEnabled(w))w._identityPlans=[];else delete w._identityPlans;
     ['tick','rngState','idCounter','stage','wave','phase','score','graze','kills','memory','resonance','autoAttack','skillRotation','practiceBoss'].forEach(function (k) { w[k] = s[k]; });
     w.time = w.tick / 60; w.player = p; w.skills = s.skills; w.stats = s.stats; w.checkpointSerial = s.checkpointSerial;
     w._shotReadyAt = finite(s.shotReadyAt) ? s.shotReadyAt : w.tick; w.events.length = 0;
@@ -1632,7 +1753,7 @@
     return w;
   }
   return Object.freeze({ W: W, H: H, FIXED_DT: FIXED_DT, RULESET_VERSION: RULESET, MECHANICS_REVISION: 2, CAPS: CAPS,
-    COMBAT_REVISION:COMBAT_REVISION,PRESSURE_LIMITS:PRESSURE_LIMITS,attackCoverage:attackCoverage,
+    COMBAT_REVISION:COMBAT_REVISION,IDENTITY_COMBAT_REVISION:IDENTITY_COMBAT_REVISION,IDENTITY_PROFILES:IDENTITY_PROFILES,PRESSURE_LIMITS:PRESSURE_LIMITS,attackCoverage:attackCoverage,
     CAMPAIGN_BOSSES: CAMPAIGN_BOSSES, CAMPAIGN_SIGNATURES: CAMPAIGN_SIGNATURES, CAMPAIGN_REVISION: 3, HELL_MECHANICS_REVISION: HELL_MECHANICS_REVISION, HELL_OVERLAP_LIMITS: HELL_OVERLAP_LIMITS,
     campaignBossCount: campaignBossCount, LATEST_CAMPAIGN_REVISION: 5, createRun: createRun, step: step, checkpoint: checkpoint, restoreCheckpoint: restoreCheckpoint, skipBossIntro: skipBossIntro,
     geometry: Object.freeze({ segmentDistanceSquared: segmentDistanceSquared, segmentPairDistanceSquared: segmentPairDistanceSquared, sweptCircleHit: sweptCircleHit, projectileDistanceSquared: projectileDistanceSquared, hazardDistanceSquared: hazardDistanceSquared }) });

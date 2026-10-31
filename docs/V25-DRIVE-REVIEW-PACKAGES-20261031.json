@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "folderId": "15OQy1rXvHomdEA_VNMI9C01NFqUcmUkJ",
+  "folderURL": "https://drive.google.com/drive/folders/15OQy1rXvHomdEA_VNMI9C01NFqUcmUkJ",
+  "maximumPartBytes": 2700000,
+  "manifestSHA256": "969bf89e74980dc6ce50eccd24a03a321c87dd85c07561897802ba19b58e657f",
+  "entries": 500,
+  "parts": [
+    {
+      "fileName": "HAPIL-V25-REVIEW-part-01.zip",
+      "bytes": 2151818,
+      "sha256": "6a4ed39e67b75b8d7cc4a2651dd4dfa6dd96b3e02e71ae8f5ad2bf40032d1956",
+      "entries": 36,
+      "driveId": "1zxAd-JI7ytJ_1zDTd-gEeTLCibOEbTke",
+      "driveURL": "https://drive.google.com/file/d/1zxAd-JI7ytJ_1zDTd-gEeTLCibOEbTke/view",
+      "remoteVerification": "Upload/update success plus metadata size/parent readback; no remote re-download SHA claim."
+    },
+    {
+      "fileName": "HAPIL-V25-REVIEW-part-02.zip",
+      "bytes": 2485253,
+      "sha256": "d20343b251210faed62162087429da582b7374a03a970ea63b5e8c3f2113268a",
+      "entries": 18,
+      "driveId": "1N4jvU_MqSSOh3JKFYAbd-bcirnD4kshj",
+      "driveURL": "https://drive.google.com/file/d/1N4jvU_MqSSOh3JKFYAbd-bcirnD4kshj/view",
+      "remoteVerification": "Upload/update success plus metadata size/parent readback; no remote re-download SHA claim."
+    },
+    {
+      "fileName": "HAPIL-V25-REVIEW-part-03.zip",
+      "bytes": 2460270,
+      "sha256": "5c5b91f3ecebbaaf04c9fa98f7f81b12e38837481ac03dbe75d5fd4d1981bbf7",
+      "entries": 413,
+      "driveId": "1k388m5ETGNbX8O0KIKJ27lnUkc8g6SaO",
+      "driveURL": "https://drive.google.com/file/d/1k388m5ETGNbX8O0KIKJ27lnUkc8g6SaO/view",
+      "remoteVerification": "Upload/update success plus metadata size/parent readback; no remote re-download SHA claim."
+    },
+    {
+      "fileName": "HAPIL-V25-REVIEW-part-04.zip",
+      "bytes": 1053369,
+      "sha256": "39cb415f166ff061bebe8afddd9c9ac786c3a887604b5964c9044ebced97830b",
+      "entries": 33,
+      "driveId": "1NIlE3HTRPHw-4k8Vvlhq4fQZta4B97JX",
+      "driveURL": "https://drive.google.com/file/d/1NIlE3HTRPHw-4k8Vvlhq4fQZta4B97JX/view",
+      "remoteVerification": "Upload/update success plus metadata size/parent readback; no remote re-download SHA claim."
+    }
+  ],
+  "crcAndAllEntryHashesVerified": true,
+  "manifestEntryScope": "500 entries:496 candidate changed files plus4 pinned own originals. This index is excluded from its own archives."
+}

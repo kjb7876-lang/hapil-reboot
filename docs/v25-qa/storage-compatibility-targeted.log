@@ -1,0 +1,41 @@
+✔ identity25 phase boundaries retain the exact selector and ordinary-health deterministic restore (797.18504ms)
+✔ legacy and21 boundaries remain exact; same-run selector replacement cannot overwrite primary or backup (5.306793ms)
+✔ an already-open deployed21 client rejects25 before settings, checkpoint, clear or completion writes (13.616683ms)
+✔ 25 marker is required for25 backup/primary and never falls back through retry, settings, clear or an older new run (2.881784ms)
+✔ serialized25 writes preserve pending boundaries, backups and stale-tab rejection until explicit load (2.352509ms)
+✔ failed25 durable writes preserve bytes and prohibit later memory commits; valid25 backup recovers damaged primary (2.037455ms)
+✔ identity25 practice cannot alter campaign checkpoints, backups or completion ledger (2.076704ms)
+✔ new combat revision survives strict save validation and deterministic ordinary-health restore (72.393324ms)
+✔ legacy absent-field boundaries stay byte-compatible and never select new combat on restore (1.451974ms)
+✔ unknown or malformed combat selectors cannot silently downgrade a saved run (0.901606ms)
+✔ same-run checkpoint writes cannot switch combat revision in either direction or overwrite backup (2.630227ms)
+✔ v21 backup recovery retains combat and a stale emulated tab cannot replace it with a legacy run (4.305757ms)
+✔ practice and malformed v21 backup data cannot overwrite confirmed legacy or v21 progress (1.96122ms)
+✔ an already-open deployed v20 storage client fails closed instead of stripping a newer v21 checkpoint selector (10.161474ms)
+✔ v21 forward-compatibility marker is required for new records and remains present in exports and loss retries (1.124191ms)
+✔ legacy v1 without baseline restores and retries 96-character run IDs with bounded, collision-free IDs (199.245524ms)
+✔ a damaged main checkpoint can restore from same-run backup without deleting it (3.416949ms)
+✔ corrupt metadata and corrupt backup block writes and preserve original bytes for export (6.990505ms)
+✔ valid boundary generation and revision remain loadable but reject overflowing mutation (2.797588ms)
+✔ two emulated clients cannot overwrite the newer confirmed run; explicit reload adopts it (2.882907ms)
+✔ automatic peek reads another client without authorizing the old world to overwrite it (2.029933ms)
+✔ a later IndexedDB read error never reports an old memory snapshot as a successful load (0.985693ms)
+✔ a failed persistent write reports failure and does not silently commit to memory (2.703376ms)
+✔ empty store is distinguishable from settings saved in this session (1.179274ms)
+✔ loss keeps the confirmed campaign checkpoint and backup, allows retry, and never counts a duplicate result (13.851025ms)
+✔ a practice result without a flag cannot create or replace a campaign record (1.356841ms)
+✔ a pending checkpoint write commits before a queued loss and the loss retains that checkpoint (15.912946ms)
+✔ a stale tab cannot complete over a newer checkpoint or corrupt its backup (0.763218ms)
+✔ corrupt or future stored records cannot be overwritten; recoverable raw bytes are included in export (3.813346ms)
+✔ counter exhaustion is readable/exportable but cannot overflow a version-1 record (0.369256ms)
+✔ peek observes another writer without silently granting this tab its revision (2.681744ms)
+✔ load reports a persistent read error instead of exposing stale in-memory progress (1.291733ms)
+✔ load and open report malformed saved state while leaving a true memory-only session usable (0.843239ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 923.26963

@@ -5,7 +5,7 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const core=require('../src/core.js'),store=require('../src/storage.js')._test;
 const root=path.resolve(__dirname,'..'),dir=path.join(__dirname,'fixtures/revision5-natural-bot'),manifest=JSON.parse(fs.readFileSync(path.join(dir,'manifest.json'),'utf8'));
 const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
-const validatedModules=manifest.replayValidatedModuleSha256||manifest.recordedModuleSha256;
+const {currentModuleSha256:validatedModules}=require('../tools/historic-replay-attestation-v25.cjs').validateHistoricalReplayAttestation('revision5-natural-bot',manifest);
 assert.deepEqual(Object.keys(validatedModules).sort(),Object.keys(manifest.recordedModuleSha256).sort(),'candidate verification must retain every recorded module/policy/capture hash');
 for(const [file,hash] of Object.entries(validatedModules))assert.equal(sha(fs.readFileSync(path.join(root,file))),hash,'replay-validated simulation/policy/capture source changed: '+file);
 assert.equal(manifest.campaignRevision,5);assert.equal(manifest.canonicalNarrativeSHA256,'e069b22f4ee33c80e1b8e2e407583a865efec5d01b6440408f0e3389d82cabaa');assert.deepEqual(manifest.encounterIds,core.CAMPAIGN_BOSSES.map(e=>e.id));assert.equal(manifest.encounterIds.length,35);

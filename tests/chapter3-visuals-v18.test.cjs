@@ -34,7 +34,7 @@ test('actual own natural projectile cores remain readable and cache-bounded with
  try{for(let i=12;i<18;i++){
   const p=global.HapilProjectiles.create(im),w=world(i),c=createCanvas(360,640),ctx=c.getContext('2d');
   for(const l of [0,7,18]){ctx.clearRect(0,0,360,640);p.beginFrame();assert(p.drawBullet(ctx,w,{x:150,y:300,r:6,halfLength:l,kind:l?'needle':'orb',angle:0,age:0}));
-   assert(ctx.getImageData(150,300,1,1).data[3]>=200,'authored source keeps its central danger core visible');assert.equal(p.getMetrics().naturalSilhouetteDraws,1);assert(p.getMetrics().maxVisualOutset<=4,'cosmetic point/fins cannot grow without a bound');
+   assert(ctx.getImageData(150,300,1,1).data[3]>=200,'authored source keeps its central danger core visible');assert.equal(p.getMetrics().naturalSilhouetteDraws,1);if(l===0){assert.deepEqual(p.getMetrics().projectileVariantDraws,{'controller-command-emitter':1});assert(p.getMetrics().maxOwnedObjectPixels<=48,'approved own emitter stays within its whole-object budget');let hit=0,visible=0;for(let y=294;y<306;y++)for(let x=144;x<156;x++)if(Math.hypot(x+.5-150,y+.5-300)<=6){hit++;visible+=ctx.getImageData(x,y,1,1).data[3]>=128;}assert(visible/hit>=.9,'the full original circle stays visible inside its actual emitter material');}else assert(p.getMetrics().maxVisualOutset<=4,'unchanged thin lance ornament keeps its existing bound');
   }
   assert(p.drawHazardBody(ctx,w,{phase:'active',x1:230,y1:200,x2:230,y2:580,width:12,progress:0}));assert.equal(p.getMetrics().missingProjectileAssets,0);assert.equal(p.getMetrics().sourceBeamOverlayDraws,1);assert(p.getMetrics().stampCacheBytes<=4194304);p.destroy();
  }}finally{global.document=old;}
