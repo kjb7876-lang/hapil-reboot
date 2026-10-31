@@ -38,5 +38,5 @@ test('old undefined21and25 records remain byte-equivalent to the prior reducer a
 test('mixed27and25 primary-backup records cannot silently restore a different combat contract',()=>{
  const first=boundary(),state=S.reduce(undefined,{type:'checkpoint',value:first},0).state;
  const mixed=json(state);mixed.backup.combatRevision=25;assert.equal(S.safeStoredRecord(mixed),false);
- assert.equal(S.validateCheckpoint({...first,combatRevision:26}),null);assert.equal(S.validateCheckpoint({...first,combatRevision:29}),null);
+ assert.equal(S.validateCheckpoint({...first,combatRevision:26}),null);assert.equal(S.validateCheckpoint({...first,combatRevision:30}),null);
 });

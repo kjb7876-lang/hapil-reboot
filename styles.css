@@ -67,3 +67,6 @@
    notices stay at the top; pause/menu screens retain their normal controls. */
 .app-shell[data-mode="playing"] .arena-footer{visibility:hidden}
 .app-shell[data-mode="playing"] .mobile-storage-status:not(.warning){visibility:hidden}
+
+/* Precision is a control beside pause, outside the combat field. */
+.precision-button{min-width:44px;min-height:28px;margin-left:10px;padding:5px 7px;border:1px solid #8fd0da55;border-radius:3px;background:#151b24;color:#a8c8d0;font:inherit;font-size:10px;cursor:pointer;touch-action:manipulation}.precision-button[aria-pressed="true"]{background:#264d50;border-color:#a5ffee;color:#d3fff5}.precision-button:focus-visible{outline:2px solid #a5ffee;outline-offset:2px}.precision-button:disabled{opacity:.45;cursor:default}.precision-button[hidden]{display:none}

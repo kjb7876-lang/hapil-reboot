@@ -5,7 +5,7 @@
   var defaults={music:true,sfx:true,quality:mobileRuntime?'low':'high',skillRotation:true,difficulty:'normal',sensitivity:1};
   var settings=Object.assign({},defaults),profile={},savedCheckpoint=null,world=null,renderer=null,images={};
   var mode='title',ready=false,booting=true,lastStamp=0,accumulator=0,lastRender=0,lastHud=0,visualTime=0,checkpointSerial=-1,completed=false,checkpointPending=null,checkpointRetryAt=0;
-  var keys=Object.create(null),pointer={active:false,id:null,lastX:0,lastY:0,pendingX:0,pendingY:0,lastMove:0},inputSource='keyboard',raf=0;
+  var keys=Object.create(null),pointer={active:false,id:null,lastX:0,lastY:0,pendingX:0,pendingY:0,lastMove:0},inputSource='keyboard',raf=0,precisionToggle=false;
   var samples={update:[],render:[],frame:[]},sampleCursor={update:0,render:0,frame:0},totalFrames=0,totalSteps=0,droppedGaps=0,peakUpdate=0,peakRender=0,peakFrame=0,lastGapReason='',maxSamples=360;
   var audio={unlocked:false,music:null,shot:[],hurt:[],shotIndex:0,hurtIndex:0,lastShot:0},toastTimer=0,settingsWasPlaying=false,settingsFocus=null;
   var core=null,store=null,lastProfileRefresh=0,assetErrors=[],campaignGeneration=0,completionJobs=0,completionUncertain=false,uncertainGeneration=-1,lastFinalizedGeneration=-1,restorePending=false,restoreError=false;
@@ -132,7 +132,15 @@
     var active=mode==='playing'&&world&&world.stage==='bossIntro';setHidden('intro-skip-button',!active);
   }
   function safeText(id,value){var element=$(id),text=value==null?'':String(value);if(element.textContent!==text)element.textContent=text;}
-  function clearInput(){keys=Object.create(null);pointer.active=false;pointer.id=null;pointer.pendingX=0;pointer.pendingY=0;pointer.lastMove=0;inputSource='keyboard';$('touch-pad').classList.remove('active');}
+  function precisionActive(){return !!keys.Shift||!!(precisionToggle&&world&&world.combatRevision===29);}
+  function syncPrecisionControl(){
+    var button=$('precision-button');if(!button)return;
+    var available=!!(world&&world.combatRevision===29&&(mode==='playing'||mode==='paused'));
+    if(button.hidden===available)button.hidden=!available;
+    button.disabled=mode!=='playing'||!world||world.stage==='bossIntro';
+    var pressed=precisionActive()?'true':'false';if(button.ariaPressed!==pressed){button.ariaPressed=pressed;button.setAttribute('aria-pressed',pressed);}
+  }
+  function clearInput(){keys=Object.create(null);precisionToggle=false;pointer.active=false;pointer.id=null;pointer.pendingX=0;pointer.pendingY=0;pointer.lastMove=0;inputSource='keyboard';$('touch-pad').classList.remove('active');syncPrecisionControl();}
   function clearToast(){clearTimeout(toastTimer);toastTimer=0;setHidden('toast',true);}
   function toast(message){safeText('toast',message);setHidden('toast',false);clearTimeout(toastTimer);toastTimer=setTimeout(clearToast,2200);}
   function showError(error){ready=false;mode='error';$('app').setAttribute('data-mode','error');clearToast();clearInput();setHidden('title-screen',true);setHidden('pause-screen',true);setHidden('result-screen',true);setHidden('error-screen',false);safeText('error-description',error&&error.message?error.message:String(error));$('pause-button').disabled=true;stopMusic();}
@@ -175,7 +183,7 @@
     if(next==='playing')clearToast();
     mode=next;setHidden('title-screen',next!=='title');setHidden('pause-screen',next!=='paused');setHidden('result-screen',next!=='result');setHidden('error-screen',next!=='error');setHidden('battle-caption',!(next==='playing'||next==='paused'||next==='result'));$('pause-button').disabled=next!=='playing';
     if(next!=='playing'){clearInput();stopMusic();}else startMusic();
-    syncIntroControls();
+    syncIntroControls();syncPrecisionControl();
   }
   function fit(){
     var mobile=global.innerWidth<=820,vh=global.visualViewport?global.visualViewport.height:global.innerHeight;
@@ -370,7 +378,7 @@
     var campaign=retry&&retryWorld?!!retryWorld.campaign:true;
     var practiceStartPhase=practice?(retry&&retryWorld?retryWorld.practiceStartPhase||0:specialPhase===2?2:0):0;
     var seed=(Date.now()^Math.floor(performance.now()*1000))>>>0;
-    try{world=core.createRun({difficulty:settings.difficulty,seed:seed,practiceBoss:!!practice,combatRevision:28,campaign:campaign,campaignRevision:campaign?campaignRevision:undefined,bossIndex:practice?practiceIndex:0,finalPractice:finalPractice});if(practice&&practiceStartPhase){var practiceSnapshot=core.checkpoint(world);practiceSnapshot.phase=practiceStartPhase;world=core.restoreCheckpoint(practiceSnapshot);if(!world)throw new Error('특수 패턴 연습을 시작하지 못했습니다.');}if(practice)world.practiceStartPhase=practiceStartPhase;world.skillRotation=settings.skillRotation;setMode('playing');accumulator=0;lastStamp=performance.now();lastRender=0;updateHUD();saveCheckpointIfChanged();$('game-canvas').focus({preventScroll:true});}
+    try{world=core.createRun({difficulty:settings.difficulty,seed:seed,practiceBoss:!!practice,combatRevision:29,campaign:campaign,campaignRevision:campaign?campaignRevision:undefined,bossIndex:practice?practiceIndex:0,finalPractice:finalPractice});if(practice&&practiceStartPhase){var practiceSnapshot=core.checkpoint(world);practiceSnapshot.phase=practiceStartPhase;world=core.restoreCheckpoint(practiceSnapshot);if(!world)throw new Error('특수 패턴 연습을 시작하지 못했습니다.');}if(practice)world.practiceStartPhase=practiceStartPhase;world.skillRotation=settings.skillRotation;setMode('playing');accumulator=0;lastStamp=performance.now();lastRender=0;updateHUD();saveCheckpointIfChanged();$('game-canvas').focus({preventScroll:true});}
     catch(e){showError(e);}
   }
   function continueRun(){
@@ -451,7 +459,7 @@
   }
   function inputForStep(){
     if(world&&world.stage==='bossIntro'){clearInput();return {dx:0,dy:0,focus:false};}
-    var focus=!!keys.Shift,speed=(focus?120:240)/60,x=(keys.ArrowRight||keys.d?1:0)-(keys.ArrowLeft||keys.a?1:0),y=(keys.ArrowDown||keys.s?1:0)-(keys.ArrowUp||keys.w?1:0),n=Math.hypot(x,y);if(n){x=x/n*speed;y=y/n*speed;}
+    var focus=precisionActive(),speed=(focus?120:240)/60,x=(keys.ArrowRight||keys.d?1:0)-(keys.ArrowLeft||keys.a?1:0),y=(keys.ArrowDown||keys.s?1:0)-(keys.ArrowUp||keys.w?1:0),n=Math.hypot(x,y);if(n){x=x/n*speed;y=y/n*speed;}
     // A held finger may stop moving before a speed-limited drag is consumed.
     // Keep its remaining distance; long frame gaps and pause still clear input.
     if(inputSource!=='pointer')return {dx:x,dy:y,focus:focus};
@@ -463,7 +471,7 @@
   function diagnostics(){
     var hazards=world&&world.hazards?world.hazards:[],heap=null;
     try{var m=performance.memory;if(m&&Number.isFinite(m.usedJSHeapSize))heap={usedBytes:m.usedJSHeapSize,totalBytes:m.totalJSHeapSize,limitBytes:m.jsHeapSizeLimit,scope:'Browser-reported JS heap estimate; excludes GPU and decoded media; GC not controlled'};}catch(e){}
-    return {version:'hapil-boss-laser-barrages-v28',candidateRevision:28,mobileRuntime:mobileRuntime,loadedImages:Object.keys(images).length,imageRequestsPending:Object.keys(imageRequests).length,imageRequestsActive:imageActive,mechanicsRevision:world?world.mechanicsRevision:(core?core.MECHANICS_REVISION:2),combatRevision:world?world.combatRevision||0:28,connectedMapStatus:renderer&&renderer.getMetrics?renderer.getMetrics().sourceStatus||'not-yet-reported':'not-yet-reported',capturedAt:new Date().toISOString(),mode:mode,fixedHz:60,renderTarget:settings.quality==='low'?30:60,rollingWindow:maxSamples,measurementScope:{update:'Main-thread fixed-step simulation and event processing',render:'JavaScript canvas command submission only; not GPU completion',frame:'requestAnimationFrame callback intervals during play'},updateMs:distribution(samples.update,peakUpdate),renderMs:distribution(samples.render,peakRender),frameIntervalMs:distribution(samples.frame,peakFrame),renderedFrames:totalFrames,fixedSteps:totalSteps,pausedLargeGaps:droppedGaps,lastGapReason:lastGapReason,viewport:{width:global.innerWidth,height:global.innerHeight,dpr:global.devicePixelRatio||1,arenaWidth:$('app-stage').clientWidth,arenaHeight:$('app-stage').clientHeight,padHeight:$('touch-pad').clientHeight},entities:world?{bullets:world.bullets.length,shots:world.shots.length,enemies:world.enemies.length,effects:world.effects.length,laserWarnings:hazards.filter(function(h){return h.phase==='warning';}).length,activeLasers:hazards.filter(function(h){return h.phase==='active';}).length,fadingLasers:hazards.filter(function(h){return h.phase==='fade';}).length}:null,terrain:renderer&&renderer.getMetrics?renderer.getMetrics():null,jsHeapEstimate:heap,gpuTimeMs:null,coreStats:world?JSON.parse(JSON.stringify(world.stats||{})):null,assetErrors:assetErrors.slice(),storage:store?Object.assign({},store.status):null};
+    return {version:'hapil-danmaku-flow-v29',candidateRevision:29,mobileRuntime:mobileRuntime,loadedImages:Object.keys(images).length,imageRequestsPending:Object.keys(imageRequests).length,imageRequestsActive:imageActive,mechanicsRevision:world?world.mechanicsRevision:(core?core.MECHANICS_REVISION:2),combatRevision:world?world.combatRevision||0:29,connectedMapStatus:renderer&&renderer.getMetrics?renderer.getMetrics().sourceStatus||'not-yet-reported':'not-yet-reported',capturedAt:new Date().toISOString(),mode:mode,fixedHz:60,renderTarget:settings.quality==='low'?30:60,rollingWindow:maxSamples,measurementScope:{update:'Main-thread fixed-step simulation and event processing',render:'JavaScript canvas command submission only; not GPU completion',frame:'requestAnimationFrame callback intervals during play'},updateMs:distribution(samples.update,peakUpdate),renderMs:distribution(samples.render,peakRender),frameIntervalMs:distribution(samples.frame,peakFrame),renderedFrames:totalFrames,fixedSteps:totalSteps,pausedLargeGaps:droppedGaps,lastGapReason:lastGapReason,viewport:{width:global.innerWidth,height:global.innerHeight,dpr:global.devicePixelRatio||1,arenaWidth:$('app-stage').clientWidth,arenaHeight:$('app-stage').clientHeight,padHeight:$('touch-pad').clientHeight},entities:world?{bullets:world.bullets.length,shots:world.shots.length,enemies:world.enemies.length,effects:world.effects.length,laserWarnings:hazards.filter(function(h){return h.phase==='warning';}).length,activeLasers:hazards.filter(function(h){return h.phase==='active';}).length,fadingLasers:hazards.filter(function(h){return h.phase==='fade';}).length}:null,terrain:renderer&&renderer.getMetrics?renderer.getMetrics():null,jsHeapEstimate:heap,gpuTimeMs:null,coreStats:world?JSON.parse(JSON.stringify(world.stats||{})):null,assetErrors:assetErrors.slice(),storage:store?Object.assign({},store.status):null};
   }
   function ensureEncounterArt(){
     if(mode==='error')return false;
@@ -505,8 +513,8 @@
     var target=settings.quality==='low'?1000/30:1000/60;
     var stableScreen=mode==='paused'||mode==='result';
     var needsDraw=!stableScreen||renderDirty||world!==lastDrawnWorld||(world&&world.tick)!==lastDrawnTick||mode!==lastDrawnMode;
-    if(needsDraw&&!encounterArtPending&&(stamp-lastRender>=target-.7||!lastRender)){var rs=performance.now();try{renderer.draw(world,accumulator*60,visualTime,settings.quality==='low');}catch(error){showError(error);return;}var cost=performance.now()-rs;if(mode==='playing'){sample('render',cost);peakRender=Math.max(peakRender,cost);}lastRender=stamp;totalFrames++;renderDirty=false;lastDrawnWorld=world;lastDrawnTick=world&&world.tick;lastDrawnMode=mode;}
-    syncIntroControls();if(stamp-lastHud>=120){updateHUD();lastHud=stamp;}
+    if(needsDraw&&!encounterArtPending&&(stamp-lastRender>=target-.7||!lastRender)){var rs=performance.now();try{renderer.draw(world,accumulator*60,visualTime,settings.quality==='low',{precise:precisionActive()});}catch(error){showError(error);return;}var cost=performance.now()-rs;if(mode==='playing'){sample('render',cost);peakRender=Math.max(peakRender,cost);}lastRender=stamp;totalFrames++;renderDirty=false;lastDrawnWorld=world;lastDrawnTick=world&&world.tick;lastDrawnMode=mode;}
+    syncIntroControls();syncPrecisionControl();if(stamp-lastHud>=120){updateHUD();lastHud=stamp;}
   }
   function pointerDown(e){if(mode!=='playing'||(world&&world.stage==='bossIntro')||pointer.active||e.button>0)return;e.preventDefault();unlockAudio();pointer.active=true;pointer.id=e.pointerId;pointer.lastX=e.clientX;pointer.lastY=e.clientY;pointer.pendingX=0;pointer.pendingY=0;pointer.lastMove=performance.now();inputSource='pointer';$('touch-pad').classList.add('active');try{e.currentTarget.setPointerCapture(e.pointerId);}catch(ignore){}}
   function pointerMove(e){if(!pointer.active||pointer.id!==e.pointerId||mode!=='playing')return;e.preventDefault();var rect=$('game-canvas').getBoundingClientRect(),scale=360/rect.width*Number(settings.sensitivity),dx=(e.clientX-pointer.lastX)*scale,dy=(e.clientY-pointer.lastY)*scale;pointer.lastX=e.clientX;pointer.lastY=e.clientY;pointer.lastMove=performance.now();inputSource='pointer';pointer.pendingX=Math.max(-60,Math.min(60,pointer.pendingX+dx));pointer.pendingY=Math.max(-60,Math.min(60,pointer.pendingY+dy));}
@@ -521,6 +529,7 @@
     var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='hapil-firstbattle-measurements-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},1000);toast('측정값과 독립 실행판 기록을 내보냈습니다.');return data;
   }
   function bind(){
+    $('precision-button').addEventListener('click',function(){if(mode!=='playing'||!world||world.combatRevision!==29||world.stage==='bossIntro')return;precisionToggle=!precisionToggle;pointer.pendingX=0;pointer.pendingY=0;renderDirty=true;syncPrecisionControl();$('game-canvas').focus({preventScroll:true});});
     $('start-button').addEventListener('click',function(){start(false);});$('practice-button').addEventListener('click',function(){start(true);});$('special-practice-button').addEventListener('click',function(){start(true,false,2);});$('continue-button').addEventListener('click',continueRun);$('pause-button').addEventListener('click',function(){pause();});$('resume-button').addEventListener('click',resume);$('home-button').addEventListener('click',home);$('result-home-button').addEventListener('click',home);$('ending-prev').addEventListener('click',function(){showEndingPage(endingPage-1);});$('ending-next').addEventListener('click',function(){showEndingPage(endingPage+1);});$('retry-button').addEventListener('click',function(){start(!!(world&&world.practiceBoss),true);});$('intro-skip-button').addEventListener('click',skipIntro);$('reload-button').addEventListener('click',function(){global.location.reload();});
     document.querySelectorAll('[data-difficulty]').forEach(function(b){b.addEventListener('click',function(){settings.difficulty=b.dataset.difficulty;persistSettings();});});
     $('settings-button').addEventListener('click',openSettings);$('pause-settings-button').addEventListener('click',openSettings);$('settings-close').addEventListener('click',closeSettings);$('settings-modal').addEventListener('click',function(e){if(e.target===this)closeSettings();});
@@ -532,9 +541,9 @@
       if(!$('settings-modal').hidden){if(e.key==='Escape'){e.preventDefault();closeSettings();}if(e.key==='Tab'){var focusables=$('settings-modal').querySelectorAll('button,input');var first=focusables[0],last=focusables[focusables.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}return;}
       var key=e.key.length===1?e.key.toLowerCase():e.key;
       if(key==='Escape'||key===' '){if(mode==='playing'||mode==='paused'){e.preventDefault();if(!e.repeat){if(mode==='playing')pause();else resume();}}return;}
-      if(mode!=='playing')return;if(world&&world.stage==='bossIntro'){e.preventDefault();if(key==='Enter'&&!e.repeat)skipIntro();return;}if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','w','a','s','d','Shift'].indexOf(key)>=0){e.preventDefault();if(e.repeat&&!keys[key])return;keys[key]=true;if(key!=='Shift')inputSource='keyboard';}else if(key==='c'&&!e.repeat){e.preventDefault();settings.skillRotation=!settings.skillRotation;persistSettings();toast(settings.skillRotation?'스킬 자동 순환 켜짐':'스킬 자동 순환 꺼짐');}
+      if(mode!=='playing')return;if(world&&world.stage==='bossIntro'){e.preventDefault();if(key==='Enter'&&!e.repeat)skipIntro();return;}if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','w','a','s','d','Shift'].indexOf(key)>=0){e.preventDefault();if(e.repeat&&!keys[key])return;keys[key]=true;if(key!=='Shift')inputSource='keyboard';syncPrecisionControl();}else if(key==='c'&&!e.repeat){e.preventDefault();settings.skillRotation=!settings.skillRotation;persistSettings();toast(settings.skillRotation?'스킬 자동 순환 켜짐':'스킬 자동 순환 꺼짐');}
     });
-    document.addEventListener('keyup',function(e){var key=e.key.length===1?e.key.toLowerCase():e.key;delete keys[key];});
+    document.addEventListener('keyup',function(e){var key=e.key.length===1?e.key.toLowerCase():e.key;delete keys[key];syncPrecisionControl();});
     document.addEventListener('visibilitychange',function(){if(document.hidden)pause('화면을 떠나 전투를 일시정지했습니다.');});global.addEventListener('blur',function(){pause('창을 떠나 전투를 일시정지했습니다.');clearInput();});global.addEventListener('resize',resize);if(global.visualViewport)global.visualViewport.addEventListener('resize',resize);
     document.querySelector('.wordmark').addEventListener('click',function(e){e.preventDefault();if(mode==='playing')pause();else if(mode!=='error')home();});
     global.addEventListener('pagehide',function(){stopMusic();clearInput();});

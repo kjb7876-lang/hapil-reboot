@@ -1,0 +1,11 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),C=require('../src/core.js'),qa=require('../tools/audit-danmaku-flow-v29.cjs');
+test('actual warning-time left/right input changes bait aim and later reversal cannot retarget any of three straight pulses',()=>{assert.equal(qa.targetLock(C).rows.length,2);});
+test('a complete near-capacity stream reserves all12promised pellets before warning and ambient attacks cannot steal later pulse slots',()=>{assert.equal(qa.capacityReservation(C).actualPellets,12);});
+test('actual29finite rays damage only during their exact committed active interval',()=>{assert.equal(qa.damageClocks(C).collisionSamples.length,5);});
+test('real boss defeat stops new extra promises while explicit core steps finish announced finite laser clocks',()=>{assert.equal(qa.phaseStop(C).length,2);});
+test('real transition drains committed remaining stream pulses while terminal victory cancels pending plans and live cues',()=>{assert.equal(qa.streamDefeatDrain(C).length,2);});
+test('actual29director exposes complete locked streams and retained finite motifs, respects recovery slots and12/40budgets',()=>{const out=qa.phaseMatrix(C,{ticks:600,bosses:[0,3,6,8,11,14,18,21,24,26,29,33,34],phases:[0,2],difficulties:['gentle','normal','hell']});assert.equal(out.summary.cases,78);assert.equal(out.summary.firstCycleMissingStreams,0);assert.equal(out.summary.firstCycleMissingPilotLaser,0);assert.equal(out.summary.poolPressure,0);assert.equal(out.summary.droppedGroups,0);});
+test('the real paired circuit source alternates both actual casters for streams and finite lasers across three cycles',()=>{const s=qa.phaseMatrix(C,{ticks:1800,bosses:[33],phases:[2],difficulties:['hell']}).summary;assert.deepEqual(s.actualPairedLaserSources,['baek-ion','han-rian']);assert.deepEqual(s.actualPairedStreamSources,['baek-ion','han-rian']);});
+test('all315old28boss/phase/difficulty worlds and raw checkpoints match pinned pre29gitobjects without normalisation',()=>{assert.equal(qa.oldExact(C,{ticks:120,revisions:[28]}).cases,315);});
+test('undefined21/25/27legacy worlds and raw checkpoints remain unchanged under varied legal inputs',()=>{const out=qa.oldExact(C,{ticks:120,bosses:[0,8,11,12,18,21,24,28,33,34],phases:[0,2],revisions:[undefined,21,25,27]});assert.equal(out.cases,240);});

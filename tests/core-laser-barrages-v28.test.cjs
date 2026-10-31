@@ -6,7 +6,7 @@ function world(index,phase=0,difficulty='hell',revision,core=C){if(arguments.len
 function shape(h){return JSON.stringify([h.x1,h.y1,h.x2,h.y2,h.width,h.born,h.baseWarningTicks,h.staggerTicks,h.warningTicks,h.activeAt,h.fadeAt,h.expireAt,h.sourcePhase,h.sourceActorId,h.modelActorId,h.chainId,h.paletteSlot]);}
 
 test('28 is a separate supported opt-in and retains its safe checkpoint selector',()=>{
- assert.equal(C.LASER_COMBAT_REVISION,28);assert.equal(C.LATEST_COMBAT_REVISION,28);const w=world(8),saved=C.checkpoint(w);assert.equal(saved.combatRevision,28);assert.deepEqual(C.checkpoint(C.restoreCheckpoint(saved)),saved);
+ assert.equal(C.LASER_COMBAT_REVISION,28);assert.equal(C.LATEST_COMBAT_REVISION,29);const w=world(8),saved=C.checkpoint(w);assert.equal(saved.combatRevision,28);assert.deepEqual(C.checkpoint(C.restoreCheckpoint(saved)),saved);
  for(const revision of [undefined,21,25,27]){const old=world(0,0,'normal',revision);assert.equal(old.combatRevision,revision);}
 });
 

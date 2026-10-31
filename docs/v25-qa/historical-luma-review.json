@@ -3,7 +3,7 @@
   "scope": "Native CPU, four historically affected actual radii/capsules ×3angles ×3subpixels ×2palette slots ×2qualities. Source exposure preserves material colour while retaining existing alpha180/luma50 and relative-brightness gates. No browser/GPU/mobile claim.",
   "historicalBaseline": "079c830e40d607d9944215a107003d66e85367ce",
   "v24Baseline": "ef95fc227506162b5203092da9e1734e2f43ef58",
-  "projectileSHA256": "07d9e239dac32a5ab288061a3fd5f6fb44009936c5ba51a8b81a360227ae9cc6",
+  "projectileSHA256": "8bd084b964b5176c1b4483d310b49b50556a79a2042ef052ca7fad66a4e2fe84",
   "summary": {
     "cases": 144,
     "minCentral": 1,

@@ -142,7 +142,7 @@
     out._hellPrepared=true;return out;
   }
   function decorate(w,specs){
-    var p=profileFor(w);if(!p||(w.combatRevision!==27&&w.combatRevision!==28)||!w.campaign||w.stage!=='boss'||!w.boss||!Array.isArray(specs))return specs;
+    var p=profileFor(w);if(!p||(w.combatRevision!==27&&w.combatRevision!==28&&w.combatRevision!==29)||!w.campaign||w.stage!=='boss'||!w.boss||!Array.isArray(specs))return specs;
     var phase=phaseFor(w);
     specs.forEach(function(s,i){
       if(!s||s._v27Prepared||s.v27Child||s.weaponMotion||s.kind==='boss-weapon'||s.kind==='hell-rotor'||s.ownerId!==w.boss.id||!finite(s.speed)||s.speed<=0)return;
