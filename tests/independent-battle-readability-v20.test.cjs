@@ -15,9 +15,15 @@ test('actual emitted radii and capsule lengths keep readable own-source centers 
  let group=-1,fx,checked=0;
  try{for(const spec of actual.shapes){if(group!==spec.group){if(fx)fx.destroy();group=spec.group;fx=api.create(images);}for(const variant of variants)for(const paletteSlot of [0,1]){
   const high=audit.paint(api,images,spec,{...variant,paletteSlot,effect:fx}),low=audit.paint(api,images,spec,{...variant,paletteSlot,low:true,effect:fx}),m=audit.inspect(high.bodyData,high.bullet),label=JSON.stringify({group:spec.group,r:spec.r,l:spec.l,owner:spec.sourceActorId,...variant,paletteSlot});
-  assert(m.centralCoreVisibleFraction>=.8,'actual emitted center is readable '+label+' '+m.centralCoreVisibleFraction);assert(m.maxRasterOutset<=4.75,'source body keeps the small visual margin around its actual collision axis '+label+' '+m.maxRasterOutset);
-  assert.deepEqual(Buffer.from(high.data),Buffer.from(low.data),'low quality preserves the actual danger source '+label);assert.equal(high.draws,['boss-weapon','hell-rotor'].includes(spec.kind)?2:1,'one danger-body draw plus only the already-defined separate weapon/rotor icon');
-  assert.equal(high.metrics.missingProjectileAssets,0);assert(high.metrics.stampCacheBytes<=4194304);assert(high.metrics.stampCacheEntries<=96);assert(high.metrics.maxVisualOutset<=4);checked++;
+  assert(m.centralCoreVisibleFraction>=.8,'actual emitted center is readable '+label+' '+m.centralCoreVisibleFraction);
+  // V24 whole props are deliberately larger, so their unchanged damage circle
+  // fits inside authored opaque material. The separate independent V24 audit
+  // tests >=90% full-circle coverage and unclipped 48/100px real pixel bounds.
+  const owned=high.metrics.ownedObjectDraws>0,limit=spec.r<=6?48:100;
+  if(owned){assert(spec.group===8||(spec.group===6&&spec.kind==='orb'),'only approved Lust props/mirror ORBs use the new whole-object budget');assert(m.maxRasterOutset<=limit);assert(high.metrics.maxOwnedObjectPixels<=limit);assert(high.metrics.legacyMaxVisualOutset<=4);}
+  else {assert(m.maxRasterOutset<=4.75,'legacy source body keeps its small visual margin '+label+' '+m.maxRasterOutset);assert(high.metrics.maxVisualOutset<=4);}
+  assert.deepEqual(Buffer.from(high.data),Buffer.from(low.data),'low quality preserves the actual danger source '+label);assert.equal(high.draws,spec.group===8?1:['boss-weapon','hell-rotor'].includes(spec.kind)?2:1,'Lust props have one complete body; retained weapons/rotors keep their original separate icon');
+  assert.equal(high.metrics.missingProjectileAssets,0);assert(high.metrics.stampCacheBytes<=4194304);assert(high.metrics.stampCacheEntries<=96);checked++;
  }}assert.equal(checked,940);}finally{if(fx)fx.destroy();}
 });
 test('the four real-size center holes are fixed with colored source pixels, not an opaque dark substitute',async()=>{
@@ -81,8 +87,14 @@ test('the real app keeps the movement surface free of map/pattern copy during co
  w.autoAttack=false;w.skillRotation=false;w.stage='transition';w.transitionRemaining=2;w.nextPhase=0;w.bullets.length=0;w.hazards.length=0;w.bullets.push({id:99999,x:24,y:24,px:24,py:24,vx:0,vy:10,r:3.8,halfLength:0,angle:Math.PI/2,kind:'orb',age:0,ttl:10,grazed:false});await advance(h);
  assert.equal(String(h.el('pad-title').textContent||''),'');assert.equal(String(h.el('pad-caption').textContent||''),'');assert.equal(h.saveCalls.length,0);assert.equal(h.completeCalls.length,0);
  assert.equal(w.combatRevision,21,'actual product opts new runs into v21 attacks');
- assert.equal(h.g.HapilApp.diagnostics().candidateRevision,23);assert.equal(h.g.HapilApp.diagnostics().version,'hapil-laser-quality-v23');
+ assert.equal(h.g.HapilApp.diagnostics().candidateRevision,24);assert.equal(h.g.HapilApp.diagnostics().version,'hapil-source-projectiles-v24');
 });
-test('combat expansion retains the exact previously reviewed original source media and collision art metadata',()=>{
- for(const file of ['src/media.js','src/story-assets.js'])assert.deepEqual(fs.readFileSync(path.join(root,file)),cp.execFileSync('git',['show','d2f5fddff2f12118d5c97a9a24e1111c16a1c771:'+file],{cwd:root}),file+' is byte-identical to deployed v20 source art');
+test('combat expansion retains every reviewed media alias and collision contract, with only three approved V24 props appended',()=>{
+ const prior=cp.execFileSync('git',['show','d2f5fddff2f12118d5c97a9a24e1111c16a1c771:src/media.js'],{cwd:root}),current=fs.readFileSync(path.join(root,'src/media.js'));
+ assert(current.subarray(0,prior.length).equals(prior),'all previous media source bytes remain an exact prefix');
+ const vm=require('node:vm'),scope={window:{}};vm.runInNewContext(prior.toString(),scope);const old=scope.window.HapilMedia,now=require('../tools/read-media-registry.cjs')();
+ for(const [key,value]of Object.entries(old))assert.equal(now[key],value,'original owned source alias '+key);
+ const added=Object.keys(now).filter(key=>!Object.hasOwn(old,key)).sort();assert.deepEqual(added,['h24LustBrokenHeart','h24LustHeel','h24LustLipstick']);
+ for(const [key,name]of [['h24LustBrokenHeart','broken-heart'],['h24LustHeel','heel'],['h24LustLipstick','lipstick']])assert.equal(now[key],'media/projectiles-hapil1-v24/lust-'+name+'.webp');
+ assert.deepEqual(fs.readFileSync(path.join(root,'src/story-assets.js')),cp.execFileSync('git',['show','d2f5fddff2f12118d5c97a9a24e1111c16a1c771:src/story-assets.js'],{cwd:root}),'collision art metadata is unchanged');
 });

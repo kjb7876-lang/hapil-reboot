@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-31",
+  "baseline": "894682f2cc56b3e578dc042b54490eab3c20097b",
+  "sourceSHA256": "3e4938f4d03bd6c1154313a813a5253334a1d45caeab00afdffe5d9a6f0bcebc",
+  "cases": 8,
+  "rows": [
+    {
+      "group": 6,
+      "quality": "high",
+      "side": -1,
+      "rawRGBA_SHA256": "85338945abde20be3a7435a2d32af408e152ae62fc9474e87c86a3ef3687eabe",
+      "byteIdentical": true
+    },
+    {
+      "group": 6,
+      "quality": "high",
+      "side": 1,
+      "rawRGBA_SHA256": "da7672a4eef0912ce23f8fcc27c736e609bff13cba6d480b64e74f1c225a5c55",
+      "byteIdentical": true
+    },
+    {
+      "group": 6,
+      "quality": "low",
+      "side": -1,
+      "rawRGBA_SHA256": "85338945abde20be3a7435a2d32af408e152ae62fc9474e87c86a3ef3687eabe",
+      "byteIdentical": true
+    },
+    {
+      "group": 6,
+      "quality": "low",
+      "side": 1,
+      "rawRGBA_SHA256": "da7672a4eef0912ce23f8fcc27c736e609bff13cba6d480b64e74f1c225a5c55",
+      "byteIdentical": true
+    },
+    {
+      "group": 9,
+      "quality": "high",
+      "side": -1,
+      "rawRGBA_SHA256": "0df7b1a16f75cf8b5bb5b5cce16bf3dd3bb5088117f74ab93d9742ecaf0c3a2f",
+      "byteIdentical": true
+    },
+    {
+      "group": 9,
+      "quality": "high",
+      "side": 1,
+      "rawRGBA_SHA256": "5bb1b47b7bbb5997b5b08f78d891dc5e95c61503ef4ac68c26f838f5edaba2d0",
+      "byteIdentical": true
+    },
+    {
+      "group": 9,
+      "quality": "low",
+      "side": -1,
+      "rawRGBA_SHA256": "0df7b1a16f75cf8b5bb5b5cce16bf3dd3bb5088117f74ab93d9742ecaf0c3a2f",
+      "byteIdentical": true
+    },
+    {
+      "group": 9,
+      "quality": "low",
+      "side": 1,
+      "rawRGBA_SHA256": "5bb1b47b7bbb5997b5b08f78d891dc5e95c61503ef4ac68c26f838f5edaba2d0",
+      "byteIdentical": true
+    }
+  ]
+}

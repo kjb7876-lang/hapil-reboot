@@ -2,6 +2,9 @@
  * Regular bullets retain the authored object silhouette rather than clipping
  * everything to a capsule. Their visible fins/points extend 3..4 CSS pixels
  * beyond the smaller collision core, as ornamental bullet art normally does.
+ * Explicit Lust whole props and the full Envy mirror instead use measured
+ * solid-source pivots and48/100px cosmetic budgets; only the original physics
+ * circle/capsule damages, never the extra shoe, handle or mirror decoration.
  * No geometric backing, stroke, fallback body or per-frame pixel processing.
  */
 (function(global){
@@ -159,6 +162,34 @@
     NATURAL_ORBS[chapterSlot]=natural('chapter3Beam',768,144,[0,0,144,144]);
     NATURAL_BLADES[chapterSlot]=natural('chapter3Lance',512,192,[9,41,493,115],{downsample:[128,48]});
   }
+  // Three distinct owned props from hapil1 RC24/RC210. Root-verified 256px
+  // derivatives preserve the full source silhouette and its red/gold material.
+  // These are projectile display roles, not a change to the encounter's story.
+  var LUST_OBJECTS=Object.freeze({
+    heel:Object.freeze(natural('h24LustHeel',256,256,[0,0,256,256],{variant:'lust-heel',sourceColor:true,preserveAspect:true,anchor:[57,62],sourceSolidRadius:34.058772731852805})),
+    lipstick:Object.freeze(natural('h24LustLipstick',256,256,[0,0,256,256],{variant:'lust-lipstick',sourceColor:true,preserveAspect:true,anchor:[115,154],sourceSolidRadius:39.05124837953327,rotation:Math.PI/3})),
+    heart:Object.freeze(natural('h24LustBrokenHeart',256,256,[0,0,256,256],{variant:'lust-broken-heart',sourceColor:true,preserveAspect:true,anchor:[134,122],sourceSolidRadius:68.11754546370561,fixedOrientation:true}))
+  });
+  // Actual own mirror-shard and coin-saw originals already retained from
+  // hapil1. Change ordinary ORBs only; keep their blade and rotor bodies and
+  // every laser material on the previous contracts.
+  var OWN_OBJECT_ORBS=Object.freeze({
+    6:Object.freeze(natural('h14SkillEnvy',512,512,[22,101,468,311],{variant:'envy-mirror-shard',sourceColor:true,preserveAspect:true,anchor:[350,256],sourceSolidRadius:52.92447448959697,downsample:[96,64]})),
+    9:Object.freeze(natural('h14SkillGreed',512,512,[24,66,464,382],{variant:'greed-coin-saw',sourceColor:true,preserveAspect:true,anchor:[256,256],downsample:[96,79]}))
+  });
+  var LUST_LEFT_THROW=Object.freeze({spinRate:-1}),LUST_RIGHT_THROW=Object.freeze({spinRate:1});
+  function lustObject(owner,blade){
+    var b=owner&&typeof owner==='object'?owner:{};
+    // Both real HELL throws use paletteSlot0; their stable physical spin sign,
+    // rather than that shared colour slot or current velocity, owns the prop.
+    if(b.kind==='hell-rotor')return b.spinRate<0?LUST_OBJECTS.heel:LUST_OBJECTS.lipstick;
+    if(blade)return LUST_OBJECTS.lipstick;
+    // The first paired fans and third-phase alternating fans throw each prop
+    // separately. Ring/pressure/copy orbs keep the cracked heart. No random
+    // choice, added damage body, age-based replacement or simulation mutation.
+    if(b.patternId==='asmodeus-phase-1'||b.patternId==='asmodeus-string-curtain')return b.paletteSlot===1?LUST_OBJECTS.lipstick:LUST_OBJECTS.heel;
+    return LUST_OBJECTS.heart;
+  }
   var CACHE_LIMIT=96,CACHE_BYTES=4*1024*1024,SCALE=3,PAD=1,CELL=128;
   function finite(n){return typeof n==='number'&&Number.isFinite(n);}
   function clamp(n,a,b){return Math.max(a,Math.min(b,n));}
@@ -194,12 +225,12 @@
     return BEHAVIOR_PALETTES[index][b.paletteSlot===1?1:0][role];
   }
   var NATURAL_SPEC_CACHE=new WeakMap(),DENSE_SPEC_CACHE=new WeakMap(),SIGNATURE_CACHE=new WeakMap();
-  function naturalSpec(i,blade,owner){var story=storySpec(i,owner),s=story?(blade?story.blade:story.orb):(blade?NATURAL_BLADES[i]:NATURAL_ORBS[i]);if(!s||s.natural)return s||null;var cached=NATURAL_SPEC_CACHE.get(s);if(cached)return cached;cached=Object.assign(natural(s.key,s.width,s.height,s.objectCrop||s.crop),s,{natural:true,crop:s.objectCrop||s.crop,frames:s.frames||1});NATURAL_SPEC_CACHE.set(s,cached);return cached;}
-  function sourceSignature(s){var cached=SIGNATURE_CACHE.get(s);if(cached)return cached;cached=[s.key,s.crop.join(','),s.rotation||0,s.frames||1,s.step||0,s.ms||0,s.downsample?s.downsample.join(','):'original',s.anchor?s.anchor.join(','):'center',s.fixedOrientation?'fixed':'aimed',s.visualOutset||0,s.alphaBoost?'readable':'original',s.sourceKey||'authored-alpha',s.cast?'cast':'body',s.encounterMaterial?'material':'object',s.natural?'natural':'dense'].join('|');SIGNATURE_CACHE.set(s,cached);return cached;}
-  function optionalAssetKeysForEncounter(i){var out=[];if(!Number.isInteger(i)||i<0||i>=ORBS.length)return out;if(i>=12)return out;if(CASTS[i])out.push(CASTS[i].key);if(ROTORS[i])out.push(ROTORS[i].key);if(BEAMS[i])out.push(BEAMS[i].key);var orb=naturalSpec(i,false),blade=naturalSpec(i,true);return out.filter(function(k){return (!orb||k!==orb.key)&&(!blade||k!==blade.key);});}
+  function naturalSpec(i,blade,owner){if(i===8)return lustObject(owner,blade);if(!blade&&OWN_OBJECT_ORBS[i]&&(!owner||(owner.kind!=='hell-rotor'&&owner.kind!=='boss-weapon')))return OWN_OBJECT_ORBS[i];var story=storySpec(i,owner),s=story?(blade?story.blade:story.orb):(blade?NATURAL_BLADES[i]:NATURAL_ORBS[i]);if(!s||s.natural)return s||null;var cached=NATURAL_SPEC_CACHE.get(s);if(cached)return cached;cached=Object.assign(natural(s.key,s.width,s.height,s.objectCrop||s.crop),s,{natural:true,crop:s.objectCrop||s.crop,frames:s.frames||1});NATURAL_SPEC_CACHE.set(s,cached);return cached;}
+  function sourceSignature(s){var cached=SIGNATURE_CACHE.get(s);if(cached)return cached;cached=[s.key,s.crop.join(','),s.rotation||0,s.frames||1,s.step||0,s.ms||0,s.downsample?s.downsample.join(','):'original',s.anchor?s.anchor.join(','):'center',s.fixedOrientation?'fixed':'aimed',s.visualOutset||0,s.alphaBoost?'readable':'original',s.sourceKey||'authored-alpha',s.cast?'cast':'body',s.encounterMaterial?'material':'object',s.natural?'natural':'dense',s.sourceColor?'source-rgb':'owner-tint',s.preserveAspect?'uniform-object':'fitted',s.sourceSolidRadius||'legacy-extent'].join('|');SIGNATURE_CACHE.set(s,cached);return cached;}
+  function optionalAssetKeysForEncounter(i){var out=[];if(!Number.isInteger(i)||i<0||i>=ORBS.length)return out;if(i>=12)return out;if(CASTS[i])out.push(CASTS[i].key);if(i!==8&&ROTORS[i])out.push(ROTORS[i].key);if(BEAMS[i])out.push(BEAMS[i].key);var orb=naturalSpec(i,false),blade=naturalSpec(i,true);return out.filter(function(k){return (!orb||k!==orb.key)&&(!blade||k!==blade.key);});}
   function assetKeysForEncounter(i){
     var wi=slotForEncounter(i);if(wi<0)return [];var story=storySpec(wi);if(story)return global.HapilStoryAssets.assetKeysForEncounter(wi,'projectiles');
-    var out=[ORBS[wi].key];if(wi===12)out.push('cultLance','cultDriveSpear');if(wi>=13)out.push('chapter3Lance');
+    var out=[ORBS[wi].key];if(wi===8)out.push(LUST_OBJECTS.heel.key,LUST_OBJECTS.lipstick.key,LUST_OBJECTS.heart.key);if(wi===12)out.push('cultLance','cultDriveSpear');if(wi>=13)out.push('chapter3Lance');
     if(BLADES[wi]&&out.indexOf(BLADES[wi].key)<0)out.push(BLADES[wi].key);
     [naturalSpec(wi,false),naturalSpec(wi,true)].forEach(function(s){if(s&&out.indexOf(s.key)<0)out.push(s.key);});
     if(Number.isInteger(i)&&i>=0&&WEAPONS[wi])out.push(WEAPONS[wi].key);
@@ -208,7 +239,7 @@
     return out.filter(function(k,n){return out.indexOf(k)===n;});
   }
   function ready(im,s){return !!(im&&im.complete!==false&&im.naturalWidth===(s.width||512)&&im.naturalHeight===(s.height||Math.ceil(s.frames/4)*CELL));}
-  function invalidAssetForEncounter(images,i){var wi=slotForEncounter(i);if(wi<0)return 'unsupportedProjectileEncounter';var story=storySpec(wi);if(story)return global.HapilStoryAssets.invalidAsset(images,wi,'projectiles');var specs=[ORBS[wi],naturalSpec(wi,false),naturalSpec(wi,true)].filter(Boolean);if(wi>=13)specs.push(CH3_LANCE);if(wi===12)specs.push({key:'cultLance',width:512,height:192},{key:'cultDriveSpear',width:512,height:512});if(BLADES[wi])specs.push(BLADES[wi]);if(Number.isInteger(i)&&i>=0&&WEAPONS[wi])specs.push(WEAPONS[wi]);for(var k=0;k<specs.length;k++)if(!ready(images&&images[specs[k].key],specs[k]))return specs[k].key;return null;}
+  function invalidAssetForEncounter(images,i){var wi=slotForEncounter(i);if(wi<0)return 'unsupportedProjectileEncounter';var story=storySpec(wi);if(story)return global.HapilStoryAssets.invalidAsset(images,wi,'projectiles');var specs=[ORBS[wi],naturalSpec(wi,false),naturalSpec(wi,true)].filter(Boolean);if(wi===8)specs.push(LUST_OBJECTS.heel,LUST_OBJECTS.lipstick,LUST_OBJECTS.heart);if(wi>=13)specs.push(CH3_LANCE);if(wi===12)specs.push({key:'cultLance',width:512,height:192},{key:'cultDriveSpear',width:512,height:512});if(BLADES[wi])specs.push(BLADES[wi]);if(Number.isInteger(i)&&i>=0&&WEAPONS[wi])specs.push(WEAPONS[wi]);for(var k=0;k<specs.length;k++)if(!ready(images&&images[specs[k].key],specs[k]))return specs[k].key;return null;}
   function capsule(ctx,x,y,r,l){
     ctx.beginPath();
     if(l>0){ctx.moveTo(x-l,y-r);ctx.lineTo(x+l,y-r);ctx.arc(x+l,y,r,-Math.PI/2,Math.PI/2);ctx.lineTo(x-l,y+r);ctx.arc(x-l,y,r,Math.PI/2,Math.PI*1.5);ctx.closePath();}
@@ -220,7 +251,7 @@
     var cache=new Map(),cacheBytes=0,group=-1,metrics,beamCacheBuilds=0;
     function release(e){if(!e)return;if(e.canvases)e.canvases.forEach(function(c){c.width=1;c.height=1;});if(e.canvas){e.canvas.width=1;e.canvas.height=1;}}
     function clearCache(){cache.forEach(release);cache.clear();cacheBytes=0;}
-    function beginFrame(){metrics={stampDraws:0,stampCacheMisses:0,stampCacheHits:0,stampCacheLimit:CACHE_LIMIT,stampCacheByteLimit:CACHE_BYTES,stampCacheBytes:cacheBytes,stampCacheEntries:cache.size,animatedBulletDraws:0,bodyAnimationPhases:0,naturalSilhouetteDraws:0,maxVisualOutset:0,suppressedUnapprovedFX:0,compactCastDraws:0,compactHazardDraws:0,assetLaserDraws:0,assetLaserSlices:0,signatureCastDraws:0,weaponVisualDraws:0,weaponTelegraphDraws:0,rotorVisualDraws:0,rotorTelegraphDraws:0,sourceBeamOverlayDraws:0,laserArtRevision:23,beamMaterialDraws:0,beamFlowDraws:0,beamEmitterDraws:0,beamDetailedLasers:0,beamDetailLimit:12,beamCacheBuilds:beamCacheBuilds,beamFrameCacheBuilds:0,beamSourceKeys:{},missingOptionalRotorAssets:0,missingOptionalBeamAssets:0,missingProjectileAssets:0,compactFamilies:{}};}
+    function beginFrame(){metrics={stampDraws:0,stampCacheMisses:0,stampCacheHits:0,stampCacheLimit:CACHE_LIMIT,stampCacheByteLimit:CACHE_BYTES,stampCacheBytes:cacheBytes,stampCacheEntries:cache.size,animatedBulletDraws:0,bodyAnimationPhases:0,naturalSilhouetteDraws:0,maxVisualOutset:0,suppressedUnapprovedFX:0,compactCastDraws:0,compactHazardDraws:0,assetLaserDraws:0,assetLaserSlices:0,signatureCastDraws:0,weaponVisualDraws:0,weaponTelegraphDraws:0,rotorVisualDraws:0,rotorTelegraphDraws:0,sourceBeamOverlayDraws:0,laserArtRevision:23,beamMaterialDraws:0,beamFlowDraws:0,beamEmitterDraws:0,beamDetailedLasers:0,beamDetailLimit:12,beamCacheBuilds:beamCacheBuilds,beamFrameCacheBuilds:0,beamSourceKeys:{},projectileArtRevision:24,projectileVariantDraws:{},projectileVariantSourceKeys:{},legacyMaxVisualOutset:0,ownedObjectDraws:0,ownedObjectMaxNormalPixels:48,ownedObjectMaxLargePixels:100,maxOwnedObjectPixels:0,ownedObjectExtentByVariant:{},missingOptionalRotorAssets:0,missingOptionalBeamAssets:0,missingProjectileAssets:0,compactFamilies:{}};}
     function remember(key,e){
       if(e.bytes>CACHE_BYTES){release(e);return null;}
       while(cache.size&&(cache.size>=CACHE_LIMIT||cacheBytes+e.bytes>CACHE_BYTES)){var first=cache.keys().next().value,old=cache.get(first);cacheBytes-=old.bytes;release(old);cache.delete(first);}
@@ -230,10 +261,16 @@
     function beamMaterialFor(w,b){var wi=indexFor(w),story=storySpec(wi,b);if(wi<0)return null;if(story){var s=story.beam||story.blade,cached=DENSE_SPEC_CACHE.get(s);if(cached)return cached;var c=s.denseCrop||s.crop;cached=Object.assign({frames:1,r:Math.min(c[2],c[3])/2,l:Math.max(0,(c[2]-c[3])/2)},s,{crop:c});DENSE_SPEC_CACHE.set(s,cached);return cached;}return BLADES[wi]||ORBS[wi];}
     function tintedArt(s,palette,laserMode){
       var key='art|'+sourceSignature(s)+'|'+palette.id+(laserMode?'|laser23':''),e=cache.get(key);if(e)return e;
-      var crop=s.crop,fw=s.downsample?s.downsample[0]:crop[2],fh=s.downsample?s.downsample[1]:crop[3],gutter=2,c=canvas((fw+gutter*2)*s.frames,fh+gutter*2);if(!c)return null;
+      var crop=s.crop,sampleW=s.downsample?s.downsample[0]:crop[2],sampleH=s.downsample?s.downsample[1]:crop[3];
+      // A non-right-angle whole prop needs room for its rotated corners before
+      // alpha bounds can be measured. The historical90-degree blade path is
+      // left byte-for-byte unchanged; only this new source-colour mode expands.
+      var expandedRotation=!!(s.sourceColor&&s.preserveAspect&&s.rotation&&Math.abs(Math.sin(s.rotation*2))>1e-7),fw=sampleW,fh=sampleH;
+      if(expandedRotation){var rc=Math.abs(Math.cos(s.rotation)),rs=Math.abs(Math.sin(s.rotation));fw=Math.ceil(sampleW*rc+sampleH*rs);fh=Math.ceil(sampleW*rs+sampleH*rc);}
+      var gutter=2,c=canvas((fw+gutter*2)*s.frames,fh+gutter*2);if(!c)return null;
       var ctx=c.getContext('2d');if(!ctx){release({canvas:c});return null;}
       for(var f=0;f<s.frames;f++){
-        if(s.rotation){ctx.save();ctx.translate(f*(fw+gutter*2)+gutter+fw/2,gutter+fh/2);ctx.rotate(s.rotation);ctx.drawImage(images[s.key],crop[0]+f*(s.step||0),crop[1],crop[2],crop[3],-fh/2,-fw/2,fh,fw);ctx.restore();}
+        if(s.rotation){ctx.save();ctx.translate(f*(fw+gutter*2)+gutter+fw/2,gutter+fh/2);ctx.rotate(s.rotation);if(expandedRotation)ctx.drawImage(images[s.key],crop[0]+f*(s.step||0),crop[1],crop[2],crop[3],-sampleW/2,-sampleH/2,sampleW,sampleH);else ctx.drawImage(images[s.key],crop[0]+f*(s.step||0),crop[1],crop[2],crop[3],-fh/2,-fw/2,fh,fw);ctx.restore();}
         else ctx.drawImage(images[s.key],crop[0]+f*(s.step||0),crop[1],crop[2],crop[3],f*(fw+gutter*2)+gutter,gutter,fw,fh);
       }
       // Recolor only existing authored pixels. Dark details and bright patches
@@ -243,7 +280,7 @@
       var laserPrimary=laserMode?rgb(laserMode.primary):null,laserSecondary=laserMode?rgb(laserMode.secondary):null,secondaryLaser=!!(laserMode&&palette.id!==laserMode.id);
       for(var i=0;i<d.length;i+=4){
         if(!d[i+3])continue;
-        var lum=(.2126*d[i]+.7152*d[i+1]+.0722*d[i+2])/255,isLucifer=palette.id.indexOf('lucifer')===0;
+        var sourceR=d[i],sourceG=d[i+1],sourceB=d[i+2],lum=(.2126*d[i]+.7152*d[i+1]+.0722*d[i+2])/255,isLucifer=palette.id.indexOf('lucifer')===0;
         // The eclipse source contains saturated blue petals: weighted luminance
         // alone treats them as dark. Preserve their authored value contrast as
         // ivory highlights while the dark iris remains readable crimson.
@@ -258,6 +295,17 @@
         // contour strokes or an opaque replacement danger body.
         var mid=s.cast?.80+castValue*.35:s.natural&&!isLucifer?.90+Math.min(lum,.9)*.45:s.encounterMaterial?.88+Math.min(lum,.75)*.55:isLucifer?1.15+Math.min(value,.64)*.35:.38+Math.min(lum,.64)*1.03;
         for(var j=0;j<3;j++)d[i+j]=clamp(Math.round(p[j]*mid*(1-hi)+q[j]*hi+(a[j]-p[j])*.045),0,255);
+        if(s.sourceColor&&!laserMode){
+          // Preserve the actual red lacquer, gold casing and pink fractured
+          // material. Behaviour cues mix only a small stable amount of the
+          // owner's established colour into source pixels; never replace the
+          // whole object with a flat encounter tint.
+          var cue=palette.id.indexOf('-pausing')>=0?.22:palette.id.indexOf('-accelerating')>=0?.16:palette.id.indexOf('-curving')>=0?.12:0;
+          var cueRGB=palette.id.indexOf('-pausing')>=0?a:q,lift=.94+lum*.12;
+          d[i]=clamp(Math.round(sourceR*lift*(1-cue)+cueRGB[0]*cue),0,255);
+          d[i+1]=clamp(Math.round(sourceG*lift*(1-cue)+cueRGB[1]*cue),0,255);
+          d[i+2]=clamp(Math.round(sourceB*lift*(1-cue)+cueRGB[2]*cue),0,255);
+        }
         if(laserMode){
           // Laser-only grade: retain the dense source alpha that makes every
           // damaging pixel visible, but keep wide shoulders in the owner's
@@ -270,7 +318,25 @@
         if(s.natural&&s.alphaBoost&&d[i+3]>64)d[i+3]=Math.round(64+191*Math.pow((d[i+3]-64)/191,.25));
       }
       ctx.putImageData(data,0,0);
-      return remember(key,{canvas:c,frameWidth:fw+gutter*2,frameHeight:fh+gutter*2,sourceWidth:fw,sourceHeight:fh,gutter:gutter,frames:s.frames,r:s.r,l:s.l,bytes:c.width*c.height*4});
+      var objectBounds=null,objectDiameter=0;
+      if(s.preserveAspect){
+        // Once per cached source, discard only transparent padding introduced
+        // by the uniform derivative and optional aim rotation. Fitting these
+        // real alpha bounds uniformly prevents a lipstick or heel becoming a
+        // squashed orb/capsule. The opaque centre remains the physics pivot.
+        var bx=fw,by=fh,br=-1,bb=-1;
+        for(var oy=0;oy<fh;oy++)for(var ox=0;ox<fw;ox++)if(d[((oy+gutter)*c.width+ox+gutter)*4+3]>8){bx=Math.min(bx,ox);by=Math.min(by,oy);br=Math.max(br,ox);bb=Math.max(bb,oy);}
+        if(br>=bx&&bb>=by){
+          bx=Math.max(0,bx-1);by=Math.max(0,by-1);br=Math.min(fw-1,br+1);bb=Math.min(fh-1,bb+1);objectBounds={x:bx,y:by,width:br-bx+1,height:bb-by+1};
+          // A circle around the source's own alpha bounds gives a conservative
+          // full-object diameter at every later world rotation. This is only
+          // a size calculation; no circle or backing is painted.
+          var mx=(bx+br+1)/2,my=(by+bb+1)/2,maxDistance=0;
+          for(var py=by;py<=bb;py++)for(var px=bx;px<=br;px++)if(d[((py+gutter)*c.width+px+gutter)*4+3]>8)maxDistance=Math.max(maxDistance,Math.hypot(Math.abs(px+.5-mx)+.5,Math.abs(py+.5-my)+.5));
+          objectDiameter=maxDistance*2;
+        }
+      }
+      return remember(key,{canvas:c,frameWidth:fw+gutter*2,frameHeight:fh+gutter*2,sourceWidth:fw,sourceHeight:fh,gutter:gutter,frames:s.frames,r:s.r,l:s.l,objectBounds:objectBounds,objectDiameter:objectDiameter,expandedRotation:expandedRotation,rotationSampleWidth:sampleW,rotationSampleHeight:sampleH,bytes:c.width*c.height*4});
     }
     // Crop caps from authored source art, scale their radii uniformly, and
     // stretch only the central band. Thus an orb can become a capsule without
@@ -284,7 +350,26 @@
     }
     function buildStamp(w,b,s,r,l){
       var art=tintedArt(s,bulletPalette(w,b));if(!art)return null;
-      var sourceOutset=Math.min(4-Math.SQRT2/SCALE,Math.max(3,finite(s.visualOutset)?s.visualOutset:r*.5)),outset=sourceOutset+Math.SQRT2/SCALE,fw=Math.ceil((l+r+outset+PAD)*2*SCALE/2)*2,fh=Math.ceil((r+outset+PAD)*2*SCALE/2)*2,hx=fw/(2*SCALE),hy=fh/(2*SCALE),frames=[];
+      var sourceOutset=Math.min(4-Math.SQRT2/SCALE,Math.max(3,finite(s.visualOutset)?s.visualOutset:r*.5)),outset=sourceOutset+Math.SQRT2/SCALE,fw=Math.ceil((l+r+outset+PAD)*2*SCALE/2)*2,fh=Math.ceil((r+outset+PAD)*2*SCALE/2)*2,hx=fw/(2*SCALE),hy=fh/(2*SCALE),frames=[],ownedPlacement=null;
+      if(s.sourceSolidRadius&&art.objectBounds){
+        // For these explicitly named whole props, fit the existing damage
+        // circle inside a measured opaque region of their own source. Their
+        // extra visible shoe/handle/heart edges are harmless decoration. This
+        // replaces the old4px ornament budget only for these approved objects.
+        var pax=(s.anchor[0]-s.crop[0])/s.crop[2],pay=(s.anchor[1]-s.crop[1])/s.crop[3];
+        if(s.rotation){var pc=Math.cos(s.rotation),ps=Math.sin(s.rotation),rotX,rotY;if(art.expandedRotation){rotX=(pc*(pax-.5)*art.rotationSampleWidth-ps*(pay-.5)*art.rotationSampleHeight)/art.sourceWidth+.5;rotY=(ps*(pax-.5)*art.rotationSampleWidth+pc*(pay-.5)*art.rotationSampleHeight)/art.sourceHeight+.5;}else{rotX=pc*(pax-.5)-ps*(pay-.5)+.5;rotY=ps*(pax-.5)+pc*(pay-.5)+.5;}pax=rotX;pay=rotY;}
+        var ob=art.objectBounds,asx=pax*art.sourceWidth-ob.x,asy=pay*art.sourceHeight-ob.y,sampleScale=Math.min(art.rotationSampleWidth/s.crop[2],art.rotationSampleHeight/s.crop[3]),solid=s.sourceSolidRadius*sampleScale;
+        var fit=(r+.8)/solid,limit=r<=6?48:100;
+        // Existing actual Lust attacks are circles. A retained synthetic
+        // capsule preview can use more of the same solid lipstick case, within
+        // the same explicit whole-object size cap; physics remains untouched.
+        if(l>0)fit+=(Math.min(l,6)*.5)/solid;
+        fit=Math.min(fit,(limit-1)/Math.max(1,art.objectDiameter));
+        var dw=ob.width*fit,dh=ob.height*fit,ax=asx/ob.width,ay=asy/ob.height,mx=Math.max(asx,ob.width-asx)*fit,my=Math.max(asy,ob.height-asy)*fit,aa=Math.SQRT2/SCALE;
+        fw=Math.ceil((mx+aa+PAD)*2*SCALE/2)*2;fh=Math.ceil((my+aa+PAD)*2*SCALE/2)*2;hx=fw/(2*SCALE);hy=fh/(2*SCALE);
+        outset=Math.max(0,mx-l-r,my-r)+aa;
+        ownedPlacement={sx:ob.x,sy:ob.y,sw:ob.width,sh:ob.height,ax:ax,ay:ay,width:dw,height:dh,diameter:art.objectDiameter*fit+aa*2,limit:limit};
+      }
       // Fractional hit radii must still land on the exact center of the cached
       // surface. Even cache dimensions avoid a second asymmetric half-pixel
       // resampling when its authored center is drawn back at native size.
@@ -296,9 +381,14 @@
         // Preserve the actual transparent contour, cloth edge, blade point or
         // mechanical fins. No capsule clipping and no opaque backing is drawn.
         var ax=s.anchor?clamp((s.anchor[0]-s.crop[0])/s.crop[2],0,1):.5,ay=s.anchor?clamp((s.anchor[1]-s.crop[1])/s.crop[3],0,1):.5;
-        if(s.rotation){var ca=Math.cos(s.rotation),sa=Math.sin(s.rotation),nx=ca*(ax-.5)-sa*(ay-.5)+.5,ny=sa*(ax-.5)+ca*(ay-.5)+.5;ax=clamp(nx,0,1);ay=clamp(ny,0,1);}
-        var dw=(l+r+sourceOutset)/Math.max(ax,1-ax),dh=(r+sourceOutset)/Math.max(ay,1-ay);
-        ctx.drawImage(art.canvas,phase*art.frameWidth+art.gutter,art.gutter,art.sourceWidth,art.sourceHeight,(hx-ax*dw)*SCALE,(hy-ay*dh)*SCALE,dw*SCALE,dh*SCALE);
+        if(s.rotation){var ca=Math.cos(s.rotation),sa=Math.sin(s.rotation),nx,ny;if(art.expandedRotation){nx=(ca*(ax-.5)*art.rotationSampleWidth-sa*(ay-.5)*art.rotationSampleHeight)/art.sourceWidth+.5;ny=(sa*(ax-.5)*art.rotationSampleWidth+ca*(ay-.5)*art.rotationSampleHeight)/art.sourceHeight+.5;}else{nx=ca*(ax-.5)-sa*(ay-.5)+.5;ny=sa*(ax-.5)+ca*(ay-.5)+.5;}ax=clamp(nx,0,1);ay=clamp(ny,0,1);}
+        var dw=(l+r+sourceOutset)/Math.max(ax,1-ax),dh=(r+sourceOutset)/Math.max(ay,1-ay),sx=phase*art.frameWidth+art.gutter,sy=art.gutter,sw=art.sourceWidth,sh=art.sourceHeight;
+        if(s.preserveAspect&&art.objectBounds){
+          var bounds=art.objectBounds;ax=clamp((ax*sw-bounds.x)/bounds.width,0,1);ay=clamp((ay*sh-bounds.y)/bounds.height,0,1);sx+=bounds.x;sy+=bounds.y;sw=bounds.width;sh=bounds.height;
+          var fit=Math.min((l+r+sourceOutset)/(sw*Math.max(ax,1-ax)),(r+sourceOutset)/(sh*Math.max(ay,1-ay)));dw=sw*fit;dh=sh*fit;
+        }
+        if(ownedPlacement){var own=ownedPlacement;ctx.drawImage(art.canvas,phase*art.frameWidth+art.gutter+own.sx,art.gutter+own.sy,own.sw,own.sh,(hx-own.ax*own.width)*SCALE,(hy-own.ay*own.height)*SCALE,own.width*SCALE,own.height*SCALE);}
+        else ctx.drawImage(art.canvas,sx,sy,sw,sh,(hx-ax*dw)*SCALE,(hy-ay*dh)*SCALE,dw*SCALE,dh*SCALE);
         // A single cached source-alpha edge separates authored silhouettes
         // from bright map detail. It follows existing alpha rather than any
         // hitbox shape; its furthest diagonal is <0.48 CSS px and fits inside
@@ -314,7 +404,7 @@
         ctx.putImageData(pixels,0,0);
         frames.push(c);
       }
-      return {canvases:frames,width:fw/SCALE,height:fh/SCALE,frameWidth:fw,frameHeight:fh,frameCount:s.frames,x:hx,y:hy,r:r,halfLength:l,outset:outset,bytes:fw*fh*s.frames*4};
+      return {canvases:frames,width:fw/SCALE,height:fh/SCALE,frameWidth:fw,frameHeight:fh,frameCount:s.frames,x:hx,y:hy,r:r,halfLength:l,outset:outset,ownedObject:!!ownedPlacement,objectDiameter:ownedPlacement?ownedPlacement.diameter:0,objectSizeLimit:ownedPlacement?ownedPlacement.limit:0,bytes:fw*fh*s.frames*4};
     }
     // One small, bounded per-encounter cache is baked from the generated
     // source pixels; rotating it never changes physics or collision direction.
@@ -333,7 +423,7 @@
       ctx.translate(x,y);ctx.rotate(angle);ctx.drawImage(art.canvas,-size/2,-size/2,size,size);ctx.restore();return true;
     }
     function rotorSurface(w,owner){
-      var wi=indexFor(w),story=storySpec(wi,owner),s=story?story.rotor:ROTORS[wi];if(!s||!ready(images[s.key],s))return null;
+      var wi=indexFor(w),story=storySpec(wi,owner),s=wi===8?(owner&&owner.spinRate>0?LUST_OBJECTS.lipstick:LUST_OBJECTS.heel):story?story.rotor:ROTORS[wi];if(!s||!ready(images[s.key],s))return null;
       var key='rotor|'+s.key,e=cache.get(key);if(e)return e;
       var c=canvas(96,96),ctx=c&&c.getContext('2d');if(!ctx){release({canvas:c});return null;}
       var crop=s.crop,scale=88/Math.max(crop[2],crop[3]),width=crop[2]*scale,height=crop[3]*scale;
@@ -402,10 +492,15 @@
       var phase=s.frames>1?Math.min(s.frames-1,Math.floor(Math.max(0,finite(b.age)?b.age:0)*1000/s.ms)):0;
       ctx.save();ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.translate(b.x,b.y);ctx.rotate(s.fixedOrientation?0:b.kind==='hell-rotor'&&finite(b.spinAngle)?b.spinAngle:finite(b.angle)?b.angle:Math.atan2(b.vy||0,b.vx||0));
       ctx.drawImage(e.canvases[phase],-e.x,-e.y,e.width,e.height);ctx.restore();
-      // The owner's opaque, authored ORB covers the actual r=11 damage body;
-      // the separate transparent weapon is a cosmetic rotating layer on it.
+      // Legacy weapons retain an authored ORB beneath their cosmetic layer.
+      // Lust instead has its one whole prop, fitted around its measured solid
+      // source mass; never restore a hidden mixed-effect backing beneath it.
       if(b.kind==='boss-weapon'&&drawWeaponIcon(ctx,w,b.x,b.y,finite(b.spinAngle)?b.spinAngle:0,34,1))metrics.weaponVisualDraws++;
-      if(b.kind==='hell-rotor'&&drawRotorIcon(ctx,w,b.x,b.y,finite(b.spinAngle)?b.spinAngle:0,36,1,b))metrics.rotorVisualDraws++;
+      // Lust's rotor is already its one complete heel/lipstick body. Do not
+      // draw the old mixed heart/prop effect over that independent object.
+      if(b.kind==='hell-rotor'&&(wi===8||drawRotorIcon(ctx,w,b.x,b.y,finite(b.spinAngle)?b.spinAngle:0,36,1,b)))metrics.rotorVisualDraws++;
+      if(s.variant){metrics.projectileVariantDraws[s.variant]=(metrics.projectileVariantDraws[s.variant]||0)+1;metrics.projectileVariantSourceKeys[s.key]=(metrics.projectileVariantSourceKeys[s.key]||0)+1;}
+      if(e.ownedObject){metrics.ownedObjectDraws++;metrics.maxOwnedObjectPixels=Math.max(metrics.maxOwnedObjectPixels,e.objectDiameter);metrics.ownedObjectExtentByVariant[s.variant]=Math.max(metrics.ownedObjectExtentByVariant[s.variant]||0,e.outset);}else metrics.legacyMaxVisualOutset=Math.max(metrics.legacyMaxVisualOutset,e.outset);
       metrics.stampDraws++;metrics.animatedBulletDraws++;metrics.naturalSilhouetteDraws++;metrics.maxVisualOutset=Math.max(metrics.maxVisualOutset,e.outset);metrics.bodyAnimationPhases=Math.max(metrics.bodyAnimationPhases,e.frameCount);metrics.compactFamilies[s.key]=(metrics.compactFamilies[s.key]||0)+1;return true;
     }
     function drawHazardBody(ctx,w,h,lowQuality){
@@ -467,8 +562,8 @@
       if(b.rotorTelegraph){
         var marker=b.hellOverlap,p=marker&&finite(marker.warningTick)&&finite(marker.pairReleaseAt)?clamp((w.tick-marker.warningTick)/Math.max(1,marker.pairReleaseAt-marker.warningTick),0,1):progress;
         var rotorAlpha=.5+.25*p;
-        if(drawRotorIcon(ctx,w,b.x-36,b.y+38,-.45,28,rotorAlpha))metrics.rotorTelegraphDraws++;
-        if(drawRotorIcon(ctx,w,b.x+36,b.y+38,.45,28,rotorAlpha))metrics.rotorTelegraphDraws++;
+        if(drawRotorIcon(ctx,w,b.x-36,b.y+38,-.45,28,rotorAlpha,wi===8?LUST_LEFT_THROW:undefined))metrics.rotorTelegraphDraws++;
+        if(drawRotorIcon(ctx,w,b.x+36,b.y+38,.45,28,rotorAlpha,wi===8?LUST_RIGHT_THROW:undefined))metrics.rotorTelegraphDraws++;
       }
       // Static accents are purely decorative, underneath all actors, warnings,
       // and damage bodies; they never replace the existing damage telegraphs.
@@ -496,7 +591,7 @@
     function drawHazardDecoration(ctx,w,h,lowQuality){return false;}
     beginFrame();
     return {beginFrame:beginFrame,drawBullet:drawBullet,drawBossCast:drawBossCast,drawHazardBody:drawHazardBody,drawHazardDecoration:drawHazardDecoration,
-      getMetrics:function(){return Object.assign({},metrics,{projectileTextureLimit:768,projectileTextureDraws:metrics.stampDraws,texturedBullets:metrics.stampDraws,projectileTailDraws:0,bossCastDraws:metrics.compactCastDraws+metrics.signatureCastDraws,hazardEmitterDraws:metrics.beamEmitterDraws,stampCacheEntries:cache.size,stampCacheBytes:cacheBytes,beamSourceKeys:Object.assign({},metrics.beamSourceKeys),compactFamilies:Object.assign({},metrics.compactFamilies)});},
+      getMetrics:function(){return Object.assign({},metrics,{projectileTextureLimit:768,projectileTextureDraws:metrics.stampDraws,texturedBullets:metrics.stampDraws,projectileTailDraws:0,bossCastDraws:metrics.compactCastDraws+metrics.signatureCastDraws,hazardEmitterDraws:metrics.beamEmitterDraws,stampCacheEntries:cache.size,stampCacheBytes:cacheBytes,beamSourceKeys:Object.assign({},metrics.beamSourceKeys),projectileVariantDraws:Object.assign({},metrics.projectileVariantDraws),projectileVariantSourceKeys:Object.assign({},metrics.projectileVariantSourceKeys),ownedObjectExtentByVariant:Object.assign({},metrics.ownedObjectExtentByVariant),compactFamilies:Object.assign({},metrics.compactFamilies)});},
       destroy:function(){clearCache();images={};}};
   }
   global.HapilProjectiles=Object.freeze({create:create,palettes:PALETTES,paletteList:PALETTE_LIST,paletteFor:paletteFor,bulletPalette:bulletPalette,assetKeysForEncounter:assetKeysForEncounter,optionalAssetKeysForEncounter:optionalAssetKeysForEncounter,invalidAssetForEncounter:invalidAssetForEncounter,colorFor:colorFor,compactFX:FX});

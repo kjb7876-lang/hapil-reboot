@@ -114,13 +114,13 @@ test('missing optional skill pixels are omitted without shapes and transparent h
 });
 
 test('all seven large HELL rotors use their own full source image and visual spin without changing physics or duplicating ordinary bullet draws', async () => {
-  const f = await fixture([...materialKeys,...skillKeys.slice(5),'h14RotorGlutton']);
+  const f = await fixture([...materialKeys,...skillKeys.slice(5),'h14RotorGlutton','h24LustHeel','h24LustLipstick','h24LustBrokenHeart']);
   try {
     for (let i=5;i<12;i++) {
       const w=world(i), bullet={x:180,y:120,r:11,halfLength:0,kind:'hell-rotor',angle:Math.PI/2,vx:40,vy:90,age:0,spinAngle:0};
       f.ctx.clearRect(0,0,360,260); f.projectiles.beginFrame(); const original=JSON.stringify(bullet), calls={count:0};
       assert.equal(f.projectiles.drawBullet(forbidGeometry(f.ctx,calls),w,bullet,false),true);
-      assert.equal(calls.count,2,'one dense damage source plus one own rotor ornament');
+      assert.equal(calls.count,i===8?1:2,'Lust is one independent whole prop; other rotors retain their original body plus own ornament');
       assert.equal(f.projectiles.getMetrics().rotorVisualDraws,1);
       assert.equal(f.projectiles.getMetrics().weaponVisualDraws,0);
       assert.equal(JSON.stringify(bullet),original,'visual rotation never mutates velocity, angle or radius');
@@ -135,7 +135,7 @@ test('all seven large HELL rotors use their own full source image and visual spi
 });
 
 test('seven rotor warnings preview owned art; required natural bodies fail closed and absent ornaments never borrow another boss', async () => {
-  const f=await fixture([...materialKeys,...skillKeys.slice(5),'h14RotorGlutton']);
+  const f=await fixture([...materialKeys,...skillKeys.slice(5),'h14RotorGlutton','h24LustHeel','h24LustLipstick','h24LustBrokenHeart']);
   try {
     for(let i=5;i<12;i++) {
       const w=world(i,{rotorTelegraph:true,hellOverlap:{warningTick:73,pairReleaseAt:127}});
@@ -144,7 +144,7 @@ test('seven rotor warnings preview owned art; required natural bodies fail close
       assert.equal(f.projectiles.getMetrics().weaponTelegraphDraws,0);
       w.boss.rotorTelegraph=false; f.projectiles.beginFrame(); f.projectiles.drawBossCast(f.ctx,w,false);
       assert.equal(f.projectiles.getMetrics().rotorTelegraphDraws,0);
-      const ownKey=i===7?'h14RotorGlutton':skillKeys[i],saved=f.images[ownKey]; delete f.images[ownKey];
+      const ownKey=i===8?'h24LustLipstick':i===7?'h14RotorGlutton':skillKeys[i],saved=f.images[ownKey]; delete f.images[ownKey];
       // A fresh renderer cannot retain an earlier cached ornament after failure.
       const missing=Projectiles.create(f.images);f.ctx.clearRect(0,0,360,260);missing.beginFrame();
       if(i!==7)assert.equal(Projectiles.invalidAssetForEncounter(f.images,i),ownKey,'a complete encounter cannot start without a newly required own source');

@@ -18,12 +18,12 @@ test('all36 encounter selections and both cult actors show natural contours and 
     const data=ctx.getImageData(0,0,64,64).data;let core=0,visibleCore=0,outside=0,colors=new Set(),n=0,sum=0,sum2=0;
     for(let y=0;y<64;y++)for(let x=0;x<64;x++){const i=(y*64+x)*4,a=data[i+3],dx=x+.5-32,dy=y+.5-32;
      if(Math.hypot(dx,dy)<Math.min(2,r*.55)){core++;visibleCore+=a>=180;}
-     if(a>=64){if(Math.hypot(Math.max(0,Math.abs(dx)-l),dy)>r+.75)outside++;assert(Math.abs(dx)<=l+r+4.75&&Math.abs(dy)<=r+4.75,'authored ornament cannot grow beyond the promised small visual margin');}
+     if(a>=64){if(Math.hypot(Math.max(0,Math.abs(dx)-l),dy)>r+.75)outside++;if(group===8||(group===6&&!l))assert(Math.abs(dx)<=49&&Math.abs(dy)<=49,'approved whole Lust/mirror objects stay within the explicit48px full-object budget plus raster tolerance');else assert(Math.abs(dx)<=l+r+4.75&&Math.abs(dy)<=r+4.75,'unchanged authored ornament cannot grow beyond the promised small visual margin');}
      if(a>=200){colors.add(`${data[i]},${data[i+1]},${data[i+2]}`);const lum=.2126*data[i]+.7152*data[i+1]+.0722*data[i+2];sum+=lum;sum2+=lum*lum;n++;}
     }
     assert(visibleCore/core>=.8,`${group}/${r}/${l}: actual central source pixels must remain readable`);assert(outside>0,`${group}/${r}/${l}: the source outline must survive beyond a forced circle/capsule clip`);assert(colors.size>=12,`${group}/${r}/${l}: source structure must survive a flat-color wash`);assert(Math.sqrt(Math.max(0,sum2/n-(sum/n)**2))>=3,'preserve opaque-source light/dark detail');
     if(low)assert.deepEqual(Buffer.from(data),high,'low quality cannot replace detailed danger sprites with primitive bodies');else high=Buffer.from(data);
-    const m=fx.getMetrics();assert.equal(m.missingProjectileAssets,0);assert.equal(m.naturalSilhouetteDraws,1);assert(m.stampCacheBytes<=4194304);assert(m.stampCacheEntries<=96);assert(m.maxVisualOutset<=4);
+    const m=fx.getMetrics();assert.equal(m.missingProjectileAssets,0);assert.equal(m.naturalSilhouetteDraws,1);assert(m.stampCacheBytes<=4194304);assert(m.stampCacheEntries<=96);if(group===8||(group===6&&!l)){assert(m.maxOwnedObjectPixels<=48);assert(m.legacyMaxVisualOutset<=4);}else assert(m.maxVisualOutset<=4);
    }
   }}finally{fx.destroy();}
  }}finally{global.document=previous;}

@@ -1,0 +1,412 @@
+{
+  "date": "2026-10-31",
+  "folderId": "1qBYG5I8-wg0qYUy1UZ0HVPiBS7l8d3ly",
+  "url": "https://drive.google.com/drive/folders/1qBYG5I8-wg0qYUy1UZ0HVPiBS7l8d3ly",
+  "parts": [
+    {
+      "name": "HAPIL-V24-REVIEW-PART01-20261031.zip",
+      "bytes": 1503718,
+      "sha256": "2a622478976b3b5edc30ce05a1c444a5125a866aff8371f549ebe19c6545a669",
+      "entries": 63,
+      "driveId": "1lQ-Zw04XwC3PjUxgsfL4B6VX35IpMs1K",
+      "url": "https://drive.google.com/file/d/1lQ-Zw04XwC3PjUxgsfL4B6VX35IpMs1K/view?usp=drivesdk",
+      "verification": "LocalSHA256+CRC andDrive metadata size/parent readback; remoteSHA256download notclaimed"
+    },
+    {
+      "name": "HAPIL-V24-REVIEW-PART02-20261031.zip",
+      "bytes": 2338888,
+      "sha256": "3598c35f50d678620fa839129e6100bb4a429e4e2e51a18513c40309b4ce4937",
+      "entries": 1,
+      "driveId": "1ubfzyeV34FzTlOcNU94rf2bZfS5zEILw",
+      "url": "https://drive.google.com/file/d/1ubfzyeV34FzTlOcNU94rf2bZfS5zEILw/view?usp=drivesdk",
+      "verification": "LocalSHA256+CRC andDrive metadata size/parent readback; remoteSHA256download notclaimed"
+    }
+  ],
+  "contents": [
+    {
+      "path": "README.md",
+      "bytes": 16967,
+      "sha256": "2e815c3000f1dd710804b8a8a6df72f39f142aa18da366170de88b0672801f7f",
+      "blobSha": "5f7e0690e3246b88895a783ae50d1f15b4aa8f0f"
+    },
+    {
+      "path": "docs/V24-COMBAT-GUARD-20261031.json",
+      "bytes": 79964,
+      "sha256": "c2cbec3508d8851ff8afde664c554f44f64682ae3760266e0632f798765f55c8",
+      "blobSha": "4114627797e774f1e6ab5111a81a143dd5afdec1"
+    },
+    {
+      "path": "docs/V24-COMBAT-GUARD-20261031.md",
+      "bytes": 2337,
+      "sha256": "33b27814cfb1fccf0e801f68432a45283291c3c9c981d347d5be81644e68294b",
+      "blobSha": "9c46b1d6d195301379084867c8f4891bb8920fb0"
+    },
+    {
+      "path": "docs/V24-FINAL-QA-20261031.json",
+      "bytes": 9952,
+      "sha256": "c25776f112872272bcd6228b124c431cd6a390fc9b461b37caa352fe84343e5d",
+      "blobSha": "0ea2c167af198fd4478d25e6b34f7a93ad002a2b"
+    },
+    {
+      "path": "docs/V24-FINAL-QA-20261031.md",
+      "bytes": 4224,
+      "sha256": "f49a534360dc1412867a0bc3cd1237c2c4173e0d997bdfaeba43118ed656c16d",
+      "blobSha": "14ecc2588f0bb6c2555c9ddb856a05ba02f98d77"
+    },
+    {
+      "path": "docs/V24-INDEPENDENT-OBJECT-QA-20261031.md",
+      "bytes": 6313,
+      "sha256": "7be8e690a397f602a66cb6af7fedb6263aedc4b023ad246a487515878a205797",
+      "blobSha": "18e5e55609da8cab383f7006a9437978f89379b4"
+    },
+    {
+      "path": "docs/V24-INDEPENDENT-OBJECT-REVIEW-20261031.json",
+      "bytes": 486869,
+      "sha256": "ddb949dc72ecaad6cd79bc2383bd3c8119fea257b62e09bd83c5abc135b7edd7",
+      "blobSha": "b16931844ef204eb467be9980153e1f602f74cda"
+    },
+    {
+      "path": "docs/V24-PROJECTILE-IMPLEMENTATION-20261031.md",
+      "bytes": 9305,
+      "sha256": "c45abd1463a8dac15ae0c4168518f6e2665235a20165eec72b71541cc91a9568",
+      "blobSha": "d63e55756357ba06a8e958cebe30eac624a412eb"
+    },
+    {
+      "path": "docs/V24-RUNTIME-PROJECTILE-ASSETS-20261031.json",
+      "bytes": 4763,
+      "sha256": "42b5e0b4d94bc5752fd5388363876a89e369e52daa278a7a9dbdb613fb1992ed",
+      "blobSha": "e4e08db66c31b09e4c9e4d87d7baa895275c8557"
+    },
+    {
+      "path": "docs/V24-SOURCE-ASSET-AUDIT-20261031.json",
+      "bytes": 14009,
+      "sha256": "79152b0ae30b6335c8a320f618e4b4528455ae21a39690543c8a96135a3c6d81",
+      "blobSha": "9c078a960840991235492877e68a6b2e975996c2"
+    },
+    {
+      "path": "docs/V24-SOURCE-ASSET-AUDIT-20261031.md",
+      "bytes": 3281,
+      "sha256": "494a7609b06842311d30c9ee715fc4591af5197968b4b09210545718eddd1405",
+      "blobSha": "bd4e446212f079a5a14c3e264cd1015f8f3619c5"
+    },
+    {
+      "path": "docs/V24-SOURCE-SCOPE-GUARD-20261031.json",
+      "bytes": 62180,
+      "sha256": "59150a89441d11076bc6322eac8551bcf0b77b79447ebf39e3ca9046dfd44506",
+      "blobSha": "c70644ab3b4922094611ac7e92795a5dfb476c20"
+    },
+    {
+      "path": "docs/v24-browser/lust-mixed-chrome-canvas.png",
+      "bytes": 430047,
+      "sha256": "5de2e66cc1bae73bb10572e2cafbea92c001a7c7556099df9107eb009a51ac8e",
+      "blobSha": "aea20815b7ed1b1d61db5fc2c3f6afe51644f7cb"
+    },
+    {
+      "path": "docs/v24-browser/lust-mixed-chrome-observations.json",
+      "bytes": 3531,
+      "sha256": "2766f08e06953356d453dc7ba94b2ea1879085d32575398de04e5b35d575124e",
+      "blobSha": "02dc8edfaf5e8118bcd21400c938c317a33c0784"
+    },
+    {
+      "path": "docs/v24-object-pixels/combat-before-after.jpg",
+      "bytes": 228972,
+      "sha256": "74c0e8a1fd75fe900eda54b9a1c55fc4ece97aa07b3f67ef80172d675dc926c2",
+      "blobSha": "fb6977aa6be135d9496a4cea61fa9c4ad2807a86"
+    },
+    {
+      "path": "docs/v24-object-pixels/individual-before-after.jpg",
+      "bytes": 47264,
+      "sha256": "cfb5cb7ab3bae63605a97050733371e6467a3e080d78b05d5e79c79841e55f76",
+      "blobSha": "04cf978eb3940d7eb6b7c4d25b8be5fb8f5ba47b"
+    },
+    {
+      "path": "docs/v24-object-pixels/lust-actual-core-review.gif",
+      "bytes": 2354128,
+      "sha256": "7f117e5f655514c2152ac02985d6e9b69f1a5e790eb1fb19e21ac8a6a201461a",
+      "blobSha": "9ed7bc7f039122dfb12d42d4b5c234bda0814807"
+    },
+    {
+      "path": "docs/v24-projectile-pixels/runtime-source-props.jpg",
+      "bytes": 70782,
+      "sha256": "da5f9c1ebbea752f2fea493dd02debd9091dd72ed0aaea8d7ed6eb2f36014f43",
+      "blobSha": "f7ac269427f5331e627511bbc6b845c4df93120d"
+    },
+    {
+      "path": "docs/v24-qa/actual-scene-cpu-cost.json",
+      "bytes": 3746,
+      "sha256": "5053a7a0e9b9527225e597b46f81cc717b043054ce8222770417b96408e2cf20",
+      "blobSha": "9bb37ae0bbb529c75d3af07bb1e3a3255e0ecc3b"
+    },
+    {
+      "path": "docs/v24-qa/actual-scene-cpu-cost.log",
+      "bytes": 2117,
+      "sha256": "7f41ef2f646a5895e49d79aea6de3308b8d2ce3122d8fef54b8583bebe19cf5a",
+      "blobSha": "8b34aaf8b4540ad21bb64939ea043906a2b696dc"
+    },
+    {
+      "path": "docs/v24-qa/first-full-summary.json",
+      "bytes": 392,
+      "sha256": "9217e9deabf10cfd20bf030295617ce68ead77e473d98e256df4c629a3561e52",
+      "blobSha": "dc8ca9c31441b90ff9d9f8dc6475a349c74eaffb"
+    },
+    {
+      "path": "docs/v24-qa/hitbody-visibility-initial.json",
+      "bytes": 4914,
+      "sha256": "e58c9a08bc5d5d43cb4d00fbd8be3e37f53b63060c0330fd76803336785f40ef",
+      "blobSha": "67c7e6b5c94a6b086d6b4ce4f7ec091329db1662"
+    },
+    {
+      "path": "docs/v24-qa/independent-full-audit-final.log",
+      "bytes": 256,
+      "sha256": "542a617706b1ffb36968dd3db2ba6cf11682843b2c23f2c920332d808f82b335",
+      "blobSha": "c7b1fad34da18b003150e5dfb59fd45042fe6fe2"
+    },
+    {
+      "path": "docs/v24-qa/independent-full-audit-initial.log",
+      "bytes": 187,
+      "sha256": "e5eb11a4bca74ae8d6ed0ed110b3ffa83cce8754bc38f61625ba48522e57553a",
+      "blobSha": "e48ed49acfa1d8e47df4a7a8fe5368cc5e9c1bb4"
+    },
+    {
+      "path": "docs/v24-qa/independent-object-before-fairfit.log",
+      "bytes": 924,
+      "sha256": "eaa4ec2e1345874d8aa52af0a036a22ce4d692e0b16bdd4c2312668a3b4fdf0b",
+      "blobSha": "925112c8d1e5e69a7c9df253dff82b11e6b656f0"
+    },
+    {
+      "path": "docs/v24-qa/independent-object-candidate1-warmup.log",
+      "bytes": 780,
+      "sha256": "a43fac6bb6b7a0053588eeac7bc45b08f019bc34bdd8b765ddd9df7bddfeef67",
+      "blobSha": "a7e40816e84dbfdf075d8432c4870b6d50608c4a"
+    },
+    {
+      "path": "docs/v24-qa/independent-object-final.log",
+      "bytes": 1192,
+      "sha256": "d4f3b5133a6d0b2d7dd6df8a7d2de5a543502969e6b7dd1680b015c2a29544f5",
+      "blobSha": "ab43a53e9c9b2cb46252ae416a0061c1658111c7"
+    },
+    {
+      "path": "docs/v24-qa/independent-object-initial.log",
+      "bytes": 644,
+      "sha256": "c7997b9d5d822df3587607e4b3eaf0fa9c7b59b189f0c269cdc05f9451b920af",
+      "blobSha": "c0b1bfef889a9880df59c3bf9a51b43d4142aee7"
+    },
+    {
+      "path": "docs/v24-qa/lipstick-rotation-fixed.log",
+      "bytes": 233,
+      "sha256": "e4556881d5b4159962095d383191870851313d169f4cd90a681e48646fab5b90",
+      "blobSha": "4ff8989d99dc4b80f99c00b6f01f99ddd626afa5"
+    },
+    {
+      "path": "docs/v24-qa/lipstick-rotation-initial.log",
+      "bytes": 1027,
+      "sha256": "f88b2d1cfb0daa6f761c6dafd55fe520e4d3f02f966e98119f37ac23d6eeff32",
+      "blobSha": "bd412b5533027e63d8f5f5839362b10f428ca3ec"
+    },
+    {
+      "path": "docs/v24-qa/mixed-frame-fairfit.log",
+      "bytes": 264,
+      "sha256": "35a14355e91c5a3cffdd82e2f2bba60f6e7093e833767b551a10390acd6ec6b1",
+      "blobSha": "005039c9aaa2d74c45581162394636cdaa823ba5"
+    },
+    {
+      "path": "docs/v24-qa/npm-test-final.log",
+      "bytes": 36300,
+      "sha256": "e10b9f5f40b9aa6d144330549ea721796ba3b239396e656fab831fbaa9b202d0",
+      "blobSha": "cf46940b0ae5a3680e2c28cbd093ed34c3cf2dd0"
+    },
+    {
+      "path": "docs/v24-qa/npm-test-first-full.log",
+      "bytes": 42746,
+      "sha256": "e676ab148149b94bda6e4479e21f8c566931c953d39766a2060e2add4e047ee4",
+      "blobSha": "60c78161dc43a5164a651122e3fe8693b46a2a84"
+    },
+    {
+      "path": "docs/v24-qa/pre-fairfit-audit-summary.json",
+      "bytes": 690,
+      "sha256": "24138c13cc14c4627641eb203c22a1904f7dfa5891334dd58da20dd788a9a38d",
+      "blobSha": "ae4755aade24e7584e57af4750c4840bf59c834a"
+    },
+    {
+      "path": "docs/v24-qa/previous-full-failures-recheck.log",
+      "bytes": 1373,
+      "sha256": "979a613a9172b92971f881c16a5d69100658814854132e34227eac59b2e2abbe",
+      "blobSha": "5260c7adbd55727c764cbb8f66641923c6ae5ee3"
+    },
+    {
+      "path": "docs/v24-qa/projectile-variants-rotation-final.log",
+      "bytes": 594,
+      "sha256": "8768c1f79e3309e505b3b1b49009fa6e6fb69ef519056e3e1e62851eb49c112e",
+      "blobSha": "a11faad575cda6d1a1d2ca87c727b314ea7e9566"
+    },
+    {
+      "path": "docs/v24-qa/projectile-variants-tests.log",
+      "bytes": 490,
+      "sha256": "8676bc458e7bf092453dbbbec0cacbc906384de4e12c35aa8b6aeabca89e2795",
+      "blobSha": "7c922f44ec8c2175a7fb80f8c45b07d9aa52a8e6"
+    },
+    {
+      "path": "docs/v24-qa/projectiles-fairness-candidate.log",
+      "bytes": 2530,
+      "sha256": "df5f4159292a80ca3db91b16c638d94b748118d6adde94a2632ec68f27be174a",
+      "blobSha": "de8b0a16ec30e51811e5a151501180713134095d"
+    },
+    {
+      "path": "docs/v24-qa/projectiles-focus-final.log",
+      "bytes": 2047,
+      "sha256": "30edc9508751aadc9f9e983c58671a9fdf82c55b8393dd6317a529bf5c11afc6",
+      "blobSha": "0c238944f4178f3afd92feeb96dacec1d18d8bf8"
+    },
+    {
+      "path": "docs/v24-qa/projectiles-focus-initial.log",
+      "bytes": 5927,
+      "sha256": "9b66ed57de27b1171f5a8f4a1b1492b11c48256b0347cfd14e2f4441d93da22d",
+      "blobSha": "a93d9dc5c9455c72e5b03381c036be245f1b98b0"
+    },
+    {
+      "path": "docs/v24-qa/projectiles-rotation-fix.log",
+      "bytes": 2426,
+      "sha256": "01364bd2491ff66d3d7eb0a4928c815e0fb06a2743c6b13fac008ebb4d43a719",
+      "blobSha": "b8327b14fbac2fdaa46fdd7e5ad8a711c2ebc218"
+    },
+    {
+      "path": "docs/v24-qa/unchanged-envy-greed-rotors.json",
+      "bytes": 1745,
+      "sha256": "e26e47492f33365eca27b68d3ec709e28a1fd0969c737adf0d01c2fe99b6e2af",
+      "blobSha": "6fefde8c391d24fc99a8c6561a08db41b30c89bc"
+    },
+    {
+      "path": "docs/v24-source-review/lust-three-originals.jpg",
+      "bytes": 88348,
+      "sha256": "c6507ad99a43e2a010f5992e3c7096084a3456f0489c13e58a46ccb68bc248d3",
+      "blobSha": "df70627c20ad1a19407f40f05ac025f3b4e41b03"
+    },
+    {
+      "path": "docs/v24-source-review/main-boss-own-mirror-coin.jpg",
+      "bytes": 109898,
+      "sha256": "bd03ae3c37f09124de5e75eba0edc869dfd05429b8cc8ca91b6da7d119d2b414",
+      "blobSha": "9dca753a876aa3fa487487ed9c52e2eeded2cb50"
+    },
+    {
+      "path": "docs/v24-source-review/other-four-originals.jpg",
+      "bytes": 175167,
+      "sha256": "b4bc636123f856d06f829e52737507ba3ef869a89de0eae45cd88dbcd39ed022",
+      "blobSha": "d16518d519d992ecec7d2af00bf17a5aabb4e50f"
+    },
+    {
+      "path": "index.html",
+      "bytes": 15472,
+      "sha256": "6dbcfd11b09ddf8735eb3ceda8f649baf09fdc0d1938e48afbb5d77b53c85336",
+      "blobSha": "7c4551d7b60643554bcd9fa14f7bf96d54d78675"
+    },
+    {
+      "path": "media/projectiles-hapil1-v24/lust-broken-heart.webp",
+      "bytes": 60702,
+      "sha256": "6fc59b540beb00e03b2643163a3f15c6a0876a4f322c23d06458036b39222899",
+      "blobSha": "bb527efaccb6d4430eaf18b3717f8575081ff4ba"
+    },
+    {
+      "path": "media/projectiles-hapil1-v24/lust-heel.webp",
+      "bytes": 39802,
+      "sha256": "ce0057dadead661fdeaadec014c9237e00d6d94482c66be5701d924bd664a33d",
+      "blobSha": "0cd1f12ecb8c1610435029a4e9b6ce1e3c03c02d"
+    },
+    {
+      "path": "media/projectiles-hapil1-v24/lust-lipstick.webp",
+      "bytes": 39346,
+      "sha256": "a3f687e5246b0e9effa03c7a3c8a1a930e522c4b0c80d2e399ff96a52027ad36",
+      "blobSha": "9c740cde59baa3c7fd538805aa77d66f304af197"
+    },
+    {
+      "path": "src/app.js",
+      "bytes": 67294,
+      "sha256": "ddb1cfc23929dca09a33ee30b3cb9d5fc3c41c7e1b8b4ae36b2f213d9bc9eb60",
+      "blobSha": "ac5ce3cfe86894a7f15c1ba0bd4f124633392f75"
+    },
+    {
+      "path": "src/media.js",
+      "bytes": 16094,
+      "sha256": "1579d82a998680add0fb5abb9917b7a0ceecd9a65c4823f015b756b2e8acc1fc",
+      "blobSha": "2f7d3800c52c7cbebf442e81d04fbcdc2212c1d5"
+    },
+    {
+      "path": "src/projectiles.js",
+      "bytes": 55002,
+      "sha256": "3e4938f4d03bd6c1154313a813a5253334a1d45caeab00afdffe5d9a6f0bcebc",
+      "blobSha": "9f435ee24c5dcf10bba6b5e711fbbc581edfc71a"
+    },
+    {
+      "path": "tests/independent-battle-readability-v20.test.cjs",
+      "bytes": 15594,
+      "sha256": "8d2847a060cd64aad40c322821de6d3b67a9e785c061475bd9049f67dc812d5e",
+      "blobSha": "a29cb7bd4b18e7e8965551015412bacf5d23b78a"
+    },
+    {
+      "path": "tests/independent-h14-full-render.test.cjs",
+      "bytes": 4687,
+      "sha256": "652edf86bd468c0425f4519be442ba955c4028bd9e2c58fc4de13cf04fba09e7",
+      "blobSha": "bbe6cf787857d86bdc926903b045d46acb0de39f"
+    },
+    {
+      "path": "tests/independent-object-projectiles-v24.test.cjs",
+      "bytes": 9254,
+      "sha256": "316046314acfdfb3ecbd850d3c8ac0c487437940926de0cbd1977f458ef350da",
+      "blobSha": "014119dd501dce48182b70a0ed1f931cae6e15f5"
+    },
+    {
+      "path": "tests/independent-projectile-detail-v19.test.cjs",
+      "bytes": 7102,
+      "sha256": "349fd18053b3b629218aca85eadefac9c60f136aba84fb714cb1f7733647453b",
+      "blobSha": "9cffb741af482b0391b18176438dfff889f95208"
+    },
+    {
+      "path": "tests/legacy-h14-source-skills.test.cjs",
+      "bytes": 13617,
+      "sha256": "f052380ff0f497a157bf67180d0a774694e7af6d65788cc9dbf0ffefebfc721a",
+      "blobSha": "e21acbca639cf332cb531a69381318da94ae9d89"
+    },
+    {
+      "path": "tests/legacy-sins-projectiles.test.cjs",
+      "bytes": 9225,
+      "sha256": "bef216e0a11c922b7c3628f5a6d40bc0ead101aaf8ddf171f415262cb19b5b7e",
+      "blobSha": "95a5e6f938347dfa651b9552184ad02436a602ff"
+    },
+    {
+      "path": "tests/projectile-variants-v24.test.cjs",
+      "bytes": 7216,
+      "sha256": "93ed76a6a072c3dfd28577616cad912a5ba3b4b05c19949a3fbb5312ecf185bb",
+      "blobSha": "0d3bc565aab588bce7a39929d3f890ba9c98507c"
+    },
+    {
+      "path": "tools/audit-object-projectiles-v24.cjs",
+      "bytes": 24312,
+      "sha256": "d80031cb2752354fb2094033320c8b6457f643de6ab5b9abf6d268b94ca40fb6",
+      "blobSha": "f068bae8f56a95c26e633430146af884a0fbdba9"
+    },
+    {
+      "path": "tools/measure-source-objects-v24.cjs",
+      "bytes": 2488,
+      "sha256": "dac0f75b09a740dbfc307af2c9bab8eb7643f95b376ed96eded87ea582723d17",
+      "blobSha": "b695944ce874dd97aa6b48de008bd0ba4e4db455"
+    },
+    {
+      "path": "tools/prepare-source-projectiles-v24.py",
+      "bytes": 4411,
+      "sha256": "7ab33fe56e6b5fd78f27e4324aa58346936c76f0225dd0a6731187d01177002b",
+      "blobSha": "7d775056744921b8457a61f4bc411a7f5c4b88ed"
+    },
+    {
+      "path": "tools/verify-combat-guard-v24.cjs",
+      "bytes": 11590,
+      "sha256": "94523e2b60eb2db8da2d476d2dddc7cd02169bffb51c17c61a9888be319ce48d",
+      "blobSha": "583192f95a974c7cd24cb0b05d948184bbbbde6f"
+    },
+    {
+      "path": "tools/verify-object-scope-v24.cjs",
+      "bytes": 3689,
+      "sha256": "67b2873e77d09cb187638e1dda0dcd4e41b1f6ba31d0de9e15447845b30d56a9",
+      "blobSha": "ba9fe1c19fe2e61add073615912f9ab09ed97584"
+    }
+  ],
+  "selfReference": "This metadata file is excluded from both archives to avoid self-reference"
+}

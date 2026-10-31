@@ -1,0 +1,221 @@
+{
+  "date": "2026-10-31",
+  "codeSHA256": "f315223b42a81d4c5d089cf67d131093e14435247e7454ba96b390c215832e5d",
+  "scope": "Independent CPU authored alpha coverage inside existing circular collision radius minus0.5px; not shape-accurate physical collision proof. Small central-readable samples cannot establish whole-collider visibility.",
+  "rows": [
+    {
+      "group": 6,
+      "key": "h14SkillEnvy",
+      "bullet": {
+        "id": 7,
+        "x": 64,
+        "y": 64,
+        "px": 64,
+        "py": 64,
+        "r": 3.5,
+        "halfLength": 0,
+        "kind": "orb",
+        "age": 0.25,
+        "angle": 1.5707963267948966,
+        "vx": 0,
+        "vy": 90,
+        "paletteSlot": 0,
+        "patternId": "asmodeus-phase-1"
+      },
+      "current": {
+        "samples": 32,
+        "visiblePixels": 19,
+        "visibleFraction": 0.59375
+      },
+      "baseline": {
+        "samples": 32,
+        "visiblePixels": 32,
+        "visibleFraction": 1
+      }
+    },
+    {
+      "group": 8,
+      "key": "h24LustHeel",
+      "bullet": {
+        "id": 7,
+        "x": 64,
+        "y": 64,
+        "px": 64,
+        "py": 64,
+        "r": 3.5,
+        "halfLength": 0,
+        "kind": "orb",
+        "age": 0.25,
+        "angle": 1.5707963267948966,
+        "vx": 0,
+        "vy": 90,
+        "paletteSlot": 0,
+        "patternId": "asmodeus-phase-1"
+      },
+      "current": {
+        "samples": 32,
+        "visiblePixels": 21,
+        "visibleFraction": 0.65625
+      },
+      "baseline": {
+        "samples": 32,
+        "visiblePixels": 31,
+        "visibleFraction": 0.96875
+      }
+    },
+    {
+      "group": 8,
+      "key": "h24LustLipstick",
+      "bullet": {
+        "id": 7,
+        "x": 64,
+        "y": 64,
+        "px": 64,
+        "py": 64,
+        "r": 3.5,
+        "halfLength": 0,
+        "kind": "orb",
+        "age": 0.25,
+        "angle": 1.5707963267948966,
+        "vx": 0,
+        "vy": 90,
+        "paletteSlot": 1,
+        "patternId": "asmodeus-phase-1"
+      },
+      "current": {
+        "samples": 32,
+        "visiblePixels": 22,
+        "visibleFraction": 0.6875
+      },
+      "baseline": {
+        "samples": 32,
+        "visiblePixels": 31,
+        "visibleFraction": 0.96875
+      }
+    },
+    {
+      "group": 8,
+      "key": "h24LustBrokenHeart",
+      "bullet": {
+        "id": 7,
+        "x": 64,
+        "y": 64,
+        "px": 64,
+        "py": 64,
+        "r": 3.5,
+        "halfLength": 0,
+        "kind": "orb",
+        "age": 0.25,
+        "angle": 1.5707963267948966,
+        "vx": 0,
+        "vy": 90,
+        "paletteSlot": 0,
+        "patternId": "asmodeus-phase-2"
+      },
+      "current": {
+        "samples": 32,
+        "visiblePixels": 32,
+        "visibleFraction": 1
+      },
+      "baseline": {
+        "samples": 32,
+        "visiblePixels": 31,
+        "visibleFraction": 0.96875
+      }
+    },
+    {
+      "group": 8,
+      "key": "h24LustHeel",
+      "bullet": {
+        "id": 7,
+        "x": 64,
+        "y": 64,
+        "px": 64,
+        "py": 64,
+        "r": 11,
+        "halfLength": 0,
+        "kind": "hell-rotor",
+        "age": 0.25,
+        "angle": 1.5707963267948966,
+        "vx": 0,
+        "vy": 90,
+        "paletteSlot": 0,
+        "patternId": "asmodeus-phase-1",
+        "spinRate": -2.6,
+        "spinAngle": -0.25
+      },
+      "current": {
+        "samples": 332,
+        "visiblePixels": 160,
+        "visibleFraction": 0.4819277108433735
+      },
+      "baseline": {
+        "samples": 332,
+        "visiblePixels": 284,
+        "visibleFraction": 0.8554216867469879
+      }
+    },
+    {
+      "group": 8,
+      "key": "h24LustLipstick",
+      "bullet": {
+        "id": 7,
+        "x": 64,
+        "y": 64,
+        "px": 64,
+        "py": 64,
+        "r": 11,
+        "halfLength": 0,
+        "kind": "hell-rotor",
+        "age": 0.25,
+        "angle": 1.5707963267948966,
+        "vx": 0,
+        "vy": 90,
+        "paletteSlot": 0,
+        "patternId": "asmodeus-phase-1",
+        "spinRate": 2.6,
+        "spinAngle": 0.25
+      },
+      "current": {
+        "samples": 332,
+        "visiblePixels": 145,
+        "visibleFraction": 0.4367469879518072
+      },
+      "baseline": {
+        "samples": 332,
+        "visiblePixels": 279,
+        "visibleFraction": 0.8403614457831325
+      }
+    },
+    {
+      "group": 9,
+      "key": "h14SkillGreed",
+      "bullet": {
+        "id": 7,
+        "x": 64,
+        "y": 64,
+        "px": 64,
+        "py": 64,
+        "r": 3.5,
+        "halfLength": 0,
+        "kind": "orb",
+        "age": 0.25,
+        "angle": 1.5707963267948966,
+        "vx": 0,
+        "vy": 90,
+        "paletteSlot": 0,
+        "patternId": "asmodeus-phase-1"
+      },
+      "current": {
+        "samples": 32,
+        "visiblePixels": 32,
+        "visibleFraction": 1
+      },
+      "baseline": {
+        "samples": 32,
+        "visiblePixels": 32,
+        "visibleFraction": 1
+      }
+    }
+  ]
+}

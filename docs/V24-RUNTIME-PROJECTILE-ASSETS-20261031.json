@@ -1,0 +1,142 @@
+{
+  "date": "2026-10-31",
+  "scope": "Main-agent source-pixel preparation; no AI image generation or paid API.",
+  "assets": [
+    {
+      "name": "heel",
+      "sourceRepository": "kjb7876-lang/hapil1",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "sourcePath": "assets/rc24/lust-heel.png",
+      "sourceBytes": 939868,
+      "sourceSHA256": "756be6a2f7a812a3f02477540935bfbe823ac80230a248c5fdcb250b76417167",
+      "sourceGitBlob": "88857cec3d45772a194fa33063a7b3d6135c6b52",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlpha8BBox": [
+        77,
+        8,
+        1193,
+        1240
+      ],
+      "crop": [
+        73,
+        4,
+        1197,
+        1244
+      ],
+      "resizedObject": [
+        218,
+        240
+      ],
+      "runtimePath": "media/projectiles-hapil1-v24/lust-heel.webp",
+      "runtimeSize": [
+        256,
+        256
+      ],
+      "runtimeBytes": 39802,
+      "runtimeSHA256": "ce0057dadead661fdeaadec014c9237e00d6d94482c66be5701d924bd664a33d",
+      "decodedRGBA_SHA256": "f27f01266242f63ba48c959c65e399f04af8132699c19500c747ccce854d3cb7",
+      "preparationCenter": [
+        128,
+        128
+      ],
+      "preparationCenterAlpha": 253,
+      "renderPivotContract": "Actual fitted collision pivots are independently defined and tested in src/projectiles.js; this preparation centre is not a runtime collision promise.",
+      "operation": "Own-source RGBA crop: alpha>8 bbox plus4sourcepx; uniform Lanczos fit240px inside256square; transparent padding; lossless WebP. No repaint or other-actor material."
+    },
+    {
+      "name": "lipstick",
+      "sourceRepository": "kjb7876-lang/hapil1",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "sourcePath": "assets/rc24/lust-lipstick.png",
+      "sourceBytes": 909510,
+      "sourceSHA256": "2616fbb9686ccbfd81cc89a4e7724e19e75cc98d883ee8d9272808a792f44bcd",
+      "sourceGitBlob": "6cfe0552e3303583f0eff01d716b706ad37ab71a",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlpha8BBox": [
+        250,
+        55,
+        1087,
+        1181
+      ],
+      "crop": [
+        246,
+        51,
+        1091,
+        1185
+      ],
+      "resizedObject": [
+        179,
+        240
+      ],
+      "runtimePath": "media/projectiles-hapil1-v24/lust-lipstick.webp",
+      "runtimeSize": [
+        256,
+        256
+      ],
+      "runtimeBytes": 39346,
+      "runtimeSHA256": "a3f687e5246b0e9effa03c7a3c8a1a930e522c4b0c80d2e399ff96a52027ad36",
+      "decodedRGBA_SHA256": "f40041c51963cacbc8e5547208dbc4262bfd51919c92f10850569d159b3aec01",
+      "preparationCenter": [
+        128,
+        128
+      ],
+      "preparationCenterAlpha": 253,
+      "renderPivotContract": "Actual fitted collision pivots are independently defined and tested in src/projectiles.js; this preparation centre is not a runtime collision promise.",
+      "operation": "Own-source RGBA crop: alpha>8 bbox plus4sourcepx; uniform Lanczos fit240px inside256square; transparent padding; lossless WebP. No repaint or other-actor material."
+    },
+    {
+      "name": "broken-heart",
+      "sourceRepository": "kjb7876-lang/hapil1",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "sourcePath": "assets/rc210/lust-broken-heart.png",
+      "sourceBytes": 1433215,
+      "sourceSHA256": "aa27c94339236ff6a7e9cb3cded7a31cde203d053f9b20c292812bc5b35de4f4",
+      "sourceGitBlob": "20f9327edb4400464a0f5a71e322f64a822400c9",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlpha8BBox": [
+        88,
+        140,
+        1166,
+        1132
+      ],
+      "crop": [
+        84,
+        136,
+        1170,
+        1136
+      ],
+      "resizedObject": [
+        240,
+        221
+      ],
+      "runtimePath": "media/projectiles-hapil1-v24/lust-broken-heart.webp",
+      "runtimeSize": [
+        256,
+        256
+      ],
+      "runtimeBytes": 60702,
+      "runtimeSHA256": "6fc59b540beb00e03b2643163a3f15c6a0876a4f322c23d06458036b39222899",
+      "decodedRGBA_SHA256": "0d0d2e4ef15d939ecaab263b53e9dc5f3c3e0a0d33f2e7d10387e14c628c2627",
+      "preparationCenter": [
+        128,
+        128
+      ],
+      "preparationCenterAlpha": 253,
+      "renderPivotContract": "Actual fitted collision pivots are independently defined and tested in src/projectiles.js; this preparation centre is not a runtime collision promise.",
+      "operation": "Own-source RGBA crop: alpha>8 bbox plus4sourcepx; uniform Lanczos fit240px inside256square; transparent padding; lossless WebP. No repaint or other-actor material."
+    }
+  ],
+  "proof": {
+    "path": "docs/v24-projectile-pixels/runtime-source-props.jpg",
+    "sha256": "da5f9c1ebbea752f2fea493dd02debd9091dd72ed0aaea8d7ed6eb2f36014f43"
+  }
+}

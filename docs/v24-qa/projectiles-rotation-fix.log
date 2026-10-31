@@ -1,0 +1,25 @@
+✔ all36 encounter selections and both cult actors show natural contours and internal contrast at real sizes in both qualities, with one bounded draw (924.837386ms)
+✔ all new source objects have closed boundaries and formerly rectangular Goblin/Siren/knight/cult stamps preserve irregular contours (169.754455ms)
+✔ twelve skill sources are their exact pinned hapil1 files, single-frame artwork with explicit dimensions and no foreign fallback (8.353465ms)
+✔ source skill release appears only on a confirmed current event, not before firing, on a future event, or after its finite lifetime (75.900459ms)
+✔ compact skill presentation is bounded, source-only, below the player region, and releases its own cache (78.342464ms)
+✔ missing optional skill pixels are omitted without shapes and transparent hidden RGB never becomes visible stripes (7.071233ms)
+✔ all seven large HELL rotors use their own full source image and visual spin without changing physics or duplicating ordinary bullet draws (225.976182ms)
+✔ seven rotor warnings preview owned art; required natural bodies fail closed and absent ornaments never borrow another boss (149.364833ms)
+✔ seven own-source beam ornaments obey the exact damage clip, retain dense material coverage, and use the current encounter palette (614.37829ms)
+✔ unknown encounter indices fail closed instead of borrowing the final existing boss artwork (2.832247ms)
+✔ the explicit legacy encounter retains original sources and requires its own natural sword image for needles (0.350238ms)
+✔ all seven sins require their own checked static material, with no Lucifer source or invented weapon (355.716238ms)
+✔ actual same-boss natural silhouettes keep a visible central core and exact beam interior without geometric backing (703.404591ms)
+✔ seven material palettes keep naming priority, explicit secondary use and dense-source detail within a bounded cache (442.353203ms)
+✔ all three independent Lust props are mandatory and never requested by another encounter (146.705616ms)
+✔ actual existing pattern roles select one complete independent prop, with stable source colours in both qualities (188.005236ms)
+✔ variant choice is independent of age, bounce direction and redraws; warmed caches stay bounded and release all surfaces (99.875704ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1871.050752

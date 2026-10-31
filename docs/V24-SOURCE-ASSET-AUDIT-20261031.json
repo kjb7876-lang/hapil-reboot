@@ -1,0 +1,388 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "repository": "kjb7876-lang/hapil1",
+  "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+  "sourceTree": "ca89ae0d9ce36ce83bc82418c810a15e89d82edb",
+  "recursiveTree": {
+    "entries": 5441,
+    "truncated": false
+  },
+  "method": "Official GitHub metadata/fetch_file base64 for heel/lipstick; ordinary Git read-only sparse object fetch/show for >1MiB heart and additional small candidates. All original file bytes checked by Git blobSHA and SHA256 in this actual runtime. No credential/security/network changes. No remote writes to hapil1/m0.",
+  "downloadDiagnostics": [
+    {
+      "source": "assets/rc210/lust-broken-heart.png",
+      "officialContentsResult": "encoding base64 with empty content for1433215B image; not accepted as a download"
+    },
+    {
+      "source": "GitHub fetch_blob wrapper",
+      "result": "UnicodeDecodeError trying UTF8 decode binary PNG; not accepted as a download"
+    },
+    {
+      "source": "GitHub fetch Git blob URL wrapper",
+      "result": "INVALID_ARGUMENT: acceptsUTF8text only; not accepted as a download"
+    },
+    {
+      "source": "ordinary official Git fetch/show",
+      "result": "succeeded; exact original1433215B, Gitblob20f9327edb4400464a0f5a71e322f64a822400c9 and SHAaa27c94339236ff6a7e9cb3cded7a31cde203d053f9b20c292812bc5b35de4f4 match"
+    }
+  ],
+  "rows": [
+    {
+      "role": "heel",
+      "sourcePath": "assets/rc24/lust-heel.png",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/8629bd82fc1d8baf41183395c054fd83775e96df/assets/rc24/lust-heel.png",
+      "mainRuntimeLocalOriginal": "/workspace/scratch/c84ef2cd7c03/v24-hapil1-sources/assets/rc24/lust-heel.png",
+      "bytes": 939868,
+      "sha256": "756be6a2f7a812a3f02477540935bfbe823ac80230a248c5fdcb250b76417167",
+      "gitBlobSHA": "88857cec3d45772a194fa33063a7b3d6135c6b52",
+      "verifiedAgainstGitHubTree": true,
+      "decodedMode": "RGBA",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaGreater8BBoxXYXY": [
+        77,
+        8,
+        1193,
+        1240
+      ],
+      "bboxCentreSourceXY": [
+        635.0,
+        624.0
+      ],
+      "bboxCentreAlpha": 253,
+      "manualPixelInspection": "source agent directly opened source contact sheet; root separately reviews before production use"
+    },
+    {
+      "role": "lipstick",
+      "sourcePath": "assets/rc24/lust-lipstick.png",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/8629bd82fc1d8baf41183395c054fd83775e96df/assets/rc24/lust-lipstick.png",
+      "mainRuntimeLocalOriginal": "/workspace/scratch/c84ef2cd7c03/v24-hapil1-sources/assets/rc24/lust-lipstick.png",
+      "bytes": 909510,
+      "sha256": "2616fbb9686ccbfd81cc89a4e7724e19e75cc98d883ee8d9272808a792f44bcd",
+      "gitBlobSHA": "6cfe0552e3303583f0eff01d716b706ad37ab71a",
+      "verifiedAgainstGitHubTree": true,
+      "decodedMode": "RGBA",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaGreater8BBoxXYXY": [
+        250,
+        55,
+        1087,
+        1181
+      ],
+      "bboxCentreSourceXY": [
+        668.5,
+        618.0
+      ],
+      "bboxCentreAlpha": 253,
+      "manualPixelInspection": "source agent directly opened source contact sheet; root separately reviews before production use"
+    },
+    {
+      "role": "broken-heart",
+      "sourcePath": "assets/rc210/lust-broken-heart.png",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/8629bd82fc1d8baf41183395c054fd83775e96df/assets/rc210/lust-broken-heart.png",
+      "mainRuntimeLocalOriginal": "/workspace/scratch/c84ef2cd7c03/v24-hapil1-sources/assets/rc210/lust-broken-heart.png",
+      "bytes": 1433215,
+      "sha256": "aa27c94339236ff6a7e9cb3cded7a31cde203d053f9b20c292812bc5b35de4f4",
+      "gitBlobSHA": "20f9327edb4400464a0f5a71e322f64a822400c9",
+      "verifiedAgainstGitHubTree": true,
+      "decodedMode": "RGBA",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaGreater8BBoxXYXY": [
+        88,
+        140,
+        1166,
+        1132
+      ],
+      "bboxCentreSourceXY": [
+        627.0,
+        636.0
+      ],
+      "bboxCentreAlpha": 253,
+      "manualPixelInspection": "source agent directly opened source contact sheet; root separately reviews before production use"
+    },
+    {
+      "role": "Leviathan-owned mirror blade: already retained as h14SkillEnvy",
+      "sourcePath": "assets/generated-v31224/boss-vfx/envy_mirror_shard.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/8629bd82fc1d8baf41183395c054fd83775e96df/assets/generated-v31224/boss-vfx/envy_mirror_shard.webp",
+      "mainRuntimeLocalOriginal": "/workspace/scratch/c84ef2cd7c03/v24-hapil1-sources/assets/generated-v31224/boss-vfx/envy_mirror_shard.webp",
+      "bytes": 179378,
+      "sha256": "79feb01463759f28a1e5ede94586b944a5c97062f21d54df097d0c6f306fedd6",
+      "gitBlobSHA": "3d348fbbe745d5cbea93d78eef2d84ed55fae58a",
+      "verifiedAgainstGitHubTree": true,
+      "decodedMode": "RGBA",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaGreater8BBoxXYXY": [
+        26,
+        105,
+        486,
+        408
+      ],
+      "bboxCentreSourceXY": [
+        256.0,
+        256.5
+      ],
+      "bboxCentreAlpha": 251,
+      "manualPixelInspection": "source agent directly opened source contact sheet; root separately reviews before production use"
+    },
+    {
+      "role": "Mammon-owned coin saw: already retained as h14SkillGreed",
+      "sourcePath": "assets/generated-v31224/boss-vfx/greed_coin_saw.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/8629bd82fc1d8baf41183395c054fd83775e96df/assets/generated-v31224/boss-vfx/greed_coin_saw.webp",
+      "mainRuntimeLocalOriginal": "/workspace/scratch/c84ef2cd7c03/v24-hapil1-sources/assets/generated-v31224/boss-vfx/greed_coin_saw.webp",
+      "bytes": 267494,
+      "sha256": "36355530ef13f3727b36c0458f3b8a40bb31e1c5fd11ad0f58e4c2f4fcfeeb4b",
+      "gitBlobSHA": "5f752b7afa90132d4074f4d78880c8f3b018f5a7",
+      "verifiedAgainstGitHubTree": true,
+      "decodedMode": "RGBA",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaGreater8BBoxXYXY": [
+        28,
+        70,
+        483,
+        443
+      ],
+      "bboxCentreSourceXY": [
+        255.5,
+        256.5
+      ],
+      "bboxCentreAlpha": 252,
+      "manualPixelInspection": "source agent directly opened source contact sheet; root separately reviews before production use"
+    },
+    {
+      "role": "candidate only: no direct main-boss owner mapping verified",
+      "sourcePath": "assets/generated-v3128/projectiles/envy_mirror.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/8629bd82fc1d8baf41183395c054fd83775e96df/assets/generated-v3128/projectiles/envy_mirror.webp",
+      "mainRuntimeLocalOriginal": "/workspace/scratch/c84ef2cd7c03/v24-hapil1-sources/assets/generated-v3128/projectiles/envy_mirror.webp",
+      "bytes": 27820,
+      "sha256": "44915bee9dc6efef8919809365c3edf1df0253f2bd97c562fa52edb590d266e0",
+      "gitBlobSHA": "030f681a4ed3121398316d447ee4794955a5a4d0",
+      "verifiedAgainstGitHubTree": true,
+      "decodedMode": "RGBA",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaGreater8BBoxXYXY": [
+        24,
+        45,
+        488,
+        467
+      ],
+      "bboxCentreSourceXY": [
+        256.0,
+        256.0
+      ],
+      "bboxCentreAlpha": 255,
+      "manualPixelInspection": "source agent directly opened source contact sheet; root separately reviews before production use"
+    },
+    {
+      "role": "candidate only: explicitly mb-ep1b06, not main b06-boss",
+      "sourcePath": "assets/generated-v3128/projectiles/greed_coin.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/8629bd82fc1d8baf41183395c054fd83775e96df/assets/generated-v3128/projectiles/greed_coin.webp",
+      "mainRuntimeLocalOriginal": "/workspace/scratch/c84ef2cd7c03/v24-hapil1-sources/assets/generated-v3128/projectiles/greed_coin.webp",
+      "bytes": 36686,
+      "sha256": "2f24b9118f5628b807dd788702e79b980379bd5645d738b972d9505b15dd90ae",
+      "gitBlobSHA": "98faa525687983460773800f80afa98ea4f885ad",
+      "verifiedAgainstGitHubTree": true,
+      "decodedMode": "RGBA",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaGreater8BBoxXYXY": [
+        24,
+        42,
+        488,
+        469
+      ],
+      "bboxCentreSourceXY": [
+        256.0,
+        255.5
+      ],
+      "bboxCentreAlpha": 255,
+      "manualPixelInspection": "source agent directly opened source contact sheet; root separately reviews before production use"
+    },
+    {
+      "role": "candidate only: no direct main-boss owner mapping verified",
+      "sourcePath": "assets/generated-v3128/projectiles/pride_cross.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/8629bd82fc1d8baf41183395c054fd83775e96df/assets/generated-v3128/projectiles/pride_cross.webp",
+      "mainRuntimeLocalOriginal": "/workspace/scratch/c84ef2cd7c03/v24-hapil1-sources/assets/generated-v3128/projectiles/pride_cross.webp",
+      "bytes": 38258,
+      "sha256": "e992c528edfd2b5b55e8a262e786abc27de3fca9838454a8194d8aff6f34822c",
+      "gitBlobSHA": "7b26eecde57030b8b3ddbbb69bc9612f6c0dc6bd",
+      "verifiedAgainstGitHubTree": true,
+      "decodedMode": "RGBA",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaGreater8BBoxXYXY": [
+        27,
+        24,
+        485,
+        488
+      ],
+      "bboxCentreSourceXY": [
+        256.0,
+        256.0
+      ],
+      "bboxCentreAlpha": 255,
+      "manualPixelInspection": "source agent directly opened source contact sheet; root separately reviews before production use"
+    },
+    {
+      "role": "candidate only: no direct main-boss owner mapping verified",
+      "sourcePath": "assets/generated-v3128/projectiles/wrath_beast.webp",
+      "sourceURL": "https://github.com/kjb7876-lang/hapil1/blob/8629bd82fc1d8baf41183395c054fd83775e96df/assets/generated-v3128/projectiles/wrath_beast.webp",
+      "mainRuntimeLocalOriginal": "/workspace/scratch/c84ef2cd7c03/v24-hapil1-sources/assets/generated-v3128/projectiles/wrath_beast.webp",
+      "bytes": 30596,
+      "sha256": "d4461eaa6f672c030e0d580afd22fa47d16d7cb97723d7fe494e648911e840ea",
+      "gitBlobSHA": "d016fc4e2d614c8ac6e81e83449f1f2607252469",
+      "verifiedAgainstGitHubTree": true,
+      "decodedMode": "RGBA",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaGreater8BBoxXYXY": [
+        24,
+        40,
+        488,
+        472
+      ],
+      "bboxCentreSourceXY": [
+        256.0,
+        256.0
+      ],
+      "bboxCentreAlpha": 255,
+      "manualPixelInspection": "source agent directly opened source contact sheet; root separately reviews before production use"
+    }
+  ],
+  "ownerEvidence": {
+    "lust": {
+      "path": "assets/rc210/lust-projectiles.js",
+      "gitBlobSHA": "6f26499b52bd1fba0d2fff964d8d04ccdfdb95d3",
+      "owners": [
+        "b05-boss",
+        "mb-ep1b05"
+      ],
+      "parts": [
+        "lipstick",
+        "heart",
+        "heel"
+      ],
+      "sourceCropsXYWH": [
+        [
+          247,
+          53,
+          844,
+          1135
+        ],
+        [
+          83,
+          138,
+          1087,
+          996
+        ],
+        [
+          73,
+          0,
+          1122,
+          1242
+        ]
+      ],
+      "note": "These are existing hapil1 presentation mappings, not instructions to copy its simulation/radii into reboot."
+    },
+    "mainMirrorAndCoin": {
+      "path": "qa/rc137/art-manifest.json",
+      "gitBlobSHA": "42037d698c4600534b022cba5a6c89b69a0d9281",
+      "b03-boss": {
+        "name": "호텔 부매니저 · 레비아탄",
+        "original": "assets/generated-v31224/boss-vfx/envy_mirror_shard.webp"
+      },
+      "b06-boss": {
+        "name": "회장에게 고용된 총지배인 · 맘몬",
+        "original": "assets/generated-v31224/boss-vfx/greed_coin_saw.webp"
+      },
+      "mb-ep1b06": {
+        "name": "금고 장부감시자",
+        "original": "assets/generated-v3128/projectiles/greed_coin.webp"
+      }
+    }
+  },
+  "interpretationLimits": [
+    "Three Lust originals are independently authored separate objects; do not reuse mixedheel/lipstick bitmap as each individual.",
+    "Actual pixel shape of the other four generically named candidates does not prove mainboss ownership. They remain candidates; do not substitute them for a different canonical actor.",
+    "hapil1 source b05 identity label says 붉은 하이힐의 서윤 while current reboot registry labels its encounter 색욕의 귀 아스모데우스. This asset adaptation does not rename or merge canonical people.",
+    "New runtime derivatives are produced and directly inspected by root; this source audit makes no claim that final runtime media or mobile FPS has already passed.",
+    "No new AI raster generation or paid API used."
+  ],
+  "proofs": [
+    {
+      "path": "docs/v24-source-review/lust-three-originals.jpg",
+      "bytes": 88348,
+      "sha256": "c6507ad99a43e2a010f5992e3c7096084a3456f0489c13e58a46ccb68bc248d3"
+    },
+    {
+      "path": "docs/v24-source-review/main-boss-own-mirror-coin.jpg",
+      "bytes": 109898,
+      "sha256": "bd03ae3c37f09124de5e75eba0edc869dfd05429b8cc8ca91b6da7d119d2b414"
+    },
+    {
+      "path": "docs/v24-source-review/other-four-originals.jpg",
+      "bytes": 175167,
+      "sha256": "b4bc636123f856d06f829e52737507ba3ef869a89de0eae45cd88dbcd39ed022"
+    }
+  ],
+  "rootProductionStatus": "await root derivative/provenance record"
+}

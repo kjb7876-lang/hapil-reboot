@@ -1,0 +1,144 @@
+{
+  "scope": "Actual Chrome canvas presentation fixture, immune, not natural/mobile FPS",
+  "canvasCSS": {
+    "x": 18,
+    "y": 163,
+    "width": 360,
+    "height": 640,
+    "top": 163,
+    "right": 378,
+    "bottom": 803,
+    "left": 18
+  },
+  "current": {
+    "mode": "mixed",
+    "bossIndex": 8,
+    "phase": 2,
+    "difficulty": "hell",
+    "quality": "high",
+    "tick": 235,
+    "assets": 27,
+    "bullets": 96,
+    "rotors": [
+      {
+        "id": 22,
+        "spinRate": -2.6,
+        "spinAngle": -4.973333333333334,
+        "paletteSlot": 0,
+        "bounceCount": 1,
+        "r": 11,
+        "x": 97.6142451513962,
+        "y": 305.47382274714613,
+        "patternId": "hell-overlap-rotor-v14"
+      },
+      {
+        "id": 23,
+        "spinRate": 2.6,
+        "spinAngle": 4.973333333333334,
+        "paletteSlot": 0,
+        "bounceCount": 1,
+        "r": 11,
+        "x": 262.3857548486017,
+        "y": 305.47382274714664,
+        "patternId": "hell-overlap-rotor-v14"
+      }
+    ],
+    "projectiles": {
+      "stampDraws": 96,
+      "stampCacheMisses": 7,
+      "stampCacheHits": 89,
+      "stampCacheLimit": 96,
+      "stampCacheByteLimit": 4194304,
+      "stampCacheBytes": 1089040,
+      "stampCacheEntries": 13,
+      "animatedBulletDraws": 96,
+      "bodyAnimationPhases": 1,
+      "naturalSilhouetteDraws": 96,
+      "maxVisualOutset": 46.99935946920208,
+      "suppressedUnapprovedFX": 0,
+      "compactCastDraws": 0,
+      "compactHazardDraws": 0,
+      "assetLaserDraws": 4,
+      "assetLaserSlices": 12,
+      "signatureCastDraws": 0,
+      "weaponVisualDraws": 0,
+      "weaponTelegraphDraws": 0,
+      "rotorVisualDraws": 2,
+      "rotorTelegraphDraws": 0,
+      "sourceBeamOverlayDraws": 4,
+      "laserArtRevision": 23,
+      "beamMaterialDraws": 4,
+      "beamFlowDraws": 8,
+      "beamEmitterDraws": 4,
+      "beamDetailedLasers": 4,
+      "beamDetailLimit": 12,
+      "beamCacheBuilds": 2,
+      "beamFrameCacheBuilds": 2,
+      "beamSourceKeys": {
+        "h14BeamLust": 4
+      },
+      "projectileArtRevision": 24,
+      "projectileVariantDraws": {
+        "lust-broken-heart": 77,
+        "lust-heel": 10,
+        "lust-lipstick": 9
+      },
+      "projectileVariantSourceKeys": {
+        "h24LustBrokenHeart": 77,
+        "h24LustHeel": 10,
+        "h24LustLipstick": 9
+      },
+      "legacyMaxVisualOutset": 0,
+      "ownedObjectDraws": 96,
+      "ownedObjectMaxNormalPixels": 48,
+      "ownedObjectMaxLargePixels": 100,
+      "maxOwnedObjectPixels": 99.94280904158207,
+      "ownedObjectExtentByVariant": {
+        "lust-broken-heart": 5.360306368876926,
+        "lust-heel": 46.99935946920208,
+        "lust-lipstick": 43.3628936419783
+      },
+      "missingOptionalRotorAssets": 0,
+      "missingOptionalBeamAssets": 0,
+      "missingProjectileAssets": 0,
+      "compactFamilies": {
+        "h24LustBrokenHeart": 77,
+        "h24LustHeel": 10,
+        "h24LustLipstick": 9
+      },
+      "projectileTextureLimit": 768,
+      "projectileTextureDraws": 96,
+      "texturedBullets": 96,
+      "projectileTailDraws": 0,
+      "bossCastDraws": 0,
+      "hazardEmitterDraws": 4
+    },
+    "actor": {
+      "from": 1,
+      "to": 1,
+      "blend": 1,
+      "scale": 0.68,
+      "angle": 0,
+      "position": [
+        180,
+        118.5
+      ],
+      "combatPosition": [
+        180,
+        116
+      ],
+      "anchors": [
+        [
+          129,
+          125
+        ],
+        [
+          129,
+          125
+        ]
+      ],
+      "presentationOffsetY": 2.5
+    },
+    "hp": 3
+  }
+}
