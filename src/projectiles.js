@@ -549,7 +549,7 @@
       var phase=s.frames>1?Math.min(s.frames-1,Math.floor(Math.max(0,finite(b.age)?b.age:0)*1000/s.ms)):0;
       // Expired v27 bullets are harmless before this finite source-art fade.
       // Active damage bodies always remain fully opaque, including slow time.
-      var alpha=w.combatRevision===27&&b.retiring&&finite(b.retireAge)&&finite(b.retireDuration)&&b.retireDuration>0?clamp(1-b.retireAge/b.retireDuration,0,1):1;
+      var alpha=(w.combatRevision===27||w.combatRevision===28)&&b.retiring&&finite(b.retireAge)&&finite(b.retireDuration)&&b.retireDuration>0?clamp(1-b.retireAge/b.retireDuration,0,1):1;
       ctx.save();ctx.globalAlpha=alpha;ctx.globalCompositeOperation='source-over';ctx.translate(b.x,b.y);ctx.rotate(s.fixedOrientation?0:b.kind==='hell-rotor'&&finite(b.spinAngle)?b.spinAngle:l===0&&finite(b.visualSpinAngle)?b.visualSpinAngle:finite(b.angle)?b.angle:Math.atan2(b.vy||0,b.vx||0));
       ctx.drawImage(e.canvases[phase],-e.x,-e.y,e.width,e.height);ctx.restore();
       // Legacy weapons retain an authored ORB beneath their cosmetic layer.

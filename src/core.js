@@ -3,10 +3,11 @@
   'use strict';
   var dependency = typeof module === 'object' && module.exports ? require('./weapon-patterns.js') : root && root.HapilWeaponPatterns;
   var patterns = typeof module === 'object' && module.exports ? require('./boss-patterns-v27.js') : root && root.HapilBossPatternsV27;
-  var api = factory(dependency,patterns);
+  var lasers = typeof module === 'object' && module.exports ? require('./boss-lasers-v28.js') : root && root.HapilBossLasersV28;
+  var api = factory(dependency,patterns,lasers);
   if (typeof module === 'object' && module.exports) module.exports = api;
   if (root) root.HapilCore = api;
-}(typeof globalThis !== 'undefined' ? globalThis : this, function (Weapon,Patterns) {
+}(typeof globalThis !== 'undefined' ? globalThis : this, function (Weapon,Patterns,Lasers) {
   'use strict';
   if (!Weapon) throw new Error('보스 무기 패턴 모듈을 찾을 수 없습니다.');
   var W = 360, H = 640, FIXED_DT = 1 / 60, TAU = Math.PI * 2;
@@ -14,9 +15,10 @@
   var HELL_MECHANICS_REVISION=15;
   // Explicit opt-in: old boundary saves have no combatRevision and retain
   // their original deterministic encounter. Revision25 is a separate opt-in.
-  var COMBAT_REVISION=21, IDENTITY_COMBAT_REVISION=25, PATTERN_COMBAT_REVISION=27;
-  function patternEnabled(w){return w.combatRevision===PATTERN_COMBAT_REVISION;}
-  function supportedCombatRevision(value){return value===COMBAT_REVISION||value===IDENTITY_COMBAT_REVISION||value===PATTERN_COMBAT_REVISION;}
+  var COMBAT_REVISION=21, IDENTITY_COMBAT_REVISION=25, PATTERN_COMBAT_REVISION=27,LASER_COMBAT_REVISION=28;
+  function laserEnabled(w){return w.combatRevision===LASER_COMBAT_REVISION;}
+  function patternEnabled(w){return w.combatRevision===PATTERN_COMBAT_REVISION||laserEnabled(w);}
+  function supportedCombatRevision(value){return value===COMBAT_REVISION||value===IDENTITY_COMBAT_REVISION||value===PATTERN_COMBAT_REVISION||value===LASER_COMBAT_REVISION;}
   function pressureEnabled(w){return supportedCombatRevision(w.combatRevision);}
   function identityEnabled(w){return (w.combatRevision===IDENTITY_COMBAT_REVISION||patternEnabled(w))&&w.campaign&&(patternEnabled(w)||w.finalPractice||w.bossIndex!==8);}
   var BULLET_SLOW=Object.freeze({factor:.14,rampTicks:6,recoverTicks:36,durations:Object.freeze({memory:24,counter:54,delay:108,ego:90})});
@@ -39,6 +41,7 @@
   var PRESSURE_LIMITS=Object.freeze({cycleTicks:600,warningTicks:90,bossActiveTicks:360,waveActiveTicks:180,bossHellCoverage:.66,bossNormalCoverage:.44,bossGentleCoverage:.22,waveMultiplier:.70,maxCopies:2,cloneTicks:360,illusionTicks:120});
   var HELL_OVERLAP_LIMITS=Object.freeze({cycleTicks:336,warningTicks:108,activeTicks:96,fanBaseSpeed:150,fanMinSpeed:198,fanMaxSpeed:234,rotorMaxDownSpeed:378,rotorMaxTotalSpeed:388,corridorHalfWidth:24});
   var CAPS = Object.freeze({ bullets: 768, shots: 96, enemies: 12, effects: 96, hazards: 40 });
+  var LASER_BARRAGE_LIMITS=Object.freeze({maxLive:12,firstTick:72,lastTick:456,minWarningTicks:54,minActiveTicks:8,maxActiveTicks:20,minFadeTicks:8,maxFadeTicks:12});
   var PHASE_HP = [1700, 1850, 2000];
   var NAMES = ['여덟 실의 문', '보라검의 각인', '끊어진 날개의 결'];
   // Names/route follow the supplied narrative. Attack labels are gameplay
@@ -258,7 +261,11 @@
     if(!b.skillReleases)b.skillReleases=[];
     var release={tick:w.tick,kind:kind,patternId:patternId||'',x:x,y:y};if(sourceActorId)release.sourceActorId=sourceActorId;b.skillReleases.push(release);
     if(sourceActorId&&b.combatCopies){var copySource=b.combatCopies.find(function(c){return c.sourceActorId===sourceActorId;});if(copySource&&copySource.modelActorId)release.modelActorId=copySource.modelActorId;}
-    if(identityEnabled(w)){release.sourcePhase=w.phase;if(identitySpec&&finite(identitySpec.angle))release.angle=identitySpec.angle;}
+    if(identityEnabled(w)){release.sourcePhase=laserEnabled(w)&&identitySpec&&Number.isInteger(identitySpec.sourcePhase)?identitySpec.sourcePhase:w.phase;if(identitySpec&&finite(identitySpec.angle))release.angle=identitySpec.angle;}
+    if(laserEnabled(w)&&identitySpec&&identitySpec.laserBarrage){
+      release.laserBarrage=true;['v28BarrageId','v28Pattern','v28Mode','v28RayGroup','v28Segment','v28Reflected','chainId'].forEach(function(k){if(identitySpec[k]!==undefined)release[k]=identitySpec[k];});
+      if(identitySpec.modelActorId)release.modelActorId=identitySpec.modelActorId;
+    }
     if(identitySpec&&identitySpec.identityRole){
       ['identityRole','identityCastId','identityWarningAt','identityActiveAt'].forEach(function(k){release[k]=identitySpec[k];});
       var committed=(b.identityCasts||[]).find(function(c){return c.id===identitySpec.identityCastId;});
@@ -326,6 +333,7 @@
     return specs;
   }
   function warning(w, specs, delay, name) {
+    if(laserEnabled(w)&&specs.length&&specs[0].laserBarrage)return warningLaserBarrage(w,specs,name);
     // HELL's additional signature layer contributes its actual bullet
     // composition, without duplicating that signature's own laser cast.
     if(w._hellSignatureOnly)return false;
@@ -374,6 +382,42 @@
     });
     return true;
   }
+  function warningLaserBarrage(w,specs,name){
+    var b=w.boss;if(!b||w.stage!=='boss'||!specs.length)return false;
+    var stats=b.laserBarrageStats||(b.laserBarrageStats={attempts:0,committed:0,raysCommitted:0,skippedRoute:0,skippedBudget:0,skippedInvalid:0,skippedWindow:0});stats.attempts++;
+    // A reflected pulse is one promise. Either both finite segments survive
+    // the route check, or neither appears; a false remaining half is not drawn.
+    var groups=Object.create(null),route=w._pressurePlan&&w.tick<w._pressurePlan.expireAt?w._pressurePlan.route:null,accepted=[];
+    specs.forEach(function(s,index){var key=s&&s.chainId||'single-'+index;(groups[key]||(groups[key]=[])).push(s);});
+    Object.keys(groups).forEach(function(key){var chain=groups[key],valid=chain.every(function(s){
+      if(!s||![s.x,s.y,s.x2,s.y2,s.width,s.warningTicks,s.staggerTicks,s.activeTicks,s.fadeTicks].every(finite))return false;
+      var length=Math.hypot(s.x2-s.x,s.y2-s.y);
+      return s.x>=0&&s.x<=W&&s.x2>=0&&s.x2<=W&&s.y>=0&&s.y<=H&&s.y2>=0&&s.y2<=H&&length>=8&&length<=900&&s.width>=2&&s.width<=24&&Number.isInteger(s.warningTicks)&&s.warningTicks>=54&&s.warningTicks<=120&&Number.isInteger(s.staggerTicks)&&s.staggerTicks>=0&&s.staggerTicks<=72&&Number.isInteger(s.activeTicks)&&s.activeTicks>=8&&s.activeTicks<=20&&Number.isInteger(s.fadeTicks)&&s.fadeTicks>=8&&s.fadeTicks<=12;
+    });
+      if(!valid){stats.skippedInvalid++;return;}
+      if(chain.some(function(s){return s.v28Reflected;})){
+        var first=chain.find(function(s){return s.v28Segment===0;}),second=chain.find(function(s){return s.v28Segment===1;});
+        if(chain.length!==2||!first||!second||Math.hypot(first.x2-second.x,first.y2-second.y)>1e-6||['warningTicks','staggerTicks','activeTicks','fadeTicks'].some(function(k){return first[k]!==second[k];})){stats.skippedInvalid++;return;}
+      }
+      var within=(Math.round(w.phaseTime*60)-1)%PRESSURE_LIMITS.cycleTicks;
+      if(chain.some(function(s){return within+s.warningTicks+s.staggerTicks+s.activeTicks+s.fadeTicks>=PRESSURE_LIMITS.cycleTicks+60;})){stats.skippedWindow++;return;}
+      if(route&&chain.some(function(s){return segmentPairDistanceSquared(s.x,s.y,s.x2,s.y2,route.x1,route.y1,route.x2,route.y2)<=sq(route.halfWidth+s.width/2+w.player.r); })){stats.skippedRoute++;return;}
+      accepted=accepted.concat(chain);
+    });
+    if(!accepted.length)return false;
+    var live=w.hazards.filter(function(h){return h.laserBarrage&&w.tick<h.expireAt;}).length;
+    // Capacity is decided before a single warning is shown. Committed rays
+    // activate in place; no later allocation, erasure or delayed retry exists.
+    if(live+accepted.length>LASER_BARRAGE_LIMITS.maxLive||w.hazards.length+accepted.length>CAPS.hazards){stats.skippedBudget++;return false;}
+    var castId=++w.idCounter,group='laser-barrage-'+b.id+'-'+w.tick+'-'+castId;
+    accepted.forEach(function(s,index){
+      var wait=s.warningTicks+s.staggerTicks,activeAt=w.tick+wait,angle=Math.atan2(s.y2-s.y,s.x2-s.x);
+      var h=acquire(w,'hazards',{id:++w.idCounter,castId:castId,ownerId:s.ownerId||b.id,kind:'laser',x1:s.x,y1:s.y,x2:s.x2,y2:s.y2,width:s.width,color:s.color||'#ffffff',phase:'warning',progress:0,born:w.tick,warningTicks:wait,baseWarningTicks:s.warningTicks,staggerTicks:s.staggerTicks,activeTicks:s.activeTicks,fadeTicks:s.fadeTicks,activeAt:activeAt,fadeAt:activeAt+s.activeTicks,expireAt:activeAt+s.activeTicks+s.fadeTicks,grazed:false,name:name,patternId:s.patternId||'laser-'+(s.v28Pattern||'boss')+'-v28',angle:angle,length:Math.hypot(s.x2-s.x,s.y2-s.y),sourcePhase:Number.isInteger(s.sourcePhase)?s.sourcePhase:w.phase,laserBarrage:true,v28BarrageId:group,v28Pattern:s.v28Pattern||'',v28RayGroup:s.v28RayGroup,v28Segment:s.v28Segment||0,v28Reflected:!!s.v28Reflected,chainId:group+'|'+(s.chainId||'single-'+index),paletteSlot:Number.isInteger(s.paletteSlot)?s.paletteSlot:index%2});
+      if(s.sourceActorId)h.sourceActorId=s.sourceActorId;if(s.modelActorId)h.modelActorId=s.modelActorId;if(s.identityRole)h.identityRole=s.identityRole;
+      ['v28Mode','v28LaneIndex','v28RestLane','v28KeyCount'].forEach(function(k){if(s[k]!==undefined)h[k]=s[k];});
+    });
+    stats.committed++;stats.raysCommitted+=accepted.length;return true;
+  }
   function emptyStats() {
     return { hits: 0, shots: 0, damage: 0, casts: { memory: 0, delay: 0, counter: 0, ego: 0 }, peakBullets: 0, peakEnemies: 0, peakParticles: 0,
       poolPressure: 0, droppedGroups: 0, missedEnemies: 0, resourceStarvation: 0, bossDamage: 0, phaseTicks: [], collisions: 0 };
@@ -384,7 +428,8 @@
     if (!seed) seed = 0x6d2b79f5;
     var gentle = options.difficulty === 'gentle', hell = options.difficulty === 'hell';
     if(options.combatRevision!==undefined&&!supportedCombatRevision(options.combatRevision))throw new RangeError('Unsupported combat revision');
-    if(options.combatRevision===PATTERN_COMBAT_REVISION&&!Patterns)throw new Error('새 보스 패턴 모듈을 불러오지 못했습니다. 새로고침해 주세요.');
+    if((options.combatRevision===PATTERN_COMBAT_REVISION||options.combatRevision===LASER_COMBAT_REVISION)&&!Patterns)throw new Error('새 보스 패턴 모듈을 불러오지 못했습니다. 새로고침해 주세요.');
+    if(options.combatRevision===LASER_COMBAT_REVISION&&!Lasers)throw new Error('보스 광선 패턴 모듈을 불러오지 못했습니다. 새로고침해 주세요.');
     var runId = typeof options.runId === 'string' && /^[A-Za-z0-9_.:-]{1,96}$/.test(options.runId) ? options.runId : 'hapil-' + Date.now().toString(36) + '-' + (++runSequence).toString(36);
     var w = { rulesetVersion: RULESET, mechanicsRevision: 2, runId: runId, seed: seed, rngState: seed, difficulty: gentle ? 'gentle' : hell ? 'hell' : 'normal', practiceBoss: !!options.practiceBoss,
       tick: 0, time: 0, stage: 'waves', stageTime: 0, bossIntroDuration: 2.5, wave: 0, waveTime: 0, waveDuration: 15, phase: 0, phaseTime: 0, phaseTargetDuration: 25, phaseTimeout: 75,
@@ -1438,6 +1483,7 @@
     if(!pressureEnabled(w)||!w.campaign||!w.boss)return;
     var t=Math.round(w.phaseTime*60)-1,cycle=Math.floor(t/PRESSURE_LIMITS.cycleTicks),within=t%PRESSURE_LIMITS.cycleTicks,b=w.boss;
     b.pressureStyle=pressureStyle(w);
+    if(laserEnabled(w))bossLaserBarrage(w,cycle,within);
     if(identityEnabled(w))flushIdentityFans(w);
     if(within===30)makeCombatCopies(w,'illusion',cycle);
     if(within===150)makeCombatCopies(w,'clone',cycle);
@@ -1453,6 +1499,19 @@
       var cadence=w.difficulty==='hell'?42+(w.bossIndex%3)*6:w.difficulty==='gentle'?114+(w.bossIndex%3)*6:78+(w.bossIndex%3)*6;
       if((within-150)%cadence===0)pressureFan(w,b.x,b.y+18,null,Math.floor((within-150)/cadence),null);
     }
+  }
+  function bossLaserBarrage(w,cycle,within){
+    // Route selection occurs at tick60 of each600tick pressure cycle. Start
+    // only afterwards, and finish every promise before the next route exists.
+    // This prevents old warned beams crossing a later unannounced safe gate.
+    if(within<LASER_BARRAGE_LIMITS.firstTick||within>LASER_BARRAGE_LIMITS.lastTick)return;
+    var cadence=Lasers.cadenceFor(w);if(!Number.isInteger(cadence)||cadence<1||(within-LASER_BARRAGE_LIMITS.firstTick)%cadence!==0)return;
+    var beat=cycle*16+Math.floor((within-LASER_BARRAGE_LIMITS.firstTick)/cadence),b=w.boss,actor=b.participants&&b.participants[beat%b.participants.length];
+    var emitter=actor?{x:actor.x,y:actor.y,sourceActorId:actor.id,modelActorId:actor.id}:{x:b.x,y:b.y+18};
+    var route=w._pressurePlan&&w.tick<w._pressurePlan.expireAt?w._pressurePlan.route:null;
+    var specs=Lasers.makeBarrage(w,emitter,beat,{phase:w.phase,escapeRoute:route,playerRadius:w.player.r});
+    specs.forEach(function(s){s.laserBarrage=true;});
+    warning(w,specs,54,'보스 고유 광선 연사');
   }
   function wavePressure(w) {
     if(!pressureEnabled(w)||!w.campaign||w.stage!=='waves')return;
@@ -1587,7 +1646,13 @@
       var h = w.hazards[i];
       if (w.tick >= h.expireAt) { remove(w, 'hazards', i); continue; }
       if (w.tick === h.activeAt && w.campaign && w.stage === 'boss' && w.boss && h.ownerId === w.boss.id) {
-        if(h.sourceActorId&&w.boss.shadowCopies){var copy=w.boss.shadowCopies.find(function(p){return p.sourceActorId===h.sourceActorId;});if(copy&&copy.lastLaserCast!==h.castId){copy.releaseTick=w.tick;copy.lastLaserCast=h.castId;markBossRelease(w,'laser',h.patternId||'',h.x1,h.y1,h.sourceActorId);}}
+        if(h.laserBarrage){
+          // Each staggered pulse has its own real activation. A shared volley
+          // id must not suppress later ray origins or the paired caster pose.
+          var actor=w.boss.participants&&w.boss.participants.find(function(p){return p.id===h.sourceActorId;});if(actor)actor.releaseTick=w.tick;
+          markBossRelease(w,'laser',h.patternId||'',h.x1,h.y1,h.sourceActorId,h);
+        }
+        else if(h.sourceActorId&&w.boss.shadowCopies){var copy=w.boss.shadowCopies.find(function(p){return p.sourceActorId===h.sourceActorId;});if(copy&&copy.lastLaserCast!==h.castId){copy.releaseTick=w.tick;copy.lastLaserCast=h.castId;markBossRelease(w,'laser',h.patternId||'',h.x1,h.y1,h.sourceActorId);}}
         else if(h.sourceActorId&&w.boss.participants){var actor=w.boss.participants.find(function(p){return p.id===h.sourceActorId;});if(actor&&actor.lastLaserCast!==h.castId){actor.releaseTick=w.tick;actor.lastLaserCast=h.castId;markBossRelease(w,'laser',h.patternId||'',h.x1,h.y1,h.sourceActorId);}}
         else if(w.boss._lastLaserReleaseCast!==h.castId){markBossRelease(w,'laser',h.patternId||'',h.x1,h.y1);w.boss._lastLaserReleaseCast=h.castId;}
       }
@@ -1816,7 +1881,7 @@
     return w;
   }
   return Object.freeze({ W: W, H: H, FIXED_DT: FIXED_DT, RULESET_VERSION: RULESET, MECHANICS_REVISION: 2, CAPS: CAPS,
-    COMBAT_REVISION:COMBAT_REVISION,IDENTITY_COMBAT_REVISION:IDENTITY_COMBAT_REVISION,PATTERN_COMBAT_REVISION:PATTERN_COMBAT_REVISION,LATEST_COMBAT_REVISION:PATTERN_COMBAT_REVISION,BULLET_SLOW:BULLET_SLOW,bulletTimeScale:bulletTimeScale,IDENTITY_PROFILES:IDENTITY_PROFILES,PRESSURE_LIMITS:PRESSURE_LIMITS,attackCoverage:attackCoverage,
+    COMBAT_REVISION:COMBAT_REVISION,IDENTITY_COMBAT_REVISION:IDENTITY_COMBAT_REVISION,PATTERN_COMBAT_REVISION:PATTERN_COMBAT_REVISION,LASER_COMBAT_REVISION:LASER_COMBAT_REVISION,LATEST_COMBAT_REVISION:LASER_COMBAT_REVISION,LASER_BARRAGE_LIMITS:LASER_BARRAGE_LIMITS,BULLET_SLOW:BULLET_SLOW,bulletTimeScale:bulletTimeScale,IDENTITY_PROFILES:IDENTITY_PROFILES,PRESSURE_LIMITS:PRESSURE_LIMITS,attackCoverage:attackCoverage,
     CAMPAIGN_BOSSES: CAMPAIGN_BOSSES, CAMPAIGN_SIGNATURES: CAMPAIGN_SIGNATURES, CAMPAIGN_REVISION: 3, HELL_MECHANICS_REVISION: HELL_MECHANICS_REVISION, HELL_OVERLAP_LIMITS: HELL_OVERLAP_LIMITS,
     campaignBossCount: campaignBossCount, LATEST_CAMPAIGN_REVISION: 5, createRun: createRun, step: step, checkpoint: checkpoint, restoreCheckpoint: restoreCheckpoint, skipBossIntro: skipBossIntro,
     geometry: Object.freeze({ segmentDistanceSquared: segmentDistanceSquared, segmentPairDistanceSquared: segmentPairDistanceSquared, sweptCircleHit: sweptCircleHit, projectileDistanceSquared: projectileDistanceSquared, patternDistanceSquared:patternDistanceSquared, hazardDistanceSquared: hazardDistanceSquared }) });

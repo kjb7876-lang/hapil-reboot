@@ -1,0 +1,160 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "scope": "Separate ordinary-health legal-input follow-up attempts for preserved initialLuciferHELLphase3failure; only read-only policy target/beam settings differ. Same productseed813/practicephase/HP/damage/autoattack/skills. Every input exactly replayed. Initial105attemptreport and its loss are unchanged.",
+  "sourceHashes": {
+    "src/core.js": "ff9df8932bbd2055af680f7c415c5c959a2e83acd56d7a0faf627d7922c68f95",
+    "src/boss-lasers-v28.js": "22eeaa9196ab417e09f0475024d83e76336ceec55c4562e2217e0e6a69dccaaf",
+    "src/boss-patterns-v27.js": "08cca787ddb64c1c725bbe481b8f0f30b458b0870e30f8d4b18330f0522f444e",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "src/projectiles.js": "07d9e239dac32a5ab288061a3fd5f6fb44009936c5ba51a8b81a360227ae9cc6",
+    "src/boss-skills.js": "f1a51e7a30487e1e702f4257b748b0a578f7d768df6bfa94124ca949edce26a9",
+    "src/storage.js": "e94077ae2a373d4cde5ad316cd2ce381c85bc32b286b8de5177d2f0b70ef22db",
+    "src/app.js": "52881db0efbe933e404332aebcedd5d443e550c34a4405ff4da16b3f49496da9",
+    "src/render.js": "a4b58d4c9b5d9900b5705b429280fd9b3f47f61e77e870f1999ab60ab15e8afc",
+    "src/actors.js": "e87c4f2155020968d6a498f17e9d3909df23dacebaff07e37fe9586fcda9ae0b",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033",
+    "src/media.js": "ac5e0e2497f242e2515873ee157f06b979b2659d6f2dc02f66349161a50bce2e",
+    "index.html": "8d3be6ae53b30eb93369ac8c0318aebbda1eb25e6345b2b4a89434d943ccecdd",
+    "styles.css": "8a2f8527a0a8dec263bb578d316c3b4339b4d18ea046486bb501d25ed223d3e9",
+    "tools/audit-laser-barrages-v28.cjs": "fc92daefd79613f3614ce8a29d6ac3abe5a2aed9ae26159bf998d411f87a2ae8",
+    "tests/independent-laser-barrages-v28.test.cjs": "e9ad00fccd41064f042ef4f4fc8bd8ab77866e76dc5f16a166d4962a67fb8bf0",
+    "tools/probe-identities-v25-natural.cjs": "18433dffe03accc00d128f501bf8a03a1844c534965b6596aedb05853db198b7",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d"
+  },
+  "sourceHashGuardPassed": true,
+  "directions": [
+    [
+      0,
+      0
+    ],
+    [
+      4,
+      0
+    ],
+    [
+      -4,
+      0
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      0,
+      -4
+    ],
+    [
+      2.828,
+      2.828
+    ],
+    [
+      2.828,
+      -2.828
+    ],
+    [
+      -2.828,
+      2.828
+    ],
+    [
+      -2.828,
+      -2.828
+    ]
+  ],
+  "initialReport": "V28-NATURAL-HEALTH-20261031.json",
+  "summary": {
+    "attempts": 2,
+    "won": 1,
+    "lost": 1,
+    "exactReplayedTicks": 5196
+  },
+  "records": [
+    {
+      "policyConfig": {
+        "route": "left",
+        "y": 575,
+        "beam": 24,
+        "commit": 4,
+        "horizon": 96
+      },
+      "actualLaserObservations": {
+        "committedRays": 104,
+        "activatedRays": 99
+      },
+      "bossIndex": 4,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "lucifer",
+      "startHP": 3,
+      "stage": "lost",
+      "ticks": 2547,
+      "hp": 0,
+      "hits": 3,
+      "score": 1155,
+      "phaseTicks": [],
+      "peakBullets": 228,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "기억이 흐려졌습니다",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-lucifer-orbiting-masks-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/followup-1/boss-04-hell-phase-2.moves.gz",
+        "bytes": 391,
+        "sha256": "7150267f862edefb779f1839bebdc2045e2a2e2fc8041592a80ab45289411ba6",
+        "ticks": 2547
+      }
+    },
+    {
+      "policyConfig": {
+        "route": "centre",
+        "y": 540,
+        "beam": 32,
+        "commit": 4,
+        "horizon": 96
+      },
+      "actualLaserObservations": {
+        "committedRays": 112,
+        "activatedRays": 104
+      },
+      "bossIndex": 4,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "lucifer",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2649,
+      "hp": 3,
+      "hits": 0,
+      "score": 7670,
+      "phaseTicks": [
+        2649
+      ],
+      "peakBullets": 239,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "코스믹 가면 루시퍼 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-lucifer-orbiting-masks-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/followup-2/boss-04-hell-phase-2.moves.gz",
+        "bytes": 341,
+        "sha256": "7cfc7ab2e41f7bc9c59e2685a21dc7fe323d165f39ce9eb04509acfc34646cb4",
+        "ticks": 2649
+      }
+    }
+  ]
+}

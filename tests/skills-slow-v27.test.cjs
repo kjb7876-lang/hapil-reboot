@@ -7,7 +7,7 @@ function bullet(w,patch={}){const b={id:++w.idCounter,x:100,y:220,px:100,py:220,
 function castState(w,name,start=0){w.stats.casts[name]=1;w.skills[name+'ReadyAt']=start+({memory:144,counter:180,delay:480,ego:1800}[name]);}
 
 test('27 is explicit and skill time scale has a smooth six-tick onset and thirty-six-tick recovery',()=>{
- assert.equal(C.PATTERN_COMBAT_REVISION,27);assert.equal(C.LATEST_COMBAT_REVISION,27);assert.equal(C.BULLET_SLOW.factor,.14);
+ assert.equal(C.PATTERN_COMBAT_REVISION,27);assert.equal(C.LATEST_COMBAT_REVISION,28);assert.equal(C.BULLET_SLOW.factor,.14);
  for(const name of ['memory','counter','delay','ego']){const w=world(),duration=C.BULLET_SLOW.durations[name];castState(w,name,20);
   let previous=1;for(let age=0;age<=6;age++){w.tick=20+age;const f=C.bulletTimeScale(w);assert(f<=previous+1e-12&&f>=.14);previous=f;}assert.equal(previous,.14);
   w.tick=20+duration;assert.equal(C.bulletTimeScale(w),.14);previous=.14;

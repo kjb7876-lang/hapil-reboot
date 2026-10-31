@@ -22,3 +22,7 @@ test('legacy source pixels ignore27 retirement metadata and warm fading does not
   assert.equal(f.allocated.length,warm);
  }finally{f.close();}
 });
+
+test('28 laser gameplay retains the same harmless source-only bullet fade as27',async()=>{
+ const f=await fixture();try{for(const fraction of [0,.25,.5,.75,1]){const patch={retiring:true,retireAge:.35*fraction,retireDuration:.35};assert(draw(f,patch,28).data.equals(draw(f,patch,27).data));}}finally{f.close();}
+});

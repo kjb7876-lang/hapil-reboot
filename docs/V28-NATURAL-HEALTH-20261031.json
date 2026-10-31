@@ -1,0 +1,4490 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "scope": "CPU isolated special-practice phase3starts, ordinary selected-mode HP/damage, default automatic attack and skillrotation, legal nine-direction inputs only. No external immunity,777, altered HP/speed/damage/RNG/timer/phase after product checkpoint phase selection. Not human/full-story/browser/GPU/phoneFPS.",
+  "policy": "Existing public-current-threat forecast. It reads live bullets and committed finite laser hazards, emits ordinary directions, never edits live combat or reads future boss emissions/RNG.",
+  "policyConfig": {
+    "route": "centre",
+    "y": 575,
+    "beam": 20,
+    "commit": 4,
+    "horizon": 96
+  },
+  "directions": [
+    [
+      0,
+      0
+    ],
+    [
+      4,
+      0
+    ],
+    [
+      -4,
+      0
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      0,
+      -4
+    ],
+    [
+      2.828,
+      2.828
+    ],
+    [
+      2.828,
+      -2.828
+    ],
+    [
+      -2.828,
+      2.828
+    ],
+    [
+      -2.828,
+      -2.828
+    ]
+  ],
+  "sourceHashes": {
+    "src/core.js": "ff9df8932bbd2055af680f7c415c5c959a2e83acd56d7a0faf627d7922c68f95",
+    "src/boss-lasers-v28.js": "22eeaa9196ab417e09f0475024d83e76336ceec55c4562e2217e0e6a69dccaaf",
+    "src/boss-patterns-v27.js": "08cca787ddb64c1c725bbe481b8f0f30b458b0870e30f8d4b18330f0522f444e",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "src/projectiles.js": "07d9e239dac32a5ab288061a3fd5f6fb44009936c5ba51a8b81a360227ae9cc6",
+    "src/boss-skills.js": "f1a51e7a30487e1e702f4257b748b0a578f7d768df6bfa94124ca949edce26a9",
+    "src/storage.js": "e94077ae2a373d4cde5ad316cd2ce381c85bc32b286b8de5177d2f0b70ef22db",
+    "src/app.js": "52881db0efbe933e404332aebcedd5d443e550c34a4405ff4da16b3f49496da9",
+    "src/render.js": "a4b58d4c9b5d9900b5705b429280fd9b3f47f61e77e870f1999ab60ab15e8afc",
+    "src/actors.js": "e87c4f2155020968d6a498f17e9d3909df23dacebaff07e37fe9586fcda9ae0b",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033",
+    "src/media.js": "ac5e0e2497f242e2515873ee157f06b979b2659d6f2dc02f66349161a50bce2e",
+    "index.html": "8d3be6ae53b30eb93369ac8c0318aebbda1eb25e6345b2b4a89434d943ccecdd",
+    "styles.css": "8a2f8527a0a8dec263bb578d316c3b4339b4d18ea046486bb501d25ed223d3e9",
+    "tools/audit-laser-barrages-v28.cjs": "fc92daefd79613f3614ce8a29d6ac3abe5a2aed9ae26159bf998d411f87a2ae8",
+    "tests/independent-laser-barrages-v28.test.cjs": "e9ad00fccd41064f042ef4f4fc8bd8ab77866e76dc5f16a166d4962a67fb8bf0",
+    "tools/probe-identities-v25-natural.cjs": "18433dffe03accc00d128f501bf8a03a1844c534965b6596aedb05853db198b7",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d"
+  },
+  "sourceHashGuardPassed": true,
+  "summary": {
+    "cases": 105,
+    "won": 104,
+    "lost": 1,
+    "unfinished": 0,
+    "recordedInputTicks": 185535,
+    "exactlyReplayedInputTicks": 185535,
+    "poolPressure": 0,
+    "droppedGroups": 0
+  },
+  "records": [
+    {
+      "bossIndex": 0,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "violet",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2099,
+      "hp": 5,
+      "hits": 0,
+      "score": 8100,
+      "phaseTicks": [
+        2099
+      ],
+      "peakBullets": 107,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "보라검천사 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-violet-wing-loom-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-00-gentle-phase-2.moves.gz",
+        "bytes": 136,
+        "sha256": "5736c657d174dcac6d161cbca8fcaa28eed7e6dfd7eb9be64bb18f31aa581ff4",
+        "ticks": 2099
+      },
+      "actualLaserObservations": {
+        "committedRays": 32,
+        "activatedRays": 28,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 11,
+        "modes": [
+          "spokes"
+        ]
+      }
+    },
+    {
+      "bossIndex": 0,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "violet",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2101,
+      "hp": 3,
+      "hits": 0,
+      "score": 7100,
+      "phaseTicks": [
+        2101
+      ],
+      "peakBullets": 112,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "보라검천사 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-violet-wing-loom-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-00-normal-phase-2.moves.gz",
+        "bytes": 158,
+        "sha256": "7d7713a721ce49e318974a6096605371738b24cc7a48d1d22472cc2f9df248bb",
+        "ticks": 2101
+      },
+      "actualLaserObservations": {
+        "committedRays": 66,
+        "activatedRays": 60,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "spokes"
+        ]
+      }
+    },
+    {
+      "bossIndex": 0,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "violet",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2613,
+      "hp": 2,
+      "hits": 1,
+      "score": 6630,
+      "phaseTicks": [
+        2613
+      ],
+      "peakBullets": 189,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "보라검천사 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-violet-wing-loom-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-00-hell-phase-2.moves.gz",
+        "bytes": 310,
+        "sha256": "39dac473ab9a79287856d08b6792b080f9ba1887e736ceffbde4f3c6b38aa552",
+        "ticks": 2613
+      },
+      "actualLaserObservations": {
+        "committedRays": 104,
+        "activatedRays": 104,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 18,
+        "modes": [
+          "spokes"
+        ]
+      }
+    },
+    {
+      "bossIndex": 1,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "horn",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2605,
+      "hp": 5,
+      "hits": 0,
+      "score": 8340,
+      "phaseTicks": [
+        2605
+      ],
+      "peakBullets": 155,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "늪지대의 뿔악마 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-horn-sinking-boulders-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-01-gentle-phase-2.moves.gz",
+        "bytes": 133,
+        "sha256": "c6ee9c893c1b90ab0743f68e19fa39a69ad659acdd4e1be67e8c80d03d4f6d60",
+        "ticks": 2605
+      },
+      "actualLaserObservations": {
+        "committedRays": 36,
+        "activatedRays": 36,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 10,
+        "modes": [
+          "cross"
+        ]
+      }
+    },
+    {
+      "bossIndex": 1,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "horn",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2606,
+      "hp": 3,
+      "hits": 0,
+      "score": 7220,
+      "phaseTicks": [
+        2606
+      ],
+      "peakBullets": 165,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "늪지대의 뿔악마 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-horn-sinking-boulders-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-01-normal-phase-2.moves.gz",
+        "bytes": 229,
+        "sha256": "c09315e9a096cd80554934716f94de5193bc468f5a2a2a03bb02e06498942a2c",
+        "ticks": 2606
+      },
+      "actualLaserObservations": {
+        "committedRays": 54,
+        "activatedRays": 54,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 12,
+        "modes": [
+          "cross"
+        ]
+      }
+    },
+    {
+      "bossIndex": 1,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "horn",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2219,
+      "hp": 2,
+      "hits": 1,
+      "score": 6990,
+      "phaseTicks": [
+        2219
+      ],
+      "peakBullets": 279,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "늪지대의 뿔악마 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-horn-sinking-boulders-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-01-hell-phase-2.moves.gz",
+        "bytes": 349,
+        "sha256": "07e44409c885cde012c0715689f513dcfafadbd0ba93aeff83c097fb7d38b180",
+        "ticks": 2219
+      },
+      "actualLaserObservations": {
+        "committedRays": 88,
+        "activatedRays": 88,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 15,
+        "modes": [
+          "cross"
+        ]
+      }
+    },
+    {
+      "bossIndex": 2,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "balrog",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2675,
+      "hp": 5,
+      "hits": 0,
+      "score": 8475,
+      "phaseTicks": [
+        2675
+      ],
+      "peakBullets": 59,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "발록 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-balrog-meteor-crucible-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-02-gentle-phase-2.moves.gz",
+        "bytes": 264,
+        "sha256": "254b1b597a4601ba09b9fa27d2d47c270202bd0f258b4efc19a530af35726151",
+        "ticks": 2675
+      },
+      "actualLaserObservations": {
+        "committedRays": 36,
+        "activatedRays": 36,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 14,
+        "modes": [
+          "triads"
+        ]
+      }
+    },
+    {
+      "bossIndex": 2,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "balrog",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2702,
+      "hp": 1,
+      "hits": 2,
+      "score": 6280,
+      "phaseTicks": [
+        2702
+      ],
+      "peakBullets": 78,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "발록 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-balrog-meteor-crucible-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-02-normal-phase-2.moves.gz",
+        "bytes": 340,
+        "sha256": "2efcfc4ab6c8fe331c345e2d5362711d5880e64974846163245ba500ef5da469",
+        "ticks": 2702
+      },
+      "actualLaserObservations": {
+        "committedRays": 84,
+        "activatedRays": 78,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 17,
+        "modes": [
+          "triads"
+        ]
+      }
+    },
+    {
+      "bossIndex": 2,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "balrog",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2178,
+      "hp": 2,
+      "hits": 1,
+      "score": 6735,
+      "phaseTicks": [
+        2178
+      ],
+      "peakBullets": 143,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "발록 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-balrog-meteor-crucible-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-02-hell-phase-2.moves.gz",
+        "bytes": 307,
+        "sha256": "b16794454eeeaa5444382095157637aeb3f79545687cc1cd1fff3bec4be3df4e",
+        "ticks": 2178
+      },
+      "actualLaserObservations": {
+        "committedRays": 88,
+        "activatedRays": 88,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 21,
+        "modes": [
+          "triads"
+        ]
+      }
+    },
+    {
+      "bossIndex": 3,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "mask",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2928,
+      "hp": 5,
+      "hits": 0,
+      "score": 7980,
+      "phaseTicks": [
+        2928
+      ],
+      "peakBullets": 136,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "초천사의 웃는 가면 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-mask-feather-mirrors-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-03-gentle-phase-2.moves.gz",
+        "bytes": 221,
+        "sha256": "3fdfa34f859437d47591fd72927108356f77dd2312012106a9f84c38a4a9ed84",
+        "ticks": 2928
+      },
+      "actualLaserObservations": {
+        "committedRays": 34,
+        "activatedRays": 34,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 10,
+        "modes": [
+          "reflect"
+        ]
+      }
+    },
+    {
+      "bossIndex": 3,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "mask",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2728,
+      "hp": 3,
+      "hits": 0,
+      "score": 7220,
+      "phaseTicks": [
+        2728
+      ],
+      "peakBullets": 146,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "초천사의 웃는 가면 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-mask-feather-mirrors-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-03-normal-phase-2.moves.gz",
+        "bytes": 282,
+        "sha256": "954c240f153fc55f02954826127fbfda1fe82e581c74f0b4c3be28b11fb6c3c5",
+        "ticks": 2728
+      },
+      "actualLaserObservations": {
+        "committedRays": 52,
+        "activatedRays": 50,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 12,
+        "modes": [
+          "reflect"
+        ]
+      }
+    },
+    {
+      "bossIndex": 3,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "mask",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2557,
+      "hp": 1,
+      "hits": 2,
+      "score": 6415,
+      "phaseTicks": [
+        2557
+      ],
+      "peakBullets": 242,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "초천사의 웃는 가면 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-mask-feather-mirrors-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-03-hell-phase-2.moves.gz",
+        "bytes": 411,
+        "sha256": "31530edfcde81df43430cbce1adb415ea5e512c85d8e246ea60c4d56e1646c9b",
+        "ticks": 2557
+      },
+      "actualLaserObservations": {
+        "committedRays": 96,
+        "activatedRays": 96,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 16,
+        "modes": [
+          "reflect"
+        ]
+      }
+    },
+    {
+      "bossIndex": 4,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "lucifer",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 3288,
+      "hp": 5,
+      "hits": 0,
+      "score": 8340,
+      "phaseTicks": [
+        3288
+      ],
+      "peakBullets": 126,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "코스믹 가면 루시퍼 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-lucifer-orbiting-masks-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-04-gentle-phase-2.moves.gz",
+        "bytes": 188,
+        "sha256": "0bce8f15d330e5018e64706a48d90b8736cbe57341a8fd234a87cc8acb5b5b10",
+        "ticks": 3288
+      },
+      "actualLaserObservations": {
+        "committedRays": 48,
+        "activatedRays": 44,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 12,
+        "modes": [
+          "spokes"
+        ]
+      }
+    },
+    {
+      "bossIndex": 4,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "lucifer",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2890,
+      "hp": 3,
+      "hits": 0,
+      "score": 7475,
+      "phaseTicks": [
+        2890
+      ],
+      "peakBullets": 128,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "코스믹 가면 루시퍼 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-lucifer-orbiting-masks-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-04-normal-phase-2.moves.gz",
+        "bytes": 318,
+        "sha256": "229166034a893d84be302eae7c4ff737bed1e5d13fb2bb899028e410f532f01f",
+        "ticks": 2890
+      },
+      "actualLaserObservations": {
+        "committedRays": 90,
+        "activatedRays": 84,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "spokes"
+        ]
+      }
+    },
+    {
+      "bossIndex": 4,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "lucifer",
+      "startHP": 3,
+      "stage": "lost",
+      "ticks": 1825,
+      "hp": 0,
+      "hits": 3,
+      "score": 570,
+      "phaseTicks": [],
+      "peakBullets": 244,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "기억이 흐려졌습니다",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-lucifer-orbiting-masks-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-04-hell-phase-2.moves.gz",
+        "bytes": 270,
+        "sha256": "c76be039f2620a29db06feb193aca03f2a77630b76be1c1a698ac99b538ce59b",
+        "ticks": 1825
+      },
+      "actualLaserObservations": {
+        "committedRays": 72,
+        "activatedRays": 72,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 16,
+        "modes": [
+          "spokes"
+        ]
+      }
+    },
+    {
+      "bossIndex": 5,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "belphegor",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2748,
+      "hp": 5,
+      "hits": 0,
+      "score": 8340,
+      "phaseTicks": [
+        2748
+      ],
+      "peakBullets": 110,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "나태의 귀 벨페고르 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-sloth-delayed-collapse-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-05-gentle-phase-2.moves.gz",
+        "bytes": 172,
+        "sha256": "4dc7cf042769852a27f71b05a99c47ba34a8e9a1ddeed4cd97ac6e7d3cfbec5f",
+        "ticks": 2748
+      },
+      "actualLaserObservations": {
+        "committedRays": 40,
+        "activatedRays": 36,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 10,
+        "modes": [
+          "stairs"
+        ]
+      }
+    },
+    {
+      "bossIndex": 5,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "belphegor",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2720,
+      "hp": 3,
+      "hits": 0,
+      "score": 7340,
+      "phaseTicks": [
+        2720
+      ],
+      "peakBullets": 126,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "나태의 귀 벨페고르 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-sloth-delayed-collapse-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-05-normal-phase-2.moves.gz",
+        "bytes": 222,
+        "sha256": "00ffdf3e89fa2c61f57802b8ee1908b15c57e7bee985b3f906b2707c5a0392e2",
+        "ticks": 2720
+      },
+      "actualLaserObservations": {
+        "committedRays": 60,
+        "activatedRays": 54,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 12,
+        "modes": [
+          "stairs"
+        ]
+      }
+    },
+    {
+      "bossIndex": 5,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "belphegor",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2601,
+      "hp": 1,
+      "hits": 2,
+      "score": 6340,
+      "phaseTicks": [
+        2601
+      ],
+      "peakBullets": 182,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "나태의 귀 벨페고르 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-sloth-delayed-collapse-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-05-hell-phase-2.moves.gz",
+        "bytes": 337,
+        "sha256": "89e298fd7672df885e51feaa16bab272d754da58c18acc07f6220a282db753d7",
+        "ticks": 2601
+      },
+      "actualLaserObservations": {
+        "committedRays": 104,
+        "activatedRays": 104,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 16,
+        "modes": [
+          "stairs"
+        ]
+      }
+    },
+    {
+      "bossIndex": 6,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "leviathan",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2666,
+      "hp": 5,
+      "hits": 0,
+      "score": 8355,
+      "phaseTicks": [
+        2666
+      ],
+      "peakBullets": 129,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "질투의 귀 레비아탄 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-envy-opposite-reflections-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-06-gentle-phase-2.moves.gz",
+        "bytes": 177,
+        "sha256": "9a8a3f43a57efeca635c268265268f88280f4ad3466e6d44447a2917f2ce01fa",
+        "ticks": 2666
+      },
+      "actualLaserObservations": {
+        "committedRays": 30,
+        "activatedRays": 30,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 10,
+        "modes": [
+          "reflect"
+        ]
+      }
+    },
+    {
+      "bossIndex": 6,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "leviathan",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2675,
+      "hp": 3,
+      "hits": 0,
+      "score": 7340,
+      "phaseTicks": [
+        2675
+      ],
+      "peakBullets": 133,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "질투의 귀 레비아탄 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-envy-opposite-reflections-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-06-normal-phase-2.moves.gz",
+        "bytes": 186,
+        "sha256": "b5a85a1d9a5927c98f55524fee97a4903de55bb22101db9643367e975e2648a3",
+        "ticks": 2675
+      },
+      "actualLaserObservations": {
+        "committedRays": 70,
+        "activatedRays": 68,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 12,
+        "modes": [
+          "reflect"
+        ]
+      }
+    },
+    {
+      "bossIndex": 6,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "leviathan",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2153,
+      "hp": 3,
+      "hits": 0,
+      "score": 7265,
+      "phaseTicks": [
+        2153
+      ],
+      "peakBullets": 224,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "질투의 귀 레비아탄 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-envy-opposite-reflections-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-06-hell-phase-2.moves.gz",
+        "bytes": 274,
+        "sha256": "e2f1e8ab3aa22ef72f56cb66dbd950952da2f23de99a04fe79f8477ae75574d4",
+        "ticks": 2153
+      },
+      "actualLaserObservations": {
+        "committedRays": 76,
+        "activatedRays": 76,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 16,
+        "modes": [
+          "reflect"
+        ]
+      }
+    },
+    {
+      "bossIndex": 7,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "beelzebub",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2783,
+      "hp": 5,
+      "hits": 0,
+      "score": 8340,
+      "phaseTicks": [
+        2783
+      ],
+      "peakBullets": 215,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "탐식의 귀 베엘제붑 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-glutton-dividing-maw-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-07-gentle-phase-2.moves.gz",
+        "bytes": 122,
+        "sha256": "176e70fdd6fc5093cb1dc19cf1e4a6b8668d5e3be5aae14f850c14ef3e145755",
+        "ticks": 2783
+      },
+      "actualLaserObservations": {
+        "committedRays": 40,
+        "activatedRays": 39,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 10,
+        "modes": [
+          "fork"
+        ]
+      }
+    },
+    {
+      "bossIndex": 7,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "beelzebub",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2891,
+      "hp": 3,
+      "hits": 0,
+      "score": 7355,
+      "phaseTicks": [
+        2891
+      ],
+      "peakBullets": 231,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "탐식의 귀 베엘제붑 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-glutton-dividing-maw-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-07-normal-phase-2.moves.gz",
+        "bytes": 294,
+        "sha256": "75fe5b27fe952706b013cc6f08f4d52e1c53b744b89aa7fad6702020b0cb2be5",
+        "ticks": 2891
+      },
+      "actualLaserObservations": {
+        "committedRays": 60,
+        "activatedRays": 60,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 12,
+        "modes": [
+          "fork"
+        ]
+      }
+    },
+    {
+      "bossIndex": 7,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "beelzebub",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2862,
+      "hp": 1,
+      "hits": 2,
+      "score": 6235,
+      "phaseTicks": [
+        2862
+      ],
+      "peakBullets": 374,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "탐식의 귀 베엘제붑 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-glutton-dividing-maw-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-07-hell-phase-2.moves.gz",
+        "bytes": 371,
+        "sha256": "bd079ae30cc3047d4a5ca0248c65f5db810040cc7f7d097807e56c4c05e7cca8",
+        "ticks": 2862
+      },
+      "actualLaserObservations": {
+        "committedRays": 120,
+        "activatedRays": 112,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 15,
+        "modes": [
+          "fork"
+        ]
+      }
+    },
+    {
+      "bossIndex": 8,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "asmodeus",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2886,
+      "hp": 5,
+      "hits": 0,
+      "score": 7860,
+      "phaseTicks": [
+        2886
+      ],
+      "peakBullets": 72,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "색욕의 귀 아스모데우스 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [],
+      "firstIdentityTick": null,
+      "input": {
+        "file": "v28-natural-inputs/boss-08-gentle-phase-2.moves.gz",
+        "bytes": 253,
+        "sha256": "34ce90a61ee8b0141b536267b3b35908de2e57eae50a01838c350c07b683eb03",
+        "ticks": 2886
+      },
+      "actualLaserObservations": {
+        "committedRays": 40,
+        "activatedRays": 40,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 11,
+        "modes": [
+          "triads"
+        ]
+      }
+    },
+    {
+      "bossIndex": 8,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "asmodeus",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2764,
+      "hp": 3,
+      "hits": 0,
+      "score": 7100,
+      "phaseTicks": [
+        2764
+      ],
+      "peakBullets": 81,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "색욕의 귀 아스모데우스 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [],
+      "firstIdentityTick": null,
+      "input": {
+        "file": "v28-natural-inputs/boss-08-normal-phase-2.moves.gz",
+        "bytes": 277,
+        "sha256": "e49d4c074746fd8c38253fee3a7ea209ab4c55b48a2eb3506f82a11a1c8668d7",
+        "ticks": 2764
+      },
+      "actualLaserObservations": {
+        "committedRays": 84,
+        "activatedRays": 84,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "triads"
+        ]
+      }
+    },
+    {
+      "bossIndex": 8,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "asmodeus",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2544,
+      "hp": 2,
+      "hits": 1,
+      "score": 7080,
+      "phaseTicks": [
+        2544
+      ],
+      "peakBullets": 170,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "색욕의 귀 아스모데우스 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [],
+      "firstIdentityTick": null,
+      "input": {
+        "file": "v28-natural-inputs/boss-08-hell-phase-2.moves.gz",
+        "bytes": 380,
+        "sha256": "a7cd4489b0e4ead7d3bedebc19d6ac6bdb0012a031936c1cfe60a804a8c423f8",
+        "ticks": 2544
+      },
+      "actualLaserObservations": {
+        "committedRays": 104,
+        "activatedRays": 102,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 18,
+        "modes": [
+          "triads"
+        ]
+      }
+    },
+    {
+      "bossIndex": 9,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "mammon",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2711,
+      "hp": 5,
+      "hits": 0,
+      "score": 8100,
+      "phaseTicks": [
+        2711
+      ],
+      "peakBullets": 68,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "탐욕의 귀 맘몬 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-mammon-vault-dividends-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-09-gentle-phase-2.moves.gz",
+        "bytes": 261,
+        "sha256": "6eb577a55308f2706623a1e24e2e35d6ae14fd8fde4d4753ff9b22833b8e52c0",
+        "ticks": 2711
+      },
+      "actualLaserObservations": {
+        "committedRays": 40,
+        "activatedRays": 36,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 10,
+        "modes": [
+          "parallel"
+        ]
+      }
+    },
+    {
+      "bossIndex": 9,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "mammon",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2678,
+      "hp": 2,
+      "hits": 1,
+      "score": 6750,
+      "phaseTicks": [
+        2678
+      ],
+      "peakBullets": 86,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "탐욕의 귀 맘몬 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-mammon-vault-dividends-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-09-normal-phase-2.moves.gz",
+        "bytes": 282,
+        "sha256": "150341ce8ceca1c7f7c499759487a0dd4db2492003b3f69551bf9e04f3fdbf16",
+        "ticks": 2678
+      },
+      "actualLaserObservations": {
+        "committedRays": 60,
+        "activatedRays": 54,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 12,
+        "modes": [
+          "parallel"
+        ]
+      }
+    },
+    {
+      "bossIndex": 9,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "mammon",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2206,
+      "hp": 3,
+      "hits": 0,
+      "score": 7265,
+      "phaseTicks": [
+        2206
+      ],
+      "peakBullets": 144,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "탐욕의 귀 맘몬 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-mammon-vault-dividends-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-09-hell-phase-2.moves.gz",
+        "bytes": 294,
+        "sha256": "01e3d219bcd9698c9ab4750c1d0ec868e90d631e60cb3f9b2232328fb9555a13",
+        "ticks": 2206
+      },
+      "actualLaserObservations": {
+        "committedRays": 88,
+        "activatedRays": 88,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 16,
+        "modes": [
+          "parallel"
+        ]
+      }
+    },
+    {
+      "bossIndex": 10,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "wrath",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 2910,
+      "hp": 5,
+      "hits": 0,
+      "score": 8340,
+      "phaseTicks": [
+        2910
+      ],
+      "peakBullets": 111,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "분노의 귀 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-wrath-firework-fuse-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-10-gentle-phase-2.moves.gz",
+        "bytes": 285,
+        "sha256": "285b912b1e48ebf853d7485134caeef4892ab772786fb2f4d8dea9d8e6826524",
+        "ticks": 2910
+      },
+      "actualLaserObservations": {
+        "committedRays": 40,
+        "activatedRays": 40,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 10,
+        "modes": [
+          "cross"
+        ]
+      }
+    },
+    {
+      "bossIndex": 10,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "wrath",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2916,
+      "hp": 3,
+      "hits": 0,
+      "score": 7385,
+      "phaseTicks": [
+        2916
+      ],
+      "peakBullets": 134,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "분노의 귀 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-wrath-firework-fuse-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-10-normal-phase-2.moves.gz",
+        "bytes": 337,
+        "sha256": "a1869a3c0446c64d4891e56b22619b2dd05ac057ca9f1521ab296837d52255a3",
+        "ticks": 2916
+      },
+      "actualLaserObservations": {
+        "committedRays": 90,
+        "activatedRays": 90,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 12,
+        "modes": [
+          "cross"
+        ]
+      }
+    },
+    {
+      "bossIndex": 10,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "wrath",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 2840,
+      "hp": 3,
+      "hits": 0,
+      "score": 7445,
+      "phaseTicks": [
+        2840
+      ],
+      "peakBullets": 189,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "분노의 귀 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-wrath-firework-fuse-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-10-hell-phase-2.moves.gz",
+        "bytes": 403,
+        "sha256": "f38fdf2af551854510844874a2d41280f40bfe484227a2e406eb464b500e0664",
+        "ticks": 2840
+      },
+      "actualLaserObservations": {
+        "committedRays": 120,
+        "activatedRays": 112,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 16,
+        "modes": [
+          "cross"
+        ]
+      }
+    },
+    {
+      "bossIndex": 11,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "pride",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 3376,
+      "hp": 5,
+      "hits": 0,
+      "score": 8250,
+      "phaseTicks": [
+        3376
+      ],
+      "peakBullets": 84,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "교만의 회장 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-pride-calculated-keyboard-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-11-gentle-phase-2.moves.gz",
+        "bytes": 314,
+        "sha256": "fbee8fe7f65690bfee8bdf970095abdfe7f69d05dc0be939fca766ed2d6fdd34",
+        "ticks": 3376
+      },
+      "actualLaserObservations": {
+        "committedRays": 48,
+        "activatedRays": 47,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 11,
+        "modes": [
+          "piano"
+        ]
+      }
+    },
+    {
+      "bossIndex": 11,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "pride",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 3204,
+      "hp": 2,
+      "hits": 1,
+      "score": 7020,
+      "phaseTicks": [
+        3204
+      ],
+      "peakBullets": 94,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "교만의 회장 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-pride-calculated-keyboard-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-11-normal-phase-2.moves.gz",
+        "bytes": 313,
+        "sha256": "46cddd4fb0523c19fb7cba9addd4db1d417f8d1a3270864c36691e68bc0b414f",
+        "ticks": 3204
+      },
+      "actualLaserObservations": {
+        "committedRays": 96,
+        "activatedRays": 96,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "piano"
+        ]
+      }
+    },
+    {
+      "bossIndex": 11,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "pride",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 3255,
+      "hp": 1,
+      "hits": 2,
+      "score": 6925,
+      "phaseTicks": [
+        3255
+      ],
+      "peakBullets": 163,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "교만의 회장 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-pride-calculated-keyboard-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-11-hell-phase-2.moves.gz",
+        "bytes": 476,
+        "sha256": "160f095d3bf4747646a9efe9cb98cbf1199d166fcdbc3a138fb4729b9af55a0d",
+        "ticks": 3255
+      },
+      "actualLaserObservations": {
+        "committedRays": 136,
+        "activatedRays": 128,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 19,
+        "modes": [
+          "piano"
+        ]
+      }
+    },
+    {
+      "bossIndex": 12,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "controller-army",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1298,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1298
+      ],
+      "peakBullets": 105,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 방어의 군단 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-defense-relay-battery-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-12-gentle-phase-2.moves.gz",
+        "bytes": 148,
+        "sha256": "258b11192c3f0eacc296b5c2a65b209708781622c53d3666d15c2ba603fbd726",
+        "ticks": 1298
+      },
+      "actualLaserObservations": {
+        "committedRays": 20,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 12,
+        "modes": [
+          "relay"
+        ]
+      }
+    },
+    {
+      "bossIndex": 12,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "controller-army",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1298,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1298
+      ],
+      "peakBullets": 109,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 방어의 군단 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-defense-relay-battery-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-12-normal-phase-2.moves.gz",
+        "bytes": 198,
+        "sha256": "18d997a9f15f7c70af161ea99680220c98525fd1b795ec5622aa694959b073a0",
+        "ticks": 1298
+      },
+      "actualLaserObservations": {
+        "committedRays": 42,
+        "activatedRays": 36,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 14,
+        "modes": [
+          "relay"
+        ]
+      }
+    },
+    {
+      "bossIndex": 12,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "controller-army",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1237,
+      "hp": 3,
+      "hits": 0,
+      "score": 6530,
+      "phaseTicks": [
+        1237
+      ],
+      "peakBullets": 123,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 방어의 군단 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-defense-relay-battery-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-12-hell-phase-2.moves.gz",
+        "bytes": 197,
+        "sha256": "bc5dd5ab9bbaea5e5545de4df4dcfe01dd8097e841ad0a8a3ebff9b6d06dc72f",
+        "ticks": 1237
+      },
+      "actualLaserObservations": {
+        "committedRays": 48,
+        "activatedRays": 48,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 16,
+        "modes": [
+          "relay"
+        ]
+      }
+    },
+    {
+      "bossIndex": 13,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "controller-rescue",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1326,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1326
+      ],
+      "peakBullets": 142,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 잔인한 구원 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-mercy-closing-boundaries-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-13-gentle-phase-2.moves.gz",
+        "bytes": 84,
+        "sha256": "3bcac8dfcf9d72c75cd6d0055be8f9d8fe1acc5f8635483a980744d1c0510f37",
+        "ticks": 1326
+      },
+      "actualLaserObservations": {
+        "committedRays": 20,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 10,
+        "modes": [
+          "parallel"
+        ]
+      }
+    },
+    {
+      "bossIndex": 13,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "controller-rescue",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1333,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1333
+      ],
+      "peakBullets": 153,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 잔인한 구원 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-mercy-closing-boundaries-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-13-normal-phase-2.moves.gz",
+        "bytes": 104,
+        "sha256": "0556d5b576442c4c3331b6d44032689915b8d67b64984b28ce303b84f8ee1620",
+        "ticks": 1333
+      },
+      "actualLaserObservations": {
+        "committedRays": 30,
+        "activatedRays": 25,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "parallel"
+        ]
+      }
+    },
+    {
+      "bossIndex": 13,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "controller-rescue",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1262,
+      "hp": 2,
+      "hits": 1,
+      "score": 6030,
+      "phaseTicks": [
+        1262
+      ],
+      "peakBullets": 176,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 잔인한 구원 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-mercy-closing-boundaries-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-13-hell-phase-2.moves.gz",
+        "bytes": 165,
+        "sha256": "11738c3563ef53529c7be4c5de0c902a90fc9c8fe6005c855b18bc5342e3eac6",
+        "ticks": 1262
+      },
+      "actualLaserObservations": {
+        "committedRays": 48,
+        "activatedRays": 48,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "parallel"
+        ]
+      }
+    },
+    {
+      "bossIndex": 14,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "controller-veto",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1352,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1352
+      ],
+      "peakBullets": 102,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 시스템의 거부권 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-veto-stop-packets-v27"
+      ],
+      "firstIdentityTick": 751,
+      "input": {
+        "file": "v28-natural-inputs/boss-14-gentle-phase-2.moves.gz",
+        "bytes": 109,
+        "sha256": "72c508b08b0c15dfd2e2de291fae34b83fa42a89a0e7417d7653d1eee58f3b99",
+        "ticks": 1352
+      },
+      "actualLaserObservations": {
+        "committedRays": 20,
+        "activatedRays": 17,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 11,
+        "modes": [
+          "reticle"
+        ]
+      }
+    },
+    {
+      "bossIndex": 14,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "controller-veto",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1344,
+      "hp": 3,
+      "hits": 0,
+      "score": 6515,
+      "phaseTicks": [
+        1344
+      ],
+      "peakBullets": 109,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 시스템의 거부권 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-veto-stop-packets-v27"
+      ],
+      "firstIdentityTick": 751,
+      "input": {
+        "file": "v28-natural-inputs/boss-14-normal-phase-2.moves.gz",
+        "bytes": 150,
+        "sha256": "78d1d72e114fd65d1a03c604de0b2a359101f515fda2559288394fa82a2f2830",
+        "ticks": 1344
+      },
+      "actualLaserObservations": {
+        "committedRays": 30,
+        "activatedRays": 26,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "reticle"
+        ]
+      }
+    },
+    {
+      "bossIndex": 14,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "controller-veto",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1329,
+      "hp": 2,
+      "hits": 1,
+      "score": 6015,
+      "phaseTicks": [
+        1329
+      ],
+      "peakBullets": 122,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 시스템의 거부권 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-veto-stop-packets-v27"
+      ],
+      "firstIdentityTick": 751,
+      "input": {
+        "file": "v28-natural-inputs/boss-14-hell-phase-2.moves.gz",
+        "bytes": 178,
+        "sha256": "f647e82c4198d60fdeacb3e95c473f2d60def3e417cf75370057e8dff0acc135",
+        "ticks": 1329
+      },
+      "actualLaserObservations": {
+        "committedRays": 56,
+        "activatedRays": 48,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 16,
+        "modes": [
+          "reticle"
+        ]
+      }
+    },
+    {
+      "bossIndex": 15,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "controller-authority",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1407,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1407
+      ],
+      "peakBullets": 105,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 관리자 권한 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-feedback-return-current-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-15-gentle-phase-2.moves.gz",
+        "bytes": 82,
+        "sha256": "6ad56e648972afbe097aeb84b63b5f673d85c1968f25c55c19a5bb03bb52b4ea",
+        "ticks": 1407
+      },
+      "actualLaserObservations": {
+        "committedRays": 16,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 10,
+        "modes": [
+          "reflect"
+        ]
+      }
+    },
+    {
+      "bossIndex": 15,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "controller-authority",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1415,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1415
+      ],
+      "peakBullets": 110,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 관리자 권한 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-feedback-return-current-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-15-normal-phase-2.moves.gz",
+        "bytes": 139,
+        "sha256": "71453a46d5e8be575d214a59cadd207a8e49d0cfda24eefdc848d74a1e9759c5",
+        "ticks": 1415
+      },
+      "actualLaserObservations": {
+        "committedRays": 22,
+        "activatedRays": 22,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "reflect"
+        ]
+      }
+    },
+    {
+      "bossIndex": 15,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "controller-authority",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1413,
+      "hp": 3,
+      "hits": 0,
+      "score": 6545,
+      "phaseTicks": [
+        1413
+      ],
+      "peakBullets": 123,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 관리자 권한 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-feedback-return-current-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-15-hell-phase-2.moves.gz",
+        "bytes": 191,
+        "sha256": "92ea283062e8f02372bcf6e8e97e9623a3480175db42f556fffd3cd55f53d071",
+        "ticks": 1413
+      },
+      "actualLaserObservations": {
+        "committedRays": 44,
+        "activatedRays": 44,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 15,
+        "modes": [
+          "reflect"
+        ]
+      }
+    },
+    {
+      "bossIndex": 16,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "controller-migration",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1434,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1434
+      ],
+      "peakBullets": 90,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 중앙 코어 이주실 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-migration-branch-gates-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-16-gentle-phase-2.moves.gz",
+        "bytes": 68,
+        "sha256": "ebf6aafc8e21e292b59072774c48d758ee23336b2220e22255d9d23127c2df33",
+        "ticks": 1434
+      },
+      "actualLaserObservations": {
+        "committedRays": 20,
+        "activatedRays": 20,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 11,
+        "modes": [
+          "fork"
+        ]
+      }
+    },
+    {
+      "bossIndex": 16,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "controller-migration",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1433,
+      "hp": 3,
+      "hits": 0,
+      "score": 6515,
+      "phaseTicks": [
+        1433
+      ],
+      "peakBullets": 94,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 중앙 코어 이주실 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-migration-branch-gates-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-16-normal-phase-2.moves.gz",
+        "bytes": 86,
+        "sha256": "cf96e687914ca81d9a20d2a172434aa0f337d558400c1ecb7143a7ae14abcbf6",
+        "ticks": 1433
+      },
+      "actualLaserObservations": {
+        "committedRays": 30,
+        "activatedRays": 30,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "fork"
+        ]
+      }
+    },
+    {
+      "bossIndex": 16,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "controller-migration",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1412,
+      "hp": 1,
+      "hits": 2,
+      "score": 5545,
+      "phaseTicks": [
+        1412
+      ],
+      "peakBullets": 114,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 중앙 코어 이주실 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-migration-branch-gates-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-16-hell-phase-2.moves.gz",
+        "bytes": 141,
+        "sha256": "5bbb36686d19307fd802eee4dee3e4fafcdf578208b72dcb865cbb1e104f6b8d",
+        "ticks": 1412
+      },
+      "actualLaserObservations": {
+        "committedRays": 56,
+        "activatedRays": 56,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 14,
+        "modes": [
+          "fork"
+        ]
+      }
+    },
+    {
+      "bossIndex": 17,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "controller-memory-gate",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1497,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1497
+      ],
+      "peakBullets": 110,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제자 · 기억의 문 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-memory-repeat-separation-v27"
+      ],
+      "firstIdentityTick": 751,
+      "input": {
+        "file": "v28-natural-inputs/boss-17-gentle-phase-2.moves.gz",
+        "bytes": 151,
+        "sha256": "b5f530a8d5a8b56240de2e3e3afbcb1530bc317f584830ea8d9b5be9a5fb5dad",
+        "ticks": 1497
+      },
+      "actualLaserObservations": {
+        "committedRays": 20,
+        "activatedRays": 20,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 12,
+        "modes": [
+          "bars"
+        ]
+      }
+    },
+    {
+      "bossIndex": 17,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "controller-memory-gate",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1495,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1495
+      ],
+      "peakBullets": 114,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제자 · 기억의 문 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-memory-repeat-separation-v27"
+      ],
+      "firstIdentityTick": 751,
+      "input": {
+        "file": "v28-natural-inputs/boss-17-normal-phase-2.moves.gz",
+        "bytes": 108,
+        "sha256": "c2407235d83a0d1f0d624261639ae76a489afdfcbd55956bca4a534b34bf9e7d",
+        "ticks": 1495
+      },
+      "actualLaserObservations": {
+        "committedRays": 36,
+        "activatedRays": 30,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 14,
+        "modes": [
+          "bars"
+        ]
+      }
+    },
+    {
+      "bossIndex": 17,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "controller-memory-gate",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1486,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1486
+      ],
+      "peakBullets": 132,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제자 · 기억의 문 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-memory-repeat-separation-v27"
+      ],
+      "firstIdentityTick": 751,
+      "input": {
+        "file": "v28-natural-inputs/boss-17-hell-phase-2.moves.gz",
+        "bytes": 178,
+        "sha256": "a1952cb641ed63eb058da6e5bc78026e6945129f4099f387117cbebf80f29c25",
+        "ticks": 1486
+      },
+      "actualLaserObservations": {
+        "committedRays": 64,
+        "activatedRays": 56,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 16,
+        "modes": [
+          "bars"
+        ]
+      }
+    },
+    {
+      "bossIndex": 18,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "goblin-chief",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1199,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1199
+      ],
+      "peakBullets": 83,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "고블린 두목 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-goblin-flute-arpeggio-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-18-gentle-phase-2.moves.gz",
+        "bytes": 136,
+        "sha256": "2c9d8caa24bc6c9de0d9df70912d8c2411bf13b20a44dc32c52bf2e5d060f556",
+        "ticks": 1199
+      },
+      "actualLaserObservations": {
+        "committedRays": 16,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 11,
+        "modes": [
+          "piano"
+        ]
+      }
+    },
+    {
+      "bossIndex": 18,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "goblin-chief",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1217,
+      "hp": 3,
+      "hits": 0,
+      "score": 6545,
+      "phaseTicks": [
+        1217
+      ],
+      "peakBullets": 79,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "고블린 두목 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-goblin-flute-arpeggio-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-18-normal-phase-2.moves.gz",
+        "bytes": 166,
+        "sha256": "d40f3dd70d95adbdb11cbbf4fd222e765d60c821e510c50026f045d9f754aa09",
+        "ticks": 1217
+      },
+      "actualLaserObservations": {
+        "committedRays": 36,
+        "activatedRays": 36,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "piano"
+        ]
+      }
+    },
+    {
+      "bossIndex": 18,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "goblin-chief",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1200,
+      "hp": 2,
+      "hits": 1,
+      "score": 6165,
+      "phaseTicks": [
+        1200
+      ],
+      "peakBullets": 135,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "고블린 두목 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-goblin-flute-arpeggio-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-18-hell-phase-2.moves.gz",
+        "bytes": 197,
+        "sha256": "6f07bc67eadaffc7e114348804f9e21e5efef0295391d39028bb468503452dd3",
+        "ticks": 1200
+      },
+      "actualLaserObservations": {
+        "committedRays": 48,
+        "activatedRays": 48,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 15,
+        "modes": [
+          "piano"
+        ]
+      }
+    },
+    {
+      "bossIndex": 19,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "fallen-knight",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1218,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1218
+      ],
+      "peakBullets": 63,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "타락천사 기사 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-knight-six-sword-wheel-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-19-gentle-phase-2.moves.gz",
+        "bytes": 90,
+        "sha256": "6e574a9bdeacf15dd08314bc41d9be3a7be953ba93e9039b52f2aea395e9ad50",
+        "ticks": 1218
+      },
+      "actualLaserObservations": {
+        "committedRays": 16,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "spokes"
+        ]
+      }
+    },
+    {
+      "bossIndex": 19,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "fallen-knight",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1218,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1218
+      ],
+      "peakBullets": 72,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "타락천사 기사 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-knight-six-sword-wheel-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-19-normal-phase-2.moves.gz",
+        "bytes": 79,
+        "sha256": "cb7d6bfd70efeb35af87c6d78cb07bc0e3c69644dad0075e5f34c1ecf2889ba4",
+        "ticks": 1218
+      },
+      "actualLaserObservations": {
+        "committedRays": 36,
+        "activatedRays": 36,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 15,
+        "modes": [
+          "spokes"
+        ]
+      }
+    },
+    {
+      "bossIndex": 19,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "fallen-knight",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1235,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1235
+      ],
+      "peakBullets": 107,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "타락천사 기사 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-knight-six-sword-wheel-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-19-hell-phase-2.moves.gz",
+        "bytes": 163,
+        "sha256": "6b2bfa8a7cf0283a2e234e483d3a2696de5778b2e8e1b1d4c2bfcc2677626098",
+        "ticks": 1235
+      },
+      "actualLaserObservations": {
+        "committedRays": 48,
+        "activatedRays": 48,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 16,
+        "modes": [
+          "spokes"
+        ]
+      }
+    },
+    {
+      "bossIndex": 20,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "insomnia",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1227,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1227
+      ],
+      "peakBullets": 168,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "불면귀 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-insomnia-drifting-mist-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-20-gentle-phase-2.moves.gz",
+        "bytes": 82,
+        "sha256": "1bcbfbbb8405b35abbbe499052ca419982c6b7cac631d2bb2aa8542c028e53cb",
+        "ticks": 1227
+      },
+      "actualLaserObservations": {
+        "committedRays": 16,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 12,
+        "modes": [
+          "parallel"
+        ]
+      }
+    },
+    {
+      "bossIndex": 20,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "insomnia",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1226,
+      "hp": 2,
+      "hits": 1,
+      "score": 6015,
+      "phaseTicks": [
+        1226
+      ],
+      "peakBullets": 173,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "불면귀 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-insomnia-drifting-mist-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-20-normal-phase-2.moves.gz",
+        "bytes": 88,
+        "sha256": "93ca7dd3806c0fa604ddde61eb09637491c7438101082071eb44280768b3f5eb",
+        "ticks": 1226
+      },
+      "actualLaserObservations": {
+        "committedRays": 24,
+        "activatedRays": 24,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 14,
+        "modes": [
+          "parallel"
+        ]
+      }
+    },
+    {
+      "bossIndex": 20,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "insomnia",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1252,
+      "hp": 2,
+      "hits": 1,
+      "score": 6015,
+      "phaseTicks": [
+        1252
+      ],
+      "peakBullets": 229,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "불면귀 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-insomnia-drifting-mist-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-20-hell-phase-2.moves.gz",
+        "bytes": 146,
+        "sha256": "47649bbbd6f9352807eecc65eb337fb45a74e72e0368f253c68a84c2eec6da9e",
+        "ticks": 1252
+      },
+      "actualLaserObservations": {
+        "committedRays": 48,
+        "activatedRays": 48,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 15,
+        "modes": [
+          "parallel"
+        ]
+      }
+    },
+    {
+      "bossIndex": 21,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "academy-defense",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1236,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1236
+      ],
+      "peakBullets": 45,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "최초명령 코어 방어 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-academy-turret-sonata-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-21-gentle-phase-2.moves.gz",
+        "bytes": 122,
+        "sha256": "071091c47240cc776af1be38b53469d0edf186b0634efdb8736ac34679074241",
+        "ticks": 1236
+      },
+      "actualLaserObservations": {
+        "committedRays": 16,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 12,
+        "modes": [
+          "relay"
+        ]
+      }
+    },
+    {
+      "bossIndex": 21,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "academy-defense",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1244,
+      "hp": 3,
+      "hits": 0,
+      "score": 6515,
+      "phaseTicks": [
+        1244
+      ],
+      "peakBullets": 48,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "최초명령 코어 방어 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-academy-turret-sonata-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-21-normal-phase-2.moves.gz",
+        "bytes": 203,
+        "sha256": "33163a2d649706d44a8e7eec7ee066a9dcd974ad07e417c7ce96f6bb378eeef3",
+        "ticks": 1244
+      },
+      "actualLaserObservations": {
+        "committedRays": 36,
+        "activatedRays": 36,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 14,
+        "modes": [
+          "relay"
+        ]
+      }
+    },
+    {
+      "bossIndex": 21,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "academy-defense",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1236,
+      "hp": 2,
+      "hits": 1,
+      "score": 6060,
+      "phaseTicks": [
+        1236
+      ],
+      "peakBullets": 80,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "최초명령 코어 방어 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-academy-turret-sonata-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-21-hell-phase-2.moves.gz",
+        "bytes": 221,
+        "sha256": "1d15fdb7c58eb0c5be80fa9f718c7e3b8f42f2047d0dd63116fefc60db36f2e7",
+        "ticks": 1236
+      },
+      "actualLaserObservations": {
+        "committedRays": 48,
+        "activatedRays": 48,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 16,
+        "modes": [
+          "relay"
+        ]
+      }
+    },
+    {
+      "bossIndex": 22,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "harvest-lower",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1252,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1252
+      ],
+      "peakBullets": 98,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "일반 수문장의 동력 연결 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-harvest-falling-tiers-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-22-gentle-phase-2.moves.gz",
+        "bytes": 127,
+        "sha256": "6c3e11bfa14f8b1983885e2e8b5a4c497eb19636f03808434ddff93a2ae201ec",
+        "ticks": 1252
+      },
+      "actualLaserObservations": {
+        "committedRays": 16,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 11,
+        "modes": [
+          "stairs"
+        ]
+      }
+    },
+    {
+      "bossIndex": 22,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "harvest-lower",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1235,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1235
+      ],
+      "peakBullets": 113,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "일반 수문장의 동력 연결 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-harvest-falling-tiers-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-22-normal-phase-2.moves.gz",
+        "bytes": 149,
+        "sha256": "2142d6406b0a9ee5630ebc058ceee3721c5e457a6520250f54522e6e74c61760",
+        "ticks": 1235
+      },
+      "actualLaserObservations": {
+        "committedRays": 24,
+        "activatedRays": 24,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "stairs"
+        ]
+      }
+    },
+    {
+      "bossIndex": 22,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "harvest-lower",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1253,
+      "hp": 3,
+      "hits": 0,
+      "score": 6530,
+      "phaseTicks": [
+        1253
+      ],
+      "peakBullets": 147,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "일반 수문장의 동력 연결 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-harvest-falling-tiers-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-22-hell-phase-2.moves.gz",
+        "bytes": 174,
+        "sha256": "cb9000a6f875b19776edaeed8a8d68935460b7af4e6cb52b169bf44df0d98f77",
+        "ticks": 1253
+      },
+      "actualLaserObservations": {
+        "committedRays": 48,
+        "activatedRays": 48,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 15,
+        "modes": [
+          "stairs"
+        ]
+      }
+    },
+    {
+      "bossIndex": 23,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "harvest-upper",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1253,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1253
+      ],
+      "peakBullets": 55,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "상급·대수문장의 교차 명령 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-upper-orders-checkerboard-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-23-gentle-phase-2.moves.gz",
+        "bytes": 93,
+        "sha256": "ece0e0b7d815fb7b1a8007f63de28992dec0910a81f9b362879fe44e24e49575",
+        "ticks": 1253
+      },
+      "actualLaserObservations": {
+        "committedRays": 16,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 15,
+        "modes": [
+          "cross"
+        ]
+      }
+    },
+    {
+      "bossIndex": 23,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "harvest-upper",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1254,
+      "hp": 3,
+      "hits": 0,
+      "score": 6515,
+      "phaseTicks": [
+        1254
+      ],
+      "peakBullets": 59,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "상급·대수문장의 교차 명령 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-upper-orders-checkerboard-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-23-normal-phase-2.moves.gz",
+        "bytes": 115,
+        "sha256": "175a48110e591de209658e7c1c6282ccc72e05e6885098914ac6131dce8bf1f6",
+        "ticks": 1254
+      },
+      "actualLaserObservations": {
+        "committedRays": 24,
+        "activatedRays": 24,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 17,
+        "modes": [
+          "cross"
+        ]
+      }
+    },
+    {
+      "bossIndex": 23,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "harvest-upper",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1280,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1280
+      ],
+      "peakBullets": 95,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "상급·대수문장의 교차 명령 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-upper-orders-checkerboard-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-23-hell-phase-2.moves.gz",
+        "bytes": 144,
+        "sha256": "10d745828d15562b136e00469879bd5515fa654954580474da3b5482af7d6779",
+        "ticks": 1280
+      },
+      "actualLaserObservations": {
+        "committedRays": 56,
+        "activatedRays": 48,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 16,
+        "modes": [
+          "cross"
+        ]
+      }
+    },
+    {
+      "bossIndex": 24,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "workshop-links",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1253,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1253
+      ],
+      "peakBullets": 80,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "검은 공방의 동력 접점 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-furnace-pipe-rebound-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-24-gentle-phase-2.moves.gz",
+        "bytes": 108,
+        "sha256": "3ae69aeb8b0378752fd73d42dcb09a3421977a075c74e86fefecfe001dcd2b8b",
+        "ticks": 1253
+      },
+      "actualLaserObservations": {
+        "committedRays": 12,
+        "activatedRays": 12,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 11,
+        "modes": [
+          "reflect"
+        ]
+      }
+    },
+    {
+      "bossIndex": 24,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "workshop-links",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1253,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1253
+      ],
+      "peakBullets": 85,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "검은 공방의 동력 접점 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-furnace-pipe-rebound-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-24-normal-phase-2.moves.gz",
+        "bytes": 105,
+        "sha256": "d3f0fbb97f902b39977a2cc27c00d2649189fd9d0d5fa97a7f8b239eb3c2bc23",
+        "ticks": 1253
+      },
+      "actualLaserObservations": {
+        "committedRays": 20,
+        "activatedRays": 20,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "reflect"
+        ]
+      }
+    },
+    {
+      "bossIndex": 24,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "workshop-links",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1289,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1289
+      ],
+      "peakBullets": 94,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "검은 공방의 동력 접점 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-furnace-pipe-rebound-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-24-hell-phase-2.moves.gz",
+        "bytes": 136,
+        "sha256": "a54f20ea71755625c3c724349221731aa4bffc66d4ba3e317b45dfd477c46817",
+        "ticks": 1289
+      },
+      "actualLaserObservations": {
+        "committedRays": 44,
+        "activatedRays": 36,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 15,
+        "modes": [
+          "reflect"
+        ]
+      }
+    },
+    {
+      "bossIndex": 25,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "neuron-gate",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1271,
+      "hp": 5,
+      "hits": 0,
+      "score": 7515,
+      "phaseTicks": [
+        1271
+      ],
+      "peakBullets": 82,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "뉴런 게이트의 강제 연결 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-neural-command-serpents-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-25-gentle-phase-2.moves.gz",
+        "bytes": 88,
+        "sha256": "08f7920f6d5c3c11417e4d06b47404101e826d519845830654b79e442f3efa62",
+        "ticks": 1271
+      },
+      "actualLaserObservations": {
+        "committedRays": 16,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 9,
+        "modes": [
+          "fork"
+        ]
+      }
+    },
+    {
+      "bossIndex": 25,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "neuron-gate",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1280,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1280
+      ],
+      "peakBullets": 84,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "뉴런 게이트의 강제 연결 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-neural-command-serpents-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-25-normal-phase-2.moves.gz",
+        "bytes": 119,
+        "sha256": "8f743acf68ae51bae52254d58ba9d3ca6d2ee1ec9b3c7d06092edf641d9140e8",
+        "ticks": 1280
+      },
+      "actualLaserObservations": {
+        "committedRays": 42,
+        "activatedRays": 36,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 12,
+        "modes": [
+          "fork"
+        ]
+      }
+    },
+    {
+      "bossIndex": 25,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "neuron-gate",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1280,
+      "hp": 2,
+      "hits": 1,
+      "score": 6030,
+      "phaseTicks": [
+        1280
+      ],
+      "peakBullets": 98,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "뉴런 게이트의 강제 연결 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-neural-command-serpents-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-25-hell-phase-2.moves.gz",
+        "bytes": 137,
+        "sha256": "2e4c18c48cb919c3f17ffc4c7f23a97179d2bb8962da2e0a0f69af700fdce3f4",
+        "ticks": 1280
+      },
+      "actualLaserObservations": {
+        "committedRays": 56,
+        "activatedRays": 48,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 16,
+        "modes": [
+          "fork"
+        ]
+      }
+    },
+    {
+      "bossIndex": 26,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "memory-grave",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1281,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1281
+      ],
+      "peakBullets": 149,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "망각의 묘지 삭제 명령 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-grave-command-seals-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-26-gentle-phase-2.moves.gz",
+        "bytes": 66,
+        "sha256": "7becb6ee4cecec93ad3966592569d6bf92cd6f4286d99d1b067f4cfcb115e341",
+        "ticks": 1281
+      },
+      "actualLaserObservations": {
+        "committedRays": 20,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 12,
+        "modes": [
+          "spokes"
+        ]
+      }
+    },
+    {
+      "bossIndex": 26,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "memory-grave",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1281,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1281
+      ],
+      "peakBullets": 143,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "망각의 묘지 삭제 명령 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-grave-command-seals-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-26-normal-phase-2.moves.gz",
+        "bytes": 89,
+        "sha256": "2af588c3b01a861a32578b4a26c4aadc6c7ac35c10ad64097ba654d55a54d452",
+        "ticks": 1281
+      },
+      "actualLaserObservations": {
+        "committedRays": 30,
+        "activatedRays": 24,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 14,
+        "modes": [
+          "spokes"
+        ]
+      }
+    },
+    {
+      "bossIndex": 26,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "memory-grave",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1298,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1298
+      ],
+      "peakBullets": 160,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "망각의 묘지 삭제 명령 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-grave-command-seals-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-26-hell-phase-2.moves.gz",
+        "bytes": 93,
+        "sha256": "66d5eac114704714e80daff50cf6243e2330027dc4c08764552ac1bef3bc3740",
+        "ticks": 1298
+      },
+      "actualLaserObservations": {
+        "committedRays": 56,
+        "activatedRays": 48,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 15,
+        "modes": [
+          "spokes"
+        ]
+      }
+    },
+    {
+      "bossIndex": 27,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "collapse-rings",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1244,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1244
+      ],
+      "peakBullets": 94,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "붕괴 의식장의 여섯 명령 고리 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-collapse-two-triads-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-27-gentle-phase-2.moves.gz",
+        "bytes": 129,
+        "sha256": "787ed7a2deded54b8bd76069c1b80fd9e8a84d8af497d7132103e77d8f7db005",
+        "ticks": 1244
+      },
+      "actualLaserObservations": {
+        "committedRays": 16,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "triads"
+        ]
+      }
+    },
+    {
+      "bossIndex": 27,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "collapse-rings",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1244,
+      "hp": 3,
+      "hits": 0,
+      "score": 6515,
+      "phaseTicks": [
+        1244
+      ],
+      "peakBullets": 93,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "붕괴 의식장의 여섯 명령 고리 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-collapse-two-triads-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-27-normal-phase-2.moves.gz",
+        "bytes": 108,
+        "sha256": "79288d1d92b6b9fa9ca539336ea4678d409b8455e8b48d3655bd5673cfe4e6cc",
+        "ticks": 1244
+      },
+      "actualLaserObservations": {
+        "committedRays": 24,
+        "activatedRays": 24,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 15,
+        "modes": [
+          "triads"
+        ]
+      }
+    },
+    {
+      "bossIndex": 27,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "collapse-rings",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1246,
+      "hp": 2,
+      "hits": 1,
+      "score": 6015,
+      "phaseTicks": [
+        1246
+      ],
+      "peakBullets": 115,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "붕괴 의식장의 여섯 명령 고리 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-collapse-two-triads-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-27-hell-phase-2.moves.gz",
+        "bytes": 175,
+        "sha256": "e2fb3f6299e1034171caf833c597e201b9df7f50c239741d37977ec0a6e73b19",
+        "ticks": 1246
+      },
+      "actualLaserObservations": {
+        "committedRays": 48,
+        "activatedRays": 48,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 18,
+        "modes": [
+          "triads"
+        ]
+      }
+    },
+    {
+      "bossIndex": 28,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "arbelia-release",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1281,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1281
+      ],
+      "peakBullets": 113,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "아르벨리아의 변조 명령 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-arbelia-deferred-threads-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-28-gentle-phase-2.moves.gz",
+        "bytes": 85,
+        "sha256": "152045e823f5a669607c0d45bf409dbcc048432ff0c75426b832f5f99078e53e",
+        "ticks": 1281
+      },
+      "actualLaserObservations": {
+        "committedRays": 20,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 10,
+        "modes": [
+          "fork"
+        ]
+      }
+    },
+    {
+      "bossIndex": 28,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "arbelia-release",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1281,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1281
+      ],
+      "peakBullets": 124,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "아르벨리아의 변조 명령 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-arbelia-deferred-threads-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-28-normal-phase-2.moves.gz",
+        "bytes": 145,
+        "sha256": "6ec781cfd7be2ed51c94885f1dcb7cc86275dd3dda9d68e86a1924a4a8a37905",
+        "ticks": 1281
+      },
+      "actualLaserObservations": {
+        "committedRays": 30,
+        "activatedRays": 24,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 12,
+        "modes": [
+          "fork"
+        ]
+      }
+    },
+    {
+      "bossIndex": 28,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "arbelia-release",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1297,
+      "hp": 2,
+      "hits": 1,
+      "score": 6030,
+      "phaseTicks": [
+        1297
+      ],
+      "peakBullets": 131,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "아르벨리아의 변조 명령 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-arbelia-deferred-threads-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-28-hell-phase-2.moves.gz",
+        "bytes": 144,
+        "sha256": "ed3051757d98e103408ed828649711b91a4398f079e4f10de70c7b9f27fa765d",
+        "ticks": 1297
+      },
+      "actualLaserObservations": {
+        "committedRays": 40,
+        "activatedRays": 32,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 16,
+        "modes": [
+          "fork"
+        ]
+      }
+    },
+    {
+      "bossIndex": 29,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "siren-mor",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1304,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1304
+      ],
+      "peakBullets": 193,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "세이렌 모르 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-siren-clock-hands-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-29-gentle-phase-2.moves.gz",
+        "bytes": 144,
+        "sha256": "2fb49c29c486773e094ea7867ec1db93aee6d69de634ec045b55f005286e3885",
+        "ticks": 1304
+      },
+      "actualLaserObservations": {
+        "committedRays": 20,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "spokes"
+        ]
+      }
+    },
+    {
+      "bossIndex": 29,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "siren-mor",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1295,
+      "hp": 3,
+      "hits": 0,
+      "score": 6530,
+      "phaseTicks": [
+        1295
+      ],
+      "peakBullets": 208,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "세이렌 모르 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-siren-clock-hands-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-29-normal-phase-2.moves.gz",
+        "bytes": 151,
+        "sha256": "75f174e803ca4f9dd66e4c841e21612e96f6319530c081a87af1b000c9e2db9e",
+        "ticks": 1295
+      },
+      "actualLaserObservations": {
+        "committedRays": 42,
+        "activatedRays": 36,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 16,
+        "modes": [
+          "spokes"
+        ]
+      }
+    },
+    {
+      "bossIndex": 29,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "siren-mor",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1314,
+      "hp": 2,
+      "hits": 1,
+      "score": 6225,
+      "phaseTicks": [
+        1314
+      ],
+      "peakBullets": 345,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "세이렌 모르 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-siren-clock-hands-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-29-hell-phase-2.moves.gz",
+        "bytes": 211,
+        "sha256": "24ceaba0d6071aa19a24f7fb393abc8ac068797fc92416d3cd1ec4cdb976b117",
+        "ticks": 1314
+      },
+      "actualLaserObservations": {
+        "committedRays": 56,
+        "activatedRays": 48,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 18,
+        "modes": [
+          "spokes"
+        ]
+      }
+    },
+    {
+      "bossIndex": 30,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "castle-nightmare",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1291,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1291
+      ],
+      "peakBullets": 126,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "공동 EGO 코어를 빼앗은 우두머리 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-castle-dual-owner-boundary-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-30-gentle-phase-2.moves.gz",
+        "bytes": 137,
+        "sha256": "7b1860ced25c95f6b972714e28969f3b65739692e703990c14d034edaf476de0",
+        "ticks": 1291
+      },
+      "actualLaserObservations": {
+        "committedRays": 20,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 11,
+        "modes": [
+          "cross"
+        ]
+      }
+    },
+    {
+      "bossIndex": 30,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "castle-nightmare",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1271,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1271
+      ],
+      "peakBullets": 123,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "공동 EGO 코어를 빼앗은 우두머리 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-castle-dual-owner-boundary-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-30-normal-phase-2.moves.gz",
+        "bytes": 163,
+        "sha256": "06e87332f8330102d7a7b0835045165c078e8ee330386b23bd424cbf217d2057",
+        "ticks": 1271
+      },
+      "actualLaserObservations": {
+        "committedRays": 24,
+        "activatedRays": 24,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "cross"
+        ]
+      }
+    },
+    {
+      "bossIndex": 30,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "castle-nightmare",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1304,
+      "hp": 3,
+      "hits": 0,
+      "score": 6560,
+      "phaseTicks": [
+        1304
+      ],
+      "peakBullets": 197,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "공동 EGO 코어를 빼앗은 우두머리 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-castle-dual-owner-boundary-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-30-hell-phase-2.moves.gz",
+        "bytes": 181,
+        "sha256": "0a7906bc5bde6e9f06ba7bdfa5e0b6a3bcbe1d2207786ef3564c983e5f73acc7",
+        "ticks": 1304
+      },
+      "actualLaserObservations": {
+        "committedRays": 56,
+        "activatedRays": 48,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 15,
+        "modes": [
+          "cross"
+        ]
+      }
+    },
+    {
+      "bossIndex": 31,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "causal-enforcer",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1291,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1291
+      ],
+      "peakBullets": 148,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "파란불 집행체 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-causal-three-delayed-locks-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-31-gentle-phase-2.moves.gz",
+        "bytes": 94,
+        "sha256": "661162c8e6815db66cbef8313845d9429c8524871409fae5b6680c36a11a5a7b",
+        "ticks": 1291
+      },
+      "actualLaserObservations": {
+        "committedRays": 20,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 11,
+        "modes": [
+          "reticle"
+        ]
+      }
+    },
+    {
+      "bossIndex": 31,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "causal-enforcer",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1281,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1281
+      ],
+      "peakBullets": 140,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "파란불 집행체 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-causal-three-delayed-locks-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-31-normal-phase-2.moves.gz",
+        "bytes": 121,
+        "sha256": "5b13572a8254ac8c56e875dfdc789641c6a3173b94d655571008933bf2e2f1e6",
+        "ticks": 1281
+      },
+      "actualLaserObservations": {
+        "committedRays": 30,
+        "activatedRays": 24,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "reticle"
+        ]
+      }
+    },
+    {
+      "bossIndex": 31,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "causal-enforcer",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1299,
+      "hp": 3,
+      "hits": 0,
+      "score": 6515,
+      "phaseTicks": [
+        1299
+      ],
+      "peakBullets": 146,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "파란불 집행체 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-causal-three-delayed-locks-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-31-hell-phase-2.moves.gz",
+        "bytes": 161,
+        "sha256": "0b2eb543c78fec138f28758c1ed30382f0eca4d687bb12b47cc3e4f36fbb775e",
+        "ticks": 1299
+      },
+      "actualLaserObservations": {
+        "committedRays": 56,
+        "activatedRays": 48,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 18,
+        "modes": [
+          "reticle"
+        ]
+      }
+    },
+    {
+      "bossIndex": 32,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "cult-network",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1254,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1254
+      ],
+      "peakBullets": 104,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "흑장미단의 외곽 지배 회로 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-cult-reverse-domination-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-32-gentle-phase-2.moves.gz",
+        "bytes": 99,
+        "sha256": "41425f022efd3482a64b7c8ee2d4f6eaf7033486f446965c38f3d41f8e0bd246",
+        "ticks": 1254
+      },
+      "actualLaserObservations": {
+        "committedRays": 16,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 10,
+        "modes": [
+          "relay"
+        ]
+      }
+    },
+    {
+      "bossIndex": 32,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "cult-network",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1247,
+      "hp": 3,
+      "hits": 0,
+      "score": 6515,
+      "phaseTicks": [
+        1247
+      ],
+      "peakBullets": 112,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "흑장미단의 외곽 지배 회로 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-cult-reverse-domination-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-32-normal-phase-2.moves.gz",
+        "bytes": 117,
+        "sha256": "1736f141c289dd71b7d16f22608bf757ca57185ab1af4c027215c8d5c4785ea5",
+        "ticks": 1247
+      },
+      "actualLaserObservations": {
+        "committedRays": 36,
+        "activatedRays": 36,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "relay"
+        ]
+      }
+    },
+    {
+      "bossIndex": 32,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "cult-network",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1254,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1254
+      ],
+      "peakBullets": 164,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "흑장미단의 외곽 지배 회로 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-cult-reverse-domination-v27"
+      ],
+      "firstIdentityTick": 151,
+      "input": {
+        "file": "v28-natural-inputs/boss-32-hell-phase-2.moves.gz",
+        "bytes": 179,
+        "sha256": "566c7c2bd1b1186d8fdc0b3d03ba6991a1585644d883deed3306d743f3a63be7",
+        "ticks": 1254
+      },
+      "actualLaserObservations": {
+        "committedRays": 48,
+        "activatedRays": 48,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 15,
+        "modes": [
+          "relay"
+        ]
+      }
+    },
+    {
+      "bossIndex": 33,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "cult-circuit-pair",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1239,
+      "hp": 5,
+      "hits": 0,
+      "score": 7500,
+      "phaseTicks": [
+        1239
+      ],
+      "peakBullets": 127,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "한리안·백이온의 합일 회로 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-circuit-cross-and-shield-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-33-gentle-phase-2.moves.gz",
+        "bytes": 113,
+        "sha256": "08d5869991fd8a108ddcee3d5d4e09a8c2ed1f5c6416e0ea0bddf72ebce4332d",
+        "ticks": 1239
+      },
+      "actualLaserObservations": {
+        "committedRays": 16,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 11,
+        "modes": [
+          "fork",
+          "parallel"
+        ]
+      }
+    },
+    {
+      "bossIndex": 33,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "cult-circuit-pair",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1244,
+      "hp": 3,
+      "hits": 0,
+      "score": 6515,
+      "phaseTicks": [
+        1244
+      ],
+      "peakBullets": 142,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "한리안·백이온의 합일 회로 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-circuit-cross-and-shield-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-33-normal-phase-2.moves.gz",
+        "bytes": 130,
+        "sha256": "51138be4d826d3db8f12a88713c3d829e44e99c71493a169cfaabe960e3ad38c",
+        "ticks": 1244
+      },
+      "actualLaserObservations": {
+        "committedRays": 24,
+        "activatedRays": 24,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 14,
+        "modes": [
+          "fork",
+          "parallel"
+        ]
+      }
+    },
+    {
+      "bossIndex": 33,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "cult-circuit-pair",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1246,
+      "hp": 2,
+      "hits": 1,
+      "score": 6075,
+      "phaseTicks": [
+        1246
+      ],
+      "peakBullets": 227,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "한리안·백이온의 합일 회로 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-circuit-cross-and-shield-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-33-hell-phase-2.moves.gz",
+        "bytes": 180,
+        "sha256": "6e55916b1eb943fa754ba2b35af39eee8f0afa3e967848eaaa9d42753f05677a",
+        "ticks": 1246
+      },
+      "actualLaserObservations": {
+        "committedRays": 48,
+        "activatedRays": 48,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 16,
+        "modes": [
+          "fork",
+          "parallel"
+        ]
+      }
+    },
+    {
+      "bossIndex": 34,
+      "phase": 2,
+      "difficulty": "gentle",
+      "combatRevision": 28,
+      "bossId": "cult-leader",
+      "startHP": 5,
+      "stage": "won",
+      "ticks": 1298,
+      "hp": 5,
+      "hits": 0,
+      "score": 7515,
+      "phaseTicks": [
+        1298
+      ],
+      "peakBullets": 136,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "교만의 사이보그 교주 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-authority-fold-stitch-impact-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-34-gentle-phase-2.moves.gz",
+        "bytes": 190,
+        "sha256": "0ab4c7e6dd86a1e2d30a58ae100336cea9004ddf52a5d1941ed1e61408413310",
+        "ticks": 1298
+      },
+      "actualLaserObservations": {
+        "committedRays": 20,
+        "activatedRays": 16,
+        "peakNewLaserBodies": 4,
+        "peakAllLaserBodies": 11,
+        "modes": [
+          "piano"
+        ]
+      }
+    },
+    {
+      "bossIndex": 34,
+      "phase": 2,
+      "difficulty": "normal",
+      "combatRevision": 28,
+      "bossId": "cult-leader",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1290,
+      "hp": 1,
+      "hits": 2,
+      "score": 5590,
+      "phaseTicks": [
+        1290
+      ],
+      "peakBullets": 141,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "교만의 사이보그 교주 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-authority-fold-stitch-impact-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-34-normal-phase-2.moves.gz",
+        "bytes": 204,
+        "sha256": "56904db5332422186fe92b5e1d86d7c1c258b8804fcb261ed5ff5c0d32e19fae",
+        "ticks": 1290
+      },
+      "actualLaserObservations": {
+        "committedRays": 42,
+        "activatedRays": 36,
+        "peakNewLaserBodies": 6,
+        "peakAllLaserBodies": 13,
+        "modes": [
+          "piano"
+        ]
+      }
+    },
+    {
+      "bossIndex": 34,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 28,
+      "bossId": "cult-leader",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1325,
+      "hp": 2,
+      "hits": 1,
+      "score": 6120,
+      "phaseTicks": [
+        1325
+      ],
+      "peakBullets": 208,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "교만의 사이보그 교주 · 연습 완료",
+      "enteredPhases": [
+        2
+      ],
+      "identityPatternIds": [
+        "identity-authority-fold-stitch-impact-v27"
+      ],
+      "firstIdentityTick": 103,
+      "input": {
+        "file": "v28-natural-inputs/boss-34-hell-phase-2.moves.gz",
+        "bytes": 188,
+        "sha256": "6a8f279af3e259e4dc6856c92a7e3b9026146953d1d59b199bfbbaef636dfb90",
+        "ticks": 1325
+      },
+      "actualLaserObservations": {
+        "committedRays": 56,
+        "activatedRays": 48,
+        "peakNewLaserBodies": 8,
+        "peakAllLaserBodies": 18,
+        "modes": [
+          "piano"
+        ]
+      }
+    }
+  ]
+}

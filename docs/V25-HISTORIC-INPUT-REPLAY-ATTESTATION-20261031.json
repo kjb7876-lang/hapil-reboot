@@ -1,6 +1,6 @@
 {
   "schema": "hapil-v25-historic-input-replay-attestation-1",
-  "createdAt": "2026-10-31T12:11:04.317Z",
+  "createdAt": "2026-10-31T14:41:17.871Z",
   "complete": true,
   "scope": "Current candidate replay verification of ALL unchanged archived ordinary-health legal directions for campaign revisions3/4/5. No new capture, policy execution,777, external immunity, HP/damage/RNG/timer/phase modification. This does not validate new25 natural-route completion, human play, browser/GPU/mobileFPS.",
   "attestationLoaderSha256": "6378ab7acaf55673ec8a78a480c6b2f6ac531abdd83404ff969598488d494bc1",
@@ -12,8 +12,8 @@
     "tests/revision5-natural-bot-replay-v19.test.cjs": "431f68aebe4841d57ddeda09a4f10d25d78fac03f24e510ae3252a4ae6228725"
   },
   "candidateModuleSha256": {
-    "src/core.js": "789cd5e5ff503a95d05b2362039edeac7fa81d21bbff7ac1992db3c87582e1dd",
-    "src/storage.js": "e4462c1766dfbe2fdb082f9e7e44a7199777eefce5fd2eb21f6d3aff37255cd7",
+    "src/core.js": "ff9df8932bbd2055af680f7c415c5c959a2e83acd56d7a0faf627d7922c68f95",
+    "src/storage.js": "e94077ae2a373d4cde5ad316cd2ce381c85bc32b286b8de5177d2f0b70ef22db",
     "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
     "tools/capture-revision4-natural.cjs": "bbbb8af159e6e63eae9a1918e6c719ede8b68a522ab2a18ad3fce86cf8064f35",
     "tools/capture-revision5-natural.cjs": "6b4592b481723545afbcf5a5fb52ca0dfa280ae04c39bb860c6962f732a6819c",
@@ -21,8 +21,8 @@
     "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079"
   },
   "sourceHashesAfter": {
-    "src/core.js": "789cd5e5ff503a95d05b2362039edeac7fa81d21bbff7ac1992db3c87582e1dd",
-    "src/storage.js": "e4462c1766dfbe2fdb082f9e7e44a7199777eefce5fd2eb21f6d3aff37255cd7",
+    "src/core.js": "ff9df8932bbd2055af680f7c415c5c959a2e83acd56d7a0faf627d7922c68f95",
+    "src/storage.js": "e94077ae2a373d4cde5ad316cd2ce381c85bc32b286b8de5177d2f0b70ef22db",
     "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
     "tools/capture-revision4-natural.cjs": "bbbb8af159e6e63eae9a1918e6c719ede8b68a522ab2a18ad3fce86cf8064f35",
     "tools/capture-revision5-natural.cjs": "6b4592b481723545afbcf5a5fb52ca0dfa280ae04c39bb860c6962f732a6819c",
