@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "scope": "Storage encoding only. Two already validated raw JSON files are archived byte-exact with gzip level9/mtime0. Checks, thresholds, source code, natural-health inputs and hashes are unchanged. Raw files remain locally available and are excluded individually from Git by the release owner.",
+  "encoding": "gzip",
+  "gzipMTime": 0,
+  "byteExactDecodeVerified": true,
+  "sourceHashGuardPassedBeforeArchival": true,
+  "entries": [
+    {
+      "archivePath": "docs/v25-qa/actual-source-pixels.json.gz",
+      "archiveBytes": 159801,
+      "archiveSHA256": "8fe4de2fc3542634926ea5b8993aa54a604f103a8e33d410eb558c5064cfddc4",
+      "decodedRawPath": "docs/v25-qa/actual-source-pixels.json",
+      "decodedRawBytes": 8545905,
+      "decodedRawSHA256": "64f2a1095eda2b7a1bb6ed0f371d0d686c61125b6ba08e06d5f10966c884c719",
+      "restoreCommand": "gzip -dc docs/v25-qa/actual-source-pixels.json.gz > docs/v25-qa/actual-source-pixels.json"
+    },
+    {
+      "archivePath": "docs/v25-qa/actual-emitted-routes.json.gz",
+      "archiveBytes": 135295,
+      "archiveSHA256": "6ce87a38b2bc20db2076b2d58e60acf2ce74779586883767ca6d22c6f953b402",
+      "decodedRawPath": "docs/v25-qa/actual-emitted-routes.json",
+      "decodedRawBytes": 3745925,
+      "decodedRawSHA256": "0c19f05a81fa86cb8f409df6a2cdb91c434ed7abac1555bce2bbea5a05cafd82",
+      "restoreCommand": "gzip -dc docs/v25-qa/actual-emitted-routes.json.gz > docs/v25-qa/actual-emitted-routes.json"
+    }
+  ]
+}

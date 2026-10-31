@@ -1,0 +1,3 @@
+{"bossIndex":8,"phase":2,"difficulty":"hell","stage":"lost","ticks":2614,"hp":0,"hits":3,"score":1125,"phaseTicks":[],"peakBullets":126,"poolPressure":0,"droppedGroups":0,"resultReason":"기억이 흐려졌습니다","identityPatternIds":[]}
+{"bossIndex":10,"phase":2,"difficulty":"hell","stage":"lost","ticks":2198,"hp":0,"hits":3,"score":1020,"phaseTicks":[],"peakBullets":180,"poolPressure":0,"droppedGroups":0,"resultReason":"기억이 흐려졌습니다","identityPatternIds":[]}
+{"report":"/workspace/scratch/c84ef2cd7c03/hapil-reboot/docs/v25-qa/natural-health-old21-control.json","sourceHashGuardPassed":true,"cases":2,"won":0,"lost":2,"unfinished":0,"poolPressure":0,"droppedGroups":0}

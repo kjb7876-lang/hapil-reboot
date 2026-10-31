@@ -13,7 +13,7 @@ function fixture(){
  for(const key of ['projectileHornOrbV10','projectileBalrogOrbV10','projectileMaskOrbV10','projectileVioletBladeV10','projectileBalrogBladeV10','projectileMaskNeedleV10','projectileHornNeedleV11','projectileLuciferShardV11']){const w=/Blade|Needle|Shard/.test(key)?128:64,c=createCanvas(w,64),ctx=c.getContext('2d');ctx.fillStyle='#e3a459';ctx.fillRect(0,0,w,64);c.complete=true;c.naturalWidth=w;c.naturalHeight=64;images[key]=c;}
  // Natural regular needles now draw these already-owned sources. The unit
  // fixture therefore needs actual drawable canvases, not dimension-only stubs.
- for(const [key,width,height] of [['h14SkillHorn',256,256],['weaponVioletV12',1774,887],['weaponHornV12',1774,887],['weaponBalrogV12',1774,887],['weaponMaskV12',1774,887],['weaponLuciferV12',1254,1254]]){const c=createCanvas(width,height),ctx=c.getContext('2d');ctx.fillStyle='#e3a459';ctx.fillRect(0,0,width,height);c.complete=true;c.naturalWidth=width;c.naturalHeight=height;images[key]=c;}
+ for(const [key,width,height] of [['h14SkillHorn',256,256],['h14SkillBalrog',512,512],['weaponVioletV12',1774,887],['weaponHornV12',1774,887],['weaponBalrogV12',1774,887],['weaponMaskV12',1774,887],['weaponLuciferV12',1254,1254]]){const c=createCanvas(width,height),ctx=c.getContext('2d');ctx.fillStyle='#e3a459';ctx.fillRect(0,0,width,height);c.complete=true;c.naturalWidth=width;c.naturalHeight=height;images[key]=c;}
  const c=createCanvas(48,48),ctx=c.getContext('2d'),fx=API.create(images);return {c,ctx,fx,images,generated,close(){fx.destroy();global.document=old}};
 }
 function bullet(age=0,r=4,l=0){return {id:3,x:24,y:24,r,halfLength:l,age,angle:0,vx:0,vy:100};}
@@ -48,7 +48,7 @@ test('palette priority follows explicit purple name then retained image colors; 
  for(let i=0;i<5;i++){const w={campaign:true,bossIndex:i},p=API.paletteFor(w);for(const kind of ['orb','needle','blade'])assert.equal(API.colorFor(w,{kind,id:3}),p.primary);assert.equal(API.colorFor(w,{paletteSlot:1}),p.secondary);assert.equal(API.colorFor(w,{paletteSlot:9}),p.primary);}
 });
 test('missing or malformed authored bodies are reported instead of replaced with procedural shapes',()=>{
- const f=fixture();try{for(let i=0;i<5;i++){assert.equal(API.invalidAssetForEncounter(f.images,i),null);const required=API.assetKeysForEncounter(i).filter(k=>/^(projectile|weapon)/.test(k));for(const key of required){const original=f.images[key];delete f.images[key];assert.equal(API.invalidAssetForEncounter(f.images,i),key);f.images[key]=original;}}
+ const f=fixture();try{for(let i=0;i<5;i++){assert.equal(API.invalidAssetForEncounter(f.images,i),null);const required=API.assetKeysForEncounter(i).filter(k=>/^(projectile|weapon|h14Skill)/.test(k)&&!API.optionalAssetKeysForEncounter(i).includes(k));for(const key of required){const original=f.images[key];delete f.images[key];assert.equal(API.invalidAssetForEncounter(f.images,i),key);f.images[key]=original;}}
  const missing=API.create({});f.fx.beginFrame();let calls=0;const ctx=new Proxy({}, {get(){return ()=>calls++;},set(){return true;}});assert.equal(missing.drawBullet(ctx,{campaign:false},bullet()),false);assert.equal(calls,0);assert.equal(missing.getMetrics().missingProjectileAssets,1);missing.destroy();
  }finally{f.close();}
 });

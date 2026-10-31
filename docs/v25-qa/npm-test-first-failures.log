@@ -1,0 +1,725 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node --test tests/*.test.cjs
+
+✔ 25 is an explicit supported opt-in and preserves the incoming safe boundary revision (4.645097ms)
+✔ all 34 changed configurations have explicit owned roles; Lust remains excluded (0.38651ms)
+✔ Lust 25 retains the entire 21 combat world, including all three phases and difficulties (751.806046ms)
+✔ actual 25 warnings commit for 54 ticks and release the same locked source and phase (1996.212295ms)
+✔ every changed configuration actually releases its identity in all three phases within bounded capacity (4119.104724ms)
+✔ protected command/record configurations receive neither new actors nor combat copies (348.819829ms)
+✔ the 34 new compositions differ in actual geometry/rhythm rather than role labels alone (33.770288ms)
+✔ all campaign bosses visibly summon at most two local encounter enemies that fire only after entering (936.898022ms)
+✔ summons leave no actor at boss phase boundary and snapshot replay matches (43.724115ms)
+✔ five original bosses have a real five-cycle no-hit focus route while summons fire (9090.750344ms)
+✔ revision four adds the six chronological controller-system scenes while old endpoints stay fixed (3.620537ms)
+✔ old chairman endpoint is retained; only explicit revision four reaches the missing-return bridge (8.151563ms)
+✔ revision-four command links release the child and leave the memory door intact (4.326348ms)
+✔ revision-four save limits admit all106 boundaries and54 phase records without widening old saves (1.600334ms)
+✔ each new scene commits its laser path, emits its own bounded bullets and restores the same combat (361.287238ms)
+✔ six role contracts require each actual body, own beam/lance, own map and three source drone states (230.527938ms)
+✔ each source pose follows the real release tick and preserves core position; missing own bodies fail closed (3.621239ms)
+✖ actual own natural projectile cores remain readable and cache-bounded with complete lance silhouettes (19.519727ms)
+✔ repeat anticipation uses the real stable clone slot and points at actual emitted volleys in all three modes (239.915618ms)
+✔ repeat preparation is bounded to18ticks and stops before the core final-volley cutoff (71.548615ms)
+✔ pending or capacity-blocked emissions do not promise an imminent repeat pose (26.495554ms)
+✔ authored preparation pixels change on a repeat while actual source bytes, release and legacy records remain intact (42.111874ms)
+✔ combat projections reuse the exact active owner source and actual authored release poses without support bodies (488.408279ms)
+✔ two paired projections retain separate original models and material ownership after unique emitter IDs (55.085033ms)
+✔ projection body begins and expires at exact core ticks and never invents geometry for missing own art (60.207667ms)
+✔ copy skill accents resolve the original paired owner but keep distinct committed emitter identities (72.720601ms)
+✔ wide source pressure ribbons retain their full active footprint in both qualities while ordinary lasers stay fully opaque (127.92982ms)
+✔ the cult leader remains a separate practice for historical campaigns (6.232691ms)
+✔ separate practice tells revival and awakening, preserves the core at its conclusion (14.226007ms)
+✔ separate leader attacks are bounded and have their own IDs and no other encounter reinforcements (23.957331ms)
+✔ separate final practice requires its own actual actor, projectile and arena images (97.247317ms)
+✔ final actor action, attack release, warning and collision use the actual own art (176.835577ms)
+✔ real five-boss portraits have no renderer-drawn ring around their combat pivot (85.422843ms)
+✔ enemy charge does not add a surrounding ring; player hitpoint and laser telegraph remain (24.489462ms)
+✔ source skill presentation lifecycle is bounded to the renderer and draws beneath actors, warnings, and the player (25.562974ms)
+✔ all fourteen exact source paintings retain manifest bytes and validate only their own encounter group (573.770466ms)
+✔ each boss and same-person phase variant uses its own scene with one bounded reusable portrait cache (254.453989ms)
+✔ finite route scroll, camera anchoring, and repeated draws never recompose or allocate map surfaces per frame (52.312334ms)
+✔ new terrain remains behind committed warnings and the player; first and Balrog approaches retain their existing route renderer (25.233658ms)
+✔ acceleration cue is stable from launch and uses only its owner palette (2.108376ms)
+✔ curve and pause cues are determined at birth and keep owner color channels (0.874152ms)
+✔ identity25 phase boundaries retain the exact selector and ordinary-health deterministic restore (1129.594853ms)
+✔ legacy and21 boundaries remain exact; same-run selector replacement cannot overwrite primary or backup (5.578108ms)
+✔ an already-open deployed21 client rejects25 before settings, checkpoint, clear or completion writes (15.644397ms)
+✔ 25 marker is required for25 backup/primary and never falls back through retry, settings, clear or an older new run (6.388496ms)
+✔ serialized25 writes preserve pending boundaries, backups and stale-tab rejection until explicit load (3.631284ms)
+✔ failed25 durable writes preserve bytes and prohibit later memory commits; valid25 backup recovers damaged primary (3.204132ms)
+✔ identity25 practice cannot alter campaign checkpoints, backups or completion ledger (1.841456ms)
+✔ independent occupancy counts real active danger once and excludes warning/fade and empty visual space (24.646257ms)
+✔ all35 encounters and105phase configurations have real66/44/22 active curtains with bounded pools (5345.360703ms)
+✔ a committed pressure warning keeps exact geometry until its six-second active window ends (86.534843ms)
+✔ own-body send-out illusions and two real-firing clones have exact lifetime and never copy protected link targets (736.97872ms)
+✔ ordinary enemies commit exactly70percent of each difficulty boss curtain area after an existing hostile source is present (135.767038ms)
+✔ standing in the real central curtain takes damage on activeAt and never during its warning (2.317861ms)
+✔ actual emitted radii and capsule lengths keep readable own-source centers at real rotations and subpixel positions (18504.808813ms)
+✔ the four real-size center holes are fixed with colored source pixels, not an opaque dark substitute (2076.990834ms)
+✔ the two retained four-frame orb sources remain readable in every actual authored frame (874.55207ms)
+✔ actual simultaneous emitters and separate cult participants retain their own release positions within stable quality budgets (188.353315ms)
+✔ the battle HUD follows exact real laser boundaries and never treats residual threats as a cleared phase (174.7572ms)
+✔ brief deduplicated entry titles disappear before live threats and timeout labels stay bounded (135.94779ms)
+✔ the real app keeps the movement surface free of map/pattern copy during combat and residual threats (89.257302ms)
+✔ combat expansion retains every reviewed media alias and collision contract, with the approved V24 and V25 props appended (80.723157ms)
+✖ the v25 comparison reads the exact v24 git objects and preserves the35config route boundary (177.98237ms)
+✔ the independent escape oracle counts crossing, tangent and degenerate real segments (0.48616ms)
+✔ every old boss keeps exact unversioned and21 simulated worlds and boundary saves (3038.951453ms)
+✖ actual25 casts keep at least54ticks immutable warning and never put new bodies in a committed escape route (4862.368938ms)
+✖ the reference Lust battle is exactly v24 in all3phases and3difficulties apart from its optional revisionfield (68.828361ms)
+✔ checkpoint-selected25 configurations replay the same legal directions deterministically (847.159986ms)
+✖ new source pivots keep the historical colored bright centers and at least90percent of the full real hitbody (5351.539192ms)
+✔ each encounter naturally creates living support actors that take auto-shot damage, fire, and can be defeated (325.201115ms)
+✔ all five original signatures with live firing support retain a five-cycle focus-speed no-hit route (8271.36758ms)
+✔ new campaign starts revision five; retry preserves the selected campaign contract (49.931643ms)
+✔ continuing revision three and retrying it does not silently upgrade its route (10.486971ms)
+✔ all six chapter-three practice selections load their own assets without replacing campaign saves (102.894254ms)
+✔ missing or malformed chapter-three required assets stop simulation instead of substituting another boss (482.854818ms)
+✔ revision four follows six canonical scenes and seventeen story stages without inventing six people (3.796412ms)
+✔ all earlier revision endpoints retain their bounds and reject overflow while revision four admits its complete safe schema (4.179737ms)
+✔ a fresh revision-four run does not overwrite or reinterpret an old save and backup (3.181247ms)
+✔ the memory-gate conclusion disconnects repetition and keeps the memory and gate (2.94913ms)
+✔ every retained chapter-three runtime image is byte-identical to a documented authorized source (10.361652ms)
+✔ separate final-practice only loads own required cult assets, never writes the campaign checkpoint, and retry preserves identity (32.40596ms)
+✔ missing or malformed mandatory cult artwork stops the final-practice before simulation (52.732076ms)
+✔ the separate final-practice result reports the specified conclusion without writing a completed campaign (22.556327ms)
+✔ the final-practice awakening bridge is displayed instead of a pride-chairman description (31.315877ms)
+✔ each optional cult Drive ornament failure leaves the required combat assets playable (33.143217ms)
+✔ separate cult finale naturally reaches awakening and core-preserving conclusion in all difficulties (9386.041076ms)
+✔ all12 actual HELL overlap frames paint every damage body, own rotor, source scene and current release in both qualities (3403.886136ms)
+✔ a warmed real overlap frame reuses its scene, material and skill caches within the declared bounds (2536.083261ms)
+✔ HELL is measurably faster, denser and more continuous for all12 signatures rather than only relabelled (1204.316012ms)
+✔ all12 hardest phases can react only after the warning from an on-ray start with legal input and no immunity fixture (3427.223195ms)
+✔ the physical rotating layer of everyboss damages via its live swept-circle body, including the seven spell rotors (42.46603ms)
+✔ source laser detail materially improves original, sins, controller, late and paired beams in both quality levels while remaining inside committed geometry (17623.517041ms)
+✔ actual immune phase3 core observations switch warning, active and harmless afterglow at exactly their committed clocks (14266.213921ms)
+✔ paired Han Rian and Baek Ion beams retain independently warm and cool source colours in both palette slots and quality levels (991.877591ms)
+✔ warm laser draws and forty-source saturation allocate no per-frame surfaces and release every cached canvas (1866.756249ms)
+✔ afterglow follows the retained fade fraction and never invents a visible damage warning or a missing-asset replacement (2291.153262ms)
+✔ every boss creates a committed # from two vertical and two horizontal lasers with explicit full warning (5.56966ms)
+✔ grid warning causes no damage and its first active tick damages exactly on the committed ray (12.853725ms)
+✔ normal HP and legal focus speed can escape the # intersection before activation (6.419702ms)
+✔ both boss-owned rotating weapon shots bounce once then accelerate downward with bounded pools (269.835576ms)
+✔ rhythm volleys travel slowly first, then accelerate after their delay without changing heading (11.669157ms)
+✔ three independently sourced Lust objects retain closed transparent sprites and documented runtime bytes (289.78359ms)
+✔ real-size heel, lipstick, broken-heart and opposite thrown objects remain individually readable without composite backing (3102.936964ms)
+✔ actual seeded Lust shots expose all three source objects while simulation and checkpoint output remain exactly v23 (8960.02077ms)
+✔ historical v24 unrelated boss shots and v23 laser pixels are unchanged across representative source owners and qualities (57934.756858ms)
+✔ source objects keep native red/gold material and spin without changing fixed hit geometry or rebuilding warmed stamps (537.156924ms)
+✔ approved main-boss mirror shard and coin saw use complete own-source orb silhouettes with readable pivots in both qualities (7274.691478ms)
+✔ aimed lipstick source is fully preserved during cached rotation rather than clipped before fitting (210.01316ms)
+✔ enlarged pure props cover the old circular hit core at every sampled spin while mixed real HELL frames reuse the bounded cache (13199.454961ms)
+✔ all36 encounter selections and both cult actors show natural contours and internal contrast at real sizes in both qualities, with one bounded draw (1152.436603ms)
+✔ all new source objects have closed boundaries and formerly rectangular Goblin/Siren/knight/cult stamps preserve irregular contours (230.457435ms)
+✔ new combat revision survives strict save validation and deterministic ordinary-health restore (86.71666ms)
+✔ legacy absent-field boundaries stay byte-compatible and never select new combat on restore (1.863689ms)
+✔ unknown or malformed combat selectors cannot silently downgrade a saved run (1.202386ms)
+✔ same-run checkpoint writes cannot switch combat revision in either direction or overwrite backup (3.831314ms)
+✔ v21 backup recovery retains combat and a stale emulated tab cannot replace it with a legacy run (13.167026ms)
+✔ practice and malformed v21 backup data cannot overwrite confirmed legacy or v21 progress (2.453705ms)
+✔ an already-open deployed v20 storage client fails closed instead of stripping a newer v21 checkpoint selector (10.804587ms)
+✔ v21 forward-compatibility marker is required for new records and remains present in exports and loss retries (3.545525ms)
+✔ nine actual seven-sin form PNGs decode, match recorded original hashes and have visible source pixels at every manual torso anchor (73.025447ms)
+✔ all seven encounters reject missing or malformed own forms before play, including child and cyborg alternatives (186.407305ms)
+✔ every form draws its own four source poses without added rings or combat-state mutations (101.153723ms)
+✔ seven actual projectile originals match provenance bytes and retain their recorded dense authored alpha in each material crop (293.344068ms)
+✔ Wrath bear, wolf and dragon are three checked static manifestations above the player lane, not extra damage geometry or actors (114.700434ms)
+✔ revision three extends rather than renames the five published encounters and owns twelve distinct signature identities (1.489346ms)
+✔ Mammon child memory and chairman cyborg keep actor identity while restoring their own phase artwork (2.145983ms)
+✔ normal and gentle route fixtures require 45 seconds of ordinary-enemy time before each boss introduction (783.99748ms)
+✔ legacy revision boundaries keep their saved wave timing, boss count and revision after restore (12.969479ms)
+✔ HELL actually varies volley speed by seed and remains faster than normal without breaking weapon pair symmetry (11.515635ms)
+✔ a synthetic lethal-shot fixture ends legacy routes at their own final boss instead of silently extending the saved campaign (1.799473ms)
+✔ all extended combat phases and modes are seeded, bounded and keep committed laser geometry through activation (4243.098206ms)
+✔ all new story practice selections start the intended revision-five encounter with own mandatory sources and bounded image requests (342.389614ms)
+✔ revision-four continue and retry keep the historical memory-gate endpoint instead of upgrading an existing save (29.94842ms)
+✔ every new required source fails closed before tick one if unavailable or dimensionally malformed (2315.793457ms)
+✖ the special-pattern shortcut reaches phase three for all36 selections, preserves retry identity and never writes campaign data (19.92761ms)
+✖ ordinary historical practice still waits for every newly required natural body and starts phase one (31.550556ms)
+✔ the actual final-engine ending is reachable in eight ordered pages without writing extra progress, and practice hides ending navigation (7.940576ms)
+✔ all79 new retained story images have pinned source/runtime hashes, documented conversions, real decoded dimensions and no untraced extra files (731.002317ms)
+✔ every new scene uses traced own sources, protects non-targets and keeps two cult actors separate (41.891767ms)
+✔ revision-five combat order follows the independent canonical scene map without treating civilians or 66 guards as new named bosses (4.614371ms)
+✔ revision-five save history expands to105 phases/208 boundaries without widening any revision-one-through-four record (6.395855ms)
+✔ creating the new campaign leaves retained revision-three/four raw records untouched and restores their exact checkpoint/backup values (3.140136ms)
+✔ all twelve retained ordinary input files remain exactly the original repository bytes (1.489968ms)
+✔ the knight boundary is a canonical defeat/fall, while Arbelia and the causal records are preserved (3.838395ms)
+✔ the final story has revival, alive-before-death awakening and a protected-core guardian conclusion (8.117627ms)
+✔ actual vertical/horizontal/lattice warnings expose their committed outer edges on both qualities and all three modes (17936.20803ms)
+✔ full-width boundary cues stop at actual activation and do not reappear during harmless fading (7646.501026ms)
+✔ v23 source material warms once and all forty beams retain art within bounded high/low cosmetic work (70.91004ms)
+✔ flow uses source art only during actual active phase and harmless afterglow follows the core fade clock (35.549842ms)
+✔ paired laser caches retain actual original owner and secondary palette identity (91.429097ms)
+✔ named Violet keeps purple shoulders and a brighter core for both committed palette slots (75.488526ms)
+✔ mobile remembers chosen FPS; practice does not touch campaign checkpoint or result (20.644907ms)
+✔ failed checkpoint retries, and a delayed previous run cannot update the new run UI (14.04896ms)
+✔ short touch drag survives release until a simulation step consumes it (7.408317ms)
+✔ fresh mobile defaults to 30 FPS and persists it; an existing 60 FPS preference stays selected (4.211074ms)
+✔ successful in-flight save updates continue after returning home (3.21598ms)
+✔ held touch drag is consumed at bounded speed even when the finger stops (2.887436ms)
+✔ pausing a held drag clears remaining input rather than moving after resume (2.974518ms)
+✔ campaign loss reloads the confirmed retry checkpoint, while a win removes continue (9.747981ms)
+✔ practice loss leaves the confirmed campaign checkpoint untouched (4.975873ms)
+✔ a late completion load cannot replace a newer campaign checkpoint, even after returning home (5.793602ms)
+✔ missing or malformed authored actor poses stop before combat, legacy keeps its own artwork (10.875794ms)
+✔ a still-loading optional cast effect never blocks required game start (6.467834ms)
+✔ a failed optional cast effect is omitted without blocking or falsely claiming replacement artwork (10.229243ms)
+✔ loss waits for completion and readback before enabling the rekeyed checkpoint (5.045629ms)
+✔ failed completion keeps old continue disabled and warns until a newer checkpoint is confirmed (3.392885ms)
+✔ persistent storage error is visible on mobile instead of claiming automatic save (2.129318ms)
+✔ completion after a newer campaign begins never requests old-generation storage readback (2.860376ms)
+✔ a failed completion readback cannot enable an old checkpoint (2.750701ms)
+✔ a checkpoint callback delayed past loss cannot overwrite confirmed rekeyed progress (2.309679ms)
+✔ explicit continue loads the latest other-tab checkpoint and restores that exact snapshot (25.824366ms)
+✔ new campaign, practice, and repeated continue cannot race an explicit checkpoint read (4.346398ms)
+✔ failed explicit checkpoint load warns without restoring or discarding the last safe checkpoint (2.568838ms)
+✔ explicit continue observes a checkpoint cleared by another tab (1.966323ms)
+✔ a missing projectile renderer stops combat instead of exposing invisible damage (2.079573ms)
+✔ missing or wrong-size player arrow atlas blocks combat instead of hiding friendly shots (3.124122ms)
+✔ storage open or boot read failures keep gameplay available but show a warning and never invent progress (2.990832ms)
+✔ full renderer paints all 768 real-asset enemy bullets for every encounter and legacy mode in both qualities (1234.589664ms)
+✔ full renderer paints 40 visible source-textured active beams without silently dropping a hazard (1221.269218ms)
+✔ image loader contract rejects every missing or malformed damage-body source before play (486.824074ms)
+✔ real-source laser covers every interior damage pixel; fade and warning remain harmless presentation phases (668.844984ms)
+✔ player wind-arrow source tip stays on the simulated shot and faces its actual velocity (655.588513ms)
+✔ each boss renders its own actual rotating weapon above an opaque circular danger body (642.277386ms)
+✔ each boss weapon telegraph uses two separate source-art images before the actual throw (440.72498ms)
+✔ each boss commits a four-ray # with one shared warning, exact positions and long enough reaction (19.675991ms)
+✔ every grid has a reachable cell using ordinary focus movement and unmodified health (11.895826ms)
+✔ the grid cycle replaces ordinary emissions and preserves the other cycle and phase3 signature (7.441106ms)
+✔ boss strike pose follows actual owned projectile and beam activation in all five encounters and phases (173.414055ms)
+✔ warning does not itself trigger a release pose (0.466ms)
+✔ a deferred group marks the actual emission tick instead of the saturated request tick (16.753472ms)
+✔ five original signatures run from normal campaign phase 3 deterministically, with bounded density and readable recovery (960.269287ms)
+✔ all signatures have a collision-free moving route at ordinary focus speed over five cycles (285.606915ms)
+✔ stationary centre is not a universal safe spot in any signature (258.572634ms)
+✔ Balrog commits five of seven pillar rays, warns first, then deals damage only at activation (1.795024ms)
+✔ Horn slow memory ring accelerates only after its announced delay and remains speed capped (2.154364ms)
+✔ distant-bullet fast path preserves exact swept hit and graze boundaries (48.898476ms)
+✔ floating-point graze boundary and invalid half-length preserve exact geometry (1.095114ms)
+✔ Drive ORB phases advance once at 125ms and hold without changing danger alpha at 6–10px (75.870165ms)
+✔ animation phase changes reuse one bounded cached strip and one live draw per bullet (106.879668ms)
+✔ static source bodies remain fixed and source-less effects never replace warning geometry (22.559817ms)
+✔ unapproved unlock source is neither requested nor drawn as another effect (2.035245ms)
+✔ all enemy modes, bullet shapes, and cap pressure stay source-only with zero geometric body draws (210.673852ms)
+✔ palette priority follows explicit purple name then retained image colors; secondary layer requires an explicit slot (0.364246ms)
+✖ missing or malformed authored bodies are reported instead of replaced with procedural shapes (2.847134ms)
+✖ Lucifer dark source pixels stay readable crimson on dark maps without adding a backing shape (10.387214ms)
+✖ Lucifer blue source petals retain bright ivory structure after crimson recoloring (4.379715ms)
+✔ cache eviction and destroy release every separate animation frame surface (44.760634ms)
+✔ floor-scar keeps a visible warning in both render qualities and stays inside the original footprint (85.428024ms)
+✔ floor-scar metadata cannot change the active beam or harmless fade pixels (454.609809ms)
+✔ encounter media stays lazy and bounded while its exact source map and phase variant load before simulation (29.395959ms)
+✔ missing or malformed own scene art stops before the new encounter can advance (24.831787ms)
+✔ a failed source used only as an optional skill/beam accent does not block its verified damage sprites (13.769821ms)
+✔ a skill source promoted to a required natural bullet body must fail closed before simulation (17.022814ms)
+✔ the new skill renderer and changed modules share the browser cache revision, with skill definitions before the renderer (0.767242ms)
+✔ twelve skill sources are their exact pinned hapil1 files, single-frame artwork with explicit dimensions and no foreign fallback (7.797957ms)
+✔ source skill release appears only on a confirmed current event, not before firing, on a future event, or after its finite lifetime (82.954096ms)
+✔ compact skill presentation is bounded, source-only, below the player region, and releases its own cache (60.903528ms)
+✔ missing optional skill pixels are omitted without shapes and transparent hidden RGB never becomes visible stripes (6.892507ms)
+✔ all seven large HELL rotors use their own full source image and visual spin without changing physics or duplicating ordinary bullet draws (343.173406ms)
+✔ seven rotor warnings preview owned art; required natural bodies fail closed and absent ornaments never borrow another boss (176.741044ms)
+✔ seven own-source beam ornaments obey the exact damage clip, retain dense material coverage, and use the current encounter palette (826.574877ms)
+✔ HELL randomness is seeded, bounded per pair and unchanged by presentation spin (40.134375ms)
+✔ HELL emits its second rhythm only after an additional full charge (7.44444ms)
+✔ new Horn route keeps fighting ordinary waves for45seconds then drains; old snapshots retain15seconds (67.014037ms)
+✔ legacy routes end at their own final boss, while new Lucifer clear shows an ordered15second bridge (5.652726ms)
+✔ seven sins preserve actual identities, shared memory forms and sealing semantics (2.081445ms)
+✔ all12 bosses and all3 phases overlap real player-lane bullets, active rays, own signature and physical rotors (992.995307ms)
+✔ HELL gate has108 harmless warning ticks, fixed geometry and96 genuinely damaging ticks (1.467183ms)
+✔ every announced ray aperture is reachable with legal focus movement and unchanged HP (36.316348ms)
+✔ saturated HELLatomic rotor pair never returns late or creates a fictitious release record (12.25019ms)
+✔ safe-phase HELL snapshots resume the same seeded concurrent combat without new save keys (144.584355ms)
+✔ all encounter-specific added fans differ in cadence or geometry while keeping real overlap (161.482411ms)
+✔ curve is fixed after release and paused fan resumes movement without changing collision identity (3.394736ms)
+✔ hell settings and results roundtrip without accepting unknown difficulty names (3.661646ms)
+✔ old campaign revisions retain their three- and five-boss bounds and phase history limits (2.347624ms)
+✔ revision three admits the twelfth boss and 36 bounded phases but rejects its own overflow and unknown revisions (1.13899ms)
+✔ hell checkpoints use three HP and retain the noncampaign three-phase limit (0.535935ms)
+✔ changing to hell settings preserves existing revision-two checkpoint and backup verbatim (2.090007ms)
+✔ hell loss and stale-client rejection keep the full-route checkpoint and its previous backup (3.01745ms)
+✔ Drive eight-phase memory effect keeps the authored tip fixed and plays once within the skill lifetime (41.018748ms)
+✔ keypose weight stays bounded and uses the real release tick without changing pose timing (2.87137ms)
+✔ sprite and tether use the same small offset, preserving the combat anchor and world state (1.93195ms)
+✔ actual hit feedback is a subtle opacity pulse with no extra sprite or attack-pose override (0.32004ms)
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: recorded simulation module changed: ../src/core.js
++ actual - expected
+
++ '0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851'
+- '52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a'
+
+    at Object.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/legacy-natural-bot-replay.test.cjs:11:190)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851',
+  expected: '52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.22.1
+✖ tests/legacy-natural-bot-replay.test.cjs (97.461218ms)
+✔ naturally reached wave and first boss checkpoints restore deterministically through real enemies, bullets and warnings (251.886612ms)
+✔ reducer rejects another tab’s stale revision and restores only the active run’s intact backup (51.940673ms)
+✔ stationary boss scenery reuses cached foreground and invalidates on map change (42.113781ms)
+✔ low quality keeps warning dash and opaque active beam and bullet cores (37.554787ms)
+✔ storage and app load the same cache revision so a stale API cannot disable saved progress (1.148064ms)
+✔ each boss draws its own real static Drive accent during charge and genuine release only (45.862849ms)
+✔ optional missing or wrong-size casts create no fallback or blocking projectile asset requirement (6.511305ms)
+✔ Lucifer accent preserves source alpha while its cyan source is recolored to crimson and ivory (17.116234ms)
+✔ boss accents retain source alpha and use only one screen draw without an added outline (44.172381ms)
+✔ dim horn decoration is brightened within its existing source alpha (6.604435ms)
+✔ unknown encounter indices fail closed instead of borrowing the final existing boss artwork (2.581014ms)
+✔ the explicit legacy encounter retains original sources and requires its own natural sword image for needles (0.288683ms)
+✔ all seven sins require their own checked static material, with no Lucifer source or invented weapon (456.095995ms)
+✔ actual same-boss natural silhouettes keep a visible central core and exact beam interior without geometric backing (756.821128ms)
+✔ seven material palettes keep naming priority, explicit secondary use and dense-source detail within a bounded cache (661.088145ms)
+✔ Balrog floor-trace cue labels only real committed laser warnings (5.667417ms)
+✔ floor trace remains the same capsule when aim moves and activates at its original tick (2.629157ms)
+✔ other bosses retain their own warnings without inheriting a Balrog floor-trace label (19.902688ms)
+✔ legacy v1 without baseline restores and retries 96-character run IDs with bounded, collision-free IDs (168.584118ms)
+✔ a damaged main checkpoint can restore from same-run backup without deleting it (2.758772ms)
+✔ corrupt metadata and corrupt backup block writes and preserve original bytes for export (10.348796ms)
+✔ valid boundary generation and revision remain loadable but reject overflowing mutation (2.39829ms)
+✔ two emulated clients cannot overwrite the newer confirmed run; explicit reload adopts it (2.252967ms)
+✔ automatic peek reads another client without authorizing the old world to overwrite it (2.999814ms)
+✔ a later IndexedDB read error never reports an old memory snapshot as a successful load (1.716427ms)
+✔ a failed persistent write reports failure and does not silently commit to memory (2.727114ms)
+✔ empty store is distinguishable from settings saved in this session (1.339521ms)
+✔ loss keeps the confirmed campaign checkpoint and backup, allows retry, and never counts a duplicate result (18.31206ms)
+✔ a practice result without a flag cannot create or replace a campaign record (1.279321ms)
+✔ a pending checkpoint write commits before a queued loss and the loss retains that checkpoint (9.185559ms)
+✔ a stale tab cannot complete over a newer checkpoint or corrupt its backup (0.678809ms)
+✔ corrupt or future stored records cannot be overwritten; recoverable raw bytes are included in export (3.657841ms)
+✔ counter exhaustion is readable/exportable but cannot overflow a version-1 record (0.270947ms)
+✔ peek observes another writer without silently granting this tab its revision (2.907815ms)
+✔ load reports a persistent read error instead of exposing stale in-memory progress (0.881803ms)
+✔ load and open report malformed saved state while leaving a true memory-only session usable (0.571818ms)
+✔ five bosses announce their own two shots, release on the real tick and bounce once in both difficulties (138.892355ms)
+✔ a full pool skips the whole warned pair, never later emits an unseen deferred throw (5.228359ms)
+✔ core collision follows the bent bounce path even when both chord endpoints miss (0.489314ms)
+✔ odd-beat slow bullets actually speed up after their delay in the game core (106.932687ms)
+✔ Horn keeps its existing slow-to-fast acceleration instead of stacking the new beat transform (13.35613ms)
+✔ weapon volleys contain exactly two symmetrical own-boss shots after a completed charge (1.126371ms)
+✔ both shots bounce at their own wall once, remain within bounds, then accelerate downward with a speed cap (4.586615ms)
+✔ spin is visual only: it never changes translational velocity or circular collision geometry (0.432659ms)
+✔ bent wall path tests both temporally matched collision segments rather than only endpoint chord (0.196515ms)
+✔ odd beat volleys become slow-to-fast once and preserve pre-existing authored acceleration (0.263125ms)
+✔ new own-source props are required only by their owners; missing or malformed sources never become another boss or a shape (741.892567ms)
+✔ stable launch roles bind tissue, knife and adult money/treasure separately while every child-memory role keeps the retained coin (1679.98461ms)
+✔ new complete objects cover the original damage circle at real radii and rotations, with bounded cached source-only bodies (2492.357878ms)
+✔ Lust v24 whole props and the v23 laser material remain byte-identical despite every other owner receiving native-colour identities (13395.202423ms)
+✔ the downward kitchen-knife aim adjustment retains all original source alpha in a padded cache (201.921889ms)
+✔ 35 canonical configurations have owned, frozen phase cues and preserve the separate final-practice route (1.536397ms)
+✔ each remaining configuration draws every admitted locked warning before generic charge/release echoes in low4 and high8 (225.229098ms)
+✔ real 54-tick warning boundaries and angle-lock changes are represented without fabricating a release on a rejected group (1.149606ms)
+✔ whole owned prop previews match phase identity; child memory never receives adult money/treasure props (3.81016ms)
+✔ two-caster copied plans retain model ownership and source-only phase cues; repeat/memory/core cues remain finite origin accents (4.895209ms)
+✔ repeated fixed frames are deterministic, bounded and warm; no static source pose is reported as a full animation cycle (30.080246ms)
+✔ all three independent Lust props are mandatory and never requested by another encounter (158.295643ms)
+✔ actual existing pattern roles select one complete independent prop, with stable source colours in both qualities (294.72165ms)
+✔ variant choice is independent of age, bounce direction and redraws; warmed caches stay bounded and release all surfaces (138.616906ms)
+✔ lipstick aim rotation keeps the complete source alpha before uniform object fitting (61.789939ms)
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: replay-validated module changed: src/core.js
++ actual - expected
+
++ '0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851'
+- '52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a'
+
+    at Object.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/revision4-natural-bot-replay-v18.test.cjs:8:121)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851',
+  expected: '52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.22.1
+✖ tests/revision4-natural-bot-replay-v18.test.cjs (95.302402ms)
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: replay-validated simulation/policy/capture source changed: src/core.js
++ actual - expected
+
++ '0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851'
+- '52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a'
+
+    at Object.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/revision5-natural-bot-replay-v19.test.cjs:10:66)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851',
+  expected: '52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.22.1
+✖ tests/revision5-natural-bot-replay-v19.test.cjs (122.782521ms)
+✔ all seven sin identities and both same-person followup forms render only their own real source atlas (233.205156ms)
+✔ every registered source keypose has an opaque torso anchor, fixed per-form scale, and stays below the HUD (237.561007ms)
+✔ missing own forms and invalid own form dimensions fail closed without painting another boss (161.750279ms)
+✔ Wrath shows one source-backed harmless beast manifestation only on charge and actual release ticks (136.904163ms)
+✔ abstract floor cache reuses one bounded surface and does not allocate or resample source art every frame (143.415221ms)
+✔ the extended single-wave approach displays its real fraction rather than finishing its route bar at fifteen seconds (145.51775ms)
+✔ revision five has17 canonical configurations and does not widen old route endpoints or saves (12.932884ms)
+✔ scripted fallen-knight defeat continues the living route and Arbelia is freed rather than killed (6.124515ms)
+✔ all17 real signatures commit source-owned geometry, remain bounded and have distinct mechanical traces (2574.434479ms)
+✔ six fallen echoes aim at already sampled positions and release on their committed activation tick (1.281764ms)
+✔ two cult guardians keep independent real origins/charge/release while only a shared circuit is targetable (9.600382ms)
+✔ six academy invasion beats are observed without a shootable friendly core or borrowed support actor (14.114589ms)
+✔ Siren compression provides Arbelia motion relief without locking or reversing player input (2.028164ms)
+✔ final awakening happens before death and ending separates coercion while leaving the core and selves intact (1.907925ms)
+✔ all seventeen story image contracts use actual own dimensions, correct protagonist and separated protected targets (890.615938ms)
+✔ the two cult people retain separate real bodies and release clocks; their intro translates without overscaling or jumping (74.371617ms)
+✔ six knight manifestations use six real origins plus a source-owned logical aim marker, never a seventh body (67.477102ms)
+✔ own Hwandō and Seoha shots render without the old gunner arrow, and the canonical final awakening changes only own player art (270.896025ms)
+✔ every existing wave actor paints its own verified four-pose image during a boss battle without an enemy ring (3.105554ms)
+✔ an unready actor never draws another enemy or a geometric substitute in actor presentation (0.655174ms)
+✔ decoded actual guard poses draw ordinary enemies below and summoned enemies above the boss (372.664434ms)
+✔ chronological bridge wraps Korean above the player lane and leaves the actual hazard on top (23.159502ms)
+✔ actual paired warnings retain the committed caster and palette slot used by their source beam (138.997951ms)
+✔ wide warnings expose exact capsule edges in all3 real profiles and retain their harmless-to-active boundary (1513.269474ms)
+ℹ tests 331
+ℹ suites 0
+ℹ pass 318
+ℹ fail 13
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 103284.681319
+
+✖ failing tests:
+
+test at tests/chapter3-visuals-v18.test.cjs:32:1
+✖ actual own natural projectile cores remain readable and cache-bounded with complete lance silhouettes (19.519727ms)
+  AssertionError [ERR_ASSERTION]: cosmetic point/fins cannot grow without a bound
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/chapter3-visuals-v18.test.cjs:37:165)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/independent-boss-identities-v25.test.cjs:4:1
+✖ the v25 comparison reads the exact v24 git objects and preserves the35config route boundary (177.98237ms)
+  AssertionError [ERR_ASSERTION]: Values have same structure but are not reference-equal:
+  
+  ... Skipped lines
+  {
+    baseline: 'ef95fc227506162b5203092da9e1734e2f43ef58',
+    campaignBossCount: 35,
+    campaignBosses: [
+      {
+        assetGroup: 0,
+        bossIndex: 0,
+        id: 'violet',
+        name: '보라검천사',
+        phaseRoles: [],
+        protectedTargets: [],
+        sceneIds: []
+      },
+      {
+        assetGroup: 1,
+        bossIndex: 1,
+        id: 'horn',
+        name: '늪지대의 뿔악마',
+        phaseRoles: [],
+        protectedTargets: [],
+        sceneIds: []
+      },
+      {
+        assetGroup: 2,
+        bossIndex: 2,
+        id: 'balrog',
+        name: '발록',
+        phaseRoles: [],
+        protectedTargets: [],
+        sceneIds: []
+      },
+      {
+        assetGroup: 3,
+        bossIndex: 3,
+        id: 'mask',
+        name: '초천사의 웃는 가면',
+        phaseRoles: [],
+        protectedTargets: [],
+        sceneIds: []
+      },
+      {
+        assetGroup: 4,
+        bossIndex: 4,
+        id: 'lucifer',
+        name: '코스믹 가면 루시퍼',
+        phaseRoles: [],
+        protectedTargets: [],
+        sceneIds: []
+      },
+      {
+  ...}
+  
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/independent-boss-identities-v25.test.cjs:6:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: {
+      schema: 1,
+      baseline: 'ef95fc227506162b5203092da9e1734e2f43ef58',
+      scope: 'Pinned v24 git objects read in this execution environment, not inherited test results.',
+      files: { 'src/core.js': [Object], 'src/weapon-patterns.js': [Object], 'src/projectiles.js': [Object], 'src/boss-skills.js': [Object], 'src/media.js': [Object], 'src/story-assets.js': [Object], 'src/actors.js': [Object], 'src/render.js': [Object], 'src/app.js': [Object], 'src/storage.js': [Object] },
+      campaignBosses: [
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object]
+      ],
+      campaignBossCount: 35,
+      standaloneCultAssetGroup: 12
+    },
+    expected: {
+      schema: 1,
+      baseline: 'ef95fc227506162b5203092da9e1734e2f43ef58',
+      scope: 'Pinned v24 git objects read in this execution environment, not inherited test results.',
+      files: { 'src/core.js': [Object], 'src/weapon-patterns.js': [Object], 'src/projectiles.js': [Object], 'src/boss-skills.js': [Object], 'src/media.js': [Object], 'src/story-assets.js': [Object], 'src/actors.js': [Object], 'src/render.js': [Object], 'src/app.js': [Object], 'src/storage.js': [Object] },
+      campaignBosses: [
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object]
+      ],
+      campaignBossCount: 35,
+      standaloneCultAssetGroup: 12
+    },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/independent-boss-identities-v25.test.cjs:17:1
+✖ actual25 casts keep at least54ticks immutable warning and never put new bodies in a committed escape route (4862.368938ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(result.rows.filter(r=>r.group!==8).every(r=>r.identityCasts>0&&r.identityBullets>0))
+  
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/independent-boss-identities-v25.test.cjs:19:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/independent-boss-identities-v25.test.cjs:22:1
+✖ the reference Lust battle is exactly v24 in all3phases and3difficulties apart from its optional revisionfield (68.828361ms)
+  AssertionError [ERR_ASSERTION]: v24 Lust physical behavior changed 0,gentle,0
+  + actual - expected
+  ... Skipped lines
+  
+    {
+      _boundaryTick: 0,
+      _checkpoint: {
+        autoAttack: true,
+        bossIndex: 8,
+  ...
+        checkpointSerial: 1,
+  +     combatRevision: 25,
+  -     combatRevision: 21,
+        difficulty: 'gentle',
+        graze: 0,
+        idCounter: 1,
+        kills: 0,
+        memory: 0,
+  
+      at Object.lustPhysics (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tools/audit-boss-identities-v25.cjs:143:116)
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/independent-boss-identities-v25.test.cjs:23:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: { rulesetVersion: 'hapil-firstbattle-1', mechanicsRevision: 4, runId: 'v25-independent-8-0-gentle', seed: 813, rngState: 813, difficulty: 'gentle', practiceBoss: true, tick: 1, time: 0.016666666666666666, stage: 'boss', stageTime: 0.016666666666666666, bossIntroDuration: 2.5, wave: 0, waveTime: 0, waveDuration: 15, phase: 0, phaseTime: 0.016666666666666666, phaseTargetDuration: 25, phaseTimeout: 75, patternName: '붉은 무대의 박자', stageLabel: '색욕의 귀 아스모데우스 · 1/3 · 연습', phaseProgress: 0, player: { x: 180, y: 540, hp: 5, maxHp: 5, r: 3, invulnerableUntil: 999999, egoUntil: 0 }, boss: { id: 1, x: 180, y: 116, px: 180, py: 116, hp: 1520, maxHp: 1520, phase: 0, opacity: 1, r: 29, isBoss: true, kind: 'asmodeus', name: '색욕의 귀 아스모데우스', artKey: 'sinAsmodeusAtlas', phaseRole: 'seoyun-stage', presentationVariant: 'seoyun-stage', sealTarget: true, linkTarget: false, identityGroup: 'asmodeus', healthLabel: '봉인 저항', action: 'move', actionProgress: 0, lean: 0, releaseTick: -1, specialPatternId: 'asmodeus-phase-1', specialPatternLabel: '붉은 무대의 박자', patternHint: '예고된 길을 벗어나 탄환 사이의 틈을 읽으세요', weaponTelegraph: false, pressureStyle: 'red-stage' }, enemies: [], bullets: [], shots: [], effects: [], hazards: [], score: 0, graze: 0, kills: 0, memory: 0, resonance: 0, autoAttack: false, skillRotation: false, reservation: false, stats: { hits: 0, shots: 0, damage: 0, casts: [Object], peakBullets: 0, peakEnemies: 0, peakParticles: 0, poolPressure: 0, droppedGroups: 0, missedEnemies: 0, resourceStarvation: 0, bossDamage: 0, phaseTicks: [], collisions: 0 }, events: [], checkpointSerial: 1, idCounter: 1, skills: { memoryReadyAt: 0, delayReadyAt: 360, counterReadyAt: 0, egoReadyAt: 0, globalReadyAt: 0 }, nextPhase: null, transitionRemaining: 0, resultReason: '', _pools: { bullets: [], shots: [], enemies: [], effects: [], hazards: [] }, _warnings: [], _delays: [], _deferred: [], _shotReadyAt: 0, _targetId: 1, _targetUntil: 13, _lastGraze: -9999, _boundaryTick: 0, _memoryBucket: 0, _memoryGain: 0, _resBucket: 0, _resGain: 0, _grazeGain: 0, _reservationSince: 0, _starvationReported: false, _checkpoint: { rulesetVersion: 'hapil-firstbattle-1', runId: 'v25-independent-8-0-gentle', seed: 813, difficulty: 'gentle', practiceBoss: true, checkpointSerial: 1, tick: 0, rngState: 813, idCounter: 1, stage: 'boss', wave: 0, phase: 0, score: 0, graze: 0, kills: 0, memory: 0, resonance: 0, autoAttack: true, skillRotation: true, campaign: true, campaignRevision: 5, bossIndex: 8, combatRevision: 25, stageTime: 0, phaseTime: 0, waveTime: 0, player: [Object], skills: [Object], stats: [Object], shotReadyAt: 0, resourceState: [Object] }, campaign: true, campaignRevision: 5, bossIndex: 8, bossId: 'asmodeus', bossName: '색욕의 귀 아스모데우스', bossCount: 35, encounterName: '붉은 조명의 무대' },
+    expected: { rulesetVersion: 'hapil-firstbattle-1', mechanicsRevision: 4, runId: 'v25-independent-8-0-gentle', seed: 813, rngState: 813, difficulty: 'gentle', practiceBoss: true, tick: 1, time: 0.016666666666666666, stage: 'boss', stageTime: 0.016666666666666666, bossIntroDuration: 2.5, wave: 0, waveTime: 0, waveDuration: 15, phase: 0, phaseTime: 0.016666666666666666, phaseTargetDuration: 25, phaseTimeout: 75, patternName: '붉은 무대의 박자', stageLabel: '색욕의 귀 아스모데우스 · 1/3 · 연습', phaseProgress: 0, player: { x: 180, y: 540, hp: 5, maxHp: 5, r: 3, invulnerableUntil: 999999, egoUntil: 0 }, boss: { id: 1, x: 180, y: 116, px: 180, py: 116, hp: 1520, maxHp: 1520, phase: 0, opacity: 1, r: 29, isBoss: true, kind: 'asmodeus', name: '색욕의 귀 아스모데우스', artKey: 'sinAsmodeusAtlas', phaseRole: 'seoyun-stage', presentationVariant: 'seoyun-stage', sealTarget: true, linkTarget: false, identityGroup: 'asmodeus', healthLabel: '봉인 저항', action: 'move', actionProgress: 0, lean: 0, releaseTick: -1, specialPatternId: 'asmodeus-phase-1', specialPatternLabel: '붉은 무대의 박자', patternHint: '예고된 길을 벗어나 탄환 사이의 틈을 읽으세요', weaponTelegraph: false, pressureStyle: 'red-stage' }, enemies: [], bullets: [], shots: [], effects: [], hazards: [], score: 0, graze: 0, kills: 0, memory: 0, resonance: 0, autoAttack: false, skillRotation: false, reservation: false, stats: { hits: 0, shots: 0, damage: 0, casts: [Object], peakBullets: 0, peakEnemies: 0, peakParticles: 0, poolPressure: 0, droppedGroups: 0, missedEnemies: 0, resourceStarvation: 0, bossDamage: 0, phaseTicks: [], collisions: 0 }, events: [], checkpointSerial: 1, idCounter: 1, skills: { memoryReadyAt: 0, delayReadyAt: 360, counterReadyAt: 0, egoReadyAt: 0, globalReadyAt: 0 }, nextPhase: null, transitionRemaining: 0, resultReason: '', _pools: { bullets: [], shots: [], enemies: [], effects: [], hazards: [] }, _warnings: [], _delays: [], _deferred: [], _shotReadyAt: 0, _targetId: 1, _targetUntil: 13, _lastGraze: -9999, _boundaryTick: 0, _memoryBucket: 0, _memoryGain: 0, _resBucket: 0, _resGain: 0, _grazeGain: 0, _reservationSince: 0, _starvationReported: false, _checkpoint: { rulesetVersion: 'hapil-firstbattle-1', runId: 'v25-independent-8-0-gentle', seed: 813, difficulty: 'gentle', practiceBoss: true, checkpointSerial: 1, tick: 0, rngState: 813, idCounter: 1, stage: 'boss', wave: 0, phase: 0, score: 0, graze: 0, kills: 0, memory: 0, resonance: 0, autoAttack: true, skillRotation: true, campaign: true, campaignRevision: 5, bossIndex: 8, combatRevision: 21, stageTime: 0, phaseTime: 0, waveTime: 0, player: [Object], skills: [Object], stats: [Object], shotReadyAt: 0, resourceState: [Object] }, campaign: true, campaignRevision: 5, bossIndex: 8, bossId: 'asmodeus', bossName: '색욕의 귀 아스모데우스', bossCount: 35, encounterName: '붉은 조명의 무대' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/independent-boss-identities-v25.test.cjs:28:1
+✖ new source pivots keep the historical colored bright centers and at least90percent of the full real hitbody (5351.539192ms)
+  AssertionError [ERR_ASSERTION]: retained historical brightness floor {"group":29,"angle":0.7853981633974483,"offset":0.5,"paletteSlot":1,"quality":"high","actual":{"centralCoreVisibleFraction":1,"centralBrightFraction":1,"centralAlphaWeightedLuminance":174.83000287581703,"centralPixels":9,"visibleCentralPixels":9,"shaftVisibleFraction":1,"damageCapsuleVisibleFraction":1,"maxRasterOutset":2.5639610306789278},"historical":{"centralCoreVisibleFraction":0.8888888888888888,"centralBrightFraction":0.8888888888888888,"centralAlphaWeightedLuminance":206.94560261437906,"centralPixels":9,"visibleCentralPixels":8,"shaftVisibleFraction":1,"damageCapsuleVisibleFraction":0.6444444444444445,"maxRasterOutset":2.5639610306789278},"v24":{"centralCoreVisibleFraction":1,"centralBrightFraction":1,"centralAlphaWeightedLuminance":197.20377586056642,"centralPixels":9,"visibleCentralPixels":9,"shaftVisibleFraction":1,"damageCapsuleVisibleFraction":1,"maxRasterOutset":2.5639610306789278},"relativeHistoricalLuma":0.8448113932703079}
+      at Object.review (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tools/review-source-centers-v25.cjs:15:197)
+      at async TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/independent-boss-identities-v25.test.cjs:29:16)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/independent-story-app-v19.test.cjs:24:1
+✖ the special-pattern shortcut reaches phase three for all36 selections, preserves retry identity and never writes campaign data (19.92761ms)
+  AssertionError [ERR_ASSERTION]: special selector 2: 다음 구간의 원화를 불러오지 못했습니다. 연결을 확인한 뒤 다시 열어주세요.
+  
+  'error' !== 'playing'
+  
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/independent-story-app-v19.test.cjs:28:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'error',
+    expected: 'playing',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/independent-story-app-v19.test.cjs:32:1
+✖ ordinary historical practice still waits for every newly required natural body and starts phase one (31.550556ms)
+  AssertionError [ERR_ASSERTION]: historical2: 다음 구간의 원화를 불러오지 못했습니다. 연결을 확인한 뒤 다시 열어주세요.
+  
+  'error' !== 'playing'
+  
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/independent-story-app-v19.test.cjs:33:99)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'error',
+    expected: 'playing',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/legacy-drive-projectiles.test.cjs:50:1
+✖ missing or malformed authored bodies are reported instead of replaced with procedural shapes (2.847134ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'h14SkillBalrog'
+  - null
+  
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/legacy-drive-projectiles.test.cjs:51:52)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'h14SkillBalrog',
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/legacy-drive-projectiles.test.cjs:57:1
+✖ Lucifer dark source pixels stay readable crimson on dark maps without adding a backing shape (10.387214ms)
+  AssertionError [ERR_ASSERTION]: dark iris remains a visible >3:1 crimson mass
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/legacy-drive-projectiles.test.cjs:64:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/legacy-drive-projectiles.test.cjs:69:1
+✖ Lucifer blue source petals retain bright ivory structure after crimson recoloring (4.379715ms)
+  AssertionError [ERR_ASSERTION]: original saturated blue value becomes visible ivory contrast
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/legacy-drive-projectiles.test.cjs:72:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/legacy-natural-bot-replay.test.cjs:1:1
+✖ tests/legacy-natural-bot-replay.test.cjs (97.461218ms)
+  'test failed'
+
+test at tests/revision4-natural-bot-replay-v18.test.cjs:1:1
+✖ tests/revision4-natural-bot-replay-v18.test.cjs (95.302402ms)
+  'test failed'
+
+test at tests/revision5-natural-bot-replay-v19.test.cjs:1:1
+✖ tests/revision5-natural-bot-replay-v19.test.cjs (122.782521ms)
+  'test failed'

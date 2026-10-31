@@ -1,0 +1,121 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "candidate": "hapil-boss-identities-v25",
+  "baseCommit": "945799615b35bb732ca5d6a0c48db8eebbd92a74",
+  "productSHA256": {
+    "index.html": "6b8f18ad5f4970169ef9b8963419fe81f17ea580d17f3e381229e628af76dda0",
+    "styles.css": "aaeb395a309ff51c1269da69fb4d338206c14effcb01dda4fb1831740e2dc2e9",
+    "src/actors.js": "c5d707a96b4a0d7be33762924782a20451d7da2099f1555af026962ce89792f4",
+    "src/app.js": "7b749289485641547c6414400329d1e6d333b576e6d28dcadc9ed41041b90039",
+    "src/boss-motion.js": "e2d1bde92838884382e30b5d8de6549cf9071ac9b21c84b7f9cb8d4bc63160b1",
+    "src/boss-skills.js": "d3a61215ad24c66747b057dc06200e6c5091f22953e5e753abf676f50b2da863",
+    "src/core.js": "0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851",
+    "src/media.js": "ac5e0e2497f242e2515873ee157f06b979b2659d6f2dc02f66349161a50bce2e",
+    "src/projectiles.js": "2c831a71ca5b2c7c1a5424855fcf903714dfe6921ac4d62546d3e2e6c881beea",
+    "src/render.js": "31343c761317f772ccf22891210eda5db6eb2e269e7831395665b6eee6aae4a1",
+    "src/storage.js": "b753b883ca10b3f116c0bac9a1ed5551d3c87aab3f9e87227af6235f09d34c12",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f"
+  },
+  "productHashGuardPassed": true,
+  "implementation": {
+    "campaignConfigurations": 35,
+    "changedPressureChoreographies": 34,
+    "lustRetained": true,
+    "primaryAttacksRetained": true,
+    "newRunCombatRevision": 25,
+    "existingUndefinedOr21SavesRetainRules": true,
+    "newOwnedObjectFiles": 4,
+    "newAssetBytes": 183104,
+    "oldMediaFilesPreserved": 295,
+    "oldMediaAliasesPreserved": 284,
+    "originalFiveFourPoseAssetsPreserved": true,
+    "continuousNewAnimationClaim": false,
+    "memoryAndFriendlyCoreProtected": true,
+    "finalCoreIntactGuardianEndingPreserved": true
+  },
+  "verification": {
+    "nodeRegression": {
+      "passed": 348,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 108592.430135,
+      "log": "docs/v25-qa/npm-test-final.log"
+    },
+    "independentCPU": {
+      "actualConfigurations": 324,
+      "actualEmittedRoutes": 1065,
+      "sourcePixelCases": 8520,
+      "newWholeObjectRotationSubpixelCases": 4374,
+      "actualWarningReleaseCueFrames": 1260,
+      "legacyExactCases": 630,
+      "lustExactCases": 9,
+      "newCheckpointDeterminismCases": 315,
+      "fullSceneCases": 84,
+      "sourceHashGuardPassed": true,
+      "report": "docs/V25-INDEPENDENT-QA-20261031.json"
+    },
+    "ordinaryHealthCPU": {
+      "primaryCases": 105,
+      "primaryWins": 103,
+      "primaryLosses": 2,
+      "alternateLegalAttempts": 2,
+      "alternateWins": 2,
+      "all105CasesHaveAtLeastOneClear": true,
+      "exactReplayedTicks": 194854,
+      "fullStoryOrHumanPlay": false,
+      "report": "docs/V25-NATURAL-HEALTH-FOLLOWUP-20261031.json"
+    },
+    "historicOrdinaryInputs": {
+      "archivedRoutes": 18,
+      "originalInputTicks": 3699860,
+      "savedBoundaries": 2286,
+      "additionalPairedBoundaryTicks": 822960,
+      "archivedInputsUnchanged": true,
+      "report": "docs/V25-HISTORIC-INPUT-REPLAY-ATTESTATION-20261031.json"
+    },
+    "actualBrowser": {
+      "nativeChromePresentation": true,
+      "nativeKeyboardAndMousePad": true,
+      "nativeIndexedDBTwoTabsBackupRestorePracticeIsolation": true,
+      "inputReport": "docs/V25-NATIVE-BROWSER-INPUT-20261031.json",
+      "storageReport": "docs/V25-NATIVE-BROWSER-STORAGE-20261031.json",
+      "immunePresentationFixturesSeparateFromOrdinaryInput": true,
+      "browserDownloadFileSyncFailed": true
+    },
+    "notRun": [
+      "New headless automation",
+      "Software-GPU-specific run",
+      "Hardware GPU completion/timing",
+      "Mobile device emulation",
+      "Physical phone touchscreen/FPS",
+      "Human full-story natural completion"
+    ]
+  },
+  "cpuTiming": {
+    "scope": "Shared-host native CPU synchronous static-scene canvas submission; five warmups and12draw samples per runtime; not browser/GPU/mobile FPS. Before/after images use the same candidate world with baseline/current presentation.",
+    "highCases": 42,
+    "lowCases": 42,
+    "highMaximumP95Ms": 3.960307000030298,
+    "lowMaximumP95Ms": 4.474038000043947,
+    "maximumProjectileCacheBytes": 2750192,
+    "warmCacheMisses": 0
+  },
+  "limits": [
+    "New whole-object hitbody coverage is at least93.75%;4374rotation/subpixel checks retain the90%gate. Existing fitted narrow sources below90% were compared separately:3936cases, no regression; minimum legacy coverage32.14%. This is not an all-projectiles90%claim.",
+    "The actual browser triggered protective auto-pause on about1017ms tool-action frame gaps. It verifies real input and safety behavior, not stable60/30FPS.",
+    "Ordinary105cases are isolated phase3 practice, not a new25 full-story natural completion. Historical18route inputs retain their original absent combatRevision.",
+    "New bitmap work consists of source-pixel transformations of owned hapil1 props, without paid image generation. Controller/story scene arsenals remain shared where canon describes the same system."
+  ],
+  "rootPixelReview": {
+    "sourceOriginalsAndFourDerivatives": true,
+    "sourceBodyBeforeAfterPages": 4,
+    "allBattleBeforeAfterPages": 6,
+    "selectedNative360Comparisons": 5,
+    "actualChromeBalrogSlothAndFinalPixels": true
+  },
+  "archiveIndex": "docs/V25-INDEPENDENT-RAW-ARCHIVE-20261031.json",
+  "deploymentEvidence": "Produced separately after GitHub Pages executes; this file attests the frozen validated candidate."
+}

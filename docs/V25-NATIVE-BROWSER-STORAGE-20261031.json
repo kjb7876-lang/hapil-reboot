@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "classification": "Actual Chrome browser, native IndexedDB in isolated QA database; button-driven two tabs; no natural gameplay/performance claim",
+  "database": "hapil.qa.identity25.native.20261031.v25root01",
+  "productionDatabaseOpened": false,
+  "evidence": "Root directly observed visible DOM status after each native UI button action. Browser download paths returned, but files did not synchronize within five seconds; this is a recorded observation report, not a claimed downloaded native export.",
+  "testedProductHashes": {
+    "src/core.js": "0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851",
+    "src/storage.js": "b753b883ca10b3f116c0bac9a1ed5551d3c87aab3f9e87227af6235f09d34c12"
+  },
+  "actions": [
+    {
+      "tab": "A+B",
+      "action": "load-current",
+      "observedRevision": 0
+    },
+    {
+      "tab": "A",
+      "action": "save-first",
+      "ok": true,
+      "persistent": true,
+      "revision": 1
+    },
+    {
+      "tab": "B",
+      "action": "settings-low",
+      "ok": false,
+      "reason": "conflict",
+      "recordUnchanged": true,
+      "revision": 1
+    },
+    {
+      "tab": "B",
+      "action": "load-current then settings-low",
+      "ok": true,
+      "quality": "low",
+      "revision": 2
+    },
+    {
+      "tab": "A",
+      "action": "save-next",
+      "ok": false,
+      "reason": "conflict",
+      "recordUnchanged": true,
+      "revision": 2
+    },
+    {
+      "tab": "A",
+      "action": "load-current then save-next",
+      "ok": true,
+      "persistent": true,
+      "revision": 3,
+      "checkpointSerial": 2,
+      "checkpointTick": 991,
+      "backupSerial": 1,
+      "combatContract": 25
+    },
+    {
+      "tab": "A",
+      "action": "practice-check",
+      "reason": "practice-checkpoint",
+      "recordUnchanged": true,
+      "passed": true
+    },
+    {
+      "tab": "A",
+      "action": "restore-check",
+      "freshStoreOpened": true,
+      "persistent": true,
+      "nativeRoundTripEqual": true,
+      "checkpointRoundTripEqual": true,
+      "storedSelector": 25,
+      "restoredSelector": 25,
+      "serial": 2,
+      "passed": true
+    }
+  ],
+  "fixture": "docs/v25-browser/native-storage25.html",
+  "fixtureSHA256": "d42054886fd8cb0a6286f865781829399d62eb3ea25878672f5dbd3002b7ca6d",
+  "limitations": [
+    "Native delayed write/transaction-abort/old21-writer scenarios were not manually forced in the browser; separate Node serialized-IDB regression tests cover those cases.",
+    "Boundary2 uses 991 actual-core fixture ticks with explicit immunity; not natural progression.",
+    "No deletion/reset or production saved data mutation."
+  ]
+}

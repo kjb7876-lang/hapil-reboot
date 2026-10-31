@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0a0b14">
+  <meta name="description" content="합일: 기억 회랑. 이동만으로 플레이하는 세로 탄막 슈팅.">
+  <title>합일 — 기억 회랑</title>
+
+  <!-- Owned QA fixture. Product index.html remains unchanged. -->
+  <script>if(/\/docs\/v25-browser\/[^/]*$/.test(location.pathname)){var qaBase=document.createElement('base');qaBase.href='../../';document.head.appendChild(qaBase);}</script>
+  <style>
+    #qa-input-panel{position:relative;z-index:50;max-width:1000px;margin:20px auto;padding:14px;border:1px solid #769bb7;background:#0e1825;color:#edf3fc;font:12px/1.45 system-ui,sans-serif;text-align:left}
+    #qa-input-panel h2{font-size:16px;margin:0 0 8px}#qa-input-panel p{margin:7px 0}#qa-input-panel button{padding:8px;margin:4px 4px 4px 0;background:#2a415a;border:1px solid #83a1bf;color:white;font:inherit}
+    #qa-input-status{margin:8px 0 0;max-height:68vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font:11px/1.4 ui-monospace,monospace}
+    #qa-input-panel a{color:#a6d7ff}#qa-input-panel code{overflow-wrap:anywhere}
+    @media(min-width:1000px){#qa-input-panel{position:fixed;right:10px;top:10px;width:min(320px,calc((100vw - var(--arena-w,360px))/2 - 26px));max-height:calc(100vh - 20px);margin:0}#qa-input-status{max-height:calc(100vh - 238px)}}
+    @media(max-width:999px){#qa-input-panel{width:calc(100% - 28px)}}
+  </style>
+  <link rel="stylesheet" href="styles.css?v=20261031-identity25">
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+  <div id="app" class="app-shell">
+    <header class="masthead">
+      <a class="wordmark" href="#" aria-label="합일 기억 회랑 홈"><span class="brand-symbol" aria-hidden="true">⌖</span><span>H A P I L <small>기억 회랑</small></span></a>
+      <div class="header-actions"><span class="edition">STORY MODE <i>VIII</i></span><button id="settings-button" class="icon-button" type="button" aria-label="설정 열기" title="설정">⚙</button></div>
+    </header>
+
+    <main class="stage-layout">
+      <aside class="intro-rail">
+        <div class="rail-line"><span class="tiny-diamond"></span><span>PORTRAIT DANMAKU</span></div>
+        <p class="overline">원문 기반 세로 각색 · 프롤로그~최종장</p>
+        <h2>검은 동화의 밤,<br>기억을 겨누다<span>.</span></h2>
+        <p class="intro-copy">멈춘 잎 아래 떨리는 날개, 검은 물 아래 익숙한 얼굴.<br>정원과 병원, 뒤섞인 시간을 지나 강제 명령의 연결을 끊으세요.</p>
+        <div class="guide-card"><span class="guide-number">01 / CONTROL</span><h3>이동에 집중하세요</h3><p>공격 · 조준 · 스킬은 자동으로 이어집니다.</p><div class="key-row"><kbd>W A S D</kbd><span>또는</span><kbd>방향키</kbd></div><div class="guide-foot"><span><kbd>Shift</kbd> 정밀 이동</span><span><kbd>Space</kbd> 일시정지</span></div></div>
+        <p class="small-note">작은 흰 점이 피격 판정입니다.<br>점선 예고 뒤 같은 경로에 레이저가 켜집니다.</p>
+        <section class="skill-ledger" aria-label="자동 스킬 상태" aria-live="off">
+          <div class="ledger-heading"><span class="guide-number">FOUR FRAGMENTS</span><span>기억 <b id="memory-value">0</b></span></div>
+          <meter id="memory-meter" class="memory-meter" min="0" max="100" value="0" aria-label="스킬에 사용하는 기억">0</meter>
+          <div id="skill-memory" class="skill-entry" data-state="waiting"><span id="skill-memory-emblem" class="skill-seal" aria-hidden="true">◇</span><div><strong>기억 해방</strong><small>기억을 모아 세 갈래로 사격</small></div><span id="skill-memory-state">대기</span></div>
+          <div id="skill-delay" class="skill-entry" data-state="waiting"><span id="skill-delay-emblem" class="skill-seal" aria-hidden="true">∴</span><div><strong>시간 지연</strong><small>표적에 새긴 뒤 뒤늦게 폭발</small></div><span id="skill-delay-state">대기</span></div>
+          <div id="skill-counter" class="skill-entry" data-state="waiting"><span id="skill-counter-emblem" class="skill-seal" aria-hidden="true">↶</span><div><strong>반격</strong><small>탄막을 스친 순간의 응답</small></div><span id="skill-counter-state">대기</span></div>
+          <div id="skill-ego" class="skill-entry" data-state="waiting"><span id="skill-ego-emblem" class="skill-seal" aria-hidden="true">⊙</span><div><strong>자아 각성</strong><small>공명이 차오르면 사격 강화</small></div><span id="skill-ego-state">대기</span></div>
+        </section>
+        <div class="rail-signature">HAPIL <span>—</span> A FRAGMENT OF MEMORY</div>
+      </aside>
+
+      <section class="game-column" aria-label="합일 게임">
+        <div class="run-hud" aria-live="off">
+          <div class="hud-health"><span class="hud-label">기억</span><span id="health-value" class="health-pips" aria-label="체력">◇ ◇ ◇ ◇ ◇</span></div>
+          <div class="hud-score"><span class="hud-label">SCORE</span><strong id="score-value">000000</strong></div>
+          <button id="pause-button" class="pause-button" type="button" aria-label="일시정지" disabled><span aria-hidden="true">Ⅱ</span></button>
+        </div>
+        <div id="app-stage" class="arena-frame">
+          <canvas id="game-canvas" width="360" height="640" aria-label="360 × 640 세로 탄막 전투장"></canvas>
+          <div id="battle-caption" class="battle-caption" hidden><span id="stage-label">기억의 입구</span><span id="stage-count">01 / 03</span></div>
+          <div id="title-screen" class="screen title-screen">
+            <div class="title-heading"><p class="overline">NIGHT OF THE BROKEN SEAL</p><h1>합일</h1><div class="title-subtitle"><span></span>기억 회랑<span></span></div></div>
+            <div class="title-menu">
+              <p class="menu-kicker">오직, 당신의 움직임으로.</p>
+              <div class="difficulty-picker" role="group" aria-label="난이도 선택"><button id="difficulty-normal" type="button" data-difficulty="normal" aria-pressed="true">기본 <small>NORMAL</small></button><button id="difficulty-gentle" type="button" data-difficulty="gentle" aria-pressed="false">여유 <small>GENTLE</small></button><button id="difficulty-hell" type="button" data-difficulty="hell" aria-pressed="false">지옥 <small>HELL</small></button></div>
+              <p id="difficulty-description" class="difficulty-description">일반 구간 · 제8부 사몽 각성과 최종장까지</p>
+              <button id="start-button" class="primary-button" type="button"><span>공간체험 여정 시작</span><span aria-hidden="true">↗</span></button>
+              <button id="continue-button" class="secondary-button" type="button" hidden>저장된 구간에서 이어하기</button>
+              <div class="practice-row"><select id="practice-select" aria-label="연습할 보스"><option value="0">보라검천사</option><option value="1">늪지대 뿔악마</option><option value="2">발록</option><option value="3">초천사의 웃는 가면</option><option value="4">코스믹 가면 루시퍼</option><option value="5">나태 · 벨페고르</option><option value="6">질투 · 레비아탄</option><option value="7">탐식 · 베엘제붑</option><option value="8">색욕 · 아스모데우스</option><option value="9">탐욕 · 맘몬</option><option value="10">분노의 귀</option><option value="11">교만의 회장</option><option value="12">제8부 최종전 연습 · 교주</option><option value="13">제3부 · 방어의 군단</option><option value="14">제3부 · 잔인한 구원</option><option value="15">제3부 · 시스템의 거부권</option><option value="16">제3부 · 관리자 권한</option><option value="17">제3부 · 중앙 코어 이주실</option><option value="18">제3부 · 기억의 문</option><option value="19">제4부 · 고블린 두목</option><option value="20">제4부 · 타락천사 기사</option><option value="21">제4부 · 불면귀</option><option value="22">제5부 · 최초명령 코어 방어</option><option value="23">제5부 · 일반 수문장의 연결</option><option value="24">제5부 · 상급 수문장 명령 교차</option><option value="25">제5부 · 검은 공방 동력 접점</option><option value="26">제5부 · 뉴런 게이트</option><option value="27">제5부 · 망각의 묘지 삭제 명령</option><option value="28">제5부 · 여섯 명령 고리</option><option value="29">제5부 · 아르벨리아 변조 명령</option><option value="30">제5부 · 세이렌 모르</option><option value="31">제6부 · 악몽의 우두머리</option><option value="32">제7부 · 파란불 집행체</option><option value="33">제8부 · 외곽 지배 회로</option><option value="34">제8부 · 한리안 / 백이온</option><option value="35">제8부 · 교주와 사몽 각성</option></select><button id="practice-button" class="text-button" type="button">보스 연습 ↗</button><button id="special-practice-button" class="text-button" type="button" disabled>특수 패턴 ↗</button></div>
+              <p class="title-control-hint">PC 방향키 / 모바일 화면을 상대 드래그</p>
+            </div>
+          </div>
+          <div id="pause-screen" class="screen dim-screen" hidden><div class="overlay-card"><p class="overline">A MOMENT OF STILLNESS</p><span class="pause-ornament" aria-hidden="true">◇</span><h2 id="pause-title">잠시, 숨을 고르기</h2><p id="pause-description">준비되면 기억을 이어가세요.</p><button id="resume-button" class="primary-button" type="button">전투 계속하기 <span aria-hidden="true">↗</span></button><button id="pause-settings-button" class="secondary-button" type="button">설정</button><button id="home-button" class="text-button" type="button">시작 화면으로</button></div></div>
+          <div id="result-screen" class="screen dim-screen" hidden><div class="overlay-card result-card"><p id="result-eyebrow" class="overline">MEMORY RECORDED</p><span class="result-symbol" aria-hidden="true">◇</span><h2 id="result-title">기억이 남았습니다</h2><p id="result-description" tabindex="0">다음 걸음은 조금 더 멀리.</p><div id="ending-nav" class="ending-nav" aria-label="결말 문단" hidden><button id="ending-prev" type="button">이전 문단</button><span id="ending-progress" aria-live="polite">1 / 8</span><button id="ending-next" type="button">다음 문단</button></div><strong id="result-score" class="result-score">000000</strong><span class="result-score-label">FINAL SCORE</span><div class="result-stats"><span>스친 탄 <b id="result-graze">0</b></span><span>격파 <b id="result-kills">0</b></span><span>피격 <b id="result-hits">0</b></span></div><button id="retry-button" class="primary-button" type="button">다시 도전하기 <span aria-hidden="true">↗</span></button><button id="result-home-button" class="text-button" type="button">시작 화면으로</button></div></div>
+          <div id="error-screen" class="screen dim-screen" hidden><div class="overlay-card error-card"><p class="overline">CORRIDOR INTERRUPTED</p><h2>회랑을 열지 못했습니다</h2><p id="error-description">필요한 게임 파일을 불러오지 못했습니다.</p><button id="reload-button" class="primary-button" type="button">다시 불러오기 ↗</button></div></div>
+          <button id="intro-skip-button" class="intro-skip-button" type="button" hidden>등장 연출 건너뛰기 ↗</button>
+          <div id="toast" class="toast" role="status" hidden></div>
+        </div>
+        <div id="touch-pad" class="touch-pad" aria-label="상대 드래그 이동 패드"><div class="pad-symbol" aria-hidden="true"><span></span><i></i></div><span class="pad-arrow" aria-hidden="true">↔</span></div>
+        <div class="arena-footer"><span id="resonance-label">공명 <b id="resonance-value">0</b></span><span id="skill-state">스킬 자동 순환</span><span id="render-state">60 FPS</span></div>
+        <p id="mobile-storage-status" class="mobile-storage-status">기록 보관함을 여는 중…</p>
+      </section>
+
+      <aside class="detail-rail">
+        <div class="chapter-marker"><span id="chapter-caption">스토리모드 · 프롤로그~제8부</span><strong id="chapter-number">01</strong><div class="chapter-orbit" aria-hidden="true"></div></div>
+        <div class="encounter-copy"><p id="encounter-kicker" class="overline">THE DREAM GUARDIAN</p><h3 id="encounter-title">검은 정원에서<br>사몽의 최종전까지</h3><p id="encounter-description" tabindex="0">환도와 윤서하의 기억을 따라 마지막 코어로.<br>사람들의 몽세를 남기고 강제 명령과 사이비 회로를 분리합니다.</p></div>
+        <ol class="phase-list"><li id="phase-wave"><span>Ⅰ</span><div><strong>기억의 파편</strong><small>정원 · 동굴 · 검은 늪</small></div><i></i></li><li id="phase-boss"><span>Ⅱ</span><div><strong>각 장의 전투와 보호 임무</strong><small>전투 구성 35개 · 105페이즈</small></div><i></i></li><li id="phase-end"><span>Ⅲ</span><div><strong>남겨진 몽세</strong><small>제8부 사몽 각성 · 몽세수호자</small></div><i></i></li></ol>
+        <div class="profile-card"><span class="guide-number">이 독립 실행판의 기록</span><div><span>최고 점수</span><strong id="best-score">000000</strong></div><p id="profile-summary">아직 기록된 기억이 없습니다.</p></div>
+        <p id="storage-status" class="storage-status">기록 보관함을 여는 중…</p>
+      </aside>
+    </main>
+    <footer class="page-footer"><span>합일 / 기억 회랑</span><span>MOVE. GRAZE. REMEMBER.</span><span>STORY MODE · 35</span></footer>
+  </div>
+
+  <div id="settings-modal" class="modal-backdrop" hidden><section class="settings-card" role="dialog" aria-modal="true" aria-labelledby="settings-title"><div class="settings-heading"><div><p class="overline">YOUR CORRIDOR</p><h2 id="settings-title">플레이 설정</h2></div><button id="settings-close" class="icon-button" type="button" aria-label="설정 닫기">×</button></div><label class="setting-row"><span><strong>배경 음악</strong><small>기존 회랑의 테마</small></span><input id="setting-music" type="checkbox" checked><i aria-hidden="true"></i></label><label class="setting-row"><span><strong>효과음</strong><small>사격 · 피격 · 전투 알림</small></span><input id="setting-sfx" type="checkbox" checked><i aria-hidden="true"></i></label><label class="setting-row"><span><strong>스킬 자동 순환</strong><small>기억 · 지연 · 반격 · 자아</small></span><input id="setting-skills" type="checkbox" checked><i aria-hidden="true"></i></label><label class="setting-row"><span><strong>절전 렌더링 · 30 FPS</strong><small>전투 판정은 항상 60 Hz</small></span><input id="setting-low" type="checkbox"><i aria-hidden="true"></i></label><label class="sensitivity-row" for="setting-sensitivity"><span>드래그 감도 <output id="sensitivity-value">1.0×</output></span><input id="setting-sensitivity" type="range" min="0.5" max="2" step="0.1" value="1"></label><p class="settings-note">자동 사격과 조준은 항상 켜져 있습니다.<br><kbd>C</kbd> 스킬 순환 · <kbd>Esc</kbd> / <kbd>Space</kbd> 일시정지</p><button id="export-button" class="secondary-button" type="button">측정값 · 플레이 기록 내보내기 ↓</button><p id="settings-storage" class="settings-note">이 독립 실행판은 별도 저장 공간을 사용합니다.</p></section></div>
+
+  <aside id="qa-input-panel" aria-label="V25 실제 입력 검수 패널">
+    <h2>V25 실제 앱 입력 검수</h2>
+    <p>제품 DB를 열지 않는 QA 복사본입니다. 실제 게임의 체력·입력·설정 기본값을 사용합니다. 자동 입력·무적·시뮬레이션 주입은 없습니다.</p>
+    <p>검수 DB: <code id="qa-input-database">준비 중</code></p>
+    <p>150ms마다 공개 상태를 읽습니다. 이 패널의 계측 비용이 있으므로 제품 성능 측정값으로 단정하지 않습니다.</p>
+    <button id="qa-input-snapshot" type="button">현재 상태 기록</button>
+    <button id="qa-input-reset-log" type="button">검수 로그만 비우기</button>
+    <button id="qa-input-export" type="button">입력 검수 JSON 내보내기</button>
+    <a id="qa-input-download" hidden>입력 검수 JSON 다운로드</a>
+    <pre id="qa-input-status" aria-live="off">{"ready":false}</pre>
+  </aside>
+  <noscript><div class="noscript">이 게임은 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜주세요.</div></noscript>
+  <script src="src/media.js?v=20261031-identity25"></script>
+  <script src="src/weapon-patterns.js?v=20261031-identity25"></script>
+  <script src="src/core.js?v=20261031-identity25"></script>
+  <script>window.module={exports:{}};</script>
+  <script src="src/storage.js?v=20261031-identity25"></script>
+  <script>
+  (function(){
+    'use strict';
+    var requested=new URLSearchParams(location.search).get('run')||'run01';
+    var run=/^[A-Za-z0-9_-]{1,40}$/.test(requested)?requested:'run01';
+    var name='hapil.qa.identity25.input.20261031.'+run;
+    var actualStorage=window.module.exports;
+    delete window.module;
+    // Only this wrapper is invoked by the actual app. The original factory's
+    // default product-named store is created but is never opened or called.
+    window.HapilStore=actualStorage._test.createStore({location:{protocol:location.protocol},indexedDB:{open:function(ignoredName,version){return window.indexedDB.open(name,version);}}});
+    document.getElementById('qa-input-database').textContent=name;
+    document.getElementById('qa-input-panel').dataset.database=name;
+  })();
+  </script>
+  <script src="src/boss-motion.js?v=20261031-identity25"></script>
+  <script src="src/story-assets.js?v=20261031-identity25"></script>
+  <script src="src/actors.js?v=20261031-identity25"></script>
+  <script src="src/projectiles.js?v=20261031-identity25"></script>
+  <script src="src/boss-skills.js?v=20261031-identity25"></script>
+  <script src="src/render.js?v=20261031-identity25"></script>
+  <script src="src/app.js?v=20261031-identity25"></script>
+
+  <script>
+  (function(){
+    'use strict';
+    var panel=document.getElementById('qa-input-panel'),output=document.getElementById('qa-input-status');
+    var started=performance.now(),lastMode=null,lastReady=false;
+    var report={fixture:'app-input25',sourceIndexSHA256:'6b8f18ad5f4970169ef9b8963419fe81f17ea580d17f3e381229e628af76dda0',qaOnly:true,database:panel.dataset.database,
+      productDatabaseOpened:false,inputInjection:false,healthOrSettingsOverride:false,simulationInjection:false,
+      samplingIntervalMs:150,instrumentationCostPresent:true,scope:'Actual app controls and public state observation in an isolated native IndexedDB namespace. Not natural campaign completion or physical mobile performance certification.',
+      observedAt:null,publicState:null,diagnostics:null,eventCounts:{},events:[],samples:[],manualSnapshots:[]};
+    function stamp(){return Math.round((performance.now()-started)*1000)/1000;}
+    function publicState(){try{return window.HapilApp&&window.HapilApp.getState?window.HapilApp.getState():null;}catch(error){return {fixtureReadError:String(error&&error.message||error)};}}
+    function brief(state){return state?{mode:state.mode,ready:state.ready,paused:state.paused,world:state.world?{runId:state.world.runId,tick:state.world.tick,stage:state.world.stage,bossIndex:state.world.bossIndex,bossName:state.world.bossName,difficulty:state.world.difficulty,combatRevision:state.world.combatRevision,player:state.world.player}:null,pointer:state.pointer}:null;}
+    function event(type,detail){report.eventCounts[type]=(report.eventCounts[type]||0)+1;report.events.push({atMs:stamp(),type:type,detail:detail,state:brief(publicState())});if(report.events.length>240)report.events.shift();}
+    function read(){
+      var state=publicState(),diag=null;
+      try{diag=window.HapilApp&&window.HapilApp.diagnostics?window.HapilApp.diagnostics():null;}catch(error){diag={fixtureReadError:String(error&&error.message||error)};}
+      report.observedAt=new Date().toISOString();report.publicState=state;report.diagnostics=diag;
+      if(state){
+        if(lastMode!==null&&lastMode!==state.mode)event('mode-change',{from:lastMode,to:state.mode,pauseTitle:document.getElementById('pause-title').textContent,pauseDescription:document.getElementById('pause-description').textContent});
+        if(lastReady!==state.ready)event('ready-change',{ready:state.ready});
+        lastMode=state.mode;lastReady=state.ready;
+        report.samples.push({atMs:stamp(),state:brief(state),render:diag?{fixedSteps:diag.fixedSteps,renderedFrames:diag.renderedFrames,renderTarget:diag.renderTarget,loadedImages:diag.loadedImages,imageRequestsPending:diag.imageRequestsPending,imageRequestsActive:diag.imageRequestsActive,assetErrors:diag.assetErrors,pausedLargeGaps:diag.pausedLargeGaps,lastGapReason:diag.lastGapReason}:null});
+        if(report.samples.length>160)report.samples.shift();
+      }
+      // The complete retained trace is exported. The visible panel keeps recent
+      // observations compact enough to read beside the actual arena.
+      var visible={fixture:report.fixture,sourceIndexSHA256:report.sourceIndexSHA256,qaOnly:true,database:report.database,productDatabaseOpened:false,inputInjection:false,healthOrSettingsOverride:false,simulationInjection:false,samplingIntervalMs:150,instrumentationCostPresent:true,observedAt:report.observedAt,publicState:report.publicState,diagnostics:report.diagnostics,eventCounts:report.eventCounts,recentEvents:report.events.slice(-16),recentSamples:report.samples.slice(-10),manualSnapshots:report.manualSnapshots};
+      output.textContent=JSON.stringify(visible,null,2);
+    }
+    ['keydown','keyup'].forEach(function(type){document.addEventListener(type,function(e){event(type,{key:e.key,code:e.code,repeat:!!e.repeat,isTrusted:e.isTrusted,targetId:e.target&&e.target.id||null});},{capture:true,passive:true});});
+    ['pointerdown','pointermove','pointerup','pointercancel','lostpointercapture'].forEach(function(type){document.addEventListener(type,function(e){var target=e.target&&e.target.closest?e.target.closest('#game-canvas,#touch-pad'):null;var id=target&&target.id;if(!id)return;event(type,{targetId:id,pointerId:e.pointerId,pointerType:e.pointerType,clientX:e.clientX,clientY:e.clientY,buttons:e.buttons,isPrimary:e.isPrimary,isTrusted:e.isTrusted});},{capture:true,passive:true});});
+    document.addEventListener('click',function(e){var id=e.target&&e.target.closest?e.target.closest('button'):null;if(id&&id.id)event('button-click',{targetId:id.id,isTrusted:e.isTrusted});},{capture:true,passive:true});
+    document.addEventListener('visibilitychange',function(){event('visibilitychange',{hidden:document.hidden});},{passive:true});
+    window.addEventListener('blur',function(e){event('blur',{isTrusted:e.isTrusted});},{passive:true});
+    window.addEventListener('focus',function(e){event('focus',{isTrusted:e.isTrusted});},{passive:true});
+    document.getElementById('qa-input-snapshot').addEventListener('click',function(){read();report.manualSnapshots.push({atMs:stamp(),state:report.publicState,diagnostics:report.diagnostics});if(report.manualSnapshots.length>16)report.manualSnapshots.shift();read();});
+    document.getElementById('qa-input-reset-log').addEventListener('click',function(){report.events=[];report.samples=[];report.manualSnapshots=[];report.eventCounts={};event('log-reset',{databaseTouched:false});read();});
+    document.getElementById('qa-input-export').addEventListener('click',function(){read();var blob=new Blob([JSON.stringify(report,null,2)+'\n'],{type:'application/json'});var link=document.getElementById('qa-input-download');if(link.dataset.objectUrl)URL.revokeObjectURL(link.dataset.objectUrl);var url=URL.createObjectURL(blob);link.href=url;link.dataset.objectUrl=url;link.download='hapil-v25-app-input-'+report.database.split('.').pop()+'.json';link.hidden=false;link.click();});
+    read();setInterval(read,150);
+  })();
+  </script>
+</body>
+</html>

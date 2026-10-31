@@ -1,0 +1,127 @@
+{
+  "canonical": {
+    "path": "/workspace/scratch/c84ef2cd7c03/upload/스토리월드_최종본_통합_20261029(1).txt",
+    "sha256": "e069b22f4ee33c80e1b8e2e407583a865efec5d01b6440408f0e3389d82cabaa",
+    "scope": "Prologue, parts1..8, finalSamongawakening and preserved-coreguardianending; part9 startsline834 and is excluded"
+  },
+  "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+  "method": "Official GitHub fetch_file base64; local byte hashes/Gitblob verification and direct pixel review; no credential/security/policy/network modification; source repos read-only.",
+  "objects": [
+    {
+      "file": "/workspace/scratch/c84ef2cd7c03/v25-hapil1-sources/dirty_tissue_projectile_bloodied.webp",
+      "bytes": 203616,
+      "sha256": "e408aa2b2317a96036d59ab692f6f4c56489e35bc1571808f14b307efc80273f",
+      "gitBlobSHA": "b5cca9f38cbe1ce85e2be7681ac6f1b52a7e711f",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "alphaBBox": [
+        65,
+        32,
+        1390,
+        984
+      ],
+      "sourceRepository": "kjb7876-lang/hapil1",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "sourcePath": "assets/generated-v31342-rc39/dirty_tissue_projectile_bloodied.webp",
+      "canonicalScene": "ep1b02",
+      "proposedRuntimeKey": "h25SlothTissue",
+      "ownershipEvidence": {
+        "path": "assets/generated-v31342-rc39/README_KO.md",
+        "gitBlobSHA": "dde98a9ab45245110dfa81b5273259bb639acfe7",
+        "kind": "explicit narrative-placement table, not filename inference"
+      },
+      "pixelInspection": "Source audit agent directly viewed all four originals in contact sheet; root separately viewed and approved ownership/derivation. Root owns derivative production.",
+      "derivativeStatus": "not produced by this source-audit agent"
+    },
+    {
+      "file": "/workspace/scratch/c84ef2cd7c03/v25-hapil1-sources/golden_treasure_projectile_bloodied.webp",
+      "bytes": 342290,
+      "sha256": "7af71a4498e60dbd2da4e19e41f34926a5ae379746876344335bef8f61875bd8",
+      "gitBlobSHA": "79b1ba15ccbaa917fb31a34ba8d00855a53793b5",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "alphaBBox": [
+        0,
+        33,
+        1505,
+        984
+      ],
+      "sourceRepository": "kjb7876-lang/hapil1",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "sourcePath": "assets/generated-v31342-rc39/golden_treasure_projectile_bloodied.webp",
+      "canonicalScene": "ep1b06",
+      "proposedRuntimeKey": "h25GreedTreasure",
+      "ownershipEvidence": {
+        "path": "assets/generated-v31342-rc39/README_KO.md",
+        "gitBlobSHA": "dde98a9ab45245110dfa81b5273259bb639acfe7",
+        "kind": "explicit narrative-placement table, not filename inference"
+      },
+      "pixelInspection": "Source audit agent directly viewed all four originals in contact sheet; root separately viewed and approved ownership/derivation. Root owns derivative production.",
+      "derivativeStatus": "not produced by this source-audit agent"
+    },
+    {
+      "file": "/workspace/scratch/c84ef2cd7c03/v25-hapil1-sources/kitchen_knife_projectile_bloodied.webp",
+      "bytes": 180108,
+      "sha256": "5558c302ebca20482050ccab47fdd92ef54134bdf684ce082b78c4e9196ac97e",
+      "gitBlobSHA": "e5dda2939602c65f1583843d486357247db4d8e0",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "alphaBBox": [
+        0,
+        21,
+        1468,
+        1000
+      ],
+      "sourceRepository": "kjb7876-lang/hapil1",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "sourcePath": "assets/generated-v31342-rc39/kitchen_knife_projectile_bloodied.webp",
+      "canonicalScene": "ep1b04",
+      "proposedRuntimeKey": "h25GluttonKnife",
+      "ownershipEvidence": {
+        "path": "assets/generated-v31342-rc39/README_KO.md",
+        "gitBlobSHA": "dde98a9ab45245110dfa81b5273259bb639acfe7",
+        "kind": "explicit narrative-placement table, not filename inference"
+      },
+      "pixelInspection": "Source audit agent directly viewed all four originals in contact sheet; root separately viewed and approved ownership/derivation. Root owns derivative production.",
+      "derivativeStatus": "not produced by this source-audit agent"
+    },
+    {
+      "file": "/workspace/scratch/c84ef2cd7c03/v25-hapil1-sources/paper_money_projectile_bloodied.webp",
+      "bytes": 233638,
+      "sha256": "ba64565641ffb5f4e96fb62b63149c8404ff5501030e3621ad907990278fabb1",
+      "gitBlobSHA": "e27d95e9c83ff596e24de6c3905d0bc416300c0c",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "alphaBBox": [
+        43,
+        21,
+        1502,
+        994
+      ],
+      "sourceRepository": "kjb7876-lang/hapil1",
+      "sourceCommit": "8629bd82fc1d8baf41183395c054fd83775e96df",
+      "sourcePath": "assets/generated-v31342-rc39/paper_money_projectile_bloodied.webp",
+      "canonicalScene": "ep1b06",
+      "proposedRuntimeKey": "h25GreedMoney",
+      "ownershipEvidence": {
+        "path": "assets/generated-v31342-rc39/README_KO.md",
+        "gitBlobSHA": "dde98a9ab45245110dfa81b5273259bb639acfe7",
+        "kind": "explicit narrative-placement table, not filename inference"
+      },
+      "pixelInspection": "Source audit agent directly viewed all four originals in contact sheet; root separately viewed and approved ownership/derivation. Root owns derivative production.",
+      "derivativeStatus": "not produced by this source-audit agent"
+    }
+  ],
+  "contact": {
+    "path": "docs/v25-source-review/owned-objects-contact.jpg",
+    "sha256": "1b831f76c0d03ea17337c4ec4d850ede7f7c4e26196c9f98b997e86795ccd59c"
+  }
+}

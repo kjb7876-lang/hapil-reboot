@@ -15,7 +15,8 @@ async function fixture(keys) {
   const previous = global.document, allocated = [];
   global.document = { createElement(name) { assert.equal(name, 'canvas'); const c = createCanvas(1, 1); allocated.push(c); return c; } };
   const images = {};
-  for (const key of [...new Set(keys)]) { assert(media[key], key + ' has a registered source'); images[key] = await loadImage(path.join(__dirname, '..', media[key])); }
+  const requested=keys.some(k=>materialKeys.includes(k))?keys.concat(['h25SlothTissue','h25GluttonKnife','h25GreedMoney','h25GreedTreasure']):keys;
+  for (const key of [...new Set(requested)]) { assert(media[key], key + ' has a registered source'); images[key] = await loadImage(path.join(__dirname, '..', media[key])); }
   const c = createCanvas(360, 260), ctx = c.getContext('2d'), skills = Skills.create(images), projectiles = Projectiles.create(images);
   return { images, c, ctx, allocated, skills, projectiles, close() { skills.destroy(); projectiles.destroy(); global.document = previous; } };
 }
@@ -120,7 +121,7 @@ test('all seven large HELL rotors use their own full source image and visual spi
       const w=world(i), bullet={x:180,y:120,r:11,halfLength:0,kind:'hell-rotor',angle:Math.PI/2,vx:40,vy:90,age:0,spinAngle:0};
       f.ctx.clearRect(0,0,360,260); f.projectiles.beginFrame(); const original=JSON.stringify(bullet), calls={count:0};
       assert.equal(f.projectiles.drawBullet(forbidGeometry(f.ctx,calls),w,bullet,false),true);
-      assert.equal(calls.count,i===8?1:2,'Lust is one independent whole prop; other rotors retain their original body plus own ornament');
+      assert.equal(calls.count,[5,7,8,9].includes(i)?1:2,'approved whole props draw once; retained legacy rotors keep body plus own ornament');
       assert.equal(f.projectiles.getMetrics().rotorVisualDraws,1);
       assert.equal(f.projectiles.getMetrics().weaponVisualDraws,0);
       assert.equal(JSON.stringify(bullet),original,'visual rotation never mutates velocity, angle or radius');
@@ -144,11 +145,11 @@ test('seven rotor warnings preview owned art; required natural bodies fail close
       assert.equal(f.projectiles.getMetrics().weaponTelegraphDraws,0);
       w.boss.rotorTelegraph=false; f.projectiles.beginFrame(); f.projectiles.drawBossCast(f.ctx,w,false);
       assert.equal(f.projectiles.getMetrics().rotorTelegraphDraws,0);
-      const ownKey=i===8?'h24LustLipstick':i===7?'h14RotorGlutton':skillKeys[i],saved=f.images[ownKey]; delete f.images[ownKey];
+      const ownKey=i===5?'h25SlothTissue':i===7?'h14SkillGlutton':i===9?'h25GreedTreasure':i===8?'h24LustLipstick':skillKeys[i],saved=f.images[ownKey]; delete f.images[ownKey];
       // A fresh renderer cannot retain an earlier cached ornament after failure.
       const missing=Projectiles.create(f.images);f.ctx.clearRect(0,0,360,260);missing.beginFrame();
-      if(i!==7)assert.equal(Projectiles.invalidAssetForEncounter(f.images,i),ownKey,'a complete encounter cannot start without a newly required own source');
-      if(i===6||i===8){assert.equal(missing.drawBullet(f.ctx,w,{x:180,y:120,r:11,halfLength:0,kind:'hell-rotor',spinAngle:0,angle:0},false),false);assert.equal(f.ctx.getImageData(180,120,1,1).data[3],0);assert.equal(missing.getMetrics().missingProjectileAssets,1,'missing mirror/heart body must not fall back to a geometric/material orb');}
+      assert.equal(Projectiles.invalidAssetForEncounter(f.images,i),ownKey,'a complete encounter cannot start without a newly required own source');
+      if([5,6,7,8,9].includes(i)){assert.equal(missing.drawBullet(f.ctx,w,{x:180,y:120,r:11,halfLength:0,kind:'hell-rotor',spinAngle:0,angle:0},false),false);assert.equal(f.ctx.getImageData(180,120,1,1).data[3],0);assert.equal(missing.getMetrics().missingProjectileAssets,1,'missing mirror/heart body must not fall back to a geometric/material orb');}
       else{assert.equal(missing.drawBullet(f.ctx,w,{x:180,y:120,r:11,halfLength:0,kind:'hell-rotor',spinAngle:0,angle:0},false),true);assert(f.ctx.getImageData(180,120,1,1).data[3]>=240,'still-present owned orb remains visible');assert.equal(missing.getMetrics().missingOptionalRotorAssets,1);}
       assert.equal(missing.getMetrics().rotorVisualDraws,0);missing.destroy();f.images[ownKey]=saved;
     }

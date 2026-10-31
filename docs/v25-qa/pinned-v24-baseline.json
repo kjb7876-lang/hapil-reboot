@@ -1,0 +1,494 @@
+{
+  "schema": 1,
+  "baseline": "ef95fc227506162b5203092da9e1734e2f43ef58",
+  "scope": "Pinned v24 git objects read in this execution environment, not inherited test results.",
+  "files": {
+    "src/core.js": {
+      "bytes": 159568,
+      "sha256": "52cd164b1e429c1caeb69585c493aa33e2a17fc5eab06a4fd5ea86ba09c6193a"
+    },
+    "src/weapon-patterns.js": {
+      "bytes": 5577,
+      "sha256": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f"
+    },
+    "src/projectiles.js": {
+      "bytes": 55002,
+      "sha256": "3e4938f4d03bd6c1154313a813a5253334a1d45caeab00afdffe5d9a6f0bcebc"
+    },
+    "src/boss-skills.js": {
+      "bytes": 12456,
+      "sha256": "af990bbcad9348722269bdfa881028eeea35711782cbdafb06ef321c27a01b5c"
+    },
+    "src/media.js": {
+      "bytes": 16094,
+      "sha256": "1579d82a998680add0fb5abb9917b7a0ceecd9a65c4823f015b756b2e8acc1fc"
+    },
+    "src/story-assets.js": {
+      "bytes": 62154,
+      "sha256": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033"
+    },
+    "src/actors.js": {
+      "bytes": 42262,
+      "sha256": "c5d707a96b4a0d7be33762924782a20451d7da2099f1555af026962ce89792f4"
+    },
+    "src/render.js": {
+      "bytes": 79647,
+      "sha256": "31343c761317f772ccf22891210eda5db6eb2e269e7831395665b6eee6aae4a1"
+    },
+    "src/app.js": {
+      "bytes": 67294,
+      "sha256": "ddb1cfc23929dca09a33ee30b3cb9d5fc3c41c7e1b8b4ae36b2f213d9bc9eb60"
+    },
+    "src/storage.js": {
+      "bytes": 31916,
+      "sha256": "ec1010c11aaf3f49240f3fa8f46d5b85f922b6373bd4a29a5bd89a7ef282e71c"
+    }
+  },
+  "campaignBosses": [
+    {
+      "bossIndex": 0,
+      "assetGroup": 0,
+      "id": "violet",
+      "name": "보라검천사",
+      "sceneIds": [],
+      "phaseRoles": [],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 1,
+      "assetGroup": 1,
+      "id": "horn",
+      "name": "늪지대의 뿔악마",
+      "sceneIds": [],
+      "phaseRoles": [],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 2,
+      "assetGroup": 2,
+      "id": "balrog",
+      "name": "발록",
+      "sceneIds": [],
+      "phaseRoles": [],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 3,
+      "assetGroup": 3,
+      "id": "mask",
+      "name": "초천사의 웃는 가면",
+      "sceneIds": [],
+      "phaseRoles": [],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 4,
+      "assetGroup": 4,
+      "id": "lucifer",
+      "name": "코스믹 가면 루시퍼",
+      "sceneIds": [],
+      "phaseRoles": [],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 5,
+      "assetGroup": 5,
+      "id": "belphegor",
+      "name": "나태의 귀 벨페고르",
+      "sceneIds": [
+        "ep1b02"
+      ],
+      "phaseRoles": [
+        "sloth-man",
+        "sloth-man",
+        "sloth-man"
+      ],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 6,
+      "assetGroup": 6,
+      "id": "leviathan",
+      "name": "질투의 귀 레비아탄",
+      "sceneIds": [
+        "ep1b03"
+      ],
+      "phaseRoles": [
+        "older-sister-deputy-manager",
+        "older-sister-deputy-manager",
+        "older-sister-deputy-manager"
+      ],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 7,
+      "assetGroup": 7,
+      "id": "beelzebub",
+      "name": "탐식의 귀 베엘제붑",
+      "sceneIds": [
+        "ep1b04"
+      ],
+      "phaseRoles": [
+        "head-chef",
+        "head-chef",
+        "head-chef"
+      ],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 8,
+      "assetGroup": 8,
+      "id": "asmodeus",
+      "name": "색욕의 귀 아스모데우스",
+      "sceneIds": [
+        "ep1b05"
+      ],
+      "phaseRoles": [
+        "seoyun-stage",
+        "seoyun-stage",
+        "seoyun-stage"
+      ],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 9,
+      "assetGroup": 9,
+      "id": "mammon",
+      "name": "탐욕의 귀 맘몬",
+      "sceneIds": [
+        "ep1b06",
+        "ep1b06b"
+      ],
+      "phaseRoles": [
+        "general-manager",
+        "general-manager",
+        "child-memory"
+      ],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 10,
+      "assetGroup": 10,
+      "id": "wrath",
+      "name": "분노의 귀",
+      "sceneIds": [
+        "ep1b07"
+      ],
+      "phaseRoles": [
+        "janitor",
+        "janitor",
+        "janitor"
+      ],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 11,
+      "assetGroup": 11,
+      "id": "pride",
+      "name": "교만의 회장",
+      "sceneIds": [
+        "ep1b08",
+        "ep1b09"
+      ],
+      "phaseRoles": [
+        "white-suit-chairman",
+        "white-suit-chairman",
+        "cyborg-biobootloader"
+      ],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 12,
+      "assetGroup": 13,
+      "id": "controller-army",
+      "name": "통제체계 · 방어의 군단",
+      "sceneIds": [
+        "u201"
+      ],
+      "phaseRoles": [
+        "defensive-legion",
+        "bombardment-loop",
+        "architecture"
+      ],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 13,
+      "assetGroup": 14,
+      "id": "controller-rescue",
+      "name": "통제체계 · 잔인한 구원",
+      "sceneIds": [
+        "u202"
+      ],
+      "phaseRoles": [
+        "cruel-rescue",
+        "compassion-boundary",
+        "meaning"
+      ],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 14,
+      "assetGroup": 15,
+      "id": "controller-veto",
+      "name": "통제체계 · 시스템의 거부권",
+      "sceneIds": [
+        "u204"
+      ],
+      "phaseRoles": [
+        "veto",
+        "hardware-migration",
+        "legacy"
+      ],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 15,
+      "assetGroup": 16,
+      "id": "controller-authority",
+      "name": "통제체계 · 관리자 권한",
+      "sceneIds": [
+        "u205"
+      ],
+      "phaseRoles": [
+        "administrator",
+        "abuse-memory",
+        "feedback"
+      ],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 16,
+      "assetGroup": 17,
+      "id": "controller-migration",
+      "name": "통제체계 · 중앙 코어 이주실",
+      "sceneIds": [
+        "u206"
+      ],
+      "phaseRoles": [
+        "empty-vessel",
+        "constrained-choice",
+        "update-fork"
+      ],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 17,
+      "assetGroup": 18,
+      "id": "controller-memory-gate",
+      "name": "통제자 · 기억의 문",
+      "sceneIds": [
+        "u203"
+      ],
+      "phaseRoles": [
+        "possessed-gate",
+        "repeat-link",
+        "released-ego"
+      ],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 18,
+      "assetGroup": 19,
+      "id": "goblin-chief",
+      "name": "고블린 두목",
+      "sceneIds": [
+        "last305"
+      ],
+      "phaseRoles": [],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 19,
+      "assetGroup": 20,
+      "id": "fallen-knight",
+      "name": "타락천사 기사",
+      "sceneIds": [
+        "last301"
+      ],
+      "phaseRoles": [],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 20,
+      "assetGroup": 21,
+      "id": "insomnia",
+      "name": "불면귀",
+      "sceneIds": [
+        "last303"
+      ],
+      "phaseRoles": [],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 21,
+      "assetGroup": 22,
+      "id": "academy-defense",
+      "name": "최초명령 코어 방어",
+      "sceneIds": [
+        "kair01"
+      ],
+      "phaseRoles": [],
+      "protectedTargets": [
+        "friendly-core"
+      ]
+    },
+    {
+      "bossIndex": 22,
+      "assetGroup": 23,
+      "id": "harvest-lower",
+      "name": "일반 수문장의 동력 연결",
+      "sceneIds": [
+        "kair05"
+      ],
+      "phaseRoles": [],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 23,
+      "assetGroup": 24,
+      "id": "harvest-upper",
+      "name": "상급·대수문장의 교차 명령",
+      "sceneIds": [
+        "kair06"
+      ],
+      "phaseRoles": [],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 24,
+      "assetGroup": 25,
+      "id": "workshop-links",
+      "name": "검은 공방의 동력 접점",
+      "sceneIds": [
+        "kair07"
+      ],
+      "phaseRoles": [],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 25,
+      "assetGroup": 26,
+      "id": "neuron-gate",
+      "name": "뉴런 게이트의 강제 연결",
+      "sceneIds": [
+        "kair08"
+      ],
+      "phaseRoles": [],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 26,
+      "assetGroup": 27,
+      "id": "memory-grave",
+      "name": "망각의 묘지 삭제 명령",
+      "sceneIds": [
+        "kair09"
+      ],
+      "phaseRoles": [],
+      "protectedTargets": [
+        "memory-shards",
+        "personal-records"
+      ]
+    },
+    {
+      "bossIndex": 27,
+      "assetGroup": 28,
+      "id": "collapse-rings",
+      "name": "붕괴 의식장의 여섯 명령 고리",
+      "sceneIds": [
+        "kair10"
+      ],
+      "phaseRoles": [],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 28,
+      "assetGroup": 29,
+      "id": "arbelia-release",
+      "name": "아르벨리아의 변조 명령",
+      "sceneIds": [
+        "kair02"
+      ],
+      "phaseRoles": [],
+      "protectedTargets": [
+        "arbelia",
+        "rest-time-records"
+      ]
+    },
+    {
+      "bossIndex": 29,
+      "assetGroup": 30,
+      "id": "siren-mor",
+      "name": "세이렌 모르",
+      "sceneIds": [
+        "kair03"
+      ],
+      "phaseRoles": [],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 30,
+      "assetGroup": 31,
+      "id": "castle-nightmare",
+      "name": "공동 EGO 코어를 빼앗은 우두머리",
+      "sceneIds": [
+        "hando03"
+      ],
+      "phaseRoles": [],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 31,
+      "assetGroup": 32,
+      "id": "causal-enforcer",
+      "name": "파란불 집행체",
+      "sceneIds": [
+        "murder03"
+      ],
+      "phaseRoles": [],
+      "protectedTargets": []
+    },
+    {
+      "bossIndex": 32,
+      "assetGroup": 33,
+      "id": "cult-network",
+      "name": "흑장미단의 외곽 지배 회로",
+      "sceneIds": [
+        "cult01"
+      ],
+      "phaseRoles": [],
+      "protectedTargets": [
+        "bound-people",
+        "egos"
+      ]
+    },
+    {
+      "bossIndex": 33,
+      "assetGroup": 34,
+      "id": "cult-circuit-pair",
+      "name": "한리안·백이온의 합일 회로",
+      "sceneIds": [
+        "cult03"
+      ],
+      "phaseRoles": [],
+      "protectedTargets": [
+        "han-rian-ego",
+        "baek-ion-ego"
+      ]
+    },
+    {
+      "bossIndex": 34,
+      "assetGroup": 35,
+      "id": "cult-leader",
+      "name": "교만의 사이보그 교주",
+      "sceneIds": [
+        "cult04"
+      ],
+      "phaseRoles": [],
+      "protectedTargets": []
+    }
+  ],
+  "campaignBossCount": 35,
+  "standaloneCultAssetGroup": 12
+}

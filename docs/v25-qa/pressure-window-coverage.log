@@ -1,0 +1,55 @@
+{
+  "output": "/workspace/scratch/c84ef2cd7c03/hapil-reboot/docs/V25-PRESSURE-WINDOW-COVERAGE-20261031.json",
+  "validation": {
+    "bossCases105": true,
+    "waveCases105": true,
+    "allBossExactActiveWindowTargets": true,
+    "allWaveExact70PercentTargets": true,
+    "allThreeCurtainProfilesEachBossCase": true,
+    "noPoolPressureOrDroppedGroups": true,
+    "capacityBounds": true,
+    "maxPendingWarningsFour": true,
+    "castHistoryEight": true,
+    "defeatCancelsPendingWithoutPhantomBulletsOrCuePlans": true,
+    "presentationCancellationGuardsPresent": true,
+    "sourceHashGuard": true
+  },
+  "observations": {
+    "ticks": 340200,
+    "maxBullets": 215,
+    "maxHazards": 13,
+    "maxPendingIdentityWarnings": 4,
+    "maxIdentityCastHistory": 5,
+    "checkedCurtainGeometryTicks": 952479
+  },
+  "geometricRanges": {
+    "boss": {
+      "hell": {
+        "min": 0.6599999999999997,
+        "max": 0.6600000000000003
+      },
+      "normal": {
+        "min": 0.44,
+        "max": 0.44000000000000006
+      },
+      "gentle": {
+        "min": 0.2199999999999998,
+        "max": 0.22000000000000008
+      }
+    },
+    "wave": {
+      "hell": {
+        "min": 0.4619999999999997,
+        "max": 0.4620000000000001
+      },
+      "normal": {
+        "min": 0.30799999999999955,
+        "max": 0.30800000000000005
+      },
+      "gentle": {
+        "min": 0.15399999999999978,
+        "max": 0.15400000000000028
+      }
+    }
+  }
+}

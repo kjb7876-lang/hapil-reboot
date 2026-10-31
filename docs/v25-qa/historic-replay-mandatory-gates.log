@@ -1,0 +1,26 @@
+✔ no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: gentle/813 (2690.456187ms)
+✔ no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: gentle/42 (2260.778146ms)
+✔ no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: normal/813 (1875.368916ms)
+✔ no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: normal/42 (1800.426809ms)
+✔ no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: hell/813 (3461.967343ms)
+✔ no-cheat natural CPU replay clears all twelve bosses and preserves checkpoint continuity: hell/42 (3288.372619ms)
+✔ ordinary-health natural revision-four CPU route and every saved boundary: gentle/813 (3382.52624ms)
+✔ ordinary-health natural revision-four CPU route and every saved boundary: gentle/42 (2926.262418ms)
+✔ ordinary-health natural revision-four CPU route and every saved boundary: normal/813 (2564.591311ms)
+✔ ordinary-health natural revision-four CPU route and every saved boundary: normal/42 (2524.183345ms)
+✔ ordinary-health natural revision-four CPU route and every saved boundary: hell/813 (3836.43663ms)
+✔ ordinary-health natural revision-four CPU route and every saved boundary: hell/42 (3849.98529ms)
+✔ ordinary-health revision-five complete route/save restoration: gentle/813 (5183.726219ms)
+✔ ordinary-health revision-five complete route/save restoration: gentle/42 (4755.202262ms)
+✔ ordinary-health revision-five complete route/save restoration: normal/813 (4544.017367ms)
+✔ ordinary-health revision-five complete route/save restoration: normal/42 (4959.737667ms)
+✔ ordinary-health revision-five complete route/save restoration: hell/813 (5702.001906ms)
+✔ ordinary-health revision-five complete route/save restoration: hell/42 (5706.933387ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30987.748496

@@ -1,0 +1,350 @@
+{
+  "schema": 1,
+  "scope": "Independent native CPU, source-only actual-emitted projectiles and explicitly immune core phase observations. Ordinary-health input/replay, browser, softwareGPU/hardwareGPU, mobile emulation/device categories are separate.",
+  "baseline": "ef95fc227506162b5203092da9e1734e2f43ef58",
+  "sourceHashes": {
+    "src/core.js": "0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "src/projectiles.js": "2c831a71ca5b2c7c1a5424855fcf903714dfe6921ac4d62546d3e2e6c881beea",
+    "src/boss-skills.js": "d3a61215ad24c66747b057dc06200e6c5091f22953e5e753abf676f50b2da863",
+    "src/media.js": "ac5e0e2497f242e2515873ee157f06b979b2659d6f2dc02f66349161a50bce2e",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033",
+    "src/actors.js": "c5d707a96b4a0d7be33762924782a20451d7da2099f1555af026962ce89792f4",
+    "src/render.js": "31343c761317f772ccf22891210eda5db6eb2e269e7831395665b6eee6aae4a1",
+    "src/app.js": "7b749289485641547c6414400329d1e6d333b576e6d28dcadc9ed41041b90039",
+    "src/storage.js": "b753b883ca10b3f116c0bac9a1ed5551d3c87aab3f9e87227af6235f09d34c12"
+  },
+  "sourceHashGuardPassed": true,
+  "actualCases": 324,
+  "actualRoutes": 1065,
+  "pixelCases": 8520,
+  "ownedRotationSubpixelCases": 4374,
+  "skillFrames": 1260,
+  "legacyExactCases": 630,
+  "lustPhysicalExactCases": 9,
+  "deterministicCheckpointCases": 315,
+  "fullSceneCases": 84,
+  "retainedLowerCoverageFittedCases": 3936,
+  "proofs": [
+    {
+      "path": "docs/v25-pixels/battle-page-1.jpg",
+      "width": 1440,
+      "height": 900,
+      "bytes": 409286,
+      "sha256": "7a829737e40c7ed1f211ce8d2bc95167b131aac6e91dc81aa388437511e9326a"
+    },
+    {
+      "path": "docs/v25-pixels/battle-page-2.jpg",
+      "width": 1440,
+      "height": 900,
+      "bytes": 449005,
+      "sha256": "3ad4a150ac569b8f7b4d4c6938d6242798e74eb4c814e28e6e59a392530d4e52"
+    },
+    {
+      "path": "docs/v25-pixels/battle-page-3.jpg",
+      "width": 1440,
+      "height": 900,
+      "bytes": 370718,
+      "sha256": "0a6464205e4d58b62a422c99db3e96e5b1612707015f022d836a089c68cb9e4b"
+    },
+    {
+      "path": "docs/v25-pixels/battle-page-4.jpg",
+      "width": 1440,
+      "height": 900,
+      "bytes": 387636,
+      "sha256": "1404e6c3ed77d89bcf8b8102d52e485765649365f25fd0e015ce9ad8197a8eda"
+    },
+    {
+      "path": "docs/v25-pixels/battle-page-5.jpg",
+      "width": 1440,
+      "height": 900,
+      "bytes": 401368,
+      "sha256": "4a0b4f4baa89d5d8fa8f5f72a617cdb6d08f53a58330f3fa4867dc58ba0a9e5e"
+    },
+    {
+      "path": "docs/v25-pixels/battle-page-6.jpg",
+      "width": 1440,
+      "height": 900,
+      "bytes": 392324,
+      "sha256": "b1bfe033643a7eb74b16b79fb357de2f22d2adc4f9559a6e1e8c1cc598110e82"
+    },
+    {
+      "path": "docs/v25-pixels/native-group-1-phase-3.jpg",
+      "width": 720,
+      "height": 664,
+      "bytes": 129940,
+      "sha256": "97e46d7a8c2384a2a45a9fce787f2b595fcbc3b07c4231b8d935c16416eb63cb"
+    },
+    {
+      "path": "docs/v25-pixels/native-group-2-phase-3.jpg",
+      "width": 720,
+      "height": 664,
+      "bytes": 122913,
+      "sha256": "61632c58ed9974657fa48e1b4e3a4f834238d607bdbd19ed2d18a93a2d9c7670"
+    },
+    {
+      "path": "docs/v25-pixels/native-group-5-phase-3.jpg",
+      "width": 720,
+      "height": 664,
+      "bytes": 125144,
+      "sha256": "23a7847155a25ef9d9f7f5552399216f508d1c785d3098639581d495f7389f89"
+    },
+    {
+      "path": "docs/v25-pixels/native-group-7-phase-3.jpg",
+      "width": 720,
+      "height": 664,
+      "bytes": 157943,
+      "sha256": "07ab010db52411477ef24a0f301ffc3cd1224e3bff4b686a0a19bc537545fd27"
+    },
+    {
+      "path": "docs/v25-pixels/native-group-9-phase-3.jpg",
+      "width": 720,
+      "height": 664,
+      "bytes": 126440,
+      "sha256": "2792cfb493be279d12ab8d01a1cef4645f156927d751462553b96cc54a259f7c"
+    },
+    {
+      "path": "docs/v25-pixels/native-group-17-phase-3.jpg",
+      "width": 720,
+      "height": 664,
+      "bytes": 137723,
+      "sha256": "4026bc8f2debae22ee60ab130c2082883438ec54115268a5adee88d8686e6bb5"
+    },
+    {
+      "path": "docs/v25-pixels/native-group-22-phase-3.jpg",
+      "width": 720,
+      "height": 664,
+      "bytes": 138844,
+      "sha256": "bbf421f060a9d624fc752ff744d3457b9e8ee1a22e94cbed22d65bb5645415b8"
+    },
+    {
+      "path": "docs/v25-pixels/native-group-27-phase-3.jpg",
+      "width": 720,
+      "height": 664,
+      "bytes": 119598,
+      "sha256": "4513316edd30392ce80055cfd3b8f71ead08b4c2566a215423266bd18af38291"
+    },
+    {
+      "path": "docs/v25-pixels/native-group-29-phase-3.jpg",
+      "width": 720,
+      "height": 664,
+      "bytes": 131313,
+      "sha256": "26a8e6c38449bccfa0bac6f5d0867dc89ef160cf03fbc39c5cae44b5437933b5"
+    },
+    {
+      "path": "docs/v25-pixels/native-group-34-phase-3.jpg",
+      "width": 720,
+      "height": 664,
+      "bytes": 134623,
+      "sha256": "b39217c0a2a9e0ab8a027ad799d573c1759a8c0ca226e2945069e051d4e70ca8"
+    },
+    {
+      "path": "docs/v25-pixels/native-group-35-phase-3.jpg",
+      "width": 720,
+      "height": 664,
+      "bytes": 150144,
+      "sha256": "18d5c87693c287d988765cbf2bddffc86801827f2653f5e77e6487d7b2830cdf"
+    },
+    {
+      "path": "docs/v25-pixels/native-group-5-phase-1.jpg",
+      "width": 720,
+      "height": 664,
+      "bytes": 137564,
+      "sha256": "841f08a6e4433187c2a638b7b9a128a475c9c38d28a7c4e11fd8a1d16e0254c8"
+    },
+    {
+      "path": "docs/v25-pixels/native-group-5-phase-2.jpg",
+      "width": 720,
+      "height": 664,
+      "bytes": 132102,
+      "sha256": "9ade960461c8b87ea6920e8b7fee9a3cb1d2183ea525e3dbb5c5bb456c373e50"
+    },
+    {
+      "path": "docs/v25-pixels/native-group-7-phase-1.jpg",
+      "width": 720,
+      "height": 664,
+      "bytes": 154285,
+      "sha256": "345a07fa47e268df446e7d0676448806ba8b202a18fac8e74f27dcf823a6275f"
+    },
+    {
+      "path": "docs/v25-pixels/native-group-7-phase-2.jpg",
+      "width": 720,
+      "height": 664,
+      "bytes": 162062,
+      "sha256": "fd1817685346fd368814a71ce8ec9b546f117fc0dec49db6152beab80b08dd21"
+    },
+    {
+      "path": "docs/v25-pixels/native-group-9-phase-1.jpg",
+      "width": 720,
+      "height": 664,
+      "bytes": 157023,
+      "sha256": "aa564e1e8ddfa126cbe9a4f7393a122ff61e87fbffd7e495c6f2887dc4d244f2"
+    },
+    {
+      "path": "docs/v25-pixels/native-group-9-phase-2.jpg",
+      "width": 720,
+      "height": 664,
+      "bytes": 147283,
+      "sha256": "554fb77d98564912c415ca597e9a07dc7e19f810bb635e0a5fe6fd7bfbc7dcff"
+    },
+    {
+      "path": "docs/v25-pixels/objects-page-1.jpg",
+      "width": 1536,
+      "height": 560,
+      "bytes": 37307,
+      "sha256": "7cc340a0a9e95a22f26b50a57d98bb5b8ddffd942e3d38ffb9219dd9c2fb7ac6"
+    },
+    {
+      "path": "docs/v25-pixels/objects-page-2.jpg",
+      "width": 1536,
+      "height": 560,
+      "bytes": 38292,
+      "sha256": "ab208d52dbb98aae014e0cc11069f1c9a430fcd8e505ba13522c483602cdea1b"
+    },
+    {
+      "path": "docs/v25-pixels/objects-page-3.jpg",
+      "width": 1536,
+      "height": 560,
+      "bytes": 38127,
+      "sha256": "98afd1f8dd04b05f4ad61c1255b107863d2e3e58c63ff46c914d676602bbe33e"
+    },
+    {
+      "path": "docs/v25-pixels/objects-page-4.jpg",
+      "width": 1536,
+      "height": 560,
+      "bytes": 38480,
+      "sha256": "0e0dcba51047739dd0202d7b655de19c5bfd78c616a9535ceac7a39b0112da72"
+    },
+    {
+      "path": "docs/v25-pixels/objects-page-5.jpg",
+      "width": 1536,
+      "height": 560,
+      "bytes": 38652,
+      "sha256": "ed172ebebef7b5e6468bf75fe6fca7ee288fe340d291618dfab010c6fc87751b"
+    },
+    {
+      "path": "docs/v25-pixels/objects-page-6.jpg",
+      "width": 1280,
+      "height": 560,
+      "bytes": 31864,
+      "sha256": "cd8da92f85ce087c57b9fd05e250475d8890d00b924efb6b32ec0cdc3dc321ea"
+    },
+    {
+      "path": "docs/v25-pixels/skill-page-1.jpg",
+      "width": 1440,
+      "height": 530,
+      "bytes": 32697,
+      "sha256": "ee8092ef6e3fb93b26361beaaaac4fe54577b3730acb9d45a48678d380f0eddf"
+    },
+    {
+      "path": "docs/v25-pixels/skill-page-2.jpg",
+      "width": 1440,
+      "height": 530,
+      "bytes": 31042,
+      "sha256": "abda8967a62874136d00bfdc6754d5a7c8a89c571fed20764e966a5982a7e02a"
+    },
+    {
+      "path": "docs/v25-pixels/skill-page-3.jpg",
+      "width": 1440,
+      "height": 530,
+      "bytes": 33993,
+      "sha256": "0ff146c207e9194063abfa7e5e7004a423bcc1f441e72f82f170077cb70265bf"
+    },
+    {
+      "path": "docs/v25-pixels/skill-page-4.jpg",
+      "width": 1440,
+      "height": 530,
+      "bytes": 34404,
+      "sha256": "b11edcb6866d00342259933ee6431e125a9ce90862149f4be9b96d8286cb7c76"
+    },
+    {
+      "path": "docs/v25-pixels/skill-page-5.jpg",
+      "width": 1440,
+      "height": 530,
+      "bytes": 39922,
+      "sha256": "7646d28753a7116490491c0acfab0322053c95861b0e2768658348ec311990e1"
+    },
+    {
+      "path": "docs/v25-pixels/skill-page-6.jpg",
+      "width": 1440,
+      "height": 530,
+      "bytes": 43194,
+      "sha256": "929e65a6967d2bb3c0449a27babb5209ac0aa6296cd2d67e26fd5ca0f57a1b36"
+    },
+    {
+      "path": "docs/v25-pixels/skill-page-7.jpg",
+      "width": 1440,
+      "height": 530,
+      "bytes": 37902,
+      "sha256": "e8dd4c896d344702b160340a5999dbb47363712bb73979b447d286968da6956d"
+    },
+    {
+      "path": "docs/v25-pixels/skill-page-8.jpg",
+      "width": 1440,
+      "height": 530,
+      "bytes": 42016,
+      "sha256": "823756934304c36d84ff08fc7a9227fd262d54bd4b6c59d238f99a3b1ab89b67"
+    },
+    {
+      "path": "docs/v25-pixels/skill-page-9.jpg",
+      "width": 1440,
+      "height": 530,
+      "bytes": 31870,
+      "sha256": "17aa8149977eaff47732c650bb795363d7dd160d1922cbc038dfdae1418de29f"
+    }
+  ],
+  "reviewStatus": {
+    "rootDirectPixelReview": "completed",
+    "scope": [
+      "original4sources and4preparedprops",
+      "4sourcebodybeforeafterpages",
+      "6allbattlebeforeafterpages",
+      "native360SlothGluttonGreedphases1/2andpairphase3",
+      "actualChromeSlothBalrogandfinalscreen"
+    ],
+    "candidateProjectileSHA256": "2c831a71ca5b2c7c1a5424855fcf903714dfe6921ac4d62546d3e2e6c881beea",
+    "rootReport": "docs/V25-FINAL-QA-20261031.json"
+  },
+  "rawArchiveIndex": "docs/V25-INDEPENDENT-RAW-ARCHIVE-20261031.json",
+  "rawEvidence": [
+    {
+      "archivePath": "docs/v25-qa/actual-source-pixels.json.gz",
+      "decodedRawSHA256": "64f2a1095eda2b7a1bb6ed0f371d0d686c61125b6ba08e06d5f10966c884c719",
+      "decodedRawBytes": 8545905,
+      "archiveSHA256": "8fe4de2fc3542634926ea5b8993aa54a604f103a8e33d410eb558c5064cfddc4"
+    },
+    {
+      "archivePath": "docs/v25-qa/actual-emitted-routes.json.gz",
+      "decodedRawSHA256": "0c19f05a81fa86cb8f409df6a2cdb91c434ed7abac1555bce2bbea5a05cafd82",
+      "decodedRawBytes": 3745925,
+      "archiveSHA256": "6ce87a38b2bc20db2076b2d58e60acf2ce74779586883767ca6d22c6f953b402"
+    }
+  ],
+  "auditTools": {
+    "tools/audit-boss-identities-v25.cjs": "88e1d4e3afd9d314d3de2cb723d145105a3da7e3793ae4d82c76ce71f08dd20c",
+    "tools/measure-identity-pixels-v25.cjs": "02d6a7a156097bfc4a0d86fb5b11a864c5980f6235281e69bc29d35ffdaac44d",
+    "tools/review-boss-identities-v25.cjs": "67cbd238aaab133083b45041436b60989c1494c72424f38374c42d4e13b306fe",
+    "tools/review-source-centers-v25.cjs": "a6fbf1d126dcde7a9828a9cedfd31cc7272ffd95054e9416c79a188e96eae2ab",
+    "tools/probe-identities-v25-natural.cjs": "18433dffe03accc00d128f501bf8a03a1844c534965b6596aedb05853db198b7",
+    "tools/summarise-identity-natural-v25.cjs": "86334edb2d61a0693fb4b18c1b979d734e4a07461d3548bc946c66a1745309c2",
+    "tools/archive-independent-qa-v25.py": "78382d0b1b20b016e979b2585effbe5fa691e7d8249a99beeefe0c612417f07d",
+    "tests/independent-boss-identities-v25.test.cjs": "9cdeb696535a18542230a53952adf9fef3fc1c58af728b81e29687d40855ebbf"
+  },
+  "independentDirectPixelReview": {
+    "reviewed": true,
+    "reviewer": "independent QA agent",
+    "paths": [
+      "docs/v25-pixels/battle-page-1.jpg",
+      "docs/v25-pixels/battle-page-2.jpg",
+      "docs/v25-pixels/battle-page-3.jpg",
+      "docs/v25-pixels/battle-page-4.jpg",
+      "docs/v25-pixels/battle-page-5.jpg",
+      "docs/v25-pixels/battle-page-6.jpg",
+      "docs/v25-pixels/native-group-7-phase-1.jpg",
+      "docs/v25-pixels/native-group-9-phase-1.jpg",
+      "docs/v25-pixels/native-group-9-phase-2.jpg",
+      "docs/v25-pixels/historical-luma-review.jpg"
+    ],
+    "notes": "Source silhouettes, existing Lust, normal-sized own props, protected encounter material and absence of new geometric backing reviewed directly. Decorative tips outside the unchanged hitbody remain harmless; retained thin fitted bodies have the documented legacy visibility limits. Final release-owner review remains separate."
+  }
+}

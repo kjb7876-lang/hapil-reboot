@@ -1,0 +1,48 @@
+✖ actual emitted radii and capsule lengths keep readable own-source centers at real rotations and subpixel positions (8681.469024ms)
+✖ the four real-size center holes are fixed with colored source pixels, not an opaque dark substitute (112.682703ms)
+✔ the two retained four-frame orb sources remain readable in every actual authored frame (916.563092ms)
+✔ actual simultaneous emitters and separate cult participants retain their own release positions within stable quality budgets (104.987219ms)
+✔ the battle HUD follows exact real laser boundaries and never treats residual threats as a cleared phase (117.537689ms)
+✔ brief deduplicated entry titles disappear before live threats and timeout labels stay bounded (79.063204ms)
+✔ the real app keeps the movement surface free of map/pattern copy during combat and residual threats (33.945864ms)
+✔ combat expansion retains every reviewed media alias and collision contract, with the approved V24 and V25 props appended (21.334647ms)
+✔ all12 actual HELL overlap frames paint every damage body, own rotor, source scene and current release in both qualities (2996.42553ms)
+✔ a warmed real overlap frame reuses its scene, material and skill caches within the declared bounds (2165.428443ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 8
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10440.358595
+
+✖ failing tests:
+
+test at tests/independent-battle-readability-v20.test.cjs:13:1
+✖ actual emitted radii and capsule lengths keep readable own-source centers at real rotations and subpixel positions (8681.469024ms)
+  AssertionError [ERR_ASSERTION]: only approved Lust props/mirror ORBs use the new whole-object budget
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/independent-battle-readability-v20.test.cjs:23:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/independent-battle-readability-v20.test.cjs:29:1
+✖ the four real-size center holes are fixed with colored source pixels, not an opaque dark substitute (112.682703ms)
+  AssertionError [ERR_ASSERTION]: center source brightness is retained
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/independent-battle-readability-v20.test.cjs:33:160)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

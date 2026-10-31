@@ -1,0 +1,34 @@
+✔ actual emitted radii and capsule lengths keep readable own-source centers at real rotations and subpixel positions (23174.866706ms)
+✖ the four real-size center holes are fixed with colored source pixels, not an opaque dark substitute (4241.37024ms)
+✔ the two retained four-frame orb sources remain readable in every actual authored frame (803.030674ms)
+✔ actual simultaneous emitters and separate cult participants retain their own release positions within stable quality budgets (141.853401ms)
+✔ the battle HUD follows exact real laser boundaries and never treats residual threats as a cleared phase (120.286922ms)
+✔ brief deduplicated entry titles disappear before live threats and timeout labels stay bounded (77.034779ms)
+✔ the real app keeps the movement surface free of map/pattern copy during combat and residual threats (40.949438ms)
+✔ combat expansion retains every reviewed media alias and collision contract, with the approved V24 and V25 props appended (28.483649ms)
+✔ all12 actual HELL overlap frames paint every damage body, own rotor, source scene and current release in both qualities (3549.124339ms)
+✔ a warmed real overlap frame reuses its scene, material and skill caches within the declared bounds (2168.473417ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 29013.26161
+
+✖ failing tests:
+
+test at tests/independent-battle-readability-v20.test.cjs:29:1
+✖ the four real-size center holes are fixed with colored source pixels, not an opaque dark substitute (4241.37024ms)
+  AssertionError [ERR_ASSERTION]: original colored center (alpha180/luma50) must read, not just a dark keyline
+      at TestContext.<anonymous> (/workspace/scratch/c84ef2cd7c03/hapil-reboot/tests/independent-battle-readability-v20.test.cjs:33:45)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

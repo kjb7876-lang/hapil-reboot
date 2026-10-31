@@ -1,0 +1,319 @@
+{
+  "schema": 1,
+  "scope": "Ordinary-health CPU isolated product-checkpoint phase3 practice. Nine legal movement directions, unchanged HP/damage/autoattack/skills. No777, external immunity, timer/actor/projectile/RNG rewrites, future emission reads or hidden inputs. Not fullstory/human/browser/GPU/mobile/device.",
+  "primaryPolicy": {
+    "route": "centre",
+    "y": 575,
+    "beam": 20,
+    "commit": 4,
+    "horizon": 96
+  },
+  "alternatePolicy": {
+    "route": "left",
+    "y": 500,
+    "beam": 20,
+    "commit": 4,
+    "horizon": 96
+  },
+  "initialReaderRepair": {
+    "originalRecording": "docs/v25-qa/natural-health-phase3.initial.json",
+    "originalSHA256": "c9c88904582a8f342abdfc6784cf270cce41e27c98b823cd44584679e12febd6",
+    "errorLog": "docs/v25-qa/natural-health-phase3.initial-reader-error.log",
+    "detail": "The original replay reader compared a VM array prototype with a Node array. JSON value comparison fixes that reader only. Re-recording all105 cases retained every outcome and inputgzipSHA exactly; both recordings are preserved.",
+    "outcomes": {
+      "cases": 105,
+      "won": 103,
+      "lost": 2,
+      "unfinished": 0,
+      "poolPressure": 0,
+      "droppedGroups": 0
+    }
+  },
+  "sourceHashes": {
+    "src/core.js": "0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d",
+    "tools/audit-boss-identities-v25.cjs": "88e1d4e3afd9d314d3de2cb723d145105a3da7e3793ae4d82c76ce71f08dd20c",
+    "tools/probe-identities-v25-natural.cjs": "18433dffe03accc00d128f501bf8a03a1844c534965b6596aedb05853db198b7"
+  },
+  "sourceHashGuardPassed": true,
+  "summary": {
+    "primaryCases": 105,
+    "primaryWins": 103,
+    "primaryLosses": 2,
+    "alternateAttempts": 2,
+    "alternateWins": 2,
+    "old21ControlAttempts": 2,
+    "old21ControlLosses": 2,
+    "casesWithAtLeastOneLegalClear": 105,
+    "unresolvedCases": 0,
+    "replayedTicks": 194854,
+    "poolPressure": 0,
+    "droppedGroups": 0
+  },
+  "proofs": [
+    {
+      "id": "primary",
+      "recording": "docs/v25-qa/natural-health-phase3.verified.json",
+      "recordingSHA256": "a99c70e144425b50bfb55cb3d02505ff6cdd5e9334536062e50b0fbe342b8363",
+      "replay": "docs/v25-qa/natural-health-phase3.verified.replay.json",
+      "replaySHA256": "051537ef47097bcdfbdf70621fcc58c5a7d9a9d0321f2974888954344be23f06",
+      "policyConfig": {
+        "route": "centre",
+        "y": 575,
+        "beam": 20,
+        "commit": 4,
+        "horizon": 96
+      },
+      "summary": {
+        "cases": 105,
+        "won": 103,
+        "lost": 2,
+        "unfinished": 0,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "id": "alternate",
+      "recording": "docs/v25-qa/natural-health-legal-alternate.json",
+      "recordingSHA256": "d6371c32d8bd858cdbda4d758ddbb27fd875e3a5bc7f26eb0c48382df07087b4",
+      "replay": "docs/v25-qa/natural-health-legal-alternate.replay.json",
+      "replaySHA256": "b28895092b882e138c7d1c249794788fc8c571d75423fd1c832822af8f93fea6",
+      "policyConfig": {
+        "route": "left",
+        "y": 500,
+        "beam": 20,
+        "commit": 4,
+        "horizon": 96
+      },
+      "summary": {
+        "cases": 2,
+        "won": 2,
+        "lost": 0,
+        "unfinished": 0,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "id": "old21",
+      "recording": "docs/v25-qa/natural-health-old21-control.json",
+      "recordingSHA256": "2a1df456b6248f1b7e2b818c905fd6db983de00ab7ab212757b2d8b834780f39",
+      "replay": "docs/v25-qa/natural-health-old21-control.replay.json",
+      "replaySHA256": "3b187230579393ab8b3c4d0d6b176acff3a07ff6b9415fdef4ae7418b47ed7f8",
+      "policyConfig": {
+        "route": "centre",
+        "y": 575,
+        "beam": 20,
+        "commit": 4,
+        "horizon": 96
+      },
+      "summary": {
+        "cases": 2,
+        "won": 0,
+        "lost": 2,
+        "unfinished": 0,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    }
+  ],
+  "followups": [
+    {
+      "bossIndex": 8,
+      "bossId": "asmodeus",
+      "difficulty": "hell",
+      "phase": 2,
+      "primary": {
+        "bossIndex": 8,
+        "phase": 2,
+        "difficulty": "hell",
+        "combatRevision": 25,
+        "bossId": "asmodeus",
+        "startHP": 3,
+        "stage": "lost",
+        "ticks": 2614,
+        "hp": 0,
+        "hits": 3,
+        "score": 1125,
+        "phaseTicks": [],
+        "peakBullets": 126,
+        "poolPressure": 0,
+        "droppedGroups": 0,
+        "resultReason": "기억이 흐려졌습니다",
+        "enteredPhases": [
+          2
+        ],
+        "identityPatternIds": [],
+        "firstIdentityTick": null,
+        "input": {
+          "file": "natural-health-phase3.verified-inputs/boss-08-hell-phase-2.moves.gz",
+          "bytes": 434,
+          "sha256": "cca8a8aead9eb8029078efe4fbe09550646873fd2c3831b4706b217fef8dcb1c",
+          "ticks": 2614
+        }
+      },
+      "old21": {
+        "bossIndex": 8,
+        "phase": 2,
+        "difficulty": "hell",
+        "combatRevision": 21,
+        "bossId": "asmodeus",
+        "startHP": 3,
+        "stage": "lost",
+        "ticks": 2614,
+        "hp": 0,
+        "hits": 3,
+        "score": 1125,
+        "phaseTicks": [],
+        "peakBullets": 126,
+        "poolPressure": 0,
+        "droppedGroups": 0,
+        "resultReason": "기억이 흐려졌습니다",
+        "enteredPhases": [
+          2
+        ],
+        "identityPatternIds": [],
+        "firstIdentityTick": null,
+        "input": {
+          "file": "natural-health-old21-control-inputs/boss-08-hell-phase-2.moves.gz",
+          "bytes": 434,
+          "sha256": "cca8a8aead9eb8029078efe4fbe09550646873fd2c3831b4706b217fef8dcb1c",
+          "ticks": 2614
+        }
+      },
+      "alternate": {
+        "bossIndex": 8,
+        "phase": 2,
+        "difficulty": "hell",
+        "combatRevision": 25,
+        "bossId": "asmodeus",
+        "startHP": 3,
+        "stage": "won",
+        "ticks": 2797,
+        "hp": 1,
+        "hits": 2,
+        "score": 6610,
+        "phaseTicks": [
+          2797
+        ],
+        "peakBullets": 128,
+        "poolPressure": 0,
+        "droppedGroups": 0,
+        "resultReason": "색욕의 귀 아스모데우스 · 연습 완료",
+        "enteredPhases": [
+          2
+        ],
+        "identityPatternIds": [],
+        "firstIdentityTick": null,
+        "input": {
+          "file": "natural-health-legal-alternate-inputs/boss-08-hell-phase-2.moves.gz",
+          "bytes": 459,
+          "sha256": "617bbff0fa8fc2cac5c0cc70ceeef27313a28c69cd5f8b79e03a977987bb91f5",
+          "ticks": 2797
+        }
+      }
+    },
+    {
+      "bossIndex": 10,
+      "bossId": "wrath",
+      "difficulty": "hell",
+      "phase": 2,
+      "primary": {
+        "bossIndex": 10,
+        "phase": 2,
+        "difficulty": "hell",
+        "combatRevision": 25,
+        "bossId": "wrath",
+        "startHP": 3,
+        "stage": "lost",
+        "ticks": 2263,
+        "hp": 0,
+        "hits": 3,
+        "score": 645,
+        "phaseTicks": [],
+        "peakBullets": 154,
+        "poolPressure": 0,
+        "droppedGroups": 0,
+        "resultReason": "기억이 흐려졌습니다",
+        "enteredPhases": [
+          2
+        ],
+        "identityPatternIds": [
+          "identity-fire-beats-v25"
+        ],
+        "firstIdentityTick": 103,
+        "input": {
+          "file": "natural-health-phase3.verified-inputs/boss-10-hell-phase-2.moves.gz",
+          "bytes": 341,
+          "sha256": "3c64cb7ff5e83e12a223b6d83ae1da819a0cd336489828ba23e03f458283ef7b",
+          "ticks": 2263
+        }
+      },
+      "old21": {
+        "bossIndex": 10,
+        "phase": 2,
+        "difficulty": "hell",
+        "combatRevision": 21,
+        "bossId": "wrath",
+        "startHP": 3,
+        "stage": "lost",
+        "ticks": 2198,
+        "hp": 0,
+        "hits": 3,
+        "score": 1020,
+        "phaseTicks": [],
+        "peakBullets": 180,
+        "poolPressure": 0,
+        "droppedGroups": 0,
+        "resultReason": "기억이 흐려졌습니다",
+        "enteredPhases": [
+          2
+        ],
+        "identityPatternIds": [],
+        "firstIdentityTick": null,
+        "input": {
+          "file": "natural-health-old21-control-inputs/boss-10-hell-phase-2.moves.gz",
+          "bytes": 364,
+          "sha256": "41f85075196aed722e01f2eaca4d22d8636d0acca6a7035d7603e23b830e240b",
+          "ticks": 2198
+        }
+      },
+      "alternate": {
+        "bossIndex": 10,
+        "phase": 2,
+        "difficulty": "hell",
+        "combatRevision": 25,
+        "bossId": "wrath",
+        "startHP": 3,
+        "stage": "won",
+        "ticks": 2768,
+        "hp": 3,
+        "hits": 0,
+        "score": 7505,
+        "phaseTicks": [
+          2768
+        ],
+        "peakBullets": 152,
+        "poolPressure": 0,
+        "droppedGroups": 0,
+        "resultReason": "분노의 귀 · 연습 완료",
+        "enteredPhases": [
+          2
+        ],
+        "identityPatternIds": [
+          "identity-fire-beats-v25"
+        ],
+        "firstIdentityTick": 103,
+        "input": {
+          "file": "natural-health-legal-alternate-inputs/boss-10-hell-phase-2.moves.gz",
+          "bytes": 398,
+          "sha256": "dd8ef733d5a40dfd931abaaa77656df178720db61ab8dc0e08001960f230d98d",
+          "ticks": 2768
+        }
+      }
+    }
+  ]
+}

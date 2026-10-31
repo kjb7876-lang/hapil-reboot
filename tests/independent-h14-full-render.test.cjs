@@ -6,7 +6,7 @@ const core=require('../src/core.js');require('../src/boss-motion.js');require('.
 const raw=fs.readFileSync(path.join(__dirname,'../src/media.js'),'utf8'),media=require('../tools/read-media-registry.cjs')();
 async function fixture(){
  const previous=global.document,allocated=[];global.document={createElement(name){assert.equal(name,'canvas');const c=createCanvas(1,1);allocated.push(c);return c;}};
- const keys=Object.keys(media).filter(k=>/^(projectile|fxV8|bossMotion|cast|weapon|sin|h14|h24Lust)/.test(k)||['gunner','forest','ruins','cave','fxWindArrow8V6'].includes(k)),images={};
+ const keys=Object.keys(media).filter(k=>/^(projectile|fxV8|bossMotion|cast|weapon|sin|h14|h25|h24Lust)/.test(k)||['gunner','forest','ruins','cave','fxWindArrow8V6'].includes(k)),images={};
  for(const key of keys)images[key]=await loadImage(path.join(__dirname,'..',media[key]));
  return{images,allocated,close(){global.document=previous;}};
 }

@@ -5,7 +5,8 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),zlib=require('node:zlib'),crypto=require('node:crypto');
 const core=require('../src/core.js'),store=require('../src/storage.js')._test;
 const root=path.join(__dirname,'..'),dir=path.join(__dirname,'fixtures/revision4-natural-bot'),manifest=JSON.parse(fs.readFileSync(path.join(dir,'manifest.json'),'utf8'));
-for(const [file,expected] of Object.entries(manifest.replayValidatedModuleSha256||manifest.recordedModuleSha256))assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex'),expected,`replay-validated module changed: ${file}`);
+const {currentModuleSha256:validatedModules}=require('../tools/historic-replay-attestation-v25.cjs').validateHistoricalReplayAttestation('revision4-natural-bot',manifest);
+for(const [file,expected] of Object.entries(validatedModules))assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex'),expected,`current replay-attested module changed: ${file}`);
 assert.equal(manifest.campaignRevision,4);assert.deepEqual(manifest.encounterIds,core.CAMPAIGN_BOSSES.slice(0,18).map(b=>b.id));assert.equal(manifest.encounterIds.length,18);
 assert.deepEqual(manifest.records.map(r=>`${r.difficulty}:${r.seed}`).sort(),['gentle:813','gentle:42','normal:813','normal:42','hell:813','hell:42'].sort());
 const fields=['tick','stage','stageTime','wave','waveTime','phase','phaseTime','bossIndex','bossCount','bossId','bossName','campaignRevision','checkpointSerial','waveDuration','idCounter','rngState','player','boss','enemies','bullets','shots','hazards','memory','resonance','score','graze','kills','skills','stats','_delays','_warnings','_deferred','_shotReadyAt','_memoryBucket','_memoryGain','_resBucket','_resGain','_grazeGain','_lastGraze','protagonist','combatObjective','resultReason'];

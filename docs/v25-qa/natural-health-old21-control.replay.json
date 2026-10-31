@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "scope": "Pure CPU replays of exact recorded legal inputs with ordinary HP/damage/autoattack/skills. Product checkpoint phase starts. No policy execution, immunity,777, human-play/browser/mobile claim.",
+  "recordingSHA256": "2a1df456b6248f1b7e2b818c905fd6db983de00ab7ab212757b2d8b834780f39",
+  "sourceHashes": {
+    "src/core.js": "0931918bc6517c6ad73a5f442922765149b35a2d40bd60d32c811cf70950e851",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d",
+    "tools/audit-boss-identities-v25.cjs": "88e1d4e3afd9d314d3de2cb723d145105a3da7e3793ae4d82c76ce71f08dd20c",
+    "tools/probe-identities-v25-natural.cjs": "18433dffe03accc00d128f501bf8a03a1844c534965b6596aedb05853db198b7"
+  },
+  "sourceHashGuardPassed": true,
+  "summary": {
+    "cases": 2,
+    "ticks": 4812,
+    "won": 0,
+    "lost": 2,
+    "unfinished": 0
+  },
+  "rows": [
+    {
+      "bossIndex": 8,
+      "phase": 2,
+      "difficulty": "hell",
+      "finalPractice": false,
+      "stage": "lost",
+      "ticks": 2614,
+      "hp": 0,
+      "hits": 3,
+      "score": 1125,
+      "phaseTicks": [],
+      "peakBullets": 126,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "기억이 흐려졌습니다",
+      "inputSHA256": "cca8a8aead9eb8029078efe4fbe09550646873fd2c3831b4706b217fef8dcb1c"
+    },
+    {
+      "bossIndex": 10,
+      "phase": 2,
+      "difficulty": "hell",
+      "finalPractice": false,
+      "stage": "lost",
+      "ticks": 2198,
+      "hp": 0,
+      "hits": 3,
+      "score": 1020,
+      "phaseTicks": [],
+      "peakBullets": 180,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "기억이 흐려졌습니다",
+      "inputSHA256": "41f85075196aed722e01f2eaca4d22d8636d0acca6a7035d7603e23b830e240b"
+    }
+  ]
+}

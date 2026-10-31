@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>V25 실제 브라우저 저장 검수</title>
+  <style>
+    body{margin:0;padding:20px;background:#10151e;color:#f0f3fa;font:16px/1.55 system-ui,sans-serif}
+    main{max-width:1100px;margin:auto}h1{font-size:24px;margin:0 0 12px}p{margin:10px 0}
+    .notice{border-left:4px solid #85c7ff;padding:8px 14px;background:#1a2635}
+    #controls{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+    button,a{font:inherit}button{padding:10px 14px;border:1px solid #7e9aba;border-radius:7px;background:#253a54;color:white;cursor:pointer}
+    button:disabled{opacity:.45;cursor:wait}a{color:#a5d8ff}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#07101b;padding:16px;border-radius:8px;font:13px/1.5 ui-monospace,monospace}
+    ol{padding-left:24px}code{overflow-wrap:anywhere}
+  </style>
+</head>
+<body>
+<main>
+  <h1>V25 실제 브라우저 IndexedDB 검수</h1>
+  <div class="notice">
+    <p id="identity">검수 모듈 준비 중</p>
+    <p>이 페이지는 검수 전용 DB만 사용합니다. 게임의 저장 DB를 열거나 삭제하지 않습니다. 두 탭에 같은 <code>run</code> 값을 사용하고 <code>tab=A</code>, <code>tab=B</code>로 구분하세요. 이미 기록이 있다면 새 run 값을 사용합니다. 초기화·삭제 버튼은 없습니다.</p>
+    <p>게임플레이 검사가 아닙니다. 경계 1은 실제 코어가 만든 최초 경계이며, 경계 2는 무적 fixture로 다음 안전 경계까지 진행해 수집합니다. 연습 기록도 실제 코어가 생성합니다. 자연 진행·성능 검증으로 계산하지 않습니다.</p>
+  </div>
+  <ol>
+    <li>A와 B에서 각각 최신 기록을 불러와 revision 0을 확인합니다.</li>
+    <li>A 경계 1 저장 → B 설정 저장은 충돌 → B 최신 기록 불러오기 → B 설정 저장 성공.</li>
+    <li>A 경계 2 저장은 충돌 → A 최신 기록 불러오기 → A 경계 2 저장 성공, 백업은 경계 1.</li>
+    <li>A 연습 저장 차단·변경 없음 확인 → 실제 DB 재열기·코어 복원 확인 → JSON 내보내기.</li>
+  </ol>
+  <div id="controls">
+    <button id="load-current" disabled>최신 기록 불러오기</button>
+    <button id="save-first" disabled>25 경계 1 저장</button>
+    <button id="settings-low" disabled>설정 낮음 저장</button>
+    <button id="save-next" disabled>25 경계 2 저장</button>
+    <button id="practice-check" disabled>연습 저장 차단 확인</button>
+    <button id="restore-check" disabled>실제 DB 재열기·복원 확인</button>
+    <button id="export-json" disabled>검수 JSON 내보내기</button>
+  </div>
+  <a id="download-json" hidden>검수 JSON 다운로드</a>
+  <pre id="status" aria-live="polite">{"ready":false}</pre>
+</main>
+<script>
+(function(){
+  'use strict';
+  var params=new URLSearchParams(location.search);
+  var candidate=params.get('run')||'v25root01';
+  var run=/^[A-Za-z0-9_-]{1,40}$/.test(candidate)?candidate:'v25root01';
+  var tab=params.get('tab')==='B'?'B':'A';
+  var dbName='hapil.qa.identity25.native.20261031.'+run;
+  var assetRoot=/\/docs\/v25-browser\/[^/]*$/.test(location.pathname)?'../../':'./';
+  var controls=Array.prototype.slice.call(document.querySelectorAll('button'));
+  var statusNode=document.getElementById('status');
+  var state={fixture:'native-storage25',ready:false,qaOnly:true,tab:tab,run:run,database:dbName,
+    nativeIndexedDB:true,productDatabaseOpened:false,destructiveResetProvided:false,
+    fixtureClassification:'Owned checkpoint fixture; second boundary uses invulnerability; not natural progression or a gameplay/performance test',
+    scripts:{core:assetRoot+'src/core.js?20261031-identity25',storage:assetRoot+'src/storage.js?20261031-identity25'},
+    lastAction:null,lastResult:null,nativeRecord:null,history:[]};
+  var Store,core,store,first,next,practice,opened=false;
+  function show(){statusNode.textContent=JSON.stringify(state,null,2);}
+  function enable(value){controls.forEach(function(button){button.disabled=!value;});}
+  function loadScript(path){return new Promise(function(resolve,reject){var node=document.createElement('script');node.src=assetRoot+path+'?20261031-identity25';node.onload=resolve;node.onerror=function(){reject(new Error('스크립트 로딩 실패: '+path));};document.head.appendChild(node);});}
+  function stable(value){if(Array.isArray(value))return value.map(stable);if(value&&typeof value==='object'){var out={};Object.keys(value).sort().forEach(function(key){out[key]=stable(value[key]);});return out;}return value;}
+  function equal(a,b){return JSON.stringify(stable(a))===JSON.stringify(stable(b));}
+  function summary(record){return {revision:record.revision,generation:record.generation,combatContract:record.combatContract===undefined?null:record.combatContract,
+    activeRunId:record.activeRunId,quality:record.settings.quality,
+    checkpoint:record.checkpoint?{serial:record.checkpoint.checkpointSerial,tick:record.checkpoint.tick,combatRevision:record.checkpoint.combatRevision,practiceBoss:record.checkpoint.practiceBoss}:null,
+    backup:record.backup?{serial:record.backup.checkpointSerial,tick:record.backup.tick,combatRevision:record.backup.combatRevision,practiceBoss:record.backup.practiceBoss}:null};}
+  async function exported(){return JSON.parse(await store.exportData());}
+  function ensureOpened(){if(!opened)throw new Error('이 탭에서 먼저 최신 기록 불러오기를 누르세요.');}
+  function nextBoundary(){
+    if(next)return next;
+    var world=core.createRun({campaign:true,campaignRevision:5,difficulty:'normal',seed:813,runId:first.runId,combatRevision:25});
+    world.player.invulnerableUntil=999999;
+    var steps=0;
+    while(world.checkpointSerial===first.checkpointSerial&&world.stage!=='lost'&&world.stage!=='won'&&steps<7200){core.step(world,{});steps++;}
+    next=core.checkpoint(world);
+    if(!next||next.checkpointSerial!==first.checkpointSerial+1||!Store.validateCheckpoint(next))throw new Error('실제 코어의 다음 안전 경계를 수집하지 못했습니다.');
+    state.nextBoundaryFixture={invulnerabilityOverride:true,steps:steps,serial:next.checkpointSerial,tick:next.tick,combatRevision:next.combatRevision,coreValidated:true};
+    return next;
+  }
+  async function action(name,fn){
+    enable(false);
+    try{
+      var before=opened?await exported():null;
+      var result=await fn();
+      var after=opened?await exported():null;
+      state.lastAction=name;state.lastResult=result;state.nativeRecord=after;
+      state.history.push({action:name,result:result,before:before?summary(before):null,after:after?summary(after):null,recordUnchanged:before&&after?equal(before,after):null});
+    }catch(error){state.lastAction=name;state.lastResult={ok:false,fixtureError:String(error&&error.message||error)};state.history.push({action:name,result:state.lastResult});}
+    show();enable(state.ready);
+  }
+  document.getElementById('load-current').addEventListener('click',function(){action('load-current',async function(){var open=await store.open();if(!open.ok)return open;opened=true;var loaded=await store.load();return {open:open,load:loaded,explicitRevisionAdoption:true};});});
+  document.getElementById('save-first').addEventListener('click',function(){action('save-first',async function(){ensureOpened();return store.saveCheckpoint(first);});});
+  document.getElementById('settings-low').addEventListener('click',function(){action('settings-low',async function(){ensureOpened();return store.saveSettings({quality:'low'});});});
+  document.getElementById('save-next').addEventListener('click',function(){action('save-next',async function(){ensureOpened();return store.saveCheckpoint(nextBoundary());});});
+  document.getElementById('practice-check').addEventListener('click',function(){action('practice-check',async function(){ensureOpened();var before=await exported();var result=await store.saveCheckpoint(practice);var after=await exported();return {result:result,expectedReason:'practice-checkpoint',recordUnchanged:equal(before,after),passed:result.ok===false&&result.reason==='practice-checkpoint'&&equal(before,after)};});});
+  document.getElementById('restore-check').addEventListener('click',function(){action('restore-check',async function(){ensureOpened();var loaded=await store.load();if(loaded.ok===false||!loaded.checkpoint)throw new Error('복원 가능한 경계가 없습니다.');var fresh=Store.createStore(qaEnvironment());var freshOpen=await fresh.open();var freshLoad=await fresh.load();var restored=core.restoreCheckpoint(freshLoad.checkpoint);var roundTrip=core.checkpoint(restored);return {freshStoreOpened:freshOpen.ok,persistent:freshOpen.persistent,nativeRoundTripEqual:equal(freshLoad.checkpoint,loaded.checkpoint),storedSelector:freshLoad.checkpoint.combatRevision,restoredSelector:restored.combatRevision,checkpointRoundTripEqual:equal(roundTrip,freshLoad.checkpoint),serial:roundTrip.checkpointSerial,passed:freshOpen.ok&&freshOpen.persistent&&equal(freshLoad.checkpoint,loaded.checkpoint)&&restored.combatRevision===25&&equal(roundTrip,freshLoad.checkpoint)};});});
+  document.getElementById('export-json').addEventListener('click',function(){action('export-json',async function(){ensureOpened();state.nativeRecord=await exported();var blob=new Blob([JSON.stringify(state,null,2)+'\n'],{type:'application/json'});var link=document.getElementById('download-json');if(link.dataset.objectUrl)URL.revokeObjectURL(link.dataset.objectUrl);var url=URL.createObjectURL(blob);link.href=url;link.dataset.objectUrl=url;link.download='hapil-v25-native-storage25-'+run+'-'+tab+'.json';link.hidden=false;link.click();return {download:link.download,bytes:blob.size};});});
+  function qaEnvironment(){return {location:{protocol:location.protocol},indexedDB:{open:function(ignoredName,version){return window.indexedDB.open(dbName,version);}}};}
+  async function boot(){
+    document.getElementById('identity').textContent='탭 '+tab+' · 검수 DB: '+dbName;
+    if(!window.indexedDB)throw new Error('이 브라우저에는 IndexedDB가 없습니다.');
+    await loadScript('src/weapon-patterns.js');await loadScript('src/core.js');core=window.HapilCore;
+    // This owned fixture exposes the existing CommonJS-only test factory. The
+    // module's default store is never opened; every invoked store receives the
+    // wrapper above, which ignores the product name and opens only this QA DB.
+    window.module={exports:{}};
+    try{await loadScript('src/storage.js');Store=window.module.exports._test;}finally{delete window.module;}
+    if(!Store||core.IDENTITY_COMBAT_REVISION!==25)throw new Error('현재25 코어·저장 모듈이 아닙니다.');
+    var options={campaign:true,campaignRevision:5,difficulty:'normal',seed:813,runId:'qa-native25-'+run,combatRevision:25};
+    first=core.checkpoint(core.createRun(options));
+    practice=core.checkpoint(core.createRun(Object.assign({},options,{runId:'qa-practice25-'+run,practiceBoss:true,bossIndex:34})));
+    if(!Store.validateCheckpoint(first)||!Store.validateCheckpoint(practice))throw new Error('코어 경계가 실제 저장 검증을 통과하지 못했습니다.');
+    store=Store.createStore(qaEnvironment());state.initialBoundary={serial:first.checkpointSerial,tick:first.tick,combatRevision:first.combatRevision,coreValidated:true,invulnerabilityOverride:false};
+    state.ready=true;show();enable(true);
+  }
+  boot().catch(function(error){state.lastResult={ok:false,fixtureError:String(error&&error.message||error)};show();enable(false);});
+})();
+</script>
+</body>
+</html>

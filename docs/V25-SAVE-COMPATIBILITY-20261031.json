@@ -1,0 +1,98 @@
+{
+  "title": "V25 save compatibility targeted verification",
+  "recordedAt": "2026-10-31T06:13:18.781873+00:00",
+  "scope": "Implementation + CPU simulation + serialized IndexedDB emulation; not a browser/device certification",
+  "productOwner": "src/storage.js",
+  "baselineCommit": "945799615b35bb732ca5d6a0c48db8eebbd92a74",
+  "supportedCheckpointCombatRevisions": [
+    21,
+    25
+  ],
+  "legacyAbsentSelector": "Preserved absent; never assigned21 or25 on restore",
+  "recordContract": "Highest previously written21/25 retained through settings, clear, completion, retries and older newly started runs",
+  "forwardWriterFence": "Pinned deployed baseline21 storage rejects25 raw records before settings/checkpoint/clear/complete writes; exact raw bytes remain exportable",
+  "mixedSnapshotGuard": "If both same-run checkpoints are valid and either is25, unequal combat selectors reject writes; legacy21/absent behavior unchanged",
+  "backupRecovery": "Damaged primary + valid25 backup is readable without an automatic disk write; corrupt backup remains untouched and blocks writes",
+  "command": "node --test tests/identity-save-compatibility-v25.test.cjs tests/independent-save-compatibility-v21.test.cjs tests/legacy-storage-regression.test.cjs tests/legacy-storage-independent-review.test.cjs",
+  "result": {
+    "tests": 33,
+    "pass": 33,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 923.26963,
+    "newTests": 7,
+    "existingTests": 26
+  },
+  "ordinaryHealthRestore": {
+    "mode": "Boss practice, index9, HELL, phase0",
+    "hp": 3,
+    "invulnerabilityOverride": false,
+    "legalInputStepCalls": 600,
+    "minimumLiveTicksAsserted": 120,
+    "comparison": "Initial and every subsequent full JSON-compatible world state; fresh-run UI notification consumed before comparison",
+    "claim": "Deterministic boundary restoration only; not a natural campaign completion or human play test"
+  },
+  "firstFailure": {
+    "tests": 33,
+    "pass": 32,
+    "fail": 1,
+    "cause": "Fresh25 world initialized _identityPlans while restored25 world omitted it",
+    "resolution": "Core owner initialized25 plan state consistently after incoming campaign fields; unchanged whole-world comparison passed on rerun",
+    "rawLog": "docs/v25-qa/storage-compatibility-first-failure.log"
+  },
+  "additionalChecks": {
+    "sourceSyntax": "pass",
+    "testSyntax": "pass",
+    "sourceAndTestDiffCheck": "pass"
+  },
+  "notVerifiedByThisReport": [
+    "Actual browser IndexedDB implementation",
+    "Physical mobile device",
+    "Actual GPU or software GPU",
+    "Manual full story natural progression",
+    "Device frame rate or touch latency"
+  ],
+  "filesAtTargetedRun": [
+    {
+      "path": "src/storage.js",
+      "bytes": 32741,
+      "sha256": "b753b883ca10b3f116c0bac9a1ed5551d3c87aab3f9e87227af6235f09d34c12"
+    },
+    {
+      "path": "src/core.js",
+      "bytes": 171773,
+      "sha256": "d1c6a706bb55e50ce33805734c6be1c8071c62684a9629b78379316a81b35515"
+    },
+    {
+      "path": "tests/identity-save-compatibility-v25.test.cjs",
+      "bytes": 13511,
+      "sha256": "03b8ce004350ec074700709b3c84beebdf1c077e2b94e056f0f08dfb0ccfaa70"
+    },
+    {
+      "path": "tests/independent-save-compatibility-v21.test.cjs",
+      "bytes": 10903,
+      "sha256": "28f2dd9345bfa70557a72b3d53a6fc73108b5c9d2b632518f525c048d9596a47"
+    },
+    {
+      "path": "tests/legacy-storage-regression.test.cjs",
+      "bytes": 14629,
+      "sha256": "079958518d585bdf1fa725963b2c59cecf4dfaf80e7a25c65ab7e44e981d13ed"
+    },
+    {
+      "path": "tests/legacy-storage-independent-review.test.cjs",
+      "bytes": 7845,
+      "sha256": "3c538b3e53d89e006d2f2520588b4635c25ce0d0e5d91c8f3b48ef01dd7ec8a6"
+    },
+    {
+      "path": "docs/v25-qa/storage-compatibility-first-failure.log",
+      "bytes": 10147,
+      "sha256": "6a2899661f3dee0b031313f3a46d1fac4856effa5b274c9b9b269ee0921976b1"
+    },
+    {
+      "path": "docs/v25-qa/storage-compatibility-targeted.log",
+      "bytes": 3707,
+      "sha256": "9156e0038caef7cb6e5de414a1d99dac9ebe51bd77a7e218c4ace17395ccdaf3"
+    }
+  ]
+}

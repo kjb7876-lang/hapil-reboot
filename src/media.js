@@ -40,3 +40,9 @@ Object.assign(window.HapilMedia,{"storyGoblin":"media/story-v19/goblin.webp","st
 window.HapilMedia.h24LustHeel='media/projectiles-hapil1-v24/lust-heel.webp';
 window.HapilMedia.h24LustLipstick='media/projectiles-hapil1-v24/lust-lipstick.webp';
 window.HapilMedia.h24LustBrokenHeart='media/projectiles-hapil1-v24/lust-broken-heart.webp';
+
+// Pinned owned Sloth/Gluttony/Greed props; source/derivative hashes: docs/V25-RUNTIME-PROJECTILE-ASSETS-20261031.json
+window.HapilMedia.h25SlothTissue='media/projectiles-hapil1-v25/sloth-tissue.webp';
+window.HapilMedia.h25GluttonKnife='media/projectiles-hapil1-v25/glutton-knife.webp';
+window.HapilMedia.h25GreedMoney='media/projectiles-hapil1-v25/greed-money.webp';
+window.HapilMedia.h25GreedTreasure='media/projectiles-hapil1-v25/greed-treasure.webp';

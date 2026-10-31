@@ -25,7 +25,7 @@ function sample(f,index,action,tick,release,progress=.6,low=false){
 function countAlpha(p){let n=0;for(let i=3;i<p.length;i+=4)if(p[i])n++;return n;}
 test('each boss draws its own real static Drive accent during charge and genuine release only',async()=>{
  const f=await fixture();try{for(let i=0;i<5;i++)for(const low of [false,true]){
-  const optionalBeam=['h14SkillViolet',null,'h14SkillBalrog','h14SkillMask','h14SkillLucifer'][i];assert.deepEqual(api.optionalAssetKeysForEncounter(i),[specs[i][0],...(optionalBeam?[optionalBeam]:[])]);assert(api.assetKeysForEncounter(i).includes(specs[i][0]));
+  const optionalBeam=['h14SkillViolet',null,null,'h14SkillMask','h14SkillLucifer'][i];assert.deepEqual(api.optionalAssetKeysForEncounter(i),[specs[i][0],...(optionalBeam?[optionalBeam]:[])]);assert(api.assetKeysForEncounter(i).includes(specs[i][0]));if(i===2){assert(api.assetKeysForEncounter(i).includes('h14SkillBalrog'),'own flame body is mandatory before simulation');assert(!api.optionalAssetKeysForEncounter(i).includes('h14SkillBalrog'),'mandatory body cannot also be deferred as an optional beam accent');}
   const charging=sample(f,i,'charge',100,-1,.6,low);assert.equal(charging.metrics.signatureCastDraws,1);assert.equal(charging.metrics.bossCastDraws,1);assert(countAlpha(charging.pixels)>12,'actual authored pixels visible');
   const before=sample(f,i,'attack',100,-1,.6,low);assert.equal(before.metrics.signatureCastDraws,0);assert.equal(countAlpha(before.pixels),0);
   const released=sample(f,i,'attack',100,100,.6,low);assert.equal(released.metrics.signatureCastDraws,1);assert(countAlpha(released.pixels)>12);

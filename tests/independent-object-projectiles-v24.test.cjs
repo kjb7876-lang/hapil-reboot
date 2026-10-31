@@ -13,8 +13,10 @@ test('real-size heel, lipstick, broken-heart and opposite thrown objects remain 
 test('actual seeded Lust shots expose all three source objects while simulation and checkpoint output remain exactly v23',async()=>{
  const box=a.runtime(),old=a.runtime(a.BASE),trace=await a.semanticTrace(box,old,keys(box));assert.equal(trace.rows.length,18);const rotorShots=trace.shots.filter(s=>s.kind==='hell-rotor');assert(rotorShots.length>0);const left=new Set(rotorShots.filter(s=>s.spinRate<0).map(s=>s.key)),right=new Set(rotorShots.filter(s=>s.spinRate>0).map(s=>s.key));assert.equal(left.size,1);assert.equal(right.size,1);assert.notEqual([...left][0],[...right][0],'actual emitted opposite-spin pair is separate heel/lipstick, even though both palette slots are zero');
 });
-test('unrelated boss shots and v23 laser pixels are unchanged across representative source owners and qualities',async()=>{
- const box=a.runtime(),old=a.runtime(a.BASE),out=await a.unchangedMatrix(box,old,[0,1,2,5,6,7,9,10,11,17,20,30,34,35]);assert(out.bulletCases>=56);assert(out.laserCases>=60);assert(out.bullets.every(r=>r.byteIdentical));assert(out.lasers.every(r=>r.byteIdentical));
+test('historical v24 unrelated boss shots and v23 laser pixels are unchanged across representative source owners and qualities',async()=>{
+ // Freeze this historical v24 byte-equality claim; current v25 identities and
+ // unchanged lasers are separately covered by owned-projectile-identities-v25.
+ const box=a.runtime('ef95fc227506162b5203092da9e1734e2f43ef58'),old=a.runtime(a.BASE),out=await a.unchangedMatrix(box,old,[0,1,2,5,6,7,9,10,11,17,20,30,34,35]);assert(out.bulletCases>=56);assert(out.laserCases>=60);assert(out.bullets.every(r=>r.byteIdentical));assert(out.lasers.every(r=>r.byteIdentical));
 });
 test('source objects keep native red/gold material and spin without changing fixed hit geometry or rebuilding warmed stamps',async()=>{
  const box=a.runtime(),images=await a.imagesFor(box,8),w=a.world(8),fx=box.HapilProjectiles.create(images),{createCanvas}=require(require.resolve('@napi-rs/canvas',{paths:[process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES||'',a.ROOT]})),c=createCanvas(128,128),ctx=c.getContext('2d');

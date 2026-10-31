@@ -1,0 +1,5496 @@
+{
+  "schema": 1,
+  "scope": "Native CPU, four historically affected actual radii/capsules ×3angles ×3subpixels ×2palette slots ×2qualities. Source exposure preserves material colour while retaining existing alpha180/luma50 and relative-brightness gates. No browser/GPU/mobile claim.",
+  "historicalBaseline": "079c830e40d607d9944215a107003d66e85367ce",
+  "v24Baseline": "ef95fc227506162b5203092da9e1734e2f43ef58",
+  "projectileSHA256": "2c831a71ca5b2c7c1a5424855fcf903714dfe6921ac4d62546d3e2e6c881beea",
+  "summary": {
+    "cases": 144,
+    "minCentral": 1,
+    "minBright": 0.8333333333333334,
+    "minRelativeHistoricalLuma": 0.9157091744598276,
+    "minFullDamage": 0.9545454545454546,
+    "minV24FullDamage": 0.9545454545454546
+  },
+  "rows": [
+    {
+      "group": 23,
+      "angle": 0,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771243,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 154.4872954248366,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 151.79517352941176,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.1910533836566262
+    },
+    {
+      "group": 23,
+      "angle": 0,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771243,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 154.4872954248366,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 151.79517352941176,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.1910533836566262
+    },
+    {
+      "group": 23,
+      "angle": 0,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771243,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 160.6473545751634,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 156.6923362745098,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.1453821722387691
+    },
+    {
+      "group": 23,
+      "angle": 0,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771243,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 160.6473545751634,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 156.6923362745098,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.1453821722387691
+    },
+    {
+      "group": 23,
+      "angle": 0,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 179.94599070889893,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 146.46465797888385,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 148.04091571644042,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "relativeHistoricalLuma": 1.2285966675649642
+    },
+    {
+      "group": 23,
+      "angle": 0,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 179.94599070889893,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 146.46465797888385,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 148.04091571644042,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "relativeHistoricalLuma": 1.2285966675649642
+    },
+    {
+      "group": 23,
+      "angle": 0,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 179.94599070889893,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 152.85568742081446,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 153.9803426847662,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "relativeHistoricalLuma": 1.1772279706773643
+    },
+    {
+      "group": 23,
+      "angle": 0,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 179.94599070889893,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 152.85568742081446,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 153.9803426847662,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "relativeHistoricalLuma": 1.1772279706773643
+    },
+    {
+      "group": 23,
+      "angle": 0,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 156.4679648801743,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 164.97539485838783,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.2619393172705473
+    },
+    {
+      "group": 23,
+      "angle": 0,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 156.4679648801743,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 164.97539485838783,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.2619393172705473
+    },
+    {
+      "group": 23,
+      "angle": 0,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 164.73400705882352,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 172.8608220479303,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.1986175793386258
+    },
+    {
+      "group": 23,
+      "angle": 0,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 164.73400705882352,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 172.8608220479303,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.1986175793386258
+    },
+    {
+      "group": 23,
+      "angle": 0.7853981633974483,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 178.1641886928104,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.75,
+        "centralBrightFraction": 0.75,
+        "centralAlphaWeightedLuminance": 146.36579875816992,
+        "centralPixels": 12,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 148.88661529411763,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 1.2172528705779058
+    },
+    {
+      "group": 23,
+      "angle": 0.7853981633974483,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 178.1641886928104,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.75,
+        "centralBrightFraction": 0.75,
+        "centralAlphaWeightedLuminance": 146.36579875816992,
+        "centralPixels": 12,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 148.88661529411763,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 1.2172528705779058
+    },
+    {
+      "group": 23,
+      "angle": 0.7853981633974483,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 178.1641886928104,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.75,
+        "centralBrightFraction": 0.75,
+        "centralAlphaWeightedLuminance": 152.1726182352941,
+        "centralPixels": 12,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 155.5511316339869,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 1.1708032020407726
+    },
+    {
+      "group": 23,
+      "angle": 0.7853981633974483,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 178.1641886928104,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.75,
+        "centralBrightFraction": 0.75,
+        "centralAlphaWeightedLuminance": 152.1726182352941,
+        "centralPixels": 12,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 155.5511316339869,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 1.1708032020407726
+    },
+    {
+      "group": 23,
+      "angle": 0.7853981633974483,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 185.35396512820515,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 146.83076730015082,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6222222222222222,
+        "maxRasterOutset": 2.2104076400856547
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 154.32848850678732,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "relativeHistoricalLuma": 1.262364615648336
+    },
+    {
+      "group": 23,
+      "angle": 0.7853981633974483,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 185.35396512820515,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 146.83076730015082,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6222222222222222,
+        "maxRasterOutset": 2.2104076400856547
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 154.32848850678732,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "relativeHistoricalLuma": 1.262364615648336
+    },
+    {
+      "group": 23,
+      "angle": 0.7853981633974483,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 185.35396512820515,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 153.2206407843137,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6222222222222222,
+        "maxRasterOutset": 2.2104076400856547
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 160.91623529411766,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "relativeHistoricalLuma": 1.2097192922533526
+    },
+    {
+      "group": 23,
+      "angle": 0.7853981633974483,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 185.35396512820515,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 153.2206407843137,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6222222222222222,
+        "maxRasterOutset": 2.2104076400856547
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 160.91623529411766,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "relativeHistoricalLuma": 1.2097192922533526
+    },
+    {
+      "group": 23,
+      "angle": 0.7853981633974483,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 189.50198692810457,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 165.70382901960784,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6444444444444445,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 158.11140174291938,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 1.1436186360285052
+    },
+    {
+      "group": 23,
+      "angle": 0.7853981633974483,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 189.50198692810457,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 165.70382901960784,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6444444444444445,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 158.11140174291938,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 1.1436186360285052
+    },
+    {
+      "group": 23,
+      "angle": 0.7853981633974483,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 189.50198692810457,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 172.6622531590414,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6444444444444445,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 164.79801464052287,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 1.0975299085987942
+    },
+    {
+      "group": 23,
+      "angle": 0.7853981633974483,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 189.50198692810457,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 172.6622531590414,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6444444444444445,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 164.79801464052287,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 1.0975299085987942
+    },
+    {
+      "group": 23,
+      "angle": 1.5707963267948966,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771237,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 154.4872954248366,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 151.79517352941176,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.1910533836566257
+    },
+    {
+      "group": 23,
+      "angle": 1.5707963267948966,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771237,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 154.4872954248366,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 151.79517352941176,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.1910533836566257
+    },
+    {
+      "group": 23,
+      "angle": 1.5707963267948966,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771237,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 160.6473545751634,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 156.6923362745098,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.1453821722387687
+    },
+    {
+      "group": 23,
+      "angle": 1.5707963267948966,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771237,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 160.6473545751634,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 156.6923362745098,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.1453821722387687
+    },
+    {
+      "group": 23,
+      "angle": 1.5707963267948966,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 173.13638720965307,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 145.2390392156863,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7111111111111111,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 141.51622389140272,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "relativeHistoricalLuma": 1.1920788525221377
+    },
+    {
+      "group": 23,
+      "angle": 1.5707963267948966,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 173.13638720965307,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 145.2390392156863,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7111111111111111,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 141.51622389140272,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "relativeHistoricalLuma": 1.1920788525221377
+    },
+    {
+      "group": 23,
+      "angle": 1.5707963267948966,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 173.13638720965307,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 151.07237538461538,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7111111111111111,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 147.4494219607843,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "relativeHistoricalLuma": 1.1460492811400158
+    },
+    {
+      "group": 23,
+      "angle": 1.5707963267948966,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 173.13638720965307,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 151.07237538461538,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7111111111111111,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 147.4494219607843,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "relativeHistoricalLuma": 1.1460492811400158
+    },
+    {
+      "group": 23,
+      "angle": 1.5707963267948966,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 156.46796488017426,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 164.9753948583878,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.2619393172705475
+    },
+    {
+      "group": 23,
+      "angle": 1.5707963267948966,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 156.46796488017426,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 164.9753948583878,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.2619393172705475
+    },
+    {
+      "group": 23,
+      "angle": 1.5707963267948966,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 164.73400705882352,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 172.8608220479303,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.1986175793386258
+    },
+    {
+      "group": 23,
+      "angle": 1.5707963267948966,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 164.73400705882352,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 172.8608220479303,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.1986175793386258
+    },
+    {
+      "group": 25,
+      "angle": 0,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771243,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 154.39202045751634,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 151.65418496732028,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.1917883800111546
+    },
+    {
+      "group": 25,
+      "angle": 0,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771243,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 154.39202045751634,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 151.65418496732028,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.1917883800111546
+    },
+    {
+      "group": 25,
+      "angle": 0,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771243,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 162.00840594771242,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 157.80877366013073,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.1357596840197204
+    },
+    {
+      "group": 25,
+      "angle": 0,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771243,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 162.00840594771242,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 157.80877366013073,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.1357596840197204
+    },
+    {
+      "group": 25,
+      "angle": 0,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 179.94599070889893,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 146.33486588235294,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 148.11629273001506,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "relativeHistoricalLuma": 1.2296863746304172
+    },
+    {
+      "group": 25,
+      "angle": 0,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 179.94599070889893,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 146.33486588235294,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 148.11629273001506,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "relativeHistoricalLuma": 1.2296863746304172
+    },
+    {
+      "group": 25,
+      "angle": 0,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 179.94599070889893,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 154.24939668174963,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 155.47936132730013,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "relativeHistoricalLuma": 1.1665912125424194
+    },
+    {
+      "group": 25,
+      "angle": 0,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 179.94599070889893,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 154.24939668174963,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 155.47936132730013,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "relativeHistoricalLuma": 1.1665912125424194
+    },
+    {
+      "group": 25,
+      "angle": 0,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 156.38514989106753,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 165.09672610021786,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.2626075871854718
+    },
+    {
+      "group": 25,
+      "angle": 0,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 156.38514989106753,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 165.09672610021786,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.2626075871854718
+    },
+    {
+      "group": 25,
+      "angle": 0,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 166.4245222657952,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 174.54071956427015,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.1864422026716022
+    },
+    {
+      "group": 25,
+      "angle": 0,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 166.4245222657952,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 174.54071956427015,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.1864422026716022
+    },
+    {
+      "group": 25,
+      "angle": 0.7853981633974483,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 178.1641886928104,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.75,
+        "centralBrightFraction": 0.75,
+        "centralAlphaWeightedLuminance": 146.22097320261437,
+        "centralPixels": 12,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 149.0350514379085,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 1.2184585069471066
+    },
+    {
+      "group": 25,
+      "angle": 0.7853981633974483,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 178.1641886928104,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.75,
+        "centralBrightFraction": 0.75,
+        "centralAlphaWeightedLuminance": 146.22097320261437,
+        "centralPixels": 12,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 149.0350514379085,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 1.2184585069471066
+    },
+    {
+      "group": 25,
+      "angle": 0.7853981633974483,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 178.1641886928104,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.75,
+        "centralBrightFraction": 0.75,
+        "centralAlphaWeightedLuminance": 153.39800183006537,
+        "centralPixels": 12,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 156.92695862745097,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 1.1614505180463892
+    },
+    {
+      "group": 25,
+      "angle": 0.7853981633974483,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 178.1641886928104,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.75,
+        "centralBrightFraction": 0.75,
+        "centralAlphaWeightedLuminance": 153.39800183006537,
+        "centralPixels": 12,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 156.92695862745097,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 1.1614505180463892
+    },
+    {
+      "group": 25,
+      "angle": 0.7853981633974483,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 185.35396512820515,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 146.9386260633484,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6222222222222222,
+        "maxRasterOutset": 2.2104076400856547
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 153.996844826546,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "relativeHistoricalLuma": 1.2614379900918296
+    },
+    {
+      "group": 25,
+      "angle": 0.7853981633974483,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 185.35396512820515,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 146.9386260633484,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6222222222222222,
+        "maxRasterOutset": 2.2104076400856547
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 153.996844826546,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "relativeHistoricalLuma": 1.2614379900918296
+    },
+    {
+      "group": 25,
+      "angle": 0.7853981633974483,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 185.35396512820515,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 154.71658781297134,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6222222222222222,
+        "maxRasterOutset": 2.2104076400856547
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 162.36426413273,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "relativeHistoricalLuma": 1.1980225763010603
+    },
+    {
+      "group": 25,
+      "angle": 0.7853981633974483,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 185.35396512820515,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 154.71658781297134,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6222222222222222,
+        "maxRasterOutset": 2.2104076400856547
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 162.36426413273,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "relativeHistoricalLuma": 1.1980225763010603
+    },
+    {
+      "group": 25,
+      "angle": 0.7853981633974483,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 189.50198692810457,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 165.82214788671024,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6444444444444445,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 157.89126901960785,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 1.1428026312719843
+    },
+    {
+      "group": 25,
+      "angle": 0.7853981633974483,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 189.50198692810457,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 165.82214788671024,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6444444444444445,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 157.89126901960785,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 1.1428026312719843
+    },
+    {
+      "group": 25,
+      "angle": 0.7853981633974483,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 189.50198692810457,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 174.53408444444443,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6444444444444445,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 166.4304761655773,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 1.085759194436457
+    },
+    {
+      "group": 25,
+      "angle": 0.7853981633974483,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 189.50198692810457,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 174.53408444444443,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6444444444444445,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 166.4304761655773,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 1.085759194436457
+    },
+    {
+      "group": 25,
+      "angle": 1.5707963267948966,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771237,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 154.39202045751634,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 151.65418496732025,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.1917883800111542
+    },
+    {
+      "group": 25,
+      "angle": 1.5707963267948966,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771237,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 154.39202045751634,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 151.65418496732025,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.1917883800111542
+    },
+    {
+      "group": 25,
+      "angle": 1.5707963267948966,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771237,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 162.00840594771242,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 157.8087736601307,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.13575968401972
+    },
+    {
+      "group": 25,
+      "angle": 1.5707963267948966,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771237,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 162.00840594771242,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 157.8087736601307,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.13575968401972
+    },
+    {
+      "group": 25,
+      "angle": 1.5707963267948966,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 173.13638720965307,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 145.12809242835596,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7111111111111111,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 141.6329337556561,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "relativeHistoricalLuma": 1.1929901669115075
+    },
+    {
+      "group": 25,
+      "angle": 1.5707963267948966,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 173.13638720965307,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 145.12809242835596,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7111111111111111,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 141.6329337556561,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "relativeHistoricalLuma": 1.1929901669115075
+    },
+    {
+      "group": 25,
+      "angle": 1.5707963267948966,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 173.13638720965307,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 152.49242340874812,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7111111111111111,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 148.8928867571644,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "relativeHistoricalLuma": 1.1353769803078666
+    },
+    {
+      "group": 25,
+      "angle": 1.5707963267948966,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 173.13638720965307,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 152.49242340874812,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7111111111111111,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 148.8928867571644,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "relativeHistoricalLuma": 1.1353769803078666
+    },
+    {
+      "group": 25,
+      "angle": 1.5707963267948966,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 156.38514989106753,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 165.09672610021786,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.2626075871854718
+    },
+    {
+      "group": 25,
+      "angle": 1.5707963267948966,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 156.38514989106753,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 165.09672610021786,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.2626075871854718
+    },
+    {
+      "group": 25,
+      "angle": 1.5707963267948966,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 166.42452226579522,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 174.54071956427012,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.186442202671602
+    },
+    {
+      "group": 25,
+      "angle": 1.5707963267948966,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 166.42452226579522,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 174.54071956427012,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.186442202671602
+    },
+    {
+      "group": 29,
+      "angle": 0,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771243,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 179.92495823529416,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 176.75577712418297,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.0226631021755512
+    },
+    {
+      "group": 29,
+      "angle": 0,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771243,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 179.92495823529416,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 176.75577712418297,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.0226631021755512
+    },
+    {
+      "group": 29,
+      "angle": 0,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771243,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 192.44109352941177,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 186.67948810457514,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 0.9561503344897089
+    },
+    {
+      "group": 29,
+      "angle": 0,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771243,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 192.44109352941177,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 186.67948810457514,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 0.9561503344897089
+    },
+    {
+      "group": 29,
+      "angle": 0,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 179.94599070889893,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 170.25343710407242,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 172.42182153846153,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "relativeHistoricalLuma": 1.056930149368448
+    },
+    {
+      "group": 29,
+      "angle": 0,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 179.94599070889893,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 170.25343710407242,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 172.42182153846153,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "relativeHistoricalLuma": 1.056930149368448
+    },
+    {
+      "group": 29,
+      "angle": 0,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 179.94599070889893,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 183.09566503770736,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 184.0665105882353,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "relativeHistoricalLuma": 0.9827976575624564
+    },
+    {
+      "group": 29,
+      "angle": 0,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 179.94599070889893,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 183.09566503770736,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 184.0665105882353,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.45
+      },
+      "relativeHistoricalLuma": 0.9827976575624564
+    },
+    {
+      "group": 29,
+      "angle": 0,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 181.50478291938998,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 191.67925673202615,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.0878670721492343
+    },
+    {
+      "group": 29,
+      "angle": 0,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 181.50478291938998,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 191.67925673202615,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.0878670721492343
+    },
+    {
+      "group": 29,
+      "angle": 0,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 197.97455302832242,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 207.31841803921566,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 0.9973659430227445
+    },
+    {
+      "group": 29,
+      "angle": 0,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 197.97455302832242,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 207.31841803921566,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 0.9973659430227445
+    },
+    {
+      "group": 29,
+      "angle": 0.7853981633974483,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 178.1641886928104,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.75,
+        "centralBrightFraction": 0.75,
+        "centralAlphaWeightedLuminance": 170.45417215686274,
+        "centralPixels": 12,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 173.01182267973857,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 1.0452321960699935
+    },
+    {
+      "group": 29,
+      "angle": 0.7853981633974483,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 178.1641886928104,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.75,
+        "centralBrightFraction": 0.75,
+        "centralAlphaWeightedLuminance": 170.45417215686274,
+        "centralPixels": 12,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 173.01182267973857,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 1.0452321960699935
+    },
+    {
+      "group": 29,
+      "angle": 0.7853981633974483,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 178.1641886928104,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.75,
+        "centralBrightFraction": 0.75,
+        "centralAlphaWeightedLuminance": 182.15365921568628,
+        "centralPixels": 12,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 186.10174888888886,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 0.9780983234701205
+    },
+    {
+      "group": 29,
+      "angle": 0.7853981633974483,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 178.1641886928104,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.75,
+        "centralBrightFraction": 0.75,
+        "centralAlphaWeightedLuminance": 182.15365921568628,
+        "centralPixels": 12,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 186.10174888888886,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9545454545454546,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 0.9780983234701205
+    },
+    {
+      "group": 29,
+      "angle": 0.7853981633974483,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 185.35396512820515,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 170.81803625942683,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6222222222222222,
+        "maxRasterOutset": 2.2104076400856547
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 178.9400720361991,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "relativeHistoricalLuma": 1.0850959839317091
+    },
+    {
+      "group": 29,
+      "angle": 0.7853981633974483,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 185.35396512820515,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 170.81803625942683,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6222222222222222,
+        "maxRasterOutset": 2.2104076400856547
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 178.9400720361991,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "relativeHistoricalLuma": 1.0850959839317091
+    },
+    {
+      "group": 29,
+      "angle": 0.7853981633974483,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 185.35396512820515,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 183.4400591251885,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6222222222222222,
+        "maxRasterOutset": 2.2104076400856547
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 192.4158306485671,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "relativeHistoricalLuma": 1.0104334135746789
+    },
+    {
+      "group": 29,
+      "angle": 0.7853981633974483,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 185.35396512820515,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 183.4400591251885,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.6222222222222222,
+        "maxRasterOutset": 2.2104076400856547
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 192.4158306485671,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.9175144212722017
+      },
+      "relativeHistoricalLuma": 1.0104334135746789
+    },
+    {
+      "group": 29,
+      "angle": 0.7853981633974483,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 189.50198692810457,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 192.80344488017428,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6444444444444445,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 183.5520603050109,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 0.9828765613906871
+    },
+    {
+      "group": 29,
+      "angle": 0.7853981633974483,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 189.50198692810457,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 192.80344488017428,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6444444444444445,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 183.5520603050109,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 0.9828765613906871
+    },
+    {
+      "group": 29,
+      "angle": 0.7853981633974483,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 189.50198692810457,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 206.94560261437906,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6444444444444445,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.20377586056642,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 0.9157091744598276
+    },
+    {
+      "group": 29,
+      "angle": 0.7853981633974483,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 189.50198692810457,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 206.94560261437906,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6444444444444445,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.20377586056642,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 2.5639610306789278
+      },
+      "relativeHistoricalLuma": 0.9157091744598276
+    },
+    {
+      "group": 29,
+      "angle": 1.5707963267948966,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771237,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 179.92495823529416,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 176.75577712418297,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.022663102175551
+    },
+    {
+      "group": 29,
+      "angle": 1.5707963267948966,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771237,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 179.92495823529416,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 176.75577712418297,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 1.022663102175551
+    },
+    {
+      "group": 29,
+      "angle": 1.5707963267948966,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771237,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 192.44109352941175,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 186.67948810457514,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 0.9561503344897088
+    },
+    {
+      "group": 29,
+      "angle": 1.5707963267948966,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 184.00261594771237,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 192.44109352941175,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7272727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9166666666666666,
+        "centralAlphaWeightedLuminance": 186.67948810457514,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9772727272727273,
+        "maxRasterOutset": 2.7
+      },
+      "relativeHistoricalLuma": 0.9561503344897088
+    },
+    {
+      "group": 29,
+      "angle": 1.5707963267948966,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 173.13638720965307,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 168.8843204826546,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7111111111111111,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 164.63699891402715,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "relativeHistoricalLuma": 1.025177391926299
+    },
+    {
+      "group": 29,
+      "angle": 1.5707963267948966,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 173.13638720965307,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 168.8843204826546,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7111111111111111,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 164.63699891402715,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "relativeHistoricalLuma": 1.025177391926299
+    },
+    {
+      "group": 29,
+      "angle": 1.5707963267948966,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 173.13638720965307,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 180.96015058823528,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7111111111111111,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 176.27494714932124,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "relativeHistoricalLuma": 0.9567652692974115
+    },
+    {
+      "group": 29,
+      "angle": 1.5707963267948966,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 173.13638720965307,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6923076923076923,
+        "centralBrightFraction": 0.6923076923076923,
+        "centralAlphaWeightedLuminance": 180.96015058823528,
+        "centralPixels": 13,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.7111111111111111,
+        "maxRasterOutset": 2.45
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.9230769230769231,
+        "centralAlphaWeightedLuminance": 176.27494714932124,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": null,
+        "damageCapsuleVisibleFraction": 0.9777777777777777,
+        "maxRasterOutset": 2.95
+      },
+      "relativeHistoricalLuma": 0.9567652692974115
+    },
+    {
+      "group": 29,
+      "angle": 1.5707963267948966,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 181.50478291938998,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 191.67925673202615,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.0878670721492343
+    },
+    {
+      "group": 29,
+      "angle": 1.5707963267948966,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 181.50478291938998,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 191.67925673202615,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 1.0878670721492343
+    },
+    {
+      "group": 29,
+      "angle": 1.5707963267948966,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 197.97455302832242,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 207.31841803921566,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 0.9973659430227445
+    },
+    {
+      "group": 29,
+      "angle": 1.5707963267948966,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 197.45307677559913,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 197.97455302832242,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.6888888888888889,
+        "maxRasterOutset": 2.2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 207.31841803921566,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 1,
+        "maxRasterOutset": 3.2
+      },
+      "relativeHistoricalLuma": 0.9973659430227445
+    },
+    {
+      "group": 34,
+      "angle": 0,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.8333333333333334,
+        "centralAlphaWeightedLuminance": 179.4882667973856,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9923076923076923,
+        "maxRasterOutset": 2.5
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 171.8871739869281,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8942307692307693,
+        "damageCapsuleVisibleFraction": 0.8961538461538462,
+        "maxRasterOutset": 2.5
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.8333333333333334,
+        "centralAlphaWeightedLuminance": 174.5186348366013,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9923076923076923,
+        "maxRasterOutset": 2.5
+      },
+      "relativeHistoricalLuma": 1.0442214077650467
+    },
+    {
+      "group": 34,
+      "angle": 0,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.8333333333333334,
+        "centralAlphaWeightedLuminance": 179.4882667973856,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9923076923076923,
+        "maxRasterOutset": 2.5
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 171.8871739869281,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8942307692307693,
+        "damageCapsuleVisibleFraction": 0.8961538461538462,
+        "maxRasterOutset": 2.5
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.8333333333333334,
+        "centralAlphaWeightedLuminance": 174.5186348366013,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9923076923076923,
+        "maxRasterOutset": 2.5
+      },
+      "relativeHistoricalLuma": 1.0442214077650467
+    },
+    {
+      "group": 34,
+      "angle": 0,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.8333333333333334,
+        "centralAlphaWeightedLuminance": 179.4882667973856,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9923076923076923,
+        "maxRasterOutset": 2.5
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 176.80107189542483,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8942307692307693,
+        "damageCapsuleVisibleFraction": 0.8961538461538462,
+        "maxRasterOutset": 2.5
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.8333333333333334,
+        "centralAlphaWeightedLuminance": 179.41811124183005,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9923076923076923,
+        "maxRasterOutset": 2.5
+      },
+      "relativeHistoricalLuma": 1.0151989740398757
+    },
+    {
+      "group": 34,
+      "angle": 0,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.8333333333333334,
+        "centralAlphaWeightedLuminance": 179.4882667973856,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9923076923076923,
+        "maxRasterOutset": 2.5
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 176.80107189542483,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8942307692307693,
+        "damageCapsuleVisibleFraction": 0.8961538461538462,
+        "maxRasterOutset": 2.5
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.8333333333333334,
+        "centralAlphaWeightedLuminance": 179.41811124183005,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9923076923076923,
+        "maxRasterOutset": 2.5
+      },
+      "relativeHistoricalLuma": 1.0151989740398757
+    },
+    {
+      "group": 34,
+      "angle": 0,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 219.34392313725488,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9961538461538462,
+        "maxRasterOutset": 3.25
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8461538461538461,
+        "centralBrightFraction": 0.8461538461538461,
+        "centralAlphaWeightedLuminance": 212.0205551131222,
+        "centralPixels": 13,
+        "visibleCentralPixels": 11,
+        "shaftVisibleFraction": 0.8974358974358975,
+        "damageCapsuleVisibleFraction": 0.9076923076923077,
+        "maxRasterOutset": 2.25
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 212.85578564102565,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9961538461538462,
+        "maxRasterOutset": 3.25
+      },
+      "relativeHistoricalLuma": 1.0345408397795455
+    },
+    {
+      "group": 34,
+      "angle": 0,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 219.34392313725488,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9961538461538462,
+        "maxRasterOutset": 3.25
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8461538461538461,
+        "centralBrightFraction": 0.8461538461538461,
+        "centralAlphaWeightedLuminance": 212.0205551131222,
+        "centralPixels": 13,
+        "visibleCentralPixels": 11,
+        "shaftVisibleFraction": 0.8974358974358975,
+        "damageCapsuleVisibleFraction": 0.9076923076923077,
+        "maxRasterOutset": 2.25
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 212.85578564102565,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9961538461538462,
+        "maxRasterOutset": 3.25
+      },
+      "relativeHistoricalLuma": 1.0345408397795455
+    },
+    {
+      "group": 34,
+      "angle": 0,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 219.34392313725488,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9961538461538462,
+        "maxRasterOutset": 3.25
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8461538461538461,
+        "centralBrightFraction": 0.8461538461538461,
+        "centralAlphaWeightedLuminance": 218.30420657616895,
+        "centralPixels": 13,
+        "visibleCentralPixels": 11,
+        "shaftVisibleFraction": 0.8974358974358975,
+        "damageCapsuleVisibleFraction": 0.9076923076923077,
+        "maxRasterOutset": 2.25
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 219.2112009653092,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9961538461538462,
+        "maxRasterOutset": 3.25
+      },
+      "relativeHistoricalLuma": 1.0047626959525544
+    },
+    {
+      "group": 34,
+      "angle": 0,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 219.34392313725488,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9961538461538462,
+        "maxRasterOutset": 3.25
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8461538461538461,
+        "centralBrightFraction": 0.8461538461538461,
+        "centralAlphaWeightedLuminance": 218.30420657616895,
+        "centralPixels": 13,
+        "visibleCentralPixels": 11,
+        "shaftVisibleFraction": 0.8974358974358975,
+        "damageCapsuleVisibleFraction": 0.9076923076923077,
+        "maxRasterOutset": 2.25
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 219.2112009653092,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9961538461538462,
+        "maxRasterOutset": 3.25
+      },
+      "relativeHistoricalLuma": 1.0047626959525544
+    },
+    {
+      "group": 34,
+      "angle": 0,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 207.13682440087143,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9964664310954063,
+        "maxRasterOutset": 3
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 203.77822466230936,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.9259259259259259,
+        "damageCapsuleVisibleFraction": 0.911660777385159,
+        "maxRasterOutset": 2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 205.02362274509807,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9964664310954063,
+        "maxRasterOutset": 3
+      },
+      "relativeHistoricalLuma": 1.016481641962127
+    },
+    {
+      "group": 34,
+      "angle": 0,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 207.13682440087143,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9964664310954063,
+        "maxRasterOutset": 3
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 203.77822466230936,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.9259259259259259,
+        "damageCapsuleVisibleFraction": 0.911660777385159,
+        "maxRasterOutset": 2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 205.02362274509807,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9964664310954063,
+        "maxRasterOutset": 3
+      },
+      "relativeHistoricalLuma": 1.016481641962127
+    },
+    {
+      "group": 34,
+      "angle": 0,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 207.13682440087143,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9964664310954063,
+        "maxRasterOutset": 3
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 212.11228801742917,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.9259259259259259,
+        "damageCapsuleVisibleFraction": 0.911660777385159,
+        "maxRasterOutset": 2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 213.18218527233114,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9964664310954063,
+        "maxRasterOutset": 3
+      },
+      "relativeHistoricalLuma": 0.9765432561071196
+    },
+    {
+      "group": 34,
+      "angle": 0,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 207.13682440087143,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9964664310954063,
+        "maxRasterOutset": 3
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 212.11228801742917,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.9259259259259259,
+        "damageCapsuleVisibleFraction": 0.911660777385159,
+        "maxRasterOutset": 2
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 213.18218527233114,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9964664310954063,
+        "maxRasterOutset": 3
+      },
+      "relativeHistoricalLuma": 0.9765432561071196
+    },
+    {
+      "group": 34,
+      "angle": 0.7853981633974483,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 186.02410287581696,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996,
+        "maxRasterOutset": 3.0710678118654755
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 182.35177202614378,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8695652173913043,
+        "damageCapsuleVisibleFraction": 0.892,
+        "maxRasterOutset": 2.3639610306789285
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 184.35508856209148,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996,
+        "maxRasterOutset": 3.0710678118654755
+      },
+      "relativeHistoricalLuma": 1.0201387176492405
+    },
+    {
+      "group": 34,
+      "angle": 0.7853981633974483,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 186.02410287581696,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996,
+        "maxRasterOutset": 3.0710678118654755
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 182.35177202614378,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8695652173913043,
+        "damageCapsuleVisibleFraction": 0.892,
+        "maxRasterOutset": 2.3639610306789285
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 184.35508856209148,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996,
+        "maxRasterOutset": 3.0710678118654755
+      },
+      "relativeHistoricalLuma": 1.0201387176492405
+    },
+    {
+      "group": 34,
+      "angle": 0.7853981633974483,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 186.02410287581696,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996,
+        "maxRasterOutset": 3.0710678118654755
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 189.53664431372547,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8695652173913043,
+        "damageCapsuleVisibleFraction": 0.892,
+        "maxRasterOutset": 2.3639610306789285
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 191.51846424836597,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996,
+        "maxRasterOutset": 3.0710678118654755
+      },
+      "relativeHistoricalLuma": 0.9814677449280231
+    },
+    {
+      "group": 34,
+      "angle": 0.7853981633974483,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 186.02410287581696,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996,
+        "maxRasterOutset": 3.0710678118654755
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 189.53664431372547,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8695652173913043,
+        "damageCapsuleVisibleFraction": 0.892,
+        "maxRasterOutset": 2.3639610306789285
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 191.51846424836597,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996,
+        "maxRasterOutset": 3.0710678118654755
+      },
+      "relativeHistoricalLuma": 0.9814677449280231
+    },
+    {
+      "group": 34,
+      "angle": 0.7853981633974483,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 187.3021598190045,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996031746031746,
+        "maxRasterOutset": 3.0710678118654764
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 182.19088971342384,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8555555555555555,
+        "damageCapsuleVisibleFraction": 0.8968253968253969,
+        "maxRasterOutset": 2.3639610306789294
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 184.30444048265463,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996031746031746,
+        "maxRasterOutset": 3.0710678118654764
+      },
+      "relativeHistoricalLuma": 1.0280544768930016
+    },
+    {
+      "group": 34,
+      "angle": 0.7853981633974483,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 187.3021598190045,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996031746031746,
+        "maxRasterOutset": 3.0710678118654764
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 182.19088971342384,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8555555555555555,
+        "damageCapsuleVisibleFraction": 0.8968253968253969,
+        "maxRasterOutset": 2.3639610306789294
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 184.30444048265463,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996031746031746,
+        "maxRasterOutset": 3.0710678118654764
+      },
+      "relativeHistoricalLuma": 1.0280544768930016
+    },
+    {
+      "group": 34,
+      "angle": 0.7853981633974483,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 187.3021598190045,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996031746031746,
+        "maxRasterOutset": 3.0710678118654764
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 187.39378238310707,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8555555555555555,
+        "damageCapsuleVisibleFraction": 0.8968253968253969,
+        "maxRasterOutset": 2.3639610306789294
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 189.64257116138762,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996031746031746,
+        "maxRasterOutset": 3.0710678118654764
+      },
+      "relativeHistoricalLuma": 0.999511069348527
+    },
+    {
+      "group": 34,
+      "angle": 0.7853981633974483,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 187.3021598190045,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996031746031746,
+        "maxRasterOutset": 3.0710678118654764
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 187.39378238310707,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8555555555555555,
+        "damageCapsuleVisibleFraction": 0.8968253968253969,
+        "maxRasterOutset": 2.3639610306789294
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 189.64257116138762,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996031746031746,
+        "maxRasterOutset": 3.0710678118654764
+      },
+      "relativeHistoricalLuma": 0.999511069348527
+    },
+    {
+      "group": 34,
+      "angle": 0.7853981633974483,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 178.56534387799562,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9922178988326849,
+        "maxRasterOutset": 3.0710678118654755
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 174.98542954248367,
+        "centralPixels": 9,
+        "visibleCentralPixels": 6,
+        "shaftVisibleFraction": 0.8602150537634409,
+        "damageCapsuleVisibleFraction": 0.8832684824902723,
+        "maxRasterOutset": 2.3639610306789294
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 177.30784993464053,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9922178988326849,
+        "maxRasterOutset": 3.0710678118654755
+      },
+      "relativeHistoricalLuma": 1.0204583567035952
+    },
+    {
+      "group": 34,
+      "angle": 0.7853981633974483,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 178.56534387799562,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9922178988326849,
+        "maxRasterOutset": 3.0710678118654755
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 174.98542954248367,
+        "centralPixels": 9,
+        "visibleCentralPixels": 6,
+        "shaftVisibleFraction": 0.8602150537634409,
+        "damageCapsuleVisibleFraction": 0.8832684824902723,
+        "maxRasterOutset": 2.3639610306789294
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 177.30784993464053,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9922178988326849,
+        "maxRasterOutset": 3.0710678118654755
+      },
+      "relativeHistoricalLuma": 1.0204583567035952
+    },
+    {
+      "group": 34,
+      "angle": 0.7853981633974483,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 178.56534387799562,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9922178988326849,
+        "maxRasterOutset": 3.0710678118654755
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 183.25844958605663,
+        "centralPixels": 9,
+        "visibleCentralPixels": 6,
+        "shaftVisibleFraction": 0.8602150537634409,
+        "damageCapsuleVisibleFraction": 0.8832684824902723,
+        "maxRasterOutset": 2.3639610306789294
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 185.57065132897606,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9922178988326849,
+        "maxRasterOutset": 3.0710678118654755
+      },
+      "relativeHistoricalLuma": 0.974390781332802
+    },
+    {
+      "group": 34,
+      "angle": 0.7853981633974483,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 178.56534387799562,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9922178988326849,
+        "maxRasterOutset": 3.0710678118654755
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 183.25844958605663,
+        "centralPixels": 9,
+        "visibleCentralPixels": 6,
+        "shaftVisibleFraction": 0.8602150537634409,
+        "damageCapsuleVisibleFraction": 0.8832684824902723,
+        "maxRasterOutset": 2.3639610306789294
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 185.57065132897606,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9922178988326849,
+        "maxRasterOutset": 3.0710678118654755
+      },
+      "relativeHistoricalLuma": 0.974390781332802
+    },
+    {
+      "group": 34,
+      "angle": 1.5707963267948966,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.8333333333333334,
+        "centralAlphaWeightedLuminance": 179.4882667973856,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9923076923076923,
+        "maxRasterOutset": 2.500000000000001
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 171.8871739869281,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8780487804878049,
+        "damageCapsuleVisibleFraction": 0.8961538461538462,
+        "maxRasterOutset": 2.500000000000001
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.8333333333333334,
+        "centralAlphaWeightedLuminance": 174.5186348366013,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9923076923076923,
+        "maxRasterOutset": 2.500000000000001
+      },
+      "relativeHistoricalLuma": 1.0442214077650467
+    },
+    {
+      "group": 34,
+      "angle": 1.5707963267948966,
+      "offset": 0,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.8333333333333334,
+        "centralAlphaWeightedLuminance": 179.4882667973856,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9923076923076923,
+        "maxRasterOutset": 2.500000000000001
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 171.8871739869281,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8780487804878049,
+        "damageCapsuleVisibleFraction": 0.8961538461538462,
+        "maxRasterOutset": 2.500000000000001
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.8333333333333334,
+        "centralAlphaWeightedLuminance": 174.5186348366013,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9923076923076923,
+        "maxRasterOutset": 2.500000000000001
+      },
+      "relativeHistoricalLuma": 1.0442214077650467
+    },
+    {
+      "group": 34,
+      "angle": 1.5707963267948966,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.8333333333333334,
+        "centralAlphaWeightedLuminance": 179.4882667973856,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9923076923076923,
+        "maxRasterOutset": 2.500000000000001
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 176.80107189542483,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8780487804878049,
+        "damageCapsuleVisibleFraction": 0.8961538461538462,
+        "maxRasterOutset": 2.500000000000001
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.8333333333333334,
+        "centralAlphaWeightedLuminance": 179.41811124183005,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9923076923076923,
+        "maxRasterOutset": 2.500000000000001
+      },
+      "relativeHistoricalLuma": 1.0151989740398757
+    },
+    {
+      "group": 34,
+      "angle": 1.5707963267948966,
+      "offset": 0,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.8333333333333334,
+        "centralAlphaWeightedLuminance": 179.4882667973856,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9923076923076923,
+        "maxRasterOutset": 2.500000000000001
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6666666666666666,
+        "centralBrightFraction": 0.6666666666666666,
+        "centralAlphaWeightedLuminance": 176.80107189542483,
+        "centralPixels": 12,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8780487804878049,
+        "damageCapsuleVisibleFraction": 0.8961538461538462,
+        "maxRasterOutset": 2.500000000000001
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 0.8333333333333334,
+        "centralAlphaWeightedLuminance": 179.41811124183005,
+        "centralPixels": 12,
+        "visibleCentralPixels": 12,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9923076923076923,
+        "maxRasterOutset": 2.500000000000001
+      },
+      "relativeHistoricalLuma": 1.0151989740398757
+    },
+    {
+      "group": 34,
+      "angle": 1.5707963267948966,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 192.81979179487178,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9884615384615385,
+        "maxRasterOutset": 2.750000000000001
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 188.18160675716442,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8974358974358975,
+        "damageCapsuleVisibleFraction": 0.9038461538461539,
+        "maxRasterOutset": 2.75
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 190.02848862745103,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9884615384615385,
+        "maxRasterOutset": 2.750000000000001
+      },
+      "relativeHistoricalLuma": 1.024647387795411
+    },
+    {
+      "group": 34,
+      "angle": 1.5707963267948966,
+      "offset": 0.25,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 192.81979179487178,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9884615384615385,
+        "maxRasterOutset": 2.750000000000001
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 188.18160675716442,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8974358974358975,
+        "damageCapsuleVisibleFraction": 0.9038461538461539,
+        "maxRasterOutset": 2.75
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 190.02848862745103,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9884615384615385,
+        "maxRasterOutset": 2.750000000000001
+      },
+      "relativeHistoricalLuma": 1.024647387795411
+    },
+    {
+      "group": 34,
+      "angle": 1.5707963267948966,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 192.81979179487178,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9884615384615385,
+        "maxRasterOutset": 2.750000000000001
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 194.48899619909506,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8974358974358975,
+        "damageCapsuleVisibleFraction": 0.9038461538461539,
+        "maxRasterOutset": 2.75
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 196.24725369532428,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9884615384615385,
+        "maxRasterOutset": 2.750000000000001
+      },
+      "relativeHistoricalLuma": 0.9914174866607129
+    },
+    {
+      "group": 34,
+      "angle": 1.5707963267948966,
+      "offset": 0.25,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 192.81979179487178,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9884615384615385,
+        "maxRasterOutset": 2.750000000000001
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.6153846153846154,
+        "centralBrightFraction": 0.6153846153846154,
+        "centralAlphaWeightedLuminance": 194.48899619909506,
+        "centralPixels": 13,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.8974358974358975,
+        "damageCapsuleVisibleFraction": 0.9038461538461539,
+        "maxRasterOutset": 2.75
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 196.24725369532428,
+        "centralPixels": 13,
+        "visibleCentralPixels": 13,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.9884615384615385,
+        "maxRasterOutset": 2.750000000000001
+      },
+      "relativeHistoricalLuma": 0.9914174866607129
+    },
+    {
+      "group": 34,
+      "angle": 1.5707963267948966,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 207.13682440087143,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996309963099631,
+        "maxRasterOutset": 3.000000000000001
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 203.77822466230936,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.9259259259259259,
+        "damageCapsuleVisibleFraction": 0.922509225092251,
+        "maxRasterOutset": 2.000000000000001
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 205.02362274509804,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996309963099631,
+        "maxRasterOutset": 3.000000000000001
+      },
+      "relativeHistoricalLuma": 1.016481641962127
+    },
+    {
+      "group": 34,
+      "angle": 1.5707963267948966,
+      "offset": 0.5,
+      "paletteSlot": 0,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 207.13682440087143,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996309963099631,
+        "maxRasterOutset": 3.000000000000001
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 203.77822466230936,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.9259259259259259,
+        "damageCapsuleVisibleFraction": 0.922509225092251,
+        "maxRasterOutset": 2.000000000000001
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 205.02362274509804,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996309963099631,
+        "maxRasterOutset": 3.000000000000001
+      },
+      "relativeHistoricalLuma": 1.016481641962127
+    },
+    {
+      "group": 34,
+      "angle": 1.5707963267948966,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "high",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 207.13682440087143,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996309963099631,
+        "maxRasterOutset": 3.000000000000001
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 212.1122880174292,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.9259259259259259,
+        "damageCapsuleVisibleFraction": 0.922509225092251,
+        "maxRasterOutset": 2.000000000000001
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 213.18218527233114,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996309963099631,
+        "maxRasterOutset": 3.000000000000001
+      },
+      "relativeHistoricalLuma": 0.9765432561071195
+    },
+    {
+      "group": 34,
+      "angle": 1.5707963267948966,
+      "offset": 0.5,
+      "paletteSlot": 1,
+      "quality": "low",
+      "actual": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 207.13682440087143,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996309963099631,
+        "maxRasterOutset": 3.000000000000001
+      },
+      "historical": {
+        "centralCoreVisibleFraction": 0.8888888888888888,
+        "centralBrightFraction": 0.8888888888888888,
+        "centralAlphaWeightedLuminance": 212.1122880174292,
+        "centralPixels": 9,
+        "visibleCentralPixels": 8,
+        "shaftVisibleFraction": 0.9259259259259259,
+        "damageCapsuleVisibleFraction": 0.922509225092251,
+        "maxRasterOutset": 2.000000000000001
+      },
+      "v24": {
+        "centralCoreVisibleFraction": 1,
+        "centralBrightFraction": 1,
+        "centralAlphaWeightedLuminance": 213.18218527233114,
+        "centralPixels": 9,
+        "visibleCentralPixels": 9,
+        "shaftVisibleFraction": 1,
+        "damageCapsuleVisibleFraction": 0.996309963099631,
+        "maxRasterOutset": 3.000000000000001
+      },
+      "relativeHistoricalLuma": 0.9765432561071195
+    }
+  ],
+  "proof": {
+    "path": "docs/v25-pixels/historical-luma-review.jpg",
+    "width": 900,
+    "height": 320,
+    "bytes": 30631,
+    "sha256": "3400123b984eabcb6296a5ed5e4a4442f2afb714f3267fafae9686d50d3ad125"
+  }
+}

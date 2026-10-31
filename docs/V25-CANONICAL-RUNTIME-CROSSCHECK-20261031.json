@@ -1,0 +1,2338 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "audit": "Read-only canonical/runtime contract crosscheck",
+  "results": {
+    "unchanged35NarrativeDefinitions": true,
+    "identityProfiles": 35,
+    "lustExcludedFromNewIdentityScheduler": true,
+    "phaseProfileCases": 105,
+    "sourcePhaseTagsMatch": true,
+    "noNewPeopleInProtected22to29": true,
+    "mammonPhase2NewPropsBlockedIncludingRotors": true,
+    "rianIonOwnerAndCopySourceRouting": true
+  },
+  "scope": "CPU/implementation fixtures only. No headless/actual-browser/realGPU/mobile/natural-progression claim.",
+  "fixtures": "Player egoUntil=999999, autoAttack=false,skillRotation=false. Eachphase independently restored from checkpoint then540fixedframes. Not777, no natural campaign completion.",
+  "files": [
+    {
+      "path": "src/core.js",
+      "sha256": "a3532c7632d13dead1db959e3d88485e5edbb785c0952a9b10fea5a4b4140d9e"
+    },
+    {
+      "path": "src/boss-skills.js",
+      "sha256": "ce11f0f0ba7d72947f3222c3079f79560a2f803f7aab4a7635f0cf7b515c4f0e"
+    },
+    {
+      "path": "src/projectiles.js",
+      "sha256": "81b2d4739a5eca9381aeca7bdd0276a955c69ba513fec4726aa23163c3027bc7"
+    },
+    {
+      "path": "src/story-assets.js",
+      "sha256": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033"
+    }
+  ],
+  "rows": [
+    {
+      "runtimeIndex": 0,
+      "phase": 0,
+      "visualGroup": 0,
+      "profile": "violet-eight-sword-threads",
+      "phaseRole": "woven-sword",
+      "identityRole": "wing-weave",
+      "seenRoles": [
+        "wing-weave"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-woven-petals-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 0,
+      "phase": 1,
+      "visualGroup": 0,
+      "profile": "violet-eight-sword-threads",
+      "phaseRole": "inscribed-sword",
+      "identityRole": "wing-weave",
+      "seenRoles": [
+        "wing-weave"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-woven-petals-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 0,
+      "phase": 2,
+      "visualGroup": 0,
+      "profile": "violet-eight-sword-threads",
+      "phaseRole": "severed-thread",
+      "identityRole": "wing-weave",
+      "seenRoles": [
+        "wing-weave"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-woven-petals-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 1,
+      "phase": 0,
+      "visualGroup": 1,
+      "profile": "horn-swamp-grasp",
+      "phaseRole": "sinking-grasp",
+      "identityRole": "bog-drag",
+      "seenRoles": [
+        "bog-drag"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-sinking-memory-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 1,
+      "phase": 1,
+      "visualGroup": 1,
+      "profile": "horn-swamp-grasp",
+      "phaseRole": "closing-hands",
+      "identityRole": "bog-drag",
+      "seenRoles": [
+        "bog-drag"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-sinking-memory-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 1,
+      "phase": 2,
+      "visualGroup": 1,
+      "profile": "horn-swamp-grasp",
+      "phaseRole": "horn-echo",
+      "identityRole": "bog-drag",
+      "seenRoles": [
+        "bog-drag"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-sinking-memory-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 2,
+      "phase": 0,
+      "visualGroup": 2,
+      "profile": "balrog-space-fire",
+      "phaseRole": "space-cut",
+      "identityRole": "sword-rake",
+      "seenRoles": [
+        "sword-rake"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-sword-rain-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 2,
+      "phase": 1,
+      "visualGroup": 2,
+      "profile": "balrog-space-fire",
+      "phaseRole": "sky-fire",
+      "identityRole": "sword-rake",
+      "seenRoles": [
+        "sword-rake"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-sword-rain-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 2,
+      "phase": 2,
+      "visualGroup": 2,
+      "profile": "balrog-space-fire",
+      "phaseRole": "seven-seals",
+      "identityRole": "sword-rake",
+      "seenRoles": [
+        "sword-rake"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1"
+      ],
+      "patterns": [
+        "identity-sword-rain-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 3,
+      "phase": 0,
+      "visualGroup": 3,
+      "profile": "mask-false-white-promise",
+      "phaseRole": "white-promise",
+      "identityRole": "feather-fork",
+      "seenRoles": [
+        "feather-fork"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0"
+      ],
+      "patterns": [
+        "identity-mirror-feathers-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 3,
+      "phase": 1,
+      "visualGroup": 3,
+      "profile": "mask-false-white-promise",
+      "phaseRole": "perfect-command",
+      "identityRole": "feather-fork",
+      "seenRoles": [
+        "feather-fork"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-mirror-feathers-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 3,
+      "phase": 2,
+      "visualGroup": 3,
+      "profile": "mask-false-white-promise",
+      "phaseRole": "mask-crack",
+      "identityRole": "feather-fork",
+      "seenRoles": [
+        "feather-fork"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-mirror-feathers-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 4,
+      "phase": 0,
+      "visualGroup": 4,
+      "profile": "lucifer-many-selves",
+      "phaseRole": "false-constellation",
+      "identityRole": "constellation-orbit",
+      "seenRoles": [
+        "constellation-orbit"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-orbit-faces-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 4,
+      "phase": 1,
+      "visualGroup": 4,
+      "profile": "lucifer-many-selves",
+      "phaseRole": "many-faces",
+      "identityRole": "constellation-orbit",
+      "seenRoles": [
+        "constellation-orbit"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-orbit-faces-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 4,
+      "phase": 2,
+      "visualGroup": 4,
+      "profile": "lucifer-many-selves",
+      "phaseRole": "j-seal",
+      "identityRole": "constellation-orbit",
+      "seenRoles": [
+        "constellation-orbit"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-orbit-faces-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 5,
+      "phase": 0,
+      "visualGroup": 5,
+      "profile": "belphegor-postponed-pulse",
+      "phaseRole": "late-trash",
+      "identityRole": "late-pulse",
+      "seenRoles": [
+        "late-pulse"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-late-pulse-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 5,
+      "phase": 1,
+      "visualGroup": 5,
+      "profile": "belphegor-postponed-pulse",
+      "phaseRole": "held-pulse",
+      "identityRole": "late-pulse",
+      "seenRoles": [
+        "late-pulse"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-late-pulse-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 5,
+      "phase": 2,
+      "visualGroup": 5,
+      "profile": "belphegor-postponed-pulse",
+      "phaseRole": "postponed-wave",
+      "identityRole": "late-pulse",
+      "seenRoles": [
+        "late-pulse"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-late-pulse-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 6,
+      "phase": 0,
+      "visualGroup": 6,
+      "profile": "leviathan-crossed-reflections",
+      "phaseRole": "unequal-flows",
+      "identityRole": "mirror-reflection",
+      "seenRoles": [
+        "mirror-reflection"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-envy-crossflow-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 6,
+      "phase": 1,
+      "visualGroup": 6,
+      "profile": "leviathan-crossed-reflections",
+      "phaseRole": "crossed-gaze",
+      "identityRole": "mirror-reflection",
+      "seenRoles": [
+        "mirror-reflection"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-envy-crossflow-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 6,
+      "phase": 2,
+      "visualGroup": 6,
+      "profile": "leviathan-crossed-reflections",
+      "phaseRole": "reversed-reflection",
+      "identityRole": "mirror-reflection",
+      "seenRoles": [
+        "mirror-reflection"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-envy-crossflow-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 7,
+      "phase": 0,
+      "visualGroup": 7,
+      "profile": "beelzebub-hungry-kitchen",
+      "phaseRole": "large-small-waves",
+      "identityRole": "hungry-jaw",
+      "seenRoles": [
+        "hungry-jaw"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-hungry-jaws-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 7,
+      "phase": 1,
+      "visualGroup": 7,
+      "profile": "beelzebub-hungry-kitchen",
+      "phaseRole": "kitchen-crossing",
+      "identityRole": "hungry-jaw",
+      "seenRoles": [
+        "hungry-jaw"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-hungry-jaws-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 7,
+      "phase": 2,
+      "visualGroup": 7,
+      "profile": "beelzebub-hungry-kitchen",
+      "phaseRole": "layered-maw",
+      "identityRole": "hungry-jaw",
+      "seenRoles": [
+        "hungry-jaw"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0"
+      ],
+      "patterns": [
+        "identity-hungry-jaws-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 8,
+      "phase": 0,
+      "visualGroup": 8,
+      "profile": "asmodeus-red-stage",
+      "phaseRole": "stage-beat",
+      "identityRole": null,
+      "seenRoles": [],
+      "seenOrigins": [],
+      "patterns": [],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 8,
+      "phase": 1,
+      "visualGroup": 8,
+      "profile": "asmodeus-red-stage",
+      "phaseRole": "locked-spotlight",
+      "identityRole": null,
+      "seenRoles": [],
+      "seenOrigins": [],
+      "patterns": [],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 8,
+      "phase": 2,
+      "visualGroup": 8,
+      "profile": "asmodeus-red-stage",
+      "phaseRole": "string-curtain",
+      "identityRole": null,
+      "seenRoles": [],
+      "seenOrigins": [],
+      "patterns": [],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 9,
+      "phase": 0,
+      "visualGroup": 9,
+      "profile": "mammon-vault-winter-memory",
+      "phaseRole": "priced-branches",
+      "identityRole": "vault-branch",
+      "seenRoles": [
+        "vault-branch"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0"
+      ],
+      "patterns": [
+        "identity-vault-branches-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 9,
+      "phase": 1,
+      "visualGroup": 9,
+      "profile": "mammon-vault-winter-memory",
+      "phaseRole": "vault-lock",
+      "identityRole": "vault-branch",
+      "seenRoles": [
+        "vault-branch"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-vault-branches-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 9,
+      "phase": 2,
+      "visualGroup": 9,
+      "profile": "mammon-vault-winter-memory",
+      "phaseRole": "preserved-winter-memory",
+      "identityRole": "vault-branch",
+      "seenRoles": [
+        "vault-branch"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-vault-branches-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 10,
+      "phase": 0,
+      "visualGroup": 10,
+      "profile": "wrath-three-fire-beats",
+      "phaseRole": "spreading-fire",
+      "identityRole": "fire-fuse",
+      "seenRoles": [
+        "fire-fuse"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-fire-beats-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 10,
+      "phase": 1,
+      "visualGroup": 10,
+      "profile": "wrath-three-fire-beats",
+      "phaseRole": "escape-corridor",
+      "identityRole": "fire-fuse",
+      "seenRoles": [
+        "fire-fuse"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-fire-beats-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 10,
+      "phase": 2,
+      "visualGroup": 10,
+      "profile": "wrath-three-fire-beats",
+      "phaseRole": "bear-wolves-dragon",
+      "identityRole": "fire-fuse",
+      "seenRoles": [
+        "fire-fuse"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-fire-beats-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 11,
+      "phase": 0,
+      "visualGroup": 11,
+      "profile": "pride-seven-calculations",
+      "phaseRole": "seven-branches",
+      "identityRole": "calculation-column",
+      "seenRoles": [
+        "calculation-column"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-seven-calculations-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 11,
+      "phase": 1,
+      "visualGroup": 11,
+      "profile": "pride-seven-calculations",
+      "phaseRole": "electrode-line",
+      "identityRole": "calculation-column",
+      "seenRoles": [
+        "calculation-column"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0"
+      ],
+      "patterns": [
+        "identity-seven-calculations-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 11,
+      "phase": 2,
+      "visualGroup": 11,
+      "profile": "pride-seven-calculations",
+      "phaseRole": "cyborg-bootloader",
+      "identityRole": "calculation-column",
+      "seenRoles": [
+        "calculation-column"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-seven-calculations-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 12,
+      "phase": 0,
+      "visualGroup": 13,
+      "profile": "controller-defensive-legion",
+      "phaseRole": "defensive-legion",
+      "identityRole": "defense-relay",
+      "seenRoles": [
+        "defense-relay"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-defense-relay-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 12,
+      "phase": 1,
+      "visualGroup": 13,
+      "profile": "controller-defensive-legion",
+      "phaseRole": "bombardment-loop",
+      "identityRole": "defense-relay",
+      "seenRoles": [
+        "defense-relay"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-defense-relay-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 12,
+      "phase": 2,
+      "visualGroup": 13,
+      "profile": "controller-defensive-legion",
+      "phaseRole": "architecture-link",
+      "identityRole": "defense-relay",
+      "seenRoles": [
+        "defense-relay"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-defense-relay-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 13,
+      "phase": 0,
+      "visualGroup": 14,
+      "profile": "controller-coercive-rescue",
+      "phaseRole": "cruel-rescue",
+      "identityRole": "mercy-boundary",
+      "seenRoles": [
+        "mercy-boundary"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-mercy-boundary-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 13,
+      "phase": 1,
+      "visualGroup": 14,
+      "profile": "controller-coercive-rescue",
+      "phaseRole": "compassion-boundary",
+      "identityRole": "mercy-boundary",
+      "seenRoles": [
+        "mercy-boundary"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-mercy-boundary-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 13,
+      "phase": 2,
+      "visualGroup": 14,
+      "profile": "controller-coercive-rescue",
+      "phaseRole": "meaning-link",
+      "identityRole": "mercy-boundary",
+      "seenRoles": [
+        "mercy-boundary"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-mercy-boundary-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 14,
+      "phase": 0,
+      "visualGroup": 15,
+      "profile": "controller-veto-signal",
+      "phaseRole": "veto-signal",
+      "identityRole": "veto-packet",
+      "seenRoles": [
+        "veto-packet"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-veto-trace-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 14,
+      "phase": 1,
+      "visualGroup": 15,
+      "profile": "controller-veto-signal",
+      "phaseRole": "hardware-migration",
+      "identityRole": "veto-packet",
+      "seenRoles": [
+        "veto-packet"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-veto-trace-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 14,
+      "phase": 2,
+      "visualGroup": 15,
+      "profile": "controller-veto-signal",
+      "phaseRole": "legacy-link",
+      "identityRole": "veto-packet",
+      "seenRoles": [
+        "veto-packet"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-veto-trace-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 15,
+      "phase": 0,
+      "visualGroup": 16,
+      "profile": "controller-feedback-return",
+      "phaseRole": "administrator-output",
+      "identityRole": "feedback-return",
+      "seenRoles": [
+        "feedback-return"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-feedback-return-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 15,
+      "phase": 1,
+      "visualGroup": 16,
+      "profile": "controller-feedback-return",
+      "phaseRole": "abuse-repeat-link",
+      "identityRole": "feedback-return",
+      "seenRoles": [
+        "feedback-return"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-feedback-return-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 15,
+      "phase": 2,
+      "visualGroup": 16,
+      "profile": "controller-feedback-return",
+      "phaseRole": "feedback-link",
+      "identityRole": "feedback-return",
+      "seenRoles": [
+        "feedback-return"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-feedback-return-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 16,
+      "phase": 0,
+      "visualGroup": 17,
+      "profile": "controller-choice-fork",
+      "phaseRole": "empty-vessel-link",
+      "identityRole": "migration-fork",
+      "seenRoles": [
+        "migration-fork"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-migration-gates-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 16,
+      "phase": 1,
+      "visualGroup": 17,
+      "profile": "controller-choice-fork",
+      "phaseRole": "constrained-choice",
+      "identityRole": "migration-fork",
+      "seenRoles": [
+        "migration-fork"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-migration-gates-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 16,
+      "phase": 2,
+      "visualGroup": 17,
+      "profile": "controller-choice-fork",
+      "phaseRole": "update-fork",
+      "identityRole": "migration-fork",
+      "seenRoles": [
+        "migration-fork"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-migration-gates-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 17,
+      "phase": 0,
+      "visualGroup": 18,
+      "profile": "controller-repeat-disconnect",
+      "phaseRole": "possessed-gate-link",
+      "identityRole": "repeat-disconnect",
+      "seenRoles": [
+        "repeat-disconnect"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-memory-separation-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 17,
+      "phase": 1,
+      "visualGroup": 18,
+      "profile": "controller-repeat-disconnect",
+      "phaseRole": "repeat-link",
+      "identityRole": "repeat-disconnect",
+      "seenRoles": [
+        "repeat-disconnect"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-memory-separation-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 17,
+      "phase": 2,
+      "visualGroup": 18,
+      "profile": "controller-repeat-disconnect",
+      "phaseRole": "released-ego-boundary",
+      "identityRole": "repeat-disconnect",
+      "seenRoles": [
+        "repeat-disconnect"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-memory-separation-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 18,
+      "phase": 0,
+      "visualGroup": 19,
+      "profile": "goblin-flute-turn",
+      "phaseRole": "flute-turn",
+      "identityRole": "flute-phrase",
+      "seenRoles": [
+        "flute-phrase"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-flute-turn-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 18,
+      "phase": 1,
+      "visualGroup": 19,
+      "profile": "goblin-flute-turn",
+      "phaseRole": "wolf-path",
+      "identityRole": "flute-phrase",
+      "seenRoles": [
+        "flute-phrase"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-flute-turn-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 18,
+      "phase": 2,
+      "visualGroup": 19,
+      "profile": "goblin-flute-turn",
+      "phaseRole": "rose-resonance",
+      "identityRole": "flute-phrase",
+      "seenRoles": [
+        "flute-phrase"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-flute-turn-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 19,
+      "phase": 0,
+      "visualGroup": 20,
+      "profile": "fallen-knight-six-swords",
+      "phaseRole": "familiar-path",
+      "identityRole": "six-swords",
+      "seenRoles": [
+        "six-swords"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-six-swords-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 19,
+      "phase": 1,
+      "visualGroup": 20,
+      "profile": "fallen-knight-six-swords",
+      "phaseRole": "six-sword-positions",
+      "identityRole": "six-swords",
+      "seenRoles": [
+        "six-swords"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0"
+      ],
+      "patterns": [
+        "identity-six-swords-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 19,
+      "phase": 2,
+      "visualGroup": 20,
+      "profile": "fallen-knight-six-swords",
+      "phaseRole": "falling-wall",
+      "identityRole": "six-swords",
+      "seenRoles": [
+        "six-swords"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-six-swords-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 20,
+      "phase": 0,
+      "visualGroup": 21,
+      "profile": "insomnia-black-mist",
+      "phaseRole": "sleepless-echo",
+      "identityRole": "insomnia-veil",
+      "seenRoles": [
+        "insomnia-veil"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-insomnia-veil-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 20,
+      "phase": 1,
+      "visualGroup": 21,
+      "profile": "insomnia-black-mist",
+      "phaseRole": "resident-safe-mist",
+      "identityRole": "insomnia-veil",
+      "seenRoles": [
+        "insomnia-veil"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-insomnia-veil-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 20,
+      "phase": 2,
+      "visualGroup": 21,
+      "profile": "insomnia-black-mist",
+      "phaseRole": "mist-heart",
+      "identityRole": "insomnia-veil",
+      "seenRoles": [
+        "insomnia-veil"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-insomnia-veil-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 21,
+      "phase": 0,
+      "visualGroup": 22,
+      "profile": "academy-six-invasions",
+      "phaseRole": "intercepting-turret",
+      "identityRole": "defense-intercept",
+      "seenRoles": [
+        "defense-intercept"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-defense-intercept-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [
+        "friendly-core"
+      ],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 21,
+      "phase": 1,
+      "visualGroup": 22,
+      "profile": "academy-six-invasions",
+      "phaseRole": "polluted-command",
+      "identityRole": "defense-intercept",
+      "seenRoles": [
+        "defense-intercept"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-defense-intercept-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [
+        "friendly-core"
+      ],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 21,
+      "phase": 2,
+      "visualGroup": 22,
+      "profile": "academy-six-invasions",
+      "phaseRole": "protected-first-command",
+      "identityRole": "defense-intercept",
+      "seenRoles": [
+        "defense-intercept"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-defense-intercept-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [
+        "friendly-core"
+      ],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 22,
+      "phase": 0,
+      "visualGroup": 23,
+      "profile": "harvest-lower-power-links",
+      "phaseRole": "overwork-bonds",
+      "identityRole": "harvest-tier",
+      "seenRoles": [
+        "harvest-tier"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-harvest-lower-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 22,
+      "phase": 1,
+      "visualGroup": 23,
+      "profile": "harvest-lower-power-links",
+      "phaseRole": "comparison-command",
+      "identityRole": "harvest-tier",
+      "seenRoles": [
+        "harvest-tier"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-harvest-lower-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 22,
+      "phase": 2,
+      "visualGroup": 23,
+      "profile": "harvest-lower-power-links",
+      "phaseRole": "power-junction",
+      "identityRole": "harvest-tier",
+      "seenRoles": [
+        "harvest-tier"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-harvest-lower-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 23,
+      "phase": 0,
+      "visualGroup": 24,
+      "profile": "harvest-upper-crossed-orders",
+      "phaseRole": "alternating-orders",
+      "identityRole": "command-alternation",
+      "seenRoles": [
+        "command-alternation"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-upper-command-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 23,
+      "phase": 1,
+      "visualGroup": 24,
+      "profile": "harvest-upper-crossed-orders",
+      "phaseRole": "crossed-rule-gap",
+      "identityRole": "command-alternation",
+      "seenRoles": [
+        "command-alternation"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-upper-command-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 23,
+      "phase": 2,
+      "visualGroup": 24,
+      "profile": "harvest-upper-crossed-orders",
+      "phaseRole": "chosen-step",
+      "identityRole": "command-alternation",
+      "seenRoles": [
+        "command-alternation"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-upper-command-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 24,
+      "phase": 0,
+      "visualGroup": 25,
+      "profile": "workshop-power-junction",
+      "phaseRole": "tightening-order",
+      "identityRole": "furnace-junction",
+      "seenRoles": [
+        "furnace-junction"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-workshop-junction-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 24,
+      "phase": 1,
+      "visualGroup": 25,
+      "profile": "workshop-power-junction",
+      "phaseRole": "preserved-time-pipe",
+      "identityRole": "furnace-junction",
+      "seenRoles": [],
+      "seenOrigins": [],
+      "patterns": [],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 24,
+      "phase": 2,
+      "visualGroup": 25,
+      "profile": "workshop-power-junction",
+      "phaseRole": "furnace-junction",
+      "identityRole": "furnace-junction",
+      "seenRoles": [
+        "furnace-junction"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-workshop-junction-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 25,
+      "phase": 0,
+      "visualGroup": 26,
+      "profile": "neuron-forced-cable",
+      "phaseRole": "preceding-cable",
+      "identityRole": "neural-packet",
+      "seenRoles": [],
+      "seenOrigins": [],
+      "patterns": [],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 25,
+      "phase": 1,
+      "visualGroup": 26,
+      "profile": "neuron-forced-cable",
+      "phaseRole": "next-command-gap",
+      "identityRole": "neural-packet",
+      "seenRoles": [
+        "neural-packet"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-neural-cable-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 25,
+      "phase": 2,
+      "visualGroup": 26,
+      "profile": "neuron-forced-cable",
+      "phaseRole": "forced-neural-link",
+      "identityRole": "neural-packet",
+      "seenRoles": [
+        "neural-packet"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-neural-cable-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 26,
+      "phase": 0,
+      "visualGroup": 27,
+      "profile": "memory-grave-deletion-link",
+      "phaseRole": "preserved-clock-shards",
+      "identityRole": "deletion-seal",
+      "seenRoles": [
+        "deletion-seal"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-memory-preserving-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [
+        "memory-shards",
+        "personal-records"
+      ],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 26,
+      "phase": 1,
+      "visualGroup": 27,
+      "profile": "memory-grave-deletion-link",
+      "phaseRole": "deletion-order",
+      "identityRole": "deletion-seal",
+      "seenRoles": [
+        "deletion-seal"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-memory-preserving-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [
+        "memory-shards",
+        "personal-records"
+      ],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 26,
+      "phase": 2,
+      "visualGroup": 27,
+      "profile": "memory-grave-deletion-link",
+      "phaseRole": "owners-records",
+      "identityRole": "deletion-seal",
+      "seenRoles": [],
+      "seenOrigins": [],
+      "patterns": [],
+      "stageAfter": "boss",
+      "protectedTargets": [
+        "memory-shards",
+        "personal-records"
+      ],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 27,
+      "phase": 0,
+      "visualGroup": 28,
+      "profile": "collapse-six-command-rings",
+      "phaseRole": "first-three-links",
+      "identityRole": "six-command-rings",
+      "seenRoles": [
+        "six-command-rings"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-six-command-rings-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 27,
+      "phase": 1,
+      "visualGroup": 28,
+      "profile": "collapse-six-command-rings",
+      "phaseRole": "last-three-links",
+      "identityRole": "six-command-rings",
+      "seenRoles": [
+        "six-command-rings"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-six-command-rings-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 27,
+      "phase": 2,
+      "visualGroup": 28,
+      "profile": "collapse-six-command-rings",
+      "phaseRole": "corridor-opening",
+      "identityRole": "six-command-rings",
+      "seenRoles": [
+        "six-command-rings"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-six-command-rings-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 28,
+      "phase": 0,
+      "visualGroup": 29,
+      "profile": "arbelia-tampered-thread",
+      "phaseRole": "deferred-time",
+      "identityRole": "tampered-thread",
+      "seenRoles": [
+        "tampered-thread"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-release-thread-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [
+        "arbelia",
+        "rest-time-records"
+      ],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 28,
+      "phase": 1,
+      "visualGroup": 29,
+      "profile": "arbelia-tampered-thread",
+      "phaseRole": "tampered-record-thread",
+      "identityRole": "tampered-thread",
+      "seenRoles": [
+        "tampered-thread"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-release-thread-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [
+        "arbelia",
+        "rest-time-records"
+      ],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 28,
+      "phase": 2,
+      "visualGroup": 29,
+      "profile": "arbelia-tampered-thread",
+      "phaseRole": "autonomous-first-command",
+      "identityRole": "tampered-thread",
+      "seenRoles": [
+        "tampered-thread"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-release-thread-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [
+        "arbelia",
+        "rest-time-records"
+      ],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 29,
+      "phase": 0,
+      "visualGroup": 30,
+      "profile": "siren-time-harvest",
+      "phaseRole": "time-harvest",
+      "identityRole": "time-hand",
+      "seenRoles": [
+        "time-hand"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-time-harvest-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 29,
+      "phase": 1,
+      "visualGroup": 30,
+      "profile": "siren-time-harvest",
+      "phaseRole": "optimized-fate",
+      "identityRole": "time-hand",
+      "seenRoles": [
+        "time-hand"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-time-harvest-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 29,
+      "phase": 2,
+      "visualGroup": 30,
+      "profile": "siren-time-harvest",
+      "phaseRole": "free-choice-window",
+      "identityRole": "time-hand",
+      "seenRoles": [
+        "time-hand"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-time-harvest-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 30,
+      "phase": 0,
+      "visualGroup": 31,
+      "profile": "castle-returned-ego-core",
+      "phaseRole": "chosen-gate",
+      "identityRole": "castle-boundary",
+      "seenRoles": [
+        "castle-boundary"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-castle-ownership-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 30,
+      "phase": 1,
+      "visualGroup": 31,
+      "profile": "castle-returned-ego-core",
+      "phaseRole": "owners-authority",
+      "identityRole": "castle-boundary",
+      "seenRoles": [
+        "castle-boundary"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-castle-ownership-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 30,
+      "phase": 2,
+      "visualGroup": 31,
+      "profile": "castle-returned-ego-core",
+      "phaseRole": "returned-core",
+      "identityRole": "castle-boundary",
+      "seenRoles": [
+        "castle-boundary"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-castle-ownership-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 31,
+      "phase": 0,
+      "visualGroup": 32,
+      "profile": "causal-repeat-links",
+      "phaseRole": "scapegoat-refusal",
+      "identityRole": "causal-lock",
+      "seenRoles": [
+        "causal-lock"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-causal-rewind-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 31,
+      "phase": 1,
+      "visualGroup": 32,
+      "profile": "causal-repeat-links",
+      "phaseRole": "three-causal-locks",
+      "identityRole": "causal-lock",
+      "seenRoles": [
+        "causal-lock"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-causal-rewind-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 31,
+      "phase": 2,
+      "visualGroup": 32,
+      "profile": "causal-repeat-links",
+      "phaseRole": "preserved-guilt-records",
+      "identityRole": "causal-lock",
+      "seenRoles": [
+        "causal-lock"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-causal-rewind-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 32,
+      "phase": 0,
+      "visualGroup": 33,
+      "profile": "cult-outer-command-network",
+      "phaseRole": "reverse-ego-occupation",
+      "identityRole": "reverse-domination",
+      "seenRoles": [
+        "reverse-domination"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-cult-network-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [
+        "bound-people",
+        "egos"
+      ],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 32,
+      "phase": 1,
+      "visualGroup": 33,
+      "profile": "cult-outer-command-network",
+      "phaseRole": "interlocked-repeat",
+      "identityRole": "reverse-domination",
+      "seenRoles": [
+        "reverse-domination"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-cult-network-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [
+        "bound-people",
+        "egos"
+      ],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 32,
+      "phase": 2,
+      "visualGroup": 33,
+      "profile": "cult-outer-command-network",
+      "phaseRole": "outer-command-link",
+      "identityRole": "reverse-domination",
+      "seenRoles": [
+        "reverse-domination"
+      ],
+      "seenOrigins": [],
+      "patterns": [
+        "identity-cult-network-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [
+        "bound-people",
+        "egos"
+      ],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 33,
+      "phase": 0,
+      "visualGroup": 34,
+      "profile": "cult-two-circuit-casters",
+      "phaseRole": "rian-inverse-cross",
+      "identityRole": "circuit-duet",
+      "seenRoles": [
+        "circuit-cross",
+        "circuit-shield"
+      ],
+      "seenOrigins": [
+        "han-rian",
+        "baek-ion"
+      ],
+      "patterns": [
+        "identity-two-circuit-casters-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [
+        "han-rian-ego",
+        "baek-ion-ego"
+      ],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 33,
+      "phase": 1,
+      "visualGroup": 34,
+      "profile": "cult-two-circuit-casters",
+      "phaseRole": "ion-order-wall",
+      "identityRole": "circuit-duet",
+      "seenRoles": [
+        "circuit-cross",
+        "circuit-shield"
+      ],
+      "seenOrigins": [
+        "han-rian",
+        "baek-ion"
+      ],
+      "patterns": [
+        "identity-two-circuit-casters-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [
+        "han-rian-ego",
+        "baek-ion-ego"
+      ],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 33,
+      "phase": 2,
+      "visualGroup": 34,
+      "profile": "cult-two-circuit-casters",
+      "phaseRole": "shared-command-circuit",
+      "identityRole": "circuit-duet",
+      "seenRoles": [
+        "circuit-cross",
+        "circuit-shield"
+      ],
+      "seenOrigins": [
+        "han-rian",
+        "baek-ion"
+      ],
+      "patterns": [
+        "identity-two-circuit-casters-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [
+        "han-rian-ego",
+        "baek-ion-ego"
+      ],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 34,
+      "phase": 0,
+      "visualGroup": 35,
+      "profile": "cult-final-samong-authority",
+      "phaseRole": "samong-fold",
+      "identityRole": "authority-fold",
+      "seenRoles": [
+        "authority-fold"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-samong-authority-v25"
+      ],
+      "stageAfter": "boss",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 34,
+      "phase": 1,
+      "visualGroup": 35,
+      "profile": "cult-final-samong-authority",
+      "phaseRole": "revival-stitch",
+      "identityRole": "authority-fold",
+      "seenRoles": [
+        "authority-stitch"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-0",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-samong-authority-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    },
+    {
+      "runtimeIndex": 34,
+      "phase": 2,
+      "visualGroup": 35,
+      "profile": "cult-final-samong-authority",
+      "phaseRole": "authority-impact",
+      "identityRole": "authority-fold",
+      "seenRoles": [
+        "authority-impact"
+      ],
+      "seenOrigins": [
+        "combat-copy-1-0-illusion-0",
+        "combat-copy-1-0-illusion-1",
+        "combat-copy-1-0-clone-1"
+      ],
+      "patterns": [
+        "identity-samong-authority-v25"
+      ],
+      "stageAfter": "lost",
+      "protectedTargets": [],
+      "observation": "CPU only; invulnerable no-shoot fixture,540 fixed frames; collected repeated event buffer observations, not unique release count"
+    }
+  ],
+  "projectileContractCases": {
+    "method": "Read-only in-memory VM exposure of existing private source selectors; production files unchanged",
+    "mammon": [
+      {
+        "phase": 0,
+        "kind": "orb",
+        "sourcePhasePresent": true,
+        "key": "h25GreedMoney"
+      },
+      {
+        "phase": 0,
+        "kind": "orb",
+        "sourcePhasePresent": false,
+        "key": "h25GreedMoney"
+      },
+      {
+        "phase": 0,
+        "kind": "hell-rotor",
+        "sourcePhasePresent": true,
+        "key": "h25GreedTreasure"
+      },
+      {
+        "phase": 0,
+        "kind": "hell-rotor",
+        "sourcePhasePresent": false,
+        "key": "h25GreedTreasure"
+      },
+      {
+        "phase": 0,
+        "kind": "boss-weapon",
+        "sourcePhasePresent": true,
+        "key": "h25GreedTreasure"
+      },
+      {
+        "phase": 0,
+        "kind": "boss-weapon",
+        "sourcePhasePresent": false,
+        "key": "h25GreedTreasure"
+      },
+      {
+        "phase": 1,
+        "kind": "orb",
+        "sourcePhasePresent": true,
+        "key": "h25GreedTreasure"
+      },
+      {
+        "phase": 1,
+        "kind": "orb",
+        "sourcePhasePresent": false,
+        "key": "h25GreedTreasure"
+      },
+      {
+        "phase": 1,
+        "kind": "hell-rotor",
+        "sourcePhasePresent": true,
+        "key": "h25GreedTreasure"
+      },
+      {
+        "phase": 1,
+        "kind": "hell-rotor",
+        "sourcePhasePresent": false,
+        "key": "h25GreedTreasure"
+      },
+      {
+        "phase": 1,
+        "kind": "boss-weapon",
+        "sourcePhasePresent": true,
+        "key": "h25GreedTreasure"
+      },
+      {
+        "phase": 1,
+        "kind": "boss-weapon",
+        "sourcePhasePresent": false,
+        "key": "h25GreedTreasure"
+      },
+      {
+        "phase": 2,
+        "kind": "orb",
+        "sourcePhasePresent": true,
+        "key": "h14SkillGreed"
+      },
+      {
+        "phase": 2,
+        "kind": "orb",
+        "sourcePhasePresent": false,
+        "key": "h14SkillGreed"
+      },
+      {
+        "phase": 2,
+        "kind": "hell-rotor",
+        "sourcePhasePresent": true,
+        "key": "h14SkillGreed"
+      },
+      {
+        "phase": 2,
+        "kind": "hell-rotor",
+        "sourcePhasePresent": false,
+        "key": "h14SkillGreed"
+      },
+      {
+        "phase": 2,
+        "kind": "boss-weapon",
+        "sourcePhasePresent": true,
+        "key": "h14SkillGreed"
+      },
+      {
+        "phase": 2,
+        "kind": "boss-weapon",
+        "sourcePhasePresent": false,
+        "key": "h14SkillGreed"
+      }
+    ],
+    "rianIon": [
+      {
+        "participant": "han-rian",
+        "copyModel": true,
+        "key": "storyRianCross"
+      },
+      {
+        "participant": "han-rian",
+        "copyModel": false,
+        "key": "storyRianCross"
+      },
+      {
+        "participant": "baek-ion",
+        "copyModel": true,
+        "key": "storyIonShield"
+      },
+      {
+        "participant": "baek-ion",
+        "copyModel": false,
+        "key": "storyIonShield"
+      }
+    ]
+  },
+  "canonicalReviewFinding": {
+    "issue": "Mammon large-object branch originally selected newly imported chest before winter-memory guard",
+    "resolution": "Owner moved explicitsourcePhase/worldphase/pattern winter guard before large-object branch; all18phase/kind/tagcases checked",
+    "newCanonicalContent": false
+  }
+}
