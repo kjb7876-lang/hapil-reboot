@@ -1,0 +1,489 @@
+{
+  "schema": 1,
+  "date": "2026-11-01",
+  "scope": "Original exactly replayed legal-direction traces. Failures are retained. ZIP integrity is not an additional gameplay claim.",
+  "archive": {
+    "path": "docs/v30-natural-inputs.zip",
+    "bytes": 17971,
+    "sha256": "2cb0a154f1a493cba3c4fd34edf012e1618213fda70e62e4d1f56c3e2665a21c",
+    "entryCount": 54,
+    "totalInputTicks": 76355
+  },
+  "extraction": {
+    "fromRepositoryRoot": "python -m zipfile -e docs/v30-natural-inputs.zip docs",
+    "sourceInputsRetainedLocally": true
+  },
+  "reports": [
+    {
+      "path": "docs/V30-NATURAL-HEALTH-20261101.json",
+      "sha256": "56cb47531e2589328d39c27c3b2e7bc97202d9fcf8679247ef8fe4ed13c42d2f",
+      "summary": {
+        "cases": 53,
+        "won": 52,
+        "lost": 1,
+        "unfinished": 0,
+        "recordedInputTicks": 74906,
+        "exactlyReplayedInputTicks": 74906,
+        "peakBullets": 277,
+        "peakCopies": 4,
+        "peakBossStagePawns": 0,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    },
+    {
+      "path": "docs/V30-NATURAL-HEALTH-FOLLOWUP-20261101.json",
+      "sha256": "107a9474eee959466acc8dab6d24d91382cff38fbca67084951c9e0756421f85",
+      "summary": {
+        "cases": 1,
+        "won": 1,
+        "lost": 0,
+        "unfinished": 0,
+        "recordedInputTicks": 1449,
+        "exactlyReplayedInputTicks": 1449,
+        "poolPressure": 0,
+        "droppedGroups": 0
+      }
+    }
+  ],
+  "validation": {
+    "entryNamesAndSHA256": true,
+    "decompressedTickCounts": true,
+    "onlyLegalDirectionDigits0to8": true,
+    "zipCRC": true
+  },
+  "entries": [
+    {
+      "path": "v30-natural-inputs/boss-00-gentle-phase-2.moves.gz",
+      "sha256": "a0b6d9b37454ebe9f64d15fb00993d9c5ade0c44d367552d6c4cdb8305d68c57",
+      "bytes": 113,
+      "inputTicks": 1325,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-00-hell-phase-2.moves.gz",
+      "sha256": "b8d7206eee33ae535e3cf300a29d4488e8ab064291054b0e1183a746620cacc7",
+      "bytes": 124,
+      "inputTicks": 1325,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-00-normal-phase-2.moves.gz",
+      "sha256": "61d47528732bd394fac4702315668899d4596f9659a87e550029ea982d7fbf0d",
+      "bytes": 136,
+      "inputTicks": 1343,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-01-hell-phase-2.moves.gz",
+      "sha256": "2b142a6bb0e7b57bea584fb845f458d68b05111c64a64dee63627697511a7f3e",
+      "bytes": 221,
+      "inputTicks": 1461,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-02-hell-phase-2.moves.gz",
+      "sha256": "394cefbe2349e3503309044421c3b61250c1fe312d6334d77ed3679226ec51aa",
+      "bytes": 192,
+      "inputTicks": 1541,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-03-hell-phase-2.moves.gz",
+      "sha256": "138c2d2214891649d6eb24d47fb1f06c18a1f12b8651edabb6be06921673bf0c",
+      "bytes": 260,
+      "inputTicks": 1619,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-03-normal-phase-2.moves.gz",
+      "sha256": "13bcf83e533f8f765d59ad167d270fcbc58f5ba0b02ffdaa64c718e121a71b88",
+      "bytes": 200,
+      "inputTicks": 1593,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-04-hell-phase-2.moves.gz",
+      "sha256": "d316ff5a83ae8c95c74e423ccf125efdadf953c617bbde8d25fa7129d7ec64f7",
+      "bytes": 259,
+      "inputTicks": 1832,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-05-hell-phase-2.moves.gz",
+      "sha256": "f204eed4e3a621dda2b2bccdd9858935f6fd4467c65ddc2d93d9dde8bb2329a6",
+      "bytes": 173,
+      "inputTicks": 1554,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-06-hell-phase-2.moves.gz",
+      "sha256": "31f13d0a5c623c254e2ce4e3b8e0df641501a35a5e46b8fbf8de2ab89128eef1",
+      "bytes": 175,
+      "inputTicks": 1574,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-06-normal-phase-2.moves.gz",
+      "sha256": "e239399ce571f7f5ed3f61b703cfa4c45916df6b0ca40027116f0c9355f9b080",
+      "bytes": 147,
+      "inputTicks": 1524,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-07-gentle-phase-2.moves.gz",
+      "sha256": "f5e5db80eb70733b4df6afcfabb53b2294a672fa2bc2824faeafb876bed1b4a3",
+      "bytes": 113,
+      "inputTicks": 1623,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-07-hell-phase-2.moves.gz",
+      "sha256": "695ca742d15b1e06e8227910fe8b5bd29999fba9eaae5901dcca48a0aa50a55a",
+      "bytes": 205,
+      "inputTicks": 1665,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-07-normal-phase-2.moves.gz",
+      "sha256": "3a56bb7592dd8acda60c34b5c7ac3db34ccb822c79584fe5e001fb2ff77c15fa",
+      "bytes": 130,
+      "inputTicks": 1642,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-08-gentle-phase-2.moves.gz",
+      "sha256": "b69a9e455d4234569c1612d06753942056bb17495d78bbb748b88c6eabaffe2f",
+      "bytes": 148,
+      "inputTicks": 1642,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-08-hell-phase-2.moves.gz",
+      "sha256": "45c558b98899762ee4864768aed2bf17c37480eaa1e270c2bd4ed30720ea056e",
+      "bytes": 237,
+      "inputTicks": 1688,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-08-normal-phase-2.moves.gz",
+      "sha256": "b6a79f051278ac5b020a482f156c58c6040d4b42db2956ba1c1703df8c5d3cbb",
+      "bytes": 170,
+      "inputTicks": 1653,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-09-hell-phase-2.moves.gz",
+      "sha256": "28b8d05446d25ccc8fedef8ef0d74acee6840b7b47395589801004489be6b97c",
+      "bytes": 174,
+      "inputTicks": 1557,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-10-hell-phase-2.moves.gz",
+      "sha256": "362b66cef5eac8658bde2885f7278b7a189d5d03ff8d60850cfbf12479ae72b7",
+      "bytes": 236,
+      "inputTicks": 1849,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-11-gentle-phase-2.moves.gz",
+      "sha256": "01347abc234f839922a363058a1b49ac2c9f3bf44427dfed67de3ba87a717715",
+      "bytes": 151,
+      "inputTicks": 1892,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-11-hell-phase-2.moves.gz",
+      "sha256": "8b15411f0e67bd4f6238ed406b7347e48b3968e5c856c84902bd1be98558d7b5",
+      "bytes": 277,
+      "inputTicks": 1902,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-11-normal-phase-2.moves.gz",
+      "sha256": "06ecb75b17429b4bc464b0a7e019d0ca65875ad401569944c5b5062138ab5d77",
+      "bytes": 189,
+      "inputTicks": 1895,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-12-hell-phase-2.moves.gz",
+      "sha256": "83105081e1238a944d8010ec3418c493ed5955cf5e21e1bebf718fb234e07b6e",
+      "bytes": 132,
+      "inputTicks": 1236,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-12-normal-phase-2.moves.gz",
+      "sha256": "e5e4bcf1ab5fd41b7c26e5ddb5ae02f2fc9c1875836300e265ee35ee2a34ba5c",
+      "bytes": 137,
+      "inputTicks": 1253,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-13-hell-phase-2.moves.gz",
+      "sha256": "317d767e453726e0d71bbed41a645060bf3500770359e39c372805bd8327aa8a",
+      "bytes": 152,
+      "inputTicks": 1236,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-14-hell-phase-2.moves.gz",
+      "sha256": "d4155b53da5c8bcedd3a2f1067cb84afd47240ee8f8ab7c6c7430b329f3f9bef",
+      "bytes": 155,
+      "inputTicks": 1328,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-15-hell-phase-2.moves.gz",
+      "sha256": "0d7cfb4fac13d429d1b871c461bba36fd1aed877d7a200e5d7684cc57bdec30d",
+      "bytes": 139,
+      "inputTicks": 1413,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-16-gentle-phase-2.moves.gz",
+      "sha256": "3dc6eae6394278caee752ef4634ae069d60174283caea2a90d980818658ff823",
+      "bytes": 80,
+      "inputTicks": 1433,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-16-hell-phase-2.moves.gz",
+      "sha256": "f14a2075507179c0283b55b6c03981ec3386d54c55fec6e67a16d6e6354963a2",
+      "bytes": 98,
+      "inputTicks": 487,
+      "stage": "lost",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-16-normal-phase-2.moves.gz",
+      "sha256": "0c4856a7bc8202ba55cc0f82bf663f02e95d3f99d7858ac57e4db49522f9a7c6",
+      "bytes": 106,
+      "inputTicks": 1432,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-17-hell-phase-2.moves.gz",
+      "sha256": "5f7d08b4f89a2e40fd10f2a0f18f47a638d2dfa7674d6a46dfda79f564459ccc",
+      "bytes": 194,
+      "inputTicks": 1487,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-18-hell-phase-2.moves.gz",
+      "sha256": "df1f15d5894af088074903941c41a4e817fb2e1bb1a6282060b2701bd681ef76",
+      "bytes": 157,
+      "inputTicks": 1234,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-19-hell-phase-2.moves.gz",
+      "sha256": "66ebc62ed9977966a0a4920f1fce1ef18fdcd0282f59bfb9c873975a2c4e6994",
+      "bytes": 150,
+      "inputTicks": 1226,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-20-hell-phase-2.moves.gz",
+      "sha256": "5c374da436f08aba0c1a211a3009335851ad06d747bc80ec50296078972e4b03",
+      "bytes": 135,
+      "inputTicks": 1252,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-21-hell-phase-2.moves.gz",
+      "sha256": "9b1fbf4fefa8a7ea2c38fc4d8ad28eebd25fa390a9755cde447a31e6575d1f0b",
+      "bytes": 143,
+      "inputTicks": 1244,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-22-hell-phase-2.moves.gz",
+      "sha256": "7957df00fa821738d09686d08c34ea2705eed1d15f7061e193d957b5c2d429dc",
+      "bytes": 124,
+      "inputTicks": 1253,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-23-hell-phase-2.moves.gz",
+      "sha256": "c45c4806eb8544ad0beb0c1d2c7ca2d964c96ecf20344a4e9e1087d8cc6885e5",
+      "bytes": 164,
+      "inputTicks": 1280,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-24-hell-phase-2.moves.gz",
+      "sha256": "0fd9a913b4197e2c20628ed2a05a5b563e0e83829917575ef99de9af0e163fd1",
+      "bytes": 99,
+      "inputTicks": 1289,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-24-normal-phase-2.moves.gz",
+      "sha256": "42ce70c9a9ae7cded4304f385d4e62ec7b99154db11d4d0efba415c43addae00",
+      "bytes": 90,
+      "inputTicks": 1271,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-25-hell-phase-2.moves.gz",
+      "sha256": "6ea8f2e27d6f1417a0bd2f72e0207666124bed822219d42a146d427aa9934684",
+      "bytes": 156,
+      "inputTicks": 1253,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-26-hell-phase-2.moves.gz",
+      "sha256": "4c4296beffebaf75c809f59848a864d8c58f822bb3f6f78332f0639214f0a2e5",
+      "bytes": 130,
+      "inputTicks": 1297,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-27-hell-phase-2.moves.gz",
+      "sha256": "a0dacb2c1f12d6e9c22037d5655203dfb8f615e1eae87123b254773b7f9b33ab",
+      "bytes": 158,
+      "inputTicks": 1245,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-28-hell-phase-2.moves.gz",
+      "sha256": "ea92cea8e59a141c6256962945f59c44d6154f8a6017a56b1a83fa173bf773ae",
+      "bytes": 110,
+      "inputTicks": 1297,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-29-hell-phase-2.moves.gz",
+      "sha256": "8033f18d5a3cba0c236c6ceb7d64744608f72a6efec56519526787d8255dc5a1",
+      "bytes": 187,
+      "inputTicks": 1283,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-29-normal-phase-2.moves.gz",
+      "sha256": "209756d6b2916f1f38e8ba002a3489755b7adb829ba561c54d5b39427b665b7e",
+      "bytes": 134,
+      "inputTicks": 1290,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-30-hell-phase-2.moves.gz",
+      "sha256": "270ac0f68dca2343e1daba26e482e57ee1f39babd6f695f7a27ae976858b529d",
+      "bytes": 186,
+      "inputTicks": 1319,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-31-hell-phase-2.moves.gz",
+      "sha256": "5d0b3466013ecafb09846f484766ef78fc28e2f8e70147a18b8d44d779770f99",
+      "bytes": 162,
+      "inputTicks": 1299,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-32-hell-phase-2.moves.gz",
+      "sha256": "b505de87580e9da391117048ae849b984641bddafdbb5bcc52abf4ea87dc1d28",
+      "bytes": 170,
+      "inputTicks": 1247,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-33-gentle-phase-2.moves.gz",
+      "sha256": "875cb70aebe4f757056180bedd66b1b1e08d6d58ed51df9c0f437ee955196f3c",
+      "bytes": 118,
+      "inputTicks": 1240,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-33-hell-phase-2.moves.gz",
+      "sha256": "33f1809670de03c6f64326b9b5d7439fa2d2c8bd3e7518048f6d2e0685072104",
+      "bytes": 177,
+      "inputTicks": 1240,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-33-normal-phase-2.moves.gz",
+      "sha256": "4a6afa688d5fbe4941b011a015a9508b594af5ee674b896101209cd0f9e1efc0",
+      "bytes": 140,
+      "inputTicks": 1239,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-34-hell-phase-2.moves.gz",
+      "sha256": "4241097e065725baee7ea9997a798a9df7bd7a09a5b8135515ee90655e8a81eb",
+      "bytes": 161,
+      "inputTicks": 1315,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/boss-34-normal-phase-2.moves.gz",
+      "sha256": "ffc4a1c6a9d4f0f1083a24c48f93dbb1c5d271f2e7d28fa7de9cbd7cc961a1f3",
+      "bytes": 137,
+      "inputTicks": 1289,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-20261101.json"
+    },
+    {
+      "path": "v30-natural-inputs/followup-1/boss-16-hell-phase-2.moves.gz",
+      "sha256": "58fe7eeab691c5cf4cd7c5ff42fe8851086ce08ad252f62af20247f1fdc4fb65",
+      "bytes": 156,
+      "inputTicks": 1449,
+      "stage": "won",
+      "report": "docs/V30-NATURAL-HEALTH-FOLLOWUP-20261101.json"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 (function (global) {
   'use strict';
   var $=function(id){return document.getElementById(id);};
-  var mobileRuntime=global.matchMedia?global.matchMedia('(pointer: coarse)').matches:Math.min(global.innerWidth||999,global.innerHeight||999)<600;
+  var mobileRuntime=!!(global.matchMedia&&global.matchMedia('(pointer: coarse)').matches)||Math.min(global.innerWidth||999,global.innerHeight||999)<600;
   var defaults={music:true,sfx:true,quality:mobileRuntime?'low':'high',skillRotation:true,difficulty:'normal',sensitivity:1};
   var settings=Object.assign({},defaults),profile={},savedCheckpoint=null,world=null,renderer=null,images={};
   var mode='title',ready=false,booting=true,lastStamp=0,accumulator=0,lastRender=0,lastHud=0,visualTime=0,checkpointSerial=-1,completed=false,checkpointPending=null,checkpointRetryAt=0;
@@ -132,12 +132,12 @@
     var active=mode==='playing'&&world&&world.stage==='bossIntro';setHidden('intro-skip-button',!active);
   }
   function safeText(id,value){var element=$(id),text=value==null?'':String(value);if(element.textContent!==text)element.textContent=text;}
-  function precisionActive(){return !!keys.Shift||!!(precisionToggle&&world&&world.combatRevision===29);}
+  function precisionActive(){return !!keys.Shift||!!(precisionToggle&&world&&(world.combatRevision===29||world.combatRevision===30));}
   function syncPrecisionControl(){
     var button=$('precision-button');if(!button)return;
-    var available=!!(world&&world.combatRevision===29&&(mode==='playing'||mode==='paused'));
+    var available=!!(world&&(world.combatRevision===29||world.combatRevision===30)&&(mode==='playing'||mode==='paused'));
     if(button.hidden===available)button.hidden=!available;
-    button.disabled=mode!=='playing'||!world||world.stage==='bossIntro';
+    var disabled=mode!=='playing'||!world||world.stage==='bossIntro';if(button.disabled!==disabled)button.disabled=disabled;
     var pressed=precisionActive()?'true':'false';if(button.ariaPressed!==pressed){button.ariaPressed=pressed;button.setAttribute('aria-pressed',pressed);}
   }
   function clearInput(){keys=Object.create(null);precisionToggle=false;pointer.active=false;pointer.id=null;pointer.pendingX=0;pointer.pendingY=0;pointer.lastMove=0;inputSource='keyboard';$('touch-pad').classList.remove('active');syncPrecisionControl();}
@@ -378,7 +378,7 @@
     var campaign=retry&&retryWorld?!!retryWorld.campaign:true;
     var practiceStartPhase=practice?(retry&&retryWorld?retryWorld.practiceStartPhase||0:specialPhase===2?2:0):0;
     var seed=(Date.now()^Math.floor(performance.now()*1000))>>>0;
-    try{world=core.createRun({difficulty:settings.difficulty,seed:seed,practiceBoss:!!practice,combatRevision:29,campaign:campaign,campaignRevision:campaign?campaignRevision:undefined,bossIndex:practice?practiceIndex:0,finalPractice:finalPractice});if(practice&&practiceStartPhase){var practiceSnapshot=core.checkpoint(world);practiceSnapshot.phase=practiceStartPhase;world=core.restoreCheckpoint(practiceSnapshot);if(!world)throw new Error('특수 패턴 연습을 시작하지 못했습니다.');}if(practice)world.practiceStartPhase=practiceStartPhase;world.skillRotation=settings.skillRotation;setMode('playing');accumulator=0;lastStamp=performance.now();lastRender=0;updateHUD();saveCheckpointIfChanged();$('game-canvas').focus({preventScroll:true});}
+    try{world=core.createRun({difficulty:settings.difficulty,seed:seed,practiceBoss:!!practice,combatRevision:30,campaign:campaign,campaignRevision:campaign?campaignRevision:undefined,bossIndex:practice?practiceIndex:0,finalPractice:finalPractice});if(practice&&practiceStartPhase){var practiceSnapshot=core.checkpoint(world);practiceSnapshot.phase=practiceStartPhase;world=core.restoreCheckpoint(practiceSnapshot);if(!world)throw new Error('특수 패턴 연습을 시작하지 못했습니다.');}if(practice)world.practiceStartPhase=practiceStartPhase;world.skillRotation=settings.skillRotation;setMode('playing');accumulator=0;lastStamp=performance.now();lastRender=0;updateHUD();saveCheckpointIfChanged();$('game-canvas').focus({preventScroll:true});}
     catch(e){showError(e);}
   }
   function continueRun(){
@@ -471,7 +471,7 @@
   function diagnostics(){
     var hazards=world&&world.hazards?world.hazards:[],heap=null;
     try{var m=performance.memory;if(m&&Number.isFinite(m.usedJSHeapSize))heap={usedBytes:m.usedJSHeapSize,totalBytes:m.totalJSHeapSize,limitBytes:m.jsHeapSizeLimit,scope:'Browser-reported JS heap estimate; excludes GPU and decoded media; GC not controlled'};}catch(e){}
-    return {version:'hapil-danmaku-flow-v29',candidateRevision:29,mobileRuntime:mobileRuntime,loadedImages:Object.keys(images).length,imageRequestsPending:Object.keys(imageRequests).length,imageRequestsActive:imageActive,mechanicsRevision:world?world.mechanicsRevision:(core?core.MECHANICS_REVISION:2),combatRevision:world?world.combatRevision||0:29,connectedMapStatus:renderer&&renderer.getMetrics?renderer.getMetrics().sourceStatus||'not-yet-reported':'not-yet-reported',capturedAt:new Date().toISOString(),mode:mode,fixedHz:60,renderTarget:settings.quality==='low'?30:60,rollingWindow:maxSamples,measurementScope:{update:'Main-thread fixed-step simulation and event processing',render:'JavaScript canvas command submission only; not GPU completion',frame:'requestAnimationFrame callback intervals during play'},updateMs:distribution(samples.update,peakUpdate),renderMs:distribution(samples.render,peakRender),frameIntervalMs:distribution(samples.frame,peakFrame),renderedFrames:totalFrames,fixedSteps:totalSteps,pausedLargeGaps:droppedGaps,lastGapReason:lastGapReason,viewport:{width:global.innerWidth,height:global.innerHeight,dpr:global.devicePixelRatio||1,arenaWidth:$('app-stage').clientWidth,arenaHeight:$('app-stage').clientHeight,padHeight:$('touch-pad').clientHeight},entities:world?{bullets:world.bullets.length,shots:world.shots.length,enemies:world.enemies.length,effects:world.effects.length,laserWarnings:hazards.filter(function(h){return h.phase==='warning';}).length,activeLasers:hazards.filter(function(h){return h.phase==='active';}).length,fadingLasers:hazards.filter(function(h){return h.phase==='fade';}).length}:null,terrain:renderer&&renderer.getMetrics?renderer.getMetrics():null,jsHeapEstimate:heap,gpuTimeMs:null,coreStats:world?JSON.parse(JSON.stringify(world.stats||{})):null,assetErrors:assetErrors.slice(),storage:store?Object.assign({},store.status):null};
+    return {version:'hapil-mobile-boss-v30',candidateRevision:30,mobileRuntime:mobileRuntime,loadedImages:Object.keys(images).length,imageRequestsPending:Object.keys(imageRequests).length,imageRequestsActive:imageActive,mechanicsRevision:world?world.mechanicsRevision:(core?core.MECHANICS_REVISION:2),combatRevision:world?world.combatRevision||0:30,connectedMapStatus:renderer&&renderer.getMetrics?renderer.getMetrics().sourceStatus||'not-yet-reported':'not-yet-reported',capturedAt:new Date().toISOString(),mode:mode,fixedHz:60,renderTarget:settings.quality==='low'?30:60,rollingWindow:maxSamples,measurementScope:{update:'Main-thread fixed-step simulation and event processing',render:'JavaScript canvas command submission only; not GPU completion',frame:'requestAnimationFrame callback intervals during play'},updateMs:distribution(samples.update,peakUpdate),renderMs:distribution(samples.render,peakRender),frameIntervalMs:distribution(samples.frame,peakFrame),renderedFrames:totalFrames,fixedSteps:totalSteps,pausedLargeGaps:droppedGaps,lastGapReason:lastGapReason,viewport:{width:global.innerWidth,height:global.innerHeight,dpr:global.devicePixelRatio||1,arenaWidth:$('app-stage').clientWidth,arenaHeight:$('app-stage').clientHeight,padHeight:$('touch-pad').clientHeight},entities:world?{bullets:world.bullets.length,shots:world.shots.length,enemies:world.enemies.length,effects:world.effects.length,laserWarnings:hazards.filter(function(h){return h.phase==='warning';}).length,activeLasers:hazards.filter(function(h){return h.phase==='active';}).length,fadingLasers:hazards.filter(function(h){return h.phase==='fade';}).length}:null,terrain:renderer&&renderer.getMetrics?renderer.getMetrics():null,jsHeapEstimate:heap,gpuTimeMs:null,coreStats:world?JSON.parse(JSON.stringify(world.stats||{})):null,assetErrors:assetErrors.slice(),storage:store?Object.assign({},store.status):null};
   }
   function ensureEncounterArt(){
     if(mode==='error')return false;
@@ -529,7 +529,7 @@
     var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='hapil-firstbattle-measurements-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},1000);toast('측정값과 독립 실행판 기록을 내보냈습니다.');return data;
   }
   function bind(){
-    $('precision-button').addEventListener('click',function(){if(mode!=='playing'||!world||world.combatRevision!==29||world.stage==='bossIntro')return;precisionToggle=!precisionToggle;pointer.pendingX=0;pointer.pendingY=0;renderDirty=true;syncPrecisionControl();$('game-canvas').focus({preventScroll:true});});
+    $('precision-button').addEventListener('click',function(){if(mode!=='playing'||!world||(world.combatRevision!==29&&world.combatRevision!==30)||world.stage==='bossIntro')return;precisionToggle=!precisionToggle;pointer.pendingX=0;pointer.pendingY=0;renderDirty=true;syncPrecisionControl();$('game-canvas').focus({preventScroll:true});});
     $('start-button').addEventListener('click',function(){start(false);});$('practice-button').addEventListener('click',function(){start(true);});$('special-practice-button').addEventListener('click',function(){start(true,false,2);});$('continue-button').addEventListener('click',continueRun);$('pause-button').addEventListener('click',function(){pause();});$('resume-button').addEventListener('click',resume);$('home-button').addEventListener('click',home);$('result-home-button').addEventListener('click',home);$('ending-prev').addEventListener('click',function(){showEndingPage(endingPage-1);});$('ending-next').addEventListener('click',function(){showEndingPage(endingPage+1);});$('retry-button').addEventListener('click',function(){start(!!(world&&world.practiceBoss),true);});$('intro-skip-button').addEventListener('click',skipIntro);$('reload-button').addEventListener('click',function(){global.location.reload();});
     document.querySelectorAll('[data-difficulty]').forEach(function(b){b.addEventListener('click',function(){settings.difficulty=b.dataset.difficulty;persistSettings();});});
     $('settings-button').addEventListener('click',openSettings);$('pause-settings-button').addEventListener('click',openSettings);$('settings-close').addEventListener('click',closeSettings);$('settings-modal').addEventListener('click',function(e){if(e.target===this)closeSettings();});
@@ -564,6 +564,9 @@
           else {
             if(data.hasStoredState===false){var initialSettings=await store.saveSettings(settings);if(!initialSettings||initialSettings.ok===false)restoreError=true;}
             else settings=Object.assign({},defaults,data.settings||{});
+            // A saved desktop/high setting must not silently disable mobile's
+            // 30fps, DPR1 startup path. Manual changes still work this session.
+            if(mobileRuntime)settings.quality='low';
             profile=data.profile||{};savedCheckpoint=data.checkpoint||null;
           }
         }

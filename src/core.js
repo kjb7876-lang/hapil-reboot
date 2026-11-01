@@ -16,11 +16,12 @@
   var HELL_MECHANICS_REVISION=15;
   // Explicit opt-in: old boundary saves have no combatRevision and retain
   // their original deterministic encounter. Revision25 is a separate opt-in.
-  var COMBAT_REVISION=21, IDENTITY_COMBAT_REVISION=25, PATTERN_COMBAT_REVISION=27,LASER_COMBAT_REVISION=28,FLOW_COMBAT_REVISION=29;
-  function flowEnabled(w){return w.combatRevision===FLOW_COMBAT_REVISION;}
+  var COMBAT_REVISION=21, IDENTITY_COMBAT_REVISION=25, PATTERN_COMBAT_REVISION=27,LASER_COMBAT_REVISION=28,FLOW_COMBAT_REVISION=29,MOBILE_COMBAT_REVISION=30;
+  function mobileBossEnabled(w){return w.combatRevision===MOBILE_COMBAT_REVISION;}
+  function flowEnabled(w){return w.combatRevision===FLOW_COMBAT_REVISION||mobileBossEnabled(w);}
   function laserEnabled(w){return w.combatRevision===LASER_COMBAT_REVISION||flowEnabled(w);}
   function patternEnabled(w){return w.combatRevision===PATTERN_COMBAT_REVISION||laserEnabled(w);}
-  function supportedCombatRevision(value){return value===COMBAT_REVISION||value===IDENTITY_COMBAT_REVISION||value===PATTERN_COMBAT_REVISION||value===LASER_COMBAT_REVISION||value===FLOW_COMBAT_REVISION;}
+  function supportedCombatRevision(value){return value===COMBAT_REVISION||value===IDENTITY_COMBAT_REVISION||value===PATTERN_COMBAT_REVISION||value===LASER_COMBAT_REVISION||value===FLOW_COMBAT_REVISION||value===MOBILE_COMBAT_REVISION;}
   function pressureEnabled(w){return supportedCombatRevision(w.combatRevision);}
   function identityEnabled(w){return (w.combatRevision===IDENTITY_COMBAT_REVISION||patternEnabled(w))&&w.campaign&&(patternEnabled(w)||w.finalPractice||w.bossIndex!==8);}
   var BULLET_SLOW=Object.freeze({factor:.14,rampTicks:6,recoverTicks:36,durations:Object.freeze({memory:24,counter:54,delay:108,ego:90})});
@@ -44,6 +45,8 @@
   var HELL_OVERLAP_LIMITS=Object.freeze({cycleTicks:336,warningTicks:108,activeTicks:96,fanBaseSpeed:150,fanMinSpeed:198,fanMaxSpeed:234,rotorMaxDownSpeed:378,rotorMaxTotalSpeed:388,corridorHalfWidth:24});
   var CAPS = Object.freeze({ bullets: 768, shots: 96, enemies: 12, effects: 96, hazards: 40 });
   var LASER_BARRAGE_LIMITS=Object.freeze({maxLive:12,firstTick:72,lastTick:456,minWarningTicks:54,minActiveTicks:8,maxActiveTicks:20,minFadeTicks:8,maxFadeTicks:12});
+  var MOBILE_BOSS_LIMITS=Object.freeze({maxCopies:4,copyTicks:360,copyX:Object.freeze([66,142,218,294]),copyY:166});
+  var MOBILE_BULLET_LIMITS=Object.freeze({graceTicks:180,retireDuration:.8,exitPadding:104,minMovingSpeed:1});
   var PHASE_HP = [1700, 1850, 2000];
   var NAMES = ['여덟 실의 문', '보라검의 각인', '끊어진 날개의 결'];
   // Names/route follow the supplied narrative. Attack labels are gameplay
@@ -451,9 +454,9 @@
     if (!seed) seed = 0x6d2b79f5;
     var gentle = options.difficulty === 'gentle', hell = options.difficulty === 'hell';
     if(options.combatRevision!==undefined&&!supportedCombatRevision(options.combatRevision))throw new RangeError('Unsupported combat revision');
-    if((options.combatRevision===PATTERN_COMBAT_REVISION||options.combatRevision===LASER_COMBAT_REVISION||options.combatRevision===FLOW_COMBAT_REVISION)&&!Patterns)throw new Error('새 보스 패턴 모듈을 불러오지 못했습니다. 새로고침해 주세요.');
-    if((options.combatRevision===LASER_COMBAT_REVISION||options.combatRevision===FLOW_COMBAT_REVISION)&&!Lasers)throw new Error('보스 광선 패턴 모듈을 불러오지 못했습니다. 새로고침해 주세요.');
-    if(options.combatRevision===FLOW_COMBAT_REVISION&&!Flow)throw new Error('전투 박자 모듈을 불러오지 못했습니다. 새로고침해 주세요.');
+    if((options.combatRevision===PATTERN_COMBAT_REVISION||options.combatRevision===LASER_COMBAT_REVISION||flowEnabled(options))&&!Patterns)throw new Error('새 보스 패턴 모듈을 불러오지 못했습니다. 새로고침해 주세요.');
+    if((options.combatRevision===LASER_COMBAT_REVISION||flowEnabled(options))&&!Lasers)throw new Error('보스 광선 패턴 모듈을 불러오지 못했습니다. 새로고침해 주세요.');
+    if(flowEnabled(options)&&!Flow)throw new Error('전투 박자 모듈을 불러오지 못했습니다. 새로고침해 주세요.');
     var runId = typeof options.runId === 'string' && /^[A-Za-z0-9_.:-]{1,96}$/.test(options.runId) ? options.runId : 'hapil-' + Date.now().toString(36) + '-' + (++runSequence).toString(36);
     var w = { rulesetVersion: RULESET, mechanicsRevision: 2, runId: runId, seed: seed, rngState: seed, difficulty: gentle ? 'gentle' : hell ? 'hell' : 'normal', practiceBoss: !!options.practiceBoss,
       tick: 0, time: 0, stage: 'waves', stageTime: 0, bossIntroDuration: 2.5, wave: 0, waveTime: 0, waveDuration: 15, phase: 0, phaseTime: 0, phaseTargetDuration: 25, phaseTimeout: 75,
@@ -552,6 +555,7 @@
     if (name) { w.memory -= cost; sk.globalReadyAt = w.tick + 15; w.stats.casts[name]++; event(w, 'skill', name); effect(w, p.x, p.y, w.campaign ? (name === 'delay' ? 'delayCharge' : name) : 'skill', name === 'ego' ? 30 : 20, '#9fffe8', 0.4); }
   }
   function spawnEnemy(w, x, kind, direction, delay) {
+    if(mobileBossEnabled(w)&&w.stage==='boss')return;
     if (w.enemies.length >= CAPS.enemies) { w.stats.poolPressure++; return; }
     var turret = kind === 'turret';
     var enemy = acquire(w, 'enemies', { id: ++w.idCounter, x: x, y: -24, px: x, py: -24, baseX: x, hp: turret ? 100 : 60, maxHp: turret ? 100 : 60,
@@ -562,6 +566,7 @@
   // Reinforcements reuse the current encounter's already-loaded ordinary
   // enemies. They enter visibly before their first attack and never exceed two.
   function summonBossAllies(w) {
+    if(mobileBossEnabled(w))return;
     if (!w.campaign || w.finalPractice || w.bossIndex >= 12 || w.campaignRevision < 3 || !w.boss || w.boss.hp <= 0) return;
     var t = Math.round(w.phaseTime * 60);
     if (t < 240 || (t - 240) % 660 !== 0 || w.enemies.length > 0) return;
@@ -1503,15 +1508,16 @@
     return actor?{x:actor.x,y:actor.y,sourceActorId:actor.id,modelActorId:actor.id}:{x:b.x,y:b.y+18};
   }
   function makeFlowCopy(w,cycle,slot){
-    var b=w.boss;if(!allowsCombatCopies(w)||(b.combatCopies||[]).length>=2)return null;
-    var pair=b.participants&&b.participants[slot%b.participants.length],id='combat-copy-'+b.id+'-flow-'+cycle+'-'+slot,x=slot?270:90;
+    var mobile=mobileBossEnabled(w),b=w.boss;if(!allowsCombatCopies(w)||(b.combatCopies||[]).length>=(mobile?MOBILE_BOSS_LIMITS.maxCopies:2))return null;
+    var pair=b.participants&&b.participants[slot%b.participants.length],id='combat-copy-'+b.id+'-flow-'+cycle+'-'+slot,x=mobile?MOBILE_BOSS_LIMITS.copyX[slot]:slot?270:90;
     if((b.combatCopies||[]).some(function(c){return c.id===id||c.destinationX===x;}))return null;
-    var c={id:id,sourceActorId:id,x:x,y:166,px:x,py:166,originX:b.x,originY:b.y,destinationX:x,artKey:b.artKey,born:w.tick,expireAt:w.tick+PRESSURE_LIMITS.cloneTicks,action:'charge',actionProgress:0,releaseTick:-1,opacity:.62,kind:'clone'};
+    var c={id:id,sourceActorId:id,x:x,y:166,px:x,py:166,originX:b.x,originY:b.y,destinationX:x,artKey:b.artKey,born:w.tick,expireAt:w.tick+(mobile?MOBILE_BOSS_LIMITS.copyTicks:PRESSURE_LIMITS.cloneTicks),action:'charge',actionProgress:0,releaseTick:-1,opacity:.62,kind:'clone'};
     if(pair)c.modelActorId=pair.id;return c;
   }
   function bossFlow(w,cycle,within){
     var action=Flow.actionAt(w,within,cycle);if(!action)return;
     if(action.kind==='laser'){bossLaserBarrage(w,cycle,within,true,action.beat);return;}
+    if(mobileBossEnabled(w)){bossMobileFlow(w,cycle,action);return;}
     var copy=action.source==='copy'?makeFlowCopy(w,cycle,action.copySlot||0):null;
     if(action.source==='copy'&&!copy)copy=makeFlowCopy(w,cycle,1-(action.copySlot||0));
     if(action.source==='copy'&&!copy)return;
@@ -1528,6 +1534,26 @@
       if(!specs.length)return;groups=[{offset:54,specs:specs}];role=copy?'copy-fixed':'owned-fixed';
     }
     if(commitFlowPlan(w,groups,{x:emitter.x,y:emitter.y,sourceActorId:emitter.sourceActorId,modelActorId:emitter.modelActorId,beat:action.beat,role:role,targetSnapshot:targetSnapshot})&&copy){if(!w.boss.combatCopies)w.boss.combatCopies=[];w.boss.combatCopies.push(copy);}
+  }
+  function bossMobileFlow(w,cycle,action){
+    var copied=allowsCombatCopies(w),first=Number.isInteger(action.copySlot)?(action.copySlot+cycle)%4:action.beat%4;
+    // More of the existing bounded attack slots belong to actual copies.
+    // A slot's pellets are never duplicated, and only a successful complete
+    // admission creates a visible actor or its immutable warning.
+    for(var attempt=0;attempt<(copied?MOBILE_BOSS_LIMITS.maxCopies:1);attempt++){
+      var copy=copied?makeFlowCopy(w,cycle,(first+attempt)%4):null;if(copied&&!copy)continue;
+      if(!copied&&action.source==='copy')return;
+      var emitter=flowEmitter(w,action.beat,copy),groups,role,targetSnapshot;
+      if(action.kind==='stream'){
+        var stream=Flow.makeStream(w,emitter,action.beat,{motionX:0,motionY:0});if(!stream)return;groups=stream.pulses;role='aimed-stream';targetSnapshot=stream.targetSnapshot;
+      }else{
+        var specs=Patterns.makeVolley(w,emitter,action.beat,{copy:!!copy,phase:w.phase}),route=w._pressurePlan&&w.tick<w._pressurePlan.expireAt?w._pressurePlan.route:null;
+        if(route)specs=specs.filter(function(s){var extra=s.r+(s.kind==='blade'?13:s.kind==='needle'?9:0)+3;return segmentPairDistanceSquared(s.x,s.y,s.x+Math.cos(s.angle)*1600,s.y+Math.sin(s.angle)*1600,route.x1,route.y1,route.x2,route.y2)>sq(route.halfWidth+extra);});
+        if(!specs.length)continue;groups=[{offset:54,specs:specs}];role=copy?'copy-fixed':'owned-fixed';
+      }
+      if(commitFlowPlan(w,groups,{x:emitter.x,y:emitter.y,sourceActorId:emitter.sourceActorId,modelActorId:emitter.modelActorId,beat:action.beat,role:role,targetSnapshot:targetSnapshot})&&copy){if(!w.boss.combatCopies)w.boss.combatCopies=[];w.boss.combatCopies.push(copy);}
+      return;
+    }
   }
   function pressureFan(w,x,y,source,beat,copy) {
     var b=w.boss,hell=w.difficulty==='hell',index=w.finalPractice?34:w.bossIndex,style=index%7;
@@ -1823,9 +1849,19 @@
       }
       b.age += modern?motionDT:FIXED_DT;
       if(modern)b.v27Age=b.age;
-      var margin=modern?Math.max(38,(b.halfLength||0)+b.r+50):38;
+      var margin=modern?Math.max(38,(b.halfLength||0)+b.r+(mobileBossEnabled(w)?MOBILE_BULLET_LIMITS.exitPadding:50)):38;
       var outside=b.x < -margin || b.x > W+margin || b.y < -margin || b.y > H+margin;
-      if(modern&&b.age>=b.ttl&&!outside&&!b.retiring){b.retiring=true;b.retireAge=0;b.retireDuration=.35;}
+      if(modern&&b.age>=b.ttl&&!outside&&!b.retiring){
+        var mobile=mobileBossEnabled(w),retireNow=true;
+        if(mobile){
+          // Authored lifetime is not a disappearing wall inside the arena.
+          // Moving bodies keep their existing trajectory for at most three
+          // unscaled seconds; skill slowdown cannot prolong this grace.
+          b.v30OverdueTicks=(b.v30OverdueTicks||0)+1;
+          retireNow=Math.hypot(b.vx,b.vy)<MOBILE_BULLET_LIMITS.minMovingSpeed||b.v30OverdueTicks>=MOBILE_BULLET_LIMITS.graceTicks;
+        }
+        if(retireNow){b.retiring=true;b.retireAge=0;b.retireDuration=mobile?MOBILE_BULLET_LIMITS.retireDuration:.35;}
+      }
       else if(modern&&b.retiring)b.retireAge+=FIXED_DT;
       if (!b.retiring && w.stage !== 'won' && w.stage !== 'lost' && w.stage !== 'bossIntro') {
         // Conservative swept AABB: the projectile's half-length and the larger
@@ -1979,7 +2015,7 @@
     return w;
   }
   return Object.freeze({ W: W, H: H, FIXED_DT: FIXED_DT, RULESET_VERSION: RULESET, MECHANICS_REVISION: 2, CAPS: CAPS,
-    COMBAT_REVISION:COMBAT_REVISION,IDENTITY_COMBAT_REVISION:IDENTITY_COMBAT_REVISION,PATTERN_COMBAT_REVISION:PATTERN_COMBAT_REVISION,LASER_COMBAT_REVISION:LASER_COMBAT_REVISION,FLOW_COMBAT_REVISION:FLOW_COMBAT_REVISION,LATEST_COMBAT_REVISION:FLOW_COMBAT_REVISION,LASER_BARRAGE_LIMITS:LASER_BARRAGE_LIMITS,BULLET_SLOW:BULLET_SLOW,bulletTimeScale:bulletTimeScale,IDENTITY_PROFILES:IDENTITY_PROFILES,PRESSURE_LIMITS:PRESSURE_LIMITS,attackCoverage:attackCoverage,
+    COMBAT_REVISION:COMBAT_REVISION,IDENTITY_COMBAT_REVISION:IDENTITY_COMBAT_REVISION,PATTERN_COMBAT_REVISION:PATTERN_COMBAT_REVISION,LASER_COMBAT_REVISION:LASER_COMBAT_REVISION,FLOW_COMBAT_REVISION:FLOW_COMBAT_REVISION,MOBILE_COMBAT_REVISION:MOBILE_COMBAT_REVISION,LATEST_COMBAT_REVISION:MOBILE_COMBAT_REVISION,MOBILE_BOSS_LIMITS:MOBILE_BOSS_LIMITS,MOBILE_BULLET_LIMITS:MOBILE_BULLET_LIMITS,LASER_BARRAGE_LIMITS:LASER_BARRAGE_LIMITS,BULLET_SLOW:BULLET_SLOW,bulletTimeScale:bulletTimeScale,IDENTITY_PROFILES:IDENTITY_PROFILES,PRESSURE_LIMITS:PRESSURE_LIMITS,attackCoverage:attackCoverage,
     CAMPAIGN_BOSSES: CAMPAIGN_BOSSES, CAMPAIGN_SIGNATURES: CAMPAIGN_SIGNATURES, CAMPAIGN_REVISION: 3, HELL_MECHANICS_REVISION: HELL_MECHANICS_REVISION, HELL_OVERLAP_LIMITS: HELL_OVERLAP_LIMITS,
     campaignBossCount: campaignBossCount, LATEST_CAMPAIGN_REVISION: 5, createRun: createRun, step: step, checkpoint: checkpoint, restoreCheckpoint: restoreCheckpoint, skipBossIntro: skipBossIntro,
     geometry: Object.freeze({ segmentDistanceSquared: segmentDistanceSquared, segmentPairDistanceSquared: segmentPairDistanceSquared, sweptCircleHit: sweptCircleHit, projectileDistanceSquared: projectileDistanceSquared, patternDistanceSquared:patternDistanceSquared, hazardDistanceSquared: hazardDistanceSquared }) });
