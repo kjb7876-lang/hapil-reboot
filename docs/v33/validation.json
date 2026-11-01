@@ -1,0 +1,17 @@
+{
+  "baseline": "1001693e009e3bc4d1dbd1ad9b859ad5936dedf7",
+  "command": "npm test",
+  "pass": 524,
+  "fail": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "durationMs": 193228.359455,
+  "productHashes": {
+    "index.html": "a8fdc6ff2164eaa5e61a00a56ac19bc4f1297d855b5b666a12b5677064c33df1",
+    "src/core.js": "dc6ba5be046e43d6801aa5a80a3c154d6e3edc6452ef472f667af6b26817590d",
+    "src/boss-lasers-v28.js": "9dd2913a603dd61ecc42e6dff6fd4875a0f2e9abeef03242286c90523ee045af",
+    "src/app.js": "134d82f696202bc63c1f1cecbc4945b163aa79de239d4c0fa7a2ed9f25443d67"
+  },
+  "testLogSHA256": "182a2c4a43317f3917d932c4ebae1ae52e60aff1322f86fdc6a72de4f92f003a",
+  "scope": "CPU simulation and native Canvas. Actual physical mobile FPS unverified."
+}
