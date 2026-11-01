@@ -1,0 +1,15 @@
+{
+  "status": "완료",
+  "scope": "고정 시점 렌더, 실시간 FPS 아님",
+  "boss": 8,
+  "tick": 300,
+  "worldUnchanged": true,
+  "loadedImages": 27,
+  "bullets": 60,
+  "visibleBulletDraws": 47,
+  "offscreenSkipped": 13,
+  "missingProjectileAssets": 0,
+  "lasers": 6,
+  "copies": 2,
+  "stampCacheBytes": 2042896
+}

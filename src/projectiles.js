@@ -304,9 +304,9 @@
   function rgb(h){return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];}
   function create(images){
     images=images||{};
-    var cache=new Map(),cacheBytes=0,group=-1,metrics,beamCacheBuilds=0,imminentCuePool=[],laserSpectaclePool=[];
-    function release(e){if(!e)return;if(e.canvases)e.canvases.forEach(function(c){c.width=1;c.height=1;});if(e.canvas){e.canvas.width=1;e.canvas.height=1;}}
-    function clearCache(){cache.forEach(release);cache.clear();cacheBytes=0;}
+    var cache=new Map(),cacheBytes=0,group=-1,metrics,beamCacheBuilds=0,imminentCuePool=[],laserSpectaclePool=[],bodyBindings=new WeakMap();
+    function release(e){if(!e)return;e.released=true;if(e.canvases)e.canvases.forEach(function(c){c.width=1;c.height=1;});if(e.canvas){e.canvas.width=1;e.canvas.height=1;}}
+    function clearCache(){cache.forEach(release);cache.clear();cacheBytes=0;bodyBindings=new WeakMap();}
     function beginFrame(){metrics={stampDraws:0,stampCacheMisses:0,stampCacheHits:0,stampCacheLimit:CACHE_LIMIT,stampCacheByteLimit:CACHE_BYTES,stampCacheBytes:cacheBytes,stampCacheEntries:cache.size,animatedBulletDraws:0,bodyAnimationPhases:0,naturalSilhouetteDraws:0,maxVisualOutset:0,suppressedUnapprovedFX:0,compactCastDraws:0,compactHazardDraws:0,assetLaserDraws:0,assetLaserSlices:0,signatureCastDraws:0,weaponVisualDraws:0,weaponTelegraphDraws:0,rotorVisualDraws:0,rotorTelegraphDraws:0,sourceBeamOverlayDraws:0,laserArtRevision:23,beamMaterialDraws:0,beamFlowDraws:0,beamEmitterDraws:0,beamDetailedLasers:0,beamDetailLimit:12,beamCacheBuilds:beamCacheBuilds,beamFrameCacheBuilds:0,beamSourceKeys:{},imminentCueDraws:0,imminentCueLimit:8,imminentCueSources:{},missingOptionalImminentAssets:0,laserSpectacleDraws:0,laserSpectacleLimit:8,laserEndcapDraws:0,laserJointDraws:0,laserAfterglowDraws:0,laserChargeDraws:0,projectileArtRevision:25,projectileVariantDraws:{},projectileVariantSourceKeys:{},legacyMaxVisualOutset:0,ownedObjectDraws:0,ownedObjectMaxNormalPixels:48,ownedObjectMaxLargePixels:100,maxOwnedObjectPixels:0,ownedObjectExtentByVariant:{},missingOptionalRotorAssets:0,missingOptionalBeamAssets:0,missingProjectileAssets:0,compactFamilies:{}};}
     function remember(key,e){
       if(e.bytes>CACHE_BYTES){release(e);return null;}
@@ -535,7 +535,7 @@
       beamCacheBuilds++;metrics.beamFrameCacheBuilds++;metrics.beamCacheBuilds=beamCacheBuilds;
       return remember(key,{canvas:c,canvases:[flow,emitter],flow:flow,emitter:emitter,sourceKey:s.key,paletteId:palette.id,bytes:(sw*sh*2+96*96)*4});
     }
-    function drawBullet(ctx,w,b,lowQuality){
+    function drawBullet(ctx,w,b,lowQuality,viewport){
       if(!w||!b||!finite(b.x)||!finite(b.y))return false;
       var wi=indexFor(w),weapon=WEAPONS[wi];
       if(b.kind==='boss-weapon'&&(!weapon||!ready(images[weapon.key],weapon))){metrics.missingProjectileAssets++;return false;}
@@ -544,8 +544,22 @@
       var r=finite(b.r)&&b.r>0?b.r:3,l=finite(b.halfLength)?Math.max(0,b.halfLength):0;
       if(r>128||l>640)return false;
       if(group!==wi){clearCache();group=wi;}
-      var key='body|'+sourceSignature(s)+'|'+r+'|'+l+'|'+bulletPalette(w,b).id,e=cache.get(key);
-      if(!e){e=buildStamp(w,b,s,r,l);if(!e)return false;e=remember(key,e);if(!e)return false;metrics.stampCacheMisses++;}else metrics.stampCacheHits++;
+      // Core pools recycle bullet objects. Compare every stamp input rather
+      // than assuming object identity means an unchanged source or hit radius.
+      // Weak bindings neither retain dead bullets nor add serialized state.
+      var palette=bulletPalette(w,b),binding=bodyBindings.get(b),e;
+      if(binding&&binding.spec===s&&binding.r===r&&binding.l===l&&binding.palette===palette.id&&!binding.art.released){
+        e=binding.art;metrics.stampCacheHits++;metrics.bodyBindingHits=(metrics.bodyBindingHits||0)+1;
+      }else{
+        var key='body|'+sourceSignature(s)+'|'+r+'|'+l+'|'+palette.id;e=cache.get(key);
+        if(!e){e=buildStamp(w,b,s,r,l);if(!e)return false;e=remember(key,e);if(!e)return false;metrics.stampCacheMisses++;}else metrics.stampCacheHits++;
+        if(!binding){binding={};bodyBindings.set(b,binding);}binding.spec=s;binding.r=r;binding.l=l;binding.palette=palette.id;binding.art=e;
+      }
+      // The renderer supplies its logical viewport. The circumcircle includes
+      // the entire rotated source quad, asymmetric pivots, legacy prop overlay,
+      // and filtering margin. This skips submission only, never simulation.
+      if(viewport&&(b.x<viewport.left||b.x>viewport.right||b.y<viewport.top||b.y>viewport.bottom)){var extent=Math.hypot(Math.max(e.x,e.width-e.x),Math.max(e.y,e.height-e.y))+2;if(b.kind==='boss-weapon'||b.kind==='hell-rotor')extent=Math.max(extent,28);
+        if(b.x+extent<viewport.left||b.x-extent>viewport.right||b.y+extent<viewport.top||b.y-extent>viewport.bottom){metrics.offscreenBulletDrawsSkipped=(metrics.offscreenBulletDrawsSkipped||0)+1;return true;}}
       var phase=s.frames>1?Math.min(s.frames-1,Math.floor(Math.max(0,finite(b.age)?b.age:0)*1000/s.ms)):0;
       // Expired v27 bullets are harmless before this finite source-art fade.
       // Active damage bodies always remain fully opaque, including slow time.

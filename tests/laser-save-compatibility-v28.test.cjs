@@ -31,5 +31,5 @@ test('all previous saved selectors still validate and reduce exactly as the27 cl
 test('browser loads both motion modules before core with one coherent cache revision',()=>{
  const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');const scripts=[...html.matchAll(/src="src\/([^"?]+)\.js\?v=([^"&]+)"/g)].map(m=>({name:m[1],revision:m[2]}));
  for(const name of ['boss-patterns-v27','boss-lasers-v28','boss-flow-v29'])assert(scripts.findIndex(s=>s.name===name)>=0&&scripts.findIndex(s=>s.name===name)<scripts.findIndex(s=>s.name==='core'));
- assert.equal(new Set(scripts.map(s=>s.revision)).size,1);assert.equal(scripts[0].revision,'20261101-laser31');
+ assert.equal(new Set(scripts.map(s=>s.revision)).size,1);assert.equal(scripts[0].revision,'20261101-portrait32');
 });

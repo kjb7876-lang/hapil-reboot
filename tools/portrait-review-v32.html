@@ -1,0 +1,21 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>합일 v32 렌더 검수</title>
+<style>body{margin:20px;background:#10131c;color:#e3d4b8;font:14px sans-serif}main{display:flex;gap:24px;flex-wrap:wrap}canvas{width:360px;max-width:100%;height:auto;border:1px solid #66523f}select,button{background:#242331;color:#eee;padding:10px;border:1px solid #675d72}pre{white-space:pre-wrap;max-width:420px;line-height:1.5}h1{font-size:20px}</style>
+<h1>합일 · 세로 전투 렌더 검수 v32</h1><p>실제 코어 HELL31 고정 시점 · 무적 QA 장면. 실시간 플레이/FPS 측정이 아닙니다.</p>
+<p><select id="boss" aria-label="검수 보스"><option value="8">색욕</option><option value="4">루시퍼</option><option value="6">질투</option><option value="11">교만</option><option value="0">보라검천사</option></select> <button id="run">장면 검사</button></p>
+<main><section style="width:360px;height:640px;flex:none"><canvas id="view" width="360" height="640"></canvas></section><pre id="result" aria-live="polite">준비 중</pre></main>
+<script src="../src/media.js"></script><script src="../src/weapon-patterns.js"></script><script src="../src/boss-patterns-v27.js"></script><script src="../src/boss-lasers-v28.js"></script><script src="../src/boss-flow-v29.js"></script><script src="../src/core.js"></script><script src="../src/boss-motion.js"></script><script src="../src/story-assets.js"></script><script src="../src/actors.js"></script><script src="../src/projectiles.js"></script><script src="../src/boss-skills.js"></script><script src="../src/render.js"></script>
+<script>
+let renderer;const registry=HapilMedia;
+async function run(){const button=document.getElementById('run'),result=document.getElementById('result');button.disabled=true;try{
+ const index=Number(document.getElementById('boss').value),motion=['bossMotionViolet','bossMotionHorn','bossMotionBalrog','bossMotionMask','bossMotionLucifer'];
+ const keys=new Set(['gunner','forest','ruins','cave','fxWindArrow8V6','fxResonance','fxSlash','fxThorns','fxArrow','fxParry','fxSilk',...HapilProjectiles.assetKeysForEncounter(index),...HapilRenderer.terrainAssetKeysForEncounter(index),...HapilBossSkills.assetKeysForEncounter(index),...HapilBossSkills.optionalAssetKeysForEncounter(index)]);
+ if(index<5)keys.add(motion[index]);else for(const k of HapilActors.sinAssetKeysForEncounter(index))keys.add(k);
+ const images={},list=[...keys];let cursor=0;result.textContent='기존 자산 읽는 중';
+ async function worker(){while(cursor<list.length){const key=list[cursor++];images[key]=await new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>reject(Error('이미지 실패: '+key));im.src='../'+registry[key];});}}await Promise.all([worker(),worker()]);
+ const first=HapilCore.createRun({campaign:true,campaignRevision:5,combatRevision:31,practiceBoss:true,bossIndex:index,difficulty:'hell',seed:813,runId:'v32-browser-fixed'}),checkpoint=HapilCore.checkpoint(first);checkpoint.phase=2;
+ const world=HapilCore.restoreCheckpoint(checkpoint);world.autoAttack=false;world.skillRotation=false;world.player.invulnerableUntil=999999;while(world.tick<300)HapilCore.step(world,{});
+ const state=JSON.stringify(world);if(renderer)renderer.destroy();renderer=HapilRenderer.create(document.getElementById('view'),images);renderer.resize(360,640,1);for(let n=0;n<4;n++)renderer.draw(world,0,world.time,true,{precise:true});
+ const m=renderer.getMetrics(),p=m.projectilePresentation;result.textContent=JSON.stringify({status:'완료',scope:'고정 시점 렌더, 실시간 FPS 아님',boss:index,tick:world.tick,worldUnchanged:state===JSON.stringify(world),loadedImages:list.length,bullets:world.bullets.length,visibleBulletDraws:p.stampDraws,offscreenSkipped:p.offscreenBulletDrawsSkipped||0,missingProjectileAssets:p.missingProjectileAssets,lasers:p.assetLaserDraws,copies:m.combatCopyDraws,stampCacheBytes:p.stampCacheBytes},null,2);
+ }catch(e){result.textContent=String(e.stack||e);}finally{button.disabled=false;}}
+document.getElementById('run').onclick=run;run();
+</script></html>

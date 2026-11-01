@@ -1,0 +1,191 @@
+{
+  "scope": "Native Canvas presentation fixture, actual seed813 Lust HELL31 tick300 background with explicitly injected cosmetic hit/kill events. Not a browser screenshot or natural-clear record.",
+  "baseline": "86f45afa49b282cfb20c03263904e576bc1b89f8",
+  "rows": [
+    {
+      "step": 0,
+      "version": "before",
+      "metrics": {
+        "hurt": 0,
+        "defeat": 0,
+        "cacheBytes": 0
+      },
+      "effects": [
+        {
+          "kind": "hit",
+          "x": 180,
+          "y": 540,
+          "r": 16,
+          "age": 0.03,
+          "ttl": 0.35
+        },
+        {
+          "kind": "kill",
+          "x": 140,
+          "y": 240,
+          "r": 45,
+          "age": 0.05,
+          "ttl": 0.6
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "version": "after",
+      "metrics": {
+        "hurt": 1,
+        "defeat": 1,
+        "cacheBytes": 663552
+      },
+      "effects": [
+        {
+          "kind": "hit",
+          "x": 180,
+          "y": 540,
+          "r": 16,
+          "age": 0.03,
+          "ttl": 0.35
+        },
+        {
+          "kind": "kill",
+          "x": 140,
+          "y": 240,
+          "r": 45,
+          "age": 0.05,
+          "ttl": 0.6
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "version": "before",
+      "metrics": {
+        "hurt": 0,
+        "defeat": 0,
+        "cacheBytes": 0
+      },
+      "effects": [
+        {
+          "kind": "hit",
+          "x": 180,
+          "y": 540,
+          "r": 16,
+          "age": 0.12,
+          "ttl": 0.35
+        },
+        {
+          "kind": "kill",
+          "x": 140,
+          "y": 240,
+          "r": 45,
+          "age": 0.25,
+          "ttl": 0.6
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "version": "after",
+      "metrics": {
+        "hurt": 1,
+        "defeat": 1,
+        "cacheBytes": 663552
+      },
+      "effects": [
+        {
+          "kind": "hit",
+          "x": 180,
+          "y": 540,
+          "r": 16,
+          "age": 0.12,
+          "ttl": 0.35
+        },
+        {
+          "kind": "kill",
+          "x": 140,
+          "y": 240,
+          "r": 45,
+          "age": 0.25,
+          "ttl": 0.6
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "version": "before",
+      "metrics": {
+        "hurt": 0,
+        "defeat": 0,
+        "cacheBytes": 0
+      },
+      "effects": [
+        {
+          "kind": "hit",
+          "x": 180,
+          "y": 540,
+          "r": 16,
+          "age": 0.29,
+          "ttl": 0.35
+        },
+        {
+          "kind": "kill",
+          "x": 140,
+          "y": 240,
+          "r": 45,
+          "age": 0.52,
+          "ttl": 0.6
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "version": "after",
+      "metrics": {
+        "hurt": 1,
+        "defeat": 1,
+        "cacheBytes": 663552
+      },
+      "effects": [
+        {
+          "kind": "hit",
+          "x": 180,
+          "y": 540,
+          "r": 16,
+          "age": 0.29,
+          "ttl": 0.35
+        },
+        {
+          "kind": "kill",
+          "x": 140,
+          "y": 240,
+          "r": 45,
+          "age": 0.52,
+          "ttl": 0.6
+        }
+      ]
+    }
+  ],
+  "sourceAssets": [
+    {
+      "key": "fxResonance",
+      "path": "media/combat/fx01-resonance-impact-v2-atlas.webp",
+      "sha256": "ab9646a1264e7a05b4b5b2dd49cdb26ef060d71447510d2df367bc26134faf73",
+      "bytes": 174016,
+      "source": "Existing verified project combat atlas; no new external license claim",
+      "conversion": "Runtime144px cells, luminance-preserving red-violet grade, alpha retained"
+    },
+    {
+      "key": "fxSlash",
+      "path": "media/combat/fx02-golden-slash-atlas.webp",
+      "sha256": "a390e460a16502215c3dde682d8ff205809dbdd3a5f5e33d99225bb153439bc2",
+      "bytes": 96476,
+      "source": "Existing verified project combat atlas; no new external license claim",
+      "conversion": "Runtime144px cells, original gold RGB/alpha"
+    }
+  ],
+  "image": {
+    "path": "docs/v32/impact-before-after.png",
+    "sha256": "50900258c9a580349141650101327d0be46e024fd1ffa7eebbc1c93cb29c3438",
+    "bytes": 256172
+  }
+}
