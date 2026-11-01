@@ -1,0 +1,21 @@
+{
+  "baseline": "fb90bfb8c5bf9f63f7789b2c38fefc10927562ed",
+  "command": "npm test",
+  "pass": 528,
+  "fail": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "durationMs": 210864.464457,
+  "productHashes": {
+    "index.html": "c9d524ee74d4d839b1986a9f52d63ba968902ebf4450a36b3cb56fb159517783",
+    "src/render.js": "562dcaf36d5b1f6f8058bdf168417b4819e6517fde842b5ce5b48688329e6269",
+    "src/projectiles.js": "1b8a84570cb1a302968a1192bf3ea2b94d60b5fecb9a5cc46fc0c68036e798ba",
+    "src/app.js": "9ebc12bea564eafe8f858c4f2408018c6e08d3b6c8fe4029dc5d62e32b61f114"
+  },
+  "testLogSHA256": "045b216590c73138c5ce41e2fcd96bd533530863d734ce8ab95b0d59a6738506",
+  "protectedFiles": 305,
+  "nativeScenePairs": 12,
+  "laserAlphaComparisons": 48,
+  "browserScenes": 2,
+  "physicalMobileFPSVerified": false
+}

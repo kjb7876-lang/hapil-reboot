@@ -23,5 +23,5 @@ test('29 checkpoint storage keeps its selector and rejects old-client overwrite 
 });
 
 test('the precision control is outside the arena and the flow module loads before core under one cache revision',()=>{
- const html=fs.readFileSync('index.html','utf8'),control=html.indexOf('id="precision-button"'),arena=html.indexOf('id="app-stage"');assert(control>0&&control<arena);assert.match(html,/id="precision-button"[^>]*aria-pressed="false"/);const scripts=[...html.matchAll(/src="src\/([^"?]+)\.js\?v=([^"&]+)"/g)].map(m=>({name:m[1],revision:m[2]}));assert(scripts.findIndex(s=>s.name==='boss-flow-v29')<scripts.findIndex(s=>s.name==='core'));assert.equal(new Set(scripts.map(s=>s.revision)).size,1);assert.equal(scripts[0].revision,'20261101-fullbeam33');
+ const html=fs.readFileSync('index.html','utf8'),control=html.indexOf('id="precision-button"'),arena=html.indexOf('id="app-stage"');assert(control>0&&control<arena);assert.match(html,/id="precision-button"[^>]*aria-pressed="false"/);const scripts=[...html.matchAll(/src="src\/([^"?]+)\.js\?v=([^"&]+)"/g)].map(m=>({name:m[1],revision:m[2]}));assert(scripts.findIndex(s=>s.name==='boss-flow-v29')<scripts.findIndex(s=>s.name==='core'));assert.equal(new Set(scripts.map(s=>s.revision)).size,1);assert.equal(scripts[0].revision,'20261101-danmaku34');
 });

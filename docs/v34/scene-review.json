@@ -1,0 +1,239 @@
+{
+  "baseline": "fb90bfb8c5bf9f63f7789b2c38fefc10927562ed",
+  "scope": "Same actual HELL31 source worlds seed813 phase2 tick300, immune, attacks/skills disabled. Native Canvas comparison, not phone/GPU FPS.",
+  "sourceHashes": {
+    "src/render.js": "562dcaf36d5b1f6f8058bdf168417b4819e6517fde842b5ce5b48688329e6269",
+    "src/projectiles.js": "1b8a84570cb1a302968a1192bf3ea2b94d60b5fecb9a5cc46fc0c68036e798ba"
+  },
+  "imageSHA256": "5e770a50f6a1ad82afbbdd122fe9f29e911fedec1cb51345eaeddb796d1afd70",
+  "rows": [
+    {
+      "index": 0,
+      "name": "Violet",
+      "low": true,
+      "tick": 300,
+      "difference": {
+        "changedPixels": 220932,
+        "maxChannelDelta": 118,
+        "totalChannelDelta": 15090118
+      },
+      "bullets": 88,
+      "logicalLasers": 8,
+      "copies": 2,
+      "sourceCacheBytes": 1579424,
+      "missing": 0,
+      "warmCanvasAllocations": 0,
+      "backdrop": true,
+      "coreUnchanged": true
+    },
+    {
+      "index": 0,
+      "name": "Violet",
+      "low": false,
+      "tick": 300,
+      "difference": {
+        "changedPixels": 221071,
+        "maxChannelDelta": 117,
+        "totalChannelDelta": 15106271
+      },
+      "bullets": 88,
+      "logicalLasers": 8,
+      "copies": 2,
+      "sourceCacheBytes": 1591296,
+      "missing": 0,
+      "warmCanvasAllocations": 0,
+      "backdrop": true,
+      "coreUnchanged": true
+    },
+    {
+      "index": 4,
+      "name": "Lucifer",
+      "low": true,
+      "tick": 300,
+      "difference": {
+        "changedPixels": 217418,
+        "maxChannelDelta": 93,
+        "totalChannelDelta": 9044661
+      },
+      "bullets": 109,
+      "logicalLasers": 5,
+      "copies": 2,
+      "sourceCacheBytes": 1998912,
+      "missing": 0,
+      "warmCanvasAllocations": 0,
+      "backdrop": true,
+      "coreUnchanged": true
+    },
+    {
+      "index": 4,
+      "name": "Lucifer",
+      "low": false,
+      "tick": 300,
+      "difference": {
+        "changedPixels": 217341,
+        "maxChannelDelta": 96,
+        "totalChannelDelta": 8975830
+      },
+      "bullets": 109,
+      "logicalLasers": 5,
+      "copies": 2,
+      "sourceCacheBytes": 1998912,
+      "missing": 0,
+      "warmCanvasAllocations": 0,
+      "backdrop": true,
+      "coreUnchanged": true
+    },
+    {
+      "index": 6,
+      "name": "Envy",
+      "low": true,
+      "tick": 300,
+      "difference": {
+        "changedPixels": 211203,
+        "maxChannelDelta": 97,
+        "totalChannelDelta": 16935110
+      },
+      "bullets": 92,
+      "logicalLasers": 8,
+      "copies": 2,
+      "sourceCacheBytes": 1433280,
+      "missing": 0,
+      "warmCanvasAllocations": 0,
+      "backdrop": true,
+      "coreUnchanged": true
+    },
+    {
+      "index": 6,
+      "name": "Envy",
+      "low": false,
+      "tick": 300,
+      "difference": {
+        "changedPixels": 211229,
+        "maxChannelDelta": 94,
+        "totalChannelDelta": 15518424
+      },
+      "bullets": 92,
+      "logicalLasers": 8,
+      "copies": 2,
+      "sourceCacheBytes": 1479936,
+      "missing": 0,
+      "warmCanvasAllocations": 0,
+      "backdrop": true,
+      "coreUnchanged": true
+    },
+    {
+      "index": 8,
+      "name": "Lust",
+      "low": true,
+      "tick": 300,
+      "difference": {
+        "changedPixels": 217424,
+        "maxChannelDelta": 112,
+        "totalChannelDelta": 9795314
+      },
+      "bullets": 60,
+      "logicalLasers": 6,
+      "copies": 2,
+      "sourceCacheBytes": 2032864,
+      "missing": 0,
+      "warmCanvasAllocations": 0,
+      "backdrop": true,
+      "coreUnchanged": true
+    },
+    {
+      "index": 8,
+      "name": "Lust",
+      "low": false,
+      "tick": 300,
+      "difference": {
+        "changedPixels": 217503,
+        "maxChannelDelta": 114,
+        "totalChannelDelta": 9294984
+      },
+      "bullets": 60,
+      "logicalLasers": 6,
+      "copies": 2,
+      "sourceCacheBytes": 2032864,
+      "missing": 0,
+      "warmCanvasAllocations": 0,
+      "backdrop": true,
+      "coreUnchanged": true
+    },
+    {
+      "index": 11,
+      "name": "Pride",
+      "low": true,
+      "tick": 300,
+      "difference": {
+        "changedPixels": 223918,
+        "maxChannelDelta": 128,
+        "totalChannelDelta": 28683769
+      },
+      "bullets": 58,
+      "logicalLasers": 5,
+      "copies": 2,
+      "sourceCacheBytes": 1483216,
+      "missing": 0,
+      "warmCanvasAllocations": 0,
+      "backdrop": true,
+      "coreUnchanged": true
+    },
+    {
+      "index": 11,
+      "name": "Pride",
+      "low": false,
+      "tick": 300,
+      "difference": {
+        "changedPixels": 224060,
+        "maxChannelDelta": 130,
+        "totalChannelDelta": 26462787
+      },
+      "bullets": 58,
+      "logicalLasers": 5,
+      "copies": 2,
+      "sourceCacheBytes": 1483216,
+      "missing": 0,
+      "warmCanvasAllocations": 0,
+      "backdrop": true,
+      "coreUnchanged": true
+    },
+    {
+      "index": 33,
+      "name": "Rian / Ion",
+      "low": true,
+      "tick": 300,
+      "difference": {
+        "changedPixels": 211693,
+        "maxChannelDelta": 122,
+        "totalChannelDelta": 19305193
+      },
+      "bullets": 77,
+      "logicalLasers": 7,
+      "copies": 2,
+      "sourceCacheBytes": 1253456,
+      "missing": 0,
+      "warmCanvasAllocations": 0,
+      "backdrop": true,
+      "coreUnchanged": true
+    },
+    {
+      "index": 33,
+      "name": "Rian / Ion",
+      "low": false,
+      "tick": 300,
+      "difference": {
+        "changedPixels": 211986,
+        "maxChannelDelta": 126,
+        "totalChannelDelta": 18826924
+      },
+      "bullets": 77,
+      "logicalLasers": 7,
+      "copies": 2,
+      "sourceCacheBytes": 1254480,
+      "missing": 0,
+      "warmCanvasAllocations": 0,
+      "backdrop": true,
+      "coreUnchanged": true
+    }
+  ]
+}
