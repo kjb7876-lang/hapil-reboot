@@ -135,6 +135,35 @@
     });
     return out;
   }
+  function outerEnd(x,y,angle){
+    var dx=Math.cos(angle),dy=Math.sin(angle),t=Infinity;
+    if(dx>1e-9)t=Math.min(t,(360-x)/dx);else if(dx< -1e-9)t=Math.min(t,-x/dx);
+    if(dy>1e-9)t=Math.min(t,(640-y)/dy);else if(dy< -1e-9)t=Math.min(t,-y/dy);
+    var ex=clamp(x+dx*t,0,360),ey=clamp(y+dy*t,0,640);
+    return{x:ex<1e-7?0:ex>360-1e-7?360:ex,y:ey<1e-7?0:ey>640-1e-7?640:ey};
+  }
+  function fullLengthRoutes(specs,route,playerRadius){
+    var chains=Object.create(null),out=[],turns=[0,.12,-.12,.24,-.24,.36,-.36,.48,-.48,.66,-.66,.84,-.84,1.02,-1.02];
+    specs.forEach(function(s){(chains[s.chainId]||(chains[s.chainId]=[])).push(s);});
+    function extend(s,x,y,angle){var end=outerEnd(x,y,angle);return Object.assign({},s,{x:x,y:y,x2:end.x,y2:end.y,angle:angle,length:Math.hypot(end.x-x,end.y-y)});}
+    function safe(s){return s.length>=12&&(!route||routeEntry(s,route,route.halfWidth+s.width/2+playerRadius+2)===null);}
+    Object.keys(chains).forEach(function(key){
+      var chain=chains[key],first=chain[0];
+      for(var i=0;i<turns.length;i++){
+        var angle=first.angle+turns[i],a=extend(first,first.x,first.y,angle),candidate=[a];
+        if(first.v28Reflected){
+          // A real side-wall bounce is recomputed as a pair. Its final leg
+          // also reaches the outer map edge; neither leg is shortened for a gap.
+          if(chain.length!==2||(a.x2!==0&&a.x2!==360))continue;
+          candidate.push(extend(chain[1],a.x2,a.y2,Math.atan2(Math.sin(angle),-Math.cos(angle))));
+        }
+        if(candidate.every(safe)){out=out.concat(candidate);break;}
+      }
+      // If even the origin lies in the protected route, omit this complete
+      // promise before warning rather than show a truncated or unannounced ray.
+    });
+    return out;
+  }
   function makeBarrage(w,emitter,beat,opts){
     if(w&&w.combatRevision===31)return makeSpectacle(w,emitter,beat,opts);
     var p=profileFor(w);if(!p||!w.boss||!emitter||![emitter.x,emitter.y].every(finite))return[];
@@ -232,7 +261,8 @@
       }
       if(b)append(a,b,i,i,0,false,chain);
     }
-    return fitRoute(out,routeFor(w,opts),Math.max(0,finite(opts.playerRadius)?opts.playerRadius:w.player&&finite(w.player.r)?w.player.r:2));
+    var route=routeFor(w,opts),radius=Math.max(0,finite(opts.playerRadius)?opts.playerRadius:w.player&&finite(w.player.r)?w.player.r:2);
+    return opts.fullLength?fullLengthRoutes(out,route,radius):fitRoute(out,route,radius);
   }
   function makeSpectacle(w,emitter,beat,opts){
     opts=opts||{};var p=profileFor(w);if(!p)return[];

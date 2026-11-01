@@ -1634,7 +1634,7 @@
     var beat=forced?flowBeat:cycle*16+Math.floor((within-LASER_BARRAGE_LIMITS.firstTick)/cadence),b=w.boss,actor=b.participants&&b.participants[beat%b.participants.length];
     var emitter=actor?{x:actor.x,y:actor.y,sourceActorId:actor.id,modelActorId:actor.id}:{x:b.x,y:b.y+18};
     var route=w._pressurePlan&&w.tick<w._pressurePlan.expireAt?w._pressurePlan.route:null;
-    var specs=Lasers.makeBarrage(w,emitter,beat,{phase:w.phase,escapeRoute:route,playerRadius:w.player.r});
+    var specs=Lasers.makeBarrage(w,emitter,beat,{phase:w.phase,escapeRoute:route,playerRadius:w.player.r,fullLength:laserPhraseEnabled(w)});
     specs.forEach(function(s){s.laserBarrage=true;});
     warning(w,specs,54,laserPhraseEnabled(w)?'보스 고유 광선 · 연속 전개':'보스 고유 광선 연사');
   }
