@@ -1,0 +1,18 @@
+{
+  "command": "npm test",
+  "pass": 522,
+  "fail": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "durationMs": 174606.243081,
+  "baseline": "86f45afa49b282cfb20c03263904e576bc1b89f8",
+  "productHashes": {
+    "index.html": "9b2162a876a89b38cc09e9026d3196666533df67c83489ebb34cf5a4ca70d6be",
+    "src/render.js": "4e69d410e16c1a3108de009f20a6d3414bcb917527e61cadaf82163c6c559fba",
+    "src/projectiles.js": "d69e94d31c95b86154c822580b317d9a1c051c55b97014841b6b956a602a1656",
+    "src/app.js": "c167cdfb51d2b1fbe2d196aedbaf2cb1db7db578b11dbc5d0663568153a630a4"
+  },
+  "testLogSHA256": "60cb1e40a38e4e9ae3e6a68891c41accde465a36aab75dabf54c9d67e1997223",
+  "browser": "Two actual-browser static core scenes passed; live mode repeatedly paused on long frame gaps; no device FPS claim",
+  "originalProtectedFiles": 305
+}

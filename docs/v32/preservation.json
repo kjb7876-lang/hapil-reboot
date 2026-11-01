@@ -1,0 +1,13 @@
+{
+  "baseline": "86f45afa49b282cfb20c03263904e576bc1b89f8",
+  "protectedCount": 305,
+  "changed": [],
+  "sourceSHA256": {
+    "src/projectiles.js": "d69e94d31c95b86154c822580b317d9a1c051c55b97014841b6b956a602a1656",
+    "src/render.js": "4e69d410e16c1a3108de009f20a6d3414bcb917527e61cadaf82163c6c559fba",
+    "src/app.js": "c167cdfb51d2b1fbe2d196aedbaf2cb1db7db578b11dbc5d0663568153a630a4",
+    "index.html": "9b2162a876a89b38cc09e9026d3196666533df67c83489ebb34cf5a4ca70d6be"
+  },
+  "simulationRevision": 31,
+  "presentationRevision": 32
+}

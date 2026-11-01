@@ -1,0 +1,310 @@
+{
+  "baseline": "86f45afa49b282cfb20c03263904e576bc1b89f8",
+  "scope": "Actual seeded HELL31 worlds at each boss maximum bullet count in first900ticks, immune, attacks/skills disabled; alternating60 warmed draw-only CPU samples. Not phone/GPU FPS.",
+  "source": {
+    "src/render.js": "4e69d410e16c1a3108de009f20a6d3414bcb917527e61cadaf82163c6c559fba",
+    "src/projectiles.js": "d69e94d31c95b86154c822580b317d9a1c051c55b97014841b6b956a602a1656"
+  },
+  "rows": [
+    {
+      "index": 0,
+      "tick": 271,
+      "low": true,
+      "bullets": 113,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "before": {
+        "p50": 8.742369999999937,
+        "p95": 11.252704000000449,
+        "frames": 60
+      },
+      "after": {
+        "p50": 7.493457999999919,
+        "p95": 27.575815000000148,
+        "frames": 60
+      },
+      "bindingHits": 113,
+      "offscreenSkipped": 27,
+      "cacheBytes": 1591296,
+      "missing": 0
+    },
+    {
+      "index": 0,
+      "tick": 271,
+      "low": false,
+      "bullets": 113,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "before": {
+        "p50": 9.816539999999804,
+        "p95": 28.869326,
+        "frames": 60
+      },
+      "after": {
+        "p50": 9.12546200000088,
+        "p95": 18.718832000000475,
+        "frames": 60
+      },
+      "bindingHits": 113,
+      "offscreenSkipped": 27,
+      "cacheBytes": 1591296,
+      "missing": 0
+    },
+    {
+      "index": 4,
+      "tick": 235,
+      "low": true,
+      "bullets": 121,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "before": {
+        "p50": 2.8135259999999107,
+        "p95": 4.430952000000616,
+        "frames": 60
+      },
+      "after": {
+        "p50": 2.502764999999272,
+        "p95": 5.1224679999995715,
+        "frames": 60
+      },
+      "bindingHits": 121,
+      "offscreenSkipped": 1,
+      "cacheBytes": 1942464,
+      "missing": 0
+    },
+    {
+      "index": 4,
+      "tick": 235,
+      "low": false,
+      "bullets": 121,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "before": {
+        "p50": 3.2669690000002447,
+        "p95": 5.203768000001219,
+        "frames": 60
+      },
+      "after": {
+        "p50": 2.9257160000015574,
+        "p95": 3.985539000001154,
+        "frames": 60
+      },
+      "bindingHits": 121,
+      "offscreenSkipped": 1,
+      "cacheBytes": 1942464,
+      "missing": 0
+    },
+    {
+      "index": 6,
+      "tick": 271,
+      "low": true,
+      "bullets": 107,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "before": {
+        "p50": 2.69821199999933,
+        "p95": 6.701951999999437,
+        "frames": 60
+      },
+      "after": {
+        "p50": 2.5506789999999455,
+        "p95": 5.196313000000373,
+        "frames": 60
+      },
+      "bindingHits": 107,
+      "offscreenSkipped": 17,
+      "cacheBytes": 1479936,
+      "missing": 0
+    },
+    {
+      "index": 6,
+      "tick": 271,
+      "low": false,
+      "bullets": 107,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "before": {
+        "p50": 7.375626000000921,
+        "p95": 18.519554999998945,
+        "frames": 60
+      },
+      "after": {
+        "p50": 7.219836000000214,
+        "p95": 15.339598999998998,
+        "frames": 60
+      },
+      "bindingHits": 107,
+      "offscreenSkipped": 17,
+      "cacheBytes": 1479936,
+      "missing": 0
+    },
+    {
+      "index": 8,
+      "tick": 277,
+      "low": true,
+      "bullets": 70,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "before": {
+        "p50": 4.341637000001356,
+        "p95": 8.19214600000123,
+        "frames": 60
+      },
+      "after": {
+        "p50": 3.6811779999989085,
+        "p95": 6.003251999998611,
+        "frames": 60
+      },
+      "bindingHits": 70,
+      "offscreenSkipped": 13,
+      "cacheBytes": 2106832,
+      "missing": 0
+    },
+    {
+      "index": 8,
+      "tick": 277,
+      "low": false,
+      "bullets": 70,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "before": {
+        "p50": 2.3023900000007416,
+        "p95": 3.12521199999901,
+        "frames": 60
+      },
+      "after": {
+        "p50": 2.1753959999987273,
+        "p95": 3.4501469999995606,
+        "frames": 60
+      },
+      "bindingHits": 70,
+      "offscreenSkipped": 13,
+      "cacheBytes": 2106832,
+      "missing": 0
+    },
+    {
+      "index": 11,
+      "tick": 253,
+      "low": true,
+      "bullets": 75,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "before": {
+        "p50": 2.0696590000006836,
+        "p95": 2.90248199999769,
+        "frames": 60
+      },
+      "after": {
+        "p50": 2.0225740000023507,
+        "p95": 3.0249600000024657,
+        "frames": 60
+      },
+      "bindingHits": 75,
+      "offscreenSkipped": 4,
+      "cacheBytes": 1501616,
+      "missing": 0
+    },
+    {
+      "index": 11,
+      "tick": 253,
+      "low": false,
+      "bullets": 75,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "before": {
+        "p50": 2.251711000004434,
+        "p95": 3.373202000002493,
+        "frames": 60
+      },
+      "after": {
+        "p50": 2.2250110000022687,
+        "p95": 4.782492999998794,
+        "frames": 60
+      },
+      "bindingHits": 75,
+      "offscreenSkipped": 4,
+      "cacheBytes": 1501616,
+      "missing": 0
+    },
+    {
+      "index": 33,
+      "tick": 289,
+      "low": true,
+      "bullets": 81,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "before": {
+        "p50": 2.7381420000019716,
+        "p95": 8.259109999999055,
+        "frames": 60
+      },
+      "after": {
+        "p50": 2.5276579999990645,
+        "p95": 3.5566840000028606,
+        "frames": 60
+      },
+      "bindingHits": 81,
+      "offscreenSkipped": 7,
+      "cacheBytes": 1253456,
+      "missing": 0
+    },
+    {
+      "index": 33,
+      "tick": 289,
+      "low": false,
+      "bullets": 81,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "before": {
+        "p50": 3.400582000002032,
+        "p95": 5.608838000000105,
+        "frames": 60
+      },
+      "after": {
+        "p50": 3.082129000002169,
+        "p95": 4.231386999999813,
+        "frames": 60
+      },
+      "bindingHits": 81,
+      "offscreenSkipped": 7,
+      "cacheBytes": 1254480,
+      "missing": 0
+    }
+  ]
+}
