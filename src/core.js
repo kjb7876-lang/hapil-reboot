@@ -16,12 +16,13 @@
   var HELL_MECHANICS_REVISION=15;
   // Explicit opt-in: old boundary saves have no combatRevision and retain
   // their original deterministic encounter. Revision25 is a separate opt-in.
-  var COMBAT_REVISION=21, IDENTITY_COMBAT_REVISION=25, PATTERN_COMBAT_REVISION=27,LASER_COMBAT_REVISION=28,FLOW_COMBAT_REVISION=29,MOBILE_COMBAT_REVISION=30;
-  function mobileBossEnabled(w){return w.combatRevision===MOBILE_COMBAT_REVISION;}
+  var COMBAT_REVISION=21, IDENTITY_COMBAT_REVISION=25, PATTERN_COMBAT_REVISION=27,LASER_COMBAT_REVISION=28,FLOW_COMBAT_REVISION=29,MOBILE_COMBAT_REVISION=30,LASER_PHRASE_COMBAT_REVISION=31;
+  function laserPhraseEnabled(w){return w.combatRevision===LASER_PHRASE_COMBAT_REVISION;}
+  function mobileBossEnabled(w){return w.combatRevision===MOBILE_COMBAT_REVISION||laserPhraseEnabled(w);}
   function flowEnabled(w){return w.combatRevision===FLOW_COMBAT_REVISION||mobileBossEnabled(w);}
   function laserEnabled(w){return w.combatRevision===LASER_COMBAT_REVISION||flowEnabled(w);}
   function patternEnabled(w){return w.combatRevision===PATTERN_COMBAT_REVISION||laserEnabled(w);}
-  function supportedCombatRevision(value){return value===COMBAT_REVISION||value===IDENTITY_COMBAT_REVISION||value===PATTERN_COMBAT_REVISION||value===LASER_COMBAT_REVISION||value===FLOW_COMBAT_REVISION||value===MOBILE_COMBAT_REVISION;}
+  function supportedCombatRevision(value){return value===COMBAT_REVISION||value===IDENTITY_COMBAT_REVISION||value===PATTERN_COMBAT_REVISION||value===LASER_COMBAT_REVISION||value===FLOW_COMBAT_REVISION||value===MOBILE_COMBAT_REVISION||value===LASER_PHRASE_COMBAT_REVISION;}
   function pressureEnabled(w){return supportedCombatRevision(w.combatRevision);}
   function identityEnabled(w){return (w.combatRevision===IDENTITY_COMBAT_REVISION||patternEnabled(w))&&w.campaign&&(patternEnabled(w)||w.finalPractice||w.bossIndex!==8);}
   var BULLET_SLOW=Object.freeze({factor:.14,rampTicks:6,recoverTicks:36,durations:Object.freeze({memory:24,counter:54,delay:108,ego:90})});
@@ -45,6 +46,7 @@
   var HELL_OVERLAP_LIMITS=Object.freeze({cycleTicks:336,warningTicks:108,activeTicks:96,fanBaseSpeed:150,fanMinSpeed:198,fanMaxSpeed:234,rotorMaxDownSpeed:378,rotorMaxTotalSpeed:388,corridorHalfWidth:24});
   var CAPS = Object.freeze({ bullets: 768, shots: 96, enemies: 12, effects: 96, hazards: 40 });
   var LASER_BARRAGE_LIMITS=Object.freeze({maxLive:12,firstTick:72,lastTick:456,minWarningTicks:54,minActiveTicks:8,maxActiveTicks:20,minFadeTicks:8,maxFadeTicks:12});
+  var LASER_PHRASE_LIMITS=Object.freeze({minActiveTicks:42,maxActiveTicks:72,minFadeTicks:12,maxFadeTicks:18,maxStaggerTicks:138,maxPhraseTicks:294,maxSegments:8});
   var MOBILE_BOSS_LIMITS=Object.freeze({maxCopies:4,copyTicks:360,copyX:Object.freeze([66,142,218,294]),copyY:166});
   var MOBILE_BULLET_LIMITS=Object.freeze({graceTicks:180,retireDuration:.8,exitPadding:104,minMovingSpeed:1});
   var PHASE_HP = [1700, 1850, 2000];
@@ -269,6 +271,7 @@
     if(identityEnabled(w)){release.sourcePhase=laserEnabled(w)&&identitySpec&&Number.isInteger(identitySpec.sourcePhase)?identitySpec.sourcePhase:w.phase;if(identitySpec&&finite(identitySpec.angle))release.angle=identitySpec.angle;}
     if(laserEnabled(w)&&identitySpec&&identitySpec.laserBarrage){
       release.laserBarrage=true;['v28BarrageId','v28Pattern','v28Mode','v28RayGroup','v28Segment','v28Reflected','chainId'].forEach(function(k){if(identitySpec[k]!==undefined)release[k]=identitySpec[k];});
+      if(laserPhraseEnabled(w))['v31Barrage','v31Phrase','v31Stage','v31StageCount'].forEach(function(k){if(identitySpec[k]!==undefined)release[k]=identitySpec[k];});
       if(identitySpec.modelActorId)release.modelActorId=identitySpec.modelActorId;
     }
     if(flowEnabled(w)&&identitySpec&&identitySpec.v29Role){['v29Role','v29PulseIndex','v29PulseCount','v29TargetX','v29TargetY','v29AimSampleTick','v29OriginX','v29OriginY','v29MovementX','v29MovementY'].forEach(function(k){if(identitySpec[k]!==undefined)release[k]=identitySpec[k];});if(identitySpec.modelActorId)release.modelActorId=identitySpec.modelActorId;}
@@ -411,6 +414,8 @@
   function warningLaserBarrage(w,specs,name){
     var b=w.boss;if(!b||w.stage!=='boss'||!specs.length)return false;
     var stats=b.laserBarrageStats||(b.laserBarrageStats={attempts:0,committed:0,raysCommitted:0,skippedRoute:0,skippedBudget:0,skippedInvalid:0,skippedWindow:0});stats.attempts++;
+    var phrase=laserPhraseEnabled(w),limits=phrase?LASER_PHRASE_LIMITS:LASER_BARRAGE_LIMITS;
+    if(phrase&&specs.length>limits.maxSegments){stats.skippedInvalid++;return false;}
     // A reflected pulse is one promise. Either both finite segments survive
     // the route check, or neither appears; a false remaining half is not drawn.
     var groups=Object.create(null),route=w._pressurePlan&&w.tick<w._pressurePlan.expireAt?w._pressurePlan.route:null,accepted=[];
@@ -418,12 +423,14 @@
     Object.keys(groups).forEach(function(key){var chain=groups[key],valid=chain.every(function(s){
       if(!s||![s.x,s.y,s.x2,s.y2,s.width,s.warningTicks,s.staggerTicks,s.activeTicks,s.fadeTicks].every(finite))return false;
       var length=Math.hypot(s.x2-s.x,s.y2-s.y);
-      return s.x>=0&&s.x<=W&&s.x2>=0&&s.x2<=W&&s.y>=0&&s.y<=H&&s.y2>=0&&s.y2<=H&&length>=8&&length<=900&&s.width>=2&&s.width<=24&&Number.isInteger(s.warningTicks)&&s.warningTicks>=54&&s.warningTicks<=120&&Number.isInteger(s.staggerTicks)&&s.staggerTicks>=0&&s.staggerTicks<=72&&Number.isInteger(s.activeTicks)&&s.activeTicks>=8&&s.activeTicks<=20&&Number.isInteger(s.fadeTicks)&&s.fadeTicks>=8&&s.fadeTicks<=12;
+      if(phrase&&(s.v31Barrage!==true||typeof s.v31Phrase!=='string'||!s.v31Phrase.length||s.v31Phrase.length>100||!Number.isInteger(s.v31StageCount)||s.v31StageCount<1||s.v31StageCount>3||!Number.isInteger(s.v31Stage)||s.v31Stage<0||s.v31Stage>=s.v31StageCount||s.warningTicks+s.staggerTicks+s.activeTicks+s.fadeTicks>limits.maxPhraseTicks))return false;
+      return s.x>=0&&s.x<=W&&s.x2>=0&&s.x2<=W&&s.y>=0&&s.y<=H&&s.y2>=0&&s.y2<=H&&length>=8&&length<=900&&s.width>=2&&s.width<=24&&Number.isInteger(s.warningTicks)&&s.warningTicks>=54&&s.warningTicks<=120&&Number.isInteger(s.staggerTicks)&&s.staggerTicks>=0&&s.staggerTicks<=(phrase?limits.maxStaggerTicks:72)&&Number.isInteger(s.activeTicks)&&s.activeTicks>=limits.minActiveTicks&&s.activeTicks<=limits.maxActiveTicks&&Number.isInteger(s.fadeTicks)&&s.fadeTicks>=limits.minFadeTicks&&s.fadeTicks<=limits.maxFadeTicks;
     });
       if(!valid){stats.skippedInvalid++;return;}
       if(chain.some(function(s){return s.v28Reflected;})){
         var first=chain.find(function(s){return s.v28Segment===0;}),second=chain.find(function(s){return s.v28Segment===1;});
-        if(chain.length!==2||!first||!second||Math.hypot(first.x2-second.x,first.y2-second.y)>1e-6||['warningTicks','staggerTicks','activeTicks','fadeTicks'].some(function(k){return first[k]!==second[k];})){stats.skippedInvalid++;return;}
+        var shared=['warningTicks','staggerTicks','activeTicks','fadeTicks'];if(phrase)shared=shared.concat(['v31Barrage','v31Phrase','v31Stage','v31StageCount']);
+        if(chain.length!==2||!first||!second||Math.hypot(first.x2-second.x,first.y2-second.y)>1e-6||shared.some(function(k){return first[k]!==second[k];})){stats.skippedInvalid++;return;}
       }
       var within=(Math.round(w.phaseTime*60)-1)%PRESSURE_LIMITS.cycleTicks;
       if(chain.some(function(s){return within+s.warningTicks+s.staggerTicks+s.activeTicks+s.fadeTicks>=PRESSURE_LIMITS.cycleTicks+60;})){stats.skippedWindow++;return;}
@@ -441,6 +448,7 @@
       var h=acquire(w,'hazards',{id:++w.idCounter,castId:castId,ownerId:s.ownerId||b.id,kind:'laser',x1:s.x,y1:s.y,x2:s.x2,y2:s.y2,width:s.width,color:s.color||'#ffffff',phase:'warning',progress:0,born:w.tick,warningTicks:wait,baseWarningTicks:s.warningTicks,staggerTicks:s.staggerTicks,activeTicks:s.activeTicks,fadeTicks:s.fadeTicks,activeAt:activeAt,fadeAt:activeAt+s.activeTicks,expireAt:activeAt+s.activeTicks+s.fadeTicks,grazed:false,name:name,patternId:s.patternId||'laser-'+(s.v28Pattern||'boss')+'-v28',angle:angle,length:Math.hypot(s.x2-s.x,s.y2-s.y),sourcePhase:Number.isInteger(s.sourcePhase)?s.sourcePhase:w.phase,laserBarrage:true,v28BarrageId:group,v28Pattern:s.v28Pattern||'',v28RayGroup:s.v28RayGroup,v28Segment:s.v28Segment||0,v28Reflected:!!s.v28Reflected,chainId:group+'|'+(s.chainId||'single-'+index),paletteSlot:Number.isInteger(s.paletteSlot)?s.paletteSlot:index%2});
       if(s.sourceActorId)h.sourceActorId=s.sourceActorId;if(s.modelActorId)h.modelActorId=s.modelActorId;if(s.identityRole)h.identityRole=s.identityRole;
       ['v28Mode','v28LaneIndex','v28RestLane','v28KeyCount'].forEach(function(k){if(s[k]!==undefined)h[k]=s[k];});
+      if(phrase)['v31Barrage','v31Phrase','v31Stage','v31StageCount'].forEach(function(k){h[k]=s[k];});
     });
     stats.committed++;stats.raysCommitted+=accepted.length;return true;
   }
@@ -1628,7 +1636,7 @@
     var route=w._pressurePlan&&w.tick<w._pressurePlan.expireAt?w._pressurePlan.route:null;
     var specs=Lasers.makeBarrage(w,emitter,beat,{phase:w.phase,escapeRoute:route,playerRadius:w.player.r});
     specs.forEach(function(s){s.laserBarrage=true;});
-    warning(w,specs,54,'보스 고유 광선 연사');
+    warning(w,specs,54,laserPhraseEnabled(w)?'보스 고유 광선 · 연속 전개':'보스 고유 광선 연사');
   }
   function wavePressure(w) {
     if(!pressureEnabled(w)||!w.campaign||w.stage!=='waves')return;
@@ -2015,7 +2023,7 @@
     return w;
   }
   return Object.freeze({ W: W, H: H, FIXED_DT: FIXED_DT, RULESET_VERSION: RULESET, MECHANICS_REVISION: 2, CAPS: CAPS,
-    COMBAT_REVISION:COMBAT_REVISION,IDENTITY_COMBAT_REVISION:IDENTITY_COMBAT_REVISION,PATTERN_COMBAT_REVISION:PATTERN_COMBAT_REVISION,LASER_COMBAT_REVISION:LASER_COMBAT_REVISION,FLOW_COMBAT_REVISION:FLOW_COMBAT_REVISION,MOBILE_COMBAT_REVISION:MOBILE_COMBAT_REVISION,LATEST_COMBAT_REVISION:MOBILE_COMBAT_REVISION,MOBILE_BOSS_LIMITS:MOBILE_BOSS_LIMITS,MOBILE_BULLET_LIMITS:MOBILE_BULLET_LIMITS,LASER_BARRAGE_LIMITS:LASER_BARRAGE_LIMITS,BULLET_SLOW:BULLET_SLOW,bulletTimeScale:bulletTimeScale,IDENTITY_PROFILES:IDENTITY_PROFILES,PRESSURE_LIMITS:PRESSURE_LIMITS,attackCoverage:attackCoverage,
+    COMBAT_REVISION:COMBAT_REVISION,IDENTITY_COMBAT_REVISION:IDENTITY_COMBAT_REVISION,PATTERN_COMBAT_REVISION:PATTERN_COMBAT_REVISION,LASER_COMBAT_REVISION:LASER_COMBAT_REVISION,FLOW_COMBAT_REVISION:FLOW_COMBAT_REVISION,MOBILE_COMBAT_REVISION:MOBILE_COMBAT_REVISION,LASER_PHRASE_COMBAT_REVISION:LASER_PHRASE_COMBAT_REVISION,LATEST_COMBAT_REVISION:LASER_PHRASE_COMBAT_REVISION,MOBILE_BOSS_LIMITS:MOBILE_BOSS_LIMITS,MOBILE_BULLET_LIMITS:MOBILE_BULLET_LIMITS,LASER_BARRAGE_LIMITS:LASER_BARRAGE_LIMITS,LASER_PHRASE_LIMITS:LASER_PHRASE_LIMITS,BULLET_SLOW:BULLET_SLOW,bulletTimeScale:bulletTimeScale,IDENTITY_PROFILES:IDENTITY_PROFILES,PRESSURE_LIMITS:PRESSURE_LIMITS,attackCoverage:attackCoverage,
     CAMPAIGN_BOSSES: CAMPAIGN_BOSSES, CAMPAIGN_SIGNATURES: CAMPAIGN_SIGNATURES, CAMPAIGN_REVISION: 3, HELL_MECHANICS_REVISION: HELL_MECHANICS_REVISION, HELL_OVERLAP_LIMITS: HELL_OVERLAP_LIMITS,
     campaignBossCount: campaignBossCount, LATEST_CAMPAIGN_REVISION: 5, createRun: createRun, step: step, checkpoint: checkpoint, restoreCheckpoint: restoreCheckpoint, skipBossIntro: skipBossIntro,
     geometry: Object.freeze({ segmentDistanceSquared: segmentDistanceSquared, segmentPairDistanceSquared: segmentPairDistanceSquared, sweptCircleHit: sweptCircleHit, projectileDistanceSquared: projectileDistanceSquared, patternDistanceSquared:patternDistanceSquared, hazardDistanceSquared: hazardDistanceSquared }) });

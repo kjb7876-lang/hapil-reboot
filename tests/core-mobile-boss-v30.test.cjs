@@ -11,7 +11,7 @@ function advance(w,tick){while(w.tick<tick)C.step(w,{});}
 const permitted=index=>index<12||[18,19,20,29,30,33,34].includes(index);
 
 test('30 is a separate supported selector with bounded copy limits and the same safe checkpoint schema',()=>{
- assert.equal(C.MOBILE_COMBAT_REVISION,30);assert.equal(C.LATEST_COMBAT_REVISION,30);assert.equal(C.MOBILE_BOSS_LIMITS.maxCopies,4);assert.equal(C.MOBILE_BOSS_LIMITS.copyTicks,360);assert.deepEqual(C.MOBILE_BOSS_LIMITS.copyX,[66,142,218,294]);const w=world(),saved=C.checkpoint(w);assert.equal(saved.combatRevision,30);assert.deepEqual(C.checkpoint(C.restoreCheckpoint(saved)),saved);assert.deepEqual(Object.keys(saved),Object.keys(C.checkpoint(world(0,0,'hell',29))));
+ assert.equal(C.MOBILE_COMBAT_REVISION,30);assert.equal(C.LATEST_COMBAT_REVISION,31);assert.equal(C.MOBILE_BOSS_LIMITS.maxCopies,4);assert.equal(C.MOBILE_BOSS_LIMITS.copyTicks,360);assert.deepEqual(C.MOBILE_BOSS_LIMITS.copyX,[66,142,218,294]);const w=world(),saved=C.checkpoint(w);assert.equal(saved.combatRevision,30);assert.deepEqual(C.checkpoint(C.restoreCheckpoint(saved)),saved);assert.deepEqual(Object.keys(saved),Object.keys(C.checkpoint(world(0,0,'hell',29))));
 });
 
 test('undefined and all five historical combat selectors remain raw exact against pinned29',()=>{

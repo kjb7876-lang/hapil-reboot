@@ -50,11 +50,31 @@
     ['authority-fold-stitch-impact','authority-fold',['diagonal','reflect','piano'],10.0,4,0]
   ];
   var profiles=Object.freeze(ROWS.map(function(r,index){return Object.freeze({index:index,id:r[0],role:r[1],modes:Object.freeze(r[2]),width:r[3],stepTicks:r[4],cadenceAdd:r[5]});}));
+  // Revision31 uses the same source-owned finite geometry, but gives each
+  // encounter its own held phrase. hold, phrase spacing and middle accent
+  // are authored separately; these are successive locked rays, never a
+  // moving active laser. Historical revisions do not enter this branch.
+  var SPECTACLE_ROWS=[
+    ['three-wing-cuts',52,102,1],['reed-held-breath',60,110,1],['double-guillotine',58,96,2],
+    ['feather-mirror-answer',54,108,0],['constellation-canon',60,114,2],['late-breath-collapse',62,120,0],
+    ['opposed-mirror-duel',58,102,1],['jaw-and-answer',58,96,2],['spotlight-encore',54,102,2],
+    ['vault-key-refrain',56,114,1],['ignition-cadenza',48,96,2],['keyboard-verdict',54,96,1],
+    ['defense-relay-chain',48,96,0],['mercy-held-boundaries',60,114,0],['three-veto-locks',50,108,2],
+    ['feedback-return-refrain',54,108,1],['migration-forked-phrase',52,108,1],['separated-memory-voices',56,114,0],
+    ['flute-key-cadenza',48,96,2],['six-sword-canon',58,96,2],['insomnia-mist-breath',62,120,0],
+    ['academy-battery-relay',48,96,2],['descending-harvest-steps',58,108,1],['alternating-upper-orders',54,96,1],
+    ['furnace-pipe-rebound',60,108,2],['neural-zigzag-phrase',48,96,2],['grave-seal-refrain',60,114,0],
+    ['collapse-triptych',56,102,2],['deferred-thread-refrain',54,120,0],['clockface-answer',56,114,1],
+    ['castle-two-wall-gates',60,108,1],['three-causal-locks',56,114,2],['reverse-relay-procession',52,96,2],
+    ['cross-and-shield-duet',58,102,1],['fold-stitch-impact',60,96,2]
+  ];
+  var spectacleLimits=Object.freeze({combatRevision:31,minActiveTicks:42,maxActiveTicks:72,minFadeTicks:12,maxFadeTicks:18,maxStaggerTicks:138,maxPhraseTicks:294,minDamageSpanTicks:138,minFullSpanTicks:150,maxSegments:8});
+  var spectacleProfiles=Object.freeze(SPECTACLE_ROWS.map(function(r,index){return Object.freeze({index:index,id:r[0],holdTicks:r[1],spacingTicks:r[2],accentStage:r[3]});}));
   function finite(n){return typeof n==='number'&&Number.isFinite(n);}
   function clamp(n,a,b){return Math.max(a,Math.min(b,n));}
   function phaseFor(w,opts){return clamp(Math.floor(opts&&finite(opts.phase)?opts.phase:w&&finite(w.phase)?w.phase:0),0,2);}
   function profileFor(w){var index=w&&w.finalPractice?34:w&&w.bossIndex;return Number.isInteger(index)&&profiles[index]||null;}
-  function cadenceFor(w){var p=profileFor(w);return p?(w.difficulty==='hell'?162:w.difficulty==='gentle'?208:182)+p.cadenceAdd:208;}
+  function cadenceFor(w){if(w&&w.combatRevision===31)return 600;var p=profileFor(w);return p?(w.difficulty==='hell'?162:w.difficulty==='gentle'?208:182)+p.cadenceAdd:208;}
   function limitFor(w,opts){var cap=w.difficulty==='hell'?8:w.difficulty==='gentle'?4:6;return opts&&opts.copy?Math.min(cap,4):cap;}
   function point(x,y){return{x:clamp(x,BOUNDS.left,BOUNDS.right),y:clamp(y,BOUNDS.top,BOUNDS.bottom)};}
   function clipRay(x,y,angle){
@@ -116,6 +136,7 @@
     return out;
   }
   function makeBarrage(w,emitter,beat,opts){
+    if(w&&w.combatRevision===31)return makeSpectacle(w,emitter,beat,opts);
     var p=profileFor(w);if(!p||!w.boss||!emitter||![emitter.x,emitter.y].every(finite))return[];
     opts=opts||{};beat=Number.isInteger(beat)?Math.max(0,beat):0;
     var phase=phaseFor(w,opts),mode=p.modes[phase],cap=limitFor(w,opts),count=cap-(phase===0?2:phase===1?1:0),out=[];
@@ -213,5 +234,54 @@
     }
     return fitRoute(out,routeFor(w,opts),Math.max(0,finite(opts.playerRadius)?opts.playerRadius:w.player&&finite(w.player.r)?w.player.r:2));
   }
-  return Object.freeze({profiles:profiles,profileFor:profileFor,cadenceFor:cadenceFor,makeBarrage:makeBarrage,bounds:BOUNDS});
+  function makeSpectacle(w,emitter,beat,opts){
+    opts=opts||{};var p=profileFor(w);if(!p)return[];
+    // Fit each original capsule before composing the phrase. A reprise may
+    // reuse a surviving honest path; it never invents a relocated emitter or
+    // replaces a reflected wall with a clipped route boundary.
+    var base=makeBarrage(Object.assign({},w,{combatRevision:30}),emitter,beat,opts);if(!base.length)return[];
+    var q=spectacleProfiles[p.index],phase=phaseFor(w,opts),cap=limitFor(w,opts),groups=[],byChain=Object.create(null);
+    base.forEach(function(s){var chain=byChain[s.chainId];if(!chain){chain=[];byChain[s.chainId]=chain;groups.push(chain);}chain.push(s);});
+    var originals=groups.slice(),size=base.length,cursor=0;
+    while(size<cap&&cursor<cap*2){var reprise=originals[cursor++%originals.length];if(size+reprise.length<=cap){groups.push(reprise);size+=reprise.length;}}
+    var mode=base[0].v28Mode,count=groups.length,span=clamp(q.spacingTicks+phase*4+(w.difficulty==='gentle'?6:w.difficulty==='hell'?-4:0),96,132);
+    var middle=clamp(.40+q.accentStage*.08+(phase===1?.025:phase===2?-.025:0),.35,.64),lead=(p.index*3+phase*2)%7;
+    function band(t){return Math.min(2,Math.floor(t*3));}
+    function clock(j){
+      var t=count>1?j/(count-1):0,stage=band(t),slots,slot;
+      // A severely clipped phrase keeps a succession of held reprises, not
+      // several identical bodies stacked at one instant on the same line.
+      if(originals.length===1)return{t:t,stage:stage};
+      if(mode==='cross'){
+        slots=Math.ceil(count/2);slot=Math.floor(j/2);t=slots>1?slot/(slots-1):0;
+      }else if(mode==='triads'){
+        slots=Math.ceil(count/3);slot=Math.floor(j/3);t=slots>1?slot/(slots-1):0;
+      }else if(mode==='spokes'){
+        slots=Math.ceil(count/2);slot=j%slots;t=slots>1?slot/(slots-1):0;
+      }else if(mode==='parallel'||mode==='reticle'){
+        slots=Math.min(3,count);slot=Math.floor(j*slots/count);t=slots>1?slot/(slots-1):0;
+      }else if(mode==='sweep'){
+        t=phase===1?t*t:phase===2?1-(1-t)*(1-t):t;
+      }
+      stage=band(t);
+      // The middle accent differs by boss, and expands/contracts by phase.
+      // Endpoints stay0/1 so every admitted phrase has a meaningful tail.
+      if(t>0&&t<1)t=t<.5?t*2*middle:middle+(t-.5)*2*(1-middle);
+      return{t:t,stage:stage};
+    }
+    var clocks=groups.map(function(_,j){return clock(j);}),stages=clocks.map(function(c){return c.stage;}).filter(function(v,i,a){return a.indexOf(v)===i;}).sort(),out=[];
+    groups.forEach(function(chain,j){
+      var c=clocks[j],stage=stages.indexOf(c.stage),accent=Math.min(stages.length-1,q.accentStage),hold=clamp(q.holdTicks+phase*3+(w.difficulty==='hell'?4:w.difficulty==='gentle'?-6:0)+(stage===accent?4:0),42,72);
+      var stagger=lead+Math.round(span*c.t),fade=12+((p.index+phase)%3)*3,chainId=chain[0].chainId+'-v31-'+j;
+      chain.forEach(function(original){
+        var s=Object.assign({},original,{chainId:chainId,v28RayGroup:j,patternId:'barrage-'+p.id+'-v31',staggerTicks:stagger,activeTicks:hold,fadeTicks:fade,
+          // Fixed narrower opening voices make the final held chord heavier
+          // while never widening beyond the already route-fitted capsule.
+          width:Math.max(3.6,original.width*(stage===0?.88:stage===stages.length-1?1:.94)),v31Barrage:true,v31Phrase:q.id+'-p'+phase,v31Stage:stage,v31StageCount:stages.length});
+        out.push(s);
+      });
+    });
+    return out;
+  }
+  return Object.freeze({profiles:profiles,profileFor:profileFor,cadenceFor:cadenceFor,makeBarrage:makeBarrage,bounds:BOUNDS,spectacleProfiles:spectacleProfiles,spectacleLimits:spectacleLimits});
 });

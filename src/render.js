@@ -611,7 +611,7 @@
       for(var i=0;i<hazards.length;i++){
         var h=hazards[i];
         if(h.phase==='active'||h.phase==='fade'){
-          if(lightweight&&world.combatRevision===30&&!pressureUsed&&staticPressure(h)&&projectilePresentation&&projectilePresentation.drawHazardBody){
+          if(lightweight&&(world.combatRevision===30||world.combatRevision===31)&&!pressureUsed&&staticPressure(h)&&projectilePresentation&&projectilePresentation.drawHazardBody){
             var end=i+1;while(end<hazards.length&&staticPressure(hazards[end]))end++;
             // A full viewport copy costs more than a short three-ribbon run
             // on some owners. Batch only the denser runs that amortize it.
@@ -640,13 +640,13 @@
       }
       if(!pressureUsed)releasePressureLayer();
       mapMetrics.pressureLayerCache.entries=pressureLayer?1:0;mapMetrics.pressureLayerCache.bytes=pressureLayer?pressureLayer.width*pressureLayer.height*4:0;mapMetrics.pressureLayerCache.builds=pressureLayerBuilds;mapMetrics.pressureLayerCache.hits=pressureLayerHits;
-      if((world.combatRevision===29||world.combatRevision===30)&&projectilePresentation&&projectilePresentation.drawHazardWarningCue){
+      if((world.combatRevision===29||world.combatRevision===30||world.combatRevision===31)&&projectilePresentation&&projectilePresentation.drawHazardWarningCue){
         var limit=lightweight?4:8;imminentWarnings.length=0;
         // The earliest committed rays get the bounded accent budget. Reuse
         // eight references instead of sorting/allocating every warning frame.
         for(var i=0;i<hazards.length;i++){
           var h=hazards[i];if(!h||h.phase!=='warning'||!Number.isFinite(h.activeAt)||!Number.isFinite(h.x1)||!Number.isFinite(h.y1)||!Number.isFinite(h.x2)||!Number.isFinite(h.y2)||!Number.isFinite(h.width)||h.width<=0)continue;
-          var remaining=h.activeAt-world.tick;if(remaining<1||remaining>12)continue;mapMetrics.imminentWarningCandidates++;
+          var remaining=h.activeAt-world.tick,window=world.combatRevision===31&&h.laserBarrage&&!h.pressureCurtain?24:12;if(remaining<1||remaining>window)continue;mapMetrics.imminentWarningCandidates++;
           var at=imminentWarnings.length;
           while(at>0){var earlier=imminentWarnings[at-1];if(h.activeAt>earlier.activeAt||h.activeAt===earlier.activeAt&&(h.id||0)>=(earlier.id||0))break;at--;}
           if(at>=limit)continue;
@@ -738,7 +738,7 @@
         var e=effects[i],life=Math.max(0,1-(e.age||0)/(e.ttl||.5)),r=e.r||10,p=1-life;
         // Revision29 coalesces successful grazes at the final player-core
         // layer, so dense grazes do not add rings under every live projectile.
-        if((world.combatRevision===29||world.combatRevision===30)&&e.kind==='graze')continue;
+        if((world.combatRevision===29||world.combatRevision===30||world.combatRevision===31)&&e.kind==='graze')continue;
         if(drawAuthoredEffect(e,world))continue;
         ctx.globalAlpha=life*.65;
         if(e.kind==='memory'){
@@ -805,7 +805,7 @@
       // Core owns the projector budget, exact positions, lifetime and
       // release ticks. The cosmetic fade never moves an emitter or hides a
       // released projectile/laser; all real attacks are drawn above bodies.
-      for(var i=0;i<Math.min(world.combatRevision===30?4:2,copies.length);i++){
+      for(var i=0;i<Math.min((world.combatRevision===30||world.combatRevision===31)?4:2,copies.length);i++){
         var copy=copies[i];if(!Number.isFinite(copy.born)||!Number.isFinite(copy.expireAt)||tick<copy.born||tick>=copy.expireAt)continue;
         var progress=clamp((tick-copy.born)/12,0,1),base=Number.isFinite(copy.opacity)?clamp(copy.opacity,.45,.85):copy.kind==='illusion'?.58:.72;
         var age=Number.isFinite(copy.releaseTick)&&copy.releaseTick>=0?tick-copy.releaseTick:Infinity,opacity=age>=0&&age<6?.92:base*(.4+.6*progress);
@@ -842,7 +842,7 @@
     function drawPlayerCore(world,presentation) {
       var p=world.player,r=p.r||3;
       ctx.beginPath();ctx.arc(p.x,p.y,(p.r||3)+1.7,0,Math.PI*2);ctx.fillStyle='#080e19';ctx.fill();
-      if((world.combatRevision===29||world.combatRevision===30)&&(world.stage==='boss'||world.stage==='waves'||world.stage==='transition')){
+      if((world.combatRevision===29||world.combatRevision===30||world.combatRevision===31)&&(world.stage==='boss'||world.stage==='waves'||world.stage==='transition')){
         var precise=!!(presentation&&presentation.precise===true),age=Number.isInteger(world.tick)&&Number.isInteger(world._lastGraze)&&world._lastGraze>=0?world.tick-world._lastGraze:-1;
         var pulse=age>=0&&age<12&&!((p.invulnerableUntil||0)>world.tick)?1-age/12:0;
         playerFeedbackRecord.hitRadius=r;playerFeedbackRecord.precise=precise;playerFeedbackRecord.focusRadius=precise?r+3:null;playerFeedbackRecord.grazeAge=pulse>0?age:null;playerFeedbackRecord.grazePulse=pulse;mapMetrics.playerFeedback=playerFeedbackRecord;
@@ -968,19 +968,9 @@
     function drawSpellTheatre(world){
       if(!world.campaign)return;
       if(world.stage==='transition'&&world.transitionNarrative)return;
-      var b=world.boss,t=world.time||0;
       mapMetrics.specialPatternCue=null;
-      if(b&&world.bossIndex>=3&&world.stage!=='bossIntro'){
-        var phase=world.phase||0;
-        if(world.bossIndex===4){
-          // Small face plate and broken orbit: bounded above combat lane.
-          var mx=b.x-2,my=b.y-20;ctx.save();ctx.globalAlpha=.85;
-          polygon([[mx-7,my-6],[mx+7,my-6],[mx+9,my+2],[mx,my+11],[mx-9,my+2]],'#15192e','#cbbbe9',.8);
-          ctx.fillStyle='#d9ecff';ctx.fillRect(mx-5,my-1,3,1);ctx.fillRect(mx+2,my-1,3,1);
-          if(phase>0)line([[mx,my-6],[mx-2,my],[mx+2,my+3],[mx,my+10]],'#f2ccab',.7);
-          ctx.restore();
-        }
-      }
+      // The source atlas already owns the face. Keep it unobscured in both
+      // existing runs and new ones instead of painting a synthetic faceplate.
       // The top HUD owns pattern names throughout combat, including the quiet
       // opening beat. Keep the centre free of duplicate entry banners.
       if(world.stage==='won'&&!world.practiceBoss&&world.bossIndex===4){
@@ -988,7 +978,7 @@
       }
     }
     function draw(world,alpha,time,lowQuality,presentation) {
-      pressureReplayMetrics=null;if(!world||world.combatRevision!==30||!lowQuality||world.stage==='bossIntro')releasePressureLayer();mapMetrics.pressureLayerCache={entries:pressureLayer?1:0,bytes:pressureLayer?pressureLayer.width*pressureLayer.height*4:0,byteLimit:PRESSURE_LAYER_BYTES,builds:pressureLayerBuilds,hits:pressureLayerHits,frameBuilds:0,frameHits:0,logicalBodies:0};
+      pressureReplayMetrics=null;if(!world||(world.combatRevision!==30&&world.combatRevision!==31)||!lowQuality||world.stage==='bossIntro')releasePressureLayer();mapMetrics.pressureLayerCache={entries:pressureLayer?1:0,bytes:pressureLayer?pressureLayer.width*pressureLayer.height*4:0,byteLimit:PRESSURE_LAYER_BYTES,builds:pressureLayerBuilds,hits:pressureLayerHits,frameBuilds:0,frameHits:0,logicalBodies:0};
       lightweight=!!lowQuality;mapMetrics.atlasFxLimit=lightweight?12:24;mapMetrics.specialPatternCue=null;mapMetrics.patternEntryCue=null;mapMetrics.battleReadability=null;mapMetrics.playerFeedback=null;mapMetrics.imminentWarningCandidates=0;mapMetrics.warningContrastStrokes=0;mapMetrics.warningFootprintDraws=0;mapMetrics.warningFootprintBuilds=warningFootprintBuilds;warningFootprints.length=0;mapMetrics.warningFootprints=warningFootprints;mapMetrics.combatCopyDraws=0;mapMetrics.playerShotDraws=0;mapMetrics.playerShotAsset=null;mapMetrics.playerShotCacheBytes=playerShotStamp?96*64*4:0;
       if(actorPresentation&&actorPresentation.beginFrame)actorPresentation.beginFrame();
       if(projectilePresentation&&projectilePresentation.beginFrame)projectilePresentation.beginFrame();

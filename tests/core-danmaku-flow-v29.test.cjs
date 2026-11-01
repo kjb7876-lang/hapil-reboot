@@ -10,7 +10,7 @@ function filler(w){return {id:++w.idCounter,x:340,y:300,px:340,py:300,vx:0,vy:0,
 function advance(w,tick){while(w.tick<tick)C.step(w,{});}
 
 test('29 is explicit, checkpoint-safe, and older revisions retain raw pinned28 simulation',()=>{
- assert.equal(C.FLOW_COMBAT_REVISION,29);assert.equal(C.LATEST_COMBAT_REVISION,30);const w=world(),s=C.checkpoint(w);assert.equal(s.combatRevision,29);assert.deepEqual(C.checkpoint(C.restoreCheckpoint(s)),s);
+ assert.equal(C.FLOW_COMBAT_REVISION,29);assert.equal(C.LATEST_COMBAT_REVISION,31);const w=world(),s=C.checkpoint(w);assert.equal(s.combatRevision,29);assert.deepEqual(C.checkpoint(C.restoreCheckpoint(s)),s);
  const Old=load(cp.execFileSync('git',['show',BASE+':src/core.js'],{encoding:'utf8'}));
  for(const revision of [undefined,21,25,27,28])for(const index of [0,8,33])for(const difficulty of ['normal','hell']){
   const a=world(index,2,difficulty,revision===undefined?28:revision),b=world(index,2,difficulty,revision===undefined?28:revision,Old);if(revision===undefined){delete a.combatRevision;delete b.combatRevision;}
