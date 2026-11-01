@@ -315,8 +315,8 @@
     }
     function canvas(w,h){if(!global.document||!global.document.createElement)return null;var c=global.document.createElement('canvas');c.width=w;c.height=h;return c;}
     function beamMaterialFor(w,b){var wi=indexFor(w),story=storySpec(wi,b);if(wi<0)return null;if(story){var s=story.beam||story.blade,cached=DENSE_SPEC_CACHE.get(s);if(cached)return cached;var c=s.denseCrop||s.crop;cached=Object.assign({frames:1,r:Math.min(c[2],c[3])/2,l:Math.max(0,(c[2]-c[3])/2)},s,{crop:c});DENSE_SPEC_CACHE.set(s,cached);return cached;}return BLADES[wi]||ORBS[wi];}
-    function tintedArt(s,palette,laserMode){
-      var key='art|'+sourceSignature(s)+'|'+palette.id+(laserMode?'|laser23':''),e=cache.get(key);if(e)return e;
+    function tintedArt(s,palette,laserMode,danmaku){
+      var key='art|'+sourceSignature(s)+'|'+palette.id+(laserMode?'|laser23':'')+(danmaku?'|relief34':''),e=cache.get(key);if(e)return e;
       var crop=s.crop,sampleW=s.downsample?s.downsample[0]:crop[2],sampleH=s.downsample?s.downsample[1]:crop[3];
       // A non-right-angle whole prop needs room for its rotated corners before
       // alpha bounds can be measured. The historical90-degree blade path is
@@ -371,6 +371,14 @@
           // flat card. Ordinary bullet/cast texture caches never use this key.
           var sy=Math.floor(i/4/c.width)-gutter,v=clamp(Math.abs((sy+.5-fh/2)/(fh/2)),0,1),spine=Math.pow(1-v,10),level=.30+Math.pow(1-v,.8)*.48+value*.16,mix=spine*.88;
           for(var lc=0;lc<3;lc++){var rim=laserPrimary[lc]*(secondaryLaser?.84:1)+laserSecondary[lc]*(secondaryLaser?.16:0),white=secondaryLaser?.5:.25;d[i+lc]=clamp(Math.round(rim*level*(1-mix)+(laserSecondary[lc]*(1-white)+255*white)*mix),0,255);}
+          if(danmaku){
+            // Bake tonal depth into existing source pixels, never a live glow
+            // or a replacement rectangle. Alpha/footprint stay unchanged.
+            var relief=.24+Math.pow(1-v,.8)*.12+value*.08,core=spine*.90;
+            for(var dc=0;dc<3;dc++){var body=laserPrimary[dc]*(secondaryLaser?.84:1)+laserSecondary[dc]*(secondaryLaser?.16:0);d[i+dc]=clamp(Math.round(body*relief*(1-core)+(laserSecondary[dc]*.65+255*.35)*core),0,255);}
+            var dangerLum=.2126*d[i]+.7152*d[i+1]+.0722*d[i+2];
+            if(dangerLum<54&&dangerLum>0)for(var dl=0;dl<3;dl++)d[i+dl]=Math.min(255,Math.round(d[i+dl]*54/dangerLum));
+          }
         }
         if(s.natural&&s.alphaBoost&&d[i+3]>64)d[i+3]=Math.round(64+191*Math.pow((d[i+3]-64)/191,.25));
       }
@@ -494,7 +502,7 @@
     }
     function beamSurface(w,h){
       var wi=indexFor(w),story=storySpec(wi,h),s=story?story.beam:BEAMS[wi];if(!s||!ready(images[s.key],s))return null;
-      var palette=paletteFor(w,h),key='beam23|'+s.key+'|'+s.crop.join(',')+'|'+palette.id,e=cache.get(key);if(e)return e;
+      var danmaku=w.combatRevision===31,palette=paletteFor(w,h),key='beam23|'+s.key+'|'+s.crop.join(',')+'|'+palette.id+(danmaku?'|relief34':''),e=cache.get(key);if(e)return e;
       // Cache a single owner-derived material, flowing shoulder and emitter.
       // Every colour/alpha sample comes from this owner's retained pixels;
       // profiles grade those samples rather than painting a geometric body.
@@ -513,12 +521,13 @@
       for(var y=0;y<sh;y++)for(var x=0;x<sw;x++){
         var i=(y*sw+x)*4,v=Math.abs((y+.5-sh/2)/(sh/2)),spine=Math.pow(1-v,9),shoulder=Math.pow(1-v,1.5);
         var value=Math.max(o[i],o[i+1],o[i+2])/255,denseValue=Math.max(m[i],m[i+1],m[i+2])/255,texture=value*.65+denseValue*.35;
-        var light=spine*.76+value*.07,level=.62+texture*.54;
+        var light=danmaku?spine*.90+value*.02:spine*.76+value*.07,level=danmaku?.22+texture*.12+shoulder*.08:.62+texture*.54;
         for(var channel=0;channel<3;channel++){
           var white=secondaryLaser?.5:.35,highlight=q[channel]*(1-white)+255*white;
           d[i+channel]=clamp(Math.round(p[channel]*level*(1-light)+highlight*light),0,255);
           f[i+channel]=clamp(Math.round((p[channel]*.72+q[channel]*.28)*(.72+value*.40)),0,255);
         }
+        if(danmaku){var bodyLum=.2126*d[i]+.7152*d[i+1]+.0722*d[i+2];if(bodyLum<54&&bodyLum>0)for(var bc=0;bc<3;bc++)d[i+bc]=Math.min(255,Math.round(d[i+bc]*54/bodyLum));}
         d[i+3]=Math.round(Math.max(o[i+3]*(.32+shoulder*.44),m[i+3]*spine*.96));
         // Leave the luminous central core unchanged between quality modes.
         // Only the source's existing side filaments flow; no strobe or global
@@ -603,7 +612,7 @@
     function drawHazardBody(ctx,w,h,lowQuality){
       if(!w||!h||(h.phase!=='active'&&h.phase!=='fade')||![h.x1,h.x2,h.y1,h.y2,h.width].every(finite)||h.width<=0)return false;
       var s=beamMaterialFor(w,h);if(!s||!ready(images[s.key],s)){metrics.missingProjectileAssets++;return false;}
-      var art=tintedArt(s,paletteFor(w,h),paletteAt(indexFor(w),h));if(!art)return false;
+      var art=tintedArt(s,paletteFor(w,h),paletteAt(indexFor(w),h),w.combatRevision===31);if(!art)return false;
       var dx=h.x2-h.x1,dy=h.y2-h.y1,len=Math.sqrt(dx*dx+dy*dy),r=h.width/2;
       var progress=clamp(h.progress||0,0,1),phase=s.frames>1?Math.min(s.frames-1,Math.floor(Math.max(0,finite(h.age)?h.age:0)*1000/s.ms)):0;
       // Broad pressure ribbons retain their complete source-painted damage

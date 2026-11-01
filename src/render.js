@@ -84,6 +84,11 @@
     var projectilePresentation=global.HapilProjectiles?global.HapilProjectiles.create(images):null;
     var bossSkillPresentation=global.HapilBossSkills?global.HapilBossSkills.create(images):null;
     if (!ctx) throw new Error('이 브라우저에서 2D 전투 화면을 만들 수 없습니다.');
+    // Static colour veils are created once, not per bullet/frame. Terrain art
+    // remains recognizable while the lower dodge field recedes behind shots.
+    var combatVeil=ctx.createLinearGradient(0,64,0,H);
+    combatVeil.addColorStop(0,'rgba(8,10,23,.10)');combatVeil.addColorStop(.35,'rgba(8,10,23,.18)');combatVeil.addColorStop(.9,'rgba(8,10,23,.28)');combatVeil.addColorStop(1,'rgba(8,10,23,.24)');
+    var hudVeil=ctx.createLinearGradient(0,19,0,64);hudVeil.addColorStop(0,'rgba(9,11,21,.86)');hudVeil.addColorStop(1,'rgba(9,11,21,.48)');
     // Three bounded portrait strips are built once from existing map pixels.
     // The two viewport canvases are reused for masks and near-edge parallax.
     var back=document.createElement('canvas');back.width=W;back.height=H;
@@ -846,6 +851,13 @@
         var copy=copies[i];if(!Number.isFinite(copy.born)||!Number.isFinite(copy.expireAt)||tick<copy.born||tick>=copy.expireAt)continue;
         var progress=clamp((tick-copy.born)/12,0,1),base=Number.isFinite(copy.opacity)?clamp(copy.opacity,.45,.85):copy.kind==='illusion'?.58:.72;
         var age=Number.isFinite(copy.releaseTick)&&copy.releaseTick>=0?tick-copy.releaseTick:Infinity,opacity=age>=0&&age<6?.92:base*(.4+.6*progress);
+        if(world.combatRevision===31&&copy.expireAt-tick<18&&age>=6){
+          var pending=false,casts=world.boss.skillCasts||[];
+          for(var k=0;k<casts.length;k++)if(!casts[k].cancelled&&casts[k].sourceActorId===copy.sourceActorId&&casts[k].activeAt>tick){pending=true;break;}
+          // Fade only an idle projection's departure. A promised emitter or
+          // genuine release stays legible; its outgoing attacks never fade here.
+          if(!pending)opacity*=smooth((copy.expireAt-tick)/18);
+        }
         if(actorPresentation.drawCombatCopy(ctx,world,copy,opacity))mapMetrics.combatCopyDraws++;
       }
     }
@@ -933,7 +945,7 @@
       }
       // All persistent information stays in the existing top HUD footprint.
       // No opaque panel remains in the middle of the bullet field.
-      ctx.fillStyle='rgba(9,11,21,.86)';ctx.fillRect(13,19,334,45);
+      ctx.fillStyle=world.combatRevision===31?hudVeil:'rgba(9,11,21,.86)';ctx.fillRect(13,19,334,45);
       ctx.textAlign='left';ctx.font=hudTextLayout.nameFit.font;ctx.fillStyle=info.tone;ctx.fillText(hudTextLayout.nameFit.text,19,31,254);
       ctx.textAlign='right';ctx.font='11px '+family;ctx.fillStyle=readability.timerWarning?'#ffd4a8':'#eee7dc';
       var remaining=readability.remainingSeconds,timerText=remaining===null?(world.stage==='bossIntro'?'등장':'전환'):(remaining<10?remaining.toFixed(1):String(Math.ceil(remaining)))+'초';
@@ -1024,6 +1036,10 @@
       var sourceKey=h14TerrainKey(world),sourceReady=sourceKey&&readyTerrainImage(images,sourceKey);
       if(!cached&&!sourceReady&&!usesConnected(world)&&!(world&&world.campaign&&world.bossIndex>=3))makeBackground();ctx.setTransform(ratio,0,0,ratio,0,0);ctx.globalAlpha=1;drawTerrain(world);
       drawDreamscape(world,time);mapMetrics.bossAccent=null;mapMetrics.atlasFxDraws=0;mapMetrics.atlasFxFamilies='';
+      mapMetrics.combatBackdropGrade=false;
+      if(world&&world.campaign&&world.combatRevision===31&&(world.stage==='boss'||world.stage==='transition'&&!world.transitionNarrative)){
+        ctx.save();ctx.globalAlpha=world.stage==='boss'?smooth((world.stageTime||0)/.6):1;ctx.fillStyle=combatVeil;ctx.fillRect(0,64,W,H-64);ctx.restore();mapMetrics.combatBackdropGrade=true;
+      }
       mapMetrics.introActive=!!(world&&world.stage==='bossIntro');mapMetrics.introProgress=mapMetrics.introActive?clamp((world.stageTime||0)/(world.bossIntroDuration||2.5),0,1):0;
       if(!world||(!world.boss&&world.stage!=='bossIntro'))mapMetrics.bossArt=null;
       if(!world){titleScene(time||0);return;}
