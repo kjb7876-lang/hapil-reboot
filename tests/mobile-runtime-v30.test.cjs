@@ -46,9 +46,9 @@ test('low mode allocates at actual CSS size on high-DPR narrow screens without f
   const canvas=createCanvas(1,1);canvas.style={};const renderer=box.HapilRenderer.create(canvas,{});try{renderer.resize(fit.width,fit.height,fit.dpr);assert.equal(canvas.width,Math.round(fit.width));assert.equal(canvas.height,Math.round(fit.height));assert(canvas.width<360&&canvas.height<640,'low backing store follows its CSS arena rather than logical minimum dimensions');}finally{renderer.destroy();}
 });
 
-test('mobile30render budget keeps the real simulation at fixed60Hz and manual high increases draw frequency',async()=>{
+test('new31runs inherit the mobile30fixed60Hz budget and manual high increases draw frequency',async()=>{
   const low=harness(),high=harness();await low.boot();await high.boot();high.quality(false);await practice(low);await practice(high);
   low.draws.length=high.draws.length=0;for(let n=0;n<120;n++){low.tick();high.tick();}
   assert(low.stepCalls.length>=119&&low.stepCalls.length<=120);assert.equal(high.stepCalls.length,low.stepCalls.length);assert(low.stepCalls.every(call=>call.dt===1/60));assert(high.stepCalls.every(call=>call.dt===1/60));
-  assert(low.draws.length>=59&&low.draws.length<=61);assert(high.draws.length>=119&&high.draws.length<=120);assert(low.draws.every(draw=>draw.low===true));assert(high.draws.every(draw=>draw.low===false));assert.equal(low.world().tick,high.world().tick);
+  assert(low.draws.length>=59&&low.draws.length<=61);assert(high.draws.length>=119&&high.draws.length<=120);assert(low.draws.every(draw=>draw.low===true));assert(high.draws.every(draw=>draw.low===false));assert.equal(low.world().tick,high.world().tick);assert.equal(low.world().combatRevision,31);assert.equal(high.world().combatRevision,31);assert.equal(low.g.HapilApp.diagnostics().candidateRevision,31);
 });

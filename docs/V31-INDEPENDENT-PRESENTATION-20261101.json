@@ -1,0 +1,257 @@
+{
+  "schema": 1,
+  "date": "2026-11-01",
+  "scope": "Six unchanged actual31immune full scenes, current source assets, native360x640DPR1;6warmups16draw-only samples and untimed native call counts. No GPU/physical-phoneFPS certificate or universal speed claim. Every damage body is uncapped; cosmetic budgets are independent. Lucifer face correction is reviewed separately and intentionally applies to old rendering too.",
+  "sourceHashes": {
+    "src/core.js": "ad691ea13c8ec950f97b81b1c7ad1b76afa6eafc94ed84e44dda9abf28a8f86b",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "src/boss-patterns-v27.js": "71bd8e85f806ce5b82dfcc020b520d3e958a5cf83e92f3ee2ee329d820dea8af",
+    "src/boss-lasers-v28.js": "0530e05a2811dfc655d722a30c243baaa6657b7a9f1356be0355c4f10d54013b",
+    "src/boss-flow-v29.js": "b0985522fe3caa7178be7a0067be318fc4d42853060307f06dcdeb02c68479b3",
+    "tools/audit-laser-phrases-v31.cjs": "05656ff92f1dbfd20b24a1085a54af0a26cbe141ce94dced11348d836a8bf03b",
+    "tests/independent-laser-phrases-v31.test.cjs": "a4267be7dbe2bef43676d91fb597813e498360bd1318b9955884fa5e3ad6b9dd",
+    "tools/audit-laser-barrages-v28.cjs": "fc92daefd79613f3614ce8a29d6ac3abe5a2aed9ae26159bf998d411f87a2ae8",
+    "tools/audit-danmaku-flow-v29.cjs": "21c4546d8625dcb8c5f342e2437ab52d0f6b718fc116ea06b87d277a41f96870",
+    "tools/audit-mobile-combat-v30.cjs": "e7ff53e95f1f75bd054d979a40f85ec5b4da05668bdf2eb6a9a5e1392aab1df3",
+    "tools/audit-patterns-v27.cjs": "2b95820bc7e284a35642d60bb5ccc7487eea8998b036c6771bc935042a5d9eb9",
+    "tools/audit-boss-identities-v25.cjs": "88e1d4e3afd9d314d3de2cb723d145105a3da7e3793ae4d82c76ce71f08dd20c",
+    "tools/probe-identities-v25-natural.cjs": "18433dffe03accc00d128f501bf8a03a1844c534965b6596aedb05853db198b7",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d",
+    "src/render.js": "3c0b741d4c07451e6c21c37e679376c237d0d8c3a3b22e90a12d0162ec824a63",
+    "src/projectiles.js": "913e235f985df543a67c277b64d44f9774624140f9f4003568af63eaa3bfe6a0",
+    "src/actors.js": "dc8ef72e54fb9a0dd16d9c1e6249962ad0f424c351137df9edcdc248c4b9c0ef",
+    "src/boss-motion.js": "e2d1bde92838884382e30b5d8de6549cf9071ac9b21c84b7f9cb8d4bc63160b1",
+    "src/boss-skills.js": "f1a51e7a30487e1e702f4257b748b0a578f7d768df6bfa94124ca949edce26a9",
+    "src/media.js": "ac5e0e2497f242e2515873ee157f06b979b2659d6f2dc02f66349161a50bce2e",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033",
+    "tools/audit-object-projectiles-v24.cjs": "458243d280d4784d67d48734e796e7b1e214f89c7f40aa9d5ca73e3c6f3b284a"
+  },
+  "sourceHashGuardPassed": true,
+  "rows": [
+    {
+      "bossIndex": 0,
+      "phase": 2,
+      "tick": 421,
+      "quality": "high",
+      "bullets": 28,
+      "copies": 4,
+      "actualCopyBodyDraws": 4,
+      "allActiveFadeCapsules": 10,
+      "logicalSourceBodyDraws": 10,
+      "rasterSourceBodyDraws": 10,
+      "heldDecorations": 4,
+      "decorationBudget": 8,
+      "pressureLayerCache": {
+        "entries": 0,
+        "bytes": 0,
+        "byteLimit": 4194304,
+        "builds": 0,
+        "hits": 0,
+        "frameBuilds": 0,
+        "frameHits": 0,
+        "logicalBodies": 0
+      },
+      "stampCacheBytes": 1210176,
+      "warmStampMisses": 0,
+      "warmBeamBuilds": 0,
+      "untimedMainCanvasCalls": {
+        "drawImage": 117,
+        "clip": 10
+      },
+      "nativeDrawOnlyCPU": {
+        "samples": 16,
+        "medianMs": 7.968793000000005,
+        "p95Ms": 15.361839999999575
+      }
+    },
+    {
+      "bossIndex": 0,
+      "phase": 2,
+      "tick": 421,
+      "quality": "low",
+      "bullets": 28,
+      "copies": 4,
+      "actualCopyBodyDraws": 4,
+      "allActiveFadeCapsules": 10,
+      "logicalSourceBodyDraws": 10,
+      "rasterSourceBodyDraws": 4,
+      "heldDecorations": 4,
+      "decorationBudget": 4,
+      "pressureLayerCache": {
+        "entries": 1,
+        "bytes": 921600,
+        "byteLimit": 4194304,
+        "builds": 1,
+        "hits": 21,
+        "frameBuilds": 0,
+        "frameHits": 1,
+        "logicalBodies": 6
+      },
+      "stampCacheBytes": 1210176,
+      "warmStampMisses": 0,
+      "warmBeamBuilds": 0,
+      "untimedMainCanvasCalls": {
+        "drawImage": 67,
+        "clip": 4
+      },
+      "nativeDrawOnlyCPU": {
+        "samples": 16,
+        "medianMs": 6.827212000000145,
+        "p95Ms": 7.910598000000391
+      }
+    },
+    {
+      "scope": "Isolated actual31bullet source-alpha fixture, not gameplay state edits.",
+      "retirementAlphaMasses": [
+        31165,
+        15644,
+        0
+      ]
+    },
+    {
+      "bossIndex": 6,
+      "phase": 0,
+      "tick": 421,
+      "quality": "high",
+      "bullets": 97,
+      "copies": 4,
+      "actualCopyBodyDraws": 4,
+      "allActiveFadeCapsules": 7,
+      "logicalSourceBodyDraws": 7,
+      "rasterSourceBodyDraws": 7,
+      "heldDecorations": 4,
+      "decorationBudget": 8,
+      "pressureLayerCache": {
+        "entries": 0,
+        "bytes": 0,
+        "byteLimit": 4194304,
+        "builds": 0,
+        "hits": 0,
+        "frameBuilds": 0,
+        "frameHits": 0,
+        "logicalBodies": 0
+      },
+      "stampCacheBytes": 1474304,
+      "warmStampMisses": 0,
+      "warmBeamBuilds": 0,
+      "untimedMainCanvasCalls": {
+        "drawImage": 158,
+        "clip": 7
+      },
+      "nativeDrawOnlyCPU": {
+        "samples": 16,
+        "medianMs": 4.471032999999807,
+        "p95Ms": 5.663507999999638
+      }
+    },
+    {
+      "bossIndex": 6,
+      "phase": 0,
+      "tick": 421,
+      "quality": "low",
+      "bullets": 97,
+      "copies": 4,
+      "actualCopyBodyDraws": 4,
+      "allActiveFadeCapsules": 7,
+      "logicalSourceBodyDraws": 7,
+      "rasterSourceBodyDraws": 7,
+      "heldDecorations": 4,
+      "decorationBudget": 4,
+      "pressureLayerCache": {
+        "entries": 0,
+        "bytes": 0,
+        "byteLimit": 4194304,
+        "builds": 0,
+        "hits": 0,
+        "frameBuilds": 0,
+        "frameHits": 0,
+        "logicalBodies": 0
+      },
+      "stampCacheBytes": 1474304,
+      "warmStampMisses": 0,
+      "warmBeamBuilds": 0,
+      "untimedMainCanvasCalls": {
+        "drawImage": 141,
+        "clip": 7
+      },
+      "nativeDrawOnlyCPU": {
+        "samples": 16,
+        "medianMs": 3.8698810000005324,
+        "p95Ms": 4.544589999999516
+      }
+    },
+    {
+      "bossIndex": 33,
+      "phase": 2,
+      "tick": 1021,
+      "quality": "high",
+      "bullets": 81,
+      "copies": 4,
+      "actualCopyBodyDraws": 4,
+      "allActiveFadeCapsules": 8,
+      "logicalSourceBodyDraws": 8,
+      "rasterSourceBodyDraws": 8,
+      "heldDecorations": 5,
+      "decorationBudget": 8,
+      "pressureLayerCache": {
+        "entries": 0,
+        "bytes": 0,
+        "byteLimit": 4194304,
+        "builds": 0,
+        "hits": 0,
+        "frameBuilds": 0,
+        "frameHits": 0,
+        "logicalBodies": 0
+      },
+      "stampCacheBytes": 2023952,
+      "warmStampMisses": 0,
+      "warmBeamBuilds": 0,
+      "untimedMainCanvasCalls": {
+        "drawImage": 157,
+        "clip": 8
+      },
+      "nativeDrawOnlyCPU": {
+        "samples": 16,
+        "medianMs": 6.7027129999987665,
+        "p95Ms": 9.24475800000073
+      }
+    },
+    {
+      "bossIndex": 33,
+      "phase": 2,
+      "tick": 1021,
+      "quality": "low",
+      "bullets": 81,
+      "copies": 4,
+      "actualCopyBodyDraws": 4,
+      "allActiveFadeCapsules": 8,
+      "logicalSourceBodyDraws": 8,
+      "rasterSourceBodyDraws": 8,
+      "heldDecorations": 4,
+      "decorationBudget": 4,
+      "pressureLayerCache": {
+        "entries": 0,
+        "bytes": 0,
+        "byteLimit": 4194304,
+        "builds": 0,
+        "hits": 0,
+        "frameBuilds": 0,
+        "frameHits": 0,
+        "logicalBodies": 0
+      },
+      "stampCacheBytes": 2023952,
+      "warmStampMisses": 0,
+      "warmBeamBuilds": 0,
+      "untimedMainCanvasCalls": {
+        "drawImage": 134,
+        "clip": 8
+      },
+      "nativeDrawOnlyCPU": {
+        "samples": 16,
+        "medianMs": 5.635258999998769,
+        "p95Ms": 8.305290000000241
+      }
+    }
+  ]
+}

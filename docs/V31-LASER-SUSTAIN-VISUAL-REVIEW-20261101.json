@@ -1,0 +1,3659 @@
+{
+  "schema": 1,
+  "date": "2026-11-01",
+  "scope": "Native real-core immune HELL before30 versus31 observations, attacks/skills disabled. Contact uses each mode's own real first finite barrage warning/late hold/fade clocks, so tick values and fields intentionally differ. Separate timing reuses the same frozen31 state with legacy30 presentation for fair draw counts. Not phone/GPU FPS, human play or campaign clear.",
+  "baseline": "6afd61432c6b2334d44e8ab81db065241c9a67ac",
+  "productSHA256": {
+    "src/core.js": "ad691ea13c8ec950f97b81b1c7ad1b76afa6eafc94ed84e44dda9abf28a8f86b",
+    "src/boss-flow-v29.js": "b0985522fe3caa7178be7a0067be318fc4d42853060307f06dcdeb02c68479b3",
+    "src/boss-lasers-v28.js": "0530e05a2811dfc655d722a30c243baaa6657b7a9f1356be0355c4f10d54013b",
+    "src/boss-patterns-v27.js": "71bd8e85f806ce5b82dfcc020b520d3e958a5cf83e92f3ee2ee329d820dea8af",
+    "src/render.js": "3c0b741d4c07451e6c21c37e679376c237d0d8c3a3b22e90a12d0162ec824a63",
+    "src/projectiles.js": "913e235f985df543a67c277b64d44f9774624140f9f4003568af63eaa3bfe6a0",
+    "src/actors.js": "dc8ef72e54fb9a0dd16d9c1e6249962ad0f424c351137df9edcdc248c4b9c0ef"
+  },
+  "toolSHA256": "a281b15cf39d54705edcd7d5f8e8926d28950f7c600f3b13b48b2f102c0c3143",
+  "proof": {
+    "contact": {
+      "path": "docs/v31-laser-review/contact.jpg",
+      "width": 1080,
+      "height": 1730,
+      "bytes": 710394,
+      "sha256": "63e09e646b567c39b6b2474558622a66f4ca2ab361341dc6b84c34476c3b3b80"
+    },
+    "animation": {
+      "path": "docs/v31-laser-review/held-phrases.gif",
+      "bytes": 1873136,
+      "sha256": "76a6ff586c5a155ec13e2c499f7c5997759b217b79e6d11177e901033c74c456",
+      "width": 675,
+      "height": 420,
+      "frames": 18,
+      "simulationStepTicks": 16,
+      "frameDurationMs": 267,
+      "scope": "Three actual immune31 seeded worlds, high quality, sampled every16simulationticks from248through520. Source-rendered timeline; no tweening, fabricated shots, human clear or live-FPS claim.",
+      "records": [
+        [
+          {
+            "index": 4,
+            "tick": 248,
+            "warning": 8,
+            "active": 0,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "index": 8,
+            "tick": 248,
+            "warning": 8,
+            "active": 0,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "index": 6,
+            "tick": 248,
+            "warning": 8,
+            "active": 0,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        [
+          {
+            "index": 4,
+            "tick": 264,
+            "warning": 8,
+            "active": 0,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "index": 8,
+            "tick": 264,
+            "warning": 8,
+            "active": 0,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "index": 6,
+            "tick": 264,
+            "warning": 8,
+            "active": 0,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        [
+          {
+            "index": 4,
+            "tick": 280,
+            "warning": 8,
+            "active": 0,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "index": 8,
+            "tick": 280,
+            "warning": 8,
+            "active": 0,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "index": 6,
+            "tick": 280,
+            "warning": 8,
+            "active": 0,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        [
+          {
+            "index": 4,
+            "tick": 296,
+            "warning": 6,
+            "active": 2,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "index": 8,
+            "tick": 296,
+            "warning": 7,
+            "active": 1,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "index": 6,
+            "tick": 296,
+            "warning": 6,
+            "active": 2,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        [
+          {
+            "index": 4,
+            "tick": 312,
+            "warning": 6,
+            "active": 2,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "index": 8,
+            "tick": 312,
+            "warning": 6,
+            "active": 2,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "index": 6,
+            "tick": 312,
+            "warning": 6,
+            "active": 2,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        [
+          {
+            "index": 4,
+            "tick": 328,
+            "warning": 6,
+            "active": 2,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "index": 8,
+            "tick": 328,
+            "warning": 5,
+            "active": 3,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "index": 6,
+            "tick": 328,
+            "warning": 4,
+            "active": 4,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        [
+          {
+            "index": 4,
+            "tick": 344,
+            "warning": 4,
+            "active": 4,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "index": 8,
+            "tick": 344,
+            "warning": 4,
+            "active": 3,
+            "fade": 1,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "index": 6,
+            "tick": 344,
+            "warning": 4,
+            "active": 4,
+            "fade": 0,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        [
+          {
+            "index": 4,
+            "tick": 360,
+            "warning": 4,
+            "active": 2,
+            "fade": 2,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "index": 8,
+            "tick": 360,
+            "warning": 2,
+            "active": 4,
+            "fade": 2,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "index": 6,
+            "tick": 360,
+            "warning": 2,
+            "active": 4,
+            "fade": 2,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        [
+          {
+            "index": 4,
+            "tick": 376,
+            "warning": 2,
+            "active": 4,
+            "fade": 0,
+            "stages": [
+              1,
+              2
+            ]
+          },
+          {
+            "index": 8,
+            "tick": 376,
+            "warning": 1,
+            "active": 4,
+            "fade": 2,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "index": 6,
+            "tick": 376,
+            "warning": 2,
+            "active": 4,
+            "fade": 0,
+            "stages": [
+              1,
+              2
+            ]
+          }
+        ],
+        [
+          {
+            "index": 4,
+            "tick": 392,
+            "warning": 2,
+            "active": 4,
+            "fade": 0,
+            "stages": [
+              1,
+              2
+            ]
+          },
+          {
+            "index": 8,
+            "tick": 392,
+            "warning": 0,
+            "active": 4,
+            "fade": 2,
+            "stages": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "index": 6,
+            "tick": 392,
+            "warning": 0,
+            "active": 4,
+            "fade": 2,
+            "stages": [
+              1,
+              2
+            ]
+          }
+        ],
+        [
+          {
+            "index": 4,
+            "tick": 408,
+            "warning": 0,
+            "active": 4,
+            "fade": 0,
+            "stages": [
+              2
+            ]
+          },
+          {
+            "index": 8,
+            "tick": 408,
+            "warning": 0,
+            "active": 3,
+            "fade": 2,
+            "stages": [
+              1,
+              2
+            ]
+          },
+          {
+            "index": 6,
+            "tick": 408,
+            "warning": 0,
+            "active": 4,
+            "fade": 0,
+            "stages": [
+              2
+            ]
+          }
+        ],
+        [
+          {
+            "index": 4,
+            "tick": 424,
+            "warning": 0,
+            "active": 4,
+            "fade": 0,
+            "stages": [
+              2
+            ]
+          },
+          {
+            "index": 8,
+            "tick": 424,
+            "warning": 0,
+            "active": 2,
+            "fade": 1,
+            "stages": [
+              2
+            ]
+          },
+          {
+            "index": 6,
+            "tick": 424,
+            "warning": 0,
+            "active": 2,
+            "fade": 2,
+            "stages": [
+              2
+            ]
+          }
+        ],
+        [
+          {
+            "index": 4,
+            "tick": 440,
+            "warning": 0,
+            "active": 2,
+            "fade": 2,
+            "stages": [
+              2
+            ]
+          },
+          {
+            "index": 8,
+            "tick": 440,
+            "warning": 0,
+            "active": 1,
+            "fade": 1,
+            "stages": [
+              2
+            ]
+          },
+          {
+            "index": 6,
+            "tick": 440,
+            "warning": 0,
+            "active": 2,
+            "fade": 0,
+            "stages": [
+              2
+            ]
+          }
+        ],
+        [
+          {
+            "index": 4,
+            "tick": 456,
+            "warning": 0,
+            "active": 2,
+            "fade": 0,
+            "stages": [
+              2
+            ]
+          },
+          {
+            "index": 8,
+            "tick": 456,
+            "warning": 0,
+            "active": 0,
+            "fade": 1,
+            "stages": [
+              2
+            ]
+          },
+          {
+            "index": 6,
+            "tick": 456,
+            "warning": 0,
+            "active": 0,
+            "fade": 2,
+            "stages": [
+              2
+            ]
+          }
+        ],
+        [
+          {
+            "index": 4,
+            "tick": 472,
+            "warning": 0,
+            "active": 0,
+            "fade": 2,
+            "stages": [
+              2
+            ]
+          },
+          {
+            "index": 8,
+            "tick": 472,
+            "warning": 0,
+            "active": 0,
+            "fade": 0,
+            "stages": []
+          },
+          {
+            "index": 6,
+            "tick": 472,
+            "warning": 0,
+            "active": 0,
+            "fade": 0,
+            "stages": []
+          }
+        ],
+        [
+          {
+            "index": 4,
+            "tick": 488,
+            "warning": 0,
+            "active": 0,
+            "fade": 0,
+            "stages": []
+          },
+          {
+            "index": 8,
+            "tick": 488,
+            "warning": 0,
+            "active": 0,
+            "fade": 0,
+            "stages": []
+          },
+          {
+            "index": 6,
+            "tick": 488,
+            "warning": 0,
+            "active": 0,
+            "fade": 0,
+            "stages": []
+          }
+        ],
+        [
+          {
+            "index": 4,
+            "tick": 504,
+            "warning": 0,
+            "active": 0,
+            "fade": 0,
+            "stages": []
+          },
+          {
+            "index": 8,
+            "tick": 504,
+            "warning": 0,
+            "active": 0,
+            "fade": 0,
+            "stages": []
+          },
+          {
+            "index": 6,
+            "tick": 504,
+            "warning": 0,
+            "active": 0,
+            "fade": 0,
+            "stages": []
+          }
+        ],
+        [
+          {
+            "index": 4,
+            "tick": 520,
+            "warning": 0,
+            "active": 0,
+            "fade": 0,
+            "stages": []
+          },
+          {
+            "index": 8,
+            "tick": 520,
+            "warning": 0,
+            "active": 0,
+            "fade": 0,
+            "stages": []
+          },
+          {
+            "index": 6,
+            "tick": 520,
+            "warning": 0,
+            "active": 0,
+            "fade": 0,
+            "stages": []
+          }
+        ]
+      ]
+    }
+  },
+  "summary": {
+    "contactBosses": 5,
+    "contactFrames": 30,
+    "lowQualityHeldFrames": 5,
+    "missingProjectileAssets": 0,
+    "warmStampMisses": 0,
+    "warmBeamBuilds": 0,
+    "maxSourceCacheBytes": 2352320,
+    "maxSourceCacheEntries": 22,
+    "highHeldAccentLimit": 8,
+    "lowHeldAccentLimit": 4
+  },
+  "phrases": [
+    {
+      "name": "Lucifer / constellation",
+      "before": {
+        "revision": 30,
+        "index": 4,
+        "phase": 0,
+        "born": 229,
+        "firstActiveAt": 286,
+        "lastFadeAt": 332,
+        "lastExpireAt": 342,
+        "activeTicks": [
+          16
+        ],
+        "fadeTicks": [
+          10
+        ],
+        "stages": []
+      },
+      "after": {
+        "revision": 31,
+        "index": 4,
+        "phase": 0,
+        "born": 229,
+        "firstActiveAt": 288,
+        "lastFadeAt": 466,
+        "lastExpireAt": 481,
+        "activeTicks": [
+          64,
+          68
+        ],
+        "fadeTicks": [
+          15
+        ],
+        "stages": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "name": "Lust / piano",
+      "before": {
+        "revision": 30,
+        "index": 8,
+        "phase": 0,
+        "born": 229,
+        "firstActiveAt": 301,
+        "lastFadeAt": 345,
+        "lastExpireAt": 357,
+        "activeTicks": [
+          14
+        ],
+        "fadeTicks": [
+          12
+        ],
+        "stages": []
+      },
+      "after": {
+        "revision": 31,
+        "index": 8,
+        "phase": 0,
+        "born": 229,
+        "firstActiveAt": 286,
+        "lastFadeAt": 446,
+        "lastExpireAt": 464,
+        "activeTicks": [
+          58,
+          62
+        ],
+        "fadeTicks": [
+          18
+        ],
+        "stages": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "name": "Pride / verdict",
+      "before": {
+        "revision": 30,
+        "index": 11,
+        "phase": 2,
+        "born": 229,
+        "firstActiveAt": 289,
+        "lastFadeAt": 348,
+        "lastExpireAt": 360,
+        "activeTicks": [
+          14
+        ],
+        "fadeTicks": [
+          12
+        ],
+        "stages": []
+      },
+      "after": {
+        "revision": 31,
+        "index": 11,
+        "phase": 2,
+        "born": 229,
+        "firstActiveAt": 285,
+        "lastFadeAt": 449,
+        "lastExpireAt": 464,
+        "activeTicks": [
+          64,
+          68
+        ],
+        "fadeTicks": [
+          15
+        ],
+        "stages": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "name": "Envy / reflection",
+      "before": {
+        "revision": 30,
+        "index": 6,
+        "phase": 0,
+        "born": 229,
+        "firstActiveAt": 283,
+        "lastFadeAt": 314,
+        "lastExpireAt": 322,
+        "activeTicks": [
+          10
+        ],
+        "fadeTicks": [
+          8
+        ],
+        "stages": []
+      },
+      "after": {
+        "revision": 31,
+        "index": 6,
+        "phase": 0,
+        "born": 229,
+        "firstActiveAt": 287,
+        "lastFadeAt": 447,
+        "lastExpireAt": 459,
+        "activeTicks": [
+          62,
+          66
+        ],
+        "fadeTicks": [
+          12
+        ],
+        "stages": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "name": "Final / authority",
+      "before": {
+        "revision": 30,
+        "index": 34,
+        "phase": 2,
+        "born": 229,
+        "firstActiveAt": 286,
+        "lastFadeAt": 332,
+        "lastExpireAt": 342,
+        "activeTicks": [
+          10
+        ],
+        "fadeTicks": [
+          10
+        ],
+        "stages": []
+      },
+      "after": {
+        "revision": 31,
+        "index": 34,
+        "phase": 2,
+        "born": 229,
+        "firstActiveAt": 284,
+        "lastFadeAt": 456,
+        "lastExpireAt": 468,
+        "activeTicks": [
+          70,
+          72
+        ],
+        "fadeTicks": [
+          12
+        ],
+        "stages": [
+          0,
+          1,
+          2
+        ]
+      }
+    }
+  ],
+  "scenes": [
+    {
+      "name": "Lucifer / constellation",
+      "version": "before",
+      "summary": {
+        "revision": 30,
+        "tick": 274,
+        "group": "laser-barrage-1-229-205",
+        "warning": 6,
+        "active": 0,
+        "fade": 0
+      },
+      "worldSHA256": "59a5c1d755ba988f55fb920494f05584a53b868773ba529e6e75c4386208dbd0",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 3,
+        "rasterAssetLaserDraws": 3,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 259,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 2052672,
+        "stampCacheEntries": 18,
+        "imminentCueDraws": 1,
+        "beamFlowDraws": 6,
+        "beamEmitterDraws": 3,
+        "beamSourceKeys": {
+          "h14SkillLucifer": 3
+        }
+      }
+    },
+    {
+      "name": "Lucifer / constellation",
+      "version": "before",
+      "summary": {
+        "revision": 30,
+        "tick": 327,
+        "group": "laser-barrage-1-229-205",
+        "warning": 0,
+        "active": 1,
+        "fade": 2
+      },
+      "worldSHA256": "c20f7688d1be62ebc4850b8ffb6ed929d938e1f4f11008dcdd7df95689f4c4c8",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 6,
+        "rasterAssetLaserDraws": 6,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 243,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 2024960,
+        "stampCacheEntries": 17,
+        "imminentCueDraws": 0,
+        "beamFlowDraws": 8,
+        "beamEmitterDraws": 4,
+        "beamSourceKeys": {
+          "h14SkillLucifer": 6
+        }
+      }
+    },
+    {
+      "name": "Lucifer / constellation",
+      "version": "before",
+      "summary": {
+        "revision": 30,
+        "tick": 335,
+        "group": "laser-barrage-1-229-205",
+        "warning": 0,
+        "active": 0,
+        "fade": 2
+      },
+      "worldSHA256": "440ec6257e8bf9cd06f0e270b9f0925e5205662c52b5e87f9f4c8bd313a862a3",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 5,
+        "rasterAssetLaserDraws": 5,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 235,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1984960,
+        "stampCacheEntries": 16,
+        "imminentCueDraws": 0,
+        "beamFlowDraws": 6,
+        "beamEmitterDraws": 3,
+        "beamSourceKeys": {
+          "h14SkillLucifer": 5
+        }
+      }
+    },
+    {
+      "name": "Lucifer / constellation",
+      "version": "after",
+      "summary": {
+        "revision": 31,
+        "tick": 276,
+        "group": "laser-barrage-1-229-205",
+        "warning": 8,
+        "active": 0,
+        "fade": 0
+      },
+      "worldSHA256": "e41ec63543aa2fdd24f6b97c7df37e8f2ea6182b7718c0bf0d8cfed99364ef7b",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 3,
+        "rasterAssetLaserDraws": 3,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 259,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 2052672,
+        "stampCacheEntries": 18,
+        "imminentCueDraws": 2,
+        "laserChargeDraws": 2,
+        "laserSpectacleDraws": 0,
+        "laserSpectacleLimit": 8,
+        "laserEndcapDraws": 0,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 0,
+        "beamFlowDraws": 6,
+        "beamEmitterDraws": 3,
+        "beamSourceKeys": {
+          "h14SkillLucifer": 3
+        },
+        "laserSpectacles": []
+      }
+    },
+    {
+      "name": "Lucifer / constellation",
+      "version": "after",
+      "summary": {
+        "revision": 31,
+        "tick": 449,
+        "group": "laser-barrage-1-229-205",
+        "warning": 0,
+        "active": 2,
+        "fade": 0
+      },
+      "worldSHA256": "c00f14d5ed0e05084e0133ea78d103450f6eca9c8778961402fc2e004c6ed22e",
+      "metrics": {
+        "combatCopyDraws": 3,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 5,
+        "rasterAssetLaserDraws": 5,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 107,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1821696,
+        "stampCacheEntries": 15,
+        "imminentCueDraws": 0,
+        "laserChargeDraws": 0,
+        "laserSpectacleDraws": 2,
+        "laserSpectacleLimit": 8,
+        "laserEndcapDraws": 2,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 0,
+        "beamFlowDraws": 10,
+        "beamEmitterDraws": 5,
+        "beamSourceKeys": {
+          "h14SkillLucifer": 5
+        },
+        "laserSpectacles": [
+          {
+            "id": 209,
+            "phase": "active",
+            "stage": 2,
+            "x1": 198.2899945080442,
+            "y1": 143.6996592628391,
+            "x2": 345.25254518834583,
+            "y2": 638,
+            "width": 6.696000000000001,
+            "sourceKey": "h14SkillLucifer",
+            "paletteId": "lucifer-secondary",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 213,
+            "phase": "active",
+            "stage": 2,
+            "x1": 215.9959655746767,
+            "y1": 117.05936983103891,
+            "x2": 326.2965921693259,
+            "y2": 638,
+            "width": 6.696000000000001,
+            "sourceKey": "h14SkillLucifer",
+            "paletteId": "lucifer-secondary",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lucifer / constellation",
+      "version": "after",
+      "summary": {
+        "revision": 31,
+        "tick": 471,
+        "group": "laser-barrage-1-229-205",
+        "warning": 0,
+        "active": 0,
+        "fade": 2
+      },
+      "worldSHA256": "dbbc6714dd7eec1a214c91137803adc1bade100d345b6b830872c504872bc8b4",
+      "metrics": {
+        "combatCopyDraws": 3,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 5,
+        "rasterAssetLaserDraws": 5,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 152,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 2024960,
+        "stampCacheEntries": 17,
+        "imminentCueDraws": 0,
+        "laserChargeDraws": 0,
+        "laserSpectacleDraws": 2,
+        "laserSpectacleLimit": 8,
+        "laserEndcapDraws": 2,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 2,
+        "beamFlowDraws": 10,
+        "beamEmitterDraws": 5,
+        "beamSourceKeys": {
+          "h14SkillLucifer": 5
+        },
+        "laserSpectacles": [
+          {
+            "id": 209,
+            "phase": "fade",
+            "stage": 2,
+            "x1": 198.2899945080442,
+            "y1": 143.6996592628391,
+            "x2": 345.25254518834583,
+            "y2": 638,
+            "width": 6.696000000000001,
+            "sourceKey": "h14SkillLucifer",
+            "paletteId": "lucifer-secondary",
+            "opacity": 0.3176470588235294,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 213,
+            "phase": "fade",
+            "stage": 2,
+            "x1": 215.9959655746767,
+            "y1": 117.05936983103891,
+            "x2": 326.2965921693259,
+            "y2": 638,
+            "width": 6.696000000000001,
+            "sourceKey": "h14SkillLucifer",
+            "paletteId": "lucifer-secondary",
+            "opacity": 0.3176470588235294,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lucifer / constellation",
+      "version": "after-low",
+      "summary": {
+        "revision": 31,
+        "tick": 449,
+        "group": "laser-barrage-1-229-205",
+        "warning": 0,
+        "active": 2,
+        "fade": 0
+      },
+      "worldSHA256": "c00f14d5ed0e05084e0133ea78d103450f6eca9c8778961402fc2e004c6ed22e",
+      "metrics": {
+        "combatCopyDraws": 3,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 5,
+        "rasterAssetLaserDraws": 5,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 107,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1821696,
+        "stampCacheEntries": 15,
+        "imminentCueDraws": 0,
+        "laserChargeDraws": 0,
+        "laserSpectacleDraws": 2,
+        "laserSpectacleLimit": 4,
+        "laserEndcapDraws": 2,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 0,
+        "beamFlowDraws": 0,
+        "beamEmitterDraws": 2,
+        "beamSourceKeys": {
+          "h14SkillLucifer": 5
+        },
+        "laserSpectacles": [
+          {
+            "id": 209,
+            "phase": "active",
+            "stage": 2,
+            "x1": 198.2899945080442,
+            "y1": 143.6996592628391,
+            "x2": 345.25254518834583,
+            "y2": 638,
+            "width": 6.696000000000001,
+            "sourceKey": "h14SkillLucifer",
+            "paletteId": "lucifer-secondary",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 213,
+            "phase": "active",
+            "stage": 2,
+            "x1": 215.9959655746767,
+            "y1": 117.05936983103891,
+            "x2": 326.2965921693259,
+            "y2": 638,
+            "width": 6.696000000000001,
+            "sourceKey": "h14SkillLucifer",
+            "paletteId": "lucifer-secondary",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lust / piano",
+      "version": "before",
+      "summary": {
+        "revision": 30,
+        "tick": 289,
+        "group": "laser-barrage-1-229-90",
+        "warning": 6,
+        "active": 0,
+        "fade": 0
+      },
+      "worldSHA256": "155f18c0f9fcd2bb41b86813caf26eb98436cc7110fa838f316a886e50a1cd17",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 8,
+        "rasterAssetLaserDraws": 8,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 106,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 2352320,
+        "stampCacheEntries": 18,
+        "imminentCueDraws": 1,
+        "beamFlowDraws": 12,
+        "beamEmitterDraws": 6,
+        "beamSourceKeys": {
+          "h14BeamLust": 8
+        }
+      }
+    },
+    {
+      "name": "Lust / piano",
+      "version": "before",
+      "summary": {
+        "revision": 30,
+        "tick": 340,
+        "group": "laser-barrage-1-229-90",
+        "warning": 0,
+        "active": 1,
+        "fade": 2
+      },
+      "worldSHA256": "de2d0b4c552327ba93b3618246c895e12759fd40cb772b0f059cc60ea391b84a",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 9,
+        "rasterAssetLaserDraws": 9,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 86,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1783696,
+        "stampCacheEntries": 15,
+        "imminentCueDraws": 0,
+        "beamFlowDraws": 14,
+        "beamEmitterDraws": 7,
+        "beamSourceKeys": {
+          "h14BeamLust": 9
+        }
+      }
+    },
+    {
+      "name": "Lust / piano",
+      "version": "before",
+      "summary": {
+        "revision": 30,
+        "tick": 349,
+        "group": "laser-barrage-1-229-90",
+        "warning": 0,
+        "active": 0,
+        "fade": 2
+      },
+      "worldSHA256": "6d8916271fc26d85a74e4b10a9d97f2d685170eb3639a0a96ea32b4da1d58116",
+      "metrics": {
+        "combatCopyDraws": 3,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 8,
+        "rasterAssetLaserDraws": 8,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 82,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1592144,
+        "stampCacheEntries": 13,
+        "imminentCueDraws": 0,
+        "beamFlowDraws": 12,
+        "beamEmitterDraws": 6,
+        "beamSourceKeys": {
+          "h14BeamLust": 8
+        }
+      }
+    },
+    {
+      "name": "Lust / piano",
+      "version": "after",
+      "summary": {
+        "revision": 31,
+        "tick": 274,
+        "group": "laser-barrage-1-229-90",
+        "warning": 8,
+        "active": 0,
+        "fade": 0
+      },
+      "worldSHA256": "a3e358eb15622c90ec56abbf4f6695e374f40a4d07218af86d42cd6b88d1c49f",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 8,
+        "rasterAssetLaserDraws": 8,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 102,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 2352320,
+        "stampCacheEntries": 18,
+        "imminentCueDraws": 1,
+        "laserChargeDraws": 1,
+        "laserSpectacleDraws": 0,
+        "laserSpectacleLimit": 8,
+        "laserEndcapDraws": 0,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 0,
+        "beamFlowDraws": 16,
+        "beamEmitterDraws": 8,
+        "beamSourceKeys": {
+          "h14BeamLust": 8
+        },
+        "laserSpectacles": []
+      }
+    },
+    {
+      "name": "Lust / piano",
+      "version": "after",
+      "summary": {
+        "revision": 31,
+        "tick": 431,
+        "group": "laser-barrage-1-229-90",
+        "warning": 0,
+        "active": 2,
+        "fade": 1
+      },
+      "worldSHA256": "5fe68bebe466770d05f8371c054aafee682efc5cc8488a70a697776adcb57d8a",
+      "metrics": {
+        "combatCopyDraws": 4,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 9,
+        "rasterAssetLaserDraws": 9,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 57,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1634048,
+        "stampCacheEntries": 14,
+        "imminentCueDraws": 0,
+        "laserChargeDraws": 0,
+        "laserSpectacleDraws": 3,
+        "laserSpectacleLimit": 8,
+        "laserEndcapDraws": 3,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 1,
+        "beamFlowDraws": 18,
+        "beamEmitterDraws": 9,
+        "beamSourceKeys": {
+          "h14BeamLust": 9
+        },
+        "laserSpectacles": [
+          {
+            "id": 96,
+            "phase": "fade",
+            "stage": 2,
+            "x1": 279.27272727272725,
+            "y1": 80,
+            "x2": 279.27272727272725,
+            "y2": 638,
+            "width": 7.344,
+            "sourceKey": "h14BeamLust",
+            "paletteId": "asmodeus-secondary",
+            "opacity": 0.21176470588235294,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 97,
+            "phase": "active",
+            "stage": 2,
+            "x1": 137.45454545454544,
+            "y1": 80,
+            "x2": 137.45454545454544,
+            "y2": 638,
+            "width": 7.344,
+            "sourceKey": "h14BeamLust",
+            "paletteId": "asmodeus",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 98,
+            "phase": "active",
+            "stage": 2,
+            "x1": 165.8181818181818,
+            "y1": 80,
+            "x2": 165.8181818181818,
+            "y2": 638,
+            "width": 7.344,
+            "sourceKey": "h14BeamLust",
+            "paletteId": "asmodeus-secondary",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lust / piano",
+      "version": "after",
+      "summary": {
+        "revision": 31,
+        "tick": 452,
+        "group": "laser-barrage-1-229-90",
+        "warning": 0,
+        "active": 0,
+        "fade": 1
+      },
+      "worldSHA256": "bb5ce096a7c41fc27fd19701d56735307ff0649f50ba97af0d928f060d4c3f6c",
+      "metrics": {
+        "combatCopyDraws": 3,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 7,
+        "rasterAssetLaserDraws": 7,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 49,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1634048,
+        "stampCacheEntries": 14,
+        "imminentCueDraws": 0,
+        "laserChargeDraws": 0,
+        "laserSpectacleDraws": 1,
+        "laserSpectacleLimit": 8,
+        "laserEndcapDraws": 1,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 1,
+        "beamFlowDraws": 14,
+        "beamEmitterDraws": 7,
+        "beamSourceKeys": {
+          "h14BeamLust": 7
+        },
+        "laserSpectacles": [
+          {
+            "id": 98,
+            "phase": "fade",
+            "stage": 2,
+            "x1": 165.8181818181818,
+            "y1": 80,
+            "x2": 165.8181818181818,
+            "y2": 638,
+            "width": 7.344,
+            "sourceKey": "h14BeamLust",
+            "paletteId": "asmodeus-secondary",
+            "opacity": 0.3176470588235294,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lust / piano",
+      "version": "after-low",
+      "summary": {
+        "revision": 31,
+        "tick": 431,
+        "group": "laser-barrage-1-229-90",
+        "warning": 0,
+        "active": 2,
+        "fade": 1
+      },
+      "worldSHA256": "5fe68bebe466770d05f8371c054aafee682efc5cc8488a70a697776adcb57d8a",
+      "metrics": {
+        "combatCopyDraws": 4,
+        "pressureLayerCache": {
+          "entries": 1,
+          "bytes": 921600,
+          "byteLimit": 4194304,
+          "builds": 1,
+          "hits": 3,
+          "frameBuilds": 0,
+          "frameHits": 1,
+          "logicalBodies": 6
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 9,
+        "rasterAssetLaserDraws": 3,
+        "cachedAssetLaserDraws": 6,
+        "stampDraws": 57,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1634048,
+        "stampCacheEntries": 14,
+        "imminentCueDraws": 0,
+        "laserChargeDraws": 0,
+        "laserSpectacleDraws": 3,
+        "laserSpectacleLimit": 4,
+        "laserEndcapDraws": 3,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 1,
+        "beamFlowDraws": 0,
+        "beamEmitterDraws": 3,
+        "beamSourceKeys": {
+          "h14BeamLust": 9
+        },
+        "laserSpectacles": [
+          {
+            "id": 96,
+            "phase": "fade",
+            "stage": 2,
+            "x1": 279.27272727272725,
+            "y1": 80,
+            "x2": 279.27272727272725,
+            "y2": 638,
+            "width": 7.344,
+            "sourceKey": "h14BeamLust",
+            "paletteId": "asmodeus-secondary",
+            "opacity": 0.21176470588235294,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 97,
+            "phase": "active",
+            "stage": 2,
+            "x1": 137.45454545454544,
+            "y1": 80,
+            "x2": 137.45454545454544,
+            "y2": 638,
+            "width": 7.344,
+            "sourceKey": "h14BeamLust",
+            "paletteId": "asmodeus",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 98,
+            "phase": "active",
+            "stage": 2,
+            "x1": 165.8181818181818,
+            "y1": 80,
+            "x2": 165.8181818181818,
+            "y2": 638,
+            "width": 7.344,
+            "sourceKey": "h14BeamLust",
+            "paletteId": "asmodeus-secondary",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Pride / verdict",
+      "version": "before",
+      "summary": {
+        "revision": 30,
+        "tick": 277,
+        "group": "laser-barrage-1-229-68",
+        "warning": 8,
+        "active": 0,
+        "fade": 0
+      },
+      "worldSHA256": "6bc268d355933725edd9d0ff6b5b3ae14cbc574062436cc655f3611067d7c377",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 4,
+        "rasterAssetLaserDraws": 4,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 71,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1501616,
+        "stampCacheEntries": 18,
+        "imminentCueDraws": 1,
+        "beamFlowDraws": 6,
+        "beamEmitterDraws": 3,
+        "beamSourceKeys": {
+          "h14BeamPride": 4
+        }
+      }
+    },
+    {
+      "name": "Pride / verdict",
+      "version": "before",
+      "summary": {
+        "revision": 30,
+        "tick": 343,
+        "group": "laser-barrage-1-229-68",
+        "warning": 0,
+        "active": 1,
+        "fade": 2
+      },
+      "worldSHA256": "14e02924190adfea80aa55cfebc59b66306dd6e41dbe5f11ef58d901efa42efd",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 6,
+        "rasterAssetLaserDraws": 6,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 42,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1464816,
+        "stampCacheEntries": 16,
+        "imminentCueDraws": 0,
+        "beamFlowDraws": 8,
+        "beamEmitterDraws": 4,
+        "beamSourceKeys": {
+          "h14BeamPride": 6
+        }
+      }
+    },
+    {
+      "name": "Pride / verdict",
+      "version": "before",
+      "summary": {
+        "revision": 30,
+        "tick": 352,
+        "group": "laser-barrage-1-229-68",
+        "warning": 0,
+        "active": 0,
+        "fade": 2
+      },
+      "worldSHA256": "a113b8016950b19f5b99e613bd10a0dcc9beaa441990595296a7b912afa72892",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 5,
+        "rasterAssetLaserDraws": 5,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 40,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1464816,
+        "stampCacheEntries": 16,
+        "imminentCueDraws": 0,
+        "beamFlowDraws": 6,
+        "beamEmitterDraws": 3,
+        "beamSourceKeys": {
+          "h14BeamPride": 5
+        }
+      }
+    },
+    {
+      "name": "Pride / verdict",
+      "version": "after",
+      "summary": {
+        "revision": 31,
+        "tick": 273,
+        "group": "laser-barrage-1-229-68",
+        "warning": 8,
+        "active": 0,
+        "fade": 0
+      },
+      "worldSHA256": "7ef291a64b4abad8b85df888e773e6fba8078810e0c2fa29e295a548960842d1",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 4,
+        "rasterAssetLaserDraws": 4,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 74,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1501616,
+        "stampCacheEntries": 18,
+        "imminentCueDraws": 1,
+        "laserChargeDraws": 1,
+        "laserSpectacleDraws": 0,
+        "laserSpectacleLimit": 8,
+        "laserEndcapDraws": 0,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 0,
+        "beamFlowDraws": 8,
+        "beamEmitterDraws": 4,
+        "beamSourceKeys": {
+          "h14BeamPride": 4
+        },
+        "laserSpectacles": []
+      }
+    },
+    {
+      "name": "Pride / verdict",
+      "version": "after",
+      "summary": {
+        "revision": 31,
+        "tick": 433,
+        "group": "laser-barrage-1-229-68",
+        "warning": 0,
+        "active": 1,
+        "fade": 1
+      },
+      "worldSHA256": "52658c450c7b5e7ba0f41594cc0ff908433d584d3eca4c1871e987c189fbeb45",
+      "metrics": {
+        "combatCopyDraws": 1,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 5,
+        "rasterAssetLaserDraws": 5,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 22,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1327760,
+        "stampCacheEntries": 12,
+        "imminentCueDraws": 0,
+        "laserChargeDraws": 0,
+        "laserSpectacleDraws": 2,
+        "laserSpectacleLimit": 8,
+        "laserEndcapDraws": 2,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 1,
+        "beamFlowDraws": 10,
+        "beamEmitterDraws": 5,
+        "beamSourceKeys": {
+          "h14BeamPride": 5
+        },
+        "laserSpectacles": [
+          {
+            "id": 75,
+            "phase": "fade",
+            "stage": 2,
+            "x1": 24,
+            "y1": 80,
+            "x2": 36,
+            "y2": 638,
+            "width": 9.687599999999998,
+            "sourceKey": "h14BeamPride",
+            "paletteId": "pride",
+            "opacity": 0.47843137254901963,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 76,
+            "phase": "active",
+            "stage": 2,
+            "x1": 52.36363636363636,
+            "y1": 80,
+            "x2": 64.36363636363636,
+            "y2": 638,
+            "width": 9.687599999999998,
+            "sourceKey": "h14BeamPride",
+            "paletteId": "pride-secondary",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Pride / verdict",
+      "version": "after",
+      "summary": {
+        "revision": 31,
+        "tick": 454,
+        "group": "laser-barrage-1-229-68",
+        "warning": 0,
+        "active": 0,
+        "fade": 1
+      },
+      "worldSHA256": "378a6516d54a80cd54901d39616149c3cd702f13e81faa13bc0be0592a120260",
+      "metrics": {
+        "combatCopyDraws": 1,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 4,
+        "rasterAssetLaserDraws": 4,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 18,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1219360,
+        "stampCacheEntries": 8,
+        "imminentCueDraws": 0,
+        "laserChargeDraws": 0,
+        "laserSpectacleDraws": 1,
+        "laserSpectacleLimit": 8,
+        "laserEndcapDraws": 1,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 1,
+        "beamFlowDraws": 8,
+        "beamEmitterDraws": 4,
+        "beamSourceKeys": {
+          "h14BeamPride": 4
+        },
+        "laserSpectacles": [
+          {
+            "id": 76,
+            "phase": "fade",
+            "stage": 2,
+            "x1": 52.36363636363636,
+            "y1": 80,
+            "x2": 64.36363636363636,
+            "y2": 638,
+            "width": 9.687599999999998,
+            "sourceKey": "h14BeamPride",
+            "paletteId": "pride-secondary",
+            "opacity": 0.3176470588235294,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Pride / verdict",
+      "version": "after-low",
+      "summary": {
+        "revision": 31,
+        "tick": 433,
+        "group": "laser-barrage-1-229-68",
+        "warning": 0,
+        "active": 1,
+        "fade": 1
+      },
+      "worldSHA256": "52658c450c7b5e7ba0f41594cc0ff908433d584d3eca4c1871e987c189fbeb45",
+      "metrics": {
+        "combatCopyDraws": 1,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 5,
+        "rasterAssetLaserDraws": 5,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 22,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1327760,
+        "stampCacheEntries": 12,
+        "imminentCueDraws": 0,
+        "laserChargeDraws": 0,
+        "laserSpectacleDraws": 2,
+        "laserSpectacleLimit": 4,
+        "laserEndcapDraws": 2,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 1,
+        "beamFlowDraws": 0,
+        "beamEmitterDraws": 2,
+        "beamSourceKeys": {
+          "h14BeamPride": 5
+        },
+        "laserSpectacles": [
+          {
+            "id": 75,
+            "phase": "fade",
+            "stage": 2,
+            "x1": 24,
+            "y1": 80,
+            "x2": 36,
+            "y2": 638,
+            "width": 9.687599999999998,
+            "sourceKey": "h14BeamPride",
+            "paletteId": "pride",
+            "opacity": 0.47843137254901963,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 76,
+            "phase": "active",
+            "stage": 2,
+            "x1": 52.36363636363636,
+            "y1": 80,
+            "x2": 64.36363636363636,
+            "y2": 638,
+            "width": 9.687599999999998,
+            "sourceKey": "h14BeamPride",
+            "paletteId": "pride-secondary",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Envy / reflection",
+      "version": "before",
+      "summary": {
+        "revision": 30,
+        "tick": 271,
+        "group": "laser-barrage-1-229-121",
+        "warning": 8,
+        "active": 0,
+        "fade": 0
+      },
+      "worldSHA256": "b2ee35ea41ff0503d9d1693b4903db511a23b43da65e22c1b23b81330e434ff9",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 4,
+        "rasterAssetLaserDraws": 4,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 149,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1630976,
+        "stampCacheEntries": 22,
+        "imminentCueDraws": 2,
+        "beamFlowDraws": 8,
+        "beamEmitterDraws": 4,
+        "beamSourceKeys": {
+          "h14BeamEnvy": 4
+        }
+      }
+    },
+    {
+      "name": "Envy / reflection",
+      "version": "before",
+      "summary": {
+        "revision": 30,
+        "tick": 309,
+        "group": "laser-barrage-1-229-121",
+        "warning": 0,
+        "active": 2,
+        "fade": 2
+      },
+      "worldSHA256": "5dc799d6caf06953fb6cdff7d08b7b227d5ce17b4fc299d38354403ca7f17aa5",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 7,
+        "rasterAssetLaserDraws": 7,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 135,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1609504,
+        "stampCacheEntries": 21,
+        "imminentCueDraws": 0,
+        "beamFlowDraws": 10,
+        "beamEmitterDraws": 5,
+        "beamSourceKeys": {
+          "h14BeamEnvy": 7
+        }
+      }
+    },
+    {
+      "name": "Envy / reflection",
+      "version": "before",
+      "summary": {
+        "revision": 30,
+        "tick": 316,
+        "group": "laser-barrage-1-229-121",
+        "warning": 0,
+        "active": 0,
+        "fade": 2
+      },
+      "worldSHA256": "86c213e21359b1daa3e9cc0656dc196b7fe6ecff2b5239f3ed3b2ed30a98f4f6",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 5,
+        "rasterAssetLaserDraws": 5,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 133,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1588032,
+        "stampCacheEntries": 20,
+        "imminentCueDraws": 0,
+        "beamFlowDraws": 6,
+        "beamEmitterDraws": 3,
+        "beamSourceKeys": {
+          "h14BeamEnvy": 5
+        }
+      }
+    },
+    {
+      "name": "Envy / reflection",
+      "version": "after",
+      "summary": {
+        "revision": 31,
+        "tick": 275,
+        "group": "laser-barrage-1-229-121",
+        "warning": 8,
+        "active": 0,
+        "fade": 0
+      },
+      "worldSHA256": "538366ad9b4e9240b131d06b4fbe055a9adcc7a256c06c04c5fc86bd36701043",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 4,
+        "rasterAssetLaserDraws": 4,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 149,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1630976,
+        "stampCacheEntries": 22,
+        "imminentCueDraws": 2,
+        "laserChargeDraws": 2,
+        "laserSpectacleDraws": 0,
+        "laserSpectacleLimit": 8,
+        "laserEndcapDraws": 0,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 0,
+        "beamFlowDraws": 8,
+        "beamEmitterDraws": 4,
+        "beamSourceKeys": {
+          "h14BeamEnvy": 4
+        },
+        "laserSpectacles": []
+      }
+    },
+    {
+      "name": "Envy / reflection",
+      "version": "after",
+      "summary": {
+        "revision": 31,
+        "tick": 432,
+        "group": "laser-barrage-1-229-121",
+        "warning": 0,
+        "active": 2,
+        "fade": 0
+      },
+      "worldSHA256": "cbf593e700b779238df880f561b06051942e6c3143ac736b214b4853adbf1e80",
+      "metrics": {
+        "combatCopyDraws": 4,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 5,
+        "rasterAssetLaserDraws": 5,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 93,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1474304,
+        "stampCacheEntries": 17,
+        "imminentCueDraws": 0,
+        "laserChargeDraws": 0,
+        "laserSpectacleDraws": 2,
+        "laserSpectacleLimit": 8,
+        "laserEndcapDraws": 1,
+        "laserJointDraws": 1,
+        "laserAfterglowDraws": 0,
+        "beamFlowDraws": 10,
+        "beamEmitterDraws": 5,
+        "beamSourceKeys": {
+          "h14BeamEnvy": 5
+        },
+        "laserSpectacles": [
+          {
+            "id": 128,
+            "phase": "active",
+            "stage": 2,
+            "x1": 120,
+            "y1": 141,
+            "x2": 352,
+            "y2": 433.35670647167865,
+            "width": 6.912000000000001,
+            "sourceKey": "h14BeamEnvy",
+            "paletteId": "leviathan-secondary",
+            "opacity": 1,
+            "terminalAccent": false,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 129,
+            "phase": "active",
+            "stage": 2,
+            "x1": 352,
+            "y1": 433.35670647167865,
+            "x2": 189.60507952236838,
+            "y2": 638,
+            "width": 6.912000000000001,
+            "sourceKey": "h14BeamEnvy",
+            "paletteId": "leviathan-secondary",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Envy / reflection",
+      "version": "after",
+      "summary": {
+        "revision": 31,
+        "tick": 451,
+        "group": "laser-barrage-1-229-121",
+        "warning": 0,
+        "active": 0,
+        "fade": 2
+      },
+      "worldSHA256": "53467e6ce928a148c80bb69d66b88cbb6154f301273aabed60dbc458364cffc5",
+      "metrics": {
+        "combatCopyDraws": 3,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 5,
+        "rasterAssetLaserDraws": 5,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 81,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1474304,
+        "stampCacheEntries": 17,
+        "imminentCueDraws": 0,
+        "laserChargeDraws": 0,
+        "laserSpectacleDraws": 2,
+        "laserSpectacleLimit": 8,
+        "laserEndcapDraws": 1,
+        "laserJointDraws": 1,
+        "laserAfterglowDraws": 2,
+        "beamFlowDraws": 10,
+        "beamEmitterDraws": 5,
+        "beamSourceKeys": {
+          "h14BeamEnvy": 5
+        },
+        "laserSpectacles": [
+          {
+            "id": 128,
+            "phase": "fade",
+            "stage": 2,
+            "x1": 120,
+            "y1": 141,
+            "x2": 352,
+            "y2": 433.35670647167865,
+            "width": 6.912000000000001,
+            "sourceKey": "h14BeamEnvy",
+            "paletteId": "leviathan-secondary",
+            "opacity": 0.3176470588235294,
+            "terminalAccent": false,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 129,
+            "phase": "fade",
+            "stage": 2,
+            "x1": 352,
+            "y1": 433.35670647167865,
+            "x2": 189.60507952236838,
+            "y2": 638,
+            "width": 6.912000000000001,
+            "sourceKey": "h14BeamEnvy",
+            "paletteId": "leviathan-secondary",
+            "opacity": 0.3176470588235294,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Envy / reflection",
+      "version": "after-low",
+      "summary": {
+        "revision": 31,
+        "tick": 432,
+        "group": "laser-barrage-1-229-121",
+        "warning": 0,
+        "active": 2,
+        "fade": 0
+      },
+      "worldSHA256": "cbf593e700b779238df880f561b06051942e6c3143ac736b214b4853adbf1e80",
+      "metrics": {
+        "combatCopyDraws": 4,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 5,
+        "rasterAssetLaserDraws": 5,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 93,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1474304,
+        "stampCacheEntries": 17,
+        "imminentCueDraws": 0,
+        "laserChargeDraws": 0,
+        "laserSpectacleDraws": 2,
+        "laserSpectacleLimit": 4,
+        "laserEndcapDraws": 1,
+        "laserJointDraws": 1,
+        "laserAfterglowDraws": 0,
+        "beamFlowDraws": 0,
+        "beamEmitterDraws": 2,
+        "beamSourceKeys": {
+          "h14BeamEnvy": 5
+        },
+        "laserSpectacles": [
+          {
+            "id": 128,
+            "phase": "active",
+            "stage": 2,
+            "x1": 120,
+            "y1": 141,
+            "x2": 352,
+            "y2": 433.35670647167865,
+            "width": 6.912000000000001,
+            "sourceKey": "h14BeamEnvy",
+            "paletteId": "leviathan-secondary",
+            "opacity": 1,
+            "terminalAccent": false,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 129,
+            "phase": "active",
+            "stage": 2,
+            "x1": 352,
+            "y1": 433.35670647167865,
+            "x2": 189.60507952236838,
+            "y2": 638,
+            "width": 6.912000000000001,
+            "sourceKey": "h14BeamEnvy",
+            "paletteId": "leviathan-secondary",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Final / authority",
+      "version": "before",
+      "summary": {
+        "revision": 30,
+        "tick": 274,
+        "group": "laser-barrage-1-229-118",
+        "warning": 8,
+        "active": 0,
+        "fade": 0
+      },
+      "worldSHA256": "6e65c0a00aadf4305b57b55411eecbc4ed2337aa94b0fa3148f8939a5d212646",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 3,
+        "rasterAssetLaserDraws": 3,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 125,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1334592,
+        "stampCacheEntries": 20,
+        "imminentCueDraws": 1,
+        "beamFlowDraws": 6,
+        "beamEmitterDraws": 3,
+        "beamSourceKeys": {
+          "cultLance": 3
+        }
+      }
+    },
+    {
+      "name": "Final / authority",
+      "version": "before",
+      "summary": {
+        "revision": 30,
+        "tick": 327,
+        "group": "laser-barrage-1-229-118",
+        "warning": 0,
+        "active": 2,
+        "fade": 2
+      },
+      "worldSHA256": "82a51a8641ca67da8ad3435273013b1acd78a4d84d20ada18a313642654da17f",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 7,
+        "rasterAssetLaserDraws": 7,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 144,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1240512,
+        "stampCacheEntries": 16,
+        "imminentCueDraws": 0,
+        "beamFlowDraws": 10,
+        "beamEmitterDraws": 5,
+        "beamSourceKeys": {
+          "cultLance": 7
+        }
+      }
+    },
+    {
+      "name": "Final / authority",
+      "version": "before",
+      "summary": {
+        "revision": 30,
+        "tick": 335,
+        "group": "laser-barrage-1-229-118",
+        "warning": 0,
+        "active": 0,
+        "fade": 2
+      },
+      "worldSHA256": "030b1a99153d15a4abec52b668e1bf1a890af4c6d1b6868b170e9111f0e1d1ef",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 5,
+        "rasterAssetLaserDraws": 5,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 144,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1240512,
+        "stampCacheEntries": 16,
+        "imminentCueDraws": 0,
+        "beamFlowDraws": 6,
+        "beamEmitterDraws": 3,
+        "beamSourceKeys": {
+          "cultLance": 5
+        }
+      }
+    },
+    {
+      "name": "Final / authority",
+      "version": "after",
+      "summary": {
+        "revision": 31,
+        "tick": 272,
+        "group": "laser-barrage-1-229-118",
+        "warning": 8,
+        "active": 0,
+        "fade": 0
+      },
+      "worldSHA256": "4a7ae4b52a8c057fa5c77fd8f5941dfecef5556283a27237f2d2256daede4a1d",
+      "metrics": {
+        "combatCopyDraws": 2,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 3,
+        "rasterAssetLaserDraws": 3,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 125,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1334592,
+        "stampCacheEntries": 20,
+        "imminentCueDraws": 1,
+        "laserChargeDraws": 1,
+        "laserSpectacleDraws": 0,
+        "laserSpectacleLimit": 8,
+        "laserEndcapDraws": 0,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 0,
+        "beamFlowDraws": 6,
+        "beamEmitterDraws": 3,
+        "beamSourceKeys": {
+          "cultLance": 3
+        },
+        "laserSpectacles": []
+      }
+    },
+    {
+      "name": "Final / authority",
+      "version": "after",
+      "summary": {
+        "revision": 31,
+        "tick": 438,
+        "group": "laser-barrage-1-229-118",
+        "warning": 0,
+        "active": 2,
+        "fade": 1
+      },
+      "worldSHA256": "cec8fee3eec6009b44526dc4847dac6a4dbd2c3e7771b94d06b8a334541692a8",
+      "metrics": {
+        "combatCopyDraws": 3,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 6,
+        "rasterAssetLaserDraws": 6,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 94,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1136000,
+        "stampCacheEntries": 14,
+        "imminentCueDraws": 0,
+        "laserChargeDraws": 0,
+        "laserSpectacleDraws": 3,
+        "laserSpectacleLimit": 8,
+        "laserEndcapDraws": 3,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 1,
+        "beamFlowDraws": 12,
+        "beamEmitterDraws": 6,
+        "beamSourceKeys": {
+          "cultLance": 6
+        },
+        "laserSpectacles": [
+          {
+            "id": 124,
+            "phase": "fade",
+            "stage": 2,
+            "x1": 336,
+            "y1": 75,
+            "x2": 324,
+            "y2": 638,
+            "width": 12.42,
+            "sourceKey": "cultLance",
+            "paletteId": "story-35-secondary",
+            "opacity": 0.11764705882352941,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 125,
+            "phase": "active",
+            "stage": 2,
+            "x1": 24,
+            "y1": 75,
+            "x2": 12,
+            "y2": 638,
+            "width": 12.42,
+            "sourceKey": "cultLance",
+            "paletteId": "story-35",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 126,
+            "phase": "active",
+            "stage": 2,
+            "x1": 52.36363636363636,
+            "y1": 75,
+            "x2": 49.031119233691285,
+            "y2": 231.35059534658959,
+            "width": 12.42,
+            "sourceKey": "cultLance",
+            "paletteId": "story-35-secondary",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Final / authority",
+      "version": "after",
+      "summary": {
+        "revision": 31,
+        "tick": 460,
+        "group": "laser-barrage-1-229-118",
+        "warning": 0,
+        "active": 0,
+        "fade": 1
+      },
+      "worldSHA256": "d6b80a539e4f3e7a9a2c5378140d261bcb82e521f0d7214f33bfe31e69de7c8f",
+      "metrics": {
+        "combatCopyDraws": 3,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 4,
+        "rasterAssetLaserDraws": 4,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 81,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1172864,
+        "stampCacheEntries": 15,
+        "imminentCueDraws": 0,
+        "laserChargeDraws": 0,
+        "laserSpectacleDraws": 1,
+        "laserSpectacleLimit": 8,
+        "laserEndcapDraws": 1,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 1,
+        "beamFlowDraws": 8,
+        "beamEmitterDraws": 4,
+        "beamSourceKeys": {
+          "cultLance": 4
+        },
+        "laserSpectacles": [
+          {
+            "id": 126,
+            "phase": "fade",
+            "stage": 2,
+            "x1": 52.36363636363636,
+            "y1": 75,
+            "x2": 49.031119233691285,
+            "y2": 231.35059534658959,
+            "width": 12.42,
+            "sourceKey": "cultLance",
+            "paletteId": "story-35-secondary",
+            "opacity": 0.3176470588235294,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Final / authority",
+      "version": "after-low",
+      "summary": {
+        "revision": 31,
+        "tick": 438,
+        "group": "laser-barrage-1-229-118",
+        "warning": 0,
+        "active": 2,
+        "fade": 1
+      },
+      "worldSHA256": "cec8fee3eec6009b44526dc4847dac6a4dbd2c3e7771b94d06b8a334541692a8",
+      "metrics": {
+        "combatCopyDraws": 3,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 6,
+        "rasterAssetLaserDraws": 6,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 94,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1136000,
+        "stampCacheEntries": 14,
+        "imminentCueDraws": 0,
+        "laserChargeDraws": 0,
+        "laserSpectacleDraws": 3,
+        "laserSpectacleLimit": 4,
+        "laserEndcapDraws": 3,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 1,
+        "beamFlowDraws": 0,
+        "beamEmitterDraws": 3,
+        "beamSourceKeys": {
+          "cultLance": 6
+        },
+        "laserSpectacles": [
+          {
+            "id": 124,
+            "phase": "fade",
+            "stage": 2,
+            "x1": 336,
+            "y1": 75,
+            "x2": 324,
+            "y2": 638,
+            "width": 12.42,
+            "sourceKey": "cultLance",
+            "paletteId": "story-35-secondary",
+            "opacity": 0.11764705882352941,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 125,
+            "phase": "active",
+            "stage": 2,
+            "x1": 24,
+            "y1": 75,
+            "x2": 12,
+            "y2": 638,
+            "width": 12.42,
+            "sourceKey": "cultLance",
+            "paletteId": "story-35",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 126,
+            "phase": "active",
+            "stage": 2,
+            "x1": 52.36363636363636,
+            "y1": 75,
+            "x2": 49.031119233691285,
+            "y2": 231.35059534658959,
+            "width": 12.42,
+            "sourceKey": "cultLance",
+            "paletteId": "story-35-secondary",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          }
+        ]
+      }
+    }
+  ],
+  "timings": [
+    {
+      "name": "Lucifer / constellation",
+      "scope": "Same frozen actual31 held scene with legacy30 presentation selector versus31, low quality, forty warmed draw-only native frames each in alternating blocks. Not old30 simulation or phone FPS.",
+      "before": {
+        "frames": 40,
+        "medianMs": 4.012577000001329,
+        "p95Ms": 33.2894610000003
+      },
+      "after": {
+        "frames": 40,
+        "medianMs": 3.7725510000000213,
+        "p95Ms": 11.790004000000408
+      },
+      "beforeDraws": {
+        "drawImage": 137,
+        "clip": 5,
+        "combatCopyDraws": 3,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 5,
+        "rasterAssetLaserDraws": 5,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 107,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1821696,
+        "stampCacheEntries": 15,
+        "imminentCueDraws": 0,
+        "beamFlowDraws": 0,
+        "beamEmitterDraws": 0,
+        "beamSourceKeys": {
+          "h14SkillLucifer": 5
+        }
+      },
+      "afterDraws": {
+        "drawImage": 141,
+        "clip": 5,
+        "combatCopyDraws": 3,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 5,
+        "rasterAssetLaserDraws": 5,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 107,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1821696,
+        "stampCacheEntries": 15,
+        "imminentCueDraws": 0,
+        "laserChargeDraws": 0,
+        "laserSpectacleDraws": 2,
+        "laserSpectacleLimit": 4,
+        "laserEndcapDraws": 2,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 0,
+        "beamFlowDraws": 0,
+        "beamEmitterDraws": 2,
+        "beamSourceKeys": {
+          "h14SkillLucifer": 5
+        },
+        "laserSpectacles": [
+          {
+            "id": 209,
+            "phase": "active",
+            "stage": 2,
+            "x1": 198.2899945080442,
+            "y1": 143.6996592628391,
+            "x2": 345.25254518834583,
+            "y2": 638,
+            "width": 6.696000000000001,
+            "sourceKey": "h14SkillLucifer",
+            "paletteId": "lucifer-secondary",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 213,
+            "phase": "active",
+            "stage": 2,
+            "x1": 215.9959655746767,
+            "y1": 117.05936983103891,
+            "x2": 326.2965921693259,
+            "y2": 638,
+            "width": 6.696000000000001,
+            "sourceKey": "h14SkillLucifer",
+            "paletteId": "lucifer-secondary",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lust / piano",
+      "scope": "Same frozen actual31 held scene with legacy30 presentation selector versus31, low quality, forty warmed draw-only native frames each in alternating blocks. Not old30 simulation or phone FPS.",
+      "before": {
+        "frames": 40,
+        "medianMs": 2.553337000001193,
+        "p95Ms": 3.4123380000019097
+      },
+      "after": {
+        "frames": 40,
+        "medianMs": 2.2161769999984244,
+        "p95Ms": 3.628617000002123
+      },
+      "beforeDraws": {
+        "drawImage": 79,
+        "clip": 3,
+        "combatCopyDraws": 4,
+        "pressureLayerCache": {
+          "entries": 1,
+          "bytes": 921600,
+          "byteLimit": 4194304,
+          "builds": 1,
+          "hits": 48,
+          "frameBuilds": 0,
+          "frameHits": 1,
+          "logicalBodies": 6
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 9,
+        "rasterAssetLaserDraws": 3,
+        "cachedAssetLaserDraws": 6,
+        "stampDraws": 57,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1634048,
+        "stampCacheEntries": 14,
+        "imminentCueDraws": 0,
+        "beamFlowDraws": 0,
+        "beamEmitterDraws": 0,
+        "beamSourceKeys": {
+          "h14BeamLust": 9
+        }
+      },
+      "afterDraws": {
+        "drawImage": 85,
+        "clip": 3,
+        "combatCopyDraws": 4,
+        "pressureLayerCache": {
+          "entries": 1,
+          "bytes": 921600,
+          "byteLimit": 4194304,
+          "builds": 1,
+          "hits": 48,
+          "frameBuilds": 0,
+          "frameHits": 1,
+          "logicalBodies": 6
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 9,
+        "rasterAssetLaserDraws": 3,
+        "cachedAssetLaserDraws": 6,
+        "stampDraws": 57,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1634048,
+        "stampCacheEntries": 14,
+        "imminentCueDraws": 0,
+        "laserChargeDraws": 0,
+        "laserSpectacleDraws": 3,
+        "laserSpectacleLimit": 4,
+        "laserEndcapDraws": 3,
+        "laserJointDraws": 0,
+        "laserAfterglowDraws": 1,
+        "beamFlowDraws": 0,
+        "beamEmitterDraws": 3,
+        "beamSourceKeys": {
+          "h14BeamLust": 9
+        },
+        "laserSpectacles": [
+          {
+            "id": 96,
+            "phase": "fade",
+            "stage": 2,
+            "x1": 279.27272727272725,
+            "y1": 80,
+            "x2": 279.27272727272725,
+            "y2": 638,
+            "width": 7.344,
+            "sourceKey": "h14BeamLust",
+            "paletteId": "asmodeus-secondary",
+            "opacity": 0.21176470588235294,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 97,
+            "phase": "active",
+            "stage": 2,
+            "x1": 137.45454545454544,
+            "y1": 80,
+            "x2": 137.45454545454544,
+            "y2": 638,
+            "width": 7.344,
+            "sourceKey": "h14BeamLust",
+            "paletteId": "asmodeus",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 98,
+            "phase": "active",
+            "stage": 2,
+            "x1": 165.8181818181818,
+            "y1": 80,
+            "x2": 165.8181818181818,
+            "y2": 638,
+            "width": 7.344,
+            "sourceKey": "h14BeamLust",
+            "paletteId": "asmodeus-secondary",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Envy / reflection",
+      "scope": "Same frozen actual31 held scene with legacy30 presentation selector versus31, low quality, forty warmed draw-only native frames each in alternating blocks. Not old30 simulation or phone FPS.",
+      "before": {
+        "frames": 40,
+        "medianMs": 3.114618999999948,
+        "p95Ms": 4.053176999994321
+      },
+      "after": {
+        "frames": 40,
+        "medianMs": 2.9248159999988275,
+        "p95Ms": 5.2065440000005765
+      },
+      "beforeDraws": {
+        "drawImage": 122,
+        "clip": 5,
+        "combatCopyDraws": 4,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 5,
+        "rasterAssetLaserDraws": 5,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 93,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1474304,
+        "stampCacheEntries": 17,
+        "imminentCueDraws": 0,
+        "beamFlowDraws": 0,
+        "beamEmitterDraws": 0,
+        "beamSourceKeys": {
+          "h14BeamEnvy": 5
+        }
+      },
+      "afterDraws": {
+        "drawImage": 125,
+        "clip": 5,
+        "combatCopyDraws": 4,
+        "pressureLayerCache": {
+          "entries": 0,
+          "bytes": 0,
+          "byteLimit": 4194304,
+          "builds": 0,
+          "hits": 0,
+          "frameBuilds": 0,
+          "frameHits": 0,
+          "logicalBodies": 0
+        },
+        "playerFeedback": {
+          "hitRadius": 3,
+          "precise": true,
+          "focusRadius": 6,
+          "grazeAge": null,
+          "grazePulse": 0,
+          "cosmeticOnly": true
+        },
+        "assetLaserDraws": 5,
+        "rasterAssetLaserDraws": 5,
+        "cachedAssetLaserDraws": 0,
+        "stampDraws": 93,
+        "missingProjectileAssets": 0,
+        "warmStampMisses": 0,
+        "warmBeamBuilds": 0,
+        "stampCacheBytes": 1474304,
+        "stampCacheEntries": 17,
+        "imminentCueDraws": 0,
+        "laserChargeDraws": 0,
+        "laserSpectacleDraws": 2,
+        "laserSpectacleLimit": 4,
+        "laserEndcapDraws": 1,
+        "laserJointDraws": 1,
+        "laserAfterglowDraws": 0,
+        "beamFlowDraws": 0,
+        "beamEmitterDraws": 2,
+        "beamSourceKeys": {
+          "h14BeamEnvy": 5
+        },
+        "laserSpectacles": [
+          {
+            "id": 128,
+            "phase": "active",
+            "stage": 2,
+            "x1": 120,
+            "y1": 141,
+            "x2": 352,
+            "y2": 433.35670647167865,
+            "width": 6.912000000000001,
+            "sourceKey": "h14BeamEnvy",
+            "paletteId": "leviathan-secondary",
+            "opacity": 1,
+            "terminalAccent": false,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          },
+          {
+            "id": 129,
+            "phase": "active",
+            "stage": 2,
+            "x1": 352,
+            "y1": 433.35670647167865,
+            "x2": 189.60507952236838,
+            "y2": 638,
+            "width": 6.912000000000001,
+            "sourceKey": "h14BeamEnvy",
+            "paletteId": "leviathan-secondary",
+            "opacity": 1,
+            "terminalAccent": true,
+            "clippedToCommittedCapsule": true,
+            "steadyDamageBody": true
+          }
+        ]
+      }
+    }
+  ],
+  "visualReview": {
+    "status": "reviewed with listed limitations",
+    "reviewers": [
+      "root: actual contact and GIF inspected and approved",
+      "visual_audit: contact and decoded GIF timeline frames inspected"
+    ],
+    "notes": [
+      "Actual Lucifer/Lust/Pride/Envy/Final before30 and31 contact frames preserve source palettes and show warning, held phrase and source afterglow at each mode's own declared ticks. These are actual different mode states rather than identical-scene screenshots.",
+      "The three-boss real31 GIF shows staged held rays and finite mirror turns before the barrage drains; no bottom or centre combat captions were introduced. Lucifer's source face is unobscured.",
+      "All inspected full scenes have zero missing damage materials, zero warm source-stamp misses and zero warm beam builds. Maximum source cache2352320bytes/22entries remains below4MiB/96entries.",
+      "Focused presentation5/5 tests pass, including240 source-only finite capsule cases with>=97%active interior coverage and0outside-capsule pixels, paired owner palettes, reflection joint deduplication, harmless fade expiry, prior beam pixels through30 and31mobile/copy/focus/graze inheritance."
+    ],
+    "limits": [
+      "The contact is downscaled to half native size; small source endpoint details are subtle, and dark Pride material remains less conspicuous on pale terrain. Native capsule visibility tests cover the full actual damage footprint.",
+      "Only finite non-pressure31laser barrages receive charging/endcap/afterglow enhancements. Every damaging body remains rendered; independent cosmetic budgets are high8/low4 for warning accents and held accents. Low pressure material remains static for its minimum-four-body bounded mobile cache.",
+      "The GIF samples actual immune worlds every16simulationticks; attacks/skills are disabled. It does not establish human clears, browser/GPU performance or physical-phone FPS.",
+      "Shared-host native timing compares the same frozen31 held scene using legacy30 versus31 presentation. Extra low-quality source accents add4/6/3main-canvas image draws in the measured Lucifer/Lust/Envy scenes; these scoped CPU samples do not support a universal speedup claim.",
+      "Lucifer's source-face correction intentionally applies to existing modes too; other prior beam pixels remain exact."
+    ]
+  }
+}

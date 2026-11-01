@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "date": "2026-11-01",
+  "baseline": "6afd61432c6b2334d44e8ab81db065241c9a67ac",
+  "scope": "Final product hashes still match the completed source-guarded simulation/presentation/pilot captures. No full resimulation after the explicitly recorded report-label-only correction.",
+  "productSourcesStillFrozen": true,
+  "productSourceHashes": {
+    "src/core.js": "ad691ea13c8ec950f97b81b1c7ad1b76afa6eafc94ed84e44dda9abf28a8f86b",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "src/boss-patterns-v27.js": "71bd8e85f806ce5b82dfcc020b520d3e958a5cf83e92f3ee2ee329d820dea8af",
+    "src/boss-lasers-v28.js": "0530e05a2811dfc655d722a30c243baaa6657b7a9f1356be0355c4f10d54013b",
+    "src/boss-flow-v29.js": "b0985522fe3caa7178be7a0067be318fc4d42853060307f06dcdeb02c68479b3",
+    "src/render.js": "3c0b741d4c07451e6c21c37e679376c237d0d8c3a3b22e90a12d0162ec824a63",
+    "src/projectiles.js": "913e235f985df543a67c277b64d44f9774624140f9f4003568af63eaa3bfe6a0",
+    "src/actors.js": "dc8ef72e54fb9a0dd16d9c1e6249962ad0f424c351137df9edcdc248c4b9c0ef",
+    "src/boss-motion.js": "e2d1bde92838884382e30b5d8de6549cf9071ac9b21c84b7f9cb8d4bc63160b1",
+    "src/boss-skills.js": "f1a51e7a30487e1e702f4257b748b0a578f7d768df6bfa94124ca949edce26a9",
+    "src/media.js": "ac5e0e2497f242e2515873ee157f06b979b2659d6f2dc02f66349161a50bce2e",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033"
+  },
+  "labelCorrectionProvenance": {
+    "labelCorrectionOnly": {
+      "field": "mobileInheritance.exactLaserDamageIntervals.scope",
+      "originalInheritedHelperLabel": "Isolated explicit collision fixtures containing one actual29committed finite ray, not ordinary-health gameplay.",
+      "actualRayMetadataProvesRevision31": true
+    },
+    "executedToolSHA256": "05656ff92f1dbfd20b24a1085a54af0a26cbe141ce94dced11348d836a8bf03b",
+    "finalToolSHA256": "3d1490fbdd2fbcbe1c6744a78a8d66a03debf96d71ba109c7d2d38d911389416",
+    "unchangedFunctionSHA256": {
+      "phaseMatrix": "07f576299d32de15c7ed203bf89c9747cf920bd53af3013dc0d4bb0e9b0056e0",
+      "oldExact": "727041578464d014929198a3884625aadad0f4eb61c6bf2c0723428f332a87e6",
+      "world": "2f58e74b3a4430dbefe9b17271d32bbcc6db9846ad15ef5fa9f3cf77a66b3517",
+      "select31": "c0ef8e987793eb88133b056e54d1124a02ac1d4e92e58f83b93e369cdd6eb3ab",
+      "baselineCore": "3842b8680a5c1c9220e1f057962afba39602875ff1e3613e66ccd39ecb448544",
+      "pilotSample": "b219773fc4740b3fcc99c4875b0f0f5e532a211efe5e52f59fb7f1398cbeeffd",
+      "presentationProof": "c61714b1f63eb4986de62548df478986a9c484637ae4efa7f8faf07ef4b3c000",
+      "hashes": "eda7a1be189e9e4fd95c3ecdd1a188bf92039e78400bce1196d6d6eacdd96ef0"
+    },
+    "simulationProductSourcesStillMatch": {
+      "src/core.js": "ad691ea13c8ec950f97b81b1c7ad1b76afa6eafc94ed84e44dda9abf28a8f86b",
+      "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+      "src/boss-patterns-v27.js": "71bd8e85f806ce5b82dfcc020b520d3e958a5cf83e92f3ee2ee329d820dea8af",
+      "src/boss-lasers-v28.js": "0530e05a2811dfc655d722a30c243baaa6657b7a9f1356be0355c4f10d54013b",
+      "src/boss-flow-v29.js": "b0985522fe3caa7178be7a0067be318fc4d42853060307f06dcdeb02c68479b3"
+    }
+  },
+  "finalToolSHA256": "3d1490fbdd2fbcbe1c6744a78a8d66a03debf96d71ba109c7d2d38d911389416",
+  "testSHA256": "a4267be7dbe2bef43676d91fb597813e498360bd1318b9955884fa5e3ad6b9dd",
+  "artifacts": [
+    {
+      "path": "docs/V31-INDEPENDENT-LASER-QA-20261101.json",
+      "bytes": 424494,
+      "sha256": "2e2e77419be417800036c1291f629d2ae13f4617fe8d02bb02464af334735ae5"
+    },
+    {
+      "path": "docs/V31-INDEPENDENT-PRESENTATION-20261101.json",
+      "bytes": 8226,
+      "sha256": "068ab718c2bd8a6de45c0b9ede4f3fded79340c2eba985611825d21f6cd7e9e1"
+    },
+    {
+      "path": "docs/V31-PILOT-SAMPLE-20261101.json",
+      "bytes": 14565,
+      "sha256": "cb0de2779fcd2394f21ae7898a79aa3ff38fe5141d8dc7a49002ad7b34afc0e9"
+    },
+    {
+      "path": "docs/V31-PILOT-INPUT-ARCHIVE-20261101.json",
+      "bytes": 3405,
+      "sha256": "07b1b181264ace92121c997adef73688756bf7674e68428afa06a3aafe78d08c"
+    },
+    {
+      "path": "docs/v31-pilot-inputs.zip",
+      "bytes": 4268,
+      "sha256": "c4362a2d613a2dac5c5761bd10e08104e6b6e12e0d38d3ebe15703628ba51522"
+    }
+  ]
+}

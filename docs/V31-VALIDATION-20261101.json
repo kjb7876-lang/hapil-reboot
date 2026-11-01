@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-11-01",
+  "baseCommit": "a5982f256b053429135fac1ed0c19a07d7f073bc",
+  "legacyBaselineCommit": "6afd61432c6b2334d44e8ab81db065241c9a67ac",
+  "command": "npm test",
+  "exitCode": 0,
+  "tests": 519,
+  "passed": 519,
+  "failed": 0,
+  "skipped": 0,
+  "durationMs": 198244.953691,
+  "sourceSHA256": {
+    "src/actors.js": "dc8ef72e54fb9a0dd16d9c1e6249962ad0f424c351137df9edcdc248c4b9c0ef",
+    "src/app.js": "d1d8c9047e7a0ca2037e4b91e2df294815dac8d40c14d929dfced81271874812",
+    "src/boss-flow-v29.js": "b0985522fe3caa7178be7a0067be318fc4d42853060307f06dcdeb02c68479b3",
+    "src/boss-lasers-v28.js": "0530e05a2811dfc655d722a30c243baaa6657b7a9f1356be0355c4f10d54013b",
+    "src/boss-motion.js": "e2d1bde92838884382e30b5d8de6549cf9071ac9b21c84b7f9cb8d4bc63160b1",
+    "src/boss-patterns-v27.js": "71bd8e85f806ce5b82dfcc020b520d3e958a5cf83e92f3ee2ee329d820dea8af",
+    "src/boss-skills.js": "f1a51e7a30487e1e702f4257b748b0a578f7d768df6bfa94124ca949edce26a9",
+    "src/core.js": "ad691ea13c8ec950f97b81b1c7ad1b76afa6eafc94ed84e44dda9abf28a8f86b",
+    "src/media.js": "ac5e0e2497f242e2515873ee157f06b979b2659d6f2dc02f66349161a50bce2e",
+    "src/projectiles.js": "913e235f985df543a67c277b64d44f9774624140f9f4003568af63eaa3bfe6a0",
+    "src/render.js": "3c0b741d4c07451e6c21c37e679376c237d0d8c3a3b22e90a12d0162ec824a63",
+    "src/storage.js": "03e23f78cea741bdd25656c59d2412dd0350b8b21a11a18e6612004a613af6cb",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "index.html": "1e3a2d420e9ca43fb0ad2abc527a6c7a395213db0adf0fea4e8b17e02b5baa28",
+    "styles.css": "6b6a223630bc44835f89b5efd91e62984a2cf5a6ff2b717fc9a0f40500c058ab"
+  },
+  "historicReplay": {
+    "command": "node tools/revalidate-historic-inputs-v25.cjs",
+    "exitCode": 0,
+    "routes": 18,
+    "ordinaryInputTicks": 3699860,
+    "savedBoundaries": 2286,
+    "boundarySuccessorInputPairs": 411480,
+    "originalArchiveFilesModified": 0
+  },
+  "verificationScope": "Deterministic CPU simulations, native Canvas pixels/call counts, managed-browser preview and public deployment smoke. No physical-phone FPS or GPU completion measurement."
+}

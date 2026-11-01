@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "date": "2026-11-01",
+  "scope": "Actual revision 31 Hell phase-checkpoint fixtures, seed 813, explicit immunity, attacks/skills off. Native 360x640 DPR 1 source images, identical world before and after. Before uses the current renderer with only drawSpellTheatre restored from pinned revision 30 to isolate the removed synthetic faceplate. After uses the actual current renderer. Face zoom is nearest-neighbour 4x of actual full-scene pixels. This is fixture-based visual QA, not human play or mobile FPS evidence.",
+  "diagnosis": "The accepted Lucifer source atlas already contains the correct human face. A procedural navy polygon, eye dots and phase crack in drawSpellTheatre obscured it. Only that obstruction was removed; the source art, pose selection, crop and crossfade remain unchanged.",
+  "compatibility": "The cosmetic face correction intentionally applies to all old continued selectors as well as 31. Non-face scene pixels and legacy source-body sampling remain exact in the focused regression fixtures.",
+  "regression": {
+    "command": "node --test tests/lucifer-source-face-v31.test.cjs tests/committed-copy-presentation-v25.test.cjs",
+    "tests": 9,
+    "passed": 9,
+    "oldAndCurrentFullSceneComparisons": 48,
+    "legacyBodyPixelComparisons": 84,
+    "currentPoseSamples": 12,
+    "fixture": "Actual restored product worlds; fixed seed, immunity and attacks/skills off."
+  },
+  "baselineFaceplateSourceCommit": "a5982f256b053429135fac1ed0c19a07d7f073bc",
+  "sourceAtlas": {
+    "path": "media/boss-motion-v8/lucifer-atlas-512.png",
+    "bytes": 347054,
+    "sha256": "06716474312bafc759bba028fb42660d6b626c67fba58f690a8014ac226600cd",
+    "manifestSHA256": "06716474312bafc759bba028fb42660d6b626c67fba58f690a8014ac226600cd",
+    "unchanged": true
+  },
+  "productHashes": {
+    "actors": "dc8ef72e54fb9a0dd16d9c1e6249962ad0f424c351137df9edcdc248c4b9c0ef",
+    "render": "3c0b741d4c07451e6c21c37e679376c237d0d8c3a3b22e90a12d0162ec824a63",
+    "core": "ad691ea13c8ec950f97b81b1c7ad1b76afa6eafc94ed84e44dda9abf28a8f86b"
+  },
+  "rows": [
+    {
+      "phase": 0,
+      "tick": 90,
+      "revision": 31,
+      "worldSHA256": "ce92e0d1d57ac69f263d004a024502ea9c17140a2f77683f7701d1caf467303e",
+      "bossPosition": [
+        218,
+        116
+      ],
+      "sourceAtlas": "media/boss-motion-v8/lucifer-atlas-512.png",
+      "faceCrop": {
+        "x": 193,
+        "y": 73,
+        "width": 50,
+        "height": 50
+      },
+      "changedPixels": 248,
+      "changedOutsideFaceRegion": 0,
+      "beforeRawSHA256": "da86bd0a90a5f858a077f9ecb90079436184f3e1578ceb6f434d9641a77b8f59",
+      "afterRawSHA256": "290730074d928150b95900b133860eeb251bd8f68d62cfb7ab90a9f0fcfa9857"
+    },
+    {
+      "phase": 1,
+      "tick": 90,
+      "revision": 31,
+      "worldSHA256": "c97bd72fe66f2cb1f67c6ab3599602d7e7928b992c524d43ce954ffa4b4df2bb",
+      "bossPosition": [
+        180,
+        116
+      ],
+      "sourceAtlas": "media/boss-motion-v8/lucifer-atlas-512.png",
+      "faceCrop": {
+        "x": 155,
+        "y": 73,
+        "width": 50,
+        "height": 50
+      },
+      "changedPixels": 244,
+      "changedOutsideFaceRegion": 0,
+      "beforeRawSHA256": "b3a5f6d00c25ff96432a28aa09480f3d04196743f8f8cfb7b8e8022c4f95f0a3",
+      "afterRawSHA256": "8564f59b0576e7a9d42eabd9c1f4223bce2472fd86f9d4afb5ea660f4edbc453"
+    },
+    {
+      "phase": 2,
+      "tick": 90,
+      "revision": 31,
+      "worldSHA256": "49e46372633342997eab44e0e202df6260fb68558ec617a96639fd71942be2b0",
+      "bossPosition": [
+        112,
+        116
+      ],
+      "sourceAtlas": "media/boss-motion-v8/lucifer-atlas-512.png",
+      "faceCrop": {
+        "x": 87,
+        "y": 73,
+        "width": 50,
+        "height": 50
+      },
+      "changedPixels": 248,
+      "changedOutsideFaceRegion": 0,
+      "beforeRawSHA256": "73d3407674b4c431df4492a768e8f880541df03da6a845dfcd4be1304eeb538f",
+      "afterRawSHA256": "b3a1bbb134ef14c5877e9a69acc7b423785c49774f8dca9d9febbab53405d35b"
+    }
+  ],
+  "files": [
+    {
+      "path": "docs/v31-lucifer-face/full-scene-before-after.jpg",
+      "bytes": 495353,
+      "sha256": "3673361c23ccfda22a96d80e0d798aba97a8a221a3de062637dcdc352f789438",
+      "width": 2160,
+      "height": 676
+    },
+    {
+      "path": "docs/v31-lucifer-face/face-before-after.png",
+      "bytes": 204445,
+      "sha256": "b22997f4f96e704edd051bf0b1cb34bf3847454590cce5846432fc758ff6b431",
+      "width": 1200,
+      "height": 440
+    }
+  ]
+}

@@ -304,10 +304,10 @@
   function rgb(h){return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];}
   function create(images){
     images=images||{};
-    var cache=new Map(),cacheBytes=0,group=-1,metrics,beamCacheBuilds=0,imminentCuePool=[];
+    var cache=new Map(),cacheBytes=0,group=-1,metrics,beamCacheBuilds=0,imminentCuePool=[],laserSpectaclePool=[];
     function release(e){if(!e)return;if(e.canvases)e.canvases.forEach(function(c){c.width=1;c.height=1;});if(e.canvas){e.canvas.width=1;e.canvas.height=1;}}
     function clearCache(){cache.forEach(release);cache.clear();cacheBytes=0;}
-    function beginFrame(){metrics={stampDraws:0,stampCacheMisses:0,stampCacheHits:0,stampCacheLimit:CACHE_LIMIT,stampCacheByteLimit:CACHE_BYTES,stampCacheBytes:cacheBytes,stampCacheEntries:cache.size,animatedBulletDraws:0,bodyAnimationPhases:0,naturalSilhouetteDraws:0,maxVisualOutset:0,suppressedUnapprovedFX:0,compactCastDraws:0,compactHazardDraws:0,assetLaserDraws:0,assetLaserSlices:0,signatureCastDraws:0,weaponVisualDraws:0,weaponTelegraphDraws:0,rotorVisualDraws:0,rotorTelegraphDraws:0,sourceBeamOverlayDraws:0,laserArtRevision:23,beamMaterialDraws:0,beamFlowDraws:0,beamEmitterDraws:0,beamDetailedLasers:0,beamDetailLimit:12,beamCacheBuilds:beamCacheBuilds,beamFrameCacheBuilds:0,beamSourceKeys:{},imminentCueDraws:0,imminentCueLimit:8,imminentCueSources:{},missingOptionalImminentAssets:0,projectileArtRevision:25,projectileVariantDraws:{},projectileVariantSourceKeys:{},legacyMaxVisualOutset:0,ownedObjectDraws:0,ownedObjectMaxNormalPixels:48,ownedObjectMaxLargePixels:100,maxOwnedObjectPixels:0,ownedObjectExtentByVariant:{},missingOptionalRotorAssets:0,missingOptionalBeamAssets:0,missingProjectileAssets:0,compactFamilies:{}};}
+    function beginFrame(){metrics={stampDraws:0,stampCacheMisses:0,stampCacheHits:0,stampCacheLimit:CACHE_LIMIT,stampCacheByteLimit:CACHE_BYTES,stampCacheBytes:cacheBytes,stampCacheEntries:cache.size,animatedBulletDraws:0,bodyAnimationPhases:0,naturalSilhouetteDraws:0,maxVisualOutset:0,suppressedUnapprovedFX:0,compactCastDraws:0,compactHazardDraws:0,assetLaserDraws:0,assetLaserSlices:0,signatureCastDraws:0,weaponVisualDraws:0,weaponTelegraphDraws:0,rotorVisualDraws:0,rotorTelegraphDraws:0,sourceBeamOverlayDraws:0,laserArtRevision:23,beamMaterialDraws:0,beamFlowDraws:0,beamEmitterDraws:0,beamDetailedLasers:0,beamDetailLimit:12,beamCacheBuilds:beamCacheBuilds,beamFrameCacheBuilds:0,beamSourceKeys:{},imminentCueDraws:0,imminentCueLimit:8,imminentCueSources:{},missingOptionalImminentAssets:0,laserSpectacleDraws:0,laserSpectacleLimit:8,laserEndcapDraws:0,laserJointDraws:0,laserAfterglowDraws:0,laserChargeDraws:0,projectileArtRevision:25,projectileVariantDraws:{},projectileVariantSourceKeys:{},legacyMaxVisualOutset:0,ownedObjectDraws:0,ownedObjectMaxNormalPixels:48,ownedObjectMaxLargePixels:100,maxOwnedObjectPixels:0,ownedObjectExtentByVariant:{},missingOptionalRotorAssets:0,missingOptionalBeamAssets:0,missingProjectileAssets:0,compactFamilies:{}};}
     function remember(key,e){
       if(e.bytes>CACHE_BYTES){release(e);return null;}
       while(cache.size&&(cache.size>=CACHE_LIMIT||cacheBytes+e.bytes>CACHE_BYTES)){var first=cache.keys().next().value,old=cache.get(first);cacheBytes-=old.bytes;release(old);cache.delete(first);}
@@ -549,7 +549,7 @@
       var phase=s.frames>1?Math.min(s.frames-1,Math.floor(Math.max(0,finite(b.age)?b.age:0)*1000/s.ms)):0;
       // Expired v27 bullets are harmless before this finite source-art fade.
       // Active damage bodies always remain fully opaque, including slow time.
-      var alpha=(w.combatRevision===27||w.combatRevision===28||w.combatRevision===29||w.combatRevision===30)&&b.retiring&&finite(b.retireAge)&&finite(b.retireDuration)&&b.retireDuration>0?clamp(1-b.retireAge/b.retireDuration,0,1):1;
+      var alpha=(w.combatRevision===27||w.combatRevision===28||w.combatRevision===29||w.combatRevision===30||w.combatRevision===31)&&b.retiring&&finite(b.retireAge)&&finite(b.retireDuration)&&b.retireDuration>0?clamp(1-b.retireAge/b.retireDuration,0,1):1;
       ctx.save();ctx.globalAlpha=alpha;ctx.globalCompositeOperation='source-over';ctx.translate(b.x,b.y);ctx.rotate(s.fixedOrientation?0:b.kind==='hell-rotor'&&finite(b.spinAngle)?b.spinAngle:l===0&&finite(b.visualSpinAngle)?b.visualSpinAngle:finite(b.angle)?b.angle:Math.atan2(b.vy||0,b.vx||0));
       ctx.drawImage(e.canvases[phase],-e.x,-e.y,e.width,e.height);ctx.restore();
       // Legacy weapons retain an authored ORB beneath their cosmetic layer.
@@ -563,6 +563,29 @@
       if(e.ownedObject){metrics.ownedObjectDraws++;metrics.maxOwnedObjectPixels=Math.max(metrics.maxOwnedObjectPixels,e.objectDiameter);metrics.ownedObjectExtentByVariant[s.variant]=Math.max(metrics.ownedObjectExtentByVariant[s.variant]||0,e.outset);}else metrics.legacyMaxVisualOutset=Math.max(metrics.legacyMaxVisualOutset,e.outset);
       metrics.stampDraws++;metrics.animatedBulletDraws++;metrics.naturalSilhouetteDraws++;metrics.maxVisualOutset=Math.max(metrics.maxVisualOutset,e.outset);metrics.bodyAnimationPhases=Math.max(metrics.bodyAnimationPhases,e.frameCount);metrics.compactFamilies[s.key]=(metrics.compactFamilies[s.key]||0)+1;return true;
     }
+    function drawHeldLaserDetail(ctx,w,h,overlay,opacity,len,r,lowQuality){
+      var limit=lowQuality?4:8;metrics.laserSpectacleLimit=limit;
+      if(metrics.laserSpectacleDraws>=limit||len<12||h.width<3)return;
+      var clock=finite(w.tick)?w.tick:finite(h.age)?h.age*60:0,start=finite(h.activeAt)?h.activeAt:0,age=Math.max(0,clock-start),stage=Number.isInteger(h.v31Stage)?h.v31Stage:0;
+      // Only the owner's side texture and endpoint light breathe. The full
+      // damaging source body underneath stays steady for the entire hold.
+      var pulse=.86+.14*Math.sin(age*.12+stage*1.1),span=len+r*2;
+      if(!lowQuality){
+        var offset=((age*(stage%2?-3:3))%512+512)%512,first=512-offset;
+        ctx.globalAlpha=opacity*.84*pulse;ctx.drawImage(overlay.flow,offset,0,first,96,-span/2,-r,span*first/512,r*2);metrics.beamFlowDraws++;
+        if(offset>0){ctx.drawImage(overlay.flow,0,0,offset,96,-span/2+span*first/512,-r,span*offset/512,r*2);metrics.beamFlowDraws++;}
+      }
+      var flareW=Math.min(lowQuality?30:48,Math.max(14,h.width*(lowQuality?1.7:2.4))),flareH=Math.min(36,h.width*1.4);
+      ctx.globalAlpha=opacity*(.72+.20*pulse);ctx.drawImage(overlay.emitter,-len/2-flareW/2,-flareH/2,flareW,flareH);metrics.beamEmitterDraws++;
+      if(h.v28Reflected&&h.v28Segment>0)metrics.laserJointDraws++;
+      // Segment1 already owns a reflection elbow. Put a destination accent
+      // only at the chain's final tip, rather than flashing that elbow twice.
+      var terminal=!h.v28Reflected||h.v28Segment>0;
+      if(terminal){var tipW=Math.min(lowQuality?22:34,Math.max(10,h.width*1.5)),tipH=Math.min(28,h.width*1.2);ctx.globalAlpha=opacity*(.55+.25*pulse);ctx.drawImage(overlay.emitter,len/2-tipW/2,-tipH/2,tipW,tipH);metrics.laserEndcapDraws++;}
+      var at=metrics.laserSpectacleDraws++,record=laserSpectaclePool[at];if(!record)record=laserSpectaclePool[at]={};
+      record.id=h.id;record.phase=h.phase;record.stage=stage;record.x1=h.x1;record.y1=h.y1;record.x2=h.x2;record.y2=h.y2;record.width=h.width;record.sourceKey=overlay.sourceKey;record.paletteId=overlay.paletteId;record.opacity=opacity;record.terminalAccent=terminal;record.clippedToCommittedCapsule=true;record.steadyDamageBody=true;
+      if(h.phase==='fade')metrics.laserAfterglowDraws++;
+    }
     function drawHazardBody(ctx,w,h,lowQuality){
       if(!w||!h||(h.phase!=='active'&&h.phase!=='fade')||![h.x1,h.x2,h.y1,h.y2,h.width].every(finite)||h.width<=0)return false;
       var s=beamMaterialFor(w,h);if(!s||!ready(images[s.key],s)){metrics.missingProjectileAssets++;return false;}
@@ -573,7 +596,8 @@
       // footprint while letting separate projectile centers read above them.
       // Narrow lasers keep full opacity; afterglow remains harmless and uses
       // only the original fade clock, never a premature active-beam fade.
-      ctx.save();ctx.globalCompositeOperation='source-over';ctx.globalAlpha=h.phase==='active'?(h.pressureCurtain?.72:1):Math.max(0,1-progress)*.35;
+      var held=w.combatRevision===31&&h.laserBarrage&&!h.pressureCurtain;
+      ctx.save();ctx.globalCompositeOperation='source-over';ctx.globalAlpha=h.phase==='active'?(h.pressureCurtain?.72:1):Math.max(0,1-progress)*(held?.48:.35);
       ctx.translate((h.x1+h.x2)/2,(h.y1+h.y2)/2);ctx.rotate(Math.atan2(dy,dx));capsule(ctx,0,0,r,len/2);ctx.clip();slices(ctx,art,phase,0,0,r,len/2);
       if(BEAMS[indexFor(w)]||storySpec(indexFor(w))){
         var overlay=beamSurface(w,h);
@@ -582,7 +606,8 @@
           ctx.globalAlpha=opacity*(lowQuality?.92:1);ctx.drawImage(overlay.canvas,-span/2,-r,span,r*2);
           metrics.sourceBeamOverlayDraws++;metrics.beamMaterialDraws++;metrics.beamSourceKeys[overlay.sourceKey]=(metrics.beamSourceKeys[overlay.sourceKey]||0)+1;
           metrics.beamDetailLimit=lowQuality?0:12;
-          if(!lowQuality&&h.phase==='active'&&len>=36&&h.width>=6&&metrics.beamDetailedLasers<12){
+          if(held)drawHeldLaserDetail(ctx,w,h,overlay,opacity,len,r,lowQuality);
+          else if(!lowQuality&&h.phase==='active'&&len>=36&&h.width>=6&&metrics.beamDetailedLasers<12){
             // Scroll existing source texture along the committed path. Two
             // cropped draws cover it continuously, with at most12 decorated
             // beams per frame. All40 damage bodies always retain their art.
@@ -602,19 +627,22 @@
       metrics.assetLaserDraws++;metrics.assetLaserSlices+=len>0?3:2;return true;
     }
     function drawHazardWarningCue(ctx,w,h,lowQuality){
-      if(!w||(w.combatRevision!==29&&w.combatRevision!==30)||!h||h.phase!=='warning'||!finite(w.tick)||!finite(h.activeAt)||![h.x1,h.y1,h.x2,h.y2,h.width].every(finite)||h.width<=0)return false;
-      var remaining=h.activeAt-w.tick,limit=lowQuality?4:8;metrics.imminentCueLimit=limit;
-      if(remaining<1||remaining>12||metrics.imminentCueDraws>=limit)return false;
+      if(!w||(w.combatRevision!==29&&w.combatRevision!==30&&w.combatRevision!==31)||!h||h.phase!=='warning'||!finite(w.tick)||!finite(h.activeAt)||![h.x1,h.y1,h.x2,h.y2,h.width].every(finite)||h.width<=0)return false;
+      var charged=w.combatRevision===31&&h.laserBarrage&&!h.pressureCurtain,window=charged?24:12,remaining=h.activeAt-w.tick,limit=lowQuality?4:8;metrics.imminentCueLimit=limit;
+      if(remaining<1||remaining>window||metrics.imminentCueDraws>=limit)return false;
       var art=beamSurface(w,h);if(!art){metrics.missingOptionalImminentAssets++;return false;}
-      var dx=h.x2-h.x1,dy=h.y2-h.y1,len=Math.hypot(dx,dy),r=h.width/2,size=clamp(h.width*1.6,12,28),progress=(12-remaining)/11,opacity=.20+.36*progress;
+      var dx=h.x2-h.x1,dy=h.y2-h.y1,len=Math.hypot(dx,dy),r=h.width/2,size=clamp(h.width*(charged?1.9:1.6),12,charged?34:28),progress=(window-remaining)/(window-1),opacity=.20+.36*progress;
       // Reuse the owner's already cached source emitter. Its centre is the
       // true committed origin; the same capsule clip prevents the harmless
       // ready cue from suggesting a wider route or a new damaging body.
       ctx.save();ctx.globalCompositeOperation='source-over';ctx.globalAlpha=opacity;
       ctx.translate((h.x1+h.x2)/2,(h.y1+h.y2)/2);ctx.rotate(Math.atan2(dy,dx));capsule(ctx,0,0,r,len/2);ctx.clip();
+      // A faint source-only charge remains visibly different from the opaque
+      // sustained body. Mobile keeps only the small local source ignition.
+      if(charged&&!lowQuality){ctx.globalAlpha=.05+.09*progress;ctx.drawImage(art.canvas,-len/2-r,-r,len+r*2,r*2);metrics.laserChargeDraws++;ctx.globalAlpha=opacity;}
       ctx.drawImage(art.emitter,-len/2-size/2,-size/2,size,size);ctx.restore();
       var at=metrics.imminentCueDraws++,record=imminentCuePool[at];if(!record)record=imminentCuePool[at]={};
-      record.id=h.id;record.x=h.x1;record.y=h.y1;record.activeAt=h.activeAt;record.remainingTicks=remaining;record.sourceKey=art.sourceKey;record.paletteId=art.paletteId;record.opacity=opacity;record.size=size;record.clippedToCommittedCapsule=true;record.damaging=false;
+      record.id=h.id;record.x=h.x1;record.y=h.y1;record.activeAt=h.activeAt;record.remainingTicks=remaining;record.windowTicks=window;record.sourceKey=art.sourceKey;record.paletteId=art.paletteId;record.opacity=opacity;record.size=size;record.clippedToCommittedCapsule=true;record.damaging=false;
       metrics.imminentCueSources[art.sourceKey]=(metrics.imminentCueSources[art.sourceKey]||0)+1;return true;
     }
     function oneShot(ctx,s,elapsed,x,y,size,alpha){
@@ -667,8 +695,8 @@
     function drawHazardDecoration(ctx,w,h,lowQuality){return false;}
     beginFrame();
     return {beginFrame:beginFrame,drawBullet:drawBullet,drawBossCast:drawBossCast,drawHazardBody:drawHazardBody,drawHazardWarningCue:drawHazardWarningCue,drawHazardDecoration:drawHazardDecoration,
-      getMetrics:function(){return Object.assign({},metrics,{projectileTextureLimit:768,projectileTextureDraws:metrics.stampDraws,texturedBullets:metrics.stampDraws,projectileTailDraws:0,bossCastDraws:metrics.compactCastDraws+metrics.signatureCastDraws,hazardEmitterDraws:metrics.beamEmitterDraws,stampCacheEntries:cache.size,stampCacheBytes:cacheBytes,beamSourceKeys:Object.assign({},metrics.beamSourceKeys),imminentCueSources:Object.assign({},metrics.imminentCueSources),imminentCues:imminentCuePool.slice(0,metrics.imminentCueDraws).map(function(record){return Object.assign({},record);}),projectileVariantDraws:Object.assign({},metrics.projectileVariantDraws),projectileVariantSourceKeys:Object.assign({},metrics.projectileVariantSourceKeys),ownedObjectExtentByVariant:Object.assign({},metrics.ownedObjectExtentByVariant),compactFamilies:Object.assign({},metrics.compactFamilies)});},
-      destroy:function(){clearCache();imminentCuePool.length=0;images={};}};
+      getMetrics:function(){return Object.assign({},metrics,{projectileTextureLimit:768,projectileTextureDraws:metrics.stampDraws,texturedBullets:metrics.stampDraws,projectileTailDraws:0,bossCastDraws:metrics.compactCastDraws+metrics.signatureCastDraws,hazardEmitterDraws:metrics.beamEmitterDraws,stampCacheEntries:cache.size,stampCacheBytes:cacheBytes,beamSourceKeys:Object.assign({},metrics.beamSourceKeys),imminentCueSources:Object.assign({},metrics.imminentCueSources),imminentCues:imminentCuePool.slice(0,metrics.imminentCueDraws).map(function(record){return Object.assign({},record);}),laserSpectacles:laserSpectaclePool.slice(0,metrics.laserSpectacleDraws).map(function(record){return Object.assign({},record);}),projectileVariantDraws:Object.assign({},metrics.projectileVariantDraws),projectileVariantSourceKeys:Object.assign({},metrics.projectileVariantSourceKeys),ownedObjectExtentByVariant:Object.assign({},metrics.ownedObjectExtentByVariant),compactFamilies:Object.assign({},metrics.compactFamilies)});},
+      destroy:function(){clearCache();imminentCuePool.length=0;laserSpectaclePool.length=0;images={};}};
   }
   global.HapilProjectiles=Object.freeze({create:create,palettes:PALETTES,paletteList:PALETTE_LIST,paletteFor:paletteFor,bulletPalette:bulletPalette,assetKeysForEncounter:assetKeysForEncounter,optionalAssetKeysForEncounter:optionalAssetKeysForEncounter,invalidAssetForEncounter:invalidAssetForEncounter,colorFor:colorFor,compactFX:FX});
 })(typeof window!=='undefined'?window:globalThis);

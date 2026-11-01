@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "date": "2026-11-01",
+  "archive": {
+    "path": "docs/v31-pilot-inputs.zip",
+    "bytes": 4268,
+    "sha256": "c4362a2d613a2dac5c5761bd10e08104e6b6e12e0d38d3ebe15703628ba51522",
+    "entryCount": 12,
+    "totalInputTicks": 18742
+  },
+  "report": {
+    "path": "docs/V31-PILOT-SAMPLE-20261101.json",
+    "sha256": "cb0de2779fcd2394f21ae7898a79aa3ff38fe5141d8dc7a49002ad7b34afc0e9"
+  },
+  "scope": "Exactly replayed legal-direction inputs, preserving every failed or unfinished pilot attempt. ZIP validation is not an additional gameplay claim.",
+  "extraction": "python -m zipfile -e docs/v31-pilot-inputs.zip docs",
+  "entries": [
+    {
+      "path": "v31-pilot-inputs/boss-04-hell-phase-2.moves.gz",
+      "sha256": "7b6988f02febb639c46403aab164faf06d4416e86d248f1c17d8fbe13d892e4b",
+      "bytes": 255,
+      "inputTicks": 1831,
+      "stage": "won"
+    },
+    {
+      "path": "v31-pilot-inputs/boss-04-normal-phase-2.moves.gz",
+      "sha256": "bba48835086725cb806908ce05718f86a6a96f35a3277110c1560181f9bef568",
+      "bytes": 152,
+      "inputTicks": 1812,
+      "stage": "won"
+    },
+    {
+      "path": "v31-pilot-inputs/boss-06-hell-phase-2.moves.gz",
+      "sha256": "9ca0d153dfd7e2bd181239de4af78dc26460666f0393983274792880a3468bc8",
+      "bytes": 197,
+      "inputTicks": 1573,
+      "stage": "won"
+    },
+    {
+      "path": "v31-pilot-inputs/boss-06-normal-phase-2.moves.gz",
+      "sha256": "8593c963bfc91b36e7711653ad34a98ccea87dc7c12248d25ad4937e8f018fe4",
+      "bytes": 133,
+      "inputTicks": 1524,
+      "stage": "won"
+    },
+    {
+      "path": "v31-pilot-inputs/boss-08-hell-phase-2.moves.gz",
+      "sha256": "5688b2dce763231169192c108ac0731fe89d91273d7d9edf26dd89946089528b",
+      "bytes": 240,
+      "inputTicks": 1667,
+      "stage": "won"
+    },
+    {
+      "path": "v31-pilot-inputs/boss-08-normal-phase-2.moves.gz",
+      "sha256": "3b49d29c4a0373c4c47b92b728e9a260ef56da11133df36dfa541665a0201c0c",
+      "bytes": 177,
+      "inputTicks": 1653,
+      "stage": "won"
+    },
+    {
+      "path": "v31-pilot-inputs/boss-11-hell-phase-2.moves.gz",
+      "sha256": "410e8cf08f57b8e187b8fd6c27096add8d11f980e34ced12134e7f0d499c0e2c",
+      "bytes": 268,
+      "inputTicks": 1928,
+      "stage": "won"
+    },
+    {
+      "path": "v31-pilot-inputs/boss-11-normal-phase-2.moves.gz",
+      "sha256": "06ecb75b17429b4bc464b0a7e019d0ca65875ad401569944c5b5062138ab5d77",
+      "bytes": 189,
+      "inputTicks": 1895,
+      "stage": "won"
+    },
+    {
+      "path": "v31-pilot-inputs/boss-33-hell-phase-2.moves.gz",
+      "sha256": "de0ba63f5c288f9fee6270f53f1b00339e575b790458385b58705fb698a1d220",
+      "bytes": 157,
+      "inputTicks": 1002,
+      "stage": "lost"
+    },
+    {
+      "path": "v31-pilot-inputs/boss-33-normal-phase-2.moves.gz",
+      "sha256": "e1451df712d4a2355229674f1583e1f2fccebc2560a39ec677d74d8d80f58901",
+      "bytes": 153,
+      "inputTicks": 1244,
+      "stage": "won"
+    },
+    {
+      "path": "v31-pilot-inputs/boss-34-hell-phase-2.moves.gz",
+      "sha256": "3fec68f23debbd105c6e26c823e470251a4a6de0eeaf17d02ad971f467e18e4f",
+      "bytes": 149,
+      "inputTicks": 1324,
+      "stage": "won"
+    },
+    {
+      "path": "v31-pilot-inputs/boss-34-normal-phase-2.moves.gz",
+      "sha256": "613cdb94c7da8152bce1f77e8cc807f40fdab62d6722e2de9076d26e202d27da",
+      "bytes": 136,
+      "inputTicks": 1289,
+      "stage": "won"
+    }
+  ]
+}
