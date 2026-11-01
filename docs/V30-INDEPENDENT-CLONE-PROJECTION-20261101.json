@@ -1,0 +1,585 @@
+{
+  "schema": 1,
+  "date": "2026-11-01",
+  "scope": "Independent actual30core immune scenes. Full native drawImage interception verifies each live copy uses the registered source image/rect and projects its authored anchor at the actual emitter; separate transparent source draws verify nonempty visible pixels. This is not only a core or renderer counter check. No phoneFPS claim.",
+  "sourceHashes": {
+    "core": "553e14c431e315a005a66c17e82b2747b0811fcf05dbbc18710c4c7c1268de22",
+    "render": "071a00db063772240a81c317a0f45ca8a13e7c0e8ad39b3fb923f1a2eb96f1c0",
+    "actors": "a7b4a71fca2b146b02975a6e421a3466599cfce8c1ed4ed63e9cc99e90446b9e"
+  },
+  "sourceHashGuardPassed": true,
+  "rows": [
+    {
+      "bossIndex": 0,
+      "phase": 2,
+      "tick": 421,
+      "quality": "high",
+      "actualLiveCopies": 4,
+      "fullSceneNativeCopyDraws": 4,
+      "missingCopySources": 0,
+      "records": [
+        {
+          "id": "combat-copy-1-flow-0-0",
+          "sourceActorId": "combat-copy-1-flow-0-0",
+          "modelActorId": null,
+          "position": [
+            66,
+            166
+          ],
+          "sourceKey": "bossMotionViolet",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "projectedAnchor": {
+            "x": 66,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 3428,
+          "isolatedAlpha96SourcePixels": 3023
+        },
+        {
+          "id": "combat-copy-1-flow-0-1",
+          "sourceActorId": "combat-copy-1-flow-0-1",
+          "modelActorId": null,
+          "position": [
+            142,
+            166
+          ],
+          "sourceKey": "bossMotionViolet",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "projectedAnchor": {
+            "x": 142,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 3428,
+          "isolatedAlpha96SourcePixels": 3023
+        },
+        {
+          "id": "combat-copy-1-flow-0-3",
+          "sourceActorId": "combat-copy-1-flow-0-3",
+          "modelActorId": null,
+          "position": [
+            294,
+            166
+          ],
+          "sourceKey": "bossMotionViolet",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "projectedAnchor": {
+            "x": 294,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 3428,
+          "isolatedAlpha96SourcePixels": 3023
+        },
+        {
+          "id": "combat-copy-1-flow-0-2",
+          "sourceActorId": "combat-copy-1-flow-0-2",
+          "modelActorId": null,
+          "position": [
+            218,
+            166
+          ],
+          "sourceKey": "bossMotionViolet",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "projectedAnchor": {
+            "x": 218,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 3428,
+          "isolatedAlpha96SourcePixels": 3023
+        }
+      ]
+    },
+    {
+      "bossIndex": 0,
+      "phase": 2,
+      "tick": 421,
+      "quality": "low",
+      "actualLiveCopies": 4,
+      "fullSceneNativeCopyDraws": 4,
+      "missingCopySources": 0,
+      "records": [
+        {
+          "id": "combat-copy-1-flow-0-0",
+          "sourceActorId": "combat-copy-1-flow-0-0",
+          "modelActorId": null,
+          "position": [
+            66,
+            166
+          ],
+          "sourceKey": "bossMotionViolet",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "projectedAnchor": {
+            "x": 66,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 3428,
+          "isolatedAlpha96SourcePixels": 3023
+        },
+        {
+          "id": "combat-copy-1-flow-0-1",
+          "sourceActorId": "combat-copy-1-flow-0-1",
+          "modelActorId": null,
+          "position": [
+            142,
+            166
+          ],
+          "sourceKey": "bossMotionViolet",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "projectedAnchor": {
+            "x": 142,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 3428,
+          "isolatedAlpha96SourcePixels": 3023
+        },
+        {
+          "id": "combat-copy-1-flow-0-3",
+          "sourceActorId": "combat-copy-1-flow-0-3",
+          "modelActorId": null,
+          "position": [
+            294,
+            166
+          ],
+          "sourceKey": "bossMotionViolet",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "projectedAnchor": {
+            "x": 294,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 3428,
+          "isolatedAlpha96SourcePixels": 3023
+        },
+        {
+          "id": "combat-copy-1-flow-0-2",
+          "sourceActorId": "combat-copy-1-flow-0-2",
+          "modelActorId": null,
+          "position": [
+            218,
+            166
+          ],
+          "sourceKey": "bossMotionViolet",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "projectedAnchor": {
+            "x": 218,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 3428,
+          "isolatedAlpha96SourcePixels": 3023
+        }
+      ]
+    },
+    {
+      "bossIndex": 33,
+      "phase": 2,
+      "tick": 421,
+      "quality": "high",
+      "actualLiveCopies": 3,
+      "fullSceneNativeCopyDraws": 3,
+      "missingCopySources": 0,
+      "records": [
+        {
+          "id": "combat-copy-1-flow-0-0",
+          "sourceActorId": "combat-copy-1-flow-0-0",
+          "modelActorId": "han-rian",
+          "position": [
+            66,
+            166
+          ],
+          "sourceKey": "storyRianIdle",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "projectedAnchor": {
+            "x": 66,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 1636,
+          "isolatedAlpha96SourcePixels": 1570
+        },
+        {
+          "id": "combat-copy-1-flow-0-1",
+          "sourceActorId": "combat-copy-1-flow-0-1",
+          "modelActorId": "baek-ion",
+          "position": [
+            142,
+            166
+          ],
+          "sourceKey": "storyIonIdle",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "projectedAnchor": {
+            "x": 142,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 2457,
+          "isolatedAlpha96SourcePixels": 2380
+        },
+        {
+          "id": "combat-copy-1-flow-0-2",
+          "sourceActorId": "combat-copy-1-flow-0-2",
+          "modelActorId": "han-rian",
+          "position": [
+            218,
+            166
+          ],
+          "sourceKey": "storyRianIdle",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "projectedAnchor": {
+            "x": 218,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 1636,
+          "isolatedAlpha96SourcePixels": 1570
+        }
+      ]
+    },
+    {
+      "bossIndex": 33,
+      "phase": 2,
+      "tick": 421,
+      "quality": "low",
+      "actualLiveCopies": 3,
+      "fullSceneNativeCopyDraws": 3,
+      "missingCopySources": 0,
+      "records": [
+        {
+          "id": "combat-copy-1-flow-0-0",
+          "sourceActorId": "combat-copy-1-flow-0-0",
+          "modelActorId": "han-rian",
+          "position": [
+            66,
+            166
+          ],
+          "sourceKey": "storyRianIdle",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "projectedAnchor": {
+            "x": 66,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 1636,
+          "isolatedAlpha96SourcePixels": 1570
+        },
+        {
+          "id": "combat-copy-1-flow-0-1",
+          "sourceActorId": "combat-copy-1-flow-0-1",
+          "modelActorId": "baek-ion",
+          "position": [
+            142,
+            166
+          ],
+          "sourceKey": "storyIonIdle",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "projectedAnchor": {
+            "x": 142,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 2457,
+          "isolatedAlpha96SourcePixels": 2380
+        },
+        {
+          "id": "combat-copy-1-flow-0-2",
+          "sourceActorId": "combat-copy-1-flow-0-2",
+          "modelActorId": "han-rian",
+          "position": [
+            218,
+            166
+          ],
+          "sourceKey": "storyRianIdle",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "projectedAnchor": {
+            "x": 218,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 1636,
+          "isolatedAlpha96SourcePixels": 1570
+        }
+      ]
+    },
+    {
+      "bossIndex": 33,
+      "phase": 2,
+      "tick": 1021,
+      "quality": "high",
+      "actualLiveCopies": 4,
+      "fullSceneNativeCopyDraws": 4,
+      "missingCopySources": 0,
+      "records": [
+        {
+          "id": "combat-copy-1-flow-1-1",
+          "sourceActorId": "combat-copy-1-flow-1-1",
+          "modelActorId": "baek-ion",
+          "position": [
+            142,
+            166
+          ],
+          "sourceKey": "storyIonIdle",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "projectedAnchor": {
+            "x": 142,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 2457,
+          "isolatedAlpha96SourcePixels": 2380
+        },
+        {
+          "id": "combat-copy-1-flow-1-2",
+          "sourceActorId": "combat-copy-1-flow-1-2",
+          "modelActorId": "han-rian",
+          "position": [
+            218,
+            166
+          ],
+          "sourceKey": "storyRianIdle",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "projectedAnchor": {
+            "x": 218,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 1636,
+          "isolatedAlpha96SourcePixels": 1570
+        },
+        {
+          "id": "combat-copy-1-flow-1-0",
+          "sourceActorId": "combat-copy-1-flow-1-0",
+          "modelActorId": "han-rian",
+          "position": [
+            66,
+            166
+          ],
+          "sourceKey": "storyRianIdle",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "projectedAnchor": {
+            "x": 66,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 1636,
+          "isolatedAlpha96SourcePixels": 1570
+        },
+        {
+          "id": "combat-copy-1-flow-1-3",
+          "sourceActorId": "combat-copy-1-flow-1-3",
+          "modelActorId": "baek-ion",
+          "position": [
+            294,
+            166
+          ],
+          "sourceKey": "storyIonIdle",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "projectedAnchor": {
+            "x": 294,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 2457,
+          "isolatedAlpha96SourcePixels": 2380
+        }
+      ]
+    },
+    {
+      "bossIndex": 33,
+      "phase": 2,
+      "tick": 1021,
+      "quality": "low",
+      "actualLiveCopies": 4,
+      "fullSceneNativeCopyDraws": 4,
+      "missingCopySources": 0,
+      "records": [
+        {
+          "id": "combat-copy-1-flow-1-1",
+          "sourceActorId": "combat-copy-1-flow-1-1",
+          "modelActorId": "baek-ion",
+          "position": [
+            142,
+            166
+          ],
+          "sourceKey": "storyIonIdle",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "projectedAnchor": {
+            "x": 142,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 2457,
+          "isolatedAlpha96SourcePixels": 2380
+        },
+        {
+          "id": "combat-copy-1-flow-1-2",
+          "sourceActorId": "combat-copy-1-flow-1-2",
+          "modelActorId": "han-rian",
+          "position": [
+            218,
+            166
+          ],
+          "sourceKey": "storyRianIdle",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "projectedAnchor": {
+            "x": 218,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 1636,
+          "isolatedAlpha96SourcePixels": 1570
+        },
+        {
+          "id": "combat-copy-1-flow-1-0",
+          "sourceActorId": "combat-copy-1-flow-1-0",
+          "modelActorId": "han-rian",
+          "position": [
+            66,
+            166
+          ],
+          "sourceKey": "storyRianIdle",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "projectedAnchor": {
+            "x": 66,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 1636,
+          "isolatedAlpha96SourcePixels": 1570
+        },
+        {
+          "id": "combat-copy-1-flow-1-3",
+          "sourceActorId": "combat-copy-1-flow-1-3",
+          "modelActorId": "baek-ion",
+          "position": [
+            294,
+            166
+          ],
+          "sourceKey": "storyIonIdle",
+          "nativeDrawCalls": 1,
+          "sourceRect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "projectedAnchor": {
+            "x": 294,
+            "y": 166
+          },
+          "isolatedVisibleSourcePixels": 2457,
+          "isolatedAlpha96SourcePixels": 2380
+        }
+      ]
+    }
+  ]
+}

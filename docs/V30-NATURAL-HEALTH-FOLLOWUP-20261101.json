@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "date": "2026-11-01",
+  "seed": 813,
+  "scope": "One bounded ordinary-health legal-input follow-up for the preserved original Migration16HELL loss. Exact full final world replay passed. Not a new balance change or human/phoneFPS claim.",
+  "policyName": "existing-forecast-with-read-only-v30-active-ttl-projection",
+  "simulationSourceHashes": {
+    "src/boss-flow-v29.js": "58885dbfde978310f4ebbf585ff8a3ed99d88dec3a443f2f1234adc694ed5c74",
+    "src/boss-lasers-v28.js": "22eeaa9196ab417e09f0475024d83e76336ceec55c4562e2217e0e6a69dccaaf",
+    "src/boss-patterns-v27.js": "276752e2cc14753cbc424dc3c4c0512406f3f09e65c81faf0ab249232744e07e",
+    "src/core.js": "553e14c431e315a005a66c17e82b2747b0811fcf05dbbc18710c4c7c1268de22",
+    "src/weapon-patterns.js": "a646cf95f81f7621a089ac17efbfffebdf9a0f3fc94d0c0f10b8d6898e6f0d8f",
+    "tools/audit-mobile-combat-v30.cjs": "e7ff53e95f1f75bd054d979a40f85ec5b4da05668bdf2eb6a9a5e1392aab1df3",
+    "tests/independent-mobile-combat-v30.test.cjs": "92ed5fdab9734e55abf3d9fdea8950a6378928c0fd0632ccc5dacf2a009eac87",
+    "tools/audit-danmaku-flow-v29.cjs": "21c4546d8625dcb8c5f342e2437ab52d0f6b718fc116ea06b87d277a41f96870",
+    "tools/audit-boss-identities-v25.cjs": "88e1d4e3afd9d314d3de2cb723d145105a3da7e3793ae4d82c76ce71f08dd20c",
+    "tools/probe-identities-v25-natural.cjs": "18433dffe03accc00d128f501bf8a03a1844c534965b6596aedb05853db198b7",
+    "tools/natural-bot-policy.cjs": "bfda010cafdfa07f03441b391e31de05e73efcb5b360e5fe5c02657b6188c079",
+    "tools/hell-forecast-policy.cjs": "7d3977489f155e99df134381cea0ec734468b63662991f4cc45f67da013f699d"
+  },
+  "sourceHashGuardPassed": true,
+  "summary": {
+    "cases": 1,
+    "won": 1,
+    "lost": 0,
+    "unfinished": 0,
+    "recordedInputTicks": 1449,
+    "exactlyReplayedInputTicks": 1449,
+    "poolPressure": 0,
+    "droppedGroups": 0
+  },
+  "records": [
+    {
+      "bossIndex": 16,
+      "phase": 2,
+      "difficulty": "hell",
+      "combatRevision": 30,
+      "bossId": "controller-migration",
+      "startHP": 3,
+      "stage": "won",
+      "ticks": 1449,
+      "hp": 3,
+      "hits": 0,
+      "score": 6500,
+      "phaseTicks": [
+        1449
+      ],
+      "peakBullets": 103,
+      "poolPressure": 0,
+      "droppedGroups": 0,
+      "resultReason": "통제체계 · 중앙 코어 이주실 · 연습 완료",
+      "policyConfig": {
+        "route": "left",
+        "y": 575,
+        "beam": 24,
+        "commit": 4,
+        "horizon": 96
+      },
+      "policyProjection": "Only the read-only forecast copy of each nonretiring30bullet receives ttl=Infinity. Actual core bullets, HP, timers, damage and RNG are never edited.",
+      "actualEntityObservations": {
+        "peakBossStagePawns": 0,
+        "peakCopies": 0
+      },
+      "input": {
+        "file": "v30-natural-inputs/followup-1/boss-16-hell-phase-2.moves.gz",
+        "bytes": 156,
+        "sha256": "58fe7eeab691c5cf4cd7c5ff42fe8851086ce08ad252f62af20247f1fdc4fb65",
+        "ticks": 1449
+      }
+    }
+  ]
+}

@@ -24,7 +24,7 @@
   var profiles=Object.freeze(Patterns.profiles.map(function(p){return Object.freeze({index:p.index,id:p.id,role:p.role,kind:p.kind,size:p.size,speed:p.speed});}));
   function finite(n){return typeof n==='number'&&Number.isFinite(n);}
   function clamp(n,a,b){return Math.max(a,Math.min(b,n));}
-  function enabled(w){return !!(w&&w.combatRevision===REVISION&&w.campaign&&w.stage==='boss');}
+  function enabled(w){return !!(w&&(w.combatRevision===REVISION||w.combatRevision===30)&&w.campaign&&w.stage==='boss');}
   function profileFor(w){var index=w&&w.finalPractice?34:w&&w.bossIndex;return Number.isInteger(index)&&profiles[index]||null;}
   function phaseFor(w){return clamp(Math.floor(w&&finite(w.phase)?w.phase:0),0,2);}
   function optionalCopy(w){return w.difficulty==='hell'||w.difficulty==='normal'&&phaseFor(w)===2;}

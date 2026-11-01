@@ -30,8 +30,8 @@ function harness(options={}){
  return {global,el,click,tick,ptr,inputs,saveCalls,completionCalls,settingsCalls,pending,completionPending,live:()=>live,stored,state,store};
 }
 const flush=()=>new Promise(r=>setImmediate(r));
-test('mobile remembers chosen FPS; practice does not touch campaign checkpoint or result',async()=>{
- const h=harness();await flush();assert.equal(h.global.HapilApp.getState().settings.quality,'high');h.click('practice-button');assert.equal(h.saveCalls.length,0);h.live().stage='won';h.tick();await flush();assert.equal(h.completionCalls.length,0);h.click('result-home-button');assert.equal(h.el('continue-button').hidden,false);
+test('mobile starts at low quality; practice does not touch campaign checkpoint or result',async()=>{
+ const h=harness();await flush();assert.equal(h.global.HapilApp.getState().settings.quality,'low');h.click('practice-button');assert.equal(h.saveCalls.length,0);h.live().stage='won';h.tick();await flush();assert.equal(h.completionCalls.length,0);h.click('result-home-button');assert.equal(h.el('continue-button').hidden,false);
 });
 test('failed checkpoint retries, and a delayed previous run cannot update the new run UI',async()=>{
  const h=harness();await flush();h.click('start-button');assert.equal(h.saveCalls.length,1);h.pending.shift()({ok:false});await flush();for(let i=0;i<105;i++)h.tick(20);assert.equal(h.saveCalls.length,2);h.click('start-button');assert.equal(h.saveCalls.length,3);h.pending.shift()({ok:true});await flush();h.click('continue-button');await flush();assert.equal(h.global.HapilApp.getState().world.runId,'run1');h.pending.shift()({ok:true});await flush();assert.equal(h.global.HapilApp.getState().world.runId,'run1');
@@ -40,9 +40,9 @@ test('short touch drag survives release until a simulation step consumes it',asy
  const h=harness();await flush();h.click('practice-button');h.ptr('pointerdown',0,0);h.ptr('pointermove',10,0);h.ptr('pointerup',10,0);assert.ok(h.global.HapilApp.getState().pointer.pendingX>0);h.tick(20);assert.ok(h.inputs.some(x=>x.dx>0));
 });
 
-test('fresh mobile defaults to 30 FPS and persists it; an existing 60 FPS preference stays selected',async()=>{
+test('fresh mobile persists its30FPS default; existing mobile startup useslow without automatically persisting',async()=>{
  const fresh=harness({hasStoredState:false});await flush();assert.equal(fresh.global.HapilApp.getState().settings.quality,'low');assert.equal(fresh.settingsCalls.length,1);assert.equal(fresh.settingsCalls[0].quality,'low');
- const existing=harness({hasStoredState:true});await flush();assert.equal(existing.global.HapilApp.getState().settings.quality,'high');assert.equal(existing.settingsCalls.length,0);
+ const existing=harness({hasStoredState:true});await flush();assert.equal(existing.global.HapilApp.getState().settings.quality,'low');assert.equal(existing.settingsCalls.length,0);
 });
 test('successful in-flight save updates continue after returning home',async()=>{
  const h=harness();await flush();h.click('start-button');h.click('home-button');h.pending.shift()({ok:true});await flush();h.click('continue-button');await flush();assert.equal(h.global.HapilApp.getState().world.runId,'run1');

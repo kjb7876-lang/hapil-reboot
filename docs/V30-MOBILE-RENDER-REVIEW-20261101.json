@@ -1,0 +1,1107 @@
+{
+  "schema": 1,
+  "date": "2026-11-01",
+  "scope": "Native CPU same-source render comparison of actual immune HELL core30 pressure states, attacks/skills disabled. No attack bodies are reduced or hidden. Not phone/GPU FPS, human play or a complete campaign.",
+  "productSHA256": {
+    "src/render.js": "071a00db063772240a81c317a0f45ca8a13e7c0e8ad39b3fb923f1a2eb96f1c0",
+    "src/projectiles.js": "4f3c7e2eb37f5c2f9680dd5b0c8bec51480460de94a7a9a3b8a945bd11b2f040",
+    "src/core.js": "553e14c431e315a005a66c17e82b2747b0811fcf05dbbc18710c4c7c1268de22",
+    "src/actors.js": "a7b4a71fca2b146b02975a6e421a3466599cfce8c1ed4ed63e9cc99e90446b9e",
+    "src/boss-flow-v29.js": "58885dbfde978310f4ebbf585ff8a3ed99d88dec3a443f2f1234adc694ed5c74",
+    "src/boss-patterns-v27.js": "276752e2cc14753cbc424dc3c4c0512406f3f09e65c81faf0ab249232744e07e"
+  },
+  "toolSHA256": "aaf00e93e5daa5b53cca1ca55f57c362bb40b7abd6676065bd57218ab0444c03",
+  "summary": {
+    "pixelCases": 24,
+    "maximumChannelDelta": 2,
+    "maximumCacheBytes": 2073600,
+    "missingAssets": 0,
+    "cacheByteLimit": 4194304,
+    "minimumPressureBodies": 4,
+    "actualFourCopyQualities": 2
+  },
+  "limits": [
+    "One contiguous active pressure run of at least4bodies only; shorter runs, ordinary lasers, warnings, fades, bullets and high quality still draw live.",
+    "A static transparent layer can round intermediate RGB by at most the measured few levels; capsule geometry, source material, opacity and final hitpoint remain unchanged.",
+    "Frames with hundreds of live bullets still issue a draw for each bullet. Shared-host native CPU results are not universal speedups; browser/device profiling is required for a phone FPS claim."
+  ],
+  "rows": [
+    {
+      "index": 0,
+      "phase": 0,
+      "tick": 300,
+      "cssW": 306,
+      "dpr": 1,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "bodyCount": 5,
+      "eligibleBodies": 0,
+      "cachedBodies": 0,
+      "rasterBodies": 5,
+      "cacheBytes": 0,
+      "missingAssets": 0
+    },
+    {
+      "index": 0,
+      "phase": 0,
+      "tick": 300,
+      "cssW": 306,
+      "dpr": 1.5,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "bodyCount": 5,
+      "eligibleBodies": 0,
+      "cachedBodies": 0,
+      "rasterBodies": 5,
+      "cacheBytes": 0,
+      "missingAssets": 0
+    },
+    {
+      "index": 0,
+      "phase": 0,
+      "tick": 300,
+      "cssW": 360,
+      "dpr": 1,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "bodyCount": 5,
+      "eligibleBodies": 0,
+      "cachedBodies": 0,
+      "rasterBodies": 5,
+      "cacheBytes": 0,
+      "missingAssets": 0
+    },
+    {
+      "index": 0,
+      "phase": 0,
+      "tick": 300,
+      "cssW": 360,
+      "dpr": 1.5,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "bodyCount": 5,
+      "eligibleBodies": 0,
+      "cachedBodies": 0,
+      "rasterBodies": 5,
+      "cacheBytes": 0,
+      "missingAssets": 0
+    },
+    {
+      "index": 0,
+      "phase": 2,
+      "tick": 300,
+      "cssW": 306,
+      "dpr": 1,
+      "pixels": {
+        "changedPixels": 42464,
+        "maxChannelDelta": 2,
+        "totalChannelDelta": 58875
+      },
+      "bodyCount": 9,
+      "eligibleBodies": 6,
+      "cachedBodies": 6,
+      "rasterBodies": 3,
+      "cacheBytes": 665856,
+      "missingAssets": 0
+    },
+    {
+      "index": 0,
+      "phase": 2,
+      "tick": 300,
+      "cssW": 306,
+      "dpr": 1.5,
+      "pixels": {
+        "changedPixels": 94699,
+        "maxChannelDelta": 2,
+        "totalChannelDelta": 131598
+      },
+      "bodyCount": 9,
+      "eligibleBodies": 6,
+      "cachedBodies": 6,
+      "rasterBodies": 3,
+      "cacheBytes": 1498176,
+      "missingAssets": 0
+    },
+    {
+      "index": 0,
+      "phase": 2,
+      "tick": 300,
+      "cssW": 360,
+      "dpr": 1,
+      "pixels": {
+        "changedPixels": 59097,
+        "maxChannelDelta": 2,
+        "totalChannelDelta": 82015
+      },
+      "bodyCount": 9,
+      "eligibleBodies": 6,
+      "cachedBodies": 6,
+      "rasterBodies": 3,
+      "cacheBytes": 921600,
+      "missingAssets": 0
+    },
+    {
+      "index": 0,
+      "phase": 2,
+      "tick": 300,
+      "cssW": 360,
+      "dpr": 1.5,
+      "pixels": {
+        "changedPixels": 131180,
+        "maxChannelDelta": 2,
+        "totalChannelDelta": 181723
+      },
+      "bodyCount": 9,
+      "eligibleBodies": 6,
+      "cachedBodies": 6,
+      "rasterBodies": 3,
+      "cacheBytes": 2073600,
+      "missingAssets": 0
+    },
+    {
+      "index": 8,
+      "phase": 0,
+      "tick": 300,
+      "cssW": 306,
+      "dpr": 1,
+      "pixels": {
+        "changedPixels": 48135,
+        "maxChannelDelta": 2,
+        "totalChannelDelta": 66150
+      },
+      "bodyCount": 6,
+      "eligibleBodies": 6,
+      "cachedBodies": 6,
+      "rasterBodies": 0,
+      "cacheBytes": 665856,
+      "missingAssets": 0
+    },
+    {
+      "index": 8,
+      "phase": 0,
+      "tick": 300,
+      "cssW": 306,
+      "dpr": 1.5,
+      "pixels": {
+        "changedPixels": 107656,
+        "maxChannelDelta": 2,
+        "totalChannelDelta": 147332
+      },
+      "bodyCount": 6,
+      "eligibleBodies": 6,
+      "cachedBodies": 6,
+      "rasterBodies": 0,
+      "cacheBytes": 1498176,
+      "missingAssets": 0
+    },
+    {
+      "index": 8,
+      "phase": 0,
+      "tick": 300,
+      "cssW": 360,
+      "dpr": 1,
+      "pixels": {
+        "changedPixels": 66255,
+        "maxChannelDelta": 2,
+        "totalChannelDelta": 90719
+      },
+      "bodyCount": 6,
+      "eligibleBodies": 6,
+      "cachedBodies": 6,
+      "rasterBodies": 0,
+      "cacheBytes": 921600,
+      "missingAssets": 0
+    },
+    {
+      "index": 8,
+      "phase": 0,
+      "tick": 300,
+      "cssW": 360,
+      "dpr": 1.5,
+      "pixels": {
+        "changedPixels": 148875,
+        "maxChannelDelta": 2,
+        "totalChannelDelta": 203751
+      },
+      "bodyCount": 6,
+      "eligibleBodies": 6,
+      "cachedBodies": 6,
+      "rasterBodies": 0,
+      "cacheBytes": 2073600,
+      "missingAssets": 0
+    },
+    {
+      "index": 8,
+      "phase": 2,
+      "tick": 300,
+      "cssW": 306,
+      "dpr": 1,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "bodyCount": 9,
+      "eligibleBodies": 0,
+      "cachedBodies": 0,
+      "rasterBodies": 9,
+      "cacheBytes": 0,
+      "missingAssets": 0
+    },
+    {
+      "index": 8,
+      "phase": 2,
+      "tick": 300,
+      "cssW": 306,
+      "dpr": 1.5,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "bodyCount": 9,
+      "eligibleBodies": 0,
+      "cachedBodies": 0,
+      "rasterBodies": 9,
+      "cacheBytes": 0,
+      "missingAssets": 0
+    },
+    {
+      "index": 8,
+      "phase": 2,
+      "tick": 300,
+      "cssW": 360,
+      "dpr": 1,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "bodyCount": 9,
+      "eligibleBodies": 0,
+      "cachedBodies": 0,
+      "rasterBodies": 9,
+      "cacheBytes": 0,
+      "missingAssets": 0
+    },
+    {
+      "index": 8,
+      "phase": 2,
+      "tick": 300,
+      "cssW": 360,
+      "dpr": 1.5,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "bodyCount": 9,
+      "eligibleBodies": 0,
+      "cachedBodies": 0,
+      "rasterBodies": 9,
+      "cacheBytes": 0,
+      "missingAssets": 0
+    },
+    {
+      "index": 33,
+      "phase": 0,
+      "tick": 300,
+      "cssW": 306,
+      "dpr": 1,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "bodyCount": 6,
+      "eligibleBodies": 0,
+      "cachedBodies": 0,
+      "rasterBodies": 6,
+      "cacheBytes": 0,
+      "missingAssets": 0
+    },
+    {
+      "index": 33,
+      "phase": 0,
+      "tick": 300,
+      "cssW": 306,
+      "dpr": 1.5,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "bodyCount": 6,
+      "eligibleBodies": 0,
+      "cachedBodies": 0,
+      "rasterBodies": 6,
+      "cacheBytes": 0,
+      "missingAssets": 0
+    },
+    {
+      "index": 33,
+      "phase": 0,
+      "tick": 300,
+      "cssW": 360,
+      "dpr": 1,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "bodyCount": 6,
+      "eligibleBodies": 0,
+      "cachedBodies": 0,
+      "rasterBodies": 6,
+      "cacheBytes": 0,
+      "missingAssets": 0
+    },
+    {
+      "index": 33,
+      "phase": 0,
+      "tick": 300,
+      "cssW": 360,
+      "dpr": 1.5,
+      "pixels": {
+        "changedPixels": 0,
+        "maxChannelDelta": 0,
+        "totalChannelDelta": 0
+      },
+      "bodyCount": 6,
+      "eligibleBodies": 0,
+      "cachedBodies": 0,
+      "rasterBodies": 6,
+      "cacheBytes": 0,
+      "missingAssets": 0
+    },
+    {
+      "index": 33,
+      "phase": 2,
+      "tick": 300,
+      "cssW": 306,
+      "dpr": 1,
+      "pixels": {
+        "changedPixels": 44110,
+        "maxChannelDelta": 2,
+        "totalChannelDelta": 60329
+      },
+      "bodyCount": 8,
+      "eligibleBodies": 6,
+      "cachedBodies": 6,
+      "rasterBodies": 2,
+      "cacheBytes": 665856,
+      "missingAssets": 0
+    },
+    {
+      "index": 33,
+      "phase": 2,
+      "tick": 300,
+      "cssW": 306,
+      "dpr": 1.5,
+      "pixels": {
+        "changedPixels": 98637,
+        "maxChannelDelta": 2,
+        "totalChannelDelta": 135277
+      },
+      "bodyCount": 8,
+      "eligibleBodies": 6,
+      "cachedBodies": 6,
+      "rasterBodies": 2,
+      "cacheBytes": 1498176,
+      "missingAssets": 0
+    },
+    {
+      "index": 33,
+      "phase": 2,
+      "tick": 300,
+      "cssW": 360,
+      "dpr": 1,
+      "pixels": {
+        "changedPixels": 60667,
+        "maxChannelDelta": 2,
+        "totalChannelDelta": 83160
+      },
+      "bodyCount": 8,
+      "eligibleBodies": 6,
+      "cachedBodies": 6,
+      "rasterBodies": 2,
+      "cacheBytes": 921600,
+      "missingAssets": 0
+    },
+    {
+      "index": 33,
+      "phase": 2,
+      "tick": 300,
+      "cssW": 360,
+      "dpr": 1.5,
+      "pixels": {
+        "changedPixels": 136780,
+        "maxChannelDelta": 2,
+        "totalChannelDelta": 186813
+      },
+      "bodyCount": 8,
+      "eligibleBodies": 6,
+      "cachedBodies": 6,
+      "rasterBodies": 2,
+      "cacheBytes": 2073600,
+      "missingAssets": 0
+    }
+  ],
+  "timings": [
+    {
+      "index": 0,
+      "tick": 300,
+      "cacheEligible": false,
+      "scope": "same actual immune core30 snapshot; direct age0 is the identical static source frame with cache disabled; cached means final policy and falls back live for short runs; sixty draws per path in ten interleaved alternating-order blocks",
+      "direct": {
+        "frames": 60,
+        "medianMs": 4.437687999998161,
+        "p95Ms": 7.04967200000101
+      },
+      "cached": {
+        "frames": 60,
+        "medianMs": 4.3213920000016515,
+        "p95Ms": 8.819486999997025
+      },
+      "directDraws": {
+        "drawImage": 225,
+        "clip": 7,
+        "scope": "one warmed complete main-canvas frame; offscreen pressure build0",
+        "pressureFrameBuilds": 0,
+        "pressureFrameHits": 0,
+        "logicalLaserBodies": 5,
+        "rasterLaserBodies": 5,
+        "cachedLaserBodies": 0
+      },
+      "cachedDraws": {
+        "drawImage": 225,
+        "clip": 7,
+        "scope": "one warmed complete main-canvas frame; offscreen pressure build0",
+        "pressureFrameBuilds": 0,
+        "pressureFrameHits": 0,
+        "logicalLaserBodies": 5,
+        "rasterLaserBodies": 5,
+        "cachedLaserBodies": 0
+      },
+      "metrics": {
+        "entries": 0,
+        "bytes": 0,
+        "byteLimit": 4194304,
+        "builds": 0,
+        "hits": 0,
+        "frameBuilds": 0,
+        "frameHits": 0,
+        "logicalBodies": 0
+      }
+    },
+    {
+      "index": 8,
+      "tick": 300,
+      "cacheEligible": true,
+      "scope": "same actual immune core30 snapshot; direct age0 is the identical static source frame with cache disabled; cached means final policy and falls back live for short runs; sixty draws per path in ten interleaved alternating-order blocks",
+      "direct": {
+        "frames": 60,
+        "medianMs": 2.2427739999984624,
+        "p95Ms": 3.684382999999798
+      },
+      "cached": {
+        "frames": 60,
+        "medianMs": 2.117713999999978,
+        "p95Ms": 3.6953359999970417
+      },
+      "directDraws": {
+        "drawImage": 132,
+        "clip": 8,
+        "scope": "one warmed complete main-canvas frame; offscreen pressure build0",
+        "pressureFrameBuilds": 0,
+        "pressureFrameHits": 0,
+        "logicalLaserBodies": 6,
+        "rasterLaserBodies": 6,
+        "cachedLaserBodies": 0
+      },
+      "cachedDraws": {
+        "drawImage": 109,
+        "clip": 2,
+        "scope": "one warmed complete main-canvas frame; offscreen pressure build0",
+        "pressureFrameBuilds": 0,
+        "pressureFrameHits": 1,
+        "logicalLaserBodies": 6,
+        "rasterLaserBodies": 0,
+        "cachedLaserBodies": 6
+      },
+      "metrics": {
+        "entries": 1,
+        "bytes": 921600,
+        "byteLimit": 4194304,
+        "builds": 1,
+        "hits": 68,
+        "frameBuilds": 0,
+        "frameHits": 1,
+        "logicalBodies": 6
+      }
+    },
+    {
+      "index": 33,
+      "tick": 300,
+      "cacheEligible": false,
+      "scope": "same actual immune core30 snapshot; direct age0 is the identical static source frame with cache disabled; cached means final policy and falls back live for short runs; sixty draws per path in ten interleaved alternating-order blocks",
+      "direct": {
+        "frames": 60,
+        "medianMs": 2.256026999999449,
+        "p95Ms": 3.8180070000016713
+      },
+      "cached": {
+        "frames": 60,
+        "medianMs": 2.4589749999977357,
+        "p95Ms": 4.683957000001101
+      },
+      "directDraws": {
+        "drawImage": 104,
+        "clip": 8,
+        "scope": "one warmed complete main-canvas frame; offscreen pressure build0",
+        "pressureFrameBuilds": 0,
+        "pressureFrameHits": 0,
+        "logicalLaserBodies": 6,
+        "rasterLaserBodies": 6,
+        "cachedLaserBodies": 0
+      },
+      "cachedDraws": {
+        "drawImage": 104,
+        "clip": 8,
+        "scope": "one warmed complete main-canvas frame; offscreen pressure build0",
+        "pressureFrameBuilds": 0,
+        "pressureFrameHits": 0,
+        "logicalLaserBodies": 6,
+        "rasterLaserBodies": 6,
+        "cachedLaserBodies": 0
+      },
+      "metrics": {
+        "entries": 0,
+        "bytes": 0,
+        "byteLimit": 4194304,
+        "builds": 0,
+        "hits": 0,
+        "frameBuilds": 0,
+        "frameHits": 0,
+        "logicalBodies": 0
+      }
+    }
+  ],
+  "actualFourCopyScene": {
+    "scope": "Actual immune HELL boss0 phase2 tick421 fullscene, attacks/skills disabled; all four live copies use their committed owned source and exact core positions in both qualities.",
+    "index": 0,
+    "phase": 2,
+    "tick": 421,
+    "worldSHA256": "2305dfcb3fa30494bc7d9ea4060565e3236f6c587a335c2aa1bfefc90ebf7276",
+    "qualities": [
+      {
+        "quality": "high",
+        "combatCopyDraws": 4,
+        "samples": [
+          {
+            "id": "combat-copy-1-flow-0-0",
+            "sourceActorId": "combat-copy-1-flow-0-0",
+            "modelActorId": null,
+            "identity": "violet",
+            "key": "bossMotionViolet",
+            "pose": "recover",
+            "sourceRect": [
+              256,
+              256,
+              256,
+              256
+            ],
+            "anchor": [
+              146,
+              120
+            ],
+            "scale": 0.47989347826086953,
+            "position": [
+              66,
+              166
+            ],
+            "born": 73,
+            "expireAt": 433,
+            "releaseTick": 151,
+            "opacity": 0.62,
+            "kind": "clone",
+            "originalAction": "recover",
+            "presentationAction": "recover",
+            "repeatCue": {
+              "active": false,
+              "nextAt": null,
+              "remainingTicks": null,
+              "windowTicks": 54,
+              "reason": "no-committed-volley"
+            },
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          },
+          {
+            "id": "combat-copy-1-flow-0-1",
+            "sourceActorId": "combat-copy-1-flow-0-1",
+            "modelActorId": null,
+            "identity": "violet",
+            "key": "bossMotionViolet",
+            "pose": "recover",
+            "sourceRect": [
+              256,
+              256,
+              256,
+              256
+            ],
+            "anchor": [
+              146,
+              120
+            ],
+            "scale": 0.47989347826086953,
+            "position": [
+              142,
+              166
+            ],
+            "born": 169,
+            "expireAt": 529,
+            "releaseTick": 223,
+            "opacity": 0.62,
+            "kind": "clone",
+            "originalAction": "recover",
+            "presentationAction": "recover",
+            "repeatCue": {
+              "active": false,
+              "nextAt": null,
+              "remainingTicks": null,
+              "windowTicks": 54,
+              "reason": "no-committed-volley"
+            },
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          },
+          {
+            "id": "combat-copy-1-flow-0-3",
+            "sourceActorId": "combat-copy-1-flow-0-3",
+            "modelActorId": null,
+            "identity": "violet",
+            "key": "bossMotionViolet",
+            "pose": "recover",
+            "sourceRect": [
+              256,
+              256,
+              256,
+              256
+            ],
+            "anchor": [
+              146,
+              120
+            ],
+            "scale": 0.47989347826086953,
+            "position": [
+              294,
+              166
+            ],
+            "born": 343,
+            "expireAt": 703,
+            "releaseTick": 397,
+            "opacity": 0.62,
+            "kind": "clone",
+            "originalAction": "recover",
+            "presentationAction": "recover",
+            "repeatCue": {
+              "active": false,
+              "nextAt": null,
+              "remainingTicks": null,
+              "windowTicks": 54,
+              "reason": "no-committed-volley"
+            },
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          },
+          {
+            "id": "combat-copy-1-flow-0-2",
+            "sourceActorId": "combat-copy-1-flow-0-2",
+            "modelActorId": null,
+            "identity": "violet",
+            "key": "bossMotionViolet",
+            "pose": "recover",
+            "sourceRect": [
+              256,
+              256,
+              256,
+              256
+            ],
+            "anchor": [
+              146,
+              120
+            ],
+            "scale": 0.47989347826086953,
+            "position": [
+              218,
+              166
+            ],
+            "born": 421,
+            "expireAt": 781,
+            "releaseTick": -1,
+            "opacity": 0.248,
+            "kind": "clone",
+            "originalAction": "charge",
+            "presentationAction": "charge",
+            "repeatCue": {
+              "active": true,
+              "nextAt": 475,
+              "remainingTicks": 54,
+              "windowTicks": 54,
+              "reason": "committed-identity-anticipation"
+            },
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          }
+        ]
+      },
+      {
+        "quality": "low",
+        "combatCopyDraws": 4,
+        "samples": [
+          {
+            "id": "combat-copy-1-flow-0-0",
+            "sourceActorId": "combat-copy-1-flow-0-0",
+            "modelActorId": null,
+            "identity": "violet",
+            "key": "bossMotionViolet",
+            "pose": "recover",
+            "sourceRect": [
+              256,
+              256,
+              256,
+              256
+            ],
+            "anchor": [
+              146,
+              120
+            ],
+            "scale": 0.47989347826086953,
+            "position": [
+              66,
+              166
+            ],
+            "born": 73,
+            "expireAt": 433,
+            "releaseTick": 151,
+            "opacity": 0.62,
+            "kind": "clone",
+            "originalAction": "recover",
+            "presentationAction": "recover",
+            "repeatCue": {
+              "active": false,
+              "nextAt": null,
+              "remainingTicks": null,
+              "windowTicks": 54,
+              "reason": "no-committed-volley"
+            },
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          },
+          {
+            "id": "combat-copy-1-flow-0-1",
+            "sourceActorId": "combat-copy-1-flow-0-1",
+            "modelActorId": null,
+            "identity": "violet",
+            "key": "bossMotionViolet",
+            "pose": "recover",
+            "sourceRect": [
+              256,
+              256,
+              256,
+              256
+            ],
+            "anchor": [
+              146,
+              120
+            ],
+            "scale": 0.47989347826086953,
+            "position": [
+              142,
+              166
+            ],
+            "born": 169,
+            "expireAt": 529,
+            "releaseTick": 223,
+            "opacity": 0.62,
+            "kind": "clone",
+            "originalAction": "recover",
+            "presentationAction": "recover",
+            "repeatCue": {
+              "active": false,
+              "nextAt": null,
+              "remainingTicks": null,
+              "windowTicks": 54,
+              "reason": "no-committed-volley"
+            },
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          },
+          {
+            "id": "combat-copy-1-flow-0-3",
+            "sourceActorId": "combat-copy-1-flow-0-3",
+            "modelActorId": null,
+            "identity": "violet",
+            "key": "bossMotionViolet",
+            "pose": "recover",
+            "sourceRect": [
+              256,
+              256,
+              256,
+              256
+            ],
+            "anchor": [
+              146,
+              120
+            ],
+            "scale": 0.47989347826086953,
+            "position": [
+              294,
+              166
+            ],
+            "born": 343,
+            "expireAt": 703,
+            "releaseTick": 397,
+            "opacity": 0.62,
+            "kind": "clone",
+            "originalAction": "recover",
+            "presentationAction": "recover",
+            "repeatCue": {
+              "active": false,
+              "nextAt": null,
+              "remainingTicks": null,
+              "windowTicks": 54,
+              "reason": "no-committed-volley"
+            },
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          },
+          {
+            "id": "combat-copy-1-flow-0-2",
+            "sourceActorId": "combat-copy-1-flow-0-2",
+            "modelActorId": null,
+            "identity": "violet",
+            "key": "bossMotionViolet",
+            "pose": "recover",
+            "sourceRect": [
+              256,
+              256,
+              256,
+              256
+            ],
+            "anchor": [
+              146,
+              120
+            ],
+            "scale": 0.47989347826086953,
+            "position": [
+              218,
+              166
+            ],
+            "born": 421,
+            "expireAt": 781,
+            "releaseTick": -1,
+            "opacity": 0.248,
+            "kind": "clone",
+            "originalAction": "charge",
+            "presentationAction": "charge",
+            "repeatCue": {
+              "active": true,
+              "nextAt": 475,
+              "remainingTicks": 54,
+              "windowTicks": 54,
+              "reason": "committed-identity-anticipation"
+            },
+            "authoredKeyposes": 4,
+            "fullAnimationCycles": 0,
+            "sourcePivotsCertified": false
+          }
+        ]
+      }
+    ]
+  },
+  "initialCandidate": {
+    "scope": "Initial cache-all-active-pressure-runs candidate before the measured minimum-four-body cost threshold; historical probe only, not final product performance.",
+    "productSHA256": {
+      "src/render.js": "ebc25591b6634c7534fc645a2dae5dfbc57104216fc8e02003126d88a05026b7",
+      "src/projectiles.js": "4f3c7e2eb37f5c2f9680dd5b0c8bec51480460de94a7a9a3b8a945bd11b2f040",
+      "src/core.js": "553e14c431e315a005a66c17e82b2747b0811fcf05dbbc18710c4c7c1268de22",
+      "src/actors.js": "a7b4a71fca2b146b02975a6e421a3466599cfce8c1ed4ed63e9cc99e90446b9e",
+      "src/boss-flow-v29.js": "58885dbfde978310f4ebbf585ff8a3ed99d88dec3a443f2f1234adc694ed5c74",
+      "src/boss-patterns-v27.js": "276752e2cc14753cbc424dc3c4c0512406f3f09e65c81faf0ab249232744e07e"
+    },
+    "toolSHA256": "f48a7b03e921bab2cd0c85eba740bfebb6ed311e8bd76d0195c6ef33ec8aaf04",
+    "timings": [
+      {
+        "index": 0,
+        "tick": 300,
+        "scope": "same actual immune core30 snapshot; direct age0 is the identical static source frame, cache disabled only; sixty draws per path in ten interleaved alternating-order blocks",
+        "direct": {
+          "frames": 60,
+          "medianMs": 4.709755000003497,
+          "p95Ms": 7.456881000005524
+        },
+        "cached": {
+          "frames": 60,
+          "medianMs": 4.529733000003034,
+          "p95Ms": 8.950987999996869
+        },
+        "directDraws": {
+          "drawImage": 225,
+          "clip": 7,
+          "scope": "one warmed complete main-canvas frame; offscreen pressure build0",
+          "pressureFrameBuilds": 0,
+          "pressureFrameHits": 0,
+          "logicalLaserBodies": 5,
+          "rasterLaserBodies": 5,
+          "cachedLaserBodies": 0
+        },
+        "cachedDraws": {
+          "drawImage": 214,
+          "clip": 4,
+          "scope": "one warmed complete main-canvas frame; offscreen pressure build0",
+          "pressureFrameBuilds": 0,
+          "pressureFrameHits": 1,
+          "logicalLaserBodies": 5,
+          "rasterLaserBodies": 2,
+          "cachedLaserBodies": 3
+        },
+        "metrics": {
+          "entries": 1,
+          "bytes": 921600,
+          "byteLimit": 4194304,
+          "builds": 1,
+          "hits": 68,
+          "frameBuilds": 0,
+          "frameHits": 1,
+          "logicalBodies": 3
+        }
+      },
+      {
+        "index": 8,
+        "tick": 300,
+        "scope": "same actual immune core30 snapshot; direct age0 is the identical static source frame, cache disabled only; sixty draws per path in ten interleaved alternating-order blocks",
+        "direct": {
+          "frames": 60,
+          "medianMs": 2.600164000003133,
+          "p95Ms": 3.9257720000023255
+        },
+        "cached": {
+          "frames": 60,
+          "medianMs": 2.322048000001814,
+          "p95Ms": 3.2594160000007832
+        },
+        "directDraws": {
+          "drawImage": 132,
+          "clip": 8,
+          "scope": "one warmed complete main-canvas frame; offscreen pressure build0",
+          "pressureFrameBuilds": 0,
+          "pressureFrameHits": 0,
+          "logicalLaserBodies": 6,
+          "rasterLaserBodies": 6,
+          "cachedLaserBodies": 0
+        },
+        "cachedDraws": {
+          "drawImage": 109,
+          "clip": 2,
+          "scope": "one warmed complete main-canvas frame; offscreen pressure build0",
+          "pressureFrameBuilds": 0,
+          "pressureFrameHits": 1,
+          "logicalLaserBodies": 6,
+          "rasterLaserBodies": 0,
+          "cachedLaserBodies": 6
+        },
+        "metrics": {
+          "entries": 1,
+          "bytes": 921600,
+          "byteLimit": 4194304,
+          "builds": 1,
+          "hits": 68,
+          "frameBuilds": 0,
+          "frameHits": 1,
+          "logicalBodies": 6
+        }
+      },
+      {
+        "index": 33,
+        "tick": 300,
+        "scope": "same actual immune core30 snapshot; direct age0 is the identical static source frame, cache disabled only; sixty draws per path in ten interleaved alternating-order blocks",
+        "direct": {
+          "frames": 60,
+          "medianMs": 2.4494660000054864,
+          "p95Ms": 3.697719000003417
+        },
+        "cached": {
+          "frames": 60,
+          "medianMs": 2.7838880000053905,
+          "p95Ms": 4.385428000008687
+        },
+        "directDraws": {
+          "drawImage": 104,
+          "clip": 8,
+          "scope": "one warmed complete main-canvas frame; offscreen pressure build0",
+          "pressureFrameBuilds": 0,
+          "pressureFrameHits": 0,
+          "logicalLaserBodies": 6,
+          "rasterLaserBodies": 6,
+          "cachedLaserBodies": 0
+        },
+        "cachedDraws": {
+          "drawImage": 93,
+          "clip": 5,
+          "scope": "one warmed complete main-canvas frame; offscreen pressure build0",
+          "pressureFrameBuilds": 0,
+          "pressureFrameHits": 1,
+          "logicalLaserBodies": 6,
+          "rasterLaserBodies": 3,
+          "cachedLaserBodies": 3
+        },
+        "metrics": {
+          "entries": 1,
+          "bytes": 921600,
+          "byteLimit": 4194304,
+          "builds": 1,
+          "hits": 68,
+          "frameBuilds": 0,
+          "frameHits": 1,
+          "logicalBodies": 3
+        }
+      }
+    ]
+  },
+  "review": {
+    "status": "reviewed with listed limitations",
+    "checks": [
+      "Final minimum-four-body policy:24 actual-source comparisons at CSS306/360 andDPR1/1.5; maximum measured RGBA channel difference2, missing damage materials0.",
+      "All8 real three-body fallback cases use0cache bytes,0cached bodies and exact direct pixels. Eligible dense runs retain all logical damage bodies.",
+      "Final focused5/5 tests pass, including actual B0phase2HELLtick421 fullscene4copydraws in high and low quality, committed owner/model/id/position matching, no missing copy assets, and unchanged core world. A separately labelled borrowed-actor legacy fixture retains the old2copycap.",
+      "Geometry/owner/source/phase/backing invalidation,<=4MiB fallback, no warm canvas creation, lifecycle release and pinned legacy/high pixel equality pass."
+    ],
+    "timingLimitations": [
+      "Shared native host, not a physical phone or browser/GPU FPS. Direct fallback raster work still varies between timing blocks, so small CPU differences cannot establish a universal speedup.",
+      "Final eligible B8 sample reduces full-frame drawImage132to109 andclip8to2 while retaining all6damage bodies; observed median2.243ms direct versus2.118ms final cache policy is a scoped native measurement.",
+      "Timing snapshots are tick300 with at most2livecopies; the separate tick421 four-copy scene verifies presentation correctness rather than measuring four-copy device performance.",
+      "initialCandidate contains only the historical cache-all probe that motivated rejecting three-body runs; it is not final product performance."
+    ]
+  }
+}

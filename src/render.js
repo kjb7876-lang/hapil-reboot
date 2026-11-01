@@ -95,6 +95,11 @@
     var sourceScene=null,sourceSceneImage=null,sourceSceneKey=null,sourceSceneTone=null,sourceSceneBuilds=0;
     var playerShotStamp=null,playerShotStampKey=null;
     var warningFootprints=[],warningFootprintPool=[],warningFootprintBuilds=0,imminentWarnings=[];
+    // One backing-resolution layer replaces repeated wide pressure clips in
+    // mobile mode. Only the static active material is cached; warnings, fades,
+    // ordinary lasers and all moving projectiles retain their live draw path.
+    var pressureLayer=null,pressureLayerContext=null,pressureLayerState=null,pressureLayerRecords=[],pressureLayerAssets=[],pressureLayerMetrics=null,pressureReplayMetrics=null;
+    var pressureLayerBuilds=0,pressureLayerHits=0,PRESSURE_LAYER_BYTES=4*1024*1024;
     var playerFeedbackRecord={hitRadius:3,precise:false,focusRadius:null,grazeAge:null,grazePulse:0,cosmeticOnly:true};
     // Text layouts depend on the actual phase names, not on every render tick.
     // One current HUD/narrative layout keeps memory bounded per renderer.
@@ -546,11 +551,73 @@
       record.paletteId=palette?palette.id:null;record.activeAt=h.activeAt;record.damageGeometryOwnedByCore=true;
       warningFootprints.push(record);mapMetrics.warningFootprintBuilds=warningFootprintBuilds;
     }
+    function releasePressureLayer(){
+      if(pressureLayer){pressureLayer.width=1;pressureLayer.height=1;}
+      pressureLayer=null;pressureLayerContext=null;pressureLayerState=null;pressureLayerRecords.length=0;pressureLayerAssets.length=0;pressureLayerMetrics=null;
+    }
+    function staticPressure(h){return h&&h.pressureCurtain&&h.phase==='active'&&!Number.isFinite(h.age);}
+    function pressureMatches(world,hazards,start,end){
+      var s=pressureLayerState;
+      if(!s||s.width!==canvas.width||s.height!==canvas.height||s.ratio!==ratio||s.bossIndex!==world.bossIndex||s.phase!==world.phase||s.finalPractice!==world.finalPractice||s.campaignRevision!==world.campaignRevision||end-start!==pressureLayerRecords.length)return false;
+      for(var i=0;i<pressureLayerAssets.length;i++){var a=pressureLayerAssets[i],im=images[a.key];if(im!==a.image||im&&(im.complete!==a.complete||im.naturalWidth!==a.width||im.naturalHeight!==a.height))return false;}
+      for(var i=start;i<end;i++){
+        var h=hazards[i],r=pressureLayerRecords[i-start];
+        if(r.id!==h.id||r.x1!==h.x1||r.y1!==h.y1||r.x2!==h.x2||r.y2!==h.y2||r.width!==h.width||r.paletteSlot!==h.paletteSlot||r.sourceActorId!==h.sourceActorId||r.modelActorId!==h.modelActorId||r.sourcePhase!==h.sourcePhase||r.color!==h.color)return false;
+      }
+      return true;
+    }
+    function pressureMetricDelta(before,after){
+      var out={beamSourceKeys:{}};
+      for(var i=0;i<4;i++){var key=['assetLaserDraws','assetLaserSlices','sourceBeamOverlayDraws','beamMaterialDraws'][i];out[key]=after[key]-before[key];}
+      for(var key in after.beamSourceKeys){var delta=after.beamSourceKeys[key]-(before.beamSourceKeys[key]||0);if(delta)out.beamSourceKeys[key]=delta;}
+      return out;
+    }
+    function drawPressureLayer(world,hazards,start,end){
+      var bytes=canvas.width*canvas.height*4;
+      if(bytes>PRESSURE_LAYER_BYTES||bytes<=0||end-start>40)return false;
+      if(!pressureMatches(world,hazards,start,end)){
+        if(!pressureLayer){pressureLayer=document.createElement('canvas');pressureLayerContext=pressureLayer.getContext('2d');}
+        if(!pressureLayerContext){releasePressureLayer();return false;}
+        if(pressureLayer.width!==canvas.width)pressureLayer.width=canvas.width;
+        if(pressureLayer.height!==canvas.height)pressureLayer.height=canvas.height;
+        var pc=pressureLayerContext;pc.setTransform(1,0,0,1,0,0);pc.clearRect(0,0,pressureLayer.width,pressureLayer.height);pc.setTransform(ratio,0,0,ratio,0,0);pc.imageSmoothingEnabled=true;
+        var before=projectilePresentation.getMetrics(),ready=true;
+        for(var i=start;i<end;i++)if(!projectilePresentation.drawHazardBody(pc,world,hazards[i],true))ready=false;
+        var after=projectilePresentation.getMetrics();
+        // A missing material must use the existing fail-closed accounting and
+        // retry normally, rather than becoming a cached invisible body.
+        if(!ready||after.missingProjectileAssets!==before.missingProjectileAssets||after.missingOptionalBeamAssets!==before.missingOptionalBeamAssets){
+          ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;ctx.drawImage(pressureLayer,0,0);ctx.restore();releasePressureLayer();return true;
+        }
+        pressureLayerRecords.length=0;
+        for(var i=start;i<end;i++){var h=hazards[i];pressureLayerRecords.push({id:h.id,x1:h.x1,y1:h.y1,x2:h.x2,y2:h.y2,width:h.width,paletteSlot:h.paletteSlot,sourceActorId:h.sourceActorId,modelActorId:h.modelActorId,sourcePhase:h.sourcePhase,color:h.color});}
+        pressureLayerState={width:canvas.width,height:canvas.height,ratio:ratio,bossIndex:world.bossIndex,phase:world.phase,finalPractice:world.finalPractice,campaignRevision:world.campaignRevision};
+        pressureLayerAssets.length=0;
+        var group=world.finalPractice?12:world.bossIndex>=12?world.bossIndex+1:world.bossIndex,keys=global.HapilProjectiles.assetKeysForEncounter(group).concat(global.HapilProjectiles.optionalAssetKeysForEncounter(group));
+        for(var i=0;i<keys.length;i++){var im=images[keys[i]];pressureLayerAssets.push({key:keys[i],image:im,complete:im&&im.complete,width:im&&im.naturalWidth,height:im&&im.naturalHeight});}
+        pressureLayerMetrics=pressureMetricDelta(before,after);pressureLayerBuilds++;mapMetrics.pressureLayerCache.frameBuilds++;
+      }else{pressureReplayMetrics=pressureLayerMetrics;pressureLayerHits++;mapMetrics.pressureLayerCache.frameHits++;}
+      ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;ctx.drawImage(pressureLayer,0,0);ctx.restore();
+      mapMetrics.pressureLayerCache.logicalBodies=end-start;return true;
+    }
+    function projectileMetrics(){
+      if(!projectilePresentation)return null;
+      var m=projectilePresentation.getMetrics(),replay=pressureReplayMetrics;m.rasterAssetLaserDraws=m.assetLaserDraws;m.cachedAssetLaserDraws=replay?replay.assetLaserDraws:0;
+      if(replay){m.beamDetailLimit=0;for(var i=0;i<4;i++){var key=['assetLaserDraws','assetLaserSlices','sourceBeamOverlayDraws','beamMaterialDraws'][i];m[key]+=replay[key];}for(var key in replay.beamSourceKeys)m.beamSourceKeys[key]=(m.beamSourceKeys[key]||0)+replay.beamSourceKeys[key];}
+      return m;
+    }
     function drawHazards(world) {
-      var hazards=world.hazards||[];
+      var hazards=world.hazards||[],pressureUsed=false;
       for(var i=0;i<hazards.length;i++){
         var h=hazards[i];
         if(h.phase==='active'||h.phase==='fade'){
+          if(lightweight&&world.combatRevision===30&&!pressureUsed&&staticPressure(h)&&projectilePresentation&&projectilePresentation.drawHazardBody){
+            var end=i+1;while(end<hazards.length&&staticPressure(hazards[end]))end++;
+            // A full viewport copy costs more than a short three-ribbon run
+            // on some owners. Batch only the denser runs that amortize it.
+            if(end-i>=4)pressureUsed=drawPressureLayer(world,hazards,i,end);
+            if(pressureUsed){i=end-1;continue;}
+          }
           // Damage bodies are entirely sampled source pixels. A missing asset
           // is blocked by encounter loading, never replaced with a plain line.
           if(projectilePresentation&&projectilePresentation.drawHazardBody)projectilePresentation.drawHazardBody(ctx,world,h,lightweight);
@@ -571,7 +638,9 @@
         ctx.restore();
         if(width>=18)warningBoundary(h,palette);
       }
-      if(world.combatRevision===29&&projectilePresentation&&projectilePresentation.drawHazardWarningCue){
+      if(!pressureUsed)releasePressureLayer();
+      mapMetrics.pressureLayerCache.entries=pressureLayer?1:0;mapMetrics.pressureLayerCache.bytes=pressureLayer?pressureLayer.width*pressureLayer.height*4:0;mapMetrics.pressureLayerCache.builds=pressureLayerBuilds;mapMetrics.pressureLayerCache.hits=pressureLayerHits;
+      if((world.combatRevision===29||world.combatRevision===30)&&projectilePresentation&&projectilePresentation.drawHazardWarningCue){
         var limit=lightweight?4:8;imminentWarnings.length=0;
         // The earliest committed rays get the bounded accent budget. Reuse
         // eight references instead of sorting/allocating every warning frame.
@@ -669,7 +738,7 @@
         var e=effects[i],life=Math.max(0,1-(e.age||0)/(e.ttl||.5)),r=e.r||10,p=1-life;
         // Revision29 coalesces successful grazes at the final player-core
         // layer, so dense grazes do not add rings under every live projectile.
-        if(world.combatRevision===29&&e.kind==='graze')continue;
+        if((world.combatRevision===29||world.combatRevision===30)&&e.kind==='graze')continue;
         if(drawAuthoredEffect(e,world))continue;
         ctx.globalAlpha=life*.65;
         if(e.kind==='memory'){
@@ -733,10 +802,10 @@
     function drawCombatCopies(world){
       if(world.stage!=='boss'||!world.boss||!actorPresentation||!actorPresentation.drawCombatCopy)return;
       var copies=world.boss.combatCopies||[],tick=world.tick||0;
-      // Core owns the two-projector budget, exact positions, lifetime and
+      // Core owns the projector budget, exact positions, lifetime and
       // release ticks. The cosmetic fade never moves an emitter or hides a
       // released projectile/laser; all real attacks are drawn above bodies.
-      for(var i=0;i<Math.min(2,copies.length);i++){
+      for(var i=0;i<Math.min(world.combatRevision===30?4:2,copies.length);i++){
         var copy=copies[i];if(!Number.isFinite(copy.born)||!Number.isFinite(copy.expireAt)||tick<copy.born||tick>=copy.expireAt)continue;
         var progress=clamp((tick-copy.born)/12,0,1),base=Number.isFinite(copy.opacity)?clamp(copy.opacity,.45,.85):copy.kind==='illusion'?.58:.72;
         var age=Number.isFinite(copy.releaseTick)&&copy.releaseTick>=0?tick-copy.releaseTick:Infinity,opacity=age>=0&&age<6?.92:base*(.4+.6*progress);
@@ -773,7 +842,7 @@
     function drawPlayerCore(world,presentation) {
       var p=world.player,r=p.r||3;
       ctx.beginPath();ctx.arc(p.x,p.y,(p.r||3)+1.7,0,Math.PI*2);ctx.fillStyle='#080e19';ctx.fill();
-      if(world.combatRevision===29&&(world.stage==='boss'||world.stage==='waves'||world.stage==='transition')){
+      if((world.combatRevision===29||world.combatRevision===30)&&(world.stage==='boss'||world.stage==='waves'||world.stage==='transition')){
         var precise=!!(presentation&&presentation.precise===true),age=Number.isInteger(world.tick)&&Number.isInteger(world._lastGraze)&&world._lastGraze>=0?world.tick-world._lastGraze:-1;
         var pulse=age>=0&&age<12&&!((p.invulnerableUntil||0)>world.tick)?1-age/12:0;
         playerFeedbackRecord.hitRadius=r;playerFeedbackRecord.precise=precise;playerFeedbackRecord.focusRadius=precise?r+3:null;playerFeedbackRecord.grazeAge=pulse>0?age:null;playerFeedbackRecord.grazePulse=pulse;mapMetrics.playerFeedback=playerFeedbackRecord;
@@ -919,6 +988,7 @@
       }
     }
     function draw(world,alpha,time,lowQuality,presentation) {
+      pressureReplayMetrics=null;if(!world||world.combatRevision!==30||!lowQuality||world.stage==='bossIntro')releasePressureLayer();mapMetrics.pressureLayerCache={entries:pressureLayer?1:0,bytes:pressureLayer?pressureLayer.width*pressureLayer.height*4:0,byteLimit:PRESSURE_LAYER_BYTES,builds:pressureLayerBuilds,hits:pressureLayerHits,frameBuilds:0,frameHits:0,logicalBodies:0};
       lightweight=!!lowQuality;mapMetrics.atlasFxLimit=lightweight?12:24;mapMetrics.specialPatternCue=null;mapMetrics.patternEntryCue=null;mapMetrics.battleReadability=null;mapMetrics.playerFeedback=null;mapMetrics.imminentWarningCandidates=0;mapMetrics.warningContrastStrokes=0;mapMetrics.warningFootprintDraws=0;mapMetrics.warningFootprintBuilds=warningFootprintBuilds;warningFootprints.length=0;mapMetrics.warningFootprints=warningFootprints;mapMetrics.combatCopyDraws=0;mapMetrics.playerShotDraws=0;mapMetrics.playerShotAsset=null;mapMetrics.playerShotCacheBytes=playerShotStamp?96*64*4:0;
       if(actorPresentation&&actorPresentation.beginFrame)actorPresentation.beginFrame();
       if(projectilePresentation&&projectilePresentation.beginFrame)projectilePresentation.beginFrame();
@@ -933,7 +1003,7 @@
       drawRoute(world);drawBossAccent(world);if(projectilePresentation&&projectilePresentation.drawBossCast)projectilePresentation.drawBossCast(ctx,world,lightweight);drawEffects(world);if(bossSkillPresentation)bossSkillPresentation.draw(ctx,world,lightweight);transition(world);if(actorPresentation&&actorPresentation.drawSceneObjects)actorPresentation.drawSceneObjects(ctx,world);drawEnemies(world,world.time||0);drawSpellTheatre(world);drawPlayerBody(world,world.time||0);drawShots(world);drawHazards(world);drawBullets(world);bossHud(world);
       drawPlayerCore(world,presentation);
     }
-    return {resize:function(cssW,cssH,dpr){ratio=Math.min(1.5,Math.max(1,dpr||1))*cssW/W;var nextWidth=Math.max(1,Math.round(W*ratio)),nextHeight=Math.max(1,Math.round(H*ratio));if(canvas.width!==nextWidth)canvas.width=nextWidth;if(canvas.height!==nextHeight)canvas.height=nextHeight;canvas.style.width='100%';canvas.style.height='100%';ctx.imageSmoothingEnabled=true;},draw:draw,getMetrics:function(){return Object.assign({},mapMetrics,{warningFootprints:warningFootprints.map(function(record){return Object.assign({},record);}),playerFeedback:mapMetrics.playerFeedback?Object.assign({},mapMetrics.playerFeedback):null,actorPresentation:actorPresentation?actorPresentation.getMetrics():null,projectilePresentation:projectilePresentation?projectilePresentation.getMetrics():null,bossSkillsPresentation:bossSkillPresentation?bossSkillPresentation.getMetrics():null});},destroy:function(){if(playerShotStamp){playerShotStamp.width=1;playerShotStamp.height=1;playerShotStamp=null;}playerShotStampKey=null;hudTextLayout=null;narrativeTextLayout=null;warningFootprints.length=0;warningFootprintPool.length=0;imminentWarnings.length=0;if(projectilePresentation&&projectilePresentation.destroy)projectilePresentation.destroy();if(bossSkillPresentation&&bossSkillPresentation.destroy)bossSkillPresentation.destroy();bossSkillPresentation=null;releaseSourceTerrain();cached=false;canvas.width=1;canvas.height=1;back.width=1;back.height=1;foreground.width=1;foreground.height=1;if(sinFloor){sinFloor.width=1;sinFloor.height=1;sinFloor=null;}sinFloorSource=null;sinFloorTone=null;for(var i=0;i<strips.length;i++){strips[i].width=1;strips[i].height=1;}strips.length=0;actorPresentation=null;projectilePresentation=null;images={};}};
+    return {resize:function(cssW,cssH,dpr){ratio=Math.min(1.5,Math.max(1,dpr||1))*cssW/W;var nextWidth=Math.max(1,Math.round(W*ratio)),nextHeight=Math.max(1,Math.round(H*ratio));if(canvas.width!==nextWidth)canvas.width=nextWidth;if(canvas.height!==nextHeight)canvas.height=nextHeight;canvas.style.width='100%';canvas.style.height='100%';ctx.imageSmoothingEnabled=true;},draw:draw,getMetrics:function(){return Object.assign({},mapMetrics,{warningFootprints:warningFootprints.map(function(record){return Object.assign({},record);}),playerFeedback:mapMetrics.playerFeedback?Object.assign({},mapMetrics.playerFeedback):null,actorPresentation:actorPresentation?actorPresentation.getMetrics():null,pressureLayerCache:Object.assign({},mapMetrics.pressureLayerCache),projectilePresentation:projectileMetrics(),bossSkillsPresentation:bossSkillPresentation?bossSkillPresentation.getMetrics():null});},destroy:function(){releasePressureLayer();pressureReplayMetrics=null;if(playerShotStamp){playerShotStamp.width=1;playerShotStamp.height=1;playerShotStamp=null;}playerShotStampKey=null;hudTextLayout=null;narrativeTextLayout=null;warningFootprints.length=0;warningFootprintPool.length=0;imminentWarnings.length=0;if(projectilePresentation&&projectilePresentation.destroy)projectilePresentation.destroy();if(bossSkillPresentation&&bossSkillPresentation.destroy)bossSkillPresentation.destroy();bossSkillPresentation=null;releaseSourceTerrain();cached=false;canvas.width=1;canvas.height=1;back.width=1;back.height=1;foreground.width=1;foreground.height=1;if(sinFloor){sinFloor.width=1;sinFloor.height=1;sinFloor=null;}sinFloorSource=null;sinFloorTone=null;for(var i=0;i<strips.length;i++){strips[i].width=1;strips[i].height=1;}strips.length=0;actorPresentation=null;projectilePresentation=null;images={};}};
   }
   global.HapilRenderer={create:create,terrainContracts:H14_TERRAIN,cultTerrainContracts:CULT_TERRAIN,chapter3TerrainContracts:CHAPTER3_TERRAIN,terrainAssetKeysForEncounter:terrainAssetKeysForEncounter,invalidTerrainAsset:invalidTerrainAsset};
 })(typeof window!=='undefined'?window:globalThis);
