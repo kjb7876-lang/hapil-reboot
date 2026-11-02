@@ -1,0 +1,501 @@
+{
+  "schema": 1,
+  "scope": "Read-only runtime experiment. Same actual current31 HELL immune worlds seed813 phase2 tick300, source files unchanged. Candidate changes only renderer cache minimum to2 for bossWideLaser while all old selectors retain minimum4. Warm native CPU Canvas renderer.draw submission,60frames per arm in alternating blocks; not device/GPU FPS. Pixels compare direct vs cached actual full scenes.",
+  "sourceHashes": {
+    "src/core.js": "73a785206f27adfd4beba1bac1c1e84128a49db7305eeb59733c949011754956",
+    "src/boss-patterns-v27.js": "8593b9e9f7dafbe1af92b2ad3f666dcdb1a62c99f4dd90327bd0bdad717f99b1",
+    "src/render.js": "562dcaf36d5b1f6f8058bdf168417b4819e6517fde842b5ce5b48688329e6269",
+    "src/projectiles.js": "1b8a84570cb1a302968a1192bf3ea2b94d60b5fecb9a5cc46fc0c68036e798ba",
+    "src/actors.js": "dc8ef72e54fb9a0dd16d9c1e6249962ad0f424c351137df9edcdc248c4b9c0ef"
+  },
+  "candidateReplacement": {
+    "from": "if(end-i>=4)",
+    "to": "if(end-i>=4||(h.bossWideLaser&&end-i>=2))"
+  },
+  "rows": [
+    {
+      "bossIndex": 8,
+      "tick": 300,
+      "timings": {
+        "direct": {
+          "frames": 60,
+          "medianMs": 1.9755489999997735,
+          "p95Ms": 3.3541000000004715
+        },
+        "candidateCache2": {
+          "frames": 60,
+          "medianMs": 2.139274999999543,
+          "p95Ms": 2.8191759999999704
+        }
+      },
+      "pixels": {
+        "changedPixels": 14634,
+        "maxChannelDelta": 2,
+        "totalChannelDelta": 20321
+      },
+      "direct": {
+        "bullets": 63,
+        "bulletStamps": 52,
+        "offscreenSkipped": 11,
+        "logicalLaserBodies": 5,
+        "rasterLaserBodies": 5,
+        "cachedLaserBodies": 0,
+        "wideBossLasers": [
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              180,
+              142.5967937335492
+            ],
+            "to": [
+              24,
+              640
+            ],
+            "width": 34
+          },
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              180,
+              142.5967937335492
+            ],
+            "to": [
+              336,
+              640
+            ],
+            "width": 34
+          }
+        ],
+        "copies": 2,
+        "missingProjectileAssets": 0,
+        "stampCacheBytes": 2032864,
+        "pressureCacheBytes": 0
+      },
+      "candidateCache2": {
+        "bullets": 63,
+        "bulletStamps": 52,
+        "offscreenSkipped": 11,
+        "logicalLaserBodies": 5,
+        "rasterLaserBodies": 3,
+        "cachedLaserBodies": 2,
+        "wideBossLasers": [
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              180,
+              142.5967937335492
+            ],
+            "to": [
+              24,
+              640
+            ],
+            "width": 34
+          },
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              180,
+              142.5967937335492
+            ],
+            "to": [
+              336,
+              640
+            ],
+            "width": 34
+          }
+        ],
+        "copies": 2,
+        "missingProjectileAssets": 0,
+        "stampCacheBytes": 2032864,
+        "pressureCacheBytes": 921600
+      },
+      "warmCanvasAllocations": 0,
+      "worldUnchanged": true
+    },
+    {
+      "bossIndex": 6,
+      "tick": 300,
+      "timings": {
+        "direct": {
+          "frames": 60,
+          "medianMs": 2.0003710000000865,
+          "p95Ms": 3.4569419999988895
+        },
+        "candidateCache2": {
+          "frames": 60,
+          "medianMs": 1.8940630000015517,
+          "p95Ms": 2.526003999999375
+        }
+      },
+      "pixels": {
+        "changedPixels": 23918,
+        "maxChannelDelta": 3,
+        "totalChannelDelta": 33581
+      },
+      "direct": {
+        "bullets": 91,
+        "bulletStamps": 83,
+        "offscreenSkipped": 8,
+        "logicalLaserBodies": 5,
+        "rasterLaserBodies": 5,
+        "cachedLaserBodies": 0,
+        "wideBossLasers": [
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              158.06468621399176,
+              142.5967937335492
+            ],
+            "to": [
+              336,
+              640
+            ],
+            "width": 34
+          },
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              158.06468621399176,
+              142.5967937335492
+            ],
+            "to": [
+              280,
+              640
+            ],
+            "width": 34
+          },
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              158.06468621399176,
+              142.5967937335492
+            ],
+            "to": [
+              136,
+              640
+            ],
+            "width": 34
+          }
+        ],
+        "copies": 2,
+        "missingProjectileAssets": 0,
+        "stampCacheBytes": 1455744,
+        "pressureCacheBytes": 0
+      },
+      "candidateCache2": {
+        "bullets": 91,
+        "bulletStamps": 83,
+        "offscreenSkipped": 8,
+        "logicalLaserBodies": 5,
+        "rasterLaserBodies": 2,
+        "cachedLaserBodies": 3,
+        "wideBossLasers": [
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              158.06468621399176,
+              142.5967937335492
+            ],
+            "to": [
+              336,
+              640
+            ],
+            "width": 34
+          },
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              158.06468621399176,
+              142.5967937335492
+            ],
+            "to": [
+              280,
+              640
+            ],
+            "width": 34
+          },
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              158.06468621399176,
+              142.5967937335492
+            ],
+            "to": [
+              136,
+              640
+            ],
+            "width": 34
+          }
+        ],
+        "copies": 2,
+        "missingProjectileAssets": 0,
+        "stampCacheBytes": 1409088,
+        "pressureCacheBytes": 921600
+      },
+      "warmCanvasAllocations": 0,
+      "worldUnchanged": true
+    },
+    {
+      "bossIndex": 11,
+      "tick": 300,
+      "timings": {
+        "direct": {
+          "frames": 60,
+          "medianMs": 1.4853729999995267,
+          "p95Ms": 1.9973920000011276
+        },
+        "candidateCache2": {
+          "frames": 60,
+          "medianMs": 1.4811460000000807,
+          "p95Ms": 2.023321999999098
+        }
+      },
+      "pixels": {
+        "changedPixels": 19823,
+        "maxChannelDelta": 2,
+        "totalChannelDelta": 28442
+      },
+      "direct": {
+        "bullets": 63,
+        "bulletStamps": 55,
+        "offscreenSkipped": 8,
+        "logicalLaserBodies": 4,
+        "rasterLaserBodies": 4,
+        "cachedLaserBodies": 0,
+        "wideBossLasers": [
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              158.06468621399176,
+              142.5967937335492
+            ],
+            "to": [
+              336,
+              640
+            ],
+            "width": 34
+          },
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              158.06468621399176,
+              142.5967937335492
+            ],
+            "to": [
+              24,
+              640
+            ],
+            "width": 34
+          }
+        ],
+        "copies": 2,
+        "missingProjectileAssets": 0,
+        "stampCacheBytes": 1483216,
+        "pressureCacheBytes": 0
+      },
+      "candidateCache2": {
+        "bullets": 63,
+        "bulletStamps": 55,
+        "offscreenSkipped": 8,
+        "logicalLaserBodies": 4,
+        "rasterLaserBodies": 2,
+        "cachedLaserBodies": 2,
+        "wideBossLasers": [
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              158.06468621399176,
+              142.5967937335492
+            ],
+            "to": [
+              336,
+              640
+            ],
+            "width": 34
+          },
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              158.06468621399176,
+              142.5967937335492
+            ],
+            "to": [
+              24,
+              640
+            ],
+            "width": 34
+          }
+        ],
+        "copies": 2,
+        "missingProjectileAssets": 0,
+        "stampCacheBytes": 1483216,
+        "pressureCacheBytes": 921600
+      },
+      "warmCanvasAllocations": 0,
+      "worldUnchanged": true
+    },
+    {
+      "bossIndex": 33,
+      "tick": 300,
+      "timings": {
+        "direct": {
+          "frames": 60,
+          "medianMs": 2.24587899999824,
+          "p95Ms": 2.838737999998557
+        },
+        "candidateCache2": {
+          "frames": 60,
+          "medianMs": 2.07613499999934,
+          "p95Ms": 2.6878429999997024
+        }
+      },
+      "pixels": {
+        "changedPixels": 15181,
+        "maxChannelDelta": 2,
+        "totalChannelDelta": 20390
+      },
+      "direct": {
+        "bullets": 77,
+        "bulletStamps": 74,
+        "offscreenSkipped": 3,
+        "logicalLaserBodies": 4,
+        "rasterLaserBodies": 4,
+        "cachedLaserBodies": 0,
+        "wideBossLasers": [
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": "han-rian",
+            "from": [
+              108,
+              126
+            ],
+            "to": [
+              24,
+              640
+            ],
+            "width": 34
+          },
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": "han-rian",
+            "from": [
+              108,
+              126
+            ],
+            "to": [
+              80,
+              640
+            ],
+            "width": 34
+          },
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": "han-rian",
+            "from": [
+              108,
+              126
+            ],
+            "to": [
+              224,
+              640
+            ],
+            "width": 34
+          }
+        ],
+        "copies": 2,
+        "missingProjectileAssets": 0,
+        "stampCacheBytes": 1254480,
+        "pressureCacheBytes": 0
+      },
+      "candidateCache2": {
+        "bullets": 77,
+        "bulletStamps": 74,
+        "offscreenSkipped": 3,
+        "logicalLaserBodies": 4,
+        "rasterLaserBodies": 1,
+        "cachedLaserBodies": 3,
+        "wideBossLasers": [
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": "han-rian",
+            "from": [
+              108,
+              126
+            ],
+            "to": [
+              24,
+              640
+            ],
+            "width": 34
+          },
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": "han-rian",
+            "from": [
+              108,
+              126
+            ],
+            "to": [
+              80,
+              640
+            ],
+            "width": 34
+          },
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": "han-rian",
+            "from": [
+              108,
+              126
+            ],
+            "to": [
+              224,
+              640
+            ],
+            "width": 34
+          }
+        ],
+        "copies": 2,
+        "missingProjectileAssets": 0,
+        "stampCacheBytes": 1253456,
+        "pressureCacheBytes": 921600
+      },
+      "warmCanvasAllocations": 0,
+      "worldUnchanged": true
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "scope": "Cloud Chromium desktop browser, fixed360x640 source-world QA canvas; not mobile-device/GPU FPS",
+  "page": "tools/danmaku-review-v35.html",
+  "boss": 8,
+  "tick": 300,
+  "phase": 2,
+  "difficulty": "hell",
+  "combatRevision": 31,
+  "wideOrigins": [
+    [
+      180,
+      142.5967937335492,
+      24,
+      640
+    ],
+    [
+      180,
+      142.5967937335492,
+      336,
+      640
+    ]
+  ],
+  "actualBossEmitter": [
+    180,
+    142.5967937335492
+  ],
+  "worldUnchanged": true,
+  "loadedImages": 27,
+  "bullets": 63,
+  "visibleBulletDraws": 52,
+  "offscreenSkipped": 11,
+  "missingProjectileAssets": 0,
+  "lasers": 5,
+  "copies": 2,
+  "stampCacheBytes": 2042896,
+  "gameConsoleErrorsObserved": 0,
+  "browserExtensionMetadataErrors": "Observed extension content-script metadata errors only; not game runtime source",
+  "actualAppSmoke": "index loaded and special-practice8 entered phase3 through visible UI; not complete playthrough",
+  "screenshotSHA256": "3e298469ea3c10f13239aeafe36b4ebd591c0096b6adebdbeef9d50c19c40c8c"
+}

@@ -50,7 +50,7 @@
     ['authority-fold-stitch-impact','authority-fold','needle',0,['curve','split','piano'],1.48,1.10,.88]
   ];
   var profiles=Object.freeze(ROWS.map(function(r,index){return Object.freeze({index:index,id:r[0],role:r[1],kind:r[2],cadenceAdd:r[3],modes:Object.freeze(r[4]),size:r[5],speed:r[6],turn:r[7]});}));
-  var FIELDS=Object.freeze(['v27Pattern','v27Motion','v27TurnRate','v27TurnUntil','v27WaveRate','v27WavePhase','v27Reflect','v27SplitAt','v27SplitCount','v27SplitSpread','v27ChildSpeed','v27LaneIndex','v27RestLane','v27ParentId','v27Child','v27SplitDone','v27Generation']);
+  var FIELDS=Object.freeze(['v27Pattern','v27Motion','v27TurnRate','v27TurnUntil','v27WaveRate','v27WavePhase','v27Reflect','v27SplitAt','v27SplitCount','v27SplitSpread','v27ChildSpeed','v27LaneIndex','v27RestLane','v27ParentId','v27Child','v27SplitDone','v27Generation','v35Downfield','v35TargetX','v35TargetY','v35Margin']);
   function finite(n){return typeof n==='number'&&Number.isFinite(n);}
   function clamp(n,a,b){return Math.max(a,Math.min(b,n));}
   function profileFor(w){var index=w&&w.finalPractice?34:w&&w.bossIndex;return Number.isInteger(index)&&profiles[index]||null;}
@@ -59,6 +59,56 @@
   function speedFor(w){return w.difficulty==='hell'?164:w.difficulty==='gentle'?86:112;}
   function childCount(w){return w.difficulty==='hell'?3:2;}
   function modeFor(p,phase,emitter){return p.index===33&&emitter&&(emitter.modelActorId==='baek-ion'||emitter.sourceActorId==='baek-ion')?'mirror':p.modes[phase];}
+  function capsuleMargin(s){return (finite(s.r)?s.r:3.8)+(finite(s.halfLength)?s.halfLength:s.kind==='blade'?13:s.kind==='needle'?9:0)+4;}
+  // Commit a whole volley once, before its warning. An affine fit retains the
+  // source formation at an edge instead of stacking individually clamped
+  // origins. Ordered landing lanes turn even a full ring into a legible fan;
+  // merely folding upward velocities would put pairs on the same trajectory.
+  function prepareDownfield(w,specs){
+    if(!w||w.combatRevision!==31||!Array.isArray(specs))return specs;
+    var rows=[];
+    specs.forEach(function(s,i){
+      if(!s||s.v35Downfield||s.weaponMotion||s.kind==='boss-weapon'||s.kind==='hell-rotor'||![s.x,s.y,s.angle,s.speed].every(finite)||s.speed<=0)return;
+      rows.push({s:s,ordinal:i,margin:capsuleMargin(s)});
+    });
+    if(!rows.length)return specs;
+    var margin=Math.max.apply(null,rows.map(function(row){return row.margin;}))+(rows.some(function(row){return row.s.v27Reflect;})?16:0),left=margin,right=360-margin;
+    var minX=Math.min.apply(null,rows.map(function(row){return row.s.x;})),maxX=Math.max.apply(null,rows.map(function(row){return row.s.x;}));
+    var scale=maxX-minX>right-left?(right-left)/(maxX-minX):1,offset=clamp(0,left-minX*scale,right-maxX*scale);
+    rows.forEach(function(row){
+      var s=row.s;s.x=s.x*scale+offset;
+      row.gate=Math.max(560,s.y+144);
+      var delta=((s.angle-DOWN+Math.PI)%TAU+TAU)%TAU-Math.PI;
+      row.landing=s.x-delta*(row.gate-s.y);
+      // Already safe bait pulses keep their exact sampled aim. The pilot
+      // snapshot remains a real snapshot, never a prediction or later homing.
+      if(s.v29Role==='aimed-stream'&&Math.sin(s.angle)>0){
+        var landing=s.x+Math.cos(s.angle)*(row.gate-s.y)/Math.sin(s.angle);
+        if(landing>=left&&landing<=right){row.keep=true;row.landing=landing;}
+      }
+    });
+    var moving=rows.filter(function(row){return !row.keep;}).sort(function(a,b){return a.landing-b.landing||a.ordinal-b.ordinal;});
+    if(moving.length){
+      var laneLeft=left+8,laneRight=right-8,lo=moving[0].landing,hi=moving[moving.length-1].landing;
+      var laneScale=hi-lo>laneRight-laneLeft?(laneRight-laneLeft)/(hi-lo):1,laneOffset=clamp(0,laneLeft-lo*laneScale,laneRight-hi*laneScale);
+      var gap=Math.min(7,(laneRight-laneLeft)/Math.max(1,moving.length-1)),previous=laneLeft-gap;
+      moving.forEach(function(row,i){
+        row.landing=clamp(row.landing*laneScale+laneOffset,laneLeft+i*gap,laneRight-(moving.length-1-i)*gap);
+        row.landing=Math.max(previous+gap,row.landing);previous=row.landing;
+      });
+    }
+    rows.forEach(function(row){
+      var s=row.s;s.v35Downfield=true;s.v35TargetX=row.landing;s.v35TargetY=row.gate;s.v35Margin=row.margin;
+      if(!s.v27Motion){s.v27Motion='straight';if(finite(s.curveRate)){s.v27TurnRate=s.curveRate;s.v27TurnUntil=s.curveUntil||0;}}
+      if(s.v27Reflect){
+        var side=Math.cos(s.angle)>=0?1:-1,wall=side>0?360-row.margin+3:row.margin-3;
+        // The first leg visits the real side wall, visibly below its source;
+        // after that single reflection it traverses its lower-field lane.
+        s.angle=Math.atan2(clamp((row.gate-s.y)*.28,50,104),wall-s.x||side*.01);
+      }else if(!row.keep)s.angle=Math.atan2(row.gate-s.y,row.landing-s.x);
+    });
+    return specs;
+  }
   function configure(w,s,p,phase,ordinal,mode){
     if(s._v27Prepared)return s;
     s._v27Prepared=true;s._rhythmPrepared=true;s.v27Pattern=p.id;s.v27Motion=mode;s.sourcePhase=phase;
@@ -129,7 +179,7 @@
       else if(p.index===32){x+=(1-beat%3)*36+u*6;angle=DOWN+u*.14+(1-beat%3)*.14;speed*=.74+(i%3)*.17;}
       else if(p.index===33){var shield=emitter.modelActorId==='baek-ion'||emitter.sourceActorId==='baek-ion';x+=shield?u*17:i%2?u*12:0;y-=shield?rank*4:i*7;angle=shield?DOWN+u*.07:DOWN+u*.045;kind=shield?'blade':'needle';r=shield?4.1:3.5;}
       else if(p.index===34){x+=side*(36+rank*6);y-=rank*(phase===1?14:5);angle=DOWN+side*(.20+rank*.06);r=phase===2?4.8:phase===1?5.2:3.6;kind=phase===1?'orb':'needle';}
-      var s={x:clamp(x,17,343),y:clamp(y,32,220),angle:angle,speed:speed,r:r,kind:kind,color:'#ffffff',ownerId:w.boss.id,ttl:6.8,patternId:'identity-'+p.id+'-v27',paletteSlot:i%2,identityRole:p.index===33?(shield?'circuit-shield':'circuit-cross'):p.index===34?['authority-fold','authority-stitch','authority-impact'][phase]:p.role,_rhythmPrepared:true,_hellPrepared:true};
+      var s={x:w.combatRevision===31?x:clamp(x,17,343),y:clamp(y,32,220),angle:angle,speed:speed,r:r,kind:kind,color:'#ffffff',ownerId:w.boss.id,ttl:6.8,patternId:'identity-'+p.id+'-v27',paletteSlot:i%2,identityRole:p.index===33?(shield?'circuit-shield':'circuit-cross'):p.index===34?['authority-fold','authority-stitch','authority-impact'][phase]:p.role,_rhythmPrepared:true,_hellPrepared:true};
       if(p.index===8)s.patternId=phase===1?'asmodeus-heart-chord':'asmodeus-phase-1';
       if(emitter.sourceActorId)s.sourceActorId=emitter.sourceActorId;if(emitter.modelActorId)s.modelActorId=emitter.modelActorId;
       if(mode==='piano'){
@@ -139,7 +189,7 @@
       }
       configure(w,s,p,phase,i,mode);out.push(s);
     }
-    out._hellPrepared=true;return out;
+    out._hellPrepared=true;return prepareDownfield(w,out);
   }
   function decorate(w,specs){
     var p=profileFor(w);if(!p||(w.combatRevision!==27&&w.combatRevision!==28&&w.combatRevision!==29&&w.combatRevision!==30&&w.combatRevision!==31)||!w.campaign||w.stage!=='boss'||!w.boss||!Array.isArray(specs))return specs;
@@ -153,7 +203,7 @@
       // source objects, without promising a split that will never happen.
       if(mode==='split'&&(i%6!==0||plannedRadius<5.2))mode='comet';
       configure(w,s,p,phase,i,mode);
-    });return specs;
+    });return prepareDownfield(w,specs);
   }
   function initialize(b,s,w){
     if(!b||!s||!s.v27Motion)return false;
@@ -170,16 +220,28 @@
       if(b.v27WaveRate)turn*=Math.cos(age*b.v27WaveRate+(b.v27WavePhase||0));
       var magnitude=Math.hypot(b.vx,b.vy);b.angle+=turn*dt;b.vx=Math.cos(b.angle)*magnitude;b.vy=Math.sin(b.angle)*magnitude;
     }
+    if(b.v35Downfield&&(!b.v27Reflect||b.v27Reflections)){
+      var downAngle=clamp(b.angle,.24,Math.PI-.24),dy=b.v35TargetY-b.y;
+      if(dy>0){
+        var projected=b.x+Math.cos(downAngle)*dy/Math.sin(downAngle),bound=clamp(projected,b.v35Margin,width-b.v35Margin);
+        if(projected!==bound)downAngle=Math.atan2(dy,bound-b.x);
+      }
+      if(downAngle!==b.angle){var downSpeed=Math.hypot(b.vx,b.vy);b.angle=downAngle;b.vx=Math.cos(downAngle)*downSpeed;b.vy=Math.sin(downAngle)*downSpeed;}
+    }
     if(b.acceleration&&age>=(b.accelerateAt||0)){
       var speed=Math.min(b.maxSpeed||270,Math.hypot(b.vx,b.vy)+b.acceleration*dt);b.vx=Math.cos(b.angle)*speed;b.vy=Math.sin(b.angle)*speed;
     }
     // Reflect when the leading capsule cap reaches the wall, not only when
     // its centre-radius circle does. The authored long body stays in bounds.
-    var wallMargin=b.r+Math.abs(Math.cos(b.angle))*(b.halfLength||0)+1;
+    var wallMargin=b.r+(b.v35Downfield?1:Math.abs(Math.cos(b.angle)))*(b.halfLength||0)+1;
     var x=b.x+b.vx*dt,y=b.y+b.vy*dt,left=wallMargin,right=width-wallMargin;
     if(b.v27Reflect&&b.v27Reflections<1&&((b.vx<0&&x<left)||(b.vx>0&&x>right))){
       var wall=b.vx<0?left:right,fraction=clamp((wall-b.x)/(b.vx*dt),0,1),hitY=b.y+b.vy*dt*fraction,remaining=dt*(1-fraction);
       b.v27BouncePoint={x:wall,y:hitY,fraction:fraction};b.v27Reflections=1;b.vx=-b.vx;
+      if(b.v35Downfield){
+        var bounceSpeed=Math.hypot(b.vx,b.vy);b.angle=Math.atan2(Math.max(24,b.v35TargetY-hitY),b.v35TargetX-wall);
+        b.vx=Math.cos(b.angle)*bounceSpeed;b.vy=Math.sin(b.angle)*bounceSpeed;
+      }
       b.x=wall+b.vx*remaining;b.y=hitY+b.vy*remaining;b.angle=Math.atan2(b.vy,b.vx);
     }else{b.x=x;b.y=y;}
     return true;
@@ -197,7 +259,7 @@
       var s={x:b.x,y:b.y,angle:clamp(center+(i-(count-1)/2)*spread,.35,Math.PI-.35),speed:clamp(b.v27ChildSpeed||Math.hypot(b.vx,b.vy),65,220),r:clamp(b.r*.62,2.5,4.2),kind:b.kind==='blade'?'needle':b.kind,color:b.color||'#ffffff',ownerId:b.ownerId,ttl:3.2,patternId:b.patternId||'',paletteSlot:((b.paletteSlot||0)+i)%2,v27Pattern:b.v27Pattern,v27Motion:'straight',v27Child:true,v27SplitDone:true,v27Generation:1,v27ParentId:b.id,_v27Prepared:true,_rhythmPrepared:true,_hellPrepared:true};
       ['sourceActorId','modelActorId','sourcePhase','identityRole','identityCastId','identityWarningAt','identityActiveAt'].forEach(function(k){if(b[k]!==undefined)s[k]=b[k];});out.push(s);
     }
-    out._hellPrepared=true;return out;
+    out._hellPrepared=true;return prepareDownfield(w,out);
   }
-  return Object.freeze({profiles:profiles,profileFor:profileFor,makeVolley:makeVolley,decorate:decorate,initialize:initialize,advance:advance,splitChildren:splitChildren,fields:FIELDS});
+  return Object.freeze({profiles:profiles,profileFor:profileFor,makeVolley:makeVolley,decorate:decorate,prepareDownfield:prepareDownfield,initialize:initialize,advance:advance,splitChildren:splitChildren,fields:FIELDS});
 });

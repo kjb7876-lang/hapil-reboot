@@ -622,9 +622,10 @@
         if(h.phase==='active'||h.phase==='fade'){
           if(lightweight&&(world.combatRevision===30||world.combatRevision===31)&&!pressureUsed&&staticPressure(h)&&projectilePresentation&&projectilePresentation.drawHazardBody){
             var end=i+1;while(end<hazards.length&&staticPressure(hazards[end]))end++;
-            // A full viewport copy costs more than a short three-ribbon run
-            // on some owners. Batch only the denser runs that amortize it.
-            if(end-i>=4)pressureUsed=drawPressureLayer(world,hazards,i,end);
+            // Legacy panels retain their measured four-body threshold. The
+            // new boss fan amortizes three long diagonal beams; two beams
+            // still draw directly because the measured benefit was mixed.
+            if(end-i>=4||(h.bossWideLaser&&end-i>=3))pressureUsed=drawPressureLayer(world,hazards,i,end);
             if(pressureUsed){i=end-1;continue;}
           }
           // Damage bodies are entirely sampled source pixels. A missing asset
