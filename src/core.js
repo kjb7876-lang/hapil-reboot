@@ -295,10 +295,11 @@
         if (s._hellPrepared) return;
         s._hellPrepared = true; s.speed *= hellSpeed;
         // Boss weapons must still reach their own side wall symmetrically.
-        if (!s.weaponMotion) s.angle += hellAngle;
+        if (!s.weaponMotion && !s.v35Downfield) s.angle += hellAngle;
         if (s.acceleration) { s.acceleration *= hellSpeed; s.maxSpeed = (s.maxSpeed || 150) * hellSpeed; }
       });
     }
+    if(laserPhraseEnabled(w)&&Patterns)Patterns.prepareDownfield(w,specs);
     if (w.bullets.length + specs.length + (flowEnabled(w)?flowReserved(w):0) > CAPS.bullets) {
       w.stats.poolPressure++; // Caller retains or reports the whole group; no live projectile is evicted.
       if(patternEnabled(w)){w.stats.droppedGroups++;return false;}
@@ -392,7 +393,7 @@
       // One committed capsule is rendered throughout warning, active and fade.
       // No projectile is substituted and its aim never follows either actor.
       var hazard = acquire(w, 'hazards', { id: ++w.idCounter, castId: castId, ownerId: s.ownerId || 0, kind: 'laser', x1: s.x, y1: s.y,
-        x2: s.x + Math.cos(s.angle) * 680, y2: s.y + Math.sin(s.angle) * 680,
+        x2: s.bossWideLaser?s.x2:s.x + Math.cos(s.angle) * 680, y2: s.bossWideLaser?s.y2:s.y + Math.sin(s.angle) * 680,
         width: s.width || (s.kind === 'blade' ? 8 : 6), color: s.color || '#d1aaff',
         phase: 'warning', progress: 0, born: w.tick, warningTicks: warningTicks, activeTicks: activeTicks, fadeTicks: fadeTicks,
         activeAt: w.tick + warningTicks, fadeAt: w.tick + warningTicks + activeTicks,
@@ -403,6 +404,7 @@
       if (hazard && s.patternId) { hazard.patternId = s.patternId; hazard.paletteSlot = s.paletteSlot || 0; }
       if(hazard&&s.sourceActorId)hazard.sourceActorId=s.sourceActorId;
       if(hazard&&s.pressureCurtain)hazard.pressureCurtain=true;
+      if(hazard&&s.bossWideLaser){hazard.bossWideLaser=true;hazard.sourcePhase=w.phase;}
       if(hazard&&s.modelActorId)hazard.modelActorId=s.modelActorId;
       if (hazard && w.campaign && w.bossIndex === 2) {
         hazard.telegraphKind = 'floor-scar';
@@ -958,6 +960,7 @@
     var move = clamp(rawWithin / 72, 0, 1), easing = move * move * (3 - 2 * move);
     b.x = origin + (destination - origin) * easing;
     b.y = 116 + Math.sin(move * Math.PI) * 16;
+    holdBossWidePosition(w);
     b.lean = clamp((b.x - b.px) / 2.5, -1, 1);
     b.action = within < 54 ? 'move' : within < 108 ? 'charge' : within < 264 ? 'attack' : 'recover';
     b.actionProgress = within < 54 ? move : within < 108 ? (within - 54) / 54 : within < 264 ? (within - 108) / 156 : clamp((within - 264) / 138, 0, 1);
@@ -1138,6 +1141,7 @@
     var t=Math.round(w.phaseTime*60)-1,cycle=Math.floor(t/period),within=t%period;
     var gapX=[116,180,244,180][(cycle+w.phase+scene)%4],down=Math.PI/2;
     b.px=b.x;b.py=b.y;b.x=180+Math.sin(cycle*.65+within*.008)*(scene===4?24:42);b.y=112+Math.sin(within*.012)*8;
+    holdBossWidePosition(w);
     b.action=within<60?'move':within<126?'charge':within<282?'attack':'recover';
     b.actionProgress=within<60?within/60:within<126?(within-60)/66:within<282?(within-126)/156:(within-282)/(period-282);
     b.specialPatternId=signature(w).id;b.specialPatternLabel=signature(w).label;b.patternHint=signature(w).hint;
@@ -1192,6 +1196,7 @@
     var gapX=scene===1?(cycle%2?286:74):[108,180,252,180][(cycle+w.phase+scene)%4];
     w._hellProtectedLane=w.difficulty==='hell'?{x:gapX,halfWidth:24,cycle:cycle}:null;
     b.px=b.x;b.py=b.y;b.x=180+Math.sin(cycle*.6+within*.007)*(scene===15?0:scene===9||scene===14?12:34);b.y=scene===15?182:112+Math.sin(within*.012)*7;
+    holdBossWidePosition(w);
     b.action=within<72?'move':within<144?'charge':within<336?'attack':'recover';
     b.actionProgress=within<72?within/72:within<144?(within-72)/72:within<336?(within-144)/192:(within-336)/(period-336);
     b.specialPatternId=signature(w).id;b.specialPatternLabel=info.patterns[w.phase];b.patternHint=signature(w).hint;b.commandGapX=gapX;
@@ -1317,7 +1322,23 @@
     var target=w.difficulty==='hell'?PRESSURE_LIMITS.bossHellCoverage:w.difficulty==='gentle'?PRESSURE_LIMITS.bossGentleCoverage:PRESSURE_LIMITS.bossNormalCoverage;
     return target*(wave?PRESSURE_LIMITS.waveMultiplier:1);
   }
+  // Current31 wide beams belong to the visible boss. Commit the real emitter
+  // once, hold its cast pose through the full fade, then ease back into the
+  // authored movement. Older recording selectors keep their original bands.
+  function holdBossWidePosition(w){
+    var b=w.boss,a=b&&b.bossWideAnchor;if(!laserPhraseEnabled(w)||!a)return;
+    var t=clamp((w.tick-a.until)/24,0,1),ease=t*t*(3-2*t);
+    b.x=a.x+(b.x-a.x)*ease;b.y=a.y+(b.y-a.y)*ease;
+    if(a.actorId&&b.participants){var actor=b.participants.find(function(p){return p.id===a.actorId;});if(actor&&w.tick<a.until){actor.x=a.actorX;actor.y=a.actorY;}}
+    if(t===1)delete b.bossWideAnchor;
+  }
+  function bossWidePose(w){
+    var b=w.boss,a=b&&b.bossWideAnchor;if(!laserPhraseEnabled(w)||!a||w.tick>=a.until)return;
+    b.action=w.tick<a.activeAt?'charge':w.tick<a.fadeAt?'attack':'recover';
+    b.actionProgress=w.tick<a.activeAt?clamp((w.tick-a.born)/(a.activeAt-a.born),0,1):w.tick<a.fadeAt?clamp((w.tick-a.activeAt)/(a.fadeAt-a.activeAt),0,1):clamp((w.tick-a.fadeAt)/(a.until-a.fadeAt),0,1);
+  }
   function pressureCast(w,ownerId,cycle,wave) {
+    if(laserPhraseEnabled(w)&&(wave||!w.boss||ownerId!==w.boss.id))return null;
     var target=pressureCoverageTarget(w,wave),profile=(cycle+(w.bossIndex||0)+(wave?w.wave:w.phase))%3;
     var mode=['vertical','horizontal','lattice'][profile];
     var verticalCoverage=profile===1?0:profile===2?target*.55:target;
@@ -1344,8 +1365,27 @@
     var warningTicks=PRESSURE_LIMITS.warningTicks+(w.difficulty==='gentle'?12:0);
     var plan={cycle:cycle,born:w.tick,activeAt:w.tick+warningTicks,fadeAt:w.tick+warningTicks+activeTicks,expireAt:w.tick+warningTicks+activeTicks+15,
       targetCoverage:target,profile:mode,verticalCoverage:verticalCoverage,horizontalCoverage:horizontalCoverage,gaps:gaps,horizontalGaps:horizontalGaps,route:route,routeX:chosen.x,routeY:lower?lower.y:null,routeHalfWidth:route.halfWidth,patternId:id};
+    var emitter=null;
+    if(laserPhraseEnabled(w)){
+      var b=w.boss,actor=b.participants&&b.participants[(cycle+w.phase)%b.participants.length];
+      emitter=actor?{x:actor.x,y:actor.y+18,actor:actor}:{x:b.x,y:b.y+18};
+      var width=w.difficulty==='hell'?34:w.difficulty==='gentle'?22:28,count=w.difficulty==='hell'?3:w.difficulty==='gentle'?1:2;
+      var targets=[24,336,80,280,136,224,180,8,352],offset=(cycle+w.phase+(w.bossIndex||0))%2;
+      specs=[];
+      for(var n=0;n<targets.length&&specs.length<count;n++){
+        var tx=targets[n^((n<6)?offset:0)];
+        if(specs.some(function(s){return Math.abs(s.x2-tx)<width+18;}))continue;
+        if(segmentPairDistanceSquared(emitter.x,emitter.y,tx,H,route.x1,route.y1,route.x2,route.y2)<=sq(route.halfWidth+width/2+w.player.r+3))continue;
+        var ray={x:emitter.x,y:emitter.y,x2:tx,y2:H,angle:Math.atan2(H-emitter.y,tx-emitter.x),width:width,ownerId:b.id,paletteSlot:specs.length%2,patternId:'boss-wide-downfield-v35',pressureCurtain:true,bossWideLaser:true,activeTicks:activeTicks};
+        if(actor){ray.sourceActorId=actor.id;ray.modelActorId=actor.id;}
+        specs.push(ray);
+      }
+      if(!specs.length)return null;
+      plan.geometryKind='boss-downfield-fan';plan.targetCoverage=null;plan.verticalCoverage=0;plan.horizontalCoverage=0;plan.patternId='boss-wide-downfield-v35';
+    }
     var previous=w._pressurePlan;w._pressurePlan=plan;
-    if(!warning(w,specs,PRESSURE_LIMITS.warningTicks,wave?'진입로의 교차 압박':'겹쳐 닫히는 압박')){w._pressurePlan=previous;return null;}
+    if(!warning(w,specs,PRESSURE_LIMITS.warningTicks,emitter?'보스 광선 · 하강 전개':wave?'진입로의 교차 압박':'겹쳐 닫히는 압박')){w._pressurePlan=previous;return null;}
+    if(emitter){var b=w.boss;b.bossWideAnchor={x:b.x,y:b.y,born:plan.born,activeAt:plan.activeAt,fadeAt:plan.fadeAt,until:plan.expireAt};if(emitter.actor){b.bossWideAnchor.actorId=emitter.actor.id;b.bossWideAnchor.actorX=emitter.actor.x;b.bossWideAnchor.actorY=emitter.actor.y;}}
     if(w.boss&&!wave)w.boss.combatPressure=plan;
     return plan;
   }
@@ -1496,6 +1536,7 @@
   }
   function commitFlowPlan(w,groups,meta){
     var b=w.boss;if(!b||!groups.length)return false;
+    if(laserPhraseEnabled(w)&&Patterns)groups.forEach(function(g){Patterns.prepareDownfield(w,g.specs);});
     if(!w._identityPlans)w._identityPlans=[];
     var total=groups.reduce(function(n,g){return n+g.specs.length;},0);
     if(w._identityPlans.length>=4||!total||w.bullets.length+flowReserved(w)+total>CAPS.bullets)return false;
@@ -1639,7 +1680,7 @@
     warning(w,specs,54,laserPhraseEnabled(w)?'보스 고유 광선 · 연속 전개':'보스 고유 광선 연사');
   }
   function wavePressure(w) {
-    if(!pressureEnabled(w)||!w.campaign||w.stage!=='waves')return;
+    if(laserPhraseEnabled(w)||!pressureEnabled(w)||!w.campaign||w.stage!=='waves')return;
     var t=Math.round(waveCombatTime(w)*60),actor=w.enemies.find(function(e){return e.age>=1.2&&e.y>=0&&e.y<230;});
     // Later story approaches already emit hostile command/shard material
     // directly instead of inventing ordinary people as enemies. Those real
@@ -1666,7 +1707,7 @@
       // same tick (chapter3's first cast is exactly logicaltick60). No already
       // announced path is removed or redirected after its warning has begun.
       if(pressureEnabled(w)&&(Math.round(w.phaseTime*60)-1)%PRESSURE_LIMITS.cycleTicks===60)pressureCast(w,w.boss.id,Math.floor((Math.round(w.phaseTime*60)-1)/PRESSURE_LIMITS.cycleTicks),false);
-      campaignPattern(w); bossPressure(w); return;
+      campaignPattern(w); bossWidePose(w); bossPressure(w); return;
     }
     var b = w.boss, t = Math.round(w.phaseTime * 60) - 1, cycle, within, gap, specs, i, a;
     b.px = b.x; b.py = b.y;

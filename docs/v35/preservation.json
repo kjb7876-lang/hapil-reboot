@@ -1,0 +1,24 @@
+{
+  "baseline": "509d1beb3a2bb6f4e75d880383fde28901ad5cdd",
+  "checkedFiles": 755,
+  "different": [],
+  "originalMediaFiles": 299,
+  "savedArchives": 450,
+  "preservedModules": [
+    "src/media.js",
+    "src/storage.js",
+    "src/story-assets.js",
+    "src/weapon-patterns.js",
+    "src/boss-flow-v29.js",
+    "src/boss-lasers-v28.js"
+  ],
+  "intentionalChanges": [
+    "current31 downward trajectories and formation origins",
+    "boss-owned wide pressure geometry and cast position",
+    "boss-wave wide pressure removal",
+    "measured three-wide render batching; damage footprints retained"
+  ],
+  "newExternalAssets": 0,
+  "paidAPICalls": 0,
+  "physicalMobileFPSVerified": false
+}

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "branch": "claude/v35-downfield-boss-lasers",
+  "baseline": "509d1beb3a2bb6f4e75d880383fde28901ad5cdd",
+  "npmTest": {
+    "tests": 537,
+    "pass": 537,
+    "fail": 0,
+    "skipped": 0,
+    "log": "tests.log"
+  },
+  "sourceSHA256": {
+    "src/core.js": "73a785206f27adfd4beba1bac1c1e84128a49db7305eeb59733c949011754956",
+    "src/boss-patterns-v27.js": "8593b9e9f7dafbe1af92b2ad3f666dcdb1a62c99f4dd90327bd0bdad717f99b1",
+    "src/render.js": "080e201b1854e3f7b69154e0d3ea940a15541938e78ae6bb285f4610d40d8adb",
+    "src/app.js": "103d743e0600266219863ce00ca4d8d99433eb75001a0072133ae823368e1dfc",
+    "index.html": "471b2cb76aa2ae699e236f9bc9ab3025918e14af60d7442531ddcd41ee722573"
+  },
+  "independentAudit": "downfield-audit.json",
+  "visualEvidence": "scene-review.json",
+  "historicalReplay": "../V25-HISTORIC-INPUT-REPLAY-ATTESTATION-20261031.json",
+  "preservation": "preservation.json",
+  "unverified": [
+    "physical mobile FPS",
+    "GPU timing",
+    "GC frequency",
+    "long natural current31 campaign clear"
+  ]
+}

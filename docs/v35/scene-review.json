@@ -1,0 +1,417 @@
+{
+  "schema": 1,
+  "baseline": "509d1beb3a2bb6f4e75d880383fde28901ad5cdd",
+  "scope": "Actual immune HELL current31 worlds, seed813, phase2 tick300, auto attacks and skill rotation off. Each side uses its own core from the same encounter/time/input. Gameplay geometry, bullet populations and cache eligibility differ. Native CPU Canvas command submission only; not an equivalent-workload optimization benchmark, live browser play, GPU time or phone FPS.",
+  "sourceHashes": {
+    "src/core.js": "73a785206f27adfd4beba1bac1c1e84128a49db7305eeb59733c949011754956",
+    "src/boss-patterns-v27.js": "8593b9e9f7dafbe1af92b2ad3f666dcdb1a62c99f4dd90327bd0bdad717f99b1",
+    "src/render.js": "080e201b1854e3f7b69154e0d3ea940a15541938e78ae6bb285f4610d40d8adb",
+    "src/projectiles.js": "1b8a84570cb1a302968a1192bf3ea2b94d60b5fecb9a5cc46fc0c68036e798ba",
+    "src/actors.js": "dc8ef72e54fb9a0dd16d9c1e6249962ad0f424c351137df9edcdc248c4b9c0ef"
+  },
+  "overview": {
+    "file": "downfield-before-after.png",
+    "sha256": "4dadef0be9ac4063101fd924e6f390803d9533bee8a02981ca822bcff444ebd5"
+  },
+  "summary": {
+    "scenes": 4,
+    "missingProjectileAssets": 0,
+    "warmCanvasAllocations": 0,
+    "allWideBeamsReachMapBottom": true,
+    "allWideBeamsStartOnActualBoss": true
+  },
+  "rows": [
+    {
+      "bossIndex": 8,
+      "name": "Lust",
+      "phase": 2,
+      "tick": 300,
+      "quality": "low",
+      "dpr": 1,
+      "before": {
+        "bullets": 60,
+        "bulletStamps": 47,
+        "offscreenSkipped": 13,
+        "logicalLaserBodies": 6,
+        "rasterLaserBodies": 6,
+        "cachedLaserBodies": 0,
+        "wideBossLasers": [],
+        "copies": 2,
+        "missingProjectileAssets": 0,
+        "stampCacheBytes": 2032864,
+        "pressureCacheBytes": 0
+      },
+      "after": {
+        "bullets": 63,
+        "bulletStamps": 52,
+        "offscreenSkipped": 11,
+        "logicalLaserBodies": 5,
+        "rasterLaserBodies": 5,
+        "cachedLaserBodies": 0,
+        "wideBossLasers": [
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              180,
+              142.5967937335492
+            ],
+            "to": [
+              24,
+              640
+            ],
+            "width": 34
+          },
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              180,
+              142.5967937335492
+            ],
+            "to": [
+              336,
+              640
+            ],
+            "width": 34
+          }
+        ],
+        "copies": 2,
+        "missingProjectileAssets": 0,
+        "stampCacheBytes": 2032864,
+        "pressureCacheBytes": 0
+      },
+      "timings": {
+        "before": {
+          "frames": 60,
+          "medianMs": 2.124809999999343,
+          "p95Ms": 3.6870039999994333
+        },
+        "after": {
+          "frames": 60,
+          "medianMs": 2.0908799999997427,
+          "p95Ms": 3.117637000000286
+        }
+      },
+      "shots": [
+        {
+          "version": "before34",
+          "file": "lust-before34.png",
+          "sha256": "88a2c0824e9a7971f937a383f20c5d07442a69d5cbe04ffff07b22821e446722",
+          "worldSHA256": "5bf7fd6beadb00148aa8c034596352b610da613fe5d78ae2dff417ba6418de4a"
+        },
+        {
+          "version": "after35",
+          "file": "lust-after35.png",
+          "sha256": "729f6e2fc502e8010cce61f8ffc33adda90f32c6aa5fb5d3d2cc1a3d9634f54c",
+          "worldSHA256": "b0b9a5f9a62d2e8a644a796ae8fb3c1f1e3ca5565f0ef907adbc488456d9275f"
+        }
+      ],
+      "warmCanvasAllocations": 0,
+      "renderWorldsUnchanged": true
+    },
+    {
+      "bossIndex": 6,
+      "name": "Envy / reflection",
+      "phase": 2,
+      "tick": 300,
+      "quality": "low",
+      "dpr": 1,
+      "before": {
+        "bullets": 92,
+        "bulletStamps": 76,
+        "offscreenSkipped": 16,
+        "logicalLaserBodies": 8,
+        "rasterLaserBodies": 2,
+        "cachedLaserBodies": 6,
+        "wideBossLasers": [],
+        "copies": 2,
+        "missingProjectileAssets": 0,
+        "stampCacheBytes": 1433280,
+        "pressureCacheBytes": 921600
+      },
+      "after": {
+        "bullets": 91,
+        "bulletStamps": 83,
+        "offscreenSkipped": 8,
+        "logicalLaserBodies": 5,
+        "rasterLaserBodies": 2,
+        "cachedLaserBodies": 3,
+        "wideBossLasers": [
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              158.06468621399176,
+              142.5967937335492
+            ],
+            "to": [
+              336,
+              640
+            ],
+            "width": 34
+          },
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              158.06468621399176,
+              142.5967937335492
+            ],
+            "to": [
+              280,
+              640
+            ],
+            "width": 34
+          },
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              158.06468621399176,
+              142.5967937335492
+            ],
+            "to": [
+              136,
+              640
+            ],
+            "width": 34
+          }
+        ],
+        "copies": 2,
+        "missingProjectileAssets": 0,
+        "stampCacheBytes": 1409088,
+        "pressureCacheBytes": 921600
+      },
+      "timings": {
+        "before": {
+          "frames": 60,
+          "medianMs": 1.9043369999999413,
+          "p95Ms": 3.382079999999405
+        },
+        "after": {
+          "frames": 60,
+          "medianMs": 1.9663110000001325,
+          "p95Ms": 3.429602000000159
+        }
+      },
+      "shots": [
+        {
+          "version": "before34",
+          "file": "envy-before34.png",
+          "sha256": "e92d6b8c3e2d1bf23274582a1a94274196990d1d849fd157768e012fa76b3639",
+          "worldSHA256": "6520ebae1dbfba2528b233d3a18534e7c9a0d082e929bd4d2679973e170682d6"
+        },
+        {
+          "version": "after35",
+          "file": "envy-after35.png",
+          "sha256": "44bb4f71efcbf0b49396ec586c9746caeda19432423e36d296981e3ba572e557",
+          "worldSHA256": "7b195ce024ad4bc7ba3a70057b118117d7bb534ef9e5c910377f78d29db01d3c"
+        }
+      ],
+      "warmCanvasAllocations": 0,
+      "renderWorldsUnchanged": true
+    },
+    {
+      "bossIndex": 11,
+      "name": "Pride / piano",
+      "phase": 2,
+      "tick": 300,
+      "quality": "low",
+      "dpr": 1,
+      "before": {
+        "bullets": 58,
+        "bulletStamps": 50,
+        "offscreenSkipped": 8,
+        "logicalLaserBodies": 5,
+        "rasterLaserBodies": 5,
+        "cachedLaserBodies": 0,
+        "wideBossLasers": [],
+        "copies": 2,
+        "missingProjectileAssets": 0,
+        "stampCacheBytes": 1483216,
+        "pressureCacheBytes": 0
+      },
+      "after": {
+        "bullets": 63,
+        "bulletStamps": 55,
+        "offscreenSkipped": 8,
+        "logicalLaserBodies": 4,
+        "rasterLaserBodies": 4,
+        "cachedLaserBodies": 0,
+        "wideBossLasers": [
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              158.06468621399176,
+              142.5967937335492
+            ],
+            "to": [
+              336,
+              640
+            ],
+            "width": 34
+          },
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": null,
+            "from": [
+              158.06468621399176,
+              142.5967937335492
+            ],
+            "to": [
+              24,
+              640
+            ],
+            "width": 34
+          }
+        ],
+        "copies": 2,
+        "missingProjectileAssets": 0,
+        "stampCacheBytes": 1483216,
+        "pressureCacheBytes": 0
+      },
+      "timings": {
+        "before": {
+          "frames": 60,
+          "medianMs": 1.4899210000003222,
+          "p95Ms": 2.9411030000010214
+        },
+        "after": {
+          "frames": 60,
+          "medianMs": 1.6366630000011355,
+          "p95Ms": 2.4025609999989683
+        }
+      },
+      "shots": [
+        {
+          "version": "before34",
+          "file": "pride-before34.png",
+          "sha256": "ec2d7632bc34e60400ade70d66133dc6276b2a98ab46d463f4b4493312cc7057",
+          "worldSHA256": "e58184da53a264757fc3b24ea659441b9e319a9b0719e06a87a45757b8c05c09"
+        },
+        {
+          "version": "after35",
+          "file": "pride-after35.png",
+          "sha256": "9c625b89739fa8001b68d0a4076ea00e8a87f30951929c1d0c05381759b51bfa",
+          "worldSHA256": "24dbfa0c088d212faa0d77775a1e1d5b4ad47140143ba3fb615aa406de160b26"
+        }
+      ],
+      "warmCanvasAllocations": 0,
+      "renderWorldsUnchanged": true
+    },
+    {
+      "bossIndex": 33,
+      "name": "Rian / Ion",
+      "phase": 2,
+      "tick": 300,
+      "quality": "low",
+      "dpr": 1,
+      "before": {
+        "bullets": 77,
+        "bulletStamps": 73,
+        "offscreenSkipped": 4,
+        "logicalLaserBodies": 7,
+        "rasterLaserBodies": 1,
+        "cachedLaserBodies": 6,
+        "wideBossLasers": [],
+        "copies": 2,
+        "missingProjectileAssets": 0,
+        "stampCacheBytes": 1253456,
+        "pressureCacheBytes": 921600
+      },
+      "after": {
+        "bullets": 77,
+        "bulletStamps": 74,
+        "offscreenSkipped": 3,
+        "logicalLaserBodies": 4,
+        "rasterLaserBodies": 1,
+        "cachedLaserBodies": 3,
+        "wideBossLasers": [
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": "han-rian",
+            "from": [
+              108,
+              126
+            ],
+            "to": [
+              24,
+              640
+            ],
+            "width": 34
+          },
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": "han-rian",
+            "from": [
+              108,
+              126
+            ],
+            "to": [
+              80,
+              640
+            ],
+            "width": 34
+          },
+          {
+            "phase": "active",
+            "ownerId": 1,
+            "sourceActorId": "han-rian",
+            "from": [
+              108,
+              126
+            ],
+            "to": [
+              224,
+              640
+            ],
+            "width": 34
+          }
+        ],
+        "copies": 2,
+        "missingProjectileAssets": 0,
+        "stampCacheBytes": 1253456,
+        "pressureCacheBytes": 921600
+      },
+      "timings": {
+        "before": {
+          "frames": 60,
+          "medianMs": 2.8597650000010617,
+          "p95Ms": 3.281619999997929
+        },
+        "after": {
+          "frames": 60,
+          "medianMs": 2.8647430000019085,
+          "p95Ms": 3.4388460000009218
+        }
+      },
+      "shots": [
+        {
+          "version": "before34",
+          "file": "rian-before34.png",
+          "sha256": "d6290c4d819dbe7eb42cc55ccee67383c31b3d950ba3f6d44dba5f14d5a7f5db",
+          "worldSHA256": "75d2df3feadac97adf7145498d5f4c9df191a5d0b9200fed69d5c47dba828d77"
+        },
+        {
+          "version": "after35",
+          "file": "rian-after35.png",
+          "sha256": "7bdce40c41452715f0a79f5e67592f957c35ef0ab20a9c1e07fe2df134c40ed9",
+          "worldSHA256": "74fb8f94b08a0893d1ea13a66fb42077f5b06addadbbc00bc839151a59536f9c"
+        }
+      ],
+      "warmCanvasAllocations": 0,
+      "renderWorldsUnchanged": true
+    }
+  ]
+}
