@@ -1,0 +1,26 @@
+{
+  "baseline": "f616a344cfdc03af2bbc7cf98a17e2126123a4c0",
+  "checkedFiles": 760,
+  "differences": [],
+  "originalMediaFiles": 299,
+  "originalInputArchives": 450,
+  "unchangedRuntimeModules": [
+    "src/actors.js",
+    "src/boss-flow-v29.js",
+    "src/boss-lasers-v28.js",
+    "src/boss-motion.js",
+    "src/boss-patterns-v27.js",
+    "src/boss-skills.js",
+    "src/media.js",
+    "src/projectiles.js",
+    "src/storage.js",
+    "src/story-assets.js",
+    "src/weapon-patterns.js"
+  ],
+  "scope": "Byte comparison; actual enabled visual-channel simulation equality separately tested over2520 combinations with legal inputs. No claim of every branch execution or physical-phoneFPS.",
+  "newExternalGameAssets": 0,
+  "paidAPICalls": 0,
+  "saveSchemaChanged": false,
+  "combatRevision": 31,
+  "presentationRevision": 36
+}

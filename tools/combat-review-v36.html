@@ -1,0 +1,23 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>합일 v36 사격·명중 검수</title>
+<style>body{margin:20px;background:#10131c;color:#e3d4b8;font:14px sans-serif}h1{font-size:20px}main{display:flex;gap:24px;flex-wrap:wrap}canvas{width:360px;max-width:100%;height:auto;border:1px solid #66523f}select,button{background:#242331;color:#eee;padding:10px;border:1px solid #675d72}pre{white-space:pre-wrap;max-width:450px;line-height:1.5}</style>
+<h1>합일 · 사격과 피격 검수 v36</h1><p>실제 코어 HELL31 · 명시적 플레이어 무적 QA 장면. 실제 명중 이벤트를 사용하며 기기 FPS 측정은 아닙니다.</p>
+<p><select id="boss" aria-label="검수 보스"><option value="8">색욕 · 바람탄</option><option value="18">고블린 · 환도</option><option value="21">방어 코어 · 서하</option><option value="33">한리안 / 백이온</option></select> <button id="run">장면 검사</button></p>
+<main><section style="width:360px;flex:none"><canvas id="view" width="360" height="640"></canvas></section><pre id="result" aria-live="polite">준비 중</pre></main>
+<script src="../src/media.js"></script><script src="../src/weapon-patterns.js"></script><script src="../src/boss-patterns-v27.js"></script><script src="../src/boss-lasers-v28.js"></script><script src="../src/boss-flow-v29.js"></script><script src="../src/core.js"></script><script src="../src/boss-motion.js"></script><script src="../src/story-assets.js"></script><script src="../src/actors.js"></script><script src="../src/projectiles.js"></script><script src="../src/boss-skills.js"></script><script src="../src/combat-presentation-v36.js"></script><script src="../src/render.js"></script>
+<script>
+let renderer;
+async function run(){const button=document.getElementById('run'),result=document.getElementById('result');button.disabled=true;try{
+ const index=Number(document.getElementById('boss').value),group=index>=12?index+1:index,keys=new Set(['gunner','spider','forest','ruins','cave','fxResonance','fxSlash','fxThorns','fxArrow','fxParry','fxSilk']);
+ for(const list of [HapilProjectiles.assetKeysForEncounter(group),HapilRenderer.terrainAssetKeysForEncounter(group),HapilBossSkills.assetKeysForEncounter(group),HapilBossSkills.optionalAssetKeysForEncounter(group),group>=19?HapilStoryAssets.assetKeysForEncounter(group):HapilActors.sinAssetKeysForEncounter(group)])for(const k of list)keys.add(k);
+ if(group<19)keys.add('fxWindArrow8V6');
+ const images={},list=[...keys];let cursor=0;result.textContent='기존 자산 읽는 중';
+ async function worker(){while(cursor<list.length){const key=list[cursor++];images[key]=await new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>reject(Error('이미지 실패: '+key));im.src='../'+HapilMedia[key];});}}await Promise.all([worker(),worker()]);
+ const first=HapilCore.createRun({campaign:true,campaignRevision:5,combatRevision:31,practiceBoss:true,bossIndex:index,difficulty:'hell',seed:813,runId:'v36-browser-fixed'}),checkpoint=HapilCore.checkpoint(first);checkpoint.phase=2;
+ const world=HapilCore.restoreCheckpoint(checkpoint);world.autoAttack=true;world.skillRotation=true;world.player.invulnerableUntil=999999;const frame=HapilCore.getCombatPresentation(world);let contactAt=null;
+ while(world.tick<650){HapilCore.step(world,{});if(world.tick>=535&&contactAt===null&&frame.events.some(e=>e.serial&&e.kind==='impact'&&e.tick===world.tick))contactAt=world.tick;if(contactAt!==null&&world.tick>=contactAt+2)break;}
+ if(contactAt===null)throw Error('실제 명중을 관측하지 못했습니다.');
+ const before=JSON.stringify(world);if(renderer)renderer.destroy();renderer=HapilRenderer.create(document.getElementById('view'),images);renderer.resize(360,640,1);for(let n=0;n<4;n++)renderer.draw(world,0,world.time,true,{precise:true});
+ const m=renderer.getMetrics();result.textContent=JSON.stringify({status:'완료',boss:index,tick:world.tick,contactAt,worldUnchanged:before===JSON.stringify(world),loadedImages:list.length,bullets:world.bullets.length,shots:world.shots.length,sourceShot:m.playerShotAsset,friendly:m.combatPresentation,missingHostileAssets:m.projectilePresentation.missingProjectileAssets},null,2);
+ }catch(e){result.textContent=String(e.stack||e);}finally{button.disabled=false;}}
+document.getElementById('run').onclick=run;run();
+</script></html>

@@ -45,6 +45,29 @@
   var PRESSURE_LIMITS=Object.freeze({cycleTicks:600,warningTicks:90,bossActiveTicks:360,waveActiveTicks:180,bossHellCoverage:.66,bossNormalCoverage:.44,bossGentleCoverage:.22,waveMultiplier:.70,maxCopies:2,cloneTicks:360,illusionTicks:120});
   var HELL_OVERLAP_LIMITS=Object.freeze({cycleTicks:336,warningTicks:108,activeTicks:96,fanBaseSpeed:150,fanMinSpeed:198,fanMaxSpeed:234,rotorMaxDownSpeed:378,rotorMaxTotalSpeed:388,corridorHalfWidth:24});
   var CAPS = Object.freeze({ bullets: 768, shots: 96, enemies: 12, effects: 96, hazards: 40 });
+  // Opt-in, render-only event storage. It never enters a world/checkpoint,
+  // consumes RNG or changes the simulation; skipped 30FPS draws still retain
+  // the exact successful shot/contact from every fixed60Hz update.
+  var combatPresentationFrames=new WeakMap();
+  function getCombatPresentation(w){
+    if(!w||!w.campaign||w.combatRevision!==31)return null;
+    var frame=combatPresentationFrames.get(w);
+    if(!frame){frame={serial:0,capacity:64,events:[]};for(var i=0;i<64;i++)frame.events.push({serial:0});combatPresentationFrames.set(w,frame);}
+    return frame;
+  }
+  function combatPresentationCue(w,kind,shot,victim,x,y){
+    var frame=combatPresentationFrames.get(w);if(!frame||w.combatRevision!==31)return;
+    var cue=frame.events[frame.serial%frame.capacity];frame.serial++;
+    cue.serial=frame.serial;cue.tick=w.tick;cue.kind=kind;cue.x=x;cue.y=y;cue.angle=shot.angle;cue.shotKind=shot.kind;cue.shotId=shot.id;
+    cue.targetId=victim?victim.id:0;cue.targetX=victim?victim.x:0;cue.targetY=victim?victim.y:0;cue.targetRadius=victim?victim.r:0;cue.isBoss=!!(victim&&victim.isBoss);cue.killed=!!(victim&&victim.hp<=0);
+  }
+  function shotContactFraction(shot,victim){
+    var ex=finite(victim.px)?victim.px:victim.x,ey=finite(victim.py)?victim.py:victim.y;
+    var rx=shot.px-ex,ry=shot.py-ey,dx=shot.x-shot.px-(victim.x-ex),dy=shot.y-shot.py-(victim.y-ey),r=shot.r+victim.r;
+    var c=rx*rx+ry*ry-r*r;if(c<=0)return 0;
+    var a=dx*dx+dy*dy,b=2*(rx*dx+ry*dy),disc=b*b-4*a*c;
+    return a>0&&disc>=0?clamp((-b-Math.sqrt(disc))/(2*a),0,1):1;
+  }
   var LASER_BARRAGE_LIMITS=Object.freeze({maxLive:12,firstTick:72,lastTick:456,minWarningTicks:54,minActiveTicks:8,maxActiveTicks:20,minFadeTicks:8,maxFadeTicks:12});
   var LASER_PHRASE_LIMITS=Object.freeze({minActiveTicks:42,maxActiveTicks:72,minFadeTicks:12,maxFadeTicks:18,maxStaggerTicks:138,maxPhraseTicks:294,maxSegments:8});
   var MOBILE_BOSS_LIMITS=Object.freeze({maxCopies:4,copyTicks:360,copyX:Object.freeze([66,142,218,294]),copyY:166});
@@ -514,9 +537,11 @@
   }
   function fireShot(w, angle, damage, kind, xOffset) {
     var p = w.player;
-    if (!acquire(w, 'shots', { id: ++w.idCounter, x: p.x + (xOffset || 0), y: p.y - 16, px: p.x + (xOffset || 0), py: p.y - 16,
-      vx: Math.cos(angle) * 660, vy: Math.sin(angle) * 660, r: 2, age: 0, ttl: 1.2, damage: damage, kind: kind || 'basic', angle: angle })) return false;
+    var shot=acquire(w, 'shots', { id: ++w.idCounter, x: p.x + (xOffset || 0), y: p.y - 16, px: p.x + (xOffset || 0), py: p.y - 16,
+      vx: Math.cos(angle) * 660, vy: Math.sin(angle) * 660, r: 2, age: 0, ttl: 1.2, damage: damage, kind: kind || 'basic', angle: angle });
+    if (!shot) return false;
     w.stats.shots++;
+    combatPresentationCue(w,'muzzle',shot,null,shot.x,shot.y);
     return true;
   }
   function gainMemory(w, amount) {
@@ -1863,7 +1888,12 @@
       var victim = null, candidates = w.enemies;
       for (var j = 0; j < candidates.length; j++) { var e = candidates[j]; if (e.age >= 0 && e.hp > 0 && sweptCircleHit(s.px, s.py, s.x, s.y, e.px, e.py, e.x, e.y, s.r + e.r)) { victim = e; break; } }
       if (!victim && w.stage === 'boss' && w.boss && w.boss.hp > 0) { var b = w.boss; if (sweptCircleHit(s.px, s.py, s.x, s.y, b.px, b.py, b.x, b.y, s.r + b.r)) victim = b; }
-      if (victim) { hitTarget(w, victim, s.damage, s.kind === 'basic'); remove(w, 'shots', i); }
+      if (victim) {
+        var contact=combatPresentationFrames.has(w)?shotContactFraction(s,victim):1;
+        hitTarget(w, victim, s.damage, s.kind === 'basic');
+        combatPresentationCue(w,'impact',s,victim,s.px+(s.x-s.px)*contact,s.py+(s.y-s.py)*contact);
+        remove(w, 'shots', i);
+      }
       else if (s.age >= s.ttl || s.x < -32 || s.x > W + 32 || s.y < -32 || s.y > H + 32) remove(w, 'shots', i);
     }
     for (var k = w.enemies.length - 1; k >= 0; k--) if (w.enemies[k].hp <= 0) remove(w, 'enemies', k);
@@ -2066,6 +2096,6 @@
   return Object.freeze({ W: W, H: H, FIXED_DT: FIXED_DT, RULESET_VERSION: RULESET, MECHANICS_REVISION: 2, CAPS: CAPS,
     COMBAT_REVISION:COMBAT_REVISION,IDENTITY_COMBAT_REVISION:IDENTITY_COMBAT_REVISION,PATTERN_COMBAT_REVISION:PATTERN_COMBAT_REVISION,LASER_COMBAT_REVISION:LASER_COMBAT_REVISION,FLOW_COMBAT_REVISION:FLOW_COMBAT_REVISION,MOBILE_COMBAT_REVISION:MOBILE_COMBAT_REVISION,LASER_PHRASE_COMBAT_REVISION:LASER_PHRASE_COMBAT_REVISION,LATEST_COMBAT_REVISION:LASER_PHRASE_COMBAT_REVISION,MOBILE_BOSS_LIMITS:MOBILE_BOSS_LIMITS,MOBILE_BULLET_LIMITS:MOBILE_BULLET_LIMITS,LASER_BARRAGE_LIMITS:LASER_BARRAGE_LIMITS,LASER_PHRASE_LIMITS:LASER_PHRASE_LIMITS,BULLET_SLOW:BULLET_SLOW,bulletTimeScale:bulletTimeScale,IDENTITY_PROFILES:IDENTITY_PROFILES,PRESSURE_LIMITS:PRESSURE_LIMITS,attackCoverage:attackCoverage,
     CAMPAIGN_BOSSES: CAMPAIGN_BOSSES, CAMPAIGN_SIGNATURES: CAMPAIGN_SIGNATURES, CAMPAIGN_REVISION: 3, HELL_MECHANICS_REVISION: HELL_MECHANICS_REVISION, HELL_OVERLAP_LIMITS: HELL_OVERLAP_LIMITS,
-    campaignBossCount: campaignBossCount, LATEST_CAMPAIGN_REVISION: 5, createRun: createRun, step: step, checkpoint: checkpoint, restoreCheckpoint: restoreCheckpoint, skipBossIntro: skipBossIntro,
+    campaignBossCount: campaignBossCount, LATEST_CAMPAIGN_REVISION: 5, createRun: createRun, step: step, checkpoint: checkpoint, restoreCheckpoint: restoreCheckpoint, skipBossIntro: skipBossIntro, getCombatPresentation:getCombatPresentation,
     geometry: Object.freeze({ segmentDistanceSquared: segmentDistanceSquared, segmentPairDistanceSquared: segmentPairDistanceSquared, sweptCircleHit: sweptCircleHit, projectileDistanceSquared: projectileDistanceSquared, patternDistanceSquared:patternDistanceSquared, hazardDistanceSquared: hazardDistanceSquared }) });
 }));

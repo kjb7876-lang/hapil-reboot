@@ -1,0 +1,40 @@
+{
+  "status": "완료",
+  "boss": 21,
+  "tick": 541,
+  "contactAt": 539,
+  "worldUnchanged": true,
+  "loadedImages": 19,
+  "bullets": 12,
+  "shots": 4,
+  "sourceShot": "storyPlayerSeohaSlash",
+  "friendly": {
+    "revision": 36,
+    "enabled": true,
+    "shotDraws": 4,
+    "shotAsset": "storyPlayerSeohaSlash",
+    "cacheBytes": 245760,
+    "cacheBuilds": 2,
+    "muzzleDraws": 1,
+    "impactDraws": 2,
+    "defeatDraws": 0,
+    "missingAssets": 0,
+    "offscreenSkipped": 0,
+    "latestSerial": 126,
+    "lastContactX": 192.13109122981118,
+    "lastContactY": 147.56678891190205,
+    "contactLimit": 8,
+    "shotVariants": {
+      "basic": 4,
+      "memory": 0,
+      "counter": 0,
+      "ego": 0
+    }
+  },
+  "missingHostileAssets": 0,
+  "scope": "Cloud Chromium desktop; fixed360x640 immune QA state and actual core shot-contact records, not device FPS or natural clear",
+  "gameConsoleErrorsObserved": 0,
+  "excludedConsoleErrors": "Browser extension metadata sending errors only",
+  "screenshot": "seoha-browser.jpg",
+  "screenshotSHA256": "0a83a485921be0313786bbb3a1e271b1099b128ce6e7141d1a4460bf14da1e6b"
+}

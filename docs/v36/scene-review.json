@@ -1,0 +1,1020 @@
+{
+  "schema": 1,
+  "baseline": "f616a344cfdc03af2bbc7cf98a17e2126123a4c0",
+  "scope": "Identical raw actual current31/baseline fixed-step boss and wave worlds, campaign5, HELL, phase2 bosses, seed813, real auto attack and skill rotation enabled; explicit player immunity fixture only. Each contact is an actual consumed shot selected by core. Native Canvas renderer.draw submission only,60draws per arm, alternating blocks after warmup; image readback excluded. Not a natural clear, browser/device FPS or GPU completion measure.",
+  "sourceHashes": {
+    "src/core.js": "da7dd071f3977220b58a4820a99bb14db232d4b4478240701a53a32badcadf5d",
+    "src/render.js": "f44678c8b2b7bb99369ed8360f388feb2a0b543ed4cc711248c10dc856c39c24",
+    "src/combat-presentation-v36.js": "9bad4091b113cac51b4e0dd853ace0844721e1115217269d48f1a468e5cea15e",
+    "src/projectiles.js": "1b8a84570cb1a302968a1192bf3ea2b94d60b5fecb9a5cc46fc0c68036e798ba",
+    "src/actors.js": "dc8ef72e54fb9a0dd16d9c1e6249962ad0f424c351137df9edcdc248c4b9c0ef",
+    "src/story-assets.js": "542579cfde3f9f51b48054dd8694a93ada7b3e5a39d4ee8554a130d3755ea033",
+    "src/media.js": "ac5e0e2497f242e2515873ee157f06b979b2659d6f2dc02f66349161a50bce2e"
+  },
+  "pictures": [
+    {
+      "file": "shot-impact-before-after.png",
+      "sha256": "da2fbd3ac82c1f2a8337fd936348df130d8bbb640087a7f2ba3a9a8ec541d6ea",
+      "width": 1440,
+      "height": 1390
+    },
+    {
+      "file": "shot-impact-detail.png",
+      "sha256": "9f53e8363afb7ba5598935f23bb3daafa6b1c5d3bd16d1b08d6f752d67ced8c1",
+      "width": 1440,
+      "height": 920
+    },
+    {
+      "file": "contact-recovery.png",
+      "sha256": "c4a2e50e133e985e55ec3f1256b457ca87c74f5e61060033199c93c8ff8edc74",
+      "width": 1440,
+      "height": 760
+    },
+    {
+      "file": "enemy-hit-defeat-before-after.png",
+      "sha256": "dd850c00035e49e083ba32884b40b798e2c09675faca431fecda6df7dbef7d01",
+      "width": 1440,
+      "height": 680
+    },
+    {
+      "file": "enemy-hit-defeat-detail.png",
+      "sha256": "4db3c0f1b04f97659222e6d97335cd1172774da0db193c0dac11d29f72777cf1",
+      "width": 1440,
+      "height": 460
+    }
+  ],
+  "summary": {
+    "scenes": 4,
+    "qualityCases": 8,
+    "recoveryContactScenes": 4,
+    "waveHitAndDefeatScenes": 2,
+    "allWorldsByteIdentical": true,
+    "missingAssets": 0,
+    "warmCanvasAllocations": 0,
+    "maxCombatCacheBytes": 589824
+  },
+  "rows": [
+    {
+      "bossIndex": 8,
+      "name": "Lust / wind arrow",
+      "tick": 298,
+      "phase": 2,
+      "worldSHA256": "04908b96d936f1b3f4757502887981c327dd13d0978fdeccba1eddf183f6f5d6",
+      "beforeWorldSHA256": "04908b96d936f1b3f4757502887981c327dd13d0978fdeccba1eddf183f6f5d6",
+      "actualContact": {
+        "serial": 70,
+        "tick": 295,
+        "kind": "impact",
+        "x": 180,
+        "y": 155.5967937335492,
+        "angle": -1.5707963267948966,
+        "shotKind": "basic",
+        "shotId": 118,
+        "targetId": 1,
+        "targetX": 180,
+        "targetY": 124.59679373354919,
+        "targetRadius": 29,
+        "isBoss": true,
+        "killed": false
+      },
+      "privateEventSerial": 71,
+      "qualities": [
+        {
+          "quality": "low",
+          "difference": {
+            "changedPixels": 880,
+            "maxChannelDelta": 202,
+            "totalChannelDelta": 84323
+          },
+          "before": {
+            "shots": 7,
+            "bullets": 79,
+            "effects": 1,
+            "logicalLasers": 5,
+            "hostileStamps": 75,
+            "hostileMissing": 0,
+            "hostileStampCacheBytes": 2106832,
+            "combat": null
+          },
+          "after": {
+            "shots": 7,
+            "bullets": 79,
+            "effects": 1,
+            "logicalLasers": 5,
+            "hostileStamps": 75,
+            "hostileMissing": 0,
+            "hostileStampCacheBytes": 2106832,
+            "combat": {
+              "revision": 36,
+              "enabled": true,
+              "shotDraws": 7,
+              "shotAsset": "fxWindArrow8V6",
+              "cacheBytes": 589824,
+              "cacheBuilds": 2,
+              "muzzleDraws": 1,
+              "impactDraws": 2,
+              "defeatDraws": 0,
+              "missingAssets": 0,
+              "offscreenSkipped": 0,
+              "latestSerial": 71,
+              "lastContactX": 180,
+              "lastContactY": 155.5967937335492,
+              "contactLimit": 8,
+              "shotVariants": {
+                "basic": 4,
+                "memory": 3,
+                "counter": 0,
+                "ego": 0
+              }
+            }
+          },
+          "timings": {
+            "before": {
+              "frames": 60,
+              "medianMs": 2.925589999999829,
+              "p95Ms": 3.3896370000002207
+            },
+            "after": {
+              "frames": 60,
+              "medianMs": 3.1539429999993445,
+              "p95Ms": 3.9007339999998294
+            }
+          },
+          "warmCanvasAllocations": 0,
+          "files": [
+            {
+              "version": "before35",
+              "file": "lust-before35.png",
+              "sha256": "d996c4fb730de7f76a53b9ce1509773a6834cce7a181a77dee2325ce54f623c0"
+            },
+            {
+              "version": "after36",
+              "file": "lust-after36.png",
+              "sha256": "82f9c719659d6d3e185679703d7485f6c280029c3121d6bfa6645948ea345118"
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "difference": {
+            "changedPixels": 864,
+            "maxChannelDelta": 202,
+            "totalChannelDelta": 84233
+          },
+          "before": {
+            "shots": 7,
+            "bullets": 79,
+            "effects": 1,
+            "logicalLasers": 5,
+            "hostileStamps": 75,
+            "hostileMissing": 0,
+            "hostileStampCacheBytes": 2106832,
+            "combat": null
+          },
+          "after": {
+            "shots": 7,
+            "bullets": 79,
+            "effects": 1,
+            "logicalLasers": 5,
+            "hostileStamps": 75,
+            "hostileMissing": 0,
+            "hostileStampCacheBytes": 2106832,
+            "combat": {
+              "revision": 36,
+              "enabled": true,
+              "shotDraws": 7,
+              "shotAsset": "fxWindArrow8V6",
+              "cacheBytes": 589824,
+              "cacheBuilds": 2,
+              "muzzleDraws": 1,
+              "impactDraws": 2,
+              "defeatDraws": 0,
+              "missingAssets": 0,
+              "offscreenSkipped": 0,
+              "latestSerial": 71,
+              "lastContactX": 180,
+              "lastContactY": 155.5967937335492,
+              "contactLimit": 12,
+              "shotVariants": {
+                "basic": 4,
+                "memory": 3,
+                "counter": 0,
+                "ego": 0
+              }
+            }
+          },
+          "timings": {
+            "before": {
+              "frames": 60,
+              "medianMs": 2.86425699999927,
+              "p95Ms": 4.306189999999333
+            },
+            "after": {
+              "frames": 60,
+              "medianMs": 3.6792700000005425,
+              "p95Ms": 4.7812229999999545
+            }
+          },
+          "warmCanvasAllocations": 0
+        }
+      ],
+      "worldsByteIdentical": true,
+      "renderWorldsUnchanged": true
+    },
+    {
+      "bossIndex": 18,
+      "name": "Hando / blade",
+      "tick": 299,
+      "phase": 2,
+      "worldSHA256": "741e8f2d9a7690cf8a2245d501dec20c81c07ae4f4044c801cb5421ed1e163c8",
+      "beforeWorldSHA256": "741e8f2d9a7690cf8a2245d501dec20c81c07ae4f4044c801cb5421ed1e163c8",
+      "actualContact": {
+        "serial": 70,
+        "tick": 296,
+        "kind": "impact",
+        "x": 192.1327523332925,
+        "y": 147.5152441245799,
+        "angle": -1.5385810653883183,
+        "shotKind": "basic",
+        "shotId": 98,
+        "targetId": 1,
+        "targetX": 193.6462023478968,
+        "targetY": 116.55221021229518,
+        "targetRadius": 29,
+        "isBoss": true,
+        "killed": false
+      },
+      "privateEventSerial": 71,
+      "qualities": [
+        {
+          "quality": "low",
+          "difference": {
+            "changedPixels": 1114,
+            "maxChannelDelta": 228,
+            "totalChannelDelta": 88607
+          },
+          "before": {
+            "shots": 7,
+            "bullets": 60,
+            "effects": 1,
+            "logicalLasers": 4,
+            "hostileStamps": 56,
+            "hostileMissing": 0,
+            "hostileStampCacheBytes": 1419136,
+            "combat": null
+          },
+          "after": {
+            "shots": 7,
+            "bullets": 60,
+            "effects": 1,
+            "logicalLasers": 4,
+            "hostileStamps": 56,
+            "hostileMissing": 0,
+            "hostileStampCacheBytes": 1419136,
+            "combat": {
+              "revision": 36,
+              "enabled": true,
+              "shotDraws": 7,
+              "shotAsset": "storyPlayerHandoSlash",
+              "cacheBytes": 245760,
+              "cacheBuilds": 2,
+              "muzzleDraws": 1,
+              "impactDraws": 2,
+              "defeatDraws": 0,
+              "missingAssets": 0,
+              "offscreenSkipped": 0,
+              "latestSerial": 71,
+              "lastContactX": 192.1327523332925,
+              "lastContactY": 147.5152441245799,
+              "contactLimit": 8,
+              "shotVariants": {
+                "basic": 4,
+                "memory": 3,
+                "counter": 0,
+                "ego": 0
+              }
+            }
+          },
+          "timings": {
+            "before": {
+              "frames": 60,
+              "medianMs": 2.8375489999998535,
+              "p95Ms": 6.076970000000074
+            },
+            "after": {
+              "frames": 60,
+              "medianMs": 3.3610740000003716,
+              "p95Ms": 7.06632399999944
+            }
+          },
+          "warmCanvasAllocations": 0,
+          "files": [
+            {
+              "version": "before35",
+              "file": "hando-before35.png",
+              "sha256": "64764c9b140bf975ee7e7709f69d9324cf3c4ec4a24b2625fa55ea69466a2e5d"
+            },
+            {
+              "version": "after36",
+              "file": "hando-after36.png",
+              "sha256": "ef860c94293cdb9278f1c3e3c24a8bd66dda26664f9ef2a0fb08dc54c6796b86"
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "difference": {
+            "changedPixels": 1006,
+            "maxChannelDelta": 228,
+            "totalChannelDelta": 87274
+          },
+          "before": {
+            "shots": 7,
+            "bullets": 60,
+            "effects": 1,
+            "logicalLasers": 4,
+            "hostileStamps": 56,
+            "hostileMissing": 0,
+            "hostileStampCacheBytes": 1420160,
+            "combat": null
+          },
+          "after": {
+            "shots": 7,
+            "bullets": 60,
+            "effects": 1,
+            "logicalLasers": 4,
+            "hostileStamps": 56,
+            "hostileMissing": 0,
+            "hostileStampCacheBytes": 1420160,
+            "combat": {
+              "revision": 36,
+              "enabled": true,
+              "shotDraws": 7,
+              "shotAsset": "storyPlayerHandoSlash",
+              "cacheBytes": 245760,
+              "cacheBuilds": 2,
+              "muzzleDraws": 1,
+              "impactDraws": 2,
+              "defeatDraws": 0,
+              "missingAssets": 0,
+              "offscreenSkipped": 0,
+              "latestSerial": 71,
+              "lastContactX": 192.1327523332925,
+              "lastContactY": 147.5152441245799,
+              "contactLimit": 12,
+              "shotVariants": {
+                "basic": 4,
+                "memory": 3,
+                "counter": 0,
+                "ego": 0
+              }
+            }
+          },
+          "timings": {
+            "before": {
+              "frames": 60,
+              "medianMs": 2.813851999999315,
+              "p95Ms": 3.6589810000004945
+            },
+            "after": {
+              "frames": 60,
+              "medianMs": 3.0554140000022016,
+              "p95Ms": 8.536308999999164
+            }
+          },
+          "warmCanvasAllocations": 0
+        }
+      ],
+      "worldsByteIdentical": true,
+      "renderWorldsUnchanged": true
+    },
+    {
+      "bossIndex": 21,
+      "name": "Seoha / radiant slash",
+      "tick": 299,
+      "phase": 2,
+      "worldSHA256": "fa300f2aa6d715e43416b9a9f6047c20a1baf7451a25ae2a0d9709b5a44de91d",
+      "beforeWorldSHA256": "fa300f2aa6d715e43416b9a9f6047c20a1baf7451a25ae2a0d9709b5a44de91d",
+      "actualContact": {
+        "serial": 70,
+        "tick": 296,
+        "kind": "impact",
+        "x": 192.1327523332925,
+        "y": 147.5152441245799,
+        "angle": -1.5385810653883183,
+        "shotKind": "basic",
+        "shotId": 81,
+        "targetId": 1,
+        "targetX": 193.6462023478968,
+        "targetY": 116.55221021229518,
+        "targetRadius": 29,
+        "isBoss": true,
+        "killed": false
+      },
+      "privateEventSerial": 71,
+      "qualities": [
+        {
+          "quality": "low",
+          "difference": {
+            "changedPixels": 1530,
+            "maxChannelDelta": 230,
+            "totalChannelDelta": 168185
+          },
+          "before": {
+            "shots": 7,
+            "bullets": 35,
+            "effects": 1,
+            "logicalLasers": 4,
+            "hostileStamps": 31,
+            "hostileMissing": 0,
+            "hostileStampCacheBytes": 1206208,
+            "combat": null
+          },
+          "after": {
+            "shots": 7,
+            "bullets": 35,
+            "effects": 1,
+            "logicalLasers": 4,
+            "hostileStamps": 31,
+            "hostileMissing": 0,
+            "hostileStampCacheBytes": 1206208,
+            "combat": {
+              "revision": 36,
+              "enabled": true,
+              "shotDraws": 7,
+              "shotAsset": "storyPlayerSeohaSlash",
+              "cacheBytes": 245760,
+              "cacheBuilds": 2,
+              "muzzleDraws": 1,
+              "impactDraws": 2,
+              "defeatDraws": 0,
+              "missingAssets": 0,
+              "offscreenSkipped": 0,
+              "latestSerial": 71,
+              "lastContactX": 192.1327523332925,
+              "lastContactY": 147.5152441245799,
+              "contactLimit": 8,
+              "shotVariants": {
+                "basic": 4,
+                "memory": 3,
+                "counter": 0,
+                "ego": 0
+              }
+            }
+          },
+          "timings": {
+            "before": {
+              "frames": 60,
+              "medianMs": 1.4283230000000913,
+              "p95Ms": 1.9016839999967488
+            },
+            "after": {
+              "frames": 60,
+              "medianMs": 1.4895749999996042,
+              "p95Ms": 2.099050000000716
+            }
+          },
+          "warmCanvasAllocations": 0,
+          "files": [
+            {
+              "version": "before35",
+              "file": "seoha-before35.png",
+              "sha256": "481e5600a95da8431802df3f371312e290c08b68254870a5bcc45fb9257fe515"
+            },
+            {
+              "version": "after36",
+              "file": "seoha-after36.png",
+              "sha256": "3f8df21f6d16ced3eb6027e78ae2703174eb17ea70cd34906a0313ae802760c5"
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "difference": {
+            "changedPixels": 1456,
+            "maxChannelDelta": 230,
+            "totalChannelDelta": 167473
+          },
+          "before": {
+            "shots": 7,
+            "bullets": 35,
+            "effects": 1,
+            "logicalLasers": 4,
+            "hostileStamps": 31,
+            "hostileMissing": 0,
+            "hostileStampCacheBytes": 1207232,
+            "combat": null
+          },
+          "after": {
+            "shots": 7,
+            "bullets": 35,
+            "effects": 1,
+            "logicalLasers": 4,
+            "hostileStamps": 31,
+            "hostileMissing": 0,
+            "hostileStampCacheBytes": 1207232,
+            "combat": {
+              "revision": 36,
+              "enabled": true,
+              "shotDraws": 7,
+              "shotAsset": "storyPlayerSeohaSlash",
+              "cacheBytes": 245760,
+              "cacheBuilds": 2,
+              "muzzleDraws": 1,
+              "impactDraws": 2,
+              "defeatDraws": 0,
+              "missingAssets": 0,
+              "offscreenSkipped": 0,
+              "latestSerial": 71,
+              "lastContactX": 192.1327523332925,
+              "lastContactY": 147.5152441245799,
+              "contactLimit": 12,
+              "shotVariants": {
+                "basic": 4,
+                "memory": 3,
+                "counter": 0,
+                "ego": 0
+              }
+            }
+          },
+          "timings": {
+            "before": {
+              "frames": 60,
+              "medianMs": 2.0721790000025067,
+              "p95Ms": 3.0541730000004463
+            },
+            "after": {
+              "frames": 60,
+              "medianMs": 2.2162759999991977,
+              "p95Ms": 3.2437079999981506
+            }
+          },
+          "warmCanvasAllocations": 0
+        }
+      ],
+      "worldsByteIdentical": true,
+      "renderWorldsUnchanged": true
+    },
+    {
+      "bossIndex": 33,
+      "name": "Rian + Ion / Hando",
+      "tick": 302,
+      "phase": 2,
+      "worldSHA256": "ba61715f7ca6bffec68cbc62f47bdf2e19b9a32e8591b20da60b403d819bad21",
+      "beforeWorldSHA256": "ba61715f7ca6bffec68cbc62f47bdf2e19b9a32e8591b20da60b403d819bad21",
+      "actualContact": {
+        "serial": 72,
+        "tick": 299,
+        "kind": "impact",
+        "x": 180,
+        "y": 206,
+        "angle": -1.5707963267948966,
+        "shotKind": "basic",
+        "shotId": 126,
+        "targetId": 1,
+        "targetX": 180,
+        "targetY": 182,
+        "targetRadius": 22,
+        "isBoss": true,
+        "killed": false
+      },
+      "privateEventSerial": 72,
+      "qualities": [
+        {
+          "quality": "low",
+          "difference": {
+            "changedPixels": 1030,
+            "maxChannelDelta": 233,
+            "totalChannelDelta": 89562
+          },
+          "before": {
+            "shots": 6,
+            "bullets": 86,
+            "effects": 1,
+            "logicalLasers": 5,
+            "hostileStamps": 83,
+            "hostileMissing": 0,
+            "hostileStampCacheBytes": 1254480,
+            "combat": null
+          },
+          "after": {
+            "shots": 6,
+            "bullets": 86,
+            "effects": 1,
+            "logicalLasers": 5,
+            "hostileStamps": 83,
+            "hostileMissing": 0,
+            "hostileStampCacheBytes": 1254480,
+            "combat": {
+              "revision": 36,
+              "enabled": true,
+              "shotDraws": 6,
+              "shotAsset": "storyPlayerHandoSlash",
+              "cacheBytes": 245760,
+              "cacheBuilds": 2,
+              "muzzleDraws": 1,
+              "impactDraws": 2,
+              "defeatDraws": 0,
+              "missingAssets": 0,
+              "offscreenSkipped": 0,
+              "latestSerial": 72,
+              "lastContactX": 180,
+              "lastContactY": 206,
+              "contactLimit": 8,
+              "shotVariants": {
+                "basic": 3,
+                "memory": 3,
+                "counter": 0,
+                "ego": 0
+              }
+            }
+          },
+          "timings": {
+            "before": {
+              "frames": 60,
+              "medianMs": 2.0746739999995043,
+              "p95Ms": 2.6638869999987946
+            },
+            "after": {
+              "frames": 60,
+              "medianMs": 2.1250590000017837,
+              "p95Ms": 2.9633669999966514
+            }
+          },
+          "warmCanvasAllocations": 0,
+          "files": [
+            {
+              "version": "before35",
+              "file": "pair-before35.png",
+              "sha256": "1ebbf0ca6939da6e3a2b0fbe49ff56d5a5626fb6cc6f6edf058a36495bff881b"
+            },
+            {
+              "version": "after36",
+              "file": "pair-after36.png",
+              "sha256": "f4e412af1af1fa1fc70b2539b405436982dedb2707c7d09e128eeb736858cc3a"
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "difference": {
+            "changedPixels": 1022,
+            "maxChannelDelta": 233,
+            "totalChannelDelta": 89202
+          },
+          "before": {
+            "shots": 6,
+            "bullets": 86,
+            "effects": 1,
+            "logicalLasers": 5,
+            "hostileStamps": 83,
+            "hostileMissing": 0,
+            "hostileStampCacheBytes": 1254480,
+            "combat": null
+          },
+          "after": {
+            "shots": 6,
+            "bullets": 86,
+            "effects": 1,
+            "logicalLasers": 5,
+            "hostileStamps": 83,
+            "hostileMissing": 0,
+            "hostileStampCacheBytes": 1254480,
+            "combat": {
+              "revision": 36,
+              "enabled": true,
+              "shotDraws": 6,
+              "shotAsset": "storyPlayerHandoSlash",
+              "cacheBytes": 245760,
+              "cacheBuilds": 2,
+              "muzzleDraws": 1,
+              "impactDraws": 2,
+              "defeatDraws": 0,
+              "missingAssets": 0,
+              "offscreenSkipped": 0,
+              "latestSerial": 72,
+              "lastContactX": 180,
+              "lastContactY": 206,
+              "contactLimit": 12,
+              "shotVariants": {
+                "basic": 3,
+                "memory": 3,
+                "counter": 0,
+                "ego": 0
+              }
+            }
+          },
+          "timings": {
+            "before": {
+              "frames": 60,
+              "medianMs": 2.6520200000013574,
+              "p95Ms": 4.485261000001628
+            },
+            "after": {
+              "frames": 60,
+              "medianMs": 2.6298270000006596,
+              "p95Ms": 5.524410000001808
+            }
+          },
+          "warmCanvasAllocations": 0
+        }
+      ],
+      "worldsByteIdentical": true,
+      "renderWorldsUnchanged": true
+    }
+  ],
+  "recoveryRows": [
+    {
+      "bossIndex": 8,
+      "tick": 579,
+      "actualContact": {
+        "serial": 129,
+        "tick": 576,
+        "kind": "impact",
+        "x": 137.0030622912681,
+        "y": 134.32612550592643,
+        "angle": -1.6806925937262902,
+        "shotKind": "basic",
+        "shotId": 184,
+        "targetId": 1,
+        "targetX": 112,
+        "targetY": 116,
+        "targetRadius": 29,
+        "isBoss": true,
+        "killed": false
+      },
+      "hostileLasers": 0,
+      "bullets": 35,
+      "worldSHA256": "d901eb96e1f77df4af8ef097439b0f7eaf8c5e29ee092f059484d9fbe6c91e04",
+      "worldsByteIdentical": true,
+      "combat": {
+        "revision": 36,
+        "enabled": true,
+        "shotDraws": 5,
+        "shotAsset": "fxWindArrow8V6",
+        "cacheBytes": 589824,
+        "cacheBuilds": 2,
+        "muzzleDraws": 1,
+        "impactDraws": 1,
+        "defeatDraws": 0,
+        "missingAssets": 0,
+        "offscreenSkipped": 0,
+        "latestSerial": 130,
+        "lastContactX": 137.0030622912681,
+        "lastContactY": 134.32612550592643,
+        "contactLimit": 8,
+        "shotVariants": {
+          "basic": 5,
+          "memory": 0,
+          "counter": 0,
+          "ego": 0
+        }
+      }
+    },
+    {
+      "bossIndex": 18,
+      "tick": 533,
+      "actualContact": {
+        "serial": 123,
+        "tick": 530,
+        "kind": "impact",
+        "x": 192.13109122981118,
+        "y": 147.56678891190205,
+        "angle": -1.5385810653883183,
+        "shotKind": "basic",
+        "shotId": 159,
+        "targetId": 1,
+        "targetX": 195.15143091532136,
+        "targetY": 116.72612310411397,
+        "targetRadius": 29,
+        "isBoss": true,
+        "killed": false
+      },
+      "hostileLasers": 0,
+      "bullets": 46,
+      "worldSHA256": "562c7e05eeeb306f80b5f1daa859c019e75a12de19ea641546370fee1b9b6d0c",
+      "worldsByteIdentical": true,
+      "combat": {
+        "revision": 36,
+        "enabled": true,
+        "shotDraws": 4,
+        "shotAsset": "storyPlayerHandoSlash",
+        "cacheBytes": 245760,
+        "cacheBuilds": 2,
+        "muzzleDraws": 1,
+        "impactDraws": 2,
+        "defeatDraws": 0,
+        "missingAssets": 0,
+        "offscreenSkipped": 0,
+        "latestSerial": 124,
+        "lastContactX": 192.1327523332925,
+        "lastContactY": 147.5152441245799,
+        "contactLimit": 8,
+        "shotVariants": {
+          "basic": 4,
+          "memory": 0,
+          "counter": 0,
+          "ego": 0
+        }
+      }
+    },
+    {
+      "bossIndex": 21,
+      "tick": 533,
+      "actualContact": {
+        "serial": 123,
+        "tick": 530,
+        "kind": "impact",
+        "x": 192.13109122981118,
+        "y": 147.56678891190205,
+        "angle": -1.5385810653883183,
+        "shotKind": "basic",
+        "shotId": 126,
+        "targetId": 1,
+        "targetX": 195.15143091532136,
+        "targetY": 116.72612310411397,
+        "targetRadius": 29,
+        "isBoss": true,
+        "killed": false
+      },
+      "hostileLasers": 0,
+      "bullets": 14,
+      "worldSHA256": "fe1f78a1a95a5587df2f94ad8f26c0d449d07248ee59f243d897823b4a0b39ab",
+      "worldsByteIdentical": true,
+      "combat": {
+        "revision": 36,
+        "enabled": true,
+        "shotDraws": 4,
+        "shotAsset": "storyPlayerSeohaSlash",
+        "cacheBytes": 245760,
+        "cacheBuilds": 2,
+        "muzzleDraws": 1,
+        "impactDraws": 2,
+        "defeatDraws": 0,
+        "missingAssets": 0,
+        "offscreenSkipped": 0,
+        "latestSerial": 124,
+        "lastContactX": 192.1327523332925,
+        "lastContactY": 147.5152441245799,
+        "contactLimit": 8,
+        "shotVariants": {
+          "basic": 4,
+          "memory": 0,
+          "counter": 0,
+          "ego": 0
+        }
+      }
+    },
+    {
+      "bossIndex": 33,
+      "tick": 536,
+      "actualContact": {
+        "serial": 125,
+        "tick": 533,
+        "kind": "impact",
+        "x": 180,
+        "y": 206,
+        "angle": -1.5707963267948966,
+        "shotKind": "basic",
+        "shotId": 175,
+        "targetId": 1,
+        "targetX": 180,
+        "targetY": 182,
+        "targetRadius": 22,
+        "isBoss": true,
+        "killed": false
+      },
+      "hostileLasers": 0,
+      "bullets": 75,
+      "worldSHA256": "f0645f5436ef2d0975575d7ccc3b29761e8c163358a66ac3b6fe301e2c0824cb",
+      "worldsByteIdentical": true,
+      "combat": {
+        "revision": 36,
+        "enabled": true,
+        "shotDraws": 3,
+        "shotAsset": "storyPlayerHandoSlash",
+        "cacheBytes": 245760,
+        "cacheBuilds": 2,
+        "muzzleDraws": 1,
+        "impactDraws": 2,
+        "defeatDraws": 0,
+        "missingAssets": 0,
+        "offscreenSkipped": 0,
+        "latestSerial": 125,
+        "lastContactX": 180,
+        "lastContactY": 206,
+        "contactLimit": 8,
+        "shotVariants": {
+          "basic": 3,
+          "memory": 0,
+          "counter": 0,
+          "ego": 0
+        }
+      }
+    }
+  ],
+  "waveRows": [
+    {
+      "kind": "nonlethal",
+      "tick": 146,
+      "actualContact": {
+        "serial": 20,
+        "tick": 143,
+        "kind": "impact",
+        "x": 96.47420819185614,
+        "y": 156.30381228043504,
+        "angle": -1.7941655428747816,
+        "shotKind": "basic",
+        "shotId": 16,
+        "targetId": 8,
+        "targetX": 80.26607349569944,
+        "targetY": 152.87199034379944,
+        "targetRadius": 15,
+        "isBoss": false,
+        "killed": false
+      },
+      "worldSHA256": "8966cc608c82e79a8534c50dd54150738eab18b398adaa5d45aa8a8e4df09983",
+      "worldsByteIdentical": true,
+      "enemyCount": 3,
+      "effects": [],
+      "combat": {
+        "revision": 36,
+        "enabled": true,
+        "shotDraws": 5,
+        "shotAsset": "fxWindArrow8V6",
+        "cacheBytes": 589824,
+        "cacheBuilds": 2,
+        "muzzleDraws": 1,
+        "impactDraws": 1,
+        "defeatDraws": 0,
+        "missingAssets": 0,
+        "offscreenSkipped": 0,
+        "latestSerial": 21,
+        "lastContactX": 96.47420819185614,
+        "lastContactY": 156.30381228043504,
+        "contactLimit": 8,
+        "shotVariants": {
+          "basic": 5,
+          "memory": 0,
+          "counter": 0,
+          "ego": 0
+        }
+      }
+    },
+    {
+      "kind": "defeat",
+      "tick": 204,
+      "actualContact": {
+        "serial": 32,
+        "tick": 195,
+        "kind": "impact",
+        "x": 97.44896315579867,
+        "y": 178.02826189103612,
+        "angle": -1.805023097753005,
+        "shotKind": "basic",
+        "shotId": 22,
+        "targetId": 9,
+        "targetX": 103.13779296565244,
+        "targetY": 161.7062209533401,
+        "targetRadius": 15,
+        "isBoss": false,
+        "killed": true
+      },
+      "worldSHA256": "4e2ee6ff94ce90db199db69651dccdcc9501b052fa3dd9713818f096947b87d8",
+      "worldsByteIdentical": true,
+      "enemyCount": 2,
+      "effects": [
+        {
+          "kind": "kill",
+          "x": 103.13779296565244,
+          "y": 161.7062209533401,
+          "age": 0.16666666666666666,
+          "ttl": 0.6
+        }
+      ],
+      "combat": {
+        "revision": 36,
+        "enabled": true,
+        "shotDraws": 4,
+        "shotAsset": "fxWindArrow8V6",
+        "cacheBytes": 589824,
+        "cacheBuilds": 2,
+        "muzzleDraws": 0,
+        "impactDraws": 1,
+        "defeatDraws": 1,
+        "missingAssets": 0,
+        "offscreenSkipped": 0,
+        "latestSerial": 33,
+        "lastContactX": 97.44896315579867,
+        "lastContactY": 178.02826189103612,
+        "contactLimit": 8,
+        "shotVariants": {
+          "basic": 4,
+          "memory": 0,
+          "counter": 0,
+          "ego": 0
+        }
+      }
+    }
+  ]
+}
