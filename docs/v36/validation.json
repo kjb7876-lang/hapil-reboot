@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "baseline": "f616a344cfdc03af2bbc7cf98a17e2126123a4c0",
+  "branch": "claude/v36-shot-impact-polish",
+  "npmTest": {
+    "tests": 554,
+    "pass": 554,
+    "fail": 0,
+    "skipped": 0,
+    "log": "tests.log"
+  },
+  "sourceSHA256": {
+    "src/core.js": "da7dd071f3977220b58a4820a99bb14db232d4b4478240701a53a32badcadf5d",
+    "src/app.js": "db6e0d141b46b97ca4dca853b4823ebb98379f708147f1b525d6dc1d2ab32c02",
+    "src/render.js": "f44678c8b2b7bb99369ed8360f388feb2a0b543ed4cc711248c10dc856c39c24",
+    "src/combat-presentation-v36.js": "9bad4091b113cac51b4e0dd853ace0844721e1115217269d48f1a468e5cea15e",
+    "index.html": "43beb330822cbc2a5785add1c213d1032dd925ccaadc8a1e67220c7e6a44e0b3"
+  },
+  "assetAudit": "asset-audit.json",
+  "runtimeAudit": "runtime-audit.json",
+  "visualEvidence": "scene-review.json",
+  "browserEvidence": "browser-review.json",
+  "preservation": "preservation.json",
+  "historicalReplay": "../V25-HISTORIC-INPUT-REPLAY-ATTESTATION-20261031.json",
+  "unverified": [
+    "physical mobile FPS",
+    "GPU timing",
+    "GC frequency",
+    "long current31 natural campaign clear"
+  ],
+  "newAssets": 0,
+  "paidAPICalls": 0
+}

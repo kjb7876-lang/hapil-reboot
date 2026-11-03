@@ -13,7 +13,7 @@ function harness(options={}){
  const g={innerWidth:360,innerHeight:760,devicePixelRatio:1,matchMedia:()=>({matches:true}),addEventListener(){},HapilCore:{...core,createRun(o){createOptions.push(o);world=core.createRun(o);return world;},restoreCheckpoint(s){world=core.restoreCheckpoint(s);return world;}},HapilStore:store};
  class ImageFixture{set src(url){if(!url)return;requests.push(url);active++;peak=Math.max(peak,active);const size=dimensionsFor(url);this.complete=true;this.naturalWidth=size[0];this.naturalHeight=size[1]-(url===options.malformed?1:0);Promise.resolve().then(()=>{active--;if(url===options.fail){if(this.onerror)this.onerror();}else if(this.onload)this.onload();});}}
  const context={window:g,globalThis:g,document:doc,Image:ImageFixture,performance:{now:()=>now},requestAnimationFrame:f=>(raf=f,1),getComputedStyle:()=>({paddingTop:'0',paddingBottom:'0'}),setTimeout:()=>1,clearTimeout(){},Audio:function(){},console};vm.createContext(context);
- for(const file of ['media','story-assets','boss-motion','actors','projectiles','boss-skills','render'])vm.runInContext(fs.readFileSync(path.join(root,'src',file+'.js'),'utf8'),context);
+ for(const file of ['media','story-assets','boss-motion','actors','projectiles','boss-skills','combat-presentation-v36','render'])vm.runInContext(fs.readFileSync(path.join(root,'src',file+'.js'),'utf8'),context);
  g.HapilRenderer={...g.HapilRenderer,create:()=>({resize(){},draw(){},getMetrics(){return {};}})};vm.runInContext(fs.readFileSync(path.join(root,'src/app.js'),'utf8'),context);
  return {g,el,requests,createOptions,saveCalls,completeCalls,get peak(){return peak;},world:()=>world,click(id){el(id).listeners.click.call(el(id),{preventDefault(){}});},tick(){now+=20;raf(now);}};
 }

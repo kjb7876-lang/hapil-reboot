@@ -83,6 +83,7 @@
     var actorPresentation=global.HapilActors?global.HapilActors.create(images):null;
     var projectilePresentation=global.HapilProjectiles?global.HapilProjectiles.create(images):null;
     var bossSkillPresentation=global.HapilBossSkills?global.HapilBossSkills.create(images):null;
+    var combatPresentation=global.HapilCombatPresentationV36?global.HapilCombatPresentationV36.create(images):null;
     if (!ctx) throw new Error('이 브라우저에서 2D 전투 화면을 만들 수 없습니다.');
     // Static colour veils are created once, not per bullet/frame. Terrain art
     // remains recognizable while the lower dodge field recedes behind shots.
@@ -717,6 +718,7 @@
     }
     function drawAuthoredEffect(e,world){
       if(!world.campaign)return false;
+      if(e.kind==='kill'&&combatPresentation&&world.campaign&&world.combatRevision===31)return true;
       if(e.kind==='hit'||e.kind==='kill')return drawImpact(e);
       if(e.kind==='memory'&&(drawStoryMemory(e,world)||drawMemoryArrow8(e)))return true;
       var key=null,size=72,age=e.age||0,y=e.y;
@@ -864,6 +866,11 @@
     }
     function drawShots(world) {
       var shots=world.shots||[],entry=global.HapilStoryAssets&&global.HapilStoryAssets.forWorld(world);
+      if(combatPresentation&&world.campaign&&world.combatRevision===31){
+        for(var ci=0;ci<shots.length;ci++)if(combatPresentation.drawShot(ctx,world,shots[ci]))mapMetrics.playerShotDraws++;
+        mapMetrics.playerShotAsset=entry&&entry.playerShot?entry.playerShot.key:'fxWindArrow8V6';
+        return;
+      }
       if(entry&&entry.playerShot){
         var own=ownPlayerShot(world);if(!own)return;
         for(var si=0;si<shots.length;si++){var ss=shots[si],dw=own.spec.displayWidth||26,dh=dw*2/3;ctx.save();ctx.translate(ss.x,ss.y);ctx.rotate(Number.isFinite(ss.angle)?ss.angle:Math.atan2(ss.vy||-1,ss.vx||0));ctx.drawImage(own.canvas,-dw*.8,-dh/2,dw,dh);ctx.restore();mapMetrics.playerShotDraws++;}
@@ -1034,6 +1041,7 @@
       if(actorPresentation&&actorPresentation.beginFrame)actorPresentation.beginFrame();
       if(projectilePresentation&&projectilePresentation.beginFrame)projectilePresentation.beginFrame();
       if(bossSkillPresentation&&bossSkillPresentation.beginFrame)bossSkillPresentation.beginFrame();
+      if(combatPresentation)combatPresentation.beginFrame(world,lightweight);
       var sourceKey=h14TerrainKey(world),sourceReady=sourceKey&&readyTerrainImage(images,sourceKey);
       if(!cached&&!sourceReady&&!usesConnected(world)&&!(world&&world.campaign&&world.bossIndex>=3))makeBackground();ctx.setTransform(ratio,0,0,ratio,0,0);ctx.globalAlpha=1;drawTerrain(world);
       drawDreamscape(world,time);mapMetrics.bossAccent=null;mapMetrics.atlasFxDraws=0;mapMetrics.atlasFxFamilies='';
@@ -1045,10 +1053,17 @@
       if(!world||(!world.boss&&world.stage!=='bossIntro'))mapMetrics.bossArt=null;
       if(!world){titleScene(time||0);return;}
       if(world.stage==='bossIntro'){drawPlayerBody(world,world.time||0);bossEntrance(world);drawPlayerCore(world,presentation);return;}
-      drawRoute(world);drawBossAccent(world);if(projectilePresentation&&projectilePresentation.drawBossCast)projectilePresentation.drawBossCast(ctx,world,lightweight);drawEffects(world);if(bossSkillPresentation)bossSkillPresentation.draw(ctx,world,lightweight);transition(world);if(actorPresentation&&actorPresentation.drawSceneObjects)actorPresentation.drawSceneObjects(ctx,world);drawEnemies(world,world.time||0);drawSpellTheatre(world);drawPlayerBody(world,world.time||0);drawShots(world);drawHazards(world);drawBullets(world);bossHud(world);
+      drawRoute(world);drawBossAccent(world);if(projectilePresentation&&projectilePresentation.drawBossCast)projectilePresentation.drawBossCast(ctx,world,lightweight);drawEffects(world);if(bossSkillPresentation)bossSkillPresentation.draw(ctx,world,lightweight);transition(world);if(actorPresentation&&actorPresentation.drawSceneObjects)actorPresentation.drawSceneObjects(ctx,world);drawEnemies(world,world.time||0);drawSpellTheatre(world);drawPlayerBody(world,world.time||0);drawShots(world);
+      if(combatPresentation&&world.campaign&&world.combatRevision===31){
+        var hasDefeats=false;
+        for(var fi=0;fi<(world.effects||[]).length;fi++)if(world.effects[fi].kind==='kill'){hasDefeats=true;combatPresentation.drawDefeat(ctx,world,world.effects[fi]);}
+        if(hasDefeats)mapMetrics.defeatImpactDraws=combatPresentation.getMetrics().defeatDraws;
+        combatPresentation.drawContacts(ctx,world);
+      }
+      drawHazards(world);drawBullets(world);bossHud(world);
       drawPlayerCore(world,presentation);
     }
-    return {resize:function(cssW,cssH,dpr){ratio=Math.min(1.5,Math.max(1,dpr||1))*cssW/W;var nextWidth=Math.max(1,Math.round(W*ratio)),nextHeight=Math.max(1,Math.round(H*ratio));if(canvas.width!==nextWidth)canvas.width=nextWidth;if(canvas.height!==nextHeight)canvas.height=nextHeight;canvas.style.width='100%';canvas.style.height='100%';ctx.imageSmoothingEnabled=true;},draw:draw,getMetrics:function(){return Object.assign({},mapMetrics,{warningFootprints:warningFootprints.map(function(record){return Object.assign({},record);}),playerFeedback:mapMetrics.playerFeedback?Object.assign({},mapMetrics.playerFeedback):null,actorPresentation:actorPresentation?actorPresentation.getMetrics():null,pressureLayerCache:Object.assign({},mapMetrics.pressureLayerCache),projectilePresentation:projectileMetrics(),bossSkillsPresentation:bossSkillPresentation?bossSkillPresentation.getMetrics():null});},destroy:function(){Object.keys(impactSheets).forEach(function(k){impactSheets[k].frames.forEach(function(c){c.width=1;c.height=1;});});impactSheets=Object.create(null);releasePressureLayer();pressureReplayMetrics=null;if(playerShotStamp){playerShotStamp.width=1;playerShotStamp.height=1;playerShotStamp=null;}playerShotStampKey=null;hudTextLayout=null;narrativeTextLayout=null;warningFootprints.length=0;warningFootprintPool.length=0;imminentWarnings.length=0;if(projectilePresentation&&projectilePresentation.destroy)projectilePresentation.destroy();if(bossSkillPresentation&&bossSkillPresentation.destroy)bossSkillPresentation.destroy();bossSkillPresentation=null;releaseSourceTerrain();cached=false;canvas.width=1;canvas.height=1;back.width=1;back.height=1;foreground.width=1;foreground.height=1;if(sinFloor){sinFloor.width=1;sinFloor.height=1;sinFloor=null;}sinFloorSource=null;sinFloorTone=null;for(var i=0;i<strips.length;i++){strips[i].width=1;strips[i].height=1;}strips.length=0;actorPresentation=null;projectilePresentation=null;images={};}};
+    return {resize:function(cssW,cssH,dpr){ratio=Math.min(1.5,Math.max(1,dpr||1))*cssW/W;var nextWidth=Math.max(1,Math.round(W*ratio)),nextHeight=Math.max(1,Math.round(H*ratio));if(canvas.width!==nextWidth)canvas.width=nextWidth;if(canvas.height!==nextHeight)canvas.height=nextHeight;canvas.style.width='100%';canvas.style.height='100%';ctx.imageSmoothingEnabled=true;},draw:draw,getMetrics:function(){return Object.assign({},mapMetrics,{warningFootprints:warningFootprints.map(function(record){return Object.assign({},record);}),playerFeedback:mapMetrics.playerFeedback?Object.assign({},mapMetrics.playerFeedback):null,actorPresentation:actorPresentation?actorPresentation.getMetrics():null,pressureLayerCache:Object.assign({},mapMetrics.pressureLayerCache),projectilePresentation:projectileMetrics(),bossSkillsPresentation:bossSkillPresentation?bossSkillPresentation.getMetrics():null,combatPresentation:combatPresentation?combatPresentation.getMetrics():null});},destroy:function(){if(combatPresentation)combatPresentation.destroy();combatPresentation=null;Object.keys(impactSheets).forEach(function(k){impactSheets[k].frames.forEach(function(c){c.width=1;c.height=1;});});impactSheets=Object.create(null);releasePressureLayer();pressureReplayMetrics=null;if(playerShotStamp){playerShotStamp.width=1;playerShotStamp.height=1;playerShotStamp=null;}playerShotStampKey=null;hudTextLayout=null;narrativeTextLayout=null;warningFootprints.length=0;warningFootprintPool.length=0;imminentWarnings.length=0;if(projectilePresentation&&projectilePresentation.destroy)projectilePresentation.destroy();if(bossSkillPresentation&&bossSkillPresentation.destroy)bossSkillPresentation.destroy();bossSkillPresentation=null;releaseSourceTerrain();cached=false;canvas.width=1;canvas.height=1;back.width=1;back.height=1;foreground.width=1;foreground.height=1;if(sinFloor){sinFloor.width=1;sinFloor.height=1;sinFloor=null;}sinFloorSource=null;sinFloorTone=null;for(var i=0;i<strips.length;i++){strips[i].width=1;strips[i].height=1;}strips.length=0;actorPresentation=null;projectilePresentation=null;images={};}};
   }
   global.HapilRenderer={create:create,terrainContracts:H14_TERRAIN,cultTerrainContracts:CULT_TERRAIN,chapter3TerrainContracts:CHAPTER3_TERRAIN,terrainAssetKeysForEncounter:terrainAssetKeysForEncounter,invalidTerrainAsset:invalidTerrainAsset};
 })(typeof window!=='undefined'?window:globalThis);
