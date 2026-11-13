@@ -700,6 +700,7 @@
         turbo:function(n){turbo=Math.max(0,Math.min(600,n|0));return turbo;},
         lose:function(){if(!state||mode!=='playing')return null;state.player.hp=0;state.stage='lost';state.stageTick=0;state.events.push('lose');consume();return snapshot();},
         setTheme:function(theme){if(!state)return null;themeOverride=theme?{stage:state.stageIndex,bg:theme.bg,tint:theme.tint,fx:theme.fx}:null;backgroundStage=-1;fxStage=-1;return snapshot();},
+        sheet:function(key){var img=images[key];if(!img)return null;var x=sheetOf(key,img);return {frames:x.frames,cw:x.cw,ch:x.ch,fps:x.fps,width:img.width,height:img.height};},
         stageKeys:stageKeys,weather:Object.keys(WEATHER)};
     }
   };
