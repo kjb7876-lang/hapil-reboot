@@ -1,0 +1,46 @@
+{
+ "actors": {
+  "p5_cult": {"src": "media/chapter3-v18/u202-atlas.png", "cell": [0, 0, 2, 2]},
+  "p5_archon": {"src": "media/chapter3-v18/u204-atlas.png", "cell": [0, 0, 2, 2]},
+  "p5_common": {"src": "media/chapter3-v18/u205-atlas.png", "cell": [1, 0, 2, 2]},
+  "p5_upper": {"src": "media/story-v19/upper-guardian.webp"},
+  "p5_grand": {"src": "media/actors-v7/guard-idle.png"},
+  "p5_furnace": {"src": "media/story-v19/chrono-engine.webp"},
+  "p5_neuron": {"src": "media/story-v19/neural-orb.webp"},
+  "p5_keeper": {"src": "media/chapter3-v18/u201-atlas.png", "cell": [0, 0, 2, 2]},
+  "p5_rings": {"src": "media/story-v19/command-ring.webp"}
+ },
+ "mobs": {
+  "p5_acolyte": {"src": "media/chapter3-v18/u202-atlas.png", "cell": [1, 1, 2, 2]},
+  "p5_reaper": {"src": "media/chapter3-v18/u205-atlas.png", "cell": [0, 0, 2, 2]},
+  "p5_fragment": {"src": "media/story-v19/memory-fragment.webp", "size": 110}
+ },
+ "props": {
+  "p5_hand": {"src": "media/story-v19/chrono-shard.webp"},
+  "p5_ring": {"src": "media/story-v19/command-ring.webp", "size": 160}
+ },
+ "rewards": {
+  "p5_core": {"src": "media/story-v19/chrono-engine.webp"},
+  "p5_clock": {"src": "media/story-v19/command-ring.webp"},
+  "p5_sand": {"src": "media/fx-v8/vortex.webp", "cell": [3, 1, 4, 4]},
+  "p5_gate": {"src": "media/story-v19/neural-obelisk.webp"},
+  "p5_furnace": {"src": "media/fx-v8/ember.webp", "cell": [1, 1, 4, 4]},
+  "p5_edict": {"src": "media/projectiles-drive-v10/false_angel_needle_edictfeather.png"},
+  "p5_shard": {"src": "media/story-v19/memory-fragment.webp"},
+  "p5_ringkey": {"src": "media/fx-v8/unlock.webp", "cell": [1, 1, 4, 4]},
+  "p5_letter": {"src": "media/projectiles-hapil1-v25/sloth-tissue.webp"},
+  "p5_secondhand": {"src": "media/story-v19/chrono-shard.webp"}
+ },
+ "bgs": {
+  "p5_academy": {"src": "media/story-v19/academy-map.jpg"},
+  "p5_outer": {"src": "media/story-v19/academy-map.jpg", "focus": [0.0, 0.5]},
+  "p5_forest": {"src": "media/story-v19/lower-map.jpg"},
+  "p5_layers": {"src": "media/story-v19/upper-map.jpg"},
+  "p5_workshop": {"src": "media/story-v19/workshop-map.jpg"},
+  "p5_neural": {"src": "media/story-v19/neural-map.jpg", "focus": [0.62, 0.5]},
+  "p5_graveyard": {"src": "media/story-v19/deletion-map.jpg"},
+  "p5_ritual": {"src": "media/story-v19/rings-map.jpg"},
+  "p5_corridor": {"src": "media/story-v19/arbelia-map.jpg"},
+  "p5_core": {"src": "media/story-v19/siren-map.webp"}
+ }
+}

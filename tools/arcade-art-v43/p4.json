@@ -1,0 +1,27 @@
+{
+ "actors": {
+  "p4_knight": {"src": "media/story-v19/knight-charge.webp"}
+ },
+ "mobs": {
+  "p4_shade": {"src": "media/story-v19/knight-recover.webp", "size": 150},
+  "p4_villager": {"src": "media/actors-v7/echo-idle.png", "size": 140},
+  "p4_soul": {"src": "media/story-v19/insomnia-soul.webp", "size": 140}
+ },
+ "props": {
+  "p4_sword": {"src": "media/story-v19/knight-sword.png", "size": 200}
+ },
+ "rewards": {
+  "p4_hando": {"src": "media/story-v19/player-hando-slash.png"},
+  "p4_roseseal": {"src": "media/story-v19/cult-rose.webp"},
+  "p4_sixcuts": {"src": "media/story-v19/knight-slash.webp"},
+  "p4_talisman": {"src": "media/projectiles-hapil1-v25/sloth-tissue.webp"},
+  "p4_core": {"src": "media/story-v19/insomnia-gaze.webp"}
+ },
+ "bgs": {
+  "p4_field": {"src": "media/maps/map05.webp"},
+  "p4_goblin": {"src": "media/story-v19/goblin-map.jpg", "focus": [0.55, 0.5]},
+  "p4_rampart": {"src": "media/story-v19/knight-map.jpg", "focus": [0.5, 0.6]},
+  "p4_harbor": {"src": "media/story-v19/insomnia-map.jpg", "focus": [0.95, 0.15]},
+  "p4_fogvillage": {"src": "media/story-v19/insomnia-map.jpg", "focus": [0.35, 0.55]}
+ }
+}

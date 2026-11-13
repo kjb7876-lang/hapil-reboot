@@ -1,0 +1,50 @@
+{
+ "actors": {
+  "p1_tree": {"src": "media/actors-v7/denial-idle.png"},
+  "p1_horn": {"src": "media/actors-v6/horn-idle.png"},
+  "p1_chaser": {"src": "media/actors-v7/guard-idle.png"},
+  "p1_comrade": {"src": "media/actors-v7/echo-idle.png"},
+  "p1_gate": {"src": "media/balrog-rain.webp"},
+  "p1_staff": {"src": "media/actors-v7/vial-idle.png"},
+  "p1_seraph": {"src": "media/actors-v7/lucifer-attack.png"}
+ },
+ "mobs": {
+  "p1_root": {"src": "media/encounter-signature-v11/horn-swamp.png", "size": 140},
+  "p1_reed": {"src": "media/fx-v8/reed.webp", "cell": [1, 1, 4, 4], "size": 140},
+  "p1_face": {"src": "media/encounter-signature-v11/lucifer-mask-shard.png", "size": 140},
+  "p1_vial": {"src": "media/encounter-signature-v11/horn-reed-needle.png", "size": 140},
+  "p1_nurse": {"src": "media/actors-v7/vial-walk.png", "size": 180, "flip": true}
+ },
+ "props": {
+  "p1_syringe": {"src": "media/projectiles-drive-v10/false_angel_needle_edictfeather.png", "size": 140},
+  "p1_shard": {"src": "media/weapon-v12/lucifer-shard.png", "size": 160}
+ },
+ "rewards": {
+  "p1_sap": {"src": "media/fx-v6/swamp-ripple.png", "cell": [1, 1, 4, 4]},
+  "p1_portal": {"src": "media/fx-v8/unlock.webp", "cell": [1, 1, 4, 4]},
+  "p1_reedr": {"src": "media/fx-v6/reed.png", "cell": [0, 0, 4, 4]},
+  "p1_chainr": {"src": "media/combat/fx05-parry-ring-atlas.webp", "cell": [1, 0, 2, 2]},
+  "p1_comrades": {"src": "media/combat/player-combination-icons-v2-atlas.webp", "cell": [0, 0, 2, 2]},
+  "p1_ember": {"src": "media/fx-v8/ember.webp", "cell": [2, 1, 4, 4]},
+  "p1_vortexr": {"src": "media/fx-v8/vortex.webp", "cell": [3, 1, 4, 4]},
+  "p1_lamp": {"src": "media/encounter-signature-v11/lucifer-ring.png"},
+  "p1_vialr": {"src": "media/encounter-signature-v11/horn-reed-needle.png"},
+  "p1_seal": {"src": "media/projectiles-drive-v10/false_angel_orb_sealedpearl.png"},
+  "p1_moon": {"src": "media/projectiles-drive-v9/lucifer-orb-eclipseiris-atlas.png", "cell": [0, 0, 4, 1]},
+  "p1_sigil": {"src": "media/combat/fx05-parry-ring-atlas.webp", "cell": [0, 1, 2, 2]}
+ },
+ "bgs": {
+  "p1_garden": {"src": "media/ruins.webp"},
+  "p1_cave": {"src": "media/hapil1-v14/maps/violet.webp"},
+  "p1_swamp": {"src": "media/hapil1-v14/maps/horn.webp"},
+  "p1_castle": {"src": "media/maps/map05.webp"},
+  "p1_grave": {"src": "media/forest.jpg"},
+  "p1_pillars": {"src": "media/maps/map07.webp"},
+  "p1_summon": {"src": "media/hapil1-v14/maps/balrog.webp"},
+  "p1_ward": {"src": "media/hapil1-v14/maps/mask.png"},
+  "p1_injection": {"src": "media/maps/map09.webp"},
+  "p1_memory": {"src": "media/maps/map06.webp"},
+  "p1_city": {"src": "media/maps/map12.webp"},
+  "p1_mask": {"src": "media/hapil1-v14/maps/lucifer.webp"}
+ }
+}
