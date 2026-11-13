@@ -6,6 +6,8 @@
   움직이는 그림: 위 항목에 "strip":칸수 를 더하면 src(자른 뒤)가 가로로 칸수만큼 이어진 시트라는 뜻이고,
                "frames":[그림 항목, …] 을 주면 낱장 여러 개를 차례로 잇는다. "fps":초당 장수(기본 6).
                결과는 가로로 이어 붙인 한 장이고 manifest에 frames·cell·fps가 적힌다(화면 쪽이 돌려 가며 그린다).
+  동작 그림: 인물·몹 항목에 "motions":{"side":{그림 항목},"attack":{…}} → <키>@side.webp (옆 걷기는 오른쪽을 보게, 필요하면 "flip":true).
+  아이템: "items":{"heart":{…}} → heart.webp.
   배경 항목: {"src": 원화 경로, "focus":[0~1,0~1](자를 때 중심, 기본 0.5,0.5)}
 결과: media/arcade-v43/<키>.webp, bg-<키>.jpg, reward-<키>.webp, manifest.json(원본 경로·해시).
 실행: python3 tools/build-arcade-art-v43.py  (저장소 루트에서). 문제가 있으면 목록을 찍고 1로 끝난다."""
@@ -13,8 +15,8 @@ import glob, hashlib, json, os, sys
 from PIL import Image
 
 OUT = 'media/arcade-v43'
-LONG = {'actors': 260, 'mobs': 150, 'props': 200, 'rewards': 96}
-LIMIT = {'actors': 90000, 'mobs': 90000, 'props': 90000, 'rewards': 40000, 'bgs': 130000}
+LONG = {'actors': 260, 'mobs': 150, 'props': 200, 'rewards': 96, 'items': 72}
+LIMIT = {'actors': 90000, 'mobs': 90000, 'props': 90000, 'rewards': 40000, 'bgs': 130000, 'items': 40000}
 
 def sha(path):
     return hashlib.sha256(open(path, 'rb').read()).hexdigest()
@@ -77,7 +79,14 @@ def main():
         for group, entries in table.items():
             if group not in LIMIT:
                 problems.append(f'{path}: unknown group {group}'); continue
+            todo = []
             for key, spec in entries.items():
+                todo.append((key, spec))
+                # 동작 그림: "motions": {"side": {그림 항목}, "attack": {…}} → <키>@side.webp. 크기는 본 그림을 따른다.
+                for mname, mspec in (spec.get('motions') or {}).items():
+                    extra_spec = dict(mspec); extra_spec.setdefault('size', spec.get('size', LONG.get(group, 150)))
+                    todo.append((key + '@' + mname, extra_spec))
+            for key, spec in todo:
                 name = ('bg-' + key + '.jpg') if group == 'bgs' else ('reward-' + key + '.webp') if group == 'rewards' else key + '.webp'
                 if name in seen:
                     problems.append(f'{path}: {name} already given by {seen[name]}'); continue
@@ -120,6 +129,7 @@ def main():
                         problems.append(f'{name}: {os.path.getsize(out)} bytes is over {LIMIT[group]}')
                     manifest[name] = {'group': group, 'source': spec['src'], 'sourceSha256': sha(spec['src']), 'size': list(im.size), 'bytes': os.path.getsize(out), 'table': path}
                     if group != 'bgs': manifest[name].update(extra)
+                    if spec.get('motions'): manifest[name]['motions'] = sorted(spec['motions'])
                 except Exception as e:
                     problems.append(f'{path}: {key}: {e}')
     for f in os.listdir(OUT):
