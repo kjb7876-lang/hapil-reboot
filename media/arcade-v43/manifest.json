@@ -43,6 +43,105 @@
   "sourceSha256": "1d025b46186a713241d901fb670476a5709e99c8e847a6a9291cb78b14c36e22",
   "table": "tools/arcade-art-v43/base.json"
  },
+ "bg-p3_gate.jpg": {
+  "bytes": 54309,
+  "group": "bgs",
+  "size": [
+   480,
+   800
+  ],
+  "source": "media/chapter3-v18/gate.jpg",
+  "sourceSha256": "0eedfd6b9ec263de1a43af5af6b8eadd2327d30cbf0c2783e167833516a49ac6",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "bg-p3_migration.jpg": {
+  "bytes": 54741,
+  "group": "bgs",
+  "size": [
+   480,
+   800
+  ],
+  "source": "media/chapter3-v18/migration.jpg",
+  "sourceSha256": "7f2ca446df7548ed3914b5f0603ed945d306a0393da7bf15fcea05e646a042d1",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "bg-p3_nexus.jpg": {
+  "bytes": 51425,
+  "group": "bgs",
+  "size": [
+   480,
+   800
+  ],
+  "source": "media/chapter3-v18/nexus.jpg",
+  "sourceSha256": "afa5dab58544cf1294e278e98ee74a30df99854ff984183051435893d5dedf83",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "bg-p3_passage.jpg": {
+  "bytes": 55655,
+  "group": "bgs",
+  "size": [
+   480,
+   800
+  ],
+  "source": "media/chapter3-v18/gate.jpg",
+  "sourceSha256": "0eedfd6b9ec263de1a43af5af6b8eadd2327d30cbf0c2783e167833516a49ac6",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "bg-p3_rampart.jpg": {
+  "bytes": 43786,
+  "group": "bgs",
+  "size": [
+   480,
+   800
+  ],
+  "source": "media/chapter3-v18/nexus.jpg",
+  "sourceSha256": "afa5dab58544cf1294e278e98ee74a30df99854ff984183051435893d5dedf83",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "bg-p3_war.jpg": {
+  "bytes": 50096,
+  "group": "bgs",
+  "size": [
+   480,
+   800
+  ],
+  "source": "media/chapter3-v18/war.jpg",
+  "sourceSha256": "50652acebcb60c2f2e51363cf3253a0a097706b43bffb017d4f4a5c750b338e4",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "bg-p6_core.jpg": {
+  "bytes": 35235,
+  "group": "bgs",
+  "size": [
+   480,
+   800
+  ],
+  "source": "media/story-v19/pair-map.jpg",
+  "sourceSha256": "9df293ea34b10f041410137beec97f9dfab9e8fc4605547dae3ed0fdfa31d2a3",
+  "table": "tools/arcade-art-v43/p6.json"
+ },
+ "bg-p6_hall.jpg": {
+  "bytes": 59389,
+  "group": "bgs",
+  "size": [
+   480,
+   800
+  ],
+  "source": "media/story-v19/chief-map.jpg",
+  "sourceSha256": "de3390d9eebc3a1263413f9e6782b70c3b6d3ea9a1a937c6682b207214381a23",
+  "table": "tools/arcade-art-v43/p6.json"
+ },
+ "bg-p6_siege.jpg": {
+  "bytes": 50096,
+  "group": "bgs",
+  "size": [
+   480,
+   800
+  ],
+  "source": "media/chapter3-v18/war.jpg",
+  "sourceSha256": "50652acebcb60c2f2e51363cf3253a0a097706b43bffb017d4f4a5c750b338e4",
+  "table": "tools/arcade-art-v43/p6.json"
+ },
  "chief.webp": {
   "bytes": 31734,
   "group": "actors",
@@ -329,6 +428,226 @@
   "sourceSha256": "db3b18311ce771e77690eb1a6e4943d8d8a217fce3bd8ae2ff14d46158b6a56e",
   "table": "tools/arcade-art-v43/base.json"
  },
+ "p3_body.webp": {
+  "bytes": 23750,
+  "group": "actors",
+  "size": [
+   260,
+   190
+  ],
+  "source": "media/chapter3-v18/migration-core.png",
+  "sourceSha256": "101ab5a8742368d192b585fe4a909ef39213f122bcbe5bee1d934b0838b1efa4",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p3_bomber.webp": {
+  "bytes": 7818,
+  "group": "mobs",
+  "size": [
+   140,
+   94
+  ],
+  "source": "media/chapter3-v18/drone-attack.png",
+  "sourceSha256": "b70abecbf2f1dc6b02da9378a1b098be992729297c2b8dade9dd14a956915874",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p3_casing.webp": {
+  "bytes": 752,
+  "group": "props",
+  "size": [
+   73,
+   19
+  ],
+  "source": "media/projectiles-drive-v10/false_angel_needle_edictfeather.png",
+  "sourceSha256": "d04e9be769b6d88c4469c8fe938086c7b56e4fd743fcb2bee73f644d3454edb9",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p3_core.webp": {
+  "bytes": 11854,
+  "group": "props",
+  "size": [
+   160,
+   113
+  ],
+  "source": "media/chapter3-v18/migration-core.png",
+  "sourceSha256": "101ab5a8742368d192b585fe4a909ef39213f122bcbe5bee1d934b0838b1efa4",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p3_defense.webp": {
+  "bytes": 12508,
+  "group": "actors",
+  "size": [
+   124,
+   194
+  ],
+  "source": "media/chapter3-v18/u204-atlas.png",
+  "sourceSha256": "2a70b0bd57b5909788141abd0f8681f4c4f72cc97dfff35634a4fa06fc04c34b",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p3_gate.webp": {
+  "bytes": 16526,
+  "group": "actors",
+  "size": [
+   260,
+   209
+  ],
+  "source": "media/chapter3-v18/memory-gate.png",
+  "sourceSha256": "ce3bfa2b39fc64d3f886fb286e1b836b7562728c8ab84005d49a91c9fbfb7fb8",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p3_lance.webp": {
+  "bytes": 6536,
+  "group": "props",
+  "size": [
+   200,
+   47
+  ],
+  "source": "media/chapter3-v18/lance.webp",
+  "sourceSha256": "450a97427236b1da1c3125c2f7eec52cef4baff2d8fd4168a4dc56c3a0268d5c",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p3_legion.webp": {
+  "bytes": 15446,
+  "group": "actors",
+  "size": [
+   211,
+   162
+  ],
+  "source": "media/chapter3-v18/u201-atlas.png",
+  "sourceSha256": "80f7321f14b7ebcb199e752ee81c875c7f7e5d3ad522ed88d96f0a3e14d69080",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p3_pod.webp": {
+  "bytes": 13348,
+  "group": "mobs",
+  "size": [
+   170,
+   154
+  ],
+  "source": "media/chapter3-v18/migration-core.png",
+  "sourceSha256": "101ab5a8742368d192b585fe4a909ef39213f122bcbe5bee1d934b0838b1efa4",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p3_rampart.webp": {
+  "bytes": 15410,
+  "group": "actors",
+  "size": [
+   181,
+   208
+  ],
+  "source": "media/chapter3-v18/u202-atlas.png",
+  "sourceSha256": "2996937c9ebd04cff93798d143ef7b51734e21385788b2dac0ed1c7b9009e8e5",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p3_sentry.webp": {
+  "bytes": 10414,
+  "group": "mobs",
+  "size": [
+   102,
+   180
+  ],
+  "source": "media/chapter3-v18/u204-atlas.png",
+  "sourceSha256": "2a70b0bd57b5909788141abd0f8681f4c4f72cc97dfff35634a4fa06fc04c34b",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p3_shard.webp": {
+  "bytes": 6642,
+  "group": "props",
+  "size": [
+   90,
+   140
+  ],
+  "source": "media/story-v19/memory-fragment.webp",
+  "sourceSha256": "19ace585f16604f969c2d3cefc17c05c37455c848490c45270ce35c5b39e621b",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p3_walker.webp": {
+  "bytes": 10668,
+  "group": "mobs",
+  "size": [
+   136,
+   140
+  ],
+  "source": "media/chapter3-v18/u205-atlas.png",
+  "sourceSha256": "8db8887ccff85d983414676e0d6e1761ca51aa6acf9991783a7cea2a6b92570f",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p6_bind.webp": {
+  "bytes": 16526,
+  "group": "actors",
+  "size": [
+   260,
+   209
+  ],
+  "source": "media/chapter3-v18/memory-gate.png",
+  "sourceSha256": "ce3bfa2b39fc64d3f886fb286e1b836b7562728c8ab84005d49a91c9fbfb7fb8",
+  "table": "tools/arcade-art-v43/p6.json"
+ },
+ "p6_demon.webp": {
+  "bytes": 9220,
+  "group": "mobs",
+  "size": [
+   150,
+   115
+  ],
+  "source": "media/chapter3-v18/u201-atlas.png",
+  "sourceSha256": "80f7321f14b7ebcb199e752ee81c875c7f7e5d3ad522ed88d96f0a3e14d69080",
+  "table": "tools/arcade-art-v43/p6.json"
+ },
+ "p6_demons.webp": {
+  "bytes": 27710,
+  "group": "actors",
+  "size": [
+   201,
+   260
+  ],
+  "source": "media/sins-v13/wrath-wolf-manifest.png",
+  "sourceSha256": "37146094be23e94ace3c4535645945af32b719e48c797132a601882e5bfda99b",
+  "table": "tools/arcade-art-v43/p6.json"
+ },
+ "p6_keeper.webp": {
+  "bytes": 9372,
+  "group": "mobs",
+  "size": [
+   131,
+   150
+  ],
+  "source": "media/chapter3-v18/u202-atlas.png",
+  "sourceSha256": "2996937c9ebd04cff93798d143ef7b51734e21385788b2dac0ed1c7b9009e8e5",
+  "table": "tools/arcade-art-v43/p6.json"
+ },
+ "p6_lance.webp": {
+  "bytes": 6368,
+  "group": "props",
+  "size": [
+   200,
+   47
+  ],
+  "source": "media/cult-v17/lance.webp",
+  "sourceSha256": "b1c98912111f3c661c418567e1d304d606705d7e3eb87c643caeaf8402f4acf7",
+  "table": "tools/arcade-art-v43/p6.json"
+ },
+ "p6_raider.webp": {
+  "bytes": 11848,
+  "group": "mobs",
+  "size": [
+   145,
+   150
+  ],
+  "source": "media/chapter3-v18/u205-atlas.png",
+  "sourceSha256": "8db8887ccff85d983414676e0d6e1761ca51aa6acf9991783a7cea2a6b92570f",
+  "table": "tools/arcade-art-v43/p6.json"
+ },
+ "p6_spear.webp": {
+  "bytes": 8970,
+  "group": "props",
+  "size": [
+   200,
+   192
+  ],
+  "source": "media/cult-v17/drive-spear.webp",
+  "sourceSha256": "507b0455ada4be3ff8876d1686aef6362539b57782333c849c48ba21ed352dd8",
+  "table": "tools/arcade-art-v43/p6.json"
+ },
  "pride.webp": {
   "bytes": 10976,
   "group": "actors",
@@ -339,6 +658,105 @@
   "source": "media/sins-v13/pride-atlas-512.png",
   "sourceSha256": "7f4ed7ef064882d4f3f31f6592b635dac0dcec61137fe3a3758d707632d17345",
   "table": "tools/arcade-art-v43/base.json"
+ },
+ "reward-p3_body.webp": {
+  "bytes": 5654,
+  "group": "rewards",
+  "size": [
+   96,
+   70
+  ],
+  "source": "media/chapter3-v18/migration-core.png",
+  "sourceSha256": "101ab5a8742368d192b585fe4a909ef39213f122bcbe5bee1d934b0838b1efa4",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "reward-p3_casing.webp": {
+  "bytes": 752,
+  "group": "rewards",
+  "size": [
+   73,
+   19
+  ],
+  "source": "media/projectiles-drive-v10/false_angel_needle_edictfeather.png",
+  "sourceSha256": "d04e9be769b6d88c4469c8fe938086c7b56e4fd743fcb2bee73f644d3454edb9",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "reward-p3_circuit.webp": {
+  "bytes": 4098,
+  "group": "rewards",
+  "size": [
+   44,
+   96
+  ],
+  "source": "media/story-v19/cult-circuit.webp",
+  "sourceSha256": "f705c72eb4d0e4501767034c84c102771130c634b893e811073d75cb8d085229",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "reward-p3_exorcism.webp": {
+  "bytes": 6792,
+  "group": "rewards",
+  "size": [
+   84,
+   96
+  ],
+  "source": "media/story-v19/command-ring.webp",
+  "sourceSha256": "337c866b9cb64eae70701c21fd87353f111be7ed9bf9f126ba60571ae0603eab",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "reward-p3_memory.webp": {
+  "bytes": 4028,
+  "group": "rewards",
+  "size": [
+   62,
+   96
+  ],
+  "source": "media/story-v19/memory-fragment.webp",
+  "sourceSha256": "19ace585f16604f969c2d3cefc17c05c37455c848490c45270ce35c5b39e621b",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "reward-p3_wall.webp": {
+  "bytes": 7288,
+  "group": "rewards",
+  "size": [
+   96,
+   73
+  ],
+  "source": "media/story-v19/ion-shield.webp",
+  "sourceSha256": "f56c5acaf90884bbf5c18a94691105360ccb00f87b30e9b44212aef159bb59d9",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "reward-p6_ego.webp": {
+  "bytes": 4028,
+  "group": "rewards",
+  "size": [
+   62,
+   96
+  ],
+  "source": "media/story-v19/memory-fragment.webp",
+  "sourceSha256": "19ace585f16604f969c2d3cefc17c05c37455c848490c45270ce35c5b39e621b",
+  "table": "tools/arcade-art-v43/p6.json"
+ },
+ "reward-p6_gate.webp": {
+  "bytes": 7288,
+  "group": "rewards",
+  "size": [
+   96,
+   73
+  ],
+  "source": "media/story-v19/ion-shield.webp",
+  "sourceSha256": "f56c5acaf90884bbf5c18a94691105360ccb00f87b30e9b44212aef159bb59d9",
+  "table": "tools/arcade-art-v43/p6.json"
+ },
+ "reward-p6_seal.webp": {
+  "bytes": 6508,
+  "group": "rewards",
+  "size": [
+   94,
+   84
+  ],
+  "source": "media/fx-v8/unlock.webp",
+  "sourceSha256": "b055e44ba21822ea8783bacf13d7318622400d83bde2437095ad13484607af31",
+  "table": "tools/arcade-art-v43/p6.json"
  },
  "rian.webp": {
   "bytes": 9576,
