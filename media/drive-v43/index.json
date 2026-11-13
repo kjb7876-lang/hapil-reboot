@@ -2857,6 +2857,24 @@
     128
    ],
    "scenes": "cult 최종보스 사몽 · S9 교주"
+  },
+  {
+   "id": "PJ-03",
+   "code": "PJ-03",
+   "name": "미카엘라 하트판 비행 8칸(alpha16 정리)",
+   "kind": "item",
+   "driveFileId": "1qlVt3rG1sARkvFtmhJ2xev_wzTKEmirw",
+   "zip": "PJ-03_heart_alpha16_v1.zip",
+   "hold": true,
+   "holdReason": "인계문: 비행 8→1 이음매 형태 차이, 게임 연결 미검증",
+   "frames": 8,
+   "cell": [
+    256,
+    256
+   ],
+   "file": "pj03-heart-fly8.png",
+   "verdict": "use",
+   "reviewNotes": "점수 아이템 그림으로 사용(하트가 바로 서도록 돌리지 않음). 적중 6칸은 미사용."
   }
  ]
 }

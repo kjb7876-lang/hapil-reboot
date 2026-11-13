@@ -8,7 +8,7 @@
                결과는 가로로 이어 붙인 한 장이고 manifest에 frames·cell·fps가 적힌다(화면 쪽이 돌려 가며 그린다).
   동작 그림: 인물·몹 항목에 "motions":{"side":{그림 항목},"attack":{…}} → <키>@side.webp (옆 걷기는 오른쪽을 보게, 필요하면 "flip":true).
   옆모습 그림: "facing":"right" 를 적으면 화면 쪽이 가는 방향에 맞춰 좌우를 뒤집는다.
-  아이템: "items":{"heart":{…}} → heart.webp.
+  아이템: "items":{"heart":{…}} → heart.webp. "turn":90 은 칸마다 시계 방향으로 돌린다.
   배경 항목: {"src": 원화 경로, "focus":[0~1,0~1](자를 때 중심, 기본 0.5,0.5)}
 결과: media/arcade-v43/<키>.webp, bg-<키>.jpg, reward-<키>.webp, manifest.json(원본 경로·해시).
 실행: python3 tools/build-arcade-art-v43.py  (저장소 루트에서). 문제가 있으면 목록을 찍고 1로 끝난다."""
@@ -63,6 +63,7 @@ def frames_of(spec):
         sheet, n = raw(spec), spec['strip']
         w = sheet.width // n
         cells = [sheet.crop((i * w, 0, i * w + w, sheet.height)) for i in range(n)]
+    if spec.get('turn'): cells = [c.rotate(-spec['turn'], expand=True) for c in cells]  # 시계 방향으로 돌린다(오른쪽으로 나는 그림을 아래로 떨어지게)
     union = None
     for c in cells:
         b = c.getchannel('A').point(lambda a: 255 if a > 24 else 0).getbbox()
