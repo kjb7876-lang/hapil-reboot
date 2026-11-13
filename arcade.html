@@ -26,7 +26,7 @@
     button.primary{background:#d8c49a;color:#17131f;border-color:#d8c49a;font-weight:600;min-width:220px;min-height:54px;font-size:17px}
     button:disabled{opacity:.5}
     #arcade-frame{position:relative}
-    #arcade-pause-button{position:absolute;top:5.5%;left:50%;transform:translateX(-50%);min-width:44px;min-height:36px;padding:0;background:rgba(10,10,24,.45);border-color:rgba(255,255,255,.22);color:rgba(255,255,255,.8)}
+    #arcade-pause-button{position:absolute;top:8.6%;left:2.6%;min-width:44px;min-height:36px;padding:0;background:rgba(10,10,24,.45);border-color:rgba(255,255,255,.22);color:rgba(255,255,255,.8)}
     #arcade-pause-button[hidden]{display:none}
   </style>
 </head>
@@ -40,13 +40,13 @@
     <div id="arcade-title" class="screen">
       <p class="kicker">HAPIL · ARCADE DANMAKU</p>
       <h1>합일</h1>
-      <p class="note">보스 셋, 스펠 아홉. 화면을 끌어 탄 사이를 지나세요.<br>공격은 자동이고, 흰 점만 맞지 않으면 됩니다.</p>
+      <p class="note">맵 셋 — 일반 몹, 중간 보스, 보스가 이어집니다.<br>화면을 끌어 피하세요. 공격은 자동, 흰 점만 안 맞으면 됩니다.</p>
       <div class="row" role="group" aria-label="난이도">
         <button type="button" data-difficulty="gentle" aria-pressed="false">여유</button>
         <button type="button" data-difficulty="normal" aria-pressed="true">기본</button>
         <button type="button" data-difficulty="hell" aria-pressed="false">지옥</button>
       </div>
-      <p class="note" id="difficulty-note">목숨 4 · 탄 보통 · 광선 3줄</p>
+      <p class="note" id="difficulty-note"></p>
       <button id="arcade-start" class="primary" type="button" disabled>불러오는 중…</button>
       <p class="note">최고 점수 <b id="title-best">00000000</b></p>
       <div class="row">
@@ -72,8 +72,8 @@
       <a class="button" href="index.html">스토리 모드</a>
     </div>
   </div>
-  <script src="src/audio-v37.js?v=20261113-arcade39"></script>
-  <script src="src/arcade-v38.js?v=20261113-arcade39"></script>
-  <script src="src/arcade-app-v38.js?v=20261113-arcade39"></script>
+  <script src="src/audio-v37.js?v=20261113-arcade40"></script>
+  <script src="src/arcade-v38.js?v=20261113-arcade40"></script>
+  <script src="src/arcade-app-v38.js?v=20261113-arcade40"></script>
 </body>
 </html>
