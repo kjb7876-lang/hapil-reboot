@@ -1,16 +1,24 @@
 {
  "actors": {
   "violet": {
-   "src": "media/boss.webp"
+   "src": "media/drive-v43/b02-down.webp",
+   "strip": 4,
+   "fps": 6
   },
   "balrog": {
-   "src": "media/balrog-idle.webp"
+   "src": "media/drive-v43/b08-down.webp",
+   "strip": 4,
+   "fps": 6
   },
   "mask": {
-   "src": "media/actors-v7/mask-idle.png"
+   "src": "media/drive-v43/b11-down.webp",
+   "strip": 4,
+   "fps": 6
   },
   "lucifer": {
-   "src": "media/actors-v7/lucifer-idle.png"
+   "src": "media/drive-v43/b12-down.webp",
+   "strip": 4,
+   "fps": 6
   },
   "asmodeus": {
    "src": "media/sins-v13/asmodeus-atlas-512.png",
@@ -34,19 +42,29 @@
    "src": "media/chapter3-v18/controller-idle.webp"
   },
   "goblin": {
-   "src": "media/story-v19/goblin.webp"
+   "src": "media/drive-v43/b33-down.webp",
+   "strip": 4,
+   "fps": 6
   },
   "insomnia": {
-   "src": "media/story-v19/insomnia-idle.webp"
+   "src": "media/drive-v43/b36-down.webp",
+   "strip": 4,
+   "fps": 6
   },
   "arbelia": {
-   "src": "media/story-v19/arbelia-idle.webp"
+   "src": "media/drive-v43/b45-down.webp",
+   "strip": 4,
+   "fps": 6
   },
   "siren": {
-   "src": "media/story-v19/siren-idle.webp"
+   "src": "media/drive-v43/b46-down.webp",
+   "strip": 4,
+   "fps": 6
   },
   "chief": {
-   "src": "media/story-v19/chief-idle.webp"
+   "src": "media/drive-v43/b50-down.webp",
+   "strip": 4,
+   "fps": 6
   },
   "executor": {
    "src": "media/story-v19/executor-idle.webp"
@@ -66,7 +84,9 @@
  },
  "mobs": {
   "horn": {
-   "src": "media/horn.webp",
+   "src": "media/drive-v43/m025-down.webp",
+   "strip": 4,
+   "fps": 6,
    "size": 260
   },
   "belphegor": {
@@ -94,7 +114,9 @@
    "size": 260
   },
   "spider": {
-   "src": "media/spider.webp",
+   "src": "media/drive-v43/m043-down.webp",
+   "strip": 4,
+   "fps": 6,
    "size": 140
   },
   "slime": {

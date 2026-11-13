@@ -1,55 +1,204 @@
 {
  "actors": {
-  "p2_demons": {"src": "media/chapter3-v18/u202-atlas.png", "cell": [0, 0, 2, 2]},
-  "p2_belphegor": {"src": "media/sins-v13/belphegor-atlas-512.png", "cell": [1, 0, 2, 2]},
-  "p2_leviathan": {"src": "media/sins-v13/leviathan-atlas-512.png", "cell": [1, 0, 2, 2]},
-  "p2_beelzebub": {"src": "media/sins-v13/beelzebub-atlas-512.png", "cell": [0, 0, 2, 2]},
-  "p2_greed": {"src": "media/sins-v13/mammon-atlas-512.png", "cell": [1, 0, 2, 2]},
-  "p2_mammon": {"src": "media/sins-v13/mammon-atlas-512.png", "cell": [1, 1, 2, 2], "flip": true},
-  "p2_wrath": {"src": "media/sins-v13/wrath-dragon-manifest.png"},
-  "p2_chairman": {"src": "media/sins-v13/pride-cyborg-atlas-512.png", "cell": [0, 0, 2, 2]},
-  "p2_core": {"src": "media/story-v19/neural-orb.webp"}
+  "p2_demons": {
+   "src": "media/drive-v43/b13-down.webp",
+   "strip": 4,
+   "fps": 6
+  },
+  "p2_belphegor": {
+   "src": "media/sins-v13/belphegor-atlas-512.png",
+   "cell": [
+    1,
+    0,
+    2,
+    2
+   ]
+  },
+  "p2_leviathan": {
+   "src": "media/drive-v43/b17-down.webp",
+   "strip": 4,
+   "fps": 6
+  },
+  "p2_beelzebub": {
+   "src": "media/drive-v43/b19-down.webp",
+   "strip": 4,
+   "fps": 6
+  },
+  "p2_greed": {
+   "src": "media/sins-v13/mammon-atlas-512.png",
+   "cell": [
+    1,
+    0,
+    2,
+    2
+   ]
+  },
+  "p2_mammon": {
+   "src": "media/sins-v13/mammon-atlas-512.png",
+   "cell": [
+    1,
+    1,
+    2,
+    2
+   ],
+   "flip": true
+  },
+  "p2_wrath": {
+   "src": "media/drive-v43/b23-down.webp",
+   "strip": 4,
+   "fps": 6
+  },
+  "p2_chairman": {
+   "src": "media/drive-v43/b27-down.webp",
+   "strip": 4,
+   "fps": 6
+  },
+  "p2_core": {
+   "src": "media/drive-v43/b26-down.webp",
+   "strip": 4,
+   "fps": 6
+  }
  },
  "mobs": {
-  "p2_trash": {"src": "media/hapil1-v14/fx/sloth-secondary.webp", "size": 150},
-  "p2_shard": {"src": "media/hapil1-v14/fx/envy-primary.webp", "size": 140},
-  "p2_maw": {"src": "media/hapil1-v14/fx/glutton-primary.webp", "size": 140},
-  "p2_heart": {"src": "media/projectiles-hapil1-v24/lust-broken-heart.webp", "size": 130},
-  "p2_coin": {"src": "media/hapil1-v14/fx/greed-primary.webp", "size": 140},
-  "p2_wolfire": {"src": "media/sins-v13/wrath-wolf-manifest.png", "size": 150},
-  "p2_bear": {"src": "media/sins-v13/wrath-bear-manifest.png", "size": 200},
-  "p2_sigil": {"src": "media/hapil1-v14/fx/pride-secondary.webp", "size": 180}
+  "p2_trash": {
+   "src": "media/drive-v43/m046-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 150
+  },
+  "p2_shard": {
+   "src": "media/drive-v43/m044-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 140
+  },
+  "p2_maw": {
+   "src": "media/drive-v43/m017-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 140
+  },
+  "p2_heart": {
+   "src": "media/drive-v43/m047-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 130
+  },
+  "p2_coin": {
+   "src": "media/hapil1-v14/fx/greed-primary.webp",
+   "size": 140
+  },
+  "p2_wolfire": {
+   "src": "media/drive-v43/m006-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 150
+  },
+  "p2_bear": {
+   "src": "media/sins-v13/wrath-bear-manifest.png",
+   "size": 200
+  },
+  "p2_sigil": {
+   "src": "media/drive-v43/m048-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 180
+  }
  },
  "props": {
-  "p2_sofa": {"src": "media/sins-v13/sloth-core.png", "size": 140},
-  "p2_knife": {"src": "media/sins-v13/envy-core.png", "size": 140},
-  "p2_pan": {"src": "media/sins-v13/glutton-core.png", "size": 140},
-  "p2_goldcoin": {"src": "media/sins-v13/mammon-projectile.png", "size": 120},
-  "p2_flame": {"src": "media/sins-v13/wrath-projectile.png", "size": 120},
-  "p2_electrode": {"src": "media/projectiles-drive-v10/false_angel_needle_edictfeather.png", "size": 128}
+  "p2_sofa": {
+   "src": "media/sins-v13/sloth-core.png",
+   "size": 140
+  },
+  "p2_knife": {
+   "src": "media/sins-v13/envy-core.png",
+   "size": 140
+  },
+  "p2_pan": {
+   "src": "media/sins-v13/glutton-core.png",
+   "size": 140
+  },
+  "p2_goldcoin": {
+   "src": "media/sins-v13/mammon-projectile.png",
+   "size": 120
+  },
+  "p2_flame": {
+   "src": "media/sins-v13/wrath-projectile.png",
+   "size": 120
+  },
+  "p2_electrode": {
+   "src": "media/projectiles-drive-v10/false_angel_needle_edictfeather.png",
+   "size": 128
+  }
  },
  "rewards": {
-  "p2_k_device": {"src": "media/story-v19/cult-circuit.webp"},
-  "p2_k_tissue": {"src": "media/projectiles-hapil1-v25/sloth-tissue.webp"},
-  "p2_k_glass": {"src": "media/story-v19/memory-fragment.webp"},
-  "p2_k_pan": {"src": "media/sins-v13/glutton-core.png"},
-  "p2_k_heel": {"src": "media/sins-v13/seoyun-core.png"},
-  "p2_k_coin": {"src": "media/sins-v13/mammon-projectile.png"},
-  "p2_k_cable": {"src": "media/chapter3-v18/memory-gate.png"},
-  "p2_k_seal": {"src": "media/encounter-signature-v11/balrog-fire.png"},
-  "p2_k_electrode": {"src": "media/projectiles-drive-v10/false_angel_needle_edictfeather.png"},
-  "p2_k_core": {"src": "media/chapter3-v18/migration-core.png", "box": [0, 0, 724, 724]}
+  "p2_k_device": {
+   "src": "media/story-v19/cult-circuit.webp"
+  },
+  "p2_k_tissue": {
+   "src": "media/projectiles-hapil1-v25/sloth-tissue.webp"
+  },
+  "p2_k_glass": {
+   "src": "media/story-v19/memory-fragment.webp"
+  },
+  "p2_k_pan": {
+   "src": "media/sins-v13/glutton-core.png"
+  },
+  "p2_k_heel": {
+   "src": "media/sins-v13/seoyun-core.png"
+  },
+  "p2_k_coin": {
+   "src": "media/sins-v13/mammon-projectile.png"
+  },
+  "p2_k_cable": {
+   "src": "media/chapter3-v18/memory-gate.png"
+  },
+  "p2_k_seal": {
+   "src": "media/encounter-signature-v11/balrog-fire.png"
+  },
+  "p2_k_electrode": {
+   "src": "media/projectiles-drive-v10/false_angel_needle_edictfeather.png"
+  },
+  "p2_k_core": {
+   "src": "media/chapter3-v18/migration-core.png",
+   "box": [
+    0,
+    0,
+    724,
+    724
+   ]
+  }
  },
  "bgs": {
-  "p2_chapel": {"src": "media/story-v19/rings-map.jpg"},
-  "p2_sloth": {"src": "media/hapil1-v14/maps/sloth.jpg"},
-  "p2_envy": {"src": "media/hapil1-v14/maps/envy.jpg"},
-  "p2_gluttony": {"src": "media/hapil1-v14/maps/gluttony.png"},
-  "p2_lust": {"src": "media/hapil1-v14/maps/lust.png"},
-  "p2_greed": {"src": "media/hapil1-v14/maps/greed.jpg"},
-  "p2_snow": {"src": "media/hapil1-v14/maps/greed-snow.jpg"},
-  "p2_wrath": {"src": "media/hapil1-v14/maps/wrath.png"},
-  "p2_pride": {"src": "media/hapil1-v14/maps/pride.jpg"},
-  "p2_core": {"src": "media/hapil1-v14/maps/pride-core.jpg"}
+  "p2_chapel": {
+   "src": "media/story-v19/rings-map.jpg"
+  },
+  "p2_sloth": {
+   "src": "media/hapil1-v14/maps/sloth.jpg"
+  },
+  "p2_envy": {
+   "src": "media/hapil1-v14/maps/envy.jpg"
+  },
+  "p2_gluttony": {
+   "src": "media/hapil1-v14/maps/gluttony.png"
+  },
+  "p2_lust": {
+   "src": "media/hapil1-v14/maps/lust.png"
+  },
+  "p2_greed": {
+   "src": "media/hapil1-v14/maps/greed.jpg"
+  },
+  "p2_snow": {
+   "src": "media/hapil1-v14/maps/greed-snow.jpg"
+  },
+  "p2_wrath": {
+   "src": "media/hapil1-v14/maps/wrath.png"
+  },
+  "p2_pride": {
+   "src": "media/hapil1-v14/maps/pride.jpg"
+  },
+  "p2_core": {
+   "src": "media/hapil1-v14/maps/pride-core.jpg"
+  }
  }
 }

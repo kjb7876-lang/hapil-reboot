@@ -1,33 +1,118 @@
 {
  "actors": {
-  "p8_chip": {"src": "media/story-v19/cult-circuit.webp", "size": 220},
-  "p8_collective": {"src": "media/story-v19/neural-orb.webp"},
-  "p8_lauren": {"src": "media/actors-v7/guard-idle.png"},
-  "p8_ion": {"src": "media/story-v19/ion-idle.webp"}
+  "p8_chip": {
+   "src": "media/drive-v43/b56-down.webp",
+   "strip": 4,
+   "fps": 6
+  },
+  "p8_collective": {
+   "src": "media/drive-v43/b58-down.webp",
+   "strip": 4,
+   "fps": 6
+  },
+  "p8_lauren": {
+   "src": "media/actors-v7/guard-idle.png"
+  },
+  "p8_ion": {
+   "src": "media/story-v19/ion-idle.webp"
+  }
  },
  "mobs": {
-  "p8_believer": {"src": "media/chapter3-v18/u204-atlas.png", "cell": [0, 0, 2, 2], "size": 140},
-  "p8_rose": {"src": "media/story-v19/cult-rose.webp", "size": 130},
-  "p8_priest": {"src": "media/chapter3-v18/u202-atlas.png", "cell": [1, 0, 2, 2], "size": 220}
+  "p8_believer": {
+   "src": "media/drive-v43/m003-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 140
+  },
+  "p8_rose": {
+   "src": "media/story-v19/cult-rose.webp",
+   "size": 130
+  },
+  "p8_priest": {
+   "src": "media/drive-v43/m014-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 220
+  }
  },
  "props": {
-  "p8_shield": {"src": "media/story-v19/ion-shield.webp", "size": 160},
-  "p8_stitch": {"src": "media/cult-v17/drive-stitch.webp", "size": 140}
+  "p8_shield": {
+   "src": "media/story-v19/ion-shield.webp",
+   "size": 160
+  },
+  "p8_stitch": {
+   "src": "media/cult-v17/drive-stitch.webp",
+   "size": 140
+  }
  },
  "rewards": {
-  "p8_egochip": {"src": "media/chapter3-v18/migration-core.png", "cell": [0, 0, 3, 1]},
-  "p8_trace": {"src": "media/story-v19/insomnia-soul.webp"},
-  "p8_hando": {"src": "media/story-v19/player-hando-slash.png"},
-  "p8_union": {"src": "media/chapter3-v18/memory-gate.png"},
-  "p8_goldcross": {"src": "media/story-v19/rian-cross.webp"},
-  "p8_triplets": {"src": "media/story-v19/memory-fragment.webp"}
+  "p8_egochip": {
+   "src": "media/chapter3-v18/migration-core.png",
+   "cell": [
+    0,
+    0,
+    3,
+    1
+   ]
+  },
+  "p8_trace": {
+   "src": "media/story-v19/insomnia-soul.webp"
+  },
+  "p8_hando": {
+   "src": "media/story-v19/player-hando-slash.png"
+  },
+  "p8_union": {
+   "src": "media/chapter3-v18/memory-gate.png"
+  },
+  "p8_goldcross": {
+   "src": "media/story-v19/rian-cross.webp"
+  },
+  "p8_triplets": {
+   "src": "media/story-v19/memory-fragment.webp"
+  }
  },
  "bgs": {
-  "p8_circuit": {"src": "media/story-v19/neural-map.jpg", "focus": [0.1, 0.5]},
-  "p8_collective": {"src": "media/story-v19/cult-map.jpg", "focus": [0.5, 0.5]},
-  "p8_castle": {"src": "media/story-v19/pair-map.jpg", "focus": [0.5, 0.5]},
-  "p8_approach": {"src": "media/story-v19/neural-map.jpg", "focus": [0.9, 0.5]},
-  "p8_harvest": {"src": "media/story-v19/deletion-map.jpg", "focus": [0.5, 0.5]},
-  "p8_core": {"src": "media/cult-v17/arena.jpg", "focus": [0.5, 0.5]}
+  "p8_circuit": {
+   "src": "media/story-v19/neural-map.jpg",
+   "focus": [
+    0.1,
+    0.5
+   ]
+  },
+  "p8_collective": {
+   "src": "media/story-v19/cult-map.jpg",
+   "focus": [
+    0.5,
+    0.5
+   ]
+  },
+  "p8_castle": {
+   "src": "media/story-v19/pair-map.jpg",
+   "focus": [
+    0.5,
+    0.5
+   ]
+  },
+  "p8_approach": {
+   "src": "media/story-v19/neural-map.jpg",
+   "focus": [
+    0.9,
+    0.5
+   ]
+  },
+  "p8_harvest": {
+   "src": "media/story-v19/deletion-map.jpg",
+   "focus": [
+    0.5,
+    0.5
+   ]
+  },
+  "p8_core": {
+   "src": "media/cult-v17/arena.jpg",
+   "focus": [
+    0.5,
+    0.5
+   ]
+  }
  }
 }
