@@ -1,0 +1,175 @@
+{
+ "actors": {
+  "p3_legion": {
+   "src": "media/chapter3-v18/u201-atlas.png",
+   "cell": [
+    0,
+    0,
+    2,
+    2
+   ]
+  },
+  "p3_rampart": {
+   "src": "media/chapter3-v18/u202-atlas.png",
+   "cell": [
+    0,
+    0,
+    2,
+    2
+   ]
+  },
+  "p3_defense": {
+   "src": "media/chapter3-v18/u204-atlas.png",
+   "cell": [
+    0,
+    0,
+    2,
+    2
+   ]
+  },
+  "p3_body": {
+   "src": "media/chapter3-v18/migration-core.png",
+   "cell": [
+    1,
+    0,
+    3,
+    1
+   ]
+  },
+  "p3_gate": {
+   "src": "media/drive-v43/b31-down.webp",
+   "strip": 4,
+   "fps": 6
+  }
+ },
+ "mobs": {
+  "p3_walker": {
+   "src": "media/chapter3-v18/u205-atlas.png",
+   "cell": [
+    0,
+    0,
+    2,
+    2
+   ],
+   "size": 140
+  },
+  "p3_bomber": {
+   "src": "media/chapter3-v18/drone-attack.png",
+   "size": 140
+  },
+  "p3_sentry": {
+   "src": "media/chapter3-v18/u204-atlas.png",
+   "cell": [
+    1,
+    1,
+    2,
+    2
+   ],
+   "size": 180
+  },
+  "p3_pod": {
+   "src": "media/chapter3-v18/migration-core.png",
+   "cell": [
+    0,
+    0,
+    3,
+    1
+   ],
+   "size": 170
+  }
+ },
+ "props": {
+  "p3_lance": {
+   "src": "media/chapter3-v18/lance.webp",
+   "size": 200
+  },
+  "p3_shard": {
+   "src": "media/story-v19/memory-fragment.webp",
+   "size": 140
+  },
+  "p3_casing": {
+   "src": "media/projectiles-drive-v10/false_angel_needle_edictfeather.png",
+   "size": 120
+  },
+  "p3_core": {
+   "src": "media/chapter3-v18/migration-core.png",
+   "cell": [
+    2,
+    0,
+    3,
+    1
+   ],
+   "size": 160
+  }
+ },
+ "rewards": {
+  "p3_casing": {
+   "src": "media/projectiles-drive-v10/false_angel_needle_edictfeather.png"
+  },
+  "p3_wall": {
+   "src": "media/story-v19/ion-shield.webp"
+  },
+  "p3_circuit": {
+   "src": "media/story-v19/cult-circuit.webp"
+  },
+  "p3_exorcism": {
+   "src": "media/story-v19/command-ring.webp"
+  },
+  "p3_body": {
+   "src": "media/chapter3-v18/migration-core.png",
+   "cell": [
+    1,
+    0,
+    3,
+    1
+   ]
+  },
+  "p3_memory": {
+   "src": "media/story-v19/memory-fragment.webp"
+  }
+ },
+ "bgs": {
+  "p3_war": {
+   "src": "media/chapter3-v18/war.jpg",
+   "focus": [
+    0.5,
+    0.5
+   ]
+  },
+  "p3_rampart": {
+   "src": "media/chapter3-v18/nexus.jpg",
+   "focus": [
+    0.0,
+    0.5
+   ]
+  },
+  "p3_passage": {
+   "src": "media/chapter3-v18/gate.jpg",
+   "focus": [
+    0.0,
+    0.5
+   ]
+  },
+  "p3_nexus": {
+   "src": "media/chapter3-v18/nexus.jpg",
+   "focus": [
+    0.55,
+    0.5
+   ]
+  },
+  "p3_migration": {
+   "src": "media/chapter3-v18/migration.jpg",
+   "focus": [
+    0.5,
+    0.5
+   ]
+  },
+  "p3_gate": {
+   "src": "media/chapter3-v18/gate.jpg",
+   "focus": [
+    0.5,
+    0.5
+   ]
+  }
+ }
+}

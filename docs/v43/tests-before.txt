@@ -1,0 +1,29 @@
+not ok 1 - v43 part 1: every wave, plain attack and named pattern leaves a lane for the hitbox
+not ok 2 - v43 part 1: a run through the part ends without error on every difficulty
+not ok 3 - v43 part 2: every wave, plain attack and named pattern leaves a lane for the hitbox
+not ok 4 - v43 part 2: a run through the part ends without error on every difficulty
+not ok 5 - v43 part 3: every wave, plain attack and named pattern leaves a lane for the hitbox
+not ok 6 - v43 part 3: a run through the part ends without error on every difficulty
+not ok 7 - v43 part 4: every wave, plain attack and named pattern leaves a lane for the hitbox
+not ok 8 - v43 part 4: a run through the part ends without error on every difficulty
+not ok 9 - v43 part 5: every wave, plain attack and named pattern leaves a lane for the hitbox
+not ok 10 - v43 part 5: a run through the part ends without error on every difficulty
+not ok 11 - v43 part 6: every wave, plain attack and named pattern leaves a lane for the hitbox
+not ok 12 - v43 part 6: a run through the part ends without error on every difficulty
+not ok 13 - v43 part 7: every wave, plain attack and named pattern leaves a lane for the hitbox
+not ok 14 - v43 part 7: a run through the part ends without error on every difficulty
+not ok 15 - v43 part 8: every wave, plain attack and named pattern leaves a lane for the hitbox
+not ok 16 - v43 part 8: a run through the part ends without error on every difficulty
+not ok 17 - v43 one stage per original scene: 55 stages in the original order, named by the scene title
+not ok 18 - v43 stages are mob waves then a guardian, or waves → mid boss → waves → boss; every stage carries a named pattern from its own scene
+not ok 19 - v43 the journey is three to four hours: stage lengths vary and add up
+not ok 20 - v43 every stage has its own look: background, tint and weather change from stage to stage, and the art is small
+not ok 21 - v43 clearing a stage gives its keepsake, and results add up to stars
+not ok 22 - v43 progress saves stage by stage, unlocks in order and survives a broken save
+not ok 23 - v43 a run can start at any stage, stop after a chosen number of stages, and replays exactly from a seed
+not ok 24 - v43 slow movement, the bomb, grazing, items and the named-pattern bonus still work
+not ok 25 - v43 difficulties, the phone mode, six colours and shapes, upright crosses, and nothing hits before it has formed
+not ok 26 - v43 one page: the journey with continue, stage select and locks; art loads a stage at a time; sound levels are ordered
+# tests 26
+# pass 0
+# fail 26

@@ -1,0 +1,104 @@
+{
+ "actors": {
+  "p7_car": {
+   "src": "media/story-v19/executor-prism.webp"
+  },
+  "p7_shadow": {
+   "src": "media/actors-v7/denial-idle.png"
+  },
+  "p7_alarm": {
+   "src": "media/chapter3-v18/memory-gate.png"
+  }
+ },
+ "mobs": {
+  "p7_fragment": {
+   "src": "media/story-v19/memory-fragment.webp"
+  },
+  "p7_shade": {
+   "src": "media/drive-v43/m001-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 150
+  },
+  "p7_bell": {
+   "src": "media/story-v19/command-ring.webp",
+   "size": 170
+  }
+ },
+ "props": {
+  "p7_sedan": {
+   "src": "media/story-v19/executor-prism.webp",
+   "box": [
+    118,
+    165,
+    70,
+    55
+   ]
+  },
+  "p7_signal": {
+   "src": "media/story-v19/executor-prism.webp",
+   "box": [
+    232,
+    40,
+    80,
+    140
+   ]
+  }
+ },
+ "rewards": {
+  "p7_r52": {
+   "src": "media/projectiles-hapil1-v25/sloth-tissue.webp"
+  },
+  "p7_r53": {
+   "src": "media/story-v19/executor-prism.webp",
+   "box": [
+    232,
+    40,
+    80,
+    140
+   ]
+  },
+  "p7_r54": {
+   "src": "media/chapter3-v18/migration-core.png",
+   "cell": [
+    0,
+    0,
+    3,
+    1
+   ]
+  },
+  "p7_r55": {
+   "src": "media/story-v19/memory-fragment.webp"
+  }
+ },
+ "bgs": {
+  "p7_crosswalk": {
+   "src": "media/story-v19/executor-map.jpg",
+   "focus": [
+    0.1,
+    0.5
+   ]
+  },
+  "p7_hotel": {
+   "src": "media/hapil1-v14/maps/wrath.png",
+   "focus": [
+    0.5,
+    0.5
+   ]
+  },
+  "p7_villa": {
+   "src": "media/hapil1-v14/maps/sloth.jpg",
+   "focus": [
+    0.3,
+    0.5
+   ]
+  },
+  "p7_rooftop": {
+   "src": "media/story-v19/executor-map.jpg",
+   "focus": [
+    0.5,
+    0.5
+   ]
+  }
+ }
+}

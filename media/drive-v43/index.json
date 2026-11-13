@@ -1,0 +1,2862 @@
+{
+ "generated": "2026-11-13",
+ "source": "Google Drive 스토리월드-dots작업/결과 (131P1Q5xkJX8eZlXwTVRWJsa48jiYjxWa), 읽기 전용으로 내려받아 검토",
+ "rules": "walk: <id>-down.webp 가로 4칸, 칸 256px, alpha<=16→0, WebP q88 m6 / structure·item·fx: 긴 변 384 이하 webp / tile: 1024 jpg q70",
+ "items": [
+  {
+   "id": "B01",
+   "code": "CX-0082MV",
+   "name": "뿌리의 문지기",
+   "kind": "boss",
+   "sourceKey": "demon_tree_root_seraph",
+   "driveFileId": "1VICQCRC7CPLvhZq4FCq89l12ZvyFOS7Y",
+   "zip": "CX-0082MV_B01_walk3dir_r1_HOLD.zip",
+   "hold": true,
+   "holdReason": "인계문 원문: \"conspicuous red/yellow alpha edge and wing-hole remnants; strict alpha<=16 zero not passed … support-foot alternation and loop closure require review\"",
+   "scenes": "dist · S1 정원·거미동굴",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b01-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 4%, 발끝 흔들림 1px, 가로 중심 흔들림 6.5px, 알파1~16 픽셀 16315개(→0 정리), 불투명 73%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B02",
+   "code": "CX-0082MV",
+   "name": "보라검천사",
+   "kind": "midboss",
+   "sourceKey": "6998402eb8e7_purple_sword_spider_angel",
+   "driveFileId": "1VSyl2An8IV3DC11JGi06o_e544aoRSy7",
+   "zip": "CX-0082MV_B02_walk3dir4_r2_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "인계문 원문: \"옆 걷기 반대발 교대는 옷·다리 중첩으로 약하며 … 뒷모습은 원본 전면/사선에서 새로 추론한 디자인\"",
+   "scenes": "dist01 · S1 정원·거미동굴",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b02-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 1%, 발끝 흔들림 0px, 가로 중심 흔들림 6.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 55%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B03",
+   "code": "CX-0082MV",
+   "name": "늪의 뿔악마 군주",
+   "kind": "midboss",
+   "sourceKey": "5168d3dce2f0_horned_swamp_demon",
+   "driveFileId": "15XJirvKkebtiYYVFtmdDsj23lRg-4lvM",
+   "zip": "CX-0082MV_B03_walk3dir_r1_HOLD.zip",
+   "hold": true,
+   "holdReason": "인계문 원문: \"HOLD: red/yellow alpha remnants and gray edge patches, strict alpha<=16zero requirement not passed\"",
+   "scenes": "dist · S1 정원·거미동굴",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b03-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 0px, 가로 중심 흔들림 2.0px, 알파1~16 픽셀 18423개(→0 정리), 불투명 85%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B04",
+   "code": "CX-0082MV",
+   "name": "핏빛 수호로 추격자",
+   "kind": "midboss",
+   "sourceKey": "693a5923c4c1_dist_blood_guardian_pursuer",
+   "driveFileId": "1ziIqBUTxFzm7QUXgZKL3Ci6pYbuWA6pd",
+   "zip": "CX-0082MV_B04_walk3dir_r1_HOLD.zip",
+   "hold": true,
+   "holdReason": "인계문 원문: \"HOLD: support-foot alternation weak, side/front same lead leg appears repeated\"",
+   "scenes": "dist · S1 정원·거미동굴",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b04-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 4%, 발끝 흔들림 1px, 가로 중심 흔들림 15.5px, 알파1~16 픽셀 14771개(→0 정리), 불투명 78%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B05",
+   "code": "CX-0082MV",
+   "name": "첫 동료의 악마잔영",
+   "kind": "midboss",
+   "sourceKey": "42daad5a3557_dist_fallen_comrade_demon_echo",
+   "driveFileId": "1vNtLUFN200zkJB8sCvhRPBH3MJcmwrTM",
+   "zip": "CX-0082MV_B05_walk3dir4_r1_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "meta 원문: \"Rear armor design newly inferred from the original front/oblique source; canonical rear view unavailable.\"",
+   "scenes": "dist04 · S1 정원·거미동굴",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b05-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 13px, 가로 중심 흔들림 11.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 50%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B06",
+   "code": "CX-0082MV",
+   "name": "숨이 끊긴 전령의 그림자",
+   "kind": "midboss",
+   "sourceKey": "cfb37917e7c0_dist_dying_messenger_shadow",
+   "driveFileId": "1HLE897Xj2_fXuNZcf9CAqrsNwMY-zwIG",
+   "zip": "CX-0082MV_B06_walk3dir_r1_HOLD.zip",
+   "hold": true,
+   "holdReason": "인계문 원문: \"HOLD: green/yellow alpha remnants and gray fringes\"",
+   "scenes": "dist · S1 정원·거미동굴",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b06-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 8%, 발끝 흔들림 36px, 가로 중심 흔들림 6.0px, 알파1~16 픽셀 18368개(→0 정리), 불투명 71%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반 / 떠다니는 망령이라 칸마다 발끝 높이가 36px(원본 384 기준) 출렁임. 게임 크기에서 약 10px 흔들림으로 유령 부유처럼 보여 허용"
+  },
+  {
+   "id": "B07",
+   "code": "CX-0082MV",
+   "name": "소환진 검은기둥",
+   "kind": "midboss",
+   "sourceKey": "",
+   "driveFileId": null,
+   "zip": null,
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "dist · S1 정원·거미동굴",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "걷기 ZIP 납품 없음"
+  },
+  {
+   "id": "B08",
+   "code": "CX-0082MV",
+   "name": "발록",
+   "kind": "boss",
+   "sourceKey": "bbebbf19f4e6_balrog_gatekeeper",
+   "driveFileId": "1Myzmw7lVEOBQjFrhHktO87mlePeExtiS",
+   "zip": "CX-0082MV_B08_walk3dir_r1_HOLD.zip",
+   "hold": true,
+   "holdReason": "인계문 원문: \"HOLD: red/yellow alpha fringes, blade flame-like silhouette remains\"",
+   "scenes": "dist · S1 정원·거미동굴",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b08-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 3%, 발끝 흔들림 1px, 가로 중심 흔들림 9.5px, 알파1~16 픽셀 16295개(→0 정리), 불투명 83%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B09",
+   "code": "CX-0082MV",
+   "name": "백의 안정화 감독",
+   "kind": "boss",
+   "sourceKey": "c386e08b76cf_ep1a_stabilization_supervisor",
+   "driveFileId": "1dnqnvFyw2SAQQSqufA2OtgXCZldysBpL",
+   "zip": "CX-0082MV_B09_supervisor_walk3dir4_r1_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "meta 원문: \"Existing adopted surgeon short-walk4 is a separate actor identity and is excluded. Latest request grouping both names must not cause a shared-nativeId overwrite.\"",
+   "scenes": "ep1a08 · S2 병원",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b09-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 0px, 가로 중심 흔들림 17.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 72%, 테두리 침범 0"
+  },
+  {
+   "id": "B10",
+   "code": "CX-0082MV",
+   "name": "오만의 폐허핵",
+   "kind": "midboss",
+   "sourceKey": "df4a6534a6d4_ep1a_pride_ruin_core",
+   "driveFileId": "1QAakkP1_63gcK09su1ihDqr3nkLdkPMs",
+   "zip": "CX-0082MV_B10_walk3dir_r1_HOLD.zip",
+   "hold": true,
+   "holdReason": "QA_CORRECTION 원문: \"B10 정면은 실제 결함입니다: 원본 2172x724 전체 1,572,528픽셀이 alpha17~254이며 alpha0 픽셀이 없습니다\"",
+   "scenes": "ep1a · S2 병원",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": null,
+   "verdict": "skip",
+   "reviewNotes": "칸 384px, 높이 흔들림 0%, 발끝 흔들림 0px, 가로 중심 흔들림 0.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 6%, 테두리 침범 0 / 정면(아래 보기) 시트 전체에 회백색 배경판 잔류(알파0 픽셀 없음). QA_CORRECTION 문서도 '정면은 실제 결함'이라고 확인"
+  },
+  {
+   "id": "B11",
+   "code": "CX-0082MV",
+   "name": "초천사의 웃는 가면",
+   "kind": "midboss",
+   "sourceKey": "a6f6c2767d0f_ep1a_false_archangel_smiling_mask",
+   "driveFileId": "1th-MrydbQfs6gD3UYGY6bzTZJsfq5cEy",
+   "zip": "CX-0082MV_B11_walk3dir4_r1_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "meta 원문: \"Rear robe, armor and wing roots reconstructed from original front/oblique view; no canonical rear reference available.\"",
+   "scenes": "ep1a11 · S2 병원",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b11-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 4%, 발끝 흔들림 25px, 가로 중심 흔들림 3.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 51%, 테두리 침범 0"
+  },
+  {
+   "id": "B12",
+   "code": "CX-0082MV",
+   "name": "루시퍼",
+   "kind": "boss",
+   "sourceKey": "b10b0b0c86f6_lucifer_unmasked",
+   "driveFileId": "10mJ8FqtV57fp6Uajj9S72sLsaAkfw-ur",
+   "zip": "CX-0082MV_B12_walk3dir_r1_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1a · S2 병원",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b12-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 14%, 발끝 흔들림 36px, 가로 중심 흔들림 3.0px, 알파1~16 픽셀 29361개(→0 정리), 불투명 68%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반 / 날개 펄럭임으로 칸별 높이 14% 차이. 게임 크기에서 숨쉬기처럼 보여 허용"
+  },
+  {
+   "id": "B13",
+   "code": "CX-0082MV",
+   "name": "교만의 잔향·제72문",
+   "kind": "midboss",
+   "sourceKey": "b42dcd0ea03d_gate72_pride_echo",
+   "driveFileId": "1v8hOEzZTexNQgntBF5hkE3ZxQ_WNdfJI",
+   "zip": "CX-0082MV_B13_walk3dir4_r2_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "meta 원문: \"Raw r1 has white background with alpha189..251 and is rejected. Raw r2 corrected transparency using imagegen; foreground is not certified pixel-identical to r1.\"",
+   "scenes": "ep1b01 · S3 7대죄 (원작 표 이름: 교만의 잔향(중간))",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b13-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 11px, 가로 중심 흔들림 1.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 46%, 테두리 침범 0 / 주위에 뜬 잎 장식(섬 34개)은 디자인 요소이며 배경 잔류 아님"
+  },
+  {
+   "id": "B14",
+   "code": "CX-0082MV",
+   "name": "나태의 껍데기 파수",
+   "kind": "midboss",
+   "sourceKey": "20995250d5fa_sloth_shell_sentinel",
+   "driveFileId": "1t31lxGr6qDuWSIfrrLhg5ycYL6kc3YxM",
+   "zip": "CX-0082MV_B14_walk3dir_candidate.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1b · S3 7대죄",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b14-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 4%, 발끝 흔들림 0px, 가로 중심 흔들림 3.5px, 알파1~16 픽셀 102499개(→0 정리), 불투명 85%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B15",
+   "code": "CX-0082MV",
+   "name": "나태에 잠식된 남자",
+   "kind": "boss",
+   "sourceKey": "",
+   "driveFileId": null,
+   "zip": null,
+   "hold": true,
+   "holdReason": "인계문 원문: \"접근 실패가 아니라 시각 기준과 기존 이동 결과 충돌 … 사람형을 새 기준으로 할지 옥좌의 이동을 만들지 먼저 확정\" (생성 0회)",
+   "scenes": "ep1b · S3 7대죄",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "걷기 ZIP 납품 없음 (인계문 원문: \"접근 실패가 아니라 시각 기준과 기존 이동 결과 충돌 … 사람형을 새 기준으로 할지 옥좌의 이동을 만들지 먼저 확정\" (생성 0…)"
+  },
+  {
+   "id": "B16",
+   "code": "CX-0082MV",
+   "name": "금이 간 비교잔영",
+   "kind": "midboss",
+   "sourceKey": "094c62d396f7_cracked_comparison_echo",
+   "driveFileId": "1aEbxJhD04nWIsQFwhiNBge8k6mS5WyCP",
+   "zip": "CX-0082MV_B16_walk3dir_candidate.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1b · S3 7대죄",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b16-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 3%, 발끝 흔들림 1px, 가로 중심 흔들림 12.0px, 알파1~16 픽셀 55432개(→0 정리), 불투명 36%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B17",
+   "code": "CX-0082MV",
+   "name": "호텔 부매니저·레비아탄, 지정 원본의 청록 잔영 단계",
+   "kind": "boss",
+   "sourceKey": "e40217032c7a_boss_envy_human",
+   "driveFileId": "1pcTspxnOWFFdQAxyMMZIEVvnD__3GAcI",
+   "zip": "CX-0082MV_B17_walk3dir4_r1_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "meta 원문: \"The label hotel manager does not imply phase0 human replacement. This output covers only the exact teal spectral original specified in B17. Other human and demon phase assets remain unchanged.\"",
+   "scenes": "ep1b03 · S3 7대죄 (원작 표 이름: 레비아탄(보스))",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b17-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 4%, 발끝 흔들림 20px, 가로 중심 흔들림 5.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 54%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B18",
+   "code": "CX-0082MV",
+   "name": "폐기주방 감독",
+   "kind": "midboss",
+   "sourceKey": "947dfea12b7e_discarded_kitchen_overseer",
+   "driveFileId": "1zyjPxcRJyRPc9aKy211-rTdeG6Fi4_6C",
+   "zip": "CX-0082MV_B18_walk3dir_candidate.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1b · S3 7대죄",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b18-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 4%, 발끝 흔들림 1px, 가로 중심 흔들림 4.5px, 알파1~16 픽셀 53581개(→0 정리), 불투명 83%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B19",
+   "code": "CX-0082MV",
+   "name": "최고급 호텔의 총주방장·탐식의 귀 베엘제붑, 지정 탐식체 단계",
+   "kind": "boss",
+   "sourceKey": "7a7409df6bc9_boss_gluttony_human",
+   "driveFileId": "1x0wHosJDSuR75DflRQ_o5Qtu1uqBJVpn",
+   "zip": "CX-0082MV_B19_walk3dir4_r2_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "meta 원문: \"Only the exact phase1 glutton-chef source is covered. Phase0 human chef and phase2 demon assets must remain separate.\"",
+   "scenes": "ep1b04 · S3 7대죄 (원작 표 이름: 베엘제붑(보스))",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b19-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 1%, 발끝 흔들림 0px, 가로 중심 흔들림 1.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 85%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B20",
+   "code": "CX-0082MV",
+   "name": "심장빛 무대감독",
+   "kind": "midboss",
+   "sourceKey": "cd804c90bfe4_heartlight_stage_director",
+   "driveFileId": "1bsJYfVlDd0_hET6YsQFC-NWQoLi7te0r",
+   "zip": "CX-0082MV_B20_walk3dir_r2_candidate.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1b · S3 7대죄",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b20-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 3%, 발끝 흔들림 5px, 가로 중심 흔들림 1.0px, 알파1~16 픽셀 112295개(→0 정리), 불투명 41%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B21",
+   "code": "CX-0082MV",
+   "name": "붉은 하이힐의 서윤",
+   "kind": "boss",
+   "sourceKey": "",
+   "driveFileId": null,
+   "zip": null,
+   "hold": true,
+   "holdReason": "인계문 원문: \"0082 일괄 이동 표의 원본과 기존 정본 연결 조건이 충돌하므로 생성하지 않았습니다\" (서윤 인간형/악마형 정본 확인 필요, 생성 0회)",
+   "scenes": "ep1b · S3 7대죄",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "걷기 ZIP 납품 없음 (인계문 원문: \"0082 일괄 이동 표의 원본과 기존 정본 연결 조건이 충돌하므로 생성하지 않았습니다\" (서윤 인간형/악마형 정본 확인 필요, …)"
+  },
+  {
+   "id": "B22",
+   "code": "CX-0082MV",
+   "name": "호텔 화염기사",
+   "kind": "midboss",
+   "sourceKey": "b30f4a94acb6_hotel_flame_knight",
+   "driveFileId": "1sNoFh7tQBUuBDm9hvyUKPZ2B9UTggrxC",
+   "zip": "CX-0082MV_B22_walk3dir_candidate.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1b · S3 7대죄",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b22-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 1px, 가로 중심 흔들림 11.5px, 알파1~16 픽셀 71026개(→0 정리), 불투명 72%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B23",
+   "code": "CX-0082MV",
+   "name": "불을 지른 청소부·분노의 귀, 지정 검은 갑주 단계",
+   "kind": "boss",
+   "sourceKey": "aea8d7a3eb38_boss_wrath_human",
+   "driveFileId": "156YlyE1XOPWp5ATzWuse0v0B8k6QDw8-",
+   "zip": "CX-0082MV_B23_walk3dir4_r2_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "meta 원문: \"Only specified armored phase1 is covered; not phase0 janitor, phase2 Satan or the separate wrath-hound creature.\"",
+   "scenes": "ep1b07 · S3 7대죄 (원작 표 이름: 분노의 귀(보스))",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b23-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 3%, 발끝 흔들림 0px, 가로 중심 흔들림 2.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 79%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B24",
+   "code": "CX-0082MV",
+   "name": "흑마법사의 시체경호체",
+   "kind": "midboss",
+   "sourceKey": "f02422d95ccb_ep1b08_pride_zombie",
+   "driveFileId": "1JHsNBZF3dvT_-dqTGqpYfbQR2f8puEYp",
+   "zip": "CX-0082MV_B24_walk3dir_candidate.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1b · S3 7대죄",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b24-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 5%, 발끝 흔들림 1px, 가로 중심 흔들림 4.5px, 알파1~16 픽셀 16523개(→0 정리), 불투명 69%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B25",
+   "code": "CX-0082MV",
+   "name": "호텔 그룹 회장",
+   "kind": "boss",
+   "sourceKey": "",
+   "driveFileId": null,
+   "zip": null,
+   "hold": true,
+   "holdReason": "인계문 원문: \"지정 원본 … 흰 정장이 아닌 검은 금장 로브·왕관 … B25의 정확한 단계와 제작 기준 원본\" 확인 필요 (생성 0회)",
+   "scenes": "ep1b · S3 7대죄",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "걷기 ZIP 납품 없음 (인계문 원문: \"지정 원본 … 흰 정장이 아닌 검은 금장 로브·왕관 … B25의 정확한 단계와 제작 기준 원본\" 확인 필요 (생성 0회)…)"
+  },
+  {
+   "id": "B26",
+   "code": "CX-0082MV",
+   "name": "생체부트로더 연산핵",
+   "kind": "midboss",
+   "sourceKey": "81909f0b3692_ascension_calculation_orb",
+   "driveFileId": "1Y5iYtciNHgxmTbUpbs8qK-E0fEsRHknK",
+   "zip": "CX-0082MV_B26_walk3dir_candidate.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1b · S3 7대죄",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b26-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 1%, 발끝 흔들림 29px, 가로 중심 흔들림 5.0px, 알파1~16 픽셀 142672개(→0 정리), 불투명 60%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반 / 구체가 회전하며 칸 2에서 눈이 안 보임(회전 표현). 발끝 출렁임 29px"
+  },
+  {
+   "id": "B27",
+   "code": "CX-0082MV",
+   "name": "사이보그 회장·생체 부트로더",
+   "kind": "boss",
+   "sourceKey": "eee59f90ff49_boss_pride_cyborg",
+   "driveFileId": "1x6j2l39l8dcgTEt5sOG9F5a1byla4JRO",
+   "zip": "CX-0082MV_B27_walk3dir4_r2_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "meta 원문: \"Exact source form only: do not replace other chairperson phases, ordinary small robot, snow walker or calculation-core miniboss.\"",
+   "scenes": "ep1b09 · S3 7대죄 (원작 표 이름: 사이보그 회장(보스))",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b27-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 0px, 가로 중심 흔들림 6.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 78%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B28",
+   "code": "CX-0082MV",
+   "name": "역전 관리자",
+   "kind": "midboss",
+   "sourceKey": "838c3c4440d1_u2_suppression_knight",
+   "driveFileId": "1xDPaAIbYuJhRzp3SUbqYl6X6JxmpMqUy",
+   "zip": "CX-0082MV_B28_walk3dir_candidate.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "u2 · S4 방어의 군단",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b28-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 1px, 가로 중심 흔들림 17.0px, 알파1~16 픽셀 30267개(→0 정리), 불투명 65%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B29",
+   "code": "CX-0082MV",
+   "name": "기억 검열기",
+   "kind": "midboss",
+   "sourceKey": "8e86a4cadfc7_u2_mirror_priest",
+   "driveFileId": "1GWN_z7QtkdSI_7PaMKTXh7cJseKFv5iG",
+   "zip": "CX-0082MV_B29_walk3dir_candidate.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "u2 · S4 방어의 군단",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b29-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 1%, 발끝 흔들림 1px, 가로 중심 흔들림 13.0px, 알파1~16 픽셀 50614개(→0 정리), 불투명 61%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B30",
+   "code": "CX-0082MV",
+   "name": "중앙이주 코어",
+   "kind": "midboss",
+   "sourceKey": "4f26454d8ae2_enemy_void_core",
+   "driveFileId": "1hC0e51-cwHOJN3iWOKftTnpSZVZGUHbl",
+   "zip": "CX-0082MV_B30_walk3dir_candidate.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "u2 · S4 방어의 군단",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b30-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 1%, 발끝 흔들림 24px, 가로 중심 흔들림 2.0px, 알파1~16 픽셀 30688개(→0 정리), 불투명 89%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B31",
+   "code": "CX-0082MV",
+   "name": "기억의 문 수호 프레임",
+   "kind": "midboss",
+   "sourceKey": "85f150dbf0f7_controller_guardian",
+   "driveFileId": "1O1DdhXUIqMd7HZeKo9ZIxyCAkpqDsMST",
+   "zip": "CX-0082MV_B31_walk3dir4_r2_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "인계문 원문: \"HOLD: side opposite leg not clearly corrected; frontal passing phases need adjustment\"",
+   "scenes": "u203 · S4 방어의 군단",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b31-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 0px, 가로 중심 흔들림 1.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 86%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B32",
+   "code": "CX-0082MV",
+   "name": "컨트롤러·기억의 문",
+   "kind": "boss",
+   "sourceKey": "",
+   "driveFileId": null,
+   "zip": null,
+   "hold": true,
+   "holdReason": "인계문 원문: \"현재 원본과 부분기계화 채택본 중 기준 및 기존 SE 이동 방향 재사용 여부를 확인해야 함\" (생성 0회)",
+   "scenes": "u2 · S4 방어의 군단",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "걷기 ZIP 납품 없음 (인계문 원문: \"현재 원본과 부분기계화 채택본 중 기준 및 기존 SE 이동 방향 재사용 여부를 확인해야 함\" (생성 0회)…)"
+  },
+  {
+   "id": "B33",
+   "code": "CX-0082MV",
+   "name": "고블린 추장",
+   "kind": "boss",
+   "sourceKey": "a43f2c5d3855_Monster_GoblinFluteKing",
+   "driveFileId": "1coOwwQqvNv-2RKQAe09aLjViuwre6MbO",
+   "zip": "CX-0082MV_B33_walk3dir4_r2_alpha_c1_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "last3 · S5 잠 못 드는 마을",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b33-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 11px, 가로 중심 흔들림 6.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 78%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B34",
+   "code": "CX-0082MV",
+   "name": "타락천사 기사",
+   "kind": "boss",
+   "sourceKey": "363f780dbb5a_Monster_FallenAngelKnight_Base",
+   "driveFileId": "1ASnfsPPL58kAtqcOePg3_Jaw35V7xY5A",
+   "zip": "CX-0082MV_B34_walkUpDown4_r2_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "meta 원문: \"R1 frontal leading boot repeated. R2 reverses frontal frame3 and4 lower-body poses. Rear passing phases remain similar and need checking; full gait/contact/loop is not certified.\"",
+   "scenes": "last301 · S5 잠 못 드는 마을",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b34-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 0px, 가로 중심 흔들림 2.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 75%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B35",
+   "code": "CX-0082MV",
+   "name": "검은 안개 심장",
+   "kind": "midboss",
+   "sourceKey": "bulmyeongwi_b",
+   "driveFileId": "1Uvhn7-6T80TzxrYL092PZGlSeJw__Cpg",
+   "zip": "CX-0082MV_B35_walk3dir4_r2_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "last3 · S5 잠 못 드는 마을",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b35-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 9%, 발끝 흔들림 15px, 가로 중심 흔들림 7.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 65%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B36",
+   "code": "CX-0082MV",
+   "name": "불면귀",
+   "kind": "boss",
+   "sourceKey": "692e4ae01c29_bulmyeongwi_idle",
+   "driveFileId": "1Yqpp_NZU_YiczdNf9sqBiVDpapeWu5Mo",
+   "zip": "CX-0082MV_B36_walkUpDown4_r2_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "meta 원문: \"R1 still copied right-facing reference. R2 corrects to front/back with central amber eye/front core and no rear eye.\"",
+   "scenes": "last303 · S5 잠 못 드는 마을",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b36-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 8%, 발끝 흔들림 28px, 가로 중심 흔들림 2.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 52%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B37",
+   "code": "CX-0082MV",
+   "name": "최초명령 코어 오염체",
+   "kind": "midboss",
+   "sourceKey": "resonance-slave",
+   "driveFileId": "1__zqF1DIFwgWUGM9OYhGBMF8_Ief6kMS",
+   "zip": "CX-0082MV_B37_walk3dir4_r1_BACKGROUND_HOLD.zip",
+   "hold": true,
+   "holdReason": "인계문 원문: \"인물·사슬 주변에 넓은 회백색 구름형 배경이 알파16보다 높게 남아 있습니다\"; 조건부 적용 메모 \"B37/M023의 기존 거절 조치는 … 해제되지 않습니다\"",
+   "scenes": "kair · S6 수문장 탑",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": null,
+   "verdict": "skip",
+   "reviewNotes": "칸 384px, 높이 흔들림 0%, 발끝 흔들림 0px, 가로 중심 흔들림 0.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 17%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반 / 정면 시트에 회색 연기 배경 잔류(불투명 비율 17%, 어두운 바탕에서 사각 배경 보임). 무릎 꿇은 사람 모습이라 걷는 적으로도 맞지 않음"
+  },
+  {
+   "id": "B38",
+   "code": "CX-0082MV",
+   "name": "휴식 수확관·과로의 수문장",
+   "kind": "midboss",
+   "sourceKey": "guardian_50",
+   "driveFileId": "1ETvYoYxxACzBqyILEI_u6vZKCPqXEpdW",
+   "zip": "CX-0082MV_B38_walk3dir4_r2_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "인계문 원문: \"HOLD: side opposite-foot and frontal lead-contact sequence need correction\"",
+   "scenes": "kair04 · S6 수문장 탑 (원작 표 이름: 과로의 수문장(중간))",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b38-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 4%, 발끝 흔들림 0px, 가로 중심 흔들림 7.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 62%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B39",
+   "code": "CX-0082MV",
+   "name": "대수문장 01",
+   "kind": "boss",
+   "sourceKey": "908a59f003db_great_01",
+   "driveFileId": "1NURg3VsVZYSVflTbD10fR-isra6QWNxq",
+   "zip": "CX-0082MV_B39_walk3dir4_r2_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "kair · S6 수문장 탑",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b39-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 7px, 가로 중심 흔들림 4.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 69%, 테두리 침범 0"
+  },
+  {
+   "id": "B40",
+   "code": "CX-0082MV",
+   "name": "대수문장 02",
+   "kind": "boss",
+   "sourceKey": "66b3a07672a9_great_02",
+   "driveFileId": "1FtPZpMlUioMPEGpfyjAPWXZqbMk0HL7i",
+   "zip": "CX-0082MV_B40_walk3dir4_r2_CANDIDATE.zip",
+   "hold": true,
+   "holdReason": "인계문 원문: \"HOLD: r2에서 앞·뒤 반대 발이 더 잘 보이도록 고쳤지만 옆 1·3칸은 같은 가까운 다리가 앞서는 인상이 남습니다\"",
+   "scenes": "kair06 · S6 수문장 탑",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b40-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 3%, 발끝 흔들림 0px, 가로 중심 흔들림 2.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 84%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B41",
+   "code": "CX-0082MV",
+   "name": "대수문장 04",
+   "kind": "boss",
+   "sourceKey": "f8c98bb66e1e_great_04",
+   "driveFileId": "1m8p_3DYndiRGcUQK_MoS5H2Yq3zMNvHS",
+   "zip": "CX-0082MV_B41_walk3dir4_r3_GAIT_REVIEW.zip",
+   "hold": false,
+   "holdReason": "인계문 원문: \"HOLD: 옆 보행의 정확한 좌우 다리 교대, 앞 지나감 자세의 자연스러움·접지·체중 이동\"",
+   "scenes": "kair · S6 수문장 탑",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b41-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 1%, 발끝 흔들림 4px, 가로 중심 흔들림 6.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 80%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B42",
+   "code": "CX-0082MV",
+   "name": "대수문장 05",
+   "kind": "midboss",
+   "sourceKey": "ba23b5fa3237_great_05",
+   "driveFileId": "1T6G-jjCB9Iw4v90hUrgXez0jKnc6c7pz",
+   "zip": "CX-0082MV_B42_walk3dir4_r1_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "meta 원문: \"Side is a right-facing three-quarter angle rather than strict90-degree profile. Direction acceptance needs review.\"",
+   "scenes": "kair08 · S6 수문장 탑",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b42-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 1%, 발끝 흔들림 22px, 가로 중심 흔들림 3.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 66%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B43",
+   "code": "CX-0082MV",
+   "name": "망각 묘지기",
+   "kind": "boss",
+   "sourceKey": "guardian_57",
+   "driveFileId": "1sQasoSGwNIUneAB8Po-VVBvswBBeLna8",
+   "zip": "CX-0082MV_B43_walk3dir4_r2_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "kair · S6 수문장 탑",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b43-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 4px, 가로 중심 흔들림 3.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 76%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B44",
+   "code": "CX-0082MV",
+   "name": "대수문장 06",
+   "kind": "boss",
+   "sourceKey": "0cbbddaf7b90_great_06",
+   "driveFileId": "1-1H1YjfkDfsjuScqSwCo8RqD4AEl4X7v",
+   "zip": "CX-0082MV_B44_walk3dir4_r2_CANDIDATE.zip",
+   "hold": true,
+   "holdReason": "인계문 원문: \"HOLD: r2에서 앞·뒤1·3칸의 선행 발은 반대로 보이도록 개선됐습니다\"",
+   "scenes": "kair10 · S6 수문장 탑",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b44-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 1%, 발끝 흔들림 0px, 가로 중심 흔들림 3.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 67%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B45",
+   "code": "CX-0082MV",
+   "name": "아르벨리아 변조 명령",
+   "kind": "boss",
+   "sourceKey": "b9b65cd61430_arvelia_delay_archon",
+   "driveFileId": "1QTip58rwN-AtbXcGk4_kbOYEosmuI7YW",
+   "zip": "CX-0082MV_B45_walk3dir4_r2_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "kair · S6 수문장 탑",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b45-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 4px, 가로 중심 흔들림 3.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 56%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B46",
+   "code": "CX-0082MV",
+   "name": "세이렌 모르",
+   "kind": "boss",
+   "sourceKey": "b19d67bb1973_siren_idle",
+   "driveFileId": "1qUWqlEGHW0wC5z2jMJAe_lIG_Ke7psjD",
+   "zip": "CX-0082MV_B46_updown4_r3_CANDIDATE.zip",
+   "hold": true,
+   "holdReason": "meta 원문: \"New2 directions only. Existing6 side is documented but actual file not retrieved; its colors, scale, pivot and timing transition to new4 remain unchecked. Do not call this delivered complete3-direction package.\"",
+   "scenes": "kair03 · S6 수문장 탑",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b46-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 4%, 발끝 흔들림 0px, 가로 중심 흔들림 8.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 75%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B47",
+   "code": "CX-0082MV",
+   "name": "의존 신호 포식자",
+   "kind": "midboss",
+   "sourceKey": "c5f90d9ed1ee_return_coordinate_devourer",
+   "driveFileId": "1hRveI0I0vrAOMl_6MX6ZeqR0RJ48qQzj",
+   "zip": "CX-0082MV_B47_walk3dir4_r2_CANDIDATE.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "hando · S7 성",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b47-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 10%, 발끝 흔들림 26px, 가로 중심 흔들림 5.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 55%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반 / 칸별 높이 10% 차이(촉수 움찔임). 허용"
+  },
+  {
+   "id": "B48",
+   "code": "CX-0082MV",
+   "name": "코어 운반 집행자",
+   "kind": "midboss",
+   "sourceKey": "458e99f2058e_order_seal_officer",
+   "driveFileId": "1usOrCY6f5rU--WLNu0bRPlA9pjTQ7btQ",
+   "zip": "CX-0082MV_B48_walk3dir_candidate.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "hando · S7 성",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b48-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 1%, 발끝 흔들림 1px, 가로 중심 흔들림 18.0px, 알파1~16 픽셀 177638개(→0 정리), 불투명 49%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B49",
+   "code": "CX-0082MV",
+   "name": "환수검 모조체",
+   "kind": "midboss",
+   "sourceKey": "6f957d283d31_phantom_reclaim_blade",
+   "driveFileId": "1X3m5DOznbLJ_fO0roFirTdUmrzUueKT0",
+   "zip": "B49_REPACK_20261113_v1_part03.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "hando · S7 성",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b49-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 7px, 가로 중심 흔들림 45.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 34%, 테두리 침범 0 / 칸 3에서 로브 자락이 옆으로 크게 날림(가로 중심 45px 이동). 허용 범위로 판단"
+  },
+  {
+   "id": "B50",
+   "code": "CX-0082MV",
+   "name": "EGO 강탈 악몽왕",
+   "kind": "boss",
+   "sourceKey": "fae708429341_hando_idle",
+   "driveFileId": "1p5Hv2nSJBZHlrgVoCdDnaFJyKe9x4VOQ",
+   "zip": "CX-0082MV_B50_walk3dir4_r2_PARTIAL_GAIT_HOLD.zip",
+   "hold": true,
+   "holdReason": "meta 원문: \"Side contact frames0/2 still appear to lead with the same near leg, and passing1/3 remain similar. This is a PARTIAL GAIT HOLD, not a full walking pass.\"",
+   "scenes": "hando03 · S7 성",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b50-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 0%, 발끝 흔들림 0px, 가로 중심 흔들림 1.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 56%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B51",
+   "code": "CX-0082MV",
+   "name": "파란불 역주행 목격자",
+   "kind": "midboss",
+   "sourceKey": "83e3f3bd00f9_rain_witness",
+   "driveFileId": "1LXCFbo-DNREbcxFES9zY5F9uW9ez2MUY",
+   "zip": "CX-0082MV_B51_walk3dir4_r1_PARTIAL_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "murder · S8 호텔·빌라 옥상",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b51-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 1%, 발끝 흔들림 1px, 가로 중심 흔들림 7.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 71%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B52",
+   "code": "CX-0082MV",
+   "name": "공실장부 당직감사",
+   "kind": "midboss",
+   "sourceKey": "2bb588948301_hotel_clerk",
+   "driveFileId": "14d4W4hG25a94OUezS0QXHL-_SLfB93gr",
+   "zip": "CX-0082MV_B52_walk3dir4_r2_PARTIAL_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "murder · S8 호텔·빌라 옥상",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b52-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 0px, 가로 중심 흔들림 3.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 82%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B53",
+   "code": "CX-0082MV",
+   "name": "진술 봉쇄 인과핵",
+   "kind": "midboss",
+   "sourceKey": "0c66fa2bfd51_silent_alarm",
+   "driveFileId": "1kF64tTCa9Jg0lQQz-biHeHwhWuQ_f8CM",
+   "zip": "CX-0082MV_B53_walk3dir4_r2_PARTIAL_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "murder · S8 호텔·빌라 옥상",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b53-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 4%, 발끝 흔들림 0px, 가로 중심 흔들림 8.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 70%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B54",
+   "code": "CX-0082MV",
+   "name": "옥상 인과보관인",
+   "kind": "midboss",
+   "sourceKey": "",
+   "driveFileId": "1ZXaGv4oBh0xLqUveyUzDYHorwVYwootD",
+   "zip": "CX-0082MV_B54_walk3dir4_r2_PARTIAL_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "murder · S8 호텔·빌라 옥상",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "ZIP이 10MB를 넘어 드라이브 내려받기 도구 한도(10MB)에 막힘. 미리보기 GIF만 따로 있으나 GIF는 1비트 투명이라 쓰지 않음"
+  },
+  {
+   "id": "B55",
+   "code": "CX-0082MV",
+   "name": "파란불",
+   "kind": "boss",
+   "sourceKey": "",
+   "driveFileId": "1oJKUM11eKoSUfHd2flQBxc0SX6cpaAme",
+   "zip": "CX-0082MV_B55_walk3dir4_r3_PARTIAL_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "murder · S8 호텔·빌라 옥상",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "ZIP이 10MB를 넘어 드라이브 내려받기 도구 한도(10MB)에 막힘. 미리보기 GIF만 따로 있으나 GIF는 1비트 투명이라 쓰지 않음"
+  },
+  {
+   "id": "B56",
+   "code": "CX-0082MV",
+   "name": "칩 제단 방화벽",
+   "kind": "midboss",
+   "sourceKey": "1fc9834a3db7_c101_rose_guardian",
+   "driveFileId": "1gvhFQqP6TCCGqwV31rz3rAkE4EevTtpL",
+   "zip": "CX-0082MV_B56_walk3dir4_r1_PARTIAL_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "cult · S9 교주",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b56-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 1%, 발끝 흔들림 0px, 가로 중심 흔들림 2.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 56%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B57",
+   "code": "CX-0082MV",
+   "name": "네트워크 합창체",
+   "kind": "boss",
+   "sourceKey": "",
+   "driveFileId": "1h19IxGhI3EdEaTs8DWCw4Hn8DvFqyN71",
+   "zip": "CX-0082MV_B57_hover3dir4_r1_ANATOMY_HOLD.zip",
+   "hold": true,
+   "holdReason": "인계문 원문: \"겹치는 날개 때문에 개별 뿌리가 가려집니다 … 등 갑옷, 후광 부착, 날개 뿌리는 … 추정\"",
+   "scenes": "cult · S9 교주",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "ZIP이 10MB를 넘어 드라이브 내려받기 도구 한도(10MB)에 막힘. 미리보기 GIF만 따로 있으나 GIF는 1비트 투명이라 쓰지 않음"
+  },
+  {
+   "id": "B58",
+   "code": "CX-0082MV",
+   "name": "ID 생체조 관리자",
+   "kind": "midboss",
+   "sourceKey": "57967d1070df_black_ritual_cyborg_boss",
+   "driveFileId": "1VaNowxjAlV3QPiXIH2g_UsL1eOzAVzB5",
+   "zip": "CX-0082MV_B58_glide3dir4_r1_LOCOMOTION_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "cult · S9 교주",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "b58-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 5%, 발끝 흔들림 17px, 가로 중심 흔들림 1.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 44%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "B59",
+   "code": "CX-0082MV",
+   "name": "기계재판 집행핵",
+   "kind": "midboss",
+   "sourceKey": "",
+   "driveFileId": "1PNelkHK3XVxoQuFt12s3AmEOLv3j44Bg",
+   "zip": "CX-0082MV_B59_walk3dir4_r2_PARTIAL_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "cult · S9 교주",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "ZIP이 10MB를 넘어 드라이브 내려받기 도구 한도(10MB)에 막힘. 미리보기 GIF만 따로 있으나 GIF는 1비트 투명이라 쓰지 않음"
+  },
+  {
+   "id": "B60",
+   "code": "CX-0082MV",
+   "name": "한리안",
+   "kind": "boss",
+   "sourceKey": "",
+   "driveFileId": null,
+   "zip": null,
+   "hold": true,
+   "holdReason": "인계문 원문: \"SOURCE_FILES_UNAVAILABLE … 공개 실제 읽기는 모두 HTTP404 … 생성0 HOLD\" (B61 함께)",
+   "scenes": "cult · S9 교주",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "걷기 ZIP 납품 없음 (인계문 원문: \"SOURCE_FILES_UNAVAILABLE … 공개 실제 읽기는 모두 HTTP404 … 생성0 HOLD\" (B61 함께)…)"
+  },
+  {
+   "id": "B61",
+   "code": "CX-0082MV",
+   "name": "백이온",
+   "kind": "boss",
+   "sourceKey": "",
+   "driveFileId": null,
+   "zip": null,
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "cult · S9 교주",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "걷기 ZIP 납품 없음"
+  },
+  {
+   "id": "B62",
+   "code": "CX-0082MV",
+   "name": "적그리스도 배양좌",
+   "kind": "midboss",
+   "sourceKey": "",
+   "driveFileId": "1QHuBRl880Hf4aEoOuw56LC-eROrV0upZ",
+   "zip": "CX-0082MV_B62_walk3dir4_r2_PARTIAL_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "cult · S9 교주",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "ZIP이 10MB를 넘어 드라이브 내려받기 도구 한도(10MB)에 막힘. 미리보기 GIF만 따로 있으나 GIF는 1비트 투명이라 쓰지 않음"
+  },
+  {
+   "id": "B63",
+   "code": "CX-0082MV",
+   "name": "교만의 사이보그 교주",
+   "kind": "boss",
+   "sourceKey": "",
+   "driveFileId": "1Adn9IDTUAfVo8941SYlKlboPG_8C6hQL",
+   "zip": "CX-0082MV_B63_walk3dir4_r2_PARTIAL_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "cult · S9 교주",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "ZIP이 10MB를 넘어 드라이브 내려받기 도구 한도(10MB)에 막힘. 미리보기 GIF만 따로 있으나 GIF는 1비트 투명이라 쓰지 않음"
+  },
+  {
+   "id": "M001",
+   "code": "CX-0082MV",
+   "name": "은폐기록 연결체",
+   "kind": "mob",
+   "sourceKey": "blue_executor",
+   "driveFileId": "1nqxgytVo0_J8pMyrXbkPCJqfHknh9Hi9",
+   "zip": "CX-0082MV_M001_front_back4_r2_PARTIAL_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "murder · S8 호텔·빌라 옥상",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m001-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 3%, 발끝 흔들림 0px, 가로 중심 흔들림 2.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 72%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "M002",
+   "code": "CX-0082MV",
+   "name": "무명 검흔",
+   "kind": "mob",
+   "sourceKey": "",
+   "driveFileId": null,
+   "zip": null,
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "hando · S7 성",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "걷기 ZIP 납품 없음"
+  },
+  {
+   "id": "M003",
+   "code": "CX-0082MV",
+   "name": "EGO 구속 연결자",
+   "kind": "mob",
+   "sourceKey": "black_rose_chip_penitent",
+   "driveFileId": "1tHh2KQ8uJY6phQcq5vO_1PUIw0TfCkK_",
+   "zip": "CX-0082MV_M003_front_back4_r1_PARTIAL_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "cult · S9 교주",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m003-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 1px, 가로 중심 흔들림 18.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 82%, 테두리 침범 0"
+  },
+  {
+   "id": "M004",
+   "code": "CX-0082MV",
+   "name": "생체기계 악몽 / 설원 아래의 기계 다리",
+   "kind": "mob",
+   "sourceKey": "black_rose_demon_soldier",
+   "driveFileId": "1RXUhubyg2gEm0HQHrcGac23lGDhtaqOC",
+   "zip": "CX-0082MV_M004_front_back4_r2_PARTIAL_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "cult · S9 교주 (원작 표 이름: 생체기계 악몽)",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m004-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 3%, 발끝 흔들림 0px, 가로 중심 흔들림 3.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 81%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "M005",
+   "code": "CX-0082MV",
+   "name": "강철 턱의 사이보그 개",
+   "kind": "mob",
+   "sourceKey": "polar_cyborg_hound",
+   "driveFileId": "1Pqh-3SMwqr3Ekp3HPpTHu0uIBsQo2PWi",
+   "zip": "CX-0082MV_M005_front_back4_r2_PARTIAL_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1b · S3 7대죄",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m005-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 5%, 발끝 흔들림 1px, 가로 중심 흔들림 1.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 82%, 테두리 침범 0"
+  },
+  {
+   "id": "M006",
+   "code": "CX-0082MV",
+   "name": "불길 속의 용·분노의 사냥개",
+   "kind": "mob",
+   "sourceKey": "wrath_satan",
+   "driveFileId": "1uay5O57Xhc7qidysOPNu3uuPtxGw3iaz",
+   "zip": "CX-0082MV_M006_r1_assets_PARTIAL_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1b · S3 7대죄",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m006-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 0px, 가로 중심 흔들림 0.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 76%, 테두리 침범 0"
+  },
+  {
+   "id": "M007",
+   "code": "CX-0082MV",
+   "name": "기억절제 연결자",
+   "kind": "mob",
+   "sourceKey": "",
+   "driveFileId": null,
+   "zip": null,
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "hando · S7 성",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "걷기 ZIP 납품 없음"
+  },
+  {
+   "id": "M010",
+   "code": "CX-0082MV",
+   "name": "의존 신호 포식자",
+   "kind": "mob",
+   "sourceKey": "",
+   "driveFileId": null,
+   "zip": null,
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "hando · S7 성",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "걷기 ZIP 납품 없음"
+  },
+  {
+   "id": "M013",
+   "code": "CX-0082MV",
+   "name": "기억 공백 망령",
+   "kind": "mob",
+   "sourceKey": "",
+   "driveFileId": null,
+   "zip": null,
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "u2 · S4 방어의 군단",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "걷기 ZIP 납품 없음"
+  },
+  {
+   "id": "M014",
+   "code": "CX-0082MV",
+   "name": "신경 케이블 포식체",
+   "kind": "mob",
+   "sourceKey": "black_robed_nightmare_demon",
+   "driveFileId": "1FGdeCVjpwJEl9lpsI83XQ1R_pBYouRRQ",
+   "zip": "CX-0082MV_M014_r1_assets_PARTIAL_HOLD.zip",
+   "hold": true,
+   "holdReason": "인계문 원문: \"HOLD: images show pose changes but clear left/right contact alternation and passing support are not established\"",
+   "scenes": "cult · S9 교주",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m014-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 5%, 발끝 흔들림 0px, 가로 중심 흔들림 0.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 77%, 테두리 침범 0"
+  },
+  {
+   "id": "M015",
+   "code": "CX-0082MV",
+   "name": "초자아 잠식체",
+   "kind": "mob",
+   "sourceKey": "ego_corrosion_vessel",
+   "driveFileId": "1pYZZWedgvuepAEekiruQIkZ86qeaxayY",
+   "zip": "CX-0082MV_M015_r2_assets_PARTIAL_HOLD.zip",
+   "hold": true,
+   "holdReason": "인계문 원문: \"HOLD: images show pose changes but clear left/right contact alternation and passing support are not established\"",
+   "scenes": "ep1a · S2 병원",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m015-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 8%, 발끝 흔들림 0px, 가로 중심 흔들림 0.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 58%, 테두리 침범 0"
+  },
+  {
+   "id": "M016",
+   "code": "CX-0082MV",
+   "name": "흑마법사의 저주창",
+   "kind": "mob",
+   "sourceKey": "ep1b08_pride_zombie",
+   "driveFileId": "1VjcOro5t6ZAy9736COZdddAVhD4Xr8PM",
+   "zip": "CX-0082MV_M016_delivery_HOLD.zip",
+   "hold": true,
+   "holdReason": "인계문 원문: \"HOLD: 앞0/2 디딤발이 같은 쪽이라 양발교대 보행기준 미충족\"",
+   "scenes": "ep1b · S3 7대죄",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": null,
+   "verdict": "skip",
+   "reviewNotes": "칸 384px, 높이 흔들림 4%, 발끝 흔들림 1px, 가로 중심 흔들림 0.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 77%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반 / B24(흑마법사의 시체경호체)와 같은 원본(ep1b08_pride_zombie)으로 만든 중복 시트. B24를 씀"
+  },
+  {
+   "id": "M017",
+   "code": "CX-0082MV",
+   "name": "살아 있는 거대한 위장",
+   "kind": "mob",
+   "sourceKey": "glutton_beelzebub",
+   "driveFileId": "1poMDUmw0kmbJdh7J1LDVyZBfrN-FvOMY",
+   "zip": "CX-0082MV_M017_delivery_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1b · S3 7대죄",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "file": "m017-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 512px, 높이 흔들림 6%, 발끝 흔들림 26px, 가로 중심 흔들림 10.0px, 알파1~16 픽셀 63040개(→0 정리), 불투명 88%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "M018",
+   "code": "CX-0082MV",
+   "name": "붉은 하이힐 칼날",
+   "kind": "mob",
+   "sourceKey": "M018",
+   "driveFileId": "1F3Luz-kOgUXubmk54X2d--ZbusaELc5i",
+   "zip": "M018_alpha16_v1_part01.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1b · S3 7대죄",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "file": "m018-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 512px, 높이 흔들림 4%, 발끝 흔들림 20px, 가로 중심 흔들림 9.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 69%, 테두리 침범 0"
+  },
+  {
+   "id": "M019",
+   "code": "CX-0082MV",
+   "name": "설원 잠복 보행기",
+   "kind": "mob",
+   "sourceKey": "",
+   "driveFileId": null,
+   "zip": null,
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1b · S3 7대죄",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "걷기 ZIP 납품 없음"
+  },
+  {
+   "id": "M022",
+   "code": "CX-0082MV",
+   "name": "시간핵의 명령 파동",
+   "kind": "mob",
+   "sourceKey": "M022",
+   "driveFileId": "1ZWD6h_9FdOF6T1aTFhOOW5QDwW8Jl_Vm",
+   "zip": "M022_alpha16_20261113_v1_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "kair · S6 수문장 탑",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "file": "m022-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 512px, 높이 흔들림 4%, 발끝 흔들림 19px, 가로 중심 흔들림 5.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 75%, 테두리 침범 0"
+  },
+  {
+   "id": "M023",
+   "code": "CX-0082MV",
+   "name": "최초명령 훈련파동",
+   "kind": "mob",
+   "sourceKey": "",
+   "driveFileId": "1-pmqgF8f_eVy5cSJL4Io7MxwpfGP8wNN",
+   "zip": "CX-0082MV_M023_M024_HOLD_evidence.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "kair · S6 수문장 탑",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "납품이 근거 자료 ZIP(evidence)뿐이라 내려받지 않음. 파일명만 보고 걷기 시트가 없다고 추정"
+  },
+  {
+   "id": "M025",
+   "code": "CX-0082MV",
+   "name": "늪의 염소머리 악마",
+   "kind": "mob",
+   "sourceKey": "M025_walk",
+   "driveFileId": "1HTkV4hfZ6_TbLw82jS0uMGCYxLGIeYkZ",
+   "zip": "M025_alpha16_v1_HOLD.zip",
+   "hold": true,
+   "holdReason": "CLAUDE-ASSET-CONDITIONAL-APPLY 원문: \"같은 선행 발 반복·후면 구조·피벗·방향 크기·루프. 512셀 허용은 품질 합격 아님\"",
+   "scenes": "dist · S1 정원·거미동굴",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "file": "m025-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 512px, 높이 흔들림 3%, 발끝 흔들림 19px, 가로 중심 흔들림 8.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 73%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "M026",
+   "code": "CX-0082MV",
+   "name": "과열 시냅스 점액체",
+   "kind": "mob",
+   "sourceKey": "M026",
+   "driveFileId": "1c4QqpgYp2ZAaC4f6tks3LjR2zTYr3KGj",
+   "zip": "M026_alpha16_v1_HOLD_part01.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "cult · S9 교주",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "file": "m026-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 512px, 높이 흔들림 31%, 발끝 흔들림 6px, 가로 중심 흔들림 7.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 94%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반 / 슬라임 찌그러짐(칸2 높이 31% 낮음)은 의도된 출렁임"
+  },
+  {
+   "id": "M029",
+   "code": "CX-0082MV",
+   "name": "검은 실의 외부 신호",
+   "kind": "mob",
+   "sourceKey": "M029",
+   "driveFileId": "1f2Nsp8-TmJjLK2vR52ei0ROzF_kW3bpq",
+   "zip": "M029_alpha16_v1_part01_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1b · S3 7대죄",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "file": "m029-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 512px, 높이 흔들림 5%, 발끝 흔들림 15px, 가로 중심 흔들림 4.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 77%, 테두리 침범 0"
+  },
+  {
+   "id": "M030",
+   "code": "CX-0082MV",
+   "name": "기계화 문턱 관측거미",
+   "kind": "mob",
+   "sourceKey": "",
+   "driveFileId": "1gdqoqxSANOpO0vlTHeyZu1R6bBadAVLt",
+   "zip": "CX-0082MV_M030_M033_evidence.zip",
+   "hold": false,
+   "holdReason": "사유 기록 없음",
+   "scenes": "u2 · S4 방어의 군단",
+   "verdict": "skip",
+   "frames": 0,
+   "file": null,
+   "cell": null,
+   "sourceCell": null,
+   "reviewNotes": "납품이 근거 자료 ZIP(evidence)뿐이라 내려받지 않음. 파일명만 보고 걷기 시트가 없다고 추정"
+  },
+  {
+   "id": "M031",
+   "code": "CX-0082MV",
+   "name": "합일 주파수 결정",
+   "kind": "mob",
+   "sourceKey": "M031",
+   "driveFileId": "1n-KgeM_6PzF69pznl4uJ_aoAYLZZ6C4m",
+   "zip": "M031_alpha16_v1_HOLD_part01.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "cult · S9 교주",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "file": "m031-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 512px, 높이 흔들림 10%, 발끝 흔들림 4px, 가로 중심 흔들림 7.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 62%, 테두리 침범 0"
+  },
+  {
+   "id": "M034",
+   "code": "CX-0082MV",
+   "name": "피냄새 추적자",
+   "kind": "mob",
+   "sourceKey": "ghoul",
+   "driveFileId": "1tUdIWXpuLWR-VGZEFyoXRAbdLbXXBCaa",
+   "zip": "CX-0082MV_M034_normalized_sample_v1_part01_HOLD.zip",
+   "hold": true,
+   "holdReason": "M034-M037_FINAL_HANDOFF 원문: \"아래0/2는 같은 화면 왼쪽 발을 뻗고 반대발을 들어 교대 실패. 후면과 지나감/피벗/크기/루프 미검증, 저알파 잔티.\"",
+   "scenes": "dist · S1 정원·거미동굴",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m034-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 6%, 발끝 흔들림 9px, 가로 중심 흔들림 7.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 74%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반 / zip에 칸별 PNG 4장(ghoul-down-0~3-sample)만 있어 가로로 이어 붙여 시트로 만듦"
+  },
+  {
+   "id": "M035",
+   "code": "CX-0082MV",
+   "name": "이름 잃은 전우",
+   "kind": "mob",
+   "sourceKey": "M035",
+   "driveFileId": "1kQY9LHEy2bdHOFAg-KCxPZQ4tumEROIG",
+   "zip": "M035_alpha16_v1_HOLD.zip",
+   "hold": true,
+   "holdReason": "M034-M037_FINAL_HANDOFF 원문: \"아래0/2 모두 화면 오른쪽 발(캐릭터 왼발)이 앞 … 위0/2,1/3 반복. 뒷갑옷 추정, 장비/천 변형\"",
+   "scenes": "dist · S1 정원·거미동굴",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "file": "m035-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 512px, 높이 흔들림 3%, 발끝 흔들림 13px, 가로 중심 흔들림 3.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 79%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "M036",
+   "code": "CX-0082MV",
+   "name": "보라검 추격천사",
+   "kind": "mob",
+   "sourceKey": "M036",
+   "driveFileId": "1_YjnGaqbZeNYdrgNHvCbnQiKgxU3UDP5",
+   "zip": "M036_alpha16_v1_NEW_ONLY_part01.zip",
+   "hold": true,
+   "holdReason": "M034-M037_FINAL_HANDOFF 원문: \"아래 네 프레임 같은 지지/들린발 배치 반복 … 심한 회백/자홍 반투명 잔류가 칸과 행 경계까지 침범\"",
+   "scenes": "dist · S1 정원·거미동굴",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "file": null,
+   "verdict": "skip",
+   "reviewNotes": "칸 512px, 높이 흔들림 7%, 발끝 흔들림 27px, 가로 중심 흔들림 2.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 48%, 테두리 침범 0 / 날개 주변 회백 반투명 잔류(회색 안개 비율 26%)가 어두운 바탕에서 뚜렷함. 인계문도 '심한 회백/자홍 반투명 잔류' 기록"
+  },
+  {
+   "id": "M038",
+   "code": "CX-0082MV",
+   "name": "복도 비명잔영",
+   "kind": "mob",
+   "sourceKey": "corridor_scream_echo",
+   "driveFileId": "17rnQFygsnNiCLFuDWdCMe0i9ElYVGpri",
+   "zip": "CX-0082MV_M038_r1_HOLD_part03_20261113.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1a · S2 병원",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m038-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 1%, 발끝 흔들림 34px, 가로 중심 흔들림 5.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 53%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "M039",
+   "code": "CX-0082MV",
+   "name": "갈망의 약병핵",
+   "kind": "mob",
+   "sourceKey": "craving_vial_core",
+   "driveFileId": "1D8ZsnfBTcDNwunJb_pwjI_xkoE8Dqp62",
+   "zip": "CX-0082MV-M039-r1-HOLD-assets.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1a · S2 병원",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m039-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 22px, 가로 중심 흔들림 1.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 83%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "M040",
+   "code": "CX-0082MV",
+   "name": "부정의 잔영",
+   "kind": "mob",
+   "sourceKey": "denial_specter",
+   "driveFileId": "17rqbXNApnBJHa5uV4LVZ8a07MYLZq-V9",
+   "zip": "CX0082MV_M040_20261113_HOLD_final.zip",
+   "hold": true,
+   "holdReason": "인계문 원문: \"HOLD: inferred back, subtle hover/cloth loop continuity, root alignment, live/index side hash mismatch, runtime and scale transition unverified\"",
+   "scenes": "ep1a · S2 병원",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m040-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 6px, 가로 중심 흔들림 1.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 66%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "M041",
+   "code": "CX-0082MV",
+   "name": "주사실 감시환각",
+   "kind": "mob",
+   "sourceKey": "hallucinated_orderly",
+   "driveFileId": "1y5CrTNwLzGPCRSXON2B2bPeFanx4r6Ii",
+   "zip": "CX0082MV_M041_r1_20261113_HOLD_part1_candidate.zip",
+   "hold": true,
+   "holdReason": "ZIP 안 meta.json 원문: \"Frames0 and2 repeat leading foot; strict four-beat alternating-contact criterion not met.\" \"Back design inferred\" (직접 내려받아 확인)",
+   "scenes": "ep1a · S2 병원",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m041-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 5%, 발끝 흔들림 16px, 가로 중심 흔들림 4.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 82%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "M042",
+   "code": "CX-0082MV",
+   "name": "지옥문 파수악마",
+   "kind": "mob",
+   "sourceKey": "horned_swamp_demon",
+   "driveFileId": "11KMgeVciZOKCj6UBnoaJtbhr6y7ReeBT",
+   "zip": "CX0082MV_M042_up-down4_r1_20261113_HOLD_part03of03.zip",
+   "hold": true,
+   "holdReason": "인계문 원문: \"HOLD: inferred back design; gait/art/game/seven-review pending; legacy live/index mismatch; current r248 routing and side-scale/pivot compatibility unresolved\"",
+   "scenes": "dist · S1 정원·거미동굴",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m042-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 2%, 발끝 흔들림 7px, 가로 중심 흔들림 1.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 83%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "M043",
+   "code": "CX-0082MV",
+   "name": "보랏빛 알집지기",
+   "kind": "mob",
+   "sourceKey": "nightmare_spider",
+   "driveFileId": "13iRj82ckR3L9wVG009VCLyFExtgRTnN0",
+   "zip": "CX0082MV_M043_nightmare_spider_updown4_r1_HOLD_20261113_part03of03.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "dist · S1 정원·거미동굴",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m043-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 9%, 발끝 흔들림 25px, 가로 중심 흔들림 17.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 72%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "M044",
+   "code": "CX-0082MV",
+   "name": "질투로 얼룩진 망령",
+   "kind": "mob",
+   "sourceKey": "envy_glass_shard",
+   "driveFileId": "1gpiippuIFh1x9mckMwpCM4Mt8Lvwuacj",
+   "zip": "CX0082MV_M044_up_down4_r1_HOLD_part02of02.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1b · S3 7대죄",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m044-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 6%, 발끝 흔들림 31px, 가로 중심 흔들림 2.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 75%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "M045",
+   "code": "CX-0082MV",
+   "name": "긴 뱀의 그림자",
+   "kind": "mob",
+   "sourceKey": "envy_leviathan",
+   "driveFileId": "1blLKbCUlcO2diUHAyr265EmwxhzWzYVs",
+   "zip": "CX0082MV_M045_r1_20261113_part1_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1b · S3 7대죄",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m045-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 8%, 발끝 흔들림 4px, 가로 중심 흔들림 22.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 56%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "M046",
+   "code": "CX-0082MV",
+   "name": "버려진 최고급 식재료",
+   "kind": "mob",
+   "sourceKey": "glutton_kitchen_scrap",
+   "driveFileId": "1OKYvEx2CYYRtAifxD5PryJJl69hkB3Yv",
+   "zip": "CX0082MV_M046_r1_20261113_part2_HOLD.zip",
+   "hold": true,
+   "holdReason": "인계문 원문: \"HOLD: visible height202–236px below nominal269px; size/shape review required; no upscale; shape and loop continuity review pending; front/back continuity; rear inferred; runtime side/r248 mapping unresolve\"",
+   "scenes": "ep1b · S3 7대죄",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m046-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 8%, 발끝 흔들림 3px, 가로 중심 흔들림 4.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 87%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "M047",
+   "code": "CX-0082MV",
+   "name": "얼굴 없는 남자의 박수",
+   "kind": "mob",
+   "sourceKey": "lust_heart_marionette",
+   "driveFileId": "1uC--LVtg7d_LwiNKeVkoyyj9v9Knknrr",
+   "zip": "CX0082MV_M047_r1_20261113_part3_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1b · S3 7대죄",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m047-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 1%, 발끝 흔들림 2px, 가로 중심 흔들림 3.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 69%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "M048",
+   "code": "CX-0082MV",
+   "name": "일흔두 번째 인장 잔류체",
+   "kind": "mob",
+   "sourceKey": "seal_residual",
+   "driveFileId": "1m7tlDeFosAo39R6neYY2QYmjvIst0geO",
+   "zip": "CX0082MV_M048_updown4_r1_HOLD_part2.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "ep1b · S3 7대죄",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m048-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 8%, 발끝 흔들림 8px, 가로 중심 흔들림 8.5px, 알파1~16 픽셀 0개(→0 정리), 불투명 58%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "M054",
+   "code": "CX-0082MV",
+   "name": "시간 수집자",
+   "kind": "mob",
+   "sourceKey": "time-collector",
+   "driveFileId": "1kkqFUYcFUrAWNWA4PERuomhIPCZD0Z8j",
+   "zip": "CX0082MV_M054_r1_20261113_part3_HOLD.zip",
+   "hold": true,
+   "holdReason": "사유 기록 없음",
+   "scenes": "kair · S6 수문장 탑",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "file": "m054-down.webp",
+   "verdict": "use",
+   "reviewNotes": "칸 384px, 높이 흔들림 5%, 발끝 흔들림 20px, 가로 중심 흔들림 2.0px, 알파1~16 픽셀 0개(→0 정리), 불투명 74%, 테두리 침범 0 / 인계문: 뒷모습(위 보기)은 추론한 디자인. 정면(아래 보기)은 원본 기반"
+  },
+  {
+   "id": "2A",
+   "code": "CX-0081KC",
+   "name": "터미널 기둥",
+   "kind": "structure",
+   "driveFileId": "18KwHQ8WvI9oA6T8RGXkfVsoegTo9cSxD",
+   "zip": "CX-0081KC_2A_terminal-pillar_r1_candidate.zip",
+   "hold": false,
+   "holdReason": "Claude 검수 회신(CX-0081KC_props_r1_REVIEW_20261113) 원문 요지: 조형물 13종 중 11종 m0 게임 적용, 2D'·2K는 이상 없으나 둘 자리 없음",
+   "verdict": "use",
+   "reviewNotes": "512×512 RGBA a/b 두 각도 중 a만 씀(b는 드라이브에 있음). 알파 테두리 상자로 잘라 긴 변 384. 가장자리 침범 0, 알파1~16 픽셀→0 정리. 어두운 바탕에서 직접 보고 잔티·배경 없음 확인",
+   "file": "0081kc-2a-terminal-pillar.webp",
+   "frames": 1,
+   "cell": [
+    178,
+    384
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "scenes": "kair(카이로노미콘·사이버 마법공학) · S6 수문장 탑"
+  },
+  {
+   "id": "2B",
+   "code": "CX-0081KC",
+   "name": "명령 콘솔",
+   "kind": "structure",
+   "driveFileId": "1nrmERMWQ-0fWqaV75s8L3gLZP9zVD0WB",
+   "zip": "CX-0081KC_2B_command-console_r1_candidate.zip",
+   "hold": false,
+   "holdReason": "Claude 검수 회신(CX-0081KC_props_r1_REVIEW_20261113) 원문 요지: 조형물 13종 중 11종 m0 게임 적용, 2D'·2K는 이상 없으나 둘 자리 없음",
+   "verdict": "use",
+   "reviewNotes": "512×512 RGBA a/b 두 각도 중 a만 씀(b는 드라이브에 있음). 알파 테두리 상자로 잘라 긴 변 384. 가장자리 침범 0, 알파1~16 픽셀→0 정리. 어두운 바탕에서 직접 보고 잔티·배경 없음 확인",
+   "file": "0081kc-2b-command-console.webp",
+   "frames": 1,
+   "cell": [
+    278,
+    384
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "scenes": "kair(카이로노미콘·사이버 마법공학) · S6 수문장 탑"
+  },
+  {
+   "id": "2C",
+   "code": "CX-0081KC",
+   "name": "시계 발전기",
+   "kind": "structure",
+   "driveFileId": "1_WTY1bOfFPIqnwa8-lehbNRBh0ElpkIG",
+   "zip": "CX-0081KC_2C_clock-generator_r1_candidate.zip",
+   "hold": false,
+   "holdReason": "Claude 검수 회신(CX-0081KC_props_r1_REVIEW_20261113) 원문 요지: 조형물 13종 중 11종 m0 게임 적용, 2D'·2K는 이상 없으나 둘 자리 없음",
+   "verdict": "use",
+   "reviewNotes": "512×512 RGBA a/b 두 각도 중 a만 씀(b는 드라이브에 있음). 알파 테두리 상자로 잘라 긴 변 384. 가장자리 침범 0, 알파1~16 픽셀→0 정리. 어두운 바탕에서 직접 보고 잔티·배경 없음 확인",
+   "file": "0081kc-2c-clock-generator.webp",
+   "frames": 1,
+   "cell": [
+    384,
+    255
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "scenes": "kair(카이로노미콘·사이버 마법공학) · S6 수문장 탑"
+  },
+  {
+   "id": "2D",
+   "code": "CX-0081KC",
+   "name": "네온 가로등",
+   "kind": "structure",
+   "driveFileId": "1AZKMuv2Qvv0lVINarVMptssCpcIDdw_L",
+   "zip": "CX-0081KC_2D_neon-streetlamp_r1_candidate.zip",
+   "hold": true,
+   "holdReason": "Claude 검수 회신(CX-0081KC_props_r1_REVIEW_20261113) 원문 요지: 조형물 13종 중 11종 m0 게임 적용, 2D'·2K는 이상 없으나 둘 자리 없음 / 파일명 HOLD",
+   "verdict": "use",
+   "reviewNotes": "512×512 RGBA a/b 두 각도 중 a만 씀(b는 드라이브에 있음). 알파 테두리 상자로 잘라 긴 변 384. 가장자리 침범 0, 알파1~16 픽셀→0 정리. 어두운 바탕에서 직접 보고 잔티·배경 없음 확인",
+   "file": "0081kc-2d-neon-streetlamp.webp",
+   "frames": 1,
+   "cell": [
+    68,
+    384
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "scenes": "kair(카이로노미콘·사이버 마법공학) · S6 수문장 탑"
+  },
+  {
+   "id": "2Dprime",
+   "code": "CX-0081KC",
+   "name": "실내 벽등",
+   "kind": "structure",
+   "driveFileId": "1_QKymr_kzLa3ODJOj1u80ZdHyUFw3V9I",
+   "zip": "CX-0081KC_2Dprime_indoor-wall-lamp_r1_candidate.zip",
+   "hold": false,
+   "holdReason": "Claude 검수 회신(CX-0081KC_props_r1_REVIEW_20261113) 원문 요지: 조형물 13종 중 11종 m0 게임 적용, 2D'·2K는 이상 없으나 둘 자리 없음",
+   "verdict": "use",
+   "reviewNotes": "512×512 RGBA a/b 두 각도 중 a만 씀(b는 드라이브에 있음). 알파 테두리 상자로 잘라 긴 변 384. 가장자리 침범 0, 알파1~16 픽셀→0 정리. 어두운 바탕에서 직접 보고 잔티·배경 없음 확인",
+   "file": "0081kc-2dprime-indoor-wall-lamp.webp",
+   "frames": 1,
+   "cell": [
+    202,
+    384
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "scenes": "kair(카이로노미콘·사이버 마법공학) · S6 수문장 탑"
+  },
+  {
+   "id": "2E",
+   "code": "CX-0081KC",
+   "name": "케이블 덕트",
+   "kind": "structure",
+   "driveFileId": "1nMAhwYvNPdDmrX_oMoEM3oa3J2ZOr4FI",
+   "zip": "CX-0081KC_2E_cable-duct_r1_candidate.zip",
+   "hold": true,
+   "holdReason": "Claude 검수 회신(CX-0081KC_props_r1_REVIEW_20261113) 원문 요지: 조형물 13종 중 11종 m0 게임 적용, 2D'·2K는 이상 없으나 둘 자리 없음 / 파일명 HOLD",
+   "verdict": "use",
+   "reviewNotes": "512×512 RGBA a/b 두 각도 중 a만 씀(b는 드라이브에 있음). 알파 테두리 상자로 잘라 긴 변 384. 가장자리 침범 0, 알파1~16 픽셀→0 정리. 어두운 바탕에서 직접 보고 잔티·배경 없음 확인",
+   "file": "0081kc-2e-cable-duct.webp",
+   "frames": 1,
+   "cell": [
+    384,
+    296
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "scenes": "kair(카이로노미콘·사이버 마법공학) · S6 수문장 탑"
+  },
+  {
+   "id": "2F",
+   "code": "CX-0081KC",
+   "name": "황동 매니폴드",
+   "kind": "structure",
+   "driveFileId": "12hU7Uaneq8yjOMOtSbD990O9Pe_LP4Cm",
+   "zip": "CX-0081KC_2F_brass-manifold_r1_candidate.zip",
+   "hold": false,
+   "holdReason": "Claude 검수 회신(CX-0081KC_props_r1_REVIEW_20261113) 원문 요지: 조형물 13종 중 11종 m0 게임 적용, 2D'·2K는 이상 없으나 둘 자리 없음",
+   "verdict": "use",
+   "reviewNotes": "512×512 RGBA a/b 두 각도 중 a만 씀(b는 드라이브에 있음). 알파 테두리 상자로 잘라 긴 변 384. 가장자리 침범 0, 알파1~16 픽셀→0 정리. 어두운 바탕에서 직접 보고 잔티·배경 없음 확인",
+   "file": "0081kc-2f-brass-manifold.webp",
+   "frames": 1,
+   "cell": [
+    349,
+    384
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "scenes": "kair(카이로노미콘·사이버 마법공학) · S6 수문장 탑"
+  },
+  {
+   "id": "2G",
+   "code": "CX-0081KC",
+   "name": "데이터 묘비",
+   "kind": "structure",
+   "driveFileId": "1LLte0hebUxTH-MO62cnLrDJiq7qtRZJ_",
+   "zip": "CX-0081KC_2G_data-gravestone_r1_candidate.zip",
+   "hold": false,
+   "holdReason": "Claude 검수 회신(CX-0081KC_props_r1_REVIEW_20261113) 원문 요지: 조형물 13종 중 11종 m0 게임 적용, 2D'·2K는 이상 없으나 둘 자리 없음",
+   "verdict": "use",
+   "reviewNotes": "512×512 RGBA a/b 두 각도 중 a만 씀(b는 드라이브에 있음). 알파 테두리 상자로 잘라 긴 변 384. 가장자리 침범 0, 알파1~16 픽셀→0 정리. 어두운 바탕에서 직접 보고 잔티·배경 없음 확인",
+   "file": "0081kc-2g-data-gravestone.webp",
+   "frames": 1,
+   "cell": [
+    248,
+    384
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "scenes": "kair(카이로노미콘·사이버 마법공학) · S6 수문장 탑"
+  },
+  {
+   "id": "2H",
+   "code": "CX-0081KC",
+   "name": "검은 모래 잔해",
+   "kind": "structure",
+   "driveFileId": "1Yl5ZnuohGCMMRmTjBpVbABOFtYTmrHT4",
+   "zip": "CX-0081KC_2H_black-sand-wreck_r1_candidate.zip",
+   "hold": false,
+   "holdReason": "Claude 검수 회신(CX-0081KC_props_r1_REVIEW_20261113) 원문 요지: 조형물 13종 중 11종 m0 게임 적용, 2D'·2K는 이상 없으나 둘 자리 없음",
+   "verdict": "use",
+   "reviewNotes": "512×512 RGBA a/b 두 각도 중 a만 씀(b는 드라이브에 있음). 알파 테두리 상자로 잘라 긴 변 384. 가장자리 침범 0, 알파1~16 픽셀→0 정리. 어두운 바탕에서 직접 보고 잔티·배경 없음 확인",
+   "file": "0081kc-2h-black-sand-wreck.webp",
+   "frames": 1,
+   "cell": [
+    384,
+    283
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "scenes": "kair(카이로노미콘·사이버 마법공학) · S6 수문장 탑"
+  },
+  {
+   "id": "2I",
+   "code": "CX-0081KC",
+   "name": "시냅스 아치",
+   "kind": "structure",
+   "driveFileId": "1BrivFYFAcPInXkCeBTKue9ym5gSsL584",
+   "zip": "CX-0081KC_2I_synapse-arch_r1_candidate.zip",
+   "hold": false,
+   "holdReason": "Claude 검수 회신(CX-0081KC_props_r1_REVIEW_20261113) 원문 요지: 조형물 13종 중 11종 m0 게임 적용, 2D'·2K는 이상 없으나 둘 자리 없음",
+   "verdict": "use",
+   "reviewNotes": "512×512 RGBA a/b 두 각도 중 a만 씀(b는 드라이브에 있음). 알파 테두리 상자로 잘라 긴 변 384. 가장자리 침범 0, 알파1~16 픽셀→0 정리. 어두운 바탕에서 직접 보고 잔티·배경 없음 확인",
+   "file": "0081kc-2i-synapse-arch.webp",
+   "frames": 1,
+   "cell": [
+    278,
+    384
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "scenes": "kair(카이로노미콘·사이버 마법공학) · S6 수문장 탑"
+  },
+  {
+   "id": "2J",
+   "code": "CX-0081KC",
+   "name": "배수 펌프",
+   "kind": "structure",
+   "driveFileId": "1YbbfXNbbkvXj5mA0Fh0p1wuuzknXFn5b",
+   "zip": "CX-0081KC_2J_drainage-pump_r1_candidate.zip",
+   "hold": false,
+   "holdReason": "Claude 검수 회신(CX-0081KC_props_r1_REVIEW_20261113) 원문 요지: 조형물 13종 중 11종 m0 게임 적용, 2D'·2K는 이상 없으나 둘 자리 없음",
+   "verdict": "use",
+   "reviewNotes": "512×512 RGBA a/b 두 각도 중 a만 씀(b는 드라이브에 있음). 알파 테두리 상자로 잘라 긴 변 384. 가장자리 침범 0, 알파1~16 픽셀→0 정리. 어두운 바탕에서 직접 보고 잔티·배경 없음 확인",
+   "file": "0081kc-2j-drainage-pump.webp",
+   "frames": 1,
+   "cell": [
+    358,
+    384
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "scenes": "kair(카이로노미콘·사이버 마법공학) · S6 수문장 탑"
+  },
+  {
+   "id": "2K",
+   "code": "CX-0081KC",
+   "name": "명령 단상",
+   "kind": "structure",
+   "driveFileId": "1eoBBSyK2GE9jBP8g9btW4rdqE6bZMdNj",
+   "zip": "CX-0081KC_2K_command-dais_r1_candidate.zip",
+   "hold": false,
+   "holdReason": "Claude 검수 회신(CX-0081KC_props_r1_REVIEW_20261113) 원문 요지: 조형물 13종 중 11종 m0 게임 적용, 2D'·2K는 이상 없으나 둘 자리 없음",
+   "verdict": "use",
+   "reviewNotes": "512×512 RGBA a/b 두 각도 중 a만 씀(b는 드라이브에 있음). 알파 테두리 상자로 잘라 긴 변 384. 가장자리 침범 0, 알파1~16 픽셀→0 정리. 어두운 바탕에서 직접 보고 잔티·배경 없음 확인",
+   "file": "0081kc-2k-command-dais.webp",
+   "frames": 1,
+   "cell": [
+    384,
+    275
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "scenes": "kair(카이로노미콘·사이버 마법공학) · S6 수문장 탑"
+  },
+  {
+   "id": "2L",
+   "code": "CX-0081KC",
+   "name": "주형 국자",
+   "kind": "structure",
+   "driveFileId": "1xmJBWciKCoL4iMs12z00BsJRR7Im7Xcc",
+   "zip": "CX-0081KC_2L_mold-ladle_r1_candidate.zip",
+   "hold": false,
+   "holdReason": "Claude 검수 회신(CX-0081KC_props_r1_REVIEW_20261113) 원문 요지: 조형물 13종 중 11종 m0 게임 적용, 2D'·2K는 이상 없으나 둘 자리 없음",
+   "verdict": "use",
+   "reviewNotes": "512×512 RGBA a/b 두 각도 중 a만 씀(b는 드라이브에 있음). 알파 테두리 상자로 잘라 긴 변 384. 가장자리 침범 0, 알파1~16 픽셀→0 정리. 어두운 바탕에서 직접 보고 잔티·배경 없음 확인",
+   "file": "0081kc-2l-mold-ladle.webp",
+   "frames": 1,
+   "cell": [
+    384,
+    341
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "scenes": "kair(카이로노미콘·사이버 마법공학) · S6 수문장 탑"
+  },
+  {
+   "id": "1A",
+   "code": "CX-0081KC",
+   "name": "kc-deck 갑판 바닥",
+   "kind": "tile",
+   "driveFileId": "1BhKkHwYwQmizv5-Y3DLIWuELUTyMf3IZ",
+   "zip": "CX-0081KC_1A_r3_LIMIT_HOLD.zip",
+   "hold": true,
+   "holdReason": "Claude 회신 원문: \"타일(1B 회랑 r2, 1E 실외 벽, 1F 뉴런)은 따로 검토해 회신하겠습니다.\" — 그 뒤 회신 찾지 못함",
+   "verdict": "skip",
+   "reviewNotes": "원본 2048×1024(왼쪽 바닥·오른쪽 벽) 중 바닥 1024×1024. 바닥 세로 이음매 차이가 인접 줄 차이의 5.1배, 인계문도 'r3 반복 경계 개선 실패, r2보다 악화'라 세로 스크롤에 이음매가 보임",
+   "file": null,
+   "frames": 1,
+   "cell": [
+    1024,
+    1024
+   ],
+   "sourceCell": [
+    1024,
+    1024
+   ],
+   "scenes": "kair · S6 수문장 탑"
+  },
+  {
+   "id": "1B",
+   "code": "CX-0081KC",
+   "name": "kc-corridor 봉인 회랑 바닥",
+   "kind": "tile",
+   "driveFileId": "1l2kyHWyphdY3RAGUkIRISNV3Zp-6NjvT",
+   "zip": "CX-0081KC_1B_kc-corridor_r2_HOLD.zip",
+   "hold": true,
+   "holdReason": "Claude 회신 원문: \"타일(1B 회랑 r2, 1E 실외 벽, 1F 뉴런)은 따로 검토해 회신하겠습니다.\" — 그 뒤 회신 찾지 못함",
+   "verdict": "use",
+   "reviewNotes": "원본 2048×1024(왼쪽 바닥·오른쪽 벽) 중 바닥 1024×1024. 바닥 세로 이음매 2.5배(약함). 어둡게 깔면 거의 안 보임",
+   "file": "0081kc-1b-kc-corridor-floor.jpg",
+   "frames": 1,
+   "cell": [
+    1024,
+    1024
+   ],
+   "sourceCell": [
+    1024,
+    1024
+   ],
+   "scenes": "kair02 · S6 수문장 탑"
+  },
+  {
+   "id": "1C",
+   "code": "CX-0081KC",
+   "name": "kc-forge 대장간 바닥",
+   "kind": "tile",
+   "driveFileId": "1mHClnSczxXulJt9_FXD4K3kfi3VwKeJ2",
+   "zip": "CX-0081KC_1C_kc-forge_r2_HOLD.zip",
+   "hold": true,
+   "holdReason": "Claude 회신 원문: \"타일(1B 회랑 r2, 1E 실외 벽, 1F 뉴런)은 따로 검토해 회신하겠습니다.\" — 그 뒤 회신 찾지 못함",
+   "verdict": "use",
+   "reviewNotes": "원본 2048×1024(왼쪽 바닥·오른쪽 벽) 중 바닥 1024×1024. 바닥 세로 이음매 2.8배. 격자 무늬라 띠가 덜 튐. 인계문은 '가로 반복에 부분 격자 띠' 지적",
+   "file": "0081kc-1c-kc-forge-floor.jpg",
+   "frames": 1,
+   "cell": [
+    1024,
+    1024
+   ],
+   "sourceCell": [
+    1024,
+    1024
+   ],
+   "scenes": "kair · S6 수문장 탑"
+  },
+  {
+   "id": "1D",
+   "code": "CX-0081KC",
+   "name": "kc-canal 운하 바닥",
+   "kind": "tile",
+   "driveFileId": "1LGObo5mZ78RyTAEY7qHp0VzonktNXC-_",
+   "zip": "CX-0081KC_1D_kc-canal_r2_HOLD.zip",
+   "hold": true,
+   "holdReason": "Claude 회신 원문: \"타일(1B 회랑 r2, 1E 실외 벽, 1F 뉴런)은 따로 검토해 회신하겠습니다.\" — 그 뒤 회신 찾지 못함",
+   "verdict": "use",
+   "reviewNotes": "원본 2048×1024(왼쪽 바닥·오른쪽 벽) 중 바닥 1024×1024. 바닥 세로 이음매 1.6배로 양호",
+   "file": "0081kc-1d-kc-canal-floor.jpg",
+   "frames": 1,
+   "cell": [
+    1024,
+    1024
+   ],
+   "sourceCell": [
+    1024,
+    1024
+   ],
+   "scenes": "kair · S6 수문장 탑"
+  },
+  {
+   "id": "1E",
+   "code": "CX-0081KC",
+   "name": "kc-wall-out 바깥 벽",
+   "kind": "tile",
+   "driveFileId": "1ILXArBVpAFaPtga8iaKkchE_b0y5S3wJ",
+   "zip": "CX-0081KC_1E_kc-wall-out_r2_HOLD.zip",
+   "hold": true,
+   "holdReason": "Claude 회신 원문: \"타일(1B 회랑 r2, 1E 실외 벽, 1F 뉴런)은 따로 검토해 회신하겠습니다.\" — 그 뒤 회신 찾지 못함",
+   "verdict": "use",
+   "reviewNotes": "원본 2048×1024(왼쪽 바닥·오른쪽 벽) 중 벽 1024×1024. 벽 전용 1024×1024. 세로 이음매 2.4배, 가로 0.9배. 옆 벽 띠로 쓰기 적당",
+   "file": "0081kc-1e-kc-wall-out-wall.jpg",
+   "frames": 1,
+   "cell": [
+    1024,
+    1024
+   ],
+   "sourceCell": [
+    1024,
+    1024
+   ],
+   "scenes": "kair · S6 수문장 탑"
+  },
+  {
+   "id": "1F",
+   "code": "CX-0081KC",
+   "name": "kc-neuron 뉴런 게이트 바닥",
+   "kind": "tile",
+   "driveFileId": "1SkMul41LFuPLvna5xmqIzvB5G4MkIHvr",
+   "zip": "CX-0081KC_1F_kc-neuron_r2_HOLD.zip",
+   "hold": true,
+   "holdReason": "Claude 회신 원문: \"타일(1B 회랑 r2, 1E 실외 벽, 1F 뉴런)은 따로 검토해 회신하겠습니다.\" — 그 뒤 회신 찾지 못함",
+   "verdict": "use",
+   "reviewNotes": "원본 2048×1024(왼쪽 바닥·오른쪽 벽) 중 바닥 1024×1024. 바닥 세로 이음매 1.9배로 양호. 벽 쪽은 8.3배라 버리고 바닥 절반만 씀",
+   "file": "0081kc-1f-kc-neuron-floor.jpg",
+   "frames": 1,
+   "cell": [
+    1024,
+    1024
+   ],
+   "sourceCell": [
+    1024,
+    1024
+   ],
+   "scenes": "kair08 · S6 수문장 탑"
+  },
+  {
+   "id": "1A",
+   "code": "CX-0074NT",
+   "name": "소나무",
+   "kind": "structure",
+   "driveFileId": "1SqlBvqTjq3r_ZGoM3J4yXvJMw3iLHDns",
+   "zip": "CX-0074NT_1A_pine_a_r1_HOLD.zip",
+   "hold": true,
+   "holdReason": "Claude 검수 원문: \"1A 소나무 a·b·c, 1B 감나무 a·b·c — 6장 모두 통과\"",
+   "verdict": "use",
+   "reviewNotes": "a 변형만 씀. 알파 테두리로 잘라 긴 변 384, 알파1~16→0. 어두운 바탕에서 직접 보고 잔티 없음 확인 (가지 끝 반투명 많음, 잎·가지 표현)",
+   "file": "0074nt-1a-pine.webp",
+   "frames": 1,
+   "cell": [
+    382,
+    384
+   ],
+   "sourceCell": [
+    768,
+    768
+   ],
+   "scenes": "dist 정원·숲 장면 · S1 정원·거미동굴"
+  },
+  {
+   "id": "1B",
+   "code": "CX-0074NT",
+   "name": "감나무",
+   "kind": "structure",
+   "driveFileId": "12nWhK4iaoMEOesWWtYfrq_I-Yhvv0GxJ",
+   "zip": "CX-0074NT_1B_persimmon_a_r1_HOLD.zip",
+   "hold": true,
+   "holdReason": "Claude 검수 원문: \"1A 소나무 a·b·c, 1B 감나무 a·b·c — 6장 모두 통과\"",
+   "verdict": "use",
+   "reviewNotes": "a 변형만 씀. 알파 테두리로 잘라 긴 변 384, 알파1~16→0. 어두운 바탕에서 직접 보고 잔티 없음 확인 (가지 끝 반투명 많음, 잎·가지 표현)",
+   "file": "0074nt-1b-persimmon.webp",
+   "frames": 1,
+   "cell": [
+    384,
+    383
+   ],
+   "sourceCell": [
+    768,
+    768
+   ],
+   "scenes": "dist 정원·숲 장면 · S1 정원·거미동굴 / last3 마을 · S5"
+  },
+  {
+   "id": "2A",
+   "code": "CX-0074NT",
+   "name": "둥근 바위",
+   "kind": "structure",
+   "driveFileId": "1PUvcmS68u7a66lYCv_-eiDPayyZuM-Mp",
+   "zip": "CX-0074NT_2A_roundboulder_a_r1_HOLD.zip",
+   "hold": true,
+   "holdReason": "파일명 HOLD, 검수 회신 미발견 — 사유 기록 없음",
+   "verdict": "use",
+   "reviewNotes": "a 변형만 씀. 알파 테두리로 잘라 긴 변 384, 알파1~16→0. 어두운 바탕에서 직접 보고 잔티 없음 확인",
+   "file": "0074nt-2a-roundboulder.webp",
+   "frames": 1,
+   "cell": [
+    378,
+    312
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "scenes": "dist 정원·숲 장면 · S1 정원·거미동굴 / last3 마을 · S5"
+  },
+  {
+   "id": "3A",
+   "code": "CX-0074NT",
+   "name": "참나무",
+   "kind": "structure",
+   "driveFileId": "1lwf-x7q4g5qhMNmVaJe0Tuy3B83LEyKY",
+   "zip": "CX-0074NT_3A_oak_a_r1_HOLD.zip",
+   "hold": true,
+   "holdReason": "파일명 HOLD, 검수 회신 미발견 — 사유 기록 없음",
+   "verdict": "use",
+   "reviewNotes": "a 변형만 씀. 알파 테두리로 잘라 긴 변 384, 알파1~16→0. 어두운 바탕에서 직접 보고 잔티 없음 확인 (가지 끝 반투명 많음, 잎·가지 표현)",
+   "file": "0074nt-3a-oak.webp",
+   "frames": 1,
+   "cell": [
+    384,
+    384
+   ],
+   "sourceCell": [
+    768,
+    768
+   ],
+   "scenes": "dist 정원·숲 장면 · S1 정원·거미동굴"
+  },
+  {
+   "id": "3C",
+   "code": "CX-0074NT",
+   "name": "통나무",
+   "kind": "structure",
+   "driveFileId": "146Nz9mEGVELIKxEC1y0xlxaTa_xvpGnj",
+   "zip": "CX-0074NT_3C_log_a_r1_HOLD.zip",
+   "hold": true,
+   "holdReason": "파일명 HOLD, 검수 회신 미발견 — 사유 기록 없음",
+   "verdict": "use",
+   "reviewNotes": "a 변형만 씀. 알파 테두리로 잘라 긴 변 384, 알파1~16→0. 어두운 바탕에서 직접 보고 잔티 없음 확인",
+   "file": "0074nt-3c-log.webp",
+   "frames": 1,
+   "cell": [
+    308,
+    171
+   ],
+   "sourceCell": [
+    512,
+    512
+   ],
+   "scenes": "dist 정원·숲 장면 · S1 정원·거미동굴 / last3 마을 · S5"
+  },
+  {
+   "id": "FB06",
+   "code": "CX-0088FB",
+   "name": "사몽 고리",
+   "kind": "fx",
+   "driveFileId": "16OkqX9Yrn80MD205rCDvr5RRa05qkKs2",
+   "zip": "CX-0088FB_r1_FB-06_samong_ring_HOLD_part02.zip",
+   "hold": true,
+   "holdReason": "FB_SERIES_REVIEW_INDEX 원문: \"반복 경계24→1이−18.89° 점프. 타원비2.06684~2.09371로2:1과 차이\" (256×128칸, 24장 — 직접 내려받아 확인)",
+   "verdict": "use",
+   "reviewNotes": "24프레임 고리 회전 중 첫 칸 한 장만 꺼내 정지 탄·고리 오라로 씀(루프 점프 결함은 정지 이미지라 무관). 최대 알파 252, 반투명 발광 고리",
+   "file": "0088fb-fb06-samong-ring.webp",
+   "frames": 1,
+   "cell": [
+    213,
+    110
+   ],
+   "sourceCell": [
+    256,
+    128
+   ],
+   "scenes": "cult 최종보스 사몽 · S9 교주"
+  }
+ ]
+}
