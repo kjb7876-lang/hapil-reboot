@@ -1,0 +1,13 @@
+not ok 1 - v41 stages follow the original story parts in order and leave no scene out
+not ok 2 - v41 every stage is mobs → mid boss → mobs → boss, and bosses alternate plain attacks with named patterns
+not ok 3 - v41 a full run on every difficulty ends without error, in order, with nothing dropped
+not ok 4 - v41 every wave, plain attack and named pattern always leaves a lane for the hitbox
+not ok 5 - v41 slow movement, the bomb, grazing, items and the named-pattern bonus work
+not ok 6 - v41 three difficulties differ in lives, bullet count and speed, and bullets are slow
+not ok 7 - v41 the phone mode lowers the bullet cap and draws bullets larger instead
+not ok 8 - v41 bullets use six colours and six shapes, the cross stays upright, and nothing can hit before it has formed
+not ok 9 - v41 a run can start at any stage, and the same seed replays exactly
+not ok 10 - v41 the page loads art one stage at a time from small files, and sound levels are ordered
+# tests 10
+# pass 0
+# fail 10

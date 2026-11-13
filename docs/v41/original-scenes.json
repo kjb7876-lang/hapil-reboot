@@ -1,0 +1,440 @@
+{
+ "source": "kjb7876-lang/m0 story-source/catalog-r75.json @ db59a40",
+ "sha256": "47a09cda7444df1bc2a09063da0748b367029f5c1fdeffb5660c477e6c60bd7a",
+ "scenes": [
+  {
+   "id": "01",
+   "zone": "dist00",
+   "title": "악마화 나무의 정원",
+   "chapter": "제1부 — 마지막 수호자 EGO",
+   "rest": false
+  },
+  {
+   "id": "02",
+   "zone": "dist01",
+   "title": "거미동굴",
+   "chapter": "제1부 — 마지막 수호자 EGO",
+   "rest": false
+  },
+  {
+   "id": "03",
+   "zone": "dist02",
+   "title": "늪지대의 뿔악마",
+   "chapter": "제1부 — 마지막 수호자 EGO",
+   "rest": false
+  },
+  {
+   "id": "04",
+   "zone": "dist03",
+   "title": "무너진성",
+   "chapter": "제1부 — 마지막 수호자 EGO",
+   "rest": false
+  },
+  {
+   "id": "05",
+   "zone": "dist04",
+   "title": "시체들이 되살아난 밤",
+   "chapter": "제1부 — 마지막 수호자 EGO",
+   "rest": false
+  },
+  {
+   "id": "06",
+   "zone": "dist05",
+   "title": "일곱 기둥",
+   "chapter": "제1부 — 마지막 수호자 EGO",
+   "rest": false
+  },
+  {
+   "id": "07",
+   "zone": "dist06",
+   "title": "추락",
+   "chapter": "제1부 — 마지막 수호자 EGO",
+   "rest": false
+  },
+  {
+   "id": "08",
+   "zone": "ep1a08",
+   "title": "피로 물든 병원",
+   "chapter": "제1부 — 마지막 수호자 EGO",
+   "rest": false
+  },
+  {
+   "id": "09-1",
+   "zone": "ep1a09",
+   "title": "주사실",
+   "chapter": "제1부 — 마지막 수호자 EGO",
+   "rest": false
+  },
+  {
+   "id": "09-2",
+   "zone": "ep1a09b",
+   "title": "결전의 날",
+   "chapter": "제1부 — 마지막 수호자 EGO",
+   "rest": false
+  },
+  {
+   "id": "10",
+   "zone": "ep1a10",
+   "title": "환자와 중독의 도시",
+   "chapter": "제1부 — 마지막 수호자 EGO",
+   "rest": false
+  },
+  {
+   "id": "11",
+   "zone": "ep1a11",
+   "title": "천사의 가면과 의목사 후보생",
+   "chapter": "제1부 — 마지막 수호자 EGO",
+   "rest": false
+  },
+  {
+   "id": "12",
+   "zone": "dreamRest",
+   "title": "기억해 내지 못하는 사람 〔쉼터〕",
+   "chapter": "제2부 — 일곱 개의 귀와 하이테크 축귀",
+   "rest": true
+  },
+  {
+   "id": "13",
+   "zone": "ep1b01",
+   "title": "솔로몬의 봉인식",
+   "chapter": "제2부 — 일곱 개의 귀와 하이테크 축귀",
+   "rest": false
+  },
+  {
+   "id": "14",
+   "zone": "ep1b02",
+   "title": "나태의 집",
+   "chapter": "제2부 — 일곱 개의 귀와 하이테크 축귀",
+   "rest": false
+  },
+  {
+   "id": "15",
+   "zone": "ep1b03",
+   "title": "금이 간 안경",
+   "chapter": "제2부 — 일곱 개의 귀와 하이테크 축귀",
+   "rest": false
+  },
+  {
+   "id": "16",
+   "zone": "ep1b04",
+   "title": "탐식의 주방",
+   "chapter": "제2부 — 일곱 개의 귀와 하이테크 축귀",
+   "rest": false
+  },
+  {
+   "id": "17",
+   "zone": "ep1b05",
+   "title": "붉은 하이힐",
+   "chapter": "제2부 — 일곱 개의 귀와 하이테크 축귀",
+   "rest": false
+  },
+  {
+   "id": "18",
+   "zone": "ep1b06",
+   "title": "맘몬의 금고",
+   "chapter": "제2부 — 일곱 개의 귀와 하이테크 축귀",
+   "rest": false
+  },
+  {
+   "id": "19",
+   "zone": "ep1b06b",
+   "title": "눈보라 속의 소년",
+   "chapter": "제2부 — 일곱 개의 귀와 하이테크 축귀",
+   "rest": false
+  },
+  {
+   "id": "20",
+   "zone": "ep1b07",
+   "title": "불을 지른 남자",
+   "chapter": "제2부 — 일곱 개의 귀와 하이테크 축귀",
+   "rest": false
+  },
+  {
+   "id": "21",
+   "zone": "ep1b08",
+   "title": "하늘에 서려는 자",
+   "chapter": "제2부 — 일곱 개의 귀와 하이테크 축귀",
+   "rest": false
+  },
+  {
+   "id": "22",
+   "zone": "ep1b09",
+   "title": "생체 부트로더",
+   "chapter": "제2부 — 일곱 개의 귀와 하이테크 축귀",
+   "rest": false
+  },
+  {
+   "id": "23",
+   "zone": "restEp1b",
+   "title": "사라진 귀환자 〔쉼터〕",
+   "chapter": "제2부 — 일곱 개의 귀와 하이테크 축귀",
+   "rest": true
+  },
+  {
+   "id": "24",
+   "zone": "u201",
+   "title": "방어의 군단",
+   "chapter": "제3부 — 통제자의 열일곱 단계",
+   "rest": false
+  },
+  {
+   "id": "25",
+   "zone": "u202",
+   "title": "잔인한 구원",
+   "chapter": "제3부 — 통제자의 열일곱 단계",
+   "rest": false
+  },
+  {
+   "id": "26",
+   "zone": "u204",
+   "title": "시스템의 거부권",
+   "chapter": "제3부 — 통제자의 열일곱 단계",
+   "rest": false
+  },
+  {
+   "id": "27",
+   "zone": "u205",
+   "title": "관리자 권한",
+   "chapter": "제3부 — 통제자의 열일곱 단계",
+   "rest": false
+  },
+  {
+   "id": "28",
+   "zone": "u206",
+   "title": "중앙 코어 이주실",
+   "chapter": "제3부 — 통제자의 열일곱 단계",
+   "rest": false
+  },
+  {
+   "id": "29",
+   "zone": "u203",
+   "title": "기억의 문",
+   "chapter": "제3부 — 통제자의 열일곱 단계",
+   "rest": false
+  },
+  {
+   "id": "30",
+   "zone": "restU2",
+   "title": "환도 자아의 탄생 〔쉼터〕",
+   "chapter": "제4부 — 환도 자아와 융합몽세",
+   "rest": true
+  },
+  {
+   "id": "31",
+   "zone": "last304",
+   "title": "중립 지역의 재각성",
+   "chapter": "제4부 — 환도 자아와 융합몽세",
+   "rest": false
+  },
+  {
+   "id": "32",
+   "zone": "last305",
+   "title": "고블린 두목과 장미 인장",
+   "chapter": "제4부 — 환도 자아와 융합몽세",
+   "rest": false
+  },
+  {
+   "id": "33",
+   "zone": "last301",
+   "title": "타락천사 기사",
+   "chapter": "제4부 — 환도 자아와 융합몽세",
+   "rest": false
+  },
+  {
+   "id": "34",
+   "zone": "last302",
+   "title": "잠들지 못하는 마을",
+   "chapter": "제4부 — 환도 자아와 융합몽세",
+   "rest": false
+  },
+  {
+   "id": "35",
+   "zone": "last303",
+   "title": "한약과 불면귀",
+   "chapter": "제4부 — 환도 자아와 융합몽세",
+   "rest": false
+  },
+  {
+   "id": "36",
+   "zone": "restLast3",
+   "title": "끼어든 시간 〔쉼터〕",
+   "chapter": "제4부 — 환도 자아와 융합몽세",
+   "rest": true
+  },
+  {
+   "id": "37",
+   "zone": "kair01",
+   "title": "최초명령의 세계",
+   "chapter": "제5부 — 카이로노미콘",
+   "rest": false
+  },
+  {
+   "id": "38",
+   "zone": "kair04",
+   "title": "예순여섯 수문장",
+   "chapter": "제5부 — 카이로노미콘",
+   "rest": false
+  },
+  {
+   "id": "39",
+   "zone": "kair05",
+   "title": "빼앗긴 시간",
+   "chapter": "제5부 — 카이로노미콘",
+   "rest": false
+  },
+  {
+   "id": "40",
+   "zone": "kair06",
+   "title": "닫힌 층의 명령",
+   "chapter": "제5부 — 카이로노미콘",
+   "rest": false
+  },
+  {
+   "id": "41",
+   "zone": "kair07",
+   "title": "검은 공방",
+   "chapter": "제5부 — 카이로노미콘",
+   "rest": false
+  },
+  {
+   "id": "42",
+   "zone": "kair08",
+   "title": "뉴런 게이트 · 노이론 게이트",
+   "chapter": "제5부 — 카이로노미콘",
+   "rest": false
+  },
+  {
+   "id": "43",
+   "zone": "kair09",
+   "title": "망각의 묘지",
+   "chapter": "제5부 — 카이로노미콘",
+   "rest": false
+  },
+  {
+   "id": "44",
+   "zone": "kair10",
+   "title": "붕괴 의식장",
+   "chapter": "제5부 — 카이로노미콘",
+   "rest": false
+  },
+  {
+   "id": "45",
+   "zone": "kair02",
+   "title": "아르벨리아, 유예의 수문장",
+   "chapter": "제5부 — 카이로노미콘",
+   "rest": false
+  },
+  {
+   "id": "46",
+   "zone": "kair03",
+   "title": "세이렌 모르",
+   "chapter": "제5부 — 카이로노미콘",
+   "rest": false
+  },
+  {
+   "id": "47",
+   "zone": "restKairo",
+   "title": "최초명령 재작성 〔쉼터〕",
+   "chapter": "제5부 — 카이로노미콘",
+   "rest": true
+  },
+  {
+   "id": "48",
+   "zone": "hando01",
+   "title": "성 안에 소환된 의목사",
+   "chapter": "제6부 — 두 사람의 성",
+   "rest": false
+  },
+  {
+   "id": "49",
+   "zone": "hando02",
+   "title": "두 주인의 각성",
+   "chapter": "제6부 — 두 사람의 성",
+   "rest": false
+  },
+  {
+   "id": "50",
+   "zone": "hando03",
+   "title": "함께 되찾은 코어",
+   "chapter": "제6부 — 두 사람의 성",
+   "rest": false
+  },
+  {
+   "id": "51",
+   "zone": "restHando",
+   "title": "잘못 이어진 기록 〔쉼터〕",
+   "chapter": "제6부 — 두 사람의 성",
+   "rest": true
+  },
+  {
+   "id": "52",
+   "zone": "murder01",
+   "title": "윤하람",
+   "chapter": "제7부 — 파란불 아래의 사람들",
+   "rest": false
+  },
+  {
+   "id": "53",
+   "zone": "murder02",
+   "title": "장민재와 새빛호텔",
+   "chapter": "제7부 — 파란불 아래의 사람들",
+   "rest": false
+  },
+  {
+   "id": "54",
+   "zone": "murder04",
+   "title": "고서진과 청록빌라",
+   "chapter": "제7부 — 파란불 아래의 사람들",
+   "rest": false
+  },
+  {
+   "id": "55",
+   "zone": "murder03",
+   "title": "옥상의 순환",
+   "chapter": "제7부 — 파란불 아래의 사람들",
+   "rest": false
+  },
+  {
+   "id": "56",
+   "zone": "cult01",
+   "title": "하나로 묶인 악몽",
+   "chapter": "제8부 — 사이비 합일몽세",
+   "rest": false
+  },
+  {
+   "id": "57",
+   "zone": "cult02",
+   "title": "교주가 기다리는 전쟁",
+   "chapter": "제8부 — 사이비 합일몽세",
+   "rest": false
+  },
+  {
+   "id": "58",
+   "zone": "cult05",
+   "title": "돌아오는 현실의 기억",
+   "chapter": "제8부 — 사이비 합일몽세",
+   "rest": false
+  },
+  {
+   "id": "59",
+   "zone": "cult06",
+   "title": "처음 세웠던 목표",
+   "chapter": "제8부 — 사이비 합일몽세",
+   "rest": false
+  },
+  {
+   "id": "60",
+   "zone": "cult03",
+   "title": "사몽의 문턱",
+   "chapter": "제8부 — 사이비 합일몽세",
+   "rest": false
+  },
+  {
+   "id": "61",
+   "zone": "cult04",
+   "title": "교주의 사몽",
+   "chapter": "제8부 — 사이비 합일몽세",
+   "rest": false
+  }
+ ]
+}

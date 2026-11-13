@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>합일 v37 · 전투 음향 미리듣기</title>
+<style>
+  :root{color-scheme:dark}
+  body{margin:0;padding:20px 16px 40px;background:#0a0b14;color:#ece6d8;font:15px/1.5 system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+  h1{font-size:19px;margin:0 0 4px;font-weight:600}
+  p{margin:0 0 14px;color:#a9a6b8;font-size:13px}
+  h2{font-size:12px;letter-spacing:.08em;color:#d8c49a;margin:22px 0 8px;font-weight:600}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+  button{appearance:none;border:1px solid #3a3850;background:#15162a;color:inherit;border-radius:10px;padding:12px 12px;text-align:left;font:inherit;min-height:60px}
+  button:active{background:#262848;border-color:#d8c49a}
+  button small{display:block;color:#8f8ca3;font-size:11.5px;margin-top:2px}
+  #state{font-size:12px;color:#8f8ca3;margin-top:18px}
+</style>
+</head>
+<body>
+<h1>전투 음향 미리듣기</h1>
+<p>버튼을 누르면 게임에서 쓰는 것과 같은 코드로 소리를 합성합니다. 무음 모드를 끄고 들어 주세요.</p>
+<div id="groups"></div>
+<p id="state">아직 재생하지 않았습니다.</p>
+<script src="../src/audio-v37.js"></script>
+<script>
+(function(){
+  var groups=[
+    ['계속 들리는 소리',[['graze','탄 스침','탄막을 아슬하게 지날 때'],['bossHit','보스 명중','자동 사격이 맞는 동안'],['bossHitLow','보스 명중 · 빈사','체력 20% 이하에서 음색 변화'],['kill','적 처치','일반 적 격파']]],
+    ['위험 신호',[['charge','보스 기 모으기','공격 준비 동작'],['laserWarn','광선 예고','점선 예고가 뜰 때'],['laserFire','광선 발사','예고가 실제 광선이 될 때'],['hurt','피격','기존 피격음 위에 겹침'],['heartbeat','심장박동','체력 1칸 남았을 때 반복'],['countdown','시간 경고','패턴 종료 10초 전부터'],['countdownLast','시간 경고 · 3초','마지막 3초']]],
+    ['자동 스킬',[['skillMemory','기억 해방',''],['skillDelay','시간 지연',''],['skillCounter','반격',''],['skillEgo','자아 각성','']]],
+    ['전투의 마디',[['warning','보스 등장','등장 연출 시작'],['phaseBreak','패턴 격파','다음 패턴으로 넘어갈 때'],['summon','지원군 출현',''],['seal','봉인 · 해방',''],['awakening','사몽 각성','제8부'],['win','승리',''],['lose','패배','']]]
+  ];
+  var fx=HapilAudio.create(),host=document.getElementById('groups'),state=document.getElementById('state');
+  groups.forEach(function(group){
+    var title=document.createElement('h2');title.textContent=group[0];host.appendChild(title);
+    var grid=document.createElement('div');grid.className='grid';host.appendChild(grid);
+    group[1].forEach(function(item){
+      var button=document.createElement('button');button.type='button';button.textContent=item[1];
+      if(item[2]){var note=document.createElement('small');note.textContent=item[2];button.appendChild(note);}
+      button.addEventListener('click',function(){
+        var ready=fx.unlock();
+        // 첫 터치 직후에는 오디오가 아직 깨어나는 중일 수 있어 한 번 더 시도한다.
+        if(!fx.play(item[0]))setTimeout(function(){fx.play(item[0]);},120);
+        state.textContent=ready?'재생: '+item[1]:'이 브라우저에서는 Web Audio를 쓸 수 없습니다.';
+      });
+      grid.appendChild(button);
+    });
+  });
+})();
+</script>
+</body>
+</html>

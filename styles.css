@@ -73,3 +73,4 @@
 
 /* Mobile combat does not need decorative full-screen compositing layers. */
 @media(pointer:coarse),(max-width:600px){.ambient{display:none}.arena-frame{box-shadow:none}.arena-frame:after{display:none}.dim-screen,.modal-backdrop{backdrop-filter:none;-webkit-backdrop-filter:none}}
+.arcade-link{display:block;text-align:center;text-decoration:none;border-color:#b77bff;color:#e9d8ff}.arcade-link small{display:block;font-size:10px;letter-spacing:.08em;opacity:.75;margin-top:2px}

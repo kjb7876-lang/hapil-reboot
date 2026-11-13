@@ -1,0 +1,143 @@
+{
+ "method": "Headless Chrome OfflineAudioContext 48kHz, each cue rendered alone through the game's own master gain and limiter; WORST = phaseBreak+laserFire+hurt+kill+bossHitLow+graze+skillEgo+win at once. peak is linear full scale (1.0 = clipping). Not a listening test.",
+ "cues": {
+  "graze": {
+   "peak": 0.057,
+   "rmsDb": -40.1,
+   "ms": 32,
+   "zcHz": 2189
+  },
+  "bossHit": {
+   "peak": 0.032,
+   "rmsDb": -45.5,
+   "ms": 19,
+   "zcHz": 2429
+  },
+  "bossHitLow": {
+   "peak": 0.041,
+   "rmsDb": -40.3,
+   "ms": 24,
+   "zcHz": 1562
+  },
+  "kill": {
+   "peak": 0.124,
+   "rmsDb": -30.2,
+   "ms": 176,
+   "zcHz": 458
+  },
+  "hurt": {
+   "peak": 0.275,
+   "rmsDb": -24.7,
+   "ms": 342,
+   "zcHz": 245
+  },
+  "charge": {
+   "peak": 0.087,
+   "rmsDb": -34.6,
+   "ms": 395,
+   "zcHz": 345
+  },
+  "laserWarn": {
+   "peak": 0.141,
+   "rmsDb": -31.2,
+   "ms": 536,
+   "zcHz": 1212
+  },
+  "laserFire": {
+   "peak": 0.182,
+   "rmsDb": -30.2,
+   "ms": 424,
+   "zcHz": 1003
+  },
+  "skillMemory": {
+   "peak": 0.135,
+   "rmsDb": -33.7,
+   "ms": 183,
+   "zcHz": 720
+  },
+  "skillDelay": {
+   "peak": 0.166,
+   "rmsDb": -29.5,
+   "ms": 257,
+   "zcHz": 493
+  },
+  "skillCounter": {
+   "peak": 0.088,
+   "rmsDb": -32.7,
+   "ms": 219,
+   "zcHz": 1356
+  },
+  "skillEgo": {
+   "peak": 0.285,
+   "rmsDb": -27.5,
+   "ms": 795,
+   "zcHz": 2589
+  },
+  "phaseBreak": {
+   "peak": 0.362,
+   "rmsDb": -23,
+   "ms": 621,
+   "zcHz": 1658
+  },
+  "summon": {
+   "peak": 0.177,
+   "rmsDb": -30.8,
+   "ms": 533,
+   "zcHz": 448
+  },
+  "seal": {
+   "peak": 0.314,
+   "rmsDb": -25.6,
+   "ms": 575,
+   "zcHz": 852
+  },
+  "awakening": {
+   "peak": 0.356,
+   "rmsDb": -22.3,
+   "ms": 1503,
+   "zcHz": 4979
+  },
+  "warning": {
+   "peak": 0.166,
+   "rmsDb": -35.2,
+   "ms": 888,
+   "zcHz": 320
+  },
+  "win": {
+   "peak": 0.38,
+   "rmsDb": -22.3,
+   "ms": 1515,
+   "zcHz": 909
+  },
+  "lose": {
+   "peak": 0.311,
+   "rmsDb": -24.1,
+   "ms": 974,
+   "zcHz": 225
+  },
+  "heartbeat": {
+   "peak": 0.245,
+   "rmsDb": -29.4,
+   "ms": 300,
+   "zcHz": 102
+  },
+  "countdown": {
+   "peak": 0.051,
+   "rmsDb": -36.8,
+   "ms": 59,
+   "zcHz": 785
+  },
+  "countdownLast": {
+   "peak": 0.055,
+   "rmsDb": -36,
+   "ms": 78,
+   "zcHz": 1081
+  },
+  "WORST": {
+   "peak": 0.586,
+   "rmsDb": -20.8,
+   "ms": 1515,
+   "zcHz": 1328
+  }
+ }
+}
