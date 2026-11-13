@@ -337,8 +337,10 @@
     try{if(media.music){audio.music=new Audio(media.music);audio.music.loop=true;audio.music.volume=.22;audio.music.preload='none';}
       ['shot','hurt'].forEach(function(kind){var url=media[kind+'Sound'];if(!url)return;for(var i=0;i<(kind==='shot'?3:2);i++){var a=new Audio(url);a.preload='none';a.volume=kind==='shot'?.12:.36;audio[kind].push(a);}});
     }catch(e){audio.music=null;}
+    // v37: 합성 전투 음향. 없어도 기존 사격·피격음은 그대로 동작한다.
+    try{audio.fx=global.HapilAudio&&global.HapilAudio.create?global.HapilAudio.create():null;}catch(e){audio.fx=null;}
   }
-  function unlockAudio(){audio.unlocked=true;if(mode==='playing')startMusic();}
+  function unlockAudio(){audio.unlocked=true;if(audio.fx)audio.fx.unlock();if(mode==='playing')startMusic();}
   function startMusic(){if(!audio.unlocked||!settings.music||!audio.music||mode!=='playing')return;try{var p=audio.music.play();if(p&&p.catch)p.catch(function(){});}catch(e){}}
   function stopMusic(){if(audio.music)try{audio.music.pause();}catch(e){}}
   function sound(kind){
@@ -448,6 +450,8 @@
     safeText('score-value',pad(world.score));safeText('resonance-value',Math.floor(world.resonance||0));safeText('stage-label',world.campaign&&world.stage==='waves'?routeNote().title:(world.stageLabel||'기억의 입구'));var chapter=world.stage==='waves'?Math.min(3,(world.wave||0)+1):Math.min(3,(world.phase||0)+1);safeText('stage-count',(world.practiceBoss?'연습 · ':'')+pad(chapter,2)+' / 05');
     if(world.campaign){safeText('stage-count',world.practiceBoss?'패턴 '+((world.phase||0)+1)+' / 3':world.stage==='waves'?'구간 '+(routeOffset(world.bossIndex||0)+(world.wave||0)+1)+' / '+routeCount():'전투 구간 '+((world.bossIndex||0)+1)+' / '+runBossCount());}
     if(world.difficulty==='hell')safeText('stage-count','HELL · '+$('stage-count').textContent);
+    // v37: 캔버스 보스 HUD가 이름·패턴 번호를 이미 보여 주므로 같은 문구를 겹쳐 쓰지 않고 모드 표시만 남긴다.
+    if(world.boss&&(world.stage==='boss'||world.stage==='bossIntro'||world.stage==='transition')){safeText('stage-label',world.practiceBoss?'연습':'');if(world.practiceBoss)safeText('stage-count',world.difficulty==='hell'?'HELL':'');}
     updateStory();updateSkills();$('phase-wave').classList.toggle('active',world.stage==='waves');$('phase-boss').classList.toggle('active',world.stage==='boss'||world.stage==='bossIntro'||world.stage==='transition');$('phase-end').classList.toggle('active',world.stage==='won');
   }
   function drainEvents(){
@@ -455,6 +459,7 @@
     // Phase names and reinforcement notices already have their own combat
     // cues. Do not cover the movement field with repeated text messages.
     for(var i=0;i<events.length;i++){var e=events[i];if(e.type==='shot')shot=true;else if(e.type==='hurt')hurt=true;else if(e.type==='skill'){if(skillNames[e.name]){lastSkill={name:e.name,tick:world.tick,runId:world.runId};updateSkills();}}}
+    if(audio.fx){audio.fx.setEnabled(!!settings.sfx&&audio.unlocked);audio.fx.observe(world,events);}
     if(hurt)sound('hurt');else if(shot)sound('shot');
   }
   function inputForStep(){

@@ -1,0 +1,11 @@
+{
+ "base": "main d0cc397994c68293cd79b43e6096ba036267c583 (v36)",
+ "command": "npm test",
+ "result": {"tests": 562, "pass": 562, "fail": 0, "skipped": 0},
+ "composition": "554 existing tests unchanged in behaviour + 8 new in tests/audio-v37.test.cjs",
+ "editedExistingTests": ["tests/laser-save-compatibility-v28.test.cjs", "tests/flow-controls-save-v29.test.cjs"],
+ "editedExistingTestsReason": "Only the pinned cache revision string changed (20261103-danmaku36 -> 20261113-audio37). The assertion that all scripts share one revision is kept.",
+ "unchanged": ["src/core.js", "src/render.js", "all media", "save format", "combat rule 31", "diagnostics version string"],
+ "environment": "Linux container, Node 22, headless Chrome. Not run on a phone.",
+ "notVerified": ["how the cues sound to a human ear", "iPhone speaker playback and silent switch", "mobile FPS and heat with audio on", "long sessions"]
+}
