@@ -3,14 +3,21 @@
 입력: docs/v43/m0-mobs.json, media/m0-v43/index.json(tools/import-m0-mobs-v43.py 결과), media/drive-v43/index.json
 출력: tools/arcade-art-v43/m0.json (그림 배정표: 몹 키 m0_…, 동작 side·attack)
       src/arcade-skins-v43.js    (장면 → 그 지도의 몹 그림 키 목록. 화면 쪽이 cast 순서대로 입힌다)
-규칙: 드라이브에 그 몹의 정면 걷기(exact)가 있으면 그것이 기본, m0 이동 스트립이 옆 걷기. 없으면 m0 이동 스트립이 기본(오른쪽을 본다).
+규칙: 드라이브 v3 정면 걷기(그 몹의 m0 그림 기준)가 있으면 그것이 기본. 다음으로 드라이브에 그 몹의 정면 걷기(exact)가 있으면 그것이 기본, m0 이동 스트립이 옆 걷기. 없으면 m0 이동 스트립이 기본(오른쪽을 본다).
       m0 그림이 모자란 시간탑(kair)·기억계(u2xx) 장면은 같은 지역 묶음의 몹을 빌려 3종까지 채운다(borrowed에 적는다).
 실행: python3 tools/assign-m0-mobs-v43.py  (저장소 루트)"""
 import json, os, re
 
 table = json.load(open('docs/v43/m0-mobs.json'))
 m0 = json.load(open('media/m0-v43/index.json'))['mobs']
-drive = {i['id']: i for i in json.load(open('media/drive-v43/index.json'))['items'] if i.get('file')}
+_items = json.load(open('media/drive-v43/index.json'))['items']
+drive = {i['id']: i for i in _items if i.get('file') and i.get('kind') != 'mob-v3'}
+# 드라이브 v3 걷기 세트: m0가 실제로 그리는 그림(m0Key) 기준으로 그린 정면(아래) 걷기. 그 그림을 쓰는 몹의 기본 그림이 된다.
+v3 = [i for i in _items if i.get('kind') == 'mob-v3' and i.get('file')]
+def v3_of(art):
+    for i in v3:
+        if any(k and k in (art or '') for k in i.get('m0Key') or []): return i
+    return None
 POOLS = {'kair': re.compile(r'^kair'), 'u2': re.compile(r'^u2')}
 FILL = 3
 
@@ -22,11 +29,15 @@ for scene, row in table['scenes'].items():
     keys = []
     for m in row['mobs']:
         mid = m['m0Id']
-        if mid not in m0: continue
-        k, e = key_of(mid), m0[mid]
-        move = {'src': 'media/m0-v43/' + e['move']['file'], 'strip': e['move']['frames'], 'fps': 7, 'facing': 'right'}
+        front = v3_of(m.get('m0ArtPath'))
+        if mid not in m0 and not front: continue
+        k, e = key_of(mid), m0.get(mid) or {}
+        move = {'src': 'media/m0-v43/' + e['move']['file'], 'strip': e['move']['frames'], 'fps': 7, 'facing': 'right'} if e else None
+        if not move and front.get('sideFile'): move = {'src': 'media/drive-v43/' + front['sideFile'], 'strip': 4, 'fps': 8, 'facing': 'right'}
         d = drive.get(m.get('driveId') or '')
-        if d and m.get('match') == 'exact' and os.path.exists('media/drive-v43/' + d['file']):
+        if front:
+            spec = {'src': 'media/drive-v43/' + front['file'], 'strip': 4, 'fps': 8, 'motions': ({'side': move} if move else {})}
+        elif d and m.get('match') == 'exact' and os.path.exists('media/drive-v43/' + d['file']):
             spec = {'src': 'media/drive-v43/' + d['file'], 'strip': d.get('frames', 4), 'fps': 6, 'motions': {'side': move}}
         else:
             spec = dict(move); spec['motions'] = {}
@@ -59,4 +70,4 @@ open('src/arcade-skins-v43.js', 'w').write(
     '(function(root,data){if(typeof module===\'object\'&&module.exports)module.exports=data;else root.ArcadeSkins=data;})'
     '(typeof self!==\'undefined\'?self:this,' + body + ');\n')
 print(len(mobs), 'mob pictures,', len(skins), 'scenes;', 'no m0 mob:', [s for s in table['scenes'] if s not in skins])
-print('drive base:', sum(1 for v in mobs.values() if 'drive-v43' in v['src']), 'borrowed:', borrowed)
+print('v3 front walk:', sum(1 for v in mobs.values() if '/v3-' in v['src']), 'drive base:', sum(1 for v in mobs.values() if 'drive-v43' in v['src']), 'borrowed:', borrowed)

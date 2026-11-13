@@ -2875,6 +2875,1012 @@
    "file": "pj03-heart-fly8.png",
    "verdict": "use",
    "reviewNotes": "점수 아이템 그림으로 사용(하트가 바로 서도록 돌리지 않음). 적중 6칸은 미사용."
+  },
+  {
+   "id": "V3-002-nameless-scar",
+   "code": "CX-0082MV v3",
+   "name": "무명 검흔 (legacy-m119-nameless-scar-v4)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r380/mobs/legacy-m119-nameless-scar-v4-walk-d1.webp"
+   ],
+   "driveFileIds": [
+    "1zgP-atZ-iD3H3Wv2yvg7CRjEFGZO4A6r",
+    "1DUVVC0xWHKApVZzuOidvpgGauRYq7Rlx",
+    "1Gpbm5vJ5jATdgSGSBHI2YFPlFX3kBZGe"
+   ],
+   "zip": [
+    "CX0082MV_V3_002_nameless_scar_current_20261113_part01.zip",
+    "CX0082MV_V3_002_nameless_scar_current_20261113_part02.zip",
+    "CX0082MV_V3_002_nameless_scar_current_20261113_part03.zip"
+   ],
+   "hold": true,
+   "holdReason": "identity, inferred rear, gait contacts, loop, anchor, source-SIDE scale, runtime, 7 reviewers not done",
+   "status": "PARTIAL/candidate HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-002-nameless-scar-down.webp"
+  },
+  {
+   "id": "V3-003-cult-ego-binder",
+   "code": "CX-0082MV v3",
+   "name": "cult-ego-binder (v3 003)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r380/mobs/cult-ego-binder-walk-d1.webp"
+   ],
+   "driveFileIds": [
+    "1h8kkcn-W2u5_P3WAGx1ZE4cy2_AYu9O9",
+    "1qrbTIxehhmHGZ5Ebbfy0KsMIO8KjqrgG",
+    "1m1s2NLNzgGWA6uJr0PD0U0deMKOY7gAZ",
+    "1gAiMArwfVkQ9EHBuZ0Lfr5Vz_Szmmipu"
+   ],
+   "zip": [
+    "StoryWorld_V3_003_cult-ego-binder_CURRENT_HOLD_20261113_part01of04.zip",
+    "StoryWorld_V3_003_cult-ego-binder_CURRENT_HOLD_20261113_part02of04.zip",
+    "StoryWorld_V3_003_cult-ego-binder_CURRENT_HOLD_20261113_part03of04.zip",
+    "StoryWorld_V3_003_cult-ego-binder_CURRENT_HOLD_20261113_part04of04.zip"
+   ],
+   "hold": true,
+   "holdReason": "DOWN gait fail: same screen-right boot leads repeatedly; rear is inferred angled view; identity, loop, anchor, 7 reviewers HOLD",
+   "status": "HOLD (technical candidate)",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-003-cult-ego-binder-down.webp"
+  },
+  {
+   "id": "V3-004-crimson-caster",
+   "code": "CX-0082MV v3",
+   "name": "crimson skeletal caster (legacy-m134-nightmare-v4)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r380/mobs/legacy-m134-nightmare-v4-walk-d1.webp"
+   ],
+   "driveFileIds": [
+    "11_8d_UwbEQ3rrdu8DksCJ6s2mQhR8nY8",
+    "1uBmDJvYMzx_Btm8YRT8OBhopG3_wQziZ",
+    "1C1E_iLSUguWu0yC6RcVHR2LT6SpBz5wB",
+    "1IM4CxhXCg0jDXWxcpvGo5lYlhJ5jLuh3"
+   ],
+   "zip": [
+    "CX0082MV_V3_004_crimson_caster_HOLD_20261113_part01of04.zip",
+    "CX0082MV_V3_004_crimson_caster_HOLD_20261113_part02of04.zip",
+    "CX0082MV_V3_004_crimson_caster_HOLD_20261113_part03of04.zip",
+    "CX0082MV_V3_004_crimson_caster_HOLD_20261113_part04of04.zip"
+   ],
+   "hold": true,
+   "holdReason": "rear-view boots, alternating gait, identity continuity, loop, foot alignment, 7 reviewers (0 done)",
+   "status": "PARTIAL_HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-004-crimson-caster-down.webp"
+  },
+  {
+   "id": "V3-005-ep1b-steel-jaw-hound",
+   "code": "CX-0082MV v3",
+   "name": "ep1b-steel-jaw-hound",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r380/mobs/ep1b-steel-jaw-hound-walk-d1.webp"
+   ],
+   "driveFileIds": [
+    "1O6_miZtdli-6oEDScsnsPW72UrC95s-Z",
+    "1ou_vk0rtHgXYtTq_EyFVovYvpqb2Kd_T",
+    "1kcge-TITZ2T8WSeCdlO1ICQWVhdfVsZ4",
+    "1WiuTfuO09kczyw2-a35-KcYfAuJ6I9T7"
+   ],
+   "zip": [
+    "CX-0082MV_v3_005_ep1b-steel-jaw-hound_current_UPDOWN_PARTIAL_HOLD_part01.zip",
+    "CX-0082MV_v3_005_ep1b-steel-jaw-hound_current_UPDOWN_PARTIAL_HOLD_part02.zip",
+    "CX-0082MV_v3_005_ep1b-steel-jaw-hound_current_UPDOWN_PARTIAL_HOLD_part03.zip",
+    "CX-0082MV_v3_005_ep1b-steel-jaw-hound_current_UPDOWN_PARTIAL_HOLD_part04.zip"
+   ],
+   "hold": true,
+   "holdReason": "rear anatomy inferred, quadruped alternating contacts not certifiable (limb occlusion), identity, loop, anchor, 7 reviewers (0)",
+   "status": "PARTIAL_HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-005-ep1b-steel-jaw-hound-down.webp"
+  },
+  {
+   "id": "V3-007-hando-memory-excision-connector",
+   "code": "CX-0082MV v3",
+   "name": "기억절제 연결자 (hando-memory-excision-connector)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r380/mobs/hando-memory-excision-connector-walk-d1.webp"
+   ],
+   "driveFileIds": [
+    "1kzNB8jb79Jp1ko0WDb7l2l8nNz86MB-g",
+    "1s9vyUPrY5aXstgjAaUdz2NfyVs3meC60",
+    "1G1fQF_0fy4JDjy3Yz9ti_lOa3TGKGPBa"
+   ],
+   "zip": [
+    "CX-0082MV_v3_007_hando-memory-excision-connector_current_UPDOWN_GAIT_HOLD_part01.zip",
+    "CX-0082MV_v3_007_hando-memory-excision-connector_current_UPDOWN_GAIT_HOLD_part02.zip",
+    "CX-0082MV_v3_007_hando-memory-excision-connector_current_UPDOWN_GAIT_HOLD_part03.zip"
+   ],
+   "hold": true,
+   "holdReason": "DOWN repeats same leading shoe; UP passing uncertain; rear and apparatus placement inferred; identity, anchor, 7 reviewers (0)",
+   "status": "DRAFT HOLD (UPDOWN_GAIT_HOLD)",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-007-hando-memory-excision-connector-down.webp"
+  },
+  {
+   "id": "V3-011-legacy-m124-silverless-shadow-v4",
+   "code": "CX-0082MV v3",
+   "name": "백은 없는 그림자 (legacy-m124-silverless-shadow-v4)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r380/mobs/legacy-m124-silverless-shadow-v4.webp"
+   ],
+   "driveFileIds": [
+    "1k2mWkxHVRR7TxPIqZP8qc0HsNfEjr4sU",
+    "1p4GfbZlLIoMV4MG8u1gDHBpw5lDjcQ5H"
+   ],
+   "zip": [
+    "CX-0082MV_v3_011_legacy-m124-silverless-shadow-v4_current_FULL3_HOLD_part01.zip",
+    "CX-0082MV_v3_011_legacy-m124-silverless-shadow-v4_current_FULL3_HOLD_part02.zip"
+   ],
+   "hold": true,
+   "holdReason": "identity, inferred rear, floating motion (legless specter), loop, lantern placement/handedness, anchor, 7 reviewers",
+   "status": "DRAFT HOLD (FULL3)",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-011-legacy-m124-silverless-shadow-v4-down.webp",
+   "sideFile": "v3-011-legacy-m124-silverless-shadow-v4-side.webp"
+  },
+  {
+   "id": "V3-012-false-mercy",
+   "code": "CX-0082MV v3",
+   "name": "False Mercy Collector (u2-false-mercy-collector-walk-d1)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r380/mobs/u2-false-mercy-collector-walk-d1.webp"
+   ],
+   "driveFileIds": [
+    "1NKLAIIuZWmPUWA3ePODUquk29W0V0rgL"
+   ],
+   "zip": [
+    "CX0082MV-v3-012-false-mercy-candidate-20261113.zip"
+   ],
+   "hold": true,
+   "holdReason": "identity, inferred rear, alternating gait, loop, anchor, source-side compat, runtime, 7 reviewers; looks brighter with more exposed legs than source",
+   "status": "candidate HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-012-false-mercy-down.webp"
+  },
+  {
+   "id": "V3-012-u205-e3-new",
+   "code": "CX-0082MV v3",
+   "name": "역전기록 수집가 (u205-e3-new)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r374/mobs/u205-e3-new.webp"
+   ],
+   "driveFileIds": [
+    "11MsdjJXHUrzQQcdI3tMkfjfclit6CXHh"
+   ],
+   "zip": [
+    "StoryWorld_v3_012_u205-e3-new_candidate_20261113.zip"
+   ],
+   "hold": true,
+   "holdReason": "independent review: DOWN alternating gait NOT met (contacts 0/2 repeat leading leg); UP passing 1/3 and SIDE angle (3/4 not strict profile) HOLD",
+   "status": "candidate HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-012-u205-e3-new-down.webp",
+   "sideFile": "v3-012-u205-e3-new-side.webp"
+  },
+  {
+   "id": "V3-013-u204-mech02",
+   "code": "CX-0082MV v3",
+   "name": "u204-mech-02-v1 (mechanical memory void shell)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r380/mobs/u204-mech-02-v1.webp"
+   ],
+   "driveFileIds": [
+    "1pTqGx323qKjAY5nVSfLUNHWmwhaFD9IS"
+   ],
+   "zip": [
+    "CX0082MV_V3_013_U204_MECH02_CORRECTED_01_FINAL_SOURCE_20261113.zip"
+   ],
+   "hold": true,
+   "holdReason": "floating motion/loop, inferred rear, DOWN/SIDE direction fidelity, rim brighter than original, 7 reviewers",
+   "status": "HOLD (CORRECTED_01_FINAL_SOURCE; final_art false)",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-013-u204-mech02-down.webp",
+   "sideFile": "v3-013-u204-mech02-side.webp"
+  },
+  {
+   "id": "V3-013-u205-e1-new",
+   "code": "CX-0082MV v3",
+   "name": "학대기록 공허체 (u205-e1-new)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r374/mobs/u205-e1-new.webp"
+   ],
+   "driveFileIds": [
+    "1nZaMafEQdj5U3yS2OjQ6pOGqDvJF3SQS",
+    "10agaO597ke1VX3tttNbwp9m9wnOTvK8m",
+    "1eiJbfs_UExSvjZf5csRRd2xCTsI3KX0h",
+    "1VlZt3v2nOu40HVhOCTU00Cbe085K9fiL"
+   ],
+   "zip": [
+    "StoryWorld_v3_013_u205-e1-new_review_part01_20261113.zip",
+    "StoryWorld_v3_013_u205-e1-new_review_part02_20261113.zip",
+    "StoryWorld_v3_013_u205-e1-new_review_part03_20261113.zip",
+    "StoryWorld_v3_013_u205-e1-new_review_part04_20261113.zip"
+   ],
+   "hold": true,
+   "holdReason": "DOWN oblique and SIDE only moderately differentiated from DOWN, inferred rear, floating motion, loop, anchor, 7 reviewers",
+   "status": "review candidate HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-013-u205-e1-new-down.webp",
+   "sideFile": "v3-013-u205-e1-new-side.webp"
+  },
+  {
+   "id": "V3-014-superego-inquisitor",
+   "code": "CX-0082MV v3",
+   "name": "superego-inquisitor",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r275/mobs/superego-inquisitor.webp"
+   ],
+   "driveFileIds": [
+    "1e0_T8QYf439u4tRtrag9MiEENuSlOMZ_",
+    "159qmb0VWIQMxRywaTFSvGRQQpoGL5WDo",
+    "1fbqeV-YEQ00x3oiqzwJ2OUbzPimHWg94"
+   ],
+   "zip": [
+    "StoryWorld_v3_014_superego-inquisitor_review_part01_20261113.zip",
+    "StoryWorld_v3_014_superego-inquisitor_review_part02_20261113.zip",
+    "StoryWorld_v3_014_superego-inquisitor_review_part03_20261113.zip"
+   ],
+   "hold": true,
+   "holdReason": "gait unresolved: SIDE contact frames 0/2 and front/back contacts show similar leading leg; rear sphere/robe inferred; identity, anchor, 7 reviewers (0/7)",
+   "status": "CANDIDATE_HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-014-superego-inquisitor-down.webp",
+   "sideFile": "v3-014-superego-inquisitor-side.webp"
+  },
+  {
+   "id": "V3-019-snow",
+   "code": "CX-0082MV v3",
+   "name": "설원 잠복 보행기 (snow-lurker-walker-v1, STORY ep1b09)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r380/mobs/snow-lurker-walker-v1.webp"
+   ],
+   "driveFileIds": [
+    "1v6tJVtCKC-Xgf3gCnkFsj7--2qHjd-pq",
+    "1QZ1P4b1-f1icLPBmtaep6N7iEcbt0mal"
+   ],
+   "zip": [
+    "CX0082MV-V3-019-SNOW-ART-DRAFT-HOLD-20261113.zip",
+    "CX0082MV-V3-019-SNOW-SOURCE-DRAFT-HOLD-20261113.zip"
+   ],
+   "hold": true,
+   "holdReason": "DRAFT_HOLD: DRAFT/CANDIDATE HOLD: identity, inferred rear, gait, loop, anatomical foot anchor(192,352 nominal), body-only 70% scale, runtime, seven actual reviewers 0/7; 8-leg anatomy/connectivity, body-only size unmeasured (whole-alpha 51-58% of cell)",
+   "status": "HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-019-snow-down.webp",
+   "sideFile": "v3-019-snow-side.webp"
+  },
+  {
+   "id": "V3-020-silver-sentinel",
+   "code": "CX-0082MV v3",
+   "name": "붕괴선 파수병 (hando02, hando-silver-seal-sentinel-walk-d1)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r380/mobs/hando-silver-seal-sentinel-walk-d1.webp"
+   ],
+   "driveFileIds": [
+    "1ClHzwPJJutRsNK877wMlXeyOv2nRC1Hf",
+    "1XAvrcBbe4xXz20VCKCXGGxKa7DgaOja1",
+    "1tF6FgICNq03vRJnLQ6woNA-2_9BURQYY",
+    "1HtJ_b-bL7OHByT9APwEPE-r1At--RjMF",
+    "1jZK4Usgkq2_4igOiLMefmIba1AtLH5iJ"
+   ],
+   "zip": [
+    "CX0082MV_v3_020_silver_sentinel_UPDOWN_HOLD_part01.zip",
+    "CX0082MV_v3_020_silver_sentinel_UPDOWN_HOLD_part02.zip",
+    "CX0082MV_v3_020_silver_sentinel_UPDOWN_HOLD_part03.zip",
+    "CX0082MV_v3_020_silver_sentinel_UPDOWN_HOLD_part04.zip",
+    "CX0082MV_v3_020_silver_sentinel_UPDOWN_HOLD_part05.zip"
+   ],
+   "hold": true,
+   "holdReason": "DRAFT_HOLD: DRAFT/CANDIDATE HOLD: identity, inferred rear, gait, loop, anatomical foot anchor(192,352 nominal), body-only 70% scale, runtime, seven actual reviewers 0/7; contact frames 0/2 repeat same leading boot",
+   "status": "HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-020-silver-sentinel-down.webp"
+  },
+  {
+   "id": "V3-025-green-goat",
+   "code": "CX-0082MV v3",
+   "name": "늪의 염소머리 악마 (swamp-goat-darkgreen-v1, STORY/dist02)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r380/mobs/swamp-goat-darkgreen-v1.webp"
+   ],
+   "driveFileIds": [
+    "12GNwRZfX3-BXtbhowOKoFOTmGOruN769",
+    "1MlghR28my4Jbm_sgYxuoq4Tt33Jbz0sj",
+    "1eQOopUF0W2vC1Ms8IPsuJIArr4odVB88",
+    "1ChjoedAmm14wZv-ou0w2tVKkwumRLJTj"
+   ],
+   "zip": [
+    "CX0082MV_v3_025_green_goat_r1_20261113_part01-of-04.zip",
+    "CX0082MV_v3_025_green_goat_r1_20261113_part02-of-04.zip",
+    "CX0082MV_v3_025_green_goat_r1_20261113_part03-of-04.zip",
+    "CX0082MV_v3_025_green_goat_r1_20261113_part04-of-04.zip"
+   ],
+   "hold": true,
+   "holdReason": "CANDIDATE/HOLD: DRAFT/CANDIDATE HOLD: identity, inferred rear, gait, loop, anatomical foot anchor(192,352 nominal), body-only 70% scale, runtime, seven actual reviewers 0/7; SIDE0/2 contact stances similar",
+   "status": "HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-025-green-goat-down.webp",
+   "sideFile": "v3-025-green-goat-side.webp"
+  },
+  {
+   "id": "V3-025-root-stalker",
+   "code": "CX-0082MV v3",
+   "name": "늪 뿌리 추적자 (swamp-root-stalker-darkgreen-v2-walk-d1)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r380/mobs/swamp-root-stalker-darkgreen-v2-walk-d1.webp"
+   ],
+   "driveFileIds": [
+    "1qd4wjHCION9ClWQg1I6Nu4vaggH1FhEw",
+    "1YC48jaFx5d0LfBxi9__m8Os5YdikVLWm"
+   ],
+   "zip": [
+    "CX-0082MV-v3-025-root-stalker-UPDOWN-candidate-HOLD-20261113.zip",
+    "CX-0082MV-v3-025-root-stalker-UPDOWN-evidence-HOLD-20261113.zip"
+   ],
+   "hold": true,
+   "holdReason": "HOLD: DRAFT/CANDIDATE HOLD: identity, inferred rear, gait, loop, anatomical foot anchor(192,352 nominal), body-only 70% scale, runtime, seven actual reviewers 0/7; front/rear inferred from side, posture straighter than SIDE",
+   "status": "HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-025-root-stalker-down.webp"
+  },
+  {
+   "id": "V3-026-m060",
+   "code": "CX-0082MV v3",
+   "name": "ID 잔류 점액체 (m060, cult03/c103-e3)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r410/mobs/m060.webp"
+   ],
+   "driveFileIds": [
+    "11Gq-7pYvgotZdtSnOZukgw1dEL_mdo-S",
+    "1QMEr9PEFka0bDb4hy1vwW8dfN3K3X-9j",
+    "1KsXjZDWY061udEg4Fqrv-CM3E4XZKUGv"
+   ],
+   "zip": [
+    "StoryWorld-v3-026-m060-HOLD-20261113-part1of3.zip",
+    "StoryWorld-v3-026-m060-HOLD-20261113-part2of3.zip",
+    "StoryWorld-v3-026-m060-HOLD-20261113-part3of3.zip"
+   ],
+   "hold": true,
+   "holdReason": "HOLD: DRAFT/CANDIDATE HOLD: identity, inferred rear, gait, loop, anatomical foot anchor(192,352 nominal), body-only 70% scale, runtime, seven actual reviewers 0/7; cardinal direction not distinguishable on faceless body, original-motion compat",
+   "status": "HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-026-m060-down.webp",
+   "sideFile": "v3-026-m060-side.webp"
+  },
+  {
+   "id": "V3-030-threshold-spider",
+   "code": "CX-0082MV v3",
+   "name": "기계화 문턱 관측거미 (u204-mech-03-v1)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r380/mobs/u204-mech-03-v1.webp"
+   ],
+   "driveFileIds": [
+    "1yhG-FbrkVRrGzyuMLXX3Cl0X0kPM4bsA",
+    "1MqWy9aJf5zLxlO3HzLQOExFB2wtGPU3B",
+    "1EZZZ-c_elI8aGJEtByo0lx7jfrrDA921",
+    "1n0z6rX_RNRxFBRlNc9srwJQKziW7RgTE"
+   ],
+   "zip": [
+    "CX0082MV_v3_030_threshold_spider_FULL3_HOLD_part01.zip",
+    "CX0082MV_v3_030_threshold_spider_FULL3_HOLD_part02.zip",
+    "CX0082MV_v3_030_threshold_spider_FULL3_HOLD_part03.zip",
+    "CX0082MV_v3_030_threshold_spider_FULL3_HOLD_part04.zip"
+   ],
+   "hold": true,
+   "holdReason": "HOLD: DRAFT/CANDIDATE HOLD: identity, inferred rear, gait, loop, anatomical foot anchor(192,352 nominal), body-only 70% scale, runtime, seven actual reviewers 0/7; old SE-walk compatibility, leg count/rear inferred",
+   "status": "HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-030-threshold-spider-down.webp",
+   "sideFile": "v3-030-threshold-spider-side.webp"
+  },
+  {
+   "id": "V3-031-olive-crystal",
+   "code": "CX-0082MV v3",
+   "name": "SUPER EGO 절개결정 (m059, olive crystal)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r290/mobs/m059.webp"
+   ],
+   "driveFileIds": [
+    "1ZwYYrQXLNVJPp05qJUdMNU6KiMzDh7Kx",
+    "1gl28svJzP9VwsvTCffGRBgQYLCjATjte"
+   ],
+   "zip": [
+    "CX0082MV-v3-031-olive-crystal-assets-HOLD-20261113.zip",
+    "CX0082MV-v3-031-olive-crystal-review-HOLD-20261113.zip"
+   ],
+   "hold": true,
+   "holdReason": "HOLD: DRAFT/CANDIDATE HOLD: identity, inferred rear, gait, loop, anatomical foot anchor(192,352 nominal), body-only 70% scale, runtime, seven actual reviewers 0/7; UP rear unverifiable (hidden core), shard drift between frames, loop",
+   "status": "HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-031-olive-crystal-down.webp",
+   "sideFile": "v3-031-olive-crystal-side.webp"
+  },
+  {
+   "id": "V3-033-greenmage",
+   "code": "CX-0082MV v3",
+   "name": "수렁 주문사 (swamp-mage-darkgreen-v1, STORY/dist02, dist02-m1)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r380/mobs/swamp-mage-darkgreen-v1.webp"
+   ],
+   "driveFileIds": [
+    "1rnxwT7QHleOZTgdZD1Hk8x2UehCFFMG_",
+    "1leTPPSJu_pb8G9T2GK914dpfMIQAN8uK",
+    "1TiqZX3ZUtv0bY3_ZwPl7lGWNeSkVqw8W",
+    "1WfvJF03UE2iI1wxpEVpfRG5RKQLtCco9",
+    "1u8Udpv5jjDQRmZt9QLbh0YYI5Ba_Iixg",
+    "1ByCNDK8iX5xTLVcSbCmrbOvSyChmNFsD"
+   ],
+   "zip": [
+    "SW-v3-033-GreenMage-UPDOWN-HOLD-20261113-part01.zip",
+    "SW-v3-033-GreenMage-UPDOWN-HOLD-20261113-part02.zip",
+    "SW-v3-033-GreenMage-UPDOWN-HOLD-20261113-part03.zip",
+    "SW-v3-033-GreenMage-UPDOWN-HOLD-20261113-part04.zip",
+    "SW-v3-033-GreenMage-UPDOWN-HOLD-20261113-part05.zip",
+    "SW-v3-033-GreenMage-UPDOWN-HOLD-20261113-part06.zip"
+   ],
+   "hold": true,
+   "holdReason": "CANDIDATE HOLD: DRAFT/CANDIDATE HOLD: identity, inferred rear, gait, loop, anatomical foot anchor(192,352 nominal), body-only 70% scale, runtime, seven actual reviewers 0/7; weapon/hand connections, poses 0/2 close",
+   "status": "HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-033-greenmage-down.webp"
+  },
+  {
+   "id": "V3-036-purpleangel",
+   "code": "CX-0082MV v3",
+   "name": "보라검 추격천사 (m004, current r290)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r290/mobs/m004.webp"
+   ],
+   "driveFileIds": [
+    "1ZXulnHLP_ivkf5xri958tBkGK1LCnkSd",
+    "1jwCpVNShFTCzHllRuRXt_jGgFxSIWahB",
+    "1TTVizIxCcP9HOZC2bzWLHDsZGh7W96ts",
+    "16IRmOGe5ootQxKBQSZnkpQrhTAJlzmF5",
+    "1pKUxdoeMdrU2SGs0dTuYoZacUNr0aNx9",
+    "16NzkfUawgVucsC4Zm5e1DRE9R0w8JIpH"
+   ],
+   "zip": [
+    "SW-v3-036-PurpleAngel-UPDOWN-HOLD-20261113-part01.zip",
+    "SW-v3-036-PurpleAngel-UPDOWN-HOLD-20261113-part02.zip",
+    "SW-v3-036-PurpleAngel-UPDOWN-HOLD-20261113-part03.zip",
+    "SW-v3-036-PurpleAngel-UPDOWN-HOLD-20261113-part04.zip",
+    "SW-v3-036-PurpleAngel-UPDOWN-HOLD-20261113-part05.zip",
+    "SW-v3-036-PurpleAngel-UPDOWN-HOLD-20261113-part06.zip"
+   ],
+   "hold": true,
+   "holdReason": "HOLD: DRAFT/CANDIDATE HOLD: identity, inferred rear, gait, loop, anatomical foot anchor(192,352 nominal), body-only 70% scale, runtime, seven actual reviewers 0/7; rear wings/arms inferred, lifted soles on rear contact frames",
+   "status": "HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-036-purpleangel-down.webp"
+  },
+  {
+   "id": "V3-039-vial-collector",
+   "code": "CX-0082MV v3",
+   "name": "갈망의 약병핵 (vial-collector, ep1a09)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r275/mobs/vial-collector.webp"
+   ],
+   "driveFileIds": [
+    "1uCWWzhWeoqF1Wn-xJuuaKN5WCMZsG_ZI",
+    "1pjvVwqiXaY7wGMsK7zfqWHGuku9oNtPV",
+    "1kC89WaIY40-1xfcdi1XFeGs1ATVHJd6p",
+    "1s2KHsZct-6qjnN2qN3W2xKZS1OWzFa1R",
+    "1xkTXL7ftk1T9h6HwfM2OcUoH8PmQdlE-"
+   ],
+   "zip": [
+    "CX0082MV-v3-039-vial-collector-UPDOWN-HOLD-20261113-01of05.zip",
+    "CX0082MV-v3-039-vial-collector-UPDOWN-HOLD-20261113-02of05.zip",
+    "CX0082MV-v3-039-vial-collector-UPDOWN-HOLD-20261113-03of05.zip",
+    "CX0082MV-v3-039-vial-collector-UPDOWN-HOLD-20261113-04of05.zip",
+    "CX0082MV-v3-039-vial-collector-UPDOWN-HOLD-20261113-05of05.zip"
+   ],
+   "hold": true,
+   "holdReason": "손 약병이 UP/DOWN에서 반대 손(해부학적 좌/우 불일치), DOWN 발 교대 불확실; call02 는 불투명 배경이라 기각",
+   "status": "HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-039-vial-collector-down.webp"
+  },
+  {
+   "id": "V3-041-blackmarket-suspect",
+   "code": "CX-0082MV v3",
+   "name": "암시장의 수상한 자 (blackmarket-suspect-v1, STORY/ep1a10)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r380/mobs/blackmarket-suspect-v1.webp"
+   ],
+   "driveFileIds": [
+    "1C_ORoPU1HOOhcLB19vTiP_kH_ivo42TB",
+    "1NX4Ogelo_4WFVFSWlAJvOW1WjDufaCWY",
+    "12mKlN8Cop-3o5251gaTn2kMC4Jub0_yh",
+    "1ZiZjvwy4pzDqZ53w3VU7XTZjDK0gXZbc",
+    "1gPb85TXUiyaF9u4gMfJvRP-b5La9imFG"
+   ],
+   "zip": [
+    "CX0082MV_V3_041_blackmarket_suspect_UPDOWN_GAIT_HOLD_20261113_part01.zip",
+    "CX0082MV_V3_041_blackmarket_suspect_UPDOWN_GAIT_HOLD_20261113_part02.zip",
+    "CX0082MV_V3_041_blackmarket_suspect_UPDOWN_GAIT_HOLD_20261113_part03.zip",
+    "CX0082MV_V3_041_blackmarket_suspect_UPDOWN_GAIT_HOLD_20261113_part04.zip",
+    "CX0082MV_V3_041_blackmarket_suspect_UPDOWN_GAIT_HOLD_20261113_part05.zip"
+   ],
+   "hold": true,
+   "holdReason": "GAIT HOLD: 2회 생성 후에도 걸음(gait) 미승인, 정체성/뒤모습 추론",
+   "status": "HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-041-blackmarket-suspect-down.webp"
+  },
+  {
+   "id": "V3-042-striped-gargoyle",
+   "code": "CX-0082MV v3",
+   "name": "지옥문 파수악마 (m011)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r410/mobs/m011.webp"
+   ],
+   "driveFileIds": [
+    "1HDiaIG0a1-9Ovx5dVSJMELoP0KcLnLFI",
+    "15TS09guahkJypIehvbliq97iupC4aAH6",
+    "1DidzPAJyrfpT4jvVL5gKbpZe5mfxnCKd",
+    "1glenxgHRNJLGn40frkNYf5U4tzIr145z"
+   ],
+   "zip": [
+    "CX0082MV_V3_042_striped_gargoyle_UPDOWN_FLIGHT_HOLD_20261113_part01.zip",
+    "CX0082MV_V3_042_striped_gargoyle_UPDOWN_FLIGHT_HOLD_20261113_part02.zip",
+    "CX0082MV_V3_042_striped_gargoyle_UPDOWN_FLIGHT_HOLD_20261113_part03.zip",
+    "CX0082MV_V3_042_striped_gargoyle_UPDOWN_FLIGHT_HOLD_20261113_part04.zip"
+   ],
+   "hold": true,
+   "holdReason": "FLIGHT HOLD: 비행 앵커/날개 관절/뒤모습 추론, 정체성·루프 미승인",
+   "status": "HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-042-striped-gargoyle-down.webp"
+  },
+  {
+   "id": "V3-043-eggkeeper",
+   "code": "CX-0082MV v3",
+   "name": "보랏빛 알집지기 (purple-eggkeeper-v1)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r380/mobs/purple-eggkeeper-v1.webp"
+   ],
+   "driveFileIds": [
+    "1M9sX-AmYd10xnJImH-veua6HlDyZPhqi",
+    "1QMajEdLY5vjZkH2kS6ilUmuW_IzrVENg",
+    "1CDW4G6Bim1qZrae49Et5qmq_AbJyW6XS",
+    "1P2XJGb78tY844xZg81B6QU4pcOYUCoFL",
+    "17hu3oXl6ShgVKYU8ms89wQM9RCAubnEg",
+    "12wCwtwgqlM0r0kPoxrk3uw-yqhnwjQQR"
+   ],
+   "zip": [
+    "CX0082MV_v3_043_eggkeeper_UPDOWN_HOLD_20261113_part01of06.zip",
+    "CX0082MV_v3_043_eggkeeper_UPDOWN_HOLD_20261113_part02of06.zip",
+    "CX0082MV_v3_043_eggkeeper_UPDOWN_HOLD_20261113_part03of06.zip",
+    "CX0082MV_v3_043_eggkeeper_UPDOWN_HOLD_20261113_part04of06.zip",
+    "CX0082MV_v3_043_eggkeeper_UPDOWN_HOLD_20261113_part05of06.zip",
+    "CX0082MV_v3_043_eggkeeper_UPDOWN_HOLD_20261113_part06of06.zip"
+   ],
+   "hold": true,
+   "holdReason": "정체성/뒤모습/다리 구조/걸음/루프 HOLD; UP 높이 239-257 vs DOWN 280-287px 불일치",
+   "status": "HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-043-eggkeeper-down.webp"
+  },
+  {
+   "id": "V3-043-memory-spider",
+   "code": "CX-0082MV v3",
+   "name": "기억 운반거미 (m005)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r290/mobs/m005.webp"
+   ],
+   "driveFileIds": [
+    "191fNjqzWDMRgLXQ0nWHNZcuZozaGwvha",
+    "16TuHIF_H7eWE8Ty12MjSmRb-W-5TO6gD",
+    "1-6vZ5eXLTP0qrDa_sLhli-WSV1YOxWvq",
+    "1noZlLxJOFboPy40yrNbKogd9J-v-b4yD"
+   ],
+   "zip": [
+    "CX0082MV_V3_043_memory_spider_UPDOWN_HOLD_20261113_part01of04.zip",
+    "CX0082MV_V3_043_memory_spider_UPDOWN_HOLD_20261113_part02of04.zip",
+    "CX0082MV_V3_043_memory_spider_UPDOWN_HOLD_20261113_part03of04.zip",
+    "CX0082MV_V3_043_memory_spider_UPDOWN_HOLD_20261113_part04of04.zip"
+   ],
+   "hold": true,
+   "holdReason": "8다리 구조/걸음/루프 미인증, 뒤모습 추론, 정체성 HOLD",
+   "status": "HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-043-memory-spider-down.webp"
+  },
+  {
+   "id": "V3-044-photo-wraith",
+   "code": "CX-0082MV v3",
+   "name": "질투로 얼룩진 망령 (jealousy-wraith-v1, ep1b03)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r380/mobs/jealousy-wraith-v1.webp"
+   ],
+   "driveFileIds": [
+    "1v8kSfw7M-mTLiCS72n3hwxuj6zPvpwli",
+    "1oVIvx4RpYT1fBoURKTsMdvVBHrJlZVOq",
+    "1emYAkwEDNxkBh8lFUfnXo20kQE8TkjMp",
+    "1IyuXiHR6wxhZlZFhiADlD_BV1z7TKmAv",
+    "1M4uugtwNyurMnKJ2VjLmsTVfAOWQ7IkR",
+    "1U9mDIUVA-_K1aAUxSD_NQ2c9aHceduAw"
+   ],
+   "zip": [
+    "CX0082MV_v3_044_photo_wraith_UPDOWN_LOOP_HOLD_20261113_part01of06.zip",
+    "CX0082MV_v3_044_photo_wraith_UPDOWN_LOOP_HOLD_20261113_part02of06.zip",
+    "CX0082MV_v3_044_photo_wraith_UPDOWN_LOOP_HOLD_20261113_part03of06.zip",
+    "CX0082MV_v3_044_photo_wraith_UPDOWN_LOOP_HOLD_20261113_part04of06.zip",
+    "CX0082MV_v3_044_photo_wraith_UPDOWN_LOOP_HOLD_20261113_part05of06.zip",
+    "CX0082MV_v3_044_photo_wraith_UPDOWN_LOOP_HOLD_20261113_part06of06.zip"
+   ],
+   "hold": true,
+   "holdReason": "LOOP HOLD: 프레임이 점점 떠올라 3->0 이음매가 눈에 띔, 얼굴 기울어짐, 뒤모습 추론",
+   "status": "HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-044-photo-wraith-down.webp"
+  },
+  {
+   "id": "V3-046-black-fluid",
+   "code": "CX-0082MV v3",
+   "name": "끓어오르는 검은 소화액 (m025)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r290/mobs/m025.webp"
+   ],
+   "driveFileIds": [
+    "1j64n79nXBLiFS8Dkq7LR-gkEN_PcL3Fj",
+    "1uFxGXOyBrspT6MiXjgICTTI65tTLhWiU",
+    "1Mhitbwoq0P-jQgIWe3TnX1QuhMmbWaQG",
+    "1vzv4yf4sA6t2ZBs8KzrcYsGmY0tu_Nsu"
+   ],
+   "zip": [
+    "CX0082MV_v3_046_black_fluid_UPDOWN_HOLD_20261113_part01of04.zip",
+    "CX0082MV_v3_046_black_fluid_UPDOWN_HOLD_20261113_part02of04.zip",
+    "CX0082MV_v3_046_black_fluid_UPDOWN_HOLD_20261113_part03of04.zip",
+    "CX0082MV_v3_046_black_fluid_UPDOWN_HOLD_20261113_part04of04.zip"
+   ],
+   "hold": true,
+   "holdReason": "DIRECTION HOLD(코디네이터 QA): 방향/뒤모습/코어 깊이/변형/루프 미승인",
+   "status": "HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-046-black-fluid-down.webp"
+  },
+  {
+   "id": "V3-046-discarded-delicacy",
+   "code": "CX-0082MV v3",
+   "name": "버려진 최고급 식재료 (discarded-delicacy-v1, ep1b04)",
+   "kind": "mob-v3",
+   "m0Key": [
+    "r380/mobs/discarded-delicacy-v1.webp"
+   ],
+   "driveFileIds": [
+    "1igaInF_5VWJr6V4Jfn7V_-F7vlStt0Ff",
+    "1DnuCEGA2v7eiZs4iKeFBp9beGW0t25Ps",
+    "1eNlfymQEyzU6fbXM87SCojbPEaGO59n_",
+    "109fOupRz4TngF6nH5KkL-i3RE7w-bPqc",
+    "10jBWsRj4t25qdiXux_nPGTh6RXVEnJoC",
+    "1QgGSJF8Uc1eZFKxMQyNBjohZPunPvUCp",
+    "1runZi-uoBZdiFpVbA-iKDfDywtJ1heIb",
+    "13LN3FltubSDs2OJsUvQpw3ft-pWErZzM"
+   ],
+   "zip": [
+    "CX0082MV_v3_046_discarded_delicacy_UPDOWN_HOLD_20261113_part01.zip",
+    "CX0082MV_v3_046_discarded_delicacy_UPDOWN_HOLD_20261113_part02.zip",
+    "CX0082MV_v3_046_discarded_delicacy_UPDOWN_HOLD_20261113_part03.zip",
+    "CX0082MV_v3_046_discarded_delicacy_UPDOWN_HOLD_20261113_part04.zip",
+    "CX0082MV_v3_046_discarded_delicacy_UPDOWN_HOLD_20261113_part05.zip",
+    "CX0082MV_v3_046_discarded_delicacy_UPDOWN_HOLD_20261113_part06.zip",
+    "CX0082MV_v3_046_discarded_delicacy_UPDOWN_HOLD_20261113_part07.zip",
+    "CX0082MV_v3_046_discarded_delicacy_UPDOWN_HOLD_20261113_part08.zip"
+   ],
+   "hold": true,
+   "holdReason": "정체성/뒤모습/네발 관절/걸음/루프 HOLD; 과거 donor 는 업스케일본, 원본 raw 미확보",
+   "status": "HOLD",
+   "frames": 4,
+   "cell": [
+    256,
+    256
+   ],
+   "sourceCell": [
+    384,
+    384
+   ],
+   "verdict": "use",
+   "reviewNotes": "세로 화면에서 작게 내려오는 기본 걷기로 사용. 걸음새 HOLD는 그대로 남아 있다.",
+   "file": "v3-046-discarded-delicacy-down.webp"
   }
  ]
 }

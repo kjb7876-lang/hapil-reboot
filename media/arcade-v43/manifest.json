@@ -1345,25 +1345,25 @@
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_a10_o1.webp": {
-  "bytes": 25292,
+  "bytes": 22548,
   "cell": [
-   121,
+   74,
    150
   ],
-  "facing": "right",
-  "fps": 7,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
-   "attack"
+   "attack",
+   "side"
   ],
   "size": [
-   484,
+   296,
    150
   ],
-  "source": "media/m0-v43/a10-o1-move.webp",
-  "sourceSha256": "2ae208c59c9ee2f2150a5060fae99f54b53e83b7f280ee717f13918cb0e1ef2d",
-  "stamp": "c6768fb377ada710",
+  "source": "media/drive-v43/v3-041-blackmarket-suspect-down.webp",
+  "sourceSha256": "2d033267e63fe87cfaad1fee6ce7f3394aaba933eaf17f8749c99693e048ac06",
+  "stamp": "9a949d1e73f3b1a9",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_a10_o1@attack.webp": {
@@ -1383,6 +1383,25 @@
   "source": "media/m0-v43/a10-o1-attack.webp",
   "sourceSha256": "b89ecc47e7bad7c2683da28a891a56fc9b0fd3dd8928073171446c0cbda331c0",
   "stamp": "91d6425b031a1964",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_a10_o1@side.webp": {
+  "bytes": 25292,
+  "cell": [
+   121,
+   150
+  ],
+  "facing": "right",
+  "fps": 7,
+  "frames": 4,
+  "group": "mobs",
+  "size": [
+   484,
+   150
+  ],
+  "source": "media/m0-v43/a10-o1-move.webp",
+  "sourceSha256": "2ae208c59c9ee2f2150a5060fae99f54b53e83b7f280ee717f13918cb0e1ef2d",
+  "stamp": "5b1c27735f729642",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_a10_s1.webp": {
@@ -1766,12 +1785,12 @@
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_b03_g1.webp": {
-  "bytes": 39164,
+  "bytes": 37236,
   "cell": [
-   122,
+   107,
    150
   ],
-  "fps": 6,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
@@ -1779,12 +1798,12 @@
    "side"
   ],
   "size": [
-   488,
+   428,
    150
   ],
-  "source": "media/drive-v43/m044-down.webp",
-  "sourceSha256": "b6d5b28cf86657aeefd1a85047ff09995977bbb191e60c192bf213d50c41f567",
-  "stamp": "08a252d199580b6a",
+  "source": "media/drive-v43/v3-044-photo-wraith-down.webp",
+  "sourceSha256": "30300c6a697dc349a9b4020474baa65e8cc556f96de08bc033b0cc1a83bce363",
+  "stamp": "be916977854a4200",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_b03_g1@attack.webp": {
@@ -1907,12 +1926,12 @@
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_b04_g1.webp": {
-  "bytes": 39146,
+  "bytes": 43106,
   "cell": [
    150,
-   134
+   135
   ],
-  "fps": 6,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
@@ -1921,11 +1940,11 @@
   ],
   "size": [
    600,
-   134
+   135
   ],
-  "source": "media/drive-v43/m046-down.webp",
-  "sourceSha256": "460a2cdbb3755e41f25a97a796465579ffb86bc4394dad63277f22142fb9ebf8",
-  "stamp": "896ce51c388a724d",
+  "source": "media/drive-v43/v3-046-discarded-delicacy-down.webp",
+  "sourceSha256": "af11e4a761a55bdbb7a54953e1f592167934ab2f46e5e2df31030339b41c9b94",
+  "stamp": "0786d3f61362f50a",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_b04_g1@attack.webp": {
@@ -1967,25 +1986,25 @@
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_b04_s1.webp": {
-  "bytes": 15444,
+  "bytes": 19650,
   "cell": [
-   140,
-   144
+   150,
+   135
   ],
-  "facing": "right",
-  "fps": 7,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
-   "attack"
+   "attack",
+   "side"
   ],
   "size": [
-   560,
-   144
+   600,
+   135
   ],
-  "source": "media/m0-v43/b04-s1-move.webp",
-  "sourceSha256": "553691540a1d19bca3dc2c79abaa02c7bb4f70ce9ec8a296675ee494ce13996c",
-  "stamp": "a83b92b8397ecd5d",
+  "source": "media/drive-v43/v3-046-black-fluid-down.webp",
+  "sourceSha256": "17f1f8bed7f247ef52d171bd4fe7dff4842385ef52584e0d857dcf43697a0c8d",
+  "stamp": "23f8b82c20f08d69",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_b04_s1@attack.webp": {
@@ -2005,6 +2024,25 @@
   "source": "media/m0-v43/b04-s1-attack.webp",
   "sourceSha256": "ed1dceedfb92b03f1fa54dae462644ec88232dd8cfb39617658da270cb099c57",
   "stamp": "df3db353ff225da4",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_b04_s1@side.webp": {
+  "bytes": 15444,
+  "cell": [
+   140,
+   144
+  ],
+  "facing": "right",
+  "fps": 7,
+  "frames": 4,
+  "group": "mobs",
+  "size": [
+   560,
+   144
+  ],
+  "source": "media/m0-v43/b04-s1-move.webp",
+  "sourceSha256": "553691540a1d19bca3dc2c79abaa02c7bb4f70ce9ec8a296675ee494ce13996c",
+  "stamp": "ee21de3f19b70558",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_b05_a1.webp": {
@@ -2412,25 +2450,25 @@
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_b09_c1.webp": {
-  "bytes": 28214,
+  "bytes": 32402,
   "cell": [
    150,
-   103
+   127
   ],
-  "facing": "right",
-  "fps": 7,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
-   "attack"
+   "attack",
+   "side"
   ],
   "size": [
    600,
-   103
+   127
   ],
-  "source": "media/m0-v43/b09-c1-move.webp",
-  "sourceSha256": "e64230a93d2ca04eeafd8e21e46322f7ec69680618c2b36b969aa817291cadaa",
-  "stamp": "0099db6c9dcbda46",
+  "source": "media/drive-v43/v3-019-snow-down.webp",
+  "sourceSha256": "3075d58ecf4bbb9dd7b072204756161cd25a46bd48fc14bfd08fc101d7df8068",
+  "stamp": "be5242f7a788e28b",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_b09_c1@attack.webp": {
@@ -2452,13 +2490,32 @@
   "stamp": "426cd9d9aee45763",
   "table": "tools/arcade-art-v43/m0.json"
  },
- "m0_b09_h1.webp": {
-  "bytes": 31808,
+ "m0_b09_c1@side.webp": {
+  "bytes": 28214,
   "cell": [
-   97,
+   150,
+   103
+  ],
+  "facing": "right",
+  "fps": 7,
+  "frames": 4,
+  "group": "mobs",
+  "size": [
+   600,
+   103
+  ],
+  "source": "media/m0-v43/b09-c1-move.webp",
+  "sourceSha256": "e64230a93d2ca04eeafd8e21e46322f7ec69680618c2b36b969aa817291cadaa",
+  "stamp": "c1bd99bd898b9255",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_b09_h1.webp": {
+  "bytes": 33494,
+  "cell": [
+   103,
    150
   ],
-  "fps": 6,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
@@ -2466,12 +2523,12 @@
    "side"
   ],
   "size": [
-   388,
+   412,
    150
   ],
-  "source": "media/drive-v43/m005-down.webp",
-  "sourceSha256": "c34c89038f6f0777a812603a34327401d55f263cb150469f0217193b604c8852",
-  "stamp": "086719b75ad70d4e",
+  "source": "media/drive-v43/v3-005-ep1b-steel-jaw-hound-down.webp",
+  "sourceSha256": "0ab9fa8e51f884bd5b20be78915b0986221a8090f0dd8737b97a6d4f9cc27554",
+  "stamp": "cc2cfe49aa26a3a8",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_b09_h1@attack.webp": {
@@ -2755,12 +2812,12 @@
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_c103_e1.webp": {
-  "bytes": 31922,
+  "bytes": 30784,
   "cell": [
-   117,
+   87,
    150
   ],
-  "fps": 6,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
@@ -2768,12 +2825,12 @@
    "side"
   ],
   "size": [
-   468,
+   348,
    150
   ],
-  "source": "media/drive-v43/m003-down.webp",
-  "sourceSha256": "6a6c88cfe8fd1bd309ff33d6d382f9b4802435eda6d3dea04fed75db7f8052ed",
-  "stamp": "c17d7f8c94ad0864",
+  "source": "media/drive-v43/v3-003-cult-ego-binder-down.webp",
+  "sourceSha256": "a42bfc00552f5ab5d4d427087a14e5b6ad8cd1380f77147205fecc67da1d8891",
+  "stamp": "e456415fef937cb0",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_c103_e1@attack.webp": {
@@ -2815,25 +2872,25 @@
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_c103_e2.webp": {
-  "bytes": 17894,
+  "bytes": 24260,
   "cell": [
-   105,
-   134
+   110,
+   150
   ],
-  "facing": "right",
-  "fps": 7,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
-   "attack"
+   "attack",
+   "side"
   ],
   "size": [
-   420,
-   134
+   440,
+   150
   ],
-  "source": "media/m0-v43/c103-e2-move.webp",
-  "sourceSha256": "90db875869271e971caa8a8db67ece68542196f657309b0b422c8292b7966779",
-  "stamp": "c71dd686538ec55d",
+  "source": "media/drive-v43/v3-031-olive-crystal-down.webp",
+  "sourceSha256": "d380d6f0a24b9a4bfadd38c58f108f82c305b28696b7895121858091db9cd1b3",
+  "stamp": "caafe94b6b0278b7",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_c103_e2@attack.webp": {
@@ -2855,26 +2912,45 @@
   "stamp": "ac63a742ad5ad0e7",
   "table": "tools/arcade-art-v43/m0.json"
  },
- "m0_c103_e3.webp": {
-  "bytes": 21384,
+ "m0_c103_e2@side.webp": {
+  "bytes": 17894,
   "cell": [
-   150,
-   139
+   105,
+   134
   ],
   "facing": "right",
   "fps": 7,
   "frames": 4,
   "group": "mobs",
+  "size": [
+   420,
+   134
+  ],
+  "source": "media/m0-v43/c103-e2-move.webp",
+  "sourceSha256": "90db875869271e971caa8a8db67ece68542196f657309b0b422c8292b7966779",
+  "stamp": "143e169306e51d3e",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_c103_e3.webp": {
+  "bytes": 20584,
+  "cell": [
+   150,
+   148
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "mobs",
   "motions": [
-   "attack"
+   "attack",
+   "side"
   ],
   "size": [
    600,
-   139
+   148
   ],
-  "source": "media/m0-v43/c103-e3-move.webp",
-  "sourceSha256": "ba2047d27f972bc2044387ce5d57fa3de2005c171cb16c94fec6f7c6c23e192e",
-  "stamp": "157c61b19506be44",
+  "source": "media/drive-v43/v3-026-m060-down.webp",
+  "sourceSha256": "3288071998f46a09a40f6832bd9fe396913808b82fffe44120513f1690353a2b",
+  "stamp": "c600f1979f144d5c",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_c103_e3@attack.webp": {
@@ -2894,6 +2970,25 @@
   "source": "media/m0-v43/c103-e3-attack.webp",
   "sourceSha256": "13c89c6e2f649a8a972f61a52589569ad73eab805a8d6c859f6e99a464a19183",
   "stamp": "4e8b59deb3610f81",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_c103_e3@side.webp": {
+  "bytes": 21384,
+  "cell": [
+   150,
+   139
+  ],
+  "facing": "right",
+  "fps": 7,
+  "frames": 4,
+  "group": "mobs",
+  "size": [
+   600,
+   139
+  ],
+  "source": "media/m0-v43/c103-e3-move.webp",
+  "sourceSha256": "ba2047d27f972bc2044387ce5d57fa3de2005c171cb16c94fec6f7c6c23e192e",
+  "stamp": "61773dc4bc808b8c",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_c104_e1.webp": {
@@ -2998,12 +3093,12 @@
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_c105_e2.webp": {
-  "bytes": 30012,
+  "bytes": 35110,
   "cell": [
-   86,
+   93,
    150
   ],
-  "fps": 6,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
@@ -3011,12 +3106,12 @@
    "side"
   ],
   "size": [
-   344,
+   372,
    150
   ],
-  "source": "media/drive-v43/m004-down.webp",
-  "sourceSha256": "ddcf81be7adf814ba699634b8b63f02fe957f352af9673bae2cca031cbaca98c",
-  "stamp": "c3689b97da0cb564",
+  "source": "media/drive-v43/v3-004-crimson-caster-down.webp",
+  "sourceSha256": "f527cd11a42c99fecc2b69eb43577a9fdc03832061d0bc30eaa828b384a1afb4",
+  "stamp": "224d36f183f8214f",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_c105_e2@attack.webp": {
@@ -3263,12 +3358,12 @@
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_dist01_sp2.webp": {
-  "bytes": 45692,
+  "bytes": 50726,
   "cell": [
    150,
-   143
+   150
   ],
-  "fps": 6,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
@@ -3277,11 +3372,11 @@
   ],
   "size": [
    600,
-   143
+   150
   ],
-  "source": "media/drive-v43/m043-down.webp",
-  "sourceSha256": "fcae396b1e1e1efe4a6d137ae0b3be56536895ea36bcf2461f4231680654b402",
-  "stamp": "1c35fbe146082e5f",
+  "source": "media/drive-v43/v3-043-eggkeeper-down.webp",
+  "sourceSha256": "5ef2dca5e1088fd9549992da475000d5e3933a8854106a6f56fbe8f9eb92b7ba",
+  "stamp": "2da64e051b78be9d",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_dist01_sp2@attack.webp": {
@@ -3364,12 +3459,12 @@
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_dist02_h1.webp": {
-  "bytes": 33562,
+  "bytes": 31826,
   "cell": [
-   86,
+   90,
    150
   ],
-  "fps": 6,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
@@ -3377,12 +3472,12 @@
    "side"
   ],
   "size": [
-   344,
+   360,
    150
   ],
-  "source": "media/drive-v43/m025-down.webp",
-  "sourceSha256": "716b9563e204e56a067572302d756b80cab3e1fb3b5371190404c2c416933508",
-  "stamp": "03f1b8458a4880da",
+  "source": "media/drive-v43/v3-025-green-goat-down.webp",
+  "sourceSha256": "5e97c07c578c3144a534676311fd1fe7c066732ff5179fd77e971e81cf0d6633",
+  "stamp": "5762d11fd94562c1",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_dist02_h1@attack.webp": {
@@ -3424,25 +3519,25 @@
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_dist02_m1.webp": {
-  "bytes": 38248,
+  "bytes": 37228,
   "cell": [
-   120,
+   102,
    150
   ],
-  "facing": "right",
-  "fps": 7,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
-   "attack"
+   "attack",
+   "side"
   ],
   "size": [
-   480,
+   408,
    150
   ],
-  "source": "media/m0-v43/dist02-m1-move.webp",
-  "sourceSha256": "ee17b9c43af15ee83d0d1020abdd6b0c9c1d7eecca805ac0dba07e54ea9fe15b",
-  "stamp": "6144cb0922b161e0",
+  "source": "media/drive-v43/v3-033-greenmage-down.webp",
+  "sourceSha256": "79e0d07d2ebc7edccb526afe482335ecd118d1a0ddacc69abda1f7d1ce398976",
+  "stamp": "6e281542a6d10463",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_dist02_m1@attack.webp": {
@@ -3464,26 +3559,45 @@
   "stamp": "813f349d66a0ab1d",
   "table": "tools/arcade-art-v43/m0.json"
  },
- "m0_dist02_r74_patrol_0_5.webp": {
-  "bytes": 38204,
+ "m0_dist02_m1@side.webp": {
+  "bytes": 38248,
   "cell": [
-   133,
+   120,
    150
   ],
   "facing": "right",
   "fps": 7,
   "frames": 4,
   "group": "mobs",
-  "motions": [
-   "attack"
-  ],
   "size": [
-   532,
+   480,
    150
   ],
-  "source": "media/m0-v43/dist02_r74-patrol_0_5-move.webp",
-  "sourceSha256": "4bfe482028e87f9f152f4608a46d2e3f9d06f8273f8ca1c891aae4d3c925d49f",
-  "stamp": "0ddc95e7814c7995",
+  "source": "media/m0-v43/dist02-m1-move.webp",
+  "sourceSha256": "ee17b9c43af15ee83d0d1020abdd6b0c9c1d7eecca805ac0dba07e54ea9fe15b",
+  "stamp": "7d695266e30d083c",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_dist02_r74_patrol_0_5.webp": {
+  "bytes": 28520,
+  "cell": [
+   86,
+   150
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "mobs",
+  "motions": [
+   "attack",
+   "side"
+  ],
+  "size": [
+   344,
+   150
+  ],
+  "source": "media/drive-v43/v3-025-root-stalker-down.webp",
+  "sourceSha256": "40995a8d628bd843854aa87af060b16903ee9142fe9f6e869169fabe6d34e820",
+  "stamp": "8a20d6dffb8e2963",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_dist02_r74_patrol_0_5@attack.webp": {
@@ -3503,6 +3617,25 @@
   "source": "media/m0-v43/dist02_r74-patrol_0_5-attack.webp",
   "sourceSha256": "fb2011d6529281ad6e3af51bbb54fc5c424a4f3aa8a67418a76a74b34f013613",
   "stamp": "82996ca4258b4556",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_dist02_r74_patrol_0_5@side.webp": {
+  "bytes": 38204,
+  "cell": [
+   133,
+   150
+  ],
+  "facing": "right",
+  "fps": 7,
+  "frames": 4,
+  "group": "mobs",
+  "size": [
+   532,
+   150
+  ],
+  "source": "media/m0-v43/dist02_r74-patrol_0_5-move.webp",
+  "sourceSha256": "4bfe482028e87f9f152f4608a46d2e3f9d06f8273f8ca1c891aae4d3c925d49f",
+  "stamp": "fe431d6d316e5f18",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_dist02_sp1.webp": {
@@ -3547,25 +3680,25 @@
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_dist03_c1.webp": {
-  "bytes": 38630,
+  "bytes": 38766,
   "cell": [
-   142,
+   112,
    150
   ],
-  "facing": "right",
-  "fps": 7,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
-   "attack"
+   "attack",
+   "side"
   ],
   "size": [
-   568,
+   448,
    150
   ],
-  "source": "media/m0-v43/dist03-c1-move.webp",
-  "sourceSha256": "848adfd4d776dbe6710f561280de83f2bb75578141d36facdca20467f68aa87a",
-  "stamp": "3cbdfe5ea4c12e9f",
+  "source": "media/drive-v43/v3-036-purpleangel-down.webp",
+  "sourceSha256": "cec6ebf7c422d6113465e93408addcab4b8a4ddb4e8b5825fa38a7ba7b68d23c",
+  "stamp": "1aebc7198ab3dec2",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_dist03_c1@attack.webp": {
@@ -3585,6 +3718,25 @@
   "source": "media/m0-v43/dist03-c1-attack.webp",
   "sourceSha256": "7213715b12d87da08bd6d20cc444ad882b231918f52285ff32ce69f56c363eae",
   "stamp": "37631b26d90dcae1",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_dist03_c1@side.webp": {
+  "bytes": 38630,
+  "cell": [
+   142,
+   150
+  ],
+  "facing": "right",
+  "fps": 7,
+  "frames": 4,
+  "group": "mobs",
+  "size": [
+   568,
+   150
+  ],
+  "source": "media/m0-v43/dist03-c1-move.webp",
+  "sourceSha256": "848adfd4d776dbe6710f561280de83f2bb75578141d36facdca20467f68aa87a",
+  "stamp": "61769f117a0bc476",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_dist03_g1.webp": {
@@ -3647,25 +3799,25 @@
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_dist03_sp1.webp": {
-  "bytes": 29378,
+  "bytes": 41460,
   "cell": [
    150,
-   103
+   148
   ],
-  "facing": "right",
-  "fps": 7,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
-   "attack"
+   "attack",
+   "side"
   ],
   "size": [
    600,
-   103
+   148
   ],
-  "source": "media/m0-v43/dist03-sp1-move.webp",
-  "sourceSha256": "f58c6e403475d73c22c348af9a46c2fb74163409522f23a2c37fbf70341ca12e",
-  "stamp": "ed53ce42c7ddc41a",
+  "source": "media/drive-v43/v3-043-memory-spider-down.webp",
+  "sourceSha256": "8b6bdfdedff6de74ceb52e17501bbc0d8bbcb9bfc3f76d564feacf245ddeeafc",
+  "stamp": "39c1ce30efff2ca5",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_dist03_sp1@attack.webp": {
@@ -3685,6 +3837,25 @@
   "source": "media/m0-v43/dist03-sp1-attack.webp",
   "sourceSha256": "a9780a64dea98f0ca9197917031623c8ac07a4aca9050f49ab1c4f6e38052243",
   "stamp": "7029c2d91aad0d08",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_dist03_sp1@side.webp": {
+  "bytes": 29378,
+  "cell": [
+   150,
+   103
+  ],
+  "facing": "right",
+  "fps": 7,
+  "frames": 4,
+  "group": "mobs",
+  "size": [
+   600,
+   103
+  ],
+  "source": "media/m0-v43/dist03-sp1-move.webp",
+  "sourceSha256": "f58c6e403475d73c22c348af9a46c2fb74163409522f23a2c37fbf70341ca12e",
+  "stamp": "ad92e60903bc8392",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_dist04_c1.webp": {
@@ -3947,12 +4118,12 @@
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_dist06_h1.webp": {
-  "bytes": 38408,
+  "bytes": 29358,
   "cell": [
-   124,
-   150
+   150,
+   111
   ],
-  "fps": 6,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
@@ -3960,12 +4131,12 @@
    "side"
   ],
   "size": [
-   496,
-   150
+   600,
+   111
   ],
-  "source": "media/drive-v43/m042-down.webp",
-  "sourceSha256": "b25fbb58d6eeb54304f8ce1c7a128b213d159cc39a838d0194feb1ade5603cb8",
-  "stamp": "b855edd338780da3",
+  "source": "media/drive-v43/v3-042-striped-gargoyle-down.webp",
+  "sourceSha256": "a602d90f11ddd82009b49492c5dfac43efa651ced12ebc78c77ed17dbd9d04c9",
+  "stamp": "4dd407c379929948",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_dist06_h1@attack.webp": {
@@ -4149,25 +4320,25 @@
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_h102_c1.webp": {
-  "bytes": 39498,
+  "bytes": 40204,
   "cell": [
-   123,
+   124,
    150
   ],
-  "facing": "right",
-  "fps": 7,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
-   "attack"
+   "attack",
+   "side"
   ],
   "size": [
-   492,
+   496,
    150
   ],
-  "source": "media/m0-v43/h102-c1-move.webp",
-  "sourceSha256": "81fcb47e0ff639c263bc64a989d94ca1c63bf1eae5bc56870d916d2a53b04e87",
-  "stamp": "3241917a366ca295",
+  "source": "media/drive-v43/v3-007-hando-memory-excision-connector-down.webp",
+  "sourceSha256": "9d394567a26f47ce5281d2eee4cd13a271fdd2b15c3158b00bf69ec7cc80aea7",
+  "stamp": "bb113b8da21aa0ca",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_h102_c1@attack.webp": {
@@ -4189,26 +4360,45 @@
   "stamp": "61e47e75ce5cc04c",
   "table": "tools/arcade-art-v43/m0.json"
  },
- "m0_h102_s1.webp": {
-  "bytes": 28216,
+ "m0_h102_c1@side.webp": {
+  "bytes": 39498,
   "cell": [
-   125,
+   123,
    150
   ],
   "facing": "right",
   "fps": 7,
   "frames": 4,
   "group": "mobs",
-  "motions": [
-   "attack"
-  ],
   "size": [
-   500,
+   492,
    150
   ],
-  "source": "media/m0-v43/h102-s1-move.webp",
-  "sourceSha256": "51383f0ed7d384abc04aa7f2b2f89258b4225a08cdc0dca4086e768eae08a387",
-  "stamp": "c60f7c653687ba42",
+  "source": "media/m0-v43/h102-c1-move.webp",
+  "sourceSha256": "81fcb47e0ff639c263bc64a989d94ca1c63bf1eae5bc56870d916d2a53b04e87",
+  "stamp": "e7d917d3774dd9b6",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_h102_s1.webp": {
+  "bytes": 32562,
+  "cell": [
+   116,
+   150
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "mobs",
+  "motions": [
+   "attack",
+   "side"
+  ],
+  "size": [
+   464,
+   150
+  ],
+  "source": "media/drive-v43/v3-020-silver-sentinel-down.webp",
+  "sourceSha256": "74126c1fe80970ef6fdc1b1deb6063e92ca1a44222e3acd0da3cdcf3cfed9e88",
+  "stamp": "051ce7888711e165",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_h102_s1@attack.webp": {
@@ -4228,6 +4418,25 @@
   "source": "media/m0-v43/h102-s1-attack.webp",
   "sourceSha256": "36fb11befd72f2b9690b8c4847de3f041de5fbcb835dc0d40a425c5f00fdf0e9",
   "stamp": "68d8b6eb3020b237",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_h102_s1@side.webp": {
+  "bytes": 28216,
+  "cell": [
+   125,
+   150
+  ],
+  "facing": "right",
+  "fps": 7,
+  "frames": 4,
+  "group": "mobs",
+  "size": [
+   500,
+   150
+  ],
+  "source": "media/m0-v43/h102-s1-move.webp",
+  "sourceSha256": "51383f0ed7d384abc04aa7f2b2f89258b4225a08cdc0dca4086e768eae08a387",
+  "stamp": "a3b0095668073143",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_h102_s2.webp": {
@@ -4250,25 +4459,25 @@
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_h102_t1.webp": {
-  "bytes": 31740,
+  "bytes": 27454,
   "cell": [
-   98,
+   79,
    150
   ],
-  "facing": "right",
-  "fps": 7,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
-   "attack"
+   "attack",
+   "side"
   ],
   "size": [
-   392,
+   316,
    150
   ],
-  "source": "media/m0-v43/h102-t1-move.webp",
-  "sourceSha256": "44eb7d5e512c4082035162d18940ae1c218eb71ce5f2dd39353abab5500ae94e",
-  "stamp": "df5ddd927aac1a68",
+  "source": "media/drive-v43/v3-002-nameless-scar-down.webp",
+  "sourceSha256": "77e8c1f282255edef9daa339e5ef0ffff4f9bd0c09d9887bfd30d865277564f0",
+  "stamp": "2089088197fb134a",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_h102_t1@attack.webp": {
@@ -4290,26 +4499,45 @@
   "stamp": "5ebd6c9e996889aa",
   "table": "tools/arcade-art-v43/m0.json"
  },
- "m0_h103_t1.webp": {
-  "bytes": 35544,
+ "m0_h102_t1@side.webp": {
+  "bytes": 31740,
   "cell": [
-   143,
+   98,
    150
   ],
   "facing": "right",
   "fps": 7,
   "frames": 4,
   "group": "mobs",
-  "motions": [
-   "attack"
-  ],
   "size": [
-   572,
+   392,
    150
   ],
-  "source": "media/m0-v43/h103-t1-move.webp",
-  "sourceSha256": "d1be0c9ea757fa4fe4f67df5fc578e58b8d0c85ba4181511ee9e97bd623dc229",
-  "stamp": "995e1cf68bace498",
+  "source": "media/m0-v43/h102-t1-move.webp",
+  "sourceSha256": "44eb7d5e512c4082035162d18940ae1c218eb71ce5f2dd39353abab5500ae94e",
+  "stamp": "5ab098ad80353feb",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_h103_t1.webp": {
+  "bytes": 32502,
+  "cell": [
+   114,
+   150
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "mobs",
+  "motions": [
+   "attack",
+   "side"
+  ],
+  "size": [
+   456,
+   150
+  ],
+  "source": "media/drive-v43/v3-011-legacy-m124-silverless-shadow-v4-down.webp",
+  "sourceSha256": "807925e84ceba824fe66b7d677f8e219d3a62e29c4d7e0fe35a15bb7c6b9ece4",
+  "stamp": "4ee13e46e505d9d4",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_h103_t1@attack.webp": {
@@ -4329,6 +4557,25 @@
   "source": "media/m0-v43/h103-t1-attack.webp",
   "sourceSha256": "d1be0c9ea757fa4fe4f67df5fc578e58b8d0c85ba4181511ee9e97bd623dc229",
   "stamp": "86b2f62cb76c8269",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_h103_t1@side.webp": {
+  "bytes": 35544,
+  "cell": [
+   143,
+   150
+  ],
+  "facing": "right",
+  "fps": 7,
+  "frames": 4,
+  "group": "mobs",
+  "size": [
+   572,
+   150
+  ],
+  "source": "media/m0-v43/h103-t1-move.webp",
+  "sourceSha256": "d1be0c9ea757fa4fe4f67df5fc578e58b8d0c85ba4181511ee9e97bd623dc229",
+  "stamp": "dddffd664e76c238",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_kair_academy_wave_1.webp": {
@@ -5164,25 +5411,25 @@
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_u202_e1.webp": {
-  "bytes": 38044,
+  "bytes": 32644,
   "cell": [
-   115,
+   99,
    150
   ],
-  "facing": "right",
-  "fps": 7,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
-   "attack"
+   "attack",
+   "side"
   ],
   "size": [
-   460,
+   396,
    150
   ],
-  "source": "media/m0-v43/u202-e1-move.webp",
-  "sourceSha256": "817e7445b4194599278c6a31c1c074eeb09c54298a9e7eb70fd4d19ecb809598",
-  "stamp": "caacd912ba66efa5",
+  "source": "media/drive-v43/v3-012-false-mercy-down.webp",
+  "sourceSha256": "a2f8c843a535a1399099b2d8e2624e5c0353e1338000555293d4777f0d5860c3",
+  "stamp": "f33e97e660a61adf",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_u202_e1@attack.webp": {
@@ -5202,6 +5449,25 @@
   "source": "media/m0-v43/u202-e1-attack.webp",
   "sourceSha256": "bccb773a8391267b2d06122dbd20a3363055679d4c5f498eebc556ff5f646b8b",
   "stamp": "374ee7df43adbf65",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_u202_e1@side.webp": {
+  "bytes": 38044,
+  "cell": [
+   115,
+   150
+  ],
+  "facing": "right",
+  "fps": 7,
+  "frames": 4,
+  "group": "mobs",
+  "size": [
+   460,
+   150
+  ],
+  "source": "media/m0-v43/u202-e1-move.webp",
+  "sourceSha256": "817e7445b4194599278c6a31c1c074eeb09c54298a9e7eb70fd4d19ecb809598",
+  "stamp": "5146a5822ef1bd37",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_u202_e1_4.webp": {
@@ -5347,25 +5613,25 @@
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_u204_e2.webp": {
-  "bytes": 32174,
+  "bytes": 35136,
   "cell": [
-   150,
-   130
+   140,
+   150
   ],
-  "facing": "right",
-  "fps": 7,
+  "fps": 8,
   "frames": 4,
   "group": "mobs",
   "motions": [
-   "attack"
+   "attack",
+   "side"
   ],
   "size": [
-   600,
-   130
+   560,
+   150
   ],
-  "source": "media/m0-v43/u204-e2-move.webp",
-  "sourceSha256": "aada54254d0090355de03c728664eec2dd9fcac8178512ebbb88851695cd9d6b",
-  "stamp": "c3fbc56bce6555d2",
+  "source": "media/drive-v43/v3-013-u204-mech02-down.webp",
+  "sourceSha256": "b2a1b4b865c7626f1d86dc6de282e6115aee33601174b7cc65466c768b55a956",
+  "stamp": "085d11ec2a338efe",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_u204_e2@attack.webp": {
@@ -5387,26 +5653,45 @@
   "stamp": "767ad5743fbcbc49",
   "table": "tools/arcade-art-v43/m0.json"
  },
- "m0_u204_e3.webp": {
-  "bytes": 32484,
+ "m0_u204_e2@side.webp": {
+  "bytes": 32174,
   "cell": [
    150,
-   104
+   130
   ],
   "facing": "right",
   "fps": 7,
   "frames": 4,
   "group": "mobs",
-  "motions": [
-   "attack"
-  ],
   "size": [
    600,
-   104
+   130
   ],
-  "source": "media/m0-v43/u204-e3-move.webp",
-  "sourceSha256": "532e4b0e821e4bf77fd5ca9675f140f37e1d9f40ef68f6c376e346013e7c643f",
-  "stamp": "826da2ccbc5263af",
+  "source": "media/m0-v43/u204-e2-move.webp",
+  "sourceSha256": "aada54254d0090355de03c728664eec2dd9fcac8178512ebbb88851695cd9d6b",
+  "stamp": "343a19a3c1786757",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_u204_e3.webp": {
+  "bytes": 42988,
+  "cell": [
+   144,
+   150
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "mobs",
+  "motions": [
+   "attack",
+   "side"
+  ],
+  "size": [
+   576,
+   150
+  ],
+  "source": "media/drive-v43/v3-030-threshold-spider-down.webp",
+  "sourceSha256": "cae722691bc4fcc8a20ceb0241d6f919f4c7783d47bc0cbd912ae193757299ef",
+  "stamp": "d4717bc4e9bc63c9",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_u204_e3@attack.webp": {
@@ -5426,6 +5711,105 @@
   "source": "media/m0-v43/u204-e3-attack.webp",
   "sourceSha256": "e30b2f1ae57dcdb243532c8bf9e05c237cb1a07a38ce2fb433fa884414a2d320",
   "stamp": "e6364b081bb8b8bf",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_u204_e3@side.webp": {
+  "bytes": 32484,
+  "cell": [
+   150,
+   104
+  ],
+  "facing": "right",
+  "fps": 7,
+  "frames": 4,
+  "group": "mobs",
+  "size": [
+   600,
+   104
+  ],
+  "source": "media/m0-v43/u204-e3-move.webp",
+  "sourceSha256": "532e4b0e821e4bf77fd5ca9675f140f37e1d9f40ef68f6c376e346013e7c643f",
+  "stamp": "a85e8a952f337592",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_u205_e1.webp": {
+  "bytes": 31412,
+  "cell": [
+   118,
+   150
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "mobs",
+  "motions": [
+   "side"
+  ],
+  "size": [
+   472,
+   150
+  ],
+  "source": "media/drive-v43/v3-013-u205-e1-new-down.webp",
+  "sourceSha256": "1c4732d70cdbfa7f267e8253d6b25baeb4398eaf905fe8675401d5d6d58a3352",
+  "stamp": "b9fa2f75a31a4848",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_u205_e1@side.webp": {
+  "bytes": 30604,
+  "cell": [
+   113,
+   150
+  ],
+  "facing": "right",
+  "fps": 8,
+  "frames": 4,
+  "group": "mobs",
+  "size": [
+   452,
+   150
+  ],
+  "source": "media/drive-v43/v3-013-u205-e1-new-side.webp",
+  "sourceSha256": "c45bbb4a2869735222a7b34694b45605e1606f2a36ac6fb0a47835f67f575c0a",
+  "stamp": "7f690f9ff535a008",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_u205_e3.webp": {
+  "bytes": 24084,
+  "cell": [
+   79,
+   150
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "mobs",
+  "motions": [
+   "side"
+  ],
+  "size": [
+   316,
+   150
+  ],
+  "source": "media/drive-v43/v3-012-u205-e3-new-down.webp",
+  "sourceSha256": "63c9fd9840392fac9350776791fd32600e79fa228e1c49670d47d8ec39cd25d8",
+  "stamp": "70e3631d65a04b20",
+  "table": "tools/arcade-art-v43/m0.json"
+ },
+ "m0_u205_e3@side.webp": {
+  "bytes": 27018,
+  "cell": [
+   76,
+   150
+  ],
+  "facing": "right",
+  "fps": 8,
+  "frames": 4,
+  "group": "mobs",
+  "size": [
+   304,
+   150
+  ],
+  "source": "media/drive-v43/v3-012-u205-e3-new-side.webp",
+  "sourceSha256": "5705057eed2d5c56eb4a88ef69a9f3fce3292e835a833afe84512e43d2d7937e",
+  "stamp": "b502c802eed49bbd",
   "table": "tools/arcade-art-v43/m0.json"
  },
  "m0_u206_e1.webp": {

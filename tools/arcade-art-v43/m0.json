@@ -88,11 +88,16 @@
    }
   },
   "m0_a10_o1": {
-   "src": "media/m0-v43/a10-o1-move.webp",
+   "src": "media/drive-v43/v3-041-blackmarket-suspect-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/a10-o1-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/a10-o1-attack.webp",
      "strip": 4,
@@ -226,9 +231,9 @@
    }
   },
   "m0_b03_g1": {
-   "src": "media/drive-v43/m044-down.webp",
+   "src": "media/drive-v43/v3-044-photo-wraith-down.webp",
    "strip": 4,
-   "fps": 6,
+   "fps": 8,
    "motions": {
     "side": {
      "src": "media/m0-v43/b03-g1-move.webp",
@@ -272,9 +277,9 @@
    }
   },
   "m0_b04_g1": {
-   "src": "media/drive-v43/m046-down.webp",
+   "src": "media/drive-v43/v3-046-discarded-delicacy-down.webp",
    "strip": 4,
-   "fps": 6,
+   "fps": 8,
    "motions": {
     "side": {
      "src": "media/m0-v43/b04-g1-move.webp",
@@ -291,11 +296,16 @@
    }
   },
   "m0_b04_s1": {
-   "src": "media/m0-v43/b04-s1-move.webp",
+   "src": "media/drive-v43/v3-046-black-fluid-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/b04-s1-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/b04-s1-attack.webp",
      "strip": 4,
@@ -440,11 +450,16 @@
    }
   },
   "m0_b09_c1": {
-   "src": "media/m0-v43/b09-c1-move.webp",
+   "src": "media/drive-v43/v3-019-snow-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/b09-c1-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/b09-c1-attack.webp",
      "strip": 4,
@@ -454,9 +469,9 @@
    }
   },
   "m0_b09_h1": {
-   "src": "media/drive-v43/m005-down.webp",
+   "src": "media/drive-v43/v3-005-ep1b-steel-jaw-hound-down.webp",
    "strip": 4,
-   "fps": 6,
+   "fps": 8,
    "motions": {
     "side": {
      "src": "media/m0-v43/b09-h1-move.webp",
@@ -553,9 +568,9 @@
    }
   },
   "m0_c103_e1": {
-   "src": "media/drive-v43/m003-down.webp",
+   "src": "media/drive-v43/v3-003-cult-ego-binder-down.webp",
    "strip": 4,
-   "fps": 6,
+   "fps": 8,
    "motions": {
     "side": {
      "src": "media/m0-v43/c103-e1-move.webp",
@@ -572,11 +587,16 @@
    }
   },
   "m0_c103_e2": {
-   "src": "media/m0-v43/c103-e2-move.webp",
+   "src": "media/drive-v43/v3-031-olive-crystal-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/c103-e2-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/c103-e2-attack.webp",
      "strip": 4,
@@ -586,11 +606,16 @@
    }
   },
   "m0_c103_e3": {
-   "src": "media/m0-v43/c103-e3-move.webp",
+   "src": "media/drive-v43/v3-026-m060-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/c103-e3-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/c103-e3-attack.webp",
      "strip": 4,
@@ -634,9 +659,9 @@
    }
   },
   "m0_c105_e2": {
-   "src": "media/drive-v43/m004-down.webp",
+   "src": "media/drive-v43/v3-004-crimson-caster-down.webp",
    "strip": 4,
-   "fps": 6,
+   "fps": 8,
    "motions": {
     "side": {
      "src": "media/m0-v43/c105-e2-move.webp",
@@ -723,9 +748,9 @@
    }
   },
   "m0_dist01_sp2": {
-   "src": "media/drive-v43/m043-down.webp",
+   "src": "media/drive-v43/v3-043-eggkeeper-down.webp",
    "strip": 4,
-   "fps": 6,
+   "fps": 8,
    "motions": {
     "side": {
      "src": "media/m0-v43/dist01-sp2-move.webp",
@@ -756,9 +781,9 @@
    }
   },
   "m0_dist02_h1": {
-   "src": "media/drive-v43/m025-down.webp",
+   "src": "media/drive-v43/v3-025-green-goat-down.webp",
    "strip": 4,
-   "fps": 6,
+   "fps": 8,
    "motions": {
     "side": {
      "src": "media/m0-v43/dist02-h1-move.webp",
@@ -775,11 +800,16 @@
    }
   },
   "m0_dist02_m1": {
-   "src": "media/m0-v43/dist02-m1-move.webp",
+   "src": "media/drive-v43/v3-033-greenmage-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/dist02-m1-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/dist02-m1-attack.webp",
      "strip": 4,
@@ -789,11 +819,16 @@
    }
   },
   "m0_dist02_r74_patrol_0_5": {
-   "src": "media/m0-v43/dist02_r74-patrol_0_5-move.webp",
+   "src": "media/drive-v43/v3-025-root-stalker-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/dist02_r74-patrol_0_5-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/dist02_r74-patrol_0_5-attack.webp",
      "strip": 3,
@@ -817,11 +852,16 @@
    }
   },
   "m0_dist03_c1": {
-   "src": "media/m0-v43/dist03-c1-move.webp",
+   "src": "media/drive-v43/v3-036-purpleangel-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/dist03-c1-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/dist03-c1-attack.webp",
      "strip": 4,
@@ -850,11 +890,16 @@
    "facing": "right"
   },
   "m0_dist03_sp1": {
-   "src": "media/m0-v43/dist03-sp1-move.webp",
+   "src": "media/drive-v43/v3-043-memory-spider-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/dist03-sp1-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/dist03-sp1-attack.webp",
      "strip": 4,
@@ -949,9 +994,9 @@
    }
   },
   "m0_dist06_h1": {
-   "src": "media/drive-v43/m042-down.webp",
+   "src": "media/drive-v43/v3-042-striped-gargoyle-down.webp",
    "strip": 4,
-   "fps": 6,
+   "fps": 8,
    "motions": {
     "side": {
      "src": "media/m0-v43/dist06-h1-move.webp",
@@ -1016,11 +1061,16 @@
    }
   },
   "m0_h102_c1": {
-   "src": "media/m0-v43/h102-c1-move.webp",
+   "src": "media/drive-v43/v3-007-hando-memory-excision-connector-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/h102-c1-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/h102-c1-attack.webp",
      "strip": 1,
@@ -1030,11 +1080,16 @@
    }
   },
   "m0_h102_s1": {
-   "src": "media/m0-v43/h102-s1-move.webp",
+   "src": "media/drive-v43/v3-020-silver-sentinel-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/h102-s1-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/h102-s1-attack.webp",
      "strip": 1,
@@ -1050,11 +1105,16 @@
    "facing": "right"
   },
   "m0_h102_t1": {
-   "src": "media/m0-v43/h102-t1-move.webp",
+   "src": "media/drive-v43/v3-002-nameless-scar-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/h102-t1-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/h102-t1-attack.webp",
      "strip": 4,
@@ -1064,11 +1124,16 @@
    }
   },
   "m0_h103_t1": {
-   "src": "media/m0-v43/h103-t1-move.webp",
+   "src": "media/drive-v43/v3-011-legacy-m124-silverless-shadow-v4-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/h103-t1-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/h103-t1-attack.webp",
      "strip": 4,
@@ -1351,11 +1416,16 @@
    "facing": "right"
   },
   "m0_u202_e1": {
-   "src": "media/m0-v43/u202-e1-move.webp",
+   "src": "media/drive-v43/v3-012-false-mercy-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/u202-e1-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/u202-e1-attack.webp",
      "strip": 1,
@@ -1413,11 +1483,16 @@
    }
   },
   "m0_u204_e2": {
-   "src": "media/m0-v43/u204-e2-move.webp",
+   "src": "media/drive-v43/v3-013-u204-mech02-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/u204-e2-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/u204-e2-attack.webp",
      "strip": 4,
@@ -1427,13 +1502,44 @@
    }
   },
   "m0_u204_e3": {
-   "src": "media/m0-v43/u204-e3-move.webp",
+   "src": "media/drive-v43/v3-030-threshold-spider-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/u204-e3-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/u204-e3-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "facing": "right"
+    }
+   }
+  },
+  "m0_u205_e1": {
+   "src": "media/drive-v43/v3-013-u205-e1-new-down.webp",
+   "strip": 4,
+   "fps": 8,
+   "motions": {
+    "side": {
+     "src": "media/drive-v43/v3-013-u205-e1-new-side.webp",
+     "strip": 4,
+     "fps": 8,
+     "facing": "right"
+    }
+   }
+  },
+  "m0_u205_e3": {
+   "src": "media/drive-v43/v3-012-u205-e3-new-down.webp",
+   "strip": 4,
+   "fps": 8,
+   "motions": {
+    "side": {
+     "src": "media/drive-v43/v3-012-u205-e3-new-side.webp",
      "strip": 4,
      "fps": 8,
      "facing": "right"

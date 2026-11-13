@@ -58,7 +58,7 @@
   var STAGE_COLOR=Arcade.STAGES.map(function(g,i){return hudColorOf(i);});
   function themeColor(s){return themeOverride&&themeOverride.stage===s.stageIndex?hudColorOf(s.stageIndex):STAGE_COLOR[s.stageIndex]||'#e6e0ff';}
   function tallOf(key){
-    if(TALL[key])return TALL[key];
+    if(TALL[key])return Arcade.MOBS[key]&&TALL[key]<TALL_MOB?TALL_MOB:TALL[key]; // 옛 잡몹 크기(26~40)는 그림이 안 보일 만큼 작았다. 잡몹은 TALL_MOB보다 작게 그리지 않는다.
     if(Arcade.ACTORS[key])return TALL_ACTOR;
     var m=Arcade.MOBS[key];if(m)return m.elite?Math.max(TALL_ELITE,Math.round(m.r*4.2)):Math.max(TALL_MOB,Math.round(m.r*4.1));
     return TALL_MOB;
@@ -411,7 +411,7 @@
   function drawItems(s){
     // 하트가 고동친다. 드라이브 하트 그림(heart)이 있으면 점수 아이템은 그 그림으로.
     var art=images.heart,beat=1+Math.sin(visual*7)*.08;
-    for(var i=0;i<s.itemCount;i++){var z=ITEM_DRAW*beat*(s.ikind[i]?1.15:1);if(art&&!s.ikind[i]){var hh=z*1.45,hw=hh*cellRatio('heart',art);drawCell('heart',art,i,false,s.ix[i]-hw*.64,s.iy[i]-hh/2,hw,hh);} /* 꽃잎에 싸인 하트(드라이브 PJ-03). 하트가 집는 자리에 오게 꽃잎 꼬리만큼 왼쪽으로 그린다 */else ctx.drawImage(itemSprites[s.ikind[i]],s.ix[i]-z/2,s.iy[i]-z/2,z,z);}
+    for(var i=0;i<s.itemCount;i++){var z=ITEM_DRAW*beat*(s.ikind[i]?1.15:1);if(art&&!s.ikind[i]){var hh=z*1.25,hw=hh*cellRatio('heart',art);drawCell('heart',art,i,false,s.ix[i]-hw*.64,s.iy[i]-hh/2,hw,hh);} /* 꽃잎에 싸인 하트(드라이브 PJ-03). 하트가 집는 자리에 오게 꽃잎 꼬리만큼 왼쪽으로 그린다 */else ctx.drawImage(itemSprites[s.ikind[i]],s.ix[i]-z/2,s.iy[i]-z/2,z,z);}
   }
   function drawProp(s,i,grow,alpha){
     var prop=Arcade.PROPS[s.bcolor[i]];if(!prop)return;
