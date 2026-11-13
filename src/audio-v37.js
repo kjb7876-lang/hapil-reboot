@@ -29,9 +29,10 @@
     countdown:{gap:400,level:.17,rank:2},
     countdownLast:{gap:400,level:.18,rank:3}
   };
-  var EVENT_CUES={hurt:'hurt',kill:'kill',phase:'phaseBreak',summon:'summon',seal:'seal',release:'seal',awakening:'awakening',win:'win',lose:'lose'};
+  // 'phase' 이벤트는 다음 패턴·구간이 시작될 때 나오므로 격파음에 쓰지 않는다(격파는 아래 단계 전환으로 잡는다).
+  var EVENT_CUES={hurt:'hurt',kill:'kill',summon:'summon',seal:'seal',release:'seal',awakening:'awakening',win:'win',lose:'lose'};
   var SKILL_CUES={memory:'skillMemory',delay:'skillDelay',counter:'skillCounter',ego:'skillEgo'};
-  var STAGE_BOSS='boss',STAGE_WAVE='waves',STAGE_INTRO='bossIntro';
+  var STAGE_BOSS='boss',STAGE_WAVE='waves',STAGE_INTRO='bossIntro',STAGE_BREAK='transition';
   var FIELD_WIDTH=360,LOW_BOSS_HEALTH=.2,COUNTDOWN_SECONDS=10,HEARTBEAT_TICKS=66,MAX_TRACKED_LASERS=96;
 
   function newState(){return {runId:null,graze:0,hitUntil:0,action:'',stage:'',lasers:Object.create(null),laserCount:0,heartbeatAt:0,countdown:-1};}
@@ -70,6 +71,8 @@
     if(warned)cues.push({name:'laserWarn',pan:bossPan,count:warned});
     if(fired)cues.push({name:'laserFire',pan:firePan/fired,count:fired});
     if(world.stage!==state.stage&&world.stage===STAGE_INTRO)cues.push({name:'warning',pan:0});
+    // 보스 패턴이 실제로 격파된 틱: boss → transition.
+    if(state.stage===STAGE_BOSS&&world.stage===STAGE_BREAK)cues.push({name:'phaseBreak',pan:bossPan});
     state.stage=world.stage;
     var fighting=world.stage===STAGE_BOSS||world.stage===STAGE_WAVE;
     if(fighting&&player.hp===1&&player.maxHp>1){if(world.tick>=state.heartbeatAt){cues.push({name:'heartbeat',pan:0});state.heartbeatAt=world.tick+HEARTBEAT_TICKS;}}

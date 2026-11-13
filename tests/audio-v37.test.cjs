@@ -32,6 +32,14 @@ test('v37 a real boss fight produces the expected families of cues',()=>{
  assert.equal(w.stage,'won');
  for(const name of ['bossHit','bossHitLow','graze','hurt','charge','laserWarn','laserFire','phaseBreak','skillMemory','win'])assert(count[name]>0,name+' never fired');
  assert.equal(count.win,1);assert.equal(count.phaseBreak,2);
+ const defeats=[],breaks=[],again=run(2,7),listen=audio.newState();let stage=again.stage;
+ for(let i=0;i<6000&&again.stage!=='won'&&again.stage!=='lost';i++){
+  if(i%400<300)again.player.hp=again.player.maxHp;
+  core.step(again,{dx:Math.sin(i/40)*2,dy:0});
+  if(stage==='boss'&&again.stage==='transition')defeats.push(again.tick);stage=again.stage;
+  if(audio.collect(listen,again,again.events.splice(0)).some(c=>c.name==='phaseBreak'))breaks.push(again.tick);
+ }
+ assert.equal(defeats.length,2);assert.deepEqual(breaks,defeats,'the break sound lands on the tick the pattern is defeated');
 });
 
 test('v37 a new or resumed run sets a baseline instead of replaying old state',()=>{
@@ -58,6 +66,10 @@ test('v37 each cue fires on its transition only',()=>{
  const fired=audio.collect(state,warn,[]);assert.deepEqual(names(fired),['laserFire']);assert.equal(fired[0].count,2);assert.equal(fired[0].pan,0);
  warn.hazards[0].phase='fade';assert.deepEqual(audio.collect(state,warn,[]),[]);
  assert.deepEqual(names(audio.collect(state,warn,[{type:'skill',name:'counter'},{type:'shot'},{type:'checkpoint'},{type:'seal',name:'x'}])),['skillCounter','seal']);
+ // 다음 패턴·구간 시작을 알리는 phase 이벤트는 격파음이 아니다. 격파음은 보스가 쓰러진 틱에만 난다.
+ assert.deepEqual(audio.collect(state,warn,[{type:'phase',name:'다음 패턴'}]),[]);
+ warn.stage='transition';assert.deepEqual(names(audio.collect(state,warn,[])),['phaseBreak']);assert.deepEqual(audio.collect(state,warn,[]),[]);
+ warn.stage='boss';assert.deepEqual(audio.collect(state,warn,[{type:'phase',name:'다음 패턴'}]),[]);
 });
 
 test('v37 heartbeat and countdown follow the rules they announce',()=>{
@@ -66,7 +78,7 @@ test('v37 heartbeat and countdown follow the rules they announce',()=>{
  assert.deepEqual(names(audio.collect(state,hurt({tick:101}),[])),['heartbeat']);
  assert.deepEqual(audio.collect(state,hurt({tick:120}),[]),[]);
  assert.deepEqual(names(audio.collect(state,hurt({tick:167}),[])),['heartbeat']);
- assert.deepEqual(audio.collect(state,hurt({tick:168,stage:'transition'}),[]),[]);
+ assert.deepEqual(audio.collect(state,hurt({tick:168,stage:'won'}),[]),[]);
  assert.deepEqual(audio.collect(state,world({tick:200,player:{x:180,hp:1,maxHp:1}}),[]),[]);
  const timer=audio.newState();audio.collect(timer,world({}),[]);
  const at=left=>names(audio.collect(timer,world({phaseTime:75-left}),[]));
