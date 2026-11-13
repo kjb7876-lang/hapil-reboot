@@ -93,7 +93,8 @@ def main():
                 if not fr: continue
                 s = strip(fr)
                 if s is None: continue
-                f = f'{OUT}/' + re.sub(r'[^A-Za-z0-9_-]+', '_', mid) + f'-{tag}.webp'  # 파일 이름에 ':' 같은 글자를 쓰지 않는다; s.save(f, quality=84, method=6)
+                f = f'{OUT}/' + re.sub(r'[^A-Za-z0-9_-]+', '_', mid) + f'-{tag}.webp'  # 파일 이름에 ':' 같은 글자를 쓰지 않는다
+                s.save(f, quality=84, method=6)
                 entry[tag] = {'file': os.path.basename(f), 'frames': len(fr), 'cell': [s.width // len(fr), s.height], 'bytes': os.path.getsize(f)}
             if 'move' in entry: index[mid] = entry
     json.dump({'source': 'kjb7876-lang/m0 ' + subprocess.run(['git', '-C', M0, 'rev-parse', '--short', 'HEAD'], capture_output=True, text=True).stdout.strip(), 'facing': 'right', 'mobs': index, 'skipped': skipped}, open(OUT + '/index.json', 'w'), ensure_ascii=False, indent=1)
