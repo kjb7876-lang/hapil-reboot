@@ -2050,11 +2050,11 @@
   "table": "tools/arcade-art-v43/p7.json"
  },
  "p7_car.webp": {
-  "bytes": 2096,
+  "bytes": 27770,
   "group": "actors",
   "size": [
-   70,
-   55
+   260,
+   238
   ],
   "source": "media/story-v19/executor-prism.webp",
   "sourceSha256": "6fd6c4d2f0e3915bb315873a70c7e9f09975c8fd1b7816f2ee184b594f12341a",

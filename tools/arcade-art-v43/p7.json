@@ -1,13 +1,7 @@
 {
  "actors": {
   "p7_car": {
-   "src": "media/story-v19/executor-prism.webp",
-   "box": [
-    118,
-    165,
-    70,
-    55
-   ]
+   "src": "media/story-v19/executor-prism.webp"
   },
   "p7_shadow": {
    "src": "media/actors-v7/denial-idle.png"
