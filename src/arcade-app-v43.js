@@ -14,7 +14,7 @@
   // 그림 높이(픽셀). 모르는 키는 종류별 기본값(인물·몹·기물)을 쓴다. 부별 파일이 새 인물·몹·기물을 계속 들인다.
   var TALL={violet:112,balrog:124,mask:112,lucifer:124,asmodeus:108,pride:118,controller:118,goblin:104,insomnia:124,arbelia:108,siren:124,chief:124,executor:124,rian:108,cultist:124,
     spider:30,slime:28,ember:34,drone:26,mobgoblin:36,wolf:34,nightmare:40,collector:40,leech:34,guardian:62,warden:72,horn:84,belphegor:70,mammon:74,knight:80};
-  var TALL_ACTOR=116,TALL_MOB=34,TALL_ELITE=72;
+  var TALL_ACTOR=116,TALL_MOB=58,TALL_ELITE=92;
   var PROP_LONG={'sword-violet':68,cleaver:64,'sword-balrog':72,obelisk:80,spire:72,'twin-blade':62,crescent:58,tissue:34,money:36,heel:40,feather:44,cross:60,gear:56};
   var PROP_GLOW={'sword-violet':2,cleaver:5,'sword-balrog':0,obelisk:2,spire:4,'twin-blade':8,crescent:4,tissue:6,money:6,heel:0,feather:8,cross:6,gear:4};
   var ART_DIR='media/arcade-v43/';
@@ -60,7 +60,7 @@
   function tallOf(key){
     if(TALL[key])return TALL[key];
     if(Arcade.ACTORS[key])return TALL_ACTOR;
-    var m=Arcade.MOBS[key];if(m)return m.elite?Math.max(TALL_ELITE,Math.round(m.r*3.3)):Math.max(TALL_MOB,Math.round(m.r*2.4));
+    var m=Arcade.MOBS[key];if(m)return m.elite?Math.max(TALL_ELITE,Math.round(m.r*4.2)):Math.max(TALL_MOB,Math.round(m.r*4.1));
     return TALL_MOB;
   }
   function propLong(prop){return PROP_LONG[prop.key]||Math.round((prop.radius||12)*4.4);}
@@ -369,7 +369,7 @@
   }
   function drawMobs(s){
     var tint=Arcade.PALETTE[s.stageIndex%Arcade.PALETTE.length],color=themeColor(s);
-    for(var i=0;i<s.mobs.length;i++){var m=s.mobs[i],glow=orbs[2][tint],reach=m.r*1.9;if(m.x!==m.x||m.y!==m.y)continue;ctx.globalAlpha=.4;ctx.drawImage(glow.image,m.x-reach,m.y-reach,reach*2,reach*2);ctx.globalAlpha=1;drawArt(m.kind,m.x,m.y+Math.sin(visual*4+i)*2,s.tick-m.hitTick<3,color,Math.floor(finite(m.baseX,0)/9)+(m.elite?3:0));} // 시작 칸을 나온 자리로 어긋나게 해 떼가 똑같이 움직이지 않는다
+    for(var i=0;i<s.mobs.length;i++){var m=s.mobs[i],glow=orbs[2][tint],reach=m.r*1.5;if(m.x!==m.x||m.y!==m.y)continue;if(!images[m.kind]){ctx.globalAlpha=.3;ctx.drawImage(glow.image,m.x-reach,m.y-reach,reach*2,reach*2);ctx.globalAlpha=1;}drawArt(m.kind,m.x,m.y+Math.sin(visual*4+i)*2,s.tick-m.hitTick<3,color,Math.floor(finite(m.baseX,0)/9)+(m.elite?3:0));} // 시작 칸을 나온 자리로 어긋나게 해 떼가 똑같이 움직이지 않는다
   }
   function drawItems(s){
     for(var i=0;i<s.itemCount;i++)ctx.drawImage(itemSprites[s.ikind[i]],s.ix[i]-7,s.iy[i]-7,14,14);

@@ -36,8 +36,8 @@
  },
  "mobs": {
   "p1_root": {
-   "src": "media/encounter-signature-v11/horn-swamp.png",
-   "size": 140
+   "src": "media/drive-v43/0074nt-3a-oak.webp",
+   "size": 150
   },
   "p1_reed": {
    "src": "media/fx-v8/reed.webp",
