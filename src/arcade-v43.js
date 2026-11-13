@@ -270,7 +270,10 @@
     pillars:{name:'일곱 기둥',scene:'06',fire:function(s,t){var b=s.boss,phase=t%230,k,shift=Math.floor(t/230)%2?25:0;
       // 일곱 기둥이 한꺼번에 서고, 다음에는 반 칸 옮겨 선다. 기둥 사이 여섯 칸이 통로다.
       if(phase===0)for(k=0;k<7;k++)column(s,30+shift+k*50,{width:14,warn:70,active:84,color:RED});
-      if(t%58===30)ring(s,b.x,b.y,count(s,12),60,rand(s)*TAU,{color:YELLOW,size:1});}},
+      if(t%58===30)ring(s,b.x,b.y,count(s,12),60,rand(s)*TAU,{color:YELLOW,size:1});
+      // 기둥에서 떨어지는 불티와, 느리게 번지는 붉은 고리.
+      if(t%58===1)ring(s,b.x,b.y,count(s,16),44,rand(s)*TAU,{color:RED,size:0});
+      if(t%8===0)spawn(s,8+rand(s)*(W-16),-8,Math.PI/2,44+rand(s)*26,{color:YELLOW,size:RICE});}},
     summon:{name:'소환진',scene:'07',fire:function(s,t){var b=s.boss;
       if(t%66===0)shape(s,b.x,b.y,Shapes.vitruvian(count(s,16)),66,t*.01,{color:RED,size:1});
       if(t%132===33)shape(s,b.x,b.y,Shapes.star(5,.4,Math.max(2,count(s,3))),78,-t*.008,{color:YELLOW,size:0});
@@ -302,7 +305,10 @@
       if(t%96===48)shape(s,b.x,b.y,Shapes.rose(5,count(s,30)),78,t*.01,{color:RED,size:0});}},
     cathedral:{name:'전극 성당',scene:'21',fire:function(s,t){var b=s.boss;
       lattice(s,t,220,pick(s,2,2,3),pick(s,2,3,4),s.difficulty==='hell',10,WHITE,YELLOW);
-      if(t%70===35)bell(s,b.x,b.y,count(s,11),aim(s,b.x,b.y),1.7,92,.45,{color:WHITE,size:0});}},
+      if(t%70===35)bell(s,b.x,b.y,count(s,11),aim(s,b.x,b.y),1.7,92,.45,{color:WHITE,size:0});
+      // 전극 불꽃: 격자 사이로 노란 고리가 겹겹이 번진다.
+      if(t%44===0)ring(s,b.x,b.y,count(s,16),54,t*.013,{color:YELLOW,size:1});
+      if(t%8===0)spawn(s,8+rand(s)*(W-16),-8,Math.PI/2,44+rand(s)*26,{color:WHITE,size:RICE});}},
     ascend:{name:'하늘에 서려는 자',scene:'21',fire:function(s,t){var b=s.boss;
       // 위로 솟구친 탄이 힘을 잃고 꺾여 내려온다.
       if(t%44===0){var n=count(s,16);for(var i=0;i<n;i++){var u=n>1?i/(n-1)-.5:0;spawn(s,b.x,b.y,-Math.PI/2+u*2.2,150,{color:YELLOW,size:1,accel:-150,min:20,at:52,mode:MODE_TURN,arg:Math.PI-u*1.5,speed2:64});}}
@@ -318,7 +324,10 @@
       // 양옆 벽이 차례로 좁혀 온다. 가운데 길만 남는다.
       if(phase===0){column(s,26,{width:22,warn:70,active:150,color:CYAN});column(s,W-26,{width:22,warn:70,active:150,color:CYAN});}
       if(phase===70){column(s,74,{width:22,warn:70,active:90,color:CYAN});column(s,W-74,{width:22,warn:70,active:90,color:CYAN});}
-      if(t%64===32)fan(s,b.x,b.y,count(s,5),aim(s,b.x,b.y),.9,96,{color:PURPLE,size:1});}},
+      if(t%64===32)fan(s,b.x,b.y,count(s,5),aim(s,b.x,b.y),.9,96,{color:PURPLE,size:1});
+      // 구원의 손길: 느린 고리가 겹겹이 번지고, 가는 빗줄기가 가운데 길에 내린다.
+      if(t%48===0)ring(s,b.x,b.y,count(s,16),52,t*.011,{color:CYAN,size:0});
+      if(t%7===0)spawn(s,60+rand(s)*(W-120),-8,Math.PI/2,50+rand(s)*30,{color:PURPLE,size:RICE});}},
     veto:{name:'시스템의 거부권',scene:'26',fire:function(s,t){var b=s.boss,k;
       // 뻗어 나가던 탄이 멈춰 서서 일제히 방향을 꺾는다.
       if(t%120===0){var n=count(s,36),start=rand(s)*TAU;for(k=0;k<n;k++)spawn(s,b.x,b.y,start+TAU*k/n,180,{color:CYAN,size:0,accel:-200,min:0,at:55,mode:MODE_TURN,arg:k%2?.9:-.9,speed2:88});}
@@ -342,12 +351,17 @@
     puppetFog:{name:'꼭두각시 실안개',scene:'35',fire:function(s,t){var i;
       // 주민에게서 뻗은 흰 실이 격자를 짜고, 그 사이로 안개가 내린다.
       lattice(s,t,240,pick(s,2,2,3),pick(s,2,3,4),s.difficulty==='hell',8,WHITE,WHITE);
-      if(t%10===0)for(i=0;i<count(s,1);i++)spawn(s,8+rand(s)*(W-16),-8,Math.PI/2+(rand(s)-.5)*.4,32+rand(s)*22,{color:WHITE,size:0,turn:(rand(s)-.5)*.24,life:1500});}},
+      if(t%6===0)for(i=0;i<count(s,1);i++)spawn(s,8+rand(s)*(W-16),-8,Math.PI/2+(rand(s)-.5)*.4,32+rand(s)*22,{color:WHITE,size:0,turn:(rand(s)-.5)*.24,life:1500});
+      // 실에 끌리는 손: 보스에게서 보랏빛 고리가 실을 따라 번진다.
+      if(t%66===33)ring(s,s.boss.x,s.boss.y,count(s,14),50,rand(s)*TAU,{color:PURPLE,size:1});}},
     // 5부 — 카이로노미콘. 아르벨리아의 유예, 세이렌의 빼앗긴 시간·닫힌 층·재작성. 톱니와 초침.
     reprieve:{name:'유예의 수문장',scene:'45',fire:function(s,t){var b=s.boss;
       // 시계: 긴 바늘과 짧은 바늘이 서로 다른 빠르기로 돌고, 열두 눈금이 퍼진다.
       if(t%420===0){var a=aim(s,b.x,b.y)+Math.PI/2;beam(s,b.x,b.y,a,{width:11,warn:76,active:300,color:CYAN,spin:pick(s,.16,.22,.3),follow:true});beam(s,b.x,b.y,a+Math.PI,{width:15,warn:76,active:300,color:WHITE,spin:-pick(s,.06,.08,.11),follow:true});}
-      if(t%60===30)ring(s,b.x,b.y,12,58,-Math.PI/2+Math.floor(t/60)*.13,{color:CYAN,size:1});}},
+      if(t%60===30)ring(s,b.x,b.y,12,58,-Math.PI/2+Math.floor(t/60)*.13,{color:CYAN,size:1});
+      // 분 눈금: 열두 눈금 사이사이로 작은 눈금이 느리게 따라 퍼진다.
+      if(t%30===0)ring(s,b.x,b.y,count(s,24),40,-Math.PI/2+Math.floor(t/30)*.065,{color:WHITE,size:0});
+      if(t%90===45)bell(s,b.x,b.y,count(s,9),aim(s,b.x,b.y),1.4,86,.45,{color:YELLOW,size:RICE});}},
     stolenTime:{name:'빼앗긴 시간',scene:'39',fire:function(s,t){var b=s.boss;
       // 톱니바퀴: 톱니 모양 고리가 맞물리듯 번갈아 돌며 퍼진다.
       if(t%60===0)shape(s,b.x,b.y,Shapes.star(8,.74,Math.max(2,count(s,2))),74,((t/60)%2?1:-1)*t*.006,{color:(t/60)%2?CYAN:RED,size:0});
@@ -355,7 +369,10 @@
     closedFloor:{name:'닫힌 층의 명령',scene:'40',fire:function(s,t){var b=s.boss,phase=t%240;
       // 층이 위에서부터 차례로 닫힌다.
       if(phase===0)row(s,250,{width:16,warn:60,active:70,color:RED});if(phase===50)row(s,380,{width:16,warn:60,active:70,color:RED});if(phase===100)row(s,510,{width:16,warn:60,active:70,color:RED});
-      if(t%60===20)bell(s,b.x,b.y,count(s,11),aim(s,b.x,b.y),1.7,92,.45,{color:CYAN,size:1});}},
+      if(t%60===20)bell(s,b.x,b.y,count(s,11),aim(s,b.x,b.y),1.7,92,.45,{color:CYAN,size:1});
+      // 명령문: 층마다 붉은 고리가 느리게 번지고, 층 사이로 쌀알이 내린다.
+      if(t%48===0)ring(s,b.x,b.y,count(s,16),50,t*.009,{color:RED,size:0});
+      if(t%7===0)spawn(s,8+rand(s)*(W-16),-8,Math.PI/2,46+rand(s)*28,{color:CYAN,size:RICE});}},
     rewrite:{name:'최초명령 재작성',scene:'46',fire:function(s,t){var b=s.boss,k,n=pick(s,2,3,4);
       // 초침처럼 한 바퀴 도는 탄 줄기와, 휘어 돌아오는 초승달
       if(t%90===0)for(k=0;k<n;k++)shape(s,b.x,b.y,Shapes.goldenSpiral(count(s,12)),104,TAU*k/n+t*.01,{color:CYAN,size:1});
@@ -364,7 +381,10 @@
     // 6부 — 두 사람의 성
     castleGate:{name:'성문',scene:'48',fire:function(s,t){var b=s.boss;
       if(t%200===0){column(s,70,{width:20,warn:66,active:120,color:WHITE});column(s,W-70,{width:20,warn:66,active:120,color:WHITE});}
-      if(t%84===40)ring(s,b.x,b.y,pick(s,3,4,6),82,rand(s)*TAU,{size:SHAPE_PROP,color:P['twin-blade'],spin:.2});}},
+      if(t%84===40)ring(s,b.x,b.y,pick(s,3,4,6),82,rand(s)*TAU,{size:SHAPE_PROP,color:P['twin-blade'],spin:.2});
+      // 쇠창살: 빈칸이 조금씩 옮겨 가는 쌀알 줄이 내려온다. 성벽 위에서는 화살 고리가 퍼진다.
+      if(t%40===0){s.lane=Math.max(0,Math.min(11,(s.lane===undefined?6:s.lane)+Math.floor(rand(s)*3)-1));curtain(s,15,s.lane,4,66,{color:WHITE,size:RICE});}
+      if(t%56===28)ring(s,b.x,b.y,count(s,14),58,rand(s)*TAU,{color:YELLOW,size:0});}},
     summoned:{name:'소환된 의목사',scene:'48',fire:function(s,t){var b=s.boss;
       if(t%64===0)shape(s,b.x,b.y,Shapes.vitruvian(count(s,16)),64,t*.009,{color:WHITE,size:1});
       if(t%64===32)ring(s,b.x,b.y,count(s,14),84,t*.02,{color:PURPLE,size:0});}},
@@ -379,11 +399,15 @@
     hotel:{name:'새빛호텔',scene:'53',fire:function(s,t){var b=s.boss,phase=t%200;
       // 화재 경보: 붉은 줄과 푸른 줄이 번갈아 켜진다.
       if(phase===0)row(s,300+rand(s)*60,{width:16,warn:64,active:70,color:RED});if(phase===100)row(s,440+rand(s)*60,{width:16,warn:64,active:70,color:CYAN});
-      if(t%50===25)ring(s,b.x,b.y,count(s,14),64,rand(s)*TAU,{color:(t/50)%2?RED:CYAN,size:1});}},
+      if(t%50===25)ring(s,b.x,b.y,count(s,14),64,rand(s)*TAU,{color:(t/50)%2?RED:CYAN,size:1});
+      // 스프링클러: 천장에서 물방울이 쉬지 않고 떨어진다.
+      if(t%6===0)spawn(s,8+rand(s)*(W-16),-8,Math.PI/2,50+rand(s)*30,{color:CYAN,size:RICE});}},
     fireDoor:{name:'청록빌라 방화문',scene:'54',fire:function(s,t){var i;
       // 방화문이 닫힌다: 세로 막대 사이 열린 문으로만 지나간다.
       if(t%170===0)slots(s,pick(s,2,3,4),W,24).forEach(function(x){column(s,x,{width:26,warn:70,active:80,color:CYAN});});
-      if(t%9===0)for(i=0;i<count(s,1);i++)spawn(s,8+rand(s)*(W-16),-8,Math.PI/2,48+rand(s)*36,{color:CYAN,size:0});}},
+      if(t%5===0)for(i=0;i<count(s,1);i++)spawn(s,8+rand(s)*(W-16),-8,Math.PI/2,48+rand(s)*36,{color:CYAN,size:0});
+      // 문틈으로 새는 불티: 보스에게서 붉은 고리가 느리게 번진다.
+      if(t%54===27)ring(s,s.boss.x,s.boss.y,count(s,14),54,rand(s)*TAU,{color:RED,size:1});}},
     blueLight:{name:'파란불',scene:'52',fire:function(s,t){var b=s.boss;
       // 멈춤과 출발: 고리가 멈춰 섰다가 신호가 바뀌면 다시 나아간다.
       if(t%84===0){var n=count(s,26),base=rand(s)*TAU;for(var i=0;i<n;i++)spawn(s,b.x,b.y,base+TAU*i/n,150,{color:(t/84)%2?RED:CYAN,size:1,accel:-190,min:0,at:96,mode:MODE_TURN,arg:0,speed2:84});}

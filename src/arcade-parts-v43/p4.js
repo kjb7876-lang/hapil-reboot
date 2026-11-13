@@ -96,7 +96,7 @@
               for(j=1;j<=tail;j++)spawn(s,b.x,b.y,a,100-j*48/tail,{color:k%2?PURPLE:CYAN,size:j===1?1:0});}}
           if(phase>=150&&phase<180&&phase%2===0){var u=(phase-150)/28,sw=DOWN+1.25-u*2.5;for(j=0;j<pick(s,2,3,4);j++)spawn(s,b.x,b.y,sw,74+j*14,{color:WHITE,size:RICE});}
           if(t%60===30)K.ring(s,b.x,b.y,count(s,12),58,rand(s)*TAU,{color:PURPLE,size:1});}},
-        p4_sea:{name:'검은 바다',scene:'33',fire:function(s,t){var b=s.boss;
+        p4_sea:{name:'성벽 밖 검은 바다',scene:'33',fire:function(s,t){var b=s.boss;
           // 성벽 밖으로 밀려나 검은 바다로: 거품 줄이 빈칸을 옮기며 내려오고, 보스 둘레로 물살이 소용돌이친다.
           if(t%84===0)K.curtain(s,9,drift(s,6),3,58,{color:PURPLE,size:4});
           if(t%Math.round(7/s.density)===0){var a=t*.05;spawn(s,b.x,b.y,a,72,{color:CYAN,size:0,turn:.3,life:520});spawn(s,b.x,b.y,a+PI,72,{color:CYAN,size:0,turn:.3,life:520});}

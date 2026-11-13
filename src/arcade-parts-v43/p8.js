@@ -20,8 +20,8 @@
     build:function(K){
       var W=K.W,TAU=K.TAU,PI=Math.PI,RED=K.RED,PURPLE=K.PURPLE,CYAN=K.CYAN,GREEN=K.GREEN,YELLOW=K.YELLOW,WHITE=K.WHITE;
       var rand=K.rand,count=K.count,pick=K.pick,aim=K.aim,spawn=K.spawn,ring=K.ring,fan=K.fan,bell=K.bell,shape=K.shape,Shapes=K.Shapes,beam=K.beam,column=K.column,slots=K.slots,mob=K.mob,wave=K.wave;
-      // 거꾸로 선 십자가: 긴 쪽이 위, 가로대가 아래쪽에 있다(단위 좌표, +y가 아래). 한 번만 만든다.
-      var INVERTED=[0,-1,0,-.8,0,-.6,0,-.4,0,-.2,0,.15,0,.45,0,.75,-.6,.45,-.4,.45,-.2,.45,.2,.45,.4,.45,.6,.45];
+      // 십자가는 똑바로 선 기물로만 그린다. 탄으로 그리는 무늬는 육망성(겹친 두 삼각형)이다.
+      var HEXAGRAM=(function(){var v=[],k,j,q;for(q=0;q<2;q++)for(k=0;k<3;k++){var a0=-Math.PI/2+q*Math.PI+K.TAU*k/3,a1=a0+K.TAU/3;for(j=0;j<4;j++){var u=j/4;v.push(Math.cos(a0)*(1-u)+Math.cos(a1)*u,Math.sin(a0)*(1-u)+Math.sin(a1)*u);}}return v;})();
       // 지나온 보스들의 무기(망령). 61에서 되불러 온다.
       var GHOSTS=[K.P['sword-balrog'],K.P.cleaver,K.P.gear,K.P.crescent,K.P['sword-violet'],K.P['twin-blade'],K.P.heel];
       var LANES5=[52,116,180,244,308];
@@ -33,8 +33,8 @@
         p8petal:function(s,m){shape(s,m.x,m.y,Shapes.rose(3,count(s,9)),64,aim(s,m.x,m.y),{color:m.color,size:0});},
         // 삼중자아: 세 갈래 쌀알
         p8trio:function(s,m){fan(s,m.x,m.y,3,aim(s,m.x,m.y),pick(s,1.1,.9,.8),92,{color:m.color,size:K.RICE});},
-        // 교단 사제: 거꾸로 선 십자가 무늬와 종 모양 부채꼴을 번갈아
-        p8sermon:function(s,m){if(m.shots%2===0)shape(s,m.x,m.y,INVERTED,74,0,{color:m.color,size:1});else bell(s,m.x,m.y,count(s,9),aim(s,m.x,m.y),1.5,90,.45,{color:m.color,size:0});}
+        // 교단 사제: 육망성 무늬와 종 모양 부채꼴을 번갈아
+        p8sermon:function(s,m){if(m.shots%2===0)shape(s,m.x,m.y,HEXAGRAM,74,0,{color:m.color,size:1});else bell(s,m.x,m.y,count(s,9),aim(s,m.x,m.y),1.5,90,.45,{color:m.color,size:0});}
       };
 
       var spells={
@@ -96,9 +96,9 @@
           if(phase===0||phase===20){var n=count(s,22),base=rand(s)*TAU;for(k=0;k<n;k++)spawn(s,b.x,b.y,base+TAU*k/n,phase?120:170,{color:(t/150)%2?CYAN:YELLOW,size:1,accel:-130,min:0,at:120,mode:K.MODE_TURN,arg:0,speed2:74});}
           if(phase>=40&&phase<110&&phase%14===0){fan(s,b.x,b.y,pick(s,1,2,2),aim(s,b.x,b.y),.18,112,{color:YELLOW,size:K.RICE});fan(s,W-b.x,b.y,pick(s,1,2,2),aim(s,W-b.x,b.y),.18,112,{color:CYAN,size:K.RICE});}}},
         p8_goldenCross:{name:'황금 역십자가',scene:'60',fire:function(s,t){var b=s.boss,i;
-          // 황금 역십자가: 십자가가 줄지어 똑바로 내려오고, 보스에게서 거꾸로 선 금빛 십자가 무늬가 커진다.
+          // 황금 역십자가: 십자가가 줄지어 똑바로 내려오고, 보스에게서 금빛 육망성 무늬가 커진다.
           if(t%96===0){s.lane=Math.max(0,Math.min(5,(s.lane===undefined?2:s.lane)+Math.floor(rand(s)*3)-1));for(i=0;i<6;i++){if(i===s.lane)continue;spawn(s,W/6*(i+.5),-30,PI/2,62,{size:K.SHAPE_PROP,color:K.P.cross,life:900});}}
-          if(t%48===24){shape(s,b.x-44,b.y,INVERTED,70,0,{color:YELLOW,size:1});if(s.difficulty==='hell'||t%96===24)shape(s,b.x+44,b.y,INVERTED,58,0,{color:WHITE,size:0});}
+          if(t%48===24){shape(s,b.x-44,b.y,HEXAGRAM,70,0,{color:YELLOW,size:1});if(s.difficulty==='hell'||t%96===24)shape(s,b.x+44,b.y,HEXAGRAM,58,0,{color:WHITE,size:0});}
           if(t%pick(s,24,20,12)===0)for(i=0;i<count(s,1);i++)spawn(s,8+rand(s)*(W-16),-8,PI/2,64+rand(s)*30,{color:YELLOW,size:K.RICE});}},
         // 61 — 교주의 사몽. 중간: 공간과 시간. 보스: 부활 → 세쌍둥이의 기록 → 사망의 글자 → 망령 → 사몽
         p8_warpSpace:{name:'공간을 왜곡',scene:'61',fire:function(s,t){var b=s.boss,k;
