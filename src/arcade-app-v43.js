@@ -60,7 +60,7 @@
   function tallOf(key){
     if(TALL[key])return Arcade.MOBS[key]&&TALL[key]<TALL_MOB?TALL_MOB:TALL[key]; // 옛 잡몹 크기(26~40)는 그림이 안 보일 만큼 작았다. 잡몹은 TALL_MOB보다 작게 그리지 않는다.
     if(Arcade.ACTORS[key])return TALL_ACTOR;
-    var m=Arcade.MOBS[key];if(m)return m.elite?Math.max(TALL_ELITE,Math.round(m.r*4.2)):Math.max(TALL_MOB,Math.round(m.r*4.1));
+    var m=Arcade.MOBS[key];if(m)return m.elite?Math.max(TALL_ELITE,Math.round(m.r*4.2)):Math.min(78,Math.max(TALL_MOB,Math.round(m.r*4.1)));
     return TALL_MOB;
   }
   /* 동작 그림: manifest의 <키>.webp 항목에 motions:['side','attack',…]가 있으면 <키>@side.webp 같은 스트립이 따로 있다. */
@@ -381,6 +381,7 @@
     if(flip){ctx.save();ctx.translate(x,0);ctx.scale(-1,1);x=0;}
     drawCell(key,img,phase,false,x-w/2,y-tall/2,w,tall);
     if(flashOn){ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=.45;drawCell(key,img,phase,false,x-w/2,y-tall/2,w,tall);ctx.restore();}
+    else if(sizeKey){ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=.24;drawCell(key,img,phase,false,x-w/2,y-tall/2,w,tall);ctx.restore();} // 잡몹은 원화가 어두워 배경에 묻힌다. 한 번 더 옅게 덧그려 밝힌다.
     if(flip)ctx.restore();
   }
   /* 움직임으로 동작을 고른다(시뮬은 건드리지 않는다). 방금 쏜 몹은 공격, 옆으로 가는 몹은 옆 걷기(스트립은 오른쪽을 본다), 그 밖에는 아래로 걷기. */
@@ -400,18 +401,25 @@
     ctx.drawImage(circleSprite,-size/2,-size/2,size,size);ctx.restore();
     var bp=bossPose;if(bp.actor!==b.actor){bp.actor=b.actor;bp.x=bx;bp.n=s.n;bp.until=-1;bp.side=0;}
     var bdx=bx-bp.x;bp.x=bx;if(Math.abs(bdx)>.3){bp.side=10;bp.dir=bdx<0?-1:1;}else if(bp.side>0)bp.side--;
-    if(s.stage==='card'&&s.n-bp.n>=6)bp.until=s.tick+30;bp.n=s.n; // 탄을 한꺼번에 뿌린 순간이 공격 동작
+    if(s.stage==='card'&&s.n-bp.n>=6)bp.until=s.tick+56;bp.n=s.n; // 탄을 한꺼번에 뿌린 순간이 공격 동작
     var bm=s.tick<bp.until&&images[b.actor+'@attack']?'attack':bp.side>0?'side':'';
     drawArt(b.actor,bx,by,s.tick-b.hitTick<3,themeColor(s),0,bm,bp.dir||(bx>W/2?-1:1));
   }
+  /* 몹 뒤에 까는 부드러운 빛(테두리 없는 원). 어두운 배경에서 어두운 몹의 윤곽이 뜨게 한다. */
+  var haloImage=null;
+  function haloSprite(){
+    if(haloImage)return haloImage;
+    var d=offscreen(128,128),q=d.getContext('2d'),g=q.createRadialGradient(64,64,4,64,64,64);
+    g.addColorStop(0,'rgba(214,226,255,.95)');g.addColorStop(.55,'rgba(170,190,240,.38)');g.addColorStop(1,'rgba(150,170,230,0)');q.fillStyle=g;q.fillRect(0,0,128,128);haloImage=d;return d;
+  }
   function drawMobs(s){
     var tint=Arcade.PALETTE[s.stageIndex%Arcade.PALETTE.length],color=themeColor(s);
-    for(var i=0;i<s.mobs.length;i++){var m=s.mobs[i],glow=orbs[2][tint],reach=m.r*1.5;if(m.x!==m.x||m.y!==m.y)continue;var art=skinOf(s.stageIndex,m.kind);if(!images[art]){ctx.globalAlpha=.3;ctx.drawImage(glow.image,m.x-reach,m.y-reach,reach*2,reach*2);ctx.globalAlpha=1;}else{var halo=tallOf(m.kind)*.62;ctx.globalAlpha=.17;ctx.drawImage(glow.image,m.x-halo,m.y-halo,halo*2,halo*2);ctx.globalAlpha=1;} /* 어두운 배경에서 몹이 묻히지 않게 뒤에 옅은 빛만 깐다 */var po=poseOf(s,m),mo=po&&s.tick<po.until&&images[art+'@attack']?'attack':po&&po.side>0?'side':'';drawArt(art,m.x,m.y+Math.sin(visual*4+i)*2,s.tick-m.hitTick<3,color,Math.floor(finite(m.baseX,0)/9)+(m.elite?3:0),mo,(po&&po.dir)||(m.x>W/2?-1:1),m.kind);} // 시작 칸을 나온 자리로 어긋나게 해 떼가 똑같이 움직이지 않는다
+    for(var i=0;i<s.mobs.length;i++){var m=s.mobs[i],glow=orbs[2][tint],reach=m.r*1.5;if(m.x!==m.x||m.y!==m.y)continue;var art=skinOf(s.stageIndex,m.kind);if(!images[art]){ctx.globalAlpha=.3;ctx.drawImage(glow.image,m.x-reach,m.y-reach,reach*2,reach*2);ctx.globalAlpha=1;}else{var tl=tallOf(m.kind),halo=tl*.82;ctx.fillStyle='rgba(0,0,0,.42)';ctx.beginPath();ctx.ellipse(m.x,m.y+tl*.47,tl*.3,tl*.085,0,0,TAU);ctx.fill();ctx.globalAlpha=.34;ctx.drawImage(haloSprite(),m.x-halo,m.y-halo,halo*2,halo*2);ctx.globalAlpha=1;} /* 어두운 배경에서 몹이 묻히지 않게 뒤에 옅은 빛만 깐다 */var po=poseOf(s,m),mo=po&&s.tick<po.until&&images[art+'@attack']?'attack':po&&po.side>0?'side':'';drawArt(art,m.x,m.y+Math.sin(visual*4+i)*2,s.tick-m.hitTick<3,color,Math.floor(finite(m.baseX,0)/9)+(m.elite?3:0),mo,(po&&po.dir)||(m.x>W/2?-1:1),m.kind);} // 시작 칸을 나온 자리로 어긋나게 해 떼가 똑같이 움직이지 않는다
   }
   function drawItems(s){
     // 하트가 고동친다. 드라이브 하트 그림(heart)이 있으면 점수 아이템은 그 그림으로.
-    var art=images.heart,beat=1+Math.sin(visual*7)*.08;
-    for(var i=0;i<s.itemCount;i++){var z=ITEM_DRAW*beat*(s.ikind[i]?1.15:1);if(art&&!s.ikind[i]){var hh=z*1.25,hw=hh*cellRatio('heart',art);drawCell('heart',art,i,false,s.ix[i]-hw*.64,s.iy[i]-hh/2,hw,hh);} /* 꽃잎에 싸인 하트(드라이브 PJ-03). 하트가 집는 자리에 오게 꽃잎 꼬리만큼 왼쪽으로 그린다 */else ctx.drawImage(itemSprites[s.ikind[i]],s.ix[i]-z/2,s.iy[i]-z/2,z,z);}
+    var beat=1+Math.sin(visual*7)*.08;
+    for(var i=0;i<s.itemCount;i++){var z=ITEM_DRAW*beat*(s.ikind[i]?1.15:1);ctx.globalAlpha=s.iy[i]>H-150?.45:1;ctx.drawImage(itemSprites[s.ikind[i]],s.ix[i]-z/2,s.iy[i]-z/2,z,z);}ctx.globalAlpha=1; // 아래쪽 버튼·점수 자리에서는 흐리게
   }
   function drawProp(s,i,grow,alpha){
     var prop=Arcade.PROPS[s.bcolor[i]];if(!prop)return;
@@ -521,7 +529,7 @@
   }
   function drawHud(s){
     var b=s.boss,seg=Arcade.SEGMENTS[s.seg],color=themeColor(s),left=Arcade.timeLeft(s),stage=Arcade.STAGES[s.stageIndex],i;
-    var top=ctx.createLinearGradient(0,0,0,64);top.addColorStop(0,'rgba(4,4,12,.78)');top.addColorStop(1,'rgba(4,4,12,0)');ctx.fillStyle=top;ctx.fillRect(0,0,W,64);
+    var top=ctx.createLinearGradient(0,0,0,96);top.addColorStop(0,'rgba(4,4,12,.9)');top.addColorStop(.6,'rgba(4,4,12,.55)');top.addColorStop(1,'rgba(4,4,12,0)');ctx.fillStyle=top;ctx.fillRect(0,0,W,96);
     ctx.textBaseline='alphabetic';
     if(s.stage==='card'&&seg){
       ctx.fillStyle='rgba(255,255,255,.16)';ctx.fillRect(12,9,W-24,4);ctx.fillStyle=b.hp/b.maxHp<=.2?'#ff5a5a':color;ctx.fillRect(12,9,(W-24)*Math.max(0,Math.min(1,finite(b.hp/b.maxHp,0))),4);

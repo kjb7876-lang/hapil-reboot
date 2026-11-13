@@ -263,13 +263,5 @@
   }
  },
  "bgs": {},
- "rewards": {},
- "items": {
-  "heart": {
-   "src": "media/drive-v43/pj03-heart-fly8.png",
-   "strip": 8,
-   "fps": 12,
-   "size": 110
-  }
- }
+ "rewards": {}
 }

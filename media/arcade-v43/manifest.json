@@ -953,24 +953,6 @@
   "stamp": "477ca10a10b0b17f",
   "table": "tools/arcade-art-v43/base.json"
  },
- "heart.webp": {
-  "bytes": 39916,
-  "cell": [
-   110,
-   88
-  ],
-  "fps": 12,
-  "frames": 8,
-  "group": "items",
-  "size": [
-   880,
-   88
-  ],
-  "source": "media/drive-v43/pj03-heart-fly8.png",
-  "sourceSha256": "0408c8140fa3d3caaee103af98947982cb91264ec57273d9e200259095a31524",
-  "stamp": "d3933f1bc2c4c871",
-  "table": "tools/arcade-art-v43/base.json"
- },
  "heel.webp": {
   "bytes": 6196,
   "group": "props",
