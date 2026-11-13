@@ -3,7 +3,15 @@
   "p4_knight": {
    "src": "media/drive-v43/b34-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/l301-boss-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   }
  },
  "mobs": {

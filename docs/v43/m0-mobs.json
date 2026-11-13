@@ -1,0 +1,3199 @@
+{
+ "scenes": {
+  "01": {
+   "map": "dist00",
+   "m0Name": "악마화 나무의 정원",
+   "mobs": [
+    {
+     "m0Id": "dist00:r383-root:0..5",
+     "name": "뿌리 추적자",
+     "artKey": "root-stalker-r74-plain",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/root-stalker-r74-plain-walk-d1.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false,
+     "source": "R383 추가(원본 로스터엔 보스만 있음, 늪 R74 순찰 복제 6마리)"
+    }
+   ],
+   "midboss": [],
+   "boss": [
+    {
+     "m0Id": "dist00-boss",
+     "name": "뿌리의 문지기",
+     "artKey": "demon_tree_root_seraph",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/dist00-boss-p1.webp ~ -p4.webp",
+     "driveId": "B01",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=dist00].sourceActors); r96/client-source/approved-mobs-r380.js:56,91; r96/runtime-text/assets/r380/mobs/index.json:3885"
+  },
+  "02": {
+   "map": "dist01",
+   "m0Name": "거미동굴",
+   "mobs": [
+    {
+     "m0Id": "dist01-sp1",
+     "name": "망각의 거미",
+     "artKey": "nightmare_spider",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/ash-moth-v2.webp",
+     "driveId": "M043",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 nightmare_spider(망각의 거미는 R380에서 재 나방 등으로 개명)",
+     "nameNow": "재 나방 / 보랏빛 알집지기 / 거미줄에 묶인 수호병 (번갈아 개명)"
+    },
+    {
+     "m0Id": "dist01-sp2",
+     "name": "보랏빛 알집지기",
+     "artKey": "nightmare_spider",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/purple-eggkeeper-v1.webp",
+     "driveId": "M043",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey nightmare_spider 일치"
+    },
+    {
+     "m0Id": "dist01-s1",
+     "name": "거미줄에 묶인 수호병",
+     "artKey": "skeleton",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/web-bound-guardian-v4.webp",
+     "driveId": "M035",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 skeleton(드라이브 이름은 dist04 이름 잃은 전우)"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-dist01",
+     "name": "보라검천사",
+     "artKey": "purple_sword_spider_angel",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-dist01-p1.webp ~ -p4.webp",
+     "driveId": "B02",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=dist01].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (dist01-sp1); r96/runtime-text/assets/r380/mobs/index.json:1726; r96/runtime-text/assets/r380/mobs/index.json:1799; r96/client-source/approved-mobs-r380.js:41; r96/client-source/approved-mobs-r380.js:21-29 (R381/R382 개명)"
+  },
+  "03": {
+   "map": "dist02",
+   "m0Name": "검은 늪지대",
+   "mobs": [
+    {
+     "m0Id": "dist02-h1",
+     "name": "늪의 염소머리 악마",
+     "artKey": "goat_head_demon_mob_bloodied",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/swamp-goat-darkgreen-v1.webp",
+     "driveId": "M025",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름 일치"
+    },
+    {
+     "m0Id": "dist02-g1",
+     "name": "늪에서 되살아난 전우",
+     "artKey": "corrupted_guardian",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/swamp-spirit-v1.webp",
+     "driveId": "M036",
+     "match": "likely",
+     "haveLocal": false,
+     "nameNow": "늪에서 되살아난 혼령체",
+     "matchNote": "같은 원본 corrupted_guardian"
+    },
+    {
+     "m0Id": "dist02-m1",
+     "name": "수렁 주문사",
+     "artKey": "cult_mage",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/swamp-mage-darkgreen-v1.webp",
+     "driveId": "M033",
+     "match": "likely",
+     "haveLocal": false,
+     "matchNote": "같은 원본 cult_mage(드라이브 033은 붉은 원형용, 늪 다크그린 변형 아님)"
+    },
+    {
+     "m0Id": "dist02-sp1",
+     "name": "진흙등 거미",
+     "artKey": "nightmare_spider",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m003.webp",
+     "driveId": "M043",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 nightmare_spider"
+    },
+    {
+     "m0Id": "dist02:r74-patrol:0..5",
+     "name": "늪 뿌리 추적자",
+     "artKey": "swamp-root-stalker-darkgreen-v2",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/swamp-root-stalker-darkgreen-v2-walk-d1.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false,
+     "source": "R74 순찰(root) → R537 개명"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-dist02",
+     "name": "늪의 뿔악마 군주",
+     "artKey": "horned_swamp_demon",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-dist02-p1.webp ~ -p4.webp",
+     "driveId": "B03",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=dist02].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:2360; r96/runtime-text/assets/r380/mobs/index.json:2214; r96/runtime-text/assets/r380/mobs/index.json:2287; r96/runtime-text/assets/r290/mobs/index.json:244; r96/client-source/approved-mobs-r380.js:56; r96/runtime-text/assets/r380/mobs/index.json:3751; r96/client-source/approved-mobs-r380.js:21-29 (R381/R382 개명)"
+  },
+  "04": {
+   "map": "dist03",
+   "m0Name": "무너진 성",
+   "mobs": [
+    {
+     "m0Id": "dist03-s1",
+     "name": "쓰러진 수호병",
+     "artKey": "skeleton",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M001-hit.png",
+     "driveId": "M035",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 skeleton"
+    },
+    {
+     "m0Id": "dist03-c1",
+     "name": "보라검 추격천사",
+     "artKey": "corrupted_guardian",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m004.webp",
+     "driveId": "M036",
+     "match": "exact",
+     "haveLocal": false,
+     "matchNote": "이름 일치(보라검 추격천사)"
+    },
+    {
+     "m0Id": "dist03-g1",
+     "name": "피냄새 추적자",
+     "artKey": "ghoul",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M006-hit.png",
+     "driveId": "M034",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름 일치(피냄새 추적자·구울), sourceKey ghoul"
+    },
+    {
+     "m0Id": "dist03-sp1",
+     "name": "기억 운반거미",
+     "artKey": "nightmare_spider",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m005.webp",
+     "driveId": "M043",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 nightmare_spider"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-dist03",
+     "name": "핏빛 수호로 추격자",
+     "artKey": "dist_blood_guardian_pursuer",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-dist03-p1.webp ~ -p4.webp",
+     "driveId": "B04",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=dist03].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (dist03-s1); r96/runtime-text/assets/r290/mobs/index.json:464; r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (dist03-g1); r96/runtime-text/assets/r290/mobs/index.json:684"
+  },
+  "05": {
+   "map": "dist04",
+   "m0Name": "시체들이 되살아난 밤",
+   "mobs": [
+    {
+     "m0Id": "dist04-c1",
+     "name": "되살아난 방패동료",
+     "artKey": "corrupted_guardian",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/reborn-shieldmate-v4.webp",
+     "driveId": "M036",
+     "match": "likely",
+     "haveLocal": false,
+     "matchNote": "같은 원본 corrupted_guardian"
+    },
+    {
+     "m0Id": "dist04-s1",
+     "name": "이름 잃은 전우",
+     "artKey": "skeleton",
+     "m0ArtPath": "r96/runtime-text/assets/r410/mobs/m007.webp",
+     "driveId": "M035",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름 일치(이름 잃은 전우·해골)"
+    },
+    {
+     "m0Id": "dist04-g1",
+     "name": "피로 꿰맨 전령",
+     "artKey": "ghoul",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M006-hit.png",
+     "driveId": "M034",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 ghoul"
+    },
+    {
+     "m0Id": "dist04-c2",
+     "name": "보라검 부활자",
+     "artKey": "corrupted_guardian",
+     "m0ArtPath": "r96/runtime-text/assets/r248/mobs/m008.webp (R248 임시 픽셀)",
+     "driveId": "M036",
+     "match": "likely",
+     "haveLocal": false,
+     "matchNote": "같은 원본 corrupted_guardian"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-dist04",
+     "name": "첫 동료의 악마잔영",
+     "artKey": "dist_fallen_comrade_demon_echo",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-dist04-p1.webp ~ -p4.webp",
+     "driveId": "B05",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=dist04].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:2433; r96/runtime-text/assets/r410/mobs/index.json:24; r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (dist04-g1); r96/runtime-text/assets/r248/mobs/index.json:107"
+  },
+  "06": {
+   "map": "dist05",
+   "m0Name": "일곱 검은 기둥",
+   "mobs": [
+    {
+     "m0Id": "dist05-h1",
+     "name": "소환진 순례악마",
+     "artKey": "horned_swamp_demon",
+     "m0ArtPath": "r96/runtime-text/assets/r109/mobs/M008-move.png",
+     "driveId": "M042",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 horned_swamp_demon"
+    },
+    {
+     "m0Id": "dist05-m1",
+     "name": "검은기둥 주문사",
+     "artKey": "cult_mage",
+     "m0ArtPath": "r96/runtime-text/assets/r410/mobs/m009.webp",
+     "driveId": "M033",
+     "match": "exact",
+     "haveLocal": false,
+     "matchNote": "이름 일치(검은기둥 주문사)"
+    },
+    {
+     "m0Id": "dist05-c1",
+     "name": "검은기둥 가고일 수호자",
+     "artKey": "gargoyle_mob_bloodied",
+     "m0ArtPath": "r96/runtime-text/assets/r109/mobs/M007-move.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "dist05-s1",
+     "name": "마지막 길의 호위병",
+     "artKey": "skeleton",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M001-hit.png",
+     "driveId": "M035",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 skeleton"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-dist05",
+     "name": "숨이 끊긴 전령의 그림자",
+     "artKey": "dist_dying_messenger_shadow",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-dist05-p1.webp ~ -p4.webp",
+     "driveId": "B06",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=dist05].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (dist05-h1); r96/runtime-text/assets/r410/mobs/index.json:248; r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (dist05-c1); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (dist05-s1)"
+  },
+  "07": {
+   "map": "dist06",
+   "m0Name": "지옥의 소환진",
+   "mobs": [
+    {
+     "m0Id": "dist06-h1",
+     "name": "지옥문 파수악마",
+     "artKey": "horned_swamp_demon",
+     "m0ArtPath": "r96/runtime-text/assets/r410/mobs/m011.webp",
+     "driveId": "M042",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey horned_swamp_demon 일치"
+    },
+    {
+     "m0Id": "dist06-m1",
+     "name": "검은기둥 화염술사",
+     "artKey": "cult_mage",
+     "m0ArtPath": "r96/runtime-text/assets/r109/mobs/M003-move.png",
+     "driveId": "M033",
+     "match": "likely",
+     "haveLocal": false,
+     "matchNote": "같은 원본 cult_mage"
+    },
+    {
+     "m0Id": "dist06-c1",
+     "name": "소환진 타락천사",
+     "artKey": "corrupted_guardian",
+     "m0ArtPath": "r96/runtime-text/assets/r410/mobs/m013.webp",
+     "driveId": "M036",
+     "match": "likely",
+     "haveLocal": false,
+     "matchNote": "같은 원본 corrupted_guardian"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-dist06",
+     "name": "소환진 검은기둥",
+     "artKey": "dist_summoning_black_pillar",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-dist06-p1.webp ~ -p4.webp",
+     "driveId": "B07",
+     "match": "exact",
+     "haveLocal": false
+    }
+   ],
+   "boss": [
+    {
+     "m0Id": "dist06-boss",
+     "name": "발록 · 지옥의 문지기",
+     "artKey": "balrog_gatekeeper",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/dist06-boss-p1.webp ~ -p4.webp",
+     "driveId": "B08",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=dist06].sourceActors); r96/runtime-text/assets/r410/mobs/index.json:470; r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (dist06-m1); r96/runtime-text/assets/r410/mobs/index.json:692"
+  },
+  "08": {
+   "map": "ep1a08",
+   "m0Name": "피로 물든 병원",
+   "mobs": [
+    {
+     "m0Id": "a08-o1",
+     "name": "백의 구속자",
+     "artKey": "hallucinated_orderly",
+     "m0ArtPath": "r96/runtime-text/assets/r198/mobs/M012-idle.png",
+     "driveId": "M041",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 hallucinated_orderly"
+    },
+    {
+     "m0Id": "a08-s1",
+     "name": "복도 비명잔영",
+     "artKey": "corridor_scream_echo",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M011-hit.png",
+     "driveId": "M038",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey corridor_scream_echo 일치"
+    },
+    {
+     "m0Id": "a08-c1",
+     "name": "소독등 타락천사",
+     "artKey": "corrupted_guardian",
+     "m0ArtPath": "r96/runtime-text/assets/r410/mobs/m016.webp",
+     "driveId": "M036",
+     "match": "likely",
+     "haveLocal": false,
+     "matchNote": "같은 원본 corrupted_guardian"
+    },
+    {
+     "m0Id": "a08-o2",
+     "name": "안정화 집행체",
+     "artKey": "hallucinated_orderly",
+     "m0ArtPath": "r96/runtime-text/assets/r410/mobs/m015.webp",
+     "driveId": "M041",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 hallucinated_orderly"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-ep1a08",
+     "name": "백의 안정화 감독",
+     "artKey": "ep1a_stabilization_supervisor",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-ep1a08-p1.webp ~ -p4.webp",
+     "driveId": "B09",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=ep1a08].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (a08-o1); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (a08-s1); r96/runtime-text/assets/r410/mobs/index.json:1117; r96/runtime-text/assets/r410/mobs/index.json:934",
+   "notes": [
+    "R380 색인에 ep1a08 보스 그림 \"병원 심부의 집도의\"(r96/runtime-text/assets/r380/mobs/hospital-surgeon-v1.webp)가 있으나 원본 로스터에는 없음"
+   ]
+  },
+  "09-1": {
+   "map": "ep1a09",
+   "m0Name": "주사실",
+   "mobs": [
+    {
+     "m0Id": "a09-o1",
+     "name": "주사실 감시환각",
+     "artKey": "hallucinated_orderly",
+     "m0ArtPath": "r96/runtime-text/assets/r198/mobs/M012-idle.png",
+     "driveId": "M041",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름 일치(주사실 감시환각)"
+    },
+    {
+     "m0Id": "a09-v1",
+     "name": "갈망의 약병핵",
+     "artKey": "craving_vial_core",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M013-hit.png",
+     "driveId": "M039",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey craving_vial_core 일치"
+    },
+    {
+     "m0Id": "ep1a09:r74-patrol:*",
+     "name": "유리 망령",
+     "artKey": "glass-wraith-v1",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/glass-wraith-v1.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false,
+     "source": "R74 실내 순찰(glass)"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "ep1a09:r387-syringe-boss",
+     "name": "중독을 부르는 주사기 환영체",
+     "artKey": "syringe-phantom-boss-v1",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/syringe-phantom-boss-v1.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false,
+     "source": "R387 추가(ep1a10 중간보스 수치 복제)"
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=ep1a09].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (a09-o1); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (a09-v1); r96/client-source/approved-mobs-r380.js:60; r96/runtime-text/assets/r380/mobs/index.json:4039; r96/runtime-text/assets/r380/mobs/index.json:4186"
+  },
+  "09-2": {
+   "map": "ep1a09b",
+   "m0Name": "결전의 날 · 과거 궁전",
+   "mobs": [
+    {
+     "m0Id": "dist03-s1",
+     "name": "쓰러진 수호병",
+     "artKey": "skeleton",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M001-hit.png",
+     "driveId": "M035",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 skeleton"
+    },
+    {
+     "m0Id": "dist03-c1",
+     "name": "보라검 추격천사",
+     "artKey": "corrupted_guardian",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m004.webp",
+     "driveId": "M036",
+     "match": "exact",
+     "haveLocal": false,
+     "matchNote": "이름 일치(보라검 추격천사)"
+    },
+    {
+     "m0Id": "dist03-g1",
+     "name": "피냄새 추적자",
+     "artKey": "ghoul",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M006-hit.png",
+     "driveId": "M034",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름 일치(피냄새 추적자·구울), sourceKey ghoul"
+    },
+    {
+     "m0Id": "dist03-sp1",
+     "name": "기억 운반거미",
+     "artKey": "nightmare_spider",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m005.webp",
+     "driveId": "M043",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 nightmare_spider"
+    }
+   ],
+   "midboss": [],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=ep1a09b].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (dist03-s1); r96/runtime-text/assets/r290/mobs/index.json:464; r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (dist03-g1); r96/runtime-text/assets/r290/mobs/index.json:684",
+   "notes": [
+    "dist03(무너진 성) 잡몹을 빌려 씀(r75Overlay.borrowedArtRegion=dist03), 보스 없음"
+   ]
+  },
+  "10": {
+   "map": "ep1a10",
+   "m0Name": "환자의 격리구역",
+   "mobs": [
+    {
+     "m0Id": "a10-s1",
+     "name": "부정의 잔영",
+     "artKey": "denial_specter",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m066.webp",
+     "driveId": "M040",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey denial_specter 일치"
+    },
+    {
+     "m0Id": "a10-o1",
+     "name": "오만의 흰 가면",
+     "artKey": "hallucinated_orderly",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/blackmarket-suspect-v1.webp",
+     "driveId": "M041",
+     "match": "likely",
+     "haveLocal": true,
+     "nameNow": "암시장의 수상한 자",
+     "matchNote": "같은 원본 hallucinated_orderly(현재 이름 암시장의 수상한 자, 그림도 R380 교체)"
+    },
+    {
+     "m0Id": "a10-h1",
+     "name": "갈망의 도시짐승",
+     "artKey": "horned_swamp_demon",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/drug-craver-v1.webp",
+     "driveId": "M042",
+     "match": "likely",
+     "haveLocal": true,
+     "nameNow": "약을 갈망하는 자",
+     "matchNote": "같은 원본 horned_swamp_demon(현재 이름 약을 갈망하는 자, 그림도 R380 교체)"
+    },
+    {
+     "m0Id": "a10-v1",
+     "name": "중독의 폐허핵",
+     "artKey": "addiction_ruin_core",
+     "m0ArtPath": null,
+     "driveId": "M037",
+     "match": "exact",
+     "haveLocal": false,
+     "matchNote": "이름 일치(CX-0079MM 037 중독의 폐허핵, 사망4 위주)"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-ep1a10",
+     "name": "오만의 폐허핵",
+     "artKey": "ep1a_pride_ruin_core",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-ep1a10-p1.webp ~ -p4.webp",
+     "driveId": "B10",
+     "match": "exact",
+     "haveLocal": false
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=ep1a10].sourceActors); r96/runtime-text/assets/r290/mobs/index.json:3484; r96/runtime-text/assets/r380/mobs/index.json:2141; r96/runtime-text/assets/r380/mobs/index.json:2068; r96/client-source/approved-mobs-r380.js:21-29 (R381/R382 개명)"
+  },
+  "11": {
+   "map": "ep1a11",
+   "m0Name": "천사의 가면",
+   "mobs": [
+    {
+     "m0Id": "a11-c1",
+     "name": "거짓천국 근위천사",
+     "artKey": "corrupted_guardian",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/false-heaven-guard-v1.webp",
+     "driveId": "M036",
+     "match": "likely",
+     "haveLocal": false,
+     "matchNote": "같은 원본 corrupted_guardian"
+    },
+    {
+     "m0Id": "a11-o1",
+     "name": "치료거부의 가면",
+     "artKey": "hallucinated_orderly",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/treatment-refusal-mask-v1.webp",
+     "driveId": "M041",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 hallucinated_orderly"
+    },
+    {
+     "m0Id": "a11-d1",
+     "name": "초자아 잠식체",
+     "artKey": "ego_corrosion_vessel",
+     "m0ArtPath": null,
+     "driveId": "M015",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey ego_corrosion_vessel 일치"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-ep1a11",
+     "name": "초천사의 웃는 가면",
+     "artKey": "ep1a_false_archangel_smiling_mask",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-ep1a11-p1.webp ~ -p4.webp",
+     "driveId": "B11",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [
+    {
+     "m0Id": "a11-boss",
+     "name": "루시퍼 · 가면 벗은 초천사",
+     "artKey": "lucifer_unmasked",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/a11-boss-p1.webp ~ -p4.webp",
+     "driveId": "B12",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=ep1a11].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:2596; r96/runtime-text/assets/r380/mobs/index.json:2689"
+  },
+  "13": {
+   "map": "ep1b01",
+   "m0Name": "솔로몬의 봉인식",
+   "mobs": [
+    {
+     "m0Id": "b01-r1",
+     "name": "일흔두 번째 인장 잔류체",
+     "artKey": "seal_residual",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/ep1b-seal-residual-float-d1.webp",
+     "driveId": "M048",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey seal_residual 일치"
+    },
+    {
+     "m0Id": "b01-c1",
+     "name": "검은 실의 외부 신호",
+     "artKey": "brainwave_contamination",
+     "m0ArtPath": "r96/runtime-text/assets/r109/mobs/M019-move.png",
+     "driveId": "M029",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름 일치"
+    },
+    {
+     "m0Id": "b01-s1",
+     "name": "이름 없던 공포",
+     "artKey": "envy_glass_shard",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M018-hit.png",
+     "driveId": "M044",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 envy_glass_shard"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-ep1b01",
+     "name": "교만의 잔향 · 제72문",
+     "artKey": "gate72_pride_echo",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-ep1b01-p1.webp ~ -p4.webp",
+     "driveId": "B13",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=ep1b01].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:8460; r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (b01-c1); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (b01-s1)"
+  },
+  "14": {
+   "map": "ep1b02",
+   "m0Name": "나태의 집",
+   "mobs": [
+    {
+     "m0Id": "b02-m1",
+     "name": "곰팡이와 오물 봉투",
+     "artKey": "sloth_moldling",
+     "m0ArtPath": "r96/runtime-text/assets/r198/mobs/M022-move.png",
+     "driveId": "M050",
+     "match": "exact",
+     "haveLocal": false,
+     "matchNote": "이름 일치(CX-0079MM 050)"
+    },
+    {
+     "m0Id": "b02-b1",
+     "name": "등에 붙은 쓰레기더미",
+     "artKey": "sloth_belphegor",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M021-hit.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "b02-o1",
+     "name": "미뤄 둔 시간의 형상",
+     "artKey": "seal_residual",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/living-trash-v1.webp",
+     "driveId": "M049",
+     "match": "exact",
+     "haveLocal": false,
+     "nameNow": "살아 움직이는 쓰레기들",
+     "matchNote": "현재 이름(살아 움직이는 쓰레기들, R382 개명) 일치(CX-0079MM 049)"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-ep1b02",
+     "name": "나태의 껍데기 파수",
+     "artKey": "sloth_shell_sentinel",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-ep1b02-p1.webp ~ -p4.webp",
+     "driveId": "B14",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [
+    {
+     "m0Id": "b02-boss",
+     "name": "나태에 잠식된 남자",
+     "artKey": "boss_sloth_human",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/b02-boss-p1.webp ~ -p4.webp; r96/runtime-text/assets/r380/mobs/sloth-burden-man-v1.webp",
+     "driveId": "B15",
+     "match": "exact",
+     "haveLocal": false
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=ep1b02].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (b02-m1); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (b02-b1); r96/runtime-text/assets/r380/mobs/index.json:2762; r96/client-source/approved-mobs-r380.js:21-29 (R381/R382 개명)"
+  },
+  "15": {
+   "map": "ep1b03",
+   "m0Name": "금이 간 안경",
+   "mobs": [
+    {
+     "m0Id": "b03-g1",
+     "name": "찢어진 사진의 망령",
+     "artKey": "envy_glass_shard",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/jealousy-wraith-v1.webp",
+     "driveId": "M044",
+     "match": "exact",
+     "haveLocal": true,
+     "nameNow": "질투로 얼룩진 망령",
+     "matchNote": "현재 이름(질투로 얼룩진 망령) 일치, sourceKey envy_glass_shard"
+    },
+    {
+     "m0Id": "b03-c1",
+     "name": "긴 뱀의 그림자",
+     "artKey": "envy_leviathan",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M023-idle.png",
+     "driveId": "M045",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey envy_leviathan 일치"
+    },
+    {
+     "m0Id": "b03-g2",
+     "name": "칼날과 유리 조각",
+     "artKey": "envy_glass_shard",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/mirror-lament-v1.webp",
+     "driveId": "M044",
+     "match": "likely",
+     "haveLocal": true,
+     "nameNow": "추녀의 한탄",
+     "matchNote": "같은 원본 envy_glass_shard(현재 이름 추녀의 한탄)"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-ep1b03",
+     "name": "금이 간 비교잔영",
+     "artKey": "cracked_comparison_echo",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-ep1b03-p1.webp ~ -p4.webp",
+     "driveId": "B16",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [
+    {
+     "m0Id": "b03-boss",
+     "name": "호텔 부매니저 · 레비아탄",
+     "artKey": "boss_envy_human",
+     "m0ArtPath": "r96/runtime-text/assets/r620/bosses/b03-idle6.webp, b03-hit4.webp",
+     "driveId": "B17",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=ep1b03].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:2835; r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (b03-c1); r96/runtime-text/assets/r380/mobs/index.json:2908; r96/client-source/approved-mobs-r380.js:21-29 (R381/R382 개명)"
+  },
+  "16": {
+   "map": "ep1b04",
+   "m0Name": "탐식의 주방",
+   "mobs": [
+    {
+     "m0Id": "b04-g1",
+     "name": "버려진 최고급 식재료",
+     "artKey": "glutton_kitchen_scrap",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/discarded-delicacy-v1.webp",
+     "driveId": "M046",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey glutton_kitchen_scrap 일치"
+    },
+    {
+     "m0Id": "b04-b1",
+     "name": "살아 있는 거대한 위장",
+     "artKey": "glutton_beelzebub",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M024-hit.png",
+     "driveId": "M017",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey glutton_beelzebub 일치"
+    },
+    {
+     "m0Id": "b04-s1",
+     "name": "끓어오르는 검은 소화액",
+     "artKey": "glutton_kitchen_scrap",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m025.webp",
+     "driveId": "M046",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 glutton_kitchen_scrap"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-ep1b04",
+     "name": "폐기주방 감독",
+     "artKey": "discarded_kitchen_overseer",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-ep1b04-p1.webp ~ -p4.webp",
+     "driveId": "B18",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [
+    {
+     "m0Id": "b04-boss",
+     "name": "최고급 호텔의 총주방장 · 탐식의 귀 베엘제붑",
+     "artKey": "boss_gluttony_human",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/b04-boss-p1.webp ~ -p4.webp",
+     "driveId": "B19",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=ep1b04].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:2981; r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (b04-b1); r96/runtime-text/assets/r290/mobs/index.json:1094"
+  },
+  "17": {
+   "map": "ep1b05",
+   "m0Name": "붉은 하이힐",
+   "mobs": [
+    {
+     "m0Id": "b05-p1",
+     "name": "얼굴 없는 남자의 박수",
+     "artKey": "lust_heart_marionette",
+     "m0ArtPath": "r96/runtime-text/assets/r248/mobs/m068.webp (R248 임시 픽셀)",
+     "driveId": "M047",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey lust_heart_marionette 일치"
+    },
+    {
+     "m0Id": "b05-a1",
+     "name": "붉은 하이힐 칼날",
+     "artKey": "lust_asmodai",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/ep1b-red-heel-blade-walk-d1.webp",
+     "driveId": "M018",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름 일치"
+    },
+    {
+     "m0Id": "b05-p2",
+     "name": "공중을 가르는 립스틱 탄환",
+     "artKey": "lust_heart_marionette",
+     "m0ArtPath": null,
+     "driveId": "M047",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 lust_heart_marionette"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-ep1b05",
+     "name": "심장빛 무대감독",
+     "artKey": "heartlight_stage_director",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-ep1b05-p1.webp ~ -p4.webp",
+     "driveId": "B20",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [
+    {
+     "m0Id": "b05-boss",
+     "name": "붉은 하이힐의 서윤",
+     "artKey": "boss_lust_human",
+     "m0ArtPath": null,
+     "driveId": "B21",
+     "match": "exact",
+     "haveLocal": false
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=ep1b05].sourceActors); r96/runtime-text/assets/r248/mobs/index.json:827; r96/runtime-text/assets/r380/mobs/index.json:8507"
+  },
+  "18": {
+   "map": "ep1b06",
+   "m0Name": "맘몬의 금고",
+   "mobs": [
+    {
+     "m0Id": "b06-f1",
+     "name": "칼날이 된 지폐",
+     "artKey": "greed_fox_hound",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/ep1b-banknote-blade-walk-d1.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "b06-c1",
+     "name": "박제된 여우의 악마",
+     "artKey": "greed_mammon",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "b06-f2",
+     "name": "모든 면이 뒷면인 동전",
+     "artKey": "greed_fox_hound",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m026.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-ep1b06",
+     "name": "금고 장부감시자",
+     "artKey": "vault_ledger_watcher",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-ep1b06-p1.webp ~ -p4.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "boss": [
+    {
+     "m0Id": "b06-boss",
+     "name": "회장에게 고용된 총지배인 · 맘몬",
+     "artKey": "boss_greed_human",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/b06-boss-p1.webp ~ -p4.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=ep1b06].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:8556; r96/runtime-text/assets/r290/mobs/index.json:1333"
+  },
+  "19": {
+   "map": "ep1b06b",
+   "m0Name": "맘몬의 설원 금고",
+   "mobs": [
+    {
+     "m0Id": "b06b-h1",
+     "name": "고슴도치 가시 사탕",
+     "artKey": "greed_mammon",
+     "m0ArtPath": "r96/runtime-text/assets/r410/mobs/m027.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "b06b-f1",
+     "name": "눈보라 속 여우 악마",
+     "artKey": "greed_fox_hound",
+     "m0ArtPath": "r96/runtime-text/assets/r410/mobs/m028.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "b06b-v1",
+     "name": "낡은 장난감 요요",
+     "artKey": "seal_residual",
+     "m0ArtPath": "r96/runtime-text/assets/r410/mobs/m029.webp",
+     "driveId": "M048",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 seal_residual"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-ep1b06b",
+     "name": "겨울숲 가시파수",
+     "artKey": "molten_vault_sentinel",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-ep1b06b-p1.webp ~ -p4.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "boss": [
+    {
+     "m0Id": "b06b-boss",
+     "name": "소년이 된 총지배인 · 맘몬",
+     "artKey": "boss_greed_demon",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/b06b-boss-p1.webp ~ -p4.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=ep1b06b].sourceActors); r96/runtime-text/assets/r410/mobs/index.json:1487; r96/runtime-text/assets/r410/mobs/index.json:1672; r96/runtime-text/assets/r410/mobs/index.json:1855"
+  },
+  "20": {
+   "map": "ep1b07",
+   "m0Name": "불을 지른 남자",
+   "mobs": [
+    {
+     "m0Id": "b07-f1",
+     "name": "불길 속의 늑대",
+     "artKey": "wrath_fire_beast",
+     "m0ArtPath": "r96/runtime-text/assets/r198/mobs/M030-move.png",
+     "driveId": "M051",
+     "match": "exact",
+     "haveLocal": false,
+     "matchNote": "이름 일치(CX-0079MM 051 불길 속의 늑대, 사망4)"
+    },
+    {
+     "m0Id": "b07-s1",
+     "name": "불길 속의 용",
+     "artKey": "wrath_satan",
+     "m0ArtPath": null,
+     "driveId": "M006",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey wrath_satan 일치"
+    },
+    {
+     "m0Id": "b07-f2",
+     "name": "불길 속의 곰",
+     "artKey": "wrath_fire_beast",
+     "m0ArtPath": "r96/runtime-text/assets/r198/mobs/M030-move.png",
+     "driveId": "M051",
+     "match": "likely",
+     "haveLocal": false,
+     "matchNote": "같은 원본 wrath_fire_beast"
+    },
+    {
+     "m0Id": "ep1b07:r74-patrol:0..5",
+     "name": "분노의 사냥개",
+     "artKey": "wrath-hound-v1",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/wrath-hound-v1.webp",
+     "driveId": "M006",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "드라이브 M006 이름에 분노의 사냥개 병기, sourceKey는 wrath_satan",
+     "source": "R383 순찰 개명"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-ep1b07",
+     "name": "호텔 화염기사",
+     "artKey": "hotel_flame_knight",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-ep1b07-p1.webp ~ -p4.webp",
+     "driveId": "B22",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [
+    {
+     "m0Id": "b07-boss",
+     "name": "불을 지른 청소부 · 사탄",
+     "artKey": "boss_wrath_human",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/b07-boss-p1.webp ~ -p4.webp",
+     "driveId": "B23",
+     "match": "exact",
+     "haveLocal": true,
+     "nameNow": "불을 지른 청소부 · 분노의 귀"
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=ep1b07].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (b07-f1); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (b07-f2); r96/client-source/approved-mobs-r380.js:85; r96/runtime-text/assets/r380/mobs/index.json:3812"
+  },
+  "21": {
+   "map": "ep1b08",
+   "m0Name": "하늘에 서려는 자",
+   "mobs": [
+    {
+     "m0Id": "b08-c1",
+     "name": "전극을 두른 좀비 수호기사",
+     "artKey": "zombie_guardian_knight_bloodied",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/electrode-machine-knight-v1.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false,
+     "nameNow": "전극기계수호기사"
+    },
+    {
+     "m0Id": "b08-h1",
+     "name": "창처럼 날아오는 역십자가",
+     "artKey": "ep1b08_pride_zombie",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M032-hit.png",
+     "driveId": "M016",
+     "match": "likely",
+     "haveLocal": false,
+     "matchNote": "sourceKey ep1b08_pride_zombie 일치, 이름은 흑마법사의 저주창"
+    },
+    {
+     "m0Id": "b08-v1",
+     "name": "육망성의 흑마술 실험체",
+     "artKey": "seal_residual",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/hexagram-experiment-m031-v1.webp",
+     "driveId": "M048",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 seal_residual(현재 그림은 R380 hexagram 교체)"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-ep1b08",
+     "name": "역십자가 시체경호체",
+     "artKey": "ep1b08_pride_zombie",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-ep1b08-p1.webp ~ -p4.webp",
+     "driveId": "B24",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [
+    {
+     "m0Id": "b08-boss",
+     "name": "백색 정장의 호텔 그룹 회장",
+     "artKey": "boss_pride_human",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/b08-boss-p1.webp ~ -p4.webp",
+     "driveId": "B25",
+     "match": "exact",
+     "haveLocal": false
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=ep1b08].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:7; r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (b08-h1); r96/runtime-text/assets/r380/mobs/index.json:3946; r96/client-source/approved-mobs-r380.js:21-29 (R381/R382 개명)"
+  },
+  "22": {
+   "map": "ep1b09",
+   "m0Name": "생체 부트로더",
+   "mobs": [
+    {
+     "m0Id": "b09-h1",
+     "name": "강철 턱의 사이보그 개",
+     "artKey": "polar_cyborg_hound",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/ep1b-steel-jaw-hound-walk-d1.webp",
+     "driveId": "M005",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey polar_cyborg_hound 일치"
+    },
+    {
+     "m0Id": "b09-o1",
+     "name": "인간의 뇌를 닮은 투명 연산 장치",
+     "artKey": "seal_residual",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/small-walking-robot-v1.webp",
+     "driveId": "M048",
+     "match": "likely",
+     "haveLocal": true,
+     "nameNow": "걸어다니는 소형 로봇",
+     "matchNote": "같은 원본 seal_residual(현재 이름 걸어다니는 소형 로봇, 그림 교체)"
+    },
+    {
+     "m0Id": "b09-c1",
+     "name": "설원 아래의 기계 다리",
+     "artKey": "polar_chairman",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/snow-lurker-walker-v1.webp",
+     "driveId": "M019",
+     "match": "exact",
+     "haveLocal": false,
+     "nameNow": "설원 잠복 보행기",
+     "matchNote": "현재 이름(설원 잠복 보행기, R382 개명) 일치. M004 이름에도 병기됨"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-ep1b09",
+     "name": "생체부트로더 연산핵",
+     "artKey": "ascension_calculation_orb",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-ep1b09-p1.webp ~ -p4.webp",
+     "driveId": "B26",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [
+    {
+     "m0Id": "b09-boss",
+     "name": "사이보그 회장 · 생체 부트로더",
+     "artKey": "boss_pride_cyborg",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/b09-boss-p1.webp ~ -p4.webp",
+     "driveId": "B27",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=ep1b09].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:8605; r96/runtime-text/assets/r380/mobs/index.json:3054; r96/runtime-text/assets/r380/mobs/index.json:3147; r96/client-source/approved-mobs-r380.js:21-29 (R381/R382 개명)"
+  },
+  "24": {
+   "map": "u201",
+   "m0Name": "통제자의 17단계",
+   "mobs": [
+    {
+     "m0Id": "u201-e1",
+     "name": "전쟁기억 정찰드론",
+     "artKey": "mdrone_idle",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M038-hit.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "u201-e2",
+     "name": "폭격기억 사이보그 사냥개",
+     "artKey": "u2_cyborg_hound",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/war-machine-hound-v1.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false,
+     "nameNow": "전쟁기계사냥개"
+    },
+    {
+     "m0Id": "u201-e3",
+     "name": "참호 공명기사",
+     "artKey": "u2_resonance_knight",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M037-hit.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "u201-mid",
+     "name": "제4단계 전쟁관리자",
+     "artKey": "u2_suppression_knight",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/u201-mid-p1.webp ~ -p4.webp",
+     "driveId": "B28",
+     "match": "likely",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=u201].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (u201-e1); r96/runtime-text/assets/r380/mobs/index.json:3220; r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (u201-e3); r96/client-source/approved-mobs-r380.js:21-29 (R381/R382 개명)"
+  },
+  "25": {
+   "map": "u202",
+   "m0Name": "잔인한 구원",
+   "mobs": [
+    {
+     "m0Id": "u202-e1",
+     "name": "가짜 자비 수집가",
+     "artKey": "u2_reactor_collector",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/u2-false-mercy-collector-walk-d1.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "u202-e2",
+     "name": "복종 봉인구",
+     "artKey": "u2_memory_orb",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "u202-e3",
+     "name": "감옥 공명기사",
+     "artKey": "u2_suppression_knight",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M041-hit.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "u202-e1 (4마리)",
+     "name": "기계화 망각거미",
+     "artKey": "mech-oblivion-spider",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/mech-oblivion-spider.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false,
+     "source": "R380: 가짜 자비 수집가 4마리를 개명·그림 교체"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "u202-mid",
+     "name": "제8단계 자비 교정관",
+     "artKey": "u2_mirror_priest",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/u202-mid-p1.webp ~ -p4.webp",
+     "driveId": "B29",
+     "match": "likely",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=u202].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:8654; r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (u202-e3); r96/client-source/approved-mobs-r380.js:44; r96/runtime-text/assets/r380/mobs/index.json:1977"
+  },
+  "26": {
+   "map": "u204",
+   "m0Name": "시스템의 거부권",
+   "mobs": [
+    {
+     "m0Id": "u204-e1",
+     "name": "첫 기억 청람잔영",
+     "artKey": "u2_blue_wraith",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/u204-mech-01-v1.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false,
+     "nameNow": "기계화 첫 기억 청람잔영"
+    },
+    {
+     "m0Id": "u204-e2",
+     "name": "기억 공백 망령",
+     "artKey": "u2_void_wraith",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/u204-mech-02-v1.webp",
+     "driveId": "M013",
+     "match": "exact",
+     "haveLocal": false,
+     "nameNow": "기계화 기억 공백 망령",
+     "matchNote": "이름 일치"
+    },
+    {
+     "m0Id": "u204-e3",
+     "name": "문턱 관측거미",
+     "artKey": "u2_observer_spider",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/u204-mech-03-v1.webp",
+     "driveId": "M030",
+     "match": "exact",
+     "haveLocal": false,
+     "nameNow": "기계화 문턱 관측거미",
+     "matchNote": "현재 이름(기계화 문턱 관측거미) 일치"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "u204-mid",
+     "name": "제12단계 기억 검열기",
+     "artKey": "u2_mirror_priest",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/u204-mid-p1.webp ~ -p4.webp",
+     "driveId": "B29",
+     "match": "exact",
+     "haveLocal": true,
+     "nameNow": "기계화 제12단계 기억 검열기"
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=u204].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:3313; r96/runtime-text/assets/r380/mobs/index.json:3386; r96/runtime-text/assets/r380/mobs/index.json:3459; r96/client-source/approved-mobs-r380.js:21-29 (R381/R382 개명)"
+  },
+  "27": {
+   "map": "u205",
+   "m0Name": "관리자 권한",
+   "mobs": [
+    {
+     "m0Id": "u205-e1",
+     "name": "학대기록 공허체",
+     "artKey": "u2_void_wraith",
+     "m0ArtPath": "r96/runtime-text/assets/r374/mobs/u205-e1-new.webp",
+     "driveId": "M013",
+     "match": "likely",
+     "haveLocal": false,
+     "matchNote": "같은 원본 u2_void_wraith"
+    },
+    {
+     "m0Id": "u205-e2",
+     "name": "관리자 추적견",
+     "artKey": "u2_cyborg_hound",
+     "m0ArtPath": "r96/runtime-text/assets/r374/mobs/u205-e2-new.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "u205-e3",
+     "name": "역전기록 수집가",
+     "artKey": "u2_reactor_collector",
+     "m0ArtPath": "r96/runtime-text/assets/r374/mobs/u205-e3-new.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "u205-mid",
+     "name": "제14단계 역전 관리자",
+     "artKey": "u2_suppression_knight",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/u205-mid-p1.webp ~ -p4.webp",
+     "driveId": "B28",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=u205].sourceActors); r96/runtime-text/assets/r374/mobs/index.json:188; r96/runtime-text/assets/r374/mobs/index.json:238; r96/runtime-text/assets/r374/mobs/index.json:288"
+  },
+  "28": {
+   "map": "u206",
+   "m0Name": "중앙 코어 이주실",
+   "mobs": [
+    {
+     "m0Id": "u206-e1",
+     "name": "기억이주 연결자",
+     "artKey": "u2_memory_orb",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/u206-mech-01-v1.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false,
+     "nameNow": "기계화 기억이주 연결자"
+    },
+    {
+     "m0Id": "u206-e2",
+     "name": "중앙이주 공명기사",
+     "artKey": "u2_resonance_knight",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/u206-mech-02-v1.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false,
+     "nameNow": "기계화 공명술사"
+    },
+    {
+     "m0Id": "u206-e3",
+     "name": "입양기억 청람잔영",
+     "artKey": "u2_blue_wraith",
+     "m0ArtPath": "r96/runtime-text/assets/r410/mobs/m039.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "u206-mid",
+     "name": "제17단계 중앙이주 코어",
+     "artKey": "enemy_void_core",
+     "m0ArtPath": null,
+     "driveId": "B30",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=u206].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:3605; r96/runtime-text/assets/r380/mobs/index.json:3678; r96/runtime-text/assets/r410/mobs/index.json:2223; r96/client-source/approved-mobs-r380.js:21-29 (R381/R382 개명)"
+  },
+  "29": {
+   "map": "u203",
+   "m0Name": "통제자의 기억문",
+   "mobs": [
+    {
+     "m0Id": "u203-e1",
+     "name": "이동문 청람잔영",
+     "artKey": "u2_blue_wraith",
+     "m0ArtPath": "r96/runtime-text/assets/r410/mobs/m040.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "u203-e2",
+     "name": "이동문 공허잔영",
+     "artKey": "u2_void_wraith",
+     "m0ArtPath": "r96/runtime-text/assets/r374/mobs/u203-e2-mech.webp",
+     "driveId": "M013",
+     "match": "likely",
+     "haveLocal": false,
+     "matchNote": "같은 원본 u2_void_wraith"
+    },
+    {
+     "m0Id": "u203-e3",
+     "name": "최종문 공명기사",
+     "artKey": "u2_resonance_knight",
+     "m0ArtPath": "r96/runtime-text/assets/r374/mobs/u203-e3-mech.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "u203-mid",
+     "name": "기억의 문 수호 프레임",
+     "artKey": "controller_guardian",
+     "m0ArtPath": null,
+     "driveId": "B31",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [
+    {
+     "m0Id": "u203-boss",
+     "name": "컨트롤러 · 기억의 문",
+     "artKey": "controller_idle",
+     "m0ArtPath": null,
+     "driveId": "B32",
+     "match": "exact",
+     "haveLocal": false
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=u203].sourceActors); r96/runtime-text/assets/r410/mobs/index.json:2406; r96/runtime-text/assets/r374/mobs/index.json:7; r96/runtime-text/assets/r374/mobs/index.json:67"
+  },
+  "31": {
+   "map": "last304",
+   "m0Name": "중립 지역의 재각성",
+   "mobs": [
+    {
+     "m0Id": "l304-e1",
+     "name": "중립초원 슬라임",
+     "artKey": "Monster_Slime",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M045-hit.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "l304-e2",
+     "name": "중립초원 늑대",
+     "artKey": "Monster_Wolf",
+     "m0ArtPath": "r96/runtime-text/assets/r198/mobs/M046-move.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "l304-e3",
+     "name": "장미이슬 슬라임",
+     "artKey": "Monster_Slime",
+     "m0ArtPath": "r96/runtime-text/assets/r410/mobs/m043.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "midboss": [],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=last304].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (l304-e1); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (l304-e2); r96/runtime-text/assets/r410/mobs/index.json:2589"
+  },
+  "32": {
+   "map": "last305",
+   "m0Name": "고블린 피리숲",
+   "mobs": [
+    {
+     "m0Id": "l305-e1",
+     "name": "숲 고블린",
+     "artKey": "Monster_Goblin",
+     "m0ArtPath": "r96/runtime-text/assets/r198/mobs/M047-move.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "l305-e2",
+     "name": "피리 고블린",
+     "artKey": "Monster_Goblin",
+     "m0ArtPath": "r96/runtime-text/assets/r410/mobs/m044.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "midboss": [],
+   "boss": [
+    {
+     "m0Id": "l305-boss",
+     "name": "고블린 추장",
+     "artKey": "Monster_GoblinFluteKing",
+     "m0ArtPath": null,
+     "driveId": "B33",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=last305].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (l305-e1); r96/runtime-text/assets/r410/mobs/index.json:2772"
+  },
+  "33": {
+   "map": "last301",
+   "m0Name": "타락천사 흑해",
+   "mobs": [],
+   "midboss": [],
+   "boss": [
+    {
+     "m0Id": "l301-boss",
+     "name": "타락천사 기사",
+     "artKey": "Monster_FallenAngelKnight_Base",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/l301-boss-p1.webp ~ -p4.webp",
+     "driveId": "B34",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=last301].sourceActors)",
+   "mobsStatus": "못 찾음(원본 로스터에 일반 몹 없음)"
+  },
+  "34": {
+   "map": "last302",
+   "m0Name": "잠들지 못하는 마을",
+   "mobs": [
+    {
+     "m0Id": "l302-e1",
+     "name": "포구 검은 안개",
+     "artKey": "bulmyeongwi_b",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M051-hit.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "l302-e3",
+     "name": "귀비탕 공명 안개핵",
+     "artKey": "Monster_Slime",
+     "m0ArtPath": "r96/runtime-text/assets/r410/mobs/m045.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "l302-e2",
+     "name": "잠들지 못한 검은 영혼",
+     "artKey": "Monster_Wolf",
+     "m0ArtPath": "r96/runtime-text/assets/r198/mobs/M046-move.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false,
+     "excluded": true
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-last302-v31231",
+     "name": "검은 안개 심장 · 불면의 기억",
+     "artKey": "bulmyeongwi_b",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-last302-v31231-p1.webp ~ -p4.webp; r96/runtime-text/assets/r760/mid/sheet-*.webp",
+     "driveId": "B35",
+     "match": "exact",
+     "haveLocal": true,
+     "nameNow": "꼭두각시 실안개"
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=last302].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (l302-e1); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (l302-e2); r96/runtime-text/assets/r410/mobs/index.json:2955; r96/client-source/midboss-puppet-r981.js:15 (중간보스 개명)",
+   "notes": [
+    "l302-e2(잠들지 못한 검은 영혼, Monster_Wolf)는 사용자 규칙으로 StoryWorld에서 제외(mainlineRosterExpectations.exclusions)"
+   ]
+  },
+  "35": {
+   "map": "last303",
+   "m0Name": "불면귀의 검은 안개",
+   "mobs": [],
+   "midboss": [],
+   "boss": [
+    {
+     "m0Id": "l303-boss",
+     "name": "불면귀",
+     "artKey": "bulmyeongwi_idle",
+     "m0ArtPath": "r96/runtime-text/assets/r760/boss/sheet-*.webp",
+     "driveId": "B36",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=last303].sourceActors)",
+   "mobsStatus": "못 찾음(원본 로스터에 일반 몹 없음)"
+  },
+  "37": {
+   "map": "kair01",
+   "m0Name": "최초명령 아카데미움",
+   "mobs": [
+    {
+     "m0Id": "kair-academy-wave-1",
+     "name": "최초명령 훈련파동 1",
+     "artKey": "time-collector",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M054-hit.png",
+     "driveId": "M054",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "sourceKey time-collector 일치"
+    },
+    {
+     "m0Id": "kair-academy-wave-2",
+     "name": "최초명령 훈련파동 2",
+     "artKey": "connector",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M052-hit.png",
+     "driveId": "M022",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "드라이브 이름에 connector 명시"
+    },
+    {
+     "m0Id": "kair-academy-wave-3",
+     "name": "최초명령 훈련파동 3",
+     "artKey": "resonance-slave",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M053-hit.png",
+     "driveId": "M023",
+     "match": "exact",
+     "haveLocal": false,
+     "matchNote": "드라이브 이름에 resonance-slave 명시"
+    },
+    {
+     "m0Id": "kair-academy-wave-4",
+     "name": "최초명령 훈련파동 4",
+     "artKey": "time-collector",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M054-hit.png",
+     "driveId": "M054",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "sourceKey time-collector 일치"
+    },
+    {
+     "m0Id": "kair-academy-wave-5",
+     "name": "최초명령 훈련파동 5",
+     "artKey": "connector",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M052-hit.png",
+     "driveId": "M022",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "드라이브 이름에 connector 명시"
+    },
+    {
+     "m0Id": "kair-academy-wave-6",
+     "name": "최초명령 훈련파동 6",
+     "artKey": "resonance-slave",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M053-hit.png",
+     "driveId": "M023",
+     "match": "exact",
+     "haveLocal": false,
+     "matchNote": "드라이브 이름에 resonance-slave 명시"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-kair01-v31231",
+     "name": "최초명령 코어 오염체",
+     "artKey": "resonance-slave",
+     "m0ArtPath": null,
+     "driveId": "B37",
+     "match": "exact",
+     "haveLocal": false
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=kair01].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (kair-academy-wave-1); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (kair-academy-wave-2); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (kair-academy-wave-3); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (kair-academy-wave-4); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (kair-academy-wave-5); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (kair-academy-wave-6)"
+  },
+  "38": {
+   "map": "kair04",
+   "m0Name": "수문장 폐허",
+   "mobs": [
+    {
+     "m0Id": "kair-guardian-01",
+     "name": "시간수문장 01",
+     "artKey": "guardian_01",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-02",
+     "name": "시간수문장 02",
+     "artKey": "guardian_02",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-03",
+     "name": "시간수문장 03",
+     "artKey": "guardian_03",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M057-idle.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-04",
+     "name": "시간수문장 04",
+     "artKey": "guardian_04",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-05",
+     "name": "시간수문장 05",
+     "artKey": "guardian_05",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-06",
+     "name": "시간수문장 06",
+     "artKey": "guardian_06",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-elite-49",
+     "name": "상위수문장 49",
+     "artKey": "guardian_49",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-elite-50",
+     "name": "상위수문장 50",
+     "artKey": "guardian_50",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-kair04-v31231",
+     "name": "휴식 수확관 · 과로의 수문장",
+     "artKey": "guardian_50",
+     "m0ArtPath": null,
+     "driveId": "B38",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=kair04].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (kair-guardian-03)"
+  },
+  "39": {
+   "map": "kair05",
+   "m0Name": "시간의 숲",
+   "mobs": [
+    {
+     "m0Id": "kair-guardian-07",
+     "name": "시간수문장 07",
+     "artKey": "guardian_07",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M063-hit.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-08",
+     "name": "시간수문장 08",
+     "artKey": "guardian_08",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M064-hit.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-09",
+     "name": "시간수문장 09",
+     "artKey": "guardian_09",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-10",
+     "name": "시간수문장 10",
+     "artKey": "guardian_10",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-11",
+     "name": "시간수문장 11",
+     "artKey": "guardian_11",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-12",
+     "name": "시간수문장 12",
+     "artKey": "guardian_12",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-elite-51",
+     "name": "상위수문장 51",
+     "artKey": "guardian_51",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M069-hit.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "midboss": [],
+   "boss": [
+    {
+     "m0Id": "kair-great-01",
+     "name": "대수문장 01",
+     "artKey": "great_01",
+     "m0ArtPath": null,
+     "driveId": "B39",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=kair05].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (kair-guardian-07); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (kair-guardian-08); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (kair-elite-51)"
+  },
+  "40": {
+   "map": "kair06",
+   "m0Name": "오염된 수로",
+   "mobs": [
+    {
+     "m0Id": "kair-guardian-13",
+     "name": "시간수문장 13",
+     "artKey": "guardian_13",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-14",
+     "name": "시간수문장 14",
+     "artKey": "guardian_14",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-15",
+     "name": "시간수문장 15",
+     "artKey": "guardian_15",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M072-hit.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-16",
+     "name": "시간수문장 16",
+     "artKey": "guardian_16",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-17",
+     "name": "시간수문장 17",
+     "artKey": "guardian_17",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M074-hit.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-18",
+     "name": "시간수문장 18",
+     "artKey": "guardian_18",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-elite-52",
+     "name": "상위수문장 52",
+     "artKey": "guardian_52",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "midboss": [],
+   "boss": [
+    {
+     "m0Id": "kair-great-02",
+     "name": "대수문장 02",
+     "artKey": "great_02",
+     "m0ArtPath": null,
+     "driveId": "B40",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=kair06].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (kair-guardian-15); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (kair-guardian-17)"
+  },
+  "41": {
+   "map": "kair07",
+   "m0Name": "검은 공방",
+   "mobs": [
+    {
+     "m0Id": "kair-guardian-19",
+     "name": "시간수문장 19",
+     "artKey": "guardian_19",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-20",
+     "name": "시간수문장 20",
+     "artKey": "guardian_20",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M078-hit.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-21",
+     "name": "시간수문장 21",
+     "artKey": "guardian_21",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-22",
+     "name": "시간수문장 22",
+     "artKey": "guardian_22",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-23",
+     "name": "시간수문장 23",
+     "artKey": "guardian_23",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-24",
+     "name": "시간수문장 24",
+     "artKey": "guardian_24",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-elite-53",
+     "name": "상위수문장 53",
+     "artKey": "guardian_53",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-elite-54",
+     "name": "상위수문장 54",
+     "artKey": "guardian_54",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "midboss": [],
+   "boss": [
+    {
+     "m0Id": "kair-great-04",
+     "name": "대수문장 04",
+     "artKey": "great_04",
+     "m0ArtPath": null,
+     "driveId": "B41",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=kair07].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (kair-guardian-20)"
+  },
+  "42": {
+   "map": "kair08",
+   "m0Name": "뉴런 게이트",
+   "mobs": [
+    {
+     "m0Id": "kair-guardian-25",
+     "name": "시간수문장 25",
+     "artKey": "guardian_25",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-26",
+     "name": "시간수문장 26",
+     "artKey": "guardian_26",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-27",
+     "name": "시간수문장 27",
+     "artKey": "guardian_27",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-28",
+     "name": "시간수문장 28",
+     "artKey": "guardian_28",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-29",
+     "name": "시간수문장 29",
+     "artKey": "guardian_29",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-30",
+     "name": "시간수문장 30",
+     "artKey": "guardian_30",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-elite-55",
+     "name": "상위수문장 55",
+     "artKey": "guardian_55",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "kair-great-05",
+     "name": "대수문장 05",
+     "artKey": "great_05",
+     "m0ArtPath": null,
+     "driveId": "B42",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=kair08].sourceActors)"
+  },
+  "43": {
+   "map": "kair09",
+   "m0Name": "망각의 묘지",
+   "mobs": [
+    {
+     "m0Id": "kair-guardian-31",
+     "name": "시간수문장 31",
+     "artKey": "guardian_31",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-32",
+     "name": "시간수문장 32",
+     "artKey": "guardian_32",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-33",
+     "name": "시간수문장 33",
+     "artKey": "guardian_33",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-34",
+     "name": "시간수문장 34",
+     "artKey": "guardian_34",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-35",
+     "name": "시간수문장 35",
+     "artKey": "guardian_35",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-36",
+     "name": "시간수문장 36",
+     "artKey": "guardian_36",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-elite-56",
+     "name": "상위수문장 56",
+     "artKey": "guardian_56",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-elite-57",
+     "name": "상위수문장 57",
+     "artKey": "guardian_57",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "midboss": [],
+   "boss": [
+    {
+     "m0Id": "mb-kair09-v31231",
+     "name": "망각 묘지기 · 삭제된 선택",
+     "artKey": "guardian_57",
+     "m0ArtPath": null,
+     "driveId": "B43",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=kair09].sourceActors)"
+  },
+  "44": {
+   "map": "kair10",
+   "m0Name": "붕괴 의식장",
+   "mobs": [
+    {
+     "m0Id": "kair-guardian-37",
+     "name": "시간수문장 37",
+     "artKey": "guardian_37",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-38",
+     "name": "시간수문장 38",
+     "artKey": "guardian_38",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-39",
+     "name": "시간수문장 39",
+     "artKey": "guardian_39",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-40",
+     "name": "시간수문장 40",
+     "artKey": "guardian_40",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-41",
+     "name": "시간수문장 41",
+     "artKey": "guardian_41",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-42",
+     "name": "시간수문장 42",
+     "artKey": "guardian_42",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-elite-58",
+     "name": "상위수문장 58",
+     "artKey": "guardian_58",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/legacy-m106-elite-guardian-v2.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "midboss": [],
+   "boss": [
+    {
+     "m0Id": "kair-great-06",
+     "name": "대수문장 06",
+     "artKey": "great_06",
+     "m0ArtPath": null,
+     "driveId": "B44",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=kair10].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:7708"
+  },
+  "45": {
+   "map": "kair02",
+   "m0Name": "아르벨리아 봉인 회랑",
+   "mobs": [
+    {
+     "m0Id": "kair-guardian-43",
+     "name": "시간수문장 43",
+     "artKey": "guardian_43",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-44",
+     "name": "시간수문장 44",
+     "artKey": "guardian_44",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-45",
+     "name": "시간수문장 45",
+     "artKey": "guardian_45",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-46",
+     "name": "시간수문장 46",
+     "artKey": "guardian_46",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/legacy-m110-time-guardian-v3-walk-d1.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-47",
+     "name": "시간수문장 47",
+     "artKey": "guardian_47",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-guardian-48",
+     "name": "시간수문장 48",
+     "artKey": "guardian_48",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-elite-59",
+     "name": "상위수문장 59",
+     "artKey": "guardian_59",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "kair-elite-60",
+     "name": "상위수문장 60",
+     "artKey": "guardian_60",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "midboss": [],
+   "boss": [
+    {
+     "m0Id": "kair-great-03",
+     "name": "아르벨리아, 유예의 수문장",
+     "artKey": "arvelia_delay_archon",
+     "m0ArtPath": null,
+     "driveId": "B45",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=kair02].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:7781"
+  },
+  "46": {
+   "map": "kair03",
+   "m0Name": "세이렌의 시간 코어",
+   "mobs": [],
+   "midboss": [],
+   "boss": [
+    {
+     "m0Id": "k103-boss",
+     "name": "세이렌 모르",
+     "artKey": "siren_idle",
+     "m0ArtPath": null,
+     "driveId": "B46",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=kair03].sourceActors)",
+   "mobsStatus": "못 찾음(원본 로스터에 일반 몹 없음)"
+  },
+  "48": {
+   "map": "hando01",
+   "m0Name": "소환된 성벽",
+   "mobs": [
+    {
+     "m0Id": "h101-s1",
+     "name": "성벽 침식 봉인병",
+     "artKey": "false_signal_seal_guard",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "h101-t1",
+     "name": "악몽 정찰체",
+     "artKey": "timeless_silver_scout",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/hando-timeless-silver-scout-walk-d1.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "h101-s2",
+     "name": "의존 신호 포식자",
+     "artKey": "return_coordinate_devourer",
+     "m0ArtPath": null,
+     "driveId": "M010",
+     "match": "exact",
+     "haveLocal": false,
+     "matchNote": "이름 일치"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-hando01",
+     "name": "의존 신호 포식자",
+     "artKey": "return_coordinate_devourer",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-hando01-p1.webp ~ -p4.webp",
+     "driveId": "B47",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=hando01].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:8170"
+  },
+  "49": {
+   "map": "hando02",
+   "m0Name": "무너진 에고 성채",
+   "mobs": [
+    {
+     "m0Id": "h102-s1",
+     "name": "붕괴선 파수병",
+     "artKey": "silver_seal_sentinel",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/hando-silver-seal-sentinel-walk-d1.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "h102-c1",
+     "name": "기억절제 연결자",
+     "artKey": "memory_excision_connector",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/hando-memory-excision-connector-walk-d1.webp",
+     "driveId": "M007",
+     "match": "exact",
+     "haveLocal": false,
+     "matchNote": "이름 일치"
+    },
+    {
+     "m0Id": "h102-t1",
+     "name": "무명 검흔",
+     "artKey": "nameless_sword_trace",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/legacy-m119-nameless-scar-v4-walk-d1.webp",
+     "driveId": "M002",
+     "match": "exact",
+     "haveLocal": false,
+     "matchNote": "이름 일치"
+    },
+    {
+     "m0Id": "h102-s2",
+     "name": "코어 운반 집행자",
+     "artKey": "order_seal_officer",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M120-hit.png",
+     "driveId": "M008",
+     "match": "exact",
+     "haveLocal": false,
+     "matchNote": "이름 일치(CX-0079MM 008, 원본 404로 그림 없음)"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-hando02",
+     "name": "코어 운반 집행자",
+     "artKey": "order_seal_officer",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-hando02-p1.webp ~ -p4.webp",
+     "driveId": "B48",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=hando02].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:8219; r96/runtime-text/assets/r380/mobs/index.json:8268; r96/runtime-text/assets/r380/mobs/index.json:7843; r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (h102-s2)"
+  },
+  "50": {
+   "map": "hando03",
+   "m0Name": "주인의 권한 회랑",
+   "mobs": [
+    {
+     "m0Id": "h103-c1",
+     "name": "EGO 탈취 연결자",
+     "artKey": "ego_theft_connector",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "h103-s1",
+     "name": "환수검 모조체",
+     "artKey": "phantom_reclaim_blade",
+     "m0ArtPath": null,
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "h103-t1",
+     "name": "백은 없는 그림자",
+     "artKey": "silverless_shadow",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/legacy-m124-silverless-shadow-v4.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-hando03",
+     "name": "환수검 모조체",
+     "artKey": "phantom_reclaim_blade",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-hando03-p1.webp ~ -p4.webp",
+     "driveId": "B49",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [
+    {
+     "m0Id": "h103-boss",
+     "name": "EGO 강탈 악몽왕",
+     "artKey": "hando_idle",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/h103-boss-p1.webp ~ -p4.webp",
+     "driveId": "B50",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=hando03].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:7905"
+  },
+  "52": {
+   "map": "murder01",
+   "m0Name": "윤하람의 교차로",
+   "mobs": [
+    {
+     "m0Id": "murder04-e2",
+     "name": "제출되지 못한 문장",
+     "artKey": "rooftop_echo",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/murder-rooftop-echo-float-d1.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false,
+     "source": "원본은 legacy-special-wave-flow(로스터 비어 있음); 잡몹은 murder04-e2 한 종, R112가 그림·이름만 섞음",
+     "nameNow": "끊어진 통화의 인과 잔향"
+    },
+    {
+     "m0Id": "murder04-e1",
+     "name": "공실 표기 잔재",
+     "artKey": "silent_alarm",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m052.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false,
+     "source": "원본은 legacy-special-wave-flow(로스터 비어 있음); 잡몹은 murder04-e2 한 종, R112가 그림·이름만 섞음"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-murder01",
+     "name": "파란불 역주행 목격자",
+     "artKey": "rain_witness",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-murder01-p1.webp ~ -p4.webp",
+     "driveId": "B51",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=murder01].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:8317; docs/r112-mob-composition.md:21-23; r96/client-source/mobs-r112.js:25-27"
+  },
+  "53": {
+   "map": "murder02",
+   "m0Name": "새빛호텔",
+   "mobs": [
+    {
+     "m0Id": "murder04-e2",
+     "name": "제출되지 못한 문장",
+     "artKey": "rooftop_echo",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m053.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false,
+     "source": "원본은 legacy-special-wave-flow(로스터 비어 있음); 잡몹은 murder04-e2 한 종, R112가 그림·이름만 섞음"
+    },
+    {
+     "m0Id": "murder04-e1",
+     "name": "공실 표기 잔재",
+     "artKey": "silent_alarm",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m052.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false,
+     "source": "원본은 legacy-special-wave-flow(로스터 비어 있음); 잡몹은 murder04-e2 한 종, R112가 그림·이름만 섞음"
+    },
+    {
+     "m0Id": "murder04-e3",
+     "name": "은폐기록 연결체",
+     "artKey": "blue_executor",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M125-hit.png",
+     "driveId": "M001",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey blue_executor 일치",
+     "source": "원본은 legacy-special-wave-flow(로스터 비어 있음); 잡몹은 murder04-e2 한 종, R112가 그림·이름만 섞음"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-murder02",
+     "name": "공실장부 당직감사",
+     "artKey": "hotel_clerk",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-murder02-p1.webp ~ -p4.webp",
+     "driveId": "B52",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=murder02].sourceActors); docs/r112-mob-composition.md:21-23; r96/client-source/mobs-r112.js:25-27"
+  },
+  "54": {
+   "map": "murder04",
+   "m0Name": "청록빌라",
+   "mobs": [
+    {
+     "m0Id": "murder04-e1",
+     "name": "공실 표기 잔재",
+     "artKey": "silent_alarm",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m052.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "murder04-e2",
+     "name": "제출되지 못한 문장",
+     "artKey": "rooftop_echo",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m053.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "murder04-e3",
+     "name": "은폐기록 연결체",
+     "artKey": "blue_executor",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M125-hit.png",
+     "driveId": "M001",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey blue_executor 일치"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "murder04-mid",
+     "name": "진술 봉쇄 인과핵",
+     "artKey": "silent_alarm",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/murder04-mid-p1.webp ~ -p4.webp",
+     "driveId": "B53",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=murder04].sourceActors); r96/runtime-text/assets/r290/mobs/index.json:6115; r96/runtime-text/assets/r290/mobs/index.json:1811; r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (murder04-e3)"
+  },
+  "55": {
+   "map": "murder03",
+   "m0Name": "순환의 옥상",
+   "mobs": [
+    {
+     "m0Id": "murder04-e2",
+     "name": "제출되지 못한 문장",
+     "artKey": "rooftop_echo",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m053.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false,
+     "source": "원본은 legacy-special-wave-flow(로스터 비어 있음); 잡몹은 murder04-e2 한 종, R112가 그림·이름만 섞음"
+    },
+    {
+     "m0Id": "murder04-e1",
+     "name": "공실 표기 잔재",
+     "artKey": "silent_alarm",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m052.webp",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false,
+     "source": "원본은 legacy-special-wave-flow(로스터 비어 있음); 잡몹은 murder04-e2 한 종, R112가 그림·이름만 섞음"
+    },
+    {
+     "m0Id": "murder04-e3",
+     "name": "은폐기록 연결체",
+     "artKey": "blue_executor",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M125-hit.png",
+     "driveId": "M001",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey blue_executor 일치",
+     "source": "원본은 legacy-special-wave-flow(로스터 비어 있음); 잡몹은 murder04-e2 한 종, R112가 그림·이름만 섞음"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "mb-murder03",
+     "name": "옥상 인과보관인",
+     "artKey": "rooftop_echo",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/mb-murder03-p1.webp ~ -p4.webp",
+     "driveId": "B54",
+     "match": "exact",
+     "haveLocal": false
+    }
+   ],
+   "boss": [
+    {
+     "m0Id": "blue-executor",
+     "name": "파란불",
+     "artKey": null,
+     "m0ArtPath": null,
+     "driveId": "B55",
+     "match": "exact",
+     "haveLocal": false,
+     "source": "sourceConflicts: data/world-v31217.js 특수 삽입, 제단으로 여는 최종 보스"
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=murder03].sourceActors); docs/r112-mob-composition.md:21-23; r96/client-source/mobs-r112.js:25-27"
+  },
+  "56": {
+   "map": "cult01",
+   "m0Name": "사이비합일몽세 관문",
+   "mobs": [
+    {
+     "m0Id": "c101-e1",
+     "name": "흑장미 눈가린 신도",
+     "artKey": "blindfold_modern_cultist_bloodied",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M128-hit.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "c101-e2",
+     "name": "흑장미 귀막은 신도",
+     "artKey": "earcovered_modern_cultist_bloodied",
+     "m0ArtPath": "r96/runtime-text/assets/r198/mobs/M129-attack.png",
+     "driveId": null,
+     "match": "none",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "c101-e3",
+     "name": "세뇌 신호 점액체",
+     "artKey": "green_enemy_slime",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/legacy-m130-slime-cult01-v2.webp",
+     "driveId": "M032",
+     "match": "likely",
+     "haveLocal": false,
+     "matchNote": "같은 원본 green_enemy_slime"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "c101-mid",
+     "name": "칩 제단 방화벽",
+     "artKey": "c101_rose_guardian",
+     "m0ArtPath": null,
+     "driveId": "B56",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=cult01].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (c101-e1); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (c101-e2); r96/runtime-text/assets/r380/mobs/index.json:7962"
+  },
+  "57": {
+   "map": "cult02",
+   "m0Name": "뉴런 합창실",
+   "mobs": [
+    {
+     "m0Id": "c102-e1",
+     "name": "신경 케이블 포식체",
+     "artKey": "black_robed_nightmare_demon",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/cult-nerve-cable-devourer-walk-d1.webp",
+     "driveId": "M014",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey black_robed_nightmare_demon 일치"
+    },
+    {
+     "m0Id": "c102-e2",
+     "name": "합일 주파수 결정",
+     "artKey": "black_rose_crystal_guardian",
+     "m0ArtPath": null,
+     "driveId": "M031",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름 일치"
+    },
+    {
+     "m0Id": "c102-e3",
+     "name": "과열 시냅스 점액체",
+     "artKey": "angry_green_slime",
+     "m0ArtPath": "r96/runtime-text/assets/r116/mobs/M131-hit.png",
+     "driveId": "M026",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름 일치"
+    }
+   ],
+   "midboss": [],
+   "boss": [
+    {
+     "m0Id": "c102-boss",
+     "name": "네트워크 합창체",
+     "artKey": "superego_cyborg_cult_leader",
+     "m0ArtPath": null,
+     "driveId": "B57",
+     "match": "exact",
+     "haveLocal": false
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=cult02].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:8411; r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (c102-e3)"
+  },
+  "58": {
+   "map": "cult05",
+   "m0Name": "융합 제단",
+   "mobs": [
+    {
+     "m0Id": "c105-e1",
+     "name": "ID 배양 점액체",
+     "artKey": "green_enemy_slime",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/legacy-m130-slime-cult05-v2.webp",
+     "driveId": "M032",
+     "match": "exact",
+     "haveLocal": false,
+     "matchNote": "이름 일치"
+    },
+    {
+     "m0Id": "c105-e2",
+     "name": "생체기계 악몽",
+     "artKey": "black_rose_demon_soldier",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/legacy-m134-nightmare-v4-walk-d1.webp",
+     "driveId": "M004",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey black_rose_demon_soldier 일치"
+    },
+    {
+     "m0Id": "c105-e3",
+     "name": "본능 추출 결정",
+     "artKey": "black_rose_crystal_guardian",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m057.webp",
+     "driveId": "M031",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 black_rose_crystal_guardian"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "c105-mid",
+     "name": "ID 생체조 관리자",
+     "artKey": "black_ritual_cyborg_boss",
+     "m0ArtPath": null,
+     "driveId": "B58",
+     "match": "exact",
+     "haveLocal": true
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=cult05].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:8035; r96/runtime-text/assets/r380/mobs/index.json:8108; r96/runtime-text/assets/r290/mobs/index.json:2289"
+  },
+  "59": {
+   "map": "cult06",
+   "m0Name": "두 개의 목표",
+   "mobs": [
+    {
+     "m0Id": "c106-e1",
+     "name": "SUPER EGO 판결인장",
+     "artKey": "superego_cyborg_cult_leader",
+     "m0ArtPath": null,
+     "driveId": "M028",
+     "match": "exact",
+     "haveLocal": false,
+     "matchNote": "이름 일치(CX-0079MM 028)"
+    },
+    {
+     "m0Id": "c106-e2",
+     "name": "기계재판 연결자",
+     "artKey": "black_robed_nightmare_demon",
+     "m0ArtPath": null,
+     "driveId": "M014",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 black_robed_nightmare_demon"
+    },
+    {
+     "m0Id": "c106-e3",
+     "name": "죄책감 압축결정",
+     "artKey": "black_rose_crystal_guardian",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m058.webp",
+     "driveId": "M031",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 black_rose_crystal_guardian"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "c106-mid",
+     "name": "기계재판 집행핵",
+     "artKey": "final_pride_cyborg_lord",
+     "m0ArtPath": null,
+     "driveId": "B59",
+     "match": "exact",
+     "haveLocal": false
+    }
+   ],
+   "boss": [],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=cult06].sourceActors); r96/runtime-text/assets/r290/mobs/index.json:2528"
+  },
+  "60": {
+   "map": "cult03",
+   "m0Name": "삼중 에고 추출실",
+   "mobs": [
+    {
+     "m0Id": "c103-e1",
+     "name": "EGO 구속 연결자",
+     "artKey": "black_rose_chip_penitent",
+     "m0ArtPath": "r96/runtime-text/assets/r380/mobs/cult-ego-binder-walk-d1.webp",
+     "driveId": "M003",
+     "match": "exact",
+     "haveLocal": true,
+     "matchNote": "이름·sourceKey black_rose_chip_penitent 일치"
+    },
+    {
+     "m0Id": "c103-e2",
+     "name": "SUPER EGO 절개결정",
+     "artKey": "black_rose_crystal_guardian",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m059.webp",
+     "driveId": "M031",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 black_rose_crystal_guardian"
+    },
+    {
+     "m0Id": "c103-e3",
+     "name": "ID 잔류 점액체",
+     "artKey": "angry_green_slime",
+     "m0ArtPath": "r96/runtime-text/assets/r410/mobs/m060.webp",
+     "driveId": "M026",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 angry_green_slime"
+    }
+   ],
+   "midboss": [],
+   "boss": [
+    {
+     "m0Id": "c103-mid",
+     "name": "이단의목사 한리안",
+     "artKey": "cult03-heretic-han-idle-v2",
+     "m0ArtPath": null,
+     "driveId": "B60",
+     "match": "exact",
+     "haveLocal": false
+    },
+    {
+     "m0Id": "c103-boss",
+     "name": "이단의목사 백이온",
+     "artKey": "cult03-heretic-baek-idle-v2",
+     "m0ArtPath": null,
+     "driveId": "B61",
+     "match": "exact",
+     "haveLocal": false
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=cult03].sourceActors); r96/runtime-text/assets/r380/mobs/index.json:8752; r96/runtime-text/assets/r290/mobs/index.json:2767; r96/runtime-text/assets/r410/mobs/index.json:4281",
+   "notes": [
+    "c103-mid(한리안)는 원본 템플릿상 중간보스지만 최종 계획에서 boss·leader로 쓰임(sourceConflicts)"
+   ]
+  },
+  "61": {
+   "map": "cult04",
+   "m0Name": "합일몽세 코어",
+   "mobs": [
+    {
+     "m0Id": "c104-e1",
+     "name": "소환좌 칩 수호체",
+     "artKey": "pride_cyborg_cult_leader",
+     "m0ArtPath": "r96/runtime-text/assets/r109/mobs/M137-move.png",
+     "driveId": "M027",
+     "match": "exact",
+     "haveLocal": false,
+     "matchNote": "이름 일치(CX-0079MM 027)"
+    },
+    {
+     "m0Id": "c104-e2",
+     "name": "아마겟돈 계산결정",
+     "artKey": "black_rose_crystal_guardian",
+     "m0ArtPath": "r96/runtime-text/assets/r290/mobs/m061.webp",
+     "driveId": "M031",
+     "match": "likely",
+     "haveLocal": true,
+     "matchNote": "같은 원본 black_rose_crystal_guardian"
+    }
+   ],
+   "midboss": [
+    {
+     "m0Id": "c104-mid",
+     "name": "적그리스도 배양좌",
+     "artKey": "six_legged_cyborg_lord_final",
+     "m0ArtPath": null,
+     "driveId": "B62",
+     "match": "exact",
+     "haveLocal": false
+    }
+   ],
+   "boss": [
+    {
+     "m0Id": "c104-boss",
+     "name": "교만의 사이보그 교주",
+     "artKey": "pride_cyborg_cult_leader",
+     "m0ArtPath": "r96/runtime-text/assets/r104/bosses/c104-boss-p1.webp ~ -p4.webp",
+     "driveId": "B63",
+     "match": "exact",
+     "haveLocal": false
+    }
+   ],
+   "evidence": "r96/runtime-text/index.html:143 (portable-data.mainlineRosterExpectations.zones[id=cult04].sourceActors); r96/runtime-text/assets/{r116,r109,r198}/mobs/index.json tracks[].ids (c104-e1); r96/runtime-text/assets/r290/mobs/index.json:3006"
+  }
+ },
+ "artFormat": {
+  "mob": "m0 저장소 r96/runtime-text/assets/ 아래에 몹 그림이 실제 파일로 있음(원본 assets/episode1a/* 등 sourceSprite는 저장소에 없음). ① R380 승인 시트 assets/r380/mobs/*.webp(120항목, 색인 assets/r380/mobs/index.json): 한 줄 스트립, 칸 대개 256x256(192x240·256x320·320x320 등 항목별), move 4칸[0-3]+attack 4칸[4-7]가 기본(일부 move 6~8칸, *-walk-d1/float-d1은 0번 공격1칸+이동 6~8칸), facing right. 실측 ash-moth-v2.webp 1536x240 = 192x240 x8칸. ② R410/R290/R248 시트 assets/r4xx/mobs/mNNN.webp: 1024x960 = 256x320 칸 4열x3행, walk 0~7(8칸), attack 8~11(4칸), pivot(128,300). 실측 r410 m007.webp 1024x960. R248은 코드로 그린 임시 픽셀 그림(temporary). ③ R116/R109/R198 트랙 PNG(assets/r116/mobs/M0xx-{move,attack,hit,idle}.png 등 93개): 동작별 가로 스트립 4키(hit 4키 포함). R92 스트립은 색인만 있고 PNG는 저장소에 없음. ④ R374/R375 개별 시트(r375는 4방향 east/west/south/north x idle1·move4·attack3·hit2·death2, 칸 320). 사망 전용 시트는 일반 몹엔 거의 없음(R380 note: 피격·사망 전용 그림 없음).",
+  "boss": "① R104 열쇠 자세 assets/r104/bosses/<id>-p1~p4.webp(45개 보스·중간보스 x4 = 180장): 준비·타격(화면 아래쪽)·이어짐·회수 4자세 낱장, 실측 dist00-boss-p1.webp 421x463. 대기·걷기·피격 전용 그림은 없고 boss-motion-r620.js가 숨쉬기·출렁임·밀림을 코드 보간. ② 불면귀(l303-boss) 전용 시트 assets/r760/boss/sheet-{idle,idle2,move,moveUp,moveDown,atkA,atkB,atkB2,cast,reveal,hit,hit2,death}.webp: 칸 512, idle/move 6칸, atk·cast·reveal·death 8칸, hit 4칸(실측 sheet-atkA·sheet-cast 4096x512 = 512x8). 중간보스(mb-last302) assets/r760/mid/sheet-{idle,atk,hit,death,moveSide,moveDown,moveUp}.webp: 칸 384, idle6·atk8·hit4·death8·move 4방향x4. ③ 질투 보스(b03) assets/r620/bosses/b03-idle6.webp(4032x384 = 672x384 x6칸, 8fps), b03-hit4.webp(4칸 16fps). ④ R380 보스 시트(나태에 잠식된 남자 sloth-burden-man-v1, 집도의, 사몽 보스 등) move4+attack4. ⑤ R700 7대죄 공격 그림 정리본 assets/r700/clean/.../{envy,gluttony,lust}-human-attack.webp. 포털 데이터가 가리키는 assets/boss-actions-20261011/*-poses.png(7보스 idle·anticipation·strike…)와 assets/rc135/midboss-motions/sheets/*.png는 저장소에 파일이 없음."
+ },
+ "notes": [
+  "근거 원본: r96/runtime-text/index.html 143행 <script id=\"portable-data\"> JSON의 mainlineRosterExpectations(정본 51bcd 로스터, 197 일반 몹 ID, 지역별 sourceActors). 그 뒤 R380/R381/R382/R383/R387/R537(approved-mobs-r380.js)·R112(mobs-r112.js)·R981 개명·추가를 nameNow/source로 덧붙임.",
+  "드라이브 M번호(CX-0082MV·CX-0079MM)는 m0 저장소의 M번호(R92/R109 그룹 M001~M137)와 다른 체계임. 예: 드라이브 M046=버려진 최고급 식재료, m0 M046=중립초원 늑대. 연결은 이름과 sourceKey로만 했음.",
+  "match 규칙: exact = 드라이브 항목 이름이 그 몹의 원래/현재 이름과 같거나 sourceKey가 같은 원본 그림이면서 이름이 그 몹을 가리킴. likely = 같은 원본 그림(sourceKey)을 쓰는 다른 몹(공유 그림)이거나 개명 관계. none = 대응 드라이브 항목 없음.",
+  "드라이브 목록에는 시간수문장(지시상 M069~M128) 항목이 실제로 없음 → kair04~kair10·kair02의 수문장 몹은 모두 none.",
+  "드라이브 M번호 가운데 CX-0079MM 번호(027·028·032·033·037·049·050·051·008)는 걷기 대신 사망4·공격4 위주 납품이며 media/drive-v43에는 없음.",
+  "R74 순찰(뿌리 추적자·태엽 수집자·재 나방·유리 망령, 지역 레이아웃 종류로 결정, 지역당 최대 6)은 지역 고유 몹이 아니라 표에서 dist00·dist02·ep1a09·ep1b07만 적었음. 그 밖 지역의 root 순찰은 R383이 원래 지역 몹 이름·그림으로 되돌림.",
+  "쉼터 장면(12·23·30·36·47·51)은 safe 지역이라 몹 없음, 이 파일 범위 밖.",
+  "m0ArtPath는 m0 저장소 안의 현재 게임 그림 경로(R374 > R380 > R410/R290 > R116/R109/R198 트랙 순). 원본 sourceSprite(artKey의 원 파일)는 m0 저장소에 없음."
+ ]
+}

@@ -1,0 +1,401 @@
+{
+ "source": "m0 r96/runtime-text/assets/r104/bosses",
+ "bosses": {
+  "dist00-boss": {
+   "name": "뿌리의 문지기",
+   "scene": "01",
+   "source": "r96/runtime-text/assets/r104/bosses/dist00-boss-p1~p4.webp",
+   "file": "dist00-boss-attack.webp",
+   "frames": 4,
+   "driveId": "B01",
+   "match": "exact"
+  },
+  "mb-dist01": {
+   "name": "보라검천사",
+   "scene": "02",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-dist01-p1~p4.webp",
+   "file": "mb-dist01-attack.webp",
+   "frames": 4,
+   "driveId": "B02",
+   "match": "exact"
+  },
+  "mb-dist02": {
+   "name": "늪의 뿔악마 군주",
+   "scene": "03",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-dist02-p1~p4.webp",
+   "file": "mb-dist02-attack.webp",
+   "frames": 4,
+   "driveId": "B03",
+   "match": "exact"
+  },
+  "mb-dist03": {
+   "name": "핏빛 수호로 추격자",
+   "scene": "04",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-dist03-p1~p4.webp",
+   "file": "mb-dist03-attack.webp",
+   "frames": 4,
+   "driveId": "B04",
+   "match": "exact"
+  },
+  "mb-dist04": {
+   "name": "첫 동료의 악마잔영",
+   "scene": "05",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-dist04-p1~p4.webp",
+   "file": "mb-dist04-attack.webp",
+   "frames": 4,
+   "driveId": "B05",
+   "match": "exact"
+  },
+  "mb-dist05": {
+   "name": "숨이 끊긴 전령의 그림자",
+   "scene": "06",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-dist05-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B06",
+   "match": "exact"
+  },
+  "mb-dist06": {
+   "name": "소환진 검은기둥",
+   "scene": "07",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-dist06-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B07",
+   "match": "exact"
+  },
+  "dist06-boss": {
+   "name": "발록 · 지옥의 문지기",
+   "scene": "07",
+   "source": "r96/runtime-text/assets/r104/bosses/dist06-boss-p1~p4.webp",
+   "file": "dist06-boss-attack.webp",
+   "frames": 4,
+   "driveId": "B08",
+   "match": "exact"
+  },
+  "mb-ep1a08": {
+   "name": "백의 안정화 감독",
+   "scene": "08",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-ep1a08-p1~p4.webp",
+   "file": "mb-ep1a08-attack.webp",
+   "frames": 4,
+   "driveId": "B09",
+   "match": "exact"
+  },
+  "mb-ep1a10": {
+   "name": "오만의 폐허핵",
+   "scene": "10",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-ep1a10-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B10",
+   "match": "exact"
+  },
+  "mb-ep1a11": {
+   "name": "초천사의 웃는 가면",
+   "scene": "11",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-ep1a11-p1~p4.webp",
+   "file": "mb-ep1a11-attack.webp",
+   "frames": 4,
+   "driveId": "B11",
+   "match": "exact"
+  },
+  "a11-boss": {
+   "name": "루시퍼 · 가면 벗은 초천사",
+   "scene": "11",
+   "source": "r96/runtime-text/assets/r104/bosses/a11-boss-p1~p4.webp",
+   "file": "a11-boss-attack.webp",
+   "frames": 4,
+   "driveId": "B12",
+   "match": "exact"
+  },
+  "mb-ep1b01": {
+   "name": "교만의 잔향 · 제72문",
+   "scene": "13",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-ep1b01-p1~p4.webp",
+   "file": "mb-ep1b01-attack.webp",
+   "frames": 4,
+   "driveId": "B13",
+   "match": "exact"
+  },
+  "mb-ep1b02": {
+   "name": "나태의 껍데기 파수",
+   "scene": "14",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-ep1b02-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B14",
+   "match": "exact"
+  },
+  "b02-boss": {
+   "name": "나태에 잠식된 남자",
+   "scene": "14",
+   "source": "r96/runtime-text/assets/r104/bosses/b02-boss-p1~p4.webp",
+   "file": "b02-boss-attack.webp",
+   "frames": 4,
+   "driveId": "B15",
+   "match": "exact"
+  },
+  "mb-ep1b03": {
+   "name": "금이 간 비교잔영",
+   "scene": "15",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-ep1b03-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B16",
+   "match": "exact"
+  },
+  "mb-ep1b04": {
+   "name": "폐기주방 감독",
+   "scene": "16",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-ep1b04-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B18",
+   "match": "exact"
+  },
+  "b04-boss": {
+   "name": "최고급 호텔의 총주방장 · 탐식의 귀 베엘제붑",
+   "scene": "16",
+   "source": "r96/runtime-text/assets/r104/bosses/b04-boss-p1~p4.webp",
+   "file": "b04-boss-attack.webp",
+   "frames": 4,
+   "driveId": "B19",
+   "match": "exact"
+  },
+  "mb-ep1b05": {
+   "name": "심장빛 무대감독",
+   "scene": "17",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-ep1b05-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B20",
+   "match": "exact"
+  },
+  "mb-ep1b06": {
+   "name": "금고 장부감시자",
+   "scene": "18",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-ep1b06-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": null,
+   "match": "none"
+  },
+  "b06-boss": {
+   "name": "회장에게 고용된 총지배인 · 맘몬",
+   "scene": "18",
+   "source": "r96/runtime-text/assets/r104/bosses/b06-boss-p1~p4.webp",
+   "file": "b06-boss-attack.webp",
+   "frames": 4,
+   "driveId": null,
+   "match": "none"
+  },
+  "mb-ep1b06b": {
+   "name": "겨울숲 가시파수",
+   "scene": "19",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-ep1b06b-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": null,
+   "match": "none"
+  },
+  "b06b-boss": {
+   "name": "소년이 된 총지배인 · 맘몬",
+   "scene": "19",
+   "source": "r96/runtime-text/assets/r104/bosses/b06b-boss-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": null,
+   "match": "none"
+  },
+  "mb-ep1b07": {
+   "name": "호텔 화염기사",
+   "scene": "20",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-ep1b07-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B22",
+   "match": "exact"
+  },
+  "b07-boss": {
+   "name": "불을 지른 청소부 · 사탄",
+   "scene": "20",
+   "source": "r96/runtime-text/assets/r104/bosses/b07-boss-p1~p4.webp",
+   "file": "b07-boss-attack.webp",
+   "frames": 4,
+   "driveId": "B23",
+   "match": "exact"
+  },
+  "mb-ep1b08": {
+   "name": "역십자가 시체경호체",
+   "scene": "21",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-ep1b08-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B24",
+   "match": "exact"
+  },
+  "b08-boss": {
+   "name": "백색 정장의 호텔 그룹 회장",
+   "scene": "21",
+   "source": "r96/runtime-text/assets/r104/bosses/b08-boss-p1~p4.webp",
+   "file": "b08-boss-attack.webp",
+   "frames": 4,
+   "driveId": "B25",
+   "match": "exact"
+  },
+  "mb-ep1b09": {
+   "name": "생체부트로더 연산핵",
+   "scene": "22",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-ep1b09-p1~p4.webp",
+   "file": "mb-ep1b09-attack.webp",
+   "frames": 4,
+   "driveId": "B26",
+   "match": "exact"
+  },
+  "b09-boss": {
+   "name": "사이보그 회장 · 생체 부트로더",
+   "scene": "22",
+   "source": "r96/runtime-text/assets/r104/bosses/b09-boss-p1~p4.webp",
+   "file": "b09-boss-attack.webp",
+   "frames": 4,
+   "driveId": "B27",
+   "match": "exact"
+  },
+  "u201-mid": {
+   "name": "제4단계 전쟁관리자",
+   "scene": "24",
+   "source": "r96/runtime-text/assets/r104/bosses/u201-mid-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B28",
+   "match": "likely"
+  },
+  "u202-mid": {
+   "name": "제8단계 자비 교정관",
+   "scene": "25",
+   "source": "r96/runtime-text/assets/r104/bosses/u202-mid-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B29",
+   "match": "likely"
+  },
+  "u204-mid": {
+   "name": "제12단계 기억 검열기",
+   "scene": "26",
+   "source": "r96/runtime-text/assets/r104/bosses/u204-mid-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B29",
+   "match": "exact"
+  },
+  "u205-mid": {
+   "name": "제14단계 역전 관리자",
+   "scene": "27",
+   "source": "r96/runtime-text/assets/r104/bosses/u205-mid-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B28",
+   "match": "exact"
+  },
+  "l301-boss": {
+   "name": "타락천사 기사",
+   "scene": "33",
+   "source": "r96/runtime-text/assets/r104/bosses/l301-boss-p1~p4.webp",
+   "file": "l301-boss-attack.webp",
+   "frames": 4,
+   "driveId": "B34",
+   "match": "exact"
+  },
+  "mb-last302-v31231": {
+   "name": "검은 안개 심장 · 불면의 기억",
+   "scene": "34",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-last302-v31231-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B35",
+   "match": "exact"
+  },
+  "mb-hando01": {
+   "name": "의존 신호 포식자",
+   "scene": "48",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-hando01-p1~p4.webp",
+   "file": "mb-hando01-attack.webp",
+   "frames": 4,
+   "driveId": "B47",
+   "match": "exact"
+  },
+  "mb-hando02": {
+   "name": "코어 운반 집행자",
+   "scene": "49",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-hando02-p1~p4.webp",
+   "file": "mb-hando02-attack.webp",
+   "frames": 4,
+   "driveId": "B48",
+   "match": "exact"
+  },
+  "mb-hando03": {
+   "name": "환수검 모조체",
+   "scene": "50",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-hando03-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B49",
+   "match": "exact"
+  },
+  "h103-boss": {
+   "name": "EGO 강탈 악몽왕",
+   "scene": "50",
+   "source": "r96/runtime-text/assets/r104/bosses/h103-boss-p1~p4.webp",
+   "file": "h103-boss-attack.webp",
+   "frames": 4,
+   "driveId": "B50",
+   "match": "exact"
+  },
+  "mb-murder01": {
+   "name": "파란불 역주행 목격자",
+   "scene": "52",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-murder01-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B51",
+   "match": "exact"
+  },
+  "mb-murder02": {
+   "name": "공실장부 당직감사",
+   "scene": "53",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-murder02-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B52",
+   "match": "exact"
+  },
+  "murder04-mid": {
+   "name": "진술 봉쇄 인과핵",
+   "scene": "54",
+   "source": "r96/runtime-text/assets/r104/bosses/murder04-mid-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B53",
+   "match": "exact"
+  },
+  "mb-murder03": {
+   "name": "옥상 인과보관인",
+   "scene": "55",
+   "source": "r96/runtime-text/assets/r104/bosses/mb-murder03-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B54",
+   "match": "exact"
+  },
+  "c104-boss": {
+   "name": "교만의 사이보그 교주",
+   "scene": "61",
+   "source": "r96/runtime-text/assets/r104/bosses/c104-boss-p1~p4.webp",
+   "file": null,
+   "frames": 4,
+   "driveId": "B63",
+   "match": "exact"
+  }
+ }
+}

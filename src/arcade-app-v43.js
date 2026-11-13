@@ -14,7 +14,7 @@
   // 그림 높이(픽셀). 모르는 키는 종류별 기본값(인물·몹·기물)을 쓴다. 부별 파일이 새 인물·몹·기물을 계속 들인다.
   var TALL={violet:112,balrog:124,mask:112,lucifer:124,asmodeus:108,pride:118,controller:118,goblin:104,insomnia:124,arbelia:108,siren:124,chief:124,executor:124,rian:108,cultist:124,
     spider:30,slime:28,ember:34,drone:26,mobgoblin:36,wolf:34,nightmare:40,collector:40,leech:34,guardian:62,warden:72,horn:84,belphegor:70,mammon:74,knight:80};
-  var ITEM_DRAW=22,TALL_ACTOR=116,TALL_MOB=58,TALL_ELITE=92;
+  var ITEM_DRAW=22,TALL_ACTOR=116,TALL_MOB=64,TALL_ELITE=92;
   var PROP_LONG={'sword-violet':68,cleaver:64,'sword-balrog':72,obelisk:80,spire:72,'twin-blade':62,crescent:58,tissue:34,money:36,heel:40,feather:44,cross:60,gear:56};
   var PROP_GLOW={'sword-violet':2,cleaver:5,'sword-balrog':0,obelisk:2,spire:4,'twin-blade':8,crescent:4,tissue:6,money:6,heel:0,feather:8,cross:6,gear:4};
   var ART_DIR='media/arcade-v43/';
@@ -82,12 +82,21 @@
     img.src=fileOf(key);
   }
   /* 스테이지에 필요한 그림: 배경 · 그 스테이지 SEGMENTS의 인물 · cast의 몹 · 기념물. 기물은 처음 화면에 나올 때 받는다. */
+  /* 장면마다 m0 지역표의 몹 그림을 입힌다(src/arcade-skins-v43.js). 시뮬의 몹 종류는 그대로고 그림만 바뀐다. */
+  var SKINS=(typeof ArcadeSkins==='object'&&ArcadeSkins&&ArcadeSkins.scenes)||{};
+  function skinsOf(index){var g=Arcade.STAGES[index],list=g&&SKINS[g.scene];return list&&list.length?list:null;}
+  function skinOf(index,kind){
+    var list=skinsOf(index);if(!list)return kind;
+    var g=Arcade.STAGES[index],at=(g.cast||[]).indexOf(kind);if(at<0){at=0;for(var i=0;i<kind.length;i++)at+=kind.charCodeAt(i);}
+    var key=list[at%list.length];return images[key]?key:(images[kind]?kind:key);
+  }
+  function facesRight(key){var e=manifest&&manifest[key+'.webp'];return !!e&&e.facing==='right';}
   function stageKeys(index){
     var g=Arcade.STAGES[index];if(!g)return [];
     var list=[],add=function(k){if(k&&list.indexOf(k)<0)list.push(k);};
     var bg=themeOf(index).bg;if(bg)add('bg-'+bg);
     for(var i=g.first;i<Arcade.SEGMENTS.length&&Arcade.SEGMENTS[i].stage===index;i++){var seg=Arcade.SEGMENTS[i];if(seg.kind==='card')add(seg.actor);}
-    (g.cast||[]).forEach(add);
+    var skin=skinsOf(index);(skin||g.cast||[]).forEach(add); // m0 지역표 몹이 있으면 그것만 받는다
     // 동작 그림(옆 걷기·공격 등)은 목록에 있을 때만 같이 받는다.
     list.slice().forEach(function(k){motionsOf(k).forEach(function(m){add(k+'@'+m);});});
     if(g.reward&&g.reward.key)add('reward-'+g.reward.key);
@@ -358,9 +367,10 @@
   }
 
   // 그림이 없으면(아직 받는 중이거나 없는 그림) 색 도형으로 대신 그린다.
-  function drawArt(key,x,y,flashOn,fallbackColor,phase,motion,flip){
-    var tall=tallOf(key),base=key;
-    if(motion&&images[key+'@'+motion])key=key+'@'+motion;else flip=false;
+  function drawArt(key,x,y,flashOn,fallbackColor,phase,motion,face,sizeKey){
+    var tall=tallOf(sizeKey||key);
+    if(motion&&images[key+'@'+motion])key=key+'@'+motion;
+    var flip=face<0&&facesRight(key); // 옆모습 그림은 오른쪽을 본다. 왼쪽으로 갈 때만 뒤집는다.
     var img=images[key];
     if(!img){
       ctx.save();ctx.globalAlpha=flashOn?.9:.6;ctx.strokeStyle=fallbackColor||'#ffffff';ctx.fillStyle='rgba(10,8,20,.7)';ctx.lineWidth=2;
@@ -392,11 +402,11 @@
     var bdx=bx-bp.x;bp.x=bx;if(Math.abs(bdx)>.3){bp.side=10;bp.dir=bdx<0?-1:1;}else if(bp.side>0)bp.side--;
     if(s.stage==='card'&&s.n-bp.n>=6)bp.until=s.tick+30;bp.n=s.n; // 탄을 한꺼번에 뿌린 순간이 공격 동작
     var bm=s.tick<bp.until&&images[b.actor+'@attack']?'attack':bp.side>0?'side':'';
-    drawArt(b.actor,bx,by,s.tick-b.hitTick<3,themeColor(s),0,bm,bm==='side'&&bp.dir<0);
+    drawArt(b.actor,bx,by,s.tick-b.hitTick<3,themeColor(s),0,bm,bp.dir||(bx>W/2?-1:1));
   }
   function drawMobs(s){
     var tint=Arcade.PALETTE[s.stageIndex%Arcade.PALETTE.length],color=themeColor(s);
-    for(var i=0;i<s.mobs.length;i++){var m=s.mobs[i],glow=orbs[2][tint],reach=m.r*1.5;if(m.x!==m.x||m.y!==m.y)continue;if(!images[m.kind]){ctx.globalAlpha=.3;ctx.drawImage(glow.image,m.x-reach,m.y-reach,reach*2,reach*2);ctx.globalAlpha=1;}var po=poseOf(s,m),mo=po&&s.tick<po.until&&images[m.kind+'@attack']?'attack':po&&po.side>0?'side':'';drawArt(m.kind,m.x,m.y+Math.sin(visual*4+i)*2,s.tick-m.hitTick<3,color,Math.floor(finite(m.baseX,0)/9)+(m.elite?3:0),mo,mo==='side'&&po.dir<0);} // 시작 칸을 나온 자리로 어긋나게 해 떼가 똑같이 움직이지 않는다
+    for(var i=0;i<s.mobs.length;i++){var m=s.mobs[i],glow=orbs[2][tint],reach=m.r*1.5;if(m.x!==m.x||m.y!==m.y)continue;var art=skinOf(s.stageIndex,m.kind);if(!images[art]){ctx.globalAlpha=.3;ctx.drawImage(glow.image,m.x-reach,m.y-reach,reach*2,reach*2);ctx.globalAlpha=1;}else{var halo=tallOf(m.kind)*.62;ctx.globalAlpha=.17;ctx.drawImage(glow.image,m.x-halo,m.y-halo,halo*2,halo*2);ctx.globalAlpha=1;} /* 어두운 배경에서 몹이 묻히지 않게 뒤에 옅은 빛만 깐다 */var po=poseOf(s,m),mo=po&&s.tick<po.until&&images[art+'@attack']?'attack':po&&po.side>0?'side':'';drawArt(art,m.x,m.y+Math.sin(visual*4+i)*2,s.tick-m.hitTick<3,color,Math.floor(finite(m.baseX,0)/9)+(m.elite?3:0),mo,(po&&po.dir)||(m.x>W/2?-1:1),m.kind);} // 시작 칸을 나온 자리로 어긋나게 해 떼가 똑같이 움직이지 않는다
   }
   function drawItems(s){
     // 하트가 고동친다. 드라이브 하트 그림(heart)이 있으면 점수 아이템은 그 그림으로.
