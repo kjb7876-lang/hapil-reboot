@@ -1,4 +1,4 @@
-/* 합일 v38 · ARCADE 탄막 모드 — 화면·입력·소리.
+/* 합일 v39 · ARCADE 탄막 모드 — 화면·입력·소리.
  * 시뮬레이션은 arcade-v38.js가 맡고, 여기서는 그 상태를 읽어 그리기만 한다. */
 (function(global){
   'use strict';
@@ -13,8 +13,10 @@
   var SERIF='"Noto Serif KR","Nanum Myeongjo","Apple SD Gothic Neo",serif',SANS='system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif';
   var BOSS_HEIGHT=124,SLOW_FRAME_MS=21,VERY_SLOW_FRAME_MS=28,MAX_PARTICLES=360;
 
+  var SHAPE_RICE=3,SHAPE_BUBBLE=4;
+  var NOTES={gentle:'목숨 6 · 느린 탄 · 아주 작은 피격점 · 광선 예고 길게',normal:'목숨 4 · 탄 보통 · 광선 3줄',hell:'목숨 3 · 빠르고 빽빽한 탄 · 격자 광선 동시 발사'};
   var images={},orbs=[],shotSprite=null,homingSprite=null,circleSprite=null,backgrounds={};
-  var scale=1,lite=false,frameMs=16,framesSeen=0;
+  var scale=1,lite=false,frameMs=16,framesSeen=0,offsetX=0,offsetY=0;
   var state=null,mode='title',difficulty='normal',accumulator=0,lastStamp=0,visual=0;
   var particles=[],flash=0,hurtFlash=0,shake=0,shock=null,cutIn=0;
   var keys={},drag={active:false,id:null,x:0,y:0,pendingX:0,pendingY:0};
@@ -32,8 +34,28 @@
     g.fillStyle=grad;g.beginPath();g.arc(m,m,r,0,TAU);g.fill();
     return {image:c,half:reach};
   }
+  // 쌀알탄: 오른쪽(진행 방향)으로 길쭉한 알. 그릴 때 탄의 각도로 돌린다.
+  function buildRice(radius,color,rim){
+    var longHalf=radius*2.6,reach=longHalf+(lite?1:4),c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale;
+    g.translate(m,m);g.scale(scale,scale);
+    if(!lite){g.fillStyle=color+'55';g.beginPath();g.ellipse(0,0,longHalf+3,radius+3,0,0,TAU);g.fill();}
+    g.fillStyle=rim;g.beginPath();g.ellipse(0,0,longHalf,radius,0,0,TAU);g.fill();
+    g.fillStyle=color;g.beginPath();g.ellipse(0,0,longHalf-1,radius-.8,0,0,TAU);g.fill();
+    g.fillStyle='#ffffff';g.beginPath();g.ellipse(0,0,longHalf*.62,radius*.5,0,0,TAU);g.fill();
+    return {image:c,half:reach};
+  }
+  // 거품: 속이 비치는 큰 방울. 터지기 전의 독 포자·운석에 쓴다.
+  function buildBubble(radius,color,rim){
+    var reach=radius*(lite?1.15:1.6),c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale,r=radius*scale,grad;
+    if(!lite){grad=g.createRadialGradient(m,m,r*.8,m,m,reach*scale);grad.addColorStop(0,color+'88');grad.addColorStop(1,color+'00');g.fillStyle=grad;g.fillRect(0,0,c.width,c.height);}
+    grad=g.createRadialGradient(m,m,r*.2,m,m,r);grad.addColorStop(0,color+'30');grad.addColorStop(.7,color+'70');grad.addColorStop(.9,color);grad.addColorStop(1,rim);
+    g.fillStyle=grad;g.beginPath();g.arc(m,m,r,0,TAU);g.fill();
+    g.fillStyle='rgba(255,255,255,.85)';g.beginPath();g.ellipse(m-r*.38,m-r*.42,r*.26,r*.15,-.6,0,TAU);g.fill();
+    g.fillStyle='#ffffff';g.beginPath();g.arc(m,m,r*.22,0,TAU);g.fill();
+    return {image:c,half:reach};
+  }
   function buildSprites(){
-    orbs=[];Arcade.SIZE_RADIUS.forEach(function(radius,size){orbs[size]=COLORS.map(function(color,i){return buildOrb(radius,color,RIM[i]);});});
+    orbs=[];Arcade.SIZE_RADIUS.forEach(function(radius,size){orbs[size]=COLORS.map(function(color,i){return size===SHAPE_RICE?buildRice(radius,color,RIM[i]):size===SHAPE_BUBBLE?buildBubble(radius,color,RIM[i]):buildOrb(radius,color,RIM[i]);});});
     var c=offscreen(8*scale,26*scale),g=c.getContext('2d'),grad=g.createLinearGradient(0,0,0,c.height);
     grad.addColorStop(0,'#ffffff');grad.addColorStop(.35,'#9fefff');grad.addColorStop(1,'#35d6ff00');g.fillStyle=grad;g.beginPath();g.ellipse(c.width/2,c.height/2,c.width*.32,c.height/2,0,0,TAU);g.fill();shotSprite=c;
     homingSprite=buildOrb(3,'#7df3ff','#0a6a8a');
@@ -82,6 +104,9 @@
       else if(e==='win'){play('win');flash=1;shock={x:s.boss.x,y:s.boss.y,r:10};finish();}
       else if(e==='lose'){play('lose');finish();}
       else if(e==='countdown'||e==='countdownLast')play(e);
+      else if(e==='laserWarn')play('laserWarn',s.boss.x);
+      else if(e==='laserFire'){play('laserFire',s.boss.x);shake=Math.max(shake,5);}
+      else if(e==='pop')play('kill',s.boss.x);
     }
     s.events.length=0;
   }
@@ -104,7 +129,9 @@
     var bloom=Arcade.BLOOM_TICKS,i,o,half;
     for(i=0;i<s.n;i++){
       if(s.bage[i]<bloom)continue;
-      o=orbs[s.bsize[i]][s.bcolor[i]];half=o.half;ctx.drawImage(o.image,s.bx[i]-half,s.by[i]-half,half*2,half*2);
+      o=orbs[s.bsize[i]][s.bcolor[i]];half=o.half;
+      if(s.bsize[i]===SHAPE_RICE){var cos=Math.cos(s.ba[i]),sin=Math.sin(s.ba[i]);ctx.setTransform(scale*cos,scale*sin,-scale*sin,scale*cos,(s.bx[i]+offsetX)*scale,(s.by[i]+offsetY)*scale);ctx.drawImage(o.image,-half,-half,half*2,half*2);ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);}
+      else ctx.drawImage(o.image,s.bx[i]-half,s.by[i]-half,half*2,half*2);
     }
     // 갓 피어나는 탄: 크고 옅게 시작해 제 크기로 조여 든다.
     for(i=0;i<s.n;i++){
@@ -112,6 +139,27 @@
       var t=age/bloom;o=orbs[s.bsize[i]][s.bcolor[i]];half=o.half*(2.4-1.4*t);ctx.globalAlpha=.25+.6*t;ctx.drawImage(o.image,s.bx[i]-half,s.by[i]-half,half*2,half*2);
     }
     ctx.globalAlpha=1;
+  }
+  /* 광선. 예고: 가는 점선이 굵어지며 깜빡인다 → 발사: 색 빛무리 + 흰 심 → 잔광: 가늘어지며 사라진다. */
+  function drawLasers(s){
+    if(!s.lasers.length)return;
+    ctx.save();ctx.lineCap='butt';
+    for(var i=0;i<s.lasers.length;i++){
+      var l=s.lasers[i],color=COLORS[l.color],x2=l.x+Math.cos(l.angle)*1000,y2=l.y+Math.sin(l.angle)*1000;
+      ctx.beginPath();ctx.moveTo(l.x,l.y);ctx.lineTo(x2,y2);
+      if(l.age<l.warn){
+        var t=l.age/l.warn,blink=.5+.5*Math.sin(l.age*(.25+t*.5));
+        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=.10+.16*t;ctx.strokeStyle=color;ctx.lineWidth=l.width*(.25+.75*t);ctx.setLineDash([]);ctx.stroke();
+        ctx.globalAlpha=.45+.5*blink;ctx.strokeStyle='#ffffff';ctx.lineWidth=1;ctx.setLineDash([7,6]);ctx.stroke();
+      }else{
+        var over=l.age-l.warn-l.active,k=over>0?Math.max(0,1-over/Arcade.BEAM_FADE):Math.min(1,(l.age-l.warn+1)/4),pulse=1+Math.sin(visual*40+i)*.06;
+        ctx.setLineDash([]);ctx.globalCompositeOperation='lighter';
+        if(!lite){ctx.globalAlpha=.3*k;ctx.strokeStyle=color;ctx.lineWidth=l.width*2.3*k*pulse;ctx.stroke();}
+        ctx.globalAlpha=.9*k;ctx.strokeStyle=color;ctx.lineWidth=l.width*k*pulse;ctx.stroke();
+        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=k;ctx.strokeStyle='#ffffff';ctx.lineWidth=l.width*.46*k;ctx.stroke();
+      }
+    }
+    ctx.restore();
   }
   function drawShots(s){
     ctx.globalAlpha=.8;
@@ -125,7 +173,7 @@
     var p=s.player,blink=s.tick<p.invulnerableUntil&&Math.floor(s.tick/4)%2;
     if(images.player){ctx.globalAlpha=blink?.35:.95;ctx.drawImage(images.player,p.x-258.5369*57/512,p.y-283.8754*57/512,57,57);ctx.globalAlpha=1;}
     if(p.focus||s.tick<p.invulnerableUntil){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(visual*3);ctx.strokeStyle='rgba(255,255,255,.55)';ctx.lineWidth=1;ctx.setLineDash([5,5]);ctx.beginPath();ctx.arc(0,0,p.focus?17:24,0,TAU);ctx.stroke();ctx.restore();}
-    ctx.fillStyle='#ff2a4a';ctx.beginPath();ctx.arc(p.x,p.y,4.2,0,TAU);ctx.fill();ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(p.x,p.y,2.6,0,TAU);ctx.fill();
+    ctx.fillStyle='#ff2a4a';ctx.beginPath();ctx.arc(p.x,p.y,p.r+1.8,0,TAU);ctx.fill();
   }
   function drawParticles(){
     ctx.save();ctx.globalCompositeOperation='lighter';
@@ -166,10 +214,11 @@
   function draw(){
     var s=state;ctx.setTransform(scale,0,0,scale,0,0);
     if(!s){ctx.fillStyle='#07070f';ctx.fillRect(0,0,W,H);if(backgrounds.violet)ctx.drawImage(backgrounds.violet,0,-80,W,H+160);return;}
-    ctx.save();if(shake>0){ctx.translate((Math.random()-.5)*shake*.7,(Math.random()-.5)*shake*.7);shake--;}
-    drawBackground(s);drawBoss(s);drawShots(s);drawPlayer(s);drawParticles();drawBullets(s);
+    offsetX=offsetY=0;if(shake>0){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;shake--;}
+    ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
+    drawBackground(s);drawBoss(s);drawShots(s);drawPlayer(s);drawParticles();drawLasers(s);drawBullets(s);
     // 피격점은 탄에 가려지지 않도록 맨 위에 한 번 더 찍는다.
-    ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(s.player.x,s.player.y,2.2,0,TAU);ctx.fill();
+    ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(s.player.x,s.player.y,Math.max(1.2,s.player.r),0,TAU);ctx.fill();
     ctx.restore();drawHud(s);
     if(flash>0){ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);flash-=.04;}
     if(hurtFlash>0){var v=ctx.createRadialGradient(W/2,H/2,120,W/2,H/2,420);v.addColorStop(0,'rgba(255,0,40,0)');v.addColorStop(1,'rgba(255,0,40,'+(hurtFlash*.6)+')');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);hurtFlash-=.035;}
@@ -208,7 +257,7 @@
   }
   function pause(){if(mode==='playing')setMode('paused');}
   function bind(){
-    document.querySelectorAll('[data-difficulty]').forEach(function(button){button.addEventListener('click',function(){difficulty=button.dataset.difficulty;document.querySelectorAll('[data-difficulty]').forEach(function(b){b.setAttribute('aria-pressed',String(b===button));});});});
+    document.querySelectorAll('[data-difficulty]').forEach(function(button){button.addEventListener('click',function(){difficulty=button.dataset.difficulty;$('difficulty-note').textContent=NOTES[difficulty];document.querySelectorAll('[data-difficulty]').forEach(function(b){b.setAttribute('aria-pressed',String(b===button));});});});
     $('arcade-start').addEventListener('click',start);$('arcade-retry').addEventListener('click',start);
     $('arcade-resume').addEventListener('click',function(){if(fx)fx.unlock();accumulator=0;lastStamp=0;setMode('playing');});
     $('arcade-pause-button').addEventListener('click',pause);
