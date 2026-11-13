@@ -3,22 +3,54 @@
   "p1_tree": {
    "src": "media/drive-v43/b01-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/dist00-boss-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "p1_horn": {
    "src": "media/drive-v43/b03-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/mb-dist02-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "p1_chaser": {
    "src": "media/drive-v43/b04-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/mb-dist03-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "p1_comrade": {
    "src": "media/drive-v43/b05-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/mb-dist04-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "p1_gate": {
    "src": "media/drive-v43/m042-down.webp",
@@ -28,16 +60,42 @@
   "p1_staff": {
    "src": "media/drive-v43/b09-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/mb-ep1a08-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "p1_seraph": {
-   "src": "media/actors-v7/lucifer-attack.png"
+   "src": "media/actors-v7/lucifer-attack.png",
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/a11-boss-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   }
  },
  "mobs": {
   "p1_root": {
-   "src": "media/drive-v43/0074nt-3a-oak.webp",
-   "size": 150
+   "src": "media/m0-v43/dist00_r383-root_0_5-move.webp",
+   "strip": 4,
+   "fps": 7,
+   "facing": "right",
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/dist00_r383-root_0_5-attack.webp",
+     "strip": 3,
+     "fps": 8,
+     "facing": "right"
+    }
+   }
   },
   "p1_reed": {
    "src": "media/fx-v8/reed.webp",

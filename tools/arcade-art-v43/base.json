@@ -3,22 +3,54 @@
   "violet": {
    "src": "media/drive-v43/b02-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/mb-dist01-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "balrog": {
    "src": "media/drive-v43/b08-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/dist06-boss-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "mask": {
    "src": "media/drive-v43/b11-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/mb-ep1a11-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "lucifer": {
    "src": "media/drive-v43/b12-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/a11-boss-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "asmodeus": {
    "src": "media/sins-v13/asmodeus-atlas-512.png",
@@ -36,7 +68,15 @@
     0,
     2,
     2
-   ]
+   ],
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/b08-boss-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "controller": {
    "src": "media/chapter3-v18/controller-idle.webp"
@@ -64,7 +104,15 @@
   "chief": {
    "src": "media/drive-v43/b50-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/h103-boss-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "executor": {
    "src": "media/story-v19/executor-idle.webp"

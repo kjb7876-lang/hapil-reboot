@@ -1,0 +1,6 @@
+not ok 1 - v43 skins: most scenes draw the mobs of their own m0 map, every picture exists and stays small
+  error: 'art m0_a10_s1'
+not ok 2 - v43 skins: no structure or scenery picture stands in for a mob, and side-facing strips say which way they look
+  error: 'p1_root.webp uses media/drive-v43/0074nt-3a-oak.webp'
+not ok 3 - v43 skins: the page loads the skin table, bosses have attack poses, score items are hearts
+  error: 'bosses with an attack motion: 0'

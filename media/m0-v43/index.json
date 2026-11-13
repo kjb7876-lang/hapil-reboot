@@ -1,0 +1,2853 @@
+{
+ "source": "kjb7876-lang/m0 40adc6c",
+ "facing": "right",
+ "mobs": {
+  "dist00:r383-root:0..5": {
+   "name": "뿌리 추적자",
+   "map": "dist00",
+   "source": "r96/runtime-text/assets/r380/mobs/root-stalker-r74-plain-walk-d1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "dist00_r383-root_0_5-move.webp",
+    "frames": 4,
+    "cell": [
+     113,
+     122
+    ],
+    "bytes": 23744
+   },
+   "attack": {
+    "file": "dist00_r383-root_0_5-attack.webp",
+    "frames": 3,
+    "cell": [
+     168,
+     142
+    ],
+    "bytes": 22464
+   }
+  },
+  "dist01-sp1": {
+   "name": "재 나방 / 보랏빛 알집지기 / 거미줄에 묶인 수호병 (번갈아 개명)",
+   "map": "dist01",
+   "source": "r96/runtime-text/assets/r380/mobs/ash-moth-v2.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "dist01-sp1-move.webp",
+    "frames": 4,
+    "cell": [
+     135,
+     161
+    ],
+    "bytes": 20418
+   },
+   "attack": {
+    "file": "dist01-sp1-attack.webp",
+    "frames": 4,
+    "cell": [
+     137,
+     166
+    ],
+    "bytes": 22238
+   }
+  },
+  "dist01-sp2": {
+   "name": "보랏빛 알집지기",
+   "map": "dist01",
+   "source": "r96/runtime-text/assets/r380/mobs/purple-eggkeeper-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "dist01-sp2-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     156
+    ],
+    "bytes": 43874
+   },
+   "attack": {
+    "file": "dist01-sp2-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     145
+    ],
+    "bytes": 37652
+   }
+  },
+  "dist01-s1": {
+   "name": "거미줄에 묶인 수호병",
+   "map": "dist01",
+   "source": "r96/runtime-text/assets/r380/mobs/web-bound-guardian-v4.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "dist01-s1-move.webp",
+    "frames": 4,
+    "cell": [
+     79,
+     124
+    ],
+    "bytes": 26016
+   },
+   "attack": {
+    "file": "dist01-s1-attack.webp",
+    "frames": 4,
+    "cell": [
+     113,
+     116
+    ],
+    "bytes": 26054
+   }
+  },
+  "dist02-h1": {
+   "name": "늪의 염소머리 악마",
+   "map": "dist02",
+   "source": "r96/runtime-text/assets/r380/mobs/swamp-goat-darkgreen-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "dist02-h1-move.webp",
+    "frames": 4,
+    "cell": [
+     125,
+     168
+    ],
+    "bytes": 42950
+   },
+   "attack": {
+    "file": "dist02-h1-attack.webp",
+    "frames": 4,
+    "cell": [
+     141,
+     168
+    ],
+    "bytes": 40620
+   }
+  },
+  "dist02-g1": {
+   "name": "늪에서 되살아난 혼령체",
+   "map": "dist02",
+   "source": "r96/runtime-text/assets/r380/mobs/swamp-spirit-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "dist02-g1-move.webp",
+    "frames": 4,
+    "cell": [
+     119,
+     168
+    ],
+    "bytes": 32840
+   },
+   "attack": {
+    "file": "dist02-g1-attack.webp",
+    "frames": 4,
+    "cell": [
+     154,
+     168
+    ],
+    "bytes": 36830
+   }
+  },
+  "dist02-m1": {
+   "name": "수렁 주문사",
+   "map": "dist02",
+   "source": "r96/runtime-text/assets/r380/mobs/swamp-mage-darkgreen-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "dist02-m1-move.webp",
+    "frames": 4,
+    "cell": [
+     134,
+     168
+    ],
+    "bytes": 37100
+   },
+   "attack": {
+    "file": "dist02-m1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     167
+    ],
+    "bytes": 41544
+   }
+  },
+  "dist02-sp1": {
+   "name": "진흙등 거미",
+   "map": "dist02",
+   "source": "r96/runtime-text/assets/r290/mobs/m003.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "dist02-sp1-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     126
+    ],
+    "bytes": 34028
+   },
+   "attack": {
+    "file": "dist02-sp1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     113
+    ],
+    "bytes": 30326
+   }
+  },
+  "dist02:r74-patrol:0..5": {
+   "name": "늪 뿌리 추적자",
+   "map": "dist02",
+   "source": "r96/runtime-text/assets/r380/mobs/swamp-root-stalker-darkgreen-v2-walk-d1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "dist02_r74-patrol_0_5-move.webp",
+    "frames": 4,
+    "cell": [
+     149,
+     168
+    ],
+    "bytes": 36560
+   },
+   "attack": {
+    "file": "dist02_r74-patrol_0_5-attack.webp",
+    "frames": 3,
+    "cell": [
+     168,
+     158
+    ],
+    "bytes": 22618
+   }
+  },
+  "dist03-s1": {
+   "name": "쓰러진 수호병",
+   "map": "dist03",
+   "source": "r96/runtime-text/assets/r116/mobs/M001-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "dist03-s1-move.webp",
+    "frames": 4,
+    "cell": [
+     113,
+     151
+    ],
+    "bytes": 34454
+   }
+  },
+  "dist03-c1": {
+   "name": "보라검 추격천사",
+   "map": "dist03",
+   "source": "r96/runtime-text/assets/r290/mobs/m004.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "dist03-c1-move.webp",
+    "frames": 4,
+    "cell": [
+     159,
+     168
+    ],
+    "bytes": 36038
+   },
+   "attack": {
+    "file": "dist03-c1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     155
+    ],
+    "bytes": 34802
+   }
+  },
+  "dist03-g1": {
+   "name": "피냄새 추적자",
+   "map": "dist03",
+   "source": "r96/runtime-text/assets/r116/mobs/M006-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "dist03-g1-move.webp",
+    "frames": 4,
+    "cell": [
+     128,
+     150
+    ],
+    "bytes": 29048
+   }
+  },
+  "dist03-sp1": {
+   "name": "기억 운반거미",
+   "map": "dist03",
+   "source": "r96/runtime-text/assets/r290/mobs/m005.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "dist03-sp1-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     115
+    ],
+    "bytes": 26906
+   },
+   "attack": {
+    "file": "dist03-sp1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     108
+    ],
+    "bytes": 27424
+   }
+  },
+  "dist04-c1": {
+   "name": "되살아난 방패동료",
+   "map": "dist04",
+   "source": "r96/runtime-text/assets/r380/mobs/reborn-shieldmate-v4.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "dist04-c1-move.webp",
+    "frames": 4,
+    "cell": [
+     102,
+     168
+    ],
+    "bytes": 23716
+   },
+   "attack": {
+    "file": "dist04-c1-attack.webp",
+    "frames": 4,
+    "cell": [
+     154,
+     162
+    ],
+    "bytes": 27484
+   }
+  },
+  "dist04-s1": {
+   "name": "이름 잃은 전우",
+   "map": "dist04",
+   "source": "r96/runtime-text/assets/r410/mobs/m007.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "dist04-s1-move.webp",
+    "frames": 4,
+    "cell": [
+     111,
+     168
+    ],
+    "bytes": 22376
+   },
+   "attack": {
+    "file": "dist04-s1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     150
+    ],
+    "bytes": 31702
+   }
+  },
+  "dist04-g1": {
+   "name": "피로 꿰맨 전령",
+   "map": "dist04",
+   "source": "r96/runtime-text/assets/r116/mobs/M006-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "dist04-g1-move.webp",
+    "frames": 4,
+    "cell": [
+     128,
+     150
+    ],
+    "bytes": 29048
+   }
+  },
+  "dist05-h1": {
+   "name": "소환진 순례악마",
+   "map": "dist05",
+   "source": "r96/runtime-text/assets/r109/mobs/M008-move.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "dist05-h1-move.webp",
+    "frames": 4,
+    "cell": [
+     147,
+     156
+    ],
+    "bytes": 40494
+   }
+  },
+  "dist05-m1": {
+   "name": "검은기둥 주문사",
+   "map": "dist05",
+   "source": "r96/runtime-text/assets/r410/mobs/m009.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "dist05-m1-move.webp",
+    "frames": 4,
+    "cell": [
+     107,
+     168
+    ],
+    "bytes": 25486
+   },
+   "attack": {
+    "file": "dist05-m1-attack.webp",
+    "frames": 4,
+    "cell": [
+     127,
+     168
+    ],
+    "bytes": 32874
+   }
+  },
+  "dist05-c1": {
+   "name": "검은기둥 가고일 수호자",
+   "map": "dist05",
+   "source": "r96/runtime-text/assets/r109/mobs/M007-move.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "dist05-c1-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     134
+    ],
+    "bytes": 30128
+   }
+  },
+  "dist05-s1": {
+   "name": "마지막 길의 호위병",
+   "map": "dist05",
+   "source": "r96/runtime-text/assets/r116/mobs/M001-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "dist05-s1-move.webp",
+    "frames": 4,
+    "cell": [
+     113,
+     151
+    ],
+    "bytes": 34454
+   }
+  },
+  "dist06-h1": {
+   "name": "지옥문 파수악마",
+   "map": "dist06",
+   "source": "r96/runtime-text/assets/r410/mobs/m011.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "dist06-h1-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     114
+    ],
+    "bytes": 26730
+   },
+   "attack": {
+    "file": "dist06-h1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     138
+    ],
+    "bytes": 33674
+   }
+  },
+  "dist06-m1": {
+   "name": "검은기둥 화염술사",
+   "map": "dist06",
+   "source": "r96/runtime-text/assets/r109/mobs/M003-move.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "dist06-m1-move.webp",
+    "frames": 4,
+    "cell": [
+     116,
+     156
+    ],
+    "bytes": 30876
+   }
+  },
+  "dist06-c1": {
+   "name": "소환진 타락천사",
+   "map": "dist06",
+   "source": "r96/runtime-text/assets/r410/mobs/m013.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "dist06-c1-move.webp",
+    "frames": 4,
+    "cell": [
+     159,
+     168
+    ],
+    "bytes": 36370
+   },
+   "attack": {
+    "file": "dist06-c1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     156
+    ],
+    "bytes": 35382
+   }
+  },
+  "a08-o1": {
+   "name": "백의 구속자",
+   "map": "ep1a08",
+   "source": "r96/runtime-text/assets/r198/mobs/M012-idle.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "a08-o1-move.webp",
+    "frames": 2,
+    "cell": [
+     100,
+     157
+    ],
+    "bytes": 12864
+   }
+  },
+  "a08-s1": {
+   "name": "복도 비명잔영",
+   "map": "ep1a08",
+   "source": "r96/runtime-text/assets/r116/mobs/M011-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "a08-s1-move.webp",
+    "frames": 2,
+    "cell": [
+     110,
+     151
+    ],
+    "bytes": 17386
+   }
+  },
+  "a08-c1": {
+   "name": "소독등 타락천사",
+   "map": "ep1a08",
+   "source": "r96/runtime-text/assets/r410/mobs/m016.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "a08-c1-move.webp",
+    "frames": 4,
+    "cell": [
+     141,
+     168
+    ],
+    "bytes": 29048
+   },
+   "attack": {
+    "file": "a08-c1-attack.webp",
+    "frames": 4,
+    "cell": [
+     143,
+     168
+    ],
+    "bytes": 28796
+   }
+  },
+  "a08-o2": {
+   "name": "안정화 집행체",
+   "map": "ep1a08",
+   "source": "r96/runtime-text/assets/r410/mobs/m015.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "a08-o2-move.webp",
+    "frames": 4,
+    "cell": [
+     111,
+     168
+    ],
+    "bytes": 18626
+   },
+   "attack": {
+    "file": "a08-o2-attack.webp",
+    "frames": 4,
+    "cell": [
+     132,
+     168
+    ],
+    "bytes": 19414
+   }
+  },
+  "a09-o1": {
+   "name": "주사실 감시환각",
+   "map": "ep1a09",
+   "source": "r96/runtime-text/assets/r198/mobs/M012-idle.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "a09-o1-move.webp",
+    "frames": 2,
+    "cell": [
+     100,
+     157
+    ],
+    "bytes": 12864
+   }
+  },
+  "a09-v1": {
+   "name": "갈망의 약병핵",
+   "map": "ep1a09",
+   "source": "r96/runtime-text/assets/r116/mobs/M013-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "a09-v1-move.webp",
+    "frames": 2,
+    "cell": [
+     107,
+     150
+    ],
+    "bytes": 16288
+   }
+  },
+  "ep1a09:r74-patrol:*": {
+   "name": "유리 망령",
+   "map": "ep1a09",
+   "source": "r96/runtime-text/assets/r380/mobs/glass-wraith-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "ep1a09_r74-patrol_-move.webp",
+    "frames": 4,
+    "cell": [
+     93,
+     168
+    ],
+    "bytes": 21386
+   },
+   "attack": {
+    "file": "ep1a09_r74-patrol_-attack.webp",
+    "frames": 4,
+    "cell": [
+     127,
+     168
+    ],
+    "bytes": 22622
+   }
+  },
+  "a10-s1": {
+   "name": "부정의 잔영",
+   "map": "ep1a10",
+   "source": "r96/runtime-text/assets/r290/mobs/m066.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "a10-s1-move.webp",
+    "frames": 4,
+    "cell": [
+     97,
+     168
+    ],
+    "bytes": 15644
+   },
+   "attack": {
+    "file": "a10-s1-attack.webp",
+    "frames": 4,
+    "cell": [
+     112,
+     168
+    ],
+    "bytes": 15746
+   }
+  },
+  "a10-o1": {
+   "name": "암시장의 수상한 자",
+   "map": "ep1a10",
+   "source": "r96/runtime-text/assets/r380/mobs/blackmarket-suspect-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "a10-o1-move.webp",
+    "frames": 4,
+    "cell": [
+     135,
+     168
+    ],
+    "bytes": 22544
+   },
+   "attack": {
+    "file": "a10-o1-attack.webp",
+    "frames": 4,
+    "cell": [
+     150,
+     168
+    ],
+    "bytes": 23578
+   }
+  },
+  "a10-h1": {
+   "name": "약을 갈망하는 자",
+   "map": "ep1a10",
+   "source": "r96/runtime-text/assets/r380/mobs/drug-craver-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "a10-h1-move.webp",
+    "frames": 4,
+    "cell": [
+     109,
+     168
+    ],
+    "bytes": 19564
+   },
+   "attack": {
+    "file": "a10-h1-attack.webp",
+    "frames": 4,
+    "cell": [
+     109,
+     168
+    ],
+    "bytes": 21540
+   }
+  },
+  "a11-c1": {
+   "name": "거짓천국 근위천사",
+   "map": "ep1a11",
+   "source": "r96/runtime-text/assets/r380/mobs/false-heaven-guard-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "a11-c1-move.webp",
+    "frames": 4,
+    "cell": [
+     160,
+     166
+    ],
+    "bytes": 43578
+   },
+   "attack": {
+    "file": "a11-c1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     148
+    ],
+    "bytes": 41236
+   }
+  },
+  "a11-o1": {
+   "name": "치료거부의 가면",
+   "map": "ep1a11",
+   "source": "r96/runtime-text/assets/r380/mobs/treatment-refusal-mask-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "a11-o1-move.webp",
+    "frames": 4,
+    "cell": [
+     165,
+     150
+    ],
+    "bytes": 32712
+   },
+   "attack": {
+    "file": "a11-o1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     152
+    ],
+    "bytes": 31324
+   }
+  },
+  "b01-r1": {
+   "name": "일흔두 번째 인장 잔류체",
+   "map": "ep1b01",
+   "source": "r96/runtime-text/assets/r380/mobs/ep1b-seal-residual-float-d1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "b01-r1-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     123
+    ],
+    "bytes": 34206
+   },
+   "attack": {
+    "file": "b01-r1-attack.webp",
+    "frames": 1,
+    "cell": [
+     168,
+     119
+    ],
+    "bytes": 10400
+   }
+  },
+  "b01-c1": {
+   "name": "검은 실의 외부 신호",
+   "map": "ep1b01",
+   "source": "r96/runtime-text/assets/r109/mobs/M019-move.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "b01-c1-move.webp",
+    "frames": 4,
+    "cell": [
+     130,
+     151
+    ],
+    "bytes": 43412
+   }
+  },
+  "b01-s1": {
+   "name": "이름 없던 공포",
+   "map": "ep1b01",
+   "source": "r96/runtime-text/assets/r116/mobs/M018-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "b01-s1-move.webp",
+    "frames": 2,
+    "cell": [
+     128,
+     151
+    ],
+    "bytes": 17758
+   }
+  },
+  "b02-m1": {
+   "name": "곰팡이와 오물 봉투",
+   "map": "ep1b02",
+   "source": "r96/runtime-text/assets/r198/mobs/M022-move.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "b02-m1-move.webp",
+    "frames": 2,
+    "cell": [
+     168,
+     87
+    ],
+    "bytes": 11910
+   }
+  },
+  "b02-b1": {
+   "name": "등에 붙은 쓰레기더미",
+   "map": "ep1b02",
+   "source": "r96/runtime-text/assets/r116/mobs/M021-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "b02-b1-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     141
+    ],
+    "bytes": 35974
+   }
+  },
+  "b02-o1": {
+   "name": "살아 움직이는 쓰레기들",
+   "map": "ep1b02",
+   "source": "r96/runtime-text/assets/r380/mobs/living-trash-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "b02-o1-move.webp",
+    "frames": 4,
+    "cell": [
+     131,
+     168
+    ],
+    "bytes": 34430
+   },
+   "attack": {
+    "file": "b02-o1-attack.webp",
+    "frames": 4,
+    "cell": [
+     145,
+     168
+    ],
+    "bytes": 36900
+   }
+  },
+  "b03-g1": {
+   "name": "질투로 얼룩진 망령",
+   "map": "ep1b03",
+   "source": "r96/runtime-text/assets/r380/mobs/jealousy-wraith-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "b03-g1-move.webp",
+    "frames": 4,
+    "cell": [
+     159,
+     162
+    ],
+    "bytes": 38438
+   },
+   "attack": {
+    "file": "b03-g1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     156
+    ],
+    "bytes": 43114
+   }
+  },
+  "b03-c1": {
+   "name": "긴 뱀의 그림자",
+   "map": "ep1b03",
+   "source": "r96/runtime-text/assets/r116/mobs/M023-idle.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "b03-c1-move.webp",
+    "frames": 4,
+    "cell": [
+     145,
+     158
+    ],
+    "bytes": 40480
+   }
+  },
+  "b03-g2": {
+   "name": "추녀의 한탄",
+   "map": "ep1b03",
+   "source": "r96/runtime-text/assets/r380/mobs/mirror-lament-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "b03-g2-move.webp",
+    "frames": 4,
+    "cell": [
+     139,
+     168
+    ],
+    "bytes": 40956
+   },
+   "attack": {
+    "file": "b03-g2-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     160
+    ],
+    "bytes": 44188
+   }
+  },
+  "b04-g1": {
+   "name": "버려진 최고급 식재료",
+   "map": "ep1b04",
+   "source": "r96/runtime-text/assets/r380/mobs/discarded-delicacy-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "b04-g1-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     132
+    ],
+    "bytes": 38072
+   },
+   "attack": {
+    "file": "b04-g1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     132
+    ],
+    "bytes": 35740
+   }
+  },
+  "b04-b1": {
+   "name": "살아 있는 거대한 위장",
+   "map": "ep1b04",
+   "source": "r96/runtime-text/assets/r116/mobs/M024-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "b04-b1-move.webp",
+    "frames": 2,
+    "cell": [
+     168,
+     145
+    ],
+    "bytes": 21390
+   }
+  },
+  "b04-s1": {
+   "name": "끓어오르는 검은 소화액",
+   "map": "ep1b04",
+   "source": "r96/runtime-text/assets/r290/mobs/m025.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "b04-s1-move.webp",
+    "frames": 4,
+    "cell": [
+     140,
+     144
+    ],
+    "bytes": 15792
+   },
+   "attack": {
+    "file": "b04-s1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     159
+    ],
+    "bytes": 15960
+   }
+  },
+  "b05-a1": {
+   "name": "붉은 하이힐 칼날",
+   "map": "ep1b05",
+   "source": "r96/runtime-text/assets/r380/mobs/ep1b-red-heel-blade-walk-d1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "b05-a1-move.webp",
+    "frames": 4,
+    "cell": [
+     141,
+     168
+    ],
+    "bytes": 42740
+   },
+   "attack": {
+    "file": "b05-a1-attack.webp",
+    "frames": 1,
+    "cell": [
+     150,
+     168
+    ],
+    "bytes": 12532
+   }
+  },
+  "b06-f1": {
+   "name": "칼날이 된 지폐",
+   "map": "ep1b06",
+   "source": "r96/runtime-text/assets/r380/mobs/ep1b-banknote-blade-walk-d1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "b06-f1-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     123
+    ],
+    "bytes": 36870
+   },
+   "attack": {
+    "file": "b06-f1-attack.webp",
+    "frames": 1,
+    "cell": [
+     168,
+     129
+    ],
+    "bytes": 9206
+   }
+  },
+  "b06-f2": {
+   "name": "모든 면이 뒷면인 동전",
+   "map": "ep1b06",
+   "source": "r96/runtime-text/assets/r290/mobs/m026.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "b06-f2-move.webp",
+    "frames": 4,
+    "cell": [
+     104,
+     108
+    ],
+    "bytes": 12086
+   },
+   "attack": {
+    "file": "b06-f2-attack.webp",
+    "frames": 4,
+    "cell": [
+     133,
+     110
+    ],
+    "bytes": 18234
+   }
+  },
+  "b06b-h1": {
+   "name": "고슴도치 가시 사탕",
+   "map": "ep1b06b",
+   "source": "r96/runtime-text/assets/r410/mobs/m027.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "b06b-h1-move.webp",
+    "frames": 4,
+    "cell": [
+     142,
+     158
+    ],
+    "bytes": 23434
+   },
+   "attack": {
+    "file": "b06b-h1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     122
+    ],
+    "bytes": 20476
+   }
+  },
+  "b06b-f1": {
+   "name": "눈보라 속 여우 악마",
+   "map": "ep1b06b",
+   "source": "r96/runtime-text/assets/r410/mobs/m028.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "b06b-f1-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     126
+    ],
+    "bytes": 25024
+   },
+   "attack": {
+    "file": "b06b-f1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     116
+    ],
+    "bytes": 22534
+   }
+  },
+  "b06b-v1": {
+   "name": "낡은 장난감 요요",
+   "map": "ep1b06b",
+   "source": "r96/runtime-text/assets/r410/mobs/m029.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "b06b-v1-move.webp",
+    "frames": 4,
+    "cell": [
+     99,
+     102
+    ],
+    "bytes": 11812
+   },
+   "attack": {
+    "file": "b06b-v1-attack.webp",
+    "frames": 4,
+    "cell": [
+     145,
+     106
+    ],
+    "bytes": 14350
+   }
+  },
+  "b07-f1": {
+   "name": "불길 속의 늑대",
+   "map": "ep1b07",
+   "source": "r96/runtime-text/assets/r198/mobs/M030-move.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "b07-f1-move.webp",
+    "frames": 2,
+    "cell": [
+     168,
+     118
+    ],
+    "bytes": 19678
+   }
+  },
+  "b07-f2": {
+   "name": "불길 속의 곰",
+   "map": "ep1b07",
+   "source": "r96/runtime-text/assets/r198/mobs/M030-move.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "b07-f2-move.webp",
+    "frames": 2,
+    "cell": [
+     168,
+     118
+    ],
+    "bytes": 19678
+   }
+  },
+  "ep1b07:r74-patrol:0..5": {
+   "name": "분노의 사냥개",
+   "map": "ep1b07",
+   "source": "r96/runtime-text/assets/r380/mobs/wrath-hound-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "ep1b07_r74-patrol_0_5-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     123
+    ],
+    "bytes": 40410
+   },
+   "attack": {
+    "file": "ep1b07_r74-patrol_0_5-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     106
+    ],
+    "bytes": 36998
+   }
+  },
+  "b08-c1": {
+   "name": "전극기계수호기사",
+   "map": "ep1b08",
+   "source": "r96/runtime-text/assets/r380/mobs/electrode-machine-knight-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "b08-c1-move.webp",
+    "frames": 4,
+    "cell": [
+     107,
+     168
+    ],
+    "bytes": 29674
+   },
+   "attack": {
+    "file": "b08-c1-attack.webp",
+    "frames": 4,
+    "cell": [
+     147,
+     168
+    ],
+    "bytes": 31978
+   }
+  },
+  "b08-h1": {
+   "name": "창처럼 날아오는 역십자가",
+   "map": "ep1b08",
+   "source": "r96/runtime-text/assets/r116/mobs/M032-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "b08-h1-move.webp",
+    "frames": 4,
+    "cell": [
+     92,
+     150
+    ],
+    "bytes": 26872
+   }
+  },
+  "b08-v1": {
+   "name": "육망성의 흑마술 실험체",
+   "map": "ep1b08",
+   "source": "r96/runtime-text/assets/r380/mobs/hexagram-experiment-m031-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "b08-v1-move.webp",
+    "frames": 4,
+    "cell": [
+     74,
+     168
+    ],
+    "bytes": 13022
+   },
+   "attack": {
+    "file": "b08-v1-attack.webp",
+    "frames": 4,
+    "cell": [
+     92,
+     168
+    ],
+    "bytes": 14972
+   }
+  },
+  "b09-h1": {
+   "name": "강철 턱의 사이보그 개",
+   "map": "ep1b09",
+   "source": "r96/runtime-text/assets/r380/mobs/ep1b-steel-jaw-hound-walk-d1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "b09-h1-move.webp",
+    "frames": 4,
+    "cell": [
+     167,
+     168
+    ],
+    "bytes": 41314
+   },
+   "attack": {
+    "file": "b09-h1-attack.webp",
+    "frames": 1,
+    "cell": [
+     157,
+     168
+    ],
+    "bytes": 9742
+   }
+  },
+  "b09-o1": {
+   "name": "걸어다니는 소형 로봇",
+   "map": "ep1b09",
+   "source": "r96/runtime-text/assets/r380/mobs/small-walking-robot-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "b09-o1-move.webp",
+    "frames": 4,
+    "cell": [
+     110,
+     168
+    ],
+    "bytes": 20222
+   },
+   "attack": {
+    "file": "b09-o1-attack.webp",
+    "frames": 4,
+    "cell": [
+     130,
+     168
+    ],
+    "bytes": 19598
+   }
+  },
+  "b09-c1": {
+   "name": "설원 잠복 보행기",
+   "map": "ep1b09",
+   "source": "r96/runtime-text/assets/r380/mobs/snow-lurker-walker-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "b09-c1-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     115
+    ],
+    "bytes": 26612
+   },
+   "attack": {
+    "file": "b09-c1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     111
+    ],
+    "bytes": 24122
+   }
+  },
+  "u201-e1": {
+   "name": "전쟁기억 정찰드론",
+   "map": "u201",
+   "source": "r96/runtime-text/assets/r116/mobs/M038-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "u201-e1-move.webp",
+    "frames": 2,
+    "cell": [
+     168,
+     118
+    ],
+    "bytes": 13720
+   }
+  },
+  "u201-e2": {
+   "name": "전쟁기계사냥개",
+   "map": "u201",
+   "source": "r96/runtime-text/assets/r380/mobs/war-machine-hound-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "u201-e2-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     131
+    ],
+    "bytes": 29292
+   },
+   "attack": {
+    "file": "u201-e2-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     120
+    ],
+    "bytes": 25768
+   }
+  },
+  "u201-e3": {
+   "name": "참호 공명기사",
+   "map": "u201",
+   "source": "r96/runtime-text/assets/r116/mobs/M037-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "u201-e3-move.webp",
+    "frames": 4,
+    "cell": [
+     135,
+     150
+    ],
+    "bytes": 39246
+   }
+  },
+  "u202-e1": {
+   "name": "가짜 자비 수집가",
+   "map": "u202",
+   "source": "r96/runtime-text/assets/r380/mobs/u2-false-mercy-collector-walk-d1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "u202-e1-move.webp",
+    "frames": 4,
+    "cell": [
+     129,
+     168
+    ],
+    "bytes": 38132
+   },
+   "attack": {
+    "file": "u202-e1-attack.webp",
+    "frames": 1,
+    "cell": [
+     149,
+     168
+    ],
+    "bytes": 10806
+   }
+  },
+  "u202-e3": {
+   "name": "감옥 공명기사",
+   "map": "u202",
+   "source": "r96/runtime-text/assets/r116/mobs/M041-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "u202-e3-move.webp",
+    "frames": 4,
+    "cell": [
+     135,
+     152
+    ],
+    "bytes": 29648
+   }
+  },
+  "u202-e1 (4마리)": {
+   "name": "기계화 망각거미",
+   "map": "u202",
+   "source": "r96/runtime-text/assets/r380/mobs/mech-oblivion-spider.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "u202-e1_4_-move.webp",
+    "frames": 4,
+    "cell": [
+     161,
+     151
+    ],
+    "bytes": 36648
+   },
+   "attack": {
+    "file": "u202-e1_4_-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     131
+    ],
+    "bytes": 37628
+   }
+  },
+  "u204-e1": {
+   "name": "기계화 첫 기억 청람잔영",
+   "map": "u204",
+   "source": "r96/runtime-text/assets/r380/mobs/u204-mech-01-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "u204-e1-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     165
+    ],
+    "bytes": 38262
+   },
+   "attack": {
+    "file": "u204-e1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     143
+    ],
+    "bytes": 38658
+   }
+  },
+  "u204-e2": {
+   "name": "기계화 기억 공백 망령",
+   "map": "u204",
+   "source": "r96/runtime-text/assets/r380/mobs/u204-mech-02-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "u204-e2-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     146
+    ],
+    "bytes": 30658
+   },
+   "attack": {
+    "file": "u204-e2-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     136
+    ],
+    "bytes": 25208
+   }
+  },
+  "u204-e3": {
+   "name": "기계화 문턱 관측거미",
+   "map": "u204",
+   "source": "r96/runtime-text/assets/r380/mobs/u204-mech-03-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "u204-e3-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     116
+    ],
+    "bytes": 31462
+   },
+   "attack": {
+    "file": "u204-e3-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     112
+    ],
+    "bytes": 28406
+   }
+  },
+  "u206-e1": {
+   "name": "기계화 기억이주 연결자",
+   "map": "u206",
+   "source": "r96/runtime-text/assets/r380/mobs/u206-mech-01-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "u206-e1-move.webp",
+    "frames": 4,
+    "cell": [
+     153,
+     168
+    ],
+    "bytes": 31292
+   },
+   "attack": {
+    "file": "u206-e1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     157
+    ],
+    "bytes": 29744
+   }
+  },
+  "u206-e2": {
+   "name": "기계화 공명술사",
+   "map": "u206",
+   "source": "r96/runtime-text/assets/r380/mobs/u206-mech-02-v1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "u206-e2-move.webp",
+    "frames": 4,
+    "cell": [
+     84,
+     168
+    ],
+    "bytes": 25790
+   },
+   "attack": {
+    "file": "u206-e2-attack.webp",
+    "frames": 4,
+    "cell": [
+     139,
+     168
+    ],
+    "bytes": 29526
+   }
+  },
+  "u206-e3": {
+   "name": "입양기억 청람잔영",
+   "map": "u206",
+   "source": "r96/runtime-text/assets/r410/mobs/m039.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "u206-e3-move.webp",
+    "frames": 4,
+    "cell": [
+     97,
+     168
+    ],
+    "bytes": 16964
+   },
+   "attack": {
+    "file": "u206-e3-attack.webp",
+    "frames": 4,
+    "cell": [
+     113,
+     168
+    ],
+    "bytes": 16704
+   }
+  },
+  "u203-e1": {
+   "name": "이동문 청람잔영",
+   "map": "u203",
+   "source": "r96/runtime-text/assets/r410/mobs/m040.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "u203-e1-move.webp",
+    "frames": 4,
+    "cell": [
+     98,
+     168
+    ],
+    "bytes": 19516
+   },
+   "attack": {
+    "file": "u203-e1-attack.webp",
+    "frames": 4,
+    "cell": [
+     117,
+     168
+    ],
+    "bytes": 20062
+   }
+  },
+  "l304-e1": {
+   "name": "중립초원 슬라임",
+   "map": "last304",
+   "source": "r96/runtime-text/assets/r116/mobs/M045-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "l304-e1-move.webp",
+    "frames": 2,
+    "cell": [
+     168,
+     99
+    ],
+    "bytes": 12858
+   }
+  },
+  "l304-e2": {
+   "name": "중립초원 늑대",
+   "map": "last304",
+   "source": "r96/runtime-text/assets/r198/mobs/M046-move.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "l304-e2-move.webp",
+    "frames": 2,
+    "cell": [
+     133,
+     155
+    ],
+    "bytes": 17888
+   }
+  },
+  "l304-e3": {
+   "name": "장미이슬 슬라임",
+   "map": "last304",
+   "source": "r96/runtime-text/assets/r410/mobs/m043.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "l304-e3-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     117
+    ],
+    "bytes": 25066
+   },
+   "attack": {
+    "file": "l304-e3-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     113
+    ],
+    "bytes": 24904
+   }
+  },
+  "l305-e1": {
+   "name": "숲 고블린",
+   "map": "last305",
+   "source": "r96/runtime-text/assets/r198/mobs/M047-move.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "l305-e1-move.webp",
+    "frames": 2,
+    "cell": [
+     155,
+     151
+    ],
+    "bytes": 19934
+   }
+  },
+  "l305-e2": {
+   "name": "피리 고블린",
+   "map": "last305",
+   "source": "r96/runtime-text/assets/r410/mobs/m044.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "l305-e2-move.webp",
+    "frames": 4,
+    "cell": [
+     88,
+     168
+    ],
+    "bytes": 17402
+   },
+   "attack": {
+    "file": "l305-e2-attack.webp",
+    "frames": 4,
+    "cell": [
+     95,
+     168
+    ],
+    "bytes": 17302
+   }
+  },
+  "l302-e1": {
+   "name": "포구 검은 안개",
+   "map": "last302",
+   "source": "r96/runtime-text/assets/r116/mobs/M051-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "l302-e1-move.webp",
+    "frames": 4,
+    "cell": [
+     112,
+     156
+    ],
+    "bytes": 31492
+   }
+  },
+  "l302-e3": {
+   "name": "귀비탕 공명 안개핵",
+   "map": "last302",
+   "source": "r96/runtime-text/assets/r410/mobs/m045.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "l302-e3-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     149
+    ],
+    "bytes": 26640
+   },
+   "attack": {
+    "file": "l302-e3-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     123
+    ],
+    "bytes": 19716
+   }
+  },
+  "l302-e2": {
+   "name": "잠들지 못한 검은 영혼",
+   "map": "last302",
+   "source": "r96/runtime-text/assets/r198/mobs/M046-move.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "l302-e2-move.webp",
+    "frames": 2,
+    "cell": [
+     133,
+     155
+    ],
+    "bytes": 17888
+   }
+  },
+  "kair-academy-wave-1": {
+   "name": "최초명령 훈련파동 1",
+   "map": "kair01",
+   "source": "r96/runtime-text/assets/r116/mobs/M054-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "kair-academy-wave-1-move.webp",
+    "frames": 4,
+    "cell": [
+     141,
+     152
+    ],
+    "bytes": 45132
+   }
+  },
+  "kair-academy-wave-2": {
+   "name": "최초명령 훈련파동 2",
+   "map": "kair01",
+   "source": "r96/runtime-text/assets/r116/mobs/M052-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "kair-academy-wave-2-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     135
+    ],
+    "bytes": 43036
+   }
+  },
+  "kair-academy-wave-3": {
+   "name": "최초명령 훈련파동 3",
+   "map": "kair01",
+   "source": "r96/runtime-text/assets/r116/mobs/M053-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "kair-academy-wave-3-move.webp",
+    "frames": 4,
+    "cell": [
+     147,
+     162
+    ],
+    "bytes": 49368
+   }
+  },
+  "kair-academy-wave-4": {
+   "name": "최초명령 훈련파동 4",
+   "map": "kair01",
+   "source": "r96/runtime-text/assets/r116/mobs/M054-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "kair-academy-wave-4-move.webp",
+    "frames": 4,
+    "cell": [
+     141,
+     152
+    ],
+    "bytes": 45132
+   }
+  },
+  "kair-academy-wave-5": {
+   "name": "최초명령 훈련파동 5",
+   "map": "kair01",
+   "source": "r96/runtime-text/assets/r116/mobs/M052-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "kair-academy-wave-5-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     135
+    ],
+    "bytes": 43036
+   }
+  },
+  "kair-academy-wave-6": {
+   "name": "최초명령 훈련파동 6",
+   "map": "kair01",
+   "source": "r96/runtime-text/assets/r116/mobs/M053-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "kair-academy-wave-6-move.webp",
+    "frames": 4,
+    "cell": [
+     147,
+     162
+    ],
+    "bytes": 49368
+   }
+  },
+  "kair-guardian-03": {
+   "name": "시간수문장 03",
+   "map": "kair04",
+   "source": "r96/runtime-text/assets/r116/mobs/M057-idle.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "kair-guardian-03-move.webp",
+    "frames": 4,
+    "cell": [
+     128,
+     150
+    ],
+    "bytes": 42814
+   }
+  },
+  "kair-guardian-07": {
+   "name": "시간수문장 07",
+   "map": "kair05",
+   "source": "r96/runtime-text/assets/r116/mobs/M063-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "kair-guardian-07-move.webp",
+    "frames": 4,
+    "cell": [
+     158,
+     168
+    ],
+    "bytes": 39770
+   }
+  },
+  "kair-guardian-08": {
+   "name": "시간수문장 08",
+   "map": "kair05",
+   "source": "r96/runtime-text/assets/r116/mobs/M064-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "kair-guardian-08-move.webp",
+    "frames": 4,
+    "cell": [
+     122,
+     155
+    ],
+    "bytes": 34216
+   }
+  },
+  "kair-elite-51": {
+   "name": "상위수문장 51",
+   "map": "kair05",
+   "source": "r96/runtime-text/assets/r116/mobs/M069-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "kair-elite-51-move.webp",
+    "frames": 4,
+    "cell": [
+     161,
+     163
+    ],
+    "bytes": 56388
+   }
+  },
+  "kair-guardian-15": {
+   "name": "시간수문장 15",
+   "map": "kair06",
+   "source": "r96/runtime-text/assets/r116/mobs/M072-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "kair-guardian-15-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     122
+    ],
+    "bytes": 39376
+   }
+  },
+  "kair-guardian-17": {
+   "name": "시간수문장 17",
+   "map": "kair06",
+   "source": "r96/runtime-text/assets/r116/mobs/M074-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "kair-guardian-17-move.webp",
+    "frames": 4,
+    "cell": [
+     164,
+     156
+    ],
+    "bytes": 41812
+   }
+  },
+  "kair-guardian-20": {
+   "name": "시간수문장 20",
+   "map": "kair07",
+   "source": "r96/runtime-text/assets/r116/mobs/M078-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "kair-guardian-20-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     161
+    ],
+    "bytes": 49492
+   }
+  },
+  "kair-elite-58": {
+   "name": "상위수문장 58",
+   "map": "kair10",
+   "source": "r96/runtime-text/assets/r380/mobs/legacy-m106-elite-guardian-v2.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "kair-elite-58-move.webp",
+    "frames": 4,
+    "cell": [
+     119,
+     122
+    ],
+    "bytes": 32610
+   },
+   "attack": {
+    "file": "kair-elite-58-attack.webp",
+    "frames": 4,
+    "cell": [
+     160,
+     129
+    ],
+    "bytes": 44870
+   }
+  },
+  "kair-guardian-46": {
+   "name": "시간수문장 46",
+   "map": "kair02",
+   "source": "r96/runtime-text/assets/r380/mobs/legacy-m110-time-guardian-v3-walk-d1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "kair-guardian-46-move.webp",
+    "frames": 4,
+    "cell": [
+     97,
+     123
+    ],
+    "bytes": 26872
+   },
+   "attack": {
+    "file": "kair-guardian-46-attack.webp",
+    "frames": 4,
+    "cell": [
+     155,
+     151
+    ],
+    "bytes": 43736
+   }
+  },
+  "h101-t1": {
+   "name": "악몽 정찰체",
+   "map": "hando01",
+   "source": "r96/runtime-text/assets/r380/mobs/hando-timeless-silver-scout-walk-d1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "h101-t1-move.webp",
+    "frames": 4,
+    "cell": [
+     156,
+     168
+    ],
+    "bytes": 41560
+   },
+   "attack": {
+    "file": "h101-t1-attack.webp",
+    "frames": 1,
+    "cell": [
+     124,
+     168
+    ],
+    "bytes": 9748
+   }
+  },
+  "h102-s1": {
+   "name": "붕괴선 파수병",
+   "map": "hando02",
+   "source": "r96/runtime-text/assets/r380/mobs/hando-silver-seal-sentinel-walk-d1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "h102-s1-move.webp",
+    "frames": 4,
+    "cell": [
+     140,
+     168
+    ],
+    "bytes": 27636
+   },
+   "attack": {
+    "file": "h102-s1-attack.webp",
+    "frames": 1,
+    "cell": [
+     125,
+     168
+    ],
+    "bytes": 7528
+   }
+  },
+  "h102-c1": {
+   "name": "기억절제 연결자",
+   "map": "hando02",
+   "source": "r96/runtime-text/assets/r380/mobs/hando-memory-excision-connector-walk-d1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "h102-c1-move.webp",
+    "frames": 4,
+    "cell": [
+     138,
+     168
+    ],
+    "bytes": 39898
+   },
+   "attack": {
+    "file": "h102-c1-attack.webp",
+    "frames": 1,
+    "cell": [
+     125,
+     168
+    ],
+    "bytes": 9462
+   }
+  },
+  "h102-t1": {
+   "name": "무명 검흔",
+   "map": "hando02",
+   "source": "r96/runtime-text/assets/r380/mobs/legacy-m119-nameless-scar-v4-walk-d1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "h102-t1-move.webp",
+    "frames": 4,
+    "cell": [
+     110,
+     168
+    ],
+    "bytes": 30336
+   },
+   "attack": {
+    "file": "h102-t1-attack.webp",
+    "frames": 4,
+    "cell": [
+     136,
+     168
+    ],
+    "bytes": 33174
+   }
+  },
+  "h102-s2": {
+   "name": "코어 운반 집행자",
+   "map": "hando02",
+   "source": "r96/runtime-text/assets/r116/mobs/M120-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "h102-s2-move.webp",
+    "frames": 4,
+    "cell": [
+     132,
+     152
+    ],
+    "bytes": 49316
+   }
+  },
+  "h103-t1": {
+   "name": "백은 없는 그림자",
+   "map": "hando03",
+   "source": "r96/runtime-text/assets/r380/mobs/legacy-m124-silverless-shadow-v4.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "h103-t1-move.webp",
+    "frames": 4,
+    "cell": [
+     160,
+     168
+    ],
+    "bytes": 34382
+   },
+   "attack": {
+    "file": "h103-t1-attack.webp",
+    "frames": 4,
+    "cell": [
+     160,
+     168
+    ],
+    "bytes": 34382
+   }
+  },
+  "murder04-e2": {
+   "name": "끊어진 통화의 인과 잔향",
+   "map": "murder01",
+   "source": "r96/runtime-text/assets/r380/mobs/murder-rooftop-echo-float-d1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "murder04-e2-move.webp",
+    "frames": 4,
+    "cell": [
+     135,
+     168
+    ],
+    "bytes": 35942
+   },
+   "attack": {
+    "file": "murder04-e2-attack.webp",
+    "frames": 1,
+    "cell": [
+     143,
+     168
+    ],
+    "bytes": 11238
+   }
+  },
+  "murder04-e1": {
+   "name": "공실 표기 잔재",
+   "map": "murder01",
+   "source": "r96/runtime-text/assets/r290/mobs/m052.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "murder04-e1-move.webp",
+    "frames": 4,
+    "cell": [
+     123,
+     168
+    ],
+    "bytes": 31724
+   },
+   "attack": {
+    "file": "murder04-e1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     132
+    ],
+    "bytes": 29046
+   }
+  },
+  "murder04-e3": {
+   "name": "은폐기록 연결체",
+   "map": "murder02",
+   "source": "r96/runtime-text/assets/r116/mobs/M125-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "murder04-e3-move.webp",
+    "frames": 4,
+    "cell": [
+     133,
+     150
+    ],
+    "bytes": 33132
+   }
+  },
+  "c101-e1": {
+   "name": "흑장미 눈가린 신도",
+   "map": "cult01",
+   "source": "r96/runtime-text/assets/r116/mobs/M128-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "c101-e1-move.webp",
+    "frames": 2,
+    "cell": [
+     93,
+     150
+    ],
+    "bytes": 12176
+   }
+  },
+  "c101-e2": {
+   "name": "흑장미 귀막은 신도",
+   "map": "cult01",
+   "source": "r96/runtime-text/assets/r198/mobs/M129-attack.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "c101-e2-move.webp",
+    "frames": 4,
+    "cell": [
+     78,
+     150
+    ],
+    "bytes": 19492
+   },
+   "attack": {
+    "file": "c101-e2-attack.webp",
+    "frames": 2,
+    "cell": [
+     108,
+     151
+    ],
+    "bytes": 11396
+   }
+  },
+  "c101-e3": {
+   "name": "세뇌 신호 점액체",
+   "map": "cult01",
+   "source": "r96/runtime-text/assets/r380/mobs/legacy-m130-slime-cult01-v2.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "c101-e3-move.webp",
+    "frames": 4,
+    "cell": [
+     163,
+     149
+    ],
+    "bytes": 30354
+   },
+   "attack": {
+    "file": "c101-e3-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     123
+    ],
+    "bytes": 33622
+   }
+  },
+  "c102-e1": {
+   "name": "신경 케이블 포식체",
+   "map": "cult02",
+   "source": "r96/runtime-text/assets/r380/mobs/cult-nerve-cable-devourer-walk-d1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "c102-e1-move.webp",
+    "frames": 4,
+    "cell": [
+     128,
+     168
+    ],
+    "bytes": 28414
+   },
+   "attack": {
+    "file": "c102-e1-attack.webp",
+    "frames": 1,
+    "cell": [
+     125,
+     168
+    ],
+    "bytes": 11680
+   }
+  },
+  "c102-e3": {
+   "name": "과열 시냅스 점액체",
+   "map": "cult02",
+   "source": "r96/runtime-text/assets/r116/mobs/M131-hit.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "c102-e3-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     99
+    ],
+    "bytes": 34064
+   }
+  },
+  "c105-e1": {
+   "name": "ID 배양 점액체",
+   "map": "cult05",
+   "source": "r96/runtime-text/assets/r380/mobs/legacy-m130-slime-cult05-v2.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "c105-e1-move.webp",
+    "frames": 4,
+    "cell": [
+     163,
+     149
+    ],
+    "bytes": 30354
+   },
+   "attack": {
+    "file": "c105-e1-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     123
+    ],
+    "bytes": 33622
+   }
+  },
+  "c105-e2": {
+   "name": "생체기계 악몽",
+   "map": "cult05",
+   "source": "r96/runtime-text/assets/r380/mobs/legacy-m134-nightmare-v4-walk-d1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "c105-e2-move.webp",
+    "frames": 4,
+    "cell": [
+     127,
+     168
+    ],
+    "bytes": 38532
+   },
+   "attack": {
+    "file": "c105-e2-attack.webp",
+    "frames": 4,
+    "cell": [
+     164,
+     168
+    ],
+    "bytes": 47628
+   }
+  },
+  "c105-e3": {
+   "name": "본능 추출 결정",
+   "map": "cult05",
+   "source": "r96/runtime-text/assets/r290/mobs/m057.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "c105-e3-move.webp",
+    "frames": 4,
+    "cell": [
+     120,
+     166
+    ],
+    "bytes": 25396
+   },
+   "attack": {
+    "file": "c105-e3-attack.webp",
+    "frames": 4,
+    "cell": [
+     132,
+     166
+    ],
+    "bytes": 26860
+   }
+  },
+  "c106-e3": {
+   "name": "죄책감 압축결정",
+   "map": "cult06",
+   "source": "r96/runtime-text/assets/r290/mobs/m058.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "c106-e3-move.webp",
+    "frames": 4,
+    "cell": [
+     107,
+     144
+    ],
+    "bytes": 16692
+   },
+   "attack": {
+    "file": "c106-e3-attack.webp",
+    "frames": 4,
+    "cell": [
+     123,
+     140
+    ],
+    "bytes": 17178
+   }
+  },
+  "c103-e1": {
+   "name": "EGO 구속 연결자",
+   "map": "cult03",
+   "source": "r96/runtime-text/assets/r380/mobs/cult-ego-binder-walk-d1.webp",
+   "format": "r380 strip",
+   "move": {
+    "file": "c103-e1-move.webp",
+    "frames": 4,
+    "cell": [
+     143,
+     168
+    ],
+    "bytes": 37150
+   },
+   "attack": {
+    "file": "c103-e1-attack.webp",
+    "frames": 1,
+    "cell": [
+     156,
+     168
+    ],
+    "bytes": 16518
+   }
+  },
+  "c103-e2": {
+   "name": "SUPER EGO 절개결정",
+   "map": "cult03",
+   "source": "r96/runtime-text/assets/r290/mobs/m059.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "c103-e2-move.webp",
+    "frames": 4,
+    "cell": [
+     105,
+     134
+    ],
+    "bytes": 18192
+   },
+   "attack": {
+    "file": "c103-e2-attack.webp",
+    "frames": 4,
+    "cell": [
+     137,
+     133
+    ],
+    "bytes": 19978
+   }
+  },
+  "c103-e3": {
+   "name": "ID 잔류 점액체",
+   "map": "cult03",
+   "source": "r96/runtime-text/assets/r410/mobs/m060.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "c103-e3-move.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     156
+    ],
+    "bytes": 19956
+   },
+   "attack": {
+    "file": "c103-e3-attack.webp",
+    "frames": 4,
+    "cell": [
+     168,
+     133
+    ],
+    "bytes": 16180
+   }
+  },
+  "c104-e1": {
+   "name": "소환좌 칩 수호체",
+   "map": "cult04",
+   "source": "r96/runtime-text/assets/r109/mobs/M137-move.png",
+   "format": "r1xx tracks",
+   "move": {
+    "file": "c104-e1-move.webp",
+    "frames": 4,
+    "cell": [
+     123,
+     153
+    ],
+    "bytes": 33780
+   }
+  },
+  "c104-e2": {
+   "name": "아마겟돈 계산결정",
+   "map": "cult04",
+   "source": "r96/runtime-text/assets/r290/mobs/m061.webp",
+   "format": "r410 sheet",
+   "move": {
+    "file": "c104-e2-move.webp",
+    "frames": 4,
+    "cell": [
+     113,
+     145
+    ],
+    "bytes": 21368
+   },
+   "attack": {
+    "file": "c104-e2-attack.webp",
+    "frames": 4,
+    "cell": [
+     133,
+     152
+    ],
+    "bytes": 22174
+   }
+  }
+ },
+ "skipped": [
+  [
+   "05",
+   "dist04-c2",
+   "r96/runtime-text/assets/r248/mobs/m008.webp"
+  ],
+  [
+   "10",
+   "a10-v1",
+   "없음"
+  ],
+  [
+   "11",
+   "a11-d1",
+   "없음"
+  ],
+  [
+   "17",
+   "b05-p1",
+   "r96/runtime-text/assets/r248/mobs/m068.webp"
+  ],
+  [
+   "17",
+   "b05-p2",
+   "없음"
+  ],
+  [
+   "18",
+   "b06-c1",
+   "없음"
+  ],
+  [
+   "20",
+   "b07-s1",
+   "없음"
+  ],
+  [
+   "25",
+   "u202-e2",
+   "없음"
+  ],
+  [
+   "27",
+   "u205-e1",
+   "r96/runtime-text/assets/r374/mobs/u205-e1-new.webp"
+  ],
+  [
+   "27",
+   "u205-e2",
+   "r96/runtime-text/assets/r374/mobs/u205-e2-new.webp"
+  ],
+  [
+   "27",
+   "u205-e3",
+   "r96/runtime-text/assets/r374/mobs/u205-e3-new.webp"
+  ],
+  [
+   "29",
+   "u203-e2",
+   "r96/runtime-text/assets/r374/mobs/u203-e2-mech.webp"
+  ],
+  [
+   "29",
+   "u203-e3",
+   "r96/runtime-text/assets/r374/mobs/u203-e3-mech.webp"
+  ],
+  [
+   "38",
+   "kair-guardian-01",
+   "없음"
+  ],
+  [
+   "38",
+   "kair-guardian-02",
+   "없음"
+  ],
+  [
+   "38",
+   "kair-guardian-04",
+   "없음"
+  ],
+  [
+   "38",
+   "kair-guardian-05",
+   "없음"
+  ],
+  [
+   "38",
+   "kair-guardian-06",
+   "없음"
+  ],
+  [
+   "38",
+   "kair-elite-49",
+   "없음"
+  ],
+  [
+   "38",
+   "kair-elite-50",
+   "없음"
+  ],
+  [
+   "39",
+   "kair-guardian-09",
+   "없음"
+  ],
+  [
+   "39",
+   "kair-guardian-10",
+   "없음"
+  ],
+  [
+   "39",
+   "kair-guardian-11",
+   "없음"
+  ],
+  [
+   "39",
+   "kair-guardian-12",
+   "없음"
+  ],
+  [
+   "40",
+   "kair-guardian-13",
+   "없음"
+  ],
+  [
+   "40",
+   "kair-guardian-14",
+   "없음"
+  ],
+  [
+   "40",
+   "kair-guardian-16",
+   "없음"
+  ],
+  [
+   "40",
+   "kair-guardian-18",
+   "없음"
+  ],
+  [
+   "40",
+   "kair-elite-52",
+   "없음"
+  ],
+  [
+   "41",
+   "kair-guardian-19",
+   "없음"
+  ],
+  [
+   "41",
+   "kair-guardian-21",
+   "없음"
+  ],
+  [
+   "41",
+   "kair-guardian-22",
+   "없음"
+  ],
+  [
+   "41",
+   "kair-guardian-23",
+   "없음"
+  ],
+  [
+   "41",
+   "kair-guardian-24",
+   "없음"
+  ],
+  [
+   "41",
+   "kair-elite-53",
+   "없음"
+  ],
+  [
+   "41",
+   "kair-elite-54",
+   "없음"
+  ],
+  [
+   "42",
+   "kair-guardian-25",
+   "없음"
+  ],
+  [
+   "42",
+   "kair-guardian-26",
+   "없음"
+  ],
+  [
+   "42",
+   "kair-guardian-27",
+   "없음"
+  ],
+  [
+   "42",
+   "kair-guardian-28",
+   "없음"
+  ],
+  [
+   "42",
+   "kair-guardian-29",
+   "없음"
+  ],
+  [
+   "42",
+   "kair-guardian-30",
+   "없음"
+  ],
+  [
+   "42",
+   "kair-elite-55",
+   "없음"
+  ],
+  [
+   "43",
+   "kair-guardian-31",
+   "없음"
+  ],
+  [
+   "43",
+   "kair-guardian-32",
+   "없음"
+  ],
+  [
+   "43",
+   "kair-guardian-33",
+   "없음"
+  ],
+  [
+   "43",
+   "kair-guardian-34",
+   "없음"
+  ],
+  [
+   "43",
+   "kair-guardian-35",
+   "없음"
+  ],
+  [
+   "43",
+   "kair-guardian-36",
+   "없음"
+  ],
+  [
+   "43",
+   "kair-elite-56",
+   "없음"
+  ],
+  [
+   "43",
+   "kair-elite-57",
+   "없음"
+  ],
+  [
+   "44",
+   "kair-guardian-37",
+   "없음"
+  ],
+  [
+   "44",
+   "kair-guardian-38",
+   "없음"
+  ],
+  [
+   "44",
+   "kair-guardian-39",
+   "없음"
+  ],
+  [
+   "44",
+   "kair-guardian-40",
+   "없음"
+  ],
+  [
+   "44",
+   "kair-guardian-41",
+   "없음"
+  ],
+  [
+   "44",
+   "kair-guardian-42",
+   "없음"
+  ],
+  [
+   "45",
+   "kair-guardian-43",
+   "없음"
+  ],
+  [
+   "45",
+   "kair-guardian-44",
+   "없음"
+  ],
+  [
+   "45",
+   "kair-guardian-45",
+   "없음"
+  ],
+  [
+   "45",
+   "kair-guardian-47",
+   "없음"
+  ],
+  [
+   "45",
+   "kair-guardian-48",
+   "없음"
+  ],
+  [
+   "45",
+   "kair-elite-59",
+   "없음"
+  ],
+  [
+   "45",
+   "kair-elite-60",
+   "없음"
+  ],
+  [
+   "48",
+   "h101-s1",
+   "없음"
+  ],
+  [
+   "48",
+   "h101-s2",
+   "없음"
+  ],
+  [
+   "50",
+   "h103-c1",
+   "없음"
+  ],
+  [
+   "50",
+   "h103-s1",
+   "없음"
+  ],
+  [
+   "57",
+   "c102-e2",
+   "없음"
+  ],
+  [
+   "59",
+   "c106-e1",
+   "없음"
+  ],
+  [
+   "59",
+   "c106-e2",
+   "없음"
+  ]
+ ]
+}

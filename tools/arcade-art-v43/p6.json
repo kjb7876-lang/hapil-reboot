@@ -3,12 +3,28 @@
   "p6_demons": {
    "src": "media/drive-v43/b47-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/mb-hando01-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "p6_bind": {
    "src": "media/drive-v43/b48-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/mb-hando02-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   }
  },
  "mobs": {

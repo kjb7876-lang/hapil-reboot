@@ -14,7 +14,7 @@
   // 그림 높이(픽셀). 모르는 키는 종류별 기본값(인물·몹·기물)을 쓴다. 부별 파일이 새 인물·몹·기물을 계속 들인다.
   var TALL={violet:112,balrog:124,mask:112,lucifer:124,asmodeus:108,pride:118,controller:118,goblin:104,insomnia:124,arbelia:108,siren:124,chief:124,executor:124,rian:108,cultist:124,
     spider:30,slime:28,ember:34,drone:26,mobgoblin:36,wolf:34,nightmare:40,collector:40,leech:34,guardian:62,warden:72,horn:84,belphegor:70,mammon:74,knight:80};
-  var TALL_ACTOR=116,TALL_MOB=58,TALL_ELITE=92;
+  var ITEM_DRAW=22,TALL_ACTOR=116,TALL_MOB=64,TALL_ELITE=92;
   var PROP_LONG={'sword-violet':68,cleaver:64,'sword-balrog':72,obelisk:80,spire:72,'twin-blade':62,crescent:58,tissue:34,money:36,heel:40,feather:44,cross:60,gear:56};
   var PROP_GLOW={'sword-violet':2,cleaver:5,'sword-balrog':0,obelisk:2,spire:4,'twin-blade':8,crescent:4,tissue:6,money:6,heel:0,feather:8,cross:6,gear:4};
   var ART_DIR='media/arcade-v43/';
@@ -63,6 +63,8 @@
     var m=Arcade.MOBS[key];if(m)return m.elite?Math.max(TALL_ELITE,Math.round(m.r*4.2)):Math.max(TALL_MOB,Math.round(m.r*4.1));
     return TALL_MOB;
   }
+  /* 동작 그림: manifest의 <키>.webp 항목에 motions:['side','attack',…]가 있으면 <키>@side.webp 같은 스트립이 따로 있다. */
+  function motionsOf(key){var e=manifest&&manifest[key+'.webp'];return e&&Array.isArray(e.motions)?e.motions:[];}
   function propLong(prop){return PROP_LONG[prop.key]||Math.round((prop.radius||12)*4.4);}
   function propGlow(prop){var g=PROP_GLOW[prop.key];return g===undefined?Arcade.PALETTE[hash(prop.key)%Arcade.PALETTE.length]:g;}
 
@@ -80,12 +82,23 @@
     img.src=fileOf(key);
   }
   /* 스테이지에 필요한 그림: 배경 · 그 스테이지 SEGMENTS의 인물 · cast의 몹 · 기념물. 기물은 처음 화면에 나올 때 받는다. */
+  /* 장면마다 m0 지역표의 몹 그림을 입힌다(src/arcade-skins-v43.js). 시뮬의 몹 종류는 그대로고 그림만 바뀐다. */
+  var SKINS=(typeof ArcadeSkins==='object'&&ArcadeSkins&&ArcadeSkins.scenes)||{};
+  function skinsOf(index){var g=Arcade.STAGES[index],list=g&&SKINS[g.scene];return list&&list.length?list:null;}
+  function skinOf(index,kind){
+    var list=skinsOf(index);if(!list)return kind;
+    var g=Arcade.STAGES[index],at=(g.cast||[]).indexOf(kind);if(at<0){at=0;for(var i=0;i<kind.length;i++)at+=kind.charCodeAt(i);}
+    var key=list[at%list.length];return images[key]?key:(images[kind]?kind:key);
+  }
+  function facesRight(key){var e=manifest&&manifest[key+'.webp'];return !!e&&e.facing==='right';}
   function stageKeys(index){
     var g=Arcade.STAGES[index];if(!g)return [];
     var list=[],add=function(k){if(k&&list.indexOf(k)<0)list.push(k);};
     var bg=themeOf(index).bg;if(bg)add('bg-'+bg);
     for(var i=g.first;i<Arcade.SEGMENTS.length&&Arcade.SEGMENTS[i].stage===index;i++){var seg=Arcade.SEGMENTS[i];if(seg.kind==='card')add(seg.actor);}
-    (g.cast||[]).forEach(add);
+    var skin=skinsOf(index);(skin||g.cast||[]).forEach(add); // m0 지역표 몹이 있으면 그것만 받는다
+    // 동작 그림(옆 걷기·공격 등)은 목록에 있을 때만 같이 받는다.
+    list.slice().forEach(function(k){motionsOf(k).forEach(function(m){add(k+'@'+m);});});
     if(g.reward&&g.reward.key)add('reward-'+g.reward.key);
     return list;
   }
@@ -153,7 +166,12 @@
     grad.addColorStop(0,'#ffffff');grad.addColorStop(.35,'#9fefff');grad.addColorStop(1,'#35d6ff00');g.fillStyle=grad;g.beginPath();g.ellipse(c.width/2,c.height/2,c.width*.32,c.height/2,0,0,TAU);g.fill();shotSprite=c;
     homingSprite=buildOrb(3,'#7df3ff');
     // 아이템: 점수(푸른 마름모)와 폭탄 조각(초록 마름모)
-    itemSprites=['#7fb8ff','#7dffb0'].map(function(color){var d=offscreen(14*scale,14*scale),q=d.getContext('2d');q.scale(scale,scale);q.translate(7,7);q.rotate(Math.PI/4);q.fillStyle=color;q.fillRect(-4,-4,8,8);q.strokeStyle='#ffffff';q.lineWidth=1.2;q.strokeRect(-4,-4,8,8);return d;});
+    // 아이템은 하트다: 점수는 분홍 하트, 폭탄 게이지는 금빛 하트. 흰 테두리와 옅은 빛으로 적 탄과 구별한다.
+    itemSprites=[['#ff6fa3','#ffd0e0'],['#ffcf4a','#fff3c4']].map(function(c){var d=offscreen(ITEM_DRAW*scale,ITEM_DRAW*scale),q=d.getContext('2d');q.scale(scale,scale);q.translate(ITEM_DRAW/2,ITEM_DRAW/2);
+      var u=ITEM_DRAW/26,g=q.createRadialGradient(0,0,2*u,0,0,13*u);g.addColorStop(0,c[1]);g.addColorStop(1,'rgba(255,255,255,0)');q.globalAlpha=.35;q.fillStyle=g;q.fillRect(-13*u,-13*u,26*u,26*u);q.globalAlpha=1;
+      q.beginPath();q.moveTo(0,8*u);q.bezierCurveTo(-11*u,0,-9*u,-9*u,-4*u,-8*u);q.bezierCurveTo(-1.5*u,-8*u,0,-6*u,0,-4.5*u);q.bezierCurveTo(0,-6*u,1.5*u,-8*u,4*u,-8*u);q.bezierCurveTo(9*u,-9*u,11*u,0,0,8*u);q.closePath();
+      q.fillStyle=c[0];q.fill();q.lineWidth=1.6*u;q.strokeStyle='#ffffff';q.lineJoin='round';q.stroke();
+      q.fillStyle=c[1];q.globalAlpha=.9;q.beginPath();q.ellipse(-3.6*u,-4.6*u,1.9*u,1.2*u,-.6,0,Math.PI*2);q.fill();return d;});
     // 보스 뒤 마법진: 동심원 셋 + 눈금 + 육각별
     c=offscreen(220*scale,220*scale);g=c.getContext('2d');g.scale(scale,scale);g.translate(110,110);g.strokeStyle='#ffffff';g.lineWidth=1.6;
     [104,92,60].forEach(function(r){g.beginPath();g.arc(0,0,r,0,TAU);g.stroke();});
@@ -349,30 +367,51 @@
   }
 
   // 그림이 없으면(아직 받는 중이거나 없는 그림) 색 도형으로 대신 그린다.
-  function drawArt(key,x,y,flashOn,fallbackColor,phase){
-    var img=images[key],tall=tallOf(key);
+  function drawArt(key,x,y,flashOn,fallbackColor,phase,motion,face,sizeKey){
+    var tall=tallOf(sizeKey||key);
+    if(motion&&images[key+'@'+motion])key=key+'@'+motion;
+    var flip=face<0&&facesRight(key); // 옆모습 그림은 오른쪽을 본다. 왼쪽으로 갈 때만 뒤집는다.
+    var img=images[key];
     if(!img){
       ctx.save();ctx.globalAlpha=flashOn?.9:.6;ctx.strokeStyle=fallbackColor||'#ffffff';ctx.fillStyle='rgba(10,8,20,.7)';ctx.lineWidth=2;
       var r=tall*.32;ctx.beginPath();ctx.moveTo(x,y-r);ctx.lineTo(x+r*.8,y);ctx.lineTo(x,y+r);ctx.lineTo(x-r*.8,y);ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();return;
     }
     // 화면 높이는 칸 높이 기준(시트 전체 너비가 아니라 칸 비율).
     var w=tall*cellRatio(key,img);
+    if(flip){ctx.save();ctx.translate(x,0);ctx.scale(-1,1);x=0;}
     drawCell(key,img,phase,false,x-w/2,y-tall/2,w,tall);
     if(flashOn){ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=.45;drawCell(key,img,phase,false,x-w/2,y-tall/2,w,tall);ctx.restore();}
+    if(flip)ctx.restore();
+  }
+  /* 움직임으로 동작을 고른다(시뮬은 건드리지 않는다). 방금 쏜 몹은 공격, 옆으로 가는 몹은 옆 걷기(스트립은 오른쪽을 본다), 그 밖에는 아래로 걷기. */
+  var poses=typeof WeakMap==='function'?new WeakMap():null,bossPose={x:0,n:0,until:0,dir:0,actor:''};
+  function poseOf(s,m){
+    if(!poses)return null;var p=poses.get(m);
+    if(!p){p={x:m.x,y:m.y,shots:m.shots|0,until:-1,dir:0,side:0};poses.set(m,p);}
+    if((m.shots|0)>p.shots){p.shots=m.shots|0;p.until=s.tick+26;}
+    var dx=m.x-p.x,dy=m.y-p.y;p.x=m.x;p.y=m.y;
+    if(Math.abs(dx)>Math.abs(dy)*1.15&&Math.abs(dx)>.35){p.side=8;p.dir=dx<0?-1:1;}else if(p.side>0)p.side--;
+    return p;
   }
   function drawBoss(s){
     var b=s.boss;if(!b.present||b.y<-50)return;
     var bob=Math.sin(visual*2.2)*4,size=(b.mid?150:190)+Math.sin(visual*1.3)*10,bx=finite(b.x,W/2),by=finite(b.y,120)+bob;
     ctx.save();ctx.translate(bx,by);ctx.rotate(visual*.5);ctx.globalAlpha=s.stage==='card'?.45:.2;ctx.globalCompositeOperation='lighter';
     ctx.drawImage(circleSprite,-size/2,-size/2,size,size);ctx.restore();
-    drawArt(b.actor,bx,by,s.tick-b.hitTick<3,themeColor(s));
+    var bp=bossPose;if(bp.actor!==b.actor){bp.actor=b.actor;bp.x=bx;bp.n=s.n;bp.until=-1;bp.side=0;}
+    var bdx=bx-bp.x;bp.x=bx;if(Math.abs(bdx)>.3){bp.side=10;bp.dir=bdx<0?-1:1;}else if(bp.side>0)bp.side--;
+    if(s.stage==='card'&&s.n-bp.n>=6)bp.until=s.tick+30;bp.n=s.n; // 탄을 한꺼번에 뿌린 순간이 공격 동작
+    var bm=s.tick<bp.until&&images[b.actor+'@attack']?'attack':bp.side>0?'side':'';
+    drawArt(b.actor,bx,by,s.tick-b.hitTick<3,themeColor(s),0,bm,bp.dir||(bx>W/2?-1:1));
   }
   function drawMobs(s){
     var tint=Arcade.PALETTE[s.stageIndex%Arcade.PALETTE.length],color=themeColor(s);
-    for(var i=0;i<s.mobs.length;i++){var m=s.mobs[i],glow=orbs[2][tint],reach=m.r*1.5;if(m.x!==m.x||m.y!==m.y)continue;if(!images[m.kind]){ctx.globalAlpha=.3;ctx.drawImage(glow.image,m.x-reach,m.y-reach,reach*2,reach*2);ctx.globalAlpha=1;}drawArt(m.kind,m.x,m.y+Math.sin(visual*4+i)*2,s.tick-m.hitTick<3,color,Math.floor(finite(m.baseX,0)/9)+(m.elite?3:0));} // 시작 칸을 나온 자리로 어긋나게 해 떼가 똑같이 움직이지 않는다
+    for(var i=0;i<s.mobs.length;i++){var m=s.mobs[i],glow=orbs[2][tint],reach=m.r*1.5;if(m.x!==m.x||m.y!==m.y)continue;var art=skinOf(s.stageIndex,m.kind);if(!images[art]){ctx.globalAlpha=.3;ctx.drawImage(glow.image,m.x-reach,m.y-reach,reach*2,reach*2);ctx.globalAlpha=1;}else{var halo=tallOf(m.kind)*.62;ctx.globalAlpha=.17;ctx.drawImage(glow.image,m.x-halo,m.y-halo,halo*2,halo*2);ctx.globalAlpha=1;} /* 어두운 배경에서 몹이 묻히지 않게 뒤에 옅은 빛만 깐다 */var po=poseOf(s,m),mo=po&&s.tick<po.until&&images[art+'@attack']?'attack':po&&po.side>0?'side':'';drawArt(art,m.x,m.y+Math.sin(visual*4+i)*2,s.tick-m.hitTick<3,color,Math.floor(finite(m.baseX,0)/9)+(m.elite?3:0),mo,(po&&po.dir)||(m.x>W/2?-1:1),m.kind);} // 시작 칸을 나온 자리로 어긋나게 해 떼가 똑같이 움직이지 않는다
   }
   function drawItems(s){
-    for(var i=0;i<s.itemCount;i++)ctx.drawImage(itemSprites[s.ikind[i]],s.ix[i]-7,s.iy[i]-7,14,14);
+    // 하트가 고동친다. 드라이브 하트 그림(heart)이 있으면 점수 아이템은 그 그림으로.
+    var art=images.heart,beat=1+Math.sin(visual*7)*.08;
+    for(var i=0;i<s.itemCount;i++){var z=ITEM_DRAW*beat*(s.ikind[i]?1.15:1);if(art&&!s.ikind[i])drawCell('heart',art,i,false,s.ix[i]-z/2,s.iy[i]-z/2,z,z);else ctx.drawImage(itemSprites[s.ikind[i]],s.ix[i]-z/2,s.iy[i]-z/2,z,z);}
   }
   function drawProp(s,i,grow,alpha){
     var prop=Arcade.PROPS[s.bcolor[i]];if(!prop)return;
@@ -680,7 +719,7 @@
     try{music=new Audio('media/music.mp3');music.loop=true;music.volume=.2;music.preload='none';}catch(e){music=null;}
     bind();fit();refreshTitle();requestAnimationFrame(frame);
     // 그림 목록을 먼저 읽는다(없는 그림을 요청하지 않으려고). 못 읽어도 3초 뒤에는 시작할 수 있다.
-    var done=function(){loadImage('gunner');ready();};
+    var done=function(){loadImage('gunner');if(manifest&&manifest['heart.webp']){want.heart=true;loadImage('heart');}ready();};
     try{
       global.fetch(ART_DIR+'manifest.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():null;}).then(function(m){manifest=m&&typeof m==='object'?m:null;done();},function(){manifest=null;done();});
     }catch(e){done();}
