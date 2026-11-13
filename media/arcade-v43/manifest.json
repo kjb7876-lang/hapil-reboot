@@ -1107,14 +1107,14 @@
   "table": "tools/arcade-art-v43/p1.json"
  },
  "p1_root.webp": {
-  "bytes": 2880,
+  "bytes": 16844,
   "group": "mobs",
   "size": [
-   70,
-   53
+   150,
+   150
   ],
-  "source": "media/encounter-signature-v11/horn-swamp.png",
-  "sourceSha256": "a63d7814ed4a8c414c9ddbd4ccb2a083c31a8c6f94e9adcf7852e3e37358b50b",
+  "source": "media/drive-v43/0074nt-3a-oak.webp",
+  "sourceSha256": "6c223e85b14bbb6a4beaddbfa7661a05acf965b004af5011a23676eb4832889a",
   "table": "tools/arcade-art-v43/p1.json"
  },
  "p1_seraph.webp": {
