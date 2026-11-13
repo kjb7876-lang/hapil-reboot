@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
   <meta name="theme-color" content="#07070f">
-  <meta name="description" content="합일 ARCADE. 구슬탄 수백 발을 스치며 버티는 세로 탄막 슈팅.">
+  <meta name="description" content="합일 ARCADE. 느리고 촘촘한 무늬 탄막을 스치며 원작 8부를 따라가는 세로 탄막 슈팅.">
   <title>합일 — ARCADE 탄막</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0b14'/%3E%3Cpath d='M16 5 27 16 16 27 5 16Z' fill='none' stroke='%23d8c49a' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='%23d8c49a'/%3E%3C/svg%3E">
   <style>
@@ -27,7 +27,11 @@
     button:disabled{opacity:.5}
     #arcade-frame{position:relative}
     #arcade-pause-button{position:absolute;top:8.6%;left:2.6%;min-width:44px;min-height:36px;padding:0;background:rgba(10,10,24,.45);border-color:rgba(255,255,255,.22);color:rgba(255,255,255,.8)}
-    #arcade-pause-button[hidden]{display:none}
+    #arcade-pause-button[hidden],.pad[hidden]{display:none}
+    .pad{position:absolute;bottom:1.6%;width:68px;height:56px;min-width:0;padding:0;border-radius:14px;background:rgba(10,10,24,.5);border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.88);font-size:13px;touch-action:none}
+    #arcade-focus{left:2.6%}#arcade-bomb{right:2.6%;border-color:rgba(125,255,176,.55)}
+    .pad:active{background:rgba(216,196,154,.4)}
+    select{appearance:none;border:1px solid #4a4666;background:#15152a;color:inherit;font:inherit;border-radius:10px;padding:10px 14px;min-height:44px;max-width:100%}
   </style>
 </head>
 <body>
@@ -35,18 +39,21 @@
     <div id="arcade-frame">
       <canvas id="arcade-canvas" width="360" height="640" aria-label="세로 탄막 전투장"></canvas>
       <button id="arcade-pause-button" type="button" aria-label="일시정지" hidden>Ⅱ</button>
+      <button id="arcade-focus" class="pad" type="button" aria-label="저속 이동 (누르고 있는 동안)" hidden>저속</button>
+      <button id="arcade-bomb" class="pad" type="button" aria-label="폭탄" hidden>폭탄</button>
     </div>
 
     <div id="arcade-title" class="screen">
       <p class="kicker">HAPIL · ARCADE DANMAKU</p>
       <h1>합일</h1>
-      <p class="note">맵 셋 — 일반 몹, 중간 보스, 보스가 이어집니다.<br>화면을 끌어 피하세요. 공격은 자동, 흰 점만 안 맞으면 됩니다.</p>
+      <p class="note">끌어서 이동 · 공격은 자동<br><b>저속</b>을 누르면 느려지고 피격점이 보입니다 · <b>폭탄</b>은 탄을 지웁니다<br>화면 위쪽으로 올라가면 아이템이 모두 끌려옵니다</p>
       <div class="row" role="group" aria-label="난이도">
         <button type="button" data-difficulty="gentle" aria-pressed="false">여유</button>
         <button type="button" data-difficulty="normal" aria-pressed="true">기본</button>
         <button type="button" data-difficulty="hell" aria-pressed="false">지옥</button>
       </div>
       <p class="note" id="difficulty-note"></p>
+      <select id="arcade-stage-select" aria-label="시작 스테이지"></select>
       <button id="arcade-start" class="primary" type="button" disabled>불러오는 중…</button>
       <p class="note">최고 점수 <b id="title-best">00000000</b></p>
       <div class="row">
@@ -72,8 +79,8 @@
       <a class="button" href="index.html">스토리 모드</a>
     </div>
   </div>
-  <script src="src/audio-v37.js?v=20261113-arcade40"></script>
-  <script src="src/arcade-v38.js?v=20261113-arcade40"></script>
-  <script src="src/arcade-app-v38.js?v=20261113-arcade40"></script>
+  <script src="src/audio-v37.js?v=20261113-arcade41"></script>
+  <script src="src/arcade-v38.js?v=20261113-arcade41"></script>
+  <script src="src/arcade-app-v38.js?v=20261113-arcade41"></script>
 </body>
 </html>
