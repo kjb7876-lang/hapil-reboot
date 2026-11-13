@@ -405,6 +405,7 @@
     var bm=s.tick<bp.until&&images[b.actor+'@attack']?'attack':bp.side>0?'side':'';
     var since=56-(bp.until-s.tick),punch=bm==='attack'&&since>=0&&since<16?1+.14*(1-since/16):1; // 공격 순간 몸이 한 번 커졌다 돌아온다. 탄에 가려도 윤곽으로 읽힌다.
     ctx.save();ctx.translate(bx,by);ctx.scale(punch,punch);drawArt(b.actor,0,0,s.tick-b.hitTick<3,themeColor(s),0,bm,bp.dir||(bx>W/2?-1:1));ctx.restore();
+    if(s.stage==='card'){ctx.globalAlpha=.5;ctx.drawImage(shadeSprite(),bx-74,by-74,148,148);ctx.globalAlpha=1;} // 패턴 중에는 몸을 조금 어둡게 눌러 몸 위의 같은 색 탄이 읽히게 한다
   }
   /* 몹 뒤에 까는 부드러운 빛(테두리 없는 원). 어두운 배경에서 어두운 몹의 윤곽이 뜨게 한다. */
   var haloImage=null;
@@ -413,10 +414,17 @@
     var d=offscreen(128,128),q=d.getContext('2d'),g=q.createRadialGradient(64,64,4,64,64,64);
     g.addColorStop(0,'rgba(214,226,255,.95)');g.addColorStop(.55,'rgba(170,190,240,.38)');g.addColorStop(1,'rgba(150,170,230,0)');q.fillStyle=g;q.fillRect(0,0,128,128);haloImage=d;return d;
   }
+  /* 가장자리가 흐린 어둠(발밑 그림자, 보스 몸 위 탄 받침) */
+  var shadeImage=null;
+  function shadeSprite(){
+    if(shadeImage)return shadeImage;
+    var d=offscreen(96,96),q=d.getContext('2d'),g=q.createRadialGradient(48,48,2,48,48,48);
+    g.addColorStop(0,'rgba(0,0,0,.72)');g.addColorStop(.6,'rgba(0,0,0,.4)');g.addColorStop(1,'rgba(0,0,0,0)');q.fillStyle=g;q.fillRect(0,0,96,96);shadeImage=d;return d;
+  }
   function drawMobs(s){
     var tint=Arcade.PALETTE[s.stageIndex%Arcade.PALETTE.length],color=themeColor(s);
     var order=[],k;for(k=0;k<s.mobs.length;k++)order.push(k);order.sort(function(a,b){return s.mobs[a].y-s.mobs[b].y||a-b;}); // 아래쪽 몹이 위에 그려져야 줄지어 내려올 때 한 덩어리로 안 보인다
-    for(k=0;k<order.length;k++){var i=order[k],m=s.mobs[i],glow=orbs[2][tint],reach=m.r*1.5;if(m.x!==m.x||m.y!==m.y)continue;var under=(m.y<56&&m.x<200)||(m.y<96&&m.x<64);if(under)ctx.globalAlpha=.5; /* 스테이지 이름·일시정지 단추 자리에서는 몹을 옅게 */var art=skinOf(s.stageIndex,m.kind);if(!images[art]){ctx.globalAlpha=.3;ctx.drawImage(glow.image,m.x-reach,m.y-reach,reach*2,reach*2);ctx.globalAlpha=1;}else{var tl=tallOf(m.kind),gap=1e9,j;for(j=0;j<s.mobs.length;j++){var o=s.mobs[j];if(j!==i&&Math.abs(o.x-m.x)<14){var d=Math.abs(o.y-m.y);if(d<gap)gap=d;}}if(!m.elite&&gap<tl)tl=Math.max(46,gap*.94); /* 한 줄로 바짝 붙어 내려오는 몹은 간격만큼만 크게 그려 서로 겹치지 않게 한다 */var halo=tl*.58,dim=under?.5:1;ctx.fillStyle='rgba(0,0,0,.58)';ctx.beginPath();ctx.ellipse(m.x,m.y+tl*.47,tl*.34,tl*.1,0,0,TAU);ctx.fill();ctx.globalAlpha=.26*dim;ctx.drawImage(haloSprite(),m.x-halo,m.y-halo,halo*2,halo*2);ctx.globalAlpha=dim;} /* 어두운 배경에서 몹이 묻히지 않게 뒤에 옅은 빛만 깐다 */var po=poseOf(s,m),mo=po&&s.tick<po.until&&images[art+'@attack']?'attack':po&&po.side>0?'side':'';drawArt(art,m.x,m.y+Math.sin(visual*4+i)*2,s.tick-m.hitTick<3,color,Math.floor(finite(m.baseX,0)/9)+(m.elite?3:0),mo,(po&&po.dir)||(m.x>W/2?-1:1),m.kind,images[art]?tl:0);ctx.globalAlpha=1;} // 시작 칸을 나온 자리로 어긋나게 해 떼가 똑같이 움직이지 않는다
+    for(k=0;k<order.length;k++){var i=order[k],m=s.mobs[i],glow=orbs[2][tint],reach=m.r*1.5;if(m.x!==m.x||m.y!==m.y)continue;var under=(m.y<56&&m.x<200)||(m.y<96&&m.x<64)||(m.y>H-116&&(m.x<96||m.x>W-112));if(under)ctx.globalAlpha=.5; /* 스테이지 이름·일시정지 단추, 아래쪽 목숨·점수 자리에서는 몹을 옅게 */var art=skinOf(s.stageIndex,m.kind);if(!images[art]){ctx.globalAlpha=.3;ctx.drawImage(glow.image,m.x-reach,m.y-reach,reach*2,reach*2);ctx.globalAlpha=1;}else{var tl=tallOf(m.kind),gap=1e9,j;for(j=0;j<s.mobs.length;j++){var o=s.mobs[j];if(j!==i&&Math.abs(o.x-m.x)<14){var d=Math.abs(o.y-m.y);if(d<gap)gap=d;}}if(!m.elite&&gap<tl)tl=Math.max(46,gap*.94); /* 한 줄로 바짝 붙어 내려오는 몹은 간격만큼만 크게 그려 서로 겹치지 않게 한다 */var halo=tl*.58,dim=under?.5:1;ctx.globalAlpha=dim;ctx.drawImage(shadeSprite(),m.x-tl*.42,m.y+tl*.47-tl*.13,tl*.84,tl*.26);ctx.globalAlpha=.26*dim;ctx.drawImage(haloSprite(),m.x-halo,m.y-halo,halo*2,halo*2);ctx.globalAlpha=dim;} /* 어두운 배경에서 몹이 묻히지 않게 뒤에 옅은 빛만 깐다 */var po=poseOf(s,m),mo=po&&s.tick<po.until&&images[art+'@attack']?'attack':po&&po.side>0?'side':'';drawArt(art,m.x,m.y+Math.sin(visual*4+i)*2,s.tick-m.hitTick<3,color,Math.floor(finite(m.baseX,0)/9)+(m.elite?3:0),mo,(po&&po.dir)||(m.x>W/2?-1:1),m.kind,images[art]?tl:0);ctx.globalAlpha=1;} // 시작 칸을 나온 자리로 어긋나게 해 떼가 똑같이 움직이지 않는다
   }
   function drawItems(s){
     // 하트가 고동친다. 드라이브 하트 그림(heart)이 있으면 점수 아이템은 그 그림으로.
