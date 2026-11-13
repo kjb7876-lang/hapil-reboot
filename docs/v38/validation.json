@@ -1,0 +1,9 @@
+{
+ "base": "claude/v37-combat-audio 8e74678 (v37)",
+ "command": "npm test",
+ "result": {"tests": 569, "pass": 569, "fail": 0, "skipped": 0},
+ "composition": "562 from v37 unchanged + 7 new in tests/arcade-v38.test.cjs",
+ "storyModeChanges": "index.html gains one link to arcade.html and styles.css one rule; core.js, render.js, app.js combat paths, media and save format are untouched",
+ "environment": "Linux container, Node 22, headless Chrome with software rendering. Not run on a phone, not played by a person.",
+ "notVerified": ["difficulty and drag feel for a human player", "FPS and heat on a real phone", "audio by ear"]
+}
