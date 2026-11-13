@@ -59,6 +59,7 @@ for scene, row in table['scenes'].items():
                 for k in own[s]:
                     if len(keys) < FILL and k not in keys and 'academy' not in k:
                         keys.append(k); borrowed.setdefault(scene, []).append(k)
+    keys.sort(key=lambda k: 'facing' in mobs[k])  # 정면 걷기 그림을 앞에 둔다. 몹 종류가 하나뿐인 스테이지는 첫 그림만 쓰므로 옆모습보다 정면이 먼저여야 한다.
     if keys: skins[scene] = keys
 
 art = {'mobs': {k: {a: b for a, b in v.items() if a != 'name'} for k, v in sorted(mobs.items())}}

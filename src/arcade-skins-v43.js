@@ -5,26 +5,26 @@
    "m0_dist00_r383_root_0_5"
   ],
   "02": [
-   "m0_dist01_sp1",
    "m0_dist01_sp2",
+   "m0_dist01_sp1",
    "m0_dist01_s1"
   ],
   "03": [
    "m0_dist02_h1",
-   "m0_dist02_g1",
    "m0_dist02_m1",
-   "m0_dist02_sp1",
-   "m0_dist02_r74_patrol_0_5"
+   "m0_dist02_r74_patrol_0_5",
+   "m0_dist02_g1",
+   "m0_dist02_sp1"
   ],
   "04": [
-   "m0_dist03_s1",
    "m0_dist03_c1",
    "m0_dist03_g1",
-   "m0_dist03_sp1"
+   "m0_dist03_sp1",
+   "m0_dist03_s1"
   ],
   "05": [
-   "m0_dist04_c1",
    "m0_dist04_s1",
+   "m0_dist04_c1",
    "m0_dist04_g1"
   ],
   "06": [
@@ -39,8 +39,8 @@
    "m0_dist06_c1"
   ],
   "08": [
-   "m0_a08_o1",
    "m0_a08_s1",
+   "m0_a08_o1",
    "m0_a08_c1",
    "m0_a08_o2"
   ],
@@ -50,10 +50,10 @@
    "m0_ep1a09_r74_patrol"
   ],
   "09-2": [
-   "m0_dist03_s1",
    "m0_dist03_c1",
    "m0_dist03_g1",
-   "m0_dist03_sp1"
+   "m0_dist03_sp1",
+   "m0_dist03_s1"
   ],
   "10": [
    "m0_a10_s1",
@@ -108,8 +108,8 @@
   ],
   "22": [
    "m0_b09_h1",
-   "m0_b09_o1",
-   "m0_b09_c1"
+   "m0_b09_c1",
+   "m0_b09_o1"
   ],
   "24": [
    "m0_u201_e1",
@@ -122,9 +122,9 @@
    "m0_u202_e1_4"
   ],
   "26": [
-   "m0_u204_e1",
    "m0_u204_e2",
-   "m0_u204_e3"
+   "m0_u204_e3",
+   "m0_u204_e1"
   ],
   "27": [
    "m0_u205_e1",
@@ -158,9 +158,9 @@
   "37": [
    "m0_kair_academy_wave_1",
    "m0_kair_academy_wave_2",
-   "m0_kair_academy_wave_3",
    "m0_kair_academy_wave_4",
    "m0_kair_academy_wave_5",
+   "m0_kair_academy_wave_3",
    "m0_kair_academy_wave_6"
   ],
   "38": [
@@ -225,19 +225,19 @@
    "m0_murder04_e1"
   ],
   "53": [
+   "m0_murder04_e3",
    "m0_murder04_e2",
-   "m0_murder04_e1",
-   "m0_murder04_e3"
+   "m0_murder04_e1"
   ],
   "54": [
+   "m0_murder04_e3",
    "m0_murder04_e1",
-   "m0_murder04_e2",
-   "m0_murder04_e3"
+   "m0_murder04_e2"
   ],
   "55": [
+   "m0_murder04_e3",
    "m0_murder04_e2",
-   "m0_murder04_e1",
-   "m0_murder04_e3"
+   "m0_murder04_e1"
   ],
   "56": [
    "m0_c101_e1",
@@ -249,8 +249,8 @@
    "m0_c102_e3"
   ],
   "58": [
-   "m0_c105_e1",
    "m0_c105_e2",
+   "m0_c105_e1",
    "m0_c105_e3"
   ],
   "59": [
