@@ -1,4 +1,4 @@
-/* 합일 v41 · ARCADE 탄막 모드 — 전투 시뮬레이션.
+/* 합일 v42 · 총집본(ARCADE 탄막) — 전투 시뮬레이션.
  * 스토리 전투(core.js, 규칙31)와 완전히 분리된 독립 엔진이다. 60Hz 고정 틱·시드 난수로 결정적으로 돈다.
  * 스테이지는 원작(StoryWorld) 8부의 장 순서를 따르고, 각 스테이지는
  *   잡몹 구간 → 중간 보스 → 잡몹 구간 → 보스(일반 공격과 이름 붙은 패턴이 번갈아)로 이어진다.
@@ -71,6 +71,16 @@
     rose:function(k,points){return cached('r'+k+'/'+points,function(){var out=[];for(var i=0;i<points;i++){var a=TAU*i/points,c=Math.cos(k*a/2),r=.3+.7*c*c;out.push(Math.cos(a)*r,Math.sin(a)*r);}return out;});},
     // 눈: 납작한 타원 테두리 안에 작은 눈동자 고리
     eye:function(points){return cached('e'+points,function(){var out=[],i,a,pupil=Math.max(6,points>>2);for(i=0;i<points;i++){a=TAU*i/points;out.push(Math.cos(a),Math.sin(a)*.42);}for(i=0;i<pupil;i++){a=TAU*i/pupil;out.push(Math.cos(a)*.24,Math.sin(a)*.24);}return out;});},
+    // 리사주 곡선 x = sin(a·t + π/2), y = sin(b·t): 두 진동의 겹침
+    lissajous:function(a,b,points){return cached('l'+a+'/'+b+'/'+points,function(){var out=[];for(var i=0;i<points;i++){var t=TAU*i/points;out.push(Math.sin(a*t+Math.PI/2),Math.sin(b*t));}return out;});},
+    // 하이포사이클로이드: 큰 원 안을 구르는 작은 원 위 한 점의 자취. k=3 델토이드, k=4 아스트로이드
+    hypocycloid:function(k,points){return cached('h'+k+'/'+points,function(){var out=[];for(var i=0;i<points;i++){var t=TAU*i/points;out.push((k-1)*Math.cos(t)+Math.cos((k-1)*t),(k-1)*Math.sin(t)-Math.sin((k-1)*t));}return out;});},
+    // 심장형 곡선 r = 1 − sin θ. 부푼 쪽이 위(−y)를 본다.
+    cardioid:function(points){return cached('c'+points,function(){var out=[];for(var i=0;i<points;i++){var t=TAU*i/points,r=1-Math.sin(t);out.push(Math.cos(t)*r,Math.sin(t)*r);}return out;});},
+    // 초공식(Gielis): r = (|cos(mθ/4)|^n2 + |sin(mθ/4)|^n3)^(−1/n1). 꽃·불가사리·조개 같은 자연의 윤곽
+    superformula:function(m,n1,n2,n3,points){return cached('f'+[m,n1,n2,n3,points].join('/'),function(){var out=[];for(var i=0;i<points;i++){var t=TAU*i/points,r=Math.pow(Math.pow(Math.abs(Math.cos(m*t/4)),n2)+Math.pow(Math.abs(Math.sin(m*t/4)),n3),-1/n1);out.push(Math.cos(t)*r,Math.sin(t)*r);}return out;});},
+    // 해바라기: i번째 씨앗을 황금각 i배 방향, √i 거리에 놓는다(피보나치 나선이 보인다).
+    sunflower:function(points){return cached('u'+points,function(){var out=[];for(var i=0;i<points;i++){var r=Math.sqrt((i+1)/points),a=i*GOLDEN_ANGLE;out.push(Math.cos(a)*r,Math.sin(a)*r);}return out;});},
     // 코흐 눈송이: 정삼각형의 각 변 가운데 1/3을 바깥 삼각형으로 바꾸기를 depth번 반복
     koch:function(depth){return cached('k'+depth,function(){var v=corners(3,1);for(var d=0;d<depth;d++){var next=[],n=v.length/2;for(var k=0;k<n;k++){var x1=v[k*2],y1=v[k*2+1],x2=v[(k+1)%n*2],y2=v[(k+1)%n*2+1],dx=(x2-x1)/3,dy=(y2-y1)/3;next.push(x1,y1,x1+dx,y1+dy,x1+dx*1.5+dy*.8660254,y1+dy*1.5-dx*.8660254,x1+dx*2,y1+dy*2);}v=next;}return v;});},
     // 시에르핀스키 삼각형: 가운데 삼각형을 비우기를 depth번 반복한 뒤 남은 작은 삼각형들의 꼭짓점
@@ -147,6 +157,24 @@
   function plainBells(c1,c2){return function(s,t){var b=s.boss;
     if(t%52===0)bell(s,b.x,b.y,count(s,13),aim(s,b.x,b.y),1.9,104,.45,{color:c1,size:1});
     if(t%104===70)ring(s,b.x,b.y,count(s,12),58,rand(s)*TAU,{color:c2,size:0});};}
+  function plainLissajous(c1,c2){return function(s,t){var b=s.boss;
+    if(t%56===0)shape(s,b.x,b.y,Shapes.lissajous(3,2,count(s,26)),82,t*.01,{color:(t/56)%2?c2:c1,size:0});
+    if(t%112===84)fan(s,b.x,b.y,count(s,3),aim(s,b.x,b.y),.5,110,{color:WHITE,size:RICE});};}
+  function plainHypocycloid(c1,c2){return function(s,t){var b=s.boss,odd=(t/60)%2;
+    if(t%60===0)shape(s,b.x,b.y,Shapes.hypocycloid(odd?3:4,count(s,28)),78,t*.008,{color:odd?c2:c1,size:1});};}
+  function plainCardioid(c1,c2){return function(s,t){var b=s.boss;
+    if(t%64===0)shape(s,b.x,b.y,Shapes.cardioid(count(s,26)),84,aim(s,b.x,b.y)+Math.PI/2,{color:c1,size:0});
+    if(t%64===32)ring(s,b.x,b.y,count(s,12),60,rand(s)*TAU,{color:c2,size:1});};}
+  // 가우디의 현수선 아치: 사슬을 늘어뜨린 곡선(cosh)을 뒤집은 아치가 차례로 내려온다. 아치마다 세 칸의 문이 있다.
+  function plainCatenary(c1,c2){return function(s,t){
+    if(t%46!==0)return;
+    s.lane=Math.max(0,Math.min(10,(s.lane===undefined?5:s.lane)+Math.floor(rand(s)*3)-1));
+    for(var i=0;i<13;i++){if(i>=s.lane&&i<s.lane+3)continue;var x=W/13*(i+.5),u=(x-W/2)/90;spawn(s,x,-43+12*((Math.exp(u)+Math.exp(-u))/2-1),Math.PI/2,60,{color:(t/46)%2?c2:c1,size:1});}};}
+  function plainSunflower(c1,c2){return function(s,t){var b=s.boss;
+    if(t%90===0)shape(s,b.x,b.y,Shapes.sunflower(count(s,34)),94,rand(s)*TAU,{color:c1,size:0});
+    if(t%90===45)bell(s,b.x,b.y,count(s,11),aim(s,b.x,b.y),1.8,100,.45,{color:c2,size:1});};}
+  function plainSuperformula(c1,c2){return function(s,t){var b=s.boss,odd=(t/58)%2;
+    if(t%58===0)shape(s,b.x,b.y,Shapes.superformula(odd?5:7,odd?2:3,7,7,count(s,30)),80,t*.006,{color:odd?c2:c1,size:0});};}
   // 보스를 축으로 도는 광선 바퀴
   function wheel(s,spokes,turn,color,active){var b=s.boss,base=aim(s,b.x,b.y)+Math.PI/spokes;for(var k=0;k<spokes;k++)beam(s,b.x,b.y,base+TAU*k/spokes,{width:12,warn:76,active:active,color:color,spin:turn,follow:true});}
   // 가로줄·세로줄 광선 격자. both면 한꺼번에 켠다.
@@ -354,14 +382,14 @@
       a:[{kind:'leech',fire:'aim',color:RED},null],mid:['rian','traitors'],
       b:[{kind:'leech',fire:'ring',color:RED},null],boss:['cultist','boundNightmare','returning','twoGoals','samong']}
   ];
-  var PLAIN=[plainSpiral,plainRings,plainBells],STAGES=[],SEGMENTS=[];
+  var PLAIN=[plainSpiral,plainLissajous,plainBells,plainCatenary,plainRings,plainHypocycloid,plainSunflower,plainCardioid,plainSuperformula],PLAIN_NAMES=['spiral','lissajous','bell','catenary','rings','hypocycloid','sunflower','cardioid','superformula'],plainCount=0,STAGES=[],SEGMENTS=[];
   STAGE_DATA.forEach(function(g,index){
     var cast=[];[g.a,g.b].forEach(function(pair){pair.forEach(function(m){if(m&&cast.indexOf(m.kind)<0)cast.push(m.kind);});});
     STAGES.push({part:g.part,name:g.name,bg:g.bg,scenes:g.scenes,cast:cast,first:SEGMENTS.length});
     function card(actor,mid,spell,plainIndex,last){
       var who=ACTORS[actor];
       return spell?{kind:'card',stage:index,actor:actor,mid:mid,spell:true,name:spell.name,scene:spell.scene,hp:mid?420:last?600:520,time:mid?26:last?36:30,fire:spell.fire}
-        :{kind:'card',stage:index,actor:actor,mid:mid,spell:false,name:'',hp:mid?200:240,time:mid?16:18,fire:PLAIN[plainIndex%3](who.c1,who.c2)};
+        :{kind:'card',stage:index,actor:actor,mid:mid,spell:false,name:'',plain:PLAIN_NAMES[plainCount%9],hp:mid?200:240,time:mid?16:18,fire:PLAIN[plainCount++%9](who.c1,who.c2)};
     }
     SEGMENTS.push({kind:'wave',stage:index,duration:760,script:waveColumns(g.a[0],g.a[1])});
     SEGMENTS.push(card(g.mid[0],true,null,index,false));SEGMENTS.push(card(g.mid[0],true,spells[g.mid[1]],0,false));
@@ -370,15 +398,15 @@
   });
   var CARD_TOTAL=SEGMENTS.filter(function(g){return g.kind==='card'&&g.spell;}).length;
 
-  /* options: {difficulty, seed, stage(시작 스테이지), segment(시작 구간), compact(휴대폰 모드)} */
+  /* options: {difficulty, seed, stage(시작 스테이지), segment(시작 구간), compact(휴대폰 모드), bossOnly(보스 체험: 그 스테이지의 보스전만)} */
   function createRun(options){
     options=options||{};var difficulty=DIFFICULTY[options.difficulty]?options.difficulty:'normal',rules=DIFFICULTY[difficulty],compact=!!options.compact;
     var startSeg=Number.isInteger(options.segment)&&SEGMENTS[options.segment]?options.segment:Number.isInteger(options.stage)&&STAGES[options.stage]?STAGES[options.stage].first:0;
-    var s={revision:41,difficulty:difficulty,rules:rules,compact:compact,density:rules.density*(compact?COMPACT_DENSITY:1),sizeScale:compact?COMPACT_SIZE:1,cap:compact?COMPACT_CAP:CAP,
+    var s={revision:42,difficulty:difficulty,rules:rules,compact:compact,density:rules.density*(compact?COMPACT_DENSITY:1),sizeScale:compact?COMPACT_SIZE:1,cap:compact?COMPACT_CAP:CAP,
       seed:(options.seed>>>0)||1,rng:(options.seed>>>0)||1,tick:0,stage:'break',stageTick:BREAK_TICKS-30,seg:startSeg-1,segTick:0,stageIndex:SEGMENTS[startSeg].stage,spellNumber:0,
       player:{x:W/2,y:H-84,hp:rules.hp,maxHp:rules.hp,invulnerableUntil:0,r:rules.radius,focus:false},
       boss:{x:W/2,y:-60,targetX:W/2,targetY:132,hp:1,maxHp:1,actor:'',name:'',mid:false,hitTick:-99,leaving:false,present:false},
-      bombs:rules.bombs,gauge:0,spellClean:false,captures:0,itemsTaken:0,lane:undefined,
+      bossOnly:!!options.bossOnly,rushStage:SEGMENTS[startSeg].stage,bombs:rules.bombs,gauge:0,spellClean:false,captures:0,itemsTaken:0,lane:undefined,
       n:0,dropped:0,peak:0,score:0,graze:0,hits:0,kills:0,cleared:0,timeouts:0,events:[],cancelled:[],pops:[],lasers:[],mobs:[],warned:false,sn:0,itemCount:0};
     ['bx','by','ba','bs','bturn','bacc','bmin','bmax','barg','bs2','bspin'].forEach(function(k){s[k]=new Float32Array(CAP);});
     ['bage','blife','bat'].forEach(function(k){s[k]=new Uint16Array(CAP);});
@@ -429,9 +457,12 @@
   function segment(s){return SEGMENTS[s.seg];}
   /* 다음 구간으로. 맵이 바뀌면 난이도 규칙대로 목숨을 채우고, 인물이 바뀌면 이전 보스를 내보낸다. */
   function advance(s){
-    var prev=segment(s),next=SEGMENTS[s.seg+1],p=s.player;
+    var prev=segment(s),at=s.seg+1,p=s.player;
+    // 보스 체험: 잡몹 구간을 건너뛰고, 고른 스테이지의 중간 보스와 보스만 싸운 뒤 끝난다.
+    if(s.bossOnly){while(SEGMENTS[at]&&SEGMENTS[at].kind==='wave')at++;if(SEGMENTS[at]&&SEGMENTS[at].stage!==s.rushStage)at=SEGMENTS.length;}
+    var next=SEGMENTS[at];
     if(!next){s.stage='won';s.stageTick=0;note(s,'win');return;}
-    s.seg++;s.segTick=0;s.stageTick=0;s.lane=undefined;
+    s.seg=at;s.segTick=0;s.stageTick=0;s.lane=undefined;
     if(next.stage!==s.stageIndex){s.stageIndex=next.stage;var heal=s.rules.mapHeal;if(heal&&p.hp<p.maxHp){p.hp=heal<0?p.maxHp:Math.min(p.maxHp,p.hp+heal);note(s,'extend');}note(s,'map');}
     if(next.kind==='wave'){s.boss.leaving=s.boss.present;s.stage='wave';note(s,'wave');return;}
     if(!prev||prev.kind!=='card'||prev.actor!==next.actor||!s.boss.present){s.boss.leaving=s.boss.present;s.stage='intro';}else s.stage='break';
@@ -588,7 +619,7 @@
     return s;
   }
   function timeLeft(s){var seg=segment(s);return s.stage==='card'?Math.max(0,seg.time-s.segTick*TICK):0;}
-  var api={revision:41,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
+  var api={revision:42,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     SEGMENTS:SEGMENTS,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
     BLOOM_TICKS:BLOOM_TICKS,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem};
   if(typeof module==='object'&&module.exports)module.exports=api;

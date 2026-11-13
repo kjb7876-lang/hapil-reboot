@@ -1,4 +1,4 @@
-/* 합일 v41 · ARCADE 탄막 모드 — 화면·입력·소리.
+/* 합일 v42 · 총집본(ARCADE 탄막) — 화면·입력·소리.
  * 시뮬레이션은 arcade-v38.js가 맡고, 여기서는 그 상태를 읽어 그리기만 한다.
  * 글은 스테이지 이름 한 줄과 패턴 이름 한 줄만 띄운다. */
 (function(global){
@@ -26,6 +26,8 @@
   var particles=[],flash=0,hurtFlash=0,shake=0,shock=null,banner=0,bannerTitle='',bannerSub='';
   var keys={},finger={active:false,id:null,x:0,y:0},focusHeld=false,bombQueued=false;
   var fx=null,music=null,soundOn=true,best=0,lastItemSound=0;
+  var runMode='full';
+  var MODE_NOTES={full:'잡몹 → 중간 보스 → 잡몹 → 보스. 1부에서 8부까지 한 번에 이어집니다.',boss:'고른 장의 중간 보스와 보스만 연달아 싸웁니다.'};
   var compact=!!(global.matchMedia&&global.matchMedia('(pointer:coarse)').matches)||global.innerWidth<520;
 
   function finite(v,fallback){return v===v&&v!==Infinity&&v!==-Infinity?v:fallback;}
@@ -128,7 +130,7 @@
       else if(e==='hurt'){play('hurt',s.player.x);hurtFlash=1;shake=14;}
       else if(e==='bomb'){play('bomb',s.player.x);flash=.55;shock={x:s.player.x,y:s.player.y,r:10};shake=10;}
       else if(e==='card'){play('charge',s.boss.x);showBanner(Arcade.SEGMENTS[s.seg].name,s.boss.name);}
-      else if(e==='wave'){if(Arcade.STAGES[s.stageIndex].first===s.seg){showBanner(Arcade.STAGES[s.stageIndex].name,'STAGE '+(s.stageIndex+1));play('seal');}}
+      else if(e==='wave'){if(Arcade.STAGES[s.stageIndex].first===s.seg){showBanner(Arcade.STAGES[s.stageIndex].name,'제'+Arcade.STAGES[s.stageIndex].part+'부 · STAGE '+(s.stageIndex+1));play('seal');}}
       else if(e==='map')loadStage(s.stageIndex);
       else if(e==='entrance')play('warning');
       else if(e==='break'){play('phaseBreak',s.boss.x);flash=.6;shock={x:s.boss.x,y:s.boss.y,r:10};shake=8;}
@@ -266,7 +268,7 @@
       }
     }
     ctx.textAlign='left';ctx.font='600 12px '+SANS;ctx.fillStyle=color;ctx.fillText(b.present?b.name:stage.name,12,29);
-    ctx.font='11px '+SANS;ctx.fillStyle='rgba(255,255,255,.72)';ctx.fillText('STAGE '+(s.stageIndex+1)+' / '+Arcade.STAGES.length,12,45);
+    ctx.font='11px '+SANS;ctx.fillStyle='rgba(255,255,255,.72)';ctx.fillText(s.bossOnly?'보스 체험 · 제'+stage.part+'부':'STAGE '+(s.stageIndex+1)+' / '+Arcade.STAGES.length,12,45);
     // 목숨 · 폭탄 · 스침 게이지(왼쪽 아래 저속 버튼 위), 점수(오른쪽 아래 폭탄 버튼 위)
     ctx.font='14px '+SANS;ctx.fillStyle='#ff6a8a';var hearts='';for(i=0;i<s.player.maxHp;i++)hearts+=i<s.player.hp?'◆':'◇';ctx.fillText(hearts,12,H-96);
     ctx.fillStyle='#7dffb0';var bombs='';for(i=0;i<s.bombs;i++)bombs+='✦';ctx.fillText(bombs,12,H-78);
@@ -322,22 +324,33 @@
   function start(){
     if(fx)fx.unlock();
     var from=Number($('arcade-stage-select').value)||0;
-    state=Arcade.createRun({difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:from,compact:compact});
+    state=Arcade.createRun({difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:from,compact:compact,bossOnly:runMode==='boss'});
     buildSprites();loadStage(state.stageIndex);
     particles.length=0;flash=hurtFlash=shake=banner=0;shock=null;accumulator=0;lastStamp=0;framesSeen=0;setMode('playing');
   }
   function finish(){
     var s=state,won=s.stage==='won';
     if(s.score>best){best=s.score;try{global.localStorage.setItem('hapil-arcade-best-v38',String(best));}catch(e){}}
-    $('result-title').textContent=won?'ALL CLEAR':'GAME OVER';$('result-score').textContent=pad(s.score);$('result-best').textContent=pad(best);
+    $('result-title').textContent=won?(s.bossOnly?'BOSS CLEAR':'ALL CLEAR'):'GAME OVER';$('result-score').textContent=pad(s.score);$('result-best').textContent=pad(best);
     $('result-detail').textContent='STAGE '+(s.stageIndex+1)+' · 패턴 보너스 '+s.captures+' / '+Arcade.CARD_TOTAL+' · 처치 '+s.kills+' · 스친 탄 '+s.graze+' · 피격 '+s.hits;
     if(!won)$('arcade-stage-select').value=String(s.stageIndex); // 다시 도전은 쓰러진 스테이지부터
     setTimeout(function(){if(state===s)setMode('result');},won?1500:900);
   }
   function pause(){if(mode==='playing')setMode('paused');}
+  // 시작 지점 목록. 원큐 여정은 스테이지 이름, 보스 체험은 그 장의 보스 이름으로 보여 준다.
+  function fillStages(){
+    var select=$('arcade-stage-select'),keep=select.value||'0';select.textContent='';
+    Arcade.STAGES.forEach(function(g,i){
+      var option=document.createElement('option'),names=[];option.value=String(i);
+      if(runMode==='boss'){Arcade.SEGMENTS.forEach(function(seg){if(seg.stage===i&&seg.kind==='card'){var n=Arcade.ACTORS[seg.actor].name;if(names.indexOf(n)<0)names.push(n);}});option.textContent='제'+g.part+'부 · '+names.join(' → ');}
+      else option.textContent=(i?'제'+g.part+'부부터 · ':'처음부터 · ')+g.name;
+      select.appendChild(option);});
+    select.value=keep;$('mode-note').textContent=MODE_NOTES[runMode];
+  }
   function fieldPoint(e){var rect=canvas.getBoundingClientRect();return {x:(e.clientX-rect.left)*W/rect.width,y:(e.clientY-rect.top)*H/rect.height};}
   function bind(){
     document.querySelectorAll('[data-difficulty]').forEach(function(button){button.addEventListener('click',function(){difficulty=button.dataset.difficulty;$('difficulty-note').textContent=NOTES[difficulty];document.querySelectorAll('[data-difficulty]').forEach(function(b){b.setAttribute('aria-pressed',String(b===button));});});});
+    document.querySelectorAll('[data-mode]').forEach(function(button){button.addEventListener('click',function(){runMode=button.dataset.mode;document.querySelectorAll('[data-mode]').forEach(function(b){b.setAttribute('aria-pressed',String(b===button));});fillStages();});});
     $('arcade-start').addEventListener('click',start);$('arcade-retry').addEventListener('click',start);
     $('arcade-resume').addEventListener('click',function(){if(fx)fx.unlock();accumulator=0;lastStamp=0;setMode('playing');});
     $('arcade-pause-button').addEventListener('click',pause);
@@ -362,7 +375,7 @@
   function boot(){
     try{best=Number(global.localStorage.getItem('hapil-arcade-best-v38'))||0;}catch(e){best=0;}
     $('title-best').textContent=pad(best);$('difficulty-note').textContent=NOTES[difficulty];
-    var select=$('arcade-stage-select');Arcade.STAGES.forEach(function(g,i){var option=document.createElement('option');option.value=String(i);option.textContent=(i?'제'+g.part+'부 · ':'처음부터 · ')+g.name;select.appendChild(option);});
+    fillStages();
     try{fx=global.HapilAudio&&global.HapilAudio.create?global.HapilAudio.create():null;}catch(e){fx=null;}
     try{music=new Audio('media/music.mp3');music.loop=true;music.volume=.2;music.preload='none';}catch(e){music=null;}
     bind();fit();requestAnimationFrame(frame);
@@ -370,6 +383,6 @@
     loadImage('gunner');Arcade.PROPS.forEach(function(prop){loadImage(prop.key);});
     $('arcade-start').disabled=false;$('arcade-start').textContent='게임 시작';
   }
-  global.HapilArcadeApp={getState:function(){return {mode:mode,scale:scale,lite:lite,compact:compact,frameMs:frameMs,bullets:state?state.n:0,stage:state?state.stage:'',seg:state?state.seg:-1,hp:state?state.player.hp:0,score:state?state.score:0,particles:particles.length,images:Object.keys(images).length,loadedStage:loadedStage};},debugState:function(){return state;}};
+  global.HapilArcadeApp={getState:function(){return {mode:mode,runMode:runMode,scale:scale,lite:lite,compact:compact,frameMs:frameMs,bullets:state?state.n:0,stage:state?state.stage:'',seg:state?state.seg:-1,hp:state?state.player.hp:0,score:state?state.score:0,particles:particles.length,images:Object.keys(images).length,loadedStage:loadedStage};},debugState:function(){return state;}};
   boot();
 })(window);
