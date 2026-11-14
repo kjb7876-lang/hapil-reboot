@@ -498,7 +498,7 @@
       if(t%120===90)for(k=0;k<pick(s,2,3,4);k++)shape(s,b.x,b.y,Shapes.goldenSpiral(count(s,12)),104,TAU*k/pick(s,2,3,4)+t*.01,{color:YELLOW,size:1});}}
   };
 
-  var PLAIN=[plainSpiral,plainLissajous,plainBells,plainCatenary,plainRings,plainHypocycloid,plainSunflower,plainCardioid,plainSuperformula],PLAIN_NAMES=['spiral','lissajous','bell','catenary','rings','hypocycloid','sunflower','cardioid','superformula'],plainCount=0,STAGES=[],SEGMENTS=[];
+  var PLAIN=[plainSpiral,plainLissajous,plainBells,plainCatenary,plainRings,plainHypocycloid,plainSunflower,plainCardioid,plainSuperformula],PLAIN_NAMES=['spiral','lissajous','bell','catenary','rings','hypocycloid','sunflower','cardioid','superformula'],plainCount=0,plainOf={},STAGES=[],SEGMENTS=[];
   /* 잡몹 구간 하나. script(s,t)는 t틱째에 몹을 내보내는 대본. */
   function wave(script,duration){script.duration=duration||760;return script;}
   /* 부별 파일에 건네는 도구 상자. */
@@ -522,10 +522,13 @@
     function cards(list,mid){
       var actor=list[0],who=ACTORS[actor];if(!who)throw new Error(row[2]+': unknown actor '+actor);
       for(var k=1;k<list.length;k++){
+        // 보스마다 고유한 일반 패턴 두 가지를 번갈아 쓴다. 처음 나온 순서 i번째 보스는 (2i, 2i+1) mod 9: 이어 나오는 두 보스는 겹치지 않는다.
+        if(!plainOf[actor])plainOf[actor]={i:plainCount++,n:0};
+        var po=plainOf[actor],pf=(2*po.i+po.n++%2)%9;
         var spell=spells[list[k]],last=!mid&&k===list.length-1;if(!spell)throw new Error(row[2]+': unknown pattern '+list[k]);
         if(spell.scene&&spell.scene!==row[0])throw new Error(row[2]+': pattern '+list[k]+' belongs to scene '+spell.scene);
         if(spell.used)throw new Error('pattern used twice: '+list[k]);spell.used=true;
-        SEGMENTS.push({kind:'card',stage:index,actor:actor,mid:mid,spell:false,name:'',plain:PLAIN_NAMES[plainCount%9],hp:mid?200:240,time:mid?16:18,fire:PLAIN[plainCount++%9](who.c1,who.c2)});
+        SEGMENTS.push({kind:'card',stage:index,actor:actor,mid:mid,spell:false,name:'',plain:PLAIN_NAMES[pf],hp:mid?200:240,time:mid?16:18,fire:PLAIN[pf](who.c1,who.c2)});
         SEGMENTS.push({kind:'card',stage:index,actor:actor,mid:mid,spell:true,name:spell.name,scene:row[0],hp:spell.hp||(mid?420:last?600:520),time:spell.time||(mid?26:last?36:30),fire:spell.fire});
       }
     }
