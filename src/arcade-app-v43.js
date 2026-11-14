@@ -586,7 +586,7 @@
       if(c.e){
         var e=c.e,img=fxImages[e.file],f=Math.floor(age*e.fps);if(!img||f>=e.frames||f<0){casts.splice(i,1);continue;}
         var sc=(c.big?1.35:1)*170/Math.max(e.cell[0],e.cell[1]),w=e.cell[0]*sc,hh=e.cell[1]*sc;
-        ctx.save();ctx.globalCompositeOperation=e.blend==='lighter'?'lighter':'source-over';ctx.globalAlpha=f>=e.frames-2?.5:.9;
+        ctx.save();ctx.globalCompositeOperation=e.blend==='lighter'?'lighter':'source-over';ctx.globalAlpha=(f>=e.frames-2?.5:.9)*(paleOf(themeColor(s))?SKILL_FX_BRIGHT:1); // 금빛·흰빛 무대에서는 빛을 덜 더한다(심사: 원반이 하얗게 날아감)
         ctx.drawImage(img,f*e.cell[0],0,e.cell[0],e.cell[1],c.x-e.pivot[0]*sc,c.y-e.pivot[1]*sc,w,hh);ctx.restore();
       }else{
         var k=age/.75;if(k>=1){casts.splice(i,1);continue;}
@@ -846,7 +846,7 @@
       }else{
         var over=l.age-l.warn-l.active,k=over>0?Math.max(0,1-over/Arcade.BEAM_FADE):Math.min(1,(l.age-l.warn+1)/4),pulse=1+Math.sin(visual*40+i)*.06;
         ctx.setLineDash([]);ctx.globalCompositeOperation='lighter';var dim=paleOf(color)?PALE_BEAM_DIM:BEAM_DIM; // 금빛·흰빛 광선은 빛무리를 줄인다(심사 6.36: 노란 광선이 화면에서 가장 밝아 탄과 영웅을 덮음)
-        if(!lite){var fade=ctx.createLinearGradient(0,H*BEAM_LOW_FADE,0,H);fade.addColorStop(0,color);fade.addColorStop(1,'#000000');ctx.globalAlpha=.3*k*dim;ctx.strokeStyle=fade;ctx.lineWidth=l.width*2.3*k*pulse;ctx.stroke();}
+        if(!lite){var top=Math.min(ly,H*BEAM_LOW_FADE-1),fade=ctx.createLinearGradient(0,top,0,H),span=H-top,r0=Math.min(.5,BEAM_ROOT/span),r1=Math.max(r0,(H*BEAM_LOW_FADE-top)/span);fade.addColorStop(0,ly<H*BEAM_LOW_FADE?'#000000':color);fade.addColorStop(r0,color);fade.addColorStop(r1,color);fade.addColorStop(1,'#000000');ctx.globalAlpha=.3*k*dim;ctx.strokeStyle=fade;ctx.lineWidth=l.width*2.3*k*pulse;ctx.stroke();}
         if(sheet){ // 보스 시트의 레이저 질감을 광선 방향으로 늘여 더한다. 판정 폭은 흰 심으로 보인다.
           var bm=sheet.e.beam,th=l.width*2.4*k*pulse;ctx.save();ctx.translate(lx,ly);ctx.rotate(angle);ctx.globalAlpha=k*dim;
           ctx.drawImage(sheet.img,bm[0],bm[1],bm[2],bm[3],0,-th/2,LASER_DRAW,th);ctx.restore();
@@ -888,7 +888,7 @@
     }
     ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
   }
-  var BEAM_LOW_FADE=.45,PALE_BEAM_DIM=.3,PALE_CORE=.5,BEAM_CORE=.7,BEAM_DIM=.5,HERO_RING_WIDTH=3,BRIGHT_ART_DIM='brightness(.7) contrast(.78)',PLAYER_SHADE=46,HERO_RING='#7ff3ff',OUTER_RIM='#1c2236',SIGIL_ALPHA=.55;
+  var SKILL_FX_BRIGHT=.4,BEAM_LOW_FADE=.45,BEAM_ROOT=48,PALE_BEAM_DIM=.3,PALE_CORE=.5,BEAM_CORE=.7,BEAM_DIM=.5,HERO_RING_WIDTH=3,BRIGHT_ART_DIM='brightness(.6) contrast(.72)',PLAYER_SHADE=46,HERO_RING='#7ff3ff',OUTER_RIM='#1c2236',SIGIL_ALPHA=.55;
   function drawPlayer(s){
     var p=s.player,blink=s.tick<p.invulnerableUntil&&Math.floor(s.tick/4)%2;
     // 영웅 뒤 어두운 빛무리: 밝은 광선·배경 사이에서도 영웅 자리가 먼저 보인다(심사 6.36)
