@@ -66,7 +66,7 @@
   /* 동작 그림: manifest의 <키>.webp 항목에 motions:['side','attack',…]가 있으면 <키>@side.webp 같은 스트립이 따로 있다. */
   function motionsOf(key){var e=manifest&&manifest[key+'.webp'];return e&&Array.isArray(e.motions)?e.motions:[];}
   function propLong(prop){return PROP_LONG[prop.key]||Math.round((prop.radius||12)*4.4);}
-  function propGlow(prop){var g=PROP_GLOW[prop.key];return g===undefined?Arcade.PALETTE[hash(prop.key)%Arcade.PALETTE.length]:g;}
+  function propGlow(prop){var g=prop.glow!==undefined?prop.glow:PROP_GLOW[prop.key];return g===undefined?Arcade.PALETTE[hash(prop.key)%Arcade.PALETTE.length]:g;}
 
   /* ── 그림 받기 ── */
   function fileOf(key){return key==='gunner'?'media/gunner.webp':ART_DIR+key+(key.indexOf('bg-')===0?'.jpg':'.webp');}
@@ -571,12 +571,13 @@
   function drawProp(s,i,grow,alpha){
     var prop=Arcade.PROPS[s.bcolor[i]];if(!prop)return;
     var img=images[prop.key],x=s.bx[i],y=s.by[i];
-    if(!img)requestProp(prop.key); // 기물은 처음 화면에 나타날 때 받는다
+    if(!img&&!prop.drawn)requestProp(prop.key); // 기물은 처음 화면에 나타날 때 받는다(코드로 그리는 기물은 받지 않는다)
     // 십자가처럼 upright인 기물은 절대 돌리지 않는다. 도는 기물은 제자리에서 돌고, 그 밖에는 끝이 진행 방향을 본다.
     var turn=prop.upright?0:s.bspin[i]?s.bage[i]*s.bspin[i]:s.ba[i],cos=Math.cos(turn),sin=Math.sin(turn),core=orbs[0][8],glow=orbs[2][propGlow(prop)]||orbs[2][8],reach=glow.half*1.5*grow,long=propLong(prop)*s.sizeScale*grow;
     ctx.globalAlpha=alpha*.5;ctx.drawImage(glow.image,x-reach,y-reach,reach*2,reach*2);
     ctx.setTransform(scale*cos,scale*sin,-scale*sin,scale*cos,(x+offsetX)*scale,(y+offsetY)*scale);ctx.globalAlpha=alpha;
-    if(img){var sh=sheetOf(prop.key,img),k=long/Math.max(sh.cw,sh.ch),w=sh.cw*k,h=sh.ch*k;drawCell(prop.key,img,0,true,-w/2,-h/2,w,h);}
+    if(prop.drawn){var u=long/2;if(prop.key==='skull')drawSkull(u);else drawHand(u);}
+    else if(img){var sh=sheetOf(prop.key,img),k=long/Math.max(sh.cw,sh.ch),w=sh.cw*k,h=sh.ch*k;drawCell(prop.key,img,0,true,-w/2,-h/2,w,h);}
     else{
       // 그림을 받기 전: 길쭉한 마름모 단색 도형(upright 기물은 세로로 선다).
       var a=long/2,b=Math.max(4,(prop.radius||10)*.55)*s.sizeScale*grow;ctx.fillStyle=COLORS[propGlow(prop)]||'#e9e9ff';ctx.strokeStyle='#ffffff';ctx.lineWidth=1.2;ctx.beginPath();
@@ -586,6 +587,36 @@
     ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 실제로 닿는 곳은 가운데 심뿐이다.
     ctx.globalAlpha=alpha;ctx.drawImage(core.image,x-core.half,y-core.half,core.half*2,core.half*2);ctx.globalAlpha=1;
+  }
+  /* 코드로 그리는 기물: 어두운 회화풍에 맞게 뼈빛·이끼빛 단색에 어두운 테두리, 왼쪽 위에서 빛. u는 반 길이. */
+  function drawSkull(u){
+    ctx.lineWidth=1.4;ctx.strokeStyle='#1a1410';
+    var g=ctx.createRadialGradient(-u*.3,-u*.4,u*.1,0,0,u*1.1);g.addColorStop(0,'#f4ead2');g.addColorStop(1,'#a99a7c');ctx.fillStyle=g;
+    ctx.beginPath();ctx.arc(0,-u*.12,u*.78,Math.PI*.82,Math.PI*2.18);ctx.lineTo(u*.42,u*.78);ctx.lineTo(-u*.42,u*.78);ctx.closePath();ctx.fill();ctx.stroke();
+    ctx.fillStyle='#120c0a';
+    ctx.beginPath();ctx.ellipse(-u*.3,-u*.08,u*.2,u*.24,0,0,TAU);ctx.ellipse(u*.3,-u*.08,u*.2,u*.24,0,0,TAU);ctx.fill();
+    ctx.beginPath();ctx.moveTo(0,u*.18);ctx.lineTo(u*.1,u*.36);ctx.lineTo(-u*.1,u*.36);ctx.closePath();ctx.fill();
+    ctx.fillStyle='#ff4a3a';ctx.beginPath();ctx.arc(-u*.3,-u*.06,u*.06,0,TAU);ctx.arc(u*.3,-u*.06,u*.06,0,TAU);ctx.fill(); // 눈 안의 붉은 불씨
+    ctx.strokeStyle='#120c0a';ctx.lineWidth=1;ctx.beginPath();for(var k=-2;k<=2;k++){ctx.moveTo(k*u*.15,u*.56);ctx.lineTo(k*u*.15,u*.78);}ctx.stroke();
+  }
+  function drawHand(u){
+    // 손끝이 위(진행 방향)를 향한 초록 악마 손: 가는 손목, 둥근 손바닥, 벌어진 굵은 손가락 넷과 엄지, 검은 발톱
+    var g=ctx.createLinearGradient(-u*.6,-u,u*.6,u);g.addColorStop(0,'#a8e88a');g.addColorStop(.55,'#4f9a3c');g.addColorStop(1,'#1f4a1c');
+    ctx.fillStyle=g;ctx.strokeStyle='#0b1a09';ctx.lineWidth=1.3;ctx.lineJoin='round';
+    var fingers=[[-.62,.3],[-.22,.18],[.2,.18],[.6,.3]],k; // [기울기, 손바닥에서 나오는 높이]
+    for(k=0;k<4;k++){var tilt=fingers[k][0],bx=(-.42+k*.28)*u,by=-u*fingers[k][1],len=u*(k===1||k===2?.82:.68),tx=bx+Math.sin(tilt)*len,ty=by-Math.cos(tilt)*len,w=u*.15;
+      ctx.beginPath();ctx.moveTo(bx-w,by+u*.1);ctx.quadraticCurveTo(bx-w+Math.sin(tilt)*len*.6,by-Math.cos(tilt)*len*.55,tx,ty);ctx.quadraticCurveTo(bx+w+Math.sin(tilt)*len*.6,by-Math.cos(tilt)*len*.45,bx+w,by+u*.1);ctx.closePath();ctx.fill();ctx.stroke();
+      ctx.fillStyle='#0b1a09';ctx.beginPath();ctx.moveTo(tx-Math.cos(tilt)*u*.07,ty+u*.05);ctx.lineTo(tx+Math.sin(tilt)*u*.2,ty-Math.cos(tilt)*u*.2);ctx.lineTo(tx+Math.cos(tilt)*u*.07,ty+u*.05);ctx.closePath();ctx.fill();ctx.fillStyle=g;}
+    ctx.beginPath();ctx.moveTo(u*.42,u*.2);ctx.quadraticCurveTo(u*.95,u*.05,u*.98,-u*.32);ctx.quadraticCurveTo(u*.7,-u*.05,u*.36,-u*.02);ctx.closePath();ctx.fill();ctx.stroke(); // 엄지
+    ctx.beginPath();ctx.moveTo(-u*.5,-u*.12);ctx.quadraticCurveTo(-u*.58,u*.4,-u*.24,u*.62);ctx.lineTo(-u*.2,u*1.05);ctx.lineTo(u*.2,u*1.05);ctx.lineTo(u*.24,u*.62);ctx.quadraticCurveTo(u*.58,u*.4,u*.5,-u*.12);ctx.closePath();ctx.fill();ctx.stroke(); // 손바닥·손목
+    ctx.strokeStyle='rgba(11,26,9,.55)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(-u*.3,u*.1);ctx.quadraticCurveTo(0,u*.28,u*.3,u*.06);ctx.stroke(); // 손금
+  }
+  /* 늪 물결: 악마 손이 솟기 전에 그 자리 바닥에 초록 물결이 커지며 예고한다. */
+  function drawRipples(s){
+    var list=s.ripples;if(!list||!list.length)return;ctx.save();ctx.lineWidth=2;
+    for(var i=0;i<list.length;i++){var r=list[i],t=r.age/Arcade.HAND_WARN;
+      for(var k=0;k<2;k++){var q=(t+k*.5)%1;ctx.globalAlpha=(1-q)*(.35+.5*t);ctx.strokeStyle=k?'#3fdc82':'#9fe07a';ctx.beginPath();ctx.ellipse(r.x,H-10,8+q*26,3+q*8,0,0,TAU);ctx.stroke();}}
+    ctx.restore();
   }
   /* 보스 몸 위(반지름 64 안)의 탄은 옅게 그려 보스 얼굴·몸이 늘 읽히게 한다. 보스 자리에서 막 나온 탄이라 플레이어가 닿을 일은 드물다. */
   function nearBoss(s,x,y){var b=s.boss;if(!b.present||s.stage!=='card')return false;var dx=x-b.x,dy=y-b.y;return dx*dx+dy*dy<4096;}
@@ -747,7 +778,7 @@
     offsetX=offsetY=0;if(shake>0){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawSkillFx(s);drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawParticles();drawItems(s);drawLasers(s);drawFigures(s);drawBullets(s);drawBossOver(s);drawPlayer(s);drawHitbox(s); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();drawTopShade();drawSkillFx(s);drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawParticles();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);drawBossOver(s);drawPlayer(s);drawHitbox(s); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);drawHud(s);
     if(flash>0){ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);flash-=.04;}
     if(hurtFlash>0){var v=ctx.createRadialGradient(W/2,H/2,120,W/2,H/2,420);v.addColorStop(0,'rgba(255,0,40,0)');v.addColorStop(1,'rgba(255,0,40,'+(hurtFlash*.6)+')');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);hurtFlash-=.035;}

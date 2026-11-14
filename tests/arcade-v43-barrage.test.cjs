@@ -220,3 +220,37 @@ test('v43 review fixes (round 3): the shot sprite is really built (no line comme
  const live=w=>app.split('\n').some(l=>l.includes(w)&&l.indexOf(w)<(l.indexOf('//')<0?Infinity:l.indexOf('//')));
  assert(live('shotSprite=c;')&&live('homingSprite=buildOrb('),'shot and homing sprites are assigned in live code');
 });
+
+/* 사용자 요청(11-14 14:34 KST): 보스를 중심으로 도는 원(물레방아·톱니바퀴) 여러 개, 직선 레이저 난사, 해골 탄, 늪에서 올라오는 초록 악마 손 탄 */
+const firstSpells=a=>{const m=new Map();a.SEGMENTS.forEach((g,i)=>{if(g.kind==='card'&&g.spell&&!m.has(g.actor))m.set(g.actor,i);});return m;};
+const runSpell=(a,i,ticks,each)=>{const s=a.createRun({difficulty:'normal',seed:3,segment:i,stages:1});
+ for(let t=0;t<ticks&&s.seg===i;t++){s.player.invulnerableUntil=s.tick+999;if(s.stage==='card')s.boss.hp=s.boss.maxHp;const lasers=s.lasers.length;a.step(s,{dx:0,dy:0});each(s,lasers);h.clear(s);}};
+
+test('v43 wheels: several waterwheel/gear laser wheels orbit the boss and spin',()=>{
+ const a=h.need();let bosses=0;const firsts=firstSpells(a);
+ for(const [,i] of firsts){let most=0,angles=new Set(),spins=new Set(),kinds=new Set();
+  runSpell(a,i,2400,s=>{const w=(s.figures||[]).filter(f=>f.orbit);most=Math.max(most,w.length);
+   for(const f of w){angles.add(Math.round(Math.atan2(f.cy-s.boss.y,f.cx-s.boss.x)*4));spins.add(Math.round(f.turn*4));kinds.add(f.glyph);}});
+  if(most>=3&&angles.size>=8&&spins.size>=8)bosses++;}
+ assert(bosses>=firsts.size*.3,'bosses with orbiting wheels: '+bosses+'/'+firsts.size);
+ assert(a.GLYPHS.waterwheel&&a.GLYPHS.gear,'waterwheel and gear shapes exist');
+});
+
+test('v43 laser spray: some bosses fire a burst of straight lasers at once, with gaps between them',()=>{
+ const a=h.need();let bosses=0;const firsts=firstSpells(a);
+ for(const [,i] of firsts){let burst=0;runSpell(a,i,2400,(s,before)=>{burst=Math.max(burst,s.lasers.length-before);});if(burst>=5)bosses++;}
+ assert(bosses>=firsts.size*.3,'bosses with a laser spray: '+bosses+'/'+firsts.size);
+});
+
+test('v43 themed bullets: green demon hands rise out of the swamp (scene 03), skulls fly in the graveyards (scenes 05, 43)',()=>{
+ const a=h.need();const key=i=>a.PROPS[i]&&a.PROPS[i].key;
+ const seen=(scene,want)=>{const st=a.STAGES.findIndex(x=>x.scene===scene);let n=0,up=0;
+  a.SEGMENTS.forEach((g,i)=>{if(g.stage!==st||n>40)return;const s=a.createRun({difficulty:'normal',seed:9,segment:i,stages:1});
+   for(let t=0;t<1500&&s.seg===i;t++){s.player.invulnerableUntil=s.tick+999;if(s.stage==='card')s.boss.hp=s.boss.maxHp;a.step(s,{dx:0,dy:0});
+    for(let k=0;k<s.n;k++)if(s.bage[k]===2&&s.bsize[k]===5&&key(s.bcolor[k])===want){n++;if(Math.sin(s.ba[k])<-.7&&s.by[k]>a.HEIGHT-60)up++;}h.clear(s);}});
+  return {n,up};};
+ const hands=seen('03','demon-hand');assert(hands.n>=6,'demon hands in the swamp: '+hands.n);assert(hands.up>=hands.n*.8,'hands rise from the bottom: '+hands.up+'/'+hands.n);
+ assert(seen('05','skull').n>=6&&seen('43','skull').n>=6,'skulls in the graveyards');
+ const hand=a.PROPS.find(p=>p.key==='demon-hand');assert(hand&&hand.drawn&&hand.glow===5,'hand is drawn in code and glows green');
+ const app=h.read('src/arcade-app-v43.js');assert(/function drawSkull\(/.test(app)&&/function drawHand\(/.test(app)&&/ripples/.test(app),'skull and hand shapes and a ripple warning are drawn');
+});
