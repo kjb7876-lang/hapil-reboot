@@ -81,7 +81,7 @@
   };
   // 휴대폰 모드: 탄 수를 줄이고 그만큼 탄을 크게 그린다(판정도 같이 커진다).
   var COMPACT_DENSITY=.72,COMPACT_SIZE=1.25;
-  var HAND_WARN=50,EXPIRE_SPEED=60,GRAZE_MARGIN=13,BLOOM_TICKS=12,INVULN_TICKS=150,BOMB_TICKS=150,INTRO_TICKS=110,BREAK_TICKS=80,FIRE_DELAY=40,WAVE_GRACE=360;
+  var HAND_WARN=50,HAND_AWAY=64,EXPIRE_SPEED=60,GRAZE_MARGIN=13,BLOOM_TICKS=12,INVULN_TICKS=150,BOMB_TICKS=150,INTRO_TICKS=110,BREAK_TICKS=80,FIRE_DELAY=40,WAVE_GRACE=360;
   var SHOT_SPEED=15,SHOT_EVERY=5,HOMING_EVERY=8,HOMING_STEER=7,SHOT_CAP=96,MAX_MOVE=12,FOCUS_MOVE=2;
   var BEAM_HIT=.62,BEAM_FADE=14,BEAM_LENGTH=1000;
   var GAUGE_FULL=100,MAX_BOMBS=4,AUTO_COLLECT_Y=190,ITEM_REACH=24,ITEM_PULL=11,BOMB_BOSS_DAMAGE=40,BOMB_MOB_DAMAGE=25;
@@ -95,7 +95,7 @@
     {key:'cross',radius:14,upright:true},{key:'gear',radius:16},
     // 코드로 그린 기물(drawn, 그림 파일은 tools/build-drawn-props-v43.cjs가 같은 코드로 구워 둔다): 해골(묘지), 늪에서 올라오는 초록 악마 손.
     // glow는 빛무리 색 번호. 둘 다 진행 방향을 본다(손끝은 위로 솟고, 해골은 날아가는 쪽으로 얼굴 아래턱을 둔다).
-    {key:'skull',radius:11,drawn:true,glow:8},{key:'demon-hand',radius:12,drawn:true,glow:5}];
+    {key:'skull',radius:11,drawn:true,glow:2},{key:'demon-hand',radius:12,drawn:true,glow:5}];
   gather('props',PROPS,true);
   var P={};PROPS.forEach(function(p,i){P[p.key]=i;});
   // 탄 변화 방식: 1 영웅을 다시 조준 2 각도 꺾기 3 터져서 고리로 4 가지치기(프랙탈)
@@ -822,8 +822,9 @@
   function themed(s){
     var kind=THEMED[STAGES[s.stageIndex].scene],t=s.stageTick,i;if(!kind||(s.stage!=='wave'&&s.stage!=='card'))return;
     if(kind==='hands'){
-      if(t%pick(s,110,95,80)===0&&s.ripples.length<6)s.ripples.push({x:24+rand(s)*(W-48),age:0});
-      for(i=s.ripples.length-1;i>=0;i--){var r=s.ripples[i];if(++r.age>=HAND_WARN){spawn(s,r.x,H+8,-Math.PI/2,pick(s,30,34,42),{size:SHAPE_PROP,color:P['demon-hand'],life:1400});s.ripples.splice(i,1);}}
+      if(t%pick(s,110,95,80)===0&&s.ripples.length<6){var rx=24+rand(s)*(W-48);if(Math.abs(rx-s.player.x)<HAND_AWAY)rx=s.player.x+(s.player.x<W/2?1:-1)*(HAND_AWAY+rand(s)*60);s.ripples.push({x:rx,age:0});}
+      // 영웅 바로 밑(HAND_AWAY 안)에서는 솟지 않는다: 물결 자리를 영웅에게서 떨어뜨리고, 그사이 영웅이 그 위로 오면 손은 가라앉는다(헛물결).
+      for(i=s.ripples.length-1;i>=0;i--){var r=s.ripples[i];if(++r.age>=HAND_WARN){if(Math.abs(r.x-s.player.x)>=HAND_AWAY)spawn(s,r.x,H+8,-Math.PI/2,pick(s,30,34,42),{size:SHAPE_PROP,color:P['demon-hand'],life:1400});s.ripples.splice(i,1);}}
     }else if(t%pick(s,100,85,70)===40){var x=30+rand(s)*(W-60);spawn(s,x,-10,aim(s,x,-10),pick(s,44,50,62),{size:SHAPE_PROP,color:P.skull});}
   }
   /* 한 틱(1/60초) 진행. input: {dx,dy,focus,bomb} — dx,dy는 이번 틱에 움직일 픽셀, focus는 저속 이동, bomb은 이번 틱에 폭탄 사용. */

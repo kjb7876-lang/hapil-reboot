@@ -254,3 +254,13 @@ test('v43 themed bullets: green demon hands rise out of the swamp (scene 03), sk
  const hand=a.PROPS.find(p=>p.key==='demon-hand');assert(hand&&hand.drawn&&hand.glow===5,'hand is drawn in code and glows green');
  const app=h.read('src/arcade-app-v43.js');assert(/function drawSkull\(/.test(app)&&/function drawHand\(/.test(app)&&/ripples/.test(app),'skull and hand shapes and a ripple warning are drawn');
 });
+
+test('v43 themed bullets (review 5): a hand never rises right under the heroine, and skulls glow apart from white bullets',()=>{
+ const a=h.need();const st=a.STAGES.findIndex(x=>x.scene==='03');let checked=0,close=0;
+ a.SEGMENTS.forEach((g,i)=>{if(g.stage!==st||checked>60)return;const s=a.createRun({difficulty:'hell',seed:4,segment:i,stages:1});
+  for(let t=0;t<1500&&s.seg===i;t++){s.player.invulnerableUntil=s.tick+999;if(s.stage==='card')s.boss.hp=s.boss.maxHp;
+   s.player.x=60+((t/90|0)%4)*80; // 영웅이 옮겨 다녀도
+   a.step(s,{dx:0,dy:0});for(let k=0;k<s.n;k++)if(s.bage[k]===1&&s.bsize[k]===5&&a.PROPS[s.bcolor[k]].key==='demon-hand'){checked++;if(Math.abs(s.bx[k]-s.player.x)<56)close++;}h.clear(s);}});
+ assert(checked>=8,'hands seen: '+checked);assert.equal(close,0,'hands rising within 56px of the heroine');
+ assert(a.PROPS.find(p=>p.key==='skull').glow!==8,'skull glow is not white');
+});

@@ -615,9 +615,12 @@
   }
   /* 늪 물결: 악마 손이 솟기 전에 그 자리 바닥에 초록 물결이 커지며 예고한다. */
   function drawRipples(s){
-    var list=s.ripples;if(!list||!list.length)return;ctx.save();ctx.lineWidth=2;
-    for(var i=0;i<list.length;i++){var r=list[i],t=r.age/Arcade.HAND_WARN;
-      for(var k=0;k<2;k++){var q=(t+k*.5)%1;ctx.globalAlpha=(1-q)*(.35+.5*t);ctx.strokeStyle=k?'#3fdc82':'#9fe07a';ctx.beginPath();ctx.ellipse(r.x,H-10,8+q*26,3+q*8,0,0,TAU);ctx.stroke();}}
+    var list=s.ripples;if(!list||!list.length)return;ctx.save();
+    for(var i=0;i<list.length;i++){var r=list[i],t=r.age/Arcade.HAND_WARN,y=H-14;
+      // 차오르는 밝은 원판 + 퍼지는 물결 세 겹 + 깜빡이는 노란 테: 어두운 늪 위에서도 솟을 자리가 보이게(심사 5차)
+      ctx.globalAlpha=.18+.3*t;ctx.fillStyle='#d8ff6a';ctx.beginPath();ctx.ellipse(r.x,y,10+18*t,4+6*t,0,0,TAU);ctx.fill();
+      ctx.lineWidth=2.5;for(var k=0;k<3;k++){var q=(t*1.5+k/3)%1;ctx.globalAlpha=(1-q)*(.5+.5*t);ctx.strokeStyle=k?'#9fe07a':'#f2ff9a';ctx.beginPath();ctx.ellipse(r.x,y,10+q*30,4+q*10,0,0,TAU);ctx.stroke();}
+      ctx.globalAlpha=(.5+.5*Math.sin(r.age*.5))*t;ctx.strokeStyle='#ffe066';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(r.x,y,28,10,0,0,TAU);ctx.stroke();}
     ctx.restore();
   }
   /* 보스 몸 위(반지름 64 안)의 탄은 옅게 그려 보스 얼굴·몸이 늘 읽히게 한다. 보스 자리에서 막 나온 탄이라 플레이어가 닿을 일은 드물다. */
