@@ -625,7 +625,8 @@
     if(next.kind==='wave'){s.boss.leaving=s.boss.present;s.stage='wave';note(s,'wave');return;}
     if(!prev||prev.kind!=='card'||prev.actor!==next.actor||!s.boss.present){s.boss.leaving=s.boss.present;s.stage='intro';}else s.stage='break';
   }
-  function enter(s,actor){var b=s.boss;b.actor=actor;b.name=ACTORS[actor].name;b.mid=!!segment(s).mid;b.present=true;b.leaving=false;b.x=W/2;b.y=-60;b.targetX=W/2;b.targetY=132;s.stageTick=0;note(s,'entrance');}
+  var BOSS_REST=156,BOSS_SWAY=40,BOSS_ROAM=58; // 좌우는 가운데 3분의 1 안: 문양이 칸 가장자리에 잘리지 않게(심사 6.53)
+  function enter(s,actor){var b=s.boss;b.actor=actor;b.name=ACTORS[actor].name;b.mid=!!segment(s).mid;b.present=true;b.leaving=false;b.x=W/2;b.y=-60;b.targetX=W/2;b.targetY=BOSS_REST;s.stageTick=0;note(s,'entrance');}
   function beginCard(s){var card=segment(s),b=s.boss;b.maxHp=b.hp=card.hp;b.mid=!!card.mid;s.stage='card';s.stageTick=0;s.segTick=0;s.spellClean=!!card.spell;if(card.spell){s.spellNumber++;note(s,'card');}else note(s,'plain');}
   function endCard(s,defeated){
     var card=segment(s),left=Math.max(0,card.time-s.segTick*TICK),wiped=cancelAll(s,true),b=s.boss;
@@ -639,7 +640,7 @@
   function moveBoss(s){
     var b=s.boss;if(!b.present)return;
     if(b.leaving){b.y-=5;if(b.y<-70){b.leaving=false;b.present=false;}return;}
-    if(s.stage==='card'&&s.segTick%150===0){b.targetX=96+rand(s)*(W-192);b.targetY=112+rand(s)*52;}
+    if(s.stage==='card'&&s.segTick%150===0){b.targetX=W/2-BOSS_ROAM+rand(s)*BOSS_ROAM*2;b.targetY=BOSS_REST-6+rand(s)*BOSS_SWAY;} // 심사 반복 지적: 화면 위에 붙어 체력 띠·스펠 이름과 겹쳤다. 조금 내려 둔다(위 3분의 1 안).
     b.x+=(b.targetX-b.x)*.035;b.y+=(b.targetY-b.y)*.05;
   }
   function movePlayer(s,input){
@@ -802,11 +803,11 @@
   /* 문양 레이저(사용자 11-14 23:33·23:34 KST): 보스 뒤 육망성처럼 보스를 중심으로 도는 큰 문양과 끊긴 원 고리가 레이저가 된다.
      보스마다 자기 문양(SIGNATURES.glyph)·도는 방향·고리 수가 다르다. 크게 그려 모양이 한눈에 읽히게 하되(보스 옆 작은 '3' 모양 금지),
      화면 아래쪽 절반에는 닿지 않게 반지름을 줄인다(SIGIL_FLOOR). 반지름은 고정이라 안쪽 빈자리와 바깥은 늘 안전하다. */
-  var SIGIL_R=150,SIGIL_RING=1.18,SIGIL_FLOOR=.53,SIGIL_EVERY=480,SIGIL_AT=30;
+  var SIGIL_FIT=.38,SIGIL_R=150,SIGIL_RING=1.18,SIGIL_FLOOR=.53,SIGIL_EVERY=480,SIGIL_AT=30;
   [3,4,5].forEach(function(n){GLYPHS['ring'+n]=[];for(var k=0;k<n;k++){var a0=TAU*k/n;GLYPHS['ring'+n].push(arcPts(0,0,1,a0+.32,a0+TAU/n-.32,14));}});
   var glyphReach={};
   function reachOf(name){if(glyphReach[name]===undefined){var m=1,lines=GLYPHS[name]||[];for(var i=0;i<lines.length;i++)for(var k=0;k+1<lines[i].length;k+=2)m=Math.max(m,Math.sqrt(lines[i][k]*lines[i][k]+lines[i][k+1]*lines[i][k+1]));glyphReach[name]=m;}return glyphReach[name];}
-  function sigilRadius(f,want){return Math.max(40,Math.min(want,W*.46,(H*SIGIL_FLOOR-f.cy)))/reachOf(f.glyph);}
+  function sigilRadius(f,want){return Math.max(40,Math.min(want,W*SIGIL_FIT,(H*SIGIL_FLOOR-f.cy)))/reachOf(f.glyph);}
   // 흰 문양은 흰 탄·흰 레이저와 한 덩어리로 번진다(심사 11-14): 흰 보스의 문양은 그 보스의 둘째 색, 그것도 희면 하늘색.
   function sigilColor(s,sig){if(sig.color!==WHITE)return sig.color;var a=ACTORS[s.boss.actor];return a&&a.c2!==WHITE?a.c2:CYAN;}
   function summonSigil(s,sig,index){
