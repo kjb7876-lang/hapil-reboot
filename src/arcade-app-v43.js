@@ -26,7 +26,7 @@
   var images={},loading={},failed={},want={},manifest=null,orbs=[],shotSprite=null,homingSprite=null,circleSprite=null,itemSprites=[],background=null,backgroundStage=-1,loadedStage=-1;
   var scale=1,lite=false,frameMs=16,framesSeen=0,offsetX=0,offsetY=0;
   var state=null,mode='title',difficulty='normal',accumulator=0,lastStamp=0,visual=0,lastRun=null;
-  var particles=[],flash=0,hurtFlash=0,shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,bannerTitle='',bannerSub='',toast=null;
+  var particles=[],flash=0,hurtFlash=0,shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,SPELL_BANNER_TICKS=42,bannerSpell=false,bannerTitle='',bannerSub='',toast=null;
   var keys={},finger={active:false,id:null,x:0,y:0},focusHeld=false,bombQueued=false;
   var fx=null,music=null,soundOn=true,best=0,lastItemSound=0,progress=Progress.fresh(),saveOk=true;
   var themeOverride=null,turbo=0,rushStage=false;
@@ -428,7 +428,7 @@
   function play(name,x){if(fx&&soundOn)fx.play(name,x===undefined?0:Math.max(-1,Math.min(1,(finite(x,W/2)/W-.5)*1.4)));}
   function addParticle(x,y,vx,vy,life,color,size){if(particles.length<MAX_PARTICLES)particles.push({x:x,y:y,vx:vx,vy:vy,life:life,max:life,color:color,size:size});}
   var BANNER_Y=60;
-  function showBanner(title,sub){banner=1;bannerTitle=title;bannerSub=sub;bannerTick=state?state.tick:0;}
+  function showBanner(title,sub,spell){banner=1;bannerTitle=title;bannerSub=sub;bannerTick=state?state.tick:0;bannerSpell=!!spell;}
   function showToast(result){
     var g=Arcade.STAGES[result.stage];if(!g)return;
     // 기념물 그림은 이 스테이지 그림과 함께 이미 받아 두었다(곧 releaseStage가 목록에서 지워도 여기서 쥐고 있다).
@@ -448,7 +448,7 @@
       else if(e==='item'){if(visual-lastItemSound>.06){lastItemSound=visual;play('item',s.player.x);}}
       else if(e==='hurt'){play('hurt',s.player.x);hurtFlash=1;shake=14;}
       else if(e==='bomb'){play('bomb',s.player.x);flash=.55;shock={x:s.player.x,y:s.player.y,r:10};shake=10;}
-      else if(e==='card'){play('charge',s.boss.x);castFx(s,true);showBanner(Arcade.SEGMENTS[s.seg].name,s.boss.name);}
+      else if(e==='card'){play('charge',s.boss.x);castFx(s,true);showBanner(Arcade.SEGMENTS[s.seg].name,s.boss.name,true);}
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,'제'+g.part+'부 · STAGE '+(s.stageIndex+1));play('seal');}}
       else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);showToast(r);rushStage=false;}
       else if(e==='map')loadStage(s.stageIndex);
@@ -880,7 +880,7 @@
       ctx.globalAlpha=t*.9;ctx.fillStyle=q.color;ctx.strokeStyle=q.color;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(q.x-q.vx*3,q.y-q.vy*3);ctx.lineTo(q.x,q.y);ctx.stroke();ctx.beginPath();ctx.arc(q.x,q.y,Math.max(.8,q.size*.32*t),0,TAU);ctx.fill();
     }
     ctx.restore();
-    if(shock){ctx.save();ctx.globalAlpha=Math.max(0,1-shock.r/420);ctx.strokeStyle='#ffffff';ctx.lineWidth=5;ctx.beginPath();ctx.arc(shock.x,shock.y,shock.r,0,TAU);ctx.stroke();ctx.restore();shock.r+=13;if(shock.r>420)shock=null;}
+    if(shock){var sk=Math.max(0,1-shock.r/420);ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=sk*.85;ctx.strokeStyle=state?themeColor(state):'#ffffff';ctx.lineWidth=1+4*sk;/* 충격파: 보스·장면 색, 퍼질수록 얇아진다 */ctx.beginPath();ctx.arc(shock.x,shock.y,shock.r,0,TAU);ctx.stroke();ctx.restore();shock.r+=13;if(shock.r>420)shock=null;}
   }
   function pad(n){return ('00000000'+Math.max(0,Math.floor(finite(n,0)))).slice(-8);}
   function starText(n){var out='';for(var i=0;i<3;i++)out+=i<n?'★':'☆';return out;}
@@ -915,7 +915,7 @@
       if(seg.spell){
         namePlate(seg.name);
         ctx.textAlign='right';ctx.font='600 20px '+SANS;ctx.fillStyle=left<=10?'#ff6a6a':'#ffffff';ctx.fillText(left<10?left.toFixed(1):String(Math.ceil(left)),W-12,35);
-        ctx.font='italic 12px '+SERIF;ctx.fillStyle='#f3e3b5';ctx.fillText('「'+seg.name+'」',W-12,52);
+        if(!(bannerSpell&&banner>0)){ctx.font='italic 12px '+SERIF;ctx.fillStyle='#f3e3b5';ctx.fillText('「'+seg.name+'」',W-12,52);} // 스펠 띠가 떠 있는 동안 받침의 같은 이름은 숨긴다
       }
     }
     if(!hudOut){ // 칸 밖에 자리가 없을 때만 칸 안에 그린다
@@ -929,10 +929,10 @@
     ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.7)';ctx.fillText('GRAZE '+s.graze,W-12,H-94);
     }
     if(banner>0){
-      var t=1-banner,slide=t<.18?(1-t/.18)*W:0,alpha=t>.75?(1-t)/.25:1;
+      var t=1-banner,slide=t<.18?(1-t/.18)*W:bannerSpell&&t>.72?((t-.72)/.28)*((t-.72)/.28)*W:0,alpha=bannerSpell?1:t>.75?(1-t)/.25:1; // 스펠 띠는 흐려지지 않고 오른쪽으로 빠져나간다(반투명 잔상이 받침 글자와 겹치지 않게)
       ctx.save();ctx.globalAlpha=alpha;ctx.translate(slide,0);
-      var band=ctx.createLinearGradient(0,0,W,0),by0=BANNER_Y;band.addColorStop(0,'rgba(0,0,0,0)');band.addColorStop(.3,'rgba(6,4,16,.88)');band.addColorStop(1,'rgba(6,4,16,.88)');ctx.fillStyle=band;ctx.fillRect(0,by0,W,42);
-      ctx.fillStyle=color;ctx.fillRect(90,by0,W-90,1.5);ctx.fillRect(90,by0+40.5,W-90,1.5);
+      var band=ctx.createLinearGradient(0,0,W,0),by0=BANNER_Y;band.addColorStop(0,'rgba(0,0,0,0)');if(bannerSpell){band.addColorStop(.3,'rgba(6,4,16,.22)');band.addColorStop(.62,'rgba(6,4,16,.3)');band.addColorStop(.8,'rgba(6,4,16,.8)');}else band.addColorStop(.3,'rgba(6,4,16,.88)');band.addColorStop(1,'rgba(6,4,16,.88)');ctx.fillStyle=band;ctx.fillRect(0,by0,W,42);
+      var lx=bannerSpell?W*.55:90;ctx.fillStyle=color;ctx.fillRect(lx,by0,W-lx,1.5);ctx.fillRect(lx,by0+40.5,W-lx,1.5);
       ctx.textAlign='right';ctx.font='600 18px '+SERIF;ctx.fillStyle='#fff3cf';ctx.fillText(bannerTitle,W-14,by0+24);
       ctx.font='10px '+SANS;ctx.fillStyle=color;ctx.fillText(bannerSub,W-14,by0+36);ctx.restore(); // 위쪽 HUD 바로 아래의 얇은 띠: 보스와 플레이어 사이 시야를 가리지 않는다
     }
@@ -951,6 +951,7 @@
     if(flash>0){ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);flash-=.04;}
     if(hurtFlash>0){var v=ctx.createRadialGradient(W/2,H/2,120,W/2,H/2,420);v.addColorStop(0,'rgba(255,0,40,0)');v.addColorStop(1,'rgba(255,0,40,'+(hurtFlash*.6)+')');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);hurtFlash-=.035;}
     if(banner>0)banner=Math.max(0,1-(s.tick-bannerTick)/BANNER_TICKS); // 게임 틱 기준: 화면이 느리거나 빨라도 1.3초 뒤에 걷힌다
+    if(bannerSpell&&banner>0)banner=Math.max(0,1-(s.tick-bannerTick)/SPELL_BANNER_TICKS); // 스펠 이름 띠는 0.7초: 보스·문양이 뜨는 순간을 오래 가리지 않는다(이름은 오른쪽 위 받침에 남는다) // 게임 틱 기준: 화면이 느리거나 빨라도 1.3초 뒤에 걷힌다
     if(toast&&mode==='playing'){toast.t-=Math.min(.05,elapsed);if(toast.t<=0)toast=null;}
   }
 
