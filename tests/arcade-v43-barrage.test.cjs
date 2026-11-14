@@ -264,3 +264,9 @@ test('v43 themed bullets (review 5): a hand never rises right under the heroine,
  assert(checked>=8,'hands seen: '+checked);assert.equal(close,0,'hands rising within 56px of the heroine');
  assert(a.PROPS.find(p=>p.key==='skull').glow!==8,'skull glow is not white');
 });
+
+test('v43 vertical maps: all 56 stages have a seamless loop map from the Drive set (A01~A56)',()=>{
+ const a=h.need(),m=JSON.parse(fs.readFileSync(path.join(root,'media/arcade-v43/manifest.json'),'utf8'));
+ const missing=a.STAGES.filter(g=>!(m['bg-loop-'+g.scene+'.jpg']&&m['bg-loop-'+g.scene+'.jpg'].loop)).map(g=>g.scene);
+ assert.deepEqual(missing,[],'stages without a loop map');
+});
