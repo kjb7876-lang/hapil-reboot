@@ -150,7 +150,7 @@
     body.addColorStop(0,'#ffffff');body.addColorStop(.28,light);body.addColorStop(.62,color);if(tint&&tint!==color)body.addColorStop(.84,mix(color,tint,.45));body.addColorStop(1,deep); // 바깥 띠는 보스 고유 색으로 물든다(사용자 11-14 23:33)
     g.fillStyle=body;g.beginPath();g.arc(m,m,r,0,TAU);g.fill();
     g.strokeStyle='#ffffff';g.lineWidth=Math.max(1,r*.2);g.beginPath();g.arc(m,m,r-g.lineWidth/2,0,TAU);g.stroke();
-    if(paleOf(color)){g.strokeStyle=paleRimOf(color);g.lineWidth=Math.max(1,r*.16);g.beginPath();g.arc(m,m,r+g.lineWidth/2,0,TAU);g.stroke();}else if(r>=2*scale){g.strokeStyle=OUTER_RIM;g.lineWidth=Math.max(1,r*.1);g.beginPath();g.arc(m,m,r+g.lineWidth/2,0,TAU);g.stroke();} // 색 탄도 바깥에 짙은 테 한 줄: 겹쳐도 낱알로 읽힌다(심사 6.36) // 흰 탄만 바깥에 짙은 테
+    if(paleOf(color)){g.strokeStyle=paleRimOf(color);g.lineWidth=Math.max(1,r*.24);g.beginPath();g.arc(m,m,r+g.lineWidth/2,0,TAU);g.stroke();}else if(r>=2*scale){g.strokeStyle=OUTER_RIM;g.lineWidth=Math.max(1,r*.1);g.beginPath();g.arc(m,m,r+g.lineWidth/2,0,TAU);g.stroke();} // 색 탄도 바깥에 짙은 테 한 줄: 겹쳐도 낱알로 읽힌다(심사 6.36) // 흰 탄만 바깥에 짙은 테
     if(r>=4*scale){g.globalAlpha=.75;g.fillStyle='#ffffff';g.beginPath();g.ellipse(m-r*.34,m-r*.38,r*.24,r*.14,-.7,0,TAU);g.fill();g.globalAlpha=1;} // 작은 하이라이트
     return {image:c,half:reach};
   }
@@ -415,11 +415,15 @@
     var life='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB [X]')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div></div>';
     var score='<div style="text-align:'+(hudOut==='side'?'left':'right')+'">'+lb('SCORE')+'<div class="score">'+pad(s.score)+'</div>'+(hudOut==='side'?lb('BEST')+'<div class="best">'+pad(Math.max(best,s.score))+'</div>':'')+'<div class="graze">GRAZE '+s.graze+'</div></div>'; // 오른쪽 패널에 최고 점수도: 좌우 패널 무게를 맞춘다(심사 10차)
     if(hudOut==='side'){
-      var seg=Arcade.SEGMENTS[s.seg],spell=s.stage==='card'&&seg&&seg.spell?'<div>'+lb('SPELL')+'<div class="spell" style="border-color:'+color+'">「'+esc(seg.name)+'」</div></div>':'<div></div>';
+      var seg=Arcade.SEGMENTS[s.seg],card=s.stage==='card'&&seg,hp=card?Math.round(100*Math.max(0,Math.min(1,finite(b.hp/b.maxHp,0)))):0;
+      var boss='<div>'+(card?lb('BOSS')+'<div class="bosshp"><i style="width:'+hp+'%;background:'+color+'"></i></div>':'')+(card&&seg.spell?lb('SPELL')+'<div class="spell" style="border-color:'+color+';font-size:'+spellFit(seg.name)+'px">'+esc(seg.name)+'</div><div class="graze">'+(s.spellClean?'BONUS +'+(20000+(seg.stage||0)*5000):'BONUS 실패')+'</div>':'')+'</div>';
+      var prog=Math.round(100*(s.stageIndex+1)/Arcade.STAGES.length);
+      var life2='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB [X]')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div>'+lb('JOURNEY')+'<div class="progress"><i style="width:'+prog+'%"></i></div><div class="graze">패턴 보너스 '+s.captures+'</div></div>';
       var keys='<div class="keys">'+lb('CONTROLS')+'<div>이동 ←↑↓→ · WASD</div><div>저속 Shift · 폭탄 X</div><div>일시정지 Esc</div></div>';
-      setHud(hi,'hi',name+life+keys);setHud(lo,'lo',score+spell);} // 아래쪽 빈자리: 왼쪽은 조작법, 오른쪽은 지금 스펠 이름(칸 안 이름표가 작아 읽기 어렵다는 지적)
+      setHud(hi,'hi',name+life2+keys);setHud(lo,'lo',score+boss+'<div class="keys">'+lb('DIFFICULTY')+'<div>'+({gentle:'EASY',normal:'NORMAL',hell:'HELL'}[s.difficulty]||'')+'</div></div>');} // 패널 가운데: 왼쪽은 목숨·여정, 오른쪽은 보스 체력·스펠명·보너스(심사 6.46: 가운데가 비었다) // 아래쪽 빈자리: 왼쪽은 조작법, 오른쪽은 지금 스펠 이름(칸 안 이름표가 작아 읽기 어렵다는 지적)
     else{setHud(hi,'hi',name);setHud(lo,'lo',life+score);}
   }
+  function spellFit(name){return Math.max(11,Math.min(17,Math.floor(118/Math.max(1,String(name).length+1))));} // 패널 폭(124px)에 한 줄로
   function esc(v){return String(v).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   // 느린 기기에서는 먼저 해상도를, 그래도 느리면 빛무리와 날씨 입자 수를 내린다.
   function adaptQuality(elapsedMs){
@@ -844,7 +848,7 @@
           var bm=sheet.e.beam,th=l.width*2.4*k*pulse;ctx.save();ctx.translate(lx,ly);ctx.rotate(angle);ctx.globalAlpha=k*dim;
           ctx.drawImage(sheet.img,bm[0],bm[1],bm[2],bm[3],0,-th/2,LASER_DRAW,th);ctx.restore();
         }else{ctx.globalAlpha=.9*k;ctx.strokeStyle=color;ctx.lineWidth=l.width*k*pulse;ctx.stroke();}
-        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=k;ctx.strokeStyle='#ffffff';ctx.lineWidth=l.width*(sheet?.34:.46)*k;ctx.stroke();
+        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=k*(paleOf(color)?PALE_CORE:1);ctx.strokeStyle='#ffffff';ctx.lineWidth=l.width*(sheet?.34:.46)*k;ctx.stroke(); // 흰·금 광선은 심지도 낮춘다(심사 6.46: 금빛 광선이 여전히 가장 밝다)
       }
     }
     ctx.restore();
@@ -881,7 +885,7 @@
     }
     ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
   }
-  var PALE_BEAM_DIM=.5,BEAM_DIM=.5,HERO_RING_WIDTH=2.2,BRIGHT_ART_DIM='brightness(.8)',PLAYER_SHADE=46,HERO_RING='#7ff3ff',OUTER_RIM='#1c2236',SIGIL_ALPHA=.55;
+  var PALE_BEAM_DIM=.3,PALE_CORE=.55,BEAM_DIM=.5,HERO_RING_WIDTH=2.2,BRIGHT_ART_DIM='brightness(.8)',PLAYER_SHADE=46,HERO_RING='#7ff3ff',OUTER_RIM='#1c2236',SIGIL_ALPHA=.55;
   function drawPlayer(s){
     var p=s.player,blink=s.tick<p.invulnerableUntil&&Math.floor(s.tick/4)%2;
     // 영웅 뒤 어두운 빛무리: 밝은 광선·배경 사이에서도 영웅 자리가 먼저 보인다(심사 6.36)
