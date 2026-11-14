@@ -75,13 +75,13 @@
   /* 난이도. density 탄 수 배율 · speed 탄 속도 배율 · hp 목숨 · mapHeal 다음 맵에서 회복(-1은 전부) · bombs 폭탄 ·
    * radius 영웅 피격점 반지름 · hitScale 탄의 보이는 반지름 중 실제로 닿는 비율 · warn 광선 예고 시간 배율 · beam 광선 굵기 배율 */
   var DIFFICULTY={
-    gentle:{density:.9,speed:.6,hp:7,mapHeal:-1,bombs:3,radius:1.4,hitScale:.36,warn:1.6,beam:.72,label:'여유'},
-    normal:{density:1.3,speed:.74,hp:3,mapHeal:1,bombs:2,radius:2,hitScale:.46,warn:1.2,beam:.88,label:'기본'},
-    hell:{density:2,speed:.9,hp:1,mapHeal:0,bombs:1,radius:2.4,hitScale:.5,warn:1,beam:1,label:'지옥'}
+    gentle:{density:2.3,speed:.56,hp:7,mapHeal:-1,bombs:3,radius:1,hitScale:.3,warn:1.6,beam:.72,label:'여유'},
+    normal:{density:2.45,speed:.64,hp:3,mapHeal:1,bombs:2,radius:1.4,hitScale:.38,warn:1.2,beam:.88,label:'기본'},
+    hell:{density:2.6,speed:.9,hp:1,mapHeal:0,bombs:1,radius:2.4,hitScale:.5,warn:1,beam:1,label:'지옥'}
   };
   // 휴대폰 모드: 탄 수를 줄이고 그만큼 탄을 크게 그린다(판정도 같이 커진다).
   var COMPACT_DENSITY=.72,COMPACT_SIZE=1.25;
-  var GRAZE_MARGIN=13,BLOOM_TICKS=12,INVULN_TICKS=150,BOMB_TICKS=150,INTRO_TICKS=110,BREAK_TICKS=80,FIRE_DELAY=40,WAVE_GRACE=360;
+  var EXPIRE_SPEED=60,GRAZE_MARGIN=13,BLOOM_TICKS=12,INVULN_TICKS=150,BOMB_TICKS=150,INTRO_TICKS=110,BREAK_TICKS=80,FIRE_DELAY=40,WAVE_GRACE=360;
   var SHOT_SPEED=15,SHOT_EVERY=5,HOMING_EVERY=8,HOMING_STEER=7,SHOT_CAP=96,MAX_MOVE=12,FOCUS_MOVE=2;
   var BEAM_HIT=.62,BEAM_FADE=14,BEAM_LENGTH=1000;
   var GAUGE_FULL=100,MAX_BOMBS=4,AUTO_COLLECT_Y=190,ITEM_REACH=24,ITEM_PULL=11,BOMB_BOSS_DAMAGE=40,BOMB_MOB_DAMAGE=25;
@@ -107,11 +107,14 @@
   /* 탄 하나. o: {size,color,turn(초당 회전),accel,min,max,at(변화 틱),mode,arg,speed2,life,gen(가지치기 남은 횟수),spin(기물이 도는 속도, 틱당 라디안)} */
   function spawn(s,x,y,angle,speed,o){
     if(s.n>=s.cap){s.dropped++;return;}
-    o=o||{};var i=s.n++,size=o.size||0;
+    o=o||{};var size=o.size||0;
+    // 화면이 붐비면(상한의 72% 이상) 새 탄을 하나 걸러 하나만, 82% 이상이면 쉬게 한다(조형물은 예외). 느린 탄이 쌓여도 상한에 닿지 않는다.
+    if(s.n>=s.cap*.72&&size!==SHAPE_PROP){s.thin=(s.thin+1)|0;if(s.n>=s.cap*.82||s.thin%2)return;}
+    var i=s.n++;
     s.bx[i]=x;s.by[i]=y;s.ba[i]=angle;s.bs[i]=speed*s.rules.speed;
     s.bturn[i]=o.turn||0;s.bacc[i]=o.accel||0;s.bmin[i]=o.min===undefined?0:o.min;s.bmax[i]=o.max===undefined?400:o.max;
     s.bat[i]=o.at||0;s.bmode[i]=o.mode||0;s.barg[i]=o.arg||0;s.bs2[i]=(o.speed2||0)*s.rules.speed;s.bgen[i]=o.gen||0;
-    s.bage[i]=0;s.blife[i]=o.life||780;s.bsize[i]=size;s.bcolor[i]=o.color||0;s.bgrazed[i]=0;
+    s.bage[i]=0;s.blife[i]=o.life||780;s.bsize[i]=size;s.bcolor[i]=o.color||0;s.bgrazed[i]=0;s.bbounce[i]=size===SHAPE_PROP?0:o.bounce||0;
     s.bspin[i]=size===SHAPE_PROP&&PROPS[o.color||0].upright?0:o.spin||0;
   }
   function ring(s,x,y,n,speed,offset,o){for(var i=0;i<n;i++)spawn(s,x,y,offset+TAU*i/n,speed,o);}
@@ -490,14 +493,14 @@
     var s={revision:43,difficulty:difficulty,rules:rules,compact:compact,density:rules.density*(compact?COMPACT_DENSITY:1),sizeScale:compact?COMPACT_SIZE:1,cap:compact?COMPACT_CAP:CAP,
       seed:(options.seed>>>0)||1,rng:(options.seed>>>0)||1,tick:0,stage:'break',stageTick:BREAK_TICKS-30,seg:startSeg-1,segTick:0,stageIndex:SEGMENTS[startSeg].stage,spellNumber:0,
       player:{x:W/2,y:H-84,hp:rules.hp,maxHp:rules.hp,invulnerableUntil:0,r:rules.radius,focus:false},
-      boss:{x:W/2,y:-60,targetX:W/2,targetY:132,hp:1,maxHp:1,actor:'',name:'',mid:false,hitTick:-99,leaving:false,present:false},
+      boss:{x:W/2,y:-60,targetX:W/2,targetY:132,hp:1,maxHp:1,actor:'',name:'',mid:false,hitTick:-99,leaving:false,present:false,down:null},
       bossOnly:!!options.bossOnly,rushStage:SEGMENTS[startSeg].stage,bombs:rules.bombs,gauge:0,spellClean:false,captures:0,itemsTaken:0,lane:undefined,
       n:0,dropped:0,peak:0,score:0,graze:0,hits:0,kills:0,cleared:0,timeouts:0,events:[],cancelled:[],pops:[],lasers:[],mobs:[],warned:false,sn:0,itemCount:0,
       lastStage:STAGES.length-1,started:false,results:[],bombsUsed:0,mark:{tick:0,score:0,hits:0,bombs:0,captures:0,spells:0}};
     if(Number.isInteger(options.stages)&&options.stages>0)s.lastStage=Math.min(STAGES.length-1,s.stageIndex+options.stages-1);
     ['bx','by','ba','bs','bturn','bacc','bmin','bmax','barg','bs2','bspin'].forEach(function(k){s[k]=new Float32Array(CAP);});
     ['bage','blife','bat'].forEach(function(k){s[k]=new Uint16Array(CAP);});
-    ['bsize','bcolor','bgrazed','bmode','bgen'].forEach(function(k){s[k]=new Uint8Array(CAP);});
+    ['bsize','bcolor','bgrazed','bmode','bgen','bbounce'].forEach(function(k){s[k]=new Uint8Array(CAP);});s.figures=[];
     s.sx=new Float32Array(SHOT_CAP);s.sy=new Float32Array(SHOT_CAP);s.shoming=new Uint8Array(SHOT_CAP);
     s.ix=new Float32Array(ITEM_CAP);s.iy=new Float32Array(ITEM_CAP);s.ivy=new Float32Array(ITEM_CAP);s.ikind=new Uint8Array(ITEM_CAP);
     // 구간을 직접 지정하면(연습·검사) 그 구간에서 바로 시작한다.
@@ -507,12 +510,12 @@
   function removeBullet(s,i){
     var j=--s.n;if(i===j)return;
     s.bx[i]=s.bx[j];s.by[i]=s.by[j];s.ba[i]=s.ba[j];s.bs[i]=s.bs[j];s.bturn[i]=s.bturn[j];s.bacc[i]=s.bacc[j];s.bmin[i]=s.bmin[j];s.bmax[i]=s.bmax[j];s.barg[i]=s.barg[j];s.bs2[i]=s.bs2[j];s.bspin[i]=s.bspin[j];
-    s.bage[i]=s.bage[j];s.blife[i]=s.blife[j];s.bat[i]=s.bat[j];s.bsize[i]=s.bsize[j];s.bcolor[i]=s.bcolor[j];s.bgrazed[i]=s.bgrazed[j];s.bmode[i]=s.bmode[j];s.bgen[i]=s.bgen[j];
+    s.bage[i]=s.bage[j];s.blife[i]=s.blife[j];s.bat[i]=s.bat[j];s.bsize[i]=s.bsize[j];s.bcolor[i]=s.bcolor[j];s.bgrazed[i]=s.bgrazed[j];s.bmode[i]=s.bmode[j];s.bgen[i]=s.bgen[j];s.bbounce[i]=s.bbounce[j];
   }
   // 화면의 탄과 광선을 모두 지우고, 지운 탄 자리를 연출용으로 남긴다(최대 320개). 지운 탄 수를 돌려준다.
   function cancelAll(s){
     var n=s.n;for(var i=0;i<n&&s.cancelled.length<320*3;i++)s.cancelled.push(s.bx[i],s.by[i],s.bsize[i]===SHAPE_PROP?WHITE:s.bcolor[i]);
-    s.n=0;s.lasers.length=0;return n;
+    s.n=0;s.lasers.length=0;s.figures.length=0;return n;
   }
   /* 아이템 하나를 떨군다. kind 0 점수, 1 폭탄 조각. 위로 살짝 튀었다가 천천히 내려온다. */
   function dropItem(s,x,y,kind){if(s.itemCount>=ITEM_CAP)return;var i=s.itemCount++;s.ix[i]=Math.max(10,Math.min(W-10,x));s.iy[i]=y;s.ivy[i]=-1.6;s.ikind[i]=kind||0;}
@@ -570,7 +573,9 @@
     if(defeated){s.cleared++;s.score+=Math.round(left)*300+wiped*30;for(var i=0;i<(card.spell?10:5);i++)dropItem(s,b.x+(i-4.5)*12,b.y+((i*37)%30)-15,card.spell&&i===5?1:0);}else s.timeouts++;
     // 이름 붙은 패턴을 폭탄 없이, 맞지 않고 넘기면 보너스
     if(card.spell&&defeated&&s.spellClean){s.captures++;s.score+=20000+card.stage*5000;note(s,'capture');}
-    s.score+=wiped*10;note(s,'break');advance(s);
+    s.score+=wiped*10;note(s,'break');var who=b.actor,dx=b.x,dy=b.y;advance(s);
+    // 이 보스의 마지막 패턴이 깨졌다(다른 보스나 잡몹 구간으로 넘어감): 화면은 이 자리에서 쓰러지는 동작을 그린다.
+    if(defeated&&(b.leaving||s.stage==='won')){b.down={actor:who,x:dx,y:dy,tick:s.tick};note(s,'bossDown');}
   }
   function moveBoss(s){
     var b=s.boss;if(!b.present)return;
@@ -648,6 +653,103 @@
     if(grazed){s.graze+=grazed;s.gauge+=grazed*2;s.score+=grazed*40;note(s,'graze');}
     return struck;
   }
+  /* ── 보스 고유 문양 광선(2026-11-14). 도형은 단위 원 안의 선(점 묶음)이고, 보스를 따라 돌며 줄었다 늘었다 한다.
+   *    외곽 지그재그는 화면 양옆을 몇 초간 막아 피할 자리를 줄인다. 선분만 닿는다(무한 광선이 아니다). ── */
+  function arcPts(cx,cy,r,a0,a1,n){var o=[];for(var k=0;k<=n;k++){var a=a0+(a1-a0)*k/n;o.push(cx+Math.cos(a)*r,cy+Math.sin(a)*r);}return o;}
+  function starPts(n,skip,r,rot){var o=[];for(var k=0;k<=n;k++){var a=-Math.PI/2+(rot||0)+TAU*((k*skip)%n)/n;o.push(Math.cos(a)*r,Math.sin(a)*r);}return o;}
+  function polyPts(n,r,rot){return starPts(n,1,r,rot);}
+  var GLYPHS={
+    pentagram:[starPts(5,2,1),arcPts(0,0,1,0,TAU,30)],
+    hexagram:[polyPts(3,1),polyPts(3,1,Math.PI)],
+    octagram:[starPts(8,3,1),arcPts(0,0,.42,0,TAU,20)],
+    triangle:[polyPts(3,1),polyPts(3,.5,Math.PI)],
+    square:[polyPts(4,1,Math.PI/4),polyPts(4,.6)],
+    ring:[arcPts(0,0,1,0,TAU,36),arcPts(0,0,.55,0,TAU,24)],
+    eye:[arcPts(0,.9,1.35,-Math.PI*.78,-Math.PI*.22,14),arcPts(0,-.9,1.35,Math.PI*.22,Math.PI*.78,14),arcPts(0,0,.32,0,TAU,16)],
+    wheel:[arcPts(0,0,1,0,TAU,36),[-1,0,1,0],[-.5,-.866,.5,.866],[-.5,.866,.5,-.866]],
+    gear:[(function(){var o=[];for(var k=0;k<=48;k++){var a=TAU*k/48,r=Math.floor(k/2)%2?1:.8;o.push(Math.cos(a)*r,Math.sin(a)*r);}return o;})(),arcPts(0,0,.35,0,TAU,16)],
+    wave:[(function(){var o=[];for(var k=0;k<=40;k++){var x=-1+k/20;o.push(x,Math.sin(x*Math.PI*2)*.4);}return o;})(),(function(){var o=[];for(var k=0;k<=40;k++){var x=-1+k/20;o.push(x,-Math.sin(x*Math.PI*2)*.4);}return o;})()],
+    wings:[arcPts(-1,0,1,-Math.PI*.45,Math.PI*.45,14),arcPts(1,0,1,Math.PI*.55,Math.PI*1.45,14),arcPts(-1.2,0,.7,-Math.PI*.4,Math.PI*.4,10),arcPts(1.2,0,.7,Math.PI*.6,Math.PI*1.4,10)],
+    branch:[[0,1,0,-.2,-.6,-.8],[0,-.2,.6,-.8],[0,.3,-.7,-.1,-1,-.5],[0,.3,.7,-.1,1,-.5],[-.6,-.8,-.4,-1],[.6,-.8,.4,-1]],
+    horns:[arcPts(-.9,.2,.9,-Math.PI*.95,-Math.PI*.2,12),arcPts(.9,.2,.9,-Math.PI*.8,-Math.PI*.05,12),arcPts(0,0,.35,0,TAU,14)],
+    spiral:[(function(){var o=[];for(var k=0;k<=60;k++){var a=k/60*TAU*2.2,r=.12+.88*k/60;o.push(Math.cos(a)*r,Math.sin(a)*r);}return o;})(),arcPts(0,0,.1,0,TAU,8)],
+    flame:[[0,-1,.35,-.35,.7,.2,.4,.7,0,1,-.4,.7,-.7,.2,-.35,-.35,0,-1],[0,-.3,.25,.25,0,.6,-.25,.25,0,-.3]],
+    gate:[[-.8,1,-.8,-.3],arcPts(0,-.3,.8,Math.PI,TAU,14),[.8,-.3,.8,1],arcPts(0,0,.22,0,TAU,12),[-1,1,1,1]],
+    hourglass:[[-.7,-1,.7,-1,-.7,1,.7,1,-.7,-1],[-.9,-1.15,.9,-1.15],[-.9,1.15,.9,1.15]],
+    honeycomb:[polyPts(6,1,Math.PI/6),polyPts(6,.5,Math.PI/6),[0,-.5,0,-1],[0,.5,0,1]],
+    rose:[(function(){var o=[];for(var k=0;k<=72;k++){var a=TAU*k/72,r=Math.cos(4*a);o.push(Math.cos(a)*r,Math.sin(a)*r);}return o;})(),arcPts(0,0,.2,0,TAU,12)],
+    coin:[arcPts(0,0,1,0,TAU,36),polyPts(4,.45,Math.PI/4)],
+    crown:[[-1,.6,-1,-.6,-.5,0,0,-1,.5,0,1,-.6,1,.6,-1,.6],[-.7,.85,.7,.85]],
+    key:[arcPts(-.55,0,.4,0,TAU,16),[-.15,0,1,0],[.6,0,.6,.35],[.85,0,.85,.3]],
+    circuit:[polyPts(4,1,Math.PI/4),[-.7,-.3,-.2,-.3,-.2,.3,.3,.3],[.7,-.7,.7,0,.2,0],[-.7,.7,0,.7,0,.3]],
+    thorns:[(function(){var o=[];for(var k=0;k<=32;k++){var a=TAU*k/32,r=k%2?1:.62;o.push(Math.cos(a)*r,Math.sin(a)*r);}return o;})(),arcPts(0,0,.4,0,TAU,18)],
+    ouroboros:[arcPts(0,0,1,.35,TAU-.05,34),arcPts(0,0,.8,.35,TAU-.05,30),[.94,.34,1.08,.12,.75,.25]]
+  };
+  // 보스마다: glyph 문양, color 색, arms 이어진 탄 줄기 수, edge 외곽 지그재그(1이면 씀), spin 도는 방향, reach 문양 최대 반지름
+  var SIGNATURES={
+    p1_tree:['branch',GREEN,3,0],violet:['hexagram',PURPLE,4,0],p1_horn:['horns',RED,3,1],p1_chaser:['spiral',RED,2,1],p1_comrade:['eye',PURPLE,2,0],p1_gate:['gate',YELLOW,4,1],
+    balrog:['flame',RED,5,1],mask:['eye',WHITE,3,0],p1_staff:['triangle',CYAN,2,0],p1_seraph:['wings',WHITE,6,0],lucifer:['pentagram',RED,6,1],
+    p2_demons:['octagram',PURPLE,6,1],p2_belphegor:['hourglass',GREEN,3,1],p2_leviathan:['wave',CYAN,4,1],p2_beelzebub:['honeycomb',YELLOW,5,0],asmodeus:['rose',PURPLE,3,1],
+    p2_greed:['coin',YELLOW,2,1],p2_mammon:['crown',YELLOW,6,1],p2_wrath:['thorns',RED,4,1],pride:['crown',WHITE,4,0],p2_chairman:['key',YELLOW,3,0],p2_core:['circuit',CYAN,3,0],
+    p3_legion:['gear',WHITE,4,1],p3_rampart:['square',CYAN,5,1],p3_defense:['triangle',YELLOW,3,1],controller:['circuit',GREEN,5,1],p3_body:['gear',RED,3,0],p3_gate:['gate',CYAN,2,1],
+    goblin:['thorns',GREEN,4,0],p4_knight:['wings',RED,4,1],insomnia:['eye',CYAN,4,1],p5_cult:['ouroboros',PURPLE,5,0],p5_archon:['hexagram',YELLOW,3,1],p5_common:['square',WHITE,2,0],
+    p5_upper:['octagram',CYAN,4,0],p5_grand:['octagram',YELLOW,6,0],p5_furnace:['flame',YELLOW,4,1],p5_neuron:['circuit',PURPLE,4,0],p5_keeper:['hourglass',WHITE,2,1],p5_rings:['wheel',CYAN,6,1],
+    arbelia:['rose',WHITE,5,0],siren:['wave',PURPLE,3,0],p6_demons:['pentagram',PURPLE,3,1],chief:['horns',PURPLE,6,1],p6_bind:['ouroboros',RED,4,1],p7_car:['wheel',WHITE,3,0],
+    p7_shadow:['spiral',PURPLE,4,0],p7_alarm:['triangle',RED,6,1],executor:['key',CYAN,5,1],p8_chip:['circuit',YELLOW,2,1],p8_collective:['honeycomb',CYAN,6,0],p8_lauren:['wings',CYAN,2,1],
+    cultist:['ouroboros',WHITE,6,1],p8_ion:['spiral',CYAN,3,1],rian:['rose',RED,4,0]
+  };
+  Object.keys(SIGNATURES).forEach(function(k,i){var v=SIGNATURES[k];SIGNATURES[k]={glyph:v[0],color:v[1],arms:v[2],edge:v[3],spin:i%2?-1:1,reach:118+(i*29)%50};});
+  function signatureOf(actor){return SIGNATURES[actor]||null;}
+  // 도형 광선 하나의 선분들 [x1,y1,x2,y2,...]
+  function figureSegments(f){
+    var out=[],i,k;
+    if(f.kind==='zigzag'){for(i=0;i+3<f.points.length;i+=2)out.push([f.points[i],f.points[i+1],f.points[i+2],f.points[i+3]]);return out;}
+    var lines=GLYPHS[f.glyph]||[],c=Math.cos(f.turn),sn=Math.sin(f.turn),r=f.r;
+    for(i=0;i<lines.length;i++){var L=lines[i];for(k=0;k+3<L.length;k+=2){
+      var x1=L[k]*r,y1=L[k+1]*r,x2=L[k+2]*r,y2=L[k+3]*r;out.push([f.cx+x1*c-y1*sn,f.cy+x1*sn+y1*c,f.cx+x2*c-y2*sn,f.cy+x2*sn+y2*c]);}}
+    return out;
+  }
+  function summonGlyph(s,sig){
+    if(s.figures.length>=6)return;
+    s.figures.push({kind:'glyph',glyph:sig.glyph,cx:s.boss.x,cy:s.boss.y,r:30,r0:34,r1:sig.reach,period:170,turn:0,spin:sig.spin*.85,follow:true,
+      width:9*s.rules.beam,warn:Math.round(54*s.rules.warn),active:230,age:0,color:sig.color,grazed:false});
+    note(s,'figure');
+  }
+  function summonZigzag(s,sig,side){
+    if(s.figures.length>=6)return;
+    var depth=40,step=46,pts=[],x0=side<0?0:W,k=0;
+    for(var y=70;y<=H+20;y+=step,k++)pts.push(x0-side*(k%2?depth:4),y);
+    s.figures.push({kind:'zigzag',points:pts,width:8*s.rules.beam,warn:Math.round(70*s.rules.warn),active:200,age:0,color:sig.color,r:0,turn:0,grazed:false});
+    note(s,'figure');
+  }
+  // 이어진 탄 줄기: 보스 둘레의 줄기 끝에서 쌀알탄을 촘촘히 뿜는다. 줄기 방향이 사인파로 흔들려 탄 줄이 생물처럼 휜다.
+  function strands(s,sig,t){
+    var b=s.boss,arms=sig.arms,gap=Math.max(5,Math.round(9/s.density*1.6));if(t%gap||s.n>CAP*.55)return; // 이미 탄이 많은 패턴에서는 탄줄을 쉬어 상한 여유를 지킨다
+    for(var k=0;k<arms;k++){var base=Math.PI/2+(k-(arms-1)/2)*(1.9/arms),sway=Math.sin(t*.021+k*1.7)*.62*(k%2?1:-1);
+      spawn(s,b.x+Math.cos(base)*24,b.y+Math.sin(base)*24,base+sway,52,{color:sig.color,size:RICE,life:1400});}
+  }
+  // 보스 고유 연출: 이름 붙은 패턴(spell) 동안 기존 패턴 위에 겹친다.
+  function signature(s,t){
+    var sig=signatureOf(s.boss.actor);if(!sig)return;
+    if(t%420===30)summonGlyph(s,sig);
+    if(sig.edge&&t%600===260){summonZigzag(s,sig,-1);summonZigzag(s,sig,1);}
+    if(t%300<200)strands(s,sig,t);
+  }
+  function updateFigures(s){
+    var p=s.player,struck=false,grazed=0;
+    for(var i=s.figures.length-1;i>=0;i--){
+      var f=s.figures[i];f.age++;
+      if(f.age>f.warn+f.active+BEAM_FADE){s.figures.splice(i,1);continue;}
+      if(f.kind==='glyph'){if(f.follow&&s.boss.present){f.cx=s.boss.x;f.cy=s.boss.y;}f.turn+=f.spin*TICK*(f.age<f.warn?.35:1);f.r=f.r0+(f.r1-f.r0)*(.5-.5*Math.cos(TAU*f.age/f.period));}
+      if(f.age<f.warn||f.age>=f.warn+f.active)continue;
+      var segs=figureSegments(f),reach=f.width*.5*BEAM_HIT+p.r,near=1e9;
+      for(var k=0;k<segs.length;k++){var g=segs[k],dx=g[2]-g[0],dy=g[3]-g[1],L=dx*dx+dy*dy||1,u=((p.x-g[0])*dx+(p.y-g[1])*dy)/L;u=u<0?0:u>1?1:u;
+        var d=Math.sqrt(Math.pow(p.x-g[0]-u*dx,2)+Math.pow(p.y-g[1]-u*dy,2));if(d<near)near=d;}
+      if(near<reach)struck=true;else if(!f.grazed&&near<f.width*.5+GRAZE_MARGIN){f.grazed=true;grazed++;}
+    }
+    if(grazed){s.graze+=grazed;s.gauge+=grazed*2;s.score+=grazed*40;note(s,'graze');}
+    return struck;
+  }
   function updateBullets(s){
     var p=s.player,px=p.x,py=p.y,struck=false,grazed=0,hitScale=s.rules.hitScale,i,k;
     for(i=s.n-1;i>=0;i--){
@@ -668,7 +770,16 @@
       if(s.bturn[i])s.ba[i]+=s.bturn[i]*TICK;
       if(s.bacc[i]){var v=s.bs[i]+s.bacc[i]*TICK;s.bs[i]=v<s.bmin[i]?s.bmin[i]:v>s.bmax[i]?s.bmax[i]:v;}
       var x=s.bx[i]+=Math.cos(s.ba[i])*s.bs[i]*TICK,y=s.by[i]+=Math.sin(s.ba[i])*s.bs[i]*TICK;
-      if(x<-36||x>W+36||y<-48||y>H+36||age>=s.blife[i]){removeBullet(s,i);continue;}
+      // 벽에서 되돌아오는 탄: 좌우 벽과 위 벽에서 한 번(남은 횟수만큼) 튕긴다. 아래로는 튕기지 않는다(영웅 뒤에서 오지 않게).
+      if(s.bbounce[i]){var a0=s.ba[i];
+        if((x<0&&Math.cos(a0)<0)||(x>W&&Math.cos(a0)>0)){s.ba[i]=Math.PI-a0;s.bx[i]=x=x<0?0:W;s.bbounce[i]--;}
+        else if(y<0&&Math.sin(a0)<0&&age>BLOOM_TICKS){s.ba[i]=-a0;s.by[i]=y=0;s.bbounce[i]--;}}
+      if(x<-36||x>W+36||y<-48||y>H+36){removeBullet(s,i);continue;}
+      if(age>=s.blife[i]){
+        // 화면 한가운데에서 수명이 다해 사라지지 않는다. 그대로 끝까지 날아가고(멈춘 탄은 다시 움직인다), 옆 벽에서 한 번 되돌아온다.
+        if(x<-4||x>W+4||y<-4||y>H+4){removeBullet(s,i);continue;}
+        s.blife[i]=65535;s.bacc[i]=0;s.bturn[i]=0;if(s.bs[i]<EXPIRE_SPEED)s.bs[i]=EXPIRE_SPEED;if(s.bsize[i]!==SHAPE_PROP&&!s.bbounce[i])s.bbounce[i]=1;
+      }
       if(age<BLOOM_TICKS)continue; // 갓 피어난 탄은 아직 닿지 않는다
       var dx=x-px,dy=y-py,radius=bulletRadius(s,i),d2=dx*dx+dy*dy,reach=radius+GRAZE_MARGIN;
       if(d2>reach*reach)continue;
@@ -697,16 +808,16 @@
     }
     else if(s.stage==='card'){
       var t=s.segTick++;
-      if(t>=FIRE_DELAY)seg.fire(s,t-FIRE_DELAY); // 패턴 이름이 뜨는 동안은 쏘지 않는다
+      if(t>=FIRE_DELAY){seg.fire(s,t-FIRE_DELAY);if(seg.spell)signature(s,t-FIRE_DELAY);} // 패턴 이름이 뜨는 동안은 쏘지 않는다. 이름 붙은 패턴에는 보스 고유 연출이 겹친다.
       var left=seg.time-s.segTick*TICK;
       if(seg.spell&&left<=10&&left>0&&s.segTick%60===0)note(s,left<=3?'countdownLast':'countdown');
     }
     updateMobs(s);updateShots(s);
     if(s.stage==='card'&&b.hp<=0)endCard(s,true);
     else if(s.stage==='card'&&s.segTick*TICK>=segment(s).time)endCard(s,false);
-    var p=s.player,byBeam=updateLasers(s),byBullet=updateBullets(s);
+    var p=s.player,byBeam=updateLasers(s),byFigure=updateFigures(s),byBullet=updateBullets(s);
     updateItems(s);
-    if((byBeam||byBullet)&&s.tick>=p.invulnerableUntil&&s.stage!=='won'){
+    if((byBeam||byFigure||byBullet)&&s.tick>=p.invulnerableUntil&&s.stage!=='won'){
       p.hp--;s.hits++;s.spellClean=false;p.invulnerableUntil=s.tick+INVULN_TICKS;cancelAll(s);note(s,'hurt');
       // 목숨이 남았으면 폭탄이 기본 개수까지 다시 찬다.
       if(p.hp<=0){s.stage='lost';s.stageTick=0;note(s,'lose');}else if(s.bombs<s.rules.bombs)s.bombs=s.rules.bombs;
@@ -749,7 +860,7 @@
   })();
   var api={revision:43,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     SEGMENTS:SEGMENTS,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
-    BLOOM_TICKS:BLOOM_TICKS,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem};
+    BLOOM_TICKS:BLOOM_TICKS,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem};
   if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcade=api;
 })(typeof window!=='undefined'?window:globalThis);

@@ -80,6 +80,426 @@
   "stamp": "b60ac39528a5c49c",
   "table": "tools/arcade-art-v43/base.json"
  },
+ "bg-loop-01.jpg": {
+  "bytes": 65374,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   699
+  ],
+  "source": "drive:1HrKvpZg0nQCK67G0yySNAe4rcpEFo5sG",
+  "sourceSha256": "501e3e8c0d2deb5a9309709b89e07746e6888bb2e048bc808dded018962dd3a8",
+  "sourceTitle": "A01_장면01_악마화_나무의_정원.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-02.jpg": {
+  "bytes": 62535,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   700
+  ],
+  "source": "drive:1GIsZKVIzETB1tRbd26AA5PxZFLvWZgE1",
+  "sourceSha256": "082da6662c7221d05201947275acbe59930692cb74a68dee81427f7bc475af7c",
+  "sourceTitle": "A02_장면02_거미동굴.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-03.jpg": {
+  "bytes": 51661,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   674
+  ],
+  "source": "drive:1vZKtzH0EsvQPaGaRk7qUlSDePQjT7w-B",
+  "sourceSha256": "49ed47182a6202e647feae17e7cfa474a8cd1e0920d463ff2d2c1be7fab7d77f",
+  "sourceTitle": "A03_장면03_늪지대의_뿔악마.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-04.jpg": {
+  "bytes": 61605,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   679
+  ],
+  "source": "drive:1nqvgA25V3SBHk0b-f806LdzIRlLAYGze",
+  "sourceSha256": "aa5c1f2f1485acd8950070d7c6efa39a2437ce4dac1188d9684b9b97dd22af86",
+  "sourceTitle": "A04_장면04_무너진성.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-05.jpg": {
+  "bytes": 51774,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   684
+  ],
+  "source": "drive:1NzUiZ6Q6_HdkshV2YVpg5HvVjVRGUWoG",
+  "sourceSha256": "e2c09734228641faf149c081db030870e73819fa22f92e59f718e541c4ac0139",
+  "sourceTitle": "A05_장면05_시체들이_되살아난_밤.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-06.jpg": {
+  "bytes": 46342,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   689
+  ],
+  "source": "drive:1Q5WFYhJ7ZQFSKtTJz92X9GH3CtI18Gvu",
+  "sourceSha256": "df6a4da5c635cb04eef4da5cba1f478a5f8e829446afd39fbbbe08d98e08d437",
+  "sourceTitle": "A06_장면06_일곱_기둥.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-07.jpg": {
+  "bytes": 62952,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   702
+  ],
+  "source": "drive:1trLu1A8USxFDdCPlXE-dUqTJ6XpzkyoP",
+  "sourceSha256": "ebe28e4717825a1109276a4cadebf725fd7e936640cd8fa5e4fbe8c16c407cf7",
+  "sourceTitle": "A07_장면07_추락.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-08.jpg": {
+  "bytes": 63201,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   674
+  ],
+  "source": "drive:1fq9SSmgcpu2sJA77_xVaZ6EWDPJRm2PM",
+  "sourceSha256": "d1499ece0cf11aa9b6c033325c977e0f4f456a11c342e7d349d4248fb16eaecb",
+  "sourceTitle": "A08_장면08_피로_물든_병원.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-09-1.jpg": {
+  "bytes": 64467,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   676
+  ],
+  "source": "drive:1WncxZf1cEqXMuv-7-6qTMcx6ypdV91xb",
+  "sourceSha256": "fc0537e39c144777ec434bf9d213cd6118fea33af539a3c0985c7f7c02f41e20",
+  "sourceTitle": "A09_장면09-1_주사실.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-09-2.jpg": {
+  "bytes": 51452,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   688
+  ],
+  "source": "drive:1ShYGexssDm0tPrkzqcfO1MH8k1SAxW-I",
+  "sourceSha256": "ed26a6a6c563bfb0125c9c6fa57c12310e3d59c27faf57cbec643677d8705aca",
+  "sourceTitle": "A10_장면09-2_결전의_날.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-10.jpg": {
+  "bytes": 58566,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   699
+  ],
+  "source": "drive:1GowTJp5EBS6b__FD8ItrOOX-6gMtB24p",
+  "sourceSha256": "b83c570edb400b40268ba3c8e5f477b39a9777cd4f5691c8a6d0319f74ade858",
+  "sourceTitle": "A11_장면10_환자와_중독의_도시.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-11.jpg": {
+  "bytes": 64085,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   691
+  ],
+  "source": "drive:1lM2ttDaK7Ntp9519mCKpkFQjVrAdQEUc",
+  "sourceSha256": "e545e92b77efb889095171f560c7547621ff7fe8cc5781858c2c1a205c547696",
+  "sourceTitle": "A12_장면11_천사의_가면과_의목사_후보생.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-13.jpg": {
+  "bytes": 48538,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   699
+  ],
+  "source": "drive:16JuqnwXsxHRhhRBKa3WPklnnleC_N2fc",
+  "sourceSha256": "7898799c41eb7144bcf6411a49659f8b5c7b7bb1c689dd0116aaac30c67188bf",
+  "sourceTitle": "A13_장면13_솔로몬의_봉인식.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-14.jpg": {
+  "bytes": 57076,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   679
+  ],
+  "source": "drive:12klU5jcL6v8CxLss-_XuyRmhcqVaOIWa",
+  "sourceSha256": "c2156be345bdb399045b16037ee4ed72cbf53236ff95a15d9601259fbee95bd7",
+  "sourceTitle": "A14_장면14_나태의_집.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-15.jpg": {
+  "bytes": 50622,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   700
+  ],
+  "source": "drive:1b64yGiKcfKxoIh84MFZ8iYXeXu33TfXw",
+  "sourceSha256": "9bf9847e3980ddd72eaa77851a96a55b6729fd537959deca17051081ee6677b4",
+  "sourceTitle": "A15_장면15_금이_간_안경.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-16.jpg": {
+  "bytes": 64669,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   689
+  ],
+  "source": "drive:14s-hjKxWANRzr2AtwfthuDJlnV-pxSXX",
+  "sourceSha256": "0c5e52bbb89e2f427c697ef44fa5f065073471c83727cbc874b5f5863953dab1",
+  "sourceTitle": "A16_장면16_탐식의_주방.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-17.jpg": {
+  "bytes": 45816,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   674
+  ],
+  "source": "drive:1jBoA0OIL4Y3W-AgnXwNm048OcgXAZ85A",
+  "sourceSha256": "28fbe24480557bbb3e721396dd1d35a13ae54ed2ad041418dd1068a61560b382",
+  "sourceTitle": "A17_장면17_붉은_하이힐.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-18.jpg": {
+  "bytes": 65780,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   681
+  ],
+  "source": "drive:1zUEboCaX_sgViBp-eBc8xV2RsoiuCgF8",
+  "sourceSha256": "9b0ca03cf94d1968d13d1465fb21431b0cc2ca5a789e225f4aa9ac0bfd55f919",
+  "sourceTitle": "A18_장면18_맘몬의_금고.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-19.jpg": {
+  "bytes": 72080,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   702
+  ],
+  "source": "drive:1ozRYfuncN5uZeMj7LlStww8FPirvFkI_",
+  "sourceSha256": "87550fc8ba102828e0cd97bd2ad115f841d6d195011783f3acba78897d6ccbae",
+  "sourceTitle": "A19_장면19_눈보라_속의_소년.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-20.jpg": {
+  "bytes": 53204,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   701
+  ],
+  "source": "drive:1cKnh1Wb_r9OvXEE1Qj7VXm4xJ9ieOBY5",
+  "sourceSha256": "2c83224cd0fdbf32eb265903f79ec487cea49ed91ea86741782e85193b29ce39",
+  "sourceTitle": "A20_장면20_불을_지른_남자.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-21.jpg": {
+  "bytes": 69158,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   700
+  ],
+  "source": "drive:1oPrJcE7oaE0KaSZDD7tszbZs6el_W-iW",
+  "sourceSha256": "399b5f9e14b5c3f46b1fbeefaf42e18b888d7dd98692526a7fe490a3de6bb047",
+  "sourceTitle": "A21_장면21_하늘에_서려는_자.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-22.jpg": {
+  "bytes": 76440,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   692
+  ],
+  "source": "drive:1DK3xMUMkiJ2U74dPSVXz5I0kxHR7VHuM",
+  "sourceSha256": "d1b71947d2c857d9e0a0f33b2f8f7472d25113f74a7084a9afe3676f4176f83f",
+  "sourceTitle": "A22_장면22_생체_부트로더.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-24.jpg": {
+  "bytes": 61035,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   695
+  ],
+  "source": "drive:1spRAdnxy9txvdRc2I3oLxo4yoNDbWBtc",
+  "sourceSha256": "59aa908ae8796cc0e7eec89a6ce9d45a8db818a46af5c081d549d822695b63f1",
+  "sourceTitle": "A23_장면24_방어의_군단.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-25.jpg": {
+  "bytes": 58315,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   698
+  ],
+  "source": "drive:1vWGMLzQdKbT643D5OvLnq5JKsRI0HzyA",
+  "sourceSha256": "5a3df970bfd861eff138873b2d11098b189167c24a8e04327b8ec96f88e3a5eb",
+  "sourceTitle": "A24_장면25_잔인한_구원.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-26.jpg": {
+  "bytes": 51331,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   692
+  ],
+  "source": "drive:1LkvRW486hhrkmu8UY-wUymEHNMInRucb",
+  "sourceSha256": "771a7088c25dcfabdbaa5d10003c3512e74d38018a5145c81d16fbab10fc5b14",
+  "sourceTitle": "A25_장면26_시스템의_거부권.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-27.jpg": {
+  "bytes": 60975,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   695
+  ],
+  "source": "drive:17fKuJkPrfhdl4QV6XVBpz3qkpq_6O6mX",
+  "sourceSha256": "fd1e7f86378b3180f6ff9b614cb51500faf3130935fdac11ad99d061fc82394a",
+  "sourceTitle": "A26_장면27_관리자_권한.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-28.jpg": {
+  "bytes": 69740,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   689
+  ],
+  "source": "drive:1PnT5OZ2ADBTAptyd5De6E_coFWwSuYIo",
+  "sourceSha256": "5255fa0f51206a51f0a5e962682023fc4ab34adba4670758477f1cc8fe9b0ed7",
+  "sourceTitle": "A27_장면28_중앙_코어_이주실.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-29.jpg": {
+  "bytes": 73274,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   700
+  ],
+  "source": "drive:1e6NUhwgpbHiHcmfS7BrmOFPtmYSY24UN",
+  "sourceSha256": "eb2c49ad5a038861c31d832c7e7d6543fe3ac5012a4a4170805353b307c9233c",
+  "sourceTitle": "A28_장면29_기억의_문.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-31.jpg": {
+  "bytes": 59588,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   696
+  ],
+  "source": "drive:17PgvWYW0iUZrj-vHSuck-Bu9e1Nilw1i",
+  "sourceSha256": "3da567606400a07aeea52a52b3e7d23f29e16b236d5a0f9121c944fe4ba9acec",
+  "sourceTitle": "A29_장면31_중립_지역의_재각성.png",
+  "table": "docs/v43/vmaps.json"
+ },
+ "bg-loop-32.jpg": {
+  "bytes": 72981,
+  "group": "bgs",
+  "loop": true,
+  "quality": 86,
+  "size": [
+   480,
+   689
+  ],
+  "source": "drive:17spPV5gEdX8JsG7YGQqsX8W5wT2fxtr7",
+  "sourceSha256": "0bf2f6d2667edef469aead8e54acc3cf43165adeb804f7d7c4d2c76ada5fa34b",
+  "sourceTitle": "A30_장면32_고블린_두목과_장미_인장.png",
+  "table": "docs/v43/vmaps.json"
+ },
  "bg-p1_castle.jpg": {
   "bytes": 83890,
   "group": "bgs",

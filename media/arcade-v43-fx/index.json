@@ -1,0 +1,389 @@
+{
+ "about": "보스 스킬 이펙트(드라이브 프레임 애니메이션, 가로 스트립). 원작자 상태가 HOLD/REVIEW인 것을 사용자 요청(11-14)으로 조건부 적용. pivot은 칸 안에서 보스 자리에 맞출 점.",
+ "effects": [
+  {
+   "file": "fx-meteor.webp",
+   "frames": 12,
+   "cell": [
+    187,
+    181
+   ],
+   "fps": 12,
+   "blend": "normal",
+   "bosses": [
+    "balrog"
+   ],
+   "pivot": [
+    97,
+    152
+   ],
+   "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
+   "source": {
+    "driveId": "1fhlkF3D38lUJQ8BD9NSGtSm6mgcDRTi2",
+    "name": "meteor_v001_sheet_qa_hold.zip"
+   },
+   "note": "운석 낙하: 예고 원→낙하→화염 충돌→연기. 발록의 불덩이/추락/소환진 스펠에. 칸 아래쪽이 착탄점. 원본 24칸 중 짝수 칸 12장.",
+   "sha256": "7f8fa0fbd9975bcce48ca7ace6d91838006cbe61e64dfd5a674e9b23da3c3af4"
+  },
+  {
+   "file": "fx-blood-spear.webp",
+   "frames": 12,
+   "cell": [
+    105,
+    192
+   ],
+   "fps": 14,
+   "blend": "normal",
+   "bosses": [
+    "p1_chaser"
+   ],
+   "pivot": [
+    52,
+    96
+   ],
+   "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
+   "source": {
+    "driveId": "1Ht0_wwSrS6L1quJJ_HQ0ZopYDfXjvr1X",
+    "name": "blood_spear_v002_sheet_qa_hold.zip"
+   },
+   "note": "혈창: 원본 동쪽 방향을 -90도 돌려 아래(플레이어 쪽)를 향하게 함. 형성→비행→액체 소멸. 다른 각도는 캔버스 회전으로. 원본 24칸 중 짝수 칸 12장.",
+   "sha256": "619dceb6b940d39df39ffdb87e2c2f6454da3505254105f36b51f853ff995c6d"
+  },
+  {
+   "file": "fx-corpse-burst.webp",
+   "frames": 12,
+   "cell": [
+    192,
+    177
+   ],
+   "fps": 12,
+   "blend": "normal",
+   "bosses": [
+    "p1_comrade"
+   ],
+   "pivot": [
+    97,
+    139
+   ],
+   "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
+   "source": {
+    "driveId": "1lnak7Twe2EAnltYTRxOc-fpMwvcLActa",
+    "name": "corpse_explosion_v001_sheet_qa_hold.zip"
+   },
+   "note": "시체 폭발: 뼈 조각·붉은 살점·연기. \"시체들로 이루어진 언덕\"에. 연기 경계 QA 미완. 원본 24칸 중 짝수 칸 12장.",
+   "sha256": "0bbc14fa4ccb363d69076a9c8377d03798fbf8d9d96c89b4d7883f53079c0eb3"
+  },
+  {
+   "file": "fx-infection.webp",
+   "frames": 12,
+   "cell": [
+    186,
+    181
+   ],
+   "fps": 12,
+   "blend": "normal",
+   "bosses": [
+    "p1_tree"
+   ],
+   "pivot": [
+    95,
+    91
+   ],
+   "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
+   "source": {
+    "driveId": "1MP-jwrF32sakQmYvuGkdNKFPrNGmtTB_",
+    "name": "infection_mark_v001_sheet_qa_hold.zip"
+   },
+   "note": "감염 표식: 노란 가지가 뻗고 포자가 흩어짐. 뿌리가 번지는 느낌이라 악마화 나무에. 어두운 배경에서 가는 가지 가독성은 실기 확인 필요. 원본 24칸 중 짝수 칸 12장.",
+   "sha256": "29d53e4488c548795c05fd64a58da2ed2b9df68d80cd4fb3736c7b66f43aefaf"
+  },
+  {
+   "file": "fx-light-pillar.webp",
+   "frames": 8,
+   "cell": [
+    107,
+    190
+   ],
+   "fps": 11,
+   "blend": "lighter",
+   "bosses": [
+    "p1_seraph"
+   ],
+   "pivot": [
+    52,
+    173
+   ],
+   "status": "REVIEW, not FINAL (원작자 표기, 자동적용 금지)",
+   "source": {
+    "driveId": "1uxK8onAtxUlUsysgo-tz_HSQ9ww36R55",
+    "name": "SW-skillfx_michaela_light-pillar_v1_review-review.zip"
+   },
+   "note": "신성 빛기둥(원래 영웅 미카엘라 스킬용 review). 성장 1~4, 분해 5~8. 초천사의 \"따뜻한 빛/존재를 지우는 힘\"에. 4→5 형태 변화가 급함. 영웅 스킬과 겹치는지 확인 필요. 원본 8칸 전부.",
+   "sha256": "e1cb03d29abeb29bc64f3e598a11ee56c0e3bca79c70b3ca3463bed524a6dcbd"
+  },
+  {
+   "file": "fx-violet-blast.webp",
+   "frames": 8,
+   "cell": [
+    192,
+    174
+   ],
+   "fps": 11,
+   "blend": "lighter",
+   "bosses": [
+    "violet"
+   ],
+   "pivot": [
+    92,
+    92
+   ],
+   "status": "REVIEW, not FINAL (원작자 표기, 자동적용 금지)",
+   "source": {
+    "driveId": "1ipJUvTbmzAHRUJ1aPCND1CpcdQ4yUtLv",
+    "name": "SW-skillfx_lauren_purple-explosion_v1_review-review.zip"
+   },
+   "note": "보라 화염 폭발(원래 영웅 로렌 스킬용 review). 보라검 천사의 색. 4→5 연속성 보류, 8번 완전 투명 아님. 영웅 스킬과 겹치는지 확인 필요. 원본 8칸 전부.",
+   "sha256": "20de40f20f7145cf1b89852e401da41060616f40a9fee0ded25360eb2f36f749"
+  },
+  {
+   "file": "fx-curse-brand.webp",
+   "frames": 12,
+   "cell": [
+    176,
+    178
+   ],
+   "fps": 12,
+   "blend": "normal",
+   "bosses": [
+    "lucifer"
+   ],
+   "pivot": [
+    89,
+    87
+   ],
+   "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
+   "source": {
+    "driveId": "1MQPfZOP4T9kgUPLXv0YAFBvlV5xtU1qe",
+    "name": "curse_brand_v001_sheet_qa_hold.zip"
+   },
+   "note": "저주 낙인: 붉은 인장이 맺히고 흩어짐. \"검은 숫자 666\"/인장 계열 스펠에. 마법진 대용으로도 가능. 원본 24칸 중 짝수 칸 12장.",
+   "sha256": "f137eabe4147e20deec41d603984858c464b2e347a6a0a3aab2d8e29d71340e9"
+  },
+  {
+   "file": "fx-tentacles.webp",
+   "frames": 12,
+   "cell": [
+    192,
+    183
+   ],
+   "fps": 12,
+   "blend": "normal",
+   "bosses": [
+    "p2_leviathan"
+   ],
+   "pivot": [
+    96,
+    166
+   ],
+   "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
+   "source": {
+    "driveId": "1dbhxBAk_uZ5i1IvIgLHMCsWgVBSIOXW6",
+    "name": "tentacle_bind_v002_sheet_qa_hold.zip"
+   },
+   "note": "촉수 속박: 바닥에서 솟아 감고 내려감. 레비아탄(바다뱀·질투)의 속박에. 지면형이라 플레이어 위치에 깔아 쓰는 용도. 원본 24칸 중 짝수 칸 12장.",
+   "sha256": "d53d436d43b645c4aa50ed0bad3835b0923a3205767ecc3a17193e2047da0718"
+  },
+  {
+   "file": "fx-poison-mist.webp",
+   "frames": 12,
+   "cell": [
+    192,
+    147
+   ],
+   "fps": 10,
+   "blend": "normal",
+   "bosses": [
+    "p2_beelzebub"
+   ],
+   "pivot": [
+    92,
+    114
+   ],
+   "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
+   "source": {
+    "driveId": "1w-iPkC416toqSZ9p3wZy1qdV-bc44se6",
+    "name": "poison_mist_v002_sheet_qa_hold.zip"
+   },
+   "note": "독안개 유지 루프(loop). 칸 사이 변화가 작아 깔린 장판 용도. 베엘제붑 \"독가스\"에. 원본 24칸 중 짝수 칸 12장.",
+   "sha256": "f95d8e04b16c959805d6cc230be1dc63b59b41f5ddb5362c178ffa18a3ba7c57"
+  },
+  {
+   "file": "fx-cold-wave.webp",
+   "frames": 12,
+   "cell": [
+    192,
+    155
+   ],
+   "fps": 12,
+   "blend": "normal",
+   "bosses": [
+    "p2_greed"
+   ],
+   "pivot": [
+    93,
+    112
+   ],
+   "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
+   "source": {
+    "driveId": "1LM7cOroDyFqHoNKWJb2kvBEV2iRNHR46",
+    "name": "cold_wave_v001_sheet_qa_hold.zip"
+   },
+   "note": "냉기파: 초승달 모양 얼음 파도. 19 눈보라 속의 소년의 \"눈보라\" 스펠(탐욕의 귀)에. 진행 방향이 오른쪽 위라 회전해 쓰기. 원본 24칸 중 짝수 칸 12장.",
+   "sha256": "5b22ea00b74b8413cc789d7aedb4a8134855ff5d355dbf4bbb01a22a29a736f8"
+  },
+  {
+   "file": "fx-ice-spikes.webp",
+   "frames": 12,
+   "cell": [
+    172,
+    192
+   ],
+   "fps": 12,
+   "blend": "normal",
+   "bosses": [
+    "p2_mammon"
+   ],
+   "pivot": [
+    87,
+    173
+   ],
+   "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
+   "source": {
+    "driveId": "1ZGEWY14jmwBvFvleNF6Q4foKswEf0dqr",
+    "name": "ice_spikes_v001_sheet_qa_hold.zip"
+   },
+   "note": "얼음가시: 지면에서 결정이 솟고 부서짐. 맘몬은 같은 19장(눈보라) 보스라 배정. 속성 연결이 약하면 보류 가능. 원본 24칸 중 짝수 칸 12장.",
+   "sha256": "755edf8d0981a7de5e4264a07ebe46d54dc032a18032353c46397465340b6a38"
+  },
+  {
+   "file": "fx-lightning.webp",
+   "frames": 12,
+   "cell": [
+    173,
+    192
+   ],
+   "fps": 12,
+   "blend": "lighter",
+   "bosses": [
+    "pride"
+   ],
+   "pivot": [
+    85,
+    172
+   ],
+   "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
+   "source": {
+    "driveId": "18vDcPHqzrsaZ8oV-XgrAFSlYyJj5h7ki",
+    "name": "lightning_strike_v002_sheet_qa_hold.zip"
+   },
+   "note": "낙뢰: 푸른 번개가 내려꽂히고 잔광. 교만의 회장 \"전극 성당/일곱 갈래 신호\"에. 원본 24칸 중 짝수 칸 12장.",
+   "sha256": "b7524ff8c482b3eaaf60c3e647fc202c9a8c09c83619427b0a5c2ba58750825e"
+  },
+  {
+   "file": "fx-gravity-well.webp",
+   "frames": 12,
+   "cell": [
+    192,
+    188
+   ],
+   "fps": 12,
+   "blend": "lighter",
+   "bosses": [
+    "cultist"
+   ],
+   "pivot": [
+    95,
+    113
+   ],
+   "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
+   "source": {
+    "driveId": "16OT_XrKOTunz4Nnoo3gvDgK9GiinndJ_",
+    "name": "gravity_well_v001_sheet_qa_hold.zip"
+   },
+   "note": "중력 우물: 보라 소용돌이가 커졌다 수렴. 교주의 \"공간을 왜곡/시간을 멈추며\"에. 원본 24칸 중 짝수 칸 12장.",
+   "sha256": "7e7da24edd3d351685630641d210fa4fc825dd9f0f8edc599a09bc6ee137b9c2"
+  },
+  {
+   "file": "fx-bone-spikes.webp",
+   "frames": 12,
+   "cell": [
+    188,
+    190
+   ],
+   "fps": 12,
+   "blend": "normal",
+   "bosses": [
+    "p5_keeper"
+   ],
+   "pivot": [
+    92,
+    166
+   ],
+   "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
+   "source": {
+    "driveId": "1mTHRBXKypm5zjdACLVw4dFgw0PvUgSEt",
+    "name": "bone_spikes_v001_sheet_qa_hold.zip"
+   },
+   "note": "뼈가시: 지면에서 솟고 부서져 흩어짐. 망각의 묘지 묘지기에. 원본 24칸 중 짝수 칸 12장.",
+   "sha256": "8370e5029ec1cac7946320222833488567c1aa2d5ffbd467a6d90c0071cdcef6"
+  },
+  {
+   "file": "fx-rift.webp",
+   "frames": 12,
+   "cell": [
+    157,
+    171
+   ],
+   "fps": 12,
+   "blend": "lighter",
+   "bosses": [
+    "arbelia"
+   ],
+   "pivot": [
+    79,
+    152
+   ],
+   "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
+   "source": {
+    "driveId": "1_atM_0An9fYRuRuSparPEc_t7gxS1jof",
+    "name": "teleport_v001_sheet_qa_hold.zip"
+   },
+   "note": "순간이동(출발형): 흰 균열이 열렸다 닫힘. 유예의 수문장 아르벨리아의 문/틈 연출에. 도착형은 없음(역재생으로 대용). 원본 24칸 중 짝수 칸 12장.",
+   "sha256": "7c000885805f650f651a197518c0abb4be535a112ca2762c47ca3a62b4d85057"
+  },
+  {
+   "file": "fx-barrier.webp",
+   "frames": 12,
+   "cell": [
+    192,
+    161
+   ],
+   "fps": 12,
+   "blend": "lighter",
+   "bosses": [
+    "p8_ion"
+   ],
+   "pivot": [
+    93,
+    143
+   ],
+   "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
+   "source": {
+    "driveId": "1jFNStKl1Gv2pqXoGCViV3ghFXYE8u3zO",
+    "name": "protective_barrier_v002_sheet_qa_hold.zip"
+   },
+   "note": "보호 결계: 반투명 돔 생성→유지→소멸. 백이온 \"질서의 방벽\"에. 용량 때문에 webp q60. 원본 24칸 중 짝수 칸 12장.",
+   "sha256": "ee02b0daa14ec5fc65b7aadd42414ab9b47915fcff2912d739cc0f97448465ae"
+  }
+ ]
+}

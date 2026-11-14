@@ -10,9 +10,10 @@
   <style>
     *{box-sizing:border-box}
     html,body{margin:0;height:100%;background:#000;color:#f0e9d8;font:15px/1.5 system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;overscroll-behavior:none}
-    body{display:flex;justify-content:center}
+    body{display:flex;justify-content:center;background:transparent} /* 뒤의 #arcade-bleed가 보이게 */
     #arcade-stage{position:relative;width:100%;height:100dvh;max-width:calc(100dvh*360/640);display:flex;align-items:center;justify-content:center;touch-action:none;user-select:none;-webkit-user-select:none;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
     canvas{display:block;background:#07070f}
+    #arcade-bleed{position:fixed;inset:-24px;z-index:-1;background:#000 center/cover no-repeat;filter:blur(14px) brightness(.38) saturate(.8)} /* 플레이 칸 밖 여백: 스테이지 그림을 흐리게 */
     .screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:28px;text-align:center;background:rgba(5,5,14,.72)}
     .screen[hidden]{display:none}
     h1{margin:0;font:600 44px/1.1 "Noto Serif KR","Nanum Myeongjo",serif;letter-spacing:.12em;color:#fff3cf}
@@ -33,6 +34,12 @@
     .pad{position:absolute;bottom:1.6%;width:68px;height:56px;min-width:0;padding:0;border-radius:14px;background:rgba(10,10,24,.5);border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.88);font-size:13px;touch-action:none}
     #arcade-focus{left:2.6%}#arcade-bomb{right:2.6%;border-color:rgba(125,255,176,.55)}
     .pad:active{background:rgba(216,196,154,.4)}
+    /* 플레이 칸 밖 HUD: 휴대폰은 위아래 여백, PC는 좌우 패널(app의 placeHud가 자리를 잡는다) */
+    .hudx{position:fixed;z-index:3;display:flex;gap:10px;pointer-events:none;font:12px/1.35 system-ui,"Apple SD Gothic Neo",sans-serif;color:rgba(255,255,255,.82);text-shadow:0 1px 2px #000}
+    .hudx[hidden]{display:none}
+    .hudx .name{font-weight:600}.hudx .lives{color:#ff6a8a;font-size:14px;letter-spacing:1px}.hudx .bombs{color:#7dffb0;font-size:14px}.hudx .score{font-weight:600;font-size:15px;color:#fff}.hudx .graze{font-size:10px;opacity:.75}
+    .hudx .gauge{width:64px;height:3px;background:rgba(255,255,255,.18)}.hudx .gauge i{display:block;height:3px;background:#7dffb0}
+    .hudx.below{align-items:center;justify-content:space-between;padding:0 12px}.hudx.side{flex-direction:column;justify-content:center}
     select{appearance:none;border:1px solid #4a4666;background:#15152a;color:inherit;font:inherit;border-radius:10px;padding:10px 14px;min-height:44px;max-width:100%}
     .screen{overflow-y:auto}
     #arcade-title{justify-content:flex-start;padding-top:max(28px,6dvh)}
@@ -47,6 +54,9 @@
   </style>
 </head>
 <body>
+  <div id="arcade-bleed" aria-hidden="true"></div>
+  <div id="arcade-hud-high" class="hudx" aria-live="off" hidden></div>
+  <div id="arcade-hud-low" class="hudx" aria-live="off" hidden></div>
   <div id="arcade-stage">
     <div id="arcade-frame">
       <canvas id="arcade-canvas" width="360" height="640" aria-label="세로 탄막 전투장"></canvas>
