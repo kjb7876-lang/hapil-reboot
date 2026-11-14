@@ -625,7 +625,7 @@
     if(next.kind==='wave'){s.boss.leaving=s.boss.present;s.stage='wave';note(s,'wave');return;}
     if(!prev||prev.kind!=='card'||prev.actor!==next.actor||!s.boss.present){s.boss.leaving=s.boss.present;s.stage='intro';}else s.stage='break';
   }
-  var BOSS_REST=156,BOSS_SWAY=40,BOSS_ROAM=36; // 좌우는 가운데 3분의 1 안: 문양이 칸 가장자리에 잘리지 않게(심사 6.53)
+  var BOSS_REST=156,BOSS_SWAY=40,BOSS_ROAM=58; // 좌우는 가운데 3분의 1 안: 문양이 칸 가장자리에 잘리지 않게(심사 6.53)
   function enter(s,actor){var b=s.boss;b.actor=actor;b.name=ACTORS[actor].name;b.mid=!!segment(s).mid;b.present=true;b.leaving=false;b.x=W/2;b.y=-60;b.targetX=W/2;b.targetY=BOSS_REST;s.stageTick=0;note(s,'entrance');}
   function beginCard(s){var card=segment(s),b=s.boss;b.maxHp=b.hp=card.hp;b.mid=!!card.mid;s.stage='card';s.stageTick=0;s.segTick=0;s.spellClean=!!card.spell;if(card.spell){s.spellNumber++;note(s,'card');}else note(s,'plain');}
   function endCard(s,defeated){
