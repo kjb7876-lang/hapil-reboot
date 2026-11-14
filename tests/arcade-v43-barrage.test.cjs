@@ -300,3 +300,17 @@ test('v43 review fixes (round 7, PC): side panels share one top line, are framed
  assert(/\.hudx\.side\{[^}]*border:/.test(page)&&/\.hudx\.side \.score\{[^}]*font-size:2\d px/.test(page.replace(/px/g,' px')),'side panels are framed and the score is large');
  assert(/class="lbl"/.test(app),'side panels label life, bomb and score');
 });
+
+/* 사용자 요청(11-14 17:42 KST): 탄환이 단순 도형이라 심미성이 약하다, 동방식 탄막 미감을 참고(그림이 아니라 방식만):
+ * 한 알을 여러 겹(빛무리·색 그라데이션 몸통·흰 심·하이라이트)으로 그리고, 스테이지마다 다른 실루엣(별·비늘·단검·부적)을 입힌다. 판정은 그대로. */
+test('v43 bullet art: layered jewel bullets and themed silhouettes, hitboxes unchanged',()=>{
+ const app=h.read('src/arcade-app-v43.js');
+ const orb=/function buildOrb[\s\S]*?\n  \}/.exec(app)[0];
+ assert(/createRadialGradient/.test(orb.replace(/grad=g\.createRadialGradient\(m,m,r\*\.8/,''))&&/addColorStop\(0,'#ffffff'\)/.test(orb),'orb body is a gradient from a white-hot core');
+ assert(/strokeStyle='#ffffff'/.test(orb),'orbs keep a bright rim');
+ assert(/ellipse\(/.test(orb),'orbs have a small highlight');
+ for(const k of ['star','scale','dagger','talisman'])assert(new RegExp("'"+k+"'").test(app),'silhouette '+k);
+ assert(/function buildSkin\(/.test(app)&&/function skinVariant\(/.test(app),'themed silhouette sprites and a per-stage choice');
+ const bul=/function drawBullets[\s\S]*?\n  \}/.exec(app)[0];assert(/skinVariant\(/.test(bul),'drawBullets uses the stage silhouette');
+ const a=h.need();assert.deepEqual(a.SIZE_RADIUS,[4,6,10,3.2,15,14],'hit radii are unchanged');
+});

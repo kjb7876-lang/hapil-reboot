@@ -140,16 +140,43 @@
   function buildOrb(radius,color){
     var reach=radius*(lite?1.2:1.9),c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale,r=radius*scale,grad;
     if(!lite){grad=g.createRadialGradient(m,m,r*.8,m,m,reach*scale);grad.addColorStop(0,color+'77');grad.addColorStop(1,color+'00');g.fillStyle=grad;g.fillRect(0,0,c.width,c.height);}
-    g.fillStyle=color;g.beginPath();g.arc(m,m,r,0,TAU);g.fill();
-    g.strokeStyle='#ffffff';g.lineWidth=Math.max(1,r*.26);g.beginPath();g.arc(m,m,r-g.lineWidth/2,0,TAU);g.stroke();
+    // 몸통: 가운데 흰 심 → 밝은 색 → 제 색 → 가장자리 짙은 색(보석처럼 깊이가 생긴다, 사용자 요청 11-14 동방식 탄 미감)
+    var body=g.createRadialGradient(m-r*.18,m-r*.18,0,m,m,r),light=mix(color,'#ffffff',.55),deep=mix(color,'#000000',.35);
+    body.addColorStop(0,'#ffffff');body.addColorStop(.28,light);body.addColorStop(.62,color);body.addColorStop(1,deep);
+    g.fillStyle=body;g.beginPath();g.arc(m,m,r,0,TAU);g.fill();
+    g.strokeStyle='#ffffff';g.lineWidth=Math.max(1,r*.2);g.beginPath();g.arc(m,m,r-g.lineWidth/2,0,TAU);g.stroke();
+    if(r>=4*scale){g.globalAlpha=.75;g.fillStyle='#ffffff';g.beginPath();g.ellipse(m-r*.34,m-r*.38,r*.24,r*.14,-.7,0,TAU);g.fill();g.globalAlpha=1;} // 작은 하이라이트
     return {image:c,half:reach};
   }
+  /* 두 색을 섞는다(#rrggbb). */
+  function mix(a,b,t){var pa=parseInt(a.slice(1,7),16),pb=parseInt(b.slice(1,7),16),out='#';for(var k=16;k>=0;k-=8){var x=Math.round(((pa>>k)&255)*(1-t)+((pb>>k)&255)*t);out+=('0'+x.toString(16)).slice(-2);}return out;}
+  /* 스테이지마다 중간 구슬탄(크기 1)에 입히는 겉모양. 판정 원은 그대로이고 그림만 바뀐다. 동방식 탄막처럼 종류마다 실루엣이 달라 패턴이 서로 다르게 읽힌다. */
+  var SKINS=['','star','scale','dagger','talisman'],skinSprites={};
+  function skinVariant(s){var i=s.stageIndex|0;return SKINS[(i+Math.floor(i/5))%SKINS.length];} // 이웃 스테이지끼리 겹치지 않게 돌린다
+  function buildSkin(kind,radius,color){
+    var u=radius*1.9,reach=u*1.5,c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale;
+    g.translate(m,m);g.scale(scale,scale);
+    var glow=g.createRadialGradient(0,0,radius*.6,0,0,reach);glow.addColorStop(0,color+'66');glow.addColorStop(1,color+'00');if(!lite){g.fillStyle=glow;g.fillRect(-reach,-reach,reach*2,reach*2);}
+    var body=g.createLinearGradient(-u,-u,u,u);body.addColorStop(0,mix(color,'#ffffff',.6));body.addColorStop(.5,color);body.addColorStop(1,mix(color,'#000000',.35));
+    g.fillStyle=body;g.strokeStyle='#ffffff';g.lineWidth=1.4;g.lineJoin='round';g.beginPath();
+    if(kind==='star'){for(var i=0;i<10;i++){var a=-Math.PI/2+i*Math.PI/5,rr=i%2?u*.45:u;g[i?'lineTo':'moveTo'](Math.cos(a)*rr,Math.sin(a)*rr);}g.closePath();}
+    else if(kind==='scale'){g.moveTo(u,0);g.quadraticCurveTo(0,-u*.85,-u*.8,-u*.35);g.lineTo(-u*.55,0);g.lineTo(-u*.8,u*.35);g.quadraticCurveTo(0,u*.85,u,0);g.closePath();} // 비늘(화살촉): +x가 진행 방향
+    else if(kind==='dagger'){g.moveTo(u*1.15,0);g.lineTo(-u*.2,-u*.32);g.lineTo(-u*.3,-u*.6);g.lineTo(-u*.45,-u*.6);g.lineTo(-u*.45,-u*.2);g.lineTo(-u*.95,-u*.16);g.lineTo(-u*.95,u*.16);g.lineTo(-u*.45,u*.2);g.lineTo(-u*.45,u*.6);g.lineTo(-u*.3,u*.6);g.lineTo(-u*.2,u*.32);g.closePath();}
+    else{g.rect(-u*.95,-u*.55,u*1.9,u*1.1);} // 부적: 진행 방향으로 누운 종이
+    g.fill();g.stroke();
+    if(kind==='talisman'){g.strokeStyle=mix(color,'#000000',.55);g.lineWidth=1;g.beginPath();g.arc(0,0,u*.3,0,TAU);g.moveTo(-u*.7,0);g.lineTo(-u*.3,0);g.moveTo(u*.3,0);g.lineTo(u*.7,0);g.stroke();} // 붓으로 그은 문양
+    g.fillStyle='#ffffff';g.beginPath();g.arc(kind==='dagger'?u*.2:0,0,radius*.42,0,TAU);g.fill(); // 흰 심
+    return {image:c,half:reach};
+  }
+  function skinOfBullet(kind,color){var key=kind+color;if(!skinSprites[key])skinSprites[key]=buildSkin(kind,Arcade.SIZE_RADIUS[1]*(state?state.sizeScale:compact?1.25:1),COLORS[color]);return skinSprites[key];}
   // 쌀알탄: 오른쪽(진행 방향)으로 길쭉한 알. 그릴 때 탄의 각도로 돌린다.
   function buildRice(radius,color){
     var longHalf=radius*2.6,reach=longHalf+3,c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale;
     g.translate(m,m);g.scale(scale,scale);
     g.fillStyle='#ffffff';g.beginPath();g.ellipse(0,0,longHalf,radius,0,0,TAU);g.fill();
-    g.fillStyle=color;g.beginPath();g.ellipse(0,0,longHalf-1.3,radius-1.1,0,0,TAU);g.fill();
+    var body=g.createLinearGradient(0,-radius,0,radius);body.addColorStop(0,mix(color,'#000000',.3));body.addColorStop(.5,mix(color,'#ffffff',.35));body.addColorStop(1,mix(color,'#000000',.3));
+    g.fillStyle=body;g.beginPath();g.ellipse(0,0,longHalf-1.3,radius-1.1,0,0,TAU);g.fill(); // 가운데가 밝은 원통형 몸통
+    g.fillStyle='#ffffff';g.globalAlpha=.9;g.beginPath();g.ellipse(longHalf*.12,0,longHalf*.5,Math.max(.6,radius*.28),0,0,TAU);g.fill();g.globalAlpha=1; // 흰 심줄
     return {image:c,half:reach};
   }
   // 거품: 속이 비치는 큰 방울
@@ -179,7 +206,7 @@
     g.lineWidth=1;for(var i=0;i<36;i++){var a=TAU*i/36;g.beginPath();g.moveTo(Math.cos(a)*92,Math.sin(a)*92);g.lineTo(Math.cos(a)*(i%3?98:104),Math.sin(a)*(i%3?98:104));g.stroke();}
     for(var k=0;k<2;k++){g.beginPath();for(var j=0;j<3;j++){var b=TAU*j/3+k*Math.PI/3-Math.PI/2;g[j?'lineTo':'moveTo'](Math.cos(b)*92,Math.sin(b)*92);}g.closePath();g.stroke();}
     circleSprite=c;
-    fxSprite=null;
+    fxSprite=null;skinSprites={};
   }
 
   /* ── 배경: 탄보다 어둡고 흐리게. 원화가 있으면 줄여 흐리게 + 색조 + 어둡게, 없으면 색조로 만든 무늬 배경. 위아래로 이어지게 그린다. ── */
@@ -649,12 +676,13 @@
   /* 잡몹 몸 위(반지름 안)의 탄도 옅게: 몹이 줄지어 쏘는 탄이 나오는 자리에 겹쳐 몹을 막대처럼 덮지 않게 한다(심사 6차, 31스테이지 기사). 몹 자리라 플레이어가 닿을 일은 드물다. */
   function nearMob(s,x,y){for(var k=0;k<s.mobs.length;k++){var m=s.mobs[k],r=(m.r||14)*1.6,dx=x-m.x,dy=y-m.y;if(dx*dx+dy*dy<r*r)return true;}return false;}
   function drawBullets(s){
-    var bloom=Arcade.BLOOM_TICKS,i,o,half,size,x,y;
+    var bloom=Arcade.BLOOM_TICKS,i,o,half,size,x,y,variant=skinVariant(s);
     for(i=0;i<s.n;i++){
       x=s.bx[i];y=s.by[i];if(s.bage[i]<bloom||x!==x||y!==y)continue;
       size=s.bsize[i];if(size===SHAPE_PROP){drawProp(s,i,1,1);continue;}
       o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;half=o.half;var faint=nearBoss(s,x,y)||nearMob(s,x,y);if(faint)ctx.globalAlpha=.38;
-      if(size===SHAPE_RICE){var a=finite(s.ba[i],0),cos=Math.cos(a),sin=Math.sin(a);ctx.setTransform(scale*cos,scale*sin,-scale*sin,scale*cos,(x+offsetX)*scale,(y+offsetY)*scale);ctx.drawImage(o.image,-half,-half,half*2,half*2);ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);}
+      var skin=size===1&&variant;if(skin){var so=skinOfBullet(variant,s.bcolor[i]),sa=variant==='star'?s.bage[i]*.08:finite(s.ba[i],0),sc=Math.cos(sa),ss=Math.sin(sa);ctx.setTransform(scale*sc,scale*ss,-scale*ss,scale*sc,(x+offsetX)*scale,(y+offsetY)*scale);ctx.drawImage(so.image,-so.half,-so.half,so.half*2,so.half*2);ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);} // 별은 돌고, 나머지는 진행 방향을 본다
+      else if(size===SHAPE_RICE){var a=finite(s.ba[i],0),cos=Math.cos(a),sin=Math.sin(a);ctx.setTransform(scale*cos,scale*sin,-scale*sin,scale*cos,(x+offsetX)*scale,(y+offsetY)*scale);ctx.drawImage(o.image,-half,-half,half*2,half*2);ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);}
       else ctx.drawImage(o.image,x-half,y-half,half*2,half*2);
       if(faint)ctx.globalAlpha=1;
     }
