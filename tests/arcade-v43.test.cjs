@@ -121,7 +121,7 @@ test('v43 slow movement, the bomb, grazing, items and the named-pattern bonus st
 });
 
 test('v43 difficulties, the phone mode, six colours and shapes, upright crosses, and nothing hits before it has formed',()=>{
- const a=A(),d=a.DIFFICULTY;assert.deepEqual([d.gentle.hp,d.normal.hp,d.hell.hp],[7,3,1]);
+ const a=A(),d=a.DIFFICULTY;assert.deepEqual([d.gentle.hp,d.normal.hp,d.hell.hp],[9,5,3]);
  assert(d.gentle.speed<d.normal.speed&&d.normal.speed<d.hell.speed&&d.hell.speed<1);assert(d.gentle.density<d.normal.density&&d.normal.density<d.hell.density);
  assert.deepEqual([...a.PALETTE].sort(),[0,2,4,5,6,8]);assert.equal(a.SIZE_RADIUS.length,6);assert(a.COMPACT_CAP<a.CAP);
  const cross=a.PROPS.findIndex(p=>p.key==='cross');assert(cross>=0&&a.PROPS[cross].upright===true);

@@ -76,12 +76,13 @@
    * radius 영웅 피격점 반지름 · hitScale 탄의 보이는 반지름 중 실제로 닿는 비율 · warn 광선 예고 시간 배율 · beam 광선 굵기 배율 */
   var DIFFICULTY={
     // 11-14 사용자 기준: 이지(여유)는 탄 수가 노멀의 약 2/3인 쉬운 패턴(지시서의 44% 대 66%). 노멀·헬은 같은 밀도에 헬이 더 빠르고 피격점이 크고 목숨이 적다.
-    gentle:{density:1.65,speed:.56,hp:7,mapHeal:-1,bombs:3,radius:1,hitScale:.3,warn:1.6,beam:.72,label:'여유'},
-    normal:{density:2.45,speed:.64,hp:3,mapHeal:1,bombs:2,radius:1.4,hitScale:.38,warn:1.2,beam:.88,label:'기본'},
-    hell:{density:2.6,speed:.9,hp:1,mapHeal:0,bombs:1,radius:2.4,hitScale:.5,warn:1,beam:1,label:'지옥'}
+    gentle:{density:1.65,speed:.56,hp:9,mapHeal:-1,bombs:3,radius:1,hitScale:.3,warn:1.6,beam:.72,label:'여유'},
+    normal:{density:2.45,speed:.64,hp:5,mapHeal:1,bombs:2,radius:1.4,hitScale:.38,warn:1.2,beam:.88,label:'기본'},
+    hell:{density:2.6,speed:.9,hp:3,mapHeal:0,bombs:1,radius:2.4,hitScale:.5,warn:1,beam:1,label:'지옥'}
   };
   // 휴대폰 모드: 탄 수를 줄이고 그만큼 탄을 크게 그린다(판정도 같이 커진다).
   var COMPACT_DENSITY=.72,COMPACT_SIZE=1.25;
+  var DRIFT_CAP=600,MOB_DROP_EVERY=3,ELITE_DROPS=3,CARD_DROPS=4,PLAIN_DROPS=2; // 하트(점수 아이템)는 적게(사용자 11-14)
   var HAND_WARN=50,HAND_AWAY=64,EXPIRE_SPEED=60,GRAZE_MARGIN=13,BLOOM_TICKS=12,INVULN_TICKS=150,BOMB_TICKS=150,INTRO_TICKS=110,BREAK_TICKS=80,FIRE_DELAY=40,WAVE_GRACE=360;
   var SHOT_SPEED=15,SHOT_EVERY=5,HOMING_EVERY=8,HOMING_STEER=7,SHOT_CAP=96,MAX_MOVE=12,FOCUS_MOVE=2;
   var BEAM_HIT=.62,BEAM_FADE=14,BEAM_LENGTH=1000;
@@ -546,7 +547,7 @@
       player:{x:W/2,y:H-84,hp:rules.hp,maxHp:rules.hp,invulnerableUntil:0,r:rules.radius,focus:false},
       boss:{x:W/2,y:-60,targetX:W/2,targetY:132,hp:1,maxHp:1,actor:'',name:'',mid:false,hitTick:-99,leaving:false,present:false,down:null},
       bossOnly:!!options.bossOnly,rushStage:SEGMENTS[startSeg].stage,bombs:rules.bombs,gauge:0,spellClean:false,captures:0,itemsTaken:0,lane:undefined,
-      n:0,dropped:0,peak:0,score:0,graze:0,hits:0,kills:0,cleared:0,timeouts:0,events:[],cancelled:[],pops:[],lasers:[],mobs:[],warned:false,sn:0,itemCount:0,
+      n:0,drifted:[],mobDrops:0,hearts:0,dropped:0,peak:0,score:0,graze:0,hits:0,kills:0,cleared:0,timeouts:0,events:[],cancelled:[],pops:[],lasers:[],mobs:[],warned:false,sn:0,itemCount:0,
       lastStage:STAGES.length-1,started:false,results:[],bombsUsed:0,mark:{tick:0,score:0,hits:0,bombs:0,captures:0,spells:0}};
     if(Number.isInteger(options.stages)&&options.stages>0)s.lastStage=Math.min(STAGES.length-1,s.stageIndex+options.stages-1);
     ['bx','by','ba','bs','bturn','bacc','bmin','bmax','barg','bs2','bspin'].forEach(function(k){s[k]=new Float32Array(CAP);});
@@ -564,12 +565,15 @@
     s.bage[i]=s.bage[j];s.blife[i]=s.blife[j];s.bat[i]=s.bat[j];s.bsize[i]=s.bsize[j];s.bcolor[i]=s.bcolor[j];s.bgrazed[i]=s.bgrazed[j];s.bmode[i]=s.bmode[j];s.bgen[i]=s.bgen[j];s.bbounce[i]=s.bbounce[j];
   }
   // 화면의 탄과 광선을 모두 지우고, 지운 탄 자리를 연출용으로 남긴다(최대 320개). 지운 탄 수를 돌려준다.
-  function cancelAll(s){
-    var n=s.n;for(var i=0;i<n&&s.cancelled.length<320*3;i++)s.cancelled.push(s.bx[i],s.by[i],s.bsize[i]===SHAPE_PROP?WHITE:s.bcolor[i]);
+  function cancelAll(s,drift){
+    var n=s.n;
+    // drift: 패턴·구간이 끝나 지운 탄은 터지지 않고 제 길로 화면 아래까지 흘러가며 흐려진다(판정 없음, 화면 연출용). 사용자 11-14: 탄이 닿기 직전 끊기면 맥빠짐.
+    if(drift){for(var j=0;j<n&&s.drifted.length<DRIFT_CAP*5;j++)s.drifted.push(s.bx[j],s.by[j],s.bsize[j]===SHAPE_PROP?WHITE:s.bcolor[j],s.ba[j],s.bs[j]*TICK);}
+    else for(var i=0;i<n&&s.cancelled.length<320*3;i++)s.cancelled.push(s.bx[i],s.by[i],s.bsize[i]===SHAPE_PROP?WHITE:s.bcolor[i]);
     s.n=0;s.lasers.length=0;s.figures.length=0;s.ripples.length=0;return n;
   }
   /* 아이템 하나를 떨군다. kind 0 점수, 1 폭탄 조각. 위로 살짝 튀었다가 천천히 내려온다. */
-  function dropItem(s,x,y,kind){if(s.itemCount>=ITEM_CAP)return;var i=s.itemCount++;s.ix[i]=Math.max(10,Math.min(W-10,x));s.iy[i]=y;s.ivy[i]=-1.6;s.ikind[i]=kind||0;}
+  function dropItem(s,x,y,kind){if(!kind)s.hearts++;if(s.itemCount>=ITEM_CAP)return;var i=s.itemCount++;s.ix[i]=Math.max(10,Math.min(W-10,x));s.iy[i]=y;s.ivy[i]=-1.6;s.ikind[i]=kind||0;}
   function fillGauge(s){while(s.gauge>=GAUGE_FULL){s.gauge-=GAUGE_FULL;if(s.bombs<MAX_BOMBS){s.bombs++;note(s,'bombGain');}}}
   function updateItems(s){
     var p=s.player,pull=p.y<AUTO_COLLECT_Y,reach=p.focus?ITEM_REACH+10:ITEM_REACH;
@@ -588,7 +592,7 @@
     fillGauge(s);
   }
   function killMob(s,k){var m=s.mobs[k];s.score+=m.score;s.kills++;s.pops.push(m.x,m.y,m.elite?1:0);note(s,'kill');
-    for(var i=0;i<(m.elite?7:1);i++)dropItem(s,m.x+(m.elite?(i-3)*9:0),m.y,m.elite&&i===3?1:0);s.mobs.splice(k,1);}
+    if(m.elite)for(var i=0;i<ELITE_DROPS;i++)dropItem(s,m.x+(i-1)*12,m.y,i===1?1:0);else if(++s.mobDrops%MOB_DROP_EVERY===0)dropItem(s,m.x,m.y,0);s.mobs.splice(k,1);}
   function useBomb(s){
     if(s.bombs<=0||s.stage==='won'||s.stage==='lost')return;
     s.bombs--;s.bombsUsed++;s.spellClean=false;s.score+=cancelAll(s)*10;s.player.invulnerableUntil=Math.max(s.player.invulnerableUntil,s.tick+BOMB_TICKS);note(s,'bomb');
@@ -620,8 +624,8 @@
   function enter(s,actor){var b=s.boss;b.actor=actor;b.name=ACTORS[actor].name;b.mid=!!segment(s).mid;b.present=true;b.leaving=false;b.x=W/2;b.y=-60;b.targetX=W/2;b.targetY=132;s.stageTick=0;note(s,'entrance');}
   function beginCard(s){var card=segment(s),b=s.boss;b.maxHp=b.hp=card.hp;b.mid=!!card.mid;s.stage='card';s.stageTick=0;s.segTick=0;s.spellClean=!!card.spell;if(card.spell){s.spellNumber++;note(s,'card');}else note(s,'plain');}
   function endCard(s,defeated){
-    var card=segment(s),left=Math.max(0,card.time-s.segTick*TICK),wiped=cancelAll(s),b=s.boss;
-    if(defeated){s.cleared++;s.score+=Math.round(left)*300+wiped*30;for(var i=0;i<(card.spell?10:5);i++)dropItem(s,b.x+(i-4.5)*12,b.y+((i*37)%30)-15,card.spell&&i===5?1:0);}else s.timeouts++;
+    var card=segment(s),left=Math.max(0,card.time-s.segTick*TICK),wiped=cancelAll(s,true),b=s.boss;
+    if(defeated){s.cleared++;s.score+=Math.round(left)*300+wiped*30;var nd=card.spell?CARD_DROPS:PLAIN_DROPS;for(var i=0;i<nd;i++)dropItem(s,b.x+(i-(nd-1)/2)*14,b.y+((i*37)%30)-15,card.spell&&i===1?1:0);}else s.timeouts++;
     // 이름 붙은 패턴을 폭탄 없이, 맞지 않고 넘기면 보너스
     if(card.spell&&defeated&&s.spellClean){s.captures++;s.score+=20000+card.stage*5000;note(s,'capture');}
     s.score+=wiped*10;note(s,'break');var who=b.actor,dx=b.x,dy=b.y;advance(s);
@@ -882,7 +886,7 @@
     else if(s.stage==='wave'){
       var w=s.segTick++;if(w<seg.duration)seg.script(s,w);
       // 대본이 끝나고 몹이 다 사라지면 다음으로. 너무 오래 남은 몹은 물러난다.
-      if(w>=seg.duration&&(!s.mobs.length||w>=seg.duration+WAVE_GRACE)){s.mobs.length=0;s.score+=cancelAll(s)*10;note(s,'waveClear');advance(s);}
+      if(w>=seg.duration&&(!s.mobs.length||w>=seg.duration+WAVE_GRACE)){s.mobs.length=0;s.score+=cancelAll(s,true)*10;note(s,'waveClear');advance(s);}
     }
     else if(s.stage==='card'){
       var t=s.segTick++;
@@ -937,7 +941,7 @@
     return {fresh:fresh,sanitize:sanitize,record:record,unlocked:unlocked,canPlay:canPlay,resume:resume,totalStars:totalStars};
   })();
   var api={revision:43,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
-    SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
+    SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
     BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem};
   if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcade=api;
