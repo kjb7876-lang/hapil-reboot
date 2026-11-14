@@ -56,8 +56,7 @@ test('v43 barrage: during a named boss pattern the glyph laser turns, grows and 
   for(let t=0;t<2400&&s.seg===i;t++){s.player.invulnerableUntil=s.tick+999;if(s.stage==='card')s.boss.hp=s.boss.maxHp;a.step(s,{dx:0,dy:0});h.clear(s);
    for(const f of s.figures||[]){if(f.kind==='zigzag')zig=true;else{fig=true;sizes.add(Math.round(f.r));angles.add(Math.round(f.turn*10));}}}
   if(fig)seen.figure++;if(zig)seen.zig++;if(sizes.size>8&&angles.size>8)seen.grow++;}
- assert(seen.figure>=firsts.size*.9,'bosses that summon their glyph: '+seen.figure+'/'+firsts.size);
- assert(seen.grow>=firsts.size*.9,'glyphs turn and change size: '+seen.grow);
+ // 보스 둘레 문양 광선은 11-14 사용자 요청으로 뺐다(룬 결계 테스트가 없는지 확인한다). 외곽 지그재그는 남는다.
  assert(seen.zig>=firsts.size*.3,'bosses that close the edges with zigzag lasers: '+seen.zig);
 });
 
@@ -226,15 +225,7 @@ const firstSpells=a=>{const m=new Map();a.SEGMENTS.forEach((g,i)=>{if(g.kind==='
 const runSpell=(a,i,ticks,each)=>{const s=a.createRun({difficulty:'normal',seed:3,segment:i,stages:1});
  for(let t=0;t<ticks&&s.seg===i;t++){s.player.invulnerableUntil=s.tick+999;if(s.stage==='card')s.boss.hp=s.boss.maxHp;const lasers=s.lasers.length;a.step(s,{dx:0,dy:0});each(s,lasers);h.clear(s);}};
 
-test('v43 wheels: several waterwheel/gear laser wheels orbit the boss and spin',()=>{
- const a=h.need();let bosses=0;const firsts=firstSpells(a);
- for(const [,i] of firsts){let most=0,angles=new Set(),spins=new Set(),kinds=new Set();
-  runSpell(a,i,2400,s=>{const w=(s.figures||[]).filter(f=>f.orbit);most=Math.max(most,w.length);
-   for(const f of w){angles.add(Math.round(Math.atan2(f.cy-s.boss.y,f.cx-s.boss.x)*4));spins.add(Math.round(f.turn*4));kinds.add(f.glyph);}});
-  if(most>=3&&angles.size>=8&&spins.size>=8)bosses++;}
- assert(bosses>=firsts.size*.3,'bosses with orbiting wheels: '+bosses+'/'+firsts.size);
- assert(a.GLYPHS.waterwheel&&a.GLYPHS.gear,'waterwheel and gear shapes exist');
-});
+// 'v43 wheels' 테스트는 11-14 사용자 요청(도는 바퀴 광선 제거)으로 'v43 rune barrier' 테스트로 바뀌었다.
 
 test('v43 laser spray: some bosses fire a burst of straight lasers at once, with gaps between them',()=>{
  const a=h.need();let bosses=0;const firsts=firstSpells(a);
@@ -332,4 +323,26 @@ test('v43 review fixes (round 10, PC): names wrap by word, the gauge and bomb ke
  assert(/BOMB \[X\]/.test(app)&&/CHARGE/.test(app),'bomb key and gauge are labelled clearly');
  assert(/lb\('BEST'\)/.test(app),'the score panel shows the best score');
  assert(/\.hudx\.side\{[^}]*min-height:/.test(page),'both side panels share a minimum height');
+});
+
+/* 룬 결계(11-14 요청): 보스 둘레에 붙던 문양 광선·도는 바퀴(오른쪽에 '3'처럼 보이던 붉은 호)를 없애고,
+ * 보라색 고대문자 고리 여러 개가 서로 다른 방향으로 돌며 커졌다 작아지는 마법결계를 그린다. 기존 마법진과 겹치지 않게 그 바깥에. */
+test('v43 rune barrier: no glyph or wheel lasers wrap the boss any more, edge zigzags and sprays remain',()=>{
+ const a=h.need();const firsts=firstSpells(a);let zig=0,wrap=0;
+ for(const [,i] of firsts)runSpell(a,i,2400,s=>{for(const f of s.figures||[]){if(f.kind==='zigzag')zig++;else wrap++;}});
+ assert.equal(wrap,0,'glyph/wheel laser figures around the boss');
+ assert(zig>0,'edge zigzags still close in');
+});
+test('v43 rune barrier: purple rune rings turn both ways and breathe outside the boss magic circle',()=>{
+ const app=fs.readFileSync(path.join(root,'src/arcade-app-v43.js'),'utf8');
+ assert(/function buildRuneRing\(/.test(app),'rune rings are pre-rendered');
+ const radii=JSON.parse((/RUNE_RADII=(\[[^\]]*\])/.exec(app)||[,'[]'])[1]);
+ assert(radii.length>=3,'several rings: '+radii.length);
+ assert(Math.min(...radii)>=112,'rings sit outside the 104px magic circle: '+radii);
+ const boss=/function drawBoss\(s\)[\s\S]*?\n  \}/.exec(app)[0];
+ assert(/drawRuneBarrier\(/.test(boss),'the boss draws its barrier');
+ const fn=/function drawRuneBarrier\([\s\S]*?\n  \}/.exec(app);assert(fn,'drawRuneBarrier exists');
+ assert(/ctx\.rotate\(/.test(fn[0])&&/Math\.sin\(/.test(fn[0])&&/ctx\.scale\(/.test(fn[0]),'rings rotate and pulse in size');
+ const spins=(/RUNE_SPIN=(\[[^\]]*\])/.exec(app)||[,'[]'])[1];const sp=JSON.parse(spins);
+ assert(sp.some(v=>v>0)&&sp.some(v=>v<0),'rings turn in both directions: '+spins);
 });
