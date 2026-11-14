@@ -107,7 +107,10 @@
   /* 탄 하나. o: {size,color,turn(초당 회전),accel,min,max,at(변화 틱),mode,arg,speed2,life,gen(가지치기 남은 횟수),spin(기물이 도는 속도, 틱당 라디안)} */
   function spawn(s,x,y,angle,speed,o){
     if(s.n>=s.cap){s.dropped++;return;}
-    o=o||{};var i=s.n++,size=o.size||0;
+    o=o||{};var size=o.size||0;
+    // 화면이 붐비면(상한의 72% 이상) 새 탄을 하나 걸러 하나만, 82% 이상이면 쉬게 한다(조형물은 예외). 느린 탄이 쌓여도 상한에 닿지 않는다.
+    if(s.n>=s.cap*.72&&size!==SHAPE_PROP){s.thin=(s.thin+1)|0;if(s.n>=s.cap*.82||s.thin%2)return;}
+    var i=s.n++;
     s.bx[i]=x;s.by[i]=y;s.ba[i]=angle;s.bs[i]=speed*s.rules.speed;
     s.bturn[i]=o.turn||0;s.bacc[i]=o.accel||0;s.bmin[i]=o.min===undefined?0:o.min;s.bmax[i]=o.max===undefined?400:o.max;
     s.bat[i]=o.at||0;s.bmode[i]=o.mode||0;s.barg[i]=o.arg||0;s.bs2[i]=(o.speed2||0)*s.rules.speed;s.bgen[i]=o.gen||0;
@@ -721,7 +724,7 @@
   }
   // 이어진 탄 줄기: 보스 둘레의 줄기 끝에서 쌀알탄을 촘촘히 뿜는다. 줄기 방향이 사인파로 흔들려 탄 줄이 생물처럼 휜다.
   function strands(s,sig,t){
-    var b=s.boss,arms=sig.arms,gap=Math.max(5,Math.round(9/s.density*1.6));if(t%gap)return;
+    var b=s.boss,arms=sig.arms,gap=Math.max(5,Math.round(9/s.density*1.6));if(t%gap||s.n>CAP*.55)return; // 이미 탄이 많은 패턴에서는 탄줄을 쉬어 상한 여유를 지킨다
     for(var k=0;k<arms;k++){var base=Math.PI/2+(k-(arms-1)/2)*(1.9/arms),sway=Math.sin(t*.021+k*1.7)*.62*(k%2?1:-1);
       spawn(s,b.x+Math.cos(base)*24,b.y+Math.sin(base)*24,base+sway,52,{color:sig.color,size:RICE,life:1400});}
   }
