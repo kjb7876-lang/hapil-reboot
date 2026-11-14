@@ -1,0 +1,621 @@
+{
+ "note": "보스 레이저 질감·스펠 시작 문양·섬광. tools/build-laser-sheets-v43.py가 만든다.",
+ "sheets": {
+  "p1_tree": {
+   "file": "p1_tree.webp",
+   "sheet": "B01",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "violet": {
+   "file": "violet.webp",
+   "sheet": "B02",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p1_horn": {
+   "file": "p1_horn.webp",
+   "sheet": "B03",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p1_chaser": {
+   "file": "p1_chaser.webp",
+   "sheet": "B04",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p1_comrade": {
+   "file": "p1_comrade.webp",
+   "sheet": "B05",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p1_gate": {
+   "file": "p1_gate.webp",
+   "sheet": "B06",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "balrog": {
+   "file": "balrog.webp",
+   "sheet": "B07",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "mask": {
+   "file": "mask.webp",
+   "sheet": "B08",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p1_staff": {
+   "file": "p1_staff.webp",
+   "sheet": "B09",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p1_seraph": {
+   "file": "p1_seraph.webp",
+   "sheet": "B10",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "lucifer": {
+   "file": "lucifer.webp",
+   "sheet": "B11",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p2_demons": {
+   "file": "p2_demons.webp",
+   "sheet": "B12",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p2_belphegor": {
+   "file": "p2_belphegor.webp",
+   "sheet": "B13",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p2_leviathan": {
+   "file": "p2_leviathan.webp",
+   "sheet": "B14",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p2_beelzebub": {
+   "file": "p2_beelzebub.webp",
+   "sheet": "B15",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "asmodeus": {
+   "file": "asmodeus.webp",
+   "sheet": "B16",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p2_greed": {
+   "file": "p2_greed.webp",
+   "sheet": "B17",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p2_mammon": {
+   "file": "p2_mammon.webp",
+   "sheet": "B18",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p2_wrath": {
+   "file": "p2_wrath.webp",
+   "sheet": "B19",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "pride": {
+   "file": "pride.webp",
+   "sheet": "B20",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p2_chairman": {
+   "file": "p2_chairman.webp",
+   "sheet": "B21",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p2_core": {
+   "file": "p2_core.webp",
+   "sheet": "B22",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p3_legion": {
+   "file": "p3_legion.webp",
+   "sheet": "B23",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p3_rampart": {
+   "file": "p3_rampart.webp",
+   "sheet": "B24",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p3_defense": {
+   "file": "p3_defense.webp",
+   "sheet": "B25",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "controller": {
+   "file": "controller.webp",
+   "sheet": "B26",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p3_body": {
+   "file": "p3_body.webp",
+   "sheet": "B27",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  },
+  "p5_archon": {
+   "file": "p5_archon.webp",
+   "sheet": "B33",
+   "beam": [
+    0,
+    0,
+    384,
+    96
+   ],
+   "emblem": [
+    0,
+    96,
+    224,
+    224
+   ],
+   "burst": [
+    224,
+    96,
+    224,
+    224
+   ]
+  }
+ }
+}
