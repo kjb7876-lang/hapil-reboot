@@ -330,8 +330,11 @@ test('v43 review fixes (round 10, PC): names wrap by word, the gauge and bomb ke
  * 보라색 고대문자 고리 여러 개가 서로 다른 방향으로 돌며 커졌다 작아지는 마법결계를 그린다. 기존 마법진과 겹치지 않게 그 바깥에. */
 test('v43 rune barrier: no glyph or wheel lasers wrap the boss any more, edge zigzags and sprays remain',()=>{
  const a=h.need();const firsts=firstSpells(a);let zig=0,wrap=0;
- for(const [,i] of firsts)runSpell(a,i,2400,s=>{for(const f of s.figures||[]){if(f.kind==='zigzag')zig++;else wrap++;}});
- assert.equal(wrap,0,'glyph/wheel laser figures around the boss');
+ // 11-14 23:33 사용자 새 요청("육망성 문양 키워서 레이저 패턴화", "원들이 돌아가는 것")으로 큰 문양 레이저(sigil)가 돌아왔다.
+ // 지적받았던 작은 문양·바퀴(보스 옆 '3' 모양)는 여전히 없어야 하고, 문양은 크게(반지름 100px 이상) 그린다.
+ let small=0;
+ for(const [,i] of firsts)runSpell(a,i,2400,s=>{for(const f of s.figures||[]){if(f.kind==='zigzag')zig++;else if(!f.sigil)wrap++;else{const segs=a.figureSegments(f);const r=Math.max(...segs.flatMap(g=>[Math.hypot(g[0]-f.cx,g[1]-f.cy),Math.hypot(g[2]-f.cx,g[3]-f.cy)]));if(r<100)small++;}}});
+ assert.equal(wrap,0,'small glyph/wheel laser figures around the boss');assert.equal(small,0,'sigils are drawn large');
  assert(zig>0,'edge zigzags still close in');
 });
 test('v43 rune barrier: purple rune rings turn both ways and breathe outside the boss magic circle',()=>{
