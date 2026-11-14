@@ -348,13 +348,16 @@
       lo.style.cssText='left:'+px(r.left)+';width:'+px(r.width)+';top:'+px(r.bottom)+';height:'+px(bottom)+';padding:0 86px';
       for(i=0;i<2;i++)if(pads[i]){pads[i].style.position='fixed';pads[i].style.top=px(r.bottom+(bottom-56)/2);pads[i].style.bottom='auto';pads[i].style.left=i?'auto':px(r.left+10);pads[i].style.right=i?px(vw-r.right+10):'auto';}
       if(pause){pause.style.position='fixed';pause.style.top=px(Math.max(4,(top-36)/2));pause.style.left=px(r.left+10);}
+      canvas.style.boxShadow='';
     }else if(hudOut==='side'){
       hi.style.cssText='left:'+px(r.left-180)+';width:160px;top:'+px(r.top+64)+';align-items:flex-end;text-align:right';
-      lo.style.cssText='left:'+px(r.right+20)+';width:160px;top:'+px(r.bottom-150)+';align-items:flex-start';
+      lo.style.cssText='left:'+px(r.right+20)+';width:160px;top:'+px(r.top+64)+';align-items:flex-start'; // 왼쪽 패널과 같은 줄에서 시작(심사 7차: 점수가 오른쪽 아래에 홀로 떠 있었다)
+      canvas.style.boxShadow='0 0 0 1px rgba(214,180,120,.55),0 0 0 5px rgba(10,8,16,.92),0 0 0 6px rgba(214,180,120,.3),0 0 60px 20px rgba(0,0,0,.8)'; // 플레이 칸 테두리와 둘레 어둠
       var coarse=global.matchMedia&&global.matchMedia('(pointer:coarse)').matches;
       for(i=0;i<2;i++)if(pads[i]){pads[i].style.position='';pads[i].style.top='';pads[i].style.bottom='';pads[i].style.left='';pads[i].style.right='';pads[i].style.visibility=coarse?'':'hidden';} // PC는 키로 조작하니 터치 버튼을 숨긴다
       if(pause){pause.style.position='fixed';pause.style.top=px(r.top+12);pause.style.left=px(r.left-56);} // PC: 일시정지도 칸 밖 왼쪽 위로(심사 3차)
     }else{
+      canvas.style.boxShadow='';
       for(i=0;i<2;i++)if(pads[i]){pads[i].style.position='';pads[i].style.top='';pads[i].style.bottom='';pads[i].style.left='';pads[i].style.right='';pads[i].style.visibility='';}
       if(pause){pause.style.position='';pause.style.top='';pause.style.left='';}
     }
@@ -367,8 +370,9 @@
     for(i=0;i<s.player.maxHp;i++)hearts+=i<s.player.hp?'◆':'◇';for(i=0;i<s.bombs;i++)bombs+='✦';
     var g=Math.round(100*Math.max(0,Math.min(1,s.gauge/Arcade.GAUGE_FULL)));
     var name='<div><div class="name" style="color:'+color+'">'+esc(b.present?b.name:stage.name)+'</div><div>'+(s.bossOnly?'보스 체험 · 제'+stage.part+'부':'STAGE '+(s.stageIndex+1)+' / '+Arcade.STAGES.length)+'</div></div>';
-    var life='<div><div class="lives">'+hearts+'</div><div class="bombs">'+(bombs||'&nbsp;')+'</div><div class="gauge"><i style="width:'+g+'%"></i></div></div>';
-    var score='<div style="text-align:'+(hudOut==='side'?'left':'right')+'"><div class="graze">GRAZE '+s.graze+'</div><div class="score">'+pad(s.score)+'</div></div>';
+    var lb=function(t){return hudOut==='side'?'<div class="lbl">'+t+'</div>':'';}; // PC 패널에는 이름표를 붙인다(심사 7차)
+    var life='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB · X')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div><div class="gauge"><i style="width:'+g+'%"></i></div></div>';
+    var score='<div style="text-align:'+(hudOut==='side'?'left':'right')+'">'+lb('SCORE')+'<div class="score">'+pad(s.score)+'</div><div class="graze">GRAZE '+s.graze+'</div></div>';
     if(hudOut==='side'){setHud(hi,'hi',name+life);setHud(lo,'lo',score);}
     else{setHud(hi,'hi',name);setHud(lo,'lo',life+score);}
   }

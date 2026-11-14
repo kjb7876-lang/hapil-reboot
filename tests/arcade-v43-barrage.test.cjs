@@ -290,3 +290,13 @@ test('v43 review fixes (round 7): homing shots are streaks, debris are sparks no
  const parts=/function drawParticles[\s\S]*?\n  \}/.exec(app)[0];assert(!/\.stroke\(\);\n    \}/.test(parts)&&/\.fill\(\)/.test(parts),'debris particles are filled sparks, not hollow rings');
  const hb=/function drawHitbox[\s\S]*?\n  \}/.exec(app)[0];assert(!/if\(!p\.focus\)return;/.test(hb),'the hit dot shows even without focus');
 });
+
+/* 7차 심사(11-14) PC: 좌우 HUD가 위·아래로 흩어지고 글씨가 작으며 플레이 칸에 테두리가 없다 */
+test('v43 review fixes (round 7, PC): side panels share one top line, are framed and labelled, and the playfield has a frame',()=>{
+ const app=h.read('src/arcade-app-v43.js'),page=h.read('arcade.html');
+ const side=/hudOut==='side'\)\{[\s\S]*?\}else\{/.exec(app)[0];
+ assert(!/r\.bottom-150/.test(side)&&(side.match(/top:'\+px\(r\.top\+64\)/g)||[]).length===2,'both side panels start on the same line');
+ assert(/canvas\.style\.boxShadow=/.test(side),'the playfield gets a frame on PC');
+ assert(/\.hudx\.side\{[^}]*border:/.test(page)&&/\.hudx\.side \.score\{[^}]*font-size:2\d px/.test(page.replace(/px/g,' px')),'side panels are framed and the score is large');
+ assert(/class="lbl"/.test(app),'side panels label life, bomb and score');
+});
