@@ -270,3 +270,47 @@ test('v43 vertical maps: all 56 stages have a seamless loop map from the Drive s
  const missing=a.STAGES.filter(g=>!(m['bg-loop-'+g.scene+'.jpg']&&m['bg-loop-'+g.scene+'.jpg'].loop)).map(g=>g.scene);
  assert.deepEqual(missing,[],'stages without a loop map');
 });
+
+/* 6차 심사(11-14): 하트 아이템이 탄처럼 보임, 잡몹이 어두운 새 맵에 묻힘, 몹 자리에서 막 나온 탄 덩어리가 몹을 덮음(31스테이지 기사), 주인공 탄 타격감 */
+test('v43 review fixes (round 6): hearts read as pickups, mobs get a rim, fresh bullets do not cover a mob, shots hit with a flash',()=>{
+ const app=h.read('src/arcade-app-v43.js');
+ const size=+(/ITEM_DRAW=(\d+)/.exec(app)||[])[1];assert(size>0&&size<=18,'heart pickups are smaller than before (22px): '+size);
+ const items=/function drawItems[\s\S]*?\n  \}/.exec(app)[0];assert(/Math\.sin\([^)]*\)\*\d/.test(items)&&/s\.ix\[i\]\+/.test(items),'hearts sway sideways as they fall, unlike bullets');
+ assert(!/strokeStyle='#ffffff';q\.lineJoin/.test(app),'hearts have no white rim (white rims are the bullet language)');
+ assert(/function rimOf\(/.test(app)&&/source-in/.test(app),'mobs have a cached silhouette for a rim light');
+ const art=/function drawArt[\s\S]*?\n  \}/.exec(app)[0];assert(/rimOf\(/.test(art),'drawArt draws the rim behind mobs');
+ const bul=/function drawBullets[\s\S]*?\n  \}/.exec(app)[0];assert(/nearMob\(/.test(bul),'bullets on top of a mob are drawn faint');
+ assert(/function impactFlash\(/.test(app)&&/impactFlash\(/.test(/function drawMobs[\s\S]*?\n  \}/.exec(app)[0]),'a hit on a mob flashes');
+});
+
+/* 7차 심사(11-14): 아군 유도탄 주황 점이 적 탄처럼 보임, 파편이 속 빈 고리라 탄처럼 보임, 판정점이 저속일 때만 보임 */
+test('v43 review fixes (round 7): homing shots are streaks, debris are sparks not hollow rings, the hit dot always shows',()=>{
+ const app=h.read('src/arcade-app-v43.js');
+ const shots=/function drawShots[\s\S]*?\n  \}/.exec(app)[0];assert(!/homingSprite/.test(shots),'homing shots are drawn as streaks like the main shot, not round orbs');
+ const parts=/function drawParticles[\s\S]*?\n  \}/.exec(app)[0];assert(!/\.stroke\(\);\n    \}/.test(parts)&&/\.fill\(\)/.test(parts),'debris particles are filled sparks, not hollow rings');
+ const hb=/function drawHitbox[\s\S]*?\n  \}/.exec(app)[0];assert(!/if\(!p\.focus\)return;/.test(hb),'the hit dot shows even without focus');
+});
+
+/* 7차 심사(11-14) PC: 좌우 HUD가 위·아래로 흩어지고 글씨가 작으며 플레이 칸에 테두리가 없다 */
+test('v43 review fixes (round 7, PC): side panels share one top line, are framed and labelled, and the playfield has a frame',()=>{
+ const app=h.read('src/arcade-app-v43.js'),page=h.read('arcade.html');
+ const side=/hudOut==='side'\)\{[\s\S]*?\}else\{/.exec(app)[0];
+ assert(!/r\.bottom-150/.test(side)&&(side.match(/top:'\+px\(r\.top\+64\)/g)||[]).length===2,'both side panels start on the same line');
+ assert(/canvas\.style\.boxShadow=/.test(side),'the playfield gets a frame on PC');
+ assert(/\.hudx\.side\{[^}]*border:/.test(page)&&/\.hudx\.side \.score\{[^}]*font-size:2\d px/.test(page.replace(/px/g,' px')),'side panels are framed and the score is large');
+ assert(/class="lbl"/.test(app),'side panels label life, bomb and score');
+});
+
+/* 사용자 요청(11-14 17:42 KST): 탄환이 단순 도형이라 심미성이 약하다, 동방식 탄막 미감을 참고(그림이 아니라 방식만):
+ * 한 알을 여러 겹(빛무리·색 그라데이션 몸통·흰 심·하이라이트)으로 그리고, 스테이지마다 다른 실루엣(별·비늘·단검·부적)을 입힌다. 판정은 그대로. */
+test('v43 bullet art: layered jewel bullets and themed silhouettes, hitboxes unchanged',()=>{
+ const app=h.read('src/arcade-app-v43.js');
+ const orb=/function buildOrb[\s\S]*?\n  \}/.exec(app)[0];
+ assert(/createRadialGradient/.test(orb.replace(/grad=g\.createRadialGradient\(m,m,r\*\.8/,''))&&/addColorStop\(0,'#ffffff'\)/.test(orb),'orb body is a gradient from a white-hot core');
+ assert(/strokeStyle='#ffffff'/.test(orb),'orbs keep a bright rim');
+ assert(/ellipse\(/.test(orb),'orbs have a small highlight');
+ for(const k of ['star','scale','dagger','talisman'])assert(new RegExp("'"+k+"'").test(app),'silhouette '+k);
+ assert(/function buildSkin\(/.test(app)&&/function skinVariant\(/.test(app),'themed silhouette sprites and a per-stage choice');
+ const bul=/function drawBullets[\s\S]*?\n  \}/.exec(app)[0];assert(/skinVariant\(/.test(bul),'drawBullets uses the stage silhouette');
+ const a=h.need();assert.deepEqual(a.SIZE_RADIUS,[4,6,10,3.2,15,14],'hit radii are unchanged');
+});
