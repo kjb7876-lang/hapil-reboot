@@ -544,14 +544,14 @@
     var ls=big&&laserSheet(s);if(ls){emblems.length=0;emblems.push({t:visual,img:ls.img,e:ls.e});}
   }
   // 스펠 시작: 보스 뒤에 그 보스의 문양이 1초 떠올랐다 걷히고, 섬광이 한 번 터진다.
-  var EMBLEM_TIME=1,EMBLEM_SIZE=196,BURST_TIME=.42;
+  var EMBLEM_TIME=1,EMBLEM_SIZE=250,BURST_TIME=.42;
   function drawEmblems(s){
     var b=s.boss;if(!emblems.length)return;
     var m=emblems[0],age=visual-m.t;if(age>=EMBLEM_TIME||!b.present){emblems.length=0;return;}
-    var k=age/EMBLEM_TIME,a=k<.2?k/.2:k>.6?(1-k)/.4:1,size=EMBLEM_SIZE*(.9+.2*k),r=m.e.emblem,q=m.e.burst;
+    var k=age/EMBLEM_TIME,a=k<.12?k/.12:k>.6?(1-k)/.4:1,size=EMBLEM_SIZE*(k<.15?1.25-k/.15*.25:1+.08*(k-.15)),r=m.e.emblem,q=m.e.burst;
     ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=.85*a;
     ctx.drawImage(m.img,r[0],r[1],r[2],r[3],b.x-size/2,b.y-size/2,size,size);
-    if(age<BURST_TIME){var kb=age/BURST_TIME,bs=90+150*kb;ctx.globalAlpha=1-kb;ctx.drawImage(m.img,q[0],q[1],q[2],q[3],b.x-bs/2,b.y-bs/2,bs,bs);}
+    if(age<BURST_TIME){var kb=age/BURST_TIME,bs=90+150*kb;ctx.globalAlpha=.6*(1-kb);ctx.drawImage(m.img,q[0],q[1],q[2],q[3],b.x-bs/2,b.y-bs/2,bs,bs);}
     ctx.restore();
   }
   function drawSkillFx(s){

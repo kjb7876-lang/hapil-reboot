@@ -6,13 +6,31 @@
 사용: python3 tools/build-laser-sheets-v43.py <시트 폴더(Bnn.png)>
 배정: B번호 = 엔진 보스 등장 순서(B01 악마화 나무 … B33 아르콘 수문장), 표는 docs/v43/laser-sheets.json."""
 import json, sys, os
-from PIL import Image
+from PIL import Image, ImageChops
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'media', 'arcade-v43-laser')
 table = json.load(open(os.path.join(ROOT, 'docs', 'v43', 'laser-sheets.json'), encoding='utf-8'))
 src = sys.argv[1]
 os.makedirs(OUT, exist_ok=True)
 index = {}
+def radial(size):
+    # 가운데 1, 가장자리 0으로 떨어지는 둥근 가림막: 'lighter'로 더할 때 칸 가장자리의 네모 경계가 보이지 않게
+    m = Image.new('L', (size, size)); px = m.load(); c = (size - 1) / 2
+    for y in range(size):
+        for x in range(size):
+            d = ((x - c) ** 2 + (y - c) ** 2) ** .5 / c
+            px[x, y] = int(255 * max(0, min(1, (1 - d) / .28)))
+    return m
+def band(w, h):
+    # 띠는 위아래 가장자리를 어둡게(광선 옆 네모 경계 방지)
+    m = Image.new('L', (w, h)); px = m.load()
+    for y in range(h):
+        v = int(255 * max(0, min(1, (1 - abs(y - (h - 1) / 2) / ((h - 1) / 2)) / .3)))
+        for x in range(w): px[x, y] = v
+    return m
+def fade(img, mask):
+    return ImageChops.multiply(img, Image.merge('RGB', (mask, mask, mask)))
+RAD = radial(224); BAND = band(384, 96)
 for b, actor in table['assign'].items():
     path = os.path.join(src, b + '.png')
     if not os.path.exists(path):
@@ -28,6 +46,7 @@ for b, actor in table['assign'].items():
     beam = im.crop((8, top, cw - 8, top + band)).resize((384, 96), Image.LANCZOS)
     emblem = im.crop((20, ch + 20, cw - 20, H - 20)).resize((224, 224), Image.LANCZOS)
     burst = im.crop((2 * cw + 60, ch + 50, W - 110, H - 100)).resize((224, 224), Image.LANCZOS)
+    beam = fade(beam, BAND); emblem = fade(emblem, RAD); burst = fade(burst, RAD)
     atlas = Image.new('RGB', (448, 320))
     atlas.paste(beam.crop((0, 0, 384, 96)), (0, 0))
     atlas.paste(emblem, (0, 96)); atlas.paste(burst, (224, 96))
