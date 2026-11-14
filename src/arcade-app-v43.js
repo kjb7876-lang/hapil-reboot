@@ -164,8 +164,8 @@
     var grow=state?state.sizeScale:compact?1.25:1;
     orbs=[];Arcade.SIZE_RADIUS.forEach(function(radius,size){if(size===SHAPE_PROP)return;orbs[size]={};Arcade.PALETTE.forEach(function(index){var color=COLORS[index],r=radius*grow;orbs[size][index]=size===SHAPE_RICE?buildRice(r,color):size===SHAPE_BUBBLE?buildBubble(r,color):buildOrb(r,color);});});
     var c=offscreen(8*scale,26*scale),g=c.getContext('2d'),grad=g.createLinearGradient(0,0,0,c.height);
-    grad.addColorStop(0,'#ffffff');grad.addColorStop(.35,'#9fefff');grad.addColorStop(1,'#35d6ff00');g.fillStyle=grad;g.beginPath();g.ellipse(c.width/2,c.height/2,c.width*.32,c.height/2,0,0,TAU);g.fill();shotSprite=c;
-    homingSprite=buildOrb(3,'#7df3ff');
+    grad.addColorStop(0,'#ffffff');grad.addColorStop(.35,'#fa800a');grad.addColorStop(1,'#fa800a00');g.fillStyle=grad;g.beginPath();g.ellipse(c.width/2,c.height/2,c.width*.32,c.height/2,0,0,TAU);g.fill();shotSprite=c;
+    homingSprite=buildOrb(3,'#fa800a'); // 아군 샷은 주황: 적 탄 6색(빨강·보라·하늘·초록·노랑·흰색) 어느 것과도 헷갈리지 않는다(심사 3차)
     // 아이템: 점수(푸른 마름모)와 폭탄 조각(초록 마름모)
     // 아이템은 하트다: 점수는 분홍 하트, 폭탄 게이지는 금빛 하트. 흰 테두리와 옅은 빛으로 적 탄과 구별한다.
     itemSprites=[['#ff6fa3','#ffd0e0'],['#ffcf4a','#fff3c4']].map(function(c){var d=offscreen(ITEM_DRAW*scale,ITEM_DRAW*scale),q=d.getContext('2d');q.scale(scale,scale);q.translate(ITEM_DRAW/2,ITEM_DRAW/2);
@@ -349,11 +349,11 @@
       for(i=0;i<2;i++)if(pads[i]){pads[i].style.position='fixed';pads[i].style.top=px(r.bottom+(bottom-56)/2);pads[i].style.bottom='auto';pads[i].style.left=i?'auto':px(r.left+10);pads[i].style.right=i?px(vw-r.right+10):'auto';}
       if(pause){pause.style.position='fixed';pause.style.top=px(Math.max(4,(top-36)/2));pause.style.left=px(r.left+10);}
     }else if(hudOut==='side'){
-      hi.style.cssText='left:'+px(r.left-180)+';width:160px;top:'+px(r.top+40)+';align-items:flex-end;text-align:right';
+      hi.style.cssText='left:'+px(r.left-180)+';width:160px;top:'+px(r.top+64)+';align-items:flex-end;text-align:right';
       lo.style.cssText='left:'+px(r.right+20)+';width:160px;top:'+px(r.bottom-150)+';align-items:flex-start';
       var coarse=global.matchMedia&&global.matchMedia('(pointer:coarse)').matches;
       for(i=0;i<2;i++)if(pads[i]){pads[i].style.position='';pads[i].style.top='';pads[i].style.bottom='';pads[i].style.left='';pads[i].style.right='';pads[i].style.visibility=coarse?'':'hidden';} // PC는 키로 조작하니 터치 버튼을 숨긴다
-      if(pause){pause.style.position='';pause.style.top='';pause.style.left='';}
+      if(pause){pause.style.position='fixed';pause.style.top=px(r.top+12);pause.style.left=px(r.left-56);} // PC: 일시정지도 칸 밖 왼쪽 위로(심사 3차)
     }else{
       for(i=0;i<2;i++)if(pads[i]){pads[i].style.position='';pads[i].style.top='';pads[i].style.bottom='';pads[i].style.left='';pads[i].style.right='';pads[i].style.visibility='';}
       if(pause){pause.style.position='';pause.style.top='';pause.style.left='';}
@@ -700,6 +700,12 @@
   }
   /* 위쪽 어둠: 탄보다 먼저 그려 탄을 가리지 않는다 */
   function drawTopShade(){var top=ctx.createLinearGradient(0,0,0,96);top.addColorStop(0,'rgba(4,4,12,.85)');top.addColorStop(.6,'rgba(4,4,12,.5)');top.addColorStop(1,'rgba(4,4,12,0)');ctx.fillStyle=top;ctx.fillRect(-8,-8,W+16,104);}
+  /* 오른쪽 위 남은 시간·패턴 이름 뒤 받침: 글자가 탄과 겹쳐도 읽힌다(심사 3차) */
+  function namePlate(name){
+    ctx.font='italic 12px '+SERIF;var w=Math.min(W*.7,ctx.measureText('「'+name+'」').width+28);
+    var g=ctx.createLinearGradient(W-w-30,0,W,0);g.addColorStop(0,'rgba(4,4,12,0)');g.addColorStop(.25,'rgba(4,4,12,.72)');g.addColorStop(1,'rgba(4,4,12,.8)');
+    ctx.fillStyle=g;ctx.fillRect(W-w-30,16,w+30,42);
+  }
   function drawHud(s){
     var b=s.boss,seg=Arcade.SEGMENTS[s.seg],color=themeColor(s),left=Arcade.timeLeft(s),stage=Arcade.STAGES[s.stageIndex],i;
     if(hudOut)domHud(s);
@@ -708,6 +714,7 @@
     if(s.stage==='card'&&seg){
       ctx.fillStyle='rgba(255,255,255,.16)';ctx.fillRect(12,9,W-24,4);ctx.fillStyle=b.hp/b.maxHp<=.2?'#ff5a5a':color;ctx.fillRect(12,9,(W-24)*Math.max(0,Math.min(1,finite(b.hp/b.maxHp,0))),4);
       if(seg.spell){
+        namePlate(seg.name);
         ctx.textAlign='right';ctx.font='600 20px '+SANS;ctx.fillStyle=left<=10?'#ff6a6a':'#ffffff';ctx.fillText(left<10?left.toFixed(1):String(Math.ceil(left)),W-12,35);
         ctx.font='italic 12px '+SERIF;ctx.fillStyle='#f3e3b5';ctx.fillText('「'+seg.name+'」',W-12,52);
       }

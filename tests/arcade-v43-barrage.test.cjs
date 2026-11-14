@@ -188,3 +188,35 @@ test('v43 review fixes: with room outside the play field, the HUD moves out of i
  assert(/function placeHud\(/.test(app)&&/hudOut==='side'/.test(app)&&/hudOut==='below'/.test(app),'two layouts: below/above on phones, side panels on PC');
  assert(/if\(!hudOut\)/.test(app),'the canvas HUD is drawn only when there is no room outside');
 });
+
+test('v43 review fixes (round 3): boss bullets leave from the rim of the boss, not from the middle of its body',()=>{
+ const a=h.need();let fresh=0,inside=0;
+ const firsts=new Map();a.SEGMENTS.forEach((g,i)=>{if(g.kind==='card'&&!firsts.has(g.actor))firsts.set(g.actor,i);});
+ for(const [,i] of [...firsts].slice(0,12)){const s=a.createRun({difficulty:'normal',seed:5,segment:i,stages:1});
+  for(let t=0;t<900&&s.seg===i;t++){s.player.invulnerableUntil=s.tick+999;if(s.stage==='card')s.boss.hp=s.boss.maxHp;
+   const before=s.n;a.step(s,{dx:0,dy:0});
+   if(s.stage==='card')for(let k=0;k<s.n;k++)if(s.bage[k]<=1){fresh++;if(Math.hypot(s.bx[k]-s.boss.x,s.by[k]-s.boss.y)<14)inside++;}
+   h.clear(s);}}
+ assert(fresh>1000,'fresh boss bullets seen: '+fresh);
+ assert(inside/fresh<.1,'share of new bullets inside the boss body: '+(inside/fresh).toFixed(2));
+});
+
+test('v43 review fixes (round 3): the heroine\'s shots do not share a colour with enemy bullets, and the pattern name has a plate behind it',()=>{
+ const app=h.read('src/arcade-app-v43.js');
+ const enemy=Object.values(eval('('+/var COLORS=(\{[^}]+\})/.exec(app)[1]+')'));
+ const rgb=c=>[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)),far=(a,b)=>Math.hypot(...rgb(a).map((v,i)=>v-rgb(b)[i]));
+ const shot=/addColorStop\(\.35,'(#[0-9a-f]{6})'\)/.exec(app)[1],homing=/homingSprite=buildOrb\(3,'(#[0-9a-f]{6})'\)/.exec(app)[1];
+ for(const c of [shot,homing])for(const e of enemy)assert(far(c,e)>=90,c+' too close to enemy '+e);
+ assert(/function namePlate\(/.test(app)&&/namePlate\(/.test(app.replace('function namePlate(','')),'a dark plate sits behind the timer and pattern name');
+});
+
+test('v43 review fixes (round 3): on PC with side panels the pause button leaves the play field',()=>{
+ const app=h.read('src/arcade-app-v43.js');const side=/hudOut==='side'\)\{([\s\S]*?)\}else\{/.exec(app);
+ assert(side&&/pause\.style\.position='fixed'/.test(side[1]),'pause button is fixed in the side panel');
+});
+
+test('v43 review fixes (round 3): the shot sprite is really built (no line comment swallows it)',()=>{
+ const app=h.read('src/arcade-app-v43.js');
+ const live=w=>app.split('\n').some(l=>l.includes(w)&&l.indexOf(w)<(l.indexOf('//')<0?Infinity:l.indexOf('//')));
+ assert(live('shotSprite=c;')&&live('homingSprite=buildOrb('),'shot and homing sprites are assigned in live code');
+});
