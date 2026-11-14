@@ -16,8 +16,8 @@ test('v43 boss art: bright artwork loses contrast too, so its highlight cannot c
  assert(/BRIGHT_ART_DIM='brightness\([\d.]+\) contrast\(\.[0-8]\d*\)'/.test(app()),'contrast lowered');
 });
 
-test('v43 panels: the stacked blocks spread over the panel height instead of piling at the top',()=>{
- assert(/\.hudx\.side \.stack\{[^}]*flex:1[^}]*justify-content:space-between/.test(h.read('arcade.html')),'stack fills and spreads');
+test('v43 panels: the stack fills the panel height (its spacing rule lives in arcade-v43-calm-centre)',()=>{
+ assert(/\.hudx\.side \.stack\{[^}]*flex:1/.test(h.read('arcade.html')),'stack fills the panel');
 });
 
 test('v43 hero marker: the cyan ring is bold enough to survive red beams',()=>{
