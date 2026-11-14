@@ -129,3 +129,9 @@ test('v43 physics: graze pays once per bullet',()=>{
  const before=s.graze;for(let k=0;k<200;k++)a.step(s,{dx:0,dy:0});
  assert.equal(s.graze-before,1);
 });
+
+test('v43 render: bullets that are still blooming are actually drawn (the draw call is not swallowed by a comment)',()=>{
+ const app=h.read('src/arcade-app-v43.js'),fn=/function drawBullets\(s\)[\s\S]*?\n  \}/.exec(app)[0];
+ const bloom=fn.slice(fn.indexOf('갓 피어나는 탄')),code=bloom.split('\n').map(l=>l.replace(/\/\/.*$/,'')).join('\n');
+ assert(/ctx\.drawImage\(o\.image,x-half,y-half/.test(code),'the blooming loop draws the bullet');
+});

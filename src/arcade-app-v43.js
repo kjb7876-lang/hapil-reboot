@@ -763,7 +763,7 @@
       var age=s.bage[i];x=s.bx[i];y=s.by[i];if(age>=bloom||x!==x||y!==y)continue;
       var t=age/bloom;size=s.bsize[i];
       if(size===SHAPE_PROP){drawProp(s,i,1.5-.5*t,.25+.6*t);continue;}
-      o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;var onMob=nearMob(s,x,y);half=o.half*(onMob?1:2.4-1.4*t);ctx.globalAlpha=(.25+.6*t)*(onMob?.45:1); // 몹 몸 위에서는 부풀리지 않는다ctx.drawImage(o.image,x-half,y-half,half*2,half*2);
+      o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;var onMob=nearMob(s,x,y);half=o.half*(onMob?1:2.4-1.4*t);ctx.globalAlpha=(.25+.6*t)*(onMob?.45:1);ctx.drawImage(o.image,x-half,y-half,half*2,half*2); // 몹 몸 위에서는 부풀리지 않는다
     }
     ctx.globalAlpha=1;
   }
