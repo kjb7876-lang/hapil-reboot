@@ -628,17 +628,21 @@
   /* 유혹의 장막(색욕 보스, 11-14): 화면 양옆에 드리운 분홍 비단. 그림일 뿐 맞지 않는다(엔진의 충돌에 없다). 탄보다 먼저(아래에) 옅게 그린다. */
   function drawVeil(s){
     if(s.veilTick===undefined||s.tick-s.veilTick>2)return;
-    ctx.save();ctx.globalCompositeOperation='lighter';
-    for(var side=0;side<2;side++)for(var k=0;k<3;k++){var w=54-k*12,x0=side?W-w:0,sway=Math.sin(visual*(.9+k*.3)+k+side*2)*10,g=ctx.createLinearGradient(side?W:0,0,side?W-w-20:w+20,0);
-      g.addColorStop(0,'rgba(232,90,150,'+(.16-k*.035)+')');g.addColorStop(1,'rgba(232,90,150,0)');ctx.fillStyle=g;
-      ctx.beginPath();ctx.moveTo(side?W:0,0);for(var y=0;y<=H;y+=32){var xx=side?x0-sway*Math.sin(y*.012+visual):x0+w+sway*Math.sin(y*.012+visual);ctx.lineTo(xx,y);}ctx.lineTo(side?W:0,H);ctx.closePath();ctx.fill();}
+    // 심사(색욕 1차): 장막이 붉은 커튼 배경에 묻힌다 → 더 짙게, 가장자리에 흰빛 분홍 선을 그어 '천의 끝'이 읽히게. 그래도 탄보다 아래, 맞지 않는다.
+    ctx.save();
+    for(var side=0;side<2;side++)for(var k=0;k<3;k++){var w=58-k*14,x0=side?W-w:0,g=ctx.createLinearGradient(side?W:0,0,side?W-w-24:w+24,0),edge=[];
+      g.addColorStop(0,'rgba(255,120,190,'+(.34-k*.08)+')');g.addColorStop(1,'rgba(255,120,190,0)');ctx.fillStyle=g;ctx.globalCompositeOperation='lighter';
+      ctx.beginPath();ctx.moveTo(side?W:0,0);for(var y=0;y<=H;y+=24){var sw=Math.sin(visual*(.9+k*.3)+k+side*2)*10*Math.sin(y*.012+visual),xx=side?x0-sw:x0+w+sw;edge.push(xx,y);ctx.lineTo(xx,y);}ctx.lineTo(side?W:0,H);ctx.closePath();ctx.fill();
+      if(k===0){ctx.globalCompositeOperation='source-over';ctx.globalAlpha=.55;ctx.strokeStyle='#ffd6ea';ctx.lineWidth=1.4;ctx.beginPath();for(var e=0;e<edge.length;e+=2)ctx[e?'lineTo':'moveTo'](edge[e],edge[e+1]);ctx.stroke();ctx.globalAlpha=1;}}
     ctx.restore();
   }
-  /* 환영 분신: 엔진이 세운 분신 자리(s.clones)에 보스 그림을 반투명 보라로 겹쳐 그린다. 분신 자체는 맞지 않고, 분신이 쏘는 탄만 맞는다. */
+  /* 환영 분신: 엔진이 세운 분신 자리(s.clones)에 보스 그림을 반투명으로 겹쳐 그린다. 뒤에 분홍 빛무리를 깔아 '가짜지만 서 있는' 것이 읽히게 한다(심사 색욕 1차).
+     분신 자체는 맞지 않고, 분신이 쏘는 탄만 맞는다. */
   function drawIllusions(s){
     if(!s.clones||s.clonesTick===undefined||s.tick-s.clonesTick>2||!s.boss.present)return;
-    for(var k=0;k<s.clones.length;k++){var c=s.clones[k],flick=.32+.1*Math.sin(visual*6+k*2);
-      ctx.save();ctx.globalAlpha=flick;ctx.translate(finite(c.x,W/2),finite(c.y,120)+Math.sin(visual*2.2+k)*4);ctx.scale(.82,.82);drawArt(s.boss.actor,0,0,false,'#c070ff',0,'',k?-1:1);ctx.restore();}
+    for(var k=0;k<s.clones.length;k++){var c=s.clones[k],cx=finite(c.x,W/2),cy=finite(c.y,120)+Math.sin(visual*2.2+k)*4,flick=.5+.12*Math.sin(visual*6+k*2),gl=ctx.createRadialGradient(cx,cy,6,cx,cy,70);
+      gl.addColorStop(0,'rgba(255,110,200,.42)');gl.addColorStop(1,'rgba(255,110,200,0)');ctx.save();ctx.globalCompositeOperation='lighter';ctx.fillStyle=gl;ctx.fillRect(cx-70,cy-70,140,140);ctx.restore();
+      ctx.save();ctx.globalAlpha=flick;ctx.translate(cx+Math.sin(visual*9+k)*1.5,cy);ctx.scale(.82,.82);drawArt(s.boss.actor,0,0,false,'#c070ff',0,'',k?-1:1);ctx.restore();}
     ctx.globalAlpha=1;
   }
   function drawBoss(s){
