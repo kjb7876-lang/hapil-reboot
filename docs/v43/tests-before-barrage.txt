@@ -1,0 +1,10 @@
+not ok 1 - v43 barrage: a bullet never disappears in the middle of the screen because its time ran out
+not ok 2 - v43 barrage: a bullet whose time ran out keeps flying, never stalls, and bounces back once from a side wall
+not ok 3 - v43 barrage: easy and normal are nearly as dense as hell, slower, and forgiven by a smaller hitbox
+not ok 4 - v43 barrage: every boss has its own signature — glyph laser, colour and bullet strands — and they differ from boss to boss
+not ok 5 - v43 barrage: during a named boss pattern the glyph laser turns, grows and shrinks, edge zigzags close in for a few seconds, and strands of bullets sway
+not ok 6 - v43 barrage: glyph lasers hit only along their own segments, and warn before they burn
+not ok 7 - v43 barrage: with glyph lasers and edge zigzags on, every boss pattern still leaves a lane (hell)
+not ok 8 - v43 barrage: mobs are drawn only with art that walks down the screen
+# pass 0
+# fail 8
