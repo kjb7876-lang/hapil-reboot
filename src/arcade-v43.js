@@ -75,7 +75,8 @@
   /* 난이도. density 탄 수 배율 · speed 탄 속도 배율 · hp 목숨 · mapHeal 다음 맵에서 회복(-1은 전부) · bombs 폭탄 ·
    * radius 영웅 피격점 반지름 · hitScale 탄의 보이는 반지름 중 실제로 닿는 비율 · warn 광선 예고 시간 배율 · beam 광선 굵기 배율 */
   var DIFFICULTY={
-    gentle:{density:2.3,speed:.56,hp:7,mapHeal:-1,bombs:3,radius:1,hitScale:.3,warn:1.6,beam:.72,label:'여유'},
+    // 11-14 사용자 기준: 이지(여유)는 탄 수가 노멀의 약 2/3인 쉬운 패턴(지시서의 44% 대 66%). 노멀·헬은 같은 밀도에 헬이 더 빠르고 피격점이 크고 목숨이 적다.
+    gentle:{density:1.65,speed:.56,hp:7,mapHeal:-1,bombs:3,radius:1,hitScale:.3,warn:1.6,beam:.72,label:'여유'},
     normal:{density:2.45,speed:.64,hp:3,mapHeal:1,bombs:2,radius:1.4,hitScale:.38,warn:1.2,beam:.88,label:'기본'},
     hell:{density:2.6,speed:.9,hp:1,mapHeal:0,bombs:1,radius:2.4,hitScale:.5,warn:1,beam:1,label:'지옥'}
   };
@@ -130,6 +131,44 @@
   }
   // 위에서 내려오는 한 줄. 화면 밖(위)에서 들어오므로 갑자기 나타나지 않는다. gapAt부터 gapWidth칸은 비운다.
   function curtain(s,cells,gapAt,gapWidth,speed,o){var step=W/cells;for(var i=0;i<cells;i++){if(i>=gapAt&&i<gapAt+gapWidth)continue;spawn(s,step*(i+.5),-10,Math.PI/2,speed,o);}}
+
+  /* ── 공통 발사기(11-14 지시서 STEP 3). 패턴을 데이터로 적는다:
+   *   {kind, patternId, emitterCount, bulletsPerWave, fireInterval(초), baseSpeed(px/초), speedVariance, spreadAngle(라디안), rotationSpeed(라디안/초),
+   *    phaseOffset, bulletType:{size,color}, difficultyMultiplier:{gentle,normal,hell}, duration(초), delay(초), children}
+   *   emit(s,spec,t,origin)을 패턴의 매 틱 t마다 부르면 그 발사기가 제 박자에 쏜다. 시간은 틱이 아니라 시뮬레이션 초(t·TICK)로 센다.
+   *   좌표계는 y가 아래로 +, 각도 π/2가 화면 아래(적 탄의 기본 방향).
+   *   01 radial 방사형 θi = θ0 + 2πi/N · 02 fan 부채꼴 · 03 rotating 발사원이 도는 직진탄 · 04 curved 탄 자신이 휘는 곡선탄 v ← Rotate(v, ω·dt)
+   *   05 spiral 다중 나선 θi(t) = ωt + 2πi/N + θ0 · 06 delayedRing 시간차로 속도·위상이 다른 고리 · 07 aimed 쏘는 순간만 조준(추적 없음)
+   *   08 layered 독립 갱신되는 여러 겹 · 09 orbCorridor 큰 구슬 줄 사이로 움직이는 통로 · 10 composite 2~4종을 저마다의 지연·박자로 합성 */
+  var EMITTER_KINDS=['radial','fan','rotating','curved','spiral','delayedRing','aimed','layered','orbCorridor','composite'];
+  function waveCount(s,spec,n){var m=spec.difficultyMultiplier,k=m&&typeof m==='object'?(m[s.difficulty]||1):(m||1);return Math.max(1,Math.round(n*k*s.density));}
+  function emitSpeed(s,spec){var v=spec.baseSpeed||80,d=spec.speedVariance||0;return d?v+(rand(s)*2-1)*d:v;}
+  // bulletType에 at·mode·arg·speed2·accel·min·max·spin을 함께 적으면 그대로 탄에 실린다(시간차 꺾기·분열 등).
+  function emitOpts(spec,size,color){var b=spec.bulletType||{},o={};for(var k in b)o[k]=b[k];if(o.size===undefined)o.size=size;if(o.color===undefined)o.color=color;o.turn=spec.kind==='curved'?spec.turnRate||0:0;return o;}
+  function emit(s,spec,t,origin){
+    var k,n,kind=spec.kind,x=origin.x,y=origin.y;
+    if(kind==='layered'||kind==='composite'){for(k=0;k<(spec.children||[]).length;k++)emit(s,spec.children[k],t,origin);return;}
+    var local=t-Math.round((spec.delay||0)*60),beat=Math.max(1,Math.round((spec.fireInterval||.5)*60));
+    if(local<0||local%beat||(spec.duration&&local*TICK>=spec.duration))return;
+    var time=local*TICK,phase=spec.phaseOffset||0,omega=spec.rotationSpeed||0,o;
+    if(kind==='radial'){o=emitOpts(spec,0,RED);n=waveCount(s,spec,spec.bulletsPerWave||12);for(k=0;k<n;k++)spawn(s,x,y,phase+omega*time+TAU*k/n,emitSpeed(s,spec),o);}
+    else if(kind==='fan'||kind==='curved'||kind==='aimed'){
+      o=emitOpts(spec,0,kind==='aimed'?WHITE:PURPLE);n=waveCount(s,spec,spec.bulletsPerWave||5);
+      var center=kind==='aimed'?aim(s,x,y)+(spec.aimOffset||0):spec.center===undefined?Math.PI/2:spec.center,spread=spec.spreadAngle||(kind==='aimed'?0:1);
+      if(kind==='curved'&&spec.center===undefined&&!spec.spreadAngle){for(k=0;k<n;k++)spawn(s,x,y,phase+omega*time+TAU*k/n,emitSpeed(s,spec),o);}
+      else for(k=0;k<n;k++){var one={},q;for(q in o)one[q]=o[q];if(kind==='curved'&&spec.mirror&&k%2)one.turn=-o.turn;spawn(s,x,y,center+omega*time+(n>1?(k/(n-1)-.5)*spread:0),emitSpeed(s,spec),one);}
+    }
+    else if(kind==='rotating'){o=emitOpts(spec,0,CYAN);spawn(s,x,y,phase+omega*time,emitSpeed(s,spec),o);}
+    else if(kind==='spiral'){o=emitOpts(spec,RICE,WHITE);n=spec.emitterCount||3;for(k=0;k<n;k++)spawn(s,x,y,omega*time+TAU*k/n+phase,emitSpeed(s,spec),o);}
+    else if(kind==='delayedRing'){o=emitOpts(spec,1,YELLOW);var layer=(local/beat)%(spec.emitterCount||3);n=waveCount(s,spec,spec.bulletsPerWave||16);
+      for(k=0;k<n;k++)spawn(s,x,y,phase+layer*(spec.phaseStep||0)+TAU*k/n,(spec.baseSpeed||60)+layer*(spec.speedStep||15),o);}
+    else if(kind==='orbCorridor'){
+      // 큰 구슬을 화면 폭에 고르게 늘어놓되, 통로 자리는 비운다. 통로 가운데는 사인파로 좌우를 오가므로 영웅은 통로를 따라 움직여야 한다.
+      o=emitOpts(spec,2,CYAN);n=waveCount(s,spec,spec.bulletsPerWave||9);var gap=spec.gapWidth||80,half=gap/2+SIZE_RADIUS[o.size]*s.sizeScale,
+        mid=W/2+(W/2-gap/2-10)*Math.sin((spec.drift||1)*time+phase);
+      for(k=0;k<n;k++){var gx=(k+.5)*W/n;if(Math.abs(gx-mid)<half)continue;spawn(s,gx,y,Math.PI/2,emitSpeed(s,spec),o);}
+    }
+  }
 
   /* ── 기하 도형. 원점 기준 단위 좌표의 점 묶음. 각 탄을 "원점에서 그 점 방향으로, 거리에 비례한 속도"로 쏘면
    *    도형이 모양을 유지한 채 커진다. ── */
@@ -268,6 +307,9 @@
 
   /* ── 이름 붙은 패턴. 이름을 순서대로 읽으면 그 인물의 사연이 되도록 원작 장면 제목·목표에서만 따왔다.
    *    name 패턴 이름 · scene 원작 장면 번호 · fire(s,t) 발사 시작 뒤 t틱째 ── */
+  // 붉은 하이힐용 발사기 설정(데이터). 굽 돌진은 조준 1회 + 가속, 큰 회전은 큰 구슬 세 팔 나선.
+  var HEEL_DASH={kind:'aimed',patternId:'heel-dash',bulletsPerWave:1,difficultyMultiplier:{gentle:.45,normal:.85,hell:.85},spreadAngle:.5,baseSpeed:40,fireInterval:1,bulletType:{size:SHAPE_PROP,color:P.heel,accel:420,max:300}};
+  var HEEL_WHEEL={kind:'spiral',patternId:'heel-wheel',emitterCount:3,rotationSpeed:1.3,baseSpeed:62,fireInterval:12/60,bulletType:{size:2,color:RED}};
   var spells={
     // 1부 전반 — 궁전. 보라검 천사의 실, 발록의 일곱 기둥·소환진·추락
     web:{name:'여덟 다리의 실',scene:'02',fire:function(s,t){var b=s.boss,n=pick(s,2,2,3),k,phase=t%190;
@@ -310,7 +352,11 @@
     // 2부 — 일곱 개의 귀. 붉은 하이힐, 회장의 전극 성당·하늘에 서려는 자·생체 부트로더
     heel:{name:'붉은 하이힐',scene:'17',fire:function(s,t){var b=s.boss;
       if(t%64===0)fan(s,b.x,b.y,pick(s,2,3,5),aim(s,b.x,b.y),1,104,{size:SHAPE_PROP,color:P.heel});
-      if(t%96===48)shape(s,b.x,b.y,Shapes.rose(5,count(s,30)),78,t*.01,{color:RED,size:0});}},
+      if(t%96===48)shape(s,b.x,b.y,Shapes.rose(5,count(s,30)),78,t*.01,{color:RED,size:0});
+      // 돌진(11-14 지시서): 굽이 느리게 출발했다가 쏘는 순간 겨눈 곳으로 급가속해 내리꽂힌다(쏜 뒤에는 따라오지 않는다).
+      if(t%150===110)emit(s,HEEL_DASH,0,b);
+      // 큰 회전: 큰 구슬 세 팔이 보스 둘레를 천천히 돌며 직진탄을 뿜는다(발사원이 도는 것, 탄은 곧게 난다).
+      if(t%300>=150&&t%300<270)emit(s,HEEL_WHEEL,t,b);}},
     cathedral:{name:'전극 성당',scene:'21',fire:function(s,t){var b=s.boss;
       lattice(s,t,220,pick(s,2,2,3),pick(s,2,3,4),s.difficulty==='hell',10,WHITE,YELLOW);
       if(t%70===35)bell(s,b.x,b.y,count(s,11),aim(s,b.x,b.y),1.7,92,.45,{color:WHITE,size:0});
@@ -457,7 +503,7 @@
   /* 부별 파일에 건네는 도구 상자. */
   var KIT={W:W,H:H,TAU:TAU,TICK:TICK,GOLDEN_ANGLE:GOLDEN_ANGLE,RED:RED,PURPLE:PURPLE,CYAN:CYAN,GREEN:GREEN,YELLOW:YELLOW,WHITE:WHITE,RICE:RICE,SHAPE_PROP:SHAPE_PROP,P:P,
     MODE_REAIM:MODE_REAIM,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,MODE_BRANCH:MODE_BRANCH,
-    rand:rand,count:count,pick:pick,aim:aim,spawn:spawn,ring:ring,fan:fan,bell:bell,curtain:curtain,shape:shape,Shapes:Shapes,beam:beam,row:row,column:column,slots:slots,wheel:wheel,lattice:lattice,
+    rand:rand,count:count,pick:pick,aim:aim,spawn:spawn,ring:ring,fan:fan,bell:bell,curtain:curtain,emit:emit,shape:shape,Shapes:Shapes,beam:beam,row:row,column:column,slots:slots,wheel:wheel,lattice:lattice,
     mob:mob,wave:wave,waveColumns:function(a,elite,duration){return wave(waveColumns(a,elite),duration);},waveDives:function(a,elite,duration){return wave(waveDives(a,elite),duration);}};
   var DEFS={};
   PARTS.forEach(function(p){
@@ -780,7 +826,7 @@
       }
       if(s.bturn[i])s.ba[i]+=s.bturn[i]*TICK;
       if(s.bacc[i]){var v=s.bs[i]+s.bacc[i]*TICK;s.bs[i]=v<s.bmin[i]?s.bmin[i]:v>s.bmax[i]?s.bmax[i]:v;}
-      var x=s.bx[i]+=Math.cos(s.ba[i])*s.bs[i]*TICK,y=s.by[i]+=Math.sin(s.ba[i])*s.bs[i]*TICK;
+      var ox=s.bx[i],oy=s.by[i],x=s.bx[i]+=Math.cos(s.ba[i])*s.bs[i]*TICK,y=s.by[i]+=Math.sin(s.ba[i])*s.bs[i]*TICK;
       // 벽에서 되돌아오는 탄: 좌우 벽과 위 벽에서 한 번(남은 횟수만큼) 튕긴다. 아래로는 튕기지 않는다(영웅 뒤에서 오지 않게).
       if(s.bbounce[i]){var a0=s.ba[i];
         if((x<0&&Math.cos(a0)<0)||(x>W&&Math.cos(a0)>0)){s.ba[i]=Math.PI-a0;s.bx[i]=x=x<0?0:W;s.bbounce[i]--;}
@@ -793,6 +839,9 @@
       }
       if(age<BLOOM_TICKS)continue; // 갓 피어난 탄은 아직 닿지 않는다
       var dx=x-px,dy=y-py,radius=bulletRadius(s,i),d2=dx*dx+dy*dy,reach=radius+GRAZE_MARGIN;
+      // 빠른 탄(한 틱에 4px 넘게 움직이는 탄)은 이전 위치→새 위치 선분에서 영웅에 가장 가까운 점으로 잰다: 한 틱 사이에 영웅을 건너뛰어도 맞는다.
+      var mx=x-ox,my=y-oy,m2=mx*mx+my*my;
+      if(m2>16){var u=((px-ox)*mx+(py-oy)*my)/m2;u=u<0?0:u>1?1:u;dx=ox+mx*u-px;dy=oy+my*u-py;d2=dx*dx+dy*dy;}
       if(d2>reach*reach)continue;
       var hitReach=radius*hitScale+p.r;
       if(d2<hitReach*hitReach)struck=true;
@@ -881,7 +930,7 @@
     return {fresh:fresh,sanitize:sanitize,record:record,unlocked:unlocked,canPlay:canPlay,resume:resume,totalStars:totalStars};
   })();
   var api={revision:43,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
-    SEGMENTS:SEGMENTS,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
+    SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
     BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem};
   if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcade=api;

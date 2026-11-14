@@ -625,6 +625,26 @@
     var b=s.boss;if(!bossDraw.on||!b.present||b.leaving||s.stage!=='card'){bossDraw.on=false;return;}
     ctx.save();ctx.globalAlpha=.55;ctx.translate(bossDraw.x,bossDraw.y);if(bossDraw.tilt)ctx.rotate(bossDraw.tilt);ctx.scale(bossDraw.sx,bossDraw.sy);drawArt(b.actor,0,0,false,themeColor(s),0,bossDraw.motion,bossDraw.face);ctx.restore();ctx.globalAlpha=1;bossDraw.on=false;
   }
+  /* 유혹의 장막(색욕 보스, 11-14): 화면 양옆에 드리운 분홍 비단. 그림일 뿐 맞지 않는다(엔진의 충돌에 없다). 탄보다 먼저(아래에) 옅게 그린다. */
+  function drawVeil(s){
+    if(s.veilTick===undefined||s.tick-s.veilTick>2)return;
+    // 심사(색욕 1차): 장막이 붉은 커튼 배경에 묻힌다 → 더 짙게, 가장자리에 흰빛 분홍 선을 그어 '천의 끝'이 읽히게. 그래도 탄보다 아래, 맞지 않는다.
+    ctx.save();
+    for(var side=0;side<2;side++)for(var k=0;k<3;k++){var w=58-k*14,x0=side?W-w:0,g=ctx.createLinearGradient(side?W:0,0,side?W-w-24:w+24,0),edge=[];
+      g.addColorStop(0,'rgba(255,120,190,'+(.34-k*.08)+')');g.addColorStop(1,'rgba(255,120,190,0)');ctx.fillStyle=g;ctx.globalCompositeOperation='lighter';
+      ctx.beginPath();ctx.moveTo(side?W:0,0);for(var y=0;y<=H;y+=24){var sw=Math.sin(visual*(.9+k*.3)+k+side*2)*10*Math.sin(y*.012+visual),xx=side?x0-sw:x0+w+sw;edge.push(xx,y);ctx.lineTo(xx,y);}ctx.lineTo(side?W:0,H);ctx.closePath();ctx.fill();
+      if(k===0){ctx.globalCompositeOperation='source-over';ctx.globalAlpha=.55;ctx.strokeStyle='#ffd6ea';ctx.lineWidth=1.4;ctx.beginPath();for(var e=0;e<edge.length;e+=2)ctx[e?'lineTo':'moveTo'](edge[e],edge[e+1]);ctx.stroke();ctx.globalAlpha=1;}}
+    ctx.restore();
+  }
+  /* 환영 분신: 엔진이 세운 분신 자리(s.clones)에 보스 그림을 반투명으로 겹쳐 그린다. 뒤에 분홍 빛무리를 깔아 '가짜지만 서 있는' 것이 읽히게 한다(심사 색욕 1차).
+     분신 자체는 맞지 않고, 분신이 쏘는 탄만 맞는다. */
+  function drawIllusions(s){
+    if(!s.clones||s.clonesTick===undefined||s.tick-s.clonesTick>2||!s.boss.present)return;
+    for(var k=0;k<s.clones.length;k++){var c=s.clones[k],cx=finite(c.x,W/2),cy=finite(c.y,120)+Math.sin(visual*2.2+k)*4,flick=.5+.12*Math.sin(visual*6+k*2),gl=ctx.createRadialGradient(cx,cy,6,cx,cy,70);
+      gl.addColorStop(0,'rgba(255,110,200,.42)');gl.addColorStop(1,'rgba(255,110,200,0)');ctx.save();ctx.globalCompositeOperation='lighter';ctx.fillStyle=gl;ctx.fillRect(cx-70,cy-70,140,140);ctx.restore();
+      ctx.save();ctx.globalAlpha=flick;ctx.translate(cx+Math.sin(visual*9+k)*1.5,cy);ctx.scale(.82,.82);drawArt(s.boss.actor,0,0,false,'#c070ff',0,'',k?-1:1);ctx.restore();}
+    ctx.globalAlpha=1;
+  }
   function drawBoss(s){
     bossDraw.on=false;
     var b=s.boss;if(!b.present||b.y<-50)return;
@@ -747,7 +767,7 @@
       var age=s.bage[i];x=s.bx[i];y=s.by[i];if(age>=bloom||x!==x||y!==y)continue;
       var t=age/bloom;size=s.bsize[i];
       if(size===SHAPE_PROP){drawProp(s,i,1.5-.5*t,.25+.6*t);continue;}
-      o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;var onMob=nearMob(s,x,y);half=o.half*(onMob?1:2.4-1.4*t);ctx.globalAlpha=(.25+.6*t)*(onMob?.45:1); // 몹 몸 위에서는 부풀리지 않는다ctx.drawImage(o.image,x-half,y-half,half*2,half*2);
+      o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;var onMob=nearMob(s,x,y);half=o.half*(onMob?1:2.4-1.4*t);ctx.globalAlpha=(.25+.6*t)*(onMob?.45:1);ctx.drawImage(o.image,x-half,y-half,half*2,half*2); // 몹 몸 위에서는 부풀리지 않는다
     }
     ctx.globalAlpha=1;
   }
@@ -892,7 +912,7 @@
     offsetX=offsetY=0;if(shake>0){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawSkillFx(s);drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);drawBossOver(s);drawPlayer(s);drawHitbox(s); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawSkillFx(s);drawIllusions(s);drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);drawBossOver(s);drawPlayer(s);drawHitbox(s); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);drawHud(s);
     if(flash>0){ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);flash-=.04;}
     if(hurtFlash>0){var v=ctx.createRadialGradient(W/2,H/2,120,W/2,H/2,420);v.addColorStop(0,'rgba(255,0,40,0)');v.addColorStop(1,'rgba(255,0,40,'+(hurtFlash*.6)+')');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);hurtFlash-=.035;}

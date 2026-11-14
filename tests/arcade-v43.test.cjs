@@ -127,7 +127,7 @@ test('v43 difficulties, the phone mode, six colours and shapes, upright crosses,
  const cross=a.PROPS.findIndex(p=>p.key==='cross');assert(cross>=0&&a.PROPS[cross].upright===true);
  const heart=a.PROPS.findIndex(p=>p.key==='heart');assert(heart<0||a.PROPS[heart].radius>0);
  const i=a.SEGMENTS.findIndex(x=>x.spell&&!x.mid),run=(difficulty,compact)=>{const s=a.createRun({difficulty,seed:9,segment:i,compact});let most=0,fastest=0;for(let t=0;t<1500&&s.seg===i;t++){s.player.invulnerableUntil=s.tick+999;if(s.stage==='card')s.boss.hp=s.boss.maxHp;a.step(s,{dx:0,dy:0});most=Math.max(most,s.n);for(let k=0;k<s.n;k++)if(s.bsize[k]!==a.SHAPE_PROP)fastest=Math.max(fastest,s.bs[k]);clear(s);}return {s,most,fastest};};
- const gentle=run('gentle'),hell=run('hell'),phone=run('hell',true);assert(d.gentle.density>=d.hell.density*.88&&d.gentle.density<d.hell.density&&gentle.most>0); // 사용자 결정(11-14): 이지·노멀은 헬만큼 쏘되 느리게. 화면 탄 수 대신 쏘는 양(density)을 비교한다.assert(hell.fastest<=200);assert(phone.most<hell.most*.85&&phone.most<=a.COMPACT_CAP);assert(phone.s.sizeScale>1&&hell.s.sizeScale===1);
+ const gentle=run('gentle'),hell=run('hell'),phone=run('hell',true);assert(d.gentle.density<=d.normal.density*.7&&d.gentle.density<d.hell.density&&gentle.most>0); // 사용자 결정(11-14): 이지·노멀은 헬만큼 쏘되 느리게. 화면 탄 수 대신 쏘는 양(density)을 비교한다.assert(hell.fastest<=200);assert(phone.most<hell.most*.85&&phone.most<=a.COMPACT_CAP);assert(phone.s.sizeScale>1&&hell.s.sizeScale===1);
  // 모든 스테이지를 지옥 난이도로 훑으며 색·모양·십자가를 본다(스테이지마다 앞 6000틱)
  const colors=new Set(),sizes=new Set();let crosses=0;
  a.STAGES.forEach((g,k)=>{const s=a.createRun({difficulty:'hell',seed:2+k,stage:k,stages:1});
