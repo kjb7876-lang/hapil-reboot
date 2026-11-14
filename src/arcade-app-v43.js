@@ -580,7 +580,12 @@
     var b=s.boss;if(!b.present||b.y<-50)return;
     if(b.leaving&&fall&&fall.actor===b.actor)return; // 쓰러진 보스는 날아가지 않고 drawFall이 그 자리에서 무너뜨린다
     var bob=Math.sin(visual*2.2)*4,size=(b.mid?150:190)+Math.sin(visual*1.3)*10,bx=finite(b.x,W/2),by=finite(b.y,120)+bob;
-    ctx.save();ctx.translate(bx,by);ctx.rotate(visual*.5);ctx.globalAlpha=s.stage==='card'?.45:.2;ctx.globalCompositeOperation='lighter';
+    // 역광(backlight): 보스 뒤에 테마색 빛을 깔아 자기 탄 고리 속에서도 몸 윤곽이 뜨게 한다(심사 9차)
+    var glowR=size*.62,bl=ctx.createRadialGradient(bx,by,8,bx,by,glowR);bl.addColorStop(0,themeColor(s)+'66');bl.addColorStop(.6,themeColor(s)+'22');bl.addColorStop(1,themeColor(s)+'00');
+    ctx.save();ctx.globalCompositeOperation='lighter';ctx.fillStyle=bl;ctx.fillRect(bx-glowR,by-glowR,glowR*2,glowR*2);ctx.restore();
+    // 마법진: 방금 쐈으면(bossPose.until) 한 번 크게 밝아지며 부푼다 → 발사 순간이 읽힌다
+    var fired=bossPose.actor===b.actor&&s.tick<bossPose.until?(bossPose.until-s.tick)/56:0,pulse=1+.1*fired;
+    ctx.save();ctx.translate(bx,by);ctx.rotate(visual*.5);ctx.scale(pulse,pulse);ctx.globalAlpha=(s.stage==='card'?.45:.2)+.4*fired;ctx.globalCompositeOperation='lighter';
     ctx.drawImage(circleSprite,-size/2,-size/2,size,size);ctx.restore();
     var bp=bossPose;if(bp.actor!==b.actor){bp.actor=b.actor;bp.x=bx;bp.n=s.n;bp.until=-1;bp.side=0;}
     var bdx=bx-bp.x;bp.x=bx;if(Math.abs(bdx)>.3){bp.side=10;bp.dir=bdx<0?-1:1;}else if(bp.side>0)bp.side--;
@@ -739,7 +744,7 @@
   }
   // 영웅 탄은 반투명하게 그려 적 탄을 가리지 않는다.
   function drawShots(s){
-    ctx.globalAlpha=.8;ctx.globalCompositeOperation='lighter'; // 더해 그려 어두운 맵 위에서 밝게 빛난다(심사 6차: 탄이 가늘고 어둡다)
+    ctx.globalAlpha=.55;ctx.globalCompositeOperation='lighter'; // 더해 그리되 한 단계 물러서게: 적 탄이 화면의 주인공이다(심사 9차: 주황 샷이 먼저 눈에 들어온다). 타격감은 명중 섬광이 맡는다
     for(var i=0;i<s.sn;i++){
       if(s.shoming[i])ctx.drawImage(shotSprite,s.sx[i]-3,s.sy[i]-9,6,18); // 유도탄도 주탄과 같은 길쭉한 빛줄기: 둥근 주황 점은 적 탄처럼 읽혔다(심사 7차)
       else ctx.drawImage(shotSprite,s.sx[i]-4,s.sy[i]-13,8,26);
