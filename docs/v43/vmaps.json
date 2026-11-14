@@ -1,5 +1,5 @@
 {
- "about": "드라이브 세로 스크롤 맵(제미나이, 사용자가 2026-11-14 올림) → 장면. tools/build-vmaps-v43.py가 읽는다.",
+ "about": "드라이브 세로 스크롤 맵(제미나이, 사용자가 2026-11-14 올림, A31~A56은 같은 날 오후 추가) → 장면. tools/build-vmaps-v43.py가 읽는다.",
  "maps": {
   "A01": {
    "driveId": "1HrKvpZg0nQCK67G0yySNAe4rcpEFo5sG",
@@ -150,6 +150,136 @@
    "driveId": "17spPV5gEdX8JsG7YGQqsX8W5wT2fxtr7",
    "title": "A30_장면32_고블린_두목과_장미_인장.png",
    "scene": "32"
+  },
+  "A31": {
+   "driveId": "1D8FXRmVdp0qSPaDREzxvvy7snW2LiroO",
+   "title": "A31_장면33_타락천사_기사.png",
+   "scene": "33"
+  },
+  "A32": {
+   "driveId": "1uK4hjZrC3UnjpZkg4K9c8b1Es2or6KVN",
+   "title": "A32_장면34_잠들지_못하는_마을.png",
+   "scene": "34"
+  },
+  "A33": {
+   "driveId": "1iWWD37888ri8NlrRF3E1jLUabMxWcwKN",
+   "title": "A33_장면35_한약과_불면귀.png",
+   "scene": "35"
+  },
+  "A34": {
+   "driveId": "1aBIKNwOwsRVNzt3E7r98TqpEI_VX3EPd",
+   "title": "A34_장면37_최초명령의_세계.png",
+   "scene": "37"
+  },
+  "A35": {
+   "driveId": "1b54M3e4cxY6fjUIfR0uIDxQIzdR0at0A",
+   "title": "A35_장면38_예순여섯_수문장.png",
+   "scene": "38"
+  },
+  "A36": {
+   "driveId": "12xTeP_eCFCaTvXGytqjMaXmp-c7xmzfW",
+   "title": "A36_장면39_빼앗긴_시간.png",
+   "scene": "39"
+  },
+  "A37": {
+   "driveId": "16YJW6szzMkjMeR6QJ4ibQ01jiIAzqOVd",
+   "title": "A37_장면40_닫힌_층의_명령.png",
+   "scene": "40"
+  },
+  "A38": {
+   "driveId": "1WMsa4wUTZoxpyz6hvt-UVMYb35fGL1Hs",
+   "title": "A38_장면41_검은_공방.png",
+   "scene": "41"
+  },
+  "A39": {
+   "driveId": "1yIoasiTVmd4aAuagkIPoFamsaD9DJz_n",
+   "title": "A39_장면42_뉴런_게이트.png",
+   "scene": "42"
+  },
+  "A40": {
+   "driveId": "1ttGYxkOkVIFzLcnfZgXVIXi6J_Qaf8m_",
+   "title": "A40_장면43_망각의_묘지.png",
+   "scene": "43"
+  },
+  "A41": {
+   "driveId": "1T1Es_DKM3G-cwWu8jKky1Cf7zZdP4ewd",
+   "title": "A41_장면44_붕괴_의식장.png",
+   "scene": "44"
+  },
+  "A42": {
+   "driveId": "1j78Q4SsT7d7Jg6tNeSrzFeXLlBCC9aBR",
+   "title": "A42_장면45_아르벨리아_유예의_수문장.png",
+   "scene": "45"
+  },
+  "A43": {
+   "driveId": "1OftroVng5BhXUdtXHfqVdH5CCt6ug-Ib",
+   "title": "A43_장면46_세이렌_모르.png",
+   "scene": "46"
+  },
+  "A44": {
+   "driveId": "1whHbN91rGUrW_cKPlM7ALgqSHN8jj9_2",
+   "title": "A44_장면48_성_안에_소환된_의목사.png",
+   "scene": "48"
+  },
+  "A45": {
+   "driveId": "1VHk5K23pUTTl3k0B7WP-sZGF_hQ1VMxn",
+   "title": "A45_장면49_두_주인의_각성.png",
+   "scene": "49"
+  },
+  "A46": {
+   "driveId": "13vWXhgKi05hmsT_z-DB4LVy_dZHeuS3I",
+   "title": "A46_장면50_함께_되찾은_코어.png",
+   "scene": "50"
+  },
+  "A47": {
+   "driveId": "1Vt-LeX2TckIPQNbgKM1ewtZfgbFT_2Ky",
+   "title": "A47_장면52_윤하람.png",
+   "scene": "52"
+  },
+  "A48": {
+   "driveId": "1dpeliojfxz-EcxOL6Py1MFAz731lYBtS",
+   "title": "A48_장면53_장민재와_새빛호텔.png",
+   "scene": "53"
+  },
+  "A49": {
+   "driveId": "15i6sIWy7ZgR_IIjcCdKpXW8ebT8m9gPb",
+   "title": "A49_장면54_고서진과_청록빌라.png",
+   "scene": "54"
+  },
+  "A50": {
+   "driveId": "1qT-lrBlwFwRiolhsI-j_5egG86m2bRhN",
+   "title": "A50_장면55_옥상의_순환.png",
+   "scene": "55"
+  },
+  "A51": {
+   "driveId": "1A3iYS_JC3fhP8_36mAF7uYWTmPfgh51w",
+   "title": "A51_장면56_하나로_묶인_악몽.png",
+   "scene": "56"
+  },
+  "A52": {
+   "driveId": "1_9AadEeiQgtuQnAFgrIONws-sQS5uyCl",
+   "title": "A52_장면57_교주가_기다리는_전쟁.png",
+   "scene": "57"
+  },
+  "A53": {
+   "driveId": "1O57ItPAWiDku8PvcZ0GdVYfckhG3Bzpu",
+   "title": "A53_장면58_돌아오는_현실의_기억.png",
+   "scene": "58"
+  },
+  "A54": {
+   "driveId": "1ijIjje1AeTiy8J0k_4ydqZTghSkhqphW",
+   "title": "A54_장면59_처음_세웠던_목표.png",
+   "scene": "59"
+  },
+  "A55": {
+   "driveId": "1CW8Ms9_Rbd9ms1xDhPMSuS8E8Xgq6wl6",
+   "title": "A55_장면60_사몽의_문턱.png",
+   "scene": "60"
+  },
+  "A56": {
+   "driveId": "1iA90ew3p113cG0pjSyyi_yKiRRW4d5aP",
+   "title": "A56_장면61_교주의_사몽.png",
+   "scene": "61"
   }
  }
 }
