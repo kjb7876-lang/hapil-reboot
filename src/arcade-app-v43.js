@@ -846,7 +846,7 @@
       }else{
         var over=l.age-l.warn-l.active,k=over>0?Math.max(0,1-over/Arcade.BEAM_FADE):Math.min(1,(l.age-l.warn+1)/4),pulse=1+Math.sin(visual*40+i)*.06;
         ctx.setLineDash([]);ctx.globalCompositeOperation='lighter';var dim=paleOf(color)?PALE_BEAM_DIM:BEAM_DIM; // 금빛·흰빛 광선은 빛무리를 줄인다(심사 6.36: 노란 광선이 화면에서 가장 밝아 탄과 영웅을 덮음)
-        if(!lite){ctx.globalAlpha=.3*k*dim;ctx.strokeStyle=color;ctx.lineWidth=l.width*2.3*k*pulse;ctx.stroke();}
+        if(!lite){var fade=ctx.createLinearGradient(0,H*BEAM_LOW_FADE,0,H);fade.addColorStop(0,color);fade.addColorStop(1,'#000000');ctx.globalAlpha=.3*k*dim;ctx.strokeStyle=fade;ctx.lineWidth=l.width*2.3*k*pulse;ctx.stroke();}
         if(sheet){ // 보스 시트의 레이저 질감을 광선 방향으로 늘여 더한다. 판정 폭은 흰 심으로 보인다.
           var bm=sheet.e.beam,th=l.width*2.4*k*pulse;ctx.save();ctx.translate(lx,ly);ctx.rotate(angle);ctx.globalAlpha=k*dim;
           ctx.drawImage(sheet.img,bm[0],bm[1],bm[2],bm[3],0,-th/2,LASER_DRAW,th);ctx.restore();
@@ -888,7 +888,7 @@
     }
     ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
   }
-  var PALE_BEAM_DIM=.3,PALE_CORE=.5,BEAM_CORE=.7,BEAM_DIM=.5,HERO_RING_WIDTH=3,BRIGHT_ART_DIM='brightness(.7) contrast(.78)',PLAYER_SHADE=46,HERO_RING='#7ff3ff',OUTER_RIM='#1c2236',SIGIL_ALPHA=.55;
+  var BEAM_LOW_FADE=.45,PALE_BEAM_DIM=.3,PALE_CORE=.5,BEAM_CORE=.7,BEAM_DIM=.5,HERO_RING_WIDTH=3,BRIGHT_ART_DIM='brightness(.7) contrast(.78)',PLAYER_SHADE=46,HERO_RING='#7ff3ff',OUTER_RIM='#1c2236',SIGIL_ALPHA=.55;
   function drawPlayer(s){
     var p=s.player,blink=s.tick<p.invulnerableUntil&&Math.floor(s.tick/4)%2;
     // 영웅 뒤 어두운 빛무리: 밝은 광선·배경 사이에서도 영웅 자리가 먼저 보인다(심사 6.36)
