@@ -640,6 +640,11 @@
     if(len>limit){dx*=limit/len;dy*=limit/len;}
     p.focus=!!(input&&input.focus);p.x=Math.max(8,Math.min(W-8,p.x+dx));p.y=Math.max(40,Math.min(H-14,p.y+dy));
   }
+  // 따로 정하지 않은 잡몹도 화면 위쪽에 머무는 동안 이 간격(틱)으로 다시 쏜다. 잡몹 구간이 보스전보다 지나치게 한가하지 않게(11-14 지시서).
+  // 화면의 탄이 적으면 더 자주, 많으면 쉬어서 장면마다 압박이 고르게 한다. [쉬움, 보통, 지옥] 기준 탄 수.
+  var MOB_REFIRE=[96,56,56],WAVE_FLOOR=[110,280,280],WAVE_CEIL=[170,320,320];
+  function refireEvery(s,every){var d=s.difficulty==='gentle'?0:s.difficulty==='hell'?2:1,base=every||MOB_REFIRE[d];
+    return Math.max(12,Math.round(s.n<WAVE_FLOOR[d]?base*.4:s.n>WAVE_CEIL[d]?base*2.5:base));}
   function updateMobs(s){
     for(var i=s.mobs.length-1;i>=0;i--){
       var m=s.mobs[i];m.age++;
@@ -650,7 +655,9 @@
       }else{
         m.baseX+=m.vx;m.y+=m.vy;m.x=m.baseX+(m.sway?Math.sin(m.age*m.swayRate)*m.sway*22:0);
         // 화면 위쪽에 있을 때만 쏜다(영웅 코앞 기습 방지).
-        if(m.y<300&&m.y>0&&(m.age===m.first||m.every&&m.age>m.first&&(m.age-m.first)%m.every===0)){MOB_FIRE[m.fire](s,m);m.shots++;}
+        if(m.next===undefined)m.next=m.first;
+        if(m.y<300&&m.y>0&&m.age>=m.next){MOB_FIRE[m.fire](s,m);m.shots++;m.next=m.age+refireEvery(s,m.every);}
+        else if(m.age>=m.next&&m.y<=0)m.next=m.age+1;
         if(m.y>H+30||m.x<-40||m.x>W+40){s.mobs.splice(i,1);continue;}
       }
     }
@@ -930,7 +937,7 @@
     return {fresh:fresh,sanitize:sanitize,record:record,unlocked:unlocked,canPlay:canPlay,resume:resume,totalStars:totalStars};
   })();
   var api={revision:43,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
-    SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
+    SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
     BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem};
   if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcade=api;
