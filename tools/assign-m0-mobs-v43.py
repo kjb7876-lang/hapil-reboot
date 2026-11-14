@@ -62,13 +62,32 @@ for scene, row in table['scenes'].items():
     keys.sort(key=lambda k: 'facing' in mobs[k])  # 정면 걷기 그림을 앞에 둔다. 몹 종류가 하나뿐인 스테이지는 첫 그림만 쓰므로 옆모습보다 정면이 먼저여야 한다.
     if keys: skins[scene] = keys
 
+# 아래로 걷는 정면 그림만 쓰는 목록(front). 옆모습뿐인 몹은 내려오며 옆으로 미끄러져 보이므로 화면은 이 목록을 먼저 쓴다.
+# 장면에 정면 그림 몹이 없으면 같은 지역 계열(지도 이름 앞 글자) 가까운 장면에서, 그래도 없으면 가장 가까운 장면에서 3종까지 빌린다.
+front, front_borrowed = {}, {}
+order = list(table['scenes'])
+def region(scene): return re.match(r'[a-z]+', table['scenes'][scene]['map'].lower()).group(0)
+def fronts(scene): return [k for k in own.get(scene, []) if 'facing' not in mobs[k]]
+for scene in order:
+    if scene not in skins: continue  # m0 몹이 없는 장면은 원래 몹(cast) 그림을 그대로 쓴다
+    keys = fronts(scene)
+    if len(keys) < FILL:
+        i = order.index(scene)
+        near = sorted((s for s in order if s != scene), key=lambda s: (region(s) != region(scene), abs(order.index(s) - i)))
+        for s in near:
+            for k in fronts(s):
+                if len(keys) < FILL and k not in keys and 'academy' not in k:
+                    keys.append(k); front_borrowed.setdefault(scene, []).append(k)
+    if keys: front[scene] = keys
+
 art = {'mobs': {k: {a: b for a, b in v.items() if a != 'name'} for k, v in sorted(mobs.items())}}
 json.dump(art, open('tools/arcade-art-v43/m0.json', 'w'), indent=1, ensure_ascii=False)
 names = {k: v['name'] for k, v in sorted(mobs.items())}
-body = json.dumps({'scenes': skins, 'names': names, 'borrowed': borrowed}, ensure_ascii=False, indent=1)
+body = json.dumps({'scenes': skins, 'front': front, 'names': names, 'borrowed': borrowed, 'frontBorrowed': front_borrowed}, ensure_ascii=False, indent=1)
 open('src/arcade-skins-v43.js', 'w').write(
     '/* 장면마다 m0 지역표의 잡몹 그림을 입힌다. tools/assign-m0-mobs-v43.py가 만든다(손으로 고치지 않는다). */\n'
     '(function(root,data){if(typeof module===\'object\'&&module.exports)module.exports=data;else root.ArcadeSkins=data;})'
     '(typeof self!==\'undefined\'?self:this,' + body + ');\n')
 print(len(mobs), 'mob pictures,', len(skins), 'scenes;', 'no m0 mob:', [s for s in table['scenes'] if s not in skins])
+print('front scenes:', len(front), 'front borrowed:', len(front_borrowed))
 print('v3 front walk:', sum(1 for v in mobs.values() if '/v3-' in v['src']), 'drive base:', sum(1 for v in mobs.values() if 'drive-v43' in v['src']), 'borrowed:', borrowed)

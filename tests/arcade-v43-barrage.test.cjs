@@ -109,3 +109,23 @@ test('v43 barrage: mobs are drawn only with art that walks down the screen',()=>
  assert(Object.keys(skins.front).length>=50,'scenes with down-walking mobs: '+Object.keys(skins.front).length);
  const app=fs.readFileSync(path.join(root,'src/arcade-app-v43.js'),'utf8');assert(/skins\.front|\.front\[/.test(app),'the game draws from the front-walking list');
 });
+
+test('v43 boss hit/death: the engine marks the moment a boss falls, and the game plays a hit and a death motion for it',()=>{
+ const a=h.need();
+ // 보스가 다른 보스나 잡몹 구간으로 넘어가며 쓰러지는 패턴(마지막 패턴)을 찾아 체력을 0으로 만든다.
+ const i=a.SEGMENTS.findIndex((g,k)=>g.kind==='card'&&(!a.SEGMENTS[k+1]||a.SEGMENTS[k+1].kind!=='card'||a.SEGMENTS[k+1].actor!==g.actor));assert(i>=0);
+ const s=a.createRun({difficulty:'normal',seed:3,segment:i});let guard=0;
+ while(s.stage!=='card'&&guard++<2000){s.player.invulnerableUntil=s.tick+999;a.step(s,{dx:0,dy:0});h.clear(s);}
+ assert.equal(s.stage,'card');const actor=s.boss.actor,x=s.boss.x;s.boss.hp=0;s.player.invulnerableUntil=s.tick+999;a.step(s,{dx:0,dy:0});
+ assert(s.events.includes('bossDown'),'bossDown event when the last pattern of a boss breaks: '+s.events.join(','));
+ assert.equal(s.boss.down&&s.boss.down.actor,actor);assert(Math.abs(s.boss.down.x-x)<8);assert.equal(s.boss.down.tick,s.tick);
+ // 같은 보스의 다음 패턴으로 넘어갈 때는 쓰러지지 않는다.
+ const j=a.SEGMENTS.findIndex((g,k)=>g.kind==='card'&&a.SEGMENTS[k+1]&&a.SEGMENTS[k+1].kind==='card'&&a.SEGMENTS[k+1].actor===g.actor);assert(j>=0);
+ const t=a.createRun({difficulty:'normal',seed:3,segment:j});guard=0;
+ while(t.stage!=='card'&&guard++<2000){t.player.invulnerableUntil=t.tick+999;a.step(t,{dx:0,dy:0});h.clear(t);}
+ t.boss.hp=0;a.step(t,{dx:0,dy:0});assert(!t.events.includes('bossDown'),'no death between patterns of the same boss');
+ const app=h.read('src/arcade-app-v43.js');
+ assert(/'bossDown'/.test(app),'the game listens for the fall');
+ assert(/'@hit'/.test(app)&&/'@death'/.test(app),'drawn hit/death strips are used when the manifest has them');
+ assert(/function recoilOf\(/.test(app)&&/function drawFall\(/.test(app),'code recoil and collapse when there is no drawing');
+});
