@@ -625,7 +625,8 @@
     if(next.kind==='wave'){s.boss.leaving=s.boss.present;s.stage='wave';note(s,'wave');return;}
     if(!prev||prev.kind!=='card'||prev.actor!==next.actor||!s.boss.present){s.boss.leaving=s.boss.present;s.stage='intro';}else s.stage='break';
   }
-  function enter(s,actor){var b=s.boss;b.actor=actor;b.name=ACTORS[actor].name;b.mid=!!segment(s).mid;b.present=true;b.leaving=false;b.x=W/2;b.y=-60;b.targetX=W/2;b.targetY=132;s.stageTick=0;note(s,'entrance');}
+  var BOSS_REST=156,BOSS_SWAY=40;
+  function enter(s,actor){var b=s.boss;b.actor=actor;b.name=ACTORS[actor].name;b.mid=!!segment(s).mid;b.present=true;b.leaving=false;b.x=W/2;b.y=-60;b.targetX=W/2;b.targetY=BOSS_REST;s.stageTick=0;note(s,'entrance');}
   function beginCard(s){var card=segment(s),b=s.boss;b.maxHp=b.hp=card.hp;b.mid=!!card.mid;s.stage='card';s.stageTick=0;s.segTick=0;s.spellClean=!!card.spell;if(card.spell){s.spellNumber++;note(s,'card');}else note(s,'plain');}
   function endCard(s,defeated){
     var card=segment(s),left=Math.max(0,card.time-s.segTick*TICK),wiped=cancelAll(s,true),b=s.boss;
@@ -639,7 +640,7 @@
   function moveBoss(s){
     var b=s.boss;if(!b.present)return;
     if(b.leaving){b.y-=5;if(b.y<-70){b.leaving=false;b.present=false;}return;}
-    if(s.stage==='card'&&s.segTick%150===0){b.targetX=96+rand(s)*(W-192);b.targetY=112+rand(s)*52;}
+    if(s.stage==='card'&&s.segTick%150===0){b.targetX=96+rand(s)*(W-192);b.targetY=BOSS_REST-6+rand(s)*BOSS_SWAY;} // 심사 반복 지적: 화면 위에 붙어 체력 띠·스펠 이름과 겹쳤다. 조금 내려 둔다(위 3분의 1 안).
     b.x+=(b.targetX-b.x)*.035;b.y+=(b.targetY-b.y)*.05;
   }
   function movePlayer(s,input){

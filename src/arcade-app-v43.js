@@ -390,8 +390,9 @@
       if(pause){pause.style.position='fixed';pause.style.top=px(Math.max(4,(top-36)/2));pause.style.left=px(r.left+10);}
       canvas.style.boxShadow='';
     }else if(hudOut==='side'){
-      hi.style.cssText='left:'+px(r.left-180)+';width:160px;top:'+px(r.top+64)+';align-items:flex-end;text-align:right';
-      lo.style.cssText='left:'+px(r.right+20)+';width:160px;top:'+px(r.top+64)+';align-items:flex-start'; // 왼쪽 패널과 같은 줄에서 시작(심사 7차: 점수가 오른쪽 아래에 홀로 떠 있었다)
+      var ph=Math.max(200,r.height-88); // 패널이 플레이 칸 높이를 채운다(심사: PC 패널 아래가 비어 있었다)
+      hi.style.cssText='left:'+px(r.left-180)+';width:160px;top:'+px(r.top+64)+';height:'+px(ph)+';align-items:flex-end;text-align:right';
+      lo.style.cssText='left:'+px(r.right+20)+';width:160px;top:'+px(r.top+64)+';height:'+px(ph)+';align-items:flex-start'; // 왼쪽 패널과 같은 줄에서 시작(심사 7차: 점수가 오른쪽 아래에 홀로 떠 있었다)
       canvas.style.boxShadow='0 0 0 1px rgba(214,180,120,.55),0 0 0 5px rgba(10,8,16,.92),0 0 0 6px rgba(214,180,120,.3),0 0 60px 20px rgba(0,0,0,.8)'; // 플레이 칸 테두리와 둘레 어둠
       var coarse=global.matchMedia&&global.matchMedia('(pointer:coarse)').matches;
       for(i=0;i<2;i++)if(pads[i]){pads[i].style.position='';pads[i].style.top='';pads[i].style.bottom='';pads[i].style.left='';pads[i].style.right='';pads[i].style.visibility=coarse?'':'hidden';} // PC는 키로 조작하니 터치 버튼을 숨긴다
@@ -413,7 +414,10 @@
     var lb=function(t){return hudOut==='side'?'<div class="lbl">'+t+'</div>':'';}; // PC 패널에는 이름표를 붙인다(심사 7차)
     var life='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB [X]')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div></div>';
     var score='<div style="text-align:'+(hudOut==='side'?'left':'right')+'">'+lb('SCORE')+'<div class="score">'+pad(s.score)+'</div>'+(hudOut==='side'?lb('BEST')+'<div class="best">'+pad(Math.max(best,s.score))+'</div>':'')+'<div class="graze">GRAZE '+s.graze+'</div></div>'; // 오른쪽 패널에 최고 점수도: 좌우 패널 무게를 맞춘다(심사 10차)
-    if(hudOut==='side'){setHud(hi,'hi',name+life);setHud(lo,'lo',score);}
+    if(hudOut==='side'){
+      var seg=Arcade.SEGMENTS[s.seg],spell=s.stage==='card'&&seg&&seg.spell?'<div>'+lb('SPELL')+'<div class="spell" style="border-color:'+color+'">「'+esc(seg.name)+'」</div></div>':'<div></div>';
+      var keys='<div class="keys">'+lb('CONTROLS')+'<div>이동 ←↑↓→ · WASD</div><div>저속 Shift · 폭탄 X</div><div>일시정지 Esc</div></div>';
+      setHud(hi,'hi',name+life+keys);setHud(lo,'lo',score+spell);} // 아래쪽 빈자리: 왼쪽은 조작법, 오른쪽은 지금 스펠 이름(칸 안 이름표가 작아 읽기 어렵다는 지적)
     else{setHud(hi,'hi',name);setHud(lo,'lo',life+score);}
   }
   function esc(v){return String(v).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
