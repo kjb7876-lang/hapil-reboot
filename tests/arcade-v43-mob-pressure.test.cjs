@@ -29,3 +29,24 @@ test('v43 stage banner clears after a fixed amount of game time, not after a num
  assert(/banner=Math\.max\(0,1-\(s\.tick-bannerTick\)\/BANNER_TICKS\)/.test(app),'the banner fades by game ticks');
  assert(!/banner-=1\/80/.test(app),'no per-frame countdown left');
 });
+
+test('v43 spell banner: the spell-name band is brief and see-through over the boss, the stage band keeps its time',()=>{
+ const app=h.read('src/arcade-app-v43.js');
+ const spell=+/SPELL_BANNER_TICKS=(\d+)/.exec(app)[1],stage=+/BANNER_TICKS=(\d+)/.exec(app)[1];
+ assert(spell<=48&&spell<stage,'spell band leaves within 0.8 s: '+spell);
+ assert(/showBanner\(Arcade\.SEGMENTS\[s\.seg\]\.name,s\.boss\.name,true\)/.test(app),'spell starts use the spell band');
+ assert(/if\(bannerSpell\)\{band\.addColorStop\(\.3,'rgba\(6,4,16,\.22\)'\)/.test(app),'the band is see-through in the middle where the boss stands');
+});
+
+test('v43 spell banner: it leaves by sliding out, its rules sit only behind the text, and the plate does not repeat the name meanwhile',()=>{
+ const app=h.read('src/arcade-app-v43.js');
+ assert(/alpha=bannerSpell\?1:/.test(app),'no half-transparent ghost of the spell name');
+ assert(/var lx=bannerSpell\?W\*\.55:90/.test(app),'the band rules do not cross the boss');
+ assert(/if\(!\(bannerSpell&&banner>0\)\)\{ctx\.font='italic 12px '\+SERIF;ctx\.fillStyle='#f3e3b5';ctx\.fillText\('「'\+seg\.name/.test(app),'the plate hides the name while the band shows');
+});
+
+test('v43 shock ring: the break shockwave takes the scene colour and thins as it spreads',()=>{
+ const app=h.read('src/arcade-app-v43.js'),m=/if\(shock\)\{[^\n]*/.exec(app)[0];
+ assert(/strokeStyle=state\?themeColor\(state\)/.test(m),'scene colour, not plain white');
+ assert(/lineWidth=1\+4\*sk/.test(m),'thins as it spreads');
+});
