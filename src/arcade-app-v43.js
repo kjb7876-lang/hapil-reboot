@@ -438,6 +438,8 @@
     var s=state,i,k;
     for(i=0;i<s.cancelled.length;i+=3)addParticle(s.cancelled[i],s.cancelled[i+1],0,-.5,22+(i%9),COLORS[s.cancelled[i+2]]||'#ffffff',5);
     s.cancelled.length=0;
+    for(i=0;i<s.drifted.length;i+=5)drifts.push({x:s.drifted[i],y:s.drifted[i+1],c:COLORS[s.drifted[i+2]]||'#ffffff',vx:Math.cos(s.drifted[i+3])*s.drifted[i+4],vy:Math.sin(s.drifted[i+3])*s.drifted[i+4],age:0});
+    s.drifted.length=0;if(drifts.length>DRIFT_DRAW)drifts.splice(0,drifts.length-DRIFT_DRAW);
     for(i=0;i<s.pops.length;i+=3){var big=s.pops[i+2];for(k=0;k<(big?14:6);k++){var a=TAU*k/(big?14:6);addParticle(s.pops[i],s.pops[i+1],Math.cos(a)*(big?3.4:2.2),Math.sin(a)*(big?3.4:2.2),big?26:16,k%2?'#ffffff':themeColor(s),big?7:4);}if(big)shake=Math.max(shake,6);}
     s.pops.length=0;
     for(i=0;i<s.events.length;i++){
@@ -871,6 +873,15 @@
     ctx.fillStyle='#ff2a4a';ctx.beginPath();ctx.arc(p.x,p.y,p.r+1.8,0,TAU);ctx.fill();
     ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(p.x,p.y,Math.max(1.2,p.r),0,TAU);ctx.fill();
   }
+  /* 끝난 패턴의 탄: 판정 없이 제 길로 흘러 화면 밖까지 가며 서서히 옅어진다(사용자 11-14). 진짜 탄과 헷갈리지 않게 속이 빈 옅은 점으로만 그린다. */
+  var drifts=[],DRIFT_DRAW=600,DRIFT_LIFE=120;
+  function drawDrifts(){
+    if(!drifts.length)return;ctx.save();ctx.globalCompositeOperation='lighter';ctx.lineWidth=1.4;
+    for(var i=drifts.length-1;i>=0;i--){var d=drifts[i];d.x+=d.vx;d.y+=d.vy;d.age++;
+      if(d.age>DRIFT_LIFE||d.y>H+12||d.y<-20||d.x<-20||d.x>W+20){drifts[i]=drifts[drifts.length-1];drifts.pop();continue;}
+      ctx.globalAlpha=.42*(1-d.age/DRIFT_LIFE);ctx.strokeStyle=d.c;ctx.beginPath();ctx.arc(d.x,d.y,3.2,0,TAU);ctx.stroke();}
+    ctx.restore();
+  }
   function drawParticles(){
     ctx.save();ctx.globalCompositeOperation='lighter';
     for(var i=particles.length-1;i>=0;i--){
@@ -946,7 +957,7 @@
     offsetX=offsetY=0;if(shake>0){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);drawBossOver(s);drawPlayer(s);drawHitbox(s); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawDrifts();drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);drawBossOver(s);drawPlayer(s);drawHitbox(s); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);drawHud(s);
     if(flash>0){ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);flash-=.04;}
     if(hurtFlash>0){var v=ctx.createRadialGradient(W/2,H/2,120,W/2,H/2,420);v.addColorStop(0,'rgba(255,0,40,0)');v.addColorStop(1,'rgba(255,0,40,'+(hurtFlash*.6)+')');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);hurtFlash-=.035;}
@@ -1001,7 +1012,7 @@
     if(Number.isInteger(run.segment))options.segment=run.segment;
     state=Arcade.createRun(options);
     buildSprites();loadStage(state.stageIndex);fxStage=-1;
-    particles.length=0;flash=hurtFlash=shake=banner=0;shock=null;toast=null;accumulator=0;lastStamp=0;framesSeen=0;rushStage=false;setMode('playing');
+    particles.length=0;drifts.length=0;flash=hurtFlash=shake=banner=0;shock=null;toast=null;accumulator=0;lastStamp=0;framesSeen=0;rushStage=false;setMode('playing');
   }
   function finish(){
     var s=state,won=s.stage==='won';rushStage=false;
