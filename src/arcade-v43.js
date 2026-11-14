@@ -75,9 +75,9 @@
   /* 난이도. density 탄 수 배율 · speed 탄 속도 배율 · hp 목숨 · mapHeal 다음 맵에서 회복(-1은 전부) · bombs 폭탄 ·
    * radius 영웅 피격점 반지름 · hitScale 탄의 보이는 반지름 중 실제로 닿는 비율 · warn 광선 예고 시간 배율 · beam 광선 굵기 배율 */
   var DIFFICULTY={
-    gentle:{density:1.8,speed:.56,hp:7,mapHeal:-1,bombs:3,radius:1,hitScale:.3,warn:1.6,beam:.72,label:'여유'},
-    normal:{density:1.9,speed:.64,hp:3,mapHeal:1,bombs:2,radius:1.4,hitScale:.38,warn:1.2,beam:.88,label:'기본'},
-    hell:{density:2,speed:.9,hp:1,mapHeal:0,bombs:1,radius:2.4,hitScale:.5,warn:1,beam:1,label:'지옥'}
+    gentle:{density:2.3,speed:.56,hp:7,mapHeal:-1,bombs:3,radius:1,hitScale:.3,warn:1.6,beam:.72,label:'여유'},
+    normal:{density:2.45,speed:.64,hp:3,mapHeal:1,bombs:2,radius:1.4,hitScale:.38,warn:1.2,beam:.88,label:'기본'},
+    hell:{density:2.6,speed:.9,hp:1,mapHeal:0,bombs:1,radius:2.4,hitScale:.5,warn:1,beam:1,label:'지옥'}
   };
   // 휴대폰 모드: 탄 수를 줄이고 그만큼 탄을 크게 그린다(판정도 같이 커진다).
   var COMPACT_DENSITY=.72,COMPACT_SIZE=1.25;

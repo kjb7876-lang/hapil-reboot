@@ -165,3 +165,8 @@ print(worst)`],{cwd:root}).toString();
  assert(Number(out)<2.2,'seam / neighbour-row difference: '+out.trim());
  const app=h.read('src/arcade-app-v43.js');assert(/'bg-loop-'/.test(app)&&/backgroundTall/.test(app),'the game uses loop maps at their own height');
 });
+
+test('v43 barrage: hell fires about 30% more than before (user 11-14: "헬도 비슷하게 탄수 올려"), easy and normal keep pace',()=>{
+ const d=h.need().DIFFICULTY;assert(d.hell.density>=2.6,'hell density '+d.hell.density);
+ assert(d.gentle.density>=d.hell.density*.88&&d.normal.density>=d.hell.density*.88);
+});
