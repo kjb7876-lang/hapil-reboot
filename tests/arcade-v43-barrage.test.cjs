@@ -181,3 +181,10 @@ test('v43 review fixes: pattern banner sits under the top HUD, bullets fade on t
 test('v43 review fixes: a hit on a mob or the boss throws a small spark',()=>{
  const app=h.read('src/arcade-app-v43.js');assert(/function hitSpark\(/.test(app)&&(app.match(/hitSpark\(/g)||[]).length>=3,'spark function used for mobs and the boss');
 });
+
+test('v43 review fixes: with room outside the play field, the HUD moves out of it (phone bars, PC side panels)',()=>{
+ const app=h.read('src/arcade-app-v43.js'),html=h.read('arcade.html');
+ assert(/id="arcade-hud-high"/.test(html)&&/id="arcade-hud-low"/.test(html),'HUD boxes outside the canvas');
+ assert(/function placeHud\(/.test(app)&&/hudOut==='side'/.test(app)&&/hudOut==='below'/.test(app),'two layouts: below/above on phones, side panels on PC');
+ assert(/if\(!hudOut\)/.test(app),'the canvas HUD is drawn only when there is no room outside');
+});

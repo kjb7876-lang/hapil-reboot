@@ -331,7 +331,48 @@
     if(next!==scale||!orbs.length||canvas.width!==W*next){scale=next;canvas.width=W*scale;canvas.height=H*scale;buildSprites();}
     var stage=$('arcade-stage'),room=stage.getBoundingClientRect(),k=Math.min(room.width/W,room.height/H);
     canvas.style.width=Math.floor(W*k)+'px';canvas.style.height=Math.floor(H*k)+'px';
+    placeHud();
   }
+  /* 플레이 칸 밖에 자리가 있으면 HUD(스테이지 이름·목숨·폭탄·점수)와 버튼을 칸 밖으로 뺀다.
+     휴대폰(위아래 여백 56px 이상): 위 여백에 이름과 일시정지, 아래 여백에 목숨·점수와 저속·폭탄 버튼. PC(좌우 여백 170px 이상): 좌우 패널. */
+  var hudOut='',hudText={};
+  function placeHud(){
+    var hi=$('arcade-hud-high'),lo=$('arcade-hud-low');if(!hi||!lo||!canvas.getBoundingClientRect)return;
+    var r=canvas.getBoundingClientRect(),vw=global.innerWidth||r.width,vh=global.innerHeight||r.height,top=r.top,bottom=vh-r.bottom,side=Math.min(r.left,vw-r.right);
+    var pads=[$('arcade-focus'),$('arcade-bomb')],pause=$('arcade-pause-button'),i;
+    hudOut=side>=170?'side':Math.min(top,bottom)>=56?'below':'';
+    hi.className='hudx'+(hudOut?' '+hudOut:'');lo.className=hi.className;hudText={};
+    var px=function(v){return Math.round(v)+'px';};
+    if(hudOut==='below'){
+      hi.style.cssText='left:'+px(r.left)+';width:'+px(r.width)+';top:0;height:'+px(top)+';justify-content:flex-start;padding-left:64px';
+      lo.style.cssText='left:'+px(r.left)+';width:'+px(r.width)+';top:'+px(r.bottom)+';height:'+px(bottom)+';padding:0 86px';
+      for(i=0;i<2;i++)if(pads[i]){pads[i].style.position='fixed';pads[i].style.top=px(r.bottom+(bottom-56)/2);pads[i].style.bottom='auto';pads[i].style.left=i?'auto':px(r.left+10);pads[i].style.right=i?px(vw-r.right+10):'auto';}
+      if(pause){pause.style.position='fixed';pause.style.top=px(Math.max(4,(top-36)/2));pause.style.left=px(r.left+10);}
+    }else if(hudOut==='side'){
+      hi.style.cssText='left:'+px(r.left-180)+';width:160px;top:'+px(r.top+40)+';align-items:flex-end;text-align:right';
+      lo.style.cssText='left:'+px(r.right+20)+';width:160px;top:'+px(r.bottom-150)+';align-items:flex-start';
+      var coarse=global.matchMedia&&global.matchMedia('(pointer:coarse)').matches;
+      for(i=0;i<2;i++)if(pads[i]){pads[i].style.position='';pads[i].style.top='';pads[i].style.bottom='';pads[i].style.left='';pads[i].style.right='';pads[i].style.visibility=coarse?'':'hidden';} // PC는 키로 조작하니 터치 버튼을 숨긴다
+      if(pause){pause.style.position='';pause.style.top='';pause.style.left='';}
+    }else{
+      for(i=0;i<2;i++)if(pads[i]){pads[i].style.position='';pads[i].style.top='';pads[i].style.bottom='';pads[i].style.left='';pads[i].style.right='';pads[i].style.visibility='';}
+      if(pause){pause.style.position='';pause.style.top='';pause.style.left='';}
+    }
+    hi.hidden=lo.hidden=!(hudOut&&mode==='playing');
+  }
+  function setHud(el,key,html){if(hudText[key]!==html){hudText[key]=html;el.innerHTML=html;}}
+  function domHud(s){
+    var hi=$('arcade-hud-high'),lo=$('arcade-hud-low');if(!hi||!lo)return;hi.hidden=lo.hidden=mode!=='playing';
+    var b=s.boss,stage=Arcade.STAGES[s.stageIndex],i,hearts='',bombs='',color=themeColor(s);
+    for(i=0;i<s.player.maxHp;i++)hearts+=i<s.player.hp?'◆':'◇';for(i=0;i<s.bombs;i++)bombs+='✦';
+    var g=Math.round(100*Math.max(0,Math.min(1,s.gauge/Arcade.GAUGE_FULL)));
+    var name='<div><div class="name" style="color:'+color+'">'+esc(b.present?b.name:stage.name)+'</div><div>'+(s.bossOnly?'보스 체험 · 제'+stage.part+'부':'STAGE '+(s.stageIndex+1)+' / '+Arcade.STAGES.length)+'</div></div>';
+    var life='<div><div class="lives">'+hearts+'</div><div class="bombs">'+(bombs||'&nbsp;')+'</div><div class="gauge"><i style="width:'+g+'%"></i></div></div>';
+    var score='<div style="text-align:'+(hudOut==='side'?'left':'right')+'"><div class="graze">GRAZE '+s.graze+'</div><div class="score">'+pad(s.score)+'</div></div>';
+    if(hudOut==='side'){setHud(hi,'hi',name+life);setHud(lo,'lo',score);}
+    else{setHud(hi,'hi',name);setHud(lo,'lo',life+score);}
+  }
+  function esc(v){return String(v).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   // 느린 기기에서는 먼저 해상도를, 그래도 느리면 빛무리와 날씨 입자 수를 내린다.
   function adaptQuality(elapsedMs){
     frameMs+=(Math.min(80,elapsedMs)-frameMs)*.05;framesSeen++;
@@ -480,7 +521,14 @@
     else{ctx.translate(fall.x,fall.y+22*k*k);ctx.rotate(fall.dir*.55*Math.min(1,k*1.5));ctx.scale(1+.1*k,1-.4*k*k);drawArt(fall.actor,0,0,k<.45&&((s.tick>>2)&1)===1,themeColor(s),0,'',fall.dir);} // 젖혀지며 무릎 꿇듯 주저앉고 사라진다
     ctx.restore();ctx.globalAlpha=1;
   }
+  /* 패턴 중에는 탄을 그린 뒤 보스를 반투명으로 한 번 더 얹어, 보스 몸 위에서 나온 탄 덩어리 속에서도 보스 윤곽이 읽히게 한다. */
+  var bossDraw={on:false};
+  function drawBossOver(s){
+    var b=s.boss;if(!bossDraw.on||!b.present||b.leaving||s.stage!=='card'){bossDraw.on=false;return;}
+    ctx.save();ctx.globalAlpha=.55;ctx.translate(bossDraw.x,bossDraw.y);if(bossDraw.tilt)ctx.rotate(bossDraw.tilt);ctx.scale(bossDraw.sx,bossDraw.sy);drawArt(b.actor,0,0,false,themeColor(s),0,bossDraw.motion,bossDraw.face);ctx.restore();ctx.globalAlpha=1;bossDraw.on=false;
+  }
   function drawBoss(s){
+    bossDraw.on=false;
     var b=s.boss;if(!b.present||b.y<-50)return;
     if(b.leaving&&fall&&fall.actor===b.actor)return; // 쓰러진 보스는 날아가지 않고 drawFall이 그 자리에서 무너뜨린다
     var bob=Math.sin(visual*2.2)*4,size=(b.mid?150:190)+Math.sin(visual*1.3)*10,bx=finite(b.x,W/2),by=finite(b.y,120)+bob;
@@ -492,6 +540,7 @@
     var bm=s.tick<bp.until&&images[b.actor+'@attack']?'attack':bp.side>0?'side':'';
     var since=56-(bp.until-s.tick),punch=bm==='attack'&&since>=0&&since<16?1+.14*(1-since/16):1; // 공격 순간 몸이 한 번 커졌다 돌아온다. 탄에 가려도 윤곽으로 읽힌다.
     var rc=recoilOf(s,b);if(rc&&images[b.actor+'@hit'])bm='hit'; // 피격 그림이 있으면 그 칸을, 없으면 같은 그림을 젖혀 피격을 보인다
+    bossDraw.on=true;bossDraw.x=bx;bossDraw.y=by+(rc?rc.dy:0);bossDraw.tilt=rc?rc.tilt:0;bossDraw.sx=punch*(rc?rc.sx:1);bossDraw.sy=punch*(rc?rc.sy:1);bossDraw.motion=bm;bossDraw.face=bp.dir||(bx>W/2?-1:1);
     ctx.save();ctx.translate(bx,by+(rc?rc.dy:0));if(rc)ctx.rotate(rc.tilt);ctx.scale(punch*(rc?rc.sx:1),punch*(rc?rc.sy:1));drawArt(b.actor,0,0,s.tick-b.hitTick<3,themeColor(s),0,bm,bp.dir||(bx>W/2?-1:1));ctx.restore();
     if(s.stage==='card'){ctx.globalAlpha=.22;ctx.drawImage(shadeSprite(),bx-74,by-74,148,148);ctx.globalAlpha=1;} // 패턴 중에는 몸을 조금 어둡게 눌러 몸 위의 같은 색 탄이 읽히게 한다
   }
@@ -603,7 +652,7 @@
   }
   // 영웅 탄은 반투명하게 그려 적 탄을 가리지 않는다.
   function drawShots(s){
-    ctx.globalAlpha=.42;
+    ctx.globalAlpha=.6; // 너무 흐리면 타격감이 없다는 심사 지적(11-14): 조금 진하게
     for(var i=0;i<s.sn;i++){
       if(s.shoming[i]){var h=homingSprite.half;ctx.drawImage(homingSprite.image,s.sx[i]-h,s.sy[i]-h,h*2,h*2);}
       else ctx.drawImage(shotSprite,s.sx[i]-4,s.sy[i]-13,8,26);
@@ -653,7 +702,8 @@
   function drawTopShade(){var top=ctx.createLinearGradient(0,0,0,96);top.addColorStop(0,'rgba(4,4,12,.85)');top.addColorStop(.6,'rgba(4,4,12,.5)');top.addColorStop(1,'rgba(4,4,12,0)');ctx.fillStyle=top;ctx.fillRect(-8,-8,W+16,104);}
   function drawHud(s){
     var b=s.boss,seg=Arcade.SEGMENTS[s.seg],color=themeColor(s),left=Arcade.timeLeft(s),stage=Arcade.STAGES[s.stageIndex],i;
-    var plate=ctx.createLinearGradient(0,0,230,0);plate.addColorStop(0,'rgba(4,4,12,.78)');plate.addColorStop(.7,'rgba(4,4,12,.6)');plate.addColorStop(1,'rgba(4,4,12,0)');ctx.fillStyle=plate;ctx.fillRect(0,15,230,36); // 글자 바로 뒤에만 깐다. 넓은 띠는 탄 아래(drawTopShade)에 있다.
+    if(hudOut)domHud(s);
+    var plate=ctx.createLinearGradient(0,0,230,0);plate.addColorStop(0,'rgba(4,4,12,.78)');plate.addColorStop(.7,'rgba(4,4,12,.6)');plate.addColorStop(1,'rgba(4,4,12,0)');if(!hudOut){ctx.fillStyle=plate;ctx.fillRect(0,15,230,36);} // 글자 바로 뒤에만 깐다. 넓은 띠는 탄 아래(drawTopShade)에 있다.
     ctx.textBaseline='alphabetic';
     if(s.stage==='card'&&seg){
       ctx.fillStyle='rgba(255,255,255,.16)';ctx.fillRect(12,9,W-24,4);ctx.fillStyle=b.hp/b.maxHp<=.2?'#ff5a5a':color;ctx.fillRect(12,9,(W-24)*Math.max(0,Math.min(1,finite(b.hp/b.maxHp,0))),4);
@@ -662,6 +712,7 @@
         ctx.font='italic 12px '+SERIF;ctx.fillStyle='#f3e3b5';ctx.fillText('「'+seg.name+'」',W-12,52);
       }
     }
+    if(!hudOut){ // 칸 밖에 자리가 없을 때만 칸 안에 그린다
     ctx.textAlign='left';ctx.font='600 12px '+SANS;ctx.fillStyle=color;ctx.fillText(b.present?b.name:stage.name,12,29);
     ctx.font='11px '+SANS;ctx.fillStyle='rgba(255,255,255,.72)';ctx.fillText(s.bossOnly?'보스 체험 · 제'+stage.part+'부':'STAGE '+(s.stageIndex+1)+' / '+Arcade.STAGES.length,12,45);
     // 목숨 · 폭탄 · 스침 게이지(왼쪽 아래 저속 버튼 위), 점수(오른쪽 아래 폭탄 버튼 위)
@@ -670,6 +721,7 @@
     ctx.fillStyle='rgba(255,255,255,.18)';ctx.fillRect(12,H-72,64,3);ctx.fillStyle='#7dffb0';ctx.fillRect(12,H-72,64*Math.max(0,Math.min(1,s.gauge/Arcade.GAUGE_FULL)),3);
     ctx.textAlign='right';ctx.font='600 14px '+SANS;ctx.fillStyle='#ffffff';ctx.fillText(pad(s.score),W-12,H-78);
     ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.7)';ctx.fillText('GRAZE '+s.graze,W-12,H-94);
+    }
     if(banner>0){
       var t=1-banner,slide=t<.18?(1-t/.18)*W:0,alpha=t>.75?(1-t)/.25:1;
       ctx.save();ctx.globalAlpha=alpha;ctx.translate(slide,0);
@@ -688,7 +740,7 @@
     offsetX=offsetY=0;if(shake>0){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawSkillFx(s);drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawPlayer(s);drawParticles();drawItems(s);drawLasers(s);drawFigures(s);drawBullets(s);drawHitbox(s);
+    drawBackground(s);drawFx();drawTopShade();drawSkillFx(s);drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawParticles();drawItems(s);drawLasers(s);drawFigures(s);drawBullets(s);drawBossOver(s);drawPlayer(s);drawHitbox(s); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);drawHud(s);
     if(flash>0){ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);flash-=.04;}
     if(hurtFlash>0){var v=ctx.createRadialGradient(W/2,H/2,120,W/2,H/2,420);v.addColorStop(0,'rgba(255,0,40,0)');v.addColorStop(1,'rgba(255,0,40,'+(hurtFlash*.6)+')');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);hurtFlash-=.035;}
@@ -729,6 +781,7 @@
   function setMode(next){
     mode=next;Object.keys(SCREENS).forEach(function(k){show(SCREENS[k],k===next);});
     ['arcade-pause-button','arcade-focus','arcade-bomb'].forEach(function(id){show(id,next==='playing');});
+    var hh=$('arcade-hud-high'),hl=$('arcade-hud-low');if(hh&&hl)hh.hidden=hl.hidden=!(hudOut&&next==='playing');
     if(next!=='playing'){focusHeld=false;finger.active=false;bombQueued=false;}
     if(next!=='keepsakes')clearKeepsakes();
     if(music){if(next==='playing'&&soundOn){var p=music.play();if(p&&p.catch)p.catch(function(){});}else music.pause();}
