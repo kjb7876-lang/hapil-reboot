@@ -591,21 +591,32 @@
     var pad=band+6,m=radius+pad,c=offscreen(m*2*scale,m*2*scale),g=c.getContext('2d');g.scale(scale,scale);g.translate(m,m);
     g.lineCap='round';g.lineJoin='round';g.shadowColor=mix(ink,'#000000',.35);g.shadowBlur=5;
     g.strokeStyle=ink;g.lineWidth=band>12?1.5:1;[-band/2,band/2].forEach(function(o){g.beginPath();g.arc(0,0,radius+o,0,TAU);g.stroke();});
-    var n=Math.floor(TAU*radius/(band*1.15)),h=band*.66,light=mix(ink,'#ffffff',.55);g.strokeStyle=light;g.lineWidth=band>12?1.4:1.05;
+    var n=Math.floor(TAU*radius/(band*1.15)),h=band*.66,light=mix(ink,'#ffffff',.55);g.strokeStyle=light;g.lineWidth=band>12?1.8:1.05;
     for(var i=0;i<n;i++){var a=TAU*i/n;g.save();g.rotate(a);g.translate(0,-radius);
       if(i%7===3){g.beginPath();g.arc(0,0,h*.3,0,TAU);g.stroke();g.beginPath();g.arc(0,0,h*.08,0,TAU);g.fillStyle=light;g.fill();} // 문장 사이 쉼표 고리
       else runeGlyph(g,h,seed*977+i*131+7);
       g.restore();}
     return c;
   }
+  // 결계 안(바깥 고리 반지름 안)에 있는 적 탄 수. 8프레임마다 센다. 많을수록 고리가 물러나 탄 윤곽을 양보한다(룬 2차 심사).
+  var duckMemo={tick:-99,v:1};
+  function runeDuck(s,bx,by,R){
+    if(s.tick-duckMemo.tick<8)return duckMemo.v;
+    var n=0,R2=R*R;for(var i=0;i<s.n;i++){var dx=s.bx[i]-bx,dy=s.by[i]-by;if(dx*dx+dy*dy<R2)n++;}
+    duckMemo.tick=s.tick;duckMemo.v=Math.max(.72,1-n/180);return duckMemo.v;
+  }
   function drawRuneBarrier(s,bx,by,size){
-    var ink=mix('#a776ff',themeColor(s).slice(0,7),.3),rings=runeRings[ink];
+    var ink=mix('#a776ff',themeColor(s).slice(0,7),.4),rings=runeRings[ink];
     if(!rings)rings=runeRings[ink]=RUNE_RADII.map(function(r,k){return buildRuneRing(r,RUNE_BAND[k],k+1,ink);});
-    var card=s.stage==='card',k0=size/190,alpha=card?.4:.12;
+    var count=compact?2:3,k0=size/190*(compact?.9:1); // 모바일은 바깥 고리를 빼고 조금 작게: 화면 위 1/3을 덮지 않게
+    var card=s.stage==='card',duck=card?runeDuck(s,bx,by,RUNE_RADII[count-1]*k0):1,alpha=(card?(compact?.6:.5):.12)*duck;
+    var room=Math.min(bx,W-bx,by+60); // 보스에서 플레이필드 가장자리(양옆·위)까지의 거리
     ctx.save();ctx.globalCompositeOperation='lighter';
-    for(var k=0;k<RUNE_RADII.length;k++){var img=rings[k],half=img.width/scale/2,breathe=1+.05*Math.sin(visual*1.25+k*2.1);
+    for(var k=0;k<count;k++){var img=rings[k],half=img.width/scale/2,breathe=1+.05*Math.sin(visual*1.25+k*2.1),r=RUNE_RADII[k]*k0*breathe;
+      var edge=Math.max(0,Math.min(1,(room+30-r*.55)/(r*.45))); // 가장자리에 잘리는 고리는 잘린 만큼 흐리게
+      if(edge<=0)continue;
       ctx.save();ctx.translate(bx,by);ctx.rotate(visual*RUNE_SPIN[k]+k);ctx.scale(k0*breathe,k0*breathe);
-      ctx.globalAlpha=alpha*RUNE_ALPHA[k]*(.82+.18*Math.sin(visual*1.25+k*2.1));ctx.drawImage(img,-half,-half,half*2,half*2);ctx.restore();}
+      ctx.globalAlpha=alpha*RUNE_ALPHA[k]*edge*(.82+.18*Math.sin(visual*1.25+k*2.1));ctx.drawImage(img,-half,-half,half*2,half*2);ctx.restore();}
     ctx.restore();ctx.globalAlpha=1;
   }
   /* 패턴 중에는 탄을 그린 뒤 보스를 반투명으로 한 번 더 얹어, 보스 몸 위에서 나온 탄 덩어리 속에서도 보스 윤곽이 읽히게 한다. */

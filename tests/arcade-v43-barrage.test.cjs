@@ -346,3 +346,12 @@ test('v43 rune barrier: purple rune rings turn both ways and breathe outside the
  const spins=(/RUNE_SPIN=(\[[^\]]*\])/.exec(app)||[,'[]'])[1];const sp=JSON.parse(spins);
  assert(sp.some(v=>v>0)&&sp.some(v=>v<0),'rings turn in both directions: '+spins);
 });
+
+/* 룬 결계 2차(11-14 심사 지적): 탄이 고리 안에 많으면 고리가 물러난다(ducking), 모바일은 바깥 고리를 빼고 작게, 화면 가장자리에서 잘리는 고리는 흐리게 */
+test('v43 rune barrier (round 2): rings duck under dense bullets, shrink on mobile and fade where the edge cuts them',()=>{
+ const app=fs.readFileSync(path.join(root,'src/arcade-app-v43.js'),'utf8');
+ const fn=(/function drawRuneBarrier\([\s\S]*?\n  \}/.exec(app)||[''])[0];
+ assert(/duck/.test(fn)&&/s\.bx\[/.test(app.slice(app.indexOf('function runeDuck'),app.indexOf('function drawRuneBarrier'))),'ring alpha drops with the bullets inside the barrier');
+ assert(/compact/.test(fn),'mobile draws a smaller barrier');
+ assert(/edge/.test(fn)&&/W-bx|W - bx/.test(fn),'rings fade when the playfield edge cuts them');
+});
