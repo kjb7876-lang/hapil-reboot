@@ -134,3 +134,14 @@ test('v43 barrage: the game draws glyph lasers and edge zigzags from the same se
  const app=h.read('src/arcade-app-v43.js');
  assert(/function drawFigures\(/.test(app)&&/Arcade\.figureSegments\(/.test(app)&&/drawFigures\(s\)/.test(app),'figures are drawn from engine segments');
 });
+
+test('v43 boss skill effects: drive frame animations are matched to bosses, light, loaded per boss, and every other boss gets a code effect',()=>{
+ const a=h.need(),file=path.join(root,'media/arcade-v43-fx/index.json');assert(fs.existsSync(file),'effect list');
+ const list=JSON.parse(fs.readFileSync(file,'utf8')).effects,seen=new Set();assert(list.length>=12,'effects: '+list.length);
+ for(const e of list){const p=path.join(root,'media/arcade-v43-fx',e.file);assert(fs.existsSync(p),e.file);assert(fs.statSync(p).size<=200000,e.file+' is light');
+  assert(Number.isInteger(e.frames)&&e.frames>=4&&Array.isArray(e.cell)&&e.fps>0,e.file);assert(['normal','lighter'].includes(e.blend));assert(e.status,e.file+' keeps the author status');
+  for(const b of e.bosses){assert(a.SIGNATURES[b],b+' is a boss');assert(!seen.has(b),b+' has one effect');seen.add(b);}}
+ const app=h.read('src/arcade-app-v43.js');
+ assert(/arcade-v43-fx\/index\.json/.test(app)&&/function drawSkillFx\(/.test(app)&&/drawSkillFx\(s\)/.test(app),'effects are drawn');
+ assert(/e==='figure'/.test(app)&&/function castFx\(/.test(app),'played when a boss casts');
+});

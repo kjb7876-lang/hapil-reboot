@@ -349,11 +349,12 @@
       else if(e==='item'){if(visual-lastItemSound>.06){lastItemSound=visual;play('item',s.player.x);}}
       else if(e==='hurt'){play('hurt',s.player.x);hurtFlash=1;shake=14;}
       else if(e==='bomb'){play('bomb',s.player.x);flash=.55;shock={x:s.player.x,y:s.player.y,r:10};shake=10;}
-      else if(e==='card'){play('charge',s.boss.x);showBanner(Arcade.SEGMENTS[s.seg].name,s.boss.name);}
+      else if(e==='card'){play('charge',s.boss.x);castFx(s,true);showBanner(Arcade.SEGMENTS[s.seg].name,s.boss.name);}
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,'제'+g.part+'부 · STAGE '+(s.stageIndex+1));play('seal');}}
       else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);showToast(r);rushStage=false;}
       else if(e==='map')loadStage(s.stageIndex);
-      else if(e==='entrance')play('warning');
+      else if(e==='entrance'){play('warning');wantFx(s.boss.actor);}
+      else if(e==='figure')castFx(s,false);
       else if(e==='bossDown'){var dn=s.boss.down;if(dn){fall={actor:dn.actor,x:dn.x,y:dn.y,tick:dn.tick,dir:dn.x>W/2?1:-1,burst:-1};flash=.8;shake=16;}}
       else if(e==='break'){play('phaseBreak',s.boss.x);flash=.6;shock={x:s.boss.x,y:s.boss.y,r:10};shake=8;}
       else if(e==='capture'||e==='bombGain'||e==='extend')play('seal');
@@ -395,6 +396,43 @@
     var dx=m.x-p.x,dy=m.y-p.y;p.x=m.x;p.y=m.y;
     if(Math.abs(dx)>Math.abs(dy)*1.15&&Math.abs(dx)>.35){p.side=8;p.dir=dx<0?-1:1;}else if(p.side>0)p.side--;
     return p;
+  }
+  /* 보스 스킬 이펙트: 드라이브 프레임 애니메이션(media/arcade-v43-fx/index.json)을 보스가 이름 붙은 패턴을 열 때와 문양 레이저를 부를 때 보스 자리에 한 번 재생한다.
+     그림은 지금 나온 보스 것만 받는다(보스가 바뀌면 앞 보스 것은 놓는다). 그림이 없는 보스는 고유 색의 겹 고리가 퍼지는 코드 연출. 판정은 없다(장식). */
+  var FX_DIR='media/arcade-v43-fx/',fxByBoss={},fxImages={},fxPending={},casts=[];
+  function loadFxList(){
+    if(!global.fetch)return;
+    global.fetch(FX_DIR+'index.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():null;}).then(function(d){
+      if(d&&Array.isArray(d.effects))d.effects.forEach(function(e){(e.bosses||[]).forEach(function(b){fxByBoss[b]=e;});});
+      if(state&&state.boss&&state.boss.present)wantFx(state.boss.actor);
+    },function(){});
+  }
+  function wantFx(actor){
+    var e=fxByBoss[actor],k;for(k in fxImages)if(!e||k!==e.file)delete fxImages[k];
+    if(!e||fxImages[e.file]||fxPending[e.file])return;fxPending[e.file]=1;
+    var im=new Image();im.onload=function(){fxPending[e.file]=0;if(fxByBoss[state&&state.boss.actor]===e)fxImages[e.file]=im;};im.onerror=function(){fxPending[e.file]=0;};im.src=FX_DIR+e.file;
+  }
+  function castFx(s,big){
+    var b=s.boss,e=fxByBoss[b.actor],sig=Arcade.SIGNATURES&&Arcade.SIGNATURES[b.actor];if(!b.present)return;
+    if(casts.length>=4)casts.shift();
+    casts.push({x:b.x,y:b.y,t:visual,e:e&&fxImages[e.file]?e:null,big:big,color:COLORS[sig?sig.color:0]||'#ffffff'});
+  }
+  function drawSkillFx(s){
+    for(var i=casts.length-1;i>=0;i--){
+      var c=casts[i],age=visual-c.t,b=s.boss;if(b.present&&!b.leaving){c.x=b.x;c.y=b.y;}
+      if(c.e){
+        var e=c.e,img=fxImages[e.file],f=Math.floor(age*e.fps);if(!img||f>=e.frames||f<0){casts.splice(i,1);continue;}
+        var sc=(c.big?1.35:1)*170/Math.max(e.cell[0],e.cell[1]),w=e.cell[0]*sc,hh=e.cell[1]*sc;
+        ctx.save();ctx.globalCompositeOperation=e.blend==='lighter'?'lighter':'source-over';ctx.globalAlpha=f>=e.frames-2?.5:.9;
+        ctx.drawImage(img,f*e.cell[0],0,e.cell[0],e.cell[1],c.x-e.pivot[0]*sc,c.y-e.pivot[1]*sc,w,hh);ctx.restore();
+      }else{
+        var k=age/.75;if(k>=1){casts.splice(i,1);continue;}
+        ctx.save();ctx.globalCompositeOperation='lighter';ctx.strokeStyle=c.color;
+        for(var q=0;q<(c.big?3:2);q++){var kk=k-q*.14;if(kk<=0)continue;ctx.globalAlpha=.7*(1-kk);ctx.lineWidth=7*(1-kk)+1;ctx.beginPath();ctx.arc(c.x,c.y,24+kk*(c.big?150:105),0,TAU);ctx.stroke();}
+        ctx.restore();
+      }
+    }
+    ctx.globalAlpha=1;
   }
   /* 보스 피격·쓰러짐. manifest에 @hit·@death 스트립이 있으면 그 그림을, 없으면 같은 그림을 코드로 젖히고 무너뜨린다. */
   var recoil={start:-99,actor:''},fall=null,FALL_TICKS=72;
@@ -618,7 +656,7 @@
     offsetX=offsetY=0;if(shake>0){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawPlayer(s);drawParticles();drawItems(s);drawLasers(s);drawFigures(s);drawBullets(s);drawHitbox(s);
+    drawBackground(s);drawFx();drawTopShade();drawSkillFx(s);drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawPlayer(s);drawParticles();drawItems(s);drawLasers(s);drawFigures(s);drawBullets(s);drawHitbox(s);
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);drawHud(s);
     if(flash>0){ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);flash-=.04;}
     if(hurtFlash>0){var v=ctx.createRadialGradient(W/2,H/2,120,W/2,H/2,420);v.addColorStop(0,'rgba(255,0,40,0)');v.addColorStop(1,'rgba(255,0,40,'+(hurtFlash*.6)+')');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);hurtFlash-=.035;}
@@ -783,6 +821,7 @@
     // 그림 목록을 먼저 읽는다(없는 그림을 요청하지 않으려고). 못 읽어도 3초 뒤에는 시작할 수 있다.
     var done=function(){loadImage('gunner');if(manifest&&manifest['heart.webp']){want.heart=true;loadImage('heart');}ready();};
     try{
+      loadFxList();
       global.fetch(ART_DIR+'manifest.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():null;}).then(function(m){manifest=m&&typeof m==='object'?m:null;done();},function(){manifest=null;done();});
     }catch(e){done();}
     setTimeout(done,3000);
