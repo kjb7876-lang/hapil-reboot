@@ -32,7 +32,8 @@ test('v43 barrage: a bullet whose time ran out keeps flying, never stalls, and b
 
 test('v43 barrage: easy and normal are nearly as dense as hell, slower, and forgiven by a smaller hitbox',()=>{
  const d=h.need().DIFFICULTY,S=h.need().SIZE_RADIUS[1];
- for(const k of ['gentle','normal'])assert(d[k].density>=d.hell.density*.88,k+' density '+d[k].density);
+ // 11-14 사용자 승인("응"): 이지는 쉬운 패턴이라 탄 수가 노멀의 70% 이하. 노멀은 헬과 거의 같은 밀도.
+ assert(d.normal.density>=d.hell.density*.88,'normal density '+d.normal.density);assert(d.gentle.density<=d.normal.density*.7,'gentle density '+d.gentle.density);
  assert(d.gentle.speed<=.62&&d.normal.speed<=.7,'slow bullets are fine');
  const hit=k=>d[k].radius+S*d[k].hitScale;assert(hit('gentle')<hit('normal')&&hit('normal')<hit('hell'));
  assert(hit('gentle')<=hit('hell')*.62,'easy hitbox is much smaller: '+hit('gentle')+' vs '+hit('hell'));
@@ -167,7 +168,7 @@ print(worst)`],{cwd:root}).toString();
 
 test('v43 barrage: hell fires about 30% more than before (user 11-14: "헬도 비슷하게 탄수 올려"), easy and normal keep pace',()=>{
  const d=h.need().DIFFICULTY;assert(d.hell.density>=2.6,'hell density '+d.hell.density);
- assert(d.gentle.density>=d.hell.density*.88&&d.normal.density>=d.hell.density*.88);
+ assert(d.gentle.density<=d.normal.density*.7&&d.normal.density>=d.hell.density*.88);
 });
 
 test('v43 review fixes: pattern banner sits under the top HUD, bullets fade on the boss body, the stage art bleeds past the play field',()=>{
