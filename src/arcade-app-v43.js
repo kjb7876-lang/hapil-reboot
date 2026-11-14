@@ -375,7 +375,7 @@
   }
   /* 플레이 칸 밖에 자리가 있으면 HUD(스테이지 이름·목숨·폭탄·점수)와 버튼을 칸 밖으로 뺀다.
      휴대폰(위아래 여백 56px 이상): 위 여백에 이름과 일시정지, 아래 여백에 목숨·점수와 저속·폭탄 버튼. PC(좌우 여백 170px 이상): 좌우 패널. */
-  var hudOut='',hudText={};
+  var hudOut='',hudText={},PANEL_W=200;
   function placeHud(){
     var hi=$('arcade-hud-high'),lo=$('arcade-hud-low');if(!hi||!lo||!canvas.getBoundingClientRect)return;
     var r=canvas.getBoundingClientRect(),vw=global.innerWidth||r.width,vh=global.innerHeight||r.height,top=r.top,bottom=vh-r.bottom,side=Math.min(r.left,vw-r.right);
@@ -390,13 +390,13 @@
       if(pause){pause.style.position='fixed';pause.style.top=px(Math.max(4,(top-36)/2));pause.style.left=px(r.left+10);}
       canvas.style.boxShadow='';
     }else if(hudOut==='side'){
-      var ph=Math.max(200,r.height-88); // 패널이 플레이 칸 높이를 채운다(심사: PC 패널 아래가 비어 있었다)
-      hi.style.cssText='left:'+px(r.left-180)+';width:160px;top:'+px(r.top+64)+';height:'+px(ph)+';align-items:flex-end;text-align:right';
-      lo.style.cssText='left:'+px(r.right+20)+';width:160px;top:'+px(r.top+64)+';height:'+px(ph)+';align-items:flex-start'; // 왼쪽 패널과 같은 줄에서 시작(심사 7차: 점수가 오른쪽 아래에 홀로 떠 있었다)
+      var ph=Math.max(200,r.height-88),pw=Math.min(PANEL_W,side-24); // 패널이 플레이 칸 높이를 채운다(심사: PC 패널 아래가 비어 있었다)
+      hi.style.cssText='left:'+px(r.left-pw-20)+';width:'+px(pw)+';top:'+px(r.top+64)+';height:'+px(ph)+';align-items:flex-end;text-align:right';
+      lo.style.cssText='left:'+px(r.right+20)+';width:'+px(pw)+';top:'+px(r.top+64)+';height:'+px(ph)+';align-items:flex-start'; // 왼쪽 패널과 같은 줄에서 시작(심사 7차: 점수가 오른쪽 아래에 홀로 떠 있었다)
       canvas.style.boxShadow='0 0 0 1px rgba(214,180,120,.55),0 0 0 5px rgba(10,8,16,.92),0 0 0 6px rgba(214,180,120,.3),0 0 60px 20px rgba(0,0,0,.8)'; // 플레이 칸 테두리와 둘레 어둠
       var coarse=global.matchMedia&&global.matchMedia('(pointer:coarse)').matches;
       for(i=0;i<2;i++)if(pads[i]){pads[i].style.position='';pads[i].style.top='';pads[i].style.bottom='';pads[i].style.left='';pads[i].style.right='';pads[i].style.visibility=coarse?'':'hidden';} // PC는 키로 조작하니 터치 버튼을 숨긴다
-      if(pause){pause.style.position='fixed';pause.style.top=px(r.top+12);pause.style.left=px(r.left-56);} // PC: 일시정지도 칸 밖 왼쪽 위로(심사 3차)
+      if(pause){pause.style.position='fixed';pause.style.top=px(r.top+12);pause.style.left=px(r.left-pw-20);} // PC: 일시정지도 칸 밖 왼쪽 위로(심사 3차)
     }else{
       canvas.style.boxShadow='';
       for(i=0;i<2;i++)if(pads[i]){pads[i].style.position='';pads[i].style.top='';pads[i].style.bottom='';pads[i].style.left='';pads[i].style.right='';pads[i].style.visibility='';}
@@ -416,14 +416,17 @@
     var score='<div style="text-align:'+(hudOut==='side'?'left':'right')+'">'+lb('SCORE')+'<div class="score">'+pad(s.score)+'</div>'+(hudOut==='side'?lb('BEST')+'<div class="best">'+pad(Math.max(best,s.score))+'</div>':'')+'<div class="graze">GRAZE '+s.graze+'</div></div>'; // 오른쪽 패널에 최고 점수도: 좌우 패널 무게를 맞춘다(심사 10차)
     if(hudOut==='side'){
       var seg=Arcade.SEGMENTS[s.seg],card=s.stage==='card'&&seg,hp=card?Math.round(100*Math.max(0,Math.min(1,finite(b.hp/b.maxHp,0)))):0;
-      var boss='<div>'+(card?lb('BOSS')+'<div class="bosshp"><i style="width:'+hp+'%;background:'+color+'"></i></div>':'')+(card&&seg.spell?lb('SPELL')+'<div class="spell" style="border-color:'+color+';font-size:'+spellFit(seg.name)+'px">'+esc(seg.name)+'</div><div class="graze">'+(s.spellClean?'BONUS +'+(20000+(seg.stage||0)*5000):'BONUS 실패')+'</div>':'')+'</div>';
+      var route='<div class="route">',k;for(k=Math.max(0,s.stageIndex-1);k<=Math.min(Arcade.STAGES.length-1,s.stageIndex+2);k++)route+='<div'+(k===s.stageIndex?' class="cur" style="color:'+color+'"':'')+'>'+(k<s.stageIndex?'✓ ':k===s.stageIndex?'▸ ':'· ')+esc(Arcade.STAGES[k].name)+'</div>';route+='</div>';
+      var list=card?Arcade.SEGMENTS.filter(function(g){return g.kind==='card'&&g.spell&&g.actor===seg.actor&&g.stage===seg.stage;}):[],at=list.indexOf(seg),cards='<div class="cards">';
+      for(k=0;k<list.length&&k<6;k++)cards+='<div'+(k===at?' class="cur" style="color:'+color+'"':'')+'>'+(k<at?'✓ ':k===at?'▸ ':'· ')+esc(list[k].name)+'</div>';cards+='</div>';
+      var boss='<div>'+(card?lb('BOSS')+'<div class="bosshp"><i style="width:'+hp+'%;background:'+color+'"></i></div>':'')+(card&&seg.spell?lb('SPELL')+'<div class="spell" style="border-color:'+color+';font-size:'+spellFit(seg.name)+'px">'+esc(seg.name)+'</div><div class="graze">'+(s.spellClean?'BONUS +'+(20000+(seg.stage||0)*5000):'BONUS 실패')+'</div>'+(list.length?lb('SPELL CARDS')+cards:''):'')+'</div>';
       var prog=Math.round(100*(s.stageIndex+1)/Arcade.STAGES.length);
-      var life2='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB [X]')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div>'+lb('JOURNEY')+'<div class="progress"><i style="width:'+prog+'%"></i></div><div class="graze">패턴 보너스 '+s.captures+'</div></div>';
+      var life2='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB [X]')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div>'+lb('JOURNEY')+'<div class="progress"><i style="width:'+prog+'%"></i></div>'+route+'<div class="graze">패턴 보너스 '+s.captures+'</div></div>';
       var keys='<div class="keys">'+lb('CONTROLS')+'<div>이동 ←↑↓→ · WASD</div><div>저속 Shift · 폭탄 X</div><div>일시정지 Esc</div></div>';
-      setHud(hi,'hi',name+life2+keys);setHud(lo,'lo',score+boss+'<div class="keys">'+lb('DIFFICULTY')+'<div>'+({gentle:'EASY',normal:'NORMAL',hell:'HELL'}[s.difficulty]||'')+'</div></div>');} // 패널 가운데: 왼쪽은 목숨·여정, 오른쪽은 보스 체력·스펠명·보너스(심사 6.46: 가운데가 비었다) // 아래쪽 빈자리: 왼쪽은 조작법, 오른쪽은 지금 스펠 이름(칸 안 이름표가 작아 읽기 어렵다는 지적)
+      setHud(hi,'hi','<div class="stack">'+name+life2+'</div>'+keys);setHud(lo,'lo','<div class="stack">'+score+boss+'</div>'+'<div class="keys">'+lb('DIFFICULTY')+'<div>'+({gentle:'EASY',normal:'NORMAL',hell:'HELL'}[s.difficulty]||'')+'</div></div>');} // 패널 가운데: 왼쪽은 목숨·여정, 오른쪽은 보스 체력·스펠명·보너스(심사 6.46: 가운데가 비었다) // 아래쪽 빈자리: 왼쪽은 조작법, 오른쪽은 지금 스펠 이름(칸 안 이름표가 작아 읽기 어렵다는 지적)
     else{setHud(hi,'hi',name);setHud(lo,'lo',life+score);}
   }
-  function spellFit(name){return Math.max(11,Math.min(17,Math.floor(118/Math.max(1,String(name).length+1))));} // 패널 폭(124px)에 한 줄로
+  function spellFit(name){return Math.max(12,Math.min(20,Math.floor(150/Math.max(1,String(name).length+1))));} // 패널 폭(124px)에 한 줄로
   function esc(v){return String(v).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   // 느린 기기에서는 먼저 해상도를, 그래도 느리면 빛무리와 날씨 입자 수를 내린다.
   function adaptQuality(elapsedMs){
@@ -885,7 +888,7 @@
     }
     ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
   }
-  var PALE_BEAM_DIM=.3,PALE_CORE=.55,BEAM_DIM=.5,HERO_RING_WIDTH=2.2,BRIGHT_ART_DIM='brightness(.8)',PLAYER_SHADE=46,HERO_RING='#7ff3ff',OUTER_RIM='#1c2236',SIGIL_ALPHA=.55;
+  var PALE_BEAM_DIM=.3,PALE_CORE=.55,BEAM_DIM=.5,HERO_RING_WIDTH=2.2,BRIGHT_ART_DIM='brightness(.7)',PLAYER_SHADE=46,HERO_RING='#7ff3ff',OUTER_RIM='#1c2236',SIGIL_ALPHA=.55;
   function drawPlayer(s){
     var p=s.player,blink=s.tick<p.invulnerableUntil&&Math.floor(s.tick/4)%2;
     // 영웅 뒤 어두운 빛무리: 밝은 광선·배경 사이에서도 영웅 자리가 먼저 보인다(심사 6.36)
@@ -959,7 +962,7 @@
       if(seg.spell){
         namePlate(seg.name);
         ctx.textAlign='right';ctx.font='600 20px '+SANS;ctx.fillStyle=left<=10?'#ff6a6a':'#ffffff';ctx.fillText(left<10?left.toFixed(1):String(Math.ceil(left)),W-12,35);
-        if(!(bannerSpell&&banner>0)){ctx.font='italic 12px '+SERIF;ctx.fillStyle='#f3e3b5';ctx.fillText('「'+seg.name+'」',W-12,52);} // 스펠 띠가 떠 있는 동안 받침의 같은 이름은 숨긴다
+        if(hudOut!=='side')if(!(bannerSpell&&banner>0)){ctx.font='italic 12px '+SERIF;ctx.fillStyle='#f3e3b5';ctx.fillText('「'+seg.name+'」',W-12,52);} // 스펠 띠가 떠 있는 동안 받침의 같은 이름은 숨긴다
       }
     }
     if(!hudOut){ // 칸 밖에 자리가 없을 때만 칸 안에 그린다
