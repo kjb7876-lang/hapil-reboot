@@ -206,7 +206,7 @@
     g.lineWidth=1;for(var i=0;i<36;i++){var a=TAU*i/36;g.beginPath();g.moveTo(Math.cos(a)*92,Math.sin(a)*92);g.lineTo(Math.cos(a)*(i%3?98:104),Math.sin(a)*(i%3?98:104));g.stroke();}
     for(var k=0;k<2;k++){g.beginPath();for(var j=0;j<3;j++){var b=TAU*j/3+k*Math.PI/3-Math.PI/2;g[j?'lineTo':'moveTo'](Math.cos(b)*92,Math.sin(b)*92);}g.closePath();g.stroke();}
     circleSprite=c;
-    fxSprite=null;skinSprites={};runeRings=[];
+    fxSprite=null;skinSprites={};runeRings={};
   }
 
   /* ── 배경: 탄보다 어둡고 흐리게. 원화가 있으면 줄여 흐리게 + 색조 + 어둡게, 없으면 색조로 만든 무늬 배경. 위아래로 이어지게 그린다. ── */
@@ -572,7 +572,9 @@
   /* 룬 결계(11-14 요청): 보스 둘레를 감싸는 보라색 고대문자 고리 셋. 문자는 이 게임만의 지어낸 글꼴이다 —
      줄기·가지·고리·가로획·갈고리를 정해진 씨앗으로 조합해 고리마다 다른 문장이 된다. 반지름은 마법진(104) 바깥.
      고리마다 도는 방향·빠르기가 다르고, 숨 쉬듯 커졌다 작아진다. 장식이라 맞지 않는다. */
-  var RUNE_RADII=[124,158,196],RUNE_SPIN=[0.32,-0.21,0.13],RUNE_BAND=17,runeRings=[];
+  // 심사(룬 1차): 고리가 너무 크고 셋이 똑같이 밝아 한 덩어리로 뭉친다, 보라 탄과 섞인다 → 반지름을 줄이고, 안쪽 고리가 주인공(굵고 밝게)·바깥은 가늘고 흐리게, 글자는 적고 크게,
+  // 보라에 그 장면 테마색을 조금 섞어 장면과 어울리게 한다. 탄보다 먼저(아래에) 그려지고 알파를 낮게 둬 탄 윤곽을 덮지 않는다.
+  var RUNE_RADII=[114,134,153],RUNE_SPIN=[0.32,-0.21,0.13],RUNE_BAND=[16,12,9],RUNE_ALPHA=[1,0.62,0.38],runeRings={};
   function runeGlyph(g,h,seed){
     var r=function(){seed=(seed*16807)%2147483647;return seed/2147483647;},u=h/2;
     g.beginPath();g.moveTo(0,-u);g.lineTo(0,u); // 줄기
@@ -585,25 +587,25 @@
       else {g.moveTo(side*u*.6,-u*.6);g.lineTo(side*u*.6,u*.6);g.moveTo(0,y);g.lineTo(side*u*.6,y);}}
     g.stroke();
   }
-  function buildRuneRing(radius,seed){
-    var pad=RUNE_BAND+6,m=radius+pad,c=offscreen(m*2*scale,m*2*scale),g=c.getContext('2d');g.scale(scale,scale);g.translate(m,m);
-    g.lineCap='round';g.lineJoin='round';g.shadowColor='#7b3cff';g.shadowBlur=6;
-    g.strokeStyle='#a776ff';g.lineWidth=1.4;[-RUNE_BAND/2,RUNE_BAND/2].forEach(function(o){g.beginPath();g.arc(0,0,radius+o,0,TAU);g.stroke();});
-    g.globalAlpha=.55;g.lineWidth=.8;g.beginPath();g.arc(0,0,radius+RUNE_BAND/2+3,0,TAU);g.stroke();g.globalAlpha=1;
-    var n=Math.floor(TAU*radius/(RUNE_BAND*.82)),h=RUNE_BAND*.62;g.strokeStyle='#e2ccff';g.lineWidth=1.25;
+  function buildRuneRing(radius,band,seed,ink){
+    var pad=band+6,m=radius+pad,c=offscreen(m*2*scale,m*2*scale),g=c.getContext('2d');g.scale(scale,scale);g.translate(m,m);
+    g.lineCap='round';g.lineJoin='round';g.shadowColor=mix(ink,'#000000',.35);g.shadowBlur=5;
+    g.strokeStyle=ink;g.lineWidth=band>12?1.5:1;[-band/2,band/2].forEach(function(o){g.beginPath();g.arc(0,0,radius+o,0,TAU);g.stroke();});
+    var n=Math.floor(TAU*radius/(band*1.15)),h=band*.66,light=mix(ink,'#ffffff',.55);g.strokeStyle=light;g.lineWidth=band>12?1.4:1.05;
     for(var i=0;i<n;i++){var a=TAU*i/n;g.save();g.rotate(a);g.translate(0,-radius);
-      if(i%9===4){g.beginPath();g.arc(0,0,h*.32,0,TAU);g.stroke();g.beginPath();g.arc(0,0,h*.08,0,TAU);g.fillStyle='#e2ccff';g.fill();} // 문장 사이 쉼표 고리
+      if(i%7===3){g.beginPath();g.arc(0,0,h*.3,0,TAU);g.stroke();g.beginPath();g.arc(0,0,h*.08,0,TAU);g.fillStyle=light;g.fill();} // 문장 사이 쉼표 고리
       else runeGlyph(g,h,seed*977+i*131+7);
       g.restore();}
     return c;
   }
   function drawRuneBarrier(s,bx,by,size){
-    if(!runeRings.length)runeRings=RUNE_RADII.map(function(r,k){return buildRuneRing(r,k+1);});
-    var card=s.stage==='card',k0=size/190,alpha=card?.5:.14;
+    var ink=mix('#a776ff',themeColor(s).slice(0,7),.3),rings=runeRings[ink];
+    if(!rings)rings=runeRings[ink]=RUNE_RADII.map(function(r,k){return buildRuneRing(r,RUNE_BAND[k],k+1,ink);});
+    var card=s.stage==='card',k0=size/190,alpha=card?.4:.12;
     ctx.save();ctx.globalCompositeOperation='lighter';
-    for(var k=0;k<RUNE_RADII.length;k++){var img=runeRings[k],half=img.width/scale/2,breathe=1+.07*Math.sin(visual*1.25+k*2.1);
+    for(var k=0;k<RUNE_RADII.length;k++){var img=rings[k],half=img.width/scale/2,breathe=1+.05*Math.sin(visual*1.25+k*2.1);
       ctx.save();ctx.translate(bx,by);ctx.rotate(visual*RUNE_SPIN[k]+k);ctx.scale(k0*breathe,k0*breathe);
-      ctx.globalAlpha=alpha*(.8+.2*Math.sin(visual*1.25+k*2.1));ctx.drawImage(img,-half,-half,half*2,half*2);ctx.restore();}
+      ctx.globalAlpha=alpha*RUNE_ALPHA[k]*(.82+.18*Math.sin(visual*1.25+k*2.1));ctx.drawImage(img,-half,-half,half*2,half*2);ctx.restore();}
     ctx.restore();ctx.globalAlpha=1;
   }
   /* 패턴 중에는 탄을 그린 뒤 보스를 반투명으로 한 번 더 얹어, 보스 몸 위에서 나온 탄 덩어리 속에서도 보스 윤곽이 읽히게 한다. */
