@@ -270,3 +270,15 @@ test('v43 vertical maps: all 56 stages have a seamless loop map from the Drive s
  const missing=a.STAGES.filter(g=>!(m['bg-loop-'+g.scene+'.jpg']&&m['bg-loop-'+g.scene+'.jpg'].loop)).map(g=>g.scene);
  assert.deepEqual(missing,[],'stages without a loop map');
 });
+
+/* 6차 심사(11-14): 하트 아이템이 탄처럼 보임, 잡몹이 어두운 새 맵에 묻힘, 몹 자리에서 막 나온 탄 덩어리가 몹을 덮음(31스테이지 기사), 주인공 탄 타격감 */
+test('v43 review fixes (round 6): hearts read as pickups, mobs get a rim, fresh bullets do not cover a mob, shots hit with a flash',()=>{
+ const app=h.read('src/arcade-app-v43.js');
+ const size=+(/ITEM_DRAW=(\d+)/.exec(app)||[])[1];assert(size>0&&size<=18,'heart pickups are smaller than before (22px): '+size);
+ const items=/function drawItems[\s\S]*?\n  \}/.exec(app)[0];assert(/Math\.sin\([^)]*\)\*\d/.test(items)&&/s\.ix\[i\]\+/.test(items),'hearts sway sideways as they fall, unlike bullets');
+ assert(!/strokeStyle='#ffffff';q\.lineJoin/.test(app),'hearts have no white rim (white rims are the bullet language)');
+ assert(/function rimOf\(/.test(app)&&/source-in/.test(app),'mobs have a cached silhouette for a rim light');
+ const art=/function drawArt[\s\S]*?\n  \}/.exec(app)[0];assert(/rimOf\(/.test(art),'drawArt draws the rim behind mobs');
+ const bul=/function drawBullets[\s\S]*?\n  \}/.exec(app)[0];assert(/nearMob\(/.test(bul),'bullets on top of a mob are drawn faint');
+ assert(/function impactFlash\(/.test(app)&&/impactFlash\(/.test(/function drawMobs[\s\S]*?\n  \}/.exec(app)[0]),'a hit on a mob flashes');
+});
