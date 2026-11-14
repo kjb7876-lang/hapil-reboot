@@ -314,3 +314,22 @@ test('v43 bullet art: layered jewel bullets and themed silhouettes, hitboxes unc
  const bul=/function drawBullets[\s\S]*?\n  \}/.exec(app)[0];assert(/skinVariant\(/.test(bul),'drawBullets uses the stage silhouette');
  const a=h.need();assert.deepEqual(a.SIZE_RADIUS,[4,6,10,3.2,15,14],'hit radii are unchanged');
 });
+
+/* 9차 심사(11-14): 주인공 주황 샷이 적 탄보다 먼저 눈에 들어온다, 보스가 자기 탄·마법진에 묻히고 무대감이 약하다 */
+test('v43 review fixes (round 9): hero shots step back, the boss gets a backlight and a pulsing circle when it fires',()=>{
+ const app=h.read('src/arcade-app-v43.js');
+ const shots=/function drawShots[\s\S]*?\n  \}/.exec(app)[0];const a=+(/globalAlpha=(\.\d+)/.exec(shots)||[])[1];
+ assert(a>0&&a<=.6,'hero shots are drawn at 60% or less: '+a);
+ const boss=/function drawBoss\(s\)[\s\S]*?\n  \}/.exec(app)[0];
+ assert(/backlight|역광/.test(boss)&&/createRadialGradient/.test(boss),'a theme-coloured backlight sits behind the boss');
+ assert(/bossPose\.until/.test(boss.slice(0,boss.indexOf('circleSprite')+40)),'the magic circle pulses when the boss has just fired');
+});
+
+/* 10차 심사(11-14) PC 패널: 스테이지 이름이 글자 하나만 다음 줄로 넘어감, 게이지·폭탄 키 이름표가 모호함, 오른쪽 패널이 점수 하나뿐이라 좌우 무게가 다름 */
+test('v43 review fixes (round 10, PC): names wrap by word, the gauge and bomb key are labelled, the score panel shows the best score',()=>{
+ const app=h.read('src/arcade-app-v43.js'),page=h.read('arcade.html');
+ assert(/\.hudx\.side \.name\{[^}]*word-break:keep-all/.test(page),'stage names wrap between words');
+ assert(/BOMB \[X\]/.test(app)&&/CHARGE/.test(app),'bomb key and gauge are labelled clearly');
+ assert(/lb\('BEST'\)/.test(app),'the score panel shows the best score');
+ assert(/\.hudx\.side\{[^}]*min-height:/.test(page),'both side panels share a minimum height');
+});
