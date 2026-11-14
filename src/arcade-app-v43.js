@@ -510,6 +510,27 @@
     }
     ctx.restore();
   }
+  /* 보스 문양 레이저·외곽 지그재그. 엔진이 맞히는 선분(Arcade.figureSegments)을 그대로 그린다. 예고 중에는 옅은 선과 흰 점선, 켜지면 굵은 빛. */
+  function drawFigures(s){
+    var list=s.figures;if(!list||!list.length)return;
+    ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
+    for(var i=0;i<list.length;i++){
+      var f=list[i],color=COLORS[f.color]||'#ffffff',segs=Arcade.figureSegments(f),j;
+      ctx.beginPath();for(j=0;j<segs.length;j++){var g=segs[j];ctx.moveTo(g[0],g[1]);ctx.lineTo(g[2],g[3]);}
+      if(f.age<f.warn){
+        var t=f.age/f.warn,blink=.5+.5*Math.sin(f.age*(.25+t*.5));
+        ctx.setLineDash([]);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=.12+.18*t;ctx.strokeStyle=color;ctx.lineWidth=f.width*(.3+.7*t);ctx.stroke();
+        ctx.globalAlpha=.4+.5*blink;ctx.strokeStyle='#ffffff';ctx.lineWidth=1;ctx.setLineDash([6,6]);ctx.stroke();
+      }else{
+        var over=f.age-f.warn-f.active,k=over>0?Math.max(0,1-over/Arcade.BEAM_FADE):Math.min(1,(f.age-f.warn+1)/4),pulse=1+Math.sin(visual*36+i)*.07;
+        ctx.setLineDash([]);ctx.globalCompositeOperation='lighter';
+        if(!lite){ctx.globalAlpha=.28*k;ctx.strokeStyle=color;ctx.lineWidth=f.width*2.4*k*pulse;ctx.stroke();}
+        ctx.globalAlpha=.9*k;ctx.strokeStyle=color;ctx.lineWidth=f.width*k*pulse;ctx.stroke();
+        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=k;ctx.strokeStyle='#ffffff';ctx.lineWidth=f.width*.42*k;ctx.stroke();
+      }
+    }
+    ctx.restore();ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.setLineDash([]);
+  }
   // 영웅 탄은 반투명하게 그려 적 탄을 가리지 않는다.
   function drawShots(s){
     ctx.globalAlpha=.42;
@@ -597,7 +618,7 @@
     offsetX=offsetY=0;if(shake>0){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawPlayer(s);drawParticles();drawItems(s);drawLasers(s);drawBullets(s);drawHitbox(s);
+    drawBackground(s);drawFx();drawTopShade();drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawPlayer(s);drawParticles();drawItems(s);drawLasers(s);drawFigures(s);drawBullets(s);drawHitbox(s);
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);drawHud(s);
     if(flash>0){ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);flash-=.04;}
     if(hurtFlash>0){var v=ctx.createRadialGradient(W/2,H/2,120,W/2,H/2,420);v.addColorStop(0,'rgba(255,0,40,0)');v.addColorStop(1,'rgba(255,0,40,'+(hurtFlash*.6)+')');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);hurtFlash-=.035;}

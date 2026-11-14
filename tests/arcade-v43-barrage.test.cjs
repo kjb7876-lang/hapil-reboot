@@ -129,3 +129,8 @@ test('v43 boss hit/death: the engine marks the moment a boss falls, and the game
  assert(/'@hit'/.test(app)&&/'@death'/.test(app),'drawn hit/death strips are used when the manifest has them');
  assert(/function recoilOf\(/.test(app)&&/function drawFall\(/.test(app),'code recoil and collapse when there is no drawing');
 });
+
+test('v43 barrage: the game draws glyph lasers and edge zigzags from the same segments the engine hits with',()=>{
+ const app=h.read('src/arcade-app-v43.js');
+ assert(/function drawFigures\(/.test(app)&&/Arcade\.figureSegments\(/.test(app)&&/drawFigures\(s\)/.test(app),'figures are drawn from engine segments');
+});
