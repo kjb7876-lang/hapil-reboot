@@ -1,0 +1,155 @@
+{
+ "about": "드라이브 세로 스크롤 맵(제미나이, 사용자가 2026-11-14 올림) → 장면. tools/build-vmaps-v43.py가 읽는다.",
+ "maps": {
+  "A01": {
+   "driveId": "1HrKvpZg0nQCK67G0yySNAe4rcpEFo5sG",
+   "title": "A01_장면01_악마화_나무의_정원.png",
+   "scene": "01"
+  },
+  "A02": {
+   "driveId": "1GIsZKVIzETB1tRbd26AA5PxZFLvWZgE1",
+   "title": "A02_장면02_거미동굴.png",
+   "scene": "02"
+  },
+  "A03": {
+   "driveId": "1vZKtzH0EsvQPaGaRk7qUlSDePQjT7w-B",
+   "title": "A03_장면03_늪지대의_뿔악마.png",
+   "scene": "03"
+  },
+  "A04": {
+   "driveId": "1nqvgA25V3SBHk0b-f806LdzIRlLAYGze",
+   "title": "A04_장면04_무너진성.png",
+   "scene": "04"
+  },
+  "A05": {
+   "driveId": "1NzUiZ6Q6_HdkshV2YVpg5HvVjVRGUWoG",
+   "title": "A05_장면05_시체들이_되살아난_밤.png",
+   "scene": "05"
+  },
+  "A06": {
+   "driveId": "1Q5WFYhJ7ZQFSKtTJz92X9GH3CtI18Gvu",
+   "title": "A06_장면06_일곱_기둥.png",
+   "scene": "06"
+  },
+  "A07": {
+   "driveId": "1trLu1A8USxFDdCPlXE-dUqTJ6XpzkyoP",
+   "title": "A07_장면07_추락.png",
+   "scene": "07"
+  },
+  "A08": {
+   "driveId": "1fq9SSmgcpu2sJA77_xVaZ6EWDPJRm2PM",
+   "title": "A08_장면08_피로_물든_병원.png",
+   "scene": "08"
+  },
+  "A09": {
+   "driveId": "1WncxZf1cEqXMuv-7-6qTMcx6ypdV91xb",
+   "title": "A09_장면09-1_주사실.png",
+   "scene": "09-1"
+  },
+  "A10": {
+   "driveId": "1ShYGexssDm0tPrkzqcfO1MH8k1SAxW-I",
+   "title": "A10_장면09-2_결전의_날.png",
+   "scene": "09-2"
+  },
+  "A11": {
+   "driveId": "1GowTJp5EBS6b__FD8ItrOOX-6gMtB24p",
+   "title": "A11_장면10_환자와_중독의_도시.png",
+   "scene": "10"
+  },
+  "A12": {
+   "driveId": "1lM2ttDaK7Ntp9519mCKpkFQjVrAdQEUc",
+   "title": "A12_장면11_천사의_가면과_의목사_후보생.png",
+   "scene": "11"
+  },
+  "A13": {
+   "driveId": "16JuqnwXsxHRhhRBKa3WPklnnleC_N2fc",
+   "title": "A13_장면13_솔로몬의_봉인식.png",
+   "scene": "13"
+  },
+  "A14": {
+   "driveId": "12klU5jcL6v8CxLss-_XuyRmhcqVaOIWa",
+   "title": "A14_장면14_나태의_집.png",
+   "scene": "14"
+  },
+  "A15": {
+   "driveId": "1b64yGiKcfKxoIh84MFZ8iYXeXu33TfXw",
+   "title": "A15_장면15_금이_간_안경.png",
+   "scene": "15"
+  },
+  "A16": {
+   "driveId": "14s-hjKxWANRzr2AtwfthuDJlnV-pxSXX",
+   "title": "A16_장면16_탐식의_주방.png",
+   "scene": "16"
+  },
+  "A17": {
+   "driveId": "1jBoA0OIL4Y3W-AgnXwNm048OcgXAZ85A",
+   "title": "A17_장면17_붉은_하이힐.png",
+   "scene": "17"
+  },
+  "A18": {
+   "driveId": "1zUEboCaX_sgViBp-eBc8xV2RsoiuCgF8",
+   "title": "A18_장면18_맘몬의_금고.png",
+   "scene": "18"
+  },
+  "A19": {
+   "driveId": "1ozRYfuncN5uZeMj7LlStww8FPirvFkI_",
+   "title": "A19_장면19_눈보라_속의_소년.png",
+   "scene": "19"
+  },
+  "A20": {
+   "driveId": "1cKnh1Wb_r9OvXEE1Qj7VXm4xJ9ieOBY5",
+   "title": "A20_장면20_불을_지른_남자.png",
+   "scene": "20"
+  },
+  "A21": {
+   "driveId": "1oPrJcE7oaE0KaSZDD7tszbZs6el_W-iW",
+   "title": "A21_장면21_하늘에_서려는_자.png",
+   "scene": "21"
+  },
+  "A22": {
+   "driveId": "1DK3xMUMkiJ2U74dPSVXz5I0kxHR7VHuM",
+   "title": "A22_장면22_생체_부트로더.png",
+   "scene": "22"
+  },
+  "A23": {
+   "driveId": "1spRAdnxy9txvdRc2I3oLxo4yoNDbWBtc",
+   "title": "A23_장면24_방어의_군단.png",
+   "scene": "24"
+  },
+  "A24": {
+   "driveId": "1vWGMLzQdKbT643D5OvLnq5JKsRI0HzyA",
+   "title": "A24_장면25_잔인한_구원.png",
+   "scene": "25"
+  },
+  "A25": {
+   "driveId": "1LkvRW486hhrkmu8UY-wUymEHNMInRucb",
+   "title": "A25_장면26_시스템의_거부권.png",
+   "scene": "26"
+  },
+  "A26": {
+   "driveId": "17fKuJkPrfhdl4QV6XVBpz3qkpq_6O6mX",
+   "title": "A26_장면27_관리자_권한.png",
+   "scene": "27"
+  },
+  "A27": {
+   "driveId": "1PnT5OZ2ADBTAptyd5De6E_coFWwSuYIo",
+   "title": "A27_장면28_중앙_코어_이주실.png",
+   "scene": "28"
+  },
+  "A28": {
+   "driveId": "1e6NUhwgpbHiHcmfS7BrmOFPtmYSY24UN",
+   "title": "A28_장면29_기억의_문.png",
+   "scene": "29"
+  },
+  "A29": {
+   "driveId": "17PgvWYW0iUZrj-vHSuck-Bu9e1Nilw1i",
+   "title": "A29_장면31_중립_지역의_재각성.png",
+   "scene": "31"
+  },
+  "A30": {
+   "driveId": "17spPV5gEdX8JsG7YGQqsX8W5wT2fxtr7",
+   "title": "A30_장면32_고블린_두목과_장미_인장.png",
+   "scene": "32"
+  }
+ }
+}

@@ -95,7 +95,7 @@
   function stageKeys(index){
     var g=Arcade.STAGES[index];if(!g)return [];
     var list=[],add=function(k){if(k&&list.indexOf(k)<0)list.push(k);};
-    var bg=themeOf(index).bg;if(bg)add('bg-'+bg);
+    var bg=themeOf(index).bg,lp=loopOf(index);if(lp)add(lp);else if(bg)add('bg-'+bg); // 드라이브 세로 맵(위아래가 이어지게 만든 그림)이 있으면 그것만 받는다
     for(var i=g.first;i<Arcade.SEGMENTS.length&&Arcade.SEGMENTS[i].stage===index;i++){var seg=Arcade.SEGMENTS[i];if(seg.kind==='card')add(seg.actor);}
     var skin=skinsOf(index);(skin||g.cast||[]).forEach(add); // m0 지역표 몹이 있으면 그것만 받는다
     // 동작 그림(옆 걷기·공격 등)은 목록에 있을 때만 같이 받는다.
@@ -183,7 +183,20 @@
   }
 
   /* ── 배경: 탄보다 어둡고 흐리게. 원화가 있으면 줄여 흐리게 + 색조 + 어둡게, 없으면 색조로 만든 무늬 배경. 위아래로 이어지게 그린다. ── */
+  /* 드라이브 세로 맵: tools/build-vmaps-v43.py가 워터마크를 지우고 위아래가 이어지게 만든 bg-loop-<장면>.jpg. 제 비율 그대로 이어 붙여 흘린다. */
+  function loopOf(index){var g=Arcade.STAGES[index],k=g&&'bg-loop-'+g.scene;return k&&manifest&&manifest[k+'.jpg']&&manifest[k+'.jpg'].loop?k:'';}
+  var backgroundTall=H+160;
   function buildBackground(index){
+    var lk=loopOf(index),limg=lk&&images[lk];
+    if(limg){
+      if(background){background.width=background.height=0;background=null;}
+      var lt=Math.max(120,Math.round(W*limg.height/limg.width)),lc=offscreen(W,lt),lg=lc.getContext('2d');
+      lg.drawImage(limg,0,0,W,lt);
+      lg.globalCompositeOperation='color';lg.globalAlpha=.22;lg.fillStyle=tintOf(index);lg.fillRect(0,0,W,lt); // 테마 색을 옅게만 입힌다(원화 색을 살린다)
+      lg.globalCompositeOperation='source-over';lg.globalAlpha=1;lg.fillStyle='rgba(5,5,14,.56)';lg.fillRect(0,0,W,lt); // 탄이 읽히도록 어둡게 누른다
+      background=lc;backgroundTall=lt;backgroundStage=index;return;
+    }
+    backgroundTall=H+160;
     if(background){background.width=background.height=0;background=null;}
     var tall=H+160,c=offscreen(W,tall),g=c.getContext('2d'),tint=tintOf(index),rgb=hexRgb(tint),img=images['bg-'+themeOf(index).bg],i;
     if(img){
@@ -217,7 +230,7 @@
   function drawBackground(s){
     if(backgroundStage!==s.stageIndex||!background)buildBackground(s.stageIndex);
     // 아래로 흐르는 배경: 같은 그림을 위아래로 이어 붙여 끝없이 내린다.
-    var tall=H+160,y=(visual*14)%tall;ctx.drawImage(background,0,y-tall,W,tall);ctx.drawImage(background,0,y,W,tall);
+    var tall=backgroundTall,y=(visual*14)%tall;for(var yy=y-tall;yy<H;yy+=tall)ctx.drawImage(background,0,Math.floor(yy),W,tall+1); // 위아래가 이어진 그림을 겹치지 않게 이어 붙인다(1px 겹쳐 틈을 막음)
   }
 
   /* ── 날씨: 고정 크기 풀(Float32Array). 프레임마다 객체를 만들지 않는다. 탄보다 어둡고 작게, 탄 뒤에 그린다. ── */

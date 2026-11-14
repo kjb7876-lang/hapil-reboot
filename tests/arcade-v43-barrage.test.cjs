@@ -145,3 +145,23 @@ test('v43 boss skill effects: drive frame animations are matched to bosses, ligh
  assert(/arcade-v43-fx\/index\.json/.test(app)&&/function drawSkillFx\(/.test(app)&&/drawSkillFx\(s\)/.test(app),'effects are drawn');
  assert(/e==='figure'/.test(app)&&/function castFx\(/.test(app),'played when a boss casts');
 });
+
+test('v43 vertical maps: drive loop maps cover their scenes, wrap without a seam, and the game scrolls them at their own height',()=>{
+ const a=h.need(),table=JSON.parse(h.read('docs/v43/vmaps.json')).maps,manifest=JSON.parse(h.read('media/arcade-v43/manifest.json')),scenes=new Set(a.STAGES.map(g=>g.scene));
+ assert(Object.keys(table).length>=30);
+ for(const [p,row] of Object.entries(table)){assert(scenes.has(row.scene),p);const e=manifest['bg-loop-'+row.scene+'.jpg'];assert(e&&e.loop===true,p+' built');assert(e.bytes<=130000,p+' light');
+  assert(fs.existsSync(path.join(root,'media/arcade-v43/bg-loop-'+row.scene+'.jpg')));}
+ // 이음매: 그림의 마지막 줄과 첫 줄의 차이가 그림 안 이웃한 줄끼리의 차이와 비슷해야 한다(파이썬으로 잰다).
+ const out=require('node:child_process').execFileSync('python3',['-I','-c',`
+import glob,sys
+from PIL import Image
+import numpy as np
+worst=0
+for f in sorted(glob.glob('media/arcade-v43/bg-loop-*.jpg')):
+    a=np.asarray(Image.open(f).convert('L')).astype(float)
+    seam=np.abs(a[-1]-a[0]).mean();inner=np.median([np.abs(a[i]-a[i+1]).mean() for i in range(0,a.shape[0]-1,7)])
+    worst=max(worst,seam/max(inner,1))
+print(worst)`],{cwd:root}).toString();
+ assert(Number(out)<2.2,'seam / neighbour-row difference: '+out.trim());
+ const app=h.read('src/arcade-app-v43.js');assert(/'bg-loop-'/.test(app)&&/backgroundTall/.test(app),'the game uses loop maps at their own height');
+});
