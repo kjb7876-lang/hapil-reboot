@@ -874,12 +874,14 @@
     ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(p.x,p.y,Math.max(1.2,p.r),0,TAU);ctx.fill();
   }
   /* 끝난 패턴의 탄: 판정 없이 제 길로 흘러 화면 밖까지 가며 서서히 옅어진다(사용자 11-14). 진짜 탄과 헷갈리지 않게 속이 빈 옅은 점으로만 그린다. */
-  var drifts=[],DRIFT_DRAW=600,DRIFT_LIFE=120;
+  var drifts=[],DRIFT_DRAW=600,DRIFT_LIFE=64,DRIFT_GREY='#8a8f99';
+  // 잔상은 해가 없다는 게 한눈에 보여야 한다(7전문가 심사 11-14): 실탄 색 대신 회색, 옅게, 1초 남짓.
+
   function drawDrifts(){
     if(!drifts.length)return;ctx.save();ctx.globalCompositeOperation='lighter';ctx.lineWidth=1.4;
     for(var i=drifts.length-1;i>=0;i--){var d=drifts[i];d.x+=d.vx;d.y+=d.vy;d.age++;
       if(d.age>DRIFT_LIFE||d.y>H+12||d.y<-20||d.x<-20||d.x>W+20){drifts[i]=drifts[drifts.length-1];drifts.pop();continue;}
-      ctx.globalAlpha=.42*(1-d.age/DRIFT_LIFE);ctx.strokeStyle=d.c;ctx.beginPath();ctx.arc(d.x,d.y,3.2,0,TAU);ctx.stroke();}
+      ctx.globalAlpha=.22*(1-d.age/DRIFT_LIFE);ctx.strokeStyle=DRIFT_GREY;ctx.beginPath();ctx.arc(d.x,d.y,3.2,0,TAU);ctx.stroke();}
     ctx.restore();
   }
   function drawParticles(){

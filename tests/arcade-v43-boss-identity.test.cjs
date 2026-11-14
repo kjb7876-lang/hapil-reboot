@@ -24,3 +24,9 @@ test('v43 boss identity: every boss has its own colours and spell overlay signat
  const a=h.need(),actors=[...plainByActor(a).keys()];
  for(const k of actors){assert(a.ACTORS[k],'actor '+k);assert(a.SIGNATURES[k],'signature '+k);}
 });
+
+test('v43 drift remains read as harmless: grey-ish, faint and short-lived so live bullets stay on top (7-expert review 11-14)',()=>{
+ const src=h.read('src/arcade-app-v43.js'),life=+/DRIFT_LIFE=(\d+)/.exec(src)[1],alpha=+/ctx\.globalAlpha=([\d.]+)\*\(1-d\.age\/DRIFT_LIFE\)/.exec(src)[1];
+ assert(life<=70,'drift life '+life);assert(alpha<=.24,'drift alpha '+alpha);
+ assert(/DRIFT_GREY/.test(src),'drift colour is pulled toward grey');
+});
