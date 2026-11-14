@@ -214,3 +214,9 @@ test('v43 review fixes (round 3): on PC with side panels the pause button leaves
  const app=h.read('src/arcade-app-v43.js');const side=/hudOut==='side'\)\{([\s\S]*?)\}else\{/.exec(app);
  assert(side&&/pause\.style\.position='fixed'/.test(side[1]),'pause button is fixed in the side panel');
 });
+
+test('v43 review fixes (round 3): the shot sprite is really built (no line comment swallows it)',()=>{
+ const app=h.read('src/arcade-app-v43.js');
+ const live=w=>app.split('\n').some(l=>l.includes(w)&&l.indexOf(w)<(l.indexOf('//')<0?Infinity:l.indexOf('//')));
+ assert(live('shotSprite=c;')&&live('homingSprite=buildOrb('),'shot and homing sprites are assigned in live code');
+});
