@@ -704,8 +704,8 @@
     p7_shadow:['spiral',PURPLE,4,0],p7_alarm:['triangle',RED,6,1],executor:['key',CYAN,5,1],p8_chip:['circuit',YELLOW,2,1],p8_collective:['honeycomb',CYAN,6,0],p8_lauren:['wings',CYAN,2,1],
     cultist:['ouroboros',WHITE,6,1],p8_ion:['spiral',CYAN,3,1],rian:['rose',RED,4,0]
   };
-  // extra: 보스마다 하나씩 더하는 큰 연출 — 물레방아 바퀴들, 톱니바퀴들(보스 둘레를 돌며 저마다 돈다), 직선 레이저 난사. 순서대로 돌려 붙여 보스마다 다르게.
-  var EXTRAS=['waterwheel','spray','gear'];
+  // extra: 보스 셋 중 하나는 직선 레이저 난사를 더한다(물레방아·톱니 바퀴는 11-14에 뺐다).
+  var EXTRAS=['','spray',''];
   Object.keys(SIGNATURES).forEach(function(k,i){var v=SIGNATURES[k];SIGNATURES[k]={glyph:v[0],color:v[1],arms:v[2],edge:v[3],spin:i%2?-1:1,reach:118+(i*29)%50,extra:EXTRAS[i%3]};});
   function signatureOf(actor){return SIGNATURES[actor]||null;}
   // 도형 광선 하나의 선분들 [x1,y1,x2,y2,...]
@@ -717,21 +717,8 @@
       var x1=L[k]*r,y1=L[k+1]*r,x2=L[k+2]*r,y2=L[k+3]*r;out.push([f.cx+x1*c-y1*sn,f.cy+x1*sn+y1*c,f.cx+x2*c-y2*sn,f.cy+x2*sn+y2*c]);}}
     return out;
   }
-  function summonGlyph(s,sig){
-    if(s.figures.length>=FIGURE_CAP-4)return;
-    s.figures.push({kind:'glyph',glyph:sig.glyph,cx:s.boss.x,cy:s.boss.y,r:30,r0:34,r1:sig.reach,period:170,turn:0,spin:sig.spin*.85,follow:true,
-      width:9*s.rules.beam,warn:Math.round(54*s.rules.warn),active:230,age:0,color:sig.color,grazed:false});
-    note(s,'figure');
-  }
-  /* 도는 바퀴들: 보스를 중심으로 같은 간격의 바퀴 n개가 원을 그리며 돌고(공전), 바퀴마다 제자리에서도 돈다(자전).
-     공전 반지름은 숨 쉬듯 커졌다 작아진다. 바퀴 사이·바퀴살 사이로 빠져나갈 틈이 있다. */
-  function summonWheels(s,sig,glyph){
-    var n=pick(s,3,3,4),dir=sig.spin,k;if(s.figures.length+n>FIGURE_CAP)return;
-    for(k=0;k<n;k++)s.figures.push({kind:'glyph',glyph:glyph,cx:s.boss.x,cy:s.boss.y,r:glyph==='gear'?30:34,r0:glyph==='gear'?30:34,r1:glyph==='gear'?30:34,period:1e9,
-      turn:k,spin:dir*(glyph==='gear'?-1.9:1.5),orbit:{phase:TAU*k/n,speed:dir*.55,near:70,far:150,period:420},
-      width:7*s.rules.beam,warn:Math.round(60*s.rules.warn),active:360,age:0,color:sig.color,grazed:false});
-    note(s,'figure');
-  }
+  /* 보스 둘레에 붙던 문양 광선(summonGlyph)과 도는 바퀴(summonWheels)는 11-14 요청으로 뺐다: 보스 옆에 '3'처럼 보이는 붉은 호가 어색했다.
+     그 자리는 그림 쪽 룬 결계(drawRuneBarrier)가 맡는다. 결계는 장식이라 맞지 않는다. */
   /* 직선 레이저 난사: 영웅 쪽 부채꼴로 가는 레이저 여러 줄이 한꺼번에 예고선을 긋고 짧게 켜진다. 줄 사이는 늘 벌어져 있다. */
   function spray(s,sig,t){
     var b=s.boss,n=pick(s,5,6,7),spread=1.7,center=aim(s,b.x,b.y)+(rand(s)-.5)*.5,k;
@@ -754,11 +741,9 @@
   // 보스 고유 연출: 이름 붙은 패턴(spell) 동안 기존 패턴 위에 겹친다.
   function signature(s,t){
     var sig=signatureOf(s.boss.actor);if(!sig)return;
-    if(t%420===30)summonGlyph(s,sig);
     if(sig.edge&&t%600===260){summonZigzag(s,sig,-1);summonZigzag(s,sig,1);}
     if(t%300<200)strands(s,sig,t);
-    if(sig.extra==='spray'){if(t%420>=120&&t%420<=330&&t%70===50)spray(s,sig,t);}
-    else if(t%840===150)summonWheels(s,sig,sig.extra);
+    if(sig.extra==='spray'&&t%420>=120&&t%420<=330&&t%70===50)spray(s,sig,t);
   }
   function updateFigures(s){
     var p=s.player,struck=false,grazed=0;
