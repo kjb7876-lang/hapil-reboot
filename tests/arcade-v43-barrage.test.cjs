@@ -177,3 +177,7 @@ test('v43 review fixes: pattern banner sits under the top HUD, bullets fade on t
  assert(/function nearBoss\(/.test(app),'bullets over the boss body are drawn faint so the boss stays readable');
  assert(/id="arcade-bleed"/.test(html)&&/arcade-bleed/.test(app),'blurred stage art fills the bars outside the play field');
 });
+
+test('v43 review fixes: a hit on a mob or the boss throws a small spark',()=>{
+ const app=h.read('src/arcade-app-v43.js');assert(/function hitSpark\(/.test(app)&&(app.match(/hitSpark\(/g)||[]).length>=3,'spark function used for mobs and the boss');
+});
