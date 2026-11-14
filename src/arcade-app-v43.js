@@ -26,7 +26,7 @@
   var images={},loading={},failed={},want={},manifest=null,orbs=[],shotSprite=null,homingSprite=null,circleSprite=null,itemSprites=[],background=null,backgroundStage=-1,loadedStage=-1;
   var scale=1,lite=false,frameMs=16,framesSeen=0,offsetX=0,offsetY=0;
   var state=null,mode='title',difficulty='normal',accumulator=0,lastStamp=0,visual=0,lastRun=null;
-  var particles=[],flash=0,hurtFlash=0,shake=0,shock=null,banner=0,bannerTitle='',bannerSub='',toast=null;
+  var particles=[],flash=0,hurtFlash=0,shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,bannerTitle='',bannerSub='',toast=null;
   var keys={},finger={active:false,id:null,x:0,y:0},focusHeld=false,bombQueued=false;
   var fx=null,music=null,soundOn=true,best=0,lastItemSound=0,progress=Progress.fresh(),saveOk=true;
   var themeOverride=null,turbo=0,rushStage=false;
@@ -428,7 +428,7 @@
   function play(name,x){if(fx&&soundOn)fx.play(name,x===undefined?0:Math.max(-1,Math.min(1,(finite(x,W/2)/W-.5)*1.4)));}
   function addParticle(x,y,vx,vy,life,color,size){if(particles.length<MAX_PARTICLES)particles.push({x:x,y:y,vx:vx,vy:vy,life:life,max:life,color:color,size:size});}
   var BANNER_Y=60;
-  function showBanner(title,sub){banner=1;bannerTitle=title;bannerSub=sub;}
+  function showBanner(title,sub){banner=1;bannerTitle=title;bannerSub=sub;bannerTick=state?state.tick:0;}
   function showToast(result){
     var g=Arcade.STAGES[result.stage];if(!g)return;
     // 기념물 그림은 이 스테이지 그림과 함께 이미 받아 두었다(곧 releaseStage가 목록에서 지워도 여기서 쥐고 있다).
@@ -916,7 +916,7 @@
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);drawHud(s);
     if(flash>0){ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);flash-=.04;}
     if(hurtFlash>0){var v=ctx.createRadialGradient(W/2,H/2,120,W/2,H/2,420);v.addColorStop(0,'rgba(255,0,40,0)');v.addColorStop(1,'rgba(255,0,40,'+(hurtFlash*.6)+')');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);hurtFlash-=.035;}
-    if(banner>0)banner-=1/80;
+    if(banner>0)banner=Math.max(0,1-(s.tick-bannerTick)/BANNER_TICKS); // 게임 틱 기준: 화면이 느리거나 빨라도 1.3초 뒤에 걷힌다
     if(toast&&mode==='playing'){toast.t-=Math.min(.05,elapsed);if(toast.t<=0)toast=null;}
   }
 

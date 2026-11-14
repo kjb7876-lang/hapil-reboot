@@ -22,3 +22,10 @@ test('v43 mob pressure: mobs keep firing while on screen and rest when the scree
  assert(low<mid&&mid<high,'refire slows as the screen fills: '+[low,mid,high]);assert(low>=12,'never faster than 12 ticks');
  s.n=0;assert(a.refireEvery(s,0)>0,'mobs without their own interval still refire');
 });
+
+test('v43 stage banner clears after a fixed amount of game time, not after a number of drawn frames',()=>{
+ const app=h.read('src/arcade-app-v43.js');
+ assert(/function showBanner\([^)]*\)\{[^}]*bannerTick=/.test(app),'the banner remembers the tick it appeared on');
+ assert(/banner=Math\.max\(0,1-\(s\.tick-bannerTick\)\/BANNER_TICKS\)/.test(app),'the banner fades by game ticks');
+ assert(!/banner-=1\/80/.test(app),'no per-frame countdown left');
+});
