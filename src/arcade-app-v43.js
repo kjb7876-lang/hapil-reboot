@@ -508,6 +508,22 @@
   /* 보스 스킬 이펙트: 드라이브 프레임 애니메이션(media/arcade-v43-fx/index.json)을 보스가 이름 붙은 패턴을 열 때와 문양 레이저를 부를 때 보스 자리에 한 번 재생한다.
      그림은 지금 나온 보스 것만 받는다(보스가 바뀌면 앞 보스 것은 놓는다). 그림이 없는 보스는 고유 색의 겹 고리가 퍼지는 코드 연출. 판정은 없다(장식). */
   var FX_DIR='media/arcade-v43-fx/',fxByBoss={},fxImages={},fxPending={},casts=[];
+  /* 보스 레이저·문양 시트(드라이브 Bnn 레이저문양시트, tools/build-laser-sheets-v43.py): 켜진 레이저의 질감 띠, 스펠 시작 때 보스 뒤에 1초 비추는 문양, 섬광.
+     계속 도는 고리·문양은 넣지 않는다(사용자 결정 11-14). 판정은 그대로(엔진 선분), 그림은 장식이다. */
+  var LASER_DIR='media/arcade-v43-laser/',laserByBoss={},laserImages={},laserPending={},emblems=[];
+  function loadLaserList(){
+    if(!global.fetch)return;
+    global.fetch(LASER_DIR+'index.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():null;}).then(function(d){
+      if(d&&d.sheets)Object.keys(d.sheets).forEach(function(a){laserByBoss[a]=d.sheets[a];});
+      if(state&&state.boss&&state.boss.present)wantLaser(state.boss.actor);
+    },function(){});
+  }
+  function wantLaser(actor){
+    var e=laserByBoss[actor],k;for(k in laserImages)if(!e||k!==e.file)delete laserImages[k];
+    if(!e||laserImages[e.file]||laserPending[e.file])return;laserPending[e.file]=1;
+    var im=new Image();im.onload=function(){laserPending[e.file]=0;if(laserByBoss[state&&state.boss.actor]===e)laserImages[e.file]=im;};im.onerror=function(){laserPending[e.file]=0;};im.src=LASER_DIR+e.file;
+  }
+  function laserSheet(s){var e=s&&s.boss&&laserByBoss[s.boss.actor];return e&&laserImages[e.file]?{e:e,img:laserImages[e.file]}:null;}
   function loadFxList(){
     if(!global.fetch)return;
     global.fetch(FX_DIR+'index.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():null;}).then(function(d){
@@ -516,6 +532,7 @@
     },function(){});
   }
   function wantFx(actor){
+    wantLaser(actor);
     var e=fxByBoss[actor],k;for(k in fxImages)if(!e||k!==e.file)delete fxImages[k];
     if(!e||fxImages[e.file]||fxPending[e.file])return;fxPending[e.file]=1;
     var im=new Image();im.onload=function(){fxPending[e.file]=0;if(fxByBoss[state&&state.boss.actor]===e)fxImages[e.file]=im;};im.onerror=function(){fxPending[e.file]=0;};im.src=FX_DIR+e.file;
@@ -524,6 +541,18 @@
     var b=s.boss,e=fxByBoss[b.actor],sig=Arcade.SIGNATURES&&Arcade.SIGNATURES[b.actor];if(!b.present)return;
     if(casts.length>=4)casts.shift();
     casts.push({x:b.x,y:b.y,t:visual,e:e&&fxImages[e.file]?e:null,big:big,color:COLORS[sig?sig.color:0]||'#ffffff'});
+    var ls=big&&laserSheet(s);if(ls){emblems.length=0;emblems.push({t:visual,img:ls.img,e:ls.e});}
+  }
+  // 스펠 시작: 보스 뒤에 그 보스의 문양이 1초 떠올랐다 걷히고, 섬광이 한 번 터진다.
+  var EMBLEM_TIME=1,EMBLEM_SIZE=250,BURST_TIME=.42;
+  function drawEmblems(s){
+    var b=s.boss;if(!emblems.length)return;
+    var m=emblems[0],age=visual-m.t;if(age>=EMBLEM_TIME||!b.present){emblems.length=0;return;}
+    var k=age/EMBLEM_TIME,a=k<.12?k/.12:k>.6?(1-k)/.4:1,size=EMBLEM_SIZE*(k<.15?1.25-k/.15*.25:1+.08*(k-.15)),r=m.e.emblem,q=m.e.burst;
+    ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=.85*a;
+    ctx.drawImage(m.img,r[0],r[1],r[2],r[3],b.x-size/2,b.y-size/2,size,size);
+    if(age<BURST_TIME){var kb=age/BURST_TIME,bs=90+150*kb;ctx.globalAlpha=.6*(1-kb);ctx.drawImage(m.img,q[0],q[1],q[2],q[3],b.x-bs/2,b.y-bs/2,bs,bs);}
+    ctx.restore();
   }
   function drawSkillFx(s){
     for(var i=casts.length-1;i>=0;i--){
@@ -772,8 +801,10 @@
     ctx.globalAlpha=1;
   }
   /* 광선. 예고: 가는 점선이 굵어지며 깜빡인다 → 발사: 색 빛무리 + 흰 심 → 잔광: 가늘어지며 사라진다. */
+  var LASER_DRAW=760; // 화면 대각선보다 길게
   function drawLasers(s){
     if(!s.lasers.length)return;
+    var sheet=s.stage==='card'?laserSheet(s):null;
     ctx.save();ctx.lineCap='butt';
     for(var i=0;i<s.lasers.length;i++){
       var l=s.lasers[i],color=COLORS[l.color]||'#ffffff',angle=finite(l.angle,0),lx=finite(l.x,0),ly=finite(l.y,0),x2=lx+Math.cos(angle)*1000,y2=ly+Math.sin(angle)*1000;
@@ -786,8 +817,11 @@
         var over=l.age-l.warn-l.active,k=over>0?Math.max(0,1-over/Arcade.BEAM_FADE):Math.min(1,(l.age-l.warn+1)/4),pulse=1+Math.sin(visual*40+i)*.06;
         ctx.setLineDash([]);ctx.globalCompositeOperation='lighter';
         if(!lite){ctx.globalAlpha=.3*k;ctx.strokeStyle=color;ctx.lineWidth=l.width*2.3*k*pulse;ctx.stroke();}
-        ctx.globalAlpha=.9*k;ctx.strokeStyle=color;ctx.lineWidth=l.width*k*pulse;ctx.stroke();
-        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=k;ctx.strokeStyle='#ffffff';ctx.lineWidth=l.width*.46*k;ctx.stroke();
+        if(sheet){ // 보스 시트의 레이저 질감을 광선 방향으로 늘여 더한다. 판정 폭은 흰 심으로 보인다.
+          var bm=sheet.e.beam,th=l.width*2.4*k*pulse;ctx.save();ctx.translate(lx,ly);ctx.rotate(angle);ctx.globalAlpha=k;
+          ctx.drawImage(sheet.img,bm[0],bm[1],bm[2],bm[3],0,-th/2,LASER_DRAW,th);ctx.restore();
+        }else{ctx.globalAlpha=.9*k;ctx.strokeStyle=color;ctx.lineWidth=l.width*k*pulse;ctx.stroke();}
+        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=k;ctx.strokeStyle='#ffffff';ctx.lineWidth=l.width*(sheet?.34:.46)*k;ctx.stroke();
       }
     }
     ctx.restore();
@@ -912,7 +946,7 @@
     offsetX=offsetY=0;if(shake>0){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawSkillFx(s);drawIllusions(s);drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);drawBossOver(s);drawPlayer(s);drawHitbox(s); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);drawBossOver(s);drawPlayer(s);drawHitbox(s); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);drawHud(s);
     if(flash>0){ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);flash-=.04;}
     if(hurtFlash>0){var v=ctx.createRadialGradient(W/2,H/2,120,W/2,H/2,420);v.addColorStop(0,'rgba(255,0,40,0)');v.addColorStop(1,'rgba(255,0,40,'+(hurtFlash*.6)+')');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);hurtFlash-=.035;}
@@ -1078,7 +1112,7 @@
     // 그림 목록을 먼저 읽는다(없는 그림을 요청하지 않으려고). 못 읽어도 3초 뒤에는 시작할 수 있다.
     var done=function(){loadImage('gunner');if(manifest&&manifest['heart.webp']){want.heart=true;loadImage('heart');}ready();};
     try{
-      loadFxList();
+      loadFxList();loadLaserList();
       global.fetch(ART_DIR+'manifest.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():null;}).then(function(m){manifest=m&&typeof m==='object'?m:null;done();},function(){manifest=null;done();});
     }catch(e){done();}
     setTimeout(done,3000);
