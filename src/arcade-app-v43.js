@@ -15,7 +15,7 @@
   var TALL={violet:112,balrog:124,mask:112,lucifer:124,asmodeus:108,pride:118,controller:118,goblin:104,insomnia:124,arbelia:108,siren:124,chief:124,executor:124,rian:108,cultist:124,
     spider:30,slime:28,ember:34,drone:26,mobgoblin:36,wolf:34,nightmare:40,collector:40,leech:34,guardian:62,warden:72,horn:84,belphegor:70,mammon:74,knight:80};
   var ITEM_DRAW=22,TALL_ACTOR=116,TALL_MOB=64,TALL_ELITE=92;
-  var PROP_LONG={'sword-violet':68,cleaver:64,'sword-balrog':72,obelisk:80,spire:72,'twin-blade':62,crescent:58,tissue:34,money:36,heel:40,feather:44,cross:60,gear:56};
+  var PROP_LONG={'sword-violet':68,cleaver:64,'sword-balrog':72,obelisk:80,spire:72,'twin-blade':62,crescent:58,tissue:34,money:36,heel:40,feather:44,cross:60,gear:56,skull:34,'demon-hand':46};
   var PROP_GLOW={'sword-violet':2,cleaver:5,'sword-balrog':0,obelisk:2,spire:4,'twin-blade':8,crescent:4,tissue:6,money:6,heel:0,feather:8,cross:6,gear:4};
   var ART_DIR='media/arcade-v43/';
   var SERIF='"Noto Serif KR","Nanum Myeongjo","Apple SD Gothic Neo",serif',SANS='system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif';
@@ -66,7 +66,7 @@
   /* 동작 그림: manifest의 <키>.webp 항목에 motions:['side','attack',…]가 있으면 <키>@side.webp 같은 스트립이 따로 있다. */
   function motionsOf(key){var e=manifest&&manifest[key+'.webp'];return e&&Array.isArray(e.motions)?e.motions:[];}
   function propLong(prop){return PROP_LONG[prop.key]||Math.round((prop.radius||12)*4.4);}
-  function propGlow(prop){var g=PROP_GLOW[prop.key];return g===undefined?Arcade.PALETTE[hash(prop.key)%Arcade.PALETTE.length]:g;}
+  function propGlow(prop){var g=prop.glow!==undefined?prop.glow:PROP_GLOW[prop.key];return g===undefined?Arcade.PALETTE[hash(prop.key)%Arcade.PALETTE.length]:g;}
 
   /* ── 그림 받기 ── */
   function fileOf(key){return key==='gunner'?'media/gunner.webp':ART_DIR+key+(key.indexOf('bg-')===0?'.jpg':'.webp');}
@@ -577,6 +577,7 @@
     ctx.globalAlpha=alpha*.5;ctx.drawImage(glow.image,x-reach,y-reach,reach*2,reach*2);
     ctx.setTransform(scale*cos,scale*sin,-scale*sin,scale*cos,(x+offsetX)*scale,(y+offsetY)*scale);ctx.globalAlpha=alpha;
     if(img){var sh=sheetOf(prop.key,img),k=long/Math.max(sh.cw,sh.ch),w=sh.cw*k,h=sh.ch*k;drawCell(prop.key,img,0,true,-w/2,-h/2,w,h);}
+    else if(prop.drawn)drawPropArt(prop.key,ctx,long/2); // 구운 그림을 받기 전에도 같은 모양
     else{
       // 그림을 받기 전: 길쭉한 마름모 단색 도형(upright 기물은 세로로 선다).
       var a=long/2,b=Math.max(4,(prop.radius||10)*.55)*s.sizeScale*grow;ctx.fillStyle=COLORS[propGlow(prop)]||'#e9e9ff';ctx.strokeStyle='#ffffff';ctx.lineWidth=1.2;ctx.beginPath();
@@ -586,6 +587,41 @@
     ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 실제로 닿는 곳은 가운데 심뿐이다.
     ctx.globalAlpha=alpha;ctx.drawImage(core.image,x-core.half,y-core.half,core.half*2,core.half*2);ctx.globalAlpha=1;
+  }
+  /* 코드로 그리는 기물: 어두운 회화풍에 맞게 뼈빛·이끼빛 단색에 어두운 테두리, 왼쪽 위에서 빛. u는 반 길이. */
+  /* 코드로 그린 기물 한 장. +x가 진행 방향이 되게 돌려 그린다(손끝이 +x, 해골은 아래턱이 +x). tools/build-drawn-props-v43.cjs도 이것으로 그림 파일을 굽는다. */
+  function drawPropArt(key,c,u){var keep=ctx;ctx=c;ctx.save();ctx.rotate(key==='skull'?-Math.PI/2:Math.PI/2);if(key==='skull')drawSkull(u);else drawHand(u);ctx.restore();ctx=keep;}
+  function drawSkull(u){
+    ctx.lineWidth=1.4;ctx.strokeStyle='#1a1410';
+    var g=ctx.createRadialGradient(-u*.3,-u*.4,u*.1,0,0,u*1.1);g.addColorStop(0,'#f4ead2');g.addColorStop(1,'#a99a7c');ctx.fillStyle=g;
+    ctx.beginPath();ctx.arc(0,-u*.12,u*.78,Math.PI*.82,Math.PI*2.18);ctx.lineTo(u*.42,u*.78);ctx.lineTo(-u*.42,u*.78);ctx.closePath();ctx.fill();ctx.stroke();
+    ctx.fillStyle='#120c0a';
+    ctx.beginPath();ctx.ellipse(-u*.3,-u*.08,u*.2,u*.24,0,0,TAU);ctx.ellipse(u*.3,-u*.08,u*.2,u*.24,0,0,TAU);ctx.fill();
+    ctx.beginPath();ctx.moveTo(0,u*.18);ctx.lineTo(u*.1,u*.36);ctx.lineTo(-u*.1,u*.36);ctx.closePath();ctx.fill();
+    ctx.fillStyle='#ff4a3a';ctx.beginPath();ctx.arc(-u*.3,-u*.06,u*.06,0,TAU);ctx.arc(u*.3,-u*.06,u*.06,0,TAU);ctx.fill(); // 눈 안의 붉은 불씨
+    ctx.strokeStyle='#120c0a';ctx.lineWidth=1;ctx.beginPath();for(var k=-2;k<=2;k++){ctx.moveTo(k*u*.15,u*.56);ctx.lineTo(k*u*.15,u*.78);}ctx.stroke();
+  }
+  function drawHand(u){
+    // 손끝이 위(진행 방향)를 향한 초록 악마 손: 가는 손목, 둥근 손바닥, 벌어진 굵은 손가락 넷과 엄지, 검은 발톱
+    var g=ctx.createLinearGradient(-u*.6,-u,u*.6,u);g.addColorStop(0,'#a8e88a');g.addColorStop(.55,'#4f9a3c');g.addColorStop(1,'#1f4a1c');
+    ctx.fillStyle=g;ctx.strokeStyle='#0b1a09';ctx.lineWidth=1.3;ctx.lineJoin='round';
+    var fingers=[[-.62,.3],[-.22,.18],[.2,.18],[.6,.3]],k; // [기울기, 손바닥에서 나오는 높이]
+    for(k=0;k<4;k++){var tilt=fingers[k][0],bx=(-.42+k*.28)*u,by=-u*fingers[k][1],len=u*(k===1||k===2?.82:.68),tx=bx+Math.sin(tilt)*len,ty=by-Math.cos(tilt)*len,w=u*.15;
+      ctx.beginPath();ctx.moveTo(bx-w,by+u*.1);ctx.quadraticCurveTo(bx-w+Math.sin(tilt)*len*.6,by-Math.cos(tilt)*len*.55,tx,ty);ctx.quadraticCurveTo(bx+w+Math.sin(tilt)*len*.6,by-Math.cos(tilt)*len*.45,bx+w,by+u*.1);ctx.closePath();ctx.fill();ctx.stroke();
+      ctx.fillStyle='#0b1a09';ctx.beginPath();ctx.moveTo(tx-Math.cos(tilt)*u*.07,ty+u*.05);ctx.lineTo(tx+Math.sin(tilt)*u*.2,ty-Math.cos(tilt)*u*.2);ctx.lineTo(tx+Math.cos(tilt)*u*.07,ty+u*.05);ctx.closePath();ctx.fill();ctx.fillStyle=g;}
+    ctx.beginPath();ctx.moveTo(u*.42,u*.2);ctx.quadraticCurveTo(u*.95,u*.05,u*.98,-u*.32);ctx.quadraticCurveTo(u*.7,-u*.05,u*.36,-u*.02);ctx.closePath();ctx.fill();ctx.stroke(); // 엄지
+    ctx.beginPath();ctx.moveTo(-u*.5,-u*.12);ctx.quadraticCurveTo(-u*.58,u*.4,-u*.24,u*.62);ctx.lineTo(-u*.2,u*1.05);ctx.lineTo(u*.2,u*1.05);ctx.lineTo(u*.24,u*.62);ctx.quadraticCurveTo(u*.58,u*.4,u*.5,-u*.12);ctx.closePath();ctx.fill();ctx.stroke(); // 손바닥·손목
+    ctx.strokeStyle='rgba(11,26,9,.55)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(-u*.3,u*.1);ctx.quadraticCurveTo(0,u*.28,u*.3,u*.06);ctx.stroke(); // 손금
+  }
+  /* 늪 물결: 악마 손이 솟기 전에 그 자리 바닥에 초록 물결이 커지며 예고한다. */
+  function drawRipples(s){
+    var list=s.ripples;if(!list||!list.length)return;ctx.save();
+    for(var i=0;i<list.length;i++){var r=list[i],t=r.age/Arcade.HAND_WARN,y=H-14;
+      // 차오르는 밝은 원판 + 퍼지는 물결 세 겹 + 깜빡이는 노란 테: 어두운 늪 위에서도 솟을 자리가 보이게(심사 5차)
+      ctx.globalAlpha=.18+.3*t;ctx.fillStyle='#d8ff6a';ctx.beginPath();ctx.ellipse(r.x,y,10+18*t,4+6*t,0,0,TAU);ctx.fill();
+      ctx.lineWidth=2.5;for(var k=0;k<3;k++){var q=(t*1.5+k/3)%1;ctx.globalAlpha=(1-q)*(.5+.5*t);ctx.strokeStyle=k?'#9fe07a':'#f2ff9a';ctx.beginPath();ctx.ellipse(r.x,y,10+q*30,4+q*10,0,0,TAU);ctx.stroke();}
+      ctx.globalAlpha=(.5+.5*Math.sin(r.age*.5))*t;ctx.strokeStyle='#ffe066';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(r.x,y,28,10,0,0,TAU);ctx.stroke();}
+    ctx.restore();
   }
   /* 보스 몸 위(반지름 64 안)의 탄은 옅게 그려 보스 얼굴·몸이 늘 읽히게 한다. 보스 자리에서 막 나온 탄이라 플레이어가 닿을 일은 드물다. */
   function nearBoss(s,x,y){var b=s.boss;if(!b.present||s.stage!=='card')return false;var dx=x-b.x,dy=y-b.y;return dx*dx+dy*dy<4096;}
@@ -747,7 +783,7 @@
     offsetX=offsetY=0;if(shake>0){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawSkillFx(s);drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawParticles();drawItems(s);drawLasers(s);drawFigures(s);drawBullets(s);drawBossOver(s);drawPlayer(s);drawHitbox(s); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();drawTopShade();drawSkillFx(s);drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawParticles();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);drawBossOver(s);drawPlayer(s);drawHitbox(s); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);drawHud(s);
     if(flash>0){ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);flash-=.04;}
     if(hurtFlash>0){var v=ctx.createRadialGradient(W/2,H/2,120,W/2,H/2,420);v.addColorStop(0,'rgba(255,0,40,0)');v.addColorStop(1,'rgba(255,0,40,'+(hurtFlash*.6)+')');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);hurtFlash-=.035;}
@@ -923,7 +959,7 @@
     fx:{kind:fxKind,count:fxCount,pool:FX_POOL},toast:toast?{name:toast.name,stars:toast.stars,hasArt:!!toast.img}:null,difficulty:difficulty,saveOk:saveOk};}
   /* 디버그 훅(헤드리스 검증용): 상태를 읽고, 스테이지·구간으로 건너뛰고, 진행 기록을 본다. */
   global.HapilArcadeApp={
-    getState:snapshot,
+    getState:snapshot,drawPropArt:drawPropArt, // tools/build-drawn-props-v43.cjs가 그림 파일을 구울 때 쓴다
     debugState:function(){
       return {state:state,app:snapshot(),progress:JSON.parse(JSON.stringify(progress)),saved:(function(){try{return global.localStorage.getItem(SAVE_KEY);}catch(e){return null;}})(),
         jumpStage:function(i,bossOnly){start({stage:i,bossOnly:!!bossOnly});return snapshot();},

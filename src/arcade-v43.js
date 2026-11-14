@@ -70,7 +70,7 @@
     ['59',8,'처음 세웠던 목표'],
     ['60',8,'사몽의 문턱'],
     ['61',8,'교주의 사몽']];
-  var W=360,H=640,CAP=1400,COMPACT_CAP=820,LASER_CAP=24,MOB_CAP=28,ITEM_CAP=160,TICK=1/60,TAU=Math.PI*2;
+  var FIGURE_CAP=10,W=360,H=640,CAP=1400,COMPACT_CAP=820,LASER_CAP=24,MOB_CAP=28,ITEM_CAP=160,TICK=1/60,TAU=Math.PI*2;
   var GOLDEN_ANGLE=Math.PI*(3-Math.sqrt(5)); // 137.5°. 해바라기 씨앗이 겹치지 않고 차오르는 각도
   /* 난이도. density 탄 수 배율 · speed 탄 속도 배율 · hp 목숨 · mapHeal 다음 맵에서 회복(-1은 전부) · bombs 폭탄 ·
    * radius 영웅 피격점 반지름 · hitScale 탄의 보이는 반지름 중 실제로 닿는 비율 · warn 광선 예고 시간 배율 · beam 광선 굵기 배율 */
@@ -81,7 +81,7 @@
   };
   // 휴대폰 모드: 탄 수를 줄이고 그만큼 탄을 크게 그린다(판정도 같이 커진다).
   var COMPACT_DENSITY=.72,COMPACT_SIZE=1.25;
-  var EXPIRE_SPEED=60,GRAZE_MARGIN=13,BLOOM_TICKS=12,INVULN_TICKS=150,BOMB_TICKS=150,INTRO_TICKS=110,BREAK_TICKS=80,FIRE_DELAY=40,WAVE_GRACE=360;
+  var HAND_WARN=50,HAND_AWAY=64,EXPIRE_SPEED=60,GRAZE_MARGIN=13,BLOOM_TICKS=12,INVULN_TICKS=150,BOMB_TICKS=150,INTRO_TICKS=110,BREAK_TICKS=80,FIRE_DELAY=40,WAVE_GRACE=360;
   var SHOT_SPEED=15,SHOT_EVERY=5,HOMING_EVERY=8,HOMING_STEER=7,SHOT_CAP=96,MAX_MOVE=12,FOCUS_MOVE=2;
   var BEAM_HIT=.62,BEAM_FADE=14,BEAM_LENGTH=1000;
   var GAUGE_FULL=100,MAX_BOMBS=4,AUTO_COLLECT_Y=190,ITEM_REACH=24,ITEM_PULL=11,BOMB_BOSS_DAMAGE=40,BOMB_MOB_DAMAGE=25;
@@ -92,7 +92,10 @@
   // 큰 기물. upright는 절대 돌리지 않는 것(십자가는 똑바로 선 채 아래로만 내려온다).
   var PROPS=[{key:'sword-violet',radius:12},{key:'cleaver',radius:14},{key:'sword-balrog',radius:14},{key:'obelisk',radius:17},{key:'spire',radius:18},
     {key:'twin-blade',radius:13},{key:'crescent',radius:14},{key:'tissue',radius:10},{key:'money',radius:10},{key:'heel',radius:11},{key:'feather',radius:9},
-    {key:'cross',radius:14,upright:true},{key:'gear',radius:16}];
+    {key:'cross',radius:14,upright:true},{key:'gear',radius:16},
+    // 코드로 그린 기물(drawn, 그림 파일은 tools/build-drawn-props-v43.cjs가 같은 코드로 구워 둔다): 해골(묘지), 늪에서 올라오는 초록 악마 손.
+    // glow는 빛무리 색 번호. 둘 다 진행 방향을 본다(손끝은 위로 솟고, 해골은 날아가는 쪽으로 얼굴 아래턱을 둔다).
+    {key:'skull',radius:11,drawn:true,glow:2},{key:'demon-hand',radius:12,drawn:true,glow:5}];
   gather('props',PROPS,true);
   var P={};PROPS.forEach(function(p,i){P[p.key]=i;});
   // 탄 변화 방식: 1 영웅을 다시 조준 2 각도 꺾기 3 터져서 고리로 4 가지치기(프랙탈)
@@ -502,7 +505,7 @@
     if(Number.isInteger(options.stages)&&options.stages>0)s.lastStage=Math.min(STAGES.length-1,s.stageIndex+options.stages-1);
     ['bx','by','ba','bs','bturn','bacc','bmin','bmax','barg','bs2','bspin'].forEach(function(k){s[k]=new Float32Array(CAP);});
     ['bage','blife','bat'].forEach(function(k){s[k]=new Uint16Array(CAP);});
-    ['bsize','bcolor','bgrazed','bmode','bgen','bbounce'].forEach(function(k){s[k]=new Uint8Array(CAP);});s.figures=[];
+    ['bsize','bcolor','bgrazed','bmode','bgen','bbounce'].forEach(function(k){s[k]=new Uint8Array(CAP);});s.figures=[];s.ripples=[];
     s.sx=new Float32Array(SHOT_CAP);s.sy=new Float32Array(SHOT_CAP);s.shoming=new Uint8Array(SHOT_CAP);
     s.ix=new Float32Array(ITEM_CAP);s.iy=new Float32Array(ITEM_CAP);s.ivy=new Float32Array(ITEM_CAP);s.ikind=new Uint8Array(ITEM_CAP);
     // 구간을 직접 지정하면(연습·검사) 그 구간에서 바로 시작한다.
@@ -517,7 +520,7 @@
   // 화면의 탄과 광선을 모두 지우고, 지운 탄 자리를 연출용으로 남긴다(최대 320개). 지운 탄 수를 돌려준다.
   function cancelAll(s){
     var n=s.n;for(var i=0;i<n&&s.cancelled.length<320*3;i++)s.cancelled.push(s.bx[i],s.by[i],s.bsize[i]===SHAPE_PROP?WHITE:s.bcolor[i]);
-    s.n=0;s.lasers.length=0;s.figures.length=0;return n;
+    s.n=0;s.lasers.length=0;s.figures.length=0;s.ripples.length=0;return n;
   }
   /* 아이템 하나를 떨군다. kind 0 점수, 1 폭탄 조각. 위로 살짝 튀었다가 천천히 내려온다. */
   function dropItem(s,x,y,kind){if(s.itemCount>=ITEM_CAP)return;var i=s.itemCount++;s.ix[i]=Math.max(10,Math.min(W-10,x));s.iy[i]=y;s.ivy[i]=-1.6;s.ikind[i]=kind||0;}
@@ -669,6 +672,7 @@
     ring:[arcPts(0,0,1,0,TAU,36),arcPts(0,0,.55,0,TAU,24)],
     eye:[arcPts(0,.9,1.35,-Math.PI*.78,-Math.PI*.22,14),arcPts(0,-.9,1.35,Math.PI*.22,Math.PI*.78,14),arcPts(0,0,.32,0,TAU,16)],
     wheel:[arcPts(0,0,1,0,TAU,36),[-1,0,1,0],[-.5,-.866,.5,.866],[-.5,.866,.5,-.866]],
+    waterwheel:[arcPts(0,0,1,0,TAU,36),arcPts(0,0,.3,0,TAU,12)].concat([0,1,2,3,4,5,6,7].map(function(k){var a=TAU*k/8,c=Math.cos(a),sn=Math.sin(a),q=a+.32;return [c*.3,sn*.3,c,sn,Math.cos(q)*1.22,Math.sin(q)*1.22];})),
     gear:[(function(){var o=[];for(var k=0;k<=48;k++){var a=TAU*k/48,r=Math.floor(k/2)%2?1:.8;o.push(Math.cos(a)*r,Math.sin(a)*r);}return o;})(),arcPts(0,0,.35,0,TAU,16)],
     wave:[(function(){var o=[];for(var k=0;k<=40;k++){var x=-1+k/20;o.push(x,Math.sin(x*Math.PI*2)*.4);}return o;})(),(function(){var o=[];for(var k=0;k<=40;k++){var x=-1+k/20;o.push(x,-Math.sin(x*Math.PI*2)*.4);}return o;})()],
     wings:[arcPts(-1,0,1,-Math.PI*.45,Math.PI*.45,14),arcPts(1,0,1,Math.PI*.55,Math.PI*1.45,14),arcPts(-1.2,0,.7,-Math.PI*.4,Math.PI*.4,10),arcPts(1.2,0,.7,Math.PI*.6,Math.PI*1.4,10)],
@@ -700,7 +704,9 @@
     p7_shadow:['spiral',PURPLE,4,0],p7_alarm:['triangle',RED,6,1],executor:['key',CYAN,5,1],p8_chip:['circuit',YELLOW,2,1],p8_collective:['honeycomb',CYAN,6,0],p8_lauren:['wings',CYAN,2,1],
     cultist:['ouroboros',WHITE,6,1],p8_ion:['spiral',CYAN,3,1],rian:['rose',RED,4,0]
   };
-  Object.keys(SIGNATURES).forEach(function(k,i){var v=SIGNATURES[k];SIGNATURES[k]={glyph:v[0],color:v[1],arms:v[2],edge:v[3],spin:i%2?-1:1,reach:118+(i*29)%50};});
+  // extra: 보스마다 하나씩 더하는 큰 연출 — 물레방아 바퀴들, 톱니바퀴들(보스 둘레를 돌며 저마다 돈다), 직선 레이저 난사. 순서대로 돌려 붙여 보스마다 다르게.
+  var EXTRAS=['waterwheel','spray','gear'];
+  Object.keys(SIGNATURES).forEach(function(k,i){var v=SIGNATURES[k];SIGNATURES[k]={glyph:v[0],color:v[1],arms:v[2],edge:v[3],spin:i%2?-1:1,reach:118+(i*29)%50,extra:EXTRAS[i%3]};});
   function signatureOf(actor){return SIGNATURES[actor]||null;}
   // 도형 광선 하나의 선분들 [x1,y1,x2,y2,...]
   function figureSegments(f){
@@ -712,9 +718,24 @@
     return out;
   }
   function summonGlyph(s,sig){
-    if(s.figures.length>=6)return;
+    if(s.figures.length>=FIGURE_CAP-4)return;
     s.figures.push({kind:'glyph',glyph:sig.glyph,cx:s.boss.x,cy:s.boss.y,r:30,r0:34,r1:sig.reach,period:170,turn:0,spin:sig.spin*.85,follow:true,
       width:9*s.rules.beam,warn:Math.round(54*s.rules.warn),active:230,age:0,color:sig.color,grazed:false});
+    note(s,'figure');
+  }
+  /* 도는 바퀴들: 보스를 중심으로 같은 간격의 바퀴 n개가 원을 그리며 돌고(공전), 바퀴마다 제자리에서도 돈다(자전).
+     공전 반지름은 숨 쉬듯 커졌다 작아진다. 바퀴 사이·바퀴살 사이로 빠져나갈 틈이 있다. */
+  function summonWheels(s,sig,glyph){
+    var n=pick(s,3,3,4),dir=sig.spin,k;if(s.figures.length+n>FIGURE_CAP)return;
+    for(k=0;k<n;k++)s.figures.push({kind:'glyph',glyph:glyph,cx:s.boss.x,cy:s.boss.y,r:glyph==='gear'?30:34,r0:glyph==='gear'?30:34,r1:glyph==='gear'?30:34,period:1e9,
+      turn:k,spin:dir*(glyph==='gear'?-1.9:1.5),orbit:{phase:TAU*k/n,speed:dir*.55,near:70,far:150,period:420},
+      width:7*s.rules.beam,warn:Math.round(60*s.rules.warn),active:360,age:0,color:sig.color,grazed:false});
+    note(s,'figure');
+  }
+  /* 직선 레이저 난사: 영웅 쪽 부채꼴로 가는 레이저 여러 줄이 한꺼번에 예고선을 긋고 짧게 켜진다. 줄 사이는 늘 벌어져 있다. */
+  function spray(s,sig,t){
+    var b=s.boss,n=pick(s,5,6,7),spread=1.7,center=aim(s,b.x,b.y)+(rand(s)-.5)*.5,k;
+    for(k=0;k<n;k++)beam(s,b.x,b.y,center+(k/(n-1)-.5)*spread,{width:9,warn:42,active:22,color:sig.color});
     note(s,'figure');
   }
   function summonZigzag(s,sig,side){
@@ -736,12 +757,15 @@
     if(t%420===30)summonGlyph(s,sig);
     if(sig.edge&&t%600===260){summonZigzag(s,sig,-1);summonZigzag(s,sig,1);}
     if(t%300<200)strands(s,sig,t);
+    if(sig.extra==='spray'){if(t%420>=120&&t%420<=330&&t%70===50)spray(s,sig,t);}
+    else if(t%840===150)summonWheels(s,sig,sig.extra);
   }
   function updateFigures(s){
     var p=s.player,struck=false,grazed=0;
     for(var i=s.figures.length-1;i>=0;i--){
       var f=s.figures[i];f.age++;
       if(f.age>f.warn+f.active+BEAM_FADE){s.figures.splice(i,1);continue;}
+      if(f.orbit&&s.boss.present){var o=f.orbit,R=o.near+(o.far-o.near)*(.5-.5*Math.cos(TAU*f.age/o.period)),A=o.phase+o.speed*f.age*TICK;f.cx=s.boss.x+Math.cos(A)*R;f.cy=s.boss.y+Math.sin(A)*R;}
       if(f.kind==='glyph'){if(f.follow&&s.boss.present){f.cx=s.boss.x;f.cy=s.boss.y;}f.turn+=f.spin*TICK*(f.age<f.warn?.35:1);f.r=f.r0+(f.r1-f.r0)*(.5-.5*Math.cos(TAU*f.age/f.period));}
       if(f.age<f.warn||f.age>=f.warn+f.active)continue;
       var segs=figureSegments(f),reach=f.width*.5*BEAM_HIT+p.r,near=1e9;
@@ -792,6 +816,17 @@
     if(grazed){s.graze+=grazed;s.gauge+=grazed;s.score+=grazed*20;note(s,'graze');}
     return struck;
   }
+  /* 장면별 탄(사용자 요청 11-14): 늪(03)에서는 물결이 먼저 일고(예고) 그 자리에서 초록 악마 손이 천천히 솟아오른다.
+     묘지(05·43)에서는 해골이 위에서 영웅 쪽으로 날아온다. 웨이브와 보스전 모두에 깔린다. */
+  var THEMED={'03':'hands','05':'skulls','43':'skulls'};
+  function themed(s){
+    var kind=THEMED[STAGES[s.stageIndex].scene],t=s.stageTick,i;if(!kind||(s.stage!=='wave'&&s.stage!=='card'))return;
+    if(kind==='hands'){
+      if(t%pick(s,110,95,80)===0&&s.ripples.length<6){var rx=24+rand(s)*(W-48);if(Math.abs(rx-s.player.x)<HAND_AWAY)rx=s.player.x+(s.player.x<W/2?1:-1)*(HAND_AWAY+rand(s)*60);s.ripples.push({x:rx,age:0});}
+      // 영웅 바로 밑(HAND_AWAY 안)에서는 솟지 않는다: 물결 자리를 영웅에게서 떨어뜨리고, 그사이 영웅이 그 위로 오면 손은 가라앉는다(헛물결).
+      for(i=s.ripples.length-1;i>=0;i--){var r=s.ripples[i];if(++r.age>=HAND_WARN){if(Math.abs(r.x-s.player.x)>=HAND_AWAY)spawn(s,r.x,H+8,-Math.PI/2,pick(s,30,34,42),{size:SHAPE_PROP,color:P['demon-hand'],life:1400});s.ripples.splice(i,1);}}
+    }else if(t%pick(s,100,85,70)===40){var x=30+rand(s)*(W-60);spawn(s,x,-10,aim(s,x,-10),pick(s,44,50,62),{size:SHAPE_PROP,color:P.skull});}
+  }
   /* 한 틱(1/60초) 진행. input: {dx,dy,focus,bomb} — dx,dy는 이번 틱에 움직일 픽셀, focus는 저속 이동, bomb은 이번 틱에 폭탄 사용. */
   function step(s,input){
     if(s.stage==='won'||s.stage==='lost'){s.stageTick++;return s;}
@@ -814,7 +849,7 @@
       var left=seg.time-s.segTick*TICK;
       if(seg.spell&&left<=10&&left>0&&s.segTick%60===0)note(s,left<=3?'countdownLast':'countdown');
     }
-    updateMobs(s);updateShots(s);
+    themed(s);updateMobs(s);updateShots(s);
     if(s.stage==='card'&&b.hp<=0)endCard(s,true);
     else if(s.stage==='card'&&s.segTick*TICK>=segment(s).time)endCard(s,false);
     var p=s.player,byBeam=updateLasers(s),byFigure=updateFigures(s),byBullet=updateBullets(s);
@@ -862,7 +897,7 @@
   })();
   var api={revision:43,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     SEGMENTS:SEGMENTS,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
-    BLOOM_TICKS:BLOOM_TICKS,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem};
+    BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem};
   if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcade=api;
 })(typeof window!=='undefined'?window:globalThis);

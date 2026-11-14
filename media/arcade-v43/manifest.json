@@ -1283,6 +1283,17 @@
   "stamp": "7ace43db551e76e4",
   "table": "tools/arcade-art-v43/base.json"
  },
+ "demon-hand.webp": {
+  "bytes": 3728,
+  "group": "props",
+  "size": [
+   112,
+   96
+  ],
+  "source": "code:HapilArcadeApp.drawPropArt",
+  "sourceSha256": "26aab39c6aedab1fb8d57f7e45a09bc40121e5bac95415a1e3c6a9b76de5d5d9",
+  "table": "tools/build-drawn-props-v43.cjs"
+ },
  "drone.webp": {
   "bytes": 7660,
   "group": "mobs",
@@ -8879,6 +8890,17 @@
   "sourceSha256": "16ee2329688fc7641f8409e27258f4cfc551353a5d0da64ea84199593b5959d8",
   "stamp": "aeed5233d7949f8a",
   "table": "tools/arcade-art-v43/base.json"
+ },
+ "skull.webp": {
+  "bytes": 2936,
+  "group": "props",
+  "size": [
+   96,
+   96
+  ],
+  "source": "code:HapilArcadeApp.drawPropArt",
+  "sourceSha256": "efc85133d54703e93a24fa758f2e535f6f3cabbfe5f5a5f809a656075611ad03",
+  "table": "tools/build-drawn-props-v43.cjs"
  },
  "slime.webp": {
   "bytes": 6130,
