@@ -170,3 +170,10 @@ test('v43 barrage: hell fires about 30% more than before (user 11-14: "헬도 �
  const d=h.need().DIFFICULTY;assert(d.hell.density>=2.6,'hell density '+d.hell.density);
  assert(d.gentle.density>=d.hell.density*.88&&d.normal.density>=d.hell.density*.88);
 });
+
+test('v43 review fixes: pattern banner sits under the top HUD, bullets fade on the boss body, the stage art bleeds past the play field',()=>{
+ const app=h.read('src/arcade-app-v43.js'),html=h.read('arcade.html');
+ const m=/var BANNER_Y=(\d+)/.exec(app);assert(m&&Number(m[1])<=110,'pattern-name banner in the upper part of the field');
+ assert(/function nearBoss\(/.test(app),'bullets over the boss body are drawn faint so the boss stays readable');
+ assert(/id="arcade-bleed"/.test(html)&&/arcade-bleed/.test(app),'blurred stage art fills the bars outside the play field');
+});

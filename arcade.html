@@ -10,9 +10,10 @@
   <style>
     *{box-sizing:border-box}
     html,body{margin:0;height:100%;background:#000;color:#f0e9d8;font:15px/1.5 system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;overscroll-behavior:none}
-    body{display:flex;justify-content:center}
+    body{display:flex;justify-content:center;background:transparent} /* 뒤의 #arcade-bleed가 보이게 */
     #arcade-stage{position:relative;width:100%;height:100dvh;max-width:calc(100dvh*360/640);display:flex;align-items:center;justify-content:center;touch-action:none;user-select:none;-webkit-user-select:none;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
     canvas{display:block;background:#07070f}
+    #arcade-bleed{position:fixed;inset:-24px;z-index:-1;background:#000 center/cover no-repeat;filter:blur(14px) brightness(.38) saturate(.8)} /* 플레이 칸 밖 여백: 스테이지 그림을 흐리게 */
     .screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:28px;text-align:center;background:rgba(5,5,14,.72)}
     .screen[hidden]{display:none}
     h1{margin:0;font:600 44px/1.1 "Noto Serif KR","Nanum Myeongjo",serif;letter-spacing:.12em;color:#fff3cf}
@@ -47,6 +48,7 @@
   </style>
 </head>
 <body>
+  <div id="arcade-bleed" aria-hidden="true"></div>
   <div id="arcade-stage">
     <div id="arcade-frame">
       <canvas id="arcade-canvas" width="360" height="640" aria-label="세로 탄막 전투장"></canvas>
