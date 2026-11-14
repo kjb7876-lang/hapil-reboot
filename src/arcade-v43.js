@@ -93,8 +93,9 @@
   var PROPS=[{key:'sword-violet',radius:12},{key:'cleaver',radius:14},{key:'sword-balrog',radius:14},{key:'obelisk',radius:17},{key:'spire',radius:18},
     {key:'twin-blade',radius:13},{key:'crescent',radius:14},{key:'tissue',radius:10},{key:'money',radius:10},{key:'heel',radius:11},{key:'feather',radius:9},
     {key:'cross',radius:14,upright:true},{key:'gear',radius:16},
-    // 그림 파일 없이 코드로 그리는 기물(drawn): 해골(묘지), 늪에서 올라오는 초록 악마 손. glow는 빛무리 색 번호.
-    {key:'skull',radius:11,drawn:true,glow:8,upright:true},{key:'demon-hand',radius:12,drawn:true,glow:5,upright:true}];
+    // 코드로 그린 기물(drawn, 그림 파일은 tools/build-drawn-props-v43.cjs가 같은 코드로 구워 둔다): 해골(묘지), 늪에서 올라오는 초록 악마 손.
+    // glow는 빛무리 색 번호. 둘 다 진행 방향을 본다(손끝은 위로 솟고, 해골은 날아가는 쪽으로 얼굴 아래턱을 둔다).
+    {key:'skull',radius:11,drawn:true,glow:8},{key:'demon-hand',radius:12,drawn:true,glow:5}];
   gather('props',PROPS,true);
   var P={};PROPS.forEach(function(p,i){P[p.key]=i;});
   // 탄 변화 방식: 1 영웅을 다시 조준 2 각도 꺾기 3 터져서 고리로 4 가지치기(프랙탈)

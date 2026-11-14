@@ -222,7 +222,7 @@ test('v43 review fixes (round 3): the shot sprite is really built (no line comme
 });
 
 /* 사용자 요청(11-14 14:34 KST): 보스를 중심으로 도는 원(물레방아·톱니바퀴) 여러 개, 직선 레이저 난사, 해골 탄, 늪에서 올라오는 초록 악마 손 탄 */
-const firstSpells=a=>{const m=new Map();a.SEGMENTS.forEach((g,i)=>{if(g.kind==='card'&&g.spell&&!m.has(g.actor))m.set(g.actor,i);});return m;};
+const firstSpells=a=>{const m=new Map();a.SEGMENTS.forEach((g,i)=>{if(g.kind==='card'&&g.spell&&!m.has(g.actor)&&m.size<18)m.set(g.actor,i);});return m;}; // 앞쪽 보스 18명(연출 셋을 돌려 붙이므로 종류마다 6명)
 const runSpell=(a,i,ticks,each)=>{const s=a.createRun({difficulty:'normal',seed:3,segment:i,stages:1});
  for(let t=0;t<ticks&&s.seg===i;t++){s.player.invulnerableUntil=s.tick+999;if(s.stage==='card')s.boss.hp=s.boss.maxHp;const lasers=s.lasers.length;a.step(s,{dx:0,dy:0});each(s,lasers);h.clear(s);}};
 

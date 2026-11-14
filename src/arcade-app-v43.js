@@ -15,7 +15,7 @@
   var TALL={violet:112,balrog:124,mask:112,lucifer:124,asmodeus:108,pride:118,controller:118,goblin:104,insomnia:124,arbelia:108,siren:124,chief:124,executor:124,rian:108,cultist:124,
     spider:30,slime:28,ember:34,drone:26,mobgoblin:36,wolf:34,nightmare:40,collector:40,leech:34,guardian:62,warden:72,horn:84,belphegor:70,mammon:74,knight:80};
   var ITEM_DRAW=22,TALL_ACTOR=116,TALL_MOB=64,TALL_ELITE=92;
-  var PROP_LONG={'sword-violet':68,cleaver:64,'sword-balrog':72,obelisk:80,spire:72,'twin-blade':62,crescent:58,tissue:34,money:36,heel:40,feather:44,cross:60,gear:56};
+  var PROP_LONG={'sword-violet':68,cleaver:64,'sword-balrog':72,obelisk:80,spire:72,'twin-blade':62,crescent:58,tissue:34,money:36,heel:40,feather:44,cross:60,gear:56,skull:34,'demon-hand':46};
   var PROP_GLOW={'sword-violet':2,cleaver:5,'sword-balrog':0,obelisk:2,spire:4,'twin-blade':8,crescent:4,tissue:6,money:6,heel:0,feather:8,cross:6,gear:4};
   var ART_DIR='media/arcade-v43/';
   var SERIF='"Noto Serif KR","Nanum Myeongjo","Apple SD Gothic Neo",serif',SANS='system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif';
@@ -571,13 +571,13 @@
   function drawProp(s,i,grow,alpha){
     var prop=Arcade.PROPS[s.bcolor[i]];if(!prop)return;
     var img=images[prop.key],x=s.bx[i],y=s.by[i];
-    if(!img&&!prop.drawn)requestProp(prop.key); // 기물은 처음 화면에 나타날 때 받는다(코드로 그리는 기물은 받지 않는다)
+    if(!img)requestProp(prop.key); // 기물은 처음 화면에 나타날 때 받는다
     // 십자가처럼 upright인 기물은 절대 돌리지 않는다. 도는 기물은 제자리에서 돌고, 그 밖에는 끝이 진행 방향을 본다.
     var turn=prop.upright?0:s.bspin[i]?s.bage[i]*s.bspin[i]:s.ba[i],cos=Math.cos(turn),sin=Math.sin(turn),core=orbs[0][8],glow=orbs[2][propGlow(prop)]||orbs[2][8],reach=glow.half*1.5*grow,long=propLong(prop)*s.sizeScale*grow;
     ctx.globalAlpha=alpha*.5;ctx.drawImage(glow.image,x-reach,y-reach,reach*2,reach*2);
     ctx.setTransform(scale*cos,scale*sin,-scale*sin,scale*cos,(x+offsetX)*scale,(y+offsetY)*scale);ctx.globalAlpha=alpha;
-    if(prop.drawn){var u=long/2;if(prop.key==='skull')drawSkull(u);else drawHand(u);}
-    else if(img){var sh=sheetOf(prop.key,img),k=long/Math.max(sh.cw,sh.ch),w=sh.cw*k,h=sh.ch*k;drawCell(prop.key,img,0,true,-w/2,-h/2,w,h);}
+    if(img){var sh=sheetOf(prop.key,img),k=long/Math.max(sh.cw,sh.ch),w=sh.cw*k,h=sh.ch*k;drawCell(prop.key,img,0,true,-w/2,-h/2,w,h);}
+    else if(prop.drawn)drawPropArt(prop.key,ctx,long/2); // 구운 그림을 받기 전에도 같은 모양
     else{
       // 그림을 받기 전: 길쭉한 마름모 단색 도형(upright 기물은 세로로 선다).
       var a=long/2,b=Math.max(4,(prop.radius||10)*.55)*s.sizeScale*grow;ctx.fillStyle=COLORS[propGlow(prop)]||'#e9e9ff';ctx.strokeStyle='#ffffff';ctx.lineWidth=1.2;ctx.beginPath();
@@ -589,6 +589,8 @@
     ctx.globalAlpha=alpha;ctx.drawImage(core.image,x-core.half,y-core.half,core.half*2,core.half*2);ctx.globalAlpha=1;
   }
   /* 코드로 그리는 기물: 어두운 회화풍에 맞게 뼈빛·이끼빛 단색에 어두운 테두리, 왼쪽 위에서 빛. u는 반 길이. */
+  /* 코드로 그린 기물 한 장. +x가 진행 방향이 되게 돌려 그린다(손끝이 +x, 해골은 아래턱이 +x). tools/build-drawn-props-v43.cjs도 이것으로 그림 파일을 굽는다. */
+  function drawPropArt(key,c,u){var keep=ctx;ctx=c;ctx.save();ctx.rotate(key==='skull'?-Math.PI/2:Math.PI/2);if(key==='skull')drawSkull(u);else drawHand(u);ctx.restore();ctx=keep;}
   function drawSkull(u){
     ctx.lineWidth=1.4;ctx.strokeStyle='#1a1410';
     var g=ctx.createRadialGradient(-u*.3,-u*.4,u*.1,0,0,u*1.1);g.addColorStop(0,'#f4ead2');g.addColorStop(1,'#a99a7c');ctx.fillStyle=g;
@@ -954,7 +956,7 @@
     fx:{kind:fxKind,count:fxCount,pool:FX_POOL},toast:toast?{name:toast.name,stars:toast.stars,hasArt:!!toast.img}:null,difficulty:difficulty,saveOk:saveOk};}
   /* 디버그 훅(헤드리스 검증용): 상태를 읽고, 스테이지·구간으로 건너뛰고, 진행 기록을 본다. */
   global.HapilArcadeApp={
-    getState:snapshot,
+    getState:snapshot,drawPropArt:drawPropArt, // tools/build-drawn-props-v43.cjs가 그림 파일을 구울 때 쓴다
     debugState:function(){
       return {state:state,app:snapshot(),progress:JSON.parse(JSON.stringify(progress)),saved:(function(){try{return global.localStorage.getItem(SAVE_KEY);}catch(e){return null;}})(),
         jumpStage:function(i,bossOnly){start({stage:i,bossOnly:!!bossOnly});return snapshot();},
