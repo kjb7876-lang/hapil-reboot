@@ -625,6 +625,22 @@
     var b=s.boss;if(!bossDraw.on||!b.present||b.leaving||s.stage!=='card'){bossDraw.on=false;return;}
     ctx.save();ctx.globalAlpha=.55;ctx.translate(bossDraw.x,bossDraw.y);if(bossDraw.tilt)ctx.rotate(bossDraw.tilt);ctx.scale(bossDraw.sx,bossDraw.sy);drawArt(b.actor,0,0,false,themeColor(s),0,bossDraw.motion,bossDraw.face);ctx.restore();ctx.globalAlpha=1;bossDraw.on=false;
   }
+  /* 유혹의 장막(색욕 보스, 11-14): 화면 양옆에 드리운 분홍 비단. 그림일 뿐 맞지 않는다(엔진의 충돌에 없다). 탄보다 먼저(아래에) 옅게 그린다. */
+  function drawVeil(s){
+    if(s.veilTick===undefined||s.tick-s.veilTick>2)return;
+    ctx.save();ctx.globalCompositeOperation='lighter';
+    for(var side=0;side<2;side++)for(var k=0;k<3;k++){var w=54-k*12,x0=side?W-w:0,sway=Math.sin(visual*(.9+k*.3)+k+side*2)*10,g=ctx.createLinearGradient(side?W:0,0,side?W-w-20:w+20,0);
+      g.addColorStop(0,'rgba(232,90,150,'+(.16-k*.035)+')');g.addColorStop(1,'rgba(232,90,150,0)');ctx.fillStyle=g;
+      ctx.beginPath();ctx.moveTo(side?W:0,0);for(var y=0;y<=H;y+=32){var xx=side?x0-sway*Math.sin(y*.012+visual):x0+w+sway*Math.sin(y*.012+visual);ctx.lineTo(xx,y);}ctx.lineTo(side?W:0,H);ctx.closePath();ctx.fill();}
+    ctx.restore();
+  }
+  /* 환영 분신: 엔진이 세운 분신 자리(s.clones)에 보스 그림을 반투명 보라로 겹쳐 그린다. 분신 자체는 맞지 않고, 분신이 쏘는 탄만 맞는다. */
+  function drawIllusions(s){
+    if(!s.clones||s.clonesTick===undefined||s.tick-s.clonesTick>2||!s.boss.present)return;
+    for(var k=0;k<s.clones.length;k++){var c=s.clones[k],flick=.32+.1*Math.sin(visual*6+k*2);
+      ctx.save();ctx.globalAlpha=flick;ctx.translate(finite(c.x,W/2),finite(c.y,120)+Math.sin(visual*2.2+k)*4);ctx.scale(.82,.82);drawArt(s.boss.actor,0,0,false,'#c070ff',0,'',k?-1:1);ctx.restore();}
+    ctx.globalAlpha=1;
+  }
   function drawBoss(s){
     bossDraw.on=false;
     var b=s.boss;if(!b.present||b.y<-50)return;
@@ -892,7 +908,7 @@
     offsetX=offsetY=0;if(shake>0){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawSkillFx(s);drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);drawBossOver(s);drawPlayer(s);drawHitbox(s); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawSkillFx(s);drawIllusions(s);drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);drawBossOver(s);drawPlayer(s);drawHitbox(s); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);drawHud(s);
     if(flash>0){ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);flash-=.04;}
     if(hurtFlash>0){var v=ctx.createRadialGradient(W/2,H/2,120,W/2,H/2,420);v.addColorStop(0,'rgba(255,0,40,0)');v.addColorStop(1,'rgba(255,0,40,'+(hurtFlash*.6)+')');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);hurtFlash-=.035;}

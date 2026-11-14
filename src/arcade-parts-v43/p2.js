@@ -25,7 +25,7 @@
     props:[{key:'p2_sofa',radius:16},{key:'p2_knife',radius:11},{key:'p2_pan',radius:13},{key:'p2_goldcoin',radius:11},{key:'p2_flame',radius:11},{key:'p2_electrode',radius:9}],
     build:function(K){
       var W=K.W,TAU=K.TAU,PI=Math.PI,HALF=PI/2,RED=K.RED,PURPLE=K.PURPLE,CYAN=K.CYAN,GREEN=K.GREEN,YELLOW=K.YELLOW,WHITE=K.WHITE,RICE=K.RICE,PROP=K.SHAPE_PROP,P=K.P;
-      var rand=K.rand,count=K.count,pick=K.pick,aim=K.aim,spawn=K.spawn,ring=K.ring,fan=K.fan,bell=K.bell,curtain=K.curtain,shape=K.shape,Shapes=K.Shapes,mob=K.mob;
+      var emit=K.emit,rand=K.rand,count=K.count,pick=K.pick,aim=K.aim,spawn=K.spawn,ring=K.ring,fan=K.fan,bell=K.bell,curtain=K.curtain,shape=K.shape,Shapes=K.Shapes,mob=K.mob;
       var TURN=K.MODE_TURN,REAIM=K.MODE_REAIM,SPLIT=K.MODE_SPLIT,BRANCH=K.MODE_BRANCH;
       // 속도 v로 쏜 탄이 거리 d에서 멈추게 하는 감속도(난이도 속도 배율을 반영한다)와 멈추기까지의 틱
       function brake(s,v,d){var e=v*s.rules.speed;return -(e*e)/(2*d);}
@@ -37,6 +37,13 @@
         for(i=0;i<raw.length;i+=2){raw[i+1]-=my;max=Math.max(max,Math.sqrt(raw[i]*raw[i]+raw[i+1]*raw[i+1]));}
         for(i=0;i<raw.length;i+=2){var x=raw[i]/max,y=raw[i+1]/max;if(x*x+y*y>=.0144)out.push(x,y);}
         hearts[n]=out;return out;}
+      // 색욕(아스모데우스) 발사기 설정. 깨진 하트의 나선, 장막의 시간차 고리 셋(분신 둘 + 보스), 최종 합성.
+      var LUST_SPIRAL={kind:'spiral',patternId:'lust-heart-spiral',emitterCount:4,rotationSpeed:1.7,baseSpeed:70,fireInterval:8/60,bulletType:{size:1,color:RED}};
+      var VEIL_RINGS=[0,1,2].map(function(k){return {kind:'delayedRing',patternId:'veil-clone-'+k,bulletsPerWave:9,emitterCount:3,baseSpeed:50,speedStep:12,phaseStep:.21,phaseOffset:k*.7,fireInterval:1.5,delay:k*.5,bulletType:{size:0,color:k===2?RED:PURPLE}};});
+      var LUST_FINAL={kind:'composite',patternId:'lust-final',children:[
+        {kind:'spiral',emitterCount:4,rotationSpeed:-1.2,baseSpeed:72,fireInterval:15/60,bulletType:{size:0,color:RED}},
+        {kind:'fan',bulletsPerWave:4,spreadAngle:1.1,baseSpeed:90,fireInterval:2.4,delay:.7,bulletType:{size:RICE,color:PURPLE,at:44,mode:TURN,arg:.6,speed2:80}},
+        {kind:'aimed',bulletsPerWave:1,difficultyMultiplier:{gentle:.45,normal:.85,hell:.85},spreadAngle:.5,baseSpeed:40,fireInterval:2.4,delay:1.6,bulletType:{size:PROP,color:P.heel,accel:420,max:300}}]};
       // 수집한 고통: 일곱 귀의 탄이 차례로 돌아온다(나태·질투·탐식·색욕·탐욕·분노·교만).
       var SINS=[[P.tissue,GREEN],[P.p2_knife,CYAN],[P.p2_pan,YELLOW],[P.heel,RED],[P.money,YELLOW],[P.p2_flame,RED],[P.p2_electrode,WHITE]];
 
@@ -148,16 +155,30 @@
           if(t%210===0)K.slots(s,pick(s,2,3,3),W,30).forEach(function(x){K.beam(s,x,-12,HALF+(rand(s)-.5)*.35,{width:8,warn:70,active:90,color:PURPLE});});
           if(phase<30&&phase%5===0)fan(s,b.x,b.y,count(s,6),HALF+.3*Math.sin(t/64),2.3,96,{color:RED,size:RICE});
           if(t%64===48)ring(s,b.x,b.y,count(s,10),50,rand(s)*TAU,{color:PURPLE,size:0});}},
+        // 립스틱 자국(11-14 지시서): 보스 양옆 두 입술 자리에서 붉은 쌀알 부채꼴이 퍼지다가, 시간차로 꺾여 서로 엇갈린다(왼쪽은 오른쪽으로, 오른쪽은 왼쪽으로).
+        p2Lipstick:{name:'립스틱 자국',fire:function(s,t){var b=s.boss,side;
+          if(t%54===0){side=(t/54)%2?1:-1;
+            emit(s,{kind:'fan',patternId:'lust-lipstick',bulletsPerWave:5,spreadAngle:1.2,center:HALF+side*.45,baseSpeed:92,fireInterval:1,bulletType:{size:RICE,color:RED,at:46,mode:TURN,arg:-side*.75,speed2:84}},0,{x:b.x+side*44,y:b.y+10});}
+          if(t%54===27)emit(s,{kind:'aimed',patternId:'lust-kiss',bulletsPerWave:2,spreadAngle:.35,baseSpeed:76,fireInterval:1,bulletType:{size:1,color:PURPLE}},0,b);}},
+        // 깨진 하트(매혹의 빛): 곧게 선 하트가 퍼지다가 금이 가 파편 고리로 부서진다. 하트 사이에는 붉은 나선 네 팔이 돈다. 영웅 양옆을 겨누는 두 줄기 빛은 그대로.
         p2Charm:{name:'매혹의 빛',fire:function(s,t){var b=s.boss;
-          // 매혹의 빛: 곧게 선 하트가 퍼지고, 영웅 양옆을 겨누는 두 줄기 빛이 켜진다.
-          if(t%64===0)shape(s,b.x,b.y,heart(count(s,24)),80,0,{color:(t/64)%2?PURPLE:RED,size:1});
+          if(t%64===0)shape(s,b.x,b.y,heart(count(s,24)),80,0,(t/64)%2?{color:PURPLE,size:1}:{color:RED,size:1,at:58,mode:SPLIT,arg:3,speed2:60});
+          if(t%192>=80&&t%192<176)emit(s,LUST_SPIRAL,t,b);
           if(t%64===32)ring(s,b.x,b.y,count(s,10),56,rand(s)*TAU,{color:RED,size:0});
           if(t%192===32){var a=aim(s,b.x,b.y);K.beam(s,b.x,b.y,a-.24,{width:10,warn:70,active:40,color:RED});K.beam(s,b.x,b.y,a+.24,{width:10,warn:70,active:40,color:RED});}}},
+        // 유혹의 장막 + 환영 분신: 화면 양옆에 분홍 장막이 드리운다(그림일 뿐 맞지 않는다). 보스 양옆에 선 분신 둘과 보스가 서로 다른 박자로 고리를 쏜다.
+        p2Veil:{name:'유혹의 장막',fire:function(s,t){var b=s.boss,k,sway=Math.sin(t*.012)*30;
+          s.veilTick=s.tick;s.clonesTick=s.tick;
+          s.clones=[{x:Math.max(40,b.x-112+sway),y:b.y+26},{x:Math.min(W-40,b.x+112+sway),y:b.y+26}];
+          for(k=0;k<3;k++){var o=k<2?s.clones[k]:b;emit(s,VEIL_RINGS[k],t,o);}
+          if(t%90===45)emit(s,{kind:'aimed',patternId:'veil-glance',bulletsPerWave:3,spreadAngle:.5,baseSpeed:84,fireInterval:1,bulletType:{size:RICE,color:PURPLE}},0,b);}},
         p2Will:{name:'의지와 다르게',fire:function(s,t){var b=s.boss,i,n,side;
           // 무기(휘두르기): 영웅 손의 칼이 엉뚱한 쪽(거울 자리)으로 호를 그리며 휘둘러졌다가, 멈춰 서서 영웅의 목 쪽으로 돌아선다.
           if(t%76===0){n=count(s,10);side=(t/76)%2?1:-1;var a=Math.atan2(s.player.y-b.y,W-s.player.x-b.x);
             for(i=0;i<n;i++){var u=n>1?i/(n-1)-.5:0;spawn(s,b.x,b.y,a+side*u*1.1,150-Math.abs(u)*40,{color:RED,size:RICE,accel:-170,min:0,at:64,mode:REAIM,arg:u*.4,speed2:100});}}
-          if(t%76===38)ring(s,b.x,b.y,count(s,16),52,rand(s)*TAU,{color:PURPLE,size:0});}},
+          if(t%76===38)ring(s,b.x,b.y,count(s,16),52,rand(s)*TAU,{color:PURPLE,size:0});
+          // 최종: 하트 나선·립스틱 부채꼴·하이힐 돌진이 서로 다른 박자(0초·0.7초·1.6초 지연)로 겹친다.
+          emit(s,LUST_FINAL,t,b);}},
         // ── 18 맘몬의 금고 · 탐욕의 귀(무기: 칼날로 변하는 지폐, 튕긴 동전)
         p2Bills:{name:'지폐가 칼날로',fire:function(s,t){var b=s.boss;
           // 무기: 흩뿌린 지폐 다발이 한참 날다가 셋으로 갈라진 칼날이 된다.
@@ -310,7 +331,7 @@
             w(function(s,t){ // 서로 반대로 흔들리는 하트 한 쌍, 그 사이의 거미
               if(t<640&&t%50===0){mob(s,'p2_heart',100,-20,{vy:1.1,sway:2,swayRate:.04,fire:'p2_kiss',first:40,every:110,color:RED});mob(s,'p2_heart',260,-20,{vy:1.1,sway:-2,swayRate:.04,fire:'p2_kiss',first:95,every:110,color:RED});}
               if(t<640&&t%35===17)mob(s,'spider',140+rand(s)*80,-20,{vy:2,fire:'aim',first:30,color:PURPLE});},860)],
-          mid:['asmodeus','p2Threads'],boss:['asmodeus','heel','p2Charm','p2Will']},
+          mid:['asmodeus','p2Threads','p2Lipstick'],boss:['asmodeus','heel','p2Veil','p2Charm','p2Will']},
         // 18 맘몬의 금고 — 금고와 겨울 산장. 계산대처럼 옆으로 미끄러지는 동전 포탑
         {scene:'18',theme:{bg:'p2_greed',tint:'#241c08',fx:'paper'},cast:['p2_coin','collector','mammon'],reward:{key:'p2_k_coin',name:'동전'},
           waves:[
