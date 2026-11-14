@@ -77,8 +77,8 @@
   var DIFFICULTY={
     // 11-14 사용자 기준: 이지(여유)는 탄 수가 노멀의 약 2/3인 쉬운 패턴(지시서의 44% 대 66%). 노멀·헬은 같은 밀도에 헬이 더 빠르고 피격점이 크고 목숨이 적다.
     gentle:{density:1.65,speed:.56,hp:9,mapHeal:-1,bombs:3,radius:1,hitScale:.3,warn:1.6,beam:.72,label:'여유'},
-    normal:{density:2.45,speed:.64,hp:5,mapHeal:1,bombs:2,radius:1.4,hitScale:.38,warn:1.2,beam:.88,label:'기본'},
-    hell:{density:2.6,speed:.9,hp:3,mapHeal:0,bombs:1,radius:2.4,hitScale:.5,warn:1,beam:1,label:'지옥'}
+    normal:{density:2.45,speed:.64,hp:5,mapHeal:-1,bombs:2,radius:1.4,hitScale:.38,warn:1.2,beam:.88,label:'기본'},
+    hell:{density:2.6,speed:.9,hp:3,mapHeal:-1,bombs:1,radius:2.4,hitScale:.5,warn:1,beam:1,label:'지옥'}
   };
   // 휴대폰 모드: 탄 수를 줄이고 그만큼 탄을 크게 그린다(판정도 같이 커진다).
   var COMPACT_DENSITY=.72,COMPACT_SIZE=1.25;
@@ -281,10 +281,11 @@
     if(t%64===0)shape(s,b.x,b.y,Shapes.cardioid(count(s,26)),84,aim(s,b.x,b.y)+Math.PI/2,{color:c1,size:0});
     if(t%64===32)ring(s,b.x,b.y,count(s,12),60,rand(s)*TAU,{color:c2,size:1});};}
   // 가우디의 현수선 아치: 사슬을 늘어뜨린 곡선(cosh)을 뒤집은 아치가 차례로 내려온다. 아치마다 세 칸의 문이 있다.
+  var CATENARY_SPEED=120; // 7전문가 심사 11-14: 60이면 노멀(속도 ×.64)에서 3.5초가 지나도 화면 위쪽 벽처럼 머물렀다
   function plainCatenary(c1,c2){return function(s,t){
     if(t%46!==0)return;
     s.lane=Math.max(0,Math.min(10,(s.lane===undefined?5:s.lane)+Math.floor(rand(s)*3)-1));
-    for(var i=0;i<13;i++){if(i>=s.lane&&i<s.lane+3)continue;var x=W/13*(i+.5),u=(x-W/2)/90;spawn(s,x,-43+12*((Math.exp(u)+Math.exp(-u))/2-1),Math.PI/2,60,{color:(t/46)%2?c2:c1,size:1});}};}
+    for(var i=0;i<13;i++){if(i>=s.lane&&i<s.lane+3)continue;var x=W/13*(i+.5),u=(x-W/2)/90;spawn(s,x,-43+12*((Math.exp(u)+Math.exp(-u))/2-1),Math.PI/2,CATENARY_SPEED,{color:(t/46)%2?c2:c1,size:1});}};}
   function plainSunflower(c1,c2){return function(s,t){var b=s.boss;
     if(t%90===0)shape(s,b.x,b.y,Shapes.sunflower(count(s,34)),94,rand(s)*TAU,{color:c1,size:0});
     if(t%90===45)bell(s,b.x,b.y,count(s,11),aim(s,b.x,b.y),1.8,100,.45,{color:c2,size:1});};}
@@ -766,7 +767,7 @@
   };
   // extra: 보스 셋 중 하나는 직선 레이저 난사를 더한다(물레방아·톱니 바퀴는 11-14에 뺐다).
   var EXTRAS=['','spray',''];
-  Object.keys(SIGNATURES).forEach(function(k,i){var v=SIGNATURES[k];SIGNATURES[k]={glyph:v[0],color:v[1],arms:v[2],edge:v[3],spin:i%2?-1:1,reach:118+(i*29)%50,extra:EXTRAS[i%3]};});
+  Object.keys(SIGNATURES).forEach(function(k,i){var v=SIGNATURES[k];SIGNATURES[k]={index:i,glyph:v[0],color:v[1],arms:v[2],edge:v[3],spin:i%2?-1:1,reach:118+(i*29)%50,extra:EXTRAS[i%3]};});
   function signatureOf(actor){return SIGNATURES[actor]||null;}
   // 도형 광선 하나의 선분들 [x1,y1,x2,y2,...]
   function figureSegments(f){
@@ -798,9 +799,28 @@
     for(var k=0;k<arms;k++){var base=Math.PI/2+(k-(arms-1)/2)*(1.9/arms),sway=Math.sin(t*.021+k*1.7)*.62*(k%2?1:-1);
       spawn(s,b.x+Math.cos(base)*24,b.y+Math.sin(base)*24,base+sway,52,{color:sig.color,size:RICE,life:1400});}
   }
+  /* 문양 레이저(사용자 11-14 23:33·23:34 KST): 보스 뒤 육망성처럼 보스를 중심으로 도는 큰 문양과 끊긴 원 고리가 레이저가 된다.
+     보스마다 자기 문양(SIGNATURES.glyph)·도는 방향·고리 수가 다르다. 크게 그려 모양이 한눈에 읽히게 하되(보스 옆 작은 '3' 모양 금지),
+     화면 아래쪽 절반에는 닿지 않게 반지름을 줄인다(SIGIL_FLOOR). 반지름은 고정이라 안쪽 빈자리와 바깥은 늘 안전하다. */
+  var SIGIL_R=150,SIGIL_RING=1.18,SIGIL_FLOOR=.53,SIGIL_EVERY=480,SIGIL_AT=30;
+  [3,4,5].forEach(function(n){GLYPHS['ring'+n]=[];for(var k=0;k<n;k++){var a0=TAU*k/n;GLYPHS['ring'+n].push(arcPts(0,0,1,a0+.32,a0+TAU/n-.32,14));}});
+  var glyphReach={};
+  function reachOf(name){if(glyphReach[name]===undefined){var m=1,lines=GLYPHS[name]||[];for(var i=0;i<lines.length;i++)for(var k=0;k+1<lines[i].length;k+=2)m=Math.max(m,Math.sqrt(lines[i][k]*lines[i][k]+lines[i][k+1]*lines[i][k+1]));glyphReach[name]=m;}return glyphReach[name];}
+  function sigilRadius(f,want){return Math.max(40,Math.min(want,W*.46,(H*SIGIL_FLOOR-f.cy)))/reachOf(f.glyph);}
+  // 흰 문양은 흰 탄·흰 레이저와 한 덩어리로 번진다(심사 11-14): 흰 보스의 문양은 그 보스의 둘째 색, 그것도 희면 하늘색.
+  function sigilColor(s,sig){if(sig.color!==WHITE)return sig.color;var a=ACTORS[s.boss.actor];return a&&a.c2!==WHITE?a.c2:CYAN;}
+  function summonSigil(s,sig,index){
+    if(s.figures.length>=FIGURE_CAP-2)return;
+    var warn=Math.max(54,Math.round(70*s.rules.warn)),active=260,dir=sig.spin,rings=3+index%3;
+    var parts=[{glyph:sig.glyph,want:SIGIL_R,spin:dir*.42,width:8},{glyph:'ring'+rings,want:SIGIL_R*SIGIL_RING,spin:-dir*.3,width:6}];
+    parts.forEach(function(q,k){var f={kind:'glyph',sigil:true,glyph:q.glyph,cx:s.boss.x,cy:s.boss.y,want:q.want,turn:TAU*k/7,spin:q.spin,follow:true,period:1e9,
+      width:q.width*s.rules.beam,warn:warn,active:active,age:0,color:sigilColor(s,sig),grazed:false};f.r=f.r0=f.r1=sigilRadius(f,q.want);s.figures.push(f);});
+    note(s,'figure');
+  }
   // 보스 고유 연출: 이름 붙은 패턴(spell) 동안 기존 패턴 위에 겹친다.
   function signature(s,t){
     var sig=signatureOf(s.boss.actor);if(!sig)return;
+    if(t%SIGIL_EVERY===SIGIL_AT)summonSigil(s,sig,sig.index);
     if(sig.edge&&t%600===260){summonZigzag(s,sig,-1);summonZigzag(s,sig,1);}
     if(t%300<200)strands(s,sig,t);
     if(sig.extra==='spray'&&t%420>=120&&t%420<=330&&t%70===50)spray(s,sig,t);
@@ -811,7 +831,7 @@
       var f=s.figures[i];f.age++;
       if(f.age>f.warn+f.active+BEAM_FADE){s.figures.splice(i,1);continue;}
       if(f.orbit&&s.boss.present){var o=f.orbit,R=o.near+(o.far-o.near)*(.5-.5*Math.cos(TAU*f.age/o.period)),A=o.phase+o.speed*f.age*TICK;f.cx=s.boss.x+Math.cos(A)*R;f.cy=s.boss.y+Math.sin(A)*R;}
-      if(f.kind==='glyph'){if(f.follow&&s.boss.present){f.cx=s.boss.x;f.cy=s.boss.y;}f.turn+=f.spin*TICK*(f.age<f.warn?.35:1);f.r=f.r0+(f.r1-f.r0)*(.5-.5*Math.cos(TAU*f.age/f.period));}
+      if(f.kind==='glyph'){if(f.follow&&s.boss.present){f.cx=s.boss.x;f.cy=s.boss.y;}if(f.sigil){f.r=sigilRadius(f,f.want);}else f.turn+=f.spin*TICK*(f.age<f.warn?.35:1);f.r=f.r0+(f.r1-f.r0)*(.5-.5*Math.cos(TAU*f.age/f.period));}
       if(f.age<f.warn||f.age>=f.warn+f.active)continue;
       var segs=figureSegments(f),reach=f.width*.5*BEAM_HIT+p.r,near=1e9;
       for(var k=0;k<segs.length;k++){var g=segs[k],dx=g[2]-g[0],dy=g[3]-g[1],L=dx*dx+dy*dy||1,u=((p.x-g[0])*dx+(p.y-g[1])*dy)/L;u=u<0?0:u>1?1:u;

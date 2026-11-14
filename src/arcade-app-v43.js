@@ -137,14 +137,20 @@
 
   /* ── 탄 그림 ── */
   /* 구슬탄 한 장: 옅은 빛무리 → 단색 속 → 밝은 테두리. 색 6 × 모양을 미리 그려 두고 찍기만 한다. */
-  function buildOrb(radius,color){
+  // 흰빛에 가까운 탄은 흰 테두리·센 빛무리면 겹칠 때 하얀 덩어리로 번진다(7전문가 심사 11-14). 짙은 테두리, 옅은 빛무리로 낱알을 지킨다.
+  var PALE_RIM='#41506e';
+  function paleOf(color){var n=parseInt(String(color).slice(1,7),16);if(n!==n)return false;return ((n>>16&255)*.299+(n>>8&255)*.587+(n&255)*.114)>220;}
+  function paleRimOf(color){return paleOf(color)?PALE_RIM:'#ffffff';}
+  function haloOf(color,strong){return paleOf(color)?'33':strong;}
+  function buildOrb(radius,color,tint){
     var reach=radius*(lite?1.2:1.9),c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale,r=radius*scale,grad;
-    if(!lite){grad=g.createRadialGradient(m,m,r*.8,m,m,reach*scale);grad.addColorStop(0,color+'77');grad.addColorStop(1,color+'00');g.fillStyle=grad;g.fillRect(0,0,c.width,c.height);}
+    if(!lite){grad=g.createRadialGradient(m,m,r*.8,m,m,reach*scale);var hc=tint&&tint!==color?mix(color,tint,.55):color;grad.addColorStop(0,hc+haloOf(color,'77'));grad.addColorStop(1,hc+'00');g.fillStyle=grad;g.fillRect(0,0,c.width,c.height);}
     // 몸통: 가운데 흰 심 → 밝은 색 → 제 색 → 가장자리 짙은 색(보석처럼 깊이가 생긴다, 사용자 요청 11-14 동방식 탄 미감)
-    var body=g.createRadialGradient(m-r*.18,m-r*.18,0,m,m,r),light=mix(color,'#ffffff',.55),deep=mix(color,'#000000',.35);
-    body.addColorStop(0,'#ffffff');body.addColorStop(.28,light);body.addColorStop(.62,color);body.addColorStop(1,deep);
+    var body=g.createRadialGradient(m-r*.18,m-r*.18,0,m,m,r),light=mix(color,'#ffffff',.55),deep=mix(tint&&tint!==color?mix(color,tint,.6):color,'#000000',.3);
+    body.addColorStop(0,'#ffffff');body.addColorStop(.28,light);body.addColorStop(.62,color);if(tint&&tint!==color)body.addColorStop(.84,mix(color,tint,.45));body.addColorStop(1,deep); // 바깥 띠는 보스 고유 색으로 물든다(사용자 11-14 23:33)
     g.fillStyle=body;g.beginPath();g.arc(m,m,r,0,TAU);g.fill();
     g.strokeStyle='#ffffff';g.lineWidth=Math.max(1,r*.2);g.beginPath();g.arc(m,m,r-g.lineWidth/2,0,TAU);g.stroke();
+    if(paleOf(color)){g.strokeStyle=paleRimOf(color);g.lineWidth=Math.max(1,r*.16);g.beginPath();g.arc(m,m,r+g.lineWidth/2,0,TAU);g.stroke();} // 흰 탄만 바깥에 짙은 테
     if(r>=4*scale){g.globalAlpha=.75;g.fillStyle='#ffffff';g.beginPath();g.ellipse(m-r*.34,m-r*.38,r*.24,r*.14,-.7,0,TAU);g.fill();g.globalAlpha=1;} // 작은 하이라이트
     return {image:c,half:reach};
   }
@@ -153,12 +159,12 @@
   /* 스테이지마다 중간 구슬탄(크기 1)에 입히는 겉모양. 판정 원은 그대로이고 그림만 바뀐다. 동방식 탄막처럼 종류마다 실루엣이 달라 패턴이 서로 다르게 읽힌다. */
   var SKINS=['','star','scale','dagger','talisman'],skinSprites={};
   function skinVariant(s){var i=s.stageIndex|0;return SKINS[(i+Math.floor(i/5))%SKINS.length];} // 이웃 스테이지끼리 겹치지 않게 돌린다
-  function buildSkin(kind,radius,color){
+  function buildSkin(kind,radius,color,tint){
     var u=radius*1.9,reach=u*1.5,c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale;
     g.translate(m,m);g.scale(scale,scale);
-    var glow=g.createRadialGradient(0,0,radius*.6,0,0,reach);glow.addColorStop(0,color+'66');glow.addColorStop(1,color+'00');if(!lite){g.fillStyle=glow;g.fillRect(-reach,-reach,reach*2,reach*2);}
-    var body=g.createLinearGradient(-u,-u,u,u);body.addColorStop(0,mix(color,'#ffffff',.6));body.addColorStop(.5,color);body.addColorStop(1,mix(color,'#000000',.35));
-    g.fillStyle=body;g.strokeStyle='#ffffff';g.lineWidth=1.4;g.lineJoin='round';g.beginPath();
+    var glow=g.createRadialGradient(0,0,radius*.6,0,0,reach);var hs=tint&&tint!==color?mix(color,tint,.55):color;glow.addColorStop(0,hs+haloOf(color,'66'));glow.addColorStop(1,hs+'00');if(!lite){g.fillStyle=glow;g.fillRect(-reach,-reach,reach*2,reach*2);}
+    var body=g.createLinearGradient(-u,-u,u,u);body.addColorStop(0,mix(color,'#ffffff',.6));body.addColorStop(.5,color);body.addColorStop(1,mix(tint&&tint!==color?mix(color,tint,.6):color,'#000000',.35));
+    g.fillStyle=body;g.strokeStyle=paleRimOf(color);g.lineWidth=1.4;g.lineJoin='round';g.beginPath();
     if(kind==='star'){for(var i=0;i<10;i++){var a=-Math.PI/2+i*Math.PI/5,rr=i%2?u*.45:u;g[i?'lineTo':'moveTo'](Math.cos(a)*rr,Math.sin(a)*rr);}g.closePath();}
     else if(kind==='scale'){g.moveTo(u,0);g.quadraticCurveTo(0,-u*.85,-u*.8,-u*.35);g.lineTo(-u*.55,0);g.lineTo(-u*.8,u*.35);g.quadraticCurveTo(0,u*.85,u,0);g.closePath();} // 비늘(화살촉): +x가 진행 방향
     else if(kind==='dagger'){g.moveTo(u*1.15,0);g.lineTo(-u*.2,-u*.32);g.lineTo(-u*.3,-u*.6);g.lineTo(-u*.45,-u*.6);g.lineTo(-u*.45,-u*.2);g.lineTo(-u*.95,-u*.16);g.lineTo(-u*.95,u*.16);g.lineTo(-u*.45,u*.2);g.lineTo(-u*.45,u*.6);g.lineTo(-u*.3,u*.6);g.lineTo(-u*.2,u*.32);g.closePath();}
@@ -168,7 +174,7 @@
     g.fillStyle='#ffffff';g.beginPath();g.arc(kind==='dagger'?u*.2:0,0,radius*.42,0,TAU);g.fill(); // 흰 심
     return {image:c,half:reach};
   }
-  function skinOfBullet(kind,color){var key=kind+color;if(!skinSprites[key])skinSprites[key]=buildSkin(kind,Arcade.SIZE_RADIUS[1]*(state?state.sizeScale:compact?1.25:1),COLORS[color]);return skinSprites[key];}
+  function skinOfBullet(kind,color){var key=kind+color+orbTint;if(!skinSprites[key])skinSprites[key]=buildSkin(kind,Arcade.SIZE_RADIUS[1]*(state?state.sizeScale:compact?1.25:1),COLORS[color],orbTint);return skinSprites[key];}
   // 쌀알탄: 오른쪽(진행 방향)으로 길쭉한 알. 그릴 때 탄의 각도로 돌린다.
   function buildRice(radius,color){
     var longHalf=radius*2.6,reach=longHalf+3,c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale;
@@ -187,9 +193,16 @@
     g.fillStyle=color;g.beginPath();g.arc(m,m,r*.3,0,TAU);g.fill();
     return {image:c,half:reach};
   }
+  /* 보스 고유 색(ACTORS c1)으로 탄의 빛무리·바깥 띠를 물들인다. 보스가 바뀔 때만 탄 그림을 다시 만든다. 판정 크기는 그대로. */
+  var orbTint='';
+  function bossTint(s){var b=s&&s.boss,a=b&&b.present&&Arcade.ACTORS[b.actor];return a?COLORS[a.c1]||'':'';}
+  function buildOrbs(){
+    var grow=state?state.sizeScale:compact?1.25:1;
+    orbs=[];Arcade.SIZE_RADIUS.forEach(function(radius,size){if(size===SHAPE_PROP)return;orbs[size]={};Arcade.PALETTE.forEach(function(index){var color=COLORS[index],r=radius*grow;orbs[size][index]=size===SHAPE_RICE?buildRice(r,color):size===SHAPE_BUBBLE?buildBubble(r,color):buildOrb(r,color,orbTint);});});
+  }
   function buildSprites(){
     var grow=state?state.sizeScale:compact?1.25:1;
-    orbs=[];Arcade.SIZE_RADIUS.forEach(function(radius,size){if(size===SHAPE_PROP)return;orbs[size]={};Arcade.PALETTE.forEach(function(index){var color=COLORS[index],r=radius*grow;orbs[size][index]=size===SHAPE_RICE?buildRice(r,color):size===SHAPE_BUBBLE?buildBubble(r,color):buildOrb(r,color);});});
+    buildOrbs();
     var c=offscreen(8*scale,26*scale),g=c.getContext('2d'),grad=g.createLinearGradient(0,0,0,c.height);
     grad.addColorStop(0,'#ffffff');grad.addColorStop(.35,'#fa800a');grad.addColorStop(1,'#fa800a00');g.fillStyle=grad;g.beginPath();g.ellipse(c.width/2,c.height/2,c.width*.32,c.height/2,0,0,TAU);g.fill();shotSprite=c;
     homingSprite=buildOrb(3,'#fa800a'); // 아군 샷은 주황: 적 탄 6색(빨강·보라·하늘·초록·노랑·흰색) 어느 것과도 헷갈리지 않는다(심사 3차)
@@ -684,10 +697,12 @@
     // 역광(backlight): 보스 뒤에 테마색 빛을 깔아 자기 탄 고리 속에서도 몸 윤곽이 뜨게 한다(심사 9차)
     var glowR=size*.62,bl=ctx.createRadialGradient(bx,by,8,bx,by,glowR);bl.addColorStop(0,themeColor(s)+'66');bl.addColorStop(.6,themeColor(s)+'22');bl.addColorStop(1,themeColor(s)+'00');
     ctx.save();ctx.globalCompositeOperation='lighter';ctx.fillStyle=bl;ctx.fillRect(bx-glowR,by-glowR,glowR*2,glowR*2);ctx.restore();
-    drawRuneBarrier(s,bx,by,size); // 마법진 바깥을 감싸는 룬 결계
+    // 문양 레이저가 켜지면 원래 마법진·룬 결계는 물러난다: 같은 자리에 원이 서너 겹 쌓이면 무엇이 닿는 선인지 안 읽힌다(심사 11-14)
+    var sigilOn=false;for(var si=0;si<s.figures.length;si++)if(s.figures[si].sigil&&s.figures[si].age>=s.figures[si].warn*.5){sigilOn=true;break;}
+    if(!sigilOn)drawRuneBarrier(s,bx,by,size); // 마법진 바깥을 감싸는 룬 결계
     // 마법진: 방금 쐈으면(bossPose.until) 한 번 크게 밝아지며 부푼다 → 발사 순간이 읽힌다
     var fired=bossPose.actor===b.actor&&s.tick<bossPose.until?(bossPose.until-s.tick)/56:0,pulse=1+.1*fired;
-    ctx.save();ctx.translate(bx,by);ctx.rotate(visual*.5);ctx.scale(pulse,pulse);ctx.globalAlpha=(s.stage==='card'?.45:.2)+.4*fired;ctx.globalCompositeOperation='lighter';
+    ctx.save();ctx.translate(bx,by);ctx.rotate(visual*.5);ctx.scale(pulse,pulse);ctx.globalAlpha=((s.stage==='card'?.45:.2)+.4*fired)*(sigilOn?.22:1);ctx.globalCompositeOperation='lighter';
     ctx.drawImage(circleSprite,-size/2,-size/2,size,size);ctx.restore();
     var bp=bossPose;if(bp.actor!==b.actor){bp.actor=b.actor;bp.x=bx;bp.n=s.n;bp.until=-1;bp.side=0;}
     var bdx=bx-bp.x;bp.x=bx;if(Math.abs(bdx)>.3){bp.side=10;bp.dir=bdx<0?-1:1;}else if(bp.side>0)bp.side--;
@@ -952,6 +967,7 @@
     drawToast();
   }
   function draw(elapsed){
+    if(state&&orbs.length){var tn=bossTint(state);if(orbTint!==tn){orbTint=tn;buildOrbs();}}
     var s=state;ctx.setTransform(scale,0,0,scale,0,0);
     if(!s){ctx.fillStyle='#07070f';ctx.fillRect(0,0,W,H);return;}
     if(fxStage!==s.stageIndex)initFx(themeOf(s.stageIndex).fx,s.stageIndex);
