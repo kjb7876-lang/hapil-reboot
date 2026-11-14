@@ -709,7 +709,7 @@
   function drawShots(s){
     ctx.globalAlpha=.8;ctx.globalCompositeOperation='lighter'; // 더해 그려 어두운 맵 위에서 밝게 빛난다(심사 6차: 탄이 가늘고 어둡다)
     for(var i=0;i<s.sn;i++){
-      if(s.shoming[i]){var h=homingSprite.half;ctx.drawImage(homingSprite.image,s.sx[i]-h,s.sy[i]-h,h*2,h*2);}
+      if(s.shoming[i])ctx.drawImage(shotSprite,s.sx[i]-3,s.sy[i]-9,6,18); // 유도탄도 주탄과 같은 길쭉한 빛줄기: 둥근 주황 점은 적 탄처럼 읽혔다(심사 7차)
       else ctx.drawImage(shotSprite,s.sx[i]-4,s.sy[i]-13,8,26);
     }
     ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
@@ -723,7 +723,8 @@
   }
   // 판정점은 저속 이동 중에만 보인다. 탄에 가려지지 않게 맨 위에 그린다.
   function drawHitbox(s){
-    var p=s.player;if(!p.focus)return;
+    var p=s.player;
+    if(!p.focus){ctx.globalAlpha=.85;ctx.fillStyle='#ff2a4a';ctx.beginPath();ctx.arc(p.x,p.y,p.r+1.4,0,TAU);ctx.fill();ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(p.x,p.y,Math.max(1,p.r*.8),0,TAU);ctx.fill();ctx.globalAlpha=1;return;} // 판정점은 늘 작게 보인다(심사 7차). 저속이면 아래처럼 고리까지
     ctx.save();ctx.translate(p.x,p.y);ctx.rotate(visual*3);ctx.strokeStyle='rgba(255,255,255,.6)';ctx.lineWidth=1;ctx.setLineDash([5,5]);ctx.beginPath();ctx.arc(0,0,17,0,TAU);ctx.stroke();ctx.restore();
     ctx.fillStyle='#ff2a4a';ctx.beginPath();ctx.arc(p.x,p.y,p.r+1.8,0,TAU);ctx.fill();
     ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(p.x,p.y,Math.max(1.2,p.r),0,TAU);ctx.fill();
@@ -733,7 +734,8 @@
     for(var i=particles.length-1;i>=0;i--){
       var q=particles[i],t=q.life/q.max;q.x+=q.vx;q.y+=q.vy;q.life--;
       if(q.life<=0){particles[i]=particles[particles.length-1];particles.pop();continue;}
-      ctx.globalAlpha=t*.9;ctx.strokeStyle=q.color;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(q.x,q.y,q.size*(1.6-t),0,TAU);ctx.stroke();
+      // 파편은 속이 찬 작은 불티 + 짧은 꼬리: 속 빈 고리는 탄처럼 읽혔다(심사 7차)
+      ctx.globalAlpha=t*.9;ctx.fillStyle=q.color;ctx.strokeStyle=q.color;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(q.x-q.vx*3,q.y-q.vy*3);ctx.lineTo(q.x,q.y);ctx.stroke();ctx.beginPath();ctx.arc(q.x,q.y,Math.max(.8,q.size*.32*t),0,TAU);ctx.fill();
     }
     ctx.restore();
     if(shock){ctx.save();ctx.globalAlpha=Math.max(0,1-shock.r/420);ctx.strokeStyle='#ffffff';ctx.lineWidth=5;ctx.beginPath();ctx.arc(shock.x,shock.y,shock.r,0,TAU);ctx.stroke();ctx.restore();shock.r+=13;if(shock.r>420)shock=null;}

@@ -282,3 +282,11 @@ test('v43 review fixes (round 6): hearts read as pickups, mobs get a rim, fresh 
  const bul=/function drawBullets[\s\S]*?\n  \}/.exec(app)[0];assert(/nearMob\(/.test(bul),'bullets on top of a mob are drawn faint');
  assert(/function impactFlash\(/.test(app)&&/impactFlash\(/.test(/function drawMobs[\s\S]*?\n  \}/.exec(app)[0]),'a hit on a mob flashes');
 });
+
+/* 7차 심사(11-14): 아군 유도탄 주황 점이 적 탄처럼 보임, 파편이 속 빈 고리라 탄처럼 보임, 판정점이 저속일 때만 보임 */
+test('v43 review fixes (round 7): homing shots are streaks, debris are sparks not hollow rings, the hit dot always shows',()=>{
+ const app=h.read('src/arcade-app-v43.js');
+ const shots=/function drawShots[\s\S]*?\n  \}/.exec(app)[0];assert(!/homingSprite/.test(shots),'homing shots are drawn as streaks like the main shot, not round orbs');
+ const parts=/function drawParticles[\s\S]*?\n  \}/.exec(app)[0];assert(!/\.stroke\(\);\n    \}/.test(parts)&&/\.fill\(\)/.test(parts),'debris particles are filled sparks, not hollow rings');
+ const hb=/function drawHitbox[\s\S]*?\n  \}/.exec(app)[0];assert(!/if\(!p\.focus\)return;/.test(hb),'the hit dot shows even without focus');
+});
