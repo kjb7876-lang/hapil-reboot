@@ -419,9 +419,9 @@
       var route='<div class="route">',k;for(k=Math.max(0,s.stageIndex-1);k<=Math.min(Arcade.STAGES.length-1,s.stageIndex+2);k++)route+='<div'+(k===s.stageIndex?' class="cur" style="color:'+color+'"':'')+'>'+(k<s.stageIndex?'✓ ':k===s.stageIndex?'▸ ':'· ')+esc(Arcade.STAGES[k].name)+'</div>';route+='</div>';
       var list=card?Arcade.SEGMENTS.filter(function(g){return g.kind==='card'&&g.spell&&g.actor===seg.actor&&g.stage===seg.stage;}):[],at=list.indexOf(seg),cards='<div class="cards">';
       for(k=0;k<list.length&&k<6;k++)cards+='<div'+(k===at?' class="cur" style="color:'+color+'"':'')+'>'+(k<at?'✓ ':k===at?'▸ ':'· ')+esc(list[k].name)+'</div>';cards+='</div>';
-      var boss='<div>'+(card?lb('BOSS')+'<div class="bosshp"><i style="width:'+hp+'%;background:'+color+'"></i></div>':'')+(card&&seg.spell?lb('SPELL')+'<div class="spell" style="border-color:'+color+';font-size:'+spellFit(seg.name)+'px">'+esc(seg.name)+'</div><div class="graze">'+(s.spellClean?'BONUS +'+(20000+(seg.stage||0)*5000):'BONUS 실패')+'</div>'+(list.length?lb('SPELL CARDS')+cards:''):'')+'</div>';
+      var boss='<div>'+(card?lb('BOSS')+'<div class="bosshp"><i style="width:'+hp+'%;background:'+color+'"></i></div>':'')+(card&&seg.spell?lb('SPELL')+'<div class="spell" style="border-color:'+color+';font-size:'+spellFit(seg.name)+'px">'+esc(seg.name)+'</div><div class="graze">'+(s.spellClean?'BONUS +'+(20000+(seg.stage||0)*5000):'BONUS 실패')+'</div>':'')+'</div>'+(card&&list.length?'<div>'+lb('SPELL CARDS')+cards+'</div>':'');
       var prog=Math.round(100*(s.stageIndex+1)/Arcade.STAGES.length);
-      var life2='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB [X]')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div>'+lb('JOURNEY')+'<div class="progress"><i style="width:'+prog+'%"></i></div>'+route+'<div class="graze">패턴 보너스 '+s.captures+'</div></div>';
+      var life2='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB [X]')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div></div><div>'+lb('JOURNEY')+'<div class="progress"><i style="width:'+prog+'%"></i></div>'+route+'<div class="graze">패턴 보너스 '+s.captures+'</div></div>';
       var keys='<div class="keys">'+lb('CONTROLS')+'<div>이동 ←↑↓→ · WASD</div><div>저속 Shift · 폭탄 X</div><div>일시정지 Esc</div></div>';
       setHud(hi,'hi','<div class="stack">'+name+life2+'</div>'+keys);setHud(lo,'lo','<div class="stack">'+score+boss+'</div>'+'<div class="keys">'+lb('DIFFICULTY')+'<div>'+({gentle:'EASY',normal:'NORMAL',hell:'HELL'}[s.difficulty]||'')+'</div></div>');} // 패널 가운데: 왼쪽은 목숨·여정, 오른쪽은 보스 체력·스펠명·보너스(심사 6.46: 가운데가 비었다) // 아래쪽 빈자리: 왼쪽은 조작법, 오른쪽은 지금 스펠 이름(칸 안 이름표가 작아 읽기 어렵다는 지적)
     else{setHud(hi,'hi',name);setHud(lo,'lo',life+score);}
@@ -851,7 +851,7 @@
           var bm=sheet.e.beam,th=l.width*2.4*k*pulse;ctx.save();ctx.translate(lx,ly);ctx.rotate(angle);ctx.globalAlpha=k*dim;
           ctx.drawImage(sheet.img,bm[0],bm[1],bm[2],bm[3],0,-th/2,LASER_DRAW,th);ctx.restore();
         }else{ctx.globalAlpha=.9*k;ctx.strokeStyle=color;ctx.lineWidth=l.width*k*pulse;ctx.stroke();}
-        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=k*(paleOf(color)?PALE_CORE:1);ctx.strokeStyle='#ffffff';ctx.lineWidth=l.width*(sheet?.34:.46)*k;ctx.stroke(); // 흰·금 광선은 심지도 낮춘다(심사 6.46: 금빛 광선이 여전히 가장 밝다)
+        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=k*(paleOf(color)?PALE_CORE:BEAM_CORE);ctx.strokeStyle='#ffffff';ctx.lineWidth=l.width*(sheet?.34:.46)*k;ctx.stroke(); // 흰·금 광선은 심지도 낮춘다(심사 6.46: 금빛 광선이 여전히 가장 밝다)
       }
     }
     ctx.restore();
@@ -888,7 +888,7 @@
     }
     ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
   }
-  var PALE_BEAM_DIM=.3,PALE_CORE=.55,BEAM_DIM=.5,HERO_RING_WIDTH=2.2,BRIGHT_ART_DIM='brightness(.7)',PLAYER_SHADE=46,HERO_RING='#7ff3ff',OUTER_RIM='#1c2236',SIGIL_ALPHA=.55;
+  var PALE_BEAM_DIM=.3,PALE_CORE=.5,BEAM_CORE=.7,BEAM_DIM=.5,HERO_RING_WIDTH=3,BRIGHT_ART_DIM='brightness(.7) contrast(.78)',PLAYER_SHADE=46,HERO_RING='#7ff3ff',OUTER_RIM='#1c2236',SIGIL_ALPHA=.55;
   function drawPlayer(s){
     var p=s.player,blink=s.tick<p.invulnerableUntil&&Math.floor(s.tick/4)%2;
     // 영웅 뒤 어두운 빛무리: 밝은 광선·배경 사이에서도 영웅 자리가 먼저 보인다(심사 6.36)
