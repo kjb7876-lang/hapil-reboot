@@ -139,7 +139,7 @@
   /* 구슬탄 한 장: 옅은 빛무리 → 단색 속 → 밝은 테두리. 색 6 × 모양을 미리 그려 두고 찍기만 한다. */
   // 흰빛에 가까운 탄은 흰 테두리·센 빛무리면 겹칠 때 하얀 덩어리로 번진다(7전문가 심사 11-14). 짙은 테두리, 옅은 빛무리로 낱알을 지킨다.
   var PALE_RIM='#41506e';
-  function paleOf(color){var n=parseInt(String(color).slice(1,7),16);if(n!==n)return false;return ((n>>16&255)*.299+(n>>8&255)*.587+(n&255)*.114)>220;}
+  function paleOf(color){var n=parseInt(String(color).slice(1,7),16);if(n!==n)return false;return ((n>>16&255)*.299+(n>>8&255)*.587+(n&255)*.114)>200;}
   function paleRimOf(color){return paleOf(color)?PALE_RIM:'#ffffff';}
   function haloOf(color,strong){return paleOf(color)?'33':strong;}
   function buildOrb(radius,color,tint){
@@ -150,7 +150,7 @@
     body.addColorStop(0,'#ffffff');body.addColorStop(.28,light);body.addColorStop(.62,color);if(tint&&tint!==color)body.addColorStop(.84,mix(color,tint,.45));body.addColorStop(1,deep); // 바깥 띠는 보스 고유 색으로 물든다(사용자 11-14 23:33)
     g.fillStyle=body;g.beginPath();g.arc(m,m,r,0,TAU);g.fill();
     g.strokeStyle='#ffffff';g.lineWidth=Math.max(1,r*.2);g.beginPath();g.arc(m,m,r-g.lineWidth/2,0,TAU);g.stroke();
-    if(paleOf(color)){g.strokeStyle=paleRimOf(color);g.lineWidth=Math.max(1,r*.16);g.beginPath();g.arc(m,m,r+g.lineWidth/2,0,TAU);g.stroke();} // 흰 탄만 바깥에 짙은 테
+    if(paleOf(color)){g.strokeStyle=paleRimOf(color);g.lineWidth=Math.max(1,r*.16);g.beginPath();g.arc(m,m,r+g.lineWidth/2,0,TAU);g.stroke();}else if(r>=2*scale){g.strokeStyle=OUTER_RIM;g.lineWidth=Math.max(1,r*.1);g.beginPath();g.arc(m,m,r+g.lineWidth/2,0,TAU);g.stroke();} // 색 탄도 바깥에 짙은 테 한 줄: 겹쳐도 낱알로 읽힌다(심사 6.36) // 흰 탄만 바깥에 짙은 테
     if(r>=4*scale){g.globalAlpha=.75;g.fillStyle='#ffffff';g.beginPath();g.ellipse(m-r*.34,m-r*.38,r*.24,r*.14,-.7,0,TAU);g.fill();g.globalAlpha=1;} // 작은 하이라이트
     return {image:c,half:reach};
   }
@@ -689,13 +689,14 @@
       ctx.save();ctx.globalAlpha=flick;ctx.translate(cx+Math.sin(visual*9+k)*1.5,cy);ctx.scale(.82,.82);drawArt(s.boss.actor,0,0,false,'#c070ff',0,'',k?-1:1);ctx.restore();}
     ctx.globalAlpha=1;
   }
+  var BACKLIGHT_BRIGHT='26'; // 금빛·흰빛 테마는 역광이 가산되면 보스 뒤가 하얗게 탄다(심사: 탐욕 보스 금빛 과노출)
   function drawBoss(s){
     bossDraw.on=false;
     var b=s.boss;if(!b.present||b.y<-50)return;
     if(b.leaving&&fall&&fall.actor===b.actor)return; // 쓰러진 보스는 날아가지 않고 drawFall이 그 자리에서 무너뜨린다
     var bob=Math.sin(visual*2.2)*4,size=(b.mid?150:190)+Math.sin(visual*1.3)*10,bx=finite(b.x,W/2),by=finite(b.y,120)+bob;
     // 역광(backlight): 보스 뒤에 테마색 빛을 깔아 자기 탄 고리 속에서도 몸 윤곽이 뜨게 한다(심사 9차)
-    var glowR=size*.62,bl=ctx.createRadialGradient(bx,by,8,bx,by,glowR);bl.addColorStop(0,themeColor(s)+'66');bl.addColorStop(.6,themeColor(s)+'22');bl.addColorStop(1,themeColor(s)+'00');
+    var tc=themeColor(s),bright=paleOf(tc),glowR=size*.62,bl=ctx.createRadialGradient(bx,by,8,bx,by,glowR);bl.addColorStop(0,tc+(bright?BACKLIGHT_BRIGHT:'66'));bl.addColorStop(.6,tc+(bright?'0c':'22'));bl.addColorStop(1,themeColor(s)+'00');
     ctx.save();ctx.globalCompositeOperation='lighter';ctx.fillStyle=bl;ctx.fillRect(bx-glowR,by-glowR,glowR*2,glowR*2);ctx.restore();
     // 문양 레이저가 켜지면 원래 마법진·룬 결계는 물러난다: 같은 자리에 원이 서너 겹 쌓이면 무엇이 닿는 선인지 안 읽힌다(심사 11-14)
     var sigilOn=false;for(var si=0;si<s.figures.length;si++)if(s.figures[si].sigil&&s.figures[si].age>=s.figures[si].warn*.5){sigilOn=true;break;}
@@ -711,7 +712,8 @@
     var since=56-(bp.until-s.tick),punch=bm==='attack'&&since>=0&&since<16?1+.14*(1-since/16):1; // 공격 순간 몸이 한 번 커졌다 돌아온다. 탄에 가려도 윤곽으로 읽힌다.
     var rc=recoilOf(s,b);if(rc&&images[b.actor+'@hit'])bm='hit'; // 피격 그림이 있으면 그 칸을, 없으면 같은 그림을 젖혀 피격을 보인다
     bossDraw.on=true;bossDraw.x=bx;bossDraw.y=by+(rc?rc.dy:0);bossDraw.tilt=rc?rc.tilt:0;bossDraw.sx=punch*(rc?rc.sx:1);bossDraw.sy=punch*(rc?rc.sy:1);bossDraw.motion=bm;bossDraw.face=bp.dir||(bx>W/2?-1:1);
-    ctx.save();ctx.translate(bx,by+(rc?rc.dy:0));if(rc)ctx.rotate(rc.tilt);ctx.scale(punch*(rc?rc.sx:1),punch*(rc?rc.sy:1));drawArt(b.actor,0,0,s.tick-b.hitTick<3,themeColor(s),0,bm,bp.dir||(bx>W/2?-1:1));ctx.restore();
+    ctx.save();ctx.translate(bx,by+(rc?rc.dy:0));if(rc)ctx.rotate(rc.tilt);ctx.scale(punch*(rc?rc.sx:1),punch*(rc?rc.sy:1));if(bright&&s.stage==='card'&&'filter' in ctx)ctx.filter=BRIGHT_ART_DIM; // 금빛·흰빛 보스 그림은 스펠 중 한 단계 어둡게: 그 위 탄이 묻힌다(심사 6.44)
+    drawArt(b.actor,0,0,s.tick-b.hitTick<3,themeColor(s),0,bm,bp.dir||(bx>W/2?-1:1));ctx.filter='none';ctx.restore();
     if(s.stage==='card'){ctx.globalAlpha=.22;ctx.drawImage(shadeSprite(),bx-74,by-74,148,148);ctx.globalAlpha=1;} // 패턴 중에는 몸을 조금 어둡게 눌러 몸 위의 같은 색 탄이 읽히게 한다
   }
   /* 몹 뒤에 까는 부드러운 빛(테두리 없는 원). 어두운 배경에서 어두운 몹의 윤곽이 뜨게 한다. */
@@ -832,10 +834,10 @@
         ctx.globalAlpha=.45+.5*blink;ctx.strokeStyle='#ffffff';ctx.lineWidth=1;ctx.setLineDash([7,6]);ctx.stroke();
       }else{
         var over=l.age-l.warn-l.active,k=over>0?Math.max(0,1-over/Arcade.BEAM_FADE):Math.min(1,(l.age-l.warn+1)/4),pulse=1+Math.sin(visual*40+i)*.06;
-        ctx.setLineDash([]);ctx.globalCompositeOperation='lighter';
-        if(!lite){ctx.globalAlpha=.3*k;ctx.strokeStyle=color;ctx.lineWidth=l.width*2.3*k*pulse;ctx.stroke();}
+        ctx.setLineDash([]);ctx.globalCompositeOperation='lighter';var dim=paleOf(color)?PALE_BEAM_DIM:BEAM_DIM; // 금빛·흰빛 광선은 빛무리를 줄인다(심사 6.36: 노란 광선이 화면에서 가장 밝아 탄과 영웅을 덮음)
+        if(!lite){ctx.globalAlpha=.3*k*dim;ctx.strokeStyle=color;ctx.lineWidth=l.width*2.3*k*pulse;ctx.stroke();}
         if(sheet){ // 보스 시트의 레이저 질감을 광선 방향으로 늘여 더한다. 판정 폭은 흰 심으로 보인다.
-          var bm=sheet.e.beam,th=l.width*2.4*k*pulse;ctx.save();ctx.translate(lx,ly);ctx.rotate(angle);ctx.globalAlpha=k;
+          var bm=sheet.e.beam,th=l.width*2.4*k*pulse;ctx.save();ctx.translate(lx,ly);ctx.rotate(angle);ctx.globalAlpha=k*dim;
           ctx.drawImage(sheet.img,bm[0],bm[1],bm[2],bm[3],0,-th/2,LASER_DRAW,th);ctx.restore();
         }else{ctx.globalAlpha=.9*k;ctx.strokeStyle=color;ctx.lineWidth=l.width*k*pulse;ctx.stroke();}
         ctx.globalCompositeOperation='source-over';ctx.globalAlpha=k;ctx.strokeStyle='#ffffff';ctx.lineWidth=l.width*(sheet?.34:.46)*k;ctx.stroke();
@@ -844,22 +846,24 @@
     ctx.restore();
   }
   /* 보스 문양 레이저·외곽 지그재그. 엔진이 맞히는 선분(Arcade.figureSegments)을 그대로 그린다. 예고 중에는 옅은 선과 흰 점선, 켜지면 굵은 빛. */
-  function drawFigures(s){
+  // 문양 레이저는 보스 뒤 층에, 회색 쪽으로 한 단계 눌러 그린다(심사 11-14: 문양·탄·보스가 같은 색으로 겹쳐 보스가 묻힘)
+  var SIGIL_MUTE='#4a4f62';
+  function drawFigures(s,sigils){
     var list=s.figures;if(!list||!list.length)return;
     ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
     for(var i=0;i<list.length;i++){
-      var f=list[i],color=COLORS[f.color]||'#ffffff',segs=Arcade.figureSegments(f),j;
+      var f=list[i];if(!!f.sigil!==!!sigils)continue;ctx.globalAlpha=1;var fa=f.sigil?SIGIL_ALPHA:1;var color=COLORS[f.color]||'#ffffff',segs=Arcade.figureSegments(f),j;if(f.sigil)color=mix(color,SIGIL_MUTE,.32);
       ctx.beginPath();for(j=0;j<segs.length;j++){var g=segs[j];ctx.moveTo(g[0],g[1]);ctx.lineTo(g[2],g[3]);}
       if(f.age<f.warn){
         var t=f.age/f.warn,blink=.5+.5*Math.sin(f.age*(.25+t*.5));
-        ctx.setLineDash([]);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=.12+.18*t;ctx.strokeStyle=color;ctx.lineWidth=f.width*(.3+.7*t);ctx.stroke();
-        ctx.globalAlpha=.4+.5*blink;ctx.strokeStyle='#ffffff';ctx.lineWidth=1;ctx.setLineDash([6,6]);ctx.stroke();
+        ctx.setLineDash([]);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=fa*(.12+.18*t);ctx.strokeStyle=color;ctx.lineWidth=f.width*(.3+.7*t);ctx.stroke();
+        ctx.globalAlpha=fa*(.4+.5*blink);ctx.strokeStyle='#ffffff';ctx.lineWidth=1;ctx.setLineDash([6,6]);ctx.stroke();
       }else{
         var over=f.age-f.warn-f.active,k=over>0?Math.max(0,1-over/Arcade.BEAM_FADE):Math.min(1,(f.age-f.warn+1)/4),pulse=1+Math.sin(visual*36+i)*.07;
         ctx.setLineDash([]);ctx.globalCompositeOperation='lighter';
-        if(!lite){ctx.globalAlpha=.16*k;ctx.strokeStyle=color;ctx.lineWidth=f.width*1.6*k*pulse;ctx.stroke();} // 글로우를 줄여 레이저는 '벽', 탄은 '위협'으로 읽히게
-        ctx.globalAlpha=.9*k;ctx.strokeStyle=color;ctx.lineWidth=f.width*k*pulse;ctx.stroke();
-        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=k;ctx.strokeStyle='#ffffff';ctx.lineWidth=f.width*.42*k;ctx.stroke();
+        if(!lite){ctx.globalAlpha=fa*(.16*k);ctx.strokeStyle=color;ctx.lineWidth=f.width*1.6*k*pulse;ctx.stroke();} // 글로우를 줄여 레이저는 '벽', 탄은 '위협'으로 읽히게
+        ctx.globalAlpha=fa*(.9*k);ctx.strokeStyle=color;ctx.lineWidth=f.width*k*pulse;ctx.stroke();
+        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=fa*(k);ctx.strokeStyle='#ffffff';ctx.lineWidth=f.width*.42*k;ctx.stroke();
       }
     }
     ctx.restore();ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.setLineDash([]);
@@ -873,12 +877,16 @@
     }
     ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
   }
+  var PALE_BEAM_DIM=.5,BEAM_DIM=.5,HERO_RING_WIDTH=2.2,BRIGHT_ART_DIM='brightness(.8)',PLAYER_SHADE=46,HERO_RING='#7ff3ff',OUTER_RIM='#1c2236',SIGIL_ALPHA=.55;
   function drawPlayer(s){
     var p=s.player,blink=s.tick<p.invulnerableUntil&&Math.floor(s.tick/4)%2;
+    // 영웅 뒤 어두운 빛무리: 밝은 광선·배경 사이에서도 영웅 자리가 먼저 보인다(심사 6.36)
+    var sh=ctx.createRadialGradient(p.x,p.y,4,p.x,p.y,PLAYER_SHADE);sh.addColorStop(0,'rgba(6,8,16,.72)');sh.addColorStop(1,'rgba(6,8,16,0)');ctx.globalAlpha=1;ctx.fillStyle=sh;ctx.fillRect(p.x-PLAYER_SHADE,p.y-PLAYER_SHADE,PLAYER_SHADE*2,PLAYER_SHADE*2);
     ctx.globalAlpha=blink?.35:.95;
     if(images.gunner)ctx.drawImage(images.gunner,p.x-258.5369*57/512,p.y-283.8754*57/512,57,57);
     else{ctx.fillStyle='#9fefff';ctx.beginPath();ctx.moveTo(p.x,p.y-16);ctx.lineTo(p.x+10,p.y+12);ctx.lineTo(p.x-10,p.y+12);ctx.closePath();ctx.fill();}
     ctx.globalAlpha=1;
+    ctx.globalAlpha=blink?.3:.8;ctx.strokeStyle=HERO_RING;ctx.lineWidth=HERO_RING_WIDTH;ctx.beginPath();ctx.arc(p.x,p.y,11,0,TAU);ctx.stroke();ctx.globalAlpha=1; // 영웅 자리 표시 고리(심사 6.36: 밝은 광선 사이에서 영웅을 놓친다)
   }
   // 판정점은 저속 이동 중에만 보인다. 탄에 가려지지 않게 맨 위에 그린다.
   function drawHitbox(s){
@@ -975,7 +983,7 @@
     offsetX=offsetY=0;if(shake>0){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawDrifts();drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);drawBossOver(s);drawPlayer(s);drawHitbox(s); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);drawMobs(s);drawShots(s);drawDrifts();drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);drawBossOver(s);drawPlayer(s);drawHitbox(s); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);drawHud(s);
     if(flash>0){ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);flash-=.04;}
     if(hurtFlash>0){var v=ctx.createRadialGradient(W/2,H/2,120,W/2,H/2,420);v.addColorStop(0,'rgba(255,0,40,0)');v.addColorStop(1,'rgba(255,0,40,'+(hurtFlash*.6)+')');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);hurtFlash-=.035;}
