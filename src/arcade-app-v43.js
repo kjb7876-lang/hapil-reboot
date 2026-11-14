@@ -137,14 +137,20 @@
 
   /* ── 탄 그림 ── */
   /* 구슬탄 한 장: 옅은 빛무리 → 단색 속 → 밝은 테두리. 색 6 × 모양을 미리 그려 두고 찍기만 한다. */
+  // 흰빛에 가까운 탄은 흰 테두리·센 빛무리면 겹칠 때 하얀 덩어리로 번진다(7전문가 심사 11-14). 짙은 테두리, 옅은 빛무리로 낱알을 지킨다.
+  var PALE_RIM='#41506e';
+  function paleOf(color){var n=parseInt(String(color).slice(1,7),16);if(n!==n)return false;return ((n>>16&255)*.299+(n>>8&255)*.587+(n&255)*.114)>220;}
+  function paleRimOf(color){return paleOf(color)?PALE_RIM:'#ffffff';}
+  function haloOf(color,strong){return paleOf(color)?'33':strong;}
   function buildOrb(radius,color){
     var reach=radius*(lite?1.2:1.9),c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale,r=radius*scale,grad;
-    if(!lite){grad=g.createRadialGradient(m,m,r*.8,m,m,reach*scale);grad.addColorStop(0,color+'77');grad.addColorStop(1,color+'00');g.fillStyle=grad;g.fillRect(0,0,c.width,c.height);}
+    if(!lite){grad=g.createRadialGradient(m,m,r*.8,m,m,reach*scale);grad.addColorStop(0,color+haloOf(color,'77'));grad.addColorStop(1,color+'00');g.fillStyle=grad;g.fillRect(0,0,c.width,c.height);}
     // 몸통: 가운데 흰 심 → 밝은 색 → 제 색 → 가장자리 짙은 색(보석처럼 깊이가 생긴다, 사용자 요청 11-14 동방식 탄 미감)
     var body=g.createRadialGradient(m-r*.18,m-r*.18,0,m,m,r),light=mix(color,'#ffffff',.55),deep=mix(color,'#000000',.35);
     body.addColorStop(0,'#ffffff');body.addColorStop(.28,light);body.addColorStop(.62,color);body.addColorStop(1,deep);
     g.fillStyle=body;g.beginPath();g.arc(m,m,r,0,TAU);g.fill();
     g.strokeStyle='#ffffff';g.lineWidth=Math.max(1,r*.2);g.beginPath();g.arc(m,m,r-g.lineWidth/2,0,TAU);g.stroke();
+    if(paleOf(color)){g.strokeStyle=paleRimOf(color);g.lineWidth=Math.max(1,r*.16);g.beginPath();g.arc(m,m,r+g.lineWidth/2,0,TAU);g.stroke();} // 흰 탄만 바깥에 짙은 테
     if(r>=4*scale){g.globalAlpha=.75;g.fillStyle='#ffffff';g.beginPath();g.ellipse(m-r*.34,m-r*.38,r*.24,r*.14,-.7,0,TAU);g.fill();g.globalAlpha=1;} // 작은 하이라이트
     return {image:c,half:reach};
   }
@@ -156,9 +162,9 @@
   function buildSkin(kind,radius,color){
     var u=radius*1.9,reach=u*1.5,c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale;
     g.translate(m,m);g.scale(scale,scale);
-    var glow=g.createRadialGradient(0,0,radius*.6,0,0,reach);glow.addColorStop(0,color+'66');glow.addColorStop(1,color+'00');if(!lite){g.fillStyle=glow;g.fillRect(-reach,-reach,reach*2,reach*2);}
+    var glow=g.createRadialGradient(0,0,radius*.6,0,0,reach);glow.addColorStop(0,color+haloOf(color,'66'));glow.addColorStop(1,color+'00');if(!lite){g.fillStyle=glow;g.fillRect(-reach,-reach,reach*2,reach*2);}
     var body=g.createLinearGradient(-u,-u,u,u);body.addColorStop(0,mix(color,'#ffffff',.6));body.addColorStop(.5,color);body.addColorStop(1,mix(color,'#000000',.35));
-    g.fillStyle=body;g.strokeStyle='#ffffff';g.lineWidth=1.4;g.lineJoin='round';g.beginPath();
+    g.fillStyle=body;g.strokeStyle=paleRimOf(color);g.lineWidth=1.4;g.lineJoin='round';g.beginPath();
     if(kind==='star'){for(var i=0;i<10;i++){var a=-Math.PI/2+i*Math.PI/5,rr=i%2?u*.45:u;g[i?'lineTo':'moveTo'](Math.cos(a)*rr,Math.sin(a)*rr);}g.closePath();}
     else if(kind==='scale'){g.moveTo(u,0);g.quadraticCurveTo(0,-u*.85,-u*.8,-u*.35);g.lineTo(-u*.55,0);g.lineTo(-u*.8,u*.35);g.quadraticCurveTo(0,u*.85,u,0);g.closePath();} // 비늘(화살촉): +x가 진행 방향
     else if(kind==='dagger'){g.moveTo(u*1.15,0);g.lineTo(-u*.2,-u*.32);g.lineTo(-u*.3,-u*.6);g.lineTo(-u*.45,-u*.6);g.lineTo(-u*.45,-u*.2);g.lineTo(-u*.95,-u*.16);g.lineTo(-u*.95,u*.16);g.lineTo(-u*.45,u*.2);g.lineTo(-u*.45,u*.6);g.lineTo(-u*.3,u*.6);g.lineTo(-u*.2,u*.32);g.closePath();}

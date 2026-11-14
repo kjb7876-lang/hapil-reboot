@@ -281,10 +281,11 @@
     if(t%64===0)shape(s,b.x,b.y,Shapes.cardioid(count(s,26)),84,aim(s,b.x,b.y)+Math.PI/2,{color:c1,size:0});
     if(t%64===32)ring(s,b.x,b.y,count(s,12),60,rand(s)*TAU,{color:c2,size:1});};}
   // 가우디의 현수선 아치: 사슬을 늘어뜨린 곡선(cosh)을 뒤집은 아치가 차례로 내려온다. 아치마다 세 칸의 문이 있다.
+  var CATENARY_SPEED=120; // 7전문가 심사 11-14: 60이면 노멀(속도 ×.64)에서 3.5초가 지나도 화면 위쪽 벽처럼 머물렀다
   function plainCatenary(c1,c2){return function(s,t){
     if(t%46!==0)return;
     s.lane=Math.max(0,Math.min(10,(s.lane===undefined?5:s.lane)+Math.floor(rand(s)*3)-1));
-    for(var i=0;i<13;i++){if(i>=s.lane&&i<s.lane+3)continue;var x=W/13*(i+.5),u=(x-W/2)/90;spawn(s,x,-43+12*((Math.exp(u)+Math.exp(-u))/2-1),Math.PI/2,60,{color:(t/46)%2?c2:c1,size:1});}};}
+    for(var i=0;i<13;i++){if(i>=s.lane&&i<s.lane+3)continue;var x=W/13*(i+.5),u=(x-W/2)/90;spawn(s,x,-43+12*((Math.exp(u)+Math.exp(-u))/2-1),Math.PI/2,CATENARY_SPEED,{color:(t/46)%2?c2:c1,size:1});}};}
   function plainSunflower(c1,c2){return function(s,t){var b=s.boss;
     if(t%90===0)shape(s,b.x,b.y,Shapes.sunflower(count(s,34)),94,rand(s)*TAU,{color:c1,size:0});
     if(t%90===45)bell(s,b.x,b.y,count(s,11),aim(s,b.x,b.y),1.8,100,.45,{color:c2,size:1});};}
