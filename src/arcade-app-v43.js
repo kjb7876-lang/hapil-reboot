@@ -878,7 +878,7 @@
     var radii=[f.r,f.r/Math.sqrt(3)],base=[153,114],q;
     ctx.save();ctx.globalCompositeOperation='lighter';
     for(q=0;q<2;q++){var img=rings[q],sc=radii[q]/base[q],half=img.width/scale/2;
-      ctx.save();ctx.translate(f.cx,f.cy);ctx.rotate(-f.turn*(q?1.5:.5)+q);ctx.scale(sc,sc);ctx.globalAlpha=(live?.38:.25)*k*(q?SIGIL_INNER:1)*(live?SIGIL_DECOR_LIVE:1); // 켜지면 룬 고리는 물러난다: 판정 있는 굵은 원과 장식 호가 겹쳐 헷갈렸다(원 심사 1차 6.83)ctx.drawImage(img,-half,-half,half*2,half*2);ctx.restore();}
+      ctx.save();ctx.translate(f.cx,f.cy);ctx.rotate(-f.turn*(q?1.5:.5)+q);ctx.scale(sc,sc);ctx.globalAlpha=(live?.38:.25)*k*(q?SIGIL_INNER:1)*(live?SIGIL_DECOR_LIVE:1);ctx.drawImage(img,-half,-half,half*2,half*2);ctx.restore();} // 켜지면 룬 고리는 물러난다: 판정 있는 굵은 원과 장식 호가 겹쳐 헷갈렸다(원 심사 1차 6.83)
     ctx.globalCompositeOperation='source-over';
     for(q=0;q<segs.length;q++){var x=segs[q][0],y=segs[q][1],hud=Math.max(0,Math.min(1,(y-SIGIL_HUD_Y*.5)/(SIGIL_HUD_Y*.5))); // 위쪽 HUD 띠(HP 바·스펠명)에 걸린 마디는 지운다(심사 12차)
       if(!hud)continue;
