@@ -33,9 +33,7 @@ jobs:
         working-directory: app
         run: |
           npm install --no-audit --no-fund
-          # 시험용 APK는 실제 웹판과 같게 보류 그림까지 넣는다(성능 측정용). 스토어 묶음은 npm run sync(보류 그림 제외).
-          node ../tools/build-app-www.cjs www --include-held
-          npx cap sync android
+          npm run sync
       - name: Build debug APK
         working-directory: app/android
         run: ./gradlew --no-daemon assembleDebug
