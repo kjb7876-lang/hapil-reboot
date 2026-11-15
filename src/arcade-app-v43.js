@@ -30,6 +30,9 @@
   var keys={},finger={active:false,id:null,x:0,y:0},focusHeld=false,bombQueued=false;
   var fx=null,music=null,soundOn=true,best=0,lastItemSound=0,progress=Progress.fresh(),saveOk=true;
   var themeOverride=null,turbo=0,rushStage=false;
+  // 개발자 모드(사용자 11-15): 게임 속도 2배 + 체력 무한. 지금은 시작 화면에 대놓고 보인다. 숨기려면 DEV_VISIBLE=false 한 줄만 바꾼다.
+  var DEV_VISIBLE=true,DEV_SPEED=2,DEV_KEY='hapil-arcade-dev-v43',devMode=false;
+  try{devMode=DEV_VISIBLE&&global.localStorage.getItem(DEV_KEY)==='1';}catch(e){devMode=false;}
   var compact=!!(global.matchMedia&&global.matchMedia('(pointer:coarse)').matches)||global.innerWidth<520;
 
   function finite(v,fallback){return v===v&&v!==Infinity&&v!==-Infinity?v:fallback;}
@@ -1153,9 +1156,9 @@
     requestAnimationFrame(frame);
     if(!lastStamp)lastStamp=stamp;var elapsed=finite(Math.min(.1,Math.max(0,(stamp-lastStamp)/1000)),0);lastStamp=stamp;visual+=elapsed;
     if(mode==='playing'&&state){
-      adaptQuality(elapsed*1000);accumulator=Math.min(accumulator+elapsed,4/60);
-      var steps=0,limit=turbo||rushStage?Math.max(4,turbo||60):4;if(turbo||rushStage)accumulator=limit/60;
-      while(accumulator>=1/60&&steps<limit&&mode==='playing'){if(rushStage)rushTick(state);Arcade.step(state,inputForStep());accumulator-=1/60;steps++;consume();}
+      adaptQuality(elapsed*1000);accumulator=Math.min(accumulator+elapsed,4/60);if(devMode)accumulator=Math.min(accumulator+elapsed*(DEV_SPEED-1),4*DEV_SPEED/60); // 개발자 모드는 같은 60Hz 틱을 두 배로 돌린다
+      var steps=0,limit=turbo||rushStage?Math.max(4,turbo||60):devMode?4*DEV_SPEED:4;if(turbo||rushStage)accumulator=limit/60;
+      while(accumulator>=1/60&&steps<limit&&mode==='playing'){if(rushStage)rushTick(state);if(devMode)state.player.hp=state.player.maxHp;Arcade.step(state,inputForStep());accumulator-=1/60;steps++;consume();}
     }
     draw(elapsed);
   }
@@ -1165,12 +1168,15 @@
   var SCREENS={title:'arcade-title',paused:'arcade-pause',result:'arcade-result',keepsakes:'arcade-keepsake-screen',boss:'arcade-boss-screen'};
   function setMode(next){
     mode=next;Object.keys(SCREENS).forEach(function(k){show(SCREENS[k],k===next);});
+    showDevBadge();
     ['arcade-pause-button','arcade-focus','arcade-bomb'].forEach(function(id){show(id,next==='playing');});
     var hh=$('arcade-hud-high'),hl=$('arcade-hud-low');if(hh&&hl)hh.hidden=hl.hidden=!(hudOut&&next==='playing');
     if(next!=='playing'){focusHeld=false;finger.active=false;bombQueued=false;}
     if(next!=='keepsakes')clearKeepsakes();
     if(music){if(next==='playing'&&soundOn){var p=music.play();if(p&&p.catch)p.catch(function(){});}else music.pause();}
   }
+  // 개발자 모드 표시: 탄이 오는 필드 밖(화면 오른쪽 위 구석)에 둔다(심사 1차: 필드 안 배지가 적·탄과 겹침)
+  function showDevBadge(){var e=$('arcade-dev-badge');if(e)e.hidden=!(devMode&&mode==='playing');}
   /* run: {stage, bossOnly}. 원큐: 그 스테이지부터 끝까지 이어진다. */
   function start(run){
     if(fx)fx.unlock();
@@ -1265,6 +1271,8 @@
     $('arcade-resume').addEventListener('click',function(){if(fx)fx.unlock();accumulator=0;lastStamp=0;setMode('playing');});
     $('arcade-pause-button').addEventListener('click',pause);
     $('arcade-quit').addEventListener('click',goTitle);
+    $('arcade-dev').hidden=!DEV_VISIBLE;if($('arcade-dev-note'))$('arcade-dev-note').hidden=!DEV_VISIBLE;var devLabel=function(){var d=$('arcade-dev');d.textContent=devMode?'DEV 켜짐':'DEV 꺼짐';d.setAttribute('aria-pressed',String(devMode));};devLabel();
+    $('arcade-dev').addEventListener('click',function(){devMode=!devMode;try{global.localStorage.setItem(DEV_KEY,devMode?'1':'0');}catch(e){}devLabel();showDevBadge();});
     $('arcade-sound').addEventListener('click',function(){soundOn=!soundOn;this.textContent=soundOn?'소리 켜짐':'소리 꺼짐';this.setAttribute('aria-pressed',String(soundOn));});
     // 저속 버튼은 누르고 있는 동안, 폭탄 버튼은 누를 때 한 번
     var focusButton=$('arcade-focus');
