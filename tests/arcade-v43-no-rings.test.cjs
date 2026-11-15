@@ -1,0 +1,12 @@
+'use strict';
+// 사용자 11-15 "저런 감싸는 원 모두 없애줘 무기에 붙는원도": 수묵화풍에서는 큰 방울 탄의 고리, 명중 섬광 고리, 발사 고리, 저속 점선 고리를 그리지 않는다. 판정은 그대로.
+const test=require('node:test'),assert=require('node:assert/strict'),h=require('./helpers/arcade-v43.cjs');
+const app=h.read('src/arcade-app-v43.js'),ink=h.read('src/ink-v43.js');
+test('ink style draws no wrapping rings',()=>{
+ const bubble=ink.slice(ink.indexOf('// 큰 방울'),ink.indexOf('hold--;return {image:c,half:reach}'));
+ assert(bubble.length>50);assert.doesNotMatch(bubble,/\.arc\(/,'the big bubble bullet is a wash blot, not a stroked ring');
+ assert.match(app,/if\(!Ink\)\{ctx\.beginPath\(\);ctx\.arc\(f\.x,f\.y,r\*\.7,0,TAU\);ctx\.stroke\(\);\}/,'hit flash ring');
+ assert.match(app,/q<\(Ink\?0:c\.big\?3:2\)/,'cast pulse rings');
+ assert.match(app,/if\(!Ink\)\{ctx\.save\(\);ctx\.translate\(p\.x,p\.y\);ctx\.rotate\(visual\*3\)/,'focus dashed ring');
+});
+test('monochrome previews are opt-in only',()=>{assert.match(ink,/\[\?&\]mono=\(\[12\]\)/);assert.match(ink,/mono:on\?mono:0/);});
