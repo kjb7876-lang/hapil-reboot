@@ -1,6 +1,6 @@
 {"tracks":{
   "title":{"file":"title.mp3","volume":0.2},
   "field":{"file":"field.mp3","volume":0.24},
-  "boss":{"file":"boss.mp3","volume":0.26},
-  "final":{"file":"final.mp3","volume":0.26}
+  "boss":{"file":"boss.mp3","volume":0.36},
+  "final":{"file":"final.mp3","volume":0.36}
 }}
