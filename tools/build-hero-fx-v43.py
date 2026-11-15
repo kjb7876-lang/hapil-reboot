@@ -16,7 +16,8 @@ SHEETS = {
   'bolt':   ('r292/fx/gunner/e.webp', 8, 384, 192, '기억 번개(5단계 이상 추격 번개·필살기 4단계 이상) — Dots 07_gunner_E 팬텀 블링크'),
   'burst':  ('r292/fx/gunner/r.webp', 12, 384, 192, '필살기 본 폭발 — Dots 07_gunner_R 궁극기'),
 }
-def ink_pixel(r, g, b, a, rnd):
+LIGHT = {'shard': .55}  # 영웅 탄은 적 탄(짙은 먹 방울)보다 한 단계 옅게(심사 1차: 탄막을 가렸다)
+def ink_pixel(r, g, b, a, rnd, light=1.0):
     if a == 0: return (0, 0, 0, 0)
     lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255
     sat = (max(r, g, b) - min(r, g, b)) / 255
@@ -25,11 +26,19 @@ def ink_pixel(r, g, b, a, rnd):
     if alpha < .03: return (0, 0, 0, 0)
     # 세기에 따라 담묵(옅은 회색) → 농묵(짙은 먹)
     t = min(1.0, k ** .9 * 1.1)
-    tone = .78 - .68 * t
-    if lum > .9 and rnd.random() < .55:  # 빛 한가운데: 마른 붓이 남긴 흰 자리(비백)
-        tone = .97
+    tone = .78 - .68 * t * light
+    if lum > .9:  # 빛 한가운데는 물기 많은 옅은 먹(흰 점 잡음 없이 매끈하게, 심사 1차)
+        tone = max(tone, .5 + .3 * (lum - .9) / .1)
     c = tuple(int(INK[i] + (PAPER[i] - INK[i]) * tone) for i in range(3))
     return c + (int(alpha * 255),)
+def unspoke(im, n, cell):
+    """+× 여덟 살이 십자로 읽히지 않게, 22.5° 돌린 사본을 겹쳐 열여섯 갈래 국화꽃 같은 터짐으로 만든다(살 사이도 먹으로 메운다)."""
+    for f in range(n):
+        box = (f * cell, 0, f * cell + cell, cell); fr = im.crop(box)
+        r = fr.rotate(22.5, resample=Image.BICUBIC, center=(cell / 2, cell / 2))
+        a = r.split()[3].point(lambda v: int(v * .8)); r.putalpha(a)
+        out = Image.new('RGBA', fr.size); out.alpha_composite(r); out.alpha_composite(fr)
+        im.paste(out, box)
 def build(name, spec):
     path, n, cell, new, use = spec
     src = Image.open(os.path.join(SRC, path)).convert('RGBA')
@@ -41,7 +50,9 @@ def build(name, spec):
     px = small.load(); q = ink.load()
     for y in range(small.size[1]):
         for x in range(small.size[0]):
-            q[x, y] = ink_pixel(*px[x, y], rnd)
+            q[x, y] = ink_pixel(*px[x, y], rnd, LIGHT.get(name, 1.0))
+    if name == 'burst':  # 폭발 가운데 +× 방사 살이 십자처럼 읽힌다(심사 1차) → 45° 배수 방향의 곧은 살을 칸마다 지운다
+        unspoke(ink, n, new); unspoke(small, n, new)
     # 먹 번짐: 살짝 흐린 사본을 아래에 깔아 가장자리가 한지에 스민 것처럼
     soft = ink.filter(ImageFilter.GaussianBlur(new / 64))
     sa = soft.split()[3].point(lambda v: int(v * .55))
