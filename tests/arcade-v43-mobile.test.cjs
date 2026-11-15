@@ -83,12 +83,13 @@ test('every listed background track exists and the title screen credits the inst
   for(const k of ['title','field','boss','final']){assert(idx.tracks[k],k);assert(fs.existsSync(path.join(root,'media/bgm',idx.tracks[k].file)),idx.tracks[k].file);assert(idx.tracks[k].volume>0&&idx.tracks[k].volume<=.4);}
   assert.match(read('arcade.html'),/id="arcade-credit" data-i18n="credit"/);assert.match(read('media/bgm/CREDITS.txt'),/CC BY 3\.0/);
 });
-test('a stage cleared mid-run keeps its real time even though the next stage starts in the same frame',()=>{
-  const {w}=sandbox(),M=w.HapilMobile,st=A.STAGES[1];let t=1e6;w.Date={now:()=>t};
-  const real=Date.now;Date.now=()=>t;
-  try{const s=A.createRun({stage:1,difficulty:'normal',seed:5});s.started=true;s.seg=st.first+1;s.stage='wave';M.tick(s,'playing',16);
-    t+=90000;s.results.push({stage:1,stars:3});s.stageIndex=2;M.tick(s,'playing',16);
-    const row=M._stats().stages['normal:1'];assert.equal(row.clears,1);assert(row.ms>=90000,'took '+row.ms);}finally{Date.now=real;}
+test('a stage cleared mid-run keeps its played time (not paused time) even though the next stage starts in the same frame',()=>{
+  const {w}=sandbox(),M=w.HapilMobile,st=A.STAGES[1];
+  const s=A.createRun({stage:1,difficulty:'normal',seed:5});s.started=true;s.seg=st.first+1;s.stage='wave';
+  for(let i=0;i<300;i++)M.tick(s,'playing',20); // 6초 플레이
+  M.tick(s,'paused',3600000); // 한 시간 일시정지
+  s.results.push({stage:1,stars:3});s.stageIndex=2;M.tick(s,'playing',20);
+  const row=M._stats().stages['normal:1'];assert.equal(row.clears,1);assert(row.ms>=6000&&row.ms<7000,'took '+row.ms);
 });
 test('boss practice never erases the campaign checkpoint',()=>{
   const {w,store}=sandbox(),M=w.HapilMobile,st=A.STAGES[2];

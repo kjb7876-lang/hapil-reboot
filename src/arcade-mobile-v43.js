@@ -33,7 +33,7 @@
   var stats=load(STATS_KEY,null);
   if(!stats||stats.v!==1)stats={v:1,since:Date.now(),stages:{},frames:{n:0,sum:0,hist:[]},playMs:0};
   if(!Array.isArray(stats.frames.hist))stats.frames.hist=[];
-  var seen=null,seenStage=-1,seenResults=0,seenEnd='',stageStart=0,seenSeg=-1,dirty=false,lastFlush=0;
+  var seen=null,seenStage=-1,seenResults=0,seenEnd='',stageMs=0,seenSeg=-1,dirty=false,lastFlush=0;
   function stageRow(i,difficulty){var key=difficulty+':'+i;return stats.stages[key]||(stats.stages[key]={tries:0,clears:0,losses:0,ms:0,bestMs:0});}
   function flush(force){var now=Date.now();if(!dirty||(!force&&now-lastFlush<5000))return;lastFlush=now;dirty=false;store(STATS_KEY,stats);}
 
@@ -52,16 +52,16 @@
   /* 앱이 매 프레임 부른다. s: 지금 판, mode: 화면 상태, ms: 지난 프레임 시간. */
   function tick(s,mode,ms){
     if(mode!=='playing'||!s)return;
-    if(ms>0&&ms<1000){var b=Math.min(BUCKETS-1,Math.floor(ms/BUCKET_MS));stats.frames.hist[b]=(stats.frames.hist[b]||0)+1;stats.frames.n++;stats.frames.sum+=ms;stats.playMs+=ms;dirty=true;}
+    if(ms>0&&ms<1000){var b=Math.min(BUCKETS-1,Math.floor(ms/BUCKET_MS));stats.frames.hist[b]=(stats.frames.hist[b]||0)+1;stats.frames.n++;stats.frames.sum+=ms;stats.playMs+=ms;stageMs+=ms;dirty=true;} // 스테이지 시간은 실제로 그린 프레임만 더한다(일시정지·백그라운드 시간 제외)
     var now=Date.now();
     if(s!==seen){seen=s;seenStage=-1;seenResults=s.results.length;seenEnd='';seenSeg=-1;}
     if(s.results.length>seenResults){ // 스테이지를 깼다
-      seenResults=s.results.length;var r=s.results[s.results.length-1],row=stageRow(r.stage!=null?r.stage:s.stageIndex,s.difficulty),took=now-stageStart;
+      seenResults=s.results.length;var r=s.results[s.results.length-1],row=stageRow(r.stage!=null?r.stage:s.stageIndex,s.difficulty),took=Math.round(stageMs);
       if(!s.bossOnly){row.clears++;row.ms+=took;row.bestMs=row.bestMs?Math.min(row.bestMs,took):took;clearCheckpoint();}dirty=true;flush(true);
     }
     // 깬 스테이지 시간을 먼저 적은 뒤(엔진이 결과와 다음 스테이지 번호를 한 프레임에 바꾼다) 새 스테이지 시계를 잰다.
-    if(s.stageIndex!==seenStage){seenStage=s.stageIndex;stageStart=now;if(!s.bossOnly)stageRow(s.stageIndex,s.difficulty).tries++;dirty=true;}
-    if((s.stage==='lost'||s.stage==='won')&&seenEnd!==s.stage){seenEnd=s.stage;if(s.stage==='lost'&&!s.bossOnly){var lr=stageRow(s.stageIndex,s.difficulty);lr.losses++;lr.ms+=now-stageStart;}if(!s.bossOnly)clearCheckpoint();dirty=true;flush(true);return;}
+    if(s.stageIndex!==seenStage){seenStage=s.stageIndex;stageMs=0;if(!s.bossOnly)stageRow(s.stageIndex,s.difficulty).tries++;dirty=true;}
+    if((s.stage==='lost'||s.stage==='won')&&seenEnd!==s.stage){seenEnd=s.stage;if(s.stage==='lost'&&!s.bossOnly){var lr=stageRow(s.stageIndex,s.difficulty);lr.losses++;lr.ms+=Math.round(stageMs);}if(!s.bossOnly)clearCheckpoint();dirty=true;flush(true);return;}
     if(!s.bossOnly&&s.started&&s.seg!==seenSeg&&s.stage!=='lost'&&s.stage!=='won'){
       seenSeg=s.seg;var A=global.HapilArcade,seg=A&&A.SEGMENTS[s.seg];
       if(seg&&seg.stage===s.stageIndex)store(CP_KEY,{v:1,stage:s.stageIndex,seg:s.seg,difficulty:s.difficulty,at:now,hits:s.hits-s.mark.hits,bombs:s.bombsUsed-s.mark.bombs}); // 별 계산용으로 이 스테이지에서 맞은 수·폭탄 수도 남긴다
