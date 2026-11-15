@@ -454,7 +454,7 @@
   function adaptQuality(elapsedMs){
     frameMs+=(Math.min(80,elapsedMs)-frameMs)*.05;framesSeen++;
     if(framesSeen<150||mode!=='playing'||turbo)return;
-    if(frameMs>VERY_SLOW_FRAME_MS&&!lite){lite=true;framesSeen=0;frameMs=16;fit();buildSprites();if(state)initFx(themeOf(state.stageIndex).fx,state.stageIndex);}
+    if(frameMs>VERY_SLOW_FRAME_MS&&!lite){lite=true;if(Ink&&Ink.setLite)Ink.setLite(true);framesSeen=0;frameMs=16;fit();buildSprites();if(state)initFx(themeOf(state.stageIndex).fx,state.stageIndex);}
     else if(frameMs>SLOW_FRAME_MS&&scale>1){scale=1;canvas.width=W;canvas.height=H;buildSprites();framesSeen=0;frameMs=16;}
   }
 
@@ -776,17 +776,18 @@
   var FLOOR_HOT='#ff5a3c'; // 경고색은 영웅 탄(주황)과 다른 붉은 쪽(심사 2차)
   function drawFloor(s){
     var F=s.floor;if(!F)return;var C=Arcade.FLOOR_CELL,N=Arcade.FLOOR_COLS,c,r,k,v,hill=false,theme=themeColor(s);
-    var stone=mix('#3a3546',theme,.28),stoneEdge=mix('#8d8799',theme,.3),live=mix(mix(theme,'#3a3546',.35),'#000000',.15),pulse=.6+.4*Math.sin(visual*12);
+    var stone=mix('#3a3546',theme,.28),stoneEdge=mix('#8d8799',theme,.3),live=mix(mix(theme,'#3a3546',.35),'#000000',.15),pulse=.6+.4*Math.sin(visual*12),HOT=Ink?'#c2362a':FLOOR_HOT,PAPER='#f2e9d6';
+    if(Ink){stone='#4c463f';stoneEdge=PAPER;live='#c2362a';} // 수묵: 먹 바위, 한지색 테, 인주색 경고(이 함수는 HapilInk.raw 안에서 돌아 색이 그대로 찍힌다)
     ctx.save();
     for(c=0;c<N;c++)if(F.hill[c]>.5){hill=true;break;}
     if(hill){ // 지형: 기둥 높이를 곡선으로 잇고, 장면 색 바위에 밝은 능선
       ctx.beginPath();ctx.moveTo(-4,H+4);ctx.lineTo(-4,H-F.hill[0]);
       for(c=0;c<N;c++){var jag=F.hill[c]>4?((c*37)%7-3)*1.6:0,x=(c+.5)*C,y=H-F.hill[c]+jag,nx=(c+1.5)*C,ny=H-F.hill[Math.min(N-1,c+1)];ctx.lineTo(x-6,y+Math.abs(jag)*.5);ctx.quadraticCurveTo(x,y-2,(x+nx)/2,(y+ny)/2);} // 바위 윤곽이 매끈한 돔이 되지 않게 기둥마다 조금씩 깬다
       ctx.lineTo(W+4,H-F.hill[N-1]);ctx.lineTo(W+4,H+4);ctx.closePath();
-      var g=ctx.createLinearGradient(0,H-110,0,H);g.addColorStop(0,mix('#3a3346',theme,.5));g.addColorStop(.35,mix('#201b2a',theme,.4));g.addColorStop(1,'#07050c');ctx.globalAlpha=.97;ctx.fillStyle=g;ctx.fill();
+      var g=ctx.createLinearGradient(0,H-110,0,H);if(Ink){g.addColorStop(0,'#1e1a18');g.addColorStop(.45,'#3d3832');g.addColorStop(1,'#6a625a');}else{g.addColorStop(0,mix('#3a3346',theme,.5));g.addColorStop(.35,mix('#201b2a',theme,.4));g.addColorStop(1,'#07050c');}ctx.globalAlpha=.97;ctx.fillStyle=g;ctx.fill();
       ctx.save();ctx.clip();ctx.globalAlpha=.35;ctx.strokeStyle='#07060b';ctx.lineWidth=1;for(k=0;k<22;k++){var hx=(k*53)%W,hy=H-6-(k*29)%96;ctx.beginPath();ctx.moveTo(hx,hy);ctx.lineTo(hx+10,hy+4);ctx.lineTo(hx+18,hy+2);ctx.stroke();}ctx.restore(); // 바위 결·균열
-      ctx.globalCompositeOperation='lighter';ctx.globalAlpha=.3;ctx.strokeStyle=theme;ctx.lineWidth=9;ctx.stroke();ctx.globalCompositeOperation='source-over';
-      ctx.globalAlpha=1;ctx.strokeStyle=mix(theme,'#ffffff',.72);ctx.lineWidth=3;ctx.stroke(); // 밟을 수 있는 능선이 보이게 밝은 테
+      if(!Ink){ctx.globalCompositeOperation='lighter';ctx.globalAlpha=.3;ctx.strokeStyle=theme;ctx.lineWidth=9;ctx.stroke();ctx.globalCompositeOperation='source-over';}
+      ctx.globalAlpha=1;ctx.strokeStyle=Ink?PAPER:mix(theme,'#ffffff',.72);ctx.lineWidth=Ink?2:3;ctx.stroke(); // 밟을 수 있는 능선이 보이게 밝은 테
       if(mode==='playing')for(c=0;c<N;c++)if(F.goal[c]>F.hill[c]+1&&Math.random()<.25)addParticle((c+Math.random())*C,H-F.hill[c],(Math.random()-.5)*1.2,-.6-Math.random()*1.2,22,stoneEdge,2.2); // 솟는 동안 흙먼지
     }
     // 쌓인 돌: 칸 사이 틈 없이 한 덩어리로 칠하고, 바깥 윤곽에만 테를 두른다(심사 4차: 칸마다 틈이 있는 UI 타일 같음)
@@ -795,26 +796,33 @@
       gr.addColorStop(0,mix(stone,vary>0?'#ffffff':'#000000',Math.abs(vary)));gr.addColorStop(1,mix(stone,'#06050a',.55));ctx.globalAlpha=.97;ctx.fillStyle=gr;ctx.fillRect(bx,by,C,C);
       ctx.globalAlpha=.3;ctx.strokeStyle='#07060b';ctx.lineWidth=1;ctx.strokeRect(bx+.5,by+.5,C-1,C-1); // 옅은 이음매
       if((r*5+c*11)%4===0){ctx.globalAlpha=.4;ctx.beginPath();ctx.moveTo(bx+8,by+6);ctx.lineTo(bx+14,by+15);ctx.lineTo(bx+11,by+C-6);ctx.stroke();}}
-    ctx.globalAlpha=.9;ctx.strokeStyle=stoneEdge;ctx.lineWidth=1.5;ctx.beginPath();
+    if(Ink){ // 수묵: 덩어리 가장자리에 먹 고임(짙은 굵은 테, 조금씩 흔들림), 안쪽에 비백 점
+      ctx.globalAlpha=.8;ctx.strokeStyle='#141110';ctx.lineWidth=5;ctx.lineJoin='round';ctx.beginPath();
+      for(r=0;r<6;r++)for(c=0;c<N;c++){if(!F.grid[r*N+c])continue;var px=c*C,py=H-(r+1)*C,j1=((c*13+r*7)%5-2)*.5,j2=((c*5+r*11)%5-2)*.5;
+        if(!cellAt(c-1,r)){ctx.moveTo(px+2.5+j1,py);ctx.lineTo(px+2.5+j2,py+C);}if(!cellAt(c+1,r)){ctx.moveTo(px+C-2.5+j2,py);ctx.lineTo(px+C-2.5+j1,py+C);}if(!cellAt(c,r+1)){ctx.moveTo(px,py+2.5+j1);ctx.lineTo(px+C,py+2.5+j2);}}
+      ctx.stroke();ctx.fillStyle=PAPER;
+      for(r=0;r<6;r++)for(c=0;c<N;c++){if(!F.grid[r*N+c])continue;for(k=0;k<3;k++){ctx.globalAlpha=.16+.1*((c+r+k)%3);ctx.fillRect(c*C+6+((c*17+r*29+k*11)%(C-12)),H-(r+1)*C+7+((c*23+r*5+k*19)%(C-13)),2.2-k*.5,1.2);}}
+    }
+    ctx.globalAlpha=Ink?.55:.9;ctx.strokeStyle=stoneEdge;ctx.lineWidth=Ink?1:1.5;ctx.beginPath();
     for(r=0;r<6;r++)for(c=0;c<N;c++){if(!F.grid[r*N+c])continue;var ex0=c*C,ey0=H-(r+1)*C;if(!cellAt(c-1,r)){ctx.moveTo(ex0+.75,ey0);ctx.lineTo(ex0+.75,ey0+C);}if(!cellAt(c+1,r)){ctx.moveTo(ex0+C-.75,ey0);ctx.lineTo(ex0+C-.75,ey0+C);}}
     ctx.stroke();
-    ctx.globalAlpha=.85;ctx.fillStyle=mix(theme,'#ffffff',.5);for(c=0;c<N;c++){for(r=5;r>=0&&!F.grid[r*N+c];r--);if(r>=0)ctx.fillRect(c*C,H-(r+1)*C,C,2);} // 쌓인 더미의 새 바닥선
+    ctx.globalAlpha=.85;ctx.fillStyle=Ink?PAPER:mix(theme,'#ffffff',.5);for(c=0;c<N;c++){for(r=5;r>=0&&!F.grid[r*N+c];r--);if(r>=0)ctx.fillRect(c*C,H-(r+1)*C,C,2);} // 쌓인 더미의 새 바닥선
     var next=null;for(k=0;k<F.pieces.length;k++)if(!next||F.pieces[k].y-F.pieces[k].land*C>next.y-next.land*C)next=F.pieces[k];
     for(k=0;k<F.pieces.length;k++){var q=F.pieces[k],j;
-      if(q===next){ctx.globalAlpha=.75;ctx.strokeStyle=FLOOR_HOT;ctx.lineWidth=1.5;ctx.setLineDash([4,3]);ctx.beginPath(); // 가장 먼저 닿을 조각의 착지 자리만, 조각 외곽선 하나로
+      if(q===next){ctx.globalAlpha=Ink?.9:.75;ctx.strokeStyle=HOT;ctx.lineWidth=Ink?2.6:1.5;ctx.setLineDash([4,3]);ctx.beginPath(); // 가장 먼저 닿을 조각의 착지 자리만, 조각 외곽선 하나로
         for(j=0;j<q.cells.length;j++){var gx=(q.col+q.cells[j][0])*C,gy=H-(q.land+q.cells[j][1]+1)*C,cx0=q.cells[j][0],cy0=q.cells[j][1],has=function(dx,dy){for(var z=0;z<q.cells.length;z++)if(q.cells[z][0]===cx0+dx&&q.cells[z][1]===cy0+dy)return true;return false;};
           if(!has(0,1)){ctx.moveTo(gx+2,gy+2);ctx.lineTo(gx+C-2,gy+2);}if(!has(0,-1)){ctx.moveTo(gx+2,gy+C-2);ctx.lineTo(gx+C-2,gy+C-2);}if(!has(-1,0)){ctx.moveTo(gx+2,gy+2);ctx.lineTo(gx+2,gy+C-2);}if(!has(1,0)){ctx.moveTo(gx+C-2,gy+2);ctx.lineTo(gx+C-2,gy+C-2);}}
         ctx.stroke();ctx.setLineDash([]);}
       var own=function(dx,dy,cx1,cy1){for(var z=0;z<q.cells.length;z++)if(q.cells[z][0]===cx1+dx&&q.cells[z][1]===cy1+dy)return true;return false;};
-            for(j=0;j<q.cells.length;j++){var tx2=(q.col+q.cells[j][0])*C,ty2=q.y-(q.cells[j][1]+1)*C;ctx.globalAlpha=.42;ctx.fillStyle=live;ctx.fillRect(tx2,ty2,C,C);} // 속은 반투명: 탄이 비쳐 보이게
-      ctx.globalAlpha=1;ctx.strokeStyle=mix(FLOOR_HOT,'#ffd0c4',.3*pulse);ctx.lineWidth=2;ctx.beginPath();
+            for(j=0;j<q.cells.length;j++){var tx2=(q.col+q.cells[j][0])*C,ty2=q.y-(q.cells[j][1]+1)*C;ctx.globalAlpha=Ink?.26:.42;ctx.fillStyle=live;ctx.fillRect(tx2,ty2,C,C);} // 속은 반투명: 탄이 비쳐 보이게
+      ctx.globalAlpha=1;ctx.strokeStyle=mix(HOT,'#ffd0c4',.3*pulse);ctx.lineWidth=2;ctx.beginPath();
       for(j=0;j<q.cells.length;j++){var ox=(q.col+q.cells[j][0])*C,oy=q.y-(q.cells[j][1]+1)*C,a0=q.cells[j][0],b0=q.cells[j][1];
         if(!own(0,1,a0,b0)){ctx.moveTo(ox,oy+1);ctx.lineTo(ox+C,oy+1);}if(!own(0,-1,a0,b0)){ctx.moveTo(ox,oy+C-1);ctx.lineTo(ox+C,oy+C-1);}if(!own(-1,0,a0,b0)){ctx.moveTo(ox+1,oy);ctx.lineTo(ox+1,oy+C);}if(!own(1,0,a0,b0)){ctx.moveTo(ox+C-1,oy);ctx.lineTo(ox+C-1,oy+C);}}
-      ctx.shadowColor=FLOOR_HOT;ctx.shadowBlur=lite?0:8+6*pulse;ctx.stroke();ctx.shadowBlur=0;} // 바깥 윤곽 한 줄만 밝게, 둘레로 부드럽게 번지는 빛
+      ctx.shadowColor=HOT;ctx.shadowBlur=lite?0:8+6*pulse;ctx.stroke();ctx.shadowBlur=0;} // 바깥 윤곽 한 줄만 밝게, 둘레로 부드럽게 번지는 빛
     for(k=0;k<F.warns.length;k++){var w=F.warns[k],a=Math.min(1,w.age/8)*(.8+.2*Math.sin(w.age*.5)); // 아래에서 올라올 몹: 바닥 가장자리에 빛과 위쪽 화살
-      var gl=ctx.createRadialGradient(w.x,H,0,w.x,H,40);gl.addColorStop(0,FLOOR_HOT);gl.addColorStop(.5,'rgba(255,90,60,.35)');gl.addColorStop(1,'rgba(255,90,60,0)');ctx.globalCompositeOperation='lighter';ctx.globalAlpha=.95*a;ctx.fillStyle=gl;ctx.beginPath();ctx.arc(w.x,H,40,Math.PI,TAU);ctx.fill();ctx.globalCompositeOperation='source-over';
-      for(var ch=0;ch<3;ch++){var cy=H-26-ch*15-(w.age%16)*.9,ca=a;ctx.globalAlpha=ca;ctx.strokeStyle='#2a0806';ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(w.x-13,cy+8);ctx.lineTo(w.x,cy-4);ctx.lineTo(w.x+13,cy+8);ctx.stroke();ctx.strokeStyle=FLOOR_HOT;ctx.lineWidth=3;ctx.stroke();}}
-    var fog=ctx.createLinearGradient(0,H-30,0,H);fog.addColorStop(0,'rgba(0,0,0,0)');fog.addColorStop(1,mix(theme,'#05040a',.7));ctx.globalAlpha=.75;ctx.fillStyle=fog;ctx.fillRect(0,H-30,W,30); // 바닥 요소 밑동을 장면 안개에 묻는다(접지감)
+      var gl=ctx.createRadialGradient(w.x,H,0,w.x,H,40);gl.addColorStop(0,HOT);gl.addColorStop(.5,'rgba(255,90,60,.35)');gl.addColorStop(1,'rgba(255,90,60,0)');ctx.globalCompositeOperation=Ink?'source-over':'lighter';ctx.globalAlpha=.95*a;ctx.fillStyle=gl;ctx.beginPath();ctx.arc(w.x,H,40,Math.PI,TAU);ctx.fill();ctx.globalCompositeOperation='source-over';
+      for(var ch=0;ch<3;ch++){var cy=H-26-ch*15-(w.age%16)*.9,ca=a;ctx.globalAlpha=ca;ctx.strokeStyle='#2a0806';ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(w.x-13,cy+8);ctx.lineTo(w.x,cy-4);ctx.lineTo(w.x+13,cy+8);ctx.stroke();ctx.strokeStyle=HOT;ctx.lineWidth=3;ctx.stroke();}}
+    var fog=ctx.createLinearGradient(0,H-30,0,H);fog.addColorStop(0,Ink?'rgba(242,233,214,0)':'rgba(0,0,0,0)');fog.addColorStop(1,Ink?'rgba(242,233,214,.9)':mix(theme,'#05040a',.7));ctx.globalAlpha=.75;ctx.fillStyle=fog;ctx.fillRect(0,H-30,W,30); // 바닥 요소 밑동을 장면 안개에 묻는다(접지감)
     ctx.restore();
   }
   // 영웅이 바닥 줄·떨어지는 조각과 겹칠 때 영웅 뒤에 어두운 후광을 깔아 묻히지 않게 한다(심사 4차)
@@ -919,7 +927,7 @@
       ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x2,y2);
       if(l.age<l.warn){
         var t=l.age/l.warn,blink=.5+.5*Math.sin(l.age*(.25+t*.5));
-        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=.10+.16*t;ctx.strokeStyle=color;ctx.lineWidth=l.width*(.25+.75*t);ctx.setLineDash([]);ctx.stroke();
+        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=Ink&&l.floor?.55+.35*t:.10+.16*t;ctx.strokeStyle=Ink&&l.floor?'#c9406e':color;ctx.lineWidth=Ink&&l.floor?Math.max(2.6,l.width*(.25+.75*t)):l.width*(.25+.75*t);ctx.setLineDash([]);ctx.stroke();
         ctx.globalAlpha=.45+.5*blink;ctx.strokeStyle='#ffffff';ctx.lineWidth=1;ctx.setLineDash([7,6]);ctx.stroke();
       }else{
         var over=l.age-l.warn-l.active,k=over>0?Math.max(0,1-over/Arcade.BEAM_FADE):Math.min(1,(l.age-l.warn+1)/4),pulse=1+Math.sin(visual*40+i)*.06;
@@ -1163,7 +1171,7 @@
     requestAnimationFrame(frame);
     if(!lastStamp)lastStamp=stamp;var elapsed=finite(Math.min(.1,Math.max(0,(stamp-lastStamp)/1000)),0);lastStamp=stamp;visual+=elapsed;
     if(mode==='playing'&&state){
-      adaptQuality(elapsed*1000);accumulator=Math.min(accumulator+elapsed,4/60);if(devMode)accumulator=Math.min(accumulator+elapsed*(DEV_SPEED-1),4*DEV_SPEED/60); // 개발자 모드는 같은 60Hz 틱을 두 배로 돌린다
+      adaptQuality(elapsed*1000);if(devMode)showDevBadge();accumulator=Math.min(accumulator+elapsed,4/60);if(devMode)accumulator=Math.min(accumulator+elapsed*(DEV_SPEED-1),4*DEV_SPEED/60); // 개발자 모드는 같은 60Hz 틱을 두 배로 돌린다
       var steps=0,limit=turbo||rushStage?Math.max(4,turbo||60):devMode?4*DEV_SPEED:4;if(turbo||rushStage)accumulator=limit/60;
       while(accumulator>=1/60&&steps<limit&&mode==='playing'){if(rushStage)rushTick(state);if(devMode)state.player.hp=state.player.maxHp;Arcade.step(state,inputForStep());accumulator-=1/60;steps++;consume();}
     }
@@ -1183,7 +1191,12 @@
     if(music){if(next==='playing'&&soundOn){var p=music.play();if(p&&p.catch)p.catch(function(){});}else music.pause();}
   }
   // 개발자 모드 표시: 탄이 오는 필드 밖(화면 오른쪽 위 구석)에 둔다(심사 1차: 필드 안 배지가 적·탄과 겹침)
-  function showDevBadge(){var e=$('arcade-dev-badge');if(e)e.hidden=!(devMode&&mode==='playing');}
+  var devErrors=0,devLastError='',devBadgeAt=0;
+  function devNote(msg){devErrors++;devLastError=String(msg||'').slice(0,60);}
+  global.addEventListener('error',function(ev){devNote(ev&&(ev.message||(ev.target&&ev.target.src&&'불러오기 실패 '+String(ev.target.src).split('/').pop())));},true);
+  global.addEventListener('unhandledrejection',function(ev){devNote(ev&&ev.reason&&(ev.reason.message||ev.reason));});
+  function devDiag(){return 'DEV ×2 · 무적 · '+Math.round(1000/Math.max(1,frameMs))+'fps'+(lite?' · lite':'')+' · 탄 '+(state?state.n:0)+' · 오류 '+devErrors+(devLastError?' · '+devLastError:'');}
+  function showDevBadge(){var e=$('arcade-dev-badge');if(e)e.hidden=!(devMode&&mode==='playing');if(e&&!e.hidden&&framesSeen-devBadgeAt>=0&&(devBadgeAt=framesSeen+30))e.textContent=devDiag();}
   /* run: {stage, bossOnly}. 원큐: 그 스테이지부터 끝까지 이어진다. */
   function start(run){
     if(fx)fx.unlock();
@@ -1316,7 +1329,7 @@
     fx:{kind:fxKind,count:fxCount,pool:FX_POOL},toast:toast?{name:toast.name,stars:toast.stars,hasArt:!!toast.img}:null,difficulty:difficulty,saveOk:saveOk};}
   /* 디버그 훅(헤드리스 검증용): 상태를 읽고, 스테이지·구간으로 건너뛰고, 진행 기록을 본다. */
   global.HapilArcadeApp={
-    getState:snapshot,drawPropArt:drawPropArt, // tools/build-drawn-props-v43.cjs가 그림 파일을 구울 때 쓴다
+    getState:snapshot,devDiag:devDiag,drawPropArt:drawPropArt, // tools/build-drawn-props-v43.cjs가 그림 파일을 구울 때 쓴다
     debugState:function(){
       return {state:state,app:snapshot(),progress:JSON.parse(JSON.stringify(progress)),saved:(function(){try{return global.localStorage.getItem(SAVE_KEY);}catch(e){return null;}})(),
         jumpStage:function(i,bossOnly){start({stage:i,bossOnly:!!bossOnly});return snapshot();},
