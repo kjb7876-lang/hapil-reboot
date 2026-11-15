@@ -106,3 +106,18 @@ test('the checkpoint keeps hits and bombs taken earlier in the stage, and contin
   assert.match(read('src/arcade-app-v43.js'),/carry:\{hits:mid\.hits,bombs:mid\.bombs\}/);
   assert.match(read('src/arcade-app-v43.js'),/state\.hits\+=run\.carry\.hits\|0;state\.bombsUsed\+=run\.carry\.bombs\|0;/);
 });
+test('menu music stops while the page is hidden or the app is in the background, and diagnostics see real frame times',()=>{
+  let vis=null;const paused=[];
+  class Aud{constructor(src){this.src=src;this.paused=true;this.volume=0;}play(){this.paused=false;return {catch(){}};}pause(){this.paused=true;paused.push(this.src);}}
+  const doc={hidden:false,addEventListener:(k,f)=>{if(k==='visibilitychange')vis=f;}};
+  const w={HapilArcade:A,document:doc,Audio:Aud,performance:{now:()=>0}};
+  w.fetch=()=>Promise.resolve({ok:true,json:()=>({tracks:{title:{file:'t.mp3',volume:.2}}})});
+  w.window=w;const ctx=vm.createContext(w);vm.runInContext(read('src/arcade-music-v43.js'),ctx);
+  return new Promise(r=>setTimeout(r,10)).then(()=>{
+    const M=w.HapilMusic;M.update('title',null,true);const a=[...paused];assert.equal(a.length,0);
+    doc.hidden=true;vis();assert(paused.length>0,'paused on hide');
+    M.update('title',null,true);assert(paused.length>1,'stays paused while hidden');
+    M.suspend(true);doc.hidden=false;const n=paused.length;M.update('title',null,true);assert(paused.length>n,'app background keeps it paused');
+    assert.match(read('src/arcade-app-v43.js'),/Mobile\.tick\(state,mode,rawMs\)/);
+  });
+});

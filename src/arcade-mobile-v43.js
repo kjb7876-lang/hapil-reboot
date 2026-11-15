@@ -101,7 +101,7 @@
     if(!isNative())return;var P=global.Capacitor.Plugins||{},App=P.App;if(!App||!App.addListener)return;
     App.addListener('backButton',function(){var a=global.HapilArcadeApp;var st=a&&a.getState?a.getState():{};
       if(st.mode==='playing'&&a.pause)a.pause();else if(st.mode==='title'){if(App.minimizeApp)App.minimizeApp();}else if(a.back)a.back();});
-    App.addListener('appStateChange',function(e){var a=global.HapilArcadeApp;if(e&&!e.isActive){flush(true);if(a&&a.pause)a.pause();}});
+    App.addListener('appStateChange',function(e){var a=global.HapilArcadeApp,mu=global.HapilMusic;if(mu&&mu.suspend)mu.suspend(!(e&&e.isActive));if(e&&!e.isActive){flush(true);if(a&&a.pause)a.pause();}});
   }
   if(global.document&&document.readyState!=='loading')setTimeout(bindNative,0);else if(global.addEventListener)global.addEventListener('DOMContentLoaded',bindNative);
   if(global.addEventListener)global.addEventListener('pagehide',function(){flush(true);});

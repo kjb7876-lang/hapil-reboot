@@ -5,7 +5,7 @@
 (function(global){
   'use strict';
   var DIR='media/bgm/',FADE_MS=1000,LEGACY={field:{file:'../music.mp3',volume:.2},boss:{file:'../music.mp3',volume:.2},final:{file:'../music.mp3',volume:.2}};
-  var tracks=null,players={},current='',fadeFrom=null,fadeVol=0,fadeAt=0,ready=false,lastTry=0;
+  var tracks=null,players={},current='',fadeFrom=null,fadeVol=0,fadeAt=0,ready=false,lastTry=0,away=false;
   function load(){
     try{global.fetch(DIR+'index.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():null;}).then(function(j){tracks=j&&j.tracks&&typeof j.tracks==='object'?j.tracks:LEGACY;ready=true;},function(){tracks=LEGACY;ready=true;});}
     catch(e){tracks=LEGACY;ready=true;}
@@ -30,7 +30,7 @@
   function update(mode,s,soundOn){
     if(!ready)return;var now=global.performance?global.performance.now():Date.now();
     var want=soundOn?pick(mode,s):'',a=want?player(want):null,cur=current?player(current):null;
-    if(mode==='paused'||!soundOn){for(var k in players)players[k].a.pause();return;}
+    if(mode==='paused'||!soundOn||away||(global.document&&global.document.hidden)){for(var k in players)players[k].a.pause();return;} // 화면이 가려지면(탭 전환·앱 백그라운드) 시작 화면 곡도 멈춘다
     if(want!==current){if(cur&&cur!==a){if(fadeFrom&&fadeFrom!==a)fadeFrom.pause();fadeFrom=cur;fadeVol=cur.volume;fadeAt=now;}current=want;if(a&&a!==cur){a.volume=0;play(a);lastTry=now;}}
     if(a&&a.paused&&now-lastTry>1000){lastTry=now;play(a);} // 첫 터치 전 자동 재생이 막히면 1초마다 다시 시도
     var k2=Math.min(1,(now-fadeAt)/FADE_MS);
@@ -38,6 +38,9 @@
     if(fadeFrom){fadeFrom.volume=Math.max(0,(1-k2)*fadeVol);if(k2>=1){fadeFrom.pause();fadeFrom=null;}}
     if(!a)for(var k3 in players)if(players[k3].a!==fadeFrom)players[k3].a.pause();
   }
+  /* 앱이 뒤로 가면 프레임이 멈춰 update가 안 불리므로 그 순간 바로 멈춘다. */
+  function suspend(on){away=!!on;if(away)for(var k in players)players[k].a.pause();}
+  try{if(global.document&&global.document.addEventListener)global.document.addEventListener('visibilitychange',function(){suspend(global.document.hidden);});}catch(e){}
   load();
-  global.HapilMusic={update:update,pick:pick,_tracks:function(){return tracks;}};
+  global.HapilMusic={update:update,pick:pick,suspend:suspend,_tracks:function(){return tracks;}};
 })(typeof window!=='undefined'?window:globalThis);

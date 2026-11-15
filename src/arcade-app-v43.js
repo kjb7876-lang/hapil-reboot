@@ -1211,7 +1211,7 @@
       adaptQuality(rawMs>STALL_FRAME_MS?rawMs:elapsed*1000);if(devMode)showDevBadge();accumulator=Math.min(accumulator+elapsed,4/60);if(devMode)accumulator=Math.min(accumulator+elapsed*(DEV_SPEED-1),4*DEV_SPEED/60); // 개발자 모드는 같은 60Hz 틱을 두 배로 돌린다
       var steps=0,limit=turbo||rushStage?Math.max(4,turbo||60):devMode?4*DEV_SPEED:4;if(turbo||rushStage)accumulator=limit/60;
       while(accumulator>=1/60&&steps<limit&&mode==='playing'){if(rushStage)rushTick(state);if(devMode)state.player.hp=state.player.maxHp;Arcade.step(state,inputForStep());accumulator-=1/60;steps++;consume();}
-      if(Mobile&&state)Mobile.tick(state,mode,elapsed*1000);
+      if(Mobile&&state)Mobile.tick(state,mode,rawMs); // 진단은 잘리기 전 실제 프레임 시간(1초 넘는 복귀 프레임은 tick이 버림)
     }
     if(global.HapilMusic)global.HapilMusic.update(mode,state,soundOn); // 구간이 바뀌면 곡을 겹쳐 바꾼다
     draw(elapsed);
