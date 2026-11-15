@@ -13,6 +13,7 @@
   var PAPER=[242,233,214],INK=[30,26,24];
   var seed=20261115;function rnd(){seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;} // 화면 난수와 섞이지 않는 제 난수
   var hold=0; // >0 이면 색을 바꾸지 않는다(이 파일이 직접 그릴 때)
+  global.HapilInk.raw=function(d){hold=Math.max(0,hold+d);}; // 바닥 바위처럼 원래 짙은 색 그대로 둘 그림을 감쌀 때
 
   /* ── 색 바꾸기 ── */
   var NAMED={white:[255,255,255,1],black:[0,0,0,1],transparent:[0,0,0,0],red:[255,0,0,1]};
