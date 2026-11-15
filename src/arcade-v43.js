@@ -573,7 +573,7 @@
   });
   var CARD_TOTAL=SEGMENTS.filter(function(g){return g.kind==='card'&&g.spell;}).length;
 
-  /* options: {difficulty, seed, stage(시작 스테이지), segment(시작 구간), compact(휴대폰 모드), bossOnly(보스 체험: 그 스테이지의 보스전만)} */
+  /* options: {difficulty, seed, stage(시작 스테이지), segment(시작 구간), compact(휴대폰 모드), bossOnly(보스 체험: 그 스테이지의 보스전만), growth(중간에서 시작하면 그만큼 자란 공격·필살 단계로)} */
   function createRun(options){
     options=options||{};var difficulty=DIFFICULTY[options.difficulty]?options.difficulty:'normal',rules=Object.assign({},DIFFICULTY[difficulty]),compact=!!options.compact;
     var startSeg=Number.isInteger(options.segment)&&SEGMENTS[options.segment]?options.segment:Number.isInteger(options.stage)&&STAGES[options.stage]?STAGES[options.stage].first:0;
@@ -589,7 +589,7 @@
     ['bage','blife','bat'].forEach(function(k){s[k]=new Uint16Array(CAP);});
     ['bsize','bcolor','bgrazed','bmode','bgen','bbounce'].forEach(function(k){s[k]=new Uint8Array(CAP);});s.figures=[];s.ripples=[];s.floor=freshFloor(s,s.stageIndex);
     s.sx=new Float32Array(SHOT_CAP);s.sy=new Float32Array(SHOT_CAP);s.svx=new Float32Array(SHOT_CAP);s.shoming=new Uint8Array(SHOT_CAP);
-    var from=s.stageIndex;if(from>0){var pf=Math.min(5,1+Math.floor(from/6)),bf=Math.min(5,1+Math.floor(from/8));s.exp=POWER_EXP[pf-1];s.power=pf;s.fills=BOMB_FILLS[bf-1];s.bombLevel=bf;}
+    var from=s.stageIndex;if(options.growth&&from>0){/* 화면이 켜 준 경우만(검사·연습용 구간 시작은 1단계 그대로) */var pf=Math.min(5,1+Math.floor(from/6)),bf=Math.min(5,1+Math.floor(from/8));s.exp=POWER_EXP[pf-1];s.power=pf;s.fills=BOMB_FILLS[bf-1];s.bombLevel=bf;}
     s.ix=new Float32Array(ITEM_CAP);s.iy=new Float32Array(ITEM_CAP);s.ivy=new Float32Array(ITEM_CAP);s.ikind=new Uint8Array(ITEM_CAP);
     // 구간을 직접 지정하면(연습·검사) 그 구간에서 바로 시작한다.
     applyCurve(s);

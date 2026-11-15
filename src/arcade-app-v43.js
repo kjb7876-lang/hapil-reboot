@@ -1313,7 +1313,7 @@
     if(fx)fx.unlock();
     run={stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),segment:run&&run.segment,carry:run&&run.carry};
     lastRun=run;
-    var options={difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,compact:compact,bossOnly:run.bossOnly};
+    var options={difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,compact:compact,bossOnly:run.bossOnly,growth:true}; // 중간 스테이지에서 시작하면 그만큼 자란 기억사수로(엔진 createRun)
     if(Number.isInteger(run.segment))options.segment=run.segment;
     state=Arcade.createRun(options);
     if(run.carry){state.hits+=run.carry.hits|0;state.bombsUsed+=run.carry.bombs|0;} // 중간 저장에서 이어 하면 앞 구간의 피격·폭탄도 별에 반영

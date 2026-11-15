@@ -12,7 +12,7 @@ test('attack level climbs 1→7 from kills and pattern breaks, drops one level o
  a.gainExp(s,99999);assert.equal(s.power,7,'capped at 7');
  const b=idle();b.exp=a.POWER_EXP[4];b.power=5;put(b,b.player.x,b.player.y,{bage:100});a.step(b,{dx:0,dy:0});
  assert.equal(b.player.hp,b.rules.hp-1);assert.equal(b.power,4,'a hit costs one attack level');assert(b.events.includes('powerDown'));
- const late=a.createRun({difficulty:'normal',seed:2,stage:30});assert(late.power>=4&&late.power<=5&&late.bombLevel>=4,'continuing deep in the journey');
+ const late=a.createRun({difficulty:'normal',seed:2,stage:30,growth:true});assert.equal(a.createRun({difficulty:'normal',seed:2,stage:30}).power,1,'only when the app asks');assert(late.power>=4&&late.power<=5&&late.bombLevel>=4,'continuing deep in the journey');
 });
 
 test('each attack level fires more and faster, but firepower grows gently (×1.8 at level 7) so boss patterns still play out',()=>{
