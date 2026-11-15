@@ -332,8 +332,9 @@ test('v43 rune barrier: no glyph or wheel lasers wrap the boss any more, edge zi
  const a=h.need();const firsts=firstSpells(a);let zig=0,wrap=0;
  // 11-14 23:33 사용자 새 요청("육망성 문양 키워서 레이저 패턴화", "원들이 돌아가는 것")으로 큰 문양 레이저(sigil)가 돌아왔다.
  // 지적받았던 작은 문양·바퀴(보스 옆 '3' 모양)는 여전히 없어야 하고, 문양은 크게(반지름 100px 이상) 그린다.
+ // 11-15 사용자 요청("원들 … 크기를 키우고 굵게해서 패턴용으로")으로 생긴 한자문 고리(runes)는 작은 바퀴가 아니라 큰 고리라 따로 센다(반지름 150 이상).
  let small=0;
- for(const [,i] of firsts)runSpell(a,i,2400,s=>{for(const f of s.figures||[]){if(f.kind==='zigzag')zig++;else if(!f.sigil)wrap++;else{const segs=a.figureSegments(f);const r=Math.max(...segs.flatMap(g=>[Math.hypot(g[0]-f.cx,g[1]-f.cy),Math.hypot(g[2]-f.cx,g[3]-f.cy)]));if(r<100)small++;}}});
+ for(const [,i] of firsts)runSpell(a,i,2400,s=>{for(const f of s.figures||[]){if(f.kind==='zigzag')zig++;else if(f.kind==='runes'){if(Math.max(...f.rings.map(q=>q.r))*(f.fit||1)<150)small++;}else if(!f.sigil)wrap++;else{const segs=a.figureSegments(f);const r=Math.max(...segs.flatMap(g=>[Math.hypot(g[0]-f.cx,g[1]-f.cy),Math.hypot(g[2]-f.cx,g[3]-f.cy)]));if(r<100)small++;}}});
  assert.equal(wrap,0,'small glyph/wheel laser figures around the boss');assert.equal(small,0,'sigils are drawn large');
  assert(zig>0,'edge zigzags still close in');
 });
