@@ -13,6 +13,7 @@
   var PAPER=[242,233,214],INK=[30,26,24];
   var seed=20261115;function rnd(){seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;} // 화면 난수와 섞이지 않는 제 난수
   var hold=0; // >0 이면 색을 바꾸지 않는다(이 파일이 직접 그릴 때)
+  var slow=false;global.HapilInk.setLite=function(v){slow=!!v;}; // 느린 기기(앱의 가벼운 화면): 한지 결 덧입히기·갈필을 뺀다
   global.HapilInk.raw=function(d){hold=Math.max(0,hold+d);}; // 바닥 바위처럼 원래 짙은 색 그대로 둘 그림을 감쌀 때
 
   /* ── 색 바꾸기 ── */
@@ -60,7 +61,7 @@
   var rawStroke=proto.stroke,inBrush=false;
   proto.stroke=function(){
     rawStroke.apply(this,arguments);
-    if(hold||inBrush||arguments.length||this.lineWidth<2.6)return;
+    if(hold||inBrush||slow||arguments.length||this.lineWidth<2.6)return;
     var dash=this.getLineDash();if(dash&&dash.length)return;
     inBrush=true;hold++;var lw=this.lineWidth,ss=this.strokeStyle,ga=this.globalAlpha,op=this.globalCompositeOperation,cap=this.lineCap;
     try{this.globalCompositeOperation='source-over';this.strokeStyle='rgba(242,233,214,.55)';this.lineCap='butt';this.lineWidth=Math.max(.6,lw*.2);this.setLineDash([lw*5,lw*2.4,lw*1.6,lw*3.2]);this.lineDashOffset=lw*1.7;rawStroke.call(this);
@@ -260,7 +261,7 @@
   }
   var canvas=null;
   function finish(){
-    canvas=canvas||document.getElementById('arcade-canvas');if(!canvas)return;
+    if(slow)return;canvas=canvas||document.getElementById('arcade-canvas');if(!canvas)return;
     sheet=sheet||buildSheet();
     var g=canvas.getContext('2d');hold++;g.save();g.setTransform(1,0,0,1,0,0);g.globalAlpha=1;g.filter='none';g.globalCompositeOperation='multiply';rawDraw.call(g,sheet,0,0,canvas.width,canvas.height);g.restore();hold--;
   }
