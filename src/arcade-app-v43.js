@@ -29,7 +29,7 @@
   var images={},loading={},failed={},want={},manifest=null,orbs=[],shotSprite=null,homingSprite=null,circleSprite=null,itemSprites=[],background=null,backgroundStage=-1,loadedStage=-1;
   var scale=1,lite=false,frameMs=16,framesSeen=0,offsetX=0,offsetY=0;
   var state=null,mode='title',difficulty='normal',accumulator=0,lastStamp=0,visual=0,lastRun=null;
-  var particles=[],flash=0,hurtFlash=0,shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,SPELL_BANNER_TICKS=42,bannerSpell=false,bannerTitle='',bannerSub='',toast=null;
+  var particles=[],flash=0,hurtFlash=0,hurtRing=null,VERMILION='#a8382a',shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,SPELL_BANNER_TICKS=42,bannerSpell=false,bannerTitle='',bannerSub='',toast=null;
   var keys={},finger={active:false,id:null,x:0,y:0},focusHeld=false,bombQueued=false;
   var fx=null,music=null,soundOn=true,best=0,lastItemSound=0,progress=Progress.fresh(),saveOk=true;
   var themeOverride=null,turbo=0,rushStage=false;
@@ -485,8 +485,10 @@
     toast={t:TOAST_SECONDS,name:g.name,stars:Math.max(1,Math.min(3,result.stars|0)),img:g.reward?images['reward-'+g.reward.key]||null:null,key:g.reward?'reward-'+g.reward.key:'',color:themeColor(state)};
   }
   function consume(){
-    var s=state,i,k;
-    for(i=0;i<s.cancelled.length;i+=3)addParticle(s.cancelled[i],s.cancelled[i+1],0,-.5,22+(i%9),COLORS[s.cancelled[i+2]]||'#ffffff',5);
+    var s=state,i,k,hurtNow=s.events.indexOf('hurt')>=0;
+    // 피격으로 지워진 탄은 영웅에서 바깥으로 튀며 인주색으로 사라진다(탄 지우기의 먹 흩어짐과 다르게, 사용자 11-15 "비슷해서 헷갈림").
+    for(i=0;i<s.cancelled.length;i+=3){if(hurtNow){var hx=s.cancelled[i]-s.player.x,hy=s.cancelled[i+1]-s.player.y,hd=Math.max(1,Math.sqrt(hx*hx+hy*hy));if(hd<170)addParticle(s.cancelled[i],s.cancelled[i+1],hx/hd*4.6,hy/hd*4.6,9+(i%5),VERMILION,3);}
+      else addParticle(s.cancelled[i],s.cancelled[i+1],0,-.5,22+(i%9),COLORS[s.cancelled[i+2]]||'#ffffff',5);}
     s.cancelled.length=0;
     for(i=0;i<s.drifted.length;i+=5)drifts.push({x:s.drifted[i],y:s.drifted[i+1],c:COLORS[s.drifted[i+2]]||'#ffffff',vx:Math.cos(s.drifted[i+3])*s.drifted[i+4],vy:Math.sin(s.drifted[i+3])*s.drifted[i+4],age:0});
     s.drifted.length=0;if(drifts.length>DRIFT_DRAW)drifts.splice(0,drifts.length-DRIFT_DRAW);
@@ -498,7 +500,7 @@
       else if(e==='bossHit'||e==='bossHitLow')play(e,s.boss.x);
       else if(e==='kill')play('kill',s.player.x);
       else if(e==='item'){if(visual-lastItemSound>.06){lastItemSound=visual;play('item',s.player.x);}}
-      else if(e==='hurt'){play('hurt',s.player.x);hurtFlash=1;shake=14;}
+      else if(e==='hurt'){play('hurt',s.player.x);hurtFlash=1;hurtRing={x:s.player.x,y:s.player.y,r:8};shake=16;}
       else if(e==='bomb'){play('bomb',s.player.x);flash=.55;shock={x:s.player.x,y:s.player.y,r:10};shake=10;}
       else if(e==='card'){play('charge',s.boss.x);castFx(s,true);showBanner(Arcade.SEGMENTS[s.seg].name,s.boss.name,true);}
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,'제'+g.part+'부 · STAGE '+(s.stageIndex+1));play('seal');}}
@@ -507,7 +509,7 @@
       else if(e==='entrance'){play('warning');wantFx(s.boss.actor);}
       else if(e==='figure')castFx(s,false);
       else if(e==='bossDown'){var dn=s.boss.down;if(dn){fall={actor:dn.actor,x:dn.x,y:dn.y,tick:dn.tick,dir:dn.x>W/2?1:-1,burst:-1};flash=.8;shake=16;}}
-      else if(e==='break'){play('phaseBreak',s.boss.x);flash=.6;shock={x:s.boss.x,y:s.boss.y,r:10};shake=8;}
+      else if(e==='break'){play('phaseBreak',s.boss.x);flash=.6;shock={x:s.boss.x,y:s.boss.y,r:10,ink:true};shake=3;}
       else if(e==='capture'||e==='bombGain'||e==='extend')play('seal');
       else if(e==='waveClear'){play('phaseBreak');flash=.3;}
       else if(e==='win'){play('win');flash=1;finish();}
@@ -1172,7 +1174,8 @@
       ctx.globalAlpha=t*.9;ctx.fillStyle=q.color;ctx.strokeStyle=q.color;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(q.x-q.vx*3,q.y-q.vy*3);ctx.lineTo(q.x,q.y);ctx.stroke();ctx.beginPath();ctx.arc(q.x,q.y,Math.max(.8,q.size*.32*t),0,TAU);ctx.fill();
     }
     ctx.restore();
-    if(shock){var sk=Math.max(0,1-shock.r/420);ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=sk*.85;ctx.strokeStyle=state?themeColor(state):'#ffffff';ctx.lineWidth=1+4*sk;/* 충격파: 보스·장면 색, 퍼질수록 얇아진다 */ctx.beginPath();ctx.arc(shock.x,shock.y,shock.r,0,TAU);ctx.stroke();ctx.restore();shock.r+=13;if(shock.r>420)shock=null;}
+    if(shock&&shock.ink){var sk=Math.max(0,1-shock.r/300);if(Ink&&Ink.raw)Ink.raw(1);var cg=ctx.createRadialGradient(shock.x,shock.y,0,shock.x,shock.y,shock.r+40);cg.addColorStop(0,'rgba(250,246,236,'+(.55*sk)+')');cg.addColorStop(.75,'rgba(250,246,236,'+(.35*sk)+')');cg.addColorStop(1,'rgba(250,246,236,0)');ctx.fillStyle=cg;ctx.fillRect(shock.x-shock.r-40,shock.y-shock.r-40,(shock.r+40)*2,(shock.r+40)*2);if(Ink&&Ink.raw)Ink.raw(-1);shock.r+=9;if(shock.r>300)shock=null;} // 탄 지우기: 보스 둘레 바탕이 한지빛으로 걷히며 퍼진다(원 고리 없이, 붉은색 없이)
+    else if(shock){var sk=Math.max(0,1-shock.r/420);ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=sk*.85;ctx.strokeStyle=state?themeColor(state):'#ffffff';ctx.lineWidth=1+4*sk;/* 충격파: 보스·장면 색, 퍼질수록 얇아진다 */ctx.beginPath();ctx.arc(shock.x,shock.y,shock.r,0,TAU);ctx.stroke();ctx.restore();shock.r+=13;if(shock.r>420)shock=null;}
   }
   function pad(n){return ('00000000'+Math.max(0,Math.floor(finite(n,0)))).slice(-8);}
   function starText(n){var out='';for(var i=0;i<3;i++)out+=i<n?'★':'☆';return out;}
@@ -1242,7 +1245,8 @@
     drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawShots(s);drawDrifts();drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);drawPlayer(s);drawHitbox(s); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);drawHud(s);
     if(flash>0){if(Ink&&Ink.raw)Ink.raw(1);if(Ink){var fb=s.boss&&s.boss.present,fx0=fb?finite(s.boss.x,W/2):W/2,fy0=fb?finite(s.boss.y,H/3):H/3,fg=ctx.createRadialGradient(fx0,fy0,20,fx0,fy0,H*.9);fg.addColorStop(0,'rgba(255,252,244,'+(flash*.75)+')');fg.addColorStop(1,'rgba(255,252,244,'+(flash*.2)+')');ctx.fillStyle=fg;}else ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);if(Ink&&Ink.raw)Ink.raw(-1);if(Ink){ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);drawPlayer(s);drawHitbox(s);ctx.restore();}flash-=.04;} // 수묵화에서도 섬광은 밝게: 먹색으로 뒤집히면 패턴 격파·보스 쓰러짐 때 화면이 잿빛으로 꺼졌다(보스 이펙트 전수조사 11-15). 보스에서 퍼지는 빛으로, 영웅·판정점은 섬광 위에 다시 그려 위치를 놓치지 않게(심사 1차 6.41)
-    if(hurtFlash>0){var v=ctx.createRadialGradient(W/2,H/2,120,W/2,H/2,420);v.addColorStop(0,'rgba(255,0,40,0)');v.addColorStop(1,'rgba(255,0,40,'+(hurtFlash*.6)+')');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);hurtFlash-=.035;}
+    // 피격: 인주색 테두리 번쩍임 + 영웅 둘레에 금 간 붉은 고리(수묵화풍에서도 먹으로 바꾸지 않는다). 탄 지우기의 한지빛 섬광과 색·모양이 겹치지 않게.
+    if(hurtFlash>0){if(Ink&&Ink.raw)Ink.raw(1);var v=ctx.createRadialGradient(W/2,H/2,150,W/2,H/2,400);v.addColorStop(0,'rgba(170,52,38,0)');v.addColorStop(.62,'rgba(170,52,38,0)');v.addColorStop(1,'rgba(150,40,30,'+(hurtFlash*.8)+')');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);if(hurtRing){ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);ctx.strokeStyle=VERMILION;ctx.lineCap='round';for(var hk=0;hk<11;hk++){var ha=TAU*hk/11+.3,h0=hurtRing.r*(.35+.1*(hk%3)),h1=hurtRing.r*(.8+.35*((hk*5)%4)/3);ctx.globalAlpha=Math.min(1,hurtFlash*1.4)*(.55+.45*((hk*7)%5)/4);ctx.lineWidth=(2.5+3.5*((hk*3)%4)/3)*hurtFlash+.8;ctx.beginPath();ctx.moveTo(hurtRing.x+Math.cos(ha)*h0,hurtRing.y+Math.sin(ha)*h0);ctx.lineTo(hurtRing.x+Math.cos(ha)*h1,hurtRing.y+Math.sin(ha)*h1);ctx.stroke();}ctx.restore();ctx.globalAlpha=1;hurtRing.r+=5;if(hurtRing.r>90)hurtRing=null;}if(Ink&&Ink.raw)Ink.raw(-1);hurtFlash-=.035;}
     if(banner>0)banner=Math.max(0,1-(s.tick-bannerTick)/BANNER_TICKS); // 게임 틱 기준: 화면이 느리거나 빨라도 1.3초 뒤에 걷힌다
     if(bannerSpell&&banner>0)banner=Math.max(0,1-(s.tick-bannerTick)/SPELL_BANNER_TICKS); // 스펠 이름 띠는 0.7초: 보스·문양이 뜨는 순간을 오래 가리지 않는다(이름은 오른쪽 위 받침에 남는다) // 게임 틱 기준: 화면이 느리거나 빨라도 1.3초 뒤에 걷힌다
     if(toast&&mode==='playing'){toast.t-=Math.min(.05,elapsed);if(toast.t<=0)toast=null;}
@@ -1307,7 +1311,7 @@
     state=Arcade.createRun(options);
     if(run.carry){state.hits+=run.carry.hits|0;state.bombsUsed+=run.carry.bombs|0;} // 중간 저장에서 이어 하면 앞 구간의 피격·폭탄도 별에 반영
     buildSprites();loadStage(state.stageIndex);fxStage=-1;
-    particles.length=0;drifts.length=0;flash=hurtFlash=shake=banner=0;shock=null;toast=null;accumulator=0;lastStamp=0;framesSeen=0;rushStage=false;setMode('playing');
+    particles.length=0;drifts.length=0;flash=hurtFlash=shake=banner=0;shock=null;hurtRing=null;toast=null;accumulator=0;lastStamp=0;framesSeen=0;rushStage=false;setMode('playing');
   }
   function finish(){
     var s=state,won=s.stage==='won';rushStage=false;
