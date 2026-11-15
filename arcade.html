@@ -39,7 +39,7 @@
     .hudx{position:fixed;z-index:3;display:flex;gap:10px;pointer-events:none;font:12px/1.35 system-ui,"Apple SD Gothic Neo",sans-serif;color:rgba(255,255,255,.82);text-shadow:0 1px 2px #000}
     .hudx[hidden]{display:none}
     .hudx .name{font-weight:600}.hudx .lives{color:#ff6a8a;font-size:14px;letter-spacing:1px}.hudx .bombs{color:#7dffb0;font-size:14px}.hudx .score{font-weight:600;font-size:15px;color:#fff}.hudx .graze{font-size:10px;opacity:.75}
-    .hudx .gauge{width:64px;height:3px;background:rgba(255,255,255,.18)}.hudx .gauge i{display:block;height:3px;background:#7dffb0}
+    .hudx .gauge{width:64px;height:3px;background:rgba(255,255,255,.18)}.hudx .gauge i{display:block;height:3px;background:#7dffb0}.hudx .levels{font-size:10px;margin-top:3px;opacity:.85;white-space:nowrap}.hudx.side .levels{font-size:13px;margin-top:6px}
     .hudx.below{align-items:center;justify-content:space-between;padding:0 12px}.hudx.side{flex-direction:column;justify-content:space-between;gap:16px;min-height:200px;padding:16px 18px;box-sizing:border-box;background:linear-gradient(180deg,rgba(14,10,22,.82),rgba(6,4,10,.72));border:1px solid rgba(214,180,120,.45);border-radius:4px;box-shadow:0 0 24px rgba(0,0,0,.6);font-size:14px}
     .hudx.side .name{font-size:16px;word-break:keep-all}.hudx.side .best{font-size:15px;color:rgba(255,255,255,.7);letter-spacing:1px}.hudx.side .lives{font-size:20px}.hudx.side .bombs{font-size:18px}.hudx.side .score{font-size:24px;letter-spacing:1px}.hudx.side .graze{font-size:12px}.hudx.side .gauge{width:150px;height:4px;margin-top:4px}.hudx.side .gauge i{height:4px}.hudx.side .spell{font:italic 15px/1.4 serif;color:#f3e3b5;border-left:3px solid;padding-left:7px;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.hudx.side .bosshp{width:150px;height:6px;background:rgba(255,255,255,.14);margin-top:4px}.hudx.side .progress{width:150px;height:4px;background:rgba(255,255,255,.14);margin-top:4px}.hudx.side .bosshp i{display:block;height:6px}.hudx.side .progress i{display:block;height:4px;background:#d6b478}.hudx.side .route,.hudx.side .cards{font-size:12px;line-height:1.7;color:rgba(255,255,255,.55);margin-top:6px}.hudx.side .route{}.hudx.side .cards{}.hudx.side .route>div{max-width:164px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hudx.side .gauge,.hudx.side .progress{margin-left:auto}.hudx.side .route .cur,.hudx.side .cards .cur{font-weight:600}.hudx.side .stack{display:flex;flex:1;flex-direction:column;gap:22px;justify-content:flex-start;padding-bottom:28px}.hudx.side .portrait{width:150px;height:120px;object-fit:contain;border-bottom:2px solid;opacity:.85;-webkit-mask-image:linear-gradient(180deg,#000 70%,transparent);mask-image:linear-gradient(180deg,#000 70%,transparent)}.hudx.side .keys{font-size:12px;line-height:1.6;color:rgba(255,255,255,.6)}
     .hudx .lbl{font-size:10px;letter-spacing:2px;color:rgba(214,180,120,.85);margin-top:6px}
@@ -159,22 +159,23 @@
       <button id="arcade-home" type="button" data-i18n="toTitle">처음 화면으로</button>
     </div>
   </div>
-  <script src="src/audio-v37.js?v=20261116-arcade43-hexagram"></script>
-  <script src="src/arcade-parts-v43/p1.js?v=20261116-arcade43-hexagram"></script>
-  <script src="src/arcade-parts-v43/p2.js?v=20261116-arcade43-hexagram"></script>
-  <script src="src/arcade-parts-v43/p3.js?v=20261116-arcade43-hexagram"></script>
-  <script src="src/arcade-parts-v43/p4.js?v=20261116-arcade43-hexagram"></script>
-  <script src="src/arcade-parts-v43/p5.js?v=20261116-arcade43-hexagram"></script>
-  <script src="src/arcade-parts-v43/p6.js?v=20261116-arcade43-hexagram"></script>
-  <script src="src/arcade-parts-v43/p7.js?v=20261116-arcade43-hexagram"></script>
-  <script src="src/arcade-parts-v43/p8.js?v=20261116-arcade43-hexagram"></script>
-  <script src="src/arcade-v43.js?v=20261116-arcade43-hexagram"></script>
-  <script src="src/arcade-skins-v43.js?v=20261116-arcade43-hexagram"></script>
-  <script src="src/ink-v43.js?v=20261116-arcade43-hexagram"></script>
-  <script src="src/ink-motifs-v43.js?v=20261116-arcade43-hexagram"></script>
-  <script src="src/arcade-i18n-v43.js?v=20261116-arcade43-hexagram"></script>
-  <script src="src/arcade-music-v43.js?v=20261116-arcade43-hexagram"></script>
-  <script src="src/arcade-mobile-v43.js?v=20261116-arcade43-hexagram"></script>
-  <script src="src/arcade-app-v43.js?v=20261116-arcade43-hexagram"></script>
+  <script src="src/audio-v37.js?v=20261116-arcade43-memory"></script>
+  <script src="src/arcade-parts-v43/p1.js?v=20261116-arcade43-memory"></script>
+  <script src="src/arcade-parts-v43/p2.js?v=20261116-arcade43-memory"></script>
+  <script src="src/arcade-parts-v43/p3.js?v=20261116-arcade43-memory"></script>
+  <script src="src/arcade-parts-v43/p4.js?v=20261116-arcade43-memory"></script>
+  <script src="src/arcade-parts-v43/p5.js?v=20261116-arcade43-memory"></script>
+  <script src="src/arcade-parts-v43/p6.js?v=20261116-arcade43-memory"></script>
+  <script src="src/arcade-parts-v43/p7.js?v=20261116-arcade43-memory"></script>
+  <script src="src/arcade-parts-v43/p8.js?v=20261116-arcade43-memory"></script>
+  <script src="src/arcade-v43.js?v=20261116-arcade43-memory"></script>
+  <script src="src/arcade-skins-v43.js?v=20261116-arcade43-memory"></script>
+  <script src="src/ink-v43.js?v=20261116-arcade43-memory"></script>
+  <script src="src/ink-motifs-v43.js?v=20261116-arcade43-memory"></script>
+  <script src="src/hero-memory-v43.js?v=20261116-arcade43-memory"></script>
+  <script src="src/arcade-i18n-v43.js?v=20261116-arcade43-memory"></script>
+  <script src="src/arcade-music-v43.js?v=20261116-arcade43-memory"></script>
+  <script src="src/arcade-mobile-v43.js?v=20261116-arcade43-memory"></script>
+  <script src="src/arcade-app-v43.js?v=20261116-arcade43-memory"></script>
 </body>
 </html>

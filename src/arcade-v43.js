@@ -84,8 +84,32 @@
   var COMPACT_DENSITY=.72,COMPACT_SIZE=1.25;
   var DRIFT_CAP=600,MOB_DROP_EVERY=3,ELITE_DROPS=3,CARD_DROPS=4,PLAIN_DROPS=2; // 하트(점수 아이템)는 적게(사용자 11-14)
   var HAND_WARN=50,HAND_AWAY=64,EXPIRE_SPEED=60,GRAZE_MARGIN=13,BLOOM_TICKS=12,INVULN_TICKS=150,BOMB_TICKS=150,INTRO_TICKS=110,BREAK_TICKS=80,FIRE_DELAY=40,WAVE_GRACE=360;
-  var SHOT_SPEED=15,SHOT_EVERY=5,HOMING_EVERY=8,HOMING_STEER=7,SHOT_CAP=96,MAX_MOVE=12,FOCUS_MOVE=2;
+  var SHOT_SPEED=15,SHOT_EVERY=5,HOMING_EVERY=8,HOMING_STEER=7,SHOT_CAP=160,MAX_MOVE=12,FOCUS_MOVE=2;
   var BEAM_HIT=.62,BEAM_FADE=14,BEAM_LENGTH=1000;
+  /* ── 기억사수 성장(사용자 11-16 "패시브공격 성장형+폭탄필살기도 성장형 … 각 7단계", "플레이어 성장따라 영웅공격가속 및 영웅주변적탄환 속도느려짐 … 7단계로").
+   *  공격 단계(power 1~7): 적을 쓰러뜨려 얻는 기억(exp)으로 오른다. 잡몹 1 · 중간 몹 5 · 일반 패턴 격파 10 · 이름 붙은 패턴 격파 16. 맞으면 한 단계 내려간다.
+   *    단계마다 주포·유도탄 수, 연사 간격(가속), 5단계부터 기억 번개(가장 가까운 적을 곧장 치는 번개), 영웅 둘레 적탄 둔화가 커진다.
+   *  필살기 단계(bombLevel 1~7): 충전 게이지가 가득 찰 때마다(폭탄 하트·스치기) 쌓인 횟수로 오른다. 맞아도 내려가지 않는다. 단계마다 피해·연출이 커진다.
+   *  시계 상태(clock): 'slow' 저속 이동 중(둔화가 1.35배) · 'haste' 단계가 오르거나 필살기를 쓴 뒤 3초(연사 한 틱 빠름) · 'normal'.
+   *  중간 스테이지에서 시작하면 그 스테이지까지 왔을 만큼의 단계에서 시작한다(최대 5). ── */
+  var POWER_EXP=[0,60,160,320,560,880,1300],BOMB_FILLS=[0,1,3,6,10,15,21],HASTE_TICKS=180,MAX_LEVEL=7;
+  // [주포 수, 주포 간격, 유도탄 수, 유도탄 간격, 번개 피해, 번개 간격, 번개 갈래]
+  var POWER_SHOTS=[null,[2,5,2,8,0,0,0],[2,4,2,8,0,0,0],[3,4,2,8,0,0,0],[3,4,4,8,0,0,0],[3,4,4,7,8,60,1],[4,3,4,7,8,54,1],[5,3,6,6,10,48,2]];
+  // 단계별 화력(1단계 대비 배수). 그림(탄 수·연사)은 화려하게 늘되 보스 패턴을 끝까지 볼 수 있게 화력은 1.8배까지만: 탄 한 발 피해 = 목표 화력 ÷ 늘어난 탄 수.
+  var POWER_DPS=[null,1,1.12,1.25,1.38,1.5,1.65,1.8],SHOT_DAMAGE=[null];
+  (function(){function raw(q){return q[0]*60/q[1]+q[2]*60/q[3]+(q[4]?q[4]*q[6]*60/q[5]:0);}var base=raw(POWER_SHOTS[1]);for(var l=1;l<=7;l++)SHOT_DAMAGE[l]=POWER_DPS[l]*base/raw(POWER_SHOTS[l]);})();
+  // 주포 자리 [x 어긋남, 옆 속도(px/틱)]
+  var MAIN_LAYOUT={2:[[-7,0],[7,0]],3:[[-9,0],[0,0],[9,0]],4:[[-13,-.55],[-5,0],[5,0],[13,.55]],5:[[-15,-.8],[-7,-.2],[0,0],[7,.2],[15,.8]]};
+  var HOMING_LAYOUT={2:[-20,20],4:[-30,-20,20,30],6:[-40,-30,-20,20,30,40]};
+  // 영웅 둘레 적탄 둔화: [반지름, 가장 느려지는 비율(영웅 바로 옆)]
+  var SLOW_FIELD=[null,[34,.15],[42,.2],[50,.25],[58,.3],[66,.35],[74,.4],[84,.45]],FOCUS_SLOW=1.35;
+  // 필살기 단계별 [보스 피해, 몹 피해]
+  var BOMB_POWER=[null,[40,25],[48,32],[56,40],[66,50],[76,60],[88,72],[100,90]];
+  var BOMB_NAMES=[null,'기억 섬광','기억 파편','잔상 폭우','회상 뇌격','망각의 붕괴','기억 범람','기억 해방'];
+  function levelOf(table,v){var l=1;while(l<MAX_LEVEL&&v>=table[l])l++;return l;}
+  function gainExp(s,n){var before=s.power;s.exp+=n;s.power=levelOf(POWER_EXP,s.exp);if(s.power>before){s.hasteUntil=s.tick+HASTE_TICKS;note(s,'powerUp');}}
+  function clockState(s){return s.player.focus?'slow':s.tick<s.hasteUntil?'haste':'normal';}
+  function slowField(s){var f=SLOW_FIELD[s.power],k=s.player.focus?FOCUS_SLOW:1;return [f[0],Math.min(.6,f[1]*k)];}
   var GAUGE_FULL=100,MAX_BOMBS=4,AUTO_COLLECT_Y=190,ITEM_REACH=24,ITEM_PULL=11,BOMB_BOSS_DAMAGE=40,BOMB_MOB_DAMAGE=25;
   // 탄 색은 여섯 가지만 쓴다: 0 빨강 2 보라 4 청록 5 초록 6 노랑 8 흰색
   var PALETTE=[0,2,4,5,6,8],RED=0,PURPLE=2,CYAN=4,GREEN=5,YELLOW=6,WHITE=8;
@@ -553,12 +577,13 @@
       boss:{x:W/2,y:-60,targetX:W/2,targetY:132,hp:1,maxHp:1,actor:'',name:'',mid:false,hitTick:-99,leaving:false,present:false,down:null},
       bossOnly:!!options.bossOnly,rushStage:SEGMENTS[startSeg].stage,bombs:rules.bombs,gauge:0,spellClean:false,captures:0,itemsTaken:0,lane:undefined,
       n:0,drifted:[],mobDrops:0,hearts:0,dropped:0,peak:0,score:0,graze:0,hits:0,kills:0,cleared:0,timeouts:0,events:[],cancelled:[],pops:[],lasers:[],mobs:[],warned:false,sn:0,itemCount:0,
-      lastStage:STAGES.length-1,lastWipe:-1e9,started:false,results:[],bombsUsed:0,mark:{tick:0,score:0,hits:0,bombs:0,captures:0,spells:0}};
+      lastStage:STAGES.length-1,lastWipe:-1e9,started:false,results:[],bombsUsed:0,power:1,exp:0,bombLevel:1,fills:0,hasteUntil:-1,zaps:[],lastBomb:null,mark:{tick:0,score:0,hits:0,bombs:0,captures:0,spells:0}};
     if(Number.isInteger(options.stages)&&options.stages>0)s.lastStage=Math.min(STAGES.length-1,s.stageIndex+options.stages-1);
     ['bx','by','ba','bs','bturn','bacc','bmin','bmax','barg','bs2','bspin'].forEach(function(k){s[k]=new Float32Array(CAP);});
     ['bage','blife','bat'].forEach(function(k){s[k]=new Uint16Array(CAP);});
     ['bsize','bcolor','bgrazed','bmode','bgen','bbounce'].forEach(function(k){s[k]=new Uint8Array(CAP);});s.figures=[];s.ripples=[];s.floor=freshFloor(s,s.stageIndex);
-    s.sx=new Float32Array(SHOT_CAP);s.sy=new Float32Array(SHOT_CAP);s.shoming=new Uint8Array(SHOT_CAP);
+    s.sx=new Float32Array(SHOT_CAP);s.sy=new Float32Array(SHOT_CAP);s.svx=new Float32Array(SHOT_CAP);s.shoming=new Uint8Array(SHOT_CAP);
+    var from=s.stageIndex;if(from>0){var pf=Math.min(5,1+Math.floor(from/6)),bf=Math.min(5,1+Math.floor(from/8));s.exp=POWER_EXP[pf-1];s.power=pf;s.fills=BOMB_FILLS[bf-1];s.bombLevel=bf;}
     s.ix=new Float32Array(ITEM_CAP);s.iy=new Float32Array(ITEM_CAP);s.ivy=new Float32Array(ITEM_CAP);s.ikind=new Uint8Array(ITEM_CAP);
     // 구간을 직접 지정하면(연습·검사) 그 구간에서 바로 시작한다.
     if(Number.isInteger(options.segment)&&SEGMENTS[options.segment]){s.started=true;s.seg=startSeg;s.stageTick=0;s.stage=SEGMENTS[startSeg].kind==='wave'?'wave':'intro';}
@@ -586,7 +611,7 @@
   }
   /* 아이템 하나를 떨군다. kind 0 점수, 1 폭탄 조각. 위로 살짝 튀었다가 천천히 내려온다. */
   function dropItem(s,x,y,kind){if(!kind)s.hearts++;if(s.itemCount>=ITEM_CAP)return;var i=s.itemCount++;s.ix[i]=Math.max(10,Math.min(W-10,x));s.iy[i]=y;s.ivy[i]=-1.6;s.ikind[i]=kind||0;}
-  function fillGauge(s){while(s.gauge>=GAUGE_FULL){s.gauge-=GAUGE_FULL;if(s.bombs<MAX_BOMBS){s.bombs++;note(s,'bombGain');}}}
+  function fillGauge(s){while(s.gauge>=GAUGE_FULL){s.gauge-=GAUGE_FULL;s.fills++;var bl=levelOf(BOMB_FILLS,s.fills);if(bl>s.bombLevel){s.bombLevel=bl;note(s,'bombLevelUp');}if(s.bombs<MAX_BOMBS){s.bombs++;note(s,'bombGain');}}}
   function updateItems(s){
     var p=s.player,pull=p.y<AUTO_COLLECT_Y,reach=p.focus?ITEM_REACH+10:ITEM_REACH;
     for(var i=s.itemCount-1;i>=0;i--){
@@ -603,13 +628,15 @@
     }
     fillGauge(s);
   }
-  function killMob(s,k){var m=s.mobs[k];s.score+=m.score;s.kills++;s.pops.push(m.x,m.y,m.elite?1:0);note(s,'kill');
+  function killMob(s,k){var m=s.mobs[k];s.score+=m.score;s.kills++;gainExp(s,m.elite?5:1);s.pops.push(m.x,m.y,m.elite?1:0);note(s,'kill');
     if(m.elite)for(var i=0;i<ELITE_DROPS;i++)dropItem(s,m.x+(i-1)*12,m.y,i===1?1:0);else if(++s.mobDrops%MOB_DROP_EVERY===0)dropItem(s,m.x,m.y,0);s.mobs.splice(k,1);}
   function useBomb(s){
     if(s.bombs<=0||s.stage==='won'||s.stage==='lost')return;
-    s.bombs--;s.bombsUsed++;s.spellClean=false;s.score+=cancelAll(s)*10;s.player.invulnerableUntil=Math.max(s.player.invulnerableUntil,s.tick+BOMB_TICKS);note(s,'bomb');
-    if(s.stage==='card')s.boss.hp-=BOMB_BOSS_DAMAGE;
-    for(var k=s.mobs.length-1;k>=0;k--){var m=s.mobs[k];m.hp-=BOMB_MOB_DAMAGE;m.hitTick=s.tick;if(m.hp<=0)killMob(s,k);}
+    var lv=s.bombLevel,pw=BOMB_POWER[lv],targets=[];
+    s.bombs--;s.bombsUsed++;s.spellClean=false;s.score+=cancelAll(s)*10;s.player.invulnerableUntil=Math.max(s.player.invulnerableUntil,s.tick+BOMB_TICKS);s.hasteUntil=s.tick+HASTE_TICKS;
+    if(s.stage==='card'){s.boss.hp-=pw[0];targets.push(s.boss.x,s.boss.y);}
+    for(var k=s.mobs.length-1;k>=0;k--){var m=s.mobs[k];if(targets.length<24)targets.push(m.x,m.y);m.hp-=pw[1];m.hitTick=s.tick;if(m.hp<=0)killMob(s,k);}
+    s.lastBomb={level:lv,name:BOMB_NAMES[lv],x:s.player.x,y:s.player.y,tick:s.tick,targets:targets};note(s,'bomb'); // 화면은 이 단계·과녁 자리로 필살기 연출을 그린다
   }
   function segment(s){return SEGMENTS[s.seg];}
   /* 스테이지 하나를 마쳤다. 그 스테이지 동안의 기록을 남긴다. 별: 깨면 1, 한 번도 안 맞으면 +1, 폭탄을 안 쓰면 +1. */
@@ -638,7 +665,7 @@
   function beginCard(s){var card=segment(s),b=s.boss;b.maxHp=b.hp=card.hp;b.mid=!!card.mid;s.stage='card';s.stageTick=0;s.segTick=0;s.spellClean=!!card.spell;if(card.spell){s.spellNumber++;note(s,'card');}else note(s,'plain');}
   function endCard(s,defeated){
     var card=segment(s),left=Math.max(0,card.time-s.segTick*TICK),wiped=breakWipe(s),b=s.boss;
-    if(defeated){s.cleared++;s.score+=Math.round(left)*300+wiped*30;var nd=card.spell?CARD_DROPS:PLAIN_DROPS;for(var i=0;i<nd;i++)dropItem(s,b.x+(i-(nd-1)/2)*14,b.y+((i*37)%30)-15,card.spell&&i===1?1:0);}else s.timeouts++;
+    if(defeated){s.cleared++;gainExp(s,card.spell?16:10);s.score+=Math.round(left)*300+wiped*30;var nd=card.spell?CARD_DROPS:PLAIN_DROPS;for(var i=0;i<nd;i++)dropItem(s,b.x+(i-(nd-1)/2)*14,b.y+((i*37)%30)-15,card.spell&&i===1?1:0);}else s.timeouts++;
     // 이름 붙은 패턴을 폭탄 없이, 맞지 않고 넘기면 보너스
     if(card.spell&&defeated&&s.spellClean){s.captures++;s.score+=20000+card.stage*5000;note(s,'capture');}
     s.score+=wiped*10;note(s,'break');var who=b.actor,dx=b.x,dy=b.y;advance(s);
@@ -686,21 +713,35 @@
     for(var i=0;i<s.mobs.length;i++){var m=s.mobs[i];if(m.y<0||m.y>p.y)continue;var d=Math.abs(m.x-p.x)+(p.y-m.y)*.3;if(d<bestD){bestD=d;best=m;}}
     return best?best.x:null;
   }
+  function nearestFoe(s,x,y,skip){
+    var best=null,bestD=1e9,i,m,d;
+    if(s.stage==='card'&&s.boss.present&&skip.indexOf(s.boss)<0&&s.boss.y>0){best=s.boss;bestD=Math.abs(s.boss.x-x)+(y-s.boss.y)*.3;}
+    for(i=0;i<s.mobs.length;i++){m=s.mobs[i];if(m.y<0||m.y>y||skip.indexOf(m)>=0)continue;d=Math.abs(m.x-x)+(y-m.y)*.3;if(d<bestD){bestD=d;best=m;}}
+    return best;
+  }
+  /* 기억 번개(5단계부터): 가장 가까운 적을 곧장 친다. 7단계는 맞은 적에서 다음 적으로 한 번 더 튄다. 화면은 s.zaps(x0,y0,x1,y1,단계)를 읽어 그린다. */
+  function memoryBolt(s,dmg,chains){
+    var x=s.player.x,y=s.player.y-20,hit=[],k,f;
+    for(k=0;k<chains;k++){f=nearestFoe(s,x,y,hit);if(!f)break;hit.push(f);if(s.zaps.length<60)s.zaps.push(x,y,f.x,f.y,s.power);x=f.x;y=f.y+1;
+      if(f===s.boss){f.hp-=dmg*SHOT_DAMAGE[s.power];s.score+=dmg*2;}else{f.hp-=dmg*SHOT_DAMAGE[s.power];f.hitTick=s.tick;if(f.hp<=0)killMob(s,s.mobs.indexOf(f));}}
+    if(hit.length)note(s,'zap');
+  }
   function updateShots(s){
-    var b=s.boss,p=s.player,i,k,target=homingX(s);
-    // 곧은 주포 2발 + 적을 따라가는 유도탄 2발. 적 바로 아래에 서면 주포까지 맞아 훨씬 빨리 깬다.
-    if(s.tick%SHOT_EVERY===0&&s.sn+2<=SHOT_CAP){s.shoming[s.sn]=0;s.sx[s.sn]=p.x-7;s.sy[s.sn++]=p.y-18;s.shoming[s.sn]=0;s.sx[s.sn]=p.x+7;s.sy[s.sn++]=p.y-18;}
-    if(s.tick%HOMING_EVERY===0&&s.sn+2<=SHOT_CAP){s.shoming[s.sn]=1;s.sx[s.sn]=p.x-20;s.sy[s.sn++]=p.y-4;s.shoming[s.sn]=1;s.sx[s.sn]=p.x+20;s.sy[s.sn++]=p.y-4;}
+    var b=s.boss,p=s.player,i,k,target=homingX(s),plan=POWER_SHOTS[s.power],dmg=SHOT_DAMAGE[s.power],haste=s.tick<s.hasteUntil?1:0,lay;
+    // 단계마다 주포·유도탄이 늘고 간격이 짧아진다(가속 중에는 한 틱 더 짧게). 적 바로 아래에 서면 주포까지 맞아 훨씬 빨리 깬다.
+    if(s.tick%Math.max(3,plan[1]-haste)===0){lay=MAIN_LAYOUT[plan[0]];for(k=0;k<lay.length&&s.sn<SHOT_CAP;k++){s.shoming[s.sn]=0;s.svx[s.sn]=lay[k][1];s.sx[s.sn]=p.x+lay[k][0];s.sy[s.sn++]=p.y-18;}}
+    if(s.tick%Math.max(4,plan[3]-haste)===0){lay=HOMING_LAYOUT[plan[2]];for(k=0;k<lay.length&&s.sn<SHOT_CAP;k++){s.shoming[s.sn]=1;s.svx[s.sn]=0;s.sx[s.sn]=p.x+lay[k];s.sy[s.sn++]=p.y-4+Math.abs(lay[k])*.1;}}
+    if(plan[4]&&s.tick%Math.max(20,plan[5]-haste*8)===0)memoryBolt(s,plan[4],plan[6]);
     for(i=s.sn-1;i>=0;i--){
-      s.sy[i]-=SHOT_SPEED;
+      s.sy[i]-=SHOT_SPEED;s.sx[i]+=s.svx[i];
       if(s.shoming[i]&&target!==null){var steer=target-s.sx[i];s.sx[i]+=steer>HOMING_STEER?HOMING_STEER:steer<-HOMING_STEER?-HOMING_STEER:steer;}
       var hit=s.stage==='card'&&Math.abs(s.sx[i]-b.x)<30&&Math.abs(s.sy[i]-b.y)<34;
-      if(hit){b.hp-=1;s.score+=2;if(s.tick-b.hitTick>=5){b.hitTick=s.tick;note(s,b.hp/b.maxHp<=.2?'bossHitLow':'bossHit');}}
+      if(hit){b.hp-=dmg;s.score+=2;if(s.tick-b.hitTick>=5){b.hitTick=s.tick;note(s,b.hp/b.maxHp<=.2?'bossHitLow':'bossHit');}}
       for(k=s.mobs.length-1;k>=0&&!hit;k--){
         var m=s.mobs[k];if(Math.abs(s.sx[i]-m.x)>m.r+4||Math.abs(s.sy[i]-m.y)>m.r+9)continue;
-        hit=true;m.hp--;m.hitTick=s.tick;if(m.hp<=0)killMob(s,k);
+        hit=true;m.hp-=dmg;m.hitTick=s.tick;if(m.hp<=1e-6)killMob(s,k);
       }
-      if(hit||s.sy[i]<-20){var j=--s.sn;s.sx[i]=s.sx[j];s.sy[i]=s.sy[j];s.shoming[i]=s.shoming[j];}
+      if(hit||s.sy[i]<-20||s.sx[i]<-20||s.sx[i]>W+20){var j=--s.sn;s.sx[i]=s.sx[j];s.sy[i]=s.sy[j];s.svx[i]=s.svx[j];s.shoming[i]=s.shoming[j];}
     }
   }
   // 광선을 한 틱 진행하고, 켜져 있는 광선이 영웅에게 닿았는지 돌려준다.
@@ -872,7 +913,7 @@
     return struck;
   }
   function updateBullets(s){
-    var p=s.player,px=p.x,py=p.y,struck=false,grazed=0,hitScale=s.rules.hitScale,i,k;
+    var p=s.player,px=p.x,py=p.y,struck=false,grazed=0,hitScale=s.rules.hitScale,i,k,field=slowField(s),fr=field[0],fs=field[1];
     for(i=s.n-1;i>=0;i--){
       var age=++s.bage[i];
       if(s.bat[i]&&age===s.bat[i]){
@@ -890,7 +931,8 @@
       }
       if(s.bturn[i])s.ba[i]+=s.bturn[i]*TICK;
       if(s.bacc[i]){var v=s.bs[i]+s.bacc[i]*TICK;s.bs[i]=v<s.bmin[i]?s.bmin[i]:v>s.bmax[i]?s.bmax[i]:v;}
-      var ox=s.bx[i],oy=s.by[i],x=s.bx[i]+=Math.cos(s.ba[i])*s.bs[i]*TICK,y=s.by[i]+=Math.sin(s.ba[i])*s.bs[i]*TICK;
+      var slow=1,fdx=s.bx[i]-px,fdy=s.by[i]-py;if(fdx<fr&&fdx>-fr&&fdy<fr&&fdy>-fr){var fd=Math.sqrt(fdx*fdx+fdy*fdy);if(fd<fr)slow=1-fs*(1-fd/fr);} // 영웅 둘레 시간 둔화: 가까울수록 느리다(판정은 그대로)
+      var ox=s.bx[i],oy=s.by[i],x=s.bx[i]+=Math.cos(s.ba[i])*s.bs[i]*TICK*slow,y=s.by[i]+=Math.sin(s.ba[i])*s.bs[i]*TICK*slow;
       // 벽에서 되돌아오는 탄: 좌우 벽과 위 벽에서 한 번(남은 횟수만큼) 튕긴다. 아래로는 튕기지 않는다(영웅 뒤에서 오지 않게).
       if(s.bbounce[i]){var a0=s.ba[i];
         if((x<0&&Math.cos(a0)<0)||(x>W&&Math.cos(a0)>0)){s.ba[i]=Math.PI-a0;s.bx[i]=x=x<0?0:W;s.bbounce[i]--;}
@@ -1107,7 +1149,7 @@
     var p=s.player,byFloor=updateFloor(s)|updateRisers(s),byBeam=updateLasers(s),byFigure=updateFigures(s),byBullet=updateBullets(s);
     updateItems(s);
     if((byBeam||byFigure||byBullet||byFloor)&&s.tick>=p.invulnerableUntil&&s.stage!=='won'){
-      p.hp--;s.hits++;s.spellClean=false;p.invulnerableUntil=s.tick+INVULN_TICKS;cancelAll(s);note(s,'hurt');
+      p.hp--;s.hits++;s.spellClean=false;p.invulnerableUntil=s.tick+INVULN_TICKS;cancelAll(s);note(s,'hurt');if(s.power>1){s.power--;s.exp=POWER_EXP[s.power-1];note(s,'powerDown');} // 맞으면 공격 단계가 하나 내려간다(필살기 단계는 그대로)
       // 목숨이 남았으면 폭탄이 기본 개수까지 다시 찬다.
       if(p.hp<=0){s.stage='lost';s.stageTick=0;note(s,'lose');}else if(s.bombs<s.rules.bombs)s.bombs=s.rules.bombs;
     }
@@ -1149,7 +1191,8 @@
   })();
   var api={revision:43,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
-    BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,RUNE_AT:RUNE_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem};
+    BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,RUNE_AT:RUNE_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
+    POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,FOCUS_SLOW:FOCUS_SLOW,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp};
   if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcade=api;
 })(typeof window!=='undefined'?window:globalThis);
