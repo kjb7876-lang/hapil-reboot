@@ -184,36 +184,42 @@ def field():
     T.seq('shakuhachi', 32, mel(sc, r - 12, A), 1, vel=.45, pan=.2)
     T.render(f'{OUT}/field.mp3', wet=.24, decay=2.0)
 
-# ── 3) 보스전: 태고 북 연타 + 팀파니 + 현 스타카토 + 샤미센, 음음계 (E, 144BPM, 40마디 ≈ 67초)
-#     도입(1~8 북·현) → 샤미센(9~16) → 샤쿠하치 선율(17~24) → 숨 고르기(25~28 북 줄이고 낮은 현) → 절정(29~40)
+# ── 3) 보스전(11-16 사용자 "좀 더 긴박감 있게"): 168BPM, 16분음 태고 연타 + 팀파니 연타 + 현 트레몰로 + 샤미센 16분 오스티나토.
+#     반음(음음계의 E-F)으로 계속 조여 오고, 4마디마다 한 음씩 올라가며 긴장을 쌓는다. 쉬는 구간 없이 몰아친다. (E, 168BPM, 48마디 ≈ 69초)
+#     도입(1~8 북·현 트레몰로) → 샤미센 오스티나토(9~24) → 샤쿠하치 외침(17~32) → 한 단계 올려 절정(33~48, 북 두 배)
 def boss():
-    T = Track(144, 40, seed=33); sc, r = IN_SCALE, 52  # E
-    drum = [(1, 0), (.6, .5), (.8, 1.5), (1, 2), (.5, 2.75), (.9, 3), (.6, 3.5)]
-    for b in range(40):
-        calm = 24 <= b < 28; peak = b >= 28
-        prog = [0, 0, 1, -1, 0, 0, 2, 1] if not peak else [0, 1, 2, 1, 0, 1, 3, 2]
-        c = prog[b % 8]
-        if calm:
-            T.note('taiko_drum', 41, b, 0, 1, vel=.5); T.note('taiko_drum', 41, b, 2.5, .5, vel=.3)
-            T.note('string_ensemble_1', deg(sc, r - 24, c), b, 0, 4, vel=.35, pan=-.2)
-            T.note('string_ensemble_1', deg(sc, r - 12, c + 1), b, 0, 4, vel=.25, pan=.3)
-        else:
-            for v, at in drum: T.note('taiko_drum', 41 if at in (0, 2) else 45, b, at, .5, vel=.55 * v * (1.1 if peak else 1), pan=(at - 2) * .08)
-            if b % 4 == 3 or (peak and b % 2):
-                for i in range(8): T.note('taiko_drum', 47, b, 2 + i * .25, .25, vel=.22 + .04 * i, pan=.2 - .05 * i)
-            for i in range(8):
-                T.note('string_ensemble_1', deg(sc, r - 12, c + (0, 0, 1, 0, 2, 0, 1, -1)[i]), b, i * .5, .35, vel=.28, pan=-.3)
-        T.note('timpani', deg(sc, r - 24, c), b, 0, 2, vel=.6 if not calm else .4)
-        T.note('contrabass', deg(sc, r - 24, c), b, 0, 3.6, vel=.5)
-        if 8 <= b < 24 or peak:
-            fig = [c + 5, c + 6, c + 5, c + 3, c + 4, c + 5, c + 4, c + 2] if b % 2 == 0 else [c + 6, c + 7, c + 6, c + 5, c + 3, c + 4, c + 5, c + 3]
-            for i, d in enumerate(fig): T.note('shamisen', deg(sc, r - 12, d), b, i * .5, .4, vel=.42, pan=.3)
-    M = '5:2 6:1 5:1 4:2 3:2 4:3 5:1 3:4 6:2 7:2 6:1 5:1 4:2 5:4 3:2 2:2 0:8'
-    T.seq('shakuhachi', 16, mel(sc, r, M), 1, vel=.6, pan=.1)
-    T.seq('shakuhachi', 24, mel(sc, r, '3:4 2:4 1:4 0:4'), 1, vel=.4, pan=.1)
-    T.seq('shakuhachi', 32, mel(sc, r + 12, '0:2 1:1 0:1 -1:2 -2:2 -1:3 0:1 -2:4 1:2 2:2 1:1 0:1 -1:2 0:4 -2:2 -3:2'), 1, vel=.65, pan=.1)
-    T.seq('string_ensemble_1', 32, mel(sc, r, M.rsplit(' ', 1)[0]), 1, vel=.25, pan=-.2)
-    T.render(f'{OUT}/boss.mp3', wet=.2, decay=1.8, gain=.93)
+    T = Track(168, 48, seed=33); sc, r = IN_SCALE, 52  # E
+    for b in range(48):
+        climb = (b // 4) % 4 if b < 32 else 1 + (b // 4) % 3   # 4마디마다 한 단계씩 올라감
+        c = [0, 1, 0, -1][b % 4] + climb; peak = b >= 32
+        # 태고: 매 박 큰북 + 16분 잔북(약강 교대), 절정에선 엇박 큰북 추가
+        for i in range(16):
+            at = i * .25
+            if i % 4 == 0: T.note('taiko_drum', 41, b, at, .5, vel=.62 if i == 0 else .5, pan=0)
+            elif i % 2 == 0: T.note('taiko_drum', 45, b, at, .25, vel=.32 + .06 * (i == 6 or i == 14), pan=.15)
+            else: T.note('taiko_drum', 50, b, at, .25, vel=.16 + .03 * (i % 4 == 3), pan=-.2)
+        if peak: T.note('taiko_drum', 41, b, 1.5, .5, vel=.45); T.note('taiko_drum', 41, b, 3.5, .5, vel=.5)
+        if b % 4 == 3:  # 마디 끝 몰아치기: 32분 연타가 커지며 다음 마디로
+            for i in range(8): T.note('taiko_drum', 47, b, 3 + i * .125, .125, vel=.2 + .05 * i, pan=-.3 + .08 * i)
+        # 팀파니: 8분 연타로 바닥을 조인다
+        for i in range(8): T.note('timpani', deg(sc, r - 24, c if i % 4 else c), b, i * .5, .5, vel=.42 + .14 * (i % 4 == 0))
+        # 현: 반음 위아래로 떠는 트레몰로(16분)
+        for i in range(16):
+            d = c + (2 if i % 2 == 0 else 1) + (1 if peak and i >= 8 else 0)
+            T.note('string_ensemble_1', deg(sc, r - 12, d), b, i * .25, .3, vel=.2 + .06 * (i % 4 == 0), pan=-.35)
+        T.note('contrabass', deg(sc, r - 24, c), b, 0, 2, vel=.55); T.note('contrabass', deg(sc, r - 24, c + 1), b, 2, 2, vel=.5)
+        # 샤미센 16분 오스티나토(반음 E-F를 비비며 위로)
+        if b >= 8:
+            fig = [5, 6, 5, 4, 5, 6, 7, 6, 5, 6, 5, 4, 3, 4, 5, 6] if b % 2 == 0 else [5, 6, 7, 6, 5, 4, 5, 6, 7, 8, 7, 6, 5, 6, 5, 4]
+            for i, d in enumerate(fig): T.note('shamisen', deg(sc, r - 12, c + d), b, i * .25, .25, vel=.36 + .1 * (i % 4 == 0), pan=.35)
+        if b % 8 == 0: T.note('tubular_bells', deg(sc, r, c), b, 0, 2, vel=.22, pan=.5)
+    shout = '7:1 8:1 7:1 6:1 5:2 6:2 7:4 -:4 8:1 9:1 8:1 7:1 6:2 7:2 5:4 -:4'
+    T.seq('shakuhachi', 16, mel(sc, r - 12, shout), 1, vel=.65, pan=.1)
+    T.seq('shakuhachi', 24, mel(sc, r - 12, shout.replace('5:4 -:4', '8:8')), 1, vel=.7, pan=.1)
+    T.seq('shakuhachi', 32, mel(sc, r - 12, '10:2 9:1 8:1 7:2 8:2 9:4 -:4 10:1 11:1 10:1 9:1 8:2 9:2 7:4 -:4'), 1, vel=.75, pan=.1)
+    T.seq('shakuhachi', 40, mel(sc, r - 12, '10:2 9:1 8:1 7:2 8:2 9:4 -:4 8:2 7:2 6:2 5:2 7:4 -:4'), 1, vel=.75, pan=.1)
+    T.seq('string_ensemble_1', 40, mel(sc, r - 24, '10:4 9:4 8:4 7:4 8:4 7:4 6:4 5:4'), 1, vel=.3, pan=.2)
+    T.render(f'{OUT}/boss.mp3', wet=.16, decay=1.5, gain=.95)
 
 # ── 4) 마지막 보스: 장중한 현 + 태고 + 종, 음음계 D (D, 120BPM, 40마디 ≈ 80초)
 def final():
