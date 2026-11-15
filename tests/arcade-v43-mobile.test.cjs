@@ -68,3 +68,13 @@ test('the app bundle has every script the page loads, the art it needs, and hide
     assert.match(read('src/arcade-app-v43.js'),/var DEV_VISIBLE=true[;,]/,'the repository copy is untouched');
   }finally{fs.rmSync(out,{recursive:true,force:true});}
 });
+test('background music picks a track for the title, the road, boss fights and the last boss',()=>{
+  const w={HapilArcade:A,fetch:()=>({then:()=>({then:()=>{}})})};w.window=w;const ctx=vm.createContext(w);vm.runInContext(read('src/arcade-music-v43.js'),ctx);
+  const M=w.HapilMusic,last=A.STAGES.length-1;
+  assert.equal(M.pick('title',null),'title');assert.equal(M.pick('result',null),'title');
+  assert.equal(M.pick('playing',{stage:'wave',stageIndex:0,boss:{present:false}}),'field');
+  assert.equal(M.pick('playing',{stage:'card',stageIndex:3,boss:{present:true}}),'boss');
+  assert.equal(M.pick('playing',{stage:'break',stageIndex:3,boss:{present:true}}),'boss','between two boss patterns the boss music keeps going');
+  const html=read('arcade.html');assert(html.indexOf('src/arcade-music-v43.js')>0&&html.indexOf('src/arcade-music-v43.js')<html.indexOf('src/arcade-app-v43.js'));
+  assert.equal(typeof last,'number');
+});

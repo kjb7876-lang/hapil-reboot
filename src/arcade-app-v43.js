@@ -1180,6 +1180,7 @@
       while(accumulator>=1/60&&steps<limit&&mode==='playing'){if(rushStage)rushTick(state);if(devMode)state.player.hp=state.player.maxHp;Arcade.step(state,inputForStep());accumulator-=1/60;steps++;consume();}
       if(Mobile&&state)Mobile.tick(state,mode,elapsed*1000);
     }
+    if(global.HapilMusic)global.HapilMusic.update(mode,state,soundOn); // 구간이 바뀌면 곡을 겹쳐 바꾼다
     draw(elapsed);
   }
 
@@ -1193,7 +1194,8 @@
     var hh=$('arcade-hud-high'),hl=$('arcade-hud-low');if(hh&&hl)hh.hidden=hl.hidden=!(hudOut&&next==='playing');
     if(next!=='playing'){focusHeld=false;finger.active=false;bombQueued=false;}
     if(next!=='keepsakes')clearKeepsakes();
-    if(music){if(next==='playing'&&soundOn){var p=music.play();if(p&&p.catch)p.catch(function(){});}else music.pause();}
+    if(global.HapilMusic)global.HapilMusic.update(next,state,soundOn); // 구간별 곡(arcade-music-v43.js). 없으면 예전 한 곡
+    else if(music){if(next==='playing'&&soundOn){var p=music.play();if(p&&p.catch)p.catch(function(){});}else music.pause();}
   }
   // 개발자 모드 표시: 탄이 오는 필드 밖(화면 오른쪽 위 구석)에 둔다(심사 1차: 필드 안 배지가 적·탄과 겹침)
   var devErrors=0,devLastError='',devBadgeAt=0;
@@ -1322,7 +1324,7 @@
     I18n.apply(document);
     loadProgress();setDifficulty(progress.difficulty);
     try{fx=global.HapilAudio&&global.HapilAudio.create?global.HapilAudio.create():null;}catch(e){fx=null;}
-    try{music=new Audio('media/music.mp3');music.loop=true;music.volume=.2;music.preload='none';}catch(e){music=null;}
+    if(!global.HapilMusic)try{music=new Audio('media/music.mp3');music.loop=true;music.volume=.2;music.preload='none';}catch(e){music=null;}
     bind();fit();refreshTitle();requestAnimationFrame(frame);
     // 그림 목록을 먼저 읽는다(없는 그림을 요청하지 않으려고). 못 읽어도 3초 뒤에는 시작할 수 있다.
     var done=function(){loadImage('gunner');if(manifest&&manifest['heart.webp']){want.heart=true;loadImage('heart');}ready();warmStage(0);};
