@@ -80,6 +80,12 @@
     normal:{density:2.45,speed:.64,hp:5,mapHeal:-1,bombs:2,radius:1.4,hitScale:.38,warn:1.2,beam:.88,label:'기본'},
     hell:{density:2.6,speed:.9,hp:3,mapHeal:-1,bombs:1,radius:2.4,hitScale:.5,warn:1,beam:1,label:'지옥'}
   };
+  /* 난이도 곡선(사용자 11-15 "헬난이도 킵 이지랑 노멀은 초반구간은 지금보다30프로널널하게 점점 빡빡해지게"):
+     헬은 표 그대로. 이지·노멀은 첫 스테이지 탄 수 70%·탄 속도 90%에서 시작해 마지막 스테이지 탄 수 110%·속도 104%까지 스테이지마다 조금씩 오른다. */
+  var CURVE_START=.7,CURVE_END=1.1,PACE_START=.9,PACE_END=1.04;
+  function applyCurve(s){var base=DIFFICULTY[s.difficulty],u=STAGES.length>1?Math.max(0,Math.min(1,s.stageIndex/(STAGES.length-1))):0,hell=s.difficulty==='hell';
+    var d=hell?1:CURVE_START+(CURVE_END-CURVE_START)*u,v=hell?1:PACE_START+(PACE_END-PACE_START)*u;
+    s.rules.speed=base.speed*v;s.density=base.density*d*(s.compact?COMPACT_DENSITY:1);}
   // 휴대폰 모드: 탄 수를 줄이고 그만큼 탄을 크게 그린다(판정도 같이 커진다).
   var COMPACT_DENSITY=.72,COMPACT_SIZE=1.25;
   var DRIFT_CAP=600,MOB_DROP_EVERY=3,ELITE_DROPS=3,CARD_DROPS=4,PLAIN_DROPS=2; // 하트(점수 아이템)는 적게(사용자 11-14)
@@ -545,7 +551,7 @@
 
   /* options: {difficulty, seed, stage(시작 스테이지), segment(시작 구간), compact(휴대폰 모드), bossOnly(보스 체험: 그 스테이지의 보스전만)} */
   function createRun(options){
-    options=options||{};var difficulty=DIFFICULTY[options.difficulty]?options.difficulty:'normal',rules=DIFFICULTY[difficulty],compact=!!options.compact;
+    options=options||{};var difficulty=DIFFICULTY[options.difficulty]?options.difficulty:'normal',rules=Object.assign({},DIFFICULTY[difficulty]),compact=!!options.compact;
     var startSeg=Number.isInteger(options.segment)&&SEGMENTS[options.segment]?options.segment:Number.isInteger(options.stage)&&STAGES[options.stage]?STAGES[options.stage].first:0;
     var s={revision:43,difficulty:difficulty,rules:rules,compact:compact,density:rules.density*(compact?COMPACT_DENSITY:1),sizeScale:compact?COMPACT_SIZE:1,cap:compact?COMPACT_CAP:CAP,
       seed:(options.seed>>>0)||1,rng:(options.seed>>>0)||1,tick:0,stage:'break',stageTick:BREAK_TICKS-30,seg:startSeg-1,segTick:0,stageIndex:SEGMENTS[startSeg].stage,spellNumber:0,
@@ -561,6 +567,7 @@
     s.sx=new Float32Array(SHOT_CAP);s.sy=new Float32Array(SHOT_CAP);s.shoming=new Uint8Array(SHOT_CAP);
     s.ix=new Float32Array(ITEM_CAP);s.iy=new Float32Array(ITEM_CAP);s.ivy=new Float32Array(ITEM_CAP);s.ikind=new Uint8Array(ITEM_CAP);
     // 구간을 직접 지정하면(연습·검사) 그 구간에서 바로 시작한다.
+    applyCurve(s);
     if(Number.isInteger(options.segment)&&SEGMENTS[options.segment]){s.started=true;s.seg=startSeg;s.stageTick=0;s.stage=SEGMENTS[startSeg].kind==='wave'?'wave':'intro';}
     return s;
   }
@@ -629,7 +636,7 @@
     s.started=true;
     if(!next){s.stage='won';s.stageTick=0;note(s,'win');return;}
     s.seg=at;s.segTick=0;s.stageTick=0;s.lane=undefined;
-    if(next.stage!==s.stageIndex){s.stageIndex=next.stage;var heal=s.rules.mapHeal;if(heal&&p.hp<p.maxHp){p.hp=heal<0?p.maxHp:Math.min(p.maxHp,p.hp+heal);note(s,'extend');}note(s,'map');}
+    if(next.stage!==s.stageIndex){s.stageIndex=next.stage;applyCurve(s);var heal=s.rules.mapHeal;if(heal&&p.hp<p.maxHp){p.hp=heal<0?p.maxHp:Math.min(p.maxHp,p.hp+heal);note(s,'extend');}note(s,'map');}
     if(next.kind==='wave'){s.boss.leaving=s.boss.present;s.stage='wave';note(s,'wave');return;}
     if(!prev||prev.kind!=='card'||prev.actor!==next.actor||!s.boss.present){s.boss.leaving=s.boss.present;s.stage='intro';}else s.stage='break';
   }
@@ -1148,7 +1155,7 @@
     return {fresh:fresh,sanitize:sanitize,record:record,unlocked:unlocked,canPlay:canPlay,resume:resume,totalStars:totalStars};
   })();
   var api={revision:43,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
-    SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
+    SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
     BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,RUNE_AT:RUNE_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem};
   if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcade=api;
