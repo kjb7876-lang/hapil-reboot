@@ -557,7 +557,7 @@
     if(Number.isInteger(options.stages)&&options.stages>0)s.lastStage=Math.min(STAGES.length-1,s.stageIndex+options.stages-1);
     ['bx','by','ba','bs','bturn','bacc','bmin','bmax','barg','bs2','bspin'].forEach(function(k){s[k]=new Float32Array(CAP);});
     ['bage','blife','bat'].forEach(function(k){s[k]=new Uint16Array(CAP);});
-    ['bsize','bcolor','bgrazed','bmode','bgen','bbounce'].forEach(function(k){s[k]=new Uint8Array(CAP);});s.figures=[];s.ripples=[];
+    ['bsize','bcolor','bgrazed','bmode','bgen','bbounce'].forEach(function(k){s[k]=new Uint8Array(CAP);});s.figures=[];s.ripples=[];s.floor=freshFloor(s,s.stageIndex);
     s.sx=new Float32Array(SHOT_CAP);s.sy=new Float32Array(SHOT_CAP);s.shoming=new Uint8Array(SHOT_CAP);
     s.ix=new Float32Array(ITEM_CAP);s.iy=new Float32Array(ITEM_CAP);s.ivy=new Float32Array(ITEM_CAP);s.ikind=new Uint8Array(ITEM_CAP);
     // 구간을 직접 지정하면(연습·검사) 그 구간에서 바로 시작한다.
@@ -575,7 +575,7 @@
     // drift: 패턴·구간이 끝나 지운 탄은 터지지 않고 제 길로 화면 아래까지 흘러가며 흐려진다(판정 없음, 화면 연출용). 사용자 11-14: 탄이 닿기 직전 끊기면 맥빠짐.
     if(drift){for(var j=0;j<n&&s.drifted.length<DRIFT_CAP*5;j++)s.drifted.push(s.bx[j],s.by[j],s.bsize[j]===SHAPE_PROP?WHITE:s.bcolor[j],s.ba[j],s.bs[j]*TICK);}
     else for(var i=0;i<n&&s.cancelled.length<320*3;i++)s.cancelled.push(s.bx[i],s.by[i],s.bsize[i]===SHAPE_PROP?WHITE:s.bcolor[i]);
-    s.n=0;s.lasers.length=0;s.figures.length=0;s.ripples.length=0;return n;
+    s.n=0;s.lasers.length=0;s.figures.length=0;s.ripples.length=0;if(s.floor)s.floor.pieces.length=0;return n;
   }
   /* 아이템 하나를 떨군다. kind 0 점수, 1 폭탄 조각. 위로 살짝 튀었다가 천천히 내려온다. */
   function dropItem(s,x,y,kind){if(!kind)s.hearts++;if(s.itemCount>=ITEM_CAP)return;var i=s.itemCount++;s.ix[i]=Math.max(10,Math.min(W-10,x));s.iy[i]=y;s.ivy[i]=-1.6;s.ikind[i]=kind||0;}
@@ -666,9 +666,9 @@
         m.baseX+=m.vx;m.y+=m.vy;m.x=m.baseX+(m.sway?Math.sin(m.age*m.swayRate)*m.sway*22:0);
         // 화면 위쪽에 있을 때만 쏜다(영웅 코앞 기습 방지).
         if(m.next===undefined)m.next=m.first;
-        if(m.y<300&&m.y>0&&m.age>=m.next){MOB_FIRE[m.fire](s,m);m.shots++;m.next=m.age+refireEvery(s,m.every);}
+        if((m.y<300||m.rise&&m.y<H-30&&Math.abs(m.x-s.player.x)>40)&&m.y>0&&m.age>=m.next){MOB_FIRE[m.fire](s,m);m.shots++;m.next=m.age+refireEvery(s,m.every);}
         else if(m.age>=m.next&&m.y<=0)m.next=m.age+1;
-        if(m.y>H+30||m.x<-40||m.x>W+40){s.mobs.splice(i,1);continue;}
+        if(m.y>H+30||m.x<-40||m.x>W+40||m.rise&&m.y<-40){s.mobs.splice(i,1);continue;}
       }
     }
   }
@@ -899,6 +899,74 @@
       for(i=s.ripples.length-1;i>=0;i--){var r=s.ripples[i];if(++r.age>=HAND_WARN){if(Math.abs(r.x-s.player.x)>=HAND_AWAY)spawn(s,r.x,H+8,-Math.PI/2,pick(s,30,34,42),{size:SHAPE_PROP,color:P['demon-hand'],life:1400});s.ripples.splice(i,1);}}
     }else if(t%pick(s,100,85,70)===40){var x=30+rand(s)*(W-60);spawn(s,x,-10,aim(s,x,-10),pick(s,44,50,62),{size:SHAPE_PROP,color:P.skull});}
   }
+  /* ── 아래쪽 압박(사용자 11-15 "맨아래에만 있으면 피하기 쉬워서 …"). 화면 맨 아래에 숨어 있지 못하게 네 가지를 스테이지마다 둘씩 섞어 번갈아 낸다.
+   *  rise    아래에서 가끔 몹이 올라온다(영웅에게서 떨어진 자리).
+   *  blocks  테트리스처럼 조각이 떨어져 아래에 쌓인다. 떨어지는 조각은 닿으면 아프고, 쌓인 블록은 바닥이 되어 영웅을 위로 밀어 올린다. 한 줄이 차면 지워진다.
+   *  terrain 아래에서 지형(언덕)이 솟아 바닥 공간을 줄인다. 닿아도 아프지 않고 위로 밀어 올린다.
+   *  lines   아래쪽에 ㅡ(한 줄)·=(두 줄) 가로 광선이 그어져 위로 몰아낸다.
+   *  쌓이는 높이는 FLOOR_ROWS칸(30px)까지라 위쪽 공간은 늘 남는다(사용자 11-15 "피할길 안남겨도 됨 그냥 공간만남겨도됨"). 이지는 한 가지만, 더 드물게. ── */
+  var FLOOR_KINDS=['rise','blocks','terrain','lines'],FLOOR_COLS=12,FLOOR_CELL=W/FLOOR_COLS,FLOOR_CYCLE=720,FLOOR_ON=90,FLOOR_OFF=600,FLOOR_LINE_Y=[H-40,H-70];
+  var FLOOR_PIECES=[[[0,0],[1,0],[2,0],[3,0]],[[0,0],[1,0],[0,1],[1,1]],[[0,0],[1,0],[2,0],[1,1]],[[0,0],[1,0],[2,0],[2,1]],[[0,0],[1,0],[1,1],[2,1]],[[0,0],[0,1],[0,2],[1,0]],[[1,0],[1,1],[0,1],[0,2]]];
+  function floorPlan(index,difficulty){var a=index%4,b=(a+1+((index>>2)%3))%4;return difficulty==='gentle'?[FLOOR_KINDS[a]]:[FLOOR_KINDS[a],FLOOR_KINDS[b]];}
+  function floorRows(s){return pick(s,3,4,4);}
+  function floorRand(F){var x=F.rng|0;x^=x<<13;x^=x>>>17;x^=x<<5;F.rng=x>>>0;return F.rng/4294967296;} // 바닥 압박은 따로 굴리는 난수: 기존 패턴의 탄 배치를 바꾸지 않는다
+  function freshFloor(s,index){return {stage:index,t:0,kind:'',rng:((s.seed*2654435761)^(index*40503+1))>>>0||1,grid:new Uint8Array(FLOOR_COLS*6),hill:new Float32Array(FLOOR_COLS),goal:new Float32Array(FLOOR_COLS),pieces:[],warns:[],clearing:0,lines:0,cleared:0,risen:0,dropped:0,mounds:0};}
+  function stackHeight(F,c){for(var r=5;r>=0;r--)if(F.grid[r*FLOOR_COLS+c])return r+1;return 0;}
+  // 그 x에서 바닥(쌓인 블록·지형) 윗면의 y. 바닥이 없으면 H.
+  function floorTop(s,x){var F=s.floor,c=Math.max(0,Math.min(FLOOR_COLS-1,Math.floor(x/FLOOR_CELL)));return H-Math.max(stackHeight(F,c)*FLOOR_CELL,F.hill[c]);}
+  function floorLine(s,y,color){if(s.lasers.length>=LASER_CAP)return;s.lasers.push({x:-12,y:y,angle:0,width:12*s.rules.beam,warn:Math.round(72*s.rules.warn),active:140,color:color,spin:0,follow:false,burst:false,age:0,grazed:false,floor:true});if(!s.warned){s.warned=true;note(s,'laserWarn');}}
+  function dropPiece(s,F){
+    var rows=floorRows(s);if(F.pieces.length>=pick(s,2,3,3))return; // 한 번에 떨어지는 조각 수 제한(심사 1차: 과밀)
+    for(var tries=0;tries<5;tries++){
+      var shape=FLOOR_PIECES[Math.floor(floorRand(F)*FLOOR_PIECES.length)],wide=0,tall=0,k;for(k=0;k<shape.length;k++){wide=Math.max(wide,shape[k][0]+1);tall=Math.max(tall,shape[k][1]+1);}
+      var col=Math.floor(floorRand(F)*(FLOOR_COLS-wide+1)),land=0;if(tries<2&&floorRand(F)<.5)col=Math.max(0,Math.min(FLOOR_COLS-wide,Math.floor(s.player.x/FLOOR_CELL)-(wide>>1))); // 절반은 영웅 쪽 칸을 겨눠 바닥 가운데 골이 숨을 곳이 되지 않게(심사 3차)
+      for(k=0;k<shape.length;k++)land=Math.max(land,stackHeight(F,col+shape[k][0])-shape[k][1]);
+      if(land+tall>rows)continue; // 쌓이면 상한을 넘는 자리는 고르지 않는다
+      F.pieces.push({cells:shape,col:col,y:-tall*FLOOR_CELL,land:land,color:1+Math.floor(floorRand(F)*5)});F.dropped++;return;
+    }
+  }
+  function settlePiece(s,F,p){
+    for(var k=0;k<p.cells.length;k++)F.grid[(p.land+p.cells[k][1])*FLOOR_COLS+p.col+p.cells[k][0]]=p.color;
+    for(var r=0;r<6;r++){var full=true;for(var c=0;c<FLOOR_COLS;c++)if(!F.grid[r*FLOOR_COLS+c]){full=false;break;}
+      if(full){F.grid.copyWithin(r*FLOOR_COLS,(r+1)*FLOOR_COLS);F.grid.fill(0,5*FLOOR_COLS);F.cleared++;s.score+=1000;note(s,'floorClear');r--;}}
+  }
+  function raiseMound(s,F){var cc=Math.floor(floorRand(F)*FLOOR_COLS),half=2+Math.floor(floorRand(F)*2),peak=pick(s,56,84,96)*(.8+floorRand(F)*.2);
+    for(var c=Math.max(0,cc-half);c<=Math.min(FLOOR_COLS-1,cc+half);c++)F.goal[c]=Math.max(F.goal[c],peak*Math.cos((c-cc)/(half+1)*Math.PI/2));F.mounds++;}
+  var RISE_WARN=45; // 아래에서 올라오기 전 바닥 가장자리에 빛 예고(심사 1차: 예고 없이 튀어나옴)
+  function warnRise(s,F){var x=30+floorRand(F)*(W-60);if(Math.abs(x-s.player.x)<90)x=s.player.x+(s.player.x<W/2?1:-1)*(90+floorRand(F)*60);F.warns.push({x:Math.max(24,Math.min(W-24,x)),age:0});}
+  function riseMob(s,F,x){
+    var cast=(STAGES[s.stageIndex].cast||[]).filter(function(k){return MOBS[k]&&!MOBS[k].elite;}),kind=cast.length?cast[Math.floor(floorRand(F)*cast.length)]:'drone';
+    if(Math.abs(x-s.player.x)<90)x=s.player.x+(s.player.x<W/2?1:-1)*(90+floorRand(F)*60); // 영웅 바로 밑에서는 올라오지 않는다
+    var before=s.mobs.length;mob(s,kind,Math.max(24,Math.min(W-24,x)),H+20,{vy:-pick(s,1.1,1.4,1.7),sway:.5,fire:'aim',first:50,every:pick(s,140,90,70),color:CYAN});
+    if(s.mobs.length>before){s.mobs[s.mobs.length-1].rise=true;F.risen++;}
+  }
+  function updateFloor(s){
+    var F=s.floor,p=s.player,c,k;if(F.stage!==s.stageIndex)F=s.floor=freshFloor(s,s.stageIndex);
+    var live=s.stage==='wave'||s.stage==='card',t=live?F.t++:F.t,plan=floorPlan(s.stageIndex,s.difficulty),u=t%FLOOR_CYCLE,kind=plan[Math.floor(t/FLOOR_CYCLE)%plan.length],on=live&&u>=FLOOR_ON&&u<FLOOR_OFF;
+    if(s.stage==='wave'&&s.segTick>=segment(s).duration)on=false; // 대본이 끝난 웨이브는 마저 끝나게 둔다
+    F.kind=on?kind:'';
+    if(on){var slow=s.difficulty==='gentle'?1.6:1;
+      if(kind==='rise'&&(u-FLOOR_ON)%Math.round(pick(s,150,110,90)*slow)===0)warnRise(s,F);
+      if(kind==='blocks'&&(u-FLOOR_ON)%Math.round(pick(s,80,58,46)*slow)===0)dropPiece(s,F);
+      if(kind==='terrain'&&(u-FLOOR_ON)%Math.round(pick(s,240,170,150)*slow)===0)raiseMound(s,F);
+      if(kind==='lines'&&(u-FLOOR_ON)%Math.round(pick(s,230,180,150)*slow)===0){var twin=F.lines%2===1;floorLine(s,FLOOR_LINE_Y[0],YELLOW);if(twin)floorLine(s,FLOOR_LINE_Y[1],YELLOW);F.lines++;}
+    }
+    // 차례가 끝나면 지형은 가라앉고 블록은 위에서부터 한 줄씩 흩어진다.
+    if(live&&u===FLOOR_OFF+40){F.goal.fill(0);if(kind==='blocks')F.clearing=1;}
+    if(!live&&s.stage==='break'){F.goal.fill(0);}
+    if(F.clearing&&t%10===0){var top=-1;for(var r=5;r>=0&&top<0;r--)for(c=0;c<FLOOR_COLS;c++)if(F.grid[r*FLOOR_COLS+c]){top=r;break;}
+      if(top<0)F.clearing=0;else{F.grid.fill(0,top*FLOOR_COLS,(top+1)*FLOOR_COLS);note(s,'floorClear');}}
+    for(k=F.warns.length-1;k>=0;k--){if(++F.warns[k].age>=RISE_WARN){riseMob(s,F,F.warns[k].x);F.warns.splice(k,1);}}
+    for(c=0;c<FLOOR_COLS;c++){var d=F.goal[c]-F.hill[c];F.hill[c]+=d>0?Math.min(d,.9):Math.max(d,-1.2);}
+    var struck=false,speed=pick(s,2.4,3.1,3.7);
+    for(k=F.pieces.length-1;k>=0;k--){var q=F.pieces[k],rest=H-q.land*FLOOR_CELL;q.y=Math.min(rest,q.y+speed);
+      for(var j=0;j<q.cells.length;j++){var x0=(q.col+q.cells[j][0])*FLOOR_CELL+3,y1=q.y-q.cells[j][1]*FLOOR_CELL-3,x1=x0+FLOOR_CELL-6,y0=y1-FLOOR_CELL+6;
+        if(p.x>x0-p.r&&p.x<x1+p.r&&p.y>y0-p.r&&p.y<y1+p.r)struck=true;}
+      if(q.y>=rest){F.pieces.splice(k,1);settlePiece(s,F,q);}}
+    // 바닥 위로 밀어 올린다(영웅 판정점 좌우 6px 안의 가장 높은 바닥).
+    var floorY=Math.min(floorTop(s,p.x-6),floorTop(s,p.x+6))-6;if(p.y>floorY)p.y=Math.max(40,floorY);
+    return struck;
+  }
   /* 한 틱(1/60초) 진행. input: {dx,dy,focus,bomb} — dx,dy는 이번 틱에 움직일 픽셀, focus는 저속 이동, bomb은 이번 틱에 폭탄 사용. */
   function step(s,input){
     if(s.stage==='won'||s.stage==='lost'){s.stageTick++;return s;}
@@ -924,9 +992,9 @@
     themed(s);updateMobs(s);updateShots(s);
     if(s.stage==='card'&&b.hp<=0)endCard(s,true);
     else if(s.stage==='card'&&s.segTick*TICK>=segment(s).time)endCard(s,false);
-    var p=s.player,byBeam=updateLasers(s),byFigure=updateFigures(s),byBullet=updateBullets(s);
+    var p=s.player,byFloor=updateFloor(s),byBeam=updateLasers(s),byFigure=updateFigures(s),byBullet=updateBullets(s);
     updateItems(s);
-    if((byBeam||byFigure||byBullet)&&s.tick>=p.invulnerableUntil&&s.stage!=='won'){
+    if((byBeam||byFigure||byBullet||byFloor)&&s.tick>=p.invulnerableUntil&&s.stage!=='won'){
       p.hp--;s.hits++;s.spellClean=false;p.invulnerableUntil=s.tick+INVULN_TICKS;cancelAll(s);note(s,'hurt');
       // 목숨이 남았으면 폭탄이 기본 개수까지 다시 찬다.
       if(p.hp<=0){s.stage='lost';s.stageTick=0;note(s,'lose');}else if(s.bombs<s.rules.bombs)s.bombs=s.rules.bombs;
@@ -969,7 +1037,7 @@
   })();
   var api={revision:43,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
-    BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem};
+    BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem};
   if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcade=api;
 })(typeof window!=='undefined'?window:globalThis);
