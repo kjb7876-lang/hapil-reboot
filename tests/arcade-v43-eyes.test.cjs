@@ -7,8 +7,8 @@ const load=(search='')=>{const w={location:{search},matchMedia:()=>({matches:fal
   requestAnimationFrame:()=>1,cancelAnimationFrame:()=>{}};w.window=w;vm.runInNewContext(read('src/arcade-eyes-v43.js'),w);return w.HapilEyes;};
 test('opening starts shut, blinks once, ends wide open; closing ends shut',()=>{
   const E=load();assert.equal(E.at('open',0),0);assert.equal(E.at('open',E.OPEN_SECONDS),1);
-  let peak=0,dip=1,after=false;for(let t=0;t<=E.OPEN_SECONDS;t+=.01){const o=E.at('open',t);if(o>peak)peak=o;if(peak>.15&&peak<1&&o<peak-.05){after=true;dip=Math.min(dip,o);}}
-  assert(after&&dip<.15,'a blink before opening fully');
+  let peak=0,dip=1,after=false;for(let t=0;t<=E.OPEN_SECONDS;t+=.01){const o=E.at('open',t);if(o>peak)peak=o;if(peak>.1&&peak<1&&o<peak-.05){after=true;dip=Math.min(dip,o);}}
+  assert(after&&dip<.1,'a blink before opening fully');
   assert.equal(E.at('close',0),1);assert.equal(E.at('close',E.CLOSE_SECONDS),0);
   assert(E.OPEN_SECONDS<=1.2,'the hero is not hidden long');assert(E.CLOSE_SECONDS<=1.4);
 });
