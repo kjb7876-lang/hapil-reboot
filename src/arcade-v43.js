@@ -997,7 +997,7 @@
     candle:{size:70,hit:[[0,-.78,.15],[0,-.38,.17],[-.55,-.5,.15],[.55,-.5,.15],[-.5,-.1,.15],[.5,-.1,.15],[0,.08,.2],[0,.48,.12],[0,.85,.3]]},
     key:{size:76,hit:[[0,-.65,.34],[0,-.18,.1],[0,.12,.1],[0,.42,.1],[.12,.74,.24]]},
     hourglass:{size:64,hit:[[0,-.55,.4],[0,0,.16],[0,.55,.4],[-.4,-.85,.15],[.4,-.85,.15],[-.4,.85,.15],[.4,.85,.15]]},
-    wing:{size:70,hit:[[-.55,.55,.26],[-.35,-.05,.36],[.02,-.52,.36],[.5,-.3,.32],[.15,.15,.32],[.75,-.05,.2]]},
+    wing:{size:70,hit:[[-.55,-.1,.25],[.04,-.51,.2],[.5,-.76,.14],[.04,-.04,.24],[.5,.03,.16],[-.22,.27,.22],[.05,.57,.15],[-.58,.3,.2],[.56,-.35,.15],[.31,.35,.16]]},
     horn:{size:68,hit:[[0,.62,.36],[-.75,.38,.25],[-.96,-.08,.17],[-.92,-.5,.13],[-.76,-.87,.09],[.75,.38,.25],[.96,-.08,.17],[.92,-.5,.13],[.76,-.87,.09]]},
     mirror:{size:68,hit:[[0,-.28,.64],[0,.55,.12],[0,.85,.12]]},
     gear:{size:58,hit:[[0,0,.82]]},
@@ -1041,7 +1041,7 @@
     var R=s.risers,p=s.player,k,live=s.stage==='wave'||s.stage==='card',every=Math.round(pick(s,560,330,270));
     if(live&&!(s.stage==='wave'&&s.segTick>=segment(s).duration)){var t=s.riserT++;
       if(t>=120&&(t-120)%every===0&&s.riserDue<2)s.riserDue++; // 자리가 없으면 미뤘다가 자리가 나면 솟는다
-      if(s.riserDue>0&&R.length<(s.floor&&s.floor.kind?1:pick(s,1,2,2))){s.riserDue--;var plan=motifPlan(s.stageIndex),kind=plan[s.riserN++%plan.length],size=MOTIFS[kind].size,lane=(s.riserN+s.stageIndex)%3,x=W*(lane===0?.24:lane===1?.76:.5)+(riserRand(s)-.5)*W*.14;
+      if(s.riserDue>0&&R.length<(s.floor&&s.floor.kind?1:pick(s,1,2,2))){s.riserDue--;var plan=motifPlan(s.stageIndex),kind=plan[s.riserN++%plan.length],size=MOTIFS[kind].size,lane=(s.riserN+s.stageIndex+((s.riserN/3)|0))%3,x=W*(lane===0?.24:lane===1?.76:.5)+(riserRand(s)-.5)*W*.14;
         if(Math.abs(x-p.x)<90)x=p.x+(p.x<W/2?1:-1)*(90+riserRand(s)*50); // 영웅 바로 밑에서는 솟지 않는다
         x=Math.max(size*1.12,Math.min(W-size*1.12,x));
         R.push({kind:kind,size:size,x:x,y:H+size+2,age:0,apex:H*(.42+riserRand(s)*.28),vy:pick(s,1.2,1.5,1.8),held:0,fade:0,lean:(riserRand(s)-.5)*.3,emblem:kind==='glyph'?(signatureOf(stageBoss(s.stageIndex))||{glyph:'ring'}).glyph:''});s.risen++;note(s,'riserWarn');}}
