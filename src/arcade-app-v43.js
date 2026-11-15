@@ -1136,7 +1136,7 @@
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
     drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawShots(s);drawDrifts();drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);drawBossOver(s);drawHeroGuard(s);drawPlayer(s);drawHitbox(s); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);drawHud(s);
-    if(flash>0){ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);flash-=.04;}
+    if(flash>0){if(Ink&&Ink.raw)Ink.raw(1);ctx.fillStyle=Ink?'rgba(255,252,244,'+(flash*.7)+')':'rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);if(Ink&&Ink.raw)Ink.raw(-1);flash-=.04;} // 수묵화에서도 섬광은 밝게: 먹색으로 뒤집히면 패턴 격파·보스 쓰러짐 때 화면이 잿빛으로 꺼졌다(보스 이펙트 전수조사 11-15)
     if(hurtFlash>0){var v=ctx.createRadialGradient(W/2,H/2,120,W/2,H/2,420);v.addColorStop(0,'rgba(255,0,40,0)');v.addColorStop(1,'rgba(255,0,40,'+(hurtFlash*.6)+')');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);hurtFlash-=.035;}
     if(banner>0)banner=Math.max(0,1-(s.tick-bannerTick)/BANNER_TICKS); // 게임 틱 기준: 화면이 느리거나 빨라도 1.3초 뒤에 걷힌다
     if(bannerSpell&&banner>0)banner=Math.max(0,1-(s.tick-bannerTick)/SPELL_BANNER_TICKS); // 스펠 이름 띠는 0.7초: 보스·문양이 뜨는 순간을 오래 가리지 않는다(이름은 오른쪽 위 받침에 남는다) // 게임 틱 기준: 화면이 느리거나 빨라도 1.3초 뒤에 걷힌다

@@ -116,11 +116,21 @@
       p[o]=(INK[0]+(PAPER[0]-INK[0])*tone)*(1-sh*(1-T[0]));p[o+1]=(INK[1]+(PAPER[1]-INK[1])*tone)*(1-sh*(1-T[1]));p[o+2]=(INK[2]+(PAPER[2]-INK[2])*tone)*(1-sh*(1-T[2]));p[o+3]=255;}
     g.putImageData(data,0,0);return c;
   }
+  /* 보스 레이저·문양 그림(media/arcade-v43-laser): 검은 바탕에 빛만 그린 더하기용 그림(투명도 없음). 인물처럼 구우면 검은 바탕이 먹 네모가 된다
+     (보스 이펙트 전수조사 11-15: 스펠마다 보스 위에 먹 네모, 광선은 검은 띠). 밝기를 투명도로 바꾸고 색은 먹·안료로: 바탕은 비고 빛만 먹 번짐으로 남는다. */
+  function washGlow(img){
+    var w=img.naturalWidth,h=img.naturalHeight,c=canvasOf(w,h),g=c.getContext('2d',{willReadFrequently:true});rawDraw.call(g,img,0,0);
+    var data;try{data=g.getImageData(0,0,w,h);}catch(e){return img;}
+    var p=data.data,i,a,k;
+    for(i=0;i<p.length;i+=4){a=Math.max(p[i],p[i+1],p[i+2]);a=a<14?0:Math.min(1,(a-14)/200);
+      k=toInk(p[i],p[i+1],p[i+2]);p[i]=k[0];p[i+1]=k[1];p[i+2]=k[2];p[i+3]=Math.round(a*p[i+3]);}
+    g.putImageData(data,0,0);return c;
+  }
   var washed=typeof WeakMap==='function'?new WeakMap():null;
   function inkOf(img){
     if(!washed||!img.complete||!img.naturalWidth)return img;
     var c=washed.get(img);
-    if(!c){hold++;try{c=/\/bg-[^\/]*$/.test(img.src)?washPaper(img):washSprite(img);}catch(e){c=img;}hold--;washed.set(img,c);}
+    if(!c){hold++;try{c=/\/bg-[^\/]*$/.test(img.src)?washPaper(img):/\/arcade-v43-laser\//.test(img.src)?washGlow(img):washSprite(img);}catch(e){c=img;}hold--;washed.set(img,c);}
     return c;
   }
   var paperBg=false; // 배경 그림을 구운 뒤에 덮는 어두운 막(탄 읽히라고 누르던 것)은 한지에서는 필요 없다
