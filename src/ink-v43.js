@@ -123,7 +123,7 @@
     var w=img.naturalWidth,h=img.naturalHeight,c=canvasOf(w,h),g=c.getContext('2d',{willReadFrequently:true});rawDraw.call(g,img,0,0);
     var data;try{data=g.getImageData(0,0,w,h);}catch(e){return img;}
     var p=data.data,i,a,k;
-    for(i=0;i<p.length;i+=4){a=Math.max(p[i],p[i+1],p[i+2]);a=a<14?0:Math.min(1,(a-14)/200);
+    for(i=0;i<p.length;i+=4){a=Math.max(p[i],p[i+1],p[i+2]);a=a<14?0:Math.pow(Math.min(1,(a-14)/130),.7); // 심사 1차 6.41: 문양·광선이 옅어 스펠 시작·위협 신호가 약했다
       k=toInk(p[i],p[i+1],p[i+2]);p[i]=k[0];p[i+1]=k[1];p[i+2]=k[2];p[i+3]=Math.round(a*p[i+3]);}
     g.putImageData(data,0,0);return c;
   }
