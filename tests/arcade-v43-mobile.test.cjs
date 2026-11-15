@@ -57,3 +57,14 @@ test('difficulty notes come from the real rules (lives and bombs)',()=>{
 test('a hidden button stays hidden (button display:flex used to override [hidden])',()=>{
   assert.match(read('arcade.html'),/button\[hidden\],a\.button\[hidden\],\.note\[hidden\]\{display:none\}/);
 });
+test('the app bundle has every script the page loads, the art it needs, and hides developer mode',()=>{
+  const os=require('os'),cp=require('child_process'),out=fs.mkdtempSync(path.join(os.tmpdir(),'hapil-www-'));
+  try{
+    cp.execFileSync(process.execPath,[path.join(root,'tools/build-app-www.cjs'),out],{stdio:'pipe'});
+    const html=fs.readFileSync(path.join(out,'index.html'),'utf8');
+    for(const m of html.matchAll(/<script src="([^"?]+)/g))assert(fs.existsSync(path.join(out,m[1])),m[1]);
+    for(const f of ['media/arcade-v43/manifest.json','media/music.mp3','media/gunner.webp'])assert(fs.existsSync(path.join(out,f)),f);
+    assert.match(fs.readFileSync(path.join(out,'src/arcade-app-v43.js'),'utf8'),/var DEV_VISIBLE=false[;,]/);
+    assert.match(read('src/arcade-app-v43.js'),/var DEV_VISIBLE=true[;,]/,'the repository copy is untouched');
+  }finally{fs.rmSync(out,{recursive:true,force:true});}
+});

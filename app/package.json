@@ -1,0 +1,19 @@
+{
+  "name": "hapil-arcade-app",
+  "private": true,
+  "description": "세로판(arcade.html)을 안드로이드·아이폰 앱으로 포장(Capacitor). www는 ../tools/build-app-www.cjs가 만든다.",
+  "scripts": {
+    "www": "node ../tools/build-app-www.cjs www",
+    "sync": "npm run www && npx cap sync",
+    "apk": "npm run sync && cd android && ./gradlew assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.6.2",
+    "@capacitor/app": "8.1.2",
+    "@capacitor/core": "8.6.2",
+    "@capacitor/ios": "8.6.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.6.2"
+  }
+}
