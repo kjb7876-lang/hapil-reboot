@@ -19,7 +19,7 @@
   var PROP_GLOW={'sword-violet':2,cleaver:5,'sword-balrog':0,obelisk:2,spire:4,'twin-blade':8,crescent:4,tissue:6,money:6,heel:0,feather:8,cross:6,gear:4};
   var ART_DIR='media/arcade-v43/';
   var SERIF='"Noto Serif KR","Nanum Myeongjo","Apple SD Gothic Neo",serif',SANS='system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif';
-  var SLOW_FRAME_MS=21,VERY_SLOW_FRAME_MS=28,MAX_PARTICLES=320,FINGER_LIFT=64,TOAST_SECONDS=1.6;
+  var SLOW_FRAME_MS=21,VERY_SLOW_FRAME_MS=28,STALL_FRAME_MS=250,MAX_PARTICLES=320,FINGER_LIFT=64,TOAST_SECONDS=1.6;
   var SHAPE_RICE=3,SHAPE_BUBBLE=4,SHAPE_PROP=Arcade.SHAPE_PROP;
   var NOTES={gentle:'목숨 7 · 폭탄 3 · 스테이지마다 전부 회복 · 느린 탄 · 아주 작은 피격점',normal:'목숨 3 · 폭탄 2 · 스테이지마다 1 회복',hell:'목숨 1 · 폭탄 1 · 회복 없음 · 빽빽한 탄 · 격자 광선 동시'};
 
@@ -452,6 +452,7 @@
   function esc(v){return String(v).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   // 느린 기기에서는 먼저 해상도를, 그래도 느리면 빛무리와 날씨 입자 수를 내린다.
   function adaptQuality(elapsedMs){
+    if(elapsedMs>STALL_FRAME_MS)return; // 멈춤(가려진 창·탭 전환·그림 굽기)은 느린 기기가 아니다: 평균에 넣지 않는다
     frameMs+=(Math.min(80,elapsedMs)-frameMs)*.05;framesSeen++;
     if(framesSeen<150||mode!=='playing'||turbo)return;
     if(frameMs>VERY_SLOW_FRAME_MS&&!lite){lite=true;if(Ink&&Ink.setLite)Ink.setLite(true);framesSeen=0;frameMs=16;fit();buildSprites();if(state)initFx(themeOf(state.stageIndex).fx,state.stageIndex);}
@@ -1169,9 +1170,9 @@
   }
   function frame(stamp){
     requestAnimationFrame(frame);
-    if(!lastStamp)lastStamp=stamp;var elapsed=finite(Math.min(.1,Math.max(0,(stamp-lastStamp)/1000)),0);lastStamp=stamp;visual+=elapsed;
+    if(!lastStamp)lastStamp=stamp;var rawMs=stamp-lastStamp,elapsed=finite(Math.min(.1,Math.max(0,(stamp-lastStamp)/1000)),0);lastStamp=stamp;visual+=elapsed;
     if(mode==='playing'&&state){
-      adaptQuality(elapsed*1000);if(devMode)showDevBadge();accumulator=Math.min(accumulator+elapsed,4/60);if(devMode)accumulator=Math.min(accumulator+elapsed*(DEV_SPEED-1),4*DEV_SPEED/60); // 개발자 모드는 같은 60Hz 틱을 두 배로 돌린다
+      adaptQuality(rawMs>STALL_FRAME_MS?rawMs:elapsed*1000);if(devMode)showDevBadge();accumulator=Math.min(accumulator+elapsed,4/60);if(devMode)accumulator=Math.min(accumulator+elapsed*(DEV_SPEED-1),4*DEV_SPEED/60); // 개발자 모드는 같은 60Hz 틱을 두 배로 돌린다
       var steps=0,limit=turbo||rushStage?Math.max(4,turbo||60):devMode?4*DEV_SPEED:4;if(turbo||rushStage)accumulator=limit/60;
       while(accumulator>=1/60&&steps<limit&&mode==='playing'){if(rushStage)rushTick(state);if(devMode)state.player.hp=state.player.maxHp;Arcade.step(state,inputForStep());accumulator-=1/60;steps++;consume();}
     }
