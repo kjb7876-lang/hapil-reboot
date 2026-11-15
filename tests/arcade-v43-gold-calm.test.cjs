@@ -10,10 +10,7 @@ test('v43 bright boss art is pressed well below the bullets during spells',()=>{
  assert(m&&+m[1]<=.6&&+m[2]<=.75,'brightness '+(m&&m[1])+' contrast '+(m&&m[2]));
 });
 
-test('v43 sigils keep a margin from the field edges (at most 38% of the field width)',()=>{
- const src=h.read('src/arcade-v43.js');assert(+/SIGIL_FIT=([\d.]+)/.exec(src)[1]<=.38);
-});
-
+// 11-15 사용자 새 요청(육망성을 맵 대부분을 덮게)으로 '문양 칸 폭 38%' 검사는 뺐다.
 test('v43 beams start faint at the boss so crossing beams do not pile into one hot spot',()=>{
  const las=/function drawLasers\(s\)[\s\S]*?\n  \}/.exec(app())[0];
  assert(/BEAM_ROOT/.test(las),'beam root fade');

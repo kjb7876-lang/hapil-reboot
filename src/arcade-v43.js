@@ -212,6 +212,7 @@
   /* 광선 하나. (x,y)에서 angle 방향으로 뻗는다. o: {width,warn,active,color,spin(초당 회전),follow(보스에 붙음),burst(켜질 때 선을 따라 쌀알탄)} */
   function beam(s,x,y,angle,o){
     if(s.lasers.length>=LASER_CAP)return;
+    for(var q=0;q<s.figures.length;q++)if(s.figures[q].sigil)return; // 큰 육망성이 떠 있는 동안 다른 광선은 내지 않는다: 사용자 11-15 "이상한레이져 생성하지말고", 심사 6.50(육망성 선과 방사 광선이 한 화면에서 겹침)
     s.lasers.push({x:x,y:y,angle:angle,width:(o.width||18)*s.rules.beam,warn:Math.round((o.warn||60)*s.rules.warn),active:o.active||60,
       color:o.color||0,spin:o.spin||0,follow:!!o.follow,burst:!!o.burst,age:0,grazed:false});
     if(!s.warned){s.warned=true;note(s,'laserWarn');}
@@ -803,17 +804,17 @@
   /* 문양 레이저(사용자 11-14 23:33·23:34 KST): 보스 뒤 육망성처럼 보스를 중심으로 도는 큰 문양과 끊긴 원 고리가 레이저가 된다.
      보스마다 자기 문양(SIGNATURES.glyph)·도는 방향·고리 수가 다르다. 크게 그려 모양이 한눈에 읽히게 하되(보스 옆 작은 '3' 모양 금지),
      화면 아래쪽 절반에는 닿지 않게 반지름을 줄인다(SIGIL_FLOOR). 반지름은 고정이라 안쪽 빈자리와 바깥은 늘 안전하다. */
-  var SIGIL_FIT=.38,SIGIL_R=150,SIGIL_RING=1.18,SIGIL_FLOOR=.53,SIGIL_EVERY=480,SIGIL_AT=30;
+  var BIG_SIGIL_R=316,BIG_SIGIL_SPIN=.22,SIGIL_FIT=.38,SIGIL_R=150,SIGIL_RING=1.18,SIGIL_FLOOR=.53,SIGIL_EVERY=480,SIGIL_AT=30;
   [3,4,5].forEach(function(n){GLYPHS['ring'+n]=[];for(var k=0;k<n;k++){var a0=TAU*k/n;GLYPHS['ring'+n].push(arcPts(0,0,1,a0+.32,a0+TAU/n-.32,14));}});
   var glyphReach={};
   function reachOf(name){if(glyphReach[name]===undefined){var m=1,lines=GLYPHS[name]||[];for(var i=0;i<lines.length;i++)for(var k=0;k+1<lines[i].length;k+=2)m=Math.max(m,Math.sqrt(lines[i][k]*lines[i][k]+lines[i][k+1]*lines[i][k+1]));glyphReach[name]=m;}return glyphReach[name];}
-  function sigilRadius(f,want){return Math.max(40,Math.min(want,W*SIGIL_FIT,(H*SIGIL_FLOOR-f.cy)))/reachOf(f.glyph);}
+  function sigilRadius(f,want){return want/reachOf(f.glyph);}
   // 흰 문양은 흰 탄·흰 레이저와 한 덩어리로 번진다(심사 11-14): 흰 보스의 문양은 그 보스의 둘째 색, 그것도 희면 하늘색.
   function sigilColor(s,sig){if(sig.color!==WHITE)return sig.color;var a=ACTORS[s.boss.actor];return a&&a.c2!==WHITE?a.c2:CYAN;}
   function summonSigil(s,sig,index){
     if(s.figures.length>=FIGURE_CAP-2)return;
     var warn=Math.max(54,Math.round(70*s.rules.warn)),active=260,dir=sig.spin,rings=3+index%3;
-    var parts=[{glyph:sig.glyph,want:SIGIL_R,spin:dir*.42,width:8},{glyph:'ring'+rings,want:SIGIL_R*SIGIL_RING,spin:-dir*.3,width:6}];
+    var parts=[{glyph:'hexagram',want:BIG_SIGIL_R,spin:dir*BIG_SIGIL_SPIN*(1+.15*(index%3)),width:7}]; // 사용자 11-15: 보스 뒤 육망성 하나를 맵 대부분을 덮게 키우고 그 선이 판정. 따로 도는 고리 레이저는 없다.
     parts.forEach(function(q,k){var f={kind:'glyph',sigil:true,glyph:q.glyph,cx:s.boss.x,cy:s.boss.y,want:q.want,turn:TAU*k/7,spin:q.spin,follow:true,period:1e9,
       width:q.width*s.rules.beam,warn:warn,active:active,age:0,color:sigilColor(s,sig),grazed:false};f.r=f.r0=f.r1=sigilRadius(f,q.want);s.figures.push(f);});
     note(s,'figure');
@@ -832,7 +833,7 @@
       var f=s.figures[i];f.age++;
       if(f.age>f.warn+f.active+BEAM_FADE){s.figures.splice(i,1);continue;}
       if(f.orbit&&s.boss.present){var o=f.orbit,R=o.near+(o.far-o.near)*(.5-.5*Math.cos(TAU*f.age/o.period)),A=o.phase+o.speed*f.age*TICK;f.cx=s.boss.x+Math.cos(A)*R;f.cy=s.boss.y+Math.sin(A)*R;}
-      if(f.kind==='glyph'){if(f.follow&&s.boss.present){f.cx=s.boss.x;f.cy=s.boss.y;}if(f.sigil){f.r=sigilRadius(f,f.want);}else f.turn+=f.spin*TICK*(f.age<f.warn?.35:1);f.r=f.r0+(f.r1-f.r0)*(.5-.5*Math.cos(TAU*f.age/f.period));}
+      if(f.kind==='glyph'){if(f.follow&&s.boss.present){f.cx=s.boss.x;f.cy=s.boss.y;}if(f.sigil)f.r=f.r0=f.r1=sigilRadius(f,f.want);f.turn+=f.spin*TICK*(f.age<f.warn?.35:1);f.r=f.r0+(f.r1-f.r0)*(.5-.5*Math.cos(TAU*f.age/f.period));}
       if(f.age<f.warn||f.age>=f.warn+f.active)continue;
       var segs=figureSegments(f),reach=f.width*.5*BEAM_HIT+p.r,near=1e9;
       for(var k=0;k<segs.length;k++){var g=segs[k],dx=g[2]-g[0],dy=g[3]-g[1],L=dx*dx+dy*dy||1,u=((p.x-g[0])*dx+(p.y-g[1])*dy)/L;u=u<0?0:u>1?1:u;

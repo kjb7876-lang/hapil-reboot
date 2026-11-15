@@ -4,15 +4,7 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const h=require('./helpers/arcade-v43.cjs');
 
-test('v43 sigils fit the field: no sigil reaches further than 42% of the field width from the boss',()=>{
- const a=h.need(),firsts=new Map();a.SEGMENTS.forEach((g,i)=>{if(g.kind==='card'&&g.spell&&!firsts.has(g.actor)&&firsts.size<6)firsts.set(g.actor,i);});
- for(const [actor,i] of firsts){
-  const s=a.createRun({difficulty:'normal',seed:3,segment:i,stages:1});let seen=0;
-  for(let t=0;t<700&&s.seg===i;t++){s.player.invulnerableUntil=s.tick+999;if(s.stage==='card')s.boss.hp=s.boss.maxHp;a.step(s,{dx:0,dy:0});h.clear(s);
-   for(const f of s.figures)if(f.sigil){seen++;for(const g of a.figureSegments(f))for(const [x,y] of [[g[0],g[1]],[g[2],g[3]]])assert(Math.hypot(x-f.cx,y-f.cy)<=a.WIDTH*.42+1,actor+' sigil reach '+Math.hypot(x-f.cx,y-f.cy).toFixed(0));}}
-  assert(seen,actor+' raised a sigil');}
-});
-
+// 11-15 사용자 새 요청(육망성을 맵 대부분을 덮게)으로 '칸 폭 42% 안' 검사는 뺐다. 크기와 피할 자리는 arcade-v43-big-sigil.test.cjs.
 test('v43 beams fade toward the bottom of the field so the dodge space reads first',()=>{
  const las=/function drawLasers\(s\)[\s\S]*?\n  \}/.exec(h.read('src/arcade-app-v43.js'))[0];
  assert(/BEAM_LOW_FADE/.test(las)&&/createLinearGradient/.test(las),'beam glow uses a fading gradient');
