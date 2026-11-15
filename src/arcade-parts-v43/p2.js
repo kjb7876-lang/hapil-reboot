@@ -37,6 +37,17 @@
         for(i=0;i<raw.length;i+=2){raw[i+1]-=my;max=Math.max(max,Math.sqrt(raw[i]*raw[i]+raw[i+1]*raw[i+1]));}
         for(i=0;i<raw.length;i+=2){var x=raw[i]/max,y=raw[i+1]/max;if(x*x+y*y>=.0144)out.push(x,y);}
         hearts[n]=out;return out;}
+      // 입술(키스, 사용자 11-15): 윗입술은 가운데가 살짝 패인 큐피드 활(cupid's bow), 아랫입술은 도톰한 호, 가운데에 다문 입선. 단위 폭 2(-1..1).
+      var lipCache={};
+      function lips(n){if(lipCache[n])return lipCache[n];var out=[],i,x,k=Math.max(5,Math.round(n/3));
+        for(i=0;i<=k;i++){x=-1+2*i/k;out.push(x,-.4*Math.pow(1-x*x,.55)+.42*Math.exp(-x*x/.016));} // 윗입술: 가운데가 V자로 깊게 패인다(큐피드의 활, 심사 5.93: 패임이 얕아 고리처럼 보였다)
+        for(i=1;i<k;i++){x=-1+2*i/k;out.push(x,.08+.62*Math.pow(1-x*x,.8));} // 아랫입술: 윗입술보다 도톰하게, 윗입술과 조금 떨어뜨려 두 고리로 붙어 보이지 않게
+        out.push(-1.1,0,1.1,0); // 입꼬리: 양끝을 한 점 더 빼서 뾰족하게
+        lipCache[n]=out;return out;}
+      var KISS_SWAY=74; // 키스마다 좌우로 번갈아 비켜 낸다: 연이은 입술이 한 줄로 쌓여 8자처럼 보였다(심사 6.40). 입선 점은 얼굴처럼 보여 뺐다
+      function kiss(s,b){var pts=lips(52),cx=Math.max(84,Math.min(K.W-84,b.x+(s.kissSide=-(s.kissSide||-1))*KISS_SWAY)),cy=b.y+176,a=Math.atan2(s.player.y-cy,s.player.x-cx),sp=pick(s,72,88,90), // 조금 빠르게: 화면에 입술이 셋 쌓이면 모바일 아래쪽이 벽처럼 막혔다(심사 6.70). 이제 대개 둘
+          w=60,hy=.78; // 가로로 넓게(심사 6.14: 모바일에서 8자처럼 세로로 읽혔다). 작은 탄(크기 0)으로 윤곽만: 큰 구슬은 서로 붙어 덩어리로 보였다
+        for(var i=0;i<pts.length;i+=2)spawn(s,cx+pts[i]*w,cy+pts[i+1]*w*hy,a,sp,{color:RED,size:0});}
       // 색욕(아스모데우스) 발사기 설정. 깨진 하트의 나선, 장막의 시간차 고리 셋(분신 둘 + 보스), 최종 합성.
       var LUST_SPIRAL={kind:'spiral',patternId:'lust-heart-spiral',emitterCount:4,rotationSpeed:1.7,baseSpeed:70,fireInterval:8/60,bulletType:{size:1,color:RED}};
       var VEIL_RINGS=[0,1,2].map(function(k){return {kind:'delayedRing',patternId:'veil-clone-'+k,bulletsPerWave:9,emitterCount:3,baseSpeed:50,speedStep:12,phaseStep:.21,phaseOffset:k*.7,fireInterval:1.5,delay:k*.5,bulletType:{size:0,color:k===2?RED:PURPLE}};});
@@ -159,7 +170,7 @@
         p2Lipstick:{name:'립스틱 자국',fire:function(s,t){var b=s.boss,side;
           if(t%54===0){side=(t/54)%2?1:-1;
             emit(s,{kind:'fan',patternId:'lust-lipstick',bulletsPerWave:5,spreadAngle:1.2,center:HALF+side*.45,baseSpeed:92,fireInterval:1,bulletType:{size:RICE,color:RED,at:46,mode:TURN,arg:-side*.75,speed2:84}},0,{x:b.x+side*44,y:b.y+10});}
-          if(t%54===27)emit(s,{kind:'aimed',patternId:'lust-kiss',bulletsPerWave:2,spreadAngle:.35,baseSpeed:76,fireInterval:1,bulletType:{size:1,color:PURPLE}},0,b);}},
+          if(t%108===27)kiss(s,b);}}, // 키스: 입술 모양 그대로 굳은 탄 덩어리가 영웅에게 날아간다. 예전 보라 조준탄(lust-kiss)은 같은 줄을 따라 날아 입술 안쪽을 메워서(심사 5.93) 키스가 그 자리를 맡는다.
         // 깨진 하트(매혹의 빛): 곧게 선 하트가 퍼지다가 금이 가 파편 고리로 부서진다. 하트 사이에는 붉은 나선 네 팔이 돈다. 영웅 양옆을 겨누는 두 줄기 빛은 그대로.
         p2Charm:{name:'매혹의 빛',fire:function(s,t){var b=s.boss;
           if(t%64===0)shape(s,b.x,b.y,heart(count(s,24)),80,0,(t/64)%2?{color:PURPLE,size:1}:{color:RED,size:1,at:58,mode:SPLIT,arg:3,speed2:60});
