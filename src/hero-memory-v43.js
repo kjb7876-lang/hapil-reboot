@@ -31,7 +31,7 @@
     raw(1);g.save();blend(g);
     for(i=0;i<s.sn;i++){
       var x=s.sx[i],y=s.sy[i],vx=s.svx?s.svx[i]:0,ang=-Math.PI/2+Math.atan2(vx,15);
-      if(shardOk){var z=s.shoming[i]?big*.7:big;cell(g,'shard',f+i,x,y,ang,z,s.shoming[i]?.3:.4);} // 적 탄보다 한 단계 옅게(심사 1차)
+      if(shardOk){var z=s.shoming[i]?big*.7:big;cell(g,'shard',f+i,x,y,ang,z,s.shoming[i]?.3:vx?.4:.5);} // 적 탄보다 한 단계 옅게(심사 1차)
       else{g.save();g.translate(x,y);g.rotate(Math.atan2(vx,15));stroke(g,0,0,s.shoming[i]?16:24+lv*2,s.shoming[i]?3:4+lv*.6,.5);g.restore();}
     }
     g.restore();raw(-1);
@@ -121,9 +121,9 @@
     g.strokeStyle=ink?'rgba(30,26,24,.9)':'#1c3a48';g.lineWidth=1.5;g.lineCap='round';
     g.beginPath();for(i=0;i<14;i++){var a=-1.2+i*.2,rr=r*(1+((i*7)%3-1)*.03);if(i)g.lineTo(x+Math.cos(a*2.2)*rr,y+Math.sin(a*2.2)*rr*.92);else g.moveTo(x+Math.cos(a*2.2)*rr,y+Math.sin(a*2.2)*rr*.92);}g.stroke(); // 붓으로 그은 테(끊긴 데가 있다)
     for(i=0;i<7;i++){var ta=-Math.PI/2+i*TAU/7,on=i<lv;g.strokeStyle=on?(ink?'rgba(30,26,24,1)':'#0f7f9a'):(ink?'rgba(30,26,24,.22)':'rgba(30,60,70,.3)');g.lineWidth=on?2.4:1;
-      g.beginPath();g.moveTo(x+Math.cos(ta)*r*.62,y+Math.sin(ta)*r*.62*.92);g.lineTo(x+Math.cos(ta)*r*.86,y+Math.sin(ta)*r*.86*.92);g.stroke();} // 눈금 일곱: 공격 단계
-    g.strokeStyle=ink?'rgba(30,26,24,1)':'#0b2a33';g.lineWidth=1.6;g.beginPath();g.moveTo(x,y);g.lineTo(x+Math.cos(hand-Math.PI/2)*r*.72,y+Math.sin(hand-Math.PI/2)*r*.72*.92);g.stroke(); // 긴 바늘
-    g.lineWidth=2;g.beginPath();g.moveTo(x,y);g.lineTo(x+Math.cos(hand/12-Math.PI/2)*r*.45,y+Math.sin(hand/12-Math.PI/2)*r*.45*.92);g.stroke(); // 짧은 바늘
+      g.fillStyle=g.strokeStyle;g.beginPath();g.arc(x+Math.cos(ta)*(r+3.2),y+Math.sin(ta)*(r+3.2)*.92,on?1.5:1,0,TAU);g.fill();} // 눈금 일곱: 공격 단계. 판 바깥 먹점으로 빼 바늘을 가리지 않게(심사 2차)
+    g.strokeStyle=ink?'rgba(30,26,24,1)':'#0b2a33';g.lineWidth=2.1;g.beginPath();g.moveTo(x,y);g.lineTo(x+Math.cos(hand-Math.PI/2)*r*.72,y+Math.sin(hand-Math.PI/2)*r*.72*.92);g.stroke(); // 긴 바늘
+    g.lineWidth=2.8;g.beginPath();g.moveTo(x,y);g.lineTo(x+Math.cos(hand/12-Math.PI/2)*r*.45,y+Math.sin(hand/12-Math.PI/2)*r*.45*.92);g.stroke(); // 짧은 바늘
     g.fillStyle=ink?'rgba(30,26,24,1)':'#0b2a33';g.beginPath();g.arc(x,y,1.2,0,TAU);g.fill();
     g.restore();raw(-1);
   }
