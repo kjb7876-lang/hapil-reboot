@@ -53,7 +53,7 @@
     .keepsake img{max-width:100%;max-height:100%;object-fit:contain}
     .keepsake .sheet{height:100%;max-width:100%;background-repeat:no-repeat;background-position:0 0}
     .keepsake.locked{background:repeating-linear-gradient(45deg,#101020 0 6px,#16162a 6px 12px);color:#55506e;font-size:14px}
-    /* 수묵화풍 시안(?ink=1 일 때만 html.ink) */
+    /* 수묵화풍(기본. ?ink=0 이면 html.ink 가 붙지 않아 옛 화풍) */
     html.ink,html.ink body{color:#2a2420}
     html.ink canvas{background:#f2e9d6}
     html.ink #arcade-bleed{filter:blur(14px) grayscale(1) invert(.86) sepia(.3) brightness(1.05)}
@@ -65,7 +65,11 @@
     html.ink button[aria-pressed="true"]{background:#d9cbae;border-color:#1e1a18;color:#1e1a18}
     html.ink button.primary{background:#1e1a18;border-color:#1e1a18;color:#f2e9d6}
     html.ink .pad,html.ink #arcade-pause-button{background:rgba(242,233,214,.55);border-color:rgba(30,26,24,.45);color:rgba(30,26,24,.85)}
-    html.ink .hudx{filter:invert(1) hue-rotate(180deg) saturate(.7) sepia(.3)}html.ink .hudx img{filter:invert(1) hue-rotate(180deg)}
+    html.ink body,html.ink button,html.ink select,html.ink .hudx{font-family:"Noto Serif KR","Nanum Myeongjo","AppleMyungjo","Batang",serif}
+    html.ink button,html.ink a.button,html.ink select{border-radius:13px 9px 12px 8px/9px 12px 8px 13px;border-width:1.5px}
+    html.ink #arcade-title h1::after,html.ink .screen h2::after{content:"合";display:inline-block;margin-left:10px;width:.62em;height:.62em;font:600 .42em/1.5 "Noto Serif KR","Nanum Myeongjo",serif;letter-spacing:0;color:#f2e9d6;background:#b23a2c;border-radius:3px 2px 3px 2px;vertical-align:.5em;text-align:center;text-shadow:none} /* 낙관 */
+    html.ink .keepsake{background:#ebe0c8;border-color:#8a7c68;color:#5a5048}html.ink .keepsake.locked{background:repeating-linear-gradient(45deg,#e6dbc2 0 6px,#ddd0b4 6px 12px);color:#a59a8c}
+    html.ink .hudx{filter:invert(1) hue-rotate(180deg) saturate(.7) sepia(.3)}html.ink .hudx.side{filter:invert(1) hue-rotate(180deg) saturate(.7) sepia(.3) brightness(.9)}html.ink .hudx img{filter:invert(1) hue-rotate(180deg)}
   </style>
 </head>
 <body>
