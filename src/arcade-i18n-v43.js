@@ -15,7 +15,7 @@
       noteGentle:'목숨 {hp} · 폭탄 {bombs} · 쉬운 패턴 · 느린 탄 · 작은 피격점 · 스테이지마다 목숨 회복',noteNormal:'목숨 {hp} · 폭탄 {bombs} · 본 패턴 · 스테이지마다 목숨 회복',noteHell:'목숨 {hp} · 폭탄 {bombs} · 더 빠른 탄 · 큰 피격점 · 스테이지마다 목숨 회복',
       keepsakes:'기념물',keepsakesCount:'기념물 {n}/{max}',bossPractice:'보스 체험',soundOn:'소리 켜짐',soundOff:'소리 꺼짐',
       starsBest:'별 <b id="title-stars">0</b> / <span id="title-stars-max">168</span> · 최고 점수 <b id="title-best">00000000</b>',noSave:'이 브라우저에서는 기록을 저장할 수 없습니다.',
-      report:'기기 진단 복사',reportDone:'복사됨 · 스레드에 붙여 넣어 주세요',reportFail:'복사 안 됨 · 길게 눌러 선택',
+      report:'기기 진단 복사',credit:'음악: 자체 작곡 · 악기 소리 Fluid R3 GM (Frank Wen, CC BY 3.0)',reportDone:'복사됨 · 스레드에 붙여 넣어 주세요',reportFail:'복사 안 됨 · 길게 눌러 선택',
       start:'시작',back:'돌아가기',paused:'잠시 멈춤',resume:'계속하기',toTitle:'처음 화면으로',best:'최고 점수',retryStage:'이 스테이지부터 다시',retryBoss:'한 번 더',
       pause:'일시정지',focus:'저속',focusLabel:'저속 이동 (누르고 있는 동안)',bomb:'폭탄',field:'세로 탄막 전투장',bossStage:'보스 스테이지',language:'언어'
     },
@@ -26,7 +26,7 @@
       noteGentle:'{hp} lives · {bombs} bombs · easy patterns · slow bullets · tiny hitbox · lives refill each stage',noteNormal:'{hp} lives · {bombs} bombs · full patterns · lives refill each stage',noteHell:'{hp} lives · {bombs} bomb · faster bullets · larger hitbox · lives refill each stage',
       keepsakes:'Keepsakes',keepsakesCount:'Keepsakes {n}/{max}',bossPractice:'Boss practice',soundOn:'Sound on',soundOff:'Sound off',
       starsBest:'Stars <b id="title-stars">0</b> / <span id="title-stars-max">168</span> · Best <b id="title-best">00000000</b>',noSave:'Progress cannot be saved in this browser.',
-      report:'Copy device report',reportDone:'Copied · paste it to the developer',reportFail:'Copy failed · long-press to select',
+      report:'Copy device report',credit:'Music: original score · Instrument samples Fluid R3 GM (Frank Wen, CC BY 3.0)',reportDone:'Copied · paste it to the developer',reportFail:'Copy failed · long-press to select',
       start:'Start',back:'Back',paused:'Paused',resume:'Resume',toTitle:'Title screen',best:'Best',retryStage:'Retry this stage',retryBoss:'Again',
       pause:'Pause',focus:'Focus',focusLabel:'Focus movement (hold)',bomb:'Bomb',field:'Vertical bullet-hell field',bossStage:'Boss stage',language:'Language'
     }

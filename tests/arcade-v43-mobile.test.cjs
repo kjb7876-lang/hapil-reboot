@@ -78,3 +78,8 @@ test('background music picks a track for the title, the road, boss fights and th
   const html=read('arcade.html');assert(html.indexOf('src/arcade-music-v43.js')>0&&html.indexOf('src/arcade-music-v43.js')<html.indexOf('src/arcade-app-v43.js'));
   assert.equal(typeof last,'number');
 });
+test('every listed background track exists and the title screen credits the instrument samples',()=>{
+  const idx=JSON.parse(read('media/bgm/index.json'));
+  for(const k of ['title','field','boss','final']){assert(idx.tracks[k],k);assert(fs.existsSync(path.join(root,'media/bgm',idx.tracks[k].file)),idx.tracks[k].file);assert(idx.tracks[k].volume>0&&idx.tracks[k].volume<=.4);}
+  assert.match(read('arcade.html'),/id="arcade-credit" data-i18n="credit"/);assert.match(read('media/bgm/CREDITS.txt'),/CC BY 3\.0/);
+});

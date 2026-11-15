@@ -55,7 +55,9 @@
     .keepsake .sheet{height:100%;max-width:100%;background-repeat:no-repeat;background-position:0 0}
     .keepsake.locked{background:repeating-linear-gradient(45deg,#101020 0 6px,#16162a 6px 12px);color:#55506e;font-size:14px}
     /* 개발자 모드: 테스트용 도구라 정식 메뉴와 구분되게 작고 점선 테두리의 호박색 */
-    #arcade-report{min-height:30px;min-width:0;margin-top:2px;padding:4px 10px;border:0;background:none;color:#8a8fa6;font-size:11.5px;text-decoration:underline;text-underline-offset:3px;box-shadow:none}html.ink #arcade-report{color:#6e5a3e;background:none}
+    #arcade-report{min-height:44px;min-width:0;padding:10px 14px;font-size:12.5px;border:1px dashed #b98a2a;border-radius:10px;background:rgba(40,28,6,.55);color:#ffc65a;text-decoration:none;box-shadow:none}html.ink #arcade-report{border-color:#8c5a1c;background:#ebe0c8;color:#7a4a12}
+    #arcade-credit{margin:auto 0 0;padding-top:10px;font-size:11px;line-height:1.5;color:rgba(216,210,230,.72)}html.ink #arcade-credit{color:rgba(40,32,24,.72)}
+    #arcade-title .note{word-break:keep-all;text-wrap:balance}
     #arcade-dev{min-height:34px;min-width:0;padding:6px 14px;font-size:12.5px;border:1px dashed #b98a2a;background:rgba(40,28,6,.55);color:#ffc65a}#arcade-dev[aria-pressed="true"]{border-style:solid;background:#3a2806;color:#ffd98a}
     #arcade-dev-badge{position:fixed;top:max(6px,env(safe-area-inset-top));right:8px;z-index:4;pointer-events:none;padding:3px 8px;border:1px solid #ffc65a;border-radius:6px;background:rgba(20,12,2,.92);color:#ffc65a;font:600 11px/1.3 system-ui,sans-serif;max-width:72vw;text-align:right}#arcade-dev-badge[hidden]{display:none}
     /* 수묵화풍(기본. ?ink=0 이면 html.ink 가 붙지 않아 옛 화풍) */
@@ -113,13 +115,14 @@
         <button id="arcade-boss-open" type="button" data-mode="boss" data-i18n="bossPractice">보스 체험</button>
         <button id="arcade-sound" type="button" aria-pressed="true" data-i18n="soundOn">소리 켜짐</button>
       </div>
-      <div class="row" style="align-items:center">
+      <div class="row" style="align-items:center;flex-wrap:wrap;justify-content:center;max-width:340px">
         <button id="arcade-dev" type="button" aria-pressed="false">DEV 꺼짐</button>
         <span class="note" id="arcade-dev-note">테스트용: 속도 2배 · 체력 무한</span>
+        <button id="arcade-report" type="button" data-i18n="report">기기 진단 복사</button>
       </div>
       <p class="note" data-i18n-html="starsBest">별 <b id="title-stars">0</b> / <span id="title-stars-max">168</span> · 최고 점수 <b id="title-best">00000000</b></p>
       <p class="note" id="save-note" data-i18n="noSave" hidden>이 브라우저에서는 기록을 저장할 수 없습니다.</p>
-      <button id="arcade-report" class="link" type="button" data-i18n="report">기기 진단 복사</button>
+      <p class="note" id="arcade-credit" data-i18n="credit">음악: 자체 작곡 · 악기 소리 Fluid R3 GM (Frank Wen, CC BY 3.0)</p>
     </div>
 
     <div id="arcade-boss-screen" class="screen" hidden>
@@ -156,21 +159,21 @@
       <button id="arcade-home" type="button" data-i18n="toTitle">처음 화면으로</button>
     </div>
   </div>
-  <script src="src/audio-v37.js?v=20261115-arcade43-ink3"></script>
-  <script src="src/arcade-parts-v43/p1.js?v=20261115-arcade43-ink3"></script>
-  <script src="src/arcade-parts-v43/p2.js?v=20261115-arcade43-ink3"></script>
-  <script src="src/arcade-parts-v43/p3.js?v=20261115-arcade43-ink3"></script>
-  <script src="src/arcade-parts-v43/p4.js?v=20261115-arcade43-ink3"></script>
-  <script src="src/arcade-parts-v43/p5.js?v=20261115-arcade43-ink3"></script>
-  <script src="src/arcade-parts-v43/p6.js?v=20261115-arcade43-ink3"></script>
-  <script src="src/arcade-parts-v43/p7.js?v=20261115-arcade43-ink3"></script>
-  <script src="src/arcade-parts-v43/p8.js?v=20261115-arcade43-ink3"></script>
-  <script src="src/arcade-v43.js?v=20261115-arcade43-ink3"></script>
-  <script src="src/arcade-skins-v43.js?v=20261115-arcade43-ink3"></script>
-  <script src="src/ink-v43.js?v=20261115-arcade43-ink3"></script>
-  <script src="src/arcade-i18n-v43.js?v=20261115-arcade43-ink3"></script>
-  <script src="src/arcade-music-v43.js?v=20261115-arcade43-ink3"></script>
-  <script src="src/arcade-mobile-v43.js?v=20261115-arcade43-ink3"></script>
-  <script src="src/arcade-app-v43.js?v=20261115-arcade43-ink3"></script>
+  <script src="src/audio-v37.js?v=20261115-arcade43-music1"></script>
+  <script src="src/arcade-parts-v43/p1.js?v=20261115-arcade43-music1"></script>
+  <script src="src/arcade-parts-v43/p2.js?v=20261115-arcade43-music1"></script>
+  <script src="src/arcade-parts-v43/p3.js?v=20261115-arcade43-music1"></script>
+  <script src="src/arcade-parts-v43/p4.js?v=20261115-arcade43-music1"></script>
+  <script src="src/arcade-parts-v43/p5.js?v=20261115-arcade43-music1"></script>
+  <script src="src/arcade-parts-v43/p6.js?v=20261115-arcade43-music1"></script>
+  <script src="src/arcade-parts-v43/p7.js?v=20261115-arcade43-music1"></script>
+  <script src="src/arcade-parts-v43/p8.js?v=20261115-arcade43-music1"></script>
+  <script src="src/arcade-v43.js?v=20261115-arcade43-music1"></script>
+  <script src="src/arcade-skins-v43.js?v=20261115-arcade43-music1"></script>
+  <script src="src/ink-v43.js?v=20261115-arcade43-music1"></script>
+  <script src="src/arcade-i18n-v43.js?v=20261115-arcade43-music1"></script>
+  <script src="src/arcade-music-v43.js?v=20261115-arcade43-music1"></script>
+  <script src="src/arcade-mobile-v43.js?v=20261115-arcade43-music1"></script>
+  <script src="src/arcade-app-v43.js?v=20261115-arcade43-music1"></script>
 </body>
 </html>
