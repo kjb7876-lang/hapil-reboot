@@ -3,7 +3,7 @@
 // 모든 스테이지가 그 스테이지 서사·보스에 맞춘 서양 소재 셋을 가지며, 보스 맞춤 소재(첫째)는 한 바퀴에 두 번 나온다. 동양 소재·무기·보스 상징은 그대로 섞인다.
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('fs'),path=require('path'),h=require('./helpers/arcade-v43.cjs');
 const a=h.need();
-const WEST=['chalice','cross','skull','scythe','crown','chain','candle','key','hourglass','wing','horn','mirror','gear','bell','mask','rose','web','vial','eye','tower','book','cauldron'];
+const WEST=['chalice','hexagram','skull','scythe','crown','chain','candle','key','hourglass','wing','horn','mirror','gear','bell','mask','rose','web','vial','eye','tower','book','cauldron'];
 const EAST=['orchid','plum','bamboo','lotus','mountain','sun','moon','wave','whirl','flame','cloud'];
 
 test('the engine knows every western subject with a silhouette that stays inside its drawing',()=>{
