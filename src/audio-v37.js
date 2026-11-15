@@ -135,7 +135,8 @@
       bossHit:function(d,l){noise(d,'bandpass',1900*vary(),1400,2.2,.035,l);},
       bossHitLow:function(d,l){var v=vary();noise(d,'bandpass',2600*v,2000,3,.035,l);tone(d,'triangle',1100*v,1040,.03,l*.3);},
       kill:function(d,l){noise(d,'lowpass',3800,240,.7,.24,l);tone(d,'sine',190*vary(),48,.26,l*.9);noise(d,'highpass',5200,7000,.5,.07,l*.3);},
-      hurt:function(d,l){tone(d,'sine',1250,150,.42,l*.7);tone(d,'sawtooth',310,70,.3,l*.3);noise(d,'lowpass',1800,180,.8,.34,l*.8);tone(d,'sine',92,38,.5,l);},
+      // 피격: 낮고 둔탁하게(사용자 11-15 "맞았을때 랑 탄없앨때 … 비슷해서 헷갈림"). 높은 쓸림을 빼고 몸통을 치는 쿵 + 거친 떨림.
+      hurt:function(d,l){tone(d,'sine',150,40,.42,l);tone(d,'square',96,58,.16,l*.32);tone(d,'sawtooth',233,110,.22,l*.22,.02);noise(d,'lowpass',700,90,1.2,.3,l*.9);},
       charge:function(d,l){noise(d,'bandpass',300,2400,5,.38,l,0,.2);tone(d,'sine',150,420,.36,l*.4,0,.18);},
       laserWarn:function(d,l,c){var more=Math.min(2,(c.count||1)/3);tone(d,'sawtooth',220,660,.5,l*.32,0,.3);tone(d,'sine',440,1320,.5,l*(.6+more*.15),0,.3);tone(d,'square',1320,1320,.05,l*.3,.5);},
       laserFire:function(d,l,c){var more=Math.min(1.4,1+(c.count||1)*.06);noise(d,'lowpass',6500,300,1.2,.6,l*.8*more);tone(d,'sawtooth',98,60,.7,l*.5);tone(d,'sawtooth',99.4,61,.7,l*.4);tone(d,'sine',1900,380,.22,l*.4);},
@@ -143,7 +144,8 @@
       skillDelay:function(d,l){tone(d,'sine',620,310,.3,l,0,.05);tone(d,'sine',930,465,.3,l*.4,0,.05);noise(d,'bandpass',900,300,6,.3,l*.5,0,.1);},
       skillCounter:function(d,l){bell(d,1320,.34,l);tone(d,'square',2640,1980,.05,l*.25);noise(d,'highpass',6000,8000,.5,.05,l*.5);},
       skillEgo:function(d,l){[196,294,392,587].forEach(function(f,i){tone(d,'sawtooth',f*.5,f,.6,l*.28,i*.03,.25);tone(d,'sine',f,f*1.5,.7,l*.5,i*.03,.3);});noise(d,'highpass',2500,9000,.6,.6,l*.3,0,.4);},
-      phaseBreak:function(d,l){noise(d,'lowpass',7000,160,.6,.9,l);tone(d,'sine',130,34,.9,l);[2093,2637,3136,3951,4699].forEach(function(f,i){tone(d,'sine',f,f*.97,.5,l*.16,.04+i*.035,.002);});noise(d,'highpass',4000,9000,.4,.3,l*.35,.02);},
+      // 탄 지우기(패턴 깨기): 맑고 높게, 먹이 흩어지듯 위로 쓸리는 소리와 올라가는 종소리. 낮은 쿵은 피격에만.
+      phaseBreak:function(d,l){noise(d,'highpass',2400,9500,.5,.7,l*.55);[1047,1319,1568,2093,2637].forEach(function(f,i){tone(d,'sine',f,f,.6,l*.22,i*.05,.003);tone(d,'triangle',f*2,f*2,.25,l*.06,i*.05,.003);});noise(d,'bandpass',6000,3000,3,.5,l*.25,.05);},
       summon:function(d,l){tone(d,'sawtooth',82,164,.5,l*.5,0,.2);noise(d,'bandpass',500,1600,4,.5,l*.6,0,.25);bell(d,392,.5,l*.5,.15);},
       seal:function(d,l){bell(d,587,.8,l);bell(d,880,.7,l*.6,.09);},
       awakening:function(d,l){[147,220,294,440,587,880].forEach(function(f,i){tone(d,'sine',f,f,1.4,l*.4,i*.07,.2);});noise(d,'highpass',1500,10000,.5,1.3,l*.35,0,.8);tone(d,'sine',60,60,1.2,l*.7,0,.1);},
