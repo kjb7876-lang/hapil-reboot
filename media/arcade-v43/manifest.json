@@ -1761,14 +1761,14 @@
   "table": "tools/arcade-art-v43/base.json"
  },
  "hexagram.webp": {
-  "bytes": 4614,
+  "bytes": 4742,
   "group": "props",
   "size": [
    96,
    96
   ],
   "source": "code:HapilArcadeApp.drawPropArt",
-  "sourceSha256": "f299fc8b90083b4f15c83e0ddfe4fee3083d2bba7ff89c08b42620130a984912",
+  "sourceSha256": "7b85af6ce5103880c377269b3d0fc9c2841d5c0ddbdd8a2011e12659bb155057",
   "table": "tools/build-drawn-props-v43.cjs"
  },
  "horn.webp": {
@@ -9189,14 +9189,14 @@
   "table": "tools/arcade-art-v43/p8.json"
  },
  "reward-p8_goldhexagram.webp": {
-  "bytes": 3784,
+  "bytes": 3816,
   "group": "rewards",
   "size": [
    80,
    96
   ],
   "source": "code:HapilArcadeApp.drawPropArt",
-  "sourceSha256": "e61dced56136fff100262a7e48980f6b11dc519035f58a369d125e05fe35e2c6",
+  "sourceSha256": "ee4e846095db734a23c504280acc581e8f62f9465cbb4dcb46023819f9f5cf77",
   "table": "tools/build-drawn-props-v43.cjs"
  },
  "reward-p8_hando.webp": {

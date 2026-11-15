@@ -106,6 +106,8 @@
     for(k=0;k<2;k++){var base=k?Math.PI/2:-Math.PI/2,P=[];for(i=0;i<3;i++){var a1=base+i*TAU/3;P.push([Math.cos(a1)*R,Math.sin(a1)*R]);}
       for(i=0;i<3;i++){var p0=P[i],p1=P[(i+1)%3],mx=(p0[0]+p1[0])/2,my=(p0[1]+p1[1])/2;stroke(c,curve([p0[0],p0[1]],[mx*1.03,my*1.03],[p1[0],p1[1]],10,s*.06,s*(k?.11:.14),s*.035),k?.82:.93,3+k*3+i);}
       P.forEach(function(q,n){blob(c,q[0],q[1],s*.075,.92,20+k*3+n,.2);});}
+    c.beginPath();c.moveTo(-s*.26,0);c.quadraticCurveTo(0,-s*.19,s*.26,0);c.quadraticCurveTo(0,s*.19,-s*.26,0);c.closePath();c.fillStyle=ink(.9);c.fill();blob(c,0,0,s*.06,.95,33,.1); // 가운데 감긴 눈: 교단의 봉인진으로 읽히게(심사 2차)
+    for(k=0;k<6;k++){var e=-Math.PI/2+k*Math.PI/3+Math.PI/6,ex=Math.cos(e)*R*.62,ey=Math.sin(e)*R*.62;stroke(c,[[ex-Math.sin(e)*s*.08,ey+Math.cos(e)*s*.08,s*.03],[ex+Math.sin(e)*s*.08,ey-Math.cos(e)*s*.08,s*.012]],.8,40+k);}
     [[.78,-.82,.04],[-.86,.7,.035],[.95,.4,.03]].forEach(function(d,n){drop(c,d[0]*s,d[1]*s,d[2]*s,.75);});flecks(c,0,0,s*1.5,s*1.5,10,8);};
   // 해골: 둥근 머리뼈, 깊은 눈구멍, 이빨
   M.skull=function(c,s){wash(c,0,0,s*1.05,.14);
