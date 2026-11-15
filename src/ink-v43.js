@@ -6,7 +6,7 @@
  *  4) 프레임 끝에 한지 결·가장자리 먹 번짐을 덮는다. */
 (function(global){'use strict';
   var on=!/[?&]ink=0(&|$)/.test(global.location&&global.location.search||'');
-  var mono=+((/[?&]mono=([12])(&|$)/.exec(global.location&&global.location.search||'')||[])[1]||0); // 시안: 1 = 탄·광선까지 완전 흑백, 2 = 흑백에 붉은 계열만 인주색으로 남김
+  var monoQ=/[?&]mono=([012])(&|$)/.exec(global.location&&global.location.search||''),mono=monoQ?+monoQ[1]:2; // 기본 2 = 먹 농담에 붉은 계열(하트·붉은 탄·경고)만 인주색(사용자 11-15). ?mono=1 완전 흑백, ?mono=0 예전 담채
   global.HapilInk={on:on,mono:on?mono:0};
   if(!on||!global.CanvasRenderingContext2D)return;
   document.documentElement.classList.add('ink');
@@ -26,12 +26,13 @@
     if((m=/^rgba?\(([^)]+)\)$/.exec(v))){var p=m[1].split(/[\s,\/]+/).filter(Boolean).map(parseFloat);if(p.length<3)return null;return [p[0],p[1],p[2],p.length>3?p[3]:1];}
     return NAMED[v]||null;
   }
-  function toInk(r,g,b){ // 밝은 색 → 짙은 먹/안료, 어두운 색 → 한지
+  function deepen(k){return mono&&k[0]-k[2]<40?[Math.round(k[0]*.58+INK[0]*.42),Math.round(k[1]*.58+INK[1]*.42),Math.round(k[2]*.58+INK[2]*.42)]:k;} // 먹 화면의 탄은 잿빛 몹·배경보다 한 단계 짙게(인주색 탄은 그대로)
+  function toInk(r,g,b,al){ // 밝은 색 → 짙은 먹/안료, 어두운 색 → 한지
     var mx=Math.max(r,g,b)/255,mn=Math.min(r,g,b)/255,l=(mx+mn)/2,d=mx-mn,s=d?d/(1-Math.abs(2*l-1)):0,h=0;
     if(d){if(mx===r/255)h=((g-b)/255/d)%6;else if(mx===g/255)h=(b-r)/255/d+2;else h=(r-g)/255/d+4;h*=60;}
     var l2=.11+.82*(1-l),s2=Math.min(1,s)*.5*(l>.9?.4:1); // 거의 흰 색은 그냥 먹
     if(s>.25&&h>28&&h<75){l2=Math.min(l2,.3);s2=Math.max(s2,.6);} // 황토는 한지와 붙지 않게 짙고 진하게
-    if(mono){var hn=((h%360)+360)%360;if(mono===2&&s>.3&&(hn<20||hn>330)){h=6;s2=.72;l2=Math.min(l2,.44);}else s2=0;} // 흑백 시안: 색을 빼고 먹 농담만(2는 붉은 계열만 인주색)
+    if(mono){var hn=((h%360)+360)%360;if(mono===2&&s>.3&&(hn<20||hn>330)&&!(al<.5)){h=6;s2=.72;l2=Math.min(l2,.44);}else s2=0;} // 흑백: 색을 빼고 먹 농담만. 2는 붉은 계열만 인주색, 단 옅게 번지는 빛(알파 .5 미만)은 먹으로 둬 붉은 역광이 화면을 덮지 않게 한다
     var c=(1-Math.abs(2*l2-1))*s2,x=c*(1-Math.abs((h/60)%2-1)),m=l2-c/2,R=0,G=0,B=0;h=((h%360)+360)%360;
     if(h<60){R=c;G=x;}else if(h<120){R=x;G=c;}else if(h<180){G=c;B=x;}else if(h<240){G=x;B=c;}else if(h<300){R=x;B=c;}else{R=c;B=x;}
     // 한지·먹의 따뜻한 기운을 살짝 섞는다
@@ -40,6 +41,7 @@
   }
   /* 뜻이 정해진 색: 영웅 자리 고리 = 그리지 않음(사용자 11-15), 판정점 = 가라앉힌 인주 테 + 먹 점(튀지 않게), 영웅 탄 = 담묵(적 탄 안료 색과 겹치지 않게) */
   var FIXED={'#7ff3ff':'rgba(30,26,24,0)','#ff2a4a':'rgba(150,56,44,.8)','#fa800a':'rgba(44,40,42,1)','#fa800a00':'rgba(44,40,42,0)','#c9406e':'rgba(198,46,36,1)','#f7b6cc':'rgba(240,170,150,1)','#f2c46d':'rgba(30,26,24,1)'};
+  if(mono===2){FIXED['#e0a52c']='rgba(160,34,28,1)';FIXED['#fff0c0']='rgba(236,160,140,1)';FIXED['#8a5a12']='rgba(30,26,24,1)';} // 큰 하트도 인주색(조금 더 짙게)
   if(mono===1){FIXED['#c9406e']='rgba(52,46,44,1)';FIXED['#f7b6cc']='rgba(156,148,140,1)';}
   var memo={},memoN=0,VEIL=/^rgba\(5,5,14,\.(56|68)\)$/;
   function remap(v){
@@ -47,7 +49,7 @@
     var hit=memo[v];if(hit!==undefined)return hit;
     if(VEIL.test(v)){memo[v]='rgba(242,233,214,.16)';return memo[v];}
     if(FIXED[v]){memo[v]=FIXED[v];return memo[v];} // 배경을 어둡게 누르던 막: 한지에서는 옅게만
-    var p=parse(v),out=v;if(p){var k=toInk(p[0],p[1],p[2]);out='rgba('+k[0]+','+k[1]+','+k[2]+','+(Math.round(p[3]*1000)/1000)+')';}
+    var p=parse(v),out=v;if(p){var k=toInk(p[0],p[1],p[2],p[3]);out='rgba('+k[0]+','+k[1]+','+k[2]+','+(Math.round(p[3]*1000)/1000)+')';}
     if(memoN++>4000){memo={};memoN=0;}memo[v]=out;return out;
   }
   var proto=global.CanvasRenderingContext2D.prototype;
@@ -159,7 +161,7 @@
   }
   function sprite(kind,radius,color,scale,tint){
     var reach=kind==='rice'?radius*2.6+3:kind==='bubble'?radius*1.2:radius*1.9,c=canvasOf(Math.ceil(reach*2*scale),Math.ceil(reach*2*scale)),g=c.getContext('2d');
-    var rgb=hexOf(color),pig=toInk(rgb[0],rgb[1],rgb[2]),t=tint&&tint!==color?hexOf(tint):null,edge=t?toInk(t[0],t[1],t[2]):pig,r=radius,i;
+    var rgb=hexOf(color),pig=deepen(toInk(rgb[0],rgb[1],rgb[2])),t=tint&&tint!==color?hexOf(tint):null,edge=t?toInk(t[0],t[1],t[2]):pig,r=radius,i;
     var dark=[Math.round(edge[0]*.45+INK[0]*.55),Math.round(edge[1]*.45+INK[1]*.55),Math.round(edge[2]*.45+INK[2]*.55)];
     hold++;g.translate(reach*scale,reach*scale);g.scale(scale,scale);g.lineCap='round';g.lineJoin='round';
     if(kind==='orb'){

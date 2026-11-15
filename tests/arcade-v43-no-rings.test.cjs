@@ -9,4 +9,4 @@ test('ink style draws no wrapping rings',()=>{
  assert.match(app,/q<\(Ink\?0:c\.big\?3:2\)/,'cast pulse rings');
  assert.match(app,/if\(!Ink\)\{ctx\.save\(\);ctx\.translate\(p\.x,p\.y\);ctx\.rotate\(visual\*3\)/,'focus dashed ring');
 });
-test('monochrome previews are opt-in only',()=>{assert.match(ink,/\[\?&\]mono=\(\[12\]\)/);assert.match(ink,/mono:on\?mono:0/);});
+test('ink is monochrome with vermilion accents by default, older looks stay reachable',()=>{assert.match(ink,/mono=monoQ\?\+monoQ\[1\]:2/);assert.match(ink,/\[\?&\]mono=\(\[012\]\)/);assert.match(ink,/!\(al<\.5\)/);assert.match(app,/PIECE=Ink&&Ink\.mono\?'#1e1a18':HOT/);assert.match(app,/WARN_RED=!!\(Ink&&Ink\.mono===2\)/);assert.match(app,/if\(!MONO\)\{g\.globalCompositeOperation='color'/);});
