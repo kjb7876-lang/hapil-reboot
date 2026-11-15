@@ -60,3 +60,13 @@ test('hero effects come from the m0 memory-gunner sheets baked in ink; no wrappi
  const tags=[...page.matchAll(/<script src="([^"?]+)/g)].map(m=>m[1]);assert(tags.indexOf('src/hero-memory-v43.js')>tags.indexOf('src/ink-v43.js')&&tags.indexOf('src/hero-memory-v43.js')<tags.indexOf('src/arcade-app-v43.js'));
  const app=fs.readFileSync(path.join(root,'src/arcade-app-v43.js'),'utf8');for(const k of ['HeroFx.shots','HeroFx.clock','HeroFx.field','HeroFx.draw(','HeroFx.onEvent'])assert(app.includes(k),k);
 });
+
+test('bomb plays a short ink cut-in of the memory gunner: a hanji band with the portrait and the bomb name, under a second, no rings or seal red',()=>{
+ const idx=JSON.parse(fs.readFileSync(path.join(root,'media/arcade-v43-hero/index.json'),'utf8'));
+ assert(idx.cutin&&/gunner/.test(idx.cutin.source));for(const f of ['cutin.webp','cutin-ink.webp'])assert(fs.statSync(path.join(root,'media/arcade-v43-hero',f)).size>5000,f);
+ const src=fs.readFileSync(path.join(root,'src/hero-memory-v43.js'),'utf8'),fn=src.slice(src.indexOf('function drawCutin'),src.indexOf('function onEvent'));
+ assert(fn.length>200,'drawCutin exists');const life=+/CUT_LIFE=([.\d]+)/.exec(src)[1];assert(life>.5&&life<=1.2,'short: '+life);
+ assert(/cutPortrait\(\)/.test(fn)&&/img\.cutin/.test(src)&&/cut\.name/.test(fn)&&/필살 Lv\./.test(fn),'portrait, bomb name and level');
+ assert(!/arc\([^)]*TAU\)[^;]*;\s*g\.stroke\(\)/.test(fn),'no ring');assert(!/rgb\(\s*1[5-9]\d|rgb\(2[0-4]\d,\s*[0-6]\d,/.test(fn),'no seal red in the cut-in');
+ assert(/drawCutin\(g,t/.test(src.slice(src.indexOf('function drawTexts'))),'drawn on top of the field');
+});

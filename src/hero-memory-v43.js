@@ -9,7 +9,7 @@
   var TAU=Math.PI*2,DIR='media/arcade-v43-hero/';
   var SHEETS={shard:{frames:8,cell:96,fps:14},shatter:{frames:6,cell:128,fps:16},bolt:{frames:8,cell:192,fps:26,ox:24},burst:{frames:12,cell:192,fps:16}};
   var img={},inkOn=function(){return !!(global.HapilInk&&global.HapilInk.on);};
-  function load(){Object.keys(SHEETS).forEach(function(k){var i=new Image();i.src=DIR+k+(inkOn()?'-ink':'')+'.webp';img[k]=i;});}
+  function load(){Object.keys(SHEETS).concat(['cutin']).forEach(function(k){var i=new Image();i.src=DIR+k+(inkOn()?'-ink':'')+'.webp';img[k]=i;});}
   function ready(k){var i=img[k];return i&&i.complete&&i.naturalWidth>0;}
   function raw(d){if(global.HapilInk&&global.HapilInk.raw)global.HapilInk.raw(d);} // 수묵판은 이미 구운 먹 그림이라 색 바꾸기를 건너뛴다
   // 시트 한 칸: 칸 가운데(또는 ox)를 (x,y)에, 진행 방향 ang(시트는 오른쪽을 향함), 칸 한 변 size
@@ -68,7 +68,7 @@
     if(lv>=5)B.push({x:main[0],y:main[1],t0:t+.35,size:260+lv*30});
     if(lv>=6){for(i=0;i<3;i++)B.push({x:W*(.2+.3*i),y:H*(.22+.14*((i+1)%2)),t0:t+.55+i*.15,size:200+lv*16});for(i=0;i+1<tg.length&&i<24;i+=2)pops.push({x:tg[i],y:tg[i+1],t0:t+.4,size:90});}
     if(lv>=7)B.push({x:W/2,y:H*.42,t0:t+1.05,size:240}); // 7단계는 큰 덩어리 대신 憶 획이 그어지는 박자(심사 1차: 5단계와 구분)
-    quake=4+lv*2.2;texts.push({text:b.name,sub:'필살 Lv.'+lv,t0:t,x:b.x,y:b.y-70,big:true});
+    quake=4+lv*2.2;if(ready('cutin'))cut={t0:t,lv:lv,name:b.name};else texts.push({text:b.name,sub:'필살 Lv.'+lv,t0:t,x:b.x,y:b.y-70,big:true});
   }
   function drawBombs(g,t,W,H){
     for(var n=bombs.length-1;n>=0;n--){var o=bombs[n],age=t-o.t0,B=o.bursts,i;if(age>3.2){bombs.splice(n,1);continue;}
@@ -96,6 +96,53 @@
     glyph=glyph||buildGlyph();var size=W*.62,x=W/2-size/2,y=H*.42-size/2,reveal=Math.min(1,Math.max(0,(age-.15)/.75)),fade=age<1.9?1:1-(age-1.9)/.9;if(reveal<=0||fade<=0)return;
     raw(1);g.save();g.globalCompositeOperation='source-over';g.globalAlpha=.62*fade;g.beginPath();var d=reveal*2.1*size;g.moveTo(x-20,y-20);g.lineTo(x-20+d,y-20);g.lineTo(x-20,y-20+d);g.closePath();g.clip();g.drawImage(glyph,x,y,size,size);g.restore();raw(-1);
   }
+  /* ── 필살기 컷씬(사용자 11-16 "필살기사용시 영웅 짧은컷씬도 간지나게", "수묵화풍"): 0.95초.
+   *  비스듬한 한지 띠가 오른쪽에서 붓으로 쓸듯 열리고, 그 안에 먹으로 그린 기억사수 초상(m0 초상을 수묵으로 구움)이 천천히 밀려 들어온다.
+   *  눈매에 한지빛 섬광 한 줄, 띠 위아래는 마른 붓 테두리, 띠 안을 가로지르는 먹 속도선. 필살 이름은 붓글씨처럼 굵게. 단계가 높을수록 띠가 두껍고 속도선이 많다.
+   *  7단계는 띠가 두 겹. 색은 먹 농담만(인주색 없음). 판정·시간은 멈추지 않는다(필살기 무적 2.5초 안에서 끝난다). ── */
+  var cut=null,CUT_LIFE=.95;
+  function brushEdge(g,x0,x1,y,thick,seed){ // 마른 붓 테두리: 굵기가 출렁이고 끝이 갈라진다
+    var n=26,i,sd=seed;function rr(){sd=(sd*16807)%2147483647;return sd/2147483647;}
+    g.beginPath();g.moveTo(x0,y);for(i=1;i<=n;i++){var x=x0+(x1-x0)*i/n;g.lineTo(x,y-thick*(.35+rr()*.65));}for(i=n;i>=0;i--){var x2=x0+(x1-x0)*i/n;g.lineTo(x2,y+thick*(.2+rr()*.5));}g.closePath();g.fill();
+    g.save();g.globalAlpha*=.55;for(i=0;i<5;i++){var yy=y+(rr()-.5)*thick*1.6,xa=x0+rr()*(x1-x0)*.3;g.fillRect(xa,yy,(x1-x0)*(.25+rr()*.5),.8+rr()*1.2);}g.restore(); // 갈라진 붓털 자국
+  }
+  var cutImg=null;
+  function cutPortrait(){ // 초상 가장자리를 먹 번짐처럼 녹인다: 왼쪽·아래로 갈수록 투명(네모 경계가 띠에 비치지 않게, 심사 1차)
+    if(cutImg)return cutImg;var im=img.cutin,w=im.naturalWidth||im.width,h=im.naturalHeight||im.height,c=document.createElement('canvas');c.width=w;c.height=h;var x=c.getContext('2d');
+    x.drawImage(im,0,0);x.globalCompositeOperation='destination-in';var gr=x.createLinearGradient(0,0,w,0);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(.3,'rgba(0,0,0,.55)');gr.addColorStop(.48,'rgba(0,0,0,1)');gr.addColorStop(1,'rgba(0,0,0,1)');x.fillStyle=gr;x.fillRect(0,0,w,h);
+    var gv=x.createLinearGradient(0,0,0,h);gv.addColorStop(0,'rgba(0,0,0,1)');gv.addColorStop(.8,'rgba(0,0,0,1)');gv.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=gv;x.fillRect(0,0,w,h);
+    var sd=1116;function rr(){sd=(sd*16807)%2147483647;return sd/2147483647;}x.fillStyle='rgba(0,0,0,1)';x.globalCompositeOperation='destination-out'; // 왼쪽 가장자리에 마른 붓털 결
+    for(var i=0;i<26;i++){var yy=rr()*h,ww=w*(.12+rr()*.22);x.globalAlpha=.25+rr()*.5;x.fillRect(0,yy,ww,1.5+rr()*4);}
+    cutImg=c;return c;
+  }
+  function stroke(g,x0,x1,y,th){ // 갈필 속도선: 가운데가 굵고 양끝이 가늘게 빠진다
+    var n=8,i;g.beginPath();g.moveTo(x0,y);for(i=1;i<n;i++){var u=i/n,w=th*Math.sin(Math.PI*u)*(.7+.3*Math.sin(i*2.7+y));g.lineTo(x0+(x1-x0)*u,y-w);}g.lineTo(x1,y);for(i=n-1;i>0;i--){var u2=i/n;g.lineTo(x0+(x1-x0)*u2,y+th*Math.sin(Math.PI*u2)*.45);}g.closePath();g.fill();
+  }
+  function drawCutin(g,t,W,H){
+    if(!cut)return false;var age=t-cut.t0;if(age>CUT_LIFE||age<0){cut=null;return false;}
+    var lv=cut.lv,ink=inkOn(),open=Math.min(1,age/.13),close=age>CUT_LIFE-.16?(age-(CUT_LIFE-.16))/.16:0,ease=1-Math.pow(1-open,3);
+    var bandH=118+lv*9,cy=H*.4,ang=-.17,i;
+    raw(1);g.save();g.globalCompositeOperation='source-over';
+    g.globalAlpha=.22*(1-close)*Math.min(1,age/.08);g.fillStyle=ink?'rgb(30,26,24)':'rgb(4,10,20)';g.fillRect(0,0,W,H); // 화면을 한 겹 누른다
+    g.translate(W/2,cy-close*40);g.rotate(ang);g.globalAlpha=1-close;
+    var L=W*1.5,x0=L/2-L*ease; // 오른쪽에서 열린다
+    if(lv>=7){g.fillStyle=ink?'rgba(244,236,218,.38)':'rgba(10,22,40,.4)';g.fillRect(x0,-bandH*.5-22,L,bandH+44);g.fillStyle=ink?'rgba(30,26,24,.85)':'rgba(120,230,255,.7)';brushEdge(g,x0,L/2,-bandH*.5-22,7,lv*97+3);brushEdge(g,x0,L/2,bandH*.5+22,7,lv*31+5);} // 7단계: 바깥에 한 겹 더
+    g.save();g.beginPath();g.rect(x0,-bandH/2,L,bandH);g.clip();
+    g.fillStyle=ink?'rgb(244,236,218)':'rgba(10,22,40,.92)';g.fillRect(-L/2,-bandH/2,L,bandH); // 한지 띠
+    g.fillStyle=ink?'rgb(30,26,24)':'rgba(140,235,255,1)'; // 먹 속도선(갈필 획). 부제 줄은 비운다
+    for(i=0;i<4+lv*3;i++){var sy=-bandH/2+((i*37.7)%bandH);if(Math.abs(sy-(bandH*.5-22))<9)continue;var sl=60+((i*53)%120),sx=L/2-((age*900*(1+(i%3)*.4)+i*71)%(L+sl));g.globalAlpha=(1-close)*.45;stroke(g,sx,sx+sl,sy,.8+((i*13)%5)*.45);}
+    g.globalAlpha=1-close;var ph=bandH*1.65,pw=ph*384/512,px=W*.3+lv*2-age*22+(1-ease)*80,top=-bandH*.56; // 초상: 띠 오른쪽, 두건·얼굴·총이 띠 안에 든다(제목과 겹치지 않게)
+    if(ink)g.globalCompositeOperation='multiply';g.drawImage(cutPortrait(),px-pw/2,top,pw,ph);if(ink){g.globalAlpha=(.4+lv*.06)*(1-close);g.drawImage(cutPortrait(),px-pw/2,top,pw,ph);g.globalAlpha=1-close;}g.globalCompositeOperation='source-over'; // 먹(곱하기)으로 얹어 흰 데는 한지에 스며들고 먹만 남는다
+    var ex=px-pw/2+pw*(205/384),ey=top+ph*(108/512),gl=Math.max(0,1-Math.abs(age-.32)/.14); // 눈매 섬광
+    if(gl>0){g.globalAlpha=gl*(1-close);g.fillStyle=ink?'rgb(255,253,246)':'rgb(200,250,255)';g.beginPath();g.ellipse(ex,ey,26*gl+4,1.6,-.12,0,TAU);g.fill();}
+    g.restore();
+    g.fillStyle=ink?'rgb(30,26,24)':'rgba(140,235,255,1)';g.globalAlpha=1-close;brushEdge(g,x0,L/2,-bandH/2,5+lv*.6,lv*13+1);brushEdge(g,x0,L/2,bandH/2,5+lv*.6,lv*7+2); // 띠 위아래 붓 테두리
+    // 필살 이름: 띠 왼쪽에 굵은 붓글씨, 아래에 작게 단계
+    var tx=-W*.36+(1-ease)*60;g.globalAlpha=(1-close)*Math.min(1,Math.max(0,(age-.08)/.12));g.textAlign='left';g.textBaseline='middle';
+    g.font='700 '+(27+lv)+'px "Noto Serif KR","Noto Serif CJK KR",serif';g.lineWidth=5;g.strokeStyle=ink?'rgba(244,236,218,.95)':'rgba(0,0,0,.8)';g.strokeText(cut.name,tx,-6);g.fillStyle=ink?'rgb(30,26,24)':'#dff8ff';g.fillText(cut.name,tx,-6);
+    g.font='700 13px "Noto Serif KR",serif';g.lineWidth=3;g.strokeText('기억사수 · 필살 Lv.'+lv,tx+2,bandH*.5-22);g.fillText('기억사수 · 필살 Lv.'+lv,tx+2,bandH*.5-22);
+    g.restore();raw(-1);return true;
+  }
   function onEvent(e,s,t){
     if(e==='powerUp')texts.push({text:'기억 공격 Lv.'+s.power,sub:s.power>=5?'기억 번개':'',t0:t,x:s.player.x,y:s.player.y-48});
     else if(e==='powerDown')texts.push({text:'기억 공격 Lv.'+s.power,sub:'',t0:t,x:s.player.x,y:s.player.y-48,down:true});
@@ -103,6 +150,7 @@
     else if(e==='bomb')bomb(s.lastBomb,t,360,640);
   }
   function drawTexts(g,t){
+    drawCutin(g,t,360,640);
     for(var i=texts.length-1;i>=0;i--){var o=texts[i],age=t-o.t0,life=o.big?1.6:1.1;if(age>life){texts.splice(i,1);continue;}
       var a=age<.12?age/.12:1-Math.max(0,age-life*.6)/(life*.4),y=o.y-age*16,x=Math.max(70,Math.min(290,o.x));
       raw(1);g.save();g.globalAlpha=a;g.textAlign='center';g.font=(o.big?'700 20px ':'700 13px ')+'"Noto Serif KR",serif';g.lineWidth=3;g.strokeStyle='rgba(255,253,246,.9)';g.fillStyle=o.down?'rgba(90,84,80,1)':'rgba(30,26,24,1)';
@@ -139,9 +187,9 @@
   }
   function draw(g,s,t){takeZaps(s,t);raw(1);g.save();blend(g);drawZaps(g,t);drawPops(g,t);g.restore();raw(-1);drawBombs(g,t,360,640);}
   function shake(){var q=quake;quake=0;return q;}
-  function reset(){zaps.length=0;pops.length=0;texts.length=0;bombs.length=0;quake=0;}
+  function reset(){zaps.length=0;pops.length=0;texts.length=0;bombs.length=0;quake=0;cut=null;}
   function hudLine(s){var lv=s.power||1,bl=s.bombLevel||1;return {attack:lv,bomb:bl};}
   load();
   global.HapilHeroFx={shots:shots,draw:draw,drawTexts:drawTexts,clock:clock,field:field,onEvent:onEvent,shake:shake,reset:reset,hudLine:hudLine,SHEETS:SHEETS,
-    debug:function(){return {zaps:zaps.length,pops:pops.length,bombs:bombs.length,texts:texts.length,ready:Object.keys(SHEETS).filter(ready)};}};
+    debug:function(){return {cut:!!cut,zaps:zaps.length,pops:pops.length,bombs:bombs.length,texts:texts.length,ready:Object.keys(SHEETS).filter(ready)};}};
 })(window);
