@@ -652,6 +652,20 @@
      고리마다 도는 방향·빠르기가 다르고, 숨 쉬듯 커졌다 작아진다. 장식이라 맞지 않는다. */
   // 심사(룬 1차): 고리가 너무 크고 셋이 똑같이 밝아 한 덩어리로 뭉친다, 보라 탄과 섞인다 → 반지름을 줄이고, 안쪽 고리가 주인공(굵고 밝게)·바깥은 가늘고 흐리게, 글자는 적고 크게,
   // 보라에 그 장면 테마색을 조금 섞어 장면과 어울리게 한다. 탄보다 먼저(아래에) 그려지고 알파를 낮게 둬 탄 윤곽을 덮지 않는다.
+  /* 한자문(사용자 11-15 "안에는 한자 적어놓고 죽음질병뭐 저주 이런거 적들 특성에 맞게", "한자문으로 만들어서 넣어 단순 한자 한글자 반복하지말고"): 보스마다 지은 여덟 글자 주문.
+     뜻 풀이는 /mnt/project-files 보고(arcade-v43/hanja-rings). 장식 고리와 판정 고리(drawRunes) 둘 다 이 문장을 고리 따라 이어 쓴다. */
+  var RUNE_VERSES={p1_tree:'根噬血土 枝結死果',violet:'八足織網 不愛之心',p1_horn:'泥中有面 角下無魂',p1_chaser:'血跡不絶 鎖斷追魂',p1_comrade:'屍積成丘 故友爲魔',p1_gate:'七柱守門 鞭痕不滅',balrog:'業火焚天 墜者無歸',mask:'笑面藏血 病室無聲',p1_staff:'針入骨髓 藥化爲毒',p1_seraph:'熾天封印 存憶盡滅',lucifer:'傲極必墮 毒城無明',p2_demons:'七十二魔 所羅門印',p2_belphegor:'怠惰腐骨 光陰虛擲',p2_leviathan:'嫉妒如蛇 毒入心肝',p2_beelzebub:'貪食無厭 腹裏藏蠅',asmodeus:'色慾纏絲 紅唇蝕骨',p2_greed:'金如刀刃 貪者自割',p2_mammon:'財奪人位 雪葬童心',p2_wrath:'怒火燎原 辱積成災',pride:'欲立天上 驕者先崩',p2_chairman:'鐵足踐人 權驅萬機',p2_core:'收苦爲算 複製魂紋',p3_legion:'鋼鐵千軍 轟炸無止',p3_rampart:'以憐行暴 救而囚之',p3_defense:'守門拒人 首憶封閉',controller:'系統否決 人性廢棄',p3_body:'肉換爲機 命假選擇',p3_gate:'憶門輪迴 歸路已斷',goblin:'笛驅群狼 刃鳴不和',p4_knight:'墮天騎士 劍路已定',insomnia:'夜不成眠 傀儡懸絲',p5_cult:'噬時之蛇 首令汚染',p5_archon:'收穫生魂 黑沙流轉',p5_common:'奪人光陰 衆門相連',p5_upper:'十二守門 閉層之令',p5_grand:'令令相疊 寸隙難求',p5_furnace:'爐吞可能 命線不息',p5_neuron:'強植其文 腦爲奴門',p5_keeper:'埋夢於忘 時計碎裂',p5_rings:'六環鎖命 沙柱崩儀',arbelia:'窗外午後 未寄之書',siren:'歌收時光 命運已算',p6_demons:'城外魔潮 雙印俱破',chief:'夢魘之首 城陷一夜',p6_bind:'夢縛其核 共奪而還',p7_car:'青燈濕路 前照奪命',p7_shadow:'墜者無聲 黑影隨身',p7_alarm:'警鳴不止 防火門閉',executor:'因果固定 終始相循',p8_chip:'萬夢一網 神經相縛',p8_collective:'衆我爲一 末日之戰',p8_lauren:'雙騎重陣 憶歸一線',cultist:'停時曲空 初志已忘',p8_ion:'秩序之壁 萬法歸一',rian:'叛者二人 全死之門'};
+  var RUNE_FONT='"Noto Serif CJK KR","Noto Serif KR","Nanum Myeongjo","Batang","Songti SC","SimSun","Noto Sans CJK KR",serif';
+  function verseOf(actor){return (RUNE_VERSES[actor]||'生者必滅 會者定離').replace(/\s+/g,'');}
+  // 고리 띠에 문장을 이어 쓴다: 글자는 고리 바깥을 머리로 세우고, 한 문장이 끝날 때마다 작은 고리 쉼표.
+  function writeVerse(g,radius,band,actor,color){
+    var text=verseOf(actor),size=band*.74,step=(size*1.08)/radius,n=Math.floor(TAU/step),seq=[],k;
+    for(k=0;seq.length<n;k++){seq.push(text.charAt(k%(text.length+1))||'');}
+    g.fillStyle=color;g.font='bold '+size.toFixed(1)+'px '+RUNE_FONT;g.textAlign='center';g.textBaseline='middle';
+    for(k=0;k<n;k++){var a=TAU*k/n;g.save();g.rotate(a);g.translate(0,-radius);
+      if(seq[k])g.fillText(seq[k],0,1);else{g.lineWidth=1.2;g.strokeStyle=color;g.beginPath();g.arc(0,0,size*.18,0,TAU);g.stroke();}
+      g.restore();}
+  }
   var RUNE_RADII=[114,134,153],RUNE_SPIN=[0.32,-0.21,0.13],RUNE_BAND=[16,12,9],RUNE_ALPHA=[1,0.62,0.38],runeRings={};
   function runeGlyph(g,h,seed){
     var r=function(){seed=(seed*16807)%2147483647;return seed/2147483647;},u=h/2;
@@ -665,12 +679,13 @@
       else {g.moveTo(side*u*.6,-u*.6);g.lineTo(side*u*.6,u*.6);g.moveTo(0,y);g.lineTo(side*u*.6,y);}}
     g.stroke();
   }
-  function buildRuneRing(radius,band,seed,ink){
+  function buildRuneRing(radius,band,seed,ink,actor){
     var pad=band+6,m=radius+pad,c=offscreen(m*2*scale,m*2*scale),g=c.getContext('2d');g.scale(scale,scale);g.translate(m,m);
     g.lineCap='round';g.lineJoin='round';g.shadowColor=mix(ink,'#000000',.35);g.shadowBlur=5;
     g.strokeStyle=ink;g.lineWidth=band>12?1.5:1;[-band/2,band/2].forEach(function(o){g.beginPath();g.arc(0,0,radius+o,0,TAU);g.stroke();});
     var n=Math.floor(TAU*radius/(band*1.15)),h=band*.66,light=mix(ink,'#ffffff',.55);g.strokeStyle=light;g.lineWidth=band>12?1.8:1.05;
-    for(var i=0;i<n;i++){var a=TAU*i/n;g.save();g.rotate(a);g.translate(0,-radius);
+    if(actor){g.shadowBlur=0;writeVerse(g,radius,band,actor,light);}
+    else for(var i=0;i<n;i++){var a=TAU*i/n;g.save();g.rotate(a);g.translate(0,-radius);
       if(i%7===3){g.beginPath();g.arc(0,0,h*.3,0,TAU);g.stroke();g.beginPath();g.arc(0,0,h*.08,0,TAU);g.fillStyle=light;g.fill();} // 문장 사이 쉼표 고리
       else runeGlyph(g,h,seed*977+i*131+7);
       g.restore();}
@@ -684,8 +699,9 @@
     duckMemo.tick=s.tick;duckMemo.v=Math.max(.72,1-n/180);return duckMemo.v;
   }
   function drawRuneBarrier(s,bx,by,size){
-    var ink=mix('#a776ff',themeColor(s).slice(0,7),.4),rings=runeRings[ink];
-    if(!rings)rings=runeRings[ink]=RUNE_RADII.map(function(r,k){return buildRuneRing(r,RUNE_BAND[k],k+1,ink);});
+    if(s.figures.some(function(f){return f.kind==='runes';}))return; // 한자문 고리 공격이 뜬 동안 장식 고리는 비킨다(같은 고리가 커져 공격이 된다)
+    var ink=mix('#a776ff',themeColor(s).slice(0,7),.4),actor=s.boss.actor,key=ink+actor,rings=runeRings[key];
+    if(!rings)rings=runeRings[key]=RUNE_RADII.map(function(r,k){return buildRuneRing(r,RUNE_BAND[k],k+1,ink,actor);});
     var count=compact?2:3,k0=size/190*(compact?.9:1); // 모바일은 바깥 고리를 빼고 조금 작게: 화면 위 1/3을 덮지 않게
     var card=s.stage==='card',duck=card?runeDuck(s,bx,by,RUNE_RADII[count-1]*k0):1,alpha=(card?(compact?.6:.5):.12)*duck;
     var room=Math.min(bx,W-bx,by+60); // 보스에서 플레이필드 가장자리(양옆·위)까지의 거리
@@ -983,6 +999,36 @@
       for(var q=0;q<6;q++){var kx=f.cx+Math.cos(a0+q*Math.PI/3)*ri,ky=f.cy+Math.sin(a0+q*Math.PI/3)*ri,kg=ctx.createRadialGradient(kx,ky,0,kx,ky,46);kg.addColorStop(0,'rgba(0,0,0,'+SIGIL_KNOT+')');kg.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=kg;ctx.fillRect(kx-46,ky-46,92,92);}}
     ctx.restore();
   }
+  /* 한자문 고리 공격: 엔진의 고리(틈 있는 호들)를 굵은 띠로, 띠 안에 보스의 한문 주문을 쓴다.
+     심사(11-15, 5.8점): 예고가 켜진 띠보다 짙어 보였다 → 예고는 점선 윤곽만, 켜지면 띠를 짙게 채우고 글자는 바탕색으로 뒤집어(탁본처럼) 쓴다.
+     글자는 호마다 한 번, 화면 기준 똑바로 세워 쓴다(아래쪽 호에서 뒤집히지 않게). 틈 양끝은 붓을 뗀 먹 맺힘으로 문을 표시. 위쪽 표시(HUD) 자리에는 글자를 쓰지 않는다.
+     판정 선분은 Arcade.figureSegments와 같은 호다(띠 폭 = f.width, 판정은 그 62%). 수묵화풍에서 밝은 색은 먹으로, 어두운 색은 한지로 바뀐다. */
+  function drawRunes(s,f){
+    var color=mix(COLORS[f.color]||'#ffffff','#ffffff',.93),letter='#0c0a08',warn=f.age<f.warn,over=f.age-f.warn-f.active,k=warn?1:over>0?Math.max(0,1-over/Arcade.BEAM_FADE):1,band=f.width;
+    var g0=Arcade.RUNE_GROW||.62,grow=(f.fit||1)*(g0+(1-g0)*(f.grow===undefined?1:f.grow)),cx=finite(f.cx,W/2),cy=finite(f.cy,120),text=verseOf(s.boss.actor),i,j,q,R,rot;
+    var main=ctx,layer=null;if(canvas.width&&canvas.height){if(!runeLayer)runeLayer=document.createElement('canvas');if(runeLayer.width!==canvas.width||runeLayer.height!==canvas.height){runeLayer.width=canvas.width;runeLayer.height=canvas.height;}
+      layer=runeLayer.getContext('2d');layer.setTransform(1,0,0,1,0,0);layer.clearRect(0,0,runeLayer.width,runeLayer.height);layer.setTransform(main.getTransform());ctx=layer;} // 따로 그려 위쪽 표시(HUD) 경계에서 먹이 옅어지며 사라지게 한다
+    ctx.save();ctx.globalCompositeOperation='source-over';ctx.lineCap='butt';
+    if(!warn&&k>0){ctx.globalAlpha=.24*k;ctx.fillStyle=letter;R=0;for(i=0;i<f.rings.length;i++)R=Math.max(R,f.rings[i].r);ctx.beginPath();ctx.arc(cx,cy,R*grow-band/2,0,TAU);ctx.fill();} // 결계 안은 맑은 종이처럼 비운다
+    for(i=0;i<f.rings.length;i++){q=f.rings[i];R=q.r*grow;rot=f.turn*q.dir+q.phase;
+      for(j=0;j<q.n;j++){var a0=rot+TAU*j/q.n+q.gap/2,a1=rot+TAU*(j+1)/q.n-q.gap/2;
+        if(warn){var wg=f.grow;var last=f.warn-f.age<18?(1-(f.warn-f.age)/18)*(.5+.5*Math.sin(f.age*.9)):0;ctx.globalAlpha=.12+.14*wg+.22*last;ctx.strokeStyle=color;ctx.lineWidth=band;ctx.beginPath();ctx.arc(cx,cy,R,a0,a1);ctx.stroke(); // 곧 짙어질 자리를 옅은 담묵 면으로
+          ctx.globalAlpha=.3+.45*wg;ctx.lineWidth=1.6+.8*wg;ctx.setLineDash([5,5]);[-band/2,band/2].forEach(function(o){ctx.beginPath();ctx.arc(cx,cy,R+o,a0,a1);ctx.stroke();});ctx.setLineDash([]); // 점선 윤곽이 1초 동안 짙어진다
+          ctx.globalAlpha=.55+.4*wg;ctx.lineWidth=2.2;[a0,a1].forEach(function(a){ctx.beginPath();ctx.arc(cx+Math.cos(a)*R,cy+Math.sin(a)*R,band*.55,0,TAU);ctx.stroke();});continue;} // 틈 자리 매듭을 먼저 찍는다
+        var lit=f.age-f.warn<10?1-(f.age-f.warn)/10:0,ga=a1+q.gap/2;
+        ctx.globalAlpha=.42*k;ctx.strokeStyle=letter;ctx.lineWidth=band*1.5;ctx.beginPath();ctx.arc(cx,cy,R,a1+.02,a1+q.gap-.02);ctx.stroke(); // 틈은 한지색으로 비워 밝은 문으로 읽히게
+        ctx.globalAlpha=k*(.72+.28*lit);ctx.strokeStyle=color;ctx.lineWidth=band*(1+.3*lit);ctx.beginPath();ctx.arc(cx,cy,R,a0,a1);ctx.stroke(); // 짙은 띠(켜지는 순간 한 번 번진다)
+        ctx.globalAlpha=k;ctx.lineWidth=2.4;ctx.strokeStyle=mix(color,'#ffffff',.5);[-band/2,band/2].forEach(function(o){ctx.beginPath();ctx.arc(cx,cy,R+o,a0,a1);ctx.stroke();}); // 갈필 테
+        ctx.globalAlpha=k*.3;ctx.lineWidth=1;ctx.strokeStyle=letter;[-.22,.05,.28].forEach(function(o,z){ctx.beginPath();ctx.arc(cx,cy,R+band*o,a0+.04*(z+1),a1-.05*(3-z));ctx.stroke();}); // 갈필 비백 줄
+        ctx.globalAlpha=k;ctx.fillStyle=mix(color,'#ffffff',.6);[a0,a1].forEach(function(a,z){var ex=cx+Math.cos(a)*R,ey=cy+Math.sin(a)*R;ctx.beginPath();ctx.ellipse(ex,ey,band*.66,band*.5,a+(z?.5:-.5),0,TAU);ctx.fill();ctx.beginPath();ctx.arc(ex+Math.cos(a+(z?-1:1)*1.6)*band*.4,ey+Math.sin(a+(z?-1:1)*1.6)*band*.4,band*.2,0,TAU);ctx.fill();}); // 틈 양끝 붓을 눌러 뗀 먹 덩이
+        var size=band*.8,step=size*1.18/R,mid=(a0+a1)/2,n=text.length;if(step*n>a1-a0-.08)step=(a1-a0-.08)/n;
+        ctx.fillStyle=letter;ctx.font='bold '+size.toFixed(1)+'px '+RUNE_FONT;ctx.textAlign='center';ctx.textBaseline='middle';
+        for(var c=0;c<n;c++){var u=mid+(c-(n-1)/2)*step*(Math.sin(mid)>0?-1:1),x=cx+Math.cos(u)*R,y=cy+Math.sin(u)*R;if(y<78||x<-10||x>W+10)continue;ctx.fillText(text.charAt(c),x,y+1);}}}
+    ctx.restore();ctx.globalAlpha=1;
+    if(layer){ctx.save();ctx.globalCompositeOperation='destination-out';var fade=ctx.createLinearGradient(0,52,0,84);fade.addColorStop(0,'rgba(0,0,0,1)');fade.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=fade;ctx.fillRect(-60,-60,W+120,144);ctx.restore();
+      ctx=main;ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.drawImage(runeLayer,0,0);ctx.restore();}
+  }
+  var runeLayer=null;
   function drawFigures(s,sigils){
     var list=s.figures;if(!list||!list.length)return;
     var keep=null,f0=null,q0,safe=null;if(sigils){for(q0=0;q0<list.length;q0++)if(list[q0].sigil){f0=list[q0];break;}
@@ -990,7 +1036,7 @@
         var lc=sigLayer.getContext('2d');lc.setTransform(1,0,0,1,0,0);lc.clearRect(0,0,sigLayer.width,sigLayer.height);lc.setTransform(ctx.getTransform());keep=ctx;ctx=lc;}}
     ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
     for(var i=0;i<list.length;i++){
-      var f=list[i];if(!!f.sigil!==!!sigils)continue;ctx.globalAlpha=1;var fa=f.sigil?SIGIL_ALPHA:1;var color=COLORS[f.color]||'#ffffff',segs=Arcade.figureSegments(f),j;if(f.sigil)color=mix(color,SIGIL_MUTE,.32);
+      var f=list[i];if(f.kind==='runes'){if(!sigils)drawRunes(s,f);continue;}if(!!f.sigil!==!!sigils)continue;ctx.globalAlpha=1;var fa=f.sigil?SIGIL_ALPHA:1;var color=COLORS[f.color]||'#ffffff',segs=Arcade.figureSegments(f),j;if(f.sigil)color=mix(color,SIGIL_MUTE,.32);
       var cool=false;if(f.sigil){color=bossTint(s)||COLORS[f.color]||'#ffffff';cool=paleOf(color);var c0=color,n0=parseInt(c0.slice(1,7),16),ba=s.boss&&s.boss.present&&Arcade.ACTORS[s.boss.actor],grey=Math.max(n0>>16&255,n0>>8&255,n0&255)-Math.min(n0>>16&255,n0>>8&255,n0&255)<60||!!(ba&&(ba.c2===0||ba.c2===2));if(cool)color=grey?mix(c0,SIGIL_VIOLET,.97):mix(color,SIGIL_COOL,.92);else color=sigilHue(color);} // 흰 보스와 붉은·보라 보조색 금빛 보스(루시퍼 등)는 보랏빛, 나머지 금빛 보스는 얼음빛: 셋이 같은 청록으로 모였다(심사 11차) // 보스 고유색(심사 6.13). 금빛·흰빛 보스는 탄도 같은 빛이라 차가운 백청으로 비튼다(심사 6.36)
       if(f.sigil)drawSigilFrame(f,segs.slice(0,segs.length-(f.ring||0)),color,f.age<f.warn?Math.min(1,f.age/12):1,f.age>=f.warn);
       ctx.beginPath();for(j=0;j<segs.length;j++){var g=segs[j];ctx.moveTo(g[0],g[1]);ctx.lineTo(g[2],g[3]);}
