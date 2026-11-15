@@ -6,7 +6,8 @@
  *  4) 프레임 끝에 한지 결·가장자리 먹 번짐을 덮는다. */
 (function(global){'use strict';
   var on=!/[?&]ink=0(&|$)/.test(global.location&&global.location.search||'');
-  global.HapilInk={on:on};
+  var mono=+((/[?&]mono=([12])(&|$)/.exec(global.location&&global.location.search||'')||[])[1]||0); // 시안: 1 = 탄·광선까지 완전 흑백, 2 = 흑백에 붉은 계열만 인주색으로 남김
+  global.HapilInk={on:on,mono:on?mono:0};
   if(!on||!global.CanvasRenderingContext2D)return;
   document.documentElement.classList.add('ink');
 
@@ -30,6 +31,7 @@
     if(d){if(mx===r/255)h=((g-b)/255/d)%6;else if(mx===g/255)h=(b-r)/255/d+2;else h=(r-g)/255/d+4;h*=60;}
     var l2=.11+.82*(1-l),s2=Math.min(1,s)*.5*(l>.9?.4:1); // 거의 흰 색은 그냥 먹
     if(s>.25&&h>28&&h<75){l2=Math.min(l2,.3);s2=Math.max(s2,.6);} // 황토는 한지와 붙지 않게 짙고 진하게
+    if(mono){var hn=((h%360)+360)%360;if(mono===2&&s>.3&&(hn<20||hn>330)){h=6;s2=.72;l2=Math.min(l2,.44);}else s2=0;} // 흑백 시안: 색을 빼고 먹 농담만(2는 붉은 계열만 인주색)
     var c=(1-Math.abs(2*l2-1))*s2,x=c*(1-Math.abs((h/60)%2-1)),m=l2-c/2,R=0,G=0,B=0;h=((h%360)+360)%360;
     if(h<60){R=c;G=x;}else if(h<120){R=x;G=c;}else if(h<180){G=c;B=x;}else if(h<240){G=x;B=c;}else if(h<300){R=x;B=c;}else{R=c;B=x;}
     // 한지·먹의 따뜻한 기운을 살짝 섞는다
@@ -38,6 +40,7 @@
   }
   /* 뜻이 정해진 색: 영웅 자리 고리 = 그리지 않음(사용자 11-15), 판정점 = 가라앉힌 인주 테 + 먹 점(튀지 않게), 영웅 탄 = 담묵(적 탄 안료 색과 겹치지 않게) */
   var FIXED={'#7ff3ff':'rgba(30,26,24,0)','#ff2a4a':'rgba(150,56,44,.8)','#fa800a':'rgba(44,40,42,1)','#fa800a00':'rgba(44,40,42,0)','#c9406e':'rgba(198,46,36,1)','#f7b6cc':'rgba(240,170,150,1)','#f2c46d':'rgba(30,26,24,1)'};
+  if(mono===1){FIXED['#c9406e']='rgba(52,46,44,1)';FIXED['#f7b6cc']='rgba(156,148,140,1)';}
   var memo={},memoN=0,VEIL=/^rgba\(5,5,14,\.(56|68)\)$/;
   function remap(v){
     if(hold||typeof v!=='string')return v;
@@ -76,7 +79,7 @@
   function washSprite(img){
     var w=img.naturalWidth,h=img.naturalHeight,c=canvasOf(w,h),g=c.getContext('2d',{willReadFrequently:true});rawDraw.call(g,img,0,0);
     var data;try{data=g.getImageData(0,0,w,h);}catch(e){return img;}
-    var p=data.data,i,x,y,v,r,gg,b,hero=/gunner/.test(img.src),keep=hero?.12:.14,n=w*h,A=new Uint8Array(n);
+    var p=data.data,i,x,y,v,r,gg,b,hero=/gunner/.test(img.src),keep=mono?0:hero?.12:.14,n=w*h,A=new Uint8Array(n);
     for(i=0;i<n;i++)A[i]=p[i*4+3];
     for(i=0;i<p.length;i+=4){if(!p[i+3])continue;r=p[i];gg=p[i+1];b=p[i+2];y=r*.299+gg*.587+b*.114;
       v=y/255;v=v<.5?2*v*v:1-2*(1-v)*(1-v);v=Math.pow(v,hero?1.05:.78);var qb=v*5,qf=Math.floor(qb),qr=qb-qf;qr=qr<.25?0:qr>.75?1:(qr-.25)*2;v=(qf+qr)/5; // 농담을 다섯 단으로 묶는다(붓으로 겹쳐 칠한 면)
@@ -101,7 +104,7 @@
       for(x=0;x<w;x++){acc=0;for(k=-rad;k<=rad;k++)acc+=T[((k+h)%h)*w+x];for(y=0;y<h;y++){dst[y*w+x]=acc/(rad*2+1);acc+=T[((y+rad+1)%h)*w+x]-T[((y-rad+h)%h)*w+x];}}}
     blur(L,B,3);blur(B,B,3);blur(B,B,2); // 넓게 풀어 번짐 면을 만든다(잔무늬·돋을새김 느낌을 없앤다)
     var mr=0,mg=0,mb=0;for(i=0;i<n;i+=7){mr+=p[i*4];mg+=p[i*4+1];mb+=p[i*4+2];}
-    var mM=Math.max(mr,mg,mb)||1,T=[.74+.26*mr/mM,.74+.26*mg/mM,.74+.26*mb/mM]; // 지역 담채: 원화의 주된 색 기운을 옅게 곱한다
+    var mM=Math.max(mr,mg,mb)||1,T=mono?[.88,.87,.85]:[.74+.26*mr/mM,.74+.26*mg/mM,.74+.26*mb/mM]; // 지역 담채: 원화의 주된 색 기운을 옅게 곱한다
     for(i=0;i<n;i++)hist[Math.min(255,B[i]|0)]++;
     var rank=new Float32Array(256),acc=0;for(i=0;i<256;i++){acc+=hist[i];rank[i]=acc/n;}
     for(y=0;y<h;y++)for(x=0;x<w;x++){i=y*w+x;
@@ -167,10 +170,12 @@
       g.fillStyle=css(pig,.95);g.beginPath();g.ellipse(L*.3,0,L*.42,r*.5,0,0,6.283);g.fill();
       g.strokeStyle=css(PAPER,.7);g.lineWidth=Math.max(.4,r*.16);for(i=0;i<2;i++){var yy=(i-.5)*r*.7;g.beginPath();g.moveTo(-L*.75,yy);g.lineTo(-L*.2,yy*.8);g.stroke();}
     }else{
-      // 큰 방울: 한 붓으로 돌린 원(끝이 살짝 벌어진다)
-      g.fillStyle=css(pig,.2);blob(g,r*.98,.08,16);g.fill();
-      var a0=rnd()*6.283,steps=40;for(i=0;i<steps;i++){var u=i/steps,a=a0+u*5.9,w=r*(.2-.14*u)*(1+(rnd()-.5)*.25);g.strokeStyle=css(dark,.95-.5*u*u);g.lineWidth=Math.max(.8,w);g.beginPath();g.arc(0,0,r*.86,a,a+5.9/steps+.05);g.stroke();}
-      g.fillStyle=css(pig,1);blob(g,r*.28,.3,9);g.fill();
+      // 큰 방울: 고리 없이 번진 담묵 덩이(사용자 11-15 "감싸는 원 모두 없애줘"). 크기(판정)는 그대로, 가운데로 갈수록 짙다
+      var deep=[Math.round(pig[0]*.72+INK[0]*.28),Math.round(pig[1]*.72+INK[1]*.28),Math.round(pig[2]*.72+INK[2]*.28)];
+      g.fillStyle=css(deep,.13);blob(g,r*1.17,.34,11);g.fill(); // 바깥 번짐은 옅게, 겹쳐도 안개가 되지 않게
+      var wash=g.createRadialGradient(0,0,r*.08,0,0,r);wash.addColorStop(0,css(dark,.97));wash.addColorStop(.3,css(dark,.9));wash.addColorStop(.5,css(deep,.8));wash.addColorStop(.9,css(deep,.74));wash.addColorStop(1,css(dark,.82));
+      g.fillStyle=wash;blob(g,r*.97,.2,13);g.fill(); // 몸: 고르지 않은 둘레의 먹 덩이, 가장자리에 물 고인 짙은 기운(선이 아니라 농담)
+      g.fillStyle=css(PAPER,.22);for(i=0;i<4;i++){var ba=rnd()*6.283,bd=r*(.5+rnd()*.3);g.beginPath();g.ellipse(Math.cos(ba)*bd,Math.sin(ba)*bd,r*.09,r*.03,ba,0,6.283);g.fill();} // 비백
     }
     hold--;return {image:c,half:reach};
   }

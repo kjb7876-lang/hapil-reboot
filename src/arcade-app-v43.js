@@ -614,7 +614,7 @@
       }else{
         var k=age/.75;if(k>=1){casts.splice(i,1);continue;}
         ctx.save();ctx.globalCompositeOperation='lighter';ctx.strokeStyle=c.color;
-        for(var q=0;q<(c.big?3:2);q++){var kk=k-q*.14;if(kk<=0)continue;ctx.globalAlpha=.7*(1-kk);ctx.lineWidth=7*(1-kk)+1;ctx.beginPath();ctx.arc(c.x,c.y,24+kk*(c.big?150:105),0,TAU);ctx.stroke();}
+        for(var q=0;q<(Ink?0:c.big?3:2);q++){var kk=k-q*.14;if(kk<=0)continue;ctx.globalAlpha=.7*(1-kk);ctx.lineWidth=7*(1-kk)+1;ctx.beginPath();ctx.arc(c.x,c.y,24+kk*(c.big?150:105),0,TAU);ctx.stroke();}
         ctx.restore();
       }
     }
@@ -629,7 +629,7 @@
   function drawFlashes(){if(!flashes.length)return;ctx.save();ctx.globalCompositeOperation='lighter';
     for(var i=flashes.length-1;i>=0;i--){var f=flashes[i],k=1-f.t/4,r=5+f.t*3;ctx.globalAlpha=.9*k;ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(f.x,f.y,2.6*k+1,0,TAU);ctx.fill();
       ctx.strokeStyle='#ffb04a';ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(f.x-r,f.y);ctx.lineTo(f.x+r,f.y);ctx.moveTo(f.x,f.y-r);ctx.lineTo(f.x,f.y+r);ctx.stroke();
-      ctx.beginPath();ctx.arc(f.x,f.y,r*.7,0,TAU);ctx.stroke();if(++f.t>3)flashes.splice(i,1);}
+      if(!Ink){ctx.beginPath();ctx.arc(f.x,f.y,r*.7,0,TAU);ctx.stroke();}if(++f.t>3)flashes.splice(i,1);} // 수묵: 감싸는 원은 그리지 않는다(사용자 11-15)
     ctx.restore();}
   function hitSpark(x,y,color,n){for(var q=0;q<n;q++){var a=-Math.PI/2+(Math.random()-.5)*2.2,v=1.6+Math.random()*2.2;addParticle(x+(Math.random()-.5)*10,y,Math.cos(a)*v,Math.sin(a)*v,9+(q%3)*3,q%2?'#ffffff':color,2.5);}}
   function recoilOf(s,b){ // 연사로 매 틱 맞으므로 18틱에 한 번만 크게 젖힌다(아래에서 쏘니 위·옆으로 젖혀진다)
@@ -777,8 +777,8 @@
   var FLOOR_HOT='#ff5a3c'; // 경고색은 영웅 탄(주황)과 다른 붉은 쪽(심사 2차)
   function drawFloor(s){
     var F=s.floor;if(!F)return;var C=Arcade.FLOOR_CELL,N=Arcade.FLOOR_COLS,c,r,k,v,hill=false,theme=themeColor(s);
-    var stone=mix('#3a3546',theme,.28),stoneEdge=mix('#8d8799',theme,.3),live=mix(mix(theme,'#3a3546',.35),'#000000',.15),pulse=.6+.4*Math.sin(visual*12),HOT=Ink?'#c2362a':FLOOR_HOT,PAPER='#f2e9d6';
-    if(Ink){stone='#4c463f';stoneEdge=PAPER;live='#c2362a';} // 수묵: 먹 바위, 한지색 테, 인주색 경고(이 함수는 HapilInk.raw 안에서 돌아 색이 그대로 찍힌다)
+    var stone=mix('#3a3546',theme,.28),stoneEdge=mix('#8d8799',theme,.3),live=mix(mix(theme,'#3a3546',.35),'#000000',.15),pulse=.6+.4*Math.sin(visual*12),HOT=Ink?(Ink.mono===1?'#26221f':'#c2362a'):FLOOR_HOT,PAPER='#f2e9d6';
+    if(Ink){stone='#4c463f';stoneEdge=PAPER;live=HOT;} // 수묵: 먹 바위, 한지색 테, 인주색 경고(이 함수는 HapilInk.raw 안에서 돌아 색이 그대로 찍힌다)
     ctx.save();
     for(c=0;c<N;c++)if(F.hill[c]>.5){hill=true;break;}
     if(hill){ // 지형: 기둥 높이를 곡선으로 잇고, 장면 색 바위에 밝은 능선
@@ -1052,7 +1052,7 @@
   function drawHitbox(s){
     var p=s.player;
     if(!p.focus){ctx.globalAlpha=.85;ctx.fillStyle='#ff2a4a';ctx.beginPath();ctx.arc(p.x,p.y,p.r+1.4,0,TAU);ctx.fill();ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(p.x,p.y,Math.max(1,p.r*.8),0,TAU);ctx.fill();ctx.globalAlpha=1;return;} // 판정점은 늘 작게 보인다(심사 7차). 저속이면 아래처럼 고리까지
-    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(visual*3);ctx.strokeStyle='rgba(255,255,255,.6)';ctx.lineWidth=1;ctx.setLineDash([5,5]);ctx.beginPath();ctx.arc(0,0,17,0,TAU);ctx.stroke();ctx.restore();
+    if(!Ink){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(visual*3);ctx.strokeStyle='rgba(255,255,255,.6)';ctx.lineWidth=1;ctx.setLineDash([5,5]);ctx.beginPath();ctx.arc(0,0,17,0,TAU);ctx.stroke();ctx.restore();}
     ctx.fillStyle='#ff2a4a';ctx.beginPath();ctx.arc(p.x,p.y,p.r+1.8,0,TAU);ctx.fill();
     ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(p.x,p.y,Math.max(1.2,p.r),0,TAU);ctx.fill();
   }
