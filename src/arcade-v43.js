@@ -81,8 +81,8 @@
     hell:{density:2.6,speed:.9,hp:3,mapHeal:-1,bombs:1,radius:2.4,hitScale:.5,warn:1,beam:1,label:'지옥'}
   };
   /* 난이도 곡선(사용자 11-15 "헬난이도 킵 이지랑 노멀은 초반구간은 지금보다30프로널널하게 점점 빡빡해지게"):
-     헬은 표 그대로. 이지·노멀은 첫 스테이지 탄 수 70%·탄 속도 90%에서 시작해 마지막 스테이지 탄 수 110%·속도 104%까지 스테이지마다 조금씩 오른다. */
-  var CURVE_START=.7,CURVE_END=1.1,PACE_START=.9,PACE_END=1.04;
+     헬은 표 그대로. 이지·노멀은 첫 스테이지 탄 수 70%에서 시작해 마지막 스테이지 110%까지 스테이지마다 조금씩 오른다. */
+  var CURVE_START=.7,CURVE_END=1.1,PACE_START=1,PACE_END=1; // 속도는 그대로(탄이 화면 아래까지 닿는 시간을 지킨다), 탄 수만 곡선
   function applyCurve(s){var base=DIFFICULTY[s.difficulty],u=STAGES.length>1?Math.max(0,Math.min(1,s.stageIndex/(STAGES.length-1))):0,hell=s.difficulty==='hell';
     var d=hell?1:CURVE_START+(CURVE_END-CURVE_START)*u,v=hell?1:PACE_START+(PACE_END-PACE_START)*u;
     s.rules.speed=base.speed*v;s.density=base.density*d*(s.compact?COMPACT_DENSITY:1);}

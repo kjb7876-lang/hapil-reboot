@@ -1175,7 +1175,7 @@
     }
     ctx.restore();
     if(shock&&shock.ink){var sk=Math.max(0,1-shock.r/300);if(Ink&&Ink.raw)Ink.raw(1);var cg=ctx.createRadialGradient(shock.x,shock.y,0,shock.x,shock.y,shock.r+40);cg.addColorStop(0,'rgba(250,246,236,'+(.55*sk)+')');cg.addColorStop(.75,'rgba(250,246,236,'+(.35*sk)+')');cg.addColorStop(1,'rgba(250,246,236,0)');ctx.fillStyle=cg;ctx.fillRect(shock.x-shock.r-40,shock.y-shock.r-40,(shock.r+40)*2,(shock.r+40)*2);if(Ink&&Ink.raw)Ink.raw(-1);shock.r+=9;if(shock.r>300)shock=null;} // 탄 지우기: 보스 둘레 바탕이 한지빛으로 걷히며 퍼진다(원 고리 없이, 붉은색 없이)
-    if(shock&&!shock.ink){var sk=Math.max(0,1-shock.r/420);ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=sk*.85;ctx.strokeStyle=shock.ink?'#ffffff':state?themeColor(state):'#ffffff';ctx.lineWidth=1+4*sk;/* 충격파: 보스·장면 색, 퍼질수록 얇아진다 */ctx.beginPath();ctx.arc(shock.x,shock.y,shock.r,0,TAU);ctx.stroke();ctx.restore();shock.r+=13;if(shock.r>420)shock=null;}
+    else if(shock){var sk=Math.max(0,1-shock.r/420);ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=sk*.85;ctx.strokeStyle=state?themeColor(state):'#ffffff';ctx.lineWidth=1+4*sk;/* 충격파: 보스·장면 색, 퍼질수록 얇아진다 */ctx.beginPath();ctx.arc(shock.x,shock.y,shock.r,0,TAU);ctx.stroke();ctx.restore();shock.r+=13;if(shock.r>420)shock=null;}
   }
   function pad(n){return ('00000000'+Math.max(0,Math.floor(finite(n,0)))).slice(-8);}
   function starText(n){var out='';for(var i=0;i<3;i++)out+=i<n?'★':'☆';return out;}

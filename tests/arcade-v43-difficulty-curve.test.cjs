@@ -11,7 +11,7 @@ test('hell keeps its density and speed on every stage',()=>{
 test('easy and normal start about 30% looser than before',()=>{
   for(const d of ['gentle','normal']){const s=at(d,0),base=A.DIFFICULTY[d];
     assert(Math.abs(s.density/base.density-.7)<.03,d+' first stage density x'+(s.density/base.density).toFixed(2));
-    assert(s.rules.speed<base.speed*.95,d+' first stage bullets slower');}
+    assert.equal(s.rules.speed,base.speed,d+' bullet speed unchanged');}
 });
 test('easy and normal tighten stage by stage and end tighter than before',()=>{
   for(const d of ['gentle','normal']){let prev=0;
