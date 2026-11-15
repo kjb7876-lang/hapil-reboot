@@ -1311,6 +1311,7 @@
   /* run: {stage, bossOnly}. 원큐: 그 스테이지부터 끝까지 이어진다. */
   function start(run){
     if(fx)fx.unlock();
+    var quiet=!!(run&&run.quiet);
     run={stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),segment:run&&run.segment,carry:run&&run.carry};
     lastRun=run;
     var options={difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,compact:compact,bossOnly:run.bossOnly,growth:true}; // 중간 스테이지에서 시작하면 그만큼 자란 기억사수로(엔진 createRun)
@@ -1319,6 +1320,7 @@
     if(run.carry){state.hits+=run.carry.hits|0;state.bombsUsed+=run.carry.bombs|0;} // 중간 저장에서 이어 하면 앞 구간의 피격·폭탄도 별에 반영
     buildSprites();loadStage(state.stageIndex);fxStage=-1;
     particles.length=0;drifts.length=0;flash=hurtFlash=shake=banner=0;shock=null;hurtRing=null;toast=null;if(HeroFx)HeroFx.reset();accumulator=0;lastStamp=0;framesSeen=0;rushStage=false;setMode('playing');
+    if(global.HapilEyes)global.HapilEyes[quiet?'clear':'open'](); // 눈 뜨기(arcade-eyes-v43.js). 디버그 건너뛰기는 연출 없이
   }
   function finish(){
     var s=state,won=s.stage==='won';rushStage=false;
@@ -1333,10 +1335,11 @@
     else retry.hidden=true;
     retry.dataset.boss=s.bossOnly?'1':'';
     $('arcade-home').className=retry.hidden?'primary':'';
-    setTimeout(function(){if(state===s)setMode('result');},won?1500:900);
+    var eyes=!won&&global.HapilEyes;if(eyes)eyes.close(); // 목숨이 다하면 눈을 감고, 다 감긴 뒤 결과 화면
+    setTimeout(function(){if(state===s)setMode('result');},won?1500:eyes?Math.round(eyes.CLOSE_SECONDS*1000)+350:900);
   }
   function pause(){if(mode==='playing')setMode('paused');}
-  function goTitle(){if(loadedStage>=0)releaseStage(loadedStage,-1);state=null;toast=null;refreshTitle();setMode('title');}
+  function goTitle(){if(global.HapilEyes)global.HapilEyes.clear();if(loadedStage>=0)releaseStage(loadedStage,-1);state=null;toast=null;refreshTitle();setMode('title');}
   function bossStages(){return Arcade.STAGES.filter(function(g){return g.kind==='boss'&&progress.cleared.indexOf(g.index)>=0;});}
   function actorNames(index){var names=[];Arcade.SEGMENTS.forEach(function(seg){if(seg.stage===index&&seg.kind==='card'){var who=Arcade.ACTORS[seg.actor],n=who?who.name:seg.actor;if(names.indexOf(n)<0)names.push(n);}});return names;}
   // 스테이지 선택: 부별로 묶고, 잠긴 스테이지는 고를 수 없다. 깬 스테이지에는 별을 단다.
@@ -1448,8 +1451,8 @@
     pause:pause,back:function(){if(mode==='paused')$('arcade-resume').click();else if(mode!=='title'&&mode!=='playing')goTitle();}, // 앱의 뒤로가기(arcade-mobile-v43.js)
     debugState:function(){
       return {state:state,app:snapshot(),progress:JSON.parse(JSON.stringify(progress)),saved:(function(){try{return global.localStorage.getItem(SAVE_KEY);}catch(e){return null;}})(),
-        jumpStage:function(i,bossOnly){start({stage:i,bossOnly:!!bossOnly});return snapshot();},
-        jumpSegment:function(i){var seg=Arcade.SEGMENTS[i];if(!seg)return null;start({stage:seg.stage,segment:i});return snapshot();},
+        jumpStage:function(i,bossOnly){start({stage:i,bossOnly:!!bossOnly,quiet:true});return snapshot();},
+        jumpSegment:function(i){var seg=Arcade.SEGMENTS[i];if(!seg)return null;start({stage:seg.stage,segment:i,quiet:true});return snapshot();},
         finishStage:function(){if(state&&mode==='playing')rushStage=true;return snapshot();},
         turbo:function(n){turbo=Math.max(0,Math.min(600,n|0));return turbo;},
         lose:function(){if(!state||mode!=='playing')return null;state.player.hp=0;state.stage='lost';state.stageTick=0;state.events.push('lose');consume();return snapshot();},
