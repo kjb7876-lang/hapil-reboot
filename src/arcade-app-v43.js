@@ -254,7 +254,7 @@
       if(background){background.width=background.height=0;background=null;}
       var lt=Math.max(120,Math.round(W*limg.height/limg.width)),lc=offscreen(W,lt),lg=lc.getContext('2d');
       lg.drawImage(limg,0,0,W,lt);
-      lg.globalCompositeOperation='color';lg.globalAlpha=.22;lg.fillStyle=tintOf(index);lg.fillRect(0,0,W,lt); // 테마 색을 옅게만 입힌다(원화 색을 살린다)
+      if(!MONO){lg.globalCompositeOperation='color';lg.globalAlpha=.22;lg.fillStyle=tintOf(index);lg.fillRect(0,0,W,lt);} // 테마 색을 옅게만 입힌다(원화 색을 살린다)
       lg.globalCompositeOperation='source-over';lg.globalAlpha=1;lg.fillStyle='rgba(5,5,14,.56)';lg.fillRect(0,0,W,lt); // 탄이 읽히도록 어둡게 누른다
       background=lc;backgroundTall=lt;backgroundStage=index;return;
     }
@@ -264,7 +264,7 @@
     if(img){
       g.filter='blur(1.5px)';g.drawImage(img,0,0,W,tall);g.filter='none';
       // 원화 위에 색조를 입힌다(색상만 바꾸고 밝기는 그대로).
-      g.globalCompositeOperation='color';g.globalAlpha=.42;g.fillStyle=tint;g.fillRect(0,0,W,tall);
+      if(!MONO){g.globalCompositeOperation='color';g.globalAlpha=.42;g.fillStyle=tint;g.fillRect(0,0,W,tall);}
       g.globalCompositeOperation='source-over';g.globalAlpha=1;g.fillStyle='rgba(5,5,14,.68)';g.fillRect(0,0,W,tall);
     }else{
       var top=g.createLinearGradient(0,0,0,tall);
@@ -774,6 +774,7 @@
   /* 아래쪽 압박(사용자 11-15): 쌓인 블록·떨어지는 조각·솟은 지형·올라올 몹 예고. 판정은 엔진(Arcade.floorTop·조각 칸)과 같은 칸이다.
      심사 1차(5.97): 네온 원색 블록이 화풍과 따로 논다 → 장면 색으로 물든 돌 블록. 닿으면 아픈 떨어지는 조각만 따뜻한 경고 테가 맥동하고, 쌓인 블록은 무채색 돌.
      화면 높이 빛기둥 대신 떨어질 자리에 점선 윤곽만. 지형은 장면 색 바위에 밝은 능선, 솟을 때 흙먼지. */
+  var MONO=!!(Ink&&Ink.mono); // 먹 농담 화면: 배경에 테마 색을 입히지 않는다(붉은 테마 스테이지 배경이 분홍으로 물들던 것)
   var WARN_RED=!!(Ink&&Ink.mono===2); // 먹 화면에서는 모든 광선 예고선을 인주색으로(사용자 11-15 "경고는 인주색")
   var FLOOR_HOT='#ff5a3c'; // 경고색은 영웅 탄(주황)과 다른 붉은 쪽(심사 2차)
   function drawFloor(s){
