@@ -5,7 +5,7 @@
  * - 출시 빌드라 개발자 모드 버튼을 숨긴다(DEV_VISIBLE=false). 저장소 원본은 바꾸지 않는다.
  * 사용: node tools/build-app-www.cjs [출력 폴더, 기본 app/www] */
 const fs=require('fs'),path=require('path');
-const root=path.join(__dirname,'..'),out=path.resolve(root,process.argv[2]||'app/www');
+const root=path.join(__dirname,'..'),out=process.argv[2]?path.resolve(process.cwd(),process.argv[2]):path.join(root,'app/www'); // 인자는 지금 폴더 기준
 const MEDIA=['media/arcade-v43','media/arcade-v43-fx','media/arcade-v43-laser','media/music.mp3','media/gunner.webp'];
 function copy(rel){const from=path.join(root,rel),to=path.join(out,rel);const st=fs.statSync(from);
   if(st.isDirectory()){for(const f of fs.readdirSync(from))copy(path.join(rel,f));return;}
