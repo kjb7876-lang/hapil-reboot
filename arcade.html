@@ -53,6 +53,19 @@
     .keepsake img{max-width:100%;max-height:100%;object-fit:contain}
     .keepsake .sheet{height:100%;max-width:100%;background-repeat:no-repeat;background-position:0 0}
     .keepsake.locked{background:repeating-linear-gradient(45deg,#101020 0 6px,#16162a 6px 12px);color:#55506e;font-size:14px}
+    /* 수묵화풍 시안(?ink=1 일 때만 html.ink) */
+    html.ink,html.ink body{color:#2a2420}
+    html.ink canvas{background:#f2e9d6}
+    html.ink #arcade-bleed{filter:blur(14px) grayscale(1) invert(.86) sepia(.3) brightness(1.05)}
+    html.ink .screen{background:rgba(242,233,214,.86)}
+    html.ink #arcade-title{background:radial-gradient(120% 70% at 50% 18%,rgba(120,104,84,.28),rgba(242,233,214,.92) 62%)}
+    html.ink h1,html.ink h2{color:#1e1a18;text-shadow:none}html.ink #arcade-title h1{text-shadow:0 0 18px rgba(30,26,24,.25)}
+    html.ink .kicker{color:#8c2f26}html.ink .note{color:#5a5048}html.ink .screen .score{color:#1e1a18}
+    html.ink button,html.ink a.button,html.ink select{background:#ebe0c8;border-color:#8a7c68;color:#2a2420}
+    html.ink button[aria-pressed="true"]{background:#d9cbae;border-color:#1e1a18;color:#1e1a18}
+    html.ink button.primary{background:#1e1a18;border-color:#1e1a18;color:#f2e9d6}
+    html.ink .pad,html.ink #arcade-pause-button{background:rgba(242,233,214,.55);border-color:rgba(30,26,24,.45);color:rgba(30,26,24,.85)}
+    html.ink .hudx{filter:invert(1) hue-rotate(180deg) saturate(.7) sepia(.3)}html.ink .hudx img{filter:invert(1) hue-rotate(180deg)}
   </style>
 </head>
 <body>
@@ -138,6 +151,7 @@
   <script src="src/arcade-parts-v43/p8.js?v=20261115-arcade43-load"></script>
   <script src="src/arcade-v43.js?v=20261115-arcade43-load"></script>
   <script src="src/arcade-skins-v43.js?v=20261115-arcade43-load"></script>
+  <script src="src/ink-v43.js?v=20261115-arcade43-load"></script>
   <script src="src/arcade-app-v43.js?v=20261115-arcade43-load"></script>
 </body>
 </html>

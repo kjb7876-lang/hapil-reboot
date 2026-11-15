@@ -145,11 +145,13 @@
   /* ── 탄 그림 ── */
   /* 구슬탄 한 장: 옅은 빛무리 → 단색 속 → 밝은 테두리. 색 6 × 모양을 미리 그려 두고 찍기만 한다. */
   // 흰빛에 가까운 탄은 흰 테두리·센 빛무리면 겹칠 때 하얀 덩어리로 번진다(7전문가 심사 11-14). 짙은 테두리, 옅은 빛무리로 낱알을 지킨다.
+  var Ink=global.HapilInk&&global.HapilInk.on&&global.HapilInk.sprite?global.HapilInk:null; // 수묵화풍 시안(?ink=1): 탄 그림만 붓 자국으로 바꿔 굽는다
   var PALE_RIM='#41506e';
   function paleOf(color){var n=parseInt(String(color).slice(1,7),16);if(n!==n)return false;return ((n>>16&255)*.299+(n>>8&255)*.587+(n&255)*.114)>200;}
   function paleRimOf(color){return paleOf(color)?PALE_RIM:'#ffffff';}
   function haloOf(color,strong){return paleOf(color)?'33':strong;}
   function buildOrb(radius,color,tint){
+    if(Ink)return Ink.sprite('orb',radius,color,scale,tint);
     var reach=radius*(lite?1.2:1.9),c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale,r=radius*scale,grad;
     if(!lite){grad=g.createRadialGradient(m,m,r*.8,m,m,reach*scale);var hc=tint&&tint!==color?mix(color,tint,.55):color;grad.addColorStop(0,hc+haloOf(color,'77'));grad.addColorStop(1,hc+'00');g.fillStyle=grad;g.fillRect(0,0,c.width,c.height);}
     // 몸통: 가운데 흰 심 → 밝은 색 → 제 색 → 가장자리 짙은 색(보석처럼 깊이가 생긴다, 사용자 요청 11-14 동방식 탄 미감)
@@ -184,6 +186,7 @@
   function skinOfBullet(kind,color){var key=kind+color+orbTint;if(!skinSprites[key])skinSprites[key]=buildSkin(kind,Arcade.SIZE_RADIUS[1]*(state?state.sizeScale:compact?1.25:1),COLORS[color],orbTint);return skinSprites[key];}
   // 쌀알탄: 오른쪽(진행 방향)으로 길쭉한 알. 그릴 때 탄의 각도로 돌린다.
   function buildRice(radius,color){
+    if(Ink)return Ink.sprite('rice',radius,color,scale);
     var longHalf=radius*2.6,reach=longHalf+3,c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale;
     g.translate(m,m);g.scale(scale,scale);
     g.fillStyle='#ffffff';g.beginPath();g.ellipse(0,0,longHalf,radius,0,0,TAU);g.fill();
@@ -194,6 +197,7 @@
   }
   // 거품: 속이 비치는 큰 방울
   function buildBubble(radius,color){
+    if(Ink)return Ink.sprite('bubble',radius,color,scale);
     var reach=radius*1.2,c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale,r=radius*scale;
     g.fillStyle=color+'66';g.beginPath();g.arc(m,m,r,0,TAU);g.fill();
     g.strokeStyle='#ffffff';g.lineWidth=Math.max(1.5,r*.12);g.beginPath();g.arc(m,m,r-g.lineWidth/2,0,TAU);g.stroke();
