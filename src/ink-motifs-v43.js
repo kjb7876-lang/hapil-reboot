@@ -100,16 +100,15 @@
     stroke(c,[[0,-s*.05,s*.14],[0,s*.14,s*.07],[0,s*.3,s*.07],[0,s*.74,s*.13]],.93,6);blob(c,0,s*.2,s*.14,.94,7,.08);
     c.save();c.translate(0,s*.88);c.scale(1,.3);blob(c,0,0,s*.5,.92,8,.05);c.restore();c.fillStyle='rgba('+PAPER+',.55)';c.fillRect(-s*.3,s*.85,s*.6,s*.02);
     stroke(c,curve([s*.42,-s*.84],[s*.5,-s*.5],[s*.44,-s*.2],6,s*.05,s*.04,s*.012),.9,9);drop(c,s*.44,-s*.08,s*.05,.9);drop(c,-s*.3,-s*.98,s*.04,.8);drop(c,s*.1,-s*1.05,s*.03,.7);flecks(c,0,-s*.45,s*.8,s*.6,8,6);};
-  // 십자가: 비스듬히 선 돌 묘표. 끝이 세 갈래로 벌어지고 밑동에 흙무더기
-  M.cross=function(c,s){wash(c,0,s*.6,s*.8,.2);
-    stroke(c,[[0,-s*1.0,s*.24],[s*.01,-s*.45,s*.21],[-s*.01,s*.3,s*.24],[0,s*.9,s*.28]],.6,3);stroke(c,[[-s*.56,-s*.45,s*.22],[0,-s*.46,s*.19],[s*.56,-s*.44,s*.22]],.6,4);stroke(c,[[-s*.11,-s*1.0,s*.05],[-s*.1,-s*.45,s*.045],[-s*.12,s*.3,s*.06],[-s*.13,s*.9,s*.05]],.92,41);stroke(c,[[s*.11,-s*1.0,s*.03],[s*.1,s*.3,s*.035],[s*.13,s*.9,s*.03]],.8,42);stroke(c,[[-s*.56,-s*.55,s*.04],[s*.56,-s*.54,s*.04]],.9,43);stroke(c,[[-s*.56,-s*.35,s*.03],[s*.56,-s*.34,s*.03]],.8,44);
-    [[0,-1.0],[-.56,-.45],[.56,-.45]].forEach(function(p,k){blob(c,p[0]*s,p[1]*s,s*.13,.93,10+k,.14);});
-    c.fillStyle='rgba('+PAPER+',.6)';c.fillRect(-s*.02,-s*.85,s*.035,s*1.5);c.fillRect(-s*.42,-s*.47,s*.84,s*.03);
-    ring(c,0,-s*.45,s*.3,s*.3,s*.07,.8,5);
-    stroke(c,[[s*.04,-s*.2,s*.02],[-s*.05,-s*.02,s*.035],[s*.03,s*.14,s*.02],[-s*.02,s*.3,s*.01]],.0001,6);
-    c.strokeStyle='rgba('+PAPER+',.7)';c.lineWidth=s*.022;c.beginPath();c.moveTo(s*.07,-s*.12);c.lineTo(-s*.04,s*.05);c.lineTo(s*.05,s*.2);c.lineTo(-s*.03,s*.4);c.stroke();
-    c.save();c.translate(0,s*.95);c.scale(1,.3);blob(c,0,0,s*.6,.85,7,.12);c.restore();
-    for(var i=0;i<5;i++)stroke(c,curve([(i-2)*s*.2,s*.95],[(i-2)*s*.24,s*.8],[(i-2)*s*.3+s*.04,s*.68-(i%2)*s*.08],5,s*.03,s*.035,s*.006),.75,20+i);flecks(c,0,0,s*.24,s*1.7,10,8);};
+  // 육망성(사용자 11-16: 십자가 대신): 위아래로 맞물린 두 삼각형을 굵은 붓 획으로, 꼭짓점마다 먹이 고이고 가운데는 옅은 담묵
+  M.hexagram=function(c,s){wash(c,0,0,s*1.05,.15);var R=s*.92,i,k;
+    c.beginPath();for(i=0;i<6;i++){var a0=-Math.PI/2+i*Math.PI/3,r0=R*.53;i?c.lineTo(Math.cos(a0)*r0,Math.sin(a0)*r0):c.moveTo(Math.cos(a0)*r0,Math.sin(a0)*r0);}c.closePath();c.fillStyle=ink(.22);c.fill();
+    for(k=0;k<2;k++){var base=k?Math.PI/2:-Math.PI/2,P=[];for(i=0;i<3;i++){var a1=base+i*TAU/3;P.push([Math.cos(a1)*R,Math.sin(a1)*R]);}
+      for(i=0;i<3;i++){var p0=P[i],p1=P[(i+1)%3],mx=(p0[0]+p1[0])/2,my=(p0[1]+p1[1])/2;stroke(c,curve([p0[0],p0[1]],[mx*1.03,my*1.03],[p1[0],p1[1]],10,s*.06,s*(k?.11:.14),s*.035),k?.82:.93,3+k*3+i);}
+      P.forEach(function(q,n){blob(c,q[0],q[1],s*.075,.92,20+k*3+n,.2);});}
+    c.beginPath();c.moveTo(-s*.26,0);c.quadraticCurveTo(0,-s*.19,s*.26,0);c.quadraticCurveTo(0,s*.19,-s*.26,0);c.closePath();c.fillStyle=ink(.9);c.fill();blob(c,0,0,s*.06,.95,33,.1); // 가운데 감긴 눈: 교단의 봉인진으로 읽히게(심사 2차)
+    for(k=0;k<6;k++){var e=-Math.PI/2+k*Math.PI/3+Math.PI/6,ex=Math.cos(e)*R*.62,ey=Math.sin(e)*R*.62;stroke(c,[[ex-Math.sin(e)*s*.08,ey+Math.cos(e)*s*.08,s*.03],[ex+Math.sin(e)*s*.08,ey-Math.cos(e)*s*.08,s*.012]],.8,40+k);}
+    [[.78,-.82,.04],[-.86,.7,.035],[.95,.4,.03]].forEach(function(d,n){drop(c,d[0]*s,d[1]*s,d[2]*s,.75);});flecks(c,0,0,s*1.5,s*1.5,10,8);};
   // 해골: 둥근 머리뼈, 깊은 눈구멍, 이빨
   M.skull=function(c,s){wash(c,0,0,s*1.05,.14);
     c.beginPath();c.arc(0,-s*.25,s*.66,Math.PI*.82,Math.PI*.18);c.bezierCurveTo(s*.52,s*.3,s*.36,s*.32,s*.34,s*.78);c.lineTo(-s*.34,s*.78);c.bezierCurveTo(-s*.36,s*.32,-s*.52,s*.3,-s*.53,s*.13);c.closePath();c.fillStyle=light(.95);c.fill();shade(c,-s*.6,-s*.6,s*.6,s*.7,.02,.42);
@@ -273,7 +272,7 @@
     for(i=0;i<9;i++){var x=(r()-.5)*s*1.9,y=(r()-.5)*s*2.0,rad=s*(.22+.3*r()),gr=q.createRadialGradient(x,y,0,x,y,rad);gr.addColorStop(0,'rgba(0,0,0,'+(.2+.16*r())+')');gr.addColorStop(1,'rgba(0,0,0,0)');q.fillStyle=gr;q.beginPath();q.arc(x,y,rad,0,TAU);q.fill();}
     q.lineCap='round';for(i=0;i<150;i++){var x2=(r()-.5)*s*2.4,y2=(r()-.5)*s*2.4,a=-1.15+(r()-.5)*.5,len=s*(.1+.36*r());q.strokeStyle='rgba(0,0,0,'+(.14+.3*r())+')';q.lineWidth=s*(.006+.014*r());q.beginPath();q.moveTo(x2,y2);q.lineTo(x2+Math.cos(a)*len,y2+Math.sin(a)*len);q.stroke();}
     q.restore();}
-  ['chalice','cross','skull','scythe','crown','chain','candle','key','hourglass','wing','horn','mirror','gear','bell','mask','rose','web','vial','eye','tower','book','cauldron'].forEach(function(k,n){var draw=M[k];
+  ['chalice','hexagram','skull','scythe','crown','chain','candle','key','hourglass','wing','horn','mirror','gear','bell','mask','rose','web','vial','eye','tower','book','cauldron'].forEach(function(k,n){var draw=M[k];
     M[k]=function(c,s){var d=g.document,px=Math.ceil(s*3*2),cv=d.createElement('canvas');cv.width=cv.height=px;var q=cv.getContext('2d');q.scale(2,2);q.translate(s*1.5,s*1.5);draw(q,s);dryBrush(q,s,97+n*13);c.drawImage(cv,-s*1.5,-s*1.5,s*3,s*3);};});
   g.InkMotifs=M;
 })(window);

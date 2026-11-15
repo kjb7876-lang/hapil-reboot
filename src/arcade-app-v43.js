@@ -16,8 +16,8 @@
   var TALL={violet:112,balrog:124,mask:112,lucifer:124,asmodeus:108,pride:118,controller:118,goblin:104,insomnia:124,arbelia:108,siren:124,chief:124,executor:124,rian:108,cultist:124,
     spider:30,slime:28,ember:34,drone:26,mobgoblin:36,wolf:34,nightmare:40,collector:40,leech:34,guardian:62,warden:72,horn:84,belphegor:70,mammon:74,knight:80};
   var ITEM_DRAW=17,TALL_ACTOR=116,TALL_MOB=64,TALL_ELITE=92;
-  var PROP_LONG={'sword-violet':68,cleaver:64,'sword-balrog':72,obelisk:80,spire:72,'twin-blade':62,crescent:58,tissue:34,money:36,heel:40,feather:44,cross:60,gear:56,skull:34,'demon-hand':46};
-  var PROP_GLOW={'sword-violet':2,cleaver:5,'sword-balrog':0,obelisk:2,spire:4,'twin-blade':8,crescent:4,tissue:6,money:6,heel:0,feather:8,cross:6,gear:4};
+  var PROP_LONG={'sword-violet':68,cleaver:64,'sword-balrog':72,obelisk:80,spire:72,'twin-blade':62,crescent:58,tissue:34,money:36,heel:40,feather:44,hexagram:46,gear:56,skull:34,'demon-hand':46};
+  var PROP_GLOW={'sword-violet':2,cleaver:5,'sword-balrog':0,obelisk:2,spire:4,'twin-blade':8,crescent:4,tissue:6,money:6,heel:0,feather:8,hexagram:6,gear:4};
   var ART_DIR='media/arcade-v43/';
   var SERIF='"Noto Serif KR","Nanum Myeongjo","Apple SD Gothic Neo",serif',SANS='system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif';
   var SLOW_FRAME_MS=21,VERY_SLOW_FRAME_MS=28,STALL_FRAME_MS=250,MAX_PARTICLES=320,FINGER_LIFT=64,TOAST_SECONDS=1.6;
@@ -850,7 +850,7 @@
     ctx.restore();
   }
   // 아래에서 솟는 수묵 소재(사용자 11-15): 예고는 인주색 화살, 그림은 먹(곱하기 합성)으로. 그림은 종류마다 한 번 구워 둔다.
-  var riserArt={},RISER_FUME={candle:[1.1,-.95],cauldron:[.8,-.5],vial:[.2,-1.0],hourglass:[.1,.1],skull:[.5,-.1],chalice:[.8,-.9]},RISER_THIN={sword:.3,spear:.3,bamboo:.5,chain:.35,key:.45,cross:.6,scythe:.75,vial:.6,tower:.55,rose:.6,candle:.75,chalice:.7}; // 솟을 자리 띠 폭(그림 폭을 따른다)
+  var riserArt={},RISER_FUME={candle:[1.1,-.95],cauldron:[.8,-.5],vial:[.2,-1.0],hourglass:[.1,.1],skull:[.5,-.1],chalice:[.8,-.9]},RISER_THIN={sword:.3,spear:.3,bamboo:.5,chain:.35,key:.45,hexagram:.8,scythe:.75,vial:.6,tower:.55,rose:.6,candle:.75,chalice:.7}; // 솟을 자리 띠 폭(그림 폭을 따른다)
   function riserSprite(r){var key=r.kind+':'+r.emblem+':'+scale,hit=riserArt[key];if(hit)return hit;var M=global.InkMotifs;if(!M||!M[r.kind])return null;
     var half=r.size*1.5,c=offscreen(half*2*scale,half*2*scale),q=c.getContext('2d');q.scale(scale,scale);q.translate(half,half);
     if(Ink&&Ink.raw)Ink.raw(1);try{M[r.kind](q,r.size,r.kind==='glyph'?Arcade.GLYPHS[r.emblem]:null);}finally{if(Ink&&Ink.raw)Ink.raw(-1);}
@@ -892,11 +892,14 @@
     var prop=Arcade.PROPS[s.bcolor[i]];if(!prop)return;
     var img=images[prop.key],x=s.bx[i],y=s.by[i];
     if(!img)requestProp(prop.key); // 기물은 처음 화면에 나타날 때 받는다
-    // 십자가처럼 upright인 기물은 절대 돌리지 않는다. 도는 기물은 제자리에서 돌고, 그 밖에는 끝이 진행 방향을 본다.
+    // 육망성처럼 upright인 기물은 절대 돌리지 않는다. 도는 기물은 제자리에서 돌고, 그 밖에는 끝이 진행 방향을 본다.
     var turn=prop.upright?0:s.bspin[i]?s.bage[i]*s.bspin[i]:s.ba[i],cos=Math.cos(turn),sin=Math.sin(turn),core=orbs[0][8],glow=orbs[2][propGlow(prop)]||orbs[2][8],reach=glow.half*1.5*grow,long=propLong(prop)*s.sizeScale*grow;
     ctx.globalAlpha=alpha*.5;ctx.drawImage(glow.image,x-reach,y-reach,reach*2,reach*2);
     ctx.setTransform(scale*cos,scale*sin,-scale*sin,scale*cos,(x+offsetX)*scale,(y+offsetY)*scale);ctx.globalAlpha=alpha;
-    if(img){var sh=sheetOf(prop.key,img),k=long/Math.max(sh.cw,sh.ch),w=sh.cw*k,h=sh.ch*k;drawCell(prop.key,img,0,true,-w/2,-h/2,w,h);}
+    if(img){var sh=sheetOf(prop.key,img),k=long/Math.max(sh.cw,sh.ch),w=sh.cw*k,h=sh.ch*k;
+      // 돌지 않는 기물은 지나온 쪽에 옅은 잔상 둘을 남겨 떨어지는 방향을 읽히게 한다(심사 2차 애니메이션).
+      if(prop.upright){var bx=-Math.cos(s.ba[i])*long*.3,by=-Math.sin(s.ba[i])*long*.3;ctx.globalAlpha=alpha*.22;drawCell(prop.key,img,0,true,bx*2-w/2,by*2-h/2,w,h);ctx.globalAlpha=alpha*.4;drawCell(prop.key,img,0,true,bx-w/2,by-h/2,w,h);ctx.globalAlpha=alpha;}
+      drawCell(prop.key,img,0,true,-w/2,-h/2,w,h);}
     else if(prop.drawn)drawPropArt(prop.key,ctx,long/2); // 구운 그림을 받기 전에도 같은 모양
     else{
       // 그림을 받기 전: 길쭉한 마름모 단색 도형(upright 기물은 세로로 선다).
@@ -910,7 +913,18 @@
   }
   /* 코드로 그리는 기물: 어두운 회화풍에 맞게 뼈빛·이끼빛 단색에 어두운 테두리, 왼쪽 위에서 빛. u는 반 길이. */
   /* 코드로 그린 기물 한 장. +x가 진행 방향이 되게 돌려 그린다(손끝이 +x, 해골은 아래턱이 +x). tools/build-drawn-props-v43.cjs도 이것으로 그림 파일을 굽는다. */
-  function drawPropArt(key,c,u){var keep=ctx;ctx=c;ctx.save();ctx.rotate(key==='skull'?-Math.PI/2:Math.PI/2);if(key==='skull')drawSkull(u);else drawHand(u);ctx.restore();ctx=keep;}
+  function drawPropArt(key,c,u){var keep=ctx;ctx=c;ctx.save();if(key!=='hexagram')ctx.rotate(key==='skull'?-Math.PI/2:Math.PI/2);if(key==='skull')drawSkull(u);else if(key==='hexagram')drawHexagram(u);else drawHand(u);ctx.restore();ctx=keep;} // 육망성은 똑바로 선 기물이라 돌리지 않는다
+  // 금빛 육망성(사용자 11-16: 적이 쓰던 십자가 대신). 교단의 봉인진: 맞물린 두 삼각형에 변마다 새긴 눈금, 가운데 감긴 눈. 속은 비어 탄 너머가 보인다(심사 2차: 밝은 면이 탄보다 튀지 않게 한 단 어둡게).
+  function drawHexagram(u){var R=u*.98,k,i;ctx.lineJoin='round';ctx.lineCap='round';
+    for(k=0;k<2;k++){var base=k?Math.PI/2:-Math.PI/2,P=[];for(i=0;i<3;i++){var a=base+i*TAU/3;P.push([Math.cos(a)*R,Math.sin(a)*R]);}
+      ctx.beginPath();ctx.moveTo(P[0][0],P[0][1]);ctx.lineTo(P[1][0],P[1][1]);ctx.lineTo(P[2][0],P[2][1]);ctx.closePath();
+      ctx.strokeStyle='#1e1206';ctx.lineWidth=u*.3;ctx.stroke();var g=ctx.createLinearGradient(0,-R,0,R);g.addColorStop(0,'#d9a83c');g.addColorStop(.55,'#a8761e');g.addColorStop(1,'#6a440c');ctx.strokeStyle=g;ctx.lineWidth=u*.17;ctx.stroke();
+      ctx.strokeStyle='rgba(255,236,170,.45)';ctx.lineWidth=u*.035;ctx.stroke();
+      ctx.strokeStyle='#1e1206';ctx.lineWidth=u*.05;for(i=0;i<3;i++){var A=P[i],B=P[(i+1)%3],dx=B[0]-A[0],dy=B[1]-A[1],L=Math.hypot(dx,dy),nx=-dy/L,ny=dx/L;[.2,.8].forEach(function(f){var x=A[0]+dx*f,y=A[1]+dy*f;ctx.beginPath();ctx.moveTo(x-nx*u*.09,y-ny*u*.09);ctx.lineTo(x+nx*u*.09,y+ny*u*.09);ctx.stroke();});}} // 변마다 새긴 눈금
+    ctx.fillStyle='#1e1206';ctx.beginPath();ctx.moveTo(-u*.3,0);ctx.quadraticCurveTo(0,-u*.2,u*.3,0);ctx.quadraticCurveTo(0,u*.2,-u*.3,0);ctx.closePath();ctx.fill(); // 가운데 감긴 눈
+    ctx.fillStyle='#c8962e';ctx.beginPath();ctx.arc(0,0,u*.07,0,TAU);ctx.fill();
+    ctx.fillStyle='#e8c46a';for(i=0;i<6;i++){var b=-Math.PI/2+i*Math.PI/3;ctx.beginPath();ctx.arc(Math.cos(b)*R,Math.sin(b)*R,u*.07,0,TAU);ctx.fill();}
+  }
   function drawSkull(u){
     ctx.lineWidth=1.4;ctx.strokeStyle='#1a1410';
     var g=ctx.createRadialGradient(-u*.3,-u*.4,u*.1,0,0,u*1.1);g.addColorStop(0,'#f4ead2');g.addColorStop(1,'#a99a7c');ctx.fillStyle=g;

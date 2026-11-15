@@ -91,10 +91,10 @@
   var PALETTE=[0,2,4,5,6,8],RED=0,PURPLE=2,CYAN=4,GREEN=5,YELLOW=6,WHITE=8;
   // 모양도 여섯 가지: 0 작은 구슬 1 중간 2 큰 구슬 3 쌀알탄 4 거품 5 큰 기물(색 번호 자리에 기물 번호)
   var SIZE_RADIUS=[4,6,10,3.2,15,14],RICE=3,SHAPE_PROP=5,MUZZLE=22;
-  // 큰 기물. upright는 절대 돌리지 않는 것(십자가는 똑바로 선 채 아래로만 내려온다).
+  // 큰 기물. upright는 절대 돌리지 않는 것(육망성은 똑바로 선 채 아래로만 내려온다. 사용자 11-16: 십자가는 늘 좋은 것이라 적이 쓰지 않는다).
   var PROPS=[{key:'sword-violet',radius:12},{key:'cleaver',radius:14},{key:'sword-balrog',radius:14},{key:'obelisk',radius:17},{key:'spire',radius:18},
     {key:'twin-blade',radius:13},{key:'crescent',radius:14},{key:'tissue',radius:10},{key:'money',radius:10},{key:'heel',radius:11},{key:'feather',radius:9},
-    {key:'cross',radius:14,upright:true},{key:'gear',radius:16},
+    {key:'hexagram',radius:14,upright:true,drawn:true,glow:6},{key:'gear',radius:16},
     // 코드로 그린 기물(drawn, 그림 파일은 tools/build-drawn-props-v43.cjs가 같은 코드로 구워 둔다): 해골(묘지), 늪에서 올라오는 초록 악마 손.
     // glow는 빛무리 색 번호. 둘 다 진행 방향을 본다(손끝은 위로 솟고, 해골은 날아가는 쪽으로 얼굴 아래턱을 둔다).
     {key:'skull',radius:11,drawn:true,glow:2},{key:'demon-hand',radius:12,drawn:true,glow:5}];
@@ -475,10 +475,10 @@
       if(t%100===60)fan(s,b.x,b.y,pick(s,2,3,4),aim(s,b.x,b.y),1.2,90,{size:SHAPE_PROP,color:P.crescent,spin:.12,turn:.25});}},
     // 8부 — 사이비 합일몽세
     traitors:{name:'배신자 둘',scene:'60',fire:function(s,t){var b=s.boss,other=W-b.x;
-      // 두 사람: 보스 자리와 그 맞은편 자리에서 번갈아 쏜다. 십자가는 똑바로 선 채 내려온다.
+      // 두 사람: 보스 자리와 그 맞은편 자리에서 번갈아 쏜다. 금빛 육망성은 똑바로 선 채 내려온다.
       if(t%72===0)bell(s,b.x,b.y,count(s,11),aim(s,b.x,b.y),1.7,96,.45,{color:YELLOW,size:1});
       if(t%72===36)bell(s,other,b.y,count(s,11),aim(s,other,b.y),1.7,96,.45,{color:CYAN,size:1});
-      if(t%150===100)slots(s,pick(s,1,2,3),W,30).forEach(function(x){spawn(s,x,-30,Math.PI/2,76,{size:SHAPE_PROP,color:P.cross,life:900});});}},
+      if(t%150===100)slots(s,pick(s,1,2,3),W,30).forEach(function(x){spawn(s,x,-30,Math.PI/2,76,{size:SHAPE_PROP,color:P.hexagram,life:900});});}},
     boundNightmare:{name:'하나로 묶인 악몽',scene:'56',fire:function(s,t){var b=s.boss;
       // 흩어졌던 탄이 한 점으로 묶여 든다.
       if(t%90===0){var n=count(s,28),base=rand(s)*TAU;for(var i=0;i<n;i++)spawn(s,b.x,b.y,base+TAU*i/n,170,{color:RED,size:0,accel:-180,min:0,at:64,mode:MODE_REAIM,arg:0,speed2:78});}
@@ -1015,7 +1015,7 @@
     glyph:{size:60,hit:[[0,0,.84]]},
     // 서양 소재(사용자 11-15 "서양쪽 적테마와서사,보스에 맞는것도 수묵화버전으로"): 스테이지 서사·보스에 맞춰 솟는다
     chalice:{size:64,hit:[[0,-.5,.42],[-.38,-.72,.2],[.38,-.72,.2],[0,.12,.12],[0,.45,.1],[0,.85,.3]]},
-    cross:{size:74,hit:[[0,-.82,.15],[0,-.45,.2],[-.4,-.45,.15],[.4,-.45,.15],[0,-.08,.15],[0,.28,.15],[0,.62,.17],[0,.88,.3]]},
+    hexagram:{size:66,hit:[[0,0,.44],[.46,0,.14],[-.46,0,.14],[.23,-.4,.14],[-.23,-.4,.14],[.23,.4,.14],[-.23,.4,.14],[0,-.72,.18],[0,.72,.18],[-.62,-.36,.18],[.62,-.36,.18],[-.62,.36,.18],[.62,.36,.18]]}, // 사용자 11-16: 십자가 대신 육망성
     skull:{size:60,hit:[[0,-.25,.62],[0,.5,.36]]},
     scythe:{size:82,hit:[[.2,-.8,.12],[-.12,-.96,.17],[-.5,-.87,.17],[-.8,-.6,.13],[-.93,-.36,.08],[.12,-.5,.09],[.02,-.15,.09],[-.08,.2,.09],[-.18,.55,.09],[-.28,.9,.09]]},
     crown:{size:60,hit:[[0,.3,.4],[-.52,.25,.34],[.52,.25,.34],[0,-.45,.25],[-.85,-.2,.18],[.85,-.2,.18]]},
@@ -1037,21 +1037,21 @@
     book:{size:62,hit:[[-.45,0,.42],[.45,0,.42],[0,.1,.3]]},
     cauldron:{size:62,hit:[[0,.25,.6],[-.5,0,.26],[.5,0,.26]]}
   };
-  var MOTIF_WEST=['chalice','cross','skull','scythe','crown','chain','candle','key','hourglass','wing','horn','mirror','gear','bell','mask','rose','web','vial','eye','tower','book','cauldron'];
+  var MOTIF_WEST=['chalice','hexagram','skull','scythe','crown','chain','candle','key','hourglass','wing','horn','mirror','gear','bell','mask','rose','web','vial','eye','tower','book','cauldron'];
   /* 스테이지(배경 열쇠)별 서양 소재 셋. 첫째가 그 스테이지 보스·서사에 가장 맞는 것(보스 고유 문양이 있으면 그 문양을 따른다)이고 한 바퀴에 두 번 나온다.
    * 소재는 스테이지 이름·몹 구성·보스 문양에서 고른 것이며 새 설정을 지어내지 않는다(Claude 판단, 기준서 docs/v43/ink-style.md 표). */
   var STAGE_MOTIFS={
-    p1_garden:['rose','horn','skull'],p1_cave:['web','candle','skull'],p1_swamp:['horn','skull','chain'],p1_castle:['tower','crown','chain'],p1_grave:['skull','cross','scythe'],p1_pillars:['candle','horn','chain'],
-    p1_summon:['horn','wing','chain'],p1_ward:['vial','mask','cross'],p1_injection:['vial','eye','mask'],p1_memory:['hourglass','horn','crown'],p1_city:['vial','chain','bell'],p1_mask:['wing','mask','cross'],
+    p1_garden:['rose','horn','skull'],p1_cave:['web','candle','skull'],p1_swamp:['horn','skull','chain'],p1_castle:['tower','crown','chain'],p1_grave:['skull','hexagram','scythe'],p1_pillars:['candle','horn','chain'],
+    p1_summon:['horn','wing','chain'],p1_ward:['vial','mask','hexagram'],p1_injection:['vial','eye','mask'],p1_memory:['hourglass','horn','crown'],p1_city:['vial','chain','bell'],p1_mask:['wing','mask','hexagram'],
     p2_chapel:['book','key','candle'],p2_sloth:['hourglass','chain','web'],p2_envy:['mirror','eye','chain'],p2_gluttony:['cauldron','chalice','skull'],p2_lust:['rose','mirror','chalice'],p2_greed:['key','chalice','crown'],
     p2_snow:['crown','bell','candle'],p2_wrath:['horn','chain','candle'],p2_pride:['crown','tower','wing'],p2_core:['gear','eye','chain'],
-    p3_war:['gear','tower','chain'],p3_rampart:['gear','cross','tower'],p3_passage:['gear','eye','key'],p3_nexus:['key','eye','gear'],p3_migration:['gear','vial','hourglass'],p3_gate:['key','mirror','gear'],
-    p4_field:['horn','skull','rose'],p4_goblin:['rose','crown','skull'],p4_rampart:['wing','cross','crown'],p4_harbor:['bell','candle','eye'],p4_fogvillage:['eye','cauldron','candle'],
+    p3_war:['gear','tower','chain'],p3_rampart:['gear','hexagram','tower'],p3_passage:['gear','eye','key'],p3_nexus:['key','eye','gear'],p3_migration:['gear','vial','hourglass'],p3_gate:['key','mirror','gear'],
+    p4_field:['horn','skull','rose'],p4_goblin:['rose','crown','skull'],p4_rampart:['wing','hexagram','crown'],p4_harbor:['bell','candle','eye'],p4_fogvillage:['eye','cauldron','candle'],
     p5_academy:['book','key','candle'],p5_outer:['key','chain','scythe'],p5_forest:['hourglass','scythe','chain'],p5_layers:['book','key','chain'],p5_workshop:['gear','cauldron','chain'],p5_neural:['eye','gear','key'],
-    p5_graveyard:['skull','cross','hourglass'],p5_ritual:['candle','book','chalice'],p5_corridor:['rose','hourglass','key'],p5_core:['bell','scythe','skull'],
-    p6_siege:['horn','cross','tower'],p6_hall:['crown','mirror','key'],p6_core:['horn','gear','crown'],
+    p5_graveyard:['skull','hexagram','hourglass'],p5_ritual:['candle','book','chalice'],p5_corridor:['rose','hourglass','key'],p5_core:['bell','scythe','skull'],
+    p6_siege:['horn','hexagram','tower'],p6_hall:['crown','mirror','key'],p6_core:['horn','gear','crown'],
     p7_crosswalk:['bell','mirror','hourglass'],p7_hotel:['key','bell','candle'],p7_villa:['mirror','key','mask'],p7_rooftop:['key','hourglass','chain'],
-    p8_circuit:['chain','gear','eye'],p8_collective:['rose','mask','book'],p8_castle:['tower','mirror','hourglass'],p8_approach:['rose','candle','cross'],p8_harvest:['rose','scythe','chalice'],p8_core:['mask','chain','crown']
+    p8_circuit:['chain','gear','eye'],p8_collective:['rose','mask','book'],p8_castle:['tower','mirror','hourglass'],p8_approach:['rose','candle','hexagram'],p8_harvest:['rose','scythe','chalice'],p8_core:['mask','chain','crown']
   };
   function stageMotifs(index){var g=STAGES[index];return STAGE_MOTIFS[g&&g.theme&&g.theme.bg]||['skull','chain','candle'];}
   var MOTIF_NATURE=['orchid','plum','bamboo','lotus','mountain','sun','moon'],MOTIF_MOVING=['wave','whirl','flame','cloud'],MOTIF_WEAPONS=['sword','spear'],RISER_WARN=60,RISER_HOLD=50,RISER_FADE=36;
