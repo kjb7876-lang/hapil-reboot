@@ -1042,7 +1042,7 @@
     if(live&&!(s.stage==='wave'&&s.segTick>=segment(s).duration)){var t=s.riserT++;
       if(t>=120&&(t-120)%every===0&&s.riserDue<2)s.riserDue++; // 자리가 없으면 미뤘다가 자리가 나면 솟는다
       if(s.riserDue>0&&R.length<(s.floor&&s.floor.kind?1:pick(s,1,2,2))){s.riserDue--;var plan=motifPlan(s.stageIndex),kind=plan[s.riserN++%plan.length],size=MOTIFS[kind].size,lane=(s.riserN+s.stageIndex+((s.riserN/3)|0))%3,x=W*(lane===0?.24:lane===1?.76:.5)+(riserRand(s)-.5)*W*.14;
-        if(Math.abs(x-p.x)<90)x=p.x+(p.x<W/2?1:-1)*(90+riserRand(s)*50); // 영웅 바로 밑에서는 솟지 않는다
+        if(Math.abs(x-p.x)<90)x=p.x+(Math.abs(p.x-W/2)>24?(p.x<W/2?1:-1):(s.riserN&1?1:-1))*(90+riserRand(s)*50); // 영웅 바로 밑에서는 솟지 않는다
         x=Math.max(size*1.12,Math.min(W-size*1.12,x));
         R.push({kind:kind,size:size,x:x,y:H+size+2,age:0,apex:H*(.42+riserRand(s)*.28),vy:pick(s,1.2,1.5,1.8),held:0,fade:0,lean:(riserRand(s)-.5)*.3,emblem:kind==='glyph'?(signatureOf(stageBoss(s.stageIndex))||{glyph:'ring'}).glyph:''});s.risen++;note(s,'riserWarn');}}
     var struck=false;

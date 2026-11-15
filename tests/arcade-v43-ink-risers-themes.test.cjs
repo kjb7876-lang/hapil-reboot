@@ -44,3 +44,11 @@ test('every western subject is drawn with the brush, in ink only',()=>{
   assert.doesNotMatch(art,/#[0-9a-fA-F]{3,6}\b/,'no colour literals outside the ink and paper tones');
   const tones=[...art.matchAll(/'(\d+,\d+,\d+)'/g)].map(m=>m[1]);assert.deepEqual([...new Set(tones)].sort(),['242,233,214','252,249,243','30,26,24']);
 });
+// 심사 2차(카메라·구도): 영웅이 가운데 서 있어도 소재가 한쪽에만 솟지 않는다.
+test('subjects rise on both sides of a hero who stays in the middle',()=>{
+  const g=a.STAGES[13];let seg=g.first;while(a.SEGMENTS[seg].kind!=='card')seg++;
+  const s=a.createRun({difficulty:'normal',seed:3,segment:seg});let left=0,right=0;
+  for(let i=0;i<3000&&s.stage!=='won'&&s.stage!=='lost';i++){s.player.invulnerableUntil=s.tick+999;s.boss.hp=s.boss.maxHp;s.player.x=a.WIDTH/2;a.step(s,{dx:0,dy:0});h.clear(s);
+    for(const r of s.risers||[])if(r.age===1){if(r.x<a.WIDTH/2)left++;else right++;}}
+  assert(left>=2&&right>=2,'both sides: '+left+' / '+right);assert(Math.max(left,right)<=2*Math.min(left,right)+1,'not lopsided: '+left+' / '+right);
+});
