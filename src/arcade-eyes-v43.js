@@ -8,9 +8,9 @@
   var off=/[?&]eyes=0\b/.test(String(global.location&&global.location.search||''));
   var reduce=!!(global.matchMedia&&global.matchMedia('(prefers-reduced-motion: reduce)').matches);
   // 여는 순서(초): 감긴 채 잠깐 → 실눈 → 다시 반쯤 감김(깜빡) → 활짝. 잡몹은 위에서 내려오므로 아래쪽 영웅 자리는 0.9초 안에 드러난다.
-  var OPEN=[[0,0],[.18,0],[.42,.2],[.6,.08],[1.05,1]],OPEN_END=1.05;
+  var OPEN=[[0,0],[.18,0],[.42,.14],[.6,.05],[1.05,1]],OPEN_END=1.05;
   // 감는 순서: 무겁게 반쯤 → 한 번 버티듯 살짝 뜸 → 끝까지 감김.
-  var CLOSE=[[0,1],[.45,.3],[.62,.38],[1.15,0]],CLOSE_END=1.15;
+  var CLOSE=[[0,1],[.45,.17],[.66,.27],[1.15,0]],CLOSE_END=1.15;
   var SEAM=3,layer=null,ctx=null,grain=null,raf=0,anim=null,shown=false;
   function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
   function at(keys,t){ // 열림 정도 0(감김)~1(활짝)
@@ -45,13 +45,13 @@
     return dpr;
   }
   // 눈꺼풀 가장자리: 가운데가 깊고 양 끝이 얕은 아몬드 곡선. 활짝이면 화면 밖으로 나간다.
-  function edge(w,h,o,up,x){var u=(x-w/2)/(w/2),a=o*h*1.18*(up?1:.86);return h*.5+(up?-1:1)*(a*(1-.5*u*u)-SEAM*(1-o));}
+  function edge(w,h,o,up,x){var u=(x-w/2)/(w/2),a=o*h*1.9*(up?1:.9);return h*.5+(up?-1:1)*(a*(1-.7*u*u)-SEAM*(1-o));} // 끝이 뾰족한 아몬드(심사: 반쯤 열린 틈이 원처럼 보임)
   function lidPath(w,h,o,up,pad){
-    var n=24;ctx.beginPath();ctx.moveTo(-pad,up?-pad:h+pad);
+    var n=48;ctx.beginPath();ctx.moveTo(-pad,up?-pad:h+pad);
     for(var i=0;i<=n;i++){var x=-pad+(w+2*pad)*i/n;ctx.lineTo(x,edge(w,h,o,up,x));}
     ctx.lineTo(w+pad,up?-pad:h+pad);ctx.closePath();
   }
-  function edgeLine(w,h,o,up){var n=24;ctx.beginPath();for(var i=0;i<=n;i++){var x=w*i/n;ctx[i?'lineTo':'moveTo'](x,edge(w,h,o,up,x));}}
+  function edgeLine(w,h,o,up){var n=48;ctx.beginPath();for(var i=0;i<=n;i++){var x=w*i/n;ctx[i?'lineTo':'moveTo'](x,edge(w,h,o,up,x));}}
   // ink-v43.js 는 모든 2D 색을 한지·먹으로 뒤집는다 → 눈꺼풀은 이미 먹색이라 그리는 동안 바꾸기를 멈춘다
   function draw(o){var H=global.HapilInk&&global.HapilInk.raw;if(H)H(1);try{paint(o);}finally{if(H)H(-1);}}
   function paint(o){
