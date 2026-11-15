@@ -77,9 +77,16 @@
     if(!listed(key)){failed[key]=true;return;}
     loading[key]=true;want[key]=true;
     var img=new Image();
-    img.onload=function(){delete loading[key];if(!want[key])return;images[key]=img;if(key.indexOf('bg-')===0)backgroundStage=-1;};
+    img.onload=function(){delete loading[key];if(loadedStage>=0&&!Object.keys(loading).length)warmStage(loadedStage+1);if(!want[key])return;images[key]=img;if(key.indexOf('bg-')===0)backgroundStage=-1;};
     img.onerror=function(){delete loading[key];failed[key]=true;};
     img.src=fileOf(key);
+  }
+  /* 미리 받기: 다음에 쓸 스테이지 그림을 브라우저 캐시에 먼저 받아 둔다(그림 객체는 들고 있지 않는다).
+   * 시작 화면에서는 첫 스테이지를, 플레이 중에는 지금 스테이지 그림을 다 받은 뒤 다음 스테이지를 받는다. */
+  var warmed={};
+  function warmStage(index){
+    if(!manifest||warmed[index]||!Arcade.STAGES[index])return;warmed[index]=true;
+    stageKeys(index).forEach(function(key){if(images[key]||loading[key]||failed[key]||!listed(key))return;var im=new Image();im.decoding='async';im.src=fileOf(key);});
   }
   /* 스테이지에 필요한 그림: 배경 · 그 스테이지 SEGMENTS의 인물 · cast의 몹 · 기념물. 기물은 처음 화면에 나올 때 받는다. */
   /* 장면마다 m0 지역표의 몹 그림을 입힌다(src/arcade-skins-v43.js). 시뮬의 몹 종류는 그대로고 그림만 바뀐다. */
@@ -1228,7 +1235,7 @@
     try{music=new Audio('media/music.mp3');music.loop=true;music.volume=.2;music.preload='none';}catch(e){music=null;}
     bind();fit();refreshTitle();requestAnimationFrame(frame);
     // 그림 목록을 먼저 읽는다(없는 그림을 요청하지 않으려고). 못 읽어도 3초 뒤에는 시작할 수 있다.
-    var done=function(){loadImage('gunner');if(manifest&&manifest['heart.webp']){want.heart=true;loadImage('heart');}ready();};
+    var done=function(){loadImage('gunner');if(manifest&&manifest['heart.webp']){want.heart=true;loadImage('heart');}ready();warmStage(0);};
     try{
       loadFxList();loadLaserList();
       global.fetch(ART_DIR+'manifest.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():null;}).then(function(m){manifest=m&&typeof m==='object'?m:null;done();},function(){manifest=null;done();});
