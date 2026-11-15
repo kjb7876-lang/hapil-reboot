@@ -66,3 +66,54 @@ if __name__ == '__main__':
     index = {k: build(k, v) for k, v in SHEETS.items()}
     json.dump(index, open(os.path.join(OUT, 'index.json'), 'w'), ensure_ascii=False, indent=1)
     print(json.dumps(index, ensure_ascii=False, indent=1))
+
+# ── 필살기 컷씬 초상(사용자 11-16 "필살기사용시 영웅 짧은컷씬도 간지나게", "수묵화풍") ──
+# 원천: m0 r96/runtime-text/assets/r108/heroes/gunner.webp(기억사수 초상, 384×512, 어두운 밤하늘 바탕).
+# 수묵판: 밝기를 먹 농담 다섯 단으로 묶고(흰 후드는 한지 여백, 갑옷은 농묵), 어두운 바탕은 인물 둘레의 먹 번짐이 되도록
+# 고르지 않은 붓 테두리 가면으로 바깥을 비운다. 원색판(?ink=0)은 같은 가면만 씌운다.
+def build_cutin():
+    import math
+    src = os.path.join(SRC, 'r108/heroes/gunner.webp')
+    im = Image.open(src).convert('RGB'); w, h = im.size
+    rnd = random.Random(1116)
+    # 가면: 인물 중심 타원 + 저주파 잡음으로 둘레를 붓처럼 들쭉날쭉하게
+    grid = [[rnd.random() for _ in range(9)] for _ in range(12)]
+    def noise(x, y):
+        gx, gy = x / w * 8, y / h * 11; x0, y0 = int(gx), int(gy); tx, ty = gx - x0, gy - y0
+        a = grid[y0][x0] * (1 - tx) + grid[y0][x0 + 1] * tx; b = grid[y0 + 1][x0] * (1 - tx) + grid[y0 + 1][x0 + 1] * tx
+        return a * (1 - ty) + b * ty
+    mask = Image.new('L', (w, h)); mp = mask.load()
+    for y in range(h):
+        for x in range(w):
+            dx, dy = (x - w * .5) / (w * .5), (y - h * .47) / (h * .55)
+            d = math.sqrt(dx * dx + dy * dy) + (noise(x, y) - .5) * .3
+            mp[x, y] = int(255 * max(0, min(1, (1.0 - d) / .22)))
+    mask = mask.filter(ImageFilter.GaussianBlur(3))
+    col = im.copy().convert('RGBA'); col.putalpha(mask)
+    col.save(os.path.join(OUT, 'cutin.webp'), 'WEBP', quality=86, method=6)
+    ink = Image.new('RGBA', (w, h)); px = im.load(); pxs = im.filter(ImageFilter.MedianFilter(3)).load(); q = ink.load(); m = mask.load()
+    for y in range(h):
+        for x in range(w):
+            r, g, b = pxs[x, y]; v = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+            v = min(1, v * 1.25); v = v * v * (3 - 2 * v)
+            qb = v * 5; qf = int(qb); qr = qb - qf; qr = 0 if qr < .3 else 1 if qr > .7 else (qr - .3) / .4; v = (qf + qr) / 5  # 다섯 단 농담
+            tone = .06 + .94 * v
+            if tone > .8 and rnd.random() < .08: tone = 1.0  # 비백
+            c = tuple(int(INK[i] + (PAPER[i] - INK[i]) * tone) for i in range(3))
+            a = m[x, y] / 255
+            a *= 1 - max(0, tone - .86) / .14 * .85  # 가장 밝은 곳(흰 후드)은 한지가 비쳐 보이게 옅게
+            q[x, y] = c + (int(255 * a),)
+    # 윤곽 붓선: 밝은 면과 어두운 면의 경계를 먹으로 한 겹
+    edge = im.convert('L').filter(ImageFilter.GaussianBlur(1.6)).filter(ImageFilter.FIND_EDGES).point(lambda v: 255 if v > 22 else 0).filter(ImageFilter.GaussianBlur(.6))
+    ep = edge.load()
+    for y in range(h):
+        for x in range(w):
+            e = ep[x, y] / 255 * m[x, y] / 255
+            if e > .05:
+                p = q[x, y]; k = .75 * e; q[x, y] = tuple(int(p[i] * (1 - k) + INK[i] * k) for i in range(3)) + (max(p[3], int(255 * e * .9)),)
+    ink.save(os.path.join(OUT, 'cutin-ink.webp'), 'WEBP', quality=86, method=6)
+    return {'size': [w, h], 'source': 'm0 r96/runtime-text/assets/r108/heroes/gunner.webp', 'sourceSha256': hashlib.sha256(open(src, 'rb').read()).hexdigest(), 'use': '필살기 컷씬 초상(기억사수)'}
+if __name__ == '__main__':
+    idx = json.load(open(os.path.join(OUT, 'index.json')))
+    idx['cutin'] = build_cutin()
+    json.dump(idx, open(os.path.join(OUT, 'index.json'), 'w'), ensure_ascii=False, indent=1)

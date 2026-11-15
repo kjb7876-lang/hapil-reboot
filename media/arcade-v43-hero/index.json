@@ -26,5 +26,14 @@
   "source": "m0 r96/runtime-text/assets/r292/fx/gunner/r.webp",
   "sourceSha256": "f7ea0dca459fec604147ed6753a70a5e897291f96f9a7efafb59e1975d3c85b9",
   "use": "필살기 본 폭발 — Dots 07_gunner_R 궁극기"
+ },
+ "cutin": {
+  "size": [
+   384,
+   512
+  ],
+  "source": "m0 r96/runtime-text/assets/r108/heroes/gunner.webp",
+  "sourceSha256": "ab9cd5d08f48799e1dcc1e2df34daf381c43ce55c7a06d7b6fe1ba186ee1b871",
+  "use": "필살기 컷씬 초상(기억사수)"
  }
 }
