@@ -778,6 +778,8 @@
     var lines=GLYPHS[f.glyph]||[],c=Math.cos(f.turn),sn=Math.sin(f.turn),r=f.r;
     for(i=0;i<lines.length;i++){var L=lines[i];for(k=0;k+3<L.length;k+=2){
       var x1=L[k]*r,y1=L[k+1]*r,x2=L[k+2]*r,y2=L[k+3]*r;out.push([f.cx+x1*c-y1*sn,f.cy+x1*sn+y1*c,f.cx+x2*c-y2*sn,f.cy+x2*sn+y2*c]);}}
+    // 꼭짓점을 지나는 큰 원(사용자 11-15 18:42 "그게 진하게 나오면서 돌아가면서 맞으면 피해"): 맨 뒤에 f.ring개 선분으로 붙는다. 문양과 같이 돈다.
+    for(i=0;i<(f.ring||0);i++){var a1=f.turn+TAU*i/f.ring,a2=f.turn+TAU*(i+1)/f.ring;out.push([f.cx+Math.cos(a1)*r,f.cy+Math.sin(a1)*r,f.cx+Math.cos(a2)*r,f.cy+Math.sin(a2)*r]);}
     return out;
   }
   /* 보스 둘레에 붙던 문양 광선(summonGlyph)과 도는 바퀴(summonWheels)는 11-14 요청으로 뺐다: 보스 옆에 '3'처럼 보이는 붉은 호가 어색했다.
@@ -804,7 +806,7 @@
   /* 문양 레이저(사용자 11-14 23:33·23:34 KST): 보스 뒤 육망성처럼 보스를 중심으로 도는 큰 문양과 끊긴 원 고리가 레이저가 된다.
      보스마다 자기 문양(SIGNATURES.glyph)·도는 방향·고리 수가 다르다. 크게 그려 모양이 한눈에 읽히게 하되(보스 옆 작은 '3' 모양 금지),
      화면 아래쪽 절반에는 닿지 않게 반지름을 줄인다(SIGIL_FLOOR). 반지름은 고정이라 안쪽 빈자리와 바깥은 늘 안전하다. */
-  var BIG_SIGIL_R=316,BIG_SIGIL_SPIN=.22,SIGIL_FIT=.38,SIGIL_R=150,SIGIL_RING=1.18,SIGIL_FLOOR=.53,SIGIL_EVERY=480,SIGIL_AT=30;
+  var SIGIL_RING_SEGS=48,BIG_SIGIL_R=316,BIG_SIGIL_SPIN=.22,SIGIL_FIT=.38,SIGIL_R=150,SIGIL_RING=1.18,SIGIL_FLOOR=.53,SIGIL_EVERY=480,SIGIL_AT=30;
   [3,4,5].forEach(function(n){GLYPHS['ring'+n]=[];for(var k=0;k<n;k++){var a0=TAU*k/n;GLYPHS['ring'+n].push(arcPts(0,0,1,a0+.32,a0+TAU/n-.32,14));}});
   var glyphReach={};
   function reachOf(name){if(glyphReach[name]===undefined){var m=1,lines=GLYPHS[name]||[];for(var i=0;i<lines.length;i++)for(var k=0;k+1<lines[i].length;k+=2)m=Math.max(m,Math.sqrt(lines[i][k]*lines[i][k]+lines[i][k+1]*lines[i][k+1]));glyphReach[name]=m;}return glyphReach[name];}
@@ -814,9 +816,9 @@
   function summonSigil(s,sig,index){
     if(s.figures.length>=FIGURE_CAP-2)return;
     var warn=Math.max(54,Math.round(70*s.rules.warn)),active=260,dir=sig.spin,rings=3+index%3;
-    var parts=[{glyph:'hexagram',want:BIG_SIGIL_R,spin:dir*BIG_SIGIL_SPIN*(1+.15*(index%3)),width:7}]; // 사용자 11-15: 보스 뒤 육망성 하나를 맵 대부분을 덮게 키우고 그 선이 판정. 따로 도는 고리 레이저는 없다.
+    var parts=[{glyph:'hexagram',want:BIG_SIGIL_R,spin:dir*BIG_SIGIL_SPIN*(1+.15*(index%3)),width:7}]; // 사용자 11-15: 보스 뒤 육망성 하나를 맵 대부분을 덮게 키우고 그 선이 판정. 따로 도는 고리 레이저는 없고, 꼭짓점을 지나는 큰 원(f.ring)이 같이 돌며 판정을 갖는다(18:42).
     parts.forEach(function(q,k){var f={kind:'glyph',sigil:true,glyph:q.glyph,cx:s.boss.x,cy:s.boss.y,want:q.want,turn:TAU*k/7,spin:q.spin,follow:true,period:1e9,
-      width:q.width*s.rules.beam,warn:warn,active:active,age:0,color:sigilColor(s,sig),grazed:false};f.r=f.r0=f.r1=sigilRadius(f,q.want);s.figures.push(f);});
+      width:q.width*s.rules.beam,warn:warn,active:active,age:0,color:sigilColor(s,sig),grazed:false,ring:SIGIL_RING_SEGS};f.r=f.r0=f.r1=sigilRadius(f,q.want);s.figures.push(f);});
     note(s,'figure');
   }
   // 보스 고유 연출: 이름 붙은 패턴(spell) 동안 기존 패턴 위에 겹친다.
