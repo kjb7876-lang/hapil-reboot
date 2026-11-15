@@ -986,13 +986,53 @@
     spear:{size:84,hit:[[0,-.8,.13],[0,-.5,.08],[0,-.2,.07],[0,.1,.07],[0,.4,.07],[0,.7,.07],[0,.95,.07]]},
     coin:{size:56,hit:[[0,0,.8]]},
     lips:{size:60,hit:[[-.5,0,.34],[0,.05,.4],[.5,0,.34]]},
-    glyph:{size:60,hit:[[0,0,.84]]}
+    glyph:{size:60,hit:[[0,0,.84]]},
+    // 서양 소재(사용자 11-15 "서양쪽 적테마와서사,보스에 맞는것도 수묵화버전으로"): 스테이지 서사·보스에 맞춰 솟는다
+    chalice:{size:64,hit:[[0,-.5,.42],[-.38,-.72,.2],[.38,-.72,.2],[0,.12,.12],[0,.45,.1],[0,.85,.3]]},
+    cross:{size:74,hit:[[0,-.82,.15],[0,-.45,.2],[-.4,-.45,.15],[.4,-.45,.15],[0,-.08,.15],[0,.28,.15],[0,.62,.17],[0,.88,.3]]},
+    skull:{size:60,hit:[[0,-.25,.62],[0,.5,.36]]},
+    scythe:{size:82,hit:[[.2,-.8,.12],[-.12,-.96,.17],[-.5,-.87,.17],[-.8,-.6,.13],[-.93,-.36,.08],[.12,-.5,.09],[.02,-.15,.09],[-.08,.2,.09],[-.18,.55,.09],[-.28,.9,.09]]},
+    crown:{size:60,hit:[[0,.3,.4],[-.52,.25,.34],[.52,.25,.34],[0,-.45,.25],[-.85,-.2,.18],[.85,-.2,.18]]},
+    chain:{size:80,hit:[[.06,-.82,.2],[-.06,-.42,.2],[.06,-.02,.2],[-.06,.38,.2],[.06,.78,.2]]},
+    candle:{size:70,hit:[[0,-.78,.15],[0,-.38,.17],[-.55,-.5,.15],[.55,-.5,.15],[-.5,-.1,.15],[.5,-.1,.15],[0,.08,.2],[0,.48,.12],[0,.85,.3]]},
+    key:{size:76,hit:[[0,-.65,.34],[0,-.18,.1],[0,.12,.1],[0,.42,.1],[.12,.74,.24]]},
+    hourglass:{size:64,hit:[[0,-.55,.4],[0,0,.16],[0,.55,.4],[-.4,-.85,.15],[.4,-.85,.15],[-.4,.85,.15],[.4,.85,.15]]},
+    wing:{size:70,hit:[[-.55,.55,.26],[-.35,-.05,.36],[.02,-.52,.36],[.5,-.3,.32],[.15,.15,.32],[.75,-.05,.2]]},
+    horn:{size:68,hit:[[0,.62,.36],[-.75,.38,.25],[-.96,-.08,.17],[-.92,-.5,.13],[-.76,-.87,.09],[.75,.38,.25],[.96,-.08,.17],[.92,-.5,.13],[.76,-.87,.09]]},
+    mirror:{size:68,hit:[[0,-.28,.64],[0,.55,.12],[0,.85,.12]]},
+    gear:{size:58,hit:[[0,0,.82]]},
+    bell:{size:62,hit:[[0,-.2,.5],[-.4,.3,.34],[.4,.3,.34],[0,.75,.14],[0,-.8,.14]]},
+    mask:{size:62,hit:[[0,-.3,.55],[0,.3,.42],[0,.68,.2]]},
+    rose:{size:70,hit:[[0,-.45,.5],[0,.15,.1],[-.3,.38,.2],[0,.5,.1],[.3,.62,.2],[0,.88,.1]]},
+    web:{size:66,hit:[[0,0,.72]]},
+    vial:{size:60,hit:[[0,.35,.52],[0,-.35,.18],[0,-.72,.18]]},
+    eye:{size:64,hit:[[0,0,.45],[-.55,0,.26],[.55,0,.26]]},
+    tower:{size:78,hit:[[0,-.7,.36],[0,-.2,.36],[0,.3,.4],[0,.72,.45]]},
+    book:{size:62,hit:[[-.45,0,.42],[.45,0,.42],[0,.1,.3]]},
+    cauldron:{size:62,hit:[[0,.25,.6],[-.5,0,.26],[.5,0,.26]]}
   };
+  var MOTIF_WEST=['chalice','cross','skull','scythe','crown','chain','candle','key','hourglass','wing','horn','mirror','gear','bell','mask','rose','web','vial','eye','tower','book','cauldron'];
+  /* 스테이지(배경 열쇠)별 서양 소재 셋. 첫째가 그 스테이지 보스·서사에 가장 맞는 것(보스 고유 문양이 있으면 그 문양을 따른다)이고 한 바퀴에 두 번 나온다.
+   * 소재는 스테이지 이름·몹 구성·보스 문양에서 고른 것이며 새 설정을 지어내지 않는다(Claude 판단, 기준서 docs/v43/ink-style.md 표). */
+  var STAGE_MOTIFS={
+    p1_garden:['rose','horn','skull'],p1_cave:['web','candle','skull'],p1_swamp:['horn','skull','chain'],p1_castle:['tower','crown','chain'],p1_grave:['skull','cross','scythe'],p1_pillars:['candle','horn','chain'],
+    p1_summon:['horn','wing','chain'],p1_ward:['vial','mask','cross'],p1_injection:['vial','eye','mask'],p1_memory:['hourglass','horn','crown'],p1_city:['vial','chain','bell'],p1_mask:['wing','mask','cross'],
+    p2_chapel:['book','key','candle'],p2_sloth:['hourglass','chain','web'],p2_envy:['mirror','eye','chain'],p2_gluttony:['cauldron','chalice','skull'],p2_lust:['rose','mirror','chalice'],p2_greed:['key','chalice','crown'],
+    p2_snow:['crown','bell','candle'],p2_wrath:['horn','chain','candle'],p2_pride:['crown','tower','wing'],p2_core:['gear','eye','chain'],
+    p3_war:['gear','tower','chain'],p3_rampart:['gear','cross','tower'],p3_passage:['gear','eye','key'],p3_nexus:['key','eye','gear'],p3_migration:['gear','vial','hourglass'],p3_gate:['key','mirror','gear'],
+    p4_field:['horn','skull','rose'],p4_goblin:['rose','crown','skull'],p4_rampart:['wing','cross','crown'],p4_harbor:['bell','candle','eye'],p4_fogvillage:['eye','cauldron','candle'],
+    p5_academy:['book','key','candle'],p5_outer:['key','chain','scythe'],p5_forest:['hourglass','scythe','chain'],p5_layers:['book','key','chain'],p5_workshop:['gear','cauldron','chain'],p5_neural:['eye','gear','key'],
+    p5_graveyard:['skull','cross','hourglass'],p5_ritual:['candle','book','chalice'],p5_corridor:['rose','hourglass','key'],p5_core:['bell','scythe','skull'],
+    p6_siege:['horn','cross','tower'],p6_hall:['crown','mirror','key'],p6_core:['horn','gear','crown'],
+    p7_crosswalk:['bell','mirror','hourglass'],p7_hotel:['key','bell','candle'],p7_villa:['mirror','key','mask'],p7_rooftop:['key','hourglass','chain'],
+    p8_circuit:['chain','gear','eye'],p8_collective:['rose','mask','book'],p8_castle:['tower','mirror','hourglass'],p8_approach:['rose','candle','cross'],p8_harvest:['rose','scythe','chalice'],p8_core:['mask','chain','crown']
+  };
+  function stageMotifs(index){var g=STAGES[index];return STAGE_MOTIFS[g&&g.theme&&g.theme.bg]||['skull','chain','candle'];}
   var MOTIF_NATURE=['orchid','plum','bamboo','lotus','mountain','sun','moon'],MOTIF_MOVING=['wave','whirl','flame','cloud'],MOTIF_WEAPONS=['sword','spear'],RISER_WARN=60,RISER_HOLD=50,RISER_FADE=36;
   function stageBoss(index){var g=STAGES[index];for(var k=g.first;k<SEGMENTS.length&&SEGMENTS[k].stage===index;k++)if(SEGMENTS[k].actor&&!SEGMENTS[k].mid)return SEGMENTS[k].actor;for(k=g.first;k<SEGMENTS.length&&SEGMENTS[k].stage===index;k++)if(SEGMENTS[k].actor)return SEGMENTS[k].actor;return '';}
   // 스테이지마다: 동양화 소재 둘, 무기 하나, 보스 상징 하나. 상징은 보스 고유 문양(엽전 문양은 엽전 그림, 색욕 보스는 입술).
   function motifEmblem(index){var sig=signatureOf(stageBoss(index));return STAGES[index].scene==='17'?'lips':sig&&sig.glyph==='coin'?'coin':'glyph';}
-  function motifPlan(index){var n=MOTIF_NATURE.length,m=MOTIF_MOVING.length,a=index%n,b=(a+1+((index>>1)%(n-1)))%n;return [MOTIF_MOVING[index%m],MOTIF_NATURE[a],MOTIF_WEAPONS[index%MOTIF_WEAPONS.length],MOTIF_MOVING[(index+1+(index>>2)%(m-1))%m],MOTIF_NATURE[b],motifEmblem(index)];} // 움직이는 소재 둘, 꽃·풍경 둘, 무기, 보스 상징
+  function motifPlan(index){var n=MOTIF_NATURE.length,m=MOTIF_MOVING.length,a=index%n,b=(a+1+((index>>1)%(n-1)))%n,t=stageMotifs(index);return [t[0],MOTIF_MOVING[index%m],MOTIF_NATURE[a],t[1],MOTIF_WEAPONS[index%MOTIF_WEAPONS.length],motifEmblem(index),t[2],MOTIF_MOVING[(index+1+(index>>2)%(m-1))%m],t[0],MOTIF_NATURE[b]];} // 보스 맞춤 서양 소재(두 번)·서양 소재 둘, 움직이는 소재 둘, 꽃·풍경 둘, 무기, 보스 상징
   function riserHits(s,r,x,y){if(r.age<RISER_WARN||r.fade)return false;var hit=MOTIFS[r.kind].hit,pr=s.player.r;for(var k=0;k<hit.length;k++){var dx=x-(r.x+hit[k][0]*r.size),dy=y-(r.y+hit[k][1]*r.size),rr=hit[k][2]*r.size+pr;if(dx*dx+dy*dy<rr*rr)return true;}return false;}
   function riserRand(s){var x=s.riserRng|0;x^=x<<13;x^=x>>>17;x^=x<<5;s.riserRng=x>>>0;return s.riserRng/4294967296;}
   function updateRisers(s){
@@ -1083,7 +1123,7 @@
   })();
   var api={revision:43,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
-    BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem};
+    BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem};
   if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcade=api;
 })(typeof window!=='undefined'?window:globalThis);
