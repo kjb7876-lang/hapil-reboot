@@ -95,9 +95,9 @@
           // 문턱: 퍼지던 고리가 멈춰 둥근 벽이 되고, 잠시 뒤 바깥으로 한꺼번에 흩어진다. 그 사이 두 사람이 겨눈다.
           if(phase===0||phase===20){var n=count(s,22),base=rand(s)*TAU;for(k=0;k<n;k++)spawn(s,b.x,b.y,base+TAU*k/n,phase?120:170,{color:(t/150)%2?CYAN:YELLOW,size:1,accel:-130,min:0,at:120,mode:K.MODE_TURN,arg:0,speed2:74});}
           if(phase>=40&&phase<110&&phase%14===0){fan(s,b.x,b.y,pick(s,1,2,2),aim(s,b.x,b.y),.18,112,{color:YELLOW,size:K.RICE});fan(s,W-b.x,b.y,pick(s,1,2,2),aim(s,W-b.x,b.y),.18,112,{color:CYAN,size:K.RICE});}}},
-        p8_goldenCross:{name:'황금 역십자가',scene:'60',fire:function(s,t){var b=s.boss,i;
-          // 황금 역십자가: 십자가가 줄지어 똑바로 내려오고, 보스에게서 금빛 육망성 무늬가 커진다.
-          if(t%96===0){s.lane=Math.max(0,Math.min(5,(s.lane===undefined?2:s.lane)+Math.floor(rand(s)*3)-1));for(i=0;i<6;i++){if(i===s.lane)continue;spawn(s,W/6*(i+.5),-30,PI/2,62,{size:K.SHAPE_PROP,color:K.P.cross,life:900});}}
+        p8_goldenCross:{name:'황금 육망성',scene:'60',fire:function(s,t){var b=s.boss,i;
+          // 황금 육망성(사용자 11-16: 십자가는 늘 좋은 것이라 적이 쓰지 않는다): 금빛 육망성 기물이 줄지어 똑바로 내려오고, 보스에게서 금빛 육망성 무늬가 커진다.
+          if(t%96===0){s.lane=Math.max(0,Math.min(5,(s.lane===undefined?2:s.lane)+Math.floor(rand(s)*3)-1));for(i=0;i<6;i++){if(i===s.lane)continue;spawn(s,W/6*(i+.5),-30,PI/2,62,{size:K.SHAPE_PROP,color:K.P.hexagram,life:900});}}
           if(t%48===24){shape(s,b.x-44,b.y,HEXAGRAM,70,0,{color:YELLOW,size:1});if(s.difficulty==='hell'||t%96===24)shape(s,b.x+44,b.y,HEXAGRAM,58,0,{color:WHITE,size:0});}
           if(t%pick(s,24,20,12)===0)for(i=0;i<count(s,1);i++)spawn(s,8+rand(s)*(W-16),-8,PI/2,64+rand(s)*30,{color:YELLOW,size:K.RICE});}},
         // 61 — 교주의 사몽. 중간: 공간과 시간. 보스: 부활 → 세쌍둥이의 기록 → 사망의 글자 → 망령 → 사몽
@@ -230,7 +230,7 @@
         {scene:'59',theme:{bg:'p8_approach',tint:'#200a1e',fx:'sparks'},cast:['leech','p8_rose','p8_believer','p8_priest'],reward:{key:'p8_union',name:'합일 회로'},
           waves:[wave(corridor,860),wave(chevrons,900),wave(coreGuard,900),wave(trios,840)],
           mid:['cultist','twoGoals','p8_pastFuture']},
-        {scene:'60',theme:{bg:'p8_harvest',tint:'#1f1a08',fx:'dust'},cast:['p8_believer','p8_priest','leech','p8_rose'],reward:{key:'p8_goldcross',name:'황금 역십자가'},
+        {scene:'60',theme:{bg:'p8_harvest',tint:'#1f1a08',fx:'dust'},cast:['p8_believer','p8_priest','leech','p8_rose'],reward:{key:'p8_goldhexagram',name:'황금 육망성'},
           waves:[wave(threeHarvesters,900),wave(tripleRoses,860),wave(harvestSweep,900),wave(circleFormation,900)],
           mid:['p8_ion','p8_orderWall'],boss:['rian','traitors','p8_wholeDeath','p8_threshold','p8_goldenCross']},
         {scene:'61',theme:{bg:'p8_core',tint:'#2a0808',fx:'embers'},cast:['p8_rose','p8_believer','leech','p8_priest','spider','ember','drone','mobgoblin','wolf','collector','slime','nightmare'],reward:{key:'p8_triplets',name:'세쌍둥이의 기록'},

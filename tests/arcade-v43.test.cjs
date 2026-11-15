@@ -124,7 +124,7 @@ test('v43 difficulties, the phone mode, six colours and shapes, upright crosses,
  const a=A(),d=a.DIFFICULTY;assert.deepEqual([d.gentle.hp,d.normal.hp,d.hell.hp],[9,5,3]);
  assert(d.gentle.speed<d.normal.speed&&d.normal.speed<d.hell.speed&&d.hell.speed<1);assert(d.gentle.density<d.normal.density&&d.normal.density<d.hell.density);
  assert.deepEqual([...a.PALETTE].sort(),[0,2,4,5,6,8]);assert.equal(a.SIZE_RADIUS.length,6);assert(a.COMPACT_CAP<a.CAP);
- const cross=a.PROPS.findIndex(p=>p.key==='cross');assert(cross>=0&&a.PROPS[cross].upright===true);
+ const cross=a.PROPS.findIndex(p=>p.key==='hexagram');assert(cross>=0&&a.PROPS[cross].upright===true); // 사용자 11-16: 똑바로 선 기물은 십자가에서 육망성으로 바뀌었다
  const heart=a.PROPS.findIndex(p=>p.key==='heart');assert(heart<0||a.PROPS[heart].radius>0);
  const i=a.SEGMENTS.findIndex(x=>x.spell&&!x.mid),run=(difficulty,compact)=>{const s=a.createRun({difficulty,seed:9,segment:i,compact});let most=0,fastest=0;for(let t=0;t<1500&&s.seg===i;t++){s.player.invulnerableUntil=s.tick+999;if(s.stage==='card')s.boss.hp=s.boss.maxHp;a.step(s,{dx:0,dy:0});most=Math.max(most,s.n);for(let k=0;k<s.n;k++)if(s.bsize[k]!==a.SHAPE_PROP)fastest=Math.max(fastest,s.bs[k]);clear(s);}return {s,most,fastest};};
  const gentle=run('gentle'),hell=run('hell'),phone=run('hell',true);assert(d.gentle.density<=d.normal.density*.7&&d.gentle.density<d.hell.density&&gentle.most>0); // 사용자 결정(11-14): 이지·노멀은 헬만큼 쏘되 느리게. 화면 탄 수 대신 쏘는 양(density)을 비교한다.assert(hell.fastest<=200);assert(phone.most<hell.most*.85&&phone.most<=a.COMPACT_CAP);assert(phone.s.sizeScale>1&&hell.s.sizeScale===1);
