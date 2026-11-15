@@ -1,0 +1,30 @@
+{
+ "shard": {
+  "frames": 8,
+  "cell": 96,
+  "source": "m0 r96/runtime-text/assets/r912/pj04-fly.webp",
+  "sourceSha256": "35f66e12c792d0f88f9ea25405ad1284c2f076803c84522adbb04bf4ff1dce56",
+  "use": "기억 결정탄(3단계 이상 주포·유도탄) — Dots CX-0084PJ 기억사수 기본탄 비행"
+ },
+ "shatter": {
+  "frames": 6,
+  "cell": 128,
+  "source": "m0 r96/runtime-text/assets/r912/pj04-hit.webp",
+  "sourceSha256": "ea984d873ee8312a413edd711ec48fe77924c807d5c2d61c94a675da8b83f160",
+  "use": "결정탄 적중·필살기 파편 — Dots CX-0084PJ 기억사수 기본탄 적중"
+ },
+ "bolt": {
+  "frames": 8,
+  "cell": 192,
+  "source": "m0 r96/runtime-text/assets/r292/fx/gunner/e.webp",
+  "sourceSha256": "065a29588394e0660ffbc14e59c681da2c69c2436153fade0283c35534df52d9",
+  "use": "기억 번개(5단계 이상 추격 번개·필살기 4단계 이상) — Dots 07_gunner_E 팬텀 블링크"
+ },
+ "burst": {
+  "frames": 12,
+  "cell": 192,
+  "source": "m0 r96/runtime-text/assets/r292/fx/gunner/r.webp",
+  "sourceSha256": "f7ea0dca459fec604147ed6753a70a5e897291f96f9a7efafb59e1975d3c85b9",
+  "use": "필살기 본 폭발 — Dots 07_gunner_R 궁극기"
+ }
+}

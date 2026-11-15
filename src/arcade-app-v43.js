@@ -151,6 +151,7 @@
   /* ── 탄 그림 ── */
   /* 구슬탄 한 장: 옅은 빛무리 → 단색 속 → 밝은 테두리. 색 6 × 모양을 미리 그려 두고 찍기만 한다. */
   // 흰빛에 가까운 탄은 흰 테두리·센 빛무리면 겹칠 때 하얀 덩어리로 번진다(7전문가 심사 11-14). 짙은 테두리, 옅은 빛무리로 낱알을 지킨다.
+  var HeroFx=global.HapilHeroFx||null; // 기억사수 성장형 공격·필살기·시계 그림(src/hero-memory-v43.js)
   var Ink=global.HapilInk&&global.HapilInk.on&&global.HapilInk.sprite?global.HapilInk:null; // 수묵화풍(기본, ?ink=0 이면 꺼짐): 탄 그림을 붓 자국으로 굽는다
   var PALE_RIM='#41506e';
   function paleOf(color){var n=parseInt(String(color).slice(1,7),16);if(n!==n)return false;return ((n>>16&255)*.299+(n>>8&255)*.587+(n&255)*.114)>200;}
@@ -429,7 +430,8 @@
     var g=Math.round(100*Math.max(0,Math.min(1,s.gauge/Arcade.GAUGE_FULL)));
     var name='<div><div class="name" style="color:'+color+'">'+esc(b.present?b.name:stage.name)+'</div><div>'+(s.bossOnly?'보스 체험 · 제'+stage.part+'부':'STAGE '+(s.stageIndex+1)+' / '+Arcade.STAGES.length)+'</div></div>';
     var lb=function(t){return hudOut==='side'?'<div class="lbl">'+t+'</div>':'';}; // PC 패널에는 이름표를 붙인다(심사 7차)
-    var life='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB [X]')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div></div>';
+    var lvl='<div class="levels">'+lb('MEMORY')+'<span>공격 Lv.'+(s.power||1)+'</span> <span>필살 Lv.'+(s.bombLevel||1)+'</span></div>'; // 기억사수 성장 단계(사용자 11-16)
+    var life='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB [X]')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div>'+lvl+'</div>';
     var score='<div style="text-align:'+(hudOut==='side'?'left':'right')+'">'+lb('SCORE')+'<div class="score">'+pad(s.score)+'</div>'+(hudOut==='side'?lb('BEST')+'<div class="best">'+pad(Math.max(best,s.score))+'</div>':'')+'<div class="graze">GRAZE '+s.graze+'</div></div>'; // 오른쪽 패널에 최고 점수도: 좌우 패널 무게를 맞춘다(심사 10차)
     if(hudOut==='side'){
       var seg=Arcade.SEGMENTS[s.seg],card=s.stage==='card'&&seg,hp=card?Math.round(100*Math.max(0,Math.min(1,finite(b.hp/b.maxHp,0)))):0;
@@ -438,7 +440,7 @@
       for(k=0;k<list.length&&k<6;k++)cards+='<div'+(k===at?' class="cur" style="color:'+color+'"':'')+'>'+(k<at?'✓ ':k===at?'▸ ':'· ')+esc(list[k].name)+'</div>';cards+='</div>';
       var boss='<div>'+(card?lb('BOSS')+'<div class="bosshp"><i style="width:'+hp+'%;background:'+color+'"></i></div>':'')+(card&&seg.spell?lb('SPELL')+'<div class="spell" style="border-color:'+color+';font-size:'+spellFit(seg.name)+'px">'+esc(seg.name)+'</div><div class="graze">'+(s.spellClean?'BONUS +'+(20000+(seg.stage||0)*5000):'BONUS 실패')+'</div>':'')+'</div>'+(card&&list.length?'<div>'+lb('SPELL CARDS')+cards+'</div>':'')+(card&&bossPortrait(b.actor,color)?'<img class="portrait" alt="" src="'+portraitUrl+'" style="border-color:'+color+'">':'');
       var prog=Math.round(100*(s.stageIndex+1)/Arcade.STAGES.length);
-      var life2='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB [X]')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div></div><div>'+lb('JOURNEY')+'<div class="progress"><i style="width:'+prog+'%"></i></div>'+route+'<div class="graze">패턴 보너스 '+s.captures+'</div></div>';
+      var life2='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB [X]')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div>'+lvl+'</div><div>'+lb('JOURNEY')+'<div class="progress"><i style="width:'+prog+'%"></i></div>'+route+'<div class="graze">패턴 보너스 '+s.captures+'</div></div>';
       var keys='<div class="keys">'+lb('CONTROLS')+'<div>이동 ←↑↓→ · WASD</div><div>저속 Shift · 폭탄 X</div><div>일시정지 Esc</div></div>';
       setHud(hi,'hi','<div class="stack">'+name+life2+'</div>'+keys);setHud(lo,'lo','<div class="stack">'+score+boss+'</div>'+'<div class="keys">'+lb('DIFFICULTY')+'<div>'+({gentle:'EASY',normal:'NORMAL',hell:'HELL'}[s.difficulty]||'')+'</div></div>');} // 패널 가운데: 왼쪽은 목숨·여정, 오른쪽은 보스 체력·스펠명·보너스(심사 6.46: 가운데가 비었다) // 아래쪽 빈자리: 왼쪽은 조작법, 오른쪽은 지금 스펠 이름(칸 안 이름표가 작아 읽기 어렵다는 지적)
     else{setHud(hi,'hi',name);setHud(lo,'lo',life+score);}
@@ -501,7 +503,8 @@
       else if(e==='kill')play('kill',s.player.x);
       else if(e==='item'){if(visual-lastItemSound>.06){lastItemSound=visual;play('item',s.player.x);}}
       else if(e==='hurt'){play('hurt',s.player.x);hurtFlash=1;hurtRing={x:s.player.x,y:s.player.y,r:8};shake=16;}
-      else if(e==='bomb'){play('bomb',s.player.x);flash=.55;shock={x:s.player.x,y:s.player.y,r:10};shake=10;}
+      else if(e==='bomb'){play('bomb',s.player.x);flash=.55;shock=HeroFx?null:{x:s.player.x,y:s.player.y,r:10};shake=10;if(HeroFx){HeroFx.onEvent(e,s,visual);shake=Math.max(shake,HeroFx.shake());}} // 필살기 단계 연출이 충격파 고리를 대신한다(감싸는 원 금지)
+      else if(HeroFx&&(e==='powerUp'||e==='powerDown'||e==='bombLevelUp')){HeroFx.onEvent(e,s,visual);if(e!=='powerDown')play('seal');}
       else if(e==='card'){play('charge',s.boss.x);castFx(s,true);showBanner(Arcade.SEGMENTS[s.seg].name,s.boss.name,true);}
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,'제'+g.part+'부 · STAGE '+(s.stageIndex+1));play('seal');}}
       else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);showToast(r);rushStage=false;}
@@ -1127,6 +1130,7 @@
   }
   // 영웅 탄은 반투명하게 그려 적 탄을 가리지 않는다.
   function drawShots(s){
+    if(HeroFx){HeroFx.shots(ctx,s,visual);return;} // 기억사수 성장 단계별 탄(src/hero-memory-v43.js)
     ctx.globalAlpha=.55;ctx.globalCompositeOperation='lighter'; // 더해 그리되 한 단계 물러서게: 적 탄이 화면의 주인공이다(심사 9차: 주황 샷이 먼저 눈에 들어온다). 타격감은 명중 섬광이 맡는다
     for(var i=0;i<s.sn;i++){
       if(s.shoming[i])ctx.drawImage(shotSprite,s.sx[i]-3,s.sy[i]-9,6,18); // 유도탄도 주탄과 같은 길쭉한 빛줄기: 둥근 주황 점은 적 탄처럼 읽혔다(심사 7차)
@@ -1137,12 +1141,14 @@
   var SKILL_FX_BRIGHT=.4,BEAM_LOW_FADE=.45,BEAM_ROOT=48,PALE_BEAM_DIM=.3,PALE_CORE=.45,BEAM_CORE=.55,BEAM_DIM=.38,HERO_RING_WIDTH=3,BRIGHT_ART_DIM='brightness(.6) contrast(.72)',PLAYER_SHADE=46,HERO_RING='#7ff3ff',OUTER_RIM='#1c2236',SIGIL_ALPHA=.55;
   function drawPlayer(s){
     var p=s.player,blink=s.tick<p.invulnerableUntil&&Math.floor(s.tick/4)%2;
+    if(HeroFx)HeroFx.field(ctx,s,visual); // 영웅 둘레 시간 둔화(먹 붓끝, 원 고리 없음)
     // 영웅 뒤 어두운 빛무리: 밝은 광선·배경 사이에서도 영웅 자리가 먼저 보인다(심사 6.36)
     var sh=ctx.createRadialGradient(p.x,p.y,4,p.x,p.y,PLAYER_SHADE);sh.addColorStop(0,'rgba(6,8,16,.72)');sh.addColorStop(1,'rgba(6,8,16,0)');ctx.globalAlpha=1;ctx.fillStyle=sh;ctx.fillRect(p.x-PLAYER_SHADE,p.y-PLAYER_SHADE,PLAYER_SHADE*2,PLAYER_SHADE*2);
     ctx.globalAlpha=blink?.35:.95;
     if(images.gunner)ctx.drawImage(images.gunner,p.x-258.5369*57/512,p.y-283.8754*57/512,57,57);
     else{ctx.fillStyle='#9fefff';ctx.beginPath();ctx.moveTo(p.x,p.y-16);ctx.lineTo(p.x+10,p.y+12);ctx.lineTo(p.x-10,p.y+12);ctx.closePath();ctx.fill();}
     if(Ink&&Ink.heroCloud)Ink.heroCloud(ctx,p.x,p.y+22,visual); // 영웅은 흰 구름을 탄다(적은 먹구름, 사용자 11-15)
+    if(HeroFx)HeroFx.clock(ctx,s,visual); // 구름 위 시계: 보통·가속·둔화에 따라 바늘 빠르기가 바뀐다(사용자 11-16)
     ctx.globalAlpha=1;
     ctx.globalAlpha=blink?.3:.8;ctx.strokeStyle=HERO_RING;ctx.lineWidth=HERO_RING_WIDTH;ctx.beginPath();ctx.arc(p.x,p.y,11,0,TAU);ctx.stroke();ctx.globalAlpha=1; // 영웅 자리 표시 고리(심사 6.36: 밝은 광선 사이에서 영웅을 놓친다)
   }
@@ -1219,6 +1225,7 @@
     // 목숨 · 폭탄 · 스침 게이지(왼쪽 아래 저속 버튼 위), 점수(오른쪽 아래 폭탄 버튼 위)
     ctx.font='14px '+SANS;ctx.fillStyle='#ff6a8a';var hearts='';for(i=0;i<s.player.maxHp;i++)hearts+=i<s.player.hp?'◆':'◇';ctx.fillText(hearts,12,H-96);
     ctx.fillStyle='#7dffb0';var bombs='';for(i=0;i<s.bombs;i++)bombs+='✦';ctx.fillText(bombs,12,H-78);
+    ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.8)';ctx.fillText('공격 Lv.'+(s.power||1)+' · 필살 Lv.'+(s.bombLevel||1),12,H-60);ctx.font='14px '+SANS;
     ctx.fillStyle='rgba(255,255,255,.18)';ctx.fillRect(12,H-72,64,3);ctx.fillStyle='#7dffb0';ctx.fillRect(12,H-72,64*Math.max(0,Math.min(1,s.gauge/Arcade.GAUGE_FULL)),3);
     ctx.textAlign='right';ctx.font='600 14px '+SANS;ctx.fillStyle='#ffffff';ctx.fillText(pad(s.score),W-12,H-78);
     ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.7)';ctx.fillText('GRAZE '+s.graze,W-12,H-94);
@@ -1242,7 +1249,7 @@
     offsetX=offsetY=0;if(shake>0){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawShots(s);drawDrifts();drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);drawPlayer(s);drawHitbox(s); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawShots(s);drawDrifts();drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);drawPlayer(s);drawHitbox(s);if(HeroFx)HeroFx.drawTexts(ctx,visual); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);drawHud(s);
     if(flash>0){if(Ink&&Ink.raw)Ink.raw(1);if(Ink){var fb=s.boss&&s.boss.present,fx0=fb?finite(s.boss.x,W/2):W/2,fy0=fb?finite(s.boss.y,H/3):H/3,fg=ctx.createRadialGradient(fx0,fy0,20,fx0,fy0,H*.9);fg.addColorStop(0,'rgba(255,252,244,'+(flash*.75)+')');fg.addColorStop(1,'rgba(255,252,244,'+(flash*.2)+')');ctx.fillStyle=fg;}else ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);if(Ink&&Ink.raw)Ink.raw(-1);if(Ink){ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);drawPlayer(s);drawHitbox(s);ctx.restore();}flash-=.04;} // 수묵화에서도 섬광은 밝게: 먹색으로 뒤집히면 패턴 격파·보스 쓰러짐 때 화면이 잿빛으로 꺼졌다(보스 이펙트 전수조사 11-15). 보스에서 퍼지는 빛으로, 영웅·판정점은 섬광 위에 다시 그려 위치를 놓치지 않게(심사 1차 6.41)
     // 피격: 인주색 테두리 번쩍임 + 영웅 둘레에 금 간 붉은 고리(수묵화풍에서도 먹으로 바꾸지 않는다). 탄 지우기의 한지빛 섬광과 색·모양이 겹치지 않게.
@@ -1307,12 +1314,12 @@
     var quiet=!!(run&&run.quiet);
     run={stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),segment:run&&run.segment,carry:run&&run.carry};
     lastRun=run;
-    var options={difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,compact:compact,bossOnly:run.bossOnly};
+    var options={difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,compact:compact,bossOnly:run.bossOnly,growth:true}; // 중간 스테이지에서 시작하면 그만큼 자란 기억사수로(엔진 createRun)
     if(Number.isInteger(run.segment))options.segment=run.segment;
     state=Arcade.createRun(options);
     if(run.carry){state.hits+=run.carry.hits|0;state.bombsUsed+=run.carry.bombs|0;} // 중간 저장에서 이어 하면 앞 구간의 피격·폭탄도 별에 반영
     buildSprites();loadStage(state.stageIndex);fxStage=-1;
-    particles.length=0;drifts.length=0;flash=hurtFlash=shake=banner=0;shock=null;hurtRing=null;toast=null;accumulator=0;lastStamp=0;framesSeen=0;rushStage=false;setMode('playing');
+    particles.length=0;drifts.length=0;flash=hurtFlash=shake=banner=0;shock=null;hurtRing=null;toast=null;if(HeroFx)HeroFx.reset();accumulator=0;lastStamp=0;framesSeen=0;rushStage=false;setMode('playing');
     if(global.HapilEyes)global.HapilEyes[quiet?'clear':'open'](); // 눈 뜨기(arcade-eyes-v43.js). 디버그 건너뛰기는 연출 없이
   }
   function finish(){
