@@ -1,0 +1,46 @@
+# 세로판을 안드로이드 시험용 APK로 만든다(Capacitor). 서명은 디버그 키라 스토어 제출용이 아니다.
+# 실행: Actions 탭에서 'Android APK' → Run workflow, 또는 앱 관련 파일이 바뀐 푸시.
+name: Android APK
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'app/**'
+      - 'arcade.html'
+      - 'src/arcade-*'
+      - 'src/arcade-parts-v43/**'
+      - 'src/ink-v43.js'
+      - 'src/audio-v37.js'
+      - 'media/arcade-v43*/**'
+      - 'tools/build-app-www.cjs'
+      - '.github/workflows/android-apk.yml'
+permissions:
+  contents: read
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Build web files and sync
+        working-directory: app
+        run: |
+          npm install --no-audit --no-fund
+          npm run sync
+      - name: Build debug APK
+        working-directory: app/android
+        run: ./gradlew --no-daemon assembleDebug
+      - name: Name the APK
+        run: cp app/android/app/build/outputs/apk/debug/app-debug.apk "hapil-arcade-${GITHUB_SHA::7}-debug.apk"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hapil-arcade-debug-apk
+          path: hapil-arcade-*-debug.apk
+          retention-days: 14

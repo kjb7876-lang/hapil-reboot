@@ -1,0 +1,9 @@
+세로판 배경음악 (title / field / boss / final)
+- 곡: 이 프로젝트에서 직접 작곡·렌더링한 창작곡 (tools/compose-bgm-v43.py, 2026-11-15)
+- 악기 소리: Fluid R3 GM SoundFont, Frank Wen
+  사전 렌더 샘플: https://github.com/gleitz/midi-js-soundfonts (FluidR3_GM)
+  라이선스: Creative Commons Attribution 3.0 (https://creativecommons.org/licenses/by/3.0/)
+  → 앱 정보·크레딧에 "Instrument samples: Fluid R3 GM SoundFont by Frank Wen (CC BY 3.0)" 표기
+
+Background music: original compositions for this game.
+Instrument samples: Fluid R3 GM SoundFont by Frank Wen, CC BY 3.0.

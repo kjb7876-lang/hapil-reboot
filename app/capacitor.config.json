@@ -1,0 +1,7 @@
+{
+  "appId": "kr.hapil.arcade",
+  "appName": "합일",
+  "webDir": "www",
+  "android": { "backgroundColor": "#0a0b14" },
+  "ios": { "backgroundColor": "#0a0b14", "contentInset": "never" }
+}
