@@ -55,15 +55,16 @@
     if(ms>0&&ms<1000){var b=Math.min(BUCKETS-1,Math.floor(ms/BUCKET_MS));stats.frames.hist[b]=(stats.frames.hist[b]||0)+1;stats.frames.n++;stats.frames.sum+=ms;stats.playMs+=ms;dirty=true;}
     var now=Date.now();
     if(s!==seen){seen=s;seenStage=-1;seenResults=s.results.length;seenEnd='';seenSeg=-1;}
-    if(s.stageIndex!==seenStage){seenStage=s.stageIndex;stageStart=now;if(!s.bossOnly)stageRow(s.stageIndex,s.difficulty).tries++;dirty=true;}
     if(s.results.length>seenResults){ // 스테이지를 깼다
       seenResults=s.results.length;var r=s.results[s.results.length-1],row=stageRow(r.stage!=null?r.stage:s.stageIndex,s.difficulty),took=now-stageStart;
-      if(!s.bossOnly){row.clears++;row.ms+=took;row.bestMs=row.bestMs?Math.min(row.bestMs,took):took;}clearCheckpoint();dirty=true;flush(true);
+      if(!s.bossOnly){row.clears++;row.ms+=took;row.bestMs=row.bestMs?Math.min(row.bestMs,took):took;clearCheckpoint();}dirty=true;flush(true);
     }
-    if((s.stage==='lost'||s.stage==='won')&&seenEnd!==s.stage){seenEnd=s.stage;if(s.stage==='lost'&&!s.bossOnly){var lr=stageRow(s.stageIndex,s.difficulty);lr.losses++;lr.ms+=now-stageStart;}clearCheckpoint();dirty=true;flush(true);return;}
+    // 깬 스테이지 시간을 먼저 적은 뒤(엔진이 결과와 다음 스테이지 번호를 한 프레임에 바꾼다) 새 스테이지 시계를 잰다.
+    if(s.stageIndex!==seenStage){seenStage=s.stageIndex;stageStart=now;if(!s.bossOnly)stageRow(s.stageIndex,s.difficulty).tries++;dirty=true;}
+    if((s.stage==='lost'||s.stage==='won')&&seenEnd!==s.stage){seenEnd=s.stage;if(s.stage==='lost'&&!s.bossOnly){var lr=stageRow(s.stageIndex,s.difficulty);lr.losses++;lr.ms+=now-stageStart;}if(!s.bossOnly)clearCheckpoint();dirty=true;flush(true);return;}
     if(!s.bossOnly&&s.started&&s.seg!==seenSeg&&s.stage!=='lost'&&s.stage!=='won'){
       seenSeg=s.seg;var A=global.HapilArcade,seg=A&&A.SEGMENTS[s.seg];
-      if(seg&&seg.stage===s.stageIndex)store(CP_KEY,{v:1,stage:s.stageIndex,seg:s.seg,difficulty:s.difficulty,at:now});
+      if(seg&&seg.stage===s.stageIndex)store(CP_KEY,{v:1,stage:s.stageIndex,seg:s.seg,difficulty:s.difficulty,at:now,hits:s.hits-s.mark.hits,bombs:s.bombsUsed-s.mark.bombs}); // 별 계산용으로 이 스테이지에서 맞은 수·폭탄 수도 남긴다
     }
     flush(false);
   }

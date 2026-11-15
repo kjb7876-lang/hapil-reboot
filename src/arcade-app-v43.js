@@ -1238,11 +1238,12 @@
   /* run: {stage, bossOnly}. 원큐: 그 스테이지부터 끝까지 이어진다. */
   function start(run){
     if(fx)fx.unlock();
-    run={stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),segment:run&&run.segment};
+    run={stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),segment:run&&run.segment,carry:run&&run.carry};
     lastRun=run;
     var options={difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,compact:compact,bossOnly:run.bossOnly};
     if(Number.isInteger(run.segment))options.segment=run.segment;
     state=Arcade.createRun(options);
+    if(run.carry){state.hits+=run.carry.hits|0;state.bombsUsed+=run.carry.bombs|0;} // 중간 저장에서 이어 하면 앞 구간의 피격·폭탄도 별에 반영
     buildSprites();loadStage(state.stageIndex);fxStage=-1;
     particles.length=0;drifts.length=0;flash=hurtFlash=shake=banner=0;shock=null;toast=null;accumulator=0;lastStamp=0;framesSeen=0;rushStage=false;setMode('playing');
   }
@@ -1317,7 +1318,7 @@
   function fieldPoint(e){var rect=canvas.getBoundingClientRect();return {x:(e.clientX-rect.left)*W/rect.width,y:(e.clientY-rect.top)*H/rect.height};}
   function bind(){
     document.querySelectorAll('[data-difficulty]').forEach(function(button){button.addEventListener('click',function(){setDifficulty(button.dataset.difficulty);progress.difficulty=difficulty;saveProgress();if(state===null)refreshTitle();});});
-    $('arcade-continue').addEventListener('click',function(){var mid=midway();start(mid?{stage:mid.stage,segment:mid.seg}:{stage:Progress.resume(progress)});});
+    $('arcade-continue').addEventListener('click',function(){var mid=midway();start(mid?{stage:mid.stage,segment:mid.seg,carry:{hits:mid.hits,bombs:mid.bombs}}:{stage:Progress.resume(progress)});});
     $('arcade-start').addEventListener('click',function(){start({stage:0});});
     $('arcade-stage-go').addEventListener('click',function(){var i=Number($('arcade-stage-select').value);if(Progress.canPlay(progress,i))start({stage:i});});
     $('arcade-boss-open').addEventListener('click',function(){fillStages();setMode('boss');});

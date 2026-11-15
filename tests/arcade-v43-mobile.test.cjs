@@ -83,3 +83,25 @@ test('every listed background track exists and the title screen credits the inst
   for(const k of ['title','field','boss','final']){assert(idx.tracks[k],k);assert(fs.existsSync(path.join(root,'media/bgm',idx.tracks[k].file)),idx.tracks[k].file);assert(idx.tracks[k].volume>0&&idx.tracks[k].volume<=.4);}
   assert.match(read('arcade.html'),/id="arcade-credit" data-i18n="credit"/);assert.match(read('media/bgm/CREDITS.txt'),/CC BY 3\.0/);
 });
+test('a stage cleared mid-run keeps its real time even though the next stage starts in the same frame',()=>{
+  const {w}=sandbox(),M=w.HapilMobile,st=A.STAGES[1];let t=1e6;w.Date={now:()=>t};
+  const real=Date.now;Date.now=()=>t;
+  try{const s=A.createRun({stage:1,difficulty:'normal',seed:5});s.started=true;s.seg=st.first+1;s.stage='wave';M.tick(s,'playing',16);
+    t+=90000;s.results.push({stage:1,stars:3});s.stageIndex=2;M.tick(s,'playing',16);
+    const row=M._stats().stages['normal:1'];assert.equal(row.clears,1);assert(row.ms>=90000,'took '+row.ms);}finally{Date.now=real;}
+});
+test('boss practice never erases the campaign checkpoint',()=>{
+  const {w,store}=sandbox(),M=w.HapilMobile,st=A.STAGES[2];
+  const s=A.createRun({stage:2,difficulty:'normal',seed:3});s.started=true;s.seg=st.first+2;s.stage='wave';M.tick(s,'playing',16);
+  const saved=store['hapil-arcade-checkpoint-v43'];assert(saved);
+  const b=A.createRun({stage:5,difficulty:'normal',seed:3,bossOnly:true});b.started=true;M.tick(b,'playing',16);
+  b.results.push({stage:5,stars:3});M.tick(b,'playing',16);b.stage='lost';M.tick(b,'playing',16);
+  assert.equal(store['hapil-arcade-checkpoint-v43'],saved);
+});
+test('the checkpoint keeps hits and bombs taken earlier in the stage, and continuing carries them into the stars',()=>{
+  const {w,store}=sandbox(),M=w.HapilMobile,st=A.STAGES[3];
+  const s=A.createRun({stage:3,difficulty:'normal',seed:3});s.started=true;s.stage='wave';s.hits=2;s.bombsUsed=1;s.seg=st.first+1;M.tick(s,'playing',16);
+  const cp=JSON.parse(store['hapil-arcade-checkpoint-v43']);assert.equal(cp.hits,2);assert.equal(cp.bombs,1);
+  assert.match(read('src/arcade-app-v43.js'),/carry:\{hits:mid\.hits,bombs:mid\.bombs\}/);
+  assert.match(read('src/arcade-app-v43.js'),/state\.hits\+=run\.carry\.hits\|0;state\.bombsUsed\+=run\.carry\.bombs\|0;/);
+});
