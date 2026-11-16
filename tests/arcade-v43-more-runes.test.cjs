@@ -14,7 +14,7 @@ test('the big hexagram comes a third as often as before (once every 24 s)',()=>{
 });
 test('the hanja rings come four times as often, in more and bigger layers',()=>{
   const [,ci]=spells[0],c=count(ci,'normal',2280);
-  assert(c.runes>=5,'ring attacks in a 38 s spell (was 4): '+c.runes);assert(c.maxRings>=4,'layers: '+c.maxRings);assert(c.maxR>=200,'outer radius: '+c.maxR);
+  assert(c.runes>=5,'ring attacks in a 38 s spell (was 4): '+c.runes);assert(c.maxRings>=6,'six layers (user 11-16 "한자문고리6겹해"): '+c.maxRings);assert(c.maxR>=200,'outer radius: '+c.maxR);
   const e=count(ci,'gentle',1440);assert(e.maxRings>=2&&e.maxRings<c.maxRings,'easy keeps fewer layers: '+e.maxRings);
 });
 test('the hexagram drawing itself is unchanged',()=>{

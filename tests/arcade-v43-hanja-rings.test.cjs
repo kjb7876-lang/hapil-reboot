@@ -10,9 +10,10 @@ const live=f=>f.age>=f.warn&&f.age<f.warn+f.active;
 
 test('during a named spell the boss raises two big turning rune rings that hurt, the outer one far larger than the old decorative ring',()=>{
   const ci=firstSpell(),s=toCard(ci);let rf=null;
-  for(let t=0;t<900&&!rf;t++){hold(s);A.step(s,{});rf=s.figures.find(f=>f.kind==='runes'&&live(f));}
-  assert(rf,'a live rune ring figure appears');
-  const radii=rf.rings.map(q=>q.r).sort((a,b)=>b-a);assert.equal(radii.length,4,'four layers (user 11-16 "더 겹겹히 큰사이즈로")');
+  // 고리는 시전마다 겹이 늘어난다(11-16): 주문 안에서 여섯 겹 시전을 찾는다
+  for(let t=0;t<2400&&!rf;t++){hold(s);A.step(s,{});rf=s.figures.find(f=>f.kind==='runes'&&live(f)&&f.rings.length===6);}
+  assert(rf,'a live six-layer rune ring figure appears (user 11-16 "한자문고리6겹해")');
+  const radii=rf.rings.map(q=>q.r).sort((a,b)=>b-a);assert.equal(radii.length,6,'six layers (user 11-16 "한자문고리6겹해")');
   assert(radii[0]>=200,'outer ring is large enough to overwhelm the field (user 11-16)');assert(rf.width>=16,'the band is bold');
   assert(rf.rings.every(q=>q.n>=3&&q.gap>0),'each ring has gaps like a gear');
   assert(rf.rings.every((q,k)=>!k||q.dir!==rf.rings[k-1].dir),'neighbouring rings turn in opposite directions');
@@ -57,10 +58,10 @@ test('the rings stay centred on the field and every layer keeps a gap of at leas
   assert(n>0);
 });
 
-test('easy mode keeps only the two outer rings',()=>{
-  const ci=firstSpell(),s=toCard(ci,'gentle');let rf=null;
-  for(let t=0;t<900&&!rf;t++){hold(s);A.step(s,{});rf=s.figures.find(f=>f.kind==='runes');}
-  assert(rf);assert.equal(rf.rings.length,2,'easy keeps two layers');
+test('easy mode keeps at most the three outer rings',()=>{
+  const ci=firstSpell(),s=toCard(ci,'gentle');let most=0;
+  for(let t=0;t<2400&&s.seg===ci;t++){hold(s);A.step(s,{});for(const f of s.figures)if(f.kind==='runes')most=Math.max(most,f.rings.length);}
+  assert.equal(most,3,'easy keeps at most three layers');
 });
 
 test('every boss has its own Classical Chinese verse for the rings, not one character repeated',()=>{

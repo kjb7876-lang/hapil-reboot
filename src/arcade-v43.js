@@ -886,13 +886,14 @@
      큰 육망성(SIGIL)이 켜진 동안에는 켜지지 않는다: 육망성은 t%1440 = 30~360, 고리는 360·600·840·1080(예고) 뒤 각 210틱이라 둘이 함께 판정을 갖는 순간이 없다. 이지는 바깥 고리 하나만. */
   /* 사용자 11-16 "원형한자빈도수 늘리고 더 겹겹히 큰사이즈로 더 압도적이게": 육망성 한 번(24초 주기의 처음 6초) 뒤 고리가 4초마다 네 번.
      고리는 네 겹(이지 두 겹), 바깥 고리는 반지름 210으로 필드 좌우를 넘어 화면을 덮는다. 겹마다 반대로 돌고, 켜질 때 틈이 모두 아래를 본다. */
-  var RUNE_AT=360,RUNE_TIMES=[360,600,840,1080],RUNE_WARN=60,RUNE_ACTIVE=150,RUNE_GROW=.62,RUNE_SPIN=.55,RUNE_W=24,RUNE_OUTER=210,RUNE_INNER=166,RUNE_RADII=[210,166,122,78];
+  var RUNE_AT=360,RUNE_TIMES=[360,570,780,990],RUNE_WARN=60,RUNE_ACTIVE=150,RUNE_GROW=.62,RUNE_SPIN=.55,RUNE_W=24,RUNE_OUTER=210,RUNE_INNER=166,RUNE_RADII=[214,182,150,118,88,60];
   // 고리 중심: 보스를 따르되 가로는 필드 정중앙, 세로는 170~230으로 묶고, 바깥 고리가 띠·매듭까지 좌우 벽 안에 들도록 줄인다(심사 2·3차: 벽에 닿아 잘렸다).
   function runeCentre(f,b){f.cx=W/2;f.cy=Math.max(170,Math.min(230,b.y+40));f.fit=1;}
-  function summonRunes(s,sig){
+  function summonRunes(s,sig,cast){
     if(s.figures.length>=FIGURE_CAP-1)return;
     var spin=sig.spin*RUNE_SPIN,lead=spin*TICK*.35*RUNE_WARN; // 켜지는 순간 두 고리 모두 틈 하나가 바로 아래(영웅 쪽)를 보게 한다(심사: 화면 안에서 틈이 보여야 한다)
-    var layers=s.difficulty==='gentle'?2:4,rings=[];for(var k=0;k<layers;k++){var dir=k%2?-1:1,r=RUNE_RADII[k];rings.push({r:r,n:3,gap:Math.min(.95,.62*172/Math.max(120,r)+.04*k),dir:dir,phase:Math.PI/2-dir*lead});} // 안쪽 고리일수록 틈 각도를 넓혀 틈 폭(px)을 비슷하게
+    var layers=(s.difficulty==='gentle'?[2,3,3,3]:[4,5,6,6])[cast||0],rings=[]; // 점층(심사 11-16): 네 겹 → 다섯 겹 → 여섯 겹 → 여섯 겹(사용자 11-16 "한자문고리6겹해")으로 쌓아 올린 뒤 육망성으로 넘어간다
+    for(var k=0;k<layers;k++){var dir=k%2?-1:1,r=RUNE_RADII[k];rings.push({r:r,n:3,gap:Math.min(1.2,Math.max(.62*172/Math.max(120,r)+.04*k,64/r)),dir:dir,phase:Math.PI/2-dir*lead});} // 안쪽 고리일수록 틈 각도를 넓혀 틈 폭(px)을 비슷하게
     var rf={kind:'runes',cx:s.boss.x,cy:s.boss.y,fit:1,follow:true,rings:rings,turn:0,spin:spin,grow:0,width:RUNE_W*s.rules.beam,warn:RUNE_WARN,active:RUNE_ACTIVE,age:0,color:sigilColor(s,sig),r:0,grazed:false};runeCentre(rf,s.boss);s.figures.push(rf);
     note(s,'figure');
   }
@@ -900,7 +901,7 @@
   function signature(s,t){
     var sig=signatureOf(s.boss.actor);if(!sig)return;
     if(t%SIGIL_EVERY===SIGIL_AT)summonSigil(s,sig,sig.index);
-    if(RUNE_TIMES.indexOf(t%SIGIL_EVERY)>=0)summonRunes(s,sig);
+    var rk=RUNE_TIMES.indexOf(t%SIGIL_EVERY);if(rk>=0)summonRunes(s,sig,rk);
     if(sig.edge&&t%600===260){summonZigzag(s,sig,-1);summonZigzag(s,sig,1);}
     if(t%300<200)strands(s,sig,t);
     if(sig.extra==='spray'&&t%420>=120&&t%420<=330&&t%70===50)spray(s,sig,t);
