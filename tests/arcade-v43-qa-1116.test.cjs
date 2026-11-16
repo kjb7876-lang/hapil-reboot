@@ -32,3 +32,13 @@ test('phone HUD level line sits above the hearts, clear of the slow-move button'
  const m=app.match(/fillText\('공격 Lv\.'\+\(s\.power\|\|1\)\+' · 필살 Lv\.'\+\(s\.bombLevel\|\|1\),12,H-(\d+)\)/);
  assert(m,'level line drawn');assert(+m[1]>96,'drawn above the hearts row (H-96), got H-'+m[1]);
 });
+
+test('the app bundle (tools/build-app-www.cjs) carries every media folder the portrait game loads',()=>{
+ const html=fs.readFileSync(path.join(root,'arcade.html'),'utf8'),tool=fs.readFileSync(path.join(root,'tools/build-app-www.cjs'),'utf8');
+ const media=tool.match(/const MEDIA=\[([^\]]*)\]/)[1].split(',').map(x=>x.trim().replace(/'/g,'')).concat(['media/bgm']);
+ const used=new Set();
+ for(const m of html.matchAll(/<script src="([^"?]+)/g)){const code=fs.readFileSync(path.join(root,m[1]),'utf8');for(const r of code.matchAll(/media\/[A-Za-z0-9_.-]+/g))used.add(r[0]);}
+ for(const r of html.matchAll(/media\/[A-Za-z0-9_.-]+/g))used.add(r[0]);
+ const missing=[...used].filter(u=>!media.includes(u)&&fs.existsSync(path.join(root,u)));
+ assert.deepEqual(missing,[],'not packed into the app');
+});
