@@ -618,7 +618,11 @@
     s.lasers.length=0;s.figures.length=0;note(s,'wipeCooling');return 0;
   }
   /* 아이템 하나를 떨군다. kind 0 점수, 1 폭탄 조각. 위로 살짝 튀었다가 천천히 내려온다. */
-  var DROP_BELOW=68,DROP_ARC=[6,-12,10,-6]; // 한 줄로 늘어서지 않게 높이를 엇갈린다
+  var DROP_BELOW=68;
+  /* 쓰러진 보스의 하트 자리: 보스 이름으로 정한 제각각의 흩뿌림(사용자 11-16 "남은 지적 개선": 매번 같은 반원 고리처럼 놓이지 않게). 발치 구름 속, 한쪽으로 쏠리기도 한다 */
+  function dropAt(actor,i,n,bx,by,axis){var h=0,k;actor=String(actor||'');for(k=0;k<actor.length;k++)h=(Math.imul(h,31)+actor.charCodeAt(k))>>>0;
+    var r=function(j){var v=Math.imul(h^(j*2654435761),1597334677)>>>0;v=(v^(v>>>15))>>>0;return (v%1000)/1000;},lean=(r(97)-.5)*30;
+    return axis?by+DROP_BELOW-14+r(i*2+7)*30:bx+lean+(i-(n-1)/2)*(24+r(31)*14)+(r(i*2+3)-.5)*14;}
   function dropItem(s,x,y,kind){if(!kind)s.hearts++;if(s.itemCount>=ITEM_CAP)return;var i=s.itemCount++;s.ix[i]=Math.max(10,Math.min(W-10,x));s.iy[i]=y;s.ivy[i]=-1.6;s.ikind[i]=kind||0;}
   function fillGauge(s){while(s.gauge>=GAUGE_FULL){s.gauge-=GAUGE_FULL;s.fills++;var bl=levelOf(BOMB_FILLS,s.fills);if(bl>s.bombLevel){s.bombLevel=bl;note(s,'bombLevelUp');}if(s.bombs<MAX_BOMBS){s.bombs++;note(s,'bombGain');}}}
   function updateItems(s){
@@ -677,7 +681,7 @@
   function beginCard(s){var card=segment(s),b=s.boss;b.maxHp=b.hp=card.hp;b.mid=!!card.mid;s.stage='card';s.stageTick=0;s.segTick=0;s.spellClean=!!card.spell;if(card.spell){s.spellNumber++;note(s,'card');}else note(s,'plain');}
   function endCard(s,defeated){
     var card=segment(s),left=Math.max(0,card.time-s.segTick*TICK),wiped=breakWipe(s),b=s.boss;
-    if(defeated){s.cleared++;gainExp(s,card.spell?16:10);s.score+=Math.round(left)*300+wiped*30;var nd=card.spell?CARD_DROPS:PLAIN_DROPS;for(var i=0;i<nd;i++)dropItem(s,b.x+(i-(nd-1)/2)*30,b.y+DROP_BELOW+DROP_ARC[i%4],card.spell&&i===1?1:0); /* 하트는 보스 발치 구름 아래에서 솟는다: 먹으로 스미는 몸 한가운데를 가리지 않게(사용자 11-16) */}else s.timeouts++;
+    if(defeated){s.cleared++;gainExp(s,card.spell?16:10);s.score+=Math.round(left)*300+wiped*30;var nd=card.spell?CARD_DROPS:PLAIN_DROPS;for(var i=0;i<nd;i++)dropItem(s,dropAt(b.actor,i,nd,b.x,b.y,0),dropAt(b.actor,i,nd,b.x,b.y,1),card.spell&&i===1?1:0); /* 하트는 보스 발치 구름 아래에서 솟는다: 먹으로 스미는 몸 한가운데를 가리지 않게(사용자 11-16) */}else s.timeouts++;
     // 이름 붙은 패턴을 폭탄 없이, 맞지 않고 넘기면 보너스
     if(card.spell&&defeated&&s.spellClean){s.captures++;s.score+=20000+card.stage*5000;note(s,'capture');}
     s.score+=wiped*10;note(s,'break');var who=b.actor,dx=b.x,dy=b.y;advance(s);

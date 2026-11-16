@@ -58,6 +58,18 @@ test('ink mode softens the white flash when a boss falls',()=>{
 });
 test('hearts from a felled boss spring from below the foot cloud, not from the body centre',()=>{
   const eng=fs.readFileSync(path.join(root,'src/arcade-v43.js'),'utf8');
-  assert.match(eng,/var DROP_BELOW=\d\d,DROP_ARC=\[/,'hearts stagger in height instead of one line');
-  assert.match(eng,/dropItem\(s,b\.x\+\(i-\(nd-1\)\/2\)\*30,b\.y\+DROP_BELOW\+DROP_ARC/);
+  assert.match(eng,/var DROP_BELOW=\d\d;/);
+  assert.match(eng,/dropItem\(s,dropAt\(b\.actor,i,nd,b\.x,b\.y,0\),dropAt\(b\.actor,i,nd,b\.x,b\.y,1\)/,'hearts use a per-boss scatter');
+});
+// 2차 개선(사용자 11-16 "남은 지적 개선"): 하트는 보스마다 다른 흩뿌림, 먹 혀는 제각각 줄기, 발치 앞 구름은 보스마다 다른 덩이.
+test('hearts scatter differently per boss and never sit as the same ring',()=>{
+  const eng=fs.readFileSync(path.join(root,'src/arcade-v43.js'),'utf8');const m=/function dropAt\([^)]*\)\{[\s\S]*?\n/.exec(eng);assert(m,'dropAt');
+  const dropAt=new Function('DROP_BELOW','return '+eng.slice(eng.indexOf('function dropAt'),eng.indexOf('return axis')).replace(/^function dropAt/,'function')+'return axis?by+DROP_BELOW-14+r(i*2+7)*30:bx+lean+(i-(n-1)/2)*(24+r(31)*14)+(r(i*2+3)-.5)*14;}')(68);
+  const layout=a=>[0,1,2,3].map(i=>[Math.round(dropAt(a,i,4,180,150,0)),Math.round(dropAt(a,i,4,180,150,1))].join(',')).join(' ');
+  assert.notEqual(layout('balrog'),layout('violet'));assert.notEqual(layout('violet'),layout('asmodeus'));
+  for(const a of ['balrog','violet','asmodeus','lucifer'])for(let i=0;i<4;i++){const y=dropAt(a,i,4,180,150,1);assert(y>=150+50&&y<=150+90,'heart stays in the foot cloud: '+y);}
+});
+test('ink tongues are a handful of uneven strokes, not an even comb',()=>{
+  assert.match(src,/function spikes\(L,u,lean\)/);assert.doesNotMatch(src,/tongue=Math\.pow\(nz\(C/);
+  assert.match(app,/Ink\.footVeil\(ctx,bx,fy,tall,visual,1,hash\(b\.actor\)\)/,'front cloud puffs differ per boss');
 });
