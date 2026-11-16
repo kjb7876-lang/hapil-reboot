@@ -34,6 +34,7 @@ test('v43 big sigil hurts on contact once live, not while it is only a warning',
  const a=h.need(),i=[...firsts(a).values()][0],s=a.createRun({difficulty:'normal',seed:3,segment:i,stages:1});
  let hitLive=false,hitWarn=false;
  for(let t=0;t<900&&s.seg===i&&!hitLive;t++){if(s.stage==='card')s.boss.hp=s.boss.maxHp;
+  s.bombs=0; // 육망성이 24초마다 한 번뿐이라(사용자 11-16 빈도 낮춤) 맞을 때 자동 필살기가 그 한 번을 지우지 않게
   const f=s.figures.find(q=>q.sigil);
   if(f){const g=a.figureSegments(f)[0],mx=(g[0]+g[2])/2,my=(g[1]+g[3])/2;
    if(mx>8&&mx<a.WIDTH-8&&my>8&&my<a.HEIGHT-8){s.player.x=mx;s.player.y=my;}}

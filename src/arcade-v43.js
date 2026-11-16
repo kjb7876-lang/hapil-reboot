@@ -870,7 +870,7 @@
   /* 문양 레이저(사용자 11-14 23:33·23:34 KST): 보스 뒤 육망성처럼 보스를 중심으로 도는 큰 문양과 끊긴 원 고리가 레이저가 된다.
      보스마다 자기 문양(SIGNATURES.glyph)·도는 방향·고리 수가 다르다. 크게 그려 모양이 한눈에 읽히게 하되(보스 옆 작은 '3' 모양 금지),
      화면 아래쪽 절반에는 닿지 않게 반지름을 줄인다(SIGIL_FLOOR). 반지름은 고정이라 안쪽 빈자리와 바깥은 늘 안전하다. */
-  var SIGIL_RING_SEGS=48,BIG_SIGIL_R=316,BIG_SIGIL_SPIN=.22,SIGIL_FIT=.38,SIGIL_R=150,SIGIL_RING=1.18,SIGIL_FLOOR=.53,SIGIL_EVERY=480,SIGIL_AT=30;
+  var SIGIL_RING_SEGS=48,BIG_SIGIL_R=316,BIG_SIGIL_SPIN=.22,SIGIL_FIT=.38,SIGIL_R=150,SIGIL_RING=1.18,SIGIL_FLOOR=.53,SIGIL_EVERY=1440,SIGIL_AT=30; // 사용자 11-16 "육망성패턴은 … 피할길이 거의없어서 빈도수를 낮춰줘 이펙트 변경하지는 말고": 8초마다 → 24초마다
   [3,4,5].forEach(function(n){GLYPHS['ring'+n]=[];for(var k=0;k<n;k++){var a0=TAU*k/n;GLYPHS['ring'+n].push(arcPts(0,0,1,a0+.32,a0+TAU/n-.32,14));}});
   var glyphReach={};
   function reachOf(name){if(glyphReach[name]===undefined){var m=1,lines=GLYPHS[name]||[];for(var i=0;i<lines.length;i++)for(var k=0;k+1<lines[i].length;k+=2)m=Math.max(m,Math.sqrt(lines[i][k]*lines[i][k]+lines[i][k+1]*lines[i][k+1]));glyphReach[name]=m;}return glyphReach[name];}
@@ -887,14 +887,17 @@
   }
   /* 한자문 고리(사용자 11-15 "보스뒤에 나오는 저 원들 톱니처럼도는거 크기를 키우고 굵게해서 패턴용으로 … 안에는 한자 적어놓고", "한자문으로 만들어서 넣어 단순 한자 한글자 반복하지말고").
      보스 뒤에서 돌던 장식 룬 고리 둘이 커지고 굵어져 판정을 갖는다. 고리마다 틈이 있어 톱니처럼 서로 반대로 돌고, 틈으로 드나든다. 고리 띠 안의 한문 문장은 그림 쪽(보스마다 다름).
-     큰 육망성(SIGIL)이 켜진 동안에는 켜지지 않는다: 육망성은 t%480 = 30~360, 고리는 360(예고)·420~570(판정)이라 둘이 함께 판정을 갖는 순간이 없다. 이지는 바깥 고리 하나만. */
-  var RUNE_AT=360,RUNE_WARN=60,RUNE_ACTIVE=150,RUNE_GROW=.62,RUNE_SPIN=.55,RUNE_W=24,RUNE_OUTER=172,RUNE_INNER=128;
+     큰 육망성(SIGIL)이 켜진 동안에는 켜지지 않는다: 육망성은 t%1440 = 30~360, 고리는 360·600·840·1080(예고) 뒤 각 210틱이라 둘이 함께 판정을 갖는 순간이 없다. 이지는 바깥 고리 하나만. */
+  /* 사용자 11-16 "원형한자빈도수 늘리고 더 겹겹히 큰사이즈로 더 압도적이게": 육망성 한 번(24초 주기의 처음 6초) 뒤 고리가 4초마다 네 번.
+     고리는 네 겹(이지 두 겹), 바깥 고리는 반지름 210으로 필드 좌우를 넘어 화면을 덮는다. 겹마다 반대로 돌고, 켜질 때 틈이 모두 아래를 본다. */
+  var RUNE_AT=360,RUNE_TIMES=[360,570,780,990],RUNE_WARN=60,RUNE_ACTIVE=150,RUNE_GROW=.62,RUNE_SPIN=.55,RUNE_W=24,RUNE_OUTER=210,RUNE_INNER=166,RUNE_RADII=[214,182,150,118,88,60];
   // 고리 중심: 보스를 따르되 가로는 필드 정중앙, 세로는 170~230으로 묶고, 바깥 고리가 띠·매듭까지 좌우 벽 안에 들도록 줄인다(심사 2·3차: 벽에 닿아 잘렸다).
-  function runeCentre(f,b){f.cx=W/2;f.cy=Math.max(170,Math.min(230,b.y+40));f.fit=Math.min(1,(W/2-12-RUNE_W*.66)/RUNE_OUTER);}
-  function summonRunes(s,sig){
+  function runeCentre(f,b){f.cx=W/2;f.cy=Math.max(170,Math.min(230,b.y+40));f.fit=1;}
+  function summonRunes(s,sig,cast){
     if(s.figures.length>=FIGURE_CAP-1)return;
     var spin=sig.spin*RUNE_SPIN,lead=spin*TICK*.35*RUNE_WARN; // 켜지는 순간 두 고리 모두 틈 하나가 바로 아래(영웅 쪽)를 보게 한다(심사: 화면 안에서 틈이 보여야 한다)
-    var rings=[{r:RUNE_OUTER,n:3,gap:.62,dir:1,phase:Math.PI/2-lead}];if(s.difficulty!=='gentle')rings.push({r:RUNE_INNER,n:3,gap:.66,dir:-1,phase:Math.PI/2+lead});
+    var layers=(s.difficulty==='gentle'?[2,3,3,3]:[4,5,6,6])[cast||0],rings=[]; // 점층(심사 11-16): 네 겹 → 다섯 겹 → 여섯 겹 → 여섯 겹(사용자 11-16 "한자문고리6겹해")으로 쌓아 올린 뒤 육망성으로 넘어간다
+    for(var k=0;k<layers;k++){var dir=k%2?-1:1,r=RUNE_RADII[k];rings.push({r:r,n:3,gap:Math.min(1.2,Math.max(.62*172/Math.max(120,r)+.04*k,64/r)),dir:dir,phase:Math.PI/2-dir*lead});} // 안쪽 고리일수록 틈 각도를 넓혀 틈 폭(px)을 비슷하게
     var rf={kind:'runes',cx:s.boss.x,cy:s.boss.y,fit:1,follow:true,rings:rings,turn:0,spin:spin,grow:0,width:RUNE_W*s.rules.beam,warn:RUNE_WARN,active:RUNE_ACTIVE,age:0,color:sigilColor(s,sig),r:0,grazed:false};runeCentre(rf,s.boss);s.figures.push(rf);
     note(s,'figure');
   }
@@ -902,7 +905,7 @@
   function signature(s,t){
     var sig=signatureOf(s.boss.actor);if(!sig)return;
     if(t%SIGIL_EVERY===SIGIL_AT)summonSigil(s,sig,sig.index);
-    if(t%SIGIL_EVERY===RUNE_AT)summonRunes(s,sig);
+    var rk=RUNE_TIMES.indexOf(t%SIGIL_EVERY);if(rk>=0)summonRunes(s,sig,rk);
     if(sig.edge&&t%600===260){summonZigzag(s,sig,-1);summonZigzag(s,sig,1);}
     if(t%300<200)strands(s,sig,t);
     if(sig.extra==='spray'&&t%420>=120&&t%420<=330&&t%70===50)spray(s,sig,t);
@@ -1251,7 +1254,7 @@
   })();
   var api={revision:43,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
-    BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,RUNE_AT:RUNE_AT,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
+    BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,RUNE_AT:RUNE_AT,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
     POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,FOCUS_SLOW:FOCUS_SLOW,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp};
   if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcade=api;
