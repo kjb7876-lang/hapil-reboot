@@ -5,6 +5,7 @@
  * 그림: 스테이지에 들어설 때 그 스테이지 그림만 받고(loadStage) 지난 스테이지 그림은 버린다(releaseStage). 그림이 없으면 색·도형으로 그린다. */
 (function(global){
   'use strict';
+  var Safe=global.HapilSave||null;
   var Mobile=global.HapilMobile||null; // 모바일 출시 도우미(오류·플레이 기록, 중간 저장, 기기 진단). 없어도 게임은 돈다.
   var Arcade=global.HapilArcade,Progress=Arcade.Progress,W=Arcade.WIDTH,H=Arcade.HEIGHT,TAU=Math.PI*2;
   var $=function(id){return document.getElementById(id);};
@@ -31,7 +32,7 @@
   var state=null,mode='title',difficulty='normal',accumulator=0,lastStamp=0,visual=0,lastRun=null;
   var particles=[],flash=0,hurtFlash=0,hurtRing=null,VERMILION='#a8382a',shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,SPELL_BANNER_TICKS=42,bannerSpell=false,bannerTitle='',bannerSub='',toast=null;
   var keys={},finger={active:false,id:null,x:0,y:0},focusHeld=false,bombQueued=false;
-  var fx=null,music=null,soundOn=true,best=0,lastItemSound=0,progress=Progress.fresh(),saveOk=true;
+  var fx=null,music=null,soundOn=true,best=0,lastItemSound=0,progress=Progress.fresh(),saveOk=true,savePending=false,saveRetryAt=0;
   var themeOverride=null,turbo=0,rushStage=false;
   // 개발자 모드(사용자 11-15): 게임 속도 2배 + 체력 무한. 지금은 시작 화면에 대놓고 보인다. 숨기려면 DEV_VISIBLE=false 한 줄만 바꾼다.
   var DEV_VISIBLE=true,DEV_SPEED=2,DEV_KEY='hapil-arcade-dev-v43',devMode=false;
@@ -465,13 +466,30 @@
   }
 
   /* ── 저장 ── */
-  function loadProgress(){
-    var raw=null;
-    try{var text=global.localStorage.getItem(SAVE_KEY);raw=text?JSON.parse(text):null;}catch(e){raw=null;}
-    try{progress=Progress.sanitize(raw);}catch(e){progress=Progress.fresh();}
-    try{best=Math.max(0,finite(Number(global.localStorage.getItem(BEST_KEY)),0))||0;}catch(e){best=0;}
+  var SAVE_SPEC={versionKey:'version',version:43,validate:function(raw){
+    if(!raw||typeof raw!=='object'||Array.isArray(raw)||raw.version!==43||!Array.isArray(raw.cleared))return null;
+    if(raw.stars!==undefined&&(!raw.stars||typeof raw.stars!=='object'||Array.isArray(raw.stars)))return null;
+    if(raw.best!==undefined&&(!raw.best||typeof raw.best!=='object'||Array.isArray(raw.best)))return null;
+    return Progress.sanitize(raw);
+  }};
+  function syncSaveStatus(){
+    var st=Safe?Safe.status():{ok:saveOk};saveOk=st.ok;
+    var msg=st.blocked?T('saveVersion'):!saveOk?T('saveFailed'):st.reset?T('saveReset'):st.recovered?T('saveRecovered'):'';
+    var note=$('save-note'),live=$('arcade-save-status');
+    if(note){if(note.textContent!==msg)note.textContent=msg;note.hidden=!msg;}
+    if(live){if(live.textContent!==msg)live.textContent=msg;live.hidden=saveOk||mode!=='playing';}
   }
-  function saveProgress(){try{global.localStorage.setItem(SAVE_KEY,JSON.stringify(progress));saveOk=true;}catch(e){saveOk=false;}}
+  function loadProgress(){
+    if(Safe)progress=Safe.read(SAVE_KEY,SAVE_SPEC,Progress.fresh());
+    else{var raw=null;try{raw=JSON.parse(global.localStorage.getItem(SAVE_KEY));}catch(e){}progress=Progress.sanitize(raw);}
+    try{best=Math.max(0,finite(Number(global.localStorage.getItem(BEST_KEY)),0))||0;}catch(e){best=0;}
+    syncSaveStatus();
+  }
+  function saveProgress(){
+    if(Safe)saveOk=Safe.write(SAVE_KEY,progress,SAVE_SPEC);
+    else try{global.localStorage.setItem(SAVE_KEY,JSON.stringify(progress));saveOk=true;}catch(e){saveOk=false;}
+    savePending=!saveOk;saveRetryAt=visual+1;syncSaveStatus();
+  }
   function recordResult(result){
     if(!result||state.bossOnly)return;
     progress=Progress.record(progress,result,state.difficulty);saveProgress();
@@ -510,8 +528,8 @@
       else if(HeroFx&&(e==='powerUp'||e==='powerDown'||e==='bombLevelUp'||e==='distort')){HeroFx.onEvent(e,s,visual);if(e!=='powerDown')play('seal');}
       else if(e==='card'){play('charge',s.boss.x);castFx(s,true);showBanner(Arcade.SEGMENTS[s.seg].name,s.boss.name,true);}
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,'제'+g.part+'부 · STAGE '+(s.stageIndex+1));play('seal');}}
-      else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);showToast(r);rushStage=false;}
-      else if(e==='map')loadStage(s.stageIndex);
+      else if(e==='stageClear'){clearInput();banner=0;var r=s.results[s.results.length-1];recordResult(r);showToast(r);rushStage=false;}
+      else if(e==='map'){toast=null;loadStage(s.stageIndex);}
       else if(e==='entrance'){play('warning');wantFx(s.boss.actor);showBanner(s.boss.name,s.boss.mid?'중간보스':'보스');} // 맵마다 일반몹 → 중간보스 → 보스: 누가 나왔는지 한 줄로(사용자 11-16)
       else if(e==='figure')castFx(s,false);
       else if(e==='bossDown'){var dn=s.boss.down;if(dn){fall={actor:dn.actor,x:dn.x,y:dn.y,tick:dn.tick,dir:dn.x>W/2?1:-1,burst:-1,keep:{}};['','@death','@hit'].forEach(function(m){var im=images[dn.actor+m]||(bossArt.actor===dn.actor&&bossArt.keep[dn.actor+m]);if(im)fall.keep[dn.actor+m]=im;}); /* 다음 스테이지로 넘어가며 그림을 놓아도 쓰러지는 동안은 쥐고 있다(전에는 마름모 자리표시가 쓰러졌다) */flash=Ink?.18:.8;shake=16;}} /* 수묵 모드는 흰 섬광을 줄여 먹빛으로 물드는 순간이 묻히지 않게(사용자 11-16) */
@@ -536,6 +554,20 @@
     if(!rims)return null;var d=rims.get(img);if(d!==undefined)return d;
     try{d=offscreen(img.width,img.height);var q=d.getContext('2d');q.drawImage(img,0,0);q.globalCompositeOperation='source-in';q.fillStyle='#ffe2b0';q.fillRect(0,0,d.width,d.height);}catch(e){d=null;}
     rims.set(img,d);return d;
+  }
+  // 실제 그림의 알파 실루엣만 따라 가는 가는 여백. 새 도형/판정은 만들지 않는다.
+  var hazardEdges=typeof WeakMap==='function'?new WeakMap():null;
+  function hazardEdge(img,pixels){
+    if(!hazardEdges||!img||!img.width)return null;
+    pixels=Math.max(1,Math.ceil(pixels));var cache=hazardEdges.get(img);if(!cache){cache={};hazardEdges.set(img,cache);}if(cache[pixels])return cache[pixels];
+    var pad=pixels+1,c=offscreen(img.width+pad*2,img.height+pad*2),g=c.getContext('2d');
+    if(Ink&&Ink.raw)Ink.raw(1);
+    try{
+      for(var i=0;i<8;i++){var a=TAU*i/8;g.drawImage(img,pad+Math.cos(a)*pixels,pad+Math.sin(a)*pixels);}
+      g.globalCompositeOperation='source-in';g.fillStyle=Ink?'#f2e9d6':'#161420';g.fillRect(0,0,c.width,c.height);
+      g.globalCompositeOperation='destination-out';g.drawImage(img,pad,pad);
+      return cache[pixels]={image:c,pad:pad};
+    }finally{if(Ink&&Ink.raw)Ink.raw(-1);}
   }
   function drawArt(key,x,y,flashOn,fallbackColor,phase,motion,face,sizeKey,fit){
     var tall=fit||tallOf(sizeKey||key);
@@ -691,7 +723,7 @@
     return true;
   }
   function drawFall(s){
-    if(!fall)return;var k=(s.tick-fall.tick)/FALL_TICKS;if(k<0||k>=1){fall=null;return;}
+    if(!fall)return;var k=(s.tick-fall.tick+(s.stage==='clear'?s.clearTicks:0))/FALL_TICKS;if(k<0||k>=1){fall=null;return;}
     var step=Math.floor(k*7);if(step!==fall.burst&&step<6){fall.burst=step;var ox=fall.x+((step*53)%60-30),oy=fall.y+((step*37)%50-25);if(!Ink)for(var q=0;q<12;q++){var a=TAU*q/12;addParticle(ox,oy,Math.cos(a)*3.2,Math.sin(a)*3.2,24,q%2?'#ffffff':themeColor(s),6);}shake=Math.max(shake,7);play('kill',ox);} // 몸 곳곳이 연달아 터진다
     var lent=[],key;for(key in fall.keep)if(!images[key]){images[key]=fall.keep[key];lent.push(key);}
     try{if(Ink&&Ink.melt&&inkFall(s,k))return;
@@ -966,7 +998,7 @@
       if(r.broken&&f){ctx.restore();drawRiserShards(r,art,f,k);continue;} /* 깨진 그림은 유령 그림 대신 조각으로 흩어진다 */
       ctx.globalAlpha=f?Math.max(0,.45-f*.9):1;if(rbl)ctx.translate((rsn&1?1.6:-1.6),0);ctx.globalCompositeOperation=Ink?'multiply':'source-over';if(!f&&RISER_FUME[mv]&&s.tick%9===k%9&&r.fumeTick!==s.tick){r.fumeTick=s.tick;var fu=RISER_FUME[mv];addParticle(r.x+(Math.random()-.5)*r.size*fu[0],r.y+r.size*fu[1],(Math.random()-.5)*.5,-.5-Math.random()*.7,34,INKC,1.4+Math.random()*1.8);} // 촛불 그을음·가마솥 김·약병 기포·모래: 먹 점이 피어오른다(그리기만)
       var blink=mv==='eye'?Math.max(0,1-Math.abs(((visual*.55+k*.37)%1)-.5)*14):0,flap=mv==='wing'?1+.05*Math.sin(visual*4.2+k):mv==='book'?1+.03*Math.sin(visual*3+k):1;
-      ctx.save();if(spin)ctx.rotate(spin);if(blink)ctx.scale(1,1-.82*blink);if(flap!==1){ctx.translate(-r.size*.62,0);ctx.scale(flap,2-flap);ctx.translate(r.size*.62,0);}if(swing){ctx.translate(0,-r.size*.85);ctx.rotate(swing);ctx.translate(0,r.size*.85);}if(flick!==1){ctx.translate(0,r.size*.9);ctx.scale(2-flick,flick);ctx.translate(0,-r.size*.9);}ctx.drawImage(art.image,-art.half,-art.half,art.half*2,art.half*2);if(rbl){ctx.globalAlpha=.85;ctx.drawImage(art.image,-art.half,-art.half,art.half*2,art.half*2);} /* 맞으면 먹이 한 번 더 짙게 번쩍(바래지 않게, 재심사 연출·조명) */ctx.restore();ctx.globalCompositeOperation='source-over';
+      ctx.save();if(spin)ctx.rotate(spin);if(blink)ctx.scale(1,1-.82*blink);if(flap!==1){ctx.translate(-r.size*.62,0);ctx.scale(flap,2-flap);ctx.translate(r.size*.62,0);}if(swing){ctx.translate(0,-r.size*.85);ctx.rotate(swing);ctx.translate(0,r.size*.85);}if(flick!==1){ctx.translate(0,r.size*.9);ctx.scale(2-flick,flick);ctx.translate(0,-r.size*.9);}if(!f){var edge=hazardEdge(art.image,art.image.width/(art.half*2)*1.1);if(edge){var ep=edge.pad*art.half*2/art.image.width;ctx.save();ctx.globalCompositeOperation='source-over';ctx.globalAlpha=.9;ctx.drawImage(edge.image,-art.half-ep,-art.half-ep,art.half*2+ep*2,art.half*2+ep*2);ctx.restore();}}ctx.drawImage(art.image,-art.half,-art.half,art.half*2,art.half*2);if(rbl){ctx.globalAlpha=.85;ctx.drawImage(art.image,-art.half,-art.half,art.half*2,art.half*2);} /* 맞으면 먹이 한 번 더 짙게 번쩍(바래지 않게, 재심사 연출·조명) */ctx.restore();ctx.globalCompositeOperation='source-over';
       if(!f){var sx=Math.min(r.size*.62,(RISER_THIN[r.kind]||.9)*r.size+16),sy=r.size*.86,pl=.75+.25*Math.sin(visual*6+k);ctx.globalAlpha=.75+.25*pl;ctx.fillStyle=PAPERC;ctx.fillRect(sx-14.5,sy-14.5,29,29);ctx.fillStyle=INKC;ctx.fillRect(sx-12.5,sy-12.5,25,25);ctx.fillStyle=HOT;ctx.fillRect(sx-10.5,sy-10.5,21,21);ctx.fillStyle=PAPERC;ctx.fillRect(sx-5.2,sy-5.2,10.4,3.2);ctx.fillRect(sx-5.2,sy+2,10.4,3.2);} // 판정이 켜진 동안만 찍히는 인주 낙관(경고 표시). 사라질 때는 꺼진다
       ctx.restore();if(r.fade)drawInkBurst(r,f,k);}
     ctx.restore();}
@@ -1000,9 +1032,11 @@
     for(k=0;k<F.pieces.length&&!near;k++)if(Math.abs(F.pieces[k].y-Arcade.FLOOR_CELL-p.y)<60)near=true;
     if(!near)return;var g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,24);g.addColorStop(0,'rgba(5,4,10,.75)');g.addColorStop(1,'rgba(5,4,10,0)');ctx.save();ctx.fillStyle=g;ctx.fillRect(p.x-24,p.y-24,48,48);ctx.restore();}
   function drawItems(s){
+    ctx.save();
     // 하트가 고동친다. 드라이브 하트 그림(heart)이 있으면 점수 아이템은 그 그림으로.
     var beat=1+Math.sin(visual*7)*.08;
-    for(var i=0;i<s.itemCount;i++){var z=ITEM_DRAW*beat*(s.ikind[i]?1.15:1),sway=Math.sin(visual*5+s.ix[i]*.13)*3;ctx.globalAlpha=s.iy[i]>H-104?.45:1;ctx.drawImage(itemSprites[s.ikind[i]],s.ix[i]+sway-z/2,s.iy[i]-z/2,z,z);} // 하트는 좌우로 살랑이며 떨어진다: 곧게 날아오는 탄과 움직임이 다르다(그리기만, 줍는 판정은 그대로)ctx.globalAlpha=1; // 아래쪽 버튼·점수 자리에서는 흐리게
+    for(var i=0;i<s.itemCount;i++){var z=ITEM_DRAW*beat*(s.ikind[i]?1.15:1),sway=Math.sin(visual*5+s.ix[i]*.13)*3;ctx.globalAlpha=s.iy[i]>H-104?.45:1;ctx.drawImage(itemSprites[s.ikind[i]],s.ix[i]+sway-z/2,s.iy[i]-z/2,z,z);} // 하트는 좌우로 살랑이며 떨어진다(그리기만, 줍는 판정은 그대로). 아래쪽 버튼·점수 자리에서는 흐리게.
+    ctx.restore();
   }
   function drawProp(s,i,grow,alpha){
     var prop=Arcade.PROPS[s.bcolor[i]];if(!prop)return;
@@ -1298,11 +1332,11 @@
   }
   function pad(n){return ('00000000'+Math.max(0,Math.floor(finite(n,0)))).slice(-8);}
   function starText(n){var out='';for(var i=0;i<3;i++)out+=i<n?'★':'☆';return out;}
-  // 스테이지를 깼다: 이름 한 줄 + 별 + 기념물 그림. 게임은 멈추지 않는다.
-  function fallHold(){return !!(fall&&state&&state.tick-fall.tick<FALL_TICKS*FALL_HOLD);} // 보스가 먹으로 스미는 동안 그 자리를 가리는 띠·알림은 기다린다(심사 11-16)
+  // 스테이지를 깼다: 사망 연출 뒤 이름·별·기념물을 짧게 표시한다.
+  function fallHold(){return !!(fall&&state&&state.tick-fall.tick+(state.stage==='clear'?state.clearTicks:0)<FALL_TICKS*FALL_HOLD);} // 보스가 먹으로 스미는 동안 그 자리를 가리는 띠·알림은 기다린다(심사 11-16)
   function drawToast(){
     if(!toast||fallHold())return;
-    var t=toast.t/TOAST_SECONDS,alpha=t>.85?(1-t)/.15:t<.25?t/.25:1,y=74;
+    var clearing=state&&state.stage==='clear',t=clearing?.65:toast.t/TOAST_SECONDS,alpha=t>.85?(1-t)/.15:t<.25?t/.25:1,y=74;
     ctx.save();ctx.globalAlpha=Math.max(0,Math.min(1,alpha));
     ctx.fillStyle='rgba(6,4,16,.78)';ctx.fillRect(40,y,W-80,64);ctx.fillStyle=toast.color;ctx.fillRect(40,y,W-80,1.5);ctx.fillRect(40,y+62.5,W-80,1.5);
     if(toast.img){var h=54,w=h*cellRatio(toast.key,toast.img);if(w>60){h*=60/w;w=60;}drawCell(toast.key,toast.img,0,false,48+(60-w)/2,y+5+(54-h)/2,w,h);}
@@ -1311,6 +1345,15 @@
     var name=toast.name;while(name.length>2&&ctx.measureText(name).width>W-80-84)name=name.slice(0,-1);ctx.fillText(name===toast.name?name:name+'…',116,y+28);
     ctx.font='18px '+SANS;ctx.fillStyle='#ffd86a';ctx.fillText(starText(toast.stars),116,y+51);
     ctx.restore();
+  }
+  function drawStageClear(s){
+    if(s.stage!=='clear')return;
+    var end=s.stageIndex>=s.lastStage||s.bossOnly,alpha=Math.min(1,s.clearTicks/12,(Arcade.STAGE_CLEAR_TICKS-s.clearTicks)/12),y=H*.6;
+    if(Ink&&Ink.raw)Ink.raw(1);ctx.save();
+    ctx.globalAlpha=Math.max(0,alpha);ctx.fillStyle=Ink?'rgba(242,233,214,.94)':'rgba(12,10,22,.92)';ctx.fillRect(56,y-26,W-112,60);
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=Ink?'#1e1a18':'#fff3cf';ctx.font='700 21px '+SERIF;ctx.fillText(T('stageClear'),W/2,y-7);
+    ctx.font='12px '+SANS;ctx.fillText(T(end?'journeyClear':'nextStage'),W/2,y+17);
+    ctx.restore();if(Ink&&Ink.raw)Ink.raw(-1);
   }
   /* 위쪽 어둠: 탄보다 먼저 그려 탄을 가리지 않는다 */
   function drawTopShade(){var top=ctx.createLinearGradient(0,0,0,96);top.addColorStop(0,'rgba(4,4,12,.85)');top.addColorStop(.6,'rgba(4,4,12,.5)');top.addColorStop(1,'rgba(4,4,12,0)');ctx.fillStyle=top;ctx.fillRect(-8,-8,W+16,104);}
@@ -1363,15 +1406,17 @@
     offsetX=offsetY=0;if(shake>0){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawShots(s);drawDrifts();drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);drawPlayer(s);drawHitbox(s);if(HeroFx)HeroFx.drawTexts(ctx,visual); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawShots(s);drawDrifts();drawParticles();drawFlashes();drawItems(s);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);drawBossOver(s);drawHeroGuard(s);drawPlayer(s);drawHitbox(s);if(HeroFx)HeroFx.drawTexts(ctx,visual); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);drawHud(s);
     if(flash>0){if(Ink&&Ink.raw)Ink.raw(1);if(Ink){var fb=s.boss&&s.boss.present,fx0=fb?finite(s.boss.x,W/2):W/2,fy0=fb?finite(s.boss.y,H/3):H/3,fg=ctx.createRadialGradient(fx0,fy0,20,fx0,fy0,H*.9);fg.addColorStop(0,'rgba(255,252,244,'+(flash*.75)+')');fg.addColorStop(1,'rgba(255,252,244,'+(flash*.2)+')');ctx.fillStyle=fg;}else ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);if(Ink&&Ink.raw)Ink.raw(-1);if(Ink){ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);drawPlayer(s);drawHitbox(s);ctx.restore();}flash-=.04;} // 수묵화에서도 섬광은 밝게: 먹색으로 뒤집히면 패턴 격파·보스 쓰러짐 때 화면이 잿빛으로 꺼졌다(보스 이펙트 전수조사 11-15). 보스에서 퍼지는 빛으로, 영웅·판정점은 섬광 위에 다시 그려 위치를 놓치지 않게(심사 1차 6.41)
     // 피격: 인주색 테두리 번쩍임 + 영웅 둘레에 금 간 붉은 고리(수묵화풍에서도 먹으로 바꾸지 않는다). 탄 지우기의 한지빛 섬광과 색·모양이 겹치지 않게.
     if(hurtFlash>0){if(Ink&&Ink.raw)Ink.raw(1);var hc='150,40,30',v=ctx.createRadialGradient(W/2,H/2,150,W/2,H/2,400);v.addColorStop(0,'rgba('+hc+',0)');v.addColorStop(.62,'rgba('+hc+',0)');v.addColorStop(1,'rgba('+hc+','+(hurtFlash*.8)+')'); /* 피격 테두리는 인주색 그대로(사용자 11-16 카드 선택 "인주색 그대로 두기") */ctx.fillStyle=v;ctx.fillRect(0,0,W,H);if(hurtRing){ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);ctx.strokeStyle=VERMILION;ctx.lineCap='round';for(var hk=0;hk<11;hk++){var ha=TAU*hk/11+.3,h0=hurtRing.r*(.35+.1*(hk%3)),h1=hurtRing.r*(.8+.35*((hk*5)%4)/3);ctx.globalAlpha=Math.min(1,hurtFlash*1.4)*(.55+.45*((hk*7)%5)/4);ctx.lineWidth=(2.5+3.5*((hk*3)%4)/3)*hurtFlash+.8;ctx.beginPath();ctx.moveTo(hurtRing.x+Math.cos(ha)*h0,hurtRing.y+Math.sin(ha)*h0);ctx.lineTo(hurtRing.x+Math.cos(ha)*h1,hurtRing.y+Math.sin(ha)*h1);ctx.stroke();}ctx.restore();ctx.globalAlpha=1;hurtRing.r+=5;if(hurtRing.r>90)hurtRing=null;}if(Ink&&Ink.raw)Ink.raw(-1);hurtFlash-=.035;}
+    drawStageClear(s);
+    if(s.stage==='clear')banner=0;
     if(banner>0&&fallHold())bannerTick=s.tick;
     if(banner>0)banner=Math.max(0,1-(s.tick-bannerTick)/BANNER_TICKS); // 게임 틱 기준: 화면이 느리거나 빨라도 1.3초 뒤에 걷힌다
     if(bannerSpell&&banner>0)banner=Math.max(0,1-(s.tick-bannerTick)/SPELL_BANNER_TICKS); // 스펠 이름 띠는 0.7초: 보스·문양이 뜨는 순간을 오래 가리지 않는다(이름은 오른쪽 위 받침에 남는다) // 게임 틱 기준: 화면이 느리거나 빨라도 1.3초 뒤에 걷힌다
-    if(toast&&mode==='playing'&&!fallHold()){toast.t-=Math.min(.05,elapsed);if(toast.t<=0)toast=null;}
+    if(toast&&mode==='playing'&&s.stage!=='clear'&&!fallHold()){toast.t-=Math.min(.05,elapsed);if(toast.t<=0)toast=null;}
   }
 
   function inputForStep(){
@@ -1397,7 +1442,9 @@
       adaptQuality(rawMs>STALL_FRAME_MS?rawMs:elapsed*1000);if(devMode)showDevBadge();accumulator=Math.min(accumulator+elapsed,4/60);if(devMode)accumulator=Math.min(accumulator+elapsed*(DEV_SPEED-1),4*DEV_SPEED/60); // 개발자 모드는 같은 60Hz 틱을 두 배로 돌린다
       var steps=0,limit=turbo||rushStage?Math.max(4,turbo||60):devMode?4*DEV_SPEED:4;if(turbo||rushStage)accumulator=limit/60;
       while(accumulator>=1/60&&steps<limit&&mode==='playing'){if(rushStage)rushTick(state);if(devMode)state.player.hp=state.player.maxHp;Arcade.step(state,inputForStep());accumulator-=1/60;steps++;consume();}
-      if(Mobile&&state)Mobile.tick(state,mode,rawMs); // 진단은 잘리기 전 실제 프레임 시간(1초 넘는 복귀 프레임은 tick이 버림)
+      if(Mobile&&state)try{Mobile.tick(state,mode,rawMs);}catch(e){if(Mobile.logError)Mobile.logError('storage',e.message,'mobile.tick',e.stack);}
+      if(savePending&&visual>=saveRetryAt&&!(Safe&&Safe.status().blocked))saveProgress();
+      syncSaveStatus(); // 진단은 잘리기 전 실제 프레임 시간(1초 넘는 복귀 프레임은 tick이 버림)
     }
     if(global.HapilMusic)global.HapilMusic.update(mode,state,soundOn); // 구간이 바뀌면 곡을 겹쳐 바꾼다
     draw(elapsed);
@@ -1406,12 +1453,14 @@
   /* ── 메뉴 ── */
   function show(id,on){var el=$(id);if(el)el.hidden=!on;}
   var SCREENS={title:'arcade-title',paused:'arcade-pause',result:'arcade-result',keepsakes:'arcade-keepsake-screen',boss:'arcade-boss-screen'};
+  function clearInput(){keys={};focusHeld=false;finger.active=false;finger.id=null;bombQueued=false;}
   function setMode(next){
     mode=next;Object.keys(SCREENS).forEach(function(k){show(SCREENS[k],k===next);});
     showDevBadge();
     ['arcade-pause-button','arcade-focus','arcade-bomb'].forEach(function(id){show(id,next==='playing');});
     var hh=$('arcade-hud-high'),hl=$('arcade-hud-low');if(hh&&hl)hh.hidden=hl.hidden=!(hudOut&&next==='playing');
-    if(next!=='playing'){focusHeld=false;finger.active=false;bombQueued=false;}
+    if(next!=='playing')clearInput();
+    syncSaveStatus();
     if(next!=='keepsakes')clearKeepsakes();
     if(global.HapilMusic)global.HapilMusic.update(next,state,soundOn); // 구간별 곡(arcade-music-v43.js). 없으면 예전 한 곡
     else if(music){if(next==='playing'&&soundOn){var p=music.play();if(p&&p.catch)p.catch(function(){});}else music.pause();}
@@ -1431,7 +1480,7 @@
     run={stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),segment:run&&run.segment,carry:run&&run.carry};
     lastRun=run;
     var options={difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,compact:compact,bossOnly:run.bossOnly,growth:true}; // 중간 스테이지에서 시작하면 그만큼 자란 기억사수로(엔진 createRun)
-    if(Number.isInteger(run.segment))options.segment=run.segment;if(grown&&(grown.exp||grown.fills))options.grown={exp:grown.exp|0,fills:grown.fills|0};
+    if(Number.isInteger(run.segment))options.segment=run.segment;if(grown)options.grown={exp:grown.exp,fills:grown.fills};
     state=Arcade.createRun(options);
     if(run.carry){state.hits+=run.carry.hits|0;state.bombsUsed+=run.carry.bombs|0;} // 중간 저장에서 이어 하면 앞 구간의 피격·폭탄도 별에 반영
     buildSprites();loadStage(state.stageIndex);fxStage=-1;
@@ -1453,9 +1502,13 @@
     $('arcade-home').className=retry.hidden?'primary':'';
     var eyes=!won&&global.HapilEyes;if(eyes)eyes.close(); // 목숨이 다하면 눈을 감고, 다 감긴 뒤 결과 화면
     var fallen=$('arcade-result');fallen.classList.toggle('fallen',!won&&!!eyes&&!eyes.state().off); // ?eyes=0 이면 감긴 눈 바탕이 없으니 예전 한지 결과판(리뷰 지적) // 게임 오버: 감긴 눈 위에 붉은 십자가가 그어지고 '다시하기'(이 스테이지 처음부터)
-    setTimeout(function(){if(state===s){setMode('result');if(eyes&&eyes.cross&&fallen.classList.contains('fallen'))eyes.cross($('result-cross'));}},won?1500:eyes?Math.round(eyes.CLOSE_SECONDS*1000)+350:900);
+    setTimeout(function(){if(state===s){setMode('result');if(eyes&&eyes.cross&&fallen.classList.contains('fallen'))eyes.cross($('result-cross'));}},won?(s.clearTicks>=Arcade.STAGE_CLEAR_TICKS?0:1500):eyes?Math.round(eyes.CLOSE_SECONDS*1000)+350:900);
   }
-  function pause(){if(mode==='playing')setMode('paused');}
+  function pause(){if(mode==='playing'){
+    if(savePending)saveProgress();
+    var note=$('pause-save-note');if(note){var st=Safe&&Safe.status();note.textContent=st&&!st.ok?(st.blocked?T('saveVersion'):T('saveFailed')):T('resumeRules');}
+    setMode('paused');
+  }}
   function goTitle(){if(global.HapilEyes)global.HapilEyes.clear();if(loadedStage>=0)releaseStage(loadedStage,-1);state=null;toast=null;refreshTitle();setMode('title');}
   function bossStages(){return Arcade.STAGES.filter(function(g){return g.kind==='boss'&&progress.cleared.indexOf(g.index)>=0;});}
   function actorNames(index){var names=[];Arcade.SEGMENTS.forEach(function(seg){if(seg.stage===index&&seg.kind==='card'){var who=Arcade.ACTORS[seg.actor],n=who?who.name:seg.actor;if(names.indexOf(n)<0)names.push(n);}});return names;}
@@ -1477,12 +1530,12 @@
   function midway(){return Mobile&&Mobile.checkpoint?Mobile.checkpoint(Progress.resume(progress),difficulty):null;}
   function refreshTitle(){
     var resume=Progress.resume(progress),mid=midway(),any=progress.cleared.length>0||!!mid,cont=$('arcade-continue'),begin=$('arcade-start');
-    cont.hidden=!any;cont.textContent=T(mid?'continueMid':'continueStage',{n:resume+1}); // 앱이 꺼졌던 스테이지는 남긴 구간부터 잇는다
-    $('continue-note').textContent=any?Arcade.STAGES[resume].name:'';$('continue-note').hidden=!any;
+    cont.hidden=!any;cont.textContent=T(mid&&mid.seg!==Arcade.STAGES[resume].first?'continueMid':'continueStage',{n:resume+1}); // 앱이 꺼졌던 스테이지는 남긴 구간부터 잇는다
+    $('continue-note').textContent=any?Arcade.STAGES[resume].name+(mid?' · '+T('resumeSegment',{n:mid.seg-Arcade.STAGES[resume].first+1})+' · '+T('resumeRules'):''):'';$('continue-note').hidden=!any;
     cont.className=any?'primary':'';begin.className=any?'':'primary';
     $('title-best').textContent=pad(best);$('title-stars').textContent=String(Progress.totalStars(progress));$('title-stars-max').textContent=String(Arcade.STAGES.length*3);
     $('arcade-keepsakes').textContent=T('keepsakesCount',{n:progress.rewards.length,max:Arcade.STAGES.length});
-    $('save-note').hidden=saveOk;
+    syncSaveStatus();
     fillStages();
   }
   function setDifficulty(next){
@@ -1537,10 +1590,11 @@
     stage.addEventListener('pointerdown',function(e){if(mode!=='playing'||finger.active||e.target.closest('button'))return;e.preventDefault();var q=fieldPoint(e);finger.active=true;finger.id=e.pointerId;finger.x=q.x;finger.y=q.y;try{stage.setPointerCapture(e.pointerId);}catch(ignore){}});
     stage.addEventListener('pointermove',function(e){if(!finger.active||e.pointerId!==finger.id)return;e.preventDefault();var q=fieldPoint(e);finger.x=q.x;finger.y=q.y;});
     ['pointerup','pointercancel','lostpointercapture'].forEach(function(type){stage.addEventListener(type,function(e){if(e.pointerId===finger.id){finger.active=false;finger.id=null;}});});
-    document.addEventListener('keydown',function(e){var key=e.key.length===1?e.key.toLowerCase():e.key;if(key==='Escape'||key===' '){if(mode==='playing'||mode==='paused')e.preventDefault();if(mode==='playing')pause();else if(mode==='paused')$('arcade-resume').click();return;}
+    document.addEventListener('keydown',function(e){var key=e.key.length===1?e.key.toLowerCase():e.key;if(key==='Escape'||key===' '){if(e.repeat)return;if(mode==='playing'||mode==='paused')e.preventDefault();if(mode==='playing')pause();else if(mode==='paused')$('arcade-resume').click();return;}
       if(key==='x'&&mode==='playing'&&!e.repeat){bombQueued=true;return;}
       if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','w','a','s','d','Shift'].indexOf(key)>=0){if(mode==='playing')e.preventDefault();keys[key]=true;}});
     document.addEventListener('keyup',function(e){delete keys[e.key.length===1?e.key.toLowerCase():e.key];});
+    global.addEventListener('pagehide',function(){if(savePending)saveProgress();});
     document.addEventListener('visibilitychange',function(){if(document.hidden)pause();});
     global.addEventListener('blur',function(){keys={};pause();});global.addEventListener('resize',fit);
   }

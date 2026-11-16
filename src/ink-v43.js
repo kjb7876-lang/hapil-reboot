@@ -115,11 +115,11 @@
       var up=((y-1+h)%h)*w,dn=((y+1)%h)*w,xl=Math.max(0,x-1),xr=Math.min(w-1,x+1);
       var gx=(B[up+xr]+2*B[y*w+xr]+B[dn+xr])-(B[up+xl]+2*B[y*w+xl]+B[dn+xl]),gy=(B[dn+xl]+2*B[dn+x]+B[dn+xr])-(B[up+xl]+2*B[up+x]+B[up+xr]);
       var mag=Math.sqrt(gx*gx+gy*gy),edge=Math.max(0,Math.min(1,(mag-14)/46)),r=rank[Math.min(255,B[i]|0)];
-      var tone=.5+.5*Math.pow(r,.6);             // 대부분은 옅은 담묵(탄보다 늘 옅게)
+      var tone=.6+.4*Math.pow(r,.6);             // 대부분은 옅은 담묵(탄보다 늘 옅게)
       var q=tone*6,f=Math.floor(q),fr=q-f;fr=fr<.3?0:fr>.7?1:(fr-.3)/.4;tone=(f+fr*fr*(3-2*fr))/6; // 농담을 몇 단으로 묶어 번진 면으로
-      tone-=edge*.3;                              // 큰 덩어리의 경계에만 붓선 한 겹(어두운 쪽으로만)
+      tone-=edge*.23;                              // 큰 덩어리의 경계에만 붓선 한 겹(어두운 쪽으로만)
       tone+=(rnd()-.5)*.03;                       // 먹 입자
-      tone=Math.max(.2,Math.min(1,tone));
+      tone=Math.max(.35,Math.min(1,tone));
       var o=i*4,sh=.45+.55*(1-tone);             // 담채는 짙은 곳에 더 밴다
       p[o]=(INK[0]+(PAPER[0]-INK[0])*tone)*(1-sh*(1-T[0]));p[o+1]=(INK[1]+(PAPER[1]-INK[1])*tone)*(1-sh*(1-T[1]));p[o+2]=(INK[2]+(PAPER[2]-INK[2])*tone)*(1-sh*(1-T[2]));p[o+3]=255;}
     g.putImageData(data,0,0);return c;
@@ -169,18 +169,18 @@
     if(kind==='orb'){
       var mid=[Math.round(pig[0]*.7+INK[0]*.3),Math.round(pig[1]*.7+INK[1]*.3),Math.round(pig[2]*.7+INK[2]*.3)],wet=[Math.round(pig[0]*.62+PAPER[0]*.38),Math.round(pig[1]*.62+PAPER[1]*.38),Math.round(pig[2]*.62+PAPER[2]*.38)];
       // 번짐: 옅은 담묵이 둘레로 고르지 않게 퍼진다
-      g.fillStyle=css(mid,1);g.globalAlpha=.13;blob(g,Math.min(reach*.92,r*1.6),.36,9);g.fill();
+      g.fillStyle=css(mid,1);g.globalAlpha=.08;blob(g,Math.min(reach*.92,r*1.6),.36,9);g.fill();
       g.globalAlpha=.2;blob(g,Math.min(reach*.86,r*1.3),.3,9);g.fill();g.globalAlpha=1;
       // 몸: 붓으로 찍은 점. 가장자리에 먹이 고이고 가운데는 물기로 옅다
       var body=g.createRadialGradient(-r*.12,-r*.1,r*.05,0,0,r*1.08);body.addColorStop(0,css(wet,.95));body.addColorStop(.45,css(mid,1));body.addColorStop(.8,css(dark,1));body.addColorStop(1,css(INK,1));
-      g.strokeStyle=css(PAPER,.85);g.lineWidth=Math.max(1,r*.34);blob(g,r*1.04,.3,9);g.stroke();g.fillStyle=body;g.fill(); // 한지색 여백 테: 몹·다른 탄과 겹쳐도 낱알로 읽힌다
+      g.strokeStyle=css(PAPER,.98);g.lineWidth=Math.max(1.2,r*.36);blob(g,r*1.04,.3,9);g.stroke();g.fillStyle=body;g.fill(); // 한지색 여백 테: 몹·다른 탄과 겹쳐도 낱알로 읽힌다
       // 튄 먹 방울
       if(r>=3){g.fillStyle=css(dark,.8);for(i=0;i<3;i++){var da=rnd()*6.283,dd=r*(1.25+rnd()*.35),ds=Math.max(.45,r*(.08+rnd()*.1));g.beginPath();g.arc(Math.cos(da)*dd,Math.sin(da)*dd,ds,0,6.283);g.fill();}}
     }else if(kind==='rice'){
       // 붓 한 점: 머리는 짙고 꼬리는 갈라지며 마른다(진행 방향 = +x)
       var L=radius*2.6;
       g.fillStyle=css(pig,.2);g.beginPath();g.ellipse(0,0,L*.98,r*1.35,0,0,6.283);g.fill();
-      g.fillStyle=css(dark,1);g.beginPath();g.moveTo(L*.95,0);g.bezierCurveTo(L*.7,-r*1.15,L*.1,-r*1.1,-L*.55,-r*.5);g.lineTo(-L*.95,-r*.1);g.lineTo(-L*.62,r*.12);g.lineTo(-L*.9,r*.42);g.bezierCurveTo(-L*.2,r*1.05,L*.6,r*1.2,L*.95,0);g.closePath();g.fill();
+      g.fillStyle=css(dark,1);g.beginPath();g.moveTo(L*.95,0);g.bezierCurveTo(L*.7,-r*1.15,L*.1,-r*1.1,-L*.55,-r*.5);g.lineTo(-L*.95,-r*.1);g.lineTo(-L*.62,r*.12);g.lineTo(-L*.9,r*.42);g.bezierCurveTo(-L*.2,r*1.05,L*.6,r*1.2,L*.95,0);g.closePath();g.strokeStyle=css(PAPER,.96);g.lineWidth=Math.max(1.1,r*.32);g.stroke();g.fill();
       g.fillStyle=css(pig,.95);g.beginPath();g.ellipse(L*.3,0,L*.42,r*.5,0,0,6.283);g.fill();
       g.strokeStyle=css(PAPER,.7);g.lineWidth=Math.max(.4,r*.16);for(i=0;i<2;i++){var yy=(i-.5)*r*.7;g.beginPath();g.moveTo(-L*.75,yy);g.lineTo(-L*.2,yy*.8);g.stroke();}
     }else{
