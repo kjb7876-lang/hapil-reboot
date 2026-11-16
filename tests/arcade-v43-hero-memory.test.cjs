@@ -70,3 +70,8 @@ test('bomb plays a short ink cut-in of the memory gunner: a hanji band with the 
  assert(!/arc\([^)]*TAU\)[^;]*;\s*g\.stroke\(\)/.test(fn),'no ring');assert(!/rgb\(\s*1[5-9]\d|rgb\(2[0-4]\d,\s*[0-6]\d,/.test(fn),'no seal red in the cut-in');
  assert(/drawCutin\(g,t/.test(src.slice(src.indexOf('function drawTexts'))),'drawn on top of the field');
 });
+
+test('no module-level function in the hero effects file is declared twice (a later twin silently replaced the level 1-2 shot brush and hid the hero bullets)',()=>{
+ const src=fs.readFileSync(path.join(root,'src/hero-memory-v43.js'),'utf8'),names=[...src.matchAll(/^  function\s+([A-Za-z_$][\w$]*)\s*\(/gm)].map(m=>m[1]),seen=new Set(),dup=names.filter(n=>seen.has(n)||!seen.add(n));
+ assert(names.length>15&&names.includes('shots')&&names.includes('drawCutin'));assert.deepEqual(dup,[]);
+});
