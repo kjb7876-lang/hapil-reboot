@@ -345,5 +345,8 @@
     q.restore();}
   ['chalice','hexagram','skull','scythe','crown','chain','candle','key','hourglass','wing','horn','mirror','gear','bell','mask','rose','web','vial','eye','tower','book','cauldron','castle','tomb','heel','glasses','syringe','tree'].forEach(function(k,n){var draw=M[k];
     M[k]=function(c,s){var d=g.document,px=Math.ceil(s*3*2),cv=d.createElement('canvas');cv.width=cv.height=px;var q=cv.getContext('2d');q.scale(2,2);q.translate(s*1.5,s*1.5);draw(q,s);dryBrush(q,s,97+n*13);c.drawImage(cv,-s*1.5,-s*1.5,s*3,s*3);};});
+  /* 바탕 비치기(사용자 11-16 "주사기그림도 배경처리해서 배경이 나오게", "앵간한거 다 배경처리해"): 한지·흰빛으로 칠한 면은 투명하게, 먹 획은 그대로.
+     밝을수록 덜 남긴다(먹물을 한지에 찍은 것처럼 흰 곳은 바탕이 그대로 보인다). px 는 RGBA 바이트 배열 */
+  M.seeThrough=function(px){for(var i=0;i<px.length;i+=4){if(!px[i+3])continue;var L=(px[i]*.299+px[i+1]*.587+px[i+2]*.114)/255,k=Math.max(0,Math.min(1,(.9-L)/.42));px[i+3]=Math.round(px[i+3]*Math.pow(k,.6));}return px;};
   g.InkMotifs=M;
 })(window);
