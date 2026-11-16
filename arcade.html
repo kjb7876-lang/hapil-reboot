@@ -91,12 +91,15 @@
     #arcade-result.fallen>*:not(#result-cross):not(.kicker){animation:fallen-rise .5s ease-out .7s both}
     @keyframes fallen-rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
     @media (prefers-reduced-motion:reduce){#arcade-result.fallen>*{animation:none!important}}
+    #arcade-save-status{position:fixed;bottom:max(4px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:30;max-width:min(92vw,560px);padding:6px 10px;background:#f2e9d6;color:#862f24;border:1px solid #862f24;font-size:12px;pointer-events:none}
+    #arcade-save-status[hidden]{display:none}
   </style>
 </head>
 <body>
   <div id="arcade-bleed" aria-hidden="true"></div>
   <div id="arcade-hud-high" class="hudx" aria-live="off" hidden></div>
   <div id="arcade-hud-low" class="hudx" aria-live="off" hidden></div>
+  <div id="arcade-save-status" role="status" aria-live="polite" hidden></div>
   <div id="arcade-dev-badge" hidden>DEV ×2 · 무적</div>
   <div id="arcade-stage">
     <div id="arcade-frame">
@@ -158,6 +161,7 @@
     <div id="arcade-pause" class="screen" hidden>
       <p class="kicker">PAUSED</p>
       <h2 data-i18n="paused">잠시 멈춤</h2>
+      <p class="note" id="pause-save-note"></p>
       <button id="arcade-resume" class="primary" type="button" data-i18n="resume">계속하기</button>
       <button id="arcade-quit" type="button" data-i18n="toTitle">처음 화면으로</button>
     </div>
@@ -182,15 +186,16 @@
   <script src="src/arcade-parts-v43/p6.js?v=20261116-arcade43-phases"></script>
   <script src="src/arcade-parts-v43/p7.js?v=20261116-arcade43-phases"></script>
   <script src="src/arcade-parts-v43/p8.js?v=20261116-arcade43-phases"></script>
-  <script src="src/arcade-v43.js?v=20261116-arcade43-phases"></script>
+  <script src="src/arcade-v43.js?v=20261116-stability-clear"></script>
   <script src="src/arcade-skins-v43.js?v=20261116-arcade43-phases"></script>
-  <script src="src/ink-v43.js?v=20261116-arcade43-phases"></script>
+  <script src="src/ink-v43.js?v=20261116-stability-clear"></script>
   <script src="src/ink-motifs-v43.js?v=20261116-arcade43-phases"></script>
   <script src="src/hero-memory-v43.js?v=20261116-arcade43-phases"></script>
-  <script src="src/arcade-i18n-v43.js?v=20261116-arcade43-phases"></script>
+  <script src="src/arcade-i18n-v43.js?v=20261116-stability-clear"></script>
   <script src="src/arcade-music-v43.js?v=20261116-arcade43-phases"></script>
-  <script src="src/arcade-mobile-v43.js?v=20261116-arcade43-phases"></script>
+  <script src="src/arcade-storage-v43.js?v=20261116-stability-clear"></script>
+  <script src="src/arcade-mobile-v43.js?v=20261116-stability-clear"></script>
   <script src="src/arcade-eyes-v43.js?v=20261116-arcade43-phases"></script>
-  <script src="src/arcade-app-v43.js?v=20261116-arcade43-phases"></script>
+  <script src="src/arcade-app-v43.js?v=20261116-stability-clear"></script>
 </body>
 </html>

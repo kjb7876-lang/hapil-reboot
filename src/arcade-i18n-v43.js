@@ -17,6 +17,7 @@
       starsBest:'별 <b id="title-stars">0</b> / <span id="title-stars-max">168</span> · 최고 점수 <b id="title-best">00000000</b>',noSave:'이 브라우저에서는 기록을 저장할 수 없습니다.',
       report:'기기 진단 복사',credit:'음악: 자체 작곡 · 악기 소리 Fluid R3 GM (Frank Wen, CC BY 3.0)',reportDone:'복사됨 · 스레드에 붙여 넣어 주세요',reportFail:'복사 안 됨 · 길게 눌러 선택',
       start:'시작',back:'돌아가기',paused:'잠시 멈춤',resume:'계속하기',toTitle:'처음 화면으로',best:'최고 점수',retryStage:'이 스테이지부터 다시',retryFallen:'다시하기 · 이 스테이지 처음부터',retryBoss:'한 번 더',
+      saveVersion:'지원하지 않는 저장 버전입니다. 원본 보호를 위해 덮어쓰지 않습니다.',saveFailed:'현재 진행을 저장하지 못했습니다. 저장 공간·브라우저 설정을 확인해 주세요.',saveRecovered:'최근 정상 기록에서 저장자료를 복구했습니다.',saveReset:'일부 저장자료를 읽지 못했습니다. 손상 원본은 별도로 보관했습니다.',resumeSegment:'저장 구간 {n}',resumeRules:'이어하기는 저장된 구간부터 다시 시작합니다. 체력·폭탄·점수는 재시작 기준입니다.',stageClear:'보스 격파',nextStage:'다음 스테이지로 이동합니다',journeyClear:'여정을 마쳤습니다',
       pause:'일시정지',focus:'저속',focusLabel:'저속 이동 (누르고 있는 동안)',bomb:'폭탄',field:'세로 탄막 전투장',bossStage:'보스 스테이지',language:'언어'
     },
     en:{
@@ -28,6 +29,7 @@
       starsBest:'Stars <b id="title-stars">0</b> / <span id="title-stars-max">168</span> · Best <b id="title-best">00000000</b>',noSave:'Progress cannot be saved in this browser.',
       report:'Copy device report',credit:'Music: original score · Instrument samples Fluid R3 GM (Frank Wen, CC BY 3.0)',reportDone:'Copied · paste it to the developer',reportFail:'Copy failed · long-press to select',
       start:'Start',back:'Back',paused:'Paused',resume:'Resume',toTitle:'Title screen',best:'Best',retryStage:'Retry this stage',retryFallen:'Rise again · from this stage\'s start',retryBoss:'Again',
+      saveVersion:'Unsupported save version. The original will not be overwritten.',saveFailed:'Progress could not be saved. Check storage space and browser settings.',saveRecovered:'Save data recovered from the last valid backup.',saveReset:'Some save data could not be read. The damaged original was preserved.',resumeSegment:'Saved section {n}',resumeRules:'Continue restarts the saved section. Lives, bombs and score reset on restart.',stageClear:'BOSS CLEAR',nextStage:'Moving to the next stage',journeyClear:'Journey complete',
       pause:'Pause',focus:'Focus',focusLabel:'Focus movement (hold)',bomb:'Bomb',field:'Vertical bullet-hell field',bossStage:'Boss stage',language:'Language'
     }
   };

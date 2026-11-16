@@ -20,7 +20,7 @@ test('a checkpoint is left when a segment starts and resumes only in its own sta
   const cp=JSON.parse(store['hapil-arcade-checkpoint-v43']);assert.equal(cp.stage,3);assert.equal(cp.seg,st.first+2);
   assert.equal(M.checkpoint(3,'normal').seg,st.first+2);
   assert.equal(M.checkpoint(3,'hell'),null,'other difficulty');assert.equal(M.checkpoint(4,'normal'),null,'other stage');
-  s.seg=st.first;M.tick(s,'playing',16);assert.equal(M.checkpoint(3,'normal'),null,'the first segment is the same as starting over');
+  s.seg=st.first;M.tick(s,'playing',16);assert.equal(M.checkpoint(3,'normal').seg,st.first,'the first segment also carries saved growth');
 });
 test('losing or clearing a stage drops the checkpoint and counts the attempt',()=>{
   const {w,store}=sandbox(),M=w.HapilMobile,st=A.STAGES[1];

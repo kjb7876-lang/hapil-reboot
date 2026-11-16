@@ -614,7 +614,7 @@
     options=options||{};var difficulty=DIFFICULTY[options.difficulty]?options.difficulty:'normal',rules=Object.assign({},DIFFICULTY[difficulty]),compact=!!options.compact;
     var startSeg=Number.isInteger(options.segment)&&SEGMENTS[options.segment]?options.segment:Number.isInteger(options.stage)&&STAGES[options.stage]?STAGES[options.stage].first:0;
     var s={revision:43,difficulty:difficulty,rules:rules,compact:compact,density:rules.density*(compact?COMPACT_DENSITY:1),sizeScale:compact?COMPACT_SIZE:1,cap:compact?COMPACT_CAP:CAP,
-      seed:(options.seed>>>0)||1,rng:(options.seed>>>0)||1,tick:0,stage:'break',stageTick:BREAK_TICKS-30,seg:startSeg-1,segTick:0,stageIndex:SEGMENTS[startSeg].stage,spellNumber:0,
+      seed:(options.seed>>>0)||1,rng:(options.seed>>>0)||1,tick:0,clearTicks:0,clearRecorded:false,stage:'break',stageTick:BREAK_TICKS-30,seg:startSeg-1,segTick:0,stageIndex:SEGMENTS[startSeg].stage,spellNumber:0,
       player:{x:W/2,y:H-84,hp:rules.hp,maxHp:rules.hp,invulnerableUntil:0,r:rules.radius,focus:false},
       boss:{x:W/2,y:-60,targetX:W/2,targetY:132,hp:1,maxHp:1,actor:'',name:'',mid:false,hitTick:-99,leaving:false,present:false,down:null},
       bossOnly:!!options.bossOnly,rushStage:SEGMENTS[startSeg].stage,bombs:rules.bombs,gauge:0,spellClean:false,captures:0,itemsTaken:0,lane:undefined,
@@ -626,7 +626,7 @@
     ['bsize','bcolor','bgrazed','bmode','bgen','bbounce'].forEach(function(k){s[k]=new Uint8Array(CAP);});s.figures=[];s.ripples=[];s.floor=freshFloor(s,s.stageIndex);
     s.sx=new Float32Array(SHOT_CAP);s.sy=new Float32Array(SHOT_CAP);s.svx=new Float32Array(SHOT_CAP);s.shoming=new Uint8Array(SHOT_CAP);
     var from=s.stageIndex;if(options.growth&&from>0){/* 화면이 켜 준 경우만(검사·연습용 구간 시작은 1단계 그대로) */var pf=Math.min(5,1+Math.floor(from/6)),bf=Math.min(5,1+Math.floor(from/8));s.exp=POWER_EXP[pf-1];s.power=pf;s.fills=BOMB_FILLS[bf-1];s.bombLevel=bf;}
-    if(options.grown){var ge=+options.grown.exp,gf=+options.grown.fills;if(ge>s.exp){s.exp=ge;s.power=levelOf(POWER_EXP,ge);}if(gf>s.fills){s.fills=gf;s.bombLevel=levelOf(BOMB_FILLS,gf);}} // 중간 저장에서 이어 하면 그때까지 자란 단계 그대로(11-16 실검증: 이어하기 뒤 필살 단계가 내려가던 문제)
+    if(options.grown){var ge=options.grown.exp,gf=options.grown.fills;if(Number.isInteger(ge)&&ge>=0&&ge<=2147483647){s.exp=ge;s.power=levelOf(POWER_EXP,ge);}if(Number.isInteger(gf)&&gf>=0&&gf<=2147483647){s.fills=gf;s.bombLevel=levelOf(BOMB_FILLS,gf);}} // 중간 저장에서 이어 하면 그때까지 자란 단계 그대로(11-16 실검증: 이어하기 뒤 필살 단계가 내려가던 문제)
     s.ix=new Float32Array(ITEM_CAP);s.iy=new Float32Array(ITEM_CAP);s.ivy=new Float32Array(ITEM_CAP);s.ikind=new Uint8Array(ITEM_CAP);
     // 구간을 직접 지정하면(연습·검사) 그 구간에서 바로 시작한다.
     applyCurve(s);
@@ -713,7 +713,8 @@
     if(s.bossOnly){while(SEGMENTS[at]&&SEGMENTS[at].kind==='wave')at++;if(SEGMENTS[at]&&SEGMENTS[at].stage!==s.rushStage)at=SEGMENTS.length;}
     var next=SEGMENTS[at];
     if(next&&next.stage>s.lastStage)next=undefined;
-    if(s.started&&prev&&(!next||next.stage!==prev.stage))closeStage(s,prev.stage);
+    if(s.started&&prev&&(!next||next.stage!==prev.stage)&&!s.clearRecorded)closeStage(s,prev.stage);
+    s.clearRecorded=false;
     s.started=true;
     if(!next){s.stage='won';s.stageTick=0;note(s,'win');return;}
     s.seg=at;s.segTick=0;s.stageTick=0;s.lane=undefined;
@@ -721,6 +722,7 @@
     if(next.kind==='wave'){s.boss.leaving=s.boss.present;s.stage='wave';note(s,'wave');return;}
     if(!prev||prev.kind!=='card'||prev.actor!==next.actor||!s.boss.present){s.boss.leaving=s.boss.present;s.stage='intro';}else s.stage='break';
   }
+  var STAGE_CLEAR_TICKS=90; // 보스 격파 뒤 1.5초: 전투 시계·입력·판정은 멈추고 연출만 진행
   var BOSS_REST=156,BOSS_SWAY=40,BOSS_ROAM=58; // 좌우는 가운데 3분의 1 안: 문양이 칸 가장자리에 잘리지 않게(심사 6.53)
   function enter(s,actor){var b=s.boss;b.actor=actor;b.name=ACTORS[actor].name;b.mid=!!segment(s).mid;b.present=true;b.leaving=false;b.x=W/2;b.y=-60;b.targetX=W/2;b.targetY=BOSS_REST;s.stageTick=0;note(s,'entrance');}
   function beginCard(s){var card=segment(s),b=s.boss;b.maxHp=b.hp=card.hp;b.mid=!!card.mid;s.stage='card';s.stageTick=0;s.segTick=0;s.spellClean=!!card.spell;if(card.spell){s.spellNumber++;note(s,'card');}else note(s,'plain');}
@@ -729,7 +731,13 @@
     if(defeated){s.cleared++;gainExp(s,card.spell?16:10);s.score+=Math.round(left)*300+wiped*30;var nd=card.spell?CARD_DROPS:PLAIN_DROPS;for(var i=0;i<nd;i++)dropItem(s,dropAt(b.actor,i,nd,b.x,b.y,0),dropAt(b.actor,i,nd,b.x,b.y,1),card.spell&&i===1?1:0); /* 하트는 보스 발치 구름 아래에서 솟는다: 먹으로 스미는 몸 한가운데를 가리지 않게(사용자 11-16) */}else s.timeouts++;
     // 이름 붙은 패턴을 폭탄 없이, 맞지 않고 넘기면 보너스
     if(card.spell&&defeated&&s.spellClean){s.captures++;s.score+=20000+card.stage*5000;note(s,'capture');}
-    s.score+=wiped*10;note(s,'break');var who=b.actor,dx=b.x,dy=b.y;advance(s);
+    s.score+=wiped*10;note(s,'break');var who=b.actor,dx=b.x,dy=b.y,next=SEGMENTS[s.seg+1];
+    // 한 보스의 다음 패턴/중간 보스는 기존 박자 유지. 스테이지 끝의 격파에만 쉼을 둔다.
+    if(defeated&&(!next||next.stage!==card.stage||next.stage>s.lastStage)){
+      closeStage(s,card.stage);s.clearRecorded=true;s.clearTicks=0;s.stage='clear';
+      b.present=false;b.leaving=false;b.down={actor:who,x:dx,y:dy,tick:s.tick};note(s,'bossDown');return;
+    }
+    advance(s);
     // 이 보스의 마지막 패턴이 깨졌다(다른 보스나 잡몹 구간으로 넘어감): 화면은 이 자리에서 쓰러지는 동작을 그린다.
     if(defeated&&(b.leaving||s.stage==='won')){b.down={actor:who,x:dx,y:dy,tick:s.tick};note(s,'bossDown');}
   }
@@ -1242,6 +1250,7 @@
   /* 한 틱(1/60초) 진행. input: {dx,dy,focus,bomb} — dx,dy는 이번 틱에 움직일 픽셀, focus는 저속 이동, bomb은 이번 틱에 폭탄 사용. */
   function step(s,input){
     if(s.stage==='won'||s.stage==='lost'){s.stageTick++;return s;}
+    if(s.stage==='clear'){if(++s.clearTicks>=STAGE_CLEAR_TICKS)advance(s);return s;}
     s.tick++;s.stageTick++;movePlayer(s,input);moveBoss(s);
     if(input&&input.bomb)useBomb(s);
     bombPulse(s);
@@ -1265,6 +1274,7 @@
     themed(s);updateMobs(s);updateShots(s);
     if(s.stage==='card'&&b.hp<=0)endCard(s,true);
     else if(s.stage==='card'&&s.segTick*TICK>=segment(s).time)endCard(s,false);
+    if(s.stage==='clear')return s; // 격파한 같은 틱의 잔탄도 더는 피격 처리하지 않는다
     var p=s.player,byFloor=updateFloor(s)|updateRisers(s),byBeam=updateLasers(s),byFigure=updateFigures(s),byBullet=updateBullets(s);
     updateItems(s);
     var touched=(byBeam||byFigure||byBullet||byFloor)&&s.tick>=p.invulnerableUntil&&s.stage!=='won'&&s.stage!=='lost';
@@ -1316,7 +1326,7 @@
     return {fresh:fresh,sanitize:sanitize,record:record,unlocked:unlocked,canPlay:canPlay,resume:resume,totalStars:totalStars};
   })();
   var api={revision:43,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
-    SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
+    STAGE_CLEAR_TICKS:STAGE_CLEAR_TICKS,SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
     BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,RUNE_AT:RUNE_AT,RISER_HP:RISER_HP,RISER_SCORE:RISER_SCORE,riserHp:riserHp,shotHitsRiser:shotHitsRiser,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
     POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,FOCUS_SLOW:FOCUS_SLOW,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,BOMB_PULSES:BOMB_PULSES,BOMB_PULSE_START:BOMB_PULSE_START,BOMB_PULSE_EVERY:BOMB_PULSE_EVERY,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp};
   if(typeof module==='object'&&module.exports)module.exports=api;
