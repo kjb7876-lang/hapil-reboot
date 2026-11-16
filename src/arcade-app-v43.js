@@ -1076,9 +1076,10 @@
         ctx.globalAlpha=k;ctx.lineWidth=2.4;ctx.strokeStyle=mix(color,'#ffffff',.5);[-band/2,band/2].forEach(function(o){ctx.beginPath();ctx.arc(cx,cy,R+o,a0,a1);ctx.stroke();}); // 갈필 테
         ctx.globalAlpha=k*.3;ctx.lineWidth=1;ctx.strokeStyle=letter;[-.22,.05,.28].forEach(function(o,z){ctx.beginPath();ctx.arc(cx,cy,R+band*o,a0+.04*(z+1),a1-.05*(3-z));ctx.stroke();}); // 갈필 비백 줄
         ctx.globalAlpha=k;ctx.fillStyle=mix(color,'#ffffff',.6);[a0,a1].forEach(function(a,z){var ex=cx+Math.cos(a)*R,ey=cy+Math.sin(a)*R;ctx.beginPath();ctx.ellipse(ex,ey,band*.66,band*.5,a+(z?.5:-.5),0,TAU);ctx.fill();ctx.beginPath();ctx.arc(ex+Math.cos(a+(z?-1:1)*1.6)*band*.4,ey+Math.sin(a+(z?-1:1)*1.6)*band*.4,band*.2,0,TAU);ctx.fill();}); // 틈 양끝 붓을 눌러 뗀 먹 덩이
-        var size=band*.8,step=size*1.18/R,mid=(a0+a1)/2,n=text.length;if(step*n>a1-a0-.08)step=(a1-a0-.08)/n;
+        var size=band*.8,step=size*1.18/R,mid=(a0+a1)/2,line=text,n;if(step*line.length>a1-a0-.08)line=j%2?text.slice(text.length>>1):text.slice(0,text.length>>1); // 작은 안쪽 고리는 구절을 반씩 나눠 쓴다(11-16 네 겹)
+        n=line.length;if(step*n>a1-a0-.08)step=(a1-a0-.08)/n;
         ctx.fillStyle=letter;ctx.font='bold '+size.toFixed(1)+'px '+RUNE_FONT;ctx.textAlign='center';ctx.textBaseline='middle';
-        for(var c=0;c<n;c++){var u=mid+(c-(n-1)/2)*step*(Math.sin(mid)>0?-1:1),x=cx+Math.cos(u)*R,y=cy+Math.sin(u)*R;if(y<78||x<-10||x>W+10)continue;ctx.fillText(text.charAt(c),x,y+1);}}}
+        for(var c=0;c<n;c++){var u=mid+(c-(n-1)/2)*step*(Math.sin(mid)>0?-1:1),x=cx+Math.cos(u)*R,y=cy+Math.sin(u)*R;if(y<78||x<-10||x>W+10)continue;ctx.fillText(line.charAt(c),x,y+1);}}}
     ctx.restore();ctx.globalAlpha=1;
     if(layer){ctx.save();ctx.globalCompositeOperation='destination-out';var fade=ctx.createLinearGradient(0,52,0,84);fade.addColorStop(0,'rgba(0,0,0,1)');fade.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=fade;ctx.fillRect(-60,-60,W+120,144);ctx.restore();
       ctx=main;ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.drawImage(runeLayer,0,0);ctx.restore();}

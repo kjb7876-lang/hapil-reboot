@@ -12,10 +12,10 @@ test('during a named spell the boss raises two big turning rune rings that hurt,
   const ci=firstSpell(),s=toCard(ci);let rf=null;
   for(let t=0;t<900&&!rf;t++){hold(s);A.step(s,{});rf=s.figures.find(f=>f.kind==='runes'&&live(f));}
   assert(rf,'a live rune ring figure appears');
-  const radii=rf.rings.map(q=>q.r).sort((a,b)=>b-a);assert.equal(radii.length,2);
-  assert(radii[0]>=168&&radii[0]<=180,'outer ring is larger than the old decorative ring (153) but fits the 360 field (review 11-15: 200 was cut off)');assert(rf.width>=16,'the band is bold');
+  const radii=rf.rings.map(q=>q.r).sort((a,b)=>b-a);assert.equal(radii.length,4,'four layers (user 11-16 "더 겹겹히 큰사이즈로")');
+  assert(radii[0]>=200,'outer ring is large enough to overwhelm the field (user 11-16)');assert(rf.width>=16,'the band is bold');
   assert(rf.rings.every(q=>q.n>=3&&q.gap>0),'each ring has gaps like a gear');
-  assert(rf.rings[0].dir!==rf.rings[1].dir,'the two rings turn in opposite directions');
+  assert(rf.rings.every((q,k)=>!k||q.dir!==rf.rings[k-1].dir),'neighbouring rings turn in opposite directions');
   // 켜지는 순간 두 고리 모두 틈 하나가 바로 아래(영웅 쪽)를 본다
   for(const q of rf.rings){const rot=rf.turn*q.dir+q.phase;let bd=9;for(let k=0;k<q.n;k++){const a=rot+2*Math.PI*k/q.n;bd=Math.min(bd,Math.abs(Math.atan2(Math.sin(a-Math.PI/2),Math.cos(a-Math.PI/2))));}
     assert(bd<q.gap/2,'a gap faces the hero at ignition ('+bd.toFixed(2)+')');}
@@ -25,7 +25,7 @@ test('the rune rings hurt on the band but not in a gap',()=>{
   const ci=firstSpell(),s=toCard(ci);let rf=null;
   for(let t=0;t<900&&!rf;t++){hold(s);A.step(s,{});rf=s.figures.find(f=>f.kind==='runes'&&f.age>=f.warn+5);}
   assert(rf);
-  const q=rf.rings[0],rot=rf.turn*q.dir+q.phase;
+  const q=rf.rings[1]||rf.rings[0],rot=rf.turn*q.dir+q.phase; // 둘째 고리: 바깥 고리(210)는 띠 대부분이 필드 밖이다
   // 아래쪽(영웅 쪽)에 가장 가까운 틈과 띠 가운데
   let best=0,bd=9;for(let k=0;k<q.n;k++){const a=rot+2*Math.PI*k/q.n,d=Math.abs(Math.atan2(Math.sin(a-Math.PI/2),Math.cos(a-Math.PI/2)));if(d<bd){bd=d;best=k;}}
   const gapA=rot+2*Math.PI*best/q.n,bandA=gapA+Math.PI/q.n;
@@ -34,7 +34,7 @@ test('the rune rings hurt on the band but not in a gap',()=>{
     const t=A.createRun({segment:ci,seed:9});Object.keys(s).forEach(k=>{t[k]=s[k];});
     t.figures=[Object.assign({},rf,{age:rf.warn+5})];t.lasers=[];t.n=0;t.mobs=[];t.player=Object.assign({},s.player,{x:pt.x,y:pt.y,invulnerableUntil:0,hp:5});t.floor.pieces=[];
     const h0=t.hits;A.step(t,{});return t.hits>h0;}
-  const g=at(gapA),b=at(bandA);
+  const g=at(gapA),inside=p=>p.x>10&&p.x<350&&p.y>45&&p.y<600;let b=at(bandA);if(!inside(b))b=at(gapA-Math.PI/q.n);if(!inside(b))b=at(gapA+Math.PI);// 바깥 고리는 필드 좌우를 넘는다(11-16): 화면 안의 띠를 고른다
   if(g.x>10&&g.x<350&&g.y>45&&g.y<600)assert.equal(hurtsAt(g),false,'the gap is safe');
   assert.equal(hurtsAt(b),true,'the band hurts');
 });
@@ -50,17 +50,17 @@ test('the rune rings and the big hexagram never hurt at the same time, and only 
   for(let t=0;t<900&&s.seg===plain;t++){hold(s);A.step(s,{});assert(!s.figures.some(f=>f.kind==='runes'),'no rings in a plain pattern');}
 });
 
-test('the outer ring stays inside the side walls wherever the boss stands (review 11-15: it was cut off)',()=>{
+test('the rings stay centred on the field and every layer keeps a gap of at least 60 px',()=>{
   const ci=firstSpell(),s=toCard(ci);let n=0;
   for(let t=0;t<2400&&s.seg===ci;t++){hold(s);A.step(s,{});const rf=s.figures.find(f=>f.kind==='runes'&&live(f));if(!rf)continue;n++;
-    const R=Math.max(...rf.rings.map(q=>q.r))*(rf.fit||1);assert(rf.cx-R>=8&&rf.cx+R<=352,'inside walls: cx '+rf.cx.toFixed(0)+' R '+R.toFixed(0));assert(R>=150,'still big: '+R.toFixed(0));}
+    assert.equal(rf.cx,180);for(const q of rf.rings)assert(q.gap*q.r*(rf.fit||1)>=60,'gap '+(q.gap*q.r).toFixed(0)+'px at r'+q.r);}
   assert(n>0);
 });
 
-test('easy mode keeps only the outer ring',()=>{
+test('easy mode keeps only the two outer rings',()=>{
   const ci=firstSpell(),s=toCard(ci,'gentle');let rf=null;
   for(let t=0;t<900&&!rf;t++){hold(s);A.step(s,{});rf=s.figures.find(f=>f.kind==='runes');}
-  assert(rf);assert.equal(rf.rings.length,1);
+  assert(rf);assert.equal(rf.rings.length,2,'easy keeps two layers');
 });
 
 test('every boss has its own Classical Chinese verse for the rings, not one character repeated',()=>{
