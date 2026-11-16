@@ -512,7 +512,7 @@
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,'제'+g.part+'부 · STAGE '+(s.stageIndex+1));play('seal');}}
       else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);showToast(r);rushStage=false;}
       else if(e==='map')loadStage(s.stageIndex);
-      else if(e==='entrance'){play('warning');wantFx(s.boss.actor);}
+      else if(e==='entrance'){play('warning');wantFx(s.boss.actor);showBanner(s.boss.name,s.boss.mid?'중간보스':'보스');} // 맵마다 일반몹 → 중간보스 → 보스: 누가 나왔는지 한 줄로(사용자 11-16)
       else if(e==='figure')castFx(s,false);
       else if(e==='bossDown'){var dn=s.boss.down;if(dn){fall={actor:dn.actor,x:dn.x,y:dn.y,tick:dn.tick,dir:dn.x>W/2?1:-1,burst:-1,keep:{}};['','@death','@hit'].forEach(function(m){var im=images[dn.actor+m]||(bossArt.actor===dn.actor&&bossArt.keep[dn.actor+m]);if(im)fall.keep[dn.actor+m]=im;}); /* 다음 스테이지로 넘어가며 그림을 놓아도 쓰러지는 동안은 쥐고 있다(전에는 마름모 자리표시가 쓰러졌다) */flash=Ink?.18:.8;shake=16;}} /* 수묵 모드는 흰 섬광을 줄여 먹빛으로 물드는 순간이 묻히지 않게(사용자 11-16) */
       else if(e==='break'){play('phaseBreak',s.boss.x);flash=.6;shock={x:s.boss.x,y:s.boss.y,r:10,ink:true};shake=3;}
@@ -817,7 +817,7 @@
     var b=s.boss;if(!b.present||b.y<-50)return;
     if(bossArt.actor!==b.actor){bossArt={actor:b.actor,keep:{}};}['','@death','@hit'].forEach(function(m){var im=images[b.actor+m];if(im)bossArt.keep[b.actor+m]=im;});
     if(b.leaving&&fall&&fall.actor===b.actor)return; // 쓰러진 보스는 날아가지 않고 drawFall이 그 자리에서 무너뜨린다
-    var bob=Math.sin(visual*2.2)*4,size=(b.mid?150:190)+Math.sin(visual*1.3)*10,bx=finite(b.x,W/2),by=finite(b.y,120)+bob;
+    var bob=Math.sin(visual*2.2)*4,size=(b.mid?168:190)+Math.sin(visual*1.3)*10,bx=finite(b.x,W/2),by=finite(b.y,120)+bob;
     // 역광(backlight): 보스 뒤에 테마색 빛을 깔아 자기 탄 고리 속에서도 몸 윤곽이 뜨게 한다(심사 9차)
     var tc=themeColor(s),bright=paleOf(tc),glowR=size*.62,bl=ctx.createRadialGradient(bx,by,8,bx,by,glowR);bl.addColorStop(0,tc+(bright?BACKLIGHT_BRIGHT:'66'));bl.addColorStop(.6,tc+(bright?'0c':'22'));bl.addColorStop(1,themeColor(s)+'00');
     ctx.save();ctx.globalCompositeOperation='lighter';ctx.fillStyle=bl;ctx.fillRect(bx-glowR,by-glowR,glowR*2,glowR*2);ctx.restore();

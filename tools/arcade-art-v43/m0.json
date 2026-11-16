@@ -37,28 +37,12 @@
   "m0_a08_s1": {
    "src": "media/drive-v43/m038-down.webp",
    "strip": 4,
-   "fps": 6,
-   "motions": {
-    "side": {
-     "src": "media/m0-v43/a08-s1-move.webp",
-     "strip": 2,
-     "fps": 7,
-     "facing": "right"
-    }
-   }
+   "fps": 6
   },
   "m0_a09_o1": {
    "src": "media/drive-v43/m041-down.webp",
    "strip": 4,
-   "fps": 6,
-   "motions": {
-    "side": {
-     "src": "media/m0-v43/a09-o1-move.webp",
-     "strip": 2,
-     "fps": 7,
-     "facing": "right"
-    }
-   }
+   "fps": 6
   },
   "m0_a09_v1": {
    "src": "media/drive-v43/m039-down.webp",
@@ -111,12 +95,6 @@
    "strip": 4,
    "fps": 6,
    "motions": {
-    "side": {
-     "src": "media/m0-v43/a10-s1-move.webp",
-     "strip": 4,
-     "fps": 7,
-     "facing": "right"
-    },
     "attack": {
      "src": "media/m0-v43/a10-s1-attack.webp",
      "strip": 4,

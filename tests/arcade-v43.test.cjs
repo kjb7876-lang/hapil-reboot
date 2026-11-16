@@ -11,16 +11,24 @@ test('v43 one stage per original scene: 56 stages in the original order, named b
  assert.deepEqual([...new Set(a.STAGES.map(g=>g.part))],[1,2,3,4,5,6,7,8]);
 });
 
-test('v43 stages are mob waves then a guardian, or waves → mid boss → waves → boss; every stage carries a named pattern from its own scene',()=>{
- const a=A(),names=new Set();let bossStages=0;
+test('v43 stages run mob waves → a mid boss → the boss → next map, and no one comes back in the same map; every stage carries a named pattern from its own scene',()=>{
+ // 사용자 11-16: "똑같은 보스가 나왔다가 사라지고 하니까 피로한거 같아 차라리 페이즈를 나눠서 일반몹-중간보스-보스-다음맵 이런식으로"
+ const a=A(),names=new Set();let bossStages=0,prevBoss='';
  a.STAGES.forEach((g,index)=>{
   const mine=a.SEGMENTS.filter(x=>x.stage===index),code=mine.map(x=>x.kind==='wave'?'W':x.mid?'M':'B').join('');
-  assert(g.kind==='road'||g.kind==='boss',g.name);
-  if(g.kind==='boss'){assert.match(code,/^W+M+W+B+$/,g.name+': '+code);bossStages++;}else assert.match(code,/^W{2,}M+$/,g.name+': '+code);
+  assert(g.kind==='road'||g.kind==='boss',g.name);if(g.kind==='boss')bossStages++;
+  assert.match(code,/^W{2,}M+B+$/,g.name+': '+code);
   assert.equal(a.SEGMENTS.indexOf(mine[0]),g.first);
   const boss=mine.filter(x=>x.kind==='card'&&!x.mid),mid=mine.filter(x=>x.mid);
-  for(const run of [boss,mid]){run.forEach((x,i)=>assert.equal(!!x.spell,i%2===1,g.name+': plain attack first, then a named pattern, alternating'));assert.equal(run.length%2,0);assert(new Set(run.map(x=>x.actor)).size<=1);}
-  assert(mid.some(x=>x.spell),g.name+' has a named pattern');
+  const ba=new Set(boss.map(x=>x.actor)),ma=new Set(mid.map(x=>x.actor));
+  assert.equal(ba.size,1,g.name+': one boss');assert.equal(ma.size,1,g.name+': one mid boss');
+  const bossActor=[...ba][0],midActor=[...ma][0];
+  assert.notEqual(midActor,bossActor,g.name+': the mid boss is someone else than the boss');
+  assert.notEqual(midActor,prevBoss,g.name+': the mid boss is not the boss of the map just before');
+  boss.forEach((x,i)=>assert.equal(!!x.spell,i%2===1,g.name+': plain attack first, then a named pattern, alternating'));assert.equal(boss.length%2,0);
+  if(a.ACTORS[midActor].midboss){assert.equal(mid.length,2,g.name);assert(mid.every(x=>!x.spell&&x.midboss),g.name+': a stand-in mid boss shows two plain attacks');}
+  else mid.forEach((x,i)=>assert.equal(!!x.spell,i%2===1,g.name+': mid boss alternates too'));
+  assert(boss.some(x=>x.spell),g.name+' has a named pattern');
   if(g.kind==='boss')assert(boss.filter(x=>x.spell).length>=3,g.name+': a boss shows at least three named patterns');
   for(const x of mine.filter(x=>x.kind==='card')){
    assert(a.ACTORS[x.actor]&&a.ACTORS[x.actor].name,'known actor '+x.actor);assert(x.hp>0&&x.time>0&&x.time<=40,'every card has a time limit');
@@ -28,6 +36,7 @@ test('v43 stages are mob waves then a guardian, or waves → mid boss → waves 
    else assert.equal(x.name,'','plain attacks carry no name');
   }
   for(const x of mine.filter(x=>x.kind==='wave'))assert(x.duration>=300&&typeof x.script==='function');
+  prevBoss=bossActor;
  });
  // 부마다 마지막 스테이지는 보스 스테이지다. 7대죄(2부)는 장면마다 보스가 있다.
  for(let part=1;part<=8;part++){const list=a.STAGES.filter(g=>g.part===part);assert.equal(list[list.length-1].kind,'boss','part '+part+' ends on a boss');}

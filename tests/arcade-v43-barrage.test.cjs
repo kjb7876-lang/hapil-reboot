@@ -41,7 +41,7 @@ test('v43 barrage: easy and normal are nearly as dense as hell, slower, and forg
 
 test('v43 barrage: every boss has its own signature — glyph laser, colour and bullet strands — and they differ from boss to boss',()=>{
  const a=h.need(),sig=a.SIGNATURES,glyphs=a.GLYPHS;assert(sig&&glyphs,'signature table and glyph shapes');
- const actors=[...new Set(a.SEGMENTS.filter(g=>g.kind==='card').map(g=>g.actor))];assert(actors.length>=50);
+ const actors=[...new Set(a.SEGMENTS.filter(g=>g.kind==='card'&&!g.midboss).map(g=>g.actor))];assert(actors.length>=50); // 중간보스(일반 패턴만, 사용자 11-16)는 이름 붙은 패턴이 없어 고유 연출이 없다
  const keys=new Set();let prev='';
  for(const k of actors){const g=sig[k];assert(g,'signature of '+k);assert(glyphs[g.glyph],k+' glyph '+g.glyph);assert(a.PALETTE.includes(g.color),k+' colour');
   assert(g.arms>=2&&g.arms<=6,k+' strands');const key=[g.glyph,g.color,g.arms,g.edge].join('/');assert(!keys.has(key),'two bosses share '+key);keys.add(key);

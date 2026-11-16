@@ -337,6 +337,23 @@
     chief:{name:'악몽의 우두머리',c1:WHITE,c2:PURPLE},executor:{name:'파란불 집행체',c1:CYAN,c2:RED},rian:{name:'한리안과 백이온',c1:YELLOW,c2:CYAN},cultist:{name:'교주',c1:RED,c2:WHITE}
   };
   gather('actors',ACTORS);
+  /* ── 중간보스(사용자 11-16 "일반몹-중간보스-보스-다음맵"). 맵마다 잡몹 구간 다음에 보스와 다른 인물이 한 번 나와 일반 패턴 둘을 쏘고 쓰러진다.
+   *    맵의 원래 중간 인물이 보스와 다르고 바로 앞 맵의 보스도 아니면 그 인물이 중간보스다. 아니면 아래 표의 인물이 나온다.
+   *    이름은 스토리월드(m0·드라이브) 그림에 붙은 이름만 쓴다. 그림은 tools/arcade-art-v43/midboss.json. ── */
+  var MIDBOSS={
+    '01':['뿌리 추적자',GREEN,PURPLE],'02':['보랏빛 알집지기',PURPLE,WHITE],'03':['늪의 염소머리 악마',GREEN,YELLOW],'04':['피냄새 추적자',RED,WHITE],
+    '05':['흑마법사의 시체경호체',PURPLE,GREEN],'06':['검은기둥 가고일 수호자',RED,PURPLE],'07':['지옥문 파수악마',YELLOW,RED],'08':['복도 비명잔영',WHITE,CYAN],
+    '09-1':['주사실 감시환각',CYAN,WHITE],'09-2':['초자아 잠식체',YELLOW,WHITE],'10':['암시장의 수상한 자',PURPLE,YELLOW],'13':['일흔두 번째 인장 잔류체',CYAN,PURPLE],
+    '14':['나태의 껍데기 파수',GREEN,YELLOW],'15':['금이 간 비교잔영',CYAN,WHITE],'16':['폐기주방 감독',YELLOW,RED],'17':['심장빛 무대감독',RED,PURPLE],
+    '18':['모든 면이 뒷면인 동전',YELLOW,WHITE],'19':['눈보라 속 여우 악마',WHITE,CYAN],'20':['호텔 화염기사',RED,YELLOW],'21':['강철 턱의 사이보그 개',CYAN,RED],
+    '24':['기계화 문턱 관측거미',YELLOW,CYAN],'25':['기억 검열기',WHITE,PURPLE],'27':['역전 관리자',CYAN,WHITE],'28':['중앙이주 코어',CYAN,YELLOW],
+    '31':['피리 고블린',GREEN,RED],'32':['장미이슬 슬라임',RED,GREEN],'33':['소환진 타락천사',PURPLE,RED],'34':['포구 검은 안개',WHITE,PURPLE],'35':['검은 안개 심장',PURPLE,YELLOW],
+    '37':['시간 수집자',YELLOW,PURPLE],'38':['시간수문장 46',YELLOW,CYAN],'39':['상위수문장 58',CYAN,WHITE],'41':['상위수문장 51',CYAN,PURPLE],'42':['신경 케이블 포식체',RED,CYAN],
+    '43':['늪에서 되살아난 혼령체',GREEN,WHITE],'44':['육망성의 흑마술 실험체',PURPLE,YELLOW],'45':['시간수문장 15',WHITE,CYAN],'46':['긴 뱀의 그림자',CYAN,GREEN],
+    '49':['환수검 모조체',WHITE,CYAN],'52':['파란불 역주행 목격자',CYAN,WHITE],'53':['공실장부 당직감사',YELLOW,RED],'54':['제출되지 못한 문장',PURPLE,WHITE],
+    '56':['소환좌 칩 수호체',CYAN,RED],'57':['흑장미 귀막은 신도',PURPLE,RED],'58':['생체기계 악몽',RED,PURPLE],'59':['죄책감 압축결정',GREEN,PURPLE],'61':['EGO 구속 연결자',PURPLE,CYAN]};
+  function midbossKey(scene){return 'mb_'+scene.replace('-','_');}
+  Object.keys(MIDBOSS).forEach(function(sc){var m=MIDBOSS[sc];ACTORS[midbossKey(sc)]={name:m[0],c1:m[1],c2:m[2],midboss:true};});
 
   /* ── 이름 붙은 패턴. 이름을 순서대로 읽으면 그 인물의 사연이 되도록 원작 장면 제목·목표에서만 따왔다.
    *    name 패턴 이름 · scene 원작 장면 번호 · fire(s,t) 발사 시작 뒤 t틱째 ── */
@@ -545,29 +562,48 @@
     Object.keys(built.spells||{}).forEach(function(k){if(spells[k])throw new Error('duplicate spell '+k);spells[k]=built.spells[k];});
     (built.stages||[]).forEach(function(g){if(DEFS[g.scene])throw new Error('scene twice: '+g.scene);g.partFile=p.part;DEFS[g.scene]=g;});
   });
+  var prevBoss='',lastNew='',midPlains={};
   SCENES.forEach(function(row,index){
     var g=DEFS[row[0]];if(!g)throw new Error('no stage for scene '+row[0]+' '+row[2]);
     if(g.partFile!==row[1])throw new Error('scene '+row[0]+' belongs to part '+row[1]);
     var stage={index:index,part:row[1],scene:row[0],name:row[2],kind:g.boss?'boss':'road',theme:g.theme,cast:g.cast||[],first:SEGMENTS.length,reward:g.reward,seconds:0};
     if(g.placeholder)stage.placeholder=true;
     stage.cast.forEach(function(k){if(!MOBS[k])throw new Error(row[2]+': unknown mob '+k);});
-    function cards(list,mid){
+    function cards(list,mid,light){
       var actor=list[0],who=ACTORS[actor];if(!who)throw new Error(row[2]+': unknown actor '+actor);
       for(var k=1;k<list.length;k++){
         // 보스마다 고유한 일반 패턴 두 가지를 번갈아 쓴다. 처음 나온 순서 i번째 보스는 (2i, 2i+1) mod 9: 이어 나오는 두 보스는 겹치지 않는다.
-        if(!plainOf[actor])plainOf[actor]={i:plainCount++,n:0};
+        if(!plainOf[actor]){plainOf[actor]={i:plainCount++,n:0};lastNew=actor;}
         var po=plainOf[actor],pf=(2*po.i+po.n++%2)%9;
         var spell=spells[list[k]],last=!mid&&k===list.length-1;if(!spell)throw new Error(row[2]+': unknown pattern '+list[k]);
         if(spell.scene&&spell.scene!==row[0])throw new Error(row[2]+': pattern '+list[k]+' belongs to scene '+spell.scene);
         if(spell.used)throw new Error('pattern used twice: '+list[k]);spell.used=true;
-        SEGMENTS.push({kind:'card',stage:index,actor:actor,mid:mid,spell:false,name:'',plain:PLAIN_NAMES[pf],hp:mid?200:240,time:mid?16:18,fire:PLAIN[pf](who.c1,who.c2)});
-        SEGMENTS.push({kind:'card',stage:index,actor:actor,mid:mid,spell:true,name:spell.name,scene:row[0],hp:spell.hp||(mid?420:last?600:520),time:spell.time||(mid?26:last?36:30),fire:spell.fire});
+        var lm=mid||light; // 길 맵의 보스는 예전 중간 인물의 체력·시간 그대로(맵 길이를 크게 늘리지 않는다)
+        SEGMENTS.push({kind:'card',stage:index,actor:actor,mid:mid,spell:false,name:'',plain:PLAIN_NAMES[pf],hp:lm?200:240,time:lm?16:18,fire:PLAIN[pf](who.c1,who.c2)});
+        SEGMENTS.push({kind:'card',stage:index,actor:actor,mid:mid,spell:true,name:spell.name,scene:row[0],hp:spell.hp||(lm?420:last?600:520),time:spell.time||(lm?26:last?36:30),fire:spell.fire});
       }
     }
     function waves(list){list.forEach(function(script){SEGMENTS.push({kind:'wave',stage:index,duration:script.duration||760,script:script});});}
+    // 중간보스: 일반 패턴 둘(이름 붙은 패턴 없음). 보스의 일반 패턴 순번과 섞이지 않게 따로 센다.
+    function midboss(){var actor=midbossKey(row[0]),who=ACTORS[actor];if(!who)throw new Error(row[2]+': no midboss for scene '+row[0]);
+      // 앞 맵 보스·이 맵 보스의 일반 패턴과 겹치지 않는 두 가지를 고른다(이어 만나는 두 인물은 일반 패턴을 나누지 않는다).
+      // 처음 만나는 순서로 바로 앞·뒤 인물(앞서 처음 나온 인물, 다음에 처음 나올 인물)도 피한다.
+      var taken={},mark=function(a){if(midPlains[a]){midPlains[a].forEach(function(c){taken[c]=true;});return;}var po=plainOf[a],i=po?po.i:plainCount;taken[(2*i)%9]=taken[(2*i+1)%9]=true;},picks=[];
+      if(prevBoss)mark(prevBoss);if(lastNew)mark(lastNew);mark(bossList[0]);taken[(2*plainCount)%9]=taken[(2*plainCount+1)%9]=true;
+      for(var q=0;q<9&&picks.length<2;q++){var c=(2*index+1+q*4)%9;if(!taken[c]&&picks.indexOf(c)<0)picks.push(c);}
+      midPlains[actor]=picks;lastNew=actor;
+      for(var n=0;n<2;n++){var pf=picks[n];SEGMENTS.push({kind:'card',stage:index,actor:actor,mid:true,midboss:true,spell:false,name:'',plain:PLAIN_NAMES[pf],hp:n?240:200,time:16,fire:PLAIN[pf](who.c1,who.c2)});}}
     var w=g.waves||[];if(w.length<2)throw new Error(row[2]+': a stage needs at least two mob waves');
-    if(g.boss){var half=Math.ceil(w.length/2);waves(w.slice(0,half));cards(g.mid,true);waves(w.slice(half));cards(g.boss,false);}
-    else{waves(w);cards(g.mid,true);}
+    /* 맵마다 일반몹 → 중간보스 → 보스 → 다음 맵(사용자 11-16: 같은 보스가 나왔다 사라졌다 다시 나오면 피로하다).
+     * 잡몹 구간은 모두 앞에 모은다. 보스는 한 번 나오면 그 맵의 패턴을 다 쓰고 쓰러진다.
+     * 원래 중간 인물이 보스와 같거나 바로 앞 맵의 보스였으면 그 인물의 패턴은 보스 몫으로 앞에 붙이고 중간보스 표의 인물이 나온다.
+     * 보스가 없던 맵(길)은 그 맵의 인물이 보스가 된다(체력·시간은 예전 중간 인물 그대로). */
+    var bossList,midList=null,light=false;
+    if(g.boss){bossList=g.boss.slice();if(g.mid[0]!==g.boss[0]&&g.mid[0]!==prevBoss)midList=g.mid;else bossList=[g.boss[0]].concat(g.mid.slice(1),g.boss.slice(1));}
+    else{bossList=g.mid.slice();light=true;}
+    waves(w);
+    if(midList)cards(midList,true);else midboss();
+    cards(bossList,false,light);prevBoss=bossList[0];
     for(var i=stage.first;i<SEGMENTS.length;i++){var x=SEGMENTS[i];stage.seconds+=x.kind==='wave'?x.duration/60+4:x.time*.7+2.5;}
     STAGES.push(stage);
   });

@@ -22,7 +22,7 @@ test('v43 boss identity: two bosses met one after another never share a plain pa
 
 test('v43 boss identity: every boss has its own colours and spell overlay signature',()=>{
  const a=h.need(),actors=[...plainByActor(a).keys()];
- for(const k of actors){assert(a.ACTORS[k],'actor '+k);assert(a.SIGNATURES[k],'signature '+k);}
+ for(const k of actors){assert(a.ACTORS[k],'actor '+k);if(!a.ACTORS[k].midboss)assert(a.SIGNATURES[k],'signature '+k);} // 중간보스(사용자 11-16)는 이름 붙은 패턴이 없어 고유 연출 없이 일반 패턴만 쓴다
 });
 
 test('v43 drift remains read as harmless: grey-ish, faint and short-lived so live bullets stay on top (7-expert review 11-14)',()=>{
