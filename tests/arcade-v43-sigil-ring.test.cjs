@@ -22,7 +22,7 @@ test('the ring hurts on contact once live and leaves the space below it free',()
   const i=[...firsts(a).values()][0],s=a.createRun({difficulty:'normal',seed:3,segment:i,stages:1});
   for(let t=0;t<900&&s.seg===i&&!hit;t++){if(s.stage==='card')s.boss.hp=s.boss.maxHp;const f=s.figures.find(q=>q.sigil);
     if(f){s.player.x=Math.max(8,Math.min(a.WIDTH-8,f.cx));s.player.y=f.cy+f.r;}
-    s.player.invulnerableUntil=-1;h.clear(s);const hp=s.player.hp;s.n=0;a.step(s,{dx:0,dy:0});
+    s.player.invulnerableUntil=-1;s.bombs=0;h.clear(s);const hp=s.player.hp;s.n=0;a.step(s,{dx:0,dy:0});
     if(f&&s.player.hp<hp){if(f.age<f.warn)warnHit=true;else hit=true;}s.player.hp=Math.max(s.player.hp,3);}
   assert(hit,'touching the live ring costs a life');assert(!warnHit,'warning ring is harmless');
 });

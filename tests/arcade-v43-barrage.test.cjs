@@ -62,7 +62,7 @@ test('v43 barrage: during a named boss pattern the glyph laser turns, grows and 
 });
 
 test('v43 barrage: glyph lasers hit only along their own segments, and warn before they burn',()=>{
- const a=h.need(),s=h.idle();s.player.x=180;s.player.y=500;
+ const a=h.need(),s=h.idle();s.player.x=180;s.player.y=500;s.bombs=0;s.noDistort=true;
  s.figures.push({kind:'zigzag',points:[0,480,180,500,360,480],width:12,warn:20,active:60,age:0,color:0,r:0,turn:0});
  for(let t=0;t<15;t++){a.step(s,{dx:0,dy:0});h.clear(s);}assert.equal(s.player.hp,s.player.maxHp,'not during the warning');
  for(let t=0;t<20;t++){a.step(s,{dx:0,dy:0});h.clear(s);}assert(s.player.hp<s.player.maxHp,'the burning segment hits');

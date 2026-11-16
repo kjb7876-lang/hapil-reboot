@@ -10,7 +10,7 @@ test('attack level climbs 1→7 from kills and pattern breaks, drops one level o
  assert.equal(s.power,1);assert.equal(a.POWER_EXP.length,7);assert.equal(a.MAX_LEVEL,7);
  for(let l=2;l<=7;l++){a.gainExp(s,a.POWER_EXP[l-1]-s.exp);assert.equal(s.power,l);assert(s.events.includes('powerUp'));clear(s);}
  a.gainExp(s,99999);assert.equal(s.power,7,'capped at 7');
- const b=idle();b.exp=a.POWER_EXP[4];b.power=5;put(b,b.player.x,b.player.y,{bage:100});a.step(b,{dx:0,dy:0});
+ const b=idle();b.exp=a.POWER_EXP[4];b.power=5;b.bombs=0;b.noDistort=true;put(b,b.player.x,b.player.y,{bage:100});a.step(b,{dx:0,dy:0});
  assert.equal(b.player.hp,b.rules.hp-1);assert.equal(b.power,4,'a hit costs one attack level');assert(b.events.includes('powerDown'));
  const late=a.createRun({difficulty:'normal',seed:2,stage:30,growth:true});assert.equal(a.createRun({difficulty:'normal',seed:2,stage:30}).power,1,'only when the app asks');assert(late.power>=4&&late.power<=5&&late.bombLevel>=4,'continuing deep in the journey');
 });
@@ -74,4 +74,25 @@ test('bomb plays a short ink cut-in of the memory gunner: a hanji band with the 
 test('no module-level function in the hero effects file is declared twice (a later twin silently replaced the level 1-2 shot brush and hid the hero bullets)',()=>{
  const src=fs.readFileSync(path.join(root,'src/hero-memory-v43.js'),'utf8'),names=[...src.matchAll(/^  function\s+([A-Za-z_$][\w$]*)\s*\(/gm)].map(m=>m[1]),seen=new Set(),dup=names.filter(n=>seen.has(n)||!seen.add(n));
  assert(names.length>15&&names.includes('shots')&&names.includes('drawCutin'));assert.deepEqual(dup,[]);
+});
+
+test('a hit with a bomb left fires the bomb instead of costing a life (auto bomb); with none left the life goes',()=>{
+ const a=A(),s=idle();s.noDistort=true;s.bombs=2;s.power=4;s.exp=a.POWER_EXP[3];const hp=s.player.hp,lv=s.bombLevel;
+ put(s,s.player.x,s.player.y,{bage:100});a.step(s,{dx:0,dy:0});
+ assert.equal(s.player.hp,hp,'no life lost');assert.equal(s.bombs,1,'one bomb spent');assert(s.events.includes('autoBomb')&&s.events.includes('bomb'));
+ assert.equal(s.autoBombs,1);assert.equal(s.hits,1,'still counts as a hit for the no-hit star');assert.equal(s.power,4,'attack level kept');assert.equal(s.bombLevel,lv,'bomb level kept');assert.equal(s.lastBomb.auto,true);
+ assert.equal(s.n,0,'the bomb clears the bullets');assert(s.player.invulnerableUntil>s.tick+60);
+ const t=idle();t.noDistort=true;t.bombs=0;put(t,t.player.x,t.player.y,{bage:100});a.step(t,{dx:0,dy:0});assert.equal(t.player.hp,hp-1);assert(!t.events.includes('autoBomb'));
+});
+
+test('space-time distortion: a touching bullet slips past at 7% (attack Lv.1) up to 37% (Lv.7), and a slip-past spends no bomb',()=>{
+ const a=A();assert.equal(a.DISTORT_CHANCE[1],.07);assert.equal(a.DISTORT_CHANCE[7],.37);for(let l=2;l<=7;l++)assert(a.DISTORT_CHANCE[l]>a.DISTORT_CHANCE[l-1]&&a.DISTORT_CHANCE[l]<=.37);
+ const rate=l=>{let ok=0,N=3000;const s=idle();s.power=l;s.exp=a.POWER_EXP[l-1];s.bombs=0;
+  for(let i=0;i<N;i++){s.power=l;s.player.hp=5;s.player.invulnerableUntil=0;s.n=0;s.stage='break';const d=s.distorts;put(s,s.player.x,s.player.y,{bage:100});a.step(s,{dx:0,dy:0});
+   if(s.distorts>d){ok++;assert.equal(s.player.hp,5);assert(s.events.includes('distort'));assert(s.player.invulnerableUntil>=s.tick+a.DISTORT_TICKS-1);}clear(s);}
+  return ok/N;};
+ const r1=rate(1),r7=rate(7);assert(Math.abs(r1-.07)<.02,'Lv.1 '+r1);assert(Math.abs(r7-.37)<.03,'Lv.7 '+r7);
+ const s=idle();s.bombs=2;s.power=7;let dist=0,auto=0;for(let i=0;i<400;i++){s.power=7;s.bombs=2;s.player.invulnerableUntil=0;s.n=0;const d=s.distorts,b=s.autoBombs;put(s,s.player.x,s.player.y,{bage:100});a.step(s,{dx:0,dy:0});if(s.distorts>d){dist++;assert.equal(s.autoBombs,b,'a slip-past does not also spend a bomb');}else auto++;clear(s);}
+ assert(dist>0&&auto>0);const off=a.createRun({difficulty:'normal',seed:1,distort:false});assert.equal(off.noDistort,true);
+ const app=fs.readFileSync(path.join(root,'src/arcade-app-v43.js'),'utf8'),fx=fs.readFileSync(path.join(root,'src/hero-memory-v43.js'),'utf8');assert(/'distort'/.test(app)&&/function drawWarps/.test(fx)&&/자동 필살/.test(fx));
 });
