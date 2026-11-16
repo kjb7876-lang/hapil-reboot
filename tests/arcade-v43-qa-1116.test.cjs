@@ -42,3 +42,14 @@ test('the app bundle (tools/build-app-www.cjs) carries every media folder the po
  const missing=[...used].filter(u=>!media.includes(u)&&fs.existsSync(path.join(root,u)));
  assert.deepEqual(missing,[],'not packed into the app');
 });
+
+test('no script the portrait game loads declares the same function twice at one level, and no two scripts claim the same global (11-16: a twin stroke() hid the hero shots)',()=>{
+ const html=fs.readFileSync(path.join(root,'arcade.html'),'utf8'),files=[...html.matchAll(/<script src="([^"?]+)/g)].map(m=>m[1]),owners={},dups=[];
+ assert(files.length>=15);
+ for(const f of files){const src=fs.readFileSync(path.join(root,f),'utf8'),seen=new Set();
+  for(const m of src.matchAll(/^( *)function\s+([A-Za-z_$][\w$]*)\s*\(/gm)){const key=m[1].length+':'+m[2];if(seen.has(key))dups.push(f+' '+m[2]);seen.add(key);}
+  for(const m of src.matchAll(/\b(?:global|window|root)\.(Hapil\w+|Arcade\w*)\s*=(?!=)(?!\s*(?:global|window|root)\.\1\s*\|\|)/g)){(owners[m[1]]=owners[m[1]]||new Set()).add(f);}}
+ assert.deepEqual(dups,[],'duplicate function declarations');
+ const shared=Object.entries(owners).filter(([,s])=>s.size>1).map(([k,s])=>k+': '+[...s].join(', '));
+ assert.deepEqual(shared,[],'one global, one owner');
+});
