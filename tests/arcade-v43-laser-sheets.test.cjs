@@ -6,7 +6,7 @@ const table=JSON.parse(h.read('docs/v43/laser-sheets.json'));
 const index=JSON.parse(h.read('media/arcade-v43-laser/index.json'));
 
 test('v43 laser sheets: every Drive sheet number maps to the boss that appears in that order',()=>{
- const a=h.need(),order=[];a.SEGMENTS.filter(g=>g.kind==='card').forEach(g=>{if(!order.includes(g.actor))order.push(g.actor);});
+ const a=h.need(),order=[];a.SEGMENTS.filter(g=>g.kind==='card'&&!g.midboss).forEach(g=>{if(!order.includes(g.actor))order.push(g.actor);});
  for(const [b,actor] of Object.entries(table.assign))assert.equal(actor,order[+b.slice(1)-1],b);
  assert.equal(table.assign.B05,'p1_comrade');assert.equal(table.assign.B16,'asmodeus');assert.equal(table.assign.B33,'p5_archon');
  assert(Object.keys(table.assign).length>=28,'all sheets on Drive are assigned');

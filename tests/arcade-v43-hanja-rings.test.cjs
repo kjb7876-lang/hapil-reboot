@@ -67,7 +67,7 @@ test('easy mode keeps at most the three outer rings',()=>{
 test('every boss has its own Classical Chinese verse for the rings, not one character repeated',()=>{
   const m=app.match(/var RUNE_VERSES=\{([\s\S]*?)\};/);assert(m,'RUNE_VERSES table');
   const pairs=[...m[1].matchAll(/(\w+):'([^']+)'/g)].map(x=>[x[1],x[2]]);const map=Object.fromEntries(pairs);
-  const actors=[...new Set(A.SEGMENTS.filter(s=>s.kind==='card').map(s=>s.actor))];
+  const actors=[...new Set(A.SEGMENTS.filter(s=>s.kind==='card'&&!s.midboss).map(s=>s.actor))]; // 중간보스는 이름 붙은 패턴이 없어 한자 고리도 없다
   const seen=new Set();
   for(const a of actors){const v=map[a];assert(v,'verse for '+a);const han=[...v].filter(c=>/\p{Script=Han}/u.test(c));
     assert(han.length>=8,a+': at least 8 characters');assert(new Set(han).size>=6,a+': not a single character repeated');
