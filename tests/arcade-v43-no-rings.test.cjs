@@ -9,4 +9,5 @@ test('ink style draws no wrapping rings',()=>{
  assert.match(app,/q<\(Ink\?0:c\.big\?3:2\)/,'cast pulse rings');
  assert.match(app,/if\(!Ink\)\{ctx\.save\(\);ctx\.translate\(p\.x,p\.y\);ctx\.rotate\(visual\*3\)/,'focus dashed ring');
 });
-test('ink is monochrome with vermilion accents by default, older looks stay reachable',()=>{assert.match(ink,/mono=monoQ\?\+monoQ\[1\]:2/);assert.match(ink,/\[\?&\]mono=\(\[012\]\)/);assert.match(ink,/!\(al<\.5\)/);assert.match(app,/PIECE=Ink&&Ink\.mono\?'#1e1a18':HOT/);assert.match(app,/WARN_RED=!!\(Ink&&Ink\.mono===2\)/);assert.match(app,/if\(!MONO\)\{g\.globalCompositeOperation='color'/);});
+test('ink is monochrome with vermilion accents by default, older looks stay reachable',()=>{assert.match(ink,/mono=monoQ\?\+monoQ\[1\]:2/);assert.match(ink,/\[\?&\]mono=\(\[012\]\)/);assert.match(ink,/if\(mono\)s2=0;/); // 사용자 11-16: 붉은 탄도 먹(옅은 붉은 빛만 먹으로 두던 규칙이 모든 적 붉은색으로 넓어졌다)
+  assert.match(app,/PIECE=Ink&&Ink\.mono\?'#1e1a18':HOT/);assert.match(app,/WARN_RED=!!\(Ink&&Ink\.mono===2\)/);assert.match(app,/if\(!MONO\)\{g\.globalCompositeOperation='color'/);});
