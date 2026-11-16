@@ -244,11 +244,13 @@
   }
   global.HapilInk.footCloud=mistCloud;global.HapilInk.footCloudDraft=footCloud;
   /* 몸 앞을 지나는 옅은 구름 한 겹(사용자 11-16 "구름에 녹아든 느낌"): 같은 먹 안개를 뒤집어 조금 높게, 옅게 얹어 구름 윗선이 곧은 띠로 남지 않게 한다 */
-  function footVeil(g,x,y,tall,time,alpha){
-    if(!mistInk)return;var a0=g.globalAlpha,k,PUFF=[[-.36,.26,.78,5,-1],[.04,.31,1.12,9,1],[.38,.22,.72,2,-1]]; // 크기·높이가 다른 구름 덩이 셋: 구름 윗선이 한 줄로 평평하지 않게(심사 11-16)
+  function footVeil(g,x,y,tall,time,alpha,seed){
+    if(!mistInk)return;var a0=g.globalAlpha,k,sd=(seed|0)>>>0,jr=function(){sd=(Math.imul(sd,1664525)+1013904223)>>>0;return sd/4294967296;},
+      PUFF=[[-.36,.26,.78,5,-1],[.04,.31,1.12,9,1],[.38,.22,.72,2,-1],[-.12,.14,.5,7,1]]; // 넷째 덩이: 몸 앞으로 높이 솟아 윗선을 끊는다
+    if(seed)for(k=0;k<PUFF.length;k++){PUFF[k]=PUFF[k].slice();PUFF[k][0]+=(jr()-.5)*.24;PUFF[k][1]+=(jr()-.5)*.14;PUFF[k][2]*=.8+jr()*.45;} // 보스마다 덩이 자리·높이·크기가 다르다 // 크기·높이가 다른 구름 덩이 셋: 구름 윗선이 한 줄로 평평하지 않게(심사 11-16)
     hold++;g.save();g.globalCompositeOperation='source-over';
     for(k=0;k<PUFF.length;k++){var P=PUFF[k],f=(Math.floor(time*MIST.fps*.8)+P[3])%MIST.frames,w=tall*P[2],h=w*MIST.ch/MIST.cw,sway=Math.sin(time*.5+k*2.1)*tall*.04,bob=Math.sin(time*.6+k)*tall*.02;
-      g.save();g.globalAlpha=a0*.5*(alpha||1);g.translate(x+P[0]*tall+sway,0);g.scale(P[4],1);rawDraw.call(g,mistInk,f*MIST.cw,0,MIST.cw,MIST.ch,-w/2,y+tall*P[1]+bob-h*.86,w,h);g.restore();}
+      g.save();g.globalAlpha=a0*(k===3?.36:.5)*(alpha||1);g.translate(x+P[0]*tall+sway,0);g.scale(P[4],1);rawDraw.call(g,mistInk,f*MIST.cw,0,MIST.cw,MIST.ch,-w/2,y+tall*P[1]+bob-h*.86,w,h);g.restore();}
     g.restore();hold--;
   }
   /* 보스 아랫몸 녹이기(사용자 11-16): 몸만 따로 그린 판 g 에서 아래쪽을 지운다. 지우는 경계는 곧은 선이 아니라 물이 번진 먹 가장자리처럼
@@ -264,8 +266,11 @@
       var q=function(a,b){return G[b*(GW+1)+(a%GW)];};return (q(x0,y0)*(1-tx)+q(x0+1,y0)*tx)*(1-ty)+(q(x0,y0+1)*(1-tx)+q(x0+1,y0+1)*tx)*ty;}
     function ss(a,b,v){v=Math.max(0,Math.min(1,(v-a)/(b-a)));return v*v*(3-2*v);}
     d=g.getImageData(0,0,Wd,Hd);p=d.data;
-    for(x=0;x<Wd;x++){var u=x/Wd,tongue=Math.pow(nz(C,u+.5),4)*.45,drip=Math.pow(nz(C,u),4), // tongue: 지움이 위로 치솟는 혀, drip: 몸이 아래로 늘어진 먹 가닥
-        edge=.1+.42*nz(A,u)+.2*nz(B,u)-tongue*1.3+drip*.3,soft=.16+.14*nz(B,u+.37);
+    // 먹 혀·가닥은 빗살처럼 고른 간격이 아니라 자리·굵기·길이가 제각각인 몇 줄기(심사 11-16 "빗살처럼 고른 세로 막대")
+    var TG=[],DR=[];for(i=0;i<9;i++)TG.push([rnd(),.006+rnd()*rnd()*.05,.12+rnd()*.42,rnd()*.012]);for(i=0;i<7;i++)DR.push([rnd(),.004+rnd()*rnd()*.03,.2+rnd()*.5]);
+    function spikes(L,u,lean){var t=0,j;for(j=0;j<L.length;j++){var c=L[j],du=u-c[0]-(lean?c[3]*(lean):0);du-=Math.round(du);t=Math.max(t,c[2]*Math.exp(-du*du/(2*c[1]*c[1])));}return t;}
+    for(x=0;x<Wd;x++){var u=x/Wd,tongue=spikes(TG,u,0),drip=spikes(DR,u,0), // tongue: 지움이 위로 치솟는 혀, drip: 몸이 아래로 늘어진 먹 가닥
+        edge=.1+.42*nz(A,u)+.2*nz(B,u)-tongue+drip*.35,soft=.16+.14*nz(B,u+.37);
       for(y=0;y<Hd;y++){var v=y/Hd,m=nz2(u,v),e2=edge+(m-.5)*.22,a=ss(e2,e2+soft,v);a=Math.min(1,a*(.75+.5*m));if(v>.9)a=Math.max(a,ss(.9,1,v));p[(y*Wd+x)*4+3]=Math.round(255*a);}}
     g.putImageData(d,0,0);hold--;return c;
   }
