@@ -512,7 +512,7 @@
       else if(e==='map')loadStage(s.stageIndex);
       else if(e==='entrance'){play('warning');wantFx(s.boss.actor);}
       else if(e==='figure')castFx(s,false);
-      else if(e==='bossDown'){var dn=s.boss.down;if(dn){fall={actor:dn.actor,x:dn.x,y:dn.y,tick:dn.tick,dir:dn.x>W/2?1:-1,burst:-1,keep:{}};['','@death','@hit'].forEach(function(m){var im=images[dn.actor+m]||(bossArt.actor===dn.actor&&bossArt.keep[dn.actor+m]);if(im)fall.keep[dn.actor+m]=im;}); /* 다음 스테이지로 넘어가며 그림을 놓아도 쓰러지는 동안은 쥐고 있다(전에는 마름모 자리표시가 쓰러졌다) */flash=.8;shake=16;}}
+      else if(e==='bossDown'){var dn=s.boss.down;if(dn){fall={actor:dn.actor,x:dn.x,y:dn.y,tick:dn.tick,dir:dn.x>W/2?1:-1,burst:-1,keep:{}};['','@death','@hit'].forEach(function(m){var im=images[dn.actor+m]||(bossArt.actor===dn.actor&&bossArt.keep[dn.actor+m]);if(im)fall.keep[dn.actor+m]=im;}); /* 다음 스테이지로 넘어가며 그림을 놓아도 쓰러지는 동안은 쥐고 있다(전에는 마름모 자리표시가 쓰러졌다) */flash=Ink?.18:.8;shake=16;}} /* 수묵 모드는 흰 섬광을 줄여 먹빛으로 물드는 순간이 묻히지 않게(사용자 11-16) */
       else if(e==='break'){play('phaseBreak',s.boss.x);flash=.6;shock={x:s.boss.x,y:s.boss.y,r:10,ink:true};shake=3;}
       else if(e==='capture'||e==='bombGain'||e==='extend')play('seal');
       else if(e==='waveClear'){play('phaseBreak');flash=.3;}

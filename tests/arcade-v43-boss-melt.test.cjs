@@ -47,3 +47,17 @@ test('the falling boss keeps its own picture even when the next stage releases i
   assert.match(app,/bossArt\.keep\[dn\.actor\+m\]/,'fall borrows the held boss art');
   assert.match(app,/finally\{for\(var li=0;li<lent\.length;li\+\+\)delete images\[lent\[li\]\];\}/,'the borrowed art is handed back after drawing');
 });
+// 남은 지적 개선(사용자 11-16 "녹는 경계가 … 가로 띠처럼 … 흰 섬광이 조금 과합니다 … 하트가 사라지는 몸 한가운데에 겹칩니다 /개선").
+test('the melt edge rises and falls within one body width and is mottled, not a straight band',()=>{
+  assert.match(src,/function nz2\(u,v\)/,'2D mottling inside the band');
+  assert.match(src,/tongue=/,'ink tongues reach up into the body');
+  assert.match(src,/MELT=\{w:384/,'a finer mask so the edge varies across one boss');
+});
+test('ink mode softens the white flash when a boss falls',()=>{
+  assert.match(app,/flash=Ink\?\.18:\.8;/);
+});
+test('hearts from a felled boss spring from below the foot cloud, not from the body centre',()=>{
+  const eng=fs.readFileSync(path.join(root,'src/arcade-v43.js'),'utf8');
+  assert.match(eng,/var DROP_BELOW=\d\d,DROP_ARC=\[/,'hearts stagger in height instead of one line');
+  assert.match(eng,/dropItem\(s,b\.x\+\(i-\(nd-1\)\/2\)\*30,b\.y\+DROP_BELOW\+DROP_ARC/);
+});
