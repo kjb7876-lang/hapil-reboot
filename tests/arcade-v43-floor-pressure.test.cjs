@@ -27,7 +27,7 @@ test('blocks: tetris pieces fall, stack at the bottom no higher than the cap, an
  t.player.x=40;t.player.y=300;a.step(t,{dx:0,dy:0});assert.equal(t.floor.cleared,1);assert.equal(a.floorTop(t,10),a.HEIGHT);
 });
 test('blocks: a falling piece hurts, a settled block only pushes the hero up',()=>{
- const s=cardRun(stageWith('blocks'));s.player.x=45;s.player.y=300;s.player.invulnerableUntil=0;const hp=s.player.hp;
+ const s=cardRun(stageWith('blocks'));s.player.x=45;s.player.y=300;s.player.invulnerableUntil=0;s.bombs=0;const hp=s.player.hp;
  s.floor.pieces.push({cells:[[0,0],[1,0]],col:1,y:300+10,land:0,color:1});a.step(s,{dx:0,dy:0});assert.equal(s.player.hp,hp-1,'falling piece hits');
  const t=cardRun(stageWith('blocks'));t.floor.grid.fill(2,0,a.FLOOR_COLS);t.floor.grid[a.FLOOR_COLS+1]=2;t.player.x=45;t.player.y=a.HEIGHT-20;t.player.invulnerableUntil=0;const hp2=t.player.hp;
  a.step(t,{dx:0,dy:4});assert.equal(t.player.hp,hp2,'settled blocks do not hurt');assert(t.player.y<=a.HEIGHT-2*a.FLOOR_CELL,'pushed above the stack: '+t.player.y);

@@ -89,7 +89,7 @@
   // 휴대폰 모드: 탄 수를 줄이고 그만큼 탄을 크게 그린다(판정도 같이 커진다).
   var COMPACT_DENSITY=.72,COMPACT_SIZE=1.25;
   var DRIFT_CAP=600,MOB_DROP_EVERY=3,ELITE_DROPS=3,CARD_DROPS=4,PLAIN_DROPS=2; // 하트(점수 아이템)는 적게(사용자 11-14)
-  var HAND_WARN=50,HAND_AWAY=64,EXPIRE_SPEED=60,GRAZE_MARGIN=13,BLOOM_TICKS=12,INVULN_TICKS=150,BOMB_TICKS=150,INTRO_TICKS=110,BREAK_TICKS=80,FIRE_DELAY=40,WAVE_GRACE=360;
+  var DISTORT_CHANCE=[0,.07,.12,.17,.22,.27,.32,.37],DISTORT_TICKS=30,HAND_WARN=50,HAND_AWAY=64,EXPIRE_SPEED=60,GRAZE_MARGIN=13,BLOOM_TICKS=12,INVULN_TICKS=150,BOMB_TICKS=150,INTRO_TICKS=110,BREAK_TICKS=80,FIRE_DELAY=40,WAVE_GRACE=360;
   var SHOT_SPEED=15,SHOT_EVERY=5,HOMING_EVERY=8,HOMING_STEER=7,SHOT_CAP=160,MAX_MOVE=12,FOCUS_MOVE=2;
   var BEAM_HIT=.62,BEAM_FADE=14,BEAM_LENGTH=1000;
   /* ── 기억사수 성장(사용자 11-16 "패시브공격 성장형+폭탄필살기도 성장형 … 각 7단계", "플레이어 성장따라 영웅공격가속 및 영웅주변적탄환 속도느려짐 … 7단계로").
@@ -583,7 +583,7 @@
       boss:{x:W/2,y:-60,targetX:W/2,targetY:132,hp:1,maxHp:1,actor:'',name:'',mid:false,hitTick:-99,leaving:false,present:false,down:null},
       bossOnly:!!options.bossOnly,rushStage:SEGMENTS[startSeg].stage,bombs:rules.bombs,gauge:0,spellClean:false,captures:0,itemsTaken:0,lane:undefined,
       n:0,drifted:[],mobDrops:0,hearts:0,dropped:0,peak:0,score:0,graze:0,hits:0,kills:0,cleared:0,timeouts:0,events:[],cancelled:[],pops:[],lasers:[],mobs:[],warned:false,sn:0,itemCount:0,
-      lastStage:STAGES.length-1,lastWipe:-1e9,started:false,results:[],bombsUsed:0,power:1,exp:0,bombLevel:1,fills:0,hasteUntil:-1,zaps:[],lastBomb:null,mark:{tick:0,score:0,hits:0,bombs:0,captures:0,spells:0}};
+      lastStage:STAGES.length-1,lastWipe:-1e9,started:false,results:[],bombsUsed:0,autoBombs:0,distorts:0,noDistort:options.distort===false,drng:((((options.seed>>>0)||1)*2246822519)^0x9e3779b9)>>>0||7,power:1,exp:0,bombLevel:1,fills:0,hasteUntil:-1,zaps:[],lastBomb:null,mark:{tick:0,score:0,hits:0,bombs:0,captures:0,spells:0}};
     if(Number.isInteger(options.stages)&&options.stages>0)s.lastStage=Math.min(STAGES.length-1,s.stageIndex+options.stages-1);
     ['bx','by','ba','bs','bturn','bacc','bmin','bmax','barg','bs2','bspin'].forEach(function(k){s[k]=new Float32Array(CAP);});
     ['bage','blife','bat'].forEach(function(k){s[k]=new Uint16Array(CAP);});
@@ -638,6 +638,9 @@
   }
   function killMob(s,k){var m=s.mobs[k];s.score+=m.score;s.kills++;gainExp(s,m.elite?5:1);s.pops.push(m.x,m.y,m.elite?1:0);note(s,'kill');
     if(m.elite)for(var i=0;i<ELITE_DROPS;i++)dropItem(s,m.x+(i-1)*12,m.y,i===1?1:0);else if(++s.mobDrops%MOB_DROP_EVERY===0)dropItem(s,m.x,m.y,0);s.mobs.splice(k,1);}
+  /* 시공간 왜곡 확률: 공격 단계마다 5%씩, 1단계 7% → 7단계 37%(사용자: 기본 7%, 풀강화 37% 이하). 탄 패턴의 난수와 따로 굴려 패턴이 바뀌지 않게 한다 */
+  function distortChance(s){return DISTORT_CHANCE[Math.max(1,Math.min(MAX_LEVEL,s.power||1))];}
+  function distortRoll(s){if(s.noDistort)return false;var x=s.drng|0;x^=x<<13;x^=x>>>17;x^=x<<5;s.drng=x>>>0;return s.drng/4294967296<distortChance(s);}
   function useBomb(s){
     if(s.bombs<=0||s.stage==='won'||s.stage==='lost')return;
     var lv=s.bombLevel,pw=BOMB_POWER[lv],targets=[];
@@ -1088,7 +1091,14 @@
     eye:{size:64,hit:[[0,0,.45],[-.55,0,.26],[.55,0,.26]]},
     tower:{size:78,hit:[[0,-.7,.36],[0,-.2,.36],[0,.3,.4],[0,.72,.45]]},
     book:{size:62,hit:[[-.45,0,.42],[.45,0,.42],[0,.1,.3]]},
-    cauldron:{size:62,hit:[[0,.25,.6],[-.5,0,.26],[.5,0,.26]]}
+    cauldron:{size:62,hit:[[0,.25,.6],[-.5,0,.26],[.5,0,.26]]},
+    // 이야기 소재(사용자 11-16 "그림으로 스토리푸는느낌으로"): 성·묘비·하이힐·금 간 안경·주사기·악마화 나무
+    castle:{size:80,hit:[[-.74,-.3,.24],[0,-.45,.36],[.72,-.62,.2],[.72,-.12,.26],[-.5,.3,.42],[.5,.3,.42],[0,.2,.35],[-.45,.68,.34],[.45,.68,.34]]},
+    tomb:{size:72,hit:[[-.14,-.36,.42],[-.06,.1,.44],[0,.55,.45],[-.55,.84,.25],[.55,.84,.25]]},
+    heel:{size:76,hit:[[-.68,.66,.25],[-.3,.52,.2],[.05,.3,.18],[.36,.02,.2],[.62,-.3,.22],[.74,-.56,.16],[.77,.25,.09],[.79,.6,.09],[.79,.84,.08]]},
+    glasses:{size:74,hit:[[-.48,.1,.42],[.48,.1,.42],[0,-.08,.12],[-.84,-.4,.14],[-.56,-.7,.12],[.84,-.4,.14],[.56,-.7,.12]]},
+    syringe:{size:80,hit:[[0,-.86,.06],[0,-.7,.08],[0,-.3,.27],[0,.15,.27],[-.38,.47,.13],[.38,.47,.13],[0,.6,.1],[0,.86,.22]]},
+    tree:{size:82,hit:[[0,.78,.26],[-.45,.92,.14],[.45,.92,.14],[0,.4,.18],[0,.08,.16],[0,-.25,.18],[-.38,-.48,.18],[-.76,-.5,.2],[-.84,-.1,.12],[.08,-.72,.2],[.38,-.36,.16],[.72,-.56,.22],[.9,-.2,.12]]}
   };
   var MOTIF_WEST=['chalice','hexagram','skull','scythe','crown','chain','candle','key','hourglass','wing','horn','mirror','gear','bell','mask','rose','web','vial','eye','tower','book','cauldron'];
   /* 스테이지(배경 열쇠)별 서양 소재 셋. 첫째가 그 스테이지 보스·서사에 가장 맞는 것(보스 고유 문양이 있으면 그 문양을 따른다)이고 한 바퀴에 두 번 나온다.
@@ -1106,12 +1116,32 @@
     p7_crosswalk:['bell','mirror','hourglass'],p7_hotel:['key','bell','candle'],p7_villa:['mirror','key','mask'],p7_rooftop:['key','hourglass','chain'],
     p8_circuit:['chain','gear','eye'],p8_collective:['rose','mask','book'],p8_castle:['tower','mirror','hourglass'],p8_approach:['rose','candle','hexagram'],p8_harvest:['rose','scythe','chalice'],p8_core:['mask','chain','crown']
   };
+  /* 이야기 소재(사용자 11-16 "먹그림올라오는거 서사에맞게 약간 그림으로 스토리푸는느낌으로 … 은연중에 티나게"): 스테이지 이름·장면에서 읽히는 것 둘.
+   * 첫째가 그 스테이지 이야기의 얼굴(시체들이 되살아난 밤 = 묘비, 무너진성 = 성)이고 한 바퀴에 두 번 나온다. 서양 소재 셋과 겹치지 않는다(배정은 Claude 판단, docs/v43/ink-style.md 표). */
+  var MOTIF_STORY=['castle','tomb','heel','glasses','syringe','tree'];
+  var STAGE_STORY={
+    p1_garden:['tree','moon'],p1_cave:['eye','mountain'],p1_swamp:['lotus','whirl'],p1_castle:['castle','moon'],p1_grave:['tomb','moon'],p1_pillars:['tower','flame'],
+    p1_summon:['cloud','scythe'],p1_ward:['syringe','skull'],p1_injection:['syringe','hourglass'],p1_memory:['castle','flame'],p1_city:['syringe','tower'],p1_mask:['book','candle'],
+    p2_chapel:['hexagram','chain'],p2_sloth:['moon','cloud'],p2_envy:['glasses','mask'],p2_gluttony:['flame','candle'],p2_lust:['heel','mask'],p2_greed:['chain','tower'],
+    p2_snow:['cloud','mountain'],p2_wrath:['flame','tower'],p2_pride:['cloud','castle'],p2_core:['vial','hourglass'],
+    p3_war:['spear','castle'],p3_rampart:['castle','sword'],p3_passage:['chain','book'],p3_nexus:['crown','book'],p3_migration:['cloud','eye'],p3_gate:['castle','hourglass'],
+    p4_field:['mountain','sword'],p4_goblin:['spear','castle'],p4_rampart:['sword','castle'],p4_harbor:['moon','tomb'],p4_fogvillage:['moon','vial'],
+    p5_academy:['tower','eye'],p5_outer:['castle','spear'],p5_forest:['tomb','moon'],p5_layers:['tower','castle'],p5_workshop:['flame','sword'],p5_neural:['whirl','chain'],
+    p5_graveyard:['tomb','moon'],p5_ritual:['hexagram','skull'],p5_corridor:['castle','scythe'],p5_core:['wave','moon'],
+    p6_siege:['castle','book'],p6_hall:['castle','mask'],p6_core:['sun','sword'],
+    p7_crosswalk:['glasses','cloud'],p7_hotel:['tower','moon'],p7_villa:['flame','tower'],p7_rooftop:['cloud','tower'],
+    p8_circuit:['mask','whirl'],p8_collective:['sword','castle'],p8_castle:['castle','sun'],p8_approach:['sun','book'],p8_harvest:['tomb','moon'],p8_core:['castle','flame']
+  };
+  function stageStory(index){var g=STAGES[index];return STAGE_STORY[g&&g.theme&&g.theme.bg]||['tomb','moon'];}
   function stageMotifs(index){var g=STAGES[index];return STAGE_MOTIFS[g&&g.theme&&g.theme.bg]||['skull','chain','candle'];}
-  var MOTIF_NATURE=['orchid','plum','bamboo','lotus','mountain','sun','moon'],MOTIF_MOVING=['wave','whirl','flame','cloud'],MOTIF_WEAPONS=['sword','spear'],RISER_WARN=60,RISER_HOLD=50,RISER_FADE=36;
+  var MOTIF_NATURE=['orchid','plum','bamboo','lotus','mountain','sun','moon'],MOTIF_MOVING=['wave','whirl','flame','cloud'],MOTIF_WEAPONS=['sword','spear'],RISER_WARN=60,RISER_HOLD=50,RISER_FADE=50;
   function stageBoss(index){var g=STAGES[index];for(var k=g.first;k<SEGMENTS.length&&SEGMENTS[k].stage===index;k++)if(SEGMENTS[k].actor&&!SEGMENTS[k].mid)return SEGMENTS[k].actor;for(k=g.first;k<SEGMENTS.length&&SEGMENTS[k].stage===index;k++)if(SEGMENTS[k].actor)return SEGMENTS[k].actor;return '';}
   // 스테이지마다: 동양화 소재 둘, 무기 하나, 보스 상징 하나. 상징은 보스 고유 문양(엽전 문양은 엽전 그림, 색욕 보스는 입술).
   function motifEmblem(index){var sig=signatureOf(stageBoss(index));return STAGES[index].scene==='17'?'lips':sig&&sig.glyph==='coin'?'coin':'glyph';}
-  function motifPlan(index){var n=MOTIF_NATURE.length,m=MOTIF_MOVING.length,a=index%n,b=(a+1+((index>>1)%(n-1)))%n,t=stageMotifs(index);return [t[0],MOTIF_MOVING[index%m],MOTIF_NATURE[a],t[1],MOTIF_WEAPONS[index%MOTIF_WEAPONS.length],motifEmblem(index),t[2],MOTIF_MOVING[(index+1+(index>>2)%(m-1))%m],t[0],MOTIF_NATURE[b]];} // 보스 맞춤 서양 소재(두 번)·서양 소재 둘, 움직이는 소재 둘, 꽃·풍경 둘, 무기, 보스 상징
+  function motifPlan(index){var t=stageMotifs(index),st=stageStory(index),free=function(L,i){L=L.filter(function(k){return st.indexOf(k)<0;});return L[((i%L.length)+L.length)%L.length];},
+    n=MOTIF_NATURE.length,m=MOTIF_MOVING.length,a=index%n,b=a+1+((index>>1)%(n-1)),mv=index%m,mw=index+1+(index>>2)%(m-1),na1=free(MOTIF_NATURE,a),na2=free(MOTIF_NATURE,b),mv1=free(MOTIF_MOVING,mv),mv2=free(MOTIF_MOVING,mw);
+    if(na2===na1)na2=free(MOTIF_NATURE,b+1);if(mv2===mv1)mv2=free(MOTIF_MOVING,mw+1);
+    return [t[0],st[0],mv1,t[1],na1,st[1],free(MOTIF_WEAPONS,index),motifEmblem(index),t[2],st[0],mv2,na2,t[0]];} // 이야기 소재(둘째 칸·열째 칸, 여섯째 칸)와 서양 소재 셋이 한 바퀴 열셋 중 일곱. 움직이는 소재 둘, 꽃·풍경 둘, 무기, 보스 상징은 그대로 섞인다
   function riserHits(s,r,x,y){if(r.age<RISER_WARN||r.fade)return false;var hit=MOTIFS[r.kind].hit,pr=s.player.r;for(var k=0;k<hit.length;k++){var dx=x-(r.x+hit[k][0]*r.size),dy=y-(r.y+hit[k][1]*r.size),rr=hit[k][2]*r.size+pr;if(dx*dx+dy*dy<rr*rr)return true;}return false;}
   function riserRand(s){var x=s.riserRng|0;x^=x<<13;x^=x>>>17;x^=x<<5;s.riserRng=x>>>0;return s.riserRng/4294967296;}
   function updateRisers(s){
@@ -1159,7 +1189,14 @@
     else if(s.stage==='card'&&s.segTick*TICK>=segment(s).time)endCard(s,false);
     var p=s.player,byFloor=updateFloor(s)|updateRisers(s),byBeam=updateLasers(s),byFigure=updateFigures(s),byBullet=updateBullets(s);
     updateItems(s);
-    if((byBeam||byFigure||byBullet||byFloor)&&s.tick>=p.invulnerableUntil&&s.stage!=='won'){
+    var touched=(byBeam||byFigure||byBullet||byFloor)&&s.tick>=p.invulnerableUntil&&s.stage!=='won'&&s.stage!=='lost';
+    if(touched&&distortRoll(s)){
+      // 시공간 왜곡(사용자 11-16, 기억사수 패시브): 닿기 직전 시간이 비틀려 탄이 빗겨 간다. 공격 단계 1에서 7%, 7에서 37%. 잠깐(DISTORT_TICKS) 닿지 않는다
+      s.distorts++;p.invulnerableUntil=s.tick+DISTORT_TICKS;note(s,'distort');
+    }else if(touched&&s.bombs>0){
+      // 자동 필살(사용자 11-16): 피격점에 닿는 순간 필살기가 남아 있으면 목숨 대신 저절로 터진다. 목숨·공격 단계·필살 단계는 그대로. 맞은 것으로 세어(무피격 별) 필살기 하나를 쓴다
+      s.autoBombs++;s.hits++;useBomb(s);if(s.lastBomb)s.lastBomb.auto=true;note(s,'autoBomb');
+    }else if((byBeam||byFigure||byBullet||byFloor)&&s.tick>=p.invulnerableUntil&&s.stage!=='won'){
       p.hp--;s.hits++;s.spellClean=false;p.invulnerableUntil=s.tick+INVULN_TICKS;cancelAll(s);note(s,'hurt');if(s.power>1){s.power--;s.exp=POWER_EXP[s.power-1];note(s,'powerDown');} // 맞으면 공격 단계가 하나 내려간다(필살기 단계는 그대로)
       // 목숨이 남았으면 폭탄이 기본 개수까지 다시 찬다.
       if(p.hp<=0){s.stage='lost';s.stageTick=0;note(s,'lose');}else if(s.bombs<s.rules.bombs)s.bombs=s.rules.bombs;
@@ -1202,8 +1239,8 @@
   })();
   var api={revision:43,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
-    BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,RUNE_AT:RUNE_AT,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
-    POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,FOCUS_SLOW:FOCUS_SLOW,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp};
+    BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,RUNE_AT:RUNE_AT,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
+    POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,FOCUS_SLOW:FOCUS_SLOW,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp};
   if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcade=api;
 })(typeof window!=='undefined'?window:globalThis);

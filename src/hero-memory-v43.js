@@ -72,7 +72,7 @@
     if(lv>=5)B.push({x:main[0],y:main[1],t0:t+.35,size:260+lv*30});
     if(lv>=6){for(i=0;i<3;i++)B.push({x:W*(.2+.3*i),y:H*(.22+.14*((i+1)%2)),t0:t+.55+i*.15,size:200+lv*16});for(i=0;i+1<tg.length&&i<24;i+=2)pops.push({x:tg[i],y:tg[i+1],t0:t+.4,size:90});}
     if(lv>=7)B.push({x:W/2,y:H*.42,t0:t+1.05,size:240}); // 7단계는 큰 덩어리 대신 憶 획이 그어지는 박자(심사 1차: 5단계와 구분)
-    quake=4+lv*2.2;if(ready('cutin'))cut={t0:t,lv:lv,name:b.name};else texts.push({text:b.name,sub:'필살 Lv.'+lv,t0:t,x:b.x,y:b.y-70,big:true});
+    quake=4+lv*2.2;if(ready('cutin'))cut={t0:t,lv:lv,name:b.name,auto:!!b.auto};else texts.push({text:b.name,sub:'필살 Lv.'+lv,t0:t,x:b.x,y:b.y-70,big:true});
   }
   function drawBombs(g,t,W,H){
     for(var n=bombs.length-1;n>=0;n--){var o=bombs[n],age=t-o.t0,B=o.bursts,i;if(age>3.2){bombs.splice(n,1);continue;}
@@ -144,7 +144,7 @@
     // 필살 이름: 띠 왼쪽에 굵은 붓글씨, 아래에 작게 단계
     var tx=-W*.36+(1-ease)*60;g.globalAlpha=(1-close)*Math.min(1,Math.max(0,(age-.08)/.12));g.textAlign='left';g.textBaseline='middle';
     g.font='700 '+(27+lv)+'px '+SERIF;g.lineWidth=5;g.strokeStyle=ink?'rgba(244,236,218,.95)':'rgba(0,0,0,.8)';g.strokeText(cut.name,tx,-6);g.fillStyle=ink?'rgb(30,26,24)':'#dff8ff';g.fillText(cut.name,tx,-6);
-    g.font='700 13px '+SERIF;g.lineWidth=3;g.strokeText('기억사수 · 필살 Lv.'+lv,tx+2,bandH*.5-22);g.fillText('기억사수 · 필살 Lv.'+lv,tx+2,bandH*.5-22);
+    g.font='700 13px '+SERIF;g.lineWidth=3;var sub=(cut.auto?'피격 직전 · 자동 필살 Lv.':'기억사수 · 필살 Lv.')+lv;g.strokeText(sub,tx+2,bandH*.5-22);g.fillText(sub,tx+2,bandH*.5-22);
     g.restore();raw(-1);return true;
   }
   function onEvent(e,s,t){
@@ -152,6 +152,26 @@
     else if(e==='powerDown')texts.push({text:'기억 공격 Lv.'+s.power,sub:'',t0:t,x:s.player.x,y:s.player.y-48,down:true});
     else if(e==='bombLevelUp')texts.push({text:'필살 Lv.'+s.bombLevel,sub:global.HapilArcade?global.HapilArcade.BOMB_NAMES[s.bombLevel]:'',t0:t,x:s.player.x,y:s.player.y-62});
     else if(e==='bomb')bomb(s.lastBomb,t,360,640);
+    else if(e==='distort'){var side=(s.distorts%2)?1:-1;warps.push({x:s.player.x,y:s.player.y,t0:t,side:side});if(warps.length>4)warps.shift();hand+=TAU*1.25;texts.push({text:'시공 왜곡',sub:'',t0:t,x:s.player.x-side*44,y:s.player.y-22});}
+  }
+  /* ── 시공간 왜곡: 탄이 빗겨 간 자리. 한쪽(탄이 온 쪽)으로 휘어 바깥 아래로 빠져나가는 붓 획 서너 개와 엷은 잔상(닫힌 고리 없이, 0.5초. 심사 1차: 좌우 대칭 획이 렌즈 꼴 고리로 읽힘 → 한쪽 흐름으로) ── */
+  var warps=[],WARP_LIFE=.5;
+  function taper(g,x0,y0,cx,cy,x1,y1,w){ // 끝이 가는 붓 획(채운 모양): 2차 곡선을 따라 가운데가 굵다
+    var n=14,i,L=[],R=[];for(i=0;i<=n;i++){var u=i/n,v=1-u,x=v*v*x0+2*v*u*cx+u*u*x1,y=v*v*y0+2*v*u*cy+u*u*y1,dx=2*v*(cx-x0)+2*u*(x1-cx),dy=2*v*(cy-y0)+2*u*(y1-cy),d=Math.sqrt(dx*dx+dy*dy)||1,ww=w*Math.pow(Math.sin(Math.PI*Math.min(1,u*1.15)),.8)*(u<.5?1:1-(u-.5)*.6);L.push(x-dy/d*ww,y+dx/d*ww);R.push(x+dy/d*ww,y-dx/d*ww);}
+    g.beginPath();g.moveTo(L[0],L[1]);for(i=2;i<L.length;i+=2)g.lineTo(L[i],L[i+1]);for(i=R.length-2;i>=0;i-=2)g.lineTo(R[i],R[i+1]);g.closePath();g.fill();
+  }
+  function drawWarps(g,t){
+    for(var i=warps.length-1;i>=0;i--){var w=warps[i],age=t-w.t0;if(age>WARP_LIFE||age<0){warps.splice(i,1);continue;}
+      var u=age/WARP_LIFE,a=age<.15?1:Math.max(0,1-(age-.15)/(WARP_LIFE-.15)),ink=inkOn(),side=w.side,k,pass;
+      raw(1);g.save();g.globalCompositeOperation='source-over';
+      var strokes=[[side,0],[side,1],[side,2],[-side,0]]; // 탄이 온 쪽 세 획, 반대쪽 한 획(어긋나게)
+      for(pass=0;pass<2;pass++)for(k=0;k<strokes.length;k++){var sd=strokes[k][0],j=strokes[k][1],far=sd!==side,wid=(far?2.6:4.6-j*.7)*(1-u*.35);
+        var x0=w.x+sd*(5+j*5)+(far?sd*3:0),y0=w.y-36-j*7+(far?12:0),cx=w.x+sd*(26+j*6+u*6),cy=w.y-2+j*3,x1=w.x+sd*(34+j*7+u*28),y1=w.y+20+j*6+u*10;
+        if(pass===0){g.globalAlpha=a*.5;g.fillStyle=ink?'rgba(255,253,246,1)':'rgba(0,10,20,1)';taper(g,x0,y0,cx,cy,x1,y1,wid+1.6);} // 한지색 밑칠로 얼룩 배경에서 떼어 낸다
+        else{g.globalAlpha=a*(far?.7:1-j*.15);g.fillStyle=ink?'rgba(30,26,24,1)':'rgba(170,240,255,1)';taper(g,x0,y0,cx,cy,x1,y1,wid);}}
+      g.globalAlpha=a*.6;g.fillStyle=ink?'rgba(30,26,24,1)':'rgba(170,240,255,1)';
+      for(k=0;k<3;k++){var gx=w.x-side*(7+k*7)*(.6+u),gy=w.y-2-k*3;g.beginPath();g.ellipse(gx,gy,4.6-k*.9,8-k*1.4,0,0,TAU);g.fill();} // 반대쪽으로 밀린 잔상 세 점(영웅이 비켜 선 자리)
+      g.restore();raw(-1);}
   }
   function drawTexts(g,t){
     drawCutin(g,t,360,640);
@@ -189,11 +209,11 @@
       g.beginPath();g.ellipse(x,y,dr,dr*(.7+.3*((i*.31)%1)),ph,0,TAU);g.fill();if(i%3===0){g.beginPath();g.arc(x+Math.cos(ph)*dr*2.2,y+Math.sin(ph)*dr*2.2,dr*.45,0,TAU);g.fill();}}
     g.restore();raw(-1);
   }
-  function draw(g,s,t){takeZaps(s,t);raw(1);g.save();blend(g);drawZaps(g,t);drawPops(g,t);g.restore();raw(-1);drawBombs(g,t,360,640);}
+  function draw(g,s,t){takeZaps(s,t);raw(1);g.save();blend(g);drawZaps(g,t);drawPops(g,t);g.restore();raw(-1);drawBombs(g,t,360,640);drawWarps(g,t);}
   function shake(){var q=quake;quake=0;return q;}
-  function reset(){zaps.length=0;pops.length=0;texts.length=0;bombs.length=0;quake=0;cut=null;}
+  function reset(){zaps.length=0;pops.length=0;texts.length=0;bombs.length=0;quake=0;cut=null;warps.length=0;}
   function hudLine(s){var lv=s.power||1,bl=s.bombLevel||1;return {attack:lv,bomb:bl};}
   load();
   global.HapilHeroFx={shots:shots,draw:draw,drawTexts:drawTexts,clock:clock,field:field,onEvent:onEvent,shake:shake,reset:reset,hudLine:hudLine,SHEETS:SHEETS,
-    debug:function(){return {cut:!!cut,zaps:zaps.length,pops:pops.length,bombs:bombs.length,texts:texts.length,ready:Object.keys(SHEETS).filter(ready)};}};
+    debug:function(){return {cut:!!cut,warps:warps.length,zaps:zaps.length,pops:pops.length,bombs:bombs.length,texts:texts.length,ready:Object.keys(SHEETS).filter(ready)};}};
 })(window);
