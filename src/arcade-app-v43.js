@@ -1225,7 +1225,7 @@
     // 목숨 · 폭탄 · 스침 게이지(왼쪽 아래 저속 버튼 위), 점수(오른쪽 아래 폭탄 버튼 위)
     ctx.font='14px '+SANS;ctx.fillStyle='#ff6a8a';var hearts='';for(i=0;i<s.player.maxHp;i++)hearts+=i<s.player.hp?'◆':'◇';ctx.fillText(hearts,12,H-96);
     ctx.fillStyle='#7dffb0';var bombs='';for(i=0;i<s.bombs;i++)bombs+='✦';ctx.fillText(bombs,12,H-78);
-    ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.8)';ctx.fillText('공격 Lv.'+(s.power||1)+' · 필살 Lv.'+(s.bombLevel||1),12,H-60);ctx.font='14px '+SANS;
+    ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.8)';ctx.fillText('공격 Lv.'+(s.power||1)+' · 필살 Lv.'+(s.bombLevel||1),12,H-114); // 목숨 위(저속 버튼과 겹쳐 가려지던 자리 H-60에서 옮김, 11-16 실검증)ctx.font='14px '+SANS;
     ctx.fillStyle='rgba(255,255,255,.18)';ctx.fillRect(12,H-72,64,3);ctx.fillStyle='#7dffb0';ctx.fillRect(12,H-72,64*Math.max(0,Math.min(1,s.gauge/Arcade.GAUGE_FULL)),3);
     ctx.textAlign='right';ctx.font='600 14px '+SANS;ctx.fillStyle='#ffffff';ctx.fillText(pad(s.score),W-12,H-78);
     ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.7)';ctx.fillText('GRAZE '+s.graze,W-12,H-94);
@@ -1312,10 +1312,11 @@
   function start(run){
     if(fx)fx.unlock();
     var quiet=!!(run&&run.quiet);
+    var grown=run&&run.grown; // 중간 저장에서 이어 할 때 자란 공격·필살 단계
     run={stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),segment:run&&run.segment,carry:run&&run.carry};
     lastRun=run;
     var options={difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,compact:compact,bossOnly:run.bossOnly,growth:true}; // 중간 스테이지에서 시작하면 그만큼 자란 기억사수로(엔진 createRun)
-    if(Number.isInteger(run.segment))options.segment=run.segment;
+    if(Number.isInteger(run.segment))options.segment=run.segment;if(grown&&(grown.exp||grown.fills))options.grown={exp:grown.exp|0,fills:grown.fills|0};
     state=Arcade.createRun(options);
     if(run.carry){state.hits+=run.carry.hits|0;state.bombsUsed+=run.carry.bombs|0;} // 중간 저장에서 이어 하면 앞 구간의 피격·폭탄도 별에 반영
     buildSprites();loadStage(state.stageIndex);fxStage=-1;
@@ -1394,7 +1395,7 @@
   function fieldPoint(e){var rect=canvas.getBoundingClientRect();return {x:(e.clientX-rect.left)*W/rect.width,y:(e.clientY-rect.top)*H/rect.height};}
   function bind(){
     document.querySelectorAll('[data-difficulty]').forEach(function(button){button.addEventListener('click',function(){setDifficulty(button.dataset.difficulty);progress.difficulty=difficulty;saveProgress();if(state===null)refreshTitle();});});
-    $('arcade-continue').addEventListener('click',function(){var mid=midway();start(mid?{stage:mid.stage,segment:mid.seg,carry:{hits:mid.hits,bombs:mid.bombs}}:{stage:Progress.resume(progress)});});
+    $('arcade-continue').addEventListener('click',function(){var mid=midway();start(mid?{stage:mid.stage,segment:mid.seg,carry:{hits:mid.hits,bombs:mid.bombs},grown:{exp:mid.exp,fills:mid.fills}}:{stage:Progress.resume(progress)});});
     $('arcade-start').addEventListener('click',function(){start({stage:0});});
     $('arcade-stage-go').addEventListener('click',function(){var i=Number($('arcade-stage-select').value);if(Progress.canPlay(progress,i))start({stage:i});});
     $('arcade-boss-open').addEventListener('click',function(){fillStages();setMode('boss');});

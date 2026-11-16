@@ -10,6 +10,10 @@
   var SHEETS={shard:{frames:8,cell:96,fps:14},shatter:{frames:6,cell:128,fps:16},bolt:{frames:8,cell:192,fps:26,ox:24},burst:{frames:12,cell:192,fps:16}};
   var img={},inkOn=function(){return !!(global.HapilInk&&global.HapilInk.on);};
   function load(){Object.keys(SHEETS).concat(['cutin']).forEach(function(k){var i=new Image();i.src=DIR+k+(inkOn()?'-ink':'')+'.webp';img[k]=i;});}
+  // 컷인 제목·성장 글자용 명조 조각(tools/build-cutin-font-v43.py, Noto Serif KR OFL). 캔버스 글자는 글꼴을 스스로 불러오지 않으므로 미리 읽는다.
+  // 기기에 한글 명조가 없으면(아이폰·헤드리스) 고딕으로 떨어지던 문제(11-16 실검증). 못 읽으면 아래 글꼴 줄의 다음 글꼴을 쓴다.
+  var SERIF='"HapilSerif","Noto Serif KR","Noto Serif CJK KR","Nanum Myeongjo",serif';
+  try{if(global.FontFace&&global.document&&global.document.fonts){var face=new global.FontFace('HapilSerif','url(media/fonts/hapil-serif-v43.woff2) format("woff2")',{weight:'100 900'});global.document.fonts.add(face);face.load().catch(function(){});}}catch(e){}
   function ready(k){var i=img[k];return i&&i.complete&&i.naturalWidth>0;}
   function raw(d){if(global.HapilInk&&global.HapilInk.raw)global.HapilInk.raw(d);} // 수묵판은 이미 구운 먹 그림이라 색 바꾸기를 건너뛴다
   // 시트 한 칸: 칸 가운데(또는 ox)를 (x,y)에, 진행 방향 ang(시트는 오른쪽을 향함), 칸 한 변 size
@@ -86,7 +90,7 @@
   var glyph=null;
   function buildGlyph(){
     var S=300,c=document.createElement('canvas');c.width=c.height=S;var q=c.getContext('2d'),i;raw(1);
-    q.fillStyle=inkOn()?'rgb(30,26,24)':'rgb(170,250,255)';q.font='900 '+Math.round(S*.86)+'px "Noto Serif KR","Noto Serif CJK KR","Noto Sans CJK KR",serif';q.textAlign='center';q.textBaseline='middle';
+    q.fillStyle=inkOn()?'rgb(30,26,24)':'rgb(170,250,255)';q.font='900 '+Math.round(S*.86)+'px '+SERIF;q.textAlign='center';q.textBaseline='middle';
     for(i=0;i<3;i++){q.globalAlpha=i?.35:1;q.fillText('憶',S/2+(i?(i-1.5)*3:0),S/2+(i?(i-1.5)*2:0));} // 겹쳐 쓴 먹 번짐
     q.globalCompositeOperation='destination-out';var sd=7;function rr(){sd=(sd*16807)%2147483647;return sd/2147483647;}
     for(i=0;i<110;i++){var y=rr()*S,x=rr()*S,w=8+rr()*40;q.globalAlpha=.35+rr()*.5;q.fillRect(x,y,w,.8+rr()*1.4);} // 갈필: 마른 붓이 남긴 흰 결
@@ -139,8 +143,8 @@
     g.fillStyle=ink?'rgb(30,26,24)':'rgba(140,235,255,1)';g.globalAlpha=1-close;brushEdge(g,x0,L/2,-bandH/2,5+lv*.6,lv*13+1);brushEdge(g,x0,L/2,bandH/2,5+lv*.6,lv*7+2); // 띠 위아래 붓 테두리
     // 필살 이름: 띠 왼쪽에 굵은 붓글씨, 아래에 작게 단계
     var tx=-W*.36+(1-ease)*60;g.globalAlpha=(1-close)*Math.min(1,Math.max(0,(age-.08)/.12));g.textAlign='left';g.textBaseline='middle';
-    g.font='700 '+(27+lv)+'px "Noto Serif KR","Noto Serif CJK KR",serif';g.lineWidth=5;g.strokeStyle=ink?'rgba(244,236,218,.95)':'rgba(0,0,0,.8)';g.strokeText(cut.name,tx,-6);g.fillStyle=ink?'rgb(30,26,24)':'#dff8ff';g.fillText(cut.name,tx,-6);
-    g.font='700 13px "Noto Serif KR",serif';g.lineWidth=3;g.strokeText('기억사수 · 필살 Lv.'+lv,tx+2,bandH*.5-22);g.fillText('기억사수 · 필살 Lv.'+lv,tx+2,bandH*.5-22);
+    g.font='700 '+(27+lv)+'px '+SERIF;g.lineWidth=5;g.strokeStyle=ink?'rgba(244,236,218,.95)':'rgba(0,0,0,.8)';g.strokeText(cut.name,tx,-6);g.fillStyle=ink?'rgb(30,26,24)':'#dff8ff';g.fillText(cut.name,tx,-6);
+    g.font='700 13px '+SERIF;g.lineWidth=3;g.strokeText('기억사수 · 필살 Lv.'+lv,tx+2,bandH*.5-22);g.fillText('기억사수 · 필살 Lv.'+lv,tx+2,bandH*.5-22);
     g.restore();raw(-1);return true;
   }
   function onEvent(e,s,t){
@@ -153,9 +157,9 @@
     drawCutin(g,t,360,640);
     for(var i=texts.length-1;i>=0;i--){var o=texts[i],age=t-o.t0,life=o.big?1.6:1.1;if(age>life){texts.splice(i,1);continue;}
       var a=age<.12?age/.12:1-Math.max(0,age-life*.6)/(life*.4),y=o.y-age*16,x=Math.max(70,Math.min(290,o.x));
-      raw(1);g.save();g.globalAlpha=a;g.textAlign='center';g.font=(o.big?'700 20px ':'700 13px ')+'"Noto Serif KR",serif';g.lineWidth=3;g.strokeStyle='rgba(255,253,246,.9)';g.fillStyle=o.down?'rgba(90,84,80,1)':'rgba(30,26,24,1)';
+      raw(1);g.save();g.globalAlpha=a;g.textAlign='center';g.font=(o.big?'700 20px ':'700 13px ')+SERIF;g.lineWidth=3;g.strokeStyle='rgba(255,253,246,.9)';g.fillStyle=o.down?'rgba(90,84,80,1)':'rgba(30,26,24,1)';
       if(!inkOn()){g.strokeStyle='rgba(0,0,0,.7)';g.fillStyle=o.down?'#9aa':'#bff6ff';}g.strokeText(o.text,x,y);g.fillText(o.text,x,y);
-      if(o.sub){g.font='600 11px "Noto Serif KR",serif';g.strokeText(o.sub,x,y+15);g.fillText(o.sub,x,y+15);}g.restore();raw(-1);}
+      if(o.sub){g.font='600 11px '+SERIF;g.strokeText(o.sub,x,y+15);g.fillText(o.sub,x,y+15);}g.restore();raw(-1);}
   }
 
   /* ── 구름 위 시계: 바늘은 보통 6초에 한 바퀴, 가속 4배, 둔화(저속) 4분의 1. 테두리 눈금 7개가 공격 단계만큼 짙어진다 ── */

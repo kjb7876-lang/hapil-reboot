@@ -64,7 +64,7 @@
     if((s.stage==='lost'||s.stage==='won')&&seenEnd!==s.stage){seenEnd=s.stage;if(s.stage==='lost'&&!s.bossOnly){var lr=stageRow(s.stageIndex,s.difficulty);lr.losses++;lr.ms+=Math.round(stageMs);}if(!s.bossOnly)clearCheckpoint();dirty=true;flush(true);return;}
     if(!s.bossOnly&&s.started&&s.seg!==seenSeg&&s.stage!=='lost'&&s.stage!=='won'){
       seenSeg=s.seg;var A=global.HapilArcade,seg=A&&A.SEGMENTS[s.seg];
-      if(seg&&seg.stage===s.stageIndex)store(CP_KEY,{v:1,stage:s.stageIndex,seg:s.seg,difficulty:s.difficulty,at:now,hits:s.hits-s.mark.hits,bombs:s.bombsUsed-s.mark.bombs}); // 별 계산용으로 이 스테이지에서 맞은 수·폭탄 수도 남긴다
+      if(seg&&seg.stage===s.stageIndex)store(CP_KEY,{v:1,stage:s.stageIndex,seg:s.seg,difficulty:s.difficulty,at:now,hits:s.hits-s.mark.hits,bombs:s.bombsUsed-s.mark.bombs,exp:s.exp|0,fills:s.fills|0}); // 별 계산용으로 이 스테이지에서 맞은 수·폭탄 수도 남긴다
     }
     flush(false);
   }
