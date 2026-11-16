@@ -511,7 +511,7 @@
       else if(e==='map')loadStage(s.stageIndex);
       else if(e==='entrance'){play('warning');wantFx(s.boss.actor);}
       else if(e==='figure')castFx(s,false);
-      else if(e==='bossDown'){var dn=s.boss.down;if(dn){fall={actor:dn.actor,x:dn.x,y:dn.y,tick:dn.tick,dir:dn.x>W/2?1:-1,burst:-1};flash=.8;shake=16;}}
+      else if(e==='bossDown'){var dn=s.boss.down;if(dn){fall={actor:dn.actor,x:dn.x,y:dn.y,tick:dn.tick,dir:dn.x>W/2?1:-1,burst:-1,keep:{}};['','@death','@hit'].forEach(function(m){var im=images[dn.actor+m]||(bossArt.actor===dn.actor&&bossArt.keep[dn.actor+m]);if(im)fall.keep[dn.actor+m]=im;}); /* 다음 스테이지로 넘어가며 그림을 놓아도 쓰러지는 동안은 쥐고 있다(전에는 마름모 자리표시가 쓰러졌다) */flash=.8;shake=16;}}
       else if(e==='break'){play('phaseBreak',s.boss.x);flash=.6;shock={x:s.boss.x,y:s.boss.y,r:10,ink:true};shake=3;}
       else if(e==='capture'||e==='bombGain'||e==='extend')play('seal');
       else if(e==='waveClear'){play('phaseBreak');flash=.3;}
@@ -648,13 +648,50 @@
     var e=Math.sin(k*Math.PI)*(1-k*.4),side=(recoil.start>>1)%2?1:-1;
     return {dy:-7*e,tilt:.1*e*side,sx:1+.05*e,sy:1-.08*e};
   }
+  /* 한지에 번진 먹 얼룩 한 장(보스 사망용): 고르지 않은 담묵 덩이 여럿이 겹친 부드러운 번짐. 둘레는 선 없이 옅어진다 */
+  var stainSprite=null;
+  function buildStain(){var S=128,d=offscreen(S,S),q=d.getContext('2d'),sd=7,rn=function(){sd=(Math.imul(sd,1664525)+1013904223)>>>0;return sd/4294967296;},i;
+    if(Ink)Ink.raw(1);for(i=0;i<11;i++){var a=rn()*TAU,dd=rn()*S*.2,r=S*(.14+rn()*.16),x=S/2+Math.cos(a)*dd,y=S/2+Math.sin(a)*dd,g=q.createRadialGradient(x,y,0,x,y,r);
+      g.addColorStop(0,'rgba(30,26,24,.5)');g.addColorStop(.55,'rgba(34,30,28,.3)');g.addColorStop(1,'rgba(40,36,34,0)');q.fillStyle=g;q.fillRect(x-r,y-r,r*2,r*2);}
+    if(Ink)Ink.raw(-1);return d;}
+  /* 수묵화풍 보스 사망(사용자 11-16 "보스 사망연출도 수묵화풍으로"): 몸이 먹빛으로 짙어지고(먹이 배어든다), 아래부터 번진 먹 가장자리로 지워지며
+     구름과 한지 속으로 스민다. 그 자리에는 먹 번짐이 한지에 퍼졌다가 옅어지고, 몸에서 떨어진 먹 조각이 바람에 흩어진다. 십자가·감싸는 원·인주색은 쓰지 않는다. */
+  function inkFall(s,k){
+    var tall=tallOf(fall.actor),x=fall.x,y=fall.y,sd=((x*31+y*17)|0)>>>0,rn=function(){sd=(Math.imul(sd,1664525)+1013904223)>>>0;return sd/4294967296;},i,a,r,j;
+    var sm=function(a,b,v){v=Math.max(0,Math.min(1,(v-a)/(b-a)));return v*v*(3-2*v);},bloom=sm(0,.55,k),fade=Math.pow(1-sm(.35,1,k),1.2);
+    // 1) 한지에 퍼지는 먹 번짐: 고르지 않은 둘레의 담묵 덩이 셋이 몸 뒤에서 번져 나갔다가 옅어진다(고리 아님, 채운 번짐)
+    stainSprite=stainSprite||buildStain();
+    for(j=0;j<3;j++){var cx=x+(rn()-.5)*tall*.5,cy=y+(rn()-.2)*tall*.35,R=tall*(.3+.16*j+.6*bloom)*(.8+.3*rn()),rot=rn()*TAU;
+      ctx.save();ctx.globalAlpha=(.62-.12*j)*fade;ctx.translate(cx,cy);ctx.rotate(rot);ctx.drawImage(stainSprite,-R,-R*.84,R*2,R*1.68);ctx.restore();}
+    ctx.globalAlpha=1;
+    // 2) 몸: 따로 그린 판에서 먹빛으로 물들이고, 아래부터 위로 녹여 지운다. 몸 곳곳에도 먹이 번져 구멍이 난다.
+    var main=meltBegin(x,y,tall);if(!main)return false;
+    var slump=sm(0,.6,k);ctx.save();ctx.translate(x+Math.sin(s.tick*.9)*3*(1-slump),y+tall*.12*slump);ctx.rotate(fall.dir*.18*slump);ctx.scale(1+.06*slump,1-.12*slump);
+    drawArt(fall.actor,0,0,false,themeColor(s),0,images[fall.actor+'@death']?'death':'',fall.dir);ctx.restore();
+    Ink.raw(1);ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.globalCompositeOperation='source-atop';ctx.globalAlpha=.88*sm(0,.3,k);ctx.fillStyle='rgba(28,24,22,1)';ctx.fillRect(0,0,meltBox.w,meltBox.h);ctx.restore();Ink.raw(-1); // 먹이 배어든다
+    var up=sm(.18,.95,k);Ink.melt(ctx,x,y+tall*.15-tall*1.35*up,tall,visual); // 아래부터 스며 사라진다
+    ctx.save();ctx.globalCompositeOperation='destination-out';var holes=sm(.3,1,k);
+    for(j=0;j<14;j++){var hx=x+(rn()-.5)*tall*.9,hy=y+(rn()-.55)*tall*.9,hr=tall*(.03+.12*rn())*holes*(1+rn()),hg;if(hr<.5)continue;hg=ctx.createRadialGradient(hx,hy,0,hx,hy,hr);hg.addColorStop(0,'rgba(0,0,0,1)');hg.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=hg;ctx.fillRect(hx-hr,hy-hr,hr*2,hr*2);}
+    ctx.restore();var l=ctx;ctx=main;
+    ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.drawImage(meltLayer,0,0,meltBox.w,meltBox.h,meltBox.x,meltBox.y,meltBox.w,meltBox.h);ctx.restore();
+    // 3) 흩어지는 먹 조각: 몸에서 떨어진 붓 자국이 위·옆으로 바람에 날리며 옅어진다
+    Ink.raw(1);ctx.save();ctx.lineCap='round';for(j=0;j<26;j++){var t0=rn()*.45,f=(k-t0)/(1-t0);if(f<=0)continue;var px=x+(rn()-.5)*tall*.7,py=y+(rn()-.3)*tall*.7,dx=(rn()-.35)*tall*.9,dy=-(.3+rn())*tall*.6,qx=px+dx*f+Math.sin(f*5+j)*6,qy=py+dy*f,len=(3+rn()*7)*(1-f*.5),ang=Math.atan2(dy,dx);
+      ctx.globalAlpha=Math.max(0,(1-f))*.75;ctx.strokeStyle=j%4?'#2a2522':'#5a524b';ctx.lineWidth=Math.max(.6,(1.2+rn()*2.4)*(1-f));ctx.beginPath();ctx.moveTo(qx-Math.cos(ang)*len,qy-Math.sin(ang)*len);ctx.quadraticCurveTo(qx,qy+2,qx+Math.cos(ang)*len*.4,qy+Math.sin(ang)*len*.4);ctx.stroke();}
+    ctx.restore();Ink.raw(-1);ctx.globalAlpha=1;
+    // 4) 발치 구름도 함께 흩어진다
+    if(Ink.footCloud&&k<.85){ctx.save();ctx.globalAlpha=1-sm(.3,.85,k);Ink.footCloud(ctx,x,y+tall*.12*slump,tall*(1+.25*k),visual);ctx.restore();ctx.globalAlpha=1;}
+    return true;
+  }
   function drawFall(s){
     if(!fall)return;var k=(s.tick-fall.tick)/FALL_TICKS;if(k<0||k>=1){fall=null;return;}
-    var step=Math.floor(k*7);if(step!==fall.burst&&step<6){fall.burst=step;var ox=fall.x+((step*53)%60-30),oy=fall.y+((step*37)%50-25);for(var q=0;q<12;q++){var a=TAU*q/12;addParticle(ox,oy,Math.cos(a)*3.2,Math.sin(a)*3.2,24,q%2?'#ffffff':themeColor(s),6);}shake=Math.max(shake,7);play('kill',ox);} // 몸 곳곳이 연달아 터진다
+    var step=Math.floor(k*7);if(step!==fall.burst&&step<6){fall.burst=step;var ox=fall.x+((step*53)%60-30),oy=fall.y+((step*37)%50-25);for(var q=0;q<12;q++){var a=TAU*q/12;addParticle(ox,oy,Math.cos(a)*3.2,Math.sin(a)*3.2,24,Ink?(q%2?'#fbf6ea':'#1e1a18'):q%2?'#ffffff':themeColor(s),6);}shake=Math.max(shake,7);play('kill',ox);} // 몸 곳곳이 연달아 터진다
+    var lent=[],key;for(key in fall.keep)if(!images[key]){images[key]=fall.keep[key];lent.push(key);}
+    try{if(Ink&&Ink.melt&&inkFall(s,k))return;
     ctx.save();ctx.globalAlpha=k<.7?1:1-(k-.7)/.3;
     if(images[fall.actor+'@death']){drawArt(fall.actor,fall.x,fall.y+10*k,false,themeColor(s),0,'death',fall.dir);}
     else{ctx.translate(fall.x,fall.y+22*k*k);ctx.rotate(fall.dir*.55*Math.min(1,k*1.5));ctx.scale(1+.1*k,1-.4*k*k);drawArt(fall.actor,0,0,k<.45&&((s.tick>>2)&1)===1,themeColor(s),0,'',fall.dir);} // 젖혀지며 무릎 꿇듯 주저앉고 사라진다
     ctx.restore();ctx.globalAlpha=1;
+    }finally{for(var li=0;li<lent.length;li++)delete images[lent[li]];}
   }
   /* 룬 결계(11-14 요청): 보스 둘레를 감싸는 보라색 고대문자 고리 셋. 문자는 이 게임만의 지어낸 글꼴이다 —
      줄기·가지·고리·가로획·갈고리를 정해진 씨앗으로 조합해 고리마다 다른 문장이 된다. 반지름은 마법진(104) 바깥.
@@ -722,12 +759,28 @@
       ctx.globalAlpha=alpha*RUNE_ALPHA[k]*edge*(.82+.18*Math.sin(visual*1.25+k*2.1));ctx.drawImage(img,-half,-half,half*2,half*2);ctx.restore();}
     ctx.restore();ctx.globalAlpha=1;
   }
+  /* 보스 몸 녹이기(사용자 11-16 "보스가 구름에 반짤린 그낌이아니라 녹아든 느낌이 들도록"): 보스만 보스 둘레 작은 판에 따로 그리고,
+     Ink.melt 로 아랫몸을 번진 먹 가장자리 모양으로 지운 뒤 화면에 얹는다. 그 위에 발치 구름과 옅은 앞 구름이 덮어 몸이 구름 속으로 스민다. */
+  var meltLayer=null,meltBox=null;
+  function meltBegin(x,y,tall){
+    if(!(Ink&&Ink.melt)||!ctx.getTransform)return null;var T=ctx.getTransform();if(T.b||T.c)return null;
+    var x0=Math.floor(T.a*(x-tall*1.7)+T.e),y0=Math.floor(T.d*(y-tall*1.05)+T.f),w=Math.ceil(T.a*tall*3.4),h=Math.ceil(T.d*tall*1.9);if(!(w>0&&h>0))return null;
+    if(!meltLayer)meltLayer=document.createElement('canvas');if(meltLayer.width<w||meltLayer.height<h){meltLayer.width=Math.max(w,meltLayer.width);meltLayer.height=Math.max(h,meltLayer.height);}
+    var l=meltLayer.getContext('2d');l.setTransform(1,0,0,1,0,0);l.globalAlpha=1;l.globalCompositeOperation='source-over';l.filter='none';l.clearRect(0,0,meltLayer.width,meltLayer.height);l.setTransform(T.a,0,0,T.d,T.e-x0,T.f-y0);
+    meltBox={x:x0,y:y0,w:w,h:h};var keep=ctx;ctx=l;return keep;
+  }
+  function meltEnd(main,x,y,tall,alpha){
+    var l=ctx;ctx=main;Ink.melt(l,x,y,tall,visual);
+    ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=alpha;ctx.globalCompositeOperation='source-over';ctx.drawImage(meltLayer,0,0,meltBox.w,meltBox.h,meltBox.x,meltBox.y,meltBox.w,meltBox.h);ctx.restore();
+  }
   /* 패턴 중에는 탄을 그린 뒤 보스를 반투명으로 한 번 더 얹어, 보스 몸 위에서 나온 탄 덩어리 속에서도 보스 윤곽이 읽히게 한다. */
   var bossDraw={on:false};
   function drawBossOver(s){
     var b=s.boss;if(!bossDraw.on||!b.present||b.leaving||s.stage!=='card'){bossDraw.on=false;return;}
-    ctx.save();ctx.globalAlpha=.55;ctx.translate(bossDraw.x,bossDraw.y);if(bossDraw.tilt)ctx.rotate(bossDraw.tilt);ctx.scale(bossDraw.sx,bossDraw.sy);if(Ink&&Ink.footCloud){ctx.beginPath();ctx.rect(-200,-200,400,200+tallOf(b.actor)*.2);ctx.clip();} // 먹구름에 가린 발은 탄 위로 다시 비치지 않게
-    drawArt(b.actor,0,0,false,themeColor(s),0,bossDraw.motion,bossDraw.face);ctx.restore();ctx.globalAlpha=1;bossDraw.on=false;
+    var tall=tallOf(b.actor),main=meltBegin(bossDraw.x,bossDraw.y,tall);
+    ctx.save();ctx.globalAlpha=main?1:.55;ctx.translate(bossDraw.x,bossDraw.y);if(bossDraw.tilt)ctx.rotate(bossDraw.tilt);ctx.scale(bossDraw.sx,bossDraw.sy);
+    drawArt(b.actor,0,0,false,themeColor(s),0,bossDraw.motion,bossDraw.face);ctx.restore();
+    if(main)meltEnd(main,bossDraw.x,bossDraw.y,tall,.55);ctx.globalAlpha=1;bossDraw.on=false; // 먹구름에 녹은 아랫몸은 탄 위로도 녹은 채 비친다(곧게 자르지 않는다)
   }
   /* 유혹의 장막(색욕 보스, 11-14): 화면 양옆에 드리운 분홍 비단. 그림일 뿐 맞지 않는다(엔진의 충돌에 없다). 탄보다 먼저(아래에) 옅게 그린다. */
   function drawVeil(s){
@@ -750,9 +803,11 @@
     ctx.globalAlpha=1;
   }
   var BACKLIGHT_BRIGHT='26'; // 금빛·흰빛 테마는 역광이 가산되면 보스 뒤가 하얗게 탄다(심사: 탐욕 보스 금빛 과노출)
+  var bossArt={actor:'',keep:{}}; // 지금 보스 그림을 쥐어 둔다: 마지막 패턴이 깨진 그 틱에 다음 스테이지로 넘어가며 그림을 놓아도 쓰러짐은 이 그림으로 그린다
   function drawBoss(s){
     bossDraw.on=false;
     var b=s.boss;if(!b.present||b.y<-50)return;
+    if(bossArt.actor!==b.actor){bossArt={actor:b.actor,keep:{}};}['','@death','@hit'].forEach(function(m){var im=images[b.actor+m];if(im)bossArt.keep[b.actor+m]=im;});
     if(b.leaving&&fall&&fall.actor===b.actor)return; // 쓰러진 보스는 날아가지 않고 drawFall이 그 자리에서 무너뜨린다
     var bob=Math.sin(visual*2.2)*4,size=(b.mid?150:190)+Math.sin(visual*1.3)*10,bx=finite(b.x,W/2),by=finite(b.y,120)+bob;
     // 역광(backlight): 보스 뒤에 테마색 빛을 깔아 자기 탄 고리 속에서도 몸 윤곽이 뜨게 한다(심사 9차)
@@ -772,9 +827,12 @@
     var since=56-(bp.until-s.tick),punch=bm==='attack'&&since>=0&&since<16?1+.14*(1-since/16):1; // 공격 순간 몸이 한 번 커졌다 돌아온다. 탄에 가려도 윤곽으로 읽힌다.
     var rc=recoilOf(s,b);if(rc&&images[b.actor+'@hit'])bm='hit'; // 피격 그림이 있으면 그 칸을, 없으면 같은 그림을 젖혀 피격을 보인다
     bossDraw.on=true;bossDraw.x=bx;bossDraw.y=by+(rc?rc.dy:0);bossDraw.tilt=rc?rc.tilt:0;bossDraw.sx=punch*(rc?rc.sx:1);bossDraw.sy=punch*(rc?rc.sy:1);bossDraw.motion=bm;bossDraw.face=bp.dir||(bx>W/2?-1:1);
-    ctx.save();ctx.translate(bx,by+(rc?rc.dy:0));if(rc)ctx.rotate(rc.tilt);ctx.scale(punch*(rc?rc.sx:1),punch*(rc?rc.sy:1));if(bright&&s.stage==='card'&&'filter' in ctx)ctx.filter=BRIGHT_ART_DIM; // 금빛·흰빛 보스 그림은 스펠 중 한 단계 어둡게: 그 위 탄이 묻힌다(심사 6.44)
+    var tall=tallOf(b.actor),fy=by+(rc?rc.dy:0),main=meltBegin(bx,fy,tall);
+    ctx.save();ctx.translate(bx,fy);if(rc)ctx.rotate(rc.tilt);ctx.scale(punch*(rc?rc.sx:1),punch*(rc?rc.sy:1));if(bright&&s.stage==='card'&&'filter' in ctx)ctx.filter=BRIGHT_ART_DIM; // 금빛·흰빛 보스 그림은 스펠 중 한 단계 어둡게: 그 위 탄이 묻힌다(심사 6.44)
     drawArt(b.actor,0,0,s.tick-b.hitTick<3,themeColor(s),0,bm,bp.dir||(bx>W/2?-1:1));ctx.filter='none';ctx.restore();
-    if(Ink&&Ink.footCloud)Ink.footCloud(ctx,bx,by+(rc?rc.dy:0),tallOf(b.actor),visual); // 발치의 먹구름: 걷는 동작의 어색함을 가린다(사용자 11-15)
+    if(main)meltEnd(main,bx,fy,tall,1); // 아랫몸은 번진 먹 가장자리로 지워져 구름 속으로 스민다(사용자 11-16)
+    if(Ink&&Ink.footCloud)Ink.footCloud(ctx,bx,fy,tall,visual); // 발치의 먹구름: 걷는 동작의 어색함을 가린다(사용자 11-15)
+    if(Ink&&Ink.footVeil)Ink.footVeil(ctx,bx,fy,tall,visual); // 몸 앞을 지나는 옅은 구름 한 겹: 구름 윗선이 곧은 띠로 남지 않게
     if(s.stage==='card'){ctx.globalAlpha=.22;ctx.drawImage(shadeSprite(),bx-74,by-74,148,148);ctx.globalAlpha=1;} // 패턴 중에는 몸을 조금 어둡게 눌러 몸 위의 같은 색 탄이 읽히게 한다
   }
   /* 몹 뒤에 까는 부드러운 빛(테두리 없는 원). 어두운 배경에서 어두운 몹의 윤곽이 뜨게 한다. */

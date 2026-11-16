@@ -243,6 +243,33 @@
     rawDraw.call(g,mistInk,f*MIST.cw,0,MIST.cw,MIST.ch,x-w/2,y+tall*.5-h*.86,w,h);g.restore();hold--; // 칸 아래쪽 덩이가 발 자리에 오게
   }
   global.HapilInk.footCloud=mistCloud;global.HapilInk.footCloudDraft=footCloud;
+  /* 몸 앞을 지나는 옅은 구름 한 겹(사용자 11-16 "구름에 녹아든 느낌"): 같은 먹 안개를 뒤집어 조금 높게, 옅게 얹어 구름 윗선이 곧은 띠로 남지 않게 한다 */
+  function footVeil(g,x,y,tall,time,alpha){
+    if(!mistInk)return;var f=(Math.floor(time*MIST.fps*.8)+5)%MIST.frames,w=tall*1.55,h=w*MIST.ch/MIST.cw,a0=g.globalAlpha,sway=Math.sin(time*.5)*tall*.04;
+    hold++;g.save();g.globalCompositeOperation='source-over';g.globalAlpha=a0*.5*(alpha||1);g.translate(x+sway,0);g.scale(-1,1);
+    rawDraw.call(g,mistInk,f*MIST.cw,0,MIST.cw,MIST.ch,-w/2,y+tall*.36-h*.86,w,h);g.restore();hold--;
+  }
+  /* 보스 아랫몸 녹이기(사용자 11-16): 몸만 따로 그린 판 g 에서 아래쪽을 지운다. 지우는 경계는 곧은 선이 아니라 물이 번진 먹 가장자리처럼
+     들쭉날쭉하고, 몸에서 아래로 먹이 몇 가닥 흘러내린 듯 남은 자국이 있다. 경계는 숨 쉬듯 천천히 오르내린다. 판정과는 무관(그림만). */
+  var meltMask=null,MELT={w:192,h:96};
+  function buildMelt(){
+    var Wd=MELT.w,Hd=MELT.h,c=canvasOf(Wd,Hd),g=c.getContext('2d',{willReadFrequently:true}),d,p,x,y,i,A=[],B=[],C=[];hold++;
+    for(i=0;i<9;i++)A.push(rnd());for(i=0;i<23;i++)B.push(rnd());for(i=0;i<41;i++)C.push(rnd());
+    function nz(T,t){var f=t*T.length,i0=Math.floor(f)%T.length,u=f-Math.floor(f);u=u*u*(3-2*u);return T[i0]*(1-u)+T[(i0+1)%T.length]*u;}
+    function ss(a,b,v){v=Math.max(0,Math.min(1,(v-a)/(b-a)));return v*v*(3-2*v);}
+    d=g.getImageData(0,0,Wd,Hd);p=d.data;
+    for(x=0;x<Wd;x++){var u=x/Wd,edge=.12+.34*nz(A,u)+.16*nz(B,u),soft=.3+.18*nz(C,u+.3),drip=Math.pow(nz(C,u),3); // drip: 먹이 흘러내린 가닥(지우기를 늦춘다)
+      for(y=0;y<Hd;y++){var v=y/Hd,a=ss(edge,edge+soft,v);a*=1-.55*drip*(1-ss(.55,1,v));p[(y*Wd+x)*4+3]=Math.round(255*a);}}
+    g.putImageData(d,0,0);hold--;return c;
+  }
+  function melt(g,x,y,tall,time){
+    meltMask=meltMask||buildMelt();var w=tall*3.2,top=y-tall*.1+Math.sin(time*.7)*tall*.02,h=tall*.62;
+    hold++;g.save();g.globalCompositeOperation='destination-out';g.globalAlpha=1;
+    rawDraw.call(g,meltMask,x-w/2+Math.sin(time*.23)*tall*.08,top,w,h); // 경계가 옆으로도 천천히 흐른다
+    g.fillStyle='rgba(0,0,0,1)';g.fillRect(x-w/2-tall,top+h-1,w+tall*2,tall*2); // 그 아래는 모두 구름 속
+    g.restore();hold--;
+  }
+  global.HapilInk.melt=melt;global.HapilInk.footVeil=footVeil;
 
 
   /* 영웅의 흰 구름: 한지보다 흰 뭉게구름에 먹 윤곽선(구름 문양). 발밑에서 천천히 일렁인다 */
