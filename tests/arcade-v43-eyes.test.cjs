@@ -22,8 +22,8 @@ test('ink lids; seal red only for the game-over cross (user 11-16), no ring',()=
 });
 test('game over: the result shows the red cross over the closed eyes and retry restarts the stage from its start',()=>{
   const app=read('src/arcade-app-v43.js'),html=read('arcade.html');
-  assert.match(app,/fallen\.classList\.toggle\('fallen',!won\)/);
-  assert.match(app,/setMode\('result'\);if\(eyes&&eyes\.cross\)eyes\.cross\(\$\('result-cross'\)\)/);
+  assert.match(app,/fallen\.classList\.toggle\('fallen',!won&&!!eyes&&!eyes\.state\(\)\.off\)/,'eyes off keeps the paper result');
+  assert.match(app,/setMode\('result'\);if\(eyes&&eyes\.cross&&fallen\.classList\.contains\('fallen'\)\)eyes\.cross\(\$\('result-cross'\)\)/);
   assert.match(app,/if\(!won\)\{retry\.hidden=false;retry\.textContent=T\('retryFallen'\);retry\.dataset\.stage=String\(s\.stageIndex\);\}/);
   assert.match(app,/\$\('arcade-retry'\)\.addEventListener\('click',function\(\)\{var i=Number\(this\.dataset\.stage\)\|\|0;start\(\{stage:i,bossOnly:this\.dataset\.boss==='1'\}\);\}\)/,'no segment: from the stage start');
   assert.match(html,/<canvas id="result-cross"/);assert.match(html,/#arcade-result\.fallen #result-cross\{display:block\}/);

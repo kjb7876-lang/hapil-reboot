@@ -1337,8 +1337,8 @@
     retry.dataset.boss=s.bossOnly?'1':'';
     $('arcade-home').className=retry.hidden?'primary':'';
     var eyes=!won&&global.HapilEyes;if(eyes)eyes.close(); // 목숨이 다하면 눈을 감고, 다 감긴 뒤 결과 화면
-    var fallen=$('arcade-result');fallen.classList.toggle('fallen',!won); // 게임 오버: 감긴 눈 위에 붉은 십자가가 그어지고 '다시하기'(이 스테이지 처음부터)
-    setTimeout(function(){if(state===s){setMode('result');if(eyes&&eyes.cross)eyes.cross($('result-cross'));}},won?1500:eyes?Math.round(eyes.CLOSE_SECONDS*1000)+350:900);
+    var fallen=$('arcade-result');fallen.classList.toggle('fallen',!won&&!!eyes&&!eyes.state().off); // ?eyes=0 이면 감긴 눈 바탕이 없으니 예전 한지 결과판(리뷰 지적) // 게임 오버: 감긴 눈 위에 붉은 십자가가 그어지고 '다시하기'(이 스테이지 처음부터)
+    setTimeout(function(){if(state===s){setMode('result');if(eyes&&eyes.cross&&fallen.classList.contains('fallen'))eyes.cross($('result-cross'));}},won?1500:eyes?Math.round(eyes.CLOSE_SECONDS*1000)+350:900);
   }
   function pause(){if(mode==='playing')setMode('paused');}
   function goTitle(){if(global.HapilEyes)global.HapilEyes.clear();if(loadedStage>=0)releaseStage(loadedStage,-1);state=null;toast=null;refreshTitle();setMode('title');}
