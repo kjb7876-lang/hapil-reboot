@@ -96,3 +96,19 @@ test('space-time distortion: a touching bullet slips past at 7% (attack Lv.1) up
  assert(dist>0&&auto>0);const off=a.createRun({difficulty:'normal',seed:1,distort:false});assert.equal(off.noDistort,true);
  const app=fs.readFileSync(path.join(root,'src/arcade-app-v43.js'),'utf8'),fx=fs.readFileSync(path.join(root,'src/hero-memory-v43.js'),'utf8');assert(/'distort'/.test(app)&&/function drawWarps/.test(fx)&&/자동 필살/.test(fx));
 });
+
+test('the bomb lands in 7 pulses after the cut-in; the total damage matches the old single hit, the bullets clear at once',()=>{
+ const a=A();assert.equal(a.BOMB_PULSES,7);
+ let seg=0;while(a.SEGMENTS[seg].kind!=='card')seg++;
+ for(const lv of [1,4,7]){
+  const mk=bomb=>{const s=a.createRun({difficulty:'normal',seed:3,segment:seg});s.noDistort=true;s.bombLevel=lv;s.bombs=1;let guard=0;while(s.stage!=='card'&&guard++<4000){s.player.invulnerableUntil=s.tick+99;a.step(s,{dx:0,dy:0});clear(s);}
+   assert.equal(s.stage,'card');s.player.x=20;s.boss.hp=s.boss.maxHp=1e6;s.mobs.length=0;s.mobs.push({kind:'x',x:300,baseX:300,y:200,r:12,hp:900,maxHp:900,hitTick:-99,elite:false,score:10,age:0,shots:0,vx:0,vy:0,sway:0,swayRate:0,fire:'aim',first:9999,every:0,color:0,stopY:200,hold:99999,next:99999,hold2:0});
+   let pulses=0,first=-1,last=-1,n0=null;for(let i=0;i<150;i++){s.player.invulnerableUntil=s.tick+99;s.boss.x=340;s.mobs[0]&&(s.mobs[0].x=300);a.step(s,{dx:0,dy:0,bomb:bomb&&i===0});if(i===0)n0=s.n;if(s.events.includes('bombPulse')){pulses++;if(first<0)first=s.tick;last=s.tick;assert.equal(s.pulseInfo.index,pulses);}clear(s);}
+   return {s,pulses,first,last,n0};};
+  const on=mk(true),off=mk(false);
+  assert.equal(on.n0<=off.n0,true,'bullets clear at once');assert.equal(on.pulses,7,'seven pulses at level '+lv);assert(on.last-on.first>=60&&on.last-on.first<=90,'spread over about a second: '+(on.last-on.first));
+  assert(Math.abs((off.s.boss.hp-on.s.boss.hp)-a.BOMB_POWER[lv][0])<1e-3,'boss total '+(off.s.boss.hp-on.s.boss.hp));
+  assert(Math.abs((off.s.mobs[0].hp-on.s.mobs[0].hp)-a.BOMB_POWER[lv][1])<1e-3,'mob total');
+ }
+ const fx=fs.readFileSync(path.join(root,'src/hero-memory-v43.js'),'utf8'),app=fs.readFileSync(path.join(root,'src/arcade-app-v43.js'),'utf8');assert(/function pulseFx/.test(fx)&&/function drawPulses/.test(fx)&&/'bombPulse'/.test(app));
+});
