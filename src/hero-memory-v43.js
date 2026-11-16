@@ -31,11 +31,11 @@
     g.globalAlpha=alpha;g.fillStyle=inkOn()?'rgba(36,32,32,1)':'#ffd9a0';g.beginPath();g.moveTo(x,y-len*.5);g.quadraticCurveTo(x+wid,y-len*.2,x+wid*.3,y+len*.5);g.lineTo(x-wid*.3,y+len*.5);g.quadraticCurveTo(x-wid,y-len*.2,x,y-len*.5);g.fill();
   }
   function shots(g,s,t){
-    var lv=s.power||1,i,big=SHARD_SIZE[lv],shardOk=lv>=3&&ready('shard'),f=Math.floor(t*SHEETS.shard.fps);
+    var lv=s.power||1,i,ink=inkOn(),big=SHARD_SIZE[lv],shardOk=lv>=3&&ready('shard'),f=Math.floor(t*SHEETS.shard.fps);
     raw(1);g.save();blend(g);
     for(i=0;i<s.sn;i++){
       var x=s.sx[i],y=s.sy[i],vx=s.svx?s.svx[i]:0,ang=-Math.PI/2+Math.atan2(vx,15);
-      if(shardOk){var z=s.shoming[i]?big*.7:big;cell(g,'shard',f+i,x,y,ang,z,s.shoming[i]?.3:vx?.4:.5);} // 적 탄보다 한 단계 옅게(심사 1차)
+      if(shardOk){var z=s.shoming[i]?big*.7:big;cell(g,'shard',f+i,x,y,ang,z,ink?(s.shoming[i]?.6:vx?.75:.9):(s.shoming[i]?.3:vx?.4:.5));} // 색판은 적 탄보다 한 단계 옅게(심사 1차). 수묵판 시트는 이미 회색이라 옅게 그리면 한지에 묻혀 안 보였다(11-16 실검증)
       else{g.save();g.translate(x,y);g.rotate(Math.atan2(vx,15));stroke(g,0,0,s.shoming[i]?16:24+lv*2,s.shoming[i]?3:4+lv*.6,.5);g.restore();}
     }
     g.restore();raw(-1);
@@ -119,7 +119,7 @@
     for(var i=0;i<26;i++){var yy=rr()*h,ww=w*(.12+rr()*.22);x.globalAlpha=.25+rr()*.5;x.fillRect(0,yy,ww,1.5+rr()*4);}
     cutImg=c;return c;
   }
-  function stroke(g,x0,x1,y,th){ // 갈필 속도선: 가운데가 굵고 양끝이 가늘게 빠진다
+  function speedStroke(g,x0,x1,y,th){ // 갈필 속도선: 가운데가 굵고 양끝이 가늘게 빠진다
     var n=8,i;g.beginPath();g.moveTo(x0,y);for(i=1;i<n;i++){var u=i/n,w=th*Math.sin(Math.PI*u)*(.7+.3*Math.sin(i*2.7+y));g.lineTo(x0+(x1-x0)*u,y-w);}g.lineTo(x1,y);for(i=n-1;i>0;i--){var u2=i/n;g.lineTo(x0+(x1-x0)*u2,y+th*Math.sin(Math.PI*u2)*.45);}g.closePath();g.fill();
   }
   function drawCutin(g,t,W,H){
@@ -134,7 +134,7 @@
     g.save();g.beginPath();g.rect(x0,-bandH/2,L,bandH);g.clip();
     g.fillStyle=ink?'rgb(244,236,218)':'rgba(10,22,40,.92)';g.fillRect(-L/2,-bandH/2,L,bandH); // 한지 띠
     g.fillStyle=ink?'rgb(30,26,24)':'rgba(140,235,255,1)'; // 먹 속도선(갈필 획). 부제 줄은 비운다
-    for(i=0;i<4+lv*3;i++){var sy=-bandH/2+((i*37.7)%bandH);if(Math.abs(sy-(bandH*.5-22))<9)continue;var sl=60+((i*53)%120),sx=L/2-((age*900*(1+(i%3)*.4)+i*71)%(L+sl));g.globalAlpha=(1-close)*.45;stroke(g,sx,sx+sl,sy,.8+((i*13)%5)*.45);}
+    for(i=0;i<4+lv*3;i++){var sy=-bandH/2+((i*37.7)%bandH);if(Math.abs(sy-(bandH*.5-22))<9)continue;var sl=60+((i*53)%120),sx=L/2-((age*900*(1+(i%3)*.4)+i*71)%(L+sl));g.globalAlpha=(1-close)*.45;speedStroke(g,sx,sx+sl,sy,.8+((i*13)%5)*.45);}
     g.globalAlpha=1-close;var ph=bandH*1.65,pw=ph*384/512,px=W*.3+lv*2-age*22+(1-ease)*80,top=-bandH*.56; // 초상: 띠 오른쪽, 두건·얼굴·총이 띠 안에 든다(제목과 겹치지 않게)
     if(ink)g.globalCompositeOperation='multiply';g.drawImage(cutPortrait(),px-pw/2,top,pw,ph);if(ink){g.globalAlpha=(.4+lv*.06)*(1-close);g.drawImage(cutPortrait(),px-pw/2,top,pw,ph);g.globalAlpha=1-close;}g.globalCompositeOperation='source-over'; // 먹(곱하기)으로 얹어 흰 데는 한지에 스며들고 먹만 남는다
     var ex=px-pw/2+pw*(205/384),ey=top+ph*(108/512),gl=Math.max(0,1-Math.abs(age-.32)/.14); // 눈매 섬광
