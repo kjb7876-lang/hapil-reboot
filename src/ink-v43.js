@@ -245,9 +245,11 @@
   global.HapilInk.footCloud=mistCloud;global.HapilInk.footCloudDraft=footCloud;
   /* 몸 앞을 지나는 옅은 구름 한 겹(사용자 11-16 "구름에 녹아든 느낌"): 같은 먹 안개를 뒤집어 조금 높게, 옅게 얹어 구름 윗선이 곧은 띠로 남지 않게 한다 */
   function footVeil(g,x,y,tall,time,alpha){
-    if(!mistInk)return;var f=(Math.floor(time*MIST.fps*.8)+5)%MIST.frames,w=tall*1.55,h=w*MIST.ch/MIST.cw,a0=g.globalAlpha,sway=Math.sin(time*.5)*tall*.04;
-    hold++;g.save();g.globalCompositeOperation='source-over';g.globalAlpha=a0*.5*(alpha||1);g.translate(x+sway,0);g.scale(-1,1);
-    rawDraw.call(g,mistInk,f*MIST.cw,0,MIST.cw,MIST.ch,-w/2,y+tall*.36-h*.86,w,h);g.restore();hold--;
+    if(!mistInk)return;var a0=g.globalAlpha,k,PUFF=[[-.36,.26,.78,5,-1],[.04,.31,1.12,9,1],[.38,.22,.72,2,-1]]; // 크기·높이가 다른 구름 덩이 셋: 구름 윗선이 한 줄로 평평하지 않게(심사 11-16)
+    hold++;g.save();g.globalCompositeOperation='source-over';
+    for(k=0;k<PUFF.length;k++){var P=PUFF[k],f=(Math.floor(time*MIST.fps*.8)+P[3])%MIST.frames,w=tall*P[2],h=w*MIST.ch/MIST.cw,sway=Math.sin(time*.5+k*2.1)*tall*.04,bob=Math.sin(time*.6+k)*tall*.02;
+      g.save();g.globalAlpha=a0*.5*(alpha||1);g.translate(x+P[0]*tall+sway,0);g.scale(P[4],1);rawDraw.call(g,mistInk,f*MIST.cw,0,MIST.cw,MIST.ch,-w/2,y+tall*P[1]+bob-h*.86,w,h);g.restore();}
+    g.restore();hold--;
   }
   /* 보스 아랫몸 녹이기(사용자 11-16): 몸만 따로 그린 판 g 에서 아래쪽을 지운다. 지우는 경계는 곧은 선이 아니라 물이 번진 먹 가장자리처럼
      들쭉날쭉하고, 몸에서 아래로 먹이 몇 가닥 흘러내린 듯 남은 자국이 있다. 경계는 숨 쉬듯 천천히 오르내린다. 판정과는 무관(그림만). */
@@ -263,7 +265,7 @@
     function ss(a,b,v){v=Math.max(0,Math.min(1,(v-a)/(b-a)));return v*v*(3-2*v);}
     d=g.getImageData(0,0,Wd,Hd);p=d.data;
     for(x=0;x<Wd;x++){var u=x/Wd,tongue=Math.pow(nz(C,u+.5),4)*.45,drip=Math.pow(nz(C,u),4), // tongue: 지움이 위로 치솟는 혀, drip: 몸이 아래로 늘어진 먹 가닥
-        edge=.12+.32*nz(A,u)+.16*nz(B,u)-tongue+drip*.25,soft=.16+.14*nz(B,u+.37);
+        edge=.1+.42*nz(A,u)+.2*nz(B,u)-tongue*1.3+drip*.3,soft=.16+.14*nz(B,u+.37);
       for(y=0;y<Hd;y++){var v=y/Hd,m=nz2(u,v),e2=edge+(m-.5)*.22,a=ss(e2,e2+soft,v);a=Math.min(1,a*(.75+.5*m));if(v>.9)a=Math.max(a,ss(.9,1,v));p[(y*Wd+x)*4+3]=Math.round(255*a);}}
     g.putImageData(d,0,0);hold--;return c;
   }

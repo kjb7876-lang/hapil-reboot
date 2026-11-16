@@ -58,6 +58,6 @@ test('ink mode softens the white flash when a boss falls',()=>{
 });
 test('hearts from a felled boss spring from below the foot cloud, not from the body centre',()=>{
   const eng=fs.readFileSync(path.join(root,'src/arcade-v43.js'),'utf8');
-  assert.match(eng,/var DROP_BELOW=6\d;/);
-  assert.match(eng,/dropItem\(s,b\.x\+\(i-\(nd-1\)\/2\)\*30,b\.y\+DROP_BELOW/);
+  assert.match(eng,/var DROP_BELOW=\d\d,DROP_ARC=\[/,'hearts stagger in height instead of one line');
+  assert.match(eng,/dropItem\(s,b\.x\+\(i-\(nd-1\)\/2\)\*30,b\.y\+DROP_BELOW\+DROP_ARC/);
 });
