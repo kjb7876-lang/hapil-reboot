@@ -855,7 +855,7 @@
     ctx.restore();
   }
   // 아래에서 솟는 수묵 소재(사용자 11-15): 예고는 인주색 화살, 그림은 먹(곱하기 합성)으로. 그림은 종류마다 한 번 구워 둔다.
-  var riserArt={},RISER_FUME={candle:[1.1,-.95],cauldron:[.8,-.5],vial:[.2,-1.0],hourglass:[.1,.1],skull:[.5,-.1],chalice:[.8,-.9]},RISER_THIN={sword:.3,spear:.3,bamboo:.5,chain:.35,key:.45,hexagram:.8,scythe:.75,vial:.6,tower:.55,rose:.6,candle:.75,chalice:.7}; // 솟을 자리 띠 폭(그림 폭을 따른다)
+  var riserArt={},RISER_FUME={candle:[1.1,-.95],cauldron:[.8,-.5],vial:[.2,-1.0],hourglass:[.1,.1],skull:[.5,-.1],chalice:[.8,-.9]},RISER_THIN={syringe:.45,heel:.85,tomb:.7,sword:.3,spear:.3,bamboo:.5,chain:.35,key:.45,hexagram:.8,scythe:.75,vial:.6,tower:.55,rose:.6,candle:.75,chalice:.7}; // 솟을 자리 띠 폭(그림 폭을 따른다)
   function riserSprite(r){var key=r.kind+':'+r.emblem+':'+scale,hit=riserArt[key];if(hit)return hit;var M=global.InkMotifs;if(!M||!M[r.kind])return null;
     var half=r.size*1.5,c=offscreen(half*2*scale,half*2*scale),q=c.getContext('2d');q.scale(scale,scale);q.translate(half,half);
     if(Ink&&Ink.raw)Ink.raw(1);try{M[r.kind](q,r.size,r.kind==='glyph'?Arcade.GLYPHS[r.emblem]:null);}finally{if(Ink&&Ink.raw)Ink.raw(-1);}
@@ -881,7 +881,21 @@
       var blink=mv==='eye'?Math.max(0,1-Math.abs(((visual*.55+k*.37)%1)-.5)*14):0,flap=mv==='wing'?1+.05*Math.sin(visual*4.2+k):mv==='book'?1+.03*Math.sin(visual*3+k):1;
       ctx.save();if(spin)ctx.rotate(spin);if(blink)ctx.scale(1,1-.82*blink);if(flap!==1){ctx.translate(-r.size*.62,0);ctx.scale(flap,2-flap);ctx.translate(r.size*.62,0);}if(swing){ctx.translate(0,-r.size*.85);ctx.rotate(swing);ctx.translate(0,r.size*.85);}if(flick!==1){ctx.translate(0,r.size*.9);ctx.scale(2-flick,flick);ctx.translate(0,-r.size*.9);}ctx.drawImage(art.image,-art.half,-art.half,art.half*2,art.half*2);ctx.restore();ctx.globalCompositeOperation='source-over';
       if(!f){var sx=Math.min(r.size*.62,(RISER_THIN[r.kind]||.9)*r.size+16),sy=r.size*.86,pl=.75+.25*Math.sin(visual*6+k);ctx.globalAlpha=.75+.25*pl;ctx.fillStyle=PAPERC;ctx.fillRect(sx-14.5,sy-14.5,29,29);ctx.fillStyle=INKC;ctx.fillRect(sx-12.5,sy-12.5,25,25);ctx.fillStyle=HOT;ctx.fillRect(sx-10.5,sy-10.5,21,21);ctx.fillStyle=PAPERC;ctx.fillRect(sx-5.2,sy-5.2,10.4,3.2);ctx.fillRect(sx-5.2,sy+2,10.4,3.2);} // 판정이 켜진 동안만 찍히는 인주 낙관(경고 표시). 사라질 때는 꺼진다
-      ctx.restore();}
+      ctx.restore();if(r.fade)drawInkBurst(r,f,k);}
+    ctx.restore();}
+  /* 먹 폭발(사용자 11-16 "사라지그전에 먹폭발한변하고 사라지도록 불꽃놀이 수묵화버전마냥 화려하게"): 솟은 그림이 사라질 때 먹물이 불꽃처럼 터진다.
+     옅은 먹(담묵)으로만 그려 가장 짙은 먹인 적 탄과 헷갈리지 않는다. 가운데 먹 덩이가 번지고 → 첫 꽃(붓 획 빛살 열여덟, 끝에 먹방울, 뒤로 떨어지는 먹점) → 늦게 피는 둘째 꽃(작은 먹꽃 여럿). 그리기만 하고 판정은 없다. 감싸는 원은 그리지 않는다. */
+  function drawInkBurst(r,f,k){var sd=((r.x*73+r.size*11+k*37)|0)>>>0,rn=function(){sd=(Math.imul(sd,1664525)+1013904223)>>>0;return sd/4294967296;},S=r.size,cx=r.x,cy=r.y-S*.1,C=Ink?'#1e1a18':'#ffe2a0',e=1-Math.pow(1-Math.min(1,f*1.7),3),fall=f*f*S*.8,al=Math.pow(1-f,1.15),i,j,t,q,n;
+    ctx.save();ctx.globalCompositeOperation=Ink?'multiply':'lighter';ctx.lineCap='round';ctx.fillStyle=C;ctx.strokeStyle=C;
+    if(f<.45){var ca=1-f/.45;ctx.globalAlpha=.42*ca;ctx.beginPath();n=18;for(i=0;i<=n;i++){t=i/n*TAU;q=S*(.18+.42*e)*(i<n?.7+.6*rn():1);if(i===n){ctx.closePath();break;}var px=cx+Math.cos(t)*q,py=cy+Math.sin(t)*q;if(i)ctx.lineTo(px,py);else ctx.moveTo(px,py);}ctx.fill();} // 가운데 먹 덩이가 퍼지며 옅어진다
+    n=18;for(i=0;i<n;i++){var ang=i/n*TAU+rn()*.3,L=S*(1.05+.85*rn())*e,w=S*(.05+.05*rn()),hx=cx+Math.cos(ang)*L,hy=cy+Math.sin(ang)*L+fall,tx=cx+Math.cos(ang)*L*.35,ty=cy+Math.sin(ang)*L*.35+fall*.3; // 첫 꽃: 붓 획 빛살
+      ctx.globalAlpha=al*(.3+.2*rn());ctx.lineWidth=w*(1-f*.6);ctx.beginPath();ctx.moveTo(tx,ty);ctx.quadraticCurveTo(cx+Math.cos(ang)*L*.7,cy+Math.sin(ang)*L*.7+fall*.5,hx,hy);ctx.stroke();
+      var hr=w*(.9+.5*rn())*(1-f*.4),ux=Math.cos(ang),uy=Math.sin(ang);ctx.globalAlpha=al*.34;ctx.beginPath();ctx.moveTo(hx+ux*hr*1.8,hy+uy*hr*1.8);ctx.quadraticCurveTo(hx-uy*hr*1.2,hy+ux*hr*1.2,hx-ux*hr,hy-uy*hr);ctx.quadraticCurveTo(hx+uy*hr*1.2,hy-ux*hr*1.2,hx+ux*hr*1.8,hy+uy*hr*1.8);ctx.fill(); // 끝의 먹방울: 바깥으로 끌린 물방울 꼴, 옅은 먹(둥근 탄과 헷갈리지 않게)
+      for(j=1;j<=3;j++){var bk=L*(1-j*.16),dx=cx+Math.cos(ang)*bk,dy=cy+Math.sin(ang)*bk+fall*(1+j*.35);ctx.globalAlpha=al*(.28-.07*j);ctx.fillRect(dx-w*.2,dy-w*.45,w*.4,w*.9);}} // 뒤로 흘러내리는 먹점
+    if(f>.22){var g2=Math.min(1,(f-.22)/.45),e2=1-Math.pow(1-g2,2),a2=Math.pow(1-g2,1.3)*.45;n=7; // 둘째 꽃: 늦게 터지는 작은 먹꽃들
+      for(i=0;i<n;i++){var ba=rn()*TAU,br=S*(.8+.7*rn()),bx=cx+Math.cos(ba)*br,by=cy+Math.sin(ba)*br+fall*1.2,m=6+(rn()*3|0);
+        for(j=0;j<m;j++){var sa=j/m*TAU+rn(),sl=S*(.16+.14*rn())*e2;ctx.globalAlpha=a2*(.45+.4*rn());ctx.lineWidth=S*.025;ctx.beginPath();ctx.moveTo(bx+Math.cos(sa)*sl*.3,by+Math.sin(sa)*sl*.3);ctx.lineTo(bx+Math.cos(sa)*sl,by+Math.sin(sa)*sl+sl*.25*g2);ctx.stroke();}
+        ctx.globalAlpha=a2;ctx.fillRect(bx-S*.025,by-S*.025,S*.05,S*.05);}}
     ctx.restore();}
   // 영웅이 바닥 줄·떨어지는 조각과 겹칠 때 영웅 뒤에 어두운 후광을 깔아 묻히지 않게 한다(심사 4차)
   function drawHeroGuard(s){var F=s.floor,p=s.player,near=false,k;if(!F)return;
