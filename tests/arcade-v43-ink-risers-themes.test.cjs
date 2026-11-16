@@ -36,7 +36,7 @@ test('a western subject really rises in play and hurts on its shape',()=>{
   const s=a.createRun({difficulty:'normal',seed:3,segment:seg});let hit=null;
   for(let i=0;i<1200&&!hit;i++){s.player.invulnerableUntil=s.tick+999;s.boss.hp=s.boss.maxHp;a.step(s,{dx:0,dy:4});h.clear(s);hit=(s.risers||[]).find(q=>WEST.includes(q.kind)&&q.age>a.RISER_WARN+60&&!q.fade)||null;}
   assert(hit,'a western subject rose');assert.equal(hit.kind,a.stageMotifs(4)[0]);
-  const c=a.MOTIFS[hit.kind].hit[0],hp=s.player.hp;s.player.x=hit.x+c[0]*hit.size;s.player.y=hit.y+c[1]*hit.size;s.player.invulnerableUntil=0;a.step(s,{dx:0,dy:0});assert.equal(s.player.hp,hp-1);
+  const c=a.MOTIFS[hit.kind].hit[0],hp=s.player.hp;s.player.x=hit.x+c[0]*hit.size;s.player.y=hit.y+c[1]*hit.size;s.player.invulnerableUntil=0;s.bombs=0;a.step(s,{dx:0,dy:0});assert.equal(s.player.hp,hp-1);
 });
 test('every western subject is drawn with the brush, in ink only',()=>{
   const art=fs.readFileSync(path.join(__dirname,'..','src/ink-motifs-v43.js'),'utf8');

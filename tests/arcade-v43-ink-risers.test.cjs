@@ -28,7 +28,7 @@ test('touching the drawn shape hurts, the empty space beside it does not',()=>{
   for(let i=0;i<2400&&!hit;i++){t.player.invulnerableUntil=t.tick+999;t.boss.hp=t.boss.maxHp;a.step(t,{dx:0,dy:4});h.clear(t);hit=(t.risers||[]).find(q=>q.age>a.RISER_WARN+60&&!q.fade)||null;}
   assert(hit,'a risen subject');const c=a.MOTIFS[hit.kind].hit[0];
   assert.equal(a.riserHits(t,hit,hit.x+c[0]*hit.size,hit.y+c[1]*hit.size),true);assert.equal(a.riserHits(t,hit,hit.x+hit.size*2.2,hit.y),false);
-  const hp=t.player.hp;t.player.x=hit.x+c[0]*hit.size;t.player.y=hit.y+c[1]*hit.size;t.player.invulnerableUntil=0;a.step(t,{dx:0,dy:0});assert.equal(t.player.hp,hp-1);
+  const hp=t.player.hp;t.player.x=hit.x+c[0]*hit.size;t.player.y=hit.y+c[1]*hit.size;t.player.invulnerableUntil=0;t.bombs=0;a.step(t,{dx:0,dy:0});assert.equal(t.player.hp,hp-1);
 });
 test('easy sends fewer subjects than normal',()=>{
   const tally=d=>{let k=0;for(let i=0;i<4;i++){const s=cardRun(i,d,9);hold(s,2400);k+=s.risen||0;}return k;};
