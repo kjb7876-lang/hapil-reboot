@@ -267,12 +267,83 @@
     [[-.3,-.2,.1],[.05,-.26,.13],[.34,-.18,.09],[-.08,-.12,.07]].forEach(function(b,k){c.beginPath();c.arc(b[0]*s,b[1]*s,b[2]*s,0,TAU);c.fillStyle=light(.92);c.fill();ring(c,b[0]*s,b[1]*s,b[2]*s,b[2]*s,s*.035,.9,20+k,k);});
     stroke(c,[[-s*.5,-s*.04,s*.05],[-s*.56,s*.2,s*.06],[-s*.52,s*.36,s*.015]],.9,30);drop(c,-s*.52,s*.46,s*.04,.9);
     [[-.25,1],[.2,-1],[.5,1]].forEach(function(v,k){var x=v[0]*s,o=[];for(var i=0;i<=12;i++){var t=i/12;o.push([x+Math.sin(t*Math.PI*2.2)*s*.1*v[1],-s*.42-t*s*.6,s*(.01+.07*Math.sin(t*Math.PI))]);}stroke(c,o,.5-k*.08,40+k);});};
+  /* ── 서사 소재(사용자 11-16 "그림으로 스토리 푸는 느낌"): 성·무덤·구두·안경·주사기·나무. 십자·테두리 원 없이 먹 농담만. ── */
+  // 성: 무너져 가는 고딕 성. 총안 달린 탑과 뾰족지붕 탑, 성문 아치와 불 켜진 창, 아래는 안개에 잠긴다
+  M.castle=function(c,s){var O=[[-.92,1],[-.88,-.38],[-.94,-.42],[-.94,-.62],[-.82,-.62],[-.82,-.52],[-.72,-.52],[-.72,-.62],[-.6,-.62],[-.6,-.42],[-.54,-.38],[-.54,-.05],[-.46,-.05],[-.46,-.15],[-.38,-.15],[-.38,-.05],[-.3,-.05],[-.3,-.58],[-.36,-.62],[-.36,-.82],[-.22,-.82],[-.22,-.72],[-.07,-.72],[-.07,-.82],[.07,-.82],[.07,-.72],[.2,-.72],[.24,-.86],[.34,-.66],[.3,-.58],[.3,-.02],[.4,-.02],[.4,-.12],[.48,-.12],[.48,-.02],[.54,-.02],[.54,-.3],[.49,-.34],[.72,-1.0],[.95,-.34],[.9,-.3],[.92,1]],i;
+    c.beginPath();O.forEach(function(p,k){k?c.lineTo(p[0]*s,p[1]*s):c.moveTo(p[0]*s,p[1]*s);});c.closePath();var g2=c.createLinearGradient(0,-s,0,s);g2.addColorStop(0,ink(.7));g2.addColorStop(.55,ink(.46));g2.addColorStop(1,ink(.04));c.fillStyle=g2;c.fill();
+    c.save();c.clip();for(var r=0;r<10;r++){var y=-s*.58+r*s*.15;c.fillStyle='rgba('+PAPER+','+(.3-.025*r)+')';c.fillRect(-s,y,s*2,s*.012);for(var q=0;q<9;q++)c.fillRect(-s*.9+q*s*.22+(r%2)*s*.11,y,s*.011,s*.15);}c.restore();
+    c.beginPath();c.moveTo(s*.49,-s*.34);c.lineTo(s*.72,-s);c.lineTo(s*.95,-s*.34);c.closePath();c.fillStyle=ink(.6);c.fill();c.fillStyle='rgba('+PAPER+',.4)';c.beginPath();c.moveTo(s*.72,-s*.9);c.lineTo(s*.76,-s*.4);c.lineTo(s*.8,-s*.4);c.closePath();c.fill();
+    stroke(c,[[-s*.92,s*.9,s*.02],[-s*.9,s*.2,s*.07],[-s*.88,-s*.38,s*.08]],.95,3);stroke(c,[[s*.9,-s*.3,s*.06],[s*.91,s*.2,s*.05],[s*.92,s*.9,s*.015]],.82,4);
+    for(i=1;i<O.length-2;i++){var a=O[i],b=O[i+1],v=Math.abs(a[0]-b[0])<.03;stroke(c,[[a[0]*s,a[1]*s,s*(v?.06:.045)],[(a[0]+b[0])/2*s,(a[1]+b[1])/2*s,s*(v?.045:.06)],[b[0]*s,b[1]*s,s*(v?.05:.04)]],i>30?.86:.94,10+i);}
+    stroke(c,[[-s*.3,-s*.05,s*.05],[-s*.31,s*.4,s*.035],[-s*.3,s*.8,s*.01]],.6,60);stroke(c,[[s*.3,-s*.02,s*.04],[s*.31,s*.4,s*.03],[s*.3,s*.8,s*.01]],.5,61);stroke(c,[[-s*.54,-s*.05,s*.04],[-s*.55,s*.5,s*.012]],.5,62);stroke(c,[[s*.54,-s*.02,s*.04],[s*.55,s*.5,s*.012]],.45,63);
+    c.beginPath();c.moveTo(-s*.15,s*.86);c.lineTo(-s*.15,s*.46);c.arc(0,s*.46,s*.15,Math.PI,0);c.lineTo(s*.15,s*.86);c.closePath();c.fillStyle=ink(.82);c.fill();stroke(c,[[-s*.16,s*.84,s*.03],[-s*.16,s*.46,s*.05],[-s*.1,s*.34,s*.05],[0,s*.3,s*.06],[s*.1,s*.34,s*.05],[s*.16,s*.46,s*.04],[s*.16,s*.84,s*.02]],.94,64);
+    for(i=-2;i<=2;i++){c.fillStyle='rgba('+PAPER+',.4)';c.fillRect(i*s*.05-s*.006,s*.4,s*.012,s*.3);}
+    [[0,-.44,.07,.17],[-.74,-.24,.05,.12],[.72,-.1,.05,.12],[-.15,.08,.04,.1],[.16,.04,.04,.1],[-.72,.24,.04,.09]].forEach(function(w){c.beginPath();c.moveTo(w[0]*s-w[2]*s,w[1]*s+w[3]*s);c.lineTo(w[0]*s-w[2]*s,w[1]*s);c.lineTo(w[0]*s,w[1]*s-w[2]*s*1.7);c.lineTo(w[0]*s+w[2]*s,w[1]*s);c.lineTo(w[0]*s+w[2]*s,w[1]*s+w[3]*s);c.closePath();c.fillStyle=light(.92);c.fill();c.lineWidth=s*.026;c.strokeStyle=ink(.9);c.stroke();});
+    [[-.2,-1.0,.06],[.34,-.98,.05],[-.5,-.84,.045]].forEach(function(b,k){stroke(c,curve([(b[0]-b[2])*s,(b[1]-b[2]*.4)*s],[(b[0]-b[2]*.4)*s,(b[1]-b[2])*s],[b[0]*s,b[1]*s],4,s*.006,s*.03,s*.02),.85,70+k);stroke(c,curve([b[0]*s,b[1]*s],[(b[0]+b[2]*.4)*s,(b[1]-b[2])*s],[(b[0]+b[2])*s,(b[1]-b[2]*.3)*s],4,s*.02,s*.03,s*.006),.85,74+k);});
+    [[.4,-.78,.04],[.3,-.96,.025],[-.5,-.7,.03]].forEach(function(d,k){blob(c,d[0]*s,d[1]*s,d[2]*s,.75,80+k,.25);});
+    for(var m=0;m<3;m++)stroke(c,curve([-s*(1.15-m*.12),s*(.7+m*.1)],[0,s*(.58+m*.1)],[s*(1.15-m*.15),s*(.72+m*.1)],12,s*.01,s*.08,s*.01),.5-m*.12,90+m);};
+  // 무덤: 기울어진 낡은 비석(둥근 머리, 금 간 돌, 새긴 줄 몇), 흙무더기와 잡풀
+  M.tomb=function(c,s){wash(c,0,s*.3,s*1.0,.13);var i;c.save();c.translate(0,s*.72);c.rotate(-.13);c.translate(0,-s*.72);
+    c.beginPath();c.moveTo(-s*.44,s*.8);c.lineTo(-s*.42,-s*.3);c.arc(0,-s*.3,s*.42,Math.PI,Math.PI*1.72);c.lineTo(s*.2,-s*.56);c.lineTo(s*.36,-s*.5);c.lineTo(s*.42,-s*.3);c.lineTo(s*.44,s*.8);c.closePath();c.fillStyle=light(.93);c.fill();shade(c,-s*.45,-s*.5,s*.5,s*.5,.06,.6);
+    c.save();c.clip();flecks(c,0,s*.1,s*.9,s*1.5,14,5);for(i=0;i<5;i++)wash(c,s*(-.3+.17*i),s*(.72-.05*(i%2)),s*.26,.3);c.restore();
+    stroke(c,[[-s*.44,s*.78,s*.05],[-s*.43,s*.2,s*.09],[-s*.42,-s*.3,s*.08]],.95,3);ring(c,0,-s*.3,s*.42,s*.42,s*.1,.94,4,Math.PI,Math.PI*.72);
+    stroke(c,[[s*.13,-s*.7,s*.06],[s*.2,-s*.56,s*.04],[s*.36,-s*.5,s*.05],[s*.42,-s*.3,s*.06]],.92,5);stroke(c,[[s*.42,-s*.3,s*.06],[s*.43,s*.2,s*.05],[s*.44,s*.78,s*.03]],.84,6);
+    stroke(c,curve([-s*.28,-s*.22],[0,-s*.56],[s*.26,-s*.26],8,s*.012,s*.035,s*.012),.6,7);
+    [[-.24,-.08,.2,-.1,.04],[-.26,.08,.24,.07,.035],[-.2,.24,.12,.23,.03]].forEach(function(l,k){stroke(c,[[l[0]*s,l[1]*s,s*.012],[(l[0]+l[2])/2*s,(l[1]+l[3])/2*s+s*.012,s*l[4]],[l[2]*s,l[3]*s,s*.01]],.72,8+k);});
+    stroke(c,[[s*.2,-s*.56,s*.04],[s*.08,-s*.36,s*.022],[s*.17,-s*.2,s*.03],[s*.04,-s*.02,s*.016],[s*.1,s*.14,s*.006]],.88,12);stroke(c,[[s*.17,-s*.2,s*.02],[s*.3,-s*.1,s*.006]],.8,13);stroke(c,[[-s*.42,s*.36,s*.03],[-s*.26,s*.42,s*.016],[-s*.2,s*.54,s*.005]],.8,14);
+    c.restore();[[.5,-.62,.04],[.62,-.48,.025],[.44,-.78,.02]].forEach(function(d,k){blob(c,d[0]*s,d[1]*s,d[2]*s,.75,20+k,.3);});
+    c.save();c.translate(0,s*.86);c.scale(1,.24);blob(c,0,0,s*.86,.86,24,.1);c.restore();stroke(c,curve([-s*.95,s*.9],[-s*.1,s*.56],[s*.92,s*.9],14,s*.01,s*.13,s*.01),.9,25);stroke(c,curve([-s*.7,s*.98],[0,s*.9],[s*.75,s*.98],10,s*.01,s*.06,s*.01),.5,26);
+    [[-.62,.82,-.82,.3,.05],[-.58,.82,-.6,.36,.04],[-.52,.84,-.34,.44,.035],[.56,.82,.72,.26,.05],[.6,.84,.9,.46,.04],[.5,.84,.5,.5,.03],[-.76,.88,-1.0,.6,.03]].forEach(function(w,k){stroke(c,curve([w[0]*s,w[1]*s],[(w[0]*.8+w[2]*.2)*s,(w[1]+w[3])/2*s],[w[2]*s,w[3]*s],7,s*w[4],s*w[4]*.8,s*.005),.9-.05*(k%3),30+k);});flecks(c,0,s*.84,s*1.3,s*.16,8,9);};
+  // 구두: 옆에서 본 하이힐 한 짝. 발등에서 뒤꿈치로 흐르는 한 획, 가는 굽
+  M.heel=function(c,s){wash(c,0,s*.2,s*1.0,.12);
+    c.beginPath();c.moveTo(-s*.3,s*.34);c.quadraticCurveTo(s*.05,-s*.2,s*.72,-s*.74);c.quadraticCurveTo(s*.34,s*.22,-s*.3,s*.34);c.closePath();c.fillStyle=light(.9);c.fill();shade(c,-s*.3,s*.3,s*.7,-s*.7,.5,.12);stroke(c,curve([-s*.3,s*.34],[s*.05,-s*.2],[s*.72,-s*.74],10,s*.012,s*.035,s*.012),.8,3);
+    c.beginPath();c.moveTo(-s*.96,s*.8);c.bezierCurveTo(-s*.92,s*.5,-s*.6,s*.4,-s*.3,s*.34);c.quadraticCurveTo(s*.36,s*.24,s*.72,-s*.74);c.bezierCurveTo(s*.92,-s*.5,s*.9,-s*.2,s*.76,-s*.04);c.lineTo(s*.82,s*.88);c.lineTo(s*.74,s*.9);c.bezierCurveTo(s*.7,s*.4,s*.62,s*.12,s*.5,s*.04);c.bezierCurveTo(s*.2,s*.26,-s*.2,s*.76,-s*.55,s*.88);c.bezierCurveTo(-s*.75,s*.93,-s*.9,s*.9,-s*.96,s*.8);c.closePath();c.fillStyle=ink(.9);c.fill();
+    stroke(c,[[-s*.96,s*.8,s*.03],[-s*.82,s*.52,s*.09],[-s*.55,s*.4,s*.07],[-s*.3,s*.34,s*.04]],.95,4);stroke(c,[[-s*.3,s*.34,s*.03],[s*.2,s*.14,s*.08],[s*.52,-s*.28,s*.07],[s*.72,-s*.74,s*.035]],.95,5);
+    stroke(c,[[s*.72,-s*.76,s*.04],[s*.88,-s*.46,s*.1],[s*.84,-s*.18,s*.09],[s*.77,s*.3,s*.07],[s*.79,s*.88,s*.045]],.95,6);stroke(c,[[-s*.94,s*.84,s*.03],[-s*.6,s*.9,s*.07],[-s*.2,s*.72,s*.05],[s*.22,s*.26,s*.04],[s*.5,s*.05,s*.03]],.85,7);
+    c.strokeStyle='rgba('+PAPER+',.6)';c.lineWidth=s*.022;c.lineCap='round';c.beginPath();c.moveTo(-s*.78,s*.62);c.quadraticCurveTo(-s*.5,s*.5,-s*.2,s*.5);c.stroke();c.beginPath();c.moveTo(s*.3,s*.2);c.quadraticCurveTo(s*.58,-s*.1,s*.7,-s*.42);c.stroke();c.lineWidth=s*.014;c.beginPath();c.moveTo(s*.765,s*.1);c.lineTo(s*.785,s*.74);c.stroke();
+    flecks(c,-s*.3,s*.62,s*1.0,s*.3,8,6);stroke(c,[[s*.7,s*.92,s*.05],[s*.86,s*.92,s*.04]],.95,8);
+    stroke(c,curve([-s*1.0,s*.98],[-s*.1,s*.92],[s*1.0,s*.99],10,s*.008,s*.05,s*.008),.45,9);drop(c,-s*.62,-s*.2,s*.035,.6);drop(c,-s*.4,-s*.44,s*.025,.5);blob(c,s*.3,-s*.6,s*.03,.6,10,.3);};
+  // 안경: 둥근 알 둘, 한 알은 금이 가고 조각이 빠졌다. 콧대와 접힌 다리
+  M.glasses=function(c,s){wash(c,0,0,s*1.05,.12);var i;
+    stroke(c,curve([-s*.86,-s*.06],[-s*.98,-s*.5],[-s*.62,-s*.7],8,s*.07,s*.05,s*.035),.9,3);stroke(c,curve([-s*.62,-s*.7],[-s*.46,-s*.78],[-s*.4,-s*.62],5,s*.035,s*.04,s*.008),.85,4);
+    stroke(c,curve([s*.86,-s*.06],[s*.98,-s*.5],[s*.62,-s*.7],8,s*.06,s*.045,s*.03),.82,5);stroke(c,curve([s*.62,-s*.7],[s*.46,-s*.78],[s*.4,-s*.62],5,s*.03,s*.035,s*.008),.78,6);
+    [[-.48,.1,1],[.48,.1,-1]].forEach(function(l,k){var x=l[0]*s,y=l[1]*s;c.beginPath();c.arc(x,y,s*.38,0,TAU);c.fillStyle=light(.7);c.fill();shade(c,x-s*.3,y-s*.3,x+s*.3,y+s*.3,.04,.34);
+      ring(c,x,y,s*.39,s*.39,s*(k?.1:.12),k?.9:.95,7+k,k?-.3:2.4,TAU*.99);c.strokeStyle=light(.8);c.lineWidth=s*.03;c.lineCap='round';c.beginPath();c.arc(x,y,s*.27,Math.PI*1.1,Math.PI*1.38);c.stroke();});
+    stroke(c,curve([-s*.13,s*.0],[0,-s*.2],[s*.13,s*.0],8,s*.07,s*.05,s*.07),.94,10);blob(c,-s*.86,-s*.05,s*.06,.95,11,.15);blob(c,s*.86,-s*.05,s*.055,.92,12,.15);
+    var X=s*.56,Y=s*.02;[[.84,-.1],[.7,.42],[.36,.4],[.18,.02],[.4,-.24],[.66,-.24]].forEach(function(p,k){var mx=(X+p[0]*s)/2+((k%2)?1:-1)*s*.04,my=(Y+p[1]*s)/2+((k%3)-1)*s*.035;stroke(c,[[X,Y,s*.03],[mx,my,s*.018],[p[0]*s,p[1]*s,s*.006]],.9,20+k);});
+    c.beginPath();c.moveTo(X,Y);c.lineTo(s*.84,-s*.1);c.lineTo(s*.8,s*.3);c.closePath();c.fillStyle=ink(.42);c.fill();blob(c,X,Y,s*.04,.95,30,.3);
+    stroke(c,[[s*.68,s*.2,s*.012],[s*.6,s*.26,s*.02],[s*.5,s*.22,s*.006]],.75,31);stroke(c,[[s*.36,-s*.08,s*.012],[s*.44,-s*.02,s*.006]],.7,32);
+    c.beginPath();c.moveTo(s*.78,s*.62);c.lineTo(s*.9,s*.7);c.lineTo(s*.8,s*.8);c.closePath();c.fillStyle=ink(.7);c.fill();c.beginPath();c.moveTo(s*.6,s*.74);c.lineTo(s*.66,s*.84);c.lineTo(s*.56,s*.82);c.closePath();c.fillStyle=ink(.55);c.fill();
+    drop(c,-s*.3,s*.72,s*.03,.6);blob(c,-s*.1,-s*.6,s*.025,.6,33,.3);flecks(c,0,s*.1,s*1.7,s*.7,8,7);};
+  // 주사기: 바늘이 위로 선 주사기. 눈금 새긴 유리 몸통에 먹빛 약, 손가락 고리와 밀대, 바늘 끝에 맺힌 방울
+  M.syringe=function(c,s){wash(c,0,-s*.1,s*.9,.12);var i;
+    stroke(c,[[0,-s*.98,s*.008],[s*.005,-s*.76,s*.035],[0,-s*.58,s*.05]],.95,3);stroke(c,[[0,-s*.62,s*.12],[0,-s*.5,s*.26]],.94,4);
+    c.beginPath();c.moveTo(-s*.25,-s*.48);c.lineTo(s*.25,-s*.48);c.lineTo(s*.26,s*.4);c.lineTo(-s*.26,s*.4);c.closePath();c.fillStyle=light(.93);c.fill();shade(c,-s*.25,0,s*.25,0,.04,.3);
+    c.fillStyle=ink(.46);c.fillRect(-s*.22,-s*.46,s*.44,s*.5);c.fillStyle=light(.4);c.fillRect(-s*.16,-s*.44,s*.045,s*.8);stroke(c,[[-s*.22,s*.06,s*.12],[0,s*.07,s*.15],[s*.22,s*.06,s*.12]],.95,5);
+    stroke(c,[[0,s*.13,s*.08],[s*.006,s*.46,s*.07],[0,s*.78,s*.08]],.85,6);
+    stroke(c,[[-s*.25,-s*.5,s*.06],[-s*.26,-s*.05,s*.1],[-s*.26,s*.4,s*.07]],.95,7);stroke(c,[[s*.25,-s*.5,s*.045],[s*.26,-s*.05,s*.06],[s*.26,s*.4,s*.05]],.86,8);stroke(c,[[-s*.27,-s*.49,s*.06],[0,-s*.51,s*.08],[s*.27,-s*.49,s*.06]],.94,9);
+    for(i=0;i<8;i++)stroke(c,[[s*.25,-s*.38+i*s*.1,s*.035],[s*(i%2?.13:.04),-s*.38+i*s*.1,s*.012]],.92,10+i);
+    stroke(c,[[-s*.27,s*.4,s*.06],[0,s*.42,s*.09],[s*.27,s*.4,s*.06]],.95,18);ring(c,-s*.38,s*.47,s*.1,s*.085,s*.06,.93,19,-.5);ring(c,s*.38,s*.47,s*.1,s*.085,s*.055,.88,20,2.2);
+    c.save();c.translate(0,s*.86);c.scale(1,.42);blob(c,0,0,s*.24,.94,21,.08);c.restore();c.fillStyle='rgba('+PAPER+',.5)';c.fillRect(-s*.14,s*.82,s*.2,s*.016);
+    drop(c,s*.015,-s*1.06,s*.04,.9);drop(c,s*.22,-s*.94,s*.03,.7);drop(c,-s*.18,-s*.82,s*.022,.55);blob(c,s*.36,-s*.74,s*.02,.5,22,.3);flecks(c,0,-s*.05,s*.4,s*.8,6,8);};
+  // 나무: 뒤틀린 마른 나무. 옹이 박힌 굽은 줄기, 손아귀처럼 오므린 맨가지, 땅을 움켜쥔 뿌리
+  M.tree=function(c,s){wash(c,0,-s*.2,s*1.05,.12);var i;
+    [[-.1,.86,-.5,.84,-.95,.98,.12],[.12,.86,.5,.82,.98,.96,.11],[-.05,.9,-.3,.98,-.55,1.04,.08],[.08,.9,.3,1.0,.5,1.04,.07]].forEach(function(r,k){stroke(c,curve([r[0]*s,r[1]*s],[r[2]*s,r[3]*s],[r[4]*s,r[5]*s],8,s*r[6]*1.6,s*r[6],s*.008),.92,3+k);});
+    stroke(c,[[-s*.02,s*.98,s*.5],[s*.02,s*.72,s*.34],[-s*.1,s*.46,s*.3],[s*.08,s*.2,s*.27],[-s*.06,-s*.04,s*.23],[s*.02,-s*.24,s*.2]],.94,8);
+    c.save();c.translate(-s*.01,s*.4);c.rotate(-.3);c.scale(.6,1);blob(c,0,0,s*.1,.5,9,.2);c.restore();c.fillStyle='rgba('+PAPER+',.6)';c.beginPath();c.ellipse(-s*.01,s*.4,s*.035,s*.07,-.3,0,TAU);c.fill();blob(c,0,s*.41,s*.022,.95,10,.2);
+    [[-.12,.9,-.04,.6,-.16,.36],[.1,.84,.14,.5,.02,.2],[.0,.3,.1,.1,.0,-.1]].forEach(function(g3,k){c.strokeStyle='rgba('+PAPER+',.42)';c.lineWidth=s*.014;c.lineCap='round';c.beginPath();c.moveTo(g3[0]*s,g3[1]*s);c.quadraticCurveTo(g3[2]*s,g3[3]*s,g3[4]*s,g3[5]*s);c.stroke();});
+    var B=[[[0,-.2,.2],[-.2,-.42,.15],[-.5,-.5,.11],[-.78,-.36,.07],[-.9,-.1,.035],[-.84,.08,.008]],[[-.5,-.5,.09],[-.7,-.7,.06],[-.94,-.72,.035],[-1.0,-.56,.008]],[[-.7,-.7,.05],[-.72,-.9,.03],[-.6,-1.0,.008]],[[-.78,-.36,.05],[-.98,-.3,.025],[-1.04,-.14,.006]],
+      [[0,-.22,.19],[.14,-.5,.14],[.1,-.76,.1],[-.08,-.92,.06],[-.26,-.9,.03],[-.34,-.76,.008]],[[.1,-.76,.07],[.2,-.96,.04],[.34,-1.02,.008]],[[-.08,-.92,.04],[-.1,-1.04,.008]],
+      [[.04,-.14,.17],[.34,-.3,.13],[.6,-.5,.1],[.86,-.5,.06],[.98,-.3,.03],[.92,-.12,.008]],[[.6,-.5,.08],[.66,-.76,.05],[.86,-.86,.03],[.98,-.76,.008]],[[.66,-.76,.04],[.54,-.92,.008]],[[.86,-.5,.045],[1.02,-.56,.008]],[[.34,-.3,.08],[.5,-.12,.05],[.66,-.06,.025],[.72,.08,.006]],[[-.2,-.42,.07],[-.36,-.2,.045],[-.52,-.14,.02],[-.56,0,.006]]];
+    B.forEach(function(b,k){stroke(c,b.map(function(p){return [p[0]*s,p[1]*s,p[2]*s];}),k%4===3?.84:.94,20+k);});
+    [[-.84,.1,.03],[.92,-.1,.03],[-.34,-.74,.025],[.72,.1,.022],[-.56,.02,.02],[.98,-.74,.022],[-1.0,-.54,.022]].forEach(function(d,k){blob(c,d[0]*s,d[1]*s,d[2]*s,.9,40+k,.25);});
+    flecks(c,0,s*.4,s*.3,s*1.0,10,7);flecks(c,0,-s*.45,s*1.4,s*.5,8,8);stroke(c,curve([-s*1.05,s*1.0],[0,s*.9],[s*1.05,s*1.0],10,s*.008,s*.06,s*.008),.5,50);drop(c,s*.72,s*.22,s*.025,.6);};
   /* 갈필 마무리(심사 1차: 순흑 면이 스티커처럼 뜬다): 서양 소재는 따로 그린 뒤 붓 결을 따라 먹을 덜어 내고 군데군데 담묵으로 풀어 동양 소재와 농담을 맞춘다. */
   function dryBrush(q,s,seed){var r=rnd(seed),i;q.save();q.globalCompositeOperation='destination-out';
     for(i=0;i<9;i++){var x=(r()-.5)*s*1.9,y=(r()-.5)*s*2.0,rad=s*(.22+.3*r()),gr=q.createRadialGradient(x,y,0,x,y,rad);gr.addColorStop(0,'rgba(0,0,0,'+(.2+.16*r())+')');gr.addColorStop(1,'rgba(0,0,0,0)');q.fillStyle=gr;q.beginPath();q.arc(x,y,rad,0,TAU);q.fill();}
     q.lineCap='round';for(i=0;i<150;i++){var x2=(r()-.5)*s*2.4,y2=(r()-.5)*s*2.4,a=-1.15+(r()-.5)*.5,len=s*(.1+.36*r());q.strokeStyle='rgba(0,0,0,'+(.14+.3*r())+')';q.lineWidth=s*(.006+.014*r());q.beginPath();q.moveTo(x2,y2);q.lineTo(x2+Math.cos(a)*len,y2+Math.sin(a)*len);q.stroke();}
     q.restore();}
-  ['chalice','hexagram','skull','scythe','crown','chain','candle','key','hourglass','wing','horn','mirror','gear','bell','mask','rose','web','vial','eye','tower','book','cauldron'].forEach(function(k,n){var draw=M[k];
+  ['chalice','hexagram','skull','scythe','crown','chain','candle','key','hourglass','wing','horn','mirror','gear','bell','mask','rose','web','vial','eye','tower','book','cauldron','castle','tomb','heel','glasses','syringe','tree'].forEach(function(k,n){var draw=M[k];
     M[k]=function(c,s){var d=g.document,px=Math.ceil(s*3*2),cv=d.createElement('canvas');cv.width=cv.height=px;var q=cv.getContext('2d');q.scale(2,2);q.translate(s*1.5,s*1.5);draw(q,s);dryBrush(q,s,97+n*13);c.drawImage(cv,-s*1.5,-s*1.5,s*3,s*3);};});
   g.InkMotifs=M;
 })(window);
