@@ -25,8 +25,8 @@ test('the risers and floor warnings and laser telegraphs still draw with the war
   assert.match(app,/HOT=Ink\?'#c2362a'/,'riser warning colour');
   assert.match(app,/strokeStyle=WARN_RED\?'#c9406e'/,'figure telegraph colour');
 });
-test('a hit flashes the edge and cracks the ring in ink under the ink style, old look keeps red',()=>{
+test('a hit keeps its vermilion edge flash and cracked ring (user choice 11-16)',()=>{
   const m=/if\(hurtFlash>0\)\{([^\n]*)/.exec(app);assert(m,'hurt overlay');
-  assert.match(m[1],/Ink&&Ink\.mono\?'30,26,24':'150,40,30'/,'edge flash is ink');
-  assert.match(m[1],/strokeStyle=Ink&&Ink\.mono\?'#1e1a18':VERMILION/,'cracked ring is ink');
+  assert.match(m[1],/hc='150,40,30'/,'edge flash stays vermilion');
+  assert.match(m[1],/strokeStyle=VERMILION;/,'cracked ring stays vermilion');
 });
