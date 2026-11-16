@@ -258,7 +258,7 @@
     function nz(T,t){var f=t*T.length,i0=Math.floor(f)%T.length,u=f-Math.floor(f);u=u*u*(3-2*u);return T[i0]*(1-u)+T[(i0+1)%T.length]*u;}
     function ss(a,b,v){v=Math.max(0,Math.min(1,(v-a)/(b-a)));return v*v*(3-2*v);}
     d=g.getImageData(0,0,Wd,Hd);p=d.data;
-    for(x=0;x<Wd;x++){var u=x/Wd,edge=.12+.34*nz(A,u)+.16*nz(B,u),soft=.3+.18*nz(C,u+.3),drip=Math.pow(nz(C,u),3); // drip: 먹이 흘러내린 가닥(지우기를 늦춘다)
+    for(x=0;x<Wd;x++){var u=x/Wd,edge=.08+.4*nz(A,u)+.22*nz(B,u),soft=.2+.16*nz(C,u+.3),drip=Math.pow(nz(C,u),3); // drip: 먹이 흘러내린 가닥(지우기를 늦춘다)
       for(y=0;y<Hd;y++){var v=y/Hd,a=ss(edge,edge+soft,v);a*=1-.55*drip*(1-ss(.55,1,v));p[(y*Wd+x)*4+3]=Math.round(255*a);}}
     g.putImageData(d,0,0);hold--;return c;
   }
