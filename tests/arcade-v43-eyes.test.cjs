@@ -13,10 +13,20 @@ test('opening starts shut, blinks once, ends wide open; closing ends shut',()=>{
   assert(E.OPEN_SECONDS<=1.2,'the hero is not hidden long');assert(E.CLOSE_SECONDS<=1.4);
 });
 test('?eyes=0 turns it off',()=>{assert.equal(load('?eyes=0').state().off,true);assert.equal(load('').state().off,false);});
-test('ink only: no seal red, no ring, no cross',()=>{
+test('ink lids; seal red only for the game-over cross (user 11-16), no ring',()=>{
   const src=read('src/arcade-eyes-v43.js').replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g,'');
-  assert.doesNotMatch(src,/\.arc\(|ellipse\(/,'no circle drawn');
-  for(const m of src.matchAll(/#([0-9a-f]{6})\b/gi)){const v=m[1],r=parseInt(v.slice(0,2),16),g=parseInt(v.slice(2,4),16),b=parseInt(v.slice(4,6),16);assert(r-Math.min(g,b)<24,'not red: #'+v);}
+  assert.doesNotMatch(src,/\.arc\(|ellipse\(/,'no circle drawn');assert.doesNotMatch(src.slice(src.indexOf('var SEAL=')),/createRadialGradient/,'no halo around the cross');
+  const lids=src.slice(0,src.indexOf('var SEAL='));
+  for(const m of lids.matchAll(/#([0-9a-f]{6})\b/gi)){const v=m[1],r=parseInt(v.slice(0,2),16),g=parseInt(v.slice(2,4),16),b=parseInt(v.slice(4,6),16);assert(r-Math.min(g,b)<24,'lids not red: #'+v);}
+  assert.match(src,/var SEAL='#b0302a'/);assert.match(src,/cross:cross/);
+});
+test('game over: the result shows the red cross over the closed eyes and retry restarts the stage from its start',()=>{
+  const app=read('src/arcade-app-v43.js'),html=read('arcade.html');
+  assert.match(app,/fallen\.classList\.toggle\('fallen',!won\)/);
+  assert.match(app,/setMode\('result'\);if\(eyes&&eyes\.cross\)eyes\.cross\(\$\('result-cross'\)\)/);
+  assert.match(app,/if\(!won\)\{retry\.hidden=false;retry\.textContent=T\('retryFallen'\);retry\.dataset\.stage=String\(s\.stageIndex\);\}/);
+  assert.match(app,/\$\('arcade-retry'\)\.addEventListener\('click',function\(\)\{var i=Number\(this\.dataset\.stage\)\|\|0;start\(\{stage:i,bossOnly:this\.dataset\.boss==='1'\}\);\}\)/,'no segment: from the stage start');
+  assert.match(html,/<canvas id="result-cross"/);assert.match(html,/#arcade-result\.fallen #result-cross\{display:block\}/);
 });
 test('the app opens on start, closes only on a loss, clears on the title, and the page loads it before the app',()=>{
   const app=read('src/arcade-app-v43.js');

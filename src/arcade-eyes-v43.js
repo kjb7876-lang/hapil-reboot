@@ -91,8 +91,55 @@
     }
     raf=global.requestAnimationFrame(frame);
   }
+  /* 붉은 십자가(11-16 사용자: "사망시 눈감는 연출 나오고 다음에 붉은 십자가 나오면서 다시하기").
+     사용자에게 십자가는 늘 좋은 것(구원) — 적·위험 소재에는 쓰지 않고, 쓰러진 영웅을 다시 일으키는 이 자리에만 쓴다.
+     인주색 붓 두 획(세로 → 가로)이 위에서 아래로, 왼쪽에서 오른쪽으로 그어진다. 둘레 원·후광 없음. */
+  var SEAL='#b0302a',SEAL_DEEP='#7e1c18',SEAL_WASH='rgba(176,48,42,.11)',CROSS_SECONDS=.8;
+  function sealStroke(g,x0,y0,x1,y1,w,t,seed){ // t: 0~1 그어진 길이. 눌러 시작해 끝으로 갈수록 가늘고 마른다(비백)
+    if(t<=0)return;var sd=seed,len=Math.hypot(x1-x0,y1-y0),n=Math.max(8,Math.ceil(len/2)),m=Math.max(1,Math.ceil(n*t)),i,k;
+    function srnd(){sd=(sd*16807)%2147483647;return sd/2147483647;}
+    var dx=(x1-x0)/len,dy=(y1-y0)/len,nx=-dy,ny=dx,wob=[];for(i=0;i<=n;i++)wob.push((srnd()-.5)*.08);
+    function half(v,q){return w*.5*(v<.06?.7+v*5:1-.42*Math.pow(v,1.5))*(1+wob[q]);}
+    function at(q,side){var v=q/n,hw=half(v,q)*side,cx=x0+dx*len*v,cy=y0+dy*len*v;return [cx+nx*hw,cy+ny*hw];}
+    function body(){g.beginPath();var q,pt;for(q=0;q<=m;q++){pt=at(q,1);if(q)g.lineTo(pt[0],pt[1]);else g.moveTo(pt[0],pt[1]);}
+      var e=at(m,0),ex=e[0]+dx*half(m/n,m)*.6,ey=e[1]+dy*half(m/n,m)*.6;g.quadraticCurveTo(ex,ey,at(m,-1)[0],at(m,-1)[1]);
+      for(q=m;q>=0;q--){pt=at(q,-1);g.lineTo(pt[0],pt[1]);}
+      var s0=at(0,0);g.quadraticCurveTo(s0[0]-dx*w*.45,s0[1]-dy*w*.45,at(0,1)[0],at(0,1)[1]);g.closePath();}
+    // 번짐: 같은 획을 넓고 옅게 한 번(둘레 원·후광 아님)
+    g.save();g.lineJoin='round';g.lineCap='round';g.strokeStyle=SEAL_WASH;g.lineWidth=w*.55;body();g.stroke();g.restore();
+    g.fillStyle=SEAL;body();g.fill();
+    // 먹결: 획 방향으로 짙은 결 몇 가닥
+    g.save();body();g.clip();g.lineCap='round';
+    for(k=0;k<7;k++){var off=(srnd()-.5)*1.6,a0=Math.floor(srnd()*m*.3),a1=Math.min(m,a0+Math.floor(m*(.4+srnd()*.6)));
+      g.strokeStyle=SEAL_DEEP;g.globalAlpha=.18+srnd()*.25;g.lineWidth=w*(.05+srnd()*.08);g.beginPath();
+      for(i=a0;i<=a1;i++){var v=i/n,hw=half(v,i)*off,px=x0+dx*len*v+nx*hw,py=y0+dy*len*v+ny*hw;if(i===a0)g.moveTo(px,py);else g.lineTo(px,py);}g.stroke();}
+    // 비백: 끝 쪽에 붓털 사이로 바탕이 비친다
+    g.globalCompositeOperation='destination-out';
+    for(k=0;k<5;k++){var o2=(srnd()-.5)*1.5,b0=Math.floor(n*(.55+srnd()*.25));if(b0>=m)continue;
+      g.globalAlpha=.5+srnd()*.4;g.lineWidth=w*(.03+srnd()*.05);g.beginPath();
+      for(i=b0;i<=m;i++){var v2=i/n,hw2=half(v2,i)*o2,qx=x0+dx*len*v2+nx*hw2,qy=y0+dy*len*v2+ny*hw2;if(i===b0)g.moveTo(qx,qy);else g.lineTo(qx,qy);}g.stroke();}
+    g.restore();g.globalAlpha=1;g.globalCompositeOperation='source-over';
+  }
+  function paintCross(c,t){
+    var g=c.getContext('2d'),w=c.width,h=c.height,H=global.HapilInk&&global.HapilInk.raw;if(H)H(1);
+    try{g.setTransform(1,0,0,1,0,0);g.globalAlpha=1;g.globalCompositeOperation='source-over';g.clearRect(0,0,w,h);
+      var bw=w*.15,a=Math.min(1,t/.55),b=Math.max(0,Math.min(1,(t-.5)/.5));
+      sealStroke(g,w*.5,h*.06,w*.5,h*.95,bw,a,11);          // 세로(위→아래)
+      sealStroke(g,w*.14,h*.33,w*.86,h*.31,bw*.92,b,29);    // 가로(왼→오른), 위쪽 3분의 1
+    }finally{if(H)H(-1);}
+  }
+  var crossRaf=0;
+  function cross(c){
+    if(!c||!c.getContext)return;if(crossRaf)global.cancelAnimationFrame(crossRaf);crossRaf=0;
+    var r=c.getBoundingClientRect(),dpr=Math.min(2,global.devicePixelRatio||1);c.width=Math.max(1,Math.round((r.width||96)*dpr));c.height=Math.max(1,Math.round((r.height||128)*dpr));
+    if(reduce||off){paintCross(c,1);return;}
+    var t0=0;function frame(now){if(!t0)t0=now;var t=Math.min(1,(now-t0)/1000/CROSS_SECONDS);paintCross(c,1-Math.pow(1-t,2));if(t<1)crossRaf=global.requestAnimationFrame(frame);else crossRaf=0;}
+    crossRaf=global.requestAnimationFrame(frame);
+  }
   var api={
-    OPEN_SECONDS:OPEN_END,CLOSE_SECONDS:CLOSE_END,
+    OPEN_SECONDS:OPEN_END,CLOSE_SECONDS:CLOSE_END,CROSS_SECONDS:CROSS_SECONDS,
+    // 게임 오버 결과 화면: 감긴 눈 위에 붉은 붓 십자가를 긋는다
+    cross:cross,
     // 게임 시작: 감긴 눈에서 깜빡이며 뜬다
     open:function(){
       if(off)return;if(!ensure())return;

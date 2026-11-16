@@ -1331,13 +1331,14 @@
     $('result-score').textContent=pad(s.score);$('result-best').textContent=pad(best);
     $('result-detail').textContent=(won?'':'STAGE '+(s.stageIndex+1)+' '+Arcade.STAGES[s.stageIndex].name+' · ')+'깬 스테이지 '+s.results.length+' · 별 '+stars+' · 패턴 보너스 '+s.captures+' · 피격 '+s.hits;
     var retry=$('arcade-retry');
-    if(!won){retry.hidden=false;retry.textContent=T('retryStage');retry.dataset.stage=String(s.stageIndex);}
+    if(!won){retry.hidden=false;retry.textContent=T('retryFallen');retry.dataset.stage=String(s.stageIndex);}
     else if(s.bossOnly){retry.hidden=false;retry.textContent=T('retryBoss');retry.dataset.stage=String(s.rushStage);}
     else retry.hidden=true;
     retry.dataset.boss=s.bossOnly?'1':'';
     $('arcade-home').className=retry.hidden?'primary':'';
     var eyes=!won&&global.HapilEyes;if(eyes)eyes.close(); // 목숨이 다하면 눈을 감고, 다 감긴 뒤 결과 화면
-    setTimeout(function(){if(state===s)setMode('result');},won?1500:eyes?Math.round(eyes.CLOSE_SECONDS*1000)+350:900);
+    var fallen=$('arcade-result');fallen.classList.toggle('fallen',!won); // 게임 오버: 감긴 눈 위에 붉은 십자가가 그어지고 '다시하기'(이 스테이지 처음부터)
+    setTimeout(function(){if(state===s){setMode('result');if(eyes&&eyes.cross)eyes.cross($('result-cross'));}},won?1500:eyes?Math.round(eyes.CLOSE_SECONDS*1000)+350:900);
   }
   function pause(){if(mode==='playing')setMode('paused');}
   function goTitle(){if(global.HapilEyes)global.HapilEyes.clear();if(loadedStage>=0)releaseStage(loadedStage,-1);state=null;toast=null;refreshTitle();setMode('title');}
