@@ -1075,26 +1075,30 @@
      글자는 호마다 한 번, 화면 기준 똑바로 세워 쓴다(아래쪽 호에서 뒤집히지 않게). 틈 양끝은 붓을 뗀 먹 맺힘으로 문을 표시. 위쪽 표시(HUD) 자리에는 글자를 쓰지 않는다.
      판정 선분은 Arcade.figureSegments와 같은 호다(띠 폭 = f.width, 판정은 그 62%). 수묵화풍에서 밝은 색은 먹으로, 어두운 색은 한지로 바뀐다. */
   function drawRunes(s,f){
-    var color=mix(COLORS[f.color]||'#ffffff','#ffffff',.93),letter='#0c0a08',warn=f.age<f.warn,over=f.age-f.warn-f.active,k=warn?1:over>0?Math.max(0,1-over/Arcade.BEAM_FADE):1,band=f.width;
+    var color='#f1f1f1',letter='#0c0a08',warn=f.age<f.warn,over=f.age-f.warn-f.active,k=warn?1:over>0?Math.max(0,1-over/Arcade.BEAM_FADE):1,band=f.width;
     var g0=Arcade.RUNE_GROW||.62,grow=(f.fit||1)*(g0+(1-g0)*(f.grow===undefined?1:f.grow)),cx=finite(f.cx,W/2),cy=finite(f.cy,120),text=verseOf(s.boss.actor),i,j,q,R,rot;
     var main=ctx,layer=null;if(canvas.width&&canvas.height){if(!runeLayer)runeLayer=document.createElement('canvas');if(runeLayer.width!==canvas.width||runeLayer.height!==canvas.height){runeLayer.width=canvas.width;runeLayer.height=canvas.height;}
       layer=runeLayer.getContext('2d');layer.setTransform(1,0,0,1,0,0);layer.clearRect(0,0,runeLayer.width,runeLayer.height);layer.setTransform(main.getTransform());ctx=layer;} // 따로 그려 위쪽 표시(HUD) 경계에서 먹이 옅어지며 사라지게 한다
     ctx.save();ctx.globalCompositeOperation='source-over';ctx.lineCap='butt';
-    if(!warn&&k>0){ctx.globalAlpha=.24*k;ctx.fillStyle=letter;R=0;for(i=0;i<f.rings.length;i++)R=Math.max(R,f.rings[i].r);ctx.beginPath();ctx.arc(cx,cy,R*grow-band/2,0,TAU);ctx.fill();} // 결계 안은 맑은 종이처럼 비운다
-    for(i=0;i<f.rings.length;i++){q=f.rings[i];R=q.r*grow;rot=f.turn*q.dir+q.phase;
+    if(!warn&&k>0){ctx.fillStyle=letter;R=0;for(i=0;i<f.rings.length;i++)R=Math.max(R,f.rings[i].r);
+      [[R*grow+44,.08],[R*grow+18,.1],[Math.max(0,R*grow-band/2),.2]].forEach(function(d){ctx.globalAlpha=d[1]*k;ctx.beginPath();ctx.arc(cx,cy,d[0],0,TAU);ctx.fill();});} // 결계 안은 맑은 종이처럼 비우고, 가장자리는 번지게 풀어 배경과 잇는다(심사: 원반이 스티커처럼 떴다)
+    for(i=0;i<f.rings.length;i++){q=f.rings[i];R=q.r*grow;rot=f.turn*q.dir+q.phase;var layerK=q.r>=180?1:q.r>=118?.62:.34,outer=q.r>=180; // 바깥 겹이 짙고 안쪽일수록 옅게(보스가 묻히지 않게)
+      if(warn&&f.grow<i/(f.rings.length+1))continue; // 예고는 바깥 겹부터 안쪽으로 차례로
       for(j=0;j<q.n;j++){var a0=rot+TAU*j/q.n+q.gap/2,a1=rot+TAU*(j+1)/q.n-q.gap/2;
         if(warn){var wg=f.grow;var last=f.warn-f.age<18?(1-(f.warn-f.age)/18)*(.5+.5*Math.sin(f.age*.9)):0;ctx.globalAlpha=.12+.14*wg+.22*last;ctx.strokeStyle=color;ctx.lineWidth=band;ctx.beginPath();ctx.arc(cx,cy,R,a0,a1);ctx.stroke(); // 곧 짙어질 자리를 옅은 담묵 면으로
-          ctx.globalAlpha=.3+.45*wg;ctx.lineWidth=1.6+.8*wg;ctx.setLineDash([5,5]);[-band/2,band/2].forEach(function(o){ctx.beginPath();ctx.arc(cx,cy,R+o,a0,a1);ctx.stroke();});ctx.setLineDash([]); // 점선 윤곽이 1초 동안 짙어진다
-          ctx.globalAlpha=.55+.4*wg;ctx.lineWidth=2.2;[a0,a1].forEach(function(a){ctx.beginPath();ctx.arc(cx+Math.cos(a)*R,cy+Math.sin(a)*R,band*.55,0,TAU);ctx.stroke();});continue;} // 틈 자리 매듭을 먼저 찍는다
+          ctx.globalAlpha=(.3+.45*wg)*(q.r<100?.6:1);if(Ink&&Ink.raw)Ink.raw(1);try{ctx.strokeStyle=VERMILION;ctx.lineWidth=1.6+.8*wg;ctx.setLineDash([5,5]);[-band/2,band/2].forEach(function(o){ctx.beginPath();ctx.arc(cx,cy,Math.max(0,R+o),a0,a1);ctx.stroke();});ctx.setLineDash([]);}finally{if(Ink&&Ink.raw)Ink.raw(-1);} // 예고 윤곽은 인주색(경고, 사용자 규칙: 플레이어를 돕는 순간) // 점선 윤곽이 1초 동안 짙어진다
+          continue;} // 틈 자리 원 표시는 뺐다: 네 겹이면 열두 개가 탄처럼 보였다(심사 11-16) // 틈 자리 매듭을 먼저 찍는다
         var lit=f.age-f.warn<10?1-(f.age-f.warn)/10:0,ga=a1+q.gap/2;
-        ctx.globalAlpha=.42*k;ctx.strokeStyle=letter;ctx.lineWidth=band*1.5;ctx.beginPath();ctx.arc(cx,cy,R,a1+.02,a1+q.gap-.02);ctx.stroke(); // 틈은 한지색으로 비워 밝은 문으로 읽히게
-        ctx.globalAlpha=k*(.72+.28*lit);ctx.strokeStyle=color;ctx.lineWidth=band*(1+.3*lit);ctx.beginPath();ctx.arc(cx,cy,R,a0,a1);ctx.stroke(); // 짙은 띠(켜지는 순간 한 번 번진다)
-        ctx.globalAlpha=k;ctx.lineWidth=2.4;ctx.strokeStyle=mix(color,'#ffffff',.5);[-band/2,band/2].forEach(function(o){ctx.beginPath();ctx.arc(cx,cy,R+o,a0,a1);ctx.stroke();}); // 갈필 테
+        var gs=f.age-f.warn<70?1-(f.age-f.warn)/70:0;ctx.globalAlpha=Math.min(1,(.7+.3*gs)*k);ctx.strokeStyle=letter;ctx.lineWidth=band*(1.5+.7*gs);ctx.beginPath();ctx.arc(cx,cy,R,a1+.02,a1+q.gap-.02);ctx.stroke(); // 틈은 한지색으로 비워 밝은 문으로 읽히게
+        ctx.globalAlpha=k*((outer?.55:.4)+.3*lit)*layerK;ctx.strokeStyle=color;ctx.lineWidth=band*(1+.3*lit);ctx.beginPath();ctx.arc(cx,cy,R,a0,a1);ctx.stroke(); // 짙은 띠(켜지는 순간 한 번 번진다)
+        ctx.globalAlpha=Math.min(1,k*((layerK>.5?.9:.55)+.5*lit));ctx.lineWidth=(outer?2.8:2.2)+2*lit;ctx.strokeStyle='#f8f8f8';var lw0=ctx.lineWidth,ea=ctx.globalAlpha;[-band/2,band/2].forEach(function(o,z){for(var m=0;m<8;m++){var p0=a0+(a1-a0)*m/8,p1=a0+(a1-a0)*(m+1)/8,pr=Math.sin(Math.PI*(m+.5)/8);ctx.lineWidth=lw0*(.45+.95*pr)*(z?.85:1.1);ctx.globalAlpha=ea*(.55+.45*pr);ctx.beginPath();ctx.arc(cx,cy,Math.max(0,R+o),p0,p1+.004);ctx.stroke();}});ctx.lineWidth=lw0;ctx.globalAlpha=ea; // 붓 압력: 획 가운데는 굵고 짙게, 틈 쪽 끝은 가늘고 마르게(심사: 관처럼 균일했다) // 갈필 테
         ctx.globalAlpha=k*.3;ctx.lineWidth=1;ctx.strokeStyle=letter;[-.22,.05,.28].forEach(function(o,z){ctx.beginPath();ctx.arc(cx,cy,R+band*o,a0+.04*(z+1),a1-.05*(3-z));ctx.stroke();}); // 갈필 비백 줄
-        ctx.globalAlpha=k;ctx.fillStyle=mix(color,'#ffffff',.6);[a0,a1].forEach(function(a,z){var ex=cx+Math.cos(a)*R,ey=cy+Math.sin(a)*R;ctx.beginPath();ctx.ellipse(ex,ey,band*.66,band*.5,a+(z?.5:-.5),0,TAU);ctx.fill();ctx.beginPath();ctx.arc(ex+Math.cos(a+(z?-1:1)*1.6)*band*.4,ey+Math.sin(a+(z?-1:1)*1.6)*band*.4,band*.2,0,TAU);ctx.fill();}); // 틈 양끝 붓을 눌러 뗀 먹 덩이
-        var size=band*.8,step=size*1.18/R,mid=(a0+a1)/2,n=text.length;if(step*n>a1-a0-.08)step=(a1-a0-.08)/n;
-        ctx.fillStyle=letter;ctx.font='bold '+size.toFixed(1)+'px '+RUNE_FONT;ctx.textAlign='center';ctx.textBaseline='middle';
-        for(var c=0;c<n;c++){var u=mid+(c-(n-1)/2)*step*(Math.sin(mid)>0?-1:1),x=cx+Math.cos(u)*R,y=cy+Math.sin(u)*R;if(y<78||x<-10||x>W+10)continue;ctx.fillText(text.charAt(c),x,y+1);}}}
+        if(q.r>=100){ctx.globalAlpha=k*.45*layerK;ctx.fillStyle='#f8f8f8';}else ctx.globalAlpha=0;[a0,a1].forEach(function(a,z){var ex=cx+Math.cos(a)*R,ey=cy+Math.sin(a)*R;ctx.beginPath();ctx.ellipse(ex,ey,band*.5,band*.36,a+(z?.5:-.5),0,TAU);ctx.fill();ctx.beginPath();ctx.arc(ex+Math.cos(a+(z?-1:1)*1.6)*band*.4,ey+Math.sin(a+(z?-1:1)*1.6)*band*.4,band*.2,0,TAU);ctx.fill();}); // 틈 양끝 붓을 눌러 뗀 먹 덩이
+        if(q.r<100)continue; // 가장 안쪽 겹은 글자 없이 띠만(보스 몸 위에 글자가 겹쳤다)
+        var size=band*.8,step=size*1.18/R,mid=(a0+a1)/2,line=text,n;if(step*line.length>a1-a0-.08)line=j%2?text.slice(text.length>>1):text.slice(0,text.length>>1); // 작은 안쪽 고리는 구절을 반씩 나눠 쓴다(11-16 네 겹)
+        n=line.length;if(step*n>a1-a0-.08)step=(a1-a0-.08)/n;
+        ctx.globalAlpha=outer?k:k*.45;ctx.fillStyle=letter;ctx.font='bold '+size.toFixed(1)+'px '+RUNE_FONT;ctx.textAlign='center';ctx.textBaseline='middle';
+        for(var c=0;c<n;c++){var u=mid+(c-(n-1)/2)*step*(Math.sin(mid)>0?-1:1),x=cx+Math.cos(u)*R,y=cy+Math.sin(u)*R;if(y<78||x<-10||x>W+10)continue;ctx.fillText(line.charAt(c),x,y+1);}}}
     ctx.restore();ctx.globalAlpha=1;
     if(layer){ctx.save();ctx.globalCompositeOperation='destination-out';var fade=ctx.createLinearGradient(0,52,0,84);fade.addColorStop(0,'rgba(0,0,0,1)');fade.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=fade;ctx.fillRect(-60,-60,W+120,144);ctx.restore();
       ctx=main;ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.drawImage(runeLayer,0,0);ctx.restore();}
