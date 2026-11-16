@@ -8,3 +8,7 @@ test('rune rings leave the escape gaps and the inside open to the background',()
   assert(!/arc\(cx,cy,[^;]*,0,TAU\)/.test(b),'no full disc washed over the ring centre');
   assert(!/a1\+q\.gap/.test(b),'no stroke painted across the escape gap');
 });
+test('no vermilion marks at the ends of the hanja bands; vermilion stays only in the warning outline (user 11-16 "한자띠 끝에 뭍어있는 언주색 선 제거")',()=>{
+  const b=body('drawRunes');
+  assert.equal((b.match(/VERMILION/g)||[]).length,1,'only the dashed warning outline uses vermilion');
+});
