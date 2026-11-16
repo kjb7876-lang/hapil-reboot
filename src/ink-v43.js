@@ -251,15 +251,20 @@
   }
   /* 보스 아랫몸 녹이기(사용자 11-16): 몸만 따로 그린 판 g 에서 아래쪽을 지운다. 지우는 경계는 곧은 선이 아니라 물이 번진 먹 가장자리처럼
      들쭉날쭉하고, 몸에서 아래로 먹이 몇 가닥 흘러내린 듯 남은 자국이 있다. 경계는 숨 쉬듯 천천히 오르내린다. 판정과는 무관(그림만). */
-  var meltMask=null,MELT={w:192,h:96};
+  var meltMask=null,MELT={w:384,h:120};
   function buildMelt(){
-    var Wd=MELT.w,Hd=MELT.h,c=canvasOf(Wd,Hd),g=c.getContext('2d',{willReadFrequently:true}),d,p,x,y,i,A=[],B=[],C=[];hold++;
-    for(i=0;i<9;i++)A.push(rnd());for(i=0;i<23;i++)B.push(rnd());for(i=0;i<41;i++)C.push(rnd());
+    // 경계가 가로 띠로 읽히지 않게(사용자 11-16 "녹는 경계가 몇몇 보스에서 여전히 가로 띠처럼"): 보스 한 몸 폭 안에서도 경계가 크게 오르내리고(촘촘한 1차 잡음),
+    // 위로 치솟는 먹 혀(지움이 몸 속까지 스민다)와 아래로 남는 먹 가닥, 띠 안쪽의 얼룩진 농담(2차 잡음)을 넣는다.
+    var Wd=MELT.w,Hd=MELT.h,c=canvasOf(Wd,Hd),g=c.getContext('2d',{willReadFrequently:true}),d,p,x,y,i,A=[],B=[],C=[],G=[],GW=24,GH=10;hold++;
+    for(i=0;i<29;i++)A.push(rnd());for(i=0;i<61;i++)B.push(rnd());for(i=0;i<97;i++)C.push(rnd());for(i=0;i<(GW+1)*(GH+1);i++)G.push(rnd());
     function nz(T,t){var f=t*T.length,i0=Math.floor(f)%T.length,u=f-Math.floor(f);u=u*u*(3-2*u);return T[i0]*(1-u)+T[(i0+1)%T.length]*u;}
+    function nz2(u,v){var fx=u*GW,fy=v*GH,x0=Math.min(GW-1,Math.floor(fx)),y0=Math.min(GH-1,Math.floor(fy)),tx=fx-x0,ty=fy-y0;tx=tx*tx*(3-2*tx);ty=ty*ty*(3-2*ty);
+      var q=function(a,b){return G[b*(GW+1)+(a%GW)];};return (q(x0,y0)*(1-tx)+q(x0+1,y0)*tx)*(1-ty)+(q(x0,y0+1)*(1-tx)+q(x0+1,y0+1)*tx)*ty;}
     function ss(a,b,v){v=Math.max(0,Math.min(1,(v-a)/(b-a)));return v*v*(3-2*v);}
     d=g.getImageData(0,0,Wd,Hd);p=d.data;
-    for(x=0;x<Wd;x++){var u=x/Wd,edge=.08+.4*nz(A,u)+.22*nz(B,u),soft=.2+.16*nz(C,u+.3),drip=Math.pow(nz(C,u),3); // drip: 먹이 흘러내린 가닥(지우기를 늦춘다)
-      for(y=0;y<Hd;y++){var v=y/Hd,a=ss(edge,edge+soft,v);a*=1-.55*drip*(1-ss(.55,1,v));p[(y*Wd+x)*4+3]=Math.round(255*a);}}
+    for(x=0;x<Wd;x++){var u=x/Wd,tongue=Math.pow(nz(C,u+.5),4)*.45,drip=Math.pow(nz(C,u),4), // tongue: 지움이 위로 치솟는 혀, drip: 몸이 아래로 늘어진 먹 가닥
+        edge=.12+.32*nz(A,u)+.16*nz(B,u)-tongue+drip*.25,soft=.16+.14*nz(B,u+.37);
+      for(y=0;y<Hd;y++){var v=y/Hd,m=nz2(u,v),e2=edge+(m-.5)*.22,a=ss(e2,e2+soft,v);a=Math.min(1,a*(.75+.5*m));if(v>.9)a=Math.max(a,ss(.9,1,v));p[(y*Wd+x)*4+3]=Math.round(255*a);}}
     g.putImageData(d,0,0);hold--;return c;
   }
   function melt(g,x,y,tall,time){
