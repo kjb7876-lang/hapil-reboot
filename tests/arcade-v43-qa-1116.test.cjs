@@ -15,7 +15,7 @@ test('a mid-stage checkpoint keeps the attack and bomb levels grown so far',()=>
  assert(floor.power>=4,'never below the journey floor');
  const mob=fs.readFileSync(path.join(root,'src/arcade-mobile-v43.js'),'utf8'),app=fs.readFileSync(path.join(root,'src/arcade-app-v43.js'),'utf8');
  assert.match(mob,/exp:s\.exp\|0,fills:s\.fills\|0/,'checkpoint stores growth');
- assert.match(app,/exp:mid\.exp,fills:mid\.fills/,'continue passes growth back');
+ assert.match(app,/grown:\{exp:mid\.exp,fills:mid\.fills\}/,'continue passes growth back');
 });
 
 test('the cut-in serif font ships as a small woff2 with every glyph the cut-in draws',()=>{
