@@ -505,6 +505,7 @@
       else if(e==='item'){if(visual-lastItemSound>.06){lastItemSound=visual;play('item',s.player.x);}}
       else if(e==='hurt'){play('hurt',s.player.x);hurtFlash=1;hurtRing={x:s.player.x,y:s.player.y,r:8};shake=16;}
       else if(e==='bomb'){play('bomb',s.player.x);flash=.55;shock=HeroFx?null:{x:s.player.x,y:s.player.y,r:10};shake=10;if(HeroFx){HeroFx.onEvent(e,s,visual);shake=Math.max(shake,HeroFx.shake());}} // 필살기 단계 연출이 충격파 고리를 대신한다(감싸는 원 금지)
+      else if(HeroFx&&e==='bombPulse'){HeroFx.onEvent(e,s,visual);play('hit',s.player.x);shake=Math.max(shake,3);}
       else if(HeroFx&&(e==='powerUp'||e==='powerDown'||e==='bombLevelUp'||e==='distort')){HeroFx.onEvent(e,s,visual);if(e!=='powerDown')play('seal');}
       else if(e==='card'){play('charge',s.boss.x);castFx(s,true);showBanner(Arcade.SEGMENTS[s.seg].name,s.boss.name,true);}
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,'제'+g.part+'부 · STAGE '+(s.stageIndex+1));play('seal');}}

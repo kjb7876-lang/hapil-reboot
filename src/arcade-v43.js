@@ -89,7 +89,7 @@
   // 휴대폰 모드: 탄 수를 줄이고 그만큼 탄을 크게 그린다(판정도 같이 커진다).
   var COMPACT_DENSITY=.72,COMPACT_SIZE=1.25;
   var DRIFT_CAP=600,MOB_DROP_EVERY=3,ELITE_DROPS=3,CARD_DROPS=4,PLAIN_DROPS=2; // 하트(점수 아이템)는 적게(사용자 11-14)
-  var DISTORT_CHANCE=[0,.07,.12,.17,.22,.27,.32,.37],DISTORT_TICKS=30,HAND_WARN=50,HAND_AWAY=64,EXPIRE_SPEED=60,GRAZE_MARGIN=13,BLOOM_TICKS=12,INVULN_TICKS=150,BOMB_TICKS=150,INTRO_TICKS=110,BREAK_TICKS=80,FIRE_DELAY=40,WAVE_GRACE=360;
+  var BOMB_PULSES=7,BOMB_PULSE_START=30,BOMB_PULSE_EVERY=11,DISTORT_CHANCE=[0,.07,.12,.17,.22,.27,.32,.37],DISTORT_TICKS=30,HAND_WARN=50,HAND_AWAY=64,EXPIRE_SPEED=60,GRAZE_MARGIN=13,BLOOM_TICKS=12,INVULN_TICKS=150,BOMB_TICKS=150,INTRO_TICKS=110,BREAK_TICKS=80,FIRE_DELAY=40,WAVE_GRACE=360;
   var SHOT_SPEED=15,SHOT_EVERY=5,HOMING_EVERY=8,HOMING_STEER=7,SHOT_CAP=160,MAX_MOVE=12,FOCUS_MOVE=2;
   var BEAM_HIT=.62,BEAM_FADE=14,BEAM_LENGTH=1000;
   /* ── 기억사수 성장(사용자 11-16 "패시브공격 성장형+폭탄필살기도 성장형 … 각 7단계", "플레이어 성장따라 영웅공격가속 및 영웅주변적탄환 속도느려짐 … 7단계로").
@@ -583,7 +583,7 @@
       boss:{x:W/2,y:-60,targetX:W/2,targetY:132,hp:1,maxHp:1,actor:'',name:'',mid:false,hitTick:-99,leaving:false,present:false,down:null},
       bossOnly:!!options.bossOnly,rushStage:SEGMENTS[startSeg].stage,bombs:rules.bombs,gauge:0,spellClean:false,captures:0,itemsTaken:0,lane:undefined,
       n:0,drifted:[],mobDrops:0,hearts:0,dropped:0,peak:0,score:0,graze:0,hits:0,kills:0,cleared:0,timeouts:0,events:[],cancelled:[],pops:[],lasers:[],mobs:[],warned:false,sn:0,itemCount:0,
-      lastStage:STAGES.length-1,lastWipe:-1e9,started:false,results:[],bombsUsed:0,autoBombs:0,distorts:0,noDistort:options.distort===false,drng:((((options.seed>>>0)||1)*2246822519)^0x9e3779b9)>>>0||7,power:1,exp:0,bombLevel:1,fills:0,hasteUntil:-1,zaps:[],lastBomb:null,mark:{tick:0,score:0,hits:0,bombs:0,captures:0,spells:0}};
+      lastStage:STAGES.length-1,lastWipe:-1e9,started:false,results:[],bombsUsed:0,autoBombs:0,distorts:0,bombPulse:null,pulseInfo:null,noDistort:options.distort===false,drng:((((options.seed>>>0)||1)*2246822519)^0x9e3779b9)>>>0||7,power:1,exp:0,bombLevel:1,fills:0,hasteUntil:-1,zaps:[],lastBomb:null,mark:{tick:0,score:0,hits:0,bombs:0,captures:0,spells:0}};
     if(Number.isInteger(options.stages)&&options.stages>0)s.lastStage=Math.min(STAGES.length-1,s.stageIndex+options.stages-1);
     ['bx','by','ba','bs','bturn','bacc','bmin','bmax','barg','bs2','bspin'].forEach(function(k){s[k]=new Float32Array(CAP);});
     ['bage','blife','bat'].forEach(function(k){s[k]=new Uint16Array(CAP);});
@@ -646,12 +646,21 @@
   /* 시공간 왜곡 확률: 공격 단계마다 5%씩, 1단계 7% → 7단계 37%(사용자: 기본 7%, 풀강화 37% 이하). 탄 패턴의 난수와 따로 굴려 패턴이 바뀌지 않게 한다 */
   function distortChance(s){return DISTORT_CHANCE[Math.max(1,Math.min(MAX_LEVEL,s.power||1))];}
   function distortRoll(s){if(s.noDistort)return false;var x=s.drng|0;x^=x<<13;x^=x>>>17;x^=x<<5;s.drng=x>>>0;return s.drng/4294967296<distortChance(s);}
+  function bombPulse(s){
+    var q=s.bombPulse;if(!q||s.tick<q.next||s.stage==='won'||s.stage==='lost')return;
+    var pw=BOMB_POWER[q.lv],targets=[],k;q.left--;q.next=s.tick+BOMB_PULSE_EVERY;
+    if(s.stage==='card'){s.boss.hp-=pw[0]/BOMB_PULSES;targets.push(s.boss.x,s.boss.y);}
+    for(k=s.mobs.length-1;k>=0;k--){var m=s.mobs[k];if(targets.length<24)targets.push(m.x,m.y);m.hp-=pw[1]/BOMB_PULSES;m.hitTick=s.tick;if(m.hp<=0)killMob(s,k);}
+    s.pulseInfo={index:BOMB_PULSES-q.left,targets:targets,x:s.player.x,y:s.player.y};note(s,'bombPulse');
+    if(q.left<=0)s.bombPulse=null;
+  }
   function useBomb(s){
     if(s.bombs<=0||s.stage==='won'||s.stage==='lost')return;
     var lv=s.bombLevel,pw=BOMB_POWER[lv],targets=[];
     s.bombs--;s.bombsUsed++;s.spellClean=false;s.score+=cancelAll(s)*10;s.player.invulnerableUntil=Math.max(s.player.invulnerableUntil,s.tick+BOMB_TICKS);s.hasteUntil=s.tick+HASTE_TICKS;
-    if(s.stage==='card'){s.boss.hp-=pw[0];targets.push(s.boss.x,s.boss.y);}
-    for(var k=s.mobs.length-1;k>=0;k--){var m=s.mobs[k];if(targets.length<24)targets.push(m.x,m.y);m.hp-=pw[1];m.hitTick=s.tick;if(m.hp<=0)killMob(s,k);}
+    s.bombPulse={left:BOMB_PULSES,next:s.tick+BOMB_PULSE_START,lv:lv}; // 피해는 컷씬 뒤 BOMB_PULSES 번에 나눠 들어간다(총합은 예전 한 번과 같다, 사용자 11-16)
+    if(s.stage==='card')targets.push(s.boss.x,s.boss.y);
+    for(var k=0;k<s.mobs.length&&targets.length<24;k++)targets.push(s.mobs[k].x,s.mobs[k].y);
     s.lastBomb={level:lv,name:BOMB_NAMES[lv],x:s.player.x,y:s.player.y,tick:s.tick,targets:targets};note(s,'bomb'); // 화면은 이 단계·과녁 자리로 필살기 연출을 그린다
   }
   function segment(s){return SEGMENTS[s.seg];}
@@ -1187,6 +1196,7 @@
     if(s.stage==='won'||s.stage==='lost'){s.stageTick++;return s;}
     s.tick++;s.stageTick++;movePlayer(s,input);moveBoss(s);
     if(input&&input.bomb)useBomb(s);
+    bombPulse(s);
     var seg=segment(s),b=s.boss;
     if(s.stage==='break'){if(s.stageTick>=BREAK_TICKS){if(seg&&seg.kind==='card'&&b.present)beginCard(s);else advance(s);}}
     else if(s.stage==='intro'){
@@ -1260,7 +1270,7 @@
   var api={revision:43,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
     BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,RUNE_AT:RUNE_AT,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
-    POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,FOCUS_SLOW:FOCUS_SLOW,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp};
+    POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,FOCUS_SLOW:FOCUS_SLOW,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,BOMB_PULSES:BOMB_PULSES,BOMB_PULSE_START:BOMB_PULSE_START,BOMB_PULSE_EVERY:BOMB_PULSE_EVERY,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp};
   if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcade=api;
 })(typeof window!=='undefined'?window:globalThis);

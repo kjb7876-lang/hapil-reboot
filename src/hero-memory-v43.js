@@ -152,6 +152,7 @@
     else if(e==='powerDown')texts.push({text:'기억 공격 Lv.'+s.power,sub:'',t0:t,x:s.player.x,y:s.player.y-48,down:true});
     else if(e==='bombLevelUp')texts.push({text:'필살 Lv.'+s.bombLevel,sub:global.HapilArcade?global.HapilArcade.BOMB_NAMES[s.bombLevel]:'',t0:t,x:s.player.x,y:s.player.y-62});
     else if(e==='bomb')bomb(s.lastBomb,t,360,640);
+    else if(e==='bombPulse'){var pi=s.pulseInfo;if(pi)pulseFx(pi,s.bombLevel||1,t);}
     else if(e==='distort'){var side=(s.distorts%2)?1:-1;warps.push({x:s.player.x,y:s.player.y,t0:t,side:side});if(warps.length>4)warps.shift();hand+=TAU*1.25;texts.push({text:'시공 왜곡',sub:'',t0:t,x:s.player.x-side*44,y:s.player.y-22});}
   }
   /* ── 시공간 왜곡: 탄이 빗겨 간 자리. 한쪽(탄이 온 쪽)으로 휘어 바깥 아래로 빠져나가는 붓 획 서너 개와 엷은 잔상(닫힌 고리 없이, 0.5초. 심사 1차: 좌우 대칭 획이 렌즈 꼴 고리로 읽힘 → 한쪽 흐름으로) ── */
@@ -172,6 +173,21 @@
       g.globalAlpha=a*.6;g.fillStyle=ink?'rgba(30,26,24,1)':'rgba(170,240,255,1)';
       for(k=0;k<3;k++){var gx=w.x-side*(7+k*7)*(.6+u),gy=w.y-2-k*3;g.beginPath();g.ellipse(gx,gy,4.6-k*.9,8-k*1.4,0,0,TAU);g.fill();} // 반대쪽으로 밀린 잔상 세 점(영웅이 비켜 선 자리)
       g.restore();raw(-1);}
+  }
+  /* ── 필살기 7연타: 컷씬 뒤 일곱 번, 과녁(없으면 화면 위쪽을 훑으며) 먹 폭발이 터진다 ── */
+  var pulseBursts=[];
+  function pulseFx(pi,lv,t){
+    var tg=pi.targets,i=pi.index-1,x,y,vary=.85+((i*37)%7)/7*.3;
+    if(tg.length>=2){var k=(i*2)%(tg.length-(tg.length%2||0)||2);x=tg[k];y=tg[k+1];}else{x=60+((i*127)%240);y=120+((i*71)%240);}
+    y=Math.min(y,450); // 영웅·탄 구역(아래쪽)에는 터지지 않게(심사 1차)
+    if(pulseBursts.length<14)pulseBursts.push({x:x,y:y,t0:t,size:(84+lv*12+(i===6?30:0))*vary,rot:i*1.3+vary});
+    if(pops.length<30)pops.push({x:x,y:y,t0:t,size:60+lv*6,rot:i});
+    quake=Math.max(quake,i===6?2.6:1.2+i*.12);
+  }
+  function drawPulses(g,t){
+    if(!pulseBursts.length)return;raw(1);g.save();blend(g);
+    for(var i=pulseBursts.length-1;i>=0;i--){var b=pulseBursts[i],f=(t-b.t0)*SHEETS.burst.fps;if(f>=10){pulseBursts.splice(i,1);continue;}if(f<0)continue;cell(g,'burst',f,b.x,b.y,b.rot,b.size,(f<3?.8:f<8?.62:.62*(1-(f-8)/2)));}
+    g.restore();raw(-1);
   }
   function drawTexts(g,t){
     drawCutin(g,t,360,640);
@@ -209,9 +225,9 @@
       g.beginPath();g.ellipse(x,y,dr,dr*(.7+.3*((i*.31)%1)),ph,0,TAU);g.fill();if(i%3===0){g.beginPath();g.arc(x+Math.cos(ph)*dr*2.2,y+Math.sin(ph)*dr*2.2,dr*.45,0,TAU);g.fill();}}
     g.restore();raw(-1);
   }
-  function draw(g,s,t){takeZaps(s,t);raw(1);g.save();blend(g);drawZaps(g,t);drawPops(g,t);g.restore();raw(-1);drawBombs(g,t,360,640);drawWarps(g,t);}
+  function draw(g,s,t){takeZaps(s,t);raw(1);g.save();blend(g);drawZaps(g,t);drawPops(g,t);g.restore();raw(-1);drawBombs(g,t,360,640);drawPulses(g,t);drawWarps(g,t);}
   function shake(){var q=quake;quake=0;return q;}
-  function reset(){zaps.length=0;pops.length=0;texts.length=0;bombs.length=0;quake=0;cut=null;warps.length=0;}
+  function reset(){zaps.length=0;pops.length=0;texts.length=0;bombs.length=0;quake=0;cut=null;warps.length=0;pulseBursts.length=0;}
   function hudLine(s){var lv=s.power||1,bl=s.bombLevel||1;return {attack:lv,bomb:bl};}
   load();
   global.HapilHeroFx={shots:shots,draw:draw,drawTexts:drawTexts,clock:clock,field:field,onEvent:onEvent,shake:shake,reset:reset,hudLine:hudLine,SHEETS:SHEETS,
