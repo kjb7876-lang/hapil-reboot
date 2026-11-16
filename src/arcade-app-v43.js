@@ -502,6 +502,7 @@
       else if(e==='bossHit'||e==='bossHitLow')play(e,s.boss.x);
       else if(e==='kill')play('kill',s.player.x);
       else if(e==='pieceBreak'){play('kill',s.player.x);shake=Math.max(shake,4);}
+      else if(e==='riserBreak'){play('kill',s.player.x);shake=Math.max(shake,5);}
       else if(e==='item'){if(visual-lastItemSound>.06){lastItemSound=visual;play('item',s.player.x);}}
       else if(e==='hurt'){play('hurt',s.player.x);hurtFlash=1;hurtRing={x:s.player.x,y:s.player.y,r:8};shake=16;}
       else if(e==='bomb'){play('bomb',s.player.x);flash=.55;shock=HeroFx?null:{x:s.player.x,y:s.player.y,r:10};shake=10;if(HeroFx){HeroFx.onEvent(e,s,visual);shake=Math.max(shake,HeroFx.shake());}} // 필살기 단계 연출이 충격파 고리를 대신한다(감싸는 원 금지)
@@ -942,6 +943,7 @@
   function riserSprite(r){var key=r.kind+':'+r.emblem+':'+scale,hit=riserArt[key];if(hit)return hit;var M=global.InkMotifs;if(!M||!M[r.kind])return null;
     var half=r.size*1.5,c=offscreen(half*2*scale,half*2*scale),q=c.getContext('2d');q.scale(scale,scale);q.translate(half,half);
     if(Ink&&Ink.raw)Ink.raw(1);try{M[r.kind](q,r.size,r.kind==='glyph'?Arcade.GLYPHS[r.emblem]:null);}finally{if(Ink&&Ink.raw)Ink.raw(-1);}
+    if(M.seeThrough)try{var pd=q.getImageData(0,0,c.width,c.height);M.seeThrough(pd.data);q.putImageData(pd,0,0);}catch(e){} // 흰빛·한지로 칠한 면은 바탕이 비치게(사용자 11-16)
     return riserArt[key]={image:c,half:half};}
   function drawRisers(s,under){var R=s.risers;if(!R||!R.length)return;ctx.save();
     for(var k=0;k<R.length;k++){var r=R[k],HOT=Ink?'#c2362a':FLOOR_HOT,INKC='#1e1a18',PAPERC='#f2e9d6',wide=r.size*(RISER_THIN[r.kind]||.9);
@@ -956,11 +958,11 @@
       if(!under&&r.held===1&&!r.splashed){r.splashed=true;for(var d=0;d<11;d++)addParticle(r.x+(Math.random()-.5)*r.size*1.2,r.y+r.size*.8,(Math.random()-.5)*3.6,-.6-Math.random()*2.4,30,INKC,2.6+Math.random()*3.4);} // 다 솟은 순간 먹물이 튄다
       var mv=r.kind,spin=mv==='whirl'?-visual*2.6:mv==='gear'?visual*1.5:0,swing=mv==='web'?Math.sin(visual*1.4+k)*.045:mv==='mirror'||mv==='key'?Math.sin(visual*1.9+k)*.04:mv==='bell'?Math.sin(visual*3.2+k)*.09:mv==='chain'?Math.sin(visual*2.1+k)*.07:mv==='scythe'?Math.sin(visual*1.7+k)*.05:0,swayX=mv==='cloud'?Math.sin(visual*1.1+k)*5:mv==='wave'?Math.sin(visual*2+k)*3:0,flick=mv==='flame'?1+.07*Math.sin(visual*11+k)+.04*Math.sin(visual*17):1; // 움직이는 소재: 회오리·톱니는 돌고, 구름·파도는 흐르고, 불길은 일렁이고, 종·사슬·낫은 위쪽을 축으로 흔들린다(판정 원 안에서만 움직인다)
       ctx.save();ctx.translate(r.x+swayX,r.y+bob);ctx.rotate(r.lean*(1-f)+Math.sin(visual*1.3+k*2)*.03);ctx.scale(2-sq,sq);
-      // 한지 여백: 가장자리가 번지는 부정형으로 넓게 깔아 먹 그림이 배경과 떨어져 보이게. 탄 밑에 깔아 둘레의 탄을 가리지 않는다(재심사 UX)
-      if(under){for(var hb=0;hb<4;hb++){var ha=hb*1.7+k,hx=Math.cos(ha)*r.size*.28,hy=Math.sin(ha)*r.size*.3,hr=r.size*(1.05+.12*((hb*7+k)%3)),pg=ctx.createRadialGradient(hx,hy,hr*.25,hx,hy,hr);pg.addColorStop(0,'rgba(242,233,214,.62)');pg.addColorStop(.75,'rgba(242,233,214,.4)');pg.addColorStop(1,'rgba(242,233,214,0)');ctx.globalAlpha=(1-f)*(1-f);ctx.fillStyle=pg;ctx.beginPath();ctx.arc(hx,hy,hr,0,TAU);ctx.fill();}
+      if(under){ /* 한지 여백(바탕 가림)은 없앴다: 그림 둘레로 배경이 그대로 보이게(사용자 11-16 "앵간한거 다 배경처리해") */
       // 밑동의 먹 번짐: 모든 소재에 같은 표시로 '솟은 위험물'임을 알린다
       var bg=ctx.createRadialGradient(0,r.size*.98,0,0,r.size*.98,r.size*.7);bg.addColorStop(0,'rgba(30,26,24,.5)');bg.addColorStop(1,'rgba(30,26,24,0)');ctx.globalAlpha=1-f;ctx.fillStyle=bg;ctx.save();ctx.scale(1,.32);ctx.beginPath();ctx.arc(0,r.size*.98/.32,r.size*.7,0,TAU);ctx.fill();ctx.restore();ctx.restore();continue;}
-      ctx.globalAlpha=f?Math.max(0,.45-f*.9):1;ctx.globalCompositeOperation=Ink?'multiply':'source-over';if(!f&&RISER_FUME[mv]&&s.tick%9===k%9&&r.fumeTick!==s.tick){r.fumeTick=s.tick;var fu=RISER_FUME[mv];addParticle(r.x+(Math.random()-.5)*r.size*fu[0],r.y+r.size*fu[1],(Math.random()-.5)*.5,-.5-Math.random()*.7,34,INKC,1.4+Math.random()*1.8);} // 촛불 그을음·가마솥 김·약병 기포·모래: 먹 점이 피어오른다(그리기만)
+      var rdm=r.maxHp?1-Math.max(0,r.hp)/r.maxHp:0,rsn=s.tick-(r.hitTick===undefined?-99:r.hitTick),rbl=!f&&(rsn<10?(rsn>>1)%2===0:rdm>.55&&((s.tick>>2)%(rdm>.8?2:4)===0)); /* 탄에 맞으면 테트리스 조각처럼 깜빡인다(사용자 11-16) */
+      ctx.globalAlpha=f?Math.max(0,.45-f*.9):rbl?.38:1;ctx.globalCompositeOperation=Ink?'multiply':'source-over';if(!f&&RISER_FUME[mv]&&s.tick%9===k%9&&r.fumeTick!==s.tick){r.fumeTick=s.tick;var fu=RISER_FUME[mv];addParticle(r.x+(Math.random()-.5)*r.size*fu[0],r.y+r.size*fu[1],(Math.random()-.5)*.5,-.5-Math.random()*.7,34,INKC,1.4+Math.random()*1.8);} // 촛불 그을음·가마솥 김·약병 기포·모래: 먹 점이 피어오른다(그리기만)
       var blink=mv==='eye'?Math.max(0,1-Math.abs(((visual*.55+k*.37)%1)-.5)*14):0,flap=mv==='wing'?1+.05*Math.sin(visual*4.2+k):mv==='book'?1+.03*Math.sin(visual*3+k):1;
       ctx.save();if(spin)ctx.rotate(spin);if(blink)ctx.scale(1,1-.82*blink);if(flap!==1){ctx.translate(-r.size*.62,0);ctx.scale(flap,2-flap);ctx.translate(r.size*.62,0);}if(swing){ctx.translate(0,-r.size*.85);ctx.rotate(swing);ctx.translate(0,r.size*.85);}if(flick!==1){ctx.translate(0,r.size*.9);ctx.scale(2-flick,flick);ctx.translate(0,-r.size*.9);}ctx.drawImage(art.image,-art.half,-art.half,art.half*2,art.half*2);ctx.restore();ctx.globalCompositeOperation='source-over';
       if(!f){var sx=Math.min(r.size*.62,(RISER_THIN[r.kind]||.9)*r.size+16),sy=r.size*.86,pl=.75+.25*Math.sin(visual*6+k);ctx.globalAlpha=.75+.25*pl;ctx.fillStyle=PAPERC;ctx.fillRect(sx-14.5,sy-14.5,29,29);ctx.fillStyle=INKC;ctx.fillRect(sx-12.5,sy-12.5,25,25);ctx.fillStyle=HOT;ctx.fillRect(sx-10.5,sy-10.5,21,21);ctx.fillStyle=PAPERC;ctx.fillRect(sx-5.2,sy-5.2,10.4,3.2);ctx.fillRect(sx-5.2,sy+2,10.4,3.2);} // 판정이 켜진 동안만 찍히는 인주 낙관(경고 표시). 사라질 때는 꺼진다
