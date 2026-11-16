@@ -752,6 +752,7 @@
         var m=s.mobs[k];if(Math.abs(s.sx[i]-m.x)>m.r+4||Math.abs(s.sy[i]-m.y)>m.r+9)continue;
         hit=true;m.hp-=dmg;m.hitTick=s.tick;if(m.hp<=1e-6)killMob(s,k);
       }
+      if(!hit)hit=shotHitsPiece(s,s.sx[i],s.sy[i],dmg);
       if(hit||s.sy[i]<-20||s.sx[i]<-20||s.sx[i]>W+20){var j=--s.sn;s.sx[i]=s.sx[j];s.sy[i]=s.sy[j];s.svx[i]=s.svx[j];s.shoming[i]=s.shoming[j];}
     }
   }
@@ -989,11 +990,24 @@
   function floorPlan(index,difficulty){var a=index%4,b=(a+1+((index>>2)%3))%4;return difficulty==='gentle'?[FLOOR_KINDS[a]]:[FLOOR_KINDS[a],FLOOR_KINDS[b]];}
   function floorRows(s){return pick(s,3,4,4);}
   function floorRand(F){var x=F.rng|0;x^=x<<13;x^=x>>>17;x^=x<<5;F.rng=x>>>0;return F.rng/4294967296;} // 바닥 압박은 따로 굴리는 난수: 기존 패턴의 탄 배치를 바꾸지 않는다
-  function freshFloor(s,index){return {stage:index,t:0,kind:'',rng:((s.seed*2654435761)^(index*40503+1))>>>0||1,grid:new Uint8Array(FLOOR_COLS*6),hill:new Float32Array(FLOOR_COLS),goal:new Float32Array(FLOOR_COLS),pieces:[],warns:[],clearing:0,lines:0,cleared:0,risen:0,dropped:0,mounds:0};}
+  function freshFloor(s,index){return {stage:index,t:0,kind:'',rng:((s.seed*2654435761)^(index*40503+1))>>>0||1,grid:new Uint8Array(FLOOR_COLS*6),hill:new Float32Array(FLOOR_COLS),goal:new Float32Array(FLOOR_COLS),pieces:[],bursts:[],broken:0,warns:[],clearing:0,lines:0,cleared:0,risen:0,dropped:0,mounds:0};}
   function stackHeight(F,c){for(var r=5;r>=0;r--)if(F.grid[r*FLOOR_COLS+c])return r+1;return 0;}
   // 그 x에서 바닥(쌓인 블록·지형) 윗면의 y. 바닥이 없으면 H.
   function floorTop(s,x){var F=s.floor,c=Math.max(0,Math.min(FLOOR_COLS-1,Math.floor(x/FLOOR_CELL)));return H-Math.max(stackHeight(F,c)*FLOOR_CELL,F.hill[c]);}
   function floorLine(s,y,color){if(s.lasers.length>=LASER_CAP)return;s.lasers.push({x:-12,y:y,angle:0,width:12*s.rules.beam,warn:Math.round(72*s.rules.warn),active:140,color:color,spin:0,follow:false,burst:false,age:0,grazed:false,floor:true});if(!s.warned){s.warned=true;note(s,'laserWarn');}}
+  // 내려오는 조각은 영웅 공격으로 깨진다(사용자 11-16 "테트리스 내려오는건 영웅공격으로 꺠부실수 있도록"). 칸마다가 아니라 조각 하나에 체력 하나.
+  var PIECE_HP=9,PIECE_SCORE=150,BURST_TICKS=36;
+  function pieceHp(s){return Math.round(PIECE_HP*(s.difficulty==='gentle'?.6:s.difficulty==='hell'?1.35:1));}
+  function shotHitsPiece(s,x,y,dmg){var F=s.floor;if(!F||!F.pieces.length)return false;
+    for(var k=F.pieces.length-1;k>=0;k--){var q=F.pieces[k];
+      for(var j=0;j<q.cells.length;j++){var x0=(q.col+q.cells[j][0])*FLOOR_CELL,y1=q.y-q.cells[j][1]*FLOOR_CELL,y0=y1-FLOOR_CELL;
+        if(x<x0||x>x0+FLOOR_CELL||y<y0-8||y>y1)continue;
+        if(q.hp===undefined){q.hp=pieceHp(s);q.maxHp=q.hp;}
+        q.hp-=dmg;q.hitTick=s.tick;if(s.tick-(F.pieceHitTick||-99)>=6){F.pieceHitTick=s.tick;note(s,'pieceHit');}
+        if(q.hp<=1e-6){F.pieces.splice(k,1);F.broken++;s.score+=PIECE_SCORE;note(s,'pieceBreak');
+          if(F.bursts.length<12)F.bursts.push({cells:q.cells,col:q.col,y:q.y,color:q.color,age:0});}
+        return true;}}
+    return false;}
   function dropPiece(s,F){
     var rows=floorRows(s);if(F.pieces.length>=pick(s,2,3,3))return; // 한 번에 떨어지는 조각 수 제한(심사 1차: 과밀)
     for(var tries=0;tries<5;tries++){
@@ -1001,7 +1015,7 @@
       var col=Math.floor(floorRand(F)*(FLOOR_COLS-wide+1)),land=0;if(tries<2&&floorRand(F)<.5)col=Math.max(0,Math.min(FLOOR_COLS-wide,Math.floor(s.player.x/FLOOR_CELL)-(wide>>1))); // 절반은 영웅 쪽 칸을 겨눠 바닥 가운데 골이 숨을 곳이 되지 않게(심사 3차)
       for(k=0;k<shape.length;k++)land=Math.max(land,stackHeight(F,col+shape[k][0])-shape[k][1]);
       if(land+tall>rows)continue; // 쌓이면 상한을 넘는 자리는 고르지 않는다
-      F.pieces.push({cells:shape,col:col,y:-tall*FLOOR_CELL,land:land,color:1+Math.floor(floorRand(F)*5)});F.dropped++;return;
+      var hp=pieceHp(s);F.pieces.push({cells:shape,col:col,y:-tall*FLOOR_CELL,land:land,color:1+Math.floor(floorRand(F)*5),hp:hp,maxHp:hp,hitTick:-99});F.dropped++;return;
     }
   }
   function settlePiece(s,F,p){
@@ -1035,6 +1049,7 @@
     if(!live&&s.stage==='break'){F.goal.fill(0);}
     if(F.clearing&&t%10===0){var top=-1;for(var r=5;r>=0&&top<0;r--)for(c=0;c<FLOOR_COLS;c++)if(F.grid[r*FLOOR_COLS+c]){top=r;break;}
       if(top<0)F.clearing=0;else{F.grid.fill(0,top*FLOOR_COLS,(top+1)*FLOOR_COLS);note(s,'floorClear');}}
+    if(!F.bursts)F.bursts=[];for(k=F.bursts.length-1;k>=0;k--)if(++F.bursts[k].age>=BURST_TICKS)F.bursts.splice(k,1);
     for(k=F.warns.length-1;k>=0;k--){if(++F.warns[k].age>=RISE_WARN){riseMob(s,F,F.warns[k].x);F.warns.splice(k,1);}}
     for(c=0;c<FLOOR_COLS;c++){var d=F.goal[c]-F.hill[c];F.hill[c]+=d>0?Math.min(d,.9):Math.max(d,-1.2);}
     var struck=false,speed=pick(s,2.4,3.1,3.7);
@@ -1236,7 +1251,7 @@
   })();
   var api={revision:43,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
-    BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,RUNE_AT:RUNE_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
+    BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,RUNE_AT:RUNE_AT,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
     POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,FOCUS_SLOW:FOCUS_SLOW,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp};
   if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcade=api;

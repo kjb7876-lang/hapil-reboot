@@ -501,6 +501,7 @@
       if(e==='graze'){play('graze',s.player.x);addParticle(s.player.x,s.player.y,(Math.random()-.5)*5,(Math.random()-.5)*5,12,'#ffffff',2);}
       else if(e==='bossHit'||e==='bossHitLow')play(e,s.boss.x);
       else if(e==='kill')play('kill',s.player.x);
+      else if(e==='pieceBreak'){play('kill',s.player.x);shake=Math.max(shake,4);}
       else if(e==='item'){if(visual-lastItemSound>.06){lastItemSound=visual;play('item',s.player.x);}}
       else if(e==='hurt'){play('hurt',s.player.x);hurtFlash=1;hurtRing={x:s.player.x,y:s.player.y,r:8};shake=16;}
       else if(e==='bomb'){play('bomb',s.player.x);flash=.55;shock=HeroFx?null:{x:s.player.x,y:s.player.y,r:10};shake=10;if(HeroFx){HeroFx.onEvent(e,s,visual);shake=Math.max(shake,HeroFx.shake());}} // 필살기 단계 연출이 충격파 고리를 대신한다(감싸는 원 금지)
@@ -848,6 +849,25 @@
       for(j=0;j<q.cells.length;j++){var ox=(q.col+q.cells[j][0])*C,oy=q.y-(q.cells[j][1]+1)*C,a0=q.cells[j][0],b0=q.cells[j][1];
         if(!own(0,1,a0,b0)){ctx.moveTo(ox,oy+1);ctx.lineTo(ox+C,oy+1);}if(!own(0,-1,a0,b0)){ctx.moveTo(ox,oy+C-1);ctx.lineTo(ox+C,oy+C-1);}if(!own(-1,0,a0,b0)){ctx.moveTo(ox+1,oy);ctx.lineTo(ox+1,oy+C);}if(!own(1,0,a0,b0)){ctx.moveTo(ox+C-1,oy);ctx.lineTo(ox+C-1,oy+C);}}
       ctx.shadowColor=PIECE;ctx.shadowBlur=lite?0:8+6*pulse;ctx.stroke();ctx.shadowBlur=0;} // 바깥 윤곽 한 줄만 밝게, 둘레로 부드럽게 번지는 빛
+    // 깨지는 조각(사용자 11-16 "테트리스 내려오는건 영웅공격으로 꺠부실수 있도록"): 맞으면 한지빛으로 번쩍, 체력이 줄수록 먹 금이 뻗고, 부서지면 먹이 터진다.
+    for(k=0;k<F.pieces.length;k++){var bq=F.pieces[k],dmg=bq.maxHp?1-Math.max(0,bq.hp)/bq.maxHp:0,flashK=s.tick-(bq.hitTick===undefined?-99:bq.hitTick)<6;
+      for(j=0;j<bq.cells.length;j++){var qx=(bq.col+bq.cells[j][0])*C,qy=bq.y-(bq.cells[j][1]+1)*C,sd=(bq.col*7+bq.cells[j][0]*13+bq.cells[j][1]*29+bq.color*5)%17;
+        if(flashK){ctx.globalAlpha=.7;ctx.fillStyle=Ink?PAPER:'#ffffff';ctx.fillRect(qx+2,qy+2,C-4,C-4);}
+        if(!dmg&&sd%3!==1){var ha=sd*.37,hx0=qx+C*(.2+.6*((sd*5)%7)/7),hy0=qy+(sd%2?2:C-2);ctx.globalAlpha=.75;ctx.strokeStyle=Ink?'#1e1a18':'#ffffff';ctx.lineWidth=1.8;ctx.beginPath();ctx.moveTo(hx0,hy0);ctx.lineWidth=1.8;ctx.lineTo(hx0+Math.cos(ha)*C*.22,hy0+(sd%2?1:-1)*C*.24);ctx.stroke();ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(hx0+Math.cos(ha)*C*.22,hy0+(sd%2?1:-1)*C*.24);ctx.lineTo(hx0+Math.cos(ha+.8)*C*.36,hy0+(sd%2?1:-1)*C*.42);ctx.stroke();} // 처음부터 실금 하나: 깨지는 물건임을 알린다(심사)
+        if(dmg>0){ctx.globalAlpha=.08+.3*dmg;ctx.fillStyle=Ink?'#1e1a18':'#ffffff';ctx.fillRect(qx+2,qy+2,C-4,C-4); // 금이 갈수록 칸 안에 담묵이 번진다(같은 돌로 읽히게)
+          ctx.globalAlpha=.7+.3*dmg;ctx.strokeStyle=Ink?'#1e1a18':'#ffffff';ctx.lineWidth=1.8+1.8*dmg;ctx.lineCap='round';ctx.beginPath();
+          var arms=1+Math.floor(dmg*3.99);for(var z=0;z<arms;z++){var ang=(sd+z*5.3)%6.28,len=C*(.25+.45*dmg),mx=qx+C/2+Math.cos(ang+1.1)*3,my=qy+C/2+Math.sin(ang+1.1)*3;ctx.moveTo(mx,my);ctx.lineTo(mx+Math.cos(ang)*len*.55+Math.sin(ang)*3,my+Math.sin(ang)*len*.55-Math.cos(ang)*3);ctx.lineTo(mx+Math.cos(ang)*len,my+Math.sin(ang)*len);}ctx.stroke();}}}
+    ctx.globalAlpha=1;
+    if(F.bursts)for(k=0;k<F.bursts.length;k++){var bb=F.bursts[k],bf=bb.age/(Arcade.BURST_TICKS||36),INKC=Ink?'#1e1a18':'#ffffff';
+      // 돌 조각이 깨지는 모양: 칸마다 네모 먹 파편이 금 따라 갈라져 튀고 무게로 떨어지며 마른다(심사: 솟는 소재 폭발과 급을 나눔, 조각 크기에 맞춤)
+      if(bb.age<9){var cxm=(bb.col+1)*C,cym=bb.y-C;ctx.globalAlpha=.6*(1-bb.age/9);ctx.fillStyle=PAPER;ctx.beginPath();ctx.ellipse(cxm,cym,C*2.2,C*1.8,0,0,TAU);ctx.fill();} // 깨지는 순간 둘레를 한지 여백으로 걷어 탄막 속에서도 자리가 읽히게
+      if(bf<.25){ctx.globalAlpha=.8*(1-bf/.25);ctx.fillStyle=PAPER;for(j=0;j<bb.cells.length;j++)ctx.fillRect((bb.col+bb.cells[j][0])*C-3,bb.y-(bb.cells[j][1]+1)*C-3,C+6,C+6);} // 깨지는 순간 한지빛 번쩍
+      for(j=0;j<bb.cells.length;j++){var ccx=(bb.col+bb.cells[j][0]+.5)*C,ccy=bb.y-(bb.cells[j][1]+.5)*C;
+        ctx.globalAlpha=.16*(1-bf);ctx.fillStyle=INKC;ctx.beginPath();for(var e2=0;e2<9;e2++){var ea2=e2/9*TAU,er=C*(.42+.16*(((j+e2)*7)%3)/2);if(e2)ctx.lineTo(ccx+Math.cos(ea2)*er,ccy+Math.sin(ea2)*er);else ctx.moveTo(ccx+Math.cos(ea2)*er,ccy+Math.sin(ea2)*er);}ctx.closePath();ctx.fill(); // 깨진 자리에 먹 번짐 자국이 잠깐 남는다
+        for(var z=0;z<7;z++){var big=z<2,sa=((j*7+z)*2.39+bb.col)%6.283,sp=(big?1.1:1.8)+((z*7+j*3)%5)*.4,dist=sp*bb.age,gx2=ccx+Math.cos(sa)*dist,gy2=ccy+Math.sin(sa)*dist-1.4*bb.age+.12*bb.age*bb.age,sz=C*(big?.5-.08*z:.09+.05*((z+j)%3))*(1-bf*.5); // 영웅 탄을 맞은 쪽(위)으로 먼저 튀고 무게로 떨어진다
+          ctx.globalAlpha=big?(bb.age<10?.9:.55*(1-bf)):(bb.age<5?.85:.35*(1-bf));/* 큰 덩이는 열 프레임, 부스러기는 다섯 프레임만 짙고 곧 옅어진다 */ctx.fillStyle=INKC;ctx.save();ctx.translate(gx2,gy2);ctx.rotate(sa+bb.age*.12*(z%2?1:-1));ctx.beginPath();ctx.moveTo(-sz/2,-sz*.4);ctx.lineTo(sz*.45,-sz*.5);ctx.lineTo(sz*.5,sz*.3);ctx.lineTo(-sz*.2,sz*.45);ctx.closePath();ctx.fill();if(big){ctx.globalAlpha=.6*(1-bf);ctx.strokeStyle=INKC;ctx.lineWidth=1;ctx.stroke();}ctx.restore();}} // 큰 조각 셋은 칸이 금 따라 갈라진 덩이, 작은 부스러기 넷(고르지 않은 모서리)
+      if(bf<.85){var tx3=(bb.col+1)*C,ty3=Math.max(112,bb.y-C*1.6-bb.age*.5);if(s.boss&&s.stage==='card'&&Math.abs(tx3-s.boss.x)<100&&ty3<s.boss.y+120)tx3=s.boss.x+(tx3<s.boss.x?-110:110);tx3=Math.max(24,Math.min(W-24,tx3));var ts=bb.age<6?1+.25*(1-bb.age/6):1;ctx.globalAlpha=bf<.6?1:1-(bf-.6)/.25;ctx.font='bold '+(17*ts).toFixed(1)+'px '+RUNE_FONT;ctx.textAlign='center';ctx.textBaseline='middle';ctx.lineJoin='round';ctx.lineWidth=4;ctx.strokeStyle=PAPER;ctx.strokeText('+'+(Arcade.PIECE_SCORE||150),tx3,ty3);ctx.fillStyle=INKC;ctx.fillText('+'+(Arcade.PIECE_SCORE||150),tx3,ty3);}}
+    ctx.globalAlpha=1;
     for(k=0;k<F.warns.length;k++){var w=F.warns[k],a=Math.min(1,w.age/8)*(.8+.2*Math.sin(w.age*.5)); // 아래에서 올라올 몹: 바닥 가장자리에 빛과 위쪽 화살
       var gl=ctx.createRadialGradient(w.x,H,0,w.x,H,40);gl.addColorStop(0,HOT);gl.addColorStop(.5,'rgba(255,90,60,.35)');gl.addColorStop(1,'rgba(255,90,60,0)');ctx.globalCompositeOperation=Ink?'source-over':'lighter';ctx.globalAlpha=.95*a;ctx.fillStyle=gl;ctx.beginPath();ctx.arc(w.x,H,40,Math.PI,TAU);ctx.fill();ctx.globalCompositeOperation='source-over';
       for(var ch=0;ch<3;ch++){var cy=H-26-ch*15-(w.age%16)*.9,ca=a;ctx.globalAlpha=ca;ctx.strokeStyle='#2a0806';ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(w.x-13,cy+8);ctx.lineTo(w.x,cy-4);ctx.lineTo(w.x+13,cy+8);ctx.stroke();ctx.strokeStyle=HOT;ctx.lineWidth=3;ctx.stroke();}}
