@@ -73,7 +73,7 @@ test('the app bundle has every script the page loads, the art it needs, and hide
     cp.execFileSync(process.execPath,[path.join(root,'tools/build-app-www.cjs'),out],{stdio:'pipe'});
     const html=fs.readFileSync(path.join(out,'index.html'),'utf8');
     for(const m of html.matchAll(/<script src="([^"?]+)/g))assert(fs.existsSync(path.join(out,m[1])),m[1]);
-    for(const f of ['media/arcade-v43/manifest.json','media/music.mp3','media/gunner.webp'])assert(fs.existsSync(path.join(out,f)),f);
+    for(const f of ['media/arcade-v43/manifest.json','media/music.mp3','media/gunner.webp','media/combat/boss01-purple-sword-spider-angel-cutin.webp','media/arcade-v43-heroes/seoha-portrait.webp','media/arcade-v43-heroes/seoha-player.webp'])assert(fs.existsSync(path.join(out,f)),f);
     assert.equal(fs.readFileSync(path.join(out,'docs/v43/canonical-story.txt'),'utf8'),read('docs/v43/canonical-story.txt'),'offline app preserves the complete canonical text');
     assert.match(fs.readFileSync(path.join(out,'src/arcade-app-v43.js'),'utf8'),/var DEV_VISIBLE=false[;,]/);
     assert.match(read('src/arcade-app-v43.js'),/var DEV_VISIBLE=true[;,]/,'the repository copy is untouched');

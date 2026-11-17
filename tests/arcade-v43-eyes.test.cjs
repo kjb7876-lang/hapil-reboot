@@ -25,7 +25,9 @@ test('game over: the result shows the red cross over the closed eyes and retry r
   assert.match(app,/fallen\.classList\.toggle\('fallen',!won&&!!eyes&&!eyes\.state\(\)\.off\)/,'eyes off keeps the paper result');
   assert.match(app,/setMode\('result'\);if\(eyes&&eyes\.cross&&fallen\.classList\.contains\('fallen'\)\)eyes\.cross\(\$\('result-cross'\)\)/);
   assert.match(app,/if\(!won\)\{retry\.hidden=false;retry\.textContent=T\('retryFallen'\);retry\.dataset\.stage=String\(s\.stageIndex\);\}/);
-  assert.match(app,/\$\('arcade-retry'\)\.addEventListener\('click',function\(\)\{var i=Number\(this\.dataset\.stage\)\|\|0;start\(\{stage:i,bossOnly:this\.dataset\.boss==='1'\}\);\}\)/,'no segment: from the stage start');
+  const retry=app.match(/\$\('arcade-retry'\)\.addEventListener\('click',function\(\)\{([^\n]+)\}\);/);
+  assert(retry,'retry handler exists');assert.match(retry[1],/stage:i/);assert.doesNotMatch(retry[1],/segment:/,'no segment: from the stage start');
+  assert.match(retry[1],/practice:true/,'retry is practice');assert.match(retry[1],/hero:state\?state\.hero:selectedHero/,'retry retains the hero');
   assert.match(html,/<canvas id="result-cross"/);assert.match(html,/#arcade-result\.fallen #result-cross\{display:block\}/);
 });
 test('the app opens on start, closes only on a loss, clears on the title, and the page loads it before the app',()=>{

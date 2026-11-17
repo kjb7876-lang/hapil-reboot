@@ -629,9 +629,10 @@
    * segment 직접 시작은 연습/전체 패턴 검사이므로 기본은 원래 길이; pacing:true로 실제 여정 길이를 검사한다.
    * nominalMinutes는 목표 예산이지 플레이어별 완료 시간 보장이 아니다. */
   var PACING={
-    gentle:{nominalMinutes:60,waveMinutes:20,bossMinutes:35,presentationMinutes:5,hpScale:.65,skipRepeatedPlain:true},
-    normal:{nominalMinutes:90,waveMinutes:30,bossMinutes:55,presentationMinutes:5,hpScale:1,skipRepeatedPlain:true},
-    hell:{nominalMinutes:120,waveMinutes:40,bossMinutes:75,presentationMinutes:5,hpScale:1,skipRepeatedPlain:false}
+    // 일반 탄이 주포를 막지 않는 규칙의 실제 사격 시간으로 재측정했다. 탄속·발사 박자는 바꾸지 않는다.
+    gentle:{nominalMinutes:60,waveMinutes:20,bossMinutes:35,presentationMinutes:5,hpScale:.75,skipRepeatedPlain:true},
+    normal:{nominalMinutes:90,waveMinutes:30,bossMinutes:55,presentationMinutes:5,hpScale:1.3,skipRepeatedPlain:true},
+    hell:{nominalMinutes:120,waveMinutes:40,bossMinutes:75,presentationMinutes:5,hpScale:1.3,skipRepeatedPlain:false}
   };
   var REPEATED_PLAIN={},pacingTotals={};
   (function(){var seen={};SEGMENTS.forEach(function(g,i){if(g.kind!=='card'||g.spell)return;var key=g.stage+':'+g.actor;if(seen[key])REPEATED_PLAIN[i]=true;seen[key]=true;});
@@ -640,7 +641,7 @@
   function waveDuration(s,g){if(!s.paced)return g.duration;var p=PACING[s.difficulty],tot=pacingTotals[s.difficulty];return Math.max(120,Math.round(g.duration*(p.waveMinutes*3600-tot.waves*30)/tot.waveTicks));}
   function cardDuration(s,g){if(!s.paced)return g.time;var p=PACING[s.difficulty],tot=pacingTotals[s.difficulty];return Math.max(3,g.time*p.bossMinutes*60/tot.bossSeconds*1.4);}
   function cardHp(s,g){return s.paced?Math.max(20,Math.round(g.hp*PACING[s.difficulty].hpScale)):g.hp;}
-  function pacingReport(difficulty){var d=PACING[difficulty]?difficulty:'normal',p=PACING[d],tot=pacingTotals[d],s={difficulty:d,paced:true},wave=0,boss=0;plannedSegments(d).forEach(function(i){var g=SEGMENTS[i];if(g.kind==='wave')wave+=(waveDuration(s,g)+30)/60;else boss+=cardDuration(s,g);});return {difficulty:d,targetMinutes:p.nominalMinutes,waveBudgetMinutes:wave/60,bossBudgetMinutes:p.bossMinutes,cardTimeoutMinutes:boss/60,presentationBudgetMinutes:p.presentationMinutes,waves:tot.waves,cards:tot.cards,skippedPlain:SEGMENTS.length-tot.waves-tot.cards};}
+  function pacingReport(difficulty){var d=PACING[difficulty]?difficulty:'normal',p=PACING[d],tot=pacingTotals[d],s={difficulty:d,paced:true},wave=0,boss=0;plannedSegments(d).forEach(function(i){var g=SEGMENTS[i];if(g.kind==='wave')wave+=(waveDuration(s,g)+30)/60;else boss+=cardDuration(s,g);});return {difficulty:d,targetMinutes:p.nominalMinutes,waveBudgetMinutes:wave/60,bossBudgetMinutes:p.bossMinutes,cardHpScale:p.hpScale,cardTimeoutMinutes:boss/60,presentationBudgetMinutes:p.presentationMinutes,waves:tot.waves,cards:tot.cards,skippedPlain:SEGMENTS.length-tot.waves-tot.cards};}
   function stageTargetSeconds(difficulty,index){var d=PACING[difficulty]?difficulty:'normal',p=PACING[d],tot=pacingTotals[d],seconds=p.presentationMinutes*60/STAGES.length;plannedSegments(d).forEach(function(i){var g=SEGMENTS[i];if(g.stage===index)seconds+=g.kind==='wave'?g.duration/tot.waveTicks*p.waveMinutes*60:g.time/tot.bossSeconds*p.bossMinutes*60;});return seconds;}
   STAGES.forEach(function(g){g.authoredSeconds=g.seconds;g.seconds=stageTargetSeconds('normal',g.index);});
 

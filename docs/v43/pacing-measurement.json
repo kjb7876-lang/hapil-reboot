@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "engine": "src/arcade-v43.js",
+  "engineSha256": "faf8a5e8ff98f0c8d60d571bd2a2e70bdf1dba5b2bd015b9ca667c8587ce4b31",
+  "commands": [
+    "node tools/measure-arcade-pacing-v43.cjs gentle",
+    "node tools/measure-arcade-pacing-v43.cjs normal",
+    "node tools/measure-arcade-pacing-v43.cjs hell"
+  ],
+  "scenario": {
+    "hero": "memory",
+    "seed": 44,
+    "stages": 56,
+    "bombsUsed": 0,
+    "growth": "normal kills and pattern rewards",
+    "controller": "tracks boss or first mob horizontally, at most 4 pixels per tick",
+    "invulnerability": "Injected to isolate timing; not evidence of a no-hit or human 1CC route."
+  },
+  "presentation": {
+    "stages": 56,
+    "bossCutinMillisecondsPerStage": 1800,
+    "automaticTextMillisecondsTotal": 336000,
+    "automaticPresentationMinutes": 7.28,
+    "description": "First journey, all main-boss cut-ins and automatic text. Already-seen or skipped scenes add less; manual reading, loading and pauses have no fixed upper bound."
+  },
+  "limits": [
+    "Approximate campaign pacing targets are 60/90/120 minutes, not guaranteed human 1CC times.",
+    "Seoha shot spread, aiming, evasive movement, hits and bombs may change clear time.",
+    "The engine report presentationBudgetMinutes is the original nominal budget; this result adds the current 1.8-second cut-in and automatic story text instead."
+  ],
+  "results": [
+    {
+      "benchmark": "invulnerable tracker, real shots and growth, no bombs; timing only, not 1CC or survival proof",
+      "difficulty": "gentle",
+      "status": "won",
+      "minutes": 51.85777777777778,
+      "counts": {
+        "break": 4801,
+        "wave": 70797,
+        "intro": 8936,
+        "card": 102154
+      },
+      "cleared": 312,
+      "timeouts": 0,
+      "power": 7,
+      "fastestNamedSeconds": 5.366666666666666,
+      "report": {
+        "difficulty": "gentle",
+        "targetMinutes": 60,
+        "waveBudgetMinutes": 19.997500000000013,
+        "bossBudgetMinutes": 35,
+        "cardHpScale": 0.75,
+        "cardTimeoutMinutes": 49.00000000000007,
+        "presentationBudgetMinutes": 5,
+        "waves": 197,
+        "cards": 312,
+        "skippedPlain": 182
+      },
+      "minutesWithFirstJourneyAutoPresentation": 59.13777777777778
+    },
+    {
+      "benchmark": "invulnerable tracker, real shots and growth, no bombs; timing only, not 1CC or survival proof",
+      "difficulty": "normal",
+      "status": "won",
+      "minutes": 84.59194444444445,
+      "counts": {
+        "break": 4801,
+        "wave": 107080,
+        "intro": 8938,
+        "card": 183712
+      },
+      "cleared": 312,
+      "timeouts": 0,
+      "power": 7,
+      "fastestNamedSeconds": 9.333333333333334,
+      "report": {
+        "difficulty": "normal",
+        "targetMinutes": 90,
+        "waveBudgetMinutes": 29.99722222222226,
+        "bossBudgetMinutes": 55,
+        "cardHpScale": 1.3,
+        "cardTimeoutMinutes": 77,
+        "presentationBudgetMinutes": 5,
+        "waves": 197,
+        "cards": 312,
+        "skippedPlain": 182
+      },
+      "minutesWithFirstJourneyAutoPresentation": 91.87194444444445
+    },
+    {
+      "benchmark": "invulnerable tracker, real shots and growth, no bombs; timing only, not 1CC or survival proof",
+      "difficulty": "hell",
+      "status": "won",
+      "minutes": 111.13305555555556,
+      "counts": {
+        "break": 9169,
+        "wave": 141338,
+        "intro": 8929,
+        "card": 240643
+      },
+      "cleared": 493,
+      "timeouts": 1,
+      "power": 7,
+      "fastestNamedSeconds": 9.033333333333333,
+      "report": {
+        "difficulty": "hell",
+        "targetMinutes": 120,
+        "waveBudgetMinutes": 39.9986111111111,
+        "bossBudgetMinutes": 75,
+        "cardHpScale": 1.3,
+        "cardTimeoutMinutes": 104.9999999999995,
+        "presentationBudgetMinutes": 5,
+        "waves": 197,
+        "cards": 494,
+        "skippedPlain": 0
+      },
+      "minutesWithFirstJourneyAutoPresentation": 118.41305555555556
+    }
+  ]
+}

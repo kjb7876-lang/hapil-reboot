@@ -48,7 +48,7 @@ function check(arcade,options){
   // Accumulate each tick, so a short lived or fast hazard cannot slip between
   // the two-tick graph updates.
   const pad=p.r+MARGIN;
-  for(let k=0;k<s.n;k++){if(s.bage[k]<arcade.BLOOM_TICKS)continue;const r=arcade.bulletRadius(s,k)*s.rules.hitScale+pad,x=s.bx[k],y=s.by[k],v=s.bs[k]/60;
+  for(let k=0;k<s.n;k++){if(s.bage[k]<Math.max(arcade.BLOOM_TICKS,s.bgrace[k]))continue;const r=arcade.bulletRadius(s,k)*s.rules.hitScale+pad,x=s.bx[k],y=s.by[k],v=s.bs[k]/60;
    if(v>4)paintLine(x-Math.cos(s.ba[k])*v,y-Math.sin(s.ba[k])*v,x,y,r);else paintCircle(x,y,r);}
   for(const l of s.lasers){if(l.age<l.warn||l.age>=l.warn+l.active)continue;paintLine(l.x,l.y,l.x+Math.cos(l.angle)*1000,l.y+Math.sin(l.angle)*1000,l.width*.5*arcade.BEAM_HIT+pad);}
   for(const f of s.figures){if(arcade.figurePhase?arcade.figurePhase(f,s.tick)!=='on':f.age<f.warn||f.age>=f.warn+f.active)continue;const r=f.width*.5*arcade.BEAM_HIT+pad;for(const g of arcade.figureSegments(f))paintLine(...g,r);}
@@ -93,6 +93,7 @@ function audit(selected){
   method:{cellPixels:CELL,clearancePixels:MARGIN,movementPixelsPerTick:4,graphUpdateEveryTicks:2,
    continuity:'One reachable set starts at the real spawn and persists across every segment boundary.',
    hazards:['bullets and fast swept trajectories','active laser beams','active blinking figure segments','rising objects','floor terrain and falling pieces'],
+   bulletBirthGrace:'Bullets enter the hazard mask at max(BLOOM_TICKS, bgrace): ordinary bullets after 12 ticks and broken-body remnants after 36 ticks, matching engine collision timing.',
    controller:'Nearby reachable-cell controller; aiming and real shot history affect the sampled attacks.',
    invulnerability:'Injected only to suppress damage, automatic bombs and evasion from changing the sampled field; the reachability graph still counts hazards.',
    bossHp:'Timeout cases restore boss HP each tick. Shots cases use normal damage and max-level starting growth; neither mode uses bombs.',
