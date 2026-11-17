@@ -39,37 +39,41 @@ async function heroSelection(page,name,mobile){
   assert.equal(await page.evaluate(()=>HapilArcadeApp.debugState().state),null,'hero selection has not created a run');
   assert.equal(await page.locator('#hero-select-memory').getAttribute('aria-pressed'),'true');
   await page.waitForFunction(()=>{const p=document.getElementById('hero-select-portrait');return p.complete&&p.naturalWidth>0;});
-  for(const id of ['memory','seoha','confirm','cancel'])await inViewport(page,'#hero-select-'+id,name+' hero '+id);
+  for(const id of ['memory','seoha','seoha-b','confirm','cancel'])await inViewport(page,'#hero-select-'+id,name+' hero '+id);
   for(const id of ['portrait','name','title','description','abilities'])await inViewport(page,'#hero-select-'+id,name+' hero '+id,1);
   assert.equal(await page.locator('#hero-select-portrait').evaluate(el=>getComputedStyle(el).objectFit),'contain','portrait preserves the complete face');
   await page.waitForTimeout(750);
   assert.equal((await state(page)).mode,'hero','reveal animation never starts the game automatically');
   await page.screenshot({path:path.join(out,name+'-hero-memory.png'),fullPage:true});
   await page.keyboard.press('ArrowRight');
-  assert.equal(await page.locator('#hero-select-seoha').getAttribute('aria-pressed'),'true','keyboard selects Seoha');
-  assert.equal(await page.locator('#hero-select-name').innerText(),'윤서하');
-  await page.keyboard.press('ArrowLeft');
-  assert.equal(await page.locator('#hero-select-memory').getAttribute('aria-pressed'),'true');
+  assert.equal(await page.locator('#hero-select-seoha').getAttribute('aria-pressed'),'true','keyboard selects the original Seoha A');
+  assert.equal(await page.locator('#hero-select-name').innerText(),await page.evaluate(()=>HapilArcadeHeroes.get('seoha').name));
+  await page.waitForFunction(()=>{const p=document.getElementById('hero-select-portrait');return p.src.endsWith('/seoha-portrait.webp')&&p.complete&&p.naturalWidth>0;});
+  await page.waitForTimeout(750);await page.screenshot({path:path.join(out,name+'-hero-seoha-a.png'),fullPage:true});
   await page.keyboard.press('ArrowRight');
-  await page.waitForFunction(()=>{const p=document.getElementById('hero-select-portrait');return p.src.includes('seoha-portrait.webp')&&p.complete&&p.naturalWidth>0;});
+  assert.equal(await page.locator('#hero-select-seoha-b').getAttribute('aria-pressed'),'true','keyboard advances to the new Seoha B');
+  assert.equal(await page.locator('#hero-select-name').innerText(),await page.evaluate(()=>HapilArcadeHeroes.get('seoha-b').name));
+  await page.waitForFunction(()=>{const p=document.getElementById('hero-select-portrait');return p.src.includes('seoha-portrait-v2.webp')&&p.complete&&p.naturalWidth>0;});
   assert.equal(await page.locator('#hero-select-abilities li').count(),3);
   assert((await page.locator('#hero-select-description').innerText()).trim().length>0);
   await page.waitForTimeout(750);
-  for(const id of ['memory','seoha','confirm','cancel'])await inViewport(page,'#hero-select-'+id,name+' Seoha '+id);
+  for(const id of ['memory','seoha','seoha-b','confirm','cancel'])await inViewport(page,'#hero-select-'+id,name+' Seoha '+id);
   for(const id of ['portrait','name','title','description','abilities'])await inViewport(page,'#hero-select-'+id,name+' Seoha '+id,1);
-  await page.screenshot({path:path.join(out,name+'-hero-seoha.png'),fullPage:true});
+  await page.screenshot({path:path.join(out,name+'-hero-seoha-b.png'),fullPage:true});
+  await page.keyboard.press('ArrowRight');assert.equal(await page.locator('#hero-select-memory').getAttribute('aria-pressed'),'true','right wraps across all three heroes');
+  await page.keyboard.press('ArrowLeft');assert.equal(await page.locator('#hero-select-seoha-b').getAttribute('aria-pressed'),'true','left cycles in reverse');
   if(mobile)await activate(page,'#hero-select-cancel',true);else await page.keyboard.press('Escape');
   assert.equal((await state(page)).mode,'title');
   assert.equal(await page.evaluate(()=>HapilArcadeApp.debugState().state),null,'cancel does not start or save a run');
   await activate(page,'#arcade-start',mobile);
   await page.waitForFunction(()=>HapilArcadeApp.getState().mode==='hero');
   assert.equal(await page.locator('#hero-select-memory').getAttribute('aria-pressed'),'true','unconfirmed choice is not persisted');
-  if(mobile)await confirmHero(page,'seoha',true);
+  if(mobile)await confirmHero(page,'seoha-b',true);
   else{
-    await page.keyboard.press('ArrowRight');await page.keyboard.press('Enter');
+    await page.keyboard.press('ArrowRight');await page.keyboard.press('ArrowRight');await page.keyboard.press('Enter');
     await page.waitForFunction(()=>HapilArcadeApp.getState().mode==='playing');
-    assert.equal((await state(page)).hero,'seoha');
-    assert.equal(await page.evaluate(()=>HapilArcadeApp.debugState().state.hero),'seoha');
+    assert.equal((await state(page)).hero,'seoha-b');
+    assert.equal(await page.evaluate(()=>HapilArcadeApp.debugState().state.hero),'seoha-b');
     assert.equal(await page.locator('#arcade-hero-select').isVisible(),false);
   }
 }
@@ -82,6 +86,16 @@ async function setup(browser,viewport,mobile,name){
     window.__audioContexts=[];
     const Native=window.AudioContext||window.webkitAudioContext;
     if(Native)window.AudioContext=new Proxy(Native,{construct(target,args){const c=new target(...args);window.__audioContexts.push(c);return c;}});
+    // Observe the actual player sprite canvas draw, not a calculated opacity
+    // debug value. This wrapper forwards every draw unchanged.
+    window.__heroSpriteDraws={};
+    const drawImage=CanvasRenderingContext2D.prototype.drawImage;
+    CanvasRenderingContext2D.prototype.drawImage=function(...args){
+      const source=args[0]&&(args[0].currentSrc||args[0].src)||'';
+      const hero=/\/media\/gunner\.webp(?:\?|$)/.test(source)?'memory':/\/media\/arcade-v43-heroes\/seoha-player-v2\.webp(?:\?|$)/.test(source)?'seoha-b':/\/media\/arcade-v43-heroes\/seoha-player\.webp(?:\?|$)/.test(source)?'seoha':null;
+      if(hero&&this.canvas.id==='arcade-canvas')window.__heroSpriteDraws[hero]={alpha:this.globalAlpha,source,time:performance.now()};
+      return drawImage.apply(this,args);
+    };
   });
   await page.goto('http://127.0.0.1:'+server.address().port+'/arcade.html?eyes=0',{waitUntil:'networkidle'});
   await page.waitForFunction(()=>window.HapilArcadeApp&&!document.getElementById('arcade-start').disabled);
@@ -95,7 +109,33 @@ async function stationary(page){
   await page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;s.stage='break';s.stageTick=-1e7;s.player.x=80;s.player.y=480;s.player.invulnerableUntil=s.tick+1e7;s.n=0;s.lasers.length=s.figures.length=s.mobs.length=0;if(s.risers)s.risers.length=0;s.bombs=3;});
 }
 async function combatClock(page){
-  return page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;return {tick:s.tick,stageTick:s.stageTick,segTick:s.segTick,hp:s.player.hp,bombs:s.bombs,x:s.player.x,y:s.player.y,actor:s.boss.actor,present:s.boss.present,n:s.n,floor:s.floor.t};});
+  return page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;return {tick:s.tick,stageTick:s.stageTick,segTick:s.segTick,hp:s.player.hp,bombs:s.bombs,x:s.player.x,y:s.player.y,actor:s.boss.actor,present:s.boss.present,n:s.n,sn:s.sn,lasers:s.lasers.length,figures:s.figures.length,risers:(s.risers||[]).length,floor:s.floor.t};});
+}
+async function nearbyBulletOpacity(page,name){
+  const results=[];
+  for(const hero of ['memory','seoha','seoha-b']){
+    // Use the real selection flow for every identity so each gameplay image is
+    // loaded through its production path instead of an injected image cache.
+    await page.evaluate(()=>HapilArcadeApp.pause());await page.locator('#arcade-quit').click();await page.locator('#arcade-start').click();await confirmHero(page,hero,false);
+    await stationary(page);
+    const farAt=await page.evaluate(hero=>{const s=HapilArcadeApp.debugState().state;s.hero=hero;s.player.x=180;s.player.y=450;s.player.invulnerableUntil=0;s.n=0;return performance.now();},hero);
+    await page.waitForFunction(({hero,at})=>window.__heroSpriteDraws[hero]&&window.__heroSpriteDraws[hero].time>at,{hero,at:farAt});
+    const far=await page.evaluate(hero=>window.__heroSpriteDraws[hero],hero);
+    assert(far.alpha>.85,name+' '+hero+' unobstructed sprite remains opaque');
+    if(hero==='seoha')assert.match(far.source,/seoha-player\.webp/,'the original A gameplay art remains in use');
+    if(hero==='seoha-b')assert.match(far.source,/seoha-player-v2\.webp/,'the new B gameplay art is actually drawn');
+    await page.screenshot({path:path.join(out,name+'-'+hero+'-far.png'),fullPage:true});
+    const nearAt=await page.evaluate(()=>{const a=HapilArcade,s=HapilArcadeApp.debugState().state;s.n=1;s.bx[0]=s.player.x+20;s.by[0]=s.player.y;s.ba[0]=0;s.bs[0]=0;s.bturn[0]=0;s.bacc[0]=0;s.bmin[0]=0;s.bmax[0]=1000;s.bsize[0]=1;s.bcolor[0]=0;s.bage[0]=a.BLOOM_TICKS+30;s.blife[0]=60000;s.bmode[0]=0;s.bbreakable[0]=0;s.bgrace[0]=0;return performance.now();});
+    await page.waitForFunction(({hero,at,alpha})=>window.__heroSpriteDraws[hero]&&window.__heroSpriteDraws[hero].time>at&&window.__heroSpriteDraws[hero].alpha<alpha*.45,{hero,at:nearAt,alpha:far.alpha});
+    const near=await page.evaluate(hero=>window.__heroSpriteDraws[hero],hero);
+    assert(near.alpha<far.alpha*.8,name+' '+hero+' nearby enemy bullet fades the actual sprite: '+JSON.stringify({far,near}));
+    assert(near.alpha>.1,name+' '+hero+' remains visible');
+    await page.screenshot({path:path.join(out,name+'-'+hero+'-near.png'),fullPage:true});
+    const restoredAt=await page.evaluate(()=>{HapilArcadeApp.debugState().state.n=0;return performance.now();});
+    await page.waitForFunction(({hero,at,alpha})=>window.__heroSpriteDraws[hero]&&window.__heroSpriteDraws[hero].time>at&&Math.abs(window.__heroSpriteDraws[hero].alpha-alpha)<.01,{hero,at:restoredAt,alpha:far.alpha});
+    results.push({hero,far:far.alpha,near:near.alpha});
+  }
+  await stationary(page);return results;
 }
 async function storyAndRules(page,name){
   // Warm the authored full portrait before timing the short entrance animation.
@@ -107,8 +147,9 @@ async function storyAndRules(page,name){
     // metadata, while the next segment identifies the not-yet-spawned main boss.
     s.stageIndex=1;s.seg=main;s.stage='intro';s.stageTick=0;s.segTick=0;
     s.boss.actor=mid.actor;s.boss.name=a.ACTORS[mid.actor].name;s.boss.mid=true;s.boss.present=false;s.boss.leaving=true;
-    s.n=0;s.lasers.length=s.figures.length=s.mobs.length=0;if(s.risers)s.risers.length=0;
-    s.player.invulnerableUntil=s.tick+1e7;document.getElementById('story-auto').checked=false;
+    s.n=1;s.bx[0]=s.player.x;s.by[0]=s.player.y;s.bsize[0]=1;s.bcolor[0]=0;s.bs[0]=s.ba[0]=s.bacc[0]=s.bturn[0]=0;s.bage[0]=100;s.blife[0]=1000;s.bmode[0]=0;
+    s.lasers.length=s.figures.length=s.mobs.length=0;if(s.risers)s.risers.length=0;
+    s.player.invulnerableUntil=0;document.getElementById('story-auto').checked=false;
     return {tick:s.tick,main,midActor:mid.actor};
   });
   // No showStory debug call: the application must intercept before Arcade.step.
@@ -118,6 +159,7 @@ async function storyAndRules(page,name){
   const before=await combatClock(page);
   assert.equal(before.tick,fixture.tick,'cut-in opens before the first main-boss engine tick');
   assert.equal(before.stageTick,0);assert.equal(before.actor,fixture.midActor);assert.equal(before.present,false,'main boss has not arrived');
+  assert.equal(before.n,0,'existing live bullets disappear when the cut-in starts');assert.equal(before.sn,0,'old player shots disappear too');
   assert.equal(await page.locator('#arcade-story').getAttribute('data-actor'),'violet');
   assert.equal(await page.locator('#story-boss-name').innerText(),await page.evaluate(()=>HapilArcade.ACTORS.violet.name));
   assert.equal(await page.locator('#story-portrait').getAttribute('aria-label'),await page.evaluate(()=>HapilArcade.ACTORS.violet.name));
@@ -153,6 +195,16 @@ async function storyAndRules(page,name){
   await page.locator('#story-skip').click();assert.equal((await state(page)).mode,'playing');
   await page.waitForFunction(()=>{const s=HapilArcadeApp.debugState().state;return s.boss.actor==='violet'&&s.boss.present&&!s.boss.mid;});
   assert.equal((await state(page)).mode,'playing','main boss enters after the cut-in without replay');
+  const arrival=await page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;return {tick:s.tick,entry:s.bossEntrance,bombs:s.bombs,bombsUsed:s.bombsUsed,hits:s.hits,hp:s.player.hp};});
+  assert.equal(arrival.entry.readyTick-arrival.entry.enteredTick,120,'the full two-second lock begins at actual enter');
+  assert(arrival.tick<arrival.entry.readyTick,'the browser observes the arrival grace');
+  await page.keyboard.press('x');await page.waitForTimeout(250);
+  const locked=await page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;return {tick:s.tick,stage:s.stage,n:s.n,sn:s.sn,bombs:s.bombs,bombsUsed:s.bombsUsed,hits:s.hits,hp:s.player.hp};});
+  assert(locked.tick<arrival.entry.readyTick);assert.equal(locked.stage,'intro');assert.equal(locked.n,0);assert.equal(locked.sn,0);
+  for(const key of ['bombs','bombsUsed','hits','hp'])assert.equal(locked[key],arrival[key],'arrival lock preserves '+key);
+  await page.waitForFunction(()=>{const s=HapilArcadeApp.debugState().state;return s.bossEntrance&&s.bossEntrance.releasedTick!==null;});
+  const released=await page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;return {entry:s.bossEntrance,bombs:s.bombs,bombsUsed:s.bombsUsed};});
+  assert.equal(released.entry.releasedTick,released.entry.readyTick);assert.equal(released.bombs,arrival.bombs);assert.equal(released.bombsUsed,arrival.bombsUsed,'blocked X is not delayed until combat');
   await stationary(page);
 }
 async function pauseSettings(page,name,mobile){
@@ -188,10 +240,10 @@ async function pauseSettings(page,name,mobile){
   assert.equal(saved.musicVolume,.35);assert.equal(saved.sfxVolume,.65);assert.equal(saved.screenShake,false);assert.equal(saved.lowQuality,true);
   await page.locator('#arcade-start').click();
   await page.waitForFunction(()=>HapilArcadeApp.getState().mode==='hero');
-  assert.equal(await page.locator('#hero-select-seoha').getAttribute('aria-pressed'),'true','confirmed hero survives reload');
+  assert.equal(await page.locator('#hero-select-seoha-b').getAttribute('aria-pressed'),'true','confirmed B hero survives reload');
   assert.equal(await page.locator('#arcade-hero-select').getAttribute('data-lite'),'true');
   assert.equal(await page.locator('#arcade-hero-select .hs-art').evaluate(el=>getComputedStyle(el).animationName),'none','low-quality selection disables reveal motion');
-  await confirmHero(page,'seoha',mobile);
+  await confirmHero(page,'seoha-b',mobile);
 }
 async function desktop(browser){
   const {context,page,errors,badRequests}=await setup(browser,{width:1280,height:900},false,'desktop');
@@ -206,9 +258,10 @@ async function desktop(browser){
     const x=await page.evaluate(()=>HapilArcadeApp.debugState().state.player.x);
     await page.waitForTimeout(100);
     assert.equal(await page.evaluate(()=>HapilArcadeApp.debugState().state.player.x),x,'no sticky movement after pause');
+    const heroOpacity=await nearbyBulletOpacity(page,'desktop');
     await storyAndRules(page,'desktop');await pauseSettings(page,'desktop',false);
     assert.deepEqual(errors,[]);assert.deepEqual(badRequests,[]);
-    reports.push({name:'desktop',heroSelection:true,hero:'seoha',mainBossCutin:true,keyboard:true,pauseSettings:true,audioLifecycle:true,errors,badRequests});
+    reports.push({name:'desktop',heroSelection:true,hero:'seoha-b',heroOpacity,mainBossCutin:true,keyboard:true,pauseSettings:true,audioLifecycle:true,errors,badRequests});
   }catch(e){await page.screenshot({path:path.join(out,'desktop-failure.png'),fullPage:true});throw e;}
   finally{await context.close();}
 }
@@ -238,9 +291,10 @@ async function mobile(browser,width,height){
     await touch('touchEnd',[blast]);assert((await state(page)).focus,'bomb release does not release low speed');
     await touch('touchEnd',[hold]);assert.equal((await state(page)).focus,false,'focus clears on its own release');
     await touch('touchEnd',[]);
+    const heroOpacity=await nearbyBulletOpacity(page,name);
     await storyAndRules(page,name);await pauseSettings(page,name,true);
     assert.deepEqual(errors,[]);assert.deepEqual(badRequests,[]);
-    reports.push({name,heroSelection:true,hero:'seoha',mainBossCutin:true,fast,slow,multitouchBomb:true,pauseSettings:true,audioLifecycle:true,errors,badRequests});
+    reports.push({name,heroSelection:true,hero:'seoha-b',heroOpacity,mainBossCutin:true,fast,slow,multitouchBomb:true,pauseSettings:true,audioLifecycle:true,errors,badRequests});
   }catch(e){await page.screenshot({path:path.join(out,name+'-failure.png'),fullPage:true});throw e;}
   finally{await context.close();}
 }

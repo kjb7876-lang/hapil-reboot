@@ -5,10 +5,11 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const A=require('../src/arcade-v43.js'),root=path.join(__dirname,'..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 function harness(saved){
-  const nodes=new Map(),storage=Object.assign({},saved),calls=[],globals={},strokes=[];let pen=[],dash=[];const stack=[];
+  const nodes=new Map(),storage=Object.assign({},saved),calls=[],globals={},strokes=[],imageDraws=[];let pen=[],dash=[];const stack=[];
   const ctx=new Proxy({globalAlpha:1,lineWidth:1,
     beginPath(){pen=[];},moveTo(...v){pen.push(['moveTo',...v]);},lineTo(...v){pen.push(['lineTo',...v]);},arc(...v){pen.push(['arc',...v]);},setLineDash(v){dash=v;},
     stroke(){strokes.push({alpha:this.globalAlpha,width:this.lineWidth,points:pen.map(p=>p.slice()),dash:dash.slice()});},
+    drawImage(img){imageDraws.push({source:img&&img.src,alpha:this.globalAlpha});},
     save(){stack.push({globalAlpha:this.globalAlpha,lineWidth:this.lineWidth});},restore(){Object.assign(this,stack.pop()||{});},createLinearGradient:()=>({addColorStop(){}}),createRadialGradient:()=>({addColorStop(){}}),getImageData:()=>({data:new Uint8ClampedArray(64)}),measureText:()=>({width:5})},{get:(o,k)=>k in o?o[k]:()=>{}});
   function element(id,tag='DIV'){
     const listeners={},attrs={};
@@ -31,14 +32,16 @@ function harness(saved){
     addEventListener:(k,f)=>{(globals[k]||(globals[k]=[])).push(f);},requestAnimationFrame(){},setTimeout(){},Image:class{},};w.window=w;
   const sandbox=vm.createContext(w);vm.runInContext(read('src/arcade-i18n-v43.js'),sandbox);vm.runInContext(read('src/arcade-story-v43.js'),sandbox);
   vm.runInContext(read('src/arcade-heroes-v43.js'),sandbox);vm.runInContext(read('src/arcade-mobile-v43.js'),sandbox);
+  vm.runInContext(read('src/arcade-hero-visibility-v43.js'),sandbox);
   // Skip only browser boot. Expose the closed-over real handlers to install them on the DOM double.
   const script=read('src/arcade-app-v43.js').replace(/  boot\(\);\s*\}\)\(window\);\s*$/,`  global.controlsTest={bind:bind,input:inputForStep,load:loadSettings,apply:applySettings,mode:setMode,
-    prepare:function(s,a){state=s;fx=a;mode='playing';},picker:function(p){heroPicker=p;},manifest:function(m){manifest=m;},settings:function(){return settings;},finger:function(){return finger;},quality:function(){return lite;},drawFigures:drawFigures,drawRunes:drawRunes,frame:frame,consume:consume,beginStory:beginStory,nextStory:nextStory};
+    prepare:function(s,a){state=s;fx=a;mode='playing';},picker:function(p){heroPicker=p;},manifest:function(m){manifest=m;},settings:function(){return settings;},finger:function(){return finger;},quality:function(){return lite;},drawFigures:drawFigures,drawRunes:drawRunes,frame:frame,consume:consume,beginStory:beginStory,nextStory:nextStory,
+    seedVisuals:function(){particles.push({});drifts.push({});flashes.push({});casts.push({});emblems.push({});bombQueued=true;},visualCounts:function(){return [particles.length,drifts.length,flashes.length,casts.length,emblems.length];},heroImages:function(){['memory','seoha','seoha-b'].forEach(function(id){var p=Heroes.get(id);images[id==='memory'?'gunner':'hero-'+id]={src:p.sprite,width:256,height:512};});}};
 })(window);`);
   assert(script.includes('global.controlsTest='));vm.runInContext(script,sandbox);
   const h=w.controlsTest,s=A.createRun({difficulty:'hell',seed:77});s.stage='break';s.stageTick=-100000;
   h.prepare(s,audio);h.bind();
-  return {w,h,s,doc,nodes,storage,calls,globals,audio,strokes};
+  return {w,h,s,doc,nodes,storage,calls,globals,audio,strokes,imageDraws};
 }
 function pickerFor(h){
   const picker={visible:false,shown:0,selected:null,confirmCallback:null,cancelCallback:null,
@@ -79,6 +82,31 @@ test('legacy checkpoints and journeys default to Memory while a saved Seoha jour
   {saved:{'hapil-arcade-hero-v43':'memory','hapil-arcade-journey-hero-v43':'seoha'},want:'seoha'}
  ];
  for(const c of cases){const {h,w,nodes}=harness(c.saved),picker=pickerFor(h);nodes.get('arcade-continue').click();assert.equal(w.HapilArcadeApp.debugState().state.hero,c.want);assert.equal(picker.shown,0);assert.equal(w.HapilArcadeApp.getState().oneCreditEligible,false,'stage-zero continuation remains practice even without a checkpoint');}
+});
+
+test('Seoha A retains its saved identity and original art while B selection, retry and checkpoint stay B',()=>{
+ const a=harness({'hapil-arcade-hero-v43':'seoha','hapil-arcade-journey-hero-v43':'seoha'});
+ assert.equal(a.w.HapilArcadeHeroes.get('seoha').id,'seoha');assert.match(a.w.HapilArcadeHeroes.get('seoha').portrait,/\/seoha-portrait\.webp$/);assert.match(a.w.HapilArcadeHeroes.get('seoha').sprite,/\/seoha-player\.webp$/);
+ a.nodes.get('arcade-continue').click();assert.equal(a.w.HapilArcadeApp.debugState().state.hero,'seoha');
+ const b=harness(),picker=pickerFor(b.h);b.nodes.get('arcade-start').click();picker.confirm('seoha-b');
+ assert.equal(b.w.HapilArcadeApp.debugState().state.hero,'seoha-b');assert.equal(b.storage['hapil-arcade-hero-v43'],'seoha-b');assert.equal(b.storage['hapil-arcade-journey-hero-v43'],'seoha-b');
+ assert.match(b.w.HapilArcadeHeroes.get('seoha-b').portrait,/\/seoha-portrait-v2\.webp$/);assert.match(b.w.HapilArcadeHeroes.get('seoha-b').sprite,/\/seoha-player-v2\.webp$/);
+ b.nodes.get('arcade-retry').dataset.stage='0';b.nodes.get('arcade-retry').click();const s=b.w.HapilArcadeApp.debugState().state;assert.equal(s.hero,'seoha-b');
+ s.started=true;s.seg=A.STAGES[0].first+1;s.stage='wave';b.w.HapilMobile.tick(s,'playing',16);
+ assert.equal(b.w.HapilMobile.checkpoint(0,'normal').hero,'seoha-b');
+ const resumed=harness({...b.storage,'hapil-arcade-hero-v43':'memory'});resumed.nodes.get('arcade-continue').click();assert.equal(resumed.w.HapilArcadeApp.debugState().state.hero,'seoha-b');
+});
+
+test('actual sprite drawing fades all three heroes near enemy bullets, freezes opacity on pause, and restores it afterward',()=>{
+ for(const hero of ['memory','seoha','seoha-b']){
+  const {h,w,s,imageDraws}=harness();s.hero=hero;s.player.invulnerableUntil=0;h.heroImages();
+  const sprite=w.HapilArcadeHeroes.get(hero).sprite,alpha=()=>imageDraws.filter(d=>d.source===sprite).at(-1).alpha;
+  h.frame(1000);h.frame(1100);const far=alpha();assert.equal(far,.95,hero+' clear sprite');
+  s.n=1;s.bx[0]=s.player.x+20;s.by[0]=s.player.y;s.bs[0]=0;s.bage[0]=100;s.blife[0]=1000;s.bsize[0]=1;s.bcolor[0]=0;
+  for(let t=1200;t<=1800;t+=100)h.frame(t);const near=alpha();assert(near<far*.45&&near>.1,hero+' real draw uses reduced opacity');assert.equal(s.hits,0);
+  h.mode('paused');s.n=0;h.frame(1900);h.frame(2000);assert.equal(alpha(),near,'paused opacity stays fixed');
+  h.mode('playing');for(let t=2100;t<=3100;t+=100)h.frame(t);assert(alpha()>.94,hero+' clears back to full opacity');
+ }
 });
 
 test('two-finger movement + held focus really changes engine speed; release/cancel belongs to its pointer',()=>{
@@ -185,6 +213,35 @@ test('spider midboss enters normally; mainboss cut-in runs before Violet spawns 
  assert.equal(s.boss.actor,'violet');assert.equal(s.boss.mid,false);assert.equal(s.boss.present,true);assert.equal(s.stage,'intro');
  assert.equal(calls.filter(c=>c[0]==='play'&&c[1]==='bossCutin').length,1,'one cut-in cue, no repeat at actual entrance');
  assert.equal(calls.filter(c=>c[0]==='play'&&c[1]==='warning').length,1,'only the midboss uses the regular entrance warning');
+});
+
+test('main-boss cut-in clears combat residue and its 120-tick attack lock starts at actual entrance, including seen stories',()=>{
+ const main=A.SEGMENTS.findIndex(g=>g.stage===1&&g.kind==='card'&&!g.mid),mid=A.SEGMENTS.find(g=>g.stage===1&&g.kind==='card'&&g.mid);
+ for(const seen of [false,true]){
+  const saved=seen?{'hapil-arcade-main-boss-seen-v2':'{"1":true}'}:undefined,{h,w,nodes,audio,calls}=harness(saved);
+  const s=A.createRun({difficulty:'hell',seed:43,segment:main,pacing:true});h.prepare(s,audio);
+  Object.assign(s.boss,{actor:mid.actor,name:A.ACTORS[mid.actor].name,mid:true,present:true,leaving:true,y:100});
+  s.n=s.sn=1;s.bx[0]=s.player.x;s.by[0]=s.player.y;s.bage[0]=100;s.blife[0]=1000;s.bsize[0]=1;
+  for(const key of ['mobs','lasers','figures','ripples','cancelled','drifted','pops','zaps'])s[key].push({});
+  s.risers=[{}];s.bombPulse={};s.pulseInfo={};s.lastBomb={};s.riserDue=2;s.riserT=200;s.riserN=4;
+  s.floor.grid.fill(1);s.floor.hill.fill(12);s.floor.goal.fill(12);s.floor.pieces.push({});s.floor.warns.push({});s.floor.bursts.push({});
+  s.itemCount=1;s.ix[0]=100;s.iy[0]=100;s.ivy[0]=0;s.ikind[0]=0;s.gauge=35;s.score=1234;s.bombs=3;s.lastWipe=s.tick;
+  const resources=()=>({hp:s.player.hp,hits:s.hits,bombs:s.bombs,bombsUsed:s.bombsUsed,autoBombs:s.autoBombs,distorts:s.distorts,gauge:s.gauge,score:s.score,exp:s.exp,itemCount:s.itemCount});
+  const before=resources();h.seedVisuals();assert.equal(h.beginStory(),!seen);assert.equal(calls.filter(c=>c[0]==='reset').length,1,'old scheduled combat sound is cleared at preparation');assert.equal(s.bossEntrance.enteredTick,null);assert.equal(s.bossEntrance.readyTick,null);
+  assert.equal(s.n,0);assert.equal(s.sn,0);for(const key of ['mobs','lasers','figures','ripples','cancelled','drifted','pops','zaps','risers'])assert.equal(s[key].length,0,key+' residue is removed');
+  assert.equal(s.bombPulse,null);assert.equal(s.pulseInfo,null);assert.equal(s.lastBomb,null);assert(s.floor.grid.every(v=>v===0));assert(s.floor.hill.every(v=>v===0));assert(s.floor.goal.every(v=>v===0));
+  for(const key of ['pieces','warns','bursts'])assert.equal(s.floor[key].length,0);assert.deepEqual(Array.from(h.visualCounts()),[0,0,0,0,0]);assert.equal(h.input().bomb,false);assert.deepEqual(resources(),before);
+  if(!seen){const tick=s.tick;h.frame(1000);h.frame(1100);assert.equal(s.tick,tick);assert.equal(s.bossEntrance.enteredTick,null,'reading does not consume the arrival grace');nodes.get('story-skip').click();}
+  assert.equal(w.HapilArcadeApp.getState().mode,'playing');
+  let retiring=0;while(s.bossEntrance.enteredTick===null&&retiring++<100){A.step(s,{dx:1,dy:0,bomb:true});assert.deepEqual(resources(),before);assert.equal(s.n,0);assert.equal(s.sn,0);}
+  assert(retiring>1,'the outgoing midboss leaves before the timer starts');assert.equal(s.boss.actor,'violet');assert.equal(s.boss.mid,false);assert.equal(s.boss.present,true);
+  const entered=s.bossEntrance.enteredTick,ready=s.bossEntrance.readyTick;assert.equal(ready-entered,120);assert.equal(s.tick,entered);
+  const bossY=s.boss.y,playerX=s.player.x;
+  while(s.tick<ready-1){A.step(s,{dx:-1,dy:0,bomb:true});assert.equal(s.stage,'intro');assert.equal(s.segTick,0);assert.equal(s.n,0);assert.equal(s.sn,0);assert.deepEqual(resources(),before);}
+  assert(s.boss.y>bossY,'boss entrance animation advances');assert(s.player.x<playerX,'movement stays available');
+  A.step(s,{dx:0,dy:0});assert.equal(s.tick,ready);assert.equal(s.bossEntrance.releasedTick,ready);assert.equal(s.stage,'card');assert.equal(s.bombs,before.bombs,'blocked bomb presses are not queued');assert.equal(s.hits,0);
+  for(let i=0;i<4;i++)A.step(s,{dx:0,dy:0});assert(s.sn>0,'automatic player fire resumes after the full grace period');
+ }
 });
 
 test('all 56 main bosses qualify before their first engine tick, including road stages; new seen state suppresses replay',()=>{

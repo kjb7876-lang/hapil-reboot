@@ -761,8 +761,29 @@
     if(next.kind==='wave'){s.boss.leaving=s.boss.present;s.stage='wave';note(s,'wave');return;}
     if(!prev||prev.kind!=='card'||prev.actor!==next.actor||!s.boss.present){s.boss.leaving=s.boss.present;s.stage='intro';}else s.stage='break';
   }
-  var BOSS_REST=156,BOSS_SWAY=40,BOSS_ROAM=58; // 좌우는 가운데 3분의 1 안: 문양이 칸 가장자리에 잘리지 않게(심사 6.53)
-  function enter(s,actor){var b=s.boss;b.actor=actor;b.name=ACTORS[actor].name;b.mid=!!segment(s).mid;b.present=true;b.leaving=false;b.x=W/2;b.y=-60;b.targetX=W/2;b.targetY=BOSS_REST;s.stageTick=0;note(s,'entrance');}
+  var BOSS_REST=156,BOSS_SWAY=40,BOSS_ROAM=58,BOSS_ENTRANCE_GRACE=120; // 좌우는 가운데 3분의 1 안: 문양이 칸 가장자리에 잘리지 않게(심사 6.53)
+  // 컷신 준비는 폭탄/격파가 아니다. 점수·아이템·경험치·쿨타임을 건드리지 않고 공격 잔재만 걷는다.
+  function clearBossEntranceHazards(s){
+    s.n=0;s.sn=0;s.mobs.length=0;s.lasers.length=0;s.figures.length=0;s.ripples.length=0;
+    s.cancelled.length=0;s.drifted.length=0;s.pops.length=0;s.zaps.length=0;
+    s.bombPulse=null;s.pulseInfo=null;s.lastBomb=null;s.warned=false;
+    s.risers=s.risers||[];s.risers.length=0;s.riserDue=0;s.riserT=0;s.riserN=0;s.riserStage=s.stageIndex;
+    if(s.risen===undefined)s.risen=0;if(s.riserRng===undefined)s.riserRng=((s.seed*40503)^(s.stageIndex*2654435761+7))>>>0||1;
+    var F=s.floor;if(F){F.grid.fill(0);F.hill.fill(0);F.goal.fill(0);F.pieces.length=0;F.warns.length=0;if(F.bursts)F.bursts.length=0;F.clearing=0;F.kind='';F.t=0;}
+    // 구간 저장·맵 변경은 유지한다. 이전 공격의 소리/번개/필살 연출은 컷신 뒤 다시 재생하지 않는다.
+    s.events=s.events.filter(function(e){return e==='map'||e==='stageClear'||e==='extend';});
+  }
+  /* 앱이 본보스 컷신 시작(또는 이미 본 컷신을 건너뜀) 직전에 한 번 준비한다.
+   * 미호출 시 기존 대본 시간은 그대로다. 실제 enter()부터 120틱 동안 양쪽 공격을 쉬며,
+   * 컷신 중 앱이 step()을 부르지 않으면 tick/등장 대기도 진행되지 않는다. */
+  function prepareBossEntrance(s){
+    var g=segment(s);if(s.stage!=='intro'||!g||g.kind!=='card'||g.mid||s.bossEntrance&&s.bossEntrance.segment===s.seg)return false;
+    clearBossEntranceHazards(s);var entered=s.boss.present&&!s.boss.leaving&&s.boss.actor===g.actor?(s.boss.enteredTick===undefined?s.tick:s.boss.enteredTick):null;
+    s.bossEntrance={segment:s.seg,enteredTick:entered,readyTick:entered===null?null:entered+BOSS_ENTRANCE_GRACE,releasedTick:null};return true;
+  }
+  function enter(s,actor){var b=s.boss;b.actor=actor;b.name=ACTORS[actor].name;b.mid=!!segment(s).mid;b.present=true;b.leaving=false;b.x=W/2;b.y=-60;b.targetX=W/2;b.targetY=BOSS_REST;b.enteredTick=s.tick;s.stageTick=0;
+    var e=s.bossEntrance;if(e&&e.segment===s.seg){e.enteredTick=s.tick;e.readyTick=s.tick+BOSS_ENTRANCE_GRACE;}
+    note(s,'entrance');}
   function beginCard(s){var card=segment(s),b=s.boss;b.maxHp=b.hp=cardHp(s,card);b.mid=!!card.mid;s.stage='card';s.stageTick=0;s.segTick=0;s.spellClean=!!card.spell;if(card.spell){s.spellNumber++;note(s,'card');}else note(s,'plain');}
   function endCard(s,defeated){
     var card=segment(s),left=Math.max(0,cardDuration(s,card)-s.segTick*TICK),wiped=breakWipe(s),b=s.boss;
@@ -1342,6 +1363,13 @@
   function step(s,input){
     if(s.stage==='won'||s.stage==='lost'){s.stageTick++;return s;}
     s.tick++;s.stageTick++;movePlayer(s,input);moveBoss(s);
+    var entrance=s.bossEntrance;
+    if(entrance&&entrance.segment===s.seg&&s.stage==='intro'){
+      if(!s.boss.present)enter(s,segment(s).actor);
+      if(entrance.readyTick===null||s.tick<entrance.readyTick)return s;
+      // 준비를 마친 첫 카드만 이름 표시용 FIRE_DELAY를 생략한다. 이후 카드의 40틱 예고는 그대로다.
+      clearBossEntranceHazards(s);beginCard(s);entrance.releasedTick=s.tick;
+    }
     if(input&&input.bomb)useBomb(s);
     bombPulse(s);
     var seg=segment(s),b=s.boss;
@@ -1357,7 +1385,8 @@
     }
     else if(s.stage==='card'){
       var t=s.segTick++;
-      if(t>=FIRE_DELAY){seg.fire(s,t-FIRE_DELAY);if(seg.spell)signature(s,t-FIRE_DELAY);} // 패턴 이름이 뜨는 동안은 쏘지 않는다. 이름 붙은 패턴에는 보스 고유 연출이 겹친다.
+      var fireDelay=entrance&&entrance.segment===s.seg&&entrance.releasedTick!==null?0:FIRE_DELAY;
+      if(t>=fireDelay){seg.fire(s,t-fireDelay);if(seg.spell)signature(s,t-fireDelay);} // 준비된 본보스 첫 카드 외에는 패턴 이름이 뜨는 동안 쏘지 않는다.
       var left=cardDuration(s,seg)-s.segTick*TICK;
       if(seg.spell&&left<=10&&left>0&&s.segTick%60===0)note(s,left<=3?'countdownLast':'countdown');
     }
@@ -1416,7 +1445,7 @@
   })();
   var api={revision:43,heroProfile:heroProfile,bombName:bombName,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     PACING:PACING,stageTargetSeconds:stageTargetSeconds,plannedSegments:plannedSegments,pacingReport:pacingReport,waveDuration:waveDuration,cardDuration:cardDuration,cardHp:cardHp,SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,PROP_LONG:PROP_LONG,propRenderSpan:propRenderSpan,bulletRenderSpan:bulletRenderSpan,BULLET_BREAK_MIN_SPAN:BULLET_BREAK_MIN_SPAN,isBulletBreakable:isBulletBreakable,ORB_HP:ORB_HP,ORB_BREAK_EVERY:ORB_BREAK_EVERY,ORB_FRAGMENT_COUNT:ORB_FRAGMENT_COUNT,ORB_FRAGMENT_GRACE:ORB_FRAGMENT_GRACE,ORB_FRAGMENT_SPEED:ORB_FRAGMENT_SPEED,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
-    BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,figurePhase:figurePhase,FIGURE_ON_TICKS:FIGURE_ON_TICKS,FIGURE_OFF_TICKS:FIGURE_OFF_TICKS,FIGURE_CHARGE_TICKS:FIGURE_CHARGE_TICKS,RUNE_AT:RUNE_AT,RISER_HP:RISER_HP,RISER_SCORE:RISER_SCORE,riserHp:riserHp,shotHitsRiser:shotHitsRiser,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
+    BOSS_ENTRANCE_GRACE:BOSS_ENTRANCE_GRACE,prepareBossEntrance:prepareBossEntrance,BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,figurePhase:figurePhase,FIGURE_ON_TICKS:FIGURE_ON_TICKS,FIGURE_OFF_TICKS:FIGURE_OFF_TICKS,FIGURE_CHARGE_TICKS:FIGURE_CHARGE_TICKS,RUNE_AT:RUNE_AT,RISER_HP:RISER_HP,RISER_SCORE:RISER_SCORE,riserHp:riserHp,shotHitsRiser:shotHitsRiser,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
     POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,FOCUS_SLOW:FOCUS_SLOW,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,BOMB_PULSES:BOMB_PULSES,BOMB_PULSE_START:BOMB_PULSE_START,BOMB_PULSE_EVERY:BOMB_PULSE_EVERY,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp};
   if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcade=api;
