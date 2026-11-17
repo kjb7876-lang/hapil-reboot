@@ -11,3 +11,8 @@ test('violet and the first comrade have an 8-frame death strip beside their atta
 test('a death strip plays once by fall progress instead of looping',()=>{
  assert.match(app,/deathProg>=0&&\/@death\$\/\.test\(key\)/);assert.match(app,/deathProg=k;try\{drawArt\(fall\.actor/);
 });
+// 스토리월드(m0 r104) 보스 공격 4칸을 같은 이름·같은 드라이브 번호의 중간보스에 연결(사용자 11-17 "스토리월드에서 가져온 보스들은 다 공격모션 있을텐데?").
+test('mid-bosses that match an m0 boss by name now attack with the m0 pose strip; look-alike or different-phase ones do not',()=>{
+ for(const k of ['mb_06','mb_14','mb_15','mb_16','mb_17','mb_20','mb_21','mb_25','mb_27','mb_49','mb_52','mb_53','mb_54']){const e=man[k+'@attack.webp'];assert(e&&e.frames===4,k);assert((man[k+'.webp'].motions||[]).includes('attack'),k);}
+ for(const k of ['mb_35','p2_chairman','p2_beelzebub','p2_wrath'])assert(!man[k+'@attack.webp'],k+' keeps no attack (art differs from the walk sheet)');
+});

@@ -7432,6 +7432,9 @@
   "fps": 6,
   "frames": 4,
   "group": "actors",
+  "motions": [
+   "attack"
+  ],
   "size": [
    536,
    182
@@ -7439,6 +7442,24 @@
   "source": "media/drive-v43/b06-down.webp",
   "sourceSha256": "4f9fe2f29f1cd466d69c5f40935254cd4134f3390ef1e485bf6909d212a3b52e",
   "stamp": "f0950834c4558e5d",
+  "table": "tools/arcade-art-v43/midboss.json"
+ },
+ "mb_06@attack.webp": {
+  "bytes": 69788,
+  "cell": [
+   186,
+   220
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   744,
+   220
+  ],
+  "source": "media/m0-v43/boss/mb-dist05-attack.webp",
+  "sourceSha256": "b595a31074a0bdadbc004d7933522ad271008db9200bb2c6b536f6f3f537a806",
+  "stamp": "78917bcdb229b73d",
   "table": "tools/arcade-art-v43/midboss.json"
  },
  "mb_07.webp": {
@@ -7581,6 +7602,9 @@
   "fps": 6,
   "frames": 4,
   "group": "actors",
+  "motions": [
+   "attack"
+  ],
   "size": [
    560,
    181
@@ -7588,6 +7612,24 @@
   "source": "media/drive-v43/b14-down.webp",
   "sourceSha256": "d9e361b3bec724d65154b01891d24b5da3618bfec1197cf049638ef305ed77a9",
   "stamp": "30ac02ed0f5c9708",
+  "table": "tools/arcade-art-v43/midboss.json"
+ },
+ "mb_14@attack.webp": {
+  "bytes": 65546,
+  "cell": [
+   212,
+   220
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   848,
+   220
+  ],
+  "source": "media/m0-v43/boss/mb-ep1b02-attack.webp",
+  "sourceSha256": "50d348124a1e140bfa4678bfc0145bfa46186ba7f019ab4eeb3867a9acb1ecf9",
+  "stamp": "e4f6f8e09ad4dd8b",
   "table": "tools/arcade-art-v43/midboss.json"
  },
  "mb_15.webp": {
@@ -7599,6 +7641,9 @@
   "fps": 6,
   "frames": 4,
   "group": "actors",
+  "motions": [
+   "attack"
+  ],
   "size": [
    504,
    180
@@ -7606,6 +7651,24 @@
   "source": "media/drive-v43/b16-down.webp",
   "sourceSha256": "923c67affaeedd1bea2b562973f703fcd230da03c0e2889ae0c0fc9c07b7508a",
   "stamp": "58c97acfb866f47b",
+  "table": "tools/arcade-art-v43/midboss.json"
+ },
+ "mb_15@attack.webp": {
+  "bytes": 62000,
+  "cell": [
+   160,
+   220
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   640,
+   220
+  ],
+  "source": "media/m0-v43/boss/mb-ep1b03-attack.webp",
+  "sourceSha256": "f0f36b15d8fffcb6de1c911d9d4664e3e7d86c65f2eb69c793f925e017fbd500",
+  "stamp": "59006780ef1b7439",
   "table": "tools/arcade-art-v43/midboss.json"
  },
  "mb_16.webp": {
@@ -7617,6 +7680,9 @@
   "fps": 6,
   "frames": 4,
   "group": "actors",
+  "motions": [
+   "attack"
+  ],
   "size": [
    656,
    177
@@ -7624,6 +7690,24 @@
   "source": "media/drive-v43/b18-down.webp",
   "sourceSha256": "77a659994d42fb5bfc4136f3e3242625855ba27e9bbbbe8456de849b2fc4ccd6",
   "stamp": "7e0c4d93a8b60f9d",
+  "table": "tools/arcade-art-v43/midboss.json"
+ },
+ "mb_16@attack.webp": {
+  "bytes": 69158,
+  "cell": [
+   220,
+   216
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   880,
+   216
+  ],
+  "source": "media/m0-v43/boss/mb-ep1b04-attack.webp",
+  "sourceSha256": "c8b4602b05e964d0c9c086acb58a5802d65f16384dae398b2d7658de2bdf216c",
+  "stamp": "516fb15ebc2b43b3",
   "table": "tools/arcade-art-v43/midboss.json"
  },
  "mb_17.webp": {
@@ -7635,6 +7719,9 @@
   "fps": 6,
   "frames": 4,
   "group": "actors",
+  "motions": [
+   "attack"
+  ],
   "size": [
    592,
    171
@@ -7642,6 +7729,24 @@
   "source": "media/drive-v43/b20-down.webp",
   "sourceSha256": "452a6725d527d107d4170bbb5dc0538b58a91640da2420a02accabe76b4acebc",
   "stamp": "75ca0c97b659477e",
+  "table": "tools/arcade-art-v43/midboss.json"
+ },
+ "mb_17@attack.webp": {
+  "bytes": 79672,
+  "cell": [
+   207,
+   220
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   828,
+   220
+  ],
+  "source": "media/m0-v43/boss/mb-ep1b05-attack.webp",
+  "sourceSha256": "50efcc27841c63dcd9b865524aa8b10d2ad9973c48c534a5afc3c097114a7802",
+  "stamp": "d5af612b78cbf16d",
   "table": "tools/arcade-art-v43/midboss.json"
  },
  "mb_18.webp": {
@@ -7735,6 +7840,9 @@
   "fps": 6,
   "frames": 4,
   "group": "actors",
+  "motions": [
+   "attack"
+  ],
   "size": [
    516,
    171
@@ -7742,6 +7850,24 @@
   "source": "media/drive-v43/b22-down.webp",
   "sourceSha256": "97e6a035786744284fc327d40494fd006220d850854293c7ec13693f1d6b1336",
   "stamp": "3ec1b0221f548620",
+  "table": "tools/arcade-art-v43/midboss.json"
+ },
+ "mb_20@attack.webp": {
+  "bytes": 55816,
+  "cell": [
+   195,
+   220
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   780,
+   220
+  ],
+  "source": "media/m0-v43/boss/mb-ep1b07-attack.webp",
+  "sourceSha256": "e62c5f043180e02f63ef65371c1ce9df1a1423a3fff2e2aac0c9b37e334281f8",
+  "stamp": "5fe06fdabc04968c",
   "table": "tools/arcade-art-v43/midboss.json"
  },
  "mb_21.webp": {
@@ -7753,6 +7879,9 @@
   "fps": 6,
   "frames": 4,
   "group": "actors",
+  "motions": [
+   "attack"
+  ],
   "size": [
    336,
    188
@@ -7760,6 +7889,24 @@
   "source": "media/drive-v43/b24-down.webp",
   "sourceSha256": "aa528e715f0a5ec78e43f08e7792b82781ad33abf0609954f9836dc7a200d500",
   "stamp": "a655ea601093dda4",
+  "table": "tools/arcade-art-v43/midboss.json"
+ },
+ "mb_21@attack.webp": {
+  "bytes": 68386,
+  "cell": [
+   220,
+   218
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   880,
+   218
+  ],
+  "source": "media/m0-v43/boss/mb-ep1b08-attack.webp",
+  "sourceSha256": "d2a16565802ac31fa6857aa0b2f0e524a541b8ed526a6f259edbbfbbf248e956",
+  "stamp": "6011ecffaf1c30cf",
   "table": "tools/arcade-art-v43/midboss.json"
  },
  "mb_24.webp": {
@@ -7811,6 +7958,9 @@
   "fps": 6,
   "frames": 4,
   "group": "actors",
+  "motions": [
+   "attack"
+  ],
   "size": [
    460,
    195
@@ -7818,6 +7968,24 @@
   "source": "media/drive-v43/b29-down.webp",
   "sourceSha256": "2900c723175200506f646bd3e2eb248cfbd47829ee4bfa2027f6922ce8fbd13b",
   "stamp": "5e35043404681164",
+  "table": "tools/arcade-art-v43/midboss.json"
+ },
+ "mb_25@attack.webp": {
+  "bytes": 52056,
+  "cell": [
+   193,
+   220
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   772,
+   220
+  ],
+  "source": "media/m0-v43/boss/u204-mid-attack.webp",
+  "sourceSha256": "1f1d540e0f23dc37160833cebd76da516e44f95435a0ae6e49ea7a5c57c22d3f",
+  "stamp": "49251e8ec9254ec3",
   "table": "tools/arcade-art-v43/midboss.json"
  },
  "mb_27.webp": {
@@ -7829,6 +7997,9 @@
   "fps": 6,
   "frames": 4,
   "group": "actors",
+  "motions": [
+   "attack"
+  ],
   "size": [
    560,
    174
@@ -7836,6 +8007,24 @@
   "source": "media/drive-v43/b28-down.webp",
   "sourceSha256": "db310a97c2118335fef445505e3f9d3ae27f65e40a2ddc0e73073a4aa1c1da24",
   "stamp": "3bdd91893ce125ae",
+  "table": "tools/arcade-art-v43/midboss.json"
+ },
+ "mb_27@attack.webp": {
+  "bytes": 67812,
+  "cell": [
+   220,
+   210
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   880,
+   210
+  ],
+  "source": "media/m0-v43/boss/u205-mid-attack.webp",
+  "sourceSha256": "f88bdabcc2af5d92376fdbcc004a722e1574cbd8e8111ddfc214b7fb2a6ae8ae",
+  "stamp": "81f2ec3b496ea21b",
   "table": "tools/arcade-art-v43/midboss.json"
  },
  "mb_28.webp": {
@@ -8187,6 +8376,9 @@
   "fps": 6,
   "frames": 4,
   "group": "actors",
+  "motions": [
+   "attack"
+  ],
   "size": [
    740,
    170
@@ -8194,6 +8386,24 @@
   "source": "media/drive-v43/b49-down.webp",
   "sourceSha256": "c0ccdc08bc612b263708a0bc02187d14817d0cebd6307ab46d8d443b192a6eca",
   "stamp": "f74d736373f6298b",
+  "table": "tools/arcade-art-v43/midboss.json"
+ },
+ "mb_49@attack.webp": {
+  "bytes": 88548,
+  "cell": [
+   200,
+   220
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   800,
+   220
+  ],
+  "source": "media/m0-v43/boss/mb-hando03-attack.webp",
+  "sourceSha256": "c0fc1328f8544649a81ddec573cc47cc2493e0820e64cd005f01fa41c0b45e55",
+  "stamp": "60880dc53f44281f",
   "table": "tools/arcade-art-v43/midboss.json"
  },
  "mb_52.webp": {
@@ -8205,6 +8415,9 @@
   "fps": 6,
   "frames": 4,
   "group": "actors",
+  "motions": [
+   "attack"
+  ],
   "size": [
    352,
    180
@@ -8212,6 +8425,24 @@
   "source": "media/drive-v43/b51-down.webp",
   "sourceSha256": "fce4048ef91cc975fb9333ac952225228e66c70e33ba9407c341ca3878810900",
   "stamp": "b18a24fbd6a4c2b4",
+  "table": "tools/arcade-art-v43/midboss.json"
+ },
+ "mb_52@attack.webp": {
+  "bytes": 65016,
+  "cell": [
+   192,
+   220
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   768,
+   220
+  ],
+  "source": "media/m0-v43/boss/mb-murder01-attack.webp",
+  "sourceSha256": "d36d1dc71633dd2d52806e6cda65d13153428394c069bcb5ba44033a03a3eeee",
+  "stamp": "0e2ade9aae203ad4",
   "table": "tools/arcade-art-v43/midboss.json"
  },
  "mb_53.webp": {
@@ -8223,6 +8454,9 @@
   "fps": 6,
   "frames": 4,
   "group": "actors",
+  "motions": [
+   "attack"
+  ],
   "size": [
    376,
    180
@@ -8230,6 +8464,24 @@
   "source": "media/drive-v43/b52-down.webp",
   "sourceSha256": "40879b5409db2d97d110b41d57289e88197bf68ce09310f448a341d4fc0bb4f9",
   "stamp": "f158a53cea795524",
+  "table": "tools/arcade-art-v43/midboss.json"
+ },
+ "mb_53@attack.webp": {
+  "bytes": 52392,
+  "cell": [
+   161,
+   220
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   644,
+   220
+  ],
+  "source": "media/m0-v43/boss/mb-murder02-attack.webp",
+  "sourceSha256": "aa250a26f51d5709209b84b1cdce71a31bb607f0c95b196ebce1d6bb5e7eff53",
+  "stamp": "2634e1829e076b6b",
   "table": "tools/arcade-art-v43/midboss.json"
  },
  "mb_54.webp": {
@@ -8241,6 +8493,9 @@
   "fps": 6,
   "frames": 4,
   "group": "actors",
+  "motions": [
+   "attack"
+  ],
   "size": [
    640,
    179
@@ -8248,6 +8503,24 @@
   "source": "media/drive-v43/b53-down.webp",
   "sourceSha256": "63f8ebe00c9e8608919eb2f0f76bc5a9bd7cf8f2c4b60d799d9429298d6f5efa",
   "stamp": "e072392f662170df",
+  "table": "tools/arcade-art-v43/midboss.json"
+ },
+ "mb_54@attack.webp": {
+  "bytes": 66428,
+  "cell": [
+   220,
+   200
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   880,
+   200
+  ],
+  "source": "media/m0-v43/boss/murder04-mid-attack.webp",
+  "sourceSha256": "92ec26624d93f4bb25f77ce9236e532717fa8c5ec0933cb6739e6db324dcb8f9",
+  "stamp": "43c79bb53810f0b6",
   "table": "tools/arcade-art-v43/midboss.json"
  },
  "mb_56.webp": {
