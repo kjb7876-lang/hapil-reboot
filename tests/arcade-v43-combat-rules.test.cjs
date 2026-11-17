@@ -154,8 +154,8 @@ test('normal and hell also share floor and riser trajectories in actual play',()
  for(const compact of [false,true])for(const stage of [0,1,2,3,11,17,28,42,55]){
   const normal=A.createRun({difficulty:'normal',stage,seed:23,compact,pacing:false}),hell=A.createRun({difficulty:'hell',stage,seed:23,compact,pacing:false});
   for(let t=0;t<1800;t++){
-   for(const s of [normal,hell]){s.player.invulnerableUntil=s.tick+999;step(s,{dx:Math.sin(t*.03)*2,dy:Math.cos(t*.015)*.5});h.clear(s);}
-   if(t%120===119){assert.equal(normal.seg,hell.seg);assert.deepEqual(hazards(normal),hazards(hell));assert.deepEqual(normal.floor,hell.floor);assert.deepEqual(normal.risers,hell.risers);}
+   for(const s of [normal,hell]){s.player.invulnerableUntil=s.tick+999;step(s,{dx:Math.sin(t*.03)*2,dy:Math.cos(t*.015)*.5});h.clear(s);s.risers.length=0;} // 먹 그림은 난이도마다 들어오는 쪽이 달라(사용자 11-17) 이 시험에서는 비운다
+   if(t%120===119){assert.equal(normal.seg,hell.seg);assert.deepEqual(hazards(normal),hazards(hell));assert.deepEqual(normal.floor,hell.floor);}
   }
  }
 });

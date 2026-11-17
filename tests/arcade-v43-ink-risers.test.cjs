@@ -18,9 +18,9 @@ test('every stage sends up eastern-painting subjects, an enemy weapon and the bo
 test('a subject is announced, rises from below the screen away from the hero, and leaves the upper field free',()=>{
   let seen=0,most=0,highest=a.HEIGHT;const s=cardRun(0,'normal');
   hold(s,2400,s=>{const R=s.risers||[];most=Math.max(most,R.length);
-    for(const r of R){if(r.age===1){seen++;assert(Math.abs(r.x-s.player.x)>=80,'not under the hero');assert(r.y-r.size>=a.HEIGHT,'starts below the screen');}
+    for(const r of R){if(r.age===1){seen++;assert(Math.abs(r.x-s.player.x)>=80,'not under the hero');assert((r.dir||'up')!=='up'||r.y-r.size>=a.HEIGHT,'starts below the screen');}
       if(r.age<a.RISER_WARN)assert.equal(a.riserHits(s,r,r.x,r.y),false,'no hit while announced');
-      highest=Math.min(highest,r.y-r.size);}});
+      if((r.dir||'up')==='up')highest=Math.min(highest,r.y-r.size);}});
   assert(seen>=3,'subjects rose: '+seen);assert(most<=2,'at most two at once');assert(highest>=a.HEIGHT*.25,'the top quarter stays free: '+highest);
 });
 test('touching the drawn shape hurts, the empty space beside it does not',()=>{
@@ -39,4 +39,18 @@ test('the page loads the brush drawings and the app draws every subject through 
   assert.match(html,/src\/ink-motifs-v43\.js/);assert(html.indexOf('ink-motifs-v43.js')<html.indexOf('arcade-app-v43.js'));
   NATURE.concat(WEAPONS,['coin','lips','glyph']).forEach(k=>assert.match(art,new RegExp('M\\.'+k+'=function')));
   assert.match(app,/function drawRisers\(/);
+});
+
+// 사용자 11-17 "이지는 위에서만 나와서 아래끝까지 가서 터지게, 노멀은 아래위 둘다, 헬은 아래위좌우 전방위"
+test('subjects enter from the side the difficulty allows: easy top only (bursting at the bottom), normal top and bottom, hell all four',()=>{
+  const want={gentle:['down'],normal:['down','up'],hell:['down','left','right','up']};
+  for(const d of ['gentle','normal','hell']){const dirs=new Set();let burst=0;
+    for(let stage=0;stage<8;stage++){const s=a.createRun({difficulty:d,seed:5+stage,stage});
+      hold(s,2600,s=>{for(const r of s.risers||[]){if(r.age===1){dirs.add(r.dir);
+        if(r.dir==='down')assert(r.y+r.size<=0,'starts above the screen');
+        if(r.dir==='left')assert(r.x+r.size<=0,'starts left of the screen');
+        if(r.dir==='right')assert(r.x-r.size>=a.WIDTH,'starts right of the screen');}
+        if(r.dir==='down'&&r.fade===1&&r.y>=a.HEIGHT*.7)burst++;}});}
+    assert.deepEqual([...dirs].sort(),want[d].slice().sort(),d+' directions: '+[...dirs]);
+    if(d==='gentle')assert(burst>=1,'easy subjects burst at the bottom edge: '+burst);}
 });

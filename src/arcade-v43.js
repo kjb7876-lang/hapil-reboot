@@ -1451,6 +1451,9 @@
       if(r.hp<=1e-6){r.fade=1;r.broken=true;s.score+=RISER_SCORE;note(s,'riserBreak');}
       return true;}
     return false;}
+  /* 사용자 11-17 "이지는 위에서만 나와서 아래끝까지 가서 터지게, 노멀은 아래위 둘다, 헬은 아래위좌우 전방위": 난이도별로 먹 그림이 들어오는 쪽. */
+  var RISER_DIRS={gentle:['down'],normal:['up','down'],hell:['up','down','left','right']};
+  function riserDir(s,n){var L=RISER_DIRS[s.difficulty]||RISER_DIRS.normal;return L[((n+s.stageIndex)%L.length+L.length)%L.length];}
   function riserRand(s){var x=s.riserRng|0;x^=x<<13;x^=x>>>17;x^=x<<5;s.riserRng=x>>>0;return s.riserRng/4294967296;}
   function updateRisers(s){
     if(!s.risers){s.risers=[];s.risen=0;s.riserT=0;s.riserStage=-1;}
@@ -1461,12 +1464,20 @@
       if(s.riserDue>0&&R.length<(s.floor&&s.floor.kind?1:pick(s,1,2,2))){s.riserDue--;var plan=motifPlan(s.stageIndex),kind=plan[s.riserN++%plan.length],size=MOTIFS[kind].size,lane=(s.riserN+s.stageIndex+((s.riserN/3)|0))%3,x=W*(lane===0?.24:lane===1?.76:.5)+(riserRand(s)-.5)*W*.14;
         if(Math.abs(x-p.x)<90)x=p.x+(Math.abs(p.x-W/2)>24?(p.x<W/2?1:-1):(s.riserN&1?1:-1))*(90+riserRand(s)*50); // 영웅 바로 밑에서는 솟지 않는다
         x=Math.max(size*1.12,Math.min(W-size*1.12,x));
-        R.push({kind:kind,size:size,x:x,y:H+size+2,age:0,apex:H*(.42+riserRand(s)*.28),vy:pick(s,1.2,1.5,1.8),held:0,fade:0,lean:(riserRand(s)-.5)*.3,emblem:kind==='glyph'?(signatureOf(stageBoss(s.stageIndex))||{glyph:'ring'}).glyph:''});s.risen++;note(s,'riserWarn');}}
+        var dir=riserDir(s,s.riserN-1),sx=x,sy=H+size+2,ax=x,ay=H*(.42+riserRand(s)*.28);
+        if(dir==='down'){sy=-size-2;ay=H-size*.6;} // 쉬움·보통: 위에서 내려와 아래 끝에서 터진다
+        else if(dir==='left'||dir==='right'){sy=H*(.2+riserRand(s)*.32);if(Math.abs(sy-p.y)<90)sy=Math.max(size,p.y-90-riserRand(s)*50);sx=dir==='left'?-size-2:W+size+2;ax=W*(dir==='left'?.3+riserRand(s)*.2:.5+riserRand(s)*.2);ay=sy;} // 헬: 좌우에서도 들어온다
+        else{ax=x;}
+        R.push({kind:kind,size:size,dir:dir,x:dir==='left'||dir==='right'?sx:x,y:sy,ax:ax,ay:ay,age:0,apex:ay,vy:pick(s,1.2,1.5,1.8),held:0,fade:0,lean:(riserRand(s)-.5)*.3,emblem:kind==='glyph'?(signatureOf(stageBoss(s.stageIndex))||{glyph:'ring'}).glyph:''});s.risen++;note(s,'riserWarn');}}
     var struck=false;
     for(k=R.length-1;k>=0;k--){var r=R[k];r.age++;
       if(r.fade){if(++r.fade>RISER_FADE)R.splice(k,1);continue;}
       if(!live){r.fade=1;continue;}
-      if(r.age>=RISER_WARN){if(r.y>r.apex)r.y=Math.max(r.apex,r.y-r.vy);else if(++r.held>RISER_HOLD)r.fade=1;}
+      if(r.age>=RISER_WARN){var rd=r.dir||'up';
+        if(rd==='down'){if(r.y<r.ay)r.y=Math.min(r.ay,r.y+r.vy*1.3);else{r.fade=1;r.broken=true;}}
+        else if(rd==='left'){if(r.x<r.ax)r.x=Math.min(r.ax,r.x+r.vy*1.5);else if(++r.held>RISER_HOLD)r.fade=1;}
+        else if(rd==='right'){if(r.x>r.ax)r.x=Math.max(r.ax,r.x-r.vy*1.5);else if(++r.held>RISER_HOLD)r.fade=1;}
+        else if(r.y>r.apex)r.y=Math.max(r.apex,r.y-r.vy);else if(++r.held>RISER_HOLD)r.fade=1;}
       if(riserHits(s,r,p.x,p.y))struck=true;}
     return struck;
   }

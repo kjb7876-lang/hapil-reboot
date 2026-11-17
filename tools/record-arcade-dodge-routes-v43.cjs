@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 'use strict';
-/* Regenerate only the two root-pattern recordings after projectile rules change.
+/* Regenerate the recordings (root pattern x2 and seal chain) after projectile or obstacle rules change.
  * This QA controller forecasts present hazards and rejects candidate directions
  * that hit during one exact engine step on a structured clone. It may inspect
  * future engine state; this is a reproducible route search, not a human pilot.
  * Live runs use legal <=4.01 px inputs, no injected immunity, no bombs and no
  * passive evasion. As in the replay test, boss HP is restored each card tick so
- * the whole authored attack duration remains covered. The chain recording is
+ * the whole authored attack duration remains covered. (Before 11-17 the chain recording was
  * retained unchanged and all three cases are replayed on Normal and Hell.
  * Run: node tools/record-arcade-dodge-routes-v43.cjs [--write]
  * Without --write this validates newly generated routes without changing files.
@@ -36,7 +36,7 @@ function clean(s){s.events.length=s.cancelled.length=s.pops.length=0;}
 function safe(s){return s.hits===0&&s.autoBombs===0&&s.distorts===0&&s.bombsUsed===0;}
 function runFor(route,difficulty){const s=a.createRun({difficulty,compact:route.compact,seed:route.seed,segment:route.segment,distort:false});s.bombs=0;return s;}
 function record(route){
- const s=runFor(route,'hell'),moves=[];let alternatives=0;
+ const s=runFor(route,route.segment===6?'hell':'normal'),moves=[];let alternatives=0;
  while(s.seg===route.segment&&s.tick<route.ticks){
   if(s.stage==='card')s.boss.hp=s.boss.maxHp;
   const ranked=control(s,{y:430,yWeight:.01,ranks:true});let direction=-1;
@@ -59,7 +59,7 @@ function verify(route,difficulty){
  }}
  assert.equal(ticks,route.ticks);assert.notEqual(s.seg,route.segment);
 }
-const updated=data.routes.map(route=>route.segment===6?record(route):route);
+const updated=data.routes.map(route=>record(route));
 for(const route of updated)for(const difficulty of ['normal','hell'])verify(route,difficulty);
 assert.equal(digest(),before,'engine changed during generation; rerun before writing');
 if(process.argv.includes('--write')){
