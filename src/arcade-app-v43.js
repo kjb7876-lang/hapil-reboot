@@ -983,11 +983,12 @@
   function drawRisers(s,under){var R=s.risers;if(!R||!R.length)return;ctx.save();
     for(var k=0;k<R.length;k++){var r=R[k],HOT=Ink?'#c2362a':FLOOR_HOT,INKC='#1e1a18',PAPERC='#f2e9d6',wide=r.size*(RISER_THIN[r.kind]||.9);
       if(r.age<Arcade.RISER_WARN){if(under)continue;var a=Math.min(1,r.age/8)*(.8+.2*Math.sin(r.age*.5)); // 솟을 자리: 솟을 폭만큼의 인주 띠, 한지 바탕에 먹 테를 두른 화살, 머물 높이까지 잇는 점선
-        ctx.globalAlpha=.85*a;ctx.fillStyle=HOT;ctx.fillRect(r.x-wide,H-5,wide*2,5);
-        ctx.globalAlpha=.55*a;ctx.strokeStyle=HOT;ctx.lineWidth=1.6;ctx.setLineDash([5,7]);ctx.beginPath();ctx.moveTo(r.x,H-70);ctx.lineTo(r.x,r.apex);ctx.stroke();ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(r.x-9,r.apex);ctx.lineTo(r.x+9,r.apex);ctx.stroke();
-        for(var ch=0;ch<3;ch++){var cy=H-26-ch*15-(r.age%16)*.9;ctx.globalAlpha=a;ctx.lineJoin='round';ctx.strokeStyle=PAPERC;ctx.lineWidth=10;ctx.beginPath();ctx.moveTo(r.x-13,cy+8);ctx.lineTo(r.x,cy-4);ctx.lineTo(r.x+13,cy+8);ctx.stroke();ctx.strokeStyle=INKC;ctx.lineWidth=6.5;ctx.stroke();ctx.strokeStyle=HOT;ctx.lineWidth=3.6;ctx.stroke();}
-        continue;}
-      var art=riserSprite(r);if(!art)continue;var f=r.fade?r.fade/Arcade.RISER_FADE:0,bob=Math.sin(visual*2.2+k)*2,rising=!r.fade&&r.y>r.apex+2,sq=r.held>0&&r.held<10?1-.08*Math.sin(r.held/10*Math.PI):1;
+        var rdir=r.dir||'up',wc=rdir==='left'||rdir==='right'?r.y:r.x,wa=rdir==='down'?H+100-r.ay:rdir==='left'?H-r.ax:rdir==='right'?r.ax-W+H:r.apex+70;ctx.save();if(rdir==='down')ctx.transform(1,0,0,-1,0,H+100);else if(rdir==='up')ctx.translate(0,-70);else if(rdir==='left')ctx.transform(0,1,-1,0,H,0);else if(rdir==='right')ctx.transform(0,1,1,0,W-H,0);
+        ctx.globalAlpha=.85*a;ctx.fillStyle=HOT;ctx.fillRect(wc-wide,H-5,wide*2,5);
+        ctx.globalAlpha=.8*a;ctx.strokeStyle=HOT;ctx.lineWidth=2.4;ctx.setLineDash([6,6]);ctx.beginPath();ctx.moveTo(wc,H-70);ctx.lineTo(wc,wa);ctx.stroke();ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(wc-12,wa);ctx.lineTo(wc+12,wa);ctx.stroke();ctx.beginPath();ctx.arc(wc,wa,5,0,TAU);ctx.stroke();
+        for(var ch=0;ch<3;ch++){var cy=H-26-ch*15-(r.age%16)*.9;ctx.globalAlpha=a;ctx.lineJoin='round';ctx.strokeStyle=PAPERC;ctx.lineWidth=10;ctx.beginPath();ctx.moveTo(wc-13,cy+8);ctx.lineTo(wc,cy-4);ctx.lineTo(wc+13,cy+8);ctx.stroke();ctx.strokeStyle=INKC;ctx.lineWidth=6.5;ctx.stroke();ctx.strokeStyle=HOT;ctx.lineWidth=3.6;ctx.stroke();}
+        ctx.restore();continue;}
+      var art=riserSprite(r);if(!art)continue;var f=r.fade?r.fade/Arcade.RISER_FADE:0,bob=Math.sin(visual*2.2+k)*2,rising=!r.fade&&(r.dir||'up')==='up'&&r.y>r.apex+2,sq=r.held>0&&r.held<10?1-.08*Math.sin(r.held/10*Math.PI):1;
       if(under&&rising){var tg=ctx.createLinearGradient(0,r.y,0,H);tg.addColorStop(0,'rgba(30,26,24,.42)');tg.addColorStop(1,'rgba(30,26,24,0)');ctx.fillStyle=tg; // 솟는 동안 아래로 끌리는 갈필 먹 자국(세 갈래)
         for(var st=-1;st<=1;st++)ctx.fillRect(r.x+st*r.size*.13-r.size*.04,r.y+r.size*.3,r.size*.08,(H-r.y)*(st?.7:1));}
       if(!under&&r.held===1&&!r.splashed){r.splashed=true;for(var d=0;d<11;d++)addParticle(r.x+(Math.random()-.5)*r.size*1.2,r.y+r.size*.8,(Math.random()-.5)*3.6,-.6-Math.random()*2.4,30,INKC,2.6+Math.random()*3.4);} // 다 솟은 순간 먹물이 튄다
