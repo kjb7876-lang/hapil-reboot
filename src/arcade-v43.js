@@ -798,9 +798,17 @@
       if(!ORB_HP[s.bsize[k]])continue;
       var r=bulletRadius(s,k)+3,bx=s.bx[k],by=s.by[k];
       if(bx<minX-r||bx>maxX+r||by<minY-r||by>maxY+r)continue;
-      var u=len2?((bx-x0)*vx+(by-y0)*vy)/len2:0;u=Math.max(0,Math.min(1,u));
-      var dx=x0+vx*u-bx,dy=y0+vy*u-by;
-      if(dx*dx+dy*dy<=r*r&&u<near){near=u;at=k;}
+      // 중심의 투영점이 아니라 원 표면에 처음 닿는 시각을 비교한다.
+      // 큰 버블의 껍질 뒤에 작은 구슬이 있어도 주포가 껍질을 뚫고 구슬부터 맞히지 않는다.
+      var dx=x0-bx,dy=y0-by,c=dx*dx+dy*dy-r*r,entry=0;
+      if(c>0){
+        if(!len2)continue;
+        var dot=dx*vx+dy*vy,disc=dot*dot-len2*c;
+        if(disc<0)continue;
+        entry=(-dot-Math.sqrt(disc))/len2;
+        if(entry<0||entry>1)continue;
+      }
+      if(entry<near){near=entry;at=k;}
     }
     if(at<0)return false;
     if(s.bhp[at]<=0)s.bhp[at]=ORB_HP[s.bsize[at]];

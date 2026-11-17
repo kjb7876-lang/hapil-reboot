@@ -59,6 +59,22 @@ test('one shot only hits its first orb, and swap removal preserves the surviving
  shot(s,80,305);step(s);assert.equal(s.bhp[0],1);shot(s,80,305);step(s);assert.equal(s.n,0);
 });
 
+test('the earliest circle surface intercepts a shot even when a smaller orb has the nearer centre',()=>{
+ const s=h.idle();s.player.x=320;orb(s,80,300,4);orb(s,80,310,0);shot(s,80,320);step(s);
+ assert.equal(s.n,2,'the small orb behind the bubble shell is not broken');
+ assert.equal(s.bhp[0],2,'bubble surface y318 is reached before small orb surface y317');
+ assert.equal(s.bhp[1],A.ORB_HP[0]);assert.equal(s.orbsBroken,0);assert.equal(s.sn,0);
+});
+
+test('orb swept collision includes initial overlaps, tangent contact and the last endpoint',()=>{
+ const overlap=h.idle();overlap.player.x=320;orb(overlap,80,320,4);orb(overlap,80,290,0);shot(overlap,80,315);step(overlap);
+ assert.equal(overlap.bhp[0],2,'starting inside the bubble is an immediate contact');assert.equal(overlap.n,2);
+ const tangent=h.idle();tangent.player.x=320;orb(tangent,80,307.5,0);shot(tangent,87,315);step(tangent);
+ assert.equal(tangent.n,0,'distance to the tangent point equals the 7px shot contact radius');
+ const endpoint=h.idle();endpoint.player.x=320;orb(endpoint,80,293,0);shot(endpoint,80,315);step(endpoint);
+ assert.equal(endpoint.n,0,'the shot reaches the orb surface exactly at y300');
+});
+
 test('rice and prop projectiles remain intact under ordinary player fire',()=>{
  for(const size of [3,A.SHAPE_PROP]){const s=h.idle();s.player.x=320;orb(s,80,300,size);shot(s,80,315);step(s);assert.equal(s.n,1);assert.equal(s.orbsBroken,0);}
 });

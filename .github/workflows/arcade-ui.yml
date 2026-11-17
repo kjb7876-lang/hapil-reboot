@@ -6,12 +6,30 @@ on:
       - 'src/**'
       - 'tests/**'
       - 'tools/check-arcade-ui-v43.cjs'
+      - 'tools/check-regressions-v43.cjs'
       - 'package.json'
       - '.github/workflows/arcade-ui.yml'
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: npm install --ignore-scripts --no-audit --no-fund
+      - run: node tools/check-regressions-v43.cjs
+        env:
+          TEST_SHARD: ${{ matrix.shard }}
+          TEST_SHARDS: 4
   routes:
     runs-on: ubuntu-latest
     timeout-minutes: 45

@@ -105,13 +105,16 @@ async function mobile(browser,width,height){
     await touch('touchMove',[move,hold]);assert((await state(page)).focus,'focus survives dragging off button');
     const stock=(await pos()).bombs;
     await touch('touchStart',[move,hold,blast]);await page.waitForFunction(n=>HapilArcadeApp.debugState().state.bombs===n-1,stock);
-    await touch('touchEnd',[move,hold]);assert((await state(page)).focus,'bomb release does not release low speed');
-    await touch('touchEnd',[move]);assert.equal((await state(page)).focus,false,'focus clears on its own release');
+    // CDP uses the active-point diff to release one finger. touchEnd itself
+    // releases the entire gesture and must contain no points.
+    await touch('touchMove',[move,hold]);assert((await state(page)).focus,'bomb release does not release low speed');
+    await touch('touchMove',[move]);assert.equal((await state(page)).focus,false,'focus clears on its own release');
     await touch('touchEnd',[]);
     await pauseSettings(page,name);
     assert.deepEqual(errors,[]);assert.deepEqual(badRequests,[]);
     reports.push({name,fast,slow,multitouchBomb:true,pauseSettings:true,audioLifecycle:true,errors,badRequests});
-  }finally{await context.close();}
+  }catch(e){await page.screenshot({path:path.join(out,name+'-failure.png'),fullPage:true});throw e;}
+  finally{await context.close();}
 }
 (async()=>{
   fs.mkdirSync(out,{recursive:true});await new Promise(r=>server.listen(0,'127.0.0.1',r));let browser;
