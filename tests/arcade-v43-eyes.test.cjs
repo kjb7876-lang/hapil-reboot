@@ -32,7 +32,8 @@ test('the app opens on start, closes only on a loss, clears on the title, and th
   const app=read('src/arcade-app-v43.js');
   assert.match(app,/setMode\('playing'\);\n\s*if\(global\.HapilEyes\)global\.HapilEyes\[quiet\?'clear':'open'\]\(\)/);
   assert.match(app,/var eyes=!won&&global\.HapilEyes;if\(eyes\)eyes\.close\(\)/);
-  assert.match(app,/function goTitle\(\)\{if\(global\.HapilEyes\)global\.HapilEyes\.clear\(\)/);
+  const titleBody=app.slice(app.indexOf('function goTitle()'),app.indexOf('function bossStages()'));
+  assert.match(titleBody,/if\(global\.HapilEyes\)global\.HapilEyes\.clear\(\)/,'returning to title clears the eyes even when other UI cleanup runs first');
   const order=[...read('arcade.html').matchAll(/<script src="([^"?]+)/g)].map(m=>m[1]);
   assert(order.indexOf('src/arcade-eyes-v43.js')>=0&&order.indexOf('src/arcade-eyes-v43.js')<order.indexOf('src/arcade-app-v43.js'));
 });
