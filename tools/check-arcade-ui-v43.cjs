@@ -93,11 +93,13 @@ async function mobile(browser,width,height){
     const cdp=await context.newCDPSession(page);
     const rect=await page.locator('#arcade-canvas').boundingBox(),focus=await page.locator('#arcade-focus').boundingBox(),bomb=await page.locator('#arcade-bomb').boundingBox();
     for(const [label,b] of [['focus',focus],['bomb',bomb]]){assert(b&&b.width>=44&&b.height>=44,label+' touch target');assert(b.x>=0&&b.y>=0&&b.x+b.width<=width+1&&b.y+b.height<=height+1,label+' visible');}
-    const move={id:1,x:rect.x+rect.width*.85,y:rect.y+rect.height*(544/640)},hold={id:2,x:focus.x+focus.width/2,y:focus.y+focus.height/2},blast={id:3,x:bomb.x+bomb.width/2,y:bomb.y+bomb.height/2};
+    // Landscape keeps the action pads over the bottom of the canvas. Start the
+    // movement finger above them so it cannot be mistaken for a bomb press.
+    const move={id:1,x:rect.x+rect.width*.85,y:Math.min(rect.y+rect.height*(544/640),focus.y-12,bomb.y-12)},hold={id:2,x:focus.x+focus.width/2,y:focus.y+focus.height/2},blast={id:3,x:bomb.x+bomb.width/2,y:bomb.y+bomb.height/2};
     const touch=(type,points)=>cdp.send('Input.dispatchTouchEvent',{type,touchPoints:points});
     const pos=()=>page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;return {x:s.player.x,tick:s.tick,bombs:s.bombs,focus:s.player.focus};});
     await touch('touchStart',[move]);let p0=await pos();await page.waitForFunction(t=>HapilArcadeApp.debugState().state.tick>=t+12,p0.tick);let p1=await pos();
-    const fast=(p1.x-p0.x)/(p1.tick-p0.tick);assert(fast>3,'normal touch movement');
+    const fast=(p1.x-p0.x)/(p1.tick-p0.tick);assert(fast>3,name+' normal touch movement: '+JSON.stringify({p0,p1,move}));
     await touch('touchStart',[hold]);p0=await pos();await page.waitForFunction(t=>HapilArcadeApp.debugState().state.tick>=t+12,p0.tick);p1=await pos();
     const slow=(p1.x-p0.x)/(p1.tick-p0.tick);assert(slow>0&&slow<fast*.65,'slow touch movement is actually slower');assert(p1.focus);
     // Finger leaving the button while held must keep pointer capture and focus.
