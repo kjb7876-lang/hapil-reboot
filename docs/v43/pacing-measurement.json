@@ -5,7 +5,8 @@
   "commands": [
     "node tools/measure-arcade-pacing-v43.cjs gentle",
     "node tools/measure-arcade-pacing-v43.cjs normal",
-    "node tools/measure-arcade-pacing-v43.cjs hell"
+    "node tools/measure-arcade-pacing-v43.cjs hell",
+    "node tools/measure-arcade-pacing-v43.cjs normal seoha"
   ],
   "scenario": {
     "hero": "memory",
@@ -56,7 +57,8 @@
         "cards": 312,
         "skippedPlain": 182
       },
-      "minutesWithFirstJourneyAutoPresentation": 59.13777777777778
+      "minutesWithFirstJourneyAutoPresentation": 59.13777777777778,
+      "hero": "memory"
     },
     {
       "benchmark": "invulnerable tracker, real shots and growth, no bombs; timing only, not 1CC or survival proof",
@@ -85,7 +87,8 @@
         "cards": 312,
         "skippedPlain": 182
       },
-      "minutesWithFirstJourneyAutoPresentation": 91.87194444444445
+      "minutesWithFirstJourneyAutoPresentation": 91.87194444444445,
+      "hero": "memory"
     },
     {
       "benchmark": "invulnerable tracker, real shots and growth, no bombs; timing only, not 1CC or survival proof",
@@ -114,7 +117,41 @@
         "cards": 494,
         "skippedPlain": 0
       },
-      "minutesWithFirstJourneyAutoPresentation": 118.41305555555556
+      "minutesWithFirstJourneyAutoPresentation": 118.41305555555556,
+      "hero": "memory"
+    }
+  ],
+  "supplementaryResults": [
+    {
+      "benchmark": "invulnerable tracker, real shots and growth, no bombs; timing only, not 1CC or survival proof",
+      "difficulty": "normal",
+      "hero": "seoha",
+      "status": "won",
+      "minutes": 87.69527777777778,
+      "counts": {
+        "break": 4801,
+        "wave": 107081,
+        "intro": 8943,
+        "card": 194878
+      },
+      "cleared": 312,
+      "timeouts": 0,
+      "power": 7,
+      "fastestNamedSeconds": 9.8,
+      "report": {
+        "difficulty": "normal",
+        "targetMinutes": 90,
+        "waveBudgetMinutes": 29.99722222222226,
+        "bossBudgetMinutes": 55,
+        "cardHpScale": 1.3,
+        "cardTimeoutMinutes": 77,
+        "presentationBudgetMinutes": 5,
+        "waves": 197,
+        "cards": 312,
+        "skippedPlain": 182
+      },
+      "focus": false,
+      "minutesWithFirstJourneyAutoPresentation": 94.97527777777778
     }
   ]
 }
