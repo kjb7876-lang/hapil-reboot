@@ -9,7 +9,7 @@
 const {chromium,devices}=require('playwright');
 const URL_=process.argv[2]||'http://localhost:4396/arcade.html',OUT=process.argv[3]||'audit-visuals-v43.json';
 (async()=>{const b=await chromium.launch();const ctx=await b.newContext(devices['iPhone 13']);
- await ctx.addInitScript(()=>{try{localStorage.setItem('hapil-arcade-dev-v43','1')}catch(e){}
+ await ctx.addInitScript(()=>{try{localStorage.setItem('hapil-arcade-dev-unlock-v43','1');localStorage.setItem('hapil-arcade-dev-v43','1')}catch(e){}
   window.__imgs={};const d=Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,'src');
   Object.defineProperty(HTMLImageElement.prototype,'src',{get(){return d.get.call(this)},set(v){const im=this,k=String(v).replace(location.origin+'/','');window.__imgs[k]={state:'loading'};im.addEventListener('load',()=>{window.__imgs[k]={state:'ok',w:im.naturalWidth,h:im.naturalHeight}});im.addEventListener('error',()=>{window.__imgs[k]={state:'ERROR'}});d.set.call(this,v)}});
  });

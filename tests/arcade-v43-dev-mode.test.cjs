@@ -5,7 +5,7 @@ const app=h.read('src/arcade-app-v43.js'),html=h.read('arcade.html');
 test('the title screen shows a visible developer-mode button, with one switch to hide it later',()=>{
  assert.match(html,/<button id="arcade-dev" type="button" aria-pressed="false">DEV 꺼짐<\/button>/);assert.match(html,/속도 2배 · 체력 무한/);
  assert.match(app,/var DEV_VISIBLE=true[;,]/,'one constant hides the button later');
- assert.match(app,/\$\('arcade-dev'\)\.hidden=!DEV_VISIBLE/);
+ assert.match(app,/\$\('arcade-dev'\)\.hidden=!devUnlocked/);assert.match(app,/\[\?&\]dev=\(\[01\]\)/,'?dev=1 reveals the developer tools on this device');
 });
 test('developer mode runs the game at double speed',()=>{
  const f=app.match(/function frame\(stamp\)\{([\s\S]*?)\n    draw\(elapsed\);/);assert(f,'frame found');

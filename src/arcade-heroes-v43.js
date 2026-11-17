@@ -21,8 +21,8 @@
       source:{kind:'existing-playable-hero'}
     },
     seoha:{
-      id:'seoha',family:'seoha',name:'윤서하 A',title:'시간공학 수련생 · 소녀풍',
-      description:'카이로스 아카데미움에서 검술과 시간 마법을 익힌 윤서하. 시간검 탄을 펼쳐 쏘고 저속 이동 중에는 좁게 모읍니다.',
+      id:'seoha',family:'seoha',name:'윤서하 · 수련생',title:'최초명령자를 꿈꾼 아카데미움 학생',
+      description:'‘최초명령자’가 되려고 카이로스 아카데미움에 들어간 윤서하. 오직 그녀의 눈에만 사라진 미래, 검은 모래가 보입니다. 시간검 탄을 펼쳐 쏘고 저속 이동 중에는 좁게 모읍니다.',
       summary:'시간검 분산 사격 · 저속 집중 사격 · 시간공학 필살',
       abilities:['평상시 분산 시간검, 저속 중 집중 시간검','기억사수와 같은 공격·필살 화력 및 7단계 성장','성장과 저속 이동에 따른 주변 적탄 둔화'],
       portrait:'media/arcade-v43-heroes/seoha-portrait.webp',sprite:'media/arcade-v43-heroes/seoha-player.webp',
@@ -37,8 +37,8 @@
   };
   // 기존 seoha ID는 A로 남겨 저장 기록을 보존한다. B는 같은 성장/시간공학 규칙의 별도 선택 영웅이다.
   profiles['seoha-b']=Object.assign({},profiles.seoha,{
-    id:'seoha-b',name:'윤서하 B',title:'시간공학 · 붉은 시간검',
-    description:'조금 더 성숙한 인상의 윤서하. 붉은 테니스 치마와 시간검을 갖추고, A와 같은 분산·저속 집중 사격 및 7단계 성장 규칙을 사용합니다.',
+    id:'seoha-b',name:'윤서하 · 각성',title:'깨어난 최초명령의 힘',
+    description:'검은 모래를 따라 금역을 건넌 뒤 시간 절단과 시공간 압축, 최초명령의 힘이 온전히 깨어난 윤서하. 사격과 성장 규칙은 수련생 때와 같습니다.',
     portrait:'media/arcade-v43-heroes/seoha-portrait-v2.webp',sprite:'media/arcade-v43-heroes/seoha-player-v2.webp',
     cutin:'media/arcade-v43-heroes/seoha-portrait-v2.webp'
   });
