@@ -74,6 +74,31 @@
       if(isSeoha(z.hero)){var a=1-f/SHEETS.bolt.frames;g.save();g.globalAlpha=a*.42;g.strokeStyle=timeColor(false);g.lineWidth=1.2;g.beginPath();for(var j=0;j<6;j++){var u=j/6,v=(j+.55)/6;g.moveTo(z.x0+dx*u,z.y0+dy*u);g.lineTo(z.x0+dx*v,z.y0+dy*v);}g.stroke();g.restore();clockwork(g,z.x1,z.y1,9+z.lv,t*3,a*.55,7);}
       else cell(g,'bolt',f,z.x0,z.y0,Math.atan2(dy,dx),size,.7,d/len,SHEETS.bolt.ox);} // 가늘고 짧게: 적 광선으로 오인되지 않게(심사 1차)
   }
+  /* ── 저속 간이 필살(사용자 11-17). 기억사수=인과의 역전: 적을 쫓는 먹빛 번개 선이 튀며 이어진다. 윤서하=시간차 공격: 시계가 돌고 잠시 뒤 굵은 시간검이 적을 쫓는다.
+   *  피해는 엔진(s.skillFx 선분, s.fsSwords 검)이 정하고, 여기서는 그리기만 한다. 탄을 가리지 않게 가늘게, 0.3초 안에 사라진다. ── */
+  var skillBolts=[],lastSkillLabel=-9;
+  function takeSkillFx(s,t){
+    var z=s.skillFx;if(!z||!z.length)return;
+    for(var i=0;i+4<z.length;i+=5){if(z[i+4]<0){if(pops.length<30)pops.push({x:z[i+2],y:z[i+3],t0:t,size:46,hero:heroId(s)});}else if(skillBolts.length<24)skillBolts.push({x0:z[i],y0:z[i+1],x1:z[i+2],y1:z[i+3],hop:z[i+4],t0:t+z[i+4]*.06,seed:(z[i]*7+z[i+3]*3)|0});}
+    z.length=0;
+  }
+  function jag(g,x0,y0,x1,y1,seed,w){
+    var dx=x1-x0,dy=y1-y0,d=Math.sqrt(dx*dx+dy*dy)||1,nx=-dy/d,ny=dx/d,n=Math.max(3,Math.round(d/22)),i;
+    g.beginPath();g.moveTo(x0,y0);for(i=1;i<n;i++){var u=i/n,o=(((seed+i*37)%11)-5)*w*.55;g.lineTo(x0+dx*u+nx*o,y0+dy*u+ny*o);}g.lineTo(x1,y1);g.stroke();
+  }
+  function drawBolts(g,t){
+    for(var i=skillBolts.length-1;i>=0;i--){var b=skillBolts[i],age=t-b.t0;if(age>.32){skillBolts.splice(i,1);continue;}if(age<0)continue;
+      var a=1-age/.32;g.save();g.lineCap='round';g.globalAlpha=a*.8;g.strokeStyle=inkOn()?'#262322':'#dff8ff';g.lineWidth=2.6-b.hop*.25;jag(g,b.x0,b.y0,b.x1,b.y1,b.seed,9);
+      g.globalAlpha=a*.55;g.strokeStyle=inkOn()?'#7c7872':'#ffffff';g.lineWidth=1;jag(g,b.x0,b.y0,b.x1,b.y1,b.seed+5,9);g.restore();}
+  }
+  function drawSwords(g,s,t){
+    var sw=s.fsSwords;if(!sw||!sw.length)return;
+    for(var i=0;i<sw.length;i++){var w=sw[i],delay=global.HapilArcade&&global.HapilArcade.SWORD_DELAY||20;
+      if(w.age<delay){var u=w.age/delay;clockwork(g,s.player.x,s.player.y-30,16+u*10,-t*9,.7*(1-u*.25),8);continue;}
+      var back=Math.max(0,Math.min(1,(w.age-delay)/4));timeNeedle(g,w.x,w.y,w.ang+Math.PI/2,46,.92*back,7);
+      for(var k=1;k<=3;k++)timeNeedle(g,w.x-Math.cos(w.ang)*k*11,w.y-Math.sin(w.ang)*k*11,w.ang+Math.PI/2,40,.22/k*back,5);}
+  }
+  function drawSkill(g,s,t){takeSkillFx(s,t);if(!skillBolts.length&&!(s.fsSwords&&s.fsSwords.length))return;raw(1);g.save();drawBolts(g,t);drawSwords(g,s,t);g.restore();raw(-1);}
   function drawPops(g,t){
     for(var i=pops.length-1;i>=0;i--){var p=pops[i],f=(t-p.t0)*SHEETS.shatter.fps;if(f<0)continue;if(f>=SHEETS.shatter.frames){pops.splice(i,1);continue;}if(isSeoha(p.hero))clockwork(g,p.x,p.y,p.size*(.14+.09*f/SHEETS.shatter.frames),(p.rot||0)+f*.13,(1-f/SHEETS.shatter.frames)*.62,7);else cell(g,'shatter',f,p.x,p.y,p.rot||0,p.size,.9);}
   }
@@ -190,6 +215,7 @@
     if(e==='powerUp')texts.push({text:heroProfile(s).attackName+' Lv.'+s.power,sub:s.power>=5?(isSeoha(heroId(s))?'시계바늘 연쇄':'기억 번개'):'',t0:t,x:s.player.x,y:s.player.y-48});
     else if(e==='powerDown')texts.push({text:heroProfile(s).attackName+' Lv.'+s.power,sub:'',t0:t,x:s.player.x,y:s.player.y-48,down:true});
     else if(e==='bombLevelUp')texts.push({text:'필살 Lv.'+s.bombLevel,sub:heroBombName(s,s.bombLevel),t0:t,x:s.player.x,y:s.player.y-62});
+    else if(e==='focusSkill'){if(t-lastSkillLabel>2.4){lastSkillLabel=t;texts.push({text:s.fsLast&&s.fsLast.kind==='sword'?'시간차 공격':'인과의 역전',sub:'',t0:t,x:s.player.x,y:s.player.y-34});}}
     else if(e==='bomb')bomb(s.lastBomb,t,360,640,s);
     else if(e==='bombPulse'){var pi=s.pulseInfo;if(pi)pulseFx(pi,s.bombLevel||1,t,heroId(s));}
     else if(e==='distort'){var side=(s.distorts%2)?1:-1;warps.push({x:s.player.x,y:s.player.y,t0:t,side:side,hero:heroId(s)});if(warps.length>4)warps.shift();hand+=TAU*1.25;texts.push({text:'시공 왜곡',sub:'',t0:t,x:s.player.x-side*44,y:s.player.y-22});}
@@ -269,9 +295,9 @@
       g.beginPath();g.ellipse(x,y,dr,dr*(.7+.3*((i*.31)%1)),ph,0,TAU);g.fill();if(i%3===0){g.beginPath();g.arc(x+Math.cos(ph)*dr*2.2,y+Math.sin(ph)*dr*2.2,dr*.45,0,TAU);g.fill();}}
     g.restore();raw(-1);
   }
-  function draw(g,s,t){takeZaps(s,t);raw(1);g.save();blend(g);drawZaps(g,t);drawPops(g,t);g.restore();raw(-1);drawBombs(g,t,360,640);drawPulses(g,t);drawWarps(g,t);}
+  function draw(g,s,t){takeZaps(s,t);raw(1);g.save();blend(g);drawZaps(g,t);drawPops(g,t);g.restore();raw(-1);drawSkill(g,s,t);drawBombs(g,t,360,640);drawPulses(g,t);drawWarps(g,t);}
   function shake(){var q=quake;quake=0;return q;}
-  function reset(){zaps.length=0;pops.length=0;texts.length=0;bombs.length=0;quake=0;cut=null;warps.length=0;pulseBursts.length=0;}
+  function reset(){skillBolts.length=0;lastSkillLabel=-9;zaps.length=0;pops.length=0;texts.length=0;bombs.length=0;quake=0;cut=null;warps.length=0;pulseBursts.length=0;}
   function hudLine(s){var lv=s.power||1,bl=s.bombLevel||1;return {attack:lv,bomb:bl};}
   load();
   global.HapilHeroFx={shots:shots,draw:draw,drawTexts:drawTexts,clock:clock,field:field,onEvent:onEvent,shake:shake,reset:reset,hudLine:hudLine,SHEETS:SHEETS,

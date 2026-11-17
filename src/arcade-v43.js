@@ -13,9 +13,14 @@
     ?require('./arcade-boss-intros-v43.js'):root.HapilArcadeBossIntros;
   var BOSS_RHYTHM=typeof module==='object'&&module.exports&&typeof require==='function'
     ?require('./arcade-boss-rhythm-v43.js'):root.HapilArcadeBossRhythm;
+  var BOSS_PHASES=typeof module==='object'&&module.exports&&typeof require==='function'
+    ?require('./arcade-boss-phases-v43.js'):root.HapilArcadePhases;
   var rhythmContext=null;
   function heroProfile(s){return HEROES?HEROES.get(typeof s==='string'?s:s&&s.hero):null;}
   function isCinematicBoss(actor,mid){var intros=BOSS_INTROS||root.HapilArcadeBossIntros;return !mid||!!(intros&&intros.isSinBoss(actor));}
+  // 11-17 사용자: 컷씬 화면과 본게임을 오가지 않고 모든 보스·중간보스가 같은 입장 연출(수묵 컷인 → 등장 → 대사 → 전투). 앱이 createRun({entranceAll:true})로 켠다(엔진 단독 시뮬은 기존 그대로).
+  function graceOf(s){return s&&s.entranceAll?BOSS_ENTRANCE_SPEECH:BOSS_ENTRANCE_GRACE;}
+  function hasEntrance(s,g){return !!(s&&s.entranceAll)||isCinematicBoss(g.actor,g.mid);}
   /* 부별 파일. 노드에서는 require로, 브라우저에서는 먼저 읽힌 스크립트가 HapilArcadeParts에 쌓아 둔 것을 쓴다. */
   var PARTS=typeof module==='object'&&module.exports&&typeof require==='function'
     ?[1,2,3,4,5,6,7,8].map(function(n){return require('./arcade-parts-v43/p'+n+'.js');})
@@ -658,13 +663,13 @@
     options=options||{};var difficulty=DIFFICULTY[options.difficulty]?options.difficulty:'normal',rules=Object.assign({},DIFFICULTY[difficulty]),compact=!!options.compact;
     var startSeg=Number.isInteger(options.segment)&&SEGMENTS[options.segment]?options.segment:Number.isInteger(options.stage)&&STAGES[options.stage]?STAGES[options.stage].first:0;
     var selectedHero=heroProfile(options);
-    var s={revision:43,hero:selectedHero?selectedHero.id:'memory',rhythm:options.rhythm===true,paced:options.pacing===true||(options.pacing!==false&&!Number.isInteger(options.segment)),difficulty:difficulty,rules:rules,compact:compact,density:rules.density*(compact?COMPACT_DENSITY:1),sizeScale:compact?COMPACT_SIZE:1,cap:compact?COMPACT_CAP:CAP,
+    var s={revision:43,entranceAll:options.entranceAll===true,hero:selectedHero?selectedHero.id:'memory',rhythm:options.rhythm===true,paced:options.pacing===true||(options.pacing!==false&&!Number.isInteger(options.segment)),difficulty:difficulty,rules:rules,compact:compact,density:rules.density*(compact?COMPACT_DENSITY:1),sizeScale:compact?COMPACT_SIZE:1,cap:compact?COMPACT_CAP:CAP,
       seed:(options.seed>>>0)||1,rng:(options.seed>>>0)||1,tick:0,stage:'break',stageTick:BREAK_TICKS-30,seg:startSeg-1,segTick:0,stageIndex:SEGMENTS[startSeg].stage,spellNumber:0,
       player:{x:W/2,y:H-84,hp:rules.hp,maxHp:rules.hp,invulnerableUntil:0,r:rules.radius,focus:false},
       boss:{x:W/2,y:-60,targetX:W/2,targetY:132,hp:1,maxHp:1,actor:'',name:'',mid:false,hitTick:-99,leaving:false,present:false,down:null},
       bossOnly:!!options.bossOnly,rushStage:SEGMENTS[startSeg].stage,bombs:rules.bombs,gauge:0,spellClean:false,captures:0,itemsTaken:0,lane:undefined,
       n:0,drifted:[],mobDrops:0,hearts:0,dropped:0,peak:0,score:0,graze:0,hits:0,kills:0,cleared:0,timeouts:0,events:[],cancelled:[],pops:[],lasers:[],mobs:[],warned:false,sn:0,itemCount:0,
-      lastStage:STAGES.length-1,lastWipe:-1e9,started:false,results:[],bombsUsed:0,autoBombs:0,distorts:0,orbsBroken:0,orbSerial:0,orbFragments:0,bombPulse:null,pulseInfo:null,noDistort:options.distort===false,drng:((((options.seed>>>0)||1)*2246822519)^0x9e3779b9)>>>0||7,power:1,exp:0,bombLevel:1,fills:0,hasteUntil:-1,zaps:[],lastBomb:null,mark:{tick:0,score:0,hits:0,bombs:0,captures:0,spells:0}};
+      lastStage:STAGES.length-1,lastWipe:-1e9,started:false,results:[],bombsUsed:0,autoBombs:0,distorts:0,orbsBroken:0,orbSerial:0,orbFragments:0,bombPulse:null,pulseInfo:null,noDistort:options.distort===false,drng:((((options.seed>>>0)||1)*2246822519)^0x9e3779b9)>>>0||7,power:1,exp:0,bombLevel:1,fills:0,hasteUntil:-1,zaps:[],skillFx:[],fsSwords:[],fsNext:0,fsLabelTick:-1e9,fsCasts:0,fsHits:0,frng:((((options.seed>>>0)||1)*3266489917)^0x85ebca6b)>>>0||11,lastBomb:null,mark:{tick:0,score:0,hits:0,bombs:0,captures:0,spells:0}};
     if(Number.isInteger(options.stages)&&options.stages>0)s.lastStage=Math.min(STAGES.length-1,s.stageIndex+options.stages-1);
     ['bx','by','ba','bs','bturn','bacc','bmin','bmax','barg','bs2','bspin','bhp'].forEach(function(k){s[k]=new Float32Array(CAP);});
     ['bage','blife','bat','bgrace'].forEach(function(k){s[k]=new Uint16Array(CAP);});
@@ -774,11 +779,11 @@
     if(next.kind==='wave'){s.boss.leaving=s.boss.present;s.stage='wave';note(s,'wave');return;}
     if(!prev||prev.kind!=='card'||prev.actor!==next.actor||!s.boss.present){s.boss.leaving=s.boss.present;s.stage='intro';}else s.stage='break';
   }
-  var BOSS_REST=156,BOSS_SWAY=40,BOSS_ROAM=58,BOSS_ENTRANCE_GRACE=120,BOSS_CLEAR_TICKS=120; // 좌우는 가운데 3분의 1 안: 문양이 칸 가장자리에 잘리지 않게(심사 6.53)
+  var BOSS_REST=156,BOSS_SWAY=40,BOSS_ROAM=58,BOSS_ENTRANCE_GRACE=120,BOSS_ENTRANCE_SPEECH=190,ENTRANCE_CUTIN=54,BOSS_CLEAR_TICKS=120; // 좌우는 가운데 3분의 1 안: 문양이 칸 가장자리에 잘리지 않게(심사 6.53)
   // 컷신 준비는 폭탄/격파가 아니다. 점수·아이템·경험치·쿨타임을 건드리지 않고 공격 잔재만 걷는다.
   function clearBossEntranceHazards(s){
     s.n=0;s.sn=0;s.mobs.length=0;s.lasers.length=0;s.figures.length=0;s.ripples.length=0;
-    s.cancelled.length=0;s.drifted.length=0;s.pops.length=0;s.zaps.length=0;
+    s.cancelled.length=0;s.drifted.length=0;s.pops.length=0;s.zaps.length=0;s.skillFx.length=0;s.fsSwords.length=0;
     s.bombPulse=null;s.pulseInfo=null;s.lastBomb=null;s.warned=false;
     s.risers=s.risers||[];s.risers.length=0;s.riserDue=0;s.riserT=0;s.riserN=0;s.riserStage=s.stageIndex;
     if(s.risen===undefined)s.risen=0;if(s.riserRng===undefined)s.riserRng=((s.seed*40503)^(s.stageIndex*2654435761+7))>>>0||1;
@@ -790,13 +795,25 @@
    * 미호출 시 기존 대본 시간은 그대로다. 실제 enter()부터 120틱 동안 양쪽 공격을 쉬며,
    * 컷신 중 앱이 step()을 부르지 않으면 tick/등장 대기도 진행되지 않는다. */
   function prepareBossEntrance(s){
-    var g=segment(s);if(s.stage!=='intro'||!g||g.kind!=='card'||!isCinematicBoss(g.actor,g.mid)||s.bossEntrance&&s.bossEntrance.segment===s.seg)return false;
+    var g=segment(s);if(s.stage!=='intro'||!g||g.kind!=='card'||!hasEntrance(s,g)||s.bossEntrance&&s.bossEntrance.segment===s.seg)return false;
     clearBossEntranceHazards(s);var entered=s.boss.present&&!s.boss.leaving&&s.boss.actor===g.actor?(s.boss.enteredTick===undefined?s.tick:s.boss.enteredTick):null;
-    s.bossEntrance={segment:s.seg,enteredTick:entered,readyTick:entered===null?null:entered+BOSS_ENTRANCE_GRACE,releasedTick:null};
+    s.bossEntrance={segment:s.seg,enteredTick:entered,readyTick:entered===null?null:entered+graceOf(s),releasedTick:null};
     s.cinematicEncounter={actor:g.actor,stageIndex:g.stage,segment:s.seg};return true;
   }
+  /* 입장 연출 단계: 'cutin'(보스 수묵 컷인, 아직 판에 없음) → 'speech'(판에 들어서 대사) → 전투. 화면은 이 값으로 컷인·대사 상자를 그린다. */
+  function entrancePhase(s){
+    var e=s.bossEntrance;if(!e||e.segment!==s.seg||s.stage!=='intro')return null;
+    if(e.enteredTick===null||e.enteredTick===undefined||!s.boss.present||s.boss.leaving)return {phase:'cutin',t:Math.min(1,s.stageTick/ENTRANCE_CUTIN)};
+    if(e.readyTick===null||s.tick>=e.readyTick)return null;
+    return {phase:'speech',t:Math.max(0,Math.min(1,(s.tick-e.enteredTick)/graceOf(s)))};
+  }
+  function skipEntrance(s){
+    var ph=entrancePhase(s);if(!ph)return false;
+    if(ph.phase==='cutin'){if(s.stageTick<ENTRANCE_CUTIN)s.stageTick=ENTRANCE_CUTIN;return true;}
+    var e=s.bossEntrance;e.readyTick=Math.min(e.readyTick,s.tick+24);return true;
+  }
   function enter(s,actor){var b=s.boss;b.actor=actor;b.name=ACTORS[actor].name;b.mid=!!segment(s).mid;b.present=true;b.leaving=false;b.x=W/2;b.y=-60;b.targetX=W/2;b.targetY=BOSS_REST;b.enteredTick=s.tick;s.stageTick=0;
-    var e=s.bossEntrance;if(e&&e.segment===s.seg){e.enteredTick=s.tick;e.readyTick=s.tick+BOSS_ENTRANCE_GRACE;}
+    var e=s.bossEntrance;if(e&&e.segment===s.seg){e.enteredTick=s.tick;e.readyTick=s.tick+graceOf(s);}
     note(s,'entrance');}
   function beginCard(s){var card=segment(s),b=s.boss;b.maxHp=b.hp=cardHp(s,card);b.mid=!!card.mid;s.stage='card';s.stageTick=0;s.segTick=0;s.spellClean=!!card.spell;if(card.spell){s.spellNumber++;note(s,'card');}else note(s,'plain');}
   function endCard(s,defeated){
@@ -821,7 +838,7 @@
   }
   function moveBoss(s){
     var b=s.boss;if(!b.present)return;
-    if(b.leaving){b.y-=5;if(b.y<-70){b.leaving=false;b.present=false;}return;}
+    if(b.leaving){b.leaveT=(b.leaveT||0)+1;b.y-=Math.min(5,1+b.leaveT*.12);if(b.y<-70){b.leaving=false;b.present=false;b.leaveT=0;}return;} // 갑자기 사라지지 않게 천천히 가속하며 물러난다
     if(s.stage==='card'&&s.segTick%150===0){b.targetX=W/2-BOSS_ROAM+rand(s)*BOSS_ROAM*2;b.targetY=BOSS_REST-6+rand(s)*BOSS_SWAY;} // 심사 반복 지적: 화면 위에 붙어 체력 띠·스펠 이름과 겹쳤다. 조금 내려 둔다(위 3분의 1 안).
     b.x+=(b.targetX-b.x)*.035;b.y+=(b.targetY-b.y)*.05;
   }
@@ -833,12 +850,14 @@
   }
   // 따로 정하지 않은 잡몹도 화면 위쪽에 머무는 동안 이 간격(틱)으로 다시 쏜다. 잡몹 구간이 보스전보다 지나치게 한가하지 않게(11-14 지시서).
   // 화면의 탄이 적으면 더 자주, 많으면 쉬어서 장면마다 압박이 고르게 한다. [쉬움, 보통, 지옥] 기준 탄 수.
+  var RETREAT_TICKS=110;
   var MOB_REFIRE=[96,56,56],WAVE_FLOOR=[110,280,280],WAVE_CEIL=[170,320,320];
   function refireEvery(s,every){var d=s.difficulty==='gentle'?0:2,base=every||MOB_REFIRE[d];
     return Math.max(12,Math.round(s.n<WAVE_FLOOR[d]?base*.4:s.n>WAVE_CEIL[d]?base*2.5:base));}
   function updateMobs(s){
     for(var i=s.mobs.length-1;i>=0;i--){
       var m=s.mobs[i];m.age++;
+      if(m.retreat){m.y-=m.elite?3:4.2;m.x+=m.x<W/2?-.6:.6;if(m.y<-44||m.x<-44||m.x>W+44)s.mobs.splice(i,1);continue;} // 구간이 끝나도 몹이 한순간에 사라지지 않고 위로 물러난다(사용자 11-17)
       if(m.elite){
         if(m.age>m.hold+90)m.y-=2.4;else if(m.y<m.stopY)m.y+=2.2;
         if(m.y>=m.stopY-1&&m.age<=m.hold+90&&m.every&&m.age>=m.first+60&&(m.age-m.first-60)%m.every===0){MOB_FIRE[m.fire](s,m);m.shots++;}
@@ -872,6 +891,66 @@
     for(k=0;k<chains;k++){f=nearestFoe(s,x,y,hit);if(!f)break;hit.push(f);if(s.zaps.length<60)s.zaps.push(x,y,f.x,f.y,s.power);x=f.x;y=f.y+1;
       if(f===s.boss){f.hp-=dmg*SHOT_DAMAGE[s.power];s.score+=dmg*2;}else{f.hp-=dmg*SHOT_DAMAGE[s.power];f.hitTick=s.tick;if(f.hp<=0)killMob(s,s.mobs.indexOf(f));}}
     if(hit.length)note(s,'zap');
+  }
+  /* ── 보스 페이즈(사용자 11-17). 한 보스(스테이지·인물·중간 여부)의 카드를 순서대로 PHASE 1..N 으로 부른다. 2페이즈부터 카드마다 다른 수학 도형(arcade-boss-phases-v43.js)을 한 겹 얹는다(앱 전용: entranceAll). ── */
+  var PHASE_INFO=null;
+  function phaseTable(){
+    if(PHASE_INFO)return PHASE_INFO;var info=[],groups={},actors=[];
+    SEGMENTS.forEach(function(g,i){if(g.kind!=='card')return;var k=g.stage+'|'+g.actor+'|'+(g.mid?1:0);(groups[k]=groups[k]||[]).push(i);if(actors.indexOf(k)<0)actors.push(k);});
+    Object.keys(groups).forEach(function(k){groups[k].forEach(function(i,j){info[i]={no:j+1,count:groups[k].length};});});
+    if(BOSS_PHASES)BOSS_PHASES.setOrder(actors);PHASE_INFO=info;return info;
+  }
+  function phaseOf(segIndex){return phaseTable()[segIndex]||null;}
+  var PHASE_PLANS={};
+  function phaseKind(seg,segIndex){var pi=phaseOf(segIndex);if(!BOSS_PHASES||!pi||pi.no<2)return null;var key=seg.stage+'|'+seg.actor+'|'+(seg.mid?1:0),plan=PHASE_PLANS[key]||(PHASE_PLANS[key]=BOSS_PHASES.plan(key,pi.count));return plan[pi.no-1];}
+  function phaseLayer(s,seg,t){
+    var kind=phaseKind(seg,s.seg);if(!kind||t<48)return;var a=ACTORS[seg.actor];
+    BOSS_PHASES.fire(kind,s,t-48,{spawn:spawn,W:W,H:H,colors:[a.c1,a.c2]},{actor:seg.actor+'|'+seg.stage,phaseNo:phaseOf(s.seg).no});
+  }
+  /* ── 저속 간이 필살(사용자 11-17). 저속(focus) 이동 중 확률적으로 나가며 탄을 지우지 않는다. 기억사수=인과의 역전(적을 쫓는 레이저, 확률로 체인 라이트닝처럼 연쇄),
+   *    윤서하=시간차 공격(시계가 돌고 잠시 뒤 굵은 시간검이 나가 적을 자동 추적). 쓰는 난수는 frng 로 탄 패턴 난수와 따로 굴린다. ── */
+  var FOCUS_SKILL_CHANCE=[0,.010,.011,.012,.014,.016,.018,.021],FOCUS_SKILL_GAP=48,SWORD_DELAY=20,SWORD_SPEED=13,SWORD_LIFE=150,SWORD_TURN=.28,SWORD_POWER=7,REVERSAL_POWER=6,REVERSAL_CHAIN_P=.62,REVERSAL_HOP=240;
+  function frand(s){var x=s.frng|0;x^=x<<13;x^=x>>>17;x^=x<<5;s.frng=x>>>0;return s.frng/4294967296;}
+  function foeNear(s,x,y,skip,maxD){
+    var best=null,bestD=maxD||1e9,i,m,d;
+    if(s.stage==='card'&&s.boss.present&&!s.boss.leaving&&s.boss.y>0&&skip.indexOf(s.boss)<0){d=Math.sqrt((s.boss.x-x)*(s.boss.x-x)+(s.boss.y-y)*(s.boss.y-y));if(d<bestD){bestD=d;best=s.boss;}}
+    for(i=0;i<s.mobs.length;i++){m=s.mobs[i];if(m.y<0||skip.indexOf(m)>=0)continue;d=Math.sqrt((m.x-x)*(m.x-x)+(m.y-y)*(m.y-y));if(d<bestD){bestD=d;best=m;}}
+    return best;
+  }
+  function hitFoe(s,f,dmg){
+    f.hp-=dmg;
+    if(f===s.boss){s.score+=2;if(s.tick-f.hitTick>=5){f.hitTick=s.tick;note(s,f.hp/f.maxHp<=.2?'bossHitLow':'bossHit');}}
+    else{f.hitTick=s.tick;if(f.hp<=1e-6){var k=s.mobs.indexOf(f);if(k>=0)killMob(s,k);}}
+  }
+  function focusSkillKind(s){return s.hero==='seoha'||s.hero==='seoha-b'?'sword':'reversal';}
+  function focusSkill(s){
+    var p=s.player,i,w,f,k;
+    for(i=s.fsSwords.length-1;i>=0;i--){
+      w=s.fsSwords[i];w.age++;
+      if(w.age<SWORD_DELAY){w.x=p.x;w.y=p.y-26-w.age*.4;continue;}
+      f=foeNear(s,w.x,w.y,[]);
+      if(f){var d=Math.atan2(f.y-w.y,f.x-w.x)-w.ang;while(d>Math.PI)d-=TAU;while(d<-Math.PI)d+=TAU;w.ang+=Math.max(-SWORD_TURN,Math.min(SWORD_TURN,d));}
+      var done=false;
+      for(k=0;k<2&&!done;k++){
+        w.x+=Math.cos(w.ang)*SWORD_SPEED*.5;w.y+=Math.sin(w.ang)*SWORD_SPEED*.5;
+        if(s.stage==='card'&&s.boss.present&&!s.boss.leaving&&Math.abs(w.x-s.boss.x)<34&&Math.abs(w.y-s.boss.y)<38){hitFoe(s,s.boss,w.dmg);done=true;}
+        for(var j=s.mobs.length-1;j>=0&&!done;j--){var m=s.mobs[j];if(Math.abs(w.x-m.x)<m.r+9&&Math.abs(w.y-m.y)<m.r+11){hitFoe(s,m,w.dmg);done=true;}}
+      }
+      if(done){s.fsHits++;if(s.skillFx.length<80)s.skillFx.push(w.x,w.y,w.x,w.y,-1);note(s,'swordHit');}
+      if(done||w.age>SWORD_LIFE||w.x<-40||w.x>W+40||w.y<-40||w.y>H+40)s.fsSwords.splice(i,1);
+    }
+    if(!p.focus||s.stage==='won'||s.stage==='lost'||s.stage==='bossClear'||(s.stage!=='card'&&s.stage!=='wave')||s.bombPulse||s.tick<s.fsNext)return;
+    if(frand(s)>=FOCUS_SKILL_CHANCE[Math.max(1,Math.min(MAX_LEVEL,s.power||1))])return;
+    var kind=focusSkillKind(s),dmg=(kind==='sword'?SWORD_POWER:REVERSAL_POWER)*SHOT_DAMAGE[s.power];
+    if(!foeNear(s,p.x,p.y,[]))return;
+    s.fsNext=s.tick+FOCUS_SKILL_GAP;s.fsCasts++;
+    if(kind==='sword'){s.fsSwords.push({x:p.x,y:p.y-26,age:0,ang:-Math.PI/2,dmg:dmg});}
+    else{
+      var x=p.x,y=p.y-20,hit=[],hops=2+(s.power>>1),hop=0;
+      while(hop<hops){f=foeNear(s,x,y,hit,hop?REVERSAL_HOP:0);if(!f)break;hit.push(f);if(s.skillFx.length<80)s.skillFx.push(x,y,f.x,f.y,hop);var fx=f.x,fy=f.y;hitFoe(s,f,dmg*Math.pow(.85,hop));x=fx;y=fy;hop++;if(frand(s)>=REVERSAL_CHAIN_P)break;}
+      if(hop)s.fsHits+=hop;
+    }
+    s.fsLast={kind:kind,tick:s.tick};note(s,'focusSkill');
   }
   // 깨진 큰 탄 하나에서만 작은 잔탄이 나온다. 영웅을 향하는 방향은 비우고 넓게 벌어지며,
   // 생성 후 0.6초는 무해하다. 잔탄은 다시 부서지거나 분열하지 않는다. 폭탄·구간 정리는 이 함수를 부르지 않는다.
@@ -1123,6 +1202,7 @@
     if(grazed){s.graze+=grazed;s.gauge+=grazed*2;s.score+=grazed*40;note(s,'graze');}
     return struck;
   }
+  var DESCEND_AGE=150,DESCEND_Y=470,DESCEND_TURN=.05,DESCEND_SPEED=72;
   function updateBullets(s){
     var p=s.player,px=p.x,py=p.y,struck=false,grazed=0,hitScale=s.rules.hitScale,i,k,field=slowField(s),fr=field[0],fs=field[1];
     for(i=s.n-1;i>=0;i--){
@@ -1141,6 +1221,12 @@
         s.bs[i]=s.bs2[i];s.bacc[i]=0;
       }
       if(s.bturn[i])s.ba[i]+=s.bturn[i]*TICK;
+      // 아래로 내려오는 보장(사용자 11-17 "보스 탄환은 보스 주변만 돌지 말고 언젠가는 아래로 내려와 의미가 있게"): 2.5초가 지나도 위쪽에 머무는 탄은 영웅이 있는 아랫녘으로 부드럽게 휘어 내려온다.
+      if(age>DESCEND_AGE&&s.by[i]<DESCEND_Y&&s.bsize[i]!==SHAPE_PROP&&!s.bfragment[i]){
+        var want=Math.atan2(py+70-s.by[i],px+((i*37)%9-4)*24-s.bx[i]),lo=.22,hi=Math.PI-.22;if(want<lo)want=lo;else if(want>hi)want=hi;
+        var ha=s.ba[i];while(ha>Math.PI)ha-=TAU;while(ha<-Math.PI)ha+=TAU;var dd=want-ha;if(dd>Math.PI)dd-=TAU;else if(dd<-Math.PI)dd+=TAU;
+        if(Math.sin(ha)<.55){s.ba[i]=ha+(dd>DESCEND_TURN?DESCEND_TURN:dd<-DESCEND_TURN?-DESCEND_TURN:dd);s.bacc[i]=0;var fl=DESCEND_SPEED*s.rules.speed;if(s.bs[i]<fl)s.bs[i]=fl;}
+      }
       if(s.bacc[i]){var v=s.bs[i]+s.bacc[i]*TICK;s.bs[i]=v<s.bmin[i]?s.bmin[i]:v>s.bmax[i]?s.bmax[i]:v;}
       var slow=1,fdx=s.bx[i]-px,fdy=s.by[i]-py;if(fdx<fr&&fdx>-fr&&fdy<fr&&fdy>-fr){var fd=Math.sqrt(fdx*fdx+fdy*fdy);if(fd<fr)slow=1-fs*(1-fd/fr);} // 영웅 둘레 시간 둔화: 가까울수록 느리다(판정은 그대로)
       var ox=s.bx[i],oy=s.by[i],x=s.bx[i]+=Math.cos(s.ba[i])*s.bs[i]*TICK*slow,y=s.by[i]+=Math.sin(s.ba[i])*s.bs[i]*TICK*slow;
@@ -1393,9 +1479,10 @@
       return s; // 격파 연출 2초 동안 공격·피격·아이템·필살을 모두 멈춘다. 다음 구간은 다음 틱부터 움직인다.
     }
     moveBoss(s);
+    if(s.entranceAll&&s.stage==='intro')prepareBossEntrance(s);
     var entrance=s.bossEntrance;
     if(entrance&&entrance.segment===s.seg&&s.stage==='intro'){
-      if(!s.boss.present)enter(s,segment(s).actor);
+      if(!s.boss.present){if(s.entranceAll&&s.stageTick<ENTRANCE_CUTIN)return s;enter(s,segment(s).actor);} // 수묵 컷인이 끝난 뒤에야 보스가 판에 들어선다
       if(entrance.readyTick===null||s.tick<entrance.readyTick)return s;
       // 준비를 마친 첫 카드만 이름 표시용 FIRE_DELAY를 생략한다. 이후 카드의 40틱 예고는 그대로다.
       clearBossEntranceHazards(s);beginCard(s);entrance.releasedTick=s.tick;
@@ -1411,7 +1498,9 @@
     else if(s.stage==='wave'){
       var w=s.segTick++,duration=waveDuration(s,seg);if(w<duration)seg.script(s,w);
       // 대본이 끝나고 몹이 다 사라지면 다음으로. 너무 오래 남은 몹은 물러난다.
-      if(w>=duration&&(!s.mobs.length||w>=duration+(s.paced?30:WAVE_GRACE))){s.mobs.length=0;s.score+=breakWipe(s)*10;note(s,'waveClear');advance(s);}
+      var over=w-duration-(s.paced?30:WAVE_GRACE);
+      if(w>=duration&&over>=0&&s.mobs.length&&!s.mobs[0].retreat&&!s.mobs.every(function(m){return m.retreat;}))for(var q=0;q<s.mobs.length;q++)s.mobs[q].retreat=true;
+      if(w>=duration&&(!s.mobs.length||over>=RETREAT_TICKS)){s.mobs.length=0;s.score+=breakWipe(s)*10;note(s,'waveClear');advance(s);}
     }
     else if(s.stage==='card'){
       var t=s.segTick++;
@@ -1419,11 +1508,12 @@
       if(t>=fireDelay){
         if(BOSS_RHYTHM&&BOSS_RHYTHM.handles(s,seg,api))BOSS_RHYTHM.fire(s,t-fireDelay,rhythmContext);
         else{seg.fire(s,t-fireDelay);if(seg.spell)signature(s,t-fireDelay);}
+        if(s.entranceAll)phaseLayer(s,seg,t-fireDelay);
       } // 고유 첫 공격은 원래 발사를 대체한다. 이름 붙은 문양과 중간 카드의 대본은 유지한다.
       var left=cardDuration(s,seg)-s.segTick*TICK;
       if(seg.spell&&left<=10&&left>0&&s.segTick%60===0)note(s,left<=3?'countdownLast':'countdown');
     }
-    themed(s);updateMobs(s);updateShots(s);
+    themed(s);updateMobs(s);updateShots(s);focusSkill(s);
     if(s.stage==='card'&&b.hp<=0)endCard(s,true);
     else if(s.stage==='card'&&s.segTick*TICK>=cardDuration(s,segment(s)))endCard(s,false);
     if(s.stage==='bossClear')return s;
@@ -1479,8 +1569,8 @@
   })();
   var api={revision:43,heroProfile:heroProfile,bombName:bombName,isCinematicBoss:isCinematicBoss,nextSegmentIndex:nextSegmentIndex,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     PACING:PACING,stageTargetSeconds:stageTargetSeconds,plannedSegments:plannedSegments,pacingReport:pacingReport,waveDuration:waveDuration,cardDuration:cardDuration,cardHp:cardHp,SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,PROP_LONG:PROP_LONG,propRenderSpan:propRenderSpan,bulletRenderSpan:bulletRenderSpan,BULLET_BREAK_MIN_SPAN:BULLET_BREAK_MIN_SPAN,isBulletBreakable:isBulletBreakable,ORB_HP:ORB_HP,ORB_BREAK_EVERY:ORB_BREAK_EVERY,ORB_FRAGMENT_COUNT:ORB_FRAGMENT_COUNT,ORB_FRAGMENT_GRACE:ORB_FRAGMENT_GRACE,ORB_FRAGMENT_SPEED:ORB_FRAGMENT_SPEED,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
-    BOSS_ENTRANCE_GRACE:BOSS_ENTRANCE_GRACE,BOSS_CLEAR_TICKS:BOSS_CLEAR_TICKS,prepareBossEntrance:prepareBossEntrance,BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,figurePhase:figurePhase,FIGURE_ON_TICKS:FIGURE_ON_TICKS,FIGURE_OFF_TICKS:FIGURE_OFF_TICKS,FIGURE_CHARGE_TICKS:FIGURE_CHARGE_TICKS,RUNE_AT:RUNE_AT,RISER_HP:RISER_HP,RISER_SCORE:RISER_SCORE,riserHp:riserHp,shotHitsRiser:shotHitsRiser,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
-    POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,FOCUS_SLOW:FOCUS_SLOW,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,BOMB_PULSES:BOMB_PULSES,BOMB_PULSE_START:BOMB_PULSE_START,BOMB_PULSE_EVERY:BOMB_PULSE_EVERY,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp};
+    BOSS_ENTRANCE_GRACE:BOSS_ENTRANCE_GRACE,BOSS_ENTRANCE_SPEECH:BOSS_ENTRANCE_SPEECH,BOSS_CLEAR_TICKS:BOSS_CLEAR_TICKS,prepareBossEntrance:prepareBossEntrance,phaseOf:phaseOf,phaseKind:phaseKind,entrancePhase:entrancePhase,skipEntrance:skipEntrance,ENTRANCE_CUTIN:ENTRANCE_CUTIN,BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,figurePhase:figurePhase,FIGURE_ON_TICKS:FIGURE_ON_TICKS,FIGURE_OFF_TICKS:FIGURE_OFF_TICKS,FIGURE_CHARGE_TICKS:FIGURE_CHARGE_TICKS,RUNE_AT:RUNE_AT,RISER_HP:RISER_HP,RISER_SCORE:RISER_SCORE,riserHp:riserHp,shotHitsRiser:shotHitsRiser,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
+    POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,DESCEND_AGE:DESCEND_AGE,DESCEND_Y:DESCEND_Y,FOCUS_SKILL_CHANCE:FOCUS_SKILL_CHANCE,FOCUS_SKILL_GAP:FOCUS_SKILL_GAP,SWORD_DELAY:SWORD_DELAY,SWORD_POWER:SWORD_POWER,REVERSAL_POWER:REVERSAL_POWER,FOCUS_SLOW:FOCUS_SLOW,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,BOMB_PULSES:BOMB_PULSES,BOMB_PULSE_START:BOMB_PULSE_START,BOMB_PULSE_EVERY:BOMB_PULSE_EVERY,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp};
    rhythmContext={WIDTH:W,HEIGHT:H,ACTORS:ACTORS,SIGNATURES:SIGNATURES,PROPS:PROPS,SEGMENTS:SEGMENTS,SHAPE_PROP:SHAPE_PROP,spawn:spawn,beam:beam,isCinematicBoss:isCinematicBoss};
    if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcade=api;

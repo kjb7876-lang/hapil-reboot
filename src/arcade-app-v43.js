@@ -498,6 +498,12 @@
   }
   function addParticle(x,y,vx,vy,life,color,size){if(particles.length<MAX_PARTICLES)particles.push({x:x,y:y,vx:vx,vy:vy,life:life,max:life,color:color,size:size});}
   var BANNER_Y=60;
+  /* 보스 페이즈 표시(사용자 11-17): 'PHASE 3 / 6'과 그 페이즈의 수학 도형 이름. */
+  function phaseLabel(s,withNo){
+    var pi=Arcade.phaseOf&&Arcade.phaseOf(s.seg),kind=Arcade.phaseKind&&Arcade.phaseKind(Arcade.SEGMENTS[s.seg],s.seg),out=s.boss.name;
+    if(pi&&pi.count>1&&s.entranceAll){if(withNo)out+=' · PHASE '+pi.no+'/'+pi.count;if(kind)out+=' · '+kind.name;}
+    return out;
+  }
   function showBanner(title,sub,spell){banner=1;bannerTitle=title;bannerSub=sub;bannerTick=state?state.tick:0;bannerSpell=!!spell;}
   function showToast(result){
     var g=Arcade.STAGES[result.stage];if(!g)return;
@@ -526,8 +532,10 @@
       else if(e==='hurt'){play('hurt',s.player.x);hurtFlash=1;hurtRing={x:s.player.x,y:s.player.y,r:8};shake=16;}
       else if(e==='bomb'){play('bomb',s.player.x);flash=.55;shock=HeroFx?null:{x:s.player.x,y:s.player.y,r:10};shake=10;if(HeroFx){HeroFx.onEvent(e,s,visual);shake=Math.max(shake,HeroFx.shake());}} // 필살기 단계 연출이 충격파 고리를 대신한다(감싸는 원 금지)
       else if(HeroFx&&e==='bombPulse'){HeroFx.onEvent(e,s,visual);play('bossHit',s.player.x);shake=Math.max(shake,3);}
+      else if(HeroFx&&e==='focusSkill'){HeroFx.onEvent(e,s,visual);play('seal',s.player.x);}
       else if(HeroFx&&(e==='powerUp'||e==='powerDown'||e==='bombLevelUp'||e==='distort')){HeroFx.onEvent(e,s,visual);if(e!=='powerDown')play('seal');}
-      else if(e==='card'){play('charge',s.boss.x);castFx(s,true);showBanner(Arcade.SEGMENTS[s.seg].name,s.boss.name,true);}
+      else if(e==='card'){play('charge',s.boss.x);castFx(s,true);showBanner(Arcade.SEGMENTS[s.seg].name,phaseLabel(s,true),true);}
+      else if(e==='plain'){var ppi=Arcade.phaseOf&&Arcade.phaseOf(s.seg);if(ppi&&ppi.count>1&&s.entranceAll)showBanner('PHASE '+ppi.no+' / '+ppi.count,phaseLabel(s,false),false);}
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,'제'+g.part+'부 · STAGE '+(s.stageIndex+1));play('seal');}}
       else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);showToast(r);rushStage=false;}
       else if(e==='map')loadStage(s.stageIndex);
@@ -1401,7 +1409,7 @@
     offsetX=offsetY=0;if(shake>0){if(settings.screenShake){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;}shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawShots(s);drawDrifts();drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink)){drawPlayer(s);drawHitbox(s);}if(HeroFx)HeroFx.drawTexts(ctx,visual); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawShots(s);drawDrifts();drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink)){drawPlayer(s);drawHitbox(s);}if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);drawHud(s);
     if(flash>0){if(Ink&&Ink.raw)Ink.raw(1);if(Ink){var fb=s.boss&&s.boss.present,fx0=fb?finite(s.boss.x,W/2):W/2,fy0=fb?finite(s.boss.y,H/3):H/3,fg=ctx.createRadialGradient(fx0,fy0,20,fx0,fy0,H*.9);fg.addColorStop(0,'rgba(255,252,244,'+(flash*.75)+')');fg.addColorStop(1,'rgba(255,252,244,'+(flash*.2)+')');ctx.fillStyle=fg;}else ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);if(Ink&&Ink.raw)Ink.raw(-1);if(Ink){ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);drawPlayer(s);drawHitbox(s);ctx.restore();}flash-=.04;} // 수묵화에서도 섬광은 밝게: 먹색으로 뒤집히면 패턴 격파·보스 쓰러짐 때 화면이 잿빛으로 꺼졌다(보스 이펙트 전수조사 11-15). 보스에서 퍼지는 빛으로, 영웅·판정점은 섬광 위에 다시 그려 위치를 놓치지 않게(심사 1차 6.41)
     // 피격: 인주색 테두리 번쩍임 + 영웅 둘레에 금 간 붉은 고리(수묵화풍에서도 먹으로 바꾸지 않는다). 탄 지우기의 한지빛 섬광과 색·모양이 겹치지 않게.
@@ -1456,11 +1464,54 @@
     $('story-next').textContent=T(story.line+1===entry.lines.length?'storyFight':'storyNext');
     story.elapsed=0;story.lineMs=Math.max(2500,Math.min(6000,(entry.durationMs||6000)/entry.lines.length));
   }
+
+  /* ── 보스 입장 연출(사용자 11-17): 수묵 컷인(필살기 컷인처럼 띠) → 보스가 판에 들어섬 → 짧은 대사 → 전투. 모든 보스·중간보스 공통. ── */
+  var introLinesKey='',introLines=null,INK_PAPER='rgb(244,236,218)',INK_DARK='rgb(30,26,24)',INK_SERIF='"HapilSerif","Noto Serif KR","Noto Serif CJK KR","Nanum Myeongjo",serif';
+  function entranceLinesOf(s){
+    var seg=Arcade.SEGMENTS[s.seg],key=s.seg+':'+seg.actor;if(introLinesKey===key&&introLines)return introLines;
+    var who=Arcade.ACTORS[seg.actor],entry=BossIntros&&BossIntros.getBoss(seg.actor,s.stageIndex),lines=entry&&entry.lines&&entry.lines.length?entry.lines:(BossIntros&&BossIntros.fallbackLines?BossIntros.fallbackLines(seg.actor,!!seg.mid,who&&who.name):[{speaker:who&&who.name||'',text:'...'}]);
+    introLinesKey=key;introLines=lines;return lines;
+  }
+  function wrapText(text,maxW){var out=[],row='',i;for(i=0;i<text.length;i++){var c=text[i];if(ctx.measureText(row+c).width>maxW&&row){out.push(row);row=c.trim()?c:'';}else row+=c;}if(row)out.push(row);return out;}
+  function brushBox(x,y,w,h,alpha){ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle='rgba(244,236,218,.94)';ctx.beginPath();ctx.moveTo(x+4,y+1);ctx.lineTo(x+w-3,y);ctx.lineTo(x+w,y+h-3);ctx.lineTo(x+3,y+h);ctx.closePath();ctx.fill();ctx.fillStyle=INK_DARK;ctx.fillRect(x+4,y-1.5,w-8,2.4);ctx.fillRect(x+6,y+h-1,w-14,2);ctx.restore();}
+  function drawBossIntro(s){
+    var info=Arcade.entrancePhase?Arcade.entrancePhase(s):null;if(!info||mode!=='playing')return;
+    var seg=Arcade.SEGMENTS[s.seg],who=Arcade.ACTORS[seg.actor];if(!who)return;
+    var mid=!!seg.mid,role=mid?'중간보스':'보스',lines=entranceLinesOf(s),t=info.t;
+    ctx.save();ctx.textBaseline='middle';
+    if(info.phase==='cutin'){
+      var open=Math.min(1,t/.22),close=t>.8?(t-.8)/.2:0,ease=1-Math.pow(1-open,3),bandH=128,cy=H*.38,L=W*1.6,x0=L/2-L*ease;
+      ctx.globalAlpha=.2*(1-close);ctx.fillStyle=INK_DARK;ctx.fillRect(0,0,W,H);
+      ctx.translate(W/2,cy-close*30);ctx.rotate(-.17);ctx.globalAlpha=1-close;
+      ctx.save();ctx.beginPath();ctx.rect(x0,-bandH/2,L,bandH);ctx.clip();
+      ctx.fillStyle=INK_PAPER;ctx.fillRect(-L/2,-bandH/2,L,bandH);
+      ctx.fillStyle=INK_DARK;for(var i=0;i<9;i++){var sy=-bandH/2+((i*41.3)%bandH),sl=60+((i*53)%110),sx=L/2-((t*760*(1+(i%3)*.4)+i*71)%(L+sl));ctx.globalAlpha=(1-close)*.4;ctx.fillRect(sx,sy,sl,.9+((i*13)%4)*.4);}
+      ctx.globalAlpha=1-close;
+      var key=seg.actor,img=images[key];if(img){ctx.save();ctx.translate(W*.30-t*18+(1-ease)*70,bandH*.12);ctx.globalCompositeOperation='multiply';drawArt(key,0,0,false,'#222',0,'',1,undefined,bandH*1.95);ctx.restore();}
+      ctx.restore();
+      ctx.fillStyle=INK_DARK;ctx.globalAlpha=1-close;ctx.fillRect(x0,-bandH/2-1,L,4);ctx.fillRect(x0,bandH/2-3,L,4);
+      var tx=-W*.38+(1-ease)*50;ctx.globalAlpha=(1-close)*Math.min(1,Math.max(0,(t-.12)/.14));ctx.textAlign='left';
+      ctx.font='700 13px '+INK_SERIF;ctx.fillStyle='rgba(30,26,24,.75)';ctx.fillText(role,tx+2,-bandH*.30);
+      var nm=who.name,fs=34;ctx.font='700 '+fs+'px '+INK_SERIF;var wmax=W*.56;while(ctx.measureText(nm).width>wmax&&fs>18){fs-=2;ctx.font='700 '+fs+'px '+INK_SERIF;}
+      ctx.lineWidth=5;ctx.strokeStyle='rgba(244,236,218,.95)';ctx.strokeText(nm,tx,-4);ctx.fillStyle=INK_DARK;ctx.fillText(nm,tx,-4);
+      var st=Arcade.STAGES[s.stageIndex];if(st){ctx.font='600 12px '+INK_SERIF;ctx.fillStyle='rgba(30,26,24,.7)';ctx.fillText(st.name,tx+2,bandH*.30);}
+    }else{
+      var n=lines.length,per=1/n,idx=Math.min(n-1,Math.floor(t/per)),lt=(t-idx*per)/per,line=lines[idx];
+      var a=Math.min(1,t/.06)*(t>.94?(1-t)/.06:1);
+      ctx.font='700 16px '+INK_SERIF;ctx.textAlign='left';
+      var rows=wrapText(line.text.slice(0,Math.max(1,Math.ceil(line.text.length*Math.min(1,lt/.55)))),286),bw=316,bh=46+rows.length*22,bx=(W-bw)/2,by=Math.max(250,Math.min(300,H*.43));
+      brushBox(bx,by,bw,bh,a);ctx.globalAlpha=a;ctx.font='600 12px '+INK_SERIF;ctx.fillStyle='rgba(30,26,24,.7)';ctx.fillText(line.speaker||who.name,bx+16,by+16);
+      ctx.font='700 16px '+INK_SERIF;ctx.fillStyle=INK_DARK;for(var r=0;r<rows.length;r++)ctx.fillText(rows[r],bx+16,by+38+r*22);
+      if(t>.3){ctx.globalAlpha=a*.5;ctx.font='600 10px '+INK_SERIF;ctx.textAlign='right';ctx.fillText('탭·Enter 넘기기',bx+bw-12,by+bh-9);}
+    }
+    ctx.restore();
+  }
   function beginStory(force){
     if(!state||story||(!force&&mode!=='playing'))return false;
     // 이미 본 컷신을 건너뛸 때도 같은 안전한 본보스 입장을 적용한다.
     if(Arcade.prepareBossEntrance&&Arcade.prepareBossEntrance(state))clearCombatPresentation();
-    if(!Story||!$('arcade-story')||(!force&&(storyQuiet||state.stage!=='intro')))return false;
+    if(!force)return false; // 11-17: 별도 컷신 화면 대신 판 위 입장 연출(drawBossIntro). 강제 호출(디버그·다시 보기)만 예전 화면
+    if(!Story||!$('arcade-story'))return false;
     var seg=Arcade.SEGMENTS[state.seg];
     var eligible=function(g){return g&&g.kind==='card'&&(Arcade.isCinematicBoss?Arcade.isCinematicBoss(g.actor,g.mid):!g.mid);};
     if(force&&!eligible(seg))seg=Arcade.SEGMENTS.find(function(g){return g.stage===state.stageIndex&&eligible(g);});
@@ -1523,7 +1574,7 @@
     var grown=run&&run.grown; // 중간 저장에서 이어 할 때 자란 공격·필살 단계
     run={stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),segment:run&&run.segment,carry:run&&run.carry,practice:!!(run&&run.practice),hero:heroId(run&&run.hero||selectedHero)};
     lastRun=run;oneCreditEligible=run.stage===0&&!run.bossOnly&&!Number.isInteger(run.segment)&&!run.carry&&!run.practice&&!quiet&&!devMode;
-    var options={difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,growth:true,pacing:!quiet,rhythm:!quiet}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
+    var options={entranceAll:true,difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,growth:true,pacing:!quiet,rhythm:!quiet}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
     if(Number.isInteger(run.segment))options.segment=run.segment;if(grown&&(grown.exp||grown.fills))options.grown={exp:grown.exp|0,fills:grown.fills|0};
     state=Arcade.createRun(options);heroOpacity=1;
     if(isSeoha(state.hero))loadImage('hero-'+state.hero);
@@ -1673,11 +1724,12 @@
     $('arcade-bomb').addEventListener('pointerdown',function(e){if(mode!=='playing'||(e.button!==undefined&&e.button!==0))return;e.preventDefault();e.stopPropagation();bombQueued=true;});
     $('arcade-bomb').addEventListener('click',function(e){if(e.detail===0&&mode==='playing')bombQueued=true;});
     var stage=$('arcade-stage');
-    stage.addEventListener('pointerdown',function(e){if(mode!=='playing'||finger.active||(e.button!==undefined&&e.button!==0)||e.target.closest('button,input,select,label'))return;e.preventDefault();var q=fieldPoint(e);finger.active=true;finger.id=e.pointerId;finger.x=q.x;finger.y=q.y;try{stage.setPointerCapture(e.pointerId);}catch(ignore){}});
+    stage.addEventListener('pointerdown',function(e){if(mode==='playing'&&state&&Arcade.entrancePhase){var ph=Arcade.entrancePhase(state);if(ph&&ph.phase==='speech'&&ph.t>.3)Arcade.skipEntrance(state);}if(mode!=='playing'||finger.active||(e.button!==undefined&&e.button!==0)||e.target.closest('button,input,select,label'))return;e.preventDefault();var q=fieldPoint(e);finger.active=true;finger.id=e.pointerId;finger.x=q.x;finger.y=q.y;try{stage.setPointerCapture(e.pointerId);}catch(ignore){}});
     stage.addEventListener('pointermove',function(e){if(!finger.active||e.pointerId!==finger.id)return;e.preventDefault();var q=fieldPoint(e);finger.x=q.x;finger.y=q.y;});
     ['pointerup','pointercancel','lostpointercapture'].forEach(function(type){stage.addEventListener(type,function(e){if(e.pointerId===finger.id){finger.active=false;finger.id=null;}});});
     document.addEventListener('keydown',function(e){var key=e.key.length===1?e.key.toLowerCase():e.key,form=e.target&&e.target.closest&&e.target.closest('input,select,textarea,button');
       if(mode==='rules'&&key==='Escape'){e.preventDefault();if(!e.repeat)closeRules();return;}
+      if(mode==='playing'&&!form&&(key==='Enter')&&state&&Arcade.entrancePhase&&Arcade.entrancePhase(state)){e.preventDefault();Arcade.skipEntrance(state);return;}
       if(mode==='story'){if(key==='Escape'){e.preventDefault();if(!e.repeat)pause();return;}if(form)return;if(key==='Enter'||key===' '||key==='z'){e.preventDefault();if(!e.repeat)nextStory();}return;}
       if(key==='Escape'||(key===' '&&!form)){if(mode==='playing'||mode==='paused')e.preventDefault();if(e.repeat)return;if(mode==='playing')pause();else if(mode==='paused')$('arcade-resume').click();return;}
       if((form&&form.tagName!=='BUTTON')||mode!=='playing')return;

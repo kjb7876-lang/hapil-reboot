@@ -91,7 +91,7 @@
     html.ink .hudx{filter:invert(1) hue-rotate(180deg) saturate(.7) sepia(.3)}html.ink .hudx.side{filter:invert(1) hue-rotate(180deg) saturate(.7) sepia(.3) brightness(.9)}html.ink .hudx img{filter:invert(1) hue-rotate(180deg)}
     html.ink #arcade-dev{border-color:#8c5a1c;background:#ebe0c8;color:#7a4a12}html.ink #arcade-dev[aria-pressed="true"]{background:#d9cbae}html.ink #arcade-dev-badge{border-color:#8c5a1c;background:rgba(242,233,214,.94);color:#7a4a12}
     /* 게임 오버(11-16): 감긴 먹 눈꺼풀이 그대로 보이고, 그 위에 붉은 붓 십자가가 그어진 뒤 '다시하기'가 떠오른다 */
-    #result-cross{display:none;width:150px;height:196px;background:transparent!important;margin:-4px 0 -2px}
+    #result-cross{display:none;position:absolute;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));width:30px;height:40px;background:transparent!important;margin:0;pointer-events:none} /* 이스터에그처럼 오른쪽 아래에 작게(사용자 11-17) */
     #arcade-result.fallen #result-cross{display:block}
     #arcade-result.fallen,html.ink #arcade-result.fallen{background:linear-gradient(180deg,rgba(8,7,6,.08),rgba(8,7,6,.28))}
     #arcade-result.fallen h2,html.ink #arcade-result.fallen h2,#arcade-result.fallen .screen .score,html.ink #arcade-result.fallen .score{color:#efe5cf}
@@ -270,7 +270,9 @@
         <p><b>목숨·회복</b> — 시작 목숨은 이지 5·노멀 3·헬 2입니다. 일반 스테이지마다 완전 회복하지 않고, 다음 부로 넘어갈 때 목숨 1을 최대치 안에서 회복합니다.</p>
         <p><b>원코인·이어하기</b> — 처음부터 게임 오버 없이 끝내는 것이 원코인 클리어입니다. 이어하기·구간 선택·재도전·DEV는 연습용이며 원코인 클리어에 포함하지 않습니다. 일시정지와 대화 읽기는 가능합니다.</p>
         <p><b>영웅 선택</b> — 기억사수·윤서하 A·윤서하 B 중 선택합니다. A는 소녀 시절, B는 성숙한 시간공학자의 모습입니다. 윤서하의 두 모습은 시간검 분산·집중 사격을 사용하며 성장·목숨·필살 규칙을 공유합니다.</p>
-        <p><b>보스의 기억</b> — 본보스가 등장하기 직전에 컷신과 정본 발췌 또는 보스 대사를 보여주며 전투는 멈춥니다. 7대죄와 후속 형태는 각자의 등장 대사를 갖습니다. 등장 전 모든 탄막을 정리하고 보스 등장 후 약 2초 뒤 공격을 시작합니다. 컷신 보스를 쓰러뜨리면 탄막을 정리하고 약 2초 뒤 다음 구간으로 갑니다. 다음/건너뛰기 또는 Enter·Space로 넘기고, 자동 진행을 끄면 천천히 읽을 수 있습니다. 이미 본 기억은 다음 시도에 생략합니다.</p>
+        <p><b>저속 간이 필살</b> — 저속 이동(Shift·저속 버튼) 중에는 확률적으로 간이 필살이 저절로 나갑니다. 탄은 지우지 않습니다. 기억사수는 「인과의 역전」(적을 쫓는 레이저가 확률로 번개처럼 이어져 연쇄), 윤서하는 「시간차 공격」(시계가 돈 뒤 굵은 시간검이 적을 자동 추적)입니다.</p>
+        <p><b>보스 등장·페이즈</b> — 모든 보스와 중간보스는 수묵 컷인 → 전장 등장 → 짧은 대사 순서로 나타난 뒤 전투가 시작됩니다(탭·Enter로 넘기기). 보스 탄은 위쪽에만 머물지 않고 결국 아래로 내려옵니다. 보스는 PHASE 1~N 으로 나뉘며 2페이즈부터 황금각·장미 곡선·리사주·별 다각형 같은 수학 도형 탄막이 페이즈마다 다르게 얹힙니다.</p>
+        <p><b>보스의 기억</b> — 7대죄 등 일부 본보스는 등장 직전에 컷신과 정본 발췌 또는 보스 대사를 보여줄 수 있습니다(기억 다시 보기에서 확인). 7대죄와 후속 형태는 각자의 등장 대사를 갖습니다. 등장 전 모든 탄막을 정리하고 보스 등장 후 약 2초 뒤 공격을 시작합니다. 컷신 보스를 쓰러뜨리면 탄막을 정리하고 약 2초 뒤 다음 구간으로 갑니다. 다음/건너뛰기 또는 Enter·Space로 넘기고, 자동 진행을 끄면 천천히 읽을 수 있습니다. 이미 본 기억은 다음 시도에 생략합니다.</p>
       </div>
       <a class="button" href="docs/v43/canonical-story.txt" target="_blank" rel="noopener">서사 정본 전체 읽기</a>
       <button id="story-replay" type="button" data-i18n="storyReplay">본 기억 다시 표시</button>
@@ -287,30 +289,31 @@
       <button id="arcade-home" type="button" data-i18n="toTitle">처음 화면으로</button>
     </div>
   </div>
-  <script src="src/audio-v37.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-parts-v43/p1.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-parts-v43/p2.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-parts-v43/p3.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-parts-v43/p4.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-parts-v43/p5.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-parts-v43/p6.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-parts-v43/p7.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-parts-v43/p8.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-boss-intros-v43.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-heroes-v43.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-boss-rhythm-v43.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-v43.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-skins-v43.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/ink-v43.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/ink-motifs-v43.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/hero-memory-v43.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-i18n-v43.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-music-v43.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-mobile-v43.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-eyes-v43.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-story-v43.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-hero-select-v43.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-hero-visibility-v43.js?v=20261117-arcade43-boss-rhythm"></script>
-  <script src="src/arcade-app-v43.js?v=20261117-arcade43-boss-rhythm"></script>
+  <script src="src/audio-v37.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-parts-v43/p1.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-parts-v43/p2.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-parts-v43/p3.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-parts-v43/p4.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-parts-v43/p5.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-parts-v43/p6.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-parts-v43/p7.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-parts-v43/p8.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-boss-intros-v43.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-heroes-v43.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-boss-rhythm-v43.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-boss-phases-v43.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-v43.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-skins-v43.js?v=20261117-arcade43-phases"></script>
+  <script src="src/ink-v43.js?v=20261117-arcade43-phases"></script>
+  <script src="src/ink-motifs-v43.js?v=20261117-arcade43-phases"></script>
+  <script src="src/hero-memory-v43.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-i18n-v43.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-music-v43.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-mobile-v43.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-eyes-v43.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-story-v43.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-hero-select-v43.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-hero-visibility-v43.js?v=20261117-arcade43-phases"></script>
+  <script src="src/arcade-app-v43.js?v=20261117-arcade43-phases"></script>
 </body>
 </html>
