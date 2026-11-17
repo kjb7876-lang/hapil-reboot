@@ -98,17 +98,17 @@ async function mobile(browser,width,height){
     const pos=()=>page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;return {x:s.player.x,tick:s.tick,bombs:s.bombs,focus:s.player.focus};});
     await touch('touchStart',[move]);let p0=await pos();await page.waitForFunction(t=>HapilArcadeApp.debugState().state.tick>=t+12,p0.tick);let p1=await pos();
     const fast=(p1.x-p0.x)/(p1.tick-p0.tick);assert(fast>3,'normal touch movement');
-    await touch('touchStart',[move,hold]);p0=await pos();await page.waitForFunction(t=>HapilArcadeApp.debugState().state.tick>=t+12,p0.tick);p1=await pos();
+    await touch('touchStart',[hold]);p0=await pos();await page.waitForFunction(t=>HapilArcadeApp.debugState().state.tick>=t+12,p0.tick);p1=await pos();
     const slow=(p1.x-p0.x)/(p1.tick-p0.tick);assert(slow>0&&slow<fast*.65,'slow touch movement is actually slower');assert(p1.focus);
     // Finger leaving the button while held must keep pointer capture and focus.
     hold.x=Math.min(width-1,hold.x+80);hold.y=Math.max(1,hold.y-80);
-    await touch('touchMove',[move,hold]);assert((await state(page)).focus,'focus survives dragging off button');
+    await touch('touchMove',[hold]);assert((await state(page)).focus,'focus survives dragging off button');
     const stock=(await pos()).bombs;
-    await touch('touchStart',[move,hold,blast]);await page.waitForFunction(n=>HapilArcadeApp.debugState().state.bombs===n-1,stock);
-    // CDP uses the active-point diff to release one finger. touchEnd itself
-    // releases the entire gesture and must contain no points.
-    await touch('touchMove',[move,hold]);assert((await state(page)).focus,'bomb release does not release low speed');
-    await touch('touchMove',[move]);assert.equal((await state(page)).focus,false,'focus clears on its own release');
+    await touch('touchStart',[blast]);await page.waitForFunction(n=>HapilArcadeApp.debugState().state.bombs===n-1,stock);
+    // Chromium CreateWebTouchEvents ends the supplied IDs, not the remaining
+    // fingers. An empty touchEnd ends every remaining pointer.
+    await touch('touchEnd',[blast]);assert((await state(page)).focus,'bomb release does not release low speed');
+    await touch('touchEnd',[hold]);assert.equal((await state(page)).focus,false,'focus clears on its own release');
     await touch('touchEnd',[]);
     await pauseSettings(page,name);
     assert.deepEqual(errors,[]);assert.deepEqual(badRequests,[]);

@@ -22,6 +22,8 @@ jobs:
         shard: [0, 1, 2, 3]
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # Historical compatibility tests read pinned git objects.
       - uses: actions/setup-node@v5
         with:
           node-version: 22
