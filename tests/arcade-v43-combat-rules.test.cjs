@@ -96,7 +96,7 @@ test('every authored wave and boss pattern emits identical hazards for normal an
  }
 });
 
-test('normal and hell also share floor/riser/signature trajectories in actual play',()=>{
+test('normal and hell also share floor and riser trajectories in actual play',()=>{
  for(const compact of [false,true])for(const stage of [0,1,2,3,11,17,28,42,55]){
   const normal=A.createRun({difficulty:'normal',stage,seed:23,compact}),hell=A.createRun({difficulty:'hell',stage,seed:23,compact});
   for(let t=0;t<1800;t++){

@@ -27,6 +27,11 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 22
+      - name: Install image regression dependencies
+        run: |
+          python3 -m venv .venv-tests
+          .venv-tests/bin/python -m pip install Pillow numpy
+          echo "$GITHUB_WORKSPACE/.venv-tests/bin" >> "$GITHUB_PATH"
       - run: npm install --ignore-scripts --no-audit --no-fund
       - run: node tools/check-regressions-v43.cjs
         env:

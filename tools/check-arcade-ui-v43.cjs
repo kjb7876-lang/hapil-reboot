@@ -33,7 +33,7 @@ async function setup(browser,viewport,mobile){
 }
 async function stationary(page){
   // A deterministic empty segment isolates input from bullet RNG and auto-defense.
-  await page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;s.stage='break';s.stageTick=-1e7;s.player.x=80;s.player.y=480;s.player.invulnerableUntil=s.tick+1e7;s.n=0;s.lasers.length=s.figures.length=s.mobs.length=0;s.risers.length=0;s.bombs=3;});
+  await page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;s.stage='break';s.stageTick=-1e7;s.player.x=80;s.player.y=480;s.player.invulnerableUntil=s.tick+1e7;s.n=0;s.lasers.length=s.figures.length=s.mobs.length=0;if(s.risers)s.risers.length=0;s.bombs=3;});
 }
 async function pauseSettings(page,name){
   await page.locator('#arcade-pause-button').click();
