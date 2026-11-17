@@ -8484,7 +8484,8 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death"
   ],
   "size": [
    696,
@@ -8511,6 +8512,24 @@
   "source": "media/m0-v43/boss/mb-dist04-attack.webp",
   "sourceSha256": "9c4ac1d66cc16727e8081364c38c3d61e66580891d79f9715b35f4cc950a2710",
   "stamp": "959358683ad6f2d1",
+  "table": "tools/arcade-art-v43/p1.json"
+ },
+ "p1_comrade@death.webp": {
+  "bytes": 75188,
+  "cell": [
+   147,
+   220
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1176,
+   220
+  ],
+  "source": "media/drive-v43/death/comrade-mbdist04-death8.png",
+  "sourceSha256": "832d69ca1e9f4593f2ef68a6e5c2c224f3f81da7117ad72f7b6030951740243c",
+  "stamp": "84418535004af92f",
   "table": "tools/arcade-art-v43/p1.json"
  },
  "p1_face.webp": {
@@ -10938,7 +10957,8 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death"
   ],
   "size": [
    732,
@@ -10965,6 +10985,24 @@
   "source": "media/m0-v43/boss/mb-dist01-attack.webp",
   "sourceSha256": "3e9fb15301a775c2d75e5b060fa1fb2233fec8089fb78faf5e0efbcabdd7449e",
   "stamp": "c840a1d43458acec",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "violet@death.webp": {
+  "bytes": 87974,
+  "cell": [
+   220,
+   188
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1760,
+   188
+  ],
+  "source": "media/drive-v43/death/violet-mbdist01-death8.png",
+  "sourceSha256": "578d52fd844ef080a9d870ca526b37994a3cbfa54553ff71ac9d34535dd42e6d",
+  "stamp": "8d879b7aeb014ace",
   "table": "tools/arcade-art-v43/base.json"
  },
  "warden.webp": {

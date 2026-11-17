@@ -10,6 +10,12 @@
      "strip": 4,
      "fps": 8,
      "size": 220
+    },
+    "death": {
+     "src": "media/drive-v43/death/violet-mbdist01-death8.png",
+     "strip": 8,
+     "fps": 8,
+     "size": 220
     }
    }
   },
@@ -135,7 +141,7 @@
    "src": "media/drive-v43/m025-down.webp",
    "strip": 4,
    "fps": 6,
-   "size": 260
+   "size": 220
   },
   "belphegor": {
    "src": "media/sins-v13/belphegor-atlas-512.png",
@@ -159,7 +165,7 @@
   },
   "knight": {
    "src": "media/story-v19/knight-idle.webp",
-   "size": 260
+   "size": 220
   },
   "spider": {
    "src": "media/drive-v43/m043-down.webp",
