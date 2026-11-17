@@ -11,15 +11,15 @@
   ],
   "03": [
    "m0_dist02_h1",
-   "m0_dist02_m1",
    "m0_dist02_r74_patrol_0_5",
+   "m0_dist02_m1",
    "m0_dist02_g1",
    "m0_dist02_sp1"
   ],
   "04": [
-   "m0_dist03_c1",
    "m0_dist03_g1",
    "m0_dist03_sp1",
+   "m0_dist03_c1",
    "m0_dist03_s1"
   ],
   "05": [
@@ -35,12 +35,11 @@
   ],
   "07": [
    "m0_dist06_h1",
-   "m0_dist06_m1",
-   "m0_dist06_c1"
+   "m0_dist06_m1"
   ],
   "08": [
-   "m0_a08_s1",
    "m0_a08_o1",
+   "m0_a08_s1",
    "m0_a08_c1",
    "m0_a08_o2"
   ],
@@ -50,10 +49,10 @@
    "m0_ep1a09_r74_patrol"
   ],
   "09-2": [
-   "m0_dist03_c1",
    "m0_dist03_g1",
    "m0_dist03_sp1",
-   "m0_dist03_s1"
+   "m0_dist03_s1",
+   "m0_dist03_c1"
   ],
   "10": [
    "m0_a10_s1",
@@ -61,6 +60,7 @@
    "m0_a10_h1"
   ],
   "11": [
+   "m0_a11_d1",
    "m0_a11_c1",
    "m0_a11_o1"
   ],
@@ -71,8 +71,8 @@
   ],
   "14": [
    "m0_b02_m1",
-   "m0_b02_b1",
-   "m0_b02_o1"
+   "m0_b02_o1",
+   "m0_b02_b1"
   ],
   "15": [
    "m0_b03_g1",
@@ -81,10 +81,11 @@
   ],
   "16": [
    "m0_b04_g1",
-   "m0_b04_b1",
-   "m0_b04_s1"
+   "m0_b04_s1",
+   "m0_b04_b1"
   ],
   "17": [
+   "m0_b05_p1",
    "m0_b05_a1"
   ],
   "18": [
@@ -97,14 +98,15 @@
    "m0_b06b_v1"
   ],
   "20": [
+   "m0_b07_s1",
    "m0_b07_f1",
    "m0_b07_f2",
    "m0_ep1b07_r74_patrol_0_5"
   ],
   "21": [
    "m0_b08_c1",
-   "m0_b08_h1",
-   "m0_b08_v1"
+   "m0_b08_v1",
+   "m0_b08_h1"
   ],
   "22": [
    "m0_b09_h1",
@@ -147,8 +149,8 @@
    "m0_l304_e3"
   ],
   "32": [
-   "m0_l305_e1",
-   "m0_l305_e2"
+   "m0_l305_e2",
+   "m0_l305_e1"
   ],
   "34": [
    "m0_l302_e1",
@@ -157,65 +159,92 @@
   ],
   "37": [
    "m0_kair_academy_wave_1",
-   "m0_kair_academy_wave_2",
    "m0_kair_academy_wave_4",
+   "m0_kair_academy_wave_2",
    "m0_kair_academy_wave_5",
    "m0_kair_academy_wave_3",
    "m0_kair_academy_wave_6"
   ],
   "38": [
-   "m0_kair_guardian_03",
-   "m0_kair_guardian_07",
-   "m0_kair_guardian_08"
+   "m0_kair_guardian_01",
+   "m0_kair_guardian_02",
+   "m0_kair_guardian_04",
+   "m0_kair_guardian_05",
+   "m0_kair_guardian_06",
+   "m0_kair_elite_49",
+   "m0_kair_elite_50",
+   "m0_kair_guardian_03"
   ],
   "39": [
    "m0_kair_guardian_07",
    "m0_kair_guardian_08",
+   "m0_kair_guardian_09",
+   "m0_kair_guardian_10",
+   "m0_kair_guardian_11",
+   "m0_kair_guardian_12",
    "m0_kair_elite_51"
   ],
   "40": [
+   "m0_kair_guardian_13",
+   "m0_kair_guardian_14",
    "m0_kair_guardian_15",
-   "m0_kair_guardian_17",
-   "m0_kair_guardian_07"
+   "m0_kair_guardian_16",
+   "m0_kair_guardian_17"
   ],
   "41": [
+   "m0_kair_guardian_19",
    "m0_kair_guardian_20",
-   "m0_kair_guardian_15",
-   "m0_kair_guardian_17"
+   "m0_kair_guardian_21",
+   "m0_kair_guardian_22",
+   "m0_kair_guardian_24",
+   "m0_kair_elite_53",
+   "m0_kair_elite_54"
   ],
   "42": [
-   "m0_kair_guardian_20",
-   "m0_kair_guardian_15",
-   "m0_kair_guardian_17"
+   "m0_kair_guardian_25",
+   "m0_kair_guardian_26",
+   "m0_kair_guardian_29",
+   "m0_kair_guardian_30"
   ],
   "43": [
-   "m0_kair_elite_58",
-   "m0_kair_guardian_20",
-   "m0_kair_guardian_46"
+   "m0_kair_guardian_31",
+   "m0_kair_guardian_32",
+   "m0_kair_guardian_33",
+   "m0_kair_guardian_35",
+   "m0_kair_elite_56",
+   "m0_kair_elite_57"
   ],
   "44": [
-   "m0_kair_elite_58",
-   "m0_kair_guardian_46",
-   "m0_kair_guardian_20"
+   "m0_kair_guardian_37",
+   "m0_kair_guardian_38",
+   "m0_kair_guardian_41",
+   "m0_kair_guardian_42",
+   "m0_kair_elite_58"
   ],
   "45": [
+   "m0_kair_guardian_43",
    "m0_kair_guardian_46",
-   "m0_kair_elite_58",
-   "m0_kair_guardian_20"
+   "m0_kair_guardian_37"
   ],
   "46": [
-   "m0_kair_guardian_46",
-   "m0_kair_elite_58",
-   "m0_kair_guardian_20"
+   "m0_kair_guardian_05",
+   "m0_kair_guardian_06",
+   "m0_kair_elite_49",
+   "m0_kair_elite_50",
+   "m0_kair_guardian_10",
+   "m0_kair_guardian_43",
+   "m0_kair_guardian_37",
+   "m0_kair_guardian_46"
   ],
   "48": [
+   "m0_h101_s1",
    "m0_h101_t1"
   ],
   "49": [
    "m0_h102_s1",
+   "m0_h102_s2",
    "m0_h102_c1",
-   "m0_h102_t1",
-   "m0_h102_s2"
+   "m0_h102_t1"
   ],
   "50": [
    "m0_h103_t1"
@@ -241,11 +270,11 @@
   ],
   "56": [
    "m0_c101_e1",
-   "m0_c101_e2",
    "m0_c101_e3"
   ],
   "57": [
    "m0_c102_e1",
+   "m0_c102_e2",
    "m0_c102_e3"
   ],
   "58": [
@@ -257,283 +286,172 @@
    "m0_c106_e3"
   ],
   "60": [
-   "m0_c103_e1",
    "m0_c103_e2",
    "m0_c103_e3"
   ],
   "61": [
-   "m0_c104_e1",
    "m0_c104_e2"
   ]
  },
  "front": {
-  "01": [
-   "m0_dist02_r74_patrol_0_5",
-   "m0_dist02_h1",
-   "m0_dist01_sp2"
-  ],
   "02": [
-   "m0_dist01_sp2",
-   "m0_dist03_sp1",
-   "m0_dist02_h1"
+   "m0_dist01_sp2"
   ],
   "03": [
    "m0_dist02_h1",
-   "m0_dist02_r74_patrol_0_5",
-   "m0_dist03_sp1"
+   "m0_dist02_r74_patrol_0_5"
   ],
   "04": [
    "m0_dist03_g1",
-   "m0_dist03_sp1",
-   "m0_dist04_s1"
+   "m0_dist03_sp1"
   ],
   "05": [
-   "m0_dist04_s1",
-   "m0_dist03_g1",
-   "m0_a08_s1"
-  ],
-  "06": [
-   "m0_dist06_h1",
-   "m0_dist02_h1",
    "m0_dist04_s1"
   ],
   "07": [
-   "m0_dist06_h1",
-   "m0_dist03_sp1",
-   "m0_dist02_h1"
+   "m0_dist06_h1"
   ],
   "08": [
-   "m0_a08_s1",
-   "m0_a09_o1",
-   "m0_a09_v1"
+   "m0_a08_o1",
+   "m0_a08_s1"
   ],
   "09-1": [
    "m0_a09_o1",
-   "m0_a09_v1",
-   "m0_a08_s1"
+   "m0_a09_v1"
   ],
   "09-2": [
    "m0_dist03_g1",
-   "m0_dist03_sp1",
-   "m0_dist06_h1"
+   "m0_dist03_sp1"
   ],
   "10": [
    "m0_a10_s1",
-   "m0_a10_o1",
-   "m0_a09_v1"
+   "m0_a10_o1"
   ],
   "11": [
-   "m0_a10_s1",
-   "m0_a10_o1",
-   "m0_b01_r1"
+   "m0_a11_d1"
   ],
   "13": [
    "m0_b01_r1",
-   "m0_b01_c1",
-   "m0_a10_s1"
+   "m0_b01_c1"
   ],
   "14": [
-   "m0_b01_r1",
-   "m0_b01_c1",
-   "m0_b03_g1"
+   "m0_b02_m1",
+   "m0_b02_o1"
   ],
   "15": [
    "m0_b03_g1",
-   "m0_b03_c1",
-   "m0_b04_g1"
+   "m0_b03_c1"
   ],
   "16": [
    "m0_b04_g1",
-   "m0_b04_s1",
-   "m0_b03_g1"
+   "m0_b04_s1"
   ],
   "17": [
-   "m0_b05_a1",
-   "m0_b03_g1",
-   "m0_b04_g1"
-  ],
-  "18": [
-   "m0_b05_a1",
-   "m0_b04_g1",
-   "m0_b03_g1"
-  ],
-  "19": [
-   "m0_b09_c1",
-   "m0_b09_h1",
-   "m0_b03_g1"
+   "m0_b05_p1",
+   "m0_b05_a1"
   ],
   "20": [
-   "m0_b09_h1",
-   "m0_b09_c1",
-   "m0_b05_a1"
+   "m0_b07_s1"
   ],
   "21": [
-   "m0_b09_h1",
-   "m0_b09_c1",
-   "m0_b05_a1"
+   "m0_b08_c1",
+   "m0_b08_v1"
   ],
   "22": [
    "m0_b09_h1",
-   "m0_b09_c1",
-   "m0_b05_a1"
-  ],
-  "24": [
-   "m0_u202_e1",
-   "m0_u204_e2",
-   "m0_u204_e3"
+   "m0_b09_c1"
   ],
   "25": [
-   "m0_u202_e1",
-   "m0_u204_e2",
-   "m0_u204_e3"
+   "m0_u202_e1"
   ],
   "26": [
    "m0_u204_e2",
-   "m0_u204_e3",
-   "m0_u202_e1"
+   "m0_u204_e3"
   ],
   "27": [
    "m0_u205_e1",
-   "m0_u205_e3",
-   "m0_u204_e2"
+   "m0_u205_e3"
   ],
   "28": [
-   "m0_u205_e1",
-   "m0_u205_e3",
-   "m0_u204_e2"
-  ],
-  "29": [
-   "m0_u205_e1",
-   "m0_u205_e3",
-   "m0_u204_e2"
-  ],
-  "31": [
-   "m0_dist02_r74_patrol_0_5",
-   "m0_dist01_sp2",
-   "m0_dist02_h1"
+   "m0_u206_e1",
+   "m0_u206_e2"
   ],
   "32": [
-   "m0_dist02_r74_patrol_0_5",
-   "m0_dist02_h1",
-   "m0_dist01_sp2"
-  ],
-  "34": [
-   "m0_b03_g1",
-   "m0_h103_t1",
-   "m0_a08_s1"
+   "m0_l305_e2"
   ],
   "37": [
    "m0_kair_academy_wave_1",
-   "m0_c105_e2",
-   "m0_u205_e1"
+   "m0_kair_academy_wave_4"
   ],
   "38": [
-   "m0_u205_e1",
-   "m0_u205_e3",
-   "m0_u204_e2"
+   "m0_kair_guardian_01",
+   "m0_kair_guardian_02",
+   "m0_kair_guardian_04"
   ],
   "39": [
-   "m0_h102_s1",
-   "m0_h103_t1",
-   "m0_u205_e1"
+   "m0_kair_guardian_07",
+   "m0_kair_guardian_08",
+   "m0_kair_guardian_09"
   ],
   "40": [
-   "m0_h102_s1",
-   "m0_h103_t1",
-   "m0_kair_academy_wave_1"
+   "m0_kair_guardian_13",
+   "m0_kair_guardian_14",
+   "m0_kair_guardian_15"
   ],
   "41": [
-   "m0_h102_s1",
-   "m0_u204_e2",
-   "m0_u205_e3"
+   "m0_kair_guardian_19",
+   "m0_kair_guardian_20"
   ],
   "42": [
-   "m0_c102_e1",
-   "m0_h102_s1",
-   "m0_u204_e2"
+   "m0_kair_guardian_25",
+   "m0_kair_guardian_26"
   ],
   "43": [
-   "m0_dist04_s1",
-   "m0_dist03_g1",
-   "m0_h103_t1"
+   "m0_kair_guardian_31",
+   "m0_kair_guardian_32"
   ],
   "44": [
-   "m0_c105_e2",
-   "m0_h103_t1",
-   "m0_h102_s1"
+   "m0_kair_guardian_37",
+   "m0_kair_guardian_38",
+   "m0_kair_guardian_41"
   ],
   "45": [
-   "m0_h102_s1",
-   "m0_h103_t1",
-   "m0_b03_g1"
+   "m0_kair_guardian_43"
   ],
   "46": [
-   "m0_b03_c1",
-   "m0_h103_t1",
-   "m0_h102_s1"
+   "m0_kair_guardian_05",
+   "m0_kair_guardian_06",
+   "m0_kair_elite_49",
+   "m0_kair_elite_50",
+   "m0_kair_guardian_10"
   ],
   "48": [
-   "m0_dist06_h1",
-   "m0_h102_s1",
-   "m0_c105_e2"
+   "m0_h101_s1",
+   "m0_h101_t1"
   ],
   "49": [
-   "m0_dist06_h1",
-   "m0_h102_s1",
-   "m0_h103_t1"
+   "m0_h102_s1"
   ],
   "50": [
-   "m0_h103_t1",
-   "m0_h102_s1",
-   "m0_dist06_h1"
-  ],
-  "52": [
-   "m0_murder04_e3",
-   "m0_h103_t1",
-   "m0_h102_s1"
+   "m0_h103_t1"
   ],
   "53": [
-   "m0_murder04_e3",
-   "m0_h103_t1",
-   "m0_h102_s1"
+   "m0_murder04_e3"
   ],
   "54": [
-   "m0_murder04_e3",
-   "m0_h103_t1",
-   "m0_c102_e1"
+   "m0_murder04_e3"
   ],
   "55": [
-   "m0_murder04_e3",
-   "m0_c102_e1",
-   "m0_c102_e3"
-  ],
-  "56": [
-   "m0_c102_e1",
-   "m0_c102_e3",
-   "m0_c105_e2"
+   "m0_murder04_e3"
   ],
   "57": [
    "m0_c102_e1",
-   "m0_c102_e3",
-   "m0_c105_e2"
+   "m0_c102_e2"
   ],
   "58": [
-   "m0_c105_e2",
-   "m0_c102_e1",
-   "m0_c102_e3"
-  ],
-  "59": [
-   "m0_c105_e2",
-   "m0_c103_e1",
-   "m0_c103_e2"
+   "m0_c105_e2"
   ],
   "60": [
-   "m0_c103_e1",
-   "m0_c103_e2",
-   "m0_c103_e3"
-  ],
-  "61": [
-   "m0_c103_e1",
    "m0_c103_e2",
    "m0_c103_e3"
   ]
@@ -549,6 +467,7 @@
   "m0_a10_o1": "암시장의 수상한 자",
   "m0_a10_s1": "부정의 잔영",
   "m0_a11_c1": "거짓천국 근위천사",
+  "m0_a11_d1": "초자아 잠식체",
   "m0_a11_o1": "치료거부의 가면",
   "m0_b01_c1": "검은 실의 외부 신호",
   "m0_b01_r1": "일흔두 번째 인장 잔류체",
@@ -563,6 +482,7 @@
   "m0_b04_g1": "버려진 최고급 식재료",
   "m0_b04_s1": "끓어오르는 검은 소화액",
   "m0_b05_a1": "붉은 하이힐 칼날",
+  "m0_b05_p1": "얼굴 없는 남자의 박수",
   "m0_b06_f1": "칼날이 된 지폐",
   "m0_b06_f2": "모든 면이 뒷면인 동전",
   "m0_b06b_f1": "눈보라 속 여우 악마",
@@ -570,6 +490,7 @@
   "m0_b06b_v1": "낡은 장난감 요요",
   "m0_b07_f1": "불길 속의 늑대",
   "m0_b07_f2": "불길 속의 곰",
+  "m0_b07_s1": "불길 속의 용",
   "m0_b08_c1": "전극기계수호기사",
   "m0_b08_h1": "창처럼 날아오는 역십자가",
   "m0_b08_v1": "육망성의 흑마술 실험체",
@@ -580,6 +501,7 @@
   "m0_c101_e2": "흑장미 귀막은 신도",
   "m0_c101_e3": "세뇌 신호 점액체",
   "m0_c102_e1": "신경 케이블 포식체",
+  "m0_c102_e2": "합일 주파수 결정",
   "m0_c102_e3": "과열 시냅스 점액체",
   "m0_c103_e1": "EGO 구속 연결자",
   "m0_c103_e2": "SUPER EGO 절개결정",
@@ -615,6 +537,7 @@
   "m0_dist06_m1": "검은기둥 화염술사",
   "m0_ep1a09_r74_patrol": "유리 망령",
   "m0_ep1b07_r74_patrol_0_5": "분노의 사냥개",
+  "m0_h101_s1": "성벽 침식 봉인병",
   "m0_h101_t1": "악몽 정찰체",
   "m0_h102_c1": "기억절제 연결자",
   "m0_h102_s1": "붕괴선 파수병",
@@ -627,14 +550,49 @@
   "m0_kair_academy_wave_4": "최초명령 훈련파동 4",
   "m0_kair_academy_wave_5": "최초명령 훈련파동 5",
   "m0_kair_academy_wave_6": "최초명령 훈련파동 6",
+  "m0_kair_elite_49": "상위수문장 49",
+  "m0_kair_elite_50": "상위수문장 50",
   "m0_kair_elite_51": "상위수문장 51",
+  "m0_kair_elite_53": "상위수문장 53",
+  "m0_kair_elite_54": "상위수문장 54",
+  "m0_kair_elite_56": "상위수문장 56",
+  "m0_kair_elite_57": "상위수문장 57",
   "m0_kair_elite_58": "상위수문장 58",
+  "m0_kair_guardian_01": "시간수문장 01",
+  "m0_kair_guardian_02": "시간수문장 02",
   "m0_kair_guardian_03": "시간수문장 03",
+  "m0_kair_guardian_04": "시간수문장 04",
+  "m0_kair_guardian_05": "시간수문장 05",
+  "m0_kair_guardian_06": "시간수문장 06",
   "m0_kair_guardian_07": "시간수문장 07",
   "m0_kair_guardian_08": "시간수문장 08",
+  "m0_kair_guardian_09": "시간수문장 09",
+  "m0_kair_guardian_10": "시간수문장 10",
+  "m0_kair_guardian_11": "시간수문장 11",
+  "m0_kair_guardian_12": "시간수문장 12",
+  "m0_kair_guardian_13": "시간수문장 13",
+  "m0_kair_guardian_14": "시간수문장 14",
   "m0_kair_guardian_15": "시간수문장 15",
+  "m0_kair_guardian_16": "시간수문장 16",
   "m0_kair_guardian_17": "시간수문장 17",
+  "m0_kair_guardian_19": "시간수문장 19",
   "m0_kair_guardian_20": "시간수문장 20",
+  "m0_kair_guardian_21": "시간수문장 21",
+  "m0_kair_guardian_22": "시간수문장 22",
+  "m0_kair_guardian_24": "시간수문장 24",
+  "m0_kair_guardian_25": "시간수문장 25",
+  "m0_kair_guardian_26": "시간수문장 26",
+  "m0_kair_guardian_29": "시간수문장 29",
+  "m0_kair_guardian_30": "시간수문장 30",
+  "m0_kair_guardian_31": "시간수문장 31",
+  "m0_kair_guardian_32": "시간수문장 32",
+  "m0_kair_guardian_33": "시간수문장 33",
+  "m0_kair_guardian_35": "시간수문장 35",
+  "m0_kair_guardian_37": "시간수문장 37",
+  "m0_kair_guardian_38": "시간수문장 38",
+  "m0_kair_guardian_41": "시간수문장 41",
+  "m0_kair_guardian_42": "시간수문장 42",
+  "m0_kair_guardian_43": "시간수문장 43",
   "m0_kair_guardian_46": "시간수문장 46",
   "m0_l302_e1": "포구 검은 안개",
   "m0_l302_e2": "잠들지 못한 검은 영혼",
@@ -671,269 +629,27 @@
    "m0_u206_e1",
    "m0_u206_e2"
   ],
-  "38": [
-   "m0_kair_guardian_07",
-   "m0_kair_guardian_08"
-  ],
-  "40": [
-   "m0_kair_guardian_07"
-  ],
-  "41": [
-   "m0_kair_guardian_15",
-   "m0_kair_guardian_17"
-  ],
-  "42": [
-   "m0_kair_guardian_20",
-   "m0_kair_guardian_15",
-   "m0_kair_guardian_17"
-  ],
-  "43": [
-   "m0_kair_elite_58",
-   "m0_kair_guardian_20",
-   "m0_kair_guardian_46"
-  ],
-  "44": [
-   "m0_kair_guardian_46",
-   "m0_kair_guardian_20"
-  ],
   "45": [
-   "m0_kair_elite_58",
-   "m0_kair_guardian_20"
+   "m0_kair_guardian_37"
   ],
   "46": [
+   "m0_kair_guardian_05",
+   "m0_kair_guardian_06",
+   "m0_kair_elite_49",
+   "m0_kair_elite_50",
+   "m0_kair_guardian_10",
+   "m0_kair_guardian_43",
    "m0_kair_guardian_46",
-   "m0_kair_elite_58",
-   "m0_kair_guardian_20"
+   "m0_kair_guardian_37"
   ]
  },
  "frontBorrowed": {
-  "01": [
-   "m0_dist02_r74_patrol_0_5",
-   "m0_dist02_h1",
-   "m0_dist01_sp2"
-  ],
-  "02": [
-   "m0_dist03_sp1",
-   "m0_dist02_h1"
-  ],
-  "05": [
-   "m0_dist03_g1",
-   "m0_a08_s1"
-  ],
-  "06": [
-   "m0_dist06_h1",
-   "m0_dist02_h1",
-   "m0_dist04_s1"
-  ],
-  "07": [
-   "m0_dist03_sp1",
-   "m0_dist02_h1"
-  ],
-  "08": [
-   "m0_a09_o1",
-   "m0_a09_v1"
-  ],
-  "09-1": [
-   "m0_a08_s1"
-  ],
-  "10": [
-   "m0_a09_v1"
-  ],
-  "11": [
-   "m0_a10_s1",
-   "m0_a10_o1",
-   "m0_b01_r1"
-  ],
-  "13": [
-   "m0_a10_s1"
-  ],
-  "14": [
-   "m0_b01_r1",
-   "m0_b01_c1",
-   "m0_b03_g1"
-  ],
-  "15": [
-   "m0_b04_g1"
-  ],
-  "17": [
-   "m0_b03_g1",
-   "m0_b04_g1"
-  ],
-  "18": [
-   "m0_b05_a1",
-   "m0_b04_g1",
-   "m0_b03_g1"
-  ],
-  "19": [
-   "m0_b09_c1",
-   "m0_b09_h1",
-   "m0_b03_g1"
-  ],
-  "20": [
-   "m0_b09_h1",
-   "m0_b09_c1",
-   "m0_b05_a1"
-  ],
-  "21": [
-   "m0_b09_h1",
-   "m0_b09_c1",
-   "m0_b05_a1"
-  ],
-  "22": [
-   "m0_b05_a1"
-  ],
-  "24": [
-   "m0_u202_e1",
-   "m0_u204_e2",
-   "m0_u204_e3"
-  ],
-  "25": [
-   "m0_u204_e2",
-   "m0_u204_e3"
-  ],
-  "26": [
-   "m0_u202_e1"
-  ],
-  "27": [
-   "m0_u204_e2"
-  ],
-  "28": [
-   "m0_u205_e1",
-   "m0_u205_e3",
-   "m0_u204_e2"
-  ],
-  "29": [
-   "m0_u205_e1",
-   "m0_u205_e3",
-   "m0_u204_e2"
-  ],
-  "31": [
-   "m0_dist02_r74_patrol_0_5",
-   "m0_dist01_sp2",
-   "m0_dist02_h1"
-  ],
-  "32": [
-   "m0_dist02_r74_patrol_0_5",
-   "m0_dist02_h1",
-   "m0_dist01_sp2"
-  ],
-  "34": [
-   "m0_b03_g1",
-   "m0_h103_t1",
-   "m0_a08_s1"
-  ],
-  "38": [
-   "m0_u205_e1",
-   "m0_u205_e3",
-   "m0_u204_e2"
-  ],
-  "39": [
-   "m0_h102_s1",
-   "m0_h103_t1",
-   "m0_u205_e1"
-  ],
-  "40": [
-   "m0_h102_s1",
-   "m0_h103_t1",
-   "m0_kair_academy_wave_1"
-  ],
-  "41": [
-   "m0_h102_s1",
-   "m0_u204_e2",
-   "m0_u205_e3"
-  ],
-  "42": [
-   "m0_c102_e1",
-   "m0_h102_s1",
-   "m0_u204_e2"
-  ],
-  "43": [
-   "m0_dist04_s1",
-   "m0_dist03_g1",
-   "m0_h103_t1"
-  ],
-  "44": [
-   "m0_c105_e2",
-   "m0_h103_t1",
-   "m0_h102_s1"
-  ],
-  "45": [
-   "m0_h102_s1",
-   "m0_h103_t1",
-   "m0_b03_g1"
-  ],
   "46": [
-   "m0_b03_c1",
-   "m0_h103_t1",
-   "m0_h102_s1"
-  ],
-  "48": [
-   "m0_dist06_h1",
-   "m0_h102_s1",
-   "m0_c105_e2"
-  ],
-  "50": [
-   "m0_h102_s1",
-   "m0_dist06_h1"
-  ],
-  "52": [
-   "m0_murder04_e3",
-   "m0_h103_t1",
-   "m0_h102_s1"
-  ],
-  "53": [
-   "m0_h103_t1",
-   "m0_h102_s1"
-  ],
-  "54": [
-   "m0_h103_t1",
-   "m0_c102_e1"
-  ],
-  "55": [
-   "m0_c102_e1",
-   "m0_c102_e3"
-  ],
-  "56": [
-   "m0_c102_e1",
-   "m0_c102_e3",
-   "m0_c105_e2"
-  ],
-  "57": [
-   "m0_c105_e2"
-  ],
-  "58": [
-   "m0_c102_e1",
-   "m0_c102_e3"
-  ],
-  "59": [
-   "m0_c105_e2",
-   "m0_c103_e1",
-   "m0_c103_e2"
-  ],
-  "61": [
-   "m0_c103_e1",
-   "m0_c103_e2",
-   "m0_c103_e3"
-  ],
-  "03": [
-   "m0_dist03_sp1"
-  ],
-  "04": [
-   "m0_dist04_s1"
-  ],
-  "09-2": [
-   "m0_dist06_h1"
-  ],
-  "16": [
-   "m0_b03_g1"
-  ],
-  "37": [
-   "m0_c105_e2",
-   "m0_u205_e1"
-  ],
-  "49": [
-   "m0_dist06_h1",
-   "m0_h103_t1"
+   "m0_kair_guardian_05",
+   "m0_kair_guardian_06",
+   "m0_kair_elite_49",
+   "m0_kair_elite_50",
+   "m0_kair_guardian_10"
   ]
  }
 });

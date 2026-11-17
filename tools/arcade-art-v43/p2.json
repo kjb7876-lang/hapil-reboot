@@ -38,15 +38,7 @@
   "p2_beelzebub": {
    "src": "media/drive-v43/b19-down.webp",
    "strip": 4,
-   "fps": 6,
-   "motions": {
-    "attack": {
-     "src": "media/m0-v43/boss/b04-boss-attack.webp",
-     "strip": 4,
-     "fps": 8,
-     "size": 220
-    }
-   }
+   "fps": 6
   },
   "p2_greed": {
    "src": "media/sins-v13/mammon-atlas-512.png",
@@ -78,28 +70,12 @@
   "p2_wrath": {
    "src": "media/drive-v43/b23-down.webp",
    "strip": 4,
-   "fps": 6,
-   "motions": {
-    "attack": {
-     "src": "media/m0-v43/boss/b07-boss-attack.webp",
-     "strip": 4,
-     "fps": 8,
-     "size": 220
-    }
-   }
+   "fps": 6
   },
   "p2_chairman": {
    "src": "media/drive-v43/b27-down.webp",
    "strip": 4,
-   "fps": 6,
-   "motions": {
-    "attack": {
-     "src": "media/m0-v43/boss/b09-boss-attack.webp",
-     "strip": 4,
-     "fps": 8,
-     "size": 220
-    }
-   }
+   "fps": 6
   },
   "p2_core": {
    "src": "media/drive-v43/b26-down.webp",

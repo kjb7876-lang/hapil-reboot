@@ -15,10 +15,17 @@
    }
   },
   "m0_a08_o1": {
-   "src": "media/m0-v43/a08-o1-move.webp",
-   "strip": 2,
-   "fps": 7,
-   "facing": "right"
+   "src": "media/m0-v43/down/hallucinated-orderly-down.webp",
+   "strip": 4,
+   "fps": 8,
+   "motions": {
+    "side": {
+     "src": "media/m0-v43/a08-o1-move.webp",
+     "strip": 2,
+     "fps": 7,
+     "facing": "right"
+    }
+   }
   },
   "m0_a08_o2": {
    "src": "media/m0-v43/a08-o2-move.webp",
@@ -93,15 +100,7 @@
   "m0_a10_s1": {
    "src": "media/drive-v43/m040-down.webp",
    "strip": 4,
-   "fps": 6,
-   "motions": {
-    "attack": {
-     "src": "media/m0-v43/a10-s1-attack.webp",
-     "strip": 4,
-     "fps": 8,
-     "facing": "right"
-    }
-   }
+   "fps": 6
   },
   "m0_a11_c1": {
    "src": "media/m0-v43/a11-c1-move.webp",
@@ -116,6 +115,11 @@
      "facing": "right"
     }
    }
+  },
+  "m0_a11_d1": {
+   "src": "media/drive-v43/m015-down.webp",
+   "strip": 4,
+   "fps": 6
   },
   "m0_a11_o1": {
    "src": "media/m0-v43/a11-o1-move.webp",
@@ -154,12 +158,6 @@
      "strip": 4,
      "fps": 7,
      "facing": "right"
-    },
-    "attack": {
-     "src": "media/m0-v43/b01-r1-attack.webp",
-     "strip": 1,
-     "fps": 8,
-     "facing": "right"
     }
    }
   },
@@ -176,17 +174,29 @@
    "facing": "right"
   },
   "m0_b02_m1": {
-   "src": "media/m0-v43/b02-m1-move.webp",
-   "strip": 2,
-   "fps": 7,
-   "facing": "right"
+   "src": "media/m0-v43/down/sloth-moldling-down.webp",
+   "strip": 4,
+   "fps": 8,
+   "motions": {
+    "side": {
+     "src": "media/m0-v43/b02-m1-move.webp",
+     "strip": 2,
+     "fps": 7,
+     "facing": "right"
+    }
+   }
   },
   "m0_b02_o1": {
-   "src": "media/m0-v43/b02-o1-move.webp",
+   "src": "media/m0-v43/down/living-trash-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/b02-o1-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/b02-o1-attack.webp",
      "strip": 4,
@@ -302,28 +312,19 @@
      "strip": 4,
      "fps": 7,
      "facing": "right"
-    },
-    "attack": {
-     "src": "media/m0-v43/b05-a1-attack.webp",
-     "strip": 1,
-     "fps": 8,
-     "facing": "right"
     }
    }
+  },
+  "m0_b05_p1": {
+   "src": "media/drive-v43/m047-down.webp",
+   "strip": 4,
+   "fps": 6
   },
   "m0_b06_f1": {
    "src": "media/m0-v43/b06-f1-move.webp",
    "strip": 4,
    "fps": 7,
-   "facing": "right",
-   "motions": {
-    "attack": {
-     "src": "media/m0-v43/b06-f1-attack.webp",
-     "strip": 1,
-     "fps": 8,
-     "facing": "right"
-    }
-   }
+   "facing": "right"
   },
   "m0_b06_f2": {
    "src": "media/m0-v43/b06-f2-move.webp",
@@ -393,12 +394,22 @@
    "fps": 7,
    "facing": "right"
   },
-  "m0_b08_c1": {
-   "src": "media/m0-v43/b08-c1-move.webp",
+  "m0_b07_s1": {
+   "src": "media/drive-v43/m006-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 6
+  },
+  "m0_b08_c1": {
+   "src": "media/m0-v43/down/electrode-machine-knight-down.webp",
+   "strip": 4,
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/b08-c1-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/b08-c1-attack.webp",
      "strip": 4,
@@ -414,11 +425,16 @@
    "facing": "right"
   },
   "m0_b08_v1": {
-   "src": "media/m0-v43/b08-v1-move.webp",
+   "src": "media/m0-v43/down/hexagram-experiment-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/b08-v1-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/b08-v1-attack.webp",
      "strip": 4,
@@ -455,12 +471,6 @@
      "src": "media/m0-v43/b09-h1-move.webp",
      "strip": 4,
      "fps": 7,
-     "facing": "right"
-    },
-    "attack": {
-     "src": "media/m0-v43/b09-h1-attack.webp",
-     "strip": 1,
-     "fps": 8,
      "facing": "right"
     }
    }
@@ -523,14 +533,13 @@
      "strip": 4,
      "fps": 7,
      "facing": "right"
-    },
-    "attack": {
-     "src": "media/m0-v43/c102-e1-attack.webp",
-     "strip": 1,
-     "fps": 8,
-     "facing": "right"
     }
    }
+  },
+  "m0_c102_e2": {
+   "src": "media/drive-v43/m031-down.webp",
+   "strip": 4,
+   "fps": 6
   },
   "m0_c102_e3": {
    "src": "media/drive-v43/m026-down.webp",
@@ -554,12 +563,6 @@
      "src": "media/m0-v43/c103-e1-move.webp",
      "strip": 4,
      "fps": 7,
-     "facing": "right"
-    },
-    "attack": {
-     "src": "media/m0-v43/c103-e1-attack.webp",
-     "strip": 1,
-     "fps": 8,
      "facing": "right"
     }
    }
@@ -1024,16 +1027,20 @@
     }
    }
   },
-  "m0_h101_t1": {
-   "src": "media/m0-v43/h101-t1-move.webp",
+  "m0_h101_s1": {
+   "src": "media/m0-v43/down/ash-mason-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8
+  },
+  "m0_h101_t1": {
+   "src": "media/m0-v43/down/timeless-silver-scout-down.webp",
+   "strip": 4,
+   "fps": 8,
    "motions": {
-    "attack": {
-     "src": "media/m0-v43/h101-t1-attack.webp",
-     "strip": 1,
-     "fps": 8,
+    "side": {
+     "src": "media/m0-v43/h101-t1-move.webp",
+     "strip": 4,
+     "fps": 7,
      "facing": "right"
     }
    }
@@ -1048,12 +1055,6 @@
      "strip": 4,
      "fps": 7,
      "facing": "right"
-    },
-    "attack": {
-     "src": "media/m0-v43/h102-c1-attack.webp",
-     "strip": 1,
-     "fps": 8,
-     "facing": "right"
     }
    }
   },
@@ -1066,12 +1067,6 @@
      "src": "media/m0-v43/h102-s1-move.webp",
      "strip": 4,
      "fps": 7,
-     "facing": "right"
-    },
-    "attack": {
-     "src": "media/m0-v43/h102-s1-attack.webp",
-     "strip": 1,
-     "fps": 8,
      "facing": "right"
     }
    }
@@ -1153,17 +1148,9 @@
    "facing": "right"
   },
   "m0_kair_academy_wave_4": {
-   "src": "media/drive-v43/m054-down.webp",
+   "src": "media/m0-v43/down/clockwork-sentinel-down.webp",
    "strip": 4,
-   "fps": 6,
-   "motions": {
-    "side": {
-     "src": "media/m0-v43/kair-academy-wave-4-move.webp",
-     "strip": 4,
-     "fps": 7,
-     "facing": "right"
-    }
-   }
+   "fps": 8
   },
   "m0_kair_academy_wave_5": {
    "src": "media/drive-v43/m022-down.webp",
@@ -1184,11 +1171,40 @@
    "fps": 7,
    "facing": "right"
   },
+  "m0_kair_elite_49": {
+   "src": "media/m0-v43/down/guardian-49.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_elite_50": {
+   "src": "media/m0-v43/down/guardian-50.webp",
+   "strip": 8,
+   "fps": 8
+  },
   "m0_kair_elite_51": {
-   "src": "media/m0-v43/kair-elite-51-move.webp",
-   "strip": 4,
-   "fps": 7,
-   "facing": "right"
+   "src": "media/m0-v43/down/guardian-51.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_elite_53": {
+   "src": "media/m0-v43/down/guardian-53.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_elite_54": {
+   "src": "media/m0-v43/down/guardian-54.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_elite_56": {
+   "src": "media/m0-v43/down/guardian-56.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_elite_57": {
+   "src": "media/m0-v43/down/guardian-57.webp",
+   "strip": 8,
+   "fps": 8
   },
   "m0_kair_elite_58": {
    "src": "media/m0-v43/kair-elite-58-move.webp",
@@ -1204,41 +1220,181 @@
     }
    }
   },
+  "m0_kair_guardian_01": {
+   "src": "media/m0-v43/down/guardian-01.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_02": {
+   "src": "media/m0-v43/down/guardian-02.webp",
+   "strip": 8,
+   "fps": 8
+  },
   "m0_kair_guardian_03": {
    "src": "media/m0-v43/kair-guardian-03-move.webp",
    "strip": 4,
    "fps": 7,
    "facing": "right"
   },
+  "m0_kair_guardian_04": {
+   "src": "media/m0-v43/down/guardian-04.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_05": {
+   "src": "media/m0-v43/down/guardian-05.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_06": {
+   "src": "media/m0-v43/down/guardian-06.webp",
+   "strip": 8,
+   "fps": 8
+  },
   "m0_kair_guardian_07": {
-   "src": "media/m0-v43/kair-guardian-07-move.webp",
-   "strip": 4,
-   "fps": 7,
-   "facing": "right"
+   "src": "media/m0-v43/down/guardian-07.webp",
+   "strip": 8,
+   "fps": 8
   },
   "m0_kair_guardian_08": {
-   "src": "media/m0-v43/kair-guardian-08-move.webp",
-   "strip": 4,
-   "fps": 7,
-   "facing": "right"
+   "src": "media/m0-v43/down/guardian-08.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_09": {
+   "src": "media/m0-v43/down/guardian-09.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_10": {
+   "src": "media/m0-v43/down/guardian-10.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_11": {
+   "src": "media/m0-v43/down/guardian-11.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_12": {
+   "src": "media/m0-v43/down/guardian-12.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_13": {
+   "src": "media/m0-v43/down/guardian-13.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_14": {
+   "src": "media/m0-v43/down/guardian-14.webp",
+   "strip": 8,
+   "fps": 8
   },
   "m0_kair_guardian_15": {
-   "src": "media/m0-v43/kair-guardian-15-move.webp",
-   "strip": 4,
-   "fps": 7,
-   "facing": "right"
+   "src": "media/m0-v43/down/guardian-15.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_16": {
+   "src": "media/m0-v43/down/guardian-16.webp",
+   "strip": 8,
+   "fps": 8
   },
   "m0_kair_guardian_17": {
-   "src": "media/m0-v43/kair-guardian-17-move.webp",
-   "strip": 4,
-   "fps": 7,
-   "facing": "right"
+   "src": "media/m0-v43/down/guardian-17.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_19": {
+   "src": "media/m0-v43/down/guardian-19.webp",
+   "strip": 8,
+   "fps": 8
   },
   "m0_kair_guardian_20": {
-   "src": "media/m0-v43/kair-guardian-20-move.webp",
-   "strip": 4,
-   "fps": 7,
-   "facing": "right"
+   "src": "media/m0-v43/down/guardian-20.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_21": {
+   "src": "media/m0-v43/down/guardian-21.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_22": {
+   "src": "media/m0-v43/down/guardian-22.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_24": {
+   "src": "media/m0-v43/down/guardian-24.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_25": {
+   "src": "media/m0-v43/down/guardian-25.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_26": {
+   "src": "media/m0-v43/down/guardian-26.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_29": {
+   "src": "media/m0-v43/down/guardian-29.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_30": {
+   "src": "media/m0-v43/down/guardian-30.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_31": {
+   "src": "media/m0-v43/down/guardian-31.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_32": {
+   "src": "media/m0-v43/down/guardian-32.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_33": {
+   "src": "media/m0-v43/down/guardian-33.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_35": {
+   "src": "media/m0-v43/down/guardian-35.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_37": {
+   "src": "media/m0-v43/down/guardian-37.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_38": {
+   "src": "media/m0-v43/down/guardian-38.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_41": {
+   "src": "media/m0-v43/down/guardian-41.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_42": {
+   "src": "media/m0-v43/down/guardian-42.webp",
+   "strip": 8,
+   "fps": 8
+  },
+  "m0_kair_guardian_43": {
+   "src": "media/m0-v43/down/guardian-43.webp",
+   "strip": 8,
+   "fps": 8
   },
   "m0_kair_guardian_46": {
    "src": "media/m0-v43/kair-guardian-46-move.webp",
@@ -1313,11 +1469,16 @@
    "facing": "right"
   },
   "m0_l305_e2": {
-   "src": "media/m0-v43/l305-e2-move.webp",
+   "src": "media/m0-v43/down/m044-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/l305-e2-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/l305-e2-attack.webp",
      "strip": 4,
@@ -1344,15 +1505,7 @@
    "src": "media/m0-v43/murder04-e2-move.webp",
    "strip": 4,
    "fps": 7,
-   "facing": "right",
-   "motions": {
-    "attack": {
-     "src": "media/m0-v43/murder04-e2-attack.webp",
-     "strip": 1,
-     "fps": 8,
-     "facing": "right"
-    }
-   }
+   "facing": "right"
   },
   "m0_murder04_e3": {
    "src": "media/drive-v43/m001-down.webp",
@@ -1402,12 +1555,6 @@
      "src": "media/m0-v43/u202-e1-move.webp",
      "strip": 4,
      "fps": 7,
-     "facing": "right"
-    },
-    "attack": {
-     "src": "media/m0-v43/u202-e1-attack.webp",
-     "strip": 1,
-     "fps": 8,
      "facing": "right"
     }
    }
@@ -1525,11 +1672,16 @@
    }
   },
   "m0_u206_e1": {
-   "src": "media/m0-v43/u206-e1-move.webp",
+   "src": "media/m0-v43/down/u206-mech-01-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/u206-e1-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/u206-e1-attack.webp",
      "strip": 4,
@@ -1539,11 +1691,16 @@
    }
   },
   "m0_u206_e2": {
-   "src": "media/m0-v43/u206-e2-move.webp",
+   "src": "media/m0-v43/down/u206-mech-02-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
+   "fps": 8,
    "motions": {
+    "side": {
+     "src": "media/m0-v43/u206-e2-move.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
+    },
     "attack": {
      "src": "media/m0-v43/u206-e2-attack.webp",
      "strip": 4,
