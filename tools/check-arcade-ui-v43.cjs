@@ -86,8 +86,14 @@ async function setup(browser,viewport,mobile,name){
     window.__audioContexts=[];
     const Native=window.AudioContext||window.webkitAudioContext;
     if(Native)window.AudioContext=new Proxy(Native,{construct(target,args){const c=new target(...args);window.__audioContexts.push(c);return c;}});
+  });
+  await page.goto('http://127.0.0.1:'+server.address().port+'/arcade.html?eyes=0',{waitUntil:'networkidle'});
+  await page.waitForFunction(()=>window.HapilArcadeApp&&!document.getElementById('arcade-start').disabled);
+  await page.evaluate(()=>{
     // Observe the actual player sprite canvas draw, not a calculated opacity
-    // debug value. This wrapper forwards every draw unchanged.
+    // debug value. Install after Ink has wrapped drawImage: its inner call uses
+    // a washed canvas, while this outer call still receives the source image.
+    // Every call is forwarded unchanged through the production Ink renderer.
     window.__heroSpriteDraws={};
     const drawImage=CanvasRenderingContext2D.prototype.drawImage;
     CanvasRenderingContext2D.prototype.drawImage=function(...args){
@@ -97,8 +103,6 @@ async function setup(browser,viewport,mobile,name){
       return drawImage.apply(this,args);
     };
   });
-  await page.goto('http://127.0.0.1:'+server.address().port+'/arcade.html?eyes=0',{waitUntil:'networkidle'});
-  await page.waitForFunction(()=>window.HapilArcadeApp&&!document.getElementById('arcade-start').disabled);
   await page.locator('#arcade-rules-title').click();assert.equal((await state(page)).mode,'rules');
   await page.locator('#arcade-rules-back').click();assert.equal((await state(page)).mode,'title');
   try{await heroSelection(page,name,mobile);}catch(e){await page.screenshot({path:path.join(out,name+'-hero-failure.png'),fullPage:true});await context.close();throw e;}
