@@ -1222,7 +1222,7 @@
       }
       if(s.bturn[i])s.ba[i]+=s.bturn[i]*TICK;
       // 아래로 내려오는 보장(사용자 11-17 "보스 탄환은 보스 주변만 돌지 말고 언젠가는 아래로 내려와 의미가 있게"): 2.5초가 지나도 위쪽에 머무는 탄은 영웅이 있는 아랫녘으로 부드럽게 휘어 내려온다.
-      if(age>DESCEND_AGE&&s.by[i]<DESCEND_Y&&s.bsize[i]!==SHAPE_PROP&&!s.bfragment[i]){
+      if(s.entranceAll&&age>DESCEND_AGE&&s.by[i]<DESCEND_Y&&s.bsize[i]!==SHAPE_PROP&&!s.bfragment[i]){
         var want=Math.atan2(py+70-s.by[i],px+((i*37)%9-4)*24-s.bx[i]),lo=.22,hi=Math.PI-.22;if(want<lo)want=lo;else if(want>hi)want=hi;
         var ha=s.ba[i];while(ha>Math.PI)ha-=TAU;while(ha<-Math.PI)ha+=TAU;var dd=want-ha;if(dd>Math.PI)dd-=TAU;else if(dd<-Math.PI)dd+=TAU;
         if(Math.sin(ha)<.55){s.ba[i]=ha+(dd>DESCEND_TURN?DESCEND_TURN:dd<-DESCEND_TURN?-DESCEND_TURN:dd);s.bacc[i]=0;var fl=DESCEND_SPEED*s.rules.speed;if(s.bs[i]<fl)s.bs[i]=fl;}

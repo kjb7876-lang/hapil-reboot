@@ -93,6 +93,7 @@
     /* 게임 오버(11-16): 감긴 먹 눈꺼풀이 그대로 보이고, 그 위에 붉은 붓 십자가가 그어진 뒤 '다시하기'가 떠오른다 */
     #result-cross{display:none;position:absolute;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));width:30px;height:40px;background:transparent!important;margin:0;pointer-events:none} /* 이스터에그처럼 오른쪽 아래에 작게(사용자 11-17) */
     #arcade-result.fallen #result-cross{display:block}
+    @media (min-width:700px){#result-cross{width:42px;height:55px}}
     #arcade-result.fallen,html.ink #arcade-result.fallen{background:linear-gradient(180deg,rgba(8,7,6,.08),rgba(8,7,6,.28))}
     #arcade-result.fallen h2,html.ink #arcade-result.fallen h2,#arcade-result.fallen .screen .score,html.ink #arcade-result.fallen .score{color:#efe5cf}
     #arcade-result.fallen .note,html.ink #arcade-result.fallen .note,#arcade-result.fallen .kicker,html.ink #arcade-result.fallen .kicker{color:rgba(239,229,207,.72)}

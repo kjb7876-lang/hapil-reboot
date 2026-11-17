@@ -534,7 +534,7 @@
       else if(HeroFx&&e==='bombPulse'){HeroFx.onEvent(e,s,visual);play('bossHit',s.player.x);shake=Math.max(shake,3);}
       else if(HeroFx&&e==='focusSkill'){HeroFx.onEvent(e,s,visual);play('seal',s.player.x);}
       else if(HeroFx&&(e==='powerUp'||e==='powerDown'||e==='bombLevelUp'||e==='distort')){HeroFx.onEvent(e,s,visual);if(e!=='powerDown')play('seal');}
-      else if(e==='card'){play('charge',s.boss.x);castFx(s,true);showBanner(Arcade.SEGMENTS[s.seg].name,phaseLabel(s,true),true);}
+      else if(e==='card'){play('charge',s.boss.x);castFx(s,true);showBanner(Arcade.SEGMENTS[s.seg].name,s.boss.name,true);if(s.entranceAll)bannerSub=phaseLabel(s,true);}
       else if(e==='plain'){var ppi=Arcade.phaseOf&&Arcade.phaseOf(s.seg);if(ppi&&ppi.count>1&&s.entranceAll)showBanner('PHASE '+ppi.no+' / '+ppi.count,phaseLabel(s,false),false);}
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,'제'+g.part+'부 · STAGE '+(s.stageIndex+1));play('seal');}}
       else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);showToast(r);rushStage=false;}
@@ -1487,7 +1487,7 @@
       ctx.fillStyle=INK_PAPER;ctx.fillRect(-L/2,-bandH/2,L,bandH);
       ctx.fillStyle=INK_DARK;for(var i=0;i<9;i++){var sy=-bandH/2+((i*41.3)%bandH),sl=60+((i*53)%110),sx=L/2-((t*760*(1+(i%3)*.4)+i*71)%(L+sl));ctx.globalAlpha=(1-close)*.4;ctx.fillRect(sx,sy,sl,.9+((i*13)%4)*.4);}
       ctx.globalAlpha=1-close;
-      var key=seg.actor,img=images[key];if(img){ctx.save();ctx.translate(W*.30-t*18+(1-ease)*70,bandH*.12);ctx.globalCompositeOperation='multiply';drawArt(key,0,0,false,'#222',0,'',1,undefined,bandH*1.95);ctx.restore();}
+      var key=seg.actor,img=images[key];if(img){ctx.save();ctx.translate(W*.25-t*14+(1-ease)*70,bandH*.12);ctx.globalCompositeOperation='multiply';if('filter' in ctx)ctx.filter='grayscale(1) contrast(1.15)';drawArt(key,0,0,false,'#222',0,'',1,undefined,bandH*1.95);ctx.filter='none';ctx.restore();} // 수묵 톤: 채색을 먹 단색으로
       ctx.restore();
       ctx.fillStyle=INK_DARK;ctx.globalAlpha=1-close;ctx.fillRect(x0,-bandH/2-1,L,4);ctx.fillRect(x0,bandH/2-3,L,4);
       var tx=-W*.38+(1-ease)*50;ctx.globalAlpha=(1-close)*Math.min(1,Math.max(0,(t-.12)/.14));ctx.textAlign='left';
@@ -1502,7 +1502,7 @@
       var rows=wrapText(line.text.slice(0,Math.max(1,Math.ceil(line.text.length*Math.min(1,lt/.55)))),286),bw=316,bh=46+rows.length*22,bx=(W-bw)/2,by=Math.max(250,Math.min(300,H*.43));
       brushBox(bx,by,bw,bh,a);ctx.globalAlpha=a;ctx.font='600 12px '+INK_SERIF;ctx.fillStyle='rgba(30,26,24,.7)';ctx.fillText(line.speaker||who.name,bx+16,by+16);
       ctx.font='700 16px '+INK_SERIF;ctx.fillStyle=INK_DARK;for(var r=0;r<rows.length;r++)ctx.fillText(rows[r],bx+16,by+38+r*22);
-      if(t>.3){ctx.globalAlpha=a*.5;ctx.font='600 10px '+INK_SERIF;ctx.textAlign='right';ctx.fillText('탭·Enter 넘기기',bx+bw-12,by+bh-9);}
+      if(t>.3){ctx.globalAlpha=a*.5;ctx.font='700 12px '+INK_SERIF;ctx.textAlign='right';ctx.fillText('탭·Enter 넘기기',bx+bw-12,by+bh-9);}
     }
     ctx.restore();
   }
@@ -1510,7 +1510,7 @@
     if(!state||story||(!force&&mode!=='playing'))return false;
     // 이미 본 컷신을 건너뛸 때도 같은 안전한 본보스 입장을 적용한다.
     if(Arcade.prepareBossEntrance&&Arcade.prepareBossEntrance(state))clearCombatPresentation();
-    if(!force)return false; // 11-17: 별도 컷신 화면 대신 판 위 입장 연출(drawBossIntro). 강제 호출(디버그·다시 보기)만 예전 화면
+    if(!force&&state.entranceAll)return false; // 11-17: 별도 컷신 화면 대신 판 위 입장 연출(drawBossIntro). 강제 호출(다시 보기)이나 entranceAll 이 꺼진 실행만 예전 화면
     if(!Story||!$('arcade-story'))return false;
     var seg=Arcade.SEGMENTS[state.seg];
     var eligible=function(g){return g&&g.kind==='card'&&(Arcade.isCinematicBoss?Arcade.isCinematicBoss(g.actor,g.mid):!g.mid);};

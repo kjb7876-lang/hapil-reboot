@@ -36,7 +36,7 @@ test('몹은 구간이 끝나면 한순간에 사라지지 않고 위로 물러�
   assert.ok(sawRetreat||true);
 });
 test('2.5초 지난 보스 탄은 영웅 쪽 아래로 휘어 내려온다',()=>{
-  const s=A.createRun({segment:cardIndexes[3],seed:3});s.noDistort=true;let lowAfter=0,total=0;
+  const s=A.createRun({segment:cardIndexes[3],seed:3,entranceAll:true});s.noDistort=true;let lowAfter=0,total=0;
   for(let i=0;i<1200;i++){A.step(s,{dx:0,dy:0});s.player.invulnerableUntil=1e9;s.boss.hp=s.boss.maxHp;if(s.stage==='card'&&i%30===0)for(let k=0;k<s.n;k++)if(s.bage[k]>A.DESCEND_AGE&&s.by[k]<A.DESCEND_Y){total++;if(Math.sin(s.ba[k])<.55)lowAfter++;}}
   assert.ok(total===0||lowAfter/total<.25,'위쪽에서 아래로 향하지 않는 늙은 탄 비율 '+(lowAfter/Math.max(1,total)));
 });
