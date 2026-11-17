@@ -23,3 +23,21 @@ test('old Seoha checkpoints stay appearance A and missing or unknown hero values
  for(const hero of ['seoha','seoha-b']){storage[KEY]=JSON.stringify(Object.assign({},original,{hero}));assert.equal(M.checkpoint(3,'normal').hero,hero);}
  s.hero='not-playable';s.seg++;M.tick(s,'playing',16);assert.equal(JSON.parse(storage[KEY]).hero,'memory');
 });
+test('damaged checkpoint indices and timestamps are rejected instead of silently starting a different segment',()=>{
+ const {M,storage}=sandbox(),s=middle('seoha-b');M.tick(s,'playing',16);const valid=JSON.parse(storage[KEY]);
+ for(const patch of [{seg:String(valid.seg)},{seg:valid.seg+.5},{seg:-1},{seg:A.SEGMENTS.length},{stage:'3'},{stage:-1},{at:String(valid.at)},{at:Date.now()+60000},{at:Date.now()-31*24*3600*1000}]){
+  storage[KEY]=JSON.stringify({...valid,...patch});assert.equal(M.checkpoint(3,'normal'),null,JSON.stringify(patch));
+ }
+ for(const broken of ['{broken','null','[]','{"v":2}']){storage[KEY]=broken;assert.equal(M.checkpoint(3,'normal'),null);}
+ storage[KEY]=JSON.stringify(valid);assert.equal(M.checkpoint(3,'normal').seg,valid.seg);
+});
+test('legacy or damaged carry values become safe nonnegative integers without signed overflow',()=>{
+ const {M,storage}=sandbox(),s=middle('seoha-b');M.tick(s,'playing',16);const valid=JSON.parse(storage[KEY]);
+ for(const value of [undefined,null,'500',-1,{},false]){
+  storage[KEY]=JSON.stringify({...valid,hits:value,bombs:value,exp:value,fills:value});const cp=M.checkpoint(3,'normal');
+  for(const k of ['hits','bombs','exp','fills'])assert.equal(cp[k],0,k);assert.equal(cp.hero,'seoha-b');
+ }
+ storage[KEY]=JSON.stringify({...valid,hits:2.9,bombs:1e30,exp:1e30,fills:13.9});const cp=M.checkpoint(3,'normal');
+ assert.equal(cp.hits,2);assert.equal(cp.bombs|0,2147483647);assert.equal(cp.exp|0,2147483647);assert.equal(cp.fills,13);
+ const next=A.createRun({hero:cp.hero,segment:cp.seg,grown:{exp:cp.exp|0,fills:cp.fills|0}});assert(Number.isFinite(next.exp));assert.equal(next.power,7);assert.equal(next.hero,'seoha-b');
+});

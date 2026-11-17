@@ -3,19 +3,32 @@
    1) 중간 저장에서 이어 하면 그때까지 자란 공격·필살 단계가 스테이지 기본값으로 내려갔다.
    2) 필살 컷인 제목이 한글 명조 없는 기기(아이폰·헤드리스)에서 고딕으로 떨어졌다 → 명조 조각 글꼴을 싣는다.
    3) 휴대폰(칸 안 HUD)에서 '공격 Lv · 필살 Lv' 글자가 저속 버튼 밑에 깔려 가려졌다. */
-const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const h=require('./helpers/arcade-v43.cjs'),{root}=h;
 const A=()=>h.need();
 
 test('a mid-stage checkpoint keeps the attack and bomb levels grown so far',()=>{
  const a=A(),exp=a.POWER_EXP[3]+5,fills=a.BOMB_FILLS[2]+1;
- const s=a.createRun({difficulty:'normal',seed:3,stage:1,growth:true,grown:{exp,fills}});
- assert.equal(s.power,4);assert.equal(s.bombLevel,3);assert.equal(s.exp,exp);assert.equal(s.fills,fills);
+ const source=fs.readFileSync(path.join(root,'src/arcade-mobile-v43.js'),'utf8');
+ function mobile(storage){
+  const w={HapilArcade:a,localStorage:{getItem:k=>storage[k]||null,setItem:(k,v)=>storage[k]=String(v),removeItem:k=>delete storage[k]},addEventListener(){}};
+  w.window=w;vm.runInNewContext(source,w);return w.HapilMobile;
+ }
+ for(const hero of ['memory','seoha','seoha-b']){
+  const storage={},segment=a.STAGES[1].first+1;
+  const s=a.createRun({difficulty:'normal',seed:3,segment,hero,growth:true,grown:{exp,fills}});
+  assert.equal(s.power,4);assert.equal(s.bombLevel,3);
+  mobile(storage).tick(s,'playing',16);
+  const saved=JSON.parse(storage['hapil-arcade-checkpoint-v43']);
+  assert.equal(saved.exp,exp,'checkpoint persists attack growth');assert.equal(saved.fills,fills,'checkpoint persists bomb growth');
+  // A fresh module reads serialized storage, as after closing and reopening the game.
+  s.exp=s.fills=0;
+  const cp=mobile({...storage}).checkpoint(1,'normal');assert(cp,'checkpoint is accepted after reload');
+  const resumed=a.createRun({difficulty:'normal',stage:cp.stage,segment:cp.seg,hero:cp.hero,growth:true,grown:{exp:cp.exp,fills:cp.fills}});
+  assert.equal(resumed.seg,segment);assert.equal(resumed.hero,hero);assert.equal(resumed.power,4);assert.equal(resumed.bombLevel,3);assert.equal(resumed.exp,exp);assert.equal(resumed.fills,fills);
+ }
  const floor=a.createRun({difficulty:'normal',seed:3,stage:30,growth:true,grown:{exp:0,fills:0}});
  assert(floor.power>=4,'never below the journey floor');
- const mob=fs.readFileSync(path.join(root,'src/arcade-mobile-v43.js'),'utf8'),app=fs.readFileSync(path.join(root,'src/arcade-app-v43.js'),'utf8');
- assert.match(mob,/exp:s\.exp\|0,fills:s\.fills\|0/,'checkpoint stores growth');
- assert.match(app,/grown:\{exp:mid\.exp,fills:mid\.fills\}/,'continue passes growth back');
 });
 
 test('the cut-in serif font ships as a small woff2 with every glyph the cut-in draws',()=>{

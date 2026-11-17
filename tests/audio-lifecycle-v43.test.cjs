@@ -33,6 +33,15 @@ test('a cue at clock zero is rate limited, and completed nodes release their out
   assert.equal(fx.stats().voices,0);
   assert(f.nodes.filter(n=>'pan' in n).every(n=>!n.connected),'stereo nodes do not accumulate after a cue ends');
 });
+test('every SFX cue drops same-tick duplicate bursts and reset removes all scheduled tails',()=>{
+ for(const name of Object.keys(audio.CUES)){
+  const f=context(),fx=audio.create({AudioContext:f.Ctor,now:()=>0});fx.unlock();assert.equal(fx.play(name),true,name);
+  const count=f.sources.length;for(let i=0;i<20;i++)assert.equal(fx.play(name),false,name+' duplicate');
+  assert.equal(f.sources.length,count,name+' never queues duplicates for later');fx.reset();assert.equal(fx.stats().voices,0,name);
+  assert(f.sources.every(s=>s.stopped&&!s.connected),name+' reset cancels future and active sources');
+  fx.suspend(true);assert.equal(fx.play(name),false);fx.suspend(false);assert.equal(f.sources.length,count,name+' resume never replays dropped cues');
+ }
+});
 test('audio unlock resumes an interrupted mobile audio context',()=>{
   const f=context(),fx=audio.create({AudioContext:f.Ctor});fx.unlock();f.ctx.state='interrupted';
   fx.unlock();assert.equal(f.ctx.state,'running');fx.dispose();assert.equal(fx.stats().voices,0);

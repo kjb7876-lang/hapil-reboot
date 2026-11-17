@@ -34,8 +34,8 @@
   var settings={music:true,sfx:true,musicVolume:1,sfxVolume:1,screenShake:true,lowQuality:false};
   var fx=null,music=null,best=0,lastItemSound=0,progress=Progress.fresh(),saveOk=true;
   var themeOverride=null,turbo=0,rushStage=false,oneCreditEligible=false;
-  var Story=global.HapilArcadeStory||null,story=null,storyQuiet=false,storySeen={},pauseReturn='playing',rulesReturn='title',storyArrivalActor='';
-  var STORY_SEEN_KEY='hapil-arcade-main-boss-seen-v2',STORY_IMPACT_MS=1800;
+  var Story=global.HapilArcadeStory||null,BossIntros=global.HapilArcadeBossIntros||null,story=null,storyQuiet=false,storySeen={},pauseReturn='playing',rulesReturn='title',storyArrivalActor='';
+  var STORY_SEEN_KEY='hapil-arcade-boss-seen-v3',STORY_IMPACT_MS=1800;
   var Heroes=global.HapilArcadeHeroes||null,heroPicker=null,selectedHero='memory',journeyHero='memory',HERO_KEY='hapil-arcade-hero-v43',JOURNEY_HERO_KEY='hapil-arcade-journey-hero-v43';
   function heroId(id){return Heroes?Heroes.get(id).id:id==='seoha'||id==='seoha-b'?id:'memory';}
   function isSeoha(id){return id==='seoha'||id==='seoha-b';}
@@ -486,8 +486,16 @@
     if(!result||state.bossOnly)return;
     progress=Progress.record(progress,result,state.difficulty);saveProgress();
   }
+  function recordBestScore(s){
+    if(s&&s.score>best){best=s.score;try{global.localStorage.setItem(BEST_KEY,String(best));}catch(e){}}
+  }
 
   function play(name,x){if(fx&&settings.sfx&&settings.sfxVolume>0)fx.play(name,x===undefined?0:Math.max(-1,Math.min(1,(finite(x,W/2)/W-.5)*1.4)));}
+  function clearCombatPresentation(){
+    particles.length=drifts.length=flashes.length=casts.length=emblems.length=0;
+    flash=hurtFlash=shake=banner=0;shock=hurtRing=fall=null;bombQueued=false;heroOpacity=1;
+    if(HeroFx)HeroFx.reset();if(fx&&fx.reset)fx.reset();
+  }
   function addParticle(x,y,vx,vy,life,color,size){if(particles.length<MAX_PARTICLES)particles.push({x:x,y:y,vx:vx,vy:vy,life:life,max:life,color:color,size:size});}
   var BANNER_Y=60;
   function showBanner(title,sub,spell){banner=1;bannerTitle=title;bannerSub=sub;bannerTick=state?state.tick:0;bannerSpell=!!spell;}
@@ -525,6 +533,10 @@
       else if(e==='map')loadStage(s.stageIndex);
       else if(e==='entrance'){if(storyArrivalActor!==s.boss.actor)play('warning');storyArrivalActor='';wantFx(s.boss.actor);showBanner(s.boss.name,s.boss.mid?'중간보스':'보스');} // 본보스 컷인은 enter() 전, 중간보스는 기존 입장만.
       else if(e==='figure')castFx(s,false);
+      else if(e==='bossClear'){clearCombatPresentation();if(Mobile&&Mobile.commitBossClear)Mobile.commitBossClear(s);
+        // 마지막 승리는 2초 연출 중 나가도 최고점이 남아야 한다. 계속되는 여정은 기존 finish() 시점에 기록한다.
+        if(s.bossClear&&s.bossClear.nextSegment===Arcade.SEGMENTS.length)recordBestScore(s);
+      } // 다음 bossDown 이벤트가 쓰러짐 연출을 새로 시작한다.
       else if(e==='bossDown'){var dn=s.boss.down;if(dn){fall={actor:dn.actor,x:dn.x,y:dn.y,tick:dn.tick,dir:dn.x>W/2?1:-1,burst:-1,keep:{}};['','@death','@hit'].forEach(function(m){var im=images[dn.actor+m]||(bossArt.actor===dn.actor&&bossArt.keep[dn.actor+m]);if(im)fall.keep[dn.actor+m]=im;}); /* 다음 스테이지로 넘어가며 그림을 놓아도 쓰러지는 동안은 쥐고 있다(전에는 마름모 자리표시가 쓰러졌다) */flash=Ink?.18:.8;shake=16;}} /* 수묵 모드는 흰 섬광을 줄여 먹빛으로 물드는 순간이 묻히지 않게(사용자 11-16) */
       else if(e==='break'){play('phaseBreak',s.boss.x);flash=.6;shock={x:s.boss.x,y:s.boss.y,r:10,ink:true};shake=3;}
       else if(e==='capture'||e==='bombGain'||e==='extend')play('seal');
@@ -1426,7 +1438,7 @@
       if(Mobile&&state)Mobile.tick(state,mode,rawMs); // 진단은 잘리기 전 실제 프레임 시간(1초 넘는 복귀 프레임은 tick이 버림)
     }
     if(mode==='story'&&story&&!document.hidden){if(story.phase==='impact'){story.phaseMs+=elapsed*1000;if(story.phaseMs>=STORY_IMPACT_MS)revealStory();}else if($('story-auto').checked){story.elapsed+=elapsed*1000;if(story.elapsed>=story.lineMs)nextStory();}}
-    if(global.HapilMusic)global.HapilMusic.update(musicMode(),state,settings.music); // 구간이 바뀌면 곡을 겹쳐 바꾼다
+    if(global.HapilMusic)global.HapilMusic.update(musicMode(),state,settings.music); // 구간이 바뀌면 이전 곡을 멈추고 전환한다
     draw(elapsed);
   }
 
@@ -1438,6 +1450,7 @@
   function revealStory(){if(!story||story.phase!=='impact')return;story.phase='memory';story.elapsed=0;$('arcade-story').dataset.phase='memory';if(fx&&fx.suspend)fx.suspend(true);}
   function paintStory(){
     if(!story)return;var entry=story.entry,line=entry.lines[story.line];
+    var caption=$('story-caption');if(caption){caption.dataset.i18n=entry.kind==='dialogue-adaptation'?'storyDialogue':'storyCanon';caption.textContent=T(caption.dataset.i18n);}
     $('story-title').textContent=entry.title;$('story-speaker').textContent=line.speaker||entry.speaker;
     $('story-text').textContent=line.text;$('story-count').textContent=(story.line+1)+' / '+entry.lines.length;
     $('story-next').textContent=T(story.line+1===entry.lines.length?'storyFight':'storyNext');
@@ -1446,20 +1459,16 @@
   function beginStory(force){
     if(!state||story||(!force&&mode!=='playing'))return false;
     // 이미 본 컷신을 건너뛸 때도 같은 안전한 본보스 입장을 적용한다.
-    if(Arcade.prepareBossEntrance&&Arcade.prepareBossEntrance(state)){
-      particles.length=drifts.length=flashes.length=casts.length=emblems.length=0;
-      flash=hurtFlash=shake=banner=0;shock=hurtRing=fall=null;bombQueued=false;
-      heroOpacity=1;
-      if(HeroFx)HeroFx.reset();
-      if(fx&&fx.reset)fx.reset();
-    }
-    if(!Story||!$('arcade-story')||(!force&&(storyQuiet||storySeen[state.stageIndex]||state.stage!=='intro')))return false;
+    if(Arcade.prepareBossEntrance&&Arcade.prepareBossEntrance(state))clearCombatPresentation();
+    if(!Story||!$('arcade-story')||(!force&&(storyQuiet||state.stage!=='intro')))return false;
     var seg=Arcade.SEGMENTS[state.seg];
-    if(force&&(!seg||seg.kind!=='card'||seg.mid))seg=Arcade.SEGMENTS.find(function(g){return g.stage===state.stageIndex&&g.kind==='card'&&!g.mid;});
-    if(!seg||seg.kind!=='card'||seg.mid)return false;
-    var entry=Story.getStage(state.stageIndex);if(!entry||!entry.lines||!entry.lines.length)return false;
+    var eligible=function(g){return g&&g.kind==='card'&&(Arcade.isCinematicBoss?Arcade.isCinematicBoss(g.actor,g.mid):!g.mid);};
+    if(force&&!eligible(seg))seg=Arcade.SEGMENTS.find(function(g){return g.stage===state.stageIndex&&eligible(g);});
+    if(!eligible(seg))return false;
+    var seenKey=state.stageIndex+':'+seg.actor;if(!force&&storySeen[seenKey])return false;
+    var entry=BossIntros&&BossIntros.getBoss(seg.actor,state.stageIndex)||Story.getStage(state.stageIndex);if(!entry||!entry.lines||!entry.lines.length)return false;
     var actor=seg.actor,who=Arcade.ACTORS[actor],screen=$('arcade-story'),portrait=$('story-portrait');
-    story={entry:entry,actor:actor,line:0,elapsed:0,lineMs:3000,phase:'impact',phaseMs:0};storyArrivalActor=actor;
+    story={entry:entry,actor:actor,seenKey:seenKey,line:0,elapsed:0,lineMs:3000,phase:'impact',phaseMs:0};storyArrivalActor=actor;
     screen.dataset.phase='impact';screen.dataset.actor=actor;portrait.hidden=!actor||!listed(actor);
     if(!portrait.hidden){var info=manifest&&manifest[actor+'.webp'],frames=info&&info.frames||1,cell=info&&(info.cell||info.size),ratio=cell?cell[0]/cell[1]:.8;
       var art=actor==='violet'?'media/combat/boss01-purple-sword-spider-angel-cutin.webp':fileOf(actor);if(actor==='violet'){frames=1;ratio=1;}
@@ -1471,7 +1480,7 @@
     paintStory();accumulator=0;lastStamp=0;setMode('story');play('bossCutin',W/2);$('story-skip').focus({preventScroll:true});return true;
   }
   function endStory(){
-    if(!story)return;storySeen[story.entry.stage]=true;try{global.localStorage.setItem(STORY_SEEN_KEY,JSON.stringify(storySeen));}catch(e){}
+    if(!story)return;storySeen[story.seenKey]=true;try{global.localStorage.setItem(STORY_SEEN_KEY,JSON.stringify(storySeen));}catch(e){}
     if(story.phase==='impact'&&fx&&fx.suspend)fx.suspend(true); // 스킵한 컷인의 지연 타격음도 정리한다.
     story=null;accumulator=0;lastStamp=0;setMode('playing');
   }
@@ -1514,7 +1523,7 @@
     var grown=run&&run.grown; // 중간 저장에서 이어 할 때 자란 공격·필살 단계
     run={stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),segment:run&&run.segment,carry:run&&run.carry,practice:!!(run&&run.practice),hero:heroId(run&&run.hero||selectedHero)};
     lastRun=run;oneCreditEligible=run.stage===0&&!run.bossOnly&&!Number.isInteger(run.segment)&&!run.carry&&!run.practice&&!quiet&&!devMode;
-    var options={difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,growth:true,pacing:!quiet}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
+    var options={difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,growth:true,pacing:!quiet,rhythm:!quiet}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
     if(Number.isInteger(run.segment))options.segment=run.segment;if(grown&&(grown.exp||grown.fills))options.grown={exp:grown.exp|0,fills:grown.fills|0};
     state=Arcade.createRun(options);heroOpacity=1;
     if(isSeoha(state.hero))loadImage('hero-'+state.hero);
@@ -1526,7 +1535,7 @@
   }
   function finish(){
     var s=state,won=s.stage==='won';rushStage=false;
-    if(s.score>best){best=s.score;try{global.localStorage.setItem(BEST_KEY,String(best));}catch(e){}}
+    recordBestScore(s);
     var stars=0;s.results.forEach(function(r){stars+=r.stars;});
     $('result-title').textContent=won?(s.bossOnly?'BOSS CLEAR':s.stageIndex>=Arcade.STAGES.length-1?'ALL CLEAR':'CLEAR'):'GAME OVER';
     $('result-score').textContent=pad(s.score);$('result-best').textContent=pad(best);
