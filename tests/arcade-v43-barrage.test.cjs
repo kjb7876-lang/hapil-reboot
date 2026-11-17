@@ -12,9 +12,12 @@ test('v43 barrage: a bullet never disappears in the middle of the screen because
   const s=a.createRun({difficulty:'normal',seed:7+i,segment:i,stages:1});
   for(let t=0;t<1800&&s.seg===i&&s.stage!=='won'&&s.stage!=='lost';t++){s.player.invulnerableUntil=s.tick+999;
    const due=[];for(let k=0;k<s.n;k++)if(s.bage[k]+1>=s.blife[k]&&onScreen(a,s.bx[k],s.by[k])&&s.bmode[k]===0)due.push([s.bx[k],s.by[k],s.bs[k]]);
-   const hp=s.player.hp,before=s.n;a.step(s,{dx:0,dy:0});h.clear(s);checked++;
+   const hp=s.player.hp,before=s.n;a.step(s,{dx:0,dy:0});const broken=s.pops.slice();h.clear(s);checked++;
    if(s.player.hp!==hp||s.n===0&&before>0)continue; // 피격·전멸 정리로 지워진 경우는 따로 센다
-   for(const [x,y,v] of due){let found=false;for(let k=0;k<s.n&&!found;k++)if(Math.hypot(s.bx[k]-x,s.by[k]-y)<=Math.max(v,60)/60+1.5)found=true;
+   for(const [x,y,v] of due){let found=false;
+    // A shot may legitimately break an orb on its expiration tick; the breakup is at its exact old position.
+    for(let k=0;k<broken.length&&!found;k+=3)if(broken[k+2]===0&&Math.abs(broken[k]-x)<1e-6&&Math.abs(broken[k+1]-y)<1e-6)found=true;
+    for(let k=0;k<s.n&&!found;k++)if(Math.hypot(s.bx[k]-x,s.by[k]-y)<=Math.max(v,60)/60+1.5)found=true;
     if(!found){vanished++;if(where.length<5)where.push(a.STAGES[g.stage].name+' '+(g.name||'wave'));}}
   }});
  assert(checked>10000);assert.equal(vanished,0,'bullets that would vanish on screen: '+where.join(', '));
@@ -30,12 +33,12 @@ test('v43 barrage: a bullet whose time ran out keeps flying, never stalls, and b
  assert(e.n===0||e.by[0]>200+60,'an expired, stopped bullet starts moving again and leaves');
 });
 
-test('v43 barrage: easy and normal are nearly as dense as hell, slower, and forgiven by a smaller hitbox',()=>{
+test('v43 barrage: normal shares hell hazards while gentle keeps slower bullets and a smaller hitbox',()=>{
  const d=h.need().DIFFICULTY,S=h.need().SIZE_RADIUS[1];
- // 11-14 사용자 승인("응"): 이지는 쉬운 패턴이라 탄 수가 노멀의 70% 이하. 노멀은 헬과 거의 같은 밀도.
- assert(d.normal.density>=d.hell.density*.88,'normal density '+d.normal.density);assert(d.gentle.density<=d.normal.density*.7,'gentle density '+d.gentle.density);
- assert(d.gentle.speed<=.62&&d.normal.speed<=.7,'slow bullets are fine');
- const hit=k=>d[k].radius+S*d[k].hitScale;assert(hit('gentle')<hit('normal')&&hit('normal')<hit('hell'));
+ // 11-17: 노멀·헬은 같은 공격과 판정이며, 여유 모드는 기존 완화를 유지한다.
+ assert.equal(d.normal.density,d.hell.density,'normal and hell density');assert(d.gentle.density<=d.normal.density*.7,'gentle density '+d.gentle.density);
+ assert(d.gentle.speed<=.62,'gentle is slower');assert.equal(d.normal.speed,d.hell.speed);
+ const hit=k=>d[k].radius+S*d[k].hitScale;assert(hit('gentle')<hit('normal')&&hit('normal')===hit('hell'));
  assert(hit('gentle')<=hit('hell')*.62,'easy hitbox is much smaller: '+hit('gentle')+' vs '+hit('hell'));
 });
 
@@ -88,7 +91,7 @@ function laneWithFigures(a,options){
    for(let cy=Math.max(0,Math.floor((y-r-Y0)/CELL));cy<=Math.min(rows-1,Math.ceil((y+r-Y0)/CELL));cy++)for(let cx=Math.max(0,Math.floor((x-r-X0)/CELL));cx<=Math.min(cols-1,Math.ceil((x+r-X0)/CELL));cx++)if(Math.hypot(X0+cx*CELL-x,Y0+cy*CELL-y)<r)blocked[cx+cy*cols]=1;}
   for(const l of s.lasers){if(l.age<l.warn-2||l.age>=l.warn+l.active)continue;const cos=Math.cos(l.angle),sin=Math.sin(l.angle),r=l.width*.5*a.BEAM_HIT+p.r+M;
    for(let c=0;c<size;c++){const x=X0+(c%cols)*CELL-l.x,y=Y0+((c/cols)|0)*CELL-l.y,al=x*cos+y*sin,d=al<0?Math.hypot(x,y):Math.abs(x*sin-y*cos);if(d<r)blocked[c]=1;}}
-  for(const f of s.figures){if(f.age<f.warn-2||f.age>=f.warn+f.active)continue;const r=f.width*.5*a.BEAM_HIT+p.r+M;
+  for(const f of s.figures){if(a.figurePhase(f,s.tick)!=='on')continue;const r=f.width*.5*a.BEAM_HIT+p.r+M;
    for(const seg2 of a.figureSegments(f))for(let c=0;c<size;c++){if(blocked[c])continue;const x=X0+(c%cols)*CELL,y=Y0+((c/cols)|0)*CELL,[x1,y1,x2,y2]=seg2,dx=x2-x1,dy=y2-y1,L=dx*dx+dy*dy||1,u=Math.max(0,Math.min(1,((x-x1)*dx+(y-y1)*dy)/L));if(Math.hypot(x-x1-u*dx,y-y1-u*dy)<r)blocked[c]=1;}}
   next.fill(0);let open=0;
   for(let c=0;c<size;c++){if(blocked[c])continue;const cx=c%cols,cy=(c/cols)|0;let ok=false;for(let dy=-1;dy<=1&&!ok;dy++)for(let dx=-1;dx<=1&&!ok;dx++){const nx=cx+dx,ny=cy+dy;if(nx>=0&&ny>=0&&nx<cols&&ny<rows&&reach[nx+ny*cols])ok=true;}if(ok){next[c]=1;open++;}}

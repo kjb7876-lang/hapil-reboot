@@ -98,7 +98,7 @@
         p8_goldenCross:{name:'황금 육망성',scene:'60',fire:function(s,t){var b=s.boss,i;
           // 황금 육망성(사용자 11-16: 십자가는 늘 좋은 것이라 적이 쓰지 않는다): 금빛 육망성 기물이 줄지어 똑바로 내려오고, 보스에게서 금빛 육망성 무늬가 커진다.
           if(t%96===0){s.lane=Math.max(0,Math.min(5,(s.lane===undefined?2:s.lane)+Math.floor(rand(s)*3)-1));for(i=0;i<6;i++){if(i===s.lane)continue;spawn(s,W/6*(i+.5),-30,PI/2,62,{size:K.SHAPE_PROP,color:K.P.hexagram,life:900});}}
-          if(t%48===24){shape(s,b.x-44,b.y,HEXAGRAM,70,0,{color:YELLOW,size:1});if(s.difficulty==='hell'||t%96===24)shape(s,b.x+44,b.y,HEXAGRAM,58,0,{color:WHITE,size:0});}
+          if(t%48===24){shape(s,b.x-44,b.y,HEXAGRAM,70,0,{color:YELLOW,size:1});if(s.difficulty!=='gentle'||t%96===24)shape(s,b.x+44,b.y,HEXAGRAM,58,0,{color:WHITE,size:0});}
           if(t%pick(s,24,20,12)===0)for(i=0;i<count(s,1);i++)spawn(s,8+rand(s)*(W-16),-8,PI/2,64+rand(s)*30,{color:YELLOW,size:K.RICE});}},
         // 61 — 교주의 사몽. 중간: 공간과 시간. 보스: 부활 → 세쌍둥이의 기록 → 사망의 글자 → 망령 → 사몽
         p8_warpSpace:{name:'공간을 왜곡',scene:'61',fire:function(s,t){var b=s.boss,k;

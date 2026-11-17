@@ -14,10 +14,10 @@ function play(options,limit,each){const a=need(),s=a.createRun(options);let i=0;
  for(;i<limit&&s.stage!=='won'&&s.stage!=='lost';i++){s.player.invulnerableUntil=s.tick+999;const target=s.stage==='card'?s.boss.x:s.mobs.length?s.mobs[0].x:180;
   a.step(s,{dx:Math.max(-4,Math.min(4,target-s.player.x)),dy:0});if(each)each(s,i);clear(s);}
  return {s,ticks:i};}
-/* 한 부(part)의 구간마다 안전 통로를 검사한다. */
+/* 한 부(part)의 구간마다 안전 통로를 검사한다. 노멀·헬 패턴 동일성은 별도 전수 검사하므로 같은 경로를 중복 계산하지 않는다. */
 function lanePart(part){const a=need(),failures=[];let n=0;
  a.SEGMENTS.forEach((g,i)=>{if(a.STAGES[g.stage].part!==part)return;
-  for(const [difficulty,compact] of [['gentle',false],['normal',false],['hell',false],['hell',true]]){const r=lane.check(a,{difficulty,compact,seed:17+i,segment:i});n++;
+  for(const [difficulty,compact] of [['gentle',false],['hell',false],['hell',true]]){const r=lane.check(a,{difficulty,compact,seed:17+i,segment:i});n++;
    if(r.emptyAt>=0||r.minOpen<4||r.ticks<=100)failures.push(`${difficulty}${compact?'/compact':''} #${i} ${a.STAGES[g.stage].name} ${r.name}: open ${r.minOpen} emptyAt ${r.emptyAt} ticks ${r.ticks}`);}});
  assert(n>0,'part '+part+' has segments');assert.deepEqual(failures,[]);}
 /* 한 부를 세 난이도로 완주한다. */

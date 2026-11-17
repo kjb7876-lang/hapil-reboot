@@ -16,13 +16,14 @@ test('v43 hearts: only every third ordinary mob drops a heart, elites and spells
  assert(s.hearts<=Math.ceil(kills/3)+3*a.ELITE_DROPS,'hearts '+s.hearts+' for '+kills+' kills');
 });
 
-test('v43 drifting bullets: when a spell or wave ends, its bullets drift on to the edge instead of popping, and never hit',()=>{
+test('v43 drifting bullets: when a spell or wave ends, its surviving bullets drift on to the edge and never hit',()=>{
  const a=h.need(),i=a.SEGMENTS.findIndex(g=>g.kind==='card'&&g.spell);
  const s=a.createRun({difficulty:'normal',seed:2,segment:i,stages:1});
  for(let t=0;t<300;t++){s.player.invulnerableUntil=s.tick+999;if(s.stage==='card')s.boss.hp=s.boss.maxHp;a.step(s,{dx:0,dy:0});s.events.length=0;s.cancelled.length=0;}
- const live=s.n;assert(live>20,'bullets on screen before the end: '+live);
+ const live=s.n,broken=s.orbsBroken;assert(live>20,'bullets on screen before the end: '+live);
  s.boss.hp=0;s.drifted.length=0;for(let t=0;t<3&&s.drifted.length===0;t++)a.step(s,{dx:0,dy:0});
- assert.equal(s.drifted.length/5,live,'every bullet becomes a drifting one');assert.equal(s.cancelled.length,0,'none pop');
+ // Existing player shots can break an orb on the same tick as the boss dies. Only those orbs pop; every survivor drifts.
+ assert.equal(s.drifted.length/5+(s.orbsBroken-broken),live,'every surviving bullet becomes a drifting one');assert.equal(s.cancelled.length,0,'the transition cancels none with a pop');
  for(let k=0;k<s.drifted.length;k+=5)assert(Number.isFinite(s.drifted[k+3])&&s.drifted[k+4]>0,'keeps its heading and speed');
  const app=h.read('src/arcade-app-v43.js');assert(/function drawDrifts\(/.test(app)&&/drawShots\(s\);drawDrifts\(\);/.test(app),'the app draws them under the live bullets');
  assert(!/drifts/.test(/function updateBullets[\s\S]*?\n  \}/.exec(h.read('src/arcade-v43.js'))[0]),'drifting bullets are not in the collision');

@@ -1,0 +1,69 @@
+name: Arcade UI regression
+on:
+  pull_request:
+    paths:
+      - 'arcade.html'
+      - 'src/**'
+      - 'tests/**'
+      - 'tools/check-arcade-ui-v43.cjs'
+      - 'tools/check-regressions-v43.cjs'
+      - 'package.json'
+      - '.github/workflows/arcade-ui.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # Historical compatibility tests read pinned git objects.
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Install image regression dependencies
+        run: |
+          python3 -m venv .venv-tests
+          .venv-tests/bin/python -m pip install Pillow numpy
+          echo "$GITHUB_WORKSPACE/.venv-tests/bin" >> "$GITHUB_PATH"
+      - run: npm install --ignore-scripts --no-audit --no-fund
+      - run: node tools/check-regressions-v43.cjs
+        env:
+          TEST_SHARD: ${{ matrix.shard }}
+          TEST_SHARDS: 4
+  routes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        part: [1, 2, 3, 4, 5, 6, 7, 8]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: node --test tests/arcade-v43-part${{ matrix.part }}.test.cjs
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: npm install --ignore-scripts --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:ui
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: arcade-ui-results
+          path: artifacts/arcade-ui/
+          retention-days: 14
