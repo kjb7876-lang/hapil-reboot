@@ -33,7 +33,8 @@ test('the rune rings hurt on the band but not in a gap',()=>{
   const R=q.r*(rf.fit||1),at=(a)=>({x:rf.cx+Math.cos(a)*R,y:rf.cy+Math.sin(a)*R});
   function hurtsAt(pt){const c=Object.assign(Object.create(Object.getPrototypeOf(s)),s);
     const t=A.createRun({segment:ci,seed:9});Object.keys(s).forEach(k=>{t[k]=s[k];});
-    t.figures=[Object.assign({},rf,{age:rf.warn+5})];t.lasers=[];t.n=0;t.mobs=[];t.player=Object.assign({},s.player,{x:pt.x,y:pt.y,invulnerableUntil:0,hp:5});t.floor.pieces=[];
+    t.figures=[Object.assign({},rf,{age:rf.warn+5})];t.tick=20;t.noDistort=true;t.bombs=0; // test band geometry during the shared illuminated window
+    t.lasers=[];t.n=0;t.mobs=[];t.player=Object.assign({},s.player,{x:pt.x,y:pt.y,invulnerableUntil:0,hp:5});t.floor.pieces=[];
     const h0=t.hits;A.step(t,{});return t.hits>h0;}
   const g=at(gapA),inside=p=>p.x>10&&p.x<350&&p.y>45&&p.y<600;let b=at(bandA);if(!inside(b))b=at(gapA-Math.PI/q.n);if(!inside(b))b=at(gapA+Math.PI);// 바깥 고리는 필드 좌우를 넘는다(11-16): 화면 안의 띠를 고른다
   if(g.x>10&&g.x<350&&g.y>45&&g.y<600)assert.equal(hurtsAt(g),false,'the gap is safe');

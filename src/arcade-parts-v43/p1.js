@@ -23,6 +23,13 @@
     build:function(K){
       var W=K.W,TAU=K.TAU,PI=Math.PI,DOWN=Math.PI/2,R=K.RED,PU=K.PURPLE,C=K.CYAN,G=K.GREEN,Y=K.YELLOW,WH=K.WHITE,RICE=K.RICE,PROP=K.SHAPE_PROP;
       function clamp(v,a,b){return v<a?a:v>b?b:v;}
+      // A curtain's opening must be reachable from the preceding opening.
+      // Keep its random walk to one column per row; independent full-width
+      // rolls could ask for a 300 px move in 44 ticks (only 176 px at 4 px/tick).
+      function driftGap(s,key,cells,width,margin){var lo=margin||0,hi=cells-width-lo;
+        var from=s[key]===undefined?Math.floor((cells-width)/2):s[key];
+        return s[key]=clamp(from+Math.floor(K.rand(s)*3)-1,lo,hi);}
+
       // 얼굴 하나: 작은 고리(윤곽)와 두 눈이 한 덩어리로 같은 방향·속도로 움직인다.
       function face(s,x,y,a,v,color,r){
         for(var k=0;k<8;k++){var q=TAU*k/8;K.spawn(s,x+Math.cos(q)*r,y+Math.sin(q)*r,a,v,{color:color,size:0});}
@@ -123,13 +130,13 @@
           if(t%60===30)K.fan(s,b.x,b.y,K.count(s,4),DOWN,.6,96,{color:R,size:RICE});}},
         p1_chains:{name:'끊어진 봉인 사슬',fire:function(s,t){var b=s.boss,cells=K.pick(s,13,14,16);
           // 그림(도구 봉인 사슬): 두 겹 사슬이 내려오다 끊어진 자리에서 양쪽으로 갈라져 흩어진다.
-          if(t%64===0){var gap=1+Math.floor(K.rand(s)*(cells-4)),at=K.pick(s,230,200,170);for(var i=0;i<cells;i++){if(i>=gap&&i<=gap+1)continue;for(var j=0;j<2;j++)K.spawn(s,(i+.5+j*.5)*W/cells,-10-j*12,DOWN,60,{color:(i+j)%2?R:WH,size:j?0:1,at:at,mode:K.MODE_TURN,arg:i<gap?.6:-.6,speed2:64});}}
+          if(t%64===0){var gap=driftGap(s,'p1ChainGap',cells,2,1),at=K.pick(s,230,200,170);for(var i=0;i<cells;i++){if(i>=gap&&i<=gap+1)continue;for(var j=0;j<2;j++)K.spawn(s,(i+.5+j*.5)*W/cells,-10-j*12,DOWN,60,{color:(i+j)%2?R:WH,size:j?0:1,at:at,mode:K.MODE_TURN,arg:i<gap?.6:-.6,speed2:64});}}
           if(t%50===25){b.targetX=clamp(s.player.x,70,W-70);K.fan(s,b.x,b.y,K.count(s,3),K.aim(s,b.x,b.y),.45,96,{color:PU,size:RICE});}}},
 
         // 05 시체들이 되살아난 밤 — 시체 언덕, 익숙한 모습의 동료들(잔상)
         p1_hill:{name:'시체들로 이루어진 언덕',fire:function(s,t){var b=s.boss,cells=K.pick(s,14,15,18);
           // 그림: 가운데가 볼록한 언덕 모양 줄이 두 겹으로 내려온다. 언덕마다 세 칸이 비어 있다.
-          if(t%K.pick(s,60,52,44)===0){var c=60+K.rand(s)*240,gap=Math.floor(K.rand(s)*(cells-2));for(var i=0;i<cells;i++){if(i>=gap&&i<gap+3)continue;var x=(i+.5)*W/cells,u=(x-c)/80,h=56*Math.exp(-u*u);K.spawn(s,x,-12-h,DOWN,58,{color:i%3?WH:PU,size:1});K.spawn(s,x,-26-h,DOWN,58,{color:PU,size:0});}}
+          if(t%K.pick(s,60,52,44)===0){var c=60+K.rand(s)*240,gap=driftGap(s,'p1HillGap',cells,3,0);for(var i=0;i<cells;i++){if(i>=gap&&i<gap+3)continue;var x=(i+.5)*W/cells,u=(x-c)/80,h=56*Math.exp(-u*u);K.spawn(s,x,-12-h,DOWN,58,{color:i%3?WH:PU,size:1});K.spawn(s,x,-26-h,DOWN,58,{color:PU,size:0});}}
           if(t%120===90)K.fan(s,b.x,b.y,K.count(s,3),K.aim(s,b.x,b.y),.5,94,{color:PU,size:RICE});}},
         p1_echo:{name:'익숙한 모습의 동료들',fire:function(s,t){var b=s.boss,ph=t%96;
           // 그림: 같은 공격이 조금씩 늦게, 자리를 옮겨 두 번 더 되풀이된다(잔상).

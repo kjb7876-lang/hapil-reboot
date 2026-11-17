@@ -11,7 +11,7 @@
     *{box-sizing:border-box}
     html,body{margin:0;height:100%;background:#000;color:#f0e9d8;font:15px/1.5 system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;overscroll-behavior:none}
     body{display:flex;justify-content:center;background:transparent} /* 뒤의 #arcade-bleed가 보이게 */
-    #arcade-stage{position:relative;width:100%;height:100dvh;max-width:calc(100dvh*360/640);display:flex;align-items:center;justify-content:center;touch-action:none;user-select:none;-webkit-user-select:none;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+    #arcade-stage{position:relative;width:100%;height:100dvh;max-width:calc(100dvh*360/640);display:flex;align-items:center;justify-content:center;touch-action:pan-y;user-select:none;-webkit-user-select:none;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
     canvas{display:block;background:#07070f}
     #arcade-bleed{position:fixed;inset:-24px;z-index:-1;background:#000 center/cover no-repeat;filter:blur(14px) brightness(.38) saturate(.8)} /* 플레이 칸 밖 여백: 스테이지 그림을 흐리게 */
     .screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:28px;text-align:center;background:rgba(5,5,14,.72)}
@@ -29,8 +29,8 @@
     button[aria-pressed="true"]{border-color:#d8c49a;background:#3a2f4a;color:#fff3cf}
     button.primary{background:#d8c49a;color:#17131f;border-color:#d8c49a;font-weight:600;min-width:220px;min-height:54px;font-size:17px}
     button:disabled{opacity:.5}
-    #arcade-frame{position:relative}
-    #arcade-pause-button{position:absolute;top:8.6%;left:2.6%;min-width:44px;min-height:36px;padding:0;background:rgba(10,10,24,.45);border-color:rgba(255,255,255,.22);color:rgba(255,255,255,.8)}
+    #arcade-frame{position:relative;touch-action:none}
+    #arcade-pause-button{position:absolute;top:8.6%;left:2.6%;min-width:44px;min-height:44px;padding:0;background:rgba(10,10,24,.45);border-color:rgba(255,255,255,.22);color:rgba(255,255,255,.8)}
     #arcade-pause-button[hidden],.pad[hidden]{display:none}
     .pad{position:absolute;bottom:1.6%;width:68px;height:56px;min-width:0;padding:0;border-radius:14px;background:rgba(10,10,24,.5);border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.88);font-size:13px;touch-action:none}
     #arcade-focus{left:2.6%}#arcade-bomb{right:2.6%;border-color:rgba(125,255,176,.55)}
@@ -44,9 +44,21 @@
     .hudx.side .name{font-size:16px;word-break:keep-all}.hudx.side .best{font-size:15px;color:rgba(255,255,255,.7);letter-spacing:1px}.hudx.side .lives{font-size:20px}.hudx.side .bombs{font-size:18px}.hudx.side .score{font-size:24px;letter-spacing:1px}.hudx.side .graze{font-size:12px}.hudx.side .gauge{width:150px;height:4px;margin-top:4px}.hudx.side .gauge i{height:4px}.hudx.side .spell{font:italic 15px/1.4 serif;color:#f3e3b5;border-left:3px solid;padding-left:7px;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.hudx.side .bosshp{width:150px;height:6px;background:rgba(255,255,255,.14);margin-top:4px}.hudx.side .progress{width:150px;height:4px;background:rgba(255,255,255,.14);margin-top:4px}.hudx.side .bosshp i{display:block;height:6px}.hudx.side .progress i{display:block;height:4px;background:#d6b478}.hudx.side .route,.hudx.side .cards{font-size:12px;line-height:1.7;color:rgba(255,255,255,.55);margin-top:6px}.hudx.side .route{}.hudx.side .cards{}.hudx.side .route>div{max-width:164px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hudx.side .gauge,.hudx.side .progress{margin-left:auto}.hudx.side .route .cur,.hudx.side .cards .cur{font-weight:600}.hudx.side .stack{display:flex;flex:1;flex-direction:column;gap:22px;justify-content:flex-start;padding-bottom:28px}.hudx.side .portrait{width:150px;height:120px;object-fit:contain;border-bottom:2px solid;opacity:.85;-webkit-mask-image:linear-gradient(180deg,#000 70%,transparent);mask-image:linear-gradient(180deg,#000 70%,transparent)}.hudx.side .keys{font-size:12px;line-height:1.6;color:rgba(255,255,255,.6)}
     .hudx .lbl{font-size:10px;letter-spacing:2px;color:rgba(214,180,120,.85);margin-top:6px}
     select{appearance:none;border:1px solid #4a4666;background:#15152a;color:inherit;font:inherit;border-radius:10px;padding:10px 14px;min-height:44px;max-width:100%}
-    .screen{overflow-y:auto}
+    .screen{overflow-y:auto;touch-action:pan-y}
+    #arcade-pause{justify-content:flex-start;padding:20px max(16px,5%);gap:12px;z-index:5}
+    #arcade-pause>*{flex-shrink:0}
+    .pause-settings{display:grid;gap:12px;width:100%;max-width:340px;text-align:left;padding:14px;border:1px solid #4a4666;border-radius:10px;background:rgba(10,10,24,.7)}
+    .setting-line{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:36px}
+    .setting-line input[type="checkbox"]{width:24px;height:24px;accent-color:#ad8561;flex-shrink:0}
+    .setting-volume{display:grid;grid-template-columns:1fr 46px;align-items:center;gap:10px}
+    .setting-volume input{width:100%;min-height:30px;accent-color:#ad8561;touch-action:pan-y}
+    .setting-volume output{text-align:right;font-size:12px;font-variant-numeric:tabular-nums}
+    #arcade-pause .controls-note{font-size:12px;line-height:1.6;text-align:left;max-width:340px}
+    html.ink .pause-settings{border-color:#8a7c68;background:rgba(235,224,200,.9)}
+    .pad[aria-pressed="true"],html.ink .pad[aria-pressed="true"]{background:#d8c49a;color:#17131f;border-color:#5a3520;box-shadow:inset 0 0 0 2px #5a3520}
     #arcade-title{justify-content:flex-start;padding-top:max(28px,6dvh)}
     #arcade-title>*{flex-shrink:0}
+    #arcade-title .row{max-width:100%;flex-wrap:wrap;justify-content:center}
     .row.pick{width:100%;max-width:320px}.row.pick select{flex:1;min-width:0}
     #continue-note{margin-top:-8px}
     .keepsakes{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;width:100%;max-width:340px}
@@ -102,14 +114,14 @@
     <div id="arcade-frame">
       <canvas id="arcade-canvas" width="360" height="640" aria-label="세로 탄막 전투장" data-i18n-label="field"></canvas>
       <button id="arcade-pause-button" type="button" aria-label="일시정지" data-i18n-label="pause" hidden>Ⅱ</button>
-      <button id="arcade-focus" class="pad" type="button" aria-label="저속 이동 (누르고 있는 동안)" data-i18n-label="focusLabel" hidden><span data-i18n="focus">저속</span></button>
+      <button id="arcade-focus" class="pad" type="button" aria-label="저속 이동 (누르고 있는 동안)" data-i18n-label="focusLabel" aria-pressed="false" hidden><span data-i18n="focus">저속</span></button>
       <button id="arcade-bomb" class="pad" type="button" aria-label="폭탄" data-i18n-label="bomb" hidden><span data-i18n="bomb">폭탄</span></button>
     </div>
 
     <div id="arcade-title" class="screen">
       <p class="kicker" data-i18n="kicker">HAPIL · 원큐 여정 · 56 STAGES</p>
       <h1>합일</h1>
-      <p class="note" data-i18n-html="controls">끌어서 이동 · 공격은 자동<br><b>저속</b>을 누르면 느려지고 피격점이 보입니다 · <b>폭탄</b>은 탄을 지웁니다</p>
+      <p class="note" data-i18n-html="controls">끌어서 이동 · 공격은 자동<br><b>저속</b>을 누른 채 다른 손가락으로 정밀 이동 · <b>폭탄</b>으로 탄을 지웁니다</p>
       <button id="arcade-continue" type="button" hidden>이어하기</button>
       <p class="note" id="continue-note" hidden></p>
       <button id="arcade-start" class="primary" type="button" data-mode="full" data-i18n="loading" disabled>불러오는 중…</button>
@@ -155,10 +167,19 @@
       <button id="arcade-keepsake-back" type="button" data-i18n="back">돌아가기</button>
     </div>
 
-    <div id="arcade-pause" class="screen" hidden>
+    <div id="arcade-pause" class="screen" role="dialog" aria-modal="true" aria-labelledby="pause-title" hidden>
       <p class="kicker">PAUSED</p>
-      <h2 data-i18n="paused">잠시 멈춤</h2>
+      <h2 id="pause-title" data-i18n="paused">잠시 멈춤</h2>
       <button id="arcade-resume" class="primary" type="button" data-i18n="resume">계속하기</button>
+      <div class="pause-settings" role="group" aria-label="플레이 설정" data-i18n-label="settings">
+        <label class="setting-line" for="setting-music"><span data-i18n="music">배경음악</span><input id="setting-music" type="checkbox" checked></label>
+        <div class="setting-volume"><input id="setting-musicVolume" type="range" min="0" max="100" step="5" value="100" aria-label="배경음악 음량" data-i18n-label="musicVolume"><output id="value-musicVolume" for="setting-musicVolume">100%</output></div>
+        <label class="setting-line" for="setting-sfx"><span data-i18n="sfx">효과음</span><input id="setting-sfx" type="checkbox" checked></label>
+        <div class="setting-volume"><input id="setting-sfxVolume" type="range" min="0" max="100" step="5" value="100" aria-label="효과음 음량" data-i18n-label="sfxVolume"><output id="value-sfxVolume" for="setting-sfxVolume">100%</output></div>
+        <label class="setting-line" for="setting-screenShake"><span data-i18n="screenShake">화면 흔들림</span><input id="setting-screenShake" type="checkbox" checked></label>
+        <label class="setting-line" for="setting-lowQuality"><span data-i18n="lowQuality">절전 그래픽</span><input id="setting-lowQuality" type="checkbox"></label>
+      </div>
+      <p class="note controls-note" data-i18n-html="pauseHelp">저속: 버튼을 누른 채 다른 손가락으로 움직이면 정밀 이동하며 피격점이 강조됩니다. PC는 Shift.<br>폭탄: 버튼 또는 X. 지옥은 수동 사용만 가능합니다.<br>설정은 자동 저장됩니다. Esc로 전투에 복귀합니다.</p>
       <button id="arcade-quit" type="button" data-i18n="toTitle">처음 화면으로</button>
     </div>
 

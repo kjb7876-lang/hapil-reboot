@@ -89,13 +89,23 @@
     options=options||{};
     var Ctor=options.AudioContext||root.AudioContext||root.webkitAudioContext;
     var clock=options.now||function(){return root.performance&&root.performance.now?root.performance.now():Date.now();};
-    var ctx=null,master=null,noiseBuffer=null,enabled=true,state=newState(),last=Object.create(null),voices=0,played=0,skipped=0,failed=false;
+    var ctx=null,master=null,noiseBuffer=null,enabled=true,suspended=false,volume=1,state=newState(),last=Object.create(null),voices=0,played=0,skipped=0,failed=false,active=[],background=!!(root.document&&root.document.hidden),pageAway=false,listening=false;
     var MAX_VOICES=28,MASTER_LEVEL=.55;
 
+    function visibility(){background=!!(root.document&&root.document.hidden);applyLevel();if(background)stopVoices();}
+    function pagehide(){pageAway=true;applyLevel();stopVoices();}
+    function pageshow(){pageAway=false;visibility();}
+    function listen(on){
+      if(listening===on)return;listening=on;var action=on?'addEventListener':'removeEventListener';
+      if(root.document&&root.document[action])root.document[action]('visibilitychange',visibility);
+      if(root[action]){root[action]('pagehide',pagehide);root[action]('pageshow',pageshow);}
+    }
     function ensure(){
+      listen(true);
+      if(ctx&&ctx.state==='closed'){ctx=null;master=null;noiseBuffer=null;}
       if(ctx||failed||!Ctor)return !!ctx;
       try{
-        ctx=new Ctor();master=ctx.createGain();master.gain.value=MASTER_LEVEL;
+        ctx=new Ctor();master=ctx.createGain();applyLevel();
         var limiter=ctx.createDynamicsCompressor();limiter.threshold.value=-14;limiter.knee.value=10;limiter.ratio.value=8;limiter.attack.value=.003;limiter.release.value=.18;
         master.connect(limiter);limiter.connect(ctx.destination);
         var length=Math.floor(ctx.sampleRate*.6),seed=0x2545f491;noiseBuffer=ctx.createBuffer(1,length,ctx.sampleRate);var data=noiseBuffer.getChannelData(0);
@@ -103,7 +113,12 @@
       }catch(e){failed=true;ctx=null;master=null;}
       return !!ctx;
     }
-    function unlock(){if(!ensure())return false;if(ctx.state==='suspended'&&ctx.resume){try{var p=ctx.resume();if(p&&p.catch)p.catch(function(){});}catch(e){}}return true;}
+    function unlock(){if(!ensure())return false;if(ctx.state!=='running'&&ctx.resume){try{var p=ctx.resume();if(p&&p.catch)p.catch(function(){});}catch(e){}}return true;}
+    function applyLevel(){if(master)master.gain.value=enabled&&!suspended&&!background&&!pageAway?MASTER_LEVEL*volume:0;}
+    function disconnect(node){if(node&&node.disconnect)try{node.disconnect();}catch(e){}}
+    function stopVoices(){
+      active.slice().forEach(function(v){try{v.source.stop();}catch(e){}v.finish();});
+    }
     function out(panValue){
       if(!panValue||!ctx.createStereoPanner)return master;
       var node=ctx.createStereoPanner();node.pan.value=panValue;node.connect(master);return node;
@@ -111,18 +126,27 @@
     function envelope(gainNode,at,attack,hold,level){
       var g=gainNode.gain;g.setValueAtTime(.0001,at);g.exponentialRampToValueAtTime(Math.max(.0002,level),at+attack);g.exponentialRampToValueAtTime(.0001,at+attack+hold);
     }
-    function finish(source,at,length){voices++;source.onended=function(){voices--;};source.start(at);source.stop(at+length+.03);}
+    function finish(source,at,length,nodes,dest){
+      var done=false,entry={source:source,finish:cleanup,dest:dest};
+      function cleanup(){
+        if(done)return;done=true;var i=active.indexOf(entry);if(i>=0)active.splice(i,1);voices=Math.max(0,voices-1);
+        disconnect(source);nodes.forEach(disconnect);
+        if(dest!==master&&!active.some(function(v){return v.dest===dest;}))disconnect(dest);
+      }
+      voices++;active.push(entry);source.onended=cleanup;
+      try{source.start(at);source.stop(at+length+.03);}catch(e){cleanup();throw e;}
+    }
     // 음정이 있는 한 음: from→to Hz로 미끄러지며 사라진다.
     function tone(dest,shape,from,to,length,level,delay,attack){
       var at=ctx.currentTime+(delay||0),o=ctx.createOscillator(),g=ctx.createGain();o.type=shape;
       o.frequency.setValueAtTime(from,at);if(to!==from)o.frequency.exponentialRampToValueAtTime(Math.max(20,to),at+length);
-      envelope(g,at,attack||.004,length,level);o.connect(g);g.connect(dest);finish(o,at,length);
+      envelope(g,at,attack||.004,length,level);o.connect(g);g.connect(dest);finish(o,at,length,[g],dest);
     }
     // 걸러낸 잡음: 타격·폭발·바람 소리의 몸통.
     function noise(dest,filterType,from,to,q,length,level,delay,attack){
       var at=ctx.currentTime+(delay||0),s=ctx.createBufferSource(),f=ctx.createBiquadFilter(),g=ctx.createGain();s.buffer=noiseBuffer;s.loop=true;
       f.type=filterType;f.Q.value=q;f.frequency.setValueAtTime(from,at);if(to!==from)f.frequency.exponentialRampToValueAtTime(Math.max(30,to),at+length);
-      envelope(g,at,attack||.003,length,level);s.connect(f);f.connect(g);g.connect(dest);finish(s,at,length);
+      envelope(g,at,attack||.003,length,level);s.connect(f);f.connect(g);g.connect(dest);finish(s,at,length,[f,g],dest);
     }
     function bell(dest,base,length,level,delay){tone(dest,'sine',base,base,length,level,delay,.002);tone(dest,'sine',base*2.76,base*2.76,length*.55,level*.35,delay,.002);tone(dest,'sine',base*5.4,base*5.4,length*.3,level*.16,delay,.002);}
     var jitter=0;function vary(){jitter=(jitter+1)%5;return 1+(jitter-2)*.035;}
@@ -158,8 +182,8 @@
       countdownLast:function(d,l){tone(d,'square',1175,1175,.06,l*.5);tone(d,'sine',1175,1175,.12,l);}
     };
     function play(cue){
-      var spec=CUES[cue.name],voice=VOICE[cue.name];if(!spec||!voice||!enabled||!ctx||ctx.state!=='running')return false;
-      var now=clock();if(now-(last[cue.name]||-1e9)<spec.gap){skipped++;return false;}
+      var spec=CUES[cue.name],voice=VOICE[cue.name];if(!spec||!voice||!enabled||suspended||background||pageAway||volume===0||!ctx||ctx.state!=='running')return false;
+      var now=clock();if(now-(last[cue.name]===undefined?-1e9:last[cue.name])<spec.gap){skipped++;return false;}
       if(voices>=MAX_VOICES&&spec.rank<4){skipped++;return false;}
       last[cue.name]=now;
       try{voice(out(cue.pan),spec.level,cue);played++;return true;}catch(e){return false;}
@@ -170,10 +194,12 @@
     }
     return {
       unlock:unlock,observe:observe,play:function(name,panValue){return play({name:name,pan:panValue||0});},
-      setEnabled:function(on){enabled=!!on;},
-      reset:function(){state=newState();},
-      dispose:function(){if(ctx&&ctx.close){try{var p=ctx.close();if(p&&p.catch)p.catch(function(){});}catch(e){}}ctx=null;master=null;noiseBuffer=null;},
-      stats:function(){return {available:!!Ctor&&!failed,running:!!ctx&&ctx.state==='running',enabled:enabled,voices:voices,played:played,skipped:skipped,cues:Object.keys(CUES).length};}
+      setEnabled:function(on){enabled=!!on;applyLevel();if(!enabled)stopVoices();},
+      setVolume:function(value){var n=Number(value);if(isFinite(n))volume=Math.max(0,Math.min(1,n));applyLevel();if(volume===0)stopVoices();},
+      suspend:function(on){suspended=!!on;applyLevel();if(suspended)stopVoices();},
+      reset:function(){state=newState();last=Object.create(null);stopVoices();},
+      dispose:function(){listen(false);stopVoices();if(ctx&&ctx.close){try{var p=ctx.close();if(p&&p.catch)p.catch(function(){});}catch(e){}}ctx=null;master=null;noiseBuffer=null;last=Object.create(null);},
+      stats:function(){return {available:!!Ctor&&!failed,running:!!ctx&&ctx.state==='running',enabled:enabled,suspended:suspended,volume:volume,voices:voices,played:played,skipped:skipped,cues:Object.keys(CUES).length};}
     };
   }
   var api={revision:37,CUES:CUES,newState:newState,collect:collect,create:create};

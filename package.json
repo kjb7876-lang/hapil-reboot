@@ -1,6 +1,6 @@
 {
   "name": "hapil-reboot-v8",
   "private": true,
-  "scripts": {"test": "node --test tests/*.test.cjs"},
-  "devDependencies": {"@napi-rs/canvas": "0.1.100"}
+  "scripts": {"test": "node --test tests/*.test.cjs", "test:ui": "node tools/check-arcade-ui-v43.cjs"},
+  "devDependencies": {"@napi-rs/canvas": "0.1.100", "playwright": "1.62.1"}
 }

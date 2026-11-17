@@ -9,25 +9,29 @@
   var LANGS={ko:'한국어',en:'English'}; // 다음 차례(제안): ja 日本語, zh-Hant 繁體中文, es Español, pt-BR Português
   var DICT={
     ko:{
-      kicker:'HAPIL · 원큐 여정 · 56 STAGES',controls:'끌어서 이동 · 공격은 자동<br><b>저속</b>을 누르면 느려지고 피격점이 보입니다 · <b>폭탄</b>은 탄을 지웁니다',
+      kicker:'HAPIL · 원큐 여정 · 56 STAGES',controls:'끌어서 이동 · 공격은 자동<br><b>저속</b>을 누른 채 다른 손가락으로 정밀 이동 · <b>폭탄</b>으로 탄을 지웁니다',
       continue:'이어하기',continueStage:'이어하기 · STAGE {n}',continueMid:'이어하기 · STAGE {n} 중간부터',loading:'불러오는 중…',fromStart:'처음부터',here:'여기서',stageSelect:'스테이지 선택',
       difficulty:'난이도',gentle:'여유',normal:'기본',hell:'지옥',
-      noteGentle:'목숨 {hp} · 폭탄 {bombs} · 쉬운 패턴 · 느린 탄 · 작은 피격점 · 스테이지마다 목숨 회복',noteNormal:'목숨 {hp} · 폭탄 {bombs} · 본 패턴 · 스테이지마다 목숨 회복',noteHell:'목숨 {hp} · 폭탄 {bombs} · 더 빠른 탄 · 큰 피격점 · 스테이지마다 목숨 회복',
+      noteGentle:'목숨 {hp} · 폭탄 {bombs} · 쉬운 패턴 · 느린 탄 · 작은 피격점 · 스테이지마다 목숨 회복',noteNormal:'목숨 {hp} · 폭탄 {bombs} · 지옥과 같은 공격 · 피격점 접촉 시 확률 회피·자동폭탄 · 스테이지마다 목숨 회복',noteHell:'목숨 {hp} · 폭탄 {bombs} · 기본과 같은 공격 · 수동폭탄만 · 자동회피 없음 · 스테이지마다 목숨 회복',
       keepsakes:'기념물',keepsakesCount:'기념물 {n}/{max}',bossPractice:'보스 체험',soundOn:'소리 켜짐',soundOff:'소리 꺼짐',
       starsBest:'별 <b id="title-stars">0</b> / <span id="title-stars-max">168</span> · 최고 점수 <b id="title-best">00000000</b>',noSave:'이 브라우저에서는 기록을 저장할 수 없습니다.',
       report:'기기 진단 복사',credit:'음악: 자체 작곡 · 악기 소리 Fluid R3 GM (Frank Wen, CC BY 3.0)',reportDone:'복사됨 · 스레드에 붙여 넣어 주세요',reportFail:'복사 안 됨 · 길게 눌러 선택',
       start:'시작',back:'돌아가기',paused:'잠시 멈춤',resume:'계속하기',toTitle:'처음 화면으로',best:'최고 점수',retryStage:'이 스테이지부터 다시',retryFallen:'다시하기 · 이 스테이지 처음부터',retryBoss:'한 번 더',
+      settings:'플레이 설정',music:'배경음악',sfx:'효과음',musicVolume:'배경음악 음량',sfxVolume:'효과음 음량',screenShake:'화면 흔들림',lowQuality:'절전 그래픽',focusActive:'저속 켜짐',
+      pauseHelp:'저속: 버튼을 누른 채 다른 손가락으로 움직이면 정밀 이동하며 피격점이 강조됩니다. PC는 Shift.<br>폭탄: 버튼 또는 X. 지옥은 수동 사용만 가능합니다.<br>설정은 자동 저장됩니다. Esc로 전투에 복귀합니다.',
       pause:'일시정지',focus:'저속',focusLabel:'저속 이동 (누르고 있는 동안)',bomb:'폭탄',field:'세로 탄막 전투장',bossStage:'보스 스테이지',language:'언어'
     },
     en:{
-      kicker:'HAPIL · ONE-RUN JOURNEY · 56 STAGES',controls:'Drag to move · Shots fire automatically<br>Hold <b>Focus</b> to slow down and see your hitbox · <b>Bomb</b> clears bullets',
+      kicker:'HAPIL · ONE-RUN JOURNEY · 56 STAGES',controls:'Drag to move · Shots fire automatically<br>Hold <b>Focus</b> and drag with another finger for precise movement · <b>Bomb</b> clears bullets',
       continue:'Continue',continueStage:'Continue · STAGE {n}',continueMid:'Continue · STAGE {n} (checkpoint)',loading:'Loading…',fromStart:'New game',here:'Play',stageSelect:'Select stage',
       difficulty:'Difficulty',gentle:'Easy',normal:'Normal',hell:'Hell',
-      noteGentle:'{hp} lives · {bombs} bombs · easy patterns · slow bullets · tiny hitbox · lives refill each stage',noteNormal:'{hp} lives · {bombs} bombs · full patterns · lives refill each stage',noteHell:'{hp} lives · {bombs} bomb · faster bullets · larger hitbox · lives refill each stage',
+      noteGentle:'{hp} lives · {bombs} bombs · easy patterns · slow bullets · tiny hitbox · lives refill each stage',noteNormal:'{hp} lives · {bombs} bombs · same attacks as Hell · chance dodge and auto-bomb on hitbox contact · lives refill each stage',noteHell:'{hp} lives · {bombs} bomb · same attacks as Normal · manual bombs only, no auto-dodge · lives refill each stage',
       keepsakes:'Keepsakes',keepsakesCount:'Keepsakes {n}/{max}',bossPractice:'Boss practice',soundOn:'Sound on',soundOff:'Sound off',
       starsBest:'Stars <b id="title-stars">0</b> / <span id="title-stars-max">168</span> · Best <b id="title-best">00000000</b>',noSave:'Progress cannot be saved in this browser.',
       report:'Copy device report',credit:'Music: original score · Instrument samples Fluid R3 GM (Frank Wen, CC BY 3.0)',reportDone:'Copied · paste it to the developer',reportFail:'Copy failed · long-press to select',
       start:'Start',back:'Back',paused:'Paused',resume:'Resume',toTitle:'Title screen',best:'Best',retryStage:'Retry this stage',retryFallen:'Rise again · from this stage\'s start',retryBoss:'Again',
+      settings:'Play settings',music:'Background music',sfx:'Sound effects',musicVolume:'Music volume',sfxVolume:'Effects volume',screenShake:'Screen shake',lowQuality:'Low-power graphics',focusActive:'Focus on',
+      pauseHelp:'Focus: hold the button and move with another finger for precise movement and a highlighted hitbox. Use Shift on PC.<br>Bomb: tap the button or press X. Hell uses manual bombs only.<br>Settings save automatically. Press Esc to resume.',
       pause:'Pause',focus:'Focus',focusLabel:'Focus movement (hold)',bomb:'Bomb',field:'Vertical bullet-hell field',bossStage:'Boss stage',language:'Language'
     }
   };
