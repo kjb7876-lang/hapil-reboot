@@ -5,8 +5,8 @@ const {idle,put,clear}=require('./helpers/arcade-v43.cjs');
 
 test('hero profiles load in Node and the browser, with a safe immutable default',()=>{
  const browser={};vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../src/arcade-heroes-v43.js'),'utf8'),browser);
- assert.equal(browser.HapilArcadeHeroes.get('seoha').name,'윤서하 A');
- assert.equal(browser.HapilArcadeHeroes.get('seoha-b').name,'윤서하 B');
+ assert.equal(browser.HapilArcadeHeroes.get('seoha').name,'윤서하 · 수련생');
+ assert.equal(browser.HapilArcadeHeroes.get('seoha-b').name,'윤서하 · 각성');
  assert.deepEqual(H.list().map(p=>p.id),['memory','seoha','seoha-b']);
  for(const id of [undefined,null,'','missing','__proto__','constructor'])assert.equal(H.get(id).id,'memory');
  for(const p of H.list()){

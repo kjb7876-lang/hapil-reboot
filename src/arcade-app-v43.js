@@ -43,7 +43,10 @@
   try{var seen=JSON.parse(global.localStorage.getItem(STORY_SEEN_KEY)||'{}');if(seen&&typeof seen==='object'&&!Array.isArray(seen))storySeen=seen;}catch(e){}
   // 개발자 모드(사용자 11-15): 게임 속도 2배 + 체력 무한. 지금은 시작 화면에 대놓고 보인다. 숨기려면 DEV_VISIBLE=false 한 줄만 바꾼다.
   var DEV_VISIBLE=true,DEV_SPEED=2,DEV_KEY='hapil-arcade-dev-v43',devMode=false;
-  try{devMode=DEV_VISIBLE&&global.localStorage.getItem(DEV_KEY)==='1';}catch(e){devMode=false;}
+  // 출시판 정리(11-17 조언): 개발자 모드·기기 진단은 평소 숨기고 주소에 ?dev=1을 붙여 열면 이 기기에 기억한다(?dev=0으로 다시 숨김).
+  var devUnlocked=false;
+  try{var dq=/[?&]dev=([01])\b/.exec(global.location&&global.location.search||'');if(dq)global.localStorage.setItem('hapil-arcade-dev-unlock-v43',dq[1]);devUnlocked=DEV_VISIBLE&&global.localStorage.getItem('hapil-arcade-dev-unlock-v43')==='1';}catch(e){devUnlocked=false;}
+  try{devMode=devUnlocked&&global.localStorage.getItem(DEV_KEY)==='1';}catch(e){devMode=false;}
   var compact=!!(global.matchMedia&&global.matchMedia('(pointer:coarse)').matches)||global.innerWidth<520;
 
   function finite(v,fallback){return v===v&&v!==Infinity&&v!==-Infinity?v:fallback;}
@@ -1661,7 +1664,7 @@
     $('arcade-pause-button').addEventListener('click',pause);
     $('arcade-quit').addEventListener('click',goTitle);
     var rep=$('arcade-report');if(rep)rep.addEventListener('click',function(){if(!Mobile)return;Mobile.copyReport(function(ok){rep.textContent=T(ok?'reportDone':'reportFail');if(!ok)global.prompt&&global.prompt('기기 진단',Mobile.report());setTimeout(function(){rep.textContent=T('report');},4000);});}); // 기기 진단(오류·프레임·스테이지 기록)을 글로 복사
-    $('arcade-dev').hidden=!DEV_VISIBLE;if($('arcade-dev-note'))$('arcade-dev-note').hidden=!DEV_VISIBLE;if($('arcade-report'))$('arcade-report').hidden=!DEV_VISIBLE;var devLabel=function(){var d=$('arcade-dev');d.textContent=devMode?'DEV 켜짐':'DEV 꺼짐';d.setAttribute('aria-pressed',String(devMode));};devLabel();
+    $('arcade-dev').hidden=!devUnlocked;if($('arcade-dev-note'))$('arcade-dev-note').hidden=!devUnlocked;if($('arcade-report'))$('arcade-report').hidden=!devUnlocked;var devLabel=function(){var d=$('arcade-dev');d.textContent=devMode?'DEV 켜짐':'DEV 꺼짐';d.setAttribute('aria-pressed',String(devMode));};devLabel();
     $('arcade-dev').addEventListener('click',function(){devMode=!devMode;if(devMode)oneCreditEligible=false;try{global.localStorage.setItem(DEV_KEY,devMode?'1':'0');}catch(e){}devLabel();showDevBadge();});
     $('arcade-sound').addEventListener('click',function(){var on=!(settings.music||settings.sfx);settings.music=settings.sfx=on;applySettings(true);unlockAudio();});
     bindSettings();

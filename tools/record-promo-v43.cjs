@@ -15,7 +15,7 @@ const OUT=path.resolve(arg('out','promo-stage'+(STAGE+1)+'.mp4')),WARM=Number(ar
   const tmp=fs.mkdtempSync(path.join(os.tmpdir(),'hapil-promo-'));
   const b=await chromium.launch();
   const pg=await b.newPage({viewport:{width:360,height:640},deviceScaleFactor:3,isMobile:true,hasTouch:true});
-  await pg.addInitScript(d=>{try{localStorage.setItem('hapil-arcade-dev-v43','1');localStorage.setItem('hapil-arcade-save-v43',JSON.stringify({version:43,cleared:[],stars:{},best:{},rewards:[],difficulty:d}));}catch(e){}},DIFF);
+  await pg.addInitScript(d=>{try{localStorage.setItem('hapil-arcade-dev-unlock-v43','1');localStorage.setItem('hapil-arcade-dev-v43','1');localStorage.setItem('hapil-arcade-save-v43',JSON.stringify({version:43,cleared:[],stars:{},best:{},rewards:[],difficulty:d}));}catch(e){}},DIFF);
   await pg.clock.install();
   await pg.goto(URL_);
   for(let i=0;i<40&&await pg.evaluate(()=>document.getElementById('arcade-start').disabled);i++)await pg.clock.runFor(200);
