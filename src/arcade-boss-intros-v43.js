@@ -299,7 +299,14 @@
     if(typeof actor!=='string'||!Number.isInteger(stage))return null;
     return BOSS_ENTRANCES.find(function(entry){return entry.actor===actor&&entry.stage===stage;})||null;
   }
+  /* 정본 발췌가 없는 보스·중간보스의 입장 대사(새로 쓴 연출용 한 줄, 설정·지명을 만들지 않는다). 보스 이름으로 같은 대사가 고정된다. */
+  var GENERIC={mid:["여기서부터는 지나갈 수 없다.","먼저 나를 넘어서야 할 것이다.","여기까지 왔나. 시험해 보지.","발걸음은 여기까지다."],
+    main:["이 앞은 내가 막는다.","돌아가라. 아니면 여기서 끝이다.","기억도 시간도, 여기서 멈춘다.","나를 쓰러뜨려야 지나갈 수 있다."]};
+  function fallbackLines(actor,mid,name){
+    var h=0,i,list=mid?GENERIC.mid:GENERIC.main,key=String(actor||'');for(i=0;i<key.length;i++)h=(h*31+key.charCodeAt(i))>>>0;
+    return [{speaker:name||'',text:list[h%list.length]}];
+  }
   function isSinBoss(actor){return typeof actor==='string'&&BOSS_ENTRANCES.some(function(entry){return entry.actor===actor;});}
-  return Object.freeze({SOURCE:Object.freeze(SOURCE),BOSS_ENTRANCES:Object.freeze(BOSS_ENTRANCES),getBoss:getBoss,isSinBoss:isSinBoss});
+  return Object.freeze({SOURCE:Object.freeze(SOURCE),BOSS_ENTRANCES:Object.freeze(BOSS_ENTRANCES),getBoss:getBoss,isSinBoss:isSinBoss,fallbackLines:fallbackLines});
 });
 
