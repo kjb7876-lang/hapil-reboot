@@ -5,7 +5,7 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const A=require('../src/arcade-v43.js'),root=path.join(__dirname,'..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 function harness(saved){
-  const nodes=new Map(),storage=Object.assign({},saved),calls=[],globals={},strokes=[],imageDraws=[];let pen=[],dash=[];const stack=[];
+  const nodes=new Map(),storage=Object.assign({},saved),storageWrites=[],calls=[],globals={},strokes=[],imageDraws=[];let pen=[],dash=[];const stack=[];
   const ctx=new Proxy({globalAlpha:1,lineWidth:1,
     beginPath(){pen=[];},moveTo(...v){pen.push(['moveTo',...v]);},lineTo(...v){pen.push(['lineTo',...v]);},arc(...v){pen.push(['arc',...v]);},setLineDash(v){dash=v;},
     stroke(){strokes.push({alpha:this.globalAlpha,width:this.lineWidth,points:pen.map(p=>p.slice()),dash:dash.slice()});},
@@ -27,21 +27,22 @@ function harness(saved){
   const doc=element('document');doc.getElementById=id=>nodes.get(id)||null;doc.querySelectorAll=()=>[];doc.createElement=tag=>element('',tag.toUpperCase());doc.hidden=false;
   const audio={unlock:()=>calls.push(['unlock']),reset:()=>calls.push(['reset']),setEnabled:v=>calls.push(['sfx',v]),setVolume:v=>calls.push(['sfxVolume',v]),suspend:v=>calls.push(['suspend',v]),play:(...x)=>calls.push(['play',...x])};
   const w={document:doc,HapilArcade:A,innerWidth:390,innerHeight:844,devicePixelRatio:1,performance:{now:()=>0},location:{search:''},
-    localStorage:{getItem:k=>storage[k]||null,setItem:(k,v)=>{storage[k]=v;},removeItem:k=>{delete storage[k];}},
+    localStorage:{getItem:k=>storage[k]||null,setItem:(k,v)=>{storage[k]=v;storageWrites.push({key:k,value:v});},removeItem:k=>{delete storage[k];}},
     HapilMusic:{update:(...a)=>calls.push(['musicUpdate',...a]),setEnabled:v=>calls.push(['music',v]),setVolume:v=>calls.push(['musicVolume',v]),unlock:()=>calls.push(['musicUnlock'])},
     addEventListener:(k,f)=>{(globals[k]||(globals[k]=[])).push(f);},requestAnimationFrame(){},setTimeout(){},Image:class{},};w.window=w;
   const sandbox=vm.createContext(w);vm.runInContext(read('src/arcade-i18n-v43.js'),sandbox);vm.runInContext(read('src/arcade-story-v43.js'),sandbox);
   vm.runInContext(read('src/arcade-heroes-v43.js'),sandbox);vm.runInContext(read('src/arcade-mobile-v43.js'),sandbox);
   vm.runInContext(read('src/arcade-hero-visibility-v43.js'),sandbox);
+  vm.runInContext(read('src/arcade-boss-intros-v43.js'),sandbox);
   // Skip only browser boot. Expose the closed-over real handlers to install them on the DOM double.
   const script=read('src/arcade-app-v43.js').replace(/  boot\(\);\s*\}\)\(window\);\s*$/,`  global.controlsTest={bind:bind,input:inputForStep,load:loadSettings,apply:applySettings,mode:setMode,
     prepare:function(s,a){state=s;fx=a;mode='playing';},picker:function(p){heroPicker=p;},manifest:function(m){manifest=m;},settings:function(){return settings;},finger:function(){return finger;},quality:function(){return lite;},drawFigures:drawFigures,drawRunes:drawRunes,frame:frame,consume:consume,beginStory:beginStory,nextStory:nextStory,
-    seedVisuals:function(){particles.push({});drifts.push({});flashes.push({});casts.push({});emblems.push({});bombQueued=true;},visualCounts:function(){return [particles.length,drifts.length,flashes.length,casts.length,emblems.length];},heroImages:function(){['memory','seoha','seoha-b'].forEach(function(id){var p=Heroes.get(id);images[id==='memory'?'gunner':'hero-'+id]={src:p.sprite,width:256,height:512};});}};
+    seedVisuals:function(){particles.push({});drifts.push({});flashes.push({});casts.push({});emblems.push({});bombQueued=true;},visualCounts:function(){return [particles.length,drifts.length,flashes.length,casts.length,emblems.length];},defeatVisual:function(){return {actor:fall&&fall.actor,flash:flash};},storyEntry:function(){return story&&story.entry;},heroImages:function(){['memory','seoha','seoha-b'].forEach(function(id){var p=Heroes.get(id);images[id==='memory'?'gunner':'hero-'+id]={src:p.sprite,width:256,height:512};});}};
 })(window);`);
   assert(script.includes('global.controlsTest='));vm.runInContext(script,sandbox);
   const h=w.controlsTest,s=A.createRun({difficulty:'hell',seed:77});s.stage='break';s.stageTick=-100000;
   h.prepare(s,audio);h.bind();
-  return {w,h,s,doc,nodes,storage,calls,globals,audio,strokes,imageDraws};
+  return {w,h,s,doc,nodes,storage,storageWrites,calls,globals,audio,strokes,imageDraws};
 }
 function pickerFor(h){
   const picker={visible:false,shown:0,selected:null,confirmCallback:null,cancelCallback:null,
@@ -57,7 +58,7 @@ test('new game waits for hero confirmation, cancel leaves no run, and Seoha conf
  picker.cancel();assert.equal(w.HapilArcadeApp.getState().mode,'title');assert.equal(w.HapilArcadeApp.debugState().state,null);
  assert.equal(storage['hapil-arcade-hero-v43'],undefined);assert.equal(storage['hapil-arcade-journey-hero-v43'],undefined);
  nodes.get('arcade-start').click();picker.confirm('seoha');let s=w.HapilArcadeApp.debugState().state;
- assert.equal(w.HapilArcadeApp.getState().mode,'playing');assert.equal(s.hero,'seoha');assert.equal(s.stageIndex,0);assert.equal(s.tick,0);assert.equal(picker.visible,false);
+ assert.equal(w.HapilArcadeApp.getState().mode,'playing');assert.equal(s.hero,'seoha');assert.equal(s.rhythm,true,'the real new-game flow enables cinematic boss rhythms');assert.equal(s.stageIndex,0);assert.equal(s.tick,0);assert.equal(picker.visible,false);
  assert.equal(w.HapilArcadeApp.getState().oneCreditEligible,true,'confirmed new game starts a one-credit journey');
  assert.equal(storage['hapil-arcade-hero-v43'],'seoha');assert.equal(storage['hapil-arcade-journey-hero-v43'],'seoha');
  const prior=s;nodes.get('arcade-retry').dataset.stage='0';nodes.get('arcade-retry').click();s=w.HapilArcadeApp.debugState().state;
@@ -207,7 +208,7 @@ test('spider midboss enters normally; mainboss cut-in runs before Violet spawns 
  const clocks=()=>({tick:s.tick,stageTick:s.stageTick,segTick:s.segTick,hp:s.player.hp,px:s.player.x,py:s.player.y,bx:s.boss.x,by:s.boss.y,n:s.n,floor:s.floor.t});
  const frozen=clocks();for(let i=0;i<12;i++)frame();assert.equal(w.HapilArcadeApp.getState().story.phase,'impact');assert.deepEqual(clocks(),frozen);
  h.nextStory();assert.equal(w.HapilArcadeApp.getState().story.phase,'memory');for(let i=0;i<12;i++)frame();assert.deepEqual(clocks(),frozen);
- nodes.get('story-skip').click();assert.equal(w.HapilArcadeApp.getState().mode,'playing');assert.equal(JSON.parse(storage['hapil-arcade-main-boss-seen-v2'])[1],true);
+ nodes.get('story-skip').click();assert.equal(w.HapilArcadeApp.getState().mode,'playing');assert.equal(JSON.parse(storage['hapil-arcade-boss-seen-v3'])['1:violet'],true);
  frame(10000);assert.equal(s.tick,frozen.tick,'reading time does not cause catch-up steps');
  for(let i=0;i<150&&s.boss.actor!=='violet';i++){frame();assert.equal(w.HapilArcadeApp.getState().mode,'playing');}
  assert.equal(s.boss.actor,'violet');assert.equal(s.boss.mid,false);assert.equal(s.boss.present,true);assert.equal(s.stage,'intro');
@@ -218,7 +219,7 @@ test('spider midboss enters normally; mainboss cut-in runs before Violet spawns 
 test('main-boss cut-in clears combat residue and its 120-tick attack lock starts at actual entrance, including seen stories',()=>{
  const main=A.SEGMENTS.findIndex(g=>g.stage===1&&g.kind==='card'&&!g.mid),mid=A.SEGMENTS.find(g=>g.stage===1&&g.kind==='card'&&g.mid);
  for(const seen of [false,true]){
-  const saved=seen?{'hapil-arcade-main-boss-seen-v2':'{"1":true}'}:undefined,{h,w,nodes,audio,calls}=harness(saved);
+  const saved=seen?{'hapil-arcade-boss-seen-v3':'{"1:violet":true}'}:undefined,{h,w,nodes,audio,calls}=harness(saved);
   const s=A.createRun({difficulty:'hell',seed:43,segment:main,pacing:true});h.prepare(s,audio);
   Object.assign(s.boss,{actor:mid.actor,name:A.ACTORS[mid.actor].name,mid:true,present:true,leaving:true,y:100});
   s.n=s.sn=1;s.bx[0]=s.player.x;s.by[0]=s.player.y;s.bage[0]=100;s.blife[0]=1000;s.bsize[0]=1;
@@ -255,8 +256,57 @@ test('all 56 main bosses qualify before their first engine tick, including road 
    if(seg.actor!=='violet'&&meta.frames>1){assert.equal(nodes.get('story-portrait').style.backgroundSize,`${meta.frames*100}% 100%`);assert.equal(Number(nodes.get('story-portrait').style.aspectRatio),meta.cell[0]/meta.cell[1]);}
    nodes.get('story-skip').click();assert.equal(h.beginStory(),false,'seen story is not repeated within the same intro');
  }
- const saved=harness({'hapil-arcade-main-boss-seen-v2':'{"1":true}'}),index=A.SEGMENTS.findIndex(g=>g.stage===1&&g.kind==='card'&&!g.mid);
+ const saved=harness({'hapil-arcade-boss-seen-v3':'{"1:violet":true}'}),index=A.SEGMENTS.findIndex(g=>g.stage===1&&g.kind==='card'&&!g.mid);
  saved.h.prepare(A.createRun({segment:index}),saved.audio);assert.equal(saved.h.beginStory(),false);assert.equal(saved.w.HapilArcadeApp.getState().mode,'playing');
+});
+
+test('all ten seven-sin forms display their own two adapted lines while other main bosses retain canonical excerpts',()=>{
+ const {h,w,nodes,audio,storage}=harness(),entries=w.HapilArcadeBossIntros.BOSS_ENTRANCES;assert.equal(entries.length,10);
+ for(const entry of entries){
+  const index=A.SEGMENTS.findIndex(g=>g.stage===entry.stage&&g.actor===entry.actor&&g.kind==='card');assert(index>=0);
+  const s=A.createRun({difficulty:'normal',seed:11,segment:index,pacing:true});h.prepare(s,audio);
+  assert.equal(h.beginStory(),true,entry.actor);assert.equal(h.storyEntry().kind,'dialogue-adaptation');assert.equal(h.storyEntry().actor,entry.actor);
+  assert.equal(w.HapilArcadeApp.getState().story.actor,entry.actor);assert.equal(s.tick,0);assert.equal(s.boss.present,false);assert.equal(nodes.get('story-portrait').attrs['aria-label'],A.ACTORS[entry.actor].name);
+  h.nextStory();assert.equal(nodes.get('story-speaker').textContent,entry.lines[0].speaker);assert.equal(nodes.get('story-text').textContent,entry.lines[0].text);
+  h.nextStory();assert.equal(nodes.get('story-speaker').textContent,entry.lines[1].speaker);assert.equal(nodes.get('story-text').textContent,entry.lines[1].text);
+  h.nextStory();assert.equal(w.HapilArcadeApp.getState().mode,'playing');assert.equal(JSON.parse(storage['hapil-arcade-boss-seen-v3'])[entry.stage+':'+entry.actor],true);
+ }
+ const index=A.SEGMENTS.findIndex(g=>g.stage===0&&g.kind==='card'&&!g.mid);h.prepare(A.createRun({segment:index}),audio);assert(h.beginStory());assert.equal(h.storyEntry(),w.HapilArcadeStory.getStage(0),'non-sin encounters use the canonical source entry');
+ assert.equal(nodes.get('story-text').textContent,w.HapilArcadeStory.getStage(0).lines[0].text);
+});
+
+test('stage 21 shows both chairman and core cut-ins with separate seen keys and a real clear transition between them',()=>{
+ const {h,w,nodes,audio,storage}=harness({'hapil-arcade-main-boss-seen-v2':'{"21":true}'}),first=A.SEGMENTS.findIndex(g=>g.stage===21&&g.actor==='p2_chairman');
+ const s=A.createRun({difficulty:'normal',seed:21,segment:first,pacing:true});h.prepare(s,audio);assert.equal(A.SEGMENTS[first].mid,true);
+ assert(h.beginStory());assert.equal(w.HapilArcadeApp.getState().story.actor,'p2_chairman');nodes.get('story-skip').click();
+ let sawClear=false,coreOpened=false;
+ for(let i=0;i<600&&!coreOpened;i++){
+  if(s.stage==='card')s.boss.hp=0;A.step(s,{});if(s.stage==='bossClear'){sawClear=true;assert.equal(s.bossClear.actor,'p2_chairman');}
+  h.consume();coreOpened=h.beginStory();
+ }
+ assert(sawClear,'chairman defeat receives its own clear interval');assert(coreOpened,'the core still opens after the chairman was seen');
+ assert.equal(s.stage,'intro');assert.equal(s.stageIndex,21);assert.equal(w.HapilArcadeApp.getState().story.actor,'p2_core');assert.equal(h.storyEntry(),w.HapilArcadeBossIntros.getBoss('p2_core',21));
+ assert.equal(s.boss.present,false,'core cut-in precedes its field entrance');assert.equal(s.results.length,0,'defeating the chairman does not prematurely clear the shared stage');
+ let seen=JSON.parse(storage['hapil-arcade-boss-seen-v3']);assert.equal(seen['21:p2_chairman'],true);assert.equal(seen['21:p2_core'],undefined);
+ nodes.get('story-skip').click();seen=JSON.parse(storage['hapil-arcade-boss-seen-v3']);assert.equal(seen['21:p2_core'],true);
+});
+
+test('final boss-card defeat clears old effects, preserves the fresh bossDown flash, pauses its 120-tick clear, and saves once',()=>{
+ const {h,w,nodes,audio,doc,calls,storageWrites}=harness(),last=A.SEGMENTS.map((g,i)=>({g,i})).filter(x=>x.g.stage===0&&x.g.kind==='card'&&!x.g.mid).at(-1).i;
+ const s=A.createRun({difficulty:'normal',seed:33,segment:last,pacing:true});h.prepare(s,audio);assert(h.beginStory());nodes.get('story-skip').click();
+ for(let i=0;i<200&&s.stage!=='card';i++){A.step(s,{});h.consume();}assert.equal(s.stage,'card');
+ s.lastWipe=s.tick;s.n=1;s.bx[0]=s.player.x;s.by[0]=s.player.y;s.bsize[0]=1;s.bage[0]=100;s.blife[0]=1000;s.bs[0]=0;
+ h.seedVisuals();const resets=calls.filter(c=>c[0]==='reset').length;s.boss.hp=0;A.step(s,{});
+ assert.equal(s.stage,'bossClear');assert.equal(s.stageIndex,0);assert.equal(s.seg,last);assert.equal(s.n,0);assert.equal(s.sn,0);assert.equal(s.lasers.length,0);assert.equal(s.figures.length,0);
+ assert(s.events.indexOf('bossClear')>=0&&s.events.indexOf('bossClear')<s.events.indexOf('bossDown'));h.consume();
+ assert.deepEqual(Array.from(h.visualCounts()),[0,0,0,0,0]);assert.equal(h.defeatVisual().actor,'p1_tree');assert(h.defeatVisual().flash>0,'clear cleanup does not erase the newly emitted defeat flash');assert.equal(h.input().bomb,false);
+ assert.equal(calls.filter(c=>c[0]==='reset').length,resets+1,'clear cancels old scheduled combat sounds once');
+ const saved=()=>storageWrites.filter(x=>x.key==='hapil-arcade-save-v43');assert.equal(saved().length,1,'the completed stage is persisted at defeat, before the visual wait');assert.equal(s.results.length,1);
+ const resources=()=>({score:s.score,exp:s.exp,items:s.itemCount,cleared:s.cleared,bombs:s.bombs,bombsUsed:s.bombsUsed,hits:s.hits,hp:s.player.hp});const rewards=resources(),tick=s.tick,ready=s.bossClear.readyTick;
+ assert.equal(ready-tick,120);doc.emit('keydown',{key:'Escape'});assert.equal(w.HapilArcadeApp.getState().mode,'paused');h.frame(1000);h.frame(1100);assert.equal(s.tick,tick);assert.deepEqual(resources(),rewards);doc.emit('keydown',{key:'Escape'});
+ while(s.tick<ready-1){A.step(s,{dx:1,bomb:true});h.consume();assert.equal(s.stage,'bossClear');assert.equal(s.stageIndex,0);assert.deepEqual(resources(),rewards);assert.equal(saved().length,1);assert.equal(s.results.length,1);}
+ A.step(s,{});h.consume();assert.equal(s.tick,ready);assert.equal(s.stageIndex,1);assert.equal(s.stage,'wave');assert.equal(s.results.length,1);assert.equal(saved().length,1);assert.equal(JSON.parse(saved()[0].value).cleared.filter(x=>x===0).length,1);
+ A.step(s,{});h.consume();assert.equal(s.results.length,1);assert.equal(saved().length,1,'the same clear is not recorded a second time');
 });
 
 test('impact animation and one-shot audio pause without restarting, then advance automatically to memory',()=>{
@@ -283,5 +333,5 @@ test('memory pause, rules, resume and skip preserve narrative position and do no
  nodes.get('arcade-resume').click();assert.equal(w.HapilArcadeApp.getState().mode,'story');assert.equal(nodes.get('story-text').textContent,text);
  doc.emit('keydown',{key:'x'});assert.equal(h.input().bomb,false);doc.emit('keydown',{key:'Enter',repeat:true});assert.equal(w.HapilArcadeApp.getState().story.line,0);
  doc.emit('keydown',{key:'Enter'});assert.equal(w.HapilArcadeApp.getState().story.line,1);nodes.get('story-skip').click();assert.equal(w.HapilArcadeApp.getState().mode,'playing');
- assert.equal(JSON.parse(storage['hapil-arcade-main-boss-seen-v2'])[0],true);assert(calls.some(c=>c[0]==='musicUpdate'&&c[1]==='playing'));
+ assert.equal(JSON.parse(storage['hapil-arcade-boss-seen-v3'])['0:p1_tree'],true);assert(calls.some(c=>c[0]==='musicUpdate'&&c[1]==='playing'));
 });

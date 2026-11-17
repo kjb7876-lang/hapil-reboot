@@ -133,7 +133,7 @@ test('menu music stops while the page is hidden or the app is in the background,
   });
 });
 
-test('boss music is ready the moment any boss appears: all tracks preload, a tap unlocks them, and every boss intro picks the boss track at once',()=>{
+test('one music element switches to each boss without overlapping or silently playing another track',()=>{
   const made=[];let gesture=null;
   class Aud{constructor(src){this.src=src;this.paused=true;this.volume=0;this.muted=false;this.currentTime=5;made.push(this);}play(){this.paused=false;return Promise.resolve();}pause(){this.paused=true;}}
   const w={HapilArcade:A,document:{hidden:false,addEventListener:()=>{}},Audio:Aud,performance:{now:()=>0},addEventListener:(k,f)=>{if(k==='touchend')gesture=f;}};
@@ -141,16 +141,15 @@ test('boss music is ready the moment any boss appears: all tracks preload, a tap
   w.window=w;const ctx=vm.createContext(w);vm.runInContext(read('src/arcade-music-v43.js'),ctx);
   return new Promise(r=>setTimeout(r,10)).then(()=>{
     const M=w.HapilMusic;
-    assert.deepEqual(made.map(a=>a.src).sort(),['media/bgm/boss.mp3','media/bgm/field.mp3','media/bgm/final.mp3','media/bgm/title.mp3'],'every track starts downloading before any boss shows up');
+    assert.equal(made.length,1);assert.equal(made[0].src,'media/bgm/title.mp3');assert.equal(made[0].preload,'auto');
     M.update('playing',{stage:'wave',stageIndex:2,boss:{present:false}},true);
-    assert.equal(typeof gesture,'function','a finger lift unlocks the tracks');gesture();
+    assert.equal(typeof gesture,'function','a finger lift can retry the current track');gesture();
     return new Promise(r=>setTimeout(r,10)).then(()=>{
-      const by=n=>made.find(a=>a.src.endsWith(n));
-      assert(!by('field.mp3').paused,'the road music keeps playing');
-      assert(by('boss.mp3').paused&&!by('boss.mp3').muted,'boss track was unlocked silently and left paused');
+      const player=made[0];assert.equal(player.src,'media/bgm/field.mp3');assert(!player.paused,'the road music keeps playing');
+      assert.equal(made.length,1,'gesture unlock never creates or primes other music elements');
       M.update('playing',{stage:'intro',stageIndex:2,boss:{present:false}},true);
-      assert(!by('boss.mp3').paused,'boss track starts on the very frame the boss intro begins');
-      assert.equal(by('boss.mp3').currentTime,0,'from its opening bar');
+      assert.equal(player.src,'media/bgm/boss.mp3');assert(!player.paused,'boss track starts on the very frame the boss intro begins');
+      assert.equal(player.currentTime,0,'from its opening bar');assert.equal(made.length,1);
       // 모든 보스(중간 보스 포함): 등장(intro)으로 바뀌는 바로 그 틱에 보스 곡을 고른다
       const s=A.createRun({difficulty:'gentle'});let intros=0;
       for(let t=0;t<200000&&s.stage!=='won';t++){s.player.invulnerableUntil=1e12;const was=s.stage;A.step(s,{dx:0,dy:0,shoot:true});

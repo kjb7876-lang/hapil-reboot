@@ -16,6 +16,15 @@ const server=http.createServer((req,res)=>{
 });
 const reports=[];
 async function state(page){return page.evaluate(()=>HapilArcadeApp.getState());}
+async function musicTrace(page){
+  const trace=await page.evaluate(()=>{const o=window.__mediaObserver;return {players:o.elements.size,plays:o.plays,maxPlaying:o.maxPlaying,overlaps:o.overlaps};});
+  assert.equal(trace.players,1,'all BGM transitions reuse one physical HTMLAudioElement');
+  assert(trace.plays>0,'real HTMLMediaElement.play calls were observed');assert.equal(trace.maxPlaying,1,'at least one real playback began and simultaneous playback never exceeds one');assert.deepEqual(trace.overlaps,[]);
+  return trace;
+}
+async function musicStopped(page,label){
+  assert.equal(await page.evaluate(()=>Array.from(window.__mediaObserver.elements).filter(a=>!a.paused).length),0,label);
+}
 async function inViewport(page,selector,label,min=44){
   const box=await page.locator(selector).boundingBox(),view=page.viewportSize();
   assert(await page.locator(selector).isVisible(),label+' is visible');
@@ -82,11 +91,28 @@ async function setup(browser,viewport,mobile,name){
   const page=await context.newPage(),errors=[],badRequests=[];
   page.on('pageerror',e=>errors.push(e.message));
   page.on('response',r=>{if(r.status()>=400&&!r.url().endsWith('/favicon.ico'))badRequests.push(r.status()+' '+r.url());});
-  await page.addInitScript(()=>{
+  await page.addInitScript(name=>{
     window.__audioContexts=[];
     const Native=window.AudioContext||window.webkitAudioContext;
     if(Native)window.AudioContext=new Proxy(Native,{construct(target,args){const c=new target(...args);window.__audioContexts.push(c);return c;}});
-  });
+    const observer=window.__mediaObserver={elements:new Set(),plays:0,maxPlaying:0,overlaps:[]};
+    function sample(phase){const active=Array.from(observer.elements).filter(a=>!a.paused);observer.maxPlaying=Math.max(observer.maxPlaying,active.length);if(active.length>1&&observer.overlaps.length<20)observer.overlaps.push({phase,sources:active.map(a=>a.currentSrc||a.src)});}
+    const NativeAudio=window.Audio;
+    window.Audio=new Proxy(NativeAudio,{construct(target,args){const a=new target(...args);observer.elements.add(a);return a;}});
+    const nativePlay=HTMLMediaElement.prototype.play,nativePause=HTMLMediaElement.prototype.pause;
+    HTMLMediaElement.prototype.play=function(...args){
+      observer.elements.add(this);observer.plays++;sample('before-play');const result=nativePlay.apply(this,args);sample('after-play');
+      if(result&&result.then)result.then(()=>sample('resolved-play'),()=>sample('rejected-play'));
+      return result;
+    };
+    HTMLMediaElement.prototype.pause=function(...args){const result=nativePause.apply(this,args);sample('after-pause');return result;};
+    if(name==='desktop'){
+      // Unlock prerequisites for the later stage-21 persistence fixture. Its
+      // actual clear must still be produced by the engine and app handlers.
+      if(!localStorage.getItem('hapil-arcade-save-v43'))localStorage.setItem('hapil-arcade-save-v43',JSON.stringify({version:43,cleared:Array.from({length:21},(_,i)=>i),stars:{},best:{},difficulty:'normal'}));
+      localStorage.setItem('hapil-arcade-main-boss-seen-v2','{"21":true}');
+    }
+  },name);
   await page.goto('http://127.0.0.1:'+server.address().port+'/arcade.html?eyes=0',{waitUntil:'networkidle'});
   await page.waitForFunction(()=>window.HapilArcadeApp&&!document.getElementById('arcade-start').disabled);
   await page.evaluate(()=>{
@@ -226,11 +252,17 @@ async function pauseSettings(page,name,mobile){
   assert.equal((await state(page)).settings.musicVolume,.35);
   assert.equal((await state(page)).settings.sfxVolume,.65);
   await page.screenshot({path:path.join(out,name+'-pause.png'),fullPage:true});
+  // Zero volume must stop the element, not leave an inaudible player running.
+  await page.locator('#setting-musicVolume').press('Home');await page.locator('#arcade-resume').click();
+  await page.waitForTimeout(150);await musicStopped(page,'zero BGM volume leaves no playing media');
+  await page.locator('#arcade-pause-button').click();
+  for(let i=0;i<7;i++)await page.locator('#setting-musicVolume').press('ArrowRight');
   // Turning off BGM must pause every HTML audio player even if play() was pending.
   await page.locator('#setting-music').uncheck();
   await page.locator('#arcade-resume').click();
   await page.waitForTimeout(250);
   assert(await page.evaluate(()=>Object.values(HapilMusic._players()).every(p=>p.a.paused)),'disabled BGM stays paused');
+  await musicStopped(page,'disabled BGM leaves no stale playing media');
   await page.locator('#arcade-pause-button').click();
   await page.locator('#setting-music').check();
   await page.locator('#arcade-resume').click();
@@ -238,6 +270,8 @@ async function pauseSettings(page,name,mobile){
   await page.locator('#arcade-pause-button').click();
   await page.waitForTimeout(100);
   assert(await page.evaluate(()=>Object.values(HapilMusic._players()).every(p=>p.a.paused)),'pause stops BGM');
+  await musicStopped(page,'pause stops every observed media element');
+  const observedMusic=await musicTrace(page);
   await page.reload({waitUntil:'networkidle'});
   await page.waitForFunction(()=>window.HapilArcadeApp&&!document.getElementById('arcade-start').disabled);
   const saved=(await state(page)).settings;
@@ -248,6 +282,121 @@ async function pauseSettings(page,name,mobile){
   assert.equal(await page.locator('#arcade-hero-select').getAttribute('data-lite'),'true');
   assert.equal(await page.locator('#arcade-hero-select .hs-art').evaluate(el=>getComputedStyle(el).animationName),'none','low-quality selection disables reveal motion');
   await confirmHero(page,'seoha-b',mobile);
+  return observedMusic;
+}
+async function musicTransitions(page){
+  // Exercise pending native play promises with immediate track changes. Normal
+  // app frames and the real UI transitions below continue using this same element.
+  const samples=await page.evaluate(()=>{
+    const m=HapilMusic,base={stageIndex:21,boss:{present:true}},out=[];
+    function capture(label,expected,stopped){const p=m._players().main,track=m._tracks()[expected];out.push({label,expected,current:m.stats().current,source:p.a.src,wanted:new URL('media/bgm/'+track.file,location.href).href,playing:Array.from(window.__mediaObserver.elements).filter(a=>!a.paused).length,stopped:!!stopped});}
+    for(let i=0;i<6;i++)for(const [mode,stage,key] of [['playing','wave','field'],['playing','intro','boss'],['playing','bossClear','boss'],['paused','bossClear','boss'],['title','wave','title']]){m.update(mode,{...base,stage},true);capture(i+':'+mode+':'+stage,key,mode==='paused');}
+    m.setVolume(0);m.update('playing',{...base,stage:'wave'},true);capture('volume-zero','field',true);
+    m.setVolume(1);m.update('playing',{...base,stage:'intro'},false);capture('disabled','boss',true);
+    m.update('playing',{...base,stage:'wave'},true);window.dispatchEvent(new Event('pagehide'));m.update('playing',{...base,stage:'wave'},true);capture('pagehide','field',true);
+    window.dispatchEvent(new Event('pageshow'));m.update('playing',HapilArcadeApp.debugState().state,true);
+    return out;
+  });
+  for(const s of samples){assert.equal(s.current,s.expected,s.label+' track');assert.equal(s.source,s.wanted,s.label+' source');assert(s.playing<=1,s.label+' has at most one playing element');if(s.stopped)assert.equal(s.playing,0,s.label+' stops playback');}
+  await page.evaluate(()=>window.dispatchEvent(new Event('blur')));assert.equal((await state(page)).mode,'paused');await musicStopped(page,'blur pauses BGM');
+  await page.locator('#arcade-resume').click();await page.locator('#arcade-pause-button').click();await page.locator('#arcade-quit').click();
+  assert.equal((await state(page)).mode,'title');assert.equal(await page.evaluate(()=>HapilMusic.stats().current),'title');
+  await page.locator('#arcade-start').click();await confirmHero(page,'seoha-b',false);
+  assert.equal(await page.evaluate(()=>HapilMusic.stats().current),'field');
+  await page.evaluate(()=>HapilArcadeApp.debugState().lose());assert.equal((await state(page)).mode,'result');assert.equal(await page.evaluate(()=>HapilMusic.stats().current),'title');
+  await page.locator('#arcade-retry').click();await page.waitForFunction(()=>HapilArcadeApp.getState().mode==='playing');
+  assert.equal(await page.evaluate(()=>HapilMusic.stats().current),'field');await stationary(page);
+  return {rapidChanges:samples.length,signals:['pagehide','pageshow','blur'],ui:['quit','new-game','loss','retry']};
+}
+async function sevenSinsClear(page){
+  // Keep the production app loop, dialogue handlers, attacks and clear events.
+  // Only the starting encounter and boss HP are fixture controls.
+  const fixture=await page.evaluate(()=>{
+    const a=HapilArcade,s=HapilArcadeApp.debugState().state,first=a.SEGMENTS.findIndex(g=>g.stage===21&&g.actor==='p2_chairman'&&g.kind==='card');
+    window.__sinSaveWrites=[];window.__sinLaserDraw=null;
+    const save=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k==='hapil-arcade-save-v43')window.__sinSaveWrites.push(JSON.parse(v));return save.call(this,k,v);};
+    // This wraps the already-installed Ink renderer, as does the hero observer.
+    const draw=CanvasRenderingContext2D.prototype.drawImage;
+    CanvasRenderingContext2D.prototype.drawImage=function(...args){
+      const src=args[0]&&(args[0].currentSrc||args[0].src)||'';
+      if(this.canvas.id==='arcade-canvas'&&src.includes('/arcade-v43-laser/')&&args.length===9&&args[2]===0)window.__sinLaserDraw={src,alpha:this.globalAlpha,time:performance.now()};
+      return draw.apply(this,args);
+    };
+    s.stageIndex=21;s.seg=first;s.stage='intro';s.stageTick=s.segTick=0;s.boss.present=false;s.boss.leaving=false;
+    s.events.push('map');s.player.x=60;s.player.y=510;s.player.invulnerableUntil=0;s.rhythm=true;
+    document.getElementById('story-auto').checked=false;
+    return {first,tick:s.tick,last:a.SEGMENTS.map((g,i)=>({g,i})).filter(x=>x.g.stage===21&&x.g.actor==='p2_core').at(-1).i};
+  });
+  async function dialogue(actor){
+    await page.waitForFunction(actor=>{const s=HapilArcadeApp.getState();return s.mode==='story'&&s.story.actor===actor;},actor);
+    const entry=await page.evaluate(actor=>HapilArcadeBossIntros.getBoss(actor,21),actor);
+    assert.equal(entry.kind,'dialogue-adaptation');assert.equal(entry.lines.length,2);
+    assert.equal(await page.locator('#arcade-story').getAttribute('data-actor'),actor);
+    assert.equal(await page.locator('#story-boss-name').innerText(),await page.evaluate(actor=>HapilArcade.ACTORS[actor].name,actor));
+    assert.equal(await page.evaluate(()=>HapilArcadeApp.debugState().state.boss.present),false,'cut-in precedes the incoming actor');
+    if((await state(page)).story.phase==='impact'){await page.evaluate(()=>document.activeElement.blur());await page.keyboard.press('z');}
+    for(let i=0;i<2;i++){
+      assert.equal(await page.locator('#story-speaker').innerText(),entry.lines[i].speaker);
+      assert.equal(await page.locator('#story-text').innerText(),entry.lines[i].text);
+      if(i===0)await page.locator('#story-next').click();
+    }
+    await page.screenshot({path:path.join(out,'desktop-'+actor+'-dialogue.png'),fullPage:true});
+    await page.locator('#story-skip').click();
+    await page.waitForFunction(actor=>{const s=HapilArcadeApp.debugState().state;return s.boss.actor===actor&&s.boss.present&&s.bossEntrance.enteredTick!==null;},actor);
+    const entryClock=await page.evaluate(()=>HapilArcadeApp.debugState().state.bossEntrance);
+    assert.equal(entryClock.readyTick-entryClock.enteredTick,120);
+    await page.waitForFunction(actor=>{const s=HapilArcadeApp.debugState().state;return s.boss.actor===actor&&s.stage==='card';},actor);
+    assert.equal(await page.evaluate(()=>HapilArcadeApp.debugState().state.bossEntrance.releasedTick),entryClock.readyTick);
+  }
+  await page.waitForFunction(()=>HapilArcadeApp.getState().mode==='story');
+  assert.equal((await combatClock(page)).tick,fixture.tick,'the chairman midboss is intercepted before its first engine tick');
+  await dialogue('p2_chairman');
+  const rhythm=await page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;s.boss.hp=s.boss.maxHp=1e6;return {active:HapilArcadeBossRhythm.handles(s,HapilArcade.SEGMENTS[s.seg],HapilArcade),description:HapilArcadeBossRhythm.describe(s.boss.actor,HapilArcade)};});
+  assert.equal(rhythm.active,true);assert.equal(rhythm.description.actor,'p2_chairman');assert(rhythm.description.motif.length>0);
+  // Wait for the real first-pattern beam AND an actual loaded laser-sheet draw.
+  // Pause on that engine frame so the exported canvas contains the live beam.
+  await page.waitForFunction(()=>{
+    const s=HapilArcadeApp.debugState().state,d=window.__sinLaserDraw;
+    if(s.stage==='card'&&s.boss.actor==='p2_chairman'&&s.lasers.some(l=>l.age>=l.warn&&l.age<l.warn+l.active)&&d&&d.src.includes('/p2_chairman.webp')&&d.alpha>0&&performance.now()-d.time<100){HapilArcadeApp.pause();return true;}
+    return false;
+  });
+  const laser=await page.evaluate(()=>window.__sinLaserDraw),png=await page.locator('#arcade-canvas').evaluate(el=>el.toDataURL('image/png'));
+  fs.writeFileSync(path.join(out,'desktop-seven-sins-rhythm-laser.png'),Buffer.from(png.split(',')[1],'base64'));
+  assert.match(laser.src,/arcade-v43-laser\/p2_chairman\.webp/);
+  await page.locator('#arcade-resume').click();
+  async function defeatAndPause(actor){
+    await page.waitForFunction(actor=>{
+      const s=HapilArcadeApp.debugState().state;
+      if(s.stage==='bossClear'&&s.bossClear.actor===actor){HapilArcadeApp.pause();return true;}
+      if(s.stage==='card'&&s.boss.actor===actor)s.boss.hp=0;
+      return false;
+    },actor);
+    return page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;return {tick:s.tick,clear:s.bossClear,seg:s.seg,stageIndex:s.stageIndex,results:s.results.slice(),writes:window.__sinSaveWrites.slice(),n:s.n,sn:s.sn,lasers:s.lasers.length,figures:s.figures.length,score:s.score,exp:s.exp};});
+  }
+  const chairman=await defeatAndPause('p2_chairman');
+  assert.equal(chairman.clear.readyTick-chairman.clear.startedTick,120);assert.equal(chairman.stageIndex,21);assert.equal(chairman.results.length,0);assert.equal(chairman.writes.length,0,'chairman defeat does not clear the shared stage');
+  for(const k of ['n','sn','lasers','figures'])assert.equal(chairman[k],0,'clear removes '+k);
+  const frozen=await combatClock(page);await page.waitForTimeout(180);assert.deepEqual(await combatClock(page),frozen,'pause freezes the clear interval');
+  await page.locator('#arcade-resume').click();
+  await page.waitForFunction(()=>{const a=HapilArcadeApp.getState();return a.mode==='story'&&a.story.actor==='p2_core';});
+  assert.equal((await combatClock(page)).tick,chairman.clear.readyTick,'core cut-in starts exactly when the clear interval ends');
+  let seen=await page.evaluate(()=>JSON.parse(localStorage.getItem('hapil-arcade-boss-seen-v3')));
+  assert.equal(seen['21:p2_chairman'],true);assert.equal(seen['21:p2_core'],undefined,'one encounter does not mark its same-stage successor seen');
+  await dialogue('p2_core');
+  seen=await page.evaluate(()=>JSON.parse(localStorage.getItem('hapil-arcade-boss-seen-v3')));assert.equal(seen['21:p2_core'],true);
+  const core=await defeatAndPause('p2_core');
+  assert.equal(core.seg,fixture.last,'the actual final core card is defeated');assert.equal(core.stageIndex,21);assert.equal(core.clear.readyTick-core.clear.startedTick,120);
+  assert.equal(core.results.filter(r=>r.stage===21).length,1);assert.equal(core.writes.length,1,'the completed stage is saved immediately, before its visual transition');
+  assert.equal(core.writes[0].cleared.filter(x=>x===21).length,1);
+  for(const k of ['n','sn','lasers','figures'])assert.equal(core[k],0,'final clear removes '+k);
+  const clearClock=await combatClock(page);await page.waitForTimeout(180);assert.deepEqual(await combatClock(page),clearClock);
+  await page.locator('#arcade-resume').click();
+  await page.waitForFunction(()=>{const s=HapilArcadeApp.debugState().state;if(s.stageIndex===22){HapilArcadeApp.pause();return true;}return false;});
+  const after=await page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;return {tick:s.tick,stage:s.stage,results:s.results,writes:window.__sinSaveWrites,progress:HapilArcadeApp.debugState().progress};});
+  assert(after.tick>=core.clear.readyTick);assert.equal(after.stage,'wave');assert.equal(after.results.filter(r=>r.stage===21).length,1);assert.equal(after.writes.length,1,'transition does not save the same clear again');
+  assert.equal(after.progress.cleared.filter(x=>x===21).length,1);
+  await page.locator('#arcade-resume').click();await stationary(page);
+  return {actors:['p2_chairman','p2_core'],clearTicks:120,stageSaves:after.writes.length,rhythm:rhythm.description.motif,laserSource:laser.src.split('/').pop()};
 }
 async function desktop(browser){
   const {context,page,errors,badRequests}=await setup(browser,{width:1280,height:900},false,'desktop');
@@ -263,9 +412,9 @@ async function desktop(browser){
     await page.waitForTimeout(100);
     assert.equal(await page.evaluate(()=>HapilArcadeApp.debugState().state.player.x),x,'no sticky movement after pause');
     const heroOpacity=await nearbyBulletOpacity(page,'desktop');
-    await storyAndRules(page,'desktop');await pauseSettings(page,'desktop',false);
+    await storyAndRules(page,'desktop');const sevenSins=await sevenSinsClear(page),musicStress=await musicTransitions(page),music=await pauseSettings(page,'desktop',false);
     assert.deepEqual(errors,[]);assert.deepEqual(badRequests,[]);
-    reports.push({name:'desktop',heroSelection:true,hero:'seoha-b',heroOpacity,mainBossCutin:true,keyboard:true,pauseSettings:true,audioLifecycle:true,errors,badRequests});
+    reports.push({name:'desktop',heroSelection:true,hero:'seoha-b',heroOpacity,mainBossCutin:true,sevenSins,keyboard:true,pauseSettings:true,audioLifecycle:true,musicStress,music,errors,badRequests});
   }catch(e){await page.screenshot({path:path.join(out,'desktop-failure.png'),fullPage:true});throw e;}
   finally{await context.close();}
 }
@@ -296,9 +445,9 @@ async function mobile(browser,width,height){
     await touch('touchEnd',[hold]);assert.equal((await state(page)).focus,false,'focus clears on its own release');
     await touch('touchEnd',[]);
     const heroOpacity=await nearbyBulletOpacity(page,name);
-    await storyAndRules(page,name);await pauseSettings(page,name,true);
+    await storyAndRules(page,name);const music=await pauseSettings(page,name,true);
     assert.deepEqual(errors,[]);assert.deepEqual(badRequests,[]);
-    reports.push({name,heroSelection:true,hero:'seoha-b',heroOpacity,mainBossCutin:true,fast,slow,multitouchBomb:true,pauseSettings:true,audioLifecycle:true,errors,badRequests});
+    reports.push({name,heroSelection:true,hero:'seoha-b',heroOpacity,mainBossCutin:true,fast,slow,multitouchBomb:true,pauseSettings:true,audioLifecycle:true,music,errors,badRequests});
   }catch(e){await page.screenshot({path:path.join(out,name+'-failure.png'),fullPage:true});throw e;}
   finally{await context.close();}
 }
