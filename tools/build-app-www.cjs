@@ -17,6 +17,7 @@ const html=fs.readFileSync(path.join(root,'arcade.html'),'utf8');
 const scripts=[...html.matchAll(/<script src="([^"?]+)/g)].map(m=>m[1]);
 if(!scripts.includes('src/arcade-app-v43.js'))throw new Error('arcade.html does not load src/arcade-app-v43.js');
 for(const s of scripts)copy(s);
+copy('docs/v43/canonical-story.txt'); // 규칙 메뉴의 정본 원문: 오프라인 앱에서도 읽을 수 있게 포함한다.
 for(const m of MEDIA)copy(m);
 if(fs.existsSync(path.join(root,'media/bgm')))copy('media/bgm'); // 구간별 배경음악(arcade-music-v43.js)
 // --exclude-held: 닷츠가 보류(QA_HOLD)라고 적은 그림을 묶음에서 뺀다. 게임은 그림이 없으면 그 효과만 건너뛴다.

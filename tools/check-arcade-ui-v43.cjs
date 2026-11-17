@@ -35,6 +35,21 @@ async function stationary(page){
   // A deterministic empty segment isolates input from bullet RNG and auto-defense.
   await page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;s.stage='break';s.stageTick=-1e7;s.player.x=80;s.player.y=480;s.player.invulnerableUntil=s.tick+1e7;s.n=0;s.lasers.length=s.figures.length=s.mobs.length=0;if(s.risers)s.risers.length=0;s.bombs=3;});
 }
+async function storyAndRules(page,name){
+  await page.evaluate(()=>HapilArcadeApp.debugState().showStory());
+  await page.waitForFunction(()=>HapilArcadeApp.getState().mode==='story');
+  const before=await page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;return {tick:s.tick,hp:s.player.hp,bombs:s.bombs};});
+  assert((await page.locator('#story-text').innerText()).trim().length>0,'canonical excerpt is visible');
+  await page.waitForTimeout(200);
+  assert.deepEqual(await page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;return {tick:s.tick,hp:s.player.hp,bombs:s.bombs};}),before,'story freezes combat');
+  await page.screenshot({path:path.join(out,name+'-story.png'),fullPage:true});
+  await page.keyboard.press('Escape');assert.equal((await state(page)).mode,'paused');
+  await page.locator('#arcade-rules-pause').click();
+  assert(await page.locator('#arcade-rules').isVisible(),'rules open from pause');
+  await page.locator('#arcade-rules-back').click();assert.equal((await state(page)).mode,'paused');
+  await page.locator('#arcade-resume').click();assert.equal((await state(page)).mode,'story');
+  await page.locator('#story-skip').click();assert.equal((await state(page)).mode,'playing');
+}
 async function pauseSettings(page,name){
   await page.locator('#arcade-pause-button').click();
   assert.equal((await state(page)).mode,'paused');
@@ -81,7 +96,7 @@ async function desktop(browser){
     const x=await page.evaluate(()=>HapilArcadeApp.debugState().state.player.x);
     await page.waitForTimeout(100);
     assert.equal(await page.evaluate(()=>HapilArcadeApp.debugState().state.player.x),x,'no sticky movement after pause');
-    await pauseSettings(page,'desktop');
+    await storyAndRules(page,'desktop');await pauseSettings(page,'desktop');
     assert.deepEqual(errors,[]);assert.deepEqual(badRequests,[]);
     reports.push({name:'desktop',keyboard:true,pauseSettings:true,audioLifecycle:true,errors,badRequests});
   }finally{await context.close();}
@@ -112,7 +127,7 @@ async function mobile(browser,width,height){
     await touch('touchEnd',[blast]);assert((await state(page)).focus,'bomb release does not release low speed');
     await touch('touchEnd',[hold]);assert.equal((await state(page)).focus,false,'focus clears on its own release');
     await touch('touchEnd',[]);
-    await pauseSettings(page,name);
+    await storyAndRules(page,name);await pauseSettings(page,name);
     assert.deepEqual(errors,[]);assert.deepEqual(badRequests,[]);
     reports.push({name,fast,slow,multitouchBomb:true,pauseSettings:true,audioLifecycle:true,errors,badRequests});
   }catch(e){await page.screenshot({path:path.join(out,name+'-failure.png'),fullPage:true});throw e;}

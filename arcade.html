@@ -103,6 +103,16 @@
     #arcade-result.fallen>*:not(#result-cross):not(.kicker){animation:fallen-rise .5s ease-out .7s both}
     @keyframes fallen-rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
     @media (prefers-reduced-motion:reduce){#arcade-result.fallen>*{animation:none!important}}
+    #arcade-story,#arcade-rules{position:fixed;inset:0;margin:auto;width:min(100%,560px);height:100dvh;max-height:100dvh;padding:20px max(18px,5%);z-index:6;justify-content:flex-start;gap:12px;overscroll-behavior:contain}
+    #arcade-story>*,#arcade-rules>*{flex-shrink:0}#arcade-story h2,#arcade-rules h2{font-size:24px;line-height:1.3;word-break:keep-all}
+    #story-portrait{width:108px;height:128px;background-repeat:no-repeat;background-position:0 0;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));animation:story-enter .7s ease-out both}
+    .story-card{width:100%;padding:16px;border:1px solid #8a7c68;border-radius:12px;background:rgba(15,15,28,.9);text-align:left;min-height:132px}
+    html.ink .story-card{background:rgba(235,224,200,.96)}#story-speaker{font-weight:bold;color:#b95748;font-size:13px;margin:0 0 10px}#story-text{font-size:16px;line-height:1.8;margin:0;word-break:keep-all;overflow-wrap:anywhere}
+    #arcade-story .row{flex-wrap:wrap;justify-content:center}#story-next{min-width:140px}.story-auto{display:flex;align-items:center;gap:8px;min-height:44px}.story-auto input{width:22px;height:22px}
+    .rules-copy{text-align:left;font-size:14px;line-height:1.8;width:100%;max-width:440px}.rules-copy p{margin:0 0 12px}
+    @keyframes story-enter{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:none}}
+    @media(max-height:500px){#story-portrait{width:64px;height:76px}#arcade-story{gap:6px}#arcade-story h2{font-size:20px}.story-card{min-height:90px;padding:10px}#story-text{font-size:14px}}
+    @media(prefers-reduced-motion:reduce){#story-portrait{animation:none}}
   </style>
 </head>
 <body>
@@ -130,12 +140,13 @@
         <button id="arcade-stage-go" type="button" data-i18n="here">여기서</button>
       </div>
       <div class="row" role="group" aria-label="난이도" data-i18n-label="difficulty">
-        <button type="button" data-difficulty="gentle" aria-pressed="false" data-i18n="gentle">여유</button>
-        <button type="button" data-difficulty="normal" aria-pressed="true" data-i18n="normal">기본</button>
-        <button type="button" data-difficulty="hell" aria-pressed="false" data-i18n="hell">지옥</button>
+        <button type="button" data-difficulty="gentle" aria-pressed="false" data-i18n="gentle">이지</button>
+        <button type="button" data-difficulty="normal" aria-pressed="true" data-i18n="normal">노멀</button>
+        <button type="button" data-difficulty="hell" aria-pressed="false" data-i18n="hell">헬</button>
       </div>
       <p class="note" id="difficulty-note"></p>
       <div class="row">
+        <button id="arcade-rules-title" type="button" data-i18n="rules">탄막 기본 규칙</button>
         <button id="arcade-keepsakes" type="button">기념물</button>
         <button id="arcade-boss-open" type="button" data-mode="boss" data-i18n="bossPractice">보스 체험</button>
         <button id="arcade-sound" type="button" aria-pressed="true" data-i18n="soundOn">소리 켜짐</button>
@@ -180,9 +191,35 @@
         <label class="setting-line" for="setting-lowQuality"><span data-i18n="lowQuality">절전 그래픽</span><input id="setting-lowQuality" type="checkbox"></label>
       </div>
       <p class="note controls-note" data-i18n-html="pauseHelp">저속: 버튼을 누른 채 다른 손가락으로 움직이면 정밀 이동하며 피격점이 강조됩니다. PC는 Shift.<br>폭탄: 버튼 또는 X. 지옥은 수동 사용만 가능합니다.<br>설정은 자동 저장됩니다. Esc로 전투에 복귀합니다.</p>
+      <button id="arcade-rules-pause" type="button" data-i18n="rules">탄막 기본 규칙</button>
       <button id="arcade-quit" type="button" data-i18n="toTitle">처음 화면으로</button>
     </div>
 
+    <div id="arcade-story" class="screen" role="dialog" aria-modal="true" aria-labelledby="story-title" hidden>
+      <p class="kicker" data-i18n="storyCanon">서사 정본 · 기억</p>
+      <h2 id="story-title"></h2>
+      <div id="story-portrait" role="img" aria-label="보스"></div>
+      <div class="story-card" aria-live="polite"><p id="story-speaker"></p><p id="story-text"></p></div>
+      <p class="note" id="story-count"></p>
+      <div class="row"><button id="story-next" class="primary" type="button" data-i18n="storyNext">다음</button><button id="story-skip" type="button" data-i18n="storySkip">건너뛰기</button></div>
+      <label class="note story-auto"><input id="story-auto" type="checkbox" checked><span data-i18n="storyAuto">자동 진행 · Esc로 멈춤</span></label>
+    </div>
+    <div id="arcade-rules" class="screen" role="dialog" aria-modal="true" aria-labelledby="rules-title" hidden>
+      <p class="kicker">HOW TO PLAY</p><h2 id="rules-title" data-i18n="rules">탄막 기본 규칙</h2>
+      <div id="rules-body" class="rules-copy" data-i18n-html="rulesBody">
+        <p><b>이동·사격</b> — 드래그 또는 방향키/WASD로 이동하며 사격은 자동입니다. Shift 또는 저속 버튼을 누르면 정밀 이동과 피격점 표시가 켜집니다.</p>
+        <p><b>피격점·스침</b> — 캐릭터 그림 전체가 아닌 작은 피격점으로 판정합니다. 탄 가까이를 지나 스침 게이지를 채우면 폭탄 재고를 얻습니다.</p>
+        <p><b>구슬·버블</b> — 사격으로 부술 수 있으며 큰 버블은 여러 번 맞혀야 합니다. 쌀알탄·기물탄은 피해야 합니다.</p>
+        <p><b>문양 레이저</b> — 밝을 때 위험하고 꺼진 동안 통과할 수 있습니다. 재점등 직전 옅게 밝아지는 예고에는 피해가 없습니다.</p>
+        <p><b>폭탄·난이도</b> — X 또는 폭탄 버튼으로 사용합니다. 이지·노멀은 피격점 접촉 시 확률 회피 후 폭탄이 있으면 자동 사용합니다. 헬은 수동폭탄만 가능하며 자동회피가 없습니다.</p>
+        <p><b>목숨·회복</b> — 시작 목숨은 이지 5·노멀 3·헬 2입니다. 일반 스테이지마다 완전 회복하지 않고, 다음 부로 넘어갈 때 목숨 1을 최대치 안에서 회복합니다.</p>
+        <p><b>원코인·이어하기</b> — 처음부터 게임 오버 없이 끝내는 것이 원코인 클리어입니다. 이어하기·구간 선택·재도전·DEV는 연습용이며 원코인 클리어에 포함하지 않습니다. 일시정지와 대화 읽기는 가능합니다.</p>
+        <p><b>보스의 기억</b> — 전투 전 정본 발췌를 보여주며 그동안 전투는 멈춥니다. 다음/건너뛰기 또는 Enter·Space로 넘기고, 자동 진행을 끄면 천천히 읽을 수 있습니다. 이미 본 기억은 다음 시도에 생략합니다.</p>
+      </div>
+      <a class="button" href="docs/v43/canonical-story.txt" target="_blank" rel="noopener">서사 정본 전체 읽기</a>
+      <button id="story-replay" type="button" data-i18n="storyReplay">본 기억 다시 표시</button>
+      <button id="arcade-rules-back" type="button" data-i18n="back">돌아가기</button>
+    </div>
     <div id="arcade-result" class="screen" hidden>
       <p class="kicker">RESULT</p>
       <canvas id="result-cross" width="150" height="196" aria-hidden="true"></canvas>
@@ -194,24 +231,25 @@
       <button id="arcade-home" type="button" data-i18n="toTitle">처음 화면으로</button>
     </div>
   </div>
-  <script src="src/audio-v37.js?v=20261117-arcade43-rules98"></script>
-  <script src="src/arcade-parts-v43/p1.js?v=20261117-arcade43-rules98"></script>
-  <script src="src/arcade-parts-v43/p2.js?v=20261117-arcade43-rules98"></script>
-  <script src="src/arcade-parts-v43/p3.js?v=20261117-arcade43-rules98"></script>
-  <script src="src/arcade-parts-v43/p4.js?v=20261117-arcade43-rules98"></script>
-  <script src="src/arcade-parts-v43/p5.js?v=20261117-arcade43-rules98"></script>
-  <script src="src/arcade-parts-v43/p6.js?v=20261117-arcade43-rules98"></script>
-  <script src="src/arcade-parts-v43/p7.js?v=20261117-arcade43-rules98"></script>
-  <script src="src/arcade-parts-v43/p8.js?v=20261117-arcade43-rules98"></script>
-  <script src="src/arcade-v43.js?v=20261117-arcade43-rules98"></script>
-  <script src="src/arcade-skins-v43.js?v=20261117-arcade43-rules98"></script>
-  <script src="src/ink-v43.js?v=20261117-arcade43-rules98"></script>
-  <script src="src/ink-motifs-v43.js?v=20261117-arcade43-rules98"></script>
-  <script src="src/hero-memory-v43.js?v=20261117-arcade43-rules98"></script>
-  <script src="src/arcade-i18n-v43.js?v=20261117-arcade43-rules98"></script>
-  <script src="src/arcade-music-v43.js?v=20261117-arcade43-rules98"></script>
-  <script src="src/arcade-mobile-v43.js?v=20261117-arcade43-rules98"></script>
-  <script src="src/arcade-eyes-v43.js?v=20261117-arcade43-rules98"></script>
-  <script src="src/arcade-app-v43.js?v=20261117-arcade43-rules98"></script>
+  <script src="src/audio-v37.js?v=20261117-arcade43-story99"></script>
+  <script src="src/arcade-parts-v43/p1.js?v=20261117-arcade43-story99"></script>
+  <script src="src/arcade-parts-v43/p2.js?v=20261117-arcade43-story99"></script>
+  <script src="src/arcade-parts-v43/p3.js?v=20261117-arcade43-story99"></script>
+  <script src="src/arcade-parts-v43/p4.js?v=20261117-arcade43-story99"></script>
+  <script src="src/arcade-parts-v43/p5.js?v=20261117-arcade43-story99"></script>
+  <script src="src/arcade-parts-v43/p6.js?v=20261117-arcade43-story99"></script>
+  <script src="src/arcade-parts-v43/p7.js?v=20261117-arcade43-story99"></script>
+  <script src="src/arcade-parts-v43/p8.js?v=20261117-arcade43-story99"></script>
+  <script src="src/arcade-v43.js?v=20261117-arcade43-story99"></script>
+  <script src="src/arcade-skins-v43.js?v=20261117-arcade43-story99"></script>
+  <script src="src/ink-v43.js?v=20261117-arcade43-story99"></script>
+  <script src="src/ink-motifs-v43.js?v=20261117-arcade43-story99"></script>
+  <script src="src/hero-memory-v43.js?v=20261117-arcade43-story99"></script>
+  <script src="src/arcade-i18n-v43.js?v=20261117-arcade43-story99"></script>
+  <script src="src/arcade-music-v43.js?v=20261117-arcade43-story99"></script>
+  <script src="src/arcade-mobile-v43.js?v=20261117-arcade43-story99"></script>
+  <script src="src/arcade-eyes-v43.js?v=20261117-arcade43-story99"></script>
+  <script src="src/arcade-story-v43.js?v=20261117-arcade43-story99"></script>
+  <script src="src/arcade-app-v43.js?v=20261117-arcade43-story99"></script>
 </body>
 </html>

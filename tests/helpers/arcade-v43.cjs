@@ -26,7 +26,7 @@ function runPart(part){const a=need(),first=a.STAGES.findIndex(g=>g.part===part)
   const r=play({difficulty,seed:5+part,stage:first,stages:count},900000,s=>{assert(s.n<=a.CAP&&s.events.length<=48&&s.mobs.length<=a.MOB_CAP&&s.lasers.length<=a.LASER_CAP&&s.itemCount<=a.ITEM_CAP);
    if(seen[seen.length-1]!==s.seg)seen.push(s.seg);if(s.n>most)most=s.n;});
   assert.equal(r.s.stage,'won',`part ${part} ${difficulty}`);assert.equal(r.s.dropped,0);
-  const mine=a.SEGMENTS.map((g,i)=>i).filter(i=>a.STAGES[a.SEGMENTS[i].stage].part===part);assert.deepEqual(seen.filter(x=>x>=mine[0]),mine,'every segment of the part, in order');
+  const mine=a.plannedSegments(difficulty).filter(i=>a.STAGES[a.SEGMENTS[i].stage].part===part);assert.deepEqual(seen.filter(x=>x>=mine[0]),mine,'every segment of the part, in order');
   for(let i=0;i<r.s.n;i++)assert(Number.isFinite(r.s.bx[i])&&Number.isFinite(r.s.by[i])&&Number.isFinite(r.s.ba[i])&&Number.isFinite(r.s.bs[i]));
   assert(Number.isFinite(r.s.score)&&r.s.score>0);assert(most<=a.CAP*.85,'headroom under the cap: '+most);assert.equal(r.s.results.length,count,'one result per cleared stage');}}
 module.exports={root,original,lane,need,clear,idle,put,play,lanePart,runPart,read:f=>fs.readFileSync(path.join(root,f),'utf8')};

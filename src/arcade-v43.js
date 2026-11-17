@@ -76,9 +76,9 @@
    * radius 영웅 피격점 반지름 · hitScale 탄의 보이는 반지름 중 실제로 닿는 비율 · warn 광선 예고 시간 배율 · beam 광선 굵기 배율 */
   var DIFFICULTY={
     // 11-17 사용자 기준: 노멀과 헬은 탄 수·속도·공격 모양·판정이 같다. 노멀에는 피격점 접촉 시 자동 방어, 헬에는 수동 필살만 있다.
-    gentle:{density:1.65,speed:.56,hp:9,mapHeal:-1,bombs:3,radius:1,hitScale:.3,warn:1.6,beam:.72,label:'여유'},
-    normal:{density:2.6,speed:.9,hp:5,mapHeal:-1,bombs:2,radius:2.4,hitScale:.5,warn:1,beam:1,label:'기본'},
-    hell:{density:2.6,speed:.9,hp:3,mapHeal:-1,bombs:1,radius:2.4,hitScale:.5,warn:1,beam:1,label:'지옥'}
+    gentle:{density:1.65,speed:.56,hp:5,mapHeal:0,partHeal:1,bombs:3,radius:1,hitScale:.3,warn:1.6,beam:.72,label:'여유'},
+    normal:{density:2.6,speed:.9,hp:3,mapHeal:0,partHeal:1,bombs:2,radius:2.4,hitScale:.5,warn:1,beam:1,label:'기본'},
+    hell:{density:2.6,speed:.9,hp:2,mapHeal:0,partHeal:1,bombs:1,radius:2.4,hitScale:.5,warn:1,beam:1,label:'지옥'}
   };
   /* 여유 모드만 첫 스테이지 탄 수 70%에서 마지막 110%까지 오른다. 노멀·헬은 같은 공격을 유지한다. */
   var CURVE_START=.7,CURVE_END=1.1,PACE_START=1,PACE_END=1; // 속도는 그대로(탄이 화면 아래까지 닿는 시간을 지킨다), 탄 수만 곡선
@@ -611,12 +611,32 @@
     STAGES.push(stage);
   });
   var CARD_TOTAL=SEGMENTS.filter(function(g){return g.kind==='card'&&g.spell;}).length;
+  /* 56장면의 짧은 원큐 여정. 작성된 패턴과 구간 번호는 그대로 두고 반복 일반탄만 생략한다.
+   * segment 직접 시작은 연습/전체 패턴 검사이므로 기본은 원래 길이; pacing:true로 실제 여정 길이를 검사한다.
+   * nominalMinutes는 목표 예산이지 플레이어별 완료 시간 보장이 아니다. */
+  var PACING={
+    gentle:{nominalMinutes:60,waveMinutes:20,bossMinutes:35,presentationMinutes:5,hpScale:.65,skipRepeatedPlain:true},
+    normal:{nominalMinutes:90,waveMinutes:30,bossMinutes:55,presentationMinutes:5,hpScale:1,skipRepeatedPlain:true},
+    hell:{nominalMinutes:120,waveMinutes:40,bossMinutes:75,presentationMinutes:5,hpScale:1,skipRepeatedPlain:false}
+  };
+  var REPEATED_PLAIN={},pacingTotals={};
+  (function(){var seen={};SEGMENTS.forEach(function(g,i){if(g.kind!=='card'||g.spell)return;var key=g.stage+':'+g.actor;if(seen[key])REPEATED_PLAIN[i]=true;seen[key]=true;});
+    Object.keys(PACING).forEach(function(d){var p=PACING[d],wave=0,boss=0,waves=0,cards=0;SEGMENTS.forEach(function(g,i){if(p.skipRepeatedPlain&&REPEATED_PLAIN[i])return;if(g.kind==='wave'){wave+=g.duration;waves++;}else{boss+=g.time;cards++;}});pacingTotals[d]={waveTicks:wave,bossSeconds:boss,waves:waves,cards:cards};});})();
+  function plannedSegments(difficulty){var p=PACING[difficulty]||PACING.normal;return SEGMENTS.map(function(g,i){return i;}).filter(function(i){return !p.skipRepeatedPlain||!REPEATED_PLAIN[i];});}
+  function waveDuration(s,g){if(!s.paced)return g.duration;var p=PACING[s.difficulty],tot=pacingTotals[s.difficulty];return Math.max(120,Math.round(g.duration*(p.waveMinutes*3600-tot.waves*30)/tot.waveTicks));}
+  function cardDuration(s,g){if(!s.paced)return g.time;var p=PACING[s.difficulty],tot=pacingTotals[s.difficulty];return Math.max(3,g.time*p.bossMinutes*60/tot.bossSeconds*1.4);}
+  function cardHp(s,g){return s.paced?Math.max(20,Math.round(g.hp*PACING[s.difficulty].hpScale)):g.hp;}
+  function pacingReport(difficulty){var d=PACING[difficulty]?difficulty:'normal',p=PACING[d],tot=pacingTotals[d],s={difficulty:d,paced:true},wave=0,boss=0;plannedSegments(d).forEach(function(i){var g=SEGMENTS[i];if(g.kind==='wave')wave+=(waveDuration(s,g)+30)/60;else boss+=cardDuration(s,g);});return {difficulty:d,targetMinutes:p.nominalMinutes,waveBudgetMinutes:wave/60,bossBudgetMinutes:p.bossMinutes,cardTimeoutMinutes:boss/60,presentationBudgetMinutes:p.presentationMinutes,waves:tot.waves,cards:tot.cards,skippedPlain:SEGMENTS.length-tot.waves-tot.cards};}
+  function stageTargetSeconds(difficulty,index){var d=PACING[difficulty]?difficulty:'normal',p=PACING[d],tot=pacingTotals[d],seconds=p.presentationMinutes*60/STAGES.length;plannedSegments(d).forEach(function(i){var g=SEGMENTS[i];if(g.stage===index)seconds+=g.kind==='wave'?g.duration/tot.waveTicks*p.waveMinutes*60:g.time/tot.bossSeconds*p.bossMinutes*60;});return seconds;}
+  STAGES.forEach(function(g){g.authoredSeconds=g.seconds;g.seconds=stageTargetSeconds('normal',g.index);});
+
+
 
   /* options: {difficulty, seed, stage(시작 스테이지), segment(시작 구간), compact(휴대폰 모드), bossOnly(보스 체험: 그 스테이지의 보스전만), growth(중간에서 시작하면 그만큼 자란 공격·필살 단계로)} */
   function createRun(options){
     options=options||{};var difficulty=DIFFICULTY[options.difficulty]?options.difficulty:'normal',rules=Object.assign({},DIFFICULTY[difficulty]),compact=!!options.compact;
     var startSeg=Number.isInteger(options.segment)&&SEGMENTS[options.segment]?options.segment:Number.isInteger(options.stage)&&STAGES[options.stage]?STAGES[options.stage].first:0;
-    var s={revision:43,difficulty:difficulty,rules:rules,compact:compact,density:rules.density*(compact?COMPACT_DENSITY:1),sizeScale:compact?COMPACT_SIZE:1,cap:compact?COMPACT_CAP:CAP,
+    var s={revision:43,paced:options.pacing===true||(options.pacing!==false&&!Number.isInteger(options.segment)),difficulty:difficulty,rules:rules,compact:compact,density:rules.density*(compact?COMPACT_DENSITY:1),sizeScale:compact?COMPACT_SIZE:1,cap:compact?COMPACT_CAP:CAP,
       seed:(options.seed>>>0)||1,rng:(options.seed>>>0)||1,tick:0,stage:'break',stageTick:BREAK_TICKS-30,seg:startSeg-1,segTick:0,stageIndex:SEGMENTS[startSeg].stage,spellNumber:0,
       player:{x:W/2,y:H-84,hp:rules.hp,maxHp:rules.hp,invulnerableUntil:0,r:rules.radius,focus:false},
       boss:{x:W/2,y:-60,targetX:W/2,targetY:132,hp:1,maxHp:1,actor:'',name:'',mid:false,hitTick:-99,leaving:false,present:false,down:null},
@@ -714,21 +734,22 @@
     var prev=segment(s),at=s.seg+1,p=s.player;
     // 보스 체험: 잡몹 구간을 건너뛰고, 고른 스테이지의 중간 보스와 보스만 싸운 뒤 끝난다.
     if(s.bossOnly){while(SEGMENTS[at]&&SEGMENTS[at].kind==='wave')at++;if(SEGMENTS[at]&&SEGMENTS[at].stage!==s.rushStage)at=SEGMENTS.length;}
+    if(s.paced&&PACING[s.difficulty].skipRepeatedPlain){while(REPEATED_PLAIN[at])at++;}
     var next=SEGMENTS[at];
     if(next&&next.stage>s.lastStage)next=undefined;
     if(s.started&&prev&&(!next||next.stage!==prev.stage))closeStage(s,prev.stage);
     s.started=true;
     if(!next){s.stage='won';s.stageTick=0;note(s,'win');return;}
     s.seg=at;s.segTick=0;s.stageTick=0;s.lane=undefined;
-    if(next.stage!==s.stageIndex){s.stageIndex=next.stage;applyCurve(s);var heal=s.rules.mapHeal;if(heal&&p.hp<p.maxHp){p.hp=heal<0?p.maxHp:Math.min(p.maxHp,p.hp+heal);note(s,'extend');}note(s,'map');}
+    if(next.stage!==s.stageIndex){var oldPart=STAGES[s.stageIndex].part;s.stageIndex=next.stage;applyCurve(s);var heal=STAGES[next.stage].part!==oldPart?s.rules.partHeal:0;if(heal&&p.hp<p.maxHp){p.hp=heal<0?p.maxHp:Math.min(p.maxHp,p.hp+heal);note(s,'extend');}note(s,'map');}
     if(next.kind==='wave'){s.boss.leaving=s.boss.present;s.stage='wave';note(s,'wave');return;}
     if(!prev||prev.kind!=='card'||prev.actor!==next.actor||!s.boss.present){s.boss.leaving=s.boss.present;s.stage='intro';}else s.stage='break';
   }
   var BOSS_REST=156,BOSS_SWAY=40,BOSS_ROAM=58; // 좌우는 가운데 3분의 1 안: 문양이 칸 가장자리에 잘리지 않게(심사 6.53)
   function enter(s,actor){var b=s.boss;b.actor=actor;b.name=ACTORS[actor].name;b.mid=!!segment(s).mid;b.present=true;b.leaving=false;b.x=W/2;b.y=-60;b.targetX=W/2;b.targetY=BOSS_REST;s.stageTick=0;note(s,'entrance');}
-  function beginCard(s){var card=segment(s),b=s.boss;b.maxHp=b.hp=card.hp;b.mid=!!card.mid;s.stage='card';s.stageTick=0;s.segTick=0;s.spellClean=!!card.spell;if(card.spell){s.spellNumber++;note(s,'card');}else note(s,'plain');}
+  function beginCard(s){var card=segment(s),b=s.boss;b.maxHp=b.hp=cardHp(s,card);b.mid=!!card.mid;s.stage='card';s.stageTick=0;s.segTick=0;s.spellClean=!!card.spell;if(card.spell){s.spellNumber++;note(s,'card');}else note(s,'plain');}
   function endCard(s,defeated){
-    var card=segment(s),left=Math.max(0,card.time-s.segTick*TICK),wiped=breakWipe(s),b=s.boss;
+    var card=segment(s),left=Math.max(0,cardDuration(s,card)-s.segTick*TICK),wiped=breakWipe(s),b=s.boss;
     if(defeated){s.cleared++;gainExp(s,card.spell?16:10);s.score+=Math.round(left)*300+wiped*30;var nd=card.spell?CARD_DROPS:PLAIN_DROPS;for(var i=0;i<nd;i++)dropItem(s,dropAt(b.actor,i,nd,b.x,b.y,0),dropAt(b.actor,i,nd,b.x,b.y,1),card.spell&&i===1?1:0); /* 하트는 보스 발치 구름 아래에서 솟는다: 먹으로 스미는 몸 한가운데를 가리지 않게(사용자 11-16) */}else s.timeouts++;
     // 이름 붙은 패턴을 폭탄 없이, 맞지 않고 넘기면 보너스
     if(card.spell&&defeated&&s.spellClean){s.captures++;s.score+=20000+card.stage*5000;note(s,'capture');}
@@ -991,6 +1012,7 @@
     var sig=signatureOf(s.boss.actor);if(!sig)return;
     if(t%SIGIL_EVERY===SIGIL_AT)summonSigil(s,sig,sig.index);
     var rk=RUNE_TIMES.indexOf(t%SIGIL_EVERY);if(rk>=0)summonRunes(s,sig,rk);
+    if(s.difficulty==='gentle')return; // 이지는 주공격과 문양만: 가장자리 지그재그·보조 실탄·추가 분사를 중첩하지 않는다.
     if(sig.edge&&t%600===260){summonZigzag(s,sig,-1);summonZigzag(s,sig,1);}
     if(t%300<200)strands(s,sig,t);
     if(sig.extra==='spray'&&t%420>=120&&t%420<=330&&t%70===50)spray(s,sig,t);
@@ -1070,7 +1092,7 @@
      묘지(05·43)에서는 해골이 위에서 영웅 쪽으로 날아온다. 웨이브와 보스전 모두에 깔린다. */
   var THEMED={'03':'hands','05':'skulls','43':'skulls'};
   function themed(s){
-    var kind=THEMED[STAGES[s.stageIndex].scene],t=s.stageTick,i;if(!kind||(s.stage!=='wave'&&s.stage!=='card'))return;
+    var kind=THEMED[STAGES[s.stageIndex].scene],t=s.stageTick,i;if(!kind||(s.stage!=='wave'&&s.stage!=='card')||(s.difficulty==='gentle'&&s.stage==='card'))return;
     if(kind==='hands'){
       if(t%pick(s,110,95,80)===0&&s.ripples.length<6){var rx=24+rand(s)*(W-48);if(Math.abs(rx-s.player.x)<HAND_AWAY)rx=s.player.x+(s.player.x<W/2?1:-1)*(HAND_AWAY+rand(s)*60);s.ripples.push({x:rx,age:0});}
       // 영웅 바로 밑(HAND_AWAY 안)에서는 솟지 않는다: 물결 자리를 영웅에게서 떨어뜨리고, 그사이 영웅이 그 위로 오면 손은 가라앉는다(헛물결).
@@ -1134,7 +1156,7 @@
   function updateFloor(s){
     var F=s.floor,p=s.player,c,k;if(F.stage!==s.stageIndex)F=s.floor=freshFloor(s,s.stageIndex);
     var live=s.stage==='wave'||s.stage==='card',t=live?F.t++:F.t,plan=floorPlan(s.stageIndex,s.difficulty),u=t%FLOOR_CYCLE,kind=plan[Math.floor(t/FLOOR_CYCLE)%plan.length],on=live&&u>=FLOOR_ON&&u<FLOOR_OFF;
-    if(s.stage==='wave'&&s.segTick>=segment(s).duration)on=false; // 대본이 끝난 웨이브는 마저 끝나게 둔다
+    if(s.stage==='wave'&&s.segTick>=waveDuration(s,segment(s))||s.difficulty==='gentle'&&s.stage==='card')on=false; // 대본이 끝난 웨이브는 마저 끝나게 둔다
     F.kind=on?kind:'';
     if(on){var slow=s.difficulty==='gentle'?1.6:1;
       if(kind==='rise'&&(u-FLOOR_ON)%Math.round(pick(s,150,110,90)*slow)===0)warnRise(s,F);
@@ -1269,7 +1291,7 @@
     if(!s.risers){s.risers=[];s.risen=0;s.riserT=0;s.riserStage=-1;}
     if(s.riserStage!==s.stageIndex){s.riserStage=s.stageIndex;s.riserT=0;s.riserN=0;s.riserDue=0;s.riserRng=((s.seed*40503)^(s.stageIndex*2654435761+7))>>>0||1;}
     var R=s.risers,p=s.player,k,live=s.stage==='wave'||s.stage==='card',every=Math.round(pick(s,560,330,270));
-    if(live&&!(s.stage==='wave'&&s.segTick>=segment(s).duration)){var t=s.riserT++;
+    if(live&&!(s.difficulty==='gentle'&&s.stage==='card')&&!(s.stage==='wave'&&s.segTick>=waveDuration(s,segment(s)))){var t=s.riserT++;
       if(t>=120&&(t-120)%every===0&&s.riserDue<2)s.riserDue++; // 자리가 없으면 미뤘다가 자리가 나면 솟는다
       if(s.riserDue>0&&R.length<(s.floor&&s.floor.kind?1:pick(s,1,2,2))){s.riserDue--;var plan=motifPlan(s.stageIndex),kind=plan[s.riserN++%plan.length],size=MOTIFS[kind].size,lane=(s.riserN+s.stageIndex+((s.riserN/3)|0))%3,x=W*(lane===0?.24:lane===1?.76:.5)+(riserRand(s)-.5)*W*.14;
         if(Math.abs(x-p.x)<90)x=p.x+(Math.abs(p.x-W/2)>24?(p.x<W/2?1:-1):(s.riserN&1?1:-1))*(90+riserRand(s)*50); // 영웅 바로 밑에서는 솟지 않는다
@@ -1290,25 +1312,25 @@
     if(input&&input.bomb)useBomb(s);
     bombPulse(s);
     var seg=segment(s),b=s.boss;
-    if(s.stage==='break'){if(s.stageTick>=BREAK_TICKS){if(seg&&seg.kind==='card'&&b.present)beginCard(s);else advance(s);}}
+    if(s.stage==='break'){if(s.stageTick>=(s.paced?24:BREAK_TICKS)){if(seg&&seg.kind==='card'&&b.present)beginCard(s);else advance(s);}}
     else if(s.stage==='intro'){
       if(!b.present)enter(s,seg.actor);
-      else if(!b.leaving&&b.actor===seg.actor&&s.stageTick>=INTRO_TICKS)beginCard(s);
+      else if(!b.leaving&&b.actor===seg.actor&&s.stageTick>=(s.paced?55:INTRO_TICKS))beginCard(s);
     }
     else if(s.stage==='wave'){
-      var w=s.segTick++;if(w<seg.duration)seg.script(s,w);
+      var w=s.segTick++,duration=waveDuration(s,seg);if(w<duration)seg.script(s,w);
       // 대본이 끝나고 몹이 다 사라지면 다음으로. 너무 오래 남은 몹은 물러난다.
-      if(w>=seg.duration&&(!s.mobs.length||w>=seg.duration+WAVE_GRACE)){s.mobs.length=0;s.score+=breakWipe(s)*10;note(s,'waveClear');advance(s);}
+      if(w>=duration&&(!s.mobs.length||w>=duration+(s.paced?30:WAVE_GRACE))){s.mobs.length=0;s.score+=breakWipe(s)*10;note(s,'waveClear');advance(s);}
     }
     else if(s.stage==='card'){
       var t=s.segTick++;
       if(t>=FIRE_DELAY){seg.fire(s,t-FIRE_DELAY);if(seg.spell)signature(s,t-FIRE_DELAY);} // 패턴 이름이 뜨는 동안은 쏘지 않는다. 이름 붙은 패턴에는 보스 고유 연출이 겹친다.
-      var left=seg.time-s.segTick*TICK;
+      var left=cardDuration(s,seg)-s.segTick*TICK;
       if(seg.spell&&left<=10&&left>0&&s.segTick%60===0)note(s,left<=3?'countdownLast':'countdown');
     }
     themed(s);updateMobs(s);updateShots(s);
     if(s.stage==='card'&&b.hp<=0)endCard(s,true);
-    else if(s.stage==='card'&&s.segTick*TICK>=segment(s).time)endCard(s,false);
+    else if(s.stage==='card'&&s.segTick*TICK>=cardDuration(s,segment(s)))endCard(s,false);
     var p=s.player,byFloor=updateFloor(s)|updateRisers(s),byBeam=updateLasers(s),byFigure=updateFigures(s),byBullet=updateBullets(s);
     updateItems(s);
     var touched=(byBeam||byFigure||byBullet||byFloor)&&s.tick>=p.invulnerableUntil&&s.stage!=='won'&&s.stage!=='lost';
@@ -1326,7 +1348,7 @@
     if(s.n>s.peak)s.peak=s.n;
     return s;
   }
-  function timeLeft(s){var seg=segment(s);return s.stage==='card'?Math.max(0,seg.time-s.segTick*TICK):0;}
+  function timeLeft(s){var seg=segment(s);return s.stage==='card'?Math.max(0,cardDuration(s,seg)-s.segTick*TICK):0;}
   /* ── 진행 기록(저장용, 순수 함수). cleared 깬 스테이지 번호 · stars 스테이지별 별(1~3) · best 최고 점수 · rewards 얻은 기념물 ── */
   var Progress=(function(){
     function fresh(){return {version:43,cleared:[],stars:{},best:{},rewards:[],difficulty:'normal'};}
@@ -1360,7 +1382,7 @@
     return {fresh:fresh,sanitize:sanitize,record:record,unlocked:unlocked,canPlay:canPlay,resume:resume,totalStars:totalStars};
   })();
   var api={revision:43,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
-    SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,ORB_HP:ORB_HP,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
+    PACING:PACING,stageTargetSeconds:stageTargetSeconds,plannedSegments:plannedSegments,pacingReport:pacingReport,waveDuration:waveDuration,cardDuration:cardDuration,cardHp:cardHp,SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,ORB_HP:ORB_HP,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
     BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,figurePhase:figurePhase,FIGURE_ON_TICKS:FIGURE_ON_TICKS,FIGURE_OFF_TICKS:FIGURE_OFF_TICKS,FIGURE_CHARGE_TICKS:FIGURE_CHARGE_TICKS,RUNE_AT:RUNE_AT,RISER_HP:RISER_HP,RISER_SCORE:RISER_SCORE,riserHp:riserHp,shotHitsRiser:shotHitsRiser,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
     POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,FOCUS_SLOW:FOCUS_SLOW,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,BOMB_PULSES:BOMB_PULSES,BOMB_PULSE_START:BOMB_PULSE_START,BOMB_PULSE_EVERY:BOMB_PULSE_EVERY,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp};
   if(typeof module==='object'&&module.exports)module.exports=api;

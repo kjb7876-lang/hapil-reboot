@@ -4,8 +4,8 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const h=require('./helpers/arcade-v43.cjs');
 
-test('v43 refill: every difficulty restores all lives when the next stage begins',()=>{
- const d=h.need().DIFFICULTY;for(const k of ['gentle','normal','hell'])assert.equal(d[k].mapHeal,-1,k);
+test('v43 refill: every difficulty reserves recovery for chapter boundaries',()=>{
+ const d=h.need().DIFFICULTY;for(const k of ['gentle','normal','hell']){assert.equal(d[k].mapHeal,0,k);assert.equal(d[k].partHeal,1,k);}
 });
 
 function sigilsOf(a,i,ticks){

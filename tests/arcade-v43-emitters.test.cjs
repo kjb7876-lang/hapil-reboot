@@ -113,7 +113,7 @@ test('v43 physics: bullet travel depends on simulated ticks, speed × ticks × 1
  assert(Math.abs(s.by[i]-(100+120*30/60))<1e-4,'moved '+(s.by[i]-100));
  const app=h.read('src/arcade-app-v43.js');
  assert(/accumulator=Math\.min\(accumulator\+elapsed,4\/60\)/.test(app)&&/while\(accumulator>=1\/60/.test(app),'the app steps the engine at a fixed 60Hz, render rate does not change bullet speed');
- assert(/visibilitychange[^\n]*pause\(\)/.test(app)&&/arcade-resume[^\n]*accumulator=0/.test(app),'tab switches pause and resume without a time jump');
+ assert(/visibilitychange[^\n]*pause\(\)/.test(app)&&/arcade-resume'\)\.addEventListener\('click',resume\)/.test(app)&&/function resume\(\)\{[^\n]*accumulator=0;lastStamp=0/.test(app),'tab switches pause and the shared resume handler resets the clock without a time jump');
 });
 
 test('v43 physics: a fast bullet that jumps over the hero in one tick still hits (swept collision)',()=>{
