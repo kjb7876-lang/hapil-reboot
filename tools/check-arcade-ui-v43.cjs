@@ -303,7 +303,11 @@ async function musicTransitions(page){
   assert.equal((await state(page)).mode,'title');assert.equal(await page.evaluate(()=>HapilMusic.stats().current),'title');
   await page.locator('#arcade-start').click();await confirmHero(page,'seoha-b',false);
   assert.equal(await page.evaluate(()=>HapilMusic.stats().current),'field');
-  await page.evaluate(()=>HapilArcadeApp.debugState().lose());assert.equal((await state(page)).mode,'result');assert.equal(await page.evaluate(()=>HapilMusic.stats().current),'title');
+  await page.evaluate(()=>HapilArcadeApp.debugState().lose());
+  // Defeat starts the authored closing animation; finish() reveals the result
+  // asynchronously afterward. Wait for that real UI transition before retrying.
+  await page.waitForFunction(()=>{const s=HapilArcadeApp.getState();return s.mode==='result'&&s.stage==='lost';});
+  assert.equal(await page.locator('#result-title').innerText(),'GAME OVER');assert.equal(await page.evaluate(()=>HapilMusic.stats().current),'title');
   await page.locator('#arcade-retry').click();await page.waitForFunction(()=>HapilArcadeApp.getState().mode==='playing');
   assert.equal(await page.evaluate(()=>HapilMusic.stats().current),'field');await stationary(page);
   return {rapidChanges:samples.length,signals:['pagehide','pageshow','blur'],ui:['quit','new-game','loss','retry']};
@@ -340,6 +344,8 @@ async function sevenSinsClear(page){
       assert.equal(await page.locator('#story-text').innerText(),entry.lines[i].text);
       if(i===0)await page.locator('#story-next').click();
     }
+    assert.equal(await page.locator('#story-caption').innerText(),'보스 등장 · 대사');
+    await page.waitForTimeout(900); // Capture the completed portrait reveal, not its initial clipped frame.
     await page.screenshot({path:path.join(out,'desktop-'+actor+'-dialogue.png'),fullPage:true});
     await page.locator('#story-skip').click();
     await page.waitForFunction(actor=>{const s=HapilArcadeApp.debugState().state;return s.boss.actor===actor&&s.boss.present&&s.bossEntrance.enteredTick!==null;},actor);

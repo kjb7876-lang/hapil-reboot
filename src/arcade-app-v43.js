@@ -486,6 +486,9 @@
     if(!result||state.bossOnly)return;
     progress=Progress.record(progress,result,state.difficulty);saveProgress();
   }
+  function recordBestScore(s){
+    if(s&&s.score>best){best=s.score;try{global.localStorage.setItem(BEST_KEY,String(best));}catch(e){}}
+  }
 
   function play(name,x){if(fx&&settings.sfx&&settings.sfxVolume>0)fx.play(name,x===undefined?0:Math.max(-1,Math.min(1,(finite(x,W/2)/W-.5)*1.4)));}
   function clearCombatPresentation(){
@@ -530,7 +533,10 @@
       else if(e==='map')loadStage(s.stageIndex);
       else if(e==='entrance'){if(storyArrivalActor!==s.boss.actor)play('warning');storyArrivalActor='';wantFx(s.boss.actor);showBanner(s.boss.name,s.boss.mid?'중간보스':'보스');} // 본보스 컷인은 enter() 전, 중간보스는 기존 입장만.
       else if(e==='figure')castFx(s,false);
-      else if(e==='bossClear'){clearCombatPresentation();if(Mobile&&Mobile.commitBossClear)Mobile.commitBossClear(s);} // 다음 bossDown 이벤트가 쓰러짐 연출을 새로 시작한다.
+      else if(e==='bossClear'){clearCombatPresentation();if(Mobile&&Mobile.commitBossClear)Mobile.commitBossClear(s);
+        // 마지막 승리는 2초 연출 중 나가도 최고점이 남아야 한다. 계속되는 여정은 기존 finish() 시점에 기록한다.
+        if(s.bossClear&&s.bossClear.nextSegment===Arcade.SEGMENTS.length)recordBestScore(s);
+      } // 다음 bossDown 이벤트가 쓰러짐 연출을 새로 시작한다.
       else if(e==='bossDown'){var dn=s.boss.down;if(dn){fall={actor:dn.actor,x:dn.x,y:dn.y,tick:dn.tick,dir:dn.x>W/2?1:-1,burst:-1,keep:{}};['','@death','@hit'].forEach(function(m){var im=images[dn.actor+m]||(bossArt.actor===dn.actor&&bossArt.keep[dn.actor+m]);if(im)fall.keep[dn.actor+m]=im;}); /* 다음 스테이지로 넘어가며 그림을 놓아도 쓰러지는 동안은 쥐고 있다(전에는 마름모 자리표시가 쓰러졌다) */flash=Ink?.18:.8;shake=16;}} /* 수묵 모드는 흰 섬광을 줄여 먹빛으로 물드는 순간이 묻히지 않게(사용자 11-16) */
       else if(e==='break'){play('phaseBreak',s.boss.x);flash=.6;shock={x:s.boss.x,y:s.boss.y,r:10,ink:true};shake=3;}
       else if(e==='capture'||e==='bombGain'||e==='extend')play('seal');
@@ -1444,6 +1450,7 @@
   function revealStory(){if(!story||story.phase!=='impact')return;story.phase='memory';story.elapsed=0;$('arcade-story').dataset.phase='memory';if(fx&&fx.suspend)fx.suspend(true);}
   function paintStory(){
     if(!story)return;var entry=story.entry,line=entry.lines[story.line];
+    var caption=$('story-caption');if(caption){caption.dataset.i18n=entry.kind==='dialogue-adaptation'?'storyDialogue':'storyCanon';caption.textContent=T(caption.dataset.i18n);}
     $('story-title').textContent=entry.title;$('story-speaker').textContent=line.speaker||entry.speaker;
     $('story-text').textContent=line.text;$('story-count').textContent=(story.line+1)+' / '+entry.lines.length;
     $('story-next').textContent=T(story.line+1===entry.lines.length?'storyFight':'storyNext');
@@ -1528,7 +1535,7 @@
   }
   function finish(){
     var s=state,won=s.stage==='won';rushStage=false;
-    if(s.score>best){best=s.score;try{global.localStorage.setItem(BEST_KEY,String(best));}catch(e){}}
+    recordBestScore(s);
     var stars=0;s.results.forEach(function(r){stars+=r.stars;});
     $('result-title').textContent=won?(s.bossOnly?'BOSS CLEAR':s.stageIndex>=Arcade.STAGES.length-1?'ALL CLEAR':'CLEAR'):'GAME OVER';
     $('result-score').textContent=pad(s.score);$('result-best').textContent=pad(best);

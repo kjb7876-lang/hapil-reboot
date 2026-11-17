@@ -36,7 +36,7 @@ function harness(saved){
   vm.runInContext(read('src/arcade-boss-intros-v43.js'),sandbox);
   // Skip only browser boot. Expose the closed-over real handlers to install them on the DOM double.
   const script=read('src/arcade-app-v43.js').replace(/  boot\(\);\s*\}\)\(window\);\s*$/,`  global.controlsTest={bind:bind,input:inputForStep,load:loadSettings,apply:applySettings,mode:setMode,
-    prepare:function(s,a){state=s;fx=a;mode='playing';},picker:function(p){heroPicker=p;},manifest:function(m){manifest=m;},settings:function(){return settings;},finger:function(){return finger;},quality:function(){return lite;},drawFigures:drawFigures,drawRunes:drawRunes,frame:frame,consume:consume,beginStory:beginStory,nextStory:nextStory,
+    prepare:function(s,a){state=s;fx=a;mode='playing';},loadProgress:loadProgress,picker:function(p){heroPicker=p;},manifest:function(m){manifest=m;},settings:function(){return settings;},finger:function(){return finger;},quality:function(){return lite;},drawFigures:drawFigures,drawRunes:drawRunes,frame:frame,consume:consume,beginStory:beginStory,nextStory:nextStory,
     seedVisuals:function(){particles.push({});drifts.push({});flashes.push({});casts.push({});emblems.push({});bombQueued=true;},visualCounts:function(){return [particles.length,drifts.length,flashes.length,casts.length,emblems.length];},defeatVisual:function(){return {actor:fall&&fall.actor,flash:flash};},storyEntry:function(){return story&&story.entry;},heroImages:function(){['memory','seoha','seoha-b'].forEach(function(id){var p=Heroes.get(id);images[id==='memory'?'gunner':'hero-'+id]={src:p.sprite,width:256,height:512};});}};
 })(window);`);
   assert(script.includes('global.controlsTest='));vm.runInContext(script,sandbox);
@@ -307,6 +307,37 @@ test('final boss-card defeat clears old effects, preserves the fresh bossDown fl
  while(s.tick<ready-1){A.step(s,{dx:1,bomb:true});h.consume();assert.equal(s.stage,'bossClear');assert.equal(s.stageIndex,0);assert.deepEqual(resources(),rewards);assert.equal(saved().length,1);assert.equal(s.results.length,1);}
  A.step(s,{});h.consume();assert.equal(s.tick,ready);assert.equal(s.stageIndex,1);assert.equal(s.stage,'wave');assert.equal(s.results.length,1);assert.equal(saved().length,1);assert.equal(JSON.parse(saved()[0].value).cleared.filter(x=>x===0).length,1);
  A.step(s,{});h.consume();assert.equal(s.results.length,1);assert.equal(saved().length,1,'the same clear is not recorded a second time');
+});
+
+function terminalClear(options,saved){
+ const f=harness(saved),stage=options.stage||0,last=A.SEGMENTS.map((g,i)=>({g,i})).filter(x=>x.g.stage===stage&&x.g.kind==='card'&&!x.g.mid).at(-1).i;
+ const s=A.createRun(Object.assign({difficulty:'normal',seed:33,segment:last,pacing:true},options));
+ f.h.loadProgress();f.h.prepare(s,f.audio);assert(f.h.beginStory());f.nodes.get('story-skip').click();
+ for(let i=0;i<200&&s.stage!=='card';i++){A.step(s,{});f.h.consume();}assert.equal(s.stage,'card');
+ s.boss.hp=0;A.step(s,{});f.h.consume();assert.equal(s.stage,'bossClear');return Object.assign(f,{s});
+}
+
+test('terminal boss clear saves the best score before quitting or reloading during its visual wait',()=>{
+ const key='hapil-arcade-best-v43',cases=[{stage:A.STAGES.length-1},{bossOnly:true},{stages:1}];
+ for(const options of cases){
+  const f=terminalClear(options),s=f.s;assert.equal(s.bossClear.nextSegment,A.SEGMENTS.length);assert(s.score>0);
+  assert.equal(Number(f.storage[key]),s.score,'campaign, boss-only and limited-run wins commit before the 120-tick wait');
+  assert.equal(f.storageWrites.filter(x=>x.key===key).length,1);
+  const reloaded=harness(f.storage);reloaded.h.loadProgress();reloaded.nodes.get('arcade-quit').click();
+  assert.equal(Number(reloaded.nodes.get('title-best').textContent),s.score,'fresh page reads the committed best score');
+  f.doc.emit('keydown',{key:'Escape'});f.nodes.get('arcade-quit').click();
+  assert.equal(f.w.HapilArcadeApp.getState().mode,'title');assert.equal(Number(f.nodes.get('title-best').textContent),s.score,'immediate home keeps the score visible');
+  assert.equal(Number(f.storage[key]),s.score);
+ }
+});
+
+test('finishing a clear wait does not duplicate best-score writes or change nonterminal and lower-score rules',()=>{
+ const key='hapil-arcade-best-v43',f=terminalClear({bossOnly:true}),score=f.s.score;
+ while(f.s.stage==='bossClear'){A.step(f.s,{});f.h.consume();}
+ assert.equal(f.s.stage,'won');assert.equal(Number(f.storage[key]),score);assert.equal(f.storageWrites.filter(x=>x.key===key).length,1,'finish shares the idempotent best-score helper');
+ const lower=terminalClear({bossOnly:true},{[key]:'999999999'});assert.equal(lower.storage[key],'999999999');assert.equal(lower.storageWrites.filter(x=>x.key===key).length,0);
+ const continuing=terminalClear({});assert(continuing.s.bossClear.nextSegment<A.SEGMENTS.length);
+ assert.equal(continuing.storage[key],undefined,'an ordinary stage clear does not introduce a new mid-run best-score save');
 });
 
 test('impact animation and one-shot audio pause without restarting, then advance automatically to memory',()=>{

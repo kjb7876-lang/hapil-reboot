@@ -33,6 +33,10 @@ jobs:
           .venv-tests/bin/python -m pip install Pillow numpy
           echo "$GITHUB_WORKSPACE/.venv-tests/bin" >> "$GITHUB_PATH"
       - run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Verify native canvas dependency
+        run: |
+          node -e "require('@napi-rs/canvas')" || npm install --no-save --ignore-scripts --no-audit --no-fund @napi-rs/canvas-linux-x64-gnu@0.1.100
+          node -e "require('@napi-rs/canvas')"
       - run: node tools/check-regressions-v43.cjs
         env:
           TEST_SHARD: ${{ matrix.shard }}
