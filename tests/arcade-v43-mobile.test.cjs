@@ -22,6 +22,14 @@ test('a checkpoint is left when a segment starts and resumes only in its own sta
   assert.equal(M.checkpoint(3,'hell'),null,'other difficulty');assert.equal(M.checkpoint(4,'normal'),null,'other stage');
   s.seg=st.first;M.tick(s,'playing',16);assert.equal(M.checkpoint(3,'normal'),null,'the first segment is the same as starting over');
 });
+test('checkpoints preserve the chosen hero and growth; legacy or unknown hero ids safely resume as Memory',()=>{
+  const {w,store}=sandbox(),M=w.HapilMobile,st=A.STAGES[3];
+  const s=A.createRun({stage:3,difficulty:'normal',hero:'seoha',seed:3});s.started=true;s.seg=st.first+1;s.stage='wave';s.exp=500;s.fills=20;M.tick(s,'playing',16);
+  const saved=JSON.parse(store['hapil-arcade-checkpoint-v43']);assert.equal(saved.hero,'seoha');assert.equal(saved.exp,500);assert.equal(saved.fills,20);
+  assert.equal(M.checkpoint(3,'normal').hero,'seoha');
+  delete saved.hero;store['hapil-arcade-checkpoint-v43']=JSON.stringify(saved);assert.equal(M.checkpoint(3,'normal').hero,'memory','pre-selection checkpoints retain the original hero');
+  saved.hero='unknown';store['hapil-arcade-checkpoint-v43']=JSON.stringify(saved);assert.equal(M.checkpoint(3,'normal').hero,'memory');
+});
 test('losing or clearing a stage drops the checkpoint and counts the attempt',()=>{
   const {w,store}=sandbox(),M=w.HapilMobile,st=A.STAGES[1];
   const s=A.createRun({stage:1,difficulty:'gentle',seed:3});s.started=true;s.seg=st.first+1;s.stage='wave';M.tick(s,'playing',16);
@@ -50,6 +58,8 @@ test('every data-i18n key in the page exists, and the helpers load before the ap
   const order=[...html.matchAll(/<script src="([^"?]+)/g)].map(m=>m[1]);
   assert(order.indexOf('src/arcade-i18n-v43.js')>=0&&order.indexOf('src/arcade-i18n-v43.js')<order.indexOf('src/arcade-app-v43.js'));
   assert(order.indexOf('src/arcade-mobile-v43.js')>=0&&order.indexOf('src/arcade-mobile-v43.js')<order.indexOf('src/arcade-app-v43.js'));
+  assert(order.indexOf('src/arcade-heroes-v43.js')>=0&&order.indexOf('src/arcade-heroes-v43.js')<order.indexOf('src/arcade-v43.js'),'hero profiles must exist when the engine initializes');
+  assert(order.indexOf('src/arcade-hero-select-v43.js')>=0&&order.indexOf('src/arcade-hero-select-v43.js')<order.indexOf('src/arcade-app-v43.js'),'the picker must exist before app boot');
 });
 test('difficulty notes come from the real rules (lives and bombs)',()=>{
   const app=read('src/arcade-app-v43.js');assert.match(app,/T\(NOTES\[difficulty\],\{hp:rule\.hp,bombs:rule\.bombs,minutes:/);assert.doesNotMatch(app,/목숨 7 · 폭탄 3/);

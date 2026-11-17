@@ -7,7 +7,7 @@
  * 사용: node tools/build-app-www.cjs [출력 폴더, 기본 app/www] [--exclude-held] */
 const fs=require('fs'),path=require('path');
 const root=path.join(__dirname,'..'),outArg=process.argv.slice(2).find(a=>!a.startsWith('--')),out=outArg?path.resolve(process.cwd(),outArg):path.join(root,'app/www'); // 인자는 지금 폴더 기준
-const MEDIA=['media/arcade-v43','media/arcade-v43-fx','media/arcade-v43-laser','media/arcade-v43-hero','media/fonts','media/music.mp3','media/gunner.webp'];
+const MEDIA=['media/arcade-v43','media/arcade-v43-fx','media/arcade-v43-laser','media/arcade-v43-hero','media/arcade-v43-heroes','media/fonts','media/music.mp3','media/gunner.webp'];
 function copy(rel){const from=path.join(root,rel),to=path.join(out,rel);const st=fs.statSync(from);
   if(st.isDirectory()){for(const f of fs.readdirSync(from))copy(path.join(rel,f));return;}
   fs.mkdirSync(path.dirname(to),{recursive:true});fs.copyFileSync(from,to);bytes+=st.size;files++;}
@@ -18,6 +18,7 @@ const scripts=[...html.matchAll(/<script src="([^"?]+)/g)].map(m=>m[1]);
 if(!scripts.includes('src/arcade-app-v43.js'))throw new Error('arcade.html does not load src/arcade-app-v43.js');
 for(const s of scripts)copy(s);
 copy('docs/v43/canonical-story.txt'); // 규칙 메뉴의 정본 원문: 오프라인 앱에서도 읽을 수 있게 포함한다.
+copy('media/combat/boss01-purple-sword-spider-angel-cutin.webp'); // 보라검 천사 본보스 전용 컷인.
 for(const m of MEDIA)copy(m);
 if(fs.existsSync(path.join(root,'media/bgm')))copy('media/bgm'); // 구간별 배경음악(arcade-music-v43.js)
 // --exclude-held: 닷츠가 보류(QA_HOLD)라고 적은 그림을 묶음에서 뺀다. 게임은 그림이 없으면 그 효과만 건너뛴다.

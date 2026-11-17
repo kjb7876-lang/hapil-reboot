@@ -14,6 +14,7 @@
     kill:{gap:80,level:.22,rank:2},
     hurt:{gap:220,level:.5,rank:5},
     charge:{gap:420,level:.32,rank:4},
+    bossCutin:{gap:1500,level:.32,rank:5},
     laserWarn:{gap:380,level:.2,rank:3},
     laserFire:{gap:260,level:.34,rank:4},
     skillMemory:{gap:200,level:.15,rank:3},
@@ -162,6 +163,13 @@
       // 피격: 낮고 둔탁하게(사용자 11-15 "맞았을때 랑 탄없앨때 … 비슷해서 헷갈림"). 높은 쓸림을 빼고 몸통을 치는 쿵 + 거친 떨림.
       hurt:function(d,l){tone(d,'sine',150,40,.42,l);tone(d,'square',96,58,.16,l*.32);tone(d,'sawtooth',233,110,.22,l*.22,.02);noise(d,'lowpass',700,90,1.2,.3,l*.9);},
       charge:function(d,l){noise(d,'bandpass',300,2400,5,.38,l,0,.2);tone(d,'sine',150,420,.36,l*.4,0,.18);},
+      // 메인보스 컷인: 짧은 상승 바람 뒤 낮은 타격·금속 잔향. 예약음도 기존 정지/음소거 경로로 정리한다.
+      bossCutin:function(d,l){
+        noise(d,'bandpass',260,2800,3,.36,l*.55,0,.2);
+        tone(d,'sawtooth',82,164,.34,l*.22,0,.18);
+        tone(d,'triangle',160,62,.45,l*.6,.30,.004);
+        bell(d,294,.60,l*.40,.30);
+      },
       laserWarn:function(d,l,c){var more=Math.min(2,(c.count||1)/3);tone(d,'sawtooth',220,660,.5,l*.32,0,.3);tone(d,'sine',440,1320,.5,l*(.6+more*.15),0,.3);tone(d,'square',1320,1320,.05,l*.3,.5);},
       laserFire:function(d,l,c){var more=Math.min(1.4,1+(c.count||1)*.06);noise(d,'lowpass',6500,300,1.2,.6,l*.8*more);tone(d,'sawtooth',98,60,.7,l*.5);tone(d,'sawtooth',99.4,61,.7,l*.4);tone(d,'sine',1900,380,.22,l*.4);},
       skillMemory:function(d,l){[523,659,784].forEach(function(f,i){tone(d,'triangle',f,f,.14,l*.8,i*.045);tone(d,'sine',f*2,f*2,.1,l*.3,i*.045);});},

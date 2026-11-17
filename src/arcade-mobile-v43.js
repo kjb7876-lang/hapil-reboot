@@ -46,7 +46,7 @@
     var seg=A.SEGMENTS[c.seg];
     if(c.stage!==stage||c.difficulty!==difficulty||!seg||seg.stage!==stage||!(Date.now()-c.at<CP_MAX_AGE))return null;
     if(A.STAGES[stage]&&A.STAGES[stage].first===c.seg)return null; // 스테이지 첫 구간이면 처음부터와 같다
-    return c;
+    c.hero=c.hero==='seoha'?'seoha':'memory';return c;
   }
 
   /* 앱이 매 프레임 부른다. s: 지금 판, mode: 화면 상태, ms: 지난 프레임 시간. */
@@ -64,7 +64,7 @@
     if((s.stage==='lost'||s.stage==='won')&&seenEnd!==s.stage){seenEnd=s.stage;if(s.stage==='lost'&&!s.bossOnly){var lr=stageRow(s.stageIndex,s.difficulty);lr.losses++;lr.ms+=Math.round(stageMs);}if(!s.bossOnly)clearCheckpoint();dirty=true;flush(true);return;}
     if(!s.bossOnly&&s.started&&s.seg!==seenSeg&&s.stage!=='lost'&&s.stage!=='won'){
       seenSeg=s.seg;var A=global.HapilArcade,seg=A&&A.SEGMENTS[s.seg];
-      if(seg&&seg.stage===s.stageIndex)store(CP_KEY,{v:1,stage:s.stageIndex,seg:s.seg,difficulty:s.difficulty,at:now,hits:s.hits-s.mark.hits,bombs:s.bombsUsed-s.mark.bombs,exp:s.exp|0,fills:s.fills|0}); // 별 계산용으로 이 스테이지에서 맞은 수·폭탄 수도 남긴다
+      if(seg&&seg.stage===s.stageIndex)store(CP_KEY,{v:1,stage:s.stageIndex,seg:s.seg,hero:s.hero==='seoha'?'seoha':'memory',difficulty:s.difficulty,at:now,hits:s.hits-s.mark.hits,bombs:s.bombsUsed-s.mark.bombs,exp:s.exp|0,fills:s.fills|0}); // 영웅·성장과 이 스테이지의 피격·폭탄을 보존한다.
     }
     flush(false);
   }
