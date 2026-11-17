@@ -12,10 +12,18 @@ test('campaign pacing retains all named attacks and stable indices while trimmin
 test('paced live durations use difficulty budgets without altering authored projectile speeds or practice lengths',()=>{
  const wave=A.SEGMENTS.find(g=>g.kind==='wave'),card=A.SEGMENTS.find(g=>g.spell),dur=[];
  for(const difficulty of ['gentle','normal','hell']){const s=A.createRun({difficulty}),practice=A.createRun({difficulty,segment:0});
-  assert(s.paced);assert(!practice.paced);assert.equal(A.waveDuration(practice,wave),wave.duration);assert.equal(A.cardDuration(practice,card),card.time);
+  assert(s.paced);assert(!practice.paced);assert.equal(A.waveDuration(practice,wave),wave.duration);assert.equal(A.cardDuration(practice,card),card.time);assert.equal(A.cardHp(practice,card),card.hp);
   dur.push(A.waveDuration(s,wave));assert.equal(s.rules.speed,A.DIFFICULTY[difficulty].speed);
  }
  assert(dur[0]<dur[1]&&dur[1]<dur[2]);
+});
+test('measured campaign HP keeps normal and hell identical, with easy below authored HP',()=>{
+ const easy=A.createRun({difficulty:'gentle'}),normal=A.createRun({difficulty:'normal'}),hell=A.createRun({difficulty:'hell'});
+ for(const card of A.SEGMENTS.filter(g=>g.kind==='card')){
+  assert.equal(A.cardHp(normal,card),A.cardHp(hell,card),'same shared card HP: '+card.actor);
+  assert(A.cardHp(easy,card)<A.cardHp(normal,card));assert(A.cardHp(easy,card)<=card.hp);
+ }
+ assert.equal(A.pacingReport('normal').cardHpScale,A.pacingReport('hell').cardHpScale);
 });
 test('lives are 5/3/2 and only a chapter boundary restores one life, capped at maximum',()=>{
  for(const [difficulty,hp] of [['gentle',5],['normal',3],['hell',2]]){

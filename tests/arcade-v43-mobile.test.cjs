@@ -22,6 +22,14 @@ test('a checkpoint is left when a segment starts and resumes only in its own sta
   assert.equal(M.checkpoint(3,'hell'),null,'other difficulty');assert.equal(M.checkpoint(4,'normal'),null,'other stage');
   s.seg=st.first;M.tick(s,'playing',16);assert.equal(M.checkpoint(3,'normal'),null,'the first segment is the same as starting over');
 });
+test('checkpoints preserve the chosen hero and growth; legacy or unknown hero ids safely resume as Memory',()=>{
+  const {w,store}=sandbox(),M=w.HapilMobile,st=A.STAGES[3];
+  const s=A.createRun({stage:3,difficulty:'normal',hero:'seoha',seed:3});s.started=true;s.seg=st.first+1;s.stage='wave';s.exp=500;s.fills=20;M.tick(s,'playing',16);
+  const saved=JSON.parse(store['hapil-arcade-checkpoint-v43']);assert.equal(saved.hero,'seoha');assert.equal(saved.exp,500);assert.equal(saved.fills,20);
+  assert.equal(M.checkpoint(3,'normal').hero,'seoha');
+  delete saved.hero;store['hapil-arcade-checkpoint-v43']=JSON.stringify(saved);assert.equal(M.checkpoint(3,'normal').hero,'memory','pre-selection checkpoints retain the original hero');
+  saved.hero='unknown';store['hapil-arcade-checkpoint-v43']=JSON.stringify(saved);assert.equal(M.checkpoint(3,'normal').hero,'memory');
+});
 test('losing or clearing a stage drops the checkpoint and counts the attempt',()=>{
   const {w,store}=sandbox(),M=w.HapilMobile,st=A.STAGES[1];
   const s=A.createRun({stage:1,difficulty:'gentle',seed:3});s.started=true;s.seg=st.first+1;s.stage='wave';M.tick(s,'playing',16);
@@ -50,6 +58,8 @@ test('every data-i18n key in the page exists, and the helpers load before the ap
   const order=[...html.matchAll(/<script src="([^"?]+)/g)].map(m=>m[1]);
   assert(order.indexOf('src/arcade-i18n-v43.js')>=0&&order.indexOf('src/arcade-i18n-v43.js')<order.indexOf('src/arcade-app-v43.js'));
   assert(order.indexOf('src/arcade-mobile-v43.js')>=0&&order.indexOf('src/arcade-mobile-v43.js')<order.indexOf('src/arcade-app-v43.js'));
+  assert(order.indexOf('src/arcade-heroes-v43.js')>=0&&order.indexOf('src/arcade-heroes-v43.js')<order.indexOf('src/arcade-v43.js'),'hero profiles must exist when the engine initializes');
+  assert(order.indexOf('src/arcade-hero-select-v43.js')>=0&&order.indexOf('src/arcade-hero-select-v43.js')<order.indexOf('src/arcade-app-v43.js'),'the picker must exist before app boot');
 });
 test('difficulty notes come from the real rules (lives and bombs)',()=>{
   const app=read('src/arcade-app-v43.js');assert.match(app,/T\(NOTES\[difficulty\],\{hp:rule\.hp,bombs:rule\.bombs,minutes:/);assert.doesNotMatch(app,/목숨 7 · 폭탄 3/);
@@ -63,7 +73,7 @@ test('the app bundle has every script the page loads, the art it needs, and hide
     cp.execFileSync(process.execPath,[path.join(root,'tools/build-app-www.cjs'),out],{stdio:'pipe'});
     const html=fs.readFileSync(path.join(out,'index.html'),'utf8');
     for(const m of html.matchAll(/<script src="([^"?]+)/g))assert(fs.existsSync(path.join(out,m[1])),m[1]);
-    for(const f of ['media/arcade-v43/manifest.json','media/music.mp3','media/gunner.webp'])assert(fs.existsSync(path.join(out,f)),f);
+    for(const f of ['media/arcade-v43/manifest.json','media/music.mp3','media/gunner.webp','media/combat/boss01-purple-sword-spider-angel-cutin.webp','media/arcade-v43-heroes/seoha-portrait.webp','media/arcade-v43-heroes/seoha-player.webp'])assert(fs.existsSync(path.join(out,f)),f);
     assert.equal(fs.readFileSync(path.join(out,'docs/v43/canonical-story.txt'),'utf8'),read('docs/v43/canonical-story.txt'),'offline app preserves the complete canonical text');
     assert.match(fs.readFileSync(path.join(out,'src/arcade-app-v43.js'),'utf8'),/var DEV_VISIBLE=false[;,]/);
     assert.match(read('src/arcade-app-v43.js'),/var DEV_VISIBLE=true[;,]/,'the repository copy is untouched');

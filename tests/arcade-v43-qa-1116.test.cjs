@@ -36,6 +36,8 @@ test('phone HUD level line sits above the hearts, clear of the slow-move button'
 test('the app bundle (tools/build-app-www.cjs) carries every media folder the portrait game loads',()=>{
  const html=fs.readFileSync(path.join(root,'arcade.html'),'utf8'),tool=fs.readFileSync(path.join(root,'tools/build-app-www.cjs'),'utf8');
  const media=tool.match(/const MEDIA=\[([^\]]*)\]/)[1].split(',').map(x=>x.trim().replace(/'/g,'')).concat(['media/bgm']);
+ const copied=[...tool.matchAll(/copy\('([^']+)'\)/g)].map(m=>m[1]);
+ for(const file of copied)if(file.startsWith('media/'))media.push(path.posix.dirname(file));
  const used=new Set();
  for(const m of html.matchAll(/<script src="([^"?]+)/g)){const code=fs.readFileSync(path.join(root,m[1]),'utf8');for(const r of code.matchAll(/media\/[A-Za-z0-9_.-]+/g))used.add(r[0]);}
  for(const r of html.matchAll(/media\/[A-Za-z0-9_.-]+/g))used.add(r[0]);

@@ -6,7 +6,7 @@ function context(){
   const sources=[],gains=[],nodes=[];
   const param=()=>({value:0,setValueAtTime(){},exponentialRampToValueAtTime(){}});
   const node=extra=>{const n=Object.assign({connected:true,connect(){},disconnect(){this.connected=false;}},extra);nodes.push(n);return n;};
-  const source=extra=>{const s=node(Object.assign({start(){},stop(at){if(at===undefined){this.stopped=true;this.onended&&this.onended();}}},extra));sources.push(s);return s;};
+  const source=extra=>{const s=node(Object.assign({start(at){this.startAt=at;},stop(at){if(at!==undefined)this.stopAt=at;if(at===undefined){this.stopped=true;this.onended&&this.onended();}}},extra));sources.push(s);return s;};
   const ctx={state:'running',currentTime:0,sampleRate:1000,destination:{},resume(){this.state='running';return Promise.resolve();},close(){this.state='closed';return Promise.resolve();},
     createGain(){const g=node({gain:param()});gains.push(g);return g;},
     createDynamicsCompressor(){return node({threshold:param(),knee:param(),ratio:param(),attack:param(),release:param()});},
@@ -116,4 +116,22 @@ test('win and loss transitions do not briefly switch from boss music to field mu
   const h=await music(tracks);
   assert.equal(h.M.pick('playing',{stage:'won',stageIndex:1}),'title');
   assert.equal(h.M.pick('playing',{stage:'lost',stageIndex:0}),'title');
+});
+
+test('main-boss cut-in sound respects mute and zero volume before scheduling any voice',()=>{
+  const f=context(),fx=audio.create({AudioContext:f.Ctor,now:()=>0});fx.unlock();
+  fx.setEnabled(false);assert.equal(fx.play('bossCutin'),false);assert.equal(f.sources.length,0);
+  fx.setEnabled(true);fx.setVolume(0);assert.equal(fx.play('bossCutin'),false);assert.equal(f.sources.length,0);
+  fx.setVolume(.4);assert.equal(fx.play('bossCutin'),true);assert.equal(f.gains[0].gain.value,.55*.4);
+  assert.equal(f.sources.length,6);assert.equal(fx.play('bossCutin'),false,'one entrance must not layer duplicate cut-in sounds');
+  assert(Math.max(...f.sources.map(s=>s.stopAt))<1,'the cue finishes in under one second');
+  fx.setEnabled(false);assert.equal(fx.stats().voices,0);assert.equal(f.gains[0].gain.value,0);
+  assert(f.sources.every(s=>s.stopped&&!s.connected),'muting cancels the scheduled impact and its tail too');
+});
+test('pausing a main-boss cut-in cancels its delayed impact without replaying it on resume',()=>{
+  const f=context(),fx=audio.create({AudioContext:f.Ctor,now:()=>0});fx.unlock();assert(fx.play('bossCutin'));
+  assert(f.sources.some(s=>s.startAt>=.3),'the impact follows the rising sound');
+  f.ctx.currentTime=.1;fx.suspend(true);assert.equal(f.gains[0].gain.value,0);assert.equal(fx.stats().voices,0);
+  assert(f.sources.every(s=>s.stopped&&!s.connected));assert.equal(fx.play('bossCutin'),false);
+  const count=f.sources.length;fx.suspend(false);assert.equal(f.sources.length,count);assert.equal(fx.stats().voices,0);
 });

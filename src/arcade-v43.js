@@ -7,6 +7,9 @@
  * 글 대신 스테이지 이름 한 줄, 패턴 이름 한 줄과 탄막 무늬로만 사연을 전한다. */
 (function(root){
   'use strict';
+  var HEROES=typeof module==='object'&&module.exports&&typeof require==='function'
+    ?require('./arcade-heroes-v43.js'):root.HapilArcadeHeroes;
+  function heroProfile(s){return HEROES?HEROES.get(typeof s==='string'?s:s&&s.hero):null;}
   /* 부별 파일. 노드에서는 require로, 브라우저에서는 먼저 읽힌 스크립트가 HapilArcadeParts에 쌓아 둔 것을 쓴다. */
   var PARTS=typeof module==='object'&&module.exports&&typeof require==='function'
     ?[1,2,3,4,5,6,7,8].map(function(n){return require('./arcade-parts-v43/p'+n+'.js');})
@@ -111,6 +114,7 @@
   // 필살기 단계별 [보스 피해, 몹 피해]
   var BOMB_POWER=[null,[40,25],[48,32],[56,40],[66,50],[76,60],[88,72],[100,90]];
   var BOMB_NAMES=[null,'기억 섬광','기억 파편','잔상 폭우','회상 뇌격','망각의 붕괴','기억 범람','기억 해방'];
+  function bombName(s,level){var hero=heroProfile(s),lv=Math.max(1,Math.min(MAX_LEVEL,level||s&&s.bombLevel||1));return hero?hero.bombNames[lv]:BOMB_NAMES[lv];}
   function levelOf(table,v){var l=1;while(l<MAX_LEVEL&&v>=table[l])l++;return l;}
   function gainExp(s,n){var before=s.power;s.exp+=n;s.power=levelOf(POWER_EXP,s.exp);if(s.power>before){s.hasteUntil=s.tick+HASTE_TICKS;note(s,'powerUp');}}
   function clockState(s){return s.player.focus?'slow':s.tick<s.hasteUntil?'haste':'normal';}
@@ -120,8 +124,11 @@
   var PALETTE=[0,2,4,5,6,8],RED=0,PURPLE=2,CYAN=4,GREEN=5,YELLOW=6,WHITE=8;
   // 모양도 여섯 가지: 0 작은 구슬 1 중간 2 큰 구슬 3 쌀알탄 4 거품 5 큰 기물(색 번호 자리에 기물 번호)
   var SIZE_RADIUS=[4,6,10,3.2,15,14],RICE=3,SHAPE_PROP=5,MUZZLE=22;
-  // 작은/중간/큰 구슬과 거품은 사격으로 깬다. 쌀알탄·기물은 회피한다. 0은 파괴 불가.
-  var ORB_HP=[.5,1,2,0,3,0];
+  // 사용자가 보여 준 톱니/코어 크기(몸체 긴 변 56px) 이상인 탄 중 세 개에 하나만 사격으로 깬다.
+  // 옅은 빛무리·생성 직후 부풀림은 크기에 포함하지 않는다. 작은 구슬·거품은 그대로 남는다.
+  var BULLET_BREAK_MIN_SPAN=56,ORB_HP=[0,0,0,0,0,3],ORB_BREAK_EVERY=3,ORB_FRAGMENT_COUNT=3,ORB_FRAGMENT_GRACE=36,ORB_FRAGMENT_SPEED=80;
+  // 화면과 파괴 크기 판정이 같은 몸체 길이를 쓴다. 휴대폰 확대는 작은 탄의 파괴 자격을 바꾸지 않는다.
+  var PROP_LONG={'sword-violet':68,cleaver:64,'sword-balrog':72,obelisk:80,spire:72,'twin-blade':62,crescent:58,tissue:34,money:36,heel:40,feather:44,hexagram:46,gear:56,skull:34,'demon-hand':46};
   // 큰 기물. upright는 절대 돌리지 않는 것(육망성은 똑바로 선 채 아래로만 내려온다. 사용자 11-16: 십자가는 늘 좋은 것이라 적이 쓰지 않는다).
   var PROPS=[{key:'sword-violet',radius:12},{key:'cleaver',radius:14},{key:'sword-balrog',radius:14},{key:'obelisk',radius:17},{key:'spire',radius:18},
     {key:'twin-blade',radius:13},{key:'crescent',radius:14},{key:'tissue',radius:10},{key:'money',radius:10},{key:'heel',radius:11},{key:'feather',radius:9},
@@ -131,6 +138,10 @@
     {key:'skull',radius:11,drawn:true,glow:2},{key:'demon-hand',radius:12,drawn:true,glow:5}];
   gather('props',PROPS,true);
   var P={};PROPS.forEach(function(p,i){P[p.key]=i;});
+  function propRenderSpan(prop){return PROP_LONG[prop.key]||Math.round((prop.radius||12)*4.4);}
+  function bulletRenderSpan(size,color){return size===SHAPE_PROP?propRenderSpan(PROPS[color]):SIZE_RADIUS[size]*(size===RICE?5.2:2);}
+  function breakableHp(size,color){return bulletRenderSpan(size,color)>=BULLET_BREAK_MIN_SPAN?ORB_HP[size]:0;}
+  function isBulletBreakable(s,i){return !!s.bbreakable[i]&&breakableHp(s.bsize[i],s.bcolor[i])>0;}
   // 탄 변화 방식: 1 영웅을 다시 조준 2 각도 꺾기 3 터져서 고리로 4 가지치기(프랙탈)
   var MODE_REAIM=1,MODE_TURN=2,MODE_SPLIT=3,MODE_BRANCH=4;
 
@@ -146,14 +157,17 @@
     if(s.n>=s.cap){s.dropped++;return;}
     o=o||{};var size=o.size||0;
     // 화면이 붐비면(상한의 72% 이상) 새 탄을 하나 걸러 하나만, 82% 이상이면 쉬게 한다(조형물은 예외). 느린 탄이 쌓여도 상한에 닿지 않는다.
-    if(s.n>=s.cap*.72&&size!==SHAPE_PROP){s.thin=(s.thin+1)|0;if(s.n>=s.cap*.82||s.thin%2)return;}
+    if(s.n>=s.cap*.72&&size!==SHAPE_PROP&&!o.fragment){s.thin=(s.thin+1)|0;if(s.n>=s.cap*.82||s.thin%2)return;}
     // 보스 한가운데서 쏘는 탄은 보스 몸 가장자리(MUZZLE)에서 나오게 옮긴다. 탄이 몸을 덮어 보스가 가려지지 않는다(7분야 심사 3차 지적).
-    var b=s.boss;if(b&&s.stage==='card'&&Math.abs(x-b.x)<2&&Math.abs(y-b.y)<2){x+=Math.cos(angle)*MUZZLE;y+=Math.sin(angle)*MUZZLE;}
+    var b=s.boss;if(!o.fragment&&b&&s.stage==='card'&&Math.abs(x-b.x)<2&&Math.abs(y-b.y)<2){x+=Math.cos(angle)*MUZZLE;y+=Math.sin(angle)*MUZZLE;}
     var i=s.n++;
     s.bx[i]=x;s.by[i]=y;s.ba[i]=angle;s.bs[i]=speed*s.rules.speed;
     s.bturn[i]=o.turn||0;s.bacc[i]=o.accel||0;s.bmin[i]=o.min===undefined?0:o.min;s.bmax[i]=o.max===undefined?400:o.max;
     s.bat[i]=o.at||0;s.bmode[i]=o.mode||0;s.barg[i]=o.arg||0;s.bs2[i]=(o.speed2||0)*s.rules.speed;s.bgen[i]=o.gen||0;
-    s.bhp[i]=ORB_HP[size]||0;
+    var hp=breakableHp(size,o.color||0),eligible=hp>0;
+    if(eligible)s.orbSerial++;
+    s.bbreakable[i]=eligible&&(o.breakable===true||o.breakable!==false&&(s.orbSerial-1)%ORB_BREAK_EVERY===0)?1:0;
+    s.bhp[i]=s.bbreakable[i]?hp:0;s.bfragment[i]=o.fragment?1:0;s.bgrace[i]=o.grace||BLOOM_TICKS;
     s.bage[i]=0;s.blife[i]=o.life||780;s.bsize[i]=size;s.bcolor[i]=o.color||0;s.bgrazed[i]=0;s.bbounce[i]=size===SHAPE_PROP?0:o.bounce||0;
     s.bspin[i]=size===SHAPE_PROP&&PROPS[o.color||0].upright?0:o.spin||0;
   }
@@ -615,9 +629,10 @@
    * segment 직접 시작은 연습/전체 패턴 검사이므로 기본은 원래 길이; pacing:true로 실제 여정 길이를 검사한다.
    * nominalMinutes는 목표 예산이지 플레이어별 완료 시간 보장이 아니다. */
   var PACING={
-    gentle:{nominalMinutes:60,waveMinutes:20,bossMinutes:35,presentationMinutes:5,hpScale:.65,skipRepeatedPlain:true},
-    normal:{nominalMinutes:90,waveMinutes:30,bossMinutes:55,presentationMinutes:5,hpScale:1,skipRepeatedPlain:true},
-    hell:{nominalMinutes:120,waveMinutes:40,bossMinutes:75,presentationMinutes:5,hpScale:1,skipRepeatedPlain:false}
+    // 일반 탄이 주포를 막지 않는 규칙의 실제 사격 시간으로 재측정했다. 탄속·발사 박자는 바꾸지 않는다.
+    gentle:{nominalMinutes:60,waveMinutes:20,bossMinutes:35,presentationMinutes:5,hpScale:.75,skipRepeatedPlain:true},
+    normal:{nominalMinutes:90,waveMinutes:30,bossMinutes:55,presentationMinutes:5,hpScale:1.3,skipRepeatedPlain:true},
+    hell:{nominalMinutes:120,waveMinutes:40,bossMinutes:75,presentationMinutes:5,hpScale:1.3,skipRepeatedPlain:false}
   };
   var REPEATED_PLAIN={},pacingTotals={};
   (function(){var seen={};SEGMENTS.forEach(function(g,i){if(g.kind!=='card'||g.spell)return;var key=g.stage+':'+g.actor;if(seen[key])REPEATED_PLAIN[i]=true;seen[key]=true;});
@@ -626,27 +641,28 @@
   function waveDuration(s,g){if(!s.paced)return g.duration;var p=PACING[s.difficulty],tot=pacingTotals[s.difficulty];return Math.max(120,Math.round(g.duration*(p.waveMinutes*3600-tot.waves*30)/tot.waveTicks));}
   function cardDuration(s,g){if(!s.paced)return g.time;var p=PACING[s.difficulty],tot=pacingTotals[s.difficulty];return Math.max(3,g.time*p.bossMinutes*60/tot.bossSeconds*1.4);}
   function cardHp(s,g){return s.paced?Math.max(20,Math.round(g.hp*PACING[s.difficulty].hpScale)):g.hp;}
-  function pacingReport(difficulty){var d=PACING[difficulty]?difficulty:'normal',p=PACING[d],tot=pacingTotals[d],s={difficulty:d,paced:true},wave=0,boss=0;plannedSegments(d).forEach(function(i){var g=SEGMENTS[i];if(g.kind==='wave')wave+=(waveDuration(s,g)+30)/60;else boss+=cardDuration(s,g);});return {difficulty:d,targetMinutes:p.nominalMinutes,waveBudgetMinutes:wave/60,bossBudgetMinutes:p.bossMinutes,cardTimeoutMinutes:boss/60,presentationBudgetMinutes:p.presentationMinutes,waves:tot.waves,cards:tot.cards,skippedPlain:SEGMENTS.length-tot.waves-tot.cards};}
+  function pacingReport(difficulty){var d=PACING[difficulty]?difficulty:'normal',p=PACING[d],tot=pacingTotals[d],s={difficulty:d,paced:true},wave=0,boss=0;plannedSegments(d).forEach(function(i){var g=SEGMENTS[i];if(g.kind==='wave')wave+=(waveDuration(s,g)+30)/60;else boss+=cardDuration(s,g);});return {difficulty:d,targetMinutes:p.nominalMinutes,waveBudgetMinutes:wave/60,bossBudgetMinutes:p.bossMinutes,cardHpScale:p.hpScale,cardTimeoutMinutes:boss/60,presentationBudgetMinutes:p.presentationMinutes,waves:tot.waves,cards:tot.cards,skippedPlain:SEGMENTS.length-tot.waves-tot.cards};}
   function stageTargetSeconds(difficulty,index){var d=PACING[difficulty]?difficulty:'normal',p=PACING[d],tot=pacingTotals[d],seconds=p.presentationMinutes*60/STAGES.length;plannedSegments(d).forEach(function(i){var g=SEGMENTS[i];if(g.stage===index)seconds+=g.kind==='wave'?g.duration/tot.waveTicks*p.waveMinutes*60:g.time/tot.bossSeconds*p.bossMinutes*60;});return seconds;}
   STAGES.forEach(function(g){g.authoredSeconds=g.seconds;g.seconds=stageTargetSeconds('normal',g.index);});
 
 
 
-  /* options: {difficulty, seed, stage(시작 스테이지), segment(시작 구간), compact(휴대폰 모드), bossOnly(보스 체험: 그 스테이지의 보스전만), growth(중간에서 시작하면 그만큼 자란 공격·필살 단계로)} */
+  /* options: {hero('memory' 또는 'seoha'), difficulty, seed, stage(시작 스테이지), segment(시작 구간), compact(휴대폰 모드), bossOnly(보스 체험: 그 스테이지의 보스전만), growth(중간에서 시작하면 그만큼 자란 공격·필살 단계로)} */
   function createRun(options){
     options=options||{};var difficulty=DIFFICULTY[options.difficulty]?options.difficulty:'normal',rules=Object.assign({},DIFFICULTY[difficulty]),compact=!!options.compact;
     var startSeg=Number.isInteger(options.segment)&&SEGMENTS[options.segment]?options.segment:Number.isInteger(options.stage)&&STAGES[options.stage]?STAGES[options.stage].first:0;
-    var s={revision:43,paced:options.pacing===true||(options.pacing!==false&&!Number.isInteger(options.segment)),difficulty:difficulty,rules:rules,compact:compact,density:rules.density*(compact?COMPACT_DENSITY:1),sizeScale:compact?COMPACT_SIZE:1,cap:compact?COMPACT_CAP:CAP,
+    var selectedHero=heroProfile(options);
+    var s={revision:43,hero:selectedHero?selectedHero.id:'memory',paced:options.pacing===true||(options.pacing!==false&&!Number.isInteger(options.segment)),difficulty:difficulty,rules:rules,compact:compact,density:rules.density*(compact?COMPACT_DENSITY:1),sizeScale:compact?COMPACT_SIZE:1,cap:compact?COMPACT_CAP:CAP,
       seed:(options.seed>>>0)||1,rng:(options.seed>>>0)||1,tick:0,stage:'break',stageTick:BREAK_TICKS-30,seg:startSeg-1,segTick:0,stageIndex:SEGMENTS[startSeg].stage,spellNumber:0,
       player:{x:W/2,y:H-84,hp:rules.hp,maxHp:rules.hp,invulnerableUntil:0,r:rules.radius,focus:false},
       boss:{x:W/2,y:-60,targetX:W/2,targetY:132,hp:1,maxHp:1,actor:'',name:'',mid:false,hitTick:-99,leaving:false,present:false,down:null},
       bossOnly:!!options.bossOnly,rushStage:SEGMENTS[startSeg].stage,bombs:rules.bombs,gauge:0,spellClean:false,captures:0,itemsTaken:0,lane:undefined,
       n:0,drifted:[],mobDrops:0,hearts:0,dropped:0,peak:0,score:0,graze:0,hits:0,kills:0,cleared:0,timeouts:0,events:[],cancelled:[],pops:[],lasers:[],mobs:[],warned:false,sn:0,itemCount:0,
-      lastStage:STAGES.length-1,lastWipe:-1e9,started:false,results:[],bombsUsed:0,autoBombs:0,distorts:0,orbsBroken:0,bombPulse:null,pulseInfo:null,noDistort:options.distort===false,drng:((((options.seed>>>0)||1)*2246822519)^0x9e3779b9)>>>0||7,power:1,exp:0,bombLevel:1,fills:0,hasteUntil:-1,zaps:[],lastBomb:null,mark:{tick:0,score:0,hits:0,bombs:0,captures:0,spells:0}};
+      lastStage:STAGES.length-1,lastWipe:-1e9,started:false,results:[],bombsUsed:0,autoBombs:0,distorts:0,orbsBroken:0,orbSerial:0,orbFragments:0,bombPulse:null,pulseInfo:null,noDistort:options.distort===false,drng:((((options.seed>>>0)||1)*2246822519)^0x9e3779b9)>>>0||7,power:1,exp:0,bombLevel:1,fills:0,hasteUntil:-1,zaps:[],lastBomb:null,mark:{tick:0,score:0,hits:0,bombs:0,captures:0,spells:0}};
     if(Number.isInteger(options.stages)&&options.stages>0)s.lastStage=Math.min(STAGES.length-1,s.stageIndex+options.stages-1);
     ['bx','by','ba','bs','bturn','bacc','bmin','bmax','barg','bs2','bspin','bhp'].forEach(function(k){s[k]=new Float32Array(CAP);});
-    ['bage','blife','bat'].forEach(function(k){s[k]=new Uint16Array(CAP);});
-    ['bsize','bcolor','bgrazed','bmode','bgen','bbounce'].forEach(function(k){s[k]=new Uint8Array(CAP);});s.figures=[];s.ripples=[];s.floor=freshFloor(s,s.stageIndex);
+    ['bage','blife','bat','bgrace'].forEach(function(k){s[k]=new Uint16Array(CAP);});
+    ['bsize','bcolor','bgrazed','bmode','bgen','bbounce','bbreakable','bfragment'].forEach(function(k){s[k]=new Uint8Array(CAP);});s.figures=[];s.ripples=[];s.floor=freshFloor(s,s.stageIndex);
     s.sx=new Float32Array(SHOT_CAP);s.sy=new Float32Array(SHOT_CAP);s.svx=new Float32Array(SHOT_CAP);s.shoming=new Uint8Array(SHOT_CAP);
     var from=s.stageIndex;if(options.growth&&from>0){/* 화면이 켜 준 경우만(검사·연습용 구간 시작은 1단계 그대로) */var pf=Math.min(5,1+Math.floor(from/6)),bf=Math.min(5,1+Math.floor(from/8));s.exp=POWER_EXP[pf-1];s.power=pf;s.fills=BOMB_FILLS[bf-1];s.bombLevel=bf;}
     if(options.grown){var ge=+options.grown.exp,gf=+options.grown.fills;if(ge>s.exp){s.exp=ge;s.power=levelOf(POWER_EXP,ge);}if(gf>s.fills){s.fills=gf;s.bombLevel=levelOf(BOMB_FILLS,gf);}} // 중간 저장에서 이어 하면 그때까지 자란 단계 그대로(11-16 실검증: 이어하기 뒤 필살 단계가 내려가던 문제)
@@ -659,7 +675,7 @@
   function removeBullet(s,i){
     var j=--s.n;if(i===j)return;
     s.bx[i]=s.bx[j];s.by[i]=s.by[j];s.ba[i]=s.ba[j];s.bs[i]=s.bs[j];s.bturn[i]=s.bturn[j];s.bacc[i]=s.bacc[j];s.bmin[i]=s.bmin[j];s.bmax[i]=s.bmax[j];s.barg[i]=s.barg[j];s.bs2[i]=s.bs2[j];s.bspin[i]=s.bspin[j];s.bhp[i]=s.bhp[j];
-    s.bage[i]=s.bage[j];s.blife[i]=s.blife[j];s.bat[i]=s.bat[j];s.bsize[i]=s.bsize[j];s.bcolor[i]=s.bcolor[j];s.bgrazed[i]=s.bgrazed[j];s.bmode[i]=s.bmode[j];s.bgen[i]=s.bgen[j];s.bbounce[i]=s.bbounce[j];
+    s.bage[i]=s.bage[j];s.blife[i]=s.blife[j];s.bat[i]=s.bat[j];s.bsize[i]=s.bsize[j];s.bcolor[i]=s.bcolor[j];s.bgrazed[i]=s.bgrazed[j];s.bmode[i]=s.bmode[j];s.bgen[i]=s.bgen[j];s.bbounce[i]=s.bbounce[j];s.bbreakable[i]=s.bbreakable[j];s.bfragment[i]=s.bfragment[j];s.bgrace[i]=s.bgrace[j];
   }
   // 화면의 탄과 광선을 모두 지우고, 지운 탄 자리를 연출용으로 남긴다(최대 320개). 지운 탄 수를 돌려준다.
   function cancelAll(s,drift){
@@ -720,7 +736,7 @@
     s.bombPulse={left:BOMB_PULSES,next:s.tick+BOMB_PULSE_START,lv:lv}; // 피해는 컷씬 뒤 BOMB_PULSES 번에 나눠 들어간다(총합은 예전 한 번과 같다, 사용자 11-16)
     if(s.stage==='card')targets.push(s.boss.x,s.boss.y);
     for(var k=0;k<s.mobs.length&&targets.length<24;k++)targets.push(s.mobs[k].x,s.mobs[k].y);
-    s.lastBomb={level:lv,name:BOMB_NAMES[lv],x:s.player.x,y:s.player.y,tick:s.tick,targets:targets};note(s,'bomb'); // 화면은 이 단계·과녁 자리로 필살기 연출을 그린다
+    s.lastBomb={hero:s.hero,level:lv,name:bombName(s,lv),x:s.player.x,y:s.player.y,tick:s.tick,targets:targets};note(s,'bomb'); // 화면은 이 단계·과녁 자리로 필살기 연출을 그린다
   }
   function segment(s){return SEGMENTS[s.seg];}
   /* 스테이지 하나를 마쳤다. 그 스테이지 동안의 기록을 남긴다. 별: 깨면 1, 한 번도 안 맞으면 +1, 폭탄을 안 쓰면 +1. */
@@ -811,16 +827,26 @@
       if(f===s.boss){f.hp-=dmg*SHOT_DAMAGE[s.power];s.score+=dmg*2;}else{f.hp-=dmg*SHOT_DAMAGE[s.power];f.hitTick=s.tick;if(f.hp<=0)killMob(s,s.mobs.indexOf(f));}}
     if(hit.length)note(s,'zap');
   }
-  // 영웅 탄의 한 틱 이동 선분으로 검사한다. 15px씩 움직이는 주포가 작은 구슬을 건너뛰지 않으며,
-  // 한 발은 가장 먼저 만난 구슬 하나에만 막힌다. 벡터 배열의 교환 삭제 때 남은 내구도도 같이 옮긴다.
+  // 깨진 큰 탄 하나에서만 작은 잔탄이 나온다. 영웅을 향하는 방향은 비우고 넓게 벌어지며,
+  // 생성 후 0.6초는 무해하다. 잔탄은 다시 부서지거나 분열하지 않는다. 폭탄·구간 정리는 이 함수를 부르지 않는다.
+  function fragmentOrb(s,x,y,color,heading){
+    var dx=x-s.player.x,dy=y-s.player.y,away=dx*dx+dy*dy>1e-6?Math.atan2(dy,dx):heading+Math.PI;
+    for(var k=0;k<ORB_FRAGMENT_COUNT&&s.n<s.cap;k++){
+      var before=s.n;
+      spawn(s,x,y,away+(k-1)*.9,ORB_FRAGMENT_SPEED,{size:0,color:color,life:480,fragment:true,grace:ORB_FRAGMENT_GRACE,breakable:false});
+      s.orbFragments+=s.n-before;
+    }
+  }
+  // 영웅 탄의 한 틱 이동 선분으로 검사한다. 한 발은 가장 먼저 만난 파괴 가능한 몸체 하나에만 막힌다.
+  // 벡터 배열의 교환 삭제 때 남은 내구도·파괴 표시·생성 보호 시간도 같이 옮긴다.
   function shotHitsOrb(s,x0,y0,x1,y1,dmg){
     var vx=x1-x0,vy=y1-y0,len2=vx*vx+vy*vy,near=2,at=-1,minX=Math.min(x0,x1),maxX=Math.max(x0,x1),minY=Math.min(y0,y1),maxY=Math.max(y0,y1);
     for(var k=s.n-1;k>=0;k--){
-      if(!ORB_HP[s.bsize[k]])continue;
+      if(!isBulletBreakable(s,k))continue;
       var r=bulletRadius(s,k)+3,bx=s.bx[k],by=s.by[k];
       if(bx<minX-r||bx>maxX+r||by<minY-r||by>maxY+r)continue;
       // 중심의 투영점이 아니라 원 표면에 처음 닿는 시각을 비교한다.
-      // 큰 버블의 껍질 뒤에 작은 구슬이 있어도 주포가 껍질을 뚫고 구슬부터 맞히지 않는다.
+      // 큰 기물 뒤의 다른 기물부터 맞지 않는다.
       var dx=x0-bx,dy=y0-by,c=dx*dx+dy*dy-r*r,entry=0;
       if(c>0){
         if(!len2)continue;
@@ -832,20 +858,27 @@
       if(entry<near){near=entry;at=k;}
     }
     if(at<0)return false;
-    if(s.bhp[at]<=0)s.bhp[at]=ORB_HP[s.bsize[at]];
+    if(s.bhp[at]<=0)s.bhp[at]=breakableHp(s.bsize[at],s.bcolor[at]);
     s.bhp[at]-=dmg;
     if(s.bhp[at]<=1e-6){
-      if(s.pops.length<64*3)s.pops.push(s.bx[at],s.by[at],0);
-      removeBullet(s,at);s.orbsBroken++;s.score+=2;
+      var bx=s.bx[at],by=s.by[at],color=s.bcolor[at],heading=s.ba[at];
+      if(s.bsize[at]===SHAPE_PROP)color=PROPS[color].glow===undefined?WHITE:PROPS[color].glow;
+      if(s.pops.length<64*3)s.pops.push(bx,by,0);
+      removeBullet(s,at);s.orbsBroken++;s.score+=2;fragmentOrb(s,bx,by,color,heading);
       if(s.tick-(s.orbBreakTick===undefined?-99:s.orbBreakTick)>=6){s.orbBreakTick=s.tick;note(s,'orbBreak');}
     }
     return true;
   }
   function updateShots(s){
-    var b=s.boss,p=s.player,i,k,target=homingX(s),plan=POWER_SHOTS[s.power],dmg=SHOT_DAMAGE[s.power],haste=s.tick<s.hasteUntil?1:0,lay;
+    var b=s.boss,p=s.player,i,k,target=homingX(s),plan=POWER_SHOTS[s.power],dmg=SHOT_DAMAGE[s.power],haste=s.tick<s.hasteUntil?1:0,lay,hero=heroProfile(s),clockHands=hero&&hero.shot.style==='clock-hands'?hero.shot:null,offset,vx;
     // 단계마다 주포·유도탄이 늘고 간격이 짧아진다(가속 중에는 한 틱 더 짧게). 적 바로 아래에 서면 주포까지 맞아 훨씬 빨리 깬다.
-    if(s.tick%Math.max(3,plan[1]-haste)===0){lay=MAIN_LAYOUT[plan[0]];for(k=0;k<lay.length&&s.sn<SHOT_CAP;k++){s.shoming[s.sn]=0;s.svx[s.sn]=lay[k][1];s.sx[s.sn]=p.x+lay[k][0];s.sy[s.sn++]=p.y-18;}}
-    if(s.tick%Math.max(4,plan[3]-haste)===0){lay=HOMING_LAYOUT[plan[2]];for(k=0;k<lay.length&&s.sn<SHOT_CAP;k++){s.shoming[s.sn]=1;s.svx[s.sn]=0;s.sx[s.sn]=p.x+lay[k];s.sy[s.sn++]=p.y-4+Math.abs(lay[k])*.1;}}
+    // 윤서하는 같은 탄 수·간격·피해로 시간검을 펼친다. 저속일 때만 주포와 유도탄 출발 폭을 좁혀 집중한다.
+    if(s.tick%Math.max(3,plan[1]-haste)===0){lay=MAIN_LAYOUT[plan[0]];for(k=0;k<lay.length&&s.sn<SHOT_CAP;k++){
+      offset=lay[k][0];vx=lay[k][1];if(clockHands){offset*=p.focus?clockHands.focusOffsetScale:clockHands.offsetScale;vx=(k-(lay.length-1)*.5)*(p.focus?clockHands.focusSpread:clockHands.spread);}
+      s.shoming[s.sn]=0;s.svx[s.sn]=vx;s.sx[s.sn]=p.x+offset;s.sy[s.sn++]=p.y-18;}}
+    if(s.tick%Math.max(4,plan[3]-haste)===0){lay=HOMING_LAYOUT[plan[2]];for(k=0;k<lay.length&&s.sn<SHOT_CAP;k++){
+      offset=lay[k];if(clockHands)offset*=p.focus?clockHands.focusHomingOffsetScale:clockHands.homingOffsetScale;
+      s.shoming[s.sn]=1;s.svx[s.sn]=0;s.sx[s.sn]=p.x+offset;s.sy[s.sn++]=p.y-4+Math.abs(offset)*.1;}}
     if(plan[4]&&s.tick%Math.max(20,plan[5]-haste*8)===0)memoryBolt(s,plan[4],plan[6]);
     for(i=s.sn-1;i>=0;i--){
       var sx0=s.sx[i],sy0=s.sy[i];
@@ -1075,7 +1108,7 @@
         if(x<-4||x>W+4||y<-4||y>H+4){removeBullet(s,i);continue;}
         s.blife[i]=65535;s.bacc[i]=0;s.bturn[i]=0;if(s.bs[i]<EXPIRE_SPEED)s.bs[i]=EXPIRE_SPEED;if(s.bsize[i]!==SHAPE_PROP&&!s.bbounce[i])s.bbounce[i]=1;
       }
-      if(age<BLOOM_TICKS)continue; // 갓 피어난 탄은 아직 닿지 않는다
+      if(age<Math.max(BLOOM_TICKS,s.bgrace[i]))continue; // 갓 피어난 탄과 파괴 직후의 잔탄은 아직 닿지 않는다
       var dx=x-px,dy=y-py,radius=bulletRadius(s,i),d2=dx*dx+dy*dy,reach=radius+GRAZE_MARGIN;
       // 빠른 탄(한 틱에 4px 넘게 움직이는 탄)은 이전 위치→새 위치 선분에서 영웅에 가장 가까운 점으로 잰다: 한 틱 사이에 영웅을 건너뛰어도 맞는다.
       var mx=x-ox,my=y-oy,m2=mx*mx+my*my;
@@ -1381,8 +1414,8 @@
     function totalStars(p){var n=0;Object.keys(p.stars).forEach(function(k){n+=p.stars[k];});return n;}
     return {fresh:fresh,sanitize:sanitize,record:record,unlocked:unlocked,canPlay:canPlay,resume:resume,totalStars:totalStars};
   })();
-  var api={revision:43,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
-    PACING:PACING,stageTargetSeconds:stageTargetSeconds,plannedSegments:plannedSegments,pacingReport:pacingReport,waveDuration:waveDuration,cardDuration:cardDuration,cardHp:cardHp,SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,ORB_HP:ORB_HP,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
+  var api={revision:43,heroProfile:heroProfile,bombName:bombName,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
+    PACING:PACING,stageTargetSeconds:stageTargetSeconds,plannedSegments:plannedSegments,pacingReport:pacingReport,waveDuration:waveDuration,cardDuration:cardDuration,cardHp:cardHp,SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,PROP_LONG:PROP_LONG,propRenderSpan:propRenderSpan,bulletRenderSpan:bulletRenderSpan,BULLET_BREAK_MIN_SPAN:BULLET_BREAK_MIN_SPAN,isBulletBreakable:isBulletBreakable,ORB_HP:ORB_HP,ORB_BREAK_EVERY:ORB_BREAK_EVERY,ORB_FRAGMENT_COUNT:ORB_FRAGMENT_COUNT,ORB_FRAGMENT_GRACE:ORB_FRAGMENT_GRACE,ORB_FRAGMENT_SPEED:ORB_FRAGMENT_SPEED,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
     BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,figurePhase:figurePhase,FIGURE_ON_TICKS:FIGURE_ON_TICKS,FIGURE_OFF_TICKS:FIGURE_OFF_TICKS,FIGURE_CHARGE_TICKS:FIGURE_CHARGE_TICKS,RUNE_AT:RUNE_AT,RISER_HP:RISER_HP,RISER_SCORE:RISER_SCORE,riserHp:riserHp,shotHitsRiser:shotHitsRiser,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
     POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,FOCUS_SLOW:FOCUS_SLOW,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,BOMB_PULSES:BOMB_PULSES,BOMB_PULSE_START:BOMB_PULSE_START,BOMB_PULSE_EVERY:BOMB_PULSE_EVERY,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp};
   if(typeof module==='object'&&module.exports)module.exports=api;

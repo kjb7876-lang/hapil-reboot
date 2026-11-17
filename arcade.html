@@ -103,16 +103,65 @@
     #arcade-result.fallen>*:not(#result-cross):not(.kicker){animation:fallen-rise .5s ease-out .7s both}
     @keyframes fallen-rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
     @media (prefers-reduced-motion:reduce){#arcade-result.fallen>*{animation:none!important}}
-    #arcade-story,#arcade-rules{position:fixed;inset:0;margin:auto;width:min(100%,560px);height:100dvh;max-height:100dvh;padding:20px max(18px,5%);z-index:6;justify-content:flex-start;gap:12px;overscroll-behavior:contain}
-    #arcade-story>*,#arcade-rules>*{flex-shrink:0}#arcade-story h2,#arcade-rules h2{font-size:24px;line-height:1.3;word-break:keep-all}
-    #story-portrait{width:108px;height:128px;background-repeat:no-repeat;background-position:0 0;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));animation:story-enter .7s ease-out both}
-    .story-card{width:100%;padding:16px;border:1px solid #8a7c68;border-radius:12px;background:rgba(15,15,28,.9);text-align:left;min-height:132px}
-    html.ink .story-card{background:rgba(235,224,200,.96)}#story-speaker{font-weight:bold;color:#b95748;font-size:13px;margin:0 0 10px}#story-text{font-size:16px;line-height:1.8;margin:0;word-break:keep-all;overflow-wrap:anywhere}
-    #arcade-story .row{flex-wrap:wrap;justify-content:center}#story-next{min-width:140px}.story-auto{display:flex;align-items:center;gap:8px;min-height:44px}.story-auto input{width:22px;height:22px}
+    /* Main-boss cut-in: all motion is a single entrance, never a repeating flash. */
+    #arcade-rules{position:fixed;inset:0;margin:auto;width:min(100%,560px);height:100dvh;max-height:100dvh;padding:20px max(18px,5%);z-index:6;justify-content:flex-start;gap:12px;overscroll-behavior:contain}
+    #arcade-rules>*{flex-shrink:0}#arcade-rules h2{font-size:24px;line-height:1.3;word-break:keep-all}
     .rules-copy{text-align:left;font-size:14px;line-height:1.8;width:100%;max-width:440px}.rules-copy p{margin:0 0 12px}
-    @keyframes story-enter{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:none}}
-    @media(max-height:500px){#story-portrait{width:64px;height:76px}#arcade-story{gap:6px}#arcade-story h2{font-size:20px}.story-card{min-height:90px;padding:10px}#story-text{font-size:14px}}
-    @media(prefers-reduced-motion:reduce){#story-portrait{animation:none}}
+    #arcade-story,html.ink #arcade-story{position:fixed;inset:0;margin:auto;width:100%;height:100dvh;max-height:100dvh;padding:max(16px,env(safe-area-inset-top)) max(18px,env(safe-area-inset-left)) max(12px,env(safe-area-inset-bottom));z-index:6;isolation:isolate;justify-content:flex-start;gap:10px;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;color:#f5ebd4;background:radial-gradient(ellipse at 48% 35%,rgba(105,26,29,.62),transparent 60%),linear-gradient(125deg,#08090e 12%,#1e121b 52%,#08090e 88%)}
+    #arcade-story>*{flex-shrink:0}#arcade-story[hidden],html.ink #arcade-story[hidden]{display:none}
+    .story-cutin-atmosphere{position:absolute;inset:0;pointer-events:none;z-index:-1;overflow:hidden;background:repeating-linear-gradient(160deg,transparent 0 85px,rgba(181,121,61,.055) 86px 87px,transparent 88px 174px)}
+    .story-cutin-atmosphere:before,.story-cutin-atmosphere:after{content:"";position:absolute;inset:10% -10%;background:radial-gradient(circle at 12% 30%,#dab274 0 1px,transparent 2px),radial-gradient(circle at 75% 20%,#b85844 0 2px,transparent 3px),radial-gradient(circle at 45% 74%,#e8c780 0 1px,transparent 2px),radial-gradient(circle at 87% 65%,#9f483d 0 1px,transparent 2px);background-size:130px 170px,230px 270px,190px 150px,210px 310px;opacity:.34;animation:story-dust 1.3s ease-out both}
+    .story-cutin-atmosphere:after{transform:rotate(180deg);opacity:.15}
+    .story-cutin-slash{position:absolute;left:-20%;right:-20%;top:23%;height:42%;transform:rotate(-12deg);background:linear-gradient(180deg,transparent 0 2%,#a74932 3% 3.5%,#e1b96d 4% 4.4%,rgba(2,3,7,.95) 5% 91%,#8f362c 92% 93%,transparent 95%);clip-path:polygon(0 9%,97% 0,100% 86%,3% 100%);animation:story-slash .65s cubic-bezier(.15,.8,.2,1) both}
+    .story-cutin-streaks{position:absolute;inset:8% -10%;background:repeating-linear-gradient(166deg,transparent 0 44px,rgba(238,188,105,.24) 45px 46px,transparent 47px 87px);mask-image:linear-gradient(90deg,#000,transparent 32%,transparent 68%,#000);animation:story-streaks .7s ease-out both}
+    .story-cutin-flash{position:absolute;inset:0;background:#eed7aa;opacity:0;animation:story-flash .28s ease-out both}
+    .story-cutin-bar{position:absolute;left:0;right:0;height:12px;background:#040507;box-shadow:0 1px rgba(213,174,99,.3)}.story-cutin-bar.top{top:0}.story-cutin-bar.bottom{bottom:0}
+    .story-heading{position:relative;width:100%;max-width:720px;text-align:left;border-left:3px solid #a94b3a;padding-left:12px;margin-top:4px;z-index:2}
+    #arcade-story .kicker,html.ink #arcade-story .kicker{font-size:10px;color:#d4ad71;letter-spacing:.22em}
+    #arcade-story h2,html.ink #arcade-story h2{margin:5px 0 0;font-size:18px;line-height:1.3;color:#f5ebd4;letter-spacing:.04em;word-break:keep-all;text-shadow:0 2px 10px #000}
+    html.ink #arcade-story h2:after{display:none}
+    .story-cutin-visual{position:relative;flex:1 0 170px;width:100%;max-width:720px;min-height:170px;isolation:isolate;overflow:hidden;border-bottom:1px solid rgba(213,174,99,.42)}
+    .story-cutin-art{position:absolute;inset:0;overflow:hidden;mask-image:linear-gradient(180deg,#000 78%,transparent 100%)}
+    #story-portrait{position:absolute;left:50%;top:0;width:auto;height:100%;aspect-ratio:var(--portrait-ratio,.72);translate:-50% 0;background-repeat:no-repeat;background-position:left top;filter:drop-shadow(0 0 18px rgba(177,54,44,.52)) drop-shadow(0 8px 8px #000);animation:story-boss-reveal .85s cubic-bezier(.15,.8,.2,1) both;transform-origin:60% 48%}
+    #story-portrait[hidden]{display:none}
+    .story-cutin-nameplate{position:absolute;left:2%;right:6%;bottom:14px;text-align:left;z-index:2;animation:story-name .75s ease-out both;text-shadow:0 3px 8px #000,0 1px 2px #000}
+    #story-boss-role{display:block;margin-bottom:4px;color:#d6ad6a;font-size:11px;letter-spacing:.23em}
+    #story-boss-name{display:block;color:#fff1d3;font:700 clamp(28px,7vw,56px)/1.15 "Noto Serif KR","Nanum Myeongjo",serif;letter-spacing:.05em;overflow-wrap:anywhere}
+    #story-cutin-phase{position:absolute;right:3%;top:10px;color:#b96952;font-size:9px;letter-spacing:.25em;writing-mode:vertical-rl}
+    #arcade-story .story-card,html.ink #arcade-story .story-card{position:relative;width:100%;max-width:620px;padding:14px 16px;border:1px solid rgba(209,174,114,.62);border-left:3px solid #a64b38;border-radius:2px;background:linear-gradient(115deg,rgba(37,28,30,.97),rgba(12,14,22,.98));box-shadow:0 12px 30px rgba(0,0,0,.35);text-align:left;min-height:132px;color:#f5ebd4}
+    #story-speaker{font-weight:600;color:#dfb574;font-size:13px;letter-spacing:.04em;margin:0 0 8px}#story-text{font-size:16px;line-height:1.75;margin:0;word-break:keep-all;overflow-wrap:anywhere}
+    #story-count{position:absolute;right:12px;top:12px;color:#a18c76;font-size:10px}#story-speaker{padding-right:42px}
+    .story-footer{position:relative;width:100%;max-width:620px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:6px}
+    #arcade-story .row{width:100%;gap:10px;justify-content:center;flex-wrap:wrap}
+    #arcade-story button,html.ink #arcade-story button{min-height:46px;border:1px solid #947d59;border-radius:3px;background:#171820;color:#e3d7c3;padding:10px 18px;font-family:system-ui,"Apple SD Gothic Neo",sans-serif}
+    #arcade-story button.primary,html.ink #arcade-story button.primary{min-width:140px;background:#dbc18b;color:#19151a;border-color:#e8d09a;font-weight:700}
+    #arcade-story button:focus-visible{outline:3px solid #f7e3b2;outline-offset:3px}#arcade-story button:disabled{opacity:.4}
+    #arcade-story .note,html.ink #arcade-story .note{color:#bcb09f}.story-auto{display:flex;align-items:center;gap:8px;min-height:38px;font:12px/1.4 system-ui,"Apple SD Gothic Neo",sans-serif}.story-auto input{width:22px;height:22px;accent-color:#d4ad71}
+    #arcade-story[data-phase="impact"] .story-cutin-visual{flex-basis:300px;min-height:260px;border-bottom-color:transparent}
+    #arcade-story[data-phase="impact"] #story-portrait{left:54%;top:-3%;height:106%}
+    #arcade-story[data-phase="impact"] #story-boss-name{font-size:clamp(38px,10vw,76px)}
+    #arcade-story[data-phase="impact"] .story-card,#arcade-story[data-phase="impact"] .story-auto,#arcade-story[data-phase="impact"] #story-next{visibility:hidden}
+    #arcade-story[data-phase="impact"] .story-card,html.ink #arcade-story[data-phase="impact"] .story-card{height:0;min-height:0;margin:0;padding:0;border:0;overflow:hidden}
+    #arcade-story[data-phase="memory"] .story-cutin-streaks{opacity:.35}
+    #arcade-story[data-paused="true"],#arcade-story[data-paused="true"] *,#arcade-story[data-paused="true"] *:before,#arcade-story[data-paused="true"] *:after{animation-play-state:paused!important}
+    #arcade-story[data-paused="true"]{pointer-events:none}#arcade-pause,#arcade-rules{z-index:8}
+    #arcade-story[data-lite="true"] *,#arcade-story[data-lite="true"] *:before,#arcade-story[data-lite="true"] *:after{animation:none!important}
+    #arcade-story[data-lite="true"] .story-cutin-flash{display:none}#arcade-story[data-lite="true"] #story-portrait{filter:none}
+    @keyframes story-slash{from{opacity:0;transform:translateX(-38%) rotate(-12deg) scaleX(.25)}to{opacity:1;transform:rotate(-12deg) scaleX(1)}}
+    @keyframes story-boss-reveal{from{opacity:0;transform:translate(18%,5%) scale(1.16);clip-path:polygon(100% 0,100% 0,100% 100%,100% 100%)}to{opacity:1;transform:none;clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}}
+    @keyframes story-name{0%,25%{opacity:0;transform:translateX(-28px)}100%{opacity:1;transform:none}}
+    @keyframes story-streaks{from{opacity:0;transform:translateX(-10%)}25%{opacity:1}to{opacity:.35;transform:translateX(0)}}
+    @keyframes story-dust{from{opacity:0;translate:0 18px}to{opacity:.34;translate:0 0}}
+    @keyframes story-flash{0%{opacity:0}12%{opacity:.48}100%{opacity:0}}
+    @media(max-width:400px){#arcade-story,html.ink #arcade-story{gap:8px;padding-left:16px;padding-right:16px}#arcade-story .story-card,html.ink #arcade-story .story-card{padding:12px;min-height:120px}#story-text{font-size:15px}#story-boss-name{font-size:30px}.story-cutin-visual{flex-basis:158px;min-height:158px}}
+    @media(max-height:500px) and (orientation:landscape){
+      #arcade-story,html.ink #arcade-story{display:grid;grid-template-columns:minmax(240px,1fr) minmax(300px,1fr);grid-template-rows:auto minmax(0,1fr) auto;column-gap:20px;row-gap:8px;padding:18px max(22px,env(safe-area-inset-left)) 12px;align-content:stretch;align-items:start}
+      #arcade-story[hidden],html.ink #arcade-story[hidden]{display:none}.story-heading{grid-column:2;grid-row:1;margin:0}.story-cutin-visual{grid-column:1;grid-row:1/4;align-self:stretch;height:100%;min-height:0!important;border-bottom:0}
+      #arcade-story .story-card,html.ink #arcade-story .story-card{grid-column:2;grid-row:2;align-self:center;min-height:0;max-height:100%;overflow-y:auto;padding:12px}#story-text{font-size:14px;line-height:1.65}.story-footer{grid-column:2;grid-row:3;gap:2px}.story-auto{min-height:30px;font-size:11px}
+      #arcade-story h2,html.ink #arcade-story h2{font-size:16px}#arcade-story .row{flex-wrap:nowrap}#arcade-story button,html.ink #arcade-story button{min-height:44px;padding:8px 14px}#story-portrait{left:54%;height:100%;top:0}#story-boss-name{font-size:36px}.story-cutin-nameplate{bottom:28px}
+      #arcade-story[data-phase="impact"] .story-cutin-visual{grid-column:1/3}.story-heading,.story-footer{z-index:3}#arcade-story[data-phase="impact"] #story-portrait{left:54%;height:106%}#arcade-story[data-phase="impact"] .story-cutin-nameplate{left:5%;bottom:24px}#arcade-story[data-phase="impact"] #story-boss-name{font-size:56px}
+    }
+    @media(prefers-reduced-motion:reduce){#arcade-story *,#arcade-story *:before,#arcade-story *:after{animation:none!important;transition:none!important}#arcade-story .story-cutin-flash{display:none}#story-portrait{filter:none}}
   </style>
 </head>
 <body>
@@ -195,26 +244,33 @@
       <button id="arcade-quit" type="button" data-i18n="toTitle">처음 화면으로</button>
     </div>
 
-    <div id="arcade-story" class="screen" role="dialog" aria-modal="true" aria-labelledby="story-title" hidden>
-      <p class="kicker" data-i18n="storyCanon">서사 정본 · 기억</p>
-      <h2 id="story-title"></h2>
-      <div id="story-portrait" role="img" aria-label="보스"></div>
-      <div class="story-card" aria-live="polite"><p id="story-speaker"></p><p id="story-text"></p></div>
-      <p class="note" id="story-count"></p>
-      <div class="row"><button id="story-next" class="primary" type="button" data-i18n="storyNext">다음</button><button id="story-skip" type="button" data-i18n="storySkip">건너뛰기</button></div>
-      <label class="note story-auto"><input id="story-auto" type="checkbox" checked><span data-i18n="storyAuto">자동 진행 · Esc로 멈춤</span></label>
+    <div id="arcade-story" class="screen" role="dialog" aria-modal="true" aria-labelledby="story-title" data-phase="impact" data-paused="false" data-lite="false" hidden>
+      <div class="story-cutin-atmosphere" aria-hidden="true"><div class="story-cutin-slash"></div><div class="story-cutin-streaks"></div><div class="story-cutin-flash"></div><div class="story-cutin-bar top"></div><div class="story-cutin-bar bottom"></div></div>
+      <header class="story-heading"><p class="kicker" data-i18n="storyCanon">서사 정본 · 기억</p><h2 id="story-title"></h2></header>
+      <div class="story-cutin-visual">
+        <div class="story-cutin-art"><div id="story-portrait" role="img" aria-label="보스"></div></div>
+        <div class="story-cutin-nameplate"><span id="story-boss-role">주요 보스</span><strong id="story-boss-name"></strong></div>
+        <span id="story-cutin-phase" aria-hidden="true">BOSS ENCOUNTER</span>
+      </div>
+      <div class="story-card" aria-live="polite"><p id="story-speaker"></p><p id="story-text"></p><p class="note" id="story-count"></p></div>
+      <footer class="story-footer">
+        <div class="row"><button id="story-next" class="primary" type="button" data-i18n="storyNext">다음</button><button id="story-skip" type="button" data-i18n="storySkip">건너뛰기</button></div>
+        <label class="note story-auto"><input id="story-auto" type="checkbox" checked><span data-i18n="storyAuto">자동 진행 · Esc로 멈춤</span></label>
+      </footer>
     </div>
     <div id="arcade-rules" class="screen" role="dialog" aria-modal="true" aria-labelledby="rules-title" hidden>
       <p class="kicker">HOW TO PLAY</p><h2 id="rules-title" data-i18n="rules">탄막 기본 규칙</h2>
       <div id="rules-body" class="rules-copy" data-i18n-html="rulesBody">
         <p><b>이동·사격</b> — 드래그 또는 방향키/WASD로 이동하며 사격은 자동입니다. Shift 또는 저속 버튼을 누르면 정밀 이동과 피격점 표시가 켜집니다.</p>
         <p><b>피격점·스침</b> — 캐릭터 그림 전체가 아닌 작은 피격점으로 판정합니다. 탄 가까이를 지나 스침 게이지를 채우면 폭탄 재고를 얻습니다.</p>
-        <p><b>구슬·버블</b> — 사격으로 부술 수 있으며 큰 버블은 여러 번 맞혀야 합니다. 쌀알탄·기물탄은 피해야 합니다.</p>
+        <p><b>대형탄 파괴</b> — 균열 표시가 있는 대형탄만 사격으로 부술 수 있습니다. 터지면 작은 잔탄 3개가 남습니다. 잔탄은 처음 잠깐 옅게 보이다가 위험해집니다. 작은 구슬·버블·쌀알탄과 표시 없는 탄은 피하세요.</p>
+        <p><b>아래에서 올라오는 요소</b> — 바닥의 빛·화살표는 상승하는 적의 예고입니다. 솟아오르는 먹 그림은 장식이 아니라 장애물이며, 예고 뒤 닿으면 피해를 줍니다. 사격으로 부수거나 옆으로 피하세요. 떨어지는 블록도 사격으로 부술 수 있습니다. 쌓인 블록·솟은 지형은 피해 없이 위로 밀어 올리므로 위쪽 탄막도 살펴야 합니다. 바닥 가로 레이저는 예고 뒤 활성화되니 위아래 빈 곳으로 피하세요.</p>
         <p><b>문양 레이저</b> — 밝을 때 위험하고 꺼진 동안 통과할 수 있습니다. 재점등 직전 옅게 밝아지는 예고에는 피해가 없습니다.</p>
         <p><b>폭탄·난이도</b> — X 또는 폭탄 버튼으로 사용합니다. 이지·노멀은 피격점 접촉 시 확률 회피 후 폭탄이 있으면 자동 사용합니다. 헬은 수동폭탄만 가능하며 자동회피가 없습니다.</p>
         <p><b>목숨·회복</b> — 시작 목숨은 이지 5·노멀 3·헬 2입니다. 일반 스테이지마다 완전 회복하지 않고, 다음 부로 넘어갈 때 목숨 1을 최대치 안에서 회복합니다.</p>
         <p><b>원코인·이어하기</b> — 처음부터 게임 오버 없이 끝내는 것이 원코인 클리어입니다. 이어하기·구간 선택·재도전·DEV는 연습용이며 원코인 클리어에 포함하지 않습니다. 일시정지와 대화 읽기는 가능합니다.</p>
-        <p><b>보스의 기억</b> — 전투 전 정본 발췌를 보여주며 그동안 전투는 멈춥니다. 다음/건너뛰기 또는 Enter·Space로 넘기고, 자동 진행을 끄면 천천히 읽을 수 있습니다. 이미 본 기억은 다음 시도에 생략합니다.</p>
+        <p><b>영웅 선택</b> — 처음부터 시작할 때 기억사수 또는 시간공학 수련생 윤서하를 고릅니다. 윤서하는 시간검 분산·집중 사격을 사용하며 두 영웅의 성장·목숨·필살 규칙은 같습니다.</p>
+        <p><b>보스의 기억</b> — 중간보스를 지난 뒤 본보스가 등장하기 직전에 컷신과 정본 발췌를 보여주며 그동안 전투는 멈춥니다. 다음/건너뛰기 또는 Enter·Space로 넘기고, 자동 진행을 끄면 천천히 읽을 수 있습니다. 이미 본 기억은 다음 시도에 생략합니다.</p>
       </div>
       <a class="button" href="docs/v43/canonical-story.txt" target="_blank" rel="noopener">서사 정본 전체 읽기</a>
       <button id="story-replay" type="button" data-i18n="storyReplay">본 기억 다시 표시</button>
@@ -231,25 +287,27 @@
       <button id="arcade-home" type="button" data-i18n="toTitle">처음 화면으로</button>
     </div>
   </div>
-  <script src="src/audio-v37.js?v=20261117-arcade43-story99"></script>
-  <script src="src/arcade-parts-v43/p1.js?v=20261117-arcade43-story99"></script>
-  <script src="src/arcade-parts-v43/p2.js?v=20261117-arcade43-story99"></script>
-  <script src="src/arcade-parts-v43/p3.js?v=20261117-arcade43-story99"></script>
-  <script src="src/arcade-parts-v43/p4.js?v=20261117-arcade43-story99"></script>
-  <script src="src/arcade-parts-v43/p5.js?v=20261117-arcade43-story99"></script>
-  <script src="src/arcade-parts-v43/p6.js?v=20261117-arcade43-story99"></script>
-  <script src="src/arcade-parts-v43/p7.js?v=20261117-arcade43-story99"></script>
-  <script src="src/arcade-parts-v43/p8.js?v=20261117-arcade43-story99"></script>
-  <script src="src/arcade-v43.js?v=20261117-arcade43-story99"></script>
-  <script src="src/arcade-skins-v43.js?v=20261117-arcade43-story99"></script>
-  <script src="src/ink-v43.js?v=20261117-arcade43-story99"></script>
-  <script src="src/ink-motifs-v43.js?v=20261117-arcade43-story99"></script>
-  <script src="src/hero-memory-v43.js?v=20261117-arcade43-story99"></script>
-  <script src="src/arcade-i18n-v43.js?v=20261117-arcade43-story99"></script>
-  <script src="src/arcade-music-v43.js?v=20261117-arcade43-story99"></script>
-  <script src="src/arcade-mobile-v43.js?v=20261117-arcade43-story99"></script>
-  <script src="src/arcade-eyes-v43.js?v=20261117-arcade43-story99"></script>
-  <script src="src/arcade-story-v43.js?v=20261117-arcade43-story99"></script>
-  <script src="src/arcade-app-v43.js?v=20261117-arcade43-story99"></script>
+  <script src="src/audio-v37.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/arcade-parts-v43/p1.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/arcade-parts-v43/p2.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/arcade-parts-v43/p3.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/arcade-parts-v43/p4.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/arcade-parts-v43/p5.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/arcade-parts-v43/p6.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/arcade-parts-v43/p7.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/arcade-parts-v43/p8.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/arcade-heroes-v43.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/arcade-v43.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/arcade-skins-v43.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/ink-v43.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/ink-motifs-v43.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/hero-memory-v43.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/arcade-i18n-v43.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/arcade-music-v43.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/arcade-mobile-v43.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/arcade-eyes-v43.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/arcade-story-v43.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/arcade-hero-select-v43.js?v=20261117-arcade43-heroes100"></script>
+  <script src="src/arcade-app-v43.js?v=20261117-arcade43-heroes100"></script>
 </body>
 </html>

@@ -16,7 +16,6 @@
   var TALL={violet:112,balrog:124,mask:112,lucifer:124,asmodeus:108,pride:118,controller:118,goblin:104,insomnia:124,arbelia:108,siren:124,chief:124,executor:124,rian:108,cultist:124,
     spider:30,slime:28,ember:34,drone:26,mobgoblin:36,wolf:34,nightmare:40,collector:40,leech:34,guardian:62,warden:72,horn:84,belphegor:70,mammon:74,knight:80};
   var ITEM_DRAW=17,TALL_ACTOR=116,TALL_MOB=64,TALL_ELITE=92;
-  var PROP_LONG={'sword-violet':68,cleaver:64,'sword-balrog':72,obelisk:80,spire:72,'twin-blade':62,crescent:58,tissue:34,money:36,heel:40,feather:44,hexagram:46,gear:56,skull:34,'demon-hand':46};
   var PROP_GLOW={'sword-violet':2,cleaver:5,'sword-balrog':0,obelisk:2,spire:4,'twin-blade':8,crescent:4,tissue:6,money:6,heel:0,feather:8,hexagram:6,gear:4};
   var ART_DIR='media/arcade-v43/';
   var SERIF='"Noto Serif KR","Nanum Myeongjo","Apple SD Gothic Neo",serif',SANS='system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif';
@@ -34,8 +33,11 @@
   var settings={music:true,sfx:true,musicVolume:1,sfxVolume:1,screenShake:true,lowQuality:false};
   var fx=null,music=null,best=0,lastItemSound=0,progress=Progress.fresh(),saveOk=true;
   var themeOverride=null,turbo=0,rushStage=false,oneCreditEligible=false;
-  var Story=global.HapilArcadeStory||null,story=null,pendingStory=-1,storyQuiet=false,storySeen={},pauseReturn='playing',rulesReturn='title';
-  var STORY_SEEN_KEY='hapil-arcade-story-seen-20261117';
+  var Story=global.HapilArcadeStory||null,story=null,storyQuiet=false,storySeen={},pauseReturn='playing',rulesReturn='title',storyArrivalActor='';
+  var STORY_SEEN_KEY='hapil-arcade-main-boss-seen-v2',STORY_IMPACT_MS=1800;
+  var Heroes=global.HapilArcadeHeroes||null,heroPicker=null,selectedHero='memory',journeyHero='memory',HERO_KEY='hapil-arcade-hero-v43',JOURNEY_HERO_KEY='hapil-arcade-journey-hero-v43';
+  function heroId(id){return Heroes?Heroes.get(id).id:id==='seoha'?'seoha':'memory';}
+  try{selectedHero=heroId(global.localStorage.getItem(HERO_KEY));journeyHero=heroId(global.localStorage.getItem(JOURNEY_HERO_KEY));}catch(e){}
   try{var seen=JSON.parse(global.localStorage.getItem(STORY_SEEN_KEY)||'{}');if(seen&&typeof seen==='object'&&!Array.isArray(seen))storySeen=seen;}catch(e){}
   // 개발자 모드(사용자 11-15): 게임 속도 2배 + 체력 무한. 지금은 시작 화면에 대놓고 보인다. 숨기려면 DEV_VISIBLE=false 한 줄만 바꾼다.
   var DEV_VISIBLE=true,DEV_SPEED=2,DEV_KEY='hapil-arcade-dev-v43',devMode=false;
@@ -75,13 +77,13 @@
   }
   /* 동작 그림: manifest의 <키>.webp 항목에 motions:['side','attack',…]가 있으면 <키>@side.webp 같은 스트립이 따로 있다. */
   function motionsOf(key){var e=manifest&&manifest[key+'.webp'];return e&&Array.isArray(e.motions)?e.motions:[];}
-  function propLong(prop){return PROP_LONG[prop.key]||Math.round((prop.radius||12)*4.4);}
+  function propLong(prop){return Arcade.propRenderSpan(prop);}
   function propGlow(prop){var g=prop.glow!==undefined?prop.glow:PROP_GLOW[prop.key];return g===undefined?Arcade.PALETTE[hash(prop.key)%Arcade.PALETTE.length]:g;}
 
   /* ── 그림 받기 ── */
-  function fileOf(key){return key==='gunner'?'media/gunner.webp':ART_DIR+key+(key.indexOf('bg-')===0?'.jpg':'.webp');}
+  function fileOf(key){return key==='gunner'?'media/gunner.webp':key==='hero-seoha'?'media/arcade-v43-heroes/seoha-player.webp':ART_DIR+key+(key.indexOf('bg-')===0?'.jpg':'.webp');}
   // 목록(manifest.json)에 없는 그림은 받지 않는다(404 없이 색·도형으로 넘어간다). 목록을 못 읽었으면 일단 받아 본다.
-  function listed(key){if(key==='gunner'||!manifest)return true;return !!manifest[fileOf(key).slice(ART_DIR.length)];}
+  function listed(key){if(key==='gunner'||key==='hero-seoha'||!manifest)return true;return !!manifest[fileOf(key).slice(ART_DIR.length)];}
   function loadImage(key){
     if(!key||images[key]||loading[key]||failed[key])return;
     if(!listed(key)){failed[key]=true;return;}
@@ -519,7 +521,7 @@
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,'제'+g.part+'부 · STAGE '+(s.stageIndex+1));play('seal');}}
       else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);showToast(r);rushStage=false;}
       else if(e==='map')loadStage(s.stageIndex);
-      else if(e==='entrance'){play('warning');wantFx(s.boss.actor);showBanner(s.boss.name,s.boss.mid?'중간보스':'보스');if(!storyQuiet&&!storySeen[s.stageIndex])pendingStory=s.stageIndex;} // 맵마다 일반몹 → 중간보스 → 보스: 누가 나왔는지 한 줄로(사용자 11-16)
+      else if(e==='entrance'){if(storyArrivalActor!==s.boss.actor)play('warning');storyArrivalActor='';wantFx(s.boss.actor);showBanner(s.boss.name,s.boss.mid?'중간보스':'보스');} // 본보스 컷인은 enter() 전, 중간보스는 기존 입장만.
       else if(e==='figure')castFx(s,false);
       else if(e==='bossDown'){var dn=s.boss.down;if(dn){fall={actor:dn.actor,x:dn.x,y:dn.y,tick:dn.tick,dir:dn.x>W/2?1:-1,burst:-1,keep:{}};['','@death','@hit'].forEach(function(m){var im=images[dn.actor+m]||(bossArt.actor===dn.actor&&bossArt.keep[dn.actor+m]);if(im)fall.keep[dn.actor+m]=im;}); /* 다음 스테이지로 넘어가며 그림을 놓아도 쓰러지는 동안은 쥐고 있다(전에는 마름모 자리표시가 쓰러졌다) */flash=Ink?.18:.8;shake=16;}} /* 수묵 모드는 흰 섬광을 줄여 먹빛으로 물드는 순간이 묻히지 않게(사용자 11-16) */
       else if(e==='break'){play('phaseBreak',s.boss.x);flash=.6;shock={x:s.boss.x,y:s.boss.y,r:10,ink:true};shake=3;}
@@ -1084,23 +1086,30 @@
   function nearBoss(s,x,y){var b=s.boss;if(!b.present||s.stage!=='card')return false;var dx=x-b.x,dy=y-b.y;return dx*dx+dy*dy<4096;}
   /* 잡몹 몸 위(반지름 안)의 탄도 옅게: 몹이 줄지어 쏘는 탄이 나오는 자리에 겹쳐 몹을 막대처럼 덮지 않게 한다(심사 6차, 31스테이지 기사). 몹 자리라 플레이어가 닿을 일은 드물다. */
   function nearMob(s,x,y){for(var k=0;k<s.mobs.length;k++){var m=s.mobs[k],r=(m.r||14)*1.6,dx=x-m.x,dy=y-m.y;if(dx*dx+dy*dy<r*r)return true;}return false;}
+  function drawBreakableMark(s,i){
+    if(!Arcade.isBulletBreakable(s,i))return;var x=s.bx[i],y=s.by[i],r=7*s.sizeScale;
+    ctx.save();ctx.globalAlpha=.95;ctx.lineJoin='round';ctx.lineCap='round';
+    ctx.beginPath();ctx.moveTo(x-r*.45,y-r);ctx.lineTo(x+r*.2,y-r*.3);ctx.lineTo(x-r*.25,y+r*.1);ctx.lineTo(x+r*.45,y+r);
+    ctx.strokeStyle='#29190c';ctx.lineWidth=4;ctx.stroke();ctx.strokeStyle='#f0c46b';ctx.lineWidth=1.6;ctx.stroke();ctx.restore();
+  }
   function drawBullets(s){
     var bloom=Arcade.BLOOM_TICKS,i,o,half,size,x,y,variant=skinVariant(s);
     for(i=0;i<s.n;i++){
       x=s.bx[i];y=s.by[i];if(s.bage[i]<bloom||x!==x||y!==y)continue;
-      size=s.bsize[i];if(size===SHAPE_PROP){drawProp(s,i,1,1);continue;}
-      o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;half=o.half;var faint=nearBoss(s,x,y)||nearMob(s,x,y);if(faint)ctx.globalAlpha=.38;
+      size=s.bsize[i];if(size===SHAPE_PROP){drawProp(s,i,1,1);drawBreakableMark(s,i);continue;}
+      o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;half=o.half;var faint=nearBoss(s,x,y)||nearMob(s,x,y),grace=s.bfragment&&s.bfragment[i]&&s.bage[i]<s.bgrace[i];ctx.globalAlpha=grace?.28+.2*s.bage[i]/s.bgrace[i]:faint?.38:1;
       var skin=size===1&&variant;if(skin){var so=skinOfBullet(variant,s.bcolor[i]),sa=variant==='star'?s.bage[i]*.08:finite(s.ba[i],0),sc=Math.cos(sa),ss=Math.sin(sa);ctx.setTransform(scale*sc,scale*ss,-scale*ss,scale*sc,(x+offsetX)*scale,(y+offsetY)*scale);ctx.drawImage(so.image,-so.half,-so.half,so.half*2,so.half*2);ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);} // 별은 돌고, 나머지는 진행 방향을 본다
       else if(size===SHAPE_RICE){var a=finite(s.ba[i],0),cos=Math.cos(a),sin=Math.sin(a);ctx.setTransform(scale*cos,scale*sin,-scale*sin,scale*cos,(x+offsetX)*scale,(y+offsetY)*scale);ctx.drawImage(o.image,-half,-half,half*2,half*2);ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);}
       else ctx.drawImage(o.image,x-half,y-half,half*2,half*2);
-      if(faint)ctx.globalAlpha=1;
+      ctx.globalAlpha=1;
+      drawBreakableMark(s,i);
     }
     // 갓 피어나는 탄: 크고 옅게 시작해 제 크기로 조여 든다(이때는 닿지 않는다).
     for(i=0;i<s.n;i++){
       var age=s.bage[i];x=s.bx[i];y=s.by[i];if(age>=bloom||x!==x||y!==y)continue;
       var t=age/bloom;size=s.bsize[i];
       if(size===SHAPE_PROP){drawProp(s,i,1.5-.5*t,.25+.6*t);continue;}
-      o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;var onMob=nearMob(s,x,y);half=o.half*(onMob?1:2.4-1.4*t);ctx.globalAlpha=(.25+.6*t)*(onMob?.45:1);ctx.drawImage(o.image,x-half,y-half,half*2,half*2); // 몹 몸 위에서는 부풀리지 않는다
+      o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;var onMob=nearMob(s,x,y);half=o.half*(onMob?1:2.4-1.4*t);ctx.globalAlpha=(s.bfragment&&s.bfragment[i]?.22+.1*t:.25+.6*t)*(onMob?.45:1);ctx.drawImage(o.image,x-half,y-half,half*2,half*2); // 몹 몸 위에서는 부풀리지 않는다
     }
     ctx.globalAlpha=1;
   }
@@ -1271,7 +1280,8 @@
     // 영웅 뒤 어두운 빛무리: 밝은 광선·배경 사이에서도 영웅 자리가 먼저 보인다(심사 6.36)
     var sh=ctx.createRadialGradient(p.x,p.y,4,p.x,p.y,PLAYER_SHADE);sh.addColorStop(0,'rgba(6,8,16,.72)');sh.addColorStop(1,'rgba(6,8,16,0)');ctx.globalAlpha=1;ctx.fillStyle=sh;ctx.fillRect(p.x-PLAYER_SHADE,p.y-PLAYER_SHADE,PLAYER_SHADE*2,PLAYER_SHADE*2);
     ctx.globalAlpha=blink?.35:.95;
-    if(images.gunner)ctx.drawImage(images.gunner,p.x-258.5369*57/512,p.y-283.8754*57/512,57,57);
+    if(s.hero==='seoha'&&images['hero-seoha']){var heroImage=images['hero-seoha'],heroH=62,heroW=heroH*heroImage.width/heroImage.height;ctx.drawImage(heroImage,p.x-heroW*.5,p.y-heroH*.5,heroW,heroH);}
+    else if(s.hero!=='seoha'&&images.gunner)ctx.drawImage(images.gunner,p.x-258.5369*57/512,p.y-283.8754*57/512,57,57);
     else{ctx.fillStyle='#9fefff';ctx.beginPath();ctx.moveTo(p.x,p.y-16);ctx.lineTo(p.x+10,p.y+12);ctx.lineTo(p.x-10,p.y+12);ctx.closePath();ctx.fill();}
     if(Ink&&Ink.heroCloud)Ink.heroCloud(ctx,p.x,p.y+22,visual); // 영웅은 흰 구름을 탄다(적은 먹구름, 사용자 11-15)
     if(HeroFx)HeroFx.clock(ctx,s,visual); // 구름 위 시계: 보통·가속·둔화에 따라 바늘 빠르기가 바뀐다(사용자 11-16)
@@ -1409,18 +1419,20 @@
     if(mode==='playing'&&state){
       adaptQuality(rawMs>STALL_FRAME_MS?rawMs:elapsed*1000);if(devMode)showDevBadge();accumulator=Math.min(accumulator+elapsed,4/60);if(devMode)accumulator=Math.min(accumulator+elapsed*(DEV_SPEED-1),4*DEV_SPEED/60); // 개발자 모드는 같은 60Hz 틱을 두 배로 돌린다
       var steps=0,limit=turbo||rushStage?Math.max(4,turbo||60):devMode?4*DEV_SPEED:4;if(turbo||rushStage)accumulator=limit/60;
-      while(accumulator>=1/60&&steps<limit&&mode==='playing'){if(rushStage)rushTick(state);if(devMode)state.player.hp=state.player.maxHp;Arcade.step(state,inputForStep());accumulator-=1/60;steps++;consume();if(mode==='playing'&&pendingStory===state.stageIndex&&state.stage==='intro'&&state.stageTick>=45)beginStory();}
+      while(accumulator>=1/60&&steps<limit&&mode==='playing'){if(beginStory())break;if(rushStage)rushTick(state);if(devMode)state.player.hp=state.player.maxHp;Arcade.step(state,inputForStep());accumulator-=1/60;steps++;consume();if(mode==='playing')beginStory();}
       if(Mobile&&state)Mobile.tick(state,mode,rawMs); // 진단은 잘리기 전 실제 프레임 시간(1초 넘는 복귀 프레임은 tick이 버림)
     }
-    if(mode==='story'&&story&&!document.hidden&&$('story-auto').checked){story.elapsed+=elapsed*1000;if(story.elapsed>=story.lineMs)nextStory();}
+    if(mode==='story'&&story&&!document.hidden){if(story.phase==='impact'){story.phaseMs+=elapsed*1000;if(story.phaseMs>=STORY_IMPACT_MS)revealStory();}else if($('story-auto').checked){story.elapsed+=elapsed*1000;if(story.elapsed>=story.lineMs)nextStory();}}
     if(global.HapilMusic)global.HapilMusic.update(musicMode(),state,settings.music); // 구간이 바뀌면 곡을 겹쳐 바꾼다
     draw(elapsed);
   }
 
   /* ── 메뉴 ── */
   function show(id,on){var el=$(id);if(el)el.hidden=!on;}
-  var SCREENS={title:'arcade-title',paused:'arcade-pause',result:'arcade-result',keepsakes:'arcade-keepsake-screen',boss:'arcade-boss-screen',story:'arcade-story',rules:'arcade-rules'};
+  var SCREENS={title:'arcade-title',paused:'arcade-pause',result:'arcade-result',keepsakes:'arcade-keepsake-screen',boss:'arcade-boss-screen',story:'arcade-story',rules:'arcade-rules',hero:'arcade-hero-select'};
   function musicMode(){return mode==='story'?'playing':mode==='rules'&&rulesReturn!=='title'?'paused':mode;}
+  function syncStoryFx(){var el=$('arcade-story');if(!el)return;el.dataset.paused=String(mode!=='story');el.dataset.lite=String(settings.lowQuality);el.dataset.shake=String(settings.screenShake);}
+  function revealStory(){if(!story||story.phase!=='impact')return;story.phase='memory';story.elapsed=0;$('arcade-story').dataset.phase='memory';if(fx&&fx.suspend)fx.suspend(true);}
   function paintStory(){
     if(!story)return;var entry=story.entry,line=entry.lines[story.line];
     $('story-title').textContent=entry.title;$('story-speaker').textContent=line.speaker||entry.speaker;
@@ -1429,30 +1441,48 @@
     story.elapsed=0;story.lineMs=Math.max(2500,Math.min(6000,(entry.durationMs||6000)/entry.lines.length));
   }
   function beginStory(force){
-    if(!state||!Story||!$('arcade-story')||(!force&&(storyQuiet||storySeen[state.stageIndex])))return false;
-    var entry=Story.getStage(state.stageIndex);pendingStory=-1;if(!entry||!entry.lines||!entry.lines.length)return false;
-    story={entry:entry,line:0,elapsed:0,lineMs:3000};
-    var portrait=$('story-portrait'),actor=state.boss.actor;portrait.hidden=!actor||!listed(actor);
-    if(!portrait.hidden){var info=manifest&&manifest[actor+'.webp'],frames=info&&info.frames||1;portrait.style.backgroundImage='url("'+fileOf(actor)+'")';portrait.style.backgroundSize=frames>1?(frames*100)+'% 100%':'contain';portrait.setAttribute('aria-label',state.boss.name||entry.title);}
-    paintStory();accumulator=0;lastStamp=0;setMode('story');$('story-next').focus({preventScroll:true});return true;
+    if(!state||!Story||!$('arcade-story')||story||(!force&&(mode!=='playing'||storyQuiet||storySeen[state.stageIndex]||state.stage!=='intro')))return false;
+    var seg=Arcade.SEGMENTS[state.seg];
+    if(force&&(!seg||seg.kind!=='card'||seg.mid))seg=Arcade.SEGMENTS.find(function(g){return g.stage===state.stageIndex&&g.kind==='card'&&!g.mid;});
+    if(!seg||seg.kind!=='card'||seg.mid)return false;
+    var entry=Story.getStage(state.stageIndex);if(!entry||!entry.lines||!entry.lines.length)return false;
+    var actor=seg.actor,who=Arcade.ACTORS[actor],screen=$('arcade-story'),portrait=$('story-portrait');
+    story={entry:entry,actor:actor,line:0,elapsed:0,lineMs:3000,phase:'impact',phaseMs:0};storyArrivalActor=actor;
+    screen.dataset.phase='impact';screen.dataset.actor=actor;portrait.hidden=!actor||!listed(actor);
+    if(!portrait.hidden){var info=manifest&&manifest[actor+'.webp'],frames=info&&info.frames||1,cell=info&&(info.cell||info.size),ratio=cell?cell[0]/cell[1]:.8;
+      var art=actor==='violet'?'media/combat/boss01-purple-sword-spider-angel-cutin.webp':fileOf(actor);if(actor==='violet'){frames=1;ratio=1;}
+      portrait.style.backgroundImage='url("'+art+'")';portrait.style.backgroundSize=frames>1?(frames*100)+'% 100%':'contain';portrait.style.aspectRatio=String(ratio);portrait.setAttribute('aria-label',who.name);
+    }
+    if(screen.style.setProperty)screen.style.setProperty('--boss-accent',COLORS[who.c1]||'#b95748');
+    if($('story-boss-name'))$('story-boss-name').textContent=who.name;
+    if($('story-boss-role'))$('story-boss-role').textContent=T('storyMainBoss');
+    paintStory();accumulator=0;lastStamp=0;setMode('story');play('bossCutin',W/2);$('story-skip').focus({preventScroll:true});return true;
   }
   function endStory(){
     if(!story)return;storySeen[story.entry.stage]=true;try{global.localStorage.setItem(STORY_SEEN_KEY,JSON.stringify(storySeen));}catch(e){}
-    story=null;pendingStory=-1;accumulator=0;lastStamp=0;setMode('playing');
+    if(story.phase==='impact'&&fx&&fx.suspend)fx.suspend(true); // 스킵한 컷인의 지연 타격음도 정리한다.
+    story=null;accumulator=0;lastStamp=0;setMode('playing');
   }
-  function nextStory(){if(!story||mode!=='story')return;if(++story.line>=story.entry.lines.length)endStory();else paintStory();}
+  function nextStory(){if(!story||mode!=='story')return;if(story.phase==='impact'){revealStory();return;}if(++story.line>=story.entry.lines.length)endStory();else paintStory();}
   function openRules(){rulesReturn=mode;setMode('rules');$('arcade-rules-back').focus({preventScroll:true});}
   function closeRules(){setMode(rulesReturn==='paused'?'paused':'title');}
   function resume(){unlockAudio();accumulator=0;lastStamp=0;setMode(pauseReturn==='story'&&story?'story':'playing');}
+  function chooseHero(run){
+    if(!heroPicker){start(run);return;}setMode('hero');var panel=$('arcade-hero-select');if(panel)panel.dataset.lite=String(settings.lowQuality);
+    heroPicker.show(selectedHero,function(id){selectedHero=heroId(id);try{global.localStorage.setItem(HERO_KEY,selectedHero);}catch(e){}run.hero=selectedHero;start(run);},function(){setMode('title');});
+  }
 
   function setMode(next){
+    if(next!=='hero'&&heroPicker)heroPicker.hide();
     mode=next;Object.keys(SCREENS).forEach(function(k){show(SCREENS[k],k===next);});
+    var heldStory=!!story&&(next==='paused'||next==='rules'),storyEl=$('arcade-story');
+    if(storyEl){if(heldStory)storyEl.hidden=false;storyEl.inert=heldStory;storyEl.setAttribute('aria-hidden',String(heldStory));}
     showDevBadge();
     ['arcade-pause-button','arcade-focus','arcade-bomb'].forEach(function(id){show(id,next==='playing');});
     var hh=$('arcade-hud-high'),hl=$('arcade-hud-low');if(hh&&hl)hh.hidden=hl.hidden=!(hudOut&&next==='playing');
     if(next!=='playing')clearInput();
     else if(document.activeElement&&document.activeElement.blur)document.activeElement.blur();
-    if(fx&&fx.suspend)fx.suspend(next==='paused'||next==='story'||next==='rules');
+    syncStoryFx();if(fx&&fx.suspend)fx.suspend(next==='paused'||next==='rules'||(next==='story'&&(!story||story.phase!=='impact')));
     if(next==='paused'){syncSettings();var resume=$('arcade-resume');if(resume&&resume.focus)resume.focus({preventScroll:true});}
     if(next!=='keepsakes')clearKeepsakes();
     if(global.HapilMusic)global.HapilMusic.update(musicMode(),state,settings.music); // 구간별 곡(arcade-music-v43.js). 없으면 예전 한 곡
@@ -1468,13 +1498,15 @@
   /* run: {stage, bossOnly}. 원큐: 그 스테이지부터 끝까지 이어진다. */
   function start(run){
     clearInput();if(fx&&fx.reset)fx.reset();unlockAudio();
-    var quiet=!!(run&&run.quiet);storyQuiet=quiet;story=null;pendingStory=-1;pauseReturn='playing';
+    var quiet=!!(run&&run.quiet);storyQuiet=quiet;story=null;storyArrivalActor='';pauseReturn='playing';
     var grown=run&&run.grown; // 중간 저장에서 이어 할 때 자란 공격·필살 단계
-    run={stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),segment:run&&run.segment,carry:run&&run.carry};
-    lastRun=run;oneCreditEligible=run.stage===0&&!run.bossOnly&&!Number.isInteger(run.segment)&&!run.carry&&!quiet&&!devMode;
-    var options={difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,compact:compact,bossOnly:run.bossOnly,growth:true,pacing:!quiet}; // 중간 스테이지에서 시작하면 그만큼 자란 기억사수로(엔진 createRun)
+    run={stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),segment:run&&run.segment,carry:run&&run.carry,practice:!!(run&&run.practice),hero:heroId(run&&run.hero||selectedHero)};
+    lastRun=run;oneCreditEligible=run.stage===0&&!run.bossOnly&&!Number.isInteger(run.segment)&&!run.carry&&!run.practice&&!quiet&&!devMode;
+    var options={difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,growth:true,pacing:!quiet}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
     if(Number.isInteger(run.segment))options.segment=run.segment;if(grown&&(grown.exp||grown.fills))options.grown={exp:grown.exp|0,fills:grown.fills|0};
     state=Arcade.createRun(options);
+    if(state.hero==='seoha')loadImage('hero-seoha');
+    if(!run.bossOnly&&!quiet){journeyHero=run.hero;try{global.localStorage.setItem(JOURNEY_HERO_KEY,journeyHero);}catch(e){}}
     if(run.carry){state.hits+=run.carry.hits|0;state.bombsUsed+=run.carry.bombs|0;} // 중간 저장에서 이어 하면 앞 구간의 피격·폭탄도 별에 반영
     buildSprites();loadStage(state.stageIndex);fxStage=-1;
     particles.length=0;drifts.length=0;flash=hurtFlash=shake=banner=0;shock=null;hurtRing=null;toast=null;if(HeroFx)HeroFx.reset();accumulator=0;lastStamp=0;framesSeen=0;rushStage=false;setMode('playing');
@@ -1498,7 +1530,7 @@
     setTimeout(function(){if(state===s){setMode('result');if(eyes&&eyes.cross&&fallen.classList.contains('fallen'))eyes.cross($('result-cross'));}},won?1500:eyes?Math.round(eyes.CLOSE_SECONDS*1000)+350:900);
   }
   function pause(){if(mode==='playing'||mode==='story'){pauseReturn=mode;setMode('paused');}}
-  function goTitle(){story=null;pendingStory=-1;if(global.HapilEyes)global.HapilEyes.clear();if(loadedStage>=0)releaseStage(loadedStage,-1);state=null;toast=null;refreshTitle();setMode('title');}
+  function goTitle(){story=null;storyArrivalActor='';if(global.HapilEyes)global.HapilEyes.clear();if(loadedStage>=0)releaseStage(loadedStage,-1);state=null;toast=null;refreshTitle();setMode('title');}
   function bossStages(){return Arcade.STAGES.filter(function(g){return g.kind==='boss'&&progress.cleared.indexOf(g.index)>=0;});}
   function actorNames(index){var names=[];Arcade.SEGMENTS.forEach(function(seg){if(seg.stage===index&&seg.kind==='card'){var who=Arcade.ACTORS[seg.actor],n=who?who.name:seg.actor;if(names.indexOf(n)<0)names.push(n);}});return names;}
   // 스테이지 선택: 부별로 묶고, 잠긴 스테이지는 고를 수 없다. 깬 스테이지에는 별을 단다.
@@ -1570,7 +1602,7 @@
     if(global.HapilMusic){if(global.HapilMusic.setVolume)global.HapilMusic.setVolume(settings.musicVolume);if(global.HapilMusic.setEnabled)global.HapilMusic.setEnabled(settings.music);global.HapilMusic.update(musicMode(),state,settings.music);}
     else if(music){music.volume=.2*settings.musicVolume;if(!settings.music||settings.musicVolume===0)music.pause();else if(mode==='playing'){try{var p=music.play();if(p&&p.catch)p.catch(function(){});}catch(e){}}}
     if(Ink&&Ink.setLite)Ink.setLite(lite);
-    syncSettings();
+    syncSettings();syncStoryFx();
   }
   function bindSettings(){
     ['music','sfx','screenShake','lowQuality'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('change',function(){settings[k]=!!e.checked;
@@ -1588,15 +1620,15 @@
   function fieldPoint(e){var rect=canvas.getBoundingClientRect();return {x:(e.clientX-rect.left)*W/rect.width,y:(e.clientY-rect.top)*H/rect.height};}
   function bind(){
     document.querySelectorAll('[data-difficulty]').forEach(function(button){button.addEventListener('click',function(){setDifficulty(button.dataset.difficulty);progress.difficulty=difficulty;saveProgress();if(state===null)refreshTitle();});});
-    $('arcade-continue').addEventListener('click',function(){var mid=midway();start(mid?{stage:mid.stage,segment:mid.seg,carry:{hits:mid.hits,bombs:mid.bombs},grown:{exp:mid.exp,fills:mid.fills}}:{stage:Progress.resume(progress)});});
-    $('arcade-start').addEventListener('click',function(){start({stage:0});});
-    $('arcade-stage-go').addEventListener('click',function(){var i=Number($('arcade-stage-select').value);if(Progress.canPlay(progress,i))start({stage:i});});
+    $('arcade-continue').addEventListener('click',function(){var mid=midway();start(mid?{practice:true,stage:mid.stage,segment:mid.seg,hero:heroId(mid.hero),carry:{hits:mid.hits,bombs:mid.bombs},grown:{exp:mid.exp,fills:mid.fills}}:{practice:true,stage:Progress.resume(progress),hero:journeyHero});});
+    $('arcade-start').addEventListener('click',function(){chooseHero({stage:0});});
+    $('arcade-stage-go').addEventListener('click',function(){var i=Number($('arcade-stage-select').value);if(Progress.canPlay(progress,i))chooseHero({stage:i,practice:true});});
     $('arcade-boss-open').addEventListener('click',function(){fillStages();setMode('boss');});
     $('arcade-boss-start').addEventListener('click',function(){var i=Number($('arcade-boss-select').value),g=Arcade.STAGES[i];if(g&&g.kind==='boss'&&progress.cleared.indexOf(i)>=0)start({stage:i,bossOnly:true});});
     $('arcade-boss-back').addEventListener('click',function(){setMode('title');});
     $('arcade-keepsakes').addEventListener('click',openKeepsakes);
     $('arcade-keepsake-back').addEventListener('click',function(){setMode('title');});
-    $('arcade-retry').addEventListener('click',function(){var i=Number(this.dataset.stage)||0;start({stage:i,bossOnly:this.dataset.boss==='1'});});
+    $('arcade-retry').addEventListener('click',function(){var i=Number(this.dataset.stage)||0;start({stage:i,practice:true,bossOnly:this.dataset.boss==='1',hero:state?state.hero:selectedHero});});
     $('arcade-home').addEventListener('click',goTitle);
     $('arcade-resume').addEventListener('click',resume);
     ['arcade-rules-title','arcade-rules-pause'].forEach(function(id){var b=$(id);if(b)b.addEventListener('click',openRules);});
@@ -1637,6 +1669,7 @@
   function ready(){var b=$('arcade-start');if(!b.disabled)return;b.disabled=false;b.textContent=T('fromStart');}
   function boot(){
     I18n.apply(document);
+    if(global.HapilHeroSelect&&global.HapilHeroSelect.mount)heroPicker=global.HapilHeroSelect.mount($('arcade-stage'));
     loadProgress();loadSettings();setDifficulty(progress.difficulty);
     try{fx=global.HapilAudio&&global.HapilAudio.create?global.HapilAudio.create():null;}catch(e){fx=null;}
     if(!global.HapilMusic)try{music=new Audio('media/music.mp3');music.loop=true;music.volume=.2;music.preload='none';}catch(e){music=null;}
@@ -1650,8 +1683,8 @@
     setTimeout(done,3000);
   }
   function snapshot(){return {mode:mode,scale:scale,lite:lite,compact:compact,frameMs:frameMs,bullets:state?state.n:0,stage:state?state.stage:'',stageIndex:state?state.stageIndex:-1,seg:state?state.seg:-1,
-    hp:state?state.player.hp:0,score:state?state.score:0,particles:particles.length,images:Object.keys(images).sort(),loading:Object.keys(loading).sort(),loadedStage:loadedStage,
-    oneCreditEligible:oneCreditEligible,story:story?{stage:story.entry.stage,line:story.line,total:story.entry.lines.length}:null,settings:Object.assign({},settings),focus:!!(keys.Shift||focusHeld||focusLatched),fx:{kind:fxKind,count:fxCount,pool:FX_POOL},toast:toast?{name:toast.name,stars:toast.stars,hasArt:!!toast.img}:null,difficulty:difficulty,saveOk:saveOk};}
+    hp:state?state.player.hp:0,score:state?state.score:0,hero:state?state.hero:selectedHero,particles:particles.length,images:Object.keys(images).sort(),loading:Object.keys(loading).sort(),loadedStage:loadedStage,
+    oneCreditEligible:oneCreditEligible,story:story?{stage:story.entry.stage,actor:story.actor,phase:story.phase,phaseMs:story.phaseMs,line:story.line,total:story.entry.lines.length}:null,settings:Object.assign({},settings),focus:!!(keys.Shift||focusHeld||focusLatched),fx:{kind:fxKind,count:fxCount,pool:FX_POOL},toast:toast?{name:toast.name,stars:toast.stars,hasArt:!!toast.img}:null,difficulty:difficulty,saveOk:saveOk};}
   /* 디버그 훅(헤드리스 검증용): 상태를 읽고, 스테이지·구간으로 건너뛰고, 진행 기록을 본다. */
   global.HapilArcadeApp={
     getState:snapshot,devDiag:devDiag,drawPropArt:drawPropArt, // tools/build-drawn-props-v43.cjs가 그림 파일을 구울 때 쓴다
