@@ -175,6 +175,7 @@ async function storyAndRules(page,name){
     const main=a.SEGMENTS.findIndex(g=>g.stage===1&&g.kind==='card'&&!g.mid),mid=a.SEGMENTS.find(g=>g.stage===1&&g.kind==='card'&&g.mid);
     // This is the real pre-enter state: the previous midboss still owns boss
     // metadata, while the next segment identifies the not-yet-spawned main boss.
+    s.entranceAll=false; // 11-17: 앱 기본은 판 위 입장 연출. 예전 컷신 화면(기억 다시 보기 경로)은 이 옵션이 꺼진 실행에서 그대로 검사한다.
     s.stageIndex=1;s.seg=main;s.stage='intro';s.stageTick=0;s.segTick=0;
     s.boss.actor=mid.actor;s.boss.name=a.ACTORS[mid.actor].name;s.boss.mid=true;s.boss.present=false;s.boss.leaving=true;
     s.n=1;s.bx[0]=s.player.x;s.by[0]=s.player.y;s.bsize[0]=1;s.bcolor[0]=0;s.bs[0]=s.ba[0]=s.bacc[0]=s.bturn[0]=0;s.bage[0]=100;s.blife[0]=1000;s.bmode[0]=0;
