@@ -22,28 +22,21 @@
    "fps": 6
   },
   "mb_05": {
-   "src": "media/drive-v43/b24-down.webp",
+   "src": "media/m0-v43/dist04-g1-move.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 7,
+   "facing": "right"
   },
   "mb_06": {
-   "src": "media/drive-v43/v3-042-striped-gargoyle-down.webp",
-   "strip": 4,
-   "fps": 6,
-   "motions": {
-    "attack": {
-     "src": "media/m0-v43/dist06-h1-attack.webp",
-     "strip": 4,
-     "fps": 8,
-     "size": 220,
-     "facing": "right"
-    }
-   }
-  },
-  "mb_07": {
-   "src": "media/drive-v43/m042-down.webp",
+   "src": "media/drive-v43/b06-down.webp",
    "strip": 4,
    "fps": 6
+  },
+  "mb_07": {
+   "src": "media/m0-v43/dist06-m1-move.webp",
+   "strip": 4,
+   "fps": 7,
+   "facing": "right"
   },
   "mb_08": {
    "src": "media/drive-v43/m038-down.webp",
@@ -56,7 +49,7 @@
    "fps": 6
   },
   "mb_09_2": {
-   "src": "media/drive-v43/m015-down.webp",
+   "src": "media/drive-v43/v3-036-purpleangel-down.webp",
    "strip": 4,
    "fps": 6
   },
@@ -135,7 +128,7 @@
    "fps": 6
   },
   "mb_21": {
-   "src": "media/drive-v43/v3-005-ep1b-steel-jaw-hound-down.webp",
+   "src": "media/drive-v43/b24-down.webp",
    "strip": 4,
    "fps": 6
   },
@@ -230,86 +223,44 @@
    "fps": 6
   },
   "mb_38": {
-   "src": "media/m0-v43/kair-guardian-46-move.webp",
-   "strip": 4,
-   "fps": 7,
-   "facing": "right",
-   "motions": {
-    "attack": {
-     "src": "media/m0-v43/kair-guardian-46-attack.webp",
-     "strip": 4,
-     "fps": 8,
-     "size": 220,
-     "facing": "right"
-    }
-   }
+   "src": "media/m0-v43/down/guardian-49.webp",
+   "strip": 8,
+   "fps": 8
   },
   "mb_39": {
-   "src": "media/m0-v43/kair-elite-58-move.webp",
-   "strip": 4,
-   "fps": 7,
-   "facing": "right",
-   "motions": {
-    "attack": {
-     "src": "media/m0-v43/kair-elite-58-attack.webp",
-     "strip": 4,
-     "fps": 8,
-     "size": 220,
-     "facing": "right"
-    }
-   }
+   "src": "media/m0-v43/down/guardian-51.webp",
+   "strip": 8,
+   "fps": 8
   },
   "mb_41": {
-   "src": "media/m0-v43/kair-elite-51-move.webp",
-   "strip": 4,
-   "fps": 7,
-   "facing": "right"
+   "src": "media/m0-v43/down/guardian-53.webp",
+   "strip": 8,
+   "fps": 8
   },
   "mb_42": {
-   "src": "media/drive-v43/m014-down.webp",
+   "src": "media/drive-v43/m022-down.webp",
    "strip": 4,
    "fps": 6
   },
   "mb_43": {
-   "src": "media/m0-v43/dist02-g1-move.webp",
-   "strip": 4,
-   "fps": 7,
-   "facing": "right",
-   "motions": {
-    "attack": {
-     "src": "media/m0-v43/dist02-g1-attack.webp",
-     "strip": 4,
-     "fps": 8,
-     "size": 220,
-     "facing": "right"
-    }
-   }
+   "src": "media/m0-v43/down/guardian-56.webp",
+   "strip": 8,
+   "fps": 8
   },
   "mb_44": {
-   "src": "media/m0-v43/b08-v1-move.webp",
-   "strip": 4,
-   "fps": 7,
-   "facing": "right",
-   "motions": {
-    "attack": {
-     "src": "media/m0-v43/b08-v1-attack.webp",
-     "strip": 4,
-     "fps": 8,
-     "size": 220,
-     "facing": "right"
-    }
-   }
+   "src": "media/m0-v43/down/guardian-42.webp",
+   "strip": 8,
+   "fps": 8
   },
   "mb_45": {
-   "src": "media/m0-v43/kair-guardian-15-move.webp",
-   "strip": 4,
-   "fps": 7,
-   "facing": "right"
+   "src": "media/m0-v43/down/guardian-57.webp",
+   "strip": 8,
+   "fps": 8
   },
   "mb_46": {
-   "src": "media/drive-v43/m045-down.webp",
-   "strip": 4,
-   "fps": 6
+   "src": "media/m0-v43/down/guardian-54.webp",
+   "strip": 8,
+   "fps": 8
   },
   "mb_49": {
    "src": "media/drive-v43/b49-down.webp",
@@ -327,19 +278,9 @@
    "fps": 6
   },
   "mb_54": {
-   "src": "media/m0-v43/murder04-e2-move.webp",
+   "src": "media/drive-v43/b53-down.webp",
    "strip": 4,
-   "fps": 7,
-   "facing": "right",
-   "motions": {
-    "attack": {
-     "src": "media/m0-v43/murder04-e2-attack.webp",
-     "strip": 4,
-     "fps": 8,
-     "size": 220,
-     "facing": "right"
-    }
-   }
+   "fps": 6
   },
   "mb_56": {
    "src": "media/m0-v43/c104-e1-move.webp",
@@ -351,16 +292,7 @@
    "src": "media/m0-v43/c101-e2-move.webp",
    "strip": 4,
    "fps": 7,
-   "facing": "right",
-   "motions": {
-    "attack": {
-     "src": "media/m0-v43/c101-e2-attack.webp",
-     "strip": 4,
-     "fps": 8,
-     "size": 220,
-     "facing": "right"
-    }
-   }
+   "facing": "right"
   },
   "mb_58": {
    "src": "media/drive-v43/v3-004-crimson-caster-down.webp",

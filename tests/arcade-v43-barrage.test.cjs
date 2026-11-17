@@ -105,8 +105,9 @@ test('v43 barrage: mobs are drawn only with art that walks down the screen',()=>
  const skins=require(path.join(root,'src/arcade-skins-v43.js')),manifest=JSON.parse(fs.readFileSync(path.join(root,'media/arcade-v43/manifest.json'),'utf8'));
  assert(skins.front&&typeof skins.front==='object','scene → front-walking mobs');
  const a=h.need(),scenes=new Set(a.STAGES.map(g=>g.scene));let n=0;
- for(const [s,keys] of Object.entries(skins.front)){assert(scenes.has(s));assert(keys.length>=1,s);for(const k of keys){const e=manifest[k+'.webp'];assert(e,k);assert.notEqual(e.facing,'right',k+' faces the side');assert(/drive-v43\//.test(e.source),k+' comes from a down-walk sheet');n++;}}
- assert(Object.keys(skins.front).length>=50,'scenes with down-walking mobs: '+Object.keys(skins.front).length);
+ for(const [s,keys] of Object.entries(skins.front)){assert(scenes.has(s));assert(keys.length>=1,s);for(const k of keys){const e=manifest[k+'.webp'];assert(e,k);assert.notEqual(e.facing,'right',k+' faces the side');assert(/drive-v43\/|m0-v43\/down\//.test(e.source),k+' comes from a down-walk sheet');n++;}}
+ // 사용자 11-17 "몹이 다른테마에 중복되서 나오지 않았으면": 정면 그림이 없는 지역은 다른 지역 몹을 빌리지 않고 자기 지역 옆모습 몹을 쓴다(그만큼 기준을 낮춤).
+ assert(Object.keys(skins.front).length>=40,'scenes with down-walking mobs: '+Object.keys(skins.front).length);
  const app=fs.readFileSync(path.join(root,'src/arcade-app-v43.js'),'utf8');assert(/skins\.front|\.front\[/.test(app),'the game draws from the front-walking list');
 });
 

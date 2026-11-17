@@ -1,0 +1,279 @@
+{
+ "about": "사용자 11-17 \"서사에 맞는 몹과 보스만\", \"구글드라이브랑 스토리월드최신버전 참고하면 다있을거야\". 스토리월드(m0) 최신 main 의 방향 이동 표(r96/client-source/move-dir-r974·r1001·r1018·r1019·r1024-data.js)가 그 몹(nativeId)의 아래 걷기 시트로 쓰는 그림을 가져온다. 옆 걷기·공격은 같은 인물로 그려진 것만 남긴다(keep). tools/import-m0-down-v43.py 가 media/m0-v43/down/ 으로 옮기고 tools/assign-m0-mobs-v43.py 가 기본 그림으로 쓴다. 시간탑 수문장(kair-guardian·elite)은 스토리월드가 방향 시트 대신 쓰는 R1029 \"떠서 이동\" 8칸 시트(정면 그림이 떠서 흔들림, move-float-r1029-data.js)를 쓴다.",
+ "source": "kjb7876-lang/m0 cadea19",
+ "mobs": {
+  "a08-o1": {
+   "down": "r1001/move/hallucinated-orderly-down.webp",
+   "keep": [
+    "side"
+   ]
+  },
+  "u206-e1": {
+   "down": "r1018/move/u206-mech-01-down.webp",
+   "keep": [
+    "side",
+    "attack"
+   ]
+  },
+  "u206-e2": {
+   "down": "r1018/move/u206-mech-02-down.webp",
+   "keep": [
+    "side",
+    "attack"
+   ]
+  },
+  "b02-o1": {
+   "down": "r1018/move/living-trash-down.webp",
+   "keep": [
+    "side",
+    "attack"
+   ]
+  },
+  "b02-m1": {
+   "down": "r1019/move/sloth-moldling-down.webp",
+   "keep": [
+    "side"
+   ]
+  },
+  "b08-c1": {
+   "down": "r1018/move/electrode-machine-knight-down.webp",
+   "keep": [
+    "side",
+    "attack"
+   ]
+  },
+  "b08-v1": {
+   "down": "r1018/move/hexagram-experiment-down.webp",
+   "keep": [
+    "side",
+    "attack"
+   ]
+  },
+  "h101-t1": {
+   "down": "r1019/move/timeless-silver-scout-down.webp",
+   "keep": [
+    "side"
+   ]
+  },
+  "h101-s1": {
+   "down": "r1018/move/ash-mason-down.webp",
+   "keep": []
+  },
+  "l305-e2": {
+   "down": "r1018/move/m044-down.webp",
+   "keep": [
+    "side",
+    "attack"
+   ]
+  },
+  "kair-academy-wave-4": {
+   "down": "r1018/move/clockwork-sentinel-down.webp",
+   "keep": []
+  },
+  "kair-guardian-01": {
+   "float": "r1029/float/guardian-01.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-02": {
+   "float": "r1029/float/guardian-02.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-04": {
+   "float": "r1029/float/guardian-04.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-05": {
+   "float": "r1029/float/guardian-05.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-06": {
+   "float": "r1029/float/guardian-06.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-07": {
+   "float": "r1029/float/guardian-07.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-08": {
+   "float": "r1029/float/guardian-08.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-09": {
+   "float": "r1029/float/guardian-09.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-10": {
+   "float": "r1029/float/guardian-10.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-11": {
+   "float": "r1029/float/guardian-11.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-12": {
+   "float": "r1029/float/guardian-12.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-13": {
+   "float": "r1029/float/guardian-13.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-14": {
+   "float": "r1029/float/guardian-14.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-15": {
+   "float": "r1029/float/guardian-15.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-16": {
+   "float": "r1029/float/guardian-16.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-17": {
+   "float": "r1029/float/guardian-17.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-19": {
+   "float": "r1029/float/guardian-19.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-20": {
+   "float": "r1029/float/guardian-20.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-21": {
+   "float": "r1029/float/guardian-21.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-22": {
+   "float": "r1029/float/guardian-22.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-24": {
+   "float": "r1029/float/guardian-24.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-25": {
+   "float": "r1029/float/guardian-25.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-26": {
+   "float": "r1029/float/guardian-26.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-29": {
+   "float": "r1029/float/guardian-29.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-30": {
+   "float": "r1029/float/guardian-30.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-31": {
+   "float": "r1029/float/guardian-31.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-32": {
+   "float": "r1029/float/guardian-32.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-33": {
+   "float": "r1029/float/guardian-33.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-35": {
+   "float": "r1029/float/guardian-35.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-37": {
+   "float": "r1029/float/guardian-37.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-38": {
+   "float": "r1029/float/guardian-38.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-41": {
+   "float": "r1029/float/guardian-41.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-42": {
+   "float": "r1029/float/guardian-42.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-guardian-43": {
+   "float": "r1029/float/guardian-43.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-elite-49": {
+   "float": "r1029/float/guardian-49.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-elite-50": {
+   "float": "r1029/float/guardian-50.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-elite-51": {
+   "float": "r1029/float/guardian-51.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-elite-53": {
+   "float": "r1029/float/guardian-53.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-elite-54": {
+   "float": "r1029/float/guardian-54.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-elite-56": {
+   "float": "r1029/float/guardian-56.webp",
+   "frames": 8,
+   "keep": []
+  },
+  "kair-elite-57": {
+   "float": "r1029/float/guardian-57.webp",
+   "frames": 8,
+   "keep": []
+  }
+ }
+}

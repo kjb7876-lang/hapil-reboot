@@ -342,15 +342,15 @@
    *    이름은 스토리월드(m0·드라이브) 그림에 붙은 이름만 쓴다. 그림은 tools/arcade-art-v43/midboss.json. ── */
   var MIDBOSS={
     '01':['뿌리 추적자',GREEN,PURPLE],'02':['보랏빛 알집지기',PURPLE,WHITE],'03':['늪의 염소머리 악마',GREEN,YELLOW],'04':['피냄새 추적자',RED,WHITE],
-    '05':['흑마법사의 시체경호체',PURPLE,GREEN],'06':['검은기둥 가고일 수호자',RED,PURPLE],'07':['지옥문 파수악마',YELLOW,RED],'08':['복도 비명잔영',WHITE,CYAN],
-    '09-1':['주사실 감시환각',CYAN,WHITE],'09-2':['초자아 잠식체',YELLOW,WHITE],'10':['암시장의 수상한 자',PURPLE,YELLOW],'13':['일흔두 번째 인장 잔류체',CYAN,PURPLE],
+    '05':['피로 꿰맨 전령',PURPLE,GREEN],'06':['숨이 끊긴 전령의 그림자',RED,PURPLE],'07':['검은기둥 화염술사',YELLOW,RED],'08':['복도 비명잔영',WHITE,CYAN],
+    '09-1':['주사실 감시환각',CYAN,WHITE],'09-2':['보라검 추격천사',YELLOW,WHITE],'10':['암시장의 수상한 자',PURPLE,YELLOW],'13':['일흔두 번째 인장 잔류체',CYAN,PURPLE],
     '14':['나태의 껍데기 파수',GREEN,YELLOW],'15':['금이 간 비교잔영',CYAN,WHITE],'16':['폐기주방 감독',YELLOW,RED],'17':['심장빛 무대감독',RED,PURPLE],
-    '18':['모든 면이 뒷면인 동전',YELLOW,WHITE],'19':['눈보라 속 여우 악마',WHITE,CYAN],'20':['호텔 화염기사',RED,YELLOW],'21':['강철 턱의 사이보그 개',CYAN,RED],
+    '18':['모든 면이 뒷면인 동전',YELLOW,WHITE],'19':['눈보라 속 여우 악마',WHITE,CYAN],'20':['호텔 화염기사',RED,YELLOW],'21':['흑마법사의 시체경호체',CYAN,RED],
     '24':['기계화 문턱 관측거미',YELLOW,CYAN],'25':['기억 검열기',WHITE,PURPLE],'27':['역전 관리자',CYAN,WHITE],'28':['중앙이주 코어',CYAN,YELLOW],
     '31':['피리 고블린',GREEN,RED],'32':['장미이슬 슬라임',RED,GREEN],'33':['소환진 타락천사',PURPLE,RED],'34':['포구 검은 안개',WHITE,PURPLE],'35':['검은 안개 심장',PURPLE,YELLOW],
-    '37':['시간 수집자',YELLOW,PURPLE],'38':['시간수문장 46',YELLOW,CYAN],'39':['상위수문장 58',CYAN,WHITE],'41':['상위수문장 51',CYAN,PURPLE],'42':['신경 케이블 포식체',RED,CYAN],
-    '43':['늪에서 되살아난 혼령체',GREEN,WHITE],'44':['육망성의 흑마술 실험체',PURPLE,YELLOW],'45':['시간수문장 15',WHITE,CYAN],'46':['긴 뱀의 그림자',CYAN,GREEN],
-    '49':['환수검 모조체',WHITE,CYAN],'52':['파란불 역주행 목격자',CYAN,WHITE],'53':['공실장부 당직감사',YELLOW,RED],'54':['제출되지 못한 문장',PURPLE,WHITE],
+    '37':['시간 수집자',YELLOW,PURPLE],'38':['상위수문장 49',YELLOW,CYAN],'39':['상위수문장 51',CYAN,WHITE],'41':['상위수문장 53',CYAN,PURPLE],'42':['시간핵의 명령 파동',RED,CYAN],
+    '43':['상위수문장 56',GREEN,WHITE],'44':['시간수문장 42',PURPLE,YELLOW],'45':['상위수문장 57',WHITE,CYAN],'46':['상위수문장 54',CYAN,GREEN],
+    '49':['환수검 모조체',WHITE,CYAN],'52':['파란불 역주행 목격자',CYAN,WHITE],'53':['공실장부 당직감사',YELLOW,RED],'54':['진술 봉쇄 인과핵',PURPLE,WHITE],
     '56':['소환좌 칩 수호체',CYAN,RED],'57':['흑장미 귀막은 신도',PURPLE,RED],'58':['생체기계 악몽',RED,PURPLE],'59':['죄책감 압축결정',GREEN,PURPLE],'61':['EGO 구속 연결자',PURPLE,CYAN]};
   function midbossKey(scene){return 'mb_'+scene.replace('-','_');}
   Object.keys(MIDBOSS).forEach(function(sc){var m=MIDBOSS[sc];ACTORS[midbossKey(sc)]={name:m[0],c1:m[1],c2:m[2],midboss:true};});
