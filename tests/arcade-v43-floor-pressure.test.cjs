@@ -45,9 +45,9 @@ test('lines: ㅡ and = horizontal beams along the bottom, even while the big hex
  const s=cardRun(stageWith('lines'));s.figures.push({sigil:true,kind:'glyph',age:0,warn:1e6,active:1,glyph:'x',want:1,turn:0,spin:0,width:1,cx:0,cy:0,r:1,r0:1,r1:1,period:1});
  let n=0;hold(s,a.FLOOR_ON+400,t=>{t.figures.forEach(f=>{f.age=0;});n=Math.max(n,t.lasers.filter(l=>l.floor).length);});assert(n>=1,'lines are not muted by the hexagram');
 });
-test('easy is gentler than hell: fewer bottom-pressure events over the same stage',()=>{
+test('easy bosses suppress new bottom-pressure events while hell retains them',()=>{
  const tally=d=>{let k=0;for(let i=0;i<8;i++){const s=cardRun(i,d,9);hold(s,a.FLOOR_CYCLE*2);const F=s.floor;k+=F.risen+F.dropped+F.mounds+F.lines;}return k;};
- const e=tally('gentle'),hl=tally('hell');assert(e>0&&e<hl*.6,`gentle ${e} vs hell ${hl}`);
+ const e=tally('gentle'),hl=tally('hell');assert.equal(e,0);assert(hl>0,`hell ${hl}`);
 });
 test('the app draws the floor (blocks, falling pieces, hills) under the bullets and keeps bottom lines bright under the hexagram',()=>{
  const app=h.read('src/arcade-app-v43.js');const m=app.match(/function drawFloor\(s\)\{([\s\S]*?)\n  \}/);assert(m,'drawFloor exists');

@@ -33,7 +33,10 @@
   var keys={},finger={active:false,id:null,x:0,y:0},focusHeld=false,focusPointer=null,focusLatched=false,bombQueued=false;
   var settings={music:true,sfx:true,musicVolume:1,sfxVolume:1,screenShake:true,lowQuality:false};
   var fx=null,music=null,best=0,lastItemSound=0,progress=Progress.fresh(),saveOk=true;
-  var themeOverride=null,turbo=0,rushStage=false;
+  var themeOverride=null,turbo=0,rushStage=false,oneCreditEligible=false;
+  var Story=global.HapilArcadeStory||null,story=null,pendingStory=-1,storyQuiet=false,storySeen={},pauseReturn='playing',rulesReturn='title';
+  var STORY_SEEN_KEY='hapil-arcade-story-seen-20261117';
+  try{var seen=JSON.parse(global.localStorage.getItem(STORY_SEEN_KEY)||'{}');if(seen&&typeof seen==='object'&&!Array.isArray(seen))storySeen=seen;}catch(e){}
   // 개발자 모드(사용자 11-15): 게임 속도 2배 + 체력 무한. 지금은 시작 화면에 대놓고 보인다. 숨기려면 DEV_VISIBLE=false 한 줄만 바꾼다.
   var DEV_VISIBLE=true,DEV_SPEED=2,DEV_KEY='hapil-arcade-dev-v43',devMode=false;
   try{devMode=DEV_VISIBLE&&global.localStorage.getItem(DEV_KEY)==='1';}catch(e){devMode=false;}
@@ -516,7 +519,7 @@
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,'제'+g.part+'부 · STAGE '+(s.stageIndex+1));play('seal');}}
       else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);showToast(r);rushStage=false;}
       else if(e==='map')loadStage(s.stageIndex);
-      else if(e==='entrance'){play('warning');wantFx(s.boss.actor);showBanner(s.boss.name,s.boss.mid?'중간보스':'보스');} // 맵마다 일반몹 → 중간보스 → 보스: 누가 나왔는지 한 줄로(사용자 11-16)
+      else if(e==='entrance'){play('warning');wantFx(s.boss.actor);showBanner(s.boss.name,s.boss.mid?'중간보스':'보스');if(!storyQuiet&&!storySeen[s.stageIndex])pendingStory=s.stageIndex;} // 맵마다 일반몹 → 중간보스 → 보스: 누가 나왔는지 한 줄로(사용자 11-16)
       else if(e==='figure')castFx(s,false);
       else if(e==='bossDown'){var dn=s.boss.down;if(dn){fall={actor:dn.actor,x:dn.x,y:dn.y,tick:dn.tick,dir:dn.x>W/2?1:-1,burst:-1,keep:{}};['','@death','@hit'].forEach(function(m){var im=images[dn.actor+m]||(bossArt.actor===dn.actor&&bossArt.keep[dn.actor+m]);if(im)fall.keep[dn.actor+m]=im;}); /* 다음 스테이지로 넘어가며 그림을 놓아도 쓰러지는 동안은 쥐고 있다(전에는 마름모 자리표시가 쓰러졌다) */flash=Ink?.18:.8;shake=16;}} /* 수묵 모드는 흰 섬광을 줄여 먹빛으로 물드는 순간이 묻히지 않게(사용자 11-16) */
       else if(e==='break'){play('phaseBreak',s.boss.x);flash=.6;shock={x:s.boss.x,y:s.boss.y,r:10,ink:true};shake=3;}
@@ -1406,16 +1409,42 @@
     if(mode==='playing'&&state){
       adaptQuality(rawMs>STALL_FRAME_MS?rawMs:elapsed*1000);if(devMode)showDevBadge();accumulator=Math.min(accumulator+elapsed,4/60);if(devMode)accumulator=Math.min(accumulator+elapsed*(DEV_SPEED-1),4*DEV_SPEED/60); // 개발자 모드는 같은 60Hz 틱을 두 배로 돌린다
       var steps=0,limit=turbo||rushStage?Math.max(4,turbo||60):devMode?4*DEV_SPEED:4;if(turbo||rushStage)accumulator=limit/60;
-      while(accumulator>=1/60&&steps<limit&&mode==='playing'){if(rushStage)rushTick(state);if(devMode)state.player.hp=state.player.maxHp;Arcade.step(state,inputForStep());accumulator-=1/60;steps++;consume();}
+      while(accumulator>=1/60&&steps<limit&&mode==='playing'){if(rushStage)rushTick(state);if(devMode)state.player.hp=state.player.maxHp;Arcade.step(state,inputForStep());accumulator-=1/60;steps++;consume();if(mode==='playing'&&pendingStory===state.stageIndex&&state.stage==='intro'&&state.stageTick>=45)beginStory();}
       if(Mobile&&state)Mobile.tick(state,mode,rawMs); // 진단은 잘리기 전 실제 프레임 시간(1초 넘는 복귀 프레임은 tick이 버림)
     }
-    if(global.HapilMusic)global.HapilMusic.update(mode,state,settings.music); // 구간이 바뀌면 곡을 겹쳐 바꾼다
+    if(mode==='story'&&story&&!document.hidden&&$('story-auto').checked){story.elapsed+=elapsed*1000;if(story.elapsed>=story.lineMs)nextStory();}
+    if(global.HapilMusic)global.HapilMusic.update(musicMode(),state,settings.music); // 구간이 바뀌면 곡을 겹쳐 바꾼다
     draw(elapsed);
   }
 
   /* ── 메뉴 ── */
   function show(id,on){var el=$(id);if(el)el.hidden=!on;}
-  var SCREENS={title:'arcade-title',paused:'arcade-pause',result:'arcade-result',keepsakes:'arcade-keepsake-screen',boss:'arcade-boss-screen'};
+  var SCREENS={title:'arcade-title',paused:'arcade-pause',result:'arcade-result',keepsakes:'arcade-keepsake-screen',boss:'arcade-boss-screen',story:'arcade-story',rules:'arcade-rules'};
+  function musicMode(){return mode==='story'?'playing':mode==='rules'&&rulesReturn!=='title'?'paused':mode;}
+  function paintStory(){
+    if(!story)return;var entry=story.entry,line=entry.lines[story.line];
+    $('story-title').textContent=entry.title;$('story-speaker').textContent=line.speaker||entry.speaker;
+    $('story-text').textContent=line.text;$('story-count').textContent=(story.line+1)+' / '+entry.lines.length;
+    $('story-next').textContent=T(story.line+1===entry.lines.length?'storyFight':'storyNext');
+    story.elapsed=0;story.lineMs=Math.max(2500,Math.min(6000,(entry.durationMs||6000)/entry.lines.length));
+  }
+  function beginStory(force){
+    if(!state||!Story||!$('arcade-story')||(!force&&(storyQuiet||storySeen[state.stageIndex])))return false;
+    var entry=Story.getStage(state.stageIndex);pendingStory=-1;if(!entry||!entry.lines||!entry.lines.length)return false;
+    story={entry:entry,line:0,elapsed:0,lineMs:3000};
+    var portrait=$('story-portrait'),actor=state.boss.actor;portrait.hidden=!actor||!listed(actor);
+    if(!portrait.hidden){var info=manifest&&manifest[actor+'.webp'],frames=info&&info.frames||1;portrait.style.backgroundImage='url("'+fileOf(actor)+'")';portrait.style.backgroundSize=frames>1?(frames*100)+'% 100%':'contain';portrait.setAttribute('aria-label',state.boss.name||entry.title);}
+    paintStory();accumulator=0;lastStamp=0;setMode('story');$('story-next').focus({preventScroll:true});return true;
+  }
+  function endStory(){
+    if(!story)return;storySeen[story.entry.stage]=true;try{global.localStorage.setItem(STORY_SEEN_KEY,JSON.stringify(storySeen));}catch(e){}
+    story=null;pendingStory=-1;accumulator=0;lastStamp=0;setMode('playing');
+  }
+  function nextStory(){if(!story||mode!=='story')return;if(++story.line>=story.entry.lines.length)endStory();else paintStory();}
+  function openRules(){rulesReturn=mode;setMode('rules');$('arcade-rules-back').focus({preventScroll:true});}
+  function closeRules(){setMode(rulesReturn==='paused'?'paused':'title');}
+  function resume(){unlockAudio();accumulator=0;lastStamp=0;setMode(pauseReturn==='story'&&story?'story':'playing');}
+
   function setMode(next){
     mode=next;Object.keys(SCREENS).forEach(function(k){show(SCREENS[k],k===next);});
     showDevBadge();
@@ -1423,11 +1452,11 @@
     var hh=$('arcade-hud-high'),hl=$('arcade-hud-low');if(hh&&hl)hh.hidden=hl.hidden=!(hudOut&&next==='playing');
     if(next!=='playing')clearInput();
     else if(document.activeElement&&document.activeElement.blur)document.activeElement.blur();
-    if(fx&&fx.suspend)fx.suspend(next==='paused');
+    if(fx&&fx.suspend)fx.suspend(next==='paused'||next==='story'||next==='rules');
     if(next==='paused'){syncSettings();var resume=$('arcade-resume');if(resume&&resume.focus)resume.focus({preventScroll:true});}
     if(next!=='keepsakes')clearKeepsakes();
-    if(global.HapilMusic)global.HapilMusic.update(next,state,settings.music); // 구간별 곡(arcade-music-v43.js). 없으면 예전 한 곡
-    else if(music){if(next==='playing'&&settings.music&&settings.musicVolume>0){var p=music.play();if(p&&p.catch)p.catch(function(){});}else music.pause();}
+    if(global.HapilMusic)global.HapilMusic.update(musicMode(),state,settings.music); // 구간별 곡(arcade-music-v43.js). 없으면 예전 한 곡
+    else if(music){if((next==='playing'||next==='story')&&settings.music&&settings.musicVolume>0){var p=music.play();if(p&&p.catch)p.catch(function(){});}else music.pause();}
   }
   // 개발자 모드 표시: 탄이 오는 필드 밖(화면 오른쪽 위 구석)에 둔다(심사 1차: 필드 안 배지가 적·탄과 겹침)
   var devErrors=0,devLastError='',devBadgeAt=0;
@@ -1439,11 +1468,11 @@
   /* run: {stage, bossOnly}. 원큐: 그 스테이지부터 끝까지 이어진다. */
   function start(run){
     clearInput();if(fx&&fx.reset)fx.reset();unlockAudio();
-    var quiet=!!(run&&run.quiet);
+    var quiet=!!(run&&run.quiet);storyQuiet=quiet;story=null;pendingStory=-1;pauseReturn='playing';
     var grown=run&&run.grown; // 중간 저장에서 이어 할 때 자란 공격·필살 단계
     run={stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),segment:run&&run.segment,carry:run&&run.carry};
-    lastRun=run;
-    var options={difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,compact:compact,bossOnly:run.bossOnly,growth:true}; // 중간 스테이지에서 시작하면 그만큼 자란 기억사수로(엔진 createRun)
+    lastRun=run;oneCreditEligible=run.stage===0&&!run.bossOnly&&!Number.isInteger(run.segment)&&!run.carry&&!quiet&&!devMode;
+    var options={difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,compact:compact,bossOnly:run.bossOnly,growth:true,pacing:!quiet}; // 중간 스테이지에서 시작하면 그만큼 자란 기억사수로(엔진 createRun)
     if(Number.isInteger(run.segment))options.segment=run.segment;if(grown&&(grown.exp||grown.fills))options.grown={exp:grown.exp|0,fills:grown.fills|0};
     state=Arcade.createRun(options);
     if(run.carry){state.hits+=run.carry.hits|0;state.bombsUsed+=run.carry.bombs|0;} // 중간 저장에서 이어 하면 앞 구간의 피격·폭탄도 별에 반영
@@ -1457,7 +1486,7 @@
     var stars=0;s.results.forEach(function(r){stars+=r.stars;});
     $('result-title').textContent=won?(s.bossOnly?'BOSS CLEAR':s.stageIndex>=Arcade.STAGES.length-1?'ALL CLEAR':'CLEAR'):'GAME OVER';
     $('result-score').textContent=pad(s.score);$('result-best').textContent=pad(best);
-    $('result-detail').textContent=(won?'':'STAGE '+(s.stageIndex+1)+' '+Arcade.STAGES[s.stageIndex].name+' · ')+'깬 스테이지 '+s.results.length+' · 별 '+stars+' · 패턴 보너스 '+s.captures+' · 피격 '+s.hits;
+    $('result-detail').textContent=(won?'':'STAGE '+(s.stageIndex+1)+' '+Arcade.STAGES[s.stageIndex].name+' · ')+(oneCreditEligible?'원코인 여정 · ':'연습/이어하기 · ')+'깬 스테이지 '+s.results.length+' · 별 '+stars+' · 패턴 보너스 '+s.captures+' · 피격 '+s.hits;
     var retry=$('arcade-retry');
     if(!won){retry.hidden=false;retry.textContent=T('retryFallen');retry.dataset.stage=String(s.stageIndex);}
     else if(s.bossOnly){retry.hidden=false;retry.textContent=T('retryBoss');retry.dataset.stage=String(s.rushStage);}
@@ -1468,8 +1497,8 @@
     var fallen=$('arcade-result');fallen.classList.toggle('fallen',!won&&!!eyes&&!eyes.state().off); // ?eyes=0 이면 감긴 눈 바탕이 없으니 예전 한지 결과판(리뷰 지적) // 게임 오버: 감긴 눈 위에 붉은 십자가가 그어지고 '다시하기'(이 스테이지 처음부터)
     setTimeout(function(){if(state===s){setMode('result');if(eyes&&eyes.cross&&fallen.classList.contains('fallen'))eyes.cross($('result-cross'));}},won?1500:eyes?Math.round(eyes.CLOSE_SECONDS*1000)+350:900);
   }
-  function pause(){if(mode==='playing')setMode('paused');}
-  function goTitle(){if(global.HapilEyes)global.HapilEyes.clear();if(loadedStage>=0)releaseStage(loadedStage,-1);state=null;toast=null;refreshTitle();setMode('title');}
+  function pause(){if(mode==='playing'||mode==='story'){pauseReturn=mode;setMode('paused');}}
+  function goTitle(){story=null;pendingStory=-1;if(global.HapilEyes)global.HapilEyes.clear();if(loadedStage>=0)releaseStage(loadedStage,-1);state=null;toast=null;refreshTitle();setMode('title');}
   function bossStages(){return Arcade.STAGES.filter(function(g){return g.kind==='boss'&&progress.cleared.indexOf(g.index)>=0;});}
   function actorNames(index){var names=[];Arcade.SEGMENTS.forEach(function(seg){if(seg.stage===index&&seg.kind==='card'){var who=Arcade.ACTORS[seg.actor],n=who?who.name:seg.actor;if(names.indexOf(n)<0)names.push(n);}});return names;}
   // 스테이지 선택: 부별로 묶고, 잠긴 스테이지는 고를 수 없다. 깬 스테이지에는 별을 단다.
@@ -1499,7 +1528,7 @@
     fillStages();
   }
   function setDifficulty(next){
-    if(!Arcade.DIFFICULTY[next])next='normal';difficulty=next;var rule=Arcade.DIFFICULTY[difficulty];$('difficulty-note').textContent=T(NOTES[difficulty],{hp:rule.hp,bombs:rule.bombs});
+    if(!Arcade.DIFFICULTY[next])next='normal';difficulty=next;var rule=Arcade.DIFFICULTY[difficulty];$('difficulty-note').textContent=T(NOTES[difficulty],{hp:rule.hp,bombs:rule.bombs,minutes:Arcade.PACING&&Arcade.PACING[difficulty]?Arcade.PACING[difficulty].nominalMinutes:({gentle:60,normal:90,hell:120})[difficulty]});
     document.querySelectorAll('[data-difficulty]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.difficulty===difficulty));});
   }
   // 기념물 격자: 얻은 것만 그림을 보이고, 못 얻은 칸은 가린다. 화면을 닫으면 그림을 버린다.
@@ -1538,7 +1567,7 @@
   function applySettings(save){
     if(save)try{global.localStorage.setItem(SETTINGS_KEY,JSON.stringify(settings));}catch(e){}
     if(fx){if(fx.setEnabled)fx.setEnabled(settings.sfx);if(fx.setVolume)fx.setVolume(settings.sfxVolume);}
-    if(global.HapilMusic){if(global.HapilMusic.setVolume)global.HapilMusic.setVolume(settings.musicVolume);if(global.HapilMusic.setEnabled)global.HapilMusic.setEnabled(settings.music);global.HapilMusic.update(mode,state,settings.music);}
+    if(global.HapilMusic){if(global.HapilMusic.setVolume)global.HapilMusic.setVolume(settings.musicVolume);if(global.HapilMusic.setEnabled)global.HapilMusic.setEnabled(settings.music);global.HapilMusic.update(musicMode(),state,settings.music);}
     else if(music){music.volume=.2*settings.musicVolume;if(!settings.music||settings.musicVolume===0)music.pause();else if(mode==='playing'){try{var p=music.play();if(p&&p.catch)p.catch(function(){});}catch(e){}}}
     if(Ink&&Ink.setLite)Ink.setLite(lite);
     syncSettings();
@@ -1569,12 +1598,18 @@
     $('arcade-keepsake-back').addEventListener('click',function(){setMode('title');});
     $('arcade-retry').addEventListener('click',function(){var i=Number(this.dataset.stage)||0;start({stage:i,bossOnly:this.dataset.boss==='1'});});
     $('arcade-home').addEventListener('click',goTitle);
-    $('arcade-resume').addEventListener('click',function(){if(fx)fx.unlock();accumulator=0;lastStamp=0;setMode('playing');});
+    $('arcade-resume').addEventListener('click',resume);
+    ['arcade-rules-title','arcade-rules-pause'].forEach(function(id){var b=$(id);if(b)b.addEventListener('click',openRules);});
+    if($('arcade-rules-back'))$('arcade-rules-back').addEventListener('click',closeRules);
+    if($('story-next'))$('story-next').addEventListener('click',nextStory);
+    if($('story-skip'))$('story-skip').addEventListener('click',function(){if(mode==='story')endStory();});
+    if($('story-auto'))$('story-auto').addEventListener('change',function(){if(story)story.elapsed=0;});
+    if($('story-replay'))$('story-replay').addEventListener('click',function(){storySeen={};try{global.localStorage.removeItem(STORY_SEEN_KEY);}catch(e){}this.textContent=T('storyReplayDone');});
     $('arcade-pause-button').addEventListener('click',pause);
     $('arcade-quit').addEventListener('click',goTitle);
     var rep=$('arcade-report');if(rep)rep.addEventListener('click',function(){if(!Mobile)return;Mobile.copyReport(function(ok){rep.textContent=T(ok?'reportDone':'reportFail');if(!ok)global.prompt&&global.prompt('기기 진단',Mobile.report());setTimeout(function(){rep.textContent=T('report');},4000);});}); // 기기 진단(오류·프레임·스테이지 기록)을 글로 복사
     $('arcade-dev').hidden=!DEV_VISIBLE;if($('arcade-dev-note'))$('arcade-dev-note').hidden=!DEV_VISIBLE;if($('arcade-report'))$('arcade-report').hidden=!DEV_VISIBLE;var devLabel=function(){var d=$('arcade-dev');d.textContent=devMode?'DEV 켜짐':'DEV 꺼짐';d.setAttribute('aria-pressed',String(devMode));};devLabel();
-    $('arcade-dev').addEventListener('click',function(){devMode=!devMode;try{global.localStorage.setItem(DEV_KEY,devMode?'1':'0');}catch(e){}devLabel();showDevBadge();});
+    $('arcade-dev').addEventListener('click',function(){devMode=!devMode;if(devMode)oneCreditEligible=false;try{global.localStorage.setItem(DEV_KEY,devMode?'1':'0');}catch(e){}devLabel();showDevBadge();});
     $('arcade-sound').addEventListener('click',function(){var on=!(settings.music||settings.sfx);settings.music=settings.sfx=on;applySettings(true);unlockAudio();});
     bindSettings();
     // 이동 손가락과 저속 손가락은 각자 캡처한다. 버튼 밖으로 살짝 밀려도 손을 뗄 때까지 유지한다.
@@ -1589,6 +1624,8 @@
     stage.addEventListener('pointermove',function(e){if(!finger.active||e.pointerId!==finger.id)return;e.preventDefault();var q=fieldPoint(e);finger.x=q.x;finger.y=q.y;});
     ['pointerup','pointercancel','lostpointercapture'].forEach(function(type){stage.addEventListener(type,function(e){if(e.pointerId===finger.id){finger.active=false;finger.id=null;}});});
     document.addEventListener('keydown',function(e){var key=e.key.length===1?e.key.toLowerCase():e.key,form=e.target&&e.target.closest&&e.target.closest('input,select,textarea,button');
+      if(mode==='rules'&&key==='Escape'){e.preventDefault();if(!e.repeat)closeRules();return;}
+      if(mode==='story'){if(key==='Escape'){e.preventDefault();if(!e.repeat)pause();return;}if(form)return;if(key==='Enter'||key===' '||key==='z'){e.preventDefault();if(!e.repeat)nextStory();}return;}
       if(key==='Escape'||(key===' '&&!form)){if(mode==='playing'||mode==='paused')e.preventDefault();if(e.repeat)return;if(mode==='playing')pause();else if(mode==='paused')$('arcade-resume').click();return;}
       if((form&&form.tagName!=='BUTTON')||mode!=='playing')return;
       if(key==='x'){e.preventDefault();if(!e.repeat)bombQueued=true;return;}
@@ -1614,11 +1651,11 @@
   }
   function snapshot(){return {mode:mode,scale:scale,lite:lite,compact:compact,frameMs:frameMs,bullets:state?state.n:0,stage:state?state.stage:'',stageIndex:state?state.stageIndex:-1,seg:state?state.seg:-1,
     hp:state?state.player.hp:0,score:state?state.score:0,particles:particles.length,images:Object.keys(images).sort(),loading:Object.keys(loading).sort(),loadedStage:loadedStage,
-    settings:Object.assign({},settings),focus:!!(keys.Shift||focusHeld||focusLatched),fx:{kind:fxKind,count:fxCount,pool:FX_POOL},toast:toast?{name:toast.name,stars:toast.stars,hasArt:!!toast.img}:null,difficulty:difficulty,saveOk:saveOk};}
+    oneCreditEligible:oneCreditEligible,story:story?{stage:story.entry.stage,line:story.line,total:story.entry.lines.length}:null,settings:Object.assign({},settings),focus:!!(keys.Shift||focusHeld||focusLatched),fx:{kind:fxKind,count:fxCount,pool:FX_POOL},toast:toast?{name:toast.name,stars:toast.stars,hasArt:!!toast.img}:null,difficulty:difficulty,saveOk:saveOk};}
   /* 디버그 훅(헤드리스 검증용): 상태를 읽고, 스테이지·구간으로 건너뛰고, 진행 기록을 본다. */
   global.HapilArcadeApp={
     getState:snapshot,devDiag:devDiag,drawPropArt:drawPropArt, // tools/build-drawn-props-v43.cjs가 그림 파일을 구울 때 쓴다
-    pause:pause,back:function(){if(mode==='paused')$('arcade-resume').click();else if(mode!=='title'&&mode!=='playing')goTitle();}, // 앱의 뒤로가기(arcade-mobile-v43.js)
+    pause:pause,back:function(){if(mode==='story')pause();else if(mode==='rules')closeRules();else if(mode==='paused')$('arcade-resume').click();else if(mode!=='title'&&mode!=='playing')goTitle();}, // 앱의 뒤로가기(arcade-mobile-v43.js)
     debugState:function(){
       return {state:state,app:snapshot(),progress:JSON.parse(JSON.stringify(progress)),saved:(function(){try{return global.localStorage.getItem(SAVE_KEY);}catch(e){return null;}})(),
         jumpStage:function(i,bossOnly){start({stage:i,bossOnly:!!bossOnly,quiet:true});return snapshot();},
@@ -1628,7 +1665,7 @@
         lose:function(){if(!state||mode!=='playing')return null;state.player.hp=0;state.stage='lost';state.stageTick=0;state.events.push('lose');consume();return snapshot();},
         setTheme:function(theme){if(!state)return null;themeOverride=theme?{stage:state.stageIndex,bg:theme.bg,tint:theme.tint,fx:theme.fx}:null;backgroundStage=-1;fxStage=-1;return snapshot();},
         sheet:function(key){var img=images[key];if(!img)return null;var x=sheetOf(key,img);return {frames:x.frames,cw:x.cw,ch:x.ch,fps:x.fps,width:img.width,height:img.height};},
-        stageKeys:stageKeys,weather:Object.keys(WEATHER)};
+        showStory:function(){return beginStory(true);},skipStory:endStory,stageKeys:stageKeys,weather:Object.keys(WEATHER)};
     }
   };
   boot();

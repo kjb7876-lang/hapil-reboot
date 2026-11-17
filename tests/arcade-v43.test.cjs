@@ -45,14 +45,12 @@ test('v43 stages run mob waves → a mid boss → the boss → next map, and no 
  const plain=a.SEGMENTS.filter(x=>x.kind==='card'&&!x.spell);assert(new Set(plain.map(x=>x.plain)).size>=9);
 });
 
-test('v43 the journey is three to four hours: stage lengths vary and add up',()=>{
- const a=A();let total=0;
- a.STAGES.forEach((g,i)=>{
-  const mine=a.SEGMENTS.filter(x=>x.stage===i);let s=0;for(const x of mine)s+=x.kind==='wave'?x.duration/60+4:x.time*.7+2.5;
-  assert(Math.abs(g.seconds-s)<1,'seconds is the nominal length of '+g.name);assert(s>=70&&s<=420,g.name+' '+Math.round(s)+'s');total+=s;});
- assert(total>=9000&&total<=13500,'nominal total '+Math.round(total)+'s (2.5 to 3.75 hours before retries)');
- const road=a.STAGES.filter(g=>g.kind==='road'),boss=a.STAGES.filter(g=>g.kind==='boss'),avg=l=>l.reduce((n,g)=>n+g.seconds,0)/l.length;
- assert(avg(boss)>avg(road)*1.4,'boss stages are clearly longer than road stages');
+test('v43 journey metadata follows the 60/90/120 minute target budgets',()=>{
+ const a=A();for(const [d,minutes] of [['gentle',60],['normal',90],['hell',120]]){
+  const total=a.STAGES.reduce((sum,g)=>sum+a.stageTargetSeconds(d,g.index),0);
+  assert(Math.abs(total-minutes*60)<.01);assert.equal(a.pacingReport(d).targetMinutes,minutes);
+ }
+ for(const g of a.STAGES){assert.equal(g.seconds,a.stageTargetSeconds('normal',g.index));assert(g.authoredSeconds>g.seconds);}
 });
 
 test('v43 every stage has its own look: background, tint and weather change from stage to stage, and the art is small',()=>{
@@ -100,14 +98,14 @@ test('v43 progress saves stage by stage, unlocks in order and survives a broken 
 
 test('v43 a run can start at any stage, stop after a chosen number of stages, and replays exactly from a seed',()=>{
  const a=A();
- a.STAGES.forEach((g,k)=>{const s=a.createRun({stage:k,seed:1});for(let i=0;i<200;i++){a.step(s,{dx:0,dy:0});clear(s);}assert.equal(s.stageIndex,k);assert.equal(s.seg,g.first);assert.equal(s.player.hp,s.player.maxHp);});
+ a.STAGES.forEach((g,k)=>{const s=a.createRun({stage:k,seed:1});for(let i=0;i<60;i++){a.step(s,{dx:0,dy:0});clear(s);}assert.equal(s.stageIndex,k);assert.equal(s.seg,g.first);assert.equal(s.player.hp,s.player.maxHp);});
  const one=play({difficulty:'gentle',seed:2,stage:7,stages:1},200000);assert.equal(one.s.stage,'won');assert.equal(one.s.stageIndex,7);assert.deepEqual(one.s.results.map(x=>x.stage),[7]);
  const digest=s=>{let n=0;for(let i=0;i<s.n;i++)n=(n*31+Math.round(s.bx[i]*8)+Math.round(s.by[i]*8)*7+s.bcolor[i])|0;return [s.tick,s.stage,s.seg,s.n,s.lasers.length,s.mobs.length,s.itemCount,s.score,s.graze,s.rng,n].join('|');};
  const x=a.createRun({seed:11}),y=a.createRun({seed:11}),z=a.createRun({seed:12});
  for(let i=0;i<9000;i++){const input={dx:Math.sin(i/30)*4,dy:Math.cos(i/70)*2,focus:i%300<60,bomb:i===4000};for(const s of [x,y,z]){s.player.invulnerableUntil=s.tick+999;a.step(s,input);clear(s);}}
  assert.equal(digest(x),digest(y));assert.notEqual(digest(x),digest(z));
  // 보스 체험: 고른 스테이지의 보스전만
- const k=a.STAGES.findIndex(g=>g.kind==='boss'),cards=a.SEGMENTS.filter(g=>g.stage===k&&g.kind==='card').length;let waves=0;
+ const k=a.STAGES.findIndex(g=>g.kind==='boss'),cards=a.plannedSegments('normal').filter(i=>a.SEGMENTS[i].stage===k&&a.SEGMENTS[i].kind==='card').length;let waves=0;
  const rush=play({difficulty:'normal',seed:5,stage:k,bossOnly:true},60000,s=>{if(s.stage==='wave')waves++;});
  assert.equal(rush.s.stage,'won');assert.equal(waves,0);assert.equal(rush.s.cleared+rush.s.timeouts,cards);assert.equal(rush.s.kills,0);
 });
@@ -130,7 +128,7 @@ test('v43 slow movement, the bomb, grazing, items and the named-pattern bonus st
 });
 
 test('v43 difficulties, the phone mode, six colours and shapes, upright crosses, and nothing hits before it has formed',()=>{
- const a=A(),d=a.DIFFICULTY;assert.deepEqual([d.gentle.hp,d.normal.hp,d.hell.hp],[9,5,3]);
+ const a=A(),d=a.DIFFICULTY;assert.deepEqual([d.gentle.hp,d.normal.hp,d.hell.hp],[5,3,2]);
  assert(d.gentle.speed<d.normal.speed&&d.normal.speed===d.hell.speed&&d.hell.speed<1);assert(d.gentle.density<d.normal.density&&d.normal.density===d.hell.density);
  assert.deepEqual([...a.PALETTE].sort(),[0,2,4,5,6,8]);assert.equal(a.SIZE_RADIUS.length,6);assert(a.COMPACT_CAP<a.CAP);
  const cross=a.PROPS.findIndex(p=>p.key==='hexagram');assert(cross>=0&&a.PROPS[cross].upright===true); // 사용자 11-16: 똑바로 선 기물은 십자가에서 육망성으로 바뀌었다

@@ -52,7 +52,7 @@ test('every data-i18n key in the page exists, and the helpers load before the ap
   assert(order.indexOf('src/arcade-mobile-v43.js')>=0&&order.indexOf('src/arcade-mobile-v43.js')<order.indexOf('src/arcade-app-v43.js'));
 });
 test('difficulty notes come from the real rules (lives and bombs)',()=>{
-  const app=read('src/arcade-app-v43.js');assert.match(app,/T\(NOTES\[difficulty\],\{hp:rule\.hp,bombs:rule\.bombs\}\)/);assert.doesNotMatch(app,/목숨 7 · 폭탄 3/);
+  const app=read('src/arcade-app-v43.js');assert.match(app,/T\(NOTES\[difficulty\],\{hp:rule\.hp,bombs:rule\.bombs,minutes:/);assert.doesNotMatch(app,/목숨 7 · 폭탄 3/);
 });
 test('a hidden button stays hidden (button display:flex used to override [hidden])',()=>{
   assert.match(read('arcade.html'),/button\[hidden\],a\.button\[hidden\],\.note\[hidden\]\{display:none\}/);
@@ -64,6 +64,7 @@ test('the app bundle has every script the page loads, the art it needs, and hide
     const html=fs.readFileSync(path.join(out,'index.html'),'utf8');
     for(const m of html.matchAll(/<script src="([^"?]+)/g))assert(fs.existsSync(path.join(out,m[1])),m[1]);
     for(const f of ['media/arcade-v43/manifest.json','media/music.mp3','media/gunner.webp'])assert(fs.existsSync(path.join(out,f)),f);
+    assert.equal(fs.readFileSync(path.join(out,'docs/v43/canonical-story.txt'),'utf8'),read('docs/v43/canonical-story.txt'),'offline app preserves the complete canonical text');
     assert.match(fs.readFileSync(path.join(out,'src/arcade-app-v43.js'),'utf8'),/var DEV_VISIBLE=false[;,]/);
     assert.match(read('src/arcade-app-v43.js'),/var DEV_VISIBLE=true[;,]/,'the repository copy is untouched');
   }finally{fs.rmSync(out,{recursive:true,force:true});}

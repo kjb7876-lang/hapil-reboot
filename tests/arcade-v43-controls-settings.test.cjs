@@ -27,10 +27,10 @@ function harness(saved){
     localStorage:{getItem:k=>storage[k]||null,setItem:(k,v)=>{storage[k]=v;}},
     HapilMusic:{update:(...a)=>calls.push(['musicUpdate',...a]),setEnabled:v=>calls.push(['music',v]),setVolume:v=>calls.push(['musicVolume',v]),unlock:()=>calls.push(['musicUnlock'])},
     addEventListener:(k,f)=>{(globals[k]||(globals[k]=[])).push(f);},requestAnimationFrame(){},setTimeout(){},Image:class{},};w.window=w;
-  const sandbox=vm.createContext(w);vm.runInContext(read('src/arcade-i18n-v43.js'),sandbox);
+  const sandbox=vm.createContext(w);vm.runInContext(read('src/arcade-i18n-v43.js'),sandbox);vm.runInContext(read('src/arcade-story-v43.js'),sandbox);
   // Skip only browser boot. Expose the closed-over real handlers to install them on the DOM double.
   const script=read('src/arcade-app-v43.js').replace(/  boot\(\);\s*\}\)\(window\);\s*$/,`  global.controlsTest={bind:bind,input:inputForStep,load:loadSettings,apply:applySettings,mode:setMode,
-    prepare:function(s,a){state=s;fx=a;mode='playing';},settings:function(){return settings;},finger:function(){return finger;},quality:function(){return lite;},drawFigures:drawFigures,drawRunes:drawRunes};
+    prepare:function(s,a){state=s;fx=a;mode='playing';},settings:function(){return settings;},finger:function(){return finger;},quality:function(){return lite;},drawFigures:drawFigures,drawRunes:drawRunes,frame:frame,consume:consume,beginStory:beginStory,nextStory:nextStory};
 })(window);`);
   assert(script.includes('global.controlsTest='));vm.runInContext(script,sandbox);
   const h=w.controlsTest,s=A.createRun({difficulty:'hell',seed:77});s.stage='break';s.stageTick=-100000;
@@ -115,4 +115,29 @@ test('rune off frames retain complete authored ring geometry and letters without
   const render=t=>{s.tick=t;strokes.length=0;h.drawRunes(s,f);return strokes.map(x=>({...x,points:x.points.map(p=>p.slice())}));};
   const on=render(20),off=render(90);assert(on.length>0);assert.equal(off.length,on.length,'off preserves all ring strokes');
   assert.deepEqual(off.map(x=>x.points),on.map(x=>x.points));assert(Math.max(...off.map(x=>x.alpha))<=.2);assert(Math.max(...on.map(x=>x.alpha))>.8);
+});
+
+
+test('real boss entrance opens canonical memory before the first card and freezes all engine clocks',()=>{
+ const {h,w,s,nodes}=harness();s.stage='intro';s.stageTick=0;s.seg=A.SEGMENTS.findIndex(g=>g.stage===0&&g.kind==='card');s.boss.present=false;
+ nodes.get('story-auto').checked=false;
+ for(let t=1000;t<4000&&w.HapilArcadeApp.getState().mode==='playing';t+=1000/60)h.frame(t);
+ assert.equal(w.HapilArcadeApp.getState().mode,'story');assert.equal(s.stage,'intro');assert(s.stageTick>=45&&s.stageTick<55);
+ assert.equal(nodes.get('story-text').textContent,w.HapilArcadeStory.getStage(0).lines[0].text);
+ assert.match(nodes.get('story-portrait').style.backgroundImage,/^url\("media\/arcade-v43\/.+\.webp"\)$/);
+ const frozen={tick:s.tick,stageTick:s.stageTick,hp:s.player.hp};h.frame(5000);h.frame(5100);assert.deepEqual({tick:s.tick,stageTick:s.stageTick,hp:s.player.hp},frozen);
+ nodes.get('story-skip').click();assert.equal(w.HapilArcadeApp.getState().mode,'playing');const tick=s.tick;h.frame(9000);assert(s.tick-tick<=1,'no catch-up burst after reading');
+ s.events=['entrance'];h.consume();h.frame(9020);assert.equal(w.HapilArcadeApp.getState().mode,'playing','seen memories are not repeated');
+});
+
+test('memory pause, rules, resume and skip preserve narrative position and do not queue game input',()=>{
+ const {h,w,s,nodes,doc,calls,storage}=harness();s.boss.actor='violet';s.boss.name='보라검 천사';assert(h.beginStory(true));
+ const controlSpace=doc.emit('keydown',{key:' ',target:nodes.get('story-auto')});assert(!controlSpace.prevented);assert.equal(w.HapilArcadeApp.getState().story.line,0);
+ const buttonEnter=doc.emit('keydown',{key:'Enter',target:nodes.get('story-skip')});assert(!buttonEnter.prevented);assert.equal(w.HapilArcadeApp.getState().story.line,0);
+ const text=nodes.get('story-text').textContent;doc.emit('keydown',{key:'Escape'});assert.equal(w.HapilArcadeApp.getState().mode,'paused');
+ nodes.get('arcade-rules-pause').click();assert.equal(w.HapilArcadeApp.getState().mode,'rules');doc.emit('keydown',{key:'Escape'});assert.equal(w.HapilArcadeApp.getState().mode,'paused');
+ nodes.get('arcade-resume').click();assert.equal(w.HapilArcadeApp.getState().mode,'story');assert.equal(nodes.get('story-text').textContent,text);
+ doc.emit('keydown',{key:'x'});assert.equal(h.input().bomb,false);doc.emit('keydown',{key:'Enter',repeat:true});assert.equal(w.HapilArcadeApp.getState().story.line,0);
+ doc.emit('keydown',{key:'Enter'});assert.equal(w.HapilArcadeApp.getState().story.line,1);nodes.get('story-skip').click();assert.equal(w.HapilArcadeApp.getState().mode,'playing');
+ assert.equal(JSON.parse(storage['hapil-arcade-story-seen-20261117'])[0],true);assert(calls.some(c=>c[0]==='musicUpdate'&&c[1]==='playing'));
 });
