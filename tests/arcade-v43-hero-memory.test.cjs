@@ -66,7 +66,7 @@ test('bomb plays a short ink cut-in of the memory gunner: a hanji band with the 
  assert(idx.cutin&&/gunner/.test(idx.cutin.source));for(const f of ['cutin.webp','cutin-ink.webp'])assert(fs.statSync(path.join(root,'media/arcade-v43-hero',f)).size>5000,f);
  const src=fs.readFileSync(path.join(root,'src/hero-memory-v43.js'),'utf8'),fn=src.slice(src.indexOf('function drawCutin'),src.indexOf('function onEvent'));
  assert(fn.length>200,'drawCutin exists');const life=+/CUT_LIFE=([.\d]+)/.exec(src)[1];assert(life>.5&&life<=1.2,'short: '+life);
- assert(/cutPortrait\(\)/.test(fn)&&/img\.cutin/.test(src)&&/cut\.name/.test(fn)&&/필살 Lv\./.test(fn),'portrait, bomb name and level');
+ assert(/cutPortrait\(cut\.hero\)/.test(fn)&&/function cutinKey\(id\).*:'cutin'/.test(src)&&/cut\.name/.test(fn)&&/필살 Lv\./.test(fn),'selected hero portrait with memory fallback, bomb name and level');
  assert(!/arc\([^)]*TAU\)[^;]*;\s*g\.stroke\(\)/.test(fn),'no ring');assert(!/rgb\(\s*1[5-9]\d|rgb\(2[0-4]\d,\s*[0-6]\d,/.test(fn),'no seal red in the cut-in');
  assert(/drawCutin\(g,t/.test(src.slice(src.indexOf('function drawTexts'))),'drawn on top of the field');
 });

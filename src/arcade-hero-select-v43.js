@@ -2,11 +2,10 @@
 (function (global) {
   'use strict';
   var STYLE_ID = 'arcade-hero-select-style';
-  var IDS = ['memory', 'seoha'];
   var CSS = `
 #arcade-hero-select,html.ink #arcade-hero-select{--hs-accent:#a7d2df;position:fixed;inset:0;z-index:20;isolation:isolate;display:flex;align-items:center;justify-content:center;width:100%;height:100dvh;overflow:auto;overscroll-behavior:contain;padding:max(24px,env(safe-area-inset-top)) max(22px,env(safe-area-inset-right)) max(20px,env(safe-area-inset-bottom)) max(22px,env(safe-area-inset-left));background:radial-gradient(ellipse at 25% 36%,#17343b 0,transparent 53%),linear-gradient(125deg,#070c10 0,#101b1b 52%,#070a0c 100%);color:#f1ead9;text-align:left;font:15px/1.5 system-ui,"Apple SD Gothic Neo",sans-serif;touch-action:pan-y}
 #arcade-hero-select[hidden],html.ink #arcade-hero-select[hidden]{display:none}
-#arcade-hero-select[data-hero="seoha"],html.ink #arcade-hero-select[data-hero="seoha"]{--hs-accent:#98dec6;background:radial-gradient(ellipse at 25% 36%,#183c35 0,transparent 53%),linear-gradient(125deg,#070c10 0,#14201b 52%,#070a0c 100%)}
+#arcade-hero-select[data-hero^="seoha"],html.ink #arcade-hero-select[data-hero^="seoha"]{--hs-accent:#98dec6;background:radial-gradient(ellipse at 25% 36%,#183c35 0,transparent 53%),linear-gradient(125deg,#070c10 0,#14201b 52%,#070a0c 100%)}
 #arcade-hero-select:before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;background:repeating-linear-gradient(115deg,transparent 0 112px,#bda36a0a 113px 114px,transparent 115px 220px);border-top:8px solid #050809;border-bottom:8px solid #050809}
 #arcade-hero-select *{box-sizing:border-box}
 #arcade-hero-select .hs-shell{width:min(100%,1080px);min-height:0;display:flex;flex-direction:column;gap:18px}
@@ -33,7 +32,7 @@
 #hero-select-abilities li:before{content:"";position:absolute;left:1px;top:8px;width:5px;height:5px;border:1px solid #d0b882;transform:rotate(45deg)}
 #arcade-hero-select .hs-loadout{margin:18px 0 0;padding-top:12px;border-top:1px solid #bda36a33;display:flex;gap:12px;flex-wrap:wrap;color:#bdb7a7;font-size:11px;line-height:1.6}
 #arcade-hero-select .hs-loadout b{color:#d7c39a;font-weight:500;margin-right:6px}
-#arcade-hero-select .hs-choices{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%}
+#arcade-hero-select .hs-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;width:100%}
 #arcade-hero-select .hs-choice,html.ink #arcade-hero-select .hs-choice{position:relative;display:flex;align-items:center;justify-content:flex-start;gap:12px;min-width:0;min-height:86px;border:1px solid #6a645455;border-radius:3px;background:#101817cc;color:#b4b7ad;padding:12px 18px;text-align:left;font:inherit;overflow:hidden;cursor:pointer;transition:border-color .2s,background .2s}
 #arcade-hero-select .hs-choice[aria-pressed="true"],html.ink #arcade-hero-select .hs-choice[aria-pressed="true"]{border-color:#d7bd83;background:linear-gradient(110deg,#31423a,#13221f);color:#f0e4ca;box-shadow:inset 3px 0 #d7bd83,0 0 20px #8bc5ab0b}
 #arcade-hero-select .hs-choice img{width:44px;height:58px;object-fit:cover;object-position:center top;flex-shrink:0;mask-image:linear-gradient(90deg,#000 75%,transparent)}
@@ -41,7 +40,7 @@
 #arcade-hero-select .hs-choice-copy{min-width:0;flex:1}
 #arcade-hero-select .hs-choice-name{display:block;font:600 19px/1.25 "HapilSerif","Noto Serif KR",serif;letter-spacing:.04em}
 #arcade-hero-select .hs-choice-title{display:block;margin-top:5px;font-size:11px;line-height:1.4;color:#bcb5a4;word-break:keep-all}
-#arcade-hero-select .hs-choice-mark{font:10px/1 system-ui,sans-serif;letter-spacing:.1em;color:#d8c393;opacity:0}
+#arcade-hero-select .hs-choice-mark{font:9px/1 system-ui,sans-serif;letter-spacing:.1em;color:#d8c393;opacity:0}
 #arcade-hero-select .hs-choice[aria-pressed="true"] .hs-choice-mark{opacity:1}
 #arcade-hero-select .hs-footer{display:flex;align-items:center;justify-content:space-between;gap:18px;padding-top:2px}
 #arcade-hero-select .hs-hint{margin:0;color:#9c9f93;font-size:10px;letter-spacing:.03em;line-height:1.6}
@@ -59,31 +58,35 @@
 #arcade-hero-select[data-lite="true"] #hero-select-portrait{filter:none}
 @media(max-width:600px){
 #arcade-hero-select,html.ink #arcade-hero-select{padding:max(20px,env(safe-area-inset-top)) 18px max(16px,env(safe-area-inset-bottom));align-items:flex-start}
-#arcade-hero-select .hs-shell{gap:12px;min-height:calc(100dvh - 36px)}
+#arcade-hero-select .hs-shell{gap:10px;height:calc(100dvh - max(20px,env(safe-area-inset-top)) - max(16px,env(safe-area-inset-bottom)));min-height:0}
+#arcade-hero-select .hs-heading,#arcade-hero-select .hs-choices,#arcade-hero-select .hs-footer{flex-shrink:0}
 #arcade-hero-select .hs-heading{padding-bottom:10px;gap:8px}#arcade-hero-select h1{font-size:19px}#arcade-hero-select .hs-kicker{font-size:8px;letter-spacing:.2em}
-#arcade-hero-select .hs-stage{display:flex;flex-direction:column;gap:0;height:auto;min-height:0;flex:1}
-#arcade-hero-select .hs-art{width:100%;height:clamp(160px,29dvh,300px);min-height:160px;flex-shrink:0}
+#arcade-hero-select .hs-stage{display:flex;flex-direction:column;gap:0;height:auto;min-height:0;flex:1;overflow-y:auto;overscroll-behavior:contain;scroll-padding:8px}
+#arcade-hero-select .hs-art{width:100%;height:clamp(140px,25dvh,250px);min-height:140px;flex-shrink:0}
 #arcade-hero-select .hs-dial{width:56%;left:22%;top:5%}#arcade-hero-select .hs-glyph{font-size:120px;left:5%}
-#arcade-hero-select .hs-details{width:100%;padding:0}#arcade-hero-select .hs-number{display:none}#hero-select-title{margin-bottom:4px;font-size:11px}#hero-select-name{font-size:34px;line-height:1.15}
+#arcade-hero-select .hs-details{width:100%;padding:0;flex-shrink:0}#arcade-hero-select .hs-number{display:none}#hero-select-title{margin-bottom:4px;font-size:11px}#hero-select-name{font-size:34px;line-height:1.15}
 #hero-select-description{margin:10px 0;font-size:12px;line-height:1.7;max-width:none}#hero-select-abilities{gap:3px;font-size:11px}#hero-select-abilities li{line-height:1.6}#hero-select-abilities li:before{top:6px}
 #arcade-hero-select .hs-loadout{display:none}#arcade-hero-select .hs-choices{gap:8px}
-#arcade-hero-select .hs-choice,html.ink #arcade-hero-select .hs-choice{min-height:72px;padding:9px 10px;gap:8px}#arcade-hero-select .hs-choice img{width:32px;height:46px}#arcade-hero-select .hs-choice-name{font-size:16px}#arcade-hero-select .hs-choice-title{font-size:9px;margin-top:4px}#arcade-hero-select .hs-choice-mark{display:none}
-#arcade-hero-select .hs-footer{flex-direction:column-reverse;gap:7px}#arcade-hero-select .hs-actions{width:100%;gap:8px}#arcade-hero-select .hs-action,html.ink #arcade-hero-select .hs-action{min-width:84px;min-height:46px;padding:10px 14px}#arcade-hero-select #hero-select-confirm,html.ink #arcade-hero-select #hero-select-confirm{flex:1;min-width:0}#arcade-hero-select .hs-hint{font-size:9px;text-align:center}
+#arcade-hero-select .hs-choice,html.ink #arcade-hero-select .hs-choice{min-height:74px;padding:8px 4px;gap:4px;flex-direction:column;justify-content:center}#arcade-hero-select .hs-choice img{display:none}#arcade-hero-select .hs-choice-name{font-size:14px;line-height:1.4;white-space:nowrap}#arcade-hero-select .hs-choice-title{font-size:9px;margin-top:3px;line-height:1.4}#arcade-hero-select .hs-choice-mark{display:none}
+#arcade-hero-select .hs-footer{flex-direction:column-reverse;gap:7px}#arcade-hero-select .hs-actions{width:100%;gap:8px}#arcade-hero-select .hs-action,html.ink #arcade-hero-select .hs-action{min-width:84px;min-height:46px;padding:10px 14px}#arcade-hero-select #hero-select-confirm,html.ink #arcade-hero-select #hero-select-confirm{flex:1;min-width:0}#arcade-hero-select .hs-hint{font-size:9px;text-align:center}#arcade-hero-select .hs-hint br{display:none}
 }
-@media(max-width:380px) and (min-height:501px){#arcade-hero-select .hs-art{height:clamp(150px,25dvh,220px);min-height:150px}#hero-select-description{font-size:11px}#arcade-hero-select .hs-choice-title{font-size:8px}}
+@media(max-width:380px) and (min-height:501px){#arcade-hero-select .hs-art{height:clamp(130px,23dvh,200px);min-height:130px}#hero-select-description{font-size:11px}#arcade-hero-select .hs-choice-title{font-size:8px}}
 @media(max-height:500px) and (orientation:landscape){
 #arcade-hero-select,html.ink #arcade-hero-select{padding:16px max(22px,env(safe-area-inset-left)) 14px;align-items:flex-start}
-#arcade-hero-select .hs-shell{height:calc(100dvh - 30px);min-height:300px;display:grid;grid-template-columns:minmax(230px,.95fr) minmax(300px,1.05fr);grid-template-rows:auto minmax(0,1fr) auto;gap:10px 26px}
+#arcade-hero-select .hs-shell{height:calc(100dvh - 30px);min-height:300px;display:grid;grid-template-columns:minmax(225px,1fr) minmax(265px,1.05fr);grid-template-rows:auto minmax(0,1fr) auto;gap:10px 26px}
 #arcade-hero-select .hs-heading{grid-column:2;grid-row:1;padding-bottom:7px}#arcade-hero-select h1{font-size:18px}#arcade-hero-select .hs-kicker{font-size:8px}
 #arcade-hero-select .hs-stage{display:contents;height:auto;min-height:0}#arcade-hero-select .hs-art{grid-column:1;grid-row:1/4;width:100%;height:100%;min-height:0}#arcade-hero-select .hs-details{grid-column:2;grid-row:2;align-self:center;padding:0;max-height:100%;overflow-y:auto}
 #arcade-hero-select .hs-number,#arcade-hero-select .hs-loadout{display:none}#hero-select-title{font-size:10px;margin:0 0 3px}#hero-select-name{font-size:31px}#hero-select-description{font-size:11px;line-height:1.55;margin:8px 0}#hero-select-abilities{font-size:10px;gap:2px}#hero-select-abilities li{line-height:1.5}#hero-select-abilities li:before{top:5px}
-#arcade-hero-select .hs-choices{grid-column:1;grid-row:3;z-index:3;gap:7px;align-self:end}#arcade-hero-select .hs-choice,html.ink #arcade-hero-select .hs-choice{min-height:54px;padding:8px 9px;background:#0a1615ed}#arcade-hero-select .hs-choice img,#arcade-hero-select .hs-choice-title,#arcade-hero-select .hs-choice-mark{display:none}#arcade-hero-select .hs-choice-name{font-size:14px}
+#arcade-hero-select .hs-choices{grid-column:1;grid-row:3;z-index:3;gap:7px;align-self:end}#arcade-hero-select .hs-choice,html.ink #arcade-hero-select .hs-choice{min-height:54px;padding:8px 3px;background:#0a1615ed}#arcade-hero-select .hs-choice img,#arcade-hero-select .hs-choice-title,#arcade-hero-select .hs-choice-mark{display:none}#arcade-hero-select .hs-choice-name{font-size:13px;white-space:nowrap}
 #arcade-hero-select .hs-footer{grid-column:2;grid-row:3;display:block;padding:0}#arcade-hero-select .hs-actions{width:100%;gap:8px}#arcade-hero-select .hs-action,html.ink #arcade-hero-select .hs-action{min-width:80px;min-height:45px;padding:8px 12px;font-size:12px}#arcade-hero-select #hero-select-confirm,html.ink #arcade-hero-select #hero-select-confirm{min-width:0;flex:1}#arcade-hero-select .hs-hint{display:none}
 }
+@media(min-width:601px) and (max-width:950px) and (min-height:501px){#arcade-hero-select .hs-choice{padding:10px;gap:8px}#arcade-hero-select .hs-choice-mark{display:none}#arcade-hero-select .hs-choice-name{font-size:17px}}
 @media(prefers-reduced-motion:reduce){#arcade-hero-select *,#arcade-hero-select *:before,#arcade-hero-select *:after{animation:none!important;transition:none!important}#hero-select-portrait{filter:none}}
 `;
   function mount(host) {
-    var doc = global.document;
+    var doc = global.document, heroes = global.HapilArcadeHeroes;
+    if (!heroes || !heroes.list) throw new Error('HapilArcadeHeroes must load before hero selection.');
+    var IDS = heroes.list().map(function (p) { return p.id; });
     if (!doc || !host || !host.appendChild) throw new Error('Hero selection requires a DOM host.');
     if (host.__hapilHeroSelect) return host.__hapilHeroSelect;
     if (!doc.getElementById(STYLE_ID)) {
@@ -93,8 +96,15 @@
     var root = doc.createElement('section'); root.id = 'arcade-hero-select'; root.hidden = true;
     root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true');
     root.setAttribute('aria-labelledby', 'hero-select-heading'); root.dataset.lite = 'false';
-    root.innerHTML = '<div class="hs-shell"><header class="hs-heading"><h1 id="hero-select-heading">주인공 선택</h1><p class="hs-kicker">SELECT YOUR HERO</p></header><div class="hs-stage"><div class="hs-art"><div class="hs-dial" aria-hidden="true"></div><span class="hs-glyph" aria-hidden="true">憶</span><img id="hero-select-portrait" alt="" decoding="async"><p class="hs-image-state" hidden>초상을 불러오지 못했습니다.</p></div><div class="hs-details" aria-live="polite"><p class="hs-number">PLAYER / <span id="hero-select-number">01</span></p><p id="hero-select-title"></p><h2 id="hero-select-name"></h2><p id="hero-select-description"></p><ul id="hero-select-abilities"></ul><p class="hs-loadout"><span><b>사격</b><span id="hero-select-shot"></span></span><span><b>필살</b><span id="hero-select-bomb"></span></span></p></div></div><div class="hs-choices" role="group" aria-label="주인공"><button id="hero-select-memory" class="hs-choice" type="button" aria-pressed="false"><img alt="" decoding="async"><span class="hs-choice-copy"><span class="hs-choice-name"></span><span class="hs-choice-title"></span></span><span class="hs-choice-mark" aria-hidden="true">SELECTED</span></button><button id="hero-select-seoha" class="hs-choice" type="button" aria-pressed="false"><img alt="" decoding="async"><span class="hs-choice-copy"><span class="hs-choice-name"></span><span class="hs-choice-title"></span></span><span class="hs-choice-mark" aria-hidden="true">SELECTED</span></button></div><footer class="hs-footer"><p class="hs-hint">방향키로 선택 · Enter로 시작 · Esc로 돌아가기<br>화면에서는 주인공을 누른 뒤 선택 확정</p><div class="hs-actions"><button id="hero-select-cancel" class="hs-action" type="button">돌아가기</button><button id="hero-select-confirm" class="hs-action" type="button">선택 확정 · 시작</button></div></footer></div>';
+    root.innerHTML = '<div class="hs-shell"><header class="hs-heading"><h1 id="hero-select-heading">주인공 선택</h1><p class="hs-kicker">SELECT YOUR HERO</p></header><div class="hs-stage"><div class="hs-art"><div class="hs-dial" aria-hidden="true"></div><span class="hs-glyph" aria-hidden="true">憶</span><img id="hero-select-portrait" alt="" decoding="async"><p class="hs-image-state" hidden>초상을 불러오지 못했습니다.</p></div><div class="hs-details" aria-live="polite"><p class="hs-number">PLAYER / <span id="hero-select-number">01</span></p><p id="hero-select-title"></p><h2 id="hero-select-name"></h2><p id="hero-select-description"></p><ul id="hero-select-abilities"></ul><p class="hs-loadout"><span><b>사격</b><span id="hero-select-shot"></span></span><span><b>필살</b><span id="hero-select-bomb"></span></span></p></div></div><div class="hs-choices" role="group" aria-label="주인공"></div><footer class="hs-footer"><p class="hs-hint">방향키로 선택 · Enter로 시작 · Esc로 돌아가기<br>화면에서는 주인공을 누른 뒤 선택 확정</p><div class="hs-actions"><button id="hero-select-cancel" class="hs-action" type="button">돌아가기</button><button id="hero-select-confirm" class="hs-action" type="button">선택 확정 · 시작</button></div></footer></div>';
     host.appendChild(root);
+    var choices = root.querySelector('.hs-choices');
+    IDS.forEach(function (id) {
+      var button = doc.createElement('button'); button.id = 'hero-select-' + id; button.className = 'hs-choice'; button.type = 'button';
+      button.setAttribute('aria-pressed', 'false');
+      button.innerHTML = '<img alt="" decoding="async"><span class="hs-choice-copy"><span class="hs-choice-name"></span><span class="hs-choice-title"></span></span><span class="hs-choice-mark" aria-hidden="true">SELECTED</span>';
+      choices.appendChild(button);
+    });
     var visible = false, selected = 'memory', onConfirm = null, onCancel = null, previousFocus = null;
     var preloadImages = {}, stage = root.querySelector('.hs-stage'), portrait = root.querySelector('#hero-select-portrait');
     function el(id) { return root.querySelector('#' + id); }
@@ -124,10 +134,10 @@
       el('hero-select-name').textContent = p.name;
       el('hero-select-title').textContent = p.title || '';
       el('hero-select-description').textContent = p.description || p.summary || '';
-      el('hero-select-number').textContent = selected === 'seoha' ? '02' : '01';
+      el('hero-select-number').textContent = String(IDS.indexOf(selected) + 1).padStart(2, '0');
       el('hero-select-shot').textContent = p.shotLabel || '';
       el('hero-select-bomb').textContent = p.bombLabel || '';
-      root.querySelector('.hs-glyph').textContent = selected === 'seoha' ? '時' : '憶';
+      root.querySelector('.hs-glyph').textContent = p.shot && p.shot.style === 'clock-hands' ? '時' : '憶';
       var abilities = el('hero-select-abilities'); abilities.textContent = '';
       (p.abilities || []).forEach(function (text) { var li = doc.createElement('li'); li.textContent = text; abilities.appendChild(li); });
       portrait.alt = p.name + ' 초상'; portrait.hidden = !p.portrait;
@@ -152,7 +162,9 @@
       if (!visible || event.altKey || event.ctrlKey || event.metaKey) return;
       var key = event.key;
       if (key === 'ArrowLeft' || key === 'ArrowRight' || key === 'ArrowUp' || key === 'ArrowDown') {
-        event.preventDefault(); event.stopImmediatePropagation(); select(selected === 'memory' ? 'seoha' : 'memory');
+        event.preventDefault(); event.stopImmediatePropagation();
+        var direction = key === 'ArrowLeft' || key === 'ArrowUp' ? -1 : 1;
+        select(IDS[(IDS.indexOf(selected) + direction + IDS.length) % IDS.length]);
         el('hero-select-' + selected).focus({ preventScroll: true });
       } else if (key === 'Enter') {
         event.preventDefault(); event.stopImmediatePropagation();
@@ -163,7 +175,7 @@
       } else if (key === ' ' || key === 'Spacebar') {
         event.stopImmediatePropagation(); // Preserve native button activation without forwarding to gameplay.
       } else if (key === 'Tab') {
-        var buttons = [el('hero-select-memory'), el('hero-select-seoha'), el('hero-select-cancel'), el('hero-select-confirm')];
+        var buttons = IDS.map(function (id) { return el('hero-select-' + id); }).concat([el('hero-select-cancel'), el('hero-select-confirm')]);
         var index = buttons.indexOf(doc.activeElement), next = event.shiftKey ? index - 1 : index + 1;
         if (index < 0 || next < 0 || next >= buttons.length) {
           event.preventDefault(); buttons[event.shiftKey ? buttons.length - 1 : 0].focus({ preventScroll: true });

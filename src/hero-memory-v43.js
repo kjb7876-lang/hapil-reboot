@@ -10,10 +10,12 @@
   var SHEETS={shard:{frames:8,cell:96,fps:14},shatter:{frames:6,cell:128,fps:16},bolt:{frames:8,cell:192,fps:26,ox:24},burst:{frames:12,cell:192,fps:16}};
   var img={},inkOn=function(){return !!(global.HapilInk&&global.HapilInk.on);};
   function load(){Object.keys(SHEETS).concat(['cutin']).forEach(function(k){var i=new Image();i.src=DIR+k+(inkOn()?'-ink':'')+'.webp';img[k]=i;});
-    var portrait=new Image();portrait.src='media/arcade-v43-heroes/seoha-portrait.webp';img.seohaCutin=portrait;
+    ['seoha','seoha-b'].forEach(function(id){var portrait=new Image(),H=global.HapilArcadeHeroes;portrait.src=H?H.get(id).cutin:'media/arcade-v43-heroes/seoha-portrait'+(id==='seoha-b'?'-v2':'')+'.webp';img[cutinKey(id)]=portrait;});
   }
-  function heroId(s){return s&&s.hero==='seoha'?'seoha':'memory';}
-  function heroProfile(s){var A=global.HapilArcade,H=global.HapilArcadeHeroes,p=A&&A.heroProfile?A.heroProfile(s):null;return p||(H&&H.get?H.get(heroId(s)):{name:heroId(s)==='seoha'?'윤서하':'기억사수',attackName:heroId(s)==='seoha'?'시간검 공격':'기억 공격',bombNames:[]});}
+  function isSeoha(id){return id==='seoha'||id==='seoha-b';}
+  function heroId(s){return s&&isSeoha(s.hero)?s.hero:'memory';}
+  function cutinKey(id){return id==='seoha-b'?'seohaBCutin':id==='seoha'?'seohaCutin':'cutin';}
+  function heroProfile(s){var A=global.HapilArcade,H=global.HapilArcadeHeroes,p=A&&A.heroProfile?A.heroProfile(s):null;return p||(H&&H.get?H.get(heroId(s)):{name:isSeoha(heroId(s))?'윤서하':'기억사수',attackName:isSeoha(heroId(s))?'시간검 공격':'기억 공격',bombNames:[]});}
   function heroBombName(s,lv){var A=global.HapilArcade,p=heroProfile(s);return A&&A.bombName?A.bombName(s,lv):p.bombNames&&p.bombNames[lv]||A&&A.BOMB_NAMES&&A.BOMB_NAMES[lv]||'';}
   function timeColor(brass){return inkOn()?(brass?'#625e52':'#282b29'):(brass?'#c39b58':'#59bab6');}
   // 윤서하의 시간 기구는 시각 연출이다. 피해·성장·둔화 수치는 공유 엔진을 그대로 따른다.
@@ -50,7 +52,7 @@
   function shots(g,s,t){
     var lv=s.power||1,i,ink=inkOn(),big=SHARD_SIZE[lv],shardOk=lv>=3&&ready('shard'),f=Math.floor(t*SHEETS.shard.fps);
     raw(1);g.save();blend(g);
-    if(heroId(s)==='seoha'){for(i=0;i<s.sn;i++)timeNeedle(g,s.sx[i],s.sy[i],Math.atan2(s.svx?s.svx[i]:0,15),s.shoming[i]?18:25+lv,ink?.75:s.shoming[i]?.4:.58,lv);g.restore();raw(-1);return;}
+    if(isSeoha(heroId(s))){for(i=0;i<s.sn;i++)timeNeedle(g,s.sx[i],s.sy[i],Math.atan2(s.svx?s.svx[i]:0,15),s.shoming[i]?18:25+lv,ink?.75:s.shoming[i]?.4:.58,lv);g.restore();raw(-1);return;}
     for(i=0;i<s.sn;i++){
       var x=s.sx[i],y=s.sy[i],vx=s.svx?s.svx[i]:0,ang=-Math.PI/2+Math.atan2(vx,15);
       if(shardOk){var z=s.shoming[i]?big*.7:big;cell(g,'shard',f+i,x,y,ang,z,ink?(s.shoming[i]?.6:vx?.75:.9):(s.shoming[i]?.3:vx?.4:.5));} // 색판은 적 탄보다 한 단계 옅게(심사 1차). 수묵판 시트는 이미 회색이라 옅게 그리면 한지에 묻혀 안 보였다(11-16 실검증)
@@ -69,11 +71,11 @@
   function drawZaps(g,t){
     for(var i=zaps.length-1;i>=0;i--){var z=zaps[i],f=(t-z.t0)*SHEETS.bolt.fps;if(f>=SHEETS.bolt.frames){zaps.splice(i,1);continue;}
       var dx=z.x1-z.x0,dy=z.y1-z.y0,d=Math.sqrt(dx*dx+dy*dy)||1,size=36+z.lv*4,len=size*(1-24*2/192);
-      if(z.hero==='seoha'){var a=1-f/SHEETS.bolt.frames;g.save();g.globalAlpha=a*.42;g.strokeStyle=timeColor(false);g.lineWidth=1.2;g.beginPath();for(var j=0;j<6;j++){var u=j/6,v=(j+.55)/6;g.moveTo(z.x0+dx*u,z.y0+dy*u);g.lineTo(z.x0+dx*v,z.y0+dy*v);}g.stroke();g.restore();clockwork(g,z.x1,z.y1,9+z.lv,t*3,a*.55,7);}
+      if(isSeoha(z.hero)){var a=1-f/SHEETS.bolt.frames;g.save();g.globalAlpha=a*.42;g.strokeStyle=timeColor(false);g.lineWidth=1.2;g.beginPath();for(var j=0;j<6;j++){var u=j/6,v=(j+.55)/6;g.moveTo(z.x0+dx*u,z.y0+dy*u);g.lineTo(z.x0+dx*v,z.y0+dy*v);}g.stroke();g.restore();clockwork(g,z.x1,z.y1,9+z.lv,t*3,a*.55,7);}
       else cell(g,'bolt',f,z.x0,z.y0,Math.atan2(dy,dx),size,.7,d/len,SHEETS.bolt.ox);} // 가늘고 짧게: 적 광선으로 오인되지 않게(심사 1차)
   }
   function drawPops(g,t){
-    for(var i=pops.length-1;i>=0;i--){var p=pops[i],f=(t-p.t0)*SHEETS.shatter.fps;if(f<0)continue;if(f>=SHEETS.shatter.frames){pops.splice(i,1);continue;}if(p.hero==='seoha')clockwork(g,p.x,p.y,p.size*(.14+.09*f/SHEETS.shatter.frames),(p.rot||0)+f*.13,(1-f/SHEETS.shatter.frames)*.62,7);else cell(g,'shatter',f,p.x,p.y,p.rot||0,p.size,.9);}
+    for(var i=pops.length-1;i>=0;i--){var p=pops[i],f=(t-p.t0)*SHEETS.shatter.fps;if(f<0)continue;if(f>=SHEETS.shatter.frames){pops.splice(i,1);continue;}if(isSeoha(p.hero))clockwork(g,p.x,p.y,p.size*(.14+.09*f/SHEETS.shatter.frames),(p.rot||0)+f*.13,(1-f/SHEETS.shatter.frames)*.62,7);else cell(g,'shatter',f,p.x,p.y,p.rot||0,p.size,.9);}
   }
 
   /* ── 필살기 7단계. 단계가 오를수록 겹이 늘어난다(앞 단계 연출은 모두 포함):
@@ -81,7 +83,7 @@
    *  4 회상 뇌격: 과녁(보스·몹)마다 번개 · 5 망각의 붕괴: 보스(또는 화면 가운데)에 큰 폭발 + 화면 먹물 번짐
    *  6 기억 범람: 화면을 가로지르는 연쇄 폭발 + 과녁마다 파편 · 7 기억 해방: 큰 붓글씨 '憶'(기억할 억)과 화면을 덮는 폭발 ── */
   function bomb(b,t,W,H,s){
-    if(!b)return;if(heroId(s)==='seoha'){timeBomb(b,s,t,W,H);return;}var lv=b.level,cx=b.x,cy=Math.max(120,b.y-90),i,tg=b.targets||[],main=tg.length?[tg[0],tg[1]]:[W/2,H*.32];
+    if(!b)return;if(isSeoha(heroId(s))){timeBomb(b,s,t,W,H);return;}var lv=b.level,cx=b.x,cy=Math.max(120,b.y-90),i,tg=b.targets||[],main=tg.length?[tg[0],tg[1]]:[W/2,H*.32];
     bombs.push({lv:lv,t0:t,name:b.name,x:b.x,y:b.y});
     bombs[bombs.length-1].bursts=[{x:cx,y:cy,t0:t,size:150+lv*22}];
     var B=bombs[bombs.length-1].bursts;
@@ -95,9 +97,9 @@
   }
   function timeBomb(b,s,t,W,H){
     var lv=b.level,targets=b.targets||[],x=targets.length>=2?targets[0]:W/2,y=targets.length>=2?targets[1]:H*.32;
-    bombs.push({hero:'seoha',lv:lv,t0:t,x:Math.max(35,Math.min(W-35,x)),y:Math.max(75,Math.min(380,y)),name:b.name||heroBombName(s,lv)});
+    bombs.push({hero:heroId(s),lv:lv,t0:t,x:Math.max(35,Math.min(W-35,x)),y:Math.max(75,Math.min(380,y)),name:b.name||heroBombName(s,lv)});
     quake=3+lv*1.6;
-    if(ready('seohaCutin'))cut={t0:t,lv:lv,name:b.name||heroBombName(s,lv),auto:!!b.auto,hero:'seoha',label:heroProfile(s).name};
+    if(ready(cutinKey(heroId(s))))cut={t0:t,lv:lv,name:b.name||heroBombName(s,lv),auto:!!b.auto,hero:heroId(s),label:heroProfile(s).name};
     else texts.push({text:b.name||heroBombName(s,lv),sub:heroProfile(s).name+' · 필살 Lv.'+lv,t0:t,x:b.x,y:b.y-70,big:true});
   }
   function drawTimeBomb(g,o,age,W,H){
@@ -111,7 +113,7 @@
   }
   function drawBombs(g,t,W,H){
     for(var n=bombs.length-1;n>=0;n--){var o=bombs[n],age=t-o.t0,B=o.bursts,i;if(age>3.2){bombs.splice(n,1);continue;}
-      if(o.hero==='seoha'){drawTimeBomb(g,o,age,W,H);continue;}
+      if(isSeoha(o.hero)){drawTimeBomb(g,o,age,W,H);continue;}
       if(o.lv>=7&&age<2.8)drawMemoryGlyph(g,age,W,H);
       // 5단계 이상: 화면에 먹물이 번졌다 걷힌다(빛 대신 먹)
       if(o.lv>=5&&age<1.1){var k=age<.2?age/.2:1-(age-.2)/.9,gg=g.createRadialGradient(W/2,H*.4,40,W/2,H*.4,H*.8);
@@ -146,21 +148,21 @@
     g.beginPath();g.moveTo(x0,y);for(i=1;i<=n;i++){var x=x0+(x1-x0)*i/n;g.lineTo(x,y-thick*(.35+rr()*.65));}for(i=n;i>=0;i--){var x2=x0+(x1-x0)*i/n;g.lineTo(x2,y+thick*(.2+rr()*.5));}g.closePath();g.fill();
     g.save();g.globalAlpha*=.55;for(i=0;i<5;i++){var yy=y+(rr()-.5)*thick*1.6,xa=x0+rr()*(x1-x0)*.3;g.fillRect(xa,yy,(x1-x0)*(.25+rr()*.5),.8+rr()*1.2);}g.restore(); // 갈라진 붓털 자국
   }
-  var cutImg=null,seohaCutImg=null;
+  var cutImages={};
   function cutPortrait(hero){ // 초상 가장자리를 먹 번짐처럼 녹인다: 왼쪽·아래로 갈수록 투명(네모 경계가 띠에 비치지 않게, 심사 1차)
-    var seoha=hero==='seoha';if(seoha?seohaCutImg:cutImg)return seoha?seohaCutImg:cutImg;var im=seoha?img.seohaCutin:img.cutin,w=im.naturalWidth||im.width,h=im.naturalHeight||im.height,c=document.createElement('canvas');if(seoha&&h>w*1.3)h=Math.round(w*1.05);c.width=w;c.height=h;var x=c.getContext('2d');
+    var seoha=isSeoha(hero),key=cutinKey(hero);if(cutImages[key])return cutImages[key];var im=img[key],w=im.naturalWidth||im.width,h=im.naturalHeight||im.height,c=document.createElement('canvas');if(seoha&&h>w*1.3)h=Math.round(w*1.05);c.width=w;c.height=h;var x=c.getContext('2d');
     if(seoha&&inkOn())x.filter='grayscale(1)';x.drawImage(im,0,0);x.filter='none';x.globalCompositeOperation='destination-in';var gr=x.createLinearGradient(0,0,w,0);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(.3,'rgba(0,0,0,.55)');gr.addColorStop(.48,'rgba(0,0,0,1)');gr.addColorStop(1,'rgba(0,0,0,1)');x.fillStyle=gr;x.fillRect(0,0,w,h);
     var gv=x.createLinearGradient(0,0,0,h);gv.addColorStop(0,'rgba(0,0,0,1)');gv.addColorStop(.8,'rgba(0,0,0,1)');gv.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=gv;x.fillRect(0,0,w,h);
     var sd=1116;function rr(){sd=(sd*16807)%2147483647;return sd/2147483647;}x.fillStyle='rgba(0,0,0,1)';x.globalCompositeOperation='destination-out'; // 왼쪽 가장자리에 마른 붓털 결
     for(var i=0;i<26;i++){var yy=rr()*h,ww=w*(.12+rr()*.22);x.globalAlpha=.25+rr()*.5;x.fillRect(0,yy,ww,1.5+rr()*4);}
-    if(seoha)seohaCutImg=c;else cutImg=c;return c;
+    cutImages[key]=c;return c;
   }
   function speedStroke(g,x0,x1,y,th){ // 갈필 속도선: 가운데가 굵고 양끝이 가늘게 빠진다
     var n=8,i;g.beginPath();g.moveTo(x0,y);for(i=1;i<n;i++){var u=i/n,w=th*Math.sin(Math.PI*u)*(.7+.3*Math.sin(i*2.7+y));g.lineTo(x0+(x1-x0)*u,y-w);}g.lineTo(x1,y);for(i=n-1;i>0;i--){var u2=i/n;g.lineTo(x0+(x1-x0)*u2,y+th*Math.sin(Math.PI*u2)*.45);}g.closePath();g.fill();
   }
   function drawCutin(g,t,W,H){
     if(!cut)return false;var age=t-cut.t0;if(age>CUT_LIFE||age<0){cut=null;return false;}
-    var lv=cut.lv,ink=inkOn(),seoha=cut.hero==='seoha',portrait=seoha?cutPortrait('seoha'):cutPortrait(),open=Math.min(1,age/.13),close=age>CUT_LIFE-.16?(age-(CUT_LIFE-.16))/.16:0,ease=1-Math.pow(1-open,3);
+    var lv=cut.lv,ink=inkOn(),seoha=isSeoha(cut.hero),portrait=cutPortrait(cut.hero),open=Math.min(1,age/.13),close=age>CUT_LIFE-.16?(age-(CUT_LIFE-.16))/.16:0,ease=1-Math.pow(1-open,3);
     var bandH=118+lv*9,cy=H*.4,ang=-.17,i;
     raw(1);g.save();g.globalCompositeOperation='source-over';
     g.globalAlpha=.22*(1-close)*Math.min(1,age/.08);g.fillStyle=ink?'rgb(30,26,24)':'rgb(4,10,20)';g.fillRect(0,0,W,H); // 화면을 한 겹 누른다
@@ -185,7 +187,7 @@
     g.restore();raw(-1);return true;
   }
   function onEvent(e,s,t){
-    if(e==='powerUp')texts.push({text:heroProfile(s).attackName+' Lv.'+s.power,sub:s.power>=5?(heroId(s)==='seoha'?'시계바늘 연쇄':'기억 번개'):'',t0:t,x:s.player.x,y:s.player.y-48});
+    if(e==='powerUp')texts.push({text:heroProfile(s).attackName+' Lv.'+s.power,sub:s.power>=5?(isSeoha(heroId(s))?'시계바늘 연쇄':'기억 번개'):'',t0:t,x:s.player.x,y:s.player.y-48});
     else if(e==='powerDown')texts.push({text:heroProfile(s).attackName+' Lv.'+s.power,sub:'',t0:t,x:s.player.x,y:s.player.y-48,down:true});
     else if(e==='bombLevelUp')texts.push({text:'필살 Lv.'+s.bombLevel,sub:heroBombName(s,s.bombLevel),t0:t,x:s.player.x,y:s.player.y-62});
     else if(e==='bomb')bomb(s.lastBomb,t,360,640,s);
@@ -202,7 +204,7 @@
     for(var i=warps.length-1;i>=0;i--){var w=warps[i],age=t-w.t0;if(age>WARP_LIFE||age<0){warps.splice(i,1);continue;}
       var u=age/WARP_LIFE,a=age<.15?1:Math.max(0,1-(age-.15)/(WARP_LIFE-.15)),ink=inkOn(),side=w.side,k,pass;
       raw(1);g.save();g.globalCompositeOperation='source-over';
-      if(w.hero==='seoha'){for(k=0;k<4;k++)timeNeedle(g,w.x+side*(16+k*8+u*20),w.y-25+k*15,-side*.4,14-k, a*.45,3);clockwork(g,w.x-side*18,w.y-8,8+u*4,-side*u*2,a*.45,7);g.restore();raw(-1);continue;}
+      if(isSeoha(w.hero)){for(k=0;k<4;k++)timeNeedle(g,w.x+side*(16+k*8+u*20),w.y-25+k*15,-side*.4,14-k, a*.45,3);clockwork(g,w.x-side*18,w.y-8,8+u*4,-side*u*2,a*.45,7);g.restore();raw(-1);continue;}
       var strokes=[[side,0],[side,1],[side,2],[-side,0]]; // 탄이 온 쪽 세 획, 반대쪽 한 획(어긋나게)
       for(pass=0;pass<2;pass++)for(k=0;k<strokes.length;k++){var sd=strokes[k][0],j=strokes[k][1],far=sd!==side,wid=(far?2.6:4.6-j*.7)*(1-u*.35);
         var x0=w.x+sd*(5+j*5)+(far?sd*3:0),y0=w.y-36-j*7+(far?12:0),cx=w.x+sd*(26+j*6+u*6),cy=w.y-2+j*3,x1=w.x+sd*(34+j*7+u*28),y1=w.y+20+j*6+u*10;
@@ -224,7 +226,7 @@
   }
   function drawPulses(g,t){
     if(!pulseBursts.length)return;raw(1);g.save();blend(g);
-    for(var i=pulseBursts.length-1;i>=0;i--){var b=pulseBursts[i],f=(t-b.t0)*SHEETS.burst.fps;if(f>=10){pulseBursts.splice(i,1);continue;}if(f<0)continue;if(b.hero==='seoha'){clockwork(g,b.x,b.y,b.size*.28,b.rot+f*.18,(1-f/10)*.62,10);timeNeedle(g,b.x,b.y,b.rot,b.size*.5,(1-f/10)*.55,7);}else cell(g,'burst',f,b.x,b.y,b.rot,b.size,(f<3?.8:f<8?.62:.62*(1-(f-8)/2)));}
+    for(var i=pulseBursts.length-1;i>=0;i--){var b=pulseBursts[i],f=(t-b.t0)*SHEETS.burst.fps;if(f>=10){pulseBursts.splice(i,1);continue;}if(f<0)continue;if(isSeoha(b.hero)){clockwork(g,b.x,b.y,b.size*.28,b.rot+f*.18,(1-f/10)*.62,10);timeNeedle(g,b.x,b.y,b.rot,b.size*.5,(1-f/10)*.55,7);}else cell(g,'burst',f,b.x,b.y,b.rot,b.size,(f<3?.8:f<8?.62:.62*(1-(f-8)/2)));}
     g.restore();raw(-1);
   }
   function drawTexts(g,t){
@@ -239,11 +241,12 @@
   /* ── 구름 위 시계: 바늘은 보통 6초에 한 바퀴, 가속 4배, 둔화(저속) 4분의 1. 테두리 눈금 7개가 공격 단계만큼 짙어진다 ── */
   var hand=0,lastT=0;
   var RATE={normal:TAU/6,haste:TAU/1.5,slow:TAU/24};
-  function clock(g,s,t){
+  function clock(g,s,t,opacity){
+    opacity=typeof opacity==='number'?Math.max(0,Math.min(1,opacity)):1;
     var dt=Math.max(0,Math.min(.1,t-lastT));lastT=t;var st=global.HapilArcade&&global.HapilArcade.clockState?global.HapilArcade.clockState(s):'normal';hand+=RATE[st]*dt;
     var p=s.player,x=p.x,y=p.y+23,r=11,lv=s.power||1,i,ink=inkOn();
-    raw(1);g.save();g.globalCompositeOperation='source-over';g.globalAlpha=s.tick<p.invulnerableUntil&&Math.floor(s.tick/4)%2?.45:1;
-    if(heroId(s)==='seoha'){clockwork(g,x,y,r+3,hand*.2,.75,12);g.strokeStyle=timeColor(false);g.lineWidth=2;g.beginPath();g.moveTo(x,y);g.lineTo(x+Math.cos(hand-Math.PI/2)*r*.75,y+Math.sin(hand-Math.PI/2)*r*.75);g.stroke();g.restore();raw(-1);return;}
+    raw(1);g.save();g.globalCompositeOperation='source-over';g.globalAlpha=(s.tick<p.invulnerableUntil&&Math.floor(s.tick/4)%2?.45:1)*opacity;
+    if(isSeoha(heroId(s))){clockwork(g,x,y,r+3,hand*.2,.75*g.globalAlpha,12);g.strokeStyle=timeColor(false);g.lineWidth=2;g.beginPath();g.moveTo(x,y);g.lineTo(x+Math.cos(hand-Math.PI/2)*r*.75,y+Math.sin(hand-Math.PI/2)*r*.75);g.stroke();g.restore();raw(-1);return;}
     g.fillStyle=ink?'#fffdf6':'rgba(230,250,255,.92)';g.beginPath();g.ellipse(x,y,r,r*.92,0,0,TAU);g.fill(); // 시계판(구름 앞에 얹힌 작은 판)
     g.strokeStyle=ink?'rgba(30,26,24,.9)':'#1c3a48';g.lineWidth=1.5;g.lineCap='round';
     g.beginPath();for(i=0;i<14;i++){var a=-1.2+i*.2,rr=r*(1+((i*7)%3-1)*.03);if(i)g.lineTo(x+Math.cos(a*2.2)*rr,y+Math.sin(a*2.2)*rr*.92);else g.moveTo(x+Math.cos(a*2.2)*rr,y+Math.sin(a*2.2)*rr*.92);}g.stroke(); // 붓으로 그은 테(끊긴 데가 있다)
@@ -255,13 +258,14 @@
     g.restore();raw(-1);
   }
   /* ── 시간 둔화: 원 고리 대신 영웅 둘레를 맴도는 먹 붓끝 몇 점(단계만큼 늘고 멀리 간다). 맴도는 빠르기도 시계를 따른다 ── */
-  function field(g,s,t){
+  function field(g,s,t,opacity){
+    opacity=typeof opacity==='number'?Math.max(0,Math.min(1,opacity)):1;
     var A=global.HapilArcade;if(!A||!A.slowField)return;var f=A.slowField(s),R=f[0],k=f[1],p=s.player,n=2+(s.power||1),i,ink=inkOn();
     raw(1);g.save();g.globalCompositeOperation='source-over';g.lineCap='round';
     for(i=0;i<n*2;i++){var u=((t*(.18+k*.1)+i*.381966)%1),ph=i*2.39996+hand*.35+Math.sin(i*1.7)*.5,rr=R*(.25+.75*((i*.618034+u*.5)%1)),x=p.x+Math.cos(ph)*rr,y=p.y+Math.sin(ph)*rr*.9;
-      if(heroId(s)==='seoha'){g.globalAlpha=Math.sin(Math.PI*u)*(.18+k*.4);g.strokeStyle=timeColor(i%3===0);g.lineWidth=1.1;g.beginPath();g.moveTo(x,y);g.lineTo(x+Math.cos(ph)*4,y+Math.sin(ph)*4);g.stroke();continue;}
+      if(isSeoha(heroId(s))){g.globalAlpha=Math.sin(Math.PI*u)*(.18+k*.4)*opacity;g.strokeStyle=timeColor(i%3===0);g.lineWidth=1.1;g.beginPath();g.moveTo(x,y);g.lineTo(x+Math.cos(ph)*4,y+Math.sin(ph)*4);g.stroke();continue;}
       // 튄 먹물 방울: 영웅 곁에서 생겨 마르며 사라진다(선을 긋지 않아 둘레 고리로 읽히지 않는다, 심사 1차). 크기·자리를 들쭉날쭉하게
-      g.globalAlpha=Math.min(1,Math.sin(Math.PI*u)*(.3+k*1.1));g.fillStyle=ink?'rgba(30,26,24,1)':'rgba(170,240,255,1)';var dr=(.7+k*2.6)*(.5+((i*.4142)%1));
+      g.globalAlpha=Math.min(1,Math.sin(Math.PI*u)*(.3+k*1.1))*opacity;g.fillStyle=ink?'rgba(30,26,24,1)':'rgba(170,240,255,1)';var dr=(.7+k*2.6)*(.5+((i*.4142)%1));
       g.beginPath();g.ellipse(x,y,dr,dr*(.7+.3*((i*.31)%1)),ph,0,TAU);g.fill();if(i%3===0){g.beginPath();g.arc(x+Math.cos(ph)*dr*2.2,y+Math.sin(ph)*dr*2.2,dr*.45,0,TAU);g.fill();}}
     g.restore();raw(-1);
   }
