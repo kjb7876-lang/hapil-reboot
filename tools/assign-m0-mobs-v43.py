@@ -136,6 +136,21 @@ for scene in list(borrowed):
     borrowed[scene] = [k for k in borrowed[scene] if k in skins[scene]]
     if not borrowed[scene]: del borrowed[scene]
 
+# 사용자 11-16: 모션이 어색한 몹(정면·옆 그림이 다른 몹, 칸이 거의 같은 몹)을 빼고 서사 테마에 맞는 몹으로 바꾼다(docs/v43/mob-recast.json).
+recast = json.load(open('docs/v43/mob-recast.json'))
+for k in recast['noSide']:
+    mobs[k].get('motions', {}).pop('side', None)
+    if not mobs[k].get('motions'): mobs[k].pop('motions', None)
+for scene, keys in recast['front'].items():
+    for k in keys:
+        assert k in mobs and 'facing' not in mobs[k] and 'drive-v43' in mobs[k]['src'], scene + ' ' + k
+        assert k not in recast['stiff'], scene + ' stiff ' + k
+    front[scene] = list(keys)
+    front_borrowed[scene] = [k for k in keys if k not in fronts(scene)]
+    if not front_borrowed[scene]: del front_borrowed[scene]
+for scene, keys in front.items():
+    front[scene] = [k for k in keys if k not in recast['stiff']] or keys
+
 art = {'mobs': {k: {a: b for a, b in v.items() if a != 'name'} for k, v in sorted(mobs.items())}}
 json.dump(art, open('tools/arcade-art-v43/m0.json', 'w'), indent=1, ensure_ascii=False)
 names = {k: v['name'] for k, v in sorted(mobs.items())}
