@@ -17,7 +17,7 @@ function playSpell(name, ticks) {
     assert.equal(s.seg, segment);
     let born = 0;
     for (let j=0; j<s.n; j++) if (s.bage[j] === 1) born++;
-    frames.push({born, count:s.n, authored:s.authoredTick, variation:s.variationTick,
+    frames.push({born, count:s.n, authored:s.authoredTick, variation:s.variationTick, patternCue:s.patternCue,
       laser:s.lasers.some(l => l.age<l.warn+l.active),
       cue:s.figures.some(f => f.age<=f.warn), figures:s.figures.map(f=>f.kind), risers:s.risen});
   }
@@ -49,7 +49,11 @@ test('a pending authored laser gets its warning and full attack before the mathe
   const first = f.findIndex(frame=>frame.variation>0);
   assert.ok(first>240 && first<360);
   assert.ok(f.slice(240,first-1).every(frame=>frame.laser && frame.born===0));
-  assert.ok(!f[first].laser && f[first].born>0);
+  const cue=f[first].patternCue;
+  assert.ok(!f[first].laser && cue.kind==='fibfan');
+  const release=first+cue.until-cue.start;
+  assert.ok(f.slice(first,release).every(frame=>frame.born===0));
+  assert.ok(f[release].born>0 && !f[release].laser);
 });
 
 test('a long beam cannot consume the variation and restart the same attack', () => {

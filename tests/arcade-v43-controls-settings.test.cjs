@@ -126,6 +126,38 @@ test('two-finger movement + held focus really changes engine speed; release/canc
   stage.emit('lostpointercapture',{pointerId:11});assert.equal(h.input().dx,0);assert.equal(h.finger().id,null);
 });
 
+test('touch movement keeps its central clearance and can dodge along the bottom edge',()=>{
+  const {h,s,nodes}=harness(),stage=nodes.get('arcade-stage'),canvas=nodes.get('arcade-canvas');
+  stage.emit('pointerdown',{target:canvas,clientX:s.player.x,clientY:400});
+  for(let i=0;i<80;i++)A.step(s,h.input());
+  assert.equal(s.player.y,336);
+  nodes.get('arcade-focus').emit('pointerdown',{pointerId:22});
+  stage.emit('pointermove',{clientX:s.player.x,clientY:A.HEIGHT-1});
+  A.step(s,h.input());
+  assert.equal(s.player.y,338,'two-pixel focused step');
+  for(let i=0;i<160;i++)A.step(s,h.input());
+  assert.equal(s.player.y,A.HEIGHT-14,'reaches the same bottom bound as keyboard');
+});
+
+test('holding a tap that dismisses a boss speech never starts a movement drag',()=>{
+  const {h,nodes,audio}=harness(),stage=nodes.get('arcade-stage'),canvas=nodes.get('arcade-canvas');
+  const index=A.SEGMENTS.findIndex(g=>g.kind==='card'&&!g.mid);
+  const s=A.createRun({segment:index,entranceAll:true});h.prepare(s,audio);
+  for(let t=0;t<400;t++){
+    const phase=A.entrancePhase(s);if(phase&&phase.phase==='speech'&&phase.t>.3)break;
+    A.step(s,{});
+  }
+  const ready=s.bossEntrance.readyTick,start=[s.player.x,s.player.y];
+  const tap=stage.emit('pointerdown',{pointerId:42,target:canvas,clientX:20,clientY:220});
+  assert.ok(tap.prevented&&s.bossEntrance.readyTick<ready,'speech dismissal succeeded');
+  stage.emit('pointermove',{pointerId:42,clientX:40,clientY:180});
+  for(let t=0;t<30;t++)A.step(s,h.input());
+  assert.equal(s.stage,'card');assert.deepEqual([s.player.x,s.player.y],start);
+  assert.equal(stage.captured.has(42),false);
+  stage.emit('pointerdown',{pointerId:43,target:canvas,clientX:20,clientY:220});
+  assert.ok(h.input().dx<0,'a new movement gesture works in combat');
+});
+
 test('bomb touch is a one-shot input while another pointer moves; keyboard/assistive click also works',()=>{
   const {h,s,nodes}=harness(),stage=nodes.get('arcade-stage'),bomb=nodes.get('arcade-bomb'),canvas=nodes.get('arcade-canvas');
   stage.emit('pointerdown',{pointerId:11,target:canvas,clientX:250,clientY:580});

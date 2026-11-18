@@ -1,12 +1,13 @@
 /* 보스 페이즈 수학 패턴(사용자 11-17: "페이즈마다 패턴변화가 확실하고 보스들끼리도 확실한 차별점", "수학·시각디자인 요소를 패턴화").
- * 한 보스가 가진 카드(패턴)를 PHASE 1..N 으로 부르고, 2페이즈부터 카드마다 다른 수학 도형 탄막을 기존 공격 위에 한 겹 얹는다.
- * 보스마다 도형 배정표가 달라(보스 번호로 소수 간격 순환) 어느 두 보스도 같은 페이즈에 같은 도형을 쓰지 않고, 한 보스 안에서도 같은 도형이 반복되지 않는다.
- * 새 탄 재료는 만들지 않는다: 보스 자신의 색 두 가지와 둥근 탄만 쓴다(인주색 금지·십자가 금지 규칙 유지). */
+ * 첫 일반 카드는 원래 리듬으로 진행하고, 후속 카드에서는 원래 발사와 장면별 도형을 번갈아 사용한다.
+ * arcade-encounter-phases-v43.js의 배정표가 장면 번호·인물·중간보스 여부로 각 카드의 도형을 정한다.
+ * 도형에는 배우의 두 색과 구슬·쌀알탄을 사용한다. */
 (function(root,factory){
-  var api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.HapilArcadePhases=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(){
+  if(typeof module==='object'&&module.exports)module.exports=factory(require('./arcade-encounter-phases-v43.js'));
+  else root.HapilArcadePhases=factory(root.HapilEncounterPhases);
+})(typeof globalThis!=='undefined'?globalThis:this,function(encounters){
   'use strict';
-  var TAU=Math.PI*2,GOLD=Math.PI*(3-Math.sqrt(5)),PHI=(Math.sqrt(5)+1)/2,FIB=[1,1,2,3,5,8,13];
+  var TAU=Math.PI*2,GOLD=Math.PI*(3-Math.sqrt(5)),PHI=(Math.sqrt(5)+1)/2,FIB=[3,5,8,13];
   // 도형 목록. 이름은 화면 부제로도 쓴다.
   var KINDS=[
     {id:'phyllotaxis',name:'황금각 해바라기',every:5},
@@ -17,23 +18,107 @@
     {id:'sierpinski',name:'시에르핀스키 낙하',every:5},
     {id:'sine',name:'사인 파도 장막',every:96},
     {id:'moire',name:'모아레 이중 고리',every:90},
-    {id:'fibfan',name:'피보나치 부채',every:70},
-    {id:'spiro',name:'스피로그래프 궤도',every:7},
-    {id:'ripple',name:'동심 물결',every:100},
-    {id:'goldrain',name:'황금비 빗줄기',every:8}
+    {id:'fibfan',name:'피보나치 부채',every:60},
+    {id:'spiro',name:'스피로그래프 궤도',every:60},
+    {id:'ripple',name:'동심 물결',every:60},
+    {id:'goldrain',name:'황금비 빗줄기',every:60}
   ];
-  var N=KINDS.length;
-  // 보스 번호 k, 페이즈 j(0부터): 종류 = (k*5 + j*7 + floor(k/N)*3) mod N. 5와 7이 12와 서로소라서 한 보스의 인접 페이즈·같은 번호 보스끼리 겹치지 않는다.
-  function kindIndex(k,j){return ((k*5+j*7+Math.floor(k/N)*3)%N+N)%N;}
-  var order=[];function setOrder(list){order=list.slice();}
-  function bossIndex(actor){var i=order.indexOf(actor);if(i<0){order.push(actor);i=order.length-1;}return i;}
-  function plan(actor,count){var k=bossIndex(actor),out=[],used={},j,idx,guard;for(j=0;j<count;j++){idx=kindIndex(k,j);guard=0;while(used[idx]&&guard++<N)idx=(idx+1)%N;used[idx]=1;out.push(KINDS[idx]);}return out;}
+  KINDS=KINDS.concat(encounters.kinds);
+  var byId=Object.fromEntries(KINDS.map(function(k){return [k.id,k];}));
+  function plan(key,count){
+    var ids=encounters.stages[key];
+    if(!ids||ids.length!==count-1)throw new Error('Missing boss phase score for '+key+' ('+count+' cards)');
+    return [null].concat(ids.map(function(id){
+      if(!byId[id])throw new Error('Unknown boss phase '+id+' in '+key);
+      return byId[id];
+    }));
+  }
   function hash(str){var h=2166136261;for(var i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}return h>>>0;}
   function params(actor,j){var h=hash(actor+':'+j);return {arms:3+(h%4),dir:(h>>3)&1?1:-1,k:2+((h>>>4)%4),k2:1+((h>>>6)%3),speed:.9+((h>>>8)%5)*.06};}
+  // Four attacks mark fixed launch geometry, then commit to it. World ticks prevent a stale
+  // warning from firing late if a laser, a signature or a card change interrupted its phrase.
+  var CAST_PERIOD=60,CAST_WARN=24;
+  function markCast(id,s,K,P,wave){
+    var W=K.W,H=K.H,previous=s.patternCue,down=Math.PI/2;
+    var cue={kind:id,seg:s.seg,start:s.tick,until:s.tick+CAST_WARN,x:s.boss.x,y:s.boss.y,angle:down};
+    var side=(wave%2?-1:1)*P.dir;
+    if(id==='goldrain'){
+      cue.x=Math.max(10,Math.min(W-10,s.player.x));
+      cue.y=32;
+      var span=W-20;
+      cue.xs=[cue.x,10+(cue.x-10+span/PHI)%span,10+(cue.x-10+span/(PHI*PHI))%span];
+    }else if(id==='fibfan'){
+      var echo=wave%2===1&&previous&&previous.kind===id&&previous.seg===s.seg;
+      cue.open=!!echo;
+      cue.aimX=echo?previous.aimX:s.player.x;
+      cue.aimY=echo?previous.aimY:s.player.y;
+      cue.angle=Math.atan2(cue.aimY-cue.y,cue.aimX-cue.x);
+      cue.gapAngle=.135;
+    }else if(id==='spiro'){
+      // Successive launch points trace a hypotrochoid. The slingshot sweeps across the
+      // lower field instead of leaving the orbiting point's whole stream in one narrow column.
+      var th=wave*GOLD,r=10+P.k*5,R=48,d=8+P.k2*6;
+      cue.x=Math.max(26,Math.min(W-26,cue.x+(R-r)*Math.cos(th)+d*Math.cos((R-r)*th/r)));
+      cue.y=Math.max(42,cue.y+(R-r)*Math.sin(th)-d*Math.sin((R-r)*th/r));
+      cue.fromX=W*(.5-.34*side);cue.toX=W-cue.fromX;cue.targetY=H*.86;
+      cue.angle=Math.atan2(cue.targetY-cue.y,cue.fromX-cue.x);
+      cue.endAngle=Math.atan2(cue.targetY-cue.y,cue.toX-cue.x);
+    }else{
+      cue.x=W*(side>0?.23:.77);cue.y=H*(.22+.03*(wave%3));
+      cue.targetY=H*.86;
+      var exitX=W*(side>0?.65:.35);
+      cue.angle=Math.atan2(cue.targetY-cue.y,exitX-cue.x);
+      cue.gapAngle=.083;
+    }
+    s.patternCue=cue;
+  }
+  function castFormation(id,s,t,K,P){
+    var beat=t%CAST_PERIOD,wave=Math.floor(t/CAST_PERIOD);
+    if(!beat){markCast(id,s,K,P,wave);return;}
+    var q=s.patternCue;
+    if(!q||q.seg!==s.seg||q.kind!==id||s.tick!==q.start+beat)return;
+    var c=K.colors;
+    function shot(x,y,a,v,color){K.spawn(s,x,y,a,v*P.speed,{size:0,color:color,formation:true});}
+    if(id==='spiro'){
+      var elapsed=beat-CAST_WARN;
+      if(elapsed<0||elapsed>24||elapsed%4)return;
+      var aimX=q.fromX+(q.toX-q.fromX)*elapsed/24;
+      shot(q.x,q.y,Math.atan2(q.targetY-q.y,aimX-q.x),150,c[(elapsed/4)%2]);
+      return;
+    }
+    if(beat!==CAST_WARN)return;
+    var i,n,a;
+    if(id==='goldrain'){
+      // The first shaft stamps the position shown in its cue. The other two use golden sections.
+      for(i=0;i<q.xs.length;i++){
+        shot(q.xs[i],q.y,q.angle,170,c[i%2]);
+        shot(q.xs[i],q.y-20,q.angle,170,c[i%2]);
+      }
+    }else if(id==='fibfan'){
+      n=FIB[wave%FIB.length];
+      for(i=0;i<n;i++){
+        if(q.open){
+          var left=Math.floor(n/2);
+          a=i<left?q.angle-q.gapAngle-(left-1-i)*.09:q.angle+q.gapAngle+(i-left)*.09;
+        }else a=q.angle+(i-(n-1)/2)*.10;
+        shot(q.x,q.y,a,148,c[i%2]);
+      }
+    }else{
+      // Sample the player-facing arc by its projected positions. A full ring from a high
+      // centre spent most of its bullets beyond the side walls before reaching this row.
+      n=s.difficulty==='gentle'?13:s.compact?15:19;
+      for(i=0;i<n;i++){
+        a=Math.atan2(q.targetY-q.y,K.W*(i+.5)/n-q.x);
+        if(Math.abs(a-q.angle)>=q.gapAngle)shot(q.x,q.y,a,138,c[wave%2]);
+      }
+      for(i=0;i<5;i++)shot(q.x,q.y,Math.PI+i*Math.PI/4,92,c[(wave+1)%2]);
+    }
+  }
   /* 한 틱 발사. K: 엔진이 넘기는 {spawn,count,colors:[c1,c2],W,H,density}. 난수 없이 t·페이즈 변수만으로 정해 같은 시드에서 같은 모양이다. */
   function fire(kind,s,t,K,seg){
+    if(kind.emit)return encounters.fire(kind,s,t,K);
     var b=s.boss,P=params(seg.actor,seg.phaseNo||1),W=K.W,H=K.H,dens=Math.max(.5,s.density/2.6),c=K.colors,x=b.x,y=b.y,i,n,a,sp,u;
-    function sp1(px,py,ang,speed,col,o){K.spawn(s,px,py,ang,speed,Object.assign({color:col,size:0},o||{}));}
+    function sp1(px,py,ang,speed,col,o){K.spawn(s,px,py,ang,speed,Object.assign({color:col,size:0,formation:true},o||{}));}
     var e=kind.every,fireNow=t%e===0;
     switch(kind.id){
       case'phyllotaxis':if(fireNow){n=t/e;sp1(x,y,n*GOLD*P.dir,76*P.speed,c[n%2]);sp1(x,y,n*GOLD*P.dir+Math.PI,76*P.speed,c[(n+1)%2]);}break;
@@ -44,11 +129,8 @@
       case'sierpinski':if(fireNow){var V=[[W*.18,y+24],[W*.82,y+24],[W/2,y+24+W*.5]],pt=s.__sp||(s.__sp={x:W/2,y:y+60,seed:hash(seg.actor)}),vert;pt.seed=(pt.seed*1664525+1013904223)>>>0;vert=V[pt.seed%3];pt.x=(pt.x+vert[0])/2;pt.y=(pt.y+vert[1])/2;sp1(pt.x,Math.max(30,pt.y-40),Math.PI/2,64*P.speed,c[(pt.seed>>>3)%2]);}break;
       case'sine':if(fireNow){n=Math.round(18*dens)+4;var lane=W/2+Math.sin(t/e*1.3)*W*.3;for(i=0;i<n;i++){var xx=(i+.5)*W/n;if(Math.abs(xx-lane)<34)continue;sp1(xx,Math.max(30,y-6)+Math.sin(i*.9+t*.02)*14,Math.PI/2,70*P.speed,c[i%2]);}}break;
       case'moire':if(fireNow){var n1=14+P.arms,n2=n1+2,r=(t/e)*.2;for(i=0;i<n1;i++)sp1(x,y,TAU*i/n1+r,82*P.speed,c[0]);for(i=0;i<n2;i++)sp1(x,y,TAU*i/n2-r*1.3,82*P.speed,c[1]);}break;
-      case'fibfan':if(fireNow){n=FIB[(t/e|0)%FIB.length];var aim=Math.atan2(s.player.y-y,s.player.x-x);for(i=0;i<n;i++){a=aim+(n>1?(i/(n-1)-.5):0)*.16*n;sp1(x,y,a,90*P.speed,c[i%2]);}}break;
-      case'spiro':if(fireNow){n=t/e;var R=48,rr=P.k*8+10,d=P.k2*10+10,th=n*.35,ex=x+(R-rr)*Math.cos(th)+d*Math.cos((R-rr)/rr*th),ey=y+Math.min(34,Math.abs((R-rr)*Math.sin(th)+d*Math.sin((R-rr)/rr*th)));sp1(ex,Math.max(36,ey),Math.PI/2+Math.sin(n*.2)*.3,86*P.speed,c[(n|0)%2]);}break;
-      case'ripple':if(fireNow){var rx=W*(.2+.6*((t/e*PHI)%1)),ry=H*(.14+.12*((t/e*PHI*PHI)%1)),m=Math.round(12*dens)+6;for(i=0;i<m;i++)sp1(rx,ry,TAU*i/m,52*P.speed,c[(t/e|0)%2]);}break;
-      case'goldrain':if(fireNow){var xr=((t/e)*PHI%1)*W,xs=(xr+W*.5)%W;if(Math.abs(xr-s.player.x)>26)sp1(xr,24,Math.PI/2,78*P.speed,c[0]);if(Math.abs(xs-s.player.x)>26)sp1(xs,24,Math.PI/2,78*P.speed,c[1]);}break;
+      case'fibfan':case'spiro':case'ripple':case'goldrain':castFormation(kind.id,s,t,K,P);break;
     }
   }
-  return Object.freeze({KINDS:KINDS,kindIndex:kindIndex,plan:plan,params:params,fire:fire,setOrder:setOrder,TAU:TAU});
+  return Object.freeze({KINDS:KINDS,plan:plan,params:params,fire:fire,TAU:TAU});
 });
