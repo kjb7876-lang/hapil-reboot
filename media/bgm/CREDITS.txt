@@ -1,5 +1,5 @@
-세로판 배경음악 (title / field / boss / final)
-- 곡: 이 프로젝트에서 직접 작곡·렌더링한 창작곡 (tools/compose-bgm-v43.py, 2026-11-15)
+세로판 배경음악 (title / field 1~4 / boss 1~3 / final)
+- 곡: 이 프로젝트에서 직접 작곡·렌더링한 창작곡 (tools/compose-bgm-v43-gugak.py, 2026-11-18). 예전 곡과 예전 작곡 스크립트는 지웠고, media/music.mp3(예전 한 곡 대체용)도 새 도중 곡으로 바꿨다. 기본 음량은 효과음보다 낮게(도중 0.14, 보스 0.2). 단소·거문고·징·꽹과리 소리는 이 스크립트가 합성했고, 가야금(GM 고토)·태고(GM 태고 드럼)·해금(GM 피들)·박(GM 우드블록)은 아래 사운드폰트 샘플이다.
 - 악기 소리: Fluid R3 GM SoundFont, Frank Wen (조선풍 곡의 태평소·해금·가야금·대금 소리는 GM 샤나이·피들·고토·샤쿠하치로 대신함)
   사전 렌더 샘플: https://github.com/gleitz/midi-js-soundfonts (FluidR3_GM)
   라이선스: Creative Commons Attribution 3.0 (https://creativecommons.org/licenses/by/3.0/)

@@ -291,9 +291,9 @@ async function musicTransitions(page){
   const samples=await page.evaluate(()=>{
     const m=HapilMusic,base={stageIndex:21,boss:{present:true}},out=[];
     function capture(label,expected,stopped){const p=m._players().main,track=m._tracks()[expected];out.push({label,expected,current:m.stats().current,source:p.a.src,wanted:new URL('media/bgm/'+track.file,location.href).href,playing:Array.from(window.__mediaObserver.elements).filter(a=>!a.paused).length,stopped:!!stopped});}
-    for(let i=0;i<6;i++)for(const [mode,stage,key] of [['playing','wave','field'],['playing','intro','boss'],['playing','bossClear','boss'],['paused','bossClear','boss'],['title','wave','title']]){m.update(mode,{...base,stage},true);capture(i+':'+mode+':'+stage,key,mode==='paused');}
+    for(let i=0;i<6;i++)for(const [mode,stage,key] of [['playing','wave','field'],['playing','intro','boss2'],['playing','bossClear','boss2'],['paused','bossClear','boss2'],['title','wave','title']]){m.update(mode,{...base,stage},true);capture(i+':'+mode+':'+stage,key,mode==='paused');}
     m.setVolume(0);m.update('playing',{...base,stage:'wave'},true);capture('volume-zero','field',true);
-    m.setVolume(1);m.update('playing',{...base,stage:'intro'},false);capture('disabled','boss',true);
+    m.setVolume(1);m.update('playing',{...base,stage:'intro'},false);capture('disabled','boss2',true);
     m.update('playing',{...base,stage:'wave'},true);window.dispatchEvent(new Event('pagehide'));m.update('playing',{...base,stage:'wave'},true);capture('pagehide','field',true);
     window.dispatchEvent(new Event('pageshow'));m.update('playing',HapilArcadeApp.debugState().state,true);
     return out;

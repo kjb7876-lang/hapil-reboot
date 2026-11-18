@@ -68,3 +68,17 @@ test('a failed source is not retried endlessly and does not poison other tracks'
  const failedPlays=h.made[0].plays;h.time(5000);M.update('playing',boss,true);M.unlock();assert.equal(h.made[0].plays,failedPlays);
  M.update('playing',wave,true);only(h,'field.mp3');h.requests.at(-1).resolve();await flush();M.update('playing',boss,true);assert(h.made[0].paused);assert.equal(h.made[0].plays,failedPlays+1);
 });
+
+test('regional field and boss tracks follow the stage part and fall back to the first track when a variant is missing',async()=>{
+ const all={...tracks,field2:{file:'field2.mp3',volume:.24},field3:{file:'field3.mp3',volume:.24},field4:{file:'field4.mp3',volume:.24},boss2:{file:'boss2.mp3',volume:.36},boss3:{file:'boss3.mp3',volume:.36}};
+ const h=await harness({manifest:all}),M=h.M;
+ h.w.HapilArcade.STAGES=[1,2,3,4,5,6,7,8].map(part=>({part}));h.w.HapilArcade.STAGES.push({part:8});
+ const expectField=['field','field','field2','field2','field3','field3','field4','field4'],expectBoss=['boss','boss2','boss3','boss','boss2','boss3','boss','boss2'];
+ for(let i=0;i<8;i++){
+  assert.equal(M.pick('playing',{stage:'wave',stageIndex:i}),expectField[i]);
+  assert.equal(M.pick('playing',{stage:'intro',stageIndex:i}),expectBoss[i]);
+ }
+ assert.equal(M.pick('playing',{stage:'card',stageIndex:8}),'final');
+ const plain=await harness();plain.w.HapilArcade.STAGES=[{part:5},{part:6}];
+ assert.equal(plain.M.pick('playing',{stage:'wave',stageIndex:0}),'field');assert.equal(plain.M.pick('playing',{stage:'intro',stageIndex:0}),'boss');
+});
