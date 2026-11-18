@@ -49,6 +49,12 @@
      "strip": 4,
      "fps": 8,
      "size": 220
+    },
+    "death": {
+     "src": "media/drive-v43/death/comrade-mbdist04-death8.png",
+     "strip": 8,
+     "fps": 8,
+     "size": 220
     }
    }
   },

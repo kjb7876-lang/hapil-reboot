@@ -50,7 +50,7 @@
    "name": "숨이 끊긴 전령의 그림자",
    "scene": "06",
    "source": "r96/runtime-text/assets/r104/bosses/mb-dist05-p1~p4.webp",
-   "file": null,
+   "file": "mb-dist05-attack.webp",
    "frames": 4,
    "driveId": "B06",
    "match": "exact"
@@ -122,7 +122,7 @@
    "name": "나태의 껍데기 파수",
    "scene": "14",
    "source": "r96/runtime-text/assets/r104/bosses/mb-ep1b02-p1~p4.webp",
-   "file": null,
+   "file": "mb-ep1b02-attack.webp",
    "frames": 4,
    "driveId": "B14",
    "match": "exact"
@@ -140,7 +140,7 @@
    "name": "금이 간 비교잔영",
    "scene": "15",
    "source": "r96/runtime-text/assets/r104/bosses/mb-ep1b03-p1~p4.webp",
-   "file": null,
+   "file": "mb-ep1b03-attack.webp",
    "frames": 4,
    "driveId": "B16",
    "match": "exact"
@@ -149,7 +149,7 @@
    "name": "폐기주방 감독",
    "scene": "16",
    "source": "r96/runtime-text/assets/r104/bosses/mb-ep1b04-p1~p4.webp",
-   "file": null,
+   "file": "mb-ep1b04-attack.webp",
    "frames": 4,
    "driveId": "B18",
    "match": "exact"
@@ -167,7 +167,7 @@
    "name": "심장빛 무대감독",
    "scene": "17",
    "source": "r96/runtime-text/assets/r104/bosses/mb-ep1b05-p1~p4.webp",
-   "file": null,
+   "file": "mb-ep1b05-attack.webp",
    "frames": 4,
    "driveId": "B20",
    "match": "exact"
@@ -212,7 +212,7 @@
    "name": "호텔 화염기사",
    "scene": "20",
    "source": "r96/runtime-text/assets/r104/bosses/mb-ep1b07-p1~p4.webp",
-   "file": null,
+   "file": "mb-ep1b07-attack.webp",
    "frames": 4,
    "driveId": "B22",
    "match": "exact"
@@ -230,7 +230,7 @@
    "name": "역십자가 시체경호체",
    "scene": "21",
    "source": "r96/runtime-text/assets/r104/bosses/mb-ep1b08-p1~p4.webp",
-   "file": null,
+   "file": "mb-ep1b08-attack.webp",
    "frames": 4,
    "driveId": "B24",
    "match": "exact"
@@ -284,7 +284,7 @@
    "name": "제12단계 기억 검열기",
    "scene": "26",
    "source": "r96/runtime-text/assets/r104/bosses/u204-mid-p1~p4.webp",
-   "file": null,
+   "file": "u204-mid-attack.webp",
    "frames": 4,
    "driveId": "B29",
    "match": "exact"
@@ -293,7 +293,7 @@
    "name": "제14단계 역전 관리자",
    "scene": "27",
    "source": "r96/runtime-text/assets/r104/bosses/u205-mid-p1~p4.webp",
-   "file": null,
+   "file": "u205-mid-attack.webp",
    "frames": 4,
    "driveId": "B28",
    "match": "exact"
@@ -338,7 +338,7 @@
    "name": "환수검 모조체",
    "scene": "50",
    "source": "r96/runtime-text/assets/r104/bosses/mb-hando03-p1~p4.webp",
-   "file": null,
+   "file": "mb-hando03-attack.webp",
    "frames": 4,
    "driveId": "B49",
    "match": "exact"
@@ -356,7 +356,7 @@
    "name": "파란불 역주행 목격자",
    "scene": "52",
    "source": "r96/runtime-text/assets/r104/bosses/mb-murder01-p1~p4.webp",
-   "file": null,
+   "file": "mb-murder01-attack.webp",
    "frames": 4,
    "driveId": "B51",
    "match": "exact"
@@ -365,7 +365,7 @@
    "name": "공실장부 당직감사",
    "scene": "53",
    "source": "r96/runtime-text/assets/r104/bosses/mb-murder02-p1~p4.webp",
-   "file": null,
+   "file": "mb-murder02-attack.webp",
    "frames": 4,
    "driveId": "B52",
    "match": "exact"
@@ -374,7 +374,7 @@
    "name": "진술 봉쇄 인과핵",
    "scene": "54",
    "source": "r96/runtime-text/assets/r104/bosses/murder04-mid-p1~p4.webp",
-   "file": null,
+   "file": "murder04-mid-attack.webp",
    "frames": 4,
    "driveId": "B53",
    "match": "exact"
