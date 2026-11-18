@@ -654,8 +654,8 @@
     Object.keys(PACING).forEach(function(d){var p=PACING[d],wave=0,boss=0,waves=0,cards=0;SEGMENTS.forEach(function(g,i){if(p.skipRepeatedPlain&&REPEATED_PLAIN[i])return;if(g.kind==='wave'){wave+=g.duration;waves++;}else{boss+=g.time;cards++;}});pacingTotals[d]={waveTicks:wave,bossSeconds:boss,waves:waves,cards:cards};});})();
   function plannedSegments(difficulty){var p=PACING[difficulty]||PACING.normal;return SEGMENTS.map(function(g,i){return i;}).filter(function(i){return !p.skipRepeatedPlain||!REPEATED_PLAIN[i];});}
   function waveDuration(s,g){if(!s.paced)return g.duration;var p=PACING[s.difficulty],tot=pacingTotals[s.difficulty];return Math.max(120,Math.round(g.duration*(p.waveMinutes*3600-tot.waves*30)/tot.waveTicks));}
-  function cardDuration(s,g){var up=s.entranceAll?BOSS_STAY:1;if(!s.paced)return g.time*up;var p=PACING[s.difficulty],tot=pacingTotals[s.difficulty];return Math.max(3,g.time*p.bossMinutes*60/tot.bossSeconds*1.4)*up;}
-  function cardHp(s,g){if(s.entranceAll)return Math.round((s.paced?Math.max(20,Math.round(g.hp*PACING[s.difficulty].hpScale)):g.hp)*BOSS_HP_UP);return s.paced?Math.max(20,Math.round(g.hp*PACING[s.difficulty].hpScale)):g.hp;}
+  function cardDuration(s,g){var up=s.entranceAll?BOSS_STAY*(g.mid?MID_UP[s.difficulty]||2.5:1):1;if(!s.paced)return g.time*up;var p=PACING[s.difficulty],tot=pacingTotals[s.difficulty];return Math.max(3,g.time*p.bossMinutes*60/tot.bossSeconds*1.4)*up;}
+  function cardHp(s,g){if(s.entranceAll)return Math.round((s.paced?Math.max(20,Math.round(g.hp*PACING[s.difficulty].hpScale)):g.hp)*BOSS_HP_UP*(g.mid?MID_UP[s.difficulty]||2.5:1));return s.paced?Math.max(20,Math.round(g.hp*PACING[s.difficulty].hpScale)):g.hp;}
   function pacingReport(difficulty){var d=PACING[difficulty]?difficulty:'normal',p=PACING[d],tot=pacingTotals[d],s={difficulty:d,paced:true},wave=0,boss=0;plannedSegments(d).forEach(function(i){var g=SEGMENTS[i];if(g.kind==='wave')wave+=(waveDuration(s,g)+30)/60;else boss+=cardDuration(s,g);});return {difficulty:d,targetMinutes:p.nominalMinutes,waveBudgetMinutes:wave/60,bossBudgetMinutes:p.bossMinutes,cardHpScale:p.hpScale,cardTimeoutMinutes:boss/60,presentationBudgetMinutes:p.presentationMinutes,waves:tot.waves,cards:tot.cards,skippedPlain:SEGMENTS.length-tot.waves-tot.cards};}
   function stageTargetSeconds(difficulty,index){var d=PACING[difficulty]?difficulty:'normal',p=PACING[d],tot=pacingTotals[d],seconds=p.presentationMinutes*60/STAGES.length;plannedSegments(d).forEach(function(i){var g=SEGMENTS[i];if(g.stage===index)seconds+=g.kind==='wave'?g.duration/tot.waveTicks*p.waveMinutes*60:g.time/tot.bossSeconds*p.bossMinutes*60;});return seconds;}
   STAGES.forEach(function(g){g.authoredSeconds=g.seconds;g.seconds=stageTargetSeconds('normal',g.index);});
@@ -854,7 +854,7 @@
   }
   // 따로 정하지 않은 잡몹도 화면 위쪽에 머무는 동안 이 간격(틱)으로 다시 쏜다. 잡몹 구간이 보스전보다 지나치게 한가하지 않게(11-14 지시서).
   // 화면의 탄이 적으면 더 자주, 많으면 쉬어서 장면마다 압박이 고르게 한다. [쉬움, 보통, 지옥] 기준 탄 수.
-  var RETREAT_TICKS=110,MOB_HP_UP=1.7,BOSS_HP_UP=1.5,BOSS_STAY=1.8,MOB_STAY=1500; // 사용자 11-18: 몹·중간보스·보스가 죽지도 않았는데 사라진다/체력이 적다 → 체력을 올리고 오래 머문다
+  var RETREAT_TICKS=110,RETREAT_ALL=330,MOB_HP_UP=1.7,BOSS_HP_UP=1.5,BOSS_STAY=1.8,MOB_STAY=2400,MID_UP={gentle:3,normal:2.5,hell:2.5}; // 사용자 11-18: 몹·중간보스·보스가 죽지도 않았는데 사라진다/체력이 적다 → 체력을 올리고 오래 머문다
 
   var MOB_REFIRE=[96,56,56],WAVE_FLOOR=[110,280,280],WAVE_CEIL=[170,320,320];
   function refireEvery(s,every){var d=s.difficulty==='gentle'?0:2,base=every||MOB_REFIRE[d];
@@ -862,7 +862,7 @@
   function updateMobs(s){
     for(var i=s.mobs.length-1;i>=0;i--){
       var m=s.mobs[i];m.age++;
-      if(m.retreat){m.y-=m.elite?3:4.2;m.x+=m.x<W/2?-.6:.6;if(m.y<-44||m.x<-44||m.x>W+44)s.mobs.splice(i,1);continue;} // 구간이 끝나도 몹이 한순간에 사라지지 않고 위로 물러난다(사용자 11-17)
+      if(m.retreat){if(s.entranceAll){var rv=4,rl=Math.hypot(m.vx||0,m.vy||0),rk=rl<.5?0:Math.max(2.6,rl*1.7)/rl; /* 가던 방향 그대로 가장자리로 나간다(위로 되돌아가지 않는다, 사용자 11-18) */ if(m.elite||!rk){m.y+=m.elite?rv:2.6;}else{m.baseX+=(m.vx||0)*rk;m.y+=(m.vy||0)*rk;m.x=m.baseX+(m.sway?Math.sin(m.age*m.swayRate)*m.sway*22:0);}if(m.y>H+44||m.y<-60||m.x<-44||m.x>W+44)s.mobs.splice(i,1);continue;}m.y-=m.elite?3:4.2;m.x+=m.x<W/2?-.6:.6;if(m.y<-44||m.x<-44||m.x>W+44)s.mobs.splice(i,1);continue;} // 구간이 끝나도 몹이 한순간에 사라지지 않고 위로 물러난다(사용자 11-17)
       if(m.elite){
         if(!s.entranceAll&&m.age>m.hold+90)m.y-=2.4;else if(m.y<m.stopY)m.y+=2.2;
         if(m.y>=m.stopY-1&&(s.entranceAll||m.age<=m.hold+90)&&m.every&&m.age>=m.first+60&&(m.age-m.first-60)%m.every===0){MOB_FIRE[m.fire](s,m);m.shots++;}
@@ -1516,7 +1516,7 @@
       // 대본이 끝나고 몹이 다 사라지면 다음으로. 너무 오래 남은 몹은 물러난다.
       var over=w-duration-(s.entranceAll?MOB_STAY:s.paced?30:WAVE_GRACE);
       if(w>=duration&&over>=0&&s.mobs.length&&!s.mobs[0].retreat&&!s.mobs.every(function(m){return m.retreat;}))for(var q=0;q<s.mobs.length;q++)s.mobs[q].retreat=true;
-      if(w>=duration&&(!s.mobs.length||over>=RETREAT_TICKS)){s.mobs.length=0;s.score+=breakWipe(s)*10;note(s,'waveClear');advance(s);}
+      if(w>=duration&&(!s.mobs.length||over>=(s.entranceAll?RETREAT_ALL:RETREAT_TICKS))){s.mobs.length=0;s.score+=breakWipe(s)*10;note(s,'waveClear');advance(s);}
     }
     else if(s.stage==='card'){
       var t=s.segTick++;
