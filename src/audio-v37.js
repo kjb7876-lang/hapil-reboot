@@ -32,6 +32,8 @@
     countdown:{gap:400,level:.17,rank:2},
     countdownLast:{gap:400,level:.18,rank:3},
     // 시계 소리(사용자 11-18 "시계소리도 적절히 사용"): 시간을 다루는 패턴 이름·서하의 시간 기술·시공간 왜곡·막판 초읽기에만 쓴다. 배경음보다 크고 효과음 중에선 작게.
+    groove:{gap:120,level:.15,rank:1},
+    grooveAccent:{gap:120,level:.22,rank:2},
     clockTick:{gap:300,level:.15,rank:2},
     clockSlow:{gap:800,level:.2,rank:3},
     clockChime:{gap:900,level:.2,rank:3}
@@ -193,6 +195,9 @@
       // 초읽기: 날카로운 전자음 대신 시계의 째깍(높은 틱)·깍(낮은 톡). 마지막 3초는 한 박자 더 단단하게.
       countdown:function(d,l){clockTick(d,l,1);},
       countdownLast:function(d,l){clockTick(d,l*1.15,1);tone(d,'sine',1175,1175,.1,l*.5,.02);},
+      // 8박 장단의 박(레이백 특수 페이즈): 나무 박 소리. 센박은 한 음 낮고 길게.
+      groove:function(d,l){tone(d,'triangle',520,360,.07,l,0,.004);noise(d,'bandpass',1800,900,3,.05,l*.3,0,.01);},
+      grooveAccent:function(d,l){tone(d,'triangle',330,200,.14,l,0,.004);tone(d,'sine',165,110,.16,l*.6,0,.004);noise(d,'bandpass',1400,700,3,.06,l*.3,0,.01);},
       clockTick:function(d,l){clockTick(d,l,1);clockTick(d,l*.8,.78,.5);},
       // 시공간 왜곡·둔화장: 째깍 간격이 점점 벌어지고 음이 내려앉는다(태엽 풀림).
       clockSlow:function(d,l){[0,.09,.22,.42,.7].forEach(function(at,i){clockTick(d,l*(1-i*.12),1-i*.1,at);});tone(d,'sine',330,110,.9,l*.5,0,.05);noise(d,'lowpass',900,200,1,.7,l*.12,0,.1);},

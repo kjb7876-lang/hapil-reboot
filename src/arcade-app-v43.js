@@ -579,6 +579,9 @@
       else if(e==='kill')play('kill',s.player.x);
       else if(e==='orbBreak')play('item',s.player.x);
       else if(e==='pieceBreak'){play('kill',s.player.x);shake=Math.max(shake,4);}
+      else if(e==='special'&&s.special){var spi=Arcade.SP_INFO[s.special.kind];if(spi){showBanner(spi.name,spi.sub,false);play('warning',W/2);}}
+      else if(e==='grooveBeat'||e==='grooveAccent'){play(e==='grooveAccent'?'grooveAccent':'groove',W/2);if(e==='grooveAccent')shake=Math.max(shake,1.5);} // 소리는 박에, 실제 공격은 레이백만큼 뒤에
+      else if(e==='centerGuard'){play('laserWarn',W/2);}
       else if(e==='riserBreak'){play('kill',s.player.x);shake=Math.max(shake,5);}
       else if(e==='item'){if(visual-lastItemSound>.06){lastItemSound=visual;play('item',s.player.x);}}
       else if(e==='hurt'){play('hurt',s.player.x);hurtFlash=1;hurtRing={x:s.player.x,y:s.player.y,r:8};shake=16;}
@@ -605,7 +608,7 @@
       else if(e==='lose'){play('lose');finish();}
       else if(e==='countdown'||e==='countdownLast')play(e);
       else if(e==='laserWarn')play('laserWarn',s.boss.x);
-      else if(e==='riserWarn')play('laserWarn',s.risers&&s.risers.length?s.risers[s.risers.length-1].x:W/2); // 아래에서 솟는 소재 예고음
+      else if(e==='riserWarn'){if(!s.special)play('laserWarn',s.risers&&s.risers.length?s.risers[s.risers.length-1].x:W/2);} // 아래에서 솟는 소재 예고음(특수 페이즈 중에는 박 소리와 겹치지 않게 뺀다)
       else if(e==='laserFire'){play('laserFire',s.boss.x);shake=Math.max(shake,5);}
       else if(e==='pop')play('skillCounter',s.boss.x);
     }
