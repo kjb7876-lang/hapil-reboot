@@ -1,11 +1,11 @@
 {"tracks":{
-  "title":{"file":"title.mp3","volume":0.2},
-  "field":{"file":"field.mp3","volume":0.24},
-  "field2":{"file":"field2.mp3","volume":0.24},
-  "field3":{"file":"field3.mp3","volume":0.24},
-  "field4":{"file":"field4.mp3","volume":0.24},
-  "boss":{"file":"boss.mp3","volume":0.36},
-  "boss2":{"file":"boss2.mp3","volume":0.36},
-  "boss3":{"file":"boss3.mp3","volume":0.36},
-  "final":{"file":"final.mp3","volume":0.36}
+  "title":{"file":"title.mp3","volume":0.12},
+  "field":{"file":"field.mp3","volume":0.14},
+  "field2":{"file":"field2.mp3","volume":0.14},
+  "field3":{"file":"field3.mp3","volume":0.14},
+  "field4":{"file":"field4.mp3","volume":0.14},
+  "boss":{"file":"boss.mp3","volume":0.2},
+  "boss2":{"file":"boss2.mp3","volume":0.2},
+  "boss3":{"file":"boss3.mp3","volume":0.2},
+  "final":{"file":"final.mp3","volume":0.2}
 }}
