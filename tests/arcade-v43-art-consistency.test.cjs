@@ -29,10 +29,25 @@ test('v43 art consistency: no figure is cut across two cells of a strip',async()
  }
  assert.deepEqual(bad,[]);
 });
-test('v43 art consistency: bosses whose drive walk sheet and m0 attack are different phases keep only the walk sheet',()=>{
- for(const k of ['p2_chairman','p2_beelzebub','p2_wrath'])assert(!manifest[k+'@attack.webp'],k);
+test('v43 art consistency: bosses with a different legacy form use attacks drawn for their current form',()=>{
+ for(const k of ['p2_chairman','p2_beelzebub','p2_wrath']){
+  assert.equal(manifest[k+'@attack.webp'].source,'media/boss-art-v43/'+k+'-attack.webp');
+ }
  for(const k of ['lucifer','mask','balrog'])assert(/-tone\.webp$/.test(manifest[k+'@attack.webp'].source),k+' attack is colour-matched to its walk sheet');
 });
+test('every arcade boss can move and attack, and scene 37 has its own character art',()=>{
+ const actors=new Set(A.SEGMENTS.filter(s=>s.kind==='card').map(s=>s.actor));
+ for(const actor of actors){
+  const base=manifest[actor+'.webp'],attack=manifest[actor+'@attack.webp'];
+  assert(base.frames>=2,actor+' movement');
+  assert(base.motions.includes('attack')&&attack.frames>=2,actor+' attack');
+ }
+ for(const action of ['','@attack']){
+  const art=manifest['p5_cult'+action+'.webp'];
+  assert.notEqual(art.sourceSha256,manifest['p3_rampart'+action+'.webp'].sourceSha256);
+ }
+});
+
 test('v43 art consistency: the cartoon slime is out of every scene',()=>{
  for(const [scene,list] of Object.entries(skins.front))for(const k of Object.keys(recast.style))assert(!list.includes(k),scene+' '+k);
 });

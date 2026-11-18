@@ -145,6 +145,12 @@ def main():
                     if spec.get('facing'): manifest[name]['facing'] = spec['facing']  # 옆모습 그림이 보는 쪽(화면 쪽이 가는 방향에 맞춰 뒤집는다)
                 except Exception as e:
                     problems.append(f'{path}: {key}: {e}')
+    # Other builders own the loop backgrounds and the hand-drawn prop sprites.
+    for name, entry in old.items():
+        if entry.get('table') in {'docs/v43/vmaps.json', 'tools/build-drawn-props-v43.cjs'}:
+            if not os.path.isfile(os.path.join(OUT, name)):
+                problems.append(f'{name}: missing picture from {entry["table"]}')
+            manifest[name] = entry
     for f in os.listdir(OUT):
         if f != 'manifest.json' and f not in manifest:
             os.remove(f'{OUT}/{f}')

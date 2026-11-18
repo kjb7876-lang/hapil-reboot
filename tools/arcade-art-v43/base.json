@@ -59,22 +59,61 @@
    }
   },
   "asmodeus": {
-   "src": "media/sins-v13/asmodeus-atlas-512.png",
-   "cell": [
-    0,
-    0,
-    2,
-    2
-   ]
+   "src": "media/boss-art-v43/asmodeus-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 184,
+   "motions": {
+    "attack": {
+     "src": "media/sins-v13/asmodeus-atlas-512.png",
+     "frames": [
+      {
+       "src": "media/sins-v13/asmodeus-atlas-512.png",
+       "cell": [
+        0,
+        0,
+        2,
+        2
+       ]
+      },
+      {
+       "src": "media/sins-v13/asmodeus-atlas-512.png",
+       "cell": [
+        1,
+        0,
+        2,
+        2
+       ]
+      },
+      {
+       "src": "media/sins-v13/asmodeus-atlas-512.png",
+       "cell": [
+        0,
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "src": "media/sins-v13/asmodeus-atlas-512.png",
+       "cell": [
+        1,
+        1,
+        2,
+        2
+       ]
+      }
+     ],
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "pride": {
-   "src": "media/sins-v13/pride-atlas-512.png",
-   "cell": [
-    0,
-    0,
-    2,
-    2
-   ],
+   "src": "media/boss-art-v43/pride-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 184,
    "motions": {
     "attack": {
      "src": "media/m0-v43/boss/b08-boss-attack.webp",
@@ -85,27 +124,109 @@
    }
   },
   "controller": {
-   "src": "media/chapter3-v18/controller-idle.webp"
+   "src": "media/boss-art-v43/controller-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 184,
+   "motions": {
+    "attack": {
+     "src": "media/chapter3-v18/controller-idle.webp",
+     "frames": [
+      {
+       "src": "media/chapter3-v18/controller-idle.webp"
+      },
+      {
+       "src": "media/chapter3-v18/controller-transition.webp"
+      },
+      {
+       "src": "media/chapter3-v18/controller-attack.webp"
+      },
+      {
+       "src": "media/chapter3-v18/controller-rain.webp"
+      }
+     ],
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "goblin": {
    "src": "media/drive-v43/b33-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/goblin-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "insomnia": {
    "src": "media/drive-v43/b36-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/insomnia-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "arbelia": {
    "src": "media/drive-v43/b45-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/story-v19/arbelia-idle.webp",
+     "frames": [
+      {
+       "src": "media/story-v19/arbelia-idle.webp"
+      },
+      {
+       "src": "media/story-v19/arbelia-charge.webp"
+      },
+      {
+       "src": "media/story-v19/arbelia-attack.webp"
+      },
+      {
+       "src": "media/story-v19/arbelia-recover.webp"
+      }
+     ],
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "siren": {
    "src": "media/drive-v43/b46-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/story-v19/siren-idle.webp",
+     "frames": [
+      {
+       "src": "media/story-v19/siren-idle.webp"
+      },
+      {
+       "src": "media/story-v19/siren-charge.webp"
+      },
+      {
+       "src": "media/story-v19/siren-attack.webp"
+      },
+      {
+       "src": "media/story-v19/siren-recover.webp"
+      }
+     ],
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "chief": {
    "src": "media/drive-v43/b50-down.webp",
@@ -121,19 +242,96 @@
    }
   },
   "executor": {
-   "src": "media/story-v19/executor-idle.webp"
+   "src": "media/boss-art-v43/executor-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 184,
+   "motions": {
+    "attack": {
+     "src": "media/story-v19/executor-idle.webp",
+     "frames": [
+      {
+       "src": "media/story-v19/executor-idle.webp"
+      },
+      {
+       "src": "media/story-v19/executor-charge.webp"
+      },
+      {
+       "src": "media/story-v19/executor-attack.webp"
+      },
+      {
+       "src": "media/story-v19/executor-recover.webp"
+      }
+     ],
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "rian": {
-   "src": "media/story-v19/rian-idle.webp"
+   "src": "media/boss-art-v43/rian-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 184,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/rian-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "cultist": {
-   "src": "media/cult-v17/cult-leader-atlas.png",
-   "cell": [
-    0,
-    0,
-    2,
-    2
-   ]
+   "src": "media/boss-art-v43/cultist-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 184,
+   "motions": {
+    "attack": {
+     "src": "media/cult-v17/cult-leader-atlas.png",
+     "frames": [
+      {
+       "src": "media/cult-v17/cult-leader-atlas.png",
+       "cell": [
+        0,
+        0,
+        2,
+        2
+       ]
+      },
+      {
+       "src": "media/cult-v17/cult-leader-atlas.png",
+       "cell": [
+        1,
+        0,
+        2,
+        2
+       ]
+      },
+      {
+       "src": "media/cult-v17/cult-leader-atlas.png",
+       "cell": [
+        0,
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "src": "media/cult-v17/cult-leader-atlas.png",
+       "cell": [
+        1,
+        1,
+        2,
+        2
+       ]
+      }
+     ],
+     "fps": 8,
+     "size": 184
+    }
+   }
   }
  },
  "mobs": {
