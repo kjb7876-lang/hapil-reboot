@@ -53,7 +53,7 @@ test('the stage and role select a stable score, including recurring bosses and t
       return g.stage===stage-1&&g.actor===actor&&g.mid===mid;
     }).map(i=>A.phaseKind(A.SEGMENTS[i],i)?.id??null);
   }
-  assert.deepEqual(score(1,'p1_tree',false),[null,'branch','rails','gates']);
+  assert.deepEqual(score(1,'p1_tree',false),[null,'petals','braid','gates']);
   assert.deepEqual(score(22,'p2_chairman',true),[null,'ratchet']);
   assert.deepEqual(score(28,'controller',true),[null,'mirror']);
   assert.equal(score(25,'controller',false)[1],'gates');
@@ -72,7 +72,7 @@ test('branching roots split once, adjacent gate openings overlap, and the twin s
     P.fire(kind,s,t,{W:360,H:640,colors:[0,1],spawn:(state,x,y,a,v,o)=>shots.push({x,y,a,v,o})},{actor,phaseNo:A.phaseOf(segment).no});
     return shots;
   }
-  const roots=emit(1,'p1_tree',false,0);
+  const roots=emit(39,'p5_neuron',false,0);
   assert.equal(roots.length,2);
   assert(roots.every(q=>q.a===Math.PI/2&&q.o.mode===A.MODE_TURN&&q.o.at===40));
   assert.equal(roots[0].o.arg,-roots[1].o.arg);

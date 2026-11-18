@@ -13,7 +13,7 @@
   }
 
   // Stage numbers follow the selection screen. Both lists begin at P2; each word is one card.
-  register(1, 'mb_01', 'phyllotaxis', 'p1_tree', 'branch rails gates');
+  register(1, 'mb_01', 'phyllotaxis', 'p1_tree', 'petals braid gates');
   register(2, 'mb_02', 'branch', 'violet', 'wings rails phyllotaxis spiro lissajous mirror archimedes ripple sweep');
   register(3, 'mb_03', 'branch', 'p1_horn', 'sine rails ripple mirror phyllotaxis gates lissajous seal echo');
   register(4, 'mb_04', 'fibfan', 'p1_chaser', 'rails goldrain gates');
@@ -42,7 +42,7 @@
   register(27, 'mb_28', 'mirror', 'p3_body', 'echo gates ripple rails branch');
   register(28, 'controller', 'mirror', 'p3_gate', 'rails seal fibfan gates ripple columns echo');
   register(29, 'mb_31', 'sine', 'goblin', 'wings mirror echo');
-  register(30, 'mb_32', 'spiro', 'goblin', 'ripple rails archimedes mirror sine sweep fibfan gates rose');
+  register(30, 'mb_32', 'spiro', 'goblin', 'ripple braid archimedes mirror sine sweep fibfan gates rose');
   register(31, 'mb_33', 'branch', 'p4_knight', 'slant rails sierpinski mirror moire fixed spiro echo goldrain stairs sweep');
   register(32, 'mb_34', 'ripple', 'insomnia', 'rails echo gates');
   register(33, 'mb_35', 'mirror', 'insomnia', 'echo trail rose fixed polygram ripple sierpinski seal moire columns triangle');
@@ -91,6 +91,22 @@
     var offset=Math.floor(beat/3)%2?12:-12;
     shot(w*.32+offset,y,down,126,false);
     shot(w*.68+offset,y,down,126,true);
+  });
+  add('braid','엇갈려 땋는 궤적',20,function(shot,beat,x,y,w){
+    // Two steady rails plus two shots that swing out and bend back, so the lanes look braided but stay readable.
+    var offset=Math.floor(beat/3)%2?12:-12;
+    shot(w*.32+offset,y,down,118,false);
+    shot(w*.68+offset,y,down,118,true);
+    for(var side=-1;side<=1;side+=2){
+      shot(x+side*4,y,down+side*.55,100,side>0,{mode:turnAfter,at:26,arg:-side*.55,speed2:104});
+    }
+  });
+  add('petals','피어나는 꽃잎',36,function(shot,beat,x,y){
+    // Five-way fan; the outer pair curls inward after leaving, like petals closing.
+    for(var i=-2;i<=2;i++){
+      var edge=Math.abs(i)===2;
+      shot(x,y,down+i*.2,edge?92:104,i%2!==0,edge?{mode:turnAfter,at:30,arg:-Math.sign(i)*.3,speed2:100}:undefined);
+    }
   });
   add('slant','엇갈린 사선비',25,function(shot,beat,x,y,w){
     var tilt=Math.floor(beat/3)%2?.18:-.18;
