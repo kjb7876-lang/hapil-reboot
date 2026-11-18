@@ -30,7 +30,11 @@
     lose:{gap:1500,level:.4,rank:5},
     heartbeat:{gap:700,level:.3,rank:2},
     countdown:{gap:400,level:.17,rank:2},
-    countdownLast:{gap:400,level:.18,rank:3}
+    countdownLast:{gap:400,level:.18,rank:3},
+    // 시계 소리(사용자 11-18 "시계소리도 적절히 사용"): 시간을 다루는 패턴 이름·서하의 시간 기술·시공간 왜곡·막판 초읽기에만 쓴다. 배경음보다 크고 효과음 중에선 작게.
+    clockTick:{gap:300,level:.15,rank:2},
+    clockSlow:{gap:800,level:.2,rank:3},
+    clockChime:{gap:900,level:.2,rank:3}
   };
   // 'phase' 이벤트는 다음 패턴·구간이 시작될 때 나오므로 격파음에 쓰지 않는다(격파는 아래 단계 전환으로 잡는다).
   var EVENT_CUES={hurt:'hurt',kill:'kill',summon:'summon',seal:'seal',release:'seal',awakening:'awakening',win:'win',lose:'lose'};
@@ -186,9 +190,16 @@
       lose:function(d,l){[392,349,294,196].forEach(function(f,i){tone(d,'triangle',f,f*.97,.5,l*.5,i*.2,.02);});tone(d,'sine',98,49,1.2,l*.6,.1,.05);},
       heartbeat:function(d,l){tone(d,'triangle',150,90,.14,l);tone(d,'sine',70,42,.14,l*.7);tone(d,'triangle',132,80,.16,l*.8,.19);tone(d,'sine',62,38,.16,l*.55,.19);}, // 휴대폰 스피커는 저역을 못 내므로 삼각파 배음을 겹친다
       
-      countdown:function(d,l){tone(d,'square',880,880,.05,l*.5);tone(d,'sine',880,880,.09,l);},
-      countdownLast:function(d,l){tone(d,'square',1175,1175,.06,l*.5);tone(d,'sine',1175,1175,.12,l);}
+      // 초읽기: 날카로운 전자음 대신 시계의 째깍(높은 틱)·깍(낮은 톡). 마지막 3초는 한 박자 더 단단하게.
+      countdown:function(d,l){clockTick(d,l,1);},
+      countdownLast:function(d,l){clockTick(d,l*1.15,1);tone(d,'sine',1175,1175,.1,l*.5,.02);},
+      clockTick:function(d,l){clockTick(d,l,1);clockTick(d,l*.8,.78,.5);},
+      // 시공간 왜곡·둔화장: 째깍 간격이 점점 벌어지고 음이 내려앉는다(태엽 풀림).
+      clockSlow:function(d,l){[0,.09,.22,.42,.7].forEach(function(at,i){clockTick(d,l*(1-i*.12),1-i*.1,at);});tone(d,'sine',330,110,.9,l*.5,0,.05);noise(d,'lowpass',900,200,1,.7,l*.12,0,.1);},
+      // 서하의 시간 기술: 맑은 종 한 번과 앞서 달려가는 째깍 셋.
+      clockChime:function(d,l){bell(d,880,.9,l*.55,0);[.12,.24,.36].forEach(function(at,i){clockTick(d,l*.8,1+i*.06,at);});}
     };
+    function clockTick(d,l,pitch,delay){delay=delay||0;noise(d,'bandpass',2600*pitch,1800*pitch,5,.022,l*.8,delay,.001);tone(d,'sine',1900*pitch,1500*pitch,.035,l*.6,delay,.001);if(pitch===1&&!delay||pitch>1)noise(d,'bandpass',900,600,3,.03,l*.35,delay,.001);}
     function play(cue){
       var spec=CUES[cue.name],voice=VOICE[cue.name];if(!spec||!voice||!enabled||suspended||background||pageAway||volume===0||!ctx||ctx.state!=='running')return false;
       var now=clock();if(now-(last[cue.name]===undefined?-1e9:last[cue.name])<spec.gap){skipped++;return false;}
