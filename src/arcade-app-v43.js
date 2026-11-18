@@ -1473,8 +1473,13 @@
   var introLinesKey='',introLines=null,INK_PAPER='rgb(244,236,218)',INK_DARK='rgb(30,26,24)',INK_SERIF='"HapilSerif","Noto Serif KR","Noto Serif CJK KR","Nanum Myeongjo",serif';
   function entranceLinesOf(s){
     var seg=Arcade.SEGMENTS[s.seg],key=s.seg+':'+seg.actor;if(introLinesKey===key&&introLines)return introLines;
-    var who=Arcade.ACTORS[seg.actor],entry=BossIntros&&BossIntros.getBoss(seg.actor,s.stageIndex),lines=entry&&entry.lines&&entry.lines.length?entry.lines:(BossIntros&&BossIntros.fallbackLines?BossIntros.fallbackLines(seg.actor,!!seg.mid,who&&who.name):[{speaker:who&&who.name||'',text:'...'}]);
-    introLinesKey=key;introLines=lines;return lines;
+    var who=Arcade.ACTORS[seg.actor],entry=BossIntros&&BossIntros.getBoss(seg.actor,s.stageIndex);
+    var line=!seg.mid&&global.HapilArcadeBossLines&&global.HapilArcadeBossLines.getLine(seg.actor,s.stageIndex);
+    if(entry)introLines=entry.lines;
+    else if(line)introLines=[line];
+    else if(BossIntros)introLines=BossIntros.fallbackLines(seg.actor,!!seg.mid,who&&who.name);
+    else introLines=[{speaker:who&&who.name||'',text:'...'}];
+    introLinesKey=key;return introLines;
   }
   function wrapText(text,maxW){var out=[],row='',i;for(i=0;i<text.length;i++){var c=text[i];if(ctx.measureText(row+c).width>maxW&&row){out.push(row);row=c.trim()?c:'';}else row+=c;}if(row)out.push(row);return out;}
   function brushBox(x,y,w,h,alpha){ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle='rgba(244,236,218,.94)';ctx.beginPath();ctx.moveTo(x+4,y+1);ctx.lineTo(x+w-3,y);ctx.lineTo(x+w,y+h-3);ctx.lineTo(x+3,y+h);ctx.closePath();ctx.fill();ctx.fillStyle=INK_DARK;ctx.fillRect(x+4,y-1.5,w-8,2.4);ctx.fillRect(x+6,y+h-1,w-14,2);ctx.restore();}
