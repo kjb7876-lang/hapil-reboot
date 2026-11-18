@@ -29,7 +29,7 @@
   var images={},loading={},failed={},want={},manifest=null,orbs=[],shotSprite=null,homingSprite=null,circleSprite=null,itemSprites=[],background=null,backgroundStage=-1,loadedStage=-1;
   var scale=1,lite=false,frameMs=16,framesSeen=0,offsetX=0,offsetY=0;
   var state=null,mode='title',difficulty='normal',accumulator=0,lastStamp=0,visual=0,lastRun=null;
-  var particles=[],flash=0,hurtFlash=0,hurtRing=null,VERMILION='#a8382a',shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,SPELL_BANNER_TICKS=42,bannerSpell=false,bannerTitle='',bannerSub='',toast=null;
+  var particles=[],spellDim=0,flash=0,hurtFlash=0,hurtRing=null,VERMILION='#a8382a',shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,SPELL_BANNER_TICKS=42,bannerSpell=false,bannerTitle='',bannerSub='',toast=null;
   var keys={},finger={active:false,id:null,x:0,y:0},focusHeld=false,focusPointer=null,focusLatched=false,bombQueued=false;
   var settings={music:true,sfx:true,musicVolume:1,sfxVolume:1,screenShake:true,lowQuality:false};
   var fx=null,music=null,best=0,lastItemSound=0,progress=Progress.fresh(),saveOk=true;
@@ -535,11 +535,11 @@
       else if(e==='riserBreak'){play('kill',s.player.x);shake=Math.max(shake,5);}
       else if(e==='item'){if(visual-lastItemSound>.06){lastItemSound=visual;play('item',s.player.x);}}
       else if(e==='hurt'){play('hurt',s.player.x);hurtFlash=1;hurtRing={x:s.player.x,y:s.player.y,r:8};shake=16;}
-      else if(e==='bomb'){play('bomb',s.player.x);flash=.55;shock=HeroFx?null:{x:s.player.x,y:s.player.y,r:10};shake=10;if(HeroFx){HeroFx.onEvent(e,s,visual);shake=Math.max(shake,HeroFx.shake());}} // 필살기 단계 연출이 충격파 고리를 대신한다(감싸는 원 금지)
+      else if(e==='bomb'){play('bomb',s.player.x);if(isSeoha(s.hero))play('clockChime',s.player.x);flash=.55;shock=HeroFx?null:{x:s.player.x,y:s.player.y,r:10};shake=10;if(HeroFx){HeroFx.onEvent(e,s,visual);shake=Math.max(shake,HeroFx.shake());}} // 필살기 단계 연출이 충격파 고리를 대신한다(감싸는 원 금지)
       else if(HeroFx&&e==='bombPulse'){HeroFx.onEvent(e,s,visual);play('bossHit',s.player.x);shake=Math.max(shake,3);}
       else if(HeroFx&&e==='focusSkill'){HeroFx.onEvent(e,s,visual);play('seal',s.player.x);}
-      else if(HeroFx&&(e==='powerUp'||e==='powerDown'||e==='bombLevelUp'||e==='distort')){HeroFx.onEvent(e,s,visual);if(e!=='powerDown')play('seal');}
-      else if(e==='card'){play('charge',s.boss.x);castFx(s,true);showBanner(Arcade.SEGMENTS[s.seg].name,s.boss.name,true);if(s.entranceAll)bannerSub=phaseLabel(s,true);}
+      else if(HeroFx&&(e==='powerUp'||e==='powerDown'||e==='bombLevelUp'||e==='distort')){HeroFx.onEvent(e,s,visual);if(e==='distort')play('clockSlow');else if(e!=='powerDown')play('seal');}
+      else if(e==='card'){spellDim=1;inkBloom(s);play(/시간|시계|초침|째깍|톱니|태엽|모래|잠들/.test(Arcade.SEGMENTS[s.seg].name||'')?'clockTick':'charge',s.boss.x);castFx(s,true);showBanner(Arcade.SEGMENTS[s.seg].name,s.boss.name,true);if(s.entranceAll)bannerSub=phaseLabel(s,true);}
       else if(e==='plain'){var ppi=Arcade.phaseOf&&Arcade.phaseOf(s.seg);if(ppi&&ppi.count>1&&s.entranceAll)showBanner('PHASE '+ppi.no+' / '+ppi.count,phaseLabel(s,false),false);}
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,'제'+g.part+'부 · STAGE '+(s.stageIndex+1));play('seal');}}
       else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);showToast(r);rushStage=false;}
@@ -634,6 +634,8 @@
     if(!e||fxImages[e.file]||fxPending[e.file])return;fxPending[e.file]=1;
     var im=new Image();im.onload=function(){fxPending[e.file]=0;if(fxByBoss[state&&state.boss.actor]===e)fxImages[e.file]=im;};im.onerror=function(){fxPending[e.file]=0;};im.src=FX_DIR+e.file;
   }
+  // 초반 보스(1~6장)의 스펠 선언: 탄 난이도는 그대로 두고 눈에 닿지 않는 장식 입자만 나선으로 흩뿌려 화려하게 보인다(사용자 11-18 "초반보스도 화려하게, 난이도는 조절").
+  function inkBloom(s){var b=s.boss;if(!b.present||s.stageIndex>5)return;var c=themeColor(s),n=44,k;for(k=0;k<n;k++){var a=k*2.399963+.4,sp=1.2+(k%11)*.42;addParticle(b.x,b.y,Math.cos(a)*sp,Math.sin(a)*sp,26+(k%7)*4,k%3?c:'#ffffff',3+(k%4));}}
   function castFx(s,big){
     var b=s.boss,e=fxByBoss[b.actor],sig=Arcade.SIGNATURES&&Arcade.SIGNATURES[b.actor];if(!b.present)return;
     if(casts.length>=4)casts.shift();
@@ -1420,7 +1422,11 @@
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
     drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawShots(s);drawDrifts();drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink)){drawPlayer(s);drawHitbox(s);}if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
-    ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);drawHud(s);
+    ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);
+    // 스펠 선언 연출(사용자 11-18 "패턴·공격 미장센 강화"): 가장자리부터 먹이 번져 화면이 잠깐 조여졌다가 걷힌다. 보스에 시선이 모였다가 탄이 펼쳐진다(탄·영웅은 이 위에 그대로 읽힌다).
+    if(spellDim>0&&Ink&&s.boss&&s.boss.present){var sd=spellDim,sx0=finite(s.boss.x,W/2),sy0=finite(s.boss.y,H/3),sg=ctx.createRadialGradient(sx0,sy0,H*.22,sx0,sy0,H*.85);if(Ink.raw)Ink.raw(1);sg.addColorStop(0,'rgba(24,20,16,0)');sg.addColorStop(.55,'rgba(24,20,16,'+(sd*.16)+')');sg.addColorStop(1,'rgba(24,20,16,'+(sd*.5)+')');ctx.fillStyle=sg;ctx.fillRect(0,0,W,H);if(Ink.raw)Ink.raw(-1);spellDim=Math.max(0,spellDim-Math.min(.05,elapsed)/1.1);}
+    else if(spellDim>0)spellDim=0;
+    drawHud(s);
     if(flash>0){if(Ink&&Ink.raw)Ink.raw(1);if(Ink){var fb=s.boss&&s.boss.present,fx0=fb?finite(s.boss.x,W/2):W/2,fy0=fb?finite(s.boss.y,H/3):H/3,fg=ctx.createRadialGradient(fx0,fy0,20,fx0,fy0,H*.9);fg.addColorStop(0,'rgba(255,252,244,'+(flash*.75)+')');fg.addColorStop(1,'rgba(255,252,244,'+(flash*.2)+')');ctx.fillStyle=fg;}else ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);if(Ink&&Ink.raw)Ink.raw(-1);if(Ink){ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);drawPlayer(s);drawHitbox(s);ctx.restore();}flash-=.04;} // 수묵화에서도 섬광은 밝게: 먹색으로 뒤집히면 패턴 격파·보스 쓰러짐 때 화면이 잿빛으로 꺼졌다(보스 이펙트 전수조사 11-15). 보스에서 퍼지는 빛으로, 영웅·판정점은 섬광 위에 다시 그려 위치를 놓치지 않게(심사 1차 6.41)
     // 피격: 인주색 테두리 번쩍임 + 영웅 둘레에 금 간 붉은 고리(수묵화풍에서도 먹으로 바꾸지 않는다). 탄 지우기의 한지빛 섬광과 색·모양이 겹치지 않게.
     if(hurtFlash>0){if(Ink&&Ink.raw)Ink.raw(1);var hc='150,40,30',v=ctx.createRadialGradient(W/2,H/2,150,W/2,H/2,400);v.addColorStop(0,'rgba('+hc+',0)');v.addColorStop(.62,'rgba('+hc+',0)');v.addColorStop(1,'rgba('+hc+','+(hurtFlash*.8)+')'); /* 피격 테두리는 인주색 그대로(사용자 11-16 카드 선택 "인주색 그대로 두기") */ctx.fillStyle=v;ctx.fillRect(0,0,W,H);if(hurtRing){ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);ctx.strokeStyle=VERMILION;ctx.lineCap='round';for(var hk=0;hk<11;hk++){var ha=TAU*hk/11+.3,h0=hurtRing.r*(.35+.1*(hk%3)),h1=hurtRing.r*(.8+.35*((hk*5)%4)/3);ctx.globalAlpha=Math.min(1,hurtFlash*1.4)*(.55+.45*((hk*7)%5)/4);ctx.lineWidth=(2.5+3.5*((hk*3)%4)/3)*hurtFlash+.8;ctx.beginPath();ctx.moveTo(hurtRing.x+Math.cos(ha)*h0,hurtRing.y+Math.sin(ha)*h0);ctx.lineTo(hurtRing.x+Math.cos(ha)*h1,hurtRing.y+Math.sin(ha)*h1);ctx.stroke();}ctx.restore();ctx.globalAlpha=1;hurtRing.r+=5;if(hurtRing.r>90)hurtRing=null;}if(Ink&&Ink.raw)Ink.raw(-1);hurtFlash-=.035;}
