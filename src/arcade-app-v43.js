@@ -211,7 +211,7 @@
       g.moveTo(u,0);g.lineTo(0,-u*.8);g.lineTo(-u,0);g.lineTo(0,u*.8);g.closePath();
     }else if(kind==='star'){for(var i=0;i<10;i++){var a=-Math.PI/2+i*Math.PI/5,rr=i%2?u*.45:u;g[i?'lineTo':'moveTo'](Math.cos(a)*rr,Math.sin(a)*rr);}g.closePath();}
     else if(kind==='scale'){g.moveTo(u,0);g.quadraticCurveTo(0,-u*.85,-u*.8,-u*.35);g.lineTo(-u*.55,0);g.lineTo(-u*.8,u*.35);g.quadraticCurveTo(0,u*.85,u,0);g.closePath();} // 비늘(화살촉): +x가 진행 방향
-    else if(kind==='dagger'){g.moveTo(u*1.15,0);g.lineTo(-u*.2,-u*.32);g.lineTo(-u*.3,-u*.6);g.lineTo(-u*.45,-u*.6);g.lineTo(-u*.45,-u*.2);g.lineTo(-u*.95,-u*.16);g.lineTo(-u*.95,u*.16);g.lineTo(-u*.45,u*.2);g.lineTo(-u*.45,u*.6);g.lineTo(-u*.3,u*.6);g.lineTo(-u*.2,u*.32);g.closePath();}
+    else if(kind==='dagger'){g.moveTo(u*1.15,0);g.lineTo(u*.1,-u*.34);g.lineTo(-u*.5,-u*.2);g.lineTo(-u*.95,-u*.14);g.lineTo(-u*.95,u*.14);g.lineTo(-u*.5,u*.2);g.lineTo(u*.1,u*.34);g.closePath();} // 쿠나이꼴: 날개(가드)를 두지 않는다 — 가드가 있으면 아래로 향할 때 십자가로 읽힌다(적 십자가 금지, 11-18 심사)
     else{g.rect(-u*.95,-u*.55,u*1.9,u*1.1);} // 부적: 진행 방향으로 누운 종이
     g.fill();g.stroke();
     if(kind==='split'){
