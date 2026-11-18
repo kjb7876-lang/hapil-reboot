@@ -1264,7 +1264,7 @@
         if(f.sigil&&keep)safe={segs:segs,color:color,k:.22,cool:cool};
       }else if(phase==='warn'||charging){
         var t=charging?(phaseTick-cycle+Arcade.FIGURE_CHARGE_TICKS)/Arcade.FIGURE_CHARGE_TICKS:f.age/f.warn,blink=t;
-        ctx.setLineDash(f.sigil?[18,9]:[]);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=fa*(WARN_RED?.22+.26*t:.12+.18*t);ctx.strokeStyle=WARN_RED?'#c9406e':color;ctx.lineWidth=f.width*(f.sigil?.3+.45*t:.3+.7*t);ctx.stroke(); // 육망성 예고는 끊긴 가는 선: 켜진 먹 선(판정)과 달리 '예고'로 읽힌다(11-18 심사). 색은 인주색 예고 규칙(11-15) 유지
+        ctx.setLineDash(f.sigil?[18,9]:[]);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=fa*(WARN_RED?.22+.26*t:.12+.18*t);ctx.strokeStyle=WARN_RED?'#c9406e':color;ctx.lineWidth=f.sigil?Math.max(f.width*(.3+.45*t),3):f.width*(.3+.7*t);ctx.stroke(); // 육망성 예고는 끊긴 가는 선: 켜진 먹 선(판정)과 달리 '예고'로 읽힌다(11-18 심사). 색은 인주색 예고 규칙(11-15) 유지
         ctx.globalAlpha=fa*(.4+.5*blink);ctx.strokeStyle='#ffffff';ctx.lineWidth=1;ctx.setLineDash([6,6]);ctx.stroke();
       }else{
         var over=f.age-f.warn-f.active,k=over>0?Math.max(0,1-over/Arcade.BEAM_FADE):Math.min(1,(phaseTick+1)/4),pulse=1+Math.sin(visual*6+i)*.025;
