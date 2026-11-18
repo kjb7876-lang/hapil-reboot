@@ -45,7 +45,7 @@
     var time=Number(p.a.currentTime);if(isFinite(time)&&time>=0)positions[p.src]=time;
     // One physical player: cancel the old request before changing its source.
     pauseAll();p.src=src;p.a.src=src;p.lastTry=-Infinity;p.failed=!!failedSources[src];
-    p.seek=key==='boss'||key==='final'?0:positions[src]||0;seek();return true;
+    p.seek=/^(boss|final)/.test(key)?0:positions[src]||0;seek();return true;
   }
   function play(){
     var p=main;if(!p||!wanted()||p.failed||p.pending||!p.a.paused)return;
@@ -62,14 +62,21 @@
   // A gesture retries only the selected track. Muted pre-playing of other songs is never used.
   function unlock(){if(ready&&wanted())play();}
   try{if(global.addEventListener)['pointerdown','touchstart','touchend','click','keydown'].forEach(function(t){global.addEventListener(t,unlock,{capture:true,passive:true});});}catch(e){}
+  // 지역(부)마다 다른 곡: 도중 곡은 두 부씩 네 곡, 보스 곡은 부마다 셋을 돌린다. 목록에 없으면 첫 곡으로 돌아간다.
+  var FIELDS=['field','field2','field3','field4'],BOSSES=['boss','boss2','boss3'];
+  function variant(list,s){
+    var A=global.HapilArcade,st=A&&A.STAGES&&A.STAGES[s.stageIndex],part=st&&Number(st.part)>0?Number(st.part):1;
+    var key=list===FIELDS?list[Math.min(list.length-1,Math.floor((part-1)/2))]:list[(part-1)%list.length];
+    return tracks&&tracks[key]&&source(key)?key:list[0];
+  }
   function pick(mode,s){
     if(mode==='paused')return current;
     if(mode!=='playing')return 'title';
     if(!s)return 'field';
     if(s.stage==='won'||s.stage==='lost')return 'title';
     var A=global.HapilArcade,last=A?A.STAGES.length-1:-1,bossy=s.stage==='card'||s.stage==='intro'||s.stage==='bossClear'||(s.stage==='break'&&s.boss&&s.boss.present);
-    if(bossy)return s.stageIndex===last&&tracks&&tracks.final?'final':'boss';
-    return 'field';
+    if(bossy)return s.stageIndex===last&&tracks&&tracks.final?'final':variant(BOSSES,s);
+    return variant(FIELDS,s);
   }
   function update(mode,s,soundOn){
     lastMode=mode;lastState=s;hasUpdate=true;if(typeof soundOn==='boolean')enabled=soundOn;
