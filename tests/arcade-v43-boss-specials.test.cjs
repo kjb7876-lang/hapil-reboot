@@ -4,7 +4,7 @@ const test=require('node:test'),assert=require('node:assert/strict'),h=require('
 const a=h.need();
 function bossRun(difficulty,stage,seed){const g=a.STAGES[stage||9];let seg=g.first;while(a.SEGMENTS[seg].kind!=='card'||a.SEGMENTS[seg].mid)seg++;const s=a.createRun({difficulty,seed:seed||3,segment:seg,entranceAll:true});toCard(s);return s;}
 function kindRun(difficulty,kind){for(let st=0;st<a.STAGES.length;st++){const g=a.STAGES[st];let seg=g.first;while(a.SEGMENTS[seg]&&a.SEGMENTS[seg].kind!=='card'||(a.SEGMENTS[seg]&&a.SEGMENTS[seg].mid))seg++;if(!a.SEGMENTS[seg]||a.SEGMENTS[seg].stage!==st)continue;
- if(a.SP_KINDS[(st*3+seg)%4]===kind){const s=a.createRun({difficulty,seed:3,segment:seg,entranceAll:true});toCard(s);if(a.spStart(s)<0)continue;s.segTick=a.spStart(s)-a.SP_LEAD-5;return s;}}throw new Error(kind);}
+ if(a.SP_ORDER[(st*3+seg)%a.SP_ORDER.length]===kind){const s=a.createRun({difficulty,seed:3,segment:seg,entranceAll:true});toCard(s);if(a.spStart(s)<0)continue;s.segTick=a.spStart(s)-a.SP_LEAD-5;return s;}}throw new Error(kind);}
 function toCard(s){for(let i=0;i<3000&&s.stage!=='card';i++){s.player.invulnerableUntil=s.tick+999;a.step(s,{dx:0,dy:0});h.clear(s);}assert.equal(s.stage,'card');s.segTick=0;}
 function go(s,ticks,each,x){for(let i=0;i<ticks&&s.stage==='card';i++){s.player.invulnerableUntil=s.tick+999;s.boss.hp=s.boss.maxHp;if(x!==undefined)s.player.x=x;a.step(s,{dx:0,dy:0});if(each)each(s,i);h.clear(s);}return s;}
 const DIFFS=['gentle','normal','hell'];
@@ -33,8 +33,8 @@ test('rayback: the beat sounds first and the attack lands LAYBACK ticks behind i
 test('drawing phase: many ink drawings, capped per difficulty, entering from the per-difficulty sides',()=>{
  const most={},dirs={};
  for(const d of DIFFS){const s=kindRun(d,'drawing');dirs[d]=new Set();let m=0;
-  go(s,a.SP_LEAD+a.SP_LEN[d],t=>{const live=(t.risers||[]).filter(r=>!r.fade);m=Math.max(m,live.length);live.forEach(r=>dirs[d].add(r.dir));});most[d]=m;}
- assert(most.gentle>=2&&most.gentle<=3&&most.normal>=3&&most.normal<=5&&most.hell>=4&&most.hell<=7,JSON.stringify(most));
+  go(s,a.SP_LEAD+a.SP_LEN[d],t=>{const live=(t.risers||[]).filter(r=>!r.fade);m=Math.max(m,live.length);live.forEach(r=>{if(r.dir!=='spit')dirs[d].add(r.dir);});});most[d]=m;}
+ assert(most.gentle>=2&&most.gentle<=6&&most.normal>=3&&most.normal<=11&&most.hell>=4&&most.hell<=13&&most.hell>most.gentle,JSON.stringify(most));
  assert.deepEqual([...dirs.gentle],['down']);assert(dirs.hell.size>=3,[...dirs.hell].join());
 });
 test('tetris phase: relentless pieces, more at once on harder levels, and they can be shot apart',()=>{
@@ -52,7 +52,7 @@ test('stones phase: hills rise from the bottom (never to the top), stones come p
  for(const d of DIFFS){const s=kindRun(d,'stones');let hill=0,mountains=0;
   go(s,a.SP_LEAD+a.SP_LEN[d],t=>{hill=Math.max(hill,...t.floor.hill);mountains=Math.max(mountains,(t.risers||[]).filter(r=>r.kind==='mountain').length);});
   assert(hill>=40&&hill<=110,`${d} hill ${hill}`);assert(mountains>=1,`${d} stones`);
-  go(s,300);assert(Math.max(...s.floor.hill)<5,'sinks again');}
+  for(let i=0;i<300&&s.stage!=='won'&&s.stage!=='lost';i++){s.player.invulnerableUntil=s.tick+999;a.step(s,{});h.clear(s);}assert(Math.max(...s.floor.hill)<5,'sinks again');}
 });
 test('centre camping is punished on normal and hell (thick centre beam, then hanja rings, then the hexagram) but not on easy',()=>{
  for(const d of DIFFS)for(const step of [0,1,2]){const s=bossRun(d,0);s.sp.round=step;let guards=0,beams=0,runes=0,sigil=0;
@@ -68,4 +68,54 @@ test('centre camping is punished on normal and hell (thick centre beam, then han
 test('runs without the full boss flow (entranceAll off) are untouched',()=>{
  const g=a.STAGES[0];let seg=g.first;while(a.SEGMENTS[seg].kind!=='card')seg++;const s=a.createRun({difficulty:'hell',seed:3,segment:seg});toCard(s);let sp=0;
  go(s,a.spStart(s)+a.SP_LEAD+300,t=>{if(t.special)sp++;},180);assert.equal(sp,0);
+});
+
+test('the relentless laser phase comes three times in six, and every boss has its own signature spit',()=>{
+ assert.equal(a.SP_ORDER.filter(k=>k==='laser').length,3);assert.equal(a.SP_ORDER.length,6);
+ for(const k of a.SP_KINDS)assert(a.SP_ORDER.includes(k),k);
+ // 거미 둘은 거미줄을 3방향 부채로
+ for(const actor of ['mb_02','mb_24']){const s=bossRun('normal');s.boss.actor=actor;assert.equal(a.spitMotif(s),'web');}
+ assert.deepEqual(a.SPIT_FORM.web.slice(0,2),['fan',[3,3,3]]);
+ const motifs=new Set();for(const g of a.SEGMENTS){if(g.kind!=='card')continue;const s={boss:{actor:g.actor},stageIndex:g.stage};motifs.add(a.spitMotif(s));}
+ assert(motifs.size>=20,'many distinct signatures: '+motifs.size);assert(!motifs.has('glyph'));
+});
+test('drawing phase: the boss spits its own drawings on the strong beats, flying out from the boss',()=>{
+ for(const d of DIFFS){const s=kindRun(d,'drawing');s.boss.actor='mb_02';let fans=[];
+  go(s,a.SP_LEAD+a.SP_LEN[d],t=>{const born=(t.risers||[]).filter(r=>r.dir==='spit'&&r.age===1);if(born.length)fans.push(born);});
+  assert(fans.length>=2,`${d} spits ${fans.length}`);
+  for(const f of fans){assert.equal(f.length,3,'three web strands');assert(f.every(r=>r.kind==='web'));
+   const ang=f.map(r=>Math.atan2(r.vy,r.vx)).sort((x,y)=>x-y);assert(ang[2]-ang[0]>.9,'spread out');}
+ }
+ const s=kindRun('hell','drawing');go(s,a.SP_LEAD+a.SP_LEN.hell,t=>{for(const r of t.risers||[])if(r.dir==='spit'&&r.age>a.RISER_WARN+2)assert(Math.hypot(r.vx,r.vy)>1,'spits fly');});
+});
+test('laser phase uses golden-ratio combs, a Gaussian fan with open shoulders and a Vitruvian square-then-X',()=>{
+ const seen={comb:0,fan:0,square:0,x:0};
+ for(const d of ['normal','hell'])for(let r=0;r<3;r++){const s=kindRun(d,'laser');s.sp.cycle=r;
+  go(s,a.SP_LEAD+a.SP_LEN[d],t=>{const born=t.lasers.filter(l=>l.age===1);if(!born.length)return;
+   const cols=born.filter(l=>l.y===-12&&Math.abs(l.angle-Math.PI/2)<1e-9),rows=born.filter(l=>l.x===-12&&l.angle===0),diag=born.filter(l=>Math.abs(Math.abs(l.angle)-Math.PI/4)<1e-6);
+   if(cols.length>=3&&!rows.length)seen.comb++;if(rows.length===2&&cols.length===2)seen.square++;if(diag.length===2)seen.x++;
+   const fan=born.filter(l=>Math.abs(l.x-Math.max(40,Math.min(a.WIDTH-40,t.boss.x)))<1e-6&&l.y!==-12);if(fan.length>=4)seen.fan++;});}
+ assert(seen.comb>0&&seen.fan>0&&seen.square>0&&seen.x>0,JSON.stringify(seen));
+});
+test('stones phase interleaves stones and drawings from opposite sides (all four on normal/hell)',()=>{
+ for(const d of DIFFS){const s=kindRun(d,'stones');const dirs=new Set();let stones=0,draws=0;
+  go(s,a.SP_LEAD+a.SP_LEN[d],t=>{for(const r of t.risers||[])if(r.age===1&&r.dir!=='spit'){dirs.add(r.dir);if(r.kind==='mountain')stones++;else draws++;}});
+  assert(stones>=1&&draws>=1,`${d} stones ${stones} drawings ${draws}`);
+  if(d==='gentle')assert([...dirs].every(x=>x==='up'||x==='down'),[...dirs].join());else assert(dirs.size>=3,`${d} dirs ${[...dirs]}`);}
+});
+test('during the hexagram and the hanja rings the boss comes down a little below the centre, then goes back',()=>{
+ const s=bossRun('hell',0);go(s,60);
+ const sig={glyph:'hexagram'};s.figures.push({kind:'runes',age:0,warn:60,active:150,rings:[],cx:180,cy:200,turn:0,spin:0,width:10,r:0,follow:true});
+ let low=0;go(s,200,t=>{t.figures.forEach(f=>{if(f.kind==='runes')f.age=Math.min(f.age,100);});low=Math.max(low,t.boss.y);},180);
+ assert(low>a.HEIGHT/2,'boss y '+low);assert(low<=a.BOSS_DESCEND+1);
+ s.figures.length=0;let back=1e9;go(s,300,t=>{back=Math.min(back,t.boss.y);},180);assert(back<250,'returns '+back);
+});
+test('bullets and mobs cleared at a mob → mid-boss → boss change leave ink dissolves instead of vanishing',()=>{
+ const g=a.STAGES[1];let seg=g.first;while(a.SEGMENTS[seg].kind!=='card')seg++;
+ const s=a.createRun({difficulty:'normal',seed:3,segment:seg,entranceAll:true});
+ for(let i=0;i<30;i++)h.put(s,20+i*10,200);s.mobs.push({x:100,y:120,hp:3});
+ s.stage='intro';s.boss.present=false;s.bossEntrance=null;
+ assert.equal(a.prepareBossEntrance(s),true);assert.equal(s.n,0);
+ assert(s.inked&&s.inked.length>=31*4,'ink marks '+(s.inked&&s.inked.length));assert.equal(s.inked[s.inked.length-1],3,'the mob leaves a bigger blot');
+ const app=h.read('src/arcade-app-v43.js');assert.match(app,/function drawInks\(\)/);assert.match(app,/drawDrifts\(\);drawInks\(\);/);
 });
