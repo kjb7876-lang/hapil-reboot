@@ -21,12 +21,12 @@ test('all seven sins and their continued forms have an actor-specific entrance',
 test('adapted dialogue is explicitly marked and grounded in verbatim section evidence',()=>{
  assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),intro.SOURCE.sha256);
  for(const entry of intro.BOSS_ENTRANCES){
-  assert.equal(entry.kind,'dialogue-adaptation');assert.equal(entry.sourceFile,intro.SOURCE.file);
+  assert.equal(entry.kind,'canon-monologue');assert.equal(entry.sourceFile,intro.SOURCE.file);
   assert.equal(entry.sourceSection,arcade.STAGES[entry.stage].name);assert(sections[entry.sourceSection]);
   assert(entry.sourceExcerpts.length>=2);
   for(const excerpt of entry.sourceExcerpts)assert(normalize(sections[entry.sourceSection]).includes(normalize(excerpt)),entry.actor+': '+excerpt);
   assert.equal(entry.lines.length,2);
-  for(const line of entry.lines){assert.equal(line.speaker,entry.bossName);assert(line.text.length>0&&line.text.length<=60);assert(Object.isFrozen(line));}
+  for(const line of entry.lines){assert(normalize(sections[entry.sourceSection]).includes(normalize(line.text)),"monologue must be verbatim: "+line.text);assert.equal(line.speaker,"EGO의 기억");assert(line.text.length>0&&line.text.length<=60);assert(Object.isFrozen(line));}
   assert(Object.isFrozen(entry)&&Object.isFrozen(entry.lines)&&Object.isFrozen(entry.sourceExcerpts));
  }
 });
@@ -40,8 +40,24 @@ test('one stage can present the chairman and core with separate dialogue',()=>{
 
 test('browser integration exposes the same API without changing the canonical story module',()=>{
  const context={};vm.runInNewContext(fs.readFileSync(path.join(root,'src/arcade-boss-intros-v43.js'),'utf8'),context);
- assert.equal(context.HapilArcadeBossIntros.getBoss('pride',20).kind,'dialogue-adaptation');
+ assert.equal(context.HapilArcadeBossIntros.getBoss('pride',20).kind,'canon-monologue');
  assert.equal(context.HapilArcadeBossIntros.BOSS_ENTRANCES.length,10);
  assert.equal(context.HapilArcadeStory,undefined);
 });
 
+
+test('non-sin boss entrance monologues are verbatim canonical sentences from the stage section',()=>{
+ const lines=require('../src/arcade-boss-lines-v43.js'),story=require('../src/arcade-story-v43.js');let n=0;
+ for(let i=0;i<56;i++){
+  const entry=intro.BOSS_ENTRANCES.find(e=>e.stage===i);
+  for(const g of arcade.SEGMENTS.filter(s=>s.kind==='card'&&s.stage===i&&!s.mid)){
+   const line=lines.getLine(g.actor,i);if(!line)continue;n++;
+   const sec=story.getStage(i).sourceSection;
+   assert(normalize(sections[sec]).includes(normalize(line.text)),i+': '+line.text);
+   assert(line.text.length<=80);assert.equal(line.speaker,'EGO의 기억');
+   assert(!story.getStage(i).lines.some(l=>l.text===line.text),'duplicates the pre-battle memory line');
+   assert(!entry,'sin stage must not also carry a generic line');
+  }
+ }
+ assert(n>=40,'expected most main bosses to carry a monologue, got '+n);
+});
