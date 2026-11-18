@@ -33,6 +33,7 @@ function harness(saved){
     addEventListener:(k,f)=>{(globals[k]||(globals[k]=[])).push(f);},requestAnimationFrame(){},setTimeout(){},Image:class{},};w.window=w;
   const sandbox=vm.createContext(w);vm.runInContext(read('src/arcade-i18n-v43.js'),sandbox);vm.runInContext(read('src/arcade-story-v43.js'),sandbox);
   vm.runInContext(read('src/arcade-heroes-v43.js'),sandbox);vm.runInContext(read('src/arcade-mobile-v43.js'),sandbox);
+  vm.runInContext(read('src/arcade-skins-v43.js'),sandbox);
   vm.runInContext(read('src/arcade-hero-visibility-v43.js'),sandbox);
   vm.runInContext(read('src/arcade-boss-intros-v43.js'),sandbox);
   vm.runInContext(read('src/arcade-boss-lines-v43.js'),sandbox);
@@ -46,6 +47,18 @@ function harness(saved){
   h.prepare(s,audio);h.bind();
   return {w,h,s,doc,nodes,storage,storageWrites,calls,globals,audio,strokes,imageDraws};
 }
+test('stage asset lists prefer front-facing mobs and use scene art when it is missing',()=>{
+  const {w}=harness();
+  const registry=w.ArcadeSkins,stageKeys=w.HapilArcadeApp.debugState().stageKeys;
+  for(const stage of A.STAGES){
+    const front=registry.front[stage.scene]||[],regional=registry.scenes[stage.scene]||[];
+    const expected=front.length?front:regional.length?regional:stage.cast;
+    const possible=new Set([...stage.cast,...regional,...front]);
+    const actors=new Set(A.SEGMENTS.filter(g=>g.stage===stage.index&&g.kind==='card').map(g=>g.actor));
+    const actual=Array.from(stageKeys(stage.index)).filter(key=>possible.has(key)&&!actors.has(key));
+    assert.deepEqual(new Set(actual),new Set(Array.from(expected).filter(key=>!actors.has(key))),stage.scene);
+  }
+});
 function pickerFor(h){
   const picker={visible:false,shown:0,selected:null,confirmCallback:null,cancelCallback:null,
     show(id,confirm,cancel){this.visible=true;this.shown++;this.selected=id;this.confirmCallback=confirm;this.cancelCallback=cancel;},

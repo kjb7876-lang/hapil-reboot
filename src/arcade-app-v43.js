@@ -107,9 +107,13 @@
   }
   /* 스테이지에 필요한 그림: 배경 · 그 스테이지 SEGMENTS의 인물 · cast의 몹 · 기념물. 기물은 처음 화면에 나올 때 받는다. */
   /* 장면마다 m0 지역표의 몹 그림을 입힌다(src/arcade-skins-v43.js). 시뮬의 몹 종류는 그대로고 그림만 바뀐다. */
-  var SKINS=(typeof ArcadeSkins==='object'&&ArcadeSkins&&ArcadeSkins.scenes)||{};
-  var skins=(typeof ArcadeSkins==='object'&&ArcadeSkins)||{},FRONT=skins.front||{}; // 아래로 걷는 정면 그림만 모은 목록이 있으면 그것을 쓴다(옆모습 몹이 아래로 미끄러지지 않게)
-  function skinsOf(index){var g=Arcade.STAGES[index],list=g&&(FRONT[g.scene]&&FRONT[g.scene].length?FRONT[g.scene]:SKINS[g.scene]);return list&&list.length?list:null;}
+  var skins=global.ArcadeSkins||{},sceneMobSkins=skins.scenes||{},frontMobSkins=skins.front||{};
+  function skinsOf(index){
+    var stage=Arcade.STAGES[index];
+    if(!stage)return null;
+    var front=frontMobSkins[stage.scene],list=front&&front.length?front:sceneMobSkins[stage.scene];
+    return list&&list.length?list:null;
+  }
   function skinOf(index,kind){
     var list=skinsOf(index);if(!list)return kind;
     var g=Arcade.STAGES[index],at=(g.cast||[]).indexOf(kind);if(at<0){at=0;for(var i=0;i<kind.length;i++)at+=kind.charCodeAt(i);}
@@ -186,8 +190,8 @@
   /* 두 색을 섞는다(#rrggbb). */
   function mix(a,b,t){var pa=parseInt(a.slice(1,7),16),pb=parseInt(b.slice(1,7),16),out='#';for(var k=16;k>=0;k-=8){var x=Math.round(((pa>>k)&255)*(1-t)+((pb>>k)&255)*t);out+=('0'+x.toString(16)).slice(-2);}return out;}
   /* 스테이지마다 중간 구슬탄(크기 1)에 입히는 겉모양. 판정 원은 그대로이고 그림만 바뀐다. 동방식 탄막처럼 종류마다 실루엣이 달라 패턴이 서로 다르게 읽힌다. */
-  var SKINS=['','star','scale','dagger','talisman'],skinSprites={};
-  function skinVariant(s){var i=s.stageIndex|0;return SKINS[(i+Math.floor(i/5))%SKINS.length];} // 이웃 스테이지끼리 겹치지 않게 돌린다
+  var STAGE_BULLET_SKINS=['','star','scale','dagger','talisman'],skinSprites={};
+  function skinVariant(s){var i=s.stageIndex|0;return STAGE_BULLET_SKINS[(i+Math.floor(i/5))%STAGE_BULLET_SKINS.length];} // 이웃 스테이지끼리 겹치지 않게 돌린다
   function buildSkin(kind,radius,color,tint){
     var compactShape=kind==='nib'||kind==='hook'||kind==='split'||kind==='facet';
     var u=radius*(compactShape?1.35:1.9),reach=u*1.5,c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale;
