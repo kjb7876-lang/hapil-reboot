@@ -1,13 +1,53 @@
 {
  "actors": {
   "p7_car": {
-   "src": "media/story-v19/executor-prism.webp"
+   "src": "media/boss-art-v43/p7_car-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 184,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p7_car-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "p7_shadow": {
-   "src": "media/actors-v7/denial-idle.png"
+   "src": "media/actors-v7/denial-idle.png",
+   "frames": [
+    {
+     "src": "media/actors-v7/denial-idle.png"
+    },
+    {
+     "src": "media/actors-v7/denial-walk.png"
+    }
+   ],
+   "fps": 6,
+   "size": 184,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p7_shadow-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "p7_alarm": {
-   "src": "media/chapter3-v18/memory-gate.png"
+   "src": "media/boss-art-v43/p7_alarm-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 184,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p7_alarm-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   }
  },
  "mobs": {

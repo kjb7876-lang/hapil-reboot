@@ -1,51 +1,123 @@
 {
  "actors": {
   "p5_cult": {
-   "src": "media/chapter3-v18/u202-atlas.png",
-   "cell": [
-    0,
-    0,
-    2,
-    2
-   ]
+   "src": "media/boss-art-v43/p5_cult-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 184,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p5_cult-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "p5_archon": {
    "src": "media/drive-v43/b41-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p5_archon-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "p5_common": {
    "src": "media/drive-v43/b38-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p5_common-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "p5_upper": {
    "src": "media/drive-v43/b40-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p5_upper-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "p5_grand": {
    "src": "media/drive-v43/b39-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p5_grand-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "p5_furnace": {
-   "src": "media/story-v19/chrono-engine.webp"
+   "src": "media/boss-art-v43/p5_furnace-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 184,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p5_furnace-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "p5_neuron": {
    "src": "media/drive-v43/b42-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p5_neuron-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "p5_keeper": {
    "src": "media/drive-v43/b43-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p5_keeper-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "p5_rings": {
    "src": "media/drive-v43/b44-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p5_rings-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   }
  },
  "mobs": {

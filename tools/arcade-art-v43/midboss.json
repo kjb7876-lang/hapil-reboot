@@ -4,28 +4,69 @@
    "src": "media/m0-v43/dist00_r383-root_0_5-move.webp",
    "strip": 4,
    "fps": 7,
-   "facing": "right"
+   "facing": "right",
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_01-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184,
+     "facing": "right"
+    }
+   }
   },
   "mb_02": {
    "src": "media/drive-v43/m043-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_02-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_03": {
    "src": "media/drive-v43/m025-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_03-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_04": {
    "src": "media/drive-v43/m034-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_04-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_05": {
    "src": "media/m0-v43/dist04-g1-move.webp",
    "strip": 4,
    "fps": 7,
-   "facing": "right"
+   "facing": "right",
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_05-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_06": {
    "src": "media/drive-v43/b06-down.webp",
@@ -44,22 +85,55 @@
    "src": "media/m0-v43/dist06-m1-move.webp",
    "strip": 4,
    "fps": 7,
-   "facing": "right"
+   "facing": "right",
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_07-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_08": {
    "src": "media/drive-v43/m038-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_08-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_09_1": {
    "src": "media/drive-v43/m041-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_09_1-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_09_2": {
    "src": "media/drive-v43/v3-036-purpleangel-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/dist03-c1-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "facing": "right",
+     "size": 184
+    }
+   }
   },
   "mb_10": {
    "src": "media/drive-v43/v3-041-blackmarket-suspect-down.webp",
@@ -78,7 +152,15 @@
   "mb_13": {
    "src": "media/drive-v43/m048-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_13-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_14": {
    "src": "media/drive-v43/b14-down.webp",
@@ -231,7 +313,15 @@
   "mb_28": {
    "src": "media/drive-v43/b30-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_28-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_31": {
    "src": "media/m0-v43/l305-e2-move.webp",
@@ -282,57 +372,145 @@
    "src": "media/m0-v43/l302-e1-move.webp",
    "strip": 4,
    "fps": 7,
-   "facing": "right"
+   "facing": "right",
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_34-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_35": {
    "src": "media/drive-v43/b35-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_35-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_37": {
    "src": "media/drive-v43/m054-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_37-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_38": {
    "src": "media/m0-v43/down/guardian-49.webp",
    "strip": 8,
-   "fps": 8
+   "fps": 8,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_38-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_39": {
    "src": "media/m0-v43/down/guardian-51.webp",
    "strip": 8,
-   "fps": 8
+   "fps": 8,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_39-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_41": {
    "src": "media/m0-v43/down/guardian-53.webp",
    "strip": 8,
-   "fps": 8
+   "fps": 8,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_41-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_42": {
    "src": "media/drive-v43/m022-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_42-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_43": {
    "src": "media/m0-v43/down/guardian-56.webp",
    "strip": 8,
-   "fps": 8
+   "fps": 8,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_43-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_44": {
    "src": "media/m0-v43/down/guardian-42.webp",
    "strip": 8,
-   "fps": 8
+   "fps": 8,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_44-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_45": {
    "src": "media/m0-v43/down/guardian-57.webp",
    "strip": 8,
-   "fps": 8
+   "fps": 8,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_45-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_46": {
    "src": "media/m0-v43/down/guardian-54.webp",
    "strip": 8,
-   "fps": 8
+   "fps": 8,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_46-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_49": {
    "src": "media/drive-v43/b49-down.webp",
@@ -390,13 +568,30 @@
    "src": "media/m0-v43/c104-e1-move.webp",
    "strip": 4,
    "fps": 7,
-   "facing": "right"
+   "facing": "right",
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_56-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "mb_57": {
    "src": "media/m0-v43/c101-e2-move.webp",
    "strip": 4,
    "fps": 7,
-   "facing": "right"
+   "facing": "right",
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_57-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184,
+     "facing": "right"
+    }
+   }
   },
   "mb_58": {
    "src": "media/drive-v43/v3-004-crimson-caster-down.webp",
@@ -430,7 +625,15 @@
   "mb_61": {
    "src": "media/drive-v43/v3-003-cult-ego-binder-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/mb_61-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   }
  }
 }

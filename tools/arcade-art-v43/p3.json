@@ -1,45 +1,184 @@
 {
  "actors": {
   "p3_legion": {
-   "src": "media/chapter3-v18/u201-atlas.png",
-   "cell": [
-    0,
-    0,
-    2,
-    2
-   ]
+   "src": "media/boss-art-v43/p3_legion-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 184,
+   "motions": {
+    "attack": {
+     "src": "media/chapter3-v18/u201-atlas.png",
+     "frames": [
+      {
+       "src": "media/chapter3-v18/u201-atlas.png",
+       "cell": [
+        0,
+        0,
+        2,
+        2
+       ]
+      },
+      {
+       "src": "media/chapter3-v18/u201-atlas.png",
+       "cell": [
+        1,
+        0,
+        2,
+        2
+       ]
+      },
+      {
+       "src": "media/chapter3-v18/u201-atlas.png",
+       "cell": [
+        0,
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "src": "media/chapter3-v18/u201-atlas.png",
+       "cell": [
+        1,
+        1,
+        2,
+        2
+       ]
+      }
+     ],
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "p3_rampart": {
-   "src": "media/chapter3-v18/u202-atlas.png",
-   "cell": [
-    0,
-    0,
-    2,
-    2
-   ]
+   "src": "media/boss-art-v43/p3_rampart-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 184,
+   "motions": {
+    "attack": {
+     "src": "media/chapter3-v18/u202-atlas.png",
+     "frames": [
+      {
+       "src": "media/chapter3-v18/u202-atlas.png",
+       "cell": [
+        0,
+        0,
+        2,
+        2
+       ]
+      },
+      {
+       "src": "media/chapter3-v18/u202-atlas.png",
+       "cell": [
+        1,
+        0,
+        2,
+        2
+       ]
+      },
+      {
+       "src": "media/chapter3-v18/u202-atlas.png",
+       "cell": [
+        0,
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "src": "media/chapter3-v18/u202-atlas.png",
+       "cell": [
+        1,
+        1,
+        2,
+        2
+       ]
+      }
+     ],
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "p3_defense": {
-   "src": "media/chapter3-v18/u204-atlas.png",
-   "cell": [
-    0,
-    0,
-    2,
-    2
-   ]
+   "src": "media/boss-art-v43/p3_defense-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 184,
+   "motions": {
+    "attack": {
+     "src": "media/chapter3-v18/u204-atlas.png",
+     "frames": [
+      {
+       "src": "media/chapter3-v18/u204-atlas.png",
+       "cell": [
+        0,
+        0,
+        2,
+        2
+       ]
+      },
+      {
+       "src": "media/chapter3-v18/u204-atlas.png",
+       "cell": [
+        1,
+        0,
+        2,
+        2
+       ]
+      },
+      {
+       "src": "media/chapter3-v18/u204-atlas.png",
+       "cell": [
+        0,
+        1,
+        2,
+        2
+       ]
+      },
+      {
+       "src": "media/chapter3-v18/u204-atlas.png",
+       "cell": [
+        1,
+        1,
+        2,
+        2
+       ]
+      }
+     ],
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "p3_body": {
-   "src": "media/chapter3-v18/migration-core.png",
-   "cell": [
-    1,
-    0,
-    3,
-    1
-   ]
+   "src": "media/boss-art-v43/p3_body-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 184,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p3_body-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "p3_gate": {
    "src": "media/drive-v43/b31-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p3_gate-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   }
  },
  "mobs": {

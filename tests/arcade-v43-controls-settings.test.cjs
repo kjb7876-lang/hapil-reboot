@@ -9,6 +9,7 @@ function harness(saved){
   const ctx=new Proxy({globalAlpha:1,lineWidth:1,
     beginPath(){pen=[];},moveTo(...v){pen.push(['moveTo',...v]);},lineTo(...v){pen.push(['lineTo',...v]);},arc(...v){pen.push(['arc',...v]);},setLineDash(v){dash=v;},
     stroke(){strokes.push({alpha:this.globalAlpha,width:this.lineWidth,points:pen.map(p=>p.slice()),dash:dash.slice()});},
+    fillText(text){calls.push(['fillText',text]);},
     drawImage(img){imageDraws.push({source:img&&img.src,alpha:this.globalAlpha});},
     save(){stack.push({globalAlpha:this.globalAlpha,lineWidth:this.lineWidth});},restore(){Object.assign(this,stack.pop()||{});},createLinearGradient:()=>({addColorStop(){}}),createRadialGradient:()=>({addColorStop(){}}),getImageData:()=>({data:new Uint8ClampedArray(64)}),measureText:()=>({width:5})},{get:(o,k)=>k in o?o[k]:()=>{}});
   function element(id,tag='DIV'){
@@ -34,10 +35,11 @@ function harness(saved){
   vm.runInContext(read('src/arcade-heroes-v43.js'),sandbox);vm.runInContext(read('src/arcade-mobile-v43.js'),sandbox);
   vm.runInContext(read('src/arcade-hero-visibility-v43.js'),sandbox);
   vm.runInContext(read('src/arcade-boss-intros-v43.js'),sandbox);
+  vm.runInContext(read('src/arcade-boss-lines-v43.js'),sandbox);
   // Skip only browser boot. Expose the closed-over real handlers to install them on the DOM double.
   const script=read('src/arcade-app-v43.js').replace(/  boot\(\);\s*\}\)\(window\);\s*$/,`  global.controlsTest={bind:bind,input:inputForStep,load:loadSettings,apply:applySettings,mode:setMode,
     prepare:function(s,a){state=s;fx=a;mode='playing';},loadProgress:loadProgress,picker:function(p){heroPicker=p;},manifest:function(m){manifest=m;},settings:function(){return settings;},finger:function(){return finger;},quality:function(){return lite;},drawFigures:drawFigures,drawRunes:drawRunes,frame:frame,consume:consume,beginStory:beginStory,nextStory:nextStory,
-    seedVisuals:function(){particles.push({});drifts.push({});flashes.push({});casts.push({});emblems.push({});bombQueued=true;},visualCounts:function(){return [particles.length,drifts.length,flashes.length,casts.length,emblems.length];},defeatVisual:function(){return {actor:fall&&fall.actor,flash:flash};},storyEntry:function(){return story&&story.entry;},heroImages:function(){['memory','seoha','seoha-b'].forEach(function(id){var p=Heroes.get(id);images[id==='memory'?'gunner':'hero-'+id]={src:p.sprite,width:256,height:512};});}};
+    drawBossIntro:drawBossIntro,seedVisuals:function(){particles.push({});drifts.push({});flashes.push({});casts.push({});emblems.push({});bombQueued=true;},visualCounts:function(){return [particles.length,drifts.length,flashes.length,casts.length,emblems.length];},defeatVisual:function(){return {actor:fall&&fall.actor,flash:flash};},storyEntry:function(){return story&&story.entry;},heroImages:function(){['memory','seoha','seoha-b'].forEach(function(id){var p=Heroes.get(id);images[id==='memory'?'gunner':'hero-'+id]={src:p.sprite,width:256,height:512};});}};
 })(window);`);
   assert(script.includes('global.controlsTest='));vm.runInContext(script,sandbox);
   const h=w.controlsTest,s=A.createRun({difficulty:'hell',seed:77});s.stage='break';s.stageTick=-100000;
@@ -365,4 +367,43 @@ test('memory pause, rules, resume and skip preserve narrative position and do no
  doc.emit('keydown',{key:'x'});assert.equal(h.input().bomb,false);doc.emit('keydown',{key:'Enter',repeat:true});assert.equal(w.HapilArcadeApp.getState().story.line,0);
  doc.emit('keydown',{key:'Enter'});assert.equal(w.HapilArcadeApp.getState().story.line,1);nodes.get('story-skip').click();assert.equal(w.HapilArcadeApp.getState().mode,'playing');
  assert.equal(JSON.parse(storage['hapil-arcade-boss-seen-v3'])['0:p1_tree'],true);assert(calls.some(c=>c[0]==='musicUpdate'&&c[1]==='playing'));
+});
+
+
+test('normal canvas entrances use the stage-specific speaker and dialogue across the complete journey',()=>{
+  const {h,w,audio,calls}=harness(),intros=w.HapilArcadeBossIntros,book=w.HapilArcadeBossLines;
+  const sections=new Set(),newLines=new Set();
+  for(const stage of A.STAGES){
+    for(const mid of [true,false]){
+      const segment=A.SEGMENTS.findIndex(g=>g.kind==='card'&&g.stage===stage.index&&!!g.mid===mid);
+      const g=A.SEGMENTS[segment],name=A.ACTORS[g.actor].name;
+      const state=A.createRun({segment,entranceAll:true});
+      h.prepare(state,audio);
+      A.step(state,{});
+      assert.equal(A.entrancePhase(state).phase,'cutin');
+      A.skipEntrance(state);
+      A.step(state,{});
+      const authored=intros.getBoss(g.actor,g.stage);
+      const line=book.getLine(g.actor,g.stage);
+      if(mid&&!authored)assert.equal(line,null,name);
+      if(!mid){
+        sections.add(g.stage);
+        assert(authored||line,name);
+        if(!authored)newLines.add(line.text);
+      }
+      const lines=authored?authored.lines:line?[line]:intros.fallbackLines(g.actor,mid,name);
+      for(const [i,expected] of lines.entries()){
+        const at=state.bossEntrance.enteredTick+Math.ceil((i+.8)*A.BOSS_ENTRANCE_SPEECH/lines.length);
+        while(state.tick<at)A.step(state,{});
+        assert.equal(A.entrancePhase(state).phase,'speech');
+        calls.length=0;
+        h.drawBossIntro(state);
+        const painted=calls.filter(c=>c[0]==='fillText').map(c=>c[1]);
+        assert(painted.includes(expected.speaker),name);
+        assert(painted.includes(expected.text),name);
+      }
+    }
+  }
+  assert.equal(sections.size,56);
+  assert.equal(newLines.size,47);
 });

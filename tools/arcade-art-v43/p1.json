@@ -61,7 +61,15 @@
   "p1_gate": {
    "src": "media/drive-v43/m042-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p1_gate-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "p1_staff": {
    "src": "media/drive-v43/b09-down.webp",
@@ -77,7 +85,17 @@
    }
   },
   "p1_seraph": {
-   "src": "media/actors-v7/lucifer-attack.png",
+   "src": "media/actors-v7/lucifer-idle.png",
+   "frames": [
+    {
+     "src": "media/actors-v7/lucifer-idle.png"
+    },
+    {
+     "src": "media/actors-v7/lucifer-walk.png"
+    }
+   ],
+   "fps": 6,
+   "size": 184,
    "motions": {
     "attack": {
      "src": "media/m0-v43/boss/a11-boss-attack.webp",

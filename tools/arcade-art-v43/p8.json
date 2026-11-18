@@ -3,18 +3,63 @@
   "p8_chip": {
    "src": "media/drive-v43/b56-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p8_chip-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "p8_collective": {
    "src": "media/drive-v43/b58-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p8_collective-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "p8_lauren": {
-   "src": "media/actors-v7/guard-idle.png"
+   "src": "media/actors-v7/guard-idle.png",
+   "frames": [
+    {
+     "src": "media/actors-v7/guard-idle.png"
+    },
+    {
+     "src": "media/actors-v7/guard-walk.png"
+    }
+   ],
+   "fps": 6,
+   "size": 184,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p8_lauren-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   },
   "p8_ion": {
-   "src": "media/story-v19/ion-idle.webp"
+   "src": "media/boss-art-v43/p8_ion-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 184,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p8_ion-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 184
+    }
+   }
   }
  },
  "mobs": {
