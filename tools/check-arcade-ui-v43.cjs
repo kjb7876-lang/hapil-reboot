@@ -335,7 +335,7 @@ async function sevenSinsClear(page){
   async function dialogue(actor){
     await page.waitForFunction(actor=>{const s=HapilArcadeApp.getState();return s.mode==='story'&&s.story.actor===actor;},actor);
     const entry=await page.evaluate(actor=>HapilArcadeBossIntros.getBoss(actor,21),actor);
-    assert.equal(entry.kind,'dialogue-adaptation');assert.equal(entry.lines.length,2);
+    assert.equal(entry.kind,'canon-monologue');assert.equal(entry.lines.length,2);
     assert.equal(await page.locator('#arcade-story').getAttribute('data-actor'),actor);
     assert.equal(await page.locator('#story-boss-name').innerText(),await page.evaluate(actor=>HapilArcade.ACTORS[actor].name,actor));
     assert.equal(await page.evaluate(()=>HapilArcadeApp.debugState().state.boss.present),false,'cut-in precedes the incoming actor');

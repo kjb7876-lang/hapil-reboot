@@ -267,7 +267,7 @@ test('all ten seven-sin forms display their own two adapted lines while other ma
  for(const entry of entries){
   const index=A.SEGMENTS.findIndex(g=>g.stage===entry.stage&&g.actor===entry.actor&&g.kind==='card');assert(index>=0);
   const s=A.createRun({difficulty:'normal',seed:11,segment:index,pacing:true});h.prepare(s,audio);
-  assert.equal(h.beginStory(),true,entry.actor);assert.equal(h.storyEntry().kind,'dialogue-adaptation');assert.equal(h.storyEntry().actor,entry.actor);
+  assert.equal(h.beginStory(),true,entry.actor);assert.equal(h.storyEntry().kind,'canon-monologue');assert.equal(h.storyEntry().actor,entry.actor);
   assert.equal(w.HapilArcadeApp.getState().story.actor,entry.actor);assert.equal(s.tick,0);assert.equal(s.boss.present,false);assert.equal(nodes.get('story-portrait').attrs['aria-label'],A.ACTORS[entry.actor].name);
   h.nextStory();assert.equal(nodes.get('story-speaker').textContent,entry.lines[0].speaker);assert.equal(nodes.get('story-text').textContent,entry.lines[0].text);
   h.nextStory();assert.equal(nodes.get('story-speaker').textContent,entry.lines[1].speaker);assert.equal(nodes.get('story-text').textContent,entry.lines[1].text);

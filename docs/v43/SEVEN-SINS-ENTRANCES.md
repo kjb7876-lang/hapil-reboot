@@ -29,7 +29,7 @@ stageIndex는 0부터, 원전 장면 번호는 게임 SCENES의 번호입니다.
 - `isSinBoss(actor)`: 후속 형태를 포함한 명시적 10개 actor 허용 목록.
 - `BOSS_ENTRANCES`: 검토 가능한 10개 동결 항목.
 - 항목: `actor,stage,sin,sinName,bossName,title,kind,durationMs,lines,sourceSection,sourceFile,sourceExcerpts,entrance,isSevenSin`.
-- `kind`는 항상 `dialogue-adaptation`. `lines`는 `{speaker,text}` 두 개이며 각 줄은 60자 이내입니다.
+- `kind`는 항상 `canon-monologue`. `lines`는 `{speaker:"EGO의 기억",text}` 두 개이며 각 줄은 정본 같은 구역의 문장을 그대로 옮긴 것이고 60자 이내입니다. 새로 쓴 대사는 없습니다.
 
 다른 보스의 기존 정본 회상은 `Story.getStage(stageIndex)`로 계속 조회할 수 있습니다. UI에서 새 모듈의 대사를 사용할 때는 “등장 대사 · 정본 바탕 각색”처럼 원문 회상과 구별할 수 있습니다. stage21에는 회장과 연산핵이 함께 있으므로 컷신 시청 키는 stage만이 아니라 `stage:actor`로 구분해야 합니다. 이 데이터 모듈은 전투 시뮬레이션·탄막·레이저·입장 시 적탄 정리를 직접 변경하지 않습니다.
 
