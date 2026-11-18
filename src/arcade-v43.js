@@ -95,10 +95,12 @@
     hell:{density:2.6,speed:.9,hp:2,mapHeal:0,partHeal:1,bombs:1,radius:2.4,hitScale:.5,warn:1,beam:1,label:'지옥'}
   };
   /* 여유 모드만 첫 스테이지 탄 수 70%에서 마지막 110%까지 오른다. 노멀·헬은 같은 공격을 유지한다. */
+  var SOFT={gentle:{speed:.87,density:.8},normal:{speed:.88,density:.8}},SCATTER_ANGLE=.16,SCATTER_SPEED=.22,SCATTER_POS=7;
   var CURVE_START=.7,CURVE_END=1.1,PACE_START=1,PACE_END=1; // 속도는 그대로(탄이 화면 아래까지 닿는 시간을 지킨다), 탄 수만 곡선
   function applyCurve(s){var base=DIFFICULTY[s.difficulty],u=STAGES.length>1?Math.max(0,Math.min(1,s.stageIndex/(STAGES.length-1))):0,gentle=s.difficulty==='gentle';
     var d=gentle?CURVE_START+(CURVE_END-CURVE_START)*u:1,v=gentle?PACE_START+(PACE_END-PACE_START)*u:1;
-    s.rules.speed=base.speed*v;s.density=base.density*d*(s.compact?COMPACT_DENSITY:1);}
+    var soft=s.entranceAll&&s.difficulty!=='hell'?SOFT[s.difficulty]:null; // 사용자 11-18: 이지·노멀만 탄 속도를 낮추고 탄 수를 10% 줄인다(헬은 그대로)
+    s.rules.speed=base.speed*v*(soft?soft.speed:1);s.density=base.density*d*(soft?soft.density:1)*(s.compact?COMPACT_DENSITY:1);}
   // 휴대폰 모드: 탄 수를 줄이고 그만큼 탄을 크게 그린다(판정도 같이 커진다).
   var COMPACT_DENSITY=.72,COMPACT_SIZE=1.25;
   var DRIFT_CAP=600,MOB_DROP_EVERY=3,ELITE_DROPS=3,CARD_DROPS=4,PLAIN_DROPS=2; // 하트(점수 아이템)는 적게(사용자 11-14)
@@ -164,6 +166,7 @@
   function note(s,name){if(s.events.length<48)s.events.push(name);}
   function bulletRadius(s,i){return (s.bsize[i]===SHAPE_PROP?PROPS[s.bcolor[i]].radius:SIZE_RADIUS[s.bsize[i]])*s.sizeScale;}
   /* 탄 하나. o: {size,color,turn(초당 회전),accel,min,max,at(변화 틱),mode,arg,speed2,life,gen(가지치기 남은 횟수),spin(기물이 도는 속도, 틱당 라디안)} */
+  function srand(s){var x=s.srng|0||1;x^=x<<13;x^=x>>>17;x^=x<<5;s.srng=x>>>0;return s.srng/4294967296;}
   function spawn(s,x,y,angle,speed,o){
     if(s.n>=s.cap){s.dropped++;return;}
     o=o||{};var size=o.size||0;
@@ -171,6 +174,7 @@
     if(s.n>=s.cap*.72&&size!==SHAPE_PROP&&!o.fragment){s.thin=(s.thin+1)|0;if(s.n>=s.cap*.82||s.thin%2)return;}
     // 보스 한가운데서 쏘는 탄은 보스 몸 가장자리(MUZZLE)에서 나오게 옮긴다. 탄이 몸을 덮어 보스가 가려지지 않는다(7분야 심사 3차 지적).
     var b=s.boss;if(!o.fragment&&b&&s.stage==='card'&&Math.abs(x-b.x)<2&&Math.abs(y-b.y)<2){x+=Math.cos(angle)*MUZZLE;y+=Math.sin(angle)*MUZZLE;}
+    if(s.entranceAll&&s.difficulty!=='hell'&&size!==SHAPE_PROP&&!o.fragment){angle+=(srand(s)-.5)*2*SCATTER_ANGLE;speed*=1+(srand(s)-.5)*2*SCATTER_SPEED;x+=(srand(s)-.5)*2*SCATTER_POS;y+=(srand(s)-.5)*2*SCATTER_POS;} // 탄을 조금 더 흩뿌려 겹침을 줄인다(사용자 11-18, 이지·노멀)
     var i=s.n++;
     s.bx[i]=x;s.by[i]=y;s.ba[i]=angle;s.bs[i]=speed*s.rules.speed;
     s.bturn[i]=o.turn||0;s.bacc[i]=o.accel||0;s.bmin[i]=o.min===undefined?0:o.min;s.bmax[i]=o.max===undefined?400:o.max;
@@ -304,7 +308,7 @@
   function mob(s,kind,x,y,o){
     if(s.mobs.length>=MOB_CAP)return;
     var spec=MOBS[kind];o=o||{};
-    s.mobs.push({kind:kind,elite:!!spec.elite,x:x,y:y,baseX:x,vx:o.vx||0,vy:o.vy===undefined?1.6:o.vy,sway:o.sway||0,swayRate:o.swayRate||.05,hp:spec.hp,r:spec.r,score:spec.score,
+    s.mobs.push({kind:kind,elite:!!spec.elite,x:x,y:y,baseX:x,vx:o.vx||0,vy:o.vy===undefined?1.6:o.vy,sway:o.sway||0,swayRate:o.swayRate||.05,hp:s.entranceAll?Math.round(spec.hp*MOB_HP_UP):spec.hp,r:spec.r,score:spec.score,
       fire:o.fire||'aim',first:o.first||40,every:o.every||0,color:o.color||0,stopY:o.stopY||120,hold:o.hold||300,age:0,shots:0,hitTick:-99});
   }
   /* 잡몹 구간 대본 두 가지. a: 잡몹 {kind,fire,color}, elite: 중간 몹 {kind,fire,color} 또는 없음. */
@@ -650,8 +654,8 @@
     Object.keys(PACING).forEach(function(d){var p=PACING[d],wave=0,boss=0,waves=0,cards=0;SEGMENTS.forEach(function(g,i){if(p.skipRepeatedPlain&&REPEATED_PLAIN[i])return;if(g.kind==='wave'){wave+=g.duration;waves++;}else{boss+=g.time;cards++;}});pacingTotals[d]={waveTicks:wave,bossSeconds:boss,waves:waves,cards:cards};});})();
   function plannedSegments(difficulty){var p=PACING[difficulty]||PACING.normal;return SEGMENTS.map(function(g,i){return i;}).filter(function(i){return !p.skipRepeatedPlain||!REPEATED_PLAIN[i];});}
   function waveDuration(s,g){if(!s.paced)return g.duration;var p=PACING[s.difficulty],tot=pacingTotals[s.difficulty];return Math.max(120,Math.round(g.duration*(p.waveMinutes*3600-tot.waves*30)/tot.waveTicks));}
-  function cardDuration(s,g){if(!s.paced)return g.time;var p=PACING[s.difficulty],tot=pacingTotals[s.difficulty];return Math.max(3,g.time*p.bossMinutes*60/tot.bossSeconds*1.4);}
-  function cardHp(s,g){return s.paced?Math.max(20,Math.round(g.hp*PACING[s.difficulty].hpScale)):g.hp;}
+  function cardDuration(s,g){var up=s.entranceAll?BOSS_STAY:1;if(!s.paced)return g.time*up;var p=PACING[s.difficulty],tot=pacingTotals[s.difficulty];return Math.max(3,g.time*p.bossMinutes*60/tot.bossSeconds*1.4)*up;}
+  function cardHp(s,g){if(s.entranceAll)return Math.round((s.paced?Math.max(20,Math.round(g.hp*PACING[s.difficulty].hpScale)):g.hp)*BOSS_HP_UP);return s.paced?Math.max(20,Math.round(g.hp*PACING[s.difficulty].hpScale)):g.hp;}
   function pacingReport(difficulty){var d=PACING[difficulty]?difficulty:'normal',p=PACING[d],tot=pacingTotals[d],s={difficulty:d,paced:true},wave=0,boss=0;plannedSegments(d).forEach(function(i){var g=SEGMENTS[i];if(g.kind==='wave')wave+=(waveDuration(s,g)+30)/60;else boss+=cardDuration(s,g);});return {difficulty:d,targetMinutes:p.nominalMinutes,waveBudgetMinutes:wave/60,bossBudgetMinutes:p.bossMinutes,cardHpScale:p.hpScale,cardTimeoutMinutes:boss/60,presentationBudgetMinutes:p.presentationMinutes,waves:tot.waves,cards:tot.cards,skippedPlain:SEGMENTS.length-tot.waves-tot.cards};}
   function stageTargetSeconds(difficulty,index){var d=PACING[difficulty]?difficulty:'normal',p=PACING[d],tot=pacingTotals[d],seconds=p.presentationMinutes*60/STAGES.length;plannedSegments(d).forEach(function(i){var g=SEGMENTS[i];if(g.stage===index)seconds+=g.kind==='wave'?g.duration/tot.waveTicks*p.waveMinutes*60:g.time/tot.bossSeconds*p.bossMinutes*60;});return seconds;}
   STAGES.forEach(function(g){g.authoredSeconds=g.seconds;g.seconds=stageTargetSeconds('normal',g.index);});
@@ -663,7 +667,7 @@
     options=options||{};var difficulty=DIFFICULTY[options.difficulty]?options.difficulty:'normal',rules=Object.assign({},DIFFICULTY[difficulty]),compact=!!options.compact;
     var startSeg=Number.isInteger(options.segment)&&SEGMENTS[options.segment]?options.segment:Number.isInteger(options.stage)&&STAGES[options.stage]?STAGES[options.stage].first:0;
     var selectedHero=heroProfile(options);
-    var s={revision:43,entranceAll:options.entranceAll===true,hero:selectedHero?selectedHero.id:'memory',rhythm:options.rhythm===true,paced:options.pacing===true||(options.pacing!==false&&!Number.isInteger(options.segment)),difficulty:difficulty,rules:rules,compact:compact,density:rules.density*(compact?COMPACT_DENSITY:1),sizeScale:compact?COMPACT_SIZE:1,cap:compact?COMPACT_CAP:CAP,
+    var s={revision:43,entranceAll:options.entranceAll===true,srng:((options.seed|0)*2246822519+374761393)>>>0||7,hero:selectedHero?selectedHero.id:'memory',rhythm:options.rhythm===true,paced:options.pacing===true||(options.pacing!==false&&!Number.isInteger(options.segment)),difficulty:difficulty,rules:rules,compact:compact,density:rules.density*(compact?COMPACT_DENSITY:1),sizeScale:compact?COMPACT_SIZE:1,cap:compact?COMPACT_CAP:CAP,
       seed:(options.seed>>>0)||1,rng:(options.seed>>>0)||1,tick:0,stage:'break',stageTick:BREAK_TICKS-30,seg:startSeg-1,segTick:0,stageIndex:SEGMENTS[startSeg].stage,spellNumber:0,
       player:{x:W/2,y:H-84,hp:rules.hp,maxHp:rules.hp,invulnerableUntil:0,r:rules.radius,focus:false},
       boss:{x:W/2,y:-60,targetX:W/2,targetY:132,hp:1,maxHp:1,actor:'',name:'',mid:false,hitTick:-99,leaving:false,present:false,down:null},
@@ -850,7 +854,8 @@
   }
   // 따로 정하지 않은 잡몹도 화면 위쪽에 머무는 동안 이 간격(틱)으로 다시 쏜다. 잡몹 구간이 보스전보다 지나치게 한가하지 않게(11-14 지시서).
   // 화면의 탄이 적으면 더 자주, 많으면 쉬어서 장면마다 압박이 고르게 한다. [쉬움, 보통, 지옥] 기준 탄 수.
-  var RETREAT_TICKS=110;
+  var RETREAT_TICKS=110,MOB_HP_UP=1.7,BOSS_HP_UP=1.5,BOSS_STAY=1.8,MOB_STAY=1500; // 사용자 11-18: 몹·중간보스·보스가 죽지도 않았는데 사라진다/체력이 적다 → 체력을 올리고 오래 머문다
+
   var MOB_REFIRE=[96,56,56],WAVE_FLOOR=[110,280,280],WAVE_CEIL=[170,320,320];
   function refireEvery(s,every){var d=s.difficulty==='gentle'?0:2,base=every||MOB_REFIRE[d];
     return Math.max(12,Math.round(s.n<WAVE_FLOOR[d]?base*.4:s.n>WAVE_CEIL[d]?base*2.5:base));}
@@ -859,9 +864,9 @@
       var m=s.mobs[i];m.age++;
       if(m.retreat){m.y-=m.elite?3:4.2;m.x+=m.x<W/2?-.6:.6;if(m.y<-44||m.x<-44||m.x>W+44)s.mobs.splice(i,1);continue;} // 구간이 끝나도 몹이 한순간에 사라지지 않고 위로 물러난다(사용자 11-17)
       if(m.elite){
-        if(m.age>m.hold+90)m.y-=2.4;else if(m.y<m.stopY)m.y+=2.2;
-        if(m.y>=m.stopY-1&&m.age<=m.hold+90&&m.every&&m.age>=m.first+60&&(m.age-m.first-60)%m.every===0){MOB_FIRE[m.fire](s,m);m.shots++;}
-        if(m.y<-40&&m.age>m.hold){s.mobs.splice(i,1);continue;}
+        if(!s.entranceAll&&m.age>m.hold+90)m.y-=2.4;else if(m.y<m.stopY)m.y+=2.2;
+        if(m.y>=m.stopY-1&&(s.entranceAll||m.age<=m.hold+90)&&m.every&&m.age>=m.first+60&&(m.age-m.first-60)%m.every===0){MOB_FIRE[m.fire](s,m);m.shots++;}
+        if(!s.entranceAll&&m.y<-40&&m.age>m.hold){s.mobs.splice(i,1);continue;}
       }else{
         m.baseX+=m.vx;m.y+=m.vy;m.x=m.baseX+(m.sway?Math.sin(m.age*m.swayRate)*m.sway*22:0);
         // 화면 위쪽에 있을 때만 쏜다(영웅 코앞 기습 방지).
@@ -1202,7 +1207,7 @@
     if(grazed){s.graze+=grazed;s.gauge+=grazed*2;s.score+=grazed*40;note(s,'graze');}
     return struck;
   }
-  var DESCEND_AGE=150,DESCEND_Y=470,DESCEND_TURN=.05,DESCEND_SPEED=72;
+  var SOFT_DESCEND_AGE=95,DESCEND_AGE=150,DESCEND_Y=470,DESCEND_TURN=.05,DESCEND_SPEED=72;
   function updateBullets(s){
     var p=s.player,px=p.x,py=p.y,struck=false,grazed=0,hitScale=s.rules.hitScale,i,k,field=slowField(s),fr=field[0],fs=field[1];
     for(i=s.n-1;i>=0;i--){
@@ -1222,7 +1227,7 @@
       }
       if(s.bturn[i])s.ba[i]+=s.bturn[i]*TICK;
       // 아래로 내려오는 보장(사용자 11-17 "보스 탄환은 보스 주변만 돌지 말고 언젠가는 아래로 내려와 의미가 있게"): 2.5초가 지나도 위쪽에 머무는 탄은 영웅이 있는 아랫녘으로 부드럽게 휘어 내려온다.
-      if(s.entranceAll&&age>DESCEND_AGE&&s.by[i]<DESCEND_Y&&s.bsize[i]!==SHAPE_PROP&&!s.bfragment[i]){
+      if(s.entranceAll&&age>(s.difficulty==='hell'?DESCEND_AGE:SOFT_DESCEND_AGE)&&s.by[i]<DESCEND_Y&&s.bsize[i]!==SHAPE_PROP&&!s.bfragment[i]){
         var want=Math.atan2(py+70-s.by[i],px+((i*37)%9-4)*24-s.bx[i]),lo=.22,hi=Math.PI-.22;if(want<lo)want=lo;else if(want>hi)want=hi;
         var ha=s.ba[i];while(ha>Math.PI)ha-=TAU;while(ha<-Math.PI)ha+=TAU;var dd=want-ha;if(dd>Math.PI)dd-=TAU;else if(dd<-Math.PI)dd+=TAU;
         if(Math.sin(ha)<.55){s.ba[i]=ha+(dd>DESCEND_TURN?DESCEND_TURN:dd<-DESCEND_TURN?-DESCEND_TURN:dd);s.bacc[i]=0;var fl=DESCEND_SPEED*s.rules.speed;if(s.bs[i]<fl)s.bs[i]=fl;}
@@ -1509,7 +1514,7 @@
     else if(s.stage==='wave'){
       var w=s.segTick++,duration=waveDuration(s,seg);if(w<duration)seg.script(s,w);
       // 대본이 끝나고 몹이 다 사라지면 다음으로. 너무 오래 남은 몹은 물러난다.
-      var over=w-duration-(s.paced?30:WAVE_GRACE);
+      var over=w-duration-(s.entranceAll?MOB_STAY:s.paced?30:WAVE_GRACE);
       if(w>=duration&&over>=0&&s.mobs.length&&!s.mobs[0].retreat&&!s.mobs.every(function(m){return m.retreat;}))for(var q=0;q<s.mobs.length;q++)s.mobs[q].retreat=true;
       if(w>=duration&&(!s.mobs.length||over>=RETREAT_TICKS)){s.mobs.length=0;s.score+=breakWipe(s)*10;note(s,'waveClear');advance(s);}
     }
