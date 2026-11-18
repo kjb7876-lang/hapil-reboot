@@ -821,7 +821,7 @@
     note(s,'entrance');}
   function beginCard(s){var card=segment(s),b=s.boss;b.maxHp=b.hp=cardHp(s,card);b.mid=!!card.mid;s.stage='card';s.stageTick=0;s.segTick=0;s.spellClean=!!card.spell;if(card.spell){s.spellNumber++;note(s,'card');}else note(s,'plain');}
   function endCard(s,defeated){
-    var card=segment(s),left=Math.max(0,cardDuration(s,card)-s.segTick*TICK),b=s.boss,nextAt=nextSegmentIndex(s),next=SEGMENTS[nextAt],cinematic=s.cinematicEncounter;
+    var card=segment(s),left=timeLeft(s),b=s.boss,nextAt=nextSegmentIndex(s),next=SEGMENTS[nextAt],cinematic=s.cinematicEncounter;
     var hold=defeated&&cinematic&&cinematic.actor===card.actor&&cinematic.stageIndex===card.stage&&(!next||next.kind!=='card'||next.actor!==card.actor||next.stage!==card.stage);
     var wiped=0;if(hold)clearBossEntranceHazards(s);else wiped=breakWipe(s);
     if(defeated){s.cleared++;gainExp(s,card.spell?16:10);s.score+=Math.round(left)*300+wiped*30;var nd=card.spell?CARD_DROPS:PLAIN_DROPS;for(var i=0;i<nd;i++)dropItem(s,dropAt(b.actor,i,nd,b.x,b.y,0),dropAt(b.actor,i,nd,b.x,b.y,1),card.spell&&i===1?1:0); /* 하트는 보스 발치 구름 아래에서 솟는다: 먹으로 스미는 몸 한가운데를 가리지 않게(사용자 11-16) */}else s.timeouts++;
@@ -854,26 +854,48 @@
   }
   // 따로 정하지 않은 잡몹도 화면 위쪽에 머무는 동안 이 간격(틱)으로 다시 쏜다. 잡몹 구간이 보스전보다 지나치게 한가하지 않게(11-14 지시서).
   // 화면의 탄이 적으면 더 자주, 많으면 쉬어서 장면마다 압박이 고르게 한다. [쉬움, 보통, 지옥] 기준 탄 수.
-  var RETREAT_TICKS=110,RETREAT_ALL=330,MOB_HP_UP=1.7,BOSS_HP_UP=1.5,BOSS_STAY=1.8,MOB_STAY=2400,MID_UP={gentle:3,normal:2.5,hell:2.5}; // 사용자 11-18: 몹·중간보스·보스가 죽지도 않았는데 사라진다/체력이 적다 → 체력을 올리고 오래 머문다
+  var MOB_HP_UP=1.7,BOSS_HP_UP=1.5,BOSS_STAY=1.8,MOB_STAY=2400,MID_UP={gentle:3,normal:2.5,hell:2.5};
+  var MOB_ENGAGE_SPEED=.5,MOB_EXIT_MARGIN=80;
 
   var MOB_REFIRE=[96,56,56],WAVE_FLOOR=[110,280,280],WAVE_CEIL=[170,320,320];
   function refireEvery(s,every){var d=s.difficulty==='gentle'?0:2,base=every||MOB_REFIRE[d];
     return Math.max(12,Math.round(s.n<WAVE_FLOOR[d]?base*.4:s.n>WAVE_CEIL[d]?base*2.5:base));}
+  function pastMobExit(m){
+    // 대열 뒤쪽은 화면 밖에서 출발할 수 있다. 자기 진행 방향의 출구를 지난 개체만 뺀다.
+    return m.y>H+MOB_EXIT_MARGIN || (m.vy<0&&m.y<-MOB_EXIT_MARGIN) ||
+      (m.vx<0&&m.x<-MOB_EXIT_MARGIN) || (m.vx>0&&m.x>W+MOB_EXIT_MARGIN);
+  }
   function updateMobs(s){
     for(var i=s.mobs.length-1;i>=0;i--){
       var m=s.mobs[i];m.age++;
-      if(m.retreat){if(s.entranceAll){var rv=4,rl=Math.hypot(m.vx||0,m.vy||0),rk=rl<.5?0:Math.max(2.6,rl*1.7)/rl; /* 가던 방향 그대로 가장자리로 나간다(위로 되돌아가지 않는다, 사용자 11-18) */ if(m.elite||!rk){m.y+=m.elite?rv:2.6;}else{m.baseX+=(m.vx||0)*rk;m.y+=(m.vy||0)*rk;m.x=m.baseX+(m.sway?Math.sin(m.age*m.swayRate)*m.sway*22:0);}if(m.y>H+44||m.y<-60||m.x<-44||m.x>W+44)s.mobs.splice(i,1);continue;}m.y-=m.elite?3:4.2;m.x+=m.x<W/2?-.6:.6;if(m.y<-44||m.x<-44||m.x>W+44)s.mobs.splice(i,1);continue;} // 구간이 끝나도 몹이 한순간에 사라지지 않고 위로 물러난다(사용자 11-17)
+      if(m.elite&&!s.entranceAll&&m.age>m.hold+90)m.retreat=true;
+      if(m.retreat){
+        // 가로 편대는 건너편으로, 위에서 들어와 멈춘 정예는 다시 아래로 나간다.
+        if(m.elite)m.y+=4;
+        else{
+          var length=Math.hypot(m.vx,m.vy);
+          if(length){
+            var scale=Math.max(2.6,length*1.7)/length;
+            m.baseX+=m.vx*scale;m.y+=m.vy*scale;
+            m.x=m.baseX+(m.sway?Math.sin(m.age*m.swayRate)*m.sway*22:0);
+          }else m.y+=2.6;
+        }
+        if(pastMobExit(m))s.mobs.splice(i,1);
+        continue;
+      }
       if(m.elite){
-        if(!s.entranceAll&&m.age>m.hold+90)m.y-=2.4;else if(m.y<m.stopY)m.y+=2.2;
-        if(m.y>=m.stopY-1&&(s.entranceAll||m.age<=m.hold+90)&&m.every&&m.age>=m.first+60&&(m.age-m.first-60)%m.every===0){MOB_FIRE[m.fire](s,m);m.shots++;}
-        if(!s.entranceAll&&m.y<-40&&m.age>m.hold){s.mobs.splice(i,1);continue;}
+        if(m.y<m.stopY)m.y+=2.2;
+        if(m.y>=m.stopY-1&&m.every&&m.age>=m.first+60&&(m.age-m.first-60)%m.every===0){MOB_FIRE[m.fire](s,m);m.shots++;}
       }else{
-        m.baseX+=m.vx;m.y+=m.vy;m.x=m.baseX+(m.sway?Math.sin(m.age*m.swayRate)*m.sway*22:0);
+        // 진입은 대본 속도 그대로. 플레이어가 겨눌 수 있는 상단을 지날 때만 진행 속도를 늦춘다.
+        var engage=s.entranceAll&&s.stage==='wave'&&!m.rise&&m.baseX>=0&&m.baseX<=W&&m.y>=24&&m.y<300;
+        var speed=engage?MOB_ENGAGE_SPEED:1;
+        m.baseX+=m.vx*speed;m.y+=m.vy*speed;m.x=m.baseX+(m.sway?Math.sin(m.age*m.swayRate)*m.sway*22:0);
         // 화면 위쪽에 있을 때만 쏜다(영웅 코앞 기습 방지).
         if(m.next===undefined)m.next=m.first;
         if((m.y<300||m.rise&&m.y<H-30&&Math.abs(m.x-s.player.x)>40)&&m.y>0&&m.age>=m.next){MOB_FIRE[m.fire](s,m);m.shots++;m.next=m.age+refireEvery(s,m.every);}
         else if(m.age>=m.next&&m.y<=0)m.next=m.age+1;
-        if(m.y>H+30||m.x<-40||m.x>W+40||m.rise&&m.y<-40){s.mobs.splice(i,1);continue;}
+        if(pastMobExit(m))s.mobs.splice(i,1);
       }
     }
   }
@@ -897,7 +919,7 @@
       if(f===s.boss){f.hp-=dmg*SHOT_DAMAGE[s.power];s.score+=dmg*2;}else{f.hp-=dmg*SHOT_DAMAGE[s.power];f.hitTick=s.tick;if(f.hp<=0)killMob(s,s.mobs.indexOf(f));}}
     if(hit.length)note(s,'zap');
   }
-  /* ── 보스 페이즈(사용자 11-17). 한 보스(스테이지·인물·중간 여부)의 카드를 순서대로 PHASE 1..N 으로 부른다. 2페이즈부터 카드마다 다른 수학 도형(arcade-boss-phases-v43.js)을 한 겹 얹는다(앱 전용: entranceAll). ── */
+  /* ── 보스 페이즈(사용자 11-17). 한 보스(스테이지·인물·중간 여부)의 카드를 순서대로 PHASE 1..N 으로 부른다. 앱의 2페이즈부터 원래 공격과 수학 도형이 차례로 나온다. ── */
   var PHASE_INFO=null;
   function phaseTable(){
     if(PHASE_INFO)return PHASE_INFO;var info=[],groups={},actors=[];
@@ -908,9 +930,41 @@
   function phaseOf(segIndex){return phaseTable()[segIndex]||null;}
   var PHASE_PLANS={};
   function phaseKind(seg,segIndex){var pi=phaseOf(segIndex);if(!BOSS_PHASES||!pi||pi.no<2)return null;var key=seg.stage+'|'+seg.actor+'|'+(seg.mid?1:0),plan=PHASE_PLANS[key]||(PHASE_PLANS[key]=BOSS_PHASES.plan(key,pi.count));return plan[pi.no-1];}
-  function phaseLayer(s,seg,t){
-    var kind=phaseKind(seg,s.seg);if(!kind||t<48)return;var a=ACTORS[seg.actor];
-    BOSS_PHASES.fire(kind,s,t-48,{spawn:spawn,W:W,H:H,colors:[a.c1,a.c2]},{actor:seg.actor+'|'+seg.stage,phaseNo:phaseOf(s.seg).no});
+  // Keep the authored clock contiguous: several cards snapshot aim on one beat and use it on a later beat.
+  // 3.5 s of the named attack, 0.5 s to reposition, 2 s of variation, then 1 s before repeating.
+  var CARD_PHRASE=420,AUTHORED_TICKS=210,VARIATION_AT=240,VARIATION_END=360;
+  function fireCardPhrase(s,seg,t,kind){
+    if(!t){s.phraseTick=0;s.authoredTick=0;s.variationTick=0;s.signatureTick=0;s.accentCycle=-1;}
+    var phrase=s.phraseTick,beat=phrase%CARD_PHRASE,cycle=Math.floor(phrase/CARD_PHRASE);
+    var beamLive=s.lasers.some(function(l){return l.age<l.warn+l.active;});
+    // Hold the hand-off itself. Long native beams must not run out the variation window and restart themselves.
+    if(beat===VARIATION_AT&&beamLive)return;
+    s.phraseTick++;
+    if(seg.spell&&phrase>=VARIATION_END&&!beamLive){
+      // The original glyph/rune order and warning lengths are kept. Let an announced beam complete first.
+      signature(s,s.signatureTick++,true);
+    }
+    var cue=s.figures.some(function(f){return f.age<f.warn;});
+    if(cue)return;
+    if(beat<AUTHORED_TICKS){seg.fire(s,s.authoredTick++);return;}
+    if(beat<VARIATION_AT||beat>=VARIATION_END||beamLive)return;
+    if(s.figures.some(function(f){var phase=figurePhase(f,s.tick);return phase==='on'||phase==='charge';}))return;
+    var sig=seg.spell&&signatureOf(seg.actor);
+    if(cycle%2===1&&sig&&s.difficulty!=='gentle'){
+      // A signature accent gets its own turn in place of the mathematical phrase.
+      var accent=beat-VARIATION_AT;
+      var accents=1+(sig.edge?1:0)+(sig.extra==='spray'?1:0);
+      var choice=Math.floor(cycle/2)%accents;
+      if(choice===accents-1)strands(s,sig,accent);
+      else if(s.accentCycle!==cycle){
+        s.accentCycle=cycle;
+        if(sig.edge&&choice===0){summonZigzag(s,sig,-1);summonZigzag(s,sig,1);}
+        else spray(s,sig,t);
+      }
+      return;
+    }
+    var actor=ACTORS[seg.actor];
+    BOSS_PHASES.fire(kind,s,s.variationTick++,{spawn:spawn,W:W,H:H,colors:[actor.c1,actor.c2]},{actor:seg.actor+'|'+seg.stage,phaseNo:phaseOf(s.seg).no});
   }
   /* ── 저속 간이 필살(사용자 11-17). 저속(focus) 이동 중 확률적으로 나가며 탄을 지우지 않는다. 기억사수=인과의 역전(적을 쫓는 레이저, 확률로 체인 라이트닝처럼 연쇄),
    *    윤서하=시간차 공격(시계가 돌고 잠시 뒤 굵은 시간검이 나가 적을 자동 추적). 쓰는 난수는 frng 로 탄 패턴 난수와 따로 굴린다. ── */
@@ -1171,11 +1225,11 @@
     note(s,'figure');
   }
   // 보스 고유 연출: 이름 붙은 패턴(spell) 동안 기존 패턴 위에 겹친다.
-  function signature(s,t){
+  function signature(s,t,figuresOnly){
     var sig=signatureOf(s.boss.actor);if(!sig)return;
     if(t%SIGIL_EVERY===SIGIL_AT)summonSigil(s,sig,sig.index);
     var rk=RUNE_TIMES.indexOf(t%SIGIL_EVERY);if(rk>=0)summonRunes(s,sig,rk);
-    if(s.difficulty==='gentle')return; // 이지는 주공격과 문양만: 가장자리 지그재그·보조 실탄·추가 분사를 중첩하지 않는다.
+    if(figuresOnly||s.difficulty==='gentle')return; // 이지는 주공격과 문양만: 가장자리 지그재그·보조 실탄·추가 분사를 중첩하지 않는다.
     if(sig.edge&&t%600===260){summonZigzag(s,sig,-1);summonZigzag(s,sig,1);}
     if(t%300<200)strands(s,sig,t);
     if(sig.extra==='spray'&&t%420>=120&&t%420<=330&&t%70===50)spray(s,sig,t);
@@ -1261,13 +1315,25 @@
   /* 장면별 탄(사용자 요청 11-14): 늪(03)에서는 물결이 먼저 일고(예고) 그 자리에서 초록 악마 손이 천천히 솟아오른다.
      묘지(05·43)에서는 해골이 위에서 영웅 쪽으로 날아온다. 웨이브와 보스전 모두에 깔린다. */
   var THEMED={'03':'hands','05':'skulls','43':'skulls'};
+  function allowAmbientStart(s){
+    if(s.stage==='wave')return s.segTick<waveDuration(s,segment(s));
+    if(s.stage!=='card'||s.difficulty==='gentle')return false;
+    // Named attacks and app entrance rhythms have their own cues. Other plain cards keep the stage backdrop.
+    if(!s.entranceAll)return true;
+    var seg=segment(s),phase=phaseOf(s.seg);
+    if(!phase||seg.spell||phase.no===1||s.segTick<=FIRE_DELAY)return false;
+    // A short admission window leaves time for the floor, hand and ink warnings before the variation.
+    var beat=s.phraseTick%CARD_PHRASE;
+    return beat>=60&&beat<120;
+  }
   function themed(s){
-    var kind=THEMED[STAGES[s.stageIndex].scene],t=s.stageTick,i;if(!kind||(s.stage!=='wave'&&s.stage!=='card')||(s.difficulty==='gentle'&&s.stage==='card'))return;
+    var kind=THEMED[STAGES[s.stageIndex].scene],t=s.stageTick,i;if(!kind||(s.stage!=='wave'&&s.stage!=='card'))return;
+    var start=allowAmbientStart(s);
     if(kind==='hands'){
-      if(t%pick(s,110,95,80)===0&&s.ripples.length<6){var rx=24+rand(s)*(W-48);if(Math.abs(rx-s.player.x)<HAND_AWAY)rx=s.player.x+(s.player.x<W/2?1:-1)*(HAND_AWAY+rand(s)*60);s.ripples.push({x:rx,age:0});}
+      if(start&&t%pick(s,110,95,80)===0&&s.ripples.length<6){var rx=24+rand(s)*(W-48);if(Math.abs(rx-s.player.x)<HAND_AWAY)rx=s.player.x+(s.player.x<W/2?1:-1)*(HAND_AWAY+rand(s)*60);s.ripples.push({x:rx,age:0});}
       // 영웅 바로 밑(HAND_AWAY 안)에서는 솟지 않는다: 물결 자리를 영웅에게서 떨어뜨리고, 그사이 영웅이 그 위로 오면 손은 가라앉는다(헛물결).
       for(i=s.ripples.length-1;i>=0;i--){var r=s.ripples[i];if(++r.age>=HAND_WARN){if(Math.abs(r.x-s.player.x)>=HAND_AWAY)spawn(s,r.x,H+8,-Math.PI/2,pick(s,30,34,42),{size:SHAPE_PROP,color:P['demon-hand'],life:1400});s.ripples.splice(i,1);}}
-    }else if(t%pick(s,100,85,70)===40){var x=30+rand(s)*(W-60);spawn(s,x,-10,aim(s,x,-10),pick(s,44,50,62),{size:SHAPE_PROP,color:P.skull});}
+    }else if(start&&t%pick(s,100,85,70)===40){var x=30+rand(s)*(W-60);spawn(s,x,-10,aim(s,x,-10),pick(s,44,50,62),{size:SHAPE_PROP,color:P.skull});}
   }
   /* ── 아래쪽 압박(사용자 11-15 "맨아래에만 있으면 피하기 쉬워서 …"). 화면 맨 아래에 숨어 있지 못하게 네 가지를 스테이지마다 둘씩 섞어 번갈아 낸다.
    *  rise    아래에서 가끔 몹이 올라온다(영웅에게서 떨어진 자리).
@@ -1326,7 +1392,7 @@
   function updateFloor(s){
     var F=s.floor,p=s.player,c,k;if(F.stage!==s.stageIndex)F=s.floor=freshFloor(s,s.stageIndex);
     var live=s.stage==='wave'||s.stage==='card',t=live?F.t++:F.t,plan=floorPlan(s.stageIndex,s.difficulty),u=t%FLOOR_CYCLE,kind=plan[Math.floor(t/FLOOR_CYCLE)%plan.length],on=live&&u>=FLOOR_ON&&u<FLOOR_OFF;
-    if(s.stage==='wave'&&s.segTick>=waveDuration(s,segment(s))||s.difficulty==='gentle'&&s.stage==='card')on=false; // 대본이 끝난 웨이브는 마저 끝나게 둔다
+    if(!allowAmbientStart(s))on=false; // 대본이 끝난 웨이브는 마저 끝나게 둔다
     F.kind=on?kind:'';
     if(on){var slow=s.difficulty==='gentle'?1.6:1;
       if(kind==='rise'&&(u-FLOOR_ON)%Math.round(pick(s,150,110,90)*slow)===0)warnRise(s,F);
@@ -1464,7 +1530,7 @@
     if(!s.risers){s.risers=[];s.risen=0;s.riserT=0;s.riserStage=-1;}
     if(s.riserStage!==s.stageIndex){s.riserStage=s.stageIndex;s.riserT=0;s.riserN=0;s.riserDue=0;s.riserRng=((s.seed*40503)^(s.stageIndex*2654435761+7))>>>0||1;}
     var R=s.risers,p=s.player,k,live=s.stage==='wave'||s.stage==='card',every=Math.round(pick(s,560,330,270));
-    if(live&&!(s.difficulty==='gentle'&&s.stage==='card')&&!(s.stage==='wave'&&s.segTick>=waveDuration(s,segment(s)))){var t=s.riserT++;
+    if(live&&allowAmbientStart(s)){var t=s.riserT++;
       if(t>=120&&(t-120)%every===0&&s.riserDue<2)s.riserDue++; // 자리가 없으면 미뤘다가 자리가 나면 솟는다
       if(s.riserDue>0&&R.length<(s.floor&&s.floor.kind?1:pick(s,1,2,2))){s.riserDue--;var plan=motifPlan(s.stageIndex),kind=plan[s.riserN++%plan.length],size=MOTIFS[kind].size,lane=(s.riserN+s.stageIndex+((s.riserN/3)|0))%3,x=W*(lane===0?.24:lane===1?.76:.5)+(riserRand(s)-.5)*W*.14;
         if(Math.abs(x-p.x)<90)x=p.x+(Math.abs(p.x-W/2)>24?(p.x<W/2?1:-1):(s.riserN&1?1:-1))*(90+riserRand(s)*50); // 영웅 바로 밑에서는 솟지 않는다
@@ -1513,25 +1579,30 @@
     }
     else if(s.stage==='wave'){
       var w=s.segTick++,duration=waveDuration(s,seg);if(w<duration)seg.script(s,w);
-      // 대본이 끝나고 몹이 다 사라지면 다음으로. 너무 오래 남은 몹은 물러난다.
-      var over=w-duration-(s.entranceAll?MOB_STAY:s.paced?30:WAVE_GRACE);
-      if(w>=duration&&over>=0&&s.mobs.length&&!s.mobs[0].retreat&&!s.mobs.every(function(m){return m.retreat;}))for(var q=0;q<s.mobs.length;q++)s.mobs[q].retreat=true;
-      if(w>=duration&&(!s.mobs.length||over>=(s.entranceAll?RETREAT_ALL:RETREAT_TICKS))){s.mobs.length=0;s.score+=breakWipe(s)*10;note(s,'waveClear');advance(s);}
+      if(w>=duration){
+        if(!s.mobs.length){s.score+=breakWipe(s)*10;note(s,'waveClear');advance(s);}
+        else if(w-duration>=(s.entranceAll?MOB_STAY:s.paced?30:WAVE_GRACE)){
+          for(var q=0;q<s.mobs.length;q++)s.mobs[q].retreat=true;
+        }
+      }
     }
     else if(s.stage==='card'){
       var t=s.segTick++;
-      var fireDelay=entrance&&entrance.segment===s.seg&&entrance.releasedTick!==null?0:FIRE_DELAY;
+      var fireDelay=cardFireDelay(s);
       if(t>=fireDelay){
         if(BOSS_RHYTHM&&BOSS_RHYTHM.handles(s,seg,api))BOSS_RHYTHM.fire(s,t-fireDelay,rhythmContext);
-        else{seg.fire(s,t-fireDelay);if(seg.spell)signature(s,t-fireDelay);}
-        if(s.entranceAll)phaseLayer(s,seg,t-fireDelay);
+        else{
+          var kind=s.entranceAll&&phaseKind(seg,s.seg);
+          if(kind)fireCardPhrase(s,seg,t-fireDelay,kind);
+          else{seg.fire(s,t-fireDelay);if(seg.spell)signature(s,t-fireDelay);}
+        }
       } // 고유 첫 공격은 원래 발사를 대체한다. 이름 붙은 문양과 중간 카드의 대본은 유지한다.
-      var left=cardDuration(s,seg)-s.segTick*TICK;
+      var left=timeLeft(s);
       if(seg.spell&&left<=10&&left>0&&s.segTick%60===0)note(s,left<=3?'countdownLast':'countdown');
     }
     themed(s);updateMobs(s);updateShots(s);focusSkill(s);
     if(s.stage==='card'&&b.hp<=0)endCard(s,true);
-    else if(s.stage==='card'&&s.segTick*TICK>=cardDuration(s,segment(s)))endCard(s,false);
+    else if(s.stage==='card'&&timeLeft(s)===0)endCard(s,false);
     if(s.stage==='bossClear')return s;
     var p=s.player,byFloor=updateFloor(s)|updateRisers(s),byBeam=updateLasers(s),byFigure=updateFigures(s),byBullet=updateBullets(s);
     updateItems(s);
@@ -1550,7 +1621,17 @@
     if(s.n>s.peak)s.peak=s.n;
     return s;
   }
-  function timeLeft(s){var seg=segment(s);return s.stage==='card'?Math.max(0,cardDuration(s,seg)-s.segTick*TICK):0;}
+  function cardFireDelay(s){
+    var entrance=s.bossEntrance;
+    return entrance&&entrance.segment===s.seg&&entrance.releasedTick!==null?0:FIRE_DELAY;
+  }
+  function timeLeft(s){
+    if(s.stage!=='card')return 0;
+    var g=segment(s),elapsed=s.segTick;
+    // A later phase can spend 40 ticks announcing itself before its attack begins.
+    if(s.entranceAll&&g.mid)elapsed=Math.max(0,elapsed-cardFireDelay(s));
+    return Math.max(0,cardDuration(s,g)-elapsed*TICK);
+  }
   /* ── 진행 기록(저장용, 순수 함수). cleared 깬 스테이지 번호 · stars 스테이지별 별(1~3) · best 최고 점수 · rewards 얻은 기념물 ── */
   var Progress=(function(){
     function fresh(){return {version:43,cleared:[],stars:{},best:{},rewards:[],difficulty:'normal'};}

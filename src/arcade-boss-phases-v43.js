@@ -29,7 +29,7 @@
   function bossIndex(actor){var i=order.indexOf(actor);if(i<0){order.push(actor);i=order.length-1;}return i;}
   function plan(actor,count){var k=bossIndex(actor),out=[],used={},j,idx,guard;for(j=0;j<count;j++){idx=kindIndex(k,j);guard=0;while(used[idx]&&guard++<N)idx=(idx+1)%N;used[idx]=1;out.push(KINDS[idx]);}return out;}
   function hash(str){var h=2166136261;for(var i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}return h>>>0;}
-  function params(actor,j){var h=hash(actor+':'+j);return {arms:3+(h%4),dir:(h>>3)&1?1:-1,k:2+((h>>4)%4),k2:1+((h>>6)%3),speed:.9+((h>>8)%5)*.06};}
+  function params(actor,j){var h=hash(actor+':'+j);return {arms:3+(h%4),dir:(h>>3)&1?1:-1,k:2+((h>>>4)%4),k2:1+((h>>>6)%3),speed:.9+((h>>>8)%5)*.06};}
   /* 한 틱 발사. K: 엔진이 넘기는 {spawn,count,colors:[c1,c2],W,H,density}. 난수 없이 t·페이즈 변수만으로 정해 같은 시드에서 같은 모양이다. */
   function fire(kind,s,t,K,seg){
     var b=s.boss,P=params(seg.actor,seg.phaseNo||1),W=K.W,H=K.H,dens=Math.max(.5,s.density/2.6),c=K.colors,x=b.x,y=b.y,i,n,a,sp,u;
@@ -41,7 +41,7 @@
       case'lissajous':if(fireNow){var ph=t*.045;sp1(W/2+Math.sin(ph*(P.k))*W*.36,Math.max(40,y-10)+Math.cos(ph*(P.k2+1))*28,Math.PI/2+Math.sin(ph)*.18,88*P.speed,c[(t/e)%2|0]);}break;
       case'polygram':if(fireNow){n=P.arms+4;var skip=P.k>=n/2?2:P.k,rot=(t/e)*.37*P.dir;for(var q=0;q<n;q++){var a0=-Math.PI/2+rot+TAU*q/n,a1=-Math.PI/2+rot+TAU*((q+skip)%n)/n,len=Math.round(6*dens)+2;for(i=0;i<len;i++){u=(i+.5)/len;var px=x+(Math.cos(a0)*(1-u)+Math.cos(a1)*u)*46,py=y+(Math.sin(a0)*(1-u)+Math.sin(a1)*u)*46,ang=Math.atan2(py-y,px-x);sp1(px,py,ang,62*P.speed,c[q%2]);}}}break;
       case'archimedes':if(fireNow){n=t/e;for(i=0;i<P.arms;i++)sp1(x,y,TAU*i/P.arms+n*.21*P.dir,66*P.speed+((n%8)*5),c[i%2]);}break;
-      case'sierpinski':if(fireNow){var V=[[W*.18,y+24],[W*.82,y+24],[W/2,y+24+W*.5]],pt=s.__sp||(s.__sp={x:W/2,y:y+60,seed:hash(seg.actor)}),vert;pt.seed=(pt.seed*1664525+1013904223)>>>0;vert=V[pt.seed%3];pt.x=(pt.x+vert[0])/2;pt.y=(pt.y+vert[1])/2;sp1(pt.x,Math.max(30,pt.y-40),Math.PI/2,64*P.speed,c[(pt.seed>>3)%2]);}break;
+      case'sierpinski':if(fireNow){var V=[[W*.18,y+24],[W*.82,y+24],[W/2,y+24+W*.5]],pt=s.__sp||(s.__sp={x:W/2,y:y+60,seed:hash(seg.actor)}),vert;pt.seed=(pt.seed*1664525+1013904223)>>>0;vert=V[pt.seed%3];pt.x=(pt.x+vert[0])/2;pt.y=(pt.y+vert[1])/2;sp1(pt.x,Math.max(30,pt.y-40),Math.PI/2,64*P.speed,c[(pt.seed>>>3)%2]);}break;
       case'sine':if(fireNow){n=Math.round(18*dens)+4;var lane=W/2+Math.sin(t/e*1.3)*W*.3;for(i=0;i<n;i++){var xx=(i+.5)*W/n;if(Math.abs(xx-lane)<34)continue;sp1(xx,Math.max(30,y-6)+Math.sin(i*.9+t*.02)*14,Math.PI/2,70*P.speed,c[i%2]);}}break;
       case'moire':if(fireNow){var n1=14+P.arms,n2=n1+2,r=(t/e)*.2;for(i=0;i<n1;i++)sp1(x,y,TAU*i/n1+r,82*P.speed,c[0]);for(i=0;i<n2;i++)sp1(x,y,TAU*i/n2-r*1.3,82*P.speed,c[1]);}break;
       case'fibfan':if(fireNow){n=FIB[(t/e|0)%FIB.length];var aim=Math.atan2(s.player.y-y,s.player.x-x);for(i=0;i<n;i++){a=aim+(n>1?(i/(n-1)-.5):0)*.16*n;sp1(x,y,a,90*P.speed,c[i%2]);}}break;

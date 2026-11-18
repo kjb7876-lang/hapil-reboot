@@ -41,3 +41,70 @@ test('easy boss keeps primary patterns and timed glyphs but does not spawn extra
  for(let t=0;t<1000&&s.seg===index;t++){s.player.invulnerableUntil=s.tick+999;if(s.stage==='card')s.boss.hp=s.boss.maxHp;A.step(s,{});if(s.figures.length)glyph=true;s.events.length=s.pops.length=s.cancelled.length=0;}
  assert(glyph);assert.equal(s.floor.dropped+s.floor.risen+s.floor.lines+s.floor.mounds,0);assert.equal(s.risen,0);assert(s.peak>0,'primary attack still fires');
 });
+
+test('the controller keeps the correct budget when it returns in a different encounter role',()=>{
+ const main=A.SEGMENTS.find(g=>g.actor==='controller'&&!g.mid&&!g.spell&&g.hp===200);
+ const mid=A.SEGMENTS.find(g=>g.actor==='controller'&&g.mid&&!g.spell);
+ assert.equal(main.hp,mid.hp);
+ assert.equal(main.time,mid.time);
+ for(const [difficulty,factor] of [['gentle',3],['normal',2.5],['hell',2.5]]){
+  const app=A.createRun({difficulty,entranceAll:true,rhythm:true});
+  const campaign=A.createRun({difficulty});
+  const hp=A.cardHp(campaign,main);
+  assert.equal(A.cardHp(app,main),Math.round(hp*1.5));
+  assert.equal(A.cardHp(app,mid),Math.round(hp*1.5*factor));
+  assert(Math.abs(A.cardDuration(app,mid)-A.cardDuration(app,main)*factor)<1e-10);
+ }
+});
+
+test('the easy opening midboss loses real HP to shots and can be defeated before timeout',()=>{
+ const s=A.createRun({difficulty:'gentle',stage:0,bossOnly:true,entranceAll:true,rhythm:true,seed:12});
+ let initialHp,halfAt,activeAt;
+ for(let i=0;i<2400&&s.stage!=='bossClear';i++){
+  const dx=Math.max(-4,Math.min(4,s.boss.x-s.player.x));
+  A.step(s,{dx});
+  if(s.stage==='intro')assert.equal(A.timeLeft(s),0);
+  if(s.stage!=='card')continue;
+  if(activeAt===undefined){
+   assert.equal(s.boss.actor,'mb_01');
+   activeAt=s.tick-s.segTick;
+   initialHp=s.boss.maxHp;
+   assert.equal(initialHp,675);
+  }
+  if(halfAt===undefined&&s.boss.hp<=initialHp/2)halfAt=s.tick;
+ }
+ assert(halfAt>activeAt);
+ assert.equal(s.stage,'bossClear');
+ assert(s.tick>halfAt);
+ assert.equal(s.cleared,1);
+ assert.equal(s.timeouts,0);
+ assert.equal(A.timeLeft(s),0);
+});
+
+test('the live midboss timeout counts firing ticks and the HUD uses the same deadline on the next card',()=>{
+ const s=A.createRun({difficulty:'hell',stage:0,bossOnly:true,entranceAll:true,rhythm:true,seed:12});
+ // Hold the player at the left edge and keep them alive to observe both deadlines.
+ // Automatic shots still deal real damage to the boss.
+ s.player.invulnerableUntil=10000;
+ const ids=A.plannedSegments('hell').filter(i=>A.SEGMENTS[i].stage===0&&A.SEGMENTS[i].mid);
+ assert.equal(ids.length,2);
+ for(const [phase,id] of ids.entries()){
+  const g=A.SEGMENTS[id],duration=A.cardDuration(s,g),delay=phase?40:0;
+  while(s.stage!=='card'){
+   assert.equal(A.timeLeft(s),0);
+   assert(s.tick<10000);
+   A.step(s,{dx:-4});
+  }
+  assert.equal(s.seg,id);
+  for(;s.seg===id&&s.stage==='card';){
+   const remaining=duration-Math.max(0,s.segTick-delay)/60;
+   assert(Math.abs(A.timeLeft(s)-remaining)<1e-10);
+   assert(remaining>0);
+   const lastLiveTick=s.segTick+1-delay===Math.ceil(duration*60);
+   A.step(s,{dx:-4});
+   assert.equal(s.seg!==id,lastLiveTick);
+  }
+  assert.equal(s.timeouts,phase+1);
+ }
+ assert.equal(s.cleared,0);
+});
