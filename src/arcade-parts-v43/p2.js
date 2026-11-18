@@ -151,10 +151,21 @@
           if(t%96===0)fan(s,b.x,b.y,pick(s,5,6,7),HALF+(odd?.18:-.18),2.5,54,{color:GREEN,size:4,accel:-12,min:26,turn:odd?.22:-.22,life:950});
           if(t%32===16)fan(s,b.x,b.y,count(s,3),aim(s,b.x,b.y),.35,104,{color:YELLOW,size:RICE});
           if(t%48===40)ring(s,b.x,b.y,count(s,12),48,rand(s)*TAU,{color:GREEN,size:0});}},
-        p2Stomach:{name:'거대한 위장',fire:function(s,t){var b=s.boss;
-          // 거대한 위장: 펼쳐진 고리가 멈췄다가 한가운데로 빨려 들어가 삼켜지고, 그대로 반대편으로 뱉어진다.
-          if(t%110===0){var d=110;ring(s,b.x,b.y,count(s,24),150,rand(s)*TAU,{color:YELLOW,size:1,accel:brake(s,150,d),min:0,at:stopTicks(s,150,d)+26,mode:TURN,arg:PI,speed2:92});}
-          if(t%110===55){var e=70;ring(s,b.x,b.y,count(s,18),120,rand(s)*TAU,{color:GREEN,size:0,accel:brake(s,120,e),min:0,at:stopTicks(s,120,e)+20,mode:TURN,arg:PI,speed2:76});}}},
+        p2Stomach:{name:'거대한 위장',fire:function(s,t){
+          // 삼킨 탄이 한 점에 모였다가 뱉어진다. 모이기 시작할 때 찍은 위치를 옆으로 피할 수 있다.
+          if(t%126!==0)return;
+          var b=s.boss,n=pick(s,5,7,9),radius=54,swallowTicks=Math.round(44*s.rules.warn);
+          var swallowSpeed=radius*60/(swallowTicks*s.rules.speed),target=aim(s,b.x,b.y),first=s.n;
+          for(var k=0;k<n;k++){
+            var around=TAU*k/n,heading=around+PI,release=target+(k-(n-1)/2)*.14;
+            spawn(s,b.x+radius*Math.cos(around),b.y+radius*Math.sin(around),heading,swallowSpeed,{
+              size:k%2?0:1,color:k%2?GREEN:YELLOW,formation:true,
+              at:swallowTicks,mode:TURN,arg:release-heading,speed2:170
+            });
+          }
+          if(s.n>first)s.skillCast={kind:'stomach',seg:s.seg,start:s.tick,release:s.tick+swallowTicks-1,
+            until:s.tick+swallowTicks+11,x:b.x,y:b.y,angle:target,radius:radius};
+        }},
         p2Photo:{name:'오래된 사진',fire:function(s,t){var b=s.boss,i;
           // 오래된 사진: 네모난 사진틀이 퍼지다가 불붙어 흩어진다. 위에서는 불티가 내린다.
           if(t%100===0)shape(s,b.x,b.y,Shapes.polygon(4,Math.max(2,count(s,3))),66,PI/4+Math.sin(t*.01)*.2,{color:WHITE,size:1,at:72,mode:SPLIT,arg:3,speed2:58});

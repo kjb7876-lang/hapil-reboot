@@ -91,17 +91,39 @@ test('selected large bodies need repeated hits and preserve another body durabil
 
 test('the earliest body surface intercepts a shot even when another body has the nearer centre',()=>{
  const s=h.idle();s.player.x=320;orb(s,80,300,'spire');orb(s,80,305,'sword-violet');shot(s,80,330);step(s);
- assert.equal(s.n,2);assert.equal(s.bhp[0],2,'spire surface y321 is reached before sword core surface y320');
+ assert.equal(s.n,2);assert.equal(s.bhp[0],2,'the wider spire rim is reached before the closer sword');
  assert.equal(s.bhp[1],3);assert.equal(s.orbsBroken,0);assert.equal(s.sn,0);
+});
+
+test('shots hit a marked sword along its rotated blade and pass beside the same vertical blade',()=>{
+ for(const compact of [false,true]){
+  for(const [angle,offsetX,offsetY,hit] of [[0,26,0,true],[Math.PI/2,0,26,true],[Math.PI/2,26,0,false]]){
+   const s=h.idle({compact});s.player.x=320;
+   const sword=orb(s,180,300,'sword-violet',3);s.ba[sword]=angle;
+   shot(s,180+offsetX*s.sizeScale,300+offsetY*s.sizeScale+6);step(s);
+   assert.equal(s.bhp[sword],hit?2:3,JSON.stringify({compact,angle,offsetX,offsetY}));
+   assert.equal(s.sn,hit?0:1);
+  }
+ }
+});
+
+test('a shot traverses the opening in a crescent and can hit a weapon behind it',()=>{
+ const s=h.idle();s.player.x=320;
+ const moon=orb(s,180,300,'crescent',3),sword=orb(s,210,300,'sword-violet',3);
+ shot(s,185,325);step(s);
+ assert.equal(s.bhp[moon],3,'clear segment through the curved interior');
+ assert.equal(s.bhp[sword],2,'the sword tip behind the opening intercepts the shot');
+ assert.equal(s.sn,0);
 });
 
 test('large-body swept collision includes initial overlaps, tangent contact and the last endpoint',()=>{
  const overlap=h.idle();overlap.player.x=320;orb(overlap,80,320,'spire');orb(overlap,80,290,'sword-violet');shot(overlap,80,315);step(overlap);
  assert.equal(overlap.bhp[0],2);assert.equal(overlap.n,2);
- const tangent=h.idle();tangent.player.x=320;orb(tangent,80,307.5,'p3_core',1);shot(tangent,97,315);step(tangent);
- assert.equal(tangent.orbsBroken,1,'a tangent reaches the 17px shot contact radius');assert.equal(tangent.orbFragments,3);
- const endpoint=h.idle();endpoint.player.x=320;orb(endpoint,80,283,'p3_core',1);shot(endpoint,80,315);step(endpoint);
- assert.equal(endpoint.orbsBroken,1,'the shot reaches the body surface exactly at y300');assert.equal(endpoint.orbFragments,3);
+ // This scale gives the core's right rim an exactly representable offset of 15.5 and shot contact radius of 11.5.
+ const tangent=h.idle();tangent.player.x=320;tangent.sizeScale=25/24;orb(tangent,80,307.5,'p3_core',1);shot(tangent,107,315);step(tangent);
+ assert.equal(tangent.orbsBroken,1,'the shot grazes the right rim midway along the segment');assert.equal(tangent.orbFragments,3);
+ const endpoint=h.idle();endpoint.player.x=320;endpoint.sizeScale=25/24;orb(endpoint,80,300,'p3_core',1);shot(endpoint,107,315);step(endpoint);
+ assert.equal(endpoint.orbsBroken,1,'the endpoint touches the right rim exactly at y300');assert.equal(endpoint.orbFragments,3);
 });
 
 test('remnants spread away with wide gaps, are initially harmless, then become ordinary non-breakable bullets',()=>{

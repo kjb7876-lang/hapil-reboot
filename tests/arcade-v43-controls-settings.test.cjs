@@ -33,6 +33,7 @@ function harness(saved){
     addEventListener:(k,f)=>{(globals[k]||(globals[k]=[])).push(f);},requestAnimationFrame(){},setTimeout(){},Image:class{},};w.window=w;
   const sandbox=vm.createContext(w);vm.runInContext(read('src/arcade-i18n-v43.js'),sandbox);vm.runInContext(read('src/arcade-story-v43.js'),sandbox);
   vm.runInContext(read('src/arcade-heroes-v43.js'),sandbox);vm.runInContext(read('src/arcade-mobile-v43.js'),sandbox);
+  vm.runInContext(read('src/arcade-skins-v43.js'),sandbox);
   vm.runInContext(read('src/arcade-hero-visibility-v43.js'),sandbox);
   vm.runInContext(read('src/arcade-boss-intros-v43.js'),sandbox);
   vm.runInContext(read('src/arcade-boss-lines-v43.js'),sandbox);
@@ -46,6 +47,18 @@ function harness(saved){
   h.prepare(s,audio);h.bind();
   return {w,h,s,doc,nodes,storage,storageWrites,calls,globals,audio,strokes,imageDraws};
 }
+test('stage asset lists prefer front-facing mobs and use scene art when it is missing',()=>{
+  const {w}=harness();
+  const registry=w.ArcadeSkins,stageKeys=w.HapilArcadeApp.debugState().stageKeys;
+  for(const stage of A.STAGES){
+    const front=registry.front[stage.scene]||[],regional=registry.scenes[stage.scene]||[];
+    const expected=front.length?front:regional.length?regional:stage.cast;
+    const possible=new Set([...stage.cast,...regional,...front]);
+    const actors=new Set(A.SEGMENTS.filter(g=>g.stage===stage.index&&g.kind==='card').map(g=>g.actor));
+    const actual=Array.from(stageKeys(stage.index)).filter(key=>possible.has(key)&&!actors.has(key));
+    assert.deepEqual(new Set(actual),new Set(Array.from(expected).filter(key=>!actors.has(key))),stage.scene);
+  }
+});
 function pickerFor(h){
   const picker={visible:false,shown:0,selected:null,confirmCallback:null,cancelCallback:null,
     show(id,confirm,cancel){this.visible=true;this.shown++;this.selected=id;this.confirmCallback=confirm;this.cancelCallback=cancel;},
@@ -124,6 +137,38 @@ test('two-finger movement + held focus really changes engine speed; release/canc
   focus.emit('pointercancel',{pointerId:22});assert.equal(h.input().focus,false);assert.equal(focus.attrs['aria-pressed'],'false');
   assert.equal(h.finger().active,true,'movement finger survives cancellation of the focus finger');
   stage.emit('lostpointercapture',{pointerId:11});assert.equal(h.input().dx,0);assert.equal(h.finger().id,null);
+});
+
+test('touch movement keeps its central clearance and can dodge along the bottom edge',()=>{
+  const {h,s,nodes}=harness(),stage=nodes.get('arcade-stage'),canvas=nodes.get('arcade-canvas');
+  stage.emit('pointerdown',{target:canvas,clientX:s.player.x,clientY:400});
+  for(let i=0;i<80;i++)A.step(s,h.input());
+  assert.equal(s.player.y,336);
+  nodes.get('arcade-focus').emit('pointerdown',{pointerId:22});
+  stage.emit('pointermove',{clientX:s.player.x,clientY:A.HEIGHT-1});
+  A.step(s,h.input());
+  assert.equal(s.player.y,338,'two-pixel focused step');
+  for(let i=0;i<160;i++)A.step(s,h.input());
+  assert.equal(s.player.y,A.HEIGHT-14,'reaches the same bottom bound as keyboard');
+});
+
+test('holding a tap that dismisses a boss speech never starts a movement drag',()=>{
+  const {h,nodes,audio}=harness(),stage=nodes.get('arcade-stage'),canvas=nodes.get('arcade-canvas');
+  const index=A.SEGMENTS.findIndex(g=>g.kind==='card'&&!g.mid);
+  const s=A.createRun({segment:index,entranceAll:true});h.prepare(s,audio);
+  for(let t=0;t<400;t++){
+    const phase=A.entrancePhase(s);if(phase&&phase.phase==='speech'&&phase.t>.3)break;
+    A.step(s,{});
+  }
+  const ready=s.bossEntrance.readyTick,start=[s.player.x,s.player.y];
+  const tap=stage.emit('pointerdown',{pointerId:42,target:canvas,clientX:20,clientY:220});
+  assert.ok(tap.prevented&&s.bossEntrance.readyTick<ready,'speech dismissal succeeded');
+  stage.emit('pointermove',{pointerId:42,clientX:40,clientY:180});
+  for(let t=0;t<30;t++)A.step(s,h.input());
+  assert.equal(s.stage,'card');assert.deepEqual([s.player.x,s.player.y],start);
+  assert.equal(stage.captured.has(42),false);
+  stage.emit('pointerdown',{pointerId:43,target:canvas,clientX:20,clientY:220});
+  assert.ok(h.input().dx<0,'a new movement gesture works in combat');
 });
 
 test('bomb touch is a one-shot input while another pointer moves; keyboard/assistive click also works',()=>{

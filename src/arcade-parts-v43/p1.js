@@ -79,10 +79,22 @@
           if(t%50===25)K.spawn(s,b.x,b.y,DOWN+(K.rand(s)-.5)*1.4,72,{color:G,size:2,at:60,mode:K.MODE_SPLIT,arg:K.count(s,9),speed2:48});}},
 
         // 02 거미동굴 — 흰 날개, 여덟 다리의 실, 굶주림과 두려움, 사랑받지 못한 마음, 무아지경 (무기: 보라검)
-        p1_wings:{name:'흰 날개',fire:function(s,t){var b=s.boss;
-          // 그림: 보스 양옆에서 흰 날개 두 장이 펼쳐졌다가 안쪽으로 접힌다.
-          if(t%50===0)for(var side=-1;side<=1;side+=2)K.fan(s,b.x+side*46,b.y-6,K.count(s,7),DOWN-side*1.05,1.1,78,{color:WH,size:RICE,turn:side*.38});
-          if(t%100===75)K.ring(s,b.x,b.y,K.count(s,12),52,K.rand(s)*TAU,{color:PU,size:1});}},
+        p1_wings:{name:'흰 날개',fire:function(s,t){
+          // 두 날개의 가장 안쪽 깃이 통로의 경계다. 다음 깃줄은 그 통로를 한 걸음 옆으로 옮긴다.
+          if(t%66!==0)return;
+          var b=s.boss,row=Math.floor(t/66),feathers=K.pick(s,5,6,7),first=s.n;
+          var halfGap=K.pick(s,40,32,28),gap=W/2+[0,1,0,-1][row%4]*halfGap;
+          for(var side=-1;side<=1;side+=2){
+            for(var j=0;j<feathers;j++){
+              var x=b.x+side*(18+9*j),y=b.y+14-2*j*j;
+              var target=gap+side*(halfGap+19*j);
+              var angle=Math.atan2(K.H*.87-y,target-x);
+              K.spawn(s,x,y,angle,148+3*j,{size:RICE,color:j===0?PU:WH,formation:true});
+            }
+          }
+          if(s.n>first)s.skillCast={kind:'wings',seg:s.seg,start:s.tick,until:s.tick+22,
+            x:b.x,y:b.y,xs:s.bx.slice(first,s.n),ys:s.by.slice(first,s.n)};
+        }},
         p1_hunger:{name:'굶주림과 두려움',fire:function(s,t){var b=s.boss,ph=t%96;
           // 그림: 굶주림은 세 번 연달아 무는 붉은 쌀알, 두려움은 떨며 번지는 보라 고리.
           if(ph===0)s.p1a=K.aim(s,b.x,b.y);

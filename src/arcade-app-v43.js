@@ -107,9 +107,13 @@
   }
   /* 스테이지에 필요한 그림: 배경 · 그 스테이지 SEGMENTS의 인물 · cast의 몹 · 기념물. 기물은 처음 화면에 나올 때 받는다. */
   /* 장면마다 m0 지역표의 몹 그림을 입힌다(src/arcade-skins-v43.js). 시뮬의 몹 종류는 그대로고 그림만 바뀐다. */
-  var SKINS=(typeof ArcadeSkins==='object'&&ArcadeSkins&&ArcadeSkins.scenes)||{};
-  var skins=(typeof ArcadeSkins==='object'&&ArcadeSkins)||{},FRONT=skins.front||{}; // 아래로 걷는 정면 그림만 모은 목록이 있으면 그것을 쓴다(옆모습 몹이 아래로 미끄러지지 않게)
-  function skinsOf(index){var g=Arcade.STAGES[index],list=g&&(FRONT[g.scene]&&FRONT[g.scene].length?FRONT[g.scene]:SKINS[g.scene]);return list&&list.length?list:null;}
+  var skins=global.ArcadeSkins||{},sceneMobSkins=skins.scenes||{},frontMobSkins=skins.front||{};
+  function skinsOf(index){
+    var stage=Arcade.STAGES[index];
+    if(!stage)return null;
+    var front=frontMobSkins[stage.scene],list=front&&front.length?front:sceneMobSkins[stage.scene];
+    return list&&list.length?list:null;
+  }
   function skinOf(index,kind){
     var list=skinsOf(index);if(!list)return kind;
     var g=Arcade.STAGES[index],at=(g.cast||[]).indexOf(kind);if(at<0){at=0;for(var i=0;i<kind.length;i++)at+=kind.charCodeAt(i);}
@@ -186,24 +190,67 @@
   /* 두 색을 섞는다(#rrggbb). */
   function mix(a,b,t){var pa=parseInt(a.slice(1,7),16),pb=parseInt(b.slice(1,7),16),out='#';for(var k=16;k>=0;k-=8){var x=Math.round(((pa>>k)&255)*(1-t)+((pb>>k)&255)*t);out+=('0'+x.toString(16)).slice(-2);}return out;}
   /* 스테이지마다 중간 구슬탄(크기 1)에 입히는 겉모양. 판정 원은 그대로이고 그림만 바뀐다. 동방식 탄막처럼 종류마다 실루엣이 달라 패턴이 서로 다르게 읽힌다. */
-  var SKINS=['','star','scale','dagger','talisman'],skinSprites={};
-  function skinVariant(s){var i=s.stageIndex|0;return SKINS[(i+Math.floor(i/5))%SKINS.length];} // 이웃 스테이지끼리 겹치지 않게 돌린다
+  var STAGE_BULLET_SKINS=['','star','scale','dagger','talisman'],skinSprites={};
+  function skinVariant(s){var i=s.stageIndex|0;return STAGE_BULLET_SKINS[(i+Math.floor(i/5))%STAGE_BULLET_SKINS.length];} // 이웃 스테이지끼리 겹치지 않게 돌린다
   function buildSkin(kind,radius,color,tint){
-    var u=radius*1.9,reach=u*1.5,c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale;
+    var compactShape=kind==='nib'||kind==='hook'||kind==='split'||kind==='facet';
+    var u=radius*(compactShape?1.35:1.9),reach=u*1.5,c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale;
     g.translate(m,m);g.scale(scale,scale);
     var glow=g.createRadialGradient(0,0,radius*.6,0,0,reach);var hs=tint&&tint!==color?mix(color,tint,.55):color;glow.addColorStop(0,hs+haloOf(color,'66'));glow.addColorStop(1,hs+'00');if(!lite){g.fillStyle=glow;g.fillRect(-reach,-reach,reach*2,reach*2);}
     var body=g.createLinearGradient(-u,-u,u,u);body.addColorStop(0,mix(color,'#ffffff',.6));body.addColorStop(.5,color);body.addColorStop(1,mix(tint&&tint!==color?mix(color,tint,.6):color,'#000000',.35));
     g.fillStyle=body;g.strokeStyle=paleRimOf(color);g.lineWidth=1.4;g.lineJoin='round';g.beginPath();
-    if(kind==='star'){for(var i=0;i<10;i++){var a=-Math.PI/2+i*Math.PI/5,rr=i%2?u*.45:u;g[i?'lineTo':'moveTo'](Math.cos(a)*rr,Math.sin(a)*rr);}g.closePath();}
+    if(kind==='nib'){
+      g.moveTo(u*1.3,0);g.lineTo(-u*.6,-u*.68);g.lineTo(-u*.32,0);g.lineTo(-u*.6,u*.68);g.closePath();
+    }else if(kind==='hook'){
+      g.moveTo(u*.98,-u*.65);g.quadraticCurveTo(u*.75,u*.55,-u*.45,u*.75);
+      g.quadraticCurveTo(-u*1.12,u*.7,-u,-u*.16);g.quadraticCurveTo(-u*.48,u*.28,u*.98,-u*.65);g.closePath();
+    }else if(kind==='split'){
+      g.moveTo(u*.98,0);g.quadraticCurveTo(u*.65,-u*1.24,-u*.95,-u*.65);g.lineTo(-u*.42,0);
+      g.lineTo(-u*.95,u*.65);g.quadraticCurveTo(u*.65,u*1.24,u*.98,0);g.closePath();
+    }else if(kind==='facet'){
+      g.moveTo(u,0);g.lineTo(0,-u*.8);g.lineTo(-u,0);g.lineTo(0,u*.8);g.closePath();
+    }else if(kind==='star'){for(var i=0;i<10;i++){var a=-Math.PI/2+i*Math.PI/5,rr=i%2?u*.45:u;g[i?'lineTo':'moveTo'](Math.cos(a)*rr,Math.sin(a)*rr);}g.closePath();}
     else if(kind==='scale'){g.moveTo(u,0);g.quadraticCurveTo(0,-u*.85,-u*.8,-u*.35);g.lineTo(-u*.55,0);g.lineTo(-u*.8,u*.35);g.quadraticCurveTo(0,u*.85,u,0);g.closePath();} // 비늘(화살촉): +x가 진행 방향
     else if(kind==='dagger'){g.moveTo(u*1.15,0);g.lineTo(-u*.2,-u*.32);g.lineTo(-u*.3,-u*.6);g.lineTo(-u*.45,-u*.6);g.lineTo(-u*.45,-u*.2);g.lineTo(-u*.95,-u*.16);g.lineTo(-u*.95,u*.16);g.lineTo(-u*.45,u*.2);g.lineTo(-u*.45,u*.6);g.lineTo(-u*.3,u*.6);g.lineTo(-u*.2,u*.32);g.closePath();}
     else{g.rect(-u*.95,-u*.55,u*1.9,u*1.1);} // 부적: 진행 방향으로 누운 종이
     g.fill();g.stroke();
+    if(kind==='split'){
+      g.strokeStyle=paleOf(color)?'#ffffff':'#251e24';g.lineWidth=Math.max(.8,radius*.22);
+      g.beginPath();g.moveTo(-u*.55,0);g.lineTo(u*.5,0);g.stroke();
+    }
     if(kind==='talisman'){g.strokeStyle=mix(color,'#000000',.55);g.lineWidth=1;g.beginPath();g.arc(0,0,u*.3,0,TAU);g.moveTo(-u*.7,0);g.lineTo(-u*.3,0);g.moveTo(u*.3,0);g.lineTo(u*.7,0);g.stroke();} // 붓으로 그은 문양
     g.fillStyle='#ffffff';g.beginPath();g.arc(kind==='dagger'?u*.2:0,0,radius*.42,0,TAU);g.fill(); // 흰 심
     return {image:c,half:reach};
   }
-  function skinOfBullet(kind,color){var key=kind+color+orbTint;if(!skinSprites[key]){skinSprites[key]=buildSkin(kind,Arcade.SIZE_RADIUS[1]*(state?state.sizeScale:compact?1.25:1),COLORS[color],orbTint);if(Ink&&Ink.rough)Ink.rough(skinSprites[key]);}return skinSprites[key];}
+  function skinOfBullet(kind,color,size){
+    var key=kind+':'+size+':'+color+orbTint;
+    if(!skinSprites[key]){
+      var radius=Arcade.SIZE_RADIUS[size]*(state?state.sizeScale:compact?1.25:1);
+      skinSprites[key]=buildSkin(kind,radius,COLORS[color],orbTint);
+      if(Ink&&Ink.rough)Ink.rough(skinSprites[key]);
+    }
+    return skinSprites[key];
+  }
+  // A moving nib can re-aim, a hooked blade can turn, and a notched seed opens into child shots.
+  function bulletSkin(s,i,stageSkin){
+    var size=s.bsize[i];
+    if(size>2)return '';
+    if(s.bat[i]){
+      var mode=s.bmode[i];
+      if(mode===Arcade.MODE_REAIM)return 'nib';
+      if(mode===Arcade.MODE_TURN)return 'hook';
+      if(mode===Arcade.MODE_SPLIT||mode===Arcade.MODE_BRANCH)return 'split';
+    }
+    if(s.bformation[i])return 'facet';
+    return size===1?stageSkin:'';
+  }
+  function drawOrientedBullet(s,i,sprite,kind,grow){
+    var a=kind==='star'?s.bage[i]*.08:finite(s.ba[i],0);
+    var co=Math.cos(a),sn=Math.sin(a),half=sprite.half*grow;
+    ctx.setTransform(scale*co,scale*sn,-scale*sn,scale*co,(s.bx[i]+offsetX)*scale,(s.by[i]+offsetY)*scale);
+    ctx.drawImage(sprite.image,-half,-half,half*2,half*2);
+    ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
+  }
   // 쌀알탄: 오른쪽(진행 방향)으로 길쭉한 알. 그릴 때 탄의 각도로 돌린다.
   function buildRice(radius,color){
     if(Ink)return Ink.sprite('rice',radius,color,scale);
@@ -661,6 +708,110 @@
     ctx.drawImage(m.img,r[0],r[1],r[2],r[3],b.x-size/2,b.y-size/2,size,size);
     if(age<BURST_TIME){var kb=age/BURST_TIME,bs=90+150*kb;ctx.globalAlpha=.6*(1-kb);ctx.drawImage(m.img,q[0],q[1],q[2],q[3],b.x-bs/2,b.y-bs/2,bs,bs);}
     ctx.restore();
+  }
+  // Brief source effects follow the actual volley. Feather tips, teeth and stitches are decorative and sit under the bullets.
+  function drawCardCast(s){
+    var c=s.skillCast;
+    if(!c||s.stage!=='card'||c.seg!==s.seg||s.tick<c.start||s.tick>=c.until)return;
+    var age=s.tick-c.start,t=age/(c.until-c.start),i,side;
+    ctx.save();ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();
+    if(c.kind==='wings'){
+      // White quills share their roots with the feather bullets that actually spawned on each wing.
+      for(i=0;i<c.xs.length;i++){
+        var x=c.xs[i],y=c.ys[i],wing=x<c.x?-1:1;
+        var span=13+Math.abs(x-c.x)*.2,tipX=x+wing*span*(.25+.5*t),tipY=y+span*(1-t*.5);
+        ctx.moveTo(x-wing*4,y-3);ctx.quadraticCurveTo(x+wing*2,y+span*.65,tipX,tipY);
+        ctx.quadraticCurveTo(x+wing*6,y+3,x,y);ctx.closePath();
+      }
+      if(Ink)Ink.raw(1);
+      ctx.fillStyle='#f5ead0';ctx.globalAlpha=.72*(1-t);ctx.fill();
+      if(Ink)Ink.raw(-1);
+      for(i=1;i<c.xs.length;i++){
+        if((c.xs[i-1]-c.x)*(c.xs[i]-c.x)>0){ctx.moveTo(c.xs[i-1],c.ys[i-1]);ctx.lineTo(c.xs[i],c.ys[i]);}
+      }
+    }else if(c.kind==='stomach'){
+      ctx.translate(c.x,c.y);ctx.rotate(c.angle);
+      var spit=s.tick>=c.release;
+      var pull=spit?0:1-age/(c.release-c.start);
+      var burst=spit?(s.tick-c.release)/(c.until-c.release):0;
+      var jaw=spit?11+18*burst:9+(c.radius-9)*pull,wide=spit?7+22*burst:9+21*pull;
+      // Two toothed lips close on the incoming shot cluster, then spring open toward its locked target.
+      for(side=-1;side<=1;side+=2){
+        ctx.moveTo(-jaw*.8,side*wide*.35);
+        ctx.quadraticCurveTo(-jaw*.25,side*wide*1.3,jaw*.6,side*wide*.86);
+        ctx.lineTo(jaw*(spit?1.9:.85),side*wide*.48);
+        for(i=0;i<3;i++){
+          var tooth=(i-1)*jaw*.32;
+          ctx.moveTo(tooth-jaw*.12,side*wide*.9);ctx.lineTo(tooth,side*wide*.55);ctx.lineTo(tooth+jaw*.12,side*wide*.9);
+        }
+      }
+      if(spit){
+        for(i=-1;i<=1;i++){
+          ctx.moveTo(jaw+3,i*4);ctx.lineTo(jaw+14+burst*16,i*(7+4*burst));
+        }
+      }
+    }else if(c.kind==='seam'){
+      // Each alternating row pulls a short thread through the point where its own diagonal begins.
+      side=c.slope>0?1:-1;
+      for(i=0;i<c.xs.length;i++){
+        var y0=c.y+15+t*10,x0=c.xs[i]+c.slope*(y0-c.y);
+        ctx.moveTo(x0-side*9,y0-4);
+        ctx.quadraticCurveTo(x0-side*6,y0+5,x0,y0+3);
+        ctx.lineTo(x0+side*9,y0+12);
+        ctx.moveTo(x0+side*3,y0+8);ctx.lineTo(x0-side*2,y0+12);
+      }
+    }
+    var fading=c.kind==='stomach'?Math.min(1,(c.until-s.tick)/10):1-t;
+    ctx.globalAlpha=.88*fading;
+    if(Ink)Ink.raw(1);
+    ctx.strokeStyle='#332b30';ctx.lineWidth=3.4;ctx.stroke();
+    ctx.strokeStyle=c.kind==='wings'?'#fff3d9':c.kind==='stomach'?'#d1ae7f':'#e2d4bf';
+    ctx.lineWidth=1.7;ctx.stroke();
+    if(Ink)Ink.raw(-1);
+    ctx.restore();
+  }
+  // The simulation fixes this cast's source and aim before releasing it. Keep the guide away from the HUD.
+  function drawPatternCue(s){
+    var c=s.patternCue;
+    if(!c||s.stage!=='card'||c.seg!==s.seg||s.tick<c.start||s.tick>=c.until)return;
+    var progress=(s.tick-c.start)/(c.until-c.start);
+    var length=43+15*progress;
+    ctx.save();ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();
+    if(c.kind==='goldrain'){
+      // Mark each shaft at both ends of the field without painting over the intervening bullets.
+      for(var i=0;i<c.xs.length;i++){
+        var x=c.xs[i],top=c.y+8,tip=top+length;
+        ctx.moveTo(x,top);ctx.lineTo(x,tip);ctx.moveTo(x-3,tip-5);ctx.lineTo(x,tip);ctx.lineTo(x+3,tip-5);
+        ctx.moveTo(x-4,H-13);ctx.lineTo(x,H-7);ctx.lineTo(x+4,H-13);
+      }
+    }else{
+      ctx.translate(c.x,c.y);ctx.rotate(c.angle);
+      if(c.kind==='fibfan'){
+        if(c.open){
+          for(var side=-1;side<=1;side+=2){
+            var a=side*c.gapAngle;
+            ctx.moveTo(7*Math.cos(a),7*Math.sin(a));ctx.lineTo(length*Math.cos(a),length*Math.sin(a));
+          }
+        }else{
+          ctx.moveTo(7,0);ctx.lineTo(length,0);ctx.moveTo(length-6,-3);ctx.lineTo(length,0);ctx.lineTo(length-6,3);
+        }
+      }else if(c.kind==='spiro'){
+        var sweep=c.endAngle-c.angle;
+        ctx.moveTo(7,0);ctx.lineTo(length,0);ctx.arc(0,0,length,0,sweep,sweep<0);
+        // A tangential arrowhead shows which end of the stroke the sweep will reach.
+        ctx.rotate(sweep);var dir=sweep<0?-1:1;
+        ctx.moveTo(length-3,-6*dir);ctx.lineTo(length,0);ctx.lineTo(length+3,-6*dir);
+      }else if(c.kind==='ripple'){
+        var gap=c.gapAngle,r=length*.68;
+        ctx.arc(0,0,r,gap,TAU-gap);
+        for(var edge=-1;edge<=1;edge+=2){
+          var angle=edge*gap;
+          ctx.moveTo(r*Math.cos(angle),r*Math.sin(angle));ctx.lineTo((r+6)*Math.cos(angle),(r+6)*Math.sin(angle));
+        }
+      }
+    }
+    ctx.globalAlpha=.78+.18*progress;ctx.strokeStyle='#22202c';ctx.lineWidth=3.8;ctx.stroke();
+    ctx.strokeStyle='#c9406e';ctx.lineWidth=2;ctx.stroke();ctx.restore();
   }
   function drawSkillFx(s){
     for(var i=casts.length-1;i>=0;i--){
@@ -1145,8 +1296,8 @@
       x=s.bx[i];y=s.by[i];if(s.bage[i]<bloom||x!==x||y!==y)continue;
       size=s.bsize[i];if(size===SHAPE_PROP){drawProp(s,i,1,1);drawBreakableMark(s,i);continue;}
       o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;half=o.half;var faint=nearBoss(s,x,y)||nearMob(s,x,y),grace=s.bfragment&&s.bfragment[i]&&s.bage[i]<s.bgrace[i];ctx.globalAlpha=grace?.28+.2*s.bage[i]/s.bgrace[i]:faint?.38:1;
-      var skin=size===1&&variant;if(skin){var so=skinOfBullet(variant,s.bcolor[i]),sa=variant==='star'?s.bage[i]*.08:finite(s.ba[i],0),sc=Math.cos(sa),ss=Math.sin(sa);ctx.setTransform(scale*sc,scale*ss,-scale*ss,scale*sc,(x+offsetX)*scale,(y+offsetY)*scale);ctx.drawImage(so.image,-so.half,-so.half,so.half*2,so.half*2);ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);} // 별은 돌고, 나머지는 진행 방향을 본다
-      else if(size===SHAPE_RICE){var a=finite(s.ba[i],0),cos=Math.cos(a),sin=Math.sin(a);ctx.setTransform(scale*cos,scale*sin,-scale*sin,scale*cos,(x+offsetX)*scale,(y+offsetY)*scale);ctx.drawImage(o.image,-half,-half,half*2,half*2);ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);}
+      var skin=bulletSkin(s,i,variant);
+      if(skin||size===SHAPE_RICE)drawOrientedBullet(s,i,skin?skinOfBullet(skin,s.bcolor[i],size):o,skin,1);
       else ctx.drawImage(o.image,x-half,y-half,half*2,half*2);
       ctx.globalAlpha=1;
       drawBreakableMark(s,i);
@@ -1156,7 +1307,11 @@
       var age=s.bage[i];x=s.bx[i];y=s.by[i];if(age>=bloom||x!==x||y!==y)continue;
       var t=age/bloom;size=s.bsize[i];
       if(size===SHAPE_PROP){drawProp(s,i,1.5-.5*t,.25+.6*t);continue;}
-      o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;var onMob=nearMob(s,x,y);half=o.half*(onMob?1:2.4-1.4*t);ctx.globalAlpha=(s.bfragment&&s.bfragment[i]?.22+.1*t:.25+.6*t)*(onMob?.45:1);ctx.drawImage(o.image,x-half,y-half,half*2,half*2); // 몹 몸 위에서는 부풀리지 않는다
+      o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;
+      var onMob=nearMob(s,x,y),grow=onMob?1:2.4-1.4*t,shape=bulletSkin(s,i,variant);
+      half=o.half*grow;ctx.globalAlpha=(s.bfragment&&s.bfragment[i]?.22+.1*t:.25+.6*t)*(onMob?.45:1);
+      if(shape||size===SHAPE_RICE)drawOrientedBullet(s,i,shape?skinOfBullet(shape,s.bcolor[i],size):o,shape,grow);
+      else ctx.drawImage(o.image,x-half,y-half,half*2,half*2);
     }
     ctx.globalAlpha=1;
   }
@@ -1434,7 +1589,7 @@
     offsetX=offsetY=0;if(shake>0){if(settings.screenShake){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;}shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawShots(s);drawDrifts();drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink)){drawPlayer(s);drawHitbox(s);}if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawCardCast(s);drawPatternCue(s);drawShots(s);drawDrifts();drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink)){drawPlayer(s);drawHitbox(s);}if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);
     // 스펠 선언 연출(사용자 11-18 "패턴·공격 미장센 강화"): 가장자리부터 먹이 번져 화면이 잠깐 조여졌다가 걷힌다. 보스에 시선이 모였다가 탄이 펼쳐진다(탄·영웅은 이 위에 그대로 읽힌다).
     if(spellDim>0&&Ink&&s.boss&&s.boss.present){var sd=spellDim,sx0=finite(s.boss.x,W/2),sy0=finite(s.boss.y,H/3),sg=ctx.createRadialGradient(sx0,sy0,H*.22,sx0,sy0,H*.85);if(Ink.raw)Ink.raw(1);sg.addColorStop(0,'rgba(24,20,16,0)');sg.addColorStop(.55,'rgba(24,20,16,'+(sd*.2)+')');sg.addColorStop(1,'rgba(24,20,16,'+(sd*.68)+')');ctx.fillStyle=sg;ctx.fillRect(0,0,W,H);if(Ink.raw)Ink.raw(-1);spellDim=Math.max(0,spellDim-Math.min(.05,elapsed)/1.6);}
@@ -1453,8 +1608,11 @@
     var focus=!!keys.Shift||focusHeld||focusLatched,bomb=bombQueued;bombQueued=false;
     var speed=focus?1.8:4.2,x=(keys.ArrowRight||keys.d?1:0)-(keys.ArrowLeft||keys.a?1:0),y=(keys.ArrowDown||keys.s?1:0)-(keys.ArrowUp||keys.w?1:0);
     if(x||y){var n=Math.sqrt(x*x+y*y);return {dx:x/n*speed,dy:y/n*speed,focus:focus,bomb:bomb};}
-    // 터치: 영웅이 손가락 조금 위에 뜬다. 손가락이 영웅과 판정점을 가리지 않는다.
-    if(finger.active&&state){var p=state.player;return {dx:finite(finger.x-p.x,0),dy:finite(finger.y-FINGER_LIFT-p.y,0),focus:focus,bomb:bomb};}
+    // 판 아래쪽에서는 손가락과의 간격을 줄여 키보드처럼 맨 아래까지 피할 수 있게 한다.
+    if(finger.active&&state){
+      var p=state.player,lift=Math.min(FINGER_LIFT,Math.max(0,H-finger.y));
+      return {dx:finite(finger.x-p.x,0),dy:finite(finger.y-lift-p.y,0),focus:focus,bomb:bomb};
+    }
     return {dx:0,dy:0,focus:focus,bomb:bomb};
   }
   // 디버그 가속: 이 스테이지를 빨리 끝낸다(무적, 잡몹 구간은 대본 끝으로, 보스는 바로 쓰러진다).
@@ -1758,7 +1916,14 @@
     $('arcade-bomb').addEventListener('pointerdown',function(e){if(mode!=='playing'||(e.button!==undefined&&e.button!==0))return;e.preventDefault();e.stopPropagation();bombQueued=true;});
     $('arcade-bomb').addEventListener('click',function(e){if(e.detail===0&&mode==='playing')bombQueued=true;});
     var stage=$('arcade-stage');
-    stage.addEventListener('pointerdown',function(e){if(mode==='playing'&&state&&Arcade.entrancePhase){var ph=Arcade.entrancePhase(state);if(ph&&ph.phase==='speech'&&ph.t>.3)Arcade.skipEntrance(state);}if(mode!=='playing'||finger.active||(e.button!==undefined&&e.button!==0)||e.target.closest('button,input,select,label'))return;e.preventDefault();var q=fieldPoint(e);finger.active=true;finger.id=e.pointerId;finger.x=q.x;finger.y=q.y;try{stage.setPointerCapture(e.pointerId);}catch(ignore){}});
+    stage.addEventListener('pointerdown',function(e){
+      if(mode!=='playing'||(e.button!==undefined&&e.button!==0)||e.target.closest('button,input,select,label'))return;
+      var ph=state&&Arcade.entrancePhase&&Arcade.entrancePhase(state);
+      if(ph&&ph.phase==='speech'&&ph.t>.3&&Arcade.skipEntrance(state)){e.preventDefault();return;}
+      if(finger.active)return;
+      e.preventDefault();var q=fieldPoint(e);finger.active=true;finger.id=e.pointerId;finger.x=q.x;finger.y=q.y;
+      try{stage.setPointerCapture(e.pointerId);}catch(ignore){}
+    });
     stage.addEventListener('pointermove',function(e){if(!finger.active||e.pointerId!==finger.id)return;e.preventDefault();var q=fieldPoint(e);finger.x=q.x;finger.y=q.y;});
     ['pointerup','pointercancel','lostpointercapture'].forEach(function(type){stage.addEventListener(type,function(e){if(e.pointerId===finger.id){finger.active=false;finger.id=null;}});});
     document.addEventListener('keydown',function(e){var key=e.key.length===1?e.key.toLowerCase():e.key,form=e.target&&e.target.closest&&e.target.closest('input,select,textarea,button');

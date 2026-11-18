@@ -45,3 +45,90 @@ test('사망 십자가는 오른쪽 아래 작게, 규칙에 새 항목이 있�
   assert.match(html,/#result-cross\{display:none;position:absolute;right:[^}]*bottom:[^}]*width:30px;height:40px/);
   assert.match(html,/arcade-boss-phases-v43\.js/);assert.match(i18n,/저속 간이 필살/);assert.match(i18n,/PHASE 1~N/);
 });
+
+test('the stage and role select a stable score, including recurring bosses and the chairman',()=>{
+  function score(stage,actor,mid){
+    return cardIndexes.filter(i=>{
+      const g=A.SEGMENTS[i];
+      return g.stage===stage-1&&g.actor===actor&&g.mid===mid;
+    }).map(i=>A.phaseKind(A.SEGMENTS[i],i)?.id??null);
+  }
+  assert.deepEqual(score(1,'p1_tree',false),[null,'branch','rails','gates']);
+  assert.deepEqual(score(22,'p2_chairman',true),[null,'ratchet']);
+  assert.deepEqual(score(28,'controller',true),[null,'mirror']);
+  assert.equal(score(25,'controller',false)[1],'gates');
+  assert.equal(score(26,'controller',false)[1],'columns');
+  assert.equal(score(30,'goblin',false).at(-1),'rose');
+  assert.equal(score(37,'p5_grand',false).at(-1),'stairs');
+  assert.equal(score(55,'rian',false).at(-1),'triangle');
+  assert.equal(score(56,'cultist',false).length,14);
+});
+
+test('branching roots split once, adjacent gate openings overlap, and the twin seals take turns',()=>{
+  function emit(stage,actor,final,t){
+    const segment=cardIndexes.filter(i=>A.SEGMENTS[i].stage===stage-1&&A.SEGMENTS[i].actor===actor).at(final?-1:1);
+    const g=A.SEGMENTS[segment],kind=A.phaseKind(g,segment),shots=[];
+    const s={boss:{x:180,y:120},player:{x:180,y:530},difficulty:'normal'};
+    P.fire(kind,s,t,{W:360,H:640,colors:[0,1],spawn:(state,x,y,a,v,o)=>shots.push({x,y,a,v,o})},{actor,phaseNo:A.phaseOf(segment).no});
+    return shots;
+  }
+  const roots=emit(1,'p1_tree',false,0);
+  assert.equal(roots.length,2);
+  assert(roots.every(q=>q.a===Math.PI/2&&q.o.mode===A.MODE_TURN&&q.o.at===40));
+  assert.equal(roots[0].o.arg,-roots[1].o.arg);
+  const open=t=>{
+    const blocked=emit(37,'p5_grand',true,t).map(q=>Math.floor(q.x/45));
+    return Array.from({length:8},(_,i)=>i).filter(i=>!blocked.includes(i));
+  };
+  assert.deepEqual(open(0),[1,2]);
+  assert.deepEqual(open(54),[2,3]);
+  const first=emit(55,'rian',true,0),second=emit(55,'rian',true,54);
+  assert.equal(first.length,9);
+  assert.equal(second.length,9);
+  assert(first.every(q=>q.o.color===0)&&second.every(q=>q.o.color===1));
+  assert(Math.abs(first[0].y+second[0].y-240)<1e-8);
+  assert(first[0].y<120&&second[0].y>120);
+});
+
+test('trimmed midbosses answer the original opening with their skipped motif on Easy/Normal',()=>{
+  const first=cardIndexes.find(i=>A.SEGMENTS[i].actor==='mb_02');
+  const second=first+1;
+  assert.equal(A.phaseKind(A.SEGMENTS[second],second).id,'branch');
+  for(const difficulty of ['gentle','normal','hell']){
+    const start=pacing=>A.createRun({segment:first,difficulty,pacing,seed:4,entranceAll:true,rhythm:true});
+    const run=start(true),untrimmed=start(false);
+    for(const s of [run,untrimmed])s.player.invulnerableUntil=1e6;
+    const born=s=>Array.from({length:s.n},(_,i)=>i).filter(i=>s.bage[i]===1);
+    let openingBullets=0;
+    while(run.segTick<241){
+      A.step(run,{dx:-4});A.step(untrimmed,{dx:-4});
+      assert(run.tick<700);
+      if(run.stage!=='card'||run.segTick===0)continue;
+      assert.equal(run.seg,first);
+      assert.equal(A.phaseOf(run.seg).no,1);
+      if(run.segTick<=210){
+        const snapshot=s=>born(s).map(i=>[s.ba[i],s.bs[i],s.bcolor[i]]);
+        assert.deepEqual(snapshot(run),snapshot(untrimmed),'all 210 opening ticks match the native shot trace');
+        openingBullets+=born(run).length;
+      }
+    }
+    assert(openingBullets>0);
+    if(difficulty==='hell'){
+      assert.equal(A.nextSegmentIndex(run),second);
+      assert.equal(run.variationTick,undefined);
+      while(run.seg===first){A.step(run,{dx:-4});assert(run.tick<6000);}
+      assert.equal(run.seg,second);
+      assert.equal(A.phaseOf(run.seg).no,2);
+      while(!run.variationTick){A.step(run,{dx:-4});assert(run.tick<6600);}
+    }else{
+      assert(A.nextSegmentIndex(run)>second);
+      assert.equal(run.authoredTick,210);
+      assert.equal(run.variationTick,1);
+      assert.equal(run.seg,first);
+    }
+    const roots=born(run).filter(i=>run.bmode[i]===A.MODE_TURN&&run.bat[i]===40);
+    assert.equal(roots.length,2);
+    assert.equal(run.barg[roots[0]],-run.barg[roots[1]]);
+    assert.equal(untrimmed.variationTick,undefined,'non-trimmed practice kept P1 intact');
+  }
+});

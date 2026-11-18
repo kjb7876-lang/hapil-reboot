@@ -29,11 +29,18 @@
 
       var spells={
         // ── 31 중립 지역의 재각성 ──
-        p4_clash:{name:'어울리지 않는 풍경',scene:'31',fire:function(s,t){var b=s.boss,n=pick(s,5,6,8),step=W/n,i;
-          // 두 세계가 맞붙은 땅: 서쪽 들판의 초록 줄과 동쪽의 보라 줄이 서로 비스듬히 엇갈려 내려오며 마름모 격자를 짠다.
-          if(t%64===0)for(i=0;i<n;i++){spawn(s,step*(i+.25),-10,DOWN-.5,62,{color:GREEN,size:0});spawn(s,step*(i+.25)-16,-34,DOWN-.5,62,{color:GREEN,size:0});}
-          if(t%64===32)for(i=0;i<n;i++){spawn(s,step*(i+.75),-10,DOWN+.5,62,{color:PURPLE,size:0});spawn(s,step*(i+.75)+16,-34,DOWN+.5,62,{color:PURPLE,size:0});}
-          if(t%128===96)K.ring(s,b.x,b.y,count(s,10),58,rand(s)*TAU,{color:YELLOW,size:1});}},
+        p4_clash:{name:'어울리지 않는 풍경',scene:'31',fire:function(s,t){
+          // 두 세계의 줄이 플레이어가 서는 높이에서 교차한다. 두 번째 줄은 반 칸 어긋난다.
+          if(t%48!==0)return;
+          var row=Math.floor(t/48),dir=row%2?-1:1,space=pick(s,80,65,56);
+          var y=32,slope=dir*.22,dy=K.H*.87-y,first=s.n;
+          var firstX=(W/2+(row%2)*space*.5-slope*dy)%space;
+          for(var x=firstX;x<=W;x+=space){
+            spawn(s,x,y,Math.atan2(1,slope),150,{color:dir>0?GREEN:PURPLE,size:dir>0?RICE:1,formation:true});
+          }
+          if(s.n>first)s.skillCast={kind:'seam',seg:s.seg,start:s.tick,until:s.tick+18,
+            y:y,slope:slope,xs:s.bx.slice(first,s.n)};
+        }},
         p4_resonance:{name:'칼의 공명',scene:'31',fire:function(s,t){var b=s.boss;
           // 칼의 공명: 같은 자리에서 함께 난 두 고리가 서로 반대로 휘며 엇갈려, 울림처럼 겹무늬가 번진다.
           if(t%44===0){var n=count(s,12),o=rand(s)*TAU;K.ring(s,b.x,b.y,n,70,o,{color:CYAN,size:0,turn:.16,life:560});K.ring(s,b.x,b.y,n,70,o,{color:WHITE,size:0,turn:-.16,life:560});}
