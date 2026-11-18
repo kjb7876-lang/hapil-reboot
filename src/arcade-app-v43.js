@@ -539,7 +539,7 @@
       else if(HeroFx&&e==='bombPulse'){HeroFx.onEvent(e,s,visual);play('bossHit',s.player.x);shake=Math.max(shake,3);}
       else if(HeroFx&&e==='focusSkill'){HeroFx.onEvent(e,s,visual);play('seal',s.player.x);}
       else if(HeroFx&&(e==='powerUp'||e==='powerDown'||e==='bombLevelUp'||e==='distort')){HeroFx.onEvent(e,s,visual);if(e==='distort')play('clockSlow');else if(e!=='powerDown')play('seal');}
-      else if(e==='card'){spellDim=1;inkBloom(s);play(/시간|시계|초침|째깍|톱니|태엽|모래|잠들/.test(Arcade.SEGMENTS[s.seg].name||'')?'clockTick':'charge',s.boss.x);castFx(s,true);showBanner(Arcade.SEGMENTS[s.seg].name,s.boss.name,true);if(s.entranceAll)bannerSub=phaseLabel(s,true);}
+      else if(e==='card'){spellDim=1;inkBloom(s);play(/시간|시계|초침|째깍|태엽/.test(Arcade.SEGMENTS[s.seg].name||'')?'clockTick':'charge',s.boss.x);castFx(s,true);showBanner(Arcade.SEGMENTS[s.seg].name,s.boss.name,true);if(s.entranceAll)bannerSub=phaseLabel(s,true);}
       else if(e==='plain'){var ppi=Arcade.phaseOf&&Arcade.phaseOf(s.seg);if(ppi&&ppi.count>1&&s.entranceAll)showBanner('PHASE '+ppi.no+' / '+ppi.count,phaseLabel(s,false),false);}
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,'제'+g.part+'부 · STAGE '+(s.stageIndex+1));play('seal');}}
       else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);showToast(r);rushStage=false;}
@@ -635,7 +635,15 @@
     var im=new Image();im.onload=function(){fxPending[e.file]=0;if(fxByBoss[state&&state.boss.actor]===e)fxImages[e.file]=im;};im.onerror=function(){fxPending[e.file]=0;};im.src=FX_DIR+e.file;
   }
   // 초반 보스(1~6장)의 스펠 선언: 탄 난이도는 그대로 두고 눈에 닿지 않는 장식 입자만 나선으로 흩뿌려 화려하게 보인다(사용자 11-18 "초반보스도 화려하게, 난이도는 조절").
-  function inkBloom(s){var b=s.boss;if(!b.present||s.stageIndex>5)return;var c=themeColor(s),n=44,k;for(k=0;k<n;k++){var a=k*2.399963+.4,sp=1.2+(k%11)*.42;addParticle(b.x,b.y,Math.cos(a)*sp,Math.sin(a)*sp,26+(k%7)*4,k%3?c:'#ffffff',3+(k%4));}}
+  var bloom=null;
+  function inkBloom(s){var b=s.boss;if(!b.present||s.stageIndex>5)return;bloom={x:b.x,y:b.y,t:visual};}
+  // 먹방울이 나선으로 번져 나갔다 옅어진다(source-over 담묵, 탄·불티와 달리 어둡고 느리다). 정식 시트가 오기 전 임시 코드 연출.
+  function drawBloom(s){
+    if(!bloom)return;var age=visual-bloom.t;if(age>1.4||!Ink){bloom=null;return;}
+    if(Ink.raw)Ink.raw(1);ctx.save();ctx.globalCompositeOperation='source-over';var k,u=age/1.4;
+    for(k=0;k<20;k++){var a=k*2.399963+.4,d=(18+age*(70+(k%5)*20)),r=(7+(k%4)*3.5)*(.6+age*.9);ctx.globalAlpha=.34*(1-u)*(1-u*.4);ctx.fillStyle='rgb(26,22,18)';ctx.beginPath();ctx.arc(bloom.x+Math.cos(a)*d,bloom.y+Math.sin(a)*d*.85,r,0,TAU);ctx.fill();ctx.globalAlpha*=.5;ctx.beginPath();ctx.arc(bloom.x+Math.cos(a)*d*.7,bloom.y+Math.sin(a)*d*.6,r*.6,0,TAU);ctx.fill();}
+    ctx.restore();if(Ink.raw)Ink.raw(-1);
+  }
   function castFx(s,big){
     var b=s.boss,e=fxByBoss[b.actor],sig=Arcade.SIGNATURES&&Arcade.SIGNATURES[b.actor];if(!b.present)return;
     if(casts.length>=4)casts.shift();
@@ -1067,8 +1075,12 @@
       ctx.closePath();ctx.fill();ctx.stroke();
     }
     ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
-    // 실제로 닿는 곳은 가운데 심뿐이다.
-    ctx.globalAlpha=alpha;ctx.drawImage(core.image,x-core.half,y-core.half,core.half*2,core.half*2);ctx.globalAlpha=1;
+    // 실제로 닿는 곳은 가운데 심과 가장자리 작은 심들이다.
+    ctx.globalAlpha=alpha;ctx.drawImage(core.image,x-core.half,y-core.half,core.half*2,core.half*2);
+    // 가장자리 판정점(사용자 11-18): 무기 몸을 따라 작은 심을 옅게 보여, 어디에 맞는지 읽힌다.
+    var rim=Arcade.propHitPoints&&Arcade.propHitPoints(s.bcolor[i]);
+    if(rim){var rs=s.sizeScale*grow,rh=core.half*.55;ctx.globalAlpha=alpha*.55;for(var q=0;q<rim.length;q++){var rp=rim[q];if(!rp[0]&&!rp[1])continue;ctx.drawImage(core.image,x+(rp[0]*cos-rp[1]*sin)*rs-rh,y+(rp[0]*sin+rp[1]*cos)*rs-rh,rh*2,rh*2);}}
+    ctx.globalAlpha=1;
   }
   /* 코드로 그리는 기물: 어두운 회화풍에 맞게 뼈빛·이끼빛 단색에 어두운 테두리, 왼쪽 위에서 빛. u는 반 길이. */
   /* 코드로 그린 기물 한 장. +x가 진행 방향이 되게 돌려 그린다(손끝이 +x, 해골은 아래턱이 +x). tools/build-drawn-props-v43.cjs도 이것으로 그림 파일을 굽는다. */
@@ -1421,10 +1433,10 @@
     offsetX=offsetY=0;if(shake>0){if(settings.screenShake){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;}shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawShots(s);drawDrifts();drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink)){drawPlayer(s);drawHitbox(s);}if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawBloom(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawShots(s);drawDrifts();drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawBullets(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink)){drawPlayer(s);drawHitbox(s);}if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);
     // 스펠 선언 연출(사용자 11-18 "패턴·공격 미장센 강화"): 가장자리부터 먹이 번져 화면이 잠깐 조여졌다가 걷힌다. 보스에 시선이 모였다가 탄이 펼쳐진다(탄·영웅은 이 위에 그대로 읽힌다).
-    if(spellDim>0&&Ink&&s.boss&&s.boss.present){var sd=spellDim,sx0=finite(s.boss.x,W/2),sy0=finite(s.boss.y,H/3),sg=ctx.createRadialGradient(sx0,sy0,H*.22,sx0,sy0,H*.85);if(Ink.raw)Ink.raw(1);sg.addColorStop(0,'rgba(24,20,16,0)');sg.addColorStop(.55,'rgba(24,20,16,'+(sd*.16)+')');sg.addColorStop(1,'rgba(24,20,16,'+(sd*.5)+')');ctx.fillStyle=sg;ctx.fillRect(0,0,W,H);if(Ink.raw)Ink.raw(-1);spellDim=Math.max(0,spellDim-Math.min(.05,elapsed)/1.1);}
+    if(spellDim>0&&Ink&&s.boss&&s.boss.present){var sd=spellDim,sx0=finite(s.boss.x,W/2),sy0=finite(s.boss.y,H/3),sg=ctx.createRadialGradient(sx0,sy0,H*.22,sx0,sy0,H*.85);if(Ink.raw)Ink.raw(1);sg.addColorStop(0,'rgba(24,20,16,0)');sg.addColorStop(.55,'rgba(24,20,16,'+(sd*.2)+')');sg.addColorStop(1,'rgba(24,20,16,'+(sd*.68)+')');ctx.fillStyle=sg;ctx.fillRect(0,0,W,H);if(Ink.raw)Ink.raw(-1);spellDim=Math.max(0,spellDim-Math.min(.05,elapsed)/1.6);}
     else if(spellDim>0)spellDim=0;
     drawHud(s);
     if(flash>0){if(Ink&&Ink.raw)Ink.raw(1);if(Ink){var fb=s.boss&&s.boss.present,fx0=fb?finite(s.boss.x,W/2):W/2,fy0=fb?finite(s.boss.y,H/3):H/3,fg=ctx.createRadialGradient(fx0,fy0,20,fx0,fy0,H*.9);fg.addColorStop(0,'rgba(255,252,244,'+(flash*.75)+')');fg.addColorStop(1,'rgba(255,252,244,'+(flash*.2)+')');ctx.fillStyle=fg;}else ctx.fillStyle='rgba(255,255,255,'+(flash*.8)+')';ctx.fillRect(0,0,W,H);if(Ink&&Ink.raw)Ink.raw(-1);if(Ink){ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);drawPlayer(s);drawHitbox(s);ctx.restore();}flash-=.04;} // 수묵화에서도 섬광은 밝게: 먹색으로 뒤집히면 패턴 격파·보스 쓰러짐 때 화면이 잿빛으로 꺼졌다(보스 이펙트 전수조사 11-15). 보스에서 퍼지는 빛으로, 영웅·판정점은 섬광 위에 다시 그려 위치를 놓치지 않게(심사 1차 6.41)
