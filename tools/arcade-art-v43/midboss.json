@@ -30,7 +30,15 @@
   "mb_06": {
    "src": "media/drive-v43/b06-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/mb-dist05-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "mb_07": {
    "src": "media/m0-v43/dist06-m1-move.webp",
@@ -75,22 +83,54 @@
   "mb_14": {
    "src": "media/drive-v43/b14-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/mb-ep1b02-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "mb_15": {
    "src": "media/drive-v43/b16-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/mb-ep1b03-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "mb_16": {
    "src": "media/drive-v43/b18-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/mb-ep1b04-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "mb_17": {
    "src": "media/drive-v43/b20-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/mb-ep1b05-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "mb_18": {
    "src": "media/m0-v43/b06-f2-move.webp",
@@ -125,12 +165,28 @@
   "mb_20": {
    "src": "media/drive-v43/b22-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/mb-ep1b07-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "mb_21": {
    "src": "media/drive-v43/b24-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/mb-ep1b08-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "mb_24": {
    "src": "media/drive-v43/v3-030-threshold-spider-down.webp",
@@ -149,12 +205,28 @@
   "mb_25": {
    "src": "media/drive-v43/b29-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/u204-mid-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "mb_27": {
    "src": "media/drive-v43/b28-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/u205-mid-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "mb_28": {
    "src": "media/drive-v43/b30-down.webp",
@@ -265,22 +337,54 @@
   "mb_49": {
    "src": "media/drive-v43/b49-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/mb-hando03-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "mb_52": {
    "src": "media/drive-v43/b51-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/mb-murder01-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "mb_53": {
    "src": "media/drive-v43/b52-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/mb-murder02-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "mb_54": {
    "src": "media/drive-v43/b53-down.webp",
    "strip": 4,
-   "fps": 6
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/m0-v43/boss/murder04-mid-attack.webp",
+     "strip": 4,
+     "fps": 8,
+     "size": 220
+    }
+   }
   },
   "mb_56": {
    "src": "media/m0-v43/c104-e1-move.webp",

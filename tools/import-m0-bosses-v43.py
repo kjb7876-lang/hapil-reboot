@@ -11,6 +11,8 @@ from PIL import Image
 M0 = sys.argv[1] if len(sys.argv) > 1 else '/home/claude/kjb7876-lang/m0'
 OUT = 'media/m0-v43/boss'
 CELL = 300
+# 걷기 시트와 m0 공격이 서로 다른 단계라 공격을 달지 않는 보스(tests/arcade-v43-art-consistency). -tone 시트는 tools/tone-match-v43.py 산출물이라 다시 돌려도 덮지 않는다.
+SKIP = {'mb_35', 'p2_chairman', 'p2_beelzebub', 'p2_wrath', 'balrog', 'mask', 'lucifer'}
 EXTRA = {'p1_seraph': 'a11-boss', 'p2_belphegor': 'b02-boss', 'p2_mammon': 'b06-boss', 'pride': 'b08-boss'}
 
 def blob(path):
@@ -45,9 +47,10 @@ for scene, row in table['scenes'].items():
         if b.get('driveId') and b.get('match') == 'exact': by_drive.setdefault(b['driveId'].lower(), f'{OUT}/{name}')
 json.dump({'source': 'm0 r96/runtime-text/assets/r104/bosses', 'bosses': index}, open(f'{OUT}/index.json', 'w'), ensure_ascii=False, indent=1)
 linked, used = [], set()
-for path in sorted(glob.glob('tools/arcade-art-v43/[bp]*.json')):
+for path in sorted(glob.glob('tools/arcade-art-v43/[bpm]*.json')):
     t = json.load(open(path)); changed = False
     for key, spec in t.get('actors', {}).items():
+        if key in SKIP: continue
         m = re.search(r'drive-v43/(b\d+)-down\.webp', spec.get('src', ''))
         src = by_drive.get(m.group(1)) if m else (f"{OUT}/{index[EXTRA[key]]['file']}" if EXTRA.get(key) in index else None)
         if src:

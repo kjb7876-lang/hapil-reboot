@@ -151,9 +151,11 @@
     sheets[key]=info;return info;
   }
   // 칸 하나만 잘라 그린다(9인자 drawImage). phase로 시작 칸을 어긋나게 한다. still이면 첫 칸.
+  var deathProg=-1;
   function drawCell(key,img,phase,still,x,y,w,h){
     var sh=sheetOf(key,img),f=0;
     if(sh.frames>1&&!still)f=((Math.floor(visual*sh.fps)+(phase|0))%sh.frames+sh.frames)%sh.frames;
+    if(sh.frames>1&&deathProg>=0&&/@death$/.test(key))f=Math.min(sh.frames-1,Math.floor(deathProg*sh.frames)); // 쓰러짐 시트는 돌지 않고 한 번 끝까지 재생(쓰러짐 진행도 따라)
     ctx.drawImage(img,f*sh.cw,0,sh.cw,sh.ch,x,y,w,h);
   }
   function cellRatio(key,img){var sh=sheetOf(key,img);return sh.cw/Math.max(1,sh.ch);}
@@ -706,6 +708,10 @@
     for(j=0;j<2;j++){var sp=stainSprite[(ss+j)%3],cx=x+(rn()-.5)*tall*.3,cy=y+tall*(.2+.1*rn()),R=tall*(.42+.2*j+.35*bloom)*(.85+.25*rn()),rot=(rn()-.5)*.5;
       ctx.save();ctx.globalAlpha=Math.min(1,(1-.25*j)*sa*1.1);ctx.translate(cx,cy);ctx.rotate(rot);ctx.drawImage(sp,-R*1.45/2*1.0,-R*.45,R*1.45,R);ctx.restore();} // 가로로 넓고 아래로 처진 번짐, 보스마다 다른 얼룩
     ctx.globalAlpha=1;
+    if(images[fall.actor+'@death']){ // 드라이브에서 받은 쓰러짐 시트가 있으면 먹 녹임 대신 그 그림을 한 번 재생(그림이 스스로 재로 스러진다)
+      deathProg=k;try{drawArt(fall.actor,x,y,false,themeColor(s),0,'death',fall.dir);}finally{deathProg=-1;}
+      if(Ink.footCloud&&k<.95){ctx.save();ctx.globalAlpha=1-sm(.35,.95,k);Ink.footCloud(ctx,x,y+tall*.12,tall*(1+.25*k),visual);ctx.restore();ctx.globalAlpha=1;}
+      return true;}
     // 2) 몸: 따로 그린 판에서 먹빛으로 물들이고, 아래부터 위로 녹여 지운다. 몸 곳곳에도 먹이 번져 구멍이 난다.
     var main=meltBegin(x,y,tall);if(!main)return false;
     var slump=sm(0,.6,k);ctx.save();ctx.translate(x+Math.sin(s.tick*.9)*3*(1-slump),y+tall*.12*slump);ctx.rotate(fall.dir*.18*slump);ctx.scale(1+.06*slump,1-.12*slump);
@@ -730,7 +736,7 @@
     var lent=[],key;for(key in fall.keep)if(!images[key]){images[key]=fall.keep[key];lent.push(key);}
     try{if(Ink&&Ink.melt&&inkFall(s,k))return;
     ctx.save();ctx.globalAlpha=k<.7?1:1-(k-.7)/.3;
-    if(images[fall.actor+'@death']){drawArt(fall.actor,fall.x,fall.y+10*k,false,themeColor(s),0,'death',fall.dir);}
+    if(images[fall.actor+'@death']){deathProg=k;try{drawArt(fall.actor,fall.x,fall.y+10*k,false,themeColor(s),0,'death',fall.dir);}finally{deathProg=-1;}}
     else{ctx.translate(fall.x,fall.y+22*k*k);ctx.rotate(fall.dir*.55*Math.min(1,k*1.5));ctx.scale(1+.1*k,1-.4*k*k);drawArt(fall.actor,0,0,k<.45&&((s.tick>>2)&1)===1,themeColor(s),0,'',fall.dir);} // 젖혀지며 무릎 꿇듯 주저앉고 사라진다
     ctx.restore();ctx.globalAlpha=1;
     }finally{for(var li=0;li<lent.length;li++)delete images[lent[li]];}
