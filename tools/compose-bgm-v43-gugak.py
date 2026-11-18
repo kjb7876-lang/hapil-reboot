@@ -61,7 +61,7 @@ def danso(m, dur, vib=.35, scoop=1.0, breath=1.0, over=0.0, trill=0.0):
     chiff *= .5 / (np.abs(chiff).max() + 1e-9)
     amp = np.clip(t / .06, 0, 1) ** .6 * (1 + .07 * np.sin(2 * np.pi * 4.7 * t + 1))
     amp *= np.where(t > dur, np.exp(-(t - dur) / .09), 1)
-    sig = tone * .55 + (nb * .55 + hiss * .1) * breath * (1 + over * 2) * .5 + chiff * .35 * breath
+    sig = tone * .55 + (nb * .45 + hiss * .03) * breath * (1 + over * .6) * .5 + chiff * .18 * breath
     return sig * amp
 
 def geomungo(m, dur, slide=0.0, vib=0.0, hit=1.0):
@@ -142,6 +142,10 @@ class Track:
         self.buf[i:i + len(a), 0] += a * l * 1.41; self.buf[i:i + len(a), 1] += a * r * 1.41
 
     def seq(self, inst, bar0, pattern, step, vel=.8, pan=0.0, legato=1.0, **kw):
+        # 11-18 사용자 "너무 높고 귀 아픈 음": 단소·해금 선율이 A5(81)를 넘으면 구절 전체를 옥타브 내린다.
+        cap = 81 if inst == 'danso' else 76 if inst == 'fiddle' else 999
+        while max((m for m, _ in pattern if m is not None), default=0) > cap:
+            pattern = [(None if m is None else m - 12, k) for m, k in pattern]
         pos = 0.0
         for m, k in pattern:
             b = pos * step
@@ -162,7 +166,10 @@ class Track:
             X = np.fft.rfft(out[:, c], F2); fr = np.fft.rfftfreq(F2, 1 / SR)
             hpp = np.fft.irfft(X * (fr > 3000), F2)[:len(out)]
             g = np.abs(hpp).max() or 1
-            out[:, c] += .10 * np.tanh(hpp / g * 3) * g / 3
+            out[:, c] += .02 * np.tanh(hpp / g * 3) * g / 3
+        for c in range(2):  # 높은 소리 덜기: 4.5kHz 위 -6dB, 9kHz 위 -12dB 쪽으로 완만히
+            X = np.fft.rfft(out[:, c], F2); fr = np.fft.rfftfreq(F2, 1 / SR)
+            out[:, c] = np.fft.irfft(X / np.sqrt(1 + (fr / 4500) ** 2), F2)[:len(out)]
         if lowcut:
             for c in range(2):
                 X = np.fft.rfft(out[:, c], F2); fr = np.fft.rfftfreq(F2, 1 / SR)
@@ -332,7 +339,7 @@ def field4():
         for k, d in enumerate(fig): T.note('koto', deg(sc, r, c + d), b, k * S3, .4, vel=.3 + .1 * (k % 3 == 0), pan=-.3)
         T.note('geomungo', deg(sc, r - 24, c), b, 0, .8, vel=.46, pan=-.05)
         T.note('geomungo', deg(sc, r - 24, c), b, 2, .6, vel=.32, pan=-.05)
-        for k in (0, 5, 9, 11) if b % 2 == 0 else (0, 3, 6, 9): T.note('kkwaeng', 96 + (7 if k % 2 else 0), b, k * S3, .2, vel=.1 + .04 * (k == 0), pan=.4)
+        for k in (0, 5, 9, 11) if b % 2 == 0 else (0, 3, 6, 9): T.note('kkwaeng', 81 + (5 if k % 2 else 0), b, k * S3, .2, vel=.05 + .02 * (k == 0), pan=.4)
     A = '4:3 5:3 7:3 5:3 4:3 2:3 4:6 5:3 4:3 7:3 5:3 4:3 2:3 0:3 2:3'
     B = '9:3 10:3 12:3 10:3 9:3 7:3 9:6 10:3 9:3 7:3 5:3 4:3 2:3 0:6'
     st = S3
@@ -370,38 +377,37 @@ def boss():
     T.seq('danso', 34, mel(sc, r, '9:2 10:1 9:1 7:2 9:2 10:4 -:4'), 1, vel=.6, pan=.05, vib=.5, scoop=1.2, over=.5)
     T.render(f'{OUT}/boss.mp3', wet=.18, decay=1.6, gain=.95)
 
-# ── 7) 보스 2: 휘모리(빠른 4박). 거문고 오스티나토가 앞에 나서고, 태고가 박마다 짓누른다. (A 평조 꼴 단조, 148BPM, 40마디 ≈ 65초)
+# ── 7) 보스 2(11-18 다시 만듦): 엇모리 장단(한 마디 10칸 = 3+2+3+2). 절룩이듯 엇박으로 몰아치는 신비롭고 불길한 곡.
+#     거문고가 3+2 엇박 가락을 굵게 짚고, 태고가 무리마다 내려치며, 가야금이 흔들고, 단소는 낮게 휘감는다. 높은 소리는 쓰지 않는다.
+#     (A 계면조, 한 칸 = 8분, 박 200BPM, 44마디 ≈ 66초)
 def boss2():
-    T = Track(148, 40, seed=34); sc, r = GYEMYEON, 57
-    for b in range(40):
-        peak = b >= 20; c = [0, 0, -1, 1][b % 4] + (1 if b >= 28 else 0)
-        for k in range(8):  # 8분음표 8칸
-            at = k * .5
-            if k in (0, 4): T.note('taiko_drum', 41, b, at, .4, vel=.6 * (1.1 if peak else 1), pan=0)
-            elif k in (2, 6): T.note('taiko_drum', 45, b, at, .3, vel=.32, pan=-.15)
-            else: T.note('taiko_drum', 52, b, at, .2, vel=.14, pan=.35)
-            if peak and k in (3, 7): T.note('taiko_drum', 50, b, at, .2, vel=.24, pan=.2)
+    T = Track(200, 44, beats=5, seed=36); sc, r = GYEMYEON, 57
+    U = .5  # 한 칸 = 반 박
+    groups = [(0, 3), (3, 2), (5, 3), (8, 2)]
+    for b in range(44):
+        peak = b >= 24; c = [0, 0, -1, 1, 0, 2, 1, 0][b % 8] + (1 if b >= 32 else 0)
+        for gi, (g0, gl) in enumerate(groups):
+            big = gi in (0, 2)
+            T.note('taiko_drum', 41 if gi == 0 else 45 if big else 47, b, g0 * U, .4, vel=(.6 if gi == 0 else .42 if big else .3) * (1.1 if peak else 1), pan=0 if big else -.15)
+            for k in range(1, gl):
+                T.note('taiko_drum', 52, b, (g0 + k) * U, .2, vel=.12 + (.05 if peak else 0), pan=.3)
         if b % 4 == 3:
-            for i in range(8): T.note('taiko_drum', 50, b, 3 + i * .125, .1, vel=.18 + .05 * i, pan=-.3 + .08 * i)
-        gp = [0, 0, 2, 0, 3, 0, 2, 0] if b % 2 == 0 else [0, 0, 3, 0, 4, 3, 2, 0]
-        for k, d in enumerate(gp): T.note('geomungo', deg(sc, r - 24, c + d), b, k * .5, .45, vel=.5 if k % 2 == 0 else .36, pan=-.1, hit=1.2)
+            for i in range(6): T.note('taiko_drum', 50, b, 3.5 + i * .25, .1, vel=.16 + .045 * i, pan=-.3 + .1 * i)
+        geo = [(0, c, .55), (3, c + 2, .4), (5, c + 1, .48), (8, c, .4)] if b % 2 == 0 else [(0, c, .55), (3, c - 1, .4), (5, c + 2, .48), (8, c + 1, .4)]
+        for at, d, v in geo: T.note('geomungo', deg(sc, r - 24, d), b, at * U, .9, vel=v * (1.08 if peak else 1), pan=-.1, hit=1.2, slide=-.4 if at == 8 else 0)
         if b >= 4:
-            fig = [5, 7, 8, 7, 5, 4, 5, 7] if b % 2 == 0 else [7, 8, 9, 8, 7, 5, 4, 3]
-            for k, d in enumerate(fig): T.note('koto', deg(sc, r - 12, c + d), b, k * .5, .4, vel=.36 + .08 * (k % 2 == 0), pan=-.35)
-        if b % 4 == 0 and b >= 8: T.note('fiddle', deg(sc, r, c + 2), b, 0, 15.6, vel=.26, pan=.3, vib=.35)
-    T.note('jing', r - 12, 0, 0, 4, vel=.3); T.note('jing', r - 12, 20, 0, 4, vel=.34)
-    m1 = '7:1 7:1 9:2 8:1 7:1 5:2 7:1 8:1 9:2 8:2 7:2'    # 16 beats
-    m2 = '9:1 10:1 12:2 11:1 10:1 9:2 10:1 12:1 13:2 12:2 10:2'
-    T.seq('danso', 4, mel(sc, r, m1, 4), 1, vel=.56, pan=.05, vib=.4, scoop=1.0, over=.4)
-    T.seq('danso', 8, mel(sc, r, m1, 4), 1, vel=.56, pan=.05, vib=.4, scoop=1.0, over=.4)
-    T.seq('danso', 12, mel(sc, r, m2, 4), 1, vel=.58, pan=.05, vib=.45, scoop=1.2, over=.5)
-    T.seq('danso', 20, mel(sc, r, m2, 4), 1, vel=.62, pan=.05, vib=.5, scoop=1.3, over=.7)
-    T.seq('fiddle', 20, mel(sc, r - 12, m2, 4), 1, vel=.28, pan=.35, vib=.4)
-    T.seq('danso', 24, mel(sc, r, m1, 4), 1, vel=.6, pan=.05, vib=.5, scoop=1.2, over=.6)
-    T.seq('danso', 28, mel(sc, r, m2.replace('12:2 10:2', '12:2 9:2'), 4), 1, vel=.64, pan=.05, vib=.5, scoop=1.3, over=.8)
-    T.seq('danso', 32, mel(sc, r, m2, 4), 1, vel=.62, pan=.05, vib=.5, scoop=1.3, over=.7)
-    T.seq('danso', 36, mel(sc, r, '9:2 10:1 9:1 7:2 9:2 10:4 -:4', 4), 1, vel=.6, pan=.05, vib=.5, scoop=1.2, over=.6)
-    T.render(f'{OUT}/boss2.mp3', wet=.18, decay=1.5, gain=.95)
+            fig = [5, 4, 3, 4, 5, 7, 5, 4, 3, 2] if b % 2 == 0 else [3, 4, 5, 4, 3, 2, 0, 2, 3, 4]
+            for k, d in enumerate(fig): T.note('koto', deg(sc, r - 12, c + d), b, k * U, .45, vel=.3 + .1 * (k in (0, 3, 5, 8)), pan=-.35)
+        if b % 4 == 0 and b >= 8: T.note('fiddle', deg(sc, r - 12, c + 4), b, 0, 19.6, vel=.24, pan=.3, vib=.4)
+    T.note('jing', r - 12, 0, 0, 4, vel=.3); T.note('jing', r - 12, 24, 0, 4, vel=.34)
+    A = '5:3 4:2 3:3 2:2 3:3 5:2 4:5 3:3 2:2 0:3 2:2 3:5 -:5'          # 4마디(40칸)
+    B = '7:3 6:2 5:3 4:2 5:5 4:3 3:2 2:3 3:2 4:3 2:2 0:8 -:2'
+    C = '7:3 8:2 7:3 5:2 7:5 6:3 5:2 4:3 5:2 3:3 2:2 3:8 -:2'
+    for bar0, txt, v, o in ((4, A, .5, .2), (8, B, .5, .2), (12, A, .52, .3), (16, B, .52, .3), (24, C, .56, .4), (28, B, .56, .4), (32, C, .58, .4), (36, A, .56, .3), (40, B, .54, .3)):
+        T.seq('danso', bar0, mel(sc, r, txt, 10), U, vel=v, pan=.05, vib=.45, scoop=1.2, over=o)
+    T.seq('fiddle', 16, mel(sc, r - 12, A, 10), U, vel=.3, pan=.35, vib=.4)
+    T.seq('fiddle', 32, mel(sc, r - 12, C, 10), U, vel=.3, pan=.35, vib=.4)
+    T.render(f'{OUT}/boss2.mp3', wet=.2, decay=1.6, gain=.95)
 
 # ── 8) 보스 3: 중중모리 행진. 묵직하게 걸어오는 태고, 거문고의 굵은 가락, 해금이 울부짖는다. (D 계면조, 점4분 108BPM, 36마디 ≈ 80초)
 def boss3():
