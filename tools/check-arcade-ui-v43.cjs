@@ -345,7 +345,7 @@ async function sevenSinsClear(page){
       assert.equal(await page.locator('#story-text').innerText(),entry.lines[i].text);
       if(i===0)await page.locator('#story-next').click();
     }
-    assert.equal(await page.locator('#story-caption').innerText(),'보스 등장 · 대사');
+    assert.equal(await page.locator('#story-caption').innerText(),'서사 정본 · 기억');
     await page.waitForTimeout(900); // Capture the completed portrait reveal, not its initial clipped frame.
     await page.screenshot({path:path.join(out,'desktop-'+actor+'-dialogue.png'),fullPage:true});
     await page.locator('#story-skip').click();
