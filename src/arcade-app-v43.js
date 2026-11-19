@@ -517,7 +517,7 @@
     var key=actor+'|'+(images[actor]?1:0);if(key===portraitKey)return portraitUrl;portraitKey=key;portraitUrl='';
     if(!images[actor]||!document.createElement)return '';
     var c=document.createElement('canvas');c.width=300;c.height=240;var saved=ctx;
-    try{ctx=c.getContext('2d');ctx.scale(300/150,240/120);ctx.globalAlpha=1;ctx.filter='none';drawArt(actor,75,74,false,color,0,null,1);portraitUrl=c.toDataURL('image/png');}catch(e){portraitUrl='';}
+    try{ctx=c.getContext('2d');ctx.scale(300/150,240/120);ctx.globalAlpha=1;ctx.filter='none';drawArt(actor,75,74,false,color,0,null,1,null,Math.min(tallOf(actor),TALL_ACTOR));portraitUrl=c.toDataURL('image/png');}catch(e){portraitUrl='';}
     ctx=saved;return portraitUrl;
   }
   function spellFit(name){return Math.max(12,Math.min(20,Math.floor(150/Math.max(1,String(name).length+1))));} // 패널 폭(124px)에 한 줄로

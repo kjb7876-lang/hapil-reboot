@@ -1780,8 +1780,8 @@
       var motif=(bar+sp.cycle+s.stageIndex)%5;
       if(motif===3){ // 피아노 건반(사용자 11-19 "피아노 건반같은 레이져 패턴도 많이"): 세로 8건반이 음계처럼 차례로 눌린다. 흰건반은 굵고 검은건반은 가늘다. 이지 2박마다 한 건반, 노멀 박마다, 헬 박마다 화음(두 건반)
         var KW=W/8,up=(bar+sp.cycle)%2===0,key=function(j){return up?j:7-j;},play=lvl===0?pos%2===0:true;
-        if(play){var j=key(lvl===0?pos/2*2:pos),black=[1,3,6].indexOf(j)>=0;beam(s,KW*(j+.5),-12,Math.PI/2,{width:(black?KW*.55:KW*.9)/s.rules.beam,warn:46,active:30,color:black?c2:c1});
-          if(lvl===2&&pos%2===1){var j2=(j+4)%8;beam(s,KW*(j2+.5),-12,Math.PI/2,{width:KW*.9/s.rules.beam,warn:46,active:30,color:c2});}}
+        if(play){var j=key(lvl===0?pos/2*2:pos),black=[1,3,6].indexOf(j)>=0;beam(s,KW*(j+.5),-12,Math.PI/2,{width:KW*.7/s.rules.beam,warn:46,active:30,color:black?c2:c1});
+          if(lvl===2&&pos%2===1){var j2=(j+4)%8;beam(s,KW*(j2+.5),-12,Math.PI/2,{width:KW*.7/s.rules.beam,warn:46,active:30,color:c2});}}
       }else if(motif===4){ // 화면 덮기(사용자 11-19 "맵의 70 80 90프로덮는패턴 … 난이도 맞게"): 이지 70%·노멀 80%·헬 90%를 광선으로 덮고 한 줄기 틈만 남긴다. 틈 자리는 황금비 수열로 매번 다르다. 마디마다 세로·가로를 번갈아
         if(pos===0){var cover=[.7,.8,.9][lvl],vert=(bar+sp.cycle)%2===0,top=120,span=vert?W:H-top,gap=span*(1-cover),gk=sp.coverN=(sp.coverN||0)+1,g0=((gk/PHI+s.stageIndex*.21)%1)*(span-gap),segs=[[0,g0],[g0+gap,span]],q2,c0;
           for(q2=0;q2<2;q2++){var lo=segs[q2][0],hi=segs[q2][1],nb=Math.ceil((hi-lo)/32),w0=(hi-lo)/nb;for(c0=0;c0<nb;c0++){var mid=lo+w0*(c0+.5);
