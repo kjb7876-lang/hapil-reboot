@@ -5,8 +5,8 @@ const live=(d)=>{const s=a.createRun({difficulty:d,seed:9,stage:3,entranceAll:tr
 test('a lone horizontal laser becomes a ladder that lights from the bottom up',()=>{
   for(const d of ['gentle','normal','hell']){const s=live(d);a.beamFor(s,-12,420,0,{width:14,warn:60,active:60});a.composeLasers(s);
     const L=s.lasers.slice().sort((x,y)=>x.warn-y.warn);assert.equal(L.length,a.LADDER_N[d],d+' rows');
-    for(let i=1;i<L.length;i++){assert(L[i].y<L[i-1].y,'each later row is higher');assert(L[i-1].y-L[i].y>=56,'rows leave room to stand');assert(L[i].warn+L[i].active===L[0].warn+L[0].active,'the ladder clears at once');}
-    assert(L[0].y>=a.HEIGHT-60,'it starts at the floor');}
+    for(let i=1;i<L.length;i++){assert(L[i].y<L[i-1].y,'each later row is higher');assert(Math.abs(L[i-1].y-L[i].y-L[i].width)<1e-9&&L[i].solid,'bands touch: no standing between rows');assert(L[i].warn+L[i].active===L[0].warn+L[0].active,'the ladder clears at once');}
+    assert(L[0].y+L[0].width/2>=a.HEIGHT,'it starts at the floor');}
 });
 test('a lone vertical laser becomes a sweeper walking toward the hero',()=>{
   for(const d of ['gentle','normal','hell']){const s=live(d);s.player.x=300;a.beamFor(s,60,-12,Math.PI/2,{width:14,warn:60,active:60});a.composeLasers(s);

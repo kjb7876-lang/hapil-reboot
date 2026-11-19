@@ -319,11 +319,11 @@
   /* ── 광선 문법(사용자 11-19 "레이져도 하나만 딸랑나오지말고 아래부터 한줄씩나오면서 위로가는걸 유도 … 모든 패턴 모든공격에는 의미와 당위성").
    *  동방·도돈파치·무시히메사마 등 탄막 설계 관행을 조사해 정한 규칙(docs/v43/danmaku-rules.md): 광선은 벽·스위퍼·우리·밀어내기·조준 중 하나의 역할을 가진다.
    *  실제 게임에서 한 틱에 가로줄 하나·세로줄 하나만 덩그러니 나오면 역할이 없으므로 여기서 묶음으로 바꾼다.
-   *  · 가로 한 줄 → 밀어올리기 사다리: 화면 아래부터 한 줄씩 차례로 켜져 위로 올라온다. 모든 예고선이 처음부터 보이고, 아래 줄일수록 오래 남아 바닥이 차오른다.
+   *  · 가로 한 줄 → 밀어올리기 사다리: 화면 아래부터 64px 띠가 한 칸씩 차례로 켜져 위로 차오른다. 모든 예고(인주색)가 처음부터 보이고, 아래 띠일수록 오래 남는다. 맨 위 띠 위가 안전지대다.
    *  · 세로 한 줄 → 스위퍼: 영웅 쪽으로 한 칸씩 걸어오는 벽. 앞 줄이 꺼지면 그 뒤가 비어 '지나간 자리로 넘어가기'가 답이 된다.
    *  · 기울어진 한 줄(영웅 조준)·keep 표시(의도된 차례 연출·중앙 견제)는 그대로 둔다.
    *  난이도는 같은 아이디어의 줄 수만 바꾼다(이지 2·노멀 3·헬 4). ── */
-  var MOB_NEAR_HOLD=120,LADDER_N={gentle:2,normal:3,hell:4},LADDER_BOTTOM=H-46,LADDER_STEP=58,LADDER_LAG=22,SWEEP_N={gentle:2,normal:3,hell:4},SWEEP_STEP=54,SWEEP_LAG=16;
+  var MOB_NEAR_HOLD=120,LADDER_N={gentle:2,normal:3,hell:4},LADDER_BAND=64,LADDER_LAG=22,SWEEP_N={gentle:2,normal:3,hell:4},SWEEP_STEP=44,SWEEP_LAG=16;
   function cloneBeam(l,o){var c={};for(var k in l)c[k]=l[k];for(k in o)c[k]=o[k];c.composed=true;return c;}
   function composeLasers(s){
     if(!s.entranceAll)return;
@@ -332,14 +332,15 @@
     l=fresh[0];if(l.solid||l.floor||l.follow||l.sq||l.keep||l.spin)return;
     var n,k,lag=Math.round(LADDER_LAG*s.rules.warn);
     if(Math.abs(l.angle)<.01){ // 가로 → 밀어올리기 사다리
-      n=LADDER_N[s.difficulty]||3;var top=Math.max(300,Math.min(LADDER_BOTTOM-LADDER_STEP*(n-1),l.y)),step=(LADDER_BOTTOM-top)/Math.max(1,n-1);
-      l.y=LADDER_BOTTOM;l.active+=(n-1)*lag;l.composed=true;l.role='ladder';
-      for(k=1;k<n&&s.lasers.length<LASER_CAP;k++)s.lasers.push(cloneBeam(l,{y:LADDER_BOTTOM-step*k,warn:l.warn+k*lag,active:l.active-k*lag,role:'ladder'}));
+      // 띠 하나는 LADDER_BAND 높이를 통째로 덮는다(solid): 줄 사이에 서서 버티는 길이 없고, 바닥이 정말로 한 칸씩 차오른다(심사 11-19 7.29: 줄 사이가 안전지대로 남았다)
+      n=LADDER_N[s.difficulty]||3;
+      l.y=H-LADDER_BAND*.5;l.width=LADDER_BAND;l.solid=true;l.active+=(n-1)*lag;l.composed=true;l.role='ladder';
+      for(k=1;k<n&&s.lasers.length<LASER_CAP;k++)s.lasers.push(cloneBeam(l,{y:H-LADDER_BAND*(k+.5),warn:l.warn+k*lag,active:l.active-k*lag,role:'ladder'}));
       s.composedLasers=(s.composedLasers||0)+1;
     }else if(Math.abs(l.angle-Math.PI/2)<.01){ // 세로 → 스위퍼
       n=SWEEP_N[s.difficulty]||3;var dir=s.player.x>=l.x?1:-1,end=l.x+dir*SWEEP_STEP*(n-1),sl=Math.round(SWEEP_LAG*s.rules.warn);
       if(end<16||end>W-16){dir=-dir;}
-      l.composed=true;l.role='sweep';l.active=Math.max(30,Math.round(l.active*.7));
+      l.composed=true;l.role='sweep';l.active=Math.max(30,Math.round(l.active*.7));l.width=SWEEP_STEP;l.solid=true; // 기둥끼리 맞붙은 벽(solid): 사이로 빠지지 않고, 먼저 켜진 뒤쪽 기둥이 먼저 꺼져 벽이 걸어온다
       for(k=1;k<n&&s.lasers.length<LASER_CAP;k++){var x=l.x+dir*SWEEP_STEP*k;if(x<10||x>W-10)break;s.lasers.push(cloneBeam(l,{x:x,warn:l.warn+k*sl,role:'sweep'}));}
       s.composedLasers=(s.composedLasers||0)+1;
     }
