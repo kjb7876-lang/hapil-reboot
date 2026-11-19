@@ -1400,29 +1400,32 @@
     if(Math.abs(c)>1e-6){var t1=(-m-x)/c,t2=(W+m-x)/c;lo=Math.max(lo,Math.min(t1,t2));hi=Math.min(hi,Math.max(t1,t2));}else if(x<-m||x>W+m)hi=lo;
     if(Math.abs(n)>1e-6){var t3=(-m-y)/n,t4=(H+m-y)/n;lo=Math.max(lo,Math.min(t3,t4));hi=Math.min(hi,Math.max(t3,t4));}else if(y<-m||y>H+m)hi=lo;
     if(hi<lo)hi=lo;return [x+c*lo,y+n*lo,x+c*hi,y+n*hi,hi-lo];}
+  var laserCuePass=false;function drawLaserCues(s){laserCuePass=true;try{drawLasers(s);}finally{laserCuePass=false;}} // 바닥 줄·사다리·스위퍼 예고만 탄 위에 한 번 더
   function drawLasers(s){
-    if(!s.lasers.length)return;
+    if(!s.lasers.length)return;var cues=laserCuePass;
     var sheet=s.stage==='card'?laserSheet(s):null,under=1;
     for(var u=0;u<s.figures.length;u++){var fu=s.figures[u];if(fu.sigil&&fu.age>=fu.warn){under=LASER_UNDER_SIGIL;break;}} // 큰 육망성이 켜진 동안 다른 광선은 한 발 물러선다(심사 6.13: 마법진 선과 방사 광선이 구분되지 않음). 판정은 그대로
     ctx.save();ctx.lineCap='butt';
     for(var i=0;i<s.lasers.length;i++){
-      var l=s.lasers[i],color=l.floor?FLOOR_HOT:COLORS[l.color]||'#ffffff',angle=finite(l.angle,0),lx=finite(l.x,0),ly=finite(l.y,0),x2=lx+Math.cos(angle)*1000,y2=ly+Math.sin(angle)*1000;
+      var l=s.lasers[i];if(cues&&!((l.floor||l.role)&&l.age<l.warn))continue; // 바닥 줄·사다리·스위퍼 예고는 탄 위에 한 번 더(심사 11-19: 탄이 많으면 인주색 예고가 탄 아래 묻힘)
+      var cue=!!(l.floor||l.role),color=l.floor?FLOOR_HOT:COLORS[l.color]||'#ffffff',angle=finite(l.angle,0),lx=finite(l.x,0),ly=finite(l.y,0),x2=lx+Math.cos(angle)*1000,y2=ly+Math.sin(angle)*1000;
       var reach=LASER_DRAW;if(l.full&&!l.floor){var cl=clipLine(lx,ly,angle);lx=cl[0];ly=cl[1];x2=cl[2];y2=cl[3];reach=cl[4];} // 실제 게임 광선은 화면 끝에서 끝까지 그린다(사용자 11-19: 보스에서 나가다 끊기는 선이 아니라 맵 끝~끝)
       var un=l.floor?1:under; // 아래쪽 ㅡ·= 줄(사용자 11-15)은 육망성 아래에서도 또렷하게: 위로 몰아내는 선이라 보여야 한다
       ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x2,y2);
       if(l.age<l.warn){
         var t=l.age/l.warn,blink=.5+.5*Math.sin(l.age*(.25+t*.5));
-        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=Ink&&l.floor?.55+.35*t:WARN_RED?.22+.26*t:.10+.16*t;ctx.strokeStyle=Ink&&l.floor||WARN_RED?'#c9406e':color;ctx.lineWidth=Ink&&l.floor?Math.max(2.6,l.width*(.25+.75*t)):l.width*(.25+.75*t);ctx.setLineDash([]);ctx.stroke();
+        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=(Ink&&cue?(l.solid?.12+.5*t*t:.55+.35*t):WARN_RED?.22+.26*t:.10+.16*t)*(cues?.6:1);ctx.strokeStyle=Ink&&cue||WARN_RED||l.role?'#c9406e':color;ctx.lineWidth=Ink&&cue&&!l.solid?Math.max(2.6,l.width*(.25+.75*t)):l.role&&l.solid?l.width:l.width*(.25+.75*t);ctx.setLineDash([]);ctx.stroke();
         ctx.globalAlpha=.45+.5*blink;ctx.strokeStyle='#ffffff';ctx.lineWidth=1;ctx.setLineDash([7,6]);ctx.stroke();
       }else{
         var over=l.age-l.warn-l.active,k=over>0?Math.max(0,1-over/Arcade.BEAM_FADE):Math.min(1,(l.age-l.warn+1)/4),pulse=1+Math.sin(visual*40+i)*.06;
         ctx.setLineDash([]);ctx.globalCompositeOperation='lighter';var dim=(paleOf(color)?PALE_BEAM_DIM:BEAM_DIM)*un; // 금빛·흰빛 광선은 빛무리를 줄인다(심사 6.36: 노란 광선이 화면에서 가장 밝아 탄과 영웅을 덮음)
-        if(!lite&&l.floor){ctx.globalAlpha=.2*k*dim;ctx.strokeStyle=color;ctx.lineWidth=l.width*2.3*k*pulse;ctx.stroke();}else if(!lite){var top=Math.min(ly,H*BEAM_LOW_FADE-1),fade=ctx.createLinearGradient(0,top,0,H),span=H-top,r0=Math.min(.5,BEAM_ROOT/span),r1=Math.max(r0,(H*BEAM_LOW_FADE-top)/span);fade.addColorStop(0,ly<H*BEAM_LOW_FADE?'#000000':color);fade.addColorStop(r0,color);fade.addColorStop(r1,color);fade.addColorStop(1,'#000000');ctx.globalAlpha=.3*k*dim;ctx.strokeStyle=fade;ctx.lineWidth=l.width*2.3*k*pulse;ctx.stroke();}
+        if(!lite&&l.floor){ctx.globalAlpha=.2*k*dim;ctx.strokeStyle=color;ctx.lineWidth=l.width*2.3*k*pulse;ctx.stroke();}else if(!lite){var top=Math.min(ly,H*BEAM_LOW_FADE-1),fade=ctx.createLinearGradient(0,top,0,H),span=H-top,r0=Math.min(.5,BEAM_ROOT/span),r1=Math.max(r0,(H*BEAM_LOW_FADE-top)/span);fade.addColorStop(0,ly<H*BEAM_LOW_FADE?'#000000':color);fade.addColorStop(r0,color);fade.addColorStop(r1,color);fade.addColorStop(1,'#000000');ctx.globalAlpha=.3*k*dim;ctx.strokeStyle=fade;ctx.lineWidth=l.width*(l.role&&l.solid?1.15:2.3)*k*pulse;ctx.stroke();}
         if(sheet&&!l.floor){ // 보스 시트의 레이저 질감을 광선 방향으로 늘여 더한다. 판정 폭은 흰 심으로 보인다.
-          var bm=sheet.e.beam,th=l.width*2.4*k*pulse;ctx.save();ctx.translate(lx,ly);ctx.rotate(angle);ctx.globalAlpha=k*dim;
+          var bm=sheet.e.beam,th=l.width*(l.role&&l.solid?1.1:2.4)*k*pulse;ctx.save();ctx.translate(lx,ly);ctx.rotate(angle);ctx.globalAlpha=k*dim;
           ctx.drawImage(sheet.img,bm[0],bm[1],bm[2],bm[3],0,-th/2,reach,th);ctx.restore();
         }else{ctx.globalAlpha=.9*k*un;ctx.strokeStyle=color;ctx.lineWidth=l.width*k*pulse;ctx.stroke();}
         if(l.floor){ctx.globalCompositeOperation='lighter';for(var e=0;e<2;e++){var ex=e?W-l.width*.9:l.width*.9;ctx.globalAlpha=.8*k;ctx.fillStyle=color;ctx.beginPath();ctx.arc(ex,ly,l.width*.9,0,TAU);ctx.fill();ctx.globalAlpha=k;ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(ex,ly,l.width*.4,0,TAU);ctx.fill();}} // 바닥 줄은 양 끝 발사점에서 뻗는다
+        if(l.role&&l.age-l.warn<6){ctx.globalCompositeOperation='source-over';ctx.globalAlpha=(1-(l.age-l.warn)/6)*.55;ctx.strokeStyle='#ffffff';ctx.lineWidth=l.width*1.25;ctx.stroke();} // 사다리·스위퍼가 켜지는 순간 6틱 섬광: 어느 칸이 방금 켜졌는지 읽힌다
         ctx.globalCompositeOperation='source-over';ctx.globalAlpha=k*un*(paleOf(color)?PALE_CORE:BEAM_CORE);ctx.strokeStyle='#ffffff';ctx.lineWidth=l.width*(sheet?.34:.46)*k;ctx.stroke(); // 흰·금 광선은 심지도 낮춘다(심사 6.46: 금빛 광선이 여전히 가장 밝다)
       }
     }
@@ -1685,7 +1688,7 @@
     offsetX=offsetY=0;if(shake>0){if(settings.screenShake){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;}shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawCardCast(s);drawPatternCue(s);drawShots(s);drawDrifts();drawInks();drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawHeroLight(s);drawBullets(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink)){drawPlayer(s);drawHitbox(s);}if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawCardCast(s);drawPatternCue(s);drawShots(s);drawDrifts();drawInks();drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawHeroLight(s);drawBullets(s);drawLaserCues(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink)){drawPlayer(s);drawHitbox(s);}if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);
     // 스펠 선언 연출(사용자 11-18 "패턴·공격 미장센 강화"): 가장자리부터 먹이 번져 화면이 잠깐 조여졌다가 걷힌다. 보스에 시선이 모였다가 탄이 펼쳐진다(탄·영웅은 이 위에 그대로 읽힌다).
     if(spellDim>0&&Ink&&s.boss&&s.boss.present){var sd=spellDim,sx0=finite(s.boss.x,W/2),sy0=finite(s.boss.y,H/3),sg=ctx.createRadialGradient(sx0,sy0,H*.22,sx0,sy0,H*.85);if(Ink.raw)Ink.raw(1);sg.addColorStop(0,'rgba(24,20,16,0)');sg.addColorStop(.55,'rgba(24,20,16,'+(sd*.2)+')');sg.addColorStop(1,'rgba(24,20,16,'+(sd*.68)+')');ctx.fillStyle=sg;ctx.fillRect(0,0,W,H);if(Ink.raw)Ink.raw(-1);spellDim=Math.max(0,spellDim-Math.min(.05,elapsed)/1.6);}
