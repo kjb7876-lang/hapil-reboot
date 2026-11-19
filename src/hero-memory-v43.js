@@ -107,32 +107,35 @@
    *  1 기억 섬광: 영웅 앞 궁극 폭발 한 번 · 2 기억 파편: 화면 위쪽 결정 파편 터짐 · 3 잔상 폭우: 아래에서 위로 결정탄 소나기
    *  4 회상 뇌격: 과녁(보스·몹)마다 번개 · 5 망각의 붕괴: 보스(또는 화면 가운데)에 큰 폭발 + 화면 먹물 번짐
    *  6 기억 범람: 화면을 가로지르는 연쇄 폭발 + 과녁마다 파편 · 7 기억 해방: 큰 붓글씨 '憶'(기억할 억)과 화면을 덮는 폭발 ── */
+  var EARLY_BURST=230,EARLY_SIDE=180,EARLY_WASH=.75,EARLY_PULSE=140,EARLY_AFTER=.85;
   function bomb(b,t,W,H,s){
     if(!b)return;if(isSeoha(heroId(s))){timeBomb(b,s,t,W,H);return;}var lv=b.level,cx=b.x,cy=Math.max(120,b.y-90),i,tg=b.targets||[],main=tg.length?[tg[0],tg[1]]:[W/2,H*.32];
     bombs.push({lv:lv,t0:t,name:b.name,x:b.x,y:b.y});
-    bombs[bombs.length-1].bursts=[{x:cx,y:cy,t0:t,size:150+lv*22}];
+    bombs[bombs.length-1].bursts=[{x:cx,y:cy,t0:t,size:Math.max(EARLY_BURST,150+lv*22)}]; // 사용자 11-19 "영웅들 초반에도 필살기 이펙트를 강화해서 필살기 같아보이게": 1단계부터 큰 폭발
     var B=bombs[bombs.length-1].bursts;
-    if(lv>=2)for(i=0;i<3+lv;i++)pops.push({x:40+((i*97+lv*31)%(W-80)),y:70+((i*53)%Math.round(H*.45)),t0:t+.08+i*.05,size:70+lv*10,rot:i});
-    if(lv>=3){B.rain=[];for(i=0;i<8+lv*5;i++)B.rain.push({x:12+((i*61)%(W-24)),d:(i*37%17)/17*.5,v:.9+(i%5)*.12});}
+    for(i=0;i<4+lv;i++)pops.push({x:40+((i*97+lv*31)%(W-80)),y:70+((i*53)%Math.round(H*.45)),t0:t+.08+i*.05,size:70+lv*10,rot:i});
+    {B.rain=[];for(i=0;i<12+lv*5;i++)B.rain.push({x:12+((i*61)%(W-24)),d:(i*37%17)/17*.5+(lv<5?EARLY_AFTER:0),v:.9+(i%5)*.12});}
     if(lv>=4)for(i=0;i+1<tg.length&&i<16;i+=2)zaps.push({x0:b.x,y0:b.y-20,x1:tg[i],y1:tg[i+1],lv:lv,t0:t+.12+i*.02});
+    if(lv<6)for(i=0;i<2;i++)B.push({x:W*(.25+.5*i),y:H*(.24+.06*i),t0:t+.22+i*.14,size:EARLY_SIDE+lv*8}); // 낮은 단계도 화면 위쪽 양옆이 함께 터진다(6단계부터는 연쇄 폭발 셋이 대신)
+    if(lv<5){B.push({x:main[0],y:main[1],t0:t+EARLY_AFTER,size:250+lv*12});for(i=0;i<2;i++)B.push({x:W*(.22+.56*i),y:H*(.2+.08*i),t0:t+EARLY_AFTER+.12+i*.1,size:200+lv*8});for(i=0;i<5+lv;i++)pops.push({x:30+((i*113+lv*17)%(W-60)),y:80+((i*67)%Math.round(H*.4)),t0:t+EARLY_AFTER+.05+i*.06,size:80+lv*8,rot:i});} // 낮은 단계 필살은 폭발이 컷씬(0.95초)에 가려 끝나 버렸다: 컷씬이 걷힐 즈음 한 번 더 크게 터진다
     if(lv>=5)B.push({x:main[0],y:main[1],t0:t+.35,size:260+lv*30});
     if(lv>=6){for(i=0;i<3;i++)B.push({x:W*(.2+.3*i),y:H*(.22+.14*((i+1)%2)),t0:t+.55+i*.15,size:200+lv*16});for(i=0;i+1<tg.length&&i<24;i+=2)pops.push({x:tg[i],y:tg[i+1],t0:t+.4,size:90});}
     if(lv>=7)B.push({x:W/2,y:H*.42,t0:t+1.05,size:240}); // 7단계는 큰 덩어리 대신 憶 획이 그어지는 박자(심사 1차: 5단계와 구분)
-    quake=4+lv*2.2;if(ready('cutin'))cut={t0:t,lv:lv,name:b.name,auto:!!b.auto};else texts.push({text:b.name,sub:'필살 Lv.'+lv,t0:t,x:b.x,y:b.y-70,big:true});
+    quake=8+lv*1.6;if(ready('cutin'))cut={t0:t,lv:lv,name:b.name,auto:!!b.auto};else texts.push({text:b.name,sub:'필살 Lv.'+lv,t0:t,x:b.x,y:b.y-70,big:true});
   }
   function timeBomb(b,s,t,W,H){
     var lv=b.level,targets=b.targets||[],x=targets.length>=2?targets[0]:W/2,y=targets.length>=2?targets[1]:H*.32;
     bombs.push({hero:heroId(s),lv:lv,t0:t,x:Math.max(35,Math.min(W-35,x)),y:Math.max(75,Math.min(380,y)),name:b.name||heroBombName(s,lv)});
-    quake=3+lv*1.6;
+    quake=7+lv*1.4;
     if(ready(cutinKey(heroId(s))))cut={t0:t,lv:lv,name:b.name||heroBombName(s,lv),auto:!!b.auto,hero:heroId(s),label:heroProfile(s).name};
     else texts.push({text:b.name||heroBombName(s,lv),sub:heroProfile(s).name+' · 필살 Lv.'+lv,t0:t,x:b.x,y:b.y-70,big:true});
   }
   function drawTimeBomb(g,o,age,W,H){
-    if(age>1.8)return;var lv=o.lv,fade=Math.max(0,1-age/1.8),spread=Math.min(1,age/.5),r=28+lv*6;
+    if(age>1.8)return;var lv=o.lv,fade=Math.max(0,1-age/1.8),spread=Math.min(1,age/.5),r=Math.max(46,28+lv*6); // 1단계부터 큼직하게(사용자 11-19)
     raw(1);g.save();g.globalCompositeOperation='source-over';
     clockwork(g,o.x,o.y,r*(.65+.35*spread),-age*(1+lv*.12),fade*.42,7+lv);
-    for(var i=0;i<Math.min(7,lv);i++){var a=i*2.39996+age*.7,x=o.x+Math.cos(a)*(r+18)*spread,y=Math.max(55,Math.min(420,o.y+Math.sin(a)*(r+12)*spread));timeNeedle(g,x,y,a+Math.PI/2,19+lv*2,fade*.35,lv);}
-    if(lv>=5){clockwork(g,o.x-65,Math.min(400,o.y+48),18+lv,age*2,fade*.25,8);clockwork(g,o.x+65,Math.max(55,o.y-42),16+lv,-age*2,fade*.25,8);}
+    for(var i=0;i<Math.min(7,lv+2);i++){var a=i*2.39996+age*.7,x=o.x+Math.cos(a)*(r+18)*spread,y=Math.max(55,Math.min(420,o.y+Math.sin(a)*(r+12)*spread));timeNeedle(g,x,y,a+Math.PI/2,19+lv*2,fade*.35,lv);}
+    {clockwork(g,o.x-65,Math.min(400,o.y+48),18+lv,age*2,fade*.25,8);clockwork(g,o.x+65,Math.max(55,o.y-42),16+lv,-age*2,fade*.25,8);}
     if(lv>=7){g.globalAlpha=fade*.32;g.strokeStyle=timeColor(true);g.lineWidth=2;g.beginPath();g.moveTo(o.x-90,o.y+24);g.lineTo(o.x,o.y);g.lineTo(o.x+45,o.y-70);g.stroke();} // 최대 단계의 엇갈린 큰 바늘, 화면 아래 탄·영웅 영역은 비운다
     g.restore();raw(-1);
   }
@@ -140,8 +143,8 @@
     for(var n=bombs.length-1;n>=0;n--){var o=bombs[n],age=t-o.t0,B=o.bursts,i;if(age>3.2){bombs.splice(n,1);continue;}
       if(isSeoha(o.hero)){drawTimeBomb(g,o,age,W,H);continue;}
       if(o.lv>=7&&age<2.8)drawMemoryGlyph(g,age,W,H);
-      // 5단계 이상: 화면에 먹물이 번졌다 걷힌다(빛 대신 먹)
-      if(o.lv>=5&&age<1.1){var k=age<.2?age/.2:1-(age-.2)/.9,gg=g.createRadialGradient(W/2,H*.4,40,W/2,H*.4,H*.8);
+      // 화면에 먹물이 번졌다 걷힌다(빛 대신 먹). 4단계까지는 조금 옅게(11-19부터 모든 단계)
+      if(age<1.1){var k=(age<.2?age/.2:1-(age-.2)/.9)*(o.lv>=5?1:EARLY_WASH),gg=g.createRadialGradient(W/2,H*.4,40,W/2,H*.4,H*.8);
         raw(1);g.save();g.globalCompositeOperation='source-over';var a=(inkOn()?.16:.14)*k;gg.addColorStop(0,inkOn()?'rgba(30,26,24,'+a*.4+')':'rgba(120,240,255,'+a*.5+')');gg.addColorStop(1,inkOn()?'rgba(30,26,24,'+a+')':'rgba(10,30,40,'+a+')');g.fillStyle=gg;g.fillRect(0,0,W,H);g.restore();raw(-1);}
       raw(1);g.save();blend(g);
       for(i=0;i<B.length;i++){var b=B[i],f=(t-b.t0)*SHEETS.burst.fps;if(f<0||f>=10)continue;var fa=(b.size>250?.62:.88)*(f<8?1:1-(f-8)/2);cell(g,'burst',f,b.x,b.y,i*.7,b.size,fa);} // 마지막 두 칸(옅은 고리처럼 남는 잔상)은 쓰지 않고 8~9칸에서 걷는다. 큰 폭발은 옅게 겹쳐 보스·탄을 오래 가리지 않게(심사 1차)
@@ -246,7 +249,7 @@
     var tg=pi.targets,i=pi.index-1,x,y,vary=.85+((i*37)%7)/7*.3;
     if(tg.length>=2){var k=(i*2)%(tg.length-(tg.length%2||0)||2);x=tg[k];y=tg[k+1];}else{x=60+((i*127)%240);y=120+((i*71)%240);}
     y=Math.min(y,450); // 영웅·탄 구역(아래쪽)에는 터지지 않게(심사 1차)
-    if(pulseBursts.length<14)pulseBursts.push({x:x,y:y,t0:t,size:(84+lv*12+(i===6?30:0))*vary,rot:i*1.3+vary,hero:hero});
+    if(pulseBursts.length<14)pulseBursts.push({x:x,y:y,t0:t,size:(EARLY_PULSE+lv*8+(i===6?30:0))*vary,rot:i*1.3+vary,hero:hero});
     if(pops.length<30)pops.push({x:x,y:y,t0:t,size:60+lv*6,rot:i,hero:hero});
     quake=Math.max(quake,i===6?2.6:1.2+i*.12);
   }
