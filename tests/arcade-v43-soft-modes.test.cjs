@@ -2,13 +2,15 @@
 const test=require('node:test'),assert=require('node:assert/strict'),a=require('../src/arcade-v43.js');
 // 사용자 11-18: 몹·중간보스·보스가 죽지도 않았는데 사라지고 체력이 적다 / 노멀 탄이 겹치고 빠르다 / 이지·노멀 탄속·탄 수 10% 감소 + 흩뿌림, 헬은 그대로.
 const run=(difficulty,all,extra)=>a.createRun(Object.assign({difficulty,seed:9,stage:3,entranceAll:all},extra||{}));
-test('easy and normal bullets are slower and about 10% fewer on screen than before; hell stays the same',()=>{
-  for(const d of ['gentle','normal']){const before=run(d,false),after=run(d,true);
-    const F=a.LIVE_FAST; // 11-19 13:14 "탄환속도 20프로 빨라지게 … 숫자20프로 줄여줘": 실제 게임 전체 몫(속도 ×1.2, 수 ×.75×.8)은 따로 본다
-    assert(after.rules.speed/F<before.rules.speed*.9+1e-9,d+' speed lowered: '+after.rules.speed+' < '+before.rules.speed);
-    const onScreen=after.density/before.density/(after.rules.speed/F/before.rules.speed)/(.75*.8); // 느려지면 화면에 더 오래 남으니 화면 속 탄 수는 탄 수÷속도 배율. 사용자 11-19 "모든모드 탄환숫자25프로정도 감소"로 실제 게임 전체 25%를 줄인 몫(.75)은 따로 본다
-    assert(onScreen<.95&&onScreen>.85,d+' bullets on screen about 10% fewer: '+onScreen);}
-  const h0=run('hell',false),h1=run('hell',true);assert(Math.abs(h1.rules.speed-h0.rules.speed*a.LIVE_FAST)<1e-9,'hell: only the all-mode 20% speed-up');assert(Math.abs(h1.density-h0.density*.75*.8)<1e-9,'hell: only the 11-19 all-mode trims');
+// 사용자 11-19 "제안대로 계단 고르게": 실제 게임은 겹친 배율 대신 LIVE_TABLE 최종값 한 줄을 쓴다(휴대폰 기준 탄 수, PC는 ÷COMPACT_DENSITY).
+test('the live game uses one final row per difficulty, with even steps from easy to hell',()=>{
+  const T=a.LIVE_TABLE,last=a.STAGES.length-1;
+  for(const d of ['gentle','normal','hell']){const m=a.createRun({difficulty:d,seed:9,stage:0,entranceAll:true,compact:true}),pc=a.createRun({difficulty:d,seed:9,stage:0,entranceAll:true});
+    assert.equal(m.rules.speed,T[d].speed,d+' speed');assert(Math.abs(m.density-T[d].density)<1e-9,d+' phone density');assert(Math.abs(pc.density*a.COMPACT_DENSITY-T[d].density)<1e-9,d+' pc density');
+    assert.equal(m.player.r,T[d].radius,d+' hit dot');assert.equal(m.rules.hitScale,T[d].hitScale,d+' bullet hit share');}
+  const g=a.createRun({difficulty:'gentle',seed:9,stage:last,entranceAll:true,compact:true});assert(Math.abs(g.density-T.gentle.end)<1e-9,'easy tightens to its end value');
+  for(const k of ['speed','density','radius'])assert(T.gentle[k]<T.normal[k]&&T.normal[k]<=T.hell[k],k+' steps up');
+  const step=(x,y)=>y/x;assert(step(T.gentle.speed,T.normal.speed)<1.4&&step(T.normal.speed,T.hell.speed)>1.1,'no cliff between easy and normal, a real step to hell');
 });
 test('normal is now gentler than hell in speed (they are no longer identical)',()=>{
   assert(run('normal',true).rules.speed<run('hell',true).rules.speed);

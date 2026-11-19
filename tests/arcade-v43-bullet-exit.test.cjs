@@ -60,9 +60,10 @@ test('mirror bullets reflect off the side walls like light on a mirror (angle in
   assert(bounced>0,d+' saw a mirror reflection');assert(maxB>=1&&maxB<=2,d+' bounces '+maxB);
  }
 });
-test('live game trims bullet density (25% then 20% more), speeds bullets up 20% and grows bullets 15% on every difficulty; replay mode keeps its numbers',()=>{
+// 11-19 "제안대로 계단 고르게": 겹친 배율 대신 기준표 최종값
+test('live game takes density and speed from the live difficulty table and grows bullets 15% on every difficulty; replay mode keeps its numbers',()=>{
  for(const d of DIFFS){const live=a.createRun({difficulty:d,seed:1,entranceAll:true}),old=a.createRun({difficulty:d,seed:1});
-  const soft=d==='hell'?1:.8;assert(Math.abs(live.density-old.density*soft*.75*.8)<1e-9,d+' '+live.density+' '+old.density);assert(Math.abs(live.rules.speed/old.rules.speed/(d==='hell'?1:(d==='gentle'?.87:.88))-a.LIVE_FAST)<1e-9,d+' speed x1.2');assert(Math.abs(live.sizeScale-old.sizeScale*1.15)<1e-9,d+' size '+live.sizeScale);}
+  const T=a.LIVE_TABLE[d];assert(Math.abs(live.density*a.COMPACT_DENSITY-T.density)<1e-9,d+' '+live.density);assert.equal(live.rules.speed,T.speed,d+' speed from the live table');assert(Math.abs(live.sizeScale-old.sizeScale*1.15)<1e-9,d+' size '+live.sizeScale);}
 });
 test('mirror bullets are marked for the layered-ring look and lose one layer (bounce) per wall hit',()=>{
  const s=a.createRun({difficulty:'hell',seed:6,segment:firstCard(4),entranceAll:true});toCard(s);let seen=0,drops=0,hits=0;const last=new Map();
