@@ -169,8 +169,9 @@
     if(kind==='orb'){
       var mid=[Math.round(pig[0]*.7+INK[0]*.3),Math.round(pig[1]*.7+INK[1]*.3),Math.round(pig[2]*.7+INK[2]*.3)],wet=[Math.round(pig[0]*.8+PAPER[0]*.2),Math.round(pig[1]*.8+PAPER[1]*.2),Math.round(pig[2]*.8+PAPER[2]*.2)]; // 가운데 물기를 줄여 얼룩진 배경에서도 탄 몸이 짙게 읽힌다(11-18 심사: 회색 탄이 배경에 묻힘)
       // 번짐: 옅은 담묵이 둘레로 고르지 않게 퍼진다
-      g.fillStyle=css(mid,1);g.globalAlpha=.13;blob(g,Math.min(reach*.92,r*1.6),.36,9);g.fill();
-      g.globalAlpha=.2;blob(g,Math.min(reach*.86,r*1.3),.3,9);g.fill();g.globalAlpha=1;
+      var haze=[Math.round(pig[0]*.55+PAPER[0]*.45),Math.round(pig[1]*.55+PAPER[1]*.45),Math.round(pig[2]*.55+PAPER[2]*.45)]; // 번짐은 물 탄 담묵(한지 쪽): 탄이 몰리면 짙은 번짐이 겹겹이 쌓여 탁한 잿빛 얼룩이 됐다(PR 118 심사) → 옅고 맑게
+      g.fillStyle=css(haze,1);g.globalAlpha=.07;blob(g,Math.min(reach*.92,r*1.6),.36,9);g.fill();
+      g.globalAlpha=.12;blob(g,Math.min(reach*.86,r*1.3),.3,9);g.fill();g.globalAlpha=1;
       // 몸: 붓으로 찍은 점. 가장자리에 먹이 고이고 가운데는 물기로 옅다
       var body=g.createRadialGradient(-r*.12,-r*.1,r*.05,0,0,r*1.08);body.addColorStop(0,css(wet,.95));body.addColorStop(.45,css(mid,1));body.addColorStop(.8,css(dark,1));body.addColorStop(1,css(INK,1));
       g.strokeStyle=css(dark,.55);g.lineWidth=Math.max(1.6,r*.62);blob(g,r*1.04,.3,9);g.stroke();g.strokeStyle=css(PAPER,1);g.lineWidth=Math.max(1.2,r*.42);blob(g,r*1.04,.3,9);g.stroke();g.fillStyle=body;g.fill(); // 한지색 여백 테: 몹·다른 탄과 겹쳐도 낱알로 읽힌다

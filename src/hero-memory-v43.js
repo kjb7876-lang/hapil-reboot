@@ -188,16 +188,16 @@
   function drawCutin(g,t,W,H){
     if(!cut)return false;var age=t-cut.t0;if(age>CUT_LIFE||age<0){cut=null;return false;}
     var lv=cut.lv,ink=inkOn(),seoha=isSeoha(cut.hero),portrait=cutPortrait(cut.hero),open=Math.min(1,age/.13),close=age>CUT_LIFE-.16?(age-(CUT_LIFE-.16))/.16:0,ease=1-Math.pow(1-open,3);
-    var bandH=118+lv*9,cy=H*.4,ang=-.17,i;
+    var auto=!!cut.auto,bandH=auto?64+lv*4:118+lv*9,cy=auto?H*.12:H*.4,ang=auto?-.08:-.17,i,subY=bandH*.5-(auto?12:22); // 자동 필살(피격 직전)은 영웅이 탄을 읽어야 하는 순간이라 화면 위쪽 좁은 띠로만(11-18 심사: 가운데를 가림)
     raw(1);g.save();g.globalCompositeOperation='source-over';
-    g.globalAlpha=.22*(1-close)*Math.min(1,age/.08);g.fillStyle=ink?'rgb(30,26,24)':'rgb(4,10,20)';g.fillRect(0,0,W,H); // 화면을 한 겹 누른다
+    if(!auto){g.globalAlpha=.22*(1-close)*Math.min(1,age/.08);g.fillStyle=ink?'rgb(30,26,24)':'rgb(4,10,20)';g.fillRect(0,0,W,H);} // 화면을 한 겹 누른다(자동 필살은 누르지 않는다)
     g.translate(W/2,cy-close*40);g.rotate(ang);g.globalAlpha=1-close;
     var L=W*1.5,x0=L/2-L*ease; // 오른쪽에서 열린다
     if(lv>=7){g.fillStyle=ink?'rgba(244,236,218,.38)':'rgba(10,22,40,.4)';g.fillRect(x0,-bandH*.5-22,L,bandH+44);g.fillStyle=ink?'rgba(30,26,24,.85)':seoha?'rgba(195,155,88,.7)':'rgba(120,230,255,.7)';brushEdge(g,x0,L/2,-bandH*.5-22,7,lv*97+3);brushEdge(g,x0,L/2,bandH*.5+22,7,lv*31+5);} // 7단계: 바깥에 한 겹 더
     g.save();g.beginPath();g.rect(x0,-bandH/2,L,bandH);g.clip();
     g.fillStyle=ink?'rgb(244,236,218)':seoha?'rgba(9,25,28,.94)':'rgba(10,22,40,.92)';g.fillRect(-L/2,-bandH/2,L,bandH); // 한지 띠
     g.fillStyle=ink?'rgb(30,26,24)':seoha?timeColor(false):'rgba(140,235,255,1)'; // 먹 속도선(갈필 획). 부제 줄은 비운다
-    for(i=0;i<4+lv*3;i++){var sy=-bandH/2+((i*37.7)%bandH);if(Math.abs(sy-(bandH*.5-22))<9)continue;var sl=60+((i*53)%120),sx=L/2-((age*900*(1+(i%3)*.4)+i*71)%(L+sl));g.globalAlpha=(1-close)*.45;speedStroke(g,sx,sx+sl,sy,.8+((i*13)%5)*.45);}
+    for(i=0;i<4+lv*3;i++){var sy=-bandH/2+((i*37.7)%bandH);if(Math.abs(sy-subY)<9)continue;var sl=60+((i*53)%120),sx=L/2-((age*900*(1+(i%3)*.4)+i*71)%(L+sl));g.globalAlpha=(1-close)*.45;speedStroke(g,sx,sx+sl,sy,.8+((i*13)%5)*.45);}
     g.globalAlpha=1-close;var ph=bandH*1.65,pw=ph*(seoha?portrait.width/portrait.height:384/512),px=W*.3+lv*2-age*22+(1-ease)*80,top=-bandH*.56; // 초상: 띠 오른쪽, 두건·얼굴·총이 띠 안에 든다(제목과 겹치지 않게)
     if(ink)g.globalCompositeOperation='multiply';g.drawImage(portrait,px-pw/2,top,pw,ph);if(ink){g.globalAlpha=(.4+lv*.06)*(1-close);g.drawImage(portrait,px-pw/2,top,pw,ph);g.globalAlpha=1-close;}g.globalCompositeOperation='source-over'; // 먹(곱하기)으로 얹어 흰 데는 한지에 스며들고 먹만 남는다
     var ex=px-pw/2+pw*(205/384),ey=top+ph*(108/512),gl=Math.max(0,1-Math.abs(age-.32)/.14); // 눈매 섬광
@@ -207,8 +207,8 @@
     g.fillStyle=ink?'rgb(30,26,24)':seoha?timeColor(true):'rgba(140,235,255,1)';g.globalAlpha=1-close;brushEdge(g,x0,L/2,-bandH/2,5+lv*.6,lv*13+1);brushEdge(g,x0,L/2,bandH/2,5+lv*.6,lv*7+2); // 띠 위아래 붓 테두리
     // 필살 이름: 띠 왼쪽에 굵은 붓글씨, 아래에 작게 단계
     var tx=-W*.36+(1-ease)*60;g.globalAlpha=(1-close)*Math.min(1,Math.max(0,(age-.08)/.12));g.textAlign='left';g.textBaseline='middle';
-    g.font='700 '+(27+lv)+'px '+SERIF;if(seoha&&g.measureText){var tw=g.measureText(cut.name).width;if(tw>W*.63)g.font='700 '+Math.max(20,Math.floor((27+lv)*W*.63/tw))+'px '+SERIF;}g.lineWidth=5;g.strokeStyle=ink?'rgba(244,236,218,.95)':'rgba(0,0,0,.8)';g.strokeText(cut.name,tx,-6);g.fillStyle=ink?'rgb(30,26,24)':'#dff8ff';g.fillText(cut.name,tx,-6);
-    g.font='700 13px '+SERIF;g.lineWidth=3;var sub=(seoha?((cut.label||'윤서하')+(cut.auto?' · 자동 필살 Lv.':' · 필살 Lv.')):(cut.auto?'피격 직전 · 자동 필살 Lv.':'기억사수 · 필살 Lv.'))+lv;g.strokeText(sub,tx+2,bandH*.5-22);g.fillText(sub,tx+2,bandH*.5-22);
+    var fs=auto?17+lv:27+lv;g.font='700 '+fs+'px '+SERIF;if(seoha&&g.measureText){var tw=g.measureText(cut.name).width;if(tw>W*.63)g.font='700 '+Math.max(auto?14:20,Math.floor(fs*W*.63/tw))+'px '+SERIF;}g.lineWidth=5;g.strokeStyle=ink?'rgba(244,236,218,.95)':'rgba(0,0,0,.8)';var ny=auto?-4:-6;g.strokeText(cut.name,tx,ny);g.fillStyle=ink?'rgb(30,26,24)':'#dff8ff';g.fillText(cut.name,tx,ny);
+    g.font='700 '+(auto?11:13)+'px '+SERIF;g.lineWidth=3;var sub=(seoha?((cut.label||'윤서하')+(cut.auto?' · 자동 필살 Lv.':' · 필살 Lv.')):(cut.auto?'피격 직전 · 자동 필살 Lv.':'기억사수 · 필살 Lv.'))+lv;g.strokeText(sub,tx+2,subY);g.fillText(sub,tx+2,subY);
     g.restore();raw(-1);return true;
   }
   function onEvent(e,s,t){

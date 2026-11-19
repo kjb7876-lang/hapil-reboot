@@ -196,7 +196,7 @@
     var compactShape=kind==='nib'||kind==='hook'||kind==='split'||kind==='facet';
     var u=radius*(compactShape?1.35:1.9),reach=u*1.5,c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale;
     g.translate(m,m);g.scale(scale,scale);
-    var glow=g.createRadialGradient(0,0,radius*.6,0,0,reach);var hs=tint&&tint!==color?mix(color,tint,.55):color;glow.addColorStop(0,hs+haloOf(color,'66'));glow.addColorStop(1,hs+'00');if(!lite){g.fillStyle=glow;g.fillRect(-reach,-reach,reach*2,reach*2);}
+    var glow=g.createRadialGradient(0,0,radius*.6,0,0,reach);var hs=tint&&tint!==color?mix(color,tint,.55):color;glow.addColorStop(0,hs+haloOf(color,Ink?'24':'66')); // 수묵: 도형 탄 번짐이 겹겹이 쌓여 탁해지지 않게 옅게(PR 118 심사)glow.addColorStop(1,hs+'00');if(!lite){g.fillStyle=glow;g.fillRect(-reach,-reach,reach*2,reach*2);}
     var body=g.createLinearGradient(-u,-u,u,u);body.addColorStop(0,mix(color,'#ffffff',.6));body.addColorStop(.5,color);body.addColorStop(1,mix(tint&&tint!==color?mix(color,tint,.6):color,'#000000',.35));
     g.fillStyle=body;g.strokeStyle=paleRimOf(color);g.lineWidth=1.4;g.lineJoin='round';g.beginPath();
     if(kind==='nib'){
@@ -225,7 +225,7 @@
   function skinOfBullet(kind,color,size){
     var key=kind+':'+size+':'+color+orbTint;
     if(!skinSprites[key]){
-      var radius=Arcade.SIZE_RADIUS[size]*(state?state.sizeScale:compact?1.25:1);
+      var radius=Arcade.SIZE_RADIUS[size]*(state?state.sizeScale:compact?1.25:1)*(SMALL_GROW[size]||1);
       skinSprites[key]=buildSkin(kind,radius,COLORS[color],orbTint);
       if(Ink&&Ink.rough)Ink.rough(skinSprites[key]);
     }
@@ -274,9 +274,10 @@
   /* 보스 고유 색(ACTORS c1)으로 탄의 빛무리·바깥 띠를 물들인다. 보스가 바뀔 때만 탄 그림을 다시 만든다. 판정 크기는 그대로. */
   var orbTint='';
   function bossTint(s){var b=s&&s.boss,a=b&&b.present&&Arcade.ACTORS[b.actor];return a?COLORS[a.c1]||'':'';}
+  var SMALL_GROW={0:1.15,3:1.15}; // 사용자 11-19 "너무작은 탄환은 크기 조금만 키워주고": 가장 작은 구슬탄·쌀알탄 그림만 15% 크게(판정은 그대로라 더 어려워지지 않는다)
   function buildOrbs(){
     var grow=state?state.sizeScale:compact?1.25:1;
-    orbs=[];Arcade.SIZE_RADIUS.forEach(function(radius,size){if(size===SHAPE_PROP)return;orbs[size]={};Arcade.PALETTE.forEach(function(index){var color=COLORS[index],r=radius*grow;orbs[size][index]=size===SHAPE_RICE?buildRice(r,color):size===SHAPE_BUBBLE?buildBubble(r,color):buildOrb(r,color,orbTint);});});
+    orbs=[];Arcade.SIZE_RADIUS.forEach(function(radius,size){if(size===SHAPE_PROP)return;orbs[size]={};Arcade.PALETTE.forEach(function(index){var color=COLORS[index],r=radius*grow;r*=SMALL_GROW[size]||1;orbs[size][index]=size===SHAPE_RICE?buildRice(r,color):size===SHAPE_BUBBLE?buildBubble(r,color):buildOrb(r,color,orbTint);});});
   }
   function buildSprites(){
     var grow=state?state.sizeScale:compact?1.25:1;
@@ -1085,6 +1086,42 @@
     for(k=0;k<F.bursts.length;k++){bb=F.bursts[k];bf=bb.age/(Arcade.BURST_TICKS||36);
       if(bf<.85){var tx3=(bb.col+1)*C,ty3=Math.max(112,bb.y-C-bb.age*.4);if(s.boss&&s.stage==='card'&&Math.abs(tx3-s.boss.x)<100&&ty3<s.boss.y+120)tx3=s.boss.x+(tx3<s.boss.x?-110:110);tx3=Math.max(24,Math.min(W-24,tx3));var ts=bb.age<6?1+.25*(1-bb.age/6):1;ctx.globalAlpha=bf<.6?1:1-(bf-.6)/.25;ctx.font='bold '+(17*ts).toFixed(1)+'px '+RUNE_FONT;ctx.textAlign='center';ctx.textBaseline='middle';ctx.lineJoin='round';ctx.lineWidth=5;ctx.strokeStyle=PAPER;ctx.strokeText('+'+(Arcade.PIECE_SCORE||150),tx3,ty3);ctx.fillStyle=INKC;ctx.fillText('+'+(Arcade.PIECE_SCORE||150),tx3,ty3);}}
     ctx.restore();ctx.globalAlpha=1;}
+  /* 떨어지는 테트리스 조각의 먹 덩이(11-18 심사 "회색 네모가 디지털 느낌"): 칸 이음매 없는 한 덩어리를 먹으로 칠한다.
+     번짐(가장자리에 먹이 고이고 속은 옅은 담묵, 탄이 비친다) + 마른 붓 테(굵기가 출렁이고 이가 빠짐) + 속의 갈필 흰 결. 모양마다 한 번 구워 둔다. 판정은 그대로 칸이다. */
+  var pieceArt={};
+  function pieceSprite(cells,C,color){
+    var key=color+':'+C+':'+scale+':'+cells.map(function(c){return c[0]+','+c[1];}).join(';'),hit=pieceArt[key];if(hit)return hit;
+    var mx=0,my=0,i,j,pad=6;for(i=0;i<cells.length;i++){mx=Math.max(mx,cells[i][0]);my=Math.max(my,cells[i][1]);}
+    var w=(mx+1)*C+pad*2,h=(my+1)*C+pad*2,cv=offscreen(w*scale,h*scale),q=cv.getContext('2d');q.scale(scale,scale);
+    var has=function(x,y){for(var z=0;z<cells.length;z++)if(cells[z][0]===x&&cells[z][1]===y)return true;return false;};
+    var sd=0;for(i=0;i<key.length;i++)sd=(sd*31+key.charCodeAt(i))>>>0;sd=sd||7;var rn=function(){sd=(Math.imul(sd,1664525)+1013904223)>>>0;return sd/4294967296;};
+    var X=function(cx){return pad+cx*C;},Y=function(cy){return pad+(my-cy)*C;}; // 칸 (cx,cy)의 왼쪽 위(위쪽이 큰 cy)
+    if(Ink&&Ink.raw)Ink.raw(1);
+    try{
+      // 1) 담묵 몸: 칸을 겹쳐 칠해 이음매가 없다. 아래쪽이 조금 짙다
+      var g=q.createLinearGradient(0,pad,0,h-pad);g.addColorStop(0,'rgba(30,26,24,.30)');g.addColorStop(1,'rgba(30,26,24,.46)');q.fillStyle=g;
+      for(i=0;i<cells.length;i++)q.fillRect(X(cells[i][0])-.5,Y(cells[i][1])-.5,C+1,C+1);
+      // 2) 속의 갈필 흰 결: 가로로 스친 마른 붓 자국(한지가 비친다)
+      q.save();q.globalCompositeOperation='destination-out';
+      for(i=0;i<cells.length;i++)for(j=0;j<3;j++){var bx=X(cells[i][0]),by=Y(cells[i][1]);q.globalAlpha=.25+rn()*.35;q.fillRect(bx+2+rn()*C*.3,by+4+rn()*(C-8),C*(.35+rn()*.5),.8+rn()*1.4);}
+      q.restore();
+      // 3) 바깥 테: 먹이 고인 마른 붓 획. 바깥 변마다 굵기가 출렁이는 띠를 채우고, 군데군데 이가 빠진다
+      q.fillStyle=color;
+      var edge=function(x0,y0,x1,y1,nx,ny){var n=7,k,L=[],R=[];for(k=0;k<=n;k++){var u=k/n,x=x0+(x1-x0)*u,y=y0+(y1-y0)*u,th=2.2+rn()*2.6,inw=.6+rn()*1.6;L.push([x+nx*th*.45,y+ny*th*.45]);R.push([x-nx*inw,y-ny*inw]);}
+        q.globalAlpha=.78+rn()*.2;q.beginPath();q.moveTo(L[0][0],L[0][1]);for(k=1;k<L.length;k++)q.lineTo(L[k][0],L[k][1]);for(k=R.length-1;k>=0;k--)q.lineTo(R[k][0],R[k][1]);q.closePath();q.fill();};
+      for(i=0;i<cells.length;i++){var cx=cells[i][0],cy=cells[i][1],x0=X(cx),y0=Y(cy);
+        if(!has(cx,cy+1))edge(x0-1,y0+1,x0+C+1,y0+1,0,-1);if(!has(cx,cy-1))edge(x0-1,y0+C-1,x0+C+1,y0+C-1,0,1);
+        if(!has(cx-1,cy))edge(x0+1,y0-1,x0+1,y0+C+1,-1,0);if(!has(cx+1,cy))edge(x0+C-1,y0-1,x0+C-1,y0+C+1,1,0);}
+      q.save();q.globalCompositeOperation='destination-out';q.globalAlpha=1; // 마른 붓의 이 빠짐: 테 위 작은 흰 틈
+      for(i=0;i<cells.length*3;i++){var c0=cells[(rn()*cells.length)|0],ex=X(c0[0])+rn()*C,ey=Y(c0[1])+(rn()<.5?0:C)+(rn()-.5)*3;q.fillRect(ex,ey-1,1.5+rn()*4,1.2+rn()*1.2);}
+      q.restore();
+      // 4) 모서리 먹 맺힘: 붓을 대고 뗀 자리
+      for(i=0;i<cells.length;i++){var ax=cells[i][0],ay=cells[i][1],corn=[[0,0,-1,1],[C,0,1,1],[0,C,-1,-1],[C,C,1,-1]];
+        for(j=0;j<4;j++){var o=corn[j];if(has(ax+o[2],ay)||has(ax,ay+o[3]))continue;q.globalAlpha=.55+rn()*.3;q.beginPath();q.arc(X(ax)+o[0],Y(ay)+o[1],1.8+rn()*1.6,0,TAU);q.fill();}}
+    }finally{if(Ink&&Ink.raw)Ink.raw(-1);}
+    return pieceArt[key]={image:cv,pad:pad,w:w,h:h,my:my};
+  }
+  function drawPieceSprite(q,C,color,alpha){var sp=pieceSprite(q.cells,C,color),x=q.col*C-sp.pad,y=q.y-(sp.my+1)*C-sp.pad;ctx.globalAlpha=alpha;ctx.drawImage(sp.image,x,y,sp.w,sp.h);}
   function drawFloor(s){
     var F=s.floor;if(!F)return;var C=Arcade.FLOOR_CELL,N=Arcade.FLOOR_COLS,c,r,k,v,hill=false,theme=themeColor(s);
     var stone=mix('#3a3546',theme,.28),stoneEdge=mix('#8d8799',theme,.3),live=mix(mix(theme,'#3a3546',.35),'#000000',.15),pulse=.6+.4*Math.sin(visual*12),HOT=Ink?(Ink.mono===1?'#26221f':'#c2362a'):FLOOR_HOT,PAPER='#f2e9d6';
@@ -1126,6 +1163,7 @@
           if(!has(0,1)){ctx.moveTo(gx+2,gy+2);ctx.lineTo(gx+C-2,gy+2);}if(!has(0,-1)){ctx.moveTo(gx+2,gy+C-2);ctx.lineTo(gx+C-2,gy+C-2);}if(!has(-1,0)){ctx.moveTo(gx+2,gy+2);ctx.lineTo(gx+2,gy+C-2);}if(!has(1,0)){ctx.moveTo(gx+C-2,gy+2);ctx.lineTo(gx+C-2,gy+C-2);}}
         ctx.stroke();ctx.setLineDash([]);}
       var own=function(dx,dy,cx1,cy1){for(var z=0;z<q.cells.length;z++)if(q.cells[z][0]===cx1+dx&&q.cells[z][1]===cy1+dy)return true;return false;};
+      if(Ink){drawPieceSprite(q,C,PIECE,1);continue;} // 수묵: 구운 먹 덩이 한 장(칸 이음매·네온 윤곽 없음)
             for(j=0;j<q.cells.length;j++){var tx2=(q.col+q.cells[j][0])*C,ty2=q.y-(q.cells[j][1]+1)*C;ctx.globalAlpha=Ink?.26:.42;ctx.fillStyle=live;ctx.fillRect(tx2,ty2,C,C);} // 속은 반투명: 탄이 비쳐 보이게
       ctx.globalAlpha=1;ctx.strokeStyle=PIECE===HOT?mix(HOT,'#ffd0c4',.3*pulse):PIECE;ctx.lineWidth=PIECE===HOT?2:2.6;ctx.beginPath();
       for(j=0;j<q.cells.length;j++){var ox=(q.col+q.cells[j][0])*C,oy=q.y-(q.cells[j][1]+1)*C,a0=q.cells[j][0],b0=q.cells[j][1];
@@ -1133,6 +1171,8 @@
       ctx.shadowColor=PIECE;ctx.shadowBlur=lite?0:8+6*pulse;ctx.stroke();ctx.shadowBlur=0;} // 바깥 윤곽 한 줄만 밝게, 둘레로 부드럽게 번지는 빛
     // 깨지는 조각(사용자 11-16): 맞으면 금 없이 한지빛으로 깜빡이고, 다 깨지면 솟는 먹 그림처럼 먹폭발로 터져 사라진다("깨지는 검은선표시말고 그냥 깜빡이다가 그림들처럼 폭발하고 사라지도록").
     for(k=0;k<F.pieces.length;k++){var bq=F.pieces[k],dmg=bq.maxHp?1-Math.max(0,bq.hp)/bq.maxHp:0,since=s.tick-(bq.hitTick===undefined?-99:bq.hitTick),blink=since<10?(since>>1)%2===0:dmg>.55&&((s.tick>>2)%(dmg>.8?2:4)===0);
+      if(Ink){ctx.save();if(blink&&since<10)ctx.translate((since&1)?1.4:-1.4,0); // 수묵: 깎인 만큼 먹 덩이를 한 번 더 겹쳐 짙게, 맞으면 먹빛으로 떨며 깜빡(네모 칸 채움 없이)
+        if(dmg>0)drawPieceSprite(bq,C,PIECE,dmg<.34?.3:dmg<.67?.55:.8);if(blink)drawPieceSprite(bq,C,PIECE,since<10?.75:.45);ctx.restore();continue;}
       for(j=0;j<bq.cells.length;j++){var qx=(bq.col+bq.cells[j][0])*C,qy=bq.y-(bq.cells[j][1]+1)*C;ctx.fillStyle=Ink?'#1e1a18':'#ffffff';
         if(dmg>0){ctx.globalAlpha=dmg<.34?.14:dmg<.67?.3:.46;ctx.fillRect(qx+1,qy+1,C-2,C-2);} // 깎인 만큼 속이 세 단계로 먹에 찬다(선 없이 면으로만, 칸 이음매까지 메워 한 덩어리로)
         if(blink){ctx.globalAlpha=since<10?.55:.32;ctx.fillRect(qx+2,qy+2,C-4,C-4);}}} // 맞은 직후 다섯 번 먹빛으로 깜빡(한지빛은 바탕에 묻혔다), 반 넘게 깎이면 스스로 깜빡이며 곧 깨질 것을 알린다. 윤곽은 늘 그대로
@@ -1153,6 +1193,8 @@
     if(Ink&&Ink.raw)Ink.raw(1);try{M[r.kind](q,r.size,r.kind==='glyph'?Arcade.GLYPHS[r.emblem]:null);}finally{if(Ink&&Ink.raw)Ink.raw(-1);}
     if(M.seeThrough)try{var pd=q.getImageData(0,0,c.width,c.height);M.seeThrough(pd.data);q.putImageData(pd,0,0);}catch(e){} // 흰빛·한지로 칠한 면은 바탕이 비치게(사용자 11-16)
     return riserArt[key]={image:c,half:half};}
+  /* 보스 몸 위를 지나는 솟는 그림·바위 파편은 옅게(11-18 심사 "바위 파편이 보스를 가림"): 보스 중심 70px 안은 35%, 150px에서 원래대로. 판정은 그대로 */
+  function bossDuck(s,x,y){var b=s.boss;if(!b||!b.present)return 1;var d=Math.hypot(x-b.x,y-b.y);return d>=150?1:d<=70?.35:.35+.65*(d-70)/80;}
   function drawRisers(s,under){var R=s.risers;if(!R||!R.length)return;ctx.save();
     for(var k=0;k<R.length;k++){var r=R[k],HOT=Ink?'#c2362a':FLOOR_HOT,INKC='#1e1a18',PAPERC='#f2e9d6',wide=r.size*(RISER_THIN[r.kind]||.9);
       if(r.age<Arcade.RISER_WARN&&r.dir==='spit'){if(under)continue; /* 보스가 뱉을 그림: 보스 입에서 날아갈 방향으로 먹 점선과 화살촉, 그림이 작게 맺힌다 */
@@ -1176,19 +1218,19 @@
       // 밑동의 먹 번짐: 모든 소재에 같은 표시로 '솟은 위험물'임을 알린다
       var bg=ctx.createRadialGradient(0,r.size*.98,0,0,r.size*.98,r.size*.7);bg.addColorStop(0,'rgba(30,26,24,.5)');bg.addColorStop(1,'rgba(30,26,24,0)');ctx.globalAlpha=1-f;ctx.fillStyle=bg;ctx.save();ctx.scale(1,.32);ctx.beginPath();ctx.arc(0,r.size*.98/.32,r.size*.7,0,TAU);ctx.fill();ctx.restore();ctx.restore();continue;}
       var rdm=r.maxHp?1-Math.max(0,r.hp)/r.maxHp:0,rsn=s.tick-(r.hitTick===undefined?-99:r.hitTick),rbl=!f&&(rsn<10?(rsn>>1)%2===0:rdm>.55&&((s.tick>>2)%(rdm>.8?2:4)===0)); /* 탄에 맞으면 테트리스 조각처럼 깜빡인다(사용자 11-16) */
-      if(r.broken&&f){ctx.restore();drawRiserShards(r,art,f,k);continue;} /* 깨진 그림은 유령 그림 대신 조각으로 흩어진다 */
-      ctx.globalAlpha=f?Math.max(0,.45-f*.9):1;if(rbl)ctx.translate((rsn&1?1.6:-1.6),0);ctx.globalCompositeOperation=Ink?'multiply':'source-over';if(!f&&RISER_FUME[mv]&&s.tick%9===k%9&&r.fumeTick!==s.tick){r.fumeTick=s.tick;var fu=RISER_FUME[mv];addParticle(r.x+(Math.random()-.5)*r.size*fu[0],r.y+r.size*fu[1],(Math.random()-.5)*.5,-.5-Math.random()*.7,34,INKC,1.4+Math.random()*1.8);} // 촛불 그을음·가마솥 김·약병 기포·모래: 먹 점이 피어오른다(그리기만)
+      if(r.broken&&f){ctx.restore();drawRiserShards(r,art,f,k,bossDuck(s,r.x,r.y));continue;} /* 깨진 그림은 유령 그림 대신 조각으로 흩어진다 */
+      var duck=bossDuck(s,r.x,r.y);ctx.globalAlpha=(f?Math.max(0,.45-f*.9):1)*duck;if(rbl)ctx.translate((rsn&1?1.6:-1.6),0);ctx.globalCompositeOperation=Ink?'multiply':'source-over';if(!f&&RISER_FUME[mv]&&s.tick%9===k%9&&r.fumeTick!==s.tick){r.fumeTick=s.tick;var fu=RISER_FUME[mv];addParticle(r.x+(Math.random()-.5)*r.size*fu[0],r.y+r.size*fu[1],(Math.random()-.5)*.5,-.5-Math.random()*.7,34,INKC,1.4+Math.random()*1.8);} // 촛불 그을음·가마솥 김·약병 기포·모래: 먹 점이 피어오른다(그리기만)
       var blink=mv==='eye'?Math.max(0,1-Math.abs(((visual*.55+k*.37)%1)-.5)*14):0,flap=mv==='wing'?1+.05*Math.sin(visual*4.2+k):mv==='book'?1+.03*Math.sin(visual*3+k):1;
       ctx.save();if(spin)ctx.rotate(spin);if(blink)ctx.scale(1,1-.82*blink);if(flap!==1){ctx.translate(-r.size*.62,0);ctx.scale(flap,2-flap);ctx.translate(r.size*.62,0);}if(swing){ctx.translate(0,-r.size*.85);ctx.rotate(swing);ctx.translate(0,r.size*.85);}if(flick!==1){ctx.translate(0,r.size*.9);ctx.scale(2-flick,flick);ctx.translate(0,-r.size*.9);}ctx.drawImage(art.image,-art.half,-art.half,art.half*2,art.half*2);if(rbl){ctx.globalAlpha=.85;ctx.drawImage(art.image,-art.half,-art.half,art.half*2,art.half*2);} /* 맞으면 먹이 한 번 더 짙게 번쩍(바래지 않게, 재심사 연출·조명) */ctx.restore();ctx.globalCompositeOperation='source-over';
       if(!f){var sx=Math.min(r.size*.62,(RISER_THIN[r.kind]||.9)*r.size+16),sy=r.size*.86,pl=.75+.25*Math.sin(visual*6+k);ctx.globalAlpha=.75+.25*pl;ctx.fillStyle=PAPERC;ctx.fillRect(sx-14.5,sy-14.5,29,29);ctx.fillStyle=INKC;ctx.fillRect(sx-12.5,sy-12.5,25,25);ctx.fillStyle=HOT;ctx.fillRect(sx-10.5,sy-10.5,21,21);ctx.fillStyle=PAPERC;ctx.fillRect(sx-5.2,sy-5.2,10.4,3.2);ctx.fillRect(sx-5.2,sy+2,10.4,3.2);} // 판정이 켜진 동안만 찍히는 인주 낙관(경고 표시). 사라질 때는 꺼진다
       ctx.restore();if(r.fade)drawInkBurst(r,f,k);}
     ctx.restore();}
   /* 깨진 그림(사용자 11-16 "그림도 테트리스처럼 공격으로 폭파시킬수 있게"): 구운 그림을 네모 조각 4×5로 잘라 테트리스 조각처럼 바깥으로 튀고 돌며 떨어진다. 먹폭발은 그 뒤에 함께 핀다. */
-  function drawRiserShards(r,art,f,k){var img=art.image,cw=img.width/4,ch=img.height/5,dw=art.half*2/4,dh=art.half*2/5,sd=((r.x*31+r.size*17+k*7)|0)>>>0,rn=function(){sd=(Math.imul(sd,1664525)+1013904223)>>>0;return sd/4294967296;},e=1-Math.pow(1-f,2),cx=r.x,cy=r.y;
+  function drawRiserShards(r,art,f,k,duck){duck=duck===undefined?1:duck;var img=art.image,cw=img.width/4,ch=img.height/5,dw=art.half*2/4,dh=art.half*2/5,sd=((r.x*31+r.size*17+k*7)|0)>>>0,rn=function(){sd=(Math.imul(sd,1664525)+1013904223)>>>0;return sd/4294967296;},e=1-Math.pow(1-f,2),cx=r.x,cy=r.y;
     ctx.save();ctx.globalCompositeOperation=Ink?'multiply':'source-over';
     for(var i=0;i<4;i++)for(var j=0;j<5;j++){var ox=-art.half+(i+.5)*dw,oy=-art.half+(j+.5)*dh,len=Math.hypot(ox,oy)||1,sp=r.size*(.5+rn()*.9),vx=ox/len*sp+(rn()-.5)*r.size*.3,vy=oy/len*sp-r.size*(.2+rn()*.4),rot=(rn()-.5)*5,cut=rn();
       if(cut<.12)continue; /* 몇 조각은 먹폭발 속에 사라진다 */
-      ctx.save();ctx.translate(cx+ox+vx*e,cy+oy+vy*e+f*f*r.size*1.3);ctx.rotate(rot*e);var sc=1-.35*f;ctx.scale(sc,sc);ctx.globalAlpha=Math.max(0,1-f*1.15);
+      ctx.save();ctx.translate(cx+ox+vx*e,cy+oy+vy*e+f*f*r.size*1.3);ctx.rotate(rot*e);var sc=1-.35*f;ctx.scale(sc,sc);ctx.globalAlpha=Math.max(0,1-f*1.15)*duck;
       ctx.drawImage(img,i*cw,j*ch,cw,ch,-dw/2,-dh/2,dw,dh);ctx.restore();}
     ctx.restore();drawInkBurst(r,f,k);}
   /* 먹 폭발(사용자 11-16 "사라지그전에 먹폭발한변하고 사라지도록 불꽃놀이 수묵화버전마냥 화려하게"): 솟은 그림이 사라질 때 먹물이 불꽃처럼 터진다.
@@ -1305,7 +1347,7 @@
     for(i=0;i<s.n;i++){
       x=s.bx[i];y=s.by[i];if(s.bage[i]<bloom||x!==x||y!==y)continue;
       size=s.bsize[i];if(size===SHAPE_PROP){drawProp(s,i,1,1);drawBreakableMark(s,i);continue;}
-      o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;half=o.half;var faint=nearBoss(s,x,y)||nearMob(s,x,y),grace=s.bfragment&&s.bfragment[i]&&s.bage[i]<s.bgrace[i];ctx.globalAlpha=grace?.28+.2*s.bage[i]/s.bgrace[i]:faint?.38:1;
+      o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;half=o.half;var faint=nearBoss(s,x,y)||nearMob(s,x,y),grace=s.bfragment&&s.bfragment[i]&&s.bage[i]<s.bgrace[i];var gone=s.bexit&&s.bexit[i];ctx.globalAlpha=gone?.5:grace?.28+.2*s.bage[i]/s.bgrace[i]:faint?.38:1; // 나가는 탄(판정 없음)은 반투명
       var skin=bulletSkin(s,i,variant);
       if(skin||size===SHAPE_RICE)drawOrientedBullet(s,i,skin?skinOfBullet(skin,s.bcolor[i],size):o,skin,1);
       else ctx.drawImage(o.image,x-half,y-half,half*2,half*2);
@@ -1444,8 +1486,8 @@
         if(f.sigil&&keep)safe={segs:segs,color:color,k:.22,cool:cool};
       }else if(phase==='warn'||charging){
         var t=charging?(phaseTick-cycle+Arcade.FIGURE_CHARGE_TICKS)/Arcade.FIGURE_CHARGE_TICKS:f.age/f.warn,blink=t;
-        ctx.setLineDash(f.sigil?[18,9]:[]);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=fa*(WARN_RED?.22+.26*t:.12+.18*t);ctx.strokeStyle=WARN_RED?'#c9406e':color;ctx.lineWidth=f.sigil?Math.max(f.width*(.3+.45*t),3):f.width*(.3+.7*t);ctx.stroke(); // 육망성 예고는 끊긴 가는 선: 켜진 먹 선(판정)과 달리 '예고'로 읽힌다(11-18 심사). 색은 인주색 예고 규칙(11-15) 유지
-        ctx.globalAlpha=fa*(.4+.5*blink);ctx.strokeStyle='#ffffff';ctx.lineWidth=1;ctx.setLineDash([6,6]);ctx.stroke();
+        ctx.setLineDash(f.sigil?[18,9]:[]);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=fa*(WARN_RED?.22+.26*t:.12+.18*t);ctx.strokeStyle=WARN_RED?'#c9406e':color;ctx.lineWidth=f.sigil?Math.max(f.width*(compact?.42+.5*t:.3+.45*t),compact?4.5:3):f.width*(.3+.7*t);ctx.stroke(); // 휴대폰은 화면이 작아 같은 굵기가 더 가늘게 보인다(사용자 11-18 PR 117 지적): 예고선을 1.5배 굵게 // 육망성 예고는 끊긴 가는 선: 켜진 먹 선(판정)과 달리 '예고'로 읽힌다(11-18 심사). 색은 인주색 예고 규칙(11-15) 유지
+        ctx.globalAlpha=fa*(.4+.5*blink);ctx.strokeStyle='#ffffff';ctx.lineWidth=f.sigil&&compact?1.6:1;ctx.setLineDash([6,6]);ctx.stroke();
       }else{
         var over=f.age-f.warn-f.active,k=over>0?Math.max(0,1-over/Arcade.BEAM_FADE):Math.min(1,(phaseTick+1)/4),pulse=1+Math.sin(visual*6+i)*.025;
         var top=null;if(f.sigil){fa=SIGIL_LIVE;ctx.setLineDash([]);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=SIGIL_UNDER_ALPHA*k;ctx.strokeStyle=sigilFade(SIGIL_EDGE);ctx.lineWidth=f.width*SIGIL_UNDER*k;ctx.stroke();
