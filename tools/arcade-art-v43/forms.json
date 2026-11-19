@@ -1,0 +1,55 @@
+{
+ "actors": {
+  "lucifer_alt11": {
+   "src": "media/m0-v43/forms/a11-boss-p4.webp",
+   "strip": 8,
+   "fps": 4,
+   "size": 260,
+   "every": 2
+  },
+  "mask_alt11": {
+   "src": "media/m0-v43/forms/mb-ep1a11-p4.webp",
+   "strip": 8,
+   "fps": 4,
+   "size": 260,
+   "every": 2
+  },
+  "controller_alt27": {
+   "src": "media/chapter3-v18/controller-attack.webp"
+  },
+  "controller_alt29": {
+   "src": "media/chapter3-v18/controller-rain.webp"
+  },
+  "goblin_alt31": {
+   "src": "media/m0-v43/forms/goblin-flute-king.webp"
+  },
+  "insomnia_alt34": {
+   "src": "media/m0-v43/forms/bulmyeongwi-p2.webp"
+  },
+  "chief_alt50": {
+   "src": "media/m0-v43/forms/h103-boss-p4.webp",
+   "strip": 8,
+   "fps": 4,
+   "size": 260,
+   "every": 2
+  },
+  "cultist_alt61": {
+   "src": "media/cult-v17/cult-leader-atlas.png",
+   "cell": [
+    1,
+    0,
+    2,
+    2
+   ]
+  },
+  "p6_demons_alt48": {
+   "src": "media/m0-v43/boss/mb-hando01-attack.webp",
+   "cell": [
+    2,
+    0,
+    4,
+    1
+   ]
+  }
+ }
+}

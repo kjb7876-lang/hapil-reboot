@@ -1623,6 +1623,24 @@
   "stamp": "1bd9969981e61096",
   "table": "tools/arcade-art-v43/base.json"
  },
+ "chief_alt50.webp": {
+  "bytes": 86626,
+  "cell": [
+   225,
+   228
+  ],
+  "fps": 4,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   900,
+   228
+  ],
+  "source": "media/m0-v43/forms/h103-boss-p4.webp",
+  "sourceSha256": "01ce3874a8c41606f7295a27196aaf3e3aeac8d6fa4c7fdc886f8db95bb88167",
+  "stamp": "69e6e8daff46fecb",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
  "cleaver.webp": {
   "bytes": 5392,
   "group": "props",
@@ -1686,6 +1704,30 @@
   "stamp": "da4f980c74179334",
   "table": "tools/arcade-art-v43/base.json"
  },
+ "controller_alt27.webp": {
+  "bytes": 33334,
+  "group": "actors",
+  "size": [
+   259,
+   260
+  ],
+  "source": "media/chapter3-v18/controller-attack.webp",
+  "sourceSha256": "ee7a2d409dab8df05a1455f314d07ead6c507730e4c13f6fd1944701edcc56e5",
+  "stamp": "8fcf51ec56111a75",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
+ "controller_alt29.webp": {
+  "bytes": 30614,
+  "group": "actors",
+  "size": [
+   255,
+   260
+  ],
+  "source": "media/chapter3-v18/controller-rain.webp",
+  "sourceSha256": "f883e208c90ed4e4173f23563f037eb75e4eb977297d7f5e64cebe936338da1c",
+  "stamp": "4fdb2eb15447c745",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
  "crescent.webp": {
   "bytes": 22118,
   "group": "props",
@@ -1748,6 +1790,18 @@
   "sourceSha256": "d76c925bd52b367aaac41473b234b35a0b5aecde42201324b187af5408f1a2de",
   "stamp": "59046df6595c4e97",
   "table": "tools/arcade-art-v43/base.json"
+ },
+ "cultist_alt61.webp": {
+  "bytes": 37094,
+  "group": "actors",
+  "size": [
+   260,
+   257
+  ],
+  "source": "media/cult-v17/cult-leader-atlas.png",
+  "sourceSha256": "d76c925bd52b367aaac41473b234b35a0b5aecde42201324b187af5408f1a2de",
+  "stamp": "a4323ec41545bcb3",
+  "table": "tools/arcade-art-v43/forms.json"
  },
  "demon-hand.webp": {
   "bytes": 3728,
@@ -1886,6 +1940,18 @@
   "stamp": "ef18a1dfa9836279",
   "table": "tools/arcade-art-v43/base.json"
  },
+ "goblin_alt31.webp": {
+  "bytes": 21788,
+  "group": "actors",
+  "size": [
+   260,
+   208
+  ],
+  "source": "media/m0-v43/forms/goblin-flute-king.webp",
+  "sourceSha256": "c5fd7fd87d7984b5c9c125cc71f5b603b2b7540710b079a7d4d5a2ef198208eb",
+  "stamp": "8ca9992348a53a68",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
  "guardian.webp": {
   "bytes": 7420,
   "group": "mobs",
@@ -1978,6 +2044,18 @@
   "stamp": "8aef48a6cf731c9f",
   "table": "tools/arcade-art-v43/base.json"
  },
+ "insomnia_alt34.webp": {
+  "bytes": 31088,
+  "group": "actors",
+  "size": [
+   243,
+   260
+  ],
+  "source": "media/m0-v43/forms/bulmyeongwi-p2.webp",
+  "sourceSha256": "bbaa488914bf2b673a48e9a781dcc9307721c70d447e42b5b77082e65b7f9ae3",
+  "stamp": "26e2dbcb746d7765",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
  "knight.webp": {
   "bytes": 23676,
   "group": "mobs",
@@ -2040,6 +2118,24 @@
   "sourceSha256": "76b692aaaa412da367401de47b3965c1857755d4f0078d52c9363e0583af528c",
   "stamp": "071f4126c7e6643a",
   "table": "tools/arcade-art-v43/base.json"
+ },
+ "lucifer_alt11.webp": {
+  "bytes": 89682,
+  "cell": [
+   260,
+   223
+  ],
+  "fps": 4,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   1040,
+   223
+  ],
+  "source": "media/m0-v43/forms/a11-boss-p4.webp",
+  "sourceSha256": "d9ca66daedf0759a29db2665f9c2c102f031a62e5bd6330b50c9e477fb7ff264",
+  "stamp": "b76d63947d809851",
+  "table": "tools/arcade-art-v43/forms.json"
  },
  "m0_a08_c1.webp": {
   "bytes": 31502,
@@ -7502,6 +7598,24 @@
   "stamp": "885c4ae9a50baeed",
   "table": "tools/arcade-art-v43/base.json"
  },
+ "mask_alt11.webp": {
+  "bytes": 87660,
+  "cell": [
+   233,
+   229
+  ],
+  "fps": 4,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   932,
+   229
+  ],
+  "source": "media/m0-v43/forms/mb-ep1a11-p4.webp",
+  "sourceSha256": "906ddaa70ed0ad73c8ca2cd270a9b37ae7a4c1058511d612c22cf6bf5a4d66d9",
+  "stamp": "f75b55d211544883",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
  "mb_01.webp": {
   "bytes": 23600,
   "cell": [
@@ -11269,6 +11383,18 @@
   "sourceSha256": "706c1b96b0dca48a34e5891c4c6f69819ee870986418702e9defab745932c0fa",
   "stamp": "f0df7502c7489765",
   "table": "tools/arcade-art-v43/p6.json"
+ },
+ "p6_demons_alt48.webp": {
+  "bytes": 37240,
+  "group": "actors",
+  "size": [
+   234,
+   260
+  ],
+  "source": "media/m0-v43/boss/mb-hando01-attack.webp",
+  "sourceSha256": "706c1b96b0dca48a34e5891c4c6f69819ee870986418702e9defab745932c0fa",
+  "stamp": "92142da8edf77616",
+  "table": "tools/arcade-art-v43/forms.json"
  },
  "p6_keeper.webp": {
   "bytes": 9372,

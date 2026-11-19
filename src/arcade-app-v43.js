@@ -80,6 +80,7 @@
     if(!list){list=phaseMemo[key]=(Arcade.plannedSegments?Arcade.plannedSegments(s.difficulty):Arcade.SEGMENTS.map(function(x,i){return i;})).filter(function(i){var x=Arcade.SEGMENTS[i];return x.kind==='card'&&x.stage===g.stage&&x.actor===g.actor&&!!x.mid===!!g.mid;});}
     var no=list.indexOf(s.seg);return no<0?null:{no:no+1,count:list.length};}
   function tallOf(key){
+    if(Arcade.FORM_BASE&&Arcade.FORM_BASE[key])key=Arcade.FORM_BASE[key]; // 다른 모습 그림은 원래 인물의 크기
     if(TALL[key])return Arcade.MOBS[key]&&TALL[key]<TALL_MOB?TALL_MOB:TALL[key]; // 옛 잡몹 크기(26~40)는 그림이 안 보일 만큼 작았다. 잡몹은 TALL_MOB보다 작게 그리지 않는다.
     if(Arcade.ACTORS[key])return TALL_ACTOR;
     var m=Arcade.MOBS[key];if(m)return m.elite?Math.max(TALL_ELITE,Math.round(m.r*4.2)):Math.min(78,Math.max(TALL_MOB,Math.round(m.r*4.1)));
@@ -125,11 +126,14 @@
     var key=list[at%list.length];return images[key]?key:(images[kind]?kind:key);
   }
   function facesRight(key){var e=manifest&&manifest[key+'.webp'];return !!e&&e.facing==='right';}
+  /* 같은 인물이 이어 나오면 다른 모습 그림(엔진 BOSS_FORMS). artAt: 이 스테이지에서 그릴 그림 키, bossKey: 지금 보스의 그림 키. */
+  function artAt(actor,index){return Arcade.bossArtOf?Arcade.bossArtOf(actor,index):actor;}
+  function bossKey(s){var b=s.boss,g=Arcade.SEGMENTS[s.seg];return artAt(b.actor,g&&g.kind==='card'&&g.actor===b.actor?g.stage:s.stageIndex);}
   function stageKeys(index){
     var g=Arcade.STAGES[index];if(!g)return [];
     var list=[],add=function(k){if(k&&list.indexOf(k)<0)list.push(k);};
     var bg=themeOf(index).bg,lp=loopOf(index);if(lp)add(lp);else if(bg)add('bg-'+bg); // 드라이브 세로 맵(위아래가 이어지게 만든 그림)이 있으면 그것만 받는다
-    for(var i=g.first;i<Arcade.SEGMENTS.length&&Arcade.SEGMENTS[i].stage===index;i++){var seg=Arcade.SEGMENTS[i];if(seg.kind==='card')add(seg.actor);}
+    for(var i=g.first;i<Arcade.SEGMENTS.length&&Arcade.SEGMENTS[i].stage===index;i++){var seg=Arcade.SEGMENTS[i];if(seg.kind==='card')add(artAt(seg.actor,index));}
     var skin=skinsOf(index);(skin||g.cast||[]).forEach(add); // m0 지역표 몹이 있으면 그것만 받는다
     // 동작 그림(옆 걷기·공격 등)은 목록에 있을 때만 같이 받는다.
     list.slice().forEach(function(k){motionsOf(k).forEach(function(m){add(k+'@'+m);});});
@@ -228,11 +232,86 @@
     g.fillStyle='#ffffff';g.beginPath();g.arc(kind==='dagger'?u*.2:0,0,radius*.42,0,TAU);g.fill(); // 흰 심
     return {image:c,half:reach};
   }
+  /* 보스 고유 탄 문양(사용자 11-19). 엔진 BOSS_SHOTS가 인물마다 하나를 정하고, 보스가 나와 있는 동안 그 보스의 구슬탄(크기 0~2)을 이 모양으로 그린다.
+     판정 원은 그대로(그림만). +x가 진행 방향. 십자가로 읽히는 가로대·가드는 두지 않는다. SHOT_SPIN은 돌며 날고, SHOT_UPRIGHT는 늘 바로 선다. */
+  var SHOT_SPIN={clock:.03,gear:.06,web:.035,coin:.07,scythe:.22},SHOT_UPRIGHT={eye:1,skull:1,mask:1,bell:1,hourglass:1,rose:1,lips:1,crown:1};
+  function shotPath(g,k,u){
+    var i,a;
+    if(k==='fist'){g.moveTo(-u*.95,-u*.32);g.lineTo(-u*.45,-u*.42);g.quadraticCurveTo(-u*.35,-u*.75,u*.25,-u*.72);g.quadraticCurveTo(u*.95,-u*.7,u*.95,0);g.quadraticCurveTo(u*.95,u*.7,u*.25,u*.72);g.quadraticCurveTo(-u*.35,u*.75,-u*.45,u*.42);g.lineTo(-u*.95,u*.32);g.closePath();}
+    else if(k==='clock'||k==='coin'){g.arc(0,0,u*.86,0,TAU);}
+    else if(k==='sword'){g.moveTo(u*1.35,0);g.lineTo(u*.85,-u*.2);g.lineTo(-u*.35,-u*.2);g.lineTo(-u*.35,-u*.1);g.lineTo(-u*.95,-u*.1);g.lineTo(-u*.95,u*.1);g.lineTo(-u*.35,u*.1);g.lineTo(-u*.35,u*.2);g.lineTo(u*.85,u*.2);g.closePath();}
+    else if(k==='missile'){g.moveTo(u*1.25,0);g.quadraticCurveTo(u*.95,-u*.32,u*.45,-u*.32);g.lineTo(-u*.45,-u*.32);g.lineTo(-u*1.0,-u*.78);g.lineTo(-u*.82,-u*.3);g.lineTo(-u*.9,0);g.lineTo(-u*.82,u*.3);g.lineTo(-u*1.0,u*.78);g.lineTo(-u*.45,u*.32);g.lineTo(u*.45,u*.32);g.quadraticCurveTo(u*.95,u*.32,u*1.25,0);g.closePath();}
+    else if(k==='web'){g.arc(0,0,u*.28,0,TAU);}
+    else if(k==='gear'){for(i=0;i<16;i++){a=i/16*TAU;var r=i%2?u*.66:u*.95;g.lineTo(Math.cos(a-.1)*r,Math.sin(a-.1)*r);g.lineTo(Math.cos(a+.1)*r,Math.sin(a+.1)*r);}g.closePath();}
+    else if(k==='eye'){g.moveTo(-u*1.1,0);g.quadraticCurveTo(0,-u*.95,u*1.1,0);g.quadraticCurveTo(0,u*.95,-u*1.1,0);g.closePath();}
+    else if(k==='flame'){g.moveTo(u*.9,0);g.bezierCurveTo(u*.9,-u*.8,-u*.2,-u*.6,-u*1.3,-u*.3);g.quadraticCurveTo(-u*.55,-u*.05,-u*1.15,u*.4);g.bezierCurveTo(-u*.2,u*.7,u*.9,u*.75,u*.9,0);g.closePath();}
+    else if(k==='horn'){g.moveTo(u*1.25,-u*.3);g.quadraticCurveTo(u*.2,-u*.2,-u*.8,-u*.62);g.lineTo(-u*.9,u*.42);g.quadraticCurveTo(u*.15,u*.38,u*1.25,-u*.3);g.closePath();}
+    else if(k==='feather'){g.moveTo(u*1.3,0);g.quadraticCurveTo(u*.4,-u*.62,-u*.7,-u*.34);g.lineTo(-u*.55,-u*.08);g.lineTo(-u*1.15,0);g.lineTo(-u*.55,u*.08);g.lineTo(-u*.7,u*.34);g.quadraticCurveTo(u*.4,u*.62,u*1.3,0);g.closePath();}
+    else if(k==='lips'){g.moveTo(-u*1.1,0);g.quadraticCurveTo(-u*.55,-u*.75,-u*.12,-u*.38);g.quadraticCurveTo(0,-u*.5,u*.12,-u*.38);g.quadraticCurveTo(u*.55,-u*.75,u*1.1,0);g.quadraticCurveTo(0,u*.95,-u*1.1,0);g.closePath();}
+    else if(k==='chain'){g.ellipse(u*.42,0,u*.66,u*.42,0,0,TAU);g.moveTo(-u*.24+u*.66,0);g.ellipse(-u*.42,0,u*.66,u*.42,0,0,TAU);}
+    else if(k==='key'){g.arc(-u*.62,0,u*.42,0,TAU);g.moveTo(-u*.25,-u*.13);g.lineTo(u*1.2,-u*.13);g.lineTo(u*1.2,u*.48);g.lineTo(u*.95,u*.48);g.lineTo(u*.95,u*.13);g.lineTo(u*.7,u*.13);g.lineTo(u*.7,u*.38);g.lineTo(u*.48,u*.38);g.lineTo(u*.48,u*.13);g.lineTo(-u*.25,u*.13);g.closePath();}
+    else if(k==='rose'){for(i=0;i<5;i++){a=-Math.PI/2+i/5*TAU;g.moveTo(Math.cos(a)*u*.42+u*.5,Math.sin(a)*u*.42);g.arc(Math.cos(a)*u*.42,Math.sin(a)*u*.42,u*.5,0,TAU);}}
+    else if(k==='bell'){g.moveTo(0,-u*1.0);g.quadraticCurveTo(u*.62,-u*.95,u*.62,-u*.1);g.quadraticCurveTo(u*.66,u*.5,u*1.0,u*.66);g.lineTo(-u*1.0,u*.66);g.quadraticCurveTo(-u*.66,u*.5,-u*.62,-u*.1);g.quadraticCurveTo(-u*.62,-u*.95,0,-u*1.0);g.closePath();}
+    else if(k==='hourglass'){g.moveTo(-u*.72,-u*1.0);g.lineTo(u*.72,-u*1.0);g.lineTo(u*.72,-u*.82);g.lineTo(u*.12,0);g.lineTo(u*.72,u*.82);g.lineTo(u*.72,u*1.0);g.lineTo(-u*.72,u*1.0);g.lineTo(-u*.72,u*.82);g.lineTo(-u*.12,0);g.lineTo(-u*.72,-u*.82);g.closePath();}
+    else if(k==='needle'){g.moveTo(u*1.45,0);g.lineTo(-u*.95,-u*.16);g.quadraticCurveTo(-u*1.15,0,-u*.95,u*.16);g.closePath();}
+    else if(k==='leaf'){g.moveTo(u*1.25,0);g.quadraticCurveTo(u*.2,-u*.85,-u*.9,-u*.05);g.lineTo(-u*1.25,0);g.lineTo(-u*.9,u*.05);g.quadraticCurveTo(u*.2,u*.85,u*1.25,0);g.closePath();}
+    else if(k==='moon'){g.arc(0,0,u*.9,-Math.PI*.62,Math.PI*.62);g.arc(-u*.55,0,u*.78,Math.PI*.42,-Math.PI*.42,true);g.closePath();}
+    else if(k==='skull'){g.moveTo(-u*.5,u*.55);g.quadraticCurveTo(-u*.9,u*.2,-u*.85,-u*.25);g.quadraticCurveTo(-u*.75,-u*.98,0,-u*.98);g.quadraticCurveTo(u*.75,-u*.98,u*.85,-u*.25);g.quadraticCurveTo(u*.9,u*.2,u*.5,u*.55);g.lineTo(u*.45,u*.9);g.lineTo(-u*.45,u*.9);g.closePath();}
+    else if(k==='fang'){g.moveTo(u*1.25,u*.05);g.quadraticCurveTo(u*.25,-u*.55,-u*.85,-u*.5);g.quadraticCurveTo(-u*1.0,0,-u*.85,u*.32);g.quadraticCurveTo(u*.1,u*.12,u*1.25,u*.05);g.closePath();}
+    else if(k==='drop'){g.moveTo(-u*1.3,0);g.quadraticCurveTo(-u*.2,-u*.72,u*.35,-u*.62);g.arc(u*.35,0,u*.62,-Math.PI/2,Math.PI/2);g.quadraticCurveTo(-u*.2,u*.72,-u*1.3,0);g.closePath();}
+    else if(k==='mask'){g.moveTo(0,-u*1.0);g.bezierCurveTo(u*.95,-u*1.0,u*.95,u*.35,0,u*1.0);g.bezierCurveTo(-u*.95,u*.35,-u*.95,-u*1.0,0,-u*1.0);g.closePath();}
+    else if(k==='bolt'){g.moveTo(u*1.4,0);g.lineTo(u*.05,-u*.72);g.lineTo(u*.05,-u*.2);g.lineTo(-u*.65,-u*.78);g.lineTo(-u*1.3,-u*.15);g.lineTo(-u*.5,-u*.15);g.lineTo(-u*.5,u*.45);g.lineTo(u*.2,u*.12);g.lineTo(u*.25,u*.62);g.closePath();}
+    else if(k==='scythe'){g.moveTo(u*1.0,-u*.15);g.quadraticCurveTo(u*.45,-u*1.1,-u*.75,-u*.75);g.quadraticCurveTo(u*.15,-u*.62,u*.62,-u*.02);g.lineTo(u*.18,u*.95);g.lineTo(u*.02,u*.88);g.lineTo(u*.5,-u*.05);g.closePath();}
+    else if(k==='fly'){g.ellipse(-u*.1,0,u*.62,u*.3,0,0,TAU);g.moveTo(u*.78,0);g.arc(u*.62,0,u*.24,0,TAU);}
+    else if(k==='crown'){g.moveTo(-u*.95,u*.65);g.lineTo(-u*.95,-u*.6);g.lineTo(-u*.45,-u*.05);g.lineTo(0,-u*.85);g.lineTo(u*.45,-u*.05);g.lineTo(u*.95,-u*.6);g.lineTo(u*.95,u*.65);g.closePath();}
+    else if(k==='thorn'){g.moveTo(u*1.35,0);g.lineTo(u*.1,-u*.22);g.lineTo(-u*.35,-u*.7);g.lineTo(-u*.3,-u*.2);g.lineTo(-u*1.05,-u*.12);g.lineTo(-u*1.05,u*.12);g.lineTo(-u*.3,u*.2);g.lineTo(-u*.35,u*.7);g.lineTo(u*.1,u*.22);g.closePath();}
+    else g.arc(0,0,u*.8,0,TAU);
+  }
+  function shotDetail(g,k,u,color){
+    var ink=mix(color,'#000000',.62),pale=mix(color,'#ffffff',.78),i,a;
+    g.lineCap='round';g.lineJoin='round';g.strokeStyle=ink;g.fillStyle=ink;g.lineWidth=Math.max(.9,u*.1);
+    if(k==='fist'){g.beginPath();for(i=-1;i<=1;i++){g.moveTo(u*.95,i*u*.24);g.lineTo(u*.45,i*u*.24);}g.moveTo(-u*.2,u*.05);g.quadraticCurveTo(u*.3,u*.55,u*.62,u*.45);g.stroke();}
+    else if(k==='clock'){g.beginPath();for(i=0;i<12;i++){a=i/12*TAU;g.moveTo(Math.cos(a)*u*.62,Math.sin(a)*u*.62);g.lineTo(Math.cos(a)*u*.76,Math.sin(a)*u*.76);}g.stroke();g.lineWidth=Math.max(1,u*.14);g.beginPath();g.moveTo(0,0);g.lineTo(0,-u*.48);g.moveTo(0,0);g.lineTo(u*.58,u*.18);g.stroke();}
+    else if(k==='coin'){g.fillRect(-u*.28,-u*.28,u*.56,u*.56);g.beginPath();g.arc(0,0,u*.66,0,TAU);g.lineWidth=Math.max(.8,u*.06);g.stroke();}
+    else if(k==='sword'){g.beginPath();g.moveTo(u*1.1,0);g.lineTo(-u*.3,0);g.stroke();g.beginPath();g.arc(-u*1.0,0,u*.14,0,TAU);g.fill();}
+    else if(k==='missile'){g.beginPath();g.moveTo(u*.5,-u*.3);g.lineTo(u*.5,u*.3);g.stroke();g.fillStyle=pale;g.beginPath();g.moveTo(-u*.9,-u*.16);g.lineTo(-u*1.45,0);g.lineTo(-u*.9,u*.16);g.closePath();g.fill();}
+    else if(k==='web'){g.strokeStyle=pale;g.lineWidth=Math.max(.9,u*.1);g.beginPath();for(i=0;i<6;i++){a=i/6*TAU+.26;g.moveTo(0,0);g.lineTo(Math.cos(a)*u*1.05,Math.sin(a)*u*1.05);}for(var ring=1;ring<=3;ring++){var rr=u*.33*ring;for(i=0;i<=6;i++){a=i/6*TAU+.26;var sag=i%1?1:.86;g[i?'lineTo':'moveTo'](Math.cos(a)*rr*sag,Math.sin(a)*rr*sag);}}g.stroke();}
+    else if(k==='gear'){g.beginPath();g.arc(0,0,u*.3,0,TAU);g.fill();}
+    else if(k==='eye'){g.beginPath();g.arc(0,0,u*.42,0,TAU);g.fill();g.fillStyle=pale;g.beginPath();g.ellipse(0,0,u*.1,u*.34,0,0,TAU);g.fill();}
+    else if(k==='flame'){g.fillStyle=pale;g.beginPath();g.moveTo(u*.55,0);g.bezierCurveTo(u*.55,-u*.4,-u*.1,-u*.3,-u*.6,-u*.1);g.quadraticCurveTo(-u*.1,u*.35,u*.55,0);g.fill();}
+    else if(k==='horn'){g.beginPath();for(i=0;i<3;i++){var x=u*(-.45+i*.4);g.moveTo(x,-u*(.45-i*.1));g.lineTo(x+u*.08,u*(.38-i*.03));}g.stroke();}
+    else if(k==='feather'){g.beginPath();g.moveTo(u*1.2,0);g.lineTo(-u*1.1,0);for(i=0;i<3;i++){g.moveTo(u*(.6-i*.45),0);g.lineTo(u*(.3-i*.45),-u*.3);}g.stroke();}
+    else if(k==='lips'){g.beginPath();g.moveTo(-u*.95,0);g.quadraticCurveTo(0,u*.18,u*.95,0);g.stroke();}
+    else if(k==='key'){g.beginPath();g.arc(-u*.62,0,u*.17,0,TAU);g.fill();}
+    else if(k==='rose'){g.beginPath();for(i=0;i<=24;i++){a=i/24*TAU*1.6;var r2=u*.06+u*.32*i/24;g[i?'lineTo':'moveTo'](Math.cos(a)*r2,Math.sin(a)*r2);}g.stroke();}
+    else if(k==='bell'){g.beginPath();g.arc(0,u*.82,u*.2,0,TAU);g.fill();g.beginPath();g.moveTo(-u*.6,u*.3);g.lineTo(u*.6,u*.3);g.stroke();}
+    else if(k==='hourglass'){g.fillStyle=pale;g.beginPath();g.moveTo(-u*.4,u*.82);g.lineTo(u*.4,u*.82);g.lineTo(0,u*.25);g.closePath();g.fill();}
+    else if(k==='needle'){g.beginPath();g.ellipse(-u*.72,0,u*.14,u*.05,0,0,TAU);g.fill();}
+    else if(k==='leaf'){g.beginPath();g.moveTo(u*1.1,0);g.lineTo(-u*1.2,0);for(i=0;i<3;i++){var lx=u*(.5-i*.45);g.moveTo(lx,0);g.lineTo(lx-u*.3,-u*.35);g.moveTo(lx,0);g.lineTo(lx-u*.3,u*.35);}g.stroke();}
+    else if(k==='skull'){g.beginPath();g.arc(-u*.34,-u*.12,u*.22,0,TAU);g.arc(u*.34,-u*.12,u*.22,0,TAU);g.fill();g.beginPath();g.moveTo(0,u*.2);g.lineTo(-u*.1,u*.38);g.lineTo(u*.1,u*.38);g.closePath();g.fill();g.beginPath();for(i=-1;i<=1;i++){g.moveTo(i*u*.2,u*.62);g.lineTo(i*u*.2,u*.9);}g.stroke();}
+    else if(k==='mask'){g.beginPath();g.ellipse(-u*.3,-u*.2,u*.2,u*.09,-.25,0,TAU);g.ellipse(u*.3,-u*.2,u*.2,u*.09,.25,0,TAU);g.fill();g.beginPath();g.moveTo(-u*.38,u*.28);g.quadraticCurveTo(0,u*.62,u*.38,u*.28);g.stroke();}
+    else if(k==='fly'){g.fillStyle=pale;g.globalAlpha=.75;g.beginPath();g.ellipse(-u*.2,-u*.55,u*.5,u*.24,-.35,0,TAU);g.ellipse(-u*.2,u*.55,u*.5,u*.24,.35,0,TAU);g.fill();g.globalAlpha=1;g.beginPath();for(i=0;i<3;i++){g.moveTo(-u*(.5-i*.25),-u*.28);g.lineTo(-u*(.5-i*.25),u*.28);}g.stroke();}
+    else if(k==='crown'){g.beginPath();g.moveTo(-u*.95,u*.35);g.lineTo(u*.95,u*.35);g.stroke();g.fillStyle=pale;[[-.95,-.6],[0,-.85],[.95,-.6]].forEach(function(p){g.beginPath();g.arc(p[0]*u,p[1]*u,u*.16,0,TAU);g.fill();});}
+    else if(k==='chain'||k==='scythe'||k==='moon'||k==='drop'||k==='bolt'||k==='thorn'||k==='fang'){g.fillStyle=pale;g.globalAlpha=.8;g.beginPath();g.ellipse(k==='drop'?u*.42:u*.2,-u*.12,u*.18,u*.08,-.4,0,TAU);g.fill();g.globalAlpha=1;}
+  }
+  function buildShot(kind,radius,color,tint){
+    var u=radius*(radius>9?1.3:radius>5?1.6:1.75),reach=u*1.6,c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale; // 큰 구슬은 덜 키운다: 그림이 판정보다 너무 커 보이지 않게(심사 11-19)
+    g.translate(m,m);g.scale(scale,scale);
+    var hs=tint&&tint!==color?mix(color,tint,.55):color,glow=g.createRadialGradient(0,0,radius*.6,0,0,reach);glow.addColorStop(0,hs+haloOf(color,Ink?'24':'5a'));glow.addColorStop(1,hs+'00');if(!lite){g.fillStyle=glow;g.fillRect(-reach,-reach,reach*2,reach*2);}
+    var body=g.createLinearGradient(-u,-u,u,u);body.addColorStop(0,mix(color,'#ffffff',.6));body.addColorStop(.5,color);body.addColorStop(1,mix(tint&&tint!==color?mix(color,tint,.6):color,'#000000',.35));
+    g.lineJoin='round';
+    if(kind==='chain'){g.strokeStyle=mix(color,'#000000',.6);g.lineWidth=u*.4;g.beginPath();g.ellipse(u*.42,0,u*.6,u*.36,0,0,TAU);g.stroke();g.beginPath();g.ellipse(-u*.42,0,u*.6,u*.36,0,0,TAU);g.stroke();g.strokeStyle=paleRimOf(color);g.lineWidth=u*.3;g.beginPath();g.ellipse(u*.42,0,u*.6,u*.36,0,0,TAU);g.stroke();g.beginPath();g.ellipse(-u*.42,0,u*.6,u*.36,0,0,TAU);g.stroke();
+      g.strokeStyle=body;g.lineWidth=u*.22;g.beginPath();g.ellipse(-u*.42,0,u*.6,u*.36,0,0,TAU);g.stroke();g.beginPath();g.ellipse(u*.42,0,u*.6,u*.36,0,0,TAU);g.stroke();}
+    else{g.beginPath();shotPath(g,kind,u);g.strokeStyle=paleRimOf(color);g.lineWidth=3.2;g.stroke();g.fillStyle=body;g.fill(kind==='moon'?'evenodd':'nonzero');g.strokeStyle=mix(color,'#000000',.6);g.lineWidth=1.3;g.stroke();} // 바깥 흰 테 + 먹선 테: 종이색 배경에서도 모양이 읽힌다(심사 11-19)
+    shotDetail(g,kind,u,color);
+    return {image:c,half:reach};
+  }
+  function bossShot(s){var b=s.boss;if(!b||!b.present||b.leaving||s.stage==='wave'||!Arcade.bossShotOf)return '';return Arcade.bossShotOf(b.actor);}
   function skinOfBullet(kind,color,size){
     var key=kind+':'+size+':'+color+orbTint;
     if(!skinSprites[key]){
       var radius=Arcade.SIZE_RADIUS[size]*(state?state.sizeScale:compact?1.25:1)*(SMALL_GROW[size]||1);
-      skinSprites[key]=buildSkin(kind,radius,COLORS[color],orbTint);
+      skinSprites[key]=Arcade.SHOT_KINDS&&Arcade.SHOT_KINDS.indexOf(kind)>=0?buildShot(kind,radius,COLORS[color],orbTint):buildSkin(kind,radius,COLORS[color],orbTint);
       if(Ink&&Ink.rough)Ink.rough(skinSprites[key]);
     }
     return skinSprites[key];
@@ -248,10 +327,11 @@
       if(mode===Arcade.MODE_SPLIT||mode===Arcade.MODE_BRANCH)return 'split';
     }
     if(s.bformation[i])return 'facet';
+    var shot=bossShot(s);if(shot)return shot; // 보스가 나와 있으면 그 보스의 고유 탄 문양 위주로
     return size===1?stageSkin:'';
   }
   function drawOrientedBullet(s,i,sprite,kind,grow){
-    var a=kind==='star'?s.bage[i]*.08:finite(s.ba[i],0);
+    var a=kind==='star'?s.bage[i]*.08:SHOT_SPIN[kind]?s.bage[i]*SHOT_SPIN[kind]+i:SHOT_UPRIGHT[kind]?0:finite(s.ba[i],0);
     var co=Math.cos(a),sn=Math.sin(a),half=sprite.half*grow;
     ctx.setTransform(scale*co,scale*sn,-scale*sn,scale*co,(s.bx[i]+offsetX)*scale,(s.by[i]+offsetY)*scale);
     ctx.drawImage(sprite.image,-half,-half,half*2,half*2);
@@ -507,7 +587,7 @@
       var route='<div class="route">',k;for(k=Math.max(0,s.stageIndex-1);k<=Math.min(Arcade.STAGES.length-1,s.stageIndex+2);k++)route+='<div'+(k===s.stageIndex?' class="cur" style="color:'+color+'"':'')+'>'+(k<s.stageIndex?'✓ ':k===s.stageIndex?'▸ ':'· ')+esc(Arcade.STAGES[k].name)+'</div>';route+='</div>';
       var list=card?Arcade.SEGMENTS.filter(function(g){return g.kind==='card'&&g.spell&&g.actor===seg.actor&&g.stage===seg.stage;}):[],at=list.indexOf(seg),cards='<div class="cards">';
       for(k=0;k<list.length&&k<6;k++)cards+='<div'+(k===at?' class="cur" style="color:'+color+'"':'')+'>'+(k<at?'✓ ':k===at?'▸ ':'· ')+esc(list[k].name)+'</div>';cards+='</div>';
-      var boss='<div>'+(card?lb('BOSS')+'<div class="bosshp"><i style="width:'+hp+'%;background:'+color+'"></i></div>':'')+(card&&seg.spell?lb('SPELL')+'<div class="spell" style="border-color:'+color+';font-size:'+spellFit(seg.name)+'px">'+esc(seg.name)+'</div><div class="graze">'+(s.spellClean?'봉인 +'+(Arcade.spellBonus?Arcade.spellBonus(s):20000+(seg.stage||0)*5000):'봉인 놓침')+'</div>':'')+'</div>'+(card&&list.length?'<div>'+lb('SPELL CARDS')+cards+'</div>':'')+(card&&bossPortrait(b.actor,color)?'<img class="portrait" alt="" src="'+portraitUrl+'" style="border-color:'+color+'">':'');
+      var boss='<div>'+(card?lb('BOSS')+'<div class="bosshp"><i style="width:'+hp+'%;background:'+color+'"></i></div>':'')+(card&&seg.spell?lb('SPELL')+'<div class="spell" style="border-color:'+color+';font-size:'+spellFit(seg.name)+'px">'+esc(seg.name)+'</div><div class="graze">'+(s.spellClean?'봉인 +'+(Arcade.spellBonus?Arcade.spellBonus(s):20000+(seg.stage||0)*5000):'봉인 놓침')+'</div>':'')+'</div>'+(card&&list.length?'<div>'+lb('SPELL CARDS')+cards+'</div>':'')+(card&&bossPortrait(bossKey(s),color)?'<img class="portrait" alt="" src="'+portraitUrl+'" style="border-color:'+color+'">':'');
       var prog=Math.round(100*(s.stageIndex+1)/Arcade.STAGES.length);
       var life2='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB [X]')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div>'+lvl+'</div><div>'+lb('JOURNEY')+'<div class="progress"><i style="width:'+prog+'%"></i></div>'+route+'<div class="graze">봉인 '+s.captures+' · 조각 '+(s.pieces||0)+'/'+(Arcade.LIFE_PIECES||3)+'</div></div>';
       var keys='<div class="keys">'+lb('CONTROLS')+'<div>이동 ←↑↓→ · WASD</div><div>저속 Shift · 폭탄 X</div><div>일시정지 Esc</div></div>';
@@ -607,7 +687,7 @@
         // 마지막 승리는 2초 연출 중 나가도 최고점이 남아야 한다. 계속되는 여정은 기존 finish() 시점에 기록한다.
         if(s.bossClear&&s.bossClear.nextSegment===Arcade.SEGMENTS.length)recordBestScore(s);
       } // 다음 bossDown 이벤트가 쓰러짐 연출을 새로 시작한다.
-      else if(e==='bossDown'){var dn=s.boss.down;if(dn){fall={actor:dn.actor,x:dn.x,y:dn.y,tick:dn.tick,dir:dn.x>W/2?1:-1,burst:-1,keep:{}};['','@death','@hit'].forEach(function(m){var im=images[dn.actor+m]||(bossArt.actor===dn.actor&&bossArt.keep[dn.actor+m]);if(im)fall.keep[dn.actor+m]=im;}); /* 다음 스테이지로 넘어가며 그림을 놓아도 쓰러지는 동안은 쥐고 있다(전에는 마름모 자리표시가 쓰러졌다) */flash=Ink?.18:.8;shake=16;}} /* 수묵 모드는 흰 섬광을 줄여 먹빛으로 물드는 순간이 묻히지 않게(사용자 11-16) */
+      else if(e==='bossDown'){var dn=s.boss.down;if(dn){fall={actor:dn.actor,x:dn.x,y:dn.y,tick:dn.tick,dir:dn.x>W/2?1:-1,burst:-1,keep:{}};['','@death','@hit'].forEach(function(m){var im=images[dn.actor+m]||(bossArt.actor===dn.actor&&bossArt.keep[dn.actor+m]);if(im)fall.keep[dn.actor+m]=im;});fall.src=dn.actor;var fa=bossArt.actor===dn.actor&&bossArt.art;if(fa&&fa!==dn.actor){fall.actor=fa;['','@death','@hit'].forEach(function(m){var im=images[fa+m]||bossArt.keep[fa+m];if(im)fall.keep[fa+m]=im;});} /* 다른 모습으로 나온 보스는 그 그림으로 쓰러진다 */ /* 다음 스테이지로 넘어가며 그림을 놓아도 쓰러지는 동안은 쥐고 있다(전에는 마름모 자리표시가 쓰러졌다) */flash=Ink?.18:.8;shake=16;}} /* 수묵 모드는 흰 섬광을 줄여 먹빛으로 물드는 순간이 묻히지 않게(사용자 11-16) */
       else if(e==='break'){play('phaseBreak',s.boss.x);flash=.6;shock={x:s.boss.x,y:s.boss.y,r:10,ink:true};shake=3;}
       else if(e==='capture'||e==='bombGain'||e==='extend')play('seal');
       else if(e==='waveClear'){play('phaseBreak');flash=.3;}
@@ -1001,7 +1081,7 @@
     var b=s.boss;if(!bossDraw.on||!b.present||b.leaving||s.stage!=='card'){bossDraw.on=false;return;}
     var tall=tallOf(b.actor),main=meltBegin(bossDraw.x,bossDraw.y,tall);
     ctx.save();ctx.globalAlpha=main?1:.55;ctx.translate(bossDraw.x,bossDraw.y);if(bossDraw.tilt)ctx.rotate(bossDraw.tilt);ctx.scale(bossDraw.sx,bossDraw.sy);
-    drawArt(b.actor,0,0,false,themeColor(s),0,bossDraw.motion,bossDraw.face);ctx.restore();
+    drawArt(bossKey(s),0,0,false,themeColor(s),0,bossDraw.motion,bossDraw.face);ctx.restore();
     if(main)meltEnd(main,bossDraw.x,bossDraw.y,tall,.55);ctx.globalAlpha=1;bossDraw.on=false; // 먹구름에 녹은 아랫몸은 탄 위로도 녹은 채 비친다(곧게 자르지 않는다)
   }
   /* 유혹의 장막(색욕 보스, 11-14): 화면 양옆에 드리운 분홍 비단. 그림일 뿐 맞지 않는다(엔진의 충돌에 없다). 탄보다 먼저(아래에) 옅게 그린다. */
@@ -1021,7 +1101,7 @@
     if(!s.clones||s.clonesTick===undefined||s.tick-s.clonesTick>2||!s.boss.present)return;
     for(var k=0;k<s.clones.length;k++){var c=s.clones[k],cx=finite(c.x,W/2),cy=finite(c.y,120)+Math.sin(visual*2.2+k)*4,flick=.5+.12*Math.sin(visual*6+k*2),gl=ctx.createRadialGradient(cx,cy,6,cx,cy,70);
       gl.addColorStop(0,'rgba(255,110,200,.42)');gl.addColorStop(1,'rgba(255,110,200,0)');ctx.save();ctx.globalCompositeOperation='lighter';ctx.fillStyle=gl;ctx.fillRect(cx-70,cy-70,140,140);ctx.restore();
-      ctx.save();ctx.globalAlpha=flick;ctx.translate(cx+Math.sin(visual*9+k)*1.5,cy);ctx.scale(.82,.82);drawArt(s.boss.actor,0,0,false,'#c070ff',0,'',k?-1:1);ctx.restore();}
+      ctx.save();ctx.globalAlpha=flick;ctx.translate(cx+Math.sin(visual*9+k)*1.5,cy);ctx.scale(.82,.82);drawArt(bossKey(s),0,0,false,'#c070ff',0,'',k?-1:1);ctx.restore();}
     ctx.globalAlpha=1;
   }
   var BACKLIGHT_BRIGHT='26'; // 금빛·흰빛 테마는 역광이 가산되면 보스 뒤가 하얗게 탄다(심사: 탐욕 보스 금빛 과노출)
@@ -1029,8 +1109,8 @@
   function drawBoss(s){
     bossDraw.on=false;
     var b=s.boss;if(!b.present||b.y<-50)return;
-    if(bossArt.actor!==b.actor){bossArt={actor:b.actor,keep:{}};}['','@death','@hit'].forEach(function(m){var im=images[b.actor+m];if(im)bossArt.keep[b.actor+m]=im;});
-    if(b.leaving&&fall&&fall.actor===b.actor)return; // 쓰러진 보스는 날아가지 않고 drawFall이 그 자리에서 무너뜨린다
+    var ak=bossKey(s);if(bossArt.actor!==b.actor||bossArt.art!==ak){bossArt={actor:b.actor,art:ak,keep:{}};}['','@death','@hit'].forEach(function(m){var im=images[ak+m];if(im)bossArt.keep[ak+m]=im;});
+    if(b.leaving&&fall&&fall.src===b.actor)return; // 쓰러진 보스는 날아가지 않고 drawFall이 그 자리에서 무너뜨린다
     var bob=Math.sin(visual*2.2)*4,size=(b.mid?168:190)+Math.sin(visual*1.3)*10,bx=finite(b.x,W/2),by=finite(b.y,120)+bob;
     // 역광(backlight): 보스 뒤에 테마색 빛을 깔아 자기 탄 고리 속에서도 몸 윤곽이 뜨게 한다(심사 9차)
     var tc=themeColor(s),bright=paleOf(tc),glowR=size*.62,bl=ctx.createRadialGradient(bx,by,8,bx,by,glowR);bl.addColorStop(0,tc+(bright?BACKLIGHT_BRIGHT:'66'));bl.addColorStop(.6,tc+(bright?'0c':'22'));bl.addColorStop(1,themeColor(s)+'00');
@@ -1045,13 +1125,13 @@
     var bp=bossPose;if(bp.actor!==b.actor){bp.actor=b.actor;bp.x=bx;bp.n=s.n;bp.until=-1;bp.side=0;}
     var bdx=bx-bp.x;bp.x=bx;if(Math.abs(bdx)>.3){bp.side=10;bp.dir=bdx<0?-1:1;}else if(bp.side>0)bp.side--;
     if(s.stage==='card'&&s.n-bp.n>=6)bp.until=s.tick+56;bp.n=s.n; // 탄을 한꺼번에 뿌린 순간이 공격 동작
-    var bm=s.tick<bp.until&&images[b.actor+'@attack']?'attack':bp.side>0?'side':'';
+    var bm=s.tick<bp.until&&images[ak+'@attack']?'attack':bp.side>0?'side':'';
     var since=56-(bp.until-s.tick),punch=bm==='attack'&&since>=0&&since<16?1+.14*(1-since/16):1; // 공격 순간 몸이 한 번 커졌다 돌아온다. 탄에 가려도 윤곽으로 읽힌다.
-    var rc=recoilOf(s,b);if(rc&&images[b.actor+'@hit'])bm='hit'; // 피격 그림이 있으면 그 칸을, 없으면 같은 그림을 젖혀 피격을 보인다
+    var rc=recoilOf(s,b);if(rc&&images[ak+'@hit'])bm='hit'; // 피격 그림이 있으면 그 칸을, 없으면 같은 그림을 젖혀 피격을 보인다
     bossDraw.on=true;bossDraw.x=bx;bossDraw.y=by+(rc?rc.dy:0);bossDraw.tilt=rc?rc.tilt:0;bossDraw.sx=punch*(rc?rc.sx:1);bossDraw.sy=punch*(rc?rc.sy:1);bossDraw.motion=bm;bossDraw.face=bp.dir||(bx>W/2?-1:1);
     var tall=tallOf(b.actor),fy=by+(rc?rc.dy:0),main=meltBegin(bx,fy,tall);
     ctx.save();ctx.translate(bx,fy);if(rc)ctx.rotate(rc.tilt);ctx.scale(punch*(rc?rc.sx:1),punch*(rc?rc.sy:1));if(bright&&s.stage==='card'&&'filter' in ctx)ctx.filter=BRIGHT_ART_DIM; // 금빛·흰빛 보스 그림은 스펠 중 한 단계 어둡게: 그 위 탄이 묻힌다(심사 6.44)
-    drawArt(b.actor,0,0,s.tick-b.hitTick<3,themeColor(s),0,bm,bp.dir||(bx>W/2?-1:1));ctx.filter='none';ctx.restore();
+    drawArt(ak,0,0,s.tick-b.hitTick<3,themeColor(s),0,bm,bp.dir||(bx>W/2?-1:1));ctx.filter='none';ctx.restore();
     if(main)meltEnd(main,bx,fy,tall,1); // 아랫몸은 번진 먹 가장자리로 지워져 구름 속으로 스민다(사용자 11-16)
     if(Ink&&Ink.footCloud)Ink.footCloud(ctx,bx,fy,tall,visual); // 발치의 먹구름: 걷는 동작의 어색함을 가린다(사용자 11-15)
     if(Ink&&Ink.footVeil)Ink.footVeil(ctx,bx,fy,tall,visual,1,hash(b.actor)); // 몸 앞을 지나는 옅은 구름 한 겹: 구름 윗선이 곧은 띠로 남지 않게
