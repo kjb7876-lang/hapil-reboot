@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "command": "node tools/audit-boss-rhythm-v43.cjs --output docs/v43/boss-rhythm-audit.json",
   "sourceHashes": {
-    "src/arcade-v43.js": "8a6b42e33aaaa5515d61dbae33ebc7d2ac3cb63e647347ef6bcd788b68e230d9",
+    "src/arcade-v43.js": "adca7b07e254afe31c59a81c31dcb665cd9f04bcf9439393392689d46ccbc920",
     "src/arcade-boss-rhythm-v43.js": "aab3001fd3f65815a45aba9f7517017d99406260429fe7f546551e6f1d110413",
     "src/arcade-boss-intros-v43.js": "b96bb2c0950015a38b7e85ff9d1c19e3d73f9bd84569564e018c98c8f0f26046",
     "src/arcade-heroes-v43.js": "a0f0eb39f8be2444e062011855f56b0bc340894f77225b7337929a56eb34cf00",
