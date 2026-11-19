@@ -1414,7 +1414,7 @@
       ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x2,y2);
       if(l.age<l.warn){
         var t=l.age/l.warn,blink=.5+.5*Math.sin(l.age*(.25+t*.5));
-        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=(Ink&&cue?(l.solid?.22+.4*t:.55+.35*t):WARN_RED?.22+.26*t:.10+.16*t)*(cues?.6:1);ctx.strokeStyle=Ink&&cue||WARN_RED||l.role?'#c9406e':color;ctx.lineWidth=Ink&&cue&&!l.solid?Math.max(2.6,l.width*(.25+.75*t)):l.width*(.25+.75*t);ctx.setLineDash([]);ctx.stroke();
+        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=(Ink&&cue?(l.solid?.12+.5*t*t:.55+.35*t):WARN_RED?.22+.26*t:.10+.16*t)*(cues?.6:1);ctx.strokeStyle=Ink&&cue||WARN_RED||l.role?'#c9406e':color;ctx.lineWidth=Ink&&cue&&!l.solid?Math.max(2.6,l.width*(.25+.75*t)):l.role&&l.solid?l.width:l.width*(.25+.75*t);ctx.setLineDash([]);ctx.stroke();
         ctx.globalAlpha=.45+.5*blink;ctx.strokeStyle='#ffffff';ctx.lineWidth=1;ctx.setLineDash([7,6]);ctx.stroke();
       }else{
         var over=l.age-l.warn-l.active,k=over>0?Math.max(0,1-over/Arcade.BEAM_FADE):Math.min(1,(l.age-l.warn+1)/4),pulse=1+Math.sin(visual*40+i)*.06;
