@@ -965,25 +965,32 @@
   var CALM_LASER_EVERY=84,CALM_LASER_FIRST=12;
   /* 이지·노멀(11-19 탄막 규칙 9·16, 전수조사: 노멀 보스 카드 58장에서 보스가 내려와 쉬는 동안 화면이 3초 넘게 텅 빔):
    * 문양·광선이 다 사라졌는데 보스가 아직 내려와 있으면 같은 역할의 광선을 수만 줄여 낸다. 세로 외줄·가로 외줄은 광선 문법이 걸어오는 벽·차오르는 바닥으로 묶는다. */
-  var CALM_SOFT={gentle:{every:150,cols:1},normal:{every:110,cols:2}},CALM_SOFT_WAIT=45;
+  var CALM_SOFT={gentle:{every:150,cols:1},normal:{every:110,cols:2}},CALM_SOFT_WAIT=30;
   function calmSoft(s){
     var cf=CALM_SOFT[s.difficulty];
     if(!cf||!s.calm||s.cardEnding||!s.boss.present||!s.entranceAll||s.lasers.length||s.figures.length||(s.sp&&s.sp.cur)){s.calmSoftT=0;return;}
     var t=s.calmSoftT=(s.calmSoftT||0)+1;if(t<CALM_SOFT_WAIT||(t-CALM_SOFT_WAIT)%cf.every)return;
     var a=ACTORS[s.boss.actor],c=a&&a.c2!==WHITE&&a.c2!==RED?a.c2:CYAN,k=((t-CALM_SOFT_WAIT)/cf.every)|0;
-    if(k%2===0)slots(s,cf.cols,W,30).forEach(function(x){column(s,x,{width:BEAM_MIN,warn:66,active:56,color:c});});
+    // 영웅이 선 자리에 한 줄(움직일 이유), 노멀은 한쪽 옆(±76px)에 한 줄 더 세워 반대쪽으로 비키게 한다(심사 7.50: 가운데가 그냥 안전했다). 이지 한 줄은 광선 문법이 걸어오는 벽으로 묶는다
+    var px=Math.max(24,Math.min(W-24,s.player.x));
+    if(k%2===0){column(s,px,{width:BEAM_MIN,warn:66,active:56,color:c});if(cf.cols>1){var side=px<W/2?1:-1;column(s,Math.max(24,Math.min(W-24,px+side*76)),{width:BEAM_MIN,warn:66,active:56,color:c});}}
     else row(s,460,{width:BEAM_MIN,warn:66,active:56,color:c});
     s.calmSoftN=(s.calmSoftN||0)+1;s.calmSoftAt=s.tick;
   }
   /* 이지 조준 층(11-19 탄막 규칙 6 "조준은 움직이게 만드는 이유", 전수조사: 이지 보스 카드 494장 중 188장은 가만히 서 있어도 10초 동안 안 맞음 → 피할 이유가 없는 장식).
    * 탄이 영웅 14px 안(거의 닿을 거리)을 3초 동안 한 번도 지나지 않으면 보스가 느린 홀수 3갈래 조준탄을 낸다(홀수라 가운데 갈래가 영웅을 겨눠 한 걸음 비켜야 한다). 노멀·헬은 이미 모두 10초 안에 맞는다. */
-  var NUDGE_IDLE=180,NUDGE_NEAR=14,NUDGE_SPEED=96;
+  var NUDGE_IDLE=180,NUDGE_NEAR=14,NUDGE_SPEED=96,NUDGE_MOVE=24,NUDGE_CUE=24;
   function gentleNudge(s){
-    if(s.difficulty!=='gentle'||!s.entranceAll||s.stage!=='card'||s.cardEnding||s.calm||!s.boss.present||s.boss.leaving||(s.sp&&s.sp.cur)||s.segTick<FIRE_DELAY){s.nudgeT=0;return;}
-    var p=s.player,i,dx,dy;for(i=0;i<s.n;i++){if(s.bexit[i])continue;dx=s.bx[i]-p.x;dy=s.by[i]-p.y;if(dx*dx+dy*dy<NUDGE_NEAR*NUDGE_NEAR){s.nudgeT=0;return;}}
+    if(s.difficulty!=='gentle'||!s.entranceAll||s.stage!=='card'||s.cardEnding||s.calm||!s.boss.present||s.boss.leaving||(s.sp&&s.sp.cur)||s.segTick<FIRE_DELAY){s.nudgeT=0;s.nudgeCue=null;return;}
+    var p=s.player,b=s.boss,i,dx,dy;
+    if(s.nudgeCue){if(s.tick<s.nudgeCue.fire)return; // 조준 예고(인주색 점선, 앱이 그림) 뒤에 쏜다: 왜 날아오는지 보인다(심사 7.50)
+      var a=ACTORS[b.actor]||{},c=a.c1===RED||a.c1===undefined?CYAN:a.c1;fan(s,b.x,b.y+20,3,Math.atan2(p.y-b.y-20,p.x-b.x),.34,NUDGE_SPEED,{color:c,size:2});
+      s.nudgeCue=null;s.nudgeT=0;s.nudges=(s.nudges||0)+1;s.nudgeAt=s.tick;return;}
+    // 가만히 선 영웅만 겨눈다(심사 7.50: 잘 피하고 있는 플레이어까지 겨누면 안 된다): 3초 동안 24px 넘게 움직이면 처음부터
+    if(s.nudgeX===undefined||Math.abs(p.x-s.nudgeX)>NUDGE_MOVE||Math.abs(p.y-s.nudgeY)>NUDGE_MOVE){s.nudgeX=p.x;s.nudgeY=p.y;s.nudgeT=0;return;}
+    for(i=0;i<s.n;i++){if(s.bexit[i])continue;dx=s.bx[i]-p.x;dy=s.by[i]-p.y;if(dx*dx+dy*dy<NUDGE_NEAR*NUDGE_NEAR){s.nudgeT=0;return;}}
     if((s.nudgeT=(s.nudgeT||0)+1)<NUDGE_IDLE)return;
-    var b=s.boss,a=ACTORS[b.actor]||{},c=a.c1===RED||a.c1===undefined?CYAN:a.c1;fan(s,b.x,b.y+20,3,Math.atan2(p.y-b.y-20,p.x-b.x),.34,NUDGE_SPEED,{color:c,size:1});
-    s.nudgeT=0;s.nudges=(s.nudges||0)+1;s.nudgeAt=s.tick;
+    s.nudgeCue={from:s.tick,fire:s.tick+NUDGE_CUE};
   }
   function calmLaser(s){
     calmSoft(s);
