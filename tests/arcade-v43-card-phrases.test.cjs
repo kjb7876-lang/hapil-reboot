@@ -25,17 +25,23 @@ function playSpell(name, ticks) {
   return frames;
 }
 
+// 사용자 11-19 "각 패턴의 지속시간을 더 길게": 실제 게임(entranceAll)의 소절은 1.5배(420→630틱, 본 공격 210→315, 변주 240~360→360~540)
+const CP=A.phraseLen({entranceAll:true}),AU=Math.round(210*CP/420),VA=Math.round(240*CP/420),VE=Math.round(360*CP/420);
+
 for (const name of ['겹치는 명령', '닫힌 층의 명령']) {
   test(name+' teaches its own attack before alternating with a geometric burst', () => {
-    const f = playSpell(name, 900);
-    const opening = f.slice(0,210);
+    const f = playSpell(name, 2100);
+    const opening = f.slice(0,AU);
     assert.ok(opening.some(frame => frame.born>0));
     assert.ok(opening.every(frame => frame.variation===0 && frame.figures.length===0));
-    const pause = f.slice(210,240);
+    const pause = f.slice(AU,VA);
     assert.ok(pause.every(frame => frame.born===0 && frame.count>0), 'old, moving bullets survive the rest');
-    assert.ok(f[240].born>0, 'first geometric burst actually spawns');
-    assert.ok(f.slice(240,360).every(frame=>frame.authored===210), 'the authored script waits for its next turn');
-    assert.ok(f.slice(420).some(frame=>frame.authored>210 && frame.born>0), 'authored fire resumes');
+    // 늘어난 본 공격 안에서 켜진 광선은 끝까지 간다(사용자 11-19 "이미 시전한 패턴은 모두 나오게"): 첫 변주는 광선이 꺼진 뒤 바로 나온다
+    const v0=f.findIndex(frame=>frame.variation>0);
+    assert.ok(v0>=VA && f.slice(VA,v0-1).every(frame=>frame.laser), 'the variation waits only for a live beam');
+    assert.ok(f[v0].born>0, 'first geometric burst actually spawns');
+    assert.ok(f.slice(VA,VE).every(frame=>frame.authored===AU), 'the authored script waits for its next turn');
+    assert.ok(f.slice(CP).some(frame=>frame.authored>AU && frame.born>0), 'authored fire resumes');
     assert.ok(f.some(frame=>frame.figures.includes('glyph')));
     assert.ok(f.some(frame=>frame.figures.includes('runes')));
     assert.ok(f.every(frame=>frame.risers===0));
@@ -44,11 +50,11 @@ for (const name of ['겹치는 명령', '닫힌 층의 명령']) {
 }
 
 test('a pending authored laser gets its warning and full attack before the mathematical response', () => {
-  const f = playSpell('짧은 틈', 360);
-  assert.equal(f[240].laser,true);
+  const f = playSpell('짧은 틈', VE);
+  assert.equal(f[VA].laser,true);
   const first = f.findIndex(frame=>frame.variation>0);
-  assert.ok(first>240 && first<360);
-  assert.ok(f.slice(240,first-1).every(frame=>frame.laser && frame.born===0));
+  assert.ok(first>VA && first<VE);
+  assert.ok(f.slice(VA,first-1).every(frame=>frame.laser && frame.born===0));
   const cue=f[first].patternCue;
   assert.ok(!f[first].laser && cue.kind==='fibfan');
   const release=first+cue.until-cue.start;
@@ -58,10 +64,10 @@ test('a pending authored laser gets its warning and full attack before the mathe
 
 test('a long beam cannot consume the variation and restart the same attack', () => {
   for (const name of ['따뜻한 빛','전조등']) {
-    const frames=playSpell(name,600);
+    const frames=playSpell(name,900);
     const first=frames.findIndex(f=>f.variation>0);
-    assert.ok(first>=360 && first<600,name+' first response at '+first);
-    assert.equal(frames[first].authored,210);
+    assert.ok(first>=VA && first<900,name+' first response at '+first);
+    assert.equal(frames[first].authored,AU);
     assert.ok(frames[first].born>0);
   }
 });
