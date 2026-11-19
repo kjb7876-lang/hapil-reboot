@@ -729,6 +729,8 @@
   /* 탄은 화면 밖으로 나가야만 사라진다(사용자 11-19 "모든탄환은 맵밖으로 나가야 사라지게 해주고(필살기등예외) 몹이나 보스가 없고 탄환만 있을때는 탄환을 가속시켜 맵으로 완전히 나가게하고 그다음 다음 몹이나 보스가 등장", 모든 난이도).
      실제 게임(entranceAll)에서 구간 전환·피격·보스 쓰러짐 때 탄을 지우지 않고 '나가는 탄'으로 바꾼다: 판정 없이 제 방향으로 점점 빨라져 화면 밖으로 빠진다. 필살기(useBomb)는 예외로 그대로 지운다. 나가게 한 탄 수를 돌려준다. */
   var EXIT_GROW=1.08,EXIT_MAX=900;
+  /* 반사탄이 벽에 튕긴 자리(그리기용 기록, 판정 없음): 앱이 벗겨진 고리가 번지며 흩어지는 연출로 쓴다 */
+  function mirrorHit(s,i,x,y){var h=s.mirrorHits||(s.mirrorHits=[]);if(h.length<24)h.push({x:x,y:y,size:s.bsize[i],left:s.bbounce[i]});}
   function flushBullets(s){var n=0;for(var i=0;i<s.n;i++){if(s.bexit[i])continue;s.bexit[i]=1;s.bbounce[i]=0;s.bat[i]=0;s.bturn[i]=0;s.bacc[i]=0;s.blife[i]=65535;n++;}return n;}
   function exiting(s){for(var i=0;i<s.n;i++)if(s.bexit[i])return true;return false;}
   function clearNonBullets(s){s.lasers.length=0;s.figures.length=0;s.ripples.length=0;if(s.floor)s.floor.pieces.length=0;}
@@ -1398,8 +1400,8 @@
       var ox=s.bx[i],oy=s.by[i],x=s.bx[i]+=Math.cos(s.ba[i])*s.bs[i]*TICK*slow,y=s.by[i]+=Math.sin(s.ba[i])*s.bs[i]*TICK*slow;
       // 벽에서 되돌아오는 탄: 좌우 벽과 위 벽에서 한 번(남은 횟수만큼) 튕긴다. 아래로는 튕기지 않는다(영웅 뒤에서 오지 않게).
       if(s.bbounce[i]){var a0=s.ba[i];
-        if((x<0&&Math.cos(a0)<0)||(x>W&&Math.cos(a0)>0)){s.ba[i]=Math.PI-a0;s.bx[i]=x=x<0?0:W;s.bbounce[i]--;}
-        else if(y<0&&Math.sin(a0)<0&&age>BLOOM_TICKS){s.ba[i]=-a0;s.by[i]=y=0;s.bbounce[i]--;}}
+        if((x<0&&Math.cos(a0)<0)||(x>W&&Math.cos(a0)>0)){s.ba[i]=Math.PI-a0;s.bx[i]=x=x<0?0:W;s.bbounce[i]--;if(s.bmirror[i])mirrorHit(s,i,x,y);}
+        else if(y<0&&Math.sin(a0)<0&&age>BLOOM_TICKS){s.ba[i]=-a0;s.by[i]=y=0;s.bbounce[i]--;if(s.bmirror[i])mirrorHit(s,i,x,y);}}
       if(x<-36||x>W+36||y<-48||y>H+36){removeBullet(s,i);continue;}
       if(age>=s.blife[i]){
         // 화면 한가운데에서 수명이 다해 사라지지 않는다. 그대로 끝까지 날아가고(멈춘 탄은 다시 움직인다), 옆 벽에서 한 번 되돌아온다.

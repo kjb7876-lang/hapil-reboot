@@ -55,8 +55,9 @@ test('live game trims bullet density by 10% on every difficulty; replay mode kee
   const soft=d==='hell'?1:.8;assert(Math.abs(live.density-old.density*soft*.9)<1e-9,d+' '+live.density+' '+old.density);}
 });
 test('mirror bullets are marked for the layered-ring look and lose one layer (bounce) per wall hit',()=>{
- const s=a.createRun({difficulty:'hell',seed:6,segment:firstCard(4),entranceAll:true});toCard(s);let seen=0,drops=0;const last=new Map();
+ const s=a.createRun({difficulty:'hell',seed:6,segment:firstCard(4),entranceAll:true});toCard(s);let seen=0,drops=0,hits=0;const last=new Map();
  for(let i=0;i<1200&&s.stage==='card';i++){s.player.invulnerableUntil=s.tick+999;s.boss.hp=s.boss.maxHp;a.step(s,{dx:0,dy:0});h.clear(s);
-  for(let k=0;k<s.n;k++)if(s.bmirror[k]){seen++;assert(s.bbounce[k]<=2);if(s.bx[k]===0||s.bx[k]===W)drops++;}}
- assert(seen>0,'mirror bullets exist');assert(drops>0,'a mirror bullet hit a wall and lost a layer');
+  for(let k=0;k<s.n;k++)if(s.bmirror[k]){seen++;assert(s.bbounce[k]<=2);if(s.bx[k]===0||s.bx[k]===W)drops++;}
+  if(s.mirrorHits&&s.mirrorHits.length){for(const m of s.mirrorHits){hits++;assert(m.left>=0&&m.left<=1,'layers left after a hit '+m.left);}s.mirrorHits.length=0;}}
+ assert(seen>0,'mirror bullets exist');assert(hits>0,'wall hits are recorded for the ring-burst effect');assert(drops>0,'a mirror bullet hit a wall and lost a layer');
 });
