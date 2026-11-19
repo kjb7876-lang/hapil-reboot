@@ -1631,7 +1631,8 @@
       ctx.fillStyle='rgba(255,255,255,.16)';ctx.fillRect(12,9,W-24,4);ctx.fillStyle=b.hp/b.maxHp<=.2?'#ff5a5a':color;ctx.fillRect(12,9,(W-24)*Math.max(0,Math.min(1,finite(b.hp/b.maxHp,0))),4);
       if(seg.spell){
         namePlate(seg.name);
-        ctx.textAlign='right';ctx.font='600 20px '+SANS;ctx.fillStyle=left<=10?'#ff6a6a':'#ffffff';ctx.fillText(left<10?left.toFixed(1):String(Math.ceil(left)),W-12,35);
+        if(!s.entranceAll){ctx.textAlign='right';ctx.font='600 20px '+SANS;ctx.fillStyle=left<=10?'#ff6a6a':'#ffffff';ctx.fillText(left<10?left.toFixed(1):String(Math.ceil(left)),W-12,35);} // 실제 게임은 시간으로 끝나지 않으니(사용자 11-19) 남은 초를 띄우지 않는다
+        ctx.textAlign='right';
         if(hudOut!=='side')if(!(bannerSpell&&banner>0)){ctx.font='italic 12px '+SERIF;ctx.fillStyle='#f3e3b5';ctx.fillText('「'+seg.name+'」',W-12,52);} // 스펠 띠가 떠 있는 동안 받침의 같은 이름은 숨긴다
       }
     }

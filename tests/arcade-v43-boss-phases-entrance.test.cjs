@@ -100,9 +100,12 @@ test('trimmed midbosses answer the original opening with their skipped motif on 
     for(const s of [run,untrimmed])s.player.invulnerableUntil=1e6;
     const born=s=>Array.from({length:s.n},(_,i)=>i).filter(i=>s.bage[i]===1);
     let openingBullets=0;
-    while(run.segTick<241){
+    // 사용자 11-19: 실제 게임 소절이 1.5배(본 공격 315틱). 이지는 문양·광선이 떠 있으면 본 공격이 쉬므로 첫 변주가 나오는 순간까지 본다
+    const AU=Math.round(210*A.phraseLen(run)/420);
+    const done=()=>run.stage==='card'&&(difficulty==='hell'?run.segTick>=AU+1:run.variationTick>=1);
+    while(!done()){
       A.step(run,{dx:-4});A.step(untrimmed,{dx:-4});
-      assert(run.tick<700);
+      assert(run.tick<1400);
       if(run.stage!=='card'||run.segTick===0)continue;
       assert.equal(run.seg,first);
       assert.equal(A.phaseOf(run.seg).no,1);
@@ -116,13 +119,14 @@ test('trimmed midbosses answer the original opening with their skipped motif on 
     if(difficulty==='hell'){
       assert.equal(A.nextSegmentIndex(run),second);
       assert.equal(run.variationTick,undefined);
+      run.boss.hp=0; // 시간으로는 넘어가지 않으니(사용자 11-19) 체력을 비워 다음 페이즈로
       while(run.seg===first){A.step(run,{dx:-4});assert(run.tick<6000);}
       assert.equal(run.seg,second);
       assert.equal(A.phaseOf(run.seg).no,2);
       while(!run.variationTick){A.step(run,{dx:-4});assert(run.tick<6600);}
     }else{
       assert(A.nextSegmentIndex(run)>second);
-      assert.equal(run.authoredTick,210);
+      assert.equal(run.authoredTick,AU);
       assert.equal(run.variationTick,1);
       assert.equal(run.seg,first);
     }

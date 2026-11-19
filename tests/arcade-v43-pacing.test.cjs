@@ -81,30 +81,20 @@ test('the easy opening midboss loses real HP to shots and can be defeated before
  assert.equal(A.timeLeft(s),0);
 });
 
-test('the live midboss timeout counts firing ticks and the HUD uses the same deadline on the next card',()=>{
+test('the live midboss clock counts firing ticks, but reaching it no longer ends the card (사용자 11-19: 체력이 모두 소진되어야 죽는다)',()=>{
  const s=A.createRun({difficulty:'hell',stage:0,bossOnly:true,entranceAll:true,rhythm:true,seed:12});
- // Hold the player at the left edge and keep them alive to observe both deadlines.
- // Automatic shots still deal real damage to the boss.
- s.player.invulnerableUntil=10000;
+ s.player.invulnerableUntil=1e6;
  const ids=A.plannedSegments('hell').filter(i=>A.SEGMENTS[i].stage===0&&A.SEGMENTS[i].mid);
  assert.equal(ids.length,2);
  for(const [phase,id] of ids.entries()){
   const g=A.SEGMENTS[id],duration=A.cardDuration(s,g),delay=phase?40:0;
-  while(s.stage!=='card'){
-   assert.equal(A.timeLeft(s),0);
-   assert(s.tick<10000);
-   A.step(s,{dx:-4});
-  }
+  while(s.stage!=='card'){assert.equal(A.timeLeft(s),0);assert(s.tick<20000);A.step(s,{dx:-4});}
   assert.equal(s.seg,id);
-  for(;s.seg===id&&s.stage==='card';){
-   const remaining=duration-Math.max(0,s.segTick-delay)/60;
-   assert(Math.abs(A.timeLeft(s)-remaining)<1e-10);
-   assert(remaining>0);
-   const lastLiveTick=s.segTick+1-delay===Math.ceil(duration*60);
-   A.step(s,{dx:-4});
-   assert.equal(s.seg!==id,lastLiveTick);
-  }
-  assert.equal(s.timeouts,phase+1);
+  // 시간 표시는 그대로 줄어들지만, 0이 되어도 카드는 끝나지 않는다
+  while(A.timeLeft(s)>0){const remaining=duration-Math.max(0,s.segTick-delay)/60;assert(Math.abs(A.timeLeft(s)-remaining)<1e-10);s.boss.hp=s.boss.maxHp;A.step(s,{dx:-4});assert.equal(s.seg,id);}
+  for(let i=0;i<120;i++){s.boss.hp=s.boss.maxHp;A.step(s,{dx:-4});}
+  assert.equal(s.seg,id);assert.equal(s.stage,'card');
+  s.boss.hp=0;while(s.seg===id){A.step(s,{dx:-4});assert(s.tick<20000);}
  }
- assert.equal(s.cleared,0);
+ assert.equal(s.timeouts,0);assert.equal(s.cleared,2);
 });
