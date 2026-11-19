@@ -1388,6 +1388,11 @@
   }
   /* 광선. 예고: 가는 점선이 굵어지며 깜빡인다 → 발사: 색 빛무리 + 흰 심 → 잔광: 가늘어지며 사라진다. */
   var LASER_DRAW=760; // 화면 대각선보다 길게
+  // 시작점을 지나는 온 줄을 화면(여백 24) 안으로 자른다: [x0,y0,x1,y1,길이]. 화면에 닿지 않으면 시작점에서 길이 0
+  function clipLine(x,y,a){var c=Math.cos(a),n=Math.sin(a),lo=-1e4,hi=1e4,m=24;
+    if(Math.abs(c)>1e-6){var t1=(-m-x)/c,t2=(W+m-x)/c;lo=Math.max(lo,Math.min(t1,t2));hi=Math.min(hi,Math.max(t1,t2));}else if(x<-m||x>W+m)hi=lo;
+    if(Math.abs(n)>1e-6){var t3=(-m-y)/n,t4=(H+m-y)/n;lo=Math.max(lo,Math.min(t3,t4));hi=Math.min(hi,Math.max(t3,t4));}else if(y<-m||y>H+m)hi=lo;
+    if(hi<lo)hi=lo;return [x+c*lo,y+n*lo,x+c*hi,y+n*hi,hi-lo];}
   function drawLasers(s){
     if(!s.lasers.length)return;
     var sheet=s.stage==='card'?laserSheet(s):null,under=1;
@@ -1395,6 +1400,7 @@
     ctx.save();ctx.lineCap='butt';
     for(var i=0;i<s.lasers.length;i++){
       var l=s.lasers[i],color=l.floor?FLOOR_HOT:COLORS[l.color]||'#ffffff',angle=finite(l.angle,0),lx=finite(l.x,0),ly=finite(l.y,0),x2=lx+Math.cos(angle)*1000,y2=ly+Math.sin(angle)*1000;
+      var reach=LASER_DRAW;if(l.full&&!l.floor){var cl=clipLine(lx,ly,angle);lx=cl[0];ly=cl[1];x2=cl[2];y2=cl[3];reach=cl[4];} // 실제 게임 광선은 화면 끝에서 끝까지 그린다(사용자 11-19: 보스에서 나가다 끊기는 선이 아니라 맵 끝~끝)
       var un=l.floor?1:under; // 아래쪽 ㅡ·= 줄(사용자 11-15)은 육망성 아래에서도 또렷하게: 위로 몰아내는 선이라 보여야 한다
       ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x2,y2);
       if(l.age<l.warn){
@@ -1407,7 +1413,7 @@
         if(!lite&&l.floor){ctx.globalAlpha=.2*k*dim;ctx.strokeStyle=color;ctx.lineWidth=l.width*2.3*k*pulse;ctx.stroke();}else if(!lite){var top=Math.min(ly,H*BEAM_LOW_FADE-1),fade=ctx.createLinearGradient(0,top,0,H),span=H-top,r0=Math.min(.5,BEAM_ROOT/span),r1=Math.max(r0,(H*BEAM_LOW_FADE-top)/span);fade.addColorStop(0,ly<H*BEAM_LOW_FADE?'#000000':color);fade.addColorStop(r0,color);fade.addColorStop(r1,color);fade.addColorStop(1,'#000000');ctx.globalAlpha=.3*k*dim;ctx.strokeStyle=fade;ctx.lineWidth=l.width*2.3*k*pulse;ctx.stroke();}
         if(sheet&&!l.floor){ // 보스 시트의 레이저 질감을 광선 방향으로 늘여 더한다. 판정 폭은 흰 심으로 보인다.
           var bm=sheet.e.beam,th=l.width*2.4*k*pulse;ctx.save();ctx.translate(lx,ly);ctx.rotate(angle);ctx.globalAlpha=k*dim;
-          ctx.drawImage(sheet.img,bm[0],bm[1],bm[2],bm[3],0,-th/2,LASER_DRAW,th);ctx.restore();
+          ctx.drawImage(sheet.img,bm[0],bm[1],bm[2],bm[3],0,-th/2,reach,th);ctx.restore();
         }else{ctx.globalAlpha=.9*k*un;ctx.strokeStyle=color;ctx.lineWidth=l.width*k*pulse;ctx.stroke();}
         if(l.floor){ctx.globalCompositeOperation='lighter';for(var e=0;e<2;e++){var ex=e?W-10:10;ctx.globalAlpha=.8*k;ctx.fillStyle=color;ctx.beginPath();ctx.arc(ex,ly,l.width*.9,0,TAU);ctx.fill();ctx.globalAlpha=k;ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(ex,ly,l.width*.4,0,TAU);ctx.fill();}} // 바닥 줄은 양 끝 발사점에서 뻗는다
         ctx.globalCompositeOperation='source-over';ctx.globalAlpha=k*un*(paleOf(color)?PALE_CORE:BEAM_CORE);ctx.strokeStyle='#ffffff';ctx.lineWidth=l.width*(sheet?.34:.46)*k;ctx.stroke(); // 흰·금 광선은 심지도 낮춘다(심사 6.46: 금빛 광선이 여전히 가장 밝다)
