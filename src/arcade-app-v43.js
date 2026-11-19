@@ -1099,7 +1099,7 @@
     if(Ink&&Ink.raw)Ink.raw(1);
     try{
       // 1) 담묵 몸: 칸을 겹쳐 칠해 이음매가 없다. 아래쪽이 조금 짙다
-      var g=q.createLinearGradient(0,pad,0,h-pad);g.addColorStop(0,'rgba(30,26,24,.30)');g.addColorStop(1,'rgba(30,26,24,.46)');q.fillStyle=g;
+      var g=q.createLinearGradient(0,pad,0,h-pad);g.addColorStop(0,'rgba(30,26,24,.22)');g.addColorStop(1,'rgba(30,26,24,.36)');q.fillStyle=g;
       for(i=0;i<cells.length;i++)q.fillRect(X(cells[i][0])-.5,Y(cells[i][1])-.5,C+1,C+1);
       // 2) 속의 갈필 흰 결: 가로로 스친 마른 붓 자국(한지가 비친다)
       q.save();q.globalCompositeOperation='destination-out';
@@ -1108,7 +1108,7 @@
       // 3) 바깥 테: 먹이 고인 마른 붓 획. 바깥 변마다 굵기가 출렁이는 띠를 채우고, 군데군데 이가 빠진다
       q.fillStyle=color;
       var edge=function(x0,y0,x1,y1,nx,ny){var n=7,k,L=[],R=[];for(k=0;k<=n;k++){var u=k/n,x=x0+(x1-x0)*u,y=y0+(y1-y0)*u,th=2.2+rn()*2.6,inw=.6+rn()*1.6;L.push([x+nx*th*.45,y+ny*th*.45]);R.push([x-nx*inw,y-ny*inw]);}
-        q.globalAlpha=.78+rn()*.2;q.beginPath();q.moveTo(L[0][0],L[0][1]);for(k=1;k<L.length;k++)q.lineTo(L[k][0],L[k][1]);for(k=R.length-1;k>=0;k--)q.lineTo(R[k][0],R[k][1]);q.closePath();q.fill();};
+        q.globalAlpha=.66+rn()*.2;q.beginPath();q.moveTo(L[0][0],L[0][1]);for(k=1;k<L.length;k++)q.lineTo(L[k][0],L[k][1]);for(k=R.length-1;k>=0;k--)q.lineTo(R[k][0],R[k][1]);q.closePath();q.fill();};
       for(i=0;i<cells.length;i++){var cx=cells[i][0],cy=cells[i][1],x0=X(cx),y0=Y(cy);
         if(!has(cx,cy+1))edge(x0-1,y0+1,x0+C+1,y0+1,0,-1);if(!has(cx,cy-1))edge(x0-1,y0+C-1,x0+C+1,y0+C-1,0,1);
         if(!has(cx-1,cy))edge(x0+1,y0-1,x0+1,y0+C+1,-1,0);if(!has(cx+1,cy))edge(x0+C-1,y0-1,x0+C-1,y0+C+1,1,0);}
@@ -1121,7 +1121,7 @@
     }finally{if(Ink&&Ink.raw)Ink.raw(-1);}
     return pieceArt[key]={image:cv,pad:pad,w:w,h:h,my:my};
   }
-  function drawPieceSprite(q,C,color,alpha){var sp=pieceSprite(q.cells,C,color),x=q.col*C-sp.pad,y=q.y-(sp.my+1)*C-sp.pad;ctx.globalAlpha=alpha;ctx.drawImage(sp.image,x,y,sp.w,sp.h);}
+  function drawPieceSprite(q,C,color,alpha){var sp=pieceSprite(q.cells,C,color),x=q.col*C-sp.pad,y=q.y-(sp.my+1)*C-sp.pad;ctx.globalAlpha=alpha*(state?bossDuck(state,x+sp.w/2,y+sp.h/2):1); /* 보스 몸 위를 지날 땐 옅게(심사 공간·환경) */ctx.drawImage(sp.image,x,y,sp.w,sp.h);}
   function drawFloor(s){
     var F=s.floor;if(!F)return;var C=Arcade.FLOOR_CELL,N=Arcade.FLOOR_COLS,c,r,k,v,hill=false,theme=themeColor(s);
     var stone=mix('#3a3546',theme,.28),stoneEdge=mix('#8d8799',theme,.3),live=mix(mix(theme,'#3a3546',.35),'#000000',.15),pulse=.6+.4*Math.sin(visual*12),HOT=Ink?(Ink.mono===1?'#26221f':'#c2362a'):FLOOR_HOT,PAPER='#f2e9d6';
@@ -1347,7 +1347,7 @@
     for(i=0;i<s.n;i++){
       x=s.bx[i];y=s.by[i];if(s.bage[i]<bloom||x!==x||y!==y)continue;
       size=s.bsize[i];if(size===SHAPE_PROP){drawProp(s,i,1,1);drawBreakableMark(s,i);continue;}
-      o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;half=o.half;var faint=nearBoss(s,x,y)||nearMob(s,x,y),grace=s.bfragment&&s.bfragment[i]&&s.bage[i]<s.bgrace[i];var gone=s.bexit&&s.bexit[i];ctx.globalAlpha=gone?.5:grace?.28+.2*s.bage[i]/s.bgrace[i]:faint?.38:1; // 나가는 탄(판정 없음)은 반투명
+      o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;half=o.half;var faint=nearBoss(s,x,y)||nearMob(s,x,y),grace=s.bfragment&&s.bfragment[i]&&s.bage[i]<s.bgrace[i];var gone=s.bexit&&s.bexit[i];ctx.globalAlpha=gone?.36:grace?.28+.2*s.bage[i]/s.bgrace[i]:faint?.38:1; // 나가는 탄(판정 없음)은 반투명
       var skin=bulletSkin(s,i,variant);
       if(skin||size===SHAPE_RICE)drawOrientedBullet(s,i,skin?skinOfBullet(skin,s.bcolor[i],size):o,skin,1);
       else ctx.drawImage(o.image,x-half,y-half,half*2,half*2);
