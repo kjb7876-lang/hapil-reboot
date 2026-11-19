@@ -1506,7 +1506,8 @@
   function stackHeight(F,c){for(var r=5;r>=0;r--)if(F.grid[r*FLOOR_COLS+c])return r+1;return 0;}
   // 그 x에서 바닥(쌓인 블록·지형) 윗면의 y. 바닥이 없으면 H.
   function floorTop(s,x){var F=s.floor,c=Math.max(0,Math.min(FLOOR_COLS-1,Math.floor(x/FLOOR_CELL)));return H-Math.max(stackHeight(F,c)*FLOOR_CELL,F.hill[c]);}
-  function floorLine(s,y,color){if(s.lasers.length>=LASER_CAP)return;s.lasers.push({x:-12,y:y,angle:0,width:12*s.rules.beam,warn:Math.round(72*s.rules.warn),active:140,color:color,spin:0,follow:false,burst:false,age:0,grazed:false,floor:true});if(!s.warned){s.warned=true;note(s,'laserWarn');}}
+  var FLOOR_BEAM_W=18; // 아래쪽 가로줄도 굵게(배포 뒤 실플레이 심사 11-19: 25px 안팎으로 가늘었다, 사용자 '굵게')
+  function floorLine(s,y,color){if(s.lasers.length>=LASER_CAP)return;s.lasers.push({x:-12,y:y,angle:0,width:(s.entranceAll?FLOOR_BEAM_W:12)*s.rules.beam,warn:Math.round(72*s.rules.warn),active:140,color:color,spin:0,follow:false,burst:false,age:0,grazed:false,floor:true});if(!s.warned){s.warned=true;note(s,'laserWarn');}}
   // 내려오는 조각은 영웅 공격으로 깨진다(사용자 11-16 "테트리스 내려오는건 영웅공격으로 꺠부실수 있도록"). 칸마다가 아니라 조각 하나에 체력 하나.
   var PIECE_HP=9,PIECE_SCORE=150,BURST_TICKS=40;
   function pieceHp(s){return Math.round(PIECE_HP*(s.difficulty==='gentle'?.6:1.35));}
