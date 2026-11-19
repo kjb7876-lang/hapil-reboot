@@ -105,11 +105,12 @@
   /* 실제 게임 난이도 기준표(사용자 11-19 "제안대로 계단 고르게"): 그동안 겹겹이 곱해지던 배율(표·이지노멀 완화·탄 수 -25%·-20%·탄속 +20%)을 최종값 한 줄로 합쳤다.
      탄 수는 휴대폰 기준값(PC는 ÷COMPACT_DENSITY), 이지는 첫 스테이지 density에서 마지막 end까지 오른다. 앞으로 난이도 조정은 이 표의 숫자만 고친다. 목숨·필살은 DIFFICULTY 표 그대로 */
   var LIVE_TABLE={
-    gentle:{speed:.70,density:.55,end:.75,radius:1.6,hitScale:.4},
-    normal:{speed:.90,density:.85,radius:2.0,hitScale:.5},
-    hell:{speed:1.05,density:1.10,radius:2.4,hitScale:.5}
+    // 사용자 11-19 21:22 "탄환속도와크기 전체적으로 30프로 늘려주고 그만큼 탄환 30프로 줄여줘": 탄속 ×1.3·탄 수 ×0.7(크기는 LIVE_GROW ×1.3)
+    gentle:{speed:.91,density:.385,end:.525,radius:1.6,hitScale:.4},
+    normal:{speed:1.17,density:.595,radius:2.0,hitScale:.5},
+    hell:{speed:1.365,density:.77,radius:2.4,hitScale:.5}
   };
-  var LIVE_TRIM=.75*.8,LIVE_GROW=1.15,LIVE_FAST=1.2; // 11-19 13:14 "탄환속도 20프로 빨라지게하고 대신 탄환 숫자20프로 줄여줘": 25% 감소에서 20% 더(×.8), 속도 ×1.2
+  var LIVE_TRIM=.75*.8,LIVE_GROW=1.15*1.3,LIVE_FAST=1.2; // 11-19 13:14 "탄환속도 20프로 빨라지게하고 대신 탄환 숫자20프로 줄여줘": 25% 감소에서 20% 더(×.8), 속도 ×1.2
   // 사용자 11-19 "모든모드 탄환숫자25프로정도 감소"·"전체적으로 탄환크기 15프로정도 증가": 실제 게임(entranceAll)의 탄 수 25%↓, 탄 크기 15%↑
   // 휴대폰 모드: 탄 수를 줄이고 그만큼 탄을 크게 그린다(판정도 같이 커진다).
   var COMPACT_DENSITY=.72,COMPACT_SIZE=1.25;
@@ -741,7 +742,7 @@
   }
   /* 탄은 화면 밖으로 나가야만 사라진다(사용자 11-19 "모든탄환은 맵밖으로 나가야 사라지게 해주고(필살기등예외) 몹이나 보스가 없고 탄환만 있을때는 탄환을 가속시켜 맵으로 완전히 나가게하고 그다음 다음 몹이나 보스가 등장", 모든 난이도).
      실제 게임(entranceAll)에서 구간 전환·피격·보스 쓰러짐 때 탄을 지우지 않고 '나가는 탄'으로 바꾼다: 판정 없이 제 방향으로 점점 빨라져 화면 밖으로 빠진다. 필살기(useBomb)는 예외로 그대로 지운다. 나가게 한 탄 수를 돌려준다. */
-  var EXIT_GROW=1.08,EXIT_MAX=900,EXIT_TURN=.14,WAVE_LINGER=360; // 몹이 다 사라져도 탄은 약 6초 남았다가(사용자 11-19) 아래로 빠르게 빠진다
+  var EXIT_GROW=1.035,EXIT_MAX=900,EXIT_TURN=.14,WAVE_LINGER=360; // 나가는 탄의 가속은 11-19 21:22 사용자 "탄환이 사라지는 속도 지금보다 2배더 길게"로 1.08→1.035(빠져나가는 시간 약 2배). 몹이 다 사라져도 탄은 약 6초 남았다가(사용자 11-19) 아래로 빠르게 빠진다
   /* 반사탄이 벽에 튕긴 자리(그리기용 기록, 판정 없음): 앱이 벗겨진 고리가 번지며 흩어지는 연출로 쓴다 */
   function mirrorHit(s,i,x,y){var h=s.mirrorHits||(s.mirrorHits=[]);if(h.length<24)h.push({x:x,y:y,size:s.bsize[i],left:s.bbounce[i]});}
   function flushBullets(s){var n=0;for(var i=0;i<s.n;i++){if(s.bexit[i])continue;s.bexit[i]=1;s.bbounce[i]=0;s.bat[i]=0;s.bturn[i]=0;s.bacc[i]=0;s.blife[i]=65535;n++;}return n;}

@@ -63,7 +63,7 @@ test('mirror bullets reflect off the side walls like light on a mirror (angle in
 // 11-19 "제안대로 계단 고르게": 겹친 배율 대신 기준표 최종값
 test('live game takes density and speed from the live difficulty table and grows bullets 15% on every difficulty; replay mode keeps its numbers',()=>{
  for(const d of DIFFS){const live=a.createRun({difficulty:d,seed:1,entranceAll:true}),old=a.createRun({difficulty:d,seed:1});
-  const T=a.LIVE_TABLE[d];assert(Math.abs(live.density*a.COMPACT_DENSITY-T.density)<1e-9,d+' '+live.density);assert.equal(live.rules.speed,T.speed,d+' speed from the live table');assert(Math.abs(live.sizeScale-old.sizeScale*1.15)<1e-9,d+' size '+live.sizeScale);}
+  const T=a.LIVE_TABLE[d];assert(Math.abs(live.density*a.COMPACT_DENSITY-T.density)<1e-9,d+' '+live.density);assert.equal(live.rules.speed,T.speed,d+' speed from the live table');assert(Math.abs(live.sizeScale-old.sizeScale*1.15*1.3)<1e-9,d+' size '+live.sizeScale);}
 });
 test('mirror bullets are marked for the layered-ring look and lose one layer (bounce) per wall hit',()=>{
  const s=a.createRun({difficulty:'hell',seed:6,segment:firstCard(4),entranceAll:true});toCard(s);let seen=0,drops=0,hits=0;const last=new Map();
