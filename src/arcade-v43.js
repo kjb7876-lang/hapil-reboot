@@ -737,6 +737,10 @@
   /* 반사탄이 벽에 튕긴 자리(그리기용 기록, 판정 없음): 앱이 벗겨진 고리가 번지며 흩어지는 연출로 쓴다 */
   function mirrorHit(s,i,x,y){var h=s.mirrorHits||(s.mirrorHits=[]);if(h.length<24)h.push({x:x,y:y,size:s.bsize[i],left:s.bbounce[i]});}
   function flushBullets(s){var n=0;for(var i=0;i<s.n;i++){if(s.bexit[i])continue;s.bexit[i]=1;s.bbounce[i]=0;s.bat[i]=0;s.bturn[i]=0;s.bacc[i]=0;s.blife[i]=65535;n++;}return n;}
+  /* 판정은 그대로 둔 채 지금 방향으로 점점 빨라져 맵 밖으로 나가게 한다(갑자기 사라지거나 판정이 꺼지지 않는다) */
+  var HURRY_ACC=300,HURRY_MAX=440;
+  function hurryBullets(s){for(var i=0;i<s.n;i++){if(s.bexit[i]||s.bsize[i]===SHAPE_PROP)continue;s.bformation[i]=1;s.bbounce[i]=0;s.bat[i]=0;s.bturn[i]=0;s.bacc[i]=HURRY_ACC;if(s.bmax[i]<HURRY_MAX)s.bmax[i]=HURRY_MAX;s.blife[i]=65535;}}
+  function driftBullets(s){for(var j=0;j<s.n&&s.drifted.length<DRIFT_CAP*5;j++)s.drifted.push(s.bx[j],s.by[j],s.bsize[j]===SHAPE_PROP?WHITE:s.bcolor[j],s.ba[j],s.bs[j]*TICK);s.n=0;}
   function exiting(s){for(var i=0;i<s.n;i++)if(s.bexit[i])return true;return false;}
   function clearNonBullets(s){s.lasers.length=0;s.figures.length=0;s.ripples.length=0;if(s.floor)s.floor.pieces.length=0;}
   /* 패턴·잡몹 구간이 끝날 때 화면 탄을 지우는 것은 1분에 한 번(사용자 11-15 "하트모으면 탄모두없어지는거 쿨타임 1분으로해서 너무 자주 발생하지않게", 카드 답: 패턴 깰 때).
@@ -879,9 +883,13 @@
     if(s.phraseCard&&s.phraseTick%s.phraseCard!==0)return false;
     if(s.lasers.some(function(l){return l.age<l.warn+l.active;})||s.figures.some(function(f){return f.age<f.warn+(f.active||0);}))return false;
     if(spWindow(s))return false;return true;}
-  function beginCardEnding(s,defeated){s.cardEnding={defeated:!!defeated,tick:s.tick};if(s.boss.hp<0)s.boss.hp=0;flushBullets(s);}
-  function cardEndingStep(s){if(s.boss.hp<0)s.boss.hp=0;flushBullets(s);} // 이 사이에 다른 경로로 생긴 탄(파편 등)도 내보낸다
-  function cardEndingDone(s){var e=s.cardEnding;if(s.tick-e.tick>=CARD_ENDING_MAX)return true;if(s.n)return false;
+  /* 같은 보스의 다음 패턴으로 넘어갈 때는 화면의 탄·광선·문양을 지우거나 가속하지 않는다(사용자 11-19 "피하는중인데 탄이 갑자기 사라져서 맥이 빠지거나… 흐름이 끊겨"): 남은 탄은 제 길로 맵 밖까지 날아간다.
+     보스가 떠날 때(다른 보스·잡몹 구간으로 넘어감)만 예전처럼 탄을 가속해 내보낸다(사용자 11-19 "몹이나 보스가 없고 탄환만 있을때는 탄환을 가속") */
+  var CARD_BREAK_PAUSE=45;
+  function bossStays(s){var card=segment(s),next=SEGMENTS[nextSegmentIndex(s)];return !!(s.entranceAll&&card&&next&&next.kind==='card'&&next.actor===card.actor&&next.stage===card.stage);}
+  function beginCardEnding(s,defeated){s.cardEnding={defeated:!!defeated,tick:s.tick,stays:bossStays(s)};if(s.boss.hp<0)s.boss.hp=0;if(!s.cardEnding.stays)flushBullets(s);}
+  function cardEndingStep(s){if(s.boss.hp<0)s.boss.hp=0;if(!s.cardEnding.stays)flushBullets(s);} // 이 사이에 다른 경로로 생긴 탄(파편 등)도 내보낸다
+  function cardEndingDone(s){var e=s.cardEnding;if(s.tick-e.tick>=CARD_ENDING_MAX)return true;if(e.stays?s.tick-e.tick<CARD_BREAK_PAUSE:s.n)return false;
     for(var i=0;i<s.lasers.length;i++){var l=s.lasers[i];if(l.age<=l.warn+l.active)return false;}return !s.figures.length;}
   /* 반사탄(사용자 11-19 "반사탄도 생성해서 탄환이 벽에 닿으면 반사되어 마치 빛이 거울에 닿으면 반사되는 각도로 … 1-2번 튕기면 맵밖으로"): 실제 게임 보스전에서
      몇 초마다 보스가 좌우 벽을 향해 비스듬한 탄 몇 알을 쏜다. 벽에서 입사각=반사각으로 꺾이고(좌우 벽은 θ→π−θ, 위 벽은 θ→−θ), 이지 1번·노멀 1~2번·헬 2번 튕긴 뒤 화면 밖으로 나간다(아래로는 튕기지 않는다). */
@@ -897,7 +905,7 @@
     s.cardEnding=null;
     var card=segment(s),left=timeLeft(s),b=s.boss,nextAt=nextSegmentIndex(s),next=SEGMENTS[nextAt],cinematic=s.cinematicEncounter;
     var hold=defeated&&cinematic&&cinematic.actor===card.actor&&cinematic.stageIndex===card.stage&&(!next||next.kind!=='card'||next.actor!==card.actor||next.stage!==card.stage);
-    var wiped=0;if(hold)clearBossEntranceHazards(s);else wiped=breakWipe(s);
+    var wiped=0;if(hold)clearBossEntranceHazards(s);else if(!(s.entranceAll&&next&&next.kind==='card'&&next.actor===card.actor&&next.stage===card.stage))wiped=breakWipe(s); // 같은 보스가 이어 가면 탄·패턴을 그대로 둔다
     if(defeated){s.cleared++;gainExp(s,card.spell?16:10);s.score+=Math.round(left)*300+wiped*30;var nd=card.spell?CARD_DROPS:PLAIN_DROPS;for(var i=0;i<nd;i++)dropItem(s,dropAt(b.actor,i,nd,b.x,b.y,0),dropAt(b.actor,i,nd,b.x,b.y,1),card.spell&&i===1?1:0); /* 하트는 보스 발치 구름 아래에서 솟는다: 먹으로 스미는 몸 한가운데를 가리지 않게(사용자 11-16) */}else s.timeouts++;
     // 이름 붙은 패턴을 폭탄 없이, 맞지 않고 넘기면 보너스
     if(card.spell&&defeated&&s.spellClean){s.captures++;s.score+=20000+card.stage*5000;note(s,'capture');}
@@ -1854,7 +1862,8 @@
     var sp=s.sp,w=spWindow(s),i;
     if(sp.drain&&s.floor&&!s.floor.pieces.length){s.floor.clearing=1;sp.drain=false;}
     if(!w){if(sp.cur)spEnd(s);sp.q.length=0;centerGuard(s,null);return;}
-    if(w.local===0){if(!sp.cur){cancelAll(s,true);}} // 전환 예고: 지난 패턴의 탄은 먹이 흐르듯 걷힌다
+    if(w.local===0&&!sp.cur){if(s.entranceAll)hurryBullets(s);else cancelAll(s,true);} // 전환 예고: 실제 게임은 지난 패턴의 탄을 지우지 않고 판정을 지닌 채 제 길로 빨라져 나가게 한다(사용자 11-19 "탄이 갑자기 사라져서 맥이 빠지거나")
+    if(w.local===SP_LEAD&&!sp.cur&&s.entranceAll&&s.n)driftBullets(s); // 예고 1.5초 안에 못 나간 몇 알만 먹이 흐르듯 걷는다(특수 페이즈는 탄 없이 광선·그림만) // 전환 예고: 지난 패턴의 탄은 먹이 흐르듯 걷힌다
     if(w.local===SP_LEAD&&!sp.cur){sp.cur=w.kind;sp.cycle=w.cycle;s.special={kind:w.kind,start:s.tick,cycle:w.cycle,lay:SP_LAYBACK[s.difficulty]};note(s,'special');}
     if(!w.active||!sp.cur){centerGuard(s,w);return;}
     riserInit(s);var lt=w.local-SP_LEAD;
@@ -1930,7 +1939,7 @@
       // 자동 필살(사용자 11-16): 피격점에 닿는 순간 필살기가 남아 있으면 목숨 대신 저절로 터진다. 목숨·공격 단계·필살 단계는 그대로. 맞은 것으로 세어(무피격 별) 필살기 하나를 쓴다
       s.autoBombs++;s.hits++;useBomb(s);if(s.lastBomb)s.lastBomb.auto=true;note(s,'autoBomb');
     }else if(touched){
-      p.hp--;s.hits++;s.spellClean=false;p.invulnerableUntil=s.tick+INVULN_TICKS;if(s.entranceAll){flushBullets(s);clearNonBullets(s);}else cancelAll(s);note(s,'hurt');if(s.power>1){s.power--;s.exp=POWER_EXP[s.power-1];note(s,'powerDown');} // 맞으면 공격 단계가 하나 내려간다(필살기 단계는 그대로)
+      p.hp--;s.hits++;s.spellClean=false;p.invulnerableUntil=s.tick+INVULN_TICKS;if(!s.entranceAll)cancelAll(s);note(s,'hurt');if(s.power>1){s.power--;s.exp=POWER_EXP[s.power-1];note(s,'powerDown');} // 맞으면 공격 단계가 하나 내려간다(필살기 단계는 그대로)
       // 목숨이 남았으면 폭탄이 기본 개수까지 다시 찬다.
       if(p.hp<=0){s.stage='lost';s.stageTick=0;note(s,'lose');}else if(s.bombs<s.rules.bombs)s.bombs=s.rules.bombs;
     }
@@ -1980,7 +1989,7 @@
     function totalStars(p){var n=0;Object.keys(p.stars).forEach(function(k){n+=p.stars[k];});return n;}
     return {fresh:fresh,sanitize:sanitize,record:record,unlocked:unlocked,canPlay:canPlay,resume:resume,totalStars:totalStars};
   })();
-  var api={revision:43,CARD_ENDING_MAX:CARD_ENDING_MAX,CARD_MIN:CARD_MIN,DESCEND_HOLD:DESCEND_HOLD,LIVE_FAST:LIVE_FAST,BEAM_MIN:BEAM_MIN,FAN_APEX:FAN_APEX,CALM_BELOW:CALM_BELOW,CALM_LASER_EVERY:CALM_LASER_EVERY,MOB_BELOW_SPEED:MOB_BELOW_SPEED,BOSS_REST:BOSS_REST,BOSS_SWAY:BOSS_SWAY,WALL_KICK_Y:WALL_KICK_Y,CARD_DOWN_MAX:CARD_DOWN_MAX,EXIT_TURN:EXIT_TURN,WAVE_LINGER:WAVE_LINGER,LAYER_CAP:LAYER_CAP,layersBut:layersBut,phraseLen:phraseLen,flushBullets:flushBullets,heroProfile:heroProfile,bombName:bombName,isCinematicBoss:isCinematicBoss,nextSegmentIndex:nextSegmentIndex,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
+  var api={revision:43,CARD_ENDING_MAX:CARD_ENDING_MAX,CARD_MIN:CARD_MIN,DESCEND_HOLD:DESCEND_HOLD,LIVE_FAST:LIVE_FAST,BEAM_MIN:BEAM_MIN,FAN_APEX:FAN_APEX,CALM_BELOW:CALM_BELOW,CALM_LASER_EVERY:CALM_LASER_EVERY,CARD_BREAK_PAUSE:CARD_BREAK_PAUSE,bossStays:bossStays,MOB_BELOW_SPEED:MOB_BELOW_SPEED,BOSS_REST:BOSS_REST,BOSS_SWAY:BOSS_SWAY,WALL_KICK_Y:WALL_KICK_Y,CARD_DOWN_MAX:CARD_DOWN_MAX,EXIT_TURN:EXIT_TURN,WAVE_LINGER:WAVE_LINGER,LAYER_CAP:LAYER_CAP,layersBut:layersBut,phraseLen:phraseLen,flushBullets:flushBullets,heroProfile:heroProfile,bombName:bombName,isCinematicBoss:isCinematicBoss,nextSegmentIndex:nextSegmentIndex,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     PACING:PACING,stageTargetSeconds:stageTargetSeconds,plannedSegments:plannedSegments,pacingReport:pacingReport,waveDuration:waveDuration,cardDuration:cardDuration,cardHp:cardHp,SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_REAIM:MODE_REAIM,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,MODE_BRANCH:MODE_BRANCH,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,PROP_LONG:PROP_LONG,propHitPoints:propHitPoints,propRenderSpan:propRenderSpan,bulletRenderSpan:bulletRenderSpan,BULLET_BREAK_MIN_SPAN:BULLET_BREAK_MIN_SPAN,isBulletBreakable:isBulletBreakable,ORB_HP:ORB_HP,ORB_BREAK_EVERY:ORB_BREAK_EVERY,ORB_FRAGMENT_COUNT:ORB_FRAGMENT_COUNT,ORB_FRAGMENT_GRACE:ORB_FRAGMENT_GRACE,ORB_FRAGMENT_SPEED:ORB_FRAGMENT_SPEED,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
     BOSS_ENTRANCE_GRACE:BOSS_ENTRANCE_GRACE,BOSS_ENTRANCE_SPEECH:BOSS_ENTRANCE_SPEECH,BOSS_CLEAR_TICKS:BOSS_CLEAR_TICKS,prepareBossEntrance:prepareBossEntrance,phaseOf:phaseOf,phaseKind:phaseKind,entrancePhase:entrancePhase,skipEntrance:skipEntrance,ENTRANCE_CUTIN:ENTRANCE_CUTIN,BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,figurePhase:figurePhase,FIGURE_ON_TICKS:FIGURE_ON_TICKS,FIGURE_OFF_TICKS:FIGURE_OFF_TICKS,FIGURE_CHARGE_TICKS:FIGURE_CHARGE_TICKS,RUNE_AT:RUNE_AT,RISER_HP:RISER_HP,RISER_SCORE:RISER_SCORE,riserHp:riserHp,shotHitsRiser:shotHitsRiser,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,BOSS_DESCEND:BOSS_DESCEND,SP_START:SP_START,spStart:function(s){return s.sp?s.sp.start:SP_START;},SP_CYCLE:SP_CYCLE,SP_LEAD:SP_LEAD,SP_BEAT:SP_BEAT,SP_LAYBACK:SP_LAYBACK,SP_LEN:SP_LEN,SP_KINDS:SP_KINDS,SP_ORDER:SP_ORDER,spitMotif:spitMotif,SPIT_FORM:SPIT_FORM,SP_INFO:SP_INFO,CAMP_HALF:CAMP_HALF,CAMP_NEED:CAMP_NEED,spWindow:spWindow,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
     POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,DESCEND_AGE:DESCEND_AGE,DESCEND_Y:DESCEND_Y,FOCUS_SKILL_CHANCE:FOCUS_SKILL_CHANCE,FOCUS_SKILL_GAP:FOCUS_SKILL_GAP,SWORD_DELAY:SWORD_DELAY,SWORD_POWER:SWORD_POWER,REVERSAL_POWER:REVERSAL_POWER,FOCUS_SLOW:FOCUS_SLOW,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,BOMB_PULSES:BOMB_PULSES,BOMB_PULSE_START:BOMB_PULSE_START,BOMB_PULSE_EVERY:BOMB_PULSE_EVERY,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp};
