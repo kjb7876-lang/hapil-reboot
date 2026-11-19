@@ -10,6 +10,7 @@
   var $=function(id){return document.getElementById(id);};
   var canvas=$('arcade-canvas'),ctx=canvas.getContext('2d');
   var HeroVisibility=global.HapilHeroVisibility||null,heroOpacity=1;
+  var Spirit=global.HapilSpirit||null; // 동방식 표시층: 수집선·보스 위치 표식·봉인 보너스·받은 값(src/arcade-spirit-v43.js)
   var SAVE_KEY='hapil-arcade-save-v43',BEST_KEY='hapil-arcade-best-v43',SETTINGS_KEY='hapil-arcade-settings-v43';
   // 탄 색 여섯 가지(시뮬레이션의 색 번호 0·2·4·5·6·8). 속은 단색, 테두리는 밝게.
   var COLORS={0:'#ff3b4e',2:'#a45cff',4:'#2fd0ff',5:'#3fdc82',6:'#ffd23e',8:'#e9e9ff'};
@@ -580,15 +581,15 @@
     var lb=function(t){return hudOut==='side'?'<div class="lbl">'+t+'</div>':'';}; // PC 패널에는 이름표를 붙인다(심사 7차)
     var lvl='<div class="levels">'+lb('MEMORY')+'<span>공격 Lv.'+(s.power||1)+'</span> <span>필살 Lv.'+(s.bombLevel||1)+'</span></div>'; // 기억사수 성장 단계(사용자 11-16)
     var life='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB [X]')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div>'+lvl+'</div>';
-    var score='<div style="text-align:'+(hudOut==='side'?'left':'right')+'">'+lb('SCORE')+'<div class="score">'+pad(s.score)+'</div>'+(hudOut==='side'?lb('BEST')+'<div class="best">'+pad(Math.max(best,s.score))+'</div>':'')+'<div class="graze">GRAZE '+s.graze+'</div></div>'; // 오른쪽 패널에 최고 점수도: 좌우 패널 무게를 맞춘다(심사 10차)
+    var score='<div style="text-align:'+(hudOut==='side'?'left':'right')+'">'+lb('SCORE')+'<div class="score">'+pad(s.score)+'</div>'+(hudOut==='side'?lb('BEST')+'<div class="best">'+pad(Math.max(best,s.score))+'</div>':'')+'<div class="graze">GRAZE '+s.graze+(Arcade.pointValue?' · 하트값 '+Arcade.pointValue(s):'')+'</div></div>'; // 오른쪽 패널에 최고 점수도: 좌우 패널 무게를 맞춘다(심사 10차)
     if(hudOut==='side'){
       var seg=Arcade.SEGMENTS[s.seg],card=s.stage==='card'&&seg,hp=card?Math.round(100*Math.max(0,Math.min(1,finite(b.hp/b.maxHp,0)))):0;
       var route='<div class="route">',k;for(k=Math.max(0,s.stageIndex-1);k<=Math.min(Arcade.STAGES.length-1,s.stageIndex+2);k++)route+='<div'+(k===s.stageIndex?' class="cur" style="color:'+color+'"':'')+'>'+(k<s.stageIndex?'✓ ':k===s.stageIndex?'▸ ':'· ')+esc(Arcade.STAGES[k].name)+'</div>';route+='</div>';
       var list=card?Arcade.SEGMENTS.filter(function(g){return g.kind==='card'&&g.spell&&g.actor===seg.actor&&g.stage===seg.stage;}):[],at=list.indexOf(seg),cards='<div class="cards">';
       for(k=0;k<list.length&&k<6;k++)cards+='<div'+(k===at?' class="cur" style="color:'+color+'"':'')+'>'+(k<at?'✓ ':k===at?'▸ ':'· ')+esc(list[k].name)+'</div>';cards+='</div>';
-      var boss='<div>'+(card?lb('BOSS')+'<div class="bosshp"><i style="width:'+hp+'%;background:'+color+'"></i></div>':'')+(card&&seg.spell?lb('SPELL')+'<div class="spell" style="border-color:'+color+';font-size:'+spellFit(seg.name)+'px">'+esc(seg.name)+'</div><div class="graze">'+(s.spellClean?'BONUS +'+(20000+(seg.stage||0)*5000):'BONUS 실패')+'</div>':'')+'</div>'+(card&&list.length?'<div>'+lb('SPELL CARDS')+cards+'</div>':'')+(card&&bossPortrait(bossKey(s),color)?'<img class="portrait" alt="" src="'+portraitUrl+'" style="border-color:'+color+'">':'');
+      var boss='<div>'+(card?lb('BOSS')+'<div class="bosshp"><i style="width:'+hp+'%;background:'+color+'"></i></div>':'')+(card&&seg.spell?lb('SPELL')+'<div class="spell" style="border-color:'+color+';font-size:'+spellFit(seg.name)+'px">'+esc(seg.name)+'</div><div class="graze">'+(s.spellClean?'봉인 +'+(Arcade.spellBonus?Arcade.spellBonus(s):20000+(seg.stage||0)*5000):'봉인 놓침')+'</div>':'')+'</div>'+(card&&list.length?'<div>'+lb('SPELL CARDS')+cards+'</div>':'')+(card&&bossPortrait(bossKey(s),color)?'<img class="portrait" alt="" src="'+portraitUrl+'" style="border-color:'+color+'">':'');
       var prog=Math.round(100*(s.stageIndex+1)/Arcade.STAGES.length);
-      var life2='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB [X]')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div>'+lvl+'</div><div>'+lb('JOURNEY')+'<div class="progress"><i style="width:'+prog+'%"></i></div>'+route+'<div class="graze">패턴 보너스 '+s.captures+'</div></div>';
+      var life2='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB [X]')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div>'+lvl+'</div><div>'+lb('JOURNEY')+'<div class="progress"><i style="width:'+prog+'%"></i></div>'+route+'<div class="graze">봉인 '+s.captures+' · 조각 '+(s.pieces||0)+'/'+(Arcade.LIFE_PIECES||3)+'</div></div>';
       var keys='<div class="keys">'+lb('CONTROLS')+'<div>이동 ←↑↓→ · WASD</div><div>저속 Shift · 폭탄 X</div><div>일시정지 Esc</div></div>';
       setHud(hi,'hi','<div class="stack">'+name+life2+'</div>'+keys);setHud(lo,'lo','<div class="stack">'+score+boss+'</div>'+'<div class="keys">'+lb('DIFFICULTY')+'<div>'+({gentle:'EASY',normal:'NORMAL',hell:'HELL'}[s.difficulty]||'')+'</div></div>');} // 패널 가운데: 왼쪽은 목숨·여정, 오른쪽은 보스 체력·스펠명·보너스(심사 6.46: 가운데가 비었다) // 아래쪽 빈자리: 왼쪽은 조작법, 오른쪽은 지금 스펠 이름(칸 안 이름표가 작아 읽기 어렵다는 지적)
     else{setHud(hi,'hi',name);setHud(lo,'lo',life+score);}
@@ -646,7 +647,7 @@
   function showToast(result){
     var g=Arcade.STAGES[result.stage];if(!g)return;
     // 기념물 그림은 이 스테이지 그림과 함께 이미 받아 두었다(곧 releaseStage가 목록에서 지워도 여기서 쥐고 있다).
-    toast={t:TOAST_SECONDS,name:g.name,stars:Math.max(1,Math.min(3,result.stars|0)),img:g.reward?images['reward-'+g.reward.key]||null:null,key:g.reward?'reward-'+g.reward.key:'',color:themeColor(state)};
+    toast={t:TOAST_SECONDS,name:g.name,stars:Math.max(1,Math.min(3,result.stars|0)),img:g.reward?images['reward-'+g.reward.key]||null:null,key:g.reward?'reward-'+g.reward.key:'',color:themeColor(state),tally:Spirit?Spirit.tally(result):''};
   }
   function consume(){
     var s=state,i,k,hurtNow=s.events.indexOf('hurt')>=0;
@@ -657,9 +658,9 @@
     for(i=0;i<s.drifted.length;i+=5)drifts.push({x:s.drifted[i],y:s.drifted[i+1],c:COLORS[s.drifted[i+2]]||'#ffffff',vx:Math.cos(s.drifted[i+3])*s.drifted[i+4],vy:Math.sin(s.drifted[i+3])*s.drifted[i+4],age:0});
     s.drifted.length=0;if(drifts.length>DRIFT_DRAW)drifts.splice(0,drifts.length-DRIFT_DRAW);
     for(i=0;i<s.pops.length;i+=3){var big=s.pops[i+2];for(k=0;k<(big?14:6);k++){var a=TAU*k/(big?14:6);addParticle(s.pops[i],s.pops[i+1],Math.cos(a)*(big?3.4:2.2),Math.sin(a)*(big?3.4:2.2),big?26:16,k%2?'#ffffff':themeColor(s),big?7:4);}if(big)shake=Math.max(shake,6);}
-    s.pops.length=0;
+    s.pops.length=0;if(Spirit)Spirit.consume(s);
     for(i=0;i<s.events.length;i++){
-      var e=s.events[i];
+      var e=s.events[i];if(Spirit)Spirit.onEvent(e,s,Arcade);
       if(e==='graze'){play('graze',s.player.x);addParticle(s.player.x,s.player.y,(Math.random()-.5)*5,(Math.random()-.5)*5,12,'#ffffff',2);}
       else if(e==='bossHit'||e==='bossHitLow')play(e,s.boss.x);
       else if(e==='kill')play('kill',s.player.x);
@@ -1707,12 +1708,13 @@
     if(!toast||fallHold())return;
     var t=toast.t/TOAST_SECONDS,alpha=t>.85?(1-t)/.15:t<.25?t/.25:1,y=74;
     ctx.save();ctx.globalAlpha=Math.max(0,Math.min(1,alpha));
-    ctx.fillStyle='rgba(6,4,16,.78)';ctx.fillRect(40,y,W-80,64);ctx.fillStyle=toast.color;ctx.fillRect(40,y,W-80,1.5);ctx.fillRect(40,y+62.5,W-80,1.5);
+    var th=toast.tally?80:64;ctx.fillStyle='rgba(6,4,16,.78)';ctx.fillRect(40,y,W-80,th);ctx.fillStyle=toast.color;ctx.fillRect(40,y,W-80,1.5);ctx.fillRect(40,y+th-1.5,W-80,1.5);
     if(toast.img){var h=54,w=h*cellRatio(toast.key,toast.img);if(w>60){h*=60/w;w=60;}drawCell(toast.key,toast.img,0,false,48+(60-w)/2,y+5+(54-h)/2,w,h);}
     else{ctx.strokeStyle=toast.color;ctx.lineWidth=1.2;ctx.strokeRect(54,y+10,44,44);}
     ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.font='600 15px '+SERIF;ctx.fillStyle='#fff3cf';
     var name=toast.name;while(name.length>2&&ctx.measureText(name).width>W-80-84)name=name.slice(0,-1);ctx.fillText(name===toast.name?name:name+'…',116,y+28);
     ctx.font='18px '+SANS;ctx.fillStyle='#ffd86a';ctx.fillText(starText(toast.stars),116,y+51);
+    if(toast.tally){var tp=toast.tally.split('결산 '),tw;ctx.font='600 11px '+SANS;ctx.fillStyle='#fff3cf';ctx.fillText(tp[0]+(tp[1]?'결산 ':''),116,y+70);if(tp[1]){tw=ctx.measureText(tp[0]+'결산 ').width;ctx.font='700 12px '+SANS;ctx.fillStyle='#ffd86a';ctx.fillText(tp[1],116+tw,y+70);}} // 결산 한 줄: 봉인·스침·결산 점수
     ctx.restore();
   }
   /* 위쪽 어둠: 탄보다 먼저 그려 탄을 가리지 않는다 */
@@ -1747,7 +1749,7 @@
     ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.8)';ctx.fillText('공격 Lv.'+(s.power||1)+' · 필살 Lv.'+(s.bombLevel||1),12,H-114); // 목숨 위(저속 버튼과 겹쳐 가려지던 자리 H-60에서 옮김, 11-16 실검증)ctx.font='14px '+SANS;
     ctx.fillStyle='rgba(255,255,255,.18)';ctx.fillRect(12,H-72,64,3);ctx.fillStyle='#7dffb0';ctx.fillRect(12,H-72,64*Math.max(0,Math.min(1,s.gauge/Arcade.GAUGE_FULL)),3);
     ctx.textAlign='right';ctx.font='600 14px '+SANS;ctx.fillStyle='#ffffff';ctx.fillText(pad(s.score),W-12,H-78);
-    ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.7)';ctx.fillText('GRAZE '+s.graze,W-12,H-94);
+    ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.7)';ctx.fillText('GRAZE '+s.graze+(Arcade.pointValue?' · 하트값 '+Arcade.pointValue(s):''),W-12,H-94);
     }
     if(banner>0){
       var t=1-banner,slide=t<.18?(1-t/.18)*W:bannerSpell&&t>.72?((t-.72)/.28)*((t-.72)/.28)*W:0,alpha=bannerSpell?1:t>.75?(1-t)/.25:1; // 스펠 띠는 흐려지지 않고 오른쪽으로 빠져나간다(반투명 잔상이 받침 글자와 겹치지 않게)
@@ -1757,6 +1759,7 @@
       ctx.textAlign='right';ctx.font='600 18px '+SERIF;ctx.fillStyle='#fff3cf';ctx.fillText(bannerTitle,W-14,by0+24);
       ctx.font='10px '+SANS;ctx.fillStyle=color;ctx.fillText(bannerSub,W-14,by0+36);ctx.restore(); // 위쪽 HUD 바로 아래의 얇은 띠: 보스와 플레이어 사이 시야를 가리지 않는다
     }
+    if(Spirit)Spirit.drawHud(ctx,s,Arcade,Ink,{hideBonus:bannerSpell&&banner>0,bonusY:hudOut==='side'?52:68,toast:!!toast&&!fallHold()});
     drawToast();
   }
   function draw(elapsed){
@@ -1769,7 +1772,7 @@
     offsetX=offsetY=0;if(shake>0){if(settings.screenShake){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;}shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawCardCast(s);drawPatternCue(s);drawShots(s);drawDrifts();drawInks();drawParticles();drawFlashes();drawItems(s);drawLasers(s);drawFigures(s);drawRipples(s);drawHeroLight(s);drawBullets(s);drawLaserCues(s);drawNudgeCue(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink)){drawPlayer(s);drawHitbox(s);}if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawCardCast(s);drawPatternCue(s);drawShots(s);drawDrifts();drawInks();drawParticles();drawFlashes();drawItems(s);if(Spirit)Spirit.drawWorld(ctx,s,Arcade,Ink,mode==='playing',{quiet:!!toast});drawLasers(s);drawFigures(s);drawRipples(s);drawHeroLight(s);drawBullets(s);drawLaserCues(s);drawNudgeCue(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink)){drawPlayer(s);drawHitbox(s);}if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);
     // 스펠 선언 연출(사용자 11-18 "패턴·공격 미장센 강화"): 가장자리부터 먹이 번져 화면이 잠깐 조여졌다가 걷힌다. 보스에 시선이 모였다가 탄이 펼쳐진다(탄·영웅은 이 위에 그대로 읽힌다).
     if(spellDim>0&&Ink&&s.boss&&s.boss.present){var sd=spellDim,sx0=finite(s.boss.x,W/2),sy0=finite(s.boss.y,H/3),sg=ctx.createRadialGradient(sx0,sy0,H*.22,sx0,sy0,H*.85);if(Ink.raw)Ink.raw(1);sg.addColorStop(0,'rgba(24,20,16,0)');sg.addColorStop(.55,'rgba(24,20,16,'+(sd*.2)+')');sg.addColorStop(1,'rgba(24,20,16,'+(sd*.68)+')');ctx.fillStyle=sg;ctx.fillRect(0,0,W,H);if(Ink.raw)Ink.raw(-1);spellDim=Math.max(0,spellDim-Math.min(.05,elapsed)/1.6);}
@@ -1948,7 +1951,7 @@
     lastRun=run;oneCreditEligible=run.stage===0&&!run.bossOnly&&!Number.isInteger(run.segment)&&!run.carry&&!run.practice&&!quiet&&!devMode;
     var options={entranceAll:true,difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,growth:true,pacing:!quiet,rhythm:!quiet}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
     if(Number.isInteger(run.segment))options.segment=run.segment;if(grown&&(grown.exp||grown.fills))options.grown={exp:grown.exp|0,fills:grown.fills|0};
-    state=Arcade.createRun(options);heroOpacity=1;
+    state=Arcade.createRun(options);heroOpacity=1;if(Spirit)Spirit.reset();
     if(isSeoha(state.hero))loadImage('hero-'+state.hero);
     if(!run.bossOnly&&!quiet){journeyHero=run.hero;try{global.localStorage.setItem(JOURNEY_HERO_KEY,journeyHero);}catch(e){}}
     if(run.carry){state.hits+=run.carry.hits|0;state.bombsUsed+=run.carry.bombs|0;} // 중간 저장에서 이어 하면 앞 구간의 피격·폭탄도 별에 반영
@@ -1962,7 +1965,7 @@
     var stars=0;s.results.forEach(function(r){stars+=r.stars;});
     $('result-title').textContent=won?(s.bossOnly?'BOSS CLEAR':s.stageIndex>=Arcade.STAGES.length-1?'ALL CLEAR':'CLEAR'):'GAME OVER';
     $('result-score').textContent=pad(s.score);$('result-best').textContent=pad(best);
-    $('result-detail').textContent=(won?'':'STAGE '+(s.stageIndex+1)+' '+Arcade.STAGES[s.stageIndex].name+' · ')+(oneCreditEligible?'원코인 여정 · ':'연습/이어하기 · ')+'깬 스테이지 '+s.results.length+' · 별 '+stars+' · 패턴 보너스 '+s.captures+' · 피격 '+s.hits;
+    $('result-detail').textContent=(won?'':'STAGE '+(s.stageIndex+1)+' '+Arcade.STAGES[s.stageIndex].name+' · ')+(oneCreditEligible?'원코인 여정 · ':'연습/이어하기 · ')+'깬 스테이지 '+s.results.length+' · 별 '+stars+' · 봉인 '+s.captures+' · 스침 '+s.graze+' · 피격 '+s.hits;
     var retry=$('arcade-retry');
     if(!won){retry.hidden=false;retry.textContent=T('retryFallen');retry.dataset.stage=String(s.stageIndex);}
     else if(s.bossOnly){retry.hidden=false;retry.textContent=T('retryBoss');retry.dataset.stage=String(s.rushStage);}
