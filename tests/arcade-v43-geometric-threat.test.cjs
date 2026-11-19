@@ -71,7 +71,7 @@ function replay(kind,dodge) {
     if(dodge){
       if(kind==='ripple'){
         // Enter the first projected gap and cross to the other side behind the front.
-        const target=t<Math.round(275*.792/s.rules.speed)?234:126;dx=Math.max(-4,Math.min(4,target-s.player.x)); // 앞줄이 지나가는 때는 탄속에 반비례(11-19 난이도 기준표)
+        const target=t<Math.round(250/s.rules.speed)?228:132;dx=Math.max(-4,Math.min(4,target-s.player.x)); // 앞줄이 지나가는 때는 탄속에 반비례(11-19 난이도 기준표)
       }else if(t>121&&t<135)dx=1.35;
     }
     A.step(s,{dx,dy:0});
