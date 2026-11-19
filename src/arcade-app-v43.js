@@ -14,7 +14,7 @@
   // 탄 색 여섯 가지(시뮬레이션의 색 번호 0·2·4·5·6·8). 속은 단색, 테두리는 밝게.
   var COLORS={0:'#ff3b4e',2:'#a45cff',4:'#2fd0ff',5:'#3fdc82',6:'#ffd23e',8:'#e9e9ff'};
   // 그림 높이(픽셀). 모르는 키는 종류별 기본값(인물·몹·기물)을 쓴다. 부별 파일이 새 인물·몹·기물을 계속 들인다.
-  var TALL={violet:112,balrog:124,mask:112,lucifer:124,asmodeus:108,pride:118,controller:118,goblin:104,insomnia:124,arbelia:108,siren:124,chief:124,executor:124,rian:108,cultist:124,
+  var TALL={violet:112,balrog:248 /* 사용자 11-19 "발록보스크기 2배로 키워서 위압감있게": 124→248(그림만, 판정 그대로) */,mask:112,lucifer:124,asmodeus:108,pride:118,controller:118,goblin:104,insomnia:124,arbelia:108,siren:124,chief:124,executor:124,rian:108,cultist:124,
     spider:30,slime:28,ember:34,drone:26,mobgoblin:36,wolf:34,nightmare:40,collector:40,leech:34,guardian:62,warden:72,horn:84,belphegor:70,mammon:74,knight:80};
   var ITEM_DRAW=17,TALL_ACTOR=144,TALL_MOB=64,TALL_ELITE=92;
   var PROP_GLOW={'sword-violet':2,cleaver:5,'sword-balrog':0,obelisk:2,spire:4,'twin-blade':8,crescent:4,tissue:6,money:6,heel:0,feather:8,hexagram:6,gear:4};
@@ -74,6 +74,10 @@
   function hudColorOf(index){var hsl=rgbHsl(hexRgb(tintOf(index)));return hsl[1]<.08?'#e6e0ff':hslHex(hsl[0],Math.max(.55,hsl[1]),.74);}
   var STAGE_COLOR=Arcade.STAGES.map(function(g,i){return hudColorOf(i);});
   function themeColor(s){return themeOverride&&themeOverride.stage===s.stageIndex?hudColorOf(s.stageIndex):STAGE_COLOR[s.stageIndex]||'#e6e0ff';}
+  var phaseMemo={};
+  function livePhase(s){var g=Arcade.SEGMENTS[s.seg];if(!g||g.kind!=='card')return null;var key=s.difficulty+'|'+g.stage+'|'+g.actor+'|'+(g.mid?1:0),list=phaseMemo[key];
+    if(!list){list=phaseMemo[key]=(Arcade.plannedSegments?Arcade.plannedSegments(s.difficulty):Arcade.SEGMENTS.map(function(x,i){return i;})).filter(function(i){var x=Arcade.SEGMENTS[i];return x.kind==='card'&&x.stage===g.stage&&x.actor===g.actor&&!!x.mid===!!g.mid;});}
+    var no=list.indexOf(s.seg);return no<0?null:{no:no+1,count:list.length};}
   function tallOf(key){
     if(TALL[key])return Arcade.MOBS[key]&&TALL[key]<TALL_MOB?TALL_MOB:TALL[key]; // 옛 잡몹 크기(26~40)는 그림이 안 보일 만큼 작았다. 잡몹은 TALL_MOB보다 작게 그리지 않는다.
     if(Arcade.ACTORS[key])return TALL_ACTOR;
@@ -1629,6 +1633,7 @@
     ctx.textBaseline='alphabetic';
     if(s.stage==='card'&&seg){
       ctx.fillStyle='rgba(255,255,255,.16)';ctx.fillRect(12,9,W-24,4);ctx.fillStyle=b.hp/b.maxHp<=.2?'#ff5a5a':color;ctx.fillRect(12,9,(W-24)*Math.max(0,Math.min(1,finite(b.hp/b.maxHp,0))),4);
+      var lp=s.entranceAll&&livePhase(s);if(lp&&lp.count>1){ctx.save();ctx.textAlign='right';ctx.font='600 12px '+SANS;ctx.fillStyle=Ink?'#3a2c22':'#f3e3b5';ctx.globalAlpha=.9;ctx.fillText((b.mid?'중간보스 ':'보스 ')+lp.no+' / '+lp.count+' 페이즈',W-12,30);ctx.restore();} // 사용자 11-19 "보스등 페이즈알수있게 지금이 몇인지 위쪽에간략히표시"
       if(seg.spell){
         namePlate(seg.name);
         if(!s.entranceAll){ctx.textAlign='right';ctx.font='600 20px '+SANS;ctx.fillStyle=left<=10?'#ff6a6a':'#ffffff';ctx.fillText(left<10?left.toFixed(1):String(Math.ceil(left)),W-12,35);} // 실제 게임은 시간으로 끝나지 않으니(사용자 11-19) 남은 초를 띄우지 않는다

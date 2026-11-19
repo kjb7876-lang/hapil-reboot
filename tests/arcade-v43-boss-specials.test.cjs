@@ -7,7 +7,7 @@ function kindRun(difficulty,kind){for(let st=0;st<a.STAGES.length;st++){const g=
  if(a.SP_ORDER[(st*3+seg)%a.SP_ORDER.length]===kind){const s=a.createRun({difficulty,seed:3,segment:seg,entranceAll:true});toCard(s);if(a.spStart(s)<0)continue;s.segTick=a.spStart(s)-a.SP_LEAD-5;return s;}}throw new Error(kind);}
 function toCard(s){for(let i=0;i<3000&&s.stage!=='card';i++){s.player.invulnerableUntil=s.tick+999;a.step(s,{dx:0,dy:0});h.clear(s);}assert.equal(s.stage,'card');s.segTick=0;}
 function go(s,ticks,each,x){for(let i=0;i<ticks&&s.stage==='card';i++){s.player.invulnerableUntil=s.tick+999;s.boss.hp=s.boss.maxHp;if(x!==undefined)s.player.x=x;a.step(s,{dx:0,dy:0});if(each)each(s,i);h.clear(s);}return s;}
-const DIFFS=['gentle','normal','hell'];
+const DIFFS=['gentle','normal','hell'],COVER={gentle:.7,normal:.8,hell:.9};
 
 test('every difficulty gets all four special phases, and normal firing is silent while one runs',()=>{
  for(const d of DIFFS)for(const kind of a.SP_KINDS){
@@ -19,7 +19,10 @@ test('every difficulty gets all four special phases, and normal firing is silent
 test('laser phase: thin beams only, always a gap, within the laser cap; harder difficulty has a narrower gap',()=>{
  const open={};
  for(const d of DIFFS){const s=kindRun(d,'laser');let beams=0,combs=[];
-  go(s,a.SP_LEAD+a.SP_LEN[d],t=>{assert(t.lasers.length<=a.LASER_CAP);const cols=t.lasers.filter(l=>l.age===1&&Math.abs(l.angle-Math.PI/2)<1e-9&&l.y===-12&&Math.abs(l.x-180)>1);if(cols.length>1){combs.push(cols.length);}beams+=t.lasers.filter(l=>l.age===1).length;});
+  go(s,a.SP_LEAD+a.SP_LEN[d],t=>{assert(t.lasers.length<=a.LASER_CAP);const born=t.lasers.filter(l=>l.age===1);
+   // 화면 덮기(사용자 11-19, 이지 70·노멀 80·헬 90%): 띠가 덮은 폭이 그 비율을 넘지 않고 틈이 남는다
+   const solid=born.filter(l=>l.solid);if(solid.length){const vert=solid[0].y===-12,span=vert?a.WIDTH:a.HEIGHT-120,covered=solid.reduce((m,l)=>m+l.width*t.rules.beam,0);assert(covered<=span*COVER[d]+1e-6,`${d} covered ${covered}/${span}`);assert(span-covered>=span*(1-COVER[d])-1e-6,d+' gap');return;}
+   const cols=born.filter(l=>Math.abs(l.angle-Math.PI/2)<1e-9&&l.y===-12&&Math.abs(l.x-180)>1&&l.width*1<=20);if(cols.length>1){combs.push(cols.length);}beams+=born.length;});
   assert(beams>=6,`${d} beams ${beams}`);assert(combs.length>=1,'combs');assert(combs.every(n=>n<=5),`${d}: a lane is always open (${combs})`);open[d]=Math.max(...combs);}
  assert(open.gentle<=open.normal,JSON.stringify(open));
 });
@@ -88,14 +91,15 @@ test('drawing phase: the boss spits its own drawings on the strong beats, flying
  }
  const s=kindRun('hell','drawing');go(s,a.SP_LEAD+a.SP_LEN.hell,t=>{for(const r of t.risers||[])if(r.dir==='spit'&&r.age>a.RISER_WARN+2)assert(Math.hypot(r.vx,r.vy)>1,'spits fly');});
 });
-test('laser phase uses golden-ratio combs, a Gaussian fan with open shoulders and a Vitruvian square-then-X',()=>{
- const seen={comb:0,fan:0,square:0,x:0};
- for(const d of ['normal','hell'])for(let r=0;r<3;r++){const s=kindRun(d,'laser');s.sp.cycle=r;
+test('laser phase uses golden-ratio combs, a Gaussian fan, a Vitruvian square-then-X, piano keys and a screen cover',()=>{
+ const seen={comb:0,fan:0,square:0,x:0,piano:0,cover:0};
+ for(const d of ['normal','hell'])for(let r=0;r<10;r+=2){const s=kindRun(d,'laser');s.segTick+=r*a.SP_CYCLE; // 여러 회차의 레이저 페이즈(회차마다 무늬가 바뀐다)
   go(s,a.SP_LEAD+a.SP_LEN[d],t=>{const born=t.lasers.filter(l=>l.age===1);if(!born.length)return;
    const cols=born.filter(l=>l.y===-12&&Math.abs(l.angle-Math.PI/2)<1e-9),rows=born.filter(l=>l.x===-12&&l.angle===0),diag=born.filter(l=>Math.abs(Math.abs(l.angle)-Math.PI/4)<1e-6);
-   if(cols.length>=3&&!rows.length)seen.comb++;if(rows.length===2&&cols.length===2)seen.square++;if(diag.length===2)seen.x++;
+   if(born.some(l=>l.solid))seen.cover++;else if(cols.length>=1&&cols.length<=2&&cols.every(l=>Math.abs(((l.x/(a.WIDTH/8))%1)-.5)<1e-6))seen.piano++;
+   if(cols.length>=3&&!rows.length&&!born.some(l=>l.solid))seen.comb++;if(rows.length===2&&cols.length===2)seen.square++;if(diag.length===2)seen.x++;
    const fan=born.filter(l=>Math.abs(l.x-Math.max(40,Math.min(a.WIDTH-40,t.boss.x)))<1e-6&&l.y!==-12);if(fan.length>=4)seen.fan++;});}
- assert(seen.comb>0&&seen.fan>0&&seen.square>0&&seen.x>0,JSON.stringify(seen));
+ assert(seen.comb>0&&seen.fan>0&&seen.square>0&&seen.x>0&&seen.piano>0&&seen.cover>0,JSON.stringify(seen));
 });
 test('stones phase interleaves stones and drawings from opposite sides (all four on normal/hell)',()=>{
  for(const d of DIFFS){const s=kindRun(d,'stones');const dirs=new Set();let stones=0,draws=0;
@@ -103,12 +107,15 @@ test('stones phase interleaves stones and drawings from opposite sides (all four
   assert(stones>=1&&draws>=1,`${d} stones ${stones} drawings ${draws}`);
   if(d==='gentle')assert([...dirs].every(x=>x==='up'||x==='down'),[...dirs].join());else assert(dirs.size>=3,`${d} dirs ${[...dirs]}`);}
 });
-test('during the hexagram and the hanja rings the boss comes down a little below the centre, then goes back',()=>{
+test('during the hexagram and the hanja rings the boss comes down a little below the centre, stays a while, then slowly goes back',()=>{
  const s=bossRun('hell',0);go(s,60);
  const sig={glyph:'hexagram'};s.figures.push({kind:'runes',age:0,warn:60,active:150,rings:[],cx:180,cy:200,turn:0,spin:0,width:10,r:0,follow:true});
  let low=0;go(s,200,t=>{t.figures.forEach(f=>{if(f.kind==='runes')f.age=Math.min(f.age,100);});low=Math.max(low,t.boss.y);},180);
  assert(low>a.HEIGHT/2,'boss y '+low);assert(low<=a.BOSS_DESCEND+1);
- s.figures.length=0;let back=1e9;go(s,300,t=>{back=Math.min(back,t.boss.y);},180);assert(back<250,'returns '+back);
+ s.figures.length=0;let back=1e9,heldLow=0;
+ // 사용자 11-19 "보스가 아래로왔다가 금방위로가고 하니까 정신없어": 문양이 끝나도 DESCEND_HOLD 동안은 아래에 머물렀다가 천천히 올라간다
+ go(s,a.DESCEND_HOLD-10,t=>{t.figures.length=0;heldLow=Math.max(heldLow,t.boss.y);});assert(s.boss.y>a.HEIGHT/2-20,'stays down for a while: '+s.boss.y);
+ go(s,500,t=>{t.figures.length=0;back=Math.min(back,t.boss.y);},180);assert(back<250,'returns '+back);
 });
 test('bullets and mobs cleared at a mob → mid-boss → boss change leave ink dissolves instead of vanishing',()=>{
  const g=a.STAGES[1];let seg=g.first;while(a.SEGMENTS[seg].kind!=='card')seg++;

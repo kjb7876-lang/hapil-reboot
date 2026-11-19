@@ -4,10 +4,11 @@ const test=require('node:test'),assert=require('node:assert/strict'),a=require('
 const run=(difficulty,all,extra)=>a.createRun(Object.assign({difficulty,seed:9,stage:3,entranceAll:all},extra||{}));
 test('easy and normal bullets are slower and about 10% fewer on screen than before; hell stays the same',()=>{
   for(const d of ['gentle','normal']){const before=run(d,false),after=run(d,true);
-    assert(after.rules.speed<before.rules.speed*.9+1e-9,d+' speed lowered: '+after.rules.speed+' < '+before.rules.speed);
-    const onScreen=after.density/before.density/(after.rules.speed/before.rules.speed)/.75; // 느려지면 화면에 더 오래 남으니 화면 속 탄 수는 탄 수÷속도 배율. 사용자 11-19 "모든모드 탄환숫자25프로정도 감소"로 실제 게임 전체 25%를 줄인 몫(.75)은 따로 본다
+    const F=a.LIVE_FAST; // 11-19 13:14 "탄환속도 20프로 빨라지게 … 숫자20프로 줄여줘": 실제 게임 전체 몫(속도 ×1.2, 수 ×.75×.8)은 따로 본다
+    assert(after.rules.speed/F<before.rules.speed*.9+1e-9,d+' speed lowered: '+after.rules.speed+' < '+before.rules.speed);
+    const onScreen=after.density/before.density/(after.rules.speed/F/before.rules.speed)/(.75*.8); // 느려지면 화면에 더 오래 남으니 화면 속 탄 수는 탄 수÷속도 배율. 사용자 11-19 "모든모드 탄환숫자25프로정도 감소"로 실제 게임 전체 25%를 줄인 몫(.75)은 따로 본다
     assert(onScreen<.95&&onScreen>.85,d+' bullets on screen about 10% fewer: '+onScreen);}
-  const h0=run('hell',false),h1=run('hell',true);assert.equal(h1.rules.speed,h0.rules.speed);assert(Math.abs(h1.density-h0.density*.75)<1e-9,'hell: only the 11-19 all-mode 25% trim');
+  const h0=run('hell',false),h1=run('hell',true);assert(Math.abs(h1.rules.speed-h0.rules.speed*a.LIVE_FAST)<1e-9,'hell: only the all-mode 20% speed-up');assert(Math.abs(h1.density-h0.density*.75*.8)<1e-9,'hell: only the 11-19 all-mode trims');
 });
 test('normal is now gentler than hell in speed (they are no longer identical)',()=>{
   assert(run('normal',true).rules.speed<run('hell',true).rules.speed);

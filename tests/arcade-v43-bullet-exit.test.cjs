@@ -60,9 +60,9 @@ test('mirror bullets reflect off the side walls like light on a mirror (angle in
   assert(bounced>0,d+' saw a mirror reflection');assert(maxB>=1&&maxB<=2,d+' bounces '+maxB);
  }
 });
-test('live game trims bullet density by 25% and grows bullets 15% on every difficulty; replay mode keeps its numbers',()=>{
+test('live game trims bullet density (25% then 20% more), speeds bullets up 20% and grows bullets 15% on every difficulty; replay mode keeps its numbers',()=>{
  for(const d of DIFFS){const live=a.createRun({difficulty:d,seed:1,entranceAll:true}),old=a.createRun({difficulty:d,seed:1});
-  const soft=d==='hell'?1:.8;assert(Math.abs(live.density-old.density*soft*.75)<1e-9,d+' '+live.density+' '+old.density);assert(Math.abs(live.sizeScale-old.sizeScale*1.15)<1e-9,d+' size '+live.sizeScale);}
+  const soft=d==='hell'?1:.8;assert(Math.abs(live.density-old.density*soft*.75*.8)<1e-9,d+' '+live.density+' '+old.density);assert(Math.abs(live.rules.speed/old.rules.speed/(d==='hell'?1:(d==='gentle'?.87:.88))-a.LIVE_FAST)<1e-9,d+' speed x1.2');assert(Math.abs(live.sizeScale-old.sizeScale*1.15)<1e-9,d+' size '+live.sizeScale);}
 });
 test('mirror bullets are marked for the layered-ring look and lose one layer (bounce) per wall hit',()=>{
  const s=a.createRun({difficulty:'hell',seed:6,segment:firstCard(4),entranceAll:true});toCard(s);let seen=0,drops=0,hits=0;const last=new Map();
@@ -89,4 +89,17 @@ test('pattern kinds at once: Easy 1, Normal 2, Hell 3 — new kinds only start w
    if(a.layersBut(s,'')>Math.max(before,a.LAYER_CAP[d]+ (d==='gentle'?1:0)))over++;}
   assert(ticks>1000,d+' ran');assert.equal(over,0,d+': a new kind started with no room');
  }
+});
+// 사용자 11-19 13:14 묶음: 휴대폰 판정 / 문양 중 탄 금지 / 한자 고리 느리게 / 모든 광선은 맵 끝에서 끝까지 / 보스 오르내림
+test('on phones the bullets are drawn bigger but hit like on PC (live game)',()=>{
+ const pc=a.createRun({difficulty:'gentle',seed:1,entranceAll:true}),ph=a.createRun({difficulty:'gentle',seed:1,entranceAll:true,compact:true});
+ a.spawn?0:0;pc.n=0;ph.n=0;for(const s of [pc,ph]){s.bsize[0]=0;s.bx[0]=10;s.by[0]=10;s.n=1;}
+ assert(ph.sizeScale>pc.sizeScale,'drawn bigger');assert(Math.abs(a.bulletRadius(ph,0)-a.bulletRadius(pc,0))<1e-9,'same hit radius');
+});
+test('no new bullets while the hexagram or the hanja rings are up; every live laser is a full edge-to-edge line',()=>{
+ for(const d of DIFFS){const s=a.createRun({difficulty:d,seed:3,segment:a.SEGMENTS.findIndex(g=>g.spell&&g.stage>=3),entranceAll:true});toCard(s);let calmTicks=0,bornInCalm=0,lasers=0;
+  for(let i=0;i<3000&&s.stage==='card';i++){s.player.invulnerableUntil=s.tick+999;s.boss.hp=s.boss.maxHp;const before=s.n;a.step(s,{dx:0,dy:0});
+   if(s.calm){calmTicks++;for(let k=0;k<s.n;k++)if(s.bage[k]===1&&!s.bfragment[k]&&!s.bmirror[k])bornInCalm++;}
+   for(const l of s.lasers){if(l.age===1){lasers++;assert(l.full||l.floor,d+' full line');assert(!l.follow||l.full);}}h.clear(s);}
+  assert(calmTicks>0,d+' saw a hexagram or rings');assert.equal(bornInCalm,0,d+' no bullets born under the figure');}
 });
