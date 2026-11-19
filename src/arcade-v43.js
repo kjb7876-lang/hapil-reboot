@@ -1857,7 +1857,7 @@
       if(seg.spell&&left<=10&&left>0&&s.segTick%60===0)note(s,left<=3?'countdownLast':'countdown');
     }
     themed(s);updateMobs(s);updateShots(s);focusSkill(s);
-    if(s.stage==='card'&&s.entranceAll&&!s.cardEnding&&(b.hp<=0||timeLeft(s)===0))beginCardEnding(s,b.hp<=0);
+    if(s.stage==='card'&&s.entranceAll&&!s.cardEnding&&b.hp<=0)beginCardEnding(s,true); // 시간이 다 된 카드는 쓰러짐이 아니라 그대로 넘어간다(남은 탄은 breakWipe가 밖으로 내보낸다)
     else if(s.stage==='card'&&s.entranceAll&&s.cardEnding){if(s.boss.hp<0)s.boss.hp=0;if(cardEndingDone(s))endCard(s,s.cardEnding.defeated);}
     else if(s.stage==='card'&&b.hp<=0)endCard(s,true);
     else if(s.stage==='card'&&timeLeft(s)===0)endCard(s,false);
