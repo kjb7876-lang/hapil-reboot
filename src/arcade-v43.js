@@ -206,7 +206,7 @@
     if(eligible)s.orbSerial++;
     s.bbreakable[i]=eligible&&(o.breakable===true||o.breakable!==false&&(s.orbSerial-1)%ORB_BREAK_EVERY===0)?1:0;
     s.bhp[i]=s.bbreakable[i]?hp:0;s.bfragment[i]=o.fragment?1:0;s.bformation[i]=o.formation?1:0;s.bgrace[i]=o.grace||BLOOM_TICKS;
-    s.bage[i]=0;s.blife[i]=o.life||780;s.bsize[i]=size;s.bcolor[i]=o.color||0;s.bgrazed[i]=0;s.bexit[i]=0;s.bbounce[i]=size===SHAPE_PROP?0:o.bounce||0;
+    s.bage[i]=0;s.blife[i]=o.life||780;s.bsize[i]=size;s.bcolor[i]=o.color||0;s.bgrazed[i]=0;s.bexit[i]=0;s.bmirror[i]=o.mirror?1:0;s.bbounce[i]=size===SHAPE_PROP?0:o.bounce||0;
     s.bspin[i]=size===SHAPE_PROP&&PROPS[o.color||0].upright?0:o.spin||0;
   }
   function ring(s,x,y,n,speed,offset,o){for(var i=0;i<n;i++)spawn(s,x,y,offset+TAU*i/n,speed,o);}
@@ -703,7 +703,7 @@
     if(Number.isInteger(options.stages)&&options.stages>0)s.lastStage=Math.min(STAGES.length-1,s.stageIndex+options.stages-1);
     ['bx','by','ba','bs','bturn','bacc','bmin','bmax','barg','bs2','bspin','bhp'].forEach(function(k){s[k]=new Float32Array(CAP);});
     ['bage','blife','bat','bgrace'].forEach(function(k){s[k]=new Uint16Array(CAP);});
-    ['bsize','bcolor','bgrazed','bmode','bgen','bbounce','bbreakable','bfragment','bformation','bexit'].forEach(function(k){s[k]=new Uint8Array(CAP);});s.figures=[];s.ripples=[];s.floor=freshFloor(s,s.stageIndex);
+    ['bsize','bcolor','bgrazed','bmode','bgen','bbounce','bbreakable','bfragment','bformation','bexit','bmirror'].forEach(function(k){s[k]=new Uint8Array(CAP);});s.figures=[];s.ripples=[];s.floor=freshFloor(s,s.stageIndex);
     s.sx=new Float32Array(SHOT_CAP);s.sy=new Float32Array(SHOT_CAP);s.svx=new Float32Array(SHOT_CAP);s.shoming=new Uint8Array(SHOT_CAP);
     var from=s.stageIndex;if(options.growth&&from>0){/* 화면이 켜 준 경우만(검사·연습용 구간 시작은 1단계 그대로) */var pf=Math.min(5,1+Math.floor(from/6)),bf=Math.min(5,1+Math.floor(from/8));s.exp=POWER_EXP[pf-1];s.power=pf;s.fills=BOMB_FILLS[bf-1];s.bombLevel=bf;}
     if(options.grown){var ge=+options.grown.exp,gf=+options.grown.fills;if(ge>s.exp){s.exp=ge;s.power=levelOf(POWER_EXP,ge);}if(gf>s.fills){s.fills=gf;s.bombLevel=levelOf(BOMB_FILLS,gf);}} // 중간 저장에서 이어 하면 그때까지 자란 단계 그대로(11-16 실검증: 이어하기 뒤 필살 단계가 내려가던 문제)
@@ -716,7 +716,7 @@
   function removeBullet(s,i){
     var j=--s.n;if(i===j)return;
     s.bx[i]=s.bx[j];s.by[i]=s.by[j];s.ba[i]=s.ba[j];s.bs[i]=s.bs[j];s.bturn[i]=s.bturn[j];s.bacc[i]=s.bacc[j];s.bmin[i]=s.bmin[j];s.bmax[i]=s.bmax[j];s.barg[i]=s.barg[j];s.bs2[i]=s.bs2[j];s.bspin[i]=s.bspin[j];s.bhp[i]=s.bhp[j];
-    s.bage[i]=s.bage[j];s.blife[i]=s.blife[j];s.bat[i]=s.bat[j];s.bsize[i]=s.bsize[j];s.bcolor[i]=s.bcolor[j];s.bgrazed[i]=s.bgrazed[j];s.bmode[i]=s.bmode[j];s.bgen[i]=s.bgen[j];s.bbounce[i]=s.bbounce[j];s.bbreakable[i]=s.bbreakable[j];s.bfragment[i]=s.bfragment[j];s.bformation[i]=s.bformation[j];s.bgrace[i]=s.bgrace[j];s.bexit[i]=s.bexit[j];
+    s.bage[i]=s.bage[j];s.blife[i]=s.blife[j];s.bat[i]=s.bat[j];s.bsize[i]=s.bsize[j];s.bcolor[i]=s.bcolor[j];s.bgrazed[i]=s.bgrazed[j];s.bmode[i]=s.bmode[j];s.bgen[i]=s.bgen[j];s.bbounce[i]=s.bbounce[j];s.bbreakable[i]=s.bbreakable[j];s.bfragment[i]=s.bfragment[j];s.bformation[i]=s.bformation[j];s.bgrace[i]=s.bgrace[j];s.bexit[i]=s.bexit[j];s.bmirror[i]=s.bmirror[j];
   }
   // 화면의 탄과 광선을 모두 지우고, 지운 탄 자리를 연출용으로 남긴다(최대 320개). 지운 탄 수를 돌려준다.
   function cancelAll(s,drift){
@@ -876,7 +876,7 @@
     if(!s.entranceAll||t<=0||t%(MIRROR_EVERY[s.difficulty]||330)!==150||s.figures.length||s.lasers.length>2)return; // 문양·광선이 떠 있을 때는 얹지 않는다(겹침 자제)
     var b=s.boss,lvl=s.difficulty==='gentle'?0:s.difficulty==='normal'?1:2,per=[2,3,3][lvl],side,k,a=ACTORS[b.actor]||{},c=a.c2===undefined?(a.c1||0):a.c2;
     for(side=-1;side<=1;side+=2)for(k=0;k<per;k++){var ang=Math.PI/2+side*(.62+k*.17),bounce=lvl===0?1:lvl===2?2:1+((k+(t/330|0))%2);
-      spawn(s,b.x+side*18,b.y+12,ang,[70,80,86][lvl],{color:c,size:0,bounce:bounce});}
+      spawn(s,b.x+side*18,b.y+12,ang,[70,80,86][lvl],{color:c,size:0,bounce:bounce,mirror:1});}
   }
   function endCard(s,defeated){
     s.cardEnding=null;

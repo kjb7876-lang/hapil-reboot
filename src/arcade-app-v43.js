@@ -1342,6 +1342,10 @@
     ctx.beginPath();ctx.moveTo(x-r*.45,y-r);ctx.lineTo(x+r*.2,y-r*.3);ctx.lineTo(x-r*.25,y+r*.1);ctx.lineTo(x+r*.45,y+r);
     ctx.strokeStyle='#29190c';ctx.lineWidth=4;ctx.stroke();ctx.strokeStyle='#f0c46b';ctx.lineWidth=1.6;ctx.stroke();ctx.restore();
   }
+  /* 반사탄(사용자 11-19 "일반 탄과 잘 구별되게 2-3겹 원형으로 만들어서 한번 튕길때 한겹씩 없어지게"): 남은 튕김 횟수만큼 바깥에 먹 고리를 두른다.
+     2번 튕기는 탄 = 몸 + 고리 2개(3겹), 튕길 때마다 바깥 고리가 하나씩 사라지고, 마지막엔 몸 하나로 밖으로 나간다. 고리는 한지 테 위 먹 선이라 일반 탄(테 하나)과 갈린다. 그리기만, 판정 그대로 */
+  function drawMirrorRings(s,i,x,y){var r=Arcade.SIZE_RADIUS[s.bsize[i]]*(s.sizeScale||1)*(SMALL_GROW[s.bsize[i]]||1),n=s.bbounce[i],k,ink=Ink?'#1e1a18':'#e8f6ff',paper=Ink?'#f2e9d6':'#0a0f1c';
+    ctx.save();ctx.globalAlpha=1;for(k=1;k<=n;k++){var rr=r+3.2*k+1;ctx.lineWidth=3.4;ctx.strokeStyle=paper;ctx.beginPath();ctx.arc(x,y,rr,0,TAU);ctx.stroke();ctx.lineWidth=1.6;ctx.strokeStyle=ink;ctx.beginPath();ctx.arc(x,y,rr,0,TAU);ctx.stroke();}ctx.restore();}
   function drawBullets(s){
     var bloom=Arcade.BLOOM_TICKS,i,o,half,size,x,y,variant=skinVariant(s);
     for(i=0;i<s.n;i++){
@@ -1351,6 +1355,7 @@
       var skin=bulletSkin(s,i,variant);
       if(skin||size===SHAPE_RICE)drawOrientedBullet(s,i,skin?skinOfBullet(skin,s.bcolor[i],size):o,skin,1);
       else ctx.drawImage(o.image,x-half,y-half,half*2,half*2);
+      if(s.bmirror&&s.bmirror[i]&&s.bbounce[i]&&!gone)drawMirrorRings(s,i,x,y);
       ctx.globalAlpha=1;
       drawBreakableMark(s,i);
     }
