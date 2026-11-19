@@ -915,6 +915,15 @@
     if(defeated&&(b.leaving||s.stage==='won')){b.down={actor:who,x:dx,y:dy,tick:s.tick};note(s,'bossDown');}
   }
   var BOSS_DESCEND=342,DESCEND_HOLD=420;
+  // 헬: 보스가 내려와 탄을 못 내는 동안 화면이 비지 않게 맵 끝에서 끝까지 닿는 가로·세로 광선을 판 가장자리에서 깐다(보스는 여전히 탄을 내지 않는다, 실플레이 심사 11-19)
+  var CALM_LASER_EVERY=84,CALM_LASER_FIRST=12;
+  function calmLaser(s){
+    if(!s.calm||s.difficulty!=='hell'||s.cardEnding||!s.boss.present){s.calmT=0;return;}
+    var t=s.calmT=(s.calmT||0)+1;if(t<CALM_LASER_FIRST||(t-CALM_LASER_FIRST)%CALM_LASER_EVERY)return;
+    var a=ACTORS[s.boss.actor],c=a&&a.c2!==WHITE&&a.c2!==RED?a.c2:CYAN,k=((t-CALM_LASER_FIRST)/CALM_LASER_EVERY)|0;
+    if(k%2===0)slots(s,3,W,18).forEach(function(x){column(s,x,{width:BEAM_MIN,warn:62,active:56,color:c});});
+    else for(var i=0;i<2;i++)row(s,380+i*120+rand(s)*50,{width:BEAM_MIN,warn:62,active:56,color:c});
+  }
   function bossDescends(s){for(var i=0;i<s.figures.length;i++){var f=s.figures[i];if((f.sigil||f.kind==='runes')&&f.age<f.warn+f.active)return true;}return false;}
   function moveBoss(s){
     var b=s.boss;if(!b.present)return;
@@ -944,6 +953,8 @@
   }
   function refireEvery(s,every){var d=s.difficulty==='gentle'?0:2,base=every||MOB_REFIRE[d];
     return Math.max(12,Math.round(s.n<WAVE_FLOOR[d]?base*.4:s.n>WAVE_CEIL[d]?base*2.5:base));}
+  var MOB_BELOW_SPEED=2.6;
+  function belowHero(s,m){return s.entranceAll&&!m.rise&&m.vy>0&&m.y>s.player.y+12;}
   function pastMobExit(m){
     // 대열 뒤쪽은 화면 밖에서 출발할 수 있다. 자기 진행 방향의 출구를 지난 개체만 뺀다.
     return m.y>H+MOB_EXIT_MARGIN || (m.vy<0&&m.y<-MOB_EXIT_MARGIN) ||
@@ -962,7 +973,7 @@
         else{
           var length=Math.hypot(m.vx,m.vy);
           if(length){
-            var scale=Math.max(2.6,length*1.7)/length;
+            var scale=Math.max(2.6,length*(belowHero(s,m)?MOB_BELOW_SPEED:1.7))/length;
             m.baseX+=m.vx*scale;m.y+=m.vy*scale;
             m.x=m.baseX+(m.sway?Math.sin(m.age*m.swayRate)*m.sway*22:0);
           }else m.y+=2.6;
@@ -978,7 +989,7 @@
       }else{
         // 진입은 대본 속도 그대로. 플레이어가 겨눌 수 있는 상단을 지날 때만 진행 속도를 늦춘다.
         var engage=formation&&!m.rise&&m.baseX>=0&&m.baseX<=W&&m.y>=24&&m.y<300;
-        var speed=engage?MOB_ENGAGE_SPEED:1;
+        var speed=engage?MOB_ENGAGE_SPEED:belowHero(s,m)?MOB_BELOW_SPEED:1; // 영웅보다 아래로 내려간 몹은 가던 방향 그대로 빨리 빠져나간다(실플레이 심사 11-19)
         m.baseX+=m.vx*speed;m.y+=m.vy*speed;m.x=m.baseX+(m.sway?Math.sin(m.age*m.swayRate)*m.sway*22:0);
         // 화면 위쪽에 있을 때만 쏜다(영웅 코앞 기습 방지).
         inRange=(m.y<300||m.rise&&m.y<H-30&&Math.abs(m.x-s.player.x)>40)&&m.y>0;
@@ -1870,7 +1881,7 @@
     }
     if(input&&input.bomb)useBomb(s);
     bombPulse(s);
-    var seg=segment(s),b=s.boss;s.calm=s.entranceAll&&s.stage==='card'&&(bossDescends(s)||b.present&&b.y>BOSS_REST+BOSS_SWAY+CALM_BELOW);
+    var seg=segment(s),b=s.boss;s.calm=s.entranceAll&&s.stage==='card'&&(bossDescends(s)||b.present&&b.y>BOSS_REST+BOSS_SWAY+CALM_BELOW);calmLaser(s);
     if(s.stage==='break'){if(s.stageTick>=(s.paced?24:BREAK_TICKS)){if(seg&&seg.kind==='card'&&b.present)beginCard(s);else advance(s);}}
     else if(s.stage==='intro'){
       if(!b.present)enter(s,seg.actor);
@@ -1969,7 +1980,7 @@
     function totalStars(p){var n=0;Object.keys(p.stars).forEach(function(k){n+=p.stars[k];});return n;}
     return {fresh:fresh,sanitize:sanitize,record:record,unlocked:unlocked,canPlay:canPlay,resume:resume,totalStars:totalStars};
   })();
-  var api={revision:43,CARD_ENDING_MAX:CARD_ENDING_MAX,CARD_MIN:CARD_MIN,DESCEND_HOLD:DESCEND_HOLD,LIVE_FAST:LIVE_FAST,BEAM_MIN:BEAM_MIN,FAN_APEX:FAN_APEX,CALM_BELOW:CALM_BELOW,BOSS_REST:BOSS_REST,BOSS_SWAY:BOSS_SWAY,WALL_KICK_Y:WALL_KICK_Y,CARD_DOWN_MAX:CARD_DOWN_MAX,EXIT_TURN:EXIT_TURN,WAVE_LINGER:WAVE_LINGER,LAYER_CAP:LAYER_CAP,layersBut:layersBut,phraseLen:phraseLen,flushBullets:flushBullets,heroProfile:heroProfile,bombName:bombName,isCinematicBoss:isCinematicBoss,nextSegmentIndex:nextSegmentIndex,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
+  var api={revision:43,CARD_ENDING_MAX:CARD_ENDING_MAX,CARD_MIN:CARD_MIN,DESCEND_HOLD:DESCEND_HOLD,LIVE_FAST:LIVE_FAST,BEAM_MIN:BEAM_MIN,FAN_APEX:FAN_APEX,CALM_BELOW:CALM_BELOW,CALM_LASER_EVERY:CALM_LASER_EVERY,MOB_BELOW_SPEED:MOB_BELOW_SPEED,BOSS_REST:BOSS_REST,BOSS_SWAY:BOSS_SWAY,WALL_KICK_Y:WALL_KICK_Y,CARD_DOWN_MAX:CARD_DOWN_MAX,EXIT_TURN:EXIT_TURN,WAVE_LINGER:WAVE_LINGER,LAYER_CAP:LAYER_CAP,layersBut:layersBut,phraseLen:phraseLen,flushBullets:flushBullets,heroProfile:heroProfile,bombName:bombName,isCinematicBoss:isCinematicBoss,nextSegmentIndex:nextSegmentIndex,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     PACING:PACING,stageTargetSeconds:stageTargetSeconds,plannedSegments:plannedSegments,pacingReport:pacingReport,waveDuration:waveDuration,cardDuration:cardDuration,cardHp:cardHp,SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_REAIM:MODE_REAIM,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,MODE_BRANCH:MODE_BRANCH,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,PROP_LONG:PROP_LONG,propHitPoints:propHitPoints,propRenderSpan:propRenderSpan,bulletRenderSpan:bulletRenderSpan,BULLET_BREAK_MIN_SPAN:BULLET_BREAK_MIN_SPAN,isBulletBreakable:isBulletBreakable,ORB_HP:ORB_HP,ORB_BREAK_EVERY:ORB_BREAK_EVERY,ORB_FRAGMENT_COUNT:ORB_FRAGMENT_COUNT,ORB_FRAGMENT_GRACE:ORB_FRAGMENT_GRACE,ORB_FRAGMENT_SPEED:ORB_FRAGMENT_SPEED,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
     BOSS_ENTRANCE_GRACE:BOSS_ENTRANCE_GRACE,BOSS_ENTRANCE_SPEECH:BOSS_ENTRANCE_SPEECH,BOSS_CLEAR_TICKS:BOSS_CLEAR_TICKS,prepareBossEntrance:prepareBossEntrance,phaseOf:phaseOf,phaseKind:phaseKind,entrancePhase:entrancePhase,skipEntrance:skipEntrance,ENTRANCE_CUTIN:ENTRANCE_CUTIN,BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,figureSegments:figureSegments,figurePhase:figurePhase,FIGURE_ON_TICKS:FIGURE_ON_TICKS,FIGURE_OFF_TICKS:FIGURE_OFF_TICKS,FIGURE_CHARGE_TICKS:FIGURE_CHARGE_TICKS,RUNE_AT:RUNE_AT,RISER_HP:RISER_HP,RISER_SCORE:RISER_SCORE,riserHp:riserHp,shotHitsRiser:shotHitsRiser,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,BOSS_DESCEND:BOSS_DESCEND,SP_START:SP_START,spStart:function(s){return s.sp?s.sp.start:SP_START;},SP_CYCLE:SP_CYCLE,SP_LEAD:SP_LEAD,SP_BEAT:SP_BEAT,SP_LAYBACK:SP_LAYBACK,SP_LEN:SP_LEN,SP_KINDS:SP_KINDS,SP_ORDER:SP_ORDER,spitMotif:spitMotif,SPIT_FORM:SPIT_FORM,SP_INFO:SP_INFO,CAMP_HALF:CAMP_HALF,CAMP_NEED:CAMP_NEED,spWindow:spWindow,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
     POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,DESCEND_AGE:DESCEND_AGE,DESCEND_Y:DESCEND_Y,FOCUS_SKILL_CHANCE:FOCUS_SKILL_CHANCE,FOCUS_SKILL_GAP:FOCUS_SKILL_GAP,SWORD_DELAY:SWORD_DELAY,SWORD_POWER:SWORD_POWER,REVERSAL_POWER:REVERSAL_POWER,FOCUS_SLOW:FOCUS_SLOW,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,BOMB_PULSES:BOMB_PULSES,BOMB_PULSE_START:BOMB_PULSE_START,BOMB_PULSE_EVERY:BOMB_PULSE_EVERY,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp};

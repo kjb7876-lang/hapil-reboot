@@ -196,9 +196,10 @@
   /* 스테이지마다 중간 구슬탄(크기 1)에 입히는 겉모양. 판정 원은 그대로이고 그림만 바뀐다. 동방식 탄막처럼 종류마다 실루엣이 달라 패턴이 서로 다르게 읽힌다. */
   var STAGE_BULLET_SKINS=['','star','scale','dagger','talisman'],skinSprites={};
   function skinVariant(s){var i=s.stageIndex|0;return STAGE_BULLET_SKINS[(i+Math.floor(i/5))%STAGE_BULLET_SKINS.length];} // 이웃 스테이지끼리 겹치지 않게 돌린다
+  var STAR_U=1.4; // 별꼴은 뾰족한 끝이 판정보다 훨씬 커 보여 과밀해 보였다: 그림만 줄인다(노멀 31 실플레이 심사 11-19)
   function buildSkin(kind,radius,color,tint){
     var compactShape=kind==='nib'||kind==='hook'||kind==='split'||kind==='facet';
-    var u=radius*(compactShape?1.35:1.9),reach=u*1.5,c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale;
+    var u=radius*(compactShape?1.35:kind==='star'?STAR_U:1.9),reach=u*1.5,c=offscreen(reach*2*scale,reach*2*scale),g=c.getContext('2d'),m=reach*scale;
     g.translate(m,m);g.scale(scale,scale);
     var glow=g.createRadialGradient(0,0,radius*.6,0,0,reach);var hs=tint&&tint!==color?mix(color,tint,.55):color;glow.addColorStop(0,hs+haloOf(color,Ink?'24':'66')); // 수묵: 도형 탄 번짐이 겹겹이 쌓여 탁해지지 않게 옅게(PR 118 심사)glow.addColorStop(1,hs+'00');if(!lite){g.fillStyle=glow;g.fillRect(-reach,-reach,reach*2,reach*2);}
     var body=g.createLinearGradient(-u,-u,u,u);body.addColorStop(0,mix(color,'#ffffff',.6));body.addColorStop(.5,color);body.addColorStop(1,mix(tint&&tint!==color?mix(color,tint,.6):color,'#000000',.35));
