@@ -798,8 +798,8 @@
   function fillGauge(s){while(s.gauge>=GAUGE_FULL){s.gauge-=GAUGE_FULL;s.fills++;var bl=levelOf(BOMB_FILLS,s.fills);if(bl>s.bombLevel){s.bombLevel=bl;note(s,'bombLevelUp');}if(s.bombs<MAX_BOMBS){s.bombs++;note(s,'bombGain');}}}
   /* 동방식 점수 순환(2026-11-20): 스침이 쌓일수록 하트 한 개의 값이 오르고(pointValue), 수집선(AUTO_COLLECT_Y) 위에서 거두면 그 값을 다 받는다.
      선 아래에서는 높이에 따라 30%~100%. 화면은 s.gets(x,y,값,최대?)로 받은 값을 띄운다(최대값은 금빛). 원작의 수치·그림이 아니라 '위험을 무릅쓰면 값이 오른다'는 원리만 가져왔다. */
-  var POINT_BASE=500,POINT_PER_GRAZE=10,POINT_MAX=5000,POINT_LOW=.3,GETS_CAP=40;
-  function pointValue(s){return Math.min(POINT_MAX,POINT_BASE+(s.graze||0)*POINT_PER_GRAZE);}
+  var POINT_BASE=500,POINT_PER_STAGE=150,POINT_PER_GRAZE=10,POINT_MAX=9990,POINT_LOW=.3,GETS_CAP=40;
+  function pointValue(s){return Math.min(POINT_MAX,POINT_BASE+(s.stageIndex||0)*POINT_PER_STAGE+(s.graze||0)*POINT_PER_GRAZE);} // 뒤 스테이지일수록 기본값이 크다(봉인 보너스가 스테이지에 비례해 커지는 것과 발을 맞춘다)
   function heartWorth(s,y){var k=Math.max(0,Math.min(1,(H-y)/(H-AUTO_COLLECT_Y)));return Math.round(pointValue(s)*(POINT_LOW+(1-POINT_LOW)*k)/10)*10;}
   /* 봉인 보너스(스펠 보너스): 이름 붙은 패턴을 맞지 않고 필살기 없이 넘기면 받는다. 처음 값에서 시작해 SPELL_DECAY_FROM초 뒤부터 SPELL_DECAY_OVER초에 걸쳐
      1/3까지 줄어든다(빨리 끝낼수록 크다). 실제 게임은 페이즈 최소 시간(CARD_MIN) 동안 보스가 쓰러지지 않으므로 그 시간이 지난 뒤부터 줄기 시작한다. */
