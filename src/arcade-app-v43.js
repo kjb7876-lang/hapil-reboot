@@ -1342,18 +1342,33 @@
     ctx.beginPath();ctx.moveTo(x-r*.45,y-r);ctx.lineTo(x+r*.2,y-r*.3);ctx.lineTo(x-r*.25,y+r*.1);ctx.lineTo(x+r*.45,y+r);
     ctx.strokeStyle='#29190c';ctx.lineWidth=4;ctx.stroke();ctx.strokeStyle='#f0c46b';ctx.lineWidth=1.6;ctx.stroke();ctx.restore();
   }
+  /* 반사탄(사용자 11-19 "일반 탄과 잘 구별되게 2-3겹 원형으로 만들어서 한번 튕길때 한겹씩 없어지게"): 남은 튕김 횟수만큼 바깥에 먹 고리를 두른다.
+     2번 튕기는 탄 = 몸 + 고리 2개(3겹), 튕길 때마다 바깥 고리가 하나씩 사라지고, 마지막엔 몸 하나로 밖으로 나간다. 고리는 한지 테 위 먹 선이라 일반 탄(테 하나)과 갈린다. 그리기만, 판정 그대로 */
+  /* 심사 반영(7전문가 6.86 → 고침): 고리는 굵기가 변하고 끊기는 붓 선, 간격은 넓게, 바깥 고리일수록 옅게(판정보다 커 보이지 않게).
+     보스 근처에서도 반사탄은 덜 흐리게, 튕긴 순간엔 벗겨진 고리가 번지며 흩어진다 */
+  var ringBursts=[];
+  function brushRing(x,y,rr,seed,w,ink,paper,alpha){var segs=3,k,a,span;ctx.globalAlpha=alpha;for(k=0;k<segs;k++){a=seed+k*TAU/segs;span=TAU/segs-.42;
+      ctx.lineCap='round';ctx.lineWidth=w+2.2;ctx.strokeStyle=paper;ctx.beginPath();ctx.arc(x,y,rr,a,a+span);ctx.stroke();
+      ctx.strokeStyle=ink;ctx.lineWidth=w;ctx.beginPath();ctx.arc(x,y,rr,a,a+span*.55);ctx.stroke();ctx.lineWidth=w*.55;ctx.beginPath();ctx.arc(x,y,rr,a+span*.5,a+span);ctx.stroke();}}
+  function mirrorInk(){return{ink:Ink?'#1e1a18':'#e8f6ff',paper:Ink?'#f2e9d6':'#0a0f1c'};}
+  function drawMirrorRings(s,i,x,y){var r=Arcade.SIZE_RADIUS[s.bsize[i]]*(s.sizeScale||1)*(SMALL_GROW[s.bsize[i]]||1),n=s.bbounce[i],k,c=mirrorInk(),seed=(i*1.7+s.tick*.035)%TAU;
+    ctx.save();for(k=1;k<=n;k++)brushRing(x,y,r+4.6*k+.5,seed+k*.9,k===1?1.9:1.5,c.ink,c.paper,k===1?1:.62);ctx.restore();}
+  function drawRingBursts(s){var h=s.mirrorHits,i,b,c=mirrorInk();if(h&&h.length){for(i=0;i<h.length;i++){b=h[i];ringBursts.push({x:b.x,y:b.y,r:Arcade.SIZE_RADIUS[b.size]*(s.sizeScale||1)*(SMALL_GROW[b.size]||1)+4.6*(b.left+1)+.5,t:0});}h.length=0;}
+    if(!ringBursts.length)return;ctx.save();for(i=ringBursts.length-1;i>=0;i--){b=ringBursts[i];b.t++;if(b.t>18){ringBursts.splice(i,1);continue;}var f=b.t/18;brushRing(b.x,b.y,b.r+10*f,f*1.3,1.6*(1-f)+.4,c.ink,c.paper,.8*(1-f));}ctx.restore();}
   function drawBullets(s){
     var bloom=Arcade.BLOOM_TICKS,i,o,half,size,x,y,variant=skinVariant(s);
     for(i=0;i<s.n;i++){
       x=s.bx[i];y=s.by[i];if(s.bage[i]<bloom||x!==x||y!==y)continue;
       size=s.bsize[i];if(size===SHAPE_PROP){drawProp(s,i,1,1);drawBreakableMark(s,i);continue;}
-      o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;half=o.half;var faint=nearBoss(s,x,y)||nearMob(s,x,y),grace=s.bfragment&&s.bfragment[i]&&s.bage[i]<s.bgrace[i];var gone=s.bexit&&s.bexit[i];ctx.globalAlpha=gone?.36:grace?.28+.2*s.bage[i]/s.bgrace[i]:faint?.38:1; // 나가는 탄(판정 없음)은 반투명
+      o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;half=o.half;var faint=nearBoss(s,x,y)||nearMob(s,x,y),grace=s.bfragment&&s.bfragment[i]&&s.bage[i]<s.bgrace[i];var gone=s.bexit&&s.bexit[i];var mir=s.bmirror&&s.bmirror[i];ctx.globalAlpha=gone?.36:grace?.28+.2*s.bage[i]/s.bgrace[i]:faint?(mir?.72:.38):1; // 나가는 탄(판정 없음)은 반투명
       var skin=bulletSkin(s,i,variant);
       if(skin||size===SHAPE_RICE)drawOrientedBullet(s,i,skin?skinOfBullet(skin,s.bcolor[i],size):o,skin,1);
       else ctx.drawImage(o.image,x-half,y-half,half*2,half*2);
+      if(s.bmirror&&s.bmirror[i]&&s.bbounce[i]&&!gone)drawMirrorRings(s,i,x,y);
       ctx.globalAlpha=1;
       drawBreakableMark(s,i);
     }
+    drawRingBursts(s);
     // 갓 피어나는 탄: 크고 옅게 시작해 제 크기로 조여 든다(이때는 닿지 않는다).
     for(i=0;i<s.n;i++){
       var age=s.bage[i];x=s.bx[i];y=s.by[i];if(age>=bloom||x!==x||y!==y)continue;
