@@ -10,12 +10,13 @@ const axis=l=>Math.abs(Math.sin(l.angle))<1e-6||Math.abs(Math.cos(l.angle))<1e-6
 test('laser special: square frame and diagonal X are never live together, and no special beam outlives the phase',()=>{
  let windows=0,xs=0;
  for(const d of ['gentle','normal','hell'])for(const s of laserRuns(d)){
-  let was=false;
-  for(let i=0;i<a.SP_LEAD+a.SP_LEN[d]+40&&s.stage==='card';i++){s.player.invulnerableUntil=s.tick+999;s.boss.hp=s.boss.maxHp;a.step(s,{dx:0,dy:0});
+  let was=false,after=false;
+  for(let i=0;i<a.SP_LEAD+a.SP_LEN[d]+400&&s.stage==='card';i++){s.player.invulnerableUntil=s.tick+999;s.boss.hp=s.boss.maxHp;a.step(s,{dx:0,dy:0});
    const on=s.special&&s.special.kind==='laser';
    if(on){const sq=s.lasers.filter(l=>live(l)&&axis(l)&&l.active>=90),x=s.lasers.filter(l=>live(l)&&!axis(l)&&Math.abs(Math.abs(Math.tan(l.angle))-1)<1e-6);
     if(x.length)xs++;assert(!(sq.length&&x.length),`${d} stage ${s.stageIndex}: square and X overlap at tick ${s.tick}`);}
-   if(was&&!on){windows++;const left=s.lasers.filter(l=>l.age>2&&l.age<=l.warn+l.active);assert.equal(left.length,0,`${d} stage ${s.stageIndex}: ${left.length} special beams still alive when normal fire resumes`);}
+   if(was&&!on)after=true;
+   if(after&&s.n>0){windows++;after=false;const left=s.lasers.filter(l=>l.age>2&&l.age<=l.warn+l.active);assert.equal(left.length,0,`${d} stage ${s.stageIndex}: ${left.length} special beams still alive when normal fire resumes`);}
    was=!!on;h.clear(s);}
  }
  assert(windows>=3,'windows '+windows);assert(xs>0,'saw the X at least once');

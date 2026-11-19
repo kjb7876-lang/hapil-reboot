@@ -1701,7 +1701,7 @@
     if(local>=SP_LEAD+len)return null;
     return {cycle:cycle,local:local,len:len,active:local>=SP_LEAD,kind:SP_ORDER[(s.stageIndex*3+s.seg+cycle)%SP_ORDER.length]};
   }
-  function spQuiet(s){return !!spWindow(s);}
+  function spQuiet(s){return !!spWindow(s)||!!(s.sp&&s.sp.tail>s.tick&&s.stage==='card');}
   function spLvl(s){return s.difficulty==='gentle'?0:s.difficulty==='normal'?1:2;}
   function spRisers(s){var n=0;if(s.risers)for(var i=0;i<s.risers.length;i++)if(!s.risers[i].fade)n++;return n;}
   function spFloor(s){var F=s.floor;if(!F||F.stage!==s.stageIndex)F=s.floor=freshFloor(s,s.stageIndex);return F;}
@@ -1743,8 +1743,8 @@
   function spAct(s,n){
     var k=s.sp.cur,pos=n%8,bar=n>>3,lvl=spLvl(s),b=s.boss,p=s.player,a=ACTORS[b.actor]||{},c1=a.c1===undefined?0:a.c1,c2=a.c2===undefined?c1:a.c2,i,sp=s.sp;
     if(k==='laser'){
-      // 페이즈 끝에 남은 광선이 다시 시작된 일반 탄과 겹치지 않게(심사 11-18): 예고+발사가 이 페이즈 안에 끝나지 않을 광선은 내지 않는다
-      var rem=(SP_LEN[s.difficulty]||SP_LEN.normal)-n*SP_BEAT-SP_LAYBACK[s.difficulty]-8,beam=function(st,x,y,a,o){if(Math.round(o.warn*s.rules.warn)+o.active<=rem)return beamRaw(st,x,y,a,o);if(o.sq)sp.sq=null;return null;};
+      // 페이즈 끝에 남은 광선이 다시 시작된 일반 탄과 겹치지 않게(심사 11-18): 마지막 광선이 꺼질 때까지 일반 사격 재개를 미룬다(spQuiet 꼬리)
+      var beam=function(st,x,y,a,o){var r=beamRaw(st,x,y,a,o);sp.tail=Math.max(sp.tail||0,st.tick+Math.round(o.warn*st.rules.warn)+o.active+BEAM_FADE);return r;};
       var motif=(bar+sp.cycle+s.stageIndex)%3;
       if(motif===0){ // 황금비 빗살
         if(pos%2===0){var open=[3,2,2][lvl],slots=6-open+1,k2=sp.combN=(sp.combN||0)+1,o=Math.floor(((k2/PHI+s.stageIndex*.37)%1)*slots);
