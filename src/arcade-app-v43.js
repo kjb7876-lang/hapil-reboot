@@ -1633,7 +1633,7 @@
     ctx.textBaseline='alphabetic';
     if(s.stage==='card'&&seg){
       ctx.fillStyle='rgba(255,255,255,.16)';ctx.fillRect(12,9,W-24,4);ctx.fillStyle=b.hp/b.maxHp<=.2?'#ff5a5a':color;ctx.fillRect(12,9,(W-24)*Math.max(0,Math.min(1,finite(b.hp/b.maxHp,0))),4);
-      var lp=s.entranceAll&&livePhase(s);if(lp&&lp.count>1){ctx.save();ctx.textAlign='right';ctx.font='600 12px '+SANS;ctx.fillStyle=Ink?'#3a2c22':'#f3e3b5';ctx.globalAlpha=.9;ctx.fillText((b.mid?'중간보스 ':'보스 ')+lp.no+' / '+lp.count+' 페이즈',W-12,30);ctx.restore();} // 사용자 11-19 "보스등 페이즈알수있게 지금이 몇인지 위쪽에간략히표시"
+      var lp=s.entranceAll&&livePhase(s);if(lp&&lp.count>1){var ptx=(b.mid?'중간보스 ':'보스 ')+lp.no+' / '+lp.count+' 페이즈';ctx.save();if(Ink&&Ink.raw)Ink.raw(1);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;ctx.font='700 12px '+SANS;var ptw=ctx.measureText(ptx).width+14;ctx.fillStyle='rgba(20,16,14,.78)';ctx.beginPath();if(ctx.roundRect)ctx.roundRect(W-12-ptw,18,ptw,19,9);else ctx.rect(W-12-ptw,18,ptw,19);ctx.fill();ctx.textAlign='right';ctx.fillStyle='#f6ead2';ctx.fillText(ptx,W-19,32);if(Ink&&Ink.raw)Ink.raw(-1);ctx.restore();} // 먹빛 띠 위 한지색 글자: 어떤 배경에서도 읽힌다 // 사용자 11-19 "보스등 페이즈알수있게 지금이 몇인지 위쪽에간략히표시"
       if(seg.spell){
         namePlate(seg.name);
         if(!s.entranceAll){ctx.textAlign='right';ctx.font='600 20px '+SANS;ctx.fillStyle=left<=10?'#ff6a6a':'#ffffff';ctx.fillText(left<10?left.toFixed(1):String(Math.ceil(left)),W-12,35);} // 실제 게임은 시간으로 끝나지 않으니(사용자 11-19) 남은 초를 띄우지 않는다
