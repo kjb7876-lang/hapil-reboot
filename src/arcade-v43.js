@@ -761,7 +761,7 @@
       seed:(options.seed>>>0)||1,rng:(options.seed>>>0)||1,tick:0,stage:'break',stageTick:BREAK_TICKS-30,seg:startSeg-1,segTick:0,stageIndex:SEGMENTS[startSeg].stage,spellNumber:0,
       player:{x:W/2,y:H-84,hp:rules.hp,maxHp:rules.hp,invulnerableUntil:0,r:rules.radius,focus:false},
       boss:{x:W/2,y:-60,targetX:W/2,targetY:132,hp:1,maxHp:1,actor:'',name:'',mid:false,hitTick:-99,leaving:false,present:false,down:null},
-      bossOnly:!!options.bossOnly,rushStage:SEGMENTS[startSeg].stage,bombs:rules.bombs,gauge:0,spellClean:false,captures:0,itemsTaken:0,lane:undefined,
+      bossOnly:!!options.bossOnly,spellOnly:!!(options.spellOnly&&SEGMENTS[startSeg].kind==='card'),spellSeg:startSeg,rushStage:SEGMENTS[startSeg].stage,bombs:rules.bombs,gauge:0,spellClean:false,captures:0,itemsTaken:0,lane:undefined,
       n:0,drifted:[],mobDrops:0,hearts:0,pieces:0,gets:[],lastCapture:null,dropped:0,peak:0,score:0,graze:0,hits:0,kills:0,cleared:0,timeouts:0,events:[],cancelled:[],pops:[],lasers:[],mobs:[],warned:false,sn:0,itemCount:0,
       lastStage:STAGES.length-1,lastWipe:-1e9,started:false,results:[],bombsUsed:0,autoBombs:0,distorts:0,orbsBroken:0,orbSerial:0,orbFragments:0,bombPulse:null,pulseInfo:null,noDistort:options.distort===false,drng:((((options.seed>>>0)||1)*2246822519)^0x9e3779b9)>>>0||7,power:1,exp:0,bombLevel:1,fills:0,hasteUntil:-1,zaps:[],skillFx:[],fsSwords:[],fsNext:0,fsLabelTick:-1e9,fsCasts:0,fsHits:0,frng:((((options.seed>>>0)||1)*3266489917)^0x85ebca6b)>>>0||11,lastBomb:null,mark:{tick:0,score:0,hits:0,bombs:0,captures:0,spells:0}};
     if(Number.isInteger(options.stages)&&options.stages>0)s.lastStage=Math.min(STAGES.length-1,s.stageIndex+options.stages-1);
@@ -826,7 +826,7 @@
      1/3까지 줄어든다(빨리 끝낼수록 크다). 실제 게임은 페이즈 최소 시간(CARD_MIN) 동안 보스가 쓰러지지 않으므로 그 시간이 지난 뒤부터 줄기 시작한다. */
   var SPELL_DECAY_FROM=20,SPELL_DECAY_OVER=40,SPELL_FLOOR=1/3,LIFE_PIECES=3;
   function spellBonusBase(card){return 20000+card.stage*5000;}
-  function spellBonus(s){var card=segment(s);if(!card||!card.spell||s.stage!=='card')return 0;
+  function spellBonus(s){var card=segment(s);if(!card||!card.spell||s.stage!=='card')return 0;if(s.bonusLock)return s.bonusLock; // 체력을 다 깎은 순간 값이 굳는다(외부 심사 11-20: 소진 뒤 17초 동안 줄던 것)
     var el=Math.max(0,s.segTick-cardFireDelay(s))/60,k=Math.max(0,Math.min(1,(el-SPELL_DECAY_FROM)/SPELL_DECAY_OVER));return Math.round(spellBonusBase(card)*(1-(1-SPELL_FLOOR)*k)/10)*10;}
   /* 봉인 조각: 봉인 LIFE_PIECES 번마다 목숨 하나를 되찾는다. 목숨이 가득이면 필살기 하나(그것도 가득이면 점수). */
   function gainPiece(s){s.pieces++;if(s.pieces<LIFE_PIECES)return;s.pieces-=LIFE_PIECES;var p=s.player;
@@ -880,6 +880,7 @@
   // 실제 진행과 보스의 마지막 카드 판정이 같은 계획을 읽는다. 체험/반복 생략/마지막 맵 제한도 여기서만 적용한다.
   function nextSegmentIndex(s){
     var at=s.seg+1;
+    if(s.spellOnly&&s.seg>=s.spellSeg)return SEGMENTS.length; // 스펠 연습(외부 심사 11-20 '방금 맞은 스펠 다시 연습'): 그 패턴 하나만 하고 끝난다
     // 보스 체험: 잡몹 구간을 건너뛰고, 고른 스테이지의 중간 보스와 보스만 싸운 뒤 끝난다.
     if(s.bossOnly){while(SEGMENTS[at]&&SEGMENTS[at].kind==='wave')at++;if(SEGMENTS[at]&&SEGMENTS[at].stage!==s.rushStage)at=SEGMENTS.length;}
     if(s.paced&&PACING[s.difficulty].skipRepeatedPlain){while(REPEATED_PLAIN[at])at++;}
@@ -946,7 +947,7 @@
   function enter(s,actor){var b=s.boss;b.actor=actor;b.name=ACTORS[actor].name;b.mid=!!segment(s).mid;b.present=true;b.leaving=false;b.x=W/2;b.y=-60;b.targetX=W/2;b.targetY=BOSS_REST;b.enteredTick=s.tick;s.stageTick=0;
     var e=s.bossEntrance;if(e&&e.segment===s.seg){e.enteredTick=s.tick;e.readyTick=s.tick+graceOf(s);}
     note(s,'entrance');}
-  function beginCard(s){var card=segment(s),b=s.boss;s.cardEnding=null;s.cardDown=0;s.phraseCard=0;spReset(s);b.maxHp=b.hp=cardHp(s,card);b.mid=!!card.mid;s.stage='card';s.stageTick=0;s.segTick=0;s.spellClean=!!card.spell;if(card.spell){s.spellNumber++;note(s,'card');}else note(s,'plain');}
+  function beginCard(s){var card=segment(s),b=s.boss;s.cardEnding=null;s.cardDown=0;s.downEnd=0;s.bonusLock=0;s.phraseCard=0;spReset(s);b.maxHp=b.hp=cardHp(s,card);b.mid=!!card.mid;s.stage='card';s.stageTick=0;s.segTick=0;s.spellClean=!!card.spell;if(card.spell){s.spellNumber++;note(s,'card');}else note(s,'plain');}
   /* 보스·중간보스는 패턴 도중에 쓰러지지 않는다(사용자 11-19 "패턴중에 보스및 중간보스가 죽지않도록 패턴끝나고 죽도록"): 체력이 다하거나 시간이 다하면
      새 공격을 멈추고(특수 페이즈도 끝), 화면 탄은 가속해 밖으로 내보내고, 이미 켜진 광선·문양이 제 수명대로 꺼진 뒤에야 쓰러짐(endCard)으로 넘어간다. 최대 CARD_ENDING_MAX틱. */
   var CARD_ENDING_MAX=240;
@@ -954,9 +955,16 @@
      체력이 먼저 다해도 한 소절(CARD_MIN)은 채우고, 소절 경계·광선·문양·특수 페이즈가 끝난 뒤에야 쓰러진다. 기다리는 동안 체력은 1로 붙든다(무한 대기 방지 상한 CARD_DOWN_MAX) */
   var CARD_MIN=Math.round(420*1.5),CARD_DOWN_MAX=Math.round(420*1.5)+180;
   function cardMayFall(s){var t=s.segTick-cardFireDelay(s);if(s.cardDown&&s.tick-s.cardDown>=CARD_DOWN_MAX)return true;if(t<CARD_MIN)return false;
+    if(s.cardDown){if(t<s.downEnd)return false;return !beamsOrFiguresLive(s);} // 소진 뒤에는 새 발사가 멈췄으니 소절 끝·예고된 광선·문양만 기다린다
     if(s.phraseCard&&s.phraseTick%s.phraseCard!==0)return false;
     if(s.lasers.some(function(l){return l.age<l.warn+l.active;})||s.figures.some(function(f){return f.age<f.warn+(f.active||0);}))return false;
     if(spWindow(s))return false;return true;}
+  function beamsOrFiguresLive(s){return s.lasers.some(function(l){return l.age<l.warn+l.active;})||s.figures.some(function(f){return f.age<f.warn+(f.active||0);});}
+  /* 체력 소진(외부 심사 11-20 "이미 예고된 공격은 끝까지, 소진 뒤에는 다음 발사 묶음을 시작하지 않도록 … 봉인 보너스 금액을 확정하고 마지막 공격까지 살아남으면 지급"):
+     소진한 틱에 봉인 보너스를 굳히고(bonusLock), 지금 소절은 끝까지 쏘되(사용자 11-19 '시전한 패턴은 모두 나오게') 다음 소절·특수 페이즈·반사탄·중앙 견제·배경 압박은 새로 시작하지 않는다. */
+  function downFiring(s){if(!s.cardDown)return true;return s.segTick-cardFireDelay(s)<s.downEnd;}
+  function markDown(s){var card=segment(s),L=phraseLen(s),t=Math.max(0,s.segTick-cardFireDelay(s));s.cardDown=s.tick||1;s.downEnd=spQuiet(s)?t:Math.max(CARD_MIN,Math.ceil((t+1)/L)*L); // 특수 페이즈 중에 다 깎으면 본 공격을 다시 열지 않는다
+    s.bonusLock=card&&card.spell?spellBonus(s):0;}
   /* 같은 보스의 다음 패턴으로 넘어갈 때는 화면의 탄·광선·문양을 지우거나 가속하지 않는다(사용자 11-19 "피하는중인데 탄이 갑자기 사라져서 맥이 빠지거나… 흐름이 끊겨"): 남은 탄은 제 길로 맵 밖까지 날아간다.
      보스가 떠날 때(다른 보스·잡몹 구간으로 넘어감)만 예전처럼 탄을 가속해 내보낸다(사용자 11-19 "몹이나 보스가 없고 탄환만 있을때는 탄환을 가속") */
   var CARD_BREAK_PAUSE=45;
@@ -1005,7 +1013,7 @@
   var CALM_SOFT={gentle:{every:150,cols:1},normal:{every:110,cols:2}},CALM_SOFT_WAIT=30;
   function calmSoft(s){
     var cf=CALM_SOFT[s.difficulty];
-    if(!cf||!s.calm||s.cardEnding||!s.boss.present||!s.entranceAll||s.lasers.length||s.figures.length||(s.sp&&s.sp.cur)){s.calmSoftT=0;return;}
+    if(!cf||!s.calm||s.cardEnding||s.cardDown||!s.boss.present||!s.entranceAll||s.lasers.length||s.figures.length||(s.sp&&s.sp.cur)){s.calmSoftT=0;return;}
     var t=s.calmSoftT=(s.calmSoftT||0)+1;if(t<CALM_SOFT_WAIT||(t-CALM_SOFT_WAIT)%cf.every)return;
     var a=ACTORS[s.boss.actor],c=a&&a.c2!==WHITE&&a.c2!==RED?a.c2:CYAN,k=((t-CALM_SOFT_WAIT)/cf.every)|0;
     // 영웅이 선 자리에 한 줄(움직일 이유), 노멀은 한쪽 옆(±76px)에 한 줄 더 세워 반대쪽으로 비키게 한다(심사 7.50: 가운데가 그냥 안전했다). 이지 한 줄은 광선 문법이 걸어오는 벽으로 묶는다
@@ -1018,7 +1026,7 @@
    * 탄이 영웅 14px 안(거의 닿을 거리)을 3초 동안 한 번도 지나지 않으면 보스가 느린 홀수 3갈래 조준탄을 낸다(홀수라 가운데 갈래가 영웅을 겨눠 한 걸음 비켜야 한다). 노멀·헬은 이미 모두 10초 안에 맞는다. */
   var NUDGE_IDLE=180,NUDGE_NEAR=14,NUDGE_SPEED=96,NUDGE_MOVE=24,NUDGE_CUE=24;
   function gentleNudge(s){
-    if(s.difficulty!=='gentle'||!s.entranceAll||s.stage!=='card'||s.cardEnding||s.calm||!s.boss.present||s.boss.leaving||(s.sp&&s.sp.cur)||s.segTick<FIRE_DELAY){s.nudgeT=0;s.nudgeCue=null;return;}
+    if(s.difficulty!=='gentle'||!s.entranceAll||s.stage!=='card'||s.cardEnding||s.cardDown||s.calm||!s.boss.present||s.boss.leaving||(s.sp&&s.sp.cur)||s.segTick<FIRE_DELAY){s.nudgeT=0;s.nudgeCue=null;return;}
     var p=s.player,b=s.boss,i,dx,dy;
     if(s.nudgeCue){if(s.tick<s.nudgeCue.fire)return; // 조준 예고(인주색 점선, 앱이 그림) 뒤에 쏜다: 왜 날아오는지 보인다(심사 7.50)
       var a=ACTORS[b.actor]||{},c=a.c1===RED||a.c1===undefined?CYAN:a.c1;fan(s,b.x,b.y+20,3,Math.atan2(p.y-b.y-20,p.x-b.x),.34,NUDGE_SPEED,{color:c,size:2});
@@ -1031,7 +1039,7 @@
   }
   function calmLaser(s){
     calmSoft(s);
-    if(!s.calm||s.difficulty!=='hell'||s.cardEnding||!s.boss.present){s.calmT=0;return;}
+    if(!s.calm||s.difficulty!=='hell'||s.cardEnding||s.cardDown||!s.boss.present){s.calmT=0;return;}
     var t=s.calmT=(s.calmT||0)+1;if(t<CALM_LASER_FIRST||(t-CALM_LASER_FIRST)%CALM_LASER_EVERY)return;
     var a=ACTORS[s.boss.actor],c=a&&a.c2!==WHITE&&a.c2!==RED?a.c2:CYAN,k=((t-CALM_LASER_FIRST)/CALM_LASER_EVERY)|0;
     if(k%2===0)slots(s,3,W,18).forEach(function(x){column(s,x,{width:BEAM_MIN,warn:62,active:56,color:c});});
@@ -1595,7 +1603,7 @@
   function layersBut(s,skip){return (skip!=='main'&&mainLive(s)?1:0)+(skip!=='figure'&&figureLive(s)?1:0)+(skip!=='mirror'&&mirrorLive(s)?1:0)+(skip!=='ambient'&&ambientLive(s)?1:0);}
   function allowAmbientStart(s){
     if(s.entranceAll&&layersBut(s,'ambient')>=layerCap(s))return false;
-    if(s.entranceAll&&(s.cardEnding||s.stage==='card'&&(s.figures.length||s.lasers.length>2)))return false; // 패턴 겹침 자제(사용자 11-19): 문양·광선이 떠 있거나 보스가 쓰러지는 중이면 배경 압박을 새로 얹지 않는다
+    if(s.entranceAll&&(s.cardEnding||s.cardDown||s.stage==='card'&&(s.figures.length||s.lasers.length>2)))return false; // 패턴 겹침 자제(사용자 11-19): 문양·광선이 떠 있거나 보스가 쓰러지는 중이면 배경 압박을 새로 얹지 않는다
     if(spQuiet(s))return false; // 특수 페이즈 중에는 배경 압박을 따로 얹지 않는다(특수 페이즈가 직접 낸다)
     if(s.stage==='wave')return s.segTick<waveDuration(s,segment(s));
     if(s.stage!=='card'||s.difficulty==='gentle')return false;
@@ -1965,7 +1973,7 @@
   }
   function bossSpecials(s){
     if(!s.sp)spReset(s);
-    if(s.cardEnding){if(s.sp.cur)spEnd(s);s.sp.q.length=0;return;}
+    if(s.cardEnding||s.cardDown){if(s.sp.cur)spEnd(s);s.sp.q.length=0;return;} // 소진 뒤에는 특수 페이즈·중앙 견제를 새로 열지 않는다(이미 켠 광선은 제 수명대로)
     var sp=s.sp,w=spWindow(s),i;
     if(sp.drain&&s.floor&&!s.floor.pieces.length){s.floor.clearing=1;sp.drain=false;}
     if(!w){if(sp.cur)spEnd(s);sp.q.length=0;centerGuard(s,null);return;}
@@ -2018,7 +2026,7 @@
     else if(s.stage==='card'){
       var t=s.segTick++;
       var fireDelay=cardFireDelay(s);
-      if(t>=fireDelay&&!spQuiet(s)){mirrorVolley(s,t-fireDelay);if(!soloHold(s))
+      if(t>=fireDelay&&!spQuiet(s)&&downFiring(s)){if(!s.cardDown)mirrorVolley(s,t-fireDelay);if(!soloHold(s))
         if(BOSS_RHYTHM&&BOSS_RHYTHM.handles(s,seg,api))BOSS_RHYTHM.fire(s,t-fireDelay,rhythmContext);
         else{
           var variationCard=s.entranceAll?variationCardIndex(s,seg):s.seg;
@@ -2031,7 +2039,7 @@
       if(seg.spell&&!s.entranceAll&&left<=10&&left>0&&s.segTick%60===0)note(s,left<=3?'countdownLast':'countdown');
     }
     themed(s);updateMobs(s);updateShots(s);focusSkill(s);
-    if(s.stage==='card'&&s.entranceAll&&!s.cardEnding&&(b.hp<=0||s.cardDown)){if(cardMayFall(s)){b.hp=0;beginCardEnding(s,true);}else{if(!s.cardDown)s.cardDown=s.tick||1;b.hp=1;}} // 시간이 다 된 카드는 쓰러짐이 아니라 그대로 넘어간다(남은 탄은 breakWipe가 밖으로 내보낸다)
+    if(s.stage==='card'&&s.entranceAll&&!s.cardEnding&&(b.hp<=0||s.cardDown)){if(!s.cardDown)markDown(s);if(cardMayFall(s)){b.hp=0;beginCardEnding(s,true);}else b.hp=1;} // 시간이 다 된 카드는 쓰러짐이 아니라 그대로 넘어간다(남은 탄은 breakWipe가 밖으로 내보낸다)
     else if(s.stage==='card'&&s.entranceAll&&s.cardEnding){if(s.boss.hp<0)s.boss.hp=0;if(cardEndingDone(s))endCard(s,s.cardEnding.defeated);}
     else if(s.stage==='card'&&b.hp<=0)endCard(s,true);
     else if(s.stage==='card'&&!s.entranceAll&&timeLeft(s)===0)endCard(s,false); // 실제 게임에서 보스·중간보스는 시간으로 사라지지 않는다(사용자 11-19): 체력이 다해야 쓰러진다

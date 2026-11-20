@@ -29,8 +29,8 @@
   function reset(){seal();popups.length=0;stamp=null;lineGlow=0;lineSeen=0;lineAge=0;bonusShown=-1;cleanSeg=-1;lostAt=-1e9;}
   function onEvent(e,s,A){
     if(!s)return;
-    if(e==='card'){var seg=A.SEGMENTS[s.seg];if(seg&&seg.name&&!s.bossOnly){entry(seg.name,s.difficulty)[0]++;saveBook();}}
-    else if(e==='capture'&&s.lastCapture){var c=s.lastCapture;if(c.name&&!s.bossOnly){var en=entry(c.name,s.difficulty);if(en[1]<en[0])en[1]++;saveBook();}
+    if(e==='card'){var seg=A.SEGMENTS[s.seg];if(seg&&seg.name&&!s.bossOnly&&!s.spellOnly){entry(seg.name,s.difficulty)[0]++;saveBook();}}
+    else if(e==='capture'&&s.lastCapture){var c=s.lastCapture;if(c.name&&!s.bossOnly&&!s.spellOnly){var en=entry(c.name,s.difficulty);if(en[1]<en[0])en[1]++;saveBook();}
       stamp={ok:true,bonus:c.bonus,tick:s.tick,pieces:s.pieces,of:A.LIFE_PIECES,gift:s.pieces===0,y:stampY(s)};}
     else if(e==='captureMiss'&&stamp&&stamp.ok)stamp=null; // 놓친 패턴은 가운데에 따로 알리지 않는다(이름 아래 줄이 이미 회색): 못한 것을 되풀이해 띄우지 않는다
   }
@@ -83,13 +83,15 @@
       var y=opt.bonusY||68,hist=history(seg.name,s.difficulty),clean=!!s.spellClean,val=clean?A.spellBonus(s):0;
       if(clean)cleanSeg=s.seg;else if(cleanSeg===s.seg){cleanSeg=-1;lostAt=s.tick;} // 보너스를 잃는 순간 한 번 깜박인다
       var lost=s.tick-lostAt<LOST_TICKS&&((s.tick-lostAt)>>2)%2===0;
-      var text=clean?'봉인 +'+comma(val):'봉인 놓침',tail=hist[0]>0&&!s.bossOnly?'  기록 '+hist[1]+'/'+hist[0]:'';
+      var down=!!(s.cardDown||s.cardEnding); // 체력을 다 깎았다: 값이 굳었고, 남은 공격을 버티면 받는다(외부 심사 11-20)
+      var text=clean?(down?'봉인 확정 +':'봉인 +')+comma(val):'봉인 놓침',tail=clean&&down?'  버티면 지급':hist[0]>0&&!s.bossOnly?'  기록 '+hist[1]+'/'+hist[0]:'';
       ctx.font='700 12px '+SANS;var w1=ctx.measureText(text).width;ctx.font='600 10px '+SANS;var w2=ctx.measureText(tail).width,w=w1+w2+16;
-      ctx.globalAlpha=.62;plate(ctx,W-12-w,y-13,w,18,9,c);
+      ctx.globalAlpha=down&&clean?.9:.62;plate(ctx,W-12-w,y-13,w,18,9,c);
       ctx.globalAlpha=1;ctx.textAlign='right';ctx.font='600 10px '+SANS;ctx.fillStyle=c.dim;ctx.fillText(tail,W-20,y);
       ctx.font='700 12px '+SANS;ctx.fillStyle=clean?c.gold:lost?c.text:c.dim;ctx.fillText(text,W-20-w2,y);
       bonusShown=val;
     }
+    drawDown(ctx,s,c);
     // 보스 위치 표식: 맨 아래 가장자리 눈금(바닥 안개·영웅 빛보다 위에 그려 묻히지 않게 화면 고정층에서). 맞는 동안 옅어지고, 체력이 20% 아래면 깜박인다.
     var b=s.boss;
     if(s.stage==='card'&&b&&b.present&&!s.cardEnding){
@@ -116,6 +118,19 @@
       }
     }
     ctx.restore();ctx.globalAlpha=1;raw(Ink,-1);
+  }
+  /* 체력 소진 알림(외부 심사 11-20 "보스 체력을 다 깎은 순간을 명확히"): 소진한 틱부터 1.6초 동안 보스 아래에 먹 붓 띠와 '격파'를 띄운다.
+     감싸는 원은 쓰지 않는다(사용자 11-15). 띠는 가로 붓질 한 획 + 글씨. 뒤 1초에 걸쳐 옅어지고, 그 뒤에는 위쪽 봉인 줄('봉인 확정')이 이어 알린다. */
+  var DOWN_TICKS=96;
+  function drawDown(ctx,s,c){
+    var b=s.boss;if(s.stage!=='card'||!s.cardDown||!b||!b.present)return;var age=s.tick-s.cardDown;if(age<0||age>DOWN_TICKS)return;
+    var by=finite(b.y,120),y=Math.max(96,Math.min(H-200,by+(by>236?-96:78))),k=age<6?age/6:1,fade=age>DOWN_TICKS-36?(DOWN_TICKS-age)/36:1,wide=Math.min(1,age/8);
+    ctx.save();ctx.globalAlpha=fade*.86;ctx.fillStyle=c.plate;ctx.strokeStyle=c.edge;ctx.lineWidth=1; // 붓 띠: 가운데가 두껍고 양끝이 가는 한 획
+    var half=118*wide;ctx.beginPath();ctx.moveTo(W/2-half,y);ctx.quadraticCurveTo(W/2,y-17,W/2+half,y-2);ctx.quadraticCurveTo(W/2,y+19,W/2-half,y);ctx.fill();ctx.stroke();
+    ctx.globalAlpha=fade*k;ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='700 '+Math.round(20+6*(1-k))+'px '+SERIF;ctx.lineWidth=3;ctx.strokeStyle=c.halo;ctx.fillStyle=c.text;
+    var clean=!!s.spellClean&&s.bonusLock>0,t1=clean?'격파 · 봉인 확정':'격파';ctx.strokeText(t1,W/2,y-1);ctx.fillText(t1,W/2,y-1);
+    ctx.font='600 11px '+SANS;ctx.fillStyle=c.dim;var t2=clean?'남은 공격을 버티면 +'+comma(s.bonusLock):'남은 공격이 끝나면 쓰러진다';ctx.strokeText(t2,W/2,y+19);ctx.fillText(t2,W/2,y+19);
+    ctx.restore();ctx.textBaseline='alphabetic';
   }
   /* 스테이지 결산 한 줄(알림 띠 아래 줄) */
   function tally(result){if(!result)return '';var out=[];if(result.spells>0)out.push('봉인 '+(result.captures||0)+'/'+result.spells);if(result.graze>=0)out.push('스침 '+result.graze);if(result.bonus>0)out.push('결산 +'+comma(result.bonus));return out.join(' · ');}
