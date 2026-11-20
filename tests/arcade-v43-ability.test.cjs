@@ -58,3 +58,31 @@ test('the focus notes in the pause panel quote the engine numbers',()=>{
  const a=A(),html=read('arcade.html');
  assert(html.includes(`초능력: 공격 ×${a.FOCUS_POWER} · 필살 게이지 ×${a.FOCUS_GAUGE}`)&&html.includes('원 안 적탄은 한층 더 느려짐'));
 });
+
+test('Seoha psi: her own shots fly much slower, time bombs come twice as often and fly slower; Memory Gunner shots are untouched (user 11-20)',()=>{
+ const a=A();assert(a.SEOHA_FOCUS_SHOT<=.5&&a.SEOHA_FOCUS_TB<a.SEOHA_FOCUS_SHOT);
+ const shots=(hero,focus)=>{const s=idle({hero});s.mobs.push({kind:'x',x:s.player.x,baseX:s.player.x,y:120,r:12,hp:1e9,maxHp:1e9,hitTick:-99,elite:false,score:0,age:0,shots:0,vx:0,vy:0,sway:0,swayRate:0,fire:'aim',first:1e9,every:0,color:0,stopY:120,hold:1e9,next:1e9});
+  const speeds=new Set(),tb=[];for(let t=0;t<240;t++){a.step(s,{dx:0,dy:0,focus});for(let i=0;i<s.sn;i++){speeds.add(Math.round(s.sspd[i]*100)/100);}if(s.events.includes('tbFire'))tb.push(s.tick);s.events.length=0;}
+  return {speeds:[...speeds].sort((x,y)=>x-y),tb};};
+ const sf=shots('seoha',true),sn=shots('seoha',false),mf=shots('memory',true);
+ assert.deepEqual(sn.speeds,[15]);assert.deepEqual(mf.speeds,[15],'Memory Gunner unchanged');
+ assert(sf.speeds.includes(15*a.SEOHA_FOCUS_SHOT)&&sf.speeds.includes(15*a.SEOHA_FOCUS_TB)&&!sf.speeds.includes(15),JSON.stringify(sf.speeds));
+ assert(sf.tb.length>=sn.tb.length*1.6,`time bombs ${sf.tb.length} vs ${sn.tb.length}`);
+});
+
+test('enemies specialize by hero: more bullets against Seoha, more boss lasers against Memory Gunner (user 11-20)',()=>{
+ const a=A(),mk=hero=>a.createRun({difficulty:'normal',seed:3,hero,entranceAll:true});
+ const m=mk('memory'),s=mk('seoha');for(let t=0;t<30;t++){a.step(m,{});a.step(s,{});}assert(s.density>m.density*1.15&&s.rules.speed>m.rules.speed,'Seoha faces denser, slightly faster bullets');
+ assert(a.heroLaserBias(m)>1&&a.heroLaserBias(s)===1,'laser bias is shared for other laser phases');
+ const seg=a.SEGMENTS.findIndex((g,i)=>g.kind==='card'&&i>40),count=hero=>{const r=a.createRun({difficulty:'normal',seed:5,segment:seg,hero,entranceAll:true});let on=0;
+  for(let t=0;t<1800&&r.seg===seg;t++){r.player.invulnerableUntil=r.tick+999;r.boss.hp=r.boss.maxHp;a.step(r,{dx:0,dy:0});r.events.length=0;if(r.lasers.length)on++;}return {on,n:r.heroLaserN||0};};
+ const cm=count('memory'),cs=count('seoha');assert(cm.n>0&&cs.n===0&&cm.on>cs.on,JSON.stringify({cm,cs}));
+});
+
+test('Seoha time control slows the enemy fire clock with the bullets, so slowed bullets do not pile up (user 11-20 dodge check)',()=>{
+ const a=A(),seg=a.SEGMENTS.findIndex((g,i)=>g.kind==='wave'&&i>100),run=(ability,focus)=>{const r=a.createRun({difficulty:'normal',seed:9,segment:seg,hero:'seoha',entranceAll:true,ability});let peak=0;
+  for(let t=0;t<900&&r.seg===seg;t++){r.player.invulnerableUntil=r.tick+999;a.step(r,{dx:0,dy:0,focus});r.events.length=0;peak=Math.max(peak,r.n);}return {peak,held:r.timeHeld||0};};
+ const off=run(0,true),max=run(7,true),idleMax=run(7,false);
+ assert.equal(off.held,0);assert.equal(idleMax.held,0,'only while psi is held');assert(max.held>0);
+ assert(max.peak<=off.peak*1.6,`slowed field stays near normal density ${max.peak} vs ${off.peak}`);
+});
