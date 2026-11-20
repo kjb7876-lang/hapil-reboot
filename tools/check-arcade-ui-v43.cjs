@@ -398,7 +398,7 @@ async function sevenSinsClear(page){
   for(const k of ['n','sn','lasers','figures'])assert.equal(core[k],0,'final clear removes '+k);
   const clearClock=await combatClock(page);await page.waitForTimeout(180);assert.deepEqual(await combatClock(page),clearClock);
   await page.locator('#arcade-resume').click();
-  await page.waitForFunction(()=>{const s=HapilArcadeApp.debugState().state;if(s.stageIndex===22){HapilArcadeApp.pause();return true;}return false;});
+  await page.waitForFunction(()=>{const s=HapilArcadeApp.debugState().state;if(s.stageIndex===20){HapilArcadeApp.pause();return true;}return false;});
   const after=await page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;return {tick:s.tick,stage:s.stage,results:s.results,writes:window.__sinSaveWrites,progress:HapilArcadeApp.debugState().progress};});
   assert(after.tick>=core.clear.readyTick);assert.equal(after.stage,'wave');assert.equal(after.results.filter(r=>r.stage===19).length,1);assert.equal(after.writes.length,1,'transition does not save the same clear again');
   assert.equal(after.progress.cleared.filter(x=>x===19).length,1);
