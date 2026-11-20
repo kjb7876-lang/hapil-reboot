@@ -43,7 +43,7 @@ test('2.5초 지난 보스 탄은 영웅 쪽 아래로 휘어 내려온다',()=>
 test('사망 십자가는 오른쪽 아래 작게, 규칙에 새 항목이 있다',()=>{
   const html=fs.readFileSync(path.join(__dirname,'../arcade.html'),'utf8'),i18n=fs.readFileSync(path.join(__dirname,'../src/arcade-i18n-v43.js'),'utf8');
   assert.match(html,/#result-cross\{display:none;position:absolute;right:[^}]*bottom:[^}]*width:30px;height:40px/);
-  assert.match(html,/arcade-boss-phases-v43\.js/);assert.match(i18n,/저속 간이 필살/);assert.match(i18n,/PHASE 1~N/);
+  assert.match(html,/arcade-boss-phases-v43\.js/);assert.match(i18n,/초능력 간이 필살/);assert.match(i18n,/PHASE 1~N/);
 });
 
 test('the stage and role select a stable score, including recurring bosses and the chairman',()=>{
