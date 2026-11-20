@@ -26,9 +26,11 @@
   /* 낙관 그림(tools/build-seal-v43.py 가 구운 직접 그린 그림). 아직 못 받았으면 코드로 그린 네모 낙관으로 대신한다. */
   var SEAL_SRC='media/arcade-v43/seal-v43.webp',sealImg=null;
   function seal(){if(sealImg===null&&global.Image&&global.document){sealImg=new global.Image();sealImg.decoding='async';sealImg.src=SEAL_SRC;}return sealImg&&sealImg.complete&&sealImg.naturalWidth?sealImg:null;}
-  function reset(){seal();popups.length=0;stamp=null;lineGlow=0;lineSeen=0;lineAge=0;bonusShown=-1;cleanSeg=-1;lostAt=-1e9;}
+  function reset(){seal();jack=null;popups.length=0;stamp=null;lineGlow=0;lineSeen=0;lineAge=0;bonusShown=-1;cleanSeg=-1;lostAt=-1e9;}
+  var sound=null;function useSound(fn){sound=typeof fn==='function'?fn:null;}
   function onEvent(e,s,A){
     if(!s)return;
+    if(e==='jackpot'&&s.lastJackpot){startJackpot(s,s.lastJackpot,sound);return;}
     if(e==='card'){var seg=A.SEGMENTS[s.seg];if(seg&&seg.name&&!s.bossOnly&&!s.spellOnly){entry(seg.name,s.difficulty)[0]++;saveBook();}}
     else if(e==='capture'&&s.lastCapture){var c=s.lastCapture;if(c.name&&!s.bossOnly&&!s.spellOnly){var en=entry(c.name,s.difficulty);if(en[1]<en[0])en[1]++;saveBook();}
       stamp={ok:true,bonus:c.bonus,tick:s.tick,pieces:s.pieces,of:A.LIFE_PIECES,gift:s.pieces===0,got:c.gift||'',y:stampY(s)};}
@@ -44,6 +46,48 @@
     if(popups.length>=POPUP_CAP)popups.shift();popups.push({x:x/n,y:y/n,v:sum,n:n,top:top,t:0});
   }
   function raw(Ink,d){if(Ink&&Ink.raw)Ink.raw(d);}
+  /* 격파 잭팟(사용자 11-20 "보스를 잡으면 … 하트를 많이 주도록(잭팟느낌나게)"). 점수는 엔진이 이미 더했다(s.lastJackpot). 여기서는 그 하트 n개가
+     쓰러진 자리 발치에서 분수처럼 솟구쳤다가 영웅에게 줄줄이 빨려 들어오며, 들어올 때마다 '하트 ×k'와 합계가 오른다. 하트 모양은 줍는 하트 그대로(사용자 11-14),
+     둘레 빛과 숫자는 금빛(인주색은 쓰지 않는다: 돕는 예고·하트 자체의 색 몫). 쓰러지는 보스 몸을 가리지 않게 발치 아래에서 솟고, 보스가 먹으로 스미기 시작한 뒤 터진다. */
+  var JACK_START=34,JACK_DROP=46,JACK_TAIL=96,jack=null;
+  function rnd(i,k){var v=Math.sin(i*12.9898+k*78.233)*43758.5453;return v-Math.floor(v);}
+  function startJackpot(s,j,play){var n=Math.max(0,Math.min(60,j.n|0)),mid=!!j.mid,x0=Math.max(30,Math.min(W-30,finite(j.x,W/2))),y0=Math.max(70,Math.min(H-220,finite(j.y,140)+JACK_DROP)),hs=[];
+    for(var i=0;i<n;i++){var a=rnd(i,1),b=rnd(i,2),c=rnd(i,3);hs.push({d:JACK_START+i*(mid?3:1.4),x:x0+(a-.5)*18,y:y0,vx:(a-.5)*(mid?8:13)+(c-.5)*2,vy:-(1.6+b*(mid?2.4:3)),home:(mid?32:24)+(i%5)*2+c*5,st:0,age:0,k:.85+b*.3,r:(c-.5)*.5});}
+    jack={n:n,mid:mid,worth:j.worth|0,total:j.total|0,x:x0,y:y0,t:0,got:0,hs:hs,last:-99,play:typeof play==='function'?play:null,done:-1};
+    if(jack.play)jack.play('seal',x0);}
+  function stepJackpot(p){var J=jack;J.t++;if(J.t===JACK_START&&J.play)J.play(J.mid?'item':'charge',J.x);
+    for(var i=0;i<J.hs.length;i++){var q=J.hs[i];if(q.st===2||J.t<q.d)continue;q.age++;
+      if(q.age<q.home){q.vy+=.24;q.vx*=.985;q.x+=q.vx;q.y+=q.vy;if(q.x<24||q.x>W-24){q.vx=-q.vx*.6;q.x=Math.max(24,Math.min(W-24,q.x));}q.st=0;}
+      else{var dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy),sp=Math.min(19,4+(q.age-q.home)*.9);q.st=1;
+        if(d<=sp+6){q.st=2;J.got++;J.glow=1;if(J.play&&J.t-J.last>=3){J.last=J.t;J.play('item',p.x);}if(J.got===J.n)J.done=J.t;}
+        else{q.vx=dx/d*sp;q.vy=dy/d*sp;q.x+=q.vx;q.y+=q.vy;}}}
+  }
+  function drawJackpot(ctx,s,c,heart,playing){
+    var J=jack,p=s.player;if(!J)return;if(playing)stepJackpot(p);
+    if(J.done>=0&&J.t-J.done>JACK_TAIL){jack=null;return;}
+    var i,q,z=J.mid?24:30;
+    // 들어올 때마다 영웅 둘레가 금빛으로 한 번씩 부푼다(줄줄이 들어오면 빛이 이어진다)
+    if(J.glow>0){var gl=J.glow;ctx.globalAlpha=gl*.8;ctx.strokeStyle='#e8b530';ctx.lineWidth=2;ctx.beginPath();ctx.arc(p.x,p.y,18+(1-gl)*20,0,TAU);ctx.stroke();var gg=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,30+gl*16);gg.addColorStop(0,'rgba(255,232,150,.85)');gg.addColorStop(1,'rgba(255,216,106,0)');ctx.globalAlpha=gl*.7;ctx.fillStyle=gg;ctx.fillRect(p.x-48,p.y-48,96,96);if(playing)J.glow=Math.max(0,gl-.07);}
+    // 터지는 순간: 발치에서 금빛 고리가 퍼지고 빛이 번진다
+    var ft=J.t-JACK_START;if(ft>=0&&ft<44){var u=ft/44;ctx.globalAlpha=(1-u)*.55;var gr=ctx.createRadialGradient(J.x,J.y,0,J.x,J.y,30+u*70);gr.addColorStop(0,'rgba(255,226,140,.9)');gr.addColorStop(1,'rgba(255,216,106,0)');ctx.fillStyle=gr;ctx.fillRect(J.x-110,J.y-110,220,220);
+      var rx=14+u*(J.mid?70:110),ry=6+u*(J.mid?24:40);ctx.globalAlpha=(1-u)*.9;ctx.strokeStyle='#6e4a10';ctx.lineWidth=5*(1-u)+1.4;ctx.beginPath();ctx.ellipse(J.x,J.y,rx,ry,0,0,TAU);ctx.stroke();ctx.strokeStyle='#ffe08a';ctx.lineWidth=2.4*(1-u)+.6;ctx.beginPath();ctx.ellipse(J.x,J.y,rx,ry,0,0,TAU);ctx.stroke();} // 두 겹 금빛(짙은 테두리+밝은 속): 한지 위에서도 탁해지지 않게
+    for(i=0;i<J.hs.length;i++){q=J.hs[i];if(q.st===2||J.t<q.d)continue;
+      var vs=Math.sqrt(q.vx*q.vx+q.vy*q.vy)||1,beat=1+Math.sin(J.t*.35+i)*.08,zz=z*q.k*beat*(q.age<6?.5+q.age/12:1)*(q.st===1?1:1);
+      // 꼬리: 날아온 쪽으로 옅은 금빛 잔상 둘(곧게 날아오는 탄과 다르게 빛 알갱이로)
+      var tl=q.st===1?4:2;ctx.fillStyle='#e8b530';for(var k=1;k<=tl;k++){ctx.globalAlpha=.34/k;ctx.beginPath();ctx.arc(q.x-q.vx/vs*k*7,q.y-q.vy/vs*k*7,zz*.22/k+1.2,0,TAU);ctx.fill();}
+      ctx.globalAlpha=.5;var hg=ctx.createRadialGradient(q.x,q.y,zz*.2,q.x,q.y,zz*.62);hg.addColorStop(0,'rgba(255,236,160,.95)');hg.addColorStop(.8,'rgba(255,220,110,.55)');hg.addColorStop(1,'rgba(255,216,106,0)');ctx.fillStyle=hg;ctx.fillRect(q.x-zz,q.y-zz,zz*2,zz*2);
+      ctx.globalAlpha=.85;ctx.strokeStyle='#8a5a12';ctx.lineWidth=1.3;ctx.beginPath();ctx.arc(q.x,q.y,zz*.5,0,TAU);ctx.stroke(); // 잭팟 하트만 금박 테두리: 평소 줍는 하트와 구분
+      ctx.globalAlpha=1;if(heart){ctx.save();ctx.translate(q.x,q.y);ctx.rotate(q.r+Math.sin(J.t*.12+i)*.15);ctx.drawImage(heart,-zz*.4,-zz*.4,zz*.8,zz*.8);ctx.restore();}else{ctx.fillStyle='#c9406e';ctx.beginPath();ctx.arc(q.x,q.y,zz*.4,0,TAU);ctx.fill();}}
+    // 영웅 쪽 숫자: 하트가 하나 들어올 때마다 오른다. 영웅 머리 위(받은 값 줄보다 한 칸 위)
+    if(J.got>0){var fade=J.done>=0?Math.max(0,Math.min(1,(JACK_TAIL-(J.t-J.done))/24)):1,pop=J.done>=0&&J.t-J.done<10?1+.25*(1-(J.t-J.done)/10):1,
+      side=p.x<W/2?1:-1,py=Math.max(118,Math.min(H-150,p.y-22)),title=J.mid?'하트 보상':'잭팟',cnt='하트 ×'+J.got,sum='+'+comma(J.got*J.worth);
+      ctx.save();ctx.globalAlpha=fade;ctx.textAlign='center';ctx.textBaseline='alphabetic';ctx.lineJoin='round';
+      ctx.font='700 '+Math.round((J.mid?17:23)*pop)+'px '+SERIF;var w1=ctx.measureText(title).width;ctx.font='700 '+Math.round((J.mid?13:15)*pop)+'px '+SANS;var w2=ctx.measureText(cnt).width,bw=Math.max(w1,w2)+28,px=Math.max(bw/2+6,Math.min(W-bw/2-6,p.x+side*(bw/2+34))); // 하트는 위에서 영웅 머리로 내려온다: 표는 영웅 옆, 넓은 쪽에 둔다
+      ctx.globalAlpha=fade*.9;plate(ctx,px-bw/2,py-(J.mid?36:42),bw,J.mid?58:66,8,c);ctx.globalAlpha=fade;
+      ctx.font='700 '+Math.round((J.mid?17:23)*pop)+'px '+SERIF;ctx.lineWidth=3;ctx.strokeStyle=c.halo;ctx.strokeText(title,px,py-(J.mid?18:20));ctx.fillStyle=c.gold;ctx.fillText(title,px,py-(J.mid?18:20));
+      ctx.font='700 '+Math.round((J.mid?13:15)*pop)+'px '+SANS;ctx.fillStyle=c.text;ctx.fillText(cnt,px,py);
+      ctx.font='700 '+(J.mid?11:12)+'px '+SANS;ctx.fillStyle=c.gold;ctx.fillText(sum,px,py+(J.mid?14:16));ctx.restore();}
+  }
   /* 판 위에 그리는 것(흔들림을 같이 탄다): 수집선 · 받은 값 · 보스 위치 표식 */
   /* 수묵화풍(Ink 있음)에서는 한지 바탕에 먹 글씨·짙은 금빛, 예전 어두운 화면(?ink=0)에서는 어두운 바탕에 밝은 글씨. */
   function tone(Ink){return Ink?{plate:'rgba(244,236,218,.9)',edge:'rgba(40,32,26,.55)',text:'rgba(30,24,20,.95)',dim:'rgba(30,24,20,.72)',gold:'#9a6400',halo:'rgba(246,238,220,.95)'}:{plate:INK,edge:'rgba(246,234,210,.4)',text:PAPER,dim:'rgba(246,234,210,.8)',gold:GOLD,halo:'rgba(20,16,14,.9)'};}
@@ -66,6 +110,7 @@
         ctx.textAlign='right';ctx.strokeText('▲',W-12,y0-6);ctx.fillText('▲',W-12,y0-6);}
     }
     if(playing&&lineGlow>0)lineGlow=Math.max(0,lineGlow-.03);
+    drawJackpot(ctx,s,c,opt.heart||null,playing);
     // 받은 값: 영웅 머리 위로 띄운다(영웅 그림에 가리지 않게)
     ctx.textAlign='center';ctx.textBaseline='alphabetic';
     for(i=popups.length-1;i>=0;i--){var q=popups[i],u=q.t/POPUP_TICKS;if(playing)q.t++;if(q.t>POPUP_TICKS){popups.splice(i,1);continue;}
@@ -137,6 +182,6 @@
   }
   /* 스테이지 결산 한 줄(알림 띠 아래 줄) */
   function tally(result){if(!result)return '';var out=[];if(result.spells>0)out.push('봉인 '+(result.captures||0)+'/'+result.spells);if(result.graze>=0)out.push('스침 '+result.graze);if(result.bonus>0)out.push('결산 +'+comma(result.bonus));return out.join(' · ');}
-  return {SEAL_SRC:SEAL_SRC,onEvent:onEvent,consume:consume,drawWorld:drawWorld,drawHud:drawHud,reset:reset,history:history,tally:tally,comma:comma,BOOK_KEY:BOOK_KEY,
-    state:function(){return {popups:popups.length,stamp:stamp?{ok:stamp.ok,bonus:stamp.bonus}:null,line:lineSeen,bonus:bonusShown};}};
+  return {SEAL_SRC:SEAL_SRC,useSound:useSound,onEvent:onEvent,consume:consume,drawWorld:drawWorld,drawHud:drawHud,reset:reset,history:history,tally:tally,comma:comma,BOOK_KEY:BOOK_KEY,
+    state:function(){return {jackpot:jack?{n:jack.n,got:jack.got,t:jack.t}:null,popups:popups.length,stamp:stamp?{ok:stamp.ok,bonus:stamp.bonus}:null,line:lineSeen,bonus:bonusShown};}};
 });
