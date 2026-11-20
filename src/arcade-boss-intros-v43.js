@@ -302,6 +302,7 @@
   var GENERIC={mid:["여기서부터는 지나갈 수 없다.","먼저 나를 넘어서야 할 것이다.","여기까지 왔나. 시험해 보지.","발걸음은 여기까지다."],
     main:["이 앞은 내가 막는다.","돌아가라. 아니면 여기서 끝이다.","기억도 시간도, 여기서 멈춘다.","나를 쓰러뜨려야 지나갈 수 있다."]};
   function fallbackLines(actor,mid,name){
+    if(mid)return []; // 사용자 11-20: 중간보스는 컷씬(컷인)만, 대사 없음. 보스만 대사
     var h=0,i,list=mid?GENERIC.mid:GENERIC.main,key=String(actor||'');for(i=0;i<key.length;i++)h=(h*31+key.charCodeAt(i))>>>0;
     return [{speaker:name||'',text:list[h%list.length]}];
   }

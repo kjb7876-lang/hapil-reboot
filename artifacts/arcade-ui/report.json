@@ -9,17 +9,17 @@
         {
           "hero": "memory",
           "far": 0.95,
-          "near": 0.41624516943892603
+          "near": 0.416245169438931
         },
         {
           "hero": "seoha",
           "far": 0.95,
-          "near": 0.4163784720172986
+          "near": 0.416511965164009
         },
         {
           "hero": "seoha-b",
           "far": 0.95,
-          "near": 0.4163784720172986
+          "near": 0.416245169438931
         }
       ],
       "mainBossCutin": true,
@@ -67,28 +67,28 @@
         {
           "hero": "memory",
           "far": 0.95,
-          "near": 0.4162451694389261
+          "near": 0.4162451694389285
         },
         {
           "hero": "seoha",
           "far": 0.95,
-          "near": 0.41637847201729866
+          "near": 0.41637847201729744
         },
         {
           "hero": "seoha-b",
           "far": 0.95,
-          "near": 0.416245169438931
+          "near": 0.4163784720172986
         }
       ],
       "mainBossCutin": true,
-      "fast": 11.999999999999984,
+      "fast": 11.999999999999982,
       "slow": 2,
       "multitouchBomb": true,
       "pauseSettings": true,
       "audioLifecycle": true,
       "music": {
         "players": 1,
-        "plays": 27,
+        "plays": 12,
         "maxPlaying": 1,
         "overlaps": []
       },
@@ -103,17 +103,17 @@
         {
           "hero": "memory",
           "far": 0.95,
-          "near": 0.41611205715685495
+          "near": 0.4162451694389261
         },
         {
           "hero": "seoha",
           "far": 0.95,
-          "near": 0.4163784720172986
+          "near": 0.41637847201729866
         },
         {
           "hero": "seoha-b",
           "far": 0.95,
-          "near": 0.4163784720172938
+          "near": 0.41637847201729383
         }
       ],
       "mainBossCutin": true,
@@ -139,17 +139,17 @@
         {
           "hero": "memory",
           "far": 0.95,
-          "near": 0.41637847201729744
+          "near": 0.4163784720172986
         },
         {
           "hero": "seoha",
           "far": 0.95,
-          "near": 0.41637847201729744
+          "near": 0.4162451694389261
         },
         {
           "hero": "seoha-b",
           "far": 0.95,
-          "near": 0.41624516943892853
+          "near": 0.4162451694389261
         }
       ],
       "mainBossCutin": true,
@@ -160,7 +160,7 @@
       "audioLifecycle": true,
       "music": {
         "players": 1,
-        "plays": 12,
+        "plays": 27,
         "maxPlaying": 1,
         "overlaps": []
       },
