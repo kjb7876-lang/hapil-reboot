@@ -39,9 +39,20 @@ test('staying above the line draws aimed shots, a beam and rising ink rocks, and
 
 test('mid-boss defeat keeps the bullets flying; mid-boss HP is 1.3x on easy and normal',()=>{
   assert.equal(A.MID_HP_MORE.normal,1.3);assert.equal(A.MID_HP_MORE.gentle,1.3);assert.equal(A.MID_HP_MORE.hell,1);
-  const mid=A.SEGMENTS.findIndex(g=>g.kind==='card'&&g.mid);const s=A.createRun({entranceAll:true,difficulty:'normal',segment:mid,seed:4});
+  const mid=A.SEGMENTS.findIndex((g,i)=>{const nx=A.SEGMENTS[i+1];return g.kind==='card'&&g.mid&&!(nx&&nx.kind==='card'&&nx.actor===g.actor);});/* 중간보스의 마지막 패턴(쓰러짐 연출로 넘어가는 자리) */const s=A.createRun({entranceAll:true,difficulty:'normal',segment:mid,seed:4});
   for(let i=0;i<3000&&!(s.stage==='card'&&s.segTick>400);i++){s.player.invulnerableUntil=s.tick+999;A.step(s,{});s.events.length=s.cancelled.length=s.pops.length=0;}
   assert.equal(s.stage,'card');const n0=s.n;assert(n0>0);s.boss.hp=0;
-  for(let i=0;i<5;i++){s.player.invulnerableUntil=s.tick+999;A.step(s,{});}
-  let exit=0;for(let i=0;i<s.n;i++)if(s.bexit[i])exit++;assert.equal(exit,0,'mid-boss bullets are not flushed');
+  let exit=0,wasEnding=false,before=-1,after=-1;
+  for(let i=0;i<600&&after<0;i++){s.player.invulnerableUntil=s.tick+999;const n=s.n;A.step(s,{});
+    for(let j=0;j<s.n;j++)if(s.bexit[j])exit++;
+    if(wasEnding&&!s.cardEnding){before=n;after=s.n;}wasEnding=!!s.cardEnding;s.events.length=s.cancelled.length=s.pops.length=0;}
+  assert.equal(exit,0,'mid-boss bullets are not flushed');
+  assert(before>0&&after>=before*.8,'bullets survive the defeat transition '+before+' -> '+after);
+});
+
+test('the line guard beam stays at the hero height instead of being turned into a floor ladder',()=>{
+  const s=A.createRun({entranceAll:true,difficulty:'normal',stage:3,stages:1,seed:8});let seen=0;
+  drive(s,100,60*40,c=>{if(c.events.includes('lineGuard')&&c.lineN%3===2){const l=c.lasers[c.lasers.length-1];
+    if(l&&l.angle===0){seen++;assert(Math.abs(l.y-Math.max(24,c.player.y))<1,'beam at '+l.y+' hero '+c.player.y);}}});
+  assert(seen>0,'a guard beam was fired');
 });

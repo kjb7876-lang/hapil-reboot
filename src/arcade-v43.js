@@ -968,9 +968,9 @@
     for(i=0;i<s.mobs.length&&ink.length<INK_DISSOLVE_CAP*4;i++)if(s.mobs[i].y>-10)ink.push(s.mobs[i].x,s.mobs[i].y,WHITE,3);
     return ink.length;
   }
-  function clearBossEntranceHazards(s){
-    var inked=inkDissolve(s);
-    s.n=0;s.sn=0;s.mobs.length=0;s.lasers.length=0;s.figures.length=0;s.ripples.length=0;
+  function clearBossEntranceHazards(s,keepBullets){
+    var inked=keepBullets?0:inkDissolve(s);
+    if(!keepBullets)s.n=0;s.sn=0;s.mobs.length=0;s.lasers.length=0;s.figures.length=0;s.ripples.length=0;
     s.cancelled.length=0;s.drifted.length=0;s.pops.length=0;s.zaps.length=0;s.skillFx.length=0;s.fsSwords.length=0;if(s.tbombs)s.tbombs.length=0;if(s.shotHits)s.shotHits.length=0;
     s.bombPulse=null;s.pulseInfo=null;s.lastBomb=null;s.warned=false;
     s.risers=s.risers||[];s.risers.length=0;s.riserDue=0;s.riserT=0;s.riserN=0;s.riserStage=s.stageIndex;
@@ -1029,7 +1029,7 @@
   function cardKeepsBullets(s){var g=segment(s);return !!(s.entranceAll&&g&&g.mid);} // 사용자 11-20 "중간보스가 빨리 죽어 탄이 내려오기도 전에 사라짐": 중간보스 격파는 탄을 걷지 않는다
   function beginCardEnding(s,defeated){s.cardEnding={defeated:!!defeated,tick:s.tick,stays:bossStays(s)};if(s.boss.hp<0)s.boss.hp=0;if(!s.cardEnding.stays&&!cardKeepsBullets(s))flushBullets(s);}
   function cardEndingStep(s){if(s.boss.hp<0)s.boss.hp=0;if(!s.cardEnding.stays&&!cardKeepsBullets(s))flushBullets(s);} // 이 사이에 다른 경로로 생긴 탄(파편 등)도 내보낸다
-  function cardEndingDone(s){var e=s.cardEnding;if(s.tick-e.tick>=CARD_ENDING_MAX)return true;if(e.stays?s.tick-e.tick<CARD_BREAK_PAUSE:s.n)return false;
+  function cardEndingDone(s){var e=s.cardEnding;if(s.tick-e.tick>=CARD_ENDING_MAX)return true;if(e.stays?s.tick-e.tick<CARD_BREAK_PAUSE:s.n&&!cardKeepsBullets(s))return false; // 중간보스는 탄이 제 길로 나가므로 기다리지 않는다
     for(var i=0;i<s.lasers.length;i++){var l=s.lasers[i];if(l.age<=l.warn+l.active)return false;}return !s.figures.length;}
   /* 반사탄(사용자 11-19 "반사탄도 생성해서 탄환이 벽에 닿으면 반사되어 마치 빛이 거울에 닿으면 반사되는 각도로 … 1-2번 튕기면 맵밖으로"): 실제 게임 보스전에서
      몇 초마다 보스가 좌우 벽을 향해 비스듬한 탄 몇 알을 쏜다. 벽에서 입사각=반사각으로 꺾이고(좌우 벽은 θ→π−θ, 위 벽은 θ→−θ), 이지 1번·노멀 1~2번·헬 2번 튕긴 뒤 화면 밖으로 나간다(아래로는 튕기지 않는다). */
@@ -1045,7 +1045,7 @@
     s.cardEnding=null;
     var card=segment(s),left=timeLeft(s),b=s.boss,nextAt=nextSegmentIndex(s),next=SEGMENTS[nextAt],cinematic=s.cinematicEncounter;
     var hold=defeated&&cinematic&&cinematic.actor===card.actor&&cinematic.stageIndex===card.stage&&(!next||next.kind!=='card'||next.actor!==card.actor||next.stage!==card.stage);
-    var wiped=0;if(hold)clearBossEntranceHazards(s);else if(!(s.entranceAll&&next&&next.kind==='card'&&next.actor===card.actor&&next.stage===card.stage))wiped=breakWipe(s); // 같은 보스가 이어 가면 탄·패턴을 그대로 둔다
+    var keepB=cardKeepsBullets(s),wiped=0;if(hold)clearBossEntranceHazards(s,keepB);else if(keepB)clearNonBullets(s);else if(!(s.entranceAll&&next&&next.kind==='card'&&next.actor===card.actor&&next.stage===card.stage))wiped=breakWipe(s); // 같은 보스가 이어 가면 탄·패턴을 그대로 둔다
     if(defeated){s.cleared++;gainExp(s,card.spell?16:10);s.score+=Math.round(left)*300+wiped*30;var nd=card.spell?CARD_DROPS:PLAIN_DROPS;if(!s.spellOnly&&(!next||next.kind!=='card'||next.actor!==card.actor))nd=card.spell?1:0; /* 잭팟이 터지는 마지막 패턴은 낱개 하트를 떨구지 않는다(심사 11-20: 잭팟이 흩어진 낱개와 섞여 묽어짐). 스펠이면 필살 조각 하나만 */for(var i=0;i<nd;i++)dropItem(s,dropAt(b.actor,i,nd,b.x,b.y,0),dropAt(b.actor,i,nd,b.x,b.y,1),card.spell&&(i===1||nd===1)?1:0); /* 하트는 보스 발치 구름 아래에서 솟는다: 먹으로 스미는 몸 한가운데를 가리지 않게(사용자 11-16) */}else s.timeouts++;
     // 이름 붙은 패턴을 폭탄 없이, 맞지 않고 넘기면 보너스
     if(defeated&&!s.spellOnly&&(!next||next.kind!=='card'||next.actor!==card.actor))jackpot(s,!!card.mid,b.x,b.y); // 이 인물의 마지막 패턴: 잭팟(스펠 연습은 제외)
@@ -1669,7 +1669,7 @@
     if(b&&b.present&&!b.leaving)src={x:b.x,y:b.y};
     for(var m=0;m<s.mobs.length;m++){var o=s.mobs[m],d=Math.abs(o.x-p.x);if(o.y<p.y&&d<best){best=d;src={x:o.x,y:o.y};}}
     if(k===1){if(!src)src={x:p.x<W/2?W-20:20,y:-10};var a=aim(s,src.x,src.y);for(var j=-2;j<=2;j++)spawn(s,src.x,src.y,a+j*.16,150,{color:WHITE,size:1,formation:true,life:600});note(s,'lineGuard');}
-    else if(k===2){beam(s,-12,Math.max(24,p.y),0,{width:18,warn:60,active:40,color:PURPLE});note(s,'lineGuard');}
+    else if(k===2){beam(s,-12,Math.max(24,p.y),0,{width:18,warn:60,active:40,color:PURPLE,keep:1});note(s,'lineGuard');}
     else{riserInit(s);var gap=Math.max(70,MOTIFS.mountain.size*1.4);
       for(var side=-1;side<=1;side+=2){var x=p.x+side*gap;if(x<20||x>W-20)continue;pushRiser(s,'mountain',{dir:'up',at:x,ay:Math.max(60,AUTO_COLLECT_Y-40)});}
       note(s,'lineGuard');}
