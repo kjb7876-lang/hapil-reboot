@@ -59,6 +59,6 @@ test('mid-boss cards have 2.5x (easy 3x) the health and stay duration of before;
   for(const [d,k] of [['gentle',3],['normal',2.5],['hell',2.5]]){
     const s=a.createRun({difficulty:d,seed:9,segment:midIdx,entranceAll:true}),mid=a.SEGMENTS[midIdx],boss=a.SEGMENTS[bossIdx];
     const plain=Object.assign({},mid,{mid:false});
-    assert(Math.abs(a.cardHp(s,mid)/a.cardHp(s,plain)-k)<.05,d+' mid hp x'+k);
+    assert(Math.abs(a.cardHp(s,mid)/a.cardHp(s,plain)-k*a.MID_HP_MORE[d])<.05,d+' mid hp x'+k+' (11-20 체력 보강 포함)');
     assert(Math.abs(a.cardDuration(s,mid)/a.cardDuration(s,plain)-k)<.05,d+' mid duration x'+k);}
 });
