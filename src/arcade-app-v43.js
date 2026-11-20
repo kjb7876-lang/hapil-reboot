@@ -705,7 +705,8 @@
     for(i=0;i<s.events.length;i++){
       var e=s.events[i];if(Spirit)Spirit.onEvent(e,s,Arcade);if(Cues)Cues.onEvent(e,s,Arcade,play);
       if(e==='graze'){play('graze',s.player.x);addParticle(s.player.x,s.player.y,(Math.random()-.5)*5,(Math.random()-.5)*5,12,'#ffffff',2);}
-      else if(e==='bossHit'||e==='bossHitLow')play(e,s.boss.x);
+      else if(e==='bossHit'||e==='bossHitLow')play(isSeoha(s.hero)?'rainHitSeoha':'rainHitMemory',s.boss.x); // 적중음: 빗방울 조각(서하는 낮고 늘어지게, 기억사수는 짧고 또렷하게)
+      else if(e==='mobHit')play(isSeoha(s.hero)?'rainHitSeoha':'rainHitMemory',s.player.x);
       else if(e==='kill')play('kill',s.player.x);
       else if(e==='orbBreak')play('item',s.player.x);
       else if(e==='pieceBreak'){play('kill',s.player.x);shake=Math.max(shake,4);}
@@ -742,7 +743,8 @@
       else if(e==='riserWarn'){if(!s.special)play('inkSwell',s.risers&&s.risers.length?s.risers[s.risers.length-1].x:W/2);} // 아래에서 솟는 소재 예고음(특수 페이즈 중에는 박 소리와 겹치지 않게 뺀다)
       else if(e==='laserFire'){if(Rhythm&&notesOnly(s))shake=Math.max(shake,1.8);else{play('laserFire',s.boss.x);shake=Math.max(shake,5);}} // 리듬 음표는 박마다 켜지므로 큰 발사음·흔들림 대신 북·가야금 소리(Rhythm.sounds)
       else if(e==='pop')play('skillCounter',s.boss.x);
-      else if(e==='sparkFire'||e==='sparkHit'||e==='tbStick'||e==='tbBoom'){play(e,s.player.x);if(e==='tbBoom')shake=Math.max(shake,1.5);} // 영웅 공격 손맛 소리(src/hero-memory-v43.js 그림과 짝)
+      else if(e==='sparkHit')play(isSeoha(s.hero)?'rainHitSeoha':'rainHitMemory',s.player.x);
+      else if(e==='sparkFire'||e==='tbStick'||e==='tbBoom'){play(e,s.player.x);if(e==='tbBoom')shake=Math.max(shake,1.5);} // 영웅 공격 손맛 소리(src/hero-memory-v43.js 그림과 짝)
       else if(e==='bossSpit'){play('summon',s.boss.x);shake=Math.max(shake,2);}
     }
     s.events.length=0;if(Rhythm)Rhythm.sounds(s,play);if(Cues)Cues.frame(s,Arcade,play);
