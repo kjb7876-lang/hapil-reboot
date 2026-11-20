@@ -370,6 +370,7 @@
   }
 
   /* 광선 하나. (x,y)에서 angle 방향으로 뻗는다. o: {width,warn,active,color,spin(초당 회전),follow(보스에 붙음),burst(켜질 때 선을 따라 쌀알탄)} */
+  function sigilUp(s){for(var q=0;q<s.figures.length;q++)if(s.figures[q].sigil)return true;return false;} // 큰 육망성이 떠 있으면 광선이 막힌다: 레이저 특수 구간은 육망성이 걷힐 때까지 미룬다(11-20, 빈 레이저 구간 3초)
   function beam(s,x,y,angle,o){
     if(s.lasers.length>=LASER_CAP)return;
     for(var q=0;q<s.figures.length;q++)if(s.figures[q].sigil)return; // 큰 육망성이 떠 있는 동안 다른 광선은 내지 않는다: 사용자 11-15 "이상한레이져 생성하지말고", 심사 6.50(육망성 선과 방사 광선이 한 화면에서 겹침)
@@ -2215,7 +2216,7 @@
     if(w.local===0&&!sp.cur&&!s.entranceAll)cancelAll(s,true); // 사용자 11-20 "시간이 지나 탄이 사라지지 않게": 실제 게임은 전환 예고에서도 탄을 서두르거나 걷지 않는다(수집선 규칙으로만 빨리 빠진다)
     // (11-20) 예고 1.5초 뒤 남은 탄을 먹으로 걷던 driftBullets 는 쓰지 않는다
     // 사용자 11-20 "탄이 다 사라진 다음에, 갑자기 지우지는 말고": 예고가 끝났는데 지난 탄이 남아 있으면 특수 페이즈 시작을 미룬다(예고 동안 새 탄은 없다, 최대 FIG_WAIT_MAX)
-    if(w.local===SP_LEAD&&!sp.cur&&s.entranceAll&&s.n&&!rlPending(s)&&(s.spHold=(s.spHold||0)+1)<FIG_WAIT_MAX){if(s.spHold===FIG_HURRY)hurryBullets(s);s.segTick--;return;} // 오래 남는 느린 탄은 판정을 지닌 채 빨라져 나간다(11-20: 고정 패턴에서 40px/초 탄이 10초 넘게 남아 특수 구간에 섞였다)
+    if(w.local===SP_LEAD&&!sp.cur&&s.entranceAll&&(s.n&&!rlPending(s)||sigilUp(s))&&(s.spHold=(s.spHold||0)+1)<FIG_WAIT_MAX){if(s.spHold===FIG_HURRY)hurryBullets(s);s.segTick--;return;} // 오래 남는 느린 탄은 판정을 지닌 채 빨라져 나간다(11-20: 고정 패턴에서 40px/초 탄이 10초 넘게 남아 특수 구간에 섞였다)
     if(w.local===SP_LEAD&&!sp.cur){s.spHold=0;sp.cur=w.kind;sp.cycle=w.cycle;s.special={kind:w.kind,start:s.tick,cycle:w.cycle,lay:SP_LAYBACK[s.difficulty]};note(s,'special');}
     if(!w.active||!sp.cur){centerGuard(s,w);return;}
     riserInit(s);var lt=w.local-SP_LEAD;
