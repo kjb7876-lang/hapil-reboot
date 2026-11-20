@@ -54,13 +54,102 @@
   function shots(g,s,t){
     var lv=s.power||1,i,ink=inkOn(),big=SHARD_SIZE[lv],shardOk=lv>=3&&ready('shard'),f=Math.floor(t*SHEETS.shard.fps);
     raw(1);g.save();blend(g);
-    if(isSeoha(heroId(s))){for(i=0;i<s.sn;i++)timeNeedle(g,s.sx[i],s.sy[i],Math.atan2(s.svx?s.svx[i]:0,15),s.shoming[i]?18:25+lv,ink?.75:s.shoming[i]?.4:.58,lv);g.restore();raw(-1);return;}
+    if(isSeoha(heroId(s))){for(i=0;i<s.sn;i++){if(s.skind&&s.skind[i]===2){bombClock(g,s.sx[i],s.sy[i],15,t*9,1,.25,lv);continue;}timeNeedle(g,s.sx[i],s.sy[i],Math.atan2(s.svx?s.svx[i]:0,15),s.shoming[i]?18:25+lv,ink?.75:s.shoming[i]?.4:.58,lv);}g.restore();raw(-1);return;}
+    var fr=Math.floor(t*30);
+    if(s.sn&&s.player&&fr%4<2)muzzle(g,s.player.x,s.player.y-24,fr,lv);
     for(i=0;i<s.sn;i++){
-      var x=s.sx[i],y=s.sy[i],vx=s.svx?s.svx[i]:0,ang=-Math.PI/2+Math.atan2(vx,15);
+      var x=s.sx[i],y=s.sy[i],vx=s.svx?s.svx[i]:0,ang=-Math.PI/2+Math.atan2(vx,15),kind=s.skind?s.skind[i]:0;
+      if(kind===1){chargedDart(g,x,y,Math.atan2(vx,15),lv,fr+i*7);continue;}
+      if(!s.shoming[i]){sparkDart(g,x,y,Math.atan2(vx,15),lv,fr+i*7,vx!==0);continue;} // 주포: 먹 번개 다트(사용자 11-20 "롤제리 느낌")
       if(shardOk){var z=s.shoming[i]?big*.7:big;cell(g,'shard',f+i,x,y,ang,z,ink?(s.shoming[i]?.6:vx?.75:.9):(s.shoming[i]?.3:vx?.4:.5));} // 색판은 적 탄보다 한 단계 옅게(심사 1차). 수묵판 시트는 이미 회색이라 옅게 그리면 한지에 묻혀 안 보였다(11-16 실검증)
       else{g.save();g.translate(x,y);g.rotate(Math.atan2(vx,15));stroke(g,0,0,s.shoming[i]?16:24+lv*2,s.shoming[i]?3:4+lv*.6,.5);g.restore();}
     }
     g.restore();raw(-1);
+  }
+
+  /* ── 전기 연사 손맛(사용자 11-20 "기억사수 모든공격 롤제리 느낌나게"): 원작 그림을 쓰지 않고 먹 번개·붓 획 전류로 다시 그린다.
+   *  주포 = 짧게 꺾인 먹 번개 다트(칸마다 모양이 바뀌어 지지직 튄다), 충전탄 = 굵은 붓 획 전류 + 먹 구슬 머리 + 갈필 꼬리,
+   *  맞은 자리 = 3~5갈래 짧은 번개 튐, 충전탄이 옆 적에 튀긴 몫 = 두 적을 잇는 번개 줄기. 닷츠 시트(CX-0154HM)가 오면 바꿔 끼울 임시 그림. ── */
+  function boltInk(){return inkOn()?'#3a3632':'#dff8ff';} // 중먹: 적 탄(진회색 구슬)보다 한 단계 옅게(심사 1차 "명도 서열 뒤집힘")
+  function boltDeep(){return inkOn()?'#1f1c1b':'#ffffff';} // 농묵: 충전탄·연쇄 줄기만
+  function boltCore(){return inkOn()?'#8a857c':'#ffffff';}
+  function rnd(n){var x=Math.sin(n*12.9898+78.233)*43758.5453;return x-Math.floor(x);}
+  function zig(g,x0,y0,x1,y1,seed,amp,n){ // 꺾인 선 하나(번개 줄기). seed 가 바뀌면 꺾임이 바뀐다
+    var dx=x1-x0,dy=y1-y0,d=Math.sqrt(dx*dx+dy*dy)||1,nx=-dy/d,ny=dx/d,i;n=n||Math.max(2,Math.round(d/7));
+    g.beginPath();g.moveTo(x0,y0);for(i=1;i<n;i++){var u=i/n,o=(rnd(seed+i*3.1)-.5)*2*amp;g.lineTo(x0+dx*u+nx*o,y0+dy*u+ny*o);}g.lineTo(x1,y1);g.stroke();
+  }
+  function wedge(g,x0,y0,x1,y1,w0,w1,seed,amp,n){ // 뿌리 굵고 끝 가는 채운 붓 획(꺾임 포함): 갈필 쐐기
+    var dx=x1-x0,dy=y1-y0,d=Math.sqrt(dx*dx+dy*dy)||1,nx=-dy/d,ny=dx/d,L=[],R=[],k;n=n||3;
+    for(k=0;k<=n;k++){var u=k/n,o=k===0||k===n?0:(rnd(seed+k*2.3)-.5)*2*amp,w=(w0+(w1-w0)*u)*.5,cx=x0+dx*u+nx*o,cy=y0+dy*u+ny*o;L.push(cx+nx*w,cy+ny*w);R.push(cx-nx*w,cy-ny*w);}
+    g.beginPath();g.moveTo(L[0],L[1]);for(k=2;k<L.length;k+=2)g.lineTo(L[k],L[k+1]);for(k=R.length-2;k>=0;k-=2)g.lineTo(R[k],R[k+1]);g.closePath();g.fill();
+  }
+  function boltShape(g,len,w,amp,seed,n){ // 채운 번개 한 줄기: 꼬리(+y)는 가늘게, 머리(-y) 바로 뒤가 가장 굵고 끝은 뾰족하다. 꺾임은 번갈아 좌우로 날카롭게
+    var L=[],R=[],k;for(k=0;k<=n;k++){var u=k/n,y=len*.5-len*u,x=k===0||k===n?0:(k%2?1:-1)*amp*(.55+rnd(seed+k*1.7)*.45),hw=k===n?0:w*(.18+.82*Math.min(1,u*1.25));L.push(x-hw,y);R.push(x+hw,y);}
+    g.beginPath();g.moveTo(L[0],L[1]);for(k=2;k<L.length;k+=2)g.lineTo(L[k],L[k+1]);for(k=R.length-2;k>=0;k-=2)g.lineTo(R[k],R[k+1]);g.closePath();g.fill();
+  }
+  function sparkDart(g,x,y,rot,lv,seed,outer){
+    var len=19+lv*1.5,a=fxDim*(outer&&lv>=5?.4:.6);g.save();g.translate(x,y);g.rotate(rot);g.lineCap='round';g.lineJoin='round';
+    g.globalAlpha=a;g.fillStyle=boltInk();boltShape(g,len,1.5+lv*.08,3.6,seed>>2,4);
+    g.globalAlpha=a*.8;g.fillStyle=boltCore();boltShape(g,len*.65,.45,3.6*.65,seed>>2,4);
+    if((seed&3)!==3){var by=-len*.1+(rnd(seed+9)-.5)*len*.5,sd=rnd(seed+4)>.5?1:-1;g.globalAlpha=a;g.strokeStyle=boltInk();g.lineWidth=1;zig(g,sd*2,by,sd*(5+lv*.6),by-4,seed+17,1.4,2);} // 잔전류: 칸마다 다른 자리에서 튄다
+    g.restore();
+  }
+  function chargedDart(g,x,y,rot,lv,seed){ // 일반 탄의 1.6배 길이·2배 폭, 이 탄만 농묵(심사 1차)
+    var len=(19+lv*1.5)*1.6,a=fxDim*.85,k;g.save();g.translate(x,y);g.rotate(rot);g.lineCap='round';g.lineJoin='round';
+    g.globalAlpha=a*.55;g.fillStyle=boltDeep();for(k=0;k<4;k++){var ox=(k-1.5)*1.9;wedge(g,ox,len*.36,ox*.5+(rnd(seed+k)-.5)*3,len*.36+20+rnd(seed*.3+k)*9,1.6,.2,seed+k*5,.8,2);} // 갈필 꼬리 24~30px: 갈라진 마른 붓털
+    g.globalAlpha=a;g.fillStyle=boltDeep();boltShape(g,len,(1.5+lv*.08)*2,4.6,seed>>2,5);
+    g.globalAlpha=a*.7;g.fillStyle=boltCore();boltShape(g,len*.68,1,4.6*.68,seed>>2,5);
+    g.globalAlpha=a*.8;g.fillStyle=boltDeep();var sd=(seed>>3)%2?1:-1,by=-len*.05;wedge(g,sd*3,by,sd*(10+rnd(seed)*4),by+7,1.6,.3,seed+11,1.4,2); // 뒤로 흘러내리는 잔전류 한 가닥
+    g.restore();
+  }
+  function muzzle(g,x,y,seed,lv){ // 총구 잔전기: 짧은 갈필 2~3획, 두 칸에 한 번만
+    g.save();g.globalAlpha=.7*fxDim;g.fillStyle=boltInk();var n=2+(seed&1);
+    for(var k=0;k<n;k++){var sd=k%2?1:-1,ln=10+rnd(seed+k)*4,an=-Math.PI/2+sd*(.45+rnd(seed*3+k)*.5);wedge(g,x+sd*2,y,x+sd*2+Math.cos(an)*ln,y+Math.sin(an)*ln,2,.3,seed+k*7,1.6,3);}
+    g.restore();
+  }
+  var hitSparks=[],hitArcs=[],hitBooms=[],TB_FUSE=42;
+  function takeHits(s,t){
+    var z=s.shotHits;if(!z||!z.length)return;var hero=heroId(s);
+    for(var i=0;i+4<z.length;i+=5){var k=z[i+2];
+      if(k===3){if(hitArcs.length<10)hitArcs.push({x0:z[i],y0:z[i+1],x1:z[i+3],y1:z[i+4],t0:t,seed:(z[i]*3+z[i+4])|0});}
+      else if(k===4){if(hitBooms.length<10)hitBooms.push({x:z[i],y:z[i+1],t0:t,seed:(z[i]*5+z[i+1])|0});}
+      else if(hitSparks.length<28)hitSparks.push({x:z[i],y:z[i+1],t0:t,big:k===1,hero:hero,seed:(z[i]*7+z[i+1]*3+i)|0,turn:rnd(z[i]+z[i+1])*TAU});}
+    z.length=0;
+  }
+  function drawHits(g,t){ // 피격 튐: 비대칭 세 갈래(별·＊ 모양 금지), 연쇄 줄기: 3→1px 로 가늘어지는 한 획 + 잔가지 하나
+    var i,k;g.save();g.lineCap='round';g.lineJoin='round';
+    for(i=hitSparks.length-1;i>=0;i--){var p=hitSparks[i],life=p.big?.24:.16,u=(t-p.t0)/life;if(u>=1||u<0){if(u>=1)hitSparks.splice(i,1);continue;}
+      g.globalAlpha=(1-u)*.85*fxDim;g.fillStyle=isSeoha(p.hero)?timeColor(false):boltDeep();var gaps=[0,1.15+rnd(p.seed)*.5,2.7+rnd(p.seed+1)*.6];
+      for(k=0;k<3;k++){var a=p.turn+gaps[k],ln=(p.big?11:8)+rnd(p.seed+k*3)*4,r0=2+u*4,r1=r0+ln*(.6+u*.5);wedge(g,p.x+Math.cos(a)*r0,p.y+Math.sin(a)*r0,p.x+Math.cos(a)*r1,p.y+Math.sin(a)*r1,p.big?2.6:2,.3,p.seed+k*5,isSeoha(p.hero)?0:1.4,2);}}
+    for(i=hitArcs.length-1;i>=0;i--){var c=hitArcs[i],age=t-c.t0,v=age<.12?0:(age-.12)/.1;if(v>=1){hitArcs.splice(i,1);continue;}var sd2=Math.floor(age*45);
+      g.globalAlpha=(1-v)*.92*fxDim;g.fillStyle=boltDeep();wedge(g,c.x0,c.y0,c.x1,c.y1,3.2,1.2,c.seed+sd2,2.6,Math.max(3,Math.round(Math.hypot(c.x1-c.x0,c.y1-c.y0)/12)));
+      var mx=(c.x0+c.x1)/2,my=(c.y0+c.y1)/2;wedge(g,mx,my,mx+(rnd(c.seed)-.5)*16,my-6-rnd(c.seed+1)*8,1.6,.2,c.seed+3,1.5,2);}
+    g.restore();
+  }
+  /* 윤서하 시간탄(사용자 11-20 "서하는 공격중에 시간탄섞어서 적에게 … 시간폭탄"): 작은 수묵 회중시계. 붙으면 테 여덟 칸이 하나씩 짙고 굵어지며 째깍이고, 마지막 두 칸에서 맥동, 다 차면 깨진다.
+   *  테는 끊긴 붓 획 여덟 조각에 위쪽(용두 자리)을 열어 둔다(닫힌 고리 아님). 바늘은 하나. 어두운 배경에서도 읽히게 한지색 번짐을 바깥에 둔다. */
+  function bombClock(g,x,y,r,ang,alpha,fill,lv){
+    var i,n=8,on=Math.floor(fill*n+1e-6),open=.3;g.save();g.translate(x,y);g.lineCap='round';
+    if(inkOn()){g.globalAlpha=alpha*.5*fxDim;g.strokeStyle='#f3ecdc';g.lineWidth=4.5;g.beginPath();g.arc(0,0,r+.5,-Math.PI/2+open,TAU-Math.PI/2-open);g.stroke();} // 한지 번짐 테(어두운 배경용)
+    g.globalAlpha=alpha*.18*fxDim;g.fillStyle=timeColor(true);g.beginPath();g.arc(0,0,r*.8,0,TAU);g.fill();
+    for(i=0;i<n;i++){var a0=-Math.PI/2+open+(TAU-2*open)*i/n+.05,a1=-Math.PI/2+open+(TAU-2*open)*(i+1)/n-.12,lit=i<on;g.globalAlpha=alpha*(lit?1:.7)*fxDim;g.strokeStyle=lit?timeColor(false):timeColor(true);g.lineWidth=lit?2+1.5*fill:1.8;g.beginPath();g.arc(0,0,r,a0,a1);g.stroke();}
+    g.globalAlpha=alpha*fxDim;g.strokeStyle=timeColor(false);g.lineWidth=2.6;g.beginPath();g.moveTo(0,0);g.lineTo(Math.cos(ang)*r*.78,Math.sin(ang)*r*.78);g.stroke();
+    g.fillStyle=timeColor(false);g.beginPath();g.arc(0,0,1.8,0,TAU);g.fill();
+    g.fillRect(-2,-r-6,4,6);g.strokeStyle=timeColor(true);g.lineWidth=1.4;g.beginPath();g.moveTo(-r*.25,-r-6);g.lineTo(r*.25,-r-6);g.stroke(); // 용두(4×6 꼭지)
+    g.restore();
+  }
+  function drawTimeBombs(g,s,t){
+    var tb=s.tbombs,i;if(!tb||!tb.length)return;var F=global.HapilArcade&&global.HapilArcade.TIMEBOMB_FUSE||TB_FUSE;
+    for(i=0;i<tb.length;i++){var b=tb[i],u=Math.min(1,b.age/F),beat=u>.74&&(b.age%6)<2?1.15:1;bombClock(g,b.x,b.y,14*beat,-Math.PI/2+b.age*.55+.3,.95,u,7);}
+  }
+  function drawBooms(g,t){ // 파열: 불규칙 먹 얼룩 + 비대칭 쐐기 갈필 5~7개 + 포물선으로 흩어지는 톱니 조각 3~4개(대칭·별 모양 금지)
+    for(var i=hitBooms.length-1;i>=0;i--){var o=hitBooms[i],age=t-o.t0,u=age/.5;if(u>=1){hitBooms.splice(i,1);continue;}var k,e=1-Math.pow(1-u,2),R=(global.HapilArcade&&global.HapilArcade.TIMEBOMB_R||52);
+      g.save();g.lineCap='round';
+      var bl=Math.max(0,.7*(1-age/.25));if(bl>0){g.globalAlpha=bl*fxDim;g.fillStyle=timeColor(false);g.beginPath();for(k=0;k<9;k++){var a=TAU*k/9+rnd(o.seed+k*5)*.5,rr=(9+rnd(o.seed+k)*3)*(1+u*.6);if(k)g.lineTo(o.x+Math.cos(a)*rr,o.y+Math.sin(a)*rr);else g.moveTo(o.x+Math.cos(a)*rr,o.y+Math.sin(a)*rr);}g.closePath();g.fill();} // 먹 얼룩 지름 18~22
+      var n=5+Math.floor(rnd(o.seed)*3),acc=rnd(o.seed+2)*TAU;g.globalAlpha=(1-u)*.9*fxDim;g.fillStyle=timeColor(false);
+      for(k=0;k<n;k++){acc+=TAU/n*(.6+rnd(o.seed+k*2)*.8);var ln=R*.45*(.5+rnd(o.seed+k*7)*.9)*(.4+e*.6),r0=R*.12+e*R*.25;wedge(g,o.x+Math.cos(acc)*r0,o.y+Math.sin(acc)*r0,o.x+Math.cos(acc)*(r0+ln),o.y+Math.sin(acc)*(r0+ln),4*(1-u*.5),.6,o.seed+k*9,2,3);}
+      g.fillStyle=timeColor(true);for(k=0;k<3+(o.seed&1);k++){var c2=rnd(o.seed+k*7)*TAU,sp=R*(.5+rnd(o.seed+k*3)*.5),gx=o.x+Math.cos(c2)*sp*e,gy=o.y+Math.sin(c2)*sp*e+28*u*u;clockwork(g,gx,gy,7,u*7+k,(1-u)*.95*fxDim,5);} // 톱니 조각: 포물선으로 떨어지며 돈다
+      g.restore();}
   }
 
   /* ── 기억 번개(5단계부터): 영웅→적으로 번개 시트를 늘여 그리고, 맞은 자리에 결정 파편이 터진다 ── */
@@ -379,9 +468,9 @@
       g.beginPath();g.ellipse(x,y,dr,dr*(.7+.3*((i*.31)%1)),ph,0,TAU);g.fill();if(i%3===0){g.beginPath();g.arc(x+Math.cos(ph)*dr*2.2,y+Math.sin(ph)*dr*2.2,dr*.45,0,TAU);g.fill();}}
     g.restore();raw(-1);
   }
-  function draw(g,s,t){takeZaps(s,t);raw(1);g.save();blend(g);drawZaps(g,t);drawPops(g,t);g.restore();raw(-1);drawSkill(g,s,t);bombing=true;drawBombs(g,t,360,640,s);drawPulses(g,t);drawWarps(g,t);bombing=false;}
+  function draw(g,s,t){takeZaps(s,t);takeHits(s,t);raw(1);g.save();blend(g);drawZaps(g,t);drawPops(g,t);drawHits(g,t);g.restore();g.save();drawTimeBombs(g,s,t);drawBooms(g,t);g.restore();raw(-1);drawSkill(g,s,t);bombing=true;drawBombs(g,t,360,640,s);drawPulses(g,t);drawWarps(g,t);bombing=false;}
   function shake(){var q=quake;quake=0;return q;}
-  function reset(){skillBolts.length=0;lastSkillLabel=-9;zaps.length=0;pops.length=0;texts.length=0;bombs.length=0;quake=0;cut=null;warps.length=0;pulseBursts.length=0;}
+  function reset(){hitSparks.length=0;hitArcs.length=0;hitBooms.length=0;skillBolts.length=0;lastSkillLabel=-9;zaps.length=0;pops.length=0;texts.length=0;bombs.length=0;quake=0;cut=null;warps.length=0;pulseBursts.length=0;}
   function hudLine(s){var lv=s.power||1,bl=s.bombLevel||1;return {attack:lv,bomb:bl};}
   load();
   global.HapilHeroFx={setDim:setDim,shots:shots,draw:draw,drawTexts:drawTexts,clock:clock,field:field,onEvent:onEvent,shake:shake,reset:reset,hudLine:hudLine,SHEETS:SHEETS,
