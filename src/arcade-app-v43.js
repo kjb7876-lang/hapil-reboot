@@ -39,6 +39,8 @@
   var themeOverride=null,turbo=0,rushStage=false,oneCreditEligible=false;
   var Story=global.HapilArcadeStory||null,BossIntros=global.HapilArcadeBossIntros||null,story=null,storyQuiet=false,storySeen={},pauseReturn='playing',rulesReturn='title',storyArrivalActor='';
   var STORY_SEEN_KEY='hapil-arcade-boss-seen-v3',STORY_IMPACT_MS=1800;
+  /* 챕터(정본 제1부~제8부, src/arcade-chapters-v43.js): 기록 화면·재도전·전환 카드. 진행 저장은 본 키 + 예비 키 두 곳에 쓰고 읽을 때 합친다(사용자 11-20 "저장 불러오기 꼭 잘되게"). */
+  var Chapters=global.HapilArcadeChapters||null,chapterLog=Chapters?Chapters.freshLog():null,chapterCard=null,chapterReturn=null,lastSaveAt=0,BACKUP_KEY='hapil-arcade-save-v43-bak';
   var Heroes=global.HapilArcadeHeroes||null,heroPicker=null,selectedHero='memory',journeyHero='memory',HERO_KEY='hapil-arcade-hero-v43',JOURNEY_HERO_KEY='hapil-arcade-journey-hero-v43';
   function heroId(id){return Heroes?Heroes.get(id).id:id==='seoha'||id==='seoha-b'?id:'memory';}
   function isSeoha(id){return id==='seoha'||id==='seoha-b';}
@@ -621,15 +623,43 @@
     var raw=null;
     try{var text=global.localStorage.getItem(SAVE_KEY);raw=text?JSON.parse(text):null;}catch(e){raw=null;}
     try{progress=Progress.sanitize(raw);}catch(e){progress=Progress.fresh();}
+    // 예비 저장(본 저장과 같은 순간에 쓴다)과 합친다: 본 키가 깨졌거나 지워졌거나 예전 값이면 예비 쪽 기록을 되살린다. 합치기는 깬 스테이지·별·점수를 잃지 않는 방향으로만.
+    var bak=null;try{bak=JSON.parse(global.localStorage.getItem(BACKUP_KEY)||'null');}catch(e){bak=null;}
+    var mainCount=progress.cleared.length;
+    if(bak&&typeof bak==='object'&&!Array.isArray(bak)){try{progress=mergeProgress(progress,Progress.sanitize(bak.progress));}catch(e){}lastSaveAt=finite(Number(bak.at),0)||0;}
+    if(Chapters){var lg=null;try{lg=JSON.parse(global.localStorage.getItem(Chapters.LOG_KEY)||'null');}catch(e){lg=null;}chapterLog=Chapters.cleanLog(lg,Arcade.STAGES);if(bak&&bak.chapters)chapterLog=Chapters.mergeLog(chapterLog,bak.chapters,Arcade.STAGES);}
+    if(progress.cleared.length>mainCount||(raw===null&&progress.cleared.length))saveProgress(); // 되살린 기록을 본 키에도 다시 쓴다
     try{best=Math.max(0,finite(Number(global.localStorage.getItem(BEST_KEY)),0))||0;}catch(e){best=0;}
     bests={};try{var bv=JSON.parse(global.localStorage.getItem(BESTS_KEY)||'{}');if(bv&&typeof bv==='object'&&!Array.isArray(bv))['gentle','normal','hell'].forEach(function(d){var e=bv[d];if(e&&typeof e==='object')bests[d]={one:Math.max(0,finite(Number(e.one),0))|0,practice:Math.max(0,finite(Number(e.practice),0))|0};});}catch(e){bests={};}
   }
-  function saveProgress(){try{global.localStorage.setItem(SAVE_KEY,JSON.stringify(progress));saveOk=true;}catch(e){saveOk=false;}}
+  /* 저장: 본 키에 쓰고 곧바로 다시 읽어 같은지 확인, 예비 키에도 같은 내용과 챕터 기록·시각을 쓴다. 둘 중 하나라도 남으면 다음 실행에서 되살린다. */
+  function saveProgress(){
+    var text=JSON.stringify(progress),ok=false,now=Date.now();
+    try{global.localStorage.setItem(SAVE_KEY,text);ok=global.localStorage.getItem(SAVE_KEY)===text;}catch(e){ok=false;}
+    try{if(Chapters&&chapterLog)global.localStorage.setItem(Chapters.LOG_KEY,JSON.stringify(chapterLog));}catch(e){}
+    try{global.localStorage.setItem(BACKUP_KEY,JSON.stringify({v:1,at:now,progress:progress,chapters:chapterLog}));ok=ok||!!global.localStorage.getItem(BACKUP_KEY);}catch(e){}
+    saveOk=ok;if(ok)lastSaveAt=now;return ok;
+  }
+  /* 두 진행 기록 합치기: b 에서 깬 스테이지를 앞에서부터 a 에 기록(더 좋은 별·점수가 남는다). Progress.record 가 순서·잠김을 다시 검사한다. */
+  function mergeProgress(a,b){
+    var r=Progress.sanitize(a);if(!b)return r;b=Progress.sanitize(b);
+    b.cleared.forEach(function(c){r=Progress.record(r,{stage:c,stars:b.stars[c]||1,score:b.best[c]||0},null);});
+    return r;
+  }
+  /* 기록 코드: 진행·챕터 기록·최고점을 한 줄로. 불러오기는 지금 기록과 합친다(덮어써서 잃지 않는다). */
+  function exportCode(){return Chapters?Chapters.encode({v:1,at:Date.now(),progress:progress,chapters:chapterLog,best:best,bests:bests}):'';}
+  function importCode(text){
+    var v=Chapters&&Chapters.decode(text);if(!v||!v.progress)return null;
+    var before=progress.cleared.length;progress=mergeProgress(progress,v.progress);if(Chapters)chapterLog=Chapters.mergeLog(chapterLog,v.chapters,Arcade.STAGES);
+    var vb=finite(Number(v.best),0);if(vb>best){best=Math.floor(vb);try{global.localStorage.setItem(BEST_KEY,String(best));}catch(e){}}
+    if(v.bests&&typeof v.bests==='object'){['gentle','normal','hell'].forEach(function(d){var e=v.bests[d];if(!e||typeof e!=='object')return;var m=bests[d]||(bests[d]={one:0,practice:0});['one','practice'].forEach(function(k){var x=Math.max(0,finite(Number(e[k]),0))|0;if(x>m[k])m[k]=x;});});try{global.localStorage.setItem(BESTS_KEY,JSON.stringify(bests));}catch(e){}}
+    saveProgress();return {added:progress.cleared.length-before,total:progress.cleared.length};
+  }
   /* 방금 맞은 스펠(외부 심사 11-20 "결과 화면에 '방금 맞은 스펠 다시 연습' … 같은 예고부터 바로 반복"): 이름 붙은 패턴에서 맞거나·자동 필살이 터지거나·봉인을 놓친 마지막 패턴 */
   function noteSpell(s){var seg=Arcade.SEGMENTS[s.seg];if((s.stage==='card'||s.stage==='lost'||s.cardEnding)&&seg&&seg.kind==='card'&&seg.spell)lastSpell={seg:s.seg,stage:seg.stage,name:seg.name,hero:s.hero};}
   function recordResult(result){
     if(!result||state.bossOnly||state.spellOnly)return;
-    progress=Progress.record(progress,result,state.difficulty);saveProgress();
+    progress=Progress.record(progress,result,state.difficulty);if(Chapters)chapterLog=Chapters.noteClear(chapterLog,Arcade.STAGES,progress,result.stage,state.difficulty);saveProgress();
   }
   function recordBestScore(s){
     if(s&&s.score>best){best=s.score;try{global.localStorage.setItem(BEST_KEY,String(best));}catch(e){}}
@@ -690,7 +720,7 @@
       else if(e==='plain'){var ppi=Arcade.phaseOf&&Arcade.phaseOf(s.seg);if(ppi&&ppi.count>1&&s.entranceAll)showBanner('PHASE '+ppi.no+' / '+ppi.count,phaseLabel(s,false),false);}
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,'제'+g.part+'부 · STAGE '+(s.stageIndex+1));play('seal');}}
       else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);showToast(r);rushStage=false;}
-      else if(e==='map')loadStage(s.stageIndex);
+      else if(e==='map'){var fromPart=s.results.length?Arcade.STAGES[s.results[s.results.length-1].stage].part:0;loadStage(s.stageIndex);if(fromPart&&fromPart!==Arcade.STAGES[s.stageIndex].part)openChapterCard(fromPart,Arcade.STAGES[s.stageIndex].part,null);}
       else if(e==='entrance'){if(storyArrivalActor!==s.boss.actor)play('warning');storyArrivalActor='';wantFx(s.boss.actor);showBanner(s.boss.name,s.boss.mid?'중간보스':'보스');} // 본보스 컷인은 enter() 전, 중간보스는 기존 입장만.
       else if(e==='figure')castFx(s,false);
       else if(e==='bossClear'){clearCombatPresentation();if(Mobile&&Mobile.commitBossClear)Mobile.commitBossClear(s);
@@ -1854,6 +1884,7 @@
       else while(accumulator>=1/60&&steps<limit&&mode==='playing'){if(beginStory())break;if(rushStage)rushTick(state);if(devMode)state.player.hp=state.player.maxHp;Arcade.step(state,inputForStep());accumulator-=1/60;steps++;consume();if(mode==='playing')beginStory();}
       if(Mobile&&state)Mobile.tick(state,mode,rawMs); // 진단은 잘리기 전 실제 프레임 시간(1초 넘는 복귀 프레임은 tick이 버림)
     }
+    if(mode==='chapter'&&chapterCard&&!document.hidden)chapterCard.tick(elapsed*1000);
     if(mode==='story'&&story&&!document.hidden){if(story.phase==='impact'){story.phaseMs+=elapsed*1000;if(story.phaseMs>=STORY_IMPACT_MS)revealStory();}else if($('story-auto').checked){story.elapsed+=elapsed*1000;if(story.elapsed>=story.lineMs)nextStory();}}
     if(global.HapilMusic)global.HapilMusic.update(musicMode(),state,settings.music); // 구간이 바뀌면 이전 곡을 멈추고 전환한다
     draw(elapsed);
@@ -1861,8 +1892,8 @@
 
   /* ── 메뉴 ── */
   function show(id,on){var el=$(id);if(el)el.hidden=!on;}
-  var SCREENS={title:'arcade-title',paused:'arcade-pause',result:'arcade-result',keepsakes:'arcade-keepsake-screen',boss:'arcade-boss-screen',story:'arcade-story',rules:'arcade-rules',hero:'arcade-hero-select'};
-  function musicMode(){return mode==='story'?'playing':mode==='rules'&&rulesReturn!=='title'?'paused':mode;}
+  var SCREENS={title:'arcade-title',paused:'arcade-pause',result:'arcade-result',keepsakes:'arcade-keepsake-screen',boss:'arcade-boss-screen',story:'arcade-story',rules:'arcade-rules',hero:'arcade-hero-select',chapters:'arcade-chapter-screen',chapter:'arcade-chapter-card'};
+  function musicMode(){return mode==='story'||mode==='chapter'?'playing':mode==='rules'&&rulesReturn!=='title'?'paused':mode;}
   function syncStoryFx(){var el=$('arcade-story');if(!el)return;el.dataset.paused=String(mode!=='story');el.dataset.lite=String(settings.lowQuality);el.dataset.shake=String(settings.screenShake);}
   function revealStory(){if(!story||story.phase!=='impact')return;story.phase='memory';story.elapsed=0;$('arcade-story').dataset.phase='memory';if(fx&&fx.suspend)fx.suspend(true);}
   function paintStory(){
@@ -1986,9 +2017,11 @@
     clearInput();if(fx&&fx.reset)fx.reset();unlockAudio();
     var quiet=!!(run&&run.quiet);storyQuiet=quiet;story=null;storyArrivalActor='';pauseReturn='playing';
     var grown=run&&run.grown; // 중간 저장에서 이어 할 때 자란 공격·필살 단계
-    run={stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),spellOnly:!!(run&&run.spellOnly&&Number.isInteger(run.segment)),segment:run&&run.segment,carry:run&&run.carry,practice:!!(run&&run.practice),hero:heroId(run&&run.hero||selectedHero)};
+    var chapterPart=run&&Number.isInteger(run.chapter)?run.chapter:0;
+    run={chapter:chapterPart,stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),spellOnly:!!(run&&run.spellOnly&&Number.isInteger(run.segment)),segment:run&&run.segment,carry:run&&run.carry,practice:!!(run&&run.practice),hero:heroId(run&&run.hero||selectedHero)};
     lastRun=run;lastSpell=run.spellOnly?lastSpell:null;oneCreditEligible=run.stage===0&&!run.bossOnly&&!run.spellOnly&&!Number.isInteger(run.segment)&&!run.carry&&!run.practice&&!quiet&&!devMode;
     var options={ability:abilityFor(run.hero),entranceAll:true,difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,spellOnly:run.spellOnly,growth:true,pacing:!quiet,rhythm:!quiet}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
+    if(run.chapter&&Chapters){var ch=Chapters.list(Arcade.STAGES)[run.chapter-1];if(ch&&ch.last>=run.stage)options.stages=ch.last-run.stage+1;} // 챕터 재도전: 그 챕터 끝에서 멈춘다
     if(Number.isInteger(run.segment))options.segment=run.segment;if(grown&&(grown.exp||grown.fills))options.grown={exp:grown.exp|0,fills:grown.fills|0};
     state=Arcade.createRun(options);syncAbility();heroOpacity=1;if(Spirit)Spirit.reset();if(Cues)Cues.reset();
     if(isSeoha(state.hero))loadImage('hero-'+state.hero);
@@ -2001,6 +2034,8 @@
     show('arcade-drill-skip',!!drill);
     particles.length=0;drifts.length=0;inks.length=0;flash=hurtFlash=shake=banner=0;shock=null;hurtRing=null;toast=null;if(HeroFx)HeroFx.reset();accumulator=0;lastStamp=0;framesSeen=0;rushStage=false;setMode('playing');
     if(global.HapilEyes)global.HapilEyes[quiet?'clear':'open'](); // 눈 뜨기(arcade-eyes-v43.js). 디버그 건너뛰기는 연출 없이
+    var firstOfPart=Chapters&&!quiet&&!run.bossOnly&&!run.spellOnly&&!Number.isInteger(run.segment)&&Chapters.list(Arcade.STAGES)[Arcade.STAGES[run.stage].part-1].first===run.stage;
+    if(firstOfPart)openChapterCard(0,Arcade.STAGES[run.stage].part,function(){setMode('playing');if(global.HapilEyes)global.HapilEyes.open();}); // 챕터 첫 스테이지에서 시작하면 그 챕터의 문부터, 카드가 걷히면 눈을 다시 뜬다
   }
   function finish(){
     var s=state,won=s.stage==='won';rushStage=false;
@@ -2014,14 +2049,17 @@
     if(!won){retry.hidden=false;retry.textContent=T('retryFallen');retry.dataset.stage=String(s.stageIndex);}
     else if(s.bossOnly){retry.hidden=false;retry.textContent=T('retryBoss');retry.dataset.stage=String(s.rushStage);}
     else retry.hidden=true;
-    retry.dataset.boss=s.bossOnly?'1':'';
+    retry.dataset.boss=s.bossOnly?'1':'';retry.dataset.chapter='';
     var sp=$('arcade-spell-retry'),again=s.spellOnly?{seg:s.spellSeg,stage:s.rushStage,name:(Arcade.SEGMENTS[s.spellSeg]||{}).name}:lastSpell;
     if(sp){sp.hidden=!again;if(again){sp.innerHTML='';var st=document.createElement('span');st.style.cssText='display:block;white-space:nowrap';st.textContent=s.spellOnly?'이 스펠 한 번 더 연습':'방금 맞은 스펠 다시 연습';sp.appendChild(st);var sm=document.createElement('small');sm.style.cssText='display:block;font-size:12px;opacity:.8';sm.textContent='「'+again.name+'」';sp.appendChild(sm);sp.dataset.seg=String(again.seg);sp.dataset.stage=String(again.stage);}}
     if(sp)sp.className=s.spellOnly?'primary':'';if(s.spellOnly){retry.hidden=true;}
     $('arcade-home').className=retry.hidden?'primary':'';
     var eyes=!won&&global.HapilEyes;if(eyes)eyes.close(); // 목숨이 다하면 눈을 감고, 다 감긴 뒤 결과 화면
     var fallen=$('arcade-result');fallen.classList.toggle('fallen',!won&&!!eyes&&!eyes.state().off); // ?eyes=0 이면 감긴 눈 바탕이 없으니 예전 한지 결과판(리뷰 지적) // 게임 오버: 감긴 눈 위에 붉은 십자가가 그어지고 '다시하기'(이 스테이지 처음부터)
-    setTimeout(function(){if(state===s){setMode('result');if(eyes&&eyes.cross&&fallen.classList.contains('fallen'))eyes.cross($('result-cross'));}},won?1500:eyes?Math.round(eyes.CLOSE_SECONDS*1000)+350:900);
+    var chapterEnd=won&&!s.bossOnly&&!s.spellOnly&&Chapters?(lastRun&&lastRun.chapter?Arcade.STAGES[s.stageIndex].part:s.stageIndex>=Arcade.STAGES.length-1?Chapters.count():0):0;
+    if(chapterEnd&&lastRun&&lastRun.chapter){var nx=Chapters.list(Arcade.STAGES)[chapterEnd];$('result-title').textContent='제'+chapterEnd+'부 완료';if(nx&&Progress.canPlay(progress,nx.first)){retry.hidden=false;retry.textContent='다음 챕터 · 제'+nx.part+'부';retry.dataset.stage=String(nx.first);retry.dataset.chapter=String(nx.part);$('arcade-home').className='';}} // 챕터 재도전 끝: 다음 챕터로 바로
+    var toResult=function(){if(state===s){setMode('result');if(eyes&&eyes.cross&&fallen.classList.contains('fallen'))eyes.cross($('result-cross'));}};
+    setTimeout(function(){if(state!==s)return;if(chapterEnd&&openChapterCard(chapterEnd,0,toResult,lastRun&&lastRun.chapter?null:Chapters.finale()))return;toResult();},won?1500:eyes?Math.round(eyes.CLOSE_SECONDS*1000)+350:900);
   }
   /* 첫 플레이 30초 조작 실습(외부 심사 11-20 "첫 플레이에는 긴 규칙창과 함께 이동·저속·폭탄을 직접 써보는 30초 실습"): 여정을 처음 시작할 때 한 번.
      적·탄 없이 판 위에서 ① 이동(240px) ② 저속(누른 채 1초 — 피격점이 보인다) ③ 필살(한 번, 연습이라 개수는 줄지 않는다)을 해 본다. 단계마다 최대 10초, 다 하면 1초 뒤 바로 1스테이지. 건너뛰기 단추. */
@@ -2054,6 +2092,41 @@
   }
   function wrapDrill(text,x,y,maxW,lh,color){var words=text.split(' '),line='',n=0;ctx.fillStyle=color;for(var i=0;i<words.length;i++){var tryL=line?line+' '+words[i]:words[i];if(ctx.measureText(tryL).width>maxW&&line){ctx.fillText(line,x,y+n*lh);n++;line=words[i];}else line=tryL;}if(line)ctx.fillText(line,x,y+n*lh);}
   function pause(){if(mode==='playing'||mode==='story'){pauseReturn=mode;setMode('paused');}}
+  /* ── 챕터 ── 카드는 자동 검사 브라우저에서는 뜨지 않는다(?chapter=1 이면 뜬다, ?chapter=0 이면 끈다): 기존 화면 검사가 1스테이지 진행을 본다. */
+  function chapterCardsOn(){
+    if(!Chapters||!chapterCard)return false;var q=/[?&]chapter=([01])\b/.exec(global.location&&global.location.search||'');if(q)return q[1]==='1';
+    return !(global.navigator&&global.navigator.webdriver);
+  }
+  function chapterStats(part){
+    var row=Chapters.summary(Arcade.STAGES,progress,chapterLog,function(i){return Progress.canPlay(progress,i);})[part-1];if(!row)return '';
+    return '스테이지 '+row.cleared+'/'+row.total+' · 별 '+row.stars+'/'+row.maxStars+(row.complete&&row.levelName?' · '+row.levelName+' 완주':'');
+  }
+  function placeOf(index){var lp=loopOf(index),k=lp||('bg-'+themeOf(index).bg);return listed(k)?fileOf(k):'';} // 다음 챕터 첫 무대의 배경을 카드 먹 면 뒤에 옅게(공간이 바뀐다는 단서)
+  function beginSpec(part,lines){var c=Chapters.list(Arcade.STAGES)[part-1];if(!c)return null;var op=lines||Chapters.opening(Arcade.STAGES,part);return {part:part,title:c.title,numeral:c.numeral,lines:op&&op.lines?op.lines.slice(0,3):[],speaker:op&&op.speaker,firstStage:Arcade.STAGES[c.first].name,place:placeOf(c.first)};}
+  /* 앞 챕터의 끝(낙관)과 다음 챕터의 시작(먹 번짐·제목·정본 연결 장면). to 가 0 이면 끝만, from 이 0 이면 시작만. done 이 없으면 판으로 돌아간다. */
+  function openChapterCard(from,to,done,endLines){
+    if(!chapterCardsOn()){if(done)done();return false;}
+    var spec={lite:!!settings.lowQuality};
+    if(from){var c=Chapters.list(Arcade.STAGES)[from-1];spec.end={part:from,title:c.title,stats:chapterStats(from),saved:saveOk,final:from===Chapters.count()&&!to};}
+    if(to)spec.begin=beginSpec(to);else if(endLines){var tt=String(endLines.title||'').split(' — ');spec.begin={part:from,kicker:tt.length>1?tt[0]:'',title:tt.length>1?tt[1]:tt[0],numeral:'合',lines:endLines.lines.slice(0,3),speaker:endLines.speaker,final:true,place:placeOf(Arcade.STAGES.length-1)};} // 마지막 챕터를 마치면 정본 최종장 문장으로 닫는다
+    chapterReturn=done||null;clearInput();
+    var ok=chapterCard.show(spec,function(){var d=chapterReturn;chapterReturn=null;accumulator=0;lastStamp=0;if(d)d();else if(state)setMode('playing');});
+    if(ok)setMode('chapter');return ok;
+  }
+  function chapterSound(kind){if(kind==='end'){play('seal');shake=0;}else play('phaseBreak',W/2);}
+  function openChapters(){
+    if(!Chapters)return;var rows=Chapters.summary(Arcade.STAGES,progress,chapterLog,function(i){return Progress.canPlay(progress,i);});
+    Chapters.renderList(document,$('arcade-chapter-list'),rows,{restart:function(part){var c=rows[part-1];if(c&&Progress.canPlay(progress,c.first))chooseHero({stage:c.first,practice:true,chapter:part});},resume:function(stage){if(Progress.canPlay(progress,stage))chooseHero({stage:stage,practice:true});}});
+    var done=rows.filter(function(r){return r.complete;}).length,cur=rows.filter(function(r){return r.open&&!r.complete;})[0];
+    $('chapter-summary').textContent='마친 챕터 '+done+' / '+rows.length+(cur?' · 지금 제'+cur.part+'부 「'+cur.title+'」':done===rows.length?' · 모든 챕터를 마쳤습니다':'');
+    paintSaveState();$('chapter-code').hidden=true;$('chapter-import-go').hidden=true;
+    setMode('chapters');
+  }
+  function paintSaveState(msg){
+    var el=$('chapter-save-state');if(!el)return;if(msg){el.textContent=msg;return;}
+    var when=lastSaveAt?new Date(lastSaveAt):null,t=when?(when.getMonth()+1)+'/'+when.getDate()+' '+('0'+when.getHours()).slice(-2)+':'+('0'+when.getMinutes()).slice(-2):'';
+    el.textContent=!saveOk?'이 브라우저에는 저장되지 않습니다. 기록 코드를 복사해 두면 다른 곳에서 불러올 수 있습니다.':'자동 저장 켜짐 · 스테이지를 깰 때마다, 보스를 쓰러뜨릴 때마다 저장'+(t?' · 마지막 저장 '+t:'')+'. 기록 코드로 다른 기기에 옮길 수 있습니다.';
+  }
   function goTitle(){story=null;storyArrivalActor='';if(global.HapilEyes)global.HapilEyes.clear();if(loadedStage>=0)releaseStage(loadedStage,-1);state=null;toast=null;refreshTitle();setMode('title');}
   function bossStages(){return Arcade.STAGES.filter(function(g){return g.kind==='boss'&&progress.cleared.indexOf(g.index)>=0;});}
   function actorNames(index){var names=[];Arcade.SEGMENTS.forEach(function(seg){if(seg.stage===index&&seg.kind==='card'){var who=Arcade.ACTORS[seg.actor],n=who?who.name:seg.actor;if(names.indexOf(n)<0)names.push(n);}});return names;}
@@ -2080,6 +2153,7 @@
     cont.className=any?'primary':'';begin.className=any?'':'primary';
     $('title-best').textContent=pad(best);$('title-stars').textContent=String(Progress.totalStars(progress));$('title-stars-max').textContent=String(Arcade.STAGES.length*3);
     $('arcade-keepsakes').textContent=T('keepsakesCount',{n:progress.rewards.length,max:Arcade.STAGES.length});
+    if($('arcade-chapters')){if(Chapters){var cs=Chapters.summary(Arcade.STAGES,progress,chapterLog,function(i){return Progress.canPlay(progress,i);});$('arcade-chapters').textContent='챕터 기록 '+cs.filter(function(r){return r.complete;}).length+'/'+cs.length;}else $('arcade-chapters').hidden=true;}
     $('save-note').hidden=saveOk;
     fillStages();
   }
@@ -2165,7 +2239,14 @@
     $('arcade-keepsakes').addEventListener('click',openKeepsakes);
     $('arcade-keepsake-back').addEventListener('click',function(){setMode('title');});
     if($('arcade-spell-retry'))$('arcade-spell-retry').addEventListener('click',function(){var g=Number(this.dataset.seg);if(!Number.isInteger(g)||!Arcade.SEGMENTS[g])return;start({stage:Number(this.dataset.stage)||0,segment:g,spellOnly:true,practice:true,hero:state?state.hero:selectedHero});});
-    $('arcade-retry').addEventListener('click',function(){var i=Number(this.dataset.stage)||0;start({stage:i,practice:true,bossOnly:this.dataset.boss==='1',hero:state?state.hero:selectedHero});});
+    $('arcade-retry').addEventListener('click',function(){var i=Number(this.dataset.stage)||0,ch=Number(this.dataset.chapter)||0;start({stage:i,practice:true,bossOnly:this.dataset.boss==='1',chapter:ch||undefined,hero:state?state.hero:selectedHero});});
+    if($('arcade-chapters'))$('arcade-chapters').addEventListener('click',openChapters);
+    if($('arcade-chapter-back'))$('arcade-chapter-back').addEventListener('click',function(){setMode('title');});
+    if($('chapter-export'))$('chapter-export').addEventListener('click',function(){var code=exportCode(),box=$('chapter-code');box.hidden=false;box.value=code;$('chapter-import-go').hidden=true;try{box.select();}catch(e){}
+      var done=function(ok){paintSaveState(ok?'기록 코드를 복사했습니다. 메모 앱 등에 붙여 두면 다른 기기에서 [기록 코드 불러오기]로 이어 할 수 있습니다.':'아래 기록 코드를 길게 눌러 복사해 두세요.');};
+      try{if(global.navigator&&global.navigator.clipboard&&global.navigator.clipboard.writeText)global.navigator.clipboard.writeText(code).then(function(){done(true);},function(){done(false);});else done(false);}catch(e){done(false);}});
+    if($('chapter-import'))$('chapter-import').addEventListener('click',function(){var box=$('chapter-code');box.hidden=false;box.value='';box.placeholder='HAPIL43- 로 시작하는 기록 코드를 붙여 넣으세요';$('chapter-import-go').hidden=false;paintSaveState('기록 코드를 붙여 넣고 [이 코드로 불러오기]를 누르세요. 지금 기록은 지워지지 않고 합쳐집니다.');try{box.focus();}catch(e){}});
+    if($('chapter-import-go'))$('chapter-import-go').addEventListener('click',function(){var r=importCode($('chapter-code').value);if(!r){paintSaveState('코드를 읽지 못했습니다. HAPIL43- 부터 끝까지 빠짐없이 붙여 넣었는지 확인해 주세요.');return;}refreshTitle();openChapters();paintSaveState('불러왔습니다 · 새로 더한 스테이지 '+r.added+' · 깬 스테이지 모두 '+r.total);});
     $('arcade-home').addEventListener('click',goTitle);
     $('arcade-resume').addEventListener('click',resume);
     ['arcade-rules-title','arcade-rules-pause'].forEach(function(id){var b=$(id);if(b)b.addEventListener('click',openRules);});
@@ -2203,6 +2284,7 @@
     document.addEventListener('keydown',function(e){var key=e.key.length===1?e.key.toLowerCase():e.key,form=e.target&&e.target.closest&&e.target.closest('input,select,textarea,button');
       if(mode==='rules'&&key==='Escape'){e.preventDefault();if(!e.repeat)closeRules();return;}
       if(mode==='playing'&&!form&&(key==='Enter')&&state&&Arcade.entrancePhase&&Arcade.entrancePhase(state)){e.preventDefault();Arcade.skipEntrance(state);return;}
+      if(mode==='chapter'&&chapterCard){e.preventDefault();if(e.repeat)return;if(key==='Escape')chapterCard.skip();else if(key==='Enter'||key===' '||key==='z')chapterCard.next();return;}
       if(mode==='story'){if(key==='Escape'){e.preventDefault();if(!e.repeat)pause();return;}if(form)return;if(key==='Enter'||key===' '||key==='z'){e.preventDefault();if(!e.repeat)nextStory();}return;}
       if(key==='Escape'||(key===' '&&!form)){if(mode==='playing'||mode==='paused')e.preventDefault();if(e.repeat)return;if(mode==='playing')pause();else if(mode==='paused')$('arcade-resume').click();return;}
       if((form&&form.tagName!=='BUTTON')||mode!=='playing')return;
@@ -2216,7 +2298,9 @@
   function boot(){
     I18n.apply(document);
     if(global.HapilHeroSelect&&global.HapilHeroSelect.mount)heroPicker=global.HapilHeroSelect.mount($('arcade-stage'));
+    if(Chapters&&Chapters.mountCard)chapterCard=Chapters.mountCard(document,chapterSound);
     loadProgress();loadSettings();setDifficulty(progress.difficulty);
+    try{var nav=global.navigator;if(nav&&nav.storage&&nav.storage.persist&&!/Firefox\//.test(nav.userAgent||''))nav.storage.persist().catch(function(){});}catch(e){} // 모바일 브라우저가 저장 공간을 비울 때 기록이 먼저 지워지지 않게(파이어폭스는 묻는 창이 떠서 뺀다)
     try{fx=global.HapilAudio&&global.HapilAudio.create?global.HapilAudio.create():null;}catch(e){fx=null;}
     if(!global.HapilMusic)try{music=new Audio('media/music.mp3');music.loop=true;music.volume=.2;music.preload='none';}catch(e){music=null;}
     bind();applySettings(false);fit();refreshTitle();requestAnimationFrame(frame);
@@ -2234,7 +2318,7 @@
   /* 디버그 훅(헤드리스 검증용): 상태를 읽고, 스테이지·구간으로 건너뛰고, 진행 기록을 본다. */
   global.HapilArcadeApp={
     getState:snapshot,devDiag:devDiag,drawPropArt:drawPropArt, // tools/build-drawn-props-v43.cjs가 그림 파일을 구울 때 쓴다
-    pause:pause,back:function(){if(mode==='story')pause();else if(mode==='rules')closeRules();else if(mode==='paused')$('arcade-resume').click();else if(mode!=='title'&&mode!=='playing')goTitle();}, // 앱의 뒤로가기(arcade-mobile-v43.js)
+    pause:pause,back:function(){if(mode==='chapter'&&chapterCard)chapterCard.skip();else if(mode==='story')pause();else if(mode==='rules')closeRules();else if(mode==='paused')$('arcade-resume').click();else if(mode!=='title'&&mode!=='playing')goTitle();}, // 앱의 뒤로가기(arcade-mobile-v43.js)
     drill:function(){return drill?JSON.parse(JSON.stringify(drill)):null;},skipDrill:function(){if(drill)endDrill();},
     debugState:function(){
       return {state:state,app:snapshot(),progress:JSON.parse(JSON.stringify(progress)),saved:(function(){try{return global.localStorage.getItem(SAVE_KEY);}catch(e){return null;}})(),
@@ -2245,7 +2329,7 @@
         lose:function(){if(!state||mode!=='playing')return null;state.player.hp=0;state.stage='lost';state.stageTick=0;state.events.push('lose');consume();return snapshot();},
         setTheme:function(theme){if(!state)return null;themeOverride=theme?{stage:state.stageIndex,bg:theme.bg,tint:theme.tint,fx:theme.fx}:null;backgroundStage=-1;fxStage=-1;return snapshot();},
         sheet:function(key){var img=images[key];if(!img)return null;var x=sheetOf(key,img);return {frames:x.frames,cw:x.cw,ch:x.ch,fps:x.fps,width:img.width,height:img.height};},
-        showStory:function(){return beginStory(true);},skipStory:endStory,stageKeys:stageKeys,weather:Object.keys(WEATHER)};
+        showStory:function(){return beginStory(true);},skipStory:endStory,chapterCard:function(){return chapterCard?chapterCard.state():null;},openChapterCard:openChapterCard,skipChapter:function(){if(chapterCard)chapterCard.skip();},exportCode:exportCode,importCode:importCode,lastSaveAt:function(){return lastSaveAt;},stageKeys:stageKeys,weather:Object.keys(WEATHER)};
     }
   };
   boot();
