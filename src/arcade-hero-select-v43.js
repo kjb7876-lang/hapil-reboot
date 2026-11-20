@@ -82,6 +82,48 @@
 }
 @media(min-width:601px) and (max-width:950px) and (min-height:501px){#arcade-hero-select .hs-choice{padding:10px;gap:8px}#arcade-hero-select .hs-choice-mark{display:none}#arcade-hero-select .hs-choice-name{font-size:17px}}
 @media(prefers-reduced-motion:reduce){#arcade-hero-select *,#arcade-hero-select *:before,#arcade-hero-select *:after{animation:none!important;transition:none!important}#hero-select-portrait{filter:none}}
+html.ink #arcade-hero-select,html.ink #arcade-hero-select[data-hero^="seoha"]{--hs-accent:#5a5048;--hs-ink:#1e1a18;--hs-paper:#f2e9d6;background:radial-gradient(120% 70% at 50% 18%,rgba(120,104,84,.26),rgba(242,233,214,.94) 62%),#f2e9d6;color:#2a2420;font-family:"Noto Serif KR","Nanum Myeongjo","AppleMyungjo","Batang",serif}
+html.ink #arcade-hero-select[data-hero^="seoha"]{--hs-accent:#3f5552}
+html.ink #arcade-hero-select:before{background:repeating-linear-gradient(115deg,transparent 0 112px,rgba(42,36,32,.05) 113px 114px,transparent 115px 220px);border-top:3px solid #1e1a18;border-bottom:3px solid #1e1a18}
+html.ink #arcade-hero-select .hs-heading{border-bottom:1.5px solid rgba(30,26,24,.55)}
+html.ink #arcade-hero-select .hs-kicker,html.ink #arcade-hero-select .hs-number{color:#6f6354}
+html.ink #arcade-hero-select h1{color:#1e1a18;font-family:inherit}
+html.ink #arcade-hero-select .hs-art:before{background:linear-gradient(180deg,transparent 1%,rgba(30,26,24,.32) 2%,rgba(60,50,40,.13) 3% 94%,rgba(30,26,24,.18) 95%,transparent 97%)}
+html.ink #arcade-hero-select .hs-glyph{color:rgba(30,26,24,.07)}
+html.ink #hero-select-portrait{filter:drop-shadow(0 6px 10px rgba(30,26,24,.22));mask-image:linear-gradient(180deg,#000 90%,transparent 100%)}
+html.ink #hero-select-name{color:#1e1a18;text-shadow:none;font-family:inherit}
+html.ink #hero-select-title{color:var(--hs-accent)}
+html.ink #hero-select-description{color:#3c332b}
+html.ink #hero-select-abilities{color:#2a2420}
+html.ink #hero-select-abilities li:before{border-color:#1e1a18;background:#1e1a18;border-radius:50% 10% 50% 10%}
+html.ink #arcade-hero-select .hs-loadout{border-top:1px solid rgba(30,26,24,.3);color:#5a5048}
+html.ink #arcade-hero-select .hs-loadout b{color:#1e1a18}
+html.ink #arcade-hero-select .hs-image-state{color:#5a5048}
+html.ink #arcade-hero-select .hs-hint{color:#6f6354}
+html.ink #arcade-hero-select .hs-choice{background:#ebe0c8;border:1.5px solid #8a7c68;border-radius:13px 9px 12px 8px/9px 12px 8px 13px;color:#4a4036}
+html.ink #arcade-hero-select .hs-choice[aria-pressed="true"]{background:#d9cbae;border-color:#1e1a18;color:#1e1a18;box-shadow:inset 4px 0 #1e1a18}
+html.ink #arcade-hero-select .hs-choice-title{color:#6f6354}
+html.ink #arcade-hero-select .hs-choice-mark{color:#1e1a18}
+html.ink #arcade-hero-select .hs-choice img{mask-image:linear-gradient(90deg,#000 75%,transparent)}
+html.ink #arcade-hero-select .hs-action{background:#ebe0c8;border:1.5px solid #8a7c68;border-radius:13px 9px 12px 8px/9px 12px 8px 13px;color:#2a2420;font-family:inherit}
+html.ink #arcade-hero-select #hero-select-confirm{background:#1e1a18;border-color:#1e1a18;color:#f2e9d6}
+html.ink #arcade-hero-select button:focus-visible{outline:3px solid #1e1a18;outline-offset:3px}
+html.ink #arcade-hero-select .hs-dial{background:none;border:0;mask-image:none;opacity:1;color:#1e1a18}
+html.ink #arcade-hero-select .hs-dial:after{display:none}
+#arcade-hero-select .hs-svg{display:none}
+html.ink #arcade-hero-select .hs-svg{display:block;width:100%;height:100%;overflow:visible}
+html.ink #arcade-hero-select .hs-wheel{transform:rotate(var(--hs-turn,270deg));transform-origin:110px 110px;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+html.ink #arcade-hero-select .hs-enso{fill:none;stroke:#1e1a18;stroke-width:7;stroke-linecap:round;opacity:.82}
+html.ink #arcade-hero-select .hs-enso2{fill:none;stroke:#1e1a18;stroke-width:2.6;stroke-linecap:round;opacity:.5}
+html.ink #arcade-hero-select .hs-enso3{fill:none;stroke:#1e1a18;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:9 4 2 5 14 3;opacity:.42}
+html.ink #arcade-hero-select .hs-mark-dot{fill:#f2e9d6;stroke:#1e1a18;stroke-width:1.4;opacity:.55}
+html.ink #arcade-hero-select .hs-mark.is-on .hs-mark-dot{fill:#1e1a18;opacity:1}
+html.ink #arcade-hero-select .hs-mark-glyph{font:700 13px "Noto Serif KR","Nanum Myeongjo",serif;fill:#3c332b;opacity:.7;transform-box:fill-box;transform-origin:center;transform:rotate(calc(var(--hs-turn,270deg) * -1 - var(--a,0deg)));transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+html.ink #arcade-hero-select .hs-mark.is-on .hs-mark-glyph{fill:#f2e9d6;opacity:1}
+html.ink #arcade-hero-select .hs-dial{height:94%;width:auto;max-width:96%;aspect-ratio:1;left:50%;top:3%;translate:-50% 0}
+html.ink #arcade-hero-select[data-lite="true"] .hs-wheel,html.ink #arcade-hero-select[data-lite="true"] .hs-mark-glyph{transition:none!important}
+@media(max-height:500px) and (orientation:landscape){html.ink #arcade-hero-select .hs-choice{background:#ebe0c8}}
+@media(prefers-reduced-motion:reduce){html.ink #arcade-hero-select .hs-wheel,html.ink #arcade-hero-select .hs-mark-glyph{transition:none!important}}
 `;
   function mount(host) {
     var doc = global.document, heroes = global.HapilArcadeHeroes;
@@ -96,8 +138,22 @@
     var root = doc.createElement('section'); root.id = 'arcade-hero-select'; root.hidden = true;
     root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true');
     root.setAttribute('aria-labelledby', 'hero-select-heading'); root.dataset.lite = 'false';
-    root.innerHTML = '<div class="hs-shell"><header class="hs-heading"><h1 id="hero-select-heading">주인공 선택</h1><p class="hs-kicker">SELECT YOUR HERO</p></header><div class="hs-stage"><div class="hs-art"><div class="hs-dial" aria-hidden="true"></div><span class="hs-glyph" aria-hidden="true">憶</span><img id="hero-select-portrait" alt="" decoding="async"><p class="hs-image-state" hidden>초상을 불러오지 못했습니다.</p></div><div class="hs-details" aria-live="polite"><p class="hs-number">PLAYER / <span id="hero-select-number">01</span></p><p id="hero-select-title"></p><h2 id="hero-select-name"></h2><p id="hero-select-description"></p><ul id="hero-select-abilities"></ul><p class="hs-loadout"><span><b>사격</b><span id="hero-select-shot"></span></span><span><b>필살</b><span id="hero-select-bomb"></span></span></p></div></div><div class="hs-choices" role="group" aria-label="주인공"></div><footer class="hs-footer"><p class="hs-hint">방향키로 선택 · Enter로 시작 · Esc로 돌아가기 <br>터치 화면에서는 주인공을 누른 뒤 선택 확정</p><div class="hs-actions"><button id="hero-select-cancel" class="hs-action" type="button">돌아가기</button><button id="hero-select-confirm" class="hs-action" type="button">선택 확정 · 시작</button></div></footer></div>';
+    root.innerHTML = '<div class="hs-shell"><header class="hs-heading"><h1 id="hero-select-heading">주인공 선택</h1><p class="hs-kicker">SELECT YOUR HERO</p></header><div class="hs-stage"><div class="hs-art"><div class="hs-dial" aria-hidden="true"><svg class="hs-svg" viewBox="0 0 220 220" focusable="false"><defs><filter id="hs-rough" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".035 .05" numOctaves="3" seed="11" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="5"/></filter></defs><g class="hs-wheel"><path class="hs-enso" d="M173.9 52.5A86 86 0 1 1 98.0 24.8" filter="url(#hs-rough)"/><path class="hs-enso2" d="M186.6 154.2A88.5 88.5 0 1 1 76.8 27.9" filter="url(#hs-rough)"/><path class="hs-enso3" d="M46.0 163.7A83.5 83.5 0 0 1 174.0 56.3" filter="url(#hs-rough)"/><g class="hs-marks"></g></g></svg></div><span class="hs-glyph" aria-hidden="true">憶</span><img id="hero-select-portrait" alt="" decoding="async"><p class="hs-image-state" hidden>초상을 불러오지 못했습니다.</p></div><div class="hs-details" aria-live="polite"><p class="hs-number">PLAYER / <span id="hero-select-number">01</span></p><p id="hero-select-title"></p><h2 id="hero-select-name"></h2><p id="hero-select-description"></p><ul id="hero-select-abilities"></ul><p class="hs-loadout"><span><b>사격</b><span id="hero-select-shot"></span></span><span><b>필살</b><span id="hero-select-bomb"></span></span></p></div></div><div class="hs-choices" role="group" aria-label="주인공"></div><footer class="hs-footer"><p class="hs-hint">방향키로 선택 · Enter로 시작 · Esc로 돌아가기 <br>터치 화면에서는 주인공을 누른 뒤 선택 확정</p><div class="hs-actions"><button id="hero-select-cancel" class="hs-action" type="button">돌아가기</button><button id="hero-select-confirm" class="hs-action" type="button">선택 확정 · 시작</button></div></footer></div>';
     host.appendChild(root);
+    var wheelMarks = [];
+    (function buildWheel() { // 수묵 휠: 영웅 수만큼 먹 낙점(憶·時·覺)을 원 둘레에 놓고, 고른 영웅이 왼쪽 자리로 오게 돌린다.
+      var g = root.querySelector('.hs-marks'), glyphs = ['憶', '時', '覺'], ns = 'http://www.w3.org/2000/svg';
+      if (!g || !doc.createElementNS) return;
+      IDS.forEach(function (id, i) {
+        var a = i * (360 / IDS.length), m = doc.createElementNS(ns, 'g'), dot = doc.createElementNS(ns, 'circle'), t = doc.createElementNS(ns, 'text');
+        m.setAttribute('class', 'hs-mark'); m.setAttribute('data-hero', id);
+        m.setAttribute('transform', 'translate(110 110) rotate(' + a + ') translate(0 -99)');
+        m.style.setProperty('--a', a + 'deg');
+        dot.setAttribute('r', '11'); dot.setAttribute('class', 'hs-mark-dot');
+        t.setAttribute('class', 'hs-mark-glyph'); t.setAttribute('text-anchor', 'middle'); t.setAttribute('dominant-baseline', 'central'); t.textContent = glyphs[i] || '';
+        m.appendChild(dot); m.appendChild(t); g.appendChild(m); wheelMarks.push(m);
+      });
+    })();
     var choices = root.querySelector('.hs-choices');
     IDS.forEach(function (id) {
       var button = doc.createElement('button'); button.id = 'hero-select-' + id; button.className = 'hs-choice'; button.type = 'button';
@@ -105,6 +161,7 @@
       button.innerHTML = '<img alt="" decoding="async"><span class="hs-choice-copy"><span class="hs-choice-name"></span><span class="hs-choice-title"></span></span><span class="hs-choice-mark" aria-hidden="true">SELECTED</span>';
       choices.appendChild(button);
     });
+    var wheel = { idx: null, turn: null };
     var visible = false, selected = 'memory', onConfirm = null, onCancel = null, previousFocus = null;
     var preloadImages = {}, stage = root.querySelector('.hs-stage'), portrait = root.querySelector('#hero-select-portrait');
     function el(id) { return root.querySelector('#' + id); }
@@ -115,9 +172,13 @@
       var profiles = data.profiles || {};
       return Array.isArray(profiles) ? profiles.find(function (p) { return p.id === id; }) : profiles[id];
     }
+    function inkArt(p) {
+      var cl = doc.documentElement && doc.documentElement.classList;
+      return cl && cl.contains('ink') && p.cutin ? p.cutin : p.portrait;
+    }
     function preload(p) {
       if (!p || !p.portrait || preloadImages[p.id] || !global.Image) return;
-      var im = new global.Image(); im.decoding = 'async'; im.src = p.portrait; preloadImages[p.id] = im;
+      var im = new global.Image(); im.decoding = 'async'; im.src = inkArt(p); preloadImages[p.id] = im;
     }
     function populateChoices() {
       IDS.forEach(function (id) {
@@ -142,8 +203,15 @@
       (p.abilities || []).forEach(function (text) { var li = doc.createElement('li'); li.textContent = text; abilities.appendChild(li); });
       portrait.alt = p.name + ' 초상'; portrait.hidden = !p.portrait;
       root.querySelector('.hs-image-state').hidden = true;
-      if (p.portrait) portrait.src = p.portrait;
+      if (p.portrait) portrait.src = inkArt(p); // 수묵 화면에서는 먹빛 컷인(없으면 원래 초상)
       IDS.forEach(function (heroId) { el('hero-select-' + heroId).setAttribute('aria-pressed', String(heroId === selected)); });
+      (function spinWheel() {
+        var n = IDS.length, idx = IDS.indexOf(selected), step = 360 / n, delta = 0;
+        if (wheel.idx != null) { delta = ((idx - wheel.idx) % n + n) % n; if (delta > n / 2) delta -= n; }
+        wheel.idx = idx; wheel.turn = wheel.turn == null ? 270 - idx * step : wheel.turn - delta * step;
+        if (root.style && root.style.setProperty) root.style.setProperty('--hs-turn', wheel.turn + 'deg');
+        wheelMarks.forEach(function (m) { if (m.classList) m.classList.toggle('is-on', m.getAttribute('data-hero') === selected); });
+      })();
       stage.classList.remove('is-revealing');
       if (visible) { void stage.offsetWidth; stage.classList.add('is-revealing'); }
       return selected;
