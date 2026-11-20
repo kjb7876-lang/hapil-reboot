@@ -581,7 +581,7 @@
   function domHud(s){
     var hi=$('arcade-hud-high'),lo=$('arcade-hud-low');if(!hi||!lo)return;hi.hidden=lo.hidden=mode!=='playing';
     var b=s.boss,stage=Arcade.STAGES[s.stageIndex],i,hearts='',bombs='',color=themeColor(s);
-    for(i=0;i<s.player.maxHp;i++)hearts+=i<s.player.hp?'◆':'◇';for(i=0;i<s.bombs;i++)bombs+='✦';
+    for(i=0;i<s.player.maxHp;i++)hearts+=i<s.player.hp?'◆':'◇';for(i=0;i<s.bombs;i++)bombs+='✦';var bcap=Arcade.bombCap?Arcade.bombCap(s):0;if(bcap>s.bombs){bombs+='<span class="slot">';for(i=s.bombs;i<bcap;i++)bombs+='✧';bombs+='</span>';} // 빈 자리 ✧: 난이도별 보관 최대치(이지 7·노멀 5·헬 3)를 보여 준다
     var g=Math.round(100*Math.max(0,Math.min(1,s.gauge/Arcade.GAUGE_FULL)));
     var name='<div><div class="name" style="color:'+color+'">'+esc(b.present?b.name:stage.name)+'</div><div>'+(s.bossOnly?'보스 체험 · 제'+stage.part+'부':'STAGE '+(s.stageIndex+1)+' / '+Arcade.STAGES.length)+'</div></div>';
     var lb=function(t){return hudOut==='side'?'<div class="lbl">'+t+'</div>':'';}; // PC 패널에는 이름표를 붙인다(심사 7차)
@@ -2031,7 +2031,7 @@
     lastRun=run;lastSpell=run.spellOnly?lastSpell:null;oneCreditEligible=run.stage===0&&!run.bossOnly&&!run.spellOnly&&!Number.isInteger(run.segment)&&!run.carry&&!run.practice&&!quiet&&!devMode;
     var options={ability:abilityFor(run.hero),entranceAll:true,difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,spellOnly:run.spellOnly,growth:true,pacing:!quiet,rhythm:!quiet}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
     if(run.chapter&&Chapters){var ch=Chapters.list(Arcade.STAGES)[run.chapter-1];if(ch&&ch.last>=run.stage)options.stages=ch.last-run.stage+1;} // 챕터 재도전: 그 챕터 끝에서 멈춘다
-    if(Number.isInteger(run.segment))options.segment=run.segment;if(grown&&(grown.exp||grown.fills))options.grown={exp:grown.exp|0,fills:grown.fills|0};
+    if(Number.isInteger(run.segment))options.segment=run.segment;if(grown&&(grown.exp||grown.fills||typeof grown.stock==='number')){options.grown={exp:grown.exp|0,fills:grown.fills|0};if(typeof grown.stock==='number')options.grown.stock=grown.stock;}
     state=Arcade.createRun(options);syncAbility();heroOpacity=1;if(Spirit)Spirit.reset();if(Cues)Cues.reset();
     if(isSeoha(state.hero))loadImage('hero-'+state.hero);
     if(!run.bossOnly&&!run.spellOnly&&!quiet){journeyHero=run.hero;try{global.localStorage.setItem(JOURNEY_HERO_KEY,journeyHero);}catch(e){}}
@@ -2239,7 +2239,7 @@
   function fieldPoint(e){var rect=canvas.getBoundingClientRect();return {x:(e.clientX-rect.left)*W/rect.width,y:(e.clientY-rect.top)*H/rect.height};}
   function bind(){
     document.querySelectorAll('[data-difficulty]').forEach(function(button){button.addEventListener('click',function(){setDifficulty(button.dataset.difficulty);progress.difficulty=difficulty;saveProgress();if(state===null)refreshTitle();});});
-    $('arcade-continue').addEventListener('click',function(){var mid=midway();start(mid?{practice:true,stage:mid.stage,segment:mid.seg,hero:heroId(mid.hero),carry:{hits:mid.hits,bombs:mid.bombs},grown:{exp:mid.exp,fills:mid.fills}}:{practice:true,stage:Progress.resume(progress),hero:journeyHero});});
+    $('arcade-continue').addEventListener('click',function(){var mid=midway();start(mid?{practice:true,stage:mid.stage,segment:mid.seg,hero:heroId(mid.hero),carry:{hits:mid.hits,bombs:mid.bombs},grown:{exp:mid.exp,fills:mid.fills,stock:mid.stock}}:{practice:true,stage:Progress.resume(progress),hero:journeyHero});});
     $('arcade-start').addEventListener('click',function(){chooseHero({stage:0});});
     $('arcade-stage-go').addEventListener('click',function(){var i=Number($('arcade-stage-select').value);if(Progress.canPlay(progress,i))chooseHero({stage:i,practice:true});});
     $('arcade-boss-open').addEventListener('click',function(){fillStages();setMode('boss');});
