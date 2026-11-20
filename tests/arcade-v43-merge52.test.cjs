@@ -63,7 +63,7 @@ test('stage 40 is the nightmare swarm and the last boss is the awakened cult lea
  assert.equal(s.boss.name,'사몽각성 교주');
  const manifest=JSON.parse(read('media/arcade-v43/manifest.json'));
  for(const k of ['chief_swarm','cultist_awake']){assert(manifest[k+'.webp'],k);assert(fs.statSync(path.join(root,'media/arcade-v43',k+'.webp')).size>2000,k);}
- assert.equal(Lines.getLine('chief',swarm).text,'그들은 항상 의지만 할걸, 여태 그래 왔듯이.');
+ assert.equal(Lines.getLine('chief',swarm).text,'그들은 항상 의지만 할 걸, 여태 그래 왔듯이.');
 });
 
 test('the awakened cult leader plays one difficulty up: easy = normal table and shapes, normal = hell table, hell = every pattern at double tempo',()=>{

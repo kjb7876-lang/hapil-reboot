@@ -2228,7 +2228,7 @@
     fillStages();
   }
   function setDifficulty(next){
-    if(!Arcade.DIFFICULTY[next])next='normal';difficulty=next;var rule=Arcade.DIFFICULTY[difficulty];$('difficulty-note').textContent=T(NOTES[difficulty],{hp:rule.hp,bombs:rule.bombs,minutes:Arcade.PACING&&Arcade.PACING[difficulty]?Arcade.PACING[difficulty].nominalMinutes:({gentle:60,normal:90,hell:120})[difficulty]});
+    if(!Arcade.DIFFICULTY[next])next='normal';difficulty=next;var rule=Object.assign({},Arcade.DIFFICULTY[difficulty]);if(Arcade.livesFor)rule.hp=Arcade.livesFor(difficulty,compact,true);$('difficulty-note').textContent=T(NOTES[difficulty],{hp:rule.hp,bombs:rule.bombs,minutes:Arcade.PACING&&Arcade.PACING[difficulty]?Arcade.PACING[difficulty].nominalMinutes:({gentle:60,normal:90,hell:120})[difficulty]});
     document.querySelectorAll('[data-difficulty]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.difficulty===difficulty));});
   }
   // 기념물 격자: 얻은 것만 그림을 보이고, 못 얻은 칸은 가린다. 화면을 닫으면 그림을 버린다.
