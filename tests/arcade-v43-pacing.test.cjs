@@ -25,14 +25,14 @@ test('measured campaign HP keeps normal and hell identical, with easy below auth
  }
  assert.equal(A.pacingReport('normal').cardHpScale,A.pacingReport('hell').cardHpScale);
 });
-test('lives are 5/3/2 and only a chapter boundary restores one life, capped at maximum',()=>{
+test('lives are 5/3/2 and only a chapter boundary refills every life (사용자 11-20 "한챕터 끝나면 모든 목숨 다 차는걸로")',()=>{
  for(const [difficulty,hp] of [['gentle',5],['normal',3],['hell',2]]){
   assert.equal(A.createRun({difficulty}).player.hp,hp);
   for(const chapterBoundary of [false,true])for(const full of [false,true]){
    const stage=A.STAGES.findIndex((g,i)=>i<A.STAGES.length-1&&(A.STAGES[i+1].part!==g.part)===chapterBoundary);
    const index=A.SEGMENTS.map((g,i)=>i).filter(i=>A.SEGMENTS[i].stage===stage).pop();
    const s=A.createRun({difficulty,segment:index,pacing:true});s.stage='card';s.boss.present=true;s.boss.hp=0;s.player.hp=full?hp:1;s.player.invulnerableUntil=999;s.bombs=0;
-   A.step(s,{});assert.equal(s.stageIndex,stage+1);assert.equal(s.player.hp,full?hp:chapterBoundary?Math.min(hp,2):1);
+   A.step(s,{});assert.equal(s.stageIndex,stage+1);assert.equal(s.player.hp,full?hp:chapterBoundary?hp:1);
   }
  }
 });
