@@ -42,7 +42,12 @@
     gateClang:{gap:300,level:.24,rank:3},
     boltRelease:{gap:200,level:.2,rank:3},
     hwandoThree:{gap:2000,level:.3,rank:4},
-    brushStroke:{gap:400,level:.2,rank:2}
+    brushStroke:{gap:400,level:.2,rank:2},
+    // 영웅 공격 손맛(사용자 11-20 "기억사수 모든공격 롤제리 느낌", "서하 … 시간폭탄"): 짧은 고역 지지직·작은 째깍·낮은 터짐. 배경음보다 크되 적 위험음보다 작게, 귀 아픈 고음은 대역 필터로 깎는다.
+    sparkFire:{gap:110,level:.09,rank:1},
+    sparkHit:{gap:90,level:.11,rank:1},
+    tbStick:{gap:150,level:.12,rank:1},
+    tbBoom:{gap:140,level:.17,rank:2}
   };
   // 'phase' 이벤트는 다음 패턴·구간이 시작될 때 나오므로 격파음에 쓰지 않는다(격파는 아래 단계 전환으로 잡는다).
   var EVENT_CUES={hurt:'hurt',kill:'kill',summon:'summon',seal:'seal',release:'seal',awakening:'awakening',win:'win',lose:'lose'};
@@ -218,6 +223,10 @@
       hwandoThree:function(d,l){[0,.42,.84].forEach(function(at,i){bell(d,i===2?659:587,1.1-i*.1,l*(i===2?1:.8),at);tone(d,'sine',1760,1760,.5,l*.12,at+.01,.002);});},
       // 스펠 첫 획: 붓이 한지를 쓸고 지나가는 짧은 쓸림.
       brushStroke:function(d,l){noise(d,'bandpass',1500,500,1.6,.26,l,0,.04);noise(d,'highpass',5000,3000,.7,.12,l*.35,0,.01);},
+      sparkFire:function(d,l){var v=vary();noise(d,'bandpass',3200*v,2400*v,4,.04,l,0,.002);noise(d,'bandpass',2200*v,1600,5,.03,l*.6,.035,.002);tone(d,'square',740*v,520*v,.03,l*.18);},
+      sparkHit:function(d,l){var v=vary();noise(d,'bandpass',2600*v,1500,3,.05,l,0,.001);noise(d,'bandpass',3400*v,2000,4,.025,l*.5,.04,.001);tone(d,'triangle',300*v,180,.06,l*.4);},
+      tbStick:function(d,l){clockTick(d,l,1.1);},
+      tbBoom:function(d,l){noise(d,'lowpass',2400,180,.8,.22,l);tone(d,'sine',170,60,.24,l*.8);bell(d,1046,.25,l*.25,.02);clockTick(d,l*.5,.9,.06);},
       clockChime:function(d,l){bell(d,880,.9,l*.55,0);[.12,.24,.36].forEach(function(at,i){clockTick(d,l*.8,1+i*.06,at);});}
     };
     function clockTick(d,l,pitch,delay){delay=delay||0;noise(d,'bandpass',2600*pitch,1800*pitch,5,.022,l*.8,delay,.001);tone(d,'sine',1900*pitch,1500*pitch,.035,l*.6,delay,.001);if(pitch===1&&!delay||pitch>1)noise(d,'bandpass',900,600,3,.03,l*.35,delay,.001);}
