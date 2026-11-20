@@ -163,6 +163,12 @@
     '.ch-row{position:relative;display:grid;grid-template-columns:52px 1fr;gap:4px 12px;align-items:center;text-align:left;padding:10px 12px;border:1px solid #4a4666;border-radius:10px;background:#15152a;overflow:hidden}',
     'html.ink .ch-row{background:#ebe0c8;border-color:#8a7c68;border-radius:13px 9px 12px 8px/9px 12px 8px 13px}',
     '.ch-row.locked{opacity:.72}',
+    /* 잠긴 제목 먹칠: 길이는 고정 두 가지(제목 길이가 드러나지 않게), 붓 모양 세 가지, 끝은 갈필(빗살 마스크). 다음에 열릴 챕터는 더 진하다 */
+    '.ch-veil{display:block;width:11.5em;max-width:100%;height:1.2em;margin:2px 0 6px;opacity:.6;background:radial-gradient(90% 120% at 6% 55%,#1e1915 0 45%,transparent 46%),linear-gradient(94deg,#1e1915,#241e19 30%,#2c241e 62%,rgba(44,36,30,.7) 84%,rgba(44,36,30,0));border-radius:48% 52% 38% 62%/66% 40% 60% 34%;-webkit-mask-image:linear-gradient(90deg,#000 56%,transparent 70%),repeating-linear-gradient(176deg,rgba(0,0,0,.9) 0 1.6px,transparent 1.6px 2.6px,rgba(0,0,0,.6) 2.6px 3.4px,transparent 3.4px 4.6px);-webkit-mask-size:100% 100%,93% 100%;-webkit-mask-repeat:no-repeat;mask-image:linear-gradient(90deg,#000 56%,transparent 70%),repeating-linear-gradient(176deg,rgba(0,0,0,.9) 0 1.6px,transparent 1.6px 2.6px,rgba(0,0,0,.6) 2.6px 3.4px,transparent 3.4px 4.6px);mask-size:100% 100%,93% 100%;mask-repeat:no-repeat}',
+    '.ch-veil.v1{width:9.5em;border-radius:40% 60% 52% 48%/52% 62% 38% 48%;transform:rotate(-1.2deg)}',
+    '.ch-veil.v2{border-radius:56% 44% 44% 56%/40% 58% 42% 60%;transform:rotate(.8deg)}',
+    '.ch-veil.next{opacity:1;filter:contrast(1.2)}',
+    '@media (min-width:900px){.ch-veil{height:1.45em}}',
     '#arcade-chapter-screen .kicker{color:#9a7a44}html.ink #arcade-chapter-screen .kicker{color:#6b5636}',
     '#chapter-summary{word-break:keep-all;max-width:520px}',
     '.ch-save textarea::selection{background:rgba(168,140,90,.45);color:inherit}',
@@ -251,7 +257,7 @@
     rows.forEach(function(r){
       var row=el(doc,'div','ch-row'+(r.complete?' complete':'')+(r.open?'':' locked')+(r===current?' current':''));row.dataset.part=String(r.part);
       var num=el(doc,'div','ch-num',r.numeral);num.setAttribute('aria-hidden','true');row.appendChild(num);
-      var head=el(doc,'div','ch-head');head.appendChild(el(doc,'small',null,'제'+r.part+'부 · STAGE '+(r.first+1)+'–'+(r.last+1)));head.appendChild(doc.createTextNode(r.title));
+      var head=el(doc,'div','ch-head');head.appendChild(el(doc,'small',null,'제'+r.part+'부 · STAGE '+(r.first+1)+'–'+(r.last+1)));if(r.open)head.appendChild(doc.createTextNode(r.title));else{var veil=el(doc,'span','ch-veil v'+(r.part%3)+(rows[r.part-2]&&rows[r.part-2].open?' next':''));veil.setAttribute('role','img');veil.setAttribute('aria-label','잠긴 챕터 · 먹으로 가린 제목');head.appendChild(veil);} /* 사용자 11-20 "해금전에 챕터 제목 묵색으로 가려서 스포방지": 잠긴 챕터는 제목 글자를 화면에 아예 넣지 않고 먹 획으로 덮는다 */
       if(r.complete){var bd=el(doc,'span','ch-badge',(r.levelName?r.levelName+' ':'')+'완주');head.appendChild(bd);}row.appendChild(head);
       var bar=el(doc,'div','ch-bar');bar.setAttribute('role','img');bar.setAttribute('aria-label',r.cleared+' / '+r.total+' 스테이지');for(var i=0;i<r.total;i++)bar.appendChild(el(doc,'i',i<r.cleared?'on':''));row.appendChild(bar);
       row.appendChild(el(doc,'div','ch-meta',r.open?('스테이지 '+r.cleared+'/'+r.total+' · 별 '+r.stars+'/'+r.maxStars+(r.score?' · 점수 합 '+r.score.toLocaleString('ko-KR'):'')):'잠김 — 제'+(r.part-1)+'부를 마치면 열립니다'));
