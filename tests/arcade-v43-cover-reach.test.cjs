@@ -9,6 +9,7 @@ for(const difficulty of ['normal','hell'])test(`cover gap is reachable and clean
   const s=A.createRun({entranceAll:true,difficulty,stage,stages:1,seed:5+stage,distort:false});s.bombs=0;const seen=new WeakSet(),open=[];
   for(let t=0;t<60*60*5&&s.stage!=='won';t++){
    const p=s.player,tx=180+Math.sin(t/200)*150,ty=560+Math.sin(t/131)*50;
+   if(s.sp)s.sp.force='cover'; // 레이저 구간의 무늬가 열한 가지로 늘어(11-20 리듬 레이저) 덮기가 드물어졌다: 이 검사는 덮기만 본다
    A.step(s,{dx:Math.max(-KEY,Math.min(KEY,tx-p.x)),dy:Math.max(-KEY,Math.min(KEY,ty-p.y))});p.hp=99;s.events.length=s.cancelled.length=s.pops.length=0;
    const fresh=s.lasers.filter(l=>l.solid&&!l.role&&!seen.has(l));fresh.forEach(l=>seen.add(l));
    if(fresh.length>=4){covers++;const vert=Math.abs(Math.sin(fresh[0].angle))>.5,top=vert?0:120,end=vert?A.WIDTH:A.HEIGHT;
