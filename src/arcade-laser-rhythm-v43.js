@@ -78,25 +78,32 @@
       if(l.age<l.warn){ if(opt.phase!=='over')continue;
         var t=l.age/l.warn,near=Math.max(0,1-(l.warn-l.age)/30); // 마지막 한 박에 짙어진다
         ctx.globalCompositeOperation='source-over';
-        ctx.globalAlpha=.05+.13*t+.16*near;ctx.fillStyle=VERMILION;if(g.v)ctx.fillRect(lo,0,wd,H);else ctx.fillRect(0,lo,W,wd);
+        ctx.globalAlpha=.02+.035*t+.075*near;ctx.fillStyle=VERMILION;if(g.v)ctx.fillRect(lo,0,wd,H);else ctx.fillRect(0,lo,W,wd);
         // 가장자리: 인주색 가는 끊긴 선(돕는 예고)
         ctx.globalAlpha=.5+.4*t;ctx.strokeStyle=VERMILION;ctx.lineWidth=1.4;ctx.setLineDash([9,7]);ctx.lineDashOffset=-s.tick*.7;ctx.beginPath();
         if(g.v){ctx.moveTo(lo+.7,0);ctx.lineTo(lo+.7,H);ctx.moveTo(hi-.7,0);ctx.lineTo(hi-.7,H);}else{ctx.moveTo(0,lo+.7);ctx.lineTo(W,lo+.7);ctx.moveTo(0,hi-.7);ctx.lineTo(W,hi-.7);}
         ctx.stroke();ctx.setLineDash([]);
         // 음표머리: 박이 다가오는 만큼 줄을 따라 내려와(가로줄은 양 끝에서 모여) 닿는 순간 켜진다
         var hw=Math.max(3,Math.min(9,wd*.09)),a=.55+.45*t;
-        if(g.v){var y=H*t,x0=lo+3,x1=hi-3;head(ctx,x0,y-hw,x1-x0,hw*2,a);}
-        else{var reach=W/2*t;head(ctx,reach-hw*2,lo+3,hw*2,wd-6,a);head(ctx,W-reach,lo+3,hw*2,wd-6,a);}
+        // 도착선: 음표머리가 닿으면 켜지는 자리(세로줄은 바닥, 가로줄은 한가운데)
+        ctx.globalAlpha=.55+.45*near;ctx.fillStyle=VERMILION;if(g.v)ctx.fillRect(lo+4,H-5,wd-8,3);else ctx.fillRect(W/2-1.5,lo+4,3,wd-8);
+        if(g.v){var y=H*t,x0=lo+3,x1=hi-3;head(ctx,x0,y-hw,x1-x0,hw*2,a,true);}
+        else{var reach=W/2*t;head(ctx,reach-hw*2,lo+3,hw*2,wd-6,a,false);head(ctx,W-reach,lo+3,hw*2,wd-6,a,false);}
       }else{ if(opt.phase!=='under')continue;
         var over=l.age-l.warn-l.active,k=over>0?Math.max(0,1-over/opt.fade):Math.min(1,(l.age-l.warn+1)/3),born=l.age-l.warn;
         if(k<=0)continue;
         // 몸: 보스 색 띠(가장자리가 짙고 가운데는 비친다) + 띠를 따라 흐르는 붓 줄기 + 가장자리 심. 넓은 음표를 흰 판으로 칠하지 않는다
         var grad=g.v?ctx.createLinearGradient(lo,0,hi,0):ctx.createLinearGradient(0,lo,0,hi),edge=Math.min(.45,12/Math.max(24,wd));
-        grad.addColorStop(0,color+'f0');grad.addColorStop(edge,color+'b4');grad.addColorStop(.5,color+'8c');grad.addColorStop(1-edge,color+'b4');grad.addColorStop(1,color+'f0');
-        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=.78*k;ctx.fillStyle=grad;if(g.v)ctx.fillRect(lo,0,wd,H);else ctx.fillRect(0,lo,W,wd);
+        grad.addColorStop(0,color+'ff');grad.addColorStop(edge,color+'e6');grad.addColorStop(.5,color+'c8');grad.addColorStop(1-edge,color+'e6');grad.addColorStop(1,color+'ff');
+        ctx.globalCompositeOperation='source-over';ctx.globalAlpha=.94*k;ctx.fillStyle=grad;if(g.v)ctx.fillRect(lo,0,wd,H);else ctx.fillRect(0,lo,W,wd);
+        // 먹 번짐: 띠 바깥으로 엷게 스미고, 가장자리에 붓끝 삐침이 불규칙하게 돋는다(자로 그은 선이 되지 않게)
+        var bl=7,bg,sd;for(sd=0;sd<2;sd++){var e0=sd?hi:lo,e1=sd?hi+bl:lo-bl;bg=g.v?ctx.createLinearGradient(e0,0,e1,0):ctx.createLinearGradient(0,e0,0,e1);bg.addColorStop(0,color+'90');bg.addColorStop(1,color+'00');ctx.globalAlpha=k;ctx.fillStyle=bg;
+          if(g.v)ctx.fillRect(Math.min(e0,e1),0,bl,H);else ctx.fillRect(0,Math.min(e0,e1),W,bl);
+          if(!opt.lite){ctx.fillStyle=color;ctx.globalAlpha=.7*k;var len=g.v?H:W,fq;for(fq=0;fq<len;fq+=23){var hsh=Math.sin((fq+1)*12.9898+i*78.233+sd*37.7)*43758.5453;hsh-=Math.floor(hsh);if(hsh<.45)continue;var fl=4+hsh*9,fw=8+hsh*22,fo=fq+hsh*11;
+            ctx.beginPath();if(g.v){ctx.moveTo(e0,fo);ctx.quadraticCurveTo(e0+(sd?fl:-fl),fo+fw*.5,e0,fo+fw);}else{ctx.moveTo(fo,e0);ctx.quadraticCurveTo(fo+fw*.5,e0+(sd?fl:-fl),fo+fw,e0);}ctx.fill();}}}
         if(!opt.lite){var ns=Math.max(2,Math.min(7,Math.round(wd/26))),q;ctx.globalCompositeOperation='lighter';ctx.strokeStyle=color;
           for(q=0;q<ns;q++){var u=(q+.5)/ns+.5*Math.sin(i*7.3+q*2.1)/ns*.7,at=lo+wd*u,sw=2+((i+q)%3),ph=((s.tick*(9+q*2)+q*97+i*31)%(g.v?H:W));
-            ctx.globalAlpha=.5*k;ctx.lineWidth=sw;ctx.setLineDash([70+q*18,26+q*9]);ctx.lineDashOffset=-ph;ctx.beginPath();if(g.v){ctx.moveTo(at,0);ctx.lineTo(at,H);}else{ctx.moveTo(0,at);ctx.lineTo(W,at);}ctx.stroke();}
+            ctx.globalAlpha=.42*k;ctx.lineWidth=sw+((q*5+i)%4);ctx.setLineDash([90+q*37+(i%3)*22,18+q*13]);ctx.lineDashOffset=-ph;ctx.beginPath();if(g.v){ctx.moveTo(at,0);ctx.lineTo(at,H);}else{ctx.moveTo(0,at);ctx.lineTo(W,at);}ctx.stroke();}
           ctx.setLineDash([]);}
         ctx.globalCompositeOperation='source-over';ctx.globalAlpha=k;ctx.strokeStyle='#ffffff';ctx.lineWidth=2.6;ctx.beginPath();
         if(g.v){ctx.moveTo(lo+1.3,0);ctx.lineTo(lo+1.3,H);ctx.moveTo(hi-1.3,0);ctx.lineTo(hi-1.3,H);}else{ctx.moveTo(0,lo+1.3);ctx.lineTo(W,lo+1.3);ctx.moveTo(0,hi-1.3);ctx.lineTo(W,hi-1.3);}
@@ -106,16 +113,23 @@
     }
     ctx.restore();
   }
-  function head(ctx,x,y,w,h,a){ctx.globalAlpha=a*.9;ctx.fillStyle=HANJI;ctx.fillRect(x,y,w,h);ctx.globalAlpha=a;ctx.strokeStyle=VERMILION;ctx.lineWidth=1.5;ctx.strokeRect(x+.5,y+.5,w-1,h-1);}
+  // 음표머리: 붓으로 눌러 찍은 먹 점(가운데가 도톰하고 끝이 가는 획) + 인주색 가는 테
+  function head(ctx,x,y,w,h,a,v){var cx=x+w/2,cy=y+h/2,rx=w/2,ry=h/2;ctx.beginPath();
+    if(v){ctx.moveTo(x,cy);ctx.quadraticCurveTo(cx-rx*.3,cy-ry*1.5,x+w,cy-ry*.25);ctx.quadraticCurveTo(cx+rx*.2,cy+ry*1.6,x,cy);}
+    else{ctx.moveTo(cx,y);ctx.quadraticCurveTo(cx+rx*1.5,cy-ry*.3,cx+rx*.25,y+h);ctx.quadraticCurveTo(cx-rx*1.6,cy+ry*.2,cx,y);}
+    ctx.globalAlpha=a;ctx.fillStyle='#ffffff';ctx.fill();ctx.globalAlpha=a*.9;ctx.strokeStyle=VERMILION;ctx.lineWidth=1.2;ctx.stroke();}
   /* 장단 점: 레이저 장단 구간 동안 화면 아래 가운데에 8박을 점으로 보인다(센박은 크게). 지금 박이 인주색으로 찬다. */
   function drawBeats(ctx,s,opt){
     var sp=s.special,b=s.beat;if(!sp||sp.kind!=='laser'||!b)return;
-    var y=opt.y||31,n=b.n%8,since=s.tick-b.tick,i,gap=12,x0=opt.x||18,acc=opt.accent||[1,0,.5,0,1,0,.5,.5];
+    var y=opt.y||31,n=b.n%8,since=s.tick-b.tick,i,gap=14,x0=opt.x||20,acc=opt.accent||[1,0,.5,0,1,0,.5,.5];
     ctx.save();ctx.globalCompositeOperation='source-over';
-    for(i=0;i<8;i++){var r=acc[i]>=1?3.6:acc[i]>0?2.8:2.2,on=i===n,pulse=on?Math.max(0,1-since/14):0;
-      ctx.globalAlpha=on?.95:.42;ctx.fillStyle=on?VERMILION:HANJI;ctx.beginPath();ctx.arc(x0+gap*i,y,r+pulse*2.2,0,TAU);ctx.fill();
+    // 받침: 켜진 띠 위에서도 읽히게 종이색 판을 깐다
+    var nm=label(sp.motif);ctx.font='700 12px '+(opt.font||'sans-serif');var pw=gap*8+(nm?(ctx.measureText?ctx.measureText(nm).width:nm.length*12)+8:0)+8,px=x0-10,py=y-11,ph=22,pr=11;
+    ctx.globalAlpha=.84;ctx.fillStyle=opt.plate||'#14100e';ctx.beginPath();ctx.moveTo(px+pr,py);ctx.lineTo(px+pw-pr,py);ctx.arc(px+pw-pr,py+pr,pr,-Math.PI/2,Math.PI/2);ctx.lineTo(px+pr,py+ph);ctx.arc(px+pr,py+pr,pr,Math.PI/2,Math.PI*1.5);ctx.fill();
+    for(i=0;i<8;i++){var r=acc[i]>=1?4.4:acc[i]>0?3.4:2.8,on=i===n,pulse=on?Math.max(0,1-since/14):0;
+      ctx.globalAlpha=on?1:.6;ctx.fillStyle=on?VERMILION:HANJI;ctx.beginPath();ctx.arc(x0+gap*i,y,r+pulse*2.2,0,TAU);ctx.fill();
       ctx.globalAlpha=on?.9:.5;ctx.strokeStyle='#14100e';ctx.lineWidth=1;ctx.stroke();}
-    var nm=label(sp.motif);if(nm){ctx.font='700 11px '+(opt.font||'sans-serif');ctx.textAlign='left';ctx.textBaseline='middle';ctx.globalAlpha=.9;ctx.lineWidth=3;ctx.strokeStyle='rgba(20,16,14,.8)';ctx.strokeText(nm,x0+gap*8,y+.5);ctx.fillStyle=HANJI;ctx.fillText(nm,x0+gap*8,y+.5);}
+    if(nm){ctx.textAlign='left';ctx.textBaseline='middle';ctx.globalAlpha=1;ctx.fillStyle='#ffffff';ctx.fillText(nm,x0+gap*8,y+.5);}
     ctx.restore();
   }
   /* 소리: 음표가 켜지는 틱에 한 번. 쿵(왼손 북)·덕(오른손 채)·덩(양손)·가야금 다섯 음. 한 틱에 같은 소리는 한 번만 */
