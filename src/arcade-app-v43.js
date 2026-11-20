@@ -1917,8 +1917,9 @@
     var seg=Arcade.SEGMENTS[s.seg],key=s.seg+':'+seg.actor;if(introLinesKey===key&&introLines)return introLines;
     var who=Arcade.ACTORS[seg.actor],entry=BossIntros&&BossIntros.getBoss(seg.actor,s.stageIndex);
     var line=!seg.mid&&global.HapilArcadeBossLines&&global.HapilArcadeBossLines.getLine(seg.actor,s.stageIndex);
-    if(entry)introLines=entry.lines;
+    if(seg.mid)introLines=[]; // 사용자 11-20: 중간보스는 컷인만, 대사는 보스만(대사표 = arcade-boss-lines-v43.js)
     else if(line)introLines=[line];
+    else if(entry)introLines=entry.lines;
     else if(BossIntros)introLines=BossIntros.fallbackLines(seg.actor,!!seg.mid,who&&who.name);
     else introLines=[{speaker:who&&who.name||'',text:'...'}];
     introLinesKey=key;return introLines;

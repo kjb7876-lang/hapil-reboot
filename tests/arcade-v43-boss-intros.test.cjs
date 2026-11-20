@@ -46,18 +46,9 @@ test('browser integration exposes the same API without changing the canonical st
 });
 
 
-test('non-sin boss entrance monologues are verbatim canonical sentences from the stage section',()=>{
- const lines=require('../src/arcade-boss-lines-v43.js'),story=require('../src/arcade-story-v43.js');let n=0;
- for(let i=0;i<56;i++){
-  const entry=intro.BOSS_ENTRANCES.find(e=>e.stage===i);
-  for(const g of arcade.SEGMENTS.filter(s=>s.kind==='card'&&s.stage===i&&!s.mid)){
-   const line=lines.getLine(g.actor,i);if(!line)continue;n++;
-   const sec=story.getStage(i).sourceSection;
-   assert(normalize(sections[sec]).includes(normalize(line.text)),i+': '+line.text);
-   assert(line.text.length<=80);assert.equal(line.speaker,'EGO의 기억');
-   assert(!story.getStage(i).lines.some(l=>l.text===line.text),'duplicates the pre-battle memory line');
-   assert(!entry,'sin stage must not also carry a generic line');
-  }
- }
- assert(n>=40,'expected most main bosses to carry a monologue, got '+n);
+test('boss entrance lines are the user-authored table: 56 lines, one per stage, no placeholders',()=>{
+ const lines=require('../src/arcade-boss-lines-v43.js');
+ assert.equal(lines.LINES.length,56);assert.equal(new Set(lines.LINES).size,56);
+ for(let i=0;i<56;i++){const l=lines.getLine('any',i);assert.equal(l.text,lines.LINES[i]);assert(l.text.length>=3&&l.text.length<=80,i+': '+l.text);assert(!/,,|그떄|불가할/.test(l.text),i);}
+ assert.equal(lines.getLine('any',56),null);
 });
