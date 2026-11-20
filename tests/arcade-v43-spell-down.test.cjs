@@ -25,3 +25,9 @@ test('after HP runs out the boss finishes its current phrase but starts no new v
   assert.equal(special,0,d+' no special phase after depletion');assert.equal(late,0,d+' no new bullets after the phrase ended');
  }
 });
+test('the third seal records what was actually given: life, bomb, or 10,000 points when both are full',()=>{
+ for(const want of ['life','bomb','score']){const s=a.createRun({difficulty:'normal',seed:9,segment:spellCard(),entranceAll:true});toCard(s);
+  const p=s.player;p.hp=want==='life'?p.maxHp-1:p.maxHp;if(want==='score')s.bombs=99;else s.bombs=0;s.pieces=a.LIFE_PIECES-1;s.spellClean=true;const sc=s.score;
+  s.boss.hp=0;let got=null;for(let i=0;i<a.CARD_DOWN_MAX+a.CARD_ENDING_MAX+20&&!got;i++){s.player.invulnerableUntil=s.tick+999;a.step(s,{dx:0,dy:0});if(s.events.includes('capture'))got=s.lastCapture.gift;h.clear(s);}
+  assert.equal(got,want);}
+});

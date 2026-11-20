@@ -830,7 +830,8 @@
     var el=Math.max(0,s.segTick-cardFireDelay(s))/60,k=Math.max(0,Math.min(1,(el-SPELL_DECAY_FROM)/SPELL_DECAY_OVER));return Math.round(spellBonusBase(card)*(1-(1-SPELL_FLOOR)*k)/10)*10;}
   /* 봉인 조각: 봉인 LIFE_PIECES 번마다 목숨 하나를 되찾는다. 목숨이 가득이면 필살기 하나(그것도 가득이면 점수). */
   function gainPiece(s){s.pieces++;if(s.pieces<LIFE_PIECES)return;s.pieces-=LIFE_PIECES;var p=s.player;
-    if(p.hp<p.maxHp){p.hp++;note(s,'extend');}else if(s.bombs<MAX_BOMBS){s.bombs++;note(s,'bombGain');}else s.score+=10000;}
+    var got=p.hp<p.maxHp?'life':s.bombs<MAX_BOMBS?'bomb':'score';if(s.lastCapture)s.lastCapture.gift=got; // 낙관에 실제로 받은 것을 찍는다(연출 제안서 11-20)
+    if(got==='life'){p.hp++;note(s,'extend');}else if(got==='bomb'){s.bombs++;note(s,'bombGain');}else s.score+=10000;}
   function updateItems(s){
     var p=s.player,pull=p.y<AUTO_COLLECT_Y,reach=p.focus?ITEM_REACH+10:ITEM_REACH;
     for(var i=s.itemCount-1;i>=0;i--){

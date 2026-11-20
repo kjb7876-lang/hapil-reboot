@@ -31,7 +31,7 @@
     if(!s)return;
     if(e==='card'){var seg=A.SEGMENTS[s.seg];if(seg&&seg.name&&!s.bossOnly&&!s.spellOnly){entry(seg.name,s.difficulty)[0]++;saveBook();}}
     else if(e==='capture'&&s.lastCapture){var c=s.lastCapture;if(c.name&&!s.bossOnly&&!s.spellOnly){var en=entry(c.name,s.difficulty);if(en[1]<en[0])en[1]++;saveBook();}
-      stamp={ok:true,bonus:c.bonus,tick:s.tick,pieces:s.pieces,of:A.LIFE_PIECES,gift:s.pieces===0,y:stampY(s)};}
+      stamp={ok:true,bonus:c.bonus,tick:s.tick,pieces:s.pieces,of:A.LIFE_PIECES,gift:s.pieces===0,got:c.gift||'',y:stampY(s)};}
     else if(e==='captureMiss'&&stamp&&stamp.ok)stamp=null; // 놓친 패턴은 가운데에 따로 알리지 않는다(이름 아래 줄이 이미 회색): 못한 것을 되풀이해 띄우지 않는다
   }
   /* 엔진이 쌓아 둔 '받은 값'을 화면 목록으로 옮긴다(엔진 목록은 비운다). */
@@ -105,10 +105,10 @@
       if(age>life)stamp=null;
       else if(age>=0){
         // 쪽지(한지 띠)가 먼저 깔리고, 낙관이 크게 내려와 그 모서리에 찍힌다(8틱). 찍히는 순간 인주가 튄다. 끝에 옅어진다.
-        var k=age<8?1.9-.9*(age/8):age<14?1-.06*(1-(age-8)/6):1,fade=age>life-24?(life-age)/24:1,cx=W/2-62,cy=opt.toast?Math.max(stamp.y,208):stamp.y,sz=50*k,art=seal(),tx=cx+38,pw=stamp.gift?162:128;
+        var k=age<8?1.9-.9*(age/8):age<14?1-.06*(1-(age-8)/6):1,fade=age>life-24?(life-age)/24:1,cx=W/2-62,cy=opt.toast?Math.max(stamp.y,208):stamp.y,sz=50*k,art=seal(),tx=cx+38,pw=stamp.gift?(stamp.got==='score'?200:162):128;
         ctx.globalAlpha=fade*Math.min(1,age/6)*.94;plate(ctx,cx+8,cy-25,pw+26,50,4,c);
         ctx.globalAlpha=fade*Math.min(1,age/6);ctx.textAlign='left';ctx.font='700 17px '+SERIF;ctx.fillStyle=c.text;ctx.fillText('봉인',tx,cy-4);ctx.font='700 17px '+SANS;ctx.fillStyle=c.gold;ctx.fillText('+'+comma(stamp.bonus),tx+42,cy-4);
-        ctx.font='600 11px '+SANS;ctx.fillStyle=c.dim;ctx.fillText(stamp.gift?'조각이 모였다 · 목숨 또는 필살 +1':'봉인 조각 '+stamp.pieces+' / '+stamp.of,tx,cy+14);
+        ctx.font='600 11px '+SANS;ctx.fillStyle=c.dim;ctx.fillText(stamp.gift?'조각이 모였다 · '+({life:'목숨 +1',bomb:'필살 +1',score:'목숨·필살 가득 · 10,000점'}[stamp.got]||'목숨 또는 필살 +1'):'봉인 조각 '+stamp.pieces+' / '+stamp.of,tx,cy+14);
         if(age>=8&&age<34){var su=(age-8)/26;ctx.fillStyle='#b02a1c';ctx.globalAlpha=fade*(1-su)*.85;for(var d=0;d<9;d++){var an=d*2.399+.6,rr=30+su*16+(d%3)*5;ctx.beginPath();ctx.arc(cx+Math.cos(an)*rr,cy+Math.sin(an)*rr*.9,1.2+(d%3)*.9,0,TAU);ctx.fill();}}
         ctx.globalAlpha=fade*(age<8?.4+.6*age/8:1);ctx.translate(cx,cy);ctx.rotate(-.1);
         if(art)ctx.drawImage(art,-sz*.62,-sz*.62,sz*1.24,sz*1.24);
@@ -131,8 +131,8 @@
     ctx.globalAlpha=fade*.55;ctx.fillStyle=c.text;for(var q=0;q<5;q++){var qx=W/2-half+q*half*.5,qy=y+30-Math.abs(q-2)*4;ctx.fillRect(qx-1,qy,2+((q*7)%3),1.4);} // 붓 끝 비백 몇 점
     if(age<20){var bx2=finite(b.x,W/2);ctx.globalAlpha=(1-age/20)*.7;for(var d=0;d<7;d++){var an=d*2.399+.3,rr=20+age*2.2+(d%3)*6;ctx.beginPath();ctx.ellipse(bx2+Math.cos(an)*rr,by+Math.sin(an)*rr*.7,2.4-(d%3)*.5,1.6,an,0,TAU);ctx.fill();}} // 소진 순간 보스 둘레로 먹물이 튄다(고리 아님, 흩어진 점)
     ctx.globalAlpha=fade*k;ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='700 '+Math.round(20+6*(1-k))+'px '+SERIF;ctx.lineWidth=3;ctx.strokeStyle=c.halo;ctx.fillStyle=c.text;
-    var clean=!!s.spellClean&&s.bonusLock>0,t1=clean?'격파 · 봉인 확정':'격파';ctx.strokeText(t1,W/2,y-1);ctx.fillText(t1,W/2,y-1);
-    ctx.font='700 12px '+SANS;ctx.lineWidth=2.4;var t2=clean?'남은 공격을 버티면 ':'남은 공격이 끝나면 쓰러진다',t3=clean?'+'+comma(s.bonusLock):'',w2=ctx.measureText(t2).width,w3=ctx.measureText(t3).width,x2=W/2-(w2+w3)/2;ctx.textAlign='left';ctx.strokeText(t2,x2,y+19);ctx.fillStyle=c.text;ctx.fillText(t2,x2,y+19);if(t3){ctx.strokeText(t3,x2+w2,y+19);ctx.fillStyle=c.gold;ctx.fillText(t3,x2+w2,y+19);}
+    var clean=!!s.spellClean&&s.bonusLock>0,t1='격파 · 마지막 공격';ctx.strokeText(t1,W/2,y-1);ctx.fillText(t1,W/2,y-1);
+    ctx.font='700 12px '+SANS;ctx.lineWidth=2.4;var t2=clean?'끝까지 버티면 봉인 ':'남은 공격이 끝나면 쓰러진다',t3=clean?'+'+comma(s.bonusLock):'',w2=ctx.measureText(t2).width,w3=ctx.measureText(t3).width,x2=W/2-(w2+w3)/2;ctx.textAlign='left';ctx.strokeText(t2,x2,y+19);ctx.fillStyle=c.text;ctx.fillText(t2,x2,y+19);if(t3){ctx.strokeText(t3,x2+w2,y+19);ctx.fillStyle=c.gold;ctx.fillText(t3,x2+w2,y+19);}
     ctx.restore();ctx.textBaseline='alphabetic';
   }
   /* 스테이지 결산 한 줄(알림 띠 아래 줄) */

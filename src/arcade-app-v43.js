@@ -331,7 +331,8 @@
     return size===1?stageSkin:'';
   }
   function drawOrientedBullet(s,i,sprite,kind,grow){
-    var a=kind==='star'?s.bage[i]*.08:SHOT_SPIN[kind]?s.bage[i]*SHOT_SPIN[kind]+i:SHOT_UPRIGHT[kind]?0:finite(s.ba[i],0);
+    var stop=(kind==='clock'||kind==='gear')&&s.cardDown?Math.min(s.bage[i],s.tick-s.cardDown):0; // 마지막 공격(체력 소진 뒤): 시계·톱니 탄의 바늘이 멎는다(연출 제안서 11-20 56장)
+    var a=kind==='star'?s.bage[i]*.08:SHOT_SPIN[kind]?(s.bage[i]-stop)*SHOT_SPIN[kind]+i:SHOT_UPRIGHT[kind]?0:finite(s.ba[i],0);
     var co=Math.cos(a),sn=Math.sin(a),half=sprite.half*grow;
     ctx.setTransform(scale*co,scale*sn,-scale*sn,scale*co,(s.bx[i]+offsetX)*scale,(s.by[i]+offsetY)*scale);
     ctx.drawImage(sprite.image,-half,-half,half*2,half*2);
@@ -1752,6 +1753,7 @@
     ctx.textBaseline='alphabetic';
     if(s.stage==='card'&&seg){
       ctx.fillStyle='rgba(255,255,255,.16)';ctx.fillRect(12,9,W-24,4);ctx.fillStyle=b.hp/b.maxHp<=.2?'#ff5a5a':color;ctx.fillRect(12,9,(s.cardDown||s.cardEnding?0:W-24)*Math.max(0,Math.min(1,finite(b.hp/b.maxHp,0))),4); // 체력을 다 깎은 뒤(붙든 1)는 빈 막대
+      if(s.cardDown||s.cardEnding){ctx.save();if(Ink&&Ink.raw)Ink.raw(1);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=(s.tick>>4)%2?1:.72;ctx.font='700 10px '+SANS;ctx.textAlign='center';ctx.textBaseline='middle';var lt='마지막 공격',lw=ctx.measureText(lt).width+14;ctx.fillStyle=Ink?'rgba(244,236,218,.95)':'rgba(10,10,22,.9)';ctx.fillRect(W/2-lw/2,4,lw,14);ctx.fillStyle=Ink?'rgba(30,24,20,.95)':'#f6ead2';ctx.fillText(lt,W/2,11.5);if(Ink&&Ink.raw)Ink.raw(-1);ctx.restore();ctx.textBaseline='alphabetic';} // 빈 체력 막대 위 '마지막 공격'(연출 제안서 11-20): 남은 예고 공격만 피하면 끝난다
       var lp=s.entranceAll&&livePhase(s);if(lp&&lp.count>1){var ptx=(b.mid?'중간보스 ':'보스 ')+lp.no+' / '+lp.count+' 페이즈';ctx.save();if(Ink&&Ink.raw)Ink.raw(1);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;ctx.font='700 12px '+SANS;var ptw=ctx.measureText(ptx).width+14;ctx.fillStyle='rgba(20,16,14,.78)';ctx.beginPath();if(ctx.roundRect)ctx.roundRect(W-12-ptw,18,ptw,19,9);else ctx.rect(W-12-ptw,18,ptw,19);ctx.fill();ctx.textAlign='right';ctx.fillStyle='#f6ead2';ctx.fillText(ptx,W-19,32);if(Ink&&Ink.raw)Ink.raw(-1);ctx.restore();} // 먹빛 띠 위 한지색 글자: 어떤 배경에서도 읽힌다 // 사용자 11-19 "보스등 페이즈알수있게 지금이 몇인지 위쪽에간략히표시"
       if(seg.spell){
         namePlate(seg.name);
