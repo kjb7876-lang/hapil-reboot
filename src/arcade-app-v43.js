@@ -1912,8 +1912,9 @@
     var seg=Arcade.SEGMENTS[s.seg],key=s.seg+':'+seg.actor;if(introLinesKey===key&&introLines)return introLines;
     var who=Arcade.ACTORS[seg.actor],entry=BossIntros&&BossIntros.getBoss(seg.actor,s.stageIndex);
     var line=!seg.mid&&global.HapilArcadeBossLines&&global.HapilArcadeBossLines.getLine(seg.actor,s.stageIndex);
-    if(entry)introLines=entry.lines;
+    if(seg.mid)introLines=[]; // 사용자 11-20: 중간보스는 컷인만, 대사는 보스만(대사표 = arcade-boss-lines-v43.js)
     else if(line)introLines=[line];
+    else if(entry)introLines=entry.lines;
     else if(BossIntros)introLines=BossIntros.fallbackLines(seg.actor,!!seg.mid,who&&who.name);
     else introLines=[{speaker:who&&who.name||'',text:'...'}];
     introLinesKey=key;return introLines;
@@ -2108,7 +2109,7 @@
   function openChapterCard(from,to,done,endLines){
     if(!chapterCardsOn()){if(done)done();return false;}
     var spec={lite:!!settings.lowQuality};
-    if(from){var c=Chapters.list(Arcade.STAGES)[from-1];spec.end={part:from,title:c.title,stats:chapterStats(from),saved:saveOk,final:from===Chapters.count()&&!to};}
+    if(from){var c=Chapters.list(Arcade.STAGES)[from-1];spec.end={part:from,title:c.title,stats:chapterStats(from),saved:saveOk,final:from===Chapters.count()&&!to};if(to&&state&&state.player)spec.end.refill={hp:state.player.hp,max:state.player.maxHp,power:state.power,bomb:state.bombLevel};} // 다음 챕터로 넘어가면 엔진이 목숨을 가득 채운다(partHeal -1) — 카드에 보여 준다
     if(to)spec.begin=beginSpec(to);else if(endLines){var tt=String(endLines.title||'').split(' — ');spec.begin={part:from,kicker:tt.length>1?tt[0]:'',title:tt.length>1?tt[1]:tt[0],numeral:'合',lines:endLines.lines.slice(0,3),speaker:endLines.speaker,final:true,place:placeOf(Arcade.STAGES.length-1)};} // 마지막 챕터를 마치면 정본 최종장 문장으로 닫는다
     chapterReturn=done||null;clearInput();
     var ok=chapterCard.show(spec,function(){var d=chapterReturn;chapterReturn=null;accumulator=0;lastStamp=0;if(d)d();else if(state)setMode('playing');});

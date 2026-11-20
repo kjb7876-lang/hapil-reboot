@@ -1,5 +1,171 @@
 {
-  "passed": false,
-  "reports": [],
-  "error": "browserType.launch: Executable doesn't exist at /opt/pw-browsers/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell\n╔════════════════════════════════════════════════════════════╗\n║ Looks like Playwright was just installed or updated.       ║\n║ Please run the following command to download new browsers: ║\n║                                                            ║\n║     npx playwright install                                 ║\n║                                                            ║\n║ <3 Playwright Team                                         ║\n╚════════════════════════════════════════════════════════════╝\n    at /home/claude/hapil-reboot/tools/check-arcade-ui-v43.cjs:463:30"
+  "passed": true,
+  "reports": [
+    {
+      "name": "desktop",
+      "heroSelection": true,
+      "hero": "seoha-b",
+      "heroOpacity": [
+        {
+          "hero": "memory",
+          "far": 0.95,
+          "near": 0.416245169438931
+        },
+        {
+          "hero": "seoha",
+          "far": 0.95,
+          "near": 0.416511965164009
+        },
+        {
+          "hero": "seoha-b",
+          "far": 0.95,
+          "near": 0.416245169438931
+        }
+      ],
+      "mainBossCutin": true,
+      "sevenSins": {
+        "actors": [
+          "p2_chairman",
+          "p2_core"
+        ],
+        "clearTicks": 120,
+        "stageSaves": 1,
+        "rhythm": "기계다리의 박자",
+        "laserSource": "p2_chairman.webp"
+      },
+      "keyboard": true,
+      "pauseSettings": true,
+      "audioLifecycle": true,
+      "musicStress": {
+        "rapidChanges": 33,
+        "signals": [
+          "pagehide",
+          "pageshow",
+          "blur"
+        ],
+        "ui": [
+          "quit",
+          "new-game",
+          "loss",
+          "retry"
+        ]
+      },
+      "music": {
+        "players": 1,
+        "plays": 60,
+        "maxPlaying": 1,
+        "overlaps": []
+      },
+      "errors": [],
+      "badRequests": []
+    },
+    {
+      "name": "mobile-390x844",
+      "heroSelection": true,
+      "hero": "seoha-b",
+      "heroOpacity": [
+        {
+          "hero": "memory",
+          "far": 0.95,
+          "near": 0.4162451694389285
+        },
+        {
+          "hero": "seoha",
+          "far": 0.95,
+          "near": 0.41637847201729744
+        },
+        {
+          "hero": "seoha-b",
+          "far": 0.95,
+          "near": 0.4163784720172986
+        }
+      ],
+      "mainBossCutin": true,
+      "fast": 11.999999999999982,
+      "slow": 2,
+      "multitouchBomb": true,
+      "pauseSettings": true,
+      "audioLifecycle": true,
+      "music": {
+        "players": 1,
+        "plays": 12,
+        "maxPlaying": 1,
+        "overlaps": []
+      },
+      "errors": [],
+      "badRequests": []
+    },
+    {
+      "name": "mobile-360x640",
+      "heroSelection": true,
+      "hero": "seoha-b",
+      "heroOpacity": [
+        {
+          "hero": "memory",
+          "far": 0.95,
+          "near": 0.4162451694389261
+        },
+        {
+          "hero": "seoha",
+          "far": 0.95,
+          "near": 0.41637847201729866
+        },
+        {
+          "hero": "seoha-b",
+          "far": 0.95,
+          "near": 0.41637847201729383
+        }
+      ],
+      "mainBossCutin": true,
+      "fast": 12,
+      "slow": 2,
+      "multitouchBomb": true,
+      "pauseSettings": true,
+      "audioLifecycle": true,
+      "music": {
+        "players": 1,
+        "plays": 27,
+        "maxPlaying": 1,
+        "overlaps": []
+      },
+      "errors": [],
+      "badRequests": []
+    },
+    {
+      "name": "mobile-844x390",
+      "heroSelection": true,
+      "hero": "seoha-b",
+      "heroOpacity": [
+        {
+          "hero": "memory",
+          "far": 0.95,
+          "near": 0.4163784720172986
+        },
+        {
+          "hero": "seoha",
+          "far": 0.95,
+          "near": 0.4162451694389261
+        },
+        {
+          "hero": "seoha-b",
+          "far": 0.95,
+          "near": 0.4162451694389261
+        }
+      ],
+      "mainBossCutin": true,
+      "fast": 11.922440016989299,
+      "slow": 1.9870733361648831,
+      "multitouchBomb": true,
+      "pauseSettings": true,
+      "audioLifecycle": true,
+      "music": {
+        "players": 1,
+        "plays": 27,
+        "maxPlaying": 1,
+        "overlaps": []
+      },
+      "errors": [],
+      "badRequests": []
+    }
+  ]
 }

@@ -112,14 +112,21 @@
     '#arcade-chapter-card .cc-kicker{font-size:12px;letter-spacing:.42em;color:#7a2a22;margin:0}',
     '#arcade-chapter-card .cc-name{margin:0;color:#221b16;font-weight:700;font-size:clamp(24px,7.4vw,40px);line-height:1.25;letter-spacing:.06em;word-break:keep-all}',
     '#arcade-chapter-card .cc-stats{margin:4px 0 0;font-size:14px;line-height:1.7;color:#4a3d32;word-break:keep-all}',
-    '#arcade-chapter-card .cc-saved{margin:0;font-size:12.5px;color:#4b5f3a;letter-spacing:.06em}',
+    '#arcade-chapter-card .cc-refill{margin:8px 0 4px;font-size:17px;font-weight:700;color:#2a1d16;letter-spacing:.05em;opacity:0;animation:cc-refill .5s .8s ease-out forwards}',
+    '#arcade-chapter-card .cc-level{margin:0 0 6px;font-size:14px;color:#33281a;letter-spacing:.05em;opacity:0;animation:cc-refill .7s 1.3s ease-out forwards}',
+    '#arcade-chapter-card .cc-hearts{color:#b8322a;letter-spacing:.18em;font-size:17px;text-shadow:0 0 8px rgba(184,50,42,.35)}',
+    '#arcade-chapter-card .cc-hearts i{font-style:normal;display:inline-block;opacity:0;animation:cc-stamp .32s ease-out forwards}',
+    '@keyframes cc-stamp{0%{opacity:0;transform:scale(1.9) rotate(-8deg)}70%{opacity:1;transform:scale(.92)}100%{opacity:1;transform:none}}',
+    '#arcade-chapter-card .cc-level b{color:#1e1915;font-weight:700}',
+    '@keyframes cc-refill{0%{opacity:0;transform:translateY(6px) scale(.96)}60%{opacity:1;transform:scale(1.04)}100%{opacity:1;transform:none}}',
+    '#arcade-chapter-card .cc-saved{margin:6px 0 0;font-size:13px;color:#3a4d2a;letter-spacing:.06em}',
     /* 끝 낙관: 챕터를 마친 순간에만 찍히는 붉은 도장(플레이어가 해낸 순간) */
     '#arcade-chapter-card .cc-seal{width:74px;height:74px;margin:10px 0 2px;display:flex;align-items:center;justify-content:center;font:700 44px/1 "Noto Serif KR","Nanum Myeongjo",serif;color:#f4ead6;background:#a8352a;border-radius:6px 4px 7px 3px;box-shadow:inset 0 0 0 3px #a8352a,inset 0 0 0 5px rgba(244,234,214,.75);transform:scale(2.6) rotate(-14deg);opacity:0}',
     '#arcade-chapter-card[data-phase="end"] .cc-seal{animation:cc-stamp .42s cubic-bezier(.3,1.6,.5,1) .55s forwards}',
     '@keyframes cc-stamp{0%{transform:scale(2.6) rotate(-14deg);opacity:0}60%{opacity:1}100%{transform:scale(1) rotate(-6deg);opacity:1}}',
     '#arcade-chapter-card[data-phase="end"] .cc-end>*:not(.cc-seal):not(.cc-sealbox){animation:cc-rise .6s ease-out both}',
-    '#arcade-chapter-card .cc-sealbox{position:relative;display:flex;align-items:center;justify-content:center}',
-    '#arcade-chapter-card .cc-splash{position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;background:radial-gradient(circle,rgba(168,53,42,.0) 38%,rgba(168,53,42,.38) 41%,rgba(168,53,42,0) 47%),radial-gradient(circle at 18% 30%,rgba(168,53,42,.55) 0 3px,transparent 4px),radial-gradient(circle at 84% 22%,rgba(168,53,42,.5) 0 2px,transparent 3px),radial-gradient(circle at 76% 86%,rgba(168,53,42,.5) 0 3px,transparent 4px),radial-gradient(circle at 12% 78%,rgba(168,53,42,.45) 0 2px,transparent 3px);opacity:0;transform:scale(.5)}',
+    '#arcade-chapter-card .cc-sealbox{position:relative;margin-bottom:6px;display:flex;align-items:center;justify-content:center}',
+    '#arcade-chapter-card .cc-splash{position:absolute;left:50%;top:50%;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;overflow:hidden;clip-path:circle(50%);background:radial-gradient(circle,rgba(168,53,42,.0) 38%,rgba(168,53,42,.38) 41%,rgba(168,53,42,0) 47%),radial-gradient(circle at 18% 30%,rgba(168,53,42,.55) 0 3px,transparent 4px),radial-gradient(circle at 84% 22%,rgba(168,53,42,.5) 0 2px,transparent 3px),radial-gradient(circle at 76% 86%,rgba(168,53,42,.5) 0 3px,transparent 4px),radial-gradient(circle at 12% 78%,rgba(168,53,42,.45) 0 2px,transparent 3px);opacity:0;transform:scale(.5)}',
     '#arcade-chapter-card[data-phase="end"] .cc-splash{animation:cc-splash .7s ease-out .9s forwards}',
     '@keyframes cc-splash{0%{opacity:0;transform:scale(.5)}20%{opacity:1}100%{opacity:.55;transform:scale(1.15)}}',
     '#arcade-chapter-card[data-phase="end"] .cc-end{animation:cc-jolt .3s ease-out .92s both}',
@@ -211,6 +218,8 @@
       box.appendChild(el(doc,'p','cc-kicker','제'+e.part+'부 · 終'));box.appendChild(el(doc,'h2','cc-name',e.title));
       var sb=el(doc,'div','cc-sealbox'),seal=el(doc,'div','cc-seal',e.final?'完':'終');sb.setAttribute('aria-hidden','true');sb.appendChild(el(doc,'div','cc-splash'));sb.appendChild(seal);box.appendChild(sb);
       if(e.stats)box.appendChild(el(doc,'p','cc-stats',e.stats));
+      if(e.refill){var rf=el(doc,'p','cc-refill');var hs=el(doc,'span','cc-hearts');for(var hi=0;hi<Math.max(0,Math.min(12,e.refill.max|0));hi++){var hh=el(doc,'i','','♥');hh.style.animationDelay=(1+hi*.12).toFixed(2)+'s';hs.appendChild(hh);}rf.appendChild(hs);rf.appendChild(doc.createTextNode(' 목숨이 모두 회복되었습니다'));rf.setAttribute('aria-label','목숨 '+e.refill.hp+'/'+e.refill.max+' 모두 회복');box.appendChild(rf);
+        if(e.refill.power){var lv=el(doc,'p','cc-level','영웅 레벨 이어짐 · 공격 ');lv.appendChild(el(doc,'b','','Lv.'+e.refill.power));lv.appendChild(doc.createTextNode(' · 필살 '));lv.appendChild(el(doc,'b','','Lv.'+(e.refill.bomb||e.refill.power)));box.appendChild(lv);}}
       box.appendChild(el(doc,'p','cc-saved',e.saved===false?'이 브라우저에 기록을 남기지 못했습니다 — 챕터 기록 화면에서 기록 코드를 복사해 두세요':'✓ 진행이 저장되었습니다'));
       host.setAttribute('aria-label','제'+e.part+'부 '+e.title+' 끝');
     }
