@@ -709,6 +709,7 @@
       else if(e==='riserWarn'){if(!s.special)play('inkSwell',s.risers&&s.risers.length?s.risers[s.risers.length-1].x:W/2);} // 아래에서 솟는 소재 예고음(특수 페이즈 중에는 박 소리와 겹치지 않게 뺀다)
       else if(e==='laserFire'){play('laserFire',s.boss.x);shake=Math.max(shake,5);}
       else if(e==='pop')play('skillCounter',s.boss.x);
+      else if(e==='sparkFire'||e==='sparkHit'||e==='tbStick'||e==='tbBoom'){play(e,s.player.x);if(e==='tbBoom')shake=Math.max(shake,1.5);} // 영웅 공격 손맛 소리(src/hero-memory-v43.js 그림과 짝)
       else if(e==='bossSpit'){play('summon',s.boss.x);shake=Math.max(shake,2);}
     }
     s.events.length=0;if(Cues)Cues.frame(s,Arcade,play);
