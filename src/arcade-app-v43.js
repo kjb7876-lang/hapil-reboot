@@ -35,7 +35,7 @@
   var state=null,mode='title',difficulty='normal',accumulator=0,lastStamp=0,visual=0,lastRun=null;
   var particles=[],spellDim=0,flash=0,hurtFlash=0,hurtRing=null,VERMILION='#a8382a',shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,SPELL_BANNER_TICKS=42,bannerSpell=false,bannerTitle='',bannerSub='',toast=null;
   var keys={},finger={active:false,id:null,x:0,y:0},focusHeld=false,focusPointer=null,focusLatched=false,bombQueued=false;
-  var settings={music:true,sfx:true,musicVolume:1,sfxVolume:1,screenShake:true,lowQuality:false,abilityMemory:0,abilitySeoha:0}; // 능력조절(사용자 11-20): 영웅별 0(끔)~7단계
+  var settings={music:true,sfx:true,hitSound:true,musicVolume:1,sfxVolume:1,screenShake:true,lowQuality:false,abilityMemory:0,abilitySeoha:0}; // 능력조절(사용자 11-20): 영웅별 0(끔)~7단계
   var fx=null,music=null,best=0,bests={},lastSpell=null,drill=null,DRILL_KEY='hapil-arcade-v43-drill',lastItemSound=0,progress=Progress.fresh(),saveOk=true;
   var themeOverride=null,turbo=0,rushStage=false,oneCreditEligible=false;
   var Story=global.HapilArcadeStory||null,BossIntros=global.HapilArcadeBossIntros||null,story=null,storyQuiet=false,storySeen={},pauseReturn='playing',rulesReturn='title',storyArrivalActor='';
@@ -705,8 +705,8 @@
     for(i=0;i<s.events.length;i++){
       var e=s.events[i];if(Spirit)Spirit.onEvent(e,s,Arcade);if(Cues)Cues.onEvent(e,s,Arcade,play);
       if(e==='graze'){play('graze',s.player.x);addParticle(s.player.x,s.player.y,(Math.random()-.5)*5,(Math.random()-.5)*5,12,'#ffffff',2);}
-      else if(e==='bossHit'||e==='bossHitLow')play(isSeoha(s.hero)?'rainHitSeoha':'rainHitMemory',s.boss.x); // 적중음: 빗방울 조각(서하는 낮고 늘어지게, 기억사수는 짧고 또렷하게)
-      else if(e==='mobHit')play(isSeoha(s.hero)?'rainHitSeoha':'rainHitMemory',s.player.x);
+      else if(e==='bossHit'||e==='bossHitLow'){if(settings.hitSound)play(isSeoha(s.hero)?'rainHitSeoha':'rainHitMemory',s.boss.x);} // 적중음: 빗방울 조각(서하는 낮고 늘어지게, 기억사수는 짧고 또렷하게)
+      else if(e==='mobHit'){if(settings.hitSound)play(isSeoha(s.hero)?'rainHitSeoha':'rainHitMemory',s.player.x);}
       else if(e==='kill')play('kill',s.player.x);
       else if(e==='orbBreak')play('item',s.player.x);
       else if(e==='pieceBreak'){play('kill',s.player.x);shake=Math.max(shake,4);}
@@ -743,7 +743,7 @@
       else if(e==='riserWarn'){if(!s.special)play('inkSwell',s.risers&&s.risers.length?s.risers[s.risers.length-1].x:W/2);} // 아래에서 솟는 소재 예고음(특수 페이즈 중에는 박 소리와 겹치지 않게 뺀다)
       else if(e==='laserFire'){if(Rhythm&&notesOnly(s))shake=Math.max(shake,1.8);else{play('laserFire',s.boss.x);shake=Math.max(shake,5);}} // 리듬 음표는 박마다 켜지므로 큰 발사음·흔들림 대신 북·가야금 소리(Rhythm.sounds)
       else if(e==='pop')play('skillCounter',s.boss.x);
-      else if(e==='sparkHit')play(isSeoha(s.hero)?'rainHitSeoha':'rainHitMemory',s.player.x);
+      else if(e==='sparkHit'){if(settings.hitSound)play(isSeoha(s.hero)?'rainHitSeoha':'rainHitMemory',s.player.x);}
       else if(e==='sparkFire'||e==='tbStick'||e==='tbBoom'){play(e,s.player.x);if(e==='tbBoom')shake=Math.max(shake,1.5);} // 영웅 공격 손맛 소리(src/hero-memory-v43.js 그림과 짝)
       else if(e==='bossSpit'){play('summon',s.boss.x);shake=Math.max(shake,2);}
     }
@@ -2193,7 +2193,7 @@
   function loadSettings(){
     var saved=null;try{saved=JSON.parse(global.localStorage.getItem(SETTINGS_KEY)||'null');}catch(e){}
     if(!saved||typeof saved!=='object')return;
-    ['music','sfx','screenShake','lowQuality'].forEach(function(k){if(typeof saved[k]==='boolean')settings[k]=saved[k];});
+    ['music','sfx','hitSound','screenShake','lowQuality'].forEach(function(k){if(typeof saved[k]==='boolean')settings[k]=saved[k];});
     ['musicVolume','sfxVolume'].forEach(function(k){if(typeof saved[k]==='number'&&isFinite(saved[k]))settings[k]=Math.max(0,Math.min(1,saved[k]));});
     ['abilityMemory','abilitySeoha'].forEach(function(k){if(typeof saved[k]==='number'&&isFinite(saved[k]))settings[k]=Math.max(0,Math.min(7,Math.round(saved[k])));});
     lite=settings.lowQuality;
@@ -2209,7 +2209,7 @@
     if(state&&Arcade.setAbility)Arcade.setAbility(state,abilityFor(state.hero));}
   function unlockAudio(){if(fx&&fx.unlock)fx.unlock();if(global.HapilMusic&&global.HapilMusic.unlock)global.HapilMusic.unlock();}
   function syncSettings(){
-    ['music','sfx','screenShake','lowQuality'].forEach(function(k){var e=$('setting-'+k);if(e)e.checked=settings[k];});
+    ['music','sfx','hitSound','screenShake','lowQuality'].forEach(function(k){var e=$('setting-'+k);if(e)e.checked=settings[k];});
     ['musicVolume','sfxVolume'].forEach(function(k){var e=$('setting-'+k),o=$('value-'+k),v=Math.round(settings[k]*100);if(e)e.value=String(v);if(o)o.textContent=v+'%';});
     syncAbility();
     var sound=$('arcade-sound');if(sound){var on=settings.music||settings.sfx;sound.textContent=T(on?'soundOn':'soundOff');sound.setAttribute('aria-pressed',String(on));}
@@ -2223,7 +2223,7 @@
     syncSettings();syncStoryFx();
   }
   function bindSettings(){
-    ['music','sfx','screenShake','lowQuality'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('change',function(){settings[k]=!!e.checked;
+    ['music','sfx','hitSound','screenShake','lowQuality'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('change',function(){settings[k]=!!e.checked;
       if(k==='lowQuality'){lite=settings.lowQuality;if(Ink&&Ink.setLite)Ink.setLite(lite);framesSeen=0;frameMs=16;fit();buildSprites();if(state)initFx(themeOf(state.stageIndex).fx,state.stageIndex);}
       applySettings(true);if(k==='music'||k==='sfx')unlockAudio();});});
     ['musicVolume','sfxVolume'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('input',function(){settings[k]=Math.max(0,Math.min(1,Number(e.value)/100||0));applySettings(true);unlockAudio();});});
