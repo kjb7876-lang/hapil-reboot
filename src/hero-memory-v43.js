@@ -42,6 +42,14 @@
     var sx=(stretch||1),o=(ox===undefined?c/2:ox);
     g.drawImage(img[k],fi*c,0,c,c,-o*size/c*sx,-size/2,size*sx,size);g.restore();
   }
+  /* 기억사수 레이저는 모두 프레임 애니메이션(사용자 11-20 "기억사수 레이져나가는거 다 프레임애니메이션 사용하게해"):
+   *  Dots 기억사수 번개 시트(bolt 8칸: 0 섬광 → 1 갈래 → 2~4 곧은 광선 → 5 착탄 → 6~7 사라짐)를 길이에 맞춰 늘여 그린다.
+   *  한 번 쏘고 끝나는 광선은 u(0~1)로 8칸을 한 번 돌고, 계속 켜 있는 광선은 2~4칸을 돌린다. 시트를 아직 못 읽었으면 false(부른 쪽이 붓 획으로 대신 그림). */
+  var BOLT_SPAN=1-2*24/192,BOLT_BAND=.12;
+  function boltBeam(g,x,y,ang,len,w,alpha,u,t){
+    if(!ready('bolt')||len<4)return false;var S=SHEETS.bolt,f=u===null?2+Math.floor(t*S.fps)%3:Math.min(S.frames-1,Math.floor(u*S.frames)),size=Math.max(24,w/BOLT_BAND);
+    cell(g,'bolt',f,x,y,ang,size,alpha,len/(size*BOLT_SPAN),S.ox);return true;
+  }
   function blend(g){g.globalCompositeOperation=inkOn()?'source-over':'lighter';}
 
   /* ── 패시브 공격: 1~2단계는 붓끝 먹줄기, 3단계부터 기억 결정탄(단계마다 커진다) ── */
@@ -122,6 +130,7 @@
       g.globalAlpha=(1-u)*.85*fxDim;g.fillStyle=isSeoha(p.hero)?timeColor(false):boltDeep();var gaps=[0,1.15+rnd(p.seed)*.5,2.7+rnd(p.seed+1)*.6];
       for(k=0;k<3;k++){var a=p.turn+gaps[k],ln=(p.big?11:8)+rnd(p.seed+k*3)*4,r0=2+u*4,r1=r0+ln*(.6+u*.5);wedge(g,p.x+Math.cos(a)*r0,p.y+Math.sin(a)*r0,p.x+Math.cos(a)*r1,p.y+Math.sin(a)*r1,p.big?2.6:2,.3,p.seed+k*5,isSeoha(p.hero)?0:1.4,2);}}
     for(i=hitArcs.length-1;i>=0;i--){var c=hitArcs[i],age=t-c.t0,v=age<.12?0:(age-.12)/.1;if(v>=1){hitArcs.splice(i,1);continue;}var sd2=Math.floor(age*45);
+      var cdx=c.x1-c.x0,cdy=c.y1-c.y0;if(boltBeam(g,c.x0,c.y0,Math.atan2(cdy,cdx),Math.sqrt(cdx*cdx+cdy*cdy),5,.9,Math.min(.99,age/.22),t))continue;
       g.globalAlpha=(1-v)*.92*fxDim;g.fillStyle=boltDeep();wedge(g,c.x0,c.y0,c.x1,c.y1,3.2,1.2,c.seed+sd2,2.6,Math.max(3,Math.round(Math.hypot(c.x1-c.x0,c.y1-c.y0)/12)));
       var mx=(c.x0+c.x1)/2,my=(c.y0+c.y1)/2;wedge(g,mx,my,mx+(rnd(c.seed)-.5)*16,my-6-rnd(c.seed+1)*8,1.6,.2,c.seed+3,1.5,2);}
     g.restore();
@@ -179,6 +188,7 @@
   }
   function drawBolts(g,t){
     for(var i=skillBolts.length-1;i>=0;i--){var b=skillBolts[i],age=t-b.t0;if(age>.32){skillBolts.splice(i,1);continue;}if(age<0)continue;
+      var rdx=b.x1-b.x0,rdy=b.y1-b.y0;if(boltBeam(g,b.x0,b.y0,Math.atan2(rdy,rdx),Math.sqrt(rdx*rdx+rdy*rdy),5.5-b.hop*.6,.85,age/.32,t))continue;
       var a=1-age/.32;g.save();g.lineCap='round';g.globalAlpha=a*.8;g.strokeStyle=inkOn()?'#262322':'#dff8ff';g.lineWidth=2.6-b.hop*.25;jag(g,b.x0,b.y0,b.x1,b.y1,b.seed,9);
       g.globalAlpha=a*.55;g.strokeStyle=inkOn()?'#7c7872':'#ffffff';g.lineWidth=1;jag(g,b.x0,b.y0,b.x1,b.y1,b.seed+5,9);g.restore();}
   }
@@ -301,10 +311,10 @@
   function drawLaserStorm(g,o,age,W,H,s,t){
     var list=laserVolley(o,age,s,W,H),lv=o.lv,i;if(!list.length&&!o.hits.length)return;
     raw(1);g.save();blend(g);
-    for(i=0;i<list.length;i++){var b=list[i];beamShape(g,b.x,b.y,b.ang,b.len,b.w,b.a);if(b.born<.05&&!b.side){g.globalAlpha=.7;g.fillStyle=inkOn()?'rgba(30,26,24,1)':'rgba(220,255,255,1)';g.beginPath();g.ellipse(b.x,b.y,b.w*1.6,b.w*1.1,0,0,TAU);g.fill();}
+    for(i=0;i<list.length;i++){var b=list[i],once=b.born<1&&!b.side&&!b.core;if(!boltBeam(g,b.x,b.y,b.ang,b.len,b.w*1.4,b.a,once?Math.min(.99,b.born/(.2+lv*.012)):null,t+i*.07))beamShape(g,b.x,b.y,b.ang,b.len,b.w,b.a);if(b.born<.05&&!b.side){g.globalAlpha=.7;g.fillStyle=inkOn()?'rgba(30,26,24,1)':'rgba(220,255,255,1)';g.beginPath();g.ellipse(b.x,b.y,b.w*1.6,b.w*1.1,0,0,TAU);g.fill();}
       if(lv>=3&&b.hitAt&&b.born<.08)cell(g,'shatter',Math.floor(b.born*60),b.hitAt[0],b.hitAt[1],b.ang,58+lv*6,.9);}
     for(i=0;i<o.hits.length;i++){var h=o.hits[i],ha=t-h.t;if(ha<0||ha>.32)continue;var hx=s&&s.player?s.player.x:o.x,hy=(s&&s.player?s.player.y:o.y)-16;
-      for(var k=0;k+1<h.tg.length&&k<(lv>=4?16:4);k+=2){var ang=Math.atan2(h.tg[k+1]-hy,h.tg[k]-hx),len=Math.sqrt(Math.pow(h.tg[k]-hx,2)+Math.pow(h.tg[k+1]-hy,2));beamShape(g,hx,hy,ang,len,4+lv*.7,(1-ha/.32));cell(g,'shatter',Math.floor(ha*18),h.tg[k],h.tg[k+1],ang,70+lv*8,.85*(1-ha/.32));}} // 피해 박자: 과녁마다 굵은 일제 사격(4단계부터 전부)
+      for(var k=0;k+1<h.tg.length&&k<(lv>=4?16:4);k+=2){var ang=Math.atan2(h.tg[k+1]-hy,h.tg[k]-hx),len=Math.sqrt(Math.pow(h.tg[k]-hx,2)+Math.pow(h.tg[k+1]-hy,2));if(!boltBeam(g,hx,hy,ang,len,(4+lv*.7)*1.4,1,Math.min(.99,ha/.32),t))beamShape(g,hx,hy,ang,len,4+lv*.7,(1-ha/.32));cell(g,'shatter',Math.floor(ha*18),h.tg[k],h.tg[k+1],ang,70+lv*8,.85*(1-ha/.32));}} // 피해 박자: 과녁마다 굵은 일제 사격(4단계부터 전부)
     g.restore();raw(-1);
   }
   function drawBombs(g,t,W,H,s){
