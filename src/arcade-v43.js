@@ -1038,7 +1038,7 @@
     note(s,'entrance');}
   function beginCard(s){var card=segment(s),b=s.boss;if(s.entranceAll&&(STAGES[card.stage].awake||s.awake))applyCurve(s);s.cardEnding=null;s.cardDown=0;s.downEnd=0;s.bonusLock=0;s.phraseCard=0;spReset(s);b.maxHp=b.hp=cardHp(s,card);b.mid=!!card.mid;if(b.actor===card.actor)b.name=card.title||actorName(card.actor,card.stage);s.stage='card';s.stageTick=0;s.segTick=0;s.spellClean=!!card.spell;if(card.spell){s.spellNumber++;note(s,'card');}else note(s,'plain');// 모습이 바뀌는 카드(일반 패턴이 생략되는 실제 게임에서는 이름 패턴일 수도 있다): 싸우던 중에 넘어왔을 때만 잠깐 쉬고 알린다(이 카드에서 바로 등장했으면 등장 연출이 대신한다)
     var fkey=card.stage+'|'+card.actor+'|'+(card.formNo||0);
-    if(!card.mid&&card.formNo>0&&s.formKey!==fkey){s.formShifts=card.formNo;if(!(s.bossEntrance&&s.bossEntrance.segment===s.seg)){if(s.entranceAll)s.formHold=s.tick+FORM_HOLD;note(s,'formShift');}}
+    if(!card.mid&&card.formNo>0&&s.formKey!==fkey){s.formShifts=card.formNo;if(!(s.bossEntrance&&s.bossEntrance.segment===s.seg)){if(s.entranceAll){s.formHold=s.tick+FORM_HOLD;s.lasers.length=0;} /* 모습이 바뀌는 쉼에는 남은 광선도 걷는다: 대사를 읽다 맞지 않게(심사 11-20) */note(s,'formShift');}}
     if(!card.mid)s.formKey=fkey;}
   /* 보스·중간보스는 패턴 도중에 쓰러지지 않는다(사용자 11-19 "패턴중에 보스및 중간보스가 죽지않도록 패턴끝나고 죽도록"): 체력이 다하거나 시간이 다하면
      새 공격을 멈추고(특수 페이즈도 끝), 화면 탄은 가속해 밖으로 내보내고, 이미 켜진 광선·문양이 제 수명대로 꺼진 뒤에야 쓰러짐(endCard)으로 넘어간다. 최대 CARD_ENDING_MAX틱. */
