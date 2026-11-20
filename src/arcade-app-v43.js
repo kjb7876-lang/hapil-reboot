@@ -710,6 +710,8 @@
     for(i=0;i<s.drifted.length;i+=5)drifts.push({x:s.drifted[i],y:s.drifted[i+1],c:COLORS[s.drifted[i+2]]||'#ffffff',vx:Math.cos(s.drifted[i+3])*s.drifted[i+4],vy:Math.sin(s.drifted[i+3])*s.drifted[i+4],age:0});
     s.drifted.length=0;if(drifts.length>DRIFT_DRAW)drifts.splice(0,drifts.length-DRIFT_DRAW);
     for(i=0;i<s.pops.length;i+=3){var big=s.pops[i+2];for(k=0;k<(big?14:6);k++){var a=TAU*k/(big?14:6);addParticle(s.pops[i],s.pops[i+1],Math.cos(a)*(big?3.4:2.2),Math.sin(a)*(big?3.4:2.2),big?26:16,k%2?'#ffffff':themeColor(s),big?7:4);}if(big)shake=Math.max(shake,6);}
+    if(s.fwBursts&&s.fwBursts.length){for(i=0;i<s.fwBursts.length;i+=4){var fx0=s.fwBursts[i],fy0=s.fwBursts[i+1],fc=COLORS[s.fwBursts[i+2]]||'#e9e9ff',second=s.fwBursts[i+3]<2,nn=second?8:20; /* 불꽃놀이 터짐(사용자 11-20): 꽃씨 자리에서 불티가 둥글게 번지고 가운데가 잠깐 밝다 */
+      for(k=0;k<nn;k++){var fa=TAU*k/nn,fv=second?1.6:2.8;addParticle(fx0,fy0,Math.cos(fa)*fv,Math.sin(fa)*fv,second?14:24,k%3?fc:'#fff6e0',second?1.6:2.4);}addParticle(fx0,fy0,0,0,10,'#fff6e0',second?5:9);}s.fwBursts.length=0;}
     s.pops.length=0;if(Spirit)Spirit.consume(s);
     for(i=0;i<s.events.length;i++){
       var e=s.events[i];if(Spirit)Spirit.onEvent(e,s,Arcade);if(Cues)Cues.onEvent(e,s,Arcade,play);
@@ -756,6 +758,10 @@
       else if(e==='sparkHit'){if(settings.hitSound)play(isSeoha(s.hero)?'rainHitSeoha':'rainHitMemory',s.player.x);}
       else if(e==='sparkFire'||e==='tbStick'||e==='tbBoom'){play(e,s.player.x);if(e==='tbBoom')shake=Math.max(shake,1.5);} // 영웅 공격 손맛 소리(src/hero-memory-v43.js 그림과 짝)
       else if(e==='bossSpit'){play('summon',s.boss.x);shake=Math.max(shake,2);}
+      else if(e==='broodSummon'||e==='weaponWarn')play('summon',s.boss.x); // 그림 페이즈 졸개 부르기·큰 무기 꺼내기(11-20)
+      else if(e==='broodGather')play('inkSwell',s.brood?s.brood.gx:W/2);
+      else if(e==='cannonFire'||e==='weaponThrow'){play('laserFire',s.boss.x);shake=Math.max(shake,e==='cannonFire'?5:3);}
+      else if(e==='firework')play('skillCounter',s.boss.x);
     }
     s.events.length=0;if(Rhythm)Rhythm.sounds(s,play);if(Cues)Cues.frame(s,Arcade,play);
     if(s.inked&&s.inked.length){play('phaseBreak',W/2);for(i=0;i<s.inked.length;i+=4)inks.push({x:s.inked[i],y:s.inked[i+1],c:COLORS[s.inked[i+2]]||'#ffffff',k:s.inked[i+3],age:-((i>>2)%7)*2});s.inked.length=0;if(inks.length>INK_DRAW)inks.splice(0,inks.length-INK_DRAW);} // 이벤트(격파 연출 정리) 뒤에 읽어 지워지지 않게
@@ -1434,7 +1440,7 @@
     ctx.globalAlpha=alpha;ctx.drawImage(core.image,x-core.half,y-core.half,core.half*2,core.half*2);
     // 가장자리 판정점(사용자 11-18): 무기 몸을 따라 작은 심을 옅게 보여, 어디에 맞는지 읽힌다.
     var rim=Arcade.propHitPoints&&Arcade.propHitPoints(s.bcolor[i]);
-    if(rim){var rs=s.sizeScale*grow,rh=core.half*.55;ctx.globalAlpha=alpha*.55;for(var q=0;q<rim.length;q++){var rp=rim[q];if(!rp[0]&&!rp[1])continue;ctx.drawImage(core.image,x+(rp[0]*cos-rp[1]*sin)*rs-rh,y+(rp[0]*sin+rp[1]*cos)*rs-rh,rh*2,rh*2);}}
+    if(rim){var rs=s.sizeScale*grow,ro=orbs[0][propGlow(prop)]||core,rh=ro.half*.62;ctx.globalAlpha=alpha*.9;for(var q=0;q<rim.length;q++){var rp=rim[q];if(!rp[0]&&!rp[1])continue;ctx.drawImage(ro.image,x+(rp[0]*cos-rp[1]*sin)*rs-rh,y+(rp[0]*sin+rp[1]*cos)*rs-rh,rh*2,rh*2);}} // 사용자 11-20 "무기이미지탄들은 외곽에 탄환넣어서": 그림 가장자리를 따라 늘어선 판정점을 기물 색 구슬탄으로 또렷이(판정과 같은 자리)
     ctx.globalAlpha=1;
   }
   /* 코드로 그리는 기물: 어두운 회화풍에 맞게 뼈빛·이끼빛 단색에 어두운 테두리, 왼쪽 위에서 빛. u는 반 길이. */
@@ -1506,6 +1512,32 @@
     ctx.save();for(k=1;k<=n;k++)brushRing(x,y,r+4.6*k+.5,seed+k*.9,k===1?1.9:1.5,c.ink,c.paper,k===1?1:.62);ctx.restore();}
   function drawRingBursts(s){var h=s.mirrorHits,i,b,c=mirrorInk();if(h&&h.length){for(i=0;i<h.length;i++){b=h[i];ringBursts.push({x:b.x,y:b.y,r:Arcade.SIZE_RADIUS[b.size]*(s.sizeScale||1)*(SMALL_GROW[b.size]||1)+4.6*(b.left+1)+.5,t:0});}h.length=0;}
     if(!ringBursts.length)return;ctx.save();for(i=ringBursts.length-1;i>=0;i--){b=ringBursts[i];b.t++;if(b.t>18){ringBursts.splice(i,1);continue;}var f=b.t/18;brushRing(b.x,b.y,b.r+10*f,f*1.3,1.6*(1-f)+.4,c.ink,c.paper,.8*(1-f));}ctx.restore();}
+  /* 그림 페이즈의 먹 포탄과 회전 큰 무기(사용자 11-20). 판정은 엔진(Arcade.cannonRadius·weaponPoints)과 같다.
+     · 포탄: 졸개들이 모인 자리에 먹 덩이가 감기고 그 안에서 졸개 얼굴이 돈다. 예고 동안 겨누는 길을 인주 점선(영웅을 돕는 경고)으로, 굳힌 뒤에는 실선 화살촉으로.
+     · 큰 무기: 윤곽을 따라 보스 색 구슬탄이 늘어서 함께 돈다. 속은 옅은 먹 그림자. 예고 동안 보스 아래에서 돌며 인주 점선으로 날아갈 길을 보인다. */
+  function drawThrown(s){
+    var C=s.cannons||[],L=s.weapons||[],br=s.brood,HOT=Ink?'#c2362a':'#ff5a4e',INKC='#1e1a18',k,i;
+    if(!C.length&&!L.length&&!(br&&br.state==='gather'))return;ctx.save();if(Ink&&Ink.raw)Ink.raw(1); // 먹 포탄은 먹 그대로(탄 색 바꿈 없이) 그린다
+    if(br&&br.state==='gather'){var g=Math.min(1,br.g/Arcade.BROOD_GATHER);ctx.globalAlpha=.25+.5*g;var gr=ctx.createRadialGradient(br.gx,br.gy,0,br.gx,br.gy,10+30*g);gr.addColorStop(0,'rgba(20,16,14,.9)');gr.addColorStop(1,'rgba(20,16,14,0)');ctx.fillStyle=gr;ctx.beginPath();ctx.arc(br.gx,br.gy,10+30*g,0,TAU);ctx.fill();
+      ctx.strokeStyle=INKC;ctx.lineWidth=2;for(k=0;k<3;k++){ctx.globalAlpha=(.6-.15*k)*g;ctx.beginPath();ctx.arc(br.gx,br.gy,(46-12*k)*(1-g*.7),visual*3+k*2,visual*3+k*2+3.6);ctx.stroke();}} // 먹 소용돌이가 졸개를 빨아들인다
+    for(i=0;i<C.length;i++){var c=C[i],warn=c.age<=c.warn,ux=Math.cos(c.a),uy=Math.sin(c.a);
+      if(warn){var wa=Math.min(1,c.age/10),locked=c.age>c.warn*Arcade.CANNON_LOCK_SHOW,len=Math.hypot(W,H);ctx.globalAlpha=.75*wa;ctx.strokeStyle=HOT;ctx.lineWidth=locked?3:2;ctx.setLineDash(locked?[]:[9,7]);
+        ctx.beginPath();ctx.moveTo(c.x+ux*c.r,c.y+uy*c.r);ctx.lineTo(c.x+ux*len,c.y+uy*len);ctx.stroke();ctx.setLineDash([]); // 날아갈 길
+        ctx.globalAlpha=.4*wa;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(c.x+ux*c.r-uy*c.r,c.y+uy*c.r+ux*c.r);ctx.lineTo(c.x+ux*len-uy*c.r,c.y+uy*len+ux*c.r);ctx.moveTo(c.x+ux*c.r+uy*c.r,c.y+uy*c.r-ux*c.r);ctx.lineTo(c.x+ux*len+uy*c.r,c.y+uy*len-ux*c.r);ctx.stroke(); // 포탄 폭(판정 폭)
+        var ah=c.r+16+((c.age*2)%24);ctx.globalAlpha=.9*wa;ctx.fillStyle=HOT;ctx.beginPath();ctx.moveTo(c.x+ux*(ah+14),c.y+uy*(ah+14));ctx.lineTo(c.x+ux*ah-uy*8,c.y+uy*ah+ux*8);ctx.lineTo(c.x+ux*ah+uy*8,c.y+uy*ah-ux*8);ctx.closePath();ctx.fill();}
+      else{ctx.globalAlpha=.35;ctx.fillStyle=INKC;for(k=1;k<=4;k++){ctx.beginPath();ctx.arc(c.x-ux*k*c.r*.45,c.y-uy*k*c.r*.45,c.r*(1-k*.18),0,TAU);ctx.fill();}} // 먹 꼬리
+      var grow=warn?Math.min(1,.55+.45*c.age/12):1,R=c.r*grow;ctx.globalAlpha=1;
+      var bg=ctx.createRadialGradient(c.x-R*.3,c.y-R*.35,R*.1,c.x,c.y,R);bg.addColorStop(0,'#4a403a');bg.addColorStop(.55,'#1e1a18');bg.addColorStop(1,'#0c0a09');ctx.fillStyle=bg;ctx.beginPath();ctx.arc(c.x,c.y,R,0,TAU);ctx.fill();
+      var art=skinOf(s.stageIndex,c.kind),im=art&&images[art];if(im&&im.width){var fw=im.height,frames=Math.max(1,Math.round(im.width/fw)),sz=R*.62;ctx.save();ctx.beginPath();ctx.arc(c.x,c.y,R*.92,0,TAU);ctx.clip();ctx.globalAlpha=.55;ctx.globalCompositeOperation='screen';
+        for(k=0;k<c.n;k++){var ang=c.spin+TAU*k/c.n,rr=c.n>1?R*.42:0;ctx.drawImage(im,0,0,fw,fw,c.x+Math.cos(ang)*rr-sz/2,c.y+Math.sin(ang)*rr-sz/2,sz,sz);}ctx.restore();} // 뭉친 졸개 얼굴이 먹 속에서 돈다
+      ctx.globalAlpha=.9;ctx.strokeStyle='rgba(242,233,214,.55)';ctx.lineWidth=2;ctx.beginPath();ctx.arc(c.x,c.y,R-1,c.spin,c.spin+2.2);ctx.stroke();}
+    if(Ink&&Ink.raw)Ink.raw(-1);
+    for(i=0;i<L.length;i++){var w=L[i],pts=Arcade.weaponPoints(w),wwarn=w.age<=w.warn,fade=wwarn?Math.min(1,w.age/(w.warn*.6)):1,ux2=Math.cos(w.a),uy2=Math.sin(w.a);
+      if(wwarn){var len2=Math.hypot(W,H);ctx.globalAlpha=.7*fade;ctx.strokeStyle=HOT;ctx.lineWidth=2;ctx.setLineDash([9,7]);ctx.beginPath();ctx.moveTo(w.x,w.y);ctx.lineTo(w.x+ux2*len2,w.y+uy2*len2);ctx.stroke();ctx.setLineDash([]);
+        ctx.globalAlpha=.3*fade;ctx.beginPath();ctx.arc(w.x,w.y,Arcade.WEAPON_LEN*.5,0,TAU);ctx.stroke();} // 날아갈 길과 도는 반경
+      ctx.globalAlpha=.55*fade;ctx.strokeStyle=INKC;ctx.lineWidth=13;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();for(k=0;k<pts.length;k+=2){if(k&&Math.hypot(pts[k]-pts[k-2],pts[k+1]-pts[k-1])>20)ctx.moveTo(pts[k],pts[k+1]);else if(!k)ctx.moveTo(pts[k],pts[k+1]);else ctx.lineTo(pts[k],pts[k+1]);}ctx.stroke(); // 무기 몸의 먹 그림자
+      ctx.globalAlpha=fade;var j2=0;for(k=0;k<pts.length;k+=2,j2++){var o=orbs[1]&&orbs[1][j2%3?w.c1:w.c2];if(o)ctx.drawImage(o.image,pts[k]-o.half*.78,pts[k+1]-o.half*.78,o.half*1.56,o.half*1.56);}}
+    ctx.restore();}
   function drawBullets(s){
     var bloom=Arcade.BLOOM_TICKS,i,o,half,size,x,y,variant=skinVariant(s),sf=s.player.focus&&Arcade.slowField?Arcade.slowField(s):null,slowR=sf?sf[0]:0,slowK=sf?sf[1]:0;
     for(i=0;i<s.n;i++){
@@ -1858,7 +1890,7 @@
     offsetX=offsetY=0;if(shake>0){if(settings.screenShake){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;}shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawCrowdWash(s);if(Cues)Cues.drawUnder(ctx,s,Arcade,Ink);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawCardCast(s);drawPatternCue(s);drawShots(s);drawDrifts();drawInks();drawParticles();drawFlashes();drawItems(s);if(Spirit)Spirit.drawWorld(ctx,s,Arcade,Ink,mode==='playing',{quiet:!!toast,dim:s.formHold>s.tick,heart:itemSprites[0]});if(Cues)Cues.drawWorld(ctx,s,Arcade,Ink);drawLasers(s);drawFigures(s);drawRipples(s);drawHeroLight(s);drawBullets(s);drawLaserCues(s);if(Cues)Cues.drawOver(ctx,s,Arcade,Ink);drawNudgeCue(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink)){drawPlayer(s);drawHitbox(s);}if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);drawFormShift(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawCrowdWash(s);if(Cues)Cues.drawUnder(ctx,s,Arcade,Ink);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawCardCast(s);drawPatternCue(s);drawShots(s);drawDrifts();drawInks();drawParticles();drawFlashes();drawItems(s);if(Spirit)Spirit.drawWorld(ctx,s,Arcade,Ink,mode==='playing',{quiet:!!toast,dim:s.formHold>s.tick,heart:itemSprites[0]});if(Cues)Cues.drawWorld(ctx,s,Arcade,Ink);drawLasers(s);drawFigures(s);drawRipples(s);drawHeroLight(s);drawBullets(s);drawThrown(s);drawLaserCues(s);if(Cues)Cues.drawOver(ctx,s,Arcade,Ink);drawNudgeCue(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink)){drawPlayer(s);drawHitbox(s);}if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);drawFormShift(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);
     // 스펠 선언 연출(사용자 11-18 "패턴·공격 미장센 강화"): 가장자리부터 먹이 번져 화면이 잠깐 조여졌다가 걷힌다. 보스에 시선이 모였다가 탄이 펼쳐진다(탄·영웅은 이 위에 그대로 읽힌다).
     if(spellDim>0&&Ink&&s.boss&&s.boss.present){var sd=spellDim,sx0=finite(s.boss.x,W/2),sy0=finite(s.boss.y,H/3),sg=ctx.createRadialGradient(sx0,sy0,H*.22,sx0,sy0,H*.85);if(Ink.raw)Ink.raw(1);sg.addColorStop(0,'rgba(24,20,16,0)');sg.addColorStop(.55,'rgba(24,20,16,'+(sd*.2)+')');sg.addColorStop(1,'rgba(24,20,16,'+(sd*.68)+')');ctx.fillStyle=sg;ctx.fillRect(0,0,W,H);if(Ink.raw)Ink.raw(-1);spellDim=Math.max(0,spellDim-Math.min(.05,elapsed)/1.6);}

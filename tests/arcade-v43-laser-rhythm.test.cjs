@@ -50,12 +50,13 @@ test('in a laser phase the rhythm section always plays to the end: it opens when
  }
 });
 
+// 사용자 11-20 "레이져패턴 예고시간 1초정도 더 길게": 예고가 LASER_MORE(60틱 = 두 박) 더 길다 → 네 박 앞(이지 다섯 박), 켜지는 자리는 여전히 박
 test('notes are full-length solid beams announced two beats ahead (three on easy) that light exactly on the beat, laid back',()=>{
  for(const d of DIFFS)for(const name of R.MOTIFS){const s=motifRun(d,name,200,560);let beat0=-1,fired=0;const WB=d==='gentle'?3:2;
   run(s,a.SP_LEAD+a.SP_LEN[d]+150,t=>{if(t.special&&beat0<0)beat0=t.special.start;
    for(const l of notes(t)){assert(l.full&&l.solid&&l.keep,'edge to edge, whole width hits, never regrouped');assert.equal(l.rl,name);
     assert(vertical(l)||Math.abs(l.angle)<1e-9,'lanes or rows only');
-    if(l.age===1){assert(l.warn>=WB*a.SP_BEAT,`${d} ${name}: warned ${l.warn} ticks`);assert(l.warn<=(WB+.5)*a.SP_BEAT+1e-9||name==='climb','only the rising rows are shown further ahead (all at once, from the floor up)');}
+    if(l.age===1){assert(l.warn>=WB*a.SP_BEAT+a.LASER_MORE,`${d} ${name}: warned ${l.warn} ticks`);assert(l.warn<=(WB+.5)*a.SP_BEAT+a.LASER_MORE+1e-9||name==='climb','only the rising rows are shown further ahead (all at once, from the floor up)');}
     if(l.age===l.warn){fired++;const off=(t.tick+1-beat0-a.SP_LAYBACK[d])%(a.SP_BEAT/2);assert.equal(off,0,`${d} ${name}: lights on the beat or the half beat (off by ${off})`);}}
    assert(t.lasers.length<=a.LASER_CAP-4,'well under the laser cap: '+t.lasers.length);});
   assert(fired>=(d==='gentle'?3:5),`${d} ${name} fired ${fired}`);}
@@ -89,7 +90,7 @@ test('jangdan: kung lights the left half, deok the right, dung both ends; sides 
 
 test('rising beat: rows light from the floor upward one per beat and clear together, then rows come down from the top',()=>{
  for(const d of DIFFS){const s=motifRun(d,'climb',180,600),up=[],down=[];
-  run(s,a.SP_LEAD+8*a.SP_BEAT,t=>{for(const l of notes(t))if(l.age===l.warn){assert(!vertical(l));(l.y>a.HEIGHT/2?up:down).push({y:l.y,tick:t.tick,off:t.tick+l.active,w:r6(l.width)});}});
+  run(s,a.SP_LEAD+8*a.SP_BEAT+a.LASER_MORE,t=>{for(const l of notes(t))if(l.age===l.warn){assert(!vertical(l));(l.y>a.HEIGHT/2?up:down).push({y:l.y,tick:t.tick,off:t.tick+l.active,w:r6(l.width)});}});
   const n={gentle:2,normal:3,hell:4}[d];assert.equal(up.length,n,d);
   for(let i=0;i<n;i++){assert.equal(up[i].w,R.BAND);assert.equal(up[i].y,a.HEIGHT-R.BAND*(i+.5));if(i){assert.equal(up[i].tick-up[i-1].tick,a.SP_BEAT);assert.equal(up[i].off,up[0].off);}}
   assert(a.HEIGHT-R.BAND*n>=384,'the top is always free');
@@ -109,7 +110,7 @@ test('follow the path: an open corridor of two lanes (three on easy) that holds 
 
 test('squeeze and release: walls close in from both sides, then the centre is struck a beat after they let go (two beats on easy)',()=>{
  for(const d of DIFFS){const s=motifRun(d,'squeeze',180),ev=[];
-  run(s,a.SP_LEAD+((d==='gentle'?3:2)+6.5)*a.SP_BEAT,t=>{for(const l of notes(t))if(l.age===l.warn){const [lo,hi]=span(l);ev.push({lo,hi,on:t.tick,off:t.tick+l.active});}});
+  run(s,a.SP_LEAD+((d==='gentle'?3:2)+6.5)*a.SP_BEAT+a.LASER_MORE,t=>{for(const l of notes(t))if(l.age===l.warn){const [lo,hi]=span(l);ev.push({lo,hi,on:t.tick,off:t.tick+l.active});}});
   const outer=ev.filter(e=>e.hi-e.lo===LANE&&(e.lo===0||e.hi===a.WIDTH)),inner=ev.filter(e=>e.hi-e.lo===LANE&&(e.lo===LANE||e.hi===a.WIDTH-LANE)),mid=ev.filter(e=>e.lo===2*LANE&&e.hi===4*LANE);
   assert.equal(outer.length,2);assert.equal(inner.length,2);assert.equal(mid.length,1);
   assert.equal(inner[0].on-outer[0].on,a.SP_BEAT);assert.equal(inner[0].off,outer[0].off,'they let go together');
@@ -118,7 +119,7 @@ test('squeeze and release: walls close in from both sides, then the centre is st
 
 test('off-beat tag: the melody skips across lanes on the beat and the off-beat note lands on the hero\'s lane',()=>{
  for(const d of DIFFS){const s=motifRun(d,'swing',200);let beat0=-1,on=[],off=[];
-  run(s,a.SP_LEAD+9*a.SP_BEAT,t=>{if(t.special&&beat0<0)beat0=t.special.start;for(const l of notes(t))if(l.age===l.warn){const [lo,hi]=span(l);assert(Math.abs(hi-lo-LANE)<1e-6);((t.tick+1-beat0-a.SP_LAYBACK[d])%a.SP_BEAT?off:on).push(Math.round(lo/LANE));}},()=>({dx:0,dy:0}));
+  run(s,a.SP_LEAD+9*a.SP_BEAT+a.LASER_MORE,t=>{if(t.special&&beat0<0)beat0=t.special.start;for(const l of notes(t))if(l.age===l.warn){const [lo,hi]=span(l);assert(Math.abs(hi-lo-LANE)<1e-6);((t.tick+1-beat0-a.SP_LAYBACK[d])%a.SP_BEAT?off:on).push(Math.round(lo/LANE));}},()=>({dx:0,dy:0}));
   assert(on.length>=5&&new Set(on).size>=5,d+' melody '+on);assert(off.length>=(d==='hell'?5:2),d+' off-beats '+off);assert(off.every(j=>j===3),'the hero stood in lane 3: '+off);}
 });
 

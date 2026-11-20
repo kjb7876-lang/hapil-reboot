@@ -119,7 +119,7 @@ test('during the hexagram and the hanja rings the boss comes down a little below
  const s=bossRun('hell',0);go(s,60);
  const sig={glyph:'hexagram'};s.figures.push({kind:'runes',age:0,warn:60,active:150,rings:[],cx:180,cy:200,turn:0,spin:0,width:10,r:0,follow:true});
  let low=0;go(s,200,t=>{t.figures.forEach(f=>{if(f.kind==='runes')f.age=Math.min(f.age,100);});low=Math.max(low,t.boss.y);},180);
- assert(low>a.HEIGHT/2,'boss y '+low);assert(low<=a.BOSS_DESCEND+1);
+ assert(low>a.HEIGHT/2,'boss y '+low);assert(low<=a.BOSS_DESCEND+a.WOBBLE_Y+1); // 사용자 11-20: 내려와 있는 동안 위아래로 조금(WOBBLE_Y 이내) 흔들린다
  s.figures.length=0;let back=1e9,heldLow=0;
  // 사용자 11-19 "보스가 아래로왔다가 금방위로가고 하니까 정신없어": 문양이 끝나도 DESCEND_HOLD 동안은 아래에 머물렀다가 천천히 올라간다
  go(s,a.DESCEND_HOLD-10,t=>{t.figures.length=0;heldLow=Math.max(heldLow,t.boss.y);});assert(s.boss.y>a.HEIGHT/2-20,'stays down for a while: '+s.boss.y);
