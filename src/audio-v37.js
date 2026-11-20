@@ -190,10 +190,10 @@
       var at=ctx.currentTime,src=ctx.createBufferSource(),g=ctx.createGain(),len=b.dec.len/b.dec.rate;
       src.buffer=b.buf;src.playbackRate.value=.94+r2*.12;g.gain.value=l*(.85+((rainSeed>>>8)&255)/255*.3)*((c&&c.power)||1);
       src.connect(g);g.connect(d);
-      var done=false,entry={source:src,dest:d,finish:cleanup};
-      function cleanup(){if(done)return;done=true;var i=active.indexOf(entry);if(i>=0)active.splice(i,1);voices=Math.max(0,voices-1);disconnect(src);disconnect(g);if(d!==master&&!active.some(function(v){return v.dest===d;}))disconnect(d);}
-      voices++;active.push(entry);src.onended=cleanup;
-      try{src.start(at,k*b.dec.len/b.dec.rate,len/src.playbackRate.value+.01);}catch(e){cleanup();throw e;}
+      var done=false,entry={source:src,dest:d,finish:rainDone};
+      function rainDone(){if(done)return;done=true;var i=active.indexOf(entry);if(i>=0)active.splice(i,1);voices=Math.max(0,voices-1);disconnect(src);disconnect(g);if(d!==master&&!active.some(function(v){return v.dest===d;}))disconnect(d);}
+      voices++;active.push(entry);src.onended=rainDone;
+      try{src.start(at,k*b.dec.len/b.dec.rate,len/src.playbackRate.value+.01);}catch(e){rainDone();throw e;}
     }
     var jitter=0;function vary(){jitter=(jitter+1)%5;return 1+(jitter-2)*.035;}
 
