@@ -81,3 +81,14 @@ test('arcade.html loads the chapter module before the app and has the chapter re
  const html=read('arcade.html');const a=html.indexOf('src/arcade-chapters-v43.js'),b=html.indexOf('src/arcade-app-v43.js');assert(a>0&&a<b);
  for(const id of ['arcade-chapters','arcade-chapter-screen','arcade-chapter-list','chapter-export','chapter-import','chapter-import-go','chapter-code','arcade-chapter-back'])assert(html.includes('id="'+id+'"'),id);
 });
+
+test('locked chapters never put their title in the page, only an ink veil (spoiler guard)',()=>{
+ const mk=tag=>({tag,children:[],className:'',textContent:'',style:{},dataset:{},attrs:{},appendChild(c){this.children.push(c);return c;},setAttribute(k,v){this.attrs[k]=v;},addEventListener(){},set type(v){}});
+ const doc={createElement:mk,createTextNode:t=>({tag:'#text',textContent:t,children:[]}),getElementById:()=>null,head:null};
+ const text=n=>(n.textContent||'')+(n.children||[]).map(text).join('')+Object.values(n.attrs||{}).join(' ');
+ let p=A.Progress.fresh();for(let i=0;i<12;i++)p=A.Progress.record(p,{stage:i,stars:1,score:1},'normal');
+ const rows=C.summary(A.STAGES,p,null,i=>A.Progress.canPlay(p,i)),box=mk('div');C.renderList(doc,box,rows,{restart(){},resume(){}});
+ const all=text(box);
+ for(const r of rows){if(r.open)assert(all.includes(r.title),'open title shown '+r.part);else assert(!all.includes(r.title),'locked title hidden '+r.part);}
+ assert.equal(box.children.filter(r=>r.children[1].children.some(c=>/^ch-veil\b/.test(c.className))).length,6);
+});
