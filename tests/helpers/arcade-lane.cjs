@@ -15,6 +15,8 @@ function check(arcade,options){
  // actual spawn. The first graph update uses these cells without expanding
  // again, so the initial two ticks cannot grant two movement budgets.
  for(let c=0;c<size;c++)if(Math.hypot(X0+c%cols*CELL-s.player.x,Y0+Math.floor(c/cols)*CELL-s.player.y)<=CELL)reach[c]=1;
+ // laneSpeed: movement budget in px/tick (default 4). focus: hold psi while stepping.
+ const vmax=options.laneSpeed||4,every=Math.max(2,Math.ceil(CELL/vmax));
  const limit=(seg.kind==='card'?seg.time*60:seg.duration+600)+400;
  function paintBox(x0,y0,x1,y1,test){
   const c0=Math.max(0,Math.floor((x0-X0)/CELL)),c1=Math.min(cols-1,Math.ceil((x1-X0)/CELL)),r0=Math.max(0,Math.floor((y0-Y0)/CELL)),r1=Math.min(rows-1,Math.ceil((y1-Y0)/CELL));
@@ -32,7 +34,7 @@ function check(arcade,options){
    const x=X0+cx*CELL,y=Y0+cy*CELL;let near=1e9;for(let k=0;k<s.n;k++){const d=Math.hypot(s.bx[k]+Math.cos(s.ba[k])*s.bs[k]*.2-x,s.by[k]+Math.sin(s.ba[k])*s.bs[k]*.2-y);if(d<near)near=d;}
    const score=Math.min(near,60)-Math.abs(y-520)*.04-Math.abs(x-180)*.01;if(score>bestScore){bestScore=score;best=c;}}
   const tx=X0+(best%cols)*CELL,ty=Y0+((best/cols)|0)*CELL;
-  arcade.step(s,{dx:Math.max(-4,Math.min(4,tx-p.x)),dy:Math.max(-4,Math.min(4,ty-p.y))});
+  arcade.step(s,{dx:Math.max(-vmax,Math.min(vmax,tx-p.x)),dy:Math.max(-vmax,Math.min(vmax,ty-p.y)),focus:!!options.focus});
   s.events.length=0;s.cancelled.length=0;s.pops.length=0;
   if(s.seg!==start)break;
   // Accumulate each tick, so a short lived or fast hazard cannot slip between
@@ -47,7 +49,7 @@ function check(arcade,options){
    for(let cx=0;cx<cols;cx++){const x=X0+cx*CELL,y=Math.min(arcade.floorTop(s,x-6),arcade.floorTop(s,x+6))-6;paintBox(x,y+.01,x,H);}
    for(const q of s.floor.pieces)for(const c of q.cells){const x=(q.col+c[0])*arcade.FLOOR_CELL+3,y=q.y-c[1]*arcade.FLOOR_CELL-3;paintBox(x-pad,y-arcade.FLOOR_CELL+6-pad,x+arcade.FLOOR_CELL-6+pad,y+pad);}
   }
-  if(i%2===0)continue;
+  if((i+1)%every)continue;
   next.fill(0);let open=0;
   for(let c=0;c<size;c++){if(blocked[c])continue;const cx=c%cols,cy=(c/cols)|0;
    // Cardinal motion only: a diagonal step must consume two updates. This is

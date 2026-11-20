@@ -72,7 +72,13 @@
   function shots(g,s,t){
     var lv=s.power||1,i,ink=inkOn(),big=SHARD_SIZE[lv],shardOk=lv>=3&&ready('shard'),f=Math.floor(t*SHEETS.shard.fps);
     raw(1);g.save();blend(g);
-    if(isSeoha(heroId(s))){for(i=0;i<s.sn;i++){if(s.skind&&s.skind[i]===2){bombClock(g,s.sx[i],s.sy[i],15,t*9,1,.25,lv);continue;}timeNeedle(g,s.sx[i],s.sy[i],Math.atan2(s.svx?s.svx[i]:0,15),s.shoming[i]?18:25+lv,ink?.75:s.shoming[i]?.4:.58,lv);}g.restore();raw(-1);return;}
+    if(isSeoha(heroId(s))){for(i=0;i<s.sn;i++){
+      // 초능력 중 쏜 느린 탄(엔진 sspd < 15): 지나온 자리에 옅은 잔상 바늘 두 개를 남겨 '시간이 늦춰진 탄'으로 읽히게 하고(심사 4차), 느린 시간탄은 더 크고 진하게 채운다
+      var slowShot=s.sspd&&s.sspd[i]>0&&s.sspd[i]<13.5,an=Math.atan2(s.svx?s.svx[i]:0,s.sspd&&s.sspd[i]>0?s.sspd[i]:15);
+      if(s.skind&&s.skind[i]===2){if(slowShot){bombClock(g,s.sx[i],s.sy[i]+24,13,t*3,.35,.2,lv);bombClock(g,s.sx[i],s.sy[i],19,t*3,1,.55,lv);}else bombClock(g,s.sx[i],s.sy[i],15,t*9,1,.25,lv);continue;}
+      var nl=s.shoming[i]?18:25+lv,na=ink?.75:s.shoming[i]?.4:.58;
+      if(slowShot){timeNeedle(g,s.sx[i]-(s.svx?s.svx[i]:0)*4,s.sy[i]+16,an,nl*.8,na*.5,lv);timeNeedle(g,s.sx[i]-(s.svx?s.svx[i]:0)*8,s.sy[i]+30,an,nl*.6,na*.18,lv);}
+      timeNeedle(g,s.sx[i],s.sy[i],an,nl,na,lv);}g.restore();raw(-1);return;}
     var fr=Math.floor(t*30);
     if(s.sn&&s.player&&fr%4<2)muzzle(g,s.player.x,s.player.y-24,fr,lv);
     for(i=0;i<s.sn;i++){
