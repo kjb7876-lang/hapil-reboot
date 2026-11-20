@@ -2137,7 +2137,7 @@
     Arcade.STAGES.forEach(function(g,i){
       var group=groups[g.part];if(!group){group=groups[g.part]=document.createElement('optgroup');group.label='제'+g.part+'부';select.appendChild(group);}
       var option=document.createElement('option'),done=progress.cleared.indexOf(i)>=0,can=Progress.canPlay(progress,i);option.value=String(i);
-      option.textContent=(i+1)+'. '+g.name+(done?' '+starText(progress.stars[i]||1):can?'':' · 잠김');option.disabled=!can;
+      option.textContent=(i+1)+'. '+(can||done?g.name:'■■■■ · 잠김')+(done?' '+starText(progress.stars[i]||1):''); // 잠긴 스테이지 이름도 가린다(스포 방지, 사용자 11-20)option.disabled=!can;
       group.appendChild(option);
     });
     select.value=String(Math.min(open,resume));
