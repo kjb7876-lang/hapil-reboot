@@ -92,6 +92,7 @@
       bonusShown=val;
     }
     drawDown(ctx,s,c);
+    if(s.spellOnly&&s.stage!=='won'&&s.stage!=='lost'){ctx.font='700 11px '+SANS;var pt='스펠 연습 · 기록에 넣지 않음',pw2=ctx.measureText(pt).width+16;ctx.globalAlpha=.92;plate(ctx,W/2-pw2/2,H-62,pw2,18,9,c);ctx.globalAlpha=1;ctx.textAlign='center';ctx.fillStyle=c.text;ctx.fillText(pt,W/2,H-49);} // 연습 중임을 판 아래에 늘 보인다
     // 보스 위치 표식: 맨 아래 가장자리 눈금(바닥 안개·영웅 빛보다 위에 그려 묻히지 않게 화면 고정층에서). 맞는 동안 옅어지고, 체력이 20% 아래면 깜박인다.
     var b=s.boss;
     if(s.stage==='card'&&b&&b.present&&!s.cardEnding){
@@ -124,12 +125,14 @@
   var DOWN_TICKS=96;
   function drawDown(ctx,s,c){
     var b=s.boss;if(s.stage!=='card'||!s.cardDown||!b||!b.present)return;var age=s.tick-s.cardDown;if(age<0||age>DOWN_TICKS)return;
-    var by=finite(b.y,120),y=Math.max(96,Math.min(H-200,by+(by>236?-96:78))),k=age<6?age/6:1,fade=age>DOWN_TICKS-36?(DOWN_TICKS-age)/36:1,wide=Math.min(1,age/8);
-    ctx.save();ctx.globalAlpha=fade*.86;ctx.fillStyle=c.plate;ctx.strokeStyle=c.edge;ctx.lineWidth=1; // 붓 띠: 가운데가 두껍고 양끝이 가는 한 획
-    var half=118*wide;ctx.beginPath();ctx.moveTo(W/2-half,y);ctx.quadraticCurveTo(W/2,y-17,W/2+half,y-2);ctx.quadraticCurveTo(W/2,y+19,W/2-half,y);ctx.fill();ctx.stroke();
+    var by=finite(b.y,120),y=Math.max(96,Math.min(H-200,by+(by>236?-118:132))),k=age<6?age/6:1,fade=age>DOWN_TICKS-36?(DOWN_TICKS-age)/36:1,wide=Math.min(1,age/8);
+    ctx.save();ctx.globalAlpha=fade*.96;ctx.fillStyle=c.plate;ctx.strokeStyle=c.edge;ctx.lineWidth=1.4; // 붓 띠: 가운데가 두껍고 양끝이 가는 한 획
+    var half=128*wide;ctx.beginPath();ctx.moveTo(W/2-half,y+4);ctx.quadraticCurveTo(W/2,y-24,W/2+half,y+2);ctx.quadraticCurveTo(W/2,y+38,W/2-half,y+4);ctx.fill();ctx.stroke();
+    ctx.globalAlpha=fade*.55;ctx.fillStyle=c.text;for(var q=0;q<5;q++){var qx=W/2-half+q*half*.5,qy=y+30-Math.abs(q-2)*4;ctx.fillRect(qx-1,qy,2+((q*7)%3),1.4);} // 붓 끝 비백 몇 점
+    if(age<20){var bx2=finite(b.x,W/2);ctx.globalAlpha=(1-age/20)*.7;for(var d=0;d<7;d++){var an=d*2.399+.3,rr=20+age*2.2+(d%3)*6;ctx.beginPath();ctx.ellipse(bx2+Math.cos(an)*rr,by+Math.sin(an)*rr*.7,2.4-(d%3)*.5,1.6,an,0,TAU);ctx.fill();}} // 소진 순간 보스 둘레로 먹물이 튄다(고리 아님, 흩어진 점)
     ctx.globalAlpha=fade*k;ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='700 '+Math.round(20+6*(1-k))+'px '+SERIF;ctx.lineWidth=3;ctx.strokeStyle=c.halo;ctx.fillStyle=c.text;
     var clean=!!s.spellClean&&s.bonusLock>0,t1=clean?'격파 · 봉인 확정':'격파';ctx.strokeText(t1,W/2,y-1);ctx.fillText(t1,W/2,y-1);
-    ctx.font='600 11px '+SANS;ctx.fillStyle=c.dim;var t2=clean?'남은 공격을 버티면 +'+comma(s.bonusLock):'남은 공격이 끝나면 쓰러진다';ctx.strokeText(t2,W/2,y+19);ctx.fillText(t2,W/2,y+19);
+    ctx.font='700 12px '+SANS;ctx.lineWidth=2.4;var t2=clean?'남은 공격을 버티면 ':'남은 공격이 끝나면 쓰러진다',t3=clean?'+'+comma(s.bonusLock):'',w2=ctx.measureText(t2).width,w3=ctx.measureText(t3).width,x2=W/2-(w2+w3)/2;ctx.textAlign='left';ctx.strokeText(t2,x2,y+19);ctx.fillStyle=c.text;ctx.fillText(t2,x2,y+19);if(t3){ctx.strokeText(t3,x2+w2,y+19);ctx.fillStyle=c.gold;ctx.fillText(t3,x2+w2,y+19);}
     ctx.restore();ctx.textBaseline='alphabetic';
   }
   /* 스테이지 결산 한 줄(알림 띠 아래 줄) */

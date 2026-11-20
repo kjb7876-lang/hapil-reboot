@@ -804,7 +804,7 @@
     var b=s.boss;if(!emblems.length)return;
     var m=emblems[0],age=visual-m.t;if(age>=EMBLEM_TIME||!b.present){emblems.length=0;return;}
     var k=age/EMBLEM_TIME,a=k<.12?k/.12:k>.6?(1-k)/.4:1,size=EMBLEM_SIZE*(k<.15?1.25-k/.15*.25:1+.08*(k-.15)),r=m.e.emblem,q=m.e.burst;
-    a*=1-.6*crowd; // 탄이 몰리면 스펠 문장(장식)도 물러선다
+    a*=1-.75*crowd; // 탄이 몰리면 스펠 문장(장식)도 물러선다
     ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=.85*a;
     ctx.drawImage(m.img,r[0],r[1],r[2],r[3],b.x-size/2,b.y-size/2,size,size);
     if(age<BURST_TIME){var kb=age/BURST_TIME,bs=90+150*kb;ctx.globalAlpha=.6*(1-kb);ctx.drawImage(m.img,q[0],q[1],q[2],q[3],b.x-bs/2,b.y-bs/2,bs,bs);}
@@ -1646,7 +1646,7 @@
   // 영웅 탄은 반투명하게 그려 적 탄을 가리지 않는다.
   /* 탄 몰림 가독성(외부 심사 11-20 "탄이 몰리는 화면에서 적탄과 피격점을 먼저 보이게 하세요. 교주의 시계탄과 X자 광선처럼 강한 효과가 겹치는 순간에는 배경 문양과 아군 검기의 농도를 낮추는 편"):
      화면 탄 수·켜진 광선·떠 있는 문양으로 몰림(0~1)을 재고 천천히 따라간다. 몰릴수록 ① 배경·날씨·문양·스펠 문장 위에 바탕색 막을 얇게 덮고(보스·탄·영웅은 그 위에 그린다) ② 아군 검기·번개를 옅게 한다. 적탄·피격점은 건드리지 않는다. */
-  var crowd=0,CROWD_FROM=60,CROWD_SPAN=110,CROWD_WASH=.42,CROWD_SHOT=.5;
+  var crowd=0,CROWD_FROM=50,CROWD_SPAN=90,CROWD_WASH=.56,CROWD_SHOT=.6;
   function crowdTarget(s){if(!s||(s.stage!=='card'&&s.stage!=='wave'))return 0;var k=Math.max(0,Math.min(1,(s.n-CROWD_FROM)/CROWD_SPAN)),live=0,i;
     for(i=0;i<s.lasers.length;i++){var l=s.lasers[i];if(l.age<l.warn+l.active)live++;}if(live>=2)k=Math.max(k,.75);else if(live)k=Math.max(k,.4);
     if(s.figures&&s.figures.length)k=Math.max(k,.55);if(s.n>=CROWD_FROM&&live)k=Math.min(1,k+.25);return k;}
@@ -1991,7 +1991,7 @@
     var stars=0;s.results.forEach(function(r){stars+=r.stars;});
     $('result-title').textContent=s.spellOnly?(s.captures?'봉인 성공':won?'봉인 놓침':'GAME OVER'):won?(s.bossOnly?'BOSS CLEAR':s.stageIndex>=Arcade.STAGES.length-1?'ALL CLEAR':'CLEAR'):'GAME OVER';
     $('result-score').textContent=pad(s.score);$('result-best').textContent=pad(best);
-    var dn={gentle:'이지',normal:'노멀',hell:'헬'}[s.difficulty]||'',bl=$('result-bests');if(bl)bl.textContent=dn+' 원코인 최고 '+pad(bestOf(s.difficulty,'one'))+' · 연습 최고 '+pad(bestOf(s.difficulty,'practice'));
+    var dn={gentle:'이지',normal:'노멀',hell:'헬'}[s.difficulty]||'',bl=$('result-bests');if(bl)var b1=bestOf(s.difficulty,'one'),b2=bestOf(s.difficulty,'practice');bl.textContent=dn+' 원코인 최고 '+(b1?pad(b1):'기록 없음')+' · 연습 최고 '+(b2?pad(b2):'기록 없음');
     $('result-detail').textContent=s.spellOnly?'스펠 연습 「'+(Arcade.SEGMENTS[s.spellSeg]||{}).name+'」 · 스침 '+s.graze+' · 피격 '+s.hits+' · 연습 점수는 최고점에 넣지 않는다':(won?'':'STAGE '+(s.stageIndex+1)+' '+Arcade.STAGES[s.stageIndex].name+' · ')+(oneCreditEligible?'원코인 여정 · ':'연습/이어하기 · ')+'깬 스테이지 '+s.results.length+' · 별 '+stars+' · 봉인 '+s.captures+' · 스침 '+s.graze+' · 피격 '+s.hits;
     var retry=$('arcade-retry');
     if(!won){retry.hidden=false;retry.textContent=T('retryFallen');retry.dataset.stage=String(s.stageIndex);}
@@ -1999,7 +1999,7 @@
     else retry.hidden=true;
     retry.dataset.boss=s.bossOnly?'1':'';
     var sp=$('arcade-spell-retry'),again=s.spellOnly?{seg:s.spellSeg,stage:s.rushStage,name:(Arcade.SEGMENTS[s.spellSeg]||{}).name}:lastSpell;
-    if(sp){sp.hidden=!again;if(again){sp.textContent=(s.spellOnly?'이 스펠 한 번 더 연습':'방금 맞은 스펠 다시 연습')+' 「'+again.name+'」';sp.dataset.seg=String(again.seg);sp.dataset.stage=String(again.stage);}}
+    if(sp){sp.hidden=!again;if(again){sp.innerHTML='';sp.appendChild(document.createTextNode(s.spellOnly?'이 스펠 한 번 더 연습':'방금 맞은 스펠 다시 연습'));var sm=document.createElement('small');sm.style.cssText='display:block;font-size:12px;opacity:.8';sm.textContent='「'+again.name+'」';sp.appendChild(sm);sp.dataset.seg=String(again.seg);sp.dataset.stage=String(again.stage);}}
     if(sp)sp.className=s.spellOnly?'primary':'';if(s.spellOnly){retry.hidden=true;}
     $('arcade-home').className=retry.hidden?'primary':'';
     var eyes=!won&&global.HapilEyes;if(eyes)eyes.close(); // 목숨이 다하면 눈을 감고, 다 감긴 뒤 결과 화면
@@ -2027,11 +2027,11 @@
     if(Ink&&Ink.raw)Ink.raw(1);ctx.save();ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;
     ctx.fillStyle=Ink?'rgba(244,236,218,.93)':'rgba(10,10,22,.86)';ctx.strokeStyle=Ink?'rgba(40,32,26,.55)':'rgba(255,255,255,.3)';ctx.lineWidth=1;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(24,y-30,W-48,120,10);else ctx.rect(24,y-30,W-48,120);ctx.fill();ctx.stroke();
     var tx=Ink?'rgba(30,24,20,.95)':'#f6ead2',dim=Ink?'rgba(30,24,20,.66)':'rgba(246,234,210,.72)',gold=Ink?'#9a6400':'#ffd86a';
-    ctx.textAlign='center';ctx.textBaseline='alphabetic';ctx.font='600 11px '+SANS;ctx.fillStyle=dim;ctx.fillText('조작 실습 · 30초',W/2,y-12);
+    ctx.textAlign='center';ctx.textBaseline='alphabetic';ctx.font='700 12px '+SERIF;ctx.fillStyle=dim;ctx.fillText('조작 실습 · 남은 '+Math.max(0,Math.ceil((DRILL_STEP*3-d.all)/60))+'초',W/2,y-12);
     for(i=0;i<DRILL_TEXT.length;i++){var cx=W/2+(i-1)*84,on=i===step&&!fin,ok=i<d.step;ctx.font=(on?'700 16px ':'600 13px ')+SANS;ctx.fillStyle=ok?gold:on?tx:dim;ctx.fillText((ok?'✓ ':'')+DRILL_TEXT[i][0],cx,y+12);}
     ctx.font='600 11px '+SANS;ctx.fillStyle=tx;var line=fin?'준비 끝 — 곧 1스테이지가 시작된다':DRILL_TEXT[step][1];wrapDrill(line,W/2,y+38,W-72,15,tx);
-    if(!fin){var k=step===0?Math.min(1,d.moved/DRILL_MOVE):step===1?Math.min(1,d.focusT/DRILL_FOCUS):0,left=1-d.t/DRILL_STEP;ctx.fillStyle=Ink?'rgba(30,24,20,.14)':'rgba(255,255,255,.14)';ctx.fillRect(48,y+74,W-96,4);ctx.fillStyle=gold;ctx.fillRect(48,y+74,(W-96)*k,4);
-      ctx.fillStyle=dim;ctx.fillRect(48,y+80,(W-96)*Math.max(0,left),1.5);}
+    if(!fin){var k=step===0?Math.min(1,d.moved/DRILL_MOVE):step===1?Math.min(1,d.focusT/DRILL_FOCUS):0;ctx.fillStyle=Ink?'rgba(30,24,20,.14)':'rgba(255,255,255,.14)';ctx.fillRect(48,y+74,W-96,4);ctx.fillStyle=gold;ctx.fillRect(48,y+74,(W-96)*k,4);
+      if(step===2)k=0;}
     ctx.restore();if(Ink&&Ink.raw)Ink.raw(-1);
     if(step===1&&!fin&&s.player.focus){ctx.save();ctx.fillStyle='#b02a1c';ctx.globalAlpha=.9;ctx.fillRect(s.player.x-1.5,s.player.y-1.5,3,3);ctx.restore();} // 저속 단계: 맞는 자리(피격점)를 짚어 준다(플레이어를 돕는 표시라 인주색)
   }
