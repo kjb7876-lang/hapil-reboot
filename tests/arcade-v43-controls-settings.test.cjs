@@ -428,27 +428,26 @@ test('normal canvas entrances use the stage-specific speaker and dialogue across
       assert.equal(A.entrancePhase(state).phase,'cutin');
       A.skipEntrance(state);
       A.step(state,{});
-      const authored=intros.getBoss(g.actor,g.stage);
       const line=book.getLine(g.actor,g.stage);
-      if(mid&&!authored)assert.equal(line,null,name);
-      if(!mid){
-        sections.add(g.stage);
-        assert(authored||line,name);
-        if(!authored)newLines.add(line.text);
+      if(mid){
+        // 사용자 11-20: 중간보스는 컷인만, 대사 없음
+        for(let k=0;k<A.BOSS_ENTRANCE_MID/2;k++)A.step(state,{});
+        calls.length=0;h.drawBossIntro(state);
+        assert.equal(calls.filter(c=>c[0]==='fillText').length,0,name+' midboss paints no speech');
+        continue;
       }
-      const lines=authored?authored.lines:line?[line]:intros.fallbackLines(g.actor,mid,name);
-      for(const [i,expected] of lines.entries()){
-        const at=state.bossEntrance.enteredTick+Math.ceil((i+.8)*A.BOSS_ENTRANCE_SPEECH/lines.length);
-        while(state.tick<at)A.step(state,{});
-        assert.equal(A.entrancePhase(state).phase,'speech');
-        calls.length=0;
-        h.drawBossIntro(state);
-        const painted=calls.filter(c=>c[0]==='fillText').map(c=>c[1]);
-        assert(painted.includes(expected.speaker),name);
-        assert(painted.includes(expected.text),name);
-      }
+      sections.add(g.stage);
+      assert.equal(line.text,book.LINES[g.stage],name);newLines.add(line.text);
+      const at=state.bossEntrance.enteredTick+Math.ceil(.8*A.BOSS_ENTRANCE_SPEECH);
+      while(state.tick<at)A.step(state,{});
+      assert.equal(A.entrancePhase(state).phase,'speech');
+      calls.length=0;
+      h.drawBossIntro(state);
+      const painted=calls.filter(c=>c[0]==='fillText').map(c=>c[1]);
+      assert(painted.includes(name),name);
+      assert(painted.includes(line.text),name);
     }
   }
   assert.equal(sections.size,56);
-  assert.equal(newLines.size,47);
+  assert.equal(newLines.size,56);
 });
