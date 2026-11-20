@@ -112,7 +112,7 @@
   var EARLY_BURST=230,EARLY_SIDE=180,EARLY_WASH=.75,EARLY_PULSE=140,EARLY_AFTER=.85;
   function bomb(b,t,W,H,s){
     if(!b)return;if(isSeoha(heroId(s))){timeBomb(b,s,t,W,H);return;}var lv=b.level,cx=b.x,cy=Math.max(120,b.y-90),i,tg=b.targets||[],main=tg.length?[tg[0],tg[1]]:[W/2,H*.32];
-    bombs.push({lv:lv,t0:t,name:b.name,x:b.x,y:b.y});
+    bombs.push({lv:lv,t0:t,name:b.name,x:b.x,y:b.y,targets:tg.slice(0,24),hits:[]});
     bombs[bombs.length-1].bursts=[{x:cx,y:cy,t0:t,size:Math.max(EARLY_BURST,150+lv*22)}]; // 사용자 11-19 "영웅들 초반에도 필살기 이펙트를 강화해서 필살기 같아보이게": 1단계부터 큰 폭발
     var B=bombs[bombs.length-1].bursts;
     for(i=0;i<4+lv;i++)pops.push({x:40+((i*97+lv*31)%(W-80)),y:70+((i*53)%Math.round(H*.45)),t0:t+.08+i*.05,size:70+lv*10,rot:i});
@@ -127,23 +127,101 @@
   }
   function timeBomb(b,s,t,W,H){
     var lv=b.level,targets=b.targets||[],x=targets.length>=2?targets[0]:W/2,y=targets.length>=2?targets[1]:H*.32;
-    bombs.push({hero:heroId(s),lv:lv,t0:t,x:Math.max(35,Math.min(W-35,x)),y:Math.max(75,Math.min(380,y)),name:b.name||heroBombName(s,lv)});
+    bombs.push({hero:heroId(s),lv:lv,t0:t,x:Math.max(35,Math.min(W-35,x)),y:Math.max(75,Math.min(380,y)),px:b.x,py:b.y,kicks:[],strikes:[],name:b.name||heroBombName(s,lv)});
     quake=7+lv*1.4;
     if(ready(cutinKey(heroId(s))))cut={t0:t,lv:lv,name:b.name||heroBombName(s,lv),auto:!!b.auto,hero:heroId(s),label:heroProfile(s).name};
     else texts.push({text:b.name||heroBombName(s,lv),sub:heroProfile(s).name+' · 필살 Lv.'+lv,t0:t,x:b.x,y:b.y-70,big:true});
   }
-  function drawTimeBomb(g,o,age,W,H){
-    if(age>1.8)return;var lv=o.lv,fade=Math.max(0,1-age/1.8),spread=Math.min(1,age/.5),r=Math.max(46,28+lv*6); // 1단계부터 큼직하게(사용자 11-19)
+  /* ── 윤서하 필살 '시계 폭풍'(사용자 11-20 "시계들이 맵안에서 막 돌아가는게 몇초간 지속 맵전역에 피해 입히는 이펙트까지"):
+   *  화면 곳곳에 수묵 시계가 피어나 바늘이 미친 듯 돌고(잔상 셋), 화면 가운데 축의 큰 시곗바늘이 전장 전체를 쓸고 지나간다.
+   *  피해 박자(bombPulse 7번)마다 모든 시계가 한 칸 튀고 과녁마다 바늘 셋이 꽂히며 화면이 한 번 먹빛으로 숨 쉰다. 약 3초.
+   *  단계: 시계 수 7+2·lv, 2단계부터 시곗바늘 비, 3단계부터 큰 시계 바깥 톱니, 4단계부터 반대로 도는 둘째 큰 바늘, 5단계부터 큰 시계 둘, 6단계는 끝에 시계마다 바늘이 튀어 흩어짐, 7단계는 전장을 두른 큰 시각 눈금과 셋째 바늘. 색은 시간 두 색(먹·놋)만, 닫힌 고리 없음 */
+  var STORM_LIFE=2.55,SWEEP_START=.3,SWEEP_TURN=1.9; // 무적(BOMB_TICKS 2.5초)이 풀리기 전에 걷힌다(심사 1차)
+  function hash01(n){var x=Math.sin(n*127.1+311.7)*43758.5453;return x-Math.floor(x);}
+  function stormClocks(o,W,H){
+    var lv=o.lv,n=7+lv*2,list=[],i,k,px=o.px,py=o.py;
+    for(i=0;i<n;i++){var x,y,tries=0;do{k=i*7.31+tries*3.7+lv;x=18+hash01(k)*(W-36);y=40+hash01(k+.5)*(H*.84-40);tries++;}while(tries<8&&(Math.abs(x-px)<70&&Math.abs(y-py)<90||list.some(function(c){return Math.abs(c.x-x)<44&&Math.abs(c.y-y)<44;})));
+      list.push({x:x,y:y,r:(i<1+(lv>=5?1:0)?42+lv*3:i<4?28+lv*1.5:14+hash01(k+.9)*10+lv*1.2),born:.18+i*(.42/n),dir:i%2?1:-1,ph:hash01(k+.3)*TAU,sp:7+hash01(k+.7)*5+lv*.8});}
+    return list;
+  }
+  function clockFace(g,c,age,kick,fade,lv){
+    var a0=age-c.born;if(a0<0)return;var grow=Math.min(1,a0/.22),pop=1-Math.pow(1-grow,3),end=age>STORM_LIFE-.5?(age-(STORM_LIFE-.5))/.5:0;
+    var r=c.r*(.35+.65*pop)*(1+.16*kick+.25*end),al=fade*(1-end)*Math.min(1,a0/.12),spin=c.dir*(a0*c.sp+a0*a0*1.6)+c.ph+kick*.55*c.dir,i;
+    g.save();g.translate(c.x,c.y);
+    g.globalAlpha=al*.2;g.fillStyle=timeColor(false);g.beginPath();g.arc(0,0,r*.92,0,TAU);g.fill(); // 옅은 먹 시계판(채움만, 테두리 고리 없음)
+    g.globalAlpha=al;g.strokeStyle=timeColor(true);g.lineCap='round';g.lineWidth=1.4+r*.045;g.beginPath(); // 열두 시각 눈금: 떨어진 짧은 획
+    for(i=0;i<12;i++){var u=TAU*i/12+spin*.08,q=i%3===0?.68:.8;g.moveTo(Math.cos(u)*r*q,Math.sin(u)*r*q);g.lineTo(Math.cos(u)*r*.94,Math.sin(u)*r*.94);}g.stroke();
+    g.strokeStyle=timeColor(false);for(i=3;i>=0;i--){var back=i*.16*c.dir,mm=spin-back,hh=spin*.25-back*.25;g.globalAlpha=al*(i?.28/i:.95);g.lineWidth=(i?1.6:2.8)+r*.045; // 바늘 둘과 지나간 자리 잔상 셋
+      g.beginPath();g.moveTo(0,0);g.lineTo(Math.cos(mm)*r*.86,Math.sin(mm)*r*.86);g.moveTo(0,0);g.lineTo(Math.cos(hh)*r*.52,Math.sin(hh)*r*.52);g.stroke();}
+    g.globalAlpha=al;g.fillStyle=timeColor(true);g.beginPath();g.arc(0,0,1.6+r*.05,0,TAU);g.fill();
+    g.restore();
+    if(lv>=3&&r>22)clockwork(g,c.x,c.y,r*1.12,-spin*.3,al*.5,10+lv); // 3단계부터 큰 시계는 톱니가 바깥에서 거꾸로 돈다
+  }
+  function bigHand(g,cx,cy,ang,len,width,alpha,trail){
+    g.save();g.translate(cx,cy);g.fillStyle=timeColor(false);
+    if(trail>0){g.globalAlpha=alpha*.11;g.beginPath();g.moveTo(0,0);g.arc(0,0,len,ang-trail,ang,false);g.closePath();g.fill();g.globalAlpha=alpha*.07;g.beginPath();g.moveTo(0,0);g.arc(0,0,len,ang-trail*1.9,ang-trail,false);g.closePath();g.fill();} // 쓸고 지나간 부채꼴 먹 자국
+    g.rotate(ang);g.globalAlpha=Math.min(1,alpha*1.5);g.beginPath();g.moveTo(-len*.08,0);g.lineTo(0,-width);g.lineTo(len*.97,-width*.18);g.lineTo(len,0);g.lineTo(len*.97,width*.18);g.lineTo(0,width);g.closePath();g.fill(); // 끝이 가는 큰 시곗바늘
+    g.fillStyle=timeColor(true);g.globalAlpha=alpha*.9;g.beginPath();g.moveTo(len*.18,-width*.55);g.lineTo(len*.26,0);g.lineTo(len*.18,width*.55);g.lineTo(len*.1,0);g.closePath();g.fill();g.restore();
+  }
+  function drawTimeBomb(g,o,age,W,H,t){
+    if(age>STORM_LIFE)return;var lv=o.lv,fade=age<.15?age/.15:1,i,kick=0,cx=W/2,cy=H*.4;
+    if(!o.clocks)o.clocks=stormClocks(o,W,H);
+    for(i=0;i<o.kicks.length;i++){var ka=t-o.kicks[i];if(ka>=0&&ka<.25)kick=Math.max(kick,1-ka/.25);}
     raw(1);g.save();g.globalCompositeOperation='source-over';
-    clockwork(g,o.x,o.y,r*(.65+.35*spread),-age*(1+lv*.12),fade*.42,7+lv);
-    for(var i=0;i<Math.min(7,lv+2);i++){var a=i*2.39996+age*.7,x=o.x+Math.cos(a)*(r+18)*spread,y=Math.max(55,Math.min(420,o.y+Math.sin(a)*(r+12)*spread));timeNeedle(g,x,y,a+Math.PI/2,19+lv*2,fade*.35,lv);}
-    {clockwork(g,o.x-65,Math.min(400,o.y+48),18+lv,age*2,fade*.25,8);clockwork(g,o.x+65,Math.max(55,o.y-42),16+lv,-age*2,fade*.25,8);}
-    if(lv>=7){g.globalAlpha=fade*.32;g.strokeStyle=timeColor(true);g.lineWidth=2;g.beginPath();g.moveTo(o.x-90,o.y+24);g.lineTo(o.x,o.y);g.lineTo(o.x+45,o.y-70);g.stroke();} // 최대 단계의 엇갈린 큰 바늘, 화면 아래 탄·영웅 영역은 비운다
+    if(kick>0){g.globalAlpha=kick*(inkOn()?.16:.12)*(o.kicks.length>=7?1.5:1);g.fillStyle=timeColor(false);g.fillRect(0,0,W,H);} // 피해 박자마다 전장이 한 번 먹빛으로 숨 쉰다
+    var sw=Math.max(0,age-SWEEP_START),endA=age>STORM_LIFE-.45?Math.max(0,(STORM_LIFE-age)/.45):1,sweep=Math.min(1,sw/SWEEP_TURN),ease=sweep<.5?2*sweep*sweep:1-Math.pow(-2*sweep+2,2)/2;
+    if(age>SWEEP_START){
+      if(lv>=7){g.globalAlpha=.55*endA;g.strokeStyle=timeColor(true);g.lineWidth=3;g.lineCap='round';g.beginPath();for(i=0;i<12;i++){var u=TAU*i/12-Math.PI/2;g.moveTo(cx+Math.cos(u)*196,cy+Math.sin(u)*196);g.lineTo(cx+Math.cos(u)*(i%3?222:246),cy+Math.sin(u)*(i%3?222:246));}g.stroke();} // 7단계: 전장을 두른 큰 시각 눈금(떨어진 획)
+      bigHand(g,cx,cy,-Math.PI/2+ease*TAU,430,7+lv*.9,.5*endA,.55);
+      if(lv>=4)bigHand(g,cx,cy,-Math.PI/2-ease*TAU*.85,300,5+lv*.6,.42*endA,.4);
+      if(lv>=7)bigHand(g,cx,cy,Math.PI/2+ease*TAU*1.38,200,4,.4*endA,.3);
+      g.globalAlpha=.8*endA;g.fillStyle=timeColor(true);g.beginPath();g.arc(cx,cy,5+lv*.5,0,TAU);g.fill();
+    }
+    for(i=0;i<o.clocks.length;i++)clockFace(g,o.clocks[i],age,kick,fade,lv);
+    if(lv>=2&&age>.3&&age<STORM_LIFE-.3)for(i=0;i<4+lv*3;i++){var rx=20+hash01(i*3.3+lv)*(W-40),rt=(age*(.55+hash01(i+.2)*.4)+hash01(i*1.7))%1,ry=-20+rt*(H*.78);timeNeedle(g,rx,ry,Math.PI,16+lv*1.5,Math.sin(Math.PI*rt)*.55*endA,lv);} // 2단계부터 시곗바늘 비가 전장에 쏟아진다(단계마다 늘어남)
+    if(lv>=6&&age>STORM_LIFE-.55)for(i=0;i<o.clocks.length;i++){var c=o.clocks[i],ea=(age-(STORM_LIFE-.55))/.55;for(var j=0;j<5;j++){var ja=j*1.2566+c.ph;timeNeedle(g,c.x+Math.cos(ja)*(c.r+ea*60),c.y+Math.sin(ja)*(c.r+ea*60),ja+Math.PI/2,12+lv,(1-ea)*.7,lv);}} // 6단계부터 마지막에 시계마다 바늘 다섯이 튀어 흩어진다
+    for(i=0;i<o.strikes.length;i++){var st=o.strikes[i],sa=t-st.t;if(sa<0||sa>.4)continue;for(var k=0;k<3;k++)timeNeedle(g,st.x+Math.cos(st.r+k*2.09)*(26-sa*40),st.y+Math.sin(st.r+k*2.09)*(26-sa*40),st.r+k*2.09-Math.PI/2,22+lv*2,(1-sa/.4)*.9,lv);} // 과녁마다 바늘 셋이 꽂힌다
     g.restore();raw(-1);
   }
-  function drawBombs(g,t,W,H){
+  /* ── 기억사수 필살 '기억 난사'(사용자 11-20 "기억사수는 레이져난사 몇초간 - 레벨업할수록 더 화려해지게"): 컷씬이 걷힐 즈음부터 약 2.3초 동안 영웅에서 레이저가 쏟아진다.
+   *  1 한 줄씩 흩뿌림 · 2 양손 두 줄 · 3 줄 끝 결정 파편 · 4 피해 박자마다 과녁 전부에 일제 사격 · 5 부채꼴로 쓸어 대는 다섯 줄 · 6 화면 양옆에서 엇갈려 쏘는 잔상 사수 · 7 한가운데 큰 기둥 레이저.
+   *  수묵판은 먹 심지 + 한지색 테(빛 대신 먹), 원색판은 하늘빛 더하기. 피해는 엔진 bombPulse 그대로 */
+  var LASER_START=.42,LASER_END=2.75;
+  function beamShape(g,x,y,ang,len,w,a){ // 붓으로 그은 광선: 뿌리 짙고 끝으로 갈수록 옅어진다(막대처럼 보이지 않게)
+    var ink=inkOn(),gr;g.save();g.translate(x,y);g.rotate(ang);
+    gr=g.createLinearGradient(0,0,len,0);gr.addColorStop(0,ink?'rgba(255,253,246,.75)':'rgba(70,190,255,.5)');gr.addColorStop(.55,ink?'rgba(255,253,246,.45)':'rgba(70,190,255,.3)');gr.addColorStop(1,ink?'rgba(255,253,246,0)':'rgba(70,190,255,0)');
+    g.globalAlpha=a;g.fillStyle=gr;g.beginPath();g.moveTo(0,-w*.6-3);g.lineTo(len,-w*1.4-5);g.lineTo(len,w*1.4+5);g.lineTo(0,w*.6+3);g.closePath();g.fill(); // 테: 한지색(수묵) 또는 푸른 번짐
+    gr=g.createLinearGradient(0,0,len,0);gr.addColorStop(0,ink?'rgba(30,26,24,1)':'rgba(200,250,255,1)');gr.addColorStop(.6,ink?'rgba(30,26,24,.75)':'rgba(200,250,255,.7)');gr.addColorStop(1,ink?'rgba(30,26,24,0)':'rgba(200,250,255,0)');
+    g.fillStyle=gr;g.beginPath();g.moveTo(-2,0);g.lineTo(8,-w*.55);g.lineTo(len*.5,-w*.7);g.lineTo(len,-w*.25);g.lineTo(len,w*.25);g.lineTo(len*.5,w*.7);g.lineTo(8,w*.55);g.closePath();g.fill(); // 심지: 붓 획
+    if(w>3){g.globalAlpha=a*.85;g.fillStyle=ink?'rgba(255,253,246,1)':'rgba(255,255,255,1)';g.fillRect(10,-w*.13,len*.55,w*.26);} // 가운데 흰 결(빛줄기로 읽히게)
+    g.restore();
+  }
+  function laserVolley(o,age,s,W,H){ // 지금 화면에 살아 있는 레이저 목록(시간으로 계산: 상태를 쌓지 않는다)
+    var lv=o.lv,out=[],px=s&&s.player?s.player.x:o.x,py=s&&s.player?s.player.y:o.y,gap=.15-lv*.011,life=.2+lv*.012,per=2+Math.floor(lv/2),i,k,tg=o.targets||[];
+    if(age<LASER_START||age>LASER_END+life)return out;
+    var first=Math.max(0,Math.floor((age-LASER_START-life)/gap)),last=Math.floor((Math.min(age,LASER_END)-LASER_START)/gap);
+    for(k=first;k<=last;k++){var ba=age-(LASER_START+k*gap);if(ba<0||ba>life)continue;
+      for(i=0;i<per;i++){var seed=k*13+i*5+lv,side=lv>=2?(i%2?1:-1):0,ox=px+side*13,oy=py-22,ang,tx;
+        if(tg.length>=2&&(i+k)%3===0){tx=((k+i)*2)%(tg.length-(tg.length%2));ang=Math.atan2(tg[tx+1]-oy,tg[tx]-ox);}else ang=-Math.PI/2+(hash01(seed)-.5)*(.7+lv*.12);
+        out.push({x:ox,y:oy,ang:ang,len:560+hash01(seed+.4)*200,w:6+lv*.5,a:(1-ba/life)*(lv>=7&&age>1&&age<2.3?.6:1),born:ba,hitAt:tg.length>=2&&(i+k)%3===0?[tg[tx],tg[tx+1]]:null});}}
+    if(lv>=5&&age>.6&&age<LASER_END-.1)for(i=0;i<5;i++){var sweep=Math.sin((age-.6)*3.2)*.55;out.push({x:px,y:py-16,ang:-Math.PI/2+sweep+(i-2)*.17,len:760,w:3+lv*.4,a:.75,born:1});}
+    if(lv>=6&&age>.8&&age<LASER_END-.15)for(i=0;i<2;i++){var sx=i?W-8:8,sy=H*.58+Math.sin(age*5+i)*30,tilt=(i?-1:1)*(.45+.15*Math.sin(age*4.3+i*1.7));out.push({x:sx,y:sy,ang:-Math.PI/2+tilt,len:760,w:4+lv*.3,a:.8,born:1,side:true});}
+    if(lv>=7&&age>1&&age<2.35){var col=Math.min(1,(age-1)/.15)*Math.min(1,(2.35-age)/.25);out.push({x:px,y:py-20,ang:-Math.PI/2,len:760,w:(22+Math.sin(age*40)*3)*col,a:.92*col,born:1,core:true});}
+    return out;
+  }
+  function drawLaserStorm(g,o,age,W,H,s,t){
+    var list=laserVolley(o,age,s,W,H),lv=o.lv,i;if(!list.length&&!o.hits.length)return;
+    raw(1);g.save();blend(g);
+    for(i=0;i<list.length;i++){var b=list[i];beamShape(g,b.x,b.y,b.ang,b.len,b.w,b.a);if(b.born<.05&&!b.side){g.globalAlpha=.7;g.fillStyle=inkOn()?'rgba(30,26,24,1)':'rgba(220,255,255,1)';g.beginPath();g.ellipse(b.x,b.y,b.w*1.6,b.w*1.1,0,0,TAU);g.fill();}
+      if(lv>=3&&b.hitAt&&b.born<.08)cell(g,'shatter',Math.floor(b.born*60),b.hitAt[0],b.hitAt[1],b.ang,58+lv*6,.9);}
+    for(i=0;i<o.hits.length;i++){var h=o.hits[i],ha=t-h.t;if(ha<0||ha>.32)continue;var hx=s&&s.player?s.player.x:o.x,hy=(s&&s.player?s.player.y:o.y)-16;
+      for(var k=0;k+1<h.tg.length&&k<(lv>=4?16:4);k+=2){var ang=Math.atan2(h.tg[k+1]-hy,h.tg[k]-hx),len=Math.sqrt(Math.pow(h.tg[k]-hx,2)+Math.pow(h.tg[k+1]-hy,2));beamShape(g,hx,hy,ang,len,4+lv*.7,(1-ha/.32));cell(g,'shatter',Math.floor(ha*18),h.tg[k],h.tg[k+1],ang,70+lv*8,.85*(1-ha/.32));}} // 피해 박자: 과녁마다 굵은 일제 사격(4단계부터 전부)
+    g.restore();raw(-1);
+  }
+  function drawBombs(g,t,W,H,s){
     for(var n=bombs.length-1;n>=0;n--){var o=bombs[n],age=t-o.t0,B=o.bursts,i;if(age>3.2){bombs.splice(n,1);continue;}
-      if(isSeoha(o.hero)){drawTimeBomb(g,o,age,W,H);continue;}
+      if(isSeoha(o.hero)){drawTimeBomb(g,o,age,W,H,t);continue;}
+      drawLaserStorm(g,o,age,W,H,s,t);
       if(o.lv>=7&&age<2.8)drawMemoryGlyph(g,age,W,H);
       // 화면에 먹물이 번졌다 걷힌다(빛 대신 먹). 4단계까지는 조금 옅게(11-19부터 모든 단계)
       if(age<1.1){var k=(age<.2?age/.2:1-(age-.2)/.9)*(o.lv>=5?1:EARLY_WASH),gg=g.createRadialGradient(W/2,H*.4,40,W/2,H*.4,H*.8);
@@ -222,7 +300,8 @@
     else if(e==='bombLevelUp')texts.push({text:'필살 Lv.'+s.bombLevel,sub:heroBombName(s,s.bombLevel),t0:t,x:s.player.x,y:s.player.y-62});
     else if(e==='focusSkill'){if(t-lastSkillLabel>2.4){lastSkillLabel=t;texts.push({text:s.fsLast&&s.fsLast.kind==='sword'?'시간차 공격':'인과의 역전',sub:'',t0:t,x:s.player.x,y:s.player.y-34});}}
     else if(e==='bomb')bomb(s.lastBomb,t,360,640,s);
-    else if(e==='bombPulse'){var pi=s.pulseInfo;if(pi)pulseFx(pi,s.bombLevel||1,t,heroId(s));}
+    else if(e==='bombPulse'){var pi=s.pulseInfo,ob=bombs[bombs.length-1];if(pi)pulseFx(pi,s.bombLevel||1,t,heroId(s));
+      if(ob&&pi){if(ob.kicks){ob.kicks.push(t);for(var q=0;q+1<pi.targets.length&&q<16;q+=2)ob.strikes.push({x:pi.targets[q],y:Math.min(470,pi.targets[q+1]),t:t,r:q+pi.index});if(!pi.targets.length)ob.strikes.push({x:60+((pi.index*127)%240),y:120+((pi.index*71)%240),t:t,r:pi.index});}else if(ob.hits)ob.hits.push({t:t,tg:pi.targets.length?pi.targets.slice(0,16):[60+((pi.index*127)%240),120+((pi.index*71)%240)]});}} // 피해 박자: 시계가 튀고 바늘이 꽂힌다 / 과녁마다 일제 사격
     else if(e==='distort'){var side=(s.distorts%2)?1:-1;warps.push({x:s.player.x,y:s.player.y,t0:t,side:side,hero:heroId(s)});if(warps.length>4)warps.shift();hand+=TAU*1.25;texts.push({text:'시공 왜곡',sub:'',t0:t,x:s.player.x-side*44,y:s.player.y-22});}
   }
   /* ── 시공간 왜곡: 탄이 빗겨 간 자리. 한쪽(탄이 온 쪽)으로 휘어 바깥 아래로 빠져나가는 붓 획 서너 개와 엷은 잔상(닫힌 고리 없이, 0.5초. 심사 1차: 좌우 대칭 획이 렌즈 꼴 고리로 읽힘 → 한쪽 흐름으로) ── */
@@ -300,7 +379,7 @@
       g.beginPath();g.ellipse(x,y,dr,dr*(.7+.3*((i*.31)%1)),ph,0,TAU);g.fill();if(i%3===0){g.beginPath();g.arc(x+Math.cos(ph)*dr*2.2,y+Math.sin(ph)*dr*2.2,dr*.45,0,TAU);g.fill();}}
     g.restore();raw(-1);
   }
-  function draw(g,s,t){takeZaps(s,t);raw(1);g.save();blend(g);drawZaps(g,t);drawPops(g,t);g.restore();raw(-1);drawSkill(g,s,t);bombing=true;drawBombs(g,t,360,640);drawPulses(g,t);drawWarps(g,t);bombing=false;}
+  function draw(g,s,t){takeZaps(s,t);raw(1);g.save();blend(g);drawZaps(g,t);drawPops(g,t);g.restore();raw(-1);drawSkill(g,s,t);bombing=true;drawBombs(g,t,360,640,s);drawPulses(g,t);drawWarps(g,t);bombing=false;}
   function shake(){var q=quake;quake=0;return q;}
   function reset(){skillBolts.length=0;lastSkillLabel=-9;zaps.length=0;pops.length=0;texts.length=0;bombs.length=0;quake=0;cut=null;warps.length=0;pulseBursts.length=0;}
   function hudLine(s){var lv=s.power||1,bl=s.bombLevel||1;return {attack:lv,bomb:bl};}
