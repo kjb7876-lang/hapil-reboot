@@ -19,7 +19,7 @@
   function heroProfile(s){return HEROES?HEROES.get(typeof s==='string'?s:s&&s.hero):null;}
   function isCinematicBoss(actor,mid){var intros=BOSS_INTROS||root.HapilArcadeBossIntros;return !mid||!!(intros&&intros.isSinBoss(actor));}
   // 11-17 사용자: 컷씬 화면과 본게임을 오가지 않고 모든 보스·중간보스가 같은 입장 연출(수묵 컷인 → 등장 → 대사 → 전투). 앱이 createRun({entranceAll:true})로 켠다(엔진 단독 시뮬은 기존 그대로).
-  function graceOf(s){if(!(s&&s.entranceAll))return BOSS_ENTRANCE_GRACE;var g=segment(s);return g&&g.mid&&!isCinematicBoss(g.actor,true)?BOSS_ENTRANCE_MID:BOSS_ENTRANCE_SPEECH;} // 사용자 11-20: 중간보스는 컷인만(대사 없음) → 등장 뒤 짧게만 기다린다
+  function graceOf(s){if(!(s&&s.entranceAll))return BOSS_ENTRANCE_GRACE;var g=segment(s);return g&&g.mid?BOSS_ENTRANCE_MID:BOSS_ENTRANCE_SPEECH;} // 사용자 11-20: 중간보스는 컷인만(대사 없음) → 등장 뒤 짧게만 기다린다
   function hasEntrance(s,g){return !!(s&&s.entranceAll)||isCinematicBoss(g.actor,g.mid);}
   /* 부별 파일. 노드에서는 require로, 브라우저에서는 먼저 읽힌 스크립트가 HapilArcadeParts에 쌓아 둔 것을 쓴다. */
   var PARTS=typeof module==='object'&&module.exports&&typeof require==='function'
