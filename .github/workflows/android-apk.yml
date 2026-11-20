@@ -11,6 +11,7 @@ on:
       - 'src/arcade-parts-v43/**'
       - 'src/ink-v43.js'
       - 'src/audio-v37.js'
+      - 'src/rain-hit-bank-v43.js'
       - 'media/arcade-v43*/**'
       - 'tools/build-app-www.cjs'
       - '.github/workflows/android-apk.yml'

@@ -53,7 +53,10 @@
   function rnd(i,k){var v=Math.sin(i*12.9898+k*78.233)*43758.5453;return v-Math.floor(v);}
   function startJackpot(s,j,play){var n=Math.max(0,Math.min(60,j.n|0)),mid=!!j.mid,x0=Math.max(30,Math.min(W-30,finite(j.x,W/2))),y0=Math.max(70,Math.min(H-220,finite(j.y,140)+JACK_DROP)),hs=[];
     for(var i=0;i<n;i++){var a=rnd(i,1),b=rnd(i,2),c=rnd(i,3);hs.push({d:JACK_START+i*(mid?3:1.4),x:x0+(a-.5)*18,y:y0,vx:(a-.5)*(mid?8:13)+(c-.5)*2,vy:-(1.6+b*(mid?2.4:3)),home:(mid?32:24)+(i%5)*2+c*5,st:0,age:0,k:.85+b*.3,r:(c-.5)*.5});}
-    jack={n:n,mid:mid,worth:j.worth|0,total:j.total|0,x:x0,y:y0,t:0,got:0,hs:hs,last:-99,play:typeof play==='function'?play:null,done:-1};
+    // 격파 필살기 보상(사용자 11-20): 받은 개수만큼 ✦ 별이 하트보다 조금 늦게, 더 크게 솟아 영웅에게 날아든다. 최대치라 못 받은 몫은 표에 '가득'으로만 알린다
+    var bn=Math.max(0,Math.min(7,j.bombs|0)),bs=[];for(i=0;i<bn;i++){var e=rnd(i,7);bs.push({d:JACK_START+10+i*5,x:x0+(i-(bn-1)/2)*20,y:y0-6,vx:(i-(bn-1)/2)*1.6+(e-.5),vy:-(6.2+e*1.2),home:24,st:0,age:0});}
+    jack={n:n,mid:mid,worth:j.worth|0,total:j.total|0,x:x0,y:y0,t:0,got:0,hs:hs,last:-99,play:typeof play==='function'?play:null,done:-1,
+      bs:bs,bgot:0,bwant:Math.max(0,j.bombsWanted|0),bfull:!!j.bombsFull,bkind:j.bombKind||'',bglow:0};
     if(jack.play)jack.play('seal',x0);}
   function stepJackpot(p){var J=jack;J.t++;if(J.t===JACK_START&&J.play)J.play(J.mid?'item':'charge',J.x);
     for(var i=0;i<J.hs.length;i++){var q=J.hs[i];if(q.st===2||J.t<q.d)continue;q.age++;
@@ -61,7 +64,14 @@
       else{var dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy),sp=Math.min(19,4+(q.age-q.home)*.9);q.st=1;
         if(d<=sp+6){q.st=2;J.got++;J.glow=1;if(J.play&&J.t-J.last>=3){J.last=J.t;J.play('item',p.x);}if(J.got===J.n)J.done=J.t;}
         else{q.vx=dx/d*sp;q.vy=dy/d*sp;q.x+=q.vx;q.y+=q.vy;}}}
+    for(i=0;i<J.bs.length;i++){q=J.bs[i];if(q.st===2||J.t<q.d)continue;q.age++;
+      if(q.age<q.home){q.vy+=.3;q.vx*=.97;q.x+=q.vx;q.y+=q.vy;q.x=Math.max(24,Math.min(W-24,q.x));}
+      else{dx=p.x-q.x;dy=p.y-q.y;d=Math.sqrt(dx*dx+dy*dy);sp=Math.min(16,3+(q.age-q.home)*.8);q.st=1;
+        if(d<=sp+6){q.st=2;J.bgot++;J.bglow=1;if(J.play)J.play('seal',p.x);}else{q.vx=dx/d*sp;q.vy=dy/d*sp;q.x+=q.vx;q.y+=q.vy;}}}
   }
+  /* 필살기 별: 네 갈래 빛(HUD 의 ✦ 과 같은 모양·같은 옥빛). 짙은 테두리 + 밝은 속으로 한지 위에서도 또렷하게 */
+  function star(ctx,x,y,r,rot,a,c){ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.beginPath();for(var k=0;k<16;k++){var rr=k%2?r*.32:(k%4?r*.58:r),an=k*Math.PI/8;ctx[k?'lineTo':'moveTo'](Math.sin(an)*rr,-Math.cos(an)*rr);}ctx.closePath(); // 큰 꼭지 넷 + 짧은 대각 꼭지 넷: 작은 크기에서도 십자로 읽히지 않는 별빛(심사 11-20)
+    ctx.globalAlpha=a;ctx.lineJoin='round';ctx.lineWidth=2.2;ctx.strokeStyle='#1d4f3f';ctx.stroke();ctx.fillStyle=c?c.jadeFill:'#7dffb0';ctx.fill();ctx.lineWidth=1;ctx.strokeStyle='rgba(236,255,244,.95)';ctx.stroke();ctx.restore();}
   function drawJackpot(ctx,s,c,heart,playing){
     var J=jack,p=s.player;if(!J)return;if(playing)stepJackpot(p);
     if(J.done>=0&&J.t-J.done>JACK_TAIL){jack=null;return;}
@@ -78,19 +88,28 @@
       ctx.globalAlpha=.5;var hg=ctx.createRadialGradient(q.x,q.y,zz*.2,q.x,q.y,zz*.62);hg.addColorStop(0,'rgba(255,236,160,.95)');hg.addColorStop(.8,'rgba(255,220,110,.55)');hg.addColorStop(1,'rgba(255,216,106,0)');ctx.fillStyle=hg;ctx.fillRect(q.x-zz,q.y-zz,zz*2,zz*2);
       ctx.globalAlpha=.85;ctx.strokeStyle='#8a5a12';ctx.lineWidth=1.3;ctx.beginPath();ctx.arc(q.x,q.y,zz*.5,0,TAU);ctx.stroke(); // 잭팟 하트만 금박 테두리: 평소 줍는 하트와 구분
       ctx.globalAlpha=1;if(heart){ctx.save();ctx.translate(q.x,q.y);ctx.rotate(q.r+Math.sin(J.t*.12+i)*.15);ctx.drawImage(heart,-zz*.4,-zz*.4,zz*.8,zz*.8);ctx.restore();}else{ctx.fillStyle='#c9406e';ctx.beginPath();ctx.arc(q.x,q.y,zz*.4,0,TAU);ctx.fill();}}
+    // 필살기 별(하트 위에 그린다): 옥빛 꼬리 + 둘레 빛
+    for(i=0;i<J.bs.length;i++){q=J.bs[i];if(q.st===2||J.t<q.d)continue;var sv=Math.sqrt(q.vx*q.vx+q.vy*q.vy)||1,sr=(q.age<8?.5+q.age/16:1)*(J.mid?14:17);
+      ctx.fillStyle=c.jadeFill;for(k=1;k<=3;k++){ctx.globalAlpha=.3/k;ctx.beginPath();ctx.arc(q.x-q.vx/sv*k*8,q.y-q.vy/sv*k*8,sr*.3/k+1.4,0,TAU);ctx.fill();}
+      var sg=ctx.createRadialGradient(q.x,q.y,0,q.x,q.y,sr*2.2);sg.addColorStop(0,c.jadeGlow);sg.addColorStop(1,'rgba(90,190,150,0)');ctx.globalAlpha=.6;ctx.fillStyle=sg;ctx.fillRect(q.x-sr*2.2,q.y-sr*2.2,sr*4.4,sr*4.4);
+      star(ctx,q.x,q.y,sr,J.t*.025*(i%2?-1:1)+i*.4,1,c);}
+    if(J.bglow>0){var bgl=J.bglow,big=J.bkind==='chapter'&&J.bgot===J.bs.length?1.5:1;ctx.globalAlpha=bgl*.85;ctx.strokeStyle=c.jadeFill;ctx.lineWidth=1+bgl*2;ctx.beginPath();ctx.arc(p.x,p.y,(10+(1-bgl)*24)*big,0,TAU);ctx.stroke();if(bgl>.6)star(ctx,p.x,p.y-26,9,0,(bgl-.6)*2.5,c);if(playing)J.bglow=Math.max(0,bgl-.075);} // 도착: 옥빛 고리가 퍼지고 머리 위에 별이 한 번 번쩍인다. 챕터 막보스의 마지막 별은 고리가 더 크다
     // 영웅 쪽 숫자: 하트가 하나 들어올 때마다 오른다. 영웅 머리 위(받은 값 줄보다 한 칸 위)
     if(J.got>0){var fade=J.done>=0?Math.max(0,Math.min(1,(JACK_TAIL-(J.t-J.done))/24)):1,pop=J.done>=0&&J.t-J.done<10?1+.25*(1-(J.t-J.done)/10):1,
-      side=p.x<W/2?1:-1,py=Math.max(118,Math.min(H-150,p.y-22)),title=J.mid?'하트 보상':'잭팟',cnt='하트 ×'+J.got,sum='+'+comma(J.got*J.worth);
+      side=p.x<W/2?1:-1,py=Math.max(118,Math.min(H-150,p.y-22)),title=J.mid?'하트 보상':J.bkind==='chapter'?'챕터 잭팟':'잭팟',cnt='하트 ×'+J.got,sum='+'+comma(J.got*J.worth),
+      bl=J.bwant>0?(J.bs.length?'필살기 +'+J.bs.length+(J.bfull?' (가득)':''):'필살기 가득'):'',ex=bl?16:0;
       ctx.save();ctx.globalAlpha=fade;ctx.textAlign='center';ctx.textBaseline='alphabetic';ctx.lineJoin='round';
-      ctx.font='700 '+Math.round((J.mid?17:23)*pop)+'px '+SERIF;var w1=ctx.measureText(title).width;ctx.font='700 '+Math.round((J.mid?13:15)*pop)+'px '+SANS;var w2=ctx.measureText(cnt).width,bw=Math.max(w1,w2)+28,px=Math.max(bw/2+6,Math.min(W-bw/2-6,p.x+side*(bw/2+34))); // 하트는 위에서 영웅 머리로 내려온다: 표는 영웅 옆, 넓은 쪽에 둔다
-      ctx.globalAlpha=fade*.9;plate(ctx,px-bw/2,py-(J.mid?36:42),bw,J.mid?58:66,8,c);ctx.globalAlpha=fade;
+      ctx.font='700 '+Math.round((J.mid?17:23)*pop)+'px '+SERIF;var w1=ctx.measureText(title).width;ctx.font='700 '+Math.round((J.mid?13:15)*pop)+'px '+SANS;var w2=ctx.measureText(cnt).width,w3=bl?ctx.measureText(bl).width+18:0,bw=Math.max(w1,w2,w3)+28,px=Math.max(bw/2+6,Math.min(W-bw/2-6,p.x+side*(bw/2+34))); // 하트는 위에서 영웅 머리로 내려온다: 표는 영웅 옆, 넓은 쪽에 둔다
+      ctx.globalAlpha=fade*(ex?.96:.9);py-=ex;plate(ctx,px-bw/2,py-(J.mid?36:42),bw,(J.mid?58:66)+ex,8,c);ctx.globalAlpha=fade;
       ctx.font='700 '+Math.round((J.mid?17:23)*pop)+'px '+SERIF;ctx.lineWidth=3;ctx.strokeStyle=c.halo;ctx.strokeText(title,px,py-(J.mid?18:20));ctx.fillStyle=c.gold;ctx.fillText(title,px,py-(J.mid?18:20));
       ctx.font='700 '+Math.round((J.mid?13:15)*pop)+'px '+SANS;ctx.fillStyle=c.text;ctx.fillText(cnt,px,py);
-      ctx.font='700 '+(J.mid?11:12)+'px '+SANS;ctx.fillStyle=c.gold;ctx.fillText(sum,px,py+(J.mid?14:16));ctx.restore();}
+      ctx.font='700 '+(J.mid?11:12)+'px '+SANS;ctx.fillStyle=c.gold;ctx.fillText(sum,px,py+(J.mid?14:16));
+      if(bl){ctx.font='700 '+(J.mid?12:13)+'px '+SANS;ctx.lineWidth=3;ctx.strokeStyle=c.halo;var by2=py+(J.mid?30:33);var bw3=ctx.measureText(bl).width,bx=px-9;ctx.strokeText(bl,bx,by2);ctx.fillStyle=c.jade;ctx.fillText(bl,bx,by2);star(ctx,bx+bw3/2+11,by2-4.5,7.5,0,fade,c);} // 글자 ✦ 대신 그린 별(글꼴에 따라 십자로 읽히지 않게)
+      ctx.restore();}
   }
   /* 판 위에 그리는 것(흔들림을 같이 탄다): 수집선 · 받은 값 · 보스 위치 표식 */
   /* 수묵화풍(Ink 있음)에서는 한지 바탕에 먹 글씨·짙은 금빛, 예전 어두운 화면(?ink=0)에서는 어두운 바탕에 밝은 글씨. */
-  function tone(Ink){return Ink?{plate:'rgba(244,236,218,.9)',edge:'rgba(40,32,26,.55)',text:'rgba(30,24,20,.95)',dim:'rgba(30,24,20,.72)',gold:'#9a6400',halo:'rgba(246,238,220,.95)'}:{plate:INK,edge:'rgba(246,234,210,.4)',text:PAPER,dim:'rgba(246,234,210,.8)',gold:GOLD,halo:'rgba(20,16,14,.9)'};}
+  function tone(Ink){return Ink?{plate:'rgba(244,236,218,.9)',edge:'rgba(40,32,26,.55)',text:'rgba(30,24,20,.95)',dim:'rgba(30,24,20,.72)',gold:'#9a6400',halo:'rgba(246,238,220,.95)',jade:'#1d6e50',jadeFill:'#2e8a6a',jadeGlow:'rgba(214,246,228,.85)'}:{plate:INK,edge:'rgba(246,234,210,.4)',text:PAPER,dim:'rgba(246,234,210,.8)',gold:GOLD,halo:'rgba(20,16,14,.9)',jade:'#7dffb0',jadeFill:'#7dffb0',jadeGlow:'rgba(200,255,228,.8)'};}
   function plate(ctx,x,y,w,h,r,c){ctx.fillStyle=c.plate;ctx.strokeStyle=c.edge;ctx.lineWidth=1;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x,y,w,h,r);else ctx.rect(x,y,w,h);ctx.fill();ctx.stroke();}
   function drawWorld(ctx,s,A,Ink,playing,opt){
     opt=opt||{};var p=s.player,y0=A.AUTO_COLLECT_Y,i,c=tone(Ink);
@@ -183,5 +202,5 @@
   /* 스테이지 결산 한 줄(알림 띠 아래 줄) */
   function tally(result){if(!result)return '';var out=[];if(result.spells>0)out.push('봉인 '+(result.captures||0)+'/'+result.spells);if(result.graze>=0)out.push('스침 '+result.graze);if(result.bonus>0)out.push('결산 +'+comma(result.bonus));return out.join(' · ');}
   return {SEAL_SRC:SEAL_SRC,useSound:useSound,onEvent:onEvent,consume:consume,drawWorld:drawWorld,drawHud:drawHud,reset:reset,history:history,tally:tally,comma:comma,BOOK_KEY:BOOK_KEY,
-    state:function(){return {jackpot:jack?{n:jack.n,got:jack.got,t:jack.t}:null,popups:popups.length,stamp:stamp?{ok:stamp.ok,bonus:stamp.bonus}:null,line:lineSeen,bonus:bonusShown};}};
+    state:function(){return {jackpot:jack?{n:jack.n,got:jack.got,t:jack.t,bombs:jack.bs.length,bombsGot:jack.bgot,bombsWanted:jack.bwant}:null,popups:popups.length,stamp:stamp?{ok:stamp.ok,bonus:stamp.bonus}:null,line:lineSeen,bonus:bonusShown};}};
 });

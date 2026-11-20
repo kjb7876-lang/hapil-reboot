@@ -39,7 +39,7 @@
     /* 플레이 칸 밖 HUD: 휴대폰은 위아래 여백, PC는 좌우 패널(app의 placeHud가 자리를 잡는다) */
     .hudx{position:fixed;z-index:3;display:flex;gap:10px;pointer-events:none;font:12px/1.35 system-ui,"Apple SD Gothic Neo",sans-serif;color:rgba(255,255,255,.82);text-shadow:0 1px 2px #000}
     .hudx[hidden]{display:none}
-    .hudx .name{font-weight:600}.hudx .lives{color:#ff6a8a;font-size:14px;letter-spacing:1px}.hudx .bombs{color:#7dffb0;font-size:14px}.hudx .score{font-weight:600;font-size:15px;color:#fff}.hudx .graze{font-size:10px;opacity:.75}
+    .hudx .name{font-weight:600}.hudx .lives{color:#ff6a8a;font-size:14px;letter-spacing:1px}.hudx .bombs{color:#7dffb0;font-size:14px;white-space:nowrap}.hudx .bombs .slot{opacity:.45}.hudx .score{font-weight:600;font-size:15px;color:#fff}.hudx .graze{font-size:10px;opacity:.75}
     .hudx .gauge{width:64px;height:3px;background:rgba(255,255,255,.18)}.hudx .gauge i{display:block;height:3px;background:#7dffb0}.hudx .levels{font-size:10px;margin-top:3px;opacity:.85;white-space:nowrap}.hudx.side .levels{font-size:13px;margin-top:6px}
     .hudx.below{align-items:center;justify-content:space-between;padding:0 12px}.hudx.side{flex-direction:column;justify-content:space-between;gap:16px;min-height:200px;padding:16px 18px;box-sizing:border-box;background:linear-gradient(180deg,rgba(14,10,22,.82),rgba(6,4,10,.72));border:1px solid rgba(214,180,120,.45);border-radius:4px;box-shadow:0 0 24px rgba(0,0,0,.6);font-size:14px}
     .hudx.side .name{font-size:16px;word-break:keep-all}.hudx.side .best{font-size:15px;color:rgba(255,255,255,.7);letter-spacing:1px}.hudx.side .lives{font-size:20px}.hudx.side .bombs{font-size:18px}.hudx.side .score{font-size:24px;letter-spacing:1px}.hudx.side .graze{font-size:12px}.hudx.side .gauge{width:150px;height:4px;margin-top:4px}.hudx.side .gauge i{height:4px}.hudx.side .spell{font:italic 15px/1.4 serif;color:#f3e3b5;border-left:3px solid;padding-left:7px;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.hudx.side .bosshp{width:150px;height:6px;background:rgba(255,255,255,.14);margin-top:4px}.hudx.side .progress{width:150px;height:4px;background:rgba(255,255,255,.14);margin-top:4px}.hudx.side .bosshp i{display:block;height:6px}.hudx.side .progress i{display:block;height:4px;background:#d6b478}.hudx.side .route,.hudx.side .cards{font-size:12px;line-height:1.7;color:rgba(255,255,255,.55);margin-top:6px}.hudx.side .route{}.hudx.side .cards{}.hudx.side .route>div{max-width:164px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hudx.side .gauge,.hudx.side .progress{margin-left:auto}.hudx.side .route .cur,.hudx.side .cards .cur{font-weight:600}.hudx.side .stack{display:flex;flex:1;flex-direction:column;gap:22px;justify-content:flex-start;padding-bottom:28px}.hudx.side .portrait{width:150px;height:120px;object-fit:contain;border-bottom:2px solid;opacity:.85;-webkit-mask-image:linear-gradient(180deg,#000 70%,transparent);mask-image:linear-gradient(180deg,#000 70%,transparent)}.hudx.side .keys{font-size:12px;line-height:1.6;color:rgba(255,255,255,.6)}
@@ -102,7 +102,7 @@
     html.ink button,html.ink a.button,html.ink select{border-radius:13px 9px 12px 8px/9px 12px 8px 13px;border-width:1.5px}
     html.ink #arcade-title h1::after,html.ink .screen h2::after{content:"合";display:inline-block;margin-left:10px;width:.62em;height:.62em;font:600 .42em/1.5 "Noto Serif KR","Nanum Myeongjo",serif;letter-spacing:0;color:#f2e9d6;background:#b23a2c;border-radius:3px 2px 3px 2px;vertical-align:.5em;text-align:center;text-shadow:none} /* 낙관 */
     html.ink .keepsake{background:#ebe0c8;border-color:#8a7c68;color:#5a5048}html.ink .keepsake.locked{background:repeating-linear-gradient(45deg,#e6dbc2 0 6px,#ddd0b4 6px 12px);color:#a59a8c}
-    html.ink .hudx{filter:invert(1) hue-rotate(180deg) saturate(.7) sepia(.3)}html.ink .hudx.side{filter:invert(1) hue-rotate(180deg) saturate(.7) sepia(.3) brightness(.9)}html.ink .hudx img{filter:invert(1) hue-rotate(180deg)}
+    html.ink .hudx{filter:invert(1) hue-rotate(180deg) saturate(.7) sepia(.3)}html.ink .hudx.side{filter:invert(1) hue-rotate(180deg) saturate(.7) sepia(.3) brightness(.9)}html.ink .hudx img{filter:invert(1) hue-rotate(180deg)}html.ink .hudx .bombs{color:#62c7a0}
     html.ink #arcade-dev{border-color:#8c5a1c;background:#ebe0c8;color:#7a4a12}html.ink #arcade-dev[aria-pressed="true"]{background:#d9cbae}html.ink #arcade-dev-badge{border-color:#8c5a1c;background:rgba(242,233,214,.94);color:#7a4a12}
     /* 게임 오버(11-16): 감긴 먹 눈꺼풀이 그대로 보이고, 그 위에 붉은 붓 십자가가 그어진 뒤 '다시하기'가 떠오른다 */
     #result-cross{display:none;position:absolute;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));width:30px;height:40px;background:transparent!important;margin:0;pointer-events:none} /* 이스터에그처럼 오른쪽 아래에 작게(사용자 11-17) */
@@ -306,7 +306,7 @@
         <p><b>대형탄 파괴</b> — 균열 표시가 있는 대형탄만 사격으로 부술 수 있습니다. 터지면 작은 잔탄 3개가 남습니다. 잔탄은 처음 잠깐 옅게 보이다가 위험해집니다. 작은 구슬·버블·쌀알탄과 표시 없는 탄은 피하세요.</p>
         <p><b>아래에서 올라오는 요소</b> — 바닥의 빛·화살표는 상승하는 적의 예고입니다. 솟아오르는 먹 그림은 장식이 아니라 장애물이며, 예고 뒤 닿으면 피해를 줍니다. 사격으로 부수거나 옆으로 피하세요. 떨어지는 블록도 사격으로 부술 수 있습니다. 쌓인 블록·솟은 지형은 피해 없이 위로 밀어 올리므로 위쪽 탄막도 살펴야 합니다. 바닥 가로 레이저는 예고 뒤 활성화되니 위아래 빈 곳으로 피하세요.</p>
         <p><b>문양 레이저</b> — 밝을 때 위험하고 꺼진 동안 통과할 수 있습니다. 재점등 직전 옅게 밝아지는 예고에는 피해가 없습니다.</p>
-        <p><b>폭탄·난이도</b> — X 또는 폭탄 버튼으로 사용합니다. 이지·노멀은 피격점 접촉 시 확률 회피 후 폭탄이 있으면 자동 사용합니다. 헬은 수동폭탄만 가능하며 자동회피가 없습니다.</p>
+        <p><b>폭탄·난이도</b> — X 또는 폭탄 버튼으로 사용합니다. 이지·노멀은 피격점 접촉 시 확률 회피 후 폭탄이 있으면 자동 사용합니다. 헬은 수동폭탄만 가능하며 자동회피가 없습니다. 격파하면 폭탄이 찹니다: 중간보스 +1, 보스 +2, 챕터 막보스 +3. 보관은 이지 7·노멀 5·헬 3개까지입니다.</p>
         <p><b>목숨·회복</b> — 시작 목숨은 이지 5·노멀 3·헬 2입니다. 일반 스테이지마다 완전 회복하지 않고, 한 부(챕터)를 마치고 다음 부로 넘어갈 때 목숨을 전부 회복합니다. 영웅의 공격·필살 단계는 챕터가 바뀌어도 이어지고, 제n부는 최소 Lv.n에서 시작합니다(제7부부터 만렙 Lv.7). 맞으면 공격 단계가 하나 내려가지만 그 챕터 기본 레벨 밑으로는 내려가지 않습니다.</p>
         <p><b>원코인·이어하기</b> — 처음부터 게임 오버 없이 끝내는 것이 원코인 클리어입니다. 이어하기·구간 선택·재도전·개발자 모드는 연습용이며 원코인 클리어에 포함하지 않습니다. 일시정지와 대화 읽기는 가능합니다.</p>
         <p><b>영웅 선택</b> — 기억사수·윤서하(수련생)·윤서하(각성) 중 선택합니다. 수련생은 아카데미움 시절, 각성은 최초명령의 힘이 깨어난 뒤의 윤서하입니다. 윤서하의 두 모습은 시간검 분산·집중 사격을 사용하며 성장·목숨·필살 규칙을 공유합니다.</p>
@@ -331,37 +331,38 @@
       <button id="arcade-home" type="button" data-i18n="toTitle">처음 화면으로</button>
     </div>
   </div>
-  <script src="src/audio-v37.js?v=20261120-line150j"></script>
-  <script src="src/arcade-parts-v43/p1.js?v=20261120-line150j"></script>
-  <script src="src/arcade-parts-v43/p2.js?v=20261120-line150j"></script>
-  <script src="src/arcade-parts-v43/p3.js?v=20261120-line150j"></script>
-  <script src="src/arcade-parts-v43/p4.js?v=20261120-line150j"></script>
-  <script src="src/arcade-parts-v43/p5.js?v=20261120-line150j"></script>
-  <script src="src/arcade-parts-v43/p6.js?v=20261120-line150j"></script>
-  <script src="src/arcade-parts-v43/p7.js?v=20261120-line150j"></script>
-  <script src="src/arcade-parts-v43/p8.js?v=20261120-line150j"></script>
-  <script src="src/arcade-boss-intros-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-boss-lines-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-heroes-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-boss-rhythm-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-encounter-phases-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-boss-phases-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-laser-rhythm-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-skins-v43.js?v=20261120-line150j"></script>
-  <script src="src/ink-v43.js?v=20261120-line150j"></script>
-  <script src="src/ink-motifs-v43.js?v=20261120-line150j"></script>
-  <script src="src/hero-memory-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-i18n-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-music-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-mobile-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-eyes-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-story-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-chapters-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-hero-select-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-hero-visibility-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-spirit-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-cues-v43.js?v=20261120-line150j"></script>
-  <script src="src/arcade-app-v43.js?v=20261120-line150j"></script>
+  <script src="src/rain-hit-bank-v43.js?v=20261120-bomb157"></script>
+  <script src="src/audio-v37.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-parts-v43/p1.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-parts-v43/p2.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-parts-v43/p3.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-parts-v43/p4.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-parts-v43/p5.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-parts-v43/p6.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-parts-v43/p7.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-parts-v43/p8.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-boss-intros-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-boss-lines-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-heroes-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-boss-rhythm-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-encounter-phases-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-boss-phases-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-laser-rhythm-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-skins-v43.js?v=20261120-bomb157"></script>
+  <script src="src/ink-v43.js?v=20261120-bomb157"></script>
+  <script src="src/ink-motifs-v43.js?v=20261120-bomb157"></script>
+  <script src="src/hero-memory-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-i18n-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-music-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-mobile-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-eyes-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-story-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-chapters-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-hero-select-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-hero-visibility-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-spirit-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-cues-v43.js?v=20261120-bomb157"></script>
+  <script src="src/arcade-app-v43.js?v=20261120-bomb157"></script>
 </body>
 </html>
