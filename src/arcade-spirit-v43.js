@@ -29,9 +29,9 @@
   function reset(){seal();popups.length=0;stamp=null;lineGlow=0;lineSeen=0;lineAge=0;bonusShown=-1;cleanSeg=-1;lostAt=-1e9;}
   function onEvent(e,s,A){
     if(!s)return;
-    if(e==='card'){var seg=A.SEGMENTS[s.seg];if(seg&&seg.name&&!s.bossOnly){entry(seg.name,s.difficulty)[0]++;saveBook();}}
-    else if(e==='capture'&&s.lastCapture){var c=s.lastCapture;if(c.name&&!s.bossOnly){var en=entry(c.name,s.difficulty);if(en[1]<en[0])en[1]++;saveBook();}
-      stamp={ok:true,bonus:c.bonus,tick:s.tick,pieces:s.pieces,of:A.LIFE_PIECES,gift:s.pieces===0,y:stampY(s)};}
+    if(e==='card'){var seg=A.SEGMENTS[s.seg];if(seg&&seg.name&&!s.bossOnly&&!s.spellOnly){entry(seg.name,s.difficulty)[0]++;saveBook();}}
+    else if(e==='capture'&&s.lastCapture){var c=s.lastCapture;if(c.name&&!s.bossOnly&&!s.spellOnly){var en=entry(c.name,s.difficulty);if(en[1]<en[0])en[1]++;saveBook();}
+      stamp={ok:true,bonus:c.bonus,tick:s.tick,pieces:s.pieces,of:A.LIFE_PIECES,gift:s.pieces===0,got:c.gift||'',y:stampY(s)};}
     else if(e==='captureMiss'&&stamp&&stamp.ok)stamp=null; // 놓친 패턴은 가운데에 따로 알리지 않는다(이름 아래 줄이 이미 회색): 못한 것을 되풀이해 띄우지 않는다
   }
   /* 엔진이 쌓아 둔 '받은 값'을 화면 목록으로 옮긴다(엔진 목록은 비운다). */
@@ -83,13 +83,16 @@
       var y=opt.bonusY||68,hist=history(seg.name,s.difficulty),clean=!!s.spellClean,val=clean?A.spellBonus(s):0;
       if(clean)cleanSeg=s.seg;else if(cleanSeg===s.seg){cleanSeg=-1;lostAt=s.tick;} // 보너스를 잃는 순간 한 번 깜박인다
       var lost=s.tick-lostAt<LOST_TICKS&&((s.tick-lostAt)>>2)%2===0;
-      var text=clean?'봉인 +'+comma(val):'봉인 놓침',tail=hist[0]>0&&!s.bossOnly?'  기록 '+hist[1]+'/'+hist[0]:'';
+      var down=!!(s.cardDown||s.cardEnding); // 체력을 다 깎았다: 값이 굳었고, 남은 공격을 버티면 받는다(외부 심사 11-20)
+      var text=clean?(down?'봉인 확정 +':'봉인 +')+comma(val):'봉인 놓침',tail=clean&&down?'  버티면 지급':hist[0]>0&&!s.bossOnly?'  기록 '+hist[1]+'/'+hist[0]:'';
       ctx.font='700 12px '+SANS;var w1=ctx.measureText(text).width;ctx.font='600 10px '+SANS;var w2=ctx.measureText(tail).width,w=w1+w2+16;
-      ctx.globalAlpha=.62;plate(ctx,W-12-w,y-13,w,18,9,c);
+      ctx.globalAlpha=down&&clean?.9:.62;plate(ctx,W-12-w,y-13,w,18,9,c);
       ctx.globalAlpha=1;ctx.textAlign='right';ctx.font='600 10px '+SANS;ctx.fillStyle=c.dim;ctx.fillText(tail,W-20,y);
       ctx.font='700 12px '+SANS;ctx.fillStyle=clean?c.gold:lost?c.text:c.dim;ctx.fillText(text,W-20-w2,y);
       bonusShown=val;
     }
+    drawDown(ctx,s,c);
+    if(s.spellOnly&&s.stage!=='won'&&s.stage!=='lost'){ctx.font='700 11px '+SANS;var pt='스펠 연습 · 기록에 넣지 않음',pw2=ctx.measureText(pt).width+16;ctx.globalAlpha=.92;plate(ctx,12,(opt.bonusY||68)+10,pw2,18,9,c);ctx.globalAlpha=1;ctx.textAlign='left';ctx.fillStyle=c.text;ctx.fillText(pt,20,(opt.bonusY||68)+23);} // 연습 중임을 위쪽 봉인 줄 아래 왼편에 늘 보인다(영웅이 머무는 아래를 가리지 않게, 심사 2차)
     // 보스 위치 표식: 맨 아래 가장자리 눈금(바닥 안개·영웅 빛보다 위에 그려 묻히지 않게 화면 고정층에서). 맞는 동안 옅어지고, 체력이 20% 아래면 깜박인다.
     var b=s.boss;
     if(s.stage==='card'&&b&&b.present&&!s.cardEnding){
@@ -102,10 +105,10 @@
       if(age>life)stamp=null;
       else if(age>=0){
         // 쪽지(한지 띠)가 먼저 깔리고, 낙관이 크게 내려와 그 모서리에 찍힌다(8틱). 찍히는 순간 인주가 튄다. 끝에 옅어진다.
-        var k=age<8?1.9-.9*(age/8):age<14?1-.06*(1-(age-8)/6):1,fade=age>life-24?(life-age)/24:1,cx=W/2-62,cy=opt.toast?Math.max(stamp.y,208):stamp.y,sz=50*k,art=seal(),tx=cx+38,pw=stamp.gift?162:128;
+        var k=age<8?1.9-.9*(age/8):age<14?1-.06*(1-(age-8)/6):1,fade=age>life-24?(life-age)/24:1,cx=W/2-62,cy=opt.toast?Math.max(stamp.y,208):stamp.y,sz=50*k,art=seal(),tx=cx+38,pw=stamp.gift?(stamp.got==='score'?200:162):128;
         ctx.globalAlpha=fade*Math.min(1,age/6)*.94;plate(ctx,cx+8,cy-25,pw+26,50,4,c);
         ctx.globalAlpha=fade*Math.min(1,age/6);ctx.textAlign='left';ctx.font='700 17px '+SERIF;ctx.fillStyle=c.text;ctx.fillText('봉인',tx,cy-4);ctx.font='700 17px '+SANS;ctx.fillStyle=c.gold;ctx.fillText('+'+comma(stamp.bonus),tx+42,cy-4);
-        ctx.font='600 11px '+SANS;ctx.fillStyle=c.dim;ctx.fillText(stamp.gift?'조각이 모였다 · 목숨 또는 필살 +1':'봉인 조각 '+stamp.pieces+' / '+stamp.of,tx,cy+14);
+        ctx.font='600 11px '+SANS;ctx.fillStyle=c.dim;ctx.fillText(stamp.gift?'조각이 모였다 · '+({life:'목숨 +1',bomb:'필살 +1',score:'목숨·필살 가득 · 10,000점'}[stamp.got]||'목숨 또는 필살 +1'):'봉인 조각 '+stamp.pieces+' / '+stamp.of,tx,cy+14);
         if(age>=8&&age<34){var su=(age-8)/26;ctx.fillStyle='#b02a1c';ctx.globalAlpha=fade*(1-su)*.85;for(var d=0;d<9;d++){var an=d*2.399+.6,rr=30+su*16+(d%3)*5;ctx.beginPath();ctx.arc(cx+Math.cos(an)*rr,cy+Math.sin(an)*rr*.9,1.2+(d%3)*.9,0,TAU);ctx.fill();}}
         ctx.globalAlpha=fade*(age<8?.4+.6*age/8:1);ctx.translate(cx,cy);ctx.rotate(-.1);
         if(art)ctx.drawImage(art,-sz*.62,-sz*.62,sz*1.24,sz*1.24);
@@ -116,6 +119,21 @@
       }
     }
     ctx.restore();ctx.globalAlpha=1;raw(Ink,-1);
+  }
+  /* 체력 소진 알림(외부 심사 11-20 "보스 체력을 다 깎은 순간을 명확히"): 소진한 틱부터 1.6초 동안 보스 아래에 먹 붓 띠와 '격파'를 띄운다.
+     감싸는 원은 쓰지 않는다(사용자 11-15). 띠는 가로 붓질 한 획 + 글씨. 뒤 1초에 걸쳐 옅어지고, 그 뒤에는 위쪽 봉인 줄('봉인 확정')이 이어 알린다. */
+  var DOWN_TICKS=96;
+  function drawDown(ctx,s,c){
+    var b=s.boss;if(s.stage!=='card'||!s.cardDown||!b||!b.present)return;var age=s.tick-s.cardDown;if(age<0||age>DOWN_TICKS)return;
+    var by=finite(b.y,120),y=Math.max(96,Math.min(H-200,by+(by>236?-118:132))),k=age<6?age/6:1,fade=age>DOWN_TICKS-36?(DOWN_TICKS-age)/36:1,wide=Math.min(1,age/8);
+    ctx.save();ctx.globalAlpha=fade*.96;ctx.fillStyle=c.plate;ctx.strokeStyle=c.edge;ctx.lineWidth=1.4; // 붓 띠: 가운데가 두껍고 양끝이 가는 한 획
+    var half=128*wide;ctx.beginPath();ctx.moveTo(W/2-half,y+4);ctx.quadraticCurveTo(W/2,y-24,W/2+half,y+2);ctx.quadraticCurveTo(W/2,y+38,W/2-half,y+4);ctx.fill();ctx.stroke();
+    ctx.globalAlpha=fade*.55;ctx.fillStyle=c.text;for(var q=0;q<5;q++){var qx=W/2-half+q*half*.5,qy=y+30-Math.abs(q-2)*4;ctx.fillRect(qx-1,qy,2+((q*7)%3),1.4);} // 붓 끝 비백 몇 점
+    if(age<20){var bx2=finite(b.x,W/2);ctx.globalAlpha=(1-age/20)*.7;for(var d=0;d<7;d++){var an=d*2.399+.3,rr=20+age*2.2+(d%3)*6;ctx.beginPath();ctx.ellipse(bx2+Math.cos(an)*rr,by+Math.sin(an)*rr*.7,2.4-(d%3)*.5,1.6,an,0,TAU);ctx.fill();}} // 소진 순간 보스 둘레로 먹물이 튄다(고리 아님, 흩어진 점)
+    ctx.globalAlpha=fade*k;ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='700 '+Math.round(20+6*(1-k))+'px '+SERIF;ctx.lineWidth=3;ctx.strokeStyle=c.halo;ctx.fillStyle=c.text;
+    var clean=!!s.spellClean&&s.bonusLock>0,t1='격파 · 마지막 공격';ctx.strokeText(t1,W/2,y-1);ctx.fillText(t1,W/2,y-1);
+    ctx.font='700 12px '+SANS;ctx.lineWidth=2.4;var t2=clean?'끝까지 버티면 봉인 ':'남은 공격이 끝나면 쓰러진다',t3=clean?'+'+comma(s.bonusLock):'',w2=ctx.measureText(t2).width,w3=ctx.measureText(t3).width,x2=W/2-(w2+w3)/2;ctx.textAlign='left';ctx.strokeText(t2,x2,y+19);ctx.fillStyle=c.text;ctx.fillText(t2,x2,y+19);if(t3){ctx.strokeText(t3,x2+w2,y+19);ctx.fillStyle=c.gold;ctx.fillText(t3,x2+w2,y+19);}
+    ctx.restore();ctx.textBaseline='alphabetic';
   }
   /* 스테이지 결산 한 줄(알림 띠 아래 줄) */
   function tally(result){if(!result)return '';var out=[];if(result.spells>0)out.push('봉인 '+(result.captures||0)+'/'+result.spells);if(result.graze>=0)out.push('스침 '+result.graze);if(result.bonus>0)out.push('결산 +'+comma(result.bonus));return out.join(' · ');}

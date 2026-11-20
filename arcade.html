@@ -175,6 +175,7 @@
       <canvas id="arcade-canvas" width="360" height="640" aria-label="세로 탄막 전투장" data-i18n-label="field"></canvas>
       <button id="arcade-pause-button" type="button" aria-label="일시정지" data-i18n-label="pause" hidden>Ⅱ</button>
       <button id="arcade-focus" class="pad" type="button" aria-label="저속 이동 (누르고 있는 동안)" data-i18n-label="focusLabel" aria-pressed="false" hidden><span data-i18n="focus">저속</span></button>
+      <button id="arcade-drill-skip" type="button" hidden style="position:absolute;top:8.6%;right:2.6%;min-height:44px;padding:0 14px;font-size:13px">실습 건너뛰기</button>
       <button id="arcade-bomb" class="pad" type="button" aria-label="폭탄" data-i18n-label="bomb" hidden><span data-i18n="bomb">폭탄</span></button>
     </div>
 
@@ -287,38 +288,40 @@
       <div class="score" id="result-score">00000000</div>
       <p class="note" id="result-detail"></p>
       <p class="note"><span data-i18n="best">최고 점수</span> <b id="result-best">00000000</b></p>
+      <p class="note" id="result-bests" style="margin-top:10px;color:#e8dcc0"></p>
+      <button id="arcade-spell-retry" type="button" hidden style="max-width:300px;line-height:1.3;word-break:keep-all">방금 맞은 스펠 다시 연습</button>
       <button id="arcade-retry" class="primary" type="button">이 스테이지부터 다시</button>
       <button id="arcade-home" type="button" data-i18n="toTitle">처음 화면으로</button>
     </div>
   </div>
-  <script src="src/audio-v37.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-parts-v43/p1.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-parts-v43/p2.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-parts-v43/p3.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-parts-v43/p4.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-parts-v43/p5.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-parts-v43/p6.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-parts-v43/p7.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-parts-v43/p8.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-boss-intros-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-boss-lines-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-heroes-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-boss-rhythm-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-encounter-phases-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-boss-phases-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-skins-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/ink-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/ink-motifs-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/hero-memory-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-i18n-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-music-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-mobile-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-eyes-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-story-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-hero-select-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-hero-visibility-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-spirit-v43.js?v=20261118-boss-special2"></script>
-  <script src="src/arcade-app-v43.js?v=20261118-boss-special2"></script>
+  <script src="src/audio-v37.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-parts-v43/p1.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-parts-v43/p2.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-parts-v43/p3.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-parts-v43/p4.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-parts-v43/p5.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-parts-v43/p6.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-parts-v43/p7.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-parts-v43/p8.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-boss-intros-v43.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-boss-lines-v43.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-heroes-v43.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-boss-rhythm-v43.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-encounter-phases-v43.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-boss-phases-v43.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-v43.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-skins-v43.js?v=20261120-spell-down"></script>
+  <script src="src/ink-v43.js?v=20261120-spell-down"></script>
+  <script src="src/ink-motifs-v43.js?v=20261120-spell-down"></script>
+  <script src="src/hero-memory-v43.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-i18n-v43.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-music-v43.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-mobile-v43.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-eyes-v43.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-story-v43.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-hero-select-v43.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-hero-visibility-v43.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-spirit-v43.js?v=20261120-spell-down"></script>
+  <script src="src/arcade-app-v43.js?v=20261120-spell-down"></script>
 </body>
 </html>
