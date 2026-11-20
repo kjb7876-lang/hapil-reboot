@@ -15,9 +15,9 @@ function playSpell(name, ticks) {
     A.step(s, {});
     if (s.stage !== 'card') continue;
     assert.equal(s.seg, segment);
-    let born = 0;
-    for (let j=0; j<s.n; j++) if (s.bage[j] === 1) born++;
-    frames.push({born, count:s.n, authored:s.authoredTick, variation:s.variationTick, patternCue:s.patternCue,
+    let born = 0, phraseBorn = 0;
+    for (let j=0; j<s.n; j++) if (s.bage[j] === 1) { born++; if (!s.bmirror[j]) phraseBorn++; }
+    frames.push({born, phraseBorn, count:s.n, authored:s.authoredTick, variation:s.variationTick, patternCue:s.patternCue,
       laser:s.lasers.some(l => l.age<l.warn+l.active),
       cue:s.figures.some(f => f.age<=f.warn), figures:s.figures.map(f=>f.kind), risers:s.risen, special:s.sp&&s.sp.cur||''});
   }
@@ -62,7 +62,8 @@ test('a pending authored laser gets its warning and full attack before the mathe
   const cue=f[first].patternCue;
   assert.ok(!f[first].laser && cue.kind==='fibfan');
   const release=first+cue.until-cue.start;
-  assert.ok(f.slice(first,release).every(frame=>frame.born===0));
+  // 반사탄(mirrorVolley)은 소절과 따로 도는 층이다. 광선 예고가 1초 길어져(사용자 11-20) 변주 시작이 반사탄 박과 겹칠 수 있어, 예고 동안 소절 탄만 센다
+  assert.ok(f.slice(first,release).every(frame=>frame.phraseBorn===0));
   assert.ok(f[release].born>0 && !f[release].laser);
 });
 
