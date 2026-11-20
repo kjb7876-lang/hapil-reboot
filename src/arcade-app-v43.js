@@ -1978,11 +1978,11 @@
     if(!run.bossOnly&&!run.spellOnly&&!quiet){journeyHero=run.hero;try{global.localStorage.setItem(JOURNEY_HERO_KEY,journeyHero);}catch(e){}}
     if(run.carry){state.hits+=run.carry.hits|0;state.bombsUsed+=run.carry.bombs|0;} // 중간 저장에서 이어 하면 앞 구간의 피격·폭탄도 별에 반영
     buildSprites();loadStage(state.stageIndex);fxStage=-1;
-    particles.length=0;drifts.length=0;inks.length=0;flash=hurtFlash=shake=banner=0;shock=null;hurtRing=null;toast=null;if(HeroFx)HeroFx.reset();accumulator=0;lastStamp=0;framesSeen=0;rushStage=false;setMode('playing');
     drill=null;var seenDrill=false,dq=/[?&]drill=([01])\b/.exec(global.location&&global.location.search||'');try{seenDrill=global.localStorage.getItem(DRILL_KEY)==='1';}catch(e){seenDrill=true;}
     if(dq)seenDrill=dq[1]==='0';else if(global.navigator&&global.navigator.webdriver)seenDrill=true; // 자동 검사 브라우저는 실습을 건너뛴다(?drill=1 이면 보인다): 기존 화면 검사가 1스테이지 진행을 본다
     if(!seenDrill&&!quiet&&!devMode&&run.stage===0&&!run.bossOnly&&!run.spellOnly&&!Number.isInteger(run.segment))drill={step:0,t:0,all:0,moved:0,focusT:0,bombs:0,done:-1,lx:state.player.x,ly:state.player.y};
     show('arcade-drill-skip',!!drill);
+    particles.length=0;drifts.length=0;inks.length=0;flash=hurtFlash=shake=banner=0;shock=null;hurtRing=null;toast=null;if(HeroFx)HeroFx.reset();accumulator=0;lastStamp=0;framesSeen=0;rushStage=false;setMode('playing');
     if(global.HapilEyes)global.HapilEyes[quiet?'clear':'open'](); // 눈 뜨기(arcade-eyes-v43.js). 디버그 건너뛰기는 연출 없이
   }
   function finish(){
@@ -1999,7 +1999,7 @@
     else retry.hidden=true;
     retry.dataset.boss=s.bossOnly?'1':'';
     var sp=$('arcade-spell-retry'),again=s.spellOnly?{seg:s.spellSeg,stage:s.rushStage,name:(Arcade.SEGMENTS[s.spellSeg]||{}).name}:lastSpell;
-    if(sp){sp.hidden=!again;if(again){sp.innerHTML='';sp.appendChild(document.createTextNode(s.spellOnly?'이 스펠 한 번 더 연습':'방금 맞은 스펠 다시 연습'));var sm=document.createElement('small');sm.style.cssText='display:block;font-size:12px;opacity:.8';sm.textContent='「'+again.name+'」';sp.appendChild(sm);sp.dataset.seg=String(again.seg);sp.dataset.stage=String(again.stage);}}
+    if(sp){sp.hidden=!again;if(again){sp.innerHTML='';var st=document.createElement('span');st.style.cssText='display:block;white-space:nowrap';st.textContent=s.spellOnly?'이 스펠 한 번 더 연습':'방금 맞은 스펠 다시 연습';sp.appendChild(st);var sm=document.createElement('small');sm.style.cssText='display:block;font-size:12px;opacity:.8';sm.textContent='「'+again.name+'」';sp.appendChild(sm);sp.dataset.seg=String(again.seg);sp.dataset.stage=String(again.stage);}}
     if(sp)sp.className=s.spellOnly?'primary':'';if(s.spellOnly){retry.hidden=true;}
     $('arcade-home').className=retry.hidden?'primary':'';
     var eyes=!won&&global.HapilEyes;if(eyes)eyes.close(); // 목숨이 다하면 눈을 감고, 다 감긴 뒤 결과 화면
@@ -2013,7 +2013,7 @@
   function endDrill(){drill=null;show('arcade-drill-skip',false);try{global.localStorage.setItem(DRILL_KEY,'1');}catch(e){}}
   function drillTick(inp){
     var d=drill,p=state.player;if(!d)return;d.t++;d.all++;
-    p.x=Math.max(8,Math.min(W-8,p.x+Math.max(-4.2,Math.min(4.2,inp.dx))));p.y=Math.max(40,Math.min(H-24,p.y+Math.max(-4.2,Math.min(4.2,inp.dy))));p.focus=!!inp.focus;state.tick++;
+    p.x=Math.max(18,Math.min(W-18,p.x+Math.max(-4.2,Math.min(4.2,inp.dx))));p.y=Math.max(40,Math.min(H-24,p.y+Math.max(-4.2,Math.min(4.2,inp.dy))));p.focus=!!inp.focus;state.tick++;
     var mv=Math.hypot(p.x-d.lx,p.y-d.ly);d.lx=p.x;d.ly=p.y;
     if(d.done>=0){if(d.all-d.done>=DRILL_END)endDrill();return;}
     if(d.step===0){d.moved+=mv;if(d.moved>=DRILL_MOVE)nextDrill(d);}

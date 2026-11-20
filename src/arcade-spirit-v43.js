@@ -92,7 +92,7 @@
       bonusShown=val;
     }
     drawDown(ctx,s,c);
-    if(s.spellOnly&&s.stage!=='won'&&s.stage!=='lost'){ctx.font='700 11px '+SANS;var pt='스펠 연습 · 기록에 넣지 않음',pw2=ctx.measureText(pt).width+16;ctx.globalAlpha=.92;plate(ctx,W/2-pw2/2,H-62,pw2,18,9,c);ctx.globalAlpha=1;ctx.textAlign='center';ctx.fillStyle=c.text;ctx.fillText(pt,W/2,H-49);} // 연습 중임을 판 아래에 늘 보인다
+    if(s.spellOnly&&s.stage!=='won'&&s.stage!=='lost'){ctx.font='700 11px '+SANS;var pt='스펠 연습 · 기록에 넣지 않음',pw2=ctx.measureText(pt).width+16;ctx.globalAlpha=.92;plate(ctx,12,(opt.bonusY||68)+10,pw2,18,9,c);ctx.globalAlpha=1;ctx.textAlign='left';ctx.fillStyle=c.text;ctx.fillText(pt,20,(opt.bonusY||68)+23);} // 연습 중임을 위쪽 봉인 줄 아래 왼편에 늘 보인다(영웅이 머무는 아래를 가리지 않게, 심사 2차)
     // 보스 위치 표식: 맨 아래 가장자리 눈금(바닥 안개·영웅 빛보다 위에 그려 묻히지 않게 화면 고정층에서). 맞는 동안 옅어지고, 체력이 20% 아래면 깜박인다.
     var b=s.boss;
     if(s.stage==='card'&&b&&b.present&&!s.cardEnding){
