@@ -124,7 +124,7 @@
       ctx.globalAlpha=a;ctx.strokeStyle=on?c.gold:c.text;ctx.lineWidth=1.5;ctx.setLineDash([3,6]);ctx.lineDashOffset=on?-(s.tick%18)*.5:0; // 켜진 동안 점선이 흐른다
       ctx.beginPath();ctx.moveTo(10,y0);ctx.lineTo(W-10,y0);ctx.stroke();ctx.setLineDash([]);ctx.lineDashOffset=0;
       var la=opt.quiet||opt.dim||stamp?0:above?1:intro?1:Math.max(0,Math.min(1,(LABEL_TICKS-lineAge)/30)); // 안내 글은 처음 잠깐만(선은 남는다). 알림 띠·낙관이 떠 있는 동안에는 숨긴다
-      if(la>0){ctx.font='700 11px '+SANS;ctx.textAlign='left';ctx.textBaseline='alphabetic';var label=above?'모두 거두는 중 · 최대값':'▲ 이 선 위에서 하트를 모두 거둔다';
+      if(la>0){ctx.font='700 11px '+SANS;ctx.textAlign='left';ctx.textBaseline='alphabetic';var label=above?'모두 거두는 중 · 최대값':'선 위에 위치하는 자, 소소한 행복이 있으리.';
         ctx.globalAlpha=Math.min(1,a*1.3)*la;ctx.lineWidth=3;ctx.strokeStyle=c.halo;ctx.strokeText(label,12,y0-6);ctx.fillStyle=above?c.gold:c.text;ctx.fillText(label,12,y0-6);
         ctx.textAlign='right';ctx.strokeText('▲',W-12,y0-6);ctx.fillText('▲',W-12,y0-6);}
     }

@@ -35,7 +35,7 @@
   var state=null,mode='title',difficulty='normal',accumulator=0,lastStamp=0,visual=0,lastRun=null;
   var particles=[],spellDim=0,flash=0,hurtFlash=0,hurtRing=null,VERMILION='#a8382a',shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,SPELL_BANNER_TICKS=42,bannerSpell=false,bannerTitle='',bannerSub='',toast=null;
   var keys={},finger={active:false,id:null,x:0,y:0},focusHeld=false,focusPointer=null,focusLatched=false,bombQueued=false;
-  var settings={music:true,sfx:true,hitSound:true,musicVolume:1,sfxVolume:1,screenShake:true,lowQuality:false,abilityMemory:7,abilitySeoha:7,abilityV:2}; // 능력조절(사용자 11-20): 영웅별 0(끔)~7단계
+  var settings={music:true,sfx:true,hitSound:true,musicVolume:1,sfxVolume:1,screenShake:true,lowQuality:false,abilityMemory:7,abilitySeoha:7,abilityV:2,keyFocus:'Shift',keyBomb:'KeyX'}; // 능력조절(사용자 11-20): 영웅별 0(끔)~7단계
   var fx=null,music=null,best=0,bests={},lastSpell=null,drill=null,DRILL_KEY='hapil-arcade-v43-drill',lastItemSound=0,progress=Progress.fresh(),saveOk=true;
   var themeOverride=null,turbo=0,rushStage=false,oneCreditEligible=false;
   var Story=global.HapilArcadeStory||null,BossIntros=global.HapilArcadeBossIntros||null,story=null,storyQuiet=false,storySeen={},pauseReturn='playing',rulesReturn='title',storyArrivalActor='';
@@ -595,7 +595,7 @@
     var name='<div><div class="name" style="color:'+color+'">'+esc(b.present?b.name:stage.name)+'</div><div>'+(s.bossOnly?'보스 체험 · 제'+stage.part+'부':'STAGE '+(s.stageIndex+1)+' / '+Arcade.STAGES.length)+'</div></div>';
     var lb=function(t){return hudOut==='side'?'<div class="lbl">'+t+'</div>':'';}; // PC 패널에는 이름표를 붙인다(심사 7차)
     var lvl='<div class="levels">'+lb('MEMORY')+'<span>공격 Lv.'+(s.power||1)+'</span> <span>필살 Lv.'+(s.bombLevel||1)+'</span></div>'; // 기억사수 성장 단계(사용자 11-16)
-    var life='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB [X]')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div>'+lvl+'</div>';
+    var life='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb(settings.keyBomb===KEY_DEFAULTS.keyBomb?'BOMB [X]':'BOMB ['+keyLabel(settings.keyBomb)+']')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div>'+lvl+'</div>';
     var score='<div style="text-align:'+(hudOut==='side'?'left':'right')+'">'+lb('SCORE')+'<div class="score">'+pad(s.score)+'</div>'+(hudOut==='side'?lb('BEST')+'<div class="best">'+pad(Math.max(best,s.score))+'</div>':'')+'<div class="graze">GRAZE '+s.graze+(Arcade.pointValue?' · 하트값 '+Arcade.pointValue(s):'')+'</div></div>'; // 오른쪽 패널에 최고 점수도: 좌우 패널 무게를 맞춘다(심사 10차)
     if(hudOut==='side'){
       var seg=Arcade.SEGMENTS[s.seg],card=s.stage==='card'&&seg,hp=card&&!s.cardDown&&!s.cardEnding?Math.round(100*Math.max(0,Math.min(1,finite(b.hp/b.maxHp,0)))):0;
@@ -604,8 +604,8 @@
       for(k=0;k<list.length&&k<6;k++)cards+='<div'+(k===at?' class="cur" style="color:'+color+'"':'')+'>'+(k<at?'✓ ':k===at?'▸ ':'· ')+esc(list[k].name)+'</div>';cards+='</div>';
       var boss='<div>'+(card?lb('BOSS')+'<div class="bosshp"><i style="width:'+hp+'%;background:'+color+'"></i></div>':'')+(card&&seg.spell?lb('SPELL')+'<div class="spell" style="border-color:'+color+';font-size:'+spellFit(seg.name)+'px">'+esc(seg.name)+'</div><div class="graze">'+(s.spellClean?(s.cardDown||s.cardEnding?'봉인 확정 +':'봉인 +')+(Arcade.spellBonus?Arcade.spellBonus(s):20000+(seg.stage||0)*5000):'봉인 놓침')+'</div>':'')+'</div>'+(card&&list.length?'<div>'+lb('SPELL CARDS')+cards+'</div>':'')+(card&&bossPortrait(bossKey(s),color)?'<img class="portrait" alt="" src="'+portraitUrl+'" style="border-color:'+color+'">':'');
       var prog=Math.round(100*(s.stageIndex+1)/Arcade.STAGES.length);
-      var life2='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB [X]')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div>'+lvl+'</div><div>'+lb('JOURNEY')+'<div class="progress"><i style="width:'+prog+'%"></i></div>'+route+'<div class="graze">봉인 '+s.captures+' · 조각 '+(s.pieces||0)+'/'+(Arcade.LIFE_PIECES||3)+'</div></div>';
-      var keys='<div class="keys">'+lb('CONTROLS')+'<div>이동 ←↑↓→ · WASD</div><div>초능력 Shift · 폭탄 X</div><div>일시정지 Esc</div></div>';
+      var life2='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb(settings.keyBomb===KEY_DEFAULTS.keyBomb?'BOMB [X]':'BOMB ['+keyLabel(settings.keyBomb)+']')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div>'+lvl+'</div><div>'+lb('JOURNEY')+'<div class="progress"><i style="width:'+prog+'%"></i></div>'+route+'<div class="graze">봉인 '+s.captures+' · 조각 '+(s.pieces||0)+'/'+(Arcade.LIFE_PIECES||3)+'</div></div>';
+      var keys='<div class="keys">'+lb('CONTROLS')+'<div>이동 ←↑↓→ · WASD</div><div>초능력 '+keyLabel(settings.keyFocus)+' · 폭탄 '+keyLabel(settings.keyBomb)+'</div><div>일시정지 Esc</div></div>';
       setHud(hi,'hi','<div class="stack">'+name+life2+'</div>'+keys);setHud(lo,'lo','<div class="stack">'+score+boss+'</div>'+'<div class="keys">'+lb('DIFFICULTY')+'<div>'+({gentle:'EASY',normal:'NORMAL',hell:'HELL'}[s.difficulty]||'')+'</div></div>');} // 패널 가운데: 왼쪽은 목숨·여정, 오른쪽은 보스 체력·스펠명·보너스(심사 6.46: 가운데가 비었다) // 아래쪽 빈자리: 왼쪽은 조작법, 오른쪽은 지금 스펠 이름(칸 안 이름표가 작아 읽기 어렵다는 지적)
     else{setHud(hi,'hi',name);setHud(lo,'lo',life+score);}
   }
@@ -1874,7 +1874,7 @@
   }
 
   function inputForStep(){
-    var focus=!!keys.Shift||focusHeld||focusLatched,bomb=bombQueued;bombQueued=false;
+    var focus=!!keys.focus||focusHeld||focusLatched,bomb=bombQueued;bombQueued=false;
     var speed=focus?1.8:4.2,x=(keys.ArrowRight||keys.d?1:0)-(keys.ArrowLeft||keys.a?1:0),y=(keys.ArrowDown||keys.s?1:0)-(keys.ArrowUp||keys.w?1:0);
     if(x||y){var n=Math.sqrt(x*x+y*y);return {dx:x/n*speed,dy:y/n*speed,focus:focus,bomb:bomb};}
     // 판 아래쪽에서는 손가락과의 간격을 줄여 키보드처럼 맨 아래까지 피할 수 있게 한다.
@@ -2226,6 +2226,8 @@
     ['musicVolume','sfxVolume'].forEach(function(k){if(typeof saved[k]==='number'&&isFinite(saved[k]))settings[k]=Math.max(0,Math.min(1,saved[k]));});
     // 사용자 11-20 "초능력설정 기본 7": 예전 저장값(abilityV 없음)의 0은 옛 기본값이라 7로 올리고, 0이 아닌 값은 사용자가 고른 것이니 그대로 둔다. 이후로는 0(끔)도 그대로 저장된다.
     ['abilityMemory','abilitySeoha'].forEach(function(k){if(typeof saved[k]==='number'&&isFinite(saved[k])){var v=Math.max(0,Math.min(7,Math.round(saved[k])));settings[k]=saved.abilityV>=2||v>0?v:7;}});
+    ['keyFocus','keyBomb'].forEach(function(k){if(typeof saved[k]==='string'&&keyOk(saved[k]))settings[k]=saved[k];});
+    if(settings.keyFocus===settings.keyBomb){settings.keyFocus=KEY_DEFAULTS.keyFocus;settings.keyBomb=KEY_DEFAULTS.keyBomb;} // 저장값이 겹치면 기본값
     lite=settings.lowQuality;
   }
   /* 능력조절: 기억사수 출력조절(피해↑·적탄↑), 서하 시간제어(적탄↓·이동↓). 엔진 수치는 Arcade.abilityOf 가 정한다 */
@@ -2241,7 +2243,7 @@
   function syncSettings(){
     ['music','sfx','hitSound','screenShake','lowQuality'].forEach(function(k){var e=$('setting-'+k);if(e)e.checked=settings[k];});
     ['musicVolume','sfxVolume'].forEach(function(k){var e=$('setting-'+k),o=$('value-'+k),v=Math.round(settings[k]*100);if(e)e.value=String(v);if(o)o.textContent=v+'%';});
-    syncAbility();
+    syncAbility();refreshKeyLabels();
     var sound=$('arcade-sound');if(sound){var on=settings.music||settings.sfx;sound.textContent=T(on?'soundOn':'soundOff');sound.setAttribute('aria-pressed',String(on));}
   }
   function applySettings(save){
@@ -2253,13 +2255,70 @@
     syncSettings();syncStoryFx();
   }
   function bindSettings(){
+    bindKeySettings();
     ['music','sfx','hitSound','screenShake','lowQuality'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('change',function(){settings[k]=!!e.checked;
       if(k==='lowQuality'){lite=settings.lowQuality;if(Ink&&Ink.setLite)Ink.setLite(lite);framesSeen=0;frameMs=16;fit();buildSprites();if(state)initFx(themeOf(state.stageIndex).fx,state.stageIndex);}
       applySettings(true);if(k==='music'||k==='sfx')unlockAudio();});});
     ['musicVolume','sfxVolume'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('input',function(){settings[k]=Math.max(0,Math.min(1,Number(e.value)/100||0));applySettings(true);unlockAudio();});});
     ['abilityMemory','abilitySeoha'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('input',function(){settings[k]=Math.max(0,Math.min(7,Math.round(Number(e.value)||0)));applySettings(true);});});
   }
-  function syncFocusButton(){var b=$('arcade-focus'),on=!!(keys.Shift||focusHeld||focusLatched);if(b){b.setAttribute('aria-pressed',String(on));b.textContent=T(on?'focusActive':'focus');}}
+
+  /* 키 바꾸기(사용자 11-20 "초능력키랑 필살기(폭탄키) 임의로 다른키로 바꾸기 가능하게"): PC 키보드 전용. 키는 물리 위치(e.code)로 저장해 한글 입력기가 켜져도 같은 키로 읽는다.
+     Shift·Ctrl·Alt 는 좌우를 같은 키로 본다. 이동(방향키·WASD)·Esc·Enter·Space·Tab 등 다른 기능과 겹치는 키는 막고, 초능력↔필살 서로 겹치면 맞바꾼다. 모바일 버튼은 그대로. */
+  var KEY_DEFAULTS={keyFocus:'Shift',keyBomb:'KeyX'},KEY_RESERVED=/^(Escape|Enter|NumpadEnter|Space|Tab|Backspace|Delete|ContextMenu|Meta|Arrow(Up|Down|Left|Right)|Key[WASD]|F\d{1,2}|CapsLock|NumLock|ScrollLock|Pause|PrintScreen|Dead|Process|Unidentified)$/;
+  function keyToken(e){
+    var c=e.code,k=e.key;
+    if(c&&c!=='Unidentified'){var m=/^(Shift|Control|Alt|Meta)(Left|Right)$/.exec(c);return m?m[1]:c;}
+    if(k==='Shift'||k==='Control'||k==='Alt'||k==='Meta')return k;
+    if(k===' ')return 'Space';
+    if(typeof k==='string'&&k.length===1){var u=k.toUpperCase();return /^[A-Z]$/.test(u)?'Key'+u:/^[0-9]$/.test(u)?'Digit'+u:k;}
+    return k||'';
+  }
+  function keyOk(t){return typeof t==='string'&&t.length>0&&t.length<=24&&!KEY_RESERVED.test(t);}
+  function keyLabel(t){
+    var m;if(t==='Shift')return 'Shift';if(t==='Control')return 'Ctrl';if(t==='Alt')return 'Alt';
+    if((m=/^Key([A-Z])$/.exec(t)))return m[1];if((m=/^Digit(\d)$/.exec(t)))return m[1];if((m=/^Numpad(\w+)$/.exec(t)))return 'Num '+m[1].replace('Add','+').replace('Subtract','-').replace('Multiply','*').replace('Divide','/').replace('Decimal','.');
+    return {Comma:',',Period:'.',Slash:'/',Semicolon:';',Quote:"'",BracketLeft:'[',BracketRight:']',Backslash:'\\',Minus:'-',Equal:'=',Backquote:'`',Insert:'Ins',Home:'Home',End:'End',PageUp:'PgUp',PageDown:'PgDn'}[t]||String(t);
+  }
+  var keyCapture=null,keyNoteText='';
+  function refreshKeyLabels(){
+    var f=keyLabel(settings.keyFocus),b=keyLabel(settings.keyBomb),i;
+    var els=document.querySelectorAll?document.querySelectorAll('[data-keyl]'):[];
+    for(i=0;i<els.length;i++)els[i].textContent=els[i].getAttribute('data-keyl')==='bomb'?b:f;
+    DRILL_TEXT[1][1]=T('drillFocus',{k:f});DRILL_TEXT[2][1]=T('drillBomb',{k:b});
+    var bf=$('key-focus'),bb=$('key-bomb'),note=$('key-note');
+    if(bf)bf.textContent=keyCapture==='keyFocus'?T('keyPress'):f;if(bb)bb.textContent=keyCapture==='keyBomb'?T('keyPress'):b;
+    if(bf)bf.setAttribute('aria-pressed',String(keyCapture==='keyFocus'));if(bb)bb.setAttribute('aria-pressed',String(keyCapture==='keyBomb'));
+    if(note)note.textContent=keyNoteText;
+  }
+  function flashKeys(){['key-focus','key-bomb'].forEach(function(id){var b=$(id);if(!b||!b.classList||!b.classList.remove)return;b.classList.remove('flash');void b.offsetWidth;b.classList.add('flash');});}
+  function endKeyCapture(note){keyCapture=null;keyNoteText=note||'';refreshKeyLabels();}
+  function assignKey(name,tok){
+    var other=name==='keyFocus'?'keyBomb':'keyFocus';
+    if(!keyOk(tok)){keyNoteText=T('keyReserved',{k:keyLabel(tok)});return false;}
+    if(settings[name]===tok){keyNoteText='';return true;}
+    if(settings[other]===tok){settings[other]=settings[name];settings[name]=tok;keyNoteText=T('keySwapped',{k:keyLabel(tok),o:keyLabel(settings[other])});}
+    else{settings[name]=tok;keyNoteText=T(name==='keyFocus'?'keyChangedFocus':'keyChangedBomb',{k:keyLabel(tok)});}
+    if(settings.keyFocus===settings.keyBomb){settings.keyFocus=KEY_DEFAULTS.keyFocus;settings.keyBomb=KEY_DEFAULTS.keyBomb;}
+    return true;
+  }
+  function onKeyCaptureDown(e){
+    if(!keyCapture)return;
+    e.preventDefault();if(e.stopImmediatePropagation)e.stopImmediatePropagation();if(e.repeat)return;
+    var tok=keyToken(e);
+    if(tok==='Escape'){endKeyCapture(T('keyCancel'));return;}
+    var name=keyCapture;if(!assignKey(name,tok)){refreshKeyLabels();return;} // 안 되는 키는 안내만 하고 계속 기다린다
+    keyCapture=null;applySettings(true);flashKeys();
+  }
+  function bindKeySettings(){
+    var bf=$('key-focus'),bb=$('key-bomb'),br=$('key-reset');if(!bf||!bb)return;
+    function arm(name){return function(){if(keyCapture===name){endKeyCapture('');return;}keyCapture=name;keyNoteText=T('keyWait');refreshKeyLabels();};}
+    bf.addEventListener('click',arm('keyFocus'));bb.addEventListener('click',arm('keyBomb'));
+    [bf,bb].forEach(function(b){b.addEventListener('blur',function(){if(keyCapture)endKeyCapture('');});});
+    if(br)br.addEventListener('click',function(){keyCapture=null;settings.keyFocus=KEY_DEFAULTS.keyFocus;settings.keyBomb=KEY_DEFAULTS.keyBomb;keyNoteText=T('keyDefaulted');applySettings(true);});
+    document.addEventListener('keydown',onKeyCaptureDown,true);
+  }
+  function syncFocusButton(){var b=$('arcade-focus'),on=!!(keys.focus||focusHeld||focusLatched);if(b){b.setAttribute('aria-pressed',String(on));b.textContent=T(on?'focusActive':'focus');}}
   function clearInput(){
     var move=finger.id,focus=focusPointer;keys={};finger.active=false;finger.id=null;focusPointer=null;focusHeld=focusLatched=false;bombQueued=false;
     try{if(move!==null)$('arcade-stage').releasePointerCapture(move);}catch(e){}
@@ -2327,15 +2386,17 @@
       if(mode==='story'){if(key==='Escape'){e.preventDefault();if(!e.repeat)pause();return;}if(form)return;if(key==='Enter'||key===' '||key==='z'){e.preventDefault();if(!e.repeat)nextStory();}return;}
       if(key==='Escape'||(key===' '&&!form)){if(mode==='playing'||mode==='paused')e.preventDefault();if(e.repeat)return;if(mode==='playing')pause();else if(mode==='paused')$('arcade-resume').click();return;}
       if((form&&form.tagName!=='BUTTON')||mode!=='playing')return;
-      if(key==='x'){e.preventDefault();if(!e.repeat)bombQueued=true;return;}
-      if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','w','a','s','d','Shift'].indexOf(key)>=0){e.preventDefault();keys[key]=true;syncFocusButton();}});
-    document.addEventListener('keyup',function(e){delete keys[e.key.length===1?e.key.toLowerCase():e.key];syncFocusButton();});
+      var tok=keyToken(e);
+      if(tok===settings.keyBomb){e.preventDefault();if(!e.repeat)bombQueued=true;return;}
+      if(tok===settings.keyFocus){e.preventDefault();keys.focus=true;syncFocusButton();return;}
+      if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','w','a','s','d'].indexOf(key)>=0){e.preventDefault();keys[key]=true;syncFocusButton();}});
+    document.addEventListener('keyup',function(e){delete keys[e.key.length===1?e.key.toLowerCase():e.key];if(keyToken(e)===settings.keyFocus)delete keys.focus;syncFocusButton();});
     document.addEventListener('visibilitychange',function(){if(document.hidden)pause();});
     global.addEventListener('blur',function(){clearInput();pause();});global.addEventListener('resize',fit);
   }
   function ready(){var b=$('arcade-start');if(!b.disabled)return;b.disabled=false;b.textContent=T('fromStart');}
   function boot(){
-    I18n.apply(document);
+    I18n.apply(document);refreshKeyLabels();
     if(global.HapilHeroSelect&&global.HapilHeroSelect.mount)heroPicker=global.HapilHeroSelect.mount($('arcade-stage'));
     if(Chapters&&Chapters.mountCard)chapterCard=Chapters.mountCard(document,chapterSound);
     loadProgress();loadSettings();setDifficulty(progress.difficulty);
@@ -2353,7 +2414,7 @@
   }
   function snapshot(){return {mode:mode,scale:scale,lite:lite,compact:compact,frameMs:frameMs,bullets:state?state.n:0,stage:state?state.stage:'',stageIndex:state?state.stageIndex:-1,seg:state?state.seg:-1,
     hp:state?state.player.hp:0,score:state?state.score:0,hero:state?state.hero:selectedHero,heroOpacity:heroOpacity,particles:particles.length,images:Object.keys(images).sort(),loading:Object.keys(loading).sort(),loadedStage:loadedStage,
-    oneCreditEligible:oneCreditEligible,story:story?{stage:story.entry.stage,actor:story.actor,phase:story.phase,phaseMs:story.phaseMs,line:story.line,total:story.entry.lines.length}:null,settings:Object.assign({},settings),focus:!!(keys.Shift||focusHeld||focusLatched),fx:{kind:fxKind,count:fxCount,pool:FX_POOL},toast:toast?{name:toast.name,stars:toast.stars,hasArt:!!toast.img}:null,difficulty:difficulty,saveOk:saveOk};}
+    oneCreditEligible:oneCreditEligible,story:story?{stage:story.entry.stage,actor:story.actor,phase:story.phase,phaseMs:story.phaseMs,line:story.line,total:story.entry.lines.length}:null,settings:Object.assign({},settings),focus:!!(keys.focus||focusHeld||focusLatched),fx:{kind:fxKind,count:fxCount,pool:FX_POOL},toast:toast?{name:toast.name,stars:toast.stars,hasArt:!!toast.img}:null,difficulty:difficulty,saveOk:saveOk};}
   /* 디버그 훅(헤드리스 검증용): 상태를 읽고, 스테이지·구간으로 건너뛰고, 진행 기록을 본다. */
   global.HapilArcadeApp={
     getState:snapshot,devDiag:devDiag,drawPropArt:drawPropArt, // tools/build-drawn-props-v43.cjs가 그림 파일을 구울 때 쓴다
