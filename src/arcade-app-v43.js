@@ -1459,12 +1459,16 @@
   function drawRingBursts(s){var h=s.mirrorHits,i,b,c=mirrorInk();if(h&&h.length){for(i=0;i<h.length;i++){b=h[i];ringBursts.push({x:b.x,y:b.y,r:Arcade.SIZE_RADIUS[b.size]*(s.sizeScale||1)*(SMALL_GROW[b.size]||1)+4.6*(b.left+1)+.5,t:0});}h.length=0;}
     if(!ringBursts.length)return;ctx.save();for(i=ringBursts.length-1;i>=0;i--){b=ringBursts[i];b.t++;if(b.t>18){ringBursts.splice(i,1);continue;}var f=b.t/18;brushRing(b.x,b.y,b.r+10*f,f*1.3,1.6*(1-f)+.4,c.ink,c.paper,.8*(1-f));}ctx.restore();}
   function drawBullets(s){
-    var bloom=Arcade.BLOOM_TICKS,i,o,half,size,x,y,variant=skinVariant(s);
+    var bloom=Arcade.BLOOM_TICKS,i,o,half,size,x,y,variant=skinVariant(s),sf=s.player.focus&&Arcade.slowField?Arcade.slowField(s):null,slowR=sf?sf[0]:0,slowK=sf?sf[1]:0;
     for(i=0;i<s.n;i++){
       x=s.bx[i];y=s.by[i];if(s.bage[i]<bloom||x!==x||y!==y)continue;
       size=s.bsize[i];if(size===SHAPE_PROP){drawProp(s,i,1,1);drawBreakableMark(s,i);continue;}
       o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;half=o.half;var faint=nearBoss(s,x,y)||nearMob(s,x,y),grace=s.bfragment&&s.bfragment[i]&&s.bage[i]<s.bgrace[i];var gone=s.bexit&&s.bexit[i];var mir=s.bmirror&&s.bmirror[i];ctx.globalAlpha=gone?.36:grace?.28+.2*s.bage[i]/s.bgrace[i]:faint?(mir?.72:.38):1; // 나가는 탄(판정 없음)은 반투명
       var skin=bulletSkin(s,i,variant);
+      if(slowR&&!gone){var sdx=x-s.player.x,sdy=y-s.player.y,sd=Math.sqrt(sdx*sdx+sdy*sdy);if(sd<slowR){var sk=slowK*(1-sd/slowR)/.777,ga=ctx.globalAlpha,ca=Math.cos(s.ba[i]),sa=Math.sin(s.ba[i]),st=s.bs[i]*.05; // 저속 둔화(사용자 11-20 최대 77.7%): 느려진 탄은 뒤로 먹 잔상 두 겹을 끈다. 진할수록 많이 느려진 탄
+        for(var gk=2;gk>=1;gk--){s.bx[i]=x-ca*st*gk*2;s.by[i]=y-sa*st*gk*2;ctx.globalAlpha=ga*(gk===1?.34:.17)*sk;
+          if(skin||size===SHAPE_RICE)drawOrientedBullet(s,i,skin?skinOfBullet(skin,s.bcolor[i],size):o,skin,1);else ctx.drawImage(o.image,s.bx[i]-half,s.by[i]-half,half*2,half*2);}
+        s.bx[i]=x;s.by[i]=y;ctx.globalAlpha=ga;}}
       if(skin||size===SHAPE_RICE)drawOrientedBullet(s,i,skin?skinOfBullet(skin,s.bcolor[i],size):o,skin,1);
       else ctx.drawImage(o.image,x-half,y-half,half*2,half*2);
       if(s.bmirror&&s.bmirror[i]&&s.bbounce[i]&&!gone)drawMirrorRings(s,i,x,y);
@@ -1493,7 +1497,16 @@
     if(Math.abs(n)>1e-6){var t3=(-m-y)/n,t4=(H+m-y)/n;lo=Math.max(lo,Math.min(t3,t4));hi=Math.min(hi,Math.max(t3,t4));}else if(y<-m||y>H+m)hi=lo;
     if(hi<lo)hi=lo;return [x+c*lo,y+n*lo,x+c*hi,y+n*hi,hi-lo];}
   function drawNudgeCue(s){var q=s.nudgeCue,b=s.boss;if(!q||!b||!b.present)return;var span=Math.max(1,q.fire-q.from),t=Math.max(0,Math.min(1,(s.tick-q.from)/span)),p=s.player,x0=b.x,y0=b.y+20,dx=p.x-x0,dy=p.y-y0,d=Math.hypot(dx,dy)||1,len=Math.min(d-18,60+d*.7*t);if(len<8)return;ctx.save();ctx.globalAlpha=.25+.5*t;ctx.strokeStyle='#c9406e';ctx.lineWidth=1.5;ctx.setLineDash([6,6]);ctx.lineDashOffset=-s.tick;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x0+dx/d*len,y0+dy/d*len);ctx.stroke();ctx.restore();} // 이지 멈춘 영웅에게 조준탄 0.4초 전 보스→영웅 끊긴 예고선(인주색=돕는 예고)
-  var laserCuePass=false;function drawLaserCues(s){laserCuePass=true;try{drawLasers(s);}finally{laserCuePass=false;}} // 바닥 줄·사다리·스위퍼 예고만 탄 위에 한 번 더
+  // 화면 덮기 틈 비춤(11-20 심사): 예고 동안 틈 양쪽 가장자리에 한지빛 붓 선이 밝아지고, 틈 안이 옅게 밝다. 켜진 동안은 은은히 남는다. 판정과 무관
+  function drawCoverGap(s){var c=s.coverGap;if(!c||s.tick>c.until||s.tick<c.from)return;var warm=s.tick<c.on?(s.tick-c.from)/Math.max(1,c.on-c.from):1-.6*(s.tick-c.on)/Math.max(1,c.until-c.on),a=Math.max(0,Math.min(1,warm));
+    ctx.save();ctx.globalCompositeOperation='source-over';var lo=c.lo,hi=c.hi,g;
+    if(c.vert){g=ctx.createLinearGradient(lo,0,hi,0);}else{g=ctx.createLinearGradient(0,lo,0,hi);}
+    g.addColorStop(0,'rgba(255,236,190,.0)');g.addColorStop(.5,'rgba(255,240,205,.55)');g.addColorStop(1,'rgba(255,236,190,.0)');ctx.globalAlpha=.55*a;ctx.fillStyle=g;
+    if(c.vert)ctx.fillRect(lo,0,hi-lo,H);else ctx.fillRect(0,lo,W,hi-lo);
+    ctx.globalAlpha=.75*a;ctx.strokeStyle='#e8c77a';ctx.lineWidth=2;ctx.setLineDash([10,7]);ctx.lineDashOffset=-s.tick*.6;ctx.beginPath();
+    if(c.vert){ctx.moveTo(lo+1,0);ctx.lineTo(lo+1,H);ctx.moveTo(hi-1,0);ctx.lineTo(hi-1,H);}else{ctx.moveTo(0,lo+1);ctx.lineTo(W,lo+1);ctx.moveTo(0,hi-1);ctx.lineTo(W,hi-1);}
+    ctx.stroke();ctx.restore();}
+  var laserCuePass=false;function drawLaserCues(s){laserCuePass=true;try{drawLasers(s);}finally{laserCuePass=false;}drawCoverGap(s);} // 바닥 줄·사다리·스위퍼 예고만 탄 위에 한 번 더
   function drawLasers(s){
     if(!s.lasers.length)return;var cues=laserCuePass;
     var sheet=s.stage==='card'?laserSheet(s):null,under=1;

@@ -39,7 +39,7 @@ test('enemy bullets slow down near the hero (stronger each level, ×1.35 while f
  let prevR=0,prevK=0;for(let l=1;l<=7;l++){const [r,k]=a.SLOW_FIELD[l];assert(r>prevR&&k>prevK);prevR=r;prevK=k;}
  const near1=move(1,12),near7=move(7,12),focus7=move(7,12,true);
  assert(near1<1&&near7<near1&&focus7<near7,`slower with level and focus: ${near1} ${near7} ${focus7}`);
- assert(a.slowField({player:{focus:true},power:7})[1]<=.6,'never freezes bullets');
+ assert(a.slowField({player:{focus:true},power:7})[1]<=.777+1e-9,'never freezes bullets');assert(Math.abs(a.slowField({player:{focus:true},power:7})[1]-.777)<1e-9,'user 11-20: focus slows up to 77.7%');
 });
 
 test('bomb level climbs with each full charge, scales damage, and hands the screen its level and targets',()=>{
