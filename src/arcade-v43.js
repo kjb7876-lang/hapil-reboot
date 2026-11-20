@@ -15,6 +15,8 @@
     ?require('./arcade-boss-rhythm-v43.js'):root.HapilArcadeBossRhythm;
   var BOSS_PHASES=typeof module==='object'&&module.exports&&typeof require==='function'
     ?require('./arcade-boss-phases-v43.js'):root.HapilArcadePhases;
+  var LASER_RHYTHM=typeof module==='object'&&module.exports&&typeof require==='function'
+    ?require('./arcade-laser-rhythm-v43.js'):root.HapilLaserRhythm;
   var rhythmContext=null;
   function heroProfile(s){return HEROES?HEROES.get(typeof s==='string'?s:s&&s.hero):null;}
   function isCinematicBoss(actor,mid){var intros=BOSS_INTROS||root.HapilArcadeBossIntros;return !mid||!!(intros&&intros.isSinBoss(actor));}
@@ -984,8 +986,8 @@
   var CARD_ENDING_MAX=240;
   /* 페이즈 최소 시간과 시전한 패턴 끝까지(사용자 11-19 "체력이 달아 페이즈가 넘어가더라도 이미 시전한 패턴은 모두 나오게 한다음 다음페이즈… 패턴별 지속시간이 유지되도록"):
      체력이 먼저 다해도 한 소절(CARD_MIN)은 채우고, 소절 경계·광선·문양·특수 페이즈가 끝난 뒤에야 쓰러진다. 기다리는 동안 체력은 1로 붙든다(무한 대기 방지 상한 CARD_DOWN_MAX) */
-  var CARD_MIN=Math.round(420*1.5),CARD_DOWN_MAX=Math.round(420*1.5)+180;
-  function cardMayFall(s){var t=s.segTick-cardFireDelay(s);if(s.cardDown&&s.tick-s.cardDown>=CARD_DOWN_MAX)return true;if(t<CARD_MIN)return false;
+  var CARD_MIN=Math.round(420*1.5),CARD_DOWN_MAX=Math.round(420*1.5)+180,RL_DOWN_MAX=1100; // RL_DOWN_MAX: 레이저 장단 구간(예고 90 + 최대 600 + 꼬리)을 다 보이는 상한
+  function cardMayFall(s){var t=s.segTick-cardFireDelay(s);if(rlPending(s)&&s.cardDown&&s.tick-s.cardDown<RL_DOWN_MAX)return false;if(s.cardDown&&s.tick-s.cardDown>=CARD_DOWN_MAX)return true;if(t<CARD_MIN)return false;
     if(s.cardDown){if(t<s.downEnd)return false;return !beamsOrFiguresLive(s);} // 소진 뒤에는 새 발사가 멈췄으니 소절 끝·예고된 광선·문양만 기다린다
     if(s.phraseCard&&s.phraseTick%s.phraseCard!==0)return false;
     if(s.lasers.some(function(l){return l.age<l.warn+l.active;})||s.figures.some(function(f){return f.age<f.warn+(f.active||0);}))return false;
@@ -1071,7 +1073,7 @@
   }
   function calmLaser(s){
     calmSoft(s);
-    if(!s.calm||s.difficulty!=='hell'||s.cardEnding||s.cardDown||!s.boss.present){s.calmT=0;return;}
+    if(!s.calm||s.difficulty!=='hell'||s.cardEnding||s.cardDown&&!rlPending(s)||!s.boss.present||(s.sp&&s.sp.cur)){s.calmT=0;return;} // 특수 페이즈(레이저 장단 등) 중에는 내지 않는다: 덮기 틈·음표 줄 위에 다른 광선이 서 있었다(11-20)
     var t=s.calmT=(s.calmT||0)+1;if(t<CALM_LASER_FIRST||(t-CALM_LASER_FIRST)%CALM_LASER_EVERY)return;
     var a=ACTORS[s.boss.actor],c=a&&a.c2!==WHITE&&a.c2!==RED?a.c2:CYAN,k=((t-CALM_LASER_FIRST)/CALM_LASER_EVERY)|0;
     if(k%2===0)slots(s,3,W,18).forEach(function(x){column(s,x,{width:BEAM_MIN,warn:62,active:56,color:c});});
@@ -1960,7 +1962,27 @@
   function beamRaw(s,x,y,a,o){return beam(s,x,y,a,o);}
   function SQ_ACTIVE(s){return 4*SP_BEAT+Math.round(48*s.rules.warn)-Math.round(66*s.rules.warn);} // 비트루비우스 사각 틀은 X가 켜지는 순간(4박 뒤 + X 예고 48틱) 꺼진다: 사각과 X가 함께 켜져 있던 18틱 겹침 제거(11-18 심사) // 8박 장단: 센박(1)·중간박(.5)·여린박(0)
   var CAMP_HALF=52,CAMP_NEED={normal:210,hell:150},CAMP_COOL={normal:420,hell:300},CAMP_BEAM={normal:34,hell:46};
-  function spReset(s){if(s.sp&&s.sp.cur)spEnd(s);var carry=!!(s.sp&&s.sp.drain),seg=SEGMENTS[s.seg],dur=seg&&seg.kind==='card'?cardDuration(s,seg):40;s.sp={drain:carry,start:dur*60>=SP_START+SP_LEAD+Math.round((SP_LEN[s.difficulty]||SP_LEN.normal)*.7)?SP_START:-1,q:[],cur:'',cycle:-1,camp:0,cool:0,round:0,rng:((s.seed*2246822519)^(s.stageIndex*40503+13))>>>0||1};s.special=null;}
+  function spReset(s){if(s.sp&&s.sp.cur)spEnd(s);var carry=!!(s.sp&&s.sp.drain),seg=SEGMENTS[s.seg],dur=seg&&seg.kind==='card'?cardDuration(s,seg):40;s.sp={drain:carry,start:dur*60>=SP_START+SP_LEAD+Math.round((SP_LEN[s.difficulty]||SP_LEN.normal)*.7)?SP_START:-1,q:[],cur:'',cycle:-1,camp:0,cool:0,round:0,rng:((s.seed*2246822519)^(s.stageIndex*40503+13))>>>0||1};s.special=null;
+    var lc=laserCard(s);if(lc){s.sp.need=true;s.sp.lj=lc.j;if(s.sp.start<0)s.sp.start=SP_START;}}
+  /* ── 레이저 장단 페이즈(사용자 11-20 "보스페이즈가 보통 5인데 3개는 레이져 패턴이 꼭 있도록 … 리듬게임을 레이져 패턴으로 구현한 느낌").
+   *  · 한 보스의 페이즈 N개 가운데 round(N×LASER_SHARE)개(5개면 3개, 3개면 2개)를 레이저 장단 페이즈로 정한다. 고르게 퍼뜨리되 마지막 페이즈는 늘 들어간다(1페이즈는 보스 고유 공격을 먼저 보인다).
+   *  · 그 페이즈의 첫 특수 구간은 반드시 레이저다. 보스 체력이 반 아래로 내려가면(또는 16초가 되면) 시작하고, 구간이 끝나기 전에는 쓰러지지 않는다(체력 1로 붙든다).
+   *    체력을 너무 빨리 깎아 구간이 시작도 못 했으면 쓰러지기 전에 마지막 장단으로 낸다.
+   *  · 중간보스는 그대로다. 영웅별 비중 등으로 몫을 바꾸려면 laserShare 를 고친다. ── */
+  var LASER_SHARE=.6,RL_EARLIEST=360,RL_HP=.5,LIVE_PHASES={};
+  function laserShare(s){return LASER_SHARE;}
+  function livePhaseOf(s,segIndex){var key=s.paced?s.difficulty:'all',T=LIVE_PHASES[key];
+    if(!T){T=LIVE_PHASES[key]=[];var groups={},list=s.paced?plannedSegments(s.difficulty):SEGMENTS.map(function(g,i){return i;});
+      list.forEach(function(i){var g=SEGMENTS[i];if(g.kind!=='card')return;var k=g.stage+'|'+g.actor+'|'+(g.mid?1:0);(groups[k]=groups[k]||[]).push(i);});
+      Object.keys(groups).forEach(function(k){groups[k].forEach(function(i,j){T[i]={no:j+1,count:groups[k].length};});});}
+    return T[segIndex]||null;}
+  // 이 카드가 레이저 장단 페이즈면 {no,count,k(레이저 페이즈 수),j(그 가운데 몇 번째, 0부터)}
+  function laserCard(s){var g=SEGMENTS[s.seg];if(!s.entranceAll||!g||g.kind!=='card'||g.mid||s.spellOnly)return null;var pi=livePhaseOf(s,s.seg);if(!pi||pi.count<2)return null;
+    var k=Math.max(1,Math.min(pi.count,Math.round(pi.count*laserShare(s)))),at=Math.floor(pi.no*k/pi.count),before=Math.floor((pi.no-1)*k/pi.count);
+    return at>before?{no:pi.no,count:pi.count,k:k,j:before}:null;}
+  function rlPending(s){return !!(s.sp&&s.sp.need&&!s.sp.done);}
+  // 장단 구간을 지금부터(예고 SP_LEAD 뒤) 시작하게 당긴다. 이미 시작했으면 그대로
+  function rlPull(s){var sp=s.sp;if(sp.cur||s.segTick>=sp.start-SP_LEAD)return;sp.start=s.segTick+SP_LEAD;}
   function spRand(s){var x=s.sp.rng|0;x^=x<<13;x^=x>>>17;x^=x<<5;s.sp.rng=x>>>0;return s.sp.rng/4294967296;}
   // 이번 틱의 특수 페이즈 위치. 시작 SP_START-SP_LEAD부터 SP_CYCLE마다 (예고 SP_LEAD틱 + 본 구간 len틱).
   function spWindow(s){
@@ -1968,14 +1990,14 @@
     var from=(s.sp?s.sp.start:SP_START)-SP_LEAD,t=s.segTick-from;if(t<0)return null;
     var cycle=Math.floor(t/SP_CYCLE),local=t-cycle*SP_CYCLE,len=SP_LEN[s.difficulty]||SP_LEN.normal;
     if(local>=SP_LEAD+len)return null;
-    return {cycle:cycle,local:local,len:len,active:local>=SP_LEAD,kind:SP_ORDER[(s.stageIndex*3+s.seg+cycle)%SP_ORDER.length]};
+    return {cycle:cycle,local:local,len:len,active:local>=SP_LEAD,kind:s.sp&&s.sp.need&&cycle===0?'laser':SP_ORDER[(s.stageIndex*3+s.seg+cycle)%SP_ORDER.length]};
   }
   function spQuiet(s){return !!spWindow(s)||!!(s.sp&&s.sp.tail>s.tick&&s.stage==='card');}
   function spLvl(s){return s.difficulty==='gentle'?0:s.difficulty==='normal'?1:2;}
   function spRisers(s){var n=0;if(s.risers)for(var i=0;i<s.risers.length;i++)if(!s.risers[i].fade)n++;return n;}
   function spFloor(s){var F=s.floor;if(!F||F.stage!==s.stageIndex)F=s.floor=freshFloor(s,s.stageIndex);return F;}
   function spEnd(s){
-    var kind=s.sp.cur;s.sp.cur='';s.sp.q.length=0;s.special=null;
+    var kind=s.sp.cur;if(s.sp.need&&kind==='laser'&&s.sp.cycle===0&&!s.sp.cut)s.sp.done=true;s.sp.cur='';s.sp.q.length=0;s.special=null;
     if(kind==='stones'&&s.floor)s.floor.goal.fill(0);
     if(kind==='tetris')s.sp.drain=true; // 떨어지던 조각이 다 내려앉은 뒤 쌓인 블록을 위에서부터 걷는다
   }
@@ -2020,9 +2042,17 @@
     var k=s.sp.cur,pos=n%8,bar=n>>3,lvl=spLvl(s),b=s.boss,p=s.player,a=ACTORS[b.actor]||{},c1=a.c1===undefined?0:a.c1,c2=a.c2===undefined?c1:a.c2,i,sp=s.sp;
     if(k==='laser'){
       // 페이즈 끝에 남은 광선이 다시 시작된 일반 탄과 겹치지 않게(심사 11-18): 마지막 광선이 꺼질 때까지 일반 사격 재개를 미룬다(spQuiet 꼬리)
-      var beam=function(st,x,y,a,o){var r=beamRaw(st,x,y,a,o);sp.tail=Math.max(sp.tail||0,st.tick+Math.round(o.warn*st.rules.warn)+o.active+BEAM_FADE);return r;};
-      var motif=(bar+sp.cycle+s.stageIndex)%5;
-      if(motif===3){ // 피아노 건반(사용자 11-19 "피아노 건반같은 레이져 패턴도 많이"): 세로 8건반이 음계처럼 차례로 눌린다. 흰건반은 굵고 검은건반은 가늘다. 이지 2박마다 한 건반, 노멀 박마다, 헬 박마다 화음(두 건반)
+      var name=laserMotif(s,bar);if(s.special)s.special.motif=name;
+      var beam=function(st,x,y,a,o){var before=st.lasers.length,r=beamRaw(st,x,y,a,o);if(st.lasers.length>before)st.lasers[before].rl=name;sp.tail=Math.max(sp.tail||0,st.tick+Math.round(o.warn*st.rules.warn)+o.active+BEAM_FADE);return r;};
+      var motif=LASER_OLD.indexOf(name);
+      if(motif<0){ // 리듬 음표(src/arcade-laser-rhythm-v43.js): 세로 줄·가로 줄 음표가 박에 맞춰 켜진다
+        var WB=lvl===0?3:2,mem=sp.rl&&sp.rl.bar===bar&&sp.rl.cycle===sp.cycle?sp.rl:(sp.rl={bar:bar,cycle:sp.cycle}),
+          put=function(vert,lo,hi,at,hold,o){var before=s.lasers.length,mid=(lo+hi)/2;o=o||{};
+            beam(s,vert?mid:-12,vert?-12:mid,vert?Math.PI/2:0,{width:(hi-lo)/s.rules.beam,warn:at*SP_BEAT/s.rules.warn,active:Math.max(6,Math.round(hold)),color:o.color?c2:c1,solid:1,keep:1});
+            if(s.lasers.length>before){var nl=s.lasers[before];nl.role='note';nl.tone=o.tone===undefined?0:o.tone;if(o.mute)nl.mute=1;}};
+        LASER_RHYTHM.play(name,{W:W,H:H,lvl:lvl,WB:WB,BEAT:SP_BEAT,pos:pos,bar:bar,px:p.x,py:p.y,mem:mem,
+          lane:function(x0,x1,at,hold,o){put(true,x0,x1,at,hold,o);},band:function(y0,y1,at,hold,o){put(false,y0,y1,at,hold,o);}});
+      }else if(motif===3){ // 피아노 건반(사용자 11-19 "피아노 건반같은 레이져 패턴도 많이"): 세로 8건반이 음계처럼 차례로 눌린다. 흰건반은 굵고 검은건반은 가늘다. 이지 2박마다 한 건반, 노멀 박마다, 헬 박마다 화음(두 건반)
         var KW=W/8,up=(bar+sp.cycle)%2===0,key=function(j){return up?j:7-j;},hold=SP_BEAT*[2,3,3][lvl]-6; // 건반이 박마다 하나씩 눌리고 2~3박 동안 눌린 채 남는다 → 2~3건반 너비의 벽이 음계를 따라 걸어간다(스위퍼). 지나간 건반 쪽으로 넘어가는 것이 답(11-19 규칙 3·4)
         var j=key(pos),black=[1,3,6].indexOf(j)>=0;beam(s,KW*(j+.5),-12,Math.PI/2,{width:KW*.7/s.rules.beam,warn:46,active:hold,color:black?c2:c1,keep:1});
         if(lvl===2&&pos%2===1){var j2=(j+4)%8;beam(s,KW*(j2+.5),-12,Math.PI/2,{width:KW*.7/s.rules.beam,warn:46,active:30,color:c2,keep:1});}
@@ -2065,6 +2095,13 @@
       else if(pos===4){if(lvl>0)bossSpit(s);else if(spRisers(s)<3)pushRiser(s,null,place('down',-off));}
     }
   }
+  /* 레이저 구간의 마디마다 무늬 하나. 옛 다섯(빗살·종·사각·건반·덮기)과 리듬 여섯(좌우 교차·덩쿵덕·차오르는 박·길 따라가기·조였다 풀기·엇박 술래)을 번갈아 세운 열한 가지를
+     보스(스테이지)마다 다른 자리에서 시작해 차례로 돈다. 레이저 장단 페이즈는 페이즈마다 세 칸씩 건너뛰어, 한 보스전에서 같은 무늬가 되풀이되지 않는다. */
+  var LASER_OLD=['comb','fan','square','piano','cover'],LASER_POOL=['trill','comb','jangdan','piano','climb','fan','slide','cover','squeeze','square','swing'];
+  function laserMotif(s,bar){var sp=s.sp,forced=sp.need&&sp.cycle===0,at=forced?s.stageIndex*5+sp.lj*3+bar:s.stageIndex*5+s.seg*2+sp.cycle*3+bar+1;
+    if(sp.force)return sp.force; // 검사·다른 연출이 무늬를 직접 고를 때(s.sp.force='trill' 등)
+    if(!LASER_RHYTHM)return LASER_OLD[((bar+sp.cycle+s.stageIndex)%5+5)%5];
+    return LASER_POOL[((at%LASER_POOL.length)+LASER_POOL.length)%LASER_POOL.length];}
   function centerGuard(s,w){
     var sp=s.sp,lvl=spLvl(s);if(!lvl||w||s.stage!=='card'||!s.entranceAll||!s.boss.present||s.boss.leaving||s.segTick<FIRE_DELAY+60){sp.camp=0;return;}
     if(sp.cool>0)sp.cool--;
@@ -2080,7 +2117,8 @@
   }
   function bossSpecials(s){
     if(!s.sp)spReset(s);
-    if(s.cardEnding||s.cardDown){if(s.sp.cur)spEnd(s);s.sp.q.length=0;return;} // 소진 뒤에는 특수 페이즈·중앙 견제를 새로 열지 않는다(이미 켠 광선은 제 수명대로)
+    if(s.sp.need&&!s.sp.done&&!s.cardEnding&&s.stage==='card'&&(s.cardDown||s.segTick-cardFireDelay(s)>=RL_EARLIEST&&s.boss.hp<=s.boss.maxHp*RL_HP))rlPull(s); // 레이저 장단 페이즈: 체력이 반 아래면 장단 구간을 당겨 시작한다(쓰러진 뒤라면 마지막 장단으로)
+    if(s.cardEnding||s.cardDown&&!rlPending(s)){if(s.sp.cur){s.sp.cut=!!s.cardEnding;spEnd(s);s.sp.cut=false;}s.sp.q.length=0;return;} // 소진 뒤에는 특수 페이즈·중앙 견제를 새로 열지 않는다(이미 켠 광선은 제 수명대로)
     var sp=s.sp,w=spWindow(s),i;
     if(sp.drain&&s.floor&&!s.floor.pieces.length){s.floor.clearing=1;sp.drain=false;}
     if(!w){if(sp.cur)spEnd(s);sp.q.length=0;centerGuard(s,null);return;}
@@ -2214,7 +2252,7 @@
   })();
   var api={revision:43,POWER_SHOTS:POWER_SHOTS,MOB_CUE_LEAD:MOB_CUE_LEAD,spellBonus:spellBonus,spellBonusBase:spellBonusBase,jackpotCount:jackpotCount,JACKPOT_MID:JACKPOT_MID,JACKPOT_BOSS:JACKPOT_BOSS,JACKPOT_SCORE_MAX:JACKPOT_SCORE_MAX,pointValue:pointValue,heartWorth:heartWorth,clearBonus:clearBonus,LIFE_PIECES:LIFE_PIECES,SPELL_DECAY_FROM:SPELL_DECAY_FROM,SPELL_DECAY_OVER:SPELL_DECAY_OVER,POINT_BASE:POINT_BASE,POINT_MAX:POINT_MAX,CALM_SOFT:CALM_SOFT,composeLasers:composeLasers,beamFor:beam,LADDER_N:LADDER_N,SWEEP_N:SWEEP_N,CARD_ENDING_MAX:CARD_ENDING_MAX,CARD_MIN:CARD_MIN,DESCEND_HOLD:DESCEND_HOLD,LIVE_FAST:LIVE_FAST,BEAM_MIN:BEAM_MIN,FAN_APEX:FAN_APEX,CALM_BELOW:CALM_BELOW,CALM_LASER_EVERY:CALM_LASER_EVERY,LIVE_TABLE:LIVE_TABLE,COMPACT_DENSITY:COMPACT_DENSITY,CARD_BREAK_PAUSE:CARD_BREAK_PAUSE,bossStays:bossStays,MOB_BELOW_SPEED:MOB_BELOW_SPEED,BOSS_REST:BOSS_REST,BOSS_SWAY:BOSS_SWAY,WALL_KICK_Y:WALL_KICK_Y,CARD_DOWN_MAX:CARD_DOWN_MAX,EXIT_TURN:EXIT_TURN,WAVE_LINGER:WAVE_LINGER,LAYER_CAP:LAYER_CAP,layersBut:layersBut,phraseLen:phraseLen,flushBullets:flushBullets,heroProfile:heroProfile,bombName:bombName,isCinematicBoss:isCinematicBoss,nextSegmentIndex:nextSegmentIndex,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     PACING:PACING,stageTargetSeconds:stageTargetSeconds,plannedSegments:plannedSegments,pacingReport:pacingReport,waveDuration:waveDuration,cardDuration:cardDuration,cardHp:cardHp,SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_REAIM:MODE_REAIM,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,MODE_BRANCH:MODE_BRANCH,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,PROP_LONG:PROP_LONG,propHitPoints:propHitPoints,propRenderSpan:propRenderSpan,bulletRenderSpan:bulletRenderSpan,BULLET_BREAK_MIN_SPAN:BULLET_BREAK_MIN_SPAN,isBulletBreakable:isBulletBreakable,ORB_HP:ORB_HP,ORB_BREAK_EVERY:ORB_BREAK_EVERY,ORB_FRAGMENT_COUNT:ORB_FRAGMENT_COUNT,ORB_FRAGMENT_GRACE:ORB_FRAGMENT_GRACE,ORB_FRAGMENT_SPEED:ORB_FRAGMENT_SPEED,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
-    BOSS_ENTRANCE_GRACE:BOSS_ENTRANCE_GRACE,BOSS_ENTRANCE_SPEECH:BOSS_ENTRANCE_SPEECH,BOSS_CLEAR_TICKS:BOSS_CLEAR_TICKS,prepareBossEntrance:prepareBossEntrance,phaseOf:phaseOf,phaseKind:phaseKind,entrancePhase:entrancePhase,skipEntrance:skipEntrance,ENTRANCE_CUTIN:ENTRANCE_CUTIN,BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,BOSS_FORMS:BOSS_FORMS,FORM_BASE:FORM_BASE,bossArtOf:bossArtOf,BOSS_SHOTS:BOSS_SHOTS,SHOT_KINDS:SHOT_KINDS,bossShotOf:bossShotOf,figureSegments:figureSegments,figurePhase:figurePhase,FIGURE_ON_TICKS:FIGURE_ON_TICKS,FIGURE_OFF_TICKS:FIGURE_OFF_TICKS,FIGURE_CHARGE_TICKS:FIGURE_CHARGE_TICKS,RUNE_AT:RUNE_AT,RISER_HP:RISER_HP,RISER_SCORE:RISER_SCORE,riserHp:riserHp,shotHitsRiser:shotHitsRiser,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,BOSS_DESCEND:BOSS_DESCEND,SP_START:SP_START,spStart:function(s){return s.sp?s.sp.start:SP_START;},SP_CYCLE:SP_CYCLE,SP_LEAD:SP_LEAD,SP_BEAT:SP_BEAT,SP_LAYBACK:SP_LAYBACK,SP_LEN:SP_LEN,SP_KINDS:SP_KINDS,SP_ORDER:SP_ORDER,spitMotif:spitMotif,SPIT_FORM:SPIT_FORM,SP_INFO:SP_INFO,CAMP_HALF:CAMP_HALF,CAMP_NEED:CAMP_NEED,spWindow:spWindow,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
+    BOSS_ENTRANCE_GRACE:BOSS_ENTRANCE_GRACE,BOSS_ENTRANCE_SPEECH:BOSS_ENTRANCE_SPEECH,BOSS_CLEAR_TICKS:BOSS_CLEAR_TICKS,prepareBossEntrance:prepareBossEntrance,phaseOf:phaseOf,phaseKind:phaseKind,entrancePhase:entrancePhase,skipEntrance:skipEntrance,ENTRANCE_CUTIN:ENTRANCE_CUTIN,BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,BOSS_FORMS:BOSS_FORMS,FORM_BASE:FORM_BASE,bossArtOf:bossArtOf,BOSS_SHOTS:BOSS_SHOTS,SHOT_KINDS:SHOT_KINDS,bossShotOf:bossShotOf,figureSegments:figureSegments,figurePhase:figurePhase,FIGURE_ON_TICKS:FIGURE_ON_TICKS,FIGURE_OFF_TICKS:FIGURE_OFF_TICKS,FIGURE_CHARGE_TICKS:FIGURE_CHARGE_TICKS,RUNE_AT:RUNE_AT,RISER_HP:RISER_HP,RISER_SCORE:RISER_SCORE,riserHp:riserHp,shotHitsRiser:shotHitsRiser,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,BOSS_DESCEND:BOSS_DESCEND,SP_START:SP_START,spStart:function(s){return s.sp?s.sp.start:SP_START;},SP_CYCLE:SP_CYCLE,SP_LEAD:SP_LEAD,SP_BEAT:SP_BEAT,SP_LAYBACK:SP_LAYBACK,SP_LEN:SP_LEN,SP_KINDS:SP_KINDS,SP_ORDER:SP_ORDER,LASER_POOL:LASER_POOL,LASER_OLD:LASER_OLD,LASER_SHARE:LASER_SHARE,RL_HP:RL_HP,RL_EARLIEST:RL_EARLIEST,laserMotif:laserMotif,laserCard:laserCard,livePhaseOf:livePhaseOf,LASER_RHYTHM:LASER_RHYTHM,spitMotif:spitMotif,SPIT_FORM:SPIT_FORM,SP_INFO:SP_INFO,CAMP_HALF:CAMP_HALF,CAMP_NEED:CAMP_NEED,spWindow:spWindow,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
     POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,DESCEND_AGE:DESCEND_AGE,DESCEND_Y:DESCEND_Y,FOCUS_SKILL_CHANCE:FOCUS_SKILL_CHANCE,FOCUS_SKILL_GAP:FOCUS_SKILL_GAP,SWORD_DELAY:SWORD_DELAY,SWORD_POWER:SWORD_POWER,REVERSAL_POWER:REVERSAL_POWER,FOCUS_SLOW:FOCUS_SLOW,FOCUS_SLOW_MAX:FOCUS_SLOW_MAX,COVER_REACH:COVER_REACH,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,BOMB_PULSES:BOMB_PULSES,BOMB_PULSE_START:BOMB_PULSE_START,BOMB_PULSE_EVERY:BOMB_PULSE_EVERY,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp,ABILITY_MAX:ABILITY_MAX,ABILITY_POWER:ABILITY_POWER,ABILITY_HASTE:ABILITY_HASTE,ABILITY_SLOW:ABILITY_SLOW,FOCUS_POWER:FOCUS_POWER,FOCUS_GAUGE:FOCUS_GAUGE,shotStrike:shotStrike,updateTimeBombs:updateTimeBombs,CHARGE_EVERY:CHARGE_EVERY,CHARGE_ARC:CHARGE_ARC,CHARGE_REACH:CHARGE_REACH,TIMEBOMB_EVERY:TIMEBOMB_EVERY,TIMEBOMB_FUSE:TIMEBOMB_FUSE,TIMEBOMB_MULT:TIMEBOMB_MULT,TIMEBOMB_SPLASH:TIMEBOMB_SPLASH,TIMEBOMB_R:TIMEBOMB_R,abilityOf:abilityOf,setAbility:setAbility,shotDamage:shotDamage,FIG_HURRY:FIG_HURRY,FIG_WAIT_MAX:FIG_WAIT_MAX};
    rhythmContext={WIDTH:W,HEIGHT:H,ACTORS:ACTORS,SIGNATURES:SIGNATURES,PROPS:PROPS,SEGMENTS:SEGMENTS,SHAPE_PROP:SHAPE_PROP,spawn:spawn,beam:beam,isCinematicBoss:isCinematicBoss};
    if(typeof module==='object'&&module.exports)module.exports=api;

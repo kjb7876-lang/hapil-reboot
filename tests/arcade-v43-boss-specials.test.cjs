@@ -16,14 +16,21 @@ test('every difficulty gets all four special phases, and normal firing is silent
   assert(active>=a.SP_LEN[d]-5,`${d} ${kind} active ${active}`);assert.equal(maxN,0,`${d} ${kind}: no bullets while it runs`);assert.equal(s.special,null,'ends');
  }
 });
-test('laser phase: thin beams only, always a gap, within the laser cap; harder difficulty has a narrower gap',()=>{
+test('laser phase: beams only, always a gap, within the laser cap; harder difficulty has a narrower gap',()=>{
  const open={};
- for(const d of DIFFS){const s=kindRun(d,'laser');let beams=0,combs=[];
-  go(s,a.SP_LEAD+a.SP_LEN[d],t=>{assert(t.lasers.length<=a.LASER_CAP);const born=t.lasers.filter(l=>l.age===1);
-   // 화면 덮기(사용자 11-19, 이지 70·노멀 80·헬 90%): 띠가 덮은 폭이 그 비율을 넘지 않고 틈이 남는다
-   const solid=born.filter(l=>l.solid);if(solid.length){const vert=solid[0].y===-12,span=vert?a.WIDTH:a.HEIGHT-120,covered=solid.reduce((m,l)=>m+l.width*t.rules.beam,0);assert(covered<=span*COVER[d]+1e-6,`${d} covered ${covered}/${span}`);assert(span-covered>=span*(1-COVER[d])-1e-6,d+' gap');return;}
-   const cols=born.filter(l=>Math.abs(l.angle-Math.PI/2)<1e-9&&l.y===-12&&Math.abs(l.x-180)>1&&l.width*1<=20);if(cols.length>1){combs.push(cols.length);}beams+=born.length;});
-  assert(beams>=6,`${d} beams ${beams}`);assert(combs.length>=1,'combs');assert(combs.every(n=>n<=5),`${d}: a lane is always open (${combs})`);open[d]=Math.max(...combs);}
+ for(const d of DIFFS){
+  // 빗살(황금비): 여섯 줄 가운데 늘 길이 열려 있고, 어려울수록 열린 길이 좁다
+  let s=kindRun(d,'laser');s.sp.force='comb';let beams=0,combs=[];
+  go(s,a.SP_LEAD+a.SP_LEN[d],t=>{t.sp.force='comb';assert(t.lasers.length<=a.LASER_CAP);const born=t.lasers.filter(l=>l.age===1);
+   const cols=born.filter(l=>l.rl==='comb'&&Math.abs(l.angle-Math.PI/2)<1e-9&&l.y===-12);if(cols.length>1)combs.push(cols.length);beams+=born.length;});
+  assert(beams>=6,`${d} beams ${beams}`);assert(combs.length>=1,'combs');assert(combs.every(n=>n<=5),`${d}: a lane is always open (${combs})`);open[d]=Math.max(...combs);
+  // 화면 덮기(사용자 11-19, 이지 70·노멀 80·헬 90%): 띠가 덮은 폭이 그 비율을 넘지 않고 틈이 남는다
+  s=kindRun(d,'laser');let covers=0;
+  go(s,a.SP_LEAD+a.SP_LEN[d],t=>{t.sp.force='cover';const solid=t.lasers.filter(l=>l.age===1&&l.rl==='cover');if(!solid.length)return;covers++;
+   const vert=solid[0].y===-12,span=vert?a.WIDTH:a.HEIGHT-120,covered=solid.reduce((m,l)=>m+l.width*t.rules.beam,0);assert(covered<=span*COVER[d]+1e-6,`${d} covered ${covered}/${span}`);assert(span-covered>=span*(1-COVER[d])-1e-6,d+' gap');});
+  assert(covers>=1,d+' covers');
+  // 무늬를 고르지 않아도 상한 안
+  s=kindRun(d,'laser');go(s,a.SP_LEAD+a.SP_LEN[d],t=>{assert(t.lasers.length<=a.LASER_CAP);});}
  assert(open.gentle<=open.normal,JSON.stringify(open));
 });
 test('rayback: the beat sounds first and the attack lands LAYBACK ticks behind it (laid back more on easy)',()=>{
@@ -91,15 +98,15 @@ test('drawing phase: the boss spits its own drawings on the strong beats, flying
  }
  const s=kindRun('hell','drawing');go(s,a.SP_LEAD+a.SP_LEN.hell,t=>{for(const r of t.risers||[])if(r.dir==='spit'&&r.age>a.RISER_WARN+2)assert(Math.hypot(r.vx,r.vy)>1,'spits fly');});
 });
-test('laser phase uses golden-ratio combs, a Gaussian fan, a Vitruvian square-then-X, piano keys and a screen cover',()=>{
- const seen={comb:0,fan:0,square:0,x:0,piano:0,cover:0};
- for(const d of ['normal','hell'])for(let r=0;r<10;r+=2){const s=kindRun(d,'laser');s.segTick+=r*a.SP_CYCLE; // 여러 회차의 레이저 페이즈(회차마다 무늬가 바뀐다)
-  go(s,a.SP_LEAD+a.SP_LEN[d],t=>{const born=t.lasers.filter(l=>l.age===1);if(!born.length)return;
-   const cols=born.filter(l=>l.y===-12&&Math.abs(l.angle-Math.PI/2)<1e-9),rows=born.filter(l=>l.x===-12&&l.angle===0),diag=born.filter(l=>Math.abs(Math.abs(l.angle)-Math.PI/4)<1e-6);
-   if(born.some(l=>l.solid))seen.cover++;else if(cols.length>=1&&cols.length<=2&&cols.every(l=>Math.abs(((l.x/(a.WIDTH/8))%1)-.5)<1e-6))seen.piano++;
-   if(cols.length>=3&&!rows.length&&!born.some(l=>l.solid))seen.comb++;if(rows.length===2&&cols.length===2)seen.square++;if(diag.length===2)seen.x++;
-   const fan=born.filter(l=>Math.abs(l.x-Math.max(40,Math.min(a.WIDTH-40,t.boss.x)))<1e-6&&l.y!==-12);if(fan.length>=4)seen.fan++;});}
- assert(seen.comb>0&&seen.fan>0&&seen.square>0&&seen.x>0&&seen.piano>0&&seen.cover>0,JSON.stringify(seen));
+test('laser phase cycles through eleven motifs: golden-ratio comb, Gaussian fan, Vitruvian square-then-X, piano keys, screen cover and the six rhythm charts',()=>{
+ const seen={},x={n:0};
+ for(const d of ['normal','hell'])for(let r=0;r<22;r+=2){const s=kindRun(d,'laser');s.segTick+=r*a.SP_CYCLE; // 여러 회차의 레이저 페이즈(회차·마디마다 무늬가 바뀐다)
+  go(s,a.SP_LEAD+a.SP_LEN[d],t=>{if(!t.special||t.special.kind!=='laser')return;const born=t.lasers.filter(l=>l.age===1);
+   for(const l of born){assert(l.rl,'every laser of the phase is labelled with its motif');seen[l.rl]=(seen[l.rl]||0)+1;}
+   if(born.filter(l=>Math.abs(Math.abs(l.angle)-Math.PI/4)<1e-6).length===2)x.n++;});}
+ for(const k of a.LASER_POOL)assert(seen[k]>0,k+' '+JSON.stringify(seen));
+ assert.equal(a.LASER_POOL.length,11);assert(x.n>0,'the diagonal X');
+ for(const k of a.LASER_RHYTHM.MOTIFS)assert(a.LASER_POOL.includes(k),k);
 });
 test('stones phase interleaves stones and drawings from opposite sides (all four on normal/hell)',()=>{
  for(const d of DIFFS){const s=kindRun(d,'stones');const dirs=new Set();let stones=0,draws=0;
