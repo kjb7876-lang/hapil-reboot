@@ -16,7 +16,8 @@
 | insomnia_alt34 | 불면귀 | 32(34) | m0 r1059/assets/r760/boss/bulmyeongwi-p2.webp (현행 디자인) | bbaa488914bf | 61560 | 정지 1장 | 적용 |
 | p6_demons_alt48 | 성 밖의 악마들(중간) | 44(48) | media/m0-v43/boss/mb-hando01-attack.webp 3번째 칸 | 706c1b96b0dc | 158262 | 정지 1장 | 적용 |
 | chief_alt50 | 악몽의 우두머리 | 46(50) | m0 r1029/float/h103-boss-p4.webp ("EGO 강탈 악몽왕") | 01ce3874a8c4 | 175620 | 8칸 떠 있기 | 적용 |
-| cultist_alt61 | 교주 | 56(61) | media/cult-v17/cult-leader-atlas.png 오른쪽 위 칸(두 팔 든 자세) | d76c925bd52b | 2304249 | 정지 1장 | 적용 |
+| cultist_awake | 사몽각성 교주 | 52(61) | media/arcade-v43-temp/cultist-awake-temp.png (tools/build-awake-temp-v43.py 가 교주 원화로 만든 **임시** 4칸. 닷츠 CX-0157AW 결과로 교체 예정) | 0fbd52114e0f | 120654 | 4칸 | 임시 적용 |
+| chief_swarm | 악몽 군집체 | 40(48) | media/arcade-v43-temp/chief-swarm-temp.png (같은 도구의 **임시** 4칸, CX-0157AW 로 교체 예정) | 4dccfb950ca8 | 118540 | 4칸 | 임시 적용 |
 
 남은 것(새 그림이 필요, 닷츠 요청 후보): 통제자·고블린 두목·교주·성 밖의 악마들은 같은 디자인의 **다른 자세**라 실루엣 차이가 작다. 은회색 승용차(47·50, 사이에 두 스테이지)는 다른 원화가 없다. 비슷하게 생긴 다른 인물 짝(검은 안개 심장↔불면귀, 중앙이주 코어↔기계 육체, 폐기주방 감독↔베엘제붑, 탐욕의 귀↔맘몬)은 원화 자체가 같은 계열이다. 정지 1장 그림은 걷기 칸이 없어 엔진의 흔들림만 있다.
 

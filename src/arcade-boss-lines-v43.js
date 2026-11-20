@@ -1,6 +1,6 @@
 /* 본보스 입장 대사 56줄. 사용자(죠죠)가 2026-11-20에 직접 쓴 대사표이며 맞춤법·띄어쓰기·문장부호만 고쳤다(뜻·말투 그대로).
  * 이전의 '서사 정본 독백 발췌' 규칙보다 이 표가 우선한다. 화자는 비워 두면 그 스테이지 보스 이름이 붙는다.
- * 중간보스는 대사가 없다(컷인만). 번호는 화면 표기(1~56)이며 getLine은 엔진의 0 기반 stageIndex를 받는다. */
+ * 중간보스는 대사가 없다(컷인만). 표의 번호는 사용자가 쓴 번호(1~56) 그대로이고, 지금 스테이지(52개)에 놓는 자리는 아래 ENTRANCE·SHIFT 가 정한다. getLine은 엔진의 0 기반 stageIndex를 받는다. */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory();
   else root.HapilArcadeBossLines = factory();
@@ -65,10 +65,24 @@
     "고통을 없애 주겠다!"
   ];
 
+  /* 스테이지 합치기(사용자 11-20): 위 표는 사용자가 쓴 56줄 그대로(번호 = 사용자 표의 번호)이고, 아래가 지금 52스테이지에 놓는 자리다.
+   * ENTRANCE[지금 스테이지(0 기반)] = 입장할 때의 대사 번호. SHIFT = 합친 보스가 모습을 바꿀 때 차례로 나오는 대사 번호.
+   *  10·11·12 → 10번째(루시퍼: 초천사 모습 입장 10 → 루시퍼 11 → 가면을 벗고 12), 29·30 → 27번째(고블린 두목), 32·33 → 29번째(불면귀),
+   *  55(한리안과 백이온 "언제나 죽음보다 삶이 낫지 않겠는가!")가 50번째, 54(교주)가 51번째, 56(사몽각성 교주)이 52번째. 사라진 대사는 없다. */
+  var ENTRANCE = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32,
+    34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 55, 54, 56];
+  var SHIFT = {9: [11, 12], 26: [30], 28: [33]};
+
   function getLine(actor, stageIndex) {
-    if (!Number.isInteger(stageIndex) || stageIndex < 0 || stageIndex >= lines.length) return null;
-    return Object.freeze({speaker: '', text: lines[stageIndex]});
+    if (!Number.isInteger(stageIndex) || stageIndex < 0 || stageIndex >= ENTRANCE.length) return null;
+    return Object.freeze({speaker: '', text: lines[ENTRANCE[stageIndex] - 1]});
+
+  }
+  /* 합친 보스가 n번째로 모습을 바꿀 때(1부터)의 대사. 없으면 null. */
+  function getShiftLine(stageIndex, n) {
+    var list = SHIFT[stageIndex], number = list && list[n - 1];
+    return number ? Object.freeze({speaker: '', text: lines[number - 1]}) : null;
   }
 
-  return Object.freeze({getLine: getLine, LINES: Object.freeze(lines.slice())});
+  return Object.freeze({getLine: getLine, getShiftLine: getShiftLine, LINES: Object.freeze(lines.slice()), ENTRANCE: Object.freeze(ENTRANCE.slice()), SHIFT: SHIFT, STAGES: ENTRANCE.length});
 });

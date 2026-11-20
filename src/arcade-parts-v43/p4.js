@@ -208,13 +208,13 @@
         {scene:'31',theme:{bg:'p4_field',tint:'#1b2a1c',fx:'leaves'},cast:['slime','wolf','mobgoblin'],reward:{key:'p4_hando',name:'환도'},
           waves:[w31field,w31forest,w31ruins],mid:['goblin','p4_clash','p4_resonance']},
         {scene:'32',theme:{bg:'p4_goblin',tint:'#21182a',fx:'spores'},cast:['wolf','mobgoblin'],reward:{key:'p4_roseseal',name:'장미 인장'},
-          waves:[w32pack,w32pipers,w32ring,w32ambush],mid:['goblin','p4_pipe'],boss:['goblin','p4_between','p4_skysplit','p4_door','roseSeal']},
+          waves:[w32pack,w32pipers,w32ring,w32ambush],mid:['goblin','p4_clash','p4_resonance','p4_pipe'],boss:['goblin','p4_between','p4_skysplit','roseSeal'],absorb:['31'],forms:['goblin_alt31','goblin_alt31','goblin_alt31','goblin','goblin','goblin']}, // 사용자 11-20 "29-30합치고": 중립 지역의 재각성(31)을 합쳐 여섯 페이즈(앞 셋 피리 든 모습)
         {scene:'33',theme:{bg:'p4_rampart',tint:'#121a2c',fx:'rain'},cast:['p4_shade','knight'],reward:{key:'p4_sixcuts',name:'여섯 검격'},
           waves:[w33rampart,w33dash,w33knight,w33twin],mid:['p4_knight','p4_storm'],boss:['p4_knight','p4_read','p4_repeat','p4_six','p4_sixcuts','p4_sea']},
         {scene:'34',theme:{bg:'p4_harbor',tint:'#2a1616',fx:'paper'},cast:['p4_villager'],reward:{key:'p4_talisman',name:'붉은 부적'},
           waves:[w34tide,w34pulled,w34pier,w34jerk],mid:['insomnia','sleepless','p4_string']},
         {scene:'35',theme:{bg:'p4_fogvillage',tint:'#1d1a26',fx:'mist'},cast:['p4_soul','p4_villager'],reward:{key:'p4_core',name:'불면귀 핵'},
-          waves:[w35fog,w35still,w35gather,w35wake],mid:['insomnia','puppetFog','p4_medicine'],boss:['insomnia','p4_gather','openEye','p4_layers','p4_core']}
+          waves:[w35fog,w35still,w35gather,w35wake],mid:['insomnia','sleepless','p4_string','puppetFog'],boss:['insomnia','p4_medicine','openEye','p4_core'],absorb:['34'],forms:['insomnia_alt34','insomnia_alt34','insomnia_alt34','insomnia','insomnia','insomnia']} // 사용자 11-20 "32-33 합치고": 잠들지 못하는 마을(34)을 합쳐 여섯 페이즈
       ];
       return {spells:spells,mobFire:mobFire,stages:stages};
     }};

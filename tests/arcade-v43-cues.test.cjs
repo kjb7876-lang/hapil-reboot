@@ -54,8 +54,8 @@ test('the gate captain bolts lock with the command columns; every new cue has a 
  const html=h.read('arcade.html');assert(html.indexOf('src/arcade-cues-v43.js')>0&&html.indexOf('src/arcade-cues-v43.js')<html.indexOf('src/arcade-app-v43.js'));
 });
 
-test('the same three hwando beats ring at the shared core (46) and return at the triplets record (56)',()=>{
- const core=A.STAGES.findIndex(g=>g.scene==='50');assert.equal(core,45);
+test('the same three hwando beats ring at the shared core (42) and return at the triplets record (52)',()=>{
+ const core=A.STAGES.findIndex(g=>g.scene==='50');assert.equal(core,41);
  Cues.reset();const sounds=[];const s={tick:1,stageIndex:core,stage:'bossClear',n:0,mobs:[],lasers:[],boss:{x:180,y:120,down:{actor:'chief',x:180,y:120}},player:{x:180,y:500}};
  Cues.frame(s,A,()=>{});Cues.onEvent('bossDown',s,A,n=>sounds.push(n));
  const trip=segOf('세쌍둥이의 기록');assert(trip>=0);const t={tick:2,seg:trip,stageIndex:A.SEGMENTS[trip].stage,stage:'card',n:0,mobs:[],lasers:[],boss:{x:180,y:120},player:{x:180,y:500}};

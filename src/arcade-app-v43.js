@@ -38,7 +38,7 @@
   var fx=null,music=null,best=0,bests={},lastSpell=null,drill=null,DRILL_KEY='hapil-arcade-v43-drill',lastItemSound=0,progress=Progress.fresh(),saveOk=true;
   var themeOverride=null,turbo=0,rushStage=false,oneCreditEligible=false;
   var Story=global.HapilArcadeStory||null,BossIntros=global.HapilArcadeBossIntros||null,story=null,storyQuiet=false,storySeen={},pauseReturn='playing',rulesReturn='title',storyArrivalActor='';
-  var STORY_SEEN_KEY='hapil-arcade-boss-seen-v3',STORY_IMPACT_MS=1800;
+  var STORY_SEEN_KEY='hapil-arcade-boss-seen-v4',STORY_IMPACT_MS=1800;
   /* 챕터(정본 제1부~제8부, src/arcade-chapters-v43.js): 기록 화면·재도전·전환 카드. 진행 저장은 본 키 + 예비 키 두 곳에 쓰고 읽을 때 합친다(사용자 11-20 "저장 불러오기 꼭 잘되게"). */
   var Chapters=global.HapilArcadeChapters||null,chapterLog=Chapters?Chapters.freshLog():null,chapterCard=null,chapterReturn=null,lastSaveAt=0,BACKUP_KEY='hapil-arcade-save-v43-bak';
   var Heroes=global.HapilArcadeHeroes||null,heroPicker=null,selectedHero='memory',journeyHero='memory',HERO_KEY='hapil-arcade-hero-v43',JOURNEY_HERO_KEY='hapil-arcade-journey-hero-v43';
@@ -83,7 +83,10 @@
   function livePhase(s){var g=Arcade.SEGMENTS[s.seg];if(!g||g.kind!=='card')return null;var key=s.difficulty+'|'+g.stage+'|'+g.actor+'|'+(g.mid?1:0),list=phaseMemo[key];
     if(!list){list=phaseMemo[key]=(Arcade.plannedSegments?Arcade.plannedSegments(s.difficulty):Arcade.SEGMENTS.map(function(x,i){return i;})).filter(function(i){var x=Arcade.SEGMENTS[i];return x.kind==='card'&&x.stage===g.stage&&x.actor===g.actor&&!!x.mid===!!g.mid;});}
     var no=list.indexOf(s.seg);return no<0?null:{no:no+1,count:list.length};}
+  // 새 모습 그림의 키(사용자 11-20): 사몽각성 교주는 교주보다 훨씬 크게, 악몽 군집체는 여럿이 뭉친 덩어리라 넓고 크게(그림만, 판정 그대로)
+  var FORM_TALL={cultist_awake:206,chief_swarm:204};
   function tallOf(key){
+    if(FORM_TALL[key])return FORM_TALL[key];
     if(Arcade.FORM_BASE&&Arcade.FORM_BASE[key])key=Arcade.FORM_BASE[key]; // 다른 모습 그림은 원래 인물의 크기
     if(TALL[key])return Arcade.MOBS[key]&&TALL[key]<TALL_MOB?TALL_MOB:TALL[key]; // 옛 잡몹 크기(26~40)는 그림이 안 보일 만큼 작았다. 잡몹은 TALL_MOB보다 작게 그리지 않는다.
     if(Arcade.ACTORS[key])return TALL_ACTOR;
@@ -132,12 +135,17 @@
   function facesRight(key){var e=manifest&&manifest[key+'.webp'];return !!e&&e.facing==='right';}
   /* 같은 인물이 이어 나오면 다른 모습 그림(엔진 BOSS_FORMS). artAt: 이 스테이지에서 그릴 그림 키, bossKey: 지금 보스의 그림 키. */
   function artAt(actor,index){return Arcade.bossArtOf?Arcade.bossArtOf(actor,index):actor;}
-  function bossKey(s){var b=s.boss,g=Arcade.SEGMENTS[s.seg];return artAt(b.actor,g&&g.kind==='card'&&g.actor===b.actor?g.stage:s.stageIndex);}
+  function bossKey(s){var b=s.boss,g=Arcade.SEGMENTS[s.seg];if(g&&g.kind==='card'&&g.actor===b.actor&&Arcade.segArt)return Arcade.segArt(g);return artAt(b.actor,g&&g.kind==='card'&&g.actor===b.actor?g.stage:s.stageIndex);}
+  /* 이 카드에서 인물이 불리는 이름·그릴 그림(합친 스테이지는 페이즈마다, 장면에 따라 달리 불리는 인물은 장면마다 — 엔진 segArt·actorName) */
+  function segName(seg){var who=Arcade.ACTORS[seg.actor];return seg.title||(Arcade.actorName?Arcade.actorName(seg.actor,seg.stage):who?who.name:seg.actor);}
+  // 레이저·이펙트 시트의 주인: 합쳐진 보스는 지금 모습(초천사 → 루시퍼)의 시트를 쓴다
+  function sheetWho(s){var b=s&&s.boss;if(!b)return '';var k=bossKey(s),base=Arcade.FORM_BASE&&Arcade.FORM_BASE[k];return base||(Arcade.ACTORS[k]?k:b.actor);}
+  function segKey(seg){return Arcade.segArt?Arcade.segArt(seg):seg.actor;}
   function stageKeys(index){
     var g=Arcade.STAGES[index];if(!g)return [];
     var list=[],add=function(k){if(k&&list.indexOf(k)<0)list.push(k);};
     var bg=themeOf(index).bg,lp=loopOf(index);if(lp)add(lp);else if(bg)add('bg-'+bg); // 드라이브 세로 맵(위아래가 이어지게 만든 그림)이 있으면 그것만 받는다
-    for(var i=g.first;i<Arcade.SEGMENTS.length&&Arcade.SEGMENTS[i].stage===index;i++){var seg=Arcade.SEGMENTS[i];if(seg.kind==='card')add(artAt(seg.actor,index));}
+    for(var i=g.first;i<Arcade.SEGMENTS.length&&Arcade.SEGMENTS[i].stage===index;i++){var seg=Arcade.SEGMENTS[i];if(seg.kind==='card')add(segKey(seg));}
     var skin=skinsOf(index);(skin||g.cast||[]).forEach(add); // m0 지역표 몹이 있으면 그것만 받는다
     // 동작 그림(옆 걷기·공격 등)은 목록에 있을 때만 같이 받는다.
     list.slice().forEach(function(k){motionsOf(k).forEach(function(m){add(k+'@'+m);});});
@@ -717,11 +725,12 @@
       else if(HeroFx&&e==='focusSkill'){HeroFx.onEvent(e,s,visual);play('seal',s.player.x);}
       else if(HeroFx&&(e==='powerUp'||e==='powerDown'||e==='bombLevelUp'||e==='distort')){HeroFx.onEvent(e,s,visual);if(e==='distort')play('clockSlow');else if(e!=='powerDown')play('seal');}
       else if(e==='card'){spellDim=1;inkBloom(s);play(/시간|시계|초침|째깍|태엽/.test(Arcade.SEGMENTS[s.seg].name||'')?'clockTick':'charge',s.boss.x);castFx(s,true);showBanner(Arcade.SEGMENTS[s.seg].name,s.boss.name,true);if(s.entranceAll)bannerSub=phaseLabel(s,true);}
+      else if(e==='formShift'){beginFormShift(s);wantFx(sheetWho(s));}
       else if(e==='plain'){var ppi=Arcade.phaseOf&&Arcade.phaseOf(s.seg);if(ppi&&ppi.count>1&&s.entranceAll)showBanner('PHASE '+ppi.no+' / '+ppi.count,phaseLabel(s,false),false);}
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,'제'+g.part+'부 · STAGE '+(s.stageIndex+1));play('seal');}}
       else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);showToast(r);rushStage=false;}
       else if(e==='map'){var fromPart=s.results.length?Arcade.STAGES[s.results[s.results.length-1].stage].part:0;loadStage(s.stageIndex);if(fromPart&&fromPart!==Arcade.STAGES[s.stageIndex].part)openChapterCard(fromPart,Arcade.STAGES[s.stageIndex].part,null);}
-      else if(e==='entrance'){if(storyArrivalActor!==s.boss.actor)play('warning');storyArrivalActor='';wantFx(s.boss.actor);showBanner(s.boss.name,s.boss.mid?'중간보스':'보스');} // 본보스 컷인은 enter() 전, 중간보스는 기존 입장만.
+      else if(e==='entrance'){if(storyArrivalActor!==s.boss.actor)play('warning');storyArrivalActor='';wantFx(sheetWho(s));showBanner(s.boss.name,s.boss.mid?'중간보스':'보스');} // 본보스 컷인은 enter() 전, 중간보스는 기존 입장만.
       else if(e==='figure')castFx(s,false);
       else if(e==='bossClear'){clearCombatPresentation();if(Mobile&&Mobile.commitBossClear)Mobile.commitBossClear(s);
         // 마지막 승리는 2초 연출 중 나가도 최고점이 남아야 한다. 계속되는 여정은 기존 finish() 시점에 기록한다.
@@ -793,27 +802,27 @@
     if(!global.fetch)return;
     global.fetch(LASER_DIR+'index.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():null;}).then(function(d){
       if(d&&d.sheets)Object.keys(d.sheets).forEach(function(a){laserByBoss[a]=d.sheets[a];});
-      if(state&&state.boss&&state.boss.present)wantLaser(state.boss.actor);
+      if(state&&state.boss&&state.boss.present)wantLaser(sheetWho(state));
     },function(){});
   }
   function wantLaser(actor){
     var e=laserByBoss[actor],k;for(k in laserImages)if(!e||k!==e.file)delete laserImages[k];
     if(!e||laserImages[e.file]||laserPending[e.file])return;laserPending[e.file]=1;
-    var im=new Image();im.onload=function(){laserPending[e.file]=0;if(laserByBoss[state&&state.boss.actor]===e)laserImages[e.file]=im;};im.onerror=function(){laserPending[e.file]=0;};im.src=LASER_DIR+e.file;
+    var im=new Image();im.onload=function(){laserPending[e.file]=0;if(laserByBoss[state&&sheetWho(state)]===e)laserImages[e.file]=im;};im.onerror=function(){laserPending[e.file]=0;};im.src=LASER_DIR+e.file;
   }
-  function laserSheet(s){var e=s&&s.boss&&laserByBoss[s.boss.actor];return e&&laserImages[e.file]?{e:e,img:laserImages[e.file]}:null;}
+  function laserSheet(s){var e=s&&s.boss&&laserByBoss[sheetWho(s)];return e&&laserImages[e.file]?{e:e,img:laserImages[e.file]}:null;}
   function loadFxList(){
     if(!global.fetch)return;
     global.fetch(FX_DIR+'index.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():null;}).then(function(d){
       if(d&&Array.isArray(d.effects))d.effects.forEach(function(e){(e.bosses||[]).forEach(function(b){fxByBoss[b]=e;});});
-      if(state&&state.boss&&state.boss.present)wantFx(state.boss.actor);
+      if(state&&state.boss&&state.boss.present)wantFx(sheetWho(state));
     },function(){});
   }
   function wantFx(actor){
     wantLaser(actor);
     var e=fxByBoss[actor],k;for(k in fxImages)if(!e||k!==e.file)delete fxImages[k];
     if(!e||fxImages[e.file]||fxPending[e.file])return;fxPending[e.file]=1;
-    var im=new Image();im.onload=function(){fxPending[e.file]=0;if(fxByBoss[state&&state.boss.actor]===e)fxImages[e.file]=im;};im.onerror=function(){fxPending[e.file]=0;};im.src=FX_DIR+e.file;
+    var im=new Image();im.onload=function(){fxPending[e.file]=0;if(fxByBoss[state&&sheetWho(state)]===e)fxImages[e.file]=im;};im.onerror=function(){fxPending[e.file]=0;};im.src=FX_DIR+e.file;
   }
   // 초반 보스(1~6장)의 스펠 선언: 탄 난이도는 그대로 두고 눈에 닿지 않는 장식 입자만 나선으로 흩뿌려 화려하게 보인다(사용자 11-18 "초반보스도 화려하게, 난이도는 조절").
   var bloom=null;
@@ -826,7 +835,7 @@
     ctx.restore();if(Ink.raw)Ink.raw(-1);
   }
   function castFx(s,big){
-    var b=s.boss,e=fxByBoss[b.actor],sig=Arcade.SIGNATURES&&Arcade.SIGNATURES[b.actor];if(!b.present)return;
+    var b=s.boss,e=fxByBoss[sheetWho(s)],sig=Arcade.SIGNATURES&&Arcade.SIGNATURES[b.actor];if(!b.present)return;
     if(casts.length>=4)casts.shift();
     casts.push({x:b.x,y:b.y,t:visual,e:e&&fxImages[e.file]?e:null,big:big,color:COLORS[sig?sig.color:0]||'#ffffff'});
     var ls=big&&laserSheet(s);if(ls){emblems.length=0;emblems.push({t:visual,img:ls.img,e:ls.e});}
@@ -1122,7 +1131,7 @@
   var bossDraw={on:false};
   function drawBossOver(s){
     var b=s.boss;if(!bossDraw.on||!b.present||b.leaving||s.stage!=='card'){bossDraw.on=false;return;}
-    var tall=tallOf(b.actor),main=meltBegin(bossDraw.x,bossDraw.y,tall);
+    var tall=tallOf(bossKey(s)),main=meltBegin(bossDraw.x,bossDraw.y,tall);
     ctx.save();ctx.globalAlpha=main?1:.55;ctx.translate(bossDraw.x,bossDraw.y);if(bossDraw.tilt)ctx.rotate(bossDraw.tilt);ctx.scale(bossDraw.sx,bossDraw.sy);
     drawArt(bossKey(s),0,0,false,themeColor(s),0,bossDraw.motion,bossDraw.face);ctx.restore();
     if(main)meltEnd(main,bossDraw.x,bossDraw.y,tall,.55);ctx.globalAlpha=1;bossDraw.on=false; // 먹구름에 녹은 아랫몸은 탄 위로도 녹은 채 비친다(곧게 자르지 않는다)
@@ -1172,7 +1181,7 @@
     var since=56-(bp.until-s.tick),punch=bm==='attack'&&since>=0&&since<16?1+.14*(1-since/16):1; // 공격 순간 몸이 한 번 커졌다 돌아온다. 탄에 가려도 윤곽으로 읽힌다.
     var rc=recoilOf(s,b);if(rc&&images[ak+'@hit'])bm='hit'; // 피격 그림이 있으면 그 칸을, 없으면 같은 그림을 젖혀 피격을 보인다
     bossDraw.on=true;bossDraw.x=bx;bossDraw.y=by+(rc?rc.dy:0);bossDraw.tilt=rc?rc.tilt:0;bossDraw.sx=punch*(rc?rc.sx:1);bossDraw.sy=punch*(rc?rc.sy:1);bossDraw.motion=bm;bossDraw.face=bp.dir||(bx>W/2?-1:1);
-    var tall=tallOf(b.actor),fy=by+(rc?rc.dy:0),main=meltBegin(bx,fy,tall);
+    var tall=tallOf(bossKey(s)),fy=by+(rc?rc.dy:0),main=meltBegin(bx,fy,tall);
     ctx.save();ctx.translate(bx,fy);if(rc)ctx.rotate(rc.tilt);ctx.scale(punch*(rc?rc.sx:1),punch*(rc?rc.sy:1));if(bright&&s.stage==='card'&&'filter' in ctx)ctx.filter=BRIGHT_ART_DIM; // 금빛·흰빛 보스 그림은 스펠 중 한 단계 어둡게: 그 위 탄이 묻힌다(심사 6.44)
     drawArt(ak,0,0,s.tick-b.hitTick<3,themeColor(s),0,bm,bp.dir||(bx>W/2?-1:1));ctx.filter='none';ctx.restore();
     if(main)meltEnd(main,bx,fy,tall,1); // 아랫몸은 번진 먹 가장자리로 지워져 구름 속으로 스민다(사용자 11-16)
@@ -1841,7 +1850,7 @@
     offsetX=offsetY=0;if(shake>0){if(settings.screenShake){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;}shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawCrowdWash(s);if(Cues)Cues.drawUnder(ctx,s,Arcade,Ink);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawCardCast(s);drawPatternCue(s);drawShots(s);drawDrifts();drawInks();drawParticles();drawFlashes();drawItems(s);if(Spirit)Spirit.drawWorld(ctx,s,Arcade,Ink,mode==='playing',{quiet:!!toast,heart:itemSprites[0]});if(Cues)Cues.drawWorld(ctx,s,Arcade,Ink);drawLasers(s);drawFigures(s);drawRipples(s);drawHeroLight(s);drawBullets(s);drawLaserCues(s);if(Cues)Cues.drawOver(ctx,s,Arcade,Ink);drawNudgeCue(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink)){drawPlayer(s);drawHitbox(s);}if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawCrowdWash(s);if(Cues)Cues.drawUnder(ctx,s,Arcade,Ink);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawCardCast(s);drawPatternCue(s);drawShots(s);drawDrifts();drawInks();drawParticles();drawFlashes();drawItems(s);if(Spirit)Spirit.drawWorld(ctx,s,Arcade,Ink,mode==='playing',{quiet:!!toast,heart:itemSprites[0]});if(Cues)Cues.drawWorld(ctx,s,Arcade,Ink);drawLasers(s);drawFigures(s);drawRipples(s);drawHeroLight(s);drawBullets(s);drawLaserCues(s);if(Cues)Cues.drawOver(ctx,s,Arcade,Ink);drawNudgeCue(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink)){drawPlayer(s);drawHitbox(s);}if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);drawFormShift(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);
     // 스펠 선언 연출(사용자 11-18 "패턴·공격 미장센 강화"): 가장자리부터 먹이 번져 화면이 잠깐 조여졌다가 걷힌다. 보스에 시선이 모였다가 탄이 펼쳐진다(탄·영웅은 이 위에 그대로 읽힌다).
     if(spellDim>0&&Ink&&s.boss&&s.boss.present){var sd=spellDim,sx0=finite(s.boss.x,W/2),sy0=finite(s.boss.y,H/3),sg=ctx.createRadialGradient(sx0,sy0,H*.22,sx0,sy0,H*.85);if(Ink.raw)Ink.raw(1);sg.addColorStop(0,'rgba(24,20,16,0)');sg.addColorStop(.55,'rgba(24,20,16,'+(sd*.2)+')');sg.addColorStop(1,'rgba(24,20,16,'+(sd*.68)+')');ctx.fillStyle=sg;ctx.fillRect(0,0,W,H);if(Ink.raw)Ink.raw(-1);spellDim=Math.max(0,spellDim-Math.min(.05,elapsed)/1.6);}
@@ -1911,7 +1920,7 @@
   function entranceLinesOf(s){
     var seg=Arcade.SEGMENTS[s.seg],key=s.seg+':'+seg.actor;if(introLinesKey===key&&introLines)return introLines;
     var who=Arcade.ACTORS[seg.actor],entry=BossIntros&&BossIntros.getBoss(seg.actor,s.stageIndex);
-    var line=!seg.mid&&global.HapilArcadeBossLines&&global.HapilArcadeBossLines.getLine(seg.actor,s.stageIndex);
+    var BLs=global.HapilArcadeBossLines,line=!seg.mid&&BLs&&(seg.formNo>0&&BLs.getShiftLine&&BLs.getShiftLine(s.stageIndex,seg.formNo)||BLs.getLine(seg.actor,s.stageIndex)); // 바뀐 모습에서 바로 시작하면 그 모습의 대사
     if(seg.mid)introLines=[]; // 사용자 11-20: 중간보스는 컷인만, 대사는 보스만(대사표 = arcade-boss-lines-v43.js)
     else if(line)introLines=[line];
     else if(entry)introLines=entry.lines;
@@ -1934,12 +1943,12 @@
       ctx.fillStyle=INK_PAPER;ctx.fillRect(-L/2,-bandH/2,L,bandH);
       ctx.fillStyle=INK_DARK;for(var i=0;i<9;i++){var sy=-bandH/2+((i*41.3)%bandH),sl=60+((i*53)%110),sx=L/2-((t*760*(1+(i%3)*.4)+i*71)%(L+sl));ctx.globalAlpha=(1-close)*.4;ctx.fillRect(sx,sy,sl,.9+((i*13)%4)*.4);}
       ctx.globalAlpha=1-close;
-      var key=seg.actor,img=images[key];if(img){ctx.save();ctx.translate(W*.15-t*14+(1-ease)*70,bandH*.46);ctx.globalCompositeOperation='multiply';if('filter' in ctx)ctx.filter='grayscale(1) contrast(1.3) brightness(.92)';drawArt(key,0,0,false,'#222',0,'',1,undefined,bandH*1.85);ctx.filter='none';ctx.restore();var fg=ctx.createLinearGradient(0,bandH*.12,0,bandH/2);fg.addColorStop(0,'rgba(244,236,218,0)');fg.addColorStop(1,'rgba(244,236,218,.92)');ctx.fillStyle=fg;ctx.fillRect(-L/2,bandH*.12,L,bandH*.38);} // 수묵 톤: 채색을 먹 단색으로
+      var key=segKey(seg),img=images[key]||images[key=seg.actor];if(img){ctx.save();ctx.translate(W*.15-t*14+(1-ease)*70,bandH*.46);ctx.globalCompositeOperation='multiply';if('filter' in ctx)ctx.filter='grayscale(1) contrast(1.3) brightness(.92)';drawArt(key,0,0,false,'#222',0,'',1,undefined,bandH*1.85);ctx.filter='none';ctx.restore();var fg=ctx.createLinearGradient(0,bandH*.12,0,bandH/2);fg.addColorStop(0,'rgba(244,236,218,0)');fg.addColorStop(1,'rgba(244,236,218,.92)');ctx.fillStyle=fg;ctx.fillRect(-L/2,bandH*.12,L,bandH*.38);} // 수묵 톤: 채색을 먹 단색으로
       ctx.restore();
       ctx.fillStyle=INK_DARK;ctx.globalAlpha=1-close;ctx.fillRect(x0,-bandH/2-1,L,4);ctx.fillRect(x0,bandH/2-3,L,4);
       var tx=-W*.38+(1-ease)*50;ctx.globalAlpha=(1-close)*Math.min(1,Math.max(0,(t-.12)/.14));ctx.textAlign='left';
       ctx.font='700 13px '+INK_SERIF;ctx.fillStyle='rgba(30,26,24,.75)';ctx.fillText(role,tx+2,-bandH*.30);
-      var nm=who.name,fs=34;ctx.font='700 '+fs+'px '+INK_SERIF;var wmax=W*.40;while(ctx.measureText(nm).width>wmax&&fs>18){fs-=2;ctx.font='700 '+fs+'px '+INK_SERIF;}
+      var nm=segName(seg),fs=34;ctx.font='700 '+fs+'px '+INK_SERIF;var wmax=W*.40;while(ctx.measureText(nm).width>wmax&&fs>18){fs-=2;ctx.font='700 '+fs+'px '+INK_SERIF;}
       ctx.lineWidth=5;ctx.strokeStyle='rgba(244,236,218,.95)';var nl=[nm];if(ctx.measureText(nm).width>wmax){var sp=nm.indexOf(' ',Math.floor(nm.length/3));if(sp<0)sp=Math.ceil(nm.length/2);else sp++;nl=[nm.slice(0,sp).trim(),nm.slice(sp).trim()];fs=Math.min(fs,22);ctx.font='700 '+fs+'px '+INK_SERIF;while(Math.max(ctx.measureText(nl[0]).width,ctx.measureText(nl[1]).width)>wmax&&fs>14){fs-=1;ctx.font='700 '+fs+'px '+INK_SERIF;}}for(var li=0;li<nl.length;li++){var ny=-4+(li-(nl.length-1)/2)*(fs+3);ctx.strokeText(nl[li],tx,ny);ctx.fillStyle=INK_DARK;ctx.fillText(nl[li],tx,ny);}
       var st=Arcade.STAGES[s.stageIndex];if(st){ctx.font='600 12px '+INK_SERIF;ctx.fillStyle='rgba(30,26,24,.7)';ctx.fillText(st.name,tx+2,bandH*.30);}
     }else{
@@ -1947,10 +1956,27 @@
       var a=Math.min(1,t/.06)*(t>.94?(1-t)/.06:1);
       ctx.font='700 16px '+INK_SERIF;ctx.textAlign='left';
       var rows=wrapText(line.text.slice(0,Math.max(1,Math.ceil(line.text.length*Math.min(1,lt/.55)))),286),bw=316,bh=46+rows.length*22,bx=(W-bw)/2,by=Math.max(250,Math.min(300,H*.43));
-      brushBox(bx,by,bw,bh,a);ctx.globalAlpha=a;ctx.font='600 12px '+INK_SERIF;ctx.fillStyle='rgba(30,26,24,.7)';ctx.fillText(line.speaker||who.name,bx+16,by+16);
+      brushBox(bx,by,bw,bh,a);ctx.globalAlpha=a;ctx.font='600 12px '+INK_SERIF;ctx.fillStyle='rgba(30,26,24,.7)';ctx.fillText(line.speaker||segName(seg),bx+16,by+16);
       ctx.font='700 16px '+INK_SERIF;ctx.fillStyle=INK_DARK;for(var r=0;r<rows.length;r++)ctx.fillText(rows[r],bx+16,by+38+r*22);
       if(t>.3){ctx.globalAlpha=a*.5;ctx.font='700 12px '+INK_SERIF;ctx.textAlign='right';ctx.fillText('탭·Enter 넘기기',bx+bw-12,by+bh-9);}
     }
+    ctx.restore();
+  }
+  /* 합친 보스가 모습을 바꾸는 순간(엔진 formShift, 사용자 11-20 스테이지 합치기): 먹이 번지고 새 이름·대사가 입장 대사와 같은 붓 상자로 잠깐 뜬다. 엔진이 그동안 공격을 쉰다(FORM_HOLD). */
+  var formSpeech=null;
+  function beginFormShift(s){
+    var seg=Arcade.SEGMENTS[s.seg],BL=global.HapilArcadeBossLines,line=BL&&BL.getShiftLine?BL.getShiftLine(s.stageIndex,s.formShifts||1):null;
+    formSpeech={seg:s.seg,from:s.tick,ticks:Arcade.FORM_HOLD||170,name:segName(seg),text:line?line.text:''};
+    inkBloom(s);play('bossCutin',s.boss.x);shake=Math.max(shake,6);showBanner(formSpeech.name,'모습을 바꾼다');
+  }
+  function drawFormShift(s){
+    if(!formSpeech)return;var t=(s.tick-formSpeech.from)/formSpeech.ticks;if(t<0||t>=1||formSpeech.seg!==s.seg||mode!=='playing'&&mode!=='paused'){if(t>=1||t<0||formSpeech.seg!==s.seg)formSpeech=null;return;}
+    if(!formSpeech.text)return;
+    var a=Math.min(1,t/.08)*(t>.9?(1-t)/.1:1);ctx.save();ctx.textBaseline='middle';ctx.textAlign='left';ctx.font='700 16px '+INK_SERIF;
+    var rows=wrapText(formSpeech.text.slice(0,Math.max(1,Math.ceil(formSpeech.text.length*Math.min(1,t/.4)))),286),bw=316,bh=46+rows.length*22,bx=(W-bw)/2,by=Math.max(250,Math.min(300,H*.43));
+    if(s.boss.present&&s.boss.y>205)by=92; // 보스가 내려와 있으면(패턴이 깨진 직후) 상자를 위로 올려 바뀐 모습을 가리지 않는다
+    brushBox(bx,by,bw,bh,a);ctx.globalAlpha=a;ctx.font='600 12px '+INK_SERIF;ctx.fillStyle='rgba(30,26,24,.7)';ctx.fillText(formSpeech.name,bx+16,by+16);
+    ctx.font='700 16px '+INK_SERIF;ctx.fillStyle=INK_DARK;for(var r=0;r<rows.length;r++)ctx.fillText(rows[r],bx+16,by+38+r*22);
     ctx.restore();
   }
   function beginStory(force){
@@ -2131,7 +2157,7 @@
   }
   function goTitle(){story=null;storyArrivalActor='';if(global.HapilEyes)global.HapilEyes.clear();if(loadedStage>=0)releaseStage(loadedStage,-1);state=null;toast=null;refreshTitle();setMode('title');}
   function bossStages(){return Arcade.STAGES.filter(function(g){return g.kind==='boss'&&progress.cleared.indexOf(g.index)>=0;});}
-  function actorNames(index){var names=[];Arcade.SEGMENTS.forEach(function(seg){if(seg.stage===index&&seg.kind==='card'){var who=Arcade.ACTORS[seg.actor],n=who?who.name:seg.actor;if(names.indexOf(n)<0)names.push(n);}});return names;}
+  function actorNames(index){var names=[];Arcade.SEGMENTS.forEach(function(seg){if(seg.stage===index&&seg.kind==='card'){var n=segName(seg);if(names.indexOf(n)<0)names.push(n);}});return names;}
   // 스테이지 선택: 부별로 묶고, 잠긴 스테이지는 고를 수 없다. 깬 스테이지에는 별을 단다.
   function fillStages(){
     var select=$('arcade-stage-select'),open=Progress.unlocked(progress),groups={},resume=Progress.resume(progress);select.textContent='';

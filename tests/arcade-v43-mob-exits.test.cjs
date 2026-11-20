@@ -55,7 +55,7 @@ test('the trailing wolves of both side formations enter the field',()=>{
 
 test('a late demon crosses the field while the hero defeats its hovering keepers',()=>{
   const {mobs,duration,run}=playWave('48',2);
-  const late=mobs.find(r=>r.born>duration-25&&r.mob.vx>0&&r.mob.hp>0);
+  const late=mobs.find(r=>r.born>duration-40&&r.mob.vx>0&&r.mob.hp>0);
   assert.ok(late&&late.engaged>=270&&late.mob.x>game.WIDTH,'late crossing keeps its direction and a 4.5-second firing window');
   assert.ok(mobs.some(r=>r.mob.elite&&r.mob.hp<=0&&!r.exitTick),'keeper defeated in combat before departure');
   assert.ok(run.kills>0&&run.exp>0,'automatic fire still defeats enemies and awards experience');

@@ -1173,9 +1173,15 @@
     }
   ]
 };
+  /* 스테이지 합치기·순서 바꾸기(사용자 11-20): 위 표는 정본 56장면 순서 그대로 두고, 여기서 지금 52스테이지 순서로 옮긴다.
+   * ORDER[지금 스테이지] = 위 표의 번호(합친 스테이지는 남은 장면 = 스테이지 이름의 장면). 연결 장면의 afterStage 도 같은 표로 옮긴다. */
+  var ORDER=[0,1,2,3,4,5,6,7,8,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,29,30,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,54,53,55];
+  var SOURCE_STAGES=STAGES;
+  STAGES=ORDER.map(function(old,index){var e=Object.assign({},SOURCE_STAGES[old]);e.stage=index;return e;});
+  TRANSITIONS=TRANSITIONS.map(function(t){var e=Object.assign({},t);e.afterStage=ORDER.indexOf(t.afterStage);if(e.afterStage<0)throw new Error('transition after a merged stage');return e;});
   function freeze(entry){entry.lines.forEach(Object.freeze);Object.freeze(entry.lines);return Object.freeze(entry);}
   STAGES.forEach(freeze);TRANSITIONS.forEach(freeze);freeze(PROLOGUE);freeze(FINALE);
-  return Object.freeze({SOURCE:Object.freeze(SOURCE),STAGES:Object.freeze(STAGES),TRANSITIONS:Object.freeze(TRANSITIONS),PROLOGUE:PROLOGUE,FINALE:FINALE,
+  return Object.freeze({SOURCE:Object.freeze(SOURCE),ORDER:Object.freeze(ORDER),STAGES:Object.freeze(STAGES),TRANSITIONS:Object.freeze(TRANSITIONS),PROLOGUE:PROLOGUE,FINALE:FINALE,
     getStage:function(index){return Number.isInteger(index)?STAGES[index]||null:null;},
     getTransition:function(afterStage){return TRANSITIONS.find(function(e){return e.afterStage===afterStage;})||null;}
   });

@@ -13,7 +13,7 @@
   // two bullet colours; it does not invent a new canonical weapon or character.
   var DEFINITIONS={
     p1_tree:['가지 갈라짐','',1],violet:['보라검 교차','sword-violet',0],p1_horn:['좌우 뿔','',1],p1_chaser:['핏빛 추격','',4],p1_comrade:['엇박자 잔상','',2],p1_gate:['문기둥','',3],
-    balrog:['대검 화염','sword-balrog',0],mask:['가면의 깃털','feather',4],p1_staff:['주사기 병렬','p1_syringe',2],p1_seraph:['양날개','feather',1],lucifer:['타락의 파편','p1_shard',5],
+    balrog:['대검 화염','sword-balrog',0],mask:['가면의 깃털','feather',4],p1_staff:['주사기 병렬','p1_syringe',2],lucifer:['타락의 파편','p1_shard',5],
     p2_demons:['악마의 무리','',4],p2_belphegor:['미룬 시간','tissue,p2_sofa',3],p2_leviathan:['갈라진 유리칼','p2_knife',4],p2_beelzebub:['주방의 탐식','p2_pan,cleaver',1],asmodeus:['붉은 매혹','heel',0],
     p2_greed:['수렴하는 거래','money',0],p2_mammon:['금화 눈보라','p2_goldcoin',5],p2_wrath:['불을 지른 분노','p2_flame',1],pride:['전극과 신호','p2_electrode',2],p2_chairman:['기계다리의 박자','',5],p2_core:['일곱 기억의 예측','tissue,p2_knife,p2_pan,heel,money,p2_flame,p2_electrode',4],
     p3_legion:['강철 분대','p3_casing',2],p3_rampart:['성벽의 틈','',3],controller:['명령의 창','p3_lance',5],p3_body:['육체의 코어','p3_core',1],p3_gate:['기억파편의 문','p3_shard',3],
