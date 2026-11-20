@@ -72,7 +72,7 @@
           if(t%80===40)K.ring(s,b.x,b.y,K.count(s,13),48,K.rand(s)*TAU,{color:G,size:1});}},
         p1_thick:{name:'가장 굵은 뿌리',fire:function(s,t){var b=s.boss,ph=t%150,j;
           // 그림(내려치기): 가장 굵은 뿌리가 세로로 내리꽂히고(광선), 위에서 떨어진 뿌리 끝은 바닥 가까이에서 양옆으로 갈라져 기어간다.
-          if(ph===0){s.p1x=Math.max(50,Math.min(310,s.player.x+(K.rand(s)-.5)*40));K.column(s,s.p1x,{width:34,warn:84,active:60,color:PU,keep:1});} // 가장 굵은 뿌리는 영웅이 선 자리로 내리꽂힌다(조준: 움직이게 만드는 이유, 11-19 규칙 6)
+          if(ph===0){s.p1x=Math.max(50,Math.min(310,s.player.x+(K.rand(s)-.5)*40));K.column(s,s.p1x,{width:34,warn:84,active:60,color:PU,keep:1,cue:'root'});} // 가장 굵은 뿌리는 영웅이 선 자리로 내리꽂힌다(조준: 움직이게 만드는 이유, 11-19 규칙 6)
           if(ph===60||ph===110){var x=30+K.rand(s)*300,at=Math.round(15000/(70*s.rules.speed)),n=K.pick(s,4,5,7);
             for(j=0;j<n;j++){K.spawn(s,x,-12,DOWN,70,{color:j%2?PU:G,size:j?0:2,at:at,mode:K.MODE_TURN,arg:DOWN-.12,speed2:34+j*11});K.spawn(s,x,-12,DOWN,70,{color:j%2?PU:G,size:j?0:2,at:at,mode:K.MODE_TURN,arg:-DOWN+.12,speed2:34+j*11});}}
           if(ph===130)K.fan(s,s.p1x,-10,K.count(s,7),DOWN,1,56,{color:PU,size:1});

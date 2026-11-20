@@ -217,7 +217,7 @@
     g.restore();raw(-1);return true;
   }
   function onEvent(e,s,t){
-    if(e==='powerUp')texts.push({text:heroProfile(s).attackName+' Lv.'+s.power,sub:s.power>=5?(isSeoha(heroId(s))?'시계바늘 연쇄':'기억 번개'):'',t0:t,x:s.player.x,y:s.player.y-48});
+    if(e==='powerUp')texts.push({text:heroProfile(s).attackName+' Lv.'+s.power,sub:[global.HapilCues&&global.HapilCues.gainText?global.HapilCues.gainText(s.power):'',s.power>=5?(isSeoha(heroId(s))?'시계바늘 연쇄':'기억 번개'):''].filter(Boolean).join(' · '),t0:t,x:s.player.x,y:s.player.y-48});
     else if(e==='powerDown')texts.push({text:heroProfile(s).attackName+' Lv.'+s.power,sub:'',t0:t,x:s.player.x,y:s.player.y-48,down:true});
     else if(e==='bombLevelUp')texts.push({text:'필살 Lv.'+s.bombLevel,sub:heroBombName(s,s.bombLevel),t0:t,x:s.player.x,y:s.player.y-62});
     else if(e==='focusSkill'){if(t-lastSkillLabel>2.4){lastSkillLabel=t;texts.push({text:s.fsLast&&s.fsLast.kind==='sword'?'시간차 공격':'인과의 역전',sub:'',t0:t,x:s.player.x,y:s.player.y-34});}}

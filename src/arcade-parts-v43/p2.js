@@ -164,7 +164,7 @@
             });
           }
           if(s.n>first)s.skillCast={kind:'stomach',seg:s.seg,start:s.tick,release:s.tick+swallowTicks-1,
-            until:s.tick+swallowTicks+11,x:b.x,y:b.y,angle:target,radius:radius};
+            until:s.tick+swallowTicks+11,x:b.x,y:b.y,angle:target,radius:radius,px:s.player.x,py:s.player.y};
         }},
         p2Photo:{name:'오래된 사진',fire:function(s,t){var b=s.boss,i;
           // 오래된 사진: 네모난 사진틀이 퍼지다가 불붙어 흩어진다. 위에서는 불티가 내린다.

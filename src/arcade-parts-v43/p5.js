@@ -95,7 +95,7 @@
           if(t%40===20)K.ring(s,b.x,b.y,K.count(s,10),74,t*.03,{color:WH,size:0});}},
         // 짧은 틈: 두 명령의 세로줄이 번갈아 선다. 한쪽이 꺼지고 다른 쪽이 켜지기 전 짧은 틈에 옮겨 선다.
         p5_gap:{name:'짧은 틈',time:32,fire:function(s,t){var b=s.boss,ph=t%212,n=K.pick(s,4,4,5),cell=W/n,k;
-          if(ph===0||ph===106)for(k=0;k<n;k++)K.column(s,cell*(k+(ph?.75:.25)),{width:14,warn:64,active:90,color:ph?YE:PU});
+          if(ph===0||ph===106)for(k=0;k<n;k++)K.column(s,cell*(k+(ph?.75:.25)),{width:14,warn:64,active:90,color:ph?YE:PU,cue:'bolt'});
           if(t%30===15)K.ring(s,b.x,b.y,K.count(s,15),52,K.rand(s)*TAU,{color:ph<106?YE:PU,size:0});}},
         // 행동할 순간: 빠른 종 무늬 사이로, 제자리에 멈춰 있다 늦게 출발하는 고리가 섞인다. 움직일 순간을 고른다.
         p5_moment:{name:'행동할 순간',time:34,fire:function(s,t){var b=s.boss,k;
