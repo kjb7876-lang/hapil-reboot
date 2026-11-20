@@ -16,7 +16,9 @@ for(const difficulty of ['normal','hell'])test(`cover gap is reachable and clean
     let prev=top,gap=null;for(const [a,b] of iv){if(a-prev>8)gap=[prev,a];prev=Math.max(prev,b);}if(end-prev>8)gap=[prev,end];
     assert(gap,'cover leaves one gap');const pos=vert?p.x:p.y,c=Math.min(Math.max(pos,gap[0]+p.r+1),gap[1]-p.r-1);
     assert(REACT+Math.abs(c-pos)/KEY<=fresh[0].warn,`gap reachable: need ${(REACT+Math.abs(c-pos)/KEY).toFixed(0)} > warn ${fresh[0].warn}`);
-    open.push({vert,gap,at:s.tick+fresh[0].warn-fresh[0].age});}
+    open.push({vert,gap,at:s.tick+fresh[0].warn-fresh[0].age});
+    for(const l of s.lasers){if(l.solid)continue;const par=vert?Math.abs(Math.abs(l.angle)-Math.PI/2)<.05:Math.abs(Math.sin(l.angle))<.05;
+     if(par)assert(l.age>=l.warn+l.active,'older parallel beams (held piano keys) are switched off so they cannot wall the way to the gap');}}
    for(let i=open.length-1;i>=0;i--)if(s.tick===open[i].at){const o=open.splice(i,1)[0];
     for(const l of s.lasers){if(l.solid||l.age<l.warn||l.age>=l.warn+l.active)continue;const par=o.vert?Math.abs(Math.abs(l.angle)-Math.PI/2)<.05:Math.abs(Math.sin(l.angle))<.05;if(!par)continue;
      const c=o.vert?l.x:l.y;assert(!(c+l.width/2>o.gap[0]&&c-l.width/2<o.gap[1]),'no live parallel beam inside the cover gap');}}

@@ -335,12 +335,14 @@
       // 띠 하나는 LADDER_BAND 높이를 통째로 덮는다(solid): 줄 사이에 서서 버티는 길이 없고, 바닥이 정말로 한 칸씩 차오른다(심사 11-19 7.29: 줄 사이가 안전지대로 남았다)
       n=LADDER_N[s.difficulty]||3;
       l.y=H-LADDER_BAND*.5;l.width=LADDER_BAND;l.solid=true;l.active+=(n-1)*lag;l.composed=true;l.role='ladder';
+      coverClear(s,false); // 회피 측정(11-20 헬 25 학대의 방): 사다리가 위로 밀어 올리는데 앞서 켜진 가로줄이 위로 가는 길을 막아 어떤 길도 안전하지 않았다 → 사다리를 세울 때 같은 방향(가로) 앞 광선은 잔광으로 끈다
       for(k=1;k<n&&s.lasers.length<LASER_CAP;k++)s.lasers.push(cloneBeam(l,{y:H-LADDER_BAND*(k+.5),warn:l.warn+k*lag,active:l.active-k*lag,role:'ladder'}));
       s.composedLasers=(s.composedLasers||0)+1;
     }else if(Math.abs(l.angle-Math.PI/2)<.01){ // 세로 → 스위퍼
       n=SWEEP_N[s.difficulty]||3;var dir=s.player.x>=l.x?1:-1,end=l.x+dir*SWEEP_STEP*(n-1),sl=Math.round(SWEEP_LAG*s.rules.warn);
       if(end<16||end>W-16){dir=-dir;}
       l.composed=true;l.role='sweep';l.active=Math.max(30,Math.round(l.active*.7));l.width=SWEEP_STEP;l.solid=true; // 기둥끼리 맞붙은 벽(solid): 사이로 빠지지 않고, 먼저 켜진 뒤쪽 기둥이 먼저 꺼져 벽이 걸어온다
+      coverClear(s,true); // 스위퍼도 같은 규칙: 옆으로 밀어내는 벽 앞을 세로 앞 광선이 막지 않게
       for(k=1;k<n&&s.lasers.length<LASER_CAP;k++){var x=l.x+dir*SWEEP_STEP*k;if(x<10||x>W-10)break;s.lasers.push(cloneBeam(l,{x:x,warn:l.warn+k*sl,role:'sweep'}));}
       s.composedLasers=(s.composedLasers||0)+1;
     }
@@ -1930,10 +1932,10 @@
   }
   var SP_OPP={up:'down',down:'up',left:'right',right:'left'};
   var COVER_REACH=230; // (예고 84틱 - 반응 15틱 - 여유 14틱) × 키보드 4.2px ≈ 230px
-  // 덮기 틈과 겹치는 앞 광선(눌린 건반 등)을 끈다: 켜진 것은 바로 꺼지고(사라지는 잔상만), 예고 중인 것은 지운다. 덮기 띠 자신(solid)은 건드리지 않는다
+  // 덮기와 같은 방향의 앞 광선(눌린 건반 등)을 끈다: 켜진 것은 바로 꺼지고(사라지는 잔상만), 예고 중인 것은 지운다. 덮기 띠 자신(solid)은 건드리지 않는다
   function coverClear(s,vert,g0,gap){for(var i=s.lasers.length-1;i>=0;i--){var l=s.lasers[i];if(l.solid)continue;
     var lv=Math.abs(Math.abs(l.angle)-Math.PI/2)<.05,lh=Math.abs(l.angle)<.05||Math.abs(Math.abs(l.angle)-Math.PI)<.05;
-    var hit=vert?(lv&&Math.abs(l.x-(g0+gap/2))<gap/2+l.width/2):(lh&&Math.abs(l.y-(g0+gap/2))<gap/2+l.width/2);
+    var hit=vert?lv:lh; // 틈과 겹친 것뿐 아니라 같은 방향의 앞 광선(눌린 건반 등)은 모두 끈다: 틈까지 가는 길을 앞 건반이 벽처럼 막아 지름길이 없던 경우(재측정 11-20 헬 7·17·25)
     if(!hit)continue;if(l.age<l.warn){l.warn=l.age;l.active=0;}else l.active=Math.min(l.active,l.age-l.warn);}} // 예고 중인 것도 잔상(BEAM_FADE)으로 옅어지며 사라진다(심사: 뚝 끊김)
   function spAct(s,n){
     var k=s.sp.cur,pos=n%8,bar=n>>3,lvl=spLvl(s),b=s.boss,p=s.player,a=ACTORS[b.actor]||{},c1=a.c1===undefined?0:a.c1,c2=a.c2===undefined?c1:a.c2,i,sp=s.sp;
