@@ -35,7 +35,7 @@
   var state=null,mode='title',difficulty='normal',accumulator=0,lastStamp=0,visual=0,lastRun=null;
   var particles=[],spellDim=0,flash=0,hurtFlash=0,hurtRing=null,VERMILION='#a8382a',shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,SPELL_BANNER_TICKS=42,bannerSpell=false,bannerTitle='',bannerSub='',toast=null;
   var keys={},finger={active:false,id:null,x:0,y:0},focusHeld=false,focusPointer=null,focusLatched=false,bombQueued=false;
-  var settings={music:true,sfx:true,musicVolume:1,sfxVolume:1,screenShake:true,lowQuality:false,abilityMemory:0,abilitySeoha:0}; // 능력조절(사용자 11-20): 영웅별 0(끔)~7단계
+  var settings={music:true,sfx:true,musicVolume:1,sfxVolume:1,screenShake:true,lowQuality:false,abilityMemory:7,abilitySeoha:7,abilityV:2}; // 능력조절(사용자 11-20): 영웅별 0(끔)~7단계
   var fx=null,music=null,best=0,bests={},lastSpell=null,drill=null,DRILL_KEY='hapil-arcade-v43-drill',lastItemSound=0,progress=Progress.fresh(),saveOk=true;
   var themeOverride=null,turbo=0,rushStage=false,oneCreditEligible=false;
   var Story=global.HapilArcadeStory||null,BossIntros=global.HapilArcadeBossIntros||null,story=null,storyQuiet=false,storySeen={},pauseReturn='playing',rulesReturn='title',storyArrivalActor='';
@@ -2193,7 +2193,8 @@
     if(!saved||typeof saved!=='object')return;
     ['music','sfx','screenShake','lowQuality'].forEach(function(k){if(typeof saved[k]==='boolean')settings[k]=saved[k];});
     ['musicVolume','sfxVolume'].forEach(function(k){if(typeof saved[k]==='number'&&isFinite(saved[k]))settings[k]=Math.max(0,Math.min(1,saved[k]));});
-    ['abilityMemory','abilitySeoha'].forEach(function(k){if(typeof saved[k]==='number'&&isFinite(saved[k]))settings[k]=Math.max(0,Math.min(7,Math.round(saved[k])));});
+    // 사용자 11-20 "초능력설정 기본 7": 예전 저장값(abilityV 없음)의 0은 옛 기본값이라 7로 올리고, 0이 아닌 값은 사용자가 고른 것이니 그대로 둔다. 이후로는 0(끔)도 그대로 저장된다.
+    ['abilityMemory','abilitySeoha'].forEach(function(k){if(typeof saved[k]==='number'&&isFinite(saved[k])){var v=Math.max(0,Math.min(7,Math.round(saved[k])));settings[k]=saved.abilityV>=2||v>0?v:7;}});
     lite=settings.lowQuality;
   }
   /* 능력조절: 기억사수 출력조절(피해↑·적탄↑), 서하 시간제어(적탄↓·이동↓). 엔진 수치는 Arcade.abilityOf 가 정한다 */
