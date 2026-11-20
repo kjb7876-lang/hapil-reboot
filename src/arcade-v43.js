@@ -101,7 +101,27 @@
     var d=gentle?CURVE_START+(CURVE_END-CURVE_START)*u:1,v=gentle?PACE_START+(PACE_END-PACE_START)*u:1;
     var soft=s.entranceAll&&s.difficulty!=='hell'?SOFT[s.difficulty]:null; // 사용자 11-18: 이지·노멀만 탄 속도를 낮추고 탄 수를 10% 줄인다(헬은 그대로)
     s.rules.speed=base.speed*v*(soft?soft.speed:1)*(s.entranceAll?LIVE_FAST:1);s.density=base.density*d*(soft?soft.density:1)*(s.compact?COMPACT_DENSITY:1)*(s.entranceAll?LIVE_TRIM:1);
-    var L=s.entranceAll&&LIVE_TABLE[s.difficulty];if(L){s.rules.speed=L.speed;s.density=(L.density+(L.end===undefined?0:(L.end-L.density)*u))/(s.compact?1:COMPACT_DENSITY);s.rules.radius=L.radius;s.rules.hitScale=L.hitScale;if(s.player)s.player.r=L.radius;}}
+    var L=s.entranceAll&&LIVE_TABLE[s.difficulty];if(L){s.rules.speed=L.speed;s.density=(L.density+(L.end===undefined?0:(L.end-L.density)*u))/(s.compact?1:COMPACT_DENSITY);s.rules.radius=L.radius;s.rules.hitScale=L.hitScale;if(s.player)s.player.r=L.radius;}
+    var tune=s.entranceAll&&HERO_TUNE[isSeohaHero(s)?'seoha':s.hero];if(tune){s.rules.speed*=tune.speed||1;s.density*=tune.density||1;}}
+  /* 영웅별 난이도 보정(사용자 11-20 "서하로 플레이할때는 적 탄환패턴 많이 나와도됨 탄환난이도 조금더 높여도 될듯"): 실제 게임(entranceAll)에서 기준표(LIVE_TABLE) 위에 곱한다. 서하는 시간을 늦추는 능력이 있으니 탄 수 +20%, 탄속 +6% */
+  var HERO_TUNE={seoha:{density:1.2,speed:1.06},memory:{laser:1.5,laserEvery:{gentle:300,normal:170,hell:200}}};
+  /* 영웅별 적 특성화(사용자 11-20 "서하-탄환 많이, 기억사수-레이져많이 적이 특성화해서 스킬사용하게"):
+   *  서하 → 위 HERO_TUNE.seoha 가 탄 밀도·속도를 올린다. 기억사수 → 보스전에서 광선을 더 자주 쓴다.
+   *  heroLaserBias(s) 는 다른 광선 페이즈(리듬 광선 등)가 빈도 배율로 그대로 가져다 쓰라고 둔 값이다(기억사수 >1, 그 밖 1).
+   *  추가 광선은 한 줄만 세우고 composeLasers 가 사다리·스위퍼로 묶는다 — 이미 켜진 광선·문양이 있으면 쉬므로 겹쳐 막히지 않는다. */
+  function heroLaserBias(s){var t=s&&s.entranceAll&&HERO_TUNE[s.hero];return t&&t.laser||1;}
+  // 종류 칸(이지1·노멀2·헬3)은 지킨다. 반사탄만 칸을 차지하고 있으면 광선이 그 칸을 넘겨받는다(yieldMirror 가 반사를 멈춤).
+  var HERO_LASER_LIFE=220; // 사다리·스위퍼가 예고부터 꺼질 때까지 걸리는 틱(넉넉히). 그 안에 특수 페이즈가 열리면 쏘지 않는다(테트리스·문양과 겹치지 않게)
+  function spSoon(s,ahead){var st=s.segTick;s.segTick=st+ahead;var w=spWindow(s);s.segTick=st;return !!w;}
+  function heroLaser(s){
+    var t=s.entranceAll&&HERO_TUNE[s.hero],every=t&&t.laserEvery&&(t.laserEvery[s.difficulty]||250);
+    if(!every||s.stage!=='card'||!s.boss.present||s.calm||s.cardEnding||s.cardDown||s.lasers.length||s.figures.length||layersBut(s,'mirror')>=layerCap(s)||spQuiet(s)||spSoon(s,HERO_LASER_LIFE)){s.heroLaserT=Math.min(s.heroLaserT||0,every?every-40:0);return;}
+    if((s.heroLaserT=(s.heroLaserT||0)+1)<every)return;
+    s.heroLaserT=0;s.heroLaserN=(s.heroLaserN||0)+1;
+    var a=ACTORS[s.boss.actor],c=a&&a.c2!==WHITE&&a.c2!==RED?a.c2:CYAN;
+    if(s.heroLaserN%2)column(s,s.player.x<W/2?W-24:24,{width:BEAM_MIN,warn:66,active:60,color:c});
+    else row(s,H-60,{width:BEAM_MIN,warn:66,active:60,color:c});
+  }
   /* 실제 게임 난이도 기준표(사용자 11-19 "제안대로 계단 고르게"): 그동안 겹겹이 곱해지던 배율(표·이지노멀 완화·탄 수 -25%·-20%·탄속 +20%)을 최종값 한 줄로 합쳤다.
      탄 수는 휴대폰 기준값(PC는 ÷COMPACT_DENSITY), 이지는 첫 스테이지 density에서 마지막 end까지 오른다. 앞으로 난이도 조정은 이 표의 숫자만 고친다. 목숨·필살은 DIFFICULTY 표 그대로 */
   var LIVE_TABLE={
@@ -153,6 +173,10 @@
      기억사수 충전탄: 주포 CHARGE_EVERY 번째 발사마다 가운데 한 발이 충전탄. 맞으면 피해를 CHARGE_ARC 만큼 덜어 CHARGE_REACH 안의 다른 적에게 튀긴다(합계는 한 발 피해 그대로).
      윤서하 시간탄: TIMEBOMB_EVERY 틱마다 가운데 한 발이 시간탄. 붙는 순간 보통 탄 한 발 피해(한 적만 상대할 때 두 영웅 화력이 같게: heroes 검사),
        TIMEBOMB_FUSE 틱 째깍인 뒤 터지며 TIMEBOMB_R 안의 다른 적에게 한 발 ×TIMEBOMB_SPLASH 를 더 준다(몰려 있을 때만 이득). 붙은 적이 먼저 쓰러지면 그 자리에서 터진다. */
+  /* 서하 초능력(사용자 11-20 "서하 초능력(저속) 사용시 서하 탄도 매우 느려지게 다만 서하 시간탄은 더 자주 나가게 서하 시간탄속도도 느려짐"):
+     누른 동안 쏜 서하 탄은 SEOHA_FOCUS_SHOT 배, 시간탄은 SEOHA_FOCUS_TB 배 빠르기로 날고(쏜 뒤 손을 떼도 그 빠르기 그대로), 시간탄은 SEOHA_FOCUS_TB_EVERY 틱마다 나간다.
+     한 발 피해는 그대로라 한 적만 상대할 때 화력은 같고(늦게 닿을 뿐), 시간탄이 잦아지는 만큼 몰린 적에게 터지는 피해만 는다. */
+  var SEOHA_FOCUS_SHOT=.4,SEOHA_FOCUS_TB=.3,SEOHA_FOCUS_TB_EVERY=18;
   var CHARGE_EVERY=4,CHARGE_ARC=.35,CHARGE_REACH=96,TIMEBOMB_EVERY=36,TIMEBOMB_FUSE=42,TIMEBOMB_MULT=0,TIMEBOMB_SPLASH=.6,TIMEBOMB_R=52,TIMEBOMB_CAP=8,SHOT_HITS_CAP=96;
   function abilityLevel(s){var l=s&&s.ability|0;return l<0?0:l>ABILITY_MAX?ABILITY_MAX:l;}
   function setAbility(s,level){s.ability=Math.max(0,Math.min(ABILITY_MAX,Math.round(Number(level)||0)));return s.ability;}
@@ -222,6 +246,7 @@
   function spawn(s,x,y,angle,speed,o){
     if(s.n>=s.cap){s.dropped++;return;}
     o=o||{};var size=o.size||0;
+    if(s.efire===false&&size!==SHAPE_PROP&&!o.fragment){s.timeHeld=(s.timeHeld||0)+1;return;} // 서하 시간제어: 적의 시간이 느려져 발사도 그만큼 드물다(아래 step 의 enemyClock)
     // 화면이 붐비면(상한의 72% 이상) 새 탄을 하나 걸러 하나만, 82% 이상이면 쉬게 한다(조형물은 예외). 느린 탄이 쌓여도 상한에 닿지 않는다.
     if(s.n>=s.cap*.72&&size!==SHAPE_PROP&&!o.fragment){s.thin=(s.thin+1)|0;if(s.n>=s.cap*.82||s.thin%2)return;}
     // 보스 한가운데서 쏘는 탄은 보스 몸 가장자리(MUZZLE)에서 나오게 옮긴다. 탄이 몸을 덮어 보스가 가려지지 않는다(7분야 심사 3차 지적).
@@ -790,7 +815,7 @@
     ['bx','by','ba','bs','bturn','bacc','bmin','bmax','barg','bs2','bspin','bhp'].forEach(function(k){s[k]=new Float32Array(CAP);});
     ['bage','blife','bat','bgrace'].forEach(function(k){s[k]=new Uint16Array(CAP);});
     ['bsize','bcolor','bgrazed','bmode','bgen','bbounce','bbreakable','bfragment','bformation','bexit','bmirror'].forEach(function(k){s[k]=new Uint8Array(CAP);});s.figures=[];s.ripples=[];s.floor=freshFloor(s,s.stageIndex);
-    s.sx=new Float32Array(SHOT_CAP);s.sy=new Float32Array(SHOT_CAP);s.svx=new Float32Array(SHOT_CAP);s.shoming=new Uint8Array(SHOT_CAP);s.skind=new Uint8Array(SHOT_CAP);s.tbombs=[];s.shotHits=[];s.volleys=0;s.tbNext=0;
+    s.sx=new Float32Array(SHOT_CAP);s.sy=new Float32Array(SHOT_CAP);s.svx=new Float32Array(SHOT_CAP);s.shoming=new Uint8Array(SHOT_CAP);s.skind=new Uint8Array(SHOT_CAP);s.sspd=new Float32Array(SHOT_CAP);s.tbombs=[];s.shotHits=[];s.volleys=0;s.tbNext=0;
     var from=s.stageIndex;if(options.growth&&from>0){/* 화면이 켜 준 경우만(검사·연습용 구간 시작은 1단계 그대로) */var pf=Math.min(5,1+Math.floor(from/6)),bf=Math.min(5,1+Math.floor(from/8));s.exp=POWER_EXP[pf-1];s.power=pf;s.fills=BOMB_FILLS[bf-1];s.bombLevel=bf;}
     if(options.grown){var ge=+options.grown.exp,gf=+options.grown.fills;if(ge>s.exp){s.exp=ge;s.power=levelOf(POWER_EXP,ge);}if(gf>s.fills){s.fills=gf;s.bombLevel=levelOf(BOMB_FILLS,gf);}} // 중간 저장에서 이어 하면 그때까지 자란 단계 그대로(11-16 실검증: 이어하기 뒤 필살 단계가 내려가던 문제)
     s.ix=new Float32Array(ITEM_CAP);s.iy=new Float32Array(ITEM_CAP);s.ivy=new Float32Array(ITEM_CAP);s.ikind=new Uint8Array(ITEM_CAP);
@@ -1361,17 +1386,19 @@
     var b=s.boss,p=s.player,i,k,target=homingX(s),plan=POWER_SHOTS[s.power],dmg=shotDamage(s),haste=s.tick<s.hasteUntil?1:0,lay,hero=heroProfile(s),clockHands=hero&&hero.shot.style==='clock-hands'?hero.shot:null,offset,vx;
     // 단계마다 주포·유도탄이 늘고 간격이 짧아진다(가속 중에는 한 틱 더 짧게). 적 바로 아래에 서면 주포까지 맞아 훨씬 빨리 깬다.
     // 윤서하는 같은 탄 수·간격·피해로 시간검을 펼친다. 저속일 때만 주포와 유도탄 출발 폭을 좁혀 집중한다.
+    var seohaFocus=isSeohaHero(s)&&p.focus;
     if(s.tick%Math.max(3,plan[1]-haste)===0){var special=isSeohaHero(s)?(s.tick>=s.tbNext&&foeNear(s,p.x,p.y,[])?2:0):(++s.volleys%CHARGE_EVERY===0?1:0);lay=MAIN_LAYOUT[plan[0]];for(k=0;k<lay.length&&s.sn<SHOT_CAP;k++){
       offset=lay[k][0];vx=lay[k][1];if(clockHands){offset*=p.focus?clockHands.focusOffsetScale:clockHands.offsetScale;vx=(k-(lay.length-1)*.5)*(p.focus?clockHands.focusSpread:clockHands.spread);}
-      s.shoming[s.sn]=0;s.skind[s.sn]=k===(lay.length>>1)?special:0;s.svx[s.sn]=vx;s.sx[s.sn]=p.x+offset;s.sy[s.sn++]=p.y-18;}
-      if(special===2){s.tbNext=s.tick+TIMEBOMB_EVERY;note(s,'tbFire');}else if(special===1)note(s,'sparkFire');}
+      var kd=k===(lay.length>>1)?special:0,sp=seohaFocus?(kd===2?SEOHA_FOCUS_TB:SEOHA_FOCUS_SHOT):1;
+      s.shoming[s.sn]=0;s.skind[s.sn]=kd;s.sspd[s.sn]=SHOT_SPEED*sp;s.svx[s.sn]=vx*sp;s.sx[s.sn]=p.x+offset;s.sy[s.sn++]=p.y-18;}
+      if(special===2){s.tbNext=s.tick+(seohaFocus?SEOHA_FOCUS_TB_EVERY:TIMEBOMB_EVERY);note(s,'tbFire');}else if(special===1)note(s,'sparkFire');}
     if(s.tick%Math.max(4,plan[3]-haste)===0){lay=HOMING_LAYOUT[plan[2]];for(k=0;k<lay.length&&s.sn<SHOT_CAP;k++){
       offset=lay[k];if(clockHands)offset*=p.focus?clockHands.focusHomingOffsetScale:clockHands.homingOffsetScale;
-      s.shoming[s.sn]=1;s.skind[s.sn]=0;s.svx[s.sn]=0;s.sx[s.sn]=p.x+offset;s.sy[s.sn++]=p.y-4+Math.abs(offset)*.1;}}
+      s.shoming[s.sn]=1;s.skind[s.sn]=0;s.sspd[s.sn]=SHOT_SPEED*(seohaFocus?SEOHA_FOCUS_SHOT:1);s.svx[s.sn]=0;s.sx[s.sn]=p.x+offset;s.sy[s.sn++]=p.y-4+Math.abs(offset)*.1;}}
     if(plan[4]&&s.tick%Math.max(20,plan[5]-haste*8)===0)memoryBolt(s,plan[4],plan[6]);
     for(i=s.sn-1;i>=0;i--){
       var sx0=s.sx[i],sy0=s.sy[i];
-      s.sy[i]-=SHOT_SPEED;s.sx[i]+=s.svx[i];
+      s.sy[i]-=s.sspd[i]||SHOT_SPEED;s.sx[i]+=s.svx[i];
       if(s.shoming[i]&&target!==null){var steer=target-s.sx[i];s.sx[i]+=steer>HOMING_STEER?HOMING_STEER:steer<-HOMING_STEER?-HOMING_STEER:steer;}
       var hit=shotHitsOrb(s,sx0,sy0,s.sx[i],s.sy[i],dmg);
       var kind=s.skind[i],foe=null;
@@ -1383,7 +1410,7 @@
       if(foe)shotStrike(s,foe,s.sx[i],s.sy[i],dmg,kind);
       if(!hit)hit=shotHitsPiece(s,s.sx[i],s.sy[i],dmg);
       if(!hit)hit=shotHitsRiser(s,s.sx[i],s.sy[i],dmg);
-      if(hit||s.sy[i]<-20||s.sx[i]<-20||s.sx[i]>W+20){var j=--s.sn;s.sx[i]=s.sx[j];s.sy[i]=s.sy[j];s.svx[i]=s.svx[j];s.shoming[i]=s.shoming[j];s.skind[i]=s.skind[j];}
+      if(hit||s.sy[i]<-20||s.sx[i]<-20||s.sx[i]>W+20){var j=--s.sn;s.sx[i]=s.sx[j];s.sy[i]=s.sy[j];s.svx[i]=s.svx[j];s.shoming[i]=s.shoming[j];s.skind[i]=s.skind[j];s.sspd[i]=s.sspd[j];}
     }
     updateTimeBombs(s);
   }
@@ -1415,9 +1442,9 @@
   function updateLasers(s){
     var p=s.player,struck=false,fired=false,grazed=0,i;
     for(i=s.lasers.length-1;i>=0;i--){
-      var l=s.lasers[i];l.age++;
+      var l=s.lasers[i],lt=s.efire!==false||!l.age;if(lt)l.age++; // 서하 시간제어: 광선의 예고·켜짐·회전도 적의 시계(enemyClock)로만 흐른다
       if(l.follow){l.x=s.boss.x;l.y=s.boss.y;}
-      if(l.spin&&l.age>l.warn)l.angle+=l.spin*TICK;
+      if(lt&&l.spin&&l.age>l.warn)l.angle+=l.spin*TICK;
       if(l.age>l.warn+l.active+BEAM_FADE){s.lasers.splice(i,1);continue;}
       var cos=Math.cos(l.angle),sin=Math.sin(l.angle);
       if(l.age===l.warn){
@@ -1605,7 +1632,7 @@
   function updateFigures(s){
     var p=s.player,struck=false,grazed=0;
     for(var i=s.figures.length-1;i>=0;i--){
-      var f=s.figures[i];f.age++;
+      var f=s.figures[i],ft=s.efire!==false||!f.age;if(ft)f.age++; // 문양도 적의 시계로
       if(f.age>f.warn+f.active+BEAM_FADE){s.figures.splice(i,1);continue;}
       if(f.orbit&&s.boss.present){var o=f.orbit,R=o.near+(o.far-o.near)*(.5-.5*Math.cos(TAU*f.age/o.period)),A=o.phase+o.speed*f.age*TICK;f.cx=s.boss.x+Math.cos(A)*R;f.cy=s.boss.y+Math.sin(A)*R;}
       if(f.kind==='runes'){if(f.follow&&s.boss.present)runeCentre(f,s.boss);f.grow=Math.min(1,f.age/f.warn);f.turn+=f.spin*TICK*(f.age<f.warn?.35:1);}
@@ -2093,9 +2120,14 @@
     for(i=0;i<sp.q.length;i++)if(sp.q[i].at<=s.tick){var e=sp.q.splice(i,1)[0];i--;spAct(s,e.n);}
   }
   /* 한 틱(1/60초) 진행. input: {dx,dy,focus,bomb} — dx,dy는 이번 틱에 움직일 픽셀, focus는 저속 이동, bomb은 이번 틱에 폭탄 사용. */
+  /* 서하 시간제어(초능력 중)는 적탄만 느리게 하는 게 아니라 적의 시간 자체를 늦춘다: 발사 틱도 같은 비율로만 돌아온다.
+   * 탄만 느려지고 발사는 그대로면 화면의 탄 밀도가 1/속도배(7단계 4.3배)로 쌓여 피할 길이 없었다(사용자 11-20 "둘다 이론상 피할수는 있어야함" 실검증: 노멀 504·648, 헬 504·540 구간 막힘).
+   * 한 틱의 탄은 통째로 나가거나 통째로 쉰다(고리·부채 모양 유지). 그림 탄(SHAPE_PROP)·조각은 그대로.
+   * 광선·문양의 예고·켜짐·회전도 같은 시계로 흐른다(실검증: 7단계 서하는 0.46px/틱이라 보스 회전 광선을 못 벗어났다, 교주의 사몽). */
+  function enemyClock(s){var k=abilityOf(s).bulletSpeed;if(k>=1){s.efire=true;s.eclock=0;return;}s.eclock=(s.eclock||0)+k;s.efire=s.eclock>=1;if(s.efire)s.eclock-=1;}
   function step(s,input){
     if(s.stage==='won'||s.stage==='lost'){s.stageTick++;return s;}
-    s.tick++;s.stageTick++;movePlayer(s,input);var charge0=s.fills*GAUGE_FULL+s.gauge;
+    s.tick++;s.stageTick++;movePlayer(s,input);enemyClock(s);var charge0=s.fills*GAUGE_FULL+s.gauge;
     if(s.stage==='bossClear'){
       if(s.tick>=s.bossClear.readyTick)advance(s);
       return s; // 격파 연출 2초 동안 공격·피격·아이템·필살을 모두 멈춘다. 다음 구간은 다음 틱부터 움직인다.
@@ -2112,7 +2144,7 @@
     }
     if(input&&input.bomb)useBomb(s);
     bombPulse(s);
-    var seg=segment(s),b=s.boss;s.calm=s.entranceAll&&s.stage==='card'&&(bossDescends(s)||b.present&&b.y>BOSS_REST+BOSS_SWAY+CALM_BELOW);calmLaser(s);figurePending(s);
+    var seg=segment(s),b=s.boss;s.calm=s.entranceAll&&s.stage==='card'&&(bossDescends(s)||b.present&&b.y>BOSS_REST+BOSS_SWAY+CALM_BELOW);calmLaser(s);heroLaser(s);figurePending(s);
     if(s.stage==='break'){if(s.stageTick>=(s.paced?24:BREAK_TICKS)){if(seg&&seg.kind==='card'&&b.present)beginCard(s);else advance(s);}}
     else if(s.stage==='intro'){
       if(!b.present)enter(s,seg.actor);
@@ -2215,7 +2247,7 @@
   var api={revision:43,POWER_SHOTS:POWER_SHOTS,MOB_CUE_LEAD:MOB_CUE_LEAD,spellBonus:spellBonus,spellBonusBase:spellBonusBase,jackpotCount:jackpotCount,JACKPOT_MID:JACKPOT_MID,JACKPOT_BOSS:JACKPOT_BOSS,JACKPOT_SCORE_MAX:JACKPOT_SCORE_MAX,pointValue:pointValue,heartWorth:heartWorth,clearBonus:clearBonus,LIFE_PIECES:LIFE_PIECES,SPELL_DECAY_FROM:SPELL_DECAY_FROM,SPELL_DECAY_OVER:SPELL_DECAY_OVER,POINT_BASE:POINT_BASE,POINT_MAX:POINT_MAX,CALM_SOFT:CALM_SOFT,composeLasers:composeLasers,beamFor:beam,LADDER_N:LADDER_N,SWEEP_N:SWEEP_N,CARD_ENDING_MAX:CARD_ENDING_MAX,CARD_MIN:CARD_MIN,DESCEND_HOLD:DESCEND_HOLD,LIVE_FAST:LIVE_FAST,BEAM_MIN:BEAM_MIN,FAN_APEX:FAN_APEX,CALM_BELOW:CALM_BELOW,CALM_LASER_EVERY:CALM_LASER_EVERY,LIVE_TABLE:LIVE_TABLE,COMPACT_DENSITY:COMPACT_DENSITY,CARD_BREAK_PAUSE:CARD_BREAK_PAUSE,bossStays:bossStays,MOB_BELOW_SPEED:MOB_BELOW_SPEED,BOSS_REST:BOSS_REST,BOSS_SWAY:BOSS_SWAY,WALL_KICK_Y:WALL_KICK_Y,CARD_DOWN_MAX:CARD_DOWN_MAX,EXIT_TURN:EXIT_TURN,WAVE_LINGER:WAVE_LINGER,LAYER_CAP:LAYER_CAP,layersBut:layersBut,phraseLen:phraseLen,flushBullets:flushBullets,heroProfile:heroProfile,bombName:bombName,isCinematicBoss:isCinematicBoss,nextSegmentIndex:nextSegmentIndex,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     PACING:PACING,stageTargetSeconds:stageTargetSeconds,plannedSegments:plannedSegments,pacingReport:pacingReport,waveDuration:waveDuration,cardDuration:cardDuration,cardHp:cardHp,SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_REAIM:MODE_REAIM,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,MODE_BRANCH:MODE_BRANCH,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,PROP_LONG:PROP_LONG,propHitPoints:propHitPoints,propRenderSpan:propRenderSpan,bulletRenderSpan:bulletRenderSpan,BULLET_BREAK_MIN_SPAN:BULLET_BREAK_MIN_SPAN,isBulletBreakable:isBulletBreakable,ORB_HP:ORB_HP,ORB_BREAK_EVERY:ORB_BREAK_EVERY,ORB_FRAGMENT_COUNT:ORB_FRAGMENT_COUNT,ORB_FRAGMENT_GRACE:ORB_FRAGMENT_GRACE,ORB_FRAGMENT_SPEED:ORB_FRAGMENT_SPEED,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
     BOSS_ENTRANCE_GRACE:BOSS_ENTRANCE_GRACE,BOSS_ENTRANCE_SPEECH:BOSS_ENTRANCE_SPEECH,BOSS_ENTRANCE_MID:BOSS_ENTRANCE_MID,BOSS_CLEAR_TICKS:BOSS_CLEAR_TICKS,prepareBossEntrance:prepareBossEntrance,phaseOf:phaseOf,phaseKind:phaseKind,entrancePhase:entrancePhase,skipEntrance:skipEntrance,ENTRANCE_CUTIN:ENTRANCE_CUTIN,BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,BOSS_FORMS:BOSS_FORMS,FORM_BASE:FORM_BASE,bossArtOf:bossArtOf,BOSS_SHOTS:BOSS_SHOTS,SHOT_KINDS:SHOT_KINDS,bossShotOf:bossShotOf,figureSegments:figureSegments,figurePhase:figurePhase,FIGURE_ON_TICKS:FIGURE_ON_TICKS,FIGURE_OFF_TICKS:FIGURE_OFF_TICKS,FIGURE_CHARGE_TICKS:FIGURE_CHARGE_TICKS,RUNE_AT:RUNE_AT,RISER_HP:RISER_HP,RISER_SCORE:RISER_SCORE,riserHp:riserHp,shotHitsRiser:shotHitsRiser,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,BOSS_DESCEND:BOSS_DESCEND,SP_START:SP_START,spStart:function(s){return s.sp?s.sp.start:SP_START;},SP_CYCLE:SP_CYCLE,SP_LEAD:SP_LEAD,SP_BEAT:SP_BEAT,SP_LAYBACK:SP_LAYBACK,SP_LEN:SP_LEN,SP_KINDS:SP_KINDS,SP_ORDER:SP_ORDER,spitMotif:spitMotif,SPIT_FORM:SPIT_FORM,SP_INFO:SP_INFO,CAMP_HALF:CAMP_HALF,CAMP_NEED:CAMP_NEED,spWindow:spWindow,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
-    POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,DESCEND_AGE:DESCEND_AGE,DESCEND_Y:DESCEND_Y,FOCUS_SKILL_CHANCE:FOCUS_SKILL_CHANCE,FOCUS_SKILL_GAP:FOCUS_SKILL_GAP,SWORD_DELAY:SWORD_DELAY,SWORD_POWER:SWORD_POWER,REVERSAL_POWER:REVERSAL_POWER,FOCUS_SLOW:FOCUS_SLOW,FOCUS_SLOW_MAX:FOCUS_SLOW_MAX,COVER_REACH:COVER_REACH,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,BOMB_PULSES:BOMB_PULSES,BOMB_PULSE_START:BOMB_PULSE_START,BOMB_PULSE_EVERY:BOMB_PULSE_EVERY,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp,ABILITY_MAX:ABILITY_MAX,ABILITY_POWER:ABILITY_POWER,ABILITY_HASTE:ABILITY_HASTE,ABILITY_SLOW:ABILITY_SLOW,FOCUS_POWER:FOCUS_POWER,FOCUS_GAUGE:FOCUS_GAUGE,shotStrike:shotStrike,updateTimeBombs:updateTimeBombs,CHARGE_EVERY:CHARGE_EVERY,CHARGE_ARC:CHARGE_ARC,CHARGE_REACH:CHARGE_REACH,TIMEBOMB_EVERY:TIMEBOMB_EVERY,TIMEBOMB_FUSE:TIMEBOMB_FUSE,TIMEBOMB_MULT:TIMEBOMB_MULT,TIMEBOMB_SPLASH:TIMEBOMB_SPLASH,TIMEBOMB_R:TIMEBOMB_R,abilityOf:abilityOf,setAbility:setAbility,shotDamage:shotDamage,FIG_HURRY:FIG_HURRY,FIG_WAIT_MAX:FIG_WAIT_MAX};
+    POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,DESCEND_AGE:DESCEND_AGE,DESCEND_Y:DESCEND_Y,FOCUS_SKILL_CHANCE:FOCUS_SKILL_CHANCE,FOCUS_SKILL_GAP:FOCUS_SKILL_GAP,SWORD_DELAY:SWORD_DELAY,SWORD_POWER:SWORD_POWER,REVERSAL_POWER:REVERSAL_POWER,FOCUS_SLOW:FOCUS_SLOW,FOCUS_SLOW_MAX:FOCUS_SLOW_MAX,COVER_REACH:COVER_REACH,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,BOMB_PULSES:BOMB_PULSES,BOMB_PULSE_START:BOMB_PULSE_START,BOMB_PULSE_EVERY:BOMB_PULSE_EVERY,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp,ABILITY_MAX:ABILITY_MAX,ABILITY_POWER:ABILITY_POWER,ABILITY_HASTE:ABILITY_HASTE,ABILITY_SLOW:ABILITY_SLOW,FOCUS_POWER:FOCUS_POWER,FOCUS_GAUGE:FOCUS_GAUGE,SEOHA_FOCUS_SHOT:SEOHA_FOCUS_SHOT,SEOHA_FOCUS_TB:SEOHA_FOCUS_TB,SEOHA_FOCUS_TB_EVERY:SEOHA_FOCUS_TB_EVERY,HERO_TUNE:HERO_TUNE,heroLaserBias:heroLaserBias,shotStrike:shotStrike,updateTimeBombs:updateTimeBombs,CHARGE_EVERY:CHARGE_EVERY,CHARGE_ARC:CHARGE_ARC,CHARGE_REACH:CHARGE_REACH,TIMEBOMB_EVERY:TIMEBOMB_EVERY,TIMEBOMB_FUSE:TIMEBOMB_FUSE,TIMEBOMB_MULT:TIMEBOMB_MULT,TIMEBOMB_SPLASH:TIMEBOMB_SPLASH,TIMEBOMB_R:TIMEBOMB_R,abilityOf:abilityOf,setAbility:setAbility,shotDamage:shotDamage,FIG_HURRY:FIG_HURRY,FIG_WAIT_MAX:FIG_WAIT_MAX};
    rhythmContext={WIDTH:W,HEIGHT:H,ACTORS:ACTORS,SIGNATURES:SIGNATURES,PROPS:PROPS,SEGMENTS:SEGMENTS,SHAPE_PROP:SHAPE_PROP,spawn:spawn,beam:beam,isCinematicBoss:isCinematicBoss};
    if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcade=api;
