@@ -6,10 +6,11 @@ const h=require('./helpers/arcade-v43.cjs'),{idle,put,read}=h;
 const A=()=>h.need();
 const near=(x,y)=>Math.abs(x-y)<1e-4; // 탄 자리는 Float32
 
-test('ability defaults to off and is clamped to 0..7 for both heroes',()=>{
- const a=A();assert.equal(a.ABILITY_MAX,7);
- for(const hero of ['memory','seoha']){const s=idle({hero});assert.equal(s.ability,0);const o=a.abilityOf(s);assert(near(o.damage,1)&&near(o.bulletSpeed,1)&&near(o.move,1),hero+' off = unchanged game');
-  assert.equal(a.setAbility(s,99),7);assert.equal(a.setAbility(s,-3),0);assert.equal(idle({hero,ability:12}).ability,7);}
+test('ability defaults to off and is clamped: Memory 0..7, Seoha 0..3 (user 11-20 "3단계를 최고단계로")',()=>{
+ const a=A();assert.equal(a.ABILITY_MAX,7);assert.equal(a.SEOHA_ABILITY_MAX,3);
+ for(const [hero,max] of [['memory',7],['seoha',3],['seoha-b',3]]){const s=idle({hero});assert.equal(s.ability,0);const o=a.abilityOf(s);assert(near(o.damage,1)&&near(o.bulletSpeed,1)&&near(o.move,1),hero+' off = unchanged game');
+  assert.equal(a.setAbility(s,99),max);assert.equal(a.setAbility(s,-3),0);assert.equal(idle({hero,ability:12}).ability,max);assert.equal(a.abilityMax(s),max);}
+ const s=idle({hero:'seoha'});s.ability=7;assert(near(a.abilityOf(s,true).bulletSpeed,.67),'a stale 7 is read as the top step 3');
 });
 
 test('Memory Gunner output: damage and enemy bullet speed both rise with the level (7 = ×1.77 damage, ×1.385 bullets)',()=>{
@@ -21,15 +22,15 @@ test('Memory Gunner output: damage and enemy bullet speed both rise with the lev
  assert(near(fly(7)/fly(0),1.385),'far bullet flies faster at output 7');
 });
 
-test('Seoha time control works only while the psi (focus) button is held: up to 77% slower bullets and Seoha, stacking with the slow circle (user 11-20)',()=>{
- const a=A(),o=a.abilityOf(idle({hero:'seoha',ability:7}),true);assert.equal(o.kind,'time');assert(near(o.bulletSpeed,.23)&&near(o.move,.23)&&near(o.damage,1));
- assert(near(a.abilityOf(idle({hero:'seoha',ability:7})).bulletSpeed,1),'not held: no effect');
+test('Seoha time control works only while the psi (focus) button is held: 11/22/33% slower bullets and Seoha, stacking with the slow circle (user 11-20)',()=>{
+ const a=A();[[1,.89],[2,.78],[3,.67]].forEach(([l,k])=>{const o=a.abilityOf(idle({hero:'seoha',ability:l}),true);assert.equal(o.kind,'time');assert(near(o.bulletSpeed,k)&&near(o.move,k)&&near(o.damage,1),'step '+l);});
+ assert(near(a.abilityOf(idle({hero:'seoha',ability:3})).bulletSpeed,1),'not held: no effect');
  const fly=(l,focus,dist=130)=>{const t=idle({hero:'seoha',ability:l});t.power=7;put(t,t.player.x+dist,t.player.y-dist,{bage:100,bs:60,ba:0});const x0=t.bx[0];a.step(t,{dx:0,dy:0,focus});return t.bx[0]-x0;};
- assert(near(fly(7,false)/fly(0,false),1),'outside focus the setting does nothing');
- assert(near(fly(7,true)/fly(0,true),.23),'held, outside the circle: setting only');
- const inside0=fly(0,true,12),inside7=fly(7,true,12);assert(inside0<1&&near(inside7/inside0,.23),'held, inside the circle: passive slow × setting');
+ assert(near(fly(3,false)/fly(0,false),1),'outside focus the setting does nothing');
+ assert(near(fly(3,true)/fly(0,true),.67),'held, outside the circle: setting only');
+ const inside0=fly(0,true,12),inside3=fly(3,true,12);assert(inside0<1&&near(inside3/inside0,.67),'held, inside the circle: passive slow × setting');
  const walk=(l,focus)=>{const t=idle({hero:'seoha',ability:l});const x0=t.player.x;a.step(t,{dx:50,dy:0,focus});return t.player.x-x0;};
- assert(near(walk(7,false)/walk(0,false),1)&&near(walk(7,true)/walk(0,true),.23),'Seoha slows only while held');
+ assert(near(walk(3,false)/walk(0,false),1)&&near(walk(3,true)/walk(0,true),.67),'Seoha slows only while held');
  assert(near(a.abilityOf(idle({hero:'seoha-b',ability:3}),true).bulletSpeed,.67),'Seoha (B) shares the trait');
 });
 
@@ -48,7 +49,7 @@ test('focus: Seoha keeps the stronger slow field; Memory Gunner gets damage and 
 
 test('pause settings carry the ability sliders and the app hands the level to the engine',()=>{
  const html=read('arcade.html'),app=read('src/arcade-app-v43.js'),i18n=read('src/arcade-i18n-v43.js');
- for(const id of ['setting-abilityMemory','setting-abilitySeoha'])assert(new RegExp(`id="${id}" type="range" min="0" max="7" step="1"`).test(html),id);
+ for(const [id,max] of [['setting-abilityMemory',7],['setting-abilitySeoha',3]])assert(new RegExp(`id="${id}" type="range" min="0" max="${max}" step="1" value="${max}"`).test(html),id);
  assert(/data-i18n="ability">능력조절</.test(html)&&/출력조절/.test(html)&&/시간제어/.test(html));
  assert(/options=\{ability:abilityFor\(run\.hero\)/.test(app)&&/Arcade\.setAbility\(state,abilityFor\(state\.hero\)\)/.test(app));
  for(const k of ['ability','abilityPower','abilityTime','abilityPowerNote','abilityTimeNote'])assert.equal((i18n.match(new RegExp('\\b'+k+':','g'))||[]).length,2,k+' in ko and en');
@@ -82,7 +83,7 @@ test('enemies specialize by hero: more bullets against Seoha, more boss lasers a
 test('Seoha time control slows the enemy fire clock with the bullets, so slowed bullets do not pile up (user 11-20 dodge check)',()=>{
  const a=A(),seg=a.SEGMENTS.findIndex((g,i)=>g.kind==='wave'&&i>100),run=(ability,focus)=>{const r=a.createRun({difficulty:'normal',seed:9,segment:seg,hero:'seoha',entranceAll:true,ability});let peak=0;
   for(let t=0;t<900&&r.seg===seg;t++){r.player.invulnerableUntil=r.tick+999;a.step(r,{dx:0,dy:0,focus});r.events.length=0;peak=Math.max(peak,r.n);}return {peak,held:r.timeHeld||0};};
- const off=run(0,true),max=run(7,true),idleMax=run(7,false);
+ const off=run(0,true),max=run(3,true),idleMax=run(3,false);
  assert.equal(off.held,0);assert.equal(idleMax.held,0,'only while psi is held');assert(max.held>0);
  assert(max.peak<=off.peak*1.6,`slowed field stays near normal density ${max.peak} vs ${off.peak}`);
 });

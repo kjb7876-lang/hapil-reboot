@@ -26,11 +26,13 @@
   /* 낙관 그림(tools/build-seal-v43.py 가 구운 직접 그린 그림). 아직 못 받았으면 코드로 그린 네모 낙관으로 대신한다. */
   var SEAL_SRC='media/arcade-v43/seal-v43.webp',sealImg=null;
   function seal(){if(sealImg===null&&global.Image&&global.document){sealImg=new global.Image();sealImg.decoding='async';sealImg.src=SEAL_SRC;}return sealImg&&sealImg.complete&&sealImg.naturalWidth?sealImg:null;}
-  function reset(){seal();jack=null;popups.length=0;stamp=null;lineGlow=0;lineSeen=0;lineAge=0;bonusShown=-1;cleanSeg=-1;lostAt=-1e9;}
+  var lifePop=null,LIFE_POP_TICKS=84;
+  function reset(){seal();jack=null;lifePop=null;popups.length=0;stamp=null;lineGlow=0;lineSeen=0;lineAge=0;bonusShown=-1;cleanSeg=-1;lostAt=-1e9;}
   var sound=null;function useSound(fn){sound=typeof fn==='function'?fn:null;}
   function onEvent(e,s,A){
     if(!s)return;
     if(e==='jackpot'&&s.lastJackpot){startJackpot(s,s.lastJackpot,sound);return;}
+    if(e==='lifeHeart'&&s.lastLifeHeart){lifePop={got:s.lastLifeHeart.got,x:s.lastLifeHeart.x,t:0};return;} // 서하 보스 격파 큰 하트(사용자 11-20): 받은 것을 영웅 위에 크게 띄운다
     if(e==='card'){var seg=A.SEGMENTS[s.seg];if(seg&&seg.name&&!s.bossOnly&&!s.spellOnly){entry(seg.name,s.difficulty)[0]++;saveBook();}}
     else if(e==='capture'&&s.lastCapture){var c=s.lastCapture;if(c.name&&!s.bossOnly&&!s.spellOnly){var en=entry(c.name,s.difficulty);if(en[1]<en[0])en[1]++;saveBook();}
       stamp={ok:true,bonus:c.bonus,tick:s.tick,pieces:s.pieces,of:A.LIFE_PIECES,gift:s.pieces===0,got:c.gift||'',y:stampY(s)};}
@@ -137,6 +139,11 @@
       var py=Math.max(54,Math.min(q.y,p.y)-46-16*Math.sqrt(u)),px=Math.max(half,Math.min(W-half,q.x));
       ctx.lineJoin='round';ctx.lineWidth=2.6;ctx.strokeStyle='rgba(44,30,14,.9)';ctx.textAlign='left';var x0=px-half+4,tw=ctx.measureText(txt).width;ctx.strokeText(txt,x0,py);ctx.fillStyle=q.top?'#e8b530':PAPER;ctx.fillText(txt,x0,py);
       if(sub){ctx.font='600 10px '+SANS;ctx.strokeText(sub,x0+tw,py);ctx.fillStyle=PAPER;ctx.fillText(sub,x0+tw,py);}ctx.textAlign='center';} // 합계를 크게, 개수는 작게(합계×개수로 읽히지 않게)
+    if(lifePop){var lu=lifePop.t/LIFE_POP_TICKS;if(playing)lifePop.t++;if(lifePop.t>LIFE_POP_TICKS)lifePop=null;else{
+      // 큰 하트 = 목숨 +1. 돕는 순간이라 인주색(사용자 11-16 규칙), 하트 값 숫자보다 위·크게. 처음 8틱 동안 1.4배에서 내려앉는다
+      var lt=({life:'목숨 +1',bomb:'목숨 가득 · 필살 +1',score:'목숨·필살 가득 · +10,000'})[lifePop.got]||'목숨 +1',lk=lifePop.t<8?1.4-.4*(lifePop.t/8):1;
+      ctx.save();ctx.globalAlpha=lu<.75?1:(1-lu)/.25;ctx.font='800 '+Math.round(17*lk)+'px '+SANS;ctx.textAlign='center';var lw=ctx.measureText(lt).width/2+6,lx=Math.max(lw,Math.min(W-lw,p.x)),ly=Math.max(72,p.y-74-14*Math.sqrt(lu));
+      ctx.lineJoin='round';ctx.lineWidth=3.2;ctx.strokeStyle='rgba(250,244,230,.95)';ctx.strokeText(lt,lx,ly);ctx.fillStyle='#b02a1c';ctx.fillText(lt,lx,ly);ctx.restore();}}
     ctx.restore();ctx.globalAlpha=1;raw(Ink,-1);
   }
   /* 화면 고정 표시: 봉인 보너스 줄 · 낙관 */

@@ -35,7 +35,7 @@
   var state=null,mode='title',difficulty='normal',accumulator=0,lastStamp=0,visual=0,lastRun=null;
   var particles=[],spellDim=0,flash=0,hurtFlash=0,hurtRing=null,VERMILION='#a8382a',shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,SPELL_BANNER_TICKS=42,bannerSpell=false,bannerTitle='',bannerSub='',toast=null;
   var keys={},finger={active:false,id:null,x:0,y:0},focusHeld=false,focusPointer=null,focusLatched=false,bombQueued=false;
-  var settings={music:true,sfx:true,hitSound:true,musicVolume:1,sfxVolume:1,screenShake:true,lowQuality:false,abilityMemory:7,abilitySeoha:7,abilityV:2,keyFocus:'Shift',keyBomb:'KeyX'}; // 능력조절(사용자 11-20): 영웅별 0(끔)~7단계
+  var settings={music:true,sfx:true,hitSound:true,musicVolume:1,sfxVolume:1,screenShake:true,lowQuality:false,abilityMemory:7,abilitySeoha:3,abilityV:3,keyFocus:'Shift',keyBomb:'KeyX'}; // 능력조절(사용자 11-20): 영웅별 0(끔)~7단계
   var fx=null,music=null,best=0,bests={},lastSpell=null,drill=null,DRILL_KEY='hapil-arcade-v43-drill',lastItemSound=0,progress=Progress.fresh(),saveOk=true;
   var themeOverride=null,turbo=0,rushStage=false,oneCreditEligible=false;
   var Story=global.HapilArcadeStory||null,BossIntros=global.HapilArcadeBossIntros||null,story=null,storyQuiet=false,storySeen={},pauseReturn='playing',rulesReturn='title',storyArrivalActor='';
@@ -2225,12 +2225,15 @@
     ['music','sfx','hitSound','screenShake','lowQuality'].forEach(function(k){if(typeof saved[k]==='boolean')settings[k]=saved[k];});
     ['musicVolume','sfxVolume'].forEach(function(k){if(typeof saved[k]==='number'&&isFinite(saved[k]))settings[k]=Math.max(0,Math.min(1,saved[k]));});
     // 사용자 11-20 "초능력설정 기본 7": 예전 저장값(abilityV 없음)의 0은 옛 기본값이라 7로 올리고, 0이 아닌 값은 사용자가 고른 것이니 그대로 둔다. 이후로는 0(끔)도 그대로 저장된다.
-    ['abilityMemory','abilitySeoha'].forEach(function(k){if(typeof saved[k]==='number'&&isFinite(saved[k])){var v=Math.max(0,Math.min(7,Math.round(saved[k])));settings[k]=saved.abilityV>=2||v>0?v:7;}});
+    ['abilityMemory','abilitySeoha'].forEach(function(k){if(typeof saved[k]==='number'&&isFinite(saved[k])){var v=Math.max(0,Math.min(7,Math.round(saved[k])));settings[k]=saved.abilityV>=2||v>0?v:7;
+      if(k==='abilitySeoha'&&!(saved.abilityV>=3))settings[k]=Math.ceil(settings[k]*SEOHA_MAX/7);}}); // 서하 7단계→3단계(사용자 11-20): 옛 1~2→1, 3~4→2, 5~7→3, 끔은 끔
+    settings.abilitySeoha=Math.min(SEOHA_MAX,settings.abilitySeoha);
     ['keyFocus','keyBomb'].forEach(function(k){if(typeof saved[k]==='string'&&keyOk(saved[k]))settings[k]=saved[k];});
     if(settings.keyFocus===settings.keyBomb){settings.keyFocus=KEY_DEFAULTS.keyFocus;settings.keyBomb=KEY_DEFAULTS.keyBomb;} // 저장값이 겹치면 기본값
     lite=settings.lowQuality;
   }
   /* 능력조절: 기억사수 출력조절(피해↑·적탄↑), 서하 시간제어(적탄↓·이동↓). 엔진 수치는 Arcade.abilityOf 가 정한다 */
+  var SEOHA_MAX=Arcade.SEOHA_ABILITY_MAX||3; // 서하 시간제어 단계 수(엔진이 정한다)
   function abilityFor(hero){return isSeoha(hero)?settings.abilitySeoha:settings.abilityMemory;}
   function abilityText(k){var lv=settings[k]|0,o=$('value-'+k),n=$('note-'+k),seoha=k==='abilitySeoha';
     if(o)o.textContent=lv?T('abilityStep',{n:lv}):T('abilityOff');
@@ -2260,7 +2263,7 @@
       if(k==='lowQuality'){lite=settings.lowQuality;if(Ink&&Ink.setLite)Ink.setLite(lite);framesSeen=0;frameMs=16;fit();buildSprites();if(state)initFx(themeOf(state.stageIndex).fx,state.stageIndex);}
       applySettings(true);if(k==='music'||k==='sfx')unlockAudio();});});
     ['musicVolume','sfxVolume'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('input',function(){settings[k]=Math.max(0,Math.min(1,Number(e.value)/100||0));applySettings(true);unlockAudio();});});
-    ['abilityMemory','abilitySeoha'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('input',function(){settings[k]=Math.max(0,Math.min(7,Math.round(Number(e.value)||0)));applySettings(true);});});
+    ['abilityMemory','abilitySeoha'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('input',function(){settings[k]=Math.max(0,Math.min(k==='abilitySeoha'?SEOHA_MAX:7,Math.round(Number(e.value)||0)));applySettings(true);});});
   }
 
   /* 키 바꾸기(사용자 11-20 "초능력키랑 필살기(폭탄키) 임의로 다른키로 바꾸기 가능하게"): PC 키보드 전용. 키는 물리 위치(e.code)로 저장해 한글 입력기가 켜져도 같은 키로 읽는다.
