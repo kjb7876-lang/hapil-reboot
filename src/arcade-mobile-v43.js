@@ -46,7 +46,7 @@
   function clearCheckpoint(){try{global.localStorage.removeItem(CP_KEY);}catch(e){}}
   function checkpointCount(value){return typeof value==='number'&&isFinite(value)&&value>=0?Math.min(2147483647,Math.floor(value)):0;}
   function storeCheckpoint(s,index){
-    store(CP_KEY,{v:1,stage:s.stageIndex,seg:index,hero:checkpointHero(s.hero),difficulty:s.difficulty,at:Date.now(),hits:checkpointCount(s.hits-s.mark.hits),bombs:checkpointCount(s.bombsUsed-s.mark.bombs),exp:checkpointCount(s.exp),fills:checkpointCount(s.fills)});
+    store(CP_KEY,{v:1,stage:s.stageIndex,seg:index,hero:checkpointHero(s.hero),difficulty:s.difficulty,at:Date.now(),hits:checkpointCount(s.hits-s.mark.hits),bombs:checkpointCount(s.bombsUsed-s.mark.bombs),exp:checkpointCount(s.exp),fills:checkpointCount(s.fills),stock:checkpointCount(s.bombs)});
   }
   // 격파 순간 앱도 호출한다. 2초의 화면 연출 중 나가도 쓰러뜨린 보스부터 다시 싸우지 않는다.
   function commitBossClear(s){
@@ -68,7 +68,7 @@
     var age=Date.now()-c.at;
     if(c.stage!==stage||c.difficulty!==difficulty||!seg||seg.stage!==stage||age<0||age>=CP_MAX_AGE)return null;
     if(A.STAGES[stage]&&A.STAGES[stage].first===c.seg)return null; // 스테이지 첫 구간이면 처음부터와 같다
-    c.hero=checkpointHero(c.hero);['hits','bombs','exp','fills'].forEach(function(k){c[k]=checkpointCount(c[k]);});return c;
+    c.hero=checkpointHero(c.hero);['hits','bombs','exp','fills'].forEach(function(k){c[k]=checkpointCount(c[k]);});if(c.stock!==undefined)c.stock=checkpointCount(c.stock);return c; // stock: 남은 필살기(11-20 격파 보상). 옛 저장에는 없다
   }
 
   /* 앱이 매 프레임 부른다. s: 지금 판, mode: 화면 상태, ms: 지난 프레임 시간. */
