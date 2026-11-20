@@ -451,3 +451,35 @@ test('normal canvas entrances use the stage-specific speaker and dialogue across
   assert.equal(sections.size,52);
   assert.equal(newLines.size,52);
 });
+
+test('PC 키 바꾸기: 초능력·폭탄 키를 눌러 지정하고, 겹치면 맞바꾸고, 막힌 키는 거절하며, 저장·되돌리기·안내 문구가 따라온다',()=>{
+  const f=harness();const {h,w,doc,nodes,storage}=f;h.mode('paused');
+  const bind=(id,ev)=>{nodes.get(id).click();doc.emit('keydown',ev);};
+  assert.equal(h.settings().keyFocus,'Shift');assert.equal(h.settings().keyBomb,'KeyX');
+  bind('key-focus',{key:'c',code:'KeyC'});assert.equal(h.settings().keyFocus,'KeyC');assert.equal(nodes.get('key-focus').textContent,'C');
+  assert.equal(JSON.parse(storage['hapil-arcade-settings-v43']).keyFocus,'KeyC');
+  bind('key-bomb',{key:'c',code:'KeyC'}); // 초능력과 겹침 → 맞바꿈
+  assert.equal(h.settings().keyBomb,'KeyC');assert.equal(h.settings().keyFocus,'KeyX');assert.equal(nodes.get('key-bomb').textContent,'C');
+  nodes.get('key-focus').click();doc.emit('keydown',{key:'ArrowLeft',code:'ArrowLeft'}); // 이동키는 거절하고 계속 기다린다
+  assert.equal(h.settings().keyFocus,'KeyX');assert(/ArrowLeft/.test(nodes.get('key-note').textContent));
+  doc.emit('keydown',{key:'w',code:'KeyW'});assert.equal(h.settings().keyFocus,'KeyX');
+  doc.emit('keydown',{key:'Control',code:'ControlRight'});assert.equal(h.settings().keyFocus,'Control');assert.equal(nodes.get('key-focus').textContent,'Ctrl');
+  nodes.get('key-reset').click();assert.equal(h.settings().keyFocus,'Shift');assert.equal(h.settings().keyBomb,'KeyX');
+});
+
+test('PC 키 바꾸기: 바꾼 키가 실제 조작이고 옛 키는 더 이상 반응하지 않으며 한글 입력기(code만 정확)에서도 같다',()=>{
+  const {h,w,doc,nodes}=harness();h.mode('paused');
+  nodes.get('key-focus').click();doc.emit('keydown',{key:'ㅊ',code:'KeyC'});
+  nodes.get('key-bomb').click();doc.emit('keydown',{key:'Process',code:'KeyV'});
+  h.mode('playing');
+  doc.emit('keydown',{key:'Shift'});assert.equal(h.input().focus,false);doc.emit('keydown',{key:'x',code:'KeyX'});assert.equal(h.input().bomb,false);
+  doc.emit('keydown',{key:'ㅊ',code:'KeyC'});assert.equal(h.input().focus,true);
+  doc.emit('keyup',{key:'ㅊ',code:'KeyC'});assert.equal(h.input().focus,false);
+  doc.emit('keydown',{key:'Process',code:'KeyV'});assert.equal(h.input().bomb,true);
+});
+
+test('PC 키 바꾸기: 저장값을 불러오고, 겹치거나 잘못된 저장값은 기본값으로 둔다',()=>{
+  const a=harness({'hapil-arcade-settings-v43':JSON.stringify({keyFocus:'KeyC',keyBomb:'KeyV'})});a.h.load();assert.equal(a.h.settings().keyFocus,'KeyC');assert.equal(a.h.settings().keyBomb,'KeyV');
+  const b=harness({'hapil-arcade-settings-v43':JSON.stringify({keyFocus:'Escape',keyBomb:'ArrowUp'})});b.h.load();assert.equal(b.h.settings().keyFocus,'Shift');assert.equal(b.h.settings().keyBomb,'KeyX');
+  const c=harness({'hapil-arcade-settings-v43':JSON.stringify({keyFocus:'KeyC',keyBomb:'KeyC'})});c.h.load();assert.equal(c.h.settings().keyFocus,'Shift');assert.equal(c.h.settings().keyBomb,'KeyX');
+});
