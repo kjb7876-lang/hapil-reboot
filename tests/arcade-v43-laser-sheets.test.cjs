@@ -6,7 +6,9 @@ const table=JSON.parse(h.read('docs/v43/laser-sheets.json'));
 const index=JSON.parse(h.read('media/arcade-v43-laser/index.json'));
 
 test('v43 laser sheets: every Drive sheet number maps to the boss that appears in that order',()=>{
- const a=h.need(),order=[];a.SEGMENTS.filter(g=>g.kind==='card'&&!g.midboss).forEach(g=>{if(!order.includes(g.actor))order.push(g.actor);});
+ const a=h.need(),order=[];// 합쳐진 보스는 모습(초천사 → 루시퍼)마다 제 시트를 쓴다
+ a.SEGMENTS.filter(g=>g.kind==='card'&&!g.midboss).forEach(g=>{const art=a.segArt(g),who=a.FORM_BASE[art]||(a.ACTORS[art]?art:g.actor);if(!order.includes(who))order.push(who);});
+ assert(/function sheetWho/.test(h.read('src/arcade-app-v43.js'))&&/laserByBoss\[sheetWho\(s\)\]/.test(h.read('src/arcade-app-v43.js')),'the app picks the sheet by the present form');
  for(const [b,actor] of Object.entries(table.assign))assert.equal(actor,order[+b.slice(1)-1],b);
  assert.equal(table.assign.B05,'p1_comrade');assert.equal(table.assign.B16,'asmodeus');assert.equal(table.assign.B33,'p5_archon');
  assert(Object.keys(table.assign).length>=28,'all sheets on Drive are assigned');

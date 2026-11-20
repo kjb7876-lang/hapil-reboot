@@ -6,7 +6,7 @@ const difficulties=['gentle','normal','hell'];
 
 test('rhythm profiles cover all cinematic bosses, including the chairman, in Node and browser',()=>{
  const browser={};vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../src/arcade-boss-rhythm-v43.js'),'utf8'),browser);
- assert.equal(browser.HapilArcadeBossRhythm.ids.length,51);assert.equal(R.ids.length,51);assert(first.every(i=>i>=0));
+ assert.equal(browser.HapilArcadeBossRhythm.ids.length,50);assert.equal(R.ids.length,50);assert(first.every(i=>i>=0));
  const cinematic=new Set(A.SEGMENTS.filter(g=>g.kind==='card'&&A.isCinematicBoss(g.actor,g.mid)).map(g=>g.actor));
  assert.deepEqual(new Set(R.ids),cinematic);assert.equal(R.families.length,6);
  assert(A.SEGMENTS[first[R.ids.indexOf('p2_chairman')]].mid);
@@ -23,7 +23,7 @@ test('only the first ordinary cinematic card is replaced; named attacks and opt-
   const k=g.stage+'|'+g.actor+'|'+!!g.mid;
   assert.equal(selected,!seen.has(k),k);seen.add(k);if(selected)count++;
  });
- assert.equal(count,57,'56 main boss visits and one cinematic midboss');
+ assert.equal(count,53,'52 main boss visits and one cinematic midboss');
 });
 
 function trace(actor,difficulty){
@@ -55,11 +55,11 @@ test('all actors emit bounded spaced fans, fixed two-line warnings and genuine f
  }
 });
 
-test('normal and hell share every emitted bullet and laser geometry for all 51 actors',()=>{
+test('normal and hell share every emitted bullet and laser geometry for all 50 actors',()=>{
  for(const actor of R.ids){const a=trace(actor,'normal'),b=trace(actor,'hell');assert.deepEqual(a.shots,b.shots,actor);assert.deepEqual(a.beams,b.beams,actor);}
 });
 
-test('actual engine runs all 306 actor/mode/viewport cases through finite first-card deadlines',tctx=>{
+test('actual engine runs all 300 actor/mode/viewport cases through finite first-card deadlines',tctx=>{
  // Invulnerability and a refilled boss HP deliberately isolate emission and
  // segment termination. This test makes no claim of a playable no-hit route.
  let cases=0,maxBullets=0;
@@ -75,8 +75,8 @@ test('actual engine runs all 306 actor/mode/viewport cases through finite first-
   assert.equal(s.dropped,0);assert(peak<=160,'bounded actual field including terrain: '+R.ids[k]+' '+difficulty+' '+peak);
   assert.equal(s.autoBombs,0);assert.equal(s.distorts,0);maxBullets=Math.max(maxBullets,peak);cases++;
  }
- assert.equal(cases,306);assert(maxBullets>0);
- tctx.diagnostic('306 actual first-card runs; peak live bullets including terrain='+maxBullets+'; all warned/activated; no cap drops. Invulnerability is emission-test-only.');
+ assert.equal(cases,300);assert(maxBullets>0);
+ tctx.diagnostic('300 actual first-card runs; peak live bullets including terrain='+maxBullets+'; all warned/activated; no cap drops. Invulnerability is emission-test-only.');
 });
 
 test('explicit disabled rhythm preserves the default deterministic engine run',()=>{

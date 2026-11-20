@@ -54,14 +54,14 @@ test('the stage and role select a stable score, including recurring bosses and t
     }).map(i=>A.phaseKind(A.SEGMENTS[i],i)?.id??null);
   }
   assert.deepEqual(score(1,'p1_tree',false),[null,'petals','braid','gates']);
-  assert.deepEqual(score(22,'p2_chairman',true),[null,'ratchet']);
-  assert.deepEqual(score(28,'controller',true),[null,'mirror']);
-  assert.equal(score(25,'controller',false)[1],'gates');
-  assert.equal(score(26,'controller',false)[1],'columns');
-  assert.equal(score(30,'goblin',false).at(-1),'rose');
-  assert.equal(score(37,'p5_grand',false).at(-1),'stairs');
-  assert.equal(score(55,'rian',false).at(-1),'triangle');
-  assert.equal(score(56,'cultist',false).length,14);
+  assert.deepEqual(score(20,'p2_chairman',true),[null,'ratchet']);
+  assert.deepEqual(score(26,'controller',true),[null,'mirror']);
+  assert.equal(score(23,'controller',false)[1],'gates');
+  assert.equal(score(24,'controller',false)[1],'columns');
+  assert.equal(score(27,'goblin',false).at(-1),'rose');
+  assert.equal(score(33,'p5_grand',false).at(-1),'stairs');
+  assert.equal(score(50,'rian',false).at(-1),'triangle');
+  assert.equal(score(52,'cultist',false).length,14);
 });
 
 test('branching roots split once, adjacent gate openings overlap, and the twin seals take turns',()=>{
@@ -72,17 +72,17 @@ test('branching roots split once, adjacent gate openings overlap, and the twin s
     P.fire(kind,s,t,{W:360,H:640,colors:[0,1],spawn:(state,x,y,a,v,o)=>shots.push({x,y,a,v,o})},{actor,phaseNo:A.phaseOf(segment).no});
     return shots;
   }
-  const roots=emit(39,'p5_neuron',false,0);
+  const roots=emit(35,'p5_neuron',false,0);
   assert.equal(roots.length,2);
   assert(roots.every(q=>q.a===Math.PI/2&&q.o.mode===A.MODE_TURN&&q.o.at===40));
   assert.equal(roots[0].o.arg,-roots[1].o.arg);
   const open=t=>{
-    const blocked=emit(37,'p5_grand',true,t).map(q=>Math.floor(q.x/45));
+    const blocked=emit(33,'p5_grand',true,t).map(q=>Math.floor(q.x/45));
     return Array.from({length:8},(_,i)=>i).filter(i=>!blocked.includes(i));
   };
   assert.deepEqual(open(0),[1,2]);
   assert.deepEqual(open(54),[2,3]);
-  const first=emit(55,'rian',true,0),second=emit(55,'rian',true,54);
+  const first=emit(50,'rian',true,0),second=emit(50,'rian',true,54);
   assert.equal(first.length,9);
   assert.equal(second.length,9);
   assert(first.every(q=>q.o.color===0)&&second.every(q=>q.o.color===1));

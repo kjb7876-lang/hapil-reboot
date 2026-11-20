@@ -2,7 +2,7 @@
 // 보스전 특수 페이즈와 중앙 견제(사용자 11-18): 레이저만 / 그림만 / 무자비 테트리스 / 솟는 바위, 레이백 장단, 중앙 버티기 견제.
 const test=require('node:test'),assert=require('node:assert/strict'),h=require('./helpers/arcade-v43.cjs');
 const a=h.need();
-function bossRun(difficulty,stage,seed){const g=a.STAGES[stage||9];let seg=g.first;while(a.SEGMENTS[seg].kind!=='card'||a.SEGMENTS[seg].mid)seg++;const s=a.createRun({difficulty,seed:seed||3,segment:seg,entranceAll:true});toCard(s);return s;}
+function bossRun(difficulty,stage,seed){const g=a.STAGES[stage||8];let seg=g.first;while(a.SEGMENTS[seg].kind!=='card'||a.SEGMENTS[seg].mid)seg++;const s=a.createRun({difficulty,seed:seed||3,segment:seg,entranceAll:true});toCard(s);return s;}
 function kindRun(difficulty,kind){for(let st=0;st<a.STAGES.length;st++){const g=a.STAGES[st];let seg=g.first;while(a.SEGMENTS[seg]&&a.SEGMENTS[seg].kind!=='card'||(a.SEGMENTS[seg]&&a.SEGMENTS[seg].mid))seg++;if(!a.SEGMENTS[seg]||a.SEGMENTS[seg].stage!==st)continue;
  if(a.SP_ORDER[(st*3+seg)%a.SP_ORDER.length]===kind){const s=a.createRun({difficulty,seed:3,segment:seg,entranceAll:true});toCard(s);if(a.spStart(s)<0)continue;s.segTick=a.spStart(s)-a.SP_LEAD-5;return s;}}throw new Error(kind);}
 function toCard(s){for(let i=0;i<3000&&s.stage!=='card';i++){s.player.invulnerableUntil=s.tick+999;a.step(s,{dx:0,dy:0});h.clear(s);}assert.equal(s.stage,'card');s.segTick=0;}

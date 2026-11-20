@@ -11,7 +11,7 @@
   var BOSS_ENTRANCES=[
     {
       "actor": "p2_belphegor",
-      "stage": 13,
+      "stage": 11,
       "sin": "sloth",
       "sinName": "나태",
       "bossName": "벨페고르",
@@ -39,7 +39,7 @@
     },
     {
       "actor": "p2_leviathan",
-      "stage": 14,
+      "stage": 12,
       "sin": "envy",
       "sinName": "질투",
       "bossName": "레비아탄",
@@ -67,7 +67,7 @@
     },
     {
       "actor": "p2_beelzebub",
-      "stage": 15,
+      "stage": 13,
       "sin": "gluttony",
       "sinName": "탐식",
       "bossName": "베엘제붑",
@@ -95,7 +95,7 @@
     },
     {
       "actor": "asmodeus",
-      "stage": 16,
+      "stage": 14,
       "sin": "lust",
       "sinName": "색욕",
       "bossName": "아스모데우스",
@@ -123,7 +123,7 @@
     },
     {
       "actor": "p2_greed",
-      "stage": 17,
+      "stage": 15,
       "sin": "greed",
       "sinName": "탐욕",
       "bossName": "탐욕의 귀",
@@ -151,7 +151,7 @@
     },
     {
       "actor": "p2_mammon",
-      "stage": 18,
+      "stage": 16,
       "sin": "greed",
       "sinName": "탐욕",
       "bossName": "맘몬",
@@ -179,7 +179,7 @@
     },
     {
       "actor": "p2_wrath",
-      "stage": 19,
+      "stage": 17,
       "sin": "wrath",
       "sinName": "분노",
       "bossName": "분노의 귀",
@@ -207,7 +207,7 @@
     },
     {
       "actor": "pride",
-      "stage": 20,
+      "stage": 18,
       "sin": "pride",
       "sinName": "교만",
       "bossName": "교만의 회장",
@@ -235,7 +235,7 @@
     },
     {
       "actor": "p2_chairman",
-      "stage": 21,
+      "stage": 19,
       "sin": "pride",
       "sinName": "교만",
       "bossName": "회장",
@@ -263,7 +263,7 @@
     },
     {
       "actor": "p2_core",
-      "stage": 21,
+      "stage": 19,
       "sin": "pride",
       "sinName": "교만",
       "bossName": "연산핵",

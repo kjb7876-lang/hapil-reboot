@@ -28,7 +28,9 @@
     ?[1,2,3,4,5,6,7,8].map(function(n){return require('./arcade-parts-v43/p'+n+'.js');})
     :(root.HapilArcadeParts||[]).slice().sort(function(a,b){return a.part-b.part;});
   function gather(field,into,isList){PARTS.forEach(function(p){var v=p[field];if(!v)return;if(isList)v.forEach(function(x){into.push(x);});else Object.keys(v).forEach(function(k){if(into[k])throw new Error('duplicate '+field+' '+k);into[k]=v[k];});});}
-  /* 원작 장면 표: [장면 번호, 부, 제목]. 쉼터 6곳은 뺐다(62장면 가운데 56장면). 스테이지 이름은 여기서만 나온다. */
+  /* 원작 장면 표: [장면 번호, 부, 제목]. 쉼터 6곳은 뺐다(62장면 가운데 56장면). 스테이지 이름은 여기서만 나온다.
+   * 사용자 11-20 "10-11-12 하나로 합치고 … 29-30합치고 32-33 합치고 … 54를55로 옮기고": 같은 보스가 이어지던 장면을 한 스테이지로 합쳐 52스테이지.
+   *  09-2·10 → 11(루시퍼 6페이즈), 31 → 32(고블린 두목), 34 → 35(불면귀), 60(한리안과 백이온)이 59(교주) 앞으로. 옛 번호 ↔ 새 번호는 arcade-layout-v43.js */
   var SCENES=[
     ['01',1,'악마화 나무의 정원'],
     ['02',1,'거미동굴'],
@@ -39,8 +41,6 @@
     ['07',1,'추락'],
     ['08',1,'피로 물든 병원'],
     ['09-1',1,'주사실'],
-    ['09-2',1,'결전의 날'],
-    ['10',1,'환자와 중독의 도시'],
     ['11',1,'천사의 가면과 의목사 후보생'],
     ['13',2,'솔로몬의 봉인식'],
     ['14',2,'나태의 집'],
@@ -58,10 +58,8 @@
     ['27',3,'관리자 권한'],
     ['28',3,'중앙 코어 이주실'],
     ['29',3,'기억의 문'],
-    ['31',4,'중립 지역의 재각성'],
     ['32',4,'고블린 두목과 장미 인장'],
     ['33',4,'타락천사 기사'],
-    ['34',4,'잠들지 못하는 마을'],
     ['35',4,'한약과 불면귀'],
     ['37',5,'최초명령의 세계'],
     ['38',5,'예순여섯 수문장'],
@@ -83,8 +81,8 @@
     ['56',8,'하나로 묶인 악몽'],
     ['57',8,'교주가 기다리는 전쟁'],
     ['58',8,'돌아오는 현실의 기억'],
-    ['59',8,'처음 세웠던 목표'],
     ['60',8,'사몽의 문턱'],
+    ['59',8,'처음 세웠던 목표'],
     ['61',8,'교주의 사몽']];
   var FIGURE_CAP=10,W=360,H=640,CAP=1120,COMPACT_CAP=656,LASER_CAP=24,MOB_CAP=28,ITEM_CAP=160,TICK=1/60,TAU=Math.PI*2;
   var GOLDEN_ANGLE=Math.PI*(3-Math.sqrt(5)); // 137.5°. 해바라기 씨앗이 겹치지 않고 차오르는 각도
@@ -99,11 +97,17 @@
   /* 여유 모드만 첫 스테이지 탄 수 70%에서 마지막 110%까지 오른다. 노멀·헬은 같은 공격을 유지한다. */
   var SOFT={gentle:{speed:.87,density:.8},normal:{speed:.88,density:.8}},SCATTER_ANGLE=.16,SCATTER_SPEED=.22,SCATTER_POS=7;
   var CURVE_START=.7,CURVE_END=1.1,PACE_START=1,PACE_END=1; // 속도는 그대로(탄이 화면 아래까지 닿는 시간을 지킨다), 탄 수만 곡선
+  var AWAKE_AS={gentle:'normal',normal:'hell',hell:'hell'},AWAKE_TEMPO=2,AWAKE_HELL_DENSITY=.85;
+  function awakeNow(s){if(!s.entranceAll)return false;var g=SEGMENTS[s.seg],st=g&&STAGES[g.stage];return !!(g&&g.kind==='card'&&!g.mid&&st&&st.awake);}
   function applyCurve(s){var base=DIFFICULTY[s.difficulty],u=STAGES.length>1?Math.max(0,Math.min(1,s.stageIndex/(STAGES.length-1))):0,gentle=s.difficulty==='gentle';
     var d=gentle?CURVE_START+(CURVE_END-CURVE_START)*u:1,v=gentle?PACE_START+(PACE_END-PACE_START)*u:1;
     var soft=s.entranceAll&&s.difficulty!=='hell'?SOFT[s.difficulty]:null; // 사용자 11-18: 이지·노멀만 탄 속도를 낮추고 탄 수를 10% 줄인다(헬은 그대로)
     s.rules.speed=base.speed*v*(soft?soft.speed:1)*(s.entranceAll?LIVE_FAST:1);s.density=base.density*d*(soft?soft.density:1)*(s.compact?COMPACT_DENSITY:1)*(s.entranceAll?LIVE_TRIM:1);
-    var L=s.entranceAll&&LIVE_TABLE[s.difficulty];if(L){s.rules.speed=L.speed;s.density=(L.density+(L.end===undefined?0:(L.end-L.density)*u))*(s.compact?LIVE_MOBILE.density:1/COMPACT_DENSITY);s.rules.radius=L.radius;s.rules.hitScale=L.hitScale;if(s.player)s.player.r=L.radius;if(s.compact){s.rules.speed*=LIVE_MOBILE.speed;s.rules.warn=base.warn*LIVE_MOBILE.warn;s.rules.beam=base.beam*LIVE_MOBILE.beam;}}
+    // 사몽각성 교주(마지막 보스, 사용자 11-20 "이지는 노말패턴 노말은 헬패턴 헬은 모든패턴2배가속"): 본보스 카드 동안만 한 단계 위 난이도의 탄속·탄 수·패턴 모양을 쓴다.
+    // 목숨·피격점·판정 비율은 고른 난이도 그대로다. 헬은 헬 표 그대로에 패턴 박자를 두 배로 돌리고(s.awakeTempo) 화면이 덮이지 않게 탄 수만 AWAKE_HELL_DENSITY 로 줄인다.
+    var aw=awakeNow(s),awD=aw?AWAKE_AS[s.difficulty]:'';s.awake=aw;s.awakeShape=aw&&s.difficulty==='gentle';s.awakeTempo=aw&&s.difficulty==='hell'?AWAKE_TEMPO:1;
+    var L=s.entranceAll&&LIVE_TABLE[s.difficulty];if(L&&aw){var own=L;L={speed:LIVE_TABLE[awD].speed,density:LIVE_TABLE[awD].density*(s.difficulty==='hell'?AWAKE_HELL_DENSITY:1),radius:own.radius,hitScale:own.hitScale};}
+    if(L){s.rules.speed=L.speed;s.density=(L.density+(L.end===undefined?0:(L.end-L.density)*u))*(s.compact?LIVE_MOBILE.density:1/COMPACT_DENSITY);s.rules.radius=L.radius;s.rules.hitScale=L.hitScale;if(s.player)s.player.r=L.radius;if(s.compact){s.rules.speed*=LIVE_MOBILE.speed;s.rules.warn=base.warn*LIVE_MOBILE.warn;s.rules.beam=base.beam*LIVE_MOBILE.beam;}}
     var tune=s.entranceAll&&HERO_TUNE[isSeohaHero(s)?'seoha':s.hero];if(tune){s.rules.speed*=tune.speed||1;s.density*=tune.density||1;}}
   /* 영웅별 난이도 보정(사용자 11-20 "서하로 플레이할때는 적 탄환패턴 많이 나와도됨 탄환난이도 조금더 높여도 될듯"): 실제 게임(entranceAll)에서 기준표(LIVE_TABLE) 위에 곱한다. 서하는 시간을 늦추는 능력이 있으니 탄 수 +20%, 탄속 +6% */
   var HERO_TUNE={seoha:{density:1.2,speed:1.06},memory:{laser:1.5,laserEvery:{gentle:300,normal:170,hell:200}}};
@@ -247,8 +251,8 @@
 
   function rand(s){var x=s.rng|0;x^=x<<13;x^=x>>>17;x^=x<<5;s.rng=x>>>0;return s.rng/4294967296;}
   function count(s,n){return Math.max(1,Math.round(n*s.density));}
-  function patternDifficulty(s){return s.difficulty==='gentle'?'gentle':'hell';}
-  function pick(s,gentle,normal,hell){return s.difficulty==='gentle'?gentle:hell;}
+  function patternDifficulty(s){return s.difficulty==='gentle'&&!s.awakeShape?'gentle':'hell';}
+  function pick(s,gentle,normal,hell){return s.difficulty==='gentle'&&!s.awakeShape?gentle:hell;}
   function aim(s,x,y){return Math.atan2(s.player.y-y,s.player.x-x);}
   function note(s,name){if(s.events.length<48)s.events.push(name);}
   function bulletRadius(s,i){return (s.bsize[i]===SHAPE_PROP?PROPS[s.bcolor[i]].radius:SIZE_RADIUS[s.bsize[i]])*hitSize(s);}
@@ -480,7 +484,7 @@
   function plainSuperformula(c1,c2){return function(s,t){var b=s.boss,odd=(t/58)%2;
     if(t%58===0)shape(s,b.x,b.y,Shapes.superformula(odd?5:7,odd?2:3,7,7,count(s,30)),80,t*.006,{color:odd?c2:c1,size:0});};}
   // 보스를 축으로 도는 광선 바퀴
-  function wheel(s,spokes,turn,color,active){var b=s.boss,base=aim(s,b.x,b.y)+Math.PI/spokes;for(var k=0;k<spokes;k++)beam(s,b.x,b.y,base+TAU*k/spokes,{width:12,warn:76,active:active,color:color,spin:turn,follow:true});}
+  function wheel(s,spokes,turn,color,active){if(s.entranceAll&&spokes===4)spokes=3; /* 실제 게임의 광선은 온 줄이라 네 살은 직각으로 만나는 두 줄(십자 모양)이 된다. 사용자 11-16 "십자가는 빼 다 육망성으로": 세 줄(여섯 갈래 별)로 낸다 */var b=s.boss,base=aim(s,b.x,b.y)+Math.PI/spokes;for(var k=0;k<spokes;k++)beam(s,b.x,b.y,base+TAU*k/spokes,{width:12,warn:76,active:active,color:color,spin:turn,follow:true});}
   // 가로줄·세로줄 광선 격자. both면 한꺼번에 켠다.
   function lattice(s,t,period,rows,columns,both,width,c1,c2){var phase=t%period,half=period>>1;
     if(phase===0||both&&phase===half)for(var k=0;k<rows;k++)row(s,236+k*(330/rows)+rand(s)*46,{width:width,warn:64,active:66,color:c1});
@@ -496,9 +500,11 @@
   gather('actors',ACTORS);
   /* ── 같은 인물이 이어 나올 때의 다른 모습(사용자 11-19 "같은 이미지의 보스가 반복해서 나오는 문제"). 인물·패턴·이름은 그대로이고 그림만 바꾼다.
    *    키: 인물@원작 장면 → 그림 키(media/arcade-v43/<키>.webp, 배정표 tools/arcade-art-v43/forms.json). 같은 인물의 원화(m0·저장소)만 쓴다. ── */
-  var BOSS_FORMS={'lucifer@11':'lucifer_alt11','mask@11':'mask_alt11','controller@27':'controller_alt27','controller@29':'controller_alt29',
-    'goblin@31':'goblin_alt31','insomnia@34':'insomnia_alt34','chief@50':'chief_alt50','cultist@61':'cultist_alt61','p6_demons@48':'p6_demons_alt48'},FORM_BASE={};
+  var BOSS_FORMS={'controller@27':'controller_alt27','controller@29':'controller_alt29',
+    'chief@48':'chief_swarm','chief@50':'chief_alt50','cultist@61':'cultist_awake','p6_demons@48':'p6_demons_alt48'},FORM_BASE={};
   Object.keys(BOSS_FORMS).forEach(function(k){FORM_BASE[BOSS_FORMS[k]]=k.split('@')[0];});
+  // 합친 스테이지의 앞·뒤 모습(부별 파일의 forms)도 원래 인물 크기로 그린다.
+  FORM_BASE.lucifer_alt11='lucifer';FORM_BASE.goblin_alt31='goblin';FORM_BASE.insomnia_alt34='insomnia';
   /* ── 보스마다 고유 탄 문양(사용자 11-19 "탄종류를 보스마다 고유하나씩 … 그 고유탄위주로"). 보스·중간보스가 나와 있는 동안 그 인물이 쏜 작은·중간·큰 구슬탄은
    *    이 문양으로 그린다(판정 원은 그대로, 그림만). 이어 만나는 인물끼리(같은 맵의 중간보스·보스, 앞 맵 보스)는 문양이 겹치지 않는다(arcade-v43-boss-shots 검사).
    *    십자가 모양 금지(검은 가드 없음), 색은 패턴이 정한 보스 색 그대로(인주색 아님). 중간보스(mb_*)는 아래 표에 없으면 bossShotOf가 고른다. ── */
@@ -519,11 +525,11 @@
   var MIDBOSS={
     '01':['뿌리 추적자',GREEN,PURPLE],'02':['보랏빛 알집지기',PURPLE,WHITE],'03':['늪의 염소머리 악마',GREEN,YELLOW],'04':['피냄새 추적자',RED,WHITE],
     '05':['피로 꿰맨 전령',PURPLE,GREEN],'06':['숨이 끊긴 전령의 그림자',RED,PURPLE],'07':['검은기둥 화염술사',YELLOW,RED],'08':['복도 비명잔영',WHITE,CYAN],
-    '09-1':['주사실 감시환각',CYAN,WHITE],'09-2':['보라검 추격천사',YELLOW,WHITE],'10':['암시장의 수상한 자',PURPLE,YELLOW],'13':['일흔두 번째 인장 잔류체',CYAN,PURPLE],
+    '09-1':['주사실 감시환각',CYAN,WHITE],'10':['암시장의 수상한 자',PURPLE,YELLOW],'13':['일흔두 번째 인장 잔류체',CYAN,PURPLE],
     '14':['나태의 껍데기 파수',GREEN,YELLOW],'15':['금이 간 비교잔영',CYAN,WHITE],'16':['폐기주방 감독',YELLOW,RED],'17':['심장빛 무대감독',RED,PURPLE],
     '18':['모든 면이 뒷면인 동전',YELLOW,WHITE],'19':['눈보라 속 여우 악마',WHITE,CYAN],'20':['호텔 화염기사',RED,YELLOW],'21':['흑마법사의 시체경호체',CYAN,RED],
     '24':['기계화 문턱 관측거미',YELLOW,CYAN],'25':['기억 검열기',WHITE,PURPLE],'27':['역전 관리자',CYAN,WHITE],'28':['중앙이주 코어',CYAN,YELLOW],
-    '31':['피리 고블린',GREEN,RED],'32':['장미이슬 슬라임',RED,GREEN],'33':['소환진 타락천사',PURPLE,RED],'34':['포구 검은 안개',WHITE,PURPLE],'35':['검은 안개 심장',PURPLE,YELLOW],
+    '32':['장미이슬 슬라임',RED,GREEN],'33':['소환진 타락천사',PURPLE,RED],'35':['검은 안개 심장',PURPLE,YELLOW],
     '37':['시간 수집자',YELLOW,PURPLE],'38':['상위수문장 49',YELLOW,CYAN],'39':['상위수문장 51',CYAN,WHITE],'41':['상위수문장 53',CYAN,PURPLE],'42':['시간핵의 명령 파동',RED,CYAN],
     '43':['상위수문장 56',GREEN,WHITE],'44':['시간수문장 42',PURPLE,YELLOW],'45':['상위수문장 57',WHITE,CYAN],'46':['상위수문장 54',CYAN,GREEN],
     '49':['환수검 모조체',WHITE,CYAN],'52':['파란불 역주행 목격자',CYAN,WHITE],'53':['공실장부 당직감사',YELLOW,RED],'54':['진술 봉쇄 인과핵',PURPLE,WHITE],
@@ -743,7 +749,7 @@
     var g=DEFS[row[0]];if(!g)throw new Error('no stage for scene '+row[0]+' '+row[2]);
     if(g.partFile!==row[1])throw new Error('scene '+row[0]+' belongs to part '+row[1]);
     var stage={index:index,part:row[1],scene:row[0],name:row[2],kind:g.boss?'boss':'road',theme:g.theme,cast:g.cast||[],first:SEGMENTS.length,reward:g.reward,seconds:0};
-    if(g.placeholder)stage.placeholder=true;
+    if(g.placeholder)stage.placeholder=true;if(g.awake)stage.awake=true;
     stage.cast.forEach(function(k){if(!MOBS[k])throw new Error(row[2]+': unknown mob '+k);});
     function cards(list,mid,light){
       var actor=list[0],who=ACTORS[actor];if(!who)throw new Error(row[2]+': unknown actor '+actor);
@@ -752,19 +758,23 @@
         if(!plainOf[actor]){plainOf[actor]={i:plainCount++,n:0};lastNew=actor;}
         var po=plainOf[actor],pf=(2*po.i+po.n++%2)%9;
         var spell=spells[list[k]],last=!mid&&k===list.length-1;if(!spell)throw new Error(row[2]+': unknown pattern '+list[k]);
-        if(spell.scene&&spell.scene!==row[0])throw new Error(row[2]+': pattern '+list[k]+' belongs to scene '+spell.scene);
+        if(spell.scene&&spell.scene!==row[0]&&(g.absorb||[]).indexOf(spell.scene)<0)throw new Error(row[2]+': pattern '+list[k]+' belongs to scene '+spell.scene);
         if(spell.used)throw new Error('pattern used twice: '+list[k]);spell.used=true;
         var lm=mid||light; // 길 맵의 보스는 예전 중간 인물의 체력·시간 그대로(맵 길이를 크게 늘리지 않는다)
         var plainFire=PLAIN[pf](who.c1,who.c2);
         // 초반 보스(1~6장, 사용자 11-18 "초반보스도 화려하게, 난이도는 조절"): 기본 패턴 자리에 이웃 기명 패턴의 화려한 모양을 40% 밀도·길어진 예고·가는 광선으로 미리 보여 준다(보스 맵에 한정, 중간보스 제외). 같은 모양이 바로 이어 반복되지 않게 다음(없으면 앞) 기명 패턴을 쓴다.
         if(index<=5&&!mid&&!light){var other=spells[list[k+1<list.length?k+1:k-1>=1?k-1:k]];if(other&&other.fire&&other!==spell)plainFire=(function(f){return function(s,tt){var d=s.density,r=s.rules,w=r.warn,bm=r.beam;s.density=Math.max(.4,d*.4);r.warn=w*1.4;r.beam=bm*.8;try{f(s,tt);}finally{s.density=d;r.warn=w;r.beam=bm;}};})(other.fire);}
-        SEGMENTS.push({kind:'card',stage:index,actor:actor,mid:mid,spell:false,name:'',plain:PLAIN_NAMES[pf],hp:lm?200:170,time:lm?16:13,fire:plainFire});
-        SEGMENTS.push({kind:'card',stage:index,actor:actor,mid:mid,spell:true,name:spell.name,scene:row[0],hp:spell.hp||(lm?420:last?600:520),time:spell.time||(lm?26:last?36:30),fire:spell.fire});
+        // 합친 스테이지(사용자 11-20): 페이즈마다 모습이 정해져 있다(g.forms[i] = i번째 이름 패턴의 그림 키, g.titles[i] = 그때 불리는 이름). 인물 키·판정은 그대로.
+        var form=!mid&&g.forms?g.forms[k-1]:undefined,title=!mid&&g.titles?g.titles[k-1]:undefined,formNo=0;
+        // formNo = 이 보스의 몇 번째 모습인가(0 = 처음 모습). 모습이 바뀌는 순간과 그때의 대사 순번에 쓴다.
+        if(form)for(var fk=1;fk<k;fk++)if(g.forms[fk]!==g.forms[fk-1])formNo++;
+        SEGMENTS.push({kind:'card',stage:index,actor:actor,mid:mid,spell:false,name:'',plain:PLAIN_NAMES[pf],hp:lm?200:170,time:lm?16:13,fire:plainFire,form:form,title:title,formNo:formNo});
+        SEGMENTS.push({kind:'card',stage:index,actor:actor,mid:mid,spell:true,name:spell.name,scene:row[0],hp:spell.hp||(lm?420:last?600:520),time:spell.time||(lm?26:last?36:30),fire:spell.fire,form:form,title:title,formNo:formNo});
       }
     }
     function waves(list){list.forEach(function(script){SEGMENTS.push({kind:'wave',stage:index,duration:script.duration||760,script:script});});}
     // 중간보스: 일반 패턴 둘(이름 붙은 패턴 없음). 보스의 일반 패턴 순번과 섞이지 않게 따로 센다.
-    function midboss(){var actor=midbossKey(row[0]),who=ACTORS[actor];if(!who)throw new Error(row[2]+': no midboss for scene '+row[0]);
+    function midboss(){var actor=midbossKey(g.midScene||row[0]),who=ACTORS[actor];if(!who)throw new Error(row[2]+': no midboss for scene '+row[0]);
       // 앞 맵 보스·이 맵 보스의 일반 패턴과 겹치지 않는 두 가지를 고른다(이어 만나는 두 인물은 일반 패턴을 나누지 않는다).
       // 처음 만나는 순서로 바로 앞·뒤 인물(앞서 처음 나온 인물, 다음에 처음 나올 인물)도 피한다.
       var taken={},mark=function(a){if(midPlains[a]){midPlains[a].forEach(function(c){taken[c]=true;});return;}var po=plainOf[a],i=po?po.i:plainCount;taken[(2*i)%9]=taken[(2*i+1)%9]=true;},picks=[];
@@ -786,8 +796,21 @@
     for(var i=stage.first;i<SEGMENTS.length;i++){var x=SEGMENTS[i];stage.seconds+=x.kind==='wave'?x.duration/60+4:x.time*.7+2.5;}
     STAGES.push(stage);
   });
+  /* ── 옛 56스테이지 번호 ↔ 지금 번호(사용자 11-20 스테이지 합치기·순서 바꾸기). 저장 기록·챕터 기록·기록 코드가 옛 번호로 남아 있어도 잃지 않게 옮긴다.
+   *    OLD_SCENES: 합치기 전 순서 그대로의 장면 번호. OLD_TO_NEW[옛 번호] = 그 장면이 들어간 지금 스테이지 번호. NEW_FROM[지금 번호] = 거기 합쳐진 옛 번호들. ── */
+  var OLD_SCENES=['01','02','03','04','05','06','07','08','09-1','09-2','10','11','13','14','15','16','17','18','19','20','21','22','24','25','26','27','28','29','31','32','33','34','35',
+    '37','38','39','40','41','42','43','44','45','46','48','49','50','52','53','54','55','56','57','58','59','60','61'];
+  var OLD_TO_NEW=OLD_SCENES.map(function(sc){for(var i=0;i<STAGES.length;i++)if(STAGES[i].scene===sc||(DEFS[STAGES[i].scene].absorb||[]).indexOf(sc)>=0)return i;throw new Error('old scene '+sc+' has no stage');});
+  var NEW_FROM=STAGES.map(function(){return [];});OLD_TO_NEW.forEach(function(n,o){NEW_FROM[n].push(o);});
+  var LAYOUT={version:44,oldCount:OLD_SCENES.length,OLD_SCENES:OLD_SCENES,OLD_TO_NEW:OLD_TO_NEW,NEW_FROM:NEW_FROM};
   /* 이 장면에서 이 인물을 그릴 그림 키(다른 모습이 없으면 인물 키 그대로). */
   function bossArtOf(actor,stageIndex){var g=STAGES[stageIndex];return (g&&BOSS_FORMS[actor+'@'+g.scene])||actor;}
+  /* 이 카드에서 그릴 그림 키: 카드에 모습이 정해져 있으면 그것(합친 스테이지의 앞·뒤 모습), 아니면 장면별 모습. */
+  var FORM_HOLD=170; // 모습이 바뀌는 순간: 대사가 뜨는 동안 보스가 공격을 쉰다(실제 게임만)
+  function segArt(seg){return seg&&seg.kind==='card'?(seg.form||bossArtOf(seg.actor,seg.stage)):'';}
+  /* 장면에 따라 달리 불리는 인물(사용자 11-20: 44 '악몽 군집체', 마지막 '사몽각성 교주'). 인물 키·패턴·대사표는 그대로이고 화면에 보이는 이름만 바뀐다. */
+  var ACTOR_TITLES={'chief@48':'악몽 군집체','cultist@61':'사몽각성 교주'};
+  function actorName(actor,stageIndex){var g=STAGES[stageIndex],who=ACTORS[actor];return (g&&ACTOR_TITLES[actor+'@'+g.scene])||(who?who.name:actor);}
   var CARD_TOTAL=SEGMENTS.filter(function(g){return g.kind==='card'&&g.spell;}).length;
   /* 56장면의 짧은 원큐 여정. 작성된 패턴과 구간 번호는 그대로 두고 반복 일반탄만 생략한다.
    * segment 직접 시작은 연습/전체 패턴 검사이므로 기본은 원래 길이; pacing:true로 실제 여정 길이를 검사한다.
@@ -1028,10 +1051,13 @@
     if(ph.phase==='cutin'){if(s.stageTick<ENTRANCE_CUTIN)s.stageTick=ENTRANCE_CUTIN;return true;}
     var e=s.bossEntrance;e.readyTick=Math.min(e.readyTick,s.tick+24);return true;
   }
-  function enter(s,actor){var b=s.boss;b.actor=actor;b.name=ACTORS[actor].name;b.mid=!!segment(s).mid;b.present=true;b.leaving=false;b.x=W/2;b.y=-60;b.targetX=W/2;b.targetY=BOSS_REST;b.enteredTick=s.tick;s.stageTick=0;
+  function enter(s,actor){var b=s.boss;b.actor=actor;b.name=segment(s).title||actorName(actor,s.stageIndex);b.mid=!!segment(s).mid;b.present=true;b.leaving=false;b.x=W/2;b.y=-60;b.targetX=W/2;b.targetY=BOSS_REST;b.enteredTick=s.tick;s.stageTick=0;
     var e=s.bossEntrance;if(e&&e.segment===s.seg){e.enteredTick=s.tick;e.readyTick=s.tick+graceOf(s);}
     note(s,'entrance');}
-  function beginCard(s){var card=segment(s),b=s.boss;s.cardEnding=null;s.cardDown=0;s.downEnd=0;s.bonusLock=0;s.phraseCard=0;spReset(s);b.maxHp=b.hp=cardHp(s,card);b.mid=!!card.mid;s.stage='card';s.stageTick=0;s.segTick=0;s.spellClean=!!card.spell;if(card.spell){s.spellNumber++;note(s,'card');}else note(s,'plain');}
+  function beginCard(s){var card=segment(s),b=s.boss;if(s.entranceAll&&(STAGES[card.stage].awake||s.awake))applyCurve(s);s.cardEnding=null;s.cardDown=0;s.downEnd=0;s.bonusLock=0;s.phraseCard=0;spReset(s);b.maxHp=b.hp=cardHp(s,card);b.mid=!!card.mid;if(b.actor===card.actor)b.name=card.title||actorName(card.actor,card.stage);s.stage='card';s.stageTick=0;s.segTick=0;s.spellClean=!!card.spell;if(card.spell){s.spellNumber++;note(s,'card');}else note(s,'plain');// 모습이 바뀌는 카드(일반 패턴이 생략되는 실제 게임에서는 이름 패턴일 수도 있다): 싸우던 중에 넘어왔을 때만 잠깐 쉬고 알린다(이 카드에서 바로 등장했으면 등장 연출이 대신한다)
+    var fkey=card.stage+'|'+card.actor+'|'+(card.formNo||0);
+    if(!card.mid&&card.formNo>0&&s.formKey!==fkey){s.formShifts=card.formNo;if(!(s.bossEntrance&&s.bossEntrance.segment===s.seg)){if(s.entranceAll){s.formHold=s.tick+FORM_HOLD;s.lasers.length=0;} /* 모습이 바뀌는 쉼에는 남은 광선도 걷는다: 대사를 읽다 맞지 않게(심사 11-20) */note(s,'formShift');}}
+    if(!card.mid)s.formKey=fkey;}
   /* 보스·중간보스는 패턴 도중에 쓰러지지 않는다(사용자 11-19 "패턴중에 보스및 중간보스가 죽지않도록 패턴끝나고 죽도록"): 체력이 다하거나 시간이 다하면
      새 공격을 멈추고(특수 페이즈도 끝), 화면 탄은 가속해 밖으로 내보내고, 이미 켜진 광선·문양이 제 수명대로 꺼진 뒤에야 쓰러짐(endCard)으로 넘어간다. 최대 CARD_ENDING_MAX틱. */
   var CARD_ENDING_MAX=240;
@@ -1414,9 +1440,10 @@
   function updateShots(s){
     var b=s.boss,p=s.player,i,k,target=homingX(s),plan=POWER_SHOTS[s.power],dmg=shotDamage(s),haste=s.tick<s.hasteUntil?1:0,lay,hero=heroProfile(s),clockHands=hero&&hero.shot.style==='clock-hands'?hero.shot:null,offset,vx;
     // 단계마다 주포·유도탄이 늘고 간격이 짧아진다(가속 중에는 한 틱 더 짧게). 적 바로 아래에 서면 주포까지 맞아 훨씬 빨리 깬다.
+    // 합친 보스가 모습을 바꾸는 동안(formHold)은 영웅도 쏘지 않는다: 바뀌는 모습 위로 사격 줄기가 지나가지 않게(심사 11-20).
     // 윤서하는 같은 탄 수·간격·피해로 시간검을 펼친다. 저속일 때만 주포와 유도탄 출발 폭을 좁혀 집중한다.
     var seohaFocus=isSeohaHero(s)&&p.focus;
-    if(s.tick%Math.max(3,plan[1]-haste)===0){var special=isSeohaHero(s)?(s.tick>=s.tbNext&&foeNear(s,p.x,p.y,[])?2:0):(++s.volleys%CHARGE_EVERY===0?1:0);lay=MAIN_LAYOUT[plan[0]];for(k=0;k<lay.length&&s.sn<SHOT_CAP;k++){
+    if(s.tick%Math.max(3,plan[1]-haste)===0&&!(s.formHold>s.tick)){var special=isSeohaHero(s)?(s.tick>=s.tbNext&&foeNear(s,p.x,p.y,[])?2:0):(++s.volleys%CHARGE_EVERY===0?1:0);lay=MAIN_LAYOUT[plan[0]];for(k=0;k<lay.length&&s.sn<SHOT_CAP;k++){
       offset=lay[k][0];vx=lay[k][1];if(clockHands){offset*=p.focus?clockHands.focusOffsetScale:clockHands.offsetScale;vx=(k-(lay.length-1)*.5)*(p.focus?clockHands.focusSpread:clockHands.spread);}
       var kd=k===(lay.length>>1)?special:0,sp=seohaFocus?(kd===2?SEOHA_FOCUS_TB:SEOHA_FOCUS_SHOT):1;
       s.shoming[s.sn]=0;s.skind[s.sn]=kd;s.sspd[s.sn]=SHOT_SPEED*sp;s.svx[s.sn]=vx*sp;s.sx[s.sn]=p.x+offset;s.sy[s.sn++]=p.y-18;}
@@ -2261,14 +2288,17 @@
     else if(s.stage==='card'){
       var t=s.segTick++;
       var fireDelay=cardFireDelay(s);
-      if(t>=fireDelay&&!spQuiet(s)&&downFiring(s)){if(!s.cardDown)mirrorVolley(s,t-fireDelay);if(!soloHold(s))
-        if(BOSS_RHYTHM&&BOSS_RHYTHM.handles(s,seg,api))BOSS_RHYTHM.fire(s,t-fireDelay,rhythmContext);
+      if(t>=fireDelay&&!spQuiet(s)&&downFiring(s)&&!(s.formHold>s.tick)){if(!s.cardDown)mirrorVolley(s,t-fireDelay);if(!soloHold(s)){
+        // 사몽각성 교주 헬: 패턴 시계를 두 배로 돌린다(한 틱에 대본 두 틱). 그 밖에는 tempo 1 = 예전과 같다.
+        var tempo=s.awakeTempo>1?s.awakeTempo:1;
+        for(var beat=0;beat<tempo;beat++){var ft=(t-fireDelay)*tempo+beat;
+        if(BOSS_RHYTHM&&BOSS_RHYTHM.handles(s,seg,api))BOSS_RHYTHM.fire(s,ft,rhythmContext);
         else{
           var variationCard=s.entranceAll?variationCardIndex(s,seg):s.seg;
           var kind=s.entranceAll&&phaseKind(SEGMENTS[variationCard],variationCard);
-          if(kind)fireCardPhrase(s,seg,t-fireDelay,kind,variationCard);
-          else{seg.fire(s,t-fireDelay);if(seg.spell)signature(s,t-fireDelay);}
-        }
+          if(kind)fireCardPhrase(s,seg,ft,kind,variationCard);
+          else{seg.fire(s,ft);if(seg.spell)signature(s,ft);}
+        }}}
       } // 고유 첫 공격은 원래 발사를 대체한다. 이름 붙은 문양과 중간 카드의 대본은 유지한다.
       var left=timeLeft(s);
       if(seg.spell&&!s.entranceAll&&left<=10&&left>0&&s.segTick%60===0)note(s,left<=3?'countdownLast':'countdown');
@@ -2310,12 +2340,22 @@
   }
   /* ── 진행 기록(저장용, 순수 함수). cleared 깬 스테이지 번호 · stars 스테이지별 별(1~3) · best 최고 점수 · rewards 얻은 기념물 ── */
   var Progress=(function(){
-    function fresh(){return {version:43,cleared:[],stars:{},best:{},rewards:[],difficulty:'normal'};}
+    function fresh(){return {version:LAYOUT.version,cleared:[],stars:{},best:{},rewards:[],difficulty:'normal'};}
+    /* 옛 기록(version 43, 56스테이지 번호) → 지금 번호. 합쳐진 스테이지는 합쳐진 옛 스테이지를 모두 깼을 때만 깬 것으로 치고(안 깬 구간을 건너뛰지 않게), 별·점수는 그중 가장 좋은 값.
+     * 순서가 바뀐 곳(옛 54·55)은 sanitize 의 '앞에서부터 이어진 기록만' 규칙이 그대로 걸러 준다. version 이 43이 아닌 기록은 이미 지금 번호다. */
+    function migrate(raw){
+      if(!raw||typeof raw!=='object'||Array.isArray(raw)||raw.version!==43||!Array.isArray(raw.cleared))return raw;
+      var out={version:LAYOUT.version,cleared:[],stars:{},best:{},difficulty:raw.difficulty},old=raw.cleared,st=raw.stars&&typeof raw.stars==='object'?raw.stars:{},bs=raw.best&&typeof raw.best==='object'?raw.best:{};
+      NEW_FROM.forEach(function(from,n){
+        if(!from.every(function(o){return old.indexOf(o)>=0;}))return;
+        out.cleared.push(n);var s0=0,b0=0;from.forEach(function(o){var a=Number(st[o]),b=Number(bs[o]);if(a>s0)s0=a;if(b>b0)b0=b;});out.stars[n]=s0;out.best[n]=b0;});
+      return out;
+    }
     function whole(v){return typeof v==='number'&&isFinite(v)&&Math.floor(v)===v;}
     function unlocked(p){var n=0;while(n<STAGES.length-1&&p.cleared.indexOf(n)>=0)n++;return n;}
     function canPlay(p,index){return whole(index)&&index>=0&&index<=unlocked(p);}
     function sanitize(raw){
-      var p=fresh(),i;if(!raw||typeof raw!=='object'||Array.isArray(raw))return p;
+      var p=fresh(),i;raw=migrate(raw);if(!raw||typeof raw!=='object'||Array.isArray(raw))return p;
       if(Array.isArray(raw.cleared))for(i=0;i<raw.cleared.length;i++){var c=raw.cleared[i];if(whole(c)&&c>=0&&c<STAGES.length&&p.cleared.indexOf(c)<0)p.cleared.push(c);}
       p.cleared.sort(function(a,b){return a-b;});
       // 앞 스테이지를 깨지 않고는 뒤 스테이지 기록이 있을 수 없다.
@@ -2338,9 +2378,9 @@
     }
     function resume(p){for(var i=0;i<STAGES.length;i++)if(p.cleared.indexOf(i)<0)return i;return 0;}
     function totalStars(p){var n=0;Object.keys(p.stars).forEach(function(k){n+=p.stars[k];});return n;}
-    return {fresh:fresh,sanitize:sanitize,record:record,unlocked:unlocked,canPlay:canPlay,resume:resume,totalStars:totalStars};
+    return {fresh:fresh,migrate:migrate,sanitize:sanitize,record:record,unlocked:unlocked,canPlay:canPlay,resume:resume,totalStars:totalStars};
   })();
-  var api={revision:43,BOMB_CAP:BOMB_CAP,bombCap:bombCap,BOMB_REWARD:BOMB_REWARD,bombRewardKind:bombRewardKind,partFinalStage:partFinalStage,POWER_SHOTS:POWER_SHOTS,MOB_CUE_LEAD:MOB_CUE_LEAD,spellBonus:spellBonus,spellBonusBase:spellBonusBase,jackpotCount:jackpotCount,JACKPOT_MID:JACKPOT_MID,JACKPOT_BOSS:JACKPOT_BOSS,JACKPOT_SCORE_MAX:JACKPOT_SCORE_MAX,pointValue:pointValue,heartWorth:heartWorth,clearBonus:clearBonus,LIFE_PIECES:LIFE_PIECES,SPELL_DECAY_FROM:SPELL_DECAY_FROM,SPELL_DECAY_OVER:SPELL_DECAY_OVER,POINT_BASE:POINT_BASE,POINT_MAX:POINT_MAX,CALM_SOFT:CALM_SOFT,composeLasers:composeLasers,beamFor:beam,LADDER_N:LADDER_N,SWEEP_N:SWEEP_N,CARD_ENDING_MAX:CARD_ENDING_MAX,CARD_MIN:CARD_MIN,DESCEND_HOLD:DESCEND_HOLD,LIVE_FAST:LIVE_FAST,BEAM_MIN:BEAM_MIN,FAN_APEX:FAN_APEX,CALM_BELOW:CALM_BELOW,CALM_LASER_EVERY:CALM_LASER_EVERY,LIVE_TABLE:LIVE_TABLE,LIVE_MOBILE:LIVE_MOBILE,COMPACT_DENSITY:COMPACT_DENSITY,CARD_BREAK_PAUSE:CARD_BREAK_PAUSE,bossStays:bossStays,MOB_BELOW_SPEED:MOB_BELOW_SPEED,BOSS_REST:BOSS_REST,BOSS_SWAY:BOSS_SWAY,WALL_KICK_Y:WALL_KICK_Y,CARD_DOWN_MAX:CARD_DOWN_MAX,EXIT_TURN:EXIT_TURN,WAVE_LINGER:WAVE_LINGER,LAYER_CAP:LAYER_CAP,layersBut:layersBut,phraseLen:phraseLen,flushBullets:flushBullets,heroProfile:heroProfile,bombName:bombName,isCinematicBoss:isCinematicBoss,nextSegmentIndex:nextSegmentIndex,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
+  var api={revision:43,LIVE_MOBILE:LIVE_MOBILE,BOMB_CAP:BOMB_CAP,bombCap:bombCap,BOMB_REWARD:BOMB_REWARD,bombRewardKind:bombRewardKind,partFinalStage:partFinalStage,POWER_SHOTS:POWER_SHOTS,MOB_CUE_LEAD:MOB_CUE_LEAD,spellBonus:spellBonus,spellBonusBase:spellBonusBase,jackpotCount:jackpotCount,JACKPOT_MID:JACKPOT_MID,JACKPOT_BOSS:JACKPOT_BOSS,JACKPOT_SCORE_MAX:JACKPOT_SCORE_MAX,pointValue:pointValue,heartWorth:heartWorth,clearBonus:clearBonus,LIFE_PIECES:LIFE_PIECES,SPELL_DECAY_FROM:SPELL_DECAY_FROM,SPELL_DECAY_OVER:SPELL_DECAY_OVER,POINT_BASE:POINT_BASE,POINT_MAX:POINT_MAX,CALM_SOFT:CALM_SOFT,composeLasers:composeLasers,beamFor:beam,LADDER_N:LADDER_N,SWEEP_N:SWEEP_N,CARD_ENDING_MAX:CARD_ENDING_MAX,CARD_MIN:CARD_MIN,DESCEND_HOLD:DESCEND_HOLD,LIVE_FAST:LIVE_FAST,BEAM_MIN:BEAM_MIN,FAN_APEX:FAN_APEX,CALM_BELOW:CALM_BELOW,CALM_LASER_EVERY:CALM_LASER_EVERY,LIVE_TABLE:LIVE_TABLE,COMPACT_DENSITY:COMPACT_DENSITY,CARD_BREAK_PAUSE:CARD_BREAK_PAUSE,bossStays:bossStays,LAYOUT:LAYOUT,AWAKE_AS:AWAKE_AS,AWAKE_TEMPO:AWAKE_TEMPO,AWAKE_HELL_DENSITY:AWAKE_HELL_DENSITY,awakeNow:awakeNow,segArt:segArt,actorName:actorName,FORM_HOLD:FORM_HOLD,ACTOR_TITLES:ACTOR_TITLES,MOB_BELOW_SPEED:MOB_BELOW_SPEED,BOSS_REST:BOSS_REST,BOSS_SWAY:BOSS_SWAY,WALL_KICK_Y:WALL_KICK_Y,CARD_DOWN_MAX:CARD_DOWN_MAX,EXIT_TURN:EXIT_TURN,WAVE_LINGER:WAVE_LINGER,LAYER_CAP:LAYER_CAP,layersBut:layersBut,phraseLen:phraseLen,flushBullets:flushBullets,heroProfile:heroProfile,bombName:bombName,isCinematicBoss:isCinematicBoss,nextSegmentIndex:nextSegmentIndex,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     PACING:PACING,stageTargetSeconds:stageTargetSeconds,plannedSegments:plannedSegments,pacingReport:pacingReport,waveDuration:waveDuration,cardDuration:cardDuration,cardHp:cardHp,SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_REAIM:MODE_REAIM,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,MODE_BRANCH:MODE_BRANCH,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,PROP_LONG:PROP_LONG,propHitPoints:propHitPoints,propRenderSpan:propRenderSpan,bulletRenderSpan:bulletRenderSpan,BULLET_BREAK_MIN_SPAN:BULLET_BREAK_MIN_SPAN,isBulletBreakable:isBulletBreakable,ORB_HP:ORB_HP,ORB_BREAK_EVERY:ORB_BREAK_EVERY,ORB_FRAGMENT_COUNT:ORB_FRAGMENT_COUNT,ORB_FRAGMENT_GRACE:ORB_FRAGMENT_GRACE,ORB_FRAGMENT_SPEED:ORB_FRAGMENT_SPEED,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
     BOSS_ENTRANCE_GRACE:BOSS_ENTRANCE_GRACE,BOSS_ENTRANCE_SPEECH:BOSS_ENTRANCE_SPEECH,BOSS_ENTRANCE_MID:BOSS_ENTRANCE_MID,BOSS_CLEAR_TICKS:BOSS_CLEAR_TICKS,prepareBossEntrance:prepareBossEntrance,phaseOf:phaseOf,phaseKind:phaseKind,entrancePhase:entrancePhase,skipEntrance:skipEntrance,ENTRANCE_CUTIN:ENTRANCE_CUTIN,BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,BOSS_FORMS:BOSS_FORMS,FORM_BASE:FORM_BASE,bossArtOf:bossArtOf,BOSS_SHOTS:BOSS_SHOTS,SHOT_KINDS:SHOT_KINDS,bossShotOf:bossShotOf,figureSegments:figureSegments,figurePhase:figurePhase,FIGURE_ON_TICKS:FIGURE_ON_TICKS,FIGURE_OFF_TICKS:FIGURE_OFF_TICKS,FIGURE_CHARGE_TICKS:FIGURE_CHARGE_TICKS,RUNE_AT:RUNE_AT,RISER_HP:RISER_HP,RISER_SCORE:RISER_SCORE,riserHp:riserHp,shotHitsRiser:shotHitsRiser,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,BOSS_DESCEND:BOSS_DESCEND,SP_START:SP_START,spStart:function(s){return s.sp?s.sp.start:SP_START;},SP_CYCLE:SP_CYCLE,SP_LEAD:SP_LEAD,SP_BEAT:SP_BEAT,SP_LAYBACK:SP_LAYBACK,SP_LEN:SP_LEN,SP_KINDS:SP_KINDS,SP_ORDER:SP_ORDER,spitMotif:spitMotif,SPIT_FORM:SPIT_FORM,SP_INFO:SP_INFO,CAMP_HALF:CAMP_HALF,CAMP_NEED:CAMP_NEED,spWindow:spWindow,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
     POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,chapterFloor:chapterFloor,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,DESCEND_AGE:DESCEND_AGE,DESCEND_Y:DESCEND_Y,FOCUS_SKILL_CHANCE:FOCUS_SKILL_CHANCE,FOCUS_SKILL_GAP:FOCUS_SKILL_GAP,SWORD_DELAY:SWORD_DELAY,SWORD_POWER:SWORD_POWER,REVERSAL_POWER:REVERSAL_POWER,FOCUS_SLOW:FOCUS_SLOW,FOCUS_SLOW_MAX:FOCUS_SLOW_MAX,COVER_REACH:COVER_REACH,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,BOMB_PULSES:BOMB_PULSES,BOMB_PULSE_START:BOMB_PULSE_START,BOMB_PULSE_EVERY:BOMB_PULSE_EVERY,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp,ABILITY_MAX:ABILITY_MAX,ABILITY_POWER:ABILITY_POWER,ABILITY_HASTE:ABILITY_HASTE,ABILITY_SLOW:ABILITY_SLOW,FOCUS_POWER:FOCUS_POWER,FOCUS_GAUGE:FOCUS_GAUGE,SEOHA_FOCUS_SHOT:SEOHA_FOCUS_SHOT,SEOHA_FOCUS_TB:SEOHA_FOCUS_TB,SEOHA_FOCUS_TB_EVERY:SEOHA_FOCUS_TB_EVERY,HERO_TUNE:HERO_TUNE,heroLaserBias:heroLaserBias,shotStrike:shotStrike,updateTimeBombs:updateTimeBombs,CHARGE_EVERY:CHARGE_EVERY,CHARGE_ARC:CHARGE_ARC,CHARGE_REACH:CHARGE_REACH,TIMEBOMB_EVERY:TIMEBOMB_EVERY,TIMEBOMB_FUSE:TIMEBOMB_FUSE,TIMEBOMB_MULT:TIMEBOMB_MULT,TIMEBOMB_SPLASH:TIMEBOMB_SPLASH,TIMEBOMB_R:TIMEBOMB_R,abilityOf:abilityOf,setAbility:setAbility,shotDamage:shotDamage,FIG_HURRY:FIG_HURRY,FIG_WAIT_MAX:FIG_WAIT_MAX,LINE_GUARD_FIRST:LINE_GUARD_FIRST,LINE_GUARD_EVERY:LINE_GUARD_EVERY,LINE_SWEEP_GAP:LINE_SWEEP_GAP,lineSweep:lineSweep,MID_HP_MORE:MID_HP_MORE};

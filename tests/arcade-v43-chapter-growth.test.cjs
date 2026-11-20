@@ -15,15 +15,15 @@ test('chapter base level is the chapter number, maxing out at part 7',()=>{
 });
 test('entering the next chapter refills every life and lifts the hero to that chapter level',()=>{
  for(const diff of ['gentle','normal','hell']){
-  const s=A.createRun({difficulty:diff,seed:4,stage:11,growth:true});s.player.hp=1;
-  s.seg=A.STAGES[12].first-1;s.segTick=0;let t=0;
-  while(s.stageIndex===11&&t<40000){s.player.invulnerableUntil=s.tick+10;if(s.boss&&s.boss.present&&s.boss.hp>1)s.boss.hp=1;A.step(s,{});t++;}
+  const s=A.createRun({difficulty:diff,seed:4,stage:9,growth:true});s.player.hp=1;
+  s.seg=A.STAGES[10].first-1;s.segTick=0;let t=0;
+  while(s.stageIndex===9&&t<40000){s.player.invulnerableUntil=s.tick+10;if(s.boss&&s.boss.present&&s.boss.hp>1)s.boss.hp=1;A.step(s,{});t++;}
   assert.equal(s.player.hp,s.player.maxHp,diff+' full lives');assert.equal(s.power,2);assert.equal(s.bombLevel,2);
   assert(s.events.includes('extend')&&s.events.includes('powerUp'));
  }
 });
 test('a higher level earned inside a chapter carries over untouched',()=>{
- const s=crossPart(11,s=>{s.exp=A.POWER_EXP[4];s.power=5;});assert.equal(s.power,5);
+ const s=crossPart(9,s=>{s.exp=A.POWER_EXP[4];s.power=5;});assert.equal(s.power,5);
 });
 test('ordinary stage changes inside a chapter do not refill lives',()=>{
  const s=A.createRun({difficulty:'normal',seed:4,stage:3,growth:true});s.player.hp=1;
@@ -32,7 +32,7 @@ test('ordinary stage changes inside a chapter do not refill lives',()=>{
  assert.equal(s.stageIndex,4);assert.equal(s.player.hp,1);
 });
 test('a hit still costs one attack level, but never below the chapter level',()=>{
- const s=h.idle({stage:30,growth:true});assert.equal(A.chapterFloor(s),4);s.exp=A.POWER_EXP[4];s.power=5;
+ const s=h.idle({stage:27,growth:true});assert.equal(A.chapterFloor(s),4);s.exp=A.POWER_EXP[4];s.power=5;
  const seq=[];for(let i=0;i<3;i++){s.bombs=0;s.noDistort=true;s.player.invulnerableUntil=0;s.player.hp=5;h.clear(s);h.put(s,s.player.x,s.player.y,{bage:100});A.step(s,{dx:0,dy:0});assert.equal(s.player.hp,4,'hit landed');seq.push(s.power);}
  assert.deepEqual(seq,[4,4,4]);
 });

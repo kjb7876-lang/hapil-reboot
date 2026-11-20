@@ -233,7 +233,8 @@
         {scene:'60',theme:{bg:'p8_harvest',tint:'#1f1a08',fx:'dust'},cast:['p8_believer','p8_priest','leech','p8_rose'],reward:{key:'p8_goldhexagram',name:'황금 육망성'},
           waves:[wave(threeHarvesters,900),wave(tripleRoses,860),wave(harvestSweep,900),wave(circleFormation,900)],
           mid:['p8_ion','p8_orderWall'],boss:['rian','traitors','p8_wholeDeath','p8_threshold','p8_goldenCross']},
-        {scene:'61',theme:{bg:'p8_core',tint:'#2a0808',fx:'embers'},cast:['p8_rose','p8_believer','leech','p8_priest','spider','ember','drone','mobgoblin','wolf','collector','slime','nightmare'],reward:{key:'p8_triplets',name:'세쌍둥이의 기록'},
+        // 사용자 11-20: 마지막 보스는 '사몽각성 교주'(엔진 ACTOR_TITLES·BOSS_FORMS). awake = 본보스 카드에서 한 단계 위 난이도(이지→노멀, 노멀→헬, 헬→패턴 2배 가속)
+        {scene:'61',awake:true,theme:{bg:'p8_core',tint:'#2a0808',fx:'embers'},cast:['p8_rose','p8_believer','leech','p8_priest','spider','ember','drone','mobgoblin','wolf','collector','slime','nightmare'],reward:{key:'p8_triplets',name:'세쌍둥이의 기록'},
           waves:[wave(spiralEntry,900),wave(coreWall,900),wave(ghostParade,900),wave(lastCharge,900)],
           mid:['cultist','p8_warpSpace','p8_stopTime'],boss:['cultist','p8_blackNerve','p8_triplets','p8_deathText','p8_ghosts','samong']}
       ];

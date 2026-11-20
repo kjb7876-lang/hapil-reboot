@@ -42,11 +42,14 @@
     var H=global.HapilArcadeHeroes,A=global.HapilArcade,p=H&&H.get?H.get(id):A&&A.heroProfile?A.heroProfile(id):null;
     return p&&typeof p.id==='string'?p.id:(id==='seoha'||id==='seoha-b'?id:'memory');
   }
-  function readCheckpoint(){var c=load(CP_KEY,null);return c&&c.v===1?c:null;}
+  /* 스테이지 합치기(11-20) 전에 남긴 중간 저장은 옛 번호다: 번호가 그대로인 앞쪽 스테이지(합치기 전 구간) 것만 쓰고, 나머지는 버린다(그 스테이지 처음부터 — 깬 기록은 그대로). */
+  function readCheckpoint(){var c=load(CP_KEY,null);if(!c||c.v!==1)return null;var A=global.HapilArcade,L=A&&A.LAYOUT;
+    if(L&&c.layout!==L.version){var same=0;while(same<L.NEW_FROM.length&&L.NEW_FROM[same].length===1&&L.NEW_FROM[same][0]===same)same++;if(!(c.stage<same))return null;}
+    return c;}
   function clearCheckpoint(){try{global.localStorage.removeItem(CP_KEY);}catch(e){}}
   function checkpointCount(value){return typeof value==='number'&&isFinite(value)&&value>=0?Math.min(2147483647,Math.floor(value)):0;}
   function storeCheckpoint(s,index){
-    store(CP_KEY,{v:1,stage:s.stageIndex,seg:index,hero:checkpointHero(s.hero),difficulty:s.difficulty,at:Date.now(),hits:checkpointCount(s.hits-s.mark.hits),bombs:checkpointCount(s.bombsUsed-s.mark.bombs),exp:checkpointCount(s.exp),fills:checkpointCount(s.fills),stock:checkpointCount(s.bombs)});
+    store(CP_KEY,{v:1,layout:global.HapilArcade&&global.HapilArcade.LAYOUT?global.HapilArcade.LAYOUT.version:undefined,stage:s.stageIndex,seg:index,hero:checkpointHero(s.hero),difficulty:s.difficulty,at:Date.now(),hits:checkpointCount(s.hits-s.mark.hits),bombs:checkpointCount(s.bombsUsed-s.mark.bombs),exp:checkpointCount(s.exp),fills:checkpointCount(s.fills),stock:checkpointCount(s.bombs)});
   }
   // 격파 순간 앱도 호출한다. 2초의 화면 연출 중 나가도 쓰러뜨린 보스부터 다시 싸우지 않는다.
   function commitBossClear(s){

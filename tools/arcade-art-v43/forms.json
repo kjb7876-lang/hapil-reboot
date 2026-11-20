@@ -33,15 +33,6 @@
    "size": 260,
    "every": 2
   },
-  "cultist_alt61": {
-   "src": "media/cult-v17/cult-leader-atlas.png",
-   "cell": [
-    1,
-    0,
-    2,
-    2
-   ]
-  },
   "p6_demons_alt48": {
    "src": "media/m0-v43/boss/mb-hando01-attack.webp",
    "cell": [
@@ -50,6 +41,20 @@
     4,
     1
    ]
+  },
+  "cultist_awake": {
+   "src": "media/arcade-v43-temp/cultist-awake-temp.png",
+   "strip": 4,
+   "fps": 6,
+   "size": 300,
+   "temp": "CX-0157AW 결과가 오면 바꾼다(임시)"
+  },
+  "chief_swarm": {
+   "src": "media/arcade-v43-temp/chief-swarm-temp.png",
+   "strip": 4,
+   "fps": 6,
+   "size": 330,
+   "temp": "CX-0157AW 결과가 오면 바꾼다(임시)"
   }
  }
 }

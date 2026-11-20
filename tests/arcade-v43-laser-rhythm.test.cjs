@@ -7,7 +7,7 @@ const DIFFS=['gentle','normal','hell'],LANE=a.WIDTH/R.LANES;
 function toCard(s){for(let i=0;i<4000&&s.stage!=='card';i++){s.player.invulnerableUntil=s.tick+999;a.step(s,{dx:0,dy:0});h.clear(s);}assert.equal(s.stage,'card');s.segTick=0;}
 function firstBossCard(stage){const g=a.STAGES[stage];let seg=g.first;while(a.SEGMENTS[seg].kind!=='card'||a.SEGMENTS[seg].mid)seg++;return seg;}
 // 무늬 하나를 골라 레이저 구간 직전으로 간다
-function motifRun(d,name,x,y){const s=a.createRun({difficulty:d,seed:3,segment:firstBossCard(9),entranceAll:true});toCard(s);s.sp.need=true;s.sp.lj=0;s.sp.force=name;s.segTick=a.spStart(s)-a.SP_LEAD-2;s.lasers.length=0;s.figures.length=0;s.n=0;if(x!==undefined){s.player.x=x;s.player.y=y||560;}return s;}
+function motifRun(d,name,x,y){const s=a.createRun({difficulty:d,seed:3,segment:firstBossCard(8),entranceAll:true});toCard(s);s.sp.need=true;s.sp.lj=0;s.sp.force=name;s.segTick=a.spStart(s)-a.SP_LEAD-2;s.lasers.length=0;s.figures.length=0;s.n=0;if(x!==undefined){s.player.x=x;s.player.y=y||560;}return s;}
 function run(s,ticks,each,move){for(let i=0;i<ticks&&s.stage==='card';i++){s.player.invulnerableUntil=s.tick+999;s.boss.hp=s.boss.maxHp;a.step(s,move?move(s):{dx:0,dy:0});if(each)each(s,i);h.clear(s);}return s;}
 const notes=s=>s.lasers.filter(l=>l.role==='note');
 const lit=l=>l.age>=l.warn&&l.age<l.warn+l.active;
