@@ -98,3 +98,13 @@ test('the live midboss clock counts firing ticks, but reaching it no longer ends
  }
  assert.equal(s.timeouts,0);assert.equal(s.cleared,2);
 });
+test('live PC lives are 3/2/1 while phones keep 5/3/2, and every refill/extend uses that maximum (사용자 11-20 "피시는 이지 목숨3 노멀목숨2 헬 목숨1로하자 모바일은 지금그대로")',()=>{
+ for(const [difficulty,pc,phone] of [['gentle',3,5],['normal',2,3],['hell',1,2]]){
+  const p=A.createRun({difficulty,entranceAll:true}),m=A.createRun({difficulty,entranceAll:true,compact:true});
+  assert.equal(p.player.hp,pc);assert.equal(p.player.maxHp,pc);assert.equal(m.player.hp,phone);assert.equal(m.player.maxHp,phone);
+  assert.equal(A.livesFor(difficulty,false,true),pc);assert.equal(A.livesFor(difficulty,true,true),phone);
+  const index=A.SEGMENTS.map((g,i)=>i).filter(i=>A.SEGMENTS[i].stage===A.STAGES.findIndex((g,i)=>i<A.STAGES.length-1&&A.STAGES[i+1].part!==g.part)).pop();
+  const s=A.createRun({difficulty,entranceAll:true,segment:index,pacing:true});s.stage='card';s.boss.present=true;s.boss.hp=0;s.player.hp=1;s.player.invulnerableUntil=999;s.bombs=0;
+  A.step(s,{});assert(s.player.hp<=pc,'never above the PC maximum');
+ }
+});
