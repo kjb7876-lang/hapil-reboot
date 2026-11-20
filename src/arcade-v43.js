@@ -933,7 +933,8 @@
     }
     fillGauge(s);
   }
-  function killMob(s,k){var m=s.mobs[k];s.score+=m.score;s.kills++;gainExp(s,m.elite?5:1);s.pops.push(m.x,m.y,m.elite?1:0);note(s,'kill');
+  function killMob(s,k){var m=s.mobs[k];if(m.hp>0)m.hp=0; // 1e-6 이하 잔여 체력(부동소수점)으로 죽은 몹도 체력 0으로 남긴다
+    s.score+=m.score;s.kills++;gainExp(s,m.elite?5:1);s.pops.push(m.x,m.y,m.elite?1:0);note(s,'kill');
     if(m.elite)for(var i=0;i<ELITE_DROPS;i++)dropItem(s,m.x+(i-1)*12,m.y,i===1?1:0);else if(++s.mobDrops%MOB_DROP_EVERY===0)dropItem(s,m.x,m.y,0);s.mobs.splice(k,1);}
   /* 시공간 왜곡 확률: 공격 단계마다 5%씩, 1단계 7% → 7단계 37%(사용자: 기본 7%, 풀강화 37% 이하). 탄 패턴의 난수와 따로 굴려 패턴이 바뀌지 않게 한다 */
   function distortChance(s){return s.difficulty==='hell'?0:DISTORT_CHANCE[Math.max(1,Math.min(MAX_LEVEL,s.power||1))];}
@@ -2211,7 +2212,7 @@
     if(w.local===0&&!sp.cur&&!s.entranceAll)cancelAll(s,true); // 사용자 11-20 "시간이 지나 탄이 사라지지 않게": 실제 게임은 전환 예고에서도 탄을 서두르거나 걷지 않는다(수집선 규칙으로만 빨리 빠진다)
     // (11-20) 예고 1.5초 뒤 남은 탄을 먹으로 걷던 driftBullets 는 쓰지 않는다
     // 사용자 11-20 "탄이 다 사라진 다음에, 갑자기 지우지는 말고": 예고가 끝났는데 지난 탄이 남아 있으면 특수 페이즈 시작을 미룬다(예고 동안 새 탄은 없다, 최대 FIG_WAIT_MAX)
-    if(w.local===SP_LEAD&&!sp.cur&&s.entranceAll&&s.n&&!rlPending(s)&&(s.spHold=(s.spHold||0)+1)<FIG_WAIT_MAX){s.segTick--;return;}
+    if(w.local===SP_LEAD&&!sp.cur&&s.entranceAll&&s.n&&!rlPending(s)&&(s.spHold=(s.spHold||0)+1)<FIG_WAIT_MAX){if(s.spHold===FIG_HURRY)hurryBullets(s);s.segTick--;return;} // 오래 남는 느린 탄은 판정을 지닌 채 빨라져 나간다(11-20: 고정 패턴에서 40px/초 탄이 10초 넘게 남아 특수 구간에 섞였다)
     if(w.local===SP_LEAD&&!sp.cur){s.spHold=0;sp.cur=w.kind;sp.cycle=w.cycle;s.special={kind:w.kind,start:s.tick,cycle:w.cycle,lay:SP_LAYBACK[s.difficulty]};note(s,'special');}
     if(!w.active||!sp.cur){centerGuard(s,w);return;}
     riserInit(s);var lt=w.local-SP_LEAD;
