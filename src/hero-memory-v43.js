@@ -25,7 +25,7 @@
     g.strokeStyle=timeColor(false);g.lineWidth=1.7;g.beginPath();g.moveTo(-r*.2,r*.25);g.lineTo(0,0);g.lineTo(r*.65,-r*.25);g.moveTo(0,0);g.lineTo(-r*.12,-r*.52);g.stroke();g.restore();
   }
   function timeNeedle(g,x,y,angle,len,alpha,lv){
-    g.save();g.translate(x,y);g.rotate(angle);g.globalAlpha=alpha;g.fillStyle=timeColor(false);var w=1.2+lv*.17;
+    g.save();g.translate(x,y);g.rotate(angle);g.globalAlpha=alpha*fxDim;g.fillStyle=timeColor(false);var w=1.2+lv*.17;
     g.beginPath();g.moveTo(0,-len*.6);g.lineTo(w,len*.18);g.lineTo(0,len*.35);g.lineTo(-w,len*.18);g.closePath();g.fill();
     if(lv>=3){g.strokeStyle=timeColor(true);g.lineWidth=1.2;g.beginPath();g.moveTo(-w*1.8,len*.1);g.lineTo(w*1.8,len*.1);g.moveTo(0,len*.1);g.lineTo(w*1.4,-len*.12);g.stroke();}g.restore();
   }
@@ -38,7 +38,7 @@
   // 시트 한 칸: 칸 가운데(또는 ox)를 (x,y)에, 진행 방향 ang(시트는 오른쪽을 향함), 칸 한 변 size
   function cell(g,k,f,x,y,ang,size,alpha,stretch,ox){
     if(!ready(k))return;var S=SHEETS[k],c=S.cell,fi=Math.max(0,Math.min(S.frames-1,f|0));
-    g.save();g.translate(x,y);if(ang)g.rotate(ang);g.globalAlpha=alpha;
+    g.save();g.translate(x,y);if(ang)g.rotate(ang);g.globalAlpha=alpha*(bombing?1:fxDim);
     var sx=(stretch||1),o=(ox===undefined?c/2:ox);
     g.drawImage(img[k],fi*c,0,c,c,-o*size/c*sx,-size/2,size*sx,size);g.restore();
   }
@@ -47,8 +47,10 @@
   /* ── 패시브 공격: 1~2단계는 붓끝 먹줄기, 3단계부터 기억 결정탄(단계마다 커진다) ── */
   var SHARD_SIZE=[0,0,0,22,24,26,28,31];
   function stroke(g,x,y,len,wid,alpha){ // 붓 한 획: 머리 짙고 꼬리 가늘게
-    g.globalAlpha=alpha;g.fillStyle=inkOn()?'rgba(36,32,32,1)':'#ffd9a0';g.beginPath();g.moveTo(x,y-len*.5);g.quadraticCurveTo(x+wid,y-len*.2,x+wid*.3,y+len*.5);g.lineTo(x-wid*.3,y+len*.5);g.quadraticCurveTo(x-wid,y-len*.2,x,y-len*.5);g.fill();
+    g.globalAlpha=alpha*fxDim;g.fillStyle=inkOn()?'rgba(36,32,32,1)':'#ffd9a0';g.beginPath();g.moveTo(x,y-len*.5);g.quadraticCurveTo(x+wid,y-len*.2,x+wid*.3,y+len*.5);g.lineTo(x-wid*.3,y+len*.5);g.quadraticCurveTo(x-wid,y-len*.2,x,y-len*.5);g.fill();
   }
+  /* 탄이 몰리는 순간 아군 검기를 옅게(외부 심사 11-20 "탄이 몰리는 화면에서 적탄과 피격점을 먼저 보이게 … 아군 검기의 농도를 낮추는 편"): 앱이 프레임마다 0.45~1을 넣는다. 필살기는 그대로 */
+  var fxDim=1,bombing=false;function setDim(v){fxDim=Math.max(.3,Math.min(1,+v||1));}
   function shots(g,s,t){
     var lv=s.power||1,i,ink=inkOn(),big=SHARD_SIZE[lv],shardOk=lv>=3&&ready('shard'),f=Math.floor(t*SHEETS.shard.fps);
     raw(1);g.save();blend(g);
@@ -298,11 +300,11 @@
       g.beginPath();g.ellipse(x,y,dr,dr*(.7+.3*((i*.31)%1)),ph,0,TAU);g.fill();if(i%3===0){g.beginPath();g.arc(x+Math.cos(ph)*dr*2.2,y+Math.sin(ph)*dr*2.2,dr*.45,0,TAU);g.fill();}}
     g.restore();raw(-1);
   }
-  function draw(g,s,t){takeZaps(s,t);raw(1);g.save();blend(g);drawZaps(g,t);drawPops(g,t);g.restore();raw(-1);drawSkill(g,s,t);drawBombs(g,t,360,640);drawPulses(g,t);drawWarps(g,t);}
+  function draw(g,s,t){takeZaps(s,t);raw(1);g.save();blend(g);drawZaps(g,t);drawPops(g,t);g.restore();raw(-1);drawSkill(g,s,t);bombing=true;drawBombs(g,t,360,640);drawPulses(g,t);drawWarps(g,t);bombing=false;}
   function shake(){var q=quake;quake=0;return q;}
   function reset(){skillBolts.length=0;lastSkillLabel=-9;zaps.length=0;pops.length=0;texts.length=0;bombs.length=0;quake=0;cut=null;warps.length=0;pulseBursts.length=0;}
   function hudLine(s){var lv=s.power||1,bl=s.bombLevel||1;return {attack:lv,bomb:bl};}
   load();
-  global.HapilHeroFx={shots:shots,draw:draw,drawTexts:drawTexts,clock:clock,field:field,onEvent:onEvent,shake:shake,reset:reset,hudLine:hudLine,SHEETS:SHEETS,
+  global.HapilHeroFx={setDim:setDim,shots:shots,draw:draw,drawTexts:drawTexts,clock:clock,field:field,onEvent:onEvent,shake:shake,reset:reset,hudLine:hudLine,SHEETS:SHEETS,
     debug:function(){return {cut:!!cut,cutHero:cut?cut.hero||'memory':null,cutName:cut?cut.name:null,warps:warps.length,zaps:zaps.length,pops:pops.length,bombs:bombs.length,texts:texts.length,ready:Object.keys(SHEETS).filter(ready)};}};
 })(window);
