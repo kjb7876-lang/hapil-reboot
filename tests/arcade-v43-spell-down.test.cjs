@@ -21,6 +21,8 @@ test('spell bonus freezes the moment HP runs out and is paid when the hero survi
 test('after HP runs out the boss finishes its current phrase but starts no new volley, special phase or mirror shot',()=>{
  for(const d of DIFFS){const s=a.createRun({difficulty:d,seed:7,segment:spellCard(),entranceAll:true});toCard(s);
   for(let i=0;i<200;i++){s.boss.hp=s.boss.maxHp;safe(s);}
+  // 레이저 장단 페이즈(2026-11-20)는 장단 구간을 다 보일 때까지 보스를 붙든다 — 여기서는 그 구간이 끝난 뒤의 소진을 본다
+  for(let i=0;i<3000&&s.sp&&s.sp.need&&!s.sp.done;i++){s.boss.hp=s.boss.maxHp;safe(s);}
   s.boss.hp=0;safe(s);const seg=s.seg,end=s.downEnd;assert(end>0);let late=0,mirror=0,special=0;
   for(let i=0;i<a.CARD_DOWN_MAX+10&&s.seg===seg&&s.stage==='card'&&!s.cardEnding;i++){safe(s);let fresh=0;for(let k=0;k<s.n;k++)if(s.bage[k]===1&&!s.bfragment[k])fresh++;
    if(s.segTick-40>end+2)late+=fresh;if(s.sp&&s.sp.cur)special++;}
