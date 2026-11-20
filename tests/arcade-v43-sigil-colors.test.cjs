@@ -4,8 +4,8 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const h=require('./helpers/arcade-v43.cjs');
 
-test('v43 refill: every difficulty reserves recovery for chapter boundaries',()=>{
- const d=h.need().DIFFICULTY;for(const k of ['gentle','normal','hell']){assert.equal(d[k].mapHeal,0,k);assert.equal(d[k].partHeal,1,k);}
+test('v43 refill: every difficulty refills all lives at chapter boundaries (사용자 11-20 "한챕터 끝나면 모든 목숨 다 차는걸로")',()=>{
+ const d=h.need().DIFFICULTY;for(const k of ['gentle','normal','hell']){assert.equal(d[k].mapHeal,0,k);assert.equal(d[k].partHeal,-1,k);}
 });
 
 function sigilsOf(a,i,ticks){
