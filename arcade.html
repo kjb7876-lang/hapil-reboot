@@ -199,6 +199,7 @@
       <button id="arcade-continue" type="button" hidden>이어하기</button>
       <p class="note" id="continue-note" hidden></p>
       <button id="arcade-start" class="primary" type="button" data-mode="full" data-i18n="loading" disabled>불러오는 중…</button>
+      <button id="arcade-chapters" type="button" style="min-width:220px">챕터 기록</button>
       <div class="row pick">
         <select id="arcade-stage-select" aria-label="스테이지 선택" data-i18n-label="stageSelect"></select>
         <button id="arcade-stage-go" type="button" data-i18n="here">여기서</button>
@@ -232,6 +233,20 @@
       <select id="arcade-boss-select" aria-label="보스 스테이지" data-i18n-label="bossStage"></select>
       <button id="arcade-boss-start" class="primary" type="button" data-i18n="start">시작</button>
       <button id="arcade-boss-back" type="button" data-i18n="back">돌아가기</button>
+    </div>
+
+    <div id="arcade-chapter-screen" class="screen" hidden>
+      <p class="kicker">EPISODES · 서사 정본 8부</p>
+      <h2>챕터 기록</h2>
+      <p class="note" id="chapter-summary"></p>
+      <div id="arcade-chapter-list" class="ch-list"></div>
+      <div class="ch-save">
+        <span id="chapter-save-state">진행은 스테이지를 깰 때마다 이 기기에 자동 저장됩니다.</span>
+        <div class="row"><button id="chapter-export" type="button">기록 코드 복사</button><button id="chapter-import" type="button">기록 코드 불러오기</button></div>
+        <textarea id="chapter-code" aria-label="기록 코드" spellcheck="false" hidden></textarea>
+        <div class="row"><button id="chapter-import-go" type="button" hidden>이 코드로 불러오기</button></div>
+      </div>
+      <button id="arcade-chapter-back" type="button" data-i18n="back">돌아가기</button>
     </div>
 
     <div id="arcade-keepsake-screen" class="screen" hidden>
@@ -340,6 +355,7 @@
   <script src="src/arcade-mobile-v43.js?v=20261120-zap"></script>
   <script src="src/arcade-eyes-v43.js?v=20261120-zap"></script>
   <script src="src/arcade-story-v43.js?v=20261120-zap"></script>
+  <script src="src/arcade-chapters-v43.js?v=20261120-zap"></script>
   <script src="src/arcade-hero-select-v43.js?v=20261120-zap"></script>
   <script src="src/arcade-hero-visibility-v43.js?v=20261120-zap"></script>
   <script src="src/arcade-spirit-v43.js?v=20261120-zap"></script>
