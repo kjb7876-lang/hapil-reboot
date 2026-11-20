@@ -44,7 +44,7 @@ for (const name of ['겹치는 명령', '닫힌 층의 명령']) {
     assert.ok(f.slice(CP).some(frame=>frame.authored>AU && frame.born>0), 'authored fire resumes');
     // 사용자 11-20 "탄이 다 사라진 다음에 육망성과 한자 패턴": 그림은 탄이 빠져나갈 때까지(최대 FIG_WAIT_MAX) 미뤄질 수 있다
     // 52스테이지 구성(11-20)에서 이 보스의 그림 순서는 한자 고리가 먼저라 문양은 더 뒤에 온다
-    const g = playSpell(name, 4400+A.FIG_WAIT_MAX);
+    const g = playSpell(name, 4400+2*A.FIG_WAIT_MAX);
     assert.ok(g.some(frame=>frame.figures.includes('glyph')));
     assert.ok(g.some(frame=>frame.figures.includes('runes')));
     // 솟는 바위·뱉는 그림은 특수 페이즈에서만 나온다. 어느 특수 페이즈가 먼저인지는 스테이지 번호로 정해진다

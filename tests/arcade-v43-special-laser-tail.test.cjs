@@ -13,10 +13,10 @@ test('laser special: square frame and diagonal X are never live together, and no
   let was=false,after=false;
   for(let i=0;i<a.SP_LEAD+a.SP_LEN[d]+400&&s.stage==='card';i++){s.player.invulnerableUntil=s.tick+999;s.boss.hp=s.boss.maxHp;a.step(s,{dx:0,dy:0});
    const on=s.special&&s.special.kind==='laser';
-   if(on){const sq=s.lasers.filter(l=>live(l)&&axis(l)&&l.active>=90),x=s.lasers.filter(l=>live(l)&&!axis(l)&&Math.abs(Math.abs(Math.tan(l.angle))-1)<1e-6);
+   if(on){const sq=s.lasers.filter(l=>live(l)&&axis(l)&&l.sq),x=s.lasers.filter(l=>live(l)&&!axis(l)&&Math.abs(Math.abs(Math.tan(l.angle))-1)<1e-6);
     if(x.length)xs++;assert(!(sq.length&&x.length),`${d} stage ${s.stageIndex}: square and X overlap at tick ${s.tick}`);}
    if(was&&!on)after=true;
-   if(after&&s.n>0){windows++;after=false;const left=s.lasers.filter(l=>l.age>2&&l.age<=l.warn+l.active);assert.equal(left.length,0,`${d} stage ${s.stageIndex}: ${left.length} special beams still alive when normal fire resumes`);}
+   if(after&&s.n>0){windows++;after=false;const left=s.lasers.filter(l=>l.rl&&l.age>2&&l.age<=l.warn+l.active);/* 특수 페이즈 광선은 무늬 꼬리표(rl)로 고른다(끝난 뒤의 중앙 견제 광선과 구별) */assert.equal(left.length,0,`${d} stage ${s.stageIndex}: ${left.length} special beams still alive when normal fire resumes`);}
    was=!!on;h.clear(s);}
  }
  assert(windows>=3,'windows '+windows);assert(xs>0,'saw the X at least once');

@@ -1642,21 +1642,21 @@
   "table": "tools/arcade-art-v43/forms.json"
  },
  "chief_swarm.webp": {
-  "bytes": 118540,
+  "bytes": 117512,
   "cell": [
    330,
-   284
+   274
   ],
   "fps": 6,
   "frames": 4,
   "group": "actors",
   "size": [
    1320,
-   284
+   274
   ],
   "source": "media/arcade-v43-temp/chief-swarm-temp.png",
-  "sourceSha256": "4dccfb950ca8556c3dbab4a7dcae49f506167a4d42f24c6e2f28d8d98a20e6e9",
-  "stamp": "2bec2a9ad4bfec55",
+  "sourceSha256": "cca072a63f0a68c2b2e3ee204c0154dde25b14c99ca66be167b5f444bc35bbe3",
+  "stamp": "d9dcae10fdceed64",
   "table": "tools/arcade-art-v43/forms.json"
  },
  "cleaver.webp": {
@@ -1810,21 +1810,21 @@
   "table": "tools/arcade-art-v43/base.json"
  },
  "cultist_awake.webp": {
-  "bytes": 120654,
+  "bytes": 126418,
   "cell": [
-   300,
-   280
+   297,
+   294
   ],
   "fps": 6,
   "frames": 4,
   "group": "actors",
   "size": [
-   1200,
-   280
+   1188,
+   294
   ],
   "source": "media/arcade-v43-temp/cultist-awake-temp.png",
-  "sourceSha256": "0fbd52114e0f9805c7531552551cc8a7fe5241e62ca5613856fede861d22a9c2",
-  "stamp": "49d0fb6cf43c2d2f",
+  "sourceSha256": "08d6ebdbe0f616cf150d6a0577ce761f4958532fadb933aed894e6b822318e26",
+  "stamp": "bb475c9f0b89b79f",
   "table": "tools/arcade-art-v43/forms.json"
  },
  "demon-hand.webp": {

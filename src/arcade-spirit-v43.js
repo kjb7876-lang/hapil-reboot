@@ -99,12 +99,12 @@
     var intro=s.started!==false&&s.tick<LINE_INTRO&&s.stageIndex===0&&!s.results.length,want=s.itemCount>0||intro||lineGlow>0;
     if(playing){lineSeen+=((want?1:0)-lineSeen)*.12;lineAge=want?lineAge+1:lineSeen<.05?0:lineAge;}
     if(lineSeen>.02&&s.stage!=='lost'&&s.stage!=='won'&&!stamp){ // 낙관이 떠 있는 동안에는 선을 감춘다(낙관 쪽지 뒤로 점선이 지나가지 않게)
-      var above=p.y<y0,on=above||lineGlow>0,a=lineSeen*(on?.95:.7);
+      var above=p.y<y0,on=above||lineGlow>0,a=lineSeen*(on?.95:.7)*(opt.dim?.25:1); // dim: 보스가 모습을 바꾸는 동안은 선을 물린다(보스 몸 위로 안내선이 지나가지 않게)
       ctx.lineCap='round';
       if(on){ctx.globalAlpha=a*.5;ctx.strokeStyle=c.text;ctx.lineWidth=1;ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(10,y0+1.6);ctx.lineTo(W-10,y0+1.6);ctx.stroke();} // 금빛 선 아래 가는 먹 밑선: 한지 위에서도 선이 끝까지 보인다
       ctx.globalAlpha=a;ctx.strokeStyle=on?c.gold:c.text;ctx.lineWidth=1.5;ctx.setLineDash([3,6]);ctx.lineDashOffset=on?-(s.tick%18)*.5:0; // 켜진 동안 점선이 흐른다
       ctx.beginPath();ctx.moveTo(10,y0);ctx.lineTo(W-10,y0);ctx.stroke();ctx.setLineDash([]);ctx.lineDashOffset=0;
-      var la=opt.quiet||stamp?0:above?1:intro?1:Math.max(0,Math.min(1,(LABEL_TICKS-lineAge)/30)); // 안내 글은 처음 잠깐만(선은 남는다). 알림 띠·낙관이 떠 있는 동안에는 숨긴다
+      var la=opt.quiet||opt.dim||stamp?0:above?1:intro?1:Math.max(0,Math.min(1,(LABEL_TICKS-lineAge)/30)); // 안내 글은 처음 잠깐만(선은 남는다). 알림 띠·낙관이 떠 있는 동안에는 숨긴다
       if(la>0){ctx.font='700 11px '+SANS;ctx.textAlign='left';ctx.textBaseline='alphabetic';var label=above?'모두 거두는 중 · 최대값':'▲ 이 선 위에서 하트를 모두 거둔다';
         ctx.globalAlpha=Math.min(1,a*1.3)*la;ctx.lineWidth=3;ctx.strokeStyle=c.halo;ctx.strokeText(label,12,y0-6);ctx.fillStyle=above?c.gold:c.text;ctx.fillText(label,12,y0-6);
         ctx.textAlign='right';ctx.strokeText('▲',W-12,y0-6);ctx.fillText('▲',W-12,y0-6);}

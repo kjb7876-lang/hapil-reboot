@@ -47,7 +47,16 @@
     sparkFire:{gap:110,level:.09,rank:1},
     sparkHit:{gap:90,level:.11,rank:1},
     tbStick:{gap:150,level:.12,rank:1},
-    tbBoom:{gap:140,level:.17,rank:2}
+    tbBoom:{gap:140,level:.17,rank:2},
+    // 리듬 레이저(사용자 11-20 "리듬게임을 레이져 패턴으로 구현한 느낌"): 음표가 켜지는 박에 북(쿵 왼손·덕 오른손·덩 양손)과 가야금 다섯 음(황·태·중·임·남). 배경음보다 크고 귀 아픈 고음 없이.
+    noteKung:{gap:50,level:.24,rank:2},
+    noteDeok:{gap:50,level:.19,rank:2},
+    noteDung:{gap:50,level:.27,rank:2},
+    notePluck0:{gap:50,level:.17,rank:2},
+    notePluck1:{gap:50,level:.17,rank:2},
+    notePluck2:{gap:50,level:.17,rank:2},
+    notePluck3:{gap:50,level:.17,rank:2},
+    notePluck4:{gap:50,level:.17,rank:2}
   };
   // 'phase' 이벤트는 다음 패턴·구간이 시작될 때 나오므로 격파음에 쓰지 않는다(격파는 아래 단계 전환으로 잡는다).
   var EVENT_CUES={hurt:'hurt',kill:'kill',summon:'summon',seal:'seal',release:'seal',awakening:'awakening',win:'win',lose:'lose'};
@@ -227,8 +236,13 @@
       sparkHit:function(d,l){var v=vary();noise(d,'bandpass',2600*v,1500,3,.05,l,0,.001);noise(d,'bandpass',3400*v,2000,4,.025,l*.5,.04,.001);tone(d,'triangle',300*v,180,.06,l*.4);},
       tbStick:function(d,l){clockTick(d,l,1.1);},
       tbBoom:function(d,l){noise(d,'lowpass',2400,180,.8,.22,l);tone(d,'sine',170,60,.24,l*.8);bell(d,1046,.25,l*.25,.02);clockTick(d,l*.5,.9,.06);},
+      noteKung:function(d,l){tone(d,'sine',118,62,.22,l,0,.003);tone(d,'triangle',180,90,.1,l*.5,0,.002);noise(d,'lowpass',420,160,1,.08,l*.35,0,.002);},
+      noteDeok:function(d,l){noise(d,'bandpass',1500,1100,6,.045,l,0,.001);tone(d,'triangle',640,520,.05,l*.6,0,.001);},
+      noteDung:function(d,l){tone(d,'sine',104,52,.3,l,0,.003);tone(d,'triangle',170,84,.12,l*.5,0,.002);noise(d,'bandpass',1400,1000,5,.05,l*.6,0,.001);noise(d,'lowpass',380,140,1,.1,l*.3,0,.002);},
+      notePluck0:function(d,l){pluck(d,l,293.7);},notePluck1:function(d,l){pluck(d,l,329.6);},notePluck2:function(d,l){pluck(d,l,392);},notePluck3:function(d,l){pluck(d,l,440);},notePluck4:function(d,l){pluck(d,l,493.9);},
       clockChime:function(d,l){bell(d,880,.9,l*.55,0);[.12,.24,.36].forEach(function(at,i){clockTick(d,l*.8,1+i*.06,at);});}
     };
+    function pluck(d,l,f){tone(d,'triangle',f*1.012,f,.34,l,0,.002);tone(d,'sine',f*2,f*2,.16,l*.32,0,.002);noise(d,'bandpass',f*3,f*2,4,.03,l*.3,0,.001);} // 가야금 뜯는 한 음: 살짝 높게 시작해 제 음으로 내려앉는다
     function clockTick(d,l,pitch,delay){delay=delay||0;noise(d,'bandpass',2600*pitch,1800*pitch,5,.022,l*.8,delay,.001);tone(d,'sine',1900*pitch,1500*pitch,.035,l*.6,delay,.001);if(pitch===1&&!delay||pitch>1)noise(d,'bandpass',900,600,3,.03,l*.35,delay,.001);}
     function play(cue){
       var spec=CUES[cue.name],voice=VOICE[cue.name];if(!spec||!voice||!enabled||suspended||background||pageAway||volume===0||!ctx||ctx.state!=='running')return false;

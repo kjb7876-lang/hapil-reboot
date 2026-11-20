@@ -52,7 +52,7 @@ test('the controller keeps the correct budget when it returns in a different enc
   const campaign=A.createRun({difficulty});
   const hp=A.cardHp(campaign,main);
   assert.equal(A.cardHp(app,main),Math.round(hp*1.5));
-  assert.equal(A.cardHp(app,mid),Math.round(hp*1.5*factor));
+  assert.equal(A.cardHp(app,mid),Math.round(hp*1.5*factor*A.MID_HP_MORE[difficulty])); // 사용자 11-20 중간보스 체력 보강(이지·노멀 1.3배)
   assert(Math.abs(A.cardDuration(app,mid)-A.cardDuration(app,main)*factor)<1e-10);
  }
 });
@@ -69,7 +69,7 @@ test('the easy opening midboss loses real HP to shots and can be defeated before
    assert.equal(s.boss.actor,'mb_01');
    activeAt=s.tick-s.segTick;
    initialHp=s.boss.maxHp;
-   assert.equal(initialHp,675);
+   assert.equal(initialHp,Math.round(675*A.MID_HP_MORE.gentle));
   }
   if(halfAt===undefined&&s.boss.hp<=initialHp/2)halfAt=s.tick;
  }

@@ -9,6 +9,13 @@ import colorsys, math, random
 from PIL import Image, ImageFilter, ImageChops, ImageDraw
 OUT = 'media/arcade-v43-temp'
 
+def feather(f, top=.16, side=.13, bottom=.04):
+    """칸 가장자리를 먹 번짐처럼 녹인다(심사 11-20: 그림자·덩어리 위와 옆에 네모 판 경계가 보임)."""
+    w, h = f.size; m = Image.new('L', (w, h), 0); d = ImageDraw.Draw(m)
+    d.rounded_rectangle((w * side, h * top, w * (1 - side), h * (1 - bottom)), radius=min(w, h) * .2, fill=255)
+    m = m.filter(ImageFilter.GaussianBlur(min(w, h) * .075))
+    f.putalpha(ImageChops.multiply(f.getchannel('A'), m)); return f
+
 def cells(path, n):
     im = Image.open(path).convert('RGBA'); w = im.width // n
     return [im.crop((i * w, 0, i * w + w, im.height)) for i in range(n)]
@@ -58,11 +65,12 @@ def build_awake():
         body = awake_cell(c, k)
         # 등 뒤에 드리운 큰 악마 그림자: 같은 몸을 1.34배로 키워 검보라 먹빛으로(갈고리가 몸 밖으로 크게 뻗는다)
         big = c.resize((int(c.width * 1.34), int(c.height * 1.34)), Image.LANCZOS)
-        shade = Image.new('RGBA', big.size, (30, 18, 46, 0)); shade.putalpha(big.getchannel('A').point(lambda v: int(v * .9)))
+        shade = Image.new('RGBA', big.size, (30, 18, 46, 0)); shade.putalpha(big.getchannel('A').point(lambda v: int(v * .62)))  # 그림자 위를 지나는 탄이 읽히게 옅게(심사 11-20)
         f.alpha_composite(shade, (pad - int(c.width * .17), max(0, pad - int(c.height * .30))))
         # 사몽 기운이 옷자락 끝을 물들인다: 아래 3분의 1에 검보라를 옅게 곱한다
         tint = Image.new('RGBA', body.size, (70, 30, 120, 0)); grad = Image.linear_gradient('L').resize(body.size); tint.putalpha(ImageChops.multiply(grad.point(lambda v: max(0, v - 150) * 2), body.getchannel('A')))
         body.alpha_composite(tint); f.alpha_composite(body, (pad, pad))
+        f = feather(f); f.alpha_composite(body, (pad, pad))  # 가장자리를 녹인 뒤 몸은 또렷하게 다시 얹는다
         f.alpha_composite(horns((w, h), pad, pad, k))
         frames.append(f)
     sheet = Image.new('RGBA', (frames[0].width * 4, frames[0].height), (0, 0, 0, 0))
@@ -79,7 +87,7 @@ def build_swarm():
             if i % 2: c = c.transpose(Image.FLIP_LEFT_RIGHT)
             dark = Image.merge('RGBA', [ch_.point(lambda v, m=m: int(v * m)) for ch_, m in zip(c.split()[:3], (lum * .8, lum * .7, lum))] + [c.getchannel('A')])
             f.alpha_composite(dark, (int(W / 2 + dx * cw - c.width / 2), int(H - c.height - (.06 - dy) * ch)))
-        f.alpha_composite(src[k], (int(W / 2 - cw / 2), H - ch))
+        f = feather(f, top=.1, side=.08); f.alpha_composite(src[k], (int(W / 2 - cw / 2), H - ch))
         frames.append(f)
     sheet = Image.new('RGBA', (W * 4, H), (0, 0, 0, 0))
     for i, f in enumerate(frames): sheet.paste(f, (i * W, 0))
