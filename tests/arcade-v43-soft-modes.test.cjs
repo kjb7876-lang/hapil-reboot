@@ -69,3 +69,8 @@ test('phone live game halves the bullet cap and cuts normal bullet count 30%; PC
     assert(Math.abs(pc.density*a.COMPACT_DENSITY-a.LIVE_TABLE[d].density)<1e-9,d+' pc density unchanged');}
   assert.equal(a.createRun({difficulty:'normal',seed:9,compact:true}).cap,a.COMPACT_CAP,'replay mode keeps its cap');
 });
+test('phone warn/beam multipliers do not compound across stages',()=>{
+  const s=a.createRun({difficulty:'normal',seed:9,stage:0,entranceAll:true,compact:true}),w=s.rules.warn,b=s.rules.beam;
+  for(let i=0;i<5;i++){s.stageIndex=Math.min(a.STAGES.length-1,i+1);a.applyCurve(s);}
+  assert(Math.abs(s.rules.warn-w)<1e-9,'warn stable');assert(Math.abs(s.rules.beam-b)<1e-9,'beam stable');
+});

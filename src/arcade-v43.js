@@ -103,7 +103,7 @@
     var d=gentle?CURVE_START+(CURVE_END-CURVE_START)*u:1,v=gentle?PACE_START+(PACE_END-PACE_START)*u:1;
     var soft=s.entranceAll&&s.difficulty!=='hell'?SOFT[s.difficulty]:null; // 사용자 11-18: 이지·노멀만 탄 속도를 낮추고 탄 수를 10% 줄인다(헬은 그대로)
     s.rules.speed=base.speed*v*(soft?soft.speed:1)*(s.entranceAll?LIVE_FAST:1);s.density=base.density*d*(soft?soft.density:1)*(s.compact?COMPACT_DENSITY:1)*(s.entranceAll?LIVE_TRIM:1);
-    var L=s.entranceAll&&LIVE_TABLE[s.difficulty];if(L){s.rules.speed=L.speed;s.density=(L.density+(L.end===undefined?0:(L.end-L.density)*u))*(s.compact?LIVE_MOBILE.density:1/COMPACT_DENSITY);s.rules.radius=L.radius;s.rules.hitScale=L.hitScale;if(s.player)s.player.r=L.radius;if(s.compact){s.rules.speed*=LIVE_MOBILE.speed;s.rules.warn*=LIVE_MOBILE.warn;s.rules.beam*=LIVE_MOBILE.beam;}}
+    var L=s.entranceAll&&LIVE_TABLE[s.difficulty];if(L){s.rules.speed=L.speed;s.density=(L.density+(L.end===undefined?0:(L.end-L.density)*u))*(s.compact?LIVE_MOBILE.density:1/COMPACT_DENSITY);s.rules.radius=L.radius;s.rules.hitScale=L.hitScale;if(s.player)s.player.r=L.radius;if(s.compact){s.rules.speed*=LIVE_MOBILE.speed;s.rules.warn=base.warn*LIVE_MOBILE.warn;s.rules.beam=base.beam*LIVE_MOBILE.beam;}}
     var tune=s.entranceAll&&HERO_TUNE[isSeohaHero(s)?'seoha':s.hero];if(tune){s.rules.speed*=tune.speed||1;s.density*=tune.density||1;}}
   /* 영웅별 난이도 보정(사용자 11-20 "서하로 플레이할때는 적 탄환패턴 많이 나와도됨 탄환난이도 조금더 높여도 될듯"): 실제 게임(entranceAll)에서 기준표(LIVE_TABLE) 위에 곱한다. 서하는 시간을 늦추는 능력이 있으니 탄 수 +20%, 탄속 +6% */
   var HERO_TUNE={seoha:{density:1.2,speed:1.06},memory:{laser:1.5,laserEvery:{gentle:300,normal:170,hell:200}}};
