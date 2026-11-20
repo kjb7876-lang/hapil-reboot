@@ -2240,7 +2240,7 @@
     if(n){if(!lv)n.textContent=T('abilityOffNote');else{var a=Arcade.abilityOf&&Arcade.abilityOf({hero:seoha?'seoha':'memory',ability:lv,player:{}},true);
       n.textContent=seoha?T('abilityTimeNote',{s:Math.round((1-(a?a.bulletSpeed:1))*100)}):T('abilityPowerNote',{d:Math.round(((a?a.damage:1)-1)*100),s:Math.round(((a?a.bulletSpeed:1)-1)*100)});}}}
   function syncAbility(){['abilityMemory','abilitySeoha'].forEach(function(k){var e=$('setting-'+k);if(e)e.value=String(settings[k]|0);abilityText(k);});
-    var hero=state?state.hero:selectedHero,rm=$('ability-row-memory'),rs=$('ability-row-seoha');if(rm)rm.dataset.active=String(!isSeoha(hero));if(rs)rs.dataset.active=String(isSeoha(hero));
+    var hero=state?state.hero:selectedHero,rm=$('ability-row-memory'),rs=$('ability-row-seoha');if(rm)rm.dataset.active=String(!isSeoha(hero));if(rs)rs.dataset.active=String(isSeoha(hero));var rt=$('ability-trade-seoha');if(rt)rt.dataset.active=String(isSeoha(hero));
     if(state&&Arcade.setAbility)Arcade.setAbility(state,abilityFor(state.hero));}
   function unlockAudio(){if(fx&&fx.unlock)fx.unlock();if(global.HapilMusic&&global.HapilMusic.unlock)global.HapilMusic.unlock();}
   function syncSettings(){

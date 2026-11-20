@@ -84,7 +84,9 @@
     .ability-row input[type="range"]::-moz-range-track{height:8px;border-radius:4px;background:repeating-linear-gradient(90deg,#8a7c68 0 2px,transparent 2px calc((100% - 2px)/var(--steps,7))),#d9c9ad}
     .ability-row input[type="range"]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#ad8561;border:2px solid #f4ead6}
     .ability-row .setting-volume{grid-template-columns:1fr 50px}
-    .ability-trade{color:#8c2f22;font-weight:600} /* 서하가 받는 특전(돕는 정보라 인주색) */
+    .ability-trade{margin:4px 2px 0;display:flex;align-items:center;gap:6px;font-size:11.5px;line-height:1.35;color:#93453a;font-weight:500} /* 서하가 받는 특전: 슬라이더 칸 밖(설정과 무관함을 보이게, 심사 1차), 돕는 정보라 인주 계열을 한 단계 가라앉혀 */
+    .ability-trade[data-active="false"]{display:none}
+    .ability-trade .trade-seal{flex:none;display:inline-grid;place-items:center;width:16px;height:16px;border-radius:3px;background:#a8382a;color:#f4ead6;font-size:10px;font-weight:700;line-height:1}
     #setting-abilitySeoha{--steps:3} /* 서하 시간제어는 0~3단계(사용자 11-20): 눈금 4개 */
     .pad[aria-pressed="true"],html.ink .pad[aria-pressed="true"]{background:#d8c49a;color:#17131f;border-color:#5a3520;box-shadow:inset 0 0 0 2px #5a3520}
     #arcade-title{justify-content:flex-start;padding-top:max(28px,6dvh)}
@@ -293,7 +295,8 @@
             <small id="note-abilityMemory" class="ability-note"></small><small class="ability-note" data-i18n="focusMemory">초능력: 공격 ×1.3 · 필살 게이지 ×1.5</small></div>
           <div class="ability-row" id="ability-row-seoha" data-active="false"><span class="ability-name"><span data-i18n="ability">능력조절</span> · <span data-i18n="abilityTime">서하 시간제어</span></span>
             <div class="setting-volume"><input id="setting-abilitySeoha" type="range" min="0" max="3" step="1" value="3" aria-label="서하 시간제어" data-i18n-label="abilityTime"><output id="value-abilitySeoha" for="setting-abilitySeoha">끔</output></div>
-            <small id="note-abilitySeoha" class="ability-note"></small><small class="ability-note" data-i18n="focusSeoha">원 안 적탄은 한층 더 느려짐</small><small class="ability-note ability-trade" data-i18n="seohaTrade">서하 특전: 하트 2배 · 성장 2배 · 보스 큰 하트 목숨 +1</small></div>
+            <small id="note-abilitySeoha" class="ability-note"></small><small class="ability-note" data-i18n="focusSeoha">원 안 적탄은 한층 더 느려짐</small></div>
+          <p class="ability-trade" id="ability-trade-seoha" data-active="false"><span class="trade-seal">特</span><span data-i18n="seohaTrade">서하 특전: 하트 2배 · 성장 2배 · 보스 큰 하트 목숨 +1</span></p>
         </div>
         <div class="key-settings" role="group" aria-label="조작 키" data-i18n-label="keysGroup">
           <span class="key-title" data-i18n="keysGroup">조작 키 (PC)</span>
