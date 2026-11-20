@@ -43,7 +43,7 @@ for (const name of ['겹치는 명령', '닫힌 층의 명령']) {
     assert.ok(f.slice(VA,VE).every(frame=>frame.authored===AU), 'the authored script waits for its next turn');
     assert.ok(f.slice(CP).some(frame=>frame.authored>AU && frame.born>0), 'authored fire resumes');
     // 사용자 11-20 "탄이 다 사라진 다음에 육망성과 한자 패턴": 그림은 탄이 빠져나갈 때까지(최대 FIG_WAIT_MAX) 미뤄질 수 있다
-    const g = playSpell(name, 2100+A.FIG_WAIT_MAX);
+    const g = playSpell(name, 2100+2*A.FIG_WAIT_MAX); // 두 번 기다릴 수 있다
     assert.ok(g.some(frame=>frame.figures.includes('glyph')));
     assert.ok(g.some(frame=>frame.figures.includes('runes')));
     assert.ok(f.every(frame=>frame.risers===0));

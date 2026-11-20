@@ -6,7 +6,8 @@ function bossRun(difficulty,stage,seed){const g=a.STAGES[stage||9];let seg=g.fir
 function kindRun(difficulty,kind){for(let st=0;st<a.STAGES.length;st++){const g=a.STAGES[st];let seg=g.first;while(a.SEGMENTS[seg]&&a.SEGMENTS[seg].kind!=='card'||(a.SEGMENTS[seg]&&a.SEGMENTS[seg].mid))seg++;if(!a.SEGMENTS[seg]||a.SEGMENTS[seg].stage!==st)continue;
  if(a.SP_ORDER[(st*3+seg)%a.SP_ORDER.length]===kind){const s=a.createRun({difficulty,seed:3,segment:seg,entranceAll:true});toCard(s);if(a.spStart(s)<0)continue;s.segTick=a.spStart(s)-a.SP_LEAD-5;return s;}}throw new Error(kind);}
 function toCard(s){for(let i=0;i<3000&&s.stage!=='card';i++){s.player.invulnerableUntil=s.tick+999;a.step(s,{dx:0,dy:0});h.clear(s);}assert.equal(s.stage,'card');s.segTick=0;}
-function go(s,ticks,each,x){for(let i=0;i<ticks&&s.stage==='card';i++){s.player.invulnerableUntil=s.tick+999;s.boss.hp=s.boss.maxHp;if(x!==undefined)s.player.x=x;a.step(s,{dx:0,dy:0});if(each)each(s,i);h.clear(s);}return s;}
+// 사용자 11-20: 특수 페이즈는 지난 탄이 다 빠져나갈 때까지 시작을 미룬다(s.spHold). 미룬 틱은 관찰 시간에서 빼고 센다
+function go(s,ticks,each,x){let held=0;for(let i=0;i<ticks+held&&s.stage==='card';i++){s.player.invulnerableUntil=s.tick+999;s.boss.hp=s.boss.maxHp;if(x!==undefined)s.player.x=x;const h0=s.spHold||0;a.step(s,{dx:0,dy:0});if((s.spHold||0)>h0){held++;h.clear(s);continue;}if(each)each(s,i-held);h.clear(s);}return s;}
 const DIFFS=['gentle','normal','hell'],COVER={gentle:.7,normal:.8,hell:.9};
 
 test('every difficulty gets all four special phases, and normal firing is silent while one runs',()=>{
@@ -129,7 +130,9 @@ test('bullets and mobs cleared at a mob → mid-boss → boss change leave ink d
  const s=a.createRun({difficulty:'normal',seed:3,segment:seg,entranceAll:true});
  for(let i=0;i<30;i++)h.put(s,20+i*10,200);s.mobs.push({x:100,y:120,hp:3});
  s.stage='intro';s.boss.present=false;s.bossEntrance=null;
+ // 사용자 11-20 "탄은 시간으로 사라지지 않게": 남은 탄은 제 길로 다 나갈 때까지 입장을 미룬다(지우지 않음). 탄이 빠진 뒤 남은 몹은 먹 번짐으로 사라진다
+ assert.equal(a.prepareBossEntrance(s),false);assert.equal(s.n,30,'bullets are left to drain');s.n=0;
  assert.equal(a.prepareBossEntrance(s),true);assert.equal(s.n,0);
- assert(s.inked&&s.inked.length>=31*4,'ink marks '+(s.inked&&s.inked.length));assert.equal(s.inked[s.inked.length-1],3,'the mob leaves a bigger blot');
+ assert(s.inked&&s.inked.length>=4,'ink marks '+(s.inked&&s.inked.length));assert.equal(s.inked[s.inked.length-1],3,'the mob leaves a bigger blot');
  const app=h.read('src/arcade-app-v43.js');assert.match(app,/function drawInks\(\)/);assert.match(app,/drawDrifts\(\);drawInks\(\);/);
 });

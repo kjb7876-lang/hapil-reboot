@@ -86,7 +86,7 @@
     ['59',8,'처음 세웠던 목표'],
     ['60',8,'사몽의 문턱'],
     ['61',8,'교주의 사몽']];
-  var FIGURE_CAP=10,W=360,H=640,CAP=1400,COMPACT_CAP=820,LASER_CAP=24,MOB_CAP=28,ITEM_CAP=160,TICK=1/60,TAU=Math.PI*2;
+  var FIGURE_CAP=10,W=360,H=640,CAP=1120,COMPACT_CAP=656,LASER_CAP=24,MOB_CAP=28,ITEM_CAP=160,TICK=1/60,TAU=Math.PI*2;
   var GOLDEN_ANGLE=Math.PI*(3-Math.sqrt(5)); // 137.5°. 해바라기 씨앗이 겹치지 않고 차오르는 각도
   /* 난이도. density 탄 수 배율 · speed 탄 속도 배율 · hp 목숨 · mapHeal 다음 맵에서 회복(-1은 전부) · bombs 폭탄 ·
    * radius 영웅 피격점 반지름 · hitScale 탄의 보이는 반지름 중 실제로 닿는 비율 · warn 광선 예고 시간 배율 · beam 광선 굵기 배율 */
@@ -128,9 +128,10 @@
      탄 수는 휴대폰 기준값(PC는 ÷COMPACT_DENSITY), 이지는 첫 스테이지 density에서 마지막 end까지 오른다. 앞으로 난이도 조정은 이 표의 숫자만 고친다. 목숨·필살은 DIFFICULTY 표 그대로 */
   var LIVE_TABLE={
     // 사용자 11-19 21:22 "탄환속도와크기 전체적으로 30프로 늘려주고 그만큼 탄환 30프로 줄여줘": 탄속 ×1.3·탄 수 ×0.7(크기는 LIVE_GROW ×1.3)
-    gentle:{speed:.91,density:.385,end:.525,radius:1.6,hitScale:.4},
-    normal:{speed:1.17,density:.595,radius:2.0,hitScale:.5},
-    hell:{speed:1.365,density:.77,radius:2.4,hitScale:.5}
+    // 사용자 11-20 14:33 "모든탄 속도 16프로 상향 최대 탄환수 모든모드 20프로 하향": 탄속 ×1.16·탄 수 ×0.8(상한 CAP·COMPACT_CAP도 ×0.8)
+    gentle:{speed:1.0556,density:.308,end:.42,radius:1.6,hitScale:.4},
+    normal:{speed:1.3572,density:.476,radius:2.0,hitScale:.5},
+    hell:{speed:1.5834,density:.616,radius:2.4,hitScale:.5}
   };
   var LIVE_TRIM=.75*.8,LIVE_GROW=1.15*1.3,LIVE_FAST=1.2; // 11-19 13:14 "탄환속도 20프로 빨라지게하고 대신 탄환 숫자20프로 줄여줘": 25% 감소에서 20% 더(×.8), 속도 ×1.2
   // 사용자 11-19 "모든모드 탄환숫자25프로정도 감소"·"전체적으로 탄환크기 15프로정도 증가": 실제 게임(entranceAll)의 탄 수 25%↓, 탄 크기 15%↑
@@ -194,7 +195,7 @@
     if(isSeohaHero(s)){var on=armed===undefined?!!(s.player&&s.player.focus):!!armed,k=on?ABILITY_SLOW*l:0;return {kind:'time',level:l,active:on,damage:1,bulletSpeed:1-k,move:1-k};}
     return {kind:'power',level:l,active:true,damage:1+ABILITY_POWER*l,bulletSpeed:1+ABILITY_HASTE*l,move:1};}
   function shotDamage(s){var d=SHOT_DAMAGE[s.power]*abilityOf(s).damage;if(s.hero==='memory'&&s.player.focus)d*=FOCUS_POWER;return d;}
-  var GAUGE_FULL=100,MAX_BOMBS=4,AUTO_COLLECT_Y=190,ITEM_REACH=24,ITEM_PULL=11,BOMB_BOSS_DAMAGE=40,BOMB_MOB_DAMAGE=25;
+  var GAUGE_FULL=100,MAX_BOMBS=4,AUTO_COLLECT_Y=150,ITEM_REACH=24,ITEM_PULL=11,BOMB_BOSS_DAMAGE=40,BOMB_MOB_DAMAGE=25;
   // 탄 색은 여섯 가지만 쓴다: 0 빨강 2 보라 4 청록 5 초록 6 노랑 8 흰색
   var PALETTE=[0,2,4,5,6,8],RED=0,PURPLE=2,CYAN=4,GREEN=5,YELLOW=6,WHITE=8;
   // 모양도 여섯 가지: 0 작은 구슬 1 중간 2 큰 구슬 3 쌀알탄 4 거품 5 큰 기물(색 번호 자리에 기물 번호)
@@ -261,7 +262,7 @@
     var b=s.boss;if(!o.fragment&&b&&s.stage==='card'&&Math.abs(x-b.x)<2&&Math.abs(y-b.y)<2){x+=Math.cos(angle)*MUZZLE;y+=Math.sin(angle)*MUZZLE;}
     // A designed gap or locked volley must keep the heading that the player saw.
     if(s.entranceAll&&s.difficulty!=='hell'&&!o.formation&&size!==SHAPE_PROP&&!o.fragment){angle+=(srand(s)-.5)*2*SCATTER_ANGLE;speed*=1+(srand(s)-.5)*2*SCATTER_SPEED;x+=(srand(s)-.5)*2*SCATTER_POS;y+=(srand(s)-.5)*2*SCATTER_POS;} // 탄을 조금 더 흩뿌려 겹침을 줄인다(사용자 11-18, 이지·노멀)
-    if((s.figPend||s.figHeldAt===s.tick)&&!o.fragment&&!s.splitting)return; // 육망성·한자 고리를 기다리는 동안 새 탄을 내지 않는다(사용자 11-20)
+    if((s.figPend||s.figHeldAt===s.tick||s.spHold)&&!o.fragment&&!s.splitting)return; // 육망성·한자 고리를 기다리는 동안 새 탄을 내지 않는다(사용자 11-20)
     if(s.calm&&!o.fragment)return; // 육망성·한자 고리가 떠 있는 동안, 그리고 보스가 아래로 내려와 있는 동안은 새 탄을 내지 않는다(사용자 11-19 "탄환은 위에 있을때만 생성"). 반사탄도 마찬가지
     var i=s.n++;
     s.bx[i]=x;s.by[i]=y;s.ba[i]=angle;s.bs[i]=speed*s.rules.speed;
@@ -800,7 +801,7 @@
   function plannedSegments(difficulty){var p=PACING[difficulty]||PACING.normal;return SEGMENTS.map(function(g,i){return i;}).filter(function(i){return !p.skipRepeatedPlain||!REPEATED_PLAIN[i];});}
   function waveDuration(s,g){if(!s.paced)return g.duration;var p=PACING[s.difficulty],tot=pacingTotals[s.difficulty];return Math.max(120,Math.round(g.duration*(p.waveMinutes*3600-tot.waves*30)/tot.waveTicks));}
   function cardDuration(s,g){var up=s.entranceAll?BOSS_STAY*(g.mid?MID_UP[s.difficulty]||2.5:1):1;if(!s.paced)return g.time*up;var p=PACING[s.difficulty],tot=pacingTotals[s.difficulty];return Math.max(3,g.time*p.bossMinutes*60/tot.bossSeconds*1.4)*up;}
-  function cardHp(s,g){if(s.entranceAll)return Math.round((s.paced?Math.max(20,Math.round(g.hp*PACING[s.difficulty].hpScale)):g.hp)*BOSS_HP_UP*(g.mid?MID_UP[s.difficulty]||2.5:1));return s.paced?Math.max(20,Math.round(g.hp*PACING[s.difficulty].hpScale)):g.hp;}
+  function cardHp(s,g){if(s.entranceAll)return Math.round((s.paced?Math.max(20,Math.round(g.hp*PACING[s.difficulty].hpScale)):g.hp)*BOSS_HP_UP*(g.mid?(MID_UP[s.difficulty]||2.5)*(MID_HP_MORE[s.difficulty]||1):1));return s.paced?Math.max(20,Math.round(g.hp*PACING[s.difficulty].hpScale)):g.hp;}
   function pacingReport(difficulty){var d=PACING[difficulty]?difficulty:'normal',p=PACING[d],tot=pacingTotals[d],s={difficulty:d,paced:true},wave=0,boss=0;plannedSegments(d).forEach(function(i){var g=SEGMENTS[i];if(g.kind==='wave')wave+=(waveDuration(s,g)+30)/60;else boss+=cardDuration(s,g);});return {difficulty:d,targetMinutes:p.nominalMinutes,waveBudgetMinutes:wave/60,bossBudgetMinutes:p.bossMinutes,cardHpScale:p.hpScale,cardTimeoutMinutes:boss/60,presentationBudgetMinutes:p.presentationMinutes,waves:tot.waves,cards:tot.cards,skippedPlain:SEGMENTS.length-tot.waves-tot.cards};}
   function stageTargetSeconds(difficulty,index){var d=PACING[difficulty]?difficulty:'normal',p=PACING[d],tot=pacingTotals[d],seconds=p.presentationMinutes*60/STAGES.length;plannedSegments(d).forEach(function(i){var g=SEGMENTS[i];if(g.stage===index)seconds+=g.kind==='wave'?g.duration/tot.waveTicks*p.waveMinutes*60:g.time/tot.bossSeconds*p.bossMinutes*60;});return seconds;}
   STAGES.forEach(function(g){g.authoredSeconds=g.seconds;g.seconds=stageTargetSeconds('normal',g.index);});
@@ -975,9 +976,9 @@
     for(i=0;i<s.mobs.length&&ink.length<INK_DISSOLVE_CAP*4;i++)if(s.mobs[i].y>-10)ink.push(s.mobs[i].x,s.mobs[i].y,WHITE,3);
     return ink.length;
   }
-  function clearBossEntranceHazards(s){
-    var inked=inkDissolve(s);
-    s.n=0;s.sn=0;s.mobs.length=0;s.lasers.length=0;s.figures.length=0;s.ripples.length=0;
+  function clearBossEntranceHazards(s,keepBullets){
+    var inked=keepBullets?0:inkDissolve(s);
+    if(!keepBullets)s.n=0;s.sn=0;s.mobs.length=0;s.lasers.length=0;s.figures.length=0;s.ripples.length=0;
     s.cancelled.length=0;s.drifted.length=0;s.pops.length=0;s.zaps.length=0;s.skillFx.length=0;s.fsSwords.length=0;if(s.tbombs)s.tbombs.length=0;if(s.shotHits)s.shotHits.length=0;
     s.bombPulse=null;s.pulseInfo=null;s.lastBomb=null;s.warned=false;
     s.risers=s.risers||[];s.risers.length=0;s.riserDue=0;s.riserT=0;s.riserN=0;s.riserStage=s.stageIndex;
@@ -992,6 +993,7 @@
    * 컷신 중 앱이 step()을 부르지 않으면 tick/등장 대기도 진행되지 않는다. */
   function prepareBossEntrance(s){
     var g=segment(s);if(s.stage!=='intro'||!g||g.kind!=='card'||!hasEntrance(s,g)||s.bossEntrance&&s.bossEntrance.segment===s.seg)return false;
+    if(s.entranceAll&&s.n>0)return false; // 남은 탄이 제 길로 다 나간 뒤에 입장(앱 beginStory 도 이 길을 탄다)
     clearBossEntranceHazards(s);var entered=s.boss.present&&!s.boss.leaving&&s.boss.actor===g.actor?(s.boss.enteredTick===undefined?s.tick:s.boss.enteredTick):null;
     s.bossEntrance={segment:s.seg,enteredTick:entered,readyTick:entered===null?null:entered+graceOf(s),releasedTick:null};
     s.cinematicEncounter={actor:g.actor,stageIndex:g.stage,segment:s.seg};return true;
@@ -1033,9 +1035,10 @@
      보스가 떠날 때(다른 보스·잡몹 구간으로 넘어감)만 예전처럼 탄을 가속해 내보낸다(사용자 11-19 "몹이나 보스가 없고 탄환만 있을때는 탄환을 가속") */
   var CARD_BREAK_PAUSE=45;
   function bossStays(s){var card=segment(s),next=SEGMENTS[nextSegmentIndex(s)];return !!(s.entranceAll&&card&&next&&next.kind==='card'&&next.actor===card.actor&&next.stage===card.stage);}
-  function beginCardEnding(s,defeated){s.cardEnding={defeated:!!defeated,tick:s.tick,stays:bossStays(s)};if(s.boss.hp<0)s.boss.hp=0;if(!s.cardEnding.stays)flushBullets(s);}
-  function cardEndingStep(s){if(s.boss.hp<0)s.boss.hp=0;if(!s.cardEnding.stays)flushBullets(s);} // 이 사이에 다른 경로로 생긴 탄(파편 등)도 내보낸다
-  function cardEndingDone(s){var e=s.cardEnding;if(s.tick-e.tick>=CARD_ENDING_MAX)return true;if(e.stays?s.tick-e.tick<CARD_BREAK_PAUSE:s.n)return false;
+  function cardKeepsBullets(s){var g=segment(s);return !!(s.entranceAll&&g&&g.mid);} // 사용자 11-20 "중간보스가 빨리 죽어 탄이 내려오기도 전에 사라짐": 중간보스 격파는 탄을 걷지 않는다
+  function beginCardEnding(s,defeated){s.cardEnding={defeated:!!defeated,tick:s.tick,stays:bossStays(s)};if(s.boss.hp<0)s.boss.hp=0;if(!s.cardEnding.stays&&!cardKeepsBullets(s))flushBullets(s);}
+  function cardEndingStep(s){if(s.boss.hp<0)s.boss.hp=0;if(!s.cardEnding.stays&&!cardKeepsBullets(s))flushBullets(s);} // 이 사이에 다른 경로로 생긴 탄(파편 등)도 내보낸다
+  function cardEndingDone(s){var e=s.cardEnding;if(s.tick-e.tick>=CARD_ENDING_MAX)return true;if(e.stays?s.tick-e.tick<CARD_BREAK_PAUSE:s.n&&!cardKeepsBullets(s))return false; // 중간보스는 탄이 제 길로 나가므로 기다리지 않는다
     for(var i=0;i<s.lasers.length;i++){var l=s.lasers[i];if(l.age<=l.warn+l.active)return false;}return !s.figures.length;}
   /* 반사탄(사용자 11-19 "반사탄도 생성해서 탄환이 벽에 닿으면 반사되어 마치 빛이 거울에 닿으면 반사되는 각도로 … 1-2번 튕기면 맵밖으로"): 실제 게임 보스전에서
      몇 초마다 보스가 좌우 벽을 향해 비스듬한 탄 몇 알을 쏜다. 벽에서 입사각=반사각으로 꺾이고(좌우 벽은 θ→π−θ, 위 벽은 θ→−θ), 이지 1번·노멀 1~2번·헬 2번 튕긴 뒤 화면 밖으로 나간다(아래로는 튕기지 않는다). */
@@ -1051,7 +1054,7 @@
     s.cardEnding=null;
     var card=segment(s),left=timeLeft(s),b=s.boss,nextAt=nextSegmentIndex(s),next=SEGMENTS[nextAt],cinematic=s.cinematicEncounter;
     var hold=defeated&&cinematic&&cinematic.actor===card.actor&&cinematic.stageIndex===card.stage&&(!next||next.kind!=='card'||next.actor!==card.actor||next.stage!==card.stage);
-    var wiped=0;if(hold)clearBossEntranceHazards(s);else if(!(s.entranceAll&&next&&next.kind==='card'&&next.actor===card.actor&&next.stage===card.stage))wiped=breakWipe(s); // 같은 보스가 이어 가면 탄·패턴을 그대로 둔다
+    var keepB=cardKeepsBullets(s),wiped=0;if(hold)clearBossEntranceHazards(s,keepB);else if(keepB)clearNonBullets(s);else if(!(s.entranceAll&&next&&next.kind==='card'&&next.actor===card.actor&&next.stage===card.stage))wiped=breakWipe(s); // 같은 보스가 이어 가면 탄·패턴을 그대로 둔다
     if(defeated){s.cleared++;gainExp(s,card.spell?16:10);s.score+=Math.round(left)*300+wiped*30;var nd=card.spell?CARD_DROPS:PLAIN_DROPS;if(!s.spellOnly&&(!next||next.kind!=='card'||next.actor!==card.actor))nd=card.spell?1:0; /* 잭팟이 터지는 마지막 패턴은 낱개 하트를 떨구지 않는다(심사 11-20: 잭팟이 흩어진 낱개와 섞여 묽어짐). 스펠이면 필살 조각 하나만 */for(var i=0;i<nd;i++)dropItem(s,dropAt(b.actor,i,nd,b.x,b.y,0),dropAt(b.actor,i,nd,b.x,b.y,1),card.spell&&(i===1||nd===1)?1:0); /* 하트는 보스 발치 구름 아래에서 솟는다: 먹으로 스미는 몸 한가운데를 가리지 않게(사용자 11-16) */}else s.timeouts++;
     // 이름 붙은 패턴을 폭탄 없이, 맞지 않고 넘기면 보너스
     if(defeated&&!s.spellOnly&&(!next||next.kind!=='card'||next.actor!==card.actor))jackpot(s,!!card.mid,b.x,b.y); // 이 인물의 마지막 패턴: 잭팟(스펠 연습은 제외)
@@ -1127,7 +1130,7 @@
   }
   // 따로 정하지 않은 잡몹도 화면 위쪽에 머무는 동안 이 간격(틱)으로 다시 쏜다. 잡몹 구간이 보스전보다 지나치게 한가하지 않게(11-14 지시서).
   // 화면의 탄이 적으면 더 자주, 많으면 쉬어서 장면마다 압박이 고르게 한다. [쉬움, 보통, 지옥] 기준 탄 수.
-  var MOB_HP_UP=1.7*1.06,BOSS_HP_UP=1.5,BOSS_STAY=1.8,MOB_STAY=2400,MID_UP={gentle:3,normal:2.5,hell:2.5};
+  var MOB_HP_UP=1.7*1.06,BOSS_HP_UP=1.5,BOSS_STAY=1.8,MOB_STAY=2400,MID_UP={gentle:3,normal:2.5,hell:2.5}; var MID_HP_MORE={gentle:1.3,normal:1.3,hell:1}; // 사용자 11-20 "중간보스가 너무 빨리 죽어서 탄이 내려오기도 전에": 노멀은 최대 공격으로 붙어 쏘아도 한 판 약 20초(이전 약 15초). 헬은 이미 약 32초라 그대로
   var MOB_ENGAGE_SPEED=.5,MOB_EXIT_MARGIN=80;
 
   var MOB_REFIRE=[96,56,56],WAVE_FLOOR=[110,280,280],WAVE_CEIL=[170,320,320];
@@ -1586,7 +1589,7 @@
     // 특수 페이즈 창 안에서는 시그니처가 원래 나가지 않으므로, 미뤄 둔 그림도 버린다(특수 페이즈 광선·탄을 굶기지 않게)
     if(q.seg!==s.seg||s.stage!=='card'||s.cardEnding||s.cardDown||spQuiet(s)){s.figPend=null;return;}
     var wait=s.tick-q.since;
-    if(!q.hurried&&wait>=FIG_HURRY&&s.n){q.hurried=true;hurryBullets(s);}
+    
     if((!s.n&&!figureBusy(s))||wait>=FIG_WAIT_MAX){s.figPend=null;s.figHeldAt=s.tick;s.figRelease=true;try{(q.fn==="runes"?summonRunes:summonSigil).apply(null,[s].concat(q.args));}finally{s.figRelease=false;}s.figWaits=(s.figWaits||0)+1;}
   }
   function summonSigil(s,sig,index){
@@ -1655,7 +1658,33 @@
     return struck;
   }
   var WALL_KICK_Y=.6,DOWN_LO=1.0,DOWN_SIN=.84,SOFT_DESCEND_AGE=95,DESCEND_AGE=150,LIVE_DESCEND_AGE=45,LIVE_DESCEND_AGE_HELL=60,DESCEND_Y=470,DESCEND_TURN=.05,DESCEND_SPEED=72;
+  /* 수집선 규칙(사용자 11-20 "플레이어가 수집선 위에 있을 때 탄이 물리적으로 닿기 어려워지면 빨리 사라지게", "그 전에는 안 사라지고"):
+   *  영웅이 수집선(AUTO_COLLECT_Y) 위에 있으면, 선 아래에서 이미 아래로 내려가 영웅에게 닿을 수 없는 탄만 판정을 지닌 채 빨라져 나간다.
+   *  다시 올라올 수 있는 탄(위·옆으로 가는 탄, 휘는 탄, 아직 바뀔 탄)은 건드리지 않는다. 시간이 지났다고 탄을 걷지 않는다. */
+  var LINE_SWEEP_GAP=60,LINE_SWEEP_SIN=.2;
+  function lineSweep(s){var p=s.player;if(!s.entranceAll||p.y>=AUTO_COLLECT_Y)return 0;var n=0;
+    for(var i=0;i<s.n;i++){if(s.bexit[i]||s.bsize[i]===SHAPE_PROP||s.bacc[i]===HURRY_ACC)continue;
+      if(s.by[i]<AUTO_COLLECT_Y+LINE_SWEEP_GAP||s.by[i]<p.y+LINE_SWEEP_GAP||Math.sin(s.ba[i])<LINE_SWEEP_SIN||s.bturn[i]||(s.bat[i]&&s.bage[i]<s.bat[i]))continue;
+      s.bformation[i]=1;s.bbounce[i]=0;s.bacc[i]=HURRY_ACC;if(s.bmax[i]<HURRY_MAX)s.bmax[i]=HURRY_MAX;s.blife[i]=65535;n++;}
+    s.lineSwept=(s.lineSwept||0)+n;return n;}
+  /* 선 위 견제(사용자 11-20 "악용 방지하게 수집선 위로도 탄을 날리도록 모든 경우에", "수집선 위에 레이저 패턴이나 묵벽 패턴 일반몹 때도"):
+   *  영웅이 선 위에 LINE_GUARD_FIRST 넘게 머물면 LINE_GUARD_EVERY마다 ① 영웅을 겨눈 탄 ② 영웅 높이 가로 광선 ③ 아래에서 솟는 먹바위(묵벽) 둘이 돌아가며 나온다.
+   *  모든 구간(일반몹·중간보스·보스). 예고가 있고, 선 아래로 내려가면 피할 수 있다. */
+  var LINE_GUARD_FIRST=90,LINE_GUARD_EVERY=120;
+  function lineGuard(s){var p=s.player;
+    if(!s.entranceAll||p.y>=AUTO_COLLECT_Y||!(s.stage==='wave'||s.stage==='card')||s.cardEnding||s.cardDown){s.lineT=0;return;}
+    var t=s.lineT=(s.lineT||0)+1;if(t<LINE_GUARD_FIRST||(t-LINE_GUARD_FIRST)%LINE_GUARD_EVERY)return;
+    var k=(s.lineN=(s.lineN||0)+1)%3,b=s.boss,src=null,best=1e9;
+    if(b&&b.present&&!b.leaving)src={x:b.x,y:b.y};
+    for(var m=0;m<s.mobs.length;m++){var o=s.mobs[m],d=Math.abs(o.x-p.x);if(o.y<p.y&&d<best){best=d;src={x:o.x,y:o.y};}}
+    if(k===1){if(!src)src={x:p.x<W/2?W-20:20,y:-10};var a=aim(s,src.x,src.y);for(var j=-2;j<=2;j++)spawn(s,src.x,src.y,a+j*.16,150,{color:WHITE,size:1,formation:true,life:600});note(s,'lineGuard');}
+    else if(k===2){beam(s,-12,Math.max(24,p.y),0,{width:18,warn:60,active:40,color:PURPLE,keep:1});note(s,'lineGuard');}
+    else{riserInit(s);var gap=Math.max(70,MOTIFS.mountain.size*1.4);
+      for(var side=-1;side<=1;side+=2){var x=p.x+side*gap;if(x<20||x>W-20)continue;pushRiser(s,'mountain',{dir:'up',at:x,ay:Math.max(60,AUTO_COLLECT_Y-40)});}
+      note(s,'lineGuard');}
+  }
   function updateBullets(s){
+    lineSweep(s);
     var p=s.player,px=p.x,py=p.y,struck=false,grazed=0,hitScale=s.rules.hitScale,i,k,field=slowField(s),fr=field[0],fs=field[1],tempo=abilityOf(s).bulletSpeed;
     for(i=s.n-1;i>=0;i--){
       var age=++s.bage[i];
@@ -1689,7 +1718,7 @@
       if(s.bbounce[i]){var a0=s.ba[i];
         if((x<0&&Math.cos(a0)<0)||(x>W&&Math.cos(a0)>0)){s.ba[i]=Math.PI-a0;s.bx[i]=x=x<0?0:W;s.bbounce[i]--;if(s.bmirror[i])mirrorHit(s,i,x,y);}
         else if(y<0&&Math.sin(a0)<0&&age>BLOOM_TICKS){s.ba[i]=-a0;s.by[i]=y=0;s.bbounce[i]--;if(s.bmirror[i])mirrorHit(s,i,x,y);}}
-      if(x<-36||x>W+36||y<-48||y>H+36){removeBullet(s,i);continue;}
+      if(x<-36||x>W+36||y<-48||y>H+36||(s.entranceAll&&y>H+14&&Math.sin(s.ba[i])>0)){removeBullet(s,i);continue;} // 11-20: 아래로 화면을 다 벗어난 탄은 되돌아올 수 없으니(아래 벽은 튕기지 않음) 바로 사라진다. 영웅 둔화장에 걸려 화면 밖에서 머무는 탄이 다음 구간을 붙잡지 않게
       if(age>=s.blife[i]){
         // 화면 한가운데에서 수명이 다해 사라지지 않는다. 그대로 끝까지 날아가고(멈춘 탄은 다시 움직인다), 옆 벽에서 한 번 되돌아온다.
         if(x<-4||x>W+4||y<-4||y>H+4){removeBullet(s,i);continue;}
@@ -1955,7 +1984,8 @@
         else if(Math.abs(x-p.x)<90)x=p.x+(Math.abs(p.x-W/2)>24?(p.x<W/2?1:-1):(s.riserN&1?1:-1))*(90+riserRand(s)*50); // 영웅 바로 밑에서는 솟지 않는다
         x=Math.max(size*1.12,Math.min(W-size*1.12,x));
         var dir=opt&&opt.dir||riserDir(s,s.riserN-1),sx=x,sy=H+size+2,ax=x,ay=H*(.42+riserRand(s)*.28);
-        if(dir==='down'){sy=-size-2;ay=H-size*.6;} // 쉬움·보통: 위에서 내려와 아래 끝에서 터진다
+        if(dir==='down'){sy=-size-2;ay=H-size*.6;}
+        if(opt&&opt.ay!==undefined&&dir==='up')ay=opt.ay; // 선 위 견제의 묵벽: 수집선 위까지 솟는다 // 쉬움·보통: 위에서 내려와 아래 끝에서 터진다
         else if(dir==='left'||dir==='right'){sy=H*(.2+riserRand(s)*.32);if(opt&&opt.at!==undefined)sy=Math.max(size,Math.min(H-size,opt.atY===undefined?sy:opt.atY));else if(Math.abs(sy-p.y)<90)sy=Math.max(size,p.y-90-riserRand(s)*50);sx=dir==='left'?-size-2:W+size+2;ax=W*(dir==='left'?.3+riserRand(s)*.2:.5+riserRand(s)*.2);ay=sy;} // 헬: 좌우에서도 들어온다
         else{ax=x;}
         R.push({kind:kind,size:size,dir:dir,x:dir==='left'||dir==='right'?sx:x,y:sy,ax:ax,ay:ay,age:0,apex:ay,vy:pick(s,1.2,1.5,1.8),held:0,fade:0,lean:(riserRand(s)-.5)*.3,emblem:kind==='glyph'?(signatureOf(stageBoss(s.stageIndex))||{glyph:'ring'}).glyph:''});s.risen++;note(s,'riserWarn');
@@ -2151,15 +2181,17 @@
   function bossSpecials(s){
     if(!s.sp)spReset(s);
     if(s.sp.need&&!s.sp.done&&!s.cardEnding&&s.stage==='card'&&(s.cardDown||s.segTick-cardFireDelay(s)>=RL_EARLIEST&&s.boss.hp<=s.boss.maxHp*RL_HP))rlPull(s); // 레이저 장단 페이즈: 체력이 반 아래면 장단 구간을 당겨 시작한다(쓰러진 뒤라면 마지막 장단으로)
-    if(s.cardEnding||s.cardDown&&!rlPending(s)){if(s.sp.cur){s.sp.cut=!!s.cardEnding;spEnd(s);s.sp.cut=false;}s.sp.q.length=0;return;} // 소진 뒤에는 특수 페이즈·중앙 견제를 새로 열지 않는다(이미 켠 광선은 제 수명대로)
-    var sp=s.sp,w=spWindow(s),i;
+    if(s.cardEnding||s.cardDown&&!rlPending(s)){if(s.sp.cur){s.sp.cut=!!s.cardEnding;spEnd(s);s.sp.cut=false;}s.spHold=0;s.sp.q.length=0;return;} // 소진 뒤에는 특수 페이즈·중앙 견제를 새로 열지 않는다(이미 켠 광선은 제 수명대로)
+    var sp=s.sp,w=spWindow(s),i;if(!(w&&w.local===SP_LEAD&&!sp.cur))s.spHold=0;
     // 서하 시간제어 중에는 광선의 예고·켜짐이 적의 시계로만 흐른다(#154). 레이저 구간의 악보도 같은 시계로 넘겨야 박과 광선이 어긋나 겹쳐 켜지지 않는다
     if(s.efire===false&&w&&w.kind==='laser'){sp.start++;for(i=0;i<sp.q.length;i++)sp.q[i].at++;if(s.special&&sp.cur)s.special.start++;if(s.beat)s.beat.tick++;if(s.cardDown)sp.heldDown=(sp.heldDown||0)+1;return;}
     if(sp.drain&&s.floor&&!s.floor.pieces.length){s.floor.clearing=1;sp.drain=false;}
     if(!w){if(sp.cur)spEnd(s);sp.q.length=0;centerGuard(s,null);return;}
-    if(w.local===0&&!sp.cur){if(s.entranceAll)hurryBullets(s);else cancelAll(s,true);} // 전환 예고: 실제 게임은 지난 패턴의 탄을 지우지 않고 판정을 지닌 채 제 길로 빨라져 나가게 한다(사용자 11-19 "탄이 갑자기 사라져서 맥이 빠지거나")
-    if(w.local===SP_LEAD&&!sp.cur&&s.entranceAll&&s.n)driftBullets(s); // 예고 1.5초 안에 못 나간 몇 알만 먹이 흐르듯 걷는다(특수 페이즈는 탄 없이 광선·그림만) // 전환 예고: 지난 패턴의 탄은 먹이 흐르듯 걷힌다
-    if(w.local===SP_LEAD&&!sp.cur){sp.cur=w.kind;sp.cycle=w.cycle;s.special={kind:w.kind,start:s.tick,cycle:w.cycle,lay:SP_LAYBACK[s.difficulty]};note(s,'special');}
+    if(w.local===0&&!sp.cur&&!s.entranceAll)cancelAll(s,true); // 사용자 11-20 "시간이 지나 탄이 사라지지 않게": 실제 게임은 전환 예고에서도 탄을 서두르거나 걷지 않는다(수집선 규칙으로만 빨리 빠진다)
+    // (11-20) 예고 1.5초 뒤 남은 탄을 먹으로 걷던 driftBullets 는 쓰지 않는다
+    // 사용자 11-20 "탄이 다 사라진 다음에, 갑자기 지우지는 말고": 예고가 끝났는데 지난 탄이 남아 있으면 특수 페이즈 시작을 미룬다(예고 동안 새 탄은 없다, 최대 FIG_WAIT_MAX)
+    if(w.local===SP_LEAD&&!sp.cur&&s.entranceAll&&s.n&&!rlPending(s)&&(s.spHold=(s.spHold||0)+1)<FIG_WAIT_MAX){s.segTick--;return;}
+    if(w.local===SP_LEAD&&!sp.cur){s.spHold=0;sp.cur=w.kind;sp.cycle=w.cycle;s.special={kind:w.kind,start:s.tick,cycle:w.cycle,lay:SP_LAYBACK[s.difficulty]};note(s,'special');}
     if(!w.active||!sp.cur){centerGuard(s,w);return;}
     riserInit(s);var lt=w.local-SP_LEAD;
     if(lt%SP_BEAT===0){var n=lt/SP_BEAT;s.beat={tick:s.tick,n:n,accent:SP_ACCENT[n%8]};note(s,SP_ACCENT[n%8]>=1?'grooveAccent':'grooveBeat');sp.q.push({at:s.tick+SP_LAYBACK[s.difficulty],n:n});}
@@ -2179,10 +2211,10 @@
       return s; // 격파 연출 2초 동안 공격·피격·아이템·필살을 모두 멈춘다. 다음 구간은 다음 틱부터 움직인다.
     }
     moveBoss(s);
-    if(s.entranceAll&&s.stage==='intro'&&s.n>0&&!(s.bossEntrance&&s.bossEntrance.segment===s.seg)){flushBullets(s);updateBullets(s);s.stageTick=0;return s;} // 보스·몹 없이 탄만 남으면 탄을 가속해 다 내보낸 뒤에 다음 보스가 들어선다(사용자 11-19)
-    if(s.entranceAll&&s.stage==='intro')prepareBossEntrance(s);
+    var introHold=s.entranceAll&&s.stage==='intro'&&s.n>0&&!(s.bossEntrance&&s.bossEntrance.segment===s.seg);if(introHold)s.stageTick=0; // (11-20) 탄은 걷지 않는다. 남은 탄이 저절로 다 나갈 때까지 판정·회피는 그대로 돌고 보스 입장만 기다린다. 보스·몹 없이 탄만 남으면 탄을 가속해 다 내보낸 뒤에 다음 보스가 들어선다(사용자 11-19)
+    if(s.entranceAll&&s.stage==='intro'&&!introHold)prepareBossEntrance(s);
     var entrance=s.bossEntrance;
-    if(entrance&&entrance.segment===s.seg&&s.stage==='intro'){
+    if(!introHold&&entrance&&entrance.segment===s.seg&&s.stage==='intro'){
       if(!s.boss.present){if(s.entranceAll&&s.stageTick<ENTRANCE_CUTIN)return s;enter(s,segment(s).actor);} // 수묵 컷인이 끝난 뒤에야 보스가 판에 들어선다
       if(entrance.readyTick===null||s.tick<entrance.readyTick)return s;
       // 준비를 마친 첫 카드만 이름 표시용 FIRE_DELAY를 생략한다. 이후 카드의 40틱 예고는 그대로다.
@@ -2190,17 +2222,17 @@
     }
     if(input&&input.bomb)useBomb(s);
     bombPulse(s);
-    var seg=segment(s),b=s.boss;s.calm=s.entranceAll&&s.stage==='card'&&(bossDescends(s)||b.present&&b.y>BOSS_REST+BOSS_SWAY+CALM_BELOW);calmLaser(s);heroLaser(s);figurePending(s);
+    var seg=segment(s),b=s.boss;s.calm=s.entranceAll&&s.stage==='card'&&(bossDescends(s)||b.present&&b.y>BOSS_REST+BOSS_SWAY+CALM_BELOW);calmLaser(s);heroLaser(s);figurePending(s);lineGuard(s);
     if(s.stage==='break'){if(s.stageTick>=(s.paced?24:BREAK_TICKS)){if(seg&&seg.kind==='card'&&b.present)beginCard(s);else advance(s);}}
-    else if(s.stage==='intro'){
+    else if(s.stage==='intro'){if(introHold){}else
       if(!b.present)enter(s,seg.actor);
       else if(!b.leaving&&b.actor===seg.actor&&s.stageTick>=(s.paced?55:INTRO_TICKS))beginCard(s);
     }
-    else if(s.stage==='wave'&&s.entranceAll&&s.segTick===0&&!s.mobs.length&&s.n>0){flushBullets(s);} // 앞 구간 탄이 다 나간 뒤에 첫 몹이 나온다(사용자 11-19)
+    else if(s.stage==='wave'&&s.entranceAll&&s.segTick===0&&!s.mobs.length&&s.n>0){} // 앞 구간 탄이 저절로 다 나갈 때까지 첫 몹을 미룬다(11-20: 걷지 않음) // 앞 구간 탄이 다 나간 뒤에 첫 몹이 나온다(사용자 11-19)
     else if(s.stage==='wave'){
       var w=s.segTick++,duration=waveDuration(s,seg);if(w<duration)seg.script(s,w);
       if(w>=duration){
-        if(!s.mobs.length&&s.entranceAll){if(!s.waveFlush&&s.n&&(s.waveLinger=(s.waveLinger||0)+1)<WAVE_LINGER){}else if(!s.waveFlush){s.waveFlush=true;s.waveFlushN=flushBullets(s);clearNonBullets(s);}if(!s.n){s.waveFlush=false;s.waveLinger=0;s.score+=(s.waveFlushN||0)*10;s.waveFlushN=0;note(s,'waveClear');advance(s);}else s.segTick--;} // 몹이 다 사라지면 남은 탄을 가속해 내보내고, 다 나간 뒤에 다음으로
+        if(!s.mobs.length&&s.entranceAll){if(!s.n){clearNonBullets(s);s.waveLinger=0;note(s,'waveClear');advance(s);}else{s.waveLinger=(s.waveLinger||0)+1;s.segTick--;}} // 11-20: 몹이 다 사라져도 남은 탄은 걷지 않고 다 나간 뒤에 다음으로 // 몹이 다 사라지면 남은 탄을 가속해 내보내고, 다 나간 뒤에 다음으로
         else if(!s.mobs.length){s.score+=breakWipe(s)*10;note(s,'waveClear');advance(s);}
         else if(w-duration>=(s.entranceAll?MOB_STAY:s.paced?30:WAVE_GRACE)){
           for(var q=0;q<s.mobs.length;q++)s.mobs[q].retreat=true;
@@ -2293,7 +2325,7 @@
   var api={revision:43,POWER_SHOTS:POWER_SHOTS,MOB_CUE_LEAD:MOB_CUE_LEAD,spellBonus:spellBonus,spellBonusBase:spellBonusBase,jackpotCount:jackpotCount,JACKPOT_MID:JACKPOT_MID,JACKPOT_BOSS:JACKPOT_BOSS,JACKPOT_SCORE_MAX:JACKPOT_SCORE_MAX,pointValue:pointValue,heartWorth:heartWorth,clearBonus:clearBonus,LIFE_PIECES:LIFE_PIECES,SPELL_DECAY_FROM:SPELL_DECAY_FROM,SPELL_DECAY_OVER:SPELL_DECAY_OVER,POINT_BASE:POINT_BASE,POINT_MAX:POINT_MAX,CALM_SOFT:CALM_SOFT,composeLasers:composeLasers,beamFor:beam,LADDER_N:LADDER_N,SWEEP_N:SWEEP_N,CARD_ENDING_MAX:CARD_ENDING_MAX,CARD_MIN:CARD_MIN,DESCEND_HOLD:DESCEND_HOLD,LIVE_FAST:LIVE_FAST,BEAM_MIN:BEAM_MIN,FAN_APEX:FAN_APEX,CALM_BELOW:CALM_BELOW,CALM_LASER_EVERY:CALM_LASER_EVERY,LIVE_TABLE:LIVE_TABLE,COMPACT_DENSITY:COMPACT_DENSITY,CARD_BREAK_PAUSE:CARD_BREAK_PAUSE,bossStays:bossStays,MOB_BELOW_SPEED:MOB_BELOW_SPEED,BOSS_REST:BOSS_REST,BOSS_SWAY:BOSS_SWAY,WALL_KICK_Y:WALL_KICK_Y,CARD_DOWN_MAX:CARD_DOWN_MAX,EXIT_TURN:EXIT_TURN,WAVE_LINGER:WAVE_LINGER,LAYER_CAP:LAYER_CAP,layersBut:layersBut,phraseLen:phraseLen,flushBullets:flushBullets,heroProfile:heroProfile,bombName:bombName,isCinematicBoss:isCinematicBoss,nextSegmentIndex:nextSegmentIndex,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     PACING:PACING,stageTargetSeconds:stageTargetSeconds,plannedSegments:plannedSegments,pacingReport:pacingReport,waveDuration:waveDuration,cardDuration:cardDuration,cardHp:cardHp,SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_REAIM:MODE_REAIM,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,MODE_BRANCH:MODE_BRANCH,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,PROP_LONG:PROP_LONG,propHitPoints:propHitPoints,propRenderSpan:propRenderSpan,bulletRenderSpan:bulletRenderSpan,BULLET_BREAK_MIN_SPAN:BULLET_BREAK_MIN_SPAN,isBulletBreakable:isBulletBreakable,ORB_HP:ORB_HP,ORB_BREAK_EVERY:ORB_BREAK_EVERY,ORB_FRAGMENT_COUNT:ORB_FRAGMENT_COUNT,ORB_FRAGMENT_GRACE:ORB_FRAGMENT_GRACE,ORB_FRAGMENT_SPEED:ORB_FRAGMENT_SPEED,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
     BOSS_ENTRANCE_GRACE:BOSS_ENTRANCE_GRACE,BOSS_ENTRANCE_SPEECH:BOSS_ENTRANCE_SPEECH,BOSS_ENTRANCE_MID:BOSS_ENTRANCE_MID,BOSS_CLEAR_TICKS:BOSS_CLEAR_TICKS,prepareBossEntrance:prepareBossEntrance,phaseOf:phaseOf,phaseKind:phaseKind,entrancePhase:entrancePhase,skipEntrance:skipEntrance,ENTRANCE_CUTIN:ENTRANCE_CUTIN,BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,BOSS_FORMS:BOSS_FORMS,FORM_BASE:FORM_BASE,bossArtOf:bossArtOf,BOSS_SHOTS:BOSS_SHOTS,SHOT_KINDS:SHOT_KINDS,bossShotOf:bossShotOf,figureSegments:figureSegments,figurePhase:figurePhase,FIGURE_ON_TICKS:FIGURE_ON_TICKS,FIGURE_OFF_TICKS:FIGURE_OFF_TICKS,FIGURE_CHARGE_TICKS:FIGURE_CHARGE_TICKS,RUNE_AT:RUNE_AT,RISER_HP:RISER_HP,RISER_SCORE:RISER_SCORE,riserHp:riserHp,shotHitsRiser:shotHitsRiser,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,BOSS_DESCEND:BOSS_DESCEND,SP_START:SP_START,spStart:function(s){return s.sp?s.sp.start:SP_START;},SP_CYCLE:SP_CYCLE,SP_LEAD:SP_LEAD,SP_BEAT:SP_BEAT,SP_LAYBACK:SP_LAYBACK,SP_LEN:SP_LEN,SP_KINDS:SP_KINDS,SP_ORDER:SP_ORDER,spitMotif:spitMotif,SPIT_FORM:SPIT_FORM,SP_INFO:SP_INFO,CAMP_HALF:CAMP_HALF,CAMP_NEED:CAMP_NEED,spWindow:spWindow,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
-    POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,chapterFloor:chapterFloor,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,DESCEND_AGE:DESCEND_AGE,DESCEND_Y:DESCEND_Y,FOCUS_SKILL_CHANCE:FOCUS_SKILL_CHANCE,FOCUS_SKILL_GAP:FOCUS_SKILL_GAP,SWORD_DELAY:SWORD_DELAY,SWORD_POWER:SWORD_POWER,REVERSAL_POWER:REVERSAL_POWER,FOCUS_SLOW:FOCUS_SLOW,FOCUS_SLOW_MAX:FOCUS_SLOW_MAX,COVER_REACH:COVER_REACH,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,BOMB_PULSES:BOMB_PULSES,BOMB_PULSE_START:BOMB_PULSE_START,BOMB_PULSE_EVERY:BOMB_PULSE_EVERY,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp,ABILITY_MAX:ABILITY_MAX,ABILITY_POWER:ABILITY_POWER,ABILITY_HASTE:ABILITY_HASTE,ABILITY_SLOW:ABILITY_SLOW,FOCUS_POWER:FOCUS_POWER,FOCUS_GAUGE:FOCUS_GAUGE,SEOHA_FOCUS_SHOT:SEOHA_FOCUS_SHOT,SEOHA_FOCUS_TB:SEOHA_FOCUS_TB,SEOHA_FOCUS_TB_EVERY:SEOHA_FOCUS_TB_EVERY,HERO_TUNE:HERO_TUNE,heroLaserBias:heroLaserBias,shotStrike:shotStrike,updateTimeBombs:updateTimeBombs,CHARGE_EVERY:CHARGE_EVERY,CHARGE_ARC:CHARGE_ARC,CHARGE_REACH:CHARGE_REACH,TIMEBOMB_EVERY:TIMEBOMB_EVERY,TIMEBOMB_FUSE:TIMEBOMB_FUSE,TIMEBOMB_MULT:TIMEBOMB_MULT,TIMEBOMB_SPLASH:TIMEBOMB_SPLASH,TIMEBOMB_R:TIMEBOMB_R,abilityOf:abilityOf,setAbility:setAbility,shotDamage:shotDamage,FIG_HURRY:FIG_HURRY,FIG_WAIT_MAX:FIG_WAIT_MAX};
+    POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,chapterFloor:chapterFloor,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,DESCEND_AGE:DESCEND_AGE,DESCEND_Y:DESCEND_Y,FOCUS_SKILL_CHANCE:FOCUS_SKILL_CHANCE,FOCUS_SKILL_GAP:FOCUS_SKILL_GAP,SWORD_DELAY:SWORD_DELAY,SWORD_POWER:SWORD_POWER,REVERSAL_POWER:REVERSAL_POWER,FOCUS_SLOW:FOCUS_SLOW,FOCUS_SLOW_MAX:FOCUS_SLOW_MAX,COVER_REACH:COVER_REACH,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,BOMB_PULSES:BOMB_PULSES,BOMB_PULSE_START:BOMB_PULSE_START,BOMB_PULSE_EVERY:BOMB_PULSE_EVERY,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp,ABILITY_MAX:ABILITY_MAX,ABILITY_POWER:ABILITY_POWER,ABILITY_HASTE:ABILITY_HASTE,ABILITY_SLOW:ABILITY_SLOW,FOCUS_POWER:FOCUS_POWER,FOCUS_GAUGE:FOCUS_GAUGE,SEOHA_FOCUS_SHOT:SEOHA_FOCUS_SHOT,SEOHA_FOCUS_TB:SEOHA_FOCUS_TB,SEOHA_FOCUS_TB_EVERY:SEOHA_FOCUS_TB_EVERY,HERO_TUNE:HERO_TUNE,heroLaserBias:heroLaserBias,shotStrike:shotStrike,updateTimeBombs:updateTimeBombs,CHARGE_EVERY:CHARGE_EVERY,CHARGE_ARC:CHARGE_ARC,CHARGE_REACH:CHARGE_REACH,TIMEBOMB_EVERY:TIMEBOMB_EVERY,TIMEBOMB_FUSE:TIMEBOMB_FUSE,TIMEBOMB_MULT:TIMEBOMB_MULT,TIMEBOMB_SPLASH:TIMEBOMB_SPLASH,TIMEBOMB_R:TIMEBOMB_R,abilityOf:abilityOf,setAbility:setAbility,shotDamage:shotDamage,FIG_HURRY:FIG_HURRY,FIG_WAIT_MAX:FIG_WAIT_MAX,LINE_GUARD_FIRST:LINE_GUARD_FIRST,LINE_GUARD_EVERY:LINE_GUARD_EVERY,LINE_SWEEP_GAP:LINE_SWEEP_GAP,lineSweep:lineSweep,MID_HP_MORE:MID_HP_MORE};
    rhythmContext={WIDTH:W,HEIGHT:H,ACTORS:ACTORS,SIGNATURES:SIGNATURES,PROPS:PROPS,SEGMENTS:SEGMENTS,SHAPE_PROP:SHAPE_PROP,spawn:spawn,beam:beam,isCinematicBoss:isCinematicBoss};
    // 리듬 레이저(2026-11-20) 공개 이름 — 다른 층(영웅별 적 특성화 등)이 무늬 목록·비율·강제 지정(s.sp.force)을 쓴다
    api.LASER_POOL=LASER_POOL;api.LASER_OLD=LASER_OLD;api.LASER_SHARE=LASER_SHARE;api.RL_HP=RL_HP;api.RL_EARLIEST=RL_EARLIEST;api.RL_DOWN_MAX=RL_DOWN_MAX;
