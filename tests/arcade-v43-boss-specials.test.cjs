@@ -123,7 +123,9 @@ test('bullets and mobs cleared at a mob → mid-boss → boss change leave ink d
  const s=a.createRun({difficulty:'normal',seed:3,segment:seg,entranceAll:true});
  for(let i=0;i<30;i++)h.put(s,20+i*10,200);s.mobs.push({x:100,y:120,hp:3});
  s.stage='intro';s.boss.present=false;s.bossEntrance=null;
+ // 사용자 11-20 "탄은 시간으로 사라지지 않게": 남은 탄은 제 길로 다 나갈 때까지 입장을 미룬다(지우지 않음). 탄이 빠진 뒤 남은 몹은 먹 번짐으로 사라진다
+ assert.equal(a.prepareBossEntrance(s),false);assert.equal(s.n,30,'bullets are left to drain');s.n=0;
  assert.equal(a.prepareBossEntrance(s),true);assert.equal(s.n,0);
- assert(s.inked&&s.inked.length>=31*4,'ink marks '+(s.inked&&s.inked.length));assert.equal(s.inked[s.inked.length-1],3,'the mob leaves a bigger blot');
+ assert(s.inked&&s.inked.length>=4,'ink marks '+(s.inked&&s.inked.length));assert.equal(s.inked[s.inked.length-1],3,'the mob leaves a bigger blot');
  const app=h.read('src/arcade-app-v43.js');assert.match(app,/function drawInks\(\)/);assert.match(app,/drawDrifts\(\);drawInks\(\);/);
 });

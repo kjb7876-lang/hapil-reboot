@@ -991,6 +991,7 @@
    * 컷신 중 앱이 step()을 부르지 않으면 tick/등장 대기도 진행되지 않는다. */
   function prepareBossEntrance(s){
     var g=segment(s);if(s.stage!=='intro'||!g||g.kind!=='card'||!hasEntrance(s,g)||s.bossEntrance&&s.bossEntrance.segment===s.seg)return false;
+    if(s.entranceAll&&s.n>0)return false; // 남은 탄이 제 길로 다 나간 뒤에 입장(앱 beginStory 도 이 길을 탄다)
     clearBossEntranceHazards(s);var entered=s.boss.present&&!s.boss.leaving&&s.boss.actor===g.actor?(s.boss.enteredTick===undefined?s.tick:s.boss.enteredTick):null;
     s.bossEntrance={segment:s.seg,enteredTick:entered,readyTick:entered===null?null:entered+graceOf(s),releasedTick:null};
     s.cinematicEncounter={actor:g.actor,stageIndex:g.stage,segment:s.seg};return true;

@@ -56,3 +56,11 @@ test('the line guard beam stays at the hero height instead of being turned into 
     if(l&&l.angle===0){seen++;assert(Math.abs(l.y-Math.max(24,c.player.y))<1,'beam at '+l.y+' hero '+c.player.y);}}});
   assert(seen>0,'a guard beam was fired');
 });
+
+test('boss entrance preparation waits for leftover bullets, even when the app calls it directly',()=>{
+  const s=A.createRun({entranceAll:true,difficulty:'normal',stage:3,stages:1,seed:8});drive(s,560,600);
+  const card=A.SEGMENTS.findIndex(g=>g.kind==='card'&&!g.mid);assert(s.n>0);
+  s.stage='intro';s.seg=card;s.bossEntrance=null;const n0=s.n;
+  assert.equal(A.prepareBossEntrance(s),false);assert.equal(s.n,n0,'bullets are not cleared while they drain');
+  s.n=0;assert.equal(A.prepareBossEntrance(s),true);
+});
