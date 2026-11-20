@@ -1485,17 +1485,18 @@
   }
   /* 한자문 고리(사용자 11-15 "보스뒤에 나오는 저 원들 톱니처럼도는거 크기를 키우고 굵게해서 패턴용으로 … 안에는 한자 적어놓고", "한자문으로 만들어서 넣어 단순 한자 한글자 반복하지말고").
      보스 뒤에서 돌던 장식 룬 고리 둘이 커지고 굵어져 판정을 갖는다. 고리마다 틈이 있어 톱니처럼 서로 반대로 돌고, 틈으로 드나든다. 고리 띠 안의 한문 문장은 그림 쪽(보스마다 다름).
-     큰 육망성(SIGIL)이 켜진 동안에는 켜지지 않는다: 육망성은 t%1440 = 30~360, 고리는 360·600·840·1080(예고) 뒤 각 210틱이라 둘이 함께 판정을 갖는 순간이 없다. 이지는 바깥 고리 하나만. */
+     큰 육망성(SIGIL)이 켜진 동안에는 켜지지 않는다: 육망성은 t%1440 = 30~360, 고리는 360·640·920·1200(예고 90) 뒤 각 280틱이라 둘이 함께 판정을 갖는 순간이 없다. 이지는 바깥 고리 하나만. */
   /* 사용자 11-16 "원형한자빈도수 늘리고 더 겹겹히 큰사이즈로 더 압도적이게": 육망성 한 번(24초 주기의 처음 6초) 뒤 고리가 4초마다 네 번.
      고리는 네 겹(이지 두 겹), 바깥 고리는 반지름 210으로 필드 좌우를 넘어 화면을 덮는다. 겹마다 반대로 돌고, 켜질 때 틈이 모두 아래를 본다. */
+  /* 사용자 11-20 "보스 한자패턴 예고시간과 한자나오는 지속시간 더 늘려줘 지금 너무 빠르게 전환됨": 예고 60→90틱(1.5배), 켜진 시간 150→190틱. 24초 주기 안에 네 번이 그대로 들어가도록 간격 210→280(육망성은 1440 주기 그대로, 마지막 고리 1200+280=1480 은 다음 육망성 판정 1540 보다 앞). */
   var RUNE_SLOW=.7,RUNE_SLOW_EASY=.55; // 사용자 11-19 "한자패턴 조금더 느리게돌게해서 피하기 쉽게"(이지는 더 느리게)
-  var RUNE_AT=360,RUNE_TIMES=[360,570,780,990],RUNE_WARN=60,RUNE_ACTIVE=150,RUNE_GROW=.62,RUNE_SPIN=.55,RUNE_W=24,RUNE_OUTER=210,RUNE_INNER=166,RUNE_RADII=[214,182,150,118,88,60];
+  var RUNE_AT=360,RUNE_TIMES=[360,640,920,1200],RUNE_WARN=90,RUNE_ACTIVE=190,RUNE_GROW=.62,RUNE_SPIN=.55,RUNE_W=24,RUNE_OUTER=210,RUNE_INNER=166,RUNE_RADII=[214,182,150,118,88,60];
   // 고리 중심: 보스를 따르되 가로는 필드 정중앙, 세로는 170~230으로 묶고, 바깥 고리가 띠·매듭까지 좌우 벽 안에 들도록 줄인다(심사 2·3차: 벽에 닿아 잘렸다).
   function runeCentre(f,b){f.cx=W/2;f.cy=Math.max(170,Math.min(b.descended?382:230,b.y+40));f.fit=1;} // 보스가 내려오면(11-18) 고리 중심도 따라 내려와 바깥 띠가 화면 아래 끝 가까이 닿는다
   function summonRunes(s,sig,cast){
     if(s.figures.length>=FIGURE_CAP-1)return;
     var spin=sig.spin*RUNE_SPIN*(s.entranceAll?(s.difficulty==='gentle'?RUNE_SLOW_EASY:RUNE_SLOW):1),lead=spin*TICK*.35*RUNE_WARN; // 켜지는 순간 두 고리 모두 틈 하나가 바로 아래(영웅 쪽)를 보게 한다(심사: 화면 안에서 틈이 보여야 한다)
-    var layers=(s.difficulty==='gentle'?[2,3,3,3]:[4,5,6,6])[cast||0],rings=[]; // 점층(심사 11-16): 네 겹 → 다섯 겹 → 여섯 겹 → 여섯 겹(사용자 11-16 "한자문고리6겹해")으로 쌓아 올린 뒤 육망성으로 넘어간다
+    var layers=(s.difficulty==='gentle'?[2,3,3,3]:[5,6,6,6])[cast||0],rings=[]; // 점층(심사 11-16): 다섯 겹 → 여섯 겹(11-20: 예고·지속을 늘려 짧은 카드엔 두 번만 들어가므로 둘째에서 여섯 겹 도달)(사용자 11-16 "한자문고리6겹해")으로 쌓아 올린 뒤 육망성으로 넘어간다
     for(var k=0;k<layers;k++){var dir=k%2?-1:1,r=RUNE_RADII[k];rings.push({r:r,n:3,gap:Math.min(1.2,Math.max(.62*172/Math.max(120,r)+.04*k,64/r)),dir:dir,phase:Math.PI/2-dir*lead});} // 안쪽 고리일수록 틈 각도를 넓혀 틈 폭(px)을 비슷하게
     var rf={kind:'runes',cx:s.boss.x,cy:s.boss.y,fit:1,follow:true,rings:rings,turn:0,spin:spin,grow:0,width:RUNE_W*s.rules.beam,warn:RUNE_WARN,active:RUNE_ACTIVE,age:0,color:sigilColor(s,sig),r:0,grazed:false};runeCentre(rf,s.boss);s.figures.push(rf);
     note(s,'figure');
