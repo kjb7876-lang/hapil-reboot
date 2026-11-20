@@ -79,11 +79,15 @@
     [data-keyl]{font-weight:700}
     .ability-note{font-size:12px;line-height:1.4;color:#4a3d2e;min-height:17px}
     .ability-row input[type="range"]{-webkit-appearance:none;appearance:none;height:44px;background:transparent;margin:0}
-    .ability-row input[type="range"]::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:repeating-linear-gradient(90deg,#8a7c68 0 2px,transparent 2px calc((100% - 2px)/7)) 11px 0/calc(100% - 22px) 100% no-repeat,#d9c9ad} /* 눈금을 손잡이 중심이 움직이는 범위에 맞춘다 */
+    .ability-row input[type="range"]::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:repeating-linear-gradient(90deg,#8a7c68 0 2px,transparent 2px calc((100% - 2px)/var(--steps,7))) 11px 0/calc(100% - 22px) 100% no-repeat,#d9c9ad} /* 눈금을 손잡이 중심이 움직이는 범위에 맞춘다 */
     .ability-row input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:-8px;border-radius:50%;background:#ad8561;border:2px solid #f4ead6;box-shadow:0 1px 3px rgba(40,30,20,.45)}
-    .ability-row input[type="range"]::-moz-range-track{height:8px;border-radius:4px;background:repeating-linear-gradient(90deg,#8a7c68 0 2px,transparent 2px calc((100% - 2px)/7)),#d9c9ad}
+    .ability-row input[type="range"]::-moz-range-track{height:8px;border-radius:4px;background:repeating-linear-gradient(90deg,#8a7c68 0 2px,transparent 2px calc((100% - 2px)/var(--steps,7))),#d9c9ad}
     .ability-row input[type="range"]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#ad8561;border:2px solid #f4ead6}
     .ability-row .setting-volume{grid-template-columns:1fr 50px}
+    .ability-trade{margin:4px 2px 0;display:flex;align-items:center;gap:6px;font-size:11.5px;line-height:1.35;color:#93453a;font-weight:500} /* 서하가 받는 특전: 슬라이더 칸 밖(설정과 무관함을 보이게, 심사 1차), 돕는 정보라 인주 계열을 한 단계 가라앉혀 */
+    .ability-trade[data-active="false"]{display:none}
+    .ability-trade .trade-seal{flex:none;display:inline-grid;place-items:center;width:16px;height:16px;border-radius:3px;background:#a8382a;color:#f4ead6;font-size:10px;font-weight:700;line-height:1}
+    #setting-abilitySeoha{--steps:3} /* 서하 시간제어는 0~3단계(사용자 11-20): 눈금 4개 */
     .pad[aria-pressed="true"],html.ink .pad[aria-pressed="true"]{background:#d8c49a;color:#17131f;border-color:#5a3520;box-shadow:inset 0 0 0 2px #5a3520}
     #arcade-title{justify-content:flex-start;padding-top:max(28px,6dvh)}
     #arcade-title>*{flex-shrink:0}
@@ -290,8 +294,9 @@
             <div class="setting-volume"><input id="setting-abilityMemory" type="range" min="0" max="7" step="1" value="7" aria-label="기억사수 출력조절" data-i18n-label="abilityPower"><output id="value-abilityMemory" for="setting-abilityMemory">끔</output></div>
             <small id="note-abilityMemory" class="ability-note"></small><small class="ability-note" data-i18n="focusMemory">초능력: 공격 ×1.3 · 필살 게이지 ×1.5</small></div>
           <div class="ability-row" id="ability-row-seoha" data-active="false"><span class="ability-name"><span data-i18n="ability">능력조절</span> · <span data-i18n="abilityTime">서하 시간제어</span></span>
-            <div class="setting-volume"><input id="setting-abilitySeoha" type="range" min="0" max="7" step="1" value="7" aria-label="서하 시간제어" data-i18n-label="abilityTime"><output id="value-abilitySeoha" for="setting-abilitySeoha">끔</output></div>
+            <div class="setting-volume"><input id="setting-abilitySeoha" type="range" min="0" max="3" step="1" value="3" aria-label="서하 시간제어" data-i18n-label="abilityTime"><output id="value-abilitySeoha" for="setting-abilitySeoha">끔</output></div>
             <small id="note-abilitySeoha" class="ability-note"></small><small class="ability-note" data-i18n="focusSeoha">원 안 적탄은 한층 더 느려짐</small></div>
+          <p class="ability-trade" id="ability-trade-seoha" data-active="false"><span class="trade-seal">特</span><span data-i18n="seohaTrade">서하 특전: 하트 2배 · 성장 2배 · 보스 큰 하트 목숨 +1</span></p>
         </div>
         <div class="key-settings" role="group" aria-label="조작 키" data-i18n-label="keysGroup">
           <span class="key-title" data-i18n="keysGroup">조작 키 (PC)</span>
@@ -355,38 +360,38 @@
       <button id="arcade-home" type="button" data-i18n="toTitle">처음 화면으로</button>
     </div>
   </div>
-  <script src="src/rain-hit-bank-v43.js?v=20261120-menu2"></script>
-  <script src="src/audio-v37.js?v=20261120-menu2"></script>
-  <script src="src/arcade-parts-v43/p1.js?v=20261120-menu2"></script>
-  <script src="src/arcade-parts-v43/p2.js?v=20261120-menu2"></script>
-  <script src="src/arcade-parts-v43/p3.js?v=20261120-menu2"></script>
-  <script src="src/arcade-parts-v43/p4.js?v=20261120-menu2"></script>
-  <script src="src/arcade-parts-v43/p5.js?v=20261120-menu2"></script>
-  <script src="src/arcade-parts-v43/p6.js?v=20261120-menu2"></script>
-  <script src="src/arcade-parts-v43/p7.js?v=20261120-menu2"></script>
-  <script src="src/arcade-parts-v43/p8.js?v=20261120-menu2"></script>
-  <script src="src/arcade-boss-intros-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-boss-lines-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-heroes-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-boss-rhythm-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-encounter-phases-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-boss-phases-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-laser-rhythm-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-skins-v43.js?v=20261120-menu2"></script>
-  <script src="src/ink-v43.js?v=20261120-menu2"></script>
-  <script src="src/ink-motifs-v43.js?v=20261120-menu2"></script>
-  <script src="src/hero-memory-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-i18n-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-music-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-mobile-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-eyes-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-story-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-chapters-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-hero-select-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-hero-visibility-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-spirit-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-cues-v43.js?v=20261120-menu2"></script>
-  <script src="src/arcade-app-v43.js?v=20261120-menu2"></script>
+  <script src="src/rain-hit-bank-v43.js?v=20261120-menu3"></script>
+  <script src="src/audio-v37.js?v=20261120-menu3"></script>
+  <script src="src/arcade-parts-v43/p1.js?v=20261120-menu3"></script>
+  <script src="src/arcade-parts-v43/p2.js?v=20261120-menu3"></script>
+  <script src="src/arcade-parts-v43/p3.js?v=20261120-menu3"></script>
+  <script src="src/arcade-parts-v43/p4.js?v=20261120-menu3"></script>
+  <script src="src/arcade-parts-v43/p5.js?v=20261120-menu3"></script>
+  <script src="src/arcade-parts-v43/p6.js?v=20261120-menu3"></script>
+  <script src="src/arcade-parts-v43/p7.js?v=20261120-menu3"></script>
+  <script src="src/arcade-parts-v43/p8.js?v=20261120-menu3"></script>
+  <script src="src/arcade-boss-intros-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-boss-lines-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-heroes-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-boss-rhythm-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-encounter-phases-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-boss-phases-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-laser-rhythm-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-skins-v43.js?v=20261120-menu3"></script>
+  <script src="src/ink-v43.js?v=20261120-menu3"></script>
+  <script src="src/ink-motifs-v43.js?v=20261120-menu3"></script>
+  <script src="src/hero-memory-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-i18n-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-music-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-mobile-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-eyes-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-story-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-chapters-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-hero-select-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-hero-visibility-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-spirit-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-cues-v43.js?v=20261120-menu3"></script>
+  <script src="src/arcade-app-v43.js?v=20261120-menu3"></script>
 </body>
 </html>

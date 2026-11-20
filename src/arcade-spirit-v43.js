@@ -26,11 +26,13 @@
   /* 낙관 그림(tools/build-seal-v43.py 가 구운 직접 그린 그림). 아직 못 받았으면 코드로 그린 네모 낙관으로 대신한다. */
   var SEAL_SRC='media/arcade-v43/seal-v43.webp',sealImg=null;
   function seal(){if(sealImg===null&&global.Image&&global.document){sealImg=new global.Image();sealImg.decoding='async';sealImg.src=SEAL_SRC;}return sealImg&&sealImg.complete&&sealImg.naturalWidth?sealImg:null;}
-  function reset(){seal();jack=null;popups.length=0;stamp=null;lineGlow=0;lineSeen=0;lineAge=0;bonusShown=-1;cleanSeg=-1;lostAt=-1e9;}
+  var lifePop=null,LIFE_POP_TICKS=90,LIFE_POP_DELAY=16,LIFE_FLY=26;
+  function reset(){seal();jack=null;lifePop=null;popups.length=0;stamp=null;lineGlow=0;lineSeen=0;lineAge=0;bonusShown=-1;cleanSeg=-1;lostAt=-1e9;}
   var sound=null;function useSound(fn){sound=typeof fn==='function'?fn:null;}
   function onEvent(e,s,A){
     if(!s)return;
     if(e==='jackpot'&&s.lastJackpot){startJackpot(s,s.lastJackpot,sound);return;}
+    if(e==='lifeHeart'&&s.lastLifeHeart){lifePop={got:s.lastLifeHeart.got,x:s.lastLifeHeart.x,t0:s.tick};return;} // 서하 보스 격파 큰 하트(사용자 11-20): 받은 것을 영웅 위에 크게 띄운다
     if(e==='card'){var seg=A.SEGMENTS[s.seg];if(seg&&seg.name&&!s.bossOnly&&!s.spellOnly){entry(seg.name,s.difficulty)[0]++;saveBook();}}
     else if(e==='capture'&&s.lastCapture){var c=s.lastCapture;if(c.name&&!s.bossOnly&&!s.spellOnly){var en=entry(c.name,s.difficulty);if(en[1]<en[0])en[1]++;saveBook();}
       stamp={ok:true,bonus:c.bonus,tick:s.tick,pieces:s.pieces,of:A.LIFE_PIECES,gift:s.pieces===0,got:c.gift||'',y:stampY(s)};}
@@ -137,6 +139,18 @@
       var py=Math.max(54,Math.min(q.y,p.y)-46-16*Math.sqrt(u)),px=Math.max(half,Math.min(W-half,q.x));
       ctx.lineJoin='round';ctx.lineWidth=2.6;ctx.strokeStyle='rgba(44,30,14,.9)';ctx.textAlign='left';var x0=px-half+4,tw=ctx.measureText(txt).width;ctx.strokeText(txt,x0,py);ctx.fillStyle=q.top?'#e8b530':PAPER;ctx.fillText(txt,x0,py);
       if(sub){ctx.font='600 10px '+SANS;ctx.strokeText(sub,x0+tw,py);ctx.fillStyle=PAPER;ctx.fillText(sub,x0+tw,py);}ctx.textAlign='center';} // 합계를 크게, 개수는 작게(합계×개수로 읽히지 않게)
+    if(lifePop){var la=s.tick-lifePop.t0-LIFE_POP_DELAY; // 게임 시간 기준(일시정지·느린 기기에서도 같은 박자)
+      if(la>LIFE_POP_TICKS)lifePop=null;else if(la>=0){
+      /* 서하 보스 격파 큰 하트 = 목숨 +1(심사 1차 7.49 반영): 잭팟 판이 먼저 뜨고 LIFE_POP_DELAY 뒤, 영웅 머리 바로 위에 인주 도장처럼 '찍힌다'
+         (1.25배에서 눌려 .92 → 잠깐 멈춤 → 1), 찍히는 순간 인주 점이 튄다. 마지막 LIFE_FLY 틱은 아래 목숨 칸(◆) 쪽으로 작아지며 날아가 스민다.
+         돕는 순간이라 인주색(사용자 11-16 규칙), 앞에 목숨 칸과 같은 ◆ 를 붙여 같은 '목숨'으로 읽힌다 */
+      var lt=({life:'목숨 +1',bomb:'목숨 가득 · 필살 +1',score:'목숨·필살 가득 · +10,000'})[lifePop.got]||'목숨 +1',
+        lk=la<5?1.25-.33*(la/5):la<11?.92:la<16?.92+.08*((la-11)/5):1,fly=Math.max(0,(la-(LIFE_POP_TICKS-LIFE_FLY))/LIFE_FLY),fe=fly*fly,
+        hx=Math.max(70,Math.min(W-70,p.x-16)),hy=Math.max(78,p.y-46),tx=60,ty=H-100,lx=hx+(tx-hx)*fe,ly=hy+(ty-hy)*fe,sc=lk*(1-.55*fe);
+      ctx.save();ctx.translate(lx,ly);ctx.scale(sc,sc);ctx.globalAlpha=fly>.7?(1-fly)/.3:1;ctx.textAlign='center';ctx.textBaseline='middle';
+      if(la>=5&&la<20&&fly===0){var sp=(la-5)/15;ctx.fillStyle='rgba(176,42,28,'+(.55*(1-sp)).toFixed(3)+')';for(var d=0;d<6;d++){var an=d*1.047+.4,rr=22+sp*18+(d%2)*6;ctx.beginPath();ctx.arc(Math.cos(an)*rr*1.6,Math.sin(an)*rr*.55,2.2-(d%3)*.5,0,Math.PI*2);ctx.fill();}} // 찍힐 때 튀는 인주 점(가로로 납작하게)
+      ctx.font='800 17px '+SANS;var tw=ctx.measureText(lt).width;ctx.lineJoin='round';ctx.lineWidth=3;ctx.strokeStyle='rgba(250,244,230,.92)';ctx.fillStyle='#b02a1c';
+      ctx.font='800 14px '+SANS;ctx.strokeText('◆',-tw/2-6,1);ctx.fillText('◆',-tw/2-6,1);ctx.font='800 17px '+SANS;ctx.strokeText(lt,8,0);ctx.fillText(lt,8,0);ctx.restore();}}
     ctx.restore();ctx.globalAlpha=1;raw(Ink,-1);
   }
   /* 화면 고정 표시: 봉인 보너스 줄 · 낙관 */

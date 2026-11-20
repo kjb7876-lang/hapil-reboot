@@ -159,12 +159,12 @@ test('the page loads the rhythm module before the engine, the app draws and voic
 });
 test('Seoha time control slows the chart with the beams: the lit sequence is the same as at full speed, only later, and the two trill halves are never lit together',()=>{
  // #154: 서하 초능력 중에는 광선의 예고·켜짐이 적의 시계로만 흐른다. 악보도 같은 시계로 넘기지 않으면 음표가 겹쳐 켜져 설 곳이 없어진다
- const seq=(focus)=>{const s=motifRun('hell','trill',180,560);s.hero='seoha';a.setAbility(s,7);const out=[];let both=0,prev='';
+ const seq=(focus)=>{const s=motifRun('hell','trill',180,560);s.hero='seoha';a.setAbility(s,3);const out=[];let both=0,prev='';
   for(let i=0;i<5000&&s.stage==='card'&&!(s.sp.done);i++){s.player.invulnerableUntil=s.tick+999;s.boss.hp=s.boss.maxHp;a.step(s,{dx:0,dy:0,focus});
    const L=notes(s).filter(lit),key=L.map(l=>span(l).join('-')).sort().join('|');let cover=0;for(const l of L)cover+=l.width;if(cover>=a.WIDTH-1)both++;
    if(key!==prev){out.push(key);prev=key;}h.clear(s);}
   return {out,both,ticks:s.tick};};
  const fast=seq(false),slow=seq(true);
  assert(fast.out.length>6,'the chart played');assert.equal(fast.both,0);assert.equal(slow.both,0,'halves overlap under time control');
- assert.deepEqual(slow.out,fast.out,'same lit sequence');assert(slow.ticks>fast.ticks*2,'and it took longer: '+fast.ticks+' → '+slow.ticks);
+ assert.deepEqual(slow.out,fast.out,'same lit sequence');assert(slow.ticks>fast.ticks*1.25,'and it took longer: '+fast.ticks+' → '+slow.ticks);
 });
