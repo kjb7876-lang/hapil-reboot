@@ -156,8 +156,11 @@
   var CHARGE_EVERY=4,CHARGE_ARC=.35,CHARGE_REACH=96,TIMEBOMB_EVERY=36,TIMEBOMB_FUSE=42,TIMEBOMB_MULT=0,TIMEBOMB_SPLASH=.6,TIMEBOMB_R=52,TIMEBOMB_CAP=8,SHOT_HITS_CAP=96;
   function abilityLevel(s){var l=s&&s.ability|0;return l<0?0:l>ABILITY_MAX?ABILITY_MAX:l;}
   function setAbility(s,level){s.ability=Math.max(0,Math.min(ABILITY_MAX,Math.round(Number(level)||0)));return s.ability;}
-  function abilityOf(s){var l=abilityLevel(s);
-    return isSeohaHero(s)?{kind:'time',level:l,damage:1,bulletSpeed:1-ABILITY_SLOW*l,move:1-ABILITY_SLOW*l}:{kind:'power',level:l,damage:1+ABILITY_POWER*l,bulletSpeed:1+ABILITY_HASTE*l,move:1};}
+  /* 사용자 11-20 "서하 능력조절 시간제어는 저속 누르고 있을때만 발동 … 원밖에서는 설정발동 원안에서는 패시브+설정발동 중첩": 서하 시간제어는 초능력(저속)을 누른 동안에만 켜진다.
+     armed: true 면 누름과 상관없는 설정 수치(설정 화면 설명용), 없으면 지금 누름(s.player.focus)을 따른다. 탄 둔화는 updateBullets 에서 둘레 둔화와 곱해진다(원 안은 중첩) */
+  function abilityOf(s,armed){var l=abilityLevel(s);
+    if(isSeohaHero(s)){var on=armed===undefined?!!(s.player&&s.player.focus):!!armed,k=on?ABILITY_SLOW*l:0;return {kind:'time',level:l,active:on,damage:1,bulletSpeed:1-k,move:1-k};}
+    return {kind:'power',level:l,active:true,damage:1+ABILITY_POWER*l,bulletSpeed:1+ABILITY_HASTE*l,move:1};}
   function shotDamage(s){var d=SHOT_DAMAGE[s.power]*abilityOf(s).damage;if(s.hero==='memory'&&s.player.focus)d*=FOCUS_POWER;return d;}
   var GAUGE_FULL=100,MAX_BOMBS=4,AUTO_COLLECT_Y=190,ITEM_REACH=24,ITEM_PULL=11,BOMB_BOSS_DAMAGE=40,BOMB_MOB_DAMAGE=25;
   // 탄 색은 여섯 가지만 쓴다: 0 빨강 2 보라 4 청록 5 초록 6 노랑 8 흰색
@@ -1084,7 +1087,7 @@
     var ease=s.entranceAll?.022:.05;b.x+=(b.targetX-b.x)*.035;b.y+=(b.targetY-b.y)*ease; // 오르내림은 천천히
   }
   function movePlayer(s,input){
-    var p=s.player,dx=Number(input&&input.dx)||0,dy=Number(input&&input.dy)||0,limit=(input&&input.focus?FOCUS_MOVE:MAX_MOVE)*abilityOf(s).move,len=Math.sqrt(dx*dx+dy*dy);
+    var p=s.player,dx=Number(input&&input.dx)||0,dy=Number(input&&input.dy)||0,limit=(input&&input.focus?FOCUS_MOVE:MAX_MOVE)*abilityOf(s,!!(input&&input.focus)).move,len=Math.sqrt(dx*dx+dy*dy);
     if(!(len<1e9)){dx=0;dy=0;len=0;} // NaN·무한대 입력은 버린다
     if(len>limit){dx*=limit/len;dy*=limit/len;}
     p.focus=!!(input&&input.focus);p.x=Math.max(8,Math.min(W-8,p.x+dx));p.y=Math.max(40,Math.min(H-14,p.y+dy));

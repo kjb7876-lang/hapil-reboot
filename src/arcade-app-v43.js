@@ -595,7 +595,7 @@
       var boss='<div>'+(card?lb('BOSS')+'<div class="bosshp"><i style="width:'+hp+'%;background:'+color+'"></i></div>':'')+(card&&seg.spell?lb('SPELL')+'<div class="spell" style="border-color:'+color+';font-size:'+spellFit(seg.name)+'px">'+esc(seg.name)+'</div><div class="graze">'+(s.spellClean?(s.cardDown||s.cardEnding?'봉인 확정 +':'봉인 +')+(Arcade.spellBonus?Arcade.spellBonus(s):20000+(seg.stage||0)*5000):'봉인 놓침')+'</div>':'')+'</div>'+(card&&list.length?'<div>'+lb('SPELL CARDS')+cards+'</div>':'')+(card&&bossPortrait(bossKey(s),color)?'<img class="portrait" alt="" src="'+portraitUrl+'" style="border-color:'+color+'">':'');
       var prog=Math.round(100*(s.stageIndex+1)/Arcade.STAGES.length);
       var life2='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb('BOMB [X]')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div>'+lvl+'</div><div>'+lb('JOURNEY')+'<div class="progress"><i style="width:'+prog+'%"></i></div>'+route+'<div class="graze">봉인 '+s.captures+' · 조각 '+(s.pieces||0)+'/'+(Arcade.LIFE_PIECES||3)+'</div></div>';
-      var keys='<div class="keys">'+lb('CONTROLS')+'<div>이동 ←↑↓→ · WASD</div><div>저속 Shift · 폭탄 X</div><div>일시정지 Esc</div></div>';
+      var keys='<div class="keys">'+lb('CONTROLS')+'<div>이동 ←↑↓→ · WASD</div><div>초능력 Shift · 폭탄 X</div><div>일시정지 Esc</div></div>';
       setHud(hi,'hi','<div class="stack">'+name+life2+'</div>'+keys);setHud(lo,'lo','<div class="stack">'+score+boss+'</div>'+'<div class="keys">'+lb('DIFFICULTY')+'<div>'+({gentle:'EASY',normal:'NORMAL',hell:'HELL'}[s.difficulty]||'')+'</div></div>');} // 패널 가운데: 왼쪽은 목숨·여정, 오른쪽은 보스 체력·스펠명·보너스(심사 6.46: 가운데가 비었다) // 아래쪽 빈자리: 왼쪽은 조작법, 오른쪽은 지금 스펠 이름(칸 안 이름표가 작아 읽기 어렵다는 지적)
     else{setHud(hi,'hi',name);setHud(lo,'lo',life+score);}
   }
@@ -2065,7 +2065,7 @@
   /* 첫 플레이 30초 조작 실습(외부 심사 11-20 "첫 플레이에는 긴 규칙창과 함께 이동·저속·폭탄을 직접 써보는 30초 실습"): 여정을 처음 시작할 때 한 번.
      적·탄 없이 판 위에서 ① 이동(240px) ② 저속(누른 채 1초 — 피격점이 보인다) ③ 필살(한 번, 연습이라 개수는 줄지 않는다)을 해 본다. 단계마다 최대 10초, 다 하면 1초 뒤 바로 1스테이지. 건너뛰기 단추. */
   var DRILL_STEP=600,DRILL_MOVE=240,DRILL_FOCUS=60,DRILL_END=60;
-  var DRILL_TEXT=[['이동','방향키·WASD, 휴대폰은 화면을 끌어 움직인다'],['저속','Shift 또는 [저속]을 누른 채 움직이면 느려지고 피격점(가운데 점)만 맞는다'],['필살','X 또는 [폭탄] — 화면의 적 탄을 지운다. 맞기 직전이면 저절로 터진다(헬 제외)']];
+  var DRILL_TEXT=[['이동','방향키·WASD, 휴대폰은 화면을 끌어 움직인다'],['초능력','Shift 또는 [초능력]을 누른 채 움직이면 느려지고 피격점(가운데 점)만 맞는다'],['필살','X 또는 [폭탄] — 화면의 적 탄을 지운다. 맞기 직전이면 저절로 터진다(헬 제외)']];
   function endDrill(){drill=null;show('arcade-drill-skip',false);try{global.localStorage.setItem(DRILL_KEY,'1');}catch(e){}}
   function drillTick(inp){
     var d=drill,p=state.player;if(!d)return;d.t++;d.all++;
@@ -2194,7 +2194,7 @@
   function abilityFor(hero){return isSeoha(hero)?settings.abilitySeoha:settings.abilityMemory;}
   function abilityText(k){var lv=settings[k]|0,o=$('value-'+k),n=$('note-'+k),seoha=k==='abilitySeoha';
     if(o)o.textContent=lv?T('abilityStep',{n:lv}):T('abilityOff');
-    if(n){if(!lv)n.textContent=T('abilityOffNote');else{var a=Arcade.abilityOf&&Arcade.abilityOf({hero:seoha?'seoha':'memory',ability:lv,player:{}});
+    if(n){if(!lv)n.textContent=T('abilityOffNote');else{var a=Arcade.abilityOf&&Arcade.abilityOf({hero:seoha?'seoha':'memory',ability:lv,player:{}},true);
       n.textContent=seoha?T('abilityTimeNote',{s:Math.round((1-(a?a.bulletSpeed:1))*100)}):T('abilityPowerNote',{d:Math.round(((a?a.damage:1)-1)*100),s:Math.round(((a?a.bulletSpeed:1)-1)*100)});}}}
   function syncAbility(){['abilityMemory','abilitySeoha'].forEach(function(k){var e=$('setting-'+k);if(e)e.value=String(settings[k]|0);abilityText(k);});
     var hero=state?state.hero:selectedHero,rm=$('ability-row-memory'),rs=$('ability-row-seoha');if(rm)rm.dataset.active=String(!isSeoha(hero));if(rs)rs.dataset.active=String(isSeoha(hero));
