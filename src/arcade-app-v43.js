@@ -33,7 +33,7 @@
   var state=null,mode='title',difficulty='normal',accumulator=0,lastStamp=0,visual=0,lastRun=null;
   var particles=[],spellDim=0,flash=0,hurtFlash=0,hurtRing=null,VERMILION='#a8382a',shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,SPELL_BANNER_TICKS=42,bannerSpell=false,bannerTitle='',bannerSub='',toast=null;
   var keys={},finger={active:false,id:null,x:0,y:0},focusHeld=false,focusPointer=null,focusLatched=false,bombQueued=false;
-  var settings={music:true,sfx:true,musicVolume:1,sfxVolume:1,screenShake:true,lowQuality:false};
+  var settings={music:true,sfx:true,musicVolume:1,sfxVolume:1,screenShake:true,lowQuality:false,abilityMemory:0,abilitySeoha:0}; // 능력조절(사용자 11-20): 영웅별 0(끔)~7단계
   var fx=null,music=null,best=0,bests={},lastSpell=null,drill=null,DRILL_KEY='hapil-arcade-v43-drill',lastItemSound=0,progress=Progress.fresh(),saveOk=true;
   var themeOverride=null,turbo=0,rushStage=false,oneCreditEligible=false;
   var Story=global.HapilArcadeStory||null,BossIntros=global.HapilArcadeBossIntros||null,story=null,storyQuiet=false,storySeen={},pauseReturn='playing',rulesReturn='title',storyArrivalActor='';
@@ -1987,9 +1987,9 @@
     var grown=run&&run.grown; // 중간 저장에서 이어 할 때 자란 공격·필살 단계
     run={stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),spellOnly:!!(run&&run.spellOnly&&Number.isInteger(run.segment)),segment:run&&run.segment,carry:run&&run.carry,practice:!!(run&&run.practice),hero:heroId(run&&run.hero||selectedHero)};
     lastRun=run;lastSpell=run.spellOnly?lastSpell:null;oneCreditEligible=run.stage===0&&!run.bossOnly&&!run.spellOnly&&!Number.isInteger(run.segment)&&!run.carry&&!run.practice&&!quiet&&!devMode;
-    var options={entranceAll:true,difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,spellOnly:run.spellOnly,growth:true,pacing:!quiet,rhythm:!quiet}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
+    var options={ability:abilityFor(run.hero),entranceAll:true,difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,spellOnly:run.spellOnly,growth:true,pacing:!quiet,rhythm:!quiet}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
     if(Number.isInteger(run.segment))options.segment=run.segment;if(grown&&(grown.exp||grown.fills))options.grown={exp:grown.exp|0,fills:grown.fills|0};
-    state=Arcade.createRun(options);heroOpacity=1;if(Spirit)Spirit.reset();if(Cues)Cues.reset();
+    state=Arcade.createRun(options);syncAbility();heroOpacity=1;if(Spirit)Spirit.reset();if(Cues)Cues.reset();
     if(isSeoha(state.hero))loadImage('hero-'+state.hero);
     if(!run.bossOnly&&!run.spellOnly&&!quiet){journeyHero=run.hero;try{global.localStorage.setItem(JOURNEY_HERO_KEY,journeyHero);}catch(e){}}
     if(run.carry){state.hits+=run.carry.hits|0;state.bombsUsed+=run.carry.bombs|0;} // 중간 저장에서 이어 하면 앞 구간의 피격·폭탄도 별에 반영
@@ -2111,12 +2111,23 @@
     if(!saved||typeof saved!=='object')return;
     ['music','sfx','screenShake','lowQuality'].forEach(function(k){if(typeof saved[k]==='boolean')settings[k]=saved[k];});
     ['musicVolume','sfxVolume'].forEach(function(k){if(typeof saved[k]==='number'&&isFinite(saved[k]))settings[k]=Math.max(0,Math.min(1,saved[k]));});
+    ['abilityMemory','abilitySeoha'].forEach(function(k){if(typeof saved[k]==='number'&&isFinite(saved[k]))settings[k]=Math.max(0,Math.min(7,Math.round(saved[k])));});
     lite=settings.lowQuality;
   }
+  /* 능력조절: 기억사수 출력조절(피해↑·적탄↑), 서하 시간제어(적탄↓·이동↓). 엔진 수치는 Arcade.abilityOf 가 정한다 */
+  function abilityFor(hero){return isSeoha(hero)?settings.abilitySeoha:settings.abilityMemory;}
+  function abilityText(k){var lv=settings[k]|0,o=$('value-'+k),n=$('note-'+k),seoha=k==='abilitySeoha';
+    if(o)o.textContent=lv?T('abilityStep',{n:lv}):T('abilityOff');
+    if(n){if(!lv)n.textContent=T('abilityOffNote');else{var a=Arcade.abilityOf&&Arcade.abilityOf({hero:seoha?'seoha':'memory',ability:lv,player:{}});
+      n.textContent=seoha?T('abilityTimeNote',{s:Math.round((1-(a?a.bulletSpeed:1))*100)}):T('abilityPowerNote',{d:Math.round(((a?a.damage:1)-1)*100),s:Math.round(((a?a.bulletSpeed:1)-1)*100)});}}}
+  function syncAbility(){['abilityMemory','abilitySeoha'].forEach(function(k){var e=$('setting-'+k);if(e)e.value=String(settings[k]|0);abilityText(k);});
+    var hero=state?state.hero:selectedHero,rm=$('ability-row-memory'),rs=$('ability-row-seoha');if(rm)rm.dataset.active=String(!isSeoha(hero));if(rs)rs.dataset.active=String(isSeoha(hero));
+    if(state&&Arcade.setAbility)Arcade.setAbility(state,abilityFor(state.hero));}
   function unlockAudio(){if(fx&&fx.unlock)fx.unlock();if(global.HapilMusic&&global.HapilMusic.unlock)global.HapilMusic.unlock();}
   function syncSettings(){
     ['music','sfx','screenShake','lowQuality'].forEach(function(k){var e=$('setting-'+k);if(e)e.checked=settings[k];});
     ['musicVolume','sfxVolume'].forEach(function(k){var e=$('setting-'+k),o=$('value-'+k),v=Math.round(settings[k]*100);if(e)e.value=String(v);if(o)o.textContent=v+'%';});
+    syncAbility();
     var sound=$('arcade-sound');if(sound){var on=settings.music||settings.sfx;sound.textContent=T(on?'soundOn':'soundOff');sound.setAttribute('aria-pressed',String(on));}
   }
   function applySettings(save){
@@ -2132,6 +2143,7 @@
       if(k==='lowQuality'){lite=settings.lowQuality;if(Ink&&Ink.setLite)Ink.setLite(lite);framesSeen=0;frameMs=16;fit();buildSprites();if(state)initFx(themeOf(state.stageIndex).fx,state.stageIndex);}
       applySettings(true);if(k==='music'||k==='sfx')unlockAudio();});});
     ['musicVolume','sfxVolume'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('input',function(){settings[k]=Math.max(0,Math.min(1,Number(e.value)/100||0));applySettings(true);unlockAudio();});});
+    ['abilityMemory','abilitySeoha'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('input',function(){settings[k]=Math.max(0,Math.min(7,Math.round(Number(e.value)||0)));applySettings(true);});});
   }
   function syncFocusButton(){var b=$('arcade-focus'),on=!!(keys.Shift||focusHeld||focusLatched);if(b){b.setAttribute('aria-pressed',String(on));b.textContent=T(on?'focusActive':'focus');}}
   function clearInput(){
