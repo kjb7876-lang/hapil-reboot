@@ -220,7 +220,7 @@
     var b=s.boss;if(!o.fragment&&b&&s.stage==='card'&&Math.abs(x-b.x)<2&&Math.abs(y-b.y)<2){x+=Math.cos(angle)*MUZZLE;y+=Math.sin(angle)*MUZZLE;}
     // A designed gap or locked volley must keep the heading that the player saw.
     if(s.entranceAll&&s.difficulty!=='hell'&&!o.formation&&size!==SHAPE_PROP&&!o.fragment){angle+=(srand(s)-.5)*2*SCATTER_ANGLE;speed*=1+(srand(s)-.5)*2*SCATTER_SPEED;x+=(srand(s)-.5)*2*SCATTER_POS;y+=(srand(s)-.5)*2*SCATTER_POS;} // 탄을 조금 더 흩뿌려 겹침을 줄인다(사용자 11-18, 이지·노멀)
-    if(s.figPend&&!o.fragment)return; // 육망성·한자 고리를 기다리는 동안 새 탄을 내지 않는다(사용자 11-20)
+    if(s.figPend&&!o.fragment&&!s.splitting)return; // 육망성·한자 고리를 기다리는 동안 새 탄을 내지 않는다(사용자 11-20)
     if(s.calm&&!o.fragment)return; // 육망성·한자 고리가 떠 있는 동안, 그리고 보스가 아래로 내려와 있는 동안은 새 탄을 내지 않는다(사용자 11-19 "탄환은 위에 있을때만 생성"). 반사탄도 마찬가지
     var i=s.n++;
     s.bx[i]=x;s.by[i]=y;s.ba[i]=angle;s.bs[i]=speed*s.rules.speed;
@@ -1494,9 +1494,10 @@
      남은 탄은 지우지 않은 채 제 길로 날아가 화면 밖으로 나간다(FIG_HURRY틱이 지나도 남으면 판정을 지닌 채 빨라져 나간다). 다 나가면 그때 문양을 편다.
      FIG_WAIT_MAX틱이 지나도 못 비우면 더 미루지 않는다(멈춤 방지). 새 문양이 겹쳐 요청되면 앞 요청 하나만 남긴다. */
   var FIG_HURRY=150,FIG_WAIT_MAX=600;
+  function figureBusy(s){for(var i=0;i<s.figures.length;i++){var f=s.figures[i];if((f.sigil||f.kind==='runes')&&f.age<f.warn+f.active)return true;}return false;}
   function figureDefer(s,fn,args){
     if(!s.entranceAll||s.figRelease)return false;
-    if(!s.n)return false;
+    if(!s.n&&!figureBusy(s))return false;
     if(!s.figPend)s.figPend={fn:fn,args:args,since:s.tick,seg:s.seg,hurried:false};
     return true;
   }
@@ -1504,7 +1505,7 @@
     if(q.seg!==s.seg||s.stage!=='card'||s.cardEnding||s.cardDown){s.figPend=null;return;}
     var wait=s.tick-q.since;
     if(!q.hurried&&wait>=FIG_HURRY&&s.n){q.hurried=true;hurryBullets(s);}
-    if(!s.n||wait>=FIG_WAIT_MAX){s.figPend=null;s.figRelease=true;try{q.fn.apply(null,[s].concat(q.args));}finally{s.figRelease=false;}s.figWaits=(s.figWaits||0)+1;}
+    if((!s.n&&!figureBusy(s))||wait>=FIG_WAIT_MAX){s.figPend=null;s.figRelease=true;try{q.fn.apply(null,[s].concat(q.args));}finally{s.figRelease=false;}s.figWaits=(s.figWaits||0)+1;}
   }
   function summonSigil(s,sig,index){
     if(figureDefer(s,summonSigil,[sig,index]))return;
@@ -1582,11 +1583,11 @@
         var mode=s.bmode[i];
         if(mode===MODE_SPLIT||mode===MODE_BRANCH){
           var sx=s.bx[i],sy=s.by[i],color=s.bcolor[i],parts=Math.round(s.barg[i]),speed=s.bs2[i]/s.rules.speed,heading=s.ba[i],gen=s.bgen[i],size=s.bsize[i],at=s.bat[i];
-          removeBullet(s,i);
+          removeBullet(s,i);s.splitting=true; // 이미 화면에 있는 탄이 갈라지는 것은 새 탄이 아니다: 그림 대기 중에도 막지 않는다
           if(mode===MODE_SPLIT)ring(s,sx,sy,parts,speed,heading,{color:color,size:0});
           // 가지치기: 진행 방향을 중심으로 부채꼴로 갈라지고, 세대가 남아 있으면 가지가 다시 갈라진다.
           else for(k=0;k<parts;k++)spawn(s,sx,sy,heading+(k-(parts-1)/2)*.5,speed,gen>1?{color:color,size:Math.max(0,size-1),at:at,mode:MODE_BRANCH,arg:parts,gen:gen-1,speed2:speed}:{color:color,size:0});
-          note(s,'pop');continue;
+          s.splitting=false;note(s,'pop');continue;
         }
         if(mode===MODE_REAIM)s.ba[i]=Math.atan2(py-s.by[i],px-s.bx[i])+s.barg[i];else if(mode===MODE_TURN)s.ba[i]+=s.barg[i];
         s.bs[i]=s.bs2[i];s.bacc[i]=0;
