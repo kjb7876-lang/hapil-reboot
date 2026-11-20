@@ -27,8 +27,8 @@ test('입장 연출은 건너뛸 수 있다',()=>{
   for(let i=0;i<10;i++)A.step(s,{dx:0,dy:0});assert.equal(A.entrancePhase(s).phase,'speech');assert.ok(A.skipEntrance(s));
   for(let i=0;i<60;i++)A.step(s,{dx:0,dy:0});assert.equal(s.stage,'card');
 });
-test('모든 보스·중간보스에 입장 대사가 있다',()=>{
-  for(const i of cardIndexes){const g=A.SEGMENTS[i],who=A.ACTORS[g.actor];const e=I.getBoss(g.actor,g.stage),lines=e?e.lines:I.fallbackLines(g.actor,!!g.mid,who.name);assert.ok(lines.length>=1&&lines[0].text.length>2,g.actor);}
+test('보스에만 입장 대사가 있고 중간보스는 컷인만(일곱 죄 독백 제외)',()=>{
+  for(const i of cardIndexes){const g=A.SEGMENTS[i],who=A.ACTORS[g.actor];const e=I.getBoss(g.actor,g.stage),lines=e?e.lines:I.fallbackLines(g.actor,!!g.mid,who.name);if(g.mid&&!e)assert.equal(lines.length,0,g.actor);else assert.ok(lines.length>=1&&lines[0].text.length>2,g.actor);}
 });
 test('몹은 구간이 끝나면 한순간에 사라지지 않고 위로 물러난다',()=>{
   const s=A.createRun({stage:0,seed:4,difficulty:'normal'});let sawRetreat=false;
