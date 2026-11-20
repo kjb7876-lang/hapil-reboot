@@ -62,7 +62,7 @@ test('Seoha focus narrows the actual shot paths without changing projectile coun
 });
 
 function target(){return {kind:'test',x:180,baseX:180,y:480,r:70,hp:100000,maxHp:100000,hitTick:-99,elite:false,score:0,age:0,shots:0,vx:0,vy:0,sway:0,swayRate:0,fire:'aim',first:999999,every:0,next:999999};}
-test('equal-level heroes deliver equal damage to an aligned target through real shots and bolts',()=>{
+test('equal-level heroes deliver equal damage to an aligned target through real shots and bolts (Memory Gunner ×FOCUS_POWER while focused)',()=>{
  for(let level=1;level<=7;level++)for(const focus of [false,true]){
   const damage=hero=>{
    const s=idle({hero});s.power=level;s.exp=A.POWER_EXP[level-1];s.mobs.push(target());
@@ -70,7 +70,7 @@ test('equal-level heroes deliver equal damage to an aligned target through real 
    return 100000-s.mobs[0].hp;
   };
   const memory=damage('memory');assert(memory>100);
-  for(const hero of ['seoha','seoha-b']){const seoha=damage(hero);assert(Math.abs(memory-seoha)<1e-6,`${hero}, level ${level}, focus ${focus}: ${memory} vs ${seoha}`);}
+  for(const hero of ['seoha','seoha-b']){const seoha=damage(hero),want=focus?seoha*A.FOCUS_POWER:seoha;assert(Math.abs(memory-want)<1e-6,`${hero}, level ${level}, focus ${focus}: ${memory} vs ${want}`);} // 사용자 11-20: 저속 때 기억사수만 피해 ×FOCUS_POWER(서하는 대신 탄 둔화)
  }
 });
 

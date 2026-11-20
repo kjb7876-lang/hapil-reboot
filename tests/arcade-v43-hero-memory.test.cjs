@@ -33,8 +33,8 @@ test('memory bolt strikes the nearest foe and leaves a drawable zap; haste short
  const t=idle();t.tick=1000;a.gainExp(t,a.POWER_EXP[1]);assert.equal(a.clockState(t),'haste');t.player.focus=true;assert.equal(a.clockState(t),'slow');t.player.focus=false;t.tick+=a.HASTE_TICKS;assert.equal(a.clockState(t),'normal');
 });
 
-test('enemy bullets slow down near the hero (stronger each level, ×1.35 while focused); far bullets are untouched',()=>{
- const a=A(),move=(l,dist,focus)=>{const s=idle();s.power=l;s.player.focus=!!focus;put(s,s.player.x+dist,s.player.y-dist,{bage:100,bs:60,ba:0});const x0=s.bx[0];a.step(s,{dx:0,dy:0,focus:!!focus});return s.bx[0]-x0;};
+test('enemy bullets slow down near the hero (stronger each level, stronger while Seoha focuses — user 11-20); far bullets are untouched',()=>{
+ const a=A(),move=(l,dist,focus)=>{const s=idle({hero:'seoha'});s.power=l;s.player.focus=!!focus;put(s,s.player.x+dist,s.player.y-dist,{bage:100,bs:60,ba:0});const x0=s.bx[0];a.step(s,{dx:0,dy:0,focus:!!focus});return s.bx[0]-x0;};
  const far=move(1,200);assert(Math.abs(far-1)<1e-6,'far bullet moves at full speed');
  let prevR=0,prevK=0;for(let l=1;l<=7;l++){const [r,k]=a.SLOW_FIELD[l];assert(r>prevR&&k>prevK);prevR=r;prevK=k;}
  const near1=move(1,12),near7=move(7,12),focus7=move(7,12,true);
