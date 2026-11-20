@@ -78,6 +78,9 @@
       if(l.age<l.warn){ if(opt.phase!=='over')continue;
         var t=l.age/l.warn,near=Math.max(0,1-(l.warn-l.age)/30); // 마지막 한 박에 짙어진다
         ctx.globalCompositeOperation='source-over';
+        // 이미 켜진 음표가 같은 자리를 덮고 있으면 붉은 물·테를 얹지 않는다(먹과 인주가 섞여 탁해지고 예고인지 켜진 것인지 헷갈린다). 음표머리만 남긴다
+        var under=false,j;for(j=0;j<L.length&&!under;j++){var m=L[j];if(m===l||!isNote(m)||m.age<m.warn||m.age>=m.warn+m.active)continue;var gm=span(m);under=gm.v===g.v&&gm.lo<=lo+.5&&gm.hi>=hi-.5;}
+        if(under){var hw0=Math.max(3,Math.min(9,wd*.09));if(g.v)head(ctx,lo+3,H*t-hw0,wd-6,hw0*2,.55+.45*t,true);else{head(ctx,W/2*t-hw0*2,lo+3,hw0*2,wd-6,.55+.45*t,false);head(ctx,W-W/2*t,lo+3,hw0*2,wd-6,.55+.45*t,false);}continue;}
         ctx.globalAlpha=.02+.035*t+.075*near;ctx.fillStyle=VERMILION;if(g.v)ctx.fillRect(lo,0,wd,H);else ctx.fillRect(0,lo,W,wd);
         // 가장자리: 인주색 가는 끊긴 선(돕는 예고)
         ctx.globalAlpha=.5+.4*t;ctx.strokeStyle=VERMILION;ctx.lineWidth=1.4;ctx.setLineDash([9,7]);ctx.lineDashOffset=-s.tick*.7;ctx.beginPath();
@@ -124,7 +127,7 @@
     var y=opt.y||31,n=b.n%8,since=s.tick-b.tick,i,gap=14,x0=opt.x||20,acc=opt.accent||[1,0,.5,0,1,0,.5,.5];
     ctx.save();ctx.globalCompositeOperation='source-over';
     // 받침: 켜진 띠 위에서도 읽히게 종이색 판을 깐다
-    var nm=label(sp.motif);ctx.font='700 12px '+(opt.font||'sans-serif');var pw=gap*8+(nm?(ctx.measureText?ctx.measureText(nm).width:nm.length*12)+8:0)+8,px=x0-10,py=y-11,ph=22,pr=11;
+    var nm=label(sp.motif);ctx.font='700 12px '+(opt.font||'sans-serif');var pw=gap*8+(nm?((ctx.measureText&&ctx.measureText(nm)||{width:nm.length*12}).width||nm.length*12)+8:0)+8,px=x0-10,py=y-11,ph=22,pr=11;
     ctx.globalAlpha=.84;ctx.fillStyle=opt.plate||'#14100e';ctx.beginPath();ctx.moveTo(px+pr,py);ctx.lineTo(px+pw-pr,py);ctx.arc(px+pw-pr,py+pr,pr,-Math.PI/2,Math.PI/2);ctx.lineTo(px+pr,py+ph);ctx.arc(px+pr,py+pr,pr,Math.PI/2,Math.PI*1.5);ctx.fill();
     for(i=0;i<8;i++){var r=acc[i]>=1?4.4:acc[i]>0?3.4:2.8,on=i===n,pulse=on?Math.max(0,1-since/14):0;
       ctx.globalAlpha=on?1:.6;ctx.fillStyle=on?VERMILION:HANJI;ctx.beginPath();ctx.arc(x0+gap*i,y,r+pulse*2.2,0,TAU);ctx.fill();
