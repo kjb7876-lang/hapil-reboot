@@ -55,8 +55,8 @@
     for(var i=0;i<n;i++){
       var e=(i+1)/n,side=(i===n-1)?0:((i&1)?-1:1)*amp*(.6+.4*Math.abs(Math.sin(i*2.3+(t||0)*9))),
           ex=x+ca*len*e-sa*side,ey=y+sa*len*e+ca*side,dx=ex-px,dy=ey-py,sl=Math.sqrt(dx*dx+dy*dy),
-          fi=(u===null||i===0)?f:Math.max(f,Math.min(4,f+i%3)),a=alpha*(1-.4*(i/n))*(i===0&&root!==undefined?root:1);
-      cell(g,'bolt',fi,px,py,Math.atan2(dy,dx),size,a,(sl+size*.06)/(size*BOLT_SPAN),S.ox);px=ex;py=ey;
+          fi=u===null?2+(f-2+i)%3:(i===0?f:Math.max(f,Math.min(4,f+i%3))),a=alpha*(1-.4*(i/n))*(i===0&&root!==undefined?Math.max(.35,root):1);
+      cell(g,'bolt',fi,px,py,Math.atan2(dy,dx),size,a,(sl*(i<n-1?1.13:1)+size*.06)/(size*BOLT_SPAN),S.ox);px=ex;py=ey;
     }
     return true;
   }
