@@ -1537,6 +1537,7 @@
      FIG_WAIT_MAX틱이 지나도 못 비우면 더 미루지 않는다(멈춤 방지). 새 문양이 겹쳐 요청되면 앞 요청 하나만 남긴다. */
   var FIG_HURRY=150,FIG_WAIT_MAX=600;
   function figureBusy(s){for(var i=0;i<s.figures.length;i++){var f=s.figures[i];if((f.sigil||f.kind==='runes')&&f.age<f.warn+f.active)return true;}return false;}
+  // 상태는 복제·저장될 수 있으므로 미룬 그림은 함수 대신 이름(sigil·runes)으로 담는다
   function figureDefer(s,fn,args){
     if(!s.entranceAll||s.figRelease)return false;
     if(!s.n&&!figureBusy(s))return false;
@@ -1548,10 +1549,10 @@
     if(q.seg!==s.seg||s.stage!=='card'||s.cardEnding||s.cardDown||spQuiet(s)){s.figPend=null;return;}
     var wait=s.tick-q.since;
     if(!q.hurried&&wait>=FIG_HURRY&&s.n){q.hurried=true;hurryBullets(s);}
-    if((!s.n&&!figureBusy(s))||wait>=FIG_WAIT_MAX){s.figPend=null;s.figHeldAt=s.tick;s.figRelease=true;try{q.fn.apply(null,[s].concat(q.args));}finally{s.figRelease=false;}s.figWaits=(s.figWaits||0)+1;}
+    if((!s.n&&!figureBusy(s))||wait>=FIG_WAIT_MAX){s.figPend=null;s.figHeldAt=s.tick;s.figRelease=true;try{(q.fn==="runes"?summonRunes:summonSigil).apply(null,[s].concat(q.args));}finally{s.figRelease=false;}s.figWaits=(s.figWaits||0)+1;}
   }
   function summonSigil(s,sig,index){
-    if(figureDefer(s,summonSigil,[sig,index]))return;
+    if(figureDefer(s,'sigil',[sig,index]))return;
     if(s.figures.length>=FIGURE_CAP-2)return;
     var warn=Math.max(54,Math.round(70*s.rules.warn)),active=260,dir=sig.spin,rings=3+index%3;
     var parts=[{glyph:'hexagram',want:BIG_SIGIL_R,spin:dir*BIG_SIGIL_SPIN*(1+.15*(index%3)),width:7}]; // 사용자 11-15: 보스 뒤 육망성 하나를 맵 대부분을 덮게 키우고 그 선이 판정. 따로 도는 고리 레이저는 없고, 꼭짓점을 지나는 큰 원(f.ring)이 같이 돌며 판정을 갖는다(18:42).
@@ -1570,7 +1571,7 @@
   // 고리 중심: 보스를 따르되 가로는 필드 정중앙, 세로는 170~230으로 묶고, 바깥 고리가 띠·매듭까지 좌우 벽 안에 들도록 줄인다(심사 2·3차: 벽에 닿아 잘렸다).
   function runeCentre(f,b){f.cx=W/2;f.cy=Math.max(170,Math.min(b.descended?382:230,b.y+40));f.fit=1;} // 보스가 내려오면(11-18) 고리 중심도 따라 내려와 바깥 띠가 화면 아래 끝 가까이 닿는다
   function summonRunes(s,sig,cast){
-    if(figureDefer(s,summonRunes,[sig,cast]))return;
+    if(figureDefer(s,'runes',[sig,cast]))return;
     if(s.figures.length>=FIGURE_CAP-1)return;
     var spin=sig.spin*RUNE_SPIN*(s.entranceAll?(s.difficulty==='gentle'?RUNE_SLOW_EASY:RUNE_SLOW):1),lead=spin*TICK*.35*RUNE_WARN; // 켜지는 순간 두 고리 모두 틈 하나가 바로 아래(영웅 쪽)를 보게 한다(심사: 화면 안에서 틈이 보여야 한다)
     var layers=(s.difficulty==='gentle'?[2,3,3,3]:[5,6,6,6])[cast||0],rings=[]; // 점층(심사 11-16): 다섯 겹 → 여섯 겹(11-20: 예고·지속을 늘려 짧은 카드엔 두 번만 들어가므로 둘째에서 여섯 겹 도달)(사용자 11-16 "한자문고리6겹해")으로 쌓아 올린 뒤 육망성으로 넘어간다
