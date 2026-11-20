@@ -95,7 +95,7 @@ test('pattern kinds at once: Easy 1, Normal 2, Hell 3 — new kinds only start w
 test('on phones the bullets are drawn bigger but hit like on PC (live game)',()=>{
  const pc=a.createRun({difficulty:'gentle',seed:1,entranceAll:true}),ph=a.createRun({difficulty:'gentle',seed:1,entranceAll:true,compact:true});
  a.spawn?0:0;pc.n=0;ph.n=0;for(const s of [pc,ph]){s.bsize[0]=0;s.bx[0]=10;s.by[0]=10;s.n=1;}
- assert(ph.sizeScale>pc.sizeScale,'drawn bigger');assert(Math.abs(a.bulletRadius(ph,0)-a.bulletRadius(pc,0))<1e-9,'same hit radius');
+ assert(ph.sizeScale>pc.sizeScale,'drawn bigger');assert(Math.abs(a.bulletRadius(ph,0)/a.bulletRadius(pc,0)-a.LIVE_MOBILE.hit)<1e-9,'phone hit radius is PC x LIVE_MOBILE.hit');
 });
 test('no new bullets while the hexagram or the hanja rings are up; every live laser is a full edge-to-edge line',()=>{
  for(const d of DIFFS){const s=a.createRun({difficulty:d,seed:3,segment:a.SEGMENTS.findIndex(g=>g.spell&&g.stage>=3),entranceAll:true});toCard(s);let calmTicks=0,bornInCalm=0,lasers=0;

@@ -6,9 +6,9 @@ const run=(difficulty,all,extra)=>a.createRun(Object.assign({difficulty,seed:9,s
 test('the live game uses one final row per difficulty, with even steps from easy to hell',()=>{
   const T=a.LIVE_TABLE,last=a.STAGES.length-1;
   for(const d of ['gentle','normal','hell']){const m=a.createRun({difficulty:d,seed:9,stage:0,entranceAll:true,compact:true}),pc=a.createRun({difficulty:d,seed:9,stage:0,entranceAll:true});
-    assert.equal(m.rules.speed,T[d].speed,d+' speed');assert(Math.abs(m.density-T[d].density)<1e-9,d+' phone density');assert(Math.abs(pc.density*a.COMPACT_DENSITY-T[d].density)<1e-9,d+' pc density');
+    assert(Math.abs(m.rules.speed-T[d].speed*a.LIVE_MOBILE.speed)<1e-9,d+' phone speed');assert.equal(pc.rules.speed,T[d].speed,d+' pc speed');assert(Math.abs(m.density-T[d].density*a.LIVE_MOBILE.density)<1e-9,d+' phone density');assert(Math.abs(pc.density*a.COMPACT_DENSITY-T[d].density)<1e-9,d+' pc density');
     assert.equal(m.player.r,T[d].radius,d+' hit dot');assert.equal(m.rules.hitScale,T[d].hitScale,d+' bullet hit share');}
-  const g=a.createRun({difficulty:'gentle',seed:9,stage:last,entranceAll:true,compact:true});assert(Math.abs(g.density-T.gentle.end)<1e-9,'easy tightens to its end value');
+  const g=a.createRun({difficulty:'gentle',seed:9,stage:last,entranceAll:true,compact:true});assert(Math.abs(g.density-T.gentle.end*a.LIVE_MOBILE.density)<1e-9,'easy tightens to its end value');
   for(const k of ['speed','density','radius'])assert(T.gentle[k]<T.normal[k]&&T.normal[k]<=T.hell[k],k+' steps up');
   const step=(x,y)=>y/x;assert(step(T.gentle.speed,T.normal.speed)<1.4&&step(T.normal.speed,T.hell.speed)>1.1,'no cliff between easy and normal, a real step to hell');
 });
@@ -61,4 +61,16 @@ test('mid-boss cards have 2.5x (easy 3x) the health and stay duration of before;
     const plain=Object.assign({},mid,{mid:false});
     assert(Math.abs(a.cardHp(s,mid)/a.cardHp(s,plain)-k*a.MID_HP_MORE[d])<.05,d+' mid hp x'+k+' (11-20 체력 보강 포함)');
     assert(Math.abs(a.cardDuration(s,mid)/a.cardDuration(s,plain)-k)<.05,d+' mid duration x'+k);}
+});
+// 사용자 11-20 "모바일 모든모드 최대탄환수 절반, 일반 탄환수 30% 감소": 휴대폰 실제 게임만, PC는 그대로
+test('phone live game halves the bullet cap and cuts normal bullet count 30%; PC unchanged',()=>{
+  for(const d of ['gentle','normal','hell']){const m=a.createRun({difficulty:d,seed:9,stage:0,entranceAll:true,compact:true}),pc=a.createRun({difficulty:d,seed:9,stage:0,entranceAll:true});
+    assert.equal(m.cap,Math.round(a.COMPACT_CAP*.5),d+' phone cap');assert.equal(pc.cap,a.CAP,d+' pc cap');
+    assert(Math.abs(pc.density*a.COMPACT_DENSITY-a.LIVE_TABLE[d].density)<1e-9,d+' pc density unchanged');}
+  assert.equal(a.createRun({difficulty:'normal',seed:9,compact:true}).cap,a.COMPACT_CAP,'replay mode keeps its cap');
+});
+test('phone warn/beam multipliers do not compound across stages',()=>{
+  const s=a.createRun({difficulty:'normal',seed:9,stage:0,entranceAll:true,compact:true}),w=s.rules.warn,b=s.rules.beam;
+  for(let i=0;i<5;i++){s.stageIndex=Math.min(a.STAGES.length-1,i+1);a.applyCurve(s);}
+  assert(Math.abs(s.rules.warn-w)<1e-9,'warn stable');assert(Math.abs(s.rules.beam-b)<1e-9,'beam stable');
 });
