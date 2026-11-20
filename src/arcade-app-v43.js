@@ -57,6 +57,7 @@
 
   function finite(v,fallback){return v===v&&v!==Infinity&&v!==-Infinity?v:fallback;}
   function offscreen(w,h){var c=document.createElement('canvas');c.width=Math.max(1,Math.ceil(w));c.height=Math.max(1,Math.ceil(h));return c;}
+  function fixedSeed(difficulty,stage){return hash('hapil-v43#'+difficulty+'#'+(stage|0))||1;} // 같은 난이도·같은 시작 스테이지는 늘 같은 탄막(사용자 11-20 무작위성 줄이기)
   function hash(text){var n=2166136261;text=String(text);for(var i=0;i<text.length;i++){n^=text.charCodeAt(i);n=Math.imul(n,16777619);}return n>>>0;}
 
   /* ── 색: 스테이지 색조와 HUD 색은 theme.tint에서 계산한다 ── */
@@ -2057,7 +2058,7 @@
     var chapterPart=run&&Number.isInteger(run.chapter)?run.chapter:0;
     run={chapter:chapterPart,stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),spellOnly:!!(run&&run.spellOnly&&Number.isInteger(run.segment)),segment:run&&run.segment,carry:run&&run.carry,practice:!!(run&&run.practice),hero:heroId(run&&run.hero||selectedHero)};
     lastRun=run;lastSpell=run.spellOnly?lastSpell:null;oneCreditEligible=run.stage===0&&!run.bossOnly&&!run.spellOnly&&!Number.isInteger(run.segment)&&!run.carry&&!run.practice&&!quiet&&!devMode;
-    var options={ability:abilityFor(run.hero),entranceAll:true,difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,spellOnly:run.spellOnly,growth:true,pacing:!quiet,rhythm:!quiet}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
+    var options={ability:abilityFor(run.hero),entranceAll:true,difficulty:difficulty,seed:fixedSeed(difficulty,run.stage),stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,spellOnly:run.spellOnly,growth:true,pacing:!quiet,rhythm:!quiet}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
     if(run.chapter&&Chapters){var ch=Chapters.list(Arcade.STAGES)[run.chapter-1];if(ch&&ch.last>=run.stage)options.stages=ch.last-run.stage+1;} // 챕터 재도전: 그 챕터 끝에서 멈춘다
     if(Number.isInteger(run.segment))options.segment=run.segment;if(grown&&(grown.exp||grown.fills||typeof grown.stock==='number')){options.grown={exp:grown.exp|0,fills:grown.fills|0};if(typeof grown.stock==='number')options.grown.stock=grown.stock;}
     state=Arcade.createRun(options);syncAbility();heroOpacity=1;if(Spirit)Spirit.reset();if(Cues)Cues.reset();

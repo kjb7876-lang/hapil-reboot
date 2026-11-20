@@ -249,7 +249,13 @@
   // 탄 변화 방식: 1 영웅을 다시 조준 2 각도 꺾기 3 터져서 고리로 4 가지치기(프랙탈)
   var MODE_REAIM=1,MODE_TURN=2,MODE_SPLIT=3,MODE_BRANCH=4;
 
-  function rand(s){var x=s.rng|0;x^=x<<13;x^=x>>>17;x^=x<<5;s.rng=x>>>0;return s.rng/4294967296;}
+  /* 탄 패턴 난수(사용자 11-20 "모든 탄환은 일정패턴이 있었으면 좋겠어 무작위성 좀 줄여서"). 실제 게임(entranceAll)에서는 난수 대신
+   * 황금비 가산 수열을 쓴다: 매 틱 patternClock 이 (구간, 구간 시각)으로 출발점을 다시 정하고, 부를 때마다 같은 보폭만큼 나아간다.
+   * 그래서 같은 구간 같은 순간에는 언제 해도 같은 각도·위치·속도가 나오고(외울 수 있음), 일정 간격으로 쏘는 고리는 일정한 각도로 돌아간다. */
+  var GOLD_TICK=2654435769,GOLD_CALL=3242174889,GOLD_SCATTER=2447445413;
+  function rand(s){if(s.entranceAll){s.rng=(s.rng+GOLD_CALL)>>>0;return s.rng/4294967296;}var x=s.rng|0;x^=x<<13;x^=x>>>17;x^=x<<5;s.rng=x>>>0;return s.rng/4294967296;}
+  function patternClock(s){if(!s.entranceAll)return;var base=Math.imul((s.seg|0)+1,0x85ebca6b)^Math.imul((s.stageIndex|0)+7,0xc2b2ae35),t=s.segTick|0;
+    s.rng=(base+Math.imul(t,GOLD_TICK))>>>0;s.srng=((base^0x27d4eb2f)+Math.imul(t,GOLD_TICK))>>>0;}
   function count(s,n){return Math.max(1,Math.round(n*s.density));}
   function patternDifficulty(s){return s.difficulty==='gentle'&&!s.awakeShape?'gentle':'hell';}
   function pick(s,gentle,normal,hell){return s.difficulty==='gentle'&&!s.awakeShape?gentle:hell;}
@@ -258,7 +264,7 @@
   function bulletRadius(s,i){return (s.bsize[i]===SHAPE_PROP?PROPS[s.bcolor[i]].radius:SIZE_RADIUS[s.bsize[i]])*hitSize(s);}
   function hitSize(s){return s.entranceAll&&s.compact?s.sizeScale/COMPACT_SIZE/LIVE_MOBILE.size*LIVE_MOBILE.hit:s.sizeScale;} // 휴대폰 이지가 어려운 원인(11-19): 휴대폰은 탄을 1.25배로 크게 그리지만 판정까지 커졌다. 실제 게임은 그림만 키우고 판정은 PC와 같게
   /* 탄 하나. o: {size,color,turn(초당 회전),accel,min,max,at(변화 틱),mode,arg,speed2,life,gen(가지치기 남은 횟수),spin(기물이 도는 속도, 틱당 라디안)} */
-  function srand(s){var x=s.srng|0||1;x^=x<<13;x^=x>>>17;x^=x<<5;s.srng=x>>>0;return s.srng/4294967296;}
+  function srand(s){if(s.entranceAll){s.srng=(s.srng+GOLD_SCATTER)>>>0;return s.srng/4294967296;}var x=s.srng|0||1;x^=x<<13;x^=x>>>17;x^=x<<5;s.srng=x>>>0;return s.srng/4294967296;}
   function spawn(s,x,y,angle,speed,o){
     if(s.n>=s.cap){s.dropped++;return;}
     o=o||{};var size=o.size||0;
@@ -368,6 +374,7 @@
   }
 
   /* 광선 하나. (x,y)에서 angle 방향으로 뻗는다. o: {width,warn,active,color,spin(초당 회전),follow(보스에 붙음),burst(켜질 때 선을 따라 쌀알탄)} */
+  function sigilUp(s){for(var q=0;q<s.figures.length;q++)if(s.figures[q].sigil)return true;return false;} // 큰 육망성이 떠 있으면 광선이 막힌다: 레이저 특수 구간은 육망성이 걷힐 때까지 미룬다(11-20, 빈 레이저 구간 3초)
   function beam(s,x,y,angle,o){
     if(s.lasers.length>=LASER_CAP)return;
     for(var q=0;q<s.figures.length;q++)if(s.figures[q].sigil)return; // 큰 육망성이 떠 있는 동안 다른 광선은 내지 않는다: 사용자 11-15 "이상한레이져 생성하지말고", 심사 6.50(육망성 선과 방사 광선이 한 화면에서 겹침)
@@ -953,7 +960,8 @@
     }
     fillGauge(s);
   }
-  function killMob(s,k){var m=s.mobs[k];s.score+=m.score;s.kills++;gainExp(s,m.elite?5:1);s.pops.push(m.x,m.y,m.elite?1:0);note(s,'kill');
+  function killMob(s,k){var m=s.mobs[k];if(m.hp>0)m.hp=0; // 1e-6 이하 잔여 체력(부동소수점)으로 죽은 몹도 체력 0으로 남긴다
+    s.score+=m.score;s.kills++;gainExp(s,m.elite?5:1);s.pops.push(m.x,m.y,m.elite?1:0);note(s,'kill');
     if(m.elite)for(var i=0;i<ELITE_DROPS;i++)dropItem(s,m.x+(i-1)*12,m.y,i===1?1:0);else if(++s.mobDrops%MOB_DROP_EVERY===0)dropItem(s,m.x,m.y,0);s.mobs.splice(k,1);}
   /* 시공간 왜곡 확률: 공격 단계마다 5%씩, 1단계 7% → 7단계 37%(사용자: 기본 7%, 풀강화 37% 이하). 탄 패턴의 난수와 따로 굴려 패턴이 바뀌지 않게 한다 */
   function distortChance(s){return s.difficulty==='hell'?0:DISTORT_CHANCE[Math.max(1,Math.min(MAX_LEVEL,s.power||1))];}
@@ -1023,7 +1031,7 @@
     s.cancelled.length=0;s.drifted.length=0;s.pops.length=0;s.zaps.length=0;s.skillFx.length=0;s.fsSwords.length=0;if(s.tbombs)s.tbombs.length=0;if(s.shotHits)s.shotHits.length=0;
     s.bombPulse=null;s.pulseInfo=null;s.lastBomb=null;s.warned=false;
     s.risers=s.risers||[];s.risers.length=0;s.riserDue=0;s.riserT=0;s.riserN=0;s.riserStage=s.stageIndex;
-    if(s.risen===undefined)s.risen=0;if(s.riserRng===undefined)s.riserRng=((s.seed*40503)^(s.stageIndex*2654435761+7))>>>0||1;
+    if(s.risen===undefined)s.risen=0;if(s.riserRng===undefined)s.riserRng=(((s.entranceAll?1:s.seed)*40503)^(s.stageIndex*2654435761+7))>>>0||1;
     var F=s.floor;if(F){F.grid.fill(0);F.hill.fill(0);F.goal.fill(0);F.pieces.length=0;F.warns.length=0;if(F.bursts)F.bursts.length=0;F.clearing=0;F.kind='';F.t=0;}
     // 구간 저장·맵 변경은 유지한다. 이전 공격의 소리/번개/필살 연출은 컷신 뒤 다시 재생하지 않는다.
     s.events=s.events.filter(function(e){return e==='map'||e==='stageClear'||e==='extend';});
@@ -1842,7 +1850,7 @@
   function floorPlan(index,difficulty){var a=index%4,b=(a+1+((index>>2)%3))%4;return difficulty==='gentle'?[FLOOR_KINDS[a]]:[FLOOR_KINDS[a],FLOOR_KINDS[b]];}
   function floorRows(s){return pick(s,3,4,4);}
   function floorRand(F){var x=F.rng|0;x^=x<<13;x^=x>>>17;x^=x<<5;F.rng=x>>>0;return F.rng/4294967296;} // 바닥 압박은 따로 굴리는 난수: 기존 패턴의 탄 배치를 바꾸지 않는다
-  function freshFloor(s,index){return {stage:index,t:0,kind:'',rng:((s.seed*2654435761)^(index*40503+1))>>>0||1,grid:new Uint8Array(FLOOR_COLS*6),hill:new Float32Array(FLOOR_COLS),goal:new Float32Array(FLOOR_COLS),pieces:[],bursts:[],broken:0,warns:[],clearing:0,lines:0,cleared:0,risen:0,dropped:0,mounds:0};}
+  function freshFloor(s,index){return {stage:index,t:0,kind:'',rng:(((s.entranceAll?1:s.seed)*2654435761)^(index*40503+1))>>>0||1,grid:new Uint8Array(FLOOR_COLS*6),hill:new Float32Array(FLOOR_COLS),goal:new Float32Array(FLOOR_COLS),pieces:[],bursts:[],broken:0,warns:[],clearing:0,lines:0,cleared:0,risen:0,dropped:0,mounds:0};}
   function stackHeight(F,c){for(var r=5;r>=0;r--)if(F.grid[r*FLOOR_COLS+c])return r+1;return 0;}
   // 그 x에서 바닥(쌓인 블록·지형) 윗면의 y. 바닥이 없으면 H.
   function floorTop(s,x){var F=s.floor,c=Math.max(0,Math.min(FLOOR_COLS-1,Math.floor(x/FLOOR_CELL)));return H-Math.max(stackHeight(F,c)*FLOOR_CELL,F.hill[c]);}
@@ -2037,7 +2045,7 @@
   }
   function riserInit(s){
     if(!s.risers){s.risers=[];s.risen=0;s.riserT=0;s.riserStage=-1;}
-    if(s.riserStage!==s.stageIndex){s.riserStage=s.stageIndex;s.riserT=0;s.riserN=0;s.riserDue=0;s.riserRng=((s.seed*40503)^(s.stageIndex*2654435761+7))>>>0||1;}
+    if(s.riserStage!==s.stageIndex){s.riserStage=s.stageIndex;s.riserT=0;s.riserN=0;s.riserDue=0;s.riserRng=(((s.entranceAll?1:s.seed)*40503)^(s.stageIndex*2654435761+7))>>>0||1;}
   }
   function updateRisers(s){
     riserInit(s);
@@ -2070,7 +2078,7 @@
   function beamRaw(s,x,y,a,o){return beam(s,x,y,a,o);}
   function SQ_ACTIVE(s){return 4*SP_BEAT+Math.round(48*s.rules.warn)-Math.round(66*s.rules.warn);} // 비트루비우스 사각 틀은 X가 켜지는 순간(4박 뒤 + X 예고 48틱) 꺼진다: 사각과 X가 함께 켜져 있던 18틱 겹침 제거(11-18 심사) // 8박 장단: 센박(1)·중간박(.5)·여린박(0)
   var CAMP_HALF=52,CAMP_NEED={normal:210,hell:150},CAMP_COOL={normal:420,hell:300},CAMP_BEAM={normal:34,hell:46};
-  function spReset(s){if(s.sp&&s.sp.cur)spEnd(s);var carry=!!(s.sp&&s.sp.drain),seg=SEGMENTS[s.seg],dur=seg&&seg.kind==='card'?cardDuration(s,seg):40;s.sp={drain:carry,start:dur*60>=SP_START+SP_LEAD+Math.round((SP_LEN[s.difficulty]||SP_LEN.normal)*.7)?SP_START:-1,q:[],cur:'',cycle:-1,camp:0,cool:0,round:0,rng:((s.seed*2246822519)^(s.stageIndex*40503+13))>>>0||1};s.special=null;
+  function spReset(s){if(s.sp&&s.sp.cur)spEnd(s);var carry=!!(s.sp&&s.sp.drain),seg=SEGMENTS[s.seg],dur=seg&&seg.kind==='card'?cardDuration(s,seg):40;s.sp={drain:carry,start:dur*60>=SP_START+SP_LEAD+Math.round((SP_LEN[s.difficulty]||SP_LEN.normal)*.7)?SP_START:-1,q:[],cur:'',cycle:-1,camp:0,cool:0,round:0,rng:(((s.entranceAll?1:s.seed)*2246822519)^(s.stageIndex*40503+13))>>>0||1};s.special=null;
     var lc=laserCard(s);if(lc){s.sp.need=true;s.sp.lj=lc.j;if(s.sp.start<0)s.sp.start=SP_START;}}
   /* ── 레이저 장단 페이즈(사용자 11-20 "보스페이즈가 보통 5인데 3개는 레이져 패턴이 꼭 있도록 … 리듬게임을 레이져 패턴으로 구현한 느낌").
    *  · 한 보스의 페이즈 N개 가운데 round(N×LASER_SHARE)개(5개면 3개, 3개면 2개)를 레이저 장단 페이즈로 정한다. 고르게 퍼뜨리되 마지막 페이즈는 늘 들어간다(1페이즈는 보스 고유 공격을 먼저 보인다).
@@ -2235,7 +2243,7 @@
     if(w.local===0&&!sp.cur&&!s.entranceAll)cancelAll(s,true); // 사용자 11-20 "시간이 지나 탄이 사라지지 않게": 실제 게임은 전환 예고에서도 탄을 서두르거나 걷지 않는다(수집선 규칙으로만 빨리 빠진다)
     // (11-20) 예고 1.5초 뒤 남은 탄을 먹으로 걷던 driftBullets 는 쓰지 않는다
     // 사용자 11-20 "탄이 다 사라진 다음에, 갑자기 지우지는 말고": 예고가 끝났는데 지난 탄이 남아 있으면 특수 페이즈 시작을 미룬다(예고 동안 새 탄은 없다, 최대 FIG_WAIT_MAX)
-    if(w.local===SP_LEAD&&!sp.cur&&s.entranceAll&&s.n&&!rlPending(s)&&(s.spHold=(s.spHold||0)+1)<FIG_WAIT_MAX){s.segTick--;return;}
+    if(w.local===SP_LEAD&&!sp.cur&&s.entranceAll&&(s.n&&!rlPending(s)||sigilUp(s))&&(s.spHold=(s.spHold||0)+1)<FIG_WAIT_MAX){if(s.spHold===FIG_HURRY)hurryBullets(s);s.segTick--;return;} // 오래 남는 느린 탄은 판정을 지닌 채 빨라져 나간다(11-20: 고정 패턴에서 40px/초 탄이 10초 넘게 남아 특수 구간에 섞였다)
     if(w.local===SP_LEAD&&!sp.cur){s.spHold=0;sp.cur=w.kind;sp.cycle=w.cycle;s.special={kind:w.kind,start:s.tick,cycle:w.cycle,lay:SP_LAYBACK[s.difficulty]};note(s,'special');}
     if(!w.active||!sp.cur){centerGuard(s,w);return;}
     riserInit(s);var lt=w.local-SP_LEAD;
@@ -2250,7 +2258,7 @@
   function enemyClock(s){var k=abilityOf(s).bulletSpeed;if(k>=1){s.efire=true;s.eclock=0;return;}s.eclock=(s.eclock||0)+k;s.efire=s.eclock>=1;if(s.efire)s.eclock-=1;}
   function step(s,input){
     if(s.stage==='won'||s.stage==='lost'){s.stageTick++;return s;}
-    s.tick++;s.stageTick++;movePlayer(s,input);enemyClock(s);var charge0=s.fills*GAUGE_FULL+s.gauge;
+    s.tick++;s.stageTick++;movePlayer(s,input);enemyClock(s);patternClock(s);var charge0=s.fills*GAUGE_FULL+s.gauge;
     if(s.stage==='bossClear'){
       if(s.tick>=s.bossClear.readyTick)advance(s);
       return s; // 격파 연출 2초 동안 공격·피격·아이템·필살을 모두 멈춘다. 다음 구간은 다음 틱부터 움직인다.
@@ -2388,6 +2396,7 @@
    // 리듬 레이저(2026-11-20) 공개 이름 — 다른 층(영웅별 적 특성화 등)이 무늬 목록·비율·강제 지정(s.sp.force)을 쓴다
    api.LASER_POOL=LASER_POOL;api.LASER_OLD=LASER_OLD;api.LASER_SHARE=LASER_SHARE;api.RL_HP=RL_HP;api.RL_EARLIEST=RL_EARLIEST;api.RL_DOWN_MAX=RL_DOWN_MAX;
    api.laserMotif=laserMotif;api.laserCard=laserCard;api.laserShare=laserShare;api.livePhaseOf=livePhaseOf;api.LASER_RHYTHM=LASER_RHYTHM;
+   api.__patternClock=patternClock;api.__rand=rand; // 고정 탄 패턴(11-20)
    if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcade=api;
 })(typeof window!=='undefined'?window:globalThis);
