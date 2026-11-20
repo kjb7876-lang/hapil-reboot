@@ -107,10 +107,10 @@ async function setup(browser,viewport,mobile,name){
     };
     HTMLMediaElement.prototype.pause=function(...args){const result=nativePause.apply(this,args);sample('after-pause');return result;};
     if(name==='desktop'){
-      // Unlock prerequisites for the later stage-21 persistence fixture. Its
+      // Unlock prerequisites for the later stage-20 (index 19) persistence fixture. Its
       // actual clear must still be produced by the engine and app handlers.
-      if(!localStorage.getItem('hapil-arcade-save-v43'))localStorage.setItem('hapil-arcade-save-v43',JSON.stringify({version:43,cleared:Array.from({length:21},(_,i)=>i),stars:{},best:{},difficulty:'normal'}));
-      localStorage.setItem('hapil-arcade-main-boss-seen-v2','{"21":true}');
+      if(!localStorage.getItem('hapil-arcade-save-v43'))localStorage.setItem('hapil-arcade-save-v43',JSON.stringify({version:44,cleared:Array.from({length:19},(_,i)=>i),stars:{},best:{},difficulty:'normal'}));
+      localStorage.setItem('hapil-arcade-main-boss-seen-v2','{"19":true}');
     }
   },name);
   await page.goto('http://127.0.0.1:'+server.address().port+'/arcade.html?eyes=0',{waitUntil:'networkidle'});
@@ -289,7 +289,7 @@ async function musicTransitions(page){
   // Exercise pending native play promises with immediate track changes. Normal
   // app frames and the real UI transitions below continue using this same element.
   const samples=await page.evaluate(()=>{
-    const m=HapilMusic,base={stageIndex:21,boss:{present:true}},out=[];
+    const m=HapilMusic,base={stageIndex:19,boss:{present:true}},out=[];
     function capture(label,expected,stopped){const p=m._players().main,track=m._tracks()[expected];out.push({label,expected,current:m.stats().current,source:p.a.src,wanted:new URL('media/bgm/'+track.file,location.href).href,playing:Array.from(window.__mediaObserver.elements).filter(a=>!a.paused).length,stopped:!!stopped});}
     for(let i=0;i<6;i++)for(const [mode,stage,key] of [['playing','wave','field'],['playing','intro','boss2'],['playing','bossClear','boss2'],['paused','bossClear','boss2'],['title','wave','title']]){m.update(mode,{...base,stage},true);capture(i+':'+mode+':'+stage,key,mode==='paused');}
     m.setVolume(0);m.update('playing',{...base,stage:'wave'},true);capture('volume-zero','field',true);
@@ -317,7 +317,7 @@ async function sevenSinsClear(page){
   // Keep the production app loop, dialogue handlers, attacks and clear events.
   // Only the starting encounter and boss HP are fixture controls.
   const fixture=await page.evaluate(()=>{
-    const a=HapilArcade,s=HapilArcadeApp.debugState().state,first=a.SEGMENTS.findIndex(g=>g.stage===21&&g.actor==='p2_chairman'&&g.kind==='card');
+    const a=HapilArcade,s=HapilArcadeApp.debugState().state,first=a.SEGMENTS.findIndex(g=>g.stage===19&&g.actor==='p2_chairman'&&g.kind==='card');
     window.__sinSaveWrites=[];window.__sinLaserDraw=null;
     const save=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k==='hapil-arcade-save-v43')window.__sinSaveWrites.push(JSON.parse(v));return save.call(this,k,v);};
     // This wraps the already-installed Ink renderer, as does the hero observer.
@@ -327,14 +327,14 @@ async function sevenSinsClear(page){
       if(this.canvas.id==='arcade-canvas'&&src.includes('/arcade-v43-laser/')&&args.length===9&&args[2]===0)window.__sinLaserDraw={src,alpha:this.globalAlpha,time:performance.now()};
       return draw.apply(this,args);
     };
-    s.stageIndex=21;s.seg=first;s.stage='intro';s.stageTick=s.segTick=0;s.boss.present=false;s.boss.leaving=false;
+    s.stageIndex=19;s.seg=first;s.stage='intro';s.stageTick=s.segTick=0;s.boss.present=false;s.boss.leaving=false;
     s.events.push('map');s.player.x=60;s.player.y=510;s.player.invulnerableUntil=0;s.rhythm=true;
     document.getElementById('story-auto').checked=false;
-    return {first,tick:s.tick,last:a.SEGMENTS.map((g,i)=>({g,i})).filter(x=>x.g.stage===21&&x.g.actor==='p2_core').at(-1).i};
+    return {first,tick:s.tick,last:a.SEGMENTS.map((g,i)=>({g,i})).filter(x=>x.g.stage===19&&x.g.actor==='p2_core').at(-1).i};
   });
   async function dialogue(actor){
     await page.waitForFunction(actor=>{const s=HapilArcadeApp.getState();return s.mode==='story'&&s.story.actor===actor;},actor);
-    const entry=await page.evaluate(actor=>HapilArcadeBossIntros.getBoss(actor,21),actor);
+    const entry=await page.evaluate(actor=>HapilArcadeBossIntros.getBoss(actor,19),actor);
     assert.equal(entry.kind,'canon-monologue');assert.equal(entry.lines.length,2);
     assert.equal(await page.locator('#arcade-story').getAttribute('data-actor'),actor);
     assert.equal(await page.locator('#story-boss-name').innerText(),await page.evaluate(actor=>HapilArcade.ACTORS[actor].name,actor));
@@ -381,27 +381,27 @@ async function sevenSinsClear(page){
     return page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;return {tick:s.tick,clear:s.bossClear,seg:s.seg,stageIndex:s.stageIndex,results:s.results.slice(),writes:window.__sinSaveWrites.slice(),n:s.n,sn:s.sn,lasers:s.lasers.length,figures:s.figures.length,score:s.score,exp:s.exp};});
   }
   const chairman=await defeatAndPause('p2_chairman');
-  assert.equal(chairman.clear.readyTick-chairman.clear.startedTick,120);assert.equal(chairman.stageIndex,21);assert.equal(chairman.results.length,0);assert.equal(chairman.writes.length,0,'chairman defeat does not clear the shared stage');
+  assert.equal(chairman.clear.readyTick-chairman.clear.startedTick,120);assert.equal(chairman.stageIndex,19);assert.equal(chairman.results.length,0);assert.equal(chairman.writes.length,0,'chairman defeat does not clear the shared stage');
   for(const k of ['n','sn','lasers','figures'])assert.equal(chairman[k],0,'clear removes '+k);
   const frozen=await combatClock(page);await page.waitForTimeout(180);assert.deepEqual(await combatClock(page),frozen,'pause freezes the clear interval');
   await page.locator('#arcade-resume').click();
   await page.waitForFunction(()=>{const a=HapilArcadeApp.getState();return a.mode==='story'&&a.story.actor==='p2_core';});
   assert.equal((await combatClock(page)).tick,chairman.clear.readyTick,'core cut-in starts exactly when the clear interval ends');
-  let seen=await page.evaluate(()=>JSON.parse(localStorage.getItem('hapil-arcade-boss-seen-v3')));
-  assert.equal(seen['21:p2_chairman'],true);assert.equal(seen['21:p2_core'],undefined,'one encounter does not mark its same-stage successor seen');
+  let seen=await page.evaluate(()=>JSON.parse(localStorage.getItem('hapil-arcade-boss-seen-v4')));
+  assert.equal(seen['19:p2_chairman'],true);assert.equal(seen['19:p2_core'],undefined,'one encounter does not mark its same-stage successor seen');
   await dialogue('p2_core');
-  seen=await page.evaluate(()=>JSON.parse(localStorage.getItem('hapil-arcade-boss-seen-v3')));assert.equal(seen['21:p2_core'],true);
+  seen=await page.evaluate(()=>JSON.parse(localStorage.getItem('hapil-arcade-boss-seen-v4')));assert.equal(seen['19:p2_core'],true);
   const core=await defeatAndPause('p2_core');
-  assert.equal(core.seg,fixture.last,'the actual final core card is defeated');assert.equal(core.stageIndex,21);assert.equal(core.clear.readyTick-core.clear.startedTick,120);
-  assert.equal(core.results.filter(r=>r.stage===21).length,1);assert.equal(core.writes.length,1,'the completed stage is saved immediately, before its visual transition');
-  assert.equal(core.writes[0].cleared.filter(x=>x===21).length,1);
+  assert.equal(core.seg,fixture.last,'the actual final core card is defeated');assert.equal(core.stageIndex,19);assert.equal(core.clear.readyTick-core.clear.startedTick,120);
+  assert.equal(core.results.filter(r=>r.stage===19).length,1);assert.equal(core.writes.length,1,'the completed stage is saved immediately, before its visual transition');
+  assert.equal(core.writes[0].cleared.filter(x=>x===19).length,1);
   for(const k of ['n','sn','lasers','figures'])assert.equal(core[k],0,'final clear removes '+k);
   const clearClock=await combatClock(page);await page.waitForTimeout(180);assert.deepEqual(await combatClock(page),clearClock);
   await page.locator('#arcade-resume').click();
-  await page.waitForFunction(()=>{const s=HapilArcadeApp.debugState().state;if(s.stageIndex===22){HapilArcadeApp.pause();return true;}return false;});
+  await page.waitForFunction(()=>{const s=HapilArcadeApp.debugState().state;if(s.stageIndex===20){HapilArcadeApp.pause();return true;}return false;});
   const after=await page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;return {tick:s.tick,stage:s.stage,results:s.results,writes:window.__sinSaveWrites,progress:HapilArcadeApp.debugState().progress};});
-  assert(after.tick>=core.clear.readyTick);assert.equal(after.stage,'wave');assert.equal(after.results.filter(r=>r.stage===21).length,1);assert.equal(after.writes.length,1,'transition does not save the same clear again');
-  assert.equal(after.progress.cleared.filter(x=>x===21).length,1);
+  assert(after.tick>=core.clear.readyTick);assert.equal(after.stage,'wave');assert.equal(after.results.filter(r=>r.stage===19).length,1);assert.equal(after.writes.length,1,'transition does not save the same clear again');
+  assert.equal(after.progress.cleared.filter(x=>x===19).length,1);
   await page.locator('#arcade-resume').click();await stationary(page);
   return {actors:['p2_chairman','p2_core'],clearTicks:120,stageSaves:after.writes.length,rhythm:rhythm.description.motif,laserSource:laser.src.split('/').pop()};
 }

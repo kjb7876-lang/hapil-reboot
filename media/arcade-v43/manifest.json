@@ -1641,6 +1641,24 @@
   "stamp": "69e6e8daff46fecb",
   "table": "tools/arcade-art-v43/forms.json"
  },
+ "chief_swarm.webp": {
+  "bytes": 117512,
+  "cell": [
+   330,
+   274
+  ],
+  "fps": 6,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   1320,
+   274
+  ],
+  "source": "media/arcade-v43-temp/chief-swarm-temp.png",
+  "sourceSha256": "cca072a63f0a68c2b2e3ee204c0154dde25b14c99ca66be167b5f444bc35bbe3",
+  "stamp": "d9dcae10fdceed64",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
  "cleaver.webp": {
   "bytes": 5392,
   "group": "props",
@@ -1791,16 +1809,22 @@
   "stamp": "59046df6595c4e97",
   "table": "tools/arcade-art-v43/base.json"
  },
- "cultist_alt61.webp": {
-  "bytes": 37094,
+ "cultist_awake.webp": {
+  "bytes": 126418,
+  "cell": [
+   297,
+   294
+  ],
+  "fps": 6,
+  "frames": 4,
   "group": "actors",
   "size": [
-   260,
-   257
+   1188,
+   294
   ],
-  "source": "media/cult-v17/cult-leader-atlas.png",
-  "sourceSha256": "d76c925bd52b367aaac41473b234b35a0b5aecde42201324b187af5408f1a2de",
-  "stamp": "a4323ec41545bcb3",
+  "source": "media/arcade-v43-temp/cultist-awake-temp.png",
+  "sourceSha256": "08d6ebdbe0f616cf150d6a0577ce761f4958532fadb933aed894e6b822318e26",
+  "stamp": "bb475c9f0b89b79f",
   "table": "tools/arcade-art-v43/forms.json"
  },
  "demon-hand.webp": {

@@ -4,9 +4,15 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const h=require('./helpers/arcade-v43.cjs'),{original,clear,idle,put,play,root}=h;
 const A=()=>h.need();
 
-test('v43 one stage per original scene: 56 stages in the original order, named by the scene title',()=>{
- const a=A(),playable=original.filter(r=>!r.rest);
- assert.equal(a.STAGES.length,playable.length);assert.equal(a.STAGES.length,56);
+test('v43 stages follow the original scenes: 52 stages named by the scene title, with the merged scenes folded in and the threshold before the first goal (user 11-20)',()=>{
+ // 사용자 11-20 "10-11-12 하나로 합치고 … 29-30합치고 32-33 합치고 … 54를55로 옮기고": 09-2·10 → 11, 31 → 32, 34 → 35, 60 이 59 앞으로.
+ const a=A(),all=original.filter(r=>!r.rest),gone=['09-2','10','31','34'];assert.equal(all.length,56);
+ const playable=all.filter(r=>!gone.includes(r.id)),i59=playable.findIndex(r=>r.id==='59'),i60=playable.findIndex(r=>r.id==='60');assert.equal(i60,i59+1);
+ [playable[i59],playable[i60]]=[playable[i60],playable[i59]];
+ assert.equal(a.STAGES.length,playable.length);assert.equal(a.STAGES.length,52);
+ assert.deepEqual(a.LAYOUT.OLD_SCENES,all.map(r=>r.id));assert.equal(a.LAYOUT.OLD_TO_NEW.length,56);
+ all.forEach((r,o)=>{const n=a.LAYOUT.OLD_TO_NEW[o],g=a.STAGES[n];assert(g.scene===r.id||gone.includes(r.id),r.id);assert(a.LAYOUT.NEW_FROM[n].includes(o));});
+ assert.deepEqual(a.LAYOUT.NEW_FROM[9],[9,10,11]);assert.deepEqual(a.LAYOUT.NEW_FROM[26],[28,29]);assert.deepEqual(a.LAYOUT.NEW_FROM[28],[31,32]);assert.deepEqual(a.LAYOUT.NEW_FROM.slice(49),[[54],[53],[55]]);
  a.STAGES.forEach((g,i)=>{const r=playable[i];assert.equal(g.scene,r.id);assert.equal(g.name,r.title);assert.equal(g.part,Number(r.chapter.match(/제(\d)부/)[1]));assert(g.name.length<=16);assert.equal(g.index,i);});
  assert.deepEqual([...new Set(a.STAGES.map(g=>g.part))],[1,2,3,4,5,6,7,8]);
 });
@@ -64,7 +70,7 @@ test('v43 every stage has its own look: background, tint and weather change from
  const dir=path.join(root,'media/arcade-v43'),size=f=>{assert(fs.existsSync(path.join(dir,f)),'art '+f);return fs.statSync(path.join(dir,f)).size;};
  for(const bg of bgs)assert(size('bg-'+bg+'.jpg')<130000,'bg '+bg);
  for(const key of new Set([...Object.keys(a.ACTORS),...Object.keys(a.MOBS),...a.PROPS.map(p=>p.key)]))assert(size(key+'.webp')<90000,key+' stays small for a phone');
- const used=new Set(a.SEGMENTS.filter(x=>x.kind==='card').map(x=>x.actor));for(const key of Object.keys(a.ACTORS))assert(used.has(key),'actor in use: '+key);
+ const used=new Set(a.SEGMENTS.filter(x=>x.kind==='card').flatMap(x=>[x.actor,x.form].filter(Boolean)));for(const key of Object.keys(a.ACTORS))assert(used.has(key),'actor in use: '+key);
  assert(used.size>=34,'named opponents: '+used.size);
 });
 
@@ -93,7 +99,16 @@ test('v43 progress saves stage by stage, unlocks in order and survives a broken 
   for(const k of Object.keys(s.stars))assert(s.stars[k]>=1&&s.stars[k]<=3);for(const k of Object.keys(s.best))assert(Number.isFinite(s.best[k])&&s.best[k]>=0);
   assert(['gentle','normal','hell'].includes(s.difficulty));assert(s.rewards.every(k=>a.STAGES.some(g=>g.reward.key===k)));}
  let all=P.fresh();for(let i=0;i<a.STAGES.length;i++)all=P.record(all,{stage:i,stars:3,score:10,ticks:10,hits:0,bombs:0,captures:1,spells:1},'hell');
- assert.equal(P.unlocked(all),a.STAGES.length-1);assert.equal(all.rewards.length,56);assert.equal(P.resume(all),0);assert.equal(P.totalStars(all),168);
+ assert.equal(P.unlocked(all),a.STAGES.length-1);assert.equal(all.rewards.length,52);assert.equal(P.resume(all),0);assert.equal(P.totalStars(all),156);
+ // 옛 기록(version 43, 56스테이지 번호)은 지금 번호로 옮겨진다: 합쳐진 스테이지는 옛 스테이지를 모두 깼을 때만, 별·점수는 가장 좋은 값, 이미 옮긴 기록은 다시 옮기지 않는다.
+ const old=n=>({version:43,cleared:[...Array(n).keys()],stars:Object.fromEntries([...Array(n).keys()].map(i=>[i,1+i%3])),best:Object.fromEntries([...Array(n).keys()].map(i=>[i,i*10])),difficulty:'hell'});
+ const m=P.sanitize(old(56));assert.equal(m.version,a.LAYOUT.version);assert.equal(m.cleared.length,52);assert.equal(m.stars[9],3);assert.equal(m.best[9],110);assert.equal(m.best[49],540);assert.equal(m.best[50],530);assert.equal(m.difficulty,'hell');
+ assert.deepEqual(P.sanitize(JSON.parse(JSON.stringify(m))),m,'a migrated save is stable');
+ assert.equal(P.sanitize(old(9)).cleared.length,9);assert.equal(P.resume(P.sanitize(old(9))),9);
+ assert.equal(P.sanitize(old(11)).cleared.length,9,'half of a merged stage does not count as cleared');assert.equal(P.sanitize(old(12)).cleared.length,10);
+ assert.equal(P.sanitize(old(29)).cleared.length,26);assert.equal(P.sanitize(old(30)).cleared.length,27);
+ assert.equal(P.sanitize(old(54)).cleared.length,49,'old 54 (cultist) now comes after old 55');assert.equal(P.sanitize(old(55)).cleared.length,51);
+ assert.equal(P.fresh().version,a.LAYOUT.version);assert.notEqual(a.LAYOUT.version,43);
 });
 
 test('v43 a run can start at any stage, stop after a chosen number of stages, and replays exactly from a seed',()=>{

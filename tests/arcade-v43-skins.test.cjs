@@ -6,7 +6,7 @@ const read=f=>fs.readFileSync(path.join(root,f),'utf8'),json=f=>JSON.parse(read(
 
 test('v43 skins: most scenes draw the mobs of their own m0 map, every picture exists and stays small',()=>{
  const a=h.need(),skins=require(path.join(root,'src/arcade-skins-v43.js')),manifest=json('media/arcade-v43/manifest.json'),table=json('docs/v43/m0-mobs.json');
- const scenes=new Set(a.STAGES.map(g=>g.scene));
+ const scenes=new Set(a.LAYOUT.OLD_SCENES); // 합쳐진 장면(09-2·10·31·34)의 표는 보관만 한다
  for(const s of Object.keys(skins.scenes))assert(scenes.has(s),'scene '+s);
  assert(Object.keys(skins.scenes).length>=50,'scenes with map mobs: '+Object.keys(skins.scenes).length);
  const used=new Set(Object.values(skins.scenes).flat());assert(used.size>=90,'distinct map mobs: '+used.size);

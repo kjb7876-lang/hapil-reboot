@@ -4,13 +4,13 @@ const A=require('../src/arcade-v43.js'),R=require('../src/arcade-boss-rhythm-v43
 const Audit=require('../tools/audit-boss-rhythm-v43.cjs');
 const report=require('../docs/v43/boss-rhythm-audit.json');
 
-test('rhythm route audit covers all 57 visits, 51 identities, modes, seeds and layouts',()=>{
+test('rhythm route audit covers all 53 visits, 50 identities, modes, seeds and layouts',()=>{
  const selected=Audit.cases(),ids=new Set(selected.map(c=>c.id));
- assert.equal(selected.length,1026);assert.equal(ids.size,1026);
- assert.equal(new Set(selected.map(c=>c.segment)).size,57);
+ assert.equal(selected.length,954);assert.equal(ids.size,954);
+ assert.equal(new Set(selected.map(c=>c.segment)).size,53);
  assert.deepEqual(new Set(selected.map(c=>c.actor)),new Set(R.ids));
  assert.deepEqual(new Set(report.samples.map(c=>c.id)),ids);
- assert.deepEqual(report.summary,{cases:1026,passed:1026,failed:0,actors:51,visits:57,verifiedReplays:1026});
+ assert.deepEqual(report.summary,{cases:954,passed:954,failed:0,actors:50,visits:53,verifiedReplays:954});
  for(const c of selected){const g=A.SEGMENTS[c.segment];assert.equal(g.stage,c.stage);assert.equal(g.actor,c.actor);assert(R.handles({rhythm:true,seg:c.segment},g,A));}
  assert(selected.some(c=>c.actor==='p2_chairman'&&A.SEGMENTS[c.segment].mid),'cinematic sin boss is included');
 });

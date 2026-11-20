@@ -374,8 +374,12 @@
           waves:w092,mid:['p1_seraph','p1_sealed','p1_erase','p1_spoon']},
         {scene:'10',theme:{bg:'p1_city',tint:'#0a1420',fx:'rain'},cast:['nightmare','p1_vial','p1_nurse'],reward:{key:'p1_moon',name:'달빛'},
           waves:w10,mid:['lucifer','p1_last','craving','p1_666']},
-        {scene:'11',theme:{bg:'p1_mask',tint:'#160c1c',fx:'petals'},cast:['p1_face','p1_vial','p1_nurse'],reward:{key:'p1_sigil',name:'J의 인장'},
-          waves:w11,mid:['mask','angelMask'],boss:['lucifer','p1_perfect','p1_thousand','p1_trial','p1_temper','p1_hope']}
+        /* 사용자 11-20 "10-11-12 하나로 합치고 페이즈를 6페이즈로 늘려줘 같은 루시퍼니까": 결전의 날(09-2)·환자와 중독의 도시(10)를 이 맵에 합쳤다.
+         * 루시퍼 여섯 페이즈 = 초천사의 모습 둘 → 도시의 루시퍼 둘 → 가면을 벗은 루시퍼 둘. 중간보스는 10의 '암시장의 수상한 자'.
+         * 위의 09-2·10 정의는 패턴 보관용이라 맵으로는 쓰이지 않는다. */
+        {scene:'11',absorb:['09-2','10'],midScene:'10',theme:{bg:'p1_mask',tint:'#160c1c',fx:'petals'},cast:['p1_face','p1_vial','p1_nurse'],reward:{key:'p1_sigil',name:'J의 인장'},
+          waves:w11,mid:['lucifer'],boss:['lucifer','p1_erase','craving','p1_666','angelMask','p1_hope'],
+          forms:['p1_seraph','lucifer','lucifer','lucifer_alt11','lucifer_alt11'],titles:['초천사','루시퍼','루시퍼','루시퍼','루시퍼']}
       ];
       return {spells:spells,mobFire:mobFire,stages:stages};
     }};

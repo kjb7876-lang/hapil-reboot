@@ -37,10 +37,18 @@
   function finale(){var S=story();return S&&S.FINALE?S.FINALE:null;}
 
   /* ── 챕터 기록(난이도별 완주) ── 진행 기록(Progress)과 따로: 스테이지마다 깬 가장 높은 난이도, 챕터를 처음 다 깬 시각. */
-  function freshLog(){return {v:1,levels:{},done:{}};}
+  function freshLog(){return {v:2,levels:{},done:{}};}
+  /* 옛 챕터 기록(v:1, 56스테이지 번호) → 지금 번호(엔진 LAYOUT). 합쳐진 스테이지의 난이도는 합쳐진 옛 스테이지 가운데 가장 낮은 값(하나라도 없으면 기록 없음). */
+  function layout(){var A=root&&root.HapilArcade;if(!A&&typeof module==='object'&&module.exports&&typeof require==='function'){try{A=require('./arcade-v43.js');}catch(e){A=null;}}return A&&A.LAYOUT||null;}
+  function migrateLog(raw){
+    if(!raw||typeof raw!=='object'||Array.isArray(raw)||raw.v!==1)return raw;var L=layout();if(!L)return raw;
+    var lv=raw.levels&&typeof raw.levels==='object'?raw.levels:{},out={v:2,levels:{},done:raw.done};
+    L.NEW_FROM.forEach(function(from,n){var low=3;from.forEach(function(o){var r=Number(lv[o]);low=Math.min(low,whole(r)&&r>=1&&r<=3?r:0);});if(low>0)out.levels[n]=low;});
+    return out;
+  }
   function whole(v){return typeof v==='number'&&isFinite(v)&&Math.floor(v)===v;}
   function cleanLog(raw,stages){
-    var log=freshLog(),n=(stages||[]).length;if(!raw||typeof raw!=='object'||Array.isArray(raw))return log;
+    var log=freshLog(),n=(stages||[]).length;raw=migrateLog(raw);if(!raw||typeof raw!=='object'||Array.isArray(raw))return log;
     var lv=raw.levels&&typeof raw.levels==='object'?raw.levels:{};Object.keys(lv).forEach(function(k){var i=Number(k),r=Number(lv[k]);if(whole(i)&&i>=0&&i<n&&whole(r)&&r>=1&&r<=3)log.levels[i]=r;});
     var dn=raw.done&&typeof raw.done==='object'?raw.done:{};Object.keys(dn).forEach(function(k){var p=Number(k),t=Number(dn[k]);if(whole(p)&&p>=1&&p<=count()&&isFinite(t)&&t>0)log.done[p]=Math.floor(t);});
     return log;

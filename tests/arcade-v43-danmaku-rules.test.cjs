@@ -10,7 +10,7 @@ function dodge(s){const p=s.player;let best=null,bs=1e18;for(let dx=-1;dx<=1;dx+
 function play(d,seg,fn,bot){const s=a.createRun({segment:seg,seed:31+seg,difficulty:d,entranceAll:true,rhythm:true,compact:true});let t0=-1;
   for(let k=0;k<7000;k++){a.step(s,bot?bot(s):{});s.player.hp=9;if(s.stage==='card'&&t0<0)t0=k;if(t0<0)continue;if(s.stage!=='card'||s.seg!==seg)break;fn(s,k-t0);}return s;}
 // 전수조사에서 보스가 내려와 쉬는 동안 화면이 9초까지 비던 카드들
-const EMPTY=[40,58,79,96,103,116,125];
+const EMPTY=[40,58,79,96,103,115]; // 52스테이지 구성: 115 = 합쳐진 루시퍼의 '존재를 지우는 힘'(옛 116), 옛 125 '이번이 마지막'은 합치면서 빠졌다
 test('normal: while the boss rests low the screen never stays empty for 3 seconds',()=>{
   for(const seg of EMPTY){let q=0,max=0;const s=play('normal',seg,s=>{q=live(s)?0:q+1;if(q>max)max=q;},dodge);assert(max<=180,'segment '+seg+' empty for '+max+' ticks');assert(s.calmSoftN>0||max<=180);}
 });

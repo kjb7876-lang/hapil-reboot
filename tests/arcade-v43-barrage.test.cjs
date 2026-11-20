@@ -107,7 +107,7 @@ test('v43 barrage: with glyph lasers and edge zigzags on, every boss pattern sti
 test('v43 barrage: mobs are drawn only with art that walks down the screen',()=>{
  const skins=require(path.join(root,'src/arcade-skins-v43.js')),manifest=JSON.parse(fs.readFileSync(path.join(root,'media/arcade-v43/manifest.json'),'utf8'));
  assert(skins.front&&typeof skins.front==='object','scene → front-walking mobs');
- const a=h.need(),scenes=new Set(a.STAGES.map(g=>g.scene));let n=0;
+ const a=h.need(),scenes=new Set(a.LAYOUT.OLD_SCENES);let n=0; // 합쳐진 장면(09-2·10·31·34)의 항목은 보관만 한다
  for(const [s,keys] of Object.entries(skins.front)){assert(scenes.has(s));assert(keys.length>=1,s);for(const k of keys){const e=manifest[k+'.webp'];assert(e,k);assert.notEqual(e.facing,'right',k+' faces the side');assert(/drive-v43\/|m0-v43\/down\//.test(e.source),k+' comes from a down-walk sheet');n++;}}
  // 사용자 11-17 "몹이 다른테마에 중복되서 나오지 않았으면": 정면 그림이 없는 지역은 다른 지역 몹을 빌리지 않고 자기 지역 옆모습 몹을 쓴다(그만큼 기준을 낮춤).
  assert(Object.keys(skins.front).length>=40,'scenes with down-walking mobs: '+Object.keys(skins.front).length);
@@ -151,7 +151,7 @@ test('v43 boss skill effects: drive frame animations are matched to bosses, ligh
 });
 
 test('v43 vertical maps: drive loop maps cover their scenes, wrap without a seam, and the game scrolls them at their own height',()=>{
- const a=h.need(),table=JSON.parse(h.read('docs/v43/vmaps.json')).maps,manifest=JSON.parse(h.read('media/arcade-v43/manifest.json')),scenes=new Set(a.STAGES.map(g=>g.scene));
+ const a=h.need(),table=JSON.parse(h.read('docs/v43/vmaps.json')).maps,manifest=JSON.parse(h.read('media/arcade-v43/manifest.json')),scenes=new Set(a.LAYOUT.OLD_SCENES);
  assert(Object.keys(table).length>=30);
  for(const [p,row] of Object.entries(table)){assert(scenes.has(row.scene),p);const e=manifest['bg-loop-'+row.scene+'.jpg'];assert(e&&e.loop===true,p+' built');assert(e.bytes<=130000,p+' light');
   assert(fs.existsSync(path.join(root,'media/arcade-v43/bg-loop-'+row.scene+'.jpg')));}
@@ -261,7 +261,7 @@ test('v43 themed bullets (review 5): a hand never rises right under the heroine,
  assert(a.PROPS.find(p=>p.key==='skull').glow!==8,'skull glow is not white');
 });
 
-test('v43 vertical maps: all 56 stages have a seamless loop map from the Drive set (A01~A56)',()=>{
+test('v43 vertical maps: all 52 stages have a seamless loop map from the Drive set (A01~A56)',()=>{
  const a=h.need(),m=JSON.parse(fs.readFileSync(path.join(root,'media/arcade-v43/manifest.json'),'utf8'));
  const missing=a.STAGES.filter(g=>!(m['bg-loop-'+g.scene+'.jpg']&&m['bg-loop-'+g.scene+'.jpg'].loop)).map(g=>g.scene);
  assert.deepEqual(missing,[],'stages without a loop map');

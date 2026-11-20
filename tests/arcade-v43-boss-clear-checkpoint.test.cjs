@@ -34,13 +34,13 @@ test('completed-stage clear removes its old checkpoint immediately and cannot re
 test('chairman defeat checkpoints the next core entrance for all heroes, retaining growth and stage penalties',()=>{
  for(const hero of ['memory','seoha','seoha-b']){
   const h=mobile(),s=encounter('p2_chairman',hero);s.exp=500;s.fills=13;s.hits=2;s.bombsUsed=1;
-  h.M.tick(s,'playing',16);assert.equal(h.M.checkpoint(21,'hell').seg,s.seg);defeat(s);
+  h.M.tick(s,'playing',16);assert.equal(h.M.checkpoint(19,'hell').seg,s.seg);defeat(s);
   assert.equal(s.bossClear.stageCommitted,false);assert.equal(s.results.length,0);assert.equal(A.SEGMENTS[s.bossClear.nextSegment].actor,'p2_core');
-  h.M.commitBossClear(s);const cp=h.M.checkpoint(21,'hell'),writeCount=h.writes.filter(w=>w.key===KEY).length;
+  h.M.commitBossClear(s);const cp=h.M.checkpoint(19,'hell'),writeCount=h.writes.filter(w=>w.key===KEY).length;
   assert.equal(cp.seg,s.bossClear.nextSegment);assert.equal(cp.hero,hero);assert.equal(cp.exp,s.exp);assert.equal(cp.fills,s.fills);assert.equal(cp.hits,2);assert.equal(cp.bombs,1);
   for(let i=0;i<30;i++){A.step(s,{bomb:true});h.M.tick(s,'playing',16);h.M.commitBossClear(s);}
   assert.equal(h.writes.filter(w=>w.key===KEY).length,writeCount,'one defeat writes one checkpoint');assert.equal(s.bombsUsed,1,'manual bomb input stays blocked in the hold');
-  const refreshed=mobile(h.storage),restored=refreshed.M.checkpoint(21,'hell');assert.equal(restored.seg,cp.seg);
+  const refreshed=mobile(h.storage),restored=refreshed.M.checkpoint(19,'hell');assert.equal(restored.seg,cp.seg);
   const next=A.createRun({segment:restored.seg,hero:restored.hero,difficulty:'hell',pacing:true,grown:{exp:restored.exp,fills:restored.fills}});
   next.hits+=restored.hits;next.bombsUsed+=restored.bombs;
   assert.equal(next.stage,'intro');assert.equal(A.SEGMENTS[next.seg].actor,'p2_core');assert.equal(next.hero,hero);assert.equal(next.exp,cp.exp);assert.equal(next.fills,cp.fills);assert.equal(next.cleared,0);assert.equal(next.score,0,'resume does not grant the chairman reward again');
