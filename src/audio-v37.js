@@ -36,7 +36,13 @@
     grooveAccent:{gap:120,level:.22,rank:2},
     clockTick:{gap:300,level:.15,rank:2},
     clockSlow:{gap:800,level:.2,rank:3},
-    clockChime:{gap:900,level:.2,rank:3}
+    clockChime:{gap:900,level:.2,rank:3},
+    // 위험마다 소리와 움직임을 짝짓는다(11-20 연출 검토): 솟는 먹물은 낮은 두드림(레이저의 상승 예고음과 구별), 대수문장 빗장의 금속음·풀림, 환도 세 박자, 스펠 첫 획.
+    inkSwell:{gap:380,level:.26,rank:3},
+    gateClang:{gap:300,level:.24,rank:3},
+    boltRelease:{gap:200,level:.2,rank:3},
+    hwandoThree:{gap:2000,level:.3,rank:4},
+    brushStroke:{gap:400,level:.2,rank:2}
   };
   // 'phase' 이벤트는 다음 패턴·구간이 시작될 때 나오므로 격파음에 쓰지 않는다(격파는 아래 단계 전환으로 잡는다).
   var EVENT_CUES={hurt:'hurt',kill:'kill',summon:'summon',seal:'seal',release:'seal',awakening:'awakening',win:'win',lose:'lose'};
@@ -202,6 +208,16 @@
       // 시공간 왜곡·둔화장: 째깍 간격이 점점 벌어지고 음이 내려앉는다(태엽 풀림).
       clockSlow:function(d,l){[0,.09,.22,.42,.7].forEach(function(at,i){clockTick(d,l*(1-i*.12),1-i*.1,at);});tone(d,'sine',330,110,.9,l*.5,0,.05);noise(d,'lowpass',900,200,1,.7,l*.12,0,.1);},
       // 서하의 시간 기술: 맑은 종 한 번과 앞서 달려가는 째깍 셋.
+      // 솟는 먹물: 바닥이 부풀 때 낮은 북 두드림 둘(쿵-둥). 피격음(낮은 쿵+떨림)보다 짧고 부드럽게, 쓸림 없음.
+      inkSwell:function(d,l){tone(d,'sine',96,58,.2,l,0,.01);tone(d,'triangle',150,96,.12,l*.45,0,.01);tone(d,'sine',84,52,.22,l*.8,.17,.01);noise(d,'lowpass',420,140,1,.18,l*.35,0,.02);},
+      // 빗장이 걸릴 때: 짧은 쇠 부딪힘(비조화 배음)과 묵직한 몸통.
+      gateClang:function(d,l){bell(d,233,.42,l*.7);tone(d,'square',466,440,.05,l*.25);tone(d,'sine',1287,1287,.25,l*.22,0,.002);noise(d,'bandpass',3200,2200,4,.06,l*.6,0,.002);tone(d,'triangle',110,80,.18,l*.5);},
+      // 빗장이 풀릴 때: 쇠가 미끄러지는 짧은 쓸림 뒤 가벼운 걸쇠 소리.
+      boltRelease:function(d,l){noise(d,'bandpass',900,2600,6,.12,l*.6,0,.03);tone(d,'triangle',880,980,.04,l*.4,.12,.002);noise(d,'highpass',4000,5000,1,.03,l*.3,.12,.002);},
+      // 환도가 세 번 울린다(46장 코어 회복 → 56장 세쌍둥이의 기록에서 같은 세 박자).
+      hwandoThree:function(d,l){[0,.42,.84].forEach(function(at,i){bell(d,i===2?659:587,1.1-i*.1,l*(i===2?1:.8),at);tone(d,'sine',1760,1760,.5,l*.12,at+.01,.002);});},
+      // 스펠 첫 획: 붓이 한지를 쓸고 지나가는 짧은 쓸림.
+      brushStroke:function(d,l){noise(d,'bandpass',1500,500,1.6,.26,l,0,.04);noise(d,'highpass',5000,3000,.7,.12,l*.35,0,.01);},
       clockChime:function(d,l){bell(d,880,.9,l*.55,0);[.12,.24,.36].forEach(function(at,i){clockTick(d,l*.8,1+i*.06,at);});}
     };
     function clockTick(d,l,pitch,delay){delay=delay||0;noise(d,'bandpass',2600*pitch,1800*pitch,5,.022,l*.8,delay,.001);tone(d,'sine',1900*pitch,1500*pitch,.035,l*.6,delay,.001);if(pitch===1&&!delay||pitch>1)noise(d,'bandpass',900,600,3,.03,l*.35,delay,.001);}

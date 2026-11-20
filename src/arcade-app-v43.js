@@ -10,6 +10,7 @@
   var $=function(id){return document.getElementById(id);};
   var canvas=$('arcade-canvas'),ctx=canvas.getContext('2d');
   var HeroVisibility=global.HapilHeroVisibility||null,heroOpacity=1;
+  var Cues=global.HapilCues||null; // 보스 행동과 회피를 잇는 연출: 뿌리 축·접시·빗장·몹 쏘기 예고·한지 비움(src/arcade-cues-v43.js)
   var Spirit=global.HapilSpirit||null; // 동방식 표시층: 수집선·보스 위치 표식·봉인 보너스·받은 값(src/arcade-spirit-v43.js)
   var SAVE_KEY='hapil-arcade-save-v43',BEST_KEY='hapil-arcade-best-v43',SETTINGS_KEY='hapil-arcade-settings-v43';
   // 탄 색 여섯 가지(시뮬레이션의 색 번호 0·2·4·5·6·8). 속은 단색, 테두리는 밝게.
@@ -660,7 +661,7 @@
     for(i=0;i<s.pops.length;i+=3){var big=s.pops[i+2];for(k=0;k<(big?14:6);k++){var a=TAU*k/(big?14:6);addParticle(s.pops[i],s.pops[i+1],Math.cos(a)*(big?3.4:2.2),Math.sin(a)*(big?3.4:2.2),big?26:16,k%2?'#ffffff':themeColor(s),big?7:4);}if(big)shake=Math.max(shake,6);}
     s.pops.length=0;if(Spirit)Spirit.consume(s);
     for(i=0;i<s.events.length;i++){
-      var e=s.events[i];if(Spirit)Spirit.onEvent(e,s,Arcade);
+      var e=s.events[i];if(Spirit)Spirit.onEvent(e,s,Arcade);if(Cues)Cues.onEvent(e,s,Arcade,play);
       if(e==='graze'){play('graze',s.player.x);addParticle(s.player.x,s.player.y,(Math.random()-.5)*5,(Math.random()-.5)*5,12,'#ffffff',2);}
       else if(e==='bossHit'||e==='bossHitLow')play(e,s.boss.x);
       else if(e==='kill')play('kill',s.player.x);
@@ -695,12 +696,12 @@
       else if(e==='lose'){play('lose');finish();}
       else if(e==='countdown'||e==='countdownLast')play(e);
       else if(e==='laserWarn')play('laserWarn',s.boss.x);
-      else if(e==='riserWarn'){if(!s.special)play('laserWarn',s.risers&&s.risers.length?s.risers[s.risers.length-1].x:W/2);} // 아래에서 솟는 소재 예고음(특수 페이즈 중에는 박 소리와 겹치지 않게 뺀다)
+      else if(e==='riserWarn'){if(!s.special)play('inkSwell',s.risers&&s.risers.length?s.risers[s.risers.length-1].x:W/2);} // 아래에서 솟는 소재 예고음(특수 페이즈 중에는 박 소리와 겹치지 않게 뺀다)
       else if(e==='laserFire'){play('laserFire',s.boss.x);shake=Math.max(shake,5);}
       else if(e==='pop')play('skillCounter',s.boss.x);
       else if(e==='bossSpit'){play('summon',s.boss.x);shake=Math.max(shake,2);}
     }
-    s.events.length=0;
+    s.events.length=0;if(Cues)Cues.frame(s,Arcade,play);
     if(s.inked&&s.inked.length){play('phaseBreak',W/2);for(i=0;i<s.inked.length;i+=4)inks.push({x:s.inked[i],y:s.inked[i+1],c:COLORS[s.inked[i+2]]||'#ffffff',k:s.inked[i+3],age:-((i>>2)%7)*2});s.inked.length=0;if(inks.length>INK_DRAW)inks.splice(0,inks.length-INK_DRAW);} // 이벤트(격파 연출 정리) 뒤에 읽어 지워지지 않게
   }
 
@@ -1051,7 +1052,7 @@
     var ink=mix('#a776ff',themeColor(s).slice(0,7),.4),actor=s.boss.actor,key=ink+actor,rings=runeRings[key];
     if(!rings)rings=runeRings[key]=RUNE_RADII.map(function(r,k){return buildRuneRing(r,RUNE_BAND[k],k+1,ink,actor);});
     var count=compact?2:3,k0=size/190*(compact?.9:1); // 모바일은 바깥 고리를 빼고 조금 작게: 화면 위 1/3을 덮지 않게
-    var card=s.stage==='card',duck=card?runeDuck(s,bx,by,RUNE_RADII[count-1]*k0):1,alpha=(card?(compact?.6:.5):.12)*duck;
+    var card=s.stage==='card',duck=(card?runeDuck(s,bx,by,RUNE_RADII[count-1]*k0):1)*(Cues?Cues.decorFade(s):1),alpha=(card?(compact?.6:.5):.12)*duck;
     var room=Math.min(bx,W-bx,by+60); // 보스에서 플레이필드 가장자리(양옆·위)까지의 거리
     ctx.save();ctx.globalCompositeOperation='lighter';
     for(var k=0;k<count;k++){var img=rings[k],half=img.width/scale/2,breathe=1+.05*Math.sin(visual*1.25+k*2.1),r=RUNE_RADII[k]*k0*breathe;
@@ -1120,7 +1121,7 @@
     if(!sigilOn)drawRuneBarrier(s,bx,by,size); // 마법진 바깥을 감싸는 룬 결계
     // 마법진: 방금 쐈으면(bossPose.until) 한 번 크게 밝아지며 부푼다 → 발사 순간이 읽힌다
     var fired=bossPose.actor===b.actor&&s.tick<bossPose.until?(bossPose.until-s.tick)/56:0,pulse=1+.1*fired;
-    ctx.save();ctx.translate(bx,by);ctx.rotate(visual*.5);ctx.scale(pulse,pulse);ctx.globalAlpha=((s.stage==='card'?.45:.2)+.4*fired)*(sigilOn?.22:1);ctx.globalCompositeOperation='lighter';
+    ctx.save();ctx.translate(bx,by);ctx.rotate(visual*.5);ctx.scale(pulse,pulse);ctx.globalAlpha=((s.stage==='card'?.45:.2)+.4*fired)*(sigilOn?.22:1)*(Cues?Cues.decorFade(s):1);ctx.globalCompositeOperation='lighter';
     ctx.drawImage(circleSprite,-size/2,-size/2,size,size);ctx.restore();
     var bp=bossPose;if(bp.actor!==b.actor){bp.actor=b.actor;bp.x=bx;bp.n=s.n;bp.until=-1;bp.side=0;}
     var bdx=bx-bp.x;bp.x=bx;if(Math.abs(bdx)>.3){bp.side=10;bp.dir=bdx<0?-1:1;}else if(bp.side>0)bp.side--;
@@ -1154,7 +1155,7 @@
   function drawMobs(s){
     var tint=Arcade.PALETTE[s.stageIndex%Arcade.PALETTE.length],color=themeColor(s);
     var order=[],k;for(k=0;k<s.mobs.length;k++)order.push(k);order.sort(function(a,b){return s.mobs[a].y-s.mobs[b].y||a-b;}); // 아래쪽 몹이 위에 그려져야 줄지어 내려올 때 한 덩어리로 안 보인다
-    for(k=0;k<order.length;k++){var i=order[k],m=s.mobs[i],glow=orbs[2][tint],reach=m.r*1.5;if(m.x!==m.x||m.y!==m.y)continue;var under=(m.y<56&&m.x<200)||(m.y<96&&m.x<64)||(m.y>H-116&&(m.x<96||m.x>W-112));if(under)ctx.globalAlpha=.5; /* 스테이지 이름·일시정지 단추, 아래쪽 목숨·점수 자리에서는 몹을 옅게 */var art=skinOf(s.stageIndex,m.kind);if(!images[art]){ctx.globalAlpha=.3;ctx.drawImage(glow.image,m.x-reach,m.y-reach,reach*2,reach*2);ctx.globalAlpha=1;}else{var tl=tallOf(m.kind),gap=1e9,j;for(j=0;j<s.mobs.length;j++){var o=s.mobs[j];if(j!==i&&Math.abs(o.x-m.x)<14){var d=Math.abs(o.y-m.y);if(d<gap)gap=d;}}if(!m.elite&&gap<tl)tl=Math.max(46,gap*.94); /* 한 줄로 바짝 붙어 내려오는 몹은 간격만큼만 크게 그려 서로 겹치지 않게 한다 */var halo=tl*.58,dim=under?.5:1;ctx.globalAlpha=dim;ctx.drawImage(shadeSprite(),m.x-tl*.42,m.y+tl*.47-tl*.13,tl*.84,tl*.26);ctx.globalAlpha=.26*dim;ctx.drawImage(haloSprite(),m.x-halo,m.y-halo,halo*2,halo*2);ctx.globalAlpha=dim;} /* 어두운 배경에서 몹이 묻히지 않게 뒤에 옅은 빛만 깐다 */var po=poseOf(s,m);if(po&&po.hit!==m.hitTick&&s.tick-m.hitTick<2){po.hit=m.hitTick;hitSpark(m.x,m.y+(tl||40)*.25,color,4);impactFlash(m.x,m.y+(tl||40)*.3);}var mo=po&&s.tick<po.until&&images[art+'@attack']?'attack':po&&po.side>0?'side':'';drawArt(art,m.x,m.y+Math.sin(visual*4+i)*2,s.tick-m.hitTick<3,color,Math.floor(finite(m.baseX,0)/9)+(m.elite?3:0),mo,(po&&po.dir)||(m.x>W/2?-1:1),m.kind,images[art]?tl:0);if(Ink&&Ink.footCloud&&images[art])Ink.footCloud(ctx,m.x,m.y+Math.sin(visual*4+i)*2,tl*.9,visual+i*1.7,.95);ctx.globalAlpha=1;} // 시작 칸을 나온 자리로 어긋나게 해 떼가 똑같이 움직이지 않는다
+    for(k=0;k<order.length;k++){var i=order[k],m=s.mobs[i],glow=orbs[2][tint],reach=m.r*1.5;if(m.x!==m.x||m.y!==m.y)continue;var under=(m.y<56&&m.x<200)||(m.y<96&&m.x<64)||(m.y>H-116&&(m.x<96||m.x>W-112));if(under)ctx.globalAlpha=.5; /* 스테이지 이름·일시정지 단추, 아래쪽 목숨·점수 자리에서는 몹을 옅게 */var art=skinOf(s.stageIndex,m.kind);if(!images[art]){ctx.globalAlpha=.3;ctx.drawImage(glow.image,m.x-reach,m.y-reach,reach*2,reach*2);ctx.globalAlpha=1;}else{var tl=tallOf(m.kind),gap=1e9,j;for(j=0;j<s.mobs.length;j++){var o=s.mobs[j];if(j!==i&&Math.abs(o.x-m.x)<14){var d=Math.abs(o.y-m.y);if(d<gap)gap=d;}}if(!m.elite&&gap<tl)tl=Math.max(46,gap*.94); /* 한 줄로 바짝 붙어 내려오는 몹은 간격만큼만 크게 그려 서로 겹치지 않게 한다 */var halo=tl*.58,dim=under?.5:1;ctx.globalAlpha=dim;ctx.drawImage(shadeSprite(),m.x-tl*.42,m.y+tl*.47-tl*.13,tl*.84,tl*.26);ctx.globalAlpha=.26*dim;ctx.drawImage(haloSprite(),m.x-halo,m.y-halo,halo*2,halo*2);ctx.globalAlpha=dim;} /* 어두운 배경에서 몹이 묻히지 않게 뒤에 옅은 빛만 깐다 */var po=poseOf(s,m);if(po&&po.hit!==m.hitTick&&s.tick-m.hitTick<2){po.hit=m.hitTick;hitSpark(m.x,m.y+(tl||40)*.25,color,4);impactFlash(m.x,m.y+(tl||40)*.3);}var mo=po&&s.tick<po.until&&images[art+'@attack']?'attack':po&&po.side>0?'side':'',tq=Cues?Cues.mobTilt(s,m):0;if(tq){ctx.save();ctx.translate(m.x,m.y);ctx.rotate(tq);ctx.translate(-m.x,-m.y);}drawArt(art,m.x,m.y+Math.sin(visual*4+i)*2,s.tick-m.hitTick<3,color,Math.floor(finite(m.baseX,0)/9)+(m.elite?3:0),mo,(po&&po.dir)||(m.x>W/2?-1:1),m.kind,images[art]?tl:0);if(tq)ctx.restore();if(Ink&&Ink.footCloud&&images[art])Ink.footCloud(ctx,m.x,m.y+Math.sin(visual*4+i)*2,tl*.9,visual+i*1.7,.95);ctx.globalAlpha=1;} // 시작 칸을 나온 자리로 어긋나게 해 떼가 똑같이 움직이지 않는다
   }
   /* 아래쪽 압박(사용자 11-15): 쌓인 블록·떨어지는 조각·솟은 지형·올라올 몹 예고. 판정은 엔진(Arcade.floorTop·조각 칸)과 같은 칸이다.
      심사 1차(5.97): 네온 원색 블록이 화풍과 따로 논다 → 장면 색으로 물든 돌 블록. 닿으면 아픈 떨어지는 조각만 따뜻한 경고 테가 맥동하고, 쌓인 블록은 무채색 돌.
@@ -1772,7 +1773,7 @@
     offsetX=offsetY=0;if(shake>0){if(settings.screenShake){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;}shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawCardCast(s);drawPatternCue(s);drawShots(s);drawDrifts();drawInks();drawParticles();drawFlashes();drawItems(s);if(Spirit)Spirit.drawWorld(ctx,s,Arcade,Ink,mode==='playing',{quiet:!!toast});drawLasers(s);drawFigures(s);drawRipples(s);drawHeroLight(s);drawBullets(s);drawLaserCues(s);drawNudgeCue(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink)){drawPlayer(s);drawHitbox(s);}if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();drawTopShade();drawVeil(s);if(Cues)Cues.drawUnder(ctx,s,Arcade,Ink);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawCardCast(s);drawPatternCue(s);drawShots(s);drawDrifts();drawInks();drawParticles();drawFlashes();drawItems(s);if(Spirit)Spirit.drawWorld(ctx,s,Arcade,Ink,mode==='playing',{quiet:!!toast});if(Cues)Cues.drawWorld(ctx,s,Arcade,Ink);drawLasers(s);drawFigures(s);drawRipples(s);drawHeroLight(s);drawBullets(s);drawLaserCues(s);if(Cues)Cues.drawOver(ctx,s,Arcade,Ink);drawNudgeCue(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink)){drawPlayer(s);drawHitbox(s);}if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);
     // 스펠 선언 연출(사용자 11-18 "패턴·공격 미장센 강화"): 가장자리부터 먹이 번져 화면이 잠깐 조여졌다가 걷힌다. 보스에 시선이 모였다가 탄이 펼쳐진다(탄·영웅은 이 위에 그대로 읽힌다).
     if(spellDim>0&&Ink&&s.boss&&s.boss.present){var sd=spellDim,sx0=finite(s.boss.x,W/2),sy0=finite(s.boss.y,H/3),sg=ctx.createRadialGradient(sx0,sy0,H*.22,sx0,sy0,H*.85);if(Ink.raw)Ink.raw(1);sg.addColorStop(0,'rgba(24,20,16,0)');sg.addColorStop(.55,'rgba(24,20,16,'+(sd*.2)+')');sg.addColorStop(1,'rgba(24,20,16,'+(sd*.68)+')');ctx.fillStyle=sg;ctx.fillRect(0,0,W,H);if(Ink.raw)Ink.raw(-1);spellDim=Math.max(0,spellDim-Math.min(.05,elapsed)/1.6);}
@@ -1951,7 +1952,7 @@
     lastRun=run;oneCreditEligible=run.stage===0&&!run.bossOnly&&!Number.isInteger(run.segment)&&!run.carry&&!run.practice&&!quiet&&!devMode;
     var options={entranceAll:true,difficulty:difficulty,seed:(Date.now()^Math.floor(performance.now()*1000))>>>0,stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,growth:true,pacing:!quiet,rhythm:!quiet}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
     if(Number.isInteger(run.segment))options.segment=run.segment;if(grown&&(grown.exp||grown.fills))options.grown={exp:grown.exp|0,fills:grown.fills|0};
-    state=Arcade.createRun(options);heroOpacity=1;if(Spirit)Spirit.reset();
+    state=Arcade.createRun(options);heroOpacity=1;if(Spirit)Spirit.reset();if(Cues)Cues.reset();
     if(isSeoha(state.hero))loadImage('hero-'+state.hero);
     if(!run.bossOnly&&!quiet){journeyHero=run.hero;try{global.localStorage.setItem(JOURNEY_HERO_KEY,journeyHero);}catch(e){}}
     if(run.carry){state.hits+=run.carry.hits|0;state.bombsUsed+=run.carry.bombs|0;} // 중간 저장에서 이어 하면 앞 구간의 피격·폭탄도 별에 반영

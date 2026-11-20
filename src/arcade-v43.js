@@ -312,7 +312,7 @@
     for(var q=0;q<s.figures.length;q++)if(s.figures[q].sigil)return; // 큰 육망성이 떠 있는 동안 다른 광선은 내지 않는다: 사용자 11-15 "이상한레이져 생성하지말고", 심사 6.50(육망성 선과 방사 광선이 한 화면에서 겹침)
     var wd=o.width||18;if(s.entranceAll&&!o.solid&&wd<BEAM_MIN)wd=BEAM_MIN; // 사용자 11-19 "빨간색선처럼 맵끝에서 끝으로 레이져가 굵게": 실제 게임의 가는 광선은 굵게
     s.lasers.push({x:x,y:y,angle:angle,width:wd*s.rules.beam,warn:Math.round((o.warn||60)*s.rules.warn),active:o.active||60,
-      color:o.color||0,spin:o.spin||0,follow:!!o.follow,burst:!!o.burst,age:0,grazed:false,full:!!s.entranceAll,solid:!!o.solid,keep:!!o.keep,sq:!!o.sq}); // 실제 게임의 광선은 모두 맵 끝에서 끝까지(사용자 11-19 "모든레이저는 맵끝과 끝이닿는레이져로"): 시작점을 지나는 온 줄
+      color:o.color||0,spin:o.spin||0,follow:!!o.follow,burst:!!o.burst,age:0,grazed:false,full:!!s.entranceAll,solid:!!o.solid,keep:!!o.keep,sq:!!o.sq});if(o.cue)s.lasers[s.lasers.length-1].cue=o.cue; // cue: 화면 연출 꼬리표(뿌리 'root'·빗장 'bolt', src/arcade-cues-v43.js). 판정과 무관 // 실제 게임의 광선은 모두 맵 끝에서 끝까지(사용자 11-19 "모든레이저는 맵끝과 끝이닿는레이져로"): 시작점을 지나는 온 줄
     if(!s.warned){s.warned=true;note(s,'laserWarn');}
   }
   var BEAM_MIN=20,FAN_APEX=-90,FAN_W=24;
@@ -1099,6 +1099,7 @@
         if(m.y<m.stopY)m.y+=2.2;
         inRange=m.y>=m.stopY-1&&m.every;
         if(!formation&&inRange&&m.age>=m.first+60&&(m.age-m.first-60)%m.every===0){MOB_FIRE[m.fire](s,m);m.shots++;}
+        if(!formation&&inRange&&m.age+MOB_CUE_LEAD>=m.first+60&&(m.age+MOB_CUE_LEAD-m.first-60)%m.every===0){m.cueAt=s.tick+MOB_CUE_LEAD;m.cueLead=MOB_CUE_LEAD;}
       }else{
         // 진입은 대본 속도 그대로. 플레이어가 겨눌 수 있는 상단을 지날 때만 진행 속도를 늦춘다.
         var engage=formation&&!m.rise&&m.baseX>=0&&m.baseX<=W&&m.y>=24&&m.y<300;
@@ -1110,6 +1111,7 @@
         if(!formation){
           if(m.next===undefined)m.next=m.first;
           if(inRange&&m.age>=m.next){MOB_FIRE[m.fire](s,m);m.shots++;m.next=m.age+refireEvery(s,m.every);}
+          if(inRange&&m.next-m.age===MOB_CUE_LEAD){m.cueAt=s.tick+MOB_CUE_LEAD;m.cueLead=MOB_CUE_LEAD;}
           else if(m.age>=m.next&&m.y<=0)m.next=m.age+1;
         }
         if(pastMobExit(m))s.mobs.splice(i,1);
@@ -1119,12 +1121,25 @@
       var side=m.x<W/2?0:1,other=shooters[side];
       if(m.age>=m.next&&(!other||m.age-m.next>other.age-other.next))shooters[side]=m;
     }
-    if(!shooters)return;
+    if(!shooters){if(slot>=0)cueWaveShooters(s,beat);return;}
     // 왼쪽과 오른쪽이 한 번씩 답하고 세 번째 박에서만 멀리 떨어진 두 자리가 함께 쏜다.
     // 남은 세 박은 편대 전체가 쉰다. 각 편에서는 가장 오래 기다린 몹의 원래 공격을 사용한다.
     var first=shooters[slot%2]||shooters[1-slot%2];
     if(first)fireWaveMob(s,first);
     if(slot===2&&shooters[0]&&shooters[1]&&shooters[1].x-shooters[0].x>=W/3&&s.n<WAVE_CEIL[s.difficulty==='gentle'?0:2])fireWaveMob(s,shooters[1]);
+    cueWaveShooters(s,beat); // 이번 박을 쏜 뒤의 상태로 다음 박에 쏠 몹을 고른다(한 박 앞 예고)
+  }
+  /* 쏘기 예고(연출 제안 11-20 "편대에서 곧 쏠 적이 먼저 몸을 틀고 총구에 먹을 맺는다"): 편대는 박마다 쏜 뒤 다음 박(한 박 = 9~13틱 앞)에 쏠 몹을, 홀로 쏘는 몹은 MOB_CUE_LEAD틱 앞서 같은 규칙으로 골라 m.cueAt·m.cueLead만 적는다.
+     판정·발사·난수는 건드리지 않는다(화면만 읽는다). 박 사이에 새로 들어온 몹이 대신 쏘면 예고 없이 쏠 수 있다(드묾). */
+  var MOB_CUE_LEAD=18;
+  function cueWaveShooters(s,beat){
+    var slot=((s.segTick+beat)/beat)%6;if(slot>=3)return;var pick=[null,null],L=beat;
+    for(var i=0;i<s.mobs.length;i++){var m=s.mobs[i];if(m.retreat||m.x<0||m.x>W)continue;
+      var inRange=m.elite?m.y>=m.stopY-1&&m.every:(m.y<300||m.rise&&m.y<H-30&&Math.abs(m.x-s.player.x)>40)&&m.y>0;if(!inRange)continue;
+      var nx=m.next===undefined?m.first+(m.elite?60:0):m.next,side=m.x<W/2?0:1,o=pick[side];
+      if(m.age+L>=nx&&(!o||m.age-nx>o.age-o.nx))pick[side]={m:m,age:m.age,nx:nx};}
+    var first=pick[slot%2]||pick[1-slot%2];if(first){first.m.cueAt=s.tick+L;first.m.cueLead=L;}
+    if(slot===2&&pick[0]&&pick[1]&&pick[1].m.x-pick[0].m.x>=W/3){pick[1].m.cueAt=s.tick+L;pick[1].m.cueLead=L;}
   }
   // 유도탄이 따라갈 가로 좌표: 보스전이면 보스, 아니면 가장 가까운 몹.
   function homingX(s){
@@ -2096,7 +2111,7 @@
     function totalStars(p){var n=0;Object.keys(p.stars).forEach(function(k){n+=p.stars[k];});return n;}
     return {fresh:fresh,sanitize:sanitize,record:record,unlocked:unlocked,canPlay:canPlay,resume:resume,totalStars:totalStars};
   })();
-  var api={revision:43,spellBonus:spellBonus,spellBonusBase:spellBonusBase,pointValue:pointValue,heartWorth:heartWorth,clearBonus:clearBonus,LIFE_PIECES:LIFE_PIECES,SPELL_DECAY_FROM:SPELL_DECAY_FROM,SPELL_DECAY_OVER:SPELL_DECAY_OVER,POINT_BASE:POINT_BASE,POINT_MAX:POINT_MAX,CALM_SOFT:CALM_SOFT,composeLasers:composeLasers,beamFor:beam,LADDER_N:LADDER_N,SWEEP_N:SWEEP_N,CARD_ENDING_MAX:CARD_ENDING_MAX,CARD_MIN:CARD_MIN,DESCEND_HOLD:DESCEND_HOLD,LIVE_FAST:LIVE_FAST,BEAM_MIN:BEAM_MIN,FAN_APEX:FAN_APEX,CALM_BELOW:CALM_BELOW,CALM_LASER_EVERY:CALM_LASER_EVERY,LIVE_TABLE:LIVE_TABLE,COMPACT_DENSITY:COMPACT_DENSITY,CARD_BREAK_PAUSE:CARD_BREAK_PAUSE,bossStays:bossStays,MOB_BELOW_SPEED:MOB_BELOW_SPEED,BOSS_REST:BOSS_REST,BOSS_SWAY:BOSS_SWAY,WALL_KICK_Y:WALL_KICK_Y,CARD_DOWN_MAX:CARD_DOWN_MAX,EXIT_TURN:EXIT_TURN,WAVE_LINGER:WAVE_LINGER,LAYER_CAP:LAYER_CAP,layersBut:layersBut,phraseLen:phraseLen,flushBullets:flushBullets,heroProfile:heroProfile,bombName:bombName,isCinematicBoss:isCinematicBoss,nextSegmentIndex:nextSegmentIndex,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
+  var api={revision:43,POWER_SHOTS:POWER_SHOTS,MOB_CUE_LEAD:MOB_CUE_LEAD,spellBonus:spellBonus,spellBonusBase:spellBonusBase,pointValue:pointValue,heartWorth:heartWorth,clearBonus:clearBonus,LIFE_PIECES:LIFE_PIECES,SPELL_DECAY_FROM:SPELL_DECAY_FROM,SPELL_DECAY_OVER:SPELL_DECAY_OVER,POINT_BASE:POINT_BASE,POINT_MAX:POINT_MAX,CALM_SOFT:CALM_SOFT,composeLasers:composeLasers,beamFor:beam,LADDER_N:LADDER_N,SWEEP_N:SWEEP_N,CARD_ENDING_MAX:CARD_ENDING_MAX,CARD_MIN:CARD_MIN,DESCEND_HOLD:DESCEND_HOLD,LIVE_FAST:LIVE_FAST,BEAM_MIN:BEAM_MIN,FAN_APEX:FAN_APEX,CALM_BELOW:CALM_BELOW,CALM_LASER_EVERY:CALM_LASER_EVERY,LIVE_TABLE:LIVE_TABLE,COMPACT_DENSITY:COMPACT_DENSITY,CARD_BREAK_PAUSE:CARD_BREAK_PAUSE,bossStays:bossStays,MOB_BELOW_SPEED:MOB_BELOW_SPEED,BOSS_REST:BOSS_REST,BOSS_SWAY:BOSS_SWAY,WALL_KICK_Y:WALL_KICK_Y,CARD_DOWN_MAX:CARD_DOWN_MAX,EXIT_TURN:EXIT_TURN,WAVE_LINGER:WAVE_LINGER,LAYER_CAP:LAYER_CAP,layersBut:layersBut,phraseLen:phraseLen,flushBullets:flushBullets,heroProfile:heroProfile,bombName:bombName,isCinematicBoss:isCinematicBoss,nextSegmentIndex:nextSegmentIndex,Progress:Progress,SCENES:SCENES,WIDTH:W,HEIGHT:H,CAP:CAP,COMPACT_CAP:COMPACT_CAP,LASER_CAP:LASER_CAP,MOB_CAP:MOB_CAP,ITEM_CAP:ITEM_CAP,GOLDEN_ANGLE:GOLDEN_ANGLE,GAUGE_FULL:GAUGE_FULL,AUTO_COLLECT_Y:AUTO_COLLECT_Y,
     PACING:PACING,stageTargetSeconds:stageTargetSeconds,plannedSegments:plannedSegments,pacingReport:pacingReport,waveDuration:waveDuration,cardDuration:cardDuration,cardHp:cardHp,SEGMENTS:SEGMENTS,EMITTER_KINDS:EMITTER_KINDS,emit:emit,refireEvery:refireEvery,MOB_DROP_EVERY:MOB_DROP_EVERY,ELITE_DROPS:ELITE_DROPS,CARD_DROPS:CARD_DROPS,MODE_REAIM:MODE_REAIM,MODE_TURN:MODE_TURN,MODE_SPLIT:MODE_SPLIT,MODE_BRANCH:MODE_BRANCH,STAGES:STAGES,ACTORS:ACTORS,MOBS:MOBS,PROPS:PROPS,PALETTE:PALETTE,CARD_TOTAL:CARD_TOTAL,DIFFICULTY:DIFFICULTY,PROP_LONG:PROP_LONG,propHitPoints:propHitPoints,propRenderSpan:propRenderSpan,bulletRenderSpan:bulletRenderSpan,BULLET_BREAK_MIN_SPAN:BULLET_BREAK_MIN_SPAN,isBulletBreakable:isBulletBreakable,ORB_HP:ORB_HP,ORB_BREAK_EVERY:ORB_BREAK_EVERY,ORB_FRAGMENT_COUNT:ORB_FRAGMENT_COUNT,ORB_FRAGMENT_GRACE:ORB_FRAGMENT_GRACE,ORB_FRAGMENT_SPEED:ORB_FRAGMENT_SPEED,CURVE_START:CURVE_START,CURVE_END:CURVE_END,applyCurve:applyCurve,SIZE_RADIUS:SIZE_RADIUS,SHAPE_PROP:SHAPE_PROP,
     BOSS_ENTRANCE_GRACE:BOSS_ENTRANCE_GRACE,BOSS_ENTRANCE_SPEECH:BOSS_ENTRANCE_SPEECH,BOSS_CLEAR_TICKS:BOSS_CLEAR_TICKS,prepareBossEntrance:prepareBossEntrance,phaseOf:phaseOf,phaseKind:phaseKind,entrancePhase:entrancePhase,skipEntrance:skipEntrance,ENTRANCE_CUTIN:ENTRANCE_CUTIN,BLOOM_TICKS:BLOOM_TICKS,HAND_WARN:HAND_WARN,SIGNATURES:SIGNATURES,GLYPHS:GLYPHS,BOSS_FORMS:BOSS_FORMS,FORM_BASE:FORM_BASE,bossArtOf:bossArtOf,BOSS_SHOTS:BOSS_SHOTS,SHOT_KINDS:SHOT_KINDS,bossShotOf:bossShotOf,figureSegments:figureSegments,figurePhase:figurePhase,FIGURE_ON_TICKS:FIGURE_ON_TICKS,FIGURE_OFF_TICKS:FIGURE_OFF_TICKS,FIGURE_CHARGE_TICKS:FIGURE_CHARGE_TICKS,RUNE_AT:RUNE_AT,RISER_HP:RISER_HP,RISER_SCORE:RISER_SCORE,riserHp:riserHp,shotHitsRiser:shotHitsRiser,PIECE_HP:PIECE_HP,PIECE_SCORE:PIECE_SCORE,BURST_TICKS:BURST_TICKS,pieceHp:pieceHp,RUNE_TIMES:RUNE_TIMES,RUNE_RADII:RUNE_RADII,SIGIL_EVERY:SIGIL_EVERY,SIGIL_AT:SIGIL_AT,RUNE_WARN:RUNE_WARN,RUNE_ACTIVE:RUNE_ACTIVE,RUNE_OUTER:RUNE_OUTER,RUNE_GROW:RUNE_GROW,RUNE_INNER:RUNE_INNER,WIPE_COOLDOWN:WIPE_COOLDOWN,BEAM_FADE:BEAM_FADE,BEAM_HIT:BEAM_HIT,Shapes:Shapes,createRun:createRun,step:step,floorPlan:floorPlan,BOSS_DESCEND:BOSS_DESCEND,SP_START:SP_START,spStart:function(s){return s.sp?s.sp.start:SP_START;},SP_CYCLE:SP_CYCLE,SP_LEAD:SP_LEAD,SP_BEAT:SP_BEAT,SP_LAYBACK:SP_LAYBACK,SP_LEN:SP_LEN,SP_KINDS:SP_KINDS,SP_ORDER:SP_ORDER,spitMotif:spitMotif,SPIT_FORM:SPIT_FORM,SP_INFO:SP_INFO,CAMP_HALF:CAMP_HALF,CAMP_NEED:CAMP_NEED,spWindow:spWindow,MOTIFS:MOTIFS,MOTIF_MOVING:MOTIF_MOVING,MOTIF_WEST:MOTIF_WEST,MOTIF_STORY:MOTIF_STORY,STAGE_STORY:STAGE_STORY,stageStory:stageStory,stageMotifs:stageMotifs,motifPlan:motifPlan,riserHits:riserHits,RISER_WARN:RISER_WARN,RISER_FADE:RISER_FADE,floorTop:floorTop,FLOOR_KINDS:FLOOR_KINDS,FLOOR_COLS:FLOOR_COLS,FLOOR_CELL:FLOOR_CELL,FLOOR_CYCLE:FLOOR_CYCLE,FLOOR_ON:FLOOR_ON,FLOOR_LINE_Y:FLOOR_LINE_Y,timeLeft:timeLeft,bulletRadius:bulletRadius,dropItem:dropItem,
     POWER_EXP:POWER_EXP,BOMB_FILLS:BOMB_FILLS,POWER_SHOTS:POWER_SHOTS,POWER_DPS:POWER_DPS,SHOT_DAMAGE:SHOT_DAMAGE,SLOW_FIELD:SLOW_FIELD,DESCEND_AGE:DESCEND_AGE,DESCEND_Y:DESCEND_Y,FOCUS_SKILL_CHANCE:FOCUS_SKILL_CHANCE,FOCUS_SKILL_GAP:FOCUS_SKILL_GAP,SWORD_DELAY:SWORD_DELAY,SWORD_POWER:SWORD_POWER,REVERSAL_POWER:REVERSAL_POWER,FOCUS_SLOW:FOCUS_SLOW,BOMB_POWER:BOMB_POWER,BOMB_NAMES:BOMB_NAMES,BOMB_PULSES:BOMB_PULSES,BOMB_PULSE_START:BOMB_PULSE_START,BOMB_PULSE_EVERY:BOMB_PULSE_EVERY,DISTORT_CHANCE:DISTORT_CHANCE,DISTORT_TICKS:DISTORT_TICKS,distortChance:distortChance,HASTE_TICKS:HASTE_TICKS,MAX_LEVEL:MAX_LEVEL,clockState:clockState,slowField:slowField,gainExp:gainExp};
