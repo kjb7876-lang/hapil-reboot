@@ -44,6 +44,9 @@
     hwandoThree:{gap:2000,level:.3,rank:4},
     brushStroke:{gap:400,level:.2,rank:2},
     // 영웅 공격 손맛(사용자 11-20 "기억사수 모든공격 롤제리 느낌", "서하 … 시간폭탄"): 짧은 고역 지지직·작은 째깍·낮은 터짐. 배경음보다 크되 적 위험음보다 작게, 귀 아픈 고음은 대역 필터로 깎는다.
+    // 적중음(사용자 11-20): 빗소리 조각을 무작위로 번갈아 튼다. 오래 들어도 피곤하지 않게 간격을 두고 음량은 낮게(배경음보다 크되 적 위험음보다 작게).
+    rainHitMemory:{gap:60,level:.17,rank:0},
+    rainHitSeoha:{gap:75,level:.16,rank:0},
     sparkFire:{gap:110,level:.09,rank:1},
     sparkHit:{gap:90,level:.11,rank:1},
     tbStick:{gap:150,level:.12,rank:1},
@@ -176,6 +179,22 @@
       envelope(g,at,attack||.003,length,level);s.connect(f);f.connect(g);g.connect(dest);finish(s,at,length,[f,g],dest);
     }
     function bell(dest,base,length,level,delay){tone(dest,'sine',base,base,length,level,delay,.002);tone(dest,'sine',base*2.76,base*2.76,length*.55,level*.35,delay,.002);tone(dest,'sine',base*5.4,base*5.4,length*.3,level*.16,delay,.002);}
+    // 빗방울 조각 한 번: 직전과 다른 조각, 음높이 ±6%·음량 ±15% 변화. 조각은 컨텍스트마다 한 번만 버퍼로 만든다.
+    var rainBuf=Object.create(null),rainLast=Object.create(null),rainSeed=0x1f3d5b79;
+    function rainHit(d,l,name,c){
+      var bank=root.HapilRainHit;if(!bank||!ctx)return;var b=rainBuf[name];
+      if(!b){var dec=bank.decode(name);if(!dec)return;b=rainBuf[name]={dec:dec,buf:ctx.createBuffer(1,dec.samples.length,dec.rate)};b.buf.getChannelData(0).set(dec.samples);}
+      rainSeed^=rainSeed<<13;rainSeed^=rainSeed>>>17;rainSeed^=rainSeed<<5;var r=(rainSeed>>>0)/4294967296;
+      var n=b.dec.count,k=Math.floor(r*n),prev=rainLast[name];if(k===prev)k=(k+1)%n;rainLast[name]=k;
+      rainSeed^=rainSeed<<13;rainSeed^=rainSeed>>>17;rainSeed^=rainSeed<<5;var r2=(rainSeed>>>0)/4294967296;
+      var at=ctx.currentTime,src=ctx.createBufferSource(),g=ctx.createGain(),len=b.dec.len/b.dec.rate;
+      src.buffer=b.buf;src.playbackRate.value=.94+r2*.12;g.gain.value=l*(.85+((rainSeed>>>8)&255)/255*.3)*((c&&c.power)||1);
+      src.connect(g);g.connect(d);
+      var done=false,entry={source:src,dest:d,finish:cleanup};
+      function cleanup(){if(done)return;done=true;var i=active.indexOf(entry);if(i>=0)active.splice(i,1);voices=Math.max(0,voices-1);disconnect(src);disconnect(g);if(d!==master&&!active.some(function(v){return v.dest===d;}))disconnect(d);}
+      voices++;active.push(entry);src.onended=cleanup;
+      try{src.start(at,k*b.dec.len/b.dec.rate,len/src.playbackRate.value+.01);}catch(e){cleanup();throw e;}
+    }
     var jitter=0;function vary(){jitter=(jitter+1)%5;return 1+(jitter-2)*.035;}
 
     var VOICE={
@@ -232,6 +251,8 @@
       hwandoThree:function(d,l){[0,.42,.84].forEach(function(at,i){bell(d,i===2?659:587,1.1-i*.1,l*(i===2?1:.8),at);tone(d,'sine',1760,1760,.5,l*.12,at+.01,.002);});},
       // 스펠 첫 획: 붓이 한지를 쓸고 지나가는 짧은 쓸림.
       brushStroke:function(d,l){noise(d,'bandpass',1500,500,1.6,.26,l,0,.04);noise(d,'highpass',5000,3000,.7,.12,l*.35,0,.01);},
+      rainHitMemory:function(d,l,c){rainHit(d,l,'memory',c);},
+      rainHitSeoha:function(d,l,c){rainHit(d,l,'seoha',c);},
       sparkFire:function(d,l){var v=vary();noise(d,'bandpass',3200*v,2400*v,4,.04,l,0,.002);noise(d,'bandpass',2200*v,1600,5,.03,l*.6,.035,.002);tone(d,'square',740*v,520*v,.03,l*.18);},
       sparkHit:function(d,l){var v=vary();noise(d,'bandpass',2600*v,1500,3,.05,l,0,.001);noise(d,'bandpass',3400*v,2000,4,.025,l*.5,.04,.001);tone(d,'triangle',300*v,180,.06,l*.4);},
       tbStick:function(d,l){clockTick(d,l,1.1);},
@@ -249,7 +270,7 @@
       var now=clock();if(now-(last[cue.name]===undefined?-1e9:last[cue.name])<spec.gap){skipped++;return false;}
       if(voices>=MAX_VOICES&&spec.rank<4){skipped++;return false;}
       last[cue.name]=now;
-      try{voice(out(cue.pan),spec.level,cue);played++;return true;}catch(e){return false;}
+      try{voice(out(cue.pan),spec.level,cue);played++;return true;}catch(e){if(root.__AUDIO_DEBUG)console.error(e);return false;}
     }
     function observe(world,events){
       var cues=collect(state,world,events);if(!enabled||!ctx)return cues;

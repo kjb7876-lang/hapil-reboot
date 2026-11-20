@@ -1434,7 +1434,7 @@
     if(kind===1){var o=foeNear(s,foe.x,foe.y,[foe],CHARGE_REACH);if(o){share=1-CHARGE_ARC;shotMark(s,foe.x,foe.y,3,o.x,o.y);hitFoe(s,o,dmg*CHARGE_ARC);}note(s,'sparkHit');}
     shotMark(s,x,y,kind===1?1:0);
     if(foe===b){b.hp-=dmg*share;s.score+=2;if(s.tick-b.hitTick>=5){b.hitTick=s.tick;note(s,b.hp/b.maxHp<=.2?'bossHitLow':'bossHit');}}
-    else{foe.hp-=dmg*share;foe.hitTick=s.tick;if(foe.hp<=1e-6){var k=s.mobs.indexOf(foe);if(k>=0)killMob(s,k);}}
+    else{foe.hp-=dmg*share;foe.hitTick=s.tick;if(s.tick-(s.mobHitTick===undefined?-99:s.mobHitTick)>=3){s.mobHitTick=s.tick;note(s,'mobHit');}if(foe.hp<=1e-6){var k=s.mobs.indexOf(foe);if(k>=0)killMob(s,k);}}
   }
   function foeAlive(s,f){return f===s.boss?s.stage==='card'&&f.present&&!f.leaving&&f.hp>0:f.hp>1e-6&&s.mobs.indexOf(f)>=0;}
   function updateTimeBombs(s){
