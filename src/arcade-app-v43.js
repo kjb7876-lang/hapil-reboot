@@ -575,8 +575,8 @@
     hi.className='hudx'+(hudOut?' '+hudOut:'');lo.className=hi.className;hudText={};
     var px=function(v){return Math.round(v)+'px';};
     if(hudOut==='below'){
-      hi.style.cssText='left:'+px(r.left)+';width:'+px(r.width)+';top:'+px(safeTop)+';height:'+px(topRoom)+';justify-content:flex-start;padding-left:64px';
-      lo.style.cssText='left:'+px(r.left)+';width:'+px(r.width)+';top:'+px(r.bottom)+';height:'+px(bottomRoom)+';padding:0 86px';
+      hi.style.cssText='left:'+px(r.left)+';width:'+px(r.width)+';top:'+px(safeTop)+';height:'+px(topRoom)+';justify-content:space-between;padding:0 12px 0 64px';
+      lo.style.cssText='left:'+px(r.left)+';width:'+px(r.width)+';top:'+px(r.bottom)+';height:'+px(bottomRoom)+';padding:0 '+px(10+(pads[1]?pads[1].getBoundingClientRect().width||80:80)+10)+' 0 '+px(10+(pads[0]?pads[0].getBoundingClientRect().width||104:104)+10)+';justify-content:center';
       for(i=0;i<2;i++)if(pads[i]){pads[i].style.position='fixed';pads[i].style.height='';var natH=parseFloat(global.getComputedStyle(pads[i]).height)||56,padH=Math.max(44,Math.min(natH,bottomRoom-4));if(padH<natH)pads[i].style.height=px(padH);pads[i].style.top=px(r.bottom+(bottomRoom-padH)/2);pads[i].style.bottom='auto';pads[i].style.left=i?'auto':px(r.left+10);pads[i].style.right=i?px(vw-r.right+10):'auto';pads[i].style.visibility='';}
       if(pause){pause.style.position='fixed';pause.style.top=px(safeTop+Math.max(4,(topRoom-44)/2));pause.style.left=px(r.left+10);}
       canvas.style.boxShadow='';
@@ -596,10 +596,19 @@
     hi.hidden=lo.hidden=!(hudOut&&mode==='playing');
   }
   function setHud(el,key,html){if(hudText[key]!==html){hudText[key]=html;el.innerHTML=html;}}
+  var badgeKey='';
+  function bombBadge(s){ // 폭탄 버튼 모서리에 남은 개수: 누르는 자리에서 바로 읽힌다(모바일 HUD 글씨가 작아 안 보인다는 지적, 사용자 11-21)
+    var key=s.bombs+'/'+(Arcade.bombCap?Arcade.bombCap(s):0);if(key===badgeKey)return;badgeKey=key;
+    var btn=$('arcade-bomb');if(!btn||!btn.querySelector||!document.createElement)return;var el=btn.querySelector('.bcnt');if(!el){el=document.createElement('b');el.className='bcnt';el.setAttribute('aria-hidden','true');btn.appendChild(el);}
+    el.textContent=String(s.bombs);if(btn.classList)btn.classList.toggle('empty',s.bombs<=0);if(btn.setAttribute)btn.setAttribute('aria-label',T('bomb')+' '+s.bombs);
+  }
   function domHud(s){
     var hi=$('arcade-hud-high'),lo=$('arcade-hud-low');if(!hi||!lo)return;hi.hidden=lo.hidden=mode!=='playing';
     var b=s.boss,stage=Arcade.STAGES[s.stageIndex],i,hearts='',bombs='',color=themeColor(s);
-    for(i=0;i<s.player.maxHp;i++)hearts+=i<s.player.hp?'◆':'◇';for(i=0;i<s.bombs;i++)bombs+='✦';var bcap=Arcade.bombCap?Arcade.bombCap(s):0;if(bcap>s.bombs){bombs+='<span class="slot">';for(i=s.bombs;i<bcap;i++)bombs+='✧';bombs+='</span>';} // 빈 자리 ✧: 난이도별 보관 최대치(이지 7·노멀 5·헬 3)를 보여 준다
+    var inl=hudOut!=='side',bcap=Arcade.bombCap?Arcade.bombCap(s):0;
+    for(i=0;i<s.player.maxHp;i++)hearts+=i<s.player.hp?'♥':'♡'; // 목숨=붉은 하트, 필살=초록 동그라미 구슬+숫자: 모양·색·이름표를 모두 달리해 헷갈리지 않게(사용자 11-21)
+    for(i=0;i<s.bombs;i++)bombs+='●';if(bcap>s.bombs){bombs+='<span class="slot">';for(i=s.bombs;i<bcap;i++)bombs+='○';bombs+='</span>';} // 빈 자리 ○: 난이도별 보관 최대치(이지 7·노멀 5·헬 3)
+    if(inl){hearts='<span class="tag">'+T('lifeLabel')+'</span>'+hearts;bombs='<span class="tag">'+T('bombLabel')+' ×'+s.bombs+'</span>'+bombs;}else bombs=bombs&&'<span class="num">×'+s.bombs+'</span> '+bombs;
     var g=Math.round(100*Math.max(0,Math.min(1,s.gauge/Arcade.GAUGE_FULL)));
     var name='<div><div class="name" style="color:'+color+'">'+esc(b.present?b.name:stage.name)+'</div><div>'+(s.bossOnly?'보스 체험 · 제'+stage.part+'부':'STAGE '+(s.stageIndex+1)+' / '+Arcade.STAGES.length)+'</div></div>';
     var lb=function(t){return hudOut==='side'?'<div class="lbl">'+t+'</div>':'';}; // PC 패널에는 이름표를 붙인다(심사 7차)
@@ -616,7 +625,7 @@
       var life2='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb(settings.keyBomb===KEY_DEFAULTS.keyBomb?'BOMB [X]':'BOMB ['+keyLabel(settings.keyBomb)+']')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div>'+lvl+'</div><div>'+lb('JOURNEY')+'<div class="progress"><i style="width:'+prog+'%"></i></div>'+route+'<div class="graze">봉인 '+s.captures+' · 조각 '+(s.pieces||0)+'/'+(Arcade.LIFE_PIECES||3)+'</div></div>';
       var keys='<div class="keys">'+lb('CONTROLS')+'<div>이동 ←↑↓→ · WASD</div><div>초능력 '+keyLabel(settings.keyFocus)+' · 폭탄 '+keyLabel(settings.keyBomb)+'</div><div>일시정지 Esc</div></div>';
       setHud(hi,'hi','<div class="stack">'+name+life2+'</div>'+keys);setHud(lo,'lo','<div class="stack">'+score+boss+'</div>'+'<div class="keys">'+lb('DIFFICULTY')+'<div>'+({gentle:'EASY',normal:'NORMAL',hell:'HELL'}[s.difficulty]||'')+'</div></div>');} // 패널 가운데: 왼쪽은 목숨·여정, 오른쪽은 보스 체력·스펠명·보너스(심사 6.46: 가운데가 비었다) // 아래쪽 빈자리: 왼쪽은 조작법, 오른쪽은 지금 스펠 이름(칸 안 이름표가 작아 읽기 어렵다는 지적)
-    else{setHud(hi,'hi',name);setHud(lo,'lo',life+score);}
+    else{setHud(hi,'hi',name+'<div class="lifebox">'+life+'</div>');setHud(lo,'lo',score);} // 목숨·필살은 위쪽 막대 오른쪽으로: 아래는 두 버튼 사이가 좁아 가려지고 글씨가 작았다(사용자 11-21)
   }
   var portraitKey='',portraitUrl='';
   function bossPortrait(actor,color){ // 오른쪽 패널의 보스 초상: 보스·그림 로드 상태가 바뀔 때만 한 번 굽는다(심사 6.60: 패널 가운데가 비었다)
@@ -1880,7 +1889,7 @@
   }
   function drawHud(s){
     var b=s.boss,seg=Arcade.SEGMENTS[s.seg],color=themeColor(s),left=Arcade.timeLeft(s),stage=Arcade.STAGES[s.stageIndex],i;
-    if(hudOut)domHud(s);
+    if(hudOut)domHud(s);bombBadge(s);
     var plate=ctx.createLinearGradient(0,0,230,0);plate.addColorStop(0,'rgba(4,4,12,.78)');plate.addColorStop(.7,'rgba(4,4,12,.6)');plate.addColorStop(1,'rgba(4,4,12,0)');if(!hudOut){ctx.fillStyle=plate;ctx.fillRect(0,15,230,36);} // 글자 바로 뒤에만 깐다. 넓은 띠는 탄 아래(drawTopShade)에 있다.
     ctx.textBaseline='alphabetic';
     if(s.stage==='card'&&seg){
@@ -1898,11 +1907,17 @@
     ctx.textAlign='left';ctx.font='600 12px '+SANS;ctx.fillStyle=color;ctx.fillText(b.present?b.name:stage.name,12,29);
     ctx.font='11px '+SANS;ctx.fillStyle='rgba(255,255,255,.72)';ctx.fillText(s.bossOnly?'보스 체험 · 제'+stage.part+'부':'STAGE '+(s.stageIndex+1)+' / '+Arcade.STAGES.length,12,45);
     // 목숨 · 폭탄 · 스침 게이지(왼쪽 아래 저속 버튼 위), 점수(오른쪽 아래 폭탄 버튼 위)
-    ctx.font='14px '+SANS;ctx.fillStyle='#ff6a8a';var hearts='';for(i=0;i<s.player.maxHp;i++)hearts+=i<s.player.hp?'◆':'◇';ctx.fillText(hearts,12,H-96);
-    ctx.fillStyle='#7dffb0';var bombs='';for(i=0;i<s.bombs;i++)bombs+='✦';ctx.fillText(bombs,12,H-78);
-    ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.8)';ctx.fillText('공격 Lv.'+(s.power||1)+' · 필살 Lv.'+(s.bombLevel||1),12,H-114); // 목숨 위(저속 버튼과 겹쳐 가려지던 자리 H-60에서 옮김, 11-16 실검증)ctx.font='14px '+SANS;
-    if(s.union)ctx.fillText(T('unionName'),12,H-130);
-    ctx.fillStyle='rgba(255,255,255,.18)';ctx.fillRect(12,H-72,64,3);ctx.fillStyle='#7dffb0';ctx.fillRect(12,H-72,64*Math.max(0,Math.min(1,s.gauge/Arcade.GAUGE_FULL)),3);
+    // 왼쪽 아래(초능력 버튼 위): 목숨 줄·필살 줄을 이름표·모양·색으로 갈라 쌓는다
+    var lifeY=H-110,bombY=H-130,bcapC=Arcade.bombCap?Arcade.bombCap(s):s.bombs;ctx.textAlign='left';
+    ctx.font='600 11px '+SANS;ctx.fillStyle='rgba(255,255,255,.92)';ctx.fillText(T('lifeLabel'),12,lifeY);
+    ctx.font='15px '+SANS;ctx.fillStyle='#ff6a8a';var hearts='';for(i=0;i<s.player.maxHp;i++)hearts+=i<s.player.hp?'♥':'♡';ctx.fillText(hearts,44,lifeY+1);
+    var chip=T('bombLabel')+' ×'+s.bombs;ctx.font='700 11px '+SANS;var cw=Math.ceil(ctx.measureText(chip).width)+12;
+    ctx.fillStyle='rgba(20,90,60,.88)';ctx.strokeStyle='#7dffb0';ctx.lineWidth=1;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(12,bombY-12,cw,16,8);else ctx.rect(12,bombY-12,cw,16);ctx.fill();ctx.stroke();
+    ctx.fillStyle='#eafff3';ctx.fillText(chip,18,bombY);
+    for(i=0;i<bcapC;i++){var px=12+cw+10+i*13;ctx.beginPath();ctx.arc(px,bombY-4,4.5,0,6.2832);if(i<s.bombs){ctx.fillStyle='#7dffb0';ctx.fill();}else{ctx.strokeStyle='rgba(125,255,176,.5)';ctx.stroke();}}
+    ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.8)';ctx.fillText('공격 Lv.'+(s.power||1)+' · 필살 Lv.'+(s.bombLevel||1),12,H-158);
+    if(s.union)ctx.fillText(T('unionName'),12,H-172);
+    ctx.fillStyle='rgba(255,255,255,.18)';ctx.fillRect(12,H-148,64,3);ctx.fillStyle='#7dffb0';ctx.fillRect(12,H-148,64*Math.max(0,Math.min(1,s.gauge/Arcade.GAUGE_FULL)),3);
     ctx.textAlign='right';ctx.font='600 14px '+SANS;ctx.fillStyle='#ffffff';ctx.fillText(pad(s.score),W-12,H-78);
     ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.7)';ctx.fillText('GRAZE '+s.graze+(Arcade.pointValue?' · 하트값 '+Arcade.pointValue(s):''),W-12,H-94);
     }
