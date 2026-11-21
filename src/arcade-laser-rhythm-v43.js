@@ -30,19 +30,19 @@
     if(c.pos===0){m.split=Math.max(2*L,Math.min(4*L,Math.round(c.px/L)*L));m.side=c.px<m.split?0:1;m.k=0;} // 금은 영웅에게 가장 가까운 줄 경계, 첫 음표는 영웅이 선 쪽
     if(m.split===undefined||c.pos%every||m.k>=hits)return;
     var left=(m.side+m.k)%2===0;m.k++;
-    c.lane(left?0:m.split,left?m.split:c.W,c.WB,[10,10,14][c.lvl],{color:left?0:1,tone:left?'k':'t'});
+    c.lane(left?0:m.split,left?m.split:c.W,c.WB,[8,8,10][c.lvl],{color:left?0:1,tone:left?'k':'t'});
   };
   M.jangdan=function(c){var p=JANGDAN[c.lvl],h=c.W/2,o=c.W/3;
     for(var e=0;e<2;e++){var ch=p[c.pos*2+e],at=c.WB+e*.5;
-      if(ch==='K')c.lane(0,h,at,8,{color:0,tone:'k'});
-      else if(ch==='T')c.lane(h,c.W,at,8,{color:1,tone:'t'});
-      else if(ch==='D'){c.lane(0,o,at,10,{color:0,tone:'d'});c.lane(c.W-o,c.W,at,10,{color:0,tone:'d',mute:1});}}
+      if(ch==='K')c.lane(0,h,at,6,{color:0,tone:'k'});
+      else if(ch==='T')c.lane(h,c.W,at,6,{color:1,tone:'t'});
+      else if(ch==='D'){c.lane(0,o,at,8,{color:0,tone:'d'});c.lane(c.W-o,c.W,at,8,{color:0,tone:'d',mute:1});}}
   };
   M.climb=function(c){var n=[2,3,4][c.lvl],n2=[1,2,3][c.lvl],k;
-    if(c.pos===0)for(k=0;k<n;k++)c.band(c.H-BAND*(k+1),c.H-BAND*k,c.WB+k,(n+1-k)*c.BEAT,{color:k%2,tone:k}); // 아래부터 한 박에 한 줄, 함께 꺼진다. 예고는 처음부터 모두 보인다
-    k=c.pos-(n+1);if(k>=0&&k<n2)c.band(TOP+BAND*k,TOP+BAND*(k+1),c.WB,(n2-k-.5)*c.BEAT,{color:(k+1)%2,tone:4-k}); // 사다리가 꺼지는 박부터 위에서 한 줄씩 내려 민다
+    if(c.pos===0)for(k=0;k<n;k++)c.band(c.H-BAND*(k+1),c.H-BAND*k,c.WB+k,(n+1-k)*c.BEAT-10,{color:k%2,tone:k}); // 아래부터 한 박에 한 줄, 함께 꺼진다. 예고는 처음부터 모두 보인다
+    k=c.pos-(n+1);if(k>=0&&k<n2)c.band(TOP+BAND*k,TOP+BAND*(k+1),c.WB,(n2-k-.5)*c.BEAT-8,{color:(k+1)%2,tone:4-k}); // 사다리가 꺼지는 박부터 위에서 한 줄씩 내려 민다
   };
-  M.slide=function(c){var m=c.mem,L=c.W/LANES,w=c.lvl===0?3:2,sb=c.lvl===0?2:1,S=[2,4,5][c.lvl],i,j;
+  M.slide=function(c){var m=c.mem,L=c.W/LANES,w=3,sb=c.lvl===0?2:1,S=[2,4,5][c.lvl],i,j;
     if(c.pos===0){var hl=Math.max(0,Math.min(LANES-1,Math.floor(c.px/L))),c0=Math.max(0,Math.min(LANES-w,hl-(w>2?1:0))),dir=LANES-w-c0>=c0?1:-1,path=[c0],plan=[];
       for(i=1;i<=S;i++){var nx=path[i-1]+dir;if(nx<0||nx>LANES-w){dir=-dir;nx=path[i-1]+dir;}path.push(nx);}
       for(j=0;j<LANES;j++){var from=-1;for(i=0;i<=S+1;i++){var shut=i<=S&&(j<path[i]||j>=path[i]+w);if(shut&&from<0)from=i;if(!shut&&from>=0){plan.push([from*sb,j,j+1,(i-from)*sb]);from=-1;}}}
@@ -52,16 +52,16 @@
     for(i=0;i<m.plan.length;i++){var q=m.plan[i];if(q[0]===c.pos)c.lane(q[1]*L,q[2]*L,c.WB,q[3]*c.BEAT,{color:q[1]%2,tone:q[1]%5});}
   };
   M.squeeze=function(c){var L=c.W/LANES,B=c.BEAT;
-    if(c.pos===0){c.lane(0,L,c.WB,4*B,{color:0,tone:'d'});c.lane(c.W-L,c.W,c.WB,4*B,{color:0,tone:'d',mute:1});}
-    else if(c.pos===1){c.lane(L,2*L,c.WB,3*B,{color:1,tone:'k'});c.lane(c.W-2*L,c.W-L,c.WB,3*B,{color:1,tone:'t'});}
-    else if(c.pos===(c.lvl===0?6:5))c.lane(2*L,4*L,c.WB,12,{color:0,tone:'d'}); // 벽이 풀린 한 박(이지 두 박) 뒤 가운데
+    if(c.pos===0){c.lane(0,L,c.WB,3.5*B,{color:0,tone:'d'});c.lane(c.W-L,c.W,c.WB,3.5*B,{color:0,tone:'d',mute:1});}
+    else if(c.pos===1){c.lane(L,2*L,c.WB,2.5*B,{color:1,tone:'k'});c.lane(c.W-2*L,c.W-L,c.WB,2.5*B,{color:1,tone:'t'});}
+    else if(c.pos===(c.lvl===0?6:5))c.lane(2*L,4*L,c.WB,12,{color:0,tone:'d'}); // 벽이 풀린 뒤 반 박 더 여유를 두고 가운데를 친다
     else if(c.lvl===2&&c.pos===6){c.lane(0,2*L,c.WB,12,{color:1,tone:'k'});c.lane(4*L,c.W,c.WB,12,{color:1,tone:'t'});}
   };
   M.swing=function(c){var L=c.W/LANES;if(c.pos>5)return;
     var j=ZIG[c.pos];if(c.bar%2)j=LANES-1-j;
-    c.lane(L*j,L*(j+1),c.WB,10,{color:0,tone:j%5});
-    var chase=c.lvl===0?c.pos===2||c.pos===4:c.lvl===1?c.pos%2===1:true;
-    if(chase){var hl=Math.max(0,Math.min(LANES-1,Math.floor(c.px/L)));c.lane(L*hl,L*(hl+1),c.WB+.5,10,{color:1,tone:(hl+2)%5});} // 엇박(반 박 뒤)은 영웅이 선 줄
+    c.lane(L*j,L*(j+1),c.WB,8,{color:0,tone:j%5});
+    var chase=c.lvl===0?c.pos===2||c.pos===4:c.lvl===1?c.pos%2===1:c.pos!==0&&c.pos!==3;
+    if(chase){var hl=Math.max(0,Math.min(LANES-1,Math.floor(c.px/L)));c.lane(L*hl,L*(hl+1),c.WB+.5,7,{color:1,tone:(hl+2)%5});} // 엇박(반 박 뒤)은 영웅이 선 줄
   };
   function play(name,c){var f=M[name];if(!f)return false;f(c);return true;}
 

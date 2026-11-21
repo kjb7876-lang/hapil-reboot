@@ -30,12 +30,12 @@
   // 난이도 설명은 실제 규칙(목숨·폭탄)에서 만든다. 예전 고정 문구(목숨 7·3·1)가 11-14 규칙(9·5·3, 스테이지마다 회복)과 달랐다.
   var NOTES={gentle:'noteGentle',normal:'noteNormal',hell:'noteHell'};
 
-  var images={},loading={},failed={},want={},manifest=null,orbs=[],shotSprite=null,homingSprite=null,circleSprite=null,itemSprites=[],background=null,backgroundStage=-1,loadedStage=-1;
+  var images={},loading={},failed={},want={},manifest=null,orbs=[],shotSprite=null,redShotSprite=null,homingSprite=null,circleSprite=null,itemSprites=[],background=null,backgroundStage=-1,loadedStage=-1;
   var scale=1,lite=false,frameMs=16,framesSeen=0,offsetX=0,offsetY=0;
   var state=null,mode='title',difficulty='normal',accumulator=0,lastStamp=0,visual=0,lastRun=null;
   var particles=[],spellDim=0,flash=0,hurtFlash=0,hurtRing=null,VERMILION='#a8382a',shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,SPELL_BANNER_TICKS=42,bannerSpell=false,bannerTitle='',bannerSub='',toast=null;
   var keys={},finger={active:false,id:null,x:0,y:0},focusHeld=false,focusPointer=null,focusLatched=false,bombQueued=false;
-  var settings={music:true,sfx:true,hitSound:true,musicVolume:1,sfxVolume:1,screenShake:true,lowQuality:false,abilityMemory:7,abilitySeoha:3,abilityV:3,keyFocus:'Shift',keyBomb:'KeyX'}; // 능력조절(사용자 11-20): 영웅별 0(끔)~7단계
+  var settings={music:true,sfx:true,hitSound:true,musicVolume:1,sfxVolume:1,screenShake:true,inkRedShots:false,lowQuality:false,abilityMemory:7,abilitySeoha:3,abilityV:3,keyFocus:'Shift',keyBomb:'KeyX'}; // 능력조절(사용자 11-20): 영웅별 0(끔)~7단계
   var fx=null,music=null,best=0,bests={},lastSpell=null,drill=null,DRILL_KEY='hapil-arcade-v43-drill',lastItemSound=0,progress=Progress.fresh(),saveOk=true;
   var themeOverride=null,turbo=0,rushStage=false,oneCreditEligible=false;
   var Story=global.HapilArcadeStory||null,BossIntros=global.HapilArcadeBossIntros||null,story=null,storyQuiet=false,storySeen={},pauseReturn='playing',rulesReturn='title',storyArrivalActor='';
@@ -380,11 +380,19 @@
     var grow=state?state.sizeScale:compact?1.25:1;
     orbs=[];Arcade.SIZE_RADIUS.forEach(function(radius,size){if(size===SHAPE_PROP)return;orbs[size]={};Arcade.PALETTE.forEach(function(index){var color=COLORS[index],r=radius*grow;r*=SMALL_GROW[size]||1;orbs[size][index]=size===SHAPE_RICE?buildRice(r,color):size===SHAPE_BUBBLE?buildBubble(r,color):buildOrb(r,color,orbTint);});});
   }
+  function buildShotSprite(color){
+    var c=offscreen(8*scale,26*scale),g=c.getContext('2d'),grad=g.createLinearGradient(0,0,0,c.height);
+    grad.addColorStop(0,'#ffffff');grad.addColorStop(.35,color);grad.addColorStop(1,color+'00');
+    g.fillStyle=grad;g.beginPath();g.ellipse(c.width/2,c.height/2,c.width*.32,c.height/2,0,0,TAU);g.fill();
+    return c;
+  }
   function buildSprites(){
     var grow=state?state.sizeScale:compact?1.25:1;
     buildOrbs();
-    var c=offscreen(8*scale,26*scale),g=c.getContext('2d'),grad=g.createLinearGradient(0,0,0,c.height);
-    grad.addColorStop(0,'#ffffff');grad.addColorStop(.35,'#fa800a');grad.addColorStop(1,'#fa800a00');g.fillStyle=grad;g.beginPath();g.ellipse(c.width/2,c.height/2,c.width*.32,c.height/2,0,0,TAU);g.fill();shotSprite=c;
+    shotSprite=buildShotSprite('#fa800a');
+    if(Ink&&Ink.raw)Ink.raw(1);
+    redShotSprite=buildShotSprite(VERMILION);
+    if(Ink&&Ink.raw)Ink.raw(-1);
     homingSprite=buildOrb(3,'#fa800a'); // 아군 샷은 주황: 적 탄 6색(빨강·보라·하늘·초록·노랑·흰색) 어느 것과도 헷갈리지 않는다(심사 3차)
     // 아이템: 점수(푸른 마름모)와 폭탄 조각(초록 마름모)
     // 아이템은 하트다: 점수는 장밋빛 하트, 폭탄 게이지는 금빛 하트. 흰 테두리는 적 탄의 문법이라 하트는 금빛 테두리로, 크기는 탄보다 작게(심사 6차).
@@ -394,7 +402,7 @@
       q.fillStyle=c[0];q.fill();q.lineWidth=1.6*u;q.strokeStyle=c[2];q.lineJoin='round';q.stroke();
       q.fillStyle=c[1];q.globalAlpha=.9;q.beginPath();q.ellipse(-3.6*u,-4.6*u,1.9*u,1.2*u,-.6,0,Math.PI*2);q.fill();return d;});
     // 보스 뒤 마법진: 동심원 셋 + 눈금 + 육각별
-    c=offscreen(220*scale,220*scale);g=c.getContext('2d');g.scale(scale,scale);g.translate(110,110);g.strokeStyle='#ffffff';g.lineWidth=1.6;
+    var c=offscreen(220*scale,220*scale),g=c.getContext('2d');g.scale(scale,scale);g.translate(110,110);g.strokeStyle='#ffffff';g.lineWidth=1.6;
     [104,92,60].forEach(function(r){g.beginPath();g.arc(0,0,r,0,TAU);g.stroke();});
     g.lineWidth=1;for(var i=0;i<36;i++){var a=TAU*i/36;g.beginPath();g.moveTo(Math.cos(a)*92,Math.sin(a)*92);g.lineTo(Math.cos(a)*(i%3?98:104),Math.sin(a)*(i%3?98:104));g.stroke();}
     for(var k=0;k<2;k++){g.beginPath();for(var j=0;j<3;j++){var b=TAU*j/3+k*Math.PI/3-Math.PI/2;g[j?'lineTo':'moveTo'](Math.cos(b)*92,Math.sin(b)*92);}g.closePath();g.stroke();}
@@ -1753,11 +1761,14 @@
   }
   function drawShots(s){
     if(HeroFx){HeroFx.shots(ctx,s,visual);return;} // 기억사수 성장 단계별 탄(src/hero-memory-v43.js)
-    ctx.globalAlpha=.55*(1-CROWD_SHOT*crowd);ctx.globalCompositeOperation='lighter'; // 더해 그리되 한 단계 물러서게: 적 탄이 화면의 주인공이다(심사 9차: 주황 샷이 먼저 눈에 들어온다). 타격감은 명중 섬광이 맡는다
+    ctx.globalAlpha=.55*(1-CROWD_SHOT*crowd);ctx.globalCompositeOperation=settings.inkRedShots?'source-over':'lighter'; // 더해 그리되 한 단계 물러서게: 적 탄이 화면의 주인공이다(심사 9차: 주황 샷이 먼저 눈에 들어온다). 타격감은 명중 섬광이 맡는다
+    var sprite=settings.inkRedShots?redShotSprite:shotSprite;
+    if(settings.inkRedShots&&Ink&&Ink.raw)Ink.raw(1);
     for(var i=0;i<s.sn;i++){
-      if(s.shoming[i])ctx.drawImage(shotSprite,s.sx[i]-3,s.sy[i]-9,6,18); // 유도탄도 주탄과 같은 길쭉한 빛줄기: 둥근 주황 점은 적 탄처럼 읽혔다(심사 7차)
-      else ctx.drawImage(shotSprite,s.sx[i]-4,s.sy[i]-13,8,26);
+      if(s.shoming[i])ctx.drawImage(sprite,s.sx[i]-3,s.sy[i]-9,6,18); // 유도탄도 주탄과 같은 길쭉한 빛줄기: 둥근 주황 점은 적 탄처럼 읽혔다(심사 7차)
+      else ctx.drawImage(sprite,s.sx[i]-4,s.sy[i]-13,8,26);
     }
+    if(settings.inkRedShots&&Ink&&Ink.raw)Ink.raw(-1);
     ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
   }
   var SKILL_FX_BRIGHT=.4,BEAM_LOW_FADE=.45,BEAM_ROOT=48,PALE_BEAM_DIM=.3,PALE_CORE=.45,BEAM_CORE=.55,BEAM_DIM=.38,HERO_RING_WIDTH=3,BRIGHT_ART_DIM='brightness(.6) contrast(.72)',PLAYER_SHADE=46,HERO_RING='#7ff3ff',OUTER_RIM='#1c2236',SIGIL_ALPHA=.55;
@@ -2251,10 +2262,11 @@
   }
   function clearKeepsakes(){var grid=$('arcade-keepsake-grid');if(grid&&grid.firstChild)grid.textContent='';}
   /* 설정은 진행 기록과 별도로 저장한다. 소리·화질 변경은 일시정지 상태를 바꾸지 않는다. */
+  var BOOLEAN_SETTINGS=['music','sfx','hitSound','screenShake','inkRedShots','lowQuality'];
   function loadSettings(){
     var saved=null;try{saved=JSON.parse(global.localStorage.getItem(SETTINGS_KEY)||'null');}catch(e){}
     if(!saved||typeof saved!=='object')return;
-    ['music','sfx','hitSound','screenShake','lowQuality'].forEach(function(k){if(typeof saved[k]==='boolean')settings[k]=saved[k];});
+    BOOLEAN_SETTINGS.forEach(function(k){if(typeof saved[k]==='boolean')settings[k]=saved[k];});
     ['musicVolume','sfxVolume'].forEach(function(k){if(typeof saved[k]==='number'&&isFinite(saved[k]))settings[k]=Math.max(0,Math.min(1,saved[k]));});
     // 사용자 11-20 "초능력설정 기본 7": 예전 저장값(abilityV 없음)의 0은 옛 기본값이라 7로 올리고, 0이 아닌 값은 사용자가 고른 것이니 그대로 둔다. 이후로는 0(끔)도 그대로 저장된다.
     ['abilityMemory','abilitySeoha'].forEach(function(k){if(typeof saved[k]==='number'&&isFinite(saved[k])){var v=Math.max(0,Math.min(7,Math.round(saved[k])));settings[k]=saved.abilityV>=2||v>0?v:7;
@@ -2276,7 +2288,7 @@
     if(state&&Arcade.setAbility)Arcade.setAbility(state,abilityFor(state.hero));}
   function unlockAudio(){if(fx&&fx.unlock)fx.unlock();if(global.HapilMusic&&global.HapilMusic.unlock)global.HapilMusic.unlock();}
   function syncSettings(){
-    ['music','sfx','hitSound','screenShake','lowQuality'].forEach(function(k){var e=$('setting-'+k);if(e)e.checked=settings[k];});
+    BOOLEAN_SETTINGS.forEach(function(k){var e=$('setting-'+k);if(e)e.checked=settings[k];});
     ['musicVolume','sfxVolume'].forEach(function(k){var e=$('setting-'+k),o=$('value-'+k),v=Math.round(settings[k]*100);if(e)e.value=String(v);if(o)o.textContent=v+'%';});
     syncAbility();refreshKeyLabels();
     var sound=$('arcade-sound');if(sound){var on=settings.music||settings.sfx;sound.textContent=T(on?'soundOn':'soundOff');sound.setAttribute('aria-pressed',String(on));}
@@ -2287,11 +2299,12 @@
     if(global.HapilMusic){if(global.HapilMusic.setVolume)global.HapilMusic.setVolume(settings.musicVolume);if(global.HapilMusic.setEnabled)global.HapilMusic.setEnabled(settings.music);global.HapilMusic.update(musicMode(),state,settings.music);}
     else if(music){music.volume=.2*settings.musicVolume;if(!settings.music||settings.musicVolume===0)music.pause();else if(mode==='playing'){try{var p=music.play();if(p&&p.catch)p.catch(function(){});}catch(e){}}}
     if(Ink&&Ink.setLite)Ink.setLite(lite);
+    if(HeroFx&&HeroFx.setInkRed)HeroFx.setInkRed(settings.inkRedShots);
     syncSettings();syncStoryFx();
   }
   function bindSettings(){
     bindKeySettings();
-    ['music','sfx','hitSound','screenShake','lowQuality'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('change',function(){settings[k]=!!e.checked;
+    BOOLEAN_SETTINGS.forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('change',function(){settings[k]=!!e.checked;
       if(k==='lowQuality'){lite=settings.lowQuality;if(Ink&&Ink.setLite)Ink.setLite(lite);framesSeen=0;frameMs=16;fit();buildSprites();if(state)initFx(themeOf(state.stageIndex).fx,state.stageIndex);}
       applySettings(true);if(k==='music'||k==='sfx')unlockAudio();});});
     ['musicVolume','sfxVolume'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('input',function(){settings[k]=Math.max(0,Math.min(1,Number(e.value)/100||0));applySettings(true);unlockAudio();});});

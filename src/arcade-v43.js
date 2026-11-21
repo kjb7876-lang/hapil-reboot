@@ -299,9 +299,9 @@
       var m=budget.mob++,side=(Math.imul((m>>>1)+s.seg+1,GOLD_TICK)>>>31);
       return (m&1)===side;
     }
-    // Spread 11 omissions evenly over each hundred in a repeatable sequence.
+    // Spread 22 omissions evenly over each hundred in a repeatable sequence.
     var i=budget.boss++,slot=i%100,phase=(s.seg*17+Math.floor(i/100)*31)%100;
-    return Math.floor((slot+phase+1)*11/100)>Math.floor((slot+phase)*11/100);
+    return Math.floor((slot+phase+1)*22/100)>Math.floor((slot+phase)*22/100);
   }
   function spawn(s,x,y,angle,speed,o){
     if(s.n>=s.cap){s.dropped++;return;}
@@ -2242,12 +2242,12 @@
       }else if(motif===3){ // 건반은 박에 맞춰 7칸만 켜고, 진행 방향의 끝 건반은 화음에서도 비워 둔다.
         if(pos===7)return;
         var KW=W/8,up=(bar+sp.cycle)%2===0,j=up?pos:7-pos,safe=up?7:0;
-        var hold=SP_BEAT*[2,3,3][lvl]-6,black=[1,3,6].indexOf(j)>=0,warn=32;
+        var hold=[48,72,72][lvl],black=[1,3,6].indexOf(j)>=0,warn=32;
         beam(s,KW*(j+.5),-12,Math.PI/2,{width:KW*.7/s.rules.beam,warn:warn,active:hold,color:black?c2:c1,keep:1});
         var j2=(j+4)%8;
         if(lvl===2&&pos%2===1&&j2!==safe)beam(s,KW*(j2+.5),-12,Math.PI/2,{width:KW*.7/s.rules.beam,warn:warn,active:30,color:c2,keep:1});
-      }else if(motif===4){ // 화면 덮기(사용자 11-19 "맵의 70 80 90프로덮는패턴 … 난이도 맞게"): 이지 70%·노멀 80%·헬 90%를 광선으로 덮고 한 줄기 틈만 남긴다. 틈 자리는 황금비 수열로 매번 다르다. 마디마다 세로·가로를 번갈아
-        if(pos===0){var cover=[.7,.8,.9][lvl],vert=(bar+sp.cycle)%2===0,top=120,span=vert?W:H-top,gap=span*(1-cover),gk=sp.coverN=(sp.coverN||0)+1,
+      }else if(motif===4){ // 화면 덮기: 이지 68%·노멀 77%·헬 86%를 광선으로 덮고 한 줄기 틈만 남긴다. 틈 자리는 황금비 수열로 매번 다르다. 마디마다 세로·가로를 번갈아
+        if(pos===0){var cover=[.68,.77,.86][lvl],vert=(bar+sp.cycle)%2===0,top=120,span=vert?W:H-top,gap=span*(1-cover),gk=sp.coverN=(sp.coverN||0)+1,
             here=vert?p.x:p.y-top,reach=COVER_REACH*s.rules.warn,glo=Math.max(0,Math.min(span-gap,here-reach-gap/2)),ghi=Math.max(glo,Math.min(span-gap,here+reach-gap/2)), // 회피 측정(11-20): 틈이 영웅에게서 너무 멀면 예고 84틱 안에 키보드 속도(4.2px)로 못 닿았다(헬 가로 덮기 4%). 틈은 영웅이 반응(0.25초) 뒤 닿을 수 있는 거리 안에서 황금비로 고른다
             g0=glo+((gk/PHI+s.stageIndex*.21)%1)*(ghi-glo),segs=[[0,g0],[g0+gap,span]],q2,c0;
           coverClear(s,vert,vert?g0:g0+top,gap);s.coverGap={vert:vert,lo:vert?g0:g0+top,hi:(vert?g0:g0+top)+gap,from:s.tick,on:s.tick+Math.round(84*s.rules.warn)+laserMore(s),until:s.tick+Math.round(84*s.rules.warn)+laserMore(s)+44}; // 화면이 틈 가장자리를 비춰 준다(그리기 전용) // 앞 마디 피아노 건반이 틈 위에 눌린 채 남아 틈이 8px로 좁아지던 겹침(헬 측정) 제거
@@ -2410,11 +2410,12 @@
     var a=ACTORS[seg.actor]||{},c1=a.c1||0,c2=a.c2===undefined?c1:a.c2,k=EXTRA_KINDS[(s.stageIndex+s.seg+(cycle>>2))%EXTRA_KINDS.length];s.extraKind=k;
     extraFire(s,k,u,c1,c2);
   }
-  function extraFire(s,k,u,c1,c2){var t;
+  function extraFire(s,k,u,c1,c2){var t,before=s.n,first=u===0;
     if(k==='weapon'){if(u===0||u===96)throwWeapon(s,c1,c2);return;}
-    if(k==='peony'&&u%60===0){t=fwTarget(s);fwShell(s,t,{color:c1,mode:MODE_SPLIT,arg:count(s,14),speed2:66,gen:1});fwShell(s,t,{color:c2,mode:MODE_SPLIT,arg:count(s,9),speed2:40,gen:1});note(s,'firework');}
-    else if(k==='senrin'&&(u===0||u===90)){t=fwTarget(s);fwShell(s,t,{color:c1,mode:MODE_SPLIT,arg:6,gen:2,speed2:58});note(s,'firework');}
-    else if(k==='willow'&&u%70===0){t=fwTarget(s);t.y-=40;fwShell(s,t,{color:c2,mode:MODE_BRANCH,arg:3,gen:2,speed2:56});note(s,'firework');}
+    if(k==='peony'&&u%60===0){t=fwTarget(s);fwShell(s,t,{color:c1,mode:MODE_SPLIT,arg:count(s,14),speed2:66,gen:1,keepShot:first});fwShell(s,t,{color:c2,mode:MODE_SPLIT,arg:count(s,9),speed2:40,gen:1,keepShot:first});}
+    else if(k==='senrin'&&(u===0||u===90)){t=fwTarget(s);fwShell(s,t,{color:c1,mode:MODE_SPLIT,arg:6,gen:2,speed2:58,keepShot:first});}
+    else if(k==='willow'&&u%70===0){t=fwTarget(s);t.y-=40;fwShell(s,t,{color:c2,mode:MODE_BRANCH,arg:3,gen:2,speed2:56,keepShot:first});}
+    if(s.n>before)note(s,'firework');
   }
   /* 한자 고리·육망성이 떠 있어 보스가 내려와 있는 동안 좌우·위아래로 조금씩 흔들린다(사용자 11-20 "한자패턴 육망성 패턴시 보스가 좌우위아래 조금씩 움직이게"). 고정 궤적(리사주), 실제 흔들림은 보스의 느린 따라가기로 약 ±22px·±10px */
   var WOBBLE_X=26,WOBBLE_Y=18,WOBBLE_TX=300,WOBBLE_TY=220;
