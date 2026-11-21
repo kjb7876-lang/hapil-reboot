@@ -5,16 +5,33 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const h=require('./helpers/arcade-v43.cjs'),{clear,idle,put,root}=h;
 const A=()=>h.need();
 
-test('attack level climbs 1→7 from kills and pattern breaks, drops one level on a hit, and starts higher deeper in the journey',()=>{
+test('attack level climbs 1→7 from kills and pattern breaks, keeps its level and experience after a hit, and starts higher deeper in the journey',()=>{
  const a=A(),s=a.createRun({difficulty:'normal',seed:2});
  assert.equal(s.power,1);assert.equal(a.POWER_EXP.length,7);assert.equal(a.MAX_LEVEL,7);
- for(let l=2;l<=7;l++){a.gainExp(s,a.POWER_EXP[l-1]-s.exp);assert.equal(s.power,l);assert(s.events.includes('powerUp'));clear(s);}
+ for(let l=2;l<=7;l++){a.gainExp(s,Math.ceil((a.POWER_EXP[l-1]-s.exp)*100/a.POWER_EXP_RATE));assert.equal(s.power,l);assert(s.events.includes('powerUp'));clear(s);}
  a.gainExp(s,99999);assert.equal(s.power,7,'capped at 7');
  const b=idle();b.exp=a.POWER_EXP[4];b.power=5;b.bombs=0;b.noDistort=true;put(b,b.player.x,b.player.y,{bage:100});a.step(b,{dx:0,dy:0});
- assert.equal(b.player.hp,b.rules.hp-1);assert.equal(b.power,4,'a hit costs one attack level');assert(b.events.includes('powerDown'));
+ assert.equal(b.player.hp,b.rules.hp-1);assert.equal(b.power,5);assert.equal(b.exp,a.POWER_EXP[4]);
  const late=a.createRun({difficulty:'normal',seed:2,stage:30,growth:true});assert.equal(a.createRun({difficulty:'normal',seed:2,stage:30}).power,1,'only when the app asks');assert(late.power>=4&&late.power<=5&&late.bombLevel>=4,'continuing deep in the journey');
 });
 
+test('every hero earns 90% attack experience and keeps progress after a hit',()=>{
+ const a=A();
+ for(const hero of ['memory','seoha','seoha-b']){
+  const s=idle({hero,distort:false});
+  for(let i=0;i<9;i++)a.gainExp(s,1);
+  const total=hero==='memory'?810:1620;
+  assert.equal(s.exp,Math.floor(total/100));
+  assert.equal(s.expRemainder,total%100);
+  s.power=4;s.exp=a.POWER_EXP[3]+5;s.bombs=0;
+  put(s,s.player.x,s.player.y,{bage:100});
+  a.step(s,{});
+  assert.equal(s.hits,1);
+  assert.equal(s.power,4);
+  assert.equal(s.exp,a.POWER_EXP[3]+5);
+  assert.equal(s.expRemainder,total%100);
+ }
+});
 test('each attack level fires more and faster, but firepower grows gently (×1.8 at level 7) so boss patterns still play out',()=>{
  const a=A();let prev=0;
  for(let l=1;l<=7;l++){const q=a.POWER_SHOTS[l],volleys=q[0]*60/q[1]+q[2]*60/q[3];assert(volleys>=prev,'level '+l+' fires at least as much');prev=volleys;
@@ -30,7 +47,7 @@ test('memory bolt strikes the nearest foe and leaves a drawable zap; haste short
  s.mobs.push({kind:'x',x:s.player.x+30,baseX:s.player.x+30,y:200,r:12,hp:50,maxHp:50,hitTick:-99,elite:false,score:10,age:0,shots:0,vx:0,vy:0,sway:0,swayRate:0,fire:'aim',first:9999,every:0,color:0,stopY:200,hold:99999,next:99999});
  for(let i=0;i<70;i++){a.step(s,{dx:0,dy:0});clear(s);}
  assert(s.zaps.length>=5,'a zap was recorded');assert(s.mobs.length===0||s.mobs[0].hp<50);
- const t=idle();t.tick=1000;a.gainExp(t,a.POWER_EXP[1]);assert.equal(a.clockState(t),'haste');t.player.focus=true;assert.equal(a.clockState(t),'slow');t.player.focus=false;t.tick+=a.HASTE_TICKS;assert.equal(a.clockState(t),'normal');
+ const t=idle();t.tick=1000;a.gainExp(t,Math.ceil(a.POWER_EXP[1]*100/a.POWER_EXP_RATE));assert.equal(a.clockState(t),'haste');t.player.focus=true;assert.equal(a.clockState(t),'slow');t.player.focus=false;t.tick+=a.HASTE_TICKS;assert.equal(a.clockState(t),'normal');
 });
 
 test('enemy bullets slow down near the hero (stronger each level, stronger while Seoha focuses — user 11-20); far bullets are untouched',()=>{

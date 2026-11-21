@@ -31,8 +31,9 @@ test('ordinary stage changes inside a chapter do not refill lives',()=>{
  while(s.stageIndex===3&&t<40000){s.player.invulnerableUntil=s.tick+10;if(s.boss&&s.boss.present&&s.boss.hp>1)s.boss.hp=1;A.step(s,{});t++;}
  assert.equal(s.stageIndex,4);assert.equal(s.player.hp,1);
 });
-test('a hit still costs one attack level, but never below the chapter level',()=>{
+test('repeated hits preserve attack level above the chapter floor',()=>{
  const s=h.idle({stage:27,growth:true});assert.equal(A.chapterFloor(s),4);s.exp=A.POWER_EXP[4];s.power=5;
  const seq=[];for(let i=0;i<3;i++){s.bombs=0;s.noDistort=true;s.player.invulnerableUntil=0;s.player.hp=5;h.clear(s);h.put(s,s.player.x,s.player.y,{bage:100});A.step(s,{dx:0,dy:0});assert.equal(s.player.hp,4,'hit landed');seq.push(s.power);}
- assert.deepEqual(seq,[4,4,4]);
+ assert.deepEqual(seq,[5,5,5]);
+ assert.equal(s.exp,A.POWER_EXP[4]);
 });
