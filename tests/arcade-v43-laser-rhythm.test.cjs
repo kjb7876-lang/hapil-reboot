@@ -98,8 +98,8 @@ test('rising beat: rows light from the floor upward one per beat and clear toget
   assert(down[down.length-1].y+R.BAND/2<a.HEIGHT-R.BAND*n,'a band stays open between the two');}
 });
 
-test('follow the path: an open corridor of two lanes (three on easy) that holds the hero at first and shifts one lane at a time',()=>{
- for(const d of DIFFS)for(const x of [20,200,345]){const s=motifRun(d,'slide',x),w=d==='gentle'?3:2;let prev=null,steps=0,first=true;
+test('follow the path: an open corridor of three lanes on every difficulty that holds the hero at first and shifts one lane at a time',()=>{
+ for(const d of DIFFS)for(const x of [20,200,345]){const s=motifRun(d,'slide',x),w=3;let prev=null,steps=0,first=true;
   run(s,a.SP_LEAD+10*a.SP_BEAT,t=>{const L=notes(t).filter(lit);if(!L.length)return;const shut=new Array(R.LANES).fill(false);
    for(const l of L){const [lo,hi]=span(l);for(let j=Math.round(lo/LANE);j<Math.round(hi/LANE);j++)shut[j]=true;}
    const open=[];shut.forEach((v,j)=>{if(!v)open.push(j);});assert(open.length>=w&&open[open.length-1]-open[0]===open.length-1,`${d}: open lanes ${open}`);
@@ -108,19 +108,19 @@ test('follow the path: an open corridor of two lanes (three on easy) that holds 
   assert(steps>=(d==='gentle'?2:3),`${d} x${x}: moved ${steps} times`);}
 });
 
-test('squeeze and release: walls close in from both sides, then the centre is struck a beat after they let go (two beats on easy)',()=>{
+test('squeeze and release: walls close in from both sides, then the centre is struck after a longer rest',()=>{
  for(const d of DIFFS){const s=motifRun(d,'squeeze',180),ev=[];
   run(s,a.SP_LEAD+((d==='gentle'?3:2)+6.5)*a.SP_BEAT+a.LASER_MORE,t=>{for(const l of notes(t))if(l.age===l.warn){const [lo,hi]=span(l);ev.push({lo,hi,on:t.tick,off:t.tick+l.active});}});
   const outer=ev.filter(e=>e.hi-e.lo===LANE&&(e.lo===0||e.hi===a.WIDTH)),inner=ev.filter(e=>e.hi-e.lo===LANE&&(e.lo===LANE||e.hi===a.WIDTH-LANE)),mid=ev.filter(e=>e.lo===2*LANE&&e.hi===4*LANE);
   assert.equal(outer.length,2);assert.equal(inner.length,2);assert.equal(mid.length,1);
   assert.equal(inner[0].on-outer[0].on,a.SP_BEAT);assert.equal(inner[0].off,outer[0].off,'they let go together');
-  assert.equal(mid[0].on-outer[0].off,a.SP_BEAT*(d==='gentle'?2:1));}
+  assert.equal(mid[0].on-outer[0].off,a.SP_BEAT*(d==='gentle'?2.5:1.5));}
 });
 
 test('off-beat tag: the melody skips across lanes on the beat and the off-beat note lands on the hero\'s lane',()=>{
  for(const d of DIFFS){const s=motifRun(d,'swing',200);let beat0=-1,on=[],off=[];
   run(s,a.SP_LEAD+9*a.SP_BEAT+a.LASER_MORE,t=>{if(t.special&&beat0<0)beat0=t.special.start;for(const l of notes(t))if(l.age===l.warn){const [lo,hi]=span(l);assert(Math.abs(hi-lo-LANE)<1e-6);((t.tick+1-beat0-a.SP_LAYBACK[d])%a.SP_BEAT?off:on).push(Math.round(lo/LANE));}},()=>({dx:0,dy:0}));
-  assert(on.length>=5&&new Set(on).size>=5,d+' melody '+on);assert(off.length>=(d==='hell'?5:2),d+' off-beats '+off);assert(off.every(j=>j===3),'the hero stood in lane 3: '+off);}
+  assert(on.length>=5&&new Set(on).size>=5,d+' melody '+on);assert(off.length>=2&&off.length<=(d==='hell'?4:3),d+' off-beats '+off);assert(off.every(j=>j===3),'the hero stood in lane 3: '+off);}
 });
 
 test('a bot that sees only the warnings and moves at keyboard speed gets through every rhythm chart untouched',()=>{
