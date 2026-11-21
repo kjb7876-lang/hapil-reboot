@@ -238,6 +238,29 @@ async function storyAndRules(page,name){
   assert.equal(released.entry.releasedTick,released.entry.readyTick);assert.equal(released.bombs,arrival.bombs);assert.equal(released.bombsUsed,arrival.bombsUsed,'blocked X is not delayed until combat');
   await stationary(page);
 }
+async function playerShotPalette(page){
+  // Read the actual drawing output with the current app setting, including the animated shard atlas.
+  await page.waitForFunction(()=>HapilHeroFx.debug().ready.includes('shard'));
+  return page.evaluate(()=>{
+    const canvas=document.createElement('canvas');
+    canvas.width=canvas.height=100;
+    const g=canvas.getContext('2d',{willReadFrequently:true});
+    const output={};
+    for(const [key,hero,kind,homing] of [['memory','memory',0,0],['shard','memory',0,1],['trainee','seoha',0,0],['awakened','seoha-b',2,0]]){
+      g.clearRect(0,0,100,100);
+      HapilHeroFx.shots(g,{hero,power:5,sn:1,sx:[50],sy:[50],svx:[0],sspd:[15],skind:[kind],shoming:[homing]},.1);
+      const p=g.getImageData(0,0,100,100).data;
+      let painted=0,red=0;
+      for(let i=0;i<p.length;i+=4){
+        if(p[i+3]<30)continue;
+        painted++;
+        if(p[i]>p[i+1]+30&&p[i]>p[i+2]+30)red++;
+      }
+      output[key]={painted,red};
+    }
+    return output;
+  });
+}
 async function pauseSettings(page,name,mobile){
   await page.locator('#arcade-pause-button').click();
   assert.equal((await state(page)).mode,'paused');
@@ -247,6 +270,18 @@ async function pauseSettings(page,name,mobile){
     for(let i=0;i<steps;i++)await slider.press('ArrowRight');
   }
   await page.locator('#setting-screenShake').uncheck();
+  const inkRed=page.locator('#setting-inkRedShots');
+  assert.equal(await inkRed.isChecked(),false,'the saved setting defaults to off');
+  const original=await playerShotPalette(page);
+  await inkRed.check();
+  const changed=await playerShotPalette(page);
+  for(const key of Object.keys(changed)){
+    assert(original[key].painted>10&&changed[key].painted>10,key+' draws actual pixels');
+    assert(changed[key].red>original[key].red+8,key+' turns vermilion');
+  }
+  await inkRed.uncheck();
+  assert.deepEqual(await playerShotPalette(page),original,'switching off restores the original palette');
+  await inkRed.check();
   await page.locator('#setting-lowQuality').check();
   await page.waitForTimeout(150);
   assert.equal(await page.evaluate(()=>HapilArcadeApp.debugState().state.tick),tick,'settings must not advance combat');
@@ -276,7 +311,9 @@ async function pauseSettings(page,name,mobile){
   await page.reload({waitUntil:'networkidle'});
   await page.waitForFunction(()=>window.HapilArcadeApp&&!document.getElementById('arcade-start').disabled);
   const saved=(await state(page)).settings;
-  assert.equal(saved.musicVolume,.35);assert.equal(saved.sfxVolume,.65);assert.equal(saved.screenShake,false);assert.equal(saved.lowQuality,true);
+  assert.equal(saved.musicVolume,.35);assert.equal(saved.sfxVolume,.65);assert.equal(saved.screenShake,false);assert.equal(saved.lowQuality,true);assert.equal(saved.inkRedShots,true);
+  const restored=await playerShotPalette(page);
+  assert(Object.values(restored).every(s=>s.red>8),'reloaded settings color the renderer');
   await page.locator('#arcade-start').click();
   await page.waitForFunction(()=>HapilArcadeApp.getState().mode==='hero');
   assert.equal(await page.locator('#hero-select-seoha-b').getAttribute('aria-pressed'),'true','confirmed B hero survives reload');
