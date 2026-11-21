@@ -94,7 +94,7 @@
     normal:{density:2.6,speed:.9,hp:3,mapHeal:0,partHeal:-1,bombs:2,radius:2.4,hitScale:.5,warn:1,beam:1,label:'기본'},
     hell:{density:2.6,speed:.9,hp:2,mapHeal:0,partHeal:-1,bombs:1,radius:2.4,hitScale:.5,warn:1,beam:1,label:'지옥'}
   };
-  /* 여유 모드만 첫 스테이지 탄 수 70%에서 마지막 110%까지 오른다. 노멀·헬은 같은 공격을 유지한다. */
+  /* 이전 리플레이의 이지 곡선. 실제 전투에는 아래 LIVE_TABLE을 적용한다. */
   var SOFT={gentle:{speed:.87,density:.8},normal:{speed:.88,density:.8}},SCATTER_ANGLE=.16,SCATTER_SPEED=.22,SCATTER_POS=7;
   var CURVE_START=.7,CURVE_END=1.1,PACE_START=1,PACE_END=1; // 속도는 그대로(탄이 화면 아래까지 닿는 시간을 지킨다), 탄 수만 곡선
   var AWAKE_AS={gentle:'normal',normal:'hell',hell:'hell'},AWAKE_TEMPO=2,AWAKE_HELL_DENSITY=.85;
@@ -129,7 +129,7 @@
     else row(s,H-60,{width:BEAM_MIN,warn:66,active:60,color:c});
   }
   /* 실제 게임 난이도 기준표(사용자 11-19 "제안대로 계단 고르게"): 그동안 겹겹이 곱해지던 배율(표·이지노멀 완화·탄 수 -25%·-20%·탄속 +20%)을 최종값 한 줄로 합쳤다.
-     탄 수는 휴대폰 기준값(PC는 ÷COMPACT_DENSITY), 이지는 첫 스테이지 density에서 마지막 end까지 오른다. 앞으로 난이도 조정은 이 표의 숫자만 고친다. 목숨·필살은 DIFFICULTY 표 그대로 */
+     탄 수는 휴대폰 기준값(PC는 ÷COMPACT_DENSITY), 이지는 첫 스테이지 density에서 마지막 end까지 오른다. 일반몹과 보스의 발사 비율은 SHOT_KEEP, 화면이 붐빌 때의 감축 기준은 CROWD_FROM을 쓴다. */
   var LIVE_TABLE={
     // 사용자 11-19 21:22 "탄환속도와크기 전체적으로 30프로 늘려주고 그만큼 탄환 30프로 줄여줘": 탄속 ×1.3·탄 수 ×0.7(크기는 LIVE_GROW ×1.3)
     // 사용자 11-20 14:33 "모든탄 속도 16프로 상향 최대 탄환수 모든모드 20프로 하향": 탄속 ×1.16·탄 수 ×0.8(상한 CAP·COMPACT_CAP도 ×0.8)
@@ -530,7 +530,10 @@
     ring:function(s,m){ring(s,m.x,m.y,count(s,8),64,aim(s,m.x,m.y),{color:m.color,size:0});},
     hexagon:function(s,m){shape(s,m.x,m.y,Shapes.polygon(6,Math.max(2,count(s,3))),78,m.shots*.26,{color:m.color,size:0});},
     bell:function(s,m){bell(s,m.x,m.y,count(s,11),aim(s,m.x,m.y),1.5,100,.42,{color:m.color,size:1});},
-    gearRing:function(s,m){shape(s,m.x,m.y,Shapes.star(8,.72,Math.max(1,count(s,2))),76,m.shots*.2,{color:m.color,size:0});},
+    gearRing:function(s,m){
+      var teeth=s.entranceAll?pick(s,5,6,8):8;
+      shape(s,m.x,m.y,Shapes.star(teeth,.72,Math.max(1,count(s,2))),76,m.shots*.2,{color:m.color,size:0});
+    },
     tissue:function(s,m){fan(s,m.x,m.y,pick(s,2,3,5),aim(s,m.x,m.y),1.1,52,{size:SHAPE_PROP,color:P.tissue,spin:.03});},
     money:function(s,m){ring(s,m.x,m.y,pick(s,4,6,9),70,m.shots*.5,{size:SHAPE_PROP,color:P.money,spin:.12});},
     cleaver:function(s,m){fan(s,m.x,m.y,pick(s,1,2,3),aim(s,m.x,m.y),.7,104,{size:SHAPE_PROP,color:P.cleaver,spin:.2});bell(s,m.x,m.y,count(s,9),aim(s,m.x,m.y),1.6,92,.45,{color:m.color,size:1});},
@@ -1438,14 +1441,26 @@
       var wantsFigure=sigBeat===SIGIL_AT||RUNE_TIMES.indexOf(sigBeat)>=0;
       // Preserve the next sigil until its warning and active period can finish
       // before the special. Waiting for two back-to-back cues hid entire volleys.
-      if(!wantsFigure||ticksToSpecial(s)>FIGURE_LEAD)signature(s,s.signatureTick++,true);
+      // The awakened final boss advances its script at double tempo on Hell.
+      // Reserve enough time for the real-time hand-off as well as the sigil;
+      // its tell, descent and recovery still run at normal speed.
+      var figureLead=s.awakeTempo>1?FIGURE_LEAD+FIG_WAIT_MAX:FIGURE_LEAD;
+      if(!wantsFigure||ticksToSpecial(s)>figureLead)signature(s,s.signatureTick++,true);
     }
     var cue=s.figures.some(function(f){return f.age<f.warn;});
     if(cue)return;
     if(beat<AUTHORED_TICKS){seg.fire(s,s.authoredTick++);return;}
     if(beat<VARIATION_AT||beat>=VARIATION_END||beamLive)return;
     if(s.figures.some(function(f){var phase=figurePhase(f,s.tick);return phase==='on'||phase==='charge';}))return;
-    if(s.entranceAll&&!seg.mid&&cycle%4===2){bossExtra(s,seg,beat-VARIATION_AT,cycle);return;} // 불꽃놀이·회전 큰 무기(사용자 11-20): 네 소절에 한 번 변주 자리에 들어간다
+    // A player who deals steady damage may finish this card before its third
+    // phrase. Let a wounded boss answer once at the start of a variation; never
+    // interrupt the native spell, an announced beam, or the defeat sequence.
+    if(s.entranceAll&&!seg.mid){
+      if(beat===VARIATION_AT&&seg.spell&&!s.cardDown&&s.boss.hp>0&&s.boss.hp<s.boss.maxHp*.92&&s.extraStage!==s.stageIndex){
+        s.extraStage=s.stageIndex;s.extraCard=s.seg;s.extraPhrase=cycle;
+      }
+      if(cycle%4===2||s.extraCard===s.seg&&s.extraPhrase===cycle){bossExtra(s,seg,beat-VARIATION_AT,cycle);return;}
+    }
     var sig=seg.spell&&signatureOf(seg.actor);
     if(cycle%2===1&&sig&&s.difficulty!=='gentle'){
       // A signature accent gets its own turn in place of the mathematical phrase.
@@ -2227,8 +2242,8 @@
     return struck;
   }
   /* ── 보스전 특수 페이즈와 중앙 견제(사용자 11-18).
-   *  · 특수 페이즈(entranceAll 보스전에서 카드 시작 15초 뒤부터 33초마다): 레이저만 / 그림만(많이 나옴, 쏘아 부수기) / 무자비한 테트리스(피하거나 부수기) / 솟는 바위(공간 줄이기).
-   *    이지·노멀·헬 모두 나오되 지속·밀도·동시 개수·틈 폭을 난이도마다 달리한다. 시작 1.5초 전부터 새 탄은 멈추고 화면 탄은 먹이 흐르듯 걷힌다.
+   *  · 특수 페이즈(entranceAll 보스전에서 기본적으로 카드 시작 16초 뒤부터 33초마다): 레이저만 / 그림만(많이 나옴, 쏘아 부수기) / 무자비한 테트리스(피하거나 부수기) / 솟는 바위(공간 줄이기).
+   *    세 난이도 모두 8초 동안 진행한다. 밀도·동시 개수·틈 폭은 난이도에 따른다. 시작 1.5초 전부터 새 탄은 멈추고 화면 탄은 먹이 흐르듯 걷힌다.
    *    "솟는 바위"와 "그림"이 들어오는 방향은 기존 난이도 규칙(RISER_DIRS: 이지 위→아래 터짐, 노멀 위·아래, 헬 사방)을 그대로 따른다.
    *  · 레이백(사용자 11-18 "레이저 그림 테트리스 무자비 연출에서는 rayback적용해서 리듬감있게"): 8박 장단(BEAT=30틱)에 맞추되 소리와 박 표시는 박에, 실제로 나가는 것은 LAYBACK틱 뒤에 둔다. 박에서 살짝 뒤처져 늘어지는 맛이다. 난이도가 높을수록 덜 처진다.
    *  · 중앙 견제: 노멀·헬에서 영웅이 가운데 띠에 오래 머물면 굵은 중앙 레이저 → 한자 고리 → 육망성 순서로 강제로 끼워 넣는다(이지는 없음). ── */

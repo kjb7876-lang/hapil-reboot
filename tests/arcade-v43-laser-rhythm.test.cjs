@@ -7,7 +7,7 @@ const DIFFS=['gentle','normal','hell'],LANE=a.WIDTH/R.LANES;
 function toCard(s){for(let i=0;i<4000&&s.stage!=='card';i++){s.player.invulnerableUntil=s.tick+999;a.step(s,{dx:0,dy:0});h.clear(s);}assert.equal(s.stage,'card');s.segTick=0;}
 function firstBossCard(stage){const g=a.STAGES[stage];let seg=g.first;while(a.SEGMENTS[seg].kind!=='card'||a.SEGMENTS[seg].mid)seg++;return seg;}
 // 무늬 하나를 골라 레이저 구간 직전으로 간다
-function motifRun(d,name,x,y){const s=a.createRun({difficulty:d,seed:3,segment:firstBossCard(8),entranceAll:true});toCard(s);s.sp.need=true;s.sp.lj=0;s.sp.force=name;s.segTick=a.spStart(s)-a.SP_LEAD-2;s.lasers.length=0;s.figures.length=0;s.n=0;if(x!==undefined){s.player.x=x;s.player.y=y||560;}return s;}
+function motifRun(d,name,x,y,compact=false){const s=a.createRun({difficulty:d,seed:3,segment:firstBossCard(8),entranceAll:true,compact});toCard(s);s.sp.need=true;s.sp.lj=0;s.sp.force=name;s.segTick=a.spStart(s)-a.SP_LEAD-2;s.lasers.length=0;s.figures.length=0;s.n=0;if(x!==undefined){s.player.x=x;s.player.y=y||560;}return s;}
 function run(s,ticks,each,move){for(let i=0;i<ticks&&s.stage==='card';i++){s.player.invulnerableUntil=s.tick+999;s.boss.hp=s.boss.maxHp;a.step(s,move?move(s):{dx:0,dy:0});if(each)each(s,i);h.clear(s);}return s;}
 const notes=s=>s.lasers.filter(l=>l.role==='note');
 const lit=l=>l.age>=l.warn&&l.age<l.warn+l.active;
@@ -69,6 +69,26 @@ test('there is always somewhere to stand, and what must be crossed in one beat i
    const free=(list,lo,hi)=>{const iv=list.map(span).sort((p,q)=>p[0]-q[0]);let at=lo,best=0;for(const [p,q] of iv){best=Math.max(best,p-at);at=Math.max(at,q);}return Math.max(best,hi-at);};
    const fx=free(L.filter(vertical),0,a.WIDTH),fy=free(L.filter(l=>!vertical(l)),R.TOP,a.HEIGHT);
    assert(fx>=LANE-1e-6,`${d} ${name}: open width ${fx}`);assert(fy>=R.BAND-1e-6,`${d} ${name}: open height ${fy}`);});}
+});
+
+test('Easy touch trill can be crossed on focus from both edges and the centre',()=>{
+ for(const start of [8,72,150,180,210,288,352]){
+  const s=motifRun('gentle','trill',start,560,true);
+  s.hero='seoha-b';a.setAbility(s,3);s.player.invulnerableUntil=0;s.noDistort=true;s.bombs=0;
+  const split=Math.min(a.WIDTH-LANE,Math.max(LANE,Math.round(start/LANE)*LANE));
+  const pulses=new Set();let target=start;
+  for(let t=0;t<900&&pulses.size<3;t++){
+   const next=notes(s).find(l=>l.rl==='trill'&&l.age>=12&&l.age<l.warn+l.active);
+   if(next){ // Read the cue after at least 0.2 s, then step across its marked boundary.
+    const [lo,hi]=span(next);assert(hi-lo<=2*LANE);
+    assert(lo===split||hi===split,'the first marked boundary stays fixed throughout the bar');
+    target=hi===split?split+6:split-6;
+    if(lit(next)){pulses.add(next);assert(s.player.x+s.player.r<lo||s.player.x-s.player.r>hi);}
+   }
+   s.boss.hp=s.boss.maxHp;a.step(s,{dx:target-s.player.x,focus:true});h.clear(s);
+  }
+  assert.equal(pulses.size,3,'three actual alternating pulses');assert.equal(s.hits,0,'no hits from '+start);
+ }
 });
 
 test('left-right trill: the halves alternate on the beat around the lane edge nearest the hero, starting on the hero\'s side',()=>{

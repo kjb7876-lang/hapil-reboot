@@ -27,10 +27,12 @@
   var ZIG=[0,3,1,4,2,5];
   var M={};
   M.trill=function(c){var m=c.mem,L=c.W/LANES,hits=[3,6,7][c.lvl],every=c.lvl===0?2:1;
-    if(c.pos===0){m.split=Math.max(2*L,Math.min(4*L,Math.round(c.px/L)*L));m.side=c.px<m.split?0:1;m.k=0;} // 금은 영웅에게 가장 가까운 줄 경계, 첫 음표는 영웅이 선 쪽
+    var easyTouch=c.compact&&c.lvl===0,edge=easyTouch?L:2*L;
+    if(c.pos===0){m.split=Math.max(edge,Math.min(c.W-edge,Math.round(c.px/L)*L));m.side=c.px<m.split?0:1;m.k=0;}
     if(m.split===undefined||c.pos%every||m.k>=hits)return;
-    var left=(m.side+m.k)%2===0;m.k++;
-    c.lane(left?0:m.split,left?m.split:c.W,c.WB,[8,8,10][c.lvl],{color:left?0:1,tone:left?'k':'t'});
+    // 휴대폰 이지는 가장 가까운 칸 경계를 고정하고 그 양쪽 두 칸까지만 번갈아 켠다.
+    var left=(m.side+m.k)%2===0,reach=easyTouch?2*L:c.W;m.k++;
+    c.lane(left?Math.max(0,m.split-reach):m.split,left?m.split:Math.min(c.W,m.split+reach),c.WB,[8,8,10][c.lvl],{color:left?0:1,tone:left?'k':'t'});
   };
   M.jangdan=function(c){var p=JANGDAN[c.lvl],h=c.W/2,o=c.W/3;
     for(var e=0;e<2;e++){var ch=p[c.pos*2+e],at=c.WB+e*.5;
