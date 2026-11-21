@@ -316,9 +316,11 @@
   function srand(s){if(s.entranceAll){s.srng=(s.srng+GOLD_SCATTER)>>>0;return s.srng/4294967296;}var x=s.srng|0||1;x^=x<<13;x^=x>>>17;x^=x<<5;s.srng=x>>>0;return s.srng/4294967296;}
   // Percentage of authored shots retained. Shared by fixed-count patterns and
   // density-scaled scripts so a fixed ring also has three distinct difficulties.
+  // 사용자 11-21 "일반몹 탄환 총량이 보스보다 많이 나와 탄환 밸런스가 역전": 몹(wave) 몫을 줄이고 보스(card) 몫을 올린다.
+  // 화면 위 평균 탄 수가 모든 난이도·기기에서 보스전 > 잡몹 구간이 되게 맞췄다(tools/audit-boss-share-v43.cjs). 몹을 줄인 만큼만 보스에 옮겨 전체 난도는 크게 바꾸지 않는다.
   var SHOT_KEEP={
-    desktop:{wave:{gentle:34,normal:43,hell:50},card:{gentle:42,normal:66,hell:78}},
-    mobile:{wave:{gentle:27,normal:36,hell:46},card:{gentle:30,normal:48,hell:66}}
+    desktop:{wave:{gentle:24,normal:30,hell:36},card:{gentle:48,normal:76,hell:78}},
+    mobile:{wave:{gentle:18,normal:23,hell:30},card:{gentle:40,normal:64,hell:76}}
   };
   // Start opening space on crowded screens well before the array's emergency cap.
   // Keep the authored fan/ring across its full width when its children split.
@@ -358,12 +360,15 @@
     }
     return s.volleyHeld;
   }
+  var THIN_MOB=[.72,.82],THIN_BOSS=[.84,.92];
   function spawn(s,x,y,angle,speed,o){
     if(s.n>=s.cap){s.dropped++;return;}
     o=o||{};var size=o.size||0;
     if(size!==SHAPE_PROP&&!o.fragment&&holdVolley(s)){s.timeHeld=(s.timeHeld||0)+1;return;}
     // 화면이 붐비면(상한의 72% 이상) 새 탄을 하나 걸러 하나만, 82% 이상이면 쉬게 한다(조형물은 예외). 느린 탄이 쌓여도 상한에 닿지 않는다.
-    if(s.n>=s.cap*.72&&size!==SHAPE_PROP&&!o.fragment){s.thin=(s.thin+1)|0;if(s.n>=s.cap*.82||s.thin%2)return;}
+    // 사용자 11-21(모바일 보스전 탄이 빨리 사라짐): 붐빌 때 먼저 덜어내는 것은 잡몹 탄이다. 보스 탄은 더 붐벼야(상한의 84%/92%) 거른다.
+    var thinAt=s.entranceAll&&s.stage==='card'&&!s.mobVolley?THIN_BOSS:THIN_MOB;
+    if(s.n>=s.cap*thinAt[0]&&size!==SHAPE_PROP&&!o.fragment){s.thin=(s.thin+1)|0;if(s.n>=s.cap*thinAt[1]||s.thin%2)return;}
     // 보스 한가운데서 쏘는 탄은 보스 몸 가장자리(MUZZLE)에서 나오게 옮긴다. 탄이 몸을 덮어 보스가 가려지지 않는다(7분야 심사 3차 지적).
     var b=s.boss;if(!o.fragment&&b&&s.stage==='card'&&Math.abs(x-b.x)<2&&Math.abs(y-b.y)<2){x+=Math.cos(angle)*MUZZLE;y+=Math.sin(angle)*MUZZLE;}
     // A designed gap or locked volley must keep the heading that the player saw.
@@ -2247,7 +2252,7 @@
    *    "솟는 바위"와 "그림"이 들어오는 방향은 기존 난이도 규칙(RISER_DIRS: 이지 위→아래 터짐, 노멀 위·아래, 헬 사방)을 그대로 따른다.
    *  · 레이백(사용자 11-18 "레이저 그림 테트리스 무자비 연출에서는 rayback적용해서 리듬감있게"): 8박 장단(BEAT=30틱)에 맞추되 소리와 박 표시는 박에, 실제로 나가는 것은 LAYBACK틱 뒤에 둔다. 박에서 살짝 뒤처져 늘어지는 맛이다. 난이도가 높을수록 덜 처진다.
    *  · 중앙 견제: 노멀·헬에서 영웅이 가운데 띠에 오래 머물면 굵은 중앙 레이저 → 한자 고리 → 육망성 순서로 강제로 끼워 넣는다(이지는 없음). ── */
-  var SP_START=960,SP_CYCLE=1980,SP_LEAD=90,SP_BEAT=30,SP_LAYBACK={gentle:7,normal:5,hell:4},SP_LEN={gentle:480,normal:480,hell:480},SP_KINDS=['laser','drawing','tetris','stones'],SP_ORDER=['laser','drawing','laser','stones','laser','tetris']; // 사용자 11-18 "레이져 무자비패턴 빈도수 증가": 여섯 번 중 세 번이 레이저
+  var SP_EXIT_WAIT=150,SP_START=960,SP_CYCLE=1980,SP_LEAD=90,SP_BEAT=30,SP_LAYBACK={gentle:7,normal:5,hell:4},SP_LEN={gentle:480,normal:480,hell:480},SP_KINDS=['laser','drawing','tetris','stones'],SP_ORDER=['laser','drawing','laser','stones','laser','tetris']; // 사용자 11-18 "레이져 무자비패턴 빈도수 증가": 여섯 번 중 세 번이 레이저
   var SP_INFO={laser:{name:'빛줄기만',sub:'탄은 멈추고 레이저만 읽는다'},drawing:{name:'붓끝 소나기',sub:'그림이 쏟아진다 · 쏘아 부숴라'},tetris:{name:'무자비 낙하',sub:'조각을 피하거나 부숴라'},stones:{name:'솟는 바위',sub:'공간이 좁아진다'}};
   var SP_ACCENT=[1,0,.5,0,1,0,.5,.5];
   function beamRaw(s,x,y,a,o){return beam(s,x,y,a,o);}
@@ -2420,8 +2425,8 @@
   function bossSpecials(s){
     if(!s.sp)spReset(s);
     if(s.sp.need&&!s.sp.done&&!s.cardEnding&&s.stage==='card'&&(s.cardDown||s.segTick-cardFireDelay(s)>=RL_EARLIEST&&s.boss.hp<=s.boss.maxHp*RL_HP))rlPull(s); // 레이저 장단 페이즈: 체력이 반 아래면 장단 구간을 당겨 시작한다(쓰러진 뒤라면 마지막 장단으로)
-    if(s.cardEnding||s.cardDown&&!rlPending(s)){if(s.sp.cur){s.sp.cut=!!s.cardEnding;spEnd(s);s.sp.cut=false;}s.spHold=0;s.sp.q.length=0;return;} // 소진 뒤에는 특수 페이즈·중앙 견제를 새로 열지 않는다(이미 켠 광선은 제 수명대로)
-    var sp=s.sp,w=spWindow(s),i;if(!(w&&w.local===SP_LEAD&&!sp.cur))s.spHold=0;
+    if(s.cardEnding||s.cardDown&&!rlPending(s)){if(s.sp.cur){s.sp.cut=!!s.cardEnding;spEnd(s);s.sp.cut=false;}s.spHold=s.spExitWait=0;s.sp.q.length=0;return;} // 소진 뒤에는 특수 페이즈·중앙 견제를 새로 열지 않는다(이미 켠 광선은 제 수명대로)
+    var sp=s.sp,w=spWindow(s),i;if(!(w&&w.local===SP_LEAD&&!sp.cur))s.spHold=s.spExitWait=0;
     // 서하 시간제어 중에는 광선의 예고·켜짐이 적의 시계로만 흐른다(#154). 레이저 구간의 악보도 같은 시계로 넘겨야 박과 광선이 어긋나 겹쳐 켜지지 않는다
     if(s.efire===false&&w&&w.kind==='laser'){sp.start++;for(i=0;i<sp.q.length;i++)sp.q[i].at++;if(s.special&&sp.cur)s.special.start++;if(s.beat)s.beat.tick++;if(s.cardDown)sp.heldDown=(sp.heldDown||0)+1;return;}
     if(sp.drain&&s.floor&&!s.floor.pieces.length){s.floor.clearing=1;sp.drain=false;}
@@ -2429,7 +2434,12 @@
     // During the announced hand-off give every remaining bullet, including
     // large props, the same harmless exit used between encounters. Keep the
     // sprites on their way out; a single slow prop cannot postpone the chart.
-    if(w.local===0&&!sp.cur)flushBullets(s);
+    // 사용자 11-21 "모바일 보스전에서 탄이 빨리 사라짐": 예고(SP_LEAD) 동안은 새 탄만 멈추고, 이미 날아가는 탄은 판정을 지닌 채 제 길로 간다.
+    // 특수 페이즈가 시작할 순간(SP_LEAD)에 아직 남은 탄만 내보내고, 그 탄이 다 빠질 때까지(최대 SP_EXIT_WAIT) 시작을 미룬다: 특수 페이즈는 전처럼 빈 화면에서 시작한다.
+    // 전에는 예고 첫 틱에 화면 탄을 한꺼번에 가속 퇴장시켜 보스 탄의 약 3분의 1이 날아가다 말고 사라졌다(tools/audit-boss-share-v43.cjs 측정).
+    if(!s.entranceAll&&w.local===0&&!sp.cur)flushBullets(s);
+    if(s.entranceAll&&w.local===SP_LEAD&&!sp.cur){if(s.n&&!s.spExitWait){flushBullets(s);s.spExitWait=1;}
+      if(s.n&&s.spExitWait&&(s.spHold=(s.spHold||0)+1)<SP_EXIT_WAIT){s.segTick--;return;}s.spExitWait=0;}
     if(w.local===SP_LEAD&&!sp.cur&&sigilUp(s)&&(s.spHold=(s.spHold||0)+1)<FIG_WAIT_MAX){s.segTick--;return;}
     s.spHold=0;
     if(w.local===SP_LEAD&&!sp.cur){sp.cur=w.kind;sp.cycle=w.cycle;s.special={kind:w.kind,start:s.tick,cycle:w.cycle,lay:SP_LAYBACK[s.difficulty]};note(s,'special');if(w.kind==='drawing')summonBrood(s);}
