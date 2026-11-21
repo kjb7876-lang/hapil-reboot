@@ -1893,6 +1893,11 @@
    *  영웅이 수집선(AUTO_COLLECT_Y) 위에 있으면, 선 아래에서 이미 아래로 내려가 영웅에게 닿을 수 없는 탄만 판정을 지닌 채 빨라져 나간다.
    *  다시 올라올 수 있는 탄(위·옆으로 가는 탄, 휘는 탄, 아직 바뀔 탄)은 건드리지 않는다. 시간이 지났다고 탄을 걷지 않는다. */
   var LINE_SWEEP_GAP=60,LINE_SWEEP_SIN=.2;
+  // 판정·모습 그대로 제 방향으로 서서히 빨라져 나간다. 영웅 가까이(HURRY_SPARE) 있는 탄은 빨라지지 않고 제 속도로 지나간다(심사: 전환 순간 가까운 탄이 갑자기 빨라지면 억울한 피격)
+  var HURRY_SOFT=170,HURRY_SPARE=96;
+  function hurryOut(s){var n=0,p=s.player;for(var i=0;i<s.n;i++){if(s.bexit[i])continue;s.bbounce[i]=0;s.bat[i]=0;s.bturn[i]=0;s.blife[i]=65535;s.bformation[i]=1;
+    var dx=s.bx[i]-p.x,dy=s.by[i]-p.y;if(dx*dx+dy*dy<HURRY_SPARE*HURRY_SPARE&&Math.cos(s.ba[i])*dx+Math.sin(s.ba[i])*dy<0)continue; // 영웅 쪽으로 다가오는 가까운 탄만 제 속도(멀어지는 탄은 빨라져도 위협이 아니다)
+    s.bacc[i]=HURRY_SOFT;if(s.bmax[i]<HURRY_MAX)s.bmax[i]=HURRY_MAX;if(s.bs[i]<EXPIRE_SPEED)s.bs[i]=EXPIRE_SPEED;n++;}return n;}
   function lineSweep(s){var p=s.player;if(!s.entranceAll||p.y>=AUTO_COLLECT_Y)return 0;var n=0;
     for(var i=0;i<s.n;i++){if(s.bexit[i]||s.bsize[i]===SHAPE_PROP||s.bacc[i]===HURRY_ACC)continue;
       if(s.by[i]<AUTO_COLLECT_Y+LINE_SWEEP_GAP||s.by[i]<p.y+LINE_SWEEP_GAP||Math.sin(s.ba[i])<LINE_SWEEP_SIN||s.bturn[i]||(s.bat[i]&&s.bage[i]<s.bat[i]))continue;
@@ -2438,8 +2443,10 @@
     // 특수 페이즈가 시작할 순간(SP_LEAD)에 아직 남은 탄만 내보내고, 그 탄이 다 빠질 때까지(최대 SP_EXIT_WAIT) 시작을 미룬다: 특수 페이즈는 전처럼 빈 화면에서 시작한다.
     // 전에는 예고 첫 틱에 화면 탄을 한꺼번에 가속 퇴장시켜 보스 탄의 약 3분의 1이 날아가다 말고 사라졌다(tools/audit-boss-share-v43.cjs 측정).
     if(!s.entranceAll&&w.local===0&&!sp.cur)flushBullets(s);
-    if(s.entranceAll&&w.local===SP_LEAD&&!sp.cur){if(s.n&&!s.spExitWait){flushBullets(s);s.spExitWait=1;}
-      if(s.n&&s.spExitWait&&(s.spHold=(s.spHold||0)+1)<SP_EXIT_WAIT){s.segTick--;return;}s.spExitWait=0;}
+    // 사용자 11-21 22:06 "아직도 보스전에서 탄환이 갑자기 사라지던데 다른 스킬사용하려고 할때 이지에서": 남은 탄을 '나가는 탄'(판정 없음·반투명)으로 바꾸지 않는다.
+    // 판정과 모습을 그대로 둔 채 제 방향으로 빨라져(hurryOut) 화면 밖으로 빠지게 하고, 다 빠질 때까지 특수 페이즈 시작을 미룬다. 상한(SP_EXIT_WAIT)을 넘긴 몇 발만 내보낸다.
+    if(s.entranceAll&&w.local===SP_LEAD&&!sp.cur){if(s.n){hurryOut(s);s.spExitWait=1;} // 영웅 곁을 지나 멀어진 탄도 그때부터 빨라진다
+      if(s.n&&s.spExitWait&&(s.spHold=(s.spHold||0)+1)<SP_EXIT_WAIT){s.segTick--;return;}if(s.n)flushBullets(s);s.spExitWait=0;}
     if(w.local===SP_LEAD&&!sp.cur&&sigilUp(s)&&(s.spHold=(s.spHold||0)+1)<FIG_WAIT_MAX){s.segTick--;return;}
     s.spHold=0;
     if(w.local===SP_LEAD&&!sp.cur){sp.cur=w.kind;sp.cycle=w.cycle;s.special={kind:w.kind,start:s.tick,cycle:w.cycle,lay:SP_LAYBACK[s.difficulty]};note(s,'special');if(w.kind==='drawing')summonBrood(s);}
