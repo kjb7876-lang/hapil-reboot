@@ -159,7 +159,7 @@
           for(var k=0;k<n;k++){
             var around=TAU*k/n,heading=around+PI,release=target+(k-(n-1)/2)*.14;
             spawn(s,b.x+radius*Math.cos(around),b.y+radius*Math.sin(around),heading,swallowSpeed,{
-              size:k%2?0:1,color:k%2?GREEN:YELLOW,formation:true,
+              size:k%2?0:1,color:k%2?GREEN:YELLOW,formation:true,keepShot:k===(n-1)/2,
               at:swallowTicks,mode:TURN,arg:release-heading,speed2:170
             });
           }

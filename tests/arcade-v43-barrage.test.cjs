@@ -209,7 +209,7 @@ test('v43 review fixes (round 3): the heroine\'s shots do not share a colour wit
  const app=h.read('src/arcade-app-v43.js');
  const enemy=Object.values(eval('('+/var COLORS=(\{[^}]+\})/.exec(app)[1]+')'));
  const rgb=c=>[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)),far=(a,b)=>Math.hypot(...rgb(a).map((v,i)=>v-rgb(b)[i]));
- const shot=/addColorStop\(\.35,'(#[0-9a-f]{6})'\)/.exec(app)[1],homing=/homingSprite=buildOrb\(3,'(#[0-9a-f]{6})'\)/.exec(app)[1];
+ const shot=/shotSprite=buildShotSprite\('(#[0-9a-f]{6})'\)/.exec(app)[1],homing=/homingSprite=buildOrb\(3,'(#[0-9a-f]{6})'\)/.exec(app)[1];
  for(const c of [shot,homing])for(const e of enemy)assert(far(c,e)>=90,c+' too close to enemy '+e);
  assert(/function namePlate\(/.test(app)&&/namePlate\(/.test(app.replace('function namePlate(','')),'a dark plate sits behind the timer and pattern name');
 });
@@ -222,7 +222,7 @@ test('v43 review fixes (round 3): on PC with side panels the pause button leaves
 test('v43 review fixes (round 3): the shot sprite is really built (no line comment swallows it)',()=>{
  const app=h.read('src/arcade-app-v43.js');
  const live=w=>app.split('\n').some(l=>l.includes(w)&&l.indexOf(w)<(l.indexOf('//')<0?Infinity:l.indexOf('//')));
- assert(live('shotSprite=c;')&&live('homingSprite=buildOrb('),'shot and homing sprites are assigned in live code');
+ assert(live('shotSprite=buildShotSprite(')&&live('redShotSprite=buildShotSprite(')&&live('homingSprite=buildOrb('),'shot and homing sprites are assigned in live code');
 });
 
 /* 사용자 요청(11-14 14:34 KST): 보스를 중심으로 도는 원(물레방아·톱니바퀴) 여러 개, 직선 레이저 난사, 해골 탄, 늪에서 올라오는 초록 악마 손 탄 */
