@@ -29,6 +29,5 @@ test('rain hit sound has a settings switch (default on, saved) that gates every 
  const html=fs.readFileSync(__dirname+'/../arcade.html','utf8'),app=fs.readFileSync(__dirname+'/../src/arcade-app-v43.js','utf8'),i18n=fs.readFileSync(__dirname+'/../src/arcade-i18n-v43.js','utf8');
  assert(/id="setting-hitSound" type="checkbox" checked/.test(html));assert(/hitSound:true/.test(app));assert.equal((i18n.match(/hitSound:'/g)||[]).length,2);
  assert.equal((app.match(/if\(settings\.hitSound\)play\(isSeoha/g)||[]).length,3,'boss·몹·충전탄 적중이 모두 스위치를 본다');
- assert((app.match(/\['music','sfx','hitSound','screenShake','lowQuality'\]/g)||[]).length===3,'저장·불러오기·동기화');
  assert(audio.CUES.rainHitMemory.level<=.1&&audio.CUES.rainHitSeoha.level<=.1,'잔잔한 음량');
 });

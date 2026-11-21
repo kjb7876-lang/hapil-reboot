@@ -206,6 +206,16 @@ test('BGM and SFX controls are independent, zero volume is preserved, changes sa
   const next=harness(storage);next.h.load();next.h.apply(false);assert.equal(next.h.settings().music,false);assert.equal(next.nodes.get('setting-sfxVolume').value,'0');assert.equal(next.nodes.get('value-sfxVolume').textContent,'0%');
 });
 
+test('the hit sound checkbox restores a saved preference',()=>{
+  const {h,nodes,storage}=harness();h.apply(false);
+  const hitSound=nodes.get('setting-hitSound');
+  assert.equal(hitSound.checked,true);
+  hitSound.checked=false;hitSound.emit('change');
+  assert.equal(JSON.parse(storage['hapil-arcade-settings-v43']).hitSound,false);
+  const next=harness(storage);next.h.load();next.h.apply(false);
+  assert.equal(next.nodes.get('setting-hitSound').checked,false);
+});
+
 test('blur and background pause clear captured touch controls and queued actions',()=>{
   const {h,w,doc,nodes,globals}=harness(),stage=nodes.get('arcade-stage'),focus=nodes.get('arcade-focus');
   stage.emit('pointerdown',{pointerId:1,target:nodes.get('arcade-canvas')});focus.emit('pointerdown',{pointerId:2});nodes.get('arcade-bomb').emit('pointerdown',{pointerId:3});
