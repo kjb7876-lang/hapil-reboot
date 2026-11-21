@@ -108,7 +108,7 @@ test('both Seoha appearances across seven bomb levels keep the same damage pulse
  }
 });
 
-test('Seoha A and B coexist with their own art while sharing the same authored combat profile',()=>{
+test('Seoha A and B share the authored attack profile and have their own portraits and charge rules',()=>{
  const a=H.get('seoha'),b=H.get('seoha-b');
  assert.equal(a.portrait,'media/arcade-v43-heroes/seoha-portrait.webp');
  assert.equal(a.sprite,'media/arcade-v43-heroes/seoha-player.webp');
@@ -121,7 +121,8 @@ test('Seoha A and B coexist with their own art while sharing the same authored c
    left.player.invulnerableUntil=right.player.invulnerableUntil=t+999;
    const input={dx:Math.sin(t/37)*2,focus:t%90<45,bomb:t===240};A.step(left,input);A.step(right,input);clear(left);clear(right);
   }
-  const comparable=s=>{const c=JSON.parse(JSON.stringify(s));delete c.hero;if(c.lastBomb)delete c.lastBomb.hero;return c;};
-  assert.deepEqual(comparable(left),comparable(right),difficulty+' differs only by appearance identity');
+  assert(Math.abs(left.gauge-right.gauge*1.77)<1e-6,difficulty+' trainee charge');
+  const comparable=s=>{const c=JSON.parse(JSON.stringify(s));delete c.hero;delete c.gauge;if(c.lastBomb)delete c.lastBomb.hero;return c;};
+  assert.deepEqual(comparable(left),comparable(right),difficulty+' authored play stays in sync before the first charge fills');
  }
 });

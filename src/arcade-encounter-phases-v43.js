@@ -81,7 +81,7 @@
   add('branch','갈라지는 가지',30,function(shot,beat,x,y){
     // Two roots share a stem, then bend in opposite directions 40 ticks after leaving it.
     for(var side=-1;side<=1;side+=2){
-      shot(x+side*3,y,down,108,side>0,{mode:turnAfter,at:40,arg:side*Math.PI/10,speed2:108});
+      shot(x+side*3,y,down,108,side>0,{mode:turnAfter,at:40,arg:side*Math.PI/10,speed2:108,keepShot:beat===0});
     }
   });
   add('rails','나란한 두 궤적',16,function(shot,beat,x,y,w){
