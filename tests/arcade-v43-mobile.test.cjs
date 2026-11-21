@@ -30,6 +30,25 @@ test('checkpoints preserve the chosen hero and growth; legacy or unknown hero id
   delete saved.hero;store['hapil-arcade-checkpoint-v43']=JSON.stringify(saved);assert.equal(M.checkpoint(3,'normal').hero,'memory','pre-selection checkpoints retain the original hero');
   saved.hero='unknown';store['hapil-arcade-checkpoint-v43']=JSON.stringify(saved);assert.equal(M.checkpoint(3,'normal').hero,'memory');
 });
+test('awakening is saved within the same segment and carried to the next stage',()=>{
+  const {w}=sandbox(),M=w.HapilMobile,st=A.STAGES[3],next=A.STAGES[4];
+  const s=A.createRun({segment:st.first,hero:'seoha',entranceAll:true,grown:{fills:21}});
+  M.tick(s,'playing',16);
+  assert.equal(M.checkpoint(3,'normal'),null);
+  A.gainExp(s,Math.ceil(A.POWER_EXP[6]*100/(2*A.POWER_EXP_RATE)));
+  M.tick(s,'playing',16);
+  assert.equal(M.checkpoint(3,'normal').union,true);
+  s.stage='bossClear';s.bossClear={nextSegment:next.first,stageCommitted:true};
+  M.commitBossClear(s);s.results.push({stage:3,stars:3});M.tick(s,'playing',16);
+  const saved=M.checkpoint(4,'normal');
+  assert.equal(saved.union,true);
+  assert.equal(saved.seg,next.first);
+  assert.equal(saved.exp,s.exp);
+  assert.equal(saved.fills,21);
+  assert.equal(saved.expRemainder,s.expRemainder);
+  assert.equal(saved.hits,0);
+  assert.equal(A.createRun({segment:saved.seg,hero:saved.hero,entranceAll:true,grown:saved}).union,true);
+});
 test('losing or clearing a stage drops the checkpoint and counts the attempt',()=>{
   const {w,store}=sandbox(),M=w.HapilMobile,st=A.STAGES[1];
   const s=A.createRun({stage:1,difficulty:'gentle',seed:3});s.started=true;s.seg=st.first+1;s.stage='wave';M.tick(s,'playing',16);

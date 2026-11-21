@@ -78,7 +78,7 @@ test('all three heroes share lives, hitbox, growth, normal automatic defense and
  for(const difficulty of ['gentle','normal','hell'])for(const hero of ['memory','seoha','seoha-b']){
   const s=idle({hero,difficulty,distort:false}),p=s.player,hp=p.hp,bombs=s.bombs;
   assert.equal(hp,A.DIFFICULTY[difficulty].hp);assert.equal(p.r,A.DIFFICULTY[difficulty].radius);
-  A.gainExp(s,1300);assert.equal(s.power,7);assert.deepEqual(A.slowField(s),A.SLOW_FIELD[7]);
+  A.gainExp(s,Math.ceil(A.POWER_EXP[6]*100/A.POWER_EXP_RATE));assert.equal(s.power,7);assert.deepEqual(A.slowField(s),A.SLOW_FIELD[7]);
   put(s,p.x,p.y,{bage:100});A.step(s,{});
   if(difficulty==='hell'){
    assert.equal(s.autoBombs,0);assert.equal(s.distorts,0);assert.equal(p.hp,hp-1);assert.equal(s.bombs,bombs);assert.equal(A.distortChance(s),0);

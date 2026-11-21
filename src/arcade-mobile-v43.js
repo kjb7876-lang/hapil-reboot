@@ -33,7 +33,7 @@
   var stats=load(STATS_KEY,null);
   if(!stats||stats.v!==1)stats={v:1,since:Date.now(),stages:{},frames:{n:0,sum:0,hist:[]},playMs:0};
   if(!Array.isArray(stats.frames.hist))stats.frames.hist=[];
-  var seen=null,seenStage=-1,seenResults=0,seenEnd='',stageMs=0,seenSeg=-1,savedClear=null,dirty=false,lastFlush=0;
+  var seen=null,seenStage=-1,seenResults=0,seenEnd='',stageMs=0,seenSeg=-1,seenUnion=false,savedClear=null,dirty=false,lastFlush=0;
   function stageRow(i,difficulty){var key=difficulty+':'+i;return stats.stages[key]||(stats.stages[key]={tries:0,clears:0,losses:0,ms:0,bestMs:0});}
   function flush(force){var now=Date.now();if(!dirty||(!force&&now-lastFlush<5000))return;lastFlush=now;dirty=false;store(STATS_KEY,stats);}
 
@@ -48,8 +48,15 @@
     return c;}
   function clearCheckpoint(){try{global.localStorage.removeItem(CP_KEY);}catch(e){}}
   function checkpointCount(value){return typeof value==='number'&&isFinite(value)&&value>=0?Math.min(2147483647,Math.floor(value)):0;}
-  function storeCheckpoint(s,index){
-    store(CP_KEY,{v:1,layout:global.HapilArcade&&global.HapilArcade.LAYOUT?global.HapilArcade.LAYOUT.version:undefined,stage:s.stageIndex,seg:index,hero:checkpointHero(s.hero),difficulty:s.difficulty,at:Date.now(),hits:checkpointCount(s.hits-s.mark.hits),bombs:checkpointCount(s.bombsUsed-s.mark.bombs),exp:checkpointCount(s.exp),fills:checkpointCount(s.fills),stock:checkpointCount(s.bombs)});
+  function storeCheckpoint(s,index,stage){
+    var nextStage=stage===undefined?s.stageIndex:stage,continuing=nextStage===s.stageIndex;
+    var data={v:1,layout:global.HapilArcade&&global.HapilArcade.LAYOUT?global.HapilArcade.LAYOUT.version:undefined,stage:nextStage,
+      seg:index,hero:checkpointHero(s.hero),difficulty:s.difficulty,at:Date.now(),
+      hits:continuing?checkpointCount(s.hits-s.mark.hits):0,bombs:continuing?checkpointCount(s.bombsUsed-s.mark.bombs):0,
+      exp:checkpointCount(s.exp),fills:checkpointCount(s.fills),stock:checkpointCount(s.bombs)};
+    if(s.expRemainder)data.expRemainder=s.expRemainder;
+    if(s.union)data.union=true;
+    store(CP_KEY,data);
   }
   // 격파 순간 앱도 호출한다. 2초의 화면 연출 중 나가도 쓰러뜨린 보스부터 다시 싸우지 않는다.
   function commitBossClear(s){
@@ -60,6 +67,7 @@
     if(!Number.isInteger(index)&&A&&A.nextSegmentIndex)index=A.nextSegmentIndex(s);
     var next=A&&A.SEGMENTS[index];
     if(!s.bossClear.stageCommitted&&next&&next.stage===s.stageIndex)storeCheckpoint(s,index);
+    else if(s.union&&next)storeCheckpoint(s,index,next.stage);
     else clearCheckpoint();
     return true;
   }
@@ -70,25 +78,28 @@
     var seg=A.SEGMENTS[c.seg];
     var age=Date.now()-c.at;
     if(c.stage!==stage||c.difficulty!==difficulty||!seg||seg.stage!==stage||age<0||age>=CP_MAX_AGE)return null;
-    if(A.STAGES[stage]&&A.STAGES[stage].first===c.seg)return null; // 스테이지 첫 구간이면 처음부터와 같다
-    c.hero=checkpointHero(c.hero);['hits','bombs','exp','fills'].forEach(function(k){c[k]=checkpointCount(c[k]);});if(c.stock!==undefined)c.stock=checkpointCount(c.stock);return c; // stock: 남은 필살기(11-20 격파 보상). 옛 저장에는 없다
+    c.hero=checkpointHero(c.hero);
+    if(c.hero!=='seoha'||c.union!==true)delete c.union;
+    if(c.expRemainder!==undefined)c.expRemainder=Math.min(99,checkpointCount(c.expRemainder));
+    if(!c.union&&A.STAGES[stage]&&A.STAGES[stage].first===c.seg)return null; // 스테이지 첫 구간이면 처음부터와 같다
+    ['hits','bombs','exp','fills'].forEach(function(k){c[k]=checkpointCount(c[k]);});if(c.stock!==undefined)c.stock=checkpointCount(c.stock);return c; // stock: 남은 필살기(11-20 격파 보상). 옛 저장에는 없다
   }
 
   /* 앱이 매 프레임 부른다. s: 지금 판, mode: 화면 상태, ms: 지난 프레임 시간. */
   function tick(s,mode,ms){
     if(mode!=='playing'||!s)return;
     if(ms>0&&ms<1000){var b=Math.min(BUCKETS-1,Math.floor(ms/BUCKET_MS));stats.frames.hist[b]=(stats.frames.hist[b]||0)+1;stats.frames.n++;stats.frames.sum+=ms;stats.playMs+=ms;stageMs+=ms;dirty=true;} // 스테이지 시간은 실제로 그린 프레임만 더한다(일시정지·백그라운드 시간 제외)
-    if(s!==seen){seen=s;seenStage=-1;seenResults=s.results.length;seenEnd='';seenSeg=-1;}
+    if(s!==seen){seen=s;seenStage=-1;seenResults=s.results.length;seenEnd='';seenSeg=-1;seenUnion=false;}
     if(s.results.length>seenResults){ // 스테이지를 깼다
       seenResults=s.results.length;var r=s.results[s.results.length-1],row=stageRow(r.stage!=null?r.stage:s.stageIndex,s.difficulty),took=Math.round(stageMs);
-      if(!s.bossOnly){row.clears++;row.ms+=took;row.bestMs=row.bestMs?Math.min(row.bestMs,took):took;clearCheckpoint();}dirty=true;flush(true);
+      if(!s.bossOnly){row.clears++;row.ms+=took;row.bestMs=row.bestMs?Math.min(row.bestMs,took):took;if(!s.union)clearCheckpoint();}dirty=true;flush(true);
     }
     // 깬 스테이지 시간을 먼저 적은 뒤(엔진이 결과와 다음 스테이지 번호를 한 프레임에 바꾼다) 새 스테이지 시계를 잰다.
     if(s.stageIndex!==seenStage){seenStage=s.stageIndex;stageMs=0;if(!s.bossOnly)stageRow(s.stageIndex,s.difficulty).tries++;dirty=true;}
     if((s.stage==='lost'||s.stage==='won')&&seenEnd!==s.stage){seenEnd=s.stage;if(s.stage==='lost'&&!s.bossOnly){var lr=stageRow(s.stageIndex,s.difficulty);lr.losses++;lr.ms+=Math.round(stageMs);}if(!s.bossOnly)clearCheckpoint();dirty=true;flush(true);return;}
     if(commitBossClear(s)){flush(false);return;} // 화면에 남은 이전 seg를 다시 저장하지 않는다.
-    if(!s.bossOnly&&s.started&&s.seg!==seenSeg&&s.stage!=='lost'&&s.stage!=='won'){
-      seenSeg=s.seg;var A=global.HapilArcade,seg=A&&A.SEGMENTS[s.seg];
+    if(!s.bossOnly&&s.started&&(s.seg!==seenSeg||!!s.union!==seenUnion)&&s.stage!=='lost'&&s.stage!=='won'){
+      seenSeg=s.seg;seenUnion=!!s.union;var A=global.HapilArcade,seg=A&&A.SEGMENTS[s.seg];
       if(seg&&seg.stage===s.stageIndex)storeCheckpoint(s,s.seg); // 영웅·성장과 이 스테이지의 피격·폭탄을 보존한다.
     }
     flush(false);

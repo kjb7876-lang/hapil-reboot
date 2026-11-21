@@ -84,3 +84,17 @@ test('one unavailable Seoha portrait falls back to its own text without disablin
   assert.equal(h.fx.debug().cutHero,other);assert(h.calls.filter(c=>c.kind==='image').every(c=>c.src===H.get(other).cutin));
  }
 });
+
+test('the unlocked pair draws the Memory Gunner shot and both ultimate effects',()=>{
+ const h=harness({ink:true}),s=state('seoha');
+ s.union=true;s.memoryShots=[0,1];s.lastBomb={...s.lastBomb,hero:'seoha-b',union:true,name:'되찾은 시간 · 기억 해방'};
+ h.fx.shots(h.g,s,1);
+ assert(h.calls.some(c=>c.kind==='image'&&/shard/.test(c.src)));
+ h.fx.onEvent('bomb',s,0);
+ assert.equal(h.fx.debug().bombs,2);
+ assert.equal(h.fx.debug().cutHero,'seoha-b');
+ assert.equal(h.fx.debug().cutName,'되찾은 시간 · 기억 해방');
+ h.fx.drawTexts(h.g,.35);
+ h.fx.draw(h.g,s,1.4);
+ assert(h.calls.some(c=>c.kind==='image'&&/bolt/.test(c.src)));
+});

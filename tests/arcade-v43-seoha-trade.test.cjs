@@ -7,9 +7,9 @@ const A=h.need();
 function lastCardOf(pred){for(let i=0;i<A.SEGMENTS.length;i++){const g=A.SEGMENTS[i],n=A.SEGMENTS[i+1];if(g.kind==='card'&&pred(g)&&(!n||n.kind!=='card'||n.actor!==g.actor))return i;}return -1;}
 function heartAt(s,kind){const p=s.player,i=s.itemCount++;s.ix[i]=p.x;s.iy[i]=p.y;s.ivy[i]=0;s.ikind[i]=kind;s.ilife[i]=0;}
 
-test('Seoha levels up twice as fast; Memory unchanged; chapter floor still applies',()=>{
+test('Seoha levels up twice as fast; both use the same experience rate; chapter floor still applies',()=>{
  const m=idle({hero:'memory'}),s=idle({hero:'seoha'});A.gainExp(m,50);A.gainExp(s,50);
- assert.equal(m.exp,50);assert.equal(s.exp,100);assert.equal(m.power,1);assert(s.power>=2,'60 exp reached in half the kills');
+ assert.equal(m.exp,45);assert.equal(s.exp,90);assert.equal(m.power,1);assert(s.power>=2,'60 exp reached in half the kills');
  assert.equal(A.SEOHA_EXP,2);
 });
 
