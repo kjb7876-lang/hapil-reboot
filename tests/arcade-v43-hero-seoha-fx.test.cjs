@@ -24,7 +24,7 @@ function state(hero,level=7){return {hero,power:level,bombLevel:level,tick:120,p
 
 const SEOHA_IDS=['seoha','seoha-b'];
 test('both Seoha portraits preload once and clock-hand shots preserve shot state',()=>{
- const h=harness({ink:false}),n=h.loaded.length;
+ const h=harness({ink:false}),n=h.loaded.length;h.fx.setInkRed(false);
  for(const hero of SEOHA_IDS){
   const s=state(hero),before=JSON.stringify(s);h.calls.length=0;
   for(let i=0;i<30;i++)h.fx.shots(h.g,s,i/60);
@@ -60,7 +60,7 @@ test('each Seoha appearance uses her own cached portrait and label for all seven
 });
 test('both Seoha appearances use the same clockwork effects without memory glyphs or combat changes',()=>{
  for(const ink of [true,false])for(const hero of SEOHA_IDS){
-  const h=harness({ink}),s=state(hero);s.zaps=[180,520,180,180,7];
+  const h=harness({ink}),s=state(hero);h.fx.setInkRed(false);s.zaps=[180,520,180,180,7];
   h.fx.onEvent('bomb',s,0);h.fx.onEvent('bombPulse',s,.5);h.fx.onEvent('distort',s,.5);
   const expected=JSON.parse(JSON.stringify(s));expected.zaps=[];h.fx.draw(h.g,s,.6);h.fx.clock(h.g,s,.6);h.fx.field(h.g,s,.6);
   assert.equal(JSON.stringify(s),JSON.stringify(expected),'only the pre-existing one-shot zap queue is consumed');

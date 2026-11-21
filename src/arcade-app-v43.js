@@ -34,8 +34,8 @@
   var scale=1,lite=false,frameMs=16,framesSeen=0,offsetX=0,offsetY=0;
   var state=null,mode='title',difficulty='normal',accumulator=0,lastStamp=0,visual=0,lastRun=null;
   var particles=[],spellDim=0,flash=0,hurtFlash=0,hurtRing=null,VERMILION='#a8382a',shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,SPELL_BANNER_TICKS=42,bannerSpell=false,bannerTitle='',bannerSub='',toast=null;
-  var keys={},finger={active:false,id:null,x:0,y:0},focusHeld=false,focusPointer=null,focusLatched=false,bombQueued=false;
-  var settings={music:true,sfx:true,hitSound:true,musicVolume:1,sfxVolume:1,screenShake:true,inkRedShots:false,lowQuality:false,abilityMemory:7,abilitySeoha:3,abilityV:3,keyFocus:'Shift',keyBomb:'KeyX'}; // 능력조절(사용자 11-20): 영웅별 0(끔)~7단계
+  var keys={},finger={active:false,id:null,x:0,y:0,relative:false,targetX:0,targetY:0},focusHeld=false,focusPointer=null,focusLatched=false,bombQueued=false;
+  var settings={music:true,sfx:true,hitSound:true,musicVolume:1,sfxVolume:1,screenShake:true,inkRedShots:true,lowQuality:false,abilityMemory:7,abilitySeoha:3,abilityV:3,keyFocus:'Shift',keyBomb:'KeyX'}; // 능력조절(사용자 11-20): 영웅별 0(끔)~7단계
   var fx=null,music=null,best=0,bests={},lastSpell=null,drill=null,DRILL_KEY='hapil-arcade-v43-drill',lastItemSound=0,progress=Progress.fresh(),saveOk=true;
   var themeOverride=null,turbo=0,rushStage=false,oneCreditEligible=false;
   var Story=global.HapilArcadeStory||null,BossIntros=global.HapilArcadeBossIntros||null,story=null,storyQuiet=false,storySeen={},pauseReturn='playing',rulesReturn='title',storyArrivalActor='';
@@ -53,7 +53,8 @@
   var devUnlocked=false;
   try{var dq=/[?&]dev=([01])\b/.exec(global.location&&global.location.search||'');if(dq)global.localStorage.setItem('hapil-arcade-dev-unlock-v43',dq[1]);devUnlocked=DEV_VISIBLE&&global.localStorage.getItem('hapil-arcade-dev-unlock-v43')==='1';}catch(e){devUnlocked=false;}
   try{devMode=devUnlocked&&global.localStorage.getItem(DEV_KEY)==='1';}catch(e){devMode=false;}
-  var compact=!!(global.matchMedia&&global.matchMedia('(pointer:coarse)').matches)||global.innerWidth<520;
+  var nav=global.navigator||{},tabletTouch=nav.maxTouchPoints>1&&(/iPad|Android/i.test(nav.userAgent||'')||nav.platform==='MacIntel');
+  var compact=!!(Mobile&&Mobile.isNative&&Mobile.isNative())||tabletTouch||!!(global.matchMedia&&global.matchMedia('(pointer:coarse)').matches)||global.innerWidth<520;
 
   function finite(v,fallback){return v===v&&v!==Infinity&&v!==-Infinity?v:fallback;}
   function offscreen(w,h){var c=document.createElement('canvas');c.width=Math.max(1,Math.ceil(w));c.height=Math.max(1,Math.ceil(h));return c;}
@@ -645,6 +646,14 @@
     var bak=null;try{bak=JSON.parse(global.localStorage.getItem(BACKUP_KEY)||'null');}catch(e){bak=null;}
     var mainCount=progress.cleared.length;
     if(bak&&typeof bak==='object'&&!Array.isArray(bak)){try{progress=mergeProgress(progress,Progress.sanitize(bak.progress));}catch(e){}lastSaveAt=finite(Number(bak.at),0)||0;}
+    var chosen=raw&&raw.difficulty;
+    if(!Object.prototype.hasOwnProperty.call(Arcade.DIFFICULTY,chosen))chosen=bak&&bak.progress&&bak.progress.difficulty;
+    if(Object.prototype.hasOwnProperty.call(Arcade.DIFFICULTY,chosen))progress.difficulty=chosen;
+    else{
+      // A first-stage checkpoint can predate the first saved stage clear.
+      var checkpoint=Mobile&&Mobile.checkpoint&&Mobile.checkpoint(Progress.resume(progress));
+      progress.difficulty=checkpoint?checkpoint.difficulty:compact?'gentle':'normal';
+    }
     if(Chapters){var lg=null;try{lg=JSON.parse(global.localStorage.getItem(Chapters.LOG_KEY)||'null');}catch(e){lg=null;}chapterLog=Chapters.cleanLog(lg,Arcade.STAGES);if(bak&&bak.chapters)chapterLog=Chapters.mergeLog(chapterLog,bak.chapters,Arcade.STAGES);}
     if(progress.cleared.length>mainCount||(raw===null&&progress.cleared.length))saveProgress(); // 되살린 기록을 본 키에도 다시 쓴다
     try{best=Math.max(0,finite(Number(global.localStorage.getItem(BEST_KEY)),0))||0;}catch(e){best=0;}
@@ -1916,7 +1925,7 @@
     if(HeroVisibility&&mode==='playing')heroOpacity=HeroVisibility.smooth(heroOpacity,HeroVisibility.target(s,Arcade),elapsed); // 한 프레임 1회: 섬광 뒤 재그리기에도 같은 값을 쓴다.
     if(fxStage!==s.stageIndex)initFx(themeOf(s.stageIndex).fx,s.stageIndex);
     if(mode==='playing')updateFx(Math.min(.05,elapsed));
-    offsetX=offsetY=0;if(shake>0){if(settings.screenShake){offsetX=(Math.random()-.5)*shake*.7;offsetY=(Math.random()-.5)*shake*.7;}shake--;}
+    offsetX=offsetY=0;if(shake>0){if(settings.screenShake){var amplitude=shake*(compact?.35:.7);offsetX=(Math.random()-.5)*amplitude;offsetY=(Math.random()-.5)*amplitude;}shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
     drawBackground(s);drawFx();drawTopShade();drawVeil(s);drawCrowdWash(s);if(Cues)Cues.drawUnder(ctx,s,Arcade,Ink);drawFigures(s,true);drawSkillFx(s);drawEmblems(s);drawIllusions(s);drawBoss(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawCardCast(s);drawPatternCue(s);drawShots(s);drawDrifts();drawInks();drawParticles();drawFlashes();drawItems(s);if(Spirit)Spirit.drawWorld(ctx,s,Arcade,Ink,mode==='playing',{quiet:!!toast,dim:s.formHold>s.tick,heart:itemSprites[0]});if(Cues)Cues.drawWorld(ctx,s,Arcade,Ink);drawLasers(s);drawFigures(s);drawRipples(s);drawHeroLight(s);drawBullets(s);drawThrown(s);drawLaserCues(s);if(Cues)Cues.drawOver(ctx,s,Arcade,Ink);drawNudgeCue(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink))drawPlayer(s);if(s.union||!(flash>0&&Ink))drawHitbox(s);if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);drawFormShift(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
@@ -1937,10 +1946,12 @@
   function inputForStep(){
     var focus=!!keys.focus||focusHeld||focusLatched,bomb=bombQueued;bombQueued=false;
     var speed=focus?1.8:4.2,x=(keys.ArrowRight||keys.d?1:0)-(keys.ArrowLeft||keys.a?1:0),y=(keys.ArrowDown||keys.s?1:0)-(keys.ArrowUp||keys.w?1:0);
-    if(x||y){var n=Math.sqrt(x*x+y*y);return {dx:x/n*speed,dy:y/n*speed,focus:focus,bomb:bomb};}
-    // 판 아래쪽에서는 손가락과의 간격을 줄여 키보드처럼 맨 아래까지 피할 수 있게 한다.
+    if(x||y){if(state&&state.compact&&state.entranceAll)speed*=Arcade.LIVE_MOBILE.move;var n=Math.sqrt(x*x+y*y);return {dx:x/n*speed,dy:y/n*speed,focus:focus,bomb:bomb};}
+    // 터치는 처음 짚은 자리를 기준으로 움직이고, 마우스는 가리킨 자리를 따라간다.
     if(finger.active&&state){
-      var p=state.player,lift=Math.min(FINGER_LIFT,Math.max(0,H-finger.y));
+      var p=state.player;
+      if(finger.relative)return {dx:finger.targetX-p.x,dy:finger.targetY-p.y,focus:focus,bomb:bomb};
+      var lift=Math.min(FINGER_LIFT,Math.max(0,H-finger.y));
       return {dx:finite(finger.x-p.x,0),dy:finite(finger.y-lift-p.y,0),focus:focus,bomb:bomb};
     }
     return {dx:0,dy:0,focus:focus,bomb:bomb};
@@ -2168,7 +2179,7 @@
   function endDrill(){drill=null;show('arcade-drill-skip',false);try{global.localStorage.setItem(DRILL_KEY,'1');}catch(e){}}
   function drillTick(inp){
     var d=drill,p=state.player;if(!d)return;d.t++;d.all++;
-    p.x=Math.max(18,Math.min(W-18,p.x+Math.max(-4.2,Math.min(4.2,inp.dx))));p.y=Math.max(40,Math.min(H-24,p.y+Math.max(-4.2,Math.min(4.2,inp.dy))));p.focus=!!inp.focus;state.tick++;
+    Arcade.movePlayer(state,inp);state.tick++;
     var mv=Math.hypot(p.x-d.lx,p.y-d.ly);d.lx=p.x;d.ly=p.y;
     if(d.done>=0){if(d.all-d.done>=DRILL_END)endDrill();return;}
     if(d.step===0){d.moved+=mv;if(d.moved>=DRILL_MOVE)nextDrill(d);}
@@ -2442,9 +2453,24 @@
       if(ph&&ph.phase==='speech'&&ph.t>.3&&Arcade.skipEntrance(state)){e.preventDefault();return;}
       if(finger.active)return;
       e.preventDefault();var q=fieldPoint(e);finger.active=true;finger.id=e.pointerId;finger.x=q.x;finger.y=q.y;
+      finger.relative=!!state&&(e.pointerType==='touch'||e.pointerType==='pen');
+      if(finger.relative){finger.targetX=state.player.x;finger.targetY=state.player.y;}
       try{stage.setPointerCapture(e.pointerId);}catch(ignore){}
     });
-    stage.addEventListener('pointermove',function(e){if(!finger.active||e.pointerId!==finger.id)return;e.preventDefault();var q=fieldPoint(e);finger.x=q.x;finger.y=q.y;});
+    stage.addEventListener('pointermove',function(e){
+      if(!finger.active||e.pointerId!==finger.id)return;
+      e.preventDefault();var q=fieldPoint(e);
+      if(finger.relative&&state){
+        var gain=keys.focus||focusHeld||focusLatched?Arcade.LIVE_MOBILE.focusDrag:Arcade.LIVE_MOBILE.drag;
+        var dx=(q.x-finger.x)*gain,dy=(q.y-finger.y)*gain,p=state.player;
+        // 방향을 바꾸면 아직 따라가지 못한 거리를 버려 역방향 회피가 곧바로 시작된다.
+        if(dx*(finger.targetX-p.x)<0)finger.targetX=p.x;
+        if(dy*(finger.targetY-p.y)<0)finger.targetY=p.y;
+        finger.targetX=Math.max(8,Math.min(W-8,finger.targetX+dx));
+        finger.targetY=Math.max(40,Math.min(H-14,finger.targetY+dy));
+      }
+      finger.x=q.x;finger.y=q.y;
+    });
     ['pointerup','pointercancel','lostpointercapture'].forEach(function(type){stage.addEventListener(type,function(e){if(e.pointerId===finger.id){finger.active=false;finger.id=null;}});});
     document.addEventListener('keydown',function(e){var key=e.key.length===1?e.key.toLowerCase():e.key,form=e.target&&e.target.closest&&e.target.closest('input,select,textarea,button');
       if(mode==='rules'&&key==='Escape'){e.preventDefault();if(!e.repeat)closeRules();return;}

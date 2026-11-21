@@ -124,7 +124,10 @@
           if(t%90===75)fan(s,b.x,b.y,3,aim(s,b.x,b.y),.6,100,{color:YELLOW,size:K.RICE});}},
         p8_deathText:{name:'사망의 글자',scene:'61',fire:function(s,t){var b=s.boss,k;
           // 신호등: 붉은 큰 탄이 멈췄다가 둘로 갈라지고, 갈라진 조각이 다시 갈라진다(사망이 사몽으로). 푸른 고리가 출발 신호.
-          if(t%110===0){var n=count(s,3);for(k=0;k<n;k++)spawn(s,b.x,b.y,PI/2+(k-(n-1)/2)*.55,150,{color:RED,size:2,accel:-150,min:0,at:70,mode:K.MODE_BRANCH,arg:2,gen:pick(s,2,3,3),speed2:72});}
+          if(t%110===0){
+            var n=count(s,3),generations=s.entranceAll?({gentle:1,normal:2,hell:3})[s.difficulty]:pick(s,2,3,3);
+            for(k=0;k<n;k++)spawn(s,b.x,b.y,PI/2+(k-(n-1)/2)*.55,150,{color:RED,size:2,accel:-150,min:0,at:70,mode:K.MODE_BRANCH,arg:2,gen:generations,speed2:72,keepShot:s.entranceAll&&k===0});
+          }
           if(t%110===55)ring(s,b.x,b.y,count(s,17),64,rand(s)*TAU,{color:GREEN,size:1});
           if(t%110===85)fan(s,b.x,b.y,count(s,3),aim(s,b.x,b.y),.4,110,{color:CYAN,size:K.RICE});}},
         p8_ghosts:{name:'코스믹 보스들의 망령',scene:'61',fire:function(s,t){var b=s.boss,k;

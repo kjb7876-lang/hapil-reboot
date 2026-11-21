@@ -41,7 +41,11 @@
         // 40 명령 범위: 느린 고리
         p5range:function(s,m){K.ring(s,m.x,m.y,K.count(s,8),54,m.shots*.4,{color:m.color,size:1});},
         // 41 불타는 모래알: 떨어지다 불꽃 고리로 터진다
-        p5ember:function(s,m){for(var k=0;k<K.pick(s,1,2,2);k++)K.spawn(s,m.x,m.y,PI/2+(k-.5)*.6,70,{color:R,size:1,at:44+k*16,mode:K.MODE_SPLIT,arg:K.pick(s,5,6,7),speed2:56});},
+        p5ember:function(s,m){
+          var pairs=s.entranceAll?(s.difficulty==='hell'&&m.shots%3===2?2:1):K.pick(s,1,2,2);
+          var sparks=s.entranceAll?K.pick(s,3,4,5):K.pick(s,5,6,7);
+          for(var k=0;k<pairs;k++)K.spawn(s,m.x,m.y,PI/2+(pairs===1&&s.entranceAll?(m.shots%2?.3:-.3):(k-.5)*.6),70,{color:R,size:1,at:44+k*16,mode:K.MODE_SPLIT,arg:sparks,speed2:56});
+        },
         // 42 명령문 한 토막: 가로로 늘어선 쌀알 다섯
         p5word:function(s,m){for(var k=-2;k<=2;k++)K.spawn(s,m.x+k*9,m.y+8,PI/2,80,{color:m.color,size:RICE});},
         // 43 묻힌 기록: 떨어져 멈췄다가 천천히 가라앉는다

@@ -79,7 +79,11 @@
         // 분노: 불씨 하나와 작은 불티
         p2_spark:function(s,m){spawn(s,m.x,m.y,HALF,58,{size:PROP,color:P.p2_flame,spin:.08});tail(s,m.x,m.y,HALF,58,2,{color:RED,size:0});fan(s,m.x,m.y,count(s,2),aim(s,m.x,m.y),.4,82,{color:RED,size:0});},
         // 교만: 일곱 갈래로 퍼지는 신호
-        p2_signal:function(s,m){ring(s,m.x,m.y,7,62,HALF,{color:m.color,size:0});ring(s,m.x,m.y,7,46,HALF+PI/7,{color:WHITE,size:0});},
+        p2_signal:function(s,m){
+          ring(s,m.x,m.y,7,62,HALF,{color:m.color,size:0});
+          // Let the seven-point outline pass before adding the slower echo.
+          if(!s.entranceAll||(m.shots+1)%pick(s,4,3,2)===0)ring(s,m.x,m.y,7,46,HALF+PI/7,{color:WHITE,size:0});
+        },
         // 사이보그 개: 짧고 빠른 물어뜯기
         p2_bite:function(s,m){fan(s,m.x,m.y,pick(s,1,2,3),aim(s,m.x,m.y),.24,116,{color:CYAN,size:RICE});}
       };

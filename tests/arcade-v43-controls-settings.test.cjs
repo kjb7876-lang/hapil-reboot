@@ -66,6 +66,16 @@ function pickerFor(h){
   h.picker(picker);return picker;
 }
 
+test('a new phone starts on Easy and restores the difficulty from saves and active checkpoints',()=>{
+ const main='hapil-arcade-save-v43',backup=main+'-bak',cp='hapil-arcade-checkpoint-v43';
+ const checkpoint={v:1,stage:0,seg:1,difficulty:'hell',at:Date.now()};
+ for(const [saved,want] of [[{},'gentle'],[{[main]:JSON.stringify({difficulty:'normal'})},'normal'],
+   [{[main]:'{',[backup]:JSON.stringify({progress:{difficulty:'hell'}})},'hell'],
+   [{[cp]:JSON.stringify(checkpoint)},'hell'],[{[cp]:JSON.stringify({...checkpoint,at:0})},'gentle']]){
+   const {h,w}=harness(saved);h.loadProgress();assert.equal(w.HapilArcadeApp.debugState().progress.difficulty,want);
+ }
+});
+
 test('new game waits for hero confirmation, cancel leaves no run, and Seoha confirmation and retry preserve the chosen hero',()=>{
  const {h,w,nodes,storage,audio}=harness(),picker=pickerFor(h);h.prepare(null,audio);h.mode('title');
  nodes.get('arcade-start').click();assert.equal(w.HapilArcadeApp.getState().mode,'hero');assert.equal(picker.selected,'memory');
@@ -139,17 +149,26 @@ test('two-finger movement + held focus really changes engine speed; release/canc
   stage.emit('lostpointercapture',{pointerId:11});assert.equal(h.input().dx,0);assert.equal(h.finger().id,null);
 });
 
-test('touch movement keeps its central clearance and can dodge along the bottom edge',()=>{
-  const {h,s,nodes}=harness(),stage=nodes.get('arcade-stage'),canvas=nodes.get('arcade-canvas');
-  stage.emit('pointerdown',{target:canvas,clientX:s.player.x,clientY:400});
-  for(let i=0;i<80;i++)A.step(s,h.input());
-  assert.equal(s.player.y,336);
-  nodes.get('arcade-focus').emit('pointerdown',{pointerId:22});
-  stage.emit('pointermove',{clientX:s.player.x,clientY:A.HEIGHT-1});
-  A.step(s,h.input());
-  assert.equal(s.player.y,338,'two-pixel focused step');
-  for(let i=0;i<160;i++)A.step(s,h.input());
-  assert.equal(s.player.y,A.HEIGHT-14,'reaches the same bottom bound as keyboard');
+test('phone drags start in place, scale small corrections and change direction without overshoot',()=>{
+  const {h,nodes,audio}=harness(),stage=nodes.get('arcade-stage'),canvas=nodes.get('arcade-canvas');
+  for(const [hero,union] of [['memory',false],['seoha',false],['seoha-b',false],['seoha',true]]){
+    const s=A.createRun({hero,compact:true,entranceAll:true,ability:0});s.union=union;
+    s.stage='break';s.stageTick=-10000;s.player.x=100;s.player.y=400;h.prepare(s,audio);
+    const touch=(type,x,y)=>stage.emit(type,{target:canvas,pointerType:'touch',pointerId:11,clientX:x,clientY:y});
+    const step=()=>A.step(s,h.input());
+    touch('pointerdown',10,280);step();assert.deepEqual([s.player.x,s.player.y],[100,400]);
+    touch('pointermove',15,280);step();assert(Math.abs(s.player.x-104.4)<1e-8);
+    const x=s.player.x;touch('pointermove',200,280);step();assert(Math.abs(s.player.x-x-10.2)<1e-8,'drag speed cap');
+    const peak=s.player.x;touch('pointermove',198,280);step();assert(Math.abs(peak-s.player.x-1.76)<1e-8);
+    const focus=nodes.get('arcade-focus');focus.emit('pointerdown',{pointerId:22});const before=s.player.x;
+    touch('pointermove',199,280);step();assert(Math.abs(s.player.x-before-.60)<1e-8);
+    const focused=s.player.y;touch('pointermove',199,639);step();assert(Math.abs(s.player.y-focused-1.7)<1e-8);
+    focus.emit('pointerup',{pointerId:22});for(let t=0;t<40;t++)step();
+    touch('pointerup',199,639);const y=s.player.y;
+    touch('pointerdown',330,100);step();assert.equal(s.player.y,y,'regrip never jumps');
+    touch('pointermove',330,639);for(let t=0;t<60;t++)step();assert.equal(s.player.y,A.HEIGHT-14);
+    touch('pointercancel',330,639);assert.equal(h.input().dx,0);assert.equal(h.input().dy,0);
+  }
 });
 
 test('holding a tap that dismisses a boss speech never starts a movement drag',()=>{
@@ -225,7 +244,7 @@ test('blur and background pause clear captured touch controls and queued actions
 
 test('invalid persisted values are bounded; reduced-shake and graphics settings load',()=>{
   const {h}=harness({'hapil-arcade-settings-v43':JSON.stringify({musicVolume:7,sfxVolume:-1,music:'false',screenShake:false,lowQuality:true})});h.load();
-  assert.equal(h.settings().music,true);assert.equal(h.settings().musicVolume,1);assert.equal(h.settings().sfxVolume,0);assert.equal(h.settings().screenShake,false);assert.equal(h.quality(),true);
+  assert.equal(h.settings().inkRedShots,true,'older settings without a palette use vermilion');assert.equal(h.settings().music,true);assert.equal(h.settings().musicVolume,1);assert.equal(h.settings().sfxVolume,0);assert.equal(h.settings().screenShake,false);assert.equal(h.quality(),true);
 });
 
 

@@ -77,7 +77,8 @@
     if(!Number.isInteger(stage)||!A.STAGES[stage]||!Number.isInteger(c.stage)||!Number.isInteger(c.seg)||typeof c.at!=='number'||!isFinite(c.at))return null;
     var seg=A.SEGMENTS[c.seg];
     var age=Date.now()-c.at;
-    if(c.stage!==stage||c.difficulty!==difficulty||!seg||seg.stage!==stage||age<0||age>=CP_MAX_AGE)return null;
+    if(!Object.prototype.hasOwnProperty.call(A.DIFFICULTY,c.difficulty)||(difficulty!==undefined&&c.difficulty!==difficulty))return null;
+    if(c.stage!==stage||!seg||seg.stage!==stage||age<0||age>=CP_MAX_AGE)return null;
     c.hero=checkpointHero(c.hero);
     if(c.hero!=='seoha'||c.union!==true)delete c.union;
     if(c.expRemainder!==undefined)c.expRemainder=Math.min(99,checkpointCount(c.expRemainder));

@@ -17,7 +17,7 @@
     if(!s||!s.player||!A||!finite(s.player.x)||!finite(s.player.y))return 1;
     var px=s.player.x,py=s.player.y,best=FAR,scale=finite(s.sizeScale)?Math.max(0,s.sizeScale):1,i,x,y,r,dx,dy,d,limit;
     for(i=0;i<(s.n||0);i++){
-      if(s.bage[i]<Math.max(A.BLOOM_TICKS||0,s.bgrace&&s.bgrace[i]||0))continue;
+      if((s.bexit&&s.bexit[i])||s.bage[i]<Math.max(A.BLOOM_TICKS||0,s.bgrace&&s.bgrace[i]||0))continue;
       x=s.bx[i];y=s.by[i];if(!finite(x)||!finite(y))continue;
       var size=s.bsize[i],color=s.bcolor[i];
       if(size===A.SHAPE_PROP&&(!A.PROPS||!A.PROPS[color]))continue;
@@ -31,8 +31,9 @@
     for(i=0;i<lasers.length;i++){
       var l=lasers[i];if(l.age<l.warn||l.age>=l.warn+l.active)continue;
       if(!finite(l.x)||!finite(l.y)||!finite(l.angle)||!finite(l.width))continue;
-      x=l.x+Math.cos(l.angle)*LASER_LENGTH;y=l.y+Math.sin(l.angle)*LASER_LENGTH;
-      d=segmentDistance(px,py,l.x,l.y,x,y)-l.width*.5;
+      dx=Math.cos(l.angle)*LASER_LENGTH;dy=Math.sin(l.angle)*LASER_LENGTH;
+      x=l.full?l.x-dx:l.x;y=l.full?l.y-dy:l.y;
+      d=segmentDistance(px,py,x,y,l.x+dx,l.y+dy)-l.width*.5;
       if(d<=NEAR)return MIN_OPACITY;if(d<best)best=d;
     }
     var figures=s.figures||[];
