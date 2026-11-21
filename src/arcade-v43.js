@@ -2333,8 +2333,8 @@
   var COVER_REACH=230; // (예고 84틱 - 반응 15틱 - 여유 14틱) × 키보드 4.2px ≈ 230px
   // 덮기와 같은 방향의 앞 광선(눌린 건반 등)을 끈다: 켜진 것은 바로 꺼지고(사라지는 잔상만), 예고 중인 것은 지운다. 덮기 띠 자신(solid)은 건드리지 않는다
   function coverClear(s,vert,g0,gap){for(var i=s.lasers.length-1;i>=0;i--){var l=s.lasers[i];if(l.solid)continue;
-    var lv=Math.abs(Math.abs(l.angle)-Math.PI/2)<.05,lh=Math.abs(l.angle)<.05||Math.abs(Math.abs(l.angle)-Math.PI)<.05;
-    var hit=vert?lv:lh; // 틈과 겹친 것뿐 아니라 같은 방향의 앞 광선(눌린 건반 등)은 모두 끈다: 틈까지 가는 길을 앞 건반이 벽처럼 막아 지름길이 없던 경우(재측정 11-20 헬 7·17·25)
+    // A rotating beam can complete several full turns before the cover arrives.
+    var hit=Math.abs(vert?Math.cos(l.angle):Math.sin(l.angle))<.05; // 틈과 겹친 것뿐 아니라 같은 방향의 앞 광선(눌린 건반 등)은 모두 끈다: 틈까지 가는 길을 앞 건반이 벽처럼 막아 지름길이 없던 경우(재측정 11-20 헬 7·17·25)
     if(!hit)continue;if(l.age<l.warn){l.warn=l.age;l.active=0;}else l.active=Math.min(l.active,l.age-l.warn);}} // 예고 중인 것도 잔상(BEAM_FADE)으로 옅어지며 사라진다(심사: 뚝 끊김)
   function spAct(s,n){
     var k=s.sp.cur,pos=n%8,bar=n>>3,lvl=spLvl(s),b=s.boss,p=s.player,a=ACTORS[b.actor]||{},c1=a.c1===undefined?0:a.c1,c2=a.c2===undefined?c1:a.c2,i,sp=s.sp;
