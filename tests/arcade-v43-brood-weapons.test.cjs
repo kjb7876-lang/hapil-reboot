@@ -121,3 +121,10 @@ test('every weapon picture bullet is ringed along its drawn outline, and touchin
   const turn=0,sc=a.hitSize?a.hitSize(s):s.sizeScale;s.player.x=180+far[0]*sc;s.player.y=300+far[1]*sc;s.player.invulnerableUntil=0;const hp=s.player.hp,bombs=s.bombs;
   a.step(s,{dx:0,dy:0});assert(s.player.hp<hp||s.bombs<bombs||s.events.includes('distort'),key+' outline tip hits');}
 });
+
+test('phone (compact) big weapon is half size: points and hit reach scale with it; PC stays full size',()=>{
+ const mk=compact=>{const g=a.STAGES[13];let seg=g.first;while(a.SEGMENTS[seg].kind!=='card'||a.SEGMENTS[seg].mid)seg++;const s=a.createRun({difficulty:'normal',seed:3,segment:seg,entranceAll:true,compact});toCard(s);s.n=0;s.calm=false;a.throwWeapon(s,4,2);return s;};
+ const ext=w=>{const p=a.weaponPoints(w);let m=0;for(let i=0;i<p.length;i+=2)m=Math.max(m,Math.hypot(p[i]-w.x,p[i+1]-w.y));return m;};
+ const pc=mk(false),ph=mk(true);assert.equal(pc.weapons[0].sc,1);assert.equal(ph.weapons[0].sc,a.WEAPON_PHONE);assert.equal(a.WEAPON_PHONE,.5);
+ const r=ext(ph.weapons[0])/ext(pc.weapons[0]);assert(Math.abs(r-.5)<.03,'phone extent ratio '+r);
+});
