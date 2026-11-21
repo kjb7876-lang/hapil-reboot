@@ -1458,7 +1458,7 @@
     ctx.globalAlpha=alpha;ctx.drawImage(core.image,x-core.half,y-core.half,core.half*2,core.half*2);
     // 가장자리 판정점(사용자 11-18): 무기 몸을 따라 작은 심을 옅게 보여, 어디에 맞는지 읽힌다.
     var rim=Arcade.propHitPoints&&Arcade.propHitPoints(s.bcolor[i]);
-    if(rim){var rs=s.sizeScale*grow,ro=orbs[0][propGlow(prop)]||core,rh=ro.half*.62;ctx.globalAlpha=alpha*.9;for(var q=0;q<rim.length;q++){var rp=rim[q];if(!rp[0]&&!rp[1])continue;ctx.drawImage(ro.image,x+(rp[0]*cos-rp[1]*sin)*rs-rh,y+(rp[0]*sin+rp[1]*cos)*rs-rh,rh*2,rh*2);}} // 사용자 11-20 "무기이미지탄들은 외곽에 탄환넣어서": 그림 가장자리를 따라 늘어선 판정점을 기물 색 구슬탄으로 또렷이(판정과 같은 자리)
+    if(rim&&SHOW_RIM_ORBS){var rs=s.sizeScale*grow,ro=orbs[0][propGlow(prop)]||core,rh=ro.half*.62;ctx.globalAlpha=alpha*.9;for(var q=0;q<rim.length;q++){var rp=rim[q];if(!rp[0]&&!rp[1])continue;ctx.drawImage(ro.image,x+(rp[0]*cos-rp[1]*sin)*rs-rh,y+(rp[0]*sin+rp[1]*cos)*rs-rh,rh*2,rh*2);}} // 사용자 11-20 "무기이미지탄들은 외곽에 탄환넣어서": 그림 가장자리를 따라 늘어선 판정점을 기물 색 구슬탄으로 또렷이(판정과 같은 자리)
     ctx.globalAlpha=1;
   }
   /* 코드로 그리는 기물: 어두운 회화풍에 맞게 뼈빛·이끼빛 단색에 어두운 테두리, 왼쪽 위에서 빛. u는 반 길이. */
@@ -1533,6 +1533,7 @@
   /* 그림 페이즈의 먹 포탄과 회전 큰 무기(사용자 11-20). 판정은 엔진(Arcade.cannonRadius·weaponPoints)과 같다.
      · 포탄: 졸개들이 모인 자리에 먹 덩이가 감기고 그 안에서 졸개 얼굴이 돈다. 예고 동안 겨누는 길을 인주 점선(영웅을 돕는 경고)으로, 굳힌 뒤에는 실선 화살촉으로.
      · 큰 무기: 윤곽을 따라 보스 색 구슬탄이 늘어서 함께 돈다. 속은 옅은 먹 그림자. 예고 동안 보스 아래에서 돌며 인주 점선으로 날아갈 길을 보인다. */
+  var SHOW_RIM_ORBS=false; // 사용자 11-21: 외곽 판정 구슬은 그림에서 숨기고 판정만 둔다(그림 자체가 몸)
   function drawThrown(s){
     var C=s.cannons||[],L=s.weapons||[],br=s.brood,HOT=Ink?'#c2362a':'#ff5a4e',INKC='#1e1a18',k,i;
     if(!C.length&&!L.length&&!(br&&br.state==='gather'))return;ctx.save();if(Ink&&Ink.raw)Ink.raw(1); // 먹 포탄은 먹 그대로(탄 색 바꿈 없이) 그린다
@@ -1550,11 +1551,13 @@
         for(k=0;k<c.n;k++){var ang=c.spin+TAU*k/c.n,rr=c.n>1?R*.42:0;ctx.drawImage(im,0,0,fw,fw,c.x+Math.cos(ang)*rr-sz/2,c.y+Math.sin(ang)*rr-sz/2,sz,sz);}ctx.restore();} // 뭉친 졸개 얼굴이 먹 속에서 돈다
       ctx.globalAlpha=.9;ctx.strokeStyle='rgba(242,233,214,.55)';ctx.lineWidth=2;ctx.beginPath();ctx.arc(c.x,c.y,R-1,c.spin,c.spin+2.2);ctx.stroke();}
     if(Ink&&Ink.raw)Ink.raw(-1);
+    if(Ink&&Ink.raw)Ink.raw(1); // 큰 무기 몸도 먹 그대로(색 바꿈 없이)
     for(i=0;i<L.length;i++){var w=L[i],pts=Arcade.weaponPoints(w),wwarn=w.age<=w.warn,fade=wwarn?Math.min(1,w.age/(w.warn*.6)):1,ux2=Math.cos(w.a),uy2=Math.sin(w.a);
       if(wwarn){var len2=Math.hypot(W,H);ctx.globalAlpha=.7*fade;ctx.strokeStyle=HOT;ctx.lineWidth=2;ctx.setLineDash([9,7]);ctx.beginPath();ctx.moveTo(w.x,w.y);ctx.lineTo(w.x+ux2*len2,w.y+uy2*len2);ctx.stroke();ctx.setLineDash([]);
-        ctx.globalAlpha=.3*fade;ctx.beginPath();ctx.arc(w.x,w.y,Arcade.WEAPON_LEN*.5,0,TAU);ctx.stroke();} // 날아갈 길과 도는 반경
-      ctx.globalAlpha=.55*fade;ctx.strokeStyle=INKC;ctx.lineWidth=13;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();for(k=0;k<pts.length;k+=2){if(k&&Math.hypot(pts[k]-pts[k-2],pts[k+1]-pts[k-1])>20)ctx.moveTo(pts[k],pts[k+1]);else if(!k)ctx.moveTo(pts[k],pts[k+1]);else ctx.lineTo(pts[k],pts[k+1]);}ctx.stroke(); // 무기 몸의 먹 그림자
-      ctx.globalAlpha=fade;var j2=0;for(k=0;k<pts.length;k+=2,j2++){var o=orbs[1]&&orbs[1][j2%3?w.c1:w.c2];if(o)ctx.drawImage(o.image,pts[k]-o.half*.78,pts[k+1]-o.half*.78,o.half*1.56,o.half*1.56);}}
+        ctx.globalAlpha=.3*fade;ctx.beginPath();ctx.arc(w.x,w.y,Arcade.WEAPON_LEN*.5*(w.sc||1),0,TAU);ctx.stroke();} // 날아갈 길과 도는 반경
+      ctx.globalAlpha=fade;ctx.strokeStyle=INKC;ctx.lineWidth=13*(w.sc||1);ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();for(k=0;k<pts.length;k+=2){if(k&&Math.hypot(pts[k]-pts[k-2],pts[k+1]-pts[k-1])>20)ctx.moveTo(pts[k],pts[k+1]);else if(!k)ctx.moveTo(pts[k],pts[k+1]);else ctx.lineTo(pts[k],pts[k+1]);}ctx.stroke(); // 무기 몸의 먹 그림자
+      ctx.globalAlpha=.45*fade;ctx.strokeStyle='rgba(242,233,214,.8)';ctx.lineWidth=2*(w.sc||1);ctx.stroke();} // 사용자 11-21 "큰무기탄환이미지상으로는숨기고 판정만": 윤곽 구슬은 그리지 않고 먹 몸 한 획만 보인다(판정점은 엔진 weaponPoints 그대로)
+    if(Ink&&Ink.raw)Ink.raw(-1);
     ctx.restore();}
   function drawBullets(s){
     var bloom=Arcade.BLOOM_TICKS,i,o,half,size,x,y,variant=skinVariant(s),sf=s.player.focus&&Arcade.slowField?Arcade.slowField(s):null,slowR=sf?sf[0]:0,slowK=sf?sf[1]:0;

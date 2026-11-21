@@ -2496,7 +2496,7 @@
    *  · 무기 길이 WEAPON_LEN = 맵 높이 640의 20%(128px). 윤곽선을 WEAPON_GAP 간격의 탄알로 두르고, 그 탄알 하나하나가 판정이다(속은 비어 있다).
    *  · 보스 아래에서 WEAPON_WARN 동안 돌며 영웅을 겨누는 예고선을 그리고, 굳힌 방향으로 돌면서 곧게 날아간다. 난이도는 날아가는 속도로만 나눈다.
    *  · 모양은 낫·도끼·여섯 날 고리칼(육망성 꼴) 셋. 손잡이 가로대가 있는 칼(십자 꼴)은 쓰지 않는다. ── */
-  var WEAPON_LEN=128,WEAPON_GAP=11,WEAPON_WARN=54,WEAPON_SPIN=.055,WEAPON_HOLD_Y=56,WEAPON_SPEED={gentle:1.5,normal:2.2,hell:3};
+  var WEAPON_PHONE=.5,WEAPON_LEN=128,WEAPON_GAP=11,WEAPON_WARN=54,WEAPON_SPIN=.055,WEAPON_HOLD_Y=56,WEAPON_SPEED={gentle:1.5,normal:2.2,hell:3};
   var WEAPON_PATHS={
     scythe:[[[0,.5],[0,-.5]],[[0,-.5],[.18,-.47],[.33,-.37],[.42,-.22],[.44,-.06],[.36,-.16],[.24,-.27],[.1,-.33],[0,-.34]]],
     axe:[[[0,.5],[0,-.46]],[[0,-.4],[.14,-.48],[.28,-.5],[.36,-.38],[.38,-.24],[.33,-.1],[.22,-.08],[.12,-.14],[0,-.18]]],
@@ -2510,17 +2510,17 @@
   function weaponShape(s){var m=SPIT_MOTIF[s.boss.actor];return WEAPON_OF[m]||(['axe','scythe','chakram'][s.stageIndex%3]);}
   function throwWeapon(s,c1,c2){
     if(s.calm||s.figPend||s.spHold||s.efire===false||s.weapons.length>=3)return;var b=s.boss;
-    s.weapons.push({shape:weaponShape(s),x:b.x,y:b.y+WEAPON_HOLD_Y,a:Math.PI/2,v:thrownSpeed(s,WEAPON_SPEED),t:(s.weaponN=(s.weaponN||0)+1)*GOLDEN_ANGLE,age:0,warn:WEAPON_WARN,c1:c1,c2:c2});note(s,'weaponWarn');}
+    s.weapons.push({shape:weaponShape(s),x:b.x,y:b.y+WEAPON_HOLD_Y,a:Math.PI/2,v:thrownSpeed(s,WEAPON_SPEED),t:(s.weaponN=(s.weaponN||0)+1)*GOLDEN_ANGLE,age:0,warn:WEAPON_WARN,c1:c1,c2:c2,sc:s.compact?WEAPON_PHONE:1});note(s,'weaponWarn');} // 사용자 11-21 "큰무기 자체를 모바일에서 크기 반으로": 휴대폰(compact)은 무기 길이·판정 모두 절반(sc)
   function weaponsStep(s){var L=s.weapons;if(!L||!L.length)return false;var p=s.player,b=s.boss,k=abilityOf(s).bulletSpeed,struck=false,reach=SIZE_RADIUS[1]*hitSize(s)*s.rules.hitScale+p.r,far=WEAPON_LEN*.62;
     for(var i=L.length-1;i>=0;i--){var w=L[i];if(s.efire!==false||w.age>w.warn)w.age++;
       if(w.age<=w.warn){if(b.present&&!b.leaving){w.x=b.x;w.y=b.y+WEAPON_HOLD_Y;}w.a=Math.atan2(p.y-w.y,p.x-w.x);w.t+=WEAPON_SPIN*(.4+.6*w.age/w.warn);if(w.age===w.warn)note(s,'weaponThrow');continue;}
       w.x+=Math.cos(w.a)*w.v*k;w.y+=Math.sin(w.a)*w.v*k;w.t+=WEAPON_SPIN*k;
-      if(w.x<-far||w.x>W+far||w.y<-far||w.y>H+far){L.splice(i,1);continue;}
-      var dx=p.x-w.x,dy=p.y-w.y;if(dx*dx+dy*dy>(far+reach)*(far+reach))continue;
-      var pts=WEAPON_PTS[w.shape],co=Math.cos(w.t),si=Math.sin(w.t);
+      var sc=w.sc||1,fs=far*sc;if(w.x<-fs||w.x>W+fs||w.y<-fs||w.y>H+fs){L.splice(i,1);continue;}
+      var dx=p.x-w.x,dy=p.y-w.y;if(dx*dx+dy*dy>(fs+reach)*(fs+reach))continue;
+      var pts=WEAPON_PTS[w.shape],co=Math.cos(w.t)*sc,si=Math.sin(w.t)*sc;
       for(var j=0;j<pts.length;j++){var ex=w.x+pts[j][0]*co-pts[j][1]*si-p.x,ey=w.y+pts[j][0]*si+pts[j][1]*co-p.y;if(ex*ex+ey*ey<reach*reach){struck=true;break;}}}
     return struck;}
-  function weaponPoints(w){var pts=WEAPON_PTS[w.shape]||[],co=Math.cos(w.t),si=Math.sin(w.t),out=[];for(var j=0;j<pts.length;j++)out.push(w.x+pts[j][0]*co-pts[j][1]*si,w.y+pts[j][0]*si+pts[j][1]*co);return out;}
+  function weaponPoints(w){var pts=WEAPON_PTS[w.shape]||[],sc=w.sc||1,co=Math.cos(w.t)*sc,si=Math.sin(w.t)*sc,out=[];for(var j=0;j<pts.length;j++)out.push(w.x+pts[j][0]*co-pts[j][1]*si,w.y+pts[j][0]*si+pts[j][1]*co);return out;}
   function clearThrown(s){var n=(s.cannons?s.cannons.length:0)+(s.weapons?s.weapons.length:0);if(s.cannons)s.cannons.length=0;if(s.weapons)s.weapons.length=0;return n;}
   /* ── 불꽃놀이 탄(사용자 11-20 "보스 탄환패턴 불꽃놀이등도 참고해서 추가 패턴 만들어줘"). 네 소절에 한 번, 보스 변주 자리(VARIATION)에 불꽃 셋·큰 무기 가운데 하나가 들어간다.
    *  · 모란(peony): 보스가 쏜 꽃씨(큰 구슬)가 FW_FUSE 뒤 두 겹 고리(빠른 바깥 겹·느린 안 겹)로 터진다.
@@ -2694,7 +2694,7 @@
    api.__patternClock=patternClock;api.__rand=rand; // 고정 탄 패턴(11-20)
    // 그림 페이즈 졸개·먹 포탄·회전 큰 무기·불꽃놀이·보스 흔들림·광선 예고 +1초(11-20)
    api.DRAW_BIG=DRAW_BIG;api.BROOD_N=BROOD_N;api.BROOD_HOLD=BROOD_HOLD;api.BROOD_GATHER=BROOD_GATHER;api.CANNON_WARN=CANNON_WARN;api.CANNON_SPEED=CANNON_SPEED;api.CANNON_HIT=CANNON_HIT;api.CANNON_LOCK_SHOW=CANNON_LOCK;api.cannonRadius=cannonRadius;
-   api.WEAPON_LEN=WEAPON_LEN;api.WEAPON_SPEED=WEAPON_SPEED;api.WEAPON_WARN=WEAPON_WARN;api.WEAPON_PTS=WEAPON_PTS;api.weaponPoints=weaponPoints;api.FW_FUSE=FW_FUSE;api.EXTRA_KINDS=EXTRA_KINDS;api.bossExtra=bossExtra;api.extraFire=extraFire;
+   api.WEAPON_LEN=WEAPON_LEN;api.WEAPON_PHONE=WEAPON_PHONE;api.WEAPON_SPEED=WEAPON_SPEED;api.WEAPON_WARN=WEAPON_WARN;api.WEAPON_PTS=WEAPON_PTS;api.weaponPoints=weaponPoints;api.FW_FUSE=FW_FUSE;api.EXTRA_KINDS=EXTRA_KINDS;api.bossExtra=bossExtra;api.extraFire=extraFire;
    api.UNION_OFFSET=UNION_OFFSET;api.POWER_EXP_RATE=POWER_EXP_RATE;api.LASER_MORE=LASER_MORE;api.__beam=beam;api.hitSize=hitSize;api.bossWobble=bossWobble;api.WOBBLE_X=WOBBLE_X;api.WOBBLE_Y=WOBBLE_Y;api.summonBrood=summonBrood;api.throwWeapon=throwWeapon;
    if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcade=api;
