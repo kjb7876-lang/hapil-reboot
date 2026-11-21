@@ -26,3 +26,16 @@ test('a ring fired on a fixed beat turns by a fixed step (no random offset)',()=
  const d=r.slice(1).map((v,i)=>((v-r[i])%1+1)%1);
  for(const x of d)assert(Math.abs(x-d[0])<1e-6,'equal rotation step: '+d.join(','));
 });
+
+test('live enemy emitters retain exactly 50% of wave shots and 89% of boss shots in every difficulty',()=>{
+ const emitter={kind:'rotating',fireInterval:1/60,baseSpeed:84,bulletType:{formation:true}};
+ for(const difficulty of ['gentle','normal','hell'])for(const compact of [false,true]){
+  for(const [stage,expected] of [['wave',100],['card',178]]){
+   const s=A.createRun({entranceAll:true,difficulty,compact,stage:0});
+   s.stage=stage;
+   for(let t=0;t<200;t++)A.emit(s,emitter,t,{x:120,y:140});
+   assert.equal(s.n,expected,difficulty+' '+stage+' compact='+compact);
+   assert.equal(s.bs[0],Math.fround(84*s.rules.speed),'retained shots keep their speed');
+  }
+ }
+});

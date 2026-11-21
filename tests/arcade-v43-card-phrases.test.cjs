@@ -12,12 +12,13 @@ function playSpell(name, ticks) {
   for (let i=0; i<ticks+600 && frames.length<ticks; i++) {
     s.player.invulnerableUntil = s.tick+600;
     if (s.stage === 'card') s.boss.hp = s.boss.maxHp;
+    s.events.length=0;
     A.step(s, {});
     if (s.stage !== 'card') continue;
     assert.equal(s.seg, segment);
     let born = 0, phraseBorn = 0;
-    for (let j=0; j<s.n; j++) if (s.bage[j] === 1) { born++; if (!s.bmirror[j]) phraseBorn++; }
-    frames.push({born, phraseBorn, count:s.n, authored:s.authoredTick, variation:s.variationTick, patternCue:s.patternCue,
+    for (let j=0; j<s.n; j++) if (s.bage[j] === 1) { born++; if (!s.bmirror[j] && !s.bfragment[j]) phraseBorn++; }
+    frames.push({born, phraseBorn, split:s.events.includes('pop'), count:s.n, authored:s.authoredTick, variation:s.variationTick, patternCue:s.patternCue,
       laser:s.lasers.some(l => l.age<l.warn+l.active),
       cue:s.figures.some(f => f.age<=f.warn), figures:s.figures.map(f=>f.kind), risers:s.risen, special:s.sp&&s.sp.cur||''});
   }
@@ -35,7 +36,7 @@ for (const name of ['겹치는 명령', '닫힌 층의 명령']) {
     assert.ok(opening.some(frame => frame.born>0));
     assert.ok(opening.every(frame => frame.variation===0 && frame.figures.length===0));
     const pause = f.slice(AU,VA);
-    assert.ok(pause.every(frame => frame.born===0 && frame.count>0), 'old, moving bullets survive the rest');
+    assert.ok(pause.every(frame => (frame.phraseBorn===0 || frame.split) && frame.count>0), 'old bullets survive and can finish splitting during the rest');
     // 늘어난 본 공격 안에서 켜진 광선은 끝까지 간다(사용자 11-19 "이미 시전한 패턴은 모두 나오게"): 첫 변주는 광선이 꺼진 뒤 바로 나온다
     const v0=f.findIndex(frame=>frame.variation>0);
     assert.ok(v0>=VA && f.slice(VA,v0-1).every(frame=>frame.laser), 'the variation waits only for a live beam');

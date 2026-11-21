@@ -13,10 +13,10 @@ test('Seoha levels up twice as fast; Memory unchanged; chapter floor still appli
  assert.equal(A.SEOHA_EXP,2);
 });
 
-test('Seoha collects hearts at twice the value; the big (gauge) heart is unchanged',()=>{
+test('Seoha collects hearts at twice the value; the trainee gets extra charge from bomb hearts',()=>{
  const take=(hero,kind)=>{const s=idle({hero});s.player.y=500;heartAt(s,kind);const sc=s.score,g=s.gauge;A.step(s,{});return {score:s.score-sc,gauge:s.gauge+s.fills*100-g};};
  const m=take('memory',0),s=take('seoha',0);assert(m.score>0);assert.equal(s.score,m.score*2);
- const mb=take('memory',1),sb=take('seoha',1);assert.equal(sb.gauge,mb.gauge);
+ const mb=take('memory',1),sb=take('seoha',1);assert.equal(sb.gauge,mb.gauge*1.77);assert.equal(take('seoha-b',1).gauge,mb.gauge);
 });
 
 test('jackpot hearts double for Seoha',()=>{
