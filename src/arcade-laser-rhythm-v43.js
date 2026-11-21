@@ -27,10 +27,12 @@
   var ZIG=[0,3,1,4,2,5];
   var M={};
   M.trill=function(c){var m=c.mem,L=c.W/LANES,hits=[3,6,7][c.lvl],every=c.lvl===0?2:1;
-    if(c.pos===0){m.split=Math.max(2*L,Math.min(4*L,Math.round(c.px/L)*L));m.side=c.px<m.split?0:1;m.k=0;} // 금은 영웅에게 가장 가까운 줄 경계, 첫 음표는 영웅이 선 쪽
+    var easyTouch=c.compact&&c.lvl===0,edge=easyTouch?L:2*L;
+    if(c.pos===0){m.split=Math.max(edge,Math.min(c.W-edge,Math.round(c.px/L)*L));m.side=c.px<m.split?0:1;m.k=0;}
     if(m.split===undefined||c.pos%every||m.k>=hits)return;
-    var left=(m.side+m.k)%2===0;m.k++;
-    c.lane(left?0:m.split,left?m.split:c.W,c.WB,[8,8,10][c.lvl],{color:left?0:1,tone:left?'k':'t'});
+    // 휴대폰 이지는 가장 가까운 칸 경계를 고정하고 그 양쪽 두 칸까지만 번갈아 켠다.
+    var left=(m.side+m.k)%2===0,reach=easyTouch?2*L:c.W;m.k++;
+    c.lane(left?Math.max(0,m.split-reach):m.split,left?m.split:Math.min(c.W,m.split+reach),c.WB,[8,8,10][c.lvl],{color:left?0:1,tone:left?'k':'t'});
   };
   M.jangdan=function(c){var p=JANGDAN[c.lvl],h=c.W/2,o=c.W/3;
     for(var e=0;e<2;e++){var ch=p[c.pos*2+e],at=c.WB+e*.5;
@@ -42,7 +44,7 @@
     if(c.pos===0)for(k=0;k<n;k++)c.band(c.H-BAND*(k+1),c.H-BAND*k,c.WB+k,(n+1-k)*c.BEAT-10,{color:k%2,tone:k}); // 아래부터 한 박에 한 줄, 함께 꺼진다. 예고는 처음부터 모두 보인다
     k=c.pos-(n+1);if(k>=0&&k<n2)c.band(TOP+BAND*k,TOP+BAND*(k+1),c.WB,(n2-k-.5)*c.BEAT-8,{color:(k+1)%2,tone:4-k}); // 사다리가 꺼지는 박부터 위에서 한 줄씩 내려 민다
   };
-  M.slide=function(c){var m=c.mem,L=c.W/LANES,w=3,sb=c.lvl===0?2:1,S=[2,4,5][c.lvl],i,j;
+  M.slide=function(c){var m=c.mem,L=c.W/LANES,w=c.compact?4:3,sb=c.lvl===0?2:1,S=[2,4,5][c.lvl],i,j;
     if(c.pos===0){var hl=Math.max(0,Math.min(LANES-1,Math.floor(c.px/L))),c0=Math.max(0,Math.min(LANES-w,hl-(w>2?1:0))),dir=LANES-w-c0>=c0?1:-1,path=[c0],plan=[];
       for(i=1;i<=S;i++){var nx=path[i-1]+dir;if(nx<0||nx>LANES-w){dir=-dir;nx=path[i-1]+dir;}path.push(nx);}
       for(j=0;j<LANES;j++){var from=-1;for(i=0;i<=S+1;i++){var shut=i<=S&&(j<path[i]||j>=path[i]+w);if(shut&&from<0)from=i;if(!shut&&from>=0){plan.push([from*sb,j,j+1,(i-from)*sb]);from=-1;}}}

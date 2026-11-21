@@ -288,7 +288,7 @@
         <div class="setting-volume"><input id="setting-sfxVolume" type="range" min="0" max="100" step="5" value="100" aria-label="효과음 음량" data-i18n-label="sfxVolume"><output id="value-sfxVolume" for="setting-sfxVolume">100%</output></div>
         <label class="setting-line" for="setting-hitSound"><span data-i18n="hitSound">적중 빗소리</span><input id="setting-hitSound" type="checkbox" checked></label>
         <label class="setting-line" for="setting-screenShake"><span data-i18n="screenShake">화면 흔들림</span><input id="setting-screenShake" type="checkbox" checked></label>
-        <label class="setting-line" for="setting-inkRedShots"><span data-i18n="inkRedShots">플레이어 공격 인주색</span><input id="setting-inkRedShots" type="checkbox"></label>
+        <label class="setting-line" for="setting-inkRedShots"><span data-i18n="inkRedShots">플레이어 공격 인주색</span><input id="setting-inkRedShots" type="checkbox" checked></label>
         <label class="setting-line" for="setting-lowQuality"><span data-i18n="lowQuality">절전 그래픽</span><input id="setting-lowQuality" type="checkbox"></label>
         <div class="ability-settings" role="group" aria-label="능력조절" data-i18n-label="ability">
           <div class="ability-row" id="ability-row-memory" data-active="false"><span class="ability-name"><span data-i18n="ability">능력조절</span> · <span data-i18n="abilityPower">기억사수 출력조절</span></span>
@@ -337,7 +337,7 @@
         <p><b>문양 레이저</b> — 밝을 때 위험하고 꺼진 동안 통과할 수 있습니다. 재점등 직전 옅게 밝아지는 예고에는 피해가 없습니다.</p>
         <p><b>폭탄·난이도</b> — <span data-keyl="bomb">X</span> 또는 폭탄 버튼으로 사용합니다. 이지·노멀은 피격점 접촉 시 확률 회피 후 폭탄이 있으면 자동 사용합니다. 헬은 수동폭탄만 가능하며 자동회피가 없습니다. 격파하면 폭탄이 찹니다: 중간보스 +1, 보스 +2, 챕터 막보스 +3. 보관은 이지 7·노멀 5·헬 3개까지입니다.</p>
         <p><b>목숨·회복</b> — 시작 목숨은 휴대폰 이지 5·노멀 3·헬 2, PC 이지 3·노멀 2·헬 1입니다. 일반 스테이지마다 완전 회복하지 않고, 한 부(챕터)를 마치고 다음 부로 넘어갈 때 목숨을 전부 회복합니다. 영웅의 공격·필살 단계는 챕터가 바뀌어도 이어지고, 제n부는 최소 Lv.n에서 시작합니다(제7부부터 만렙 Lv.7). 적 격파와 패턴 완료로 공격 경험치를 얻습니다. 피격되어도 공격 단계와 경험치는 유지됩니다.</p>
-        <p><b>휴대폰 화면</b> — 좁은 화면에서는 탄 수가 30% 줄고 동시에 나오는 탄 상한이 절반이 되며, 탄속이 15% 느려지고 탄이 20% 커집니다. 패턴 예고는 길어지고 초능력 버튼은 더 큽니다.</p>
+        <p><b>휴대폰 화면</b> — 화면을 누른 채 밀면 영웅이 같은 방향으로 움직입니다. 손을 떼고 다른 곳에서 이어서 밀 수 있습니다. 모바일은 같은 난이도의 PC보다 적탄이 적고 느리며, 레이저 예고를 더 오래 보여 줍니다.</p>
         <p><b>원코인·이어하기</b> — 처음부터 게임 오버 없이 끝내는 것이 원코인 클리어입니다. 이어하기·구간 선택·재도전·개발자 모드는 연습용이며 원코인 클리어에 포함하지 않습니다. 일시정지와 대화 읽기는 가능합니다.</p>
         <p><b>영웅 선택</b> — 기억사수·윤서하(수련생)·윤서하(각성) 중 선택합니다. 수련생은 아카데미움 시절, 각성은 최초명령의 힘이 깨어난 뒤의 윤서하입니다. 윤서하의 두 모습은 시간검 분산·집중 사격을 사용합니다. 수련생은 스침과 필살 하트로 게이지를 1.77배 채웁니다. 적도 영웅에 맞춰 달라집니다: 윤서하 상대로는 탄이 더 많고 빨라지고, 기억사수 상대로는 보스전 레이저가 늘어납니다. 일시정지 설정의 능력조절(끔·1~7단계)로 영웅별 출력과 시간제어를 고를 수 있습니다.</p>
         <p><b>초능력 간이 필살</b> — 초능력(<span data-keyl="focus">Shift</span>·초능력 버튼) 중에는 확률적으로 간이 필살이 저절로 나갑니다. 탄은 지우지 않습니다. 기억사수는 「인과의 역전」(적을 쫓는 레이저가 확률로 번개처럼 이어져 연쇄), 윤서하는 「시간차 공격」(시계가 돈 뒤 굵은 시간검이 적을 자동 추적)입니다. 초능력을 누르는 동안 기억사수는 공격 ×1.3·필살 게이지 ×1.5, 윤서하는 원 안 적탄이 크게 느려집니다(시간제어는 초능력을 누를 때만).</p>
@@ -361,38 +361,38 @@
       <button id="arcade-home" type="button" data-i18n="toTitle">처음 화면으로</button>
     </div>
   </div>
-  <script src="src/rain-hit-bank-v43.js?v=20261120-menu3"></script>
-  <script src="src/audio-v37.js?v=20261120-menu3"></script>
-  <script src="src/arcade-parts-v43/p1.js?v=20261120-menu3"></script>
-  <script src="src/arcade-parts-v43/p2.js?v=20261120-menu3"></script>
-  <script src="src/arcade-parts-v43/p3.js?v=20261120-menu3"></script>
-  <script src="src/arcade-parts-v43/p4.js?v=20261120-menu3"></script>
-  <script src="src/arcade-parts-v43/p5.js?v=20261120-menu3"></script>
-  <script src="src/arcade-parts-v43/p6.js?v=20261120-menu3"></script>
-  <script src="src/arcade-parts-v43/p7.js?v=20261120-menu3"></script>
-  <script src="src/arcade-parts-v43/p8.js?v=20261120-menu3"></script>
-  <script src="src/arcade-boss-intros-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-boss-lines-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-heroes-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-boss-rhythm-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-encounter-phases-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-boss-phases-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-laser-rhythm-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-skins-v43.js?v=20261120-menu3"></script>
-  <script src="src/ink-v43.js?v=20261120-menu3"></script>
-  <script src="src/ink-motifs-v43.js?v=20261120-menu3"></script>
-  <script src="src/hero-memory-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-i18n-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-music-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-mobile-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-eyes-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-story-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-chapters-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-hero-select-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-hero-visibility-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-spirit-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-cues-v43.js?v=20261120-menu3"></script>
-  <script src="src/arcade-app-v43.js?v=20261120-menu3"></script>
+  <script src="src/rain-hit-bank-v43.js?v=20261121-mobile1"></script>
+  <script src="src/audio-v37.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-parts-v43/p1.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-parts-v43/p2.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-parts-v43/p3.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-parts-v43/p4.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-parts-v43/p5.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-parts-v43/p6.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-parts-v43/p7.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-parts-v43/p8.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-boss-intros-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-boss-lines-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-heroes-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-boss-rhythm-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-encounter-phases-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-boss-phases-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-laser-rhythm-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-skins-v43.js?v=20261121-mobile1"></script>
+  <script src="src/ink-v43.js?v=20261121-mobile1"></script>
+  <script src="src/ink-motifs-v43.js?v=20261121-mobile1"></script>
+  <script src="src/hero-memory-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-i18n-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-music-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-mobile-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-eyes-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-story-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-chapters-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-hero-select-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-hero-visibility-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-spirit-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-cues-v43.js?v=20261121-mobile1"></script>
+  <script src="src/arcade-app-v43.js?v=20261121-mobile1"></script>
 </body>
 </html>

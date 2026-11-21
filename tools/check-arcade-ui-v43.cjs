@@ -271,17 +271,17 @@ async function pauseSettings(page,name,mobile){
   }
   await page.locator('#setting-screenShake').uncheck();
   const inkRed=page.locator('#setting-inkRedShots');
-  assert.equal(await inkRed.isChecked(),false,'the saved setting defaults to off');
-  const original=await playerShotPalette(page);
-  await inkRed.check();
-  const changed=await playerShotPalette(page);
-  for(const key of Object.keys(changed)){
-    assert(original[key].painted>10&&changed[key].painted>10,key+' draws actual pixels');
-    assert(changed[key].red>original[key].red+8,key+' turns vermilion');
-  }
+  assert.equal(await inkRed.isChecked(),true,'new players start with vermilion attacks');
+  const vermilion=await playerShotPalette(page);
   await inkRed.uncheck();
-  assert.deepEqual(await playerShotPalette(page),original,'switching off restores the original palette');
+  const plain=await playerShotPalette(page);
+  for(const key of Object.keys(vermilion)){
+    assert(plain[key].painted>10&&vermilion[key].painted>10,key+' draws actual pixels');
+    assert(vermilion[key].red>plain[key].red+8,key+' loses its vermilion tint when disabled');
+  }
   await inkRed.check();
+  assert.deepEqual(await playerShotPalette(page),vermilion,'switching back on restores the default palette');
+  if(!mobile)await inkRed.uncheck(); // Exercise both saved choices across reloads.
   await page.locator('#setting-lowQuality').check();
   await page.waitForTimeout(150);
   assert.equal(await page.evaluate(()=>HapilArcadeApp.debugState().state.tick),tick,'settings must not advance combat');
@@ -311,9 +311,9 @@ async function pauseSettings(page,name,mobile){
   await page.reload({waitUntil:'networkidle'});
   await page.waitForFunction(()=>window.HapilArcadeApp&&!document.getElementById('arcade-start').disabled);
   const saved=(await state(page)).settings;
-  assert.equal(saved.musicVolume,.35);assert.equal(saved.sfxVolume,.65);assert.equal(saved.screenShake,false);assert.equal(saved.lowQuality,true);assert.equal(saved.inkRedShots,true);
+  assert.equal(saved.musicVolume,.35);assert.equal(saved.sfxVolume,.65);assert.equal(saved.screenShake,false);assert.equal(saved.lowQuality,true);assert.equal(saved.inkRedShots,mobile);
   const restored=await playerShotPalette(page);
-  assert(Object.values(restored).every(s=>s.red>8),'reloaded settings color the renderer');
+  for(const key of Object.keys(restored))assert.equal(restored[key].red>plain[key].red+8,mobile,key+' uses the saved palette after reload');
   await page.locator('#arcade-start').click();
   await page.waitForFunction(()=>HapilArcadeApp.getState().mode==='hero');
   assert.equal(await page.locator('#hero-select-seoha-b').getAttribute('aria-pressed'),'true','confirmed B hero survives reload');
@@ -471,10 +471,14 @@ async function mobile(browser,width,height){
     for(const [label,b] of [['focus',focus],['bomb',bomb]]){assert(b&&b.width>=44&&b.height>=44,label+' touch target');assert(b.x>=0&&b.y>=0&&b.x+b.width<=width+1&&b.y+b.height<=height+1,label+' visible');}
     // Landscape keeps the action pads over the bottom of the canvas. Start the
     // movement finger above them so it cannot be mistaken for a bomb press.
-    const move={id:1,x:rect.x+rect.width*.85,y:Math.min(rect.y+rect.height*(544/640),focus.y-12,bomb.y-12)},hold={id:2,x:focus.x+focus.width/2,y:focus.y+focus.height/2},blast={id:3,x:bomb.x+bomb.width/2,y:bomb.y+bomb.height/2};
+    const move={id:1,x:rect.x+rect.width*.12,y:Math.min(rect.y+rect.height*.52,focus.y-44,bomb.y-44)},hold={id:2,x:focus.x+focus.width/2,y:focus.y+focus.height/2},blast={id:3,x:bomb.x+bomb.width/2,y:bomb.y+bomb.height/2};
     const touch=(type,points)=>cdp.send('Input.dispatchTouchEvent',{type,touchPoints:points});
     const pos=()=>page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;return {x:s.player.x,tick:s.tick,bombs:s.bombs,focus:s.player.focus};});
-    await touch('touchStart',[move]);let p0=await pos();await page.waitForFunction(t=>HapilArcadeApp.debugState().state.tick>=t+12,p0.tick);let p1=await pos();
+    await touch('touchStart',[move]);let p0=await pos();
+    await page.waitForFunction(t=>HapilArcadeApp.debugState().state.tick>=t+6,p0.tick);
+    assert.equal((await pos()).x,p0.x,name+' touching a new location holds the hero in place');
+    move.x=rect.x+rect.width*.95;p0=await pos();await touch('touchMove',[move]);
+    await page.waitForFunction(t=>HapilArcadeApp.debugState().state.tick>=t+8,p0.tick);let p1=await pos();
     const fast=(p1.x-p0.x)/(p1.tick-p0.tick);assert(fast>3,name+' normal touch movement: '+JSON.stringify({p0,p1,move}));
     await touch('touchStart',[hold]);p0=await pos();await page.waitForFunction(t=>HapilArcadeApp.debugState().state.tick>=t+12,p0.tick);p1=await pos();
     const slow=(p1.x-p0.x)/(p1.tick-p0.tick);assert(slow>0&&slow<fast*.65,'slow touch movement is actually slower');assert(p1.focus);

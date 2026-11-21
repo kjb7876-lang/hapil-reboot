@@ -34,6 +34,7 @@ test('harmless birth and broken-fragment grace do not cause threat fading',()=>{
  const s=run(),i=bullet(s,s.player.x,s.player.y);s.bage[i]=A.BLOOM_TICKS-1;assert.equal(V.target(s,A),1);
  s.bfragment[i]=1;s.bage[i]=A.BLOOM_TICKS+1;s.bgrace[i]=s.bage[i]+1;assert.equal(V.target(s,A),1);
  s.bage[i]=s.bgrace[i];assert.equal(V.target(s,A),V.MIN_OPACITY);
+ s.bexit[i]=1;assert.equal(V.target(s,A),1,'harmless retiring bullets never hide the hero');s.bexit[i]=0;
  s.bx[i]=NaN;assert.equal(V.target(s,A),1,'invalid coordinates do not poison opacity');
 });
 
@@ -42,6 +43,7 @@ test('only live laser geometry fades the hero; warnings, off phases and afterglo
  assert.equal(V.target(s,A),1);l.age=60;assert.equal(V.target(s,A),V.MIN_OPACITY);
  l.y=s.player.y-200;assert.equal(V.target(s,A),1);l.y=s.player.y;l.age=160;assert.equal(V.target(s,A),1);
  l.age=80;l.x=s.player.x+200;assert.equal(V.target(s,A),1,'beam does not extend backward from its origin');
+ l.full=true;assert.equal(V.target(s,A),V.MIN_OPACITY,'a full-width beam also reveals its other half');
  l.x=s.player.x-1200;assert.equal(V.target(s,A),1,'beyond the rendered beam end');
  s.lasers=[];s.tick=0;const f={kind:'zigzag',points:[0,s.player.y,360,s.player.y],width:14,warn:1,active:500,age:30};s.figures.push(f);
  assert.equal(A.figurePhase(f,s.tick),'on');assert.equal(V.target(s,A),V.MIN_OPACITY);

@@ -27,15 +27,28 @@ test('a ring fired on a fixed beat turns by a fixed step (no random offset)',()=
  for(const x of d)assert(Math.abs(x-d[0])<1e-6,'equal rotation step: '+d.join(','));
 });
 
-test('live enemy emitters retain exactly 50% of wave shots and 78% of boss shots in every difficulty',()=>{
+test('fixed one-shot emitters admit strictly more real bullets per tier on both devices',()=>{
  const emitter={kind:'rotating',fireInterval:1/60,baseSpeed:84,bulletType:{formation:true}};
- for(const difficulty of ['gentle','normal','hell'])for(const compact of [false,true]){
-  for(const [stage,expected] of [['wave',100],['card',156]]){
-   const s=A.createRun({entranceAll:true,difficulty,compact,stage:0});
-   s.stage=stage;
-   for(let t=0;t<200;t++)A.emit(s,emitter,t,{x:120,y:140});
-   assert.equal(s.n,expected,difficulty+' '+stage+' compact='+compact);
-   assert.equal(s.bs[0],Math.fround(84*s.rules.speed),'retained shots keep their speed');
+ for(const stage of ['wave','card']){
+  const pc=[];
+  for(const compact of [false,true]){
+   const counts=['gentle','normal','hell'].map((difficulty,index)=>{
+    const s=A.createRun({entranceAll:true,difficulty,compact,stage:0});
+    s.stage=stage;
+    for(let t=0;t<200;t++)A.emit(s,emitter,t,{x:120,y:140});
+    assert.equal(s.bs[0],Math.fround(84*s.rules.speed),'retained shots keep their speed');
+    if(compact)assert(s.n<pc[index],stage+' mobile is lighter on '+difficulty);
+    else pc.push(s.n);
+    return s.n;
+   });
+   assert(counts[0]<counts[1]&&counts[1]<counts[2],stage+' '+counts);
+   assert(counts[2]<=(stage==='wave'?100:156),'preserve the previous upper limit');
   }
  }
+});
+
+test('live mobile stage 7 keeps Easy < Normal < Hell through the Balrog cards and their special handoffs',()=>{
+ const {execFileSync}=require('node:child_process');
+ const audit=require.resolve('../tools/audit-live-difficulty-v43.cjs');
+ execFileSync(process.execPath,[audit,'--stage','7','--device','mobile','--check'],{encoding:'utf8'});
 });

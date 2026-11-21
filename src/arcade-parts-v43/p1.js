@@ -176,7 +176,7 @@
           // 그림: 불덩이가 하늘을 뒤덮는다. 위에서 큰 불덩이가 내려오다 터져 작은 불꽃 고리가 된다.
           if(t%K.pick(s,26,18,12)===0)K.spawn(s,20+K.rand(s)*320,-14,DOWN+(K.rand(s)-.5)*.3,70,{color:R,size:2,at:K.pick(s,190,170,150)+Math.floor(K.rand(s)*40),mode:K.MODE_SPLIT,arg:K.pick(s,6,7,8),speed2:52});
           if(t%60===30)K.fan(s,b.x,b.y,K.count(s,6),K.aim(s,b.x,b.y),1,92,{color:Y,size:0});}},
-        p1_vortex:{name:'검은 소용돌이',fire:function(s,t){var b=s.boss,arms=K.count(s,3),k;
+        p1_vortex:{name:'검은 소용돌이',fire:function(s,t){var b=s.boss,arms=s.entranceAll?K.pick(s,1,2,3):K.count(s,3),k;
           // 그림: 하늘 한가운데 검은 소용돌이. 팔이 휘감기며 돌고, 화면 위 양 끝에서 끌려 들어오는 탄이 휘어진다.
           if(t%7===0)for(k=0;k<arms;k++)K.spawn(s,b.x,b.y,t*.05+TAU*k/arms,70,{color:k%2?PU:R,size:0,turn:.36,life:620});
           if(t%K.pick(s,36,28,20)===0){K.spawn(s,8,-10,.95,92,{color:WH,size:1,turn:-.42});K.spawn(s,W-8,-10,PI-.95,92,{color:WH,size:1,turn:.42});}}},

@@ -127,7 +127,11 @@
           if(t%100===50)K.fan(s,b.x,b.y,K.pick(s,2,3,4),K.aim(s,b.x,b.y),.8,100,{size:K.SHAPE_PROP,color:K.P.p3_lance});}},
         // 29 — 기계 괴물의 갑옷: 상처(보라)와 선의(청록) 두 겹의 팔각 갑옷판이 서로 반대로 돌며 얽힌다.
         p3_armor:{name:'기계 괴물의 갑옷',scene:'29',fire:function(s,t){var b=s.boss,per=Math.max(2,K.count(s,2));
-          if(t%56===0){K.shape(s,b.x,b.y,K.Shapes.polygon(8,per),66,t*.01,{color:K.PURPLE,size:1});K.shape(s,b.x,b.y,K.Shapes.polygon(8,per),66,PI/8-t*.01,{color:K.CYAN,size:0});}
+          if(t%56===0){
+            var single=s.entranceAll&&s.difficulty==='gentle',row=t/56;
+            if(!single||row%2===0)K.shape(s,b.x,b.y,K.Shapes.polygon(8,per),66,t*.01,{color:K.PURPLE,size:1});
+            if(!single||row%2===1)K.shape(s,b.x,b.y,K.Shapes.polygon(8,per),66,PI/8-t*.01,{color:K.CYAN,size:0});
+          }
           if(t%112===84)K.fan(s,b.x,b.y,3,K.aim(s,b.x,b.y),.9,80,{color:K.WHITE,size:2});}},
         // 29 — 반복을 명령하는 연결: 문의 촉수 같은 연결선이 채찍처럼 휘어 뻗고, 영웅에게 겨눈 연결 광선이 같은 박자로 켜진다.
         p3_repeatLink:{name:'반복을 명령하는 연결',scene:'29',fire:function(s,t){var b=s.boss,n=K.count(s,13),phase=t%150;

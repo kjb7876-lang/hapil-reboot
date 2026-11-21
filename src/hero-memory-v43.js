@@ -3,12 +3,12 @@
  *  "지금영웅 구름에 수묵화풍시계그림넣어서 일반 가속 둔화에 따라 시계가 빨리돌고 늦게돌게끔 … 영웅공격가속 및 영웅주변적탄환 속도느려짐 … 7단계로".
  *  그림 원천: m0 StoryWorld 기억사수 이펙트 시트(Dots 제작·사용자 승인) → tools/build-hero-fx-v43.py 가 줄인 원색판과 수묵판을 media/arcade-v43-hero/ 에 굽는다.
  *   shard 결정탄 비행 8칸 · shatter 결정 파편 터짐 6칸 · bolt 기억 번개 8칸 · burst 궁극 폭발 12칸.
- *  기본은 먹 농담이며, 설정에서 플레이어 공격에 인주색을 더할 수 있다. 영웅을 감싸는 원 고리는 그리지 않는다(둔화는 흩날리는 먹 붓끝으로). 십자가 없음.
+ *  플레이어 공격은 기본 인주색이며 설정에서 끌 수 있다. 영웅을 감싸는 원 고리는 그리지 않는다(둔화는 흩날리는 먹 붓끝으로). 십자가 없음.
  *  판정·피해는 엔진(arcade-v43.js)이 정한다. 이 파일은 그림만. */
 (function(global){'use strict';
   var TAU=Math.PI*2,DIR='media/arcade-v43-hero/';
   var SHEETS={shard:{frames:8,cell:96,fps:14},shatter:{frames:6,cell:128,fps:16},bolt:{frames:8,cell:192,fps:26,ox:24},burst:{frames:12,cell:192,fps:16}};
-  var img={},redAtlases={},inkRed=false,RED_INK='#a8382a',RED_DARK='#842c22',RED_LIGHT='#ce7360',inkOn=function(){return !!(global.HapilInk&&global.HapilInk.on);};
+  var img={},redAtlases={},inkRed=true,RED_INK='#a8382a',RED_DARK='#842c22',RED_LIGHT='#ce7360',inkOn=function(){return !!(global.HapilInk&&global.HapilInk.on);};
   function load(){Object.keys(SHEETS).concat(['cutin']).forEach(function(k){var i=new Image();i.src=DIR+k+(inkOn()?'-ink':'')+'.webp';img[k]=i;});
     ['seoha','seoha-b'].forEach(function(id){var portrait=new Image(),H=global.HapilArcadeHeroes;portrait.src=H?H.get(id).cutin:'media/arcade-v43-heroes/seoha-portrait'+(id==='seoha-b'?'-v2':'')+'.webp';img[cutinKey(id)]=portrait;});
   }
@@ -126,14 +126,32 @@
     var dx=x1-x0,dy=y1-y0,d=Math.sqrt(dx*dx+dy*dy)||1,nx=-dy/d,ny=dx/d,i;n=n||Math.max(2,Math.round(d/7));
     g.beginPath();g.moveTo(x0,y0);for(i=1;i<n;i++){var u=i/n,o=(rnd(seed+i*3.1)-.5)*2*amp;g.lineTo(x0+dx*u+nx*o,y0+dy*u+ny*o);}g.lineTo(x1,y1);g.stroke();
   }
+  // Each path draws its near edge immediately. Keep the far edge to trace back before filling.
+  var farEdge=[];
+  function fillBoltPath(g,last){
+    for(var i=last*2;i>=0;i-=2)g.lineTo(farEdge[i],farEdge[i+1]);
+    g.closePath();g.fill();
+  }
   function wedge(g,x0,y0,x1,y1,w0,w1,seed,amp,n){ // 뿌리 굵고 끝 가는 채운 붓 획(꺾임 포함): 갈필 쐐기
-    var dx=x1-x0,dy=y1-y0,d=Math.sqrt(dx*dx+dy*dy)||1,nx=-dy/d,ny=dx/d,L=[],R=[],k;n=n||3;
-    for(k=0;k<=n;k++){var u=k/n,o=k===0||k===n?0:(rnd(seed+k*2.3)-.5)*2*amp,w=(w0+(w1-w0)*u)*.5,cx=x0+dx*u+nx*o,cy=y0+dy*u+ny*o;L.push(cx+nx*w,cy+ny*w);R.push(cx-nx*w,cy-ny*w);}
-    g.beginPath();g.moveTo(L[0],L[1]);for(k=2;k<L.length;k+=2)g.lineTo(L[k],L[k+1]);for(k=R.length-2;k>=0;k-=2)g.lineTo(R[k],R[k+1]);g.closePath();g.fill();
+    var dx=x1-x0,dy=y1-y0,d=Math.sqrt(dx*dx+dy*dy)||1,nx=-dy/d,ny=dx/d;n=n||3;
+    g.beginPath();
+    for(var k=0;k<=n;k++){
+      var u=k/n,o=k===0||k===n?0:(rnd(seed+k*2.3)-.5)*2*amp,w=(w0+(w1-w0)*u)*.5;
+      var cx=x0+dx*u+nx*o,cy=y0+dy*u+ny*o;
+      if(k===0)g.moveTo(cx+nx*w,cy+ny*w);else g.lineTo(cx+nx*w,cy+ny*w);
+      farEdge[k*2]=cx-nx*w;farEdge[k*2+1]=cy-ny*w;
+    }
+    fillBoltPath(g,n);
   }
   function boltShape(g,len,w,amp,seed,n){ // 채운 번개 한 줄기: 꼬리(+y)는 가늘게, 머리(-y) 바로 뒤가 가장 굵고 끝은 뾰족하다. 꺾임은 번갈아 좌우로 날카롭게
-    var L=[],R=[],k;for(k=0;k<=n;k++){var u=k/n,y=len*.5-len*u,x=k===0||k===n?0:(k%2?1:-1)*amp*(.55+rnd(seed+k*1.7)*.45),hw=k===n?0:w*(.18+.82*Math.min(1,u*1.25));L.push(x-hw,y);R.push(x+hw,y);}
-    g.beginPath();g.moveTo(L[0],L[1]);for(k=2;k<L.length;k+=2)g.lineTo(L[k],L[k+1]);for(k=R.length-2;k>=0;k-=2)g.lineTo(R[k],R[k+1]);g.closePath();g.fill();
+    g.beginPath();
+    for(var k=0;k<=n;k++){
+      var u=k/n,y=len*.5-len*u,x=k===0||k===n?0:(k%2?1:-1)*amp*(.55+rnd(seed+k*1.7)*.45);
+      var hw=k===n?0:w*(.18+.82*Math.min(1,u*1.25));
+      if(k===0)g.moveTo(x-hw,y);else g.lineTo(x-hw,y);
+      farEdge[k*2]=x+hw;farEdge[k*2+1]=y;
+    }
+    fillBoltPath(g,n);
   }
   function sparkDart(g,x,y,rot,lv,seed,outer){
     var len=19+lv*1.5,a=fxDim*(outer&&lv>=5?.4:.6);g.save();g.translate(x,y);g.rotate(rot);g.lineCap='round';g.lineJoin='round';

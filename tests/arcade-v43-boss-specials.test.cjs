@@ -3,8 +3,8 @@
 const test=require('node:test'),assert=require('node:assert/strict'),h=require('./helpers/arcade-v43.cjs');
 const a=h.need();
 function bossRun(difficulty,stage,seed){const g=a.STAGES[stage||8];let seg=g.first;while(a.SEGMENTS[seg].kind!=='card'||a.SEGMENTS[seg].mid)seg++;const s=a.createRun({difficulty,seed:seed||3,segment:seg,entranceAll:true});toCard(s);return s;}
-function kindRun(difficulty,kind){for(let st=0;st<a.STAGES.length;st++){const g=a.STAGES[st];let seg=g.first;while(a.SEGMENTS[seg]&&a.SEGMENTS[seg].kind!=='card'||(a.SEGMENTS[seg]&&a.SEGMENTS[seg].mid))seg++;if(!a.SEGMENTS[seg]||a.SEGMENTS[seg].stage!==st)continue;
- if(a.SP_ORDER[(st*3+seg)%a.SP_ORDER.length]===kind){const s=a.createRun({difficulty,seed:3,segment:seg,entranceAll:true});toCard(s);if(a.spStart(s)<0)continue;s.segTick=a.spStart(s)-a.SP_LEAD-5;return s;}}throw new Error(kind);}
+function kindRun(difficulty,kind,compact=false){for(let st=0;st<a.STAGES.length;st++){const g=a.STAGES[st];let seg=g.first;while(a.SEGMENTS[seg]&&a.SEGMENTS[seg].kind!=='card'||(a.SEGMENTS[seg]&&a.SEGMENTS[seg].mid))seg++;if(!a.SEGMENTS[seg]||a.SEGMENTS[seg].stage!==st)continue;
+ if(a.SP_ORDER[(st*3+seg)%a.SP_ORDER.length]===kind){const s=a.createRun({difficulty,seed:3,segment:seg,entranceAll:true,compact});toCard(s);if(a.spStart(s)<0)continue;s.segTick=a.spStart(s)-a.SP_LEAD-5;return s;}}throw new Error(kind);}
 function toCard(s){for(let i=0;i<3000&&s.stage!=='card';i++){s.player.invulnerableUntil=s.tick+999;a.step(s,{dx:0,dy:0});h.clear(s);}assert.equal(s.stage,'card');s.segTick=0;}
 // 사용자 11-20: 특수 페이즈는 지난 탄이 다 빠져나갈 때까지 시작을 미룬다(s.spHold). 미룬 틱은 관찰 시간에서 빼고 센다
 function go(s,ticks,each,x){let held=0;for(let i=0;i<ticks+held&&s.stage==='card';i++){s.player.invulnerableUntil=s.tick+999;s.boss.hp=s.boss.maxHp;if(x!==undefined)s.player.x=x;const h0=s.spHold||0;a.step(s,{dx:0,dy:0});if((s.spHold||0)>h0){held++;h.clear(s);continue;}if(each)each(s,i-held);h.clear(s);}return s;}
@@ -34,6 +34,25 @@ test('laser phase: beams only, always a gap, within the laser cap; harder diffic
   s=kindRun(d,'laser');go(s,a.SP_LEAD+a.SP_LEN[d],t=>{assert(t.lasers.length<=a.LASER_CAP);});}
  assert(open.gentle<=open.normal,JSON.stringify(open));
 });
+test('on phones the rhythm notes give one more beat of warning and the open paths are wider',()=>{
+ for(const d of DIFFS){
+  const first=(compact,motif)=>{
+   const s=kindRun(d,'laser',compact);s.sp.force=motif;let notes=null;
+   go(s,a.SP_LEAD+130,t=>{
+    const born=t.lasers.filter(l=>l.age===1&&l.rl===motif);
+    if(born.length&&!notes)notes={warn:born[0].warn,active:born[0].active,covered:born.reduce((sum,l)=>sum+l.width,0),
+      gap:t.coverGap&&t.coverGap.hi-t.coverGap.lo};
+   });
+   assert(notes,d+' '+motif);return notes;
+  };
+  const pc=first(false,'slide'),phone=first(true,'slide');
+  assert.equal(phone.warn,pc.warn+30,d+' warning');
+  assert(phone.covered<pc.covered,d+' moving corridor');
+  assert(first(true,'trill').active<first(false,'trill').active,d+' shorter active note');
+  assert(first(true,'cover').gap>first(false,'cover').gap,d+' a wider marked escape path');
+ }
+});
+
 test('rayback: the beat sounds first and the attack lands LAYBACK ticks behind it (laid back more on easy)',()=>{
  for(const d of DIFFS){const s=kindRun(d,'laser');let beatTick=-1,lags=[];
   go(s,a.SP_LEAD+a.SP_LEN[d],t=>{if(t.events.includes('grooveBeat')||t.events.includes('grooveAccent'))beatTick=t.tick;
