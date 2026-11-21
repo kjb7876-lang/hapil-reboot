@@ -30,6 +30,8 @@
     button.primary{background:#d8c49a;color:#17131f;border-color:#d8c49a;font-weight:600;min-width:220px;min-height:54px;font-size:17px}
     button:disabled{opacity:.5}
     #arcade-frame{position:relative;touch-action:none}
+    #arcade-stage{-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}#arcade-stage[data-mode="playing"]{touch-action:none} /* 플레이 중 위아래 HUD 여백에서 세로로 끌어도 스크롤 제스처가 이동 손가락을 취소하지 않게 */
+    html:has(#arcade-stage[data-mode="playing"]),html:has(#arcade-stage[data-mode="playing"]) body{touch-action:none}
     #arcade-pause-button{position:absolute;top:8.6%;left:2.6%;min-width:44px;min-height:44px;padding:0;background:rgba(10,10,24,.45);border-color:rgba(255,255,255,.22);color:rgba(255,255,255,.8)}
     #arcade-pause-button[hidden],.pad[hidden]{display:none}
     .pad{position:absolute;bottom:1.6%;width:68px;height:56px;min-width:0;padding:0;border-radius:14px;background:rgba(10,10,24,.5);border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.88);font-size:13px;touch-action:none}
@@ -361,38 +363,38 @@
       <button id="arcade-home" type="button" data-i18n="toTitle">처음 화면으로</button>
     </div>
   </div>
-  <script src="src/rain-hit-bank-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/audio-v37.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-parts-v43/p1.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-parts-v43/p2.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-parts-v43/p3.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-parts-v43/p4.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-parts-v43/p5.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-parts-v43/p6.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-parts-v43/p7.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-parts-v43/p8.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-boss-intros-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-boss-lines-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-heroes-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-boss-rhythm-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-encounter-phases-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-boss-phases-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-laser-rhythm-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-skins-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/ink-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/ink-motifs-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/hero-memory-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-i18n-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-music-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-mobile-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-eyes-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-story-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-chapters-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-hero-select-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-hero-visibility-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-spirit-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-cues-v43.js?v=20261121-bossshare2"></script>
-  <script src="src/arcade-app-v43.js?v=20261121-bossshare2"></script>
+  <script src="src/rain-hit-bank-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/audio-v37.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-parts-v43/p1.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-parts-v43/p2.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-parts-v43/p3.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-parts-v43/p4.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-parts-v43/p5.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-parts-v43/p6.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-parts-v43/p7.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-parts-v43/p8.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-boss-intros-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-boss-lines-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-heroes-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-boss-rhythm-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-encounter-phases-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-boss-phases-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-laser-rhythm-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-skins-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/ink-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/ink-motifs-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/hero-memory-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-i18n-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-music-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-mobile-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-eyes-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-story-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-chapters-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-hero-select-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-hero-visibility-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-spirit-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-cues-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/arcade-app-v43.js?v=20261121-bossshare3"></script>
 </body>
 </html>

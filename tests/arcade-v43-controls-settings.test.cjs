@@ -512,3 +512,34 @@ test('PC 키 바꾸기: 저장값을 불러오고, 겹치거나 잘못된 저장
   const b=harness({'hapil-arcade-settings-v43':JSON.stringify({keyFocus:'Escape',keyBomb:'ArrowUp'})});b.h.load();assert.equal(b.h.settings().keyFocus,'Shift');assert.equal(b.h.settings().keyBomb,'KeyX');
   const c=harness({'hapil-arcade-settings-v43':JSON.stringify({keyFocus:'KeyC',keyBomb:'KeyC'})});c.h.load();assert.equal(c.h.settings().keyFocus,'Shift');assert.equal(c.h.settings().keyBomb,'KeyX');
 });
+test('mobile touch never gets stuck: a lost pointerup, a held finger across pause, and HUD-margin drags all keep moving the hero (11-21)',()=>{
+  const {h,s,nodes}=harness(),stage=nodes.get('arcade-stage'),canvas=nodes.get('arcade-canvas'),focus=nodes.get('arcade-focus');
+  const touch=(type,id,x,y,target=canvas)=>stage.emit(type,{target,pointerType:'touch',pointerId:id,clientX:x,clientY:y});
+  s.player.x=180;s.player.y=500;
+  // 1) finger 1 goes down, its pointerup never arrives (lost capture / browser gesture). A new finger must take over.
+  touch('pointerdown',1,180,500);assert.equal(h.finger().id,1);
+  touch('pointerdown',2,100,300);assert.equal(h.finger().id,2,'newest finger owns movement even if the old one was never released');
+  assert.equal(stage.captured.has(1),false,'old capture is released');assert(stage.captured.has(2));
+  touch('pointermove',2,130,300);assert(h.input().dx>0,'new finger drags the hero');
+  // 2) the old finger's late pointerup must not cancel the new one
+  touch('pointerup',1,180,500);assert.equal(h.finger().active,true);
+  // 3) pause clears input; the finger is still on glass and moves after resume: it is adopted
+  h.mode('paused');assert.equal(h.finger().active,false);h.mode('playing');
+  assert.equal(stage.dataset.mode,'playing','stage is marked so CSS turns off browser panning around the field');
+  touch('pointermove',2,170,300);assert.equal(h.finger().active,true,'untracked touching finger is adopted on move');
+  touch('pointermove',2,190,300);assert(h.input().dx>0);
+  touch('pointerup',2,190,300);assert.equal(h.finger().active,false);
+  // 4) the focus finger is never adopted as movement, and button targets are ignored
+  focus.emit('pointerdown',{pointerId:9});stage.emit('pointermove',{target:focus,pointerType:'touch',pointerId:9,clientX:20,clientY:620});
+  assert.equal(h.finger().active,false,'focus finger stays a focus finger');
+  stage.emit('pointermove',{target:canvas,pointerType:'touch',pointerId:9,clientX:30,clientY:600});assert.equal(h.finger().active,false);
+  // 5) mouse hovering is not a touch: no adoption without a press
+  stage.emit('pointermove',{target:canvas,pointerType:'mouse',pointerId:1,clientX:30,clientY:600});assert.equal(h.finger().active,false);
+  h.mode('title');assert.equal(stage.dataset.mode,'title');
+});
+test('mobile rendering hints: opaque game canvas and touch-action none around the field only while playing',()=>{
+  const app=read('src/arcade-app-v43.js'),html=read('arcade.html');
+  assert.match(app,/getContext\('2d',\{alpha:false\}\)/);
+  assert.match(html,/#arcade-stage\[data-mode="playing"\]\{touch-action:none\}/);
+  assert.match(html,/#arcade-stage\{[^}]*-webkit-touch-callout:none/);
+});
