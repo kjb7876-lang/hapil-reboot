@@ -1909,17 +1909,18 @@
     // 목숨 · 폭탄 · 스침 게이지(왼쪽 아래 저속 버튼 위), 점수(오른쪽 아래 폭탄 버튼 위)
     // 왼쪽 아래(초능력 버튼 위): 목숨 줄·필살 줄을 이름표·모양·색으로 갈라 쌓는다
     var lifeY=H-110,bombY=H-130,bcapC=Arcade.bombCap?Arcade.bombCap(s):s.bombs;ctx.textAlign='left';
+    ctx.fillStyle='rgba(8,6,16,.5)';ctx.beginPath();if(ctx.roundRect)ctx.roundRect(5,H-148,Math.min(176,W*.5),46,8);else ctx.rect(5,H-148,Math.min(176,W*.5),46);ctx.fill(); // 적 그림 위에서도 읽히는 어두운 바탕
     ctx.font='600 11px '+SANS;ctx.fillStyle='rgba(255,255,255,.92)';ctx.fillText(T('lifeLabel'),12,lifeY);
     ctx.font='15px '+SANS;ctx.fillStyle='#ff6a8a';var hearts='';for(i=0;i<s.player.maxHp;i++)hearts+=i<s.player.hp?'♥':'♡';ctx.fillText(hearts,44,lifeY+1);
     var chip=T('bombLabel')+' ×'+s.bombs;ctx.font='700 11px '+SANS;var cw=Math.ceil(ctx.measureText(chip).width)+12;
     ctx.fillStyle='rgba(20,90,60,.88)';ctx.strokeStyle='#7dffb0';ctx.lineWidth=1;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(12,bombY-12,cw,16,8);else ctx.rect(12,bombY-12,cw,16);ctx.fill();ctx.stroke();
     ctx.fillStyle='#eafff3';ctx.fillText(chip,18,bombY);
     for(i=0;i<bcapC;i++){var px=12+cw+10+i*13;ctx.beginPath();ctx.arc(px,bombY-4,4.5,0,6.2832);if(i<s.bombs){ctx.fillStyle='#7dffb0';ctx.fill();}else{ctx.strokeStyle='rgba(125,255,176,.5)';ctx.stroke();}}
-    ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.8)';ctx.fillText('공격 Lv.'+(s.power||1)+' · 필살 Lv.'+(s.bombLevel||1),12,H-158);
+    ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.8)';var lvT='공격 Lv.'+(s.power||1)+' · 필살 Lv.'+(s.bombLevel||1);ctx.lineWidth=3;ctx.strokeStyle='rgba(8,6,16,.7)';ctx.strokeText(lvT,12,H-158);ctx.fillText(lvT,12,H-158);
     if(s.union)ctx.fillText(T('unionName'),12,H-172);
     ctx.fillStyle='rgba(255,255,255,.18)';ctx.fillRect(12,H-148,64,3);ctx.fillStyle='#7dffb0';ctx.fillRect(12,H-148,64*Math.max(0,Math.min(1,s.gauge/Arcade.GAUGE_FULL)),3);
-    ctx.textAlign='right';ctx.font='600 14px '+SANS;ctx.fillStyle='#ffffff';ctx.fillText(pad(s.score),W-12,H-78);
-    ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.7)';ctx.fillText('GRAZE '+s.graze+(Arcade.pointValue?' · 하트값 '+Arcade.pointValue(s):''),W-12,H-94);
+    ctx.textAlign='right';ctx.font='600 14px '+SANS;ctx.fillStyle='#ffffff';ctx.fillText(pad(s.score),W-12,H-96);
+    ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.7)';ctx.fillText('GRAZE '+s.graze+(Arcade.pointValue?' · 하트값 '+Arcade.pointValue(s):''),W-12,H-112);
     }
     if(banner>0){
       var t=1-banner,slide=t<.18?(1-t/.18)*W:bannerSpell&&t>.72?((t-.72)/.28)*((t-.72)/.28)*W:0,alpha=bannerSpell?1:t>.75?(1-t)/.25:1; // 스펠 띠는 흐려지지 않고 오른쪽으로 빠져나간다(반투명 잔상이 받침 글자와 겹치지 않게)
