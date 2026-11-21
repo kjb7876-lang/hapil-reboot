@@ -46,3 +46,9 @@ test('fixed one-shot emitters admit strictly more real bullets per tier on both 
   }
  }
 });
+
+test('live mobile stage 7 keeps Easy < Normal < Hell through the Balrog cards and their special handoffs',()=>{
+ const {execFileSync}=require('node:child_process');
+ const audit=require.resolve('../tools/audit-live-difficulty-v43.cjs');
+ execFileSync(process.execPath,[audit,'--stage','7','--device','mobile','--check'],{encoding:'utf8'});
+});

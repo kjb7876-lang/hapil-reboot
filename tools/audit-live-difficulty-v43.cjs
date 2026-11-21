@@ -90,7 +90,7 @@ function audit(args) {
       if (!okOpening || !okEnd) violations++;
       if (opt.details || (!okOpening || !okEnd) && opt.check) {
         const name = part.name || part.plain || part.kind;
-        console.log(`${device} stage ${stage}, segment ${segment} ${name} | 12s ${opening.join('/')} | total ${shots.join('/')}`);
+        console.log(`${device} stage ${stage}, segment ${segment} ${name} | 12s ${opening.join('/')} | total ${shots.join('/')} | peak ${runs.map(run => run.peak).join('/')}`);
       }
     }
     console.log(`${device}, memory ability ${opt.ability}, Easy/Normal/Hell | total births ${totals.join('/')} | peak alive ${peaks.join('/')}`);
