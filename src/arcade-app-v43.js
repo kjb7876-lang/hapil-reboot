@@ -8,7 +8,7 @@
   var Mobile=global.HapilMobile||null; // 모바일 출시 도우미(오류·플레이 기록, 중간 저장, 기기 진단). 없어도 게임은 돈다.
   var Arcade=global.HapilArcade,Progress=Arcade.Progress,W=Arcade.WIDTH,H=Arcade.HEIGHT,TAU=Math.PI*2;
   var $=function(id){return document.getElementById(id);};
-  var canvas=$('arcade-canvas'),ctx=canvas.getContext('2d');
+  var canvas=$('arcade-canvas'),ctx=canvas.getContext('2d',{alpha:false}); // 불투명 판: 휴대폰 합성기가 캔버스 층을 뒤 배경과 섞지 않아도 된다(모바일 최적화 11-21). 매 프레임 배경이 판 전체를 칠한다
   var HeroVisibility=global.HapilHeroVisibility||null,heroOpacity=1;
   var Cues=global.HapilCues||null; // 보스 행동과 회피를 잇는 연출: 뿌리 축·접시·빗장·몹 쏘기 예고·한지 비움(src/arcade-cues-v43.js)
   var Rhythm=global.HapilLaserRhythm||null; // 리듬 레이저: 음표 줄·내려오는 음표머리·장단 점·북과 가야금 소리(src/arcade-laser-rhythm-v43.js)
@@ -559,7 +559,7 @@
     var dpr=Math.min(2,global.devicePixelRatio||1),next=lite?1:Math.max(1,dpr);
     if(next!==scale||!orbs.length||canvas.width!==W*next){scale=next;canvas.width=W*scale;canvas.height=H*scale;buildSprites();}
     var stage=$('arcade-stage'),room=stage.getBoundingClientRect(),k=Math.min(room.width/W,room.height/H);
-    canvas.style.width=Math.floor(W*k)+'px';canvas.style.height=Math.floor(H*k)+'px';
+    canvas.style.width=Math.floor(W*k)+'px';canvas.style.height=Math.floor(H*k)+'px';fieldRect=null;
     placeHud();
   }
   /* 플레이 칸 밖에 자리가 있으면 HUD(스테이지 이름·목숨·폭탄·점수)와 버튼을 칸 밖으로 뺀다.
@@ -2101,7 +2101,8 @@
 
   function setMode(next){
     if(next!=='hero'&&heroPicker)heroPicker.hide();
-    mode=next;Object.keys(SCREENS).forEach(function(k){show(SCREENS[k],k===next);});
+    mode=next;var st=$('arcade-stage');if(st&&st.dataset)st.dataset.mode=next; // 플레이 중에만 판 둘레까지 touch-action:none(arcade.html)
+    Object.keys(SCREENS).forEach(function(k){show(SCREENS[k],k===next);});
     var heldStory=!!story&&(next==='paused'||next==='rules'),storyEl=$('arcade-story');
     if(storyEl){if(heldStory)storyEl.hidden=false;storyEl.inert=heldStory;storyEl.setAttribute('aria-hidden',String(heldStory));}
     showDevBadge();
@@ -2403,7 +2404,8 @@
     try{if(focus!==null)$('arcade-focus').releasePointerCapture(focus);}catch(e){}
     syncFocusButton();
   }
-  function fieldPoint(e){var rect=canvas.getBoundingClientRect();return {x:(e.clientX-rect.left)*W/rect.width,y:(e.clientY-rect.top)*H/rect.height};}
+  var fieldRect=null; // 이동 중에는 판 위치를 다시 재지 않는다: 매 pointermove 마다 getBoundingClientRect 가 레이아웃을 강제해 입력이 늦어지던 것(모바일 최적화 11-21). 짚을 때·크기 바뀔 때 새로 잰다
+  function fieldPoint(e,fresh){if(fresh||!fieldRect||!fieldRect.width)fieldRect=canvas.getBoundingClientRect();var rect=fieldRect;return {x:(e.clientX-rect.left)*W/rect.width,y:(e.clientY-rect.top)*H/rect.height};}
   function bind(){
     document.querySelectorAll('[data-difficulty]').forEach(function(button){button.addEventListener('click',function(){setDifficulty(button.dataset.difficulty);progress.difficulty=difficulty;saveProgress();if(state===null)refreshTitle();});});
     $('arcade-continue').addEventListener('click',function(){var mid=midway();start(mid?{practice:true,stage:mid.stage,segment:mid.seg,hero:heroId(mid.hero),carry:{hits:mid.hits,bombs:mid.bombs},grown:{exp:mid.exp,expRemainder:mid.expRemainder,fills:mid.fills,stock:mid.stock,union:mid.union}}:{practice:true,stage:Progress.resume(progress),hero:journeyHero});});
@@ -2447,18 +2449,37 @@
     $('arcade-bomb').addEventListener('pointerdown',function(e){if(mode!=='playing'||(e.button!==undefined&&e.button!==0))return;e.preventDefault();e.stopPropagation();bombQueued=true;});
     $('arcade-bomb').addEventListener('click',function(e){if(e.detail===0&&mode==='playing')bombQueued=true;});
     var stage=$('arcade-stage');
-    stage.addEventListener('pointerdown',function(e){
-      if(mode!=='playing'||(e.button!==undefined&&e.button!==0)||e.target.closest('button,input,select,label'))return;
-      var ph=state&&Arcade.entrancePhase&&Arcade.entrancePhase(state);
-      if(ph&&ph.phase==='speech'&&ph.t>.3&&Arcade.skipEntrance(state)){e.preventDefault();return;}
-      if(finger.active)return;
-      e.preventDefault();var q=fieldPoint(e);finger.active=true;finger.id=e.pointerId;finger.x=q.x;finger.y=q.y;
+    /* 이동 손가락(모바일 터치 안 먹는 버그, 11-21):
+       1) 새 손가락이 판을 짚으면 언제나 그 손가락이 이동을 맡는다. 예전에는 앞 손가락의 pointerup 이 빠지면(캡처 유실·가림막·브라우저 제스처)
+          finger.active 가 true 로 남아 그 뒤 모든 터치를 무시했다.
+       2) 짚은 채 컷인·일시정지·대사 넘기기를 지나와 추적이 끊긴 손가락도 움직이는 순간 다시 이동을 맡는다.
+       3) 플레이 중에는 판 둘레 여백(HUD 줄)도 touch-action:none 이라 세로로 끌어도 브라우저 스크롤이 pointercancel 로 손가락을 빼앗지 않는다. */
+    function blocked(e){return e.target&&e.target.closest&&e.target.closest('button,input,select,label,textarea');}
+    function grab(e){
+      var q=fieldPoint(e,true),old=finger.id;
+      if(old!==null&&old!==e.pointerId){try{stage.releasePointerCapture(old);}catch(ignore){}}
+      finger.active=true;finger.id=e.pointerId;finger.x=q.x;finger.y=q.y;
       finger.relative=!!state&&(e.pointerType==='touch'||e.pointerType==='pen');
       if(finger.relative){finger.targetX=state.player.x;finger.targetY=state.player.y;}
       try{stage.setPointerCapture(e.pointerId);}catch(ignore){}
-    });
+    }
+    function down(e){
+      if(e.arcadeSeen)return;e.arcadeSeen=true;
+      if(mode!=='playing'||(e.button!==undefined&&e.button!==0)||blocked(e))return;
+      var ph=state&&Arcade.entrancePhase&&Arcade.entrancePhase(state);
+      if(ph&&ph.phase==='speech'&&ph.t>.3&&Arcade.skipEntrance(state)){e.preventDefault();return;}
+      if(e.pointerId===focusPointer)return;
+      e.preventDefault();grab(e);
+    }
+    stage.addEventListener('pointerdown',down);
+    if(document.addEventListener)document.addEventListener('pointerdown',down); // 태블릿·가로 화면: 판 밖 좌우 여백을 짚어도 움직인다
     stage.addEventListener('pointermove',function(e){
-      if(!finger.active||e.pointerId!==finger.id)return;
+      if(!finger.active||e.pointerId!==finger.id){
+        // 추적이 끊긴 채 화면에 닿아 있는 손가락: 움직이면 이어 받는다(초능력 버튼을 누른 손가락은 빼고).
+        if(mode!=='playing'||!state||e.pointerId===focusPointer||(e.pointerType!=='touch'&&e.pointerType!=='pen')||blocked(e))return;
+        if(finger.active&&finger.id!==null)return;
+        grab(e);return;
+      }
       e.preventDefault();var q=fieldPoint(e);
       if(finger.relative&&state){
         var gain=keys.focus||focusHeld||focusLatched?Arcade.LIVE_MOBILE.focusDrag:Arcade.LIVE_MOBILE.drag;
