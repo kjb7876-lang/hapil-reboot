@@ -1919,7 +1919,7 @@
     ctx.fillStyle='rgba(20,90,60,.88)';ctx.strokeStyle='#7dffb0';ctx.lineWidth=1;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(12,bombY-12,cw,16,8);else ctx.rect(12,bombY-12,cw,16);ctx.fill();ctx.stroke();
     ctx.fillStyle='#eafff3';ctx.fillText(chip,18,bombY);
     for(i=0;i<bcapC;i++){var px=12+cw+10+i*13;ctx.beginPath();ctx.arc(px,bombY-4,4.5,0,6.2832);if(i<s.bombs){ctx.fillStyle='#7dffb0';ctx.fill();}else{ctx.strokeStyle='rgba(125,255,176,.5)';ctx.stroke();}}
-    ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.8)';var lvT='공격 Lv.'+(s.power||1)+' · 필살 Lv.'+(s.bombLevel||1);ctx.lineWidth=3;ctx.strokeStyle='rgba(8,6,16,.7)';ctx.strokeText(lvT,12,H-158);ctx.fillText(lvT,12,H-158);
+    ctx.font='10px '+SANS;ctx.fillStyle='rgba(255,255,255,.8)';var lvT='공격 Lv.'+(s.power||1)+' · 필살 Lv.'+(s.bombLevel||1);ctx.lineWidth=3;ctx.strokeStyle='rgba(8,6,16,.7)';ctx.strokeText(lvT,12,H-158);ctx.fillText('공격 Lv.'+(s.power||1)+' · 필살 Lv.'+(s.bombLevel||1),12,H-158);
     if(s.union)ctx.fillText(T('unionName'),12,H-172);
     ctx.fillStyle='rgba(255,255,255,.18)';ctx.fillRect(12,H-148,64,3);ctx.fillStyle='#7dffb0';ctx.fillRect(12,H-148,64*Math.max(0,Math.min(1,s.gauge/Arcade.GAUGE_FULL)),3);
     ctx.textAlign='right';ctx.font='600 14px '+SANS;ctx.fillStyle='#ffffff';ctx.fillText(pad(s.score),W-12,H-96);
