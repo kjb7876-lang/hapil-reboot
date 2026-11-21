@@ -32,3 +32,17 @@ test('crowding thins mob shots before boss shots',()=>{
   if(stage==='wave')assert.equal(born,0,'mob volleys pause at 86% of the cap');else assert(born>0,'boss volleys still come (thinned) at 86% of the cap');
  }
 });
+
+test('easy boss switching to a special phase never fades leftover bullets out: they keep their look and hit and speed off-screen first',()=>{
+ // 사용자 11-21 22:06 "아직도 보스전에서 탄환이 갑자기 사라지던데 다른 스킬사용하려고 할때 이지에서"
+ for(const [difficulty,compact] of [['gentle',true],['gentle',false],['normal',true]]){
+  const s=A.createRun({difficulty,seed:3,stage:1,stages:1,entranceAll:true,compact,pacing:true});let starts=0;
+  for(let t=0;t<80000&&s.stage!=='won'&&starts<3;t++){
+   s.player.invulnerableUntil=s.tick+999;if(s.stage==='card')s.boss.hp=Math.max(s.boss.hp,s.boss.maxHp*.6);
+   const had=!!s.special;A.step(s,{dx:0,dy:0});s.events.length=s.cancelled.length=s.pops.length=0;
+   if(s.stage==='card'&&A.spWindow(s)&&!s.cardEnding)for(let i=0;i<s.n;i++)assert.equal(s.bexit[i],0,`${difficulty}${compact?' phone':''}: no faded-out bullet around a special phase`);
+   if(!had&&s.special){starts++;assert.equal(s.n,0,'the special starts on a clear screen');}
+  }
+  assert(starts>0,'a special phase started');
+ }
+});
