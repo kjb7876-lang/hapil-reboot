@@ -191,7 +191,7 @@
   /* 서하 3단계(사용자 11-20 20:57 KST "윤서하 수련생 초능력 3단계를 최고단계로하고 11-33프로로 맞춰 대신 하트수집 2배적용하고 보스 클리어시 큰하트가 나오는데 큰하트는 목숨을 추가로 1개더줘 그리고 레벨업이 2배로 빨라"):
      서하 시간제어는 1~3단계(11·22·33%)만. 기억사수는 7단계 그대로. 대신 서하는 하트 값 SEOHA_HEART 배, 기억(exp) SEOHA_EXP 배,
      보스(중간보스 아님) 마지막 패턴 격파 때 큰 하트가 꼭 떨어지고 그 큰 하트는 목숨 하나를 더 준다(목숨이 가득이면 필살기, 그것도 가득이면 점수: 봉인 조각과 같은 순서). */
-  var SEOHA_ABILITY_MAX=3,SEOHA_HEART=2,SEOHA_EXP=2;
+  var SEOHA_ABILITY_MAX=3,SEOHA_HEART=2,SEOHA_EXP=2,SEOHA_TRAINEE_GAUGE=1.77;
   var ABILITY_MAX=7,ABILITY_POWER=.11,ABILITY_HASTE=.055,ABILITY_SLOW=.11,FOCUS_POWER=1.3,FOCUS_GAUGE=1.5;
   /* 영웅 공격 손맛(사용자 11-20 "기억사수 모든공격 롤제리 느낌나게", "서하는 공격중에 시간탄섞어서 … 시간폭탄"). 원작 그림·소리는 쓰지 않고 수묵으로 다시 그린다.
      기억사수 충전탄: 주포 CHARGE_EVERY 번째 발사마다 가운데 한 발이 충전탄. 맞으면 피해를 CHARGE_ARC 만큼 덜어 CHARGE_REACH 안의 다른 적에게 튀긴다(합계는 한 발 피해 그대로).
@@ -288,6 +288,21 @@
   function hitSize(s){return s.entranceAll&&s.compact?s.sizeScale/COMPACT_SIZE/LIVE_MOBILE.size*LIVE_MOBILE.hit:s.sizeScale;} // 휴대폰 이지가 어려운 원인(11-19): 휴대폰은 탄을 1.25배로 크게 그리지만 판정까지 커졌다. 실제 게임은 그림만 키우고 판정은 PC와 같게
   /* 탄 하나. o: {size,color,turn(초당 회전),accel,min,max,at(변화 틱),mode,arg,speed2,life,gen(가지치기 남은 횟수),spin(기물이 도는 속도, 틱당 라디안)} */
   function srand(s){if(s.entranceAll){s.srng=(s.srng+GOLD_SCATTER)>>>0;return s.srng/4294967296;}var x=s.srng|0||1;x^=x<<13;x^=x>>>17;x^=x<<5;s.srng=x>>>0;return s.srng/4294967296;}
+  // Limit new shots without changing volleys' angles, speed, or pattern RNG.
+  function skipEnemyShot(s){
+    var mob=s.mobVolley||s.stage==='wave';
+    if(!mob&&s.stage!=='card')return false;
+    var budget=s.shotBudget;
+    if(budget.seg!==s.seg){budget.seg=s.seg;budget.mob=budget.boss=0;}
+    if(mob){
+      // Keep one shot per pair; alternate the omitted side without locking it to a fan's indices.
+      var m=budget.mob++,side=(Math.imul((m>>>1)+s.seg+1,GOLD_TICK)>>>31);
+      return (m&1)===side;
+    }
+    // Spread 11 omissions evenly over each hundred in a repeatable sequence.
+    var i=budget.boss++,slot=i%100,phase=(s.seg*17+Math.floor(i/100)*31)%100;
+    return Math.floor((slot+phase+1)*11/100)>Math.floor((slot+phase)*11/100);
+  }
   function spawn(s,x,y,angle,speed,o){
     if(s.n>=s.cap){s.dropped++;return;}
     o=o||{};var size=o.size||0;
@@ -300,6 +315,7 @@
     if(s.entranceAll&&s.difficulty!=='hell'&&!o.formation&&size!==SHAPE_PROP&&!o.fragment){angle+=(srand(s)-.5)*2*SCATTER_ANGLE;speed*=1+(srand(s)-.5)*2*SCATTER_SPEED;x+=(srand(s)-.5)*2*SCATTER_POS;y+=(srand(s)-.5)*2*SCATTER_POS;} // 탄을 조금 더 흩뿌려 겹침을 줄인다(사용자 11-18, 이지·노멀)
     if((s.figPend||s.figHeldAt===s.tick||s.spHold)&&!o.fragment&&!s.splitting)return; // 육망성·한자 고리를 기다리는 동안 새 탄을 내지 않는다(사용자 11-20)
     if(s.calm&&!o.fragment)return; // 육망성·한자 고리가 떠 있는 동안, 그리고 보스가 아래로 내려와 있는 동안은 새 탄을 내지 않는다(사용자 11-19 "탄환은 위에 있을때만 생성"). 반사탄도 마찬가지
+    if(s.entranceAll&&!o.fragment&&!s.splitting&&skipEnemyShot(s))return;
     var i=s.n++;
     s.bx[i]=x;s.by[i]=y;s.ba[i]=angle;s.bs[i]=speed*s.rules.speed;
     s.bturn[i]=o.turn||0;s.bacc[i]=o.accel||0;s.bmin[i]=o.min===undefined?0:o.min;s.bmax[i]=o.max===undefined?400:o.max;
@@ -877,7 +893,7 @@
       ability:Math.max(0,Math.min(selectedHero&&(selectedHero.id==='seoha'||selectedHero.id==='seoha-b')?SEOHA_ABILITY_MAX:ABILITY_MAX,options.ability|0)),player:{x:W/2,y:H-84,hp:rules.hp,maxHp:rules.hp,invulnerableUntil:0,r:rules.radius,focus:false},
       boss:{x:W/2,y:-60,targetX:W/2,targetY:132,hp:1,maxHp:1,actor:'',name:'',mid:false,hitTick:-99,leaving:false,present:false,down:null},
       bossOnly:!!options.bossOnly,spellOnly:!!(options.spellOnly&&SEGMENTS[startSeg].kind==='card'),spellSeg:startSeg,rushStage:SEGMENTS[startSeg].stage,bombs:rules.bombs,gauge:0,spellClean:false,captures:0,itemsTaken:0,lane:undefined,
-      n:0,drifted:[],mobDrops:0,hearts:0,pieces:0,gets:[],lastCapture:null,jackpots:0,lastJackpot:null,dropped:0,peak:0,score:0,graze:0,hits:0,kills:0,cleared:0,timeouts:0,events:[],cancelled:[],pops:[],lasers:[],mobs:[],cannons:[],weapons:[],brood:null,warned:false,sn:0,itemCount:0,
+      n:0,shotBudget:{seg:-1,mob:0,boss:0},mobVolley:false,drifted:[],mobDrops:0,hearts:0,pieces:0,gets:[],lastCapture:null,jackpots:0,lastJackpot:null,dropped:0,peak:0,score:0,graze:0,hits:0,kills:0,cleared:0,timeouts:0,events:[],cancelled:[],pops:[],lasers:[],mobs:[],cannons:[],weapons:[],brood:null,warned:false,sn:0,itemCount:0,
       lastStage:STAGES.length-1,lastWipe:-1e9,started:false,results:[],bombsUsed:0,autoBombs:0,distorts:0,orbsBroken:0,orbSerial:0,orbFragments:0,bombPulse:null,pulseInfo:null,noDistort:options.distort===false,drng:((((options.seed>>>0)||1)*2246822519)^0x9e3779b9)>>>0||7,power:1,exp:0,bombLevel:1,fills:0,hasteUntil:-1,zaps:[],skillFx:[],fsSwords:[],fsNext:0,fsLabelTick:-1e9,fsCasts:0,fsHits:0,frng:((((options.seed>>>0)||1)*3266489917)^0x85ebca6b)>>>0||11,lastBomb:null,mark:{tick:0,score:0,hits:0,bombs:0,captures:0,spells:0}};
     if(Number.isInteger(options.stages)&&options.stages>0)s.lastStage=Math.min(STAGES.length-1,s.stageIndex+options.stages-1);
     ['bx','by','ba','bs','bturn','bacc','bmin','bmax','barg','bs2','bspin','bhp'].forEach(function(k){s[k]=new Float32Array(CAP);});
@@ -1216,9 +1232,13 @@
 
   var MOB_REFIRE=[96,56,56],WAVE_FLOOR=[110,280,280],WAVE_CEIL=[170,320,320];
   var MOB_VOLLEY_BEAT={gentle:13,normal:10,hell:9};
-  function fireWaveMob(s,m){
-    MOB_FIRE[m.fire](s,m);
+  function fireMob(s,m){
+    s.mobVolley=true;
+    try{MOB_FIRE[m.fire](s,m);}finally{s.mobVolley=false;}
     m.shots++;
+  }
+  function fireWaveMob(s,m){
+    fireMob(s,m);
     m.next=m.age+(m.every||MOB_REFIRE[s.difficulty==='gentle'?0:2]);
   }
   function refireEvery(s,every){var d=s.difficulty==='gentle'?0:2,base=every||MOB_REFIRE[d];
@@ -1256,7 +1276,7 @@
       if(m.elite){
         if(m.y<m.stopY)m.y+=2.2;
         inRange=m.y>=m.stopY-1&&m.every;
-        if(!formation&&inRange&&m.age>=m.first+60&&(m.age-m.first-60)%m.every===0){MOB_FIRE[m.fire](s,m);m.shots++;}
+        if(!formation&&inRange&&m.age>=m.first+60&&(m.age-m.first-60)%m.every===0){fireMob(s,m);}
         if(!formation&&inRange&&m.age+MOB_CUE_LEAD>=m.first+60&&(m.age+MOB_CUE_LEAD-m.first-60)%m.every===0){m.cueAt=s.tick+MOB_CUE_LEAD;m.cueLead=MOB_CUE_LEAD;}
       }else{
         // 진입은 대본 속도 그대로. 플레이어가 겨눌 수 있는 상단을 지날 때만 진행 속도를 늦춘다.
@@ -1268,7 +1288,7 @@
         if(inRange&&m.rise&&s.entranceAll&&Math.hypot(m.x-s.player.x,m.y-s.player.y)<MOB_NEAR_HOLD)inRange=false; // 아래에서 솟는 몹은 영웅 코앞(120px 안)에서는 쏘지 않는다: 발밑 기습 금지(11-19 탄막 규칙 2·15, docs/v43/danmaku-rules.md)
         if(!formation){
           if(m.next===undefined)m.next=m.first;
-          if(inRange&&m.age>=m.next){MOB_FIRE[m.fire](s,m);m.shots++;m.next=m.age+refireEvery(s,m.every);}
+          if(inRange&&m.age>=m.next){fireMob(s,m);m.next=m.age+refireEvery(s,m.every);}
           if(inRange&&m.next-m.age===MOB_CUE_LEAD){m.cueAt=s.tick+MOB_CUE_LEAD;m.cueLead=MOB_CUE_LEAD;}
           else if(m.age>=m.next&&m.y<=0)m.next=m.age+1;
         }
@@ -2219,10 +2239,13 @@
             if(s.lasers.length>before){var nl=s.lasers[before];nl.role='note';nl.tone=o.tone===undefined?0:o.tone;if(o.mute)nl.mute=1;}};
         LASER_RHYTHM.play(name,{W:W,H:H,lvl:lvl,WB:WB,BEAT:SP_BEAT,pos:pos,bar:bar,px:p.x,py:p.y,mem:mem,
           lane:function(x0,x1,at,hold,o){put(true,x0,x1,at,hold,o);},band:function(y0,y1,at,hold,o){put(false,y0,y1,at,hold,o);}});
-      }else if(motif===3){ // 피아노 건반(사용자 11-19 "피아노 건반같은 레이져 패턴도 많이"): 세로 8건반이 음계처럼 차례로 눌린다. 흰건반은 굵고 검은건반은 가늘다. 이지 2박마다 한 건반, 노멀 박마다, 헬 박마다 화음(두 건반)
-        var KW=W/8,up=(bar+sp.cycle)%2===0,key=function(j){return up?j:7-j;},hold=SP_BEAT*[2,3,3][lvl]-6; // 건반이 박마다 하나씩 눌리고 2~3박 동안 눌린 채 남는다 → 2~3건반 너비의 벽이 음계를 따라 걸어간다(스위퍼). 지나간 건반 쪽으로 넘어가는 것이 답(11-19 규칙 3·4)
-        var j=key(pos),black=[1,3,6].indexOf(j)>=0;beam(s,KW*(j+.5),-12,Math.PI/2,{width:KW*.7/s.rules.beam,warn:46,active:hold,color:black?c2:c1,keep:1});
-        if(lvl===2&&pos%2===1){var j2=(j+4)%8;beam(s,KW*(j2+.5),-12,Math.PI/2,{width:KW*.7/s.rules.beam,warn:46,active:30,color:c2,keep:1});}
+      }else if(motif===3){ // 건반은 박에 맞춰 7칸만 켜고, 진행 방향의 끝 건반은 화음에서도 비워 둔다.
+        if(pos===7)return;
+        var KW=W/8,up=(bar+sp.cycle)%2===0,j=up?pos:7-pos,safe=up?7:0;
+        var hold=SP_BEAT*[2,3,3][lvl]-6,black=[1,3,6].indexOf(j)>=0,warn=32;
+        beam(s,KW*(j+.5),-12,Math.PI/2,{width:KW*.7/s.rules.beam,warn:warn,active:hold,color:black?c2:c1,keep:1});
+        var j2=(j+4)%8;
+        if(lvl===2&&pos%2===1&&j2!==safe)beam(s,KW*(j2+.5),-12,Math.PI/2,{width:KW*.7/s.rules.beam,warn:warn,active:30,color:c2,keep:1});
       }else if(motif===4){ // 화면 덮기(사용자 11-19 "맵의 70 80 90프로덮는패턴 … 난이도 맞게"): 이지 70%·노멀 80%·헬 90%를 광선으로 덮고 한 줄기 틈만 남긴다. 틈 자리는 황금비 수열로 매번 다르다. 마디마다 세로·가로를 번갈아
         if(pos===0){var cover=[.7,.8,.9][lvl],vert=(bar+sp.cycle)%2===0,top=120,span=vert?W:H-top,gap=span*(1-cover),gk=sp.coverN=(sp.coverN||0)+1,
             here=vert?p.x:p.y-top,reach=COVER_REACH*s.rules.warn,glo=Math.max(0,Math.min(span-gap,here-reach-gap/2)),ghi=Math.max(glo,Math.min(span-gap,here+reach-gap/2)), // 회피 측정(11-20): 틈이 영웅에게서 너무 멀면 예고 84틱 안에 키보드 속도(4.2px)로 못 닿았다(헬 가로 덮기 4%). 틈은 영웅이 반응(0.25초) 뒤 닿을 수 있는 거리 안에서 황금비로 고른다
@@ -2404,7 +2427,7 @@
   function enemyClock(s){var k=abilityOf(s).bulletSpeed;if(k>=1){s.efire=true;s.eclock=0;return;}s.eclock=(s.eclock||0)+k;s.efire=s.eclock>=1;if(s.efire)s.eclock-=1;}
   function step(s,input){
     if(s.stage==='won'||s.stage==='lost'){s.stageTick++;return s;}
-    s.tick++;s.stageTick++;movePlayer(s,input);enemyClock(s);patternClock(s);var charge0=s.fills*GAUGE_FULL+s.gauge;
+    s.tick++;s.stageTick++;movePlayer(s,input);enemyClock(s);patternClock(s);
     if(s.stage==='bossClear'){
       if(s.tick>=s.bossClear.readyTick)advance(s);
       return s; // 격파 연출 2초 동안 공격·피격·아이템·필살을 모두 멈춘다. 다음 구간은 다음 틱부터 움직인다.
@@ -2463,9 +2486,10 @@
     else if(s.stage==='card'&&b.hp<=0)endCard(s,true);
     else if(s.stage==='card'&&!s.entranceAll&&timeLeft(s)===0)endCard(s,false); // 실제 게임에서 보스·중간보스는 시간으로 사라지지 않는다(사용자 11-19): 체력이 다해야 쓰러진다
     if(s.stage==='bossClear')return s;
-    var p=s.player;bossSpecials(s);yieldMirror(s);gentleNudge(s);composeLasers(s);var byFloor=updateFloor(s)|updateRisers(s),byBeam=updateLasers(s),byFigure=updateFigures(s),byBullet=updateBullets(s)|broodUpdate(s)|weaponsStep(s);
+    var p=s.player,charge0=s.fills*GAUGE_FULL+s.gauge;bossSpecials(s);yieldMirror(s);gentleNudge(s);composeLasers(s);var byFloor=updateFloor(s)|updateRisers(s),byBeam=updateLasers(s),byFigure=updateFigures(s),byBullet=updateBullets(s)|broodUpdate(s)|weaponsStep(s);
     updateItems(s);
-    if(s.hero==='memory'&&p.focus){var gained=s.fills*GAUGE_FULL+s.gauge-charge0;if(gained>0){s.gauge+=gained*(FOCUS_GAUGE-1);fillGauge(s);}} // 기억사수 저속: 이번 틱에 찬 필살 게이지를 1.5배로
+    var gaugeMult=s.hero==='seoha'?SEOHA_TRAINEE_GAUGE:s.hero==='memory'&&p.focus?FOCUS_GAUGE:1;
+    if(gaugeMult>1){var gained=s.fills*GAUGE_FULL+s.gauge-charge0;if(gained>0){s.gauge+=gained*(gaugeMult-1);fillGauge(s);}}
     var touched=(byBeam||byFigure||byBullet||byFloor)&&s.tick>=p.invulnerableUntil&&s.stage!=='won'&&s.stage!=='lost';
     if(touched&&distortRoll(s)){
       // 시공간 왜곡(사용자 11-16, 기억사수 패시브): 닿기 직전 시간이 비틀려 탄이 빗겨 간다. 공격 단계 1에서 7%, 7에서 37%. 잠깐(DISTORT_TICKS) 닿지 않는다

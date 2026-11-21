@@ -44,7 +44,18 @@ test('focus: Seoha keeps the stronger slow field; Memory Gunner gets damage and 
  const charge=(hero,focus)=>{const s=idle({hero});s.power=1;let n=0;for(let i=0;i<4;i++){put(s,s.player.x+15,s.player.y-14+i*7,{bage:100});}
   a.step(s,{dx:0,dy:0,focus});return s.fills*a.GAUGE_FULL+s.gauge;};
  const mf=charge('memory',true),mn=charge('memory',false);assert(mn>0,'grazing charges the gauge');assert(near(mf/mn,a.FOCUS_GAUGE),`memory focus charges ×${a.FOCUS_GAUGE}: ${mf}/${mn}`);
- assert(near(charge('seoha',true),charge('seoha',false)),'Seoha focus charge unchanged');
+ const trainee=charge('seoha',false),awakened=charge('seoha-b',false);
+ assert(awakened>0&&near(trainee/awakened,1.77),'only the trainee gains extra charge from grazes');
+ assert(near(charge('seoha',true),trainee),'the trainee also gains charge while focused');
+ for(const difficulty of ['gentle','normal','hell']){
+  const s=idle({hero:'seoha',difficulty});
+  s.gauge=60;
+  const bombs=s.bombs;
+  a.dropItem(s,s.player.x,s.player.y,1);
+  a.step(s,{});
+  assert.equal(s.bombs,bombs+1,'one heart crosses the charge threshold in '+difficulty);
+  assert(near(s.gauge,4.25),'the unused charge carries over');
+ }
 });
 
 test('pause settings carry the ability sliders and the app hands the level to the engine',()=>{

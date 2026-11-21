@@ -59,6 +59,29 @@ test('tetris phase: relentless pieces, more at once on harder levels, and they c
  for(let i=0;i<300&&s.floor.pieces.includes(piece);i++){s.player.invulnerableUntil=s.tick+999;s.boss.hp=s.boss.maxHp;a.step(s,{dx:0,dy:0});h.clear(s);}
  assert(s.floor.broken>broken||!s.floor.pieces.includes(piece),'a piece goes away');
 });
+test('piano keys light sooner and leave the last lane clear in both directions',()=>{
+ const kw=a.WIDTH/8;
+ for(const difficulty of DIFFS){
+  const s=kindRun(difficulty,'laser');
+  s.sp.force='piano';
+  const bars=new Map();
+  go(s,a.SP_LEAD+a.SP_LEN[difficulty],t=>{
+   const n=t.beat?.n;
+   if(n===undefined||t.special?.kind!=='laser')return;
+   const bar=n>>3,pos=n%8,up=(bar+t.sp.cycle)%2===0,safe=up?7:0;
+   if(!bars.has(bar))bars.set(bar,new Set());
+   for(const l of t.lasers.filter(l=>l.rl==='piano'&&l.age===1)){
+    const key=Math.floor(l.x/kw);
+    assert.notEqual(key,safe,'the last lane is free even during chords');
+    assert.notEqual(pos,7,'the final beat is a rest');
+    assert.equal(l.warn,Math.round(32*t.rules.warn)+a.LASER_MORE);
+    bars.get(bar).add(key);
+   }
+  });
+  assert.deepEqual([...bars.get(0)].sort(),[0,1,2,3,4,5,6]);
+  assert(bars.get(1).size>=5&&bars.get(1).has(7),'the next bar fires in the reverse direction');
+ }
+});
 test('stones phase: hills rise from the bottom (never to the top), stones come per-difficulty sides, then sink',()=>{
  for(const d of DIFFS){const s=kindRun(d,'stones');let hill=0,mountains=0;
   go(s,a.SP_LEAD+a.SP_LEN[d],t=>{hill=Math.max(hill,...t.floor.hill);mountains=Math.max(mountains,(t.risers||[]).filter(r=>r.kind==='mountain').length);});

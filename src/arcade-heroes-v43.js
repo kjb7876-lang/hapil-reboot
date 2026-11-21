@@ -38,10 +38,11 @@
   // 기존 seoha ID는 A로 남겨 저장 기록을 보존한다. B는 같은 성장/시간공학 규칙의 별도 선택 영웅이다.
   profiles['seoha-b']=Object.assign({},profiles.seoha,{
     id:'seoha-b',name:'윤서하 · 각성',title:'깨어난 최초명령의 힘',
-    description:'검은 모래를 따라 금역을 건넌 뒤 시간 절단과 시공간 압축, 최초명령의 힘이 온전히 깨어난 윤서하. 사격과 성장 규칙은 수련생 때와 같습니다.',
+    description:'검은 모래를 따라 금역을 건넌 뒤 시간 절단과 시공간 압축, 최초명령의 힘이 온전히 깨어난 윤서하. 수련생과 같은 시간검으로 사격합니다.',
     portrait:'media/arcade-v43-heroes/seoha-portrait-v2.webp',sprite:'media/arcade-v43-heroes/seoha-player-v2.webp',
     cutin:'media/arcade-v43-heroes/seoha-portrait-v2.webp'
   });
+  profiles.seoha.abilities=profiles.seoha.abilities.concat('스침과 필살 하트로 게이지 ×1.77');
   function freeze(value){
     if(value&&typeof value==='object'){Object.keys(value).forEach(function(k){freeze(value[k]);});Object.freeze(value);}
     return value;
