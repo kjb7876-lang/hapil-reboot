@@ -315,7 +315,7 @@
     if(s.entranceAll&&s.difficulty!=='hell'&&!o.formation&&size!==SHAPE_PROP&&!o.fragment){angle+=(srand(s)-.5)*2*SCATTER_ANGLE;speed*=1+(srand(s)-.5)*2*SCATTER_SPEED;x+=(srand(s)-.5)*2*SCATTER_POS;y+=(srand(s)-.5)*2*SCATTER_POS;} // 탄을 조금 더 흩뿌려 겹침을 줄인다(사용자 11-18, 이지·노멀)
     if((s.figPend||s.figHeldAt===s.tick||s.spHold)&&!o.fragment&&!s.splitting)return; // 육망성·한자 고리를 기다리는 동안 새 탄을 내지 않는다(사용자 11-20)
     if(s.calm&&!o.fragment)return; // 육망성·한자 고리가 떠 있는 동안, 그리고 보스가 아래로 내려와 있는 동안은 새 탄을 내지 않는다(사용자 11-19 "탄환은 위에 있을때만 생성"). 반사탄도 마찬가지
-    if(s.entranceAll&&!o.fragment&&!s.splitting&&skipEnemyShot(s))return;
+    if(s.entranceAll&&!o.fragment&&!o.stageHazard&&!s.splitting&&skipEnemyShot(s))return;
     var i=s.n++;
     s.bx[i]=x;s.by[i]=y;s.ba[i]=angle;s.bs[i]=speed*s.rules.speed;
     s.bturn[i]=o.turn||0;s.bacc[i]=o.accel||0;s.bmin[i]=o.min===undefined?0:o.min;s.bmax[i]=o.max===undefined?400:o.max;
@@ -1907,7 +1907,7 @@
     if(kind==='hands'){
       if(start&&t%pick(s,110,95,80)===0&&s.ripples.length<6){var rx=24+rand(s)*(W-48);if(Math.abs(rx-s.player.x)<HAND_AWAY)rx=s.player.x+(s.player.x<W/2?1:-1)*(HAND_AWAY+rand(s)*60);s.ripples.push({x:rx,age:0});}
       // 영웅 바로 밑(HAND_AWAY 안)에서는 솟지 않는다: 물결 자리를 영웅에게서 떨어뜨리고, 그사이 영웅이 그 위로 오면 손은 가라앉는다(헛물결).
-      for(i=s.ripples.length-1;i>=0;i--){var r=s.ripples[i];if(++r.age>=HAND_WARN){if(Math.abs(r.x-s.player.x)>=HAND_AWAY)spawn(s,r.x,H+8,-Math.PI/2,pick(s,30,34,42),{size:SHAPE_PROP,color:P['demon-hand'],life:1400});s.ripples.splice(i,1);}}
+      for(i=s.ripples.length-1;i>=0;i--){var r=s.ripples[i];if(++r.age>=HAND_WARN){if(Math.abs(r.x-s.player.x)>=HAND_AWAY)spawn(s,r.x,H+8,-Math.PI/2,pick(s,30,34,42),{size:SHAPE_PROP,color:P['demon-hand'],life:1400,stageHazard:true});s.ripples.splice(i,1);}}
     }else if(start&&t%pick(s,100,85,70)===40){var x=30+rand(s)*(W-60);spawn(s,x,-10,aim(s,x,-10),pick(s,44,50,62),{size:SHAPE_PROP,color:P.skull});}
   }
   /* ── 아래쪽 압박(사용자 11-15 "맨아래에만 있으면 피하기 쉬워서 …"). 화면 맨 아래에 숨어 있지 못하게 네 가지를 스테이지마다 둘씩 섞어 번갈아 낸다.
