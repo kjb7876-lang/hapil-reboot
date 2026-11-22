@@ -371,6 +371,7 @@
     var dims=PROP_DIMS[prop.key]||[1,1],scale=propRenderSpan(prop)/Math.max(dims[0],dims[1]);
     return [dims[0]*scale,dims[1]*scale];
   });
+  var PROP_DRAW_RADIUS=MOBILE_PROP_BOX.map(function(box){return Math.hypot(box[0],box[1])*.5;});
   function shotFootprint(s,size,color){
     if(size===SHAPE_PROP){
       var box=MOBILE_PROP_BOX[color];
@@ -385,6 +386,11 @@
     return area;
   }
   function hasVolley(s){return !!(s.bossVolley&&s.bossVolley.queue.length);}
+  function flyingInk(r){return !r.fade&&(r.dir==='spit'||r.dir==='down');}
+  function pendingProjectiles(s){
+    return !!(s.n||hasVolley(s)||s.weapons.length||s.cannons.length||
+      (s.risers&&s.risers.some(flyingInk)));
+  }
   function resetVolley(s){s.bossVolley=null;}
   function paceBossShot(s,x,y,angle,speed,o){
     var v=s.bossVolley||(s.bossVolley={due:s.tick,count:0,queue:[]});
@@ -398,7 +404,7 @@
     else v.queue.push({due:v.due,x:x,y:y,angle:angle,speed:speed,options:o});
   }
   function releaseBossVolley(s){
-    if(!hasVolley(s)||s.calm||s.figPend)return;
+    if(!hasVolley(s)||s.calm)return;
     var volley=s.bossVolley,queue=volley.queue,due=queue[0].due;
     // After a pause recover one group per beat instead of releasing all overdue groups.
     if(s.tick<due||s.tick<(volley.lastRelease||0)+MOBILE_VOLLEY_GAP[s.difficulty])return;
@@ -411,7 +417,7 @@
   function spawn(s,x,y,angle,speed,o){
     if(s.n>=s.cap){s.dropped++;return;}
     o=o||{};var size=o.size||0;
-    if(size!==SHAPE_PROP&&!o.fragment&&holdVolley(s)){s.timeHeld=(s.timeHeld||0)+1;return;}
+    if(size!==SHAPE_PROP&&!o.fragment&&!(s.entranceAll&&s.splitting)&&holdVolley(s)){s.timeHeld=(s.timeHeld||0)+1;return;}
     // 화면이 붐비면(상한의 72% 이상) 새 탄을 하나 걸러 하나만, 82% 이상이면 쉬게 한다(조형물은 예외). 느린 탄이 쌓여도 상한에 닿지 않는다.
     // 사용자 11-21(모바일 보스전 탄이 빨리 사라짐): 붐빌 때 먼저 덜어내는 것은 잡몹 탄이다. 보스 탄은 더 붐벼야(상한의 84%/92%) 거른다.
     var thinAt=s.entranceAll&&s.stage==='card'&&!s.mobVolley?THIN_BOSS:THIN_MOB;
@@ -421,9 +427,9 @@
     // A designed gap or locked volley must keep the heading that the player saw.
     if(s.entranceAll&&s.difficulty!=='hell'&&!mobileBossShots(s)&&!o.formation&&size!==SHAPE_PROP&&!o.fragment){angle+=(srand(s)-.5)*2*SCATTER_ANGLE;speed*=1+(srand(s)-.5)*2*SCATTER_SPEED;x+=(srand(s)-.5)*2*SCATTER_POS;y+=(srand(s)-.5)*2*SCATTER_POS;} // 탄을 조금 더 흩뿌려 겹침을 줄인다(사용자 11-18, 이지·노멀)
     if((s.figPend||s.figHeldAt===s.tick||s.spHold)&&!o.fragment&&!s.splitting)return; // 육망성·한자 고리를 기다리는 동안 새 탄을 내지 않는다(사용자 11-20)
-    if(s.calm&&!o.fragment)return; // 육망성·한자 고리가 떠 있는 동안, 그리고 보스가 아래로 내려와 있는 동안은 새 탄을 내지 않는다(사용자 11-19 "탄환은 위에 있을때만 생성"). 반사탄도 마찬가지
+    if(s.calm&&!o.fragment&&!s.splitting)return; // 육망성·한자 고리가 떠 있는 동안, 그리고 보스가 아래로 내려와 있는 동안은 새 탄을 내지 않는다(사용자 11-19 "탄환은 위에 있을때만 생성"). 반사탄도 마찬가지
     if(s.entranceAll&&!o.fragment&&!o.keepShot&&!s.splitting&&skipEnemyShot(s))return;
-    if(s.paceBossVolleys&&mobileBossShots(s)&&!s.mobVolley&&!o.sameBeat&&!o.fragment){paceBossShot(s,x,y,angle,speed,o);return;}
+    if(s.paceBossVolleys&&mobileBossShots(s)&&!s.mobVolley&&!o.sameBeat&&!o.fragment&&!s.splitOpening){paceBossShot(s,x,y,angle,speed,o);return;}
     placeBullet(s,x,y,angle,speed,o);
   }
   function placeBullet(s,x,y,angle,speed,o){
@@ -437,6 +443,7 @@
       if(s.coverageArea+area>W*H*MOBILE_BOSS_COVER[s.difficulty])return;
       s.coverageArea+=area;s.coverageCount++;
     }
+    if(s.splitting)s.splitOpening=false;
     var i=s.n++;s.enemyShotsBorn++;
     s.bx[i]=x;s.by[i]=y;s.ba[i]=angle;s.bs[i]=speed*s.rules.speed;
     s.bturn[i]=o.turn||0;s.bacc[i]=o.accel||0;s.bmin[i]=o.min===undefined?0:o.min;s.bmax[i]=o.max===undefined?400:o.max;
@@ -1214,7 +1221,7 @@
    * 컷신 중 앱이 step()을 부르지 않으면 tick/등장 대기도 진행되지 않는다. */
   function prepareBossEntrance(s){
     var g=segment(s);if(s.stage!=='intro'||!g||g.kind!=='card'||!hasEntrance(s,g)||s.bossEntrance&&s.bossEntrance.segment===s.seg)return false;
-    if(s.entranceAll&&s.n>0)return false; // 남은 탄이 제 길로 다 나간 뒤에 입장(앱 beginStory 도 이 길을 탄다)
+    if(s.entranceAll&&pendingProjectiles(s))return false; // 남은 탄이 제 길로 다 나간 뒤에 입장(앱 beginStory 도 이 길을 탄다)
     clearBossEntranceHazards(s);var entered=s.boss.present&&!s.boss.leaving&&s.boss.actor===g.actor?(s.boss.enteredTick===undefined?s.tick:s.boss.enteredTick):null;
     s.bossEntrance={segment:s.seg,enteredTick:entered,readyTick:entered===null?null:entered+graceOf(s),releasedTick:null};
     s.cinematicEncounter={actor:g.actor,stageIndex:g.stage,segment:s.seg};return true;
@@ -1238,22 +1245,20 @@
     var fkey=card.stage+'|'+card.actor+'|'+(card.formNo||0);
     if(!card.mid&&card.formNo>0&&s.formKey!==fkey){s.formShifts=card.formNo;if(!(s.bossEntrance&&s.bossEntrance.segment===s.seg)){if(s.entranceAll){s.formHold=s.tick+FORM_HOLD;s.lasers.length=0;} /* 모습이 바뀌는 쉼에는 남은 광선도 걷는다: 대사를 읽다 맞지 않게(심사 11-20) */note(s,'formShift');}}
     if(!card.mid)s.formKey=fkey;}
-  /* 보스·중간보스는 패턴 도중에 쓰러지지 않는다(사용자 11-19 "패턴중에 보스및 중간보스가 죽지않도록 패턴끝나고 죽도록"): 체력이 다하거나 시간이 다하면
-     새 공격을 멈추고(특수 페이즈도 끝), 화면 탄은 가속해 밖으로 내보내고, 이미 켜진 광선·문양이 제 수명대로 꺼진 뒤에야 쓰러짐(endCard)으로 넘어간다. 최대 CARD_ENDING_MAX틱. */
+  /* 실전에서는 날아가는 탄과 투척물이 전부 화면 밖으로 나간 뒤에 카드 종료 처리를 한다. */
   var CARD_ENDING_MAX=240;
   /* 페이즈 최소 시간과 시전한 패턴 끝까지(사용자 11-19 "체력이 달아 페이즈가 넘어가더라도 이미 시전한 패턴은 모두 나오게 한다음 다음페이즈… 패턴별 지속시간이 유지되도록"):
      체력이 먼저 다해도 한 소절(CARD_MIN)은 채우고, 소절 경계·광선·문양·특수 페이즈가 끝난 뒤에야 쓰러진다. 기다리는 동안 체력은 1로 붙든다(무한 대기 방지 상한 CARD_DOWN_MAX) */
   var CARD_MIN=Math.round(420*1.5),CARD_DOWN_MAX=Math.round(420*1.5)+180,RL_DOWN_MAX=1100; // RL_DOWN_MAX: 레이저 장단 구간(예고 90 + 최대 600 + 꼬리)을 다 보이는 상한
-  function waitForBossBullets(s){return s.entranceAll&&s.difficulty!=='hell';}
   function cardMayFall(s){
     var t=s.segTick-cardFireDelay(s);
     if(hasVolley(s))return false;
-    if(rlPending(s)&&s.cardDown&&(waitForBossBullets(s)||s.tick-s.cardDown-(s.sp.heldDown||0)<RL_DOWN_MAX))return false;
-    if(waitForBossBullets(s)&&s.sp&&s.sp.cur==='laser')return false;
+    if(rlPending(s)&&s.cardDown&&(s.difficulty!=='hell'||s.tick-s.cardDown-(s.sp.heldDown||0)<RL_DOWN_MAX))return false;
+    if(s.entranceAll&&s.sp&&s.sp.cur==='laser')return false;
     if(t<CARD_MIN)return false;
     if(s.cardDown){
       if(t<s.downEnd)return false;
-      return !beamsOrFiguresLive(s)||(!waitForBossBullets(s)&&s.tick-s.cardDown>=CARD_DOWN_MAX);
+      return !beamsOrFiguresLive(s)||(s.difficulty==='hell'&&s.tick-s.cardDown>=CARD_DOWN_MAX);
     }
     if(s.phraseCard&&s.phraseTick%s.phraseCard!==0)return false;
     return !beamsOrFiguresLive(s)&&!spWindow(s);
@@ -1273,13 +1278,9 @@
     s.cardEnding={defeated:!!defeated,tick:s.tick,stays:bossStays(s)};
     cardEndingStep(s);
   }
-  function cardEndingStep(s){
-    if(s.boss.hp<0)s.boss.hp=0;
-    if(waitForBossBullets(s)){if(s.tick-s.cardEnding.tick>=BOSS_DRAIN_GRACE[s.difficulty])retireSlowBossBullets(s,s.tick-s.cardEnding.tick);}
-    else if(!s.cardEnding.stays&&!cardKeepsBullets(s))flushBullets(s);
-  }
+  function cardEndingStep(s){s.boss.hp=Math.max(0,s.boss.hp);}
   function cardEndingDone(s){var e=s.cardEnding;
-    if(waitForBossBullets(s)&&(s.n||hasVolley(s)))return false;
+    if(s.entranceAll&&pendingProjectiles(s))return false;
     if(s.tick-e.tick>=CARD_ENDING_MAX)return true;
     if(e.stays?s.tick-e.tick<CARD_BREAK_PAUSE:s.n&&!cardKeepsBullets(s))return false;
     for(var i=0;i<s.lasers.length;i++){var l=s.lasers[i];if(l.age<=l.warn+l.active)return false;}return !s.figures.length;}
@@ -1885,22 +1886,20 @@
   /* 사용자 11-20 "탄이 있으면 탄이 다 사라진다음에 육망성과 한자패턴이 나왔으면 좋겠는데" + "그렇다고 갑자기 탄을 다 사라지게 하지말고":
      실제 게임에서 화면에 탄이 남아 있거나 앞 육망성·한자 고리가 아직 떠 있으면 문양을 바로 펴지 않고 미룬다. 그동안 새 탄은 나오지 않고,
      남은 탄은 지우지 않은 채 제 길로 날아가 화면 밖으로 나간다. 다 나가면 그때 문양을 편다.
-     FIG_WAIT_MAX틱이 지나도 못 비우면 더 미루지 않는다(멈춤 방지). 새 문양이 겹쳐 요청되면 앞 요청 하나만 남긴다. */
+     새 문양이 겹쳐 요청되면 앞 요청 하나만 남긴다. */
   var FIG_HURRY=150,FIG_WAIT_MAX=600,FIGURE_LEAD=480;
   function figureBusy(s){for(var i=0;i<s.figures.length;i++){var f=s.figures[i];if((f.sigil||f.kind==='runes')&&f.age<f.warn+f.active)return true;}return false;}
   // 상태는 복제·저장될 수 있으므로 미룬 그림은 함수 대신 이름(sigil·runes)으로 담는다
   function figureDefer(s,fn,args){
     if(!s.entranceAll||s.figRelease)return false;
-    if(!s.n&&!figureBusy(s))return false;
-    if(!s.figPend)s.figPend={fn:fn,args:args,since:s.tick,seg:s.seg,hurried:false};
+    if(!pendingProjectiles(s)&&!figureBusy(s))return false;
+    if(!s.figPend)s.figPend={fn:fn,args:args,seg:s.seg};
     return true;
   }
   function figurePending(s){var q=s.figPend;if(!q)return;
     // 특수 페이즈 창 안에서는 시그니처가 원래 나가지 않으므로, 미뤄 둔 그림도 버린다(특수 페이즈 광선·탄을 굶기지 않게)
     if(q.seg!==s.seg||s.stage!=='card'||s.cardEnding||s.cardDown||spQuiet(s)){s.figPend=null;return;}
-    var wait=s.tick-q.since;
-    
-    if((!s.n&&!figureBusy(s))||wait>=FIG_WAIT_MAX){s.figPend=null;s.figHeldAt=s.tick;s.figRelease=true;try{(q.fn==="runes"?summonRunes:summonSigil).apply(null,[s].concat(q.args));}finally{s.figRelease=false;}s.figWaits=(s.figWaits||0)+1;}
+    if(!pendingProjectiles(s)&&!figureBusy(s)){s.figPend=null;s.figHeldAt=s.tick;s.figRelease=true;try{(q.fn==="runes"?summonRunes:summonSigil).apply(null,[s].concat(q.args));}finally{s.figRelease=false;}s.figWaits=(s.figWaits||0)+1;}
   }
   function summonSigil(s,sig,index){
     if(figureDefer(s,'sigil',[sig,index]))return;
@@ -1973,30 +1972,7 @@
    *  영웅이 수집선(AUTO_COLLECT_Y) 위에 있으면, 선 아래에서 이미 아래로 내려가 영웅에게 닿을 수 없는 탄만 판정을 지닌 채 빨라져 나간다.
    *  다시 올라올 수 있는 탄(위·옆으로 가는 탄, 휘는 탄, 아직 바뀔 탄)은 건드리지 않는다. 시간이 지났다고 탄을 걷지 않는다. */
   var LINE_SWEEP_GAP=60,LINE_SWEEP_SIN=.2;
-  // 판정·모습 그대로 제 방향으로 서서히 빨라져 나간다. 영웅 가까이(HURRY_SPARE) 있는 탄은 빨라지지 않고 제 속도로 지나간다(심사: 전환 순간 가까운 탄이 갑자기 빨라지면 억울한 피격)
-  var HURRY_SOFT=170,HURRY_SPARE=96;
-  function hurryOut(s){var n=0,p=s.player;for(var i=0;i<s.n;i++){if(s.bexit[i])continue;s.bbounce[i]=0;s.bat[i]=0;s.bturn[i]=0;s.blife[i]=65535;s.bformation[i]=1;
-    var dx=s.bx[i]-p.x,dy=s.by[i]-p.y;if(dx*dx+dy*dy<HURRY_SPARE*HURRY_SPARE&&Math.cos(s.ba[i])*dx+Math.sin(s.ba[i])*dy<0)continue; // 영웅 쪽으로 다가오는 가까운 탄만 제 속도(멀어지는 탄은 빨라져도 위협이 아니다)
-    s.bacc[i]=HURRY_SOFT;if(s.bmax[i]<HURRY_MAX)s.bmax[i]=HURRY_MAX;if(s.bs[i]<EXPIRE_SPEED)s.bs[i]=EXPIRE_SPEED;n++;}return n;}
-  var BOSS_DRAIN_GRACE={gentle:240,normal:180},RETIRE_ALL_AFTER=600;
-  function retireSlowBossBullets(s,wait){
-    // Only the tail of a drain is accelerated. Close incoming bullets retain their trajectory and their hitbox.
-    var p=s.player;
-    for(var i=0;i<s.n;i++){
-      if(s.bexit[i])continue;
-      var dx=s.bx[i]-p.x,dy=s.by[i]-p.y;
-      var toward=Math.cos(s.ba[i])*dx+Math.sin(s.ba[i])*dy<0;
-      if(wait<RETIRE_ALL_AFTER&&s.bs[i]>=EXPIRE_SPEED&&dx*dx+dy*dy<HURRY_SPARE*HURRY_SPARE&&toward)continue;
-      if(s.bs[i]<EXPIRE_SPEED){
-        s.bs[i]=EXPIRE_SPEED;
-        if(!Number.isFinite(s.ba[i]))s.ba[i]=Math.PI/2;
-      }
-      s.bbounce[i]=0;s.bat[i]=0;s.bturn[i]=0;s.bformation[i]=1;
-      if(s.bmax[i]<HURRY_MAX)s.bmax[i]=HURRY_MAX;
-      s.bacc[i]=toward?0:HURRY_SOFT;
-    }
-  }
-  function lineSweep(s){var p=s.player;if(!s.entranceAll||p.y>=AUTO_COLLECT_Y)return 0;var n=0;
+  function lineSweep(s){var p=s.player;if(!s.entranceAll||p.y>=AUTO_COLLECT_Y||s.stage==='card'&&(s.cardEnding||s.figPend||spQuiet(s)))return 0;var n=0;
     for(var i=0;i<s.n;i++){if(s.bexit[i]||s.bsize[i]===SHAPE_PROP||s.bacc[i]===HURRY_ACC)continue;
       if(s.by[i]<AUTO_COLLECT_Y+LINE_SWEEP_GAP||s.by[i]<p.y+LINE_SWEEP_GAP||Math.sin(s.ba[i])<LINE_SWEEP_SIN||s.bturn[i]||(s.bat[i]&&s.bage[i]<s.bat[i]))continue;
       s.bformation[i]=1;s.bbounce[i]=0;s.bacc[i]=HURRY_ACC;if(s.bmax[i]<HURRY_MAX)s.bmax[i]=HURRY_MAX;s.blife[i]=65535;n++;}
@@ -2006,7 +1982,7 @@
    *  모든 구간(일반몹·중간보스·보스). 예고가 있고, 선 아래로 내려가면 피할 수 있다. */
   var LINE_GUARD_FIRST=90,LINE_GUARD_EVERY=120;
   function lineGuard(s){var p=s.player;
-    if(!s.entranceAll||p.y>=AUTO_COLLECT_Y||!(s.stage==='wave'||s.stage==='card')||s.cardEnding||s.cardDown||waitForBossBullets(s)&&spQuiet(s)){s.lineT=0;return;}
+    if(!s.entranceAll||p.y>=AUTO_COLLECT_Y||!(s.stage==='wave'||s.stage==='card')||s.cardEnding||s.cardDown||s.entranceAll&&spQuiet(s)){s.lineT=0;return;}
     var t=s.lineT=(s.lineT||0)+1;if(t<LINE_GUARD_FIRST||(t-LINE_GUARD_FIRST)%Math.round(LINE_GUARD_EVERY*(s.entranceAll&&s.compact?LIVE_MOBILE.guard:1)))return;
     var k=(s.lineN=(s.lineN||0)+1)%3,b=s.boss,src=null,best=1e9;
     if(b&&b.present&&!b.leaving)src={x:b.x,y:b.y};
@@ -2016,6 +1992,16 @@
     else{riserInit(s);var gap=Math.max(70,MOTIFS.mountain.size*1.4);
       for(var side=-1;side<=1;side+=2){var x=p.x+side*gap;if(x<20||x>W-20)continue;pushRiser(s,'mountain',{dir:'up',at:x,ay:Math.max(60,AUTO_COLLECT_Y-40)});}
       note(s,'lineGuard');}
+  }
+  function projectileOutside(s,i,x,y){
+    if(!s.entranceAll)return x<-36||x>W+36||y<-48||y>H+36;
+    if(x>=0&&x<=W&&y>=0&&y<=H)return false;
+    var size=s.bsize[i],color=s.bcolor[i];
+    var radius=size===SHAPE_PROP?PROP_DRAW_RADIUS[color]*s.sizeScale:
+      bulletRenderSpan(size,color)*s.sizeScale*.575;
+    // The sprite may still be visible long after its centre crosses the bottom.
+    return x<-Math.max(36,radius)||x>W+Math.max(36,radius)||
+      y<-Math.max(48,radius)||y>H+Math.max(Math.sin(s.ba[i])>0?14:36,radius);
   }
   function updateBullets(s){
     lineSweep(s);
@@ -2029,12 +2015,12 @@
         if(mode===MODE_SPLIT||mode===MODE_BRANCH){
           var sx=s.bx[i],sy=s.by[i],color=s.bcolor[i],parts=Math.round(s.barg[i]),speed=s.bs2[i]/s.rules.speed,heading=s.ba[i],gen=s.bgen[i],size=s.bsize[i],at=s.bat[i];
           if(s.entranceAll)parts=Math.max(1,Math.round(parts*crowdScale(s)));
-          removeBullet(s,i);s.splitting=true; // 이미 화면에 있는 탄이 갈라지는 것은 새 탄이 아니다: 그림 대기 중에도 막지 않는다
+          removeBullet(s,i);s.splitting=true;s.splitOpening=true; // 이미 화면에 있는 탄이 갈라지는 것은 새 탄이 아니다: 그림 대기 중에도 막지 않는다
           if(mode===MODE_SPLIT&&gen>=1){var fb=s.fwBursts||(s.fwBursts=[]);if(fb.length<48*4)fb.push(sx,sy,color,gen);} // 불꽃놀이 터짐 자리(그리기 전용, 판정 없음)
           if(mode===MODE_SPLIT)ring(s,sx,sy,parts,speed,heading,gen>1?{color:color,size:1,at:at,mode:MODE_SPLIT,arg:FW_SUB,gen:gen-1,speed2:speed*.82}:{color:color,size:0}); // 불꽃놀이 2차 폭발(gen 2): 갈라진 불티가 한 번 더 세 갈래로 터진다
           // 가지치기: 진행 방향을 중심으로 부채꼴로 갈라지고, 세대가 남아 있으면 가지가 다시 갈라진다.
           else for(k=0;k<parts;k++)spawn(s,sx,sy,heading+(k-(parts-1)/2)*.5,speed,gen>1?{color:color,size:Math.max(0,size-1),at:at,mode:MODE_BRANCH,arg:parts,gen:gen-1,speed2:speed}:{color:color,size:0});
-          s.splitting=false;note(s,'pop');continue;
+          s.splitting=false;s.splitOpening=false;note(s,'pop');continue;
         }
         if(mode===MODE_REAIM)s.ba[i]=Math.atan2(py-s.by[i],px-s.bx[i])+s.barg[i];else if(mode===MODE_TURN)s.ba[i]+=s.barg[i];
         s.bs[i]=s.bs2[i];s.bacc[i]=0;
@@ -2054,10 +2040,10 @@
       if(s.bbounce[i]){var a0=s.ba[i];
         if((x<0&&Math.cos(a0)<0)||(x>W&&Math.cos(a0)>0)){s.ba[i]=Math.PI-a0;s.bx[i]=x=x<0?0:W;s.bbounce[i]--;if(s.bmirror[i])mirrorHit(s,i,x,y);}
         else if(y<0&&Math.sin(a0)<0&&age>BLOOM_TICKS){s.ba[i]=-a0;s.by[i]=y=0;s.bbounce[i]--;if(s.bmirror[i])mirrorHit(s,i,x,y);}}
-      if(x<-36||x>W+36||y<-48||y>H+36||(s.entranceAll&&y>H+14&&Math.sin(s.ba[i])>0)){removeBullet(s,i);continue;} // 11-20: 아래로 화면을 다 벗어난 탄은 되돌아올 수 없으니(아래 벽은 튕기지 않음) 바로 사라진다. 영웅 둔화장에 걸려 화면 밖에서 머무는 탄이 다음 구간을 붙잡지 않게
+      if(projectileOutside(s,i,x,y)){removeBullet(s,i);continue;}
       if(age>=s.blife[i]){
-        // 화면 한가운데에서 수명이 다해 사라지지 않는다. 그대로 끝까지 날아가고(멈춘 탄은 다시 움직인다), 옆 벽에서 한 번 되돌아온다.
-        if(x<-4||x>W+4||y<-4||y>H+4){removeBullet(s,i);continue;}
+        // Only retire visible bullets by motion, even when their scripted lifetime runs out.
+        if(!s.entranceAll&&(x<-4||x>W+4||y<-4||y>H+4)){removeBullet(s,i);continue;}
         s.blife[i]=65535;s.bacc[i]=0;s.bturn[i]=0;if(s.bs[i]<EXPIRE_SPEED)s.bs[i]=EXPIRE_SPEED;if(s.bsize[i]!==SHAPE_PROP&&!s.bbounce[i])s.bbounce[i]=1;
       }
       if(age<Math.max(BLOOM_TICKS,s.bgrace[i]))continue; // 갓 피어난 탄과 파괴 직후의 잔탄은 아직 닿지 않는다
@@ -2339,10 +2325,13 @@
     var struck=false;
     for(k=R.length-1;k>=0;k--){var r=R[k];r.age++;
       if(r.fade){if(++r.fade>RISER_FADE)R.splice(k,1);continue;}
-      if(!live){r.fade=1;continue;}
+      if(!live&&!(s.entranceAll&&flyingInk(r))){r.fade=1;continue;}
       if(r.age>=RISER_WARN){var rd=r.dir||'up';
         if(rd==='spit'){r.x+=r.vx;r.y+=r.vy;if(r.x<-r.size||r.x>W+r.size||r.y<-r.size||r.y>H+r.size)r.fade=1;}
-        else if(rd==='down'){if(r.y<r.ay)r.y=Math.min(r.ay,r.y+r.vy*1.3);else{r.fade=1;r.broken=true;}}
+        else if(rd==='down'){
+          if(s.entranceAll){r.y+=r.vy*1.3;if(r.y>H+r.size)r.fade=1;}
+          else if(r.y<r.ay)r.y=Math.min(r.ay,r.y+r.vy*1.3);else{r.fade=1;r.broken=true;}
+        }
         else if(rd==='left'){if(r.x<r.ax)r.x=Math.min(r.ax,r.x+r.vy*1.5);else if(++r.held>RISER_HOLD)r.fade=1;}
         else if(rd==='right'){if(r.x>r.ax)r.x=Math.max(r.ax,r.x-r.vy*1.5);else if(++r.held>RISER_HOLD)r.fade=1;}
         else if(r.y>r.apex)r.y=Math.max(r.apex,r.y-r.vy);else if(++r.held>RISER_HOLD)r.fade=1;}
@@ -2355,7 +2344,7 @@
    *    "솟는 바위"와 "그림"이 들어오는 방향은 기존 난이도 규칙(RISER_DIRS: 이지 위→아래 터짐, 노멀 위·아래, 헬 사방)을 그대로 따른다.
    *  · 레이백(사용자 11-18 "레이저 그림 테트리스 무자비 연출에서는 rayback적용해서 리듬감있게"): 8박 장단(BEAT=30틱)에 맞추되 소리와 박 표시는 박에, 실제로 나가는 것은 LAYBACK틱 뒤에 둔다. 박에서 살짝 뒤처져 늘어지는 맛이다. 난이도가 높을수록 덜 처진다.
    *  · 중앙 견제: 노멀·헬에서 영웅이 가운데 띠에 오래 머물면 굵은 중앙 레이저 → 한자 고리 → 육망성 순서로 강제로 끼워 넣는다(이지는 없음). ── */
-  var SP_EXIT_WAIT=150,SP_START=960,SP_CYCLE=1980,SP_LEAD=90,SP_BEAT=30,SP_LAYBACK={gentle:7,normal:5,hell:4},SP_LEN={gentle:480,normal:480,hell:480},SP_KINDS=['laser','drawing','tetris','stones'],SP_ORDER=['laser','drawing','laser','stones','laser','tetris']; // 사용자 11-18 "레이져 무자비패턴 빈도수 증가": 여섯 번 중 세 번이 레이저
+  var SP_START=960,SP_CYCLE=1980,SP_LEAD=90,SP_BEAT=30,SP_LAYBACK={gentle:7,normal:5,hell:4},SP_LEN={gentle:480,normal:480,hell:480},SP_KINDS=['laser','drawing','tetris','stones'],SP_ORDER=['laser','drawing','laser','stones','laser','tetris']; // 사용자 11-18 "레이져 무자비패턴 빈도수 증가": 여섯 번 중 세 번이 레이저
   var SP_INFO={laser:{name:'빛줄기만',sub:'탄은 멈추고 레이저만 읽는다'},drawing:{name:'붓끝 소나기',sub:'그림이 쏟아진다 · 쏘아 부숴라'},tetris:{name:'무자비 낙하',sub:'조각을 피하거나 부숴라'},stones:{name:'솟는 바위',sub:'공간이 좁아진다'}};
   var SP_ACCENT=[1,0,.5,0,1,0,.5,.5];
   function beamRaw(s,x,y,a,o){return beam(s,x,y,a,o);}
@@ -2386,7 +2375,7 @@
   function rlPull(s){
     var sp=s.sp;
     if(sp.cur||s.segTick>=sp.start-SP_LEAD)return;
-    if(!waitForBossBullets(s)){sp.start=s.segTick+SP_LEAD;return;}
+    if(s.difficulty==='hell'){sp.start=s.segTick+SP_LEAD;return;}
     // Do not cut the ongoing phrase when HP drops. Fire through the next boundary.
     var delay=cardFireDelay(s),phrase=phraseLen(s),elapsed=Math.max(0,s.segTick-delay);
     var boundary=delay+(s.cardDown?s.downEnd:Math.ceil(elapsed/phrase)*phrase);
@@ -2538,31 +2527,17 @@
   function bossSpecials(s){
     if(!s.sp)spReset(s);
     if(s.sp.need&&!s.sp.done&&!s.cardEnding&&s.stage==='card'&&(s.cardDown||s.segTick-cardFireDelay(s)>=RL_EARLIEST&&s.boss.hp<=s.boss.maxHp*RL_HP))rlPull(s); // 레이저 장단 페이즈: 체력이 반 아래면 장단 구간을 당겨 시작한다(쓰러진 뒤라면 마지막 장단으로)
-    if(s.cardEnding||s.cardDown&&!rlPending(s)&&!(waitForBossBullets(s)&&s.sp.cur==='laser')){if(s.sp.cur){s.sp.cut=!!s.cardEnding;spEnd(s);s.sp.cut=false;}s.spHold=s.spExitWait=0;s.sp.q.length=0;return;} // 소진 뒤에는 특수 페이즈·중앙 견제를 새로 열지 않는다(이미 켠 광선은 제 수명대로)
-    var sp=s.sp,w=spWindow(s),i;if(!(w&&w.local===SP_LEAD&&!sp.cur))s.spHold=s.spExitWait=0;
+    if(s.cardEnding||s.cardDown&&!rlPending(s)&&!(s.entranceAll&&s.sp.cur==='laser')){if(s.sp.cur){s.sp.cut=!!s.cardEnding;spEnd(s);s.sp.cut=false;}s.spHold=0;s.sp.q.length=0;return;} // 소진 뒤에는 특수 페이즈·중앙 견제를 새로 열지 않는다(이미 켠 광선은 제 수명대로)
+    var sp=s.sp,w=spWindow(s),i;if(!(w&&w.local===SP_LEAD&&!sp.cur))s.spHold=0;
     // 서하 시간제어 중에는 광선의 예고·켜짐이 적의 시계로만 흐른다(#154). 레이저 구간의 악보도 같은 시계로 넘겨야 박과 광선이 어긋나 겹쳐 켜지지 않는다
     if(s.efire===false&&w&&w.kind==='laser'){sp.start++;for(i=0;i<sp.q.length;i++)sp.q[i].at++;if(s.special&&sp.cur)s.special.start++;if(s.beat)s.beat.tick++;if(s.cardDown)sp.heldDown=(sp.heldDown||0)+1;return;}
     if(sp.drain&&s.floor&&!s.floor.pieces.length){s.floor.clearing=1;sp.drain=false;}
     if(!w){if(sp.cur)spEnd(s);sp.q.length=0;centerGuard(s,null);return;}
-    if(!s.entranceAll&&w.local===0&&!sp.cur)flushBullets(s);
-    if(s.entranceAll&&w.local===SP_LEAD&&!sp.cur){
-      if(hasVolley(s)){s.segTick--;return;}
-      if(waitForBossBullets(s)){
-        // Keep every previously fired round solid until it has travelled off the playfield.
-        if(s.n){
-          s.spHold=(s.spHold||0)+1;
-          if(s.spHold>=BOSS_DRAIN_GRACE[s.difficulty])retireSlowBossBullets(s,s.spHold);
-          s.segTick--;
-          return;
-        }
-      }else{
-        if(s.n){hurryOut(s);s.spExitWait=1;}
-        if(s.n&&s.spExitWait&&(s.spHold=(s.spHold||0)+1)<SP_EXIT_WAIT){s.segTick--;return;}
-        if(s.n)flushBullets(s);
-        s.spExitWait=0;
-      }
+    if(w.local===SP_LEAD&&!sp.cur&&(pendingProjectiles(s)||sigilUp(s))){
+      s.spHold=(s.spHold||0)+1;
+      s.segTick--;
+      return;
     }
-    if(w.local===SP_LEAD&&!sp.cur&&sigilUp(s)&&(s.spHold=(s.spHold||0)+1)<FIG_WAIT_MAX){s.segTick--;return;}
     s.spHold=0;
     if(w.local===SP_LEAD&&!sp.cur){sp.cur=w.kind;sp.cycle=w.cycle;s.special={kind:w.kind,start:s.tick,cycle:w.cycle,lay:SP_LAYBACK[s.difficulty]};note(s,'special');if(w.kind==='drawing')summonBrood(s);}
     if(!w.active||!sp.cur){centerGuard(s,w);return;}
@@ -2680,7 +2655,7 @@
       return s; // 격파 연출 2초 동안 공격·피격·아이템·필살을 모두 멈춘다. 다음 구간은 다음 틱부터 움직인다.
     }
     moveBoss(s);
-    var introHold=s.entranceAll&&s.stage==='intro'&&s.n>0&&!(s.bossEntrance&&s.bossEntrance.segment===s.seg);if(introHold)s.stageTick=0; // (11-20) 탄은 걷지 않는다. 남은 탄이 저절로 다 나갈 때까지 판정·회피는 그대로 돌고 보스 입장만 기다린다. 보스·몹 없이 탄만 남으면 탄을 가속해 다 내보낸 뒤에 다음 보스가 들어선다(사용자 11-19)
+    var introHold=s.entranceAll&&s.stage==='intro'&&pendingProjectiles(s)&&!(s.bossEntrance&&s.bossEntrance.segment===s.seg);if(introHold)s.stageTick=0; // (11-20) 탄은 걷지 않는다. 남은 탄이 저절로 다 나갈 때까지 판정·회피는 그대로 돌고 보스 입장만 기다린다. 보스·몹 없이 탄만 남으면 탄을 가속해 다 내보낸 뒤에 다음 보스가 들어선다(사용자 11-19)
     if(s.entranceAll&&s.stage==='intro'&&!introHold)prepareBossEntrance(s);
     var entrance=s.bossEntrance;
     if(!introHold&&entrance&&entrance.segment===s.seg&&s.stage==='intro'){
