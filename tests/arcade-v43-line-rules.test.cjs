@@ -37,17 +37,21 @@ test('staying above the line draws aimed shots, a beam and rising ink rocks, and
   assert(hits[100]>hits[560],JSON.stringify(hits));
 });
 
-test('mid-boss defeat keeps the bullets flying; mid-boss HP is 1.3x on easy and normal',()=>{
+test('mid-boss defeat lets its bullets fly off before moving on; mid-boss HP is 1.3x on easy and normal',()=>{
   assert.equal(A.MID_HP_MORE.normal,1.3);assert.equal(A.MID_HP_MORE.gentle,1.3);assert.equal(A.MID_HP_MORE.hell,1);
   const mid=A.SEGMENTS.findIndex((g,i)=>{const nx=A.SEGMENTS[i+1];return g.kind==='card'&&g.mid&&!(nx&&nx.kind==='card'&&nx.actor===g.actor);});/* 중간보스의 마지막 패턴(쓰러짐 연출로 넘어가는 자리) */const s=A.createRun({entranceAll:true,difficulty:'normal',segment:mid,seed:4});
   for(let i=0;i<3000&&!(s.stage==='card'&&s.segTick>400);i++){s.player.invulnerableUntil=s.tick+999;A.step(s,{});s.events.length=s.cancelled.length=s.pops.length=0;}
   assert.equal(s.stage,'card');const n0=s.n;assert(n0>0);s.boss.hp=0;
-  let exit=0,wasEnding=false,before=-1,after=-1;
-  for(let i=0;i<600&&after<0;i++){s.player.invulnerableUntil=s.tick+999;const n=s.n;A.step(s,{});
-    for(let j=0;j<s.n;j++)if(s.bexit[j])exit++;
-    if(wasEnding&&!s.cardEnding){before=n;after=s.n;}wasEnding=!!s.cardEnding;s.events.length=s.cancelled.length=s.pops.length=0;}
-  assert.equal(exit,0,'mid-boss bullets are not flushed');
-  assert(before>0&&after>=before*.8,'bullets survive the defeat transition '+before+' -> '+after);
+  let seenEndingBullets=false;
+  for(let i=0;i<2400&&s.seg===mid&&s.stage==='card';i++){
+    s.player.invulnerableUntil=s.tick+999;A.step(s,{});
+    if(s.cardEnding&&s.n>0)seenEndingBullets=true;
+    for(let j=0;j<s.n;j++)assert.equal(s.bexit[j],0,'bullets retain their damage and appearance');
+    s.events.length=s.cancelled.length=s.pops.length=0;
+  }
+  assert(seenEndingBullets,'previous shots remain visible through the ending');
+  assert(s.seg!==mid||s.stage!=='card','the encounter progresses');
+  assert.equal(s.n,0,'the next encounter starts on an empty field');
 });
 
 test('the line guard beam stays at the hero height instead of being turned into a floor ladder',()=>{

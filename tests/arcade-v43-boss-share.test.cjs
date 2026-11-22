@@ -23,9 +23,9 @@ test('the special-phase warning no longer sweeps live boss bullets off at its fi
  }
 });
 
-test('crowding thins mob shots before boss shots',()=>{
+test('desktop crowding thins mob shots before boss shots',()=>{
  for(const stage of ['wave','card']){
-  const s=A.createRun({entranceAll:true,difficulty:'hell',compact:true,stage:0});s.stage=stage;s.n=Math.round(s.cap*.86);
+  const s=A.createRun({entranceAll:true,difficulty:'hell',stage:0});s.stage=stage;s.n=Math.round(s.cap*.86);
   let born=0;const before=s.enemyShotsBorn;
   for(let k=0;k<200;k++){const n0=s.n;A.emit(s,{kind:'rotating',fireInterval:1/60,baseSpeed:84,bulletType:{formation:true}},k,{x:120,y:140});s.n=n0;}
   born=s.enemyShotsBorn-before;
