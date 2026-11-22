@@ -34,7 +34,8 @@ test('awakening is saved within the same segment and carried to the next stage',
   const {w}=sandbox(),M=w.HapilMobile,st=A.STAGES[3],next=A.STAGES[4];
   const s=A.createRun({segment:st.first,hero:'seoha',entranceAll:true,grown:{fills:21}});
   M.tick(s,'playing',16);
-  assert.equal(M.checkpoint(3,'normal'),null);
+  assert.equal(M.checkpoint(3,'normal').fills,21);
+  assert.equal(M.checkpoint(3,'normal').union,undefined);
   A.gainExp(s,Math.ceil(A.POWER_EXP[6]*100/(2*A.POWER_EXP_RATE)));
   M.tick(s,'playing',16);
   assert.equal(M.checkpoint(3,'normal').union,true);
@@ -49,7 +50,7 @@ test('awakening is saved within the same segment and carried to the next stage',
   assert.equal(saved.hits,0);
   assert.equal(A.createRun({segment:saved.seg,hero:saved.hero,entranceAll:true,grown:saved}).union,true);
 });
-test('losing or clearing a stage drops the checkpoint and counts the attempt',()=>{
+test('losing or clearing a stage without earned ultimate growth drops the checkpoint and counts the attempt',()=>{
   const {w,store}=sandbox(),M=w.HapilMobile,st=A.STAGES[1];
   const s=A.createRun({stage:1,difficulty:'gentle',seed:3});s.started=true;s.seg=st.first+1;s.stage='wave';M.tick(s,'playing',16);
   assert(store['hapil-arcade-checkpoint-v43']);
@@ -57,6 +58,33 @@ test('losing or clearing a stage drops the checkpoint and counts the attempt',()
   const row=M._stats().stages['gentle:1'];assert.equal(row.tries,1);assert.equal(row.losses,1);
   const s2=A.createRun({stage:1,difficulty:'gentle',seed:4});s2.started=true;s2.seg=st.first+1;s2.stage='wave';M.tick(s2,'playing',16);
   s2.results.push({stage:1,stars:3});M.tick(s2,'playing',16);assert.equal(store['hapil-arcade-checkpoint-v43'],undefined);assert.equal(M._stats().stages['gentle:1'].clears,1);
+});
+test('filling the ultimate gauge saves growth even before the first segment ends, and defeat keeps that growth for a stage retry',()=>{
+  for(const hero of ['memory','seoha','seoha-b'])for(const difficulty of ['gentle','normal','hell']){
+    const {w}=sandbox(),M=w.HapilMobile,stage=1,st=A.STAGES[stage];
+    const s=A.createRun({hero,difficulty,segment:st.first,growth:true,compact:true});
+    M.tick(s,'playing',16);
+    assert.equal(M.checkpoint(stage,difficulty),null);
+    s.gauge=A.GAUGE_FULL*A.BOMB_FILLS[3];
+    A.step(s,{});
+    assert.equal(s.bombLevel,4);
+    M.tick(s,'playing',16);
+    const saved=M.checkpoint(stage,difficulty);
+    assert.equal(saved.seg,st.first);
+    assert.equal(A.createRun({hero,difficulty,stage,growth:true,grown:saved}).bombLevel,4);
+
+    s.seg=st.first+1;s.hits=3;s.bombsUsed=2;s.bombs=0;s.stage='lost';
+    M.tick(s,'playing',16);
+    const retry=M.checkpoint(stage,difficulty);
+    assert.equal(retry.seg,st.first);
+    assert.equal(retry.hero,hero);
+    assert.equal(retry.hits,0);
+    assert.equal(retry.bombs,0);
+    assert.equal(retry.stock,undefined);
+    const resumed=A.createRun({hero,difficulty,stage,growth:true,grown:retry});
+    assert.equal(resumed.bombLevel,4);
+    assert.equal(resumed.bombs,A.DIFFICULTY[difficulty].bombs);
+  }
 });
 test('the device report lists frames, stages and recorded errors',()=>{
   const {w,listeners}=sandbox(),M=w.HapilMobile;

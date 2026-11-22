@@ -48,6 +48,21 @@ test('chairman defeat checkpoints the next core entrance for all heroes, retaini
  }
 });
 
+test('boss defeat keeps earned ultimate growth at the start of the next stage, including during the victory hold',()=>{
+ const h=mobile(),s=encounter('p1_tree','seoha-b');
+ s.fills=A.BOMB_FILLS[4];s.bombLevel=5;
+ h.M.tick(s,'playing',16);defeat(s);h.M.commitBossClear(s);
+ function verify(){
+  const cp=mobile(h.storage).M.checkpoint(1,'hell');
+  assert.equal(cp.seg,A.STAGES[1].first);
+  assert.equal(cp.hero,'seoha-b');
+  assert.equal(cp.fills,A.BOMB_FILLS[4]);
+  assert.equal(A.createRun({stage:1,grown:cp}).bombLevel,5);
+ }
+ verify();
+ while(s.stage==='bossClear'){A.step(s,{});h.M.tick(s,'playing',16);verify();}
+});
+
 test('the frame fallback commits a clear even if no earlier mobile frame ran and boss practice preserves the journey checkpoint',()=>{
  const old={v:1,stage:3,seg:A.STAGES[3].first+1,hero:'seoha-b',difficulty:'normal',at:Date.now(),exp:123,fills:4,hits:0,bombs:0};
  const h=mobile({[KEY]:JSON.stringify(old)}),s=encounter('p1_tree');defeat(s);h.M.tick(s,'playing',16);assert.equal(h.storage[KEY],undefined);

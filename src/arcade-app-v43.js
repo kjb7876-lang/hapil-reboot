@@ -2185,7 +2185,7 @@
   function start(run){
     clearInput();if(fx&&fx.reset)fx.reset();unlockAudio();
     var quiet=!!(run&&run.quiet);storyQuiet=quiet;story=null;storyArrivalActor='';pauseReturn='playing';
-    var grown=run&&run.grown; // 중간 저장에서 이어 할 때 자란 공격·필살 단계
+    var grown=run&&run.grown; // 이어하기와 재도전에서 물려받는 공격·필살 성장
     var chapterPart=run&&Number.isInteger(run.chapter)?run.chapter:0;
     run={chapter:chapterPart,stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),spellOnly:!!(run&&run.spellOnly&&Number.isInteger(run.segment)),segment:run&&run.segment,carry:run&&run.carry,practice:!!(run&&run.practice),hero:heroId(run&&run.hero||selectedHero)};
     lastRun=run;lastSpell=run.spellOnly?lastSpell:null;oneCreditEligible=run.stage===0&&!run.bossOnly&&!run.spellOnly&&!Number.isInteger(run.segment)&&!run.carry&&!run.practice&&!quiet&&!devMode;
@@ -2318,7 +2318,7 @@
   function midway(){return Mobile&&Mobile.checkpoint?Mobile.checkpoint(Progress.resume(progress),difficulty):null;}
   function refreshTitle(){
     var resume=Progress.resume(progress),mid=midway(),any=progress.cleared.length>0||!!mid,cont=$('arcade-continue'),begin=$('arcade-start');
-    cont.hidden=!any;cont.textContent=T(mid?'continueMid':'continueStage',{n:resume+1}); // 앱이 꺼졌던 스테이지는 남긴 구간부터 잇는다
+    cont.hidden=!any;cont.textContent=T(mid&&mid.seg!==Arcade.STAGES[resume].first?'continueMid':'continueStage',{n:resume+1});
     $('continue-note').textContent=any?Arcade.STAGES[resume].name:'';$('continue-note').hidden=!any;
     cont.className=any?'primary':'';begin.className=any?'':'primary';
     $('title-best').textContent=pad(best);$('title-stars').textContent=String(Progress.totalStars(progress));$('title-stars-max').textContent=String(Arcade.STAGES.length*3);
@@ -2466,7 +2466,11 @@
   function fieldPoint(e,fresh){if(fresh||!fieldRect||!fieldRect.width)fieldRect=canvas.getBoundingClientRect();var rect=fieldRect;return {x:(e.clientX-rect.left)*W/rect.width,y:(e.clientY-rect.top)*H/rect.height};}
   function bind(){
     document.querySelectorAll('[data-difficulty]').forEach(function(button){button.addEventListener('click',function(){setDifficulty(button.dataset.difficulty);progress.difficulty=difficulty;saveProgress();if(state===null)refreshTitle();});});
-    $('arcade-continue').addEventListener('click',function(){var mid=midway();start(mid?{practice:true,stage:mid.stage,segment:mid.seg,hero:heroId(mid.hero),carry:{hits:mid.hits,bombs:mid.bombs},grown:{exp:mid.exp,expRemainder:mid.expRemainder,fills:mid.fills,stock:mid.stock,union:mid.union}}:{practice:true,stage:Progress.resume(progress),hero:journeyHero});});
+    $('arcade-continue').addEventListener('click',function(){
+      var mid=midway();
+      start(mid?{practice:true,stage:mid.stage,segment:mid.seg===Arcade.STAGES[mid.stage].first?undefined:mid.seg,hero:heroId(mid.hero),carry:{hits:mid.hits,bombs:mid.bombs},grown:mid}
+        :{practice:true,stage:Progress.resume(progress),hero:journeyHero});
+    });
     $('arcade-start').addEventListener('click',function(){chooseHero({stage:0});});
     $('arcade-stage-go').addEventListener('click',function(){var i=Number($('arcade-stage-select').value);if(Progress.canPlay(progress,i))chooseHero({stage:i,practice:true});});
     $('arcade-boss-open').addEventListener('click',function(){fillStages();setMode('boss');});
@@ -2475,7 +2479,10 @@
     $('arcade-keepsakes').addEventListener('click',openKeepsakes);
     $('arcade-keepsake-back').addEventListener('click',function(){setMode('title');});
     if($('arcade-spell-retry'))$('arcade-spell-retry').addEventListener('click',function(){var g=Number(this.dataset.seg);if(!Number.isInteger(g)||!Arcade.SEGMENTS[g])return;start({stage:Number(this.dataset.stage)||0,segment:g,spellOnly:true,practice:true,hero:state?state.hero:selectedHero});});
-    $('arcade-retry').addEventListener('click',function(){var i=Number(this.dataset.stage)||0,ch=Number(this.dataset.chapter)||0;start({stage:i,practice:true,bossOnly:this.dataset.boss==='1',chapter:ch||undefined,hero:state?state.hero:selectedHero});});
+    $('arcade-retry').addEventListener('click',function(){
+      var i=Number(this.dataset.stage)||0,ch=Number(this.dataset.chapter)||0;
+      start({stage:i,practice:true,bossOnly:this.dataset.boss==='1',chapter:ch||undefined,hero:state?state.hero:selectedHero,grown:state});
+    });
     if($('arcade-chapters'))$('arcade-chapters').addEventListener('click',openChapters);
     if($('arcade-chapter-back'))$('arcade-chapter-back').addEventListener('click',function(){setMode('title');});
     if($('chapter-export'))$('chapter-export').addEventListener('click',function(){var code=exportCode(),box=$('chapter-code');box.hidden=false;box.value=code;$('chapter-import-go').hidden=true;try{box.select();}catch(e){}
