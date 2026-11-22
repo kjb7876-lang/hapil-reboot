@@ -38,7 +38,7 @@
           for(var x=firstX;x<=W;x+=space){
             // Keep the centre cue on the first row and both sides of the opening on the next.
             var landing=x+slope*dy,edge=Math.abs(landing-W/2)<=space*(row%2)*.5+.01;
-            spawn(s,x,y,Math.atan2(1,slope),150,{color:dir>0?GREEN:PURPLE,size:dir>0?RICE:1,formation:true,keepShot:edge});
+            spawn(s,x,y,Math.atan2(1,slope),150,{color:dir>0?GREEN:PURPLE,size:dir>0?RICE:1,formation:true,sameBeat:true,keepShot:edge});
           }
           if(s.n>first)s.skillCast={kind:'seam',seg:s.seg,start:s.tick,until:s.tick+18,
             y:y,slope:slope,xs:s.bx.slice(first,s.n)};

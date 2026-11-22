@@ -89,7 +89,7 @@
               var x=b.x+side*(18+9*j),y=b.y+14-2*j*j;
               var target=gap+side*(halfGap+19*j);
               var angle=Math.atan2(K.H*.87-y,target-x);
-              K.spawn(s,x,y,angle,148+3*j,{size:RICE,color:j===0?PU:WH,formation:true,keepShot:j===0});
+              K.spawn(s,x,y,angle,148+3*j,{size:RICE,color:j===0?PU:WH,formation:true,sameBeat:true,keepShot:j===0});
             }
           }
           if(s.n>first)s.skillCast={kind:'wings',seg:s.seg,start:s.tick,until:s.tick+22,
