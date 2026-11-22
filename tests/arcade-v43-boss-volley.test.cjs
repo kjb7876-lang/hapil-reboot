@@ -31,10 +31,11 @@ for(const difficulty of ['gentle','normal']){
     assert(s.downEnd>=A.CARD_MIN);
     const firstSpecial=s.sp.start;
     assert(firstSpecial>=s.downEnd+A.SP_LEAD,'low HP must wait for the shot phrase');
-    while(s.segTick<firstSpecial-1){
+    for(let i=0;i<1800&&s.segTick<firstSpecial-1;i++){
       step(s);
       assert.equal(s.special,null);
     }
+    assert.equal(s.segTick,firstSpecial-1);
     assert(s.enemyShotsBorn>firedAt,'the boss still fired its phrase at zero HP');
     // A very slow large round cannot reach the old timeout before the laser.
     const stallAge=2500;
@@ -86,5 +87,20 @@ test('mobile volleys release on several beats and stay within their difficulty�
     assert(releases.length>=6);
     const gaps=new Set(releases.slice(1).map((t,i)=>t-releases[i]));
     assert(gaps.has({gentle:9,normal:7,hell:5}[difficulty]),'large volleys are staggered by difficulty');
+  }
+});
+
+test('a saturated mobile boss rejects further launches without cancelling existing rounds',()=>{
+  const index=A.SEGMENTS.findIndex(g=>g.actor==='balrog'&&g.name==='불덩이');
+  for(const difficulty of ['gentle','normal','hell']){
+    const s=enterCard(difficulty,index),limit=W*H*A.MOBILE_BOSS_COVER[difficulty];
+    const emitter={kind:'radial',bulletsPerWave:64,bulletType:{size:A.SHAPE_PROP,color:0,keepShot:true}};
+    for(let i=0;i<20;i++)A.emit(s,emitter,0,s.boss);
+    const needed=A.fieldBulletArea(s);
+    assert(needed<=limit&&needed>limit*.7,'the area limit constrains the dense attack');
+    const count=s.n;
+    A.emit(s,emitter,0,s.boss);
+    assert.equal(s.n,count);
+    assert(Array.from(s.bexit.slice(0,count)).every(x=>x===0));
   }
 });

@@ -361,19 +361,22 @@
     return s.volleyHeld;
   }
   var THIN_MOB=[.72,.82],THIN_BOSS=[.84,.92];
-  // Sum the area of each projectile's bounding circle plus a small dodge margin.
+  // Sum the area of each projectile's body bounds plus a small dodge margin.
   // Offscreen rounds count too, so a group entering the field cannot exceed the budget.
   var MOBILE_BOSS_COVER={gentle:.30,normal:.45,hell:.66};
   var MOBILE_VOLLEY_SIZE={gentle:4,normal:5,hell:7};
   var MOBILE_VOLLEY_GAP={gentle:9,normal:7,hell:5};
   function mobileBossShots(s){return s.entranceAll&&s.compact&&s.stage==='card';}
-  var MOBILE_PROP_RADIUS=PROPS.map(function(prop){
-    var dims=PROP_DIMS[prop.key]||[1,1];
-    return propRenderSpan(prop)*.5*Math.hypot(dims[0],dims[1])/Math.max(dims[0],dims[1]);
+  var MOBILE_PROP_BOX=PROPS.map(function(prop){
+    var dims=PROP_DIMS[prop.key]||[1,1],scale=propRenderSpan(prop)/Math.max(dims[0],dims[1]);
+    return [dims[0]*scale,dims[1]*scale];
   });
   function shotFootprint(s,size,color){
-    var base=size===SHAPE_PROP?MOBILE_PROP_RADIUS[color]:bulletRenderSpan(size,color)*.5*(size===0||size===RICE?1.15:1);
-    var r=base*s.sizeScale+4;
+    if(size===SHAPE_PROP){
+      var box=MOBILE_PROP_BOX[color];
+      return (box[0]*s.sizeScale+8)*(box[1]*s.sizeScale+8);
+    }
+    var r=bulletRenderSpan(size,color)*s.sizeScale*.5*(size===0||size===RICE?1.15:1)+4;
     return Math.PI*r*r;
   }
   function fieldBulletArea(s){
@@ -1975,7 +1978,7 @@
   function hurryOut(s){var n=0,p=s.player;for(var i=0;i<s.n;i++){if(s.bexit[i])continue;s.bbounce[i]=0;s.bat[i]=0;s.bturn[i]=0;s.blife[i]=65535;s.bformation[i]=1;
     var dx=s.bx[i]-p.x,dy=s.by[i]-p.y;if(dx*dx+dy*dy<HURRY_SPARE*HURRY_SPARE&&Math.cos(s.ba[i])*dx+Math.sin(s.ba[i])*dy<0)continue; // 영웅 쪽으로 다가오는 가까운 탄만 제 속도(멀어지는 탄은 빨라져도 위협이 아니다)
     s.bacc[i]=HURRY_SOFT;if(s.bmax[i]<HURRY_MAX)s.bmax[i]=HURRY_MAX;if(s.bs[i]<EXPIRE_SPEED)s.bs[i]=EXPIRE_SPEED;n++;}return n;}
-  var BOSS_DRAIN_GRACE={gentle:240,normal:180};
+  var BOSS_DRAIN_GRACE={gentle:240,normal:180},RETIRE_ALL_AFTER=600;
   function retireSlowBossBullets(s,wait){
     // Only the tail of a drain is accelerated. Close incoming bullets retain their trajectory and their hitbox.
     var p=s.player;
@@ -1983,7 +1986,7 @@
       if(s.bexit[i])continue;
       var dx=s.bx[i]-p.x,dy=s.by[i]-p.y;
       var toward=Math.cos(s.ba[i])*dx+Math.sin(s.ba[i])*dy<0;
-      if(wait<600&&s.bs[i]>=EXPIRE_SPEED&&dx*dx+dy*dy<HURRY_SPARE*HURRY_SPARE&&toward)continue;
+      if(wait<RETIRE_ALL_AFTER&&s.bs[i]>=EXPIRE_SPEED&&dx*dx+dy*dy<HURRY_SPARE*HURRY_SPARE&&toward)continue;
       if(s.bs[i]<EXPIRE_SPEED){
         s.bs[i]=EXPIRE_SPEED;
         if(!Number.isFinite(s.ba[i]))s.ba[i]=Math.PI/2;
