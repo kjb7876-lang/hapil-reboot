@@ -121,7 +121,7 @@
   function spSoon(s,ahead){var st=s.segTick;s.segTick=st+ahead;var w=spWindow(s);s.segTick=st;return !!w;}
   function heroLaser(s){
     var t=s.entranceAll&&HERO_TUNE[s.hero],every=t&&t.laserEvery&&(t.laserEvery[s.difficulty]||250);
-    if(!every||s.stage!=='card'||!s.boss.present||s.calm||s.cardEnding||s.cardDown||s.lasers.length||s.figures.length||layersBut(s,'mirror')>=layerCap(s)||spQuiet(s)||spSoon(s,HERO_LASER_LIFE)){s.heroLaserT=Math.min(s.heroLaserT||0,every?every-40:0);return;}
+    if(!every||s.stage!=='card'||!s.boss.present||s.calm||s.figPend||s.cardEnding||s.cardDown||s.lasers.length||s.figures.length||layersBut(s,'mirror')>=layerCap(s)||spQuiet(s)||spSoon(s,HERO_LASER_LIFE)){s.heroLaserT=Math.min(s.heroLaserT||0,every?every-40:0);return;}
     if((s.heroLaserT=(s.heroLaserT||0)+1)<every)return;
     s.heroLaserT=0;s.heroLaserN=(s.heroLaserN||0)+1;
     var a=ACTORS[s.boss.actor],c=a&&a.c2!==WHITE&&a.c2!==RED?a.c2:CYAN;
@@ -1982,7 +1982,7 @@
    *  모든 구간(일반몹·중간보스·보스). 예고가 있고, 선 아래로 내려가면 피할 수 있다. */
   var LINE_GUARD_FIRST=90,LINE_GUARD_EVERY=120;
   function lineGuard(s){var p=s.player;
-    if(!s.entranceAll||p.y>=AUTO_COLLECT_Y||!(s.stage==='wave'||s.stage==='card')||s.cardEnding||s.cardDown||s.entranceAll&&spQuiet(s)){s.lineT=0;return;}
+    if(!s.entranceAll||p.y>=AUTO_COLLECT_Y||!(s.stage==='wave'||s.stage==='card')||s.cardEnding||s.cardDown||s.figPend||spQuiet(s)){s.lineT=0;return;}
     var t=s.lineT=(s.lineT||0)+1;if(t<LINE_GUARD_FIRST||(t-LINE_GUARD_FIRST)%Math.round(LINE_GUARD_EVERY*(s.entranceAll&&s.compact?LIVE_MOBILE.guard:1)))return;
     var k=(s.lineN=(s.lineN||0)+1)%3,b=s.boss,src=null,best=1e9;
     if(b&&b.present&&!b.leaving)src={x:b.x,y:b.y};
@@ -2088,7 +2088,7 @@
   function allowAmbientStart(s){
     if(s.entranceAll&&layersBut(s,'ambient')>=layerCap(s))return false;
     if(s.entranceAll&&(s.cardEnding||s.cardDown||s.stage==='card'&&(s.figures.length||s.lasers.length>2)))return false; // 패턴 겹침 자제(사용자 11-19): 문양·광선이 떠 있거나 보스가 쓰러지는 중이면 배경 압박을 새로 얹지 않는다
-    if(spQuiet(s))return false; // 특수 페이즈 중에는 배경 압박을 따로 얹지 않는다(특수 페이즈가 직접 낸다)
+    if(s.figPend||spQuiet(s))return false; // 문양 전환과 특수 페이즈에는 배경 압박을 따로 얹지 않는다(특수 페이즈가 직접 낸다)
     if(s.stage==='wave')return s.segTick<waveDuration(s,segment(s));
     if(s.stage!=='card'||s.difficulty==='gentle')return false;
     // Named attacks and app entrance rhythms have their own cues. Other plain cards keep the stage backdrop.

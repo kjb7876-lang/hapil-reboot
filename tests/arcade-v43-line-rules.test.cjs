@@ -66,5 +66,10 @@ test('boss entrance preparation waits for leftover bullets, even when the app ca
   const card=A.SEGMENTS.findIndex(g=>g.kind==='card'&&!g.mid);assert(s.n>0);
   s.stage='intro';s.seg=card;s.bossEntrance=null;const n0=s.n;
   assert.equal(A.prepareBossEntrance(s),false);assert.equal(s.n,n0,'bullets are not cleared while they drain');
-  s.n=0;assert.equal(A.prepareBossEntrance(s),true);
+  s.n=0;
+  if((s.risers||[]).some(r=>!r.fade&&(r.dir==='down'||r.dir==='spit'))){
+    assert.equal(A.prepareBossEntrance(s),false,'flying ink also holds the entrance');
+    for(let t=0;t<1200&&!s.bossEntrance;t++)A.step(s,{});
+    assert(s.bossEntrance,'entrance is scheduled once the flying ink is offscreen');
+  }else assert.equal(A.prepareBossEntrance(s),true);
 });
