@@ -189,7 +189,7 @@ test('v43 review fixes: a hit on a mob or the boss throws a small spark',()=>{
 test('v43 review fixes: with room outside the play field, the HUD moves out of it (phone bars, PC side panels)',()=>{
  const app=h.read('src/arcade-app-v43.js'),html=h.read('arcade.html');
  assert(/id="arcade-hud-high"/.test(html)&&/id="arcade-hud-low"/.test(html),'HUD boxes outside the canvas');
- assert(/function placeHud\(/.test(app)&&/hudOut==='side'/.test(app)&&/hudOut==='below'/.test(app),'two layouts: below/above on phones, side panels on PC');
+ assert(/function placeHud\(/.test(app)&&/hudOut==='side'/.test(app)&&/hudOut==='mobile'/.test(app),'upper readouts on phones and side panels on PC');
  assert(/if\(!hudOut\)/.test(app),'the canvas HUD is drawn only when there is no room outside');
 });
 

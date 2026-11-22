@@ -38,12 +38,12 @@
     @media (pointer:coarse),(max-width:520px){.pad#arcade-focus{width:104px;height:88px;font-size:16px;font-weight:700;border-radius:20px}.pad#arcade-focus::after{content:"";position:absolute;inset:-14px -10px -10px -14px}.pad#arcade-bomb{width:80px;height:68px;font-size:15px;font-weight:700;border-width:2px;border-color:rgba(40,140,90,.85)}}
     #arcade-focus{left:2.6%}#arcade-bomb{right:2.6%;border-color:rgba(125,255,176,.55)}#arcade-bomb .bcnt{position:absolute;top:-10px;right:-8px;min-width:26px;height:26px;padding:0 4px;box-sizing:border-box;border-radius:13px;background:#1f7a52;border:2px solid #eafff3;color:#fff;font:700 16px/22px system-ui,sans-serif;text-align:center;pointer-events:none;text-shadow:none}#arcade-bomb.empty .bcnt{background:#555;border-color:#aaa;color:#ddd}
     .pad:active{background:rgba(216,196,154,.4)}
-    /* 플레이 칸 밖 HUD: 휴대폰은 위아래 여백, PC는 좌우 패널(app의 placeHud가 자리를 잡는다) */
+    /* 플레이 HUD: 휴대폰 상단, PC 좌우 패널 */
     .hudx{position:fixed;z-index:3;display:flex;gap:10px;pointer-events:none;font:12px/1.35 system-ui,"Apple SD Gothic Neo",sans-serif;color:rgba(255,255,255,.82);text-shadow:0 1px 2px #000}
     .hudx[hidden]{display:none}
-    .hudx .name{font-weight:600}.hudx .lives{color:#ff6a8a;font-size:14px;letter-spacing:1px}.hudx .bombs{color:#7dffb0;font-size:14px;white-space:nowrap}.hudx .bombs .slot{opacity:.5}.hudx .tag{font-size:10px;letter-spacing:0;margin-right:5px;color:rgba(255,255,255,.92);font-weight:600}.hudx .lives .tag{display:inline-block;min-width:24px}.hudx .bombs .tag{background:rgba(20,90,60,.88);border:1px solid #7dffb0;color:#eafff3;border-radius:9px;padding:0 6px;font-weight:700}.hudx .lifebox{text-align:right}.hudx.below .lives{font-size:17px}.hudx.below .bombs{font-size:16px}.hudx.below .tag{font-size:11px}.hudx .bombs .num{font-weight:700;margin-right:2px}.hudx .score{font-weight:600;font-size:15px;color:#fff}.hudx .graze{font-size:10px;opacity:.75}
+    .hudx .name{font-weight:600}.hudx .lives{color:#ff6a8a;font-size:14px;letter-spacing:1px}.hudx .bombs{color:#7dffb0;font-size:14px;white-space:nowrap}.hudx .bombs .slot{opacity:.5}.hudx .tag{font-size:10px;letter-spacing:0;margin-right:5px;color:rgba(255,255,255,.92);font-weight:600}.hudx .lives .tag{display:inline-block;min-width:24px}.hudx .bombs .tag{background:rgba(20,90,60,.88);border:1px solid #7dffb0;color:#eafff3;border-radius:9px;padding:0 6px;font-weight:700}.hudx .bombs .num{font-weight:700;margin-right:2px}.hudx .score{font-weight:600;font-size:15px;color:#fff}.hudx .graze{font-size:10px;opacity:.75}
     .hudx .gauge{width:64px;height:3px;background:rgba(255,255,255,.18)}.hudx .gauge i{display:block;height:3px;background:#7dffb0}.hudx .levels{font-size:10px;margin-top:3px;opacity:.85;white-space:nowrap}.hudx.side .levels{font-size:13px;margin-top:6px}
-    .hudx.below{align-items:center;justify-content:space-between;padding:0 12px}.hudx.side{flex-direction:column;justify-content:space-between;gap:16px;min-height:200px;padding:16px 18px;box-sizing:border-box;background:linear-gradient(180deg,rgba(14,10,22,.82),rgba(6,4,10,.72));border:1px solid rgba(214,180,120,.45);border-radius:4px;box-shadow:0 0 24px rgba(0,0,0,.6);font-size:14px}
+    .hudx.side{flex-direction:column;justify-content:space-between;gap:16px;min-height:200px;padding:16px 18px;box-sizing:border-box;background:linear-gradient(180deg,rgba(14,10,22,.82),rgba(6,4,10,.72));border:1px solid rgba(214,180,120,.45);border-radius:4px;box-shadow:0 0 24px rgba(0,0,0,.6);font-size:14px}
     .hudx.side .name{font-size:16px;word-break:keep-all}.hudx.side .best{font-size:15px;color:rgba(255,255,255,.7);letter-spacing:1px}.hudx.side .lives{font-size:20px}.hudx.side .bombs{font-size:18px}.hudx.side .score{font-size:24px;letter-spacing:1px}.hudx.side .graze{font-size:12px}.hudx.side .gauge{width:150px;height:4px;margin-top:4px}.hudx.side .gauge i{height:4px}.hudx.side .spell{font:italic 15px/1.4 serif;color:#f3e3b5;border-left:3px solid;padding-left:7px;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.hudx.side .bosshp{width:150px;height:6px;background:rgba(255,255,255,.14);margin-top:4px}.hudx.side .progress{width:150px;height:4px;background:rgba(255,255,255,.14);margin-top:4px}.hudx.side .bosshp i{display:block;height:6px}.hudx.side .progress i{display:block;height:4px;background:#d6b478}.hudx.side .route,.hudx.side .cards{font-size:12px;line-height:1.7;color:rgba(255,255,255,.55);margin-top:6px}.hudx.side .route{}.hudx.side .cards{}.hudx.side .route>div{max-width:164px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hudx.side .gauge,.hudx.side .progress{margin-left:auto}.hudx.side .route .cur,.hudx.side .cards .cur{font-weight:600}.hudx.side .stack{display:flex;flex:1;flex-direction:column;gap:22px;justify-content:flex-start;padding-bottom:28px}.hudx.side .portrait{width:150px;height:120px;object-fit:contain;border-bottom:2px solid;opacity:.85;-webkit-mask-image:linear-gradient(180deg,#000 70%,transparent);mask-image:linear-gradient(180deg,#000 70%,transparent)}.hudx.side .keys{font-size:12px;line-height:1.6;color:rgba(255,255,255,.6)}
     .hudx .lbl{font-size:10px;letter-spacing:2px;color:rgba(214,180,120,.85);margin-top:6px}
     select{appearance:none;border:1px solid #4a4666;background:#15152a;color:inherit;font:inherit;border-radius:10px;padding:10px 14px;min-height:44px;max-width:100%}
@@ -124,6 +124,44 @@
     html.ink #arcade-title h1::after,html.ink .screen h2::after{content:"合";display:inline-block;margin-left:10px;width:.62em;height:.62em;font:600 .42em/1.5 "Noto Serif KR","Nanum Myeongjo",serif;letter-spacing:0;color:#f2e9d6;background:#b23a2c;border-radius:3px 2px 3px 2px;vertical-align:.5em;text-align:center;text-shadow:none} /* 낙관 */
     html.ink .keepsake{background:#ebe0c8;border-color:#8a7c68;color:#5a5048}html.ink .keepsake.locked{background:repeating-linear-gradient(45deg,#e6dbc2 0 6px,#ddd0b4 6px 12px);color:#a59a8c}
     html.ink .hudx{filter:invert(1) hue-rotate(180deg) saturate(.7) sepia(.3)}html.ink .hudx.side{filter:invert(1) hue-rotate(180deg) saturate(.7) sepia(.3) brightness(.9)}html.ink .hudx img{filter:invert(1) hue-rotate(180deg)}html.ink .hudx .bombs{color:#62c7a0}
+    /* Compact controls keep their full button and focus hit area. Only the inner label is painted. */
+    #arcade-stage.compact-combat .pad{z-index:4;background:transparent;border:0;box-shadow:none;border-radius:0;align-items:flex-end;justify-content:flex-start;color:#fff3df}
+    #arcade-stage.compact-combat #arcade-focus{width:104px;height:88px}
+    #arcade-stage.compact-combat #arcade-focus::after{content:"";position:absolute;inset:-14px -10px -10px -14px}
+    #arcade-stage.compact-combat #arcade-bomb{width:80px;height:68px;justify-content:flex-end}
+    #arcade-stage.compact-combat .pad-label{display:grid;place-items:center;padding:0 9px;height:33px;min-width:62px;white-space:nowrap;border:1px solid rgba(255,244,217,.5);border-radius:8px;background:rgba(20,15,27,.42);font:700 12px/1 system-ui,sans-serif;pointer-events:none}
+    #arcade-stage.compact-combat .pad:is(:active,[aria-pressed="true"]) .pad-label{background:rgba(216,196,154,.72);color:#201915;border-color:currentColor}
+    #arcade-stage.compact-combat .pad:focus-visible{outline:none}
+    #arcade-stage.compact-combat .pad:focus-visible .pad-label{outline:2px solid currentColor;outline-offset:2px}
+    #arcade-stage.compact-combat .bcnt{display:none}
+    html.ink #arcade-stage.compact-combat .pad{color:#301f18}
+    html.ink #arcade-stage.compact-combat .pad-label{background:rgba(249,240,221,.52);border-color:rgba(52,38,31,.53)}
+    html.ink #arcade-stage.compact-combat .pad:is(:active,[aria-pressed="true"]) .pad-label{background:rgba(217,190,145,.78);border-color:currentColor}
+    #arcade-stage.compact-combat #arcade-pause-button{z-index:4}
+    #arcade-stage.compact-combat #arcade-drill-skip{top:82px!important}
+    .hudx.mobile-boss,.hudx.mobile-player{display:block;text-align:left;font:600 11px/1.25 system-ui,"Apple SD Gothic Neo",sans-serif;color:#f6ecda;font-variant-numeric:tabular-nums;text-shadow:0 1px 2px #130e15}
+    .hudx.mobile-player{text-align:right}
+    .hudx.mobile-boss[hidden],.hudx.mobile-player[hidden]{display:none}
+    .mobile-boss .name,.mobile-boss .spell,.mobile-boss .mobile-bonus{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .mobile-boss .name{font-size:13px}
+    .mobile-boss .mobile-meta,.mobile-player .graze,.mobile-player .levels{font-size:10px;opacity:.9;margin:0}
+    .mobile-boss .bosshp{height:2px;margin:4px 0;background:rgba(244,236,218,.3)}
+    .mobile-boss .bosshp i,.mobile-player .gauge i{display:block;height:100%;background:currentColor}
+    .mobile-boss .mobile-meta{white-space:nowrap}
+    .mobile-boss .mobile-bonus{color:#f1cb86}
+    .mobile-player .score{font-size:17px;line-height:1;margin:0 0 2px}
+    .mobile-player .mobile-stock{display:flex;justify-content:flex-end;align-items:center;gap:8px;white-space:nowrap}
+    .mobile-player .mobile-stock .lives,.mobile-player .mobile-stock .bombs{font-size:12px;line-height:1.2;letter-spacing:0}
+    .mobile-player .mobile-stock .tag{margin:0 2px 0 0;font-size:10px;min-width:0}
+    .mobile-player .mobile-stock .bombs .tag{padding:0;border:0;background:none;color:inherit}
+    .mobile-player .gauge{width:55px;height:2px;margin:2px 0 0 auto}
+    html.ink .hudx.mobile-boss,html.ink .hudx.mobile-player{filter:none;font-family:system-ui,"Apple SD Gothic Neo",sans-serif;color:#30251d;text-shadow:0 1px 2px #fff5df,0 0 4px #fff5df}
+    html.ink .mobile-player .score,html.ink .mobile-player .tag{color:#30251d}
+    html.ink .mobile-player .lives{color:#862f3d}
+    html.ink .mobile-player .bombs{color:#24604a}
+    html.ink .mobile-boss .mobile-bonus{color:#795000}
+    html.ink .mobile-boss .bosshp,html.ink .mobile-player .gauge{background:rgba(54,41,31,.24)}
+    html.ink .mobile-player .gauge i{color:#24604a}
     html.ink #arcade-dev{border-color:#8c5a1c;background:#ebe0c8;color:#7a4a12}html.ink #arcade-dev[aria-pressed="true"]{background:#d9cbae}html.ink #arcade-dev-badge{border-color:#8c5a1c;background:rgba(242,233,214,.94);color:#7a4a12}
     /* 게임 오버(11-16): 감긴 먹 눈꺼풀이 그대로 보이고, 그 위에 붉은 붓 십자가가 그어진 뒤 '다시하기'가 떠오른다 */
     #result-cross{display:none;position:absolute;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));width:30px;height:40px;background:transparent!important;margin:0;pointer-events:none} /* 이스터에그처럼 오른쪽 아래에 작게(사용자 11-17) */
@@ -209,9 +247,9 @@
     <div id="arcade-frame">
       <canvas id="arcade-canvas" width="360" height="640" aria-label="세로 탄막 전투장" data-i18n-label="field"></canvas>
       <button id="arcade-pause-button" type="button" aria-label="일시정지" data-i18n-label="pause" hidden>Ⅱ</button>
-      <button id="arcade-focus" class="pad" type="button" aria-label="초능력 (누르고 있는 동안)" data-i18n-label="focusLabel" aria-pressed="false" hidden><span data-i18n="focus">초능력</span></button>
+      <button id="arcade-focus" class="pad" type="button" aria-label="초능력 (누르고 있는 동안)" data-i18n-label="focusLabel" aria-pressed="false" hidden><span class="pad-label" data-i18n="focus">초능력</span></button>
       <button id="arcade-drill-skip" type="button" hidden style="position:absolute;top:8.6%;right:2.6%;min-height:44px;padding:0 14px;font-size:13px">실습 건너뛰기</button>
-      <button id="arcade-bomb" class="pad" type="button" aria-label="폭탄" data-i18n-label="bomb" hidden><span data-i18n="bomb">폭탄</span></button>
+      <button id="arcade-bomb" class="pad" type="button" aria-label="폭탄" data-i18n-label="bomb" hidden><span class="pad-label" data-i18n="bomb">폭탄</span></button>
     </div>
 
     <div id="arcade-title" class="screen">
@@ -363,38 +401,38 @@
       <button id="arcade-home" type="button" data-i18n="toTitle">처음 화면으로</button>
     </div>
   </div>
-  <script src="src/rain-hit-bank-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/audio-v37.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-parts-v43/p1.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-parts-v43/p2.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-parts-v43/p3.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-parts-v43/p4.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-parts-v43/p5.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-parts-v43/p6.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-parts-v43/p7.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-parts-v43/p8.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-boss-intros-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-boss-lines-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-heroes-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-boss-rhythm-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-encounter-phases-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-boss-phases-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-laser-rhythm-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-skins-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/ink-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/ink-motifs-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/hero-memory-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-i18n-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-music-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-mobile-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-eyes-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-story-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-chapters-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-hero-select-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-hero-visibility-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-spirit-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-cues-v43.js?v=20261121-bossshare3"></script>
-  <script src="src/arcade-app-v43.js?v=20261121-bossshare3"></script>
+  <script src="src/rain-hit-bank-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/audio-v37.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-parts-v43/p1.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-parts-v43/p2.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-parts-v43/p3.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-parts-v43/p4.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-parts-v43/p5.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-parts-v43/p6.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-parts-v43/p7.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-parts-v43/p8.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-boss-intros-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-boss-lines-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-heroes-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-boss-rhythm-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-encounter-phases-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-boss-phases-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-laser-rhythm-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-skins-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/ink-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/ink-motifs-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/hero-memory-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-i18n-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-music-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-mobile-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-eyes-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-story-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-chapters-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-hero-select-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-hero-visibility-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-spirit-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-cues-v43.js?v=20261122-combat-hud"></script>
+  <script src="src/arcade-app-v43.js?v=20261122-combat-hud"></script>
 </body>
 </html>
