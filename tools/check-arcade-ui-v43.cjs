@@ -468,10 +468,20 @@ async function mobile(browser,width,height){
     await stationary(page);
     const cdp=await context.newCDPSession(page);
     const rect=await page.locator('#arcade-canvas').boundingBox(),focus=await page.locator('#arcade-focus').boundingBox(),bomb=await page.locator('#arcade-bomb').boundingBox();
-    for(const [label,b] of [['focus',focus],['bomb',bomb]]){assert(b&&b.width>=44&&b.height>=44,label+' touch target');assert(b.x>=0&&b.y>=0&&b.x+b.width<=width+1&&b.y+b.height<=height+1,label+' visible');}
-    // Landscape keeps the action pads over the bottom of the canvas. Start the
-    // movement finger above them so it cannot be mistaken for a bomb press.
-    const move={id:1,x:rect.x+rect.width*.12,y:Math.min(rect.y+rect.height*.52,focus.y-44,bomb.y-44)},hold={id:2,x:focus.x+focus.width/2,y:focus.y+focus.height/2},blast={id:3,x:bomb.x+bomb.width/2,y:bomb.y+bomb.height/2};
+    const readouts=await page.locator('#arcade-hud-low.mobile-player').boundingBox();
+    const bossHud=await page.locator('#arcade-hud-high.mobile-boss').boundingBox();
+    assert(readouts&&bossHud&&readouts.x>bossHud.x+bossHud.width,'hero stats sit at the upper right');
+    assert(readouts.y<=rect.y+5,'the HUD starts at the top of the field or in the gutter');
+    const stats=page.locator('.mobile-player');
+    for(const selector of ['.score','.graze','.lives','.bombs','.levels','.gauge'])assert(await stats.locator(selector).isVisible());
+    for(const [id,b,w,h] of [['focus',focus,104,88],['bomb',bomb,80,68]]){
+      assert.deepEqual([b.width,b.height],[w,h],id+' preserves the original touch target');
+      assert(b.x>=0&&b.y>=0&&b.x+b.width<=width+1&&b.y+b.height<=height+1,id+' target stays within the viewport');
+      const label=await page.locator('#arcade-'+id+' .pad-label').boundingBox();
+      assert(label.width<w&&label.height<h/2&&label.y>b.y+12,id+' paints only a small label at the bottom');
+    }
+    // Press above both visible labels, including the focus button's extended hit area.
+    const move={id:1,x:rect.x+rect.width*.12,y:Math.min(rect.y+rect.height*.52,focus.y-44,bomb.y-44)},hold={id:2,x:focus.x+focus.width/2,y:focus.y-6},blast={id:3,x:bomb.x+bomb.width/2,y:bomb.y+6};
     const touch=(type,points)=>cdp.send('Input.dispatchTouchEvent',{type,touchPoints:points});
     const pos=()=>page.evaluate(()=>{const s=HapilArcadeApp.debugState().state;return {x:s.player.x,tick:s.tick,bombs:s.bombs,focus:s.player.focus};});
     await touch('touchStart',[move]);let p0=await pos();

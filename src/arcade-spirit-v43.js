@@ -146,7 +146,7 @@
          돕는 순간이라 인주색(사용자 11-16 규칙), 앞에 목숨 칸과 같은 ◆ 를 붙여 같은 '목숨'으로 읽힌다 */
       var lt=({life:'목숨 +1',bomb:'목숨 가득 · 필살 +1',score:'목숨·필살 가득 · +10,000'})[lifePop.got]||'목숨 +1',
         lk=la<5?1.25-.33*(la/5):la<11?.92:la<16?.92+.08*((la-11)/5):1,fly=Math.max(0,(la-(LIFE_POP_TICKS-LIFE_FLY))/LIFE_FLY),fe=fly*fly,
-        hx=Math.max(70,Math.min(W-70,p.x-16)),hy=Math.max(78,p.y-46),tx=60,ty=H-100,lx=hx+(tx-hx)*fe,ly=hy+(ty-hy)*fe,sc=lk*(1-.55*fe);
+        hx=Math.max(70,Math.min(W-70,p.x-16)),hy=Math.max(78,p.y-46),tx=s.compact?W-50:60,ty=s.compact?8:H-100,lx=hx+(tx-hx)*fe,ly=hy+(ty-hy)*fe,sc=lk*(1-.55*fe);
       ctx.save();ctx.translate(lx,ly);ctx.scale(sc,sc);ctx.globalAlpha=fly>.7?(1-fly)/.3:1;ctx.textAlign='center';ctx.textBaseline='middle';
       if(la>=5&&la<20&&fly===0){var sp=(la-5)/15;ctx.fillStyle='rgba(176,42,28,'+(.55*(1-sp)).toFixed(3)+')';for(var d=0;d<6;d++){var an=d*1.047+.4,rr=22+sp*18+(d%2)*6;ctx.beginPath();ctx.arc(Math.cos(an)*rr*1.6,Math.sin(an)*rr*.55,2.2-(d%3)*.5,0,Math.PI*2);ctx.fill();}} // 찍힐 때 튀는 인주 점(가로로 납작하게)
       ctx.font='800 17px '+SANS;var tw=ctx.measureText(lt).width;ctx.lineJoin='round';ctx.lineWidth=3;ctx.strokeStyle='rgba(250,244,230,.92)';ctx.fillStyle='#b02a1c';
@@ -170,7 +170,7 @@
       bonusShown=val;
     }
     drawDown(ctx,s,c);
-    if(s.spellOnly&&s.stage!=='won'&&s.stage!=='lost'){ctx.font='700 11px '+SANS;var pt='스펠 연습 · 기록에 넣지 않음',pw2=ctx.measureText(pt).width+16;ctx.globalAlpha=.92;plate(ctx,12,(opt.bonusY||68)+10,pw2,18,9,c);ctx.globalAlpha=1;ctx.textAlign='left';ctx.fillStyle=c.text;ctx.fillText(pt,20,(opt.bonusY||68)+23);} // 연습 중임을 위쪽 봉인 줄 아래 왼편에 늘 보인다(영웅이 머무는 아래를 가리지 않게, 심사 2차)
+    if(!opt.hidePractice&&s.spellOnly&&s.stage!=='won'&&s.stage!=='lost'){ctx.font='700 11px '+SANS;var pt='스펠 연습 · 기록에 넣지 않음',pw2=ctx.measureText(pt).width+16;ctx.globalAlpha=.92;plate(ctx,12,(opt.bonusY||68)+10,pw2,18,9,c);ctx.globalAlpha=1;ctx.textAlign='left';ctx.fillStyle=c.text;ctx.fillText(pt,20,(opt.bonusY||68)+23);} // 연습 중임을 위쪽 봉인 줄 아래 왼편에 늘 보인다(영웅이 머무는 아래를 가리지 않게, 심사 2차)
     // 보스 위치 표식: 맨 아래 가장자리 눈금(바닥 안개·영웅 빛보다 위에 그려 묻히지 않게 화면 고정층에서). 맞는 동안 옅어지고, 체력이 20% 아래면 깜박인다.
     var b=s.boss;
     if(s.stage==='card'&&b&&b.present&&!s.cardEnding){
