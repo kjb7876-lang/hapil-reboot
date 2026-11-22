@@ -59,7 +59,7 @@ test('continue restores the saved bomb stock within the cap',()=>{
 
 test('the checkpoint stores the bomb stock and reads old checkpoints unchanged',()=>{
  const src=require('fs').readFileSync(require('path').join(__dirname,'..','src','arcade-mobile-v43.js'),'utf8');
- assert(/stock:checkpointCount\(s\.bombs\)/.test(src));assert(/if\(c\.stock!==undefined\)c\.stock=checkpointCount\(c\.stock\)/.test(src));
+ assert(/if\(!retry\)data\.stock=checkpointCount\(s\.bombs\)/.test(src));assert(/if\(c\.stock!==undefined\)c\.stock=checkpointCount\(c\.stock\)/.test(src));
  const app=require('fs').readFileSync(require('path').join(__dirname,'..','src','arcade-app-v43.js'),'utf8');
- assert(/stock:mid\.stock/.test(app));assert(/options\.grown\.stock=grown\.stock/.test(app));
+ assert(/grown:mid/.test(app));assert(/options\.grown\.stock=grown\.stock/.test(app));
 });
