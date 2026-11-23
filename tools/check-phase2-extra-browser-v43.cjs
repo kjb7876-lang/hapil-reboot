@@ -25,7 +25,7 @@ module.exports=async function extraBrowser(browser,url,out){
     const report=window.__extraReport={seg,mode,positions:[],phases:{}},priorInk=window.__extraInk.filtered;
     const canvas=document.getElementById('arcade-canvas'),ctx=canvas.getContext('2d');
     app.debugState().jumpSegment(seg,true);
-    let p,firstTick,firstHits,target,edgeSamples;
+    let p,firstTick,firstHits,target,entry;
     HapilArcade.step=function(s,input){
      if(s.seg!==seg||report.done)return step(s,input);
      const q=N.inspect(s);if(s.stage==='card'||q)s.boss.hp=s.boss.maxHp; // prevent scripted fixture from killing the target card.
@@ -33,22 +33,13 @@ module.exports=async function extraBrowser(browser,url,out){
      if(q?.phase==='telegraph'&&!p){
       const planned=E.plan(seg,s.difficulty,q.safeLane[0]<180?1:-1);
       if(!planned)throw Error('missing exact canonical browser geometry');
-      let entry=null;
-      for(const y of [520,480,430,555,590,390,350,310]){
-       for(let x=66;x<298;x+=2)if([-4,0,4].every(d=>P.contains(planned,x+d,y)&&P.contains(planned,x,y+d))){entry={x,y};break;}
-       if(entry)break;
-      }
-      if(!entry)throw Error('no interior hazard test point for '+seg);
+      entry=null;
+      for(let y=150;y<611&&!entry;y+=3)for(let x=65;x<300;x+=3)
+       if(N.firstContactAt(s,x+.5,y+.5)){entry={x:x+.5,y:y+.5};break;}
+      if(!entry)throw Error('no actual visible source contact for '+seg);
       p=planned;
-      edgeSamples=[];
-      for(let y=236;y<=520;y+=26){
-       const row=p.rows[y-p.area.y0];
-       for(let i=0;i<row.length;i+=2){
-        const x=row[i];if(x>19&&x<339&&P.contains(p,x+4,y)&&!P.contains(p,x-4,y))edgeSamples.push([x,y]);
-       }
-      }
       firstTick=s.tick;firstHits=s.hits;
-      report.coverage=q.coverage;report.safeLane=q.safeLane;report.difficulty=s.difficulty;report.compact=s.compact;
+      report.maxClip=q.maxClip;report.safeLane=q.safeLane;report.difficulty=s.difficulty;report.compact=s.compact;
       report.staged={tick:s.tick,legacyBullets:s.n};report.card=HapilArcade.SEGMENTS[seg].name;
       // Seed only the starting point. Subsequent movement uses the engine's normal input path.
       s.player.x=entry.x;s.player.y=entry.y;s.player.invulnerableUntil=0;report.entry=entry;
@@ -71,11 +62,13 @@ module.exports=async function extraBrowser(browser,url,out){
      const s=app.debugState(),q=s.signature;
      if(q?.phase==='telegraph'&&q.local>=55&&!report.warningImage)report.warningImage=canvas.toDataURL('image/jpeg',.88);
      if(q?.phase==='active'&&!report.image&&window.__extraInk.filtered>priorInk){
-      const image=ctx.getImageData(0,0,canvas.width,canvas.height),rgba=(x,y)=>{
-       const i=(Math.floor(y*canvas.height/HapilArcade.HEIGHT)*canvas.width+Math.floor(x*canvas.width/HapilArcade.WIDTH))*4;
-       return .2126*image.data[i]+.7152*image.data[i+1]+.0722*image.data[i+2];
-      };
-      report.contrast=edgeSamples.map(([x,y])=>Math.round(rgba(x-4,y)-rgba(x+4,y)));
+      // Actual per-effect render, through the same native Ink prototype, on
+      // transparent backing so campsite/legacy pixels cannot fake visibility.
+      const off=document.createElement('canvas');off.width=HapilArcade.WIDTH;off.height=HapilArcade.HEIGHT;
+      const isolated=off.getContext('2d');N.paint(isolated,s.state);
+      const pixels=isolated.getImageData(0,0,off.width,off.height).data,read=(x,y)=>pixels[(Math.floor(y)*off.width+Math.floor(x))*4+3];
+      let paint=0,total=0;for(let y=43;y<626;y+=3)for(let x=8;x<352;x+=3){total++;if(read(x,y)>=80)paint++;}
+      report.alpha={paint,total,entry:read(entry.x,entry.y),player:read(s.state.player.x,s.state.player.y)};
       report.ink={...window.__extraInk};report.image=canvas.toDataURL('image/png');
      }
      if(!report.done)requestAnimationFrame(loop);
@@ -92,8 +85,9 @@ module.exports=async function extraBrowser(browser,url,out){
    assert.equal(proof.phases.active.bullets,0,'follow-on must not insert over a legacy volley');
    assert.equal(proof.ink.raw,0);assert(proof.ink.filtered>0&&proof.ink.wash>0);
    assert.equal(proof.difficulty,'hell');assert(proof.compact);assert.equal(proof.staged.legacyBullets,0);
-   assert(Math.abs(proof.coverage-.70)<1e-5);
-   assert(proof.contrast.some(d=>d>=18),'real rendered interior is darker than neighboring non-hit pixels');
+   assert(Math.abs(proof.maxClip-.70)<1e-5);
+   assert(proof.alpha.paint>0&&proof.alpha.paint/proof.alpha.total<proof.maxClip);
+   if(mode==='escape')assert(proof.alpha.player<80,'safe lane has no dark effect pixels');
    assert(proof.positions.filter(p=>p.phase==='telegraph').every(p=>p.hits===0&&p.stock===0));
    assert.equal(proof.phases.active.hits,mode==='contact'?1:0);
    assert.equal(proof.phases.active.mask,mode==='contact');

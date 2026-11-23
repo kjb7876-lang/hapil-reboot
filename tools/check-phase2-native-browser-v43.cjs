@@ -38,14 +38,17 @@ module.exports=async function phase2Browser(browser,url,out,options={}){
    for(const theme of slot.themes){
     await page.waitForFunction(theme=>{const d=HapilArcadeApp.debugState();return d.signature?.theme===theme&&d.signature?.phase==='telegraph';},theme,{timeout:30000});
     const warning=await page.evaluate(()=>{const d=HapilArcadeApp.debugState();return d.signature;});
-    assert(warning.coverage>=.5-1e-5&&warning.coverage<=.7+1e-5);
-    const warn=await page.waitForFunction(theme=>{
-      const q=HapilArcadeApp.debugState().signature;
-      return q?.theme===theme&&q.phase==='telegraph'&&q.local>=55&&document.getElementById('arcade-canvas').toDataURL('image/jpeg',.88);
-    },theme,{timeout:9000});
-    const warningBytes=Buffer.from((await warn.jsonValue()).slice('data:image/jpeg;base64,'.length),'base64');
-    assert(warningBytes.length>4000,'nonblank actual warning');
-    fs.writeFileSync(path.join(out,'phase2-'+(options.mobile?'mobile-':'')+theme+'-warning.jpg'),warningBytes);
+    if(theme==='spatial-slash')assert(warning.coverage>.04&&warning.coverage<.12,'three source-alpha cuts, not the former broad promise');
+    else {
+     assert(warning.maxClip>=.5-1e-5&&warning.maxClip<=.7+1e-5);
+     const warn=await page.waitForFunction(theme=>{
+       const q=HapilArcadeApp.debugState().signature;
+       return q?.theme===theme&&q.phase==='telegraph'&&q.local>=55&&document.getElementById('arcade-canvas').toDataURL('image/jpeg',.88);
+     },theme,{timeout:9000});
+     const warningBytes=Buffer.from((await warn.jsonValue()).slice('data:image/jpeg;base64,'.length),'base64');
+     assert(warningBytes.length>4000,'nonblank actual warning');
+     fs.writeFileSync(path.join(out,'phase2-'+(options.mobile?'mobile-':'')+theme+'-warning.jpg'),warningBytes);
+    }
     // Snapshot exact active canvas from within the same animation frame,
     // after observing a native filtered draw (not a delayed UI screenshot).
     await page.evaluate(theme=>{

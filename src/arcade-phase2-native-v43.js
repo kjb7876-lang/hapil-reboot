@@ -1,7 +1,7 @@
 (function(root,factory){
-  if(typeof module==='object'&&module.exports)module.exports=factory(require('./arcade-phase2-signatures-v43.js'),null,require('./arcade-phase2-extra-v43.js'),require('./arcade-phase2-extra-art-v43.js'),()=>require('./arcade-v43.js'));
-  else root.HapilPhase2Native=factory(root.HapilPhase2Local,root.HapilPhase2Art,root.HapilPhase2Extension,root.HapilPhase2ExtraArt,()=>root.HapilArcade);
-})(typeof globalThis==='undefined'?this:globalThis,function(P,art,bindExtra,extraArt,native){
+  if(typeof module==='object'&&module.exports)module.exports=factory(require('./arcade-phase2-signatures-v43.js'),null,require('./arcade-phase2-extra-v43.js'),require('./arcade-phase2-extra-art-v43.js'),()=>require('./arcade-v43.js'),require('./arcade-phase2-source-ink-v43.js'));
+  else root.HapilPhase2Native=factory(root.HapilPhase2Local,root.HapilPhase2Art,root.HapilPhase2Extension,root.HapilPhase2ExtraArt,()=>root.HapilArcade,root.HapilPhase2Source);
+})(typeof globalThis==='undefined'?this:globalThis,function(P,art,bindExtra,extraArt,native,Source){
   'use strict';
   // Exact scene and native card, not art-source scene labels or a global phase heuristic.
   const slots=Object.freeze({
@@ -38,12 +38,16 @@
     return extra;
   }
   function slotFor(segment){return bySegment.get(segment)||(extension()?.identity(segment)&&extraSlots.find(s=>s.segment===segment))||null;}
-  const encounters=new WeakMap(),overrides=new WeakMap(),finishPaths=new WeakMap(); // not serialized; no save schema change.
+  const encounters=new WeakMap(),overrides=new WeakMap(); // not serialized; no save schema change.
   let stageKey='',assets=new Map();
   function getSpec(theme){
     const v=assets.get(theme);
-    if(!v||!P.atlasSpec(v,theme)||(v.alternateSpec&&!P.atlasSpec(v.alternateSpec,theme)))return null;
+    if(!visualReady(v,theme))return null;
     return v;
+  }
+  function visualReady(v,theme){
+    return !!(Source&&P.atlasSpec(v,theme)&&Source.ready(v.image)&&
+      (!v.alternateSpec||P.atlasSpec(v.alternateSpec,theme)&&Source.ready(v.alternateSpec.image)));
   }
   function preload(stage,scene){
     const key=stage+'|'+scene;
@@ -55,7 +59,7 @@
     function load(d){
       if(!d||!/^media\/(?:phase2-v43|phase2-extra)\/[A-Za-z0-9.-]+\.webp\?v=[a-f0-9]{12}$/.test(d.url))return null;
       const image=new Image();
-      image.decoding='async';image.src=d.url; // actual HTMLImageElement is required by the native Ink wrapper.
+      image.decoding='async';image.addEventListener('load',()=>{void Source?.prepare(image);},{once:true});image.src=d.url; // actual HTMLImageElement is required by the native Ink wrapper.
       const spec={...d,image};
       if(d.alternateSpec){spec.alternateSpec=load(d.alternateSpec);if(!spec.alternateSpec)return null;}
       return spec;
@@ -84,7 +88,7 @@
     let rec=encounters.get(s);
     if(!rec||rec.seg!==s.seg){rec={seg:s.seg,index:0,event:null,settle:0,skipped:[]};encounters.set(s,rec);}
     if(rec.event){
-      const img=rec.event.art,alive=P.atlasSpec(img,rec.event.plan.theme)&&(!img.alternateSpec||P.atlasSpec(img.alternateSpec,rec.event.plan.theme));
+      const img=rec.event.art,alive=visualReady(img,rec.event.plan.theme);
       if(alive&&phase(rec,s)){s.calm=false;return true;}
       rec.index++;rec.event=null;rec.settle=0;return false;
     }
@@ -94,7 +98,7 @@
     // If the clear window doesn't occur, the original card proceeds untouched.
     if(slot.extra?(s.segTick>2||s.n>0||s.mobs?.length||s.floor?.pieces?.length||s.floor?.warns?.length||s.ripples?.length||s.brood||s.bossVolley?.queue?.length):s.segTick<48+rec.index*96)return false;
     const provider=overrides.get(s)||getSpec, spec=provider(theme);
-    if(!P.atlasSpec(spec,theme)||(theme==='falling-vehicles'&&!P.atlasSpec(spec?.alternateSpec,theme)))return false;
+    if(!visualReady(spec,theme)||(theme==='falling-vehicles'&&!spec?.alternateSpec))return false;
     const boss=s.boss;
     if(theme==='flame-cone'&&boss.y>maxRootY(s.difficulty)){
       // Move the actual boss up to a feasible origin before warning. No shape or danger while settling.
@@ -110,77 +114,26 @@
     rec.event=event;rec.settle=0;
     return true;
   }
-  function hit(s){const e=encounters.get(s)?.event;return !!e&&P.hit(e,s);}
+  function eventPainter(e){return e.extension?extension().paint:P.paint;}
+  function hit(s){const e=encounters.get(s)?.event;return !!e&&P.hit(e,s,eventPainter(e));}
   function paint(ctx,s){
     const e=encounters.get(s)?.event;
-    if(!e||!(e.extension?extension().paint(ctx,e,s):P.paint(ctx,e,s)))return false;
-    finish(ctx,e,s);
+    if(!e||!eventPainter(e)(ctx,e,s))return false;
     if(P.paintApproach)P.paintApproach(ctx,e,s);
-    const ph=P.phaseAt(e.plan,s.tick-e.start),key=e.plan.theme;
-    if(ph?.name==='active'&&(key==='gravity'||key==='time-acceleration'))paintSiren(ctx,e,ph);
     return true;
   }
-  function finish(ctx,e,s){
-    const p=e.plan,ph=P.phaseAt(p,s.tick-e.start);
-    if(ph?.name!=='active'||typeof Path2D!=='function')return;
-    const group=P.impactIndex(p,ph),key=group===null?-1:group;
-    let cached=finishPaths.get(p);if(!cached){cached=new Map();finishPaths.set(p,cached);}
-    let q=cached.get(key);
-    if(!q){
-      const rows=group===null?p.rows:p.landings[group],mask=new Path2D(),edge=new Path2D();
-      function rim(y,from,a,b){
-        let x=a;
-        for(let i=0;i<from.length&&x<b;i+=2){
-          if(from[i+1]<=x)continue;if(from[i]>=b)break;
-          if(from[i]>x){edge.moveTo(x,y);edge.lineTo(from[i],y);}
-          x=Math.max(x,from[i+1]);
-        }
-        if(x<b){edge.moveTo(x,y);edge.lineTo(b,y);}
-      }
-      for(let y=0;y<rows.length;y++){
-        const r=rows[y],yy=p.area.y0+y;
-        for(let x=0;x<r.length;x+=2){
-          const a=r[x],b=r[x+1];mask.rect(a,yy,b-a,1);
-          edge.moveTo(a,yy);edge.lineTo(a,yy+1);edge.moveTo(b,yy);edge.lineTo(b,yy+1);
-          rim(yy,rows[y-1]||[],a,b);rim(yy+1,rows[y+1]||[],a,b);
-        }
-      }q={mask,edge};cached.set(key,q);
-    }
-    const r=p.area,a=ctx.globalAlpha;
-    ctx.save();try{
-      // The glaze and double edge use precisely the damage footprint and the
-      // existing Ink palette. Sparse highlights can't erase the marked area.
-      ctx.clip(q.mask);ctx.globalCompositeOperation='multiply';ctx.globalAlpha=a*.38;ctx.fillStyle='#f2c46d';
-      ctx.fillRect(r.x0,r.y0,r.x1-r.x0,r.y1-r.y0);
-      ctx.globalCompositeOperation='source-over';ctx.globalAlpha=a*.72;ctx.lineWidth=3.2;ctx.strokeStyle='#f2e9d6';ctx.stroke(q.edge);
-      ctx.globalAlpha=a*.93;ctx.lineWidth=1.35;ctx.strokeStyle='#f2c46d';ctx.stroke(q.edge);
-    }finally{ctx.restore();}
-  }
-  function paintSiren(ctx,e,ph){
-    // Event-owned visual shards only: not damage, not legacy projectiles, never forces player movement.
-    const p=e.plan,r=p.area,w=r.x1-r.x0,h=r.y1-r.y0,age=ph.local,t=age/Math.max(1,ph.duration-1);
-    const ease=p.theme==='time-acceleration'?(.45*t+1.10*t*t):t,gravity=p.theme==='gravity';
-    ctx.save();
-    try{
-      ctx.globalAlpha*=.48;
-      ctx.strokeStyle=gravity?'#493a67':'#5c5f81';
-      ctx.lineWidth=1.45;
-      for(let i=0;i<12;i++){
-        const phase=((i*37)%101)/101,cy=(i%2?.68:.36)*h,cx=(i%2?.73:.24)*w;
-        const x=gravity?r.x0+cx+(w*(phase-.5))*Math.pow(1-t,1.65):r.x0+w*(phase+ease*.48)%w;
-        const y=gravity?r.y0+cy+Math.sin(phase*19+t*4)*h*.16*Math.pow(1-t,1.6):r.y0+h*(.18+((i*29)%61)/100+ease*.29)%h;
-        if(!P.contains(p,x,y)||!P.contains(p,x-2,y+3))continue;
-        ctx.beginPath();ctx.moveTo(x-2,y+3);ctx.lineTo(x,y);ctx.stroke();
-      }
-    }finally{ctx.restore();}
+  // Read-only QA/diagnostic projection of the first contact beat; never affects the live clock or collision.
+  function firstContactAt(s,x,y){
+    const e=encounters.get(s)?.event;if(!e)return false;
+    return P.hit(e,{...s,tick:e.start+e.plan.timing[0],player:{x,y}},eventPainter(e));
   }
   function inspect(s){
     const r=encounters.get(s),p=r?.event?.plan,ph=phase(r,s);
     return r?{index:r.index,segment:r.seg,prep:r.settle,skipped:r.skipped.slice(),theme:p?.theme??null,phase:ph?.name??null,local:ph?.local??null,
-      coverage:p?.coverage??null,safeLane:p?.safeLane??null,origin:p?.origin??null,timing:p?.timing??null}:null;
+      coverage:p?.cuts?p.coverage:null,maxClip:p&&!p.cuts?p.coverage:null,cuts:P.cutStatus(p,ph),safeLane:p?.safeLane??null,origin:p?.origin??null,timing:p?.timing??null}:null;
   }
   function fixtureAtlas(s,get){overrides.set(s,get);} // test-only injection, not a browser hook.
-  const api={slots,slotFor,preload,step,hit,paint,inspect};
-  if(typeof module==='object'&&module.exports){api.fixtureAtlas=fixtureAtlas;api.fixtureFinish=finish;}
+  const api={slots,slotFor,preload,step,hit,paint,inspect,firstContactAt};
+  if(typeof module==='object'&&module.exports){api.fixtureAtlas=fixtureAtlas;}
   return Object.freeze(api);
 });
