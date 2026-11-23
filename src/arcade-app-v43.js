@@ -1257,8 +1257,12 @@
     ctx.drawImage(b.actor==='p2_wrath'?wrathCircleSprite:circleSprite,-size/2,-size/2,size,size);ctx.restore();
     var tr=s.wrathTraverse;if(tr&&!tr.done&&tr.seg===s.seg&&b.actor==='p2_wrath'&&Arcade.WRATH_WAYPOINTS){
       var dst=Arcade.WRATH_WAYPOINTS[tr.index];if(dst){var ang=Math.atan2(dst[1]-by,dst[0]-bx),ex=dst[0],ey=dst[1];
-        ctx.save();ctx.strokeStyle='#bf382a';ctx.globalAlpha=tr.active?.4:.82;ctx.lineWidth=1.8;ctx.setLineDash([7,6]);ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(ex,ey);ctx.stroke();
-        ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(ex-10*Math.cos(ang-.55),ey-10*Math.sin(ang-.55));ctx.lineTo(ex,ey);ctx.lineTo(ex-10*Math.cos(ang+.55),ey-10*Math.sin(ang+.55));ctx.stroke();ctx.restore();}
+        // Native Ink keeps this exact warning token vermilion (mono 2). A paper under-stroke
+        // separates the cue from the rune wheel without bypassing Ink in any palette.
+        ctx.save();ctx.globalAlpha=tr.active?.4:.9;ctx.lineJoin='round';
+        function cueStroke(){ctx.strokeStyle='#f2e9d6';ctx.lineWidth=4;ctx.stroke();ctx.strokeStyle='#c2362a';ctx.lineWidth=2;ctx.stroke();}
+        ctx.setLineDash([7,6]);ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(ex,ey);cueStroke();
+        ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(ex-10*Math.cos(ang-.55),ey-10*Math.sin(ang-.55));ctx.lineTo(ex,ey);ctx.lineTo(ex-10*Math.cos(ang+.55),ey-10*Math.sin(ang+.55));cueStroke();ctx.restore();}
     }
     var bp=bossPose;if(bp.actor!==b.actor){bp.actor=b.actor;bp.x=bx;bp.n=s.n;bp.until=-1;bp.side=0;}
     var bdx=bx-bp.x;bp.x=bx;if(Math.abs(bdx)>.3){bp.side=10;bp.dir=bdx<0?-1:1;}else if(bp.side>0)bp.side--;
