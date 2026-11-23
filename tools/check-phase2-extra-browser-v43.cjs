@@ -1,14 +1,15 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
-module.exports=async function extraBrowser(browser,url,out){
+module.exports=async function extraBrowser(browser,url,out,{p1=false}={}){
  const page=await browser.newPage({viewport:{width:390,height:790},isMobile:true,hasTouch:true,deviceScaleFactor:1});
- const data=[],errors=[]; page.on('pageerror',e=>errors.push(e.message));
+ const data=[],errors=[],prefix=p1?'phase2-p1':'phase2-extra';
+ const routes=p1?[[3,'contact'],[6,'escape'],[8,'escape'],[115,'escape'],[119,'escape'],[123,'escape']]:[[227,'escape'],[321,'contact'],[325,'escape'],[489,'escape'],[572,'escape'],[574,'escape']]; page.on('pageerror',e=>errors.push(e.message));
  try{
   await page.addInitScript(()=>{
    const R=CanvasRenderingContext2D.prototype.drawImage,wash=new WeakMap(),t={wash:0,filtered:0,raw:0};
    window.__extraInk=t;
    CanvasRenderingContext2D.prototype.drawImage=function(src,...args){
-    const name=String(src?.src||'').match(/\/phase2-extra\/([^?]+\.webp)(?:\?|$)/)?.[1],main=this.canvas.id==='arcade-canvas';
+    const name=String(src?.src||'').match(/\/phase2-(?:extra|p1)\/([^?]+\.webp)(?:\?|$)/)?.[1],main=this.canvas.id==='arcade-canvas';
     if(name&&!main){wash.set(this.canvas,name);t.wash++;}
     if(name&&main)t.raw++;
     if(main&&wash.has(src)){t.filtered++;t.source=wash.get(src);}
@@ -19,9 +20,9 @@ module.exports=async function extraBrowser(browser,url,out){
   await page.waitForFunction(()=>HapilArcadeApp.getState()&&document.getElementById('arcade-start')&&!document.getElementById('arcade-start').disabled);
   await page.locator('[data-difficulty=hell]').click();
   assert(await page.evaluate(()=>HapilInk.on&&HapilInk.mono===2&&matchMedia('(pointer:coarse)').matches));
-  for(const [seg,mode] of [[227,'escape'],[321,'contact'],[325,'escape'],[489,'escape'],[572,'escape'],[574,'escape']]){
-   const r=await page.evaluate(({seg,mode})=>{
-    const app=HapilArcadeApp,N=HapilPhase2Native,P=HapilPhase2Local,E=HapilPhase2Extension(P,HapilArcade),step=HapilArcade.step;
+  for(const [seg,mode] of routes){
+   const r=await page.evaluate(({seg,mode,p1})=>{
+    const app=HapilArcadeApp,N=HapilPhase2Native,P=HapilPhase2Local,E=p1?HapilPhase2P1(P,HapilArcade):HapilPhase2Extension(P,HapilArcade),step=HapilArcade.step;
     const report=window.__extraReport={seg,mode,positions:[],phases:{}},priorInk=window.__extraInk.filtered;
     const canvas=document.getElementById('arcade-canvas'),ctx=canvas.getContext('2d');
     app.debugState().jumpSegment(seg,true);
@@ -34,13 +35,14 @@ module.exports=async function extraBrowser(browser,url,out){
       const planned=E.plan(seg,s.difficulty,q.safeLane[0]<180?1:-1);
       if(!planned)throw Error('missing exact canonical browser geometry');
       entry=null;
-      for(let y=150;y<611&&!entry;y+=3)for(let x=65;x<300;x+=3)
+      for(let y=p1&&seg===6?70:150;y<611&&!entry;y+=3)for(let x=65;x<300;x+=3)
        if(N.firstContactAt(s,x+.5,y+.5)){entry={x:x+.5,y:y+.5};break;}
       if(!entry)throw Error('no actual visible source contact for '+seg);
       p=planned;
       firstTick=s.tick;firstHits=s.hits;
       report.maxClip=q.maxClip;report.safeLane=q.safeLane;report.difficulty=s.difficulty;report.compact=s.compact;
       report.staged={tick:s.tick,legacyBullets:s.n};report.card=HapilArcade.SEGMENTS[seg].name;
+      report.route={stage:s.stageIndex+1,actor:s.boss.actor,mid:s.boss.mid,formKey:s.formKey??null};
       // Seed only the starting point. Subsequent movement uses the engine's normal input path.
       s.player.x=entry.x;s.player.y=entry.y;s.player.invulnerableUntil=0;report.entry=entry;
       target=(q.safeLane[0]+q.safeLane[1])/2;
@@ -69,21 +71,26 @@ module.exports=async function extraBrowser(browser,url,out){
       const pixels=isolated.getImageData(0,0,off.width,off.height).data,read=(x,y)=>pixels[(Math.floor(y)*off.width+Math.floor(x))*4+3];
       let paint=0,total=0;for(let y=43;y<626;y+=3)for(let x=8;x<352;x+=3){total++;if(read(x,y)>=80)paint++;}
       report.alpha={paint,total,entry:read(entry.x,entry.y),player:read(s.state.player.x,s.state.player.y)};
-      report.ink={...window.__extraInk};report.image=canvas.toDataURL('image/png');
+      report.ink={...window.__extraInk};report.image=p1?canvas.toDataURL('image/jpeg',.9):canvas.toDataURL('image/png');
      }
      if(!report.done)requestAnimationFrame(loop);
     }
     requestAnimationFrame(loop);return true;
-   },{seg,mode});assert(r);
+   },{seg,mode,p1});assert(r);
    await page.waitForFunction(()=>window.__extraReport?.done,undefined,{timeout:30000});
    const {image,warningImage,...proof}=await page.evaluate(()=>window.__extraReport);
    assert(warningImage?.startsWith('data:image/jpeg;base64,'));
-   fs.writeFileSync(path.join(out,'phase2-extra-mobile-'+seg+'-warning.jpg'),Buffer.from(warningImage.slice('data:image/jpeg;base64,'.length),'base64'));
-   fs.writeFileSync(path.join(out,'phase2-extra-mobile-'+seg+'-trace.json'),JSON.stringify(proof,null,2));
+   fs.writeFileSync(path.join(out,prefix+'-mobile-'+seg+'-warning.jpg'),Buffer.from(warningImage.slice('data:image/jpeg;base64,'.length),'base64'));
+   fs.writeFileSync(path.join(out,prefix+'-mobile-'+seg+'-trace.json'),JSON.stringify(proof,null,2));
    assert(Number.isFinite(proof.entry?.x)&&Number.isFinite(proof.entry?.y));
    if(mode==='escape')assert(proof.phases.active.x>=proof.safeLane[0]&&proof.phases.active.x<proof.safeLane[1],'real native movement crossed exact lane');
    assert.equal(proof.phases.active.bullets,0,'follow-on must not insert over a legacy volley');
    assert.equal(proof.ink.raw,0);assert(proof.ink.filtered>0&&proof.ink.wash>0);
+   if(p1){
+    const expected={3:[1,'mb_01',true,null],6:[1,'p1_tree',false,'0|p1_tree|0'],8:[1,'p1_tree',false,'0|p1_tree|0'],
+      115:[10,'lucifer',false,'9|lucifer|0'],119:[10,'lucifer',false,'9|lucifer|1'],123:[10,'lucifer',false,'9|lucifer|2']}[seg];
+    assert.deepEqual([proof.route.stage,proof.route.actor,!!proof.route.mid,proof.route.formKey],expected);
+   }
    assert.equal(proof.difficulty,'hell');assert(proof.compact);assert.equal(proof.staged.legacyBullets,0);
    assert(Math.abs(proof.maxClip-.70)<1e-5);
    assert(proof.alpha.paint>0&&proof.alpha.paint/proof.alpha.total<proof.maxClip);
@@ -93,7 +100,7 @@ module.exports=async function extraBrowser(browser,url,out){
    assert.equal(proof.phases.active.mask,mode==='contact');
    assert(!proof.phases.decay.mask);assert.equal(proof.phases.decay.hits,mode==='contact'?1:0);
    assert(proof.positions.some((p,i)=>mode==='contact'||i>0&&p.x!==proof.positions[i-1].x),'normal movement input did change rendered player position');
-   fs.writeFileSync(path.join(out,'phase2-extra-mobile-'+seg+'-'+mode+'.png'),Buffer.from(image.slice(22),'base64'));data.push(proof);
+   fs.writeFileSync(path.join(out,prefix+'-mobile-'+seg+'-'+mode+(p1?'.jpg':'.png')),Buffer.from(image.slice(p1?'data:image/jpeg;base64,'.length:22),'base64'));data.push(proof);
   }
   assert.deepEqual(errors,[]);
   return {scope:'seeded native Chromium mobile emulation (actual renderer and damage; scripted normal movement inputs, no real touch device claim)',data};
