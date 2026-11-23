@@ -2,8 +2,8 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const assetMap={
   100:['injection-shadow-shutters','injection-shadow-shutters-seg100.webp'],
-  103:['injection-still-glass','injection-still-glass-seg103.webp'],
-  105:['injection-warm-delusion','injection-warm-delusion-seg105.webp']
+  103:['injection-still-glass','injection-still-glass-expanded-seg103.webp'],
+  105:['injection-warm-delusion','injection-warm-delusion-expanded-seg105.webp']
 };
 module.exports=async function stage9Browser(browser,uri,out){
  const notes=[];
@@ -92,7 +92,7 @@ module.exports=async function stage9Browser(browser,uri,out){
         const gaps=[];
         if(rec.draws.length===1){
           const q=rec.draws[0],k=q.k,det=k[0]*k[3]-k[1]*k[2];
-          const lanes=[[76,116]];
+          const lanes=seg===105?[[85,104]]:[[76,116]];
           for(const [lo,hi] of lanes){
             let samples=0,gapHits=0,maxAlpha=0;
             for(let v=1;v<q.sh;v+=3)for(let u=lo+2;u<hi-2;u+=2){
@@ -144,7 +144,7 @@ module.exports=async function stage9Browser(browser,uri,out){
       assert.equal(p.holes,0,prefix+': no contact in a transparent rendered pixel');
       assert.equal(p.gaps.length,1,prefix+': authored internal lanes');
       for(const lane of p.gaps){
-        assert(lane.samples>1000,prefix+': densely sample this projected lane');
+        assert(lane.samples>(seg===105?400:1000),prefix+': densely sample this projected lane');
         assert.equal(lane.gapHits,0,prefix+': authored internal lane never hits');
         assert.equal(lane.maxAlpha,0,prefix+': sampled lane stays visually clear');
       }

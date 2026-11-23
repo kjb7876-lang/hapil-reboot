@@ -59,6 +59,11 @@
     return p1;
   }
   function slotFor(segment){return bySegment.get(segment)||(extension()?.identity(segment)&&extraSlots.find(s=>s.segment===segment))||(p1Bundle()?.identity(segment)&&p1Slots.find(s=>s.segment===segment))||null;}
+  // Only the two expanded main-boss cards can reserve a clean native opening.
+  // Existing downHold reaches 420 ticks; allow recovery travel but never wait indefinitely.
+  const EXPANDED_OPENING_MAX=480;
+  const expandedOpening=slot=>slot.p1&&slot.actor==='p1_staff'&&slot.stage===9&&slot.scene==='09-1'&&
+    (slot.segment===103||slot.segment===105);
   const encounters=new WeakMap(),overrides=new WeakMap(); // not serialized; no save schema change.
   let stageKey='',assets=new Map();
   function getSpec(theme){
@@ -102,6 +107,7 @@
   function phase(rec,s){
     return rec?.event&&P.phaseAt(rec.event.plan,s.tick-rec.event.start);
   }
+  function stopOpening(rec,s,fallback=false){if(rec.openingStart!==undefined&&rec.openingEnd===undefined)rec.openingEnd=s.tick;if(fallback)rec.openingFallback=true;}
   function step(s,c){
     if(!P)return false;
     const slot=exact(s,c);
@@ -114,12 +120,26 @@
       rec.index++;rec.event=null;rec.settle=0;return false;
     }
     const theme=slot.themes[rec.index];
-    if(!theme||c.legacyBusy)return false;
-    // Later cards insert only before legacy fire starts, with no residual body, floor or bullet hazards.
-    // If the clear window doesn't occur, the original card proceeds untouched.
-    if(slot.extra||slot.p1?((slot.p1?!c.preFire:s.segTick>2)||s.n>0||s.mobs?.length||s.floor?.pieces?.length||s.floor?.warns?.length||s.ripples?.length||s.brood||s.bossVolley?.queue?.length):s.segTick<48+rec.index*96)return false;
+    if(!theme)return false;
+    const residual=s.n>0||s.mobs?.length||s.floor?.pieces?.length||s.floor?.warns?.length||s.ripples?.length||s.brood||s.bossVolley?.queue?.length;
+    // Other authored cards keep their exact original early admission rules.
+    if(!expandedOpening(slot)&&(c.legacyBusy||
+      (slot.extra||slot.p1?((slot.p1?!c.preFire:s.segTick>2)||residual):s.segTick<48+rec.index*96)))return false;
     const provider=overrides.get(s)||getSpec, spec=provider(theme);
-    if(!visualReady(spec,theme)||(theme==='falling-vehicles'&&!spec?.alternateSpec))return false;
+    if(!visualReady(spec,theme)||(theme==='falling-vehicles'&&!spec?.alternateSpec)){
+      if(rec.openingStart!==undefined)stopOpening(rec,s,true); // no wait for a lost/late source
+      return false;
+    }
+    if(expandedOpening(slot)){
+      if(rec.openingFallback||!c.preFire||s.sp?.cur){stopOpening(rec,s,true);return false;}
+      if(c.legacyBusy||residual||s.calm||s.figPend?.seg===s.seg||s.formHold>s.tick){
+        if(rec.openingStart===undefined)rec.openingStart=s.tick;
+        if(s.tick-rec.openingStart>=EXPANDED_OPENING_MAX){stopOpening(rec,s,true);return false;}
+        // This is a no-contact/no-art wait. Existing hazards still move, hit, and expire.
+        rec.openingTick=s.tick;
+        return false;
+      }
+    }
     const boss=s.boss;
     if(theme==='flame-cone'&&boss.y>maxRootY(s.difficulty)){
       // Move the actual boss up to a feasible origin before warning. No shape or danger while settling.
@@ -127,6 +147,7 @@
       boss.y=Math.max(maxRootY(s.difficulty),boss.y-2);
       return true;
     }
+    if(expandedOpening(slot))stopOpening(rec,s);
     if(!slot.extra&&!slot.p1)s.calm=false;
     const args={stage:slot.stage,scene:slot.scene,actor:c.actor,cardOrdinal:c.ordinal,mid:slot.mid,themeIndex:rec.index,renderSpec:spec};
     const side=s.player.x<=180?1:-1;
@@ -135,6 +156,8 @@
     rec.event=event;rec.settle=0;
     return true;
   }
+  function holding(s){const r=encounters.get(s);return !!r&&r.seg===s.seg&&r.openingTick===s.tick&&!r.openingFallback&&!r.event&&
+    s.stage==='card'&&!s.cardDown&&!s.cardEnding&&s.boss?.present&&s.boss.hp>0;}
   function eventPainter(e){return e.p1Native?p1Bundle().paint:e.extension?extension().paint:P.paint;}
   function hit(s){const e=encounters.get(s)?.event;return !!e&&((e.stage2Source||e.stage3Source||e.stage4Source||e.stage5Source||e.stage6Source||e.stage7Source||e.stage8Source||e.stage9Source)?p1Bundle().hit(e,s):P.hit(e,s,eventPainter(e)));}
   function paint(ctx,s){
@@ -151,10 +174,11 @@
   function inspect(s){
     const r=encounters.get(s),p=r?.event?.plan,ph=phase(r,s);
     return r?{index:r.index,segment:r.seg,prep:r.settle,skipped:r.skipped.slice(),theme:p?.theme??null,phase:ph?.name??null,local:ph?.local??null,
+      ...(r.openingStart===undefined?{}:{opening:{waiting:holding(s),elapsed:(r.openingEnd??s.tick)-r.openingStart,fallback:!!r.openingFallback}}),
       coverage:p?.cuts?p.coverage:null,maxClip:p&&!p.cuts?p.coverage:null,cuts:P.cutStatus(p,ph),safeLane:p?.safeLane??null,origin:p?.origin??null,timing:p?.timing??null}:null;
   }
   function fixtureAtlas(s,get){overrides.set(s,get);} // test-only injection, not a browser hook.
-  const api={slots,slotFor,preload,step,hit,paint,inspect,firstContactAt};
+  const api={slots,slotFor,preload,step,holding,hit,paint,inspect,firstContactAt};
   if(typeof module==='object'&&module.exports){api.fixtureAtlas=fixtureAtlas;}
   return Object.freeze(api);
 });

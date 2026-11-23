@@ -771,9 +771,9 @@
     ],
     "theme": "injection-still-glass",
     "artId": "stage9-still-glass",
-    "sha256": "ce6f71482f210dd118e26582e0400dfbe1fb8131da4da608feebd10935212ec4",
-    "path": "media/phase2-p1/injection-still-glass-seg103.webp",
-    "url": "media/phase2-p1/injection-still-glass-seg103.webp?v=ce6f71482f21",
+    "sha256": "0ae52c21cd5967d773ca9da693144a09166e60eb25c506c8e85921a691690d5e",
+    "path": "media/phase2-p1/injection-still-glass-expanded-seg103.webp",
+    "url": "media/phase2-p1/injection-still-glass-expanded-seg103.webp?v=0ae52c21cd59",
     "framesByPhase": {
       "telegraph": [
         0,
@@ -807,9 +807,9 @@
     ],
     "theme": "injection-warm-delusion",
     "artId": "stage9-warm-delusion",
-    "sha256": "4eba642b49b8e12ba90c75d7e1c619ef9d85f861823c736caefe0de2a72e0294",
-    "path": "media/phase2-p1/injection-warm-delusion-seg105.webp",
-    "url": "media/phase2-p1/injection-warm-delusion-seg105.webp?v=4eba642b49b8",
+    "sha256": "8bd8261e139f7b92b68522a82bc11ab701bd22c3a5159b2db7f80ad45f1a9890",
+    "path": "media/phase2-p1/injection-warm-delusion-expanded-seg105.webp",
+    "url": "media/phase2-p1/injection-warm-delusion-expanded-seg105.webp?v=8bd8261e139f",
     "framesByPhase": {
       "telegraph": [
         0,

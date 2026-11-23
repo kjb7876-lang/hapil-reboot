@@ -175,9 +175,11 @@
  function stage9Plan(q,s,side){
   if(!Object.hasOwn(B.target,s.difficulty))return null;
   const clock=s.difficulty==='hell'?[65,16,25]:s.difficulty==='normal'?[76,19,28]:[88,22,32];
-  const mid=q.seg===100,w=mid?292:310,h=mid?380:q.seg===103?415:426;
-  const x=fit(Number(s.boss?.x)||180,mid?162:174,mid?198:186)-w/2;
-  const y=mid?fit((Number(s.boss?.y)||108)-44,61,119):q.seg===103?84:89;
+  // Exact expanded p1_staff cards only. The authored source still owns all contact.
+  const own=q.seg===103||q.seg===105;
+  const w=own?360:292,h=own?640:380;
+  const x=own?0:fit(Number(s.boss?.x)||180,162,198)-w/2;
+  const y=own?0:fit((Number(s.boss?.y)||108)-44,61,119);
   return Object.freeze({ok:true,theme:q.theme,difficulty:s.difficulty,stage9Source:true,area,
    side:side>=0?1:-1,timing:Object.freeze(clock),draw:Object.freeze([x,y,w,h]),seg:q.seg});
  }

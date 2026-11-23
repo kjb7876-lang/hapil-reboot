@@ -4,7 +4,7 @@ const {createCanvas,loadImage,Image}=require('@napi-rs/canvas');
 const A=require('../src/arcade-v43.js'),N=require('../src/arcade-phase2-native-v43.js'),Source=require('../src/arcade-phase2-source-ink-v43.js');
 const defs=require('../src/arcade-phase2-p1-art-v43.js');
 const cards=[100,103,105],themes=['injection-shadow-shutters','injection-still-glass','injection-warm-delusion'];
-const gaps=Object.fromEntries(cards.map(i=>[i,[[76,116]]]));
+const gaps=Object.fromEntries(cards.map(i=>[i,i===105?[[85,104]]:[[76,116]]]));
 const base=createCanvas(1,1).getContext('2d'),win={location:{search:'?mono=2'},CanvasRenderingContext2D:base.constructor,HTMLImageElement:Image,CanvasGradient:base.createLinearGradient(0,0,1,1).constructor,document:{documentElement:{classList:{add(){}}},createElement:()=>createCanvas(1,1)}};
 win.window=win;vm.runInNewContext(fs.readFileSync('src/ink-v43.js','utf8'),win);globalThis.HapilInk=win.HapilInk;
 function until(s,p,max=660){for(let j=0;j<max&&!p();j++)A.step(s,{});assert(p(),JSON.stringify({tick:s.tick,stage:s.stage,seg:s.seg,segTick:s.segTick,n:s.n,view:N.inspect(s)}));}
@@ -92,7 +92,7 @@ test('actual deterministic step + native Ink matrix: real hits, transparent gaps
     s.player.x=x+(dpr===2?.75:.5);s.player.y=y+(dpr===2?.75:.5);
     if(N.hit(s)){assert(p>=100,`transparent or weak hit ${seg}/${diff}/${side}/${p}`);shots++;coords.push([x+.5,y+.5]);minHit=Math.min(minHit,p);}
    }
-   assert(pixels>150&&pixels<30000&&maxAlpha>=60);
+   assert(pixels>150&&pixels<(seg===100?30000:Math.floor(.58*344*586))&&maxAlpha>=60);
    if(phase==='active') assert(shots>40,`no real hits ${seg}/${diff}/${side}`);
    else assert.equal(shots,0);
    if(phase==='active')for(let y=40;y<626;y+=5){s.player.x=side>0?9:350;s.player.y=y+.5;assert(!N.hit(s));}
@@ -214,4 +214,165 @@ test('native Stage9 wave start through 97–99 reaches mid100; ready lane clean 
    for(let i=0;i<120;i++){A.step(s,{});assert(!N.inspect(s)?.phase);}
   }
  }
+});
+
+test('expanded Mask-staff cards retain two exact paced HUD phases across every tier',()=>{
+ for(const tier of ['gentle','normal','hell']){
+  const s=A.createRun({stage:8,entranceAll:true,pacing:true,difficulty:tier});
+  const p=A.livePhaseOf(s,103),q=A.livePhaseOf(s,105);
+  assert.equal(p.no,2);assert.equal(q.no,tier==='hell'?4:3);
+  assert.equal(A.SEGMENTS[103].actor,'p1_staff');assert.equal(A.SEGMENTS[105].actor,'p1_staff');
+  assert.equal(A.SEGMENTS[103].formNo,A.SEGMENTS[105].formNo);
+ }
+});
+
+test('both mirrored bent 105 corridors can be followed vulnerable with legal motion',()=>{
+ const art=atlases.get(themes[2]),d=createCanvas(art.image.width,art.image.height).getContext('2d');
+ HapilInk.raw(1);try{d.drawImage(art.image,0,0);}finally{HapilInk.raw(-1);}
+ const data=d.getImageData(0,0,art.image.width,art.image.height).data;
+ const profile=[];
+ for(let y=0;y<192;y++){
+  let width=0,mid=96,start=-1;
+  for(let x=36;x<=156;x++){
+   const transparent=x<156&&Array.from({length:24},(_,i)=>i).every(i=>!data[
+    (((i/6|0)*192+y)*art.image.width+(i%6)*192+x)*4+3]);
+   if(transparent&&start<0)start=x;
+   if(!transparent&&start>=0){if(x-start>width){width=x-start;mid=(start+x)/2;}start=-1;}
+  }
+  profile.push({width,mid});
+ }
+ assert(Math.min(...profile.map(q=>q.width))*360/192>=65);
+ assert(Math.max(...profile.map(q=>q.mid))-Math.min(...profile.map(q=>q.mid))>25,'true bent lane, not two straight rails');
+ for(const difficulty of ['gentle','normal','hell'])for(const side of [1,-1]){
+  const s=run(105,difficulty,side);N.fixtureAtlas(s,t=>atlases.get(t));
+  until(s,()=>N.inspect(s)?.phase==='telegraph');
+  const rec=Source.createRecorder();assert(N.paint(rec,s));const q=rec.draws[0],target=y=>q.e+profile[Math.max(0,Math.min(191,Math.floor((y-q.f)*q.k[3])))].mid/q.k[0];
+  const hp=s.player.hp;assert.equal(s.player.invulnerableUntil,0);
+  for(let i=0;i<48&&Math.abs(target(s.player.y)-s.player.x)>.1;i++)A.step(s,{dx:Math.max(-4.2,Math.min(4.2,target(s.player.y)-s.player.x))});
+  assert.equal(N.inspect(s).phase,'telegraph');assert(Math.abs(target(s.player.y)-s.player.x)<.15);
+  let minX=s.player.x,maxX=s.player.x,minY=s.player.y;
+  while(N.inspect(s)?.phase){
+   const dy=-3.8,dx=target(s.player.y+dy)-s.player.x,k=Math.min(1,4.2/Math.hypot(dx,dy));
+   A.step(s,{dx:dx*k,dy:dy*k});
+   minX=Math.min(minX,s.player.x);maxX=Math.max(maxX,s.player.x);minY=Math.min(minY,s.player.y);
+   assert.equal(s.player.hp,hp);assert.equal(s.hits,0);assert.equal(s.bombsUsed,0);assert.equal(s.autoBombs,0);
+  }
+  assert(maxX-minX>25&&minY<390,`vulnerable route follows real bend ${difficulty}/${side}: ${minX}–${maxX}, y=${minY}`);
+ }
+});
+
+test('one seeded paced fight reaches both expanded cards on gentle and normal without health overrides',()=>{
+ for(const [diff,y] of [['gentle',540],['normal',580],['normal',540]]){
+  const s=A.createRun({segment:102,entranceAll:true,pacing:true,rhythm:true,difficulty:diff,compact:true,seed:5815,distort:false,hero:'seoha',growth:true});
+  N.fixtureAtlas(s,t=>atlases.get(t));s.bombs=0;const seen=new Set();let held=0;for(let i=0;i<15500&&s.stage!=='lost';i++){
+   if(N.inspect(s)?.phase==='active')seen.add(s.seg);
+   if(s.seg===105&&N.holding(s))held++;
+   if(seen.has(103)&&seen.has(105))break;
+   let x=180,targetY=y,threats=[];
+   if(s.stage==='card'&&!N.inspect(s)?.phase){
+    for(let z=0;z<s.n;z++){const bx=s.bx[z],by=s.by[z],vx=Math.cos(s.ba[z])*s.bs[z]/60,vy=Math.sin(s.ba[z])*s.bs[z]/60;
+     if(Math.abs(by-s.player.y)<50&&Math.abs(bx-s.player.x)<60)threats.push([bx,by,vx,vy]);}
+    const cs=[s.player.x-4.2,s.player.x,s.player.x+4.2].filter(w=>w>40&&w<320);let best=-1e10;
+    for(const c of cs){const score=-(Math.abs(c-180)*.18)+Math.min(55,...threats.map(z=>Math.min(...[0,3,6,10].map(t=>Math.hypot(c-z[0]-z[2]*t,s.player.y-z[1]-z[3]*t)))));if(score>best){x=c;best=score;}}
+   }else if(s.seg===105){targetY=520;}
+   const dx=Math.max(-4.2,Math.min(4.2,x-s.player.x)),dy=Math.max(-2,Math.min(2,targetY-s.player.y)),k=Math.min(1,4.2/Math.hypot(dx,dy));
+   const own=N.inspect(s),before=s.hits;
+   A.step(s,{dx:dx*k,dy:dy*k});s.events.length=0;
+   if(own?.phase==='active'&&N.inspect(s)?.phase==='active')assert.equal(s.hits,before,'center stays safe at the expanded occurrence');
+  }
+  assert.deepEqual([...seen],[103,105]);
+  assert.equal(s.boss.actor,'p1_staff');assert.equal(s.stageIndex,8);assert(s.player.hp>0);
+  assert.equal(s.bombsUsed,s.autoBombs,'no manual or injected stock use; native ordinary-hit refills still apply');
+  if(diff==='normal'&&y===540)assert(held>=335&&held<=480,'now reaches second occurrence after real inherited recovery');
+ }
+});
+
+function seededOpening(seg=105,difficulty='hell'){
+ const s=run(seg,difficulty);
+ s.stage='card';s.segTick=0;s.stageTick=0;s.boss.present=true;s.boss.leaving=false;
+ const card=A.SEGMENTS[seg];s.boss.actor=card.actor;s.boss.x=180;s.boss.y=156;s.boss.hp=s.boss.maxHp=A.cardHp(s,card);
+ s.formKey=card.stage+'|'+card.actor+'|'+(card.formNo||0);s.bombs=0;
+ return s;
+}
+function oldBeam(x=90,duration=12){
+ return {x,y:0,angle:Math.PI/2,width:20,warn:0,active:duration,age:0,spin:0,full:true,solid:true,grazed:false};
+}
+
+test('ready reservation never deletes or immunizes inherited laser; starts after its honest decay',()=>{
+ const s=seededOpening();N.fixtureAtlas(s,t=>atlases.get(t));const beam=oldBeam(),hp=s.player.hp;
+ s.lasers.push(beam);assert.equal(s.player.invulnerableUntil,0);
+ A.step(s,{});
+ assert(N.holding(s));assert.equal(s.segTick,0);assert.equal(beam.age,1);assert.equal(s.lasers[0],beam);
+ assert.equal(s.hits,1);assert.equal(s.player.hp,hp-1);assert(!N.hit(s));
+ const c=createCanvas(360,640).getContext('2d');assert(!N.paint(c,s));
+ for(let i=0;i<100&&N.holding(s);i++){
+  assert(s.lasers.includes(beam)||beam.age>beam.active);assert(!N.hit(s));
+  A.step(s,{});
+ }
+ assert(beam.age>beam.active);assert.equal(s.lasers.length,0);assert.equal(N.inspect(s)?.phase,'telegraph');
+ assert.equal(s.segTick,0);assert.equal(s.boss.maxHp,A.cardHp(s,A.SEGMENTS[105]));
+});
+
+test('bounded reservation preserves occupied board and falls back permanently; no starting on late or lost asset',()=>{
+ const occupied=seededOpening(),beam=oldBeam(40,600);occupied.lasers.push(beam);N.fixtureAtlas(occupied,t=>atlases.get(t));
+ for(let i=0;i<480;i++){A.step(occupied,{});assert(N.holding(occupied));assert.equal(occupied.segTick,0);assert.equal(occupied.lasers[0],beam);assert(!N.hit(occupied));}
+ A.step(occupied,{});assert(!N.holding(occupied));assert.equal(occupied.segTick,1);assert(occupied.lasers.includes(beam));
+ assert.deepEqual(N.inspect(occupied)?.opening,{waiting:false,elapsed:480,fallback:true});
+ for(let i=0;i<160;i++){A.step(occupied,{});assert(!N.inspect(occupied)?.theme);}
+ assert(occupied.segTick>100);
+ const missing=seededOpening();let ready=false;N.fixtureAtlas(missing,t=>ready?atlases.get(t):null);missing.lasers.push(oldBeam(40,70));
+ for(let i=0;i<100;i++){A.step(missing,{});assert(!N.holding(missing));}assert(missing.segTick>60);
+ ready=true;for(let i=0;i<40;i++){A.step(missing,{});assert(!N.inspect(missing)?.theme);}
+ const lost=seededOpening();ready=true;N.fixtureAtlas(lost,t=>ready?atlases.get(t):null);lost.lasers.push(oldBeam(40,12));A.step(lost,{});assert(N.holding(lost));
+ ready=false;A.step(lost,{});assert(!N.holding(lost));assert.equal(lost.segTick,1);ready=true;
+ for(let i=0;i<70;i++){A.step(lost,{});assert(!N.inspect(lost)?.theme);}
+});
+
+test('card down or phase exit cancels reservation without altering ordinary life or HP rules',()=>{
+ const s=seededOpening();N.fixtureAtlas(s,t=>atlases.get(t));s.lasers.push(oldBeam(40,30));A.step(s,{});assert(N.holding(s));
+ const normal=seededOpening();normal.lasers.push(oldBeam(40,30));A.step(normal,{});
+ s.boss.hp=0;normal.boss.hp=0;A.step(s,{});A.step(normal,{});
+ assert(!N.holding(s));assert.equal(s.boss.hp,normal.boss.hp);assert.equal(s.player.hp,normal.player.hp);assert(s.cardDown>0);
+ assert(!N.hit(s));assert(!N.paint(createCanvas(360,640).getContext('2d'),s));
+ s.stage='break';s.seg=106;A.step(s,{});assert(!N.holding(s));assert.equal(N.inspect(s),null);
+});
+
+test('actual focused Hell transition from legacy card104 reaches expanded card105',()=>{
+
+ const diff='hell',y=570,hero='seoha',seed=5815,goal=90;
+  const s=A.createRun({segment:104,entranceAll:true,pacing:true,rhythm:true,difficulty:diff,compact:true,seed,distort:false,hero,growth:true,ability:hero==='seoha'?3:7});
+  N.fixtureAtlas(s,t=>atlases.get(t));const seen=new Set();for(let i=0;i<14500&&s.stage!=='lost';i++){
+   if(N.inspect(s)?.phase==='active')seen.add(s.seg);
+   if(seen.has(105))break;
+   const p=s.player,phase=N.inspect(s)?.phase;let dx=0,dy=0,bomb=false,near=99;
+   if(s.stage==='card'&&!phase){
+    const threats=[];
+    for(let z=0;z<s.n;z++){const bx=s.bx[z],by=s.by[z],vx=Math.cos(s.ba[z])*s.bs[z]/60,vy=Math.sin(s.ba[z])*s.bs[z]/60;
+     if(!s.bexit[z]&&Math.abs(by-p.y)<65&&Math.abs(bx-p.x)<85)threats.push([bx,by,vx,vy]);}
+    let best=-1e10;
+    for(const ux of [-1,0,1])for(const uy of [-1,0,1]){
+     const mag=Math.hypot(ux,uy)||1,m=4.2/mag,tx=p.x+ux*m,ty=p.y+uy*m;if(tx<35||tx>325||ty<165||ty>614)continue;
+     let d=42;for(const b of threats){for(const t of [0,2,4,7,10])d=Math.min(d,Math.hypot(tx-b[0]-b[2]*t,ty-b[1]-b[3]*t));}
+     const line=(x,y,x0,y0,x1,y1)=>{const dx=x1-x0,dy=y1-y0,t=Math.max(0,Math.min(1,((x-x0)*dx+(y-y0)*dy)/(dx*dx+dy*dy||1)));return Math.hypot(x-x0-t*dx,y-y0-t*dy);};
+     let rays=35;
+     for(const l of s.lasers)for(const k of [1,6,12,20]){
+      if(l.age+k<l.warn-12||l.age+k>=l.warn+l.active)continue;
+      const a=l.angle+(l.spin||0)*k/60,co=Math.cos(a),si=Math.sin(a),x=l.follow?s.boss.x:l.x,y=l.follow?s.boss.y:l.y;
+      const dist=line(tx,ty,x-(l.full?1000:0)*co,y-(l.full?1000:0)*si,x+1000*co,y+1000*si);
+      rays=Math.min(rays,dist-l.width*(l.solid?.5:.31)-p.r);
+     }
+     for(const f of s.figures){
+      if(f.age+20<f.warn||f.age>=f.warn+(f.active||0))continue;
+      const v=A.figureSegments(f);for(const l of v)if(l.length>=4)rays=Math.min(rays,line(tx,ty,l[0],l[1],l[2],l[3])-f.width*.31-p.r);
+     }
+     near=Math.min(near,rays);
+     const score=Math.min(32,d)*2+Math.min(24,rays)*2-(Math.abs(tx-goal)*.23)-(Math.abs(ty-y)*.20);
+     if(score>best){best=score;dx=ux*m;dy=uy*m;near=Math.min(d,rays);}
+    }
+    bomb=near<9&&s.bombs>0&&s.tick>=s.player.invulnerableUntil;
+   }else{dx=Math.max(-4.2,Math.min(4.2,(phase?180:goal)-p.x));dy=Math.max(-2,Math.min(2,y-p.y));const k=Math.min(1,4.2/Math.hypot(dx,dy));dx*=k;dy*=k;}
+   A.step(s,{dx,dy,bomb,focus:false});s.events.length=0;
+  }
+  assert.deepEqual([...seen],[105]);assert.equal(s.seg,105);assert.equal(s.boss.actor,'p1_staff');
+  assert.equal(A.livePhaseOf(s,105).no,4);assert(s.player.hp>0);
 });
