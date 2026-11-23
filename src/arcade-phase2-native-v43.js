@@ -136,7 +136,7 @@
     return true;
   }
   function eventPainter(e){return e.p1Native?p1Bundle().paint:e.extension?extension().paint:P.paint;}
-  function hit(s){const e=encounters.get(s)?.event;return !!e&&((e.stage2Source||e.stage3Source||e.stage4Source||e.stage5Source||e.stage6Source||e.stage7Source||e.stage8Source)?p1Bundle().hit(e,s):P.hit(e,s,eventPainter(e)));}
+  function hit(s){const e=encounters.get(s)?.event;return !!e&&((e.stage2Source||e.stage3Source||e.stage4Source||e.stage5Source||e.stage6Source||e.stage7Source||e.stage8Source||e.stage9Source)?p1Bundle().hit(e,s):P.hit(e,s,eventPainter(e)));}
   function paint(ctx,s){
     const e=encounters.get(s)?.event;
     if(!e||!eventPainter(e)(ctx,e,s))return false;
@@ -146,7 +146,7 @@
   // Read-only QA/diagnostic projection of the first contact beat; never affects the live clock or collision.
   function firstContactAt(s,x,y){
     const e=encounters.get(s)?.event;if(!e)return false;
-    const probe={...s,tick:e.start+e.plan.timing[0],player:{x,y}};return (e.stage2Source||e.stage3Source||e.stage4Source||e.stage5Source||e.stage6Source||e.stage7Source||e.stage8Source)?p1Bundle().hit(e,probe):P.hit(e,probe,eventPainter(e));
+    const probe={...s,tick:e.start+e.plan.timing[0],player:{x,y}};return (e.stage2Source||e.stage3Source||e.stage4Source||e.stage5Source||e.stage6Source||e.stage7Source||e.stage8Source||e.stage9Source)?p1Bundle().hit(e,probe):P.hit(e,probe,eventPainter(e));
   }
   function inspect(s){
     const r=encounters.get(s),p=r?.event?.plan,ph=phase(r,s);

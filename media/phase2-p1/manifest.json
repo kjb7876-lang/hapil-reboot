@@ -722,5 +722,113 @@
         17
       ]
     ]
+  },
+  "injection-shadow-shutters": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "anchor": [
+      96,
+      96
+    ],
+    "theme": "injection-shadow-shutters",
+    "artId": "stage9-shadow-shutters",
+    "sha256": "6a646654e9755f2b05b3ff377e1f00180b3110f8f8948ae3e4c0065bf51fe660",
+    "path": "media/phase2-p1/injection-shadow-shutters-seg100.webp",
+    "url": "media/phase2-p1/injection-shadow-shutters-seg100.webp?v=6a646654e975",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        11
+      ],
+      "active": [
+        12,
+        16
+      ],
+      "decay": [
+        17,
+        23
+      ]
+    },
+    "contactWindows": [
+      [
+        12,
+        16
+      ]
+    ]
+  },
+  "injection-still-glass": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "anchor": [
+      96,
+      96
+    ],
+    "theme": "injection-still-glass",
+    "artId": "stage9-still-glass",
+    "sha256": "ce6f71482f210dd118e26582e0400dfbe1fb8131da4da608feebd10935212ec4",
+    "path": "media/phase2-p1/injection-still-glass-seg103.webp",
+    "url": "media/phase2-p1/injection-still-glass-seg103.webp?v=ce6f71482f21",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        11
+      ],
+      "active": [
+        12,
+        17
+      ],
+      "decay": [
+        18,
+        23
+      ]
+    },
+    "contactWindows": [
+      [
+        12,
+        17
+      ]
+    ]
+  },
+  "injection-warm-delusion": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "anchor": [
+      96,
+      96
+    ],
+    "theme": "injection-warm-delusion",
+    "artId": "stage9-warm-delusion",
+    "sha256": "4eba642b49b8e12ba90c75d7e1c619ef9d85f861823c736caefe0de2a72e0294",
+    "path": "media/phase2-p1/injection-warm-delusion-seg105.webp",
+    "url": "media/phase2-p1/injection-warm-delusion-seg105.webp?v=4eba642b49b8",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        12
+      ],
+      "active": [
+        13,
+        17
+      ],
+      "decay": [
+        18,
+        23
+      ]
+    },
+    "contactWindows": [
+      [
+        13,
+        17
+      ]
+    ]
   }
 }
