@@ -4,6 +4,7 @@
 })(typeof globalThis!=='undefined'?globalThis:this,function bind(B,A,{assets={},reservedHashes=[],offlineOnly=false,nativeOnly=false,source=null}={}){
  if(!B?.atlasSpec||!B?.impactIndex||!A?.SEGMENTS||!A?.STAGES)throw Error('exact base and native routes required');
  const rows=[
+  {seg:74,actor:'mb_07',role:'mid',stage:7,scene:'07',plain:'superformula',card:'',form:undefined,formNo:undefined,theme:'fall-mage-charred-columns',artId:'stage7-charred-columns'},
   {seg:62,actor:'mb_06',role:'mid',stage:6,scene:'06',plain:'sunflower',card:'',form:undefined,formNo:undefined,theme:'pillar-messenger-scorched-quills',artId:'stage6-scorched-quills'},
   {seg:65,actor:'p1_gate',role:'main',stage:6,scene:'06',card:'기둥에 남은 불씨',form:undefined,formNo:0,theme:'pillar-gate-bank-of-embers',artId:'stage6-bank-of-embers'},
   {seg:67,actor:'p1_gate',role:'main',stage:6,scene:'06',card:'채찍 자국',form:undefined,formNo:0,theme:'pillar-gate-whip-gouges',artId:'stage6-whip-gouges'},
@@ -56,7 +57,7 @@
   }
  }
  function plan(seg,tier,side=1){
-  const q=identity(seg);if(!q||!Object.hasOwn(B.target,tier))return null;if(q.stage===2)return stage2Plan(q,{difficulty:tier},side);if(q.stage===3)return stage3Plan(q,{difficulty:tier},side);if(q.stage===4)return stage4Plan(q,{difficulty:tier},side);if(q.stage===5)return stage5Plan(q,{difficulty:tier},side);if(q.stage===6)return stage6Plan(q,{difficulty:tier},side);
+  const q=identity(seg);if(!q||!Object.hasOwn(B.target,tier))return null;if(q.stage===2)return stage2Plan(q,{difficulty:tier},side);if(q.stage===3)return stage3Plan(q,{difficulty:tier},side);if(q.stage===4)return stage4Plan(q,{difficulty:tier},side);if(q.stage===5)return stage5Plan(q,{difficulty:tier},side);if(q.stage===6)return stage6Plan(q,{difficulty:tier},side);if(q.stage===7)return stage7Plan(q,{difficulty:tier},side);
   const easy=tier==='gentle'||tier==='easy', sequential=q.theme==='sequential-rootlets';
   side=side>=0?1:-1;
   const lane=q.stage===1&&easy?64:q.stage===1&&tier==='normal'?49:42;
@@ -92,14 +93,14 @@
       (q.role!=='mid'&&s.formKey!==q.stage-1+'|'+q.actor+'|'+(q.formNo||0))))return null;
   if(priorEvent&&priorEvent.seg===s.seg&&B.phaseAt(priorEvent.plan,s.tick-priorEvent.start))return null;
   const a=verified[q.artId];if(!art||art.artId!==q.artId||art.path!==a.path||art.sha256!==a.sha256||art.frameCount<20||!B.atlasSpec(art,q.theme))return null;
-  const p=q.stage===2?stage2Plan(q,s,side):q.stage===3?stage3Plan(q,s,side):q.stage===4?stage4Plan(q,s,side):q.stage===5?stage5Plan(q,s,side):q.stage===6?stage6Plan(q,s,side):plan(q.seg,s.difficulty,side);if(!p)return null;
+  const p=q.stage===2?stage2Plan(q,s,side):q.stage===3?stage3Plan(q,s,side):q.stage===4?stage4Plan(q,s,side):q.stage===5?stage5Plan(q,s,side):q.stage===6?stage6Plan(q,s,side):q.stage===7?stage7Plan(q,s,side):plan(q.seg,s.difficulty,side);if(!p)return null;
   if(q.stage===2&&(!source?.ready(art.image)||art.frameCount!==24||art.columns!==6||!art.framesByPhase||
       (q.seg===13&&(!Array.isArray(art.contact)||art.contact.length!==24||art.contact[17]?.length!==350))))return null;
   if(q.stage===3&&(!source?.ready(art.image)||art.frameCount!==24||art.columns!==6||!art.framesByPhase||
       (q.seg===29&&(!Array.isArray(art.contact)||art.contact.length!==24||art.contact[16]?.length!==271))))return null;
-  if((q.stage===4||q.stage===5||q.stage===6)&&(!source?.ready(art.image)||art.frameCount!==24||art.columns!==6||!castleRuns(art,a)))return null;
+  if((q.stage===4||q.stage===5||q.stage===6||q.stage===7)&&(!source?.ready(art.image)||art.frameCount!==24||art.columns!==6||!castleRuns(art,a)))return null;
   const ar=Object.freeze({...art,cells:art.cells&&Object.freeze(art.cells.map(c=>Object.freeze([...c]))),framesByPhase:art.framesByPhase&&Object.freeze(Object.fromEntries(Object.entries(art.framesByPhase).map(([k,v])=>[k,Object.freeze([...v])])))});
-  return Object.freeze({actor:q.actor,seg:q.seg,start:s.tick,plan:p,art:ar,offlineOnly:!nativeOnly,p1Native:nativeOnly,stage2Source:q.stage===2,stage3Source:q.stage===3,...(q.stage===4?{stage4Source:true}:q.stage===5?{stage5Source:true}:q.stage===6?{stage6Source:true}:{})});
+  return Object.freeze({actor:q.actor,seg:q.seg,start:s.tick,plan:p,art:ar,offlineOnly:!nativeOnly,p1Native:nativeOnly,stage2Source:q.stage===2,stage3Source:q.stage===3,...(q.stage===4?{stage4Source:true}:q.stage===5?{stage5Source:true}:q.stage===6?{stage6Source:true}:q.stage===7?{stage7Source:true}:{})});
  }
  const fit=(x,a,b)=>Math.max(a,Math.min(b,x));
  function stage2Plan(q,s,side){
@@ -147,6 +148,15 @@
   return Object.freeze({ok:true,theme:q.theme,difficulty:s.difficulty,stage6Source:true,area,
    side:side>=0?1:-1,timing:Object.freeze(clock),draw:Object.freeze([x,y,w,h]),seg:q.seg});
  }
+ function stage7Plan(q,s,side){
+  if(!Object.hasOwn(B.target,s.difficulty))return null;
+  const clock=s.difficulty==='hell'?[65,16,25]:s.difficulty==='normal'?[76,19,28]:[88,22,32];
+  const w=290,h=382;
+  const x=fit(Number(s.boss?.x)||180,161,199)-w/2;
+  const y=fit((Number(s.boss?.y)||108)-44,61,118);
+  return Object.freeze({ok:true,theme:q.theme,difficulty:s.difficulty,stage7Source:true,area,
+   side:side>=0?1:-1,timing:Object.freeze(clock),draw:Object.freeze([x,y,w,h]),seg:q.seg});
+ }
  function castleRuns(art,expect){
   if(art.cellWidth!==192||art.cellHeight!==192||!Array.isArray(expect.contactRuns)||expect.contactRuns.length!==24||art.contactRuns!==expect.contactRuns)return false;
   return ['telegraph','active','decay'].every(k=>Array.isArray(art.framesByPhase?.[k])&&
@@ -159,7 +169,7 @@
   return false;
  }
  function stage2Frame(e,s){
-  if(!(e?.stage2Source||e?.stage3Source||e?.stage4Source||e?.stage5Source||e?.stage6Source)||s?.seg!==e.seg||s.stage!=='card'||s.cardEnding||s.cardDown||!(s.boss?.hp>0)||s.boss.actor!==e.actor)return null;
+  if(!(e?.stage2Source||e?.stage3Source||e?.stage4Source||e?.stage5Source||e?.stage6Source||e?.stage7Source)||s?.seg!==e.seg||s.stage!=='card'||s.cardEnding||s.cardDown||!(s.boss?.hp>0)||s.boss.actor!==e.actor)return null;
   const f=B.phaseAt(e.plan,s.tick-e.start);if(!f)return null;
   const a=e.art.framesByPhase[f.name],p=f.local/Math.max(1,f.duration-1);
   return {phase:f.name,frame:Math.round(a[0]+p*(a[1]-a[0]))};
@@ -177,18 +187,18 @@
  function stage2Hit(e,s){
   const f=stage2Frame(e,s),{x,y}=s.player||{};
   if(f?.phase!=='active'||!Number.isFinite(x)||!Number.isFinite(y))return false;
-  if(e.seg===13||e.seg===29||e.stage4Source||e.stage5Source||e.stage6Source){
+  if(e.seg===13||e.seg===29||e.stage4Source||e.stage5Source||e.stage6Source||e.stage7Source){
    const [dx,dy,w,h]=e.plan.draw,a=e.art;
    const ix=Math.floor((e.plan.side<0?dx+w-x:x-dx)*a.cellWidth/w),iy=Math.floor((y-dy)*a.cellHeight/h);
-   if(ix<0||iy<0||ix>=a.cellWidth||iy>=a.cellHeight||!((e.stage4Source||e.stage5Source||e.stage6Source)?castleHas(a.contactRuns[f.frame],ix,iy):a.contact[f.frame].includes(iy*a.cellWidth+ix)))return false;
+   if(ix<0||iy<0||ix>=a.cellWidth||iy>=a.cellHeight||!((e.stage4Source||e.stage5Source||e.stage6Source||e.stage7Source)?castleHas(a.contactRuns[f.frame],ix,iy):a.contact[f.frame].includes(iy*a.cellWidth+ix)))return false;
   }
   // Chromium DPR2 rendered the silk's fine fringe below the visible hit floor
   // even at predicted alpha 106. Keep contact in its more opaque source ink.
-  const threshold=e.seg===29?184:e.stage3Source?132:e.seg===13?158:e.seg===18?124:(e.stage4Source||e.stage5Source||e.stage6Source)?158:104;
+  const threshold=e.seg===29?184:e.stage3Source?132:e.seg===13?158:e.seg===18?124:(e.stage4Source||e.stage5Source||e.stage6Source||e.stage7Source)?158:104;
   return !!source?.test({event:e,state:s,painter:stage2Paint,x,y,threshold});
  }
  function paint(ctx,event,s){
-  if(event?.stage2Source||event?.stage3Source||event?.stage4Source||event?.stage5Source||event?.stage6Source)return stage2Paint(ctx,event,s);
+  if(event?.stage2Source||event?.stage3Source||event?.stage4Source||event?.stage5Source||event?.stage6Source||event?.stage7Source)return stage2Paint(ctx,event,s);
   if(event?.plan.theme!=='sequential-rootlets')return B.paint(ctx,event,s);
   const ph=B.phaseAt(event.plan,s.tick-event.start),group=B.impactIndex(event.plan,ph);
   const shim=new Proxy(ctx,{
@@ -218,5 +228,5 @@
   });
   return B.paint(shim,event,s);
  }
- return Object.freeze({specs,verified,identity,plan,make,hit:(e,s)=>(e?.stage2Source||e?.stage3Source||e?.stage4Source||e?.stage5Source||e?.stage6Source)?stage2Hit(e,s):B.hit(e,s,paint),paint,held:!nativeOnly});
+ return Object.freeze({specs,verified,identity,plan,make,hit:(e,s)=>(e?.stage2Source||e?.stage3Source||e?.stage4Source||e?.stage5Source||e?.stage6Source||e?.stage7Source)?stage2Hit(e,s):B.hit(e,s,paint),paint,held:!nativeOnly});
 });
