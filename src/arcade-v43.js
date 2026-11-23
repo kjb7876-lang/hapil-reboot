@@ -2759,6 +2759,8 @@
       if(entrance.readyTick===null||s.tick<entrance.readyTick)return s;
       // 준비를 마친 첫 카드만 이름 표시용 FIRE_DELAY를 생략한다. 이후 카드의 40틱 예고는 그대로다.
       clearBossEntranceHazards(s);beginCard(s);entrance.releasedTick=s.tick;
+      // Exact follow-on cards may insert one warning before the first legacy volley, not over a live barrage.
+      if(!signatureOn&&nativeP2?.slotFor(s.seg)?.extra&&phase2Step(nativeP2,s)){signatureOn=true;sweeping=true;}
     }
     if(input&&input.bomb)useBomb(s);
     bombPulse(s);
