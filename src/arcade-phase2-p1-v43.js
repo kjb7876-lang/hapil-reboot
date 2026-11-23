@@ -4,6 +4,9 @@
 })(typeof globalThis!=='undefined'?globalThis:this,function bind(B,A,{assets={},reservedHashes=[],offlineOnly=false,nativeOnly=false,source=null}={}){
  if(!B?.atlasSpec||!B?.impactIndex||!A?.SEGMENTS||!A?.STAGES)throw Error('exact base and native routes required');
  const rows=[
+  {seg:100,actor:'mb_09_1',role:'mid',stage:9,scene:'09-1',plain:'catenary',card:'',form:undefined,formNo:undefined,theme:'injection-shadow-shutters',artId:'stage9-shadow-shutters'},
+  {seg:103,actor:'p1_staff',role:'main',stage:9,scene:'09-1',card:'주사실',form:undefined,formNo:0,theme:'injection-still-glass',artId:'stage9-still-glass'},
+  {seg:105,actor:'p1_staff',role:'main',stage:9,scene:'09-1',card:'펜타닐',form:undefined,formNo:0,theme:'injection-warm-delusion',artId:'stage9-warm-delusion'},
   {seg:89,actor:'mb_08',role:'mid',stage:8,scene:'08',plain:'lissajous',card:'',form:undefined,formNo:undefined,theme:'ward-scream-phantom',artId:'stage8-scream-phantom'},
   {seg:92,actor:'mask',role:'main',stage:8,scene:'08',card:'가느다란 전자음',form:undefined,formNo:0,theme:'ward-mask-thin-impulse',artId:'stage8-thin-impulse'},
   {seg:94,actor:'mask',role:'main',stage:8,scene:'08',card:'붉은 글씨',form:undefined,formNo:0,theme:'ward-mask-ink-fragments',artId:'stage8-ink-fragments'},
@@ -60,7 +63,7 @@
   }
  }
  function plan(seg,tier,side=1){
-  const q=identity(seg);if(!q||!Object.hasOwn(B.target,tier))return null;if(q.stage===2)return stage2Plan(q,{difficulty:tier},side);if(q.stage===3)return stage3Plan(q,{difficulty:tier},side);if(q.stage===4)return stage4Plan(q,{difficulty:tier},side);if(q.stage===5)return stage5Plan(q,{difficulty:tier},side);if(q.stage===6)return stage6Plan(q,{difficulty:tier},side);if(q.stage===7)return stage7Plan(q,{difficulty:tier},side);if(q.stage===8)return stage8Plan(q,{difficulty:tier},side);
+  const q=identity(seg);if(!q||!Object.hasOwn(B.target,tier))return null;if(q.stage===2)return stage2Plan(q,{difficulty:tier},side);if(q.stage===3)return stage3Plan(q,{difficulty:tier},side);if(q.stage===4)return stage4Plan(q,{difficulty:tier},side);if(q.stage===5)return stage5Plan(q,{difficulty:tier},side);if(q.stage===6)return stage6Plan(q,{difficulty:tier},side);if(q.stage===7)return stage7Plan(q,{difficulty:tier},side);if(q.stage===8)return stage8Plan(q,{difficulty:tier},side);if(q.stage===9)return stage9Plan(q,{difficulty:tier},side);
   const easy=tier==='gentle'||tier==='easy', sequential=q.theme==='sequential-rootlets';
   side=side>=0?1:-1;
   const lane=q.stage===1&&easy?64:q.stage===1&&tier==='normal'?49:42;
@@ -96,14 +99,14 @@
       (q.role!=='mid'&&s.formKey!==q.stage-1+'|'+q.actor+'|'+(q.formNo||0))))return null;
   if(priorEvent&&priorEvent.seg===s.seg&&B.phaseAt(priorEvent.plan,s.tick-priorEvent.start))return null;
   const a=verified[q.artId];if(!art||art.artId!==q.artId||art.path!==a.path||art.sha256!==a.sha256||art.frameCount<20||!B.atlasSpec(art,q.theme))return null;
-  const p=q.stage===2?stage2Plan(q,s,side):q.stage===3?stage3Plan(q,s,side):q.stage===4?stage4Plan(q,s,side):q.stage===5?stage5Plan(q,s,side):q.stage===6?stage6Plan(q,s,side):q.stage===7?stage7Plan(q,s,side):q.stage===8?stage8Plan(q,s,side):plan(q.seg,s.difficulty,side);if(!p)return null;
+  const p=q.stage===2?stage2Plan(q,s,side):q.stage===3?stage3Plan(q,s,side):q.stage===4?stage4Plan(q,s,side):q.stage===5?stage5Plan(q,s,side):q.stage===6?stage6Plan(q,s,side):q.stage===7?stage7Plan(q,s,side):q.stage===8?stage8Plan(q,s,side):q.stage===9?stage9Plan(q,s,side):plan(q.seg,s.difficulty,side);if(!p)return null;
   if(q.stage===2&&(!source?.ready(art.image)||art.frameCount!==24||art.columns!==6||!art.framesByPhase||
       (q.seg===13&&(!Array.isArray(art.contact)||art.contact.length!==24||art.contact[17]?.length!==350))))return null;
   if(q.stage===3&&(!source?.ready(art.image)||art.frameCount!==24||art.columns!==6||!art.framesByPhase||
       (q.seg===29&&(!Array.isArray(art.contact)||art.contact.length!==24||art.contact[16]?.length!==271))))return null;
-  if((q.stage===4||q.stage===5||q.stage===6||q.stage===7||q.stage===8)&&(!source?.ready(art.image)||art.frameCount!==24||art.columns!==6||!castleRuns(art,a)))return null;
+  if((q.stage===4||q.stage===5||q.stage===6||q.stage===7||q.stage===8||q.stage===9)&&(!source?.ready(art.image)||art.frameCount!==24||art.columns!==6||!castleRuns(art,a)))return null;
   const ar=Object.freeze({...art,cells:art.cells&&Object.freeze(art.cells.map(c=>Object.freeze([...c]))),framesByPhase:art.framesByPhase&&Object.freeze(Object.fromEntries(Object.entries(art.framesByPhase).map(([k,v])=>[k,Object.freeze([...v])])))});
-  return Object.freeze({actor:q.actor,seg:q.seg,start:s.tick,plan:p,art:ar,offlineOnly:!nativeOnly,p1Native:nativeOnly,stage2Source:q.stage===2,stage3Source:q.stage===3,...(q.stage===4?{stage4Source:true}:q.stage===5?{stage5Source:true}:q.stage===6?{stage6Source:true}:q.stage===7?{stage7Source:true}:q.stage===8?{stage8Source:true}:{})});
+  return Object.freeze({actor:q.actor,seg:q.seg,start:s.tick,plan:p,art:ar,offlineOnly:!nativeOnly,p1Native:nativeOnly,stage2Source:q.stage===2,stage3Source:q.stage===3,...(q.stage===4?{stage4Source:true}:q.stage===5?{stage5Source:true}:q.stage===6?{stage6Source:true}:q.stage===7?{stage7Source:true}:q.stage===8?{stage8Source:true}:q.stage===9?{stage9Source:true}:{})});
  }
  const fit=(x,a,b)=>Math.max(a,Math.min(b,x));
  function stage2Plan(q,s,side){
@@ -169,6 +172,17 @@
   return Object.freeze({ok:true,theme:q.theme,difficulty:s.difficulty,stage8Source:true,area,
    side:side>=0?1:-1,timing:Object.freeze(clock),draw:Object.freeze([x,y,w,h]),seg:q.seg});
  }
+ function stage9Plan(q,s,side){
+  if(!Object.hasOwn(B.target,s.difficulty))return null;
+  const clock=s.difficulty==='hell'?[65,16,25]:s.difficulty==='normal'?[76,19,28]:[88,22,32];
+  // Exact expanded p1_staff cards only. The authored source still owns all contact.
+  const own=q.seg===103||q.seg===105;
+  const w=own?360:292,h=own?640:380;
+  const x=own?0:fit(Number(s.boss?.x)||180,162,198)-w/2;
+  const y=own?0:fit((Number(s.boss?.y)||108)-44,61,119);
+  return Object.freeze({ok:true,theme:q.theme,difficulty:s.difficulty,stage9Source:true,area,
+   side:side>=0?1:-1,timing:Object.freeze(clock),draw:Object.freeze([x,y,w,h]),seg:q.seg});
+ }
  function castleRuns(art,expect){
   if(art.cellWidth!==192||art.cellHeight!==192||!Array.isArray(expect.contactRuns)||expect.contactRuns.length!==24||art.contactRuns!==expect.contactRuns)return false;
   return ['telegraph','active','decay'].every(k=>Array.isArray(art.framesByPhase?.[k])&&
@@ -181,7 +195,7 @@
   return false;
  }
  function stage2Frame(e,s){
-  if(!(e?.stage2Source||e?.stage3Source||e?.stage4Source||e?.stage5Source||e?.stage6Source||e?.stage7Source||e?.stage8Source)||s?.seg!==e.seg||s.stage!=='card'||s.cardEnding||s.cardDown||!(s.boss?.hp>0)||s.boss.actor!==e.actor)return null;
+  if(!(e?.stage2Source||e?.stage3Source||e?.stage4Source||e?.stage5Source||e?.stage6Source||e?.stage7Source||e?.stage8Source||e?.stage9Source)||s?.seg!==e.seg||s.stage!=='card'||s.cardEnding||s.cardDown||!(s.boss?.hp>0)||s.boss.actor!==e.actor)return null;
   const f=B.phaseAt(e.plan,s.tick-e.start);if(!f)return null;
   const a=e.art.framesByPhase[f.name],p=f.local/Math.max(1,f.duration-1);
   return {phase:f.name,frame:Math.round(a[0]+p*(a[1]-a[0]))};
@@ -199,18 +213,18 @@
  function stage2Hit(e,s){
   const f=stage2Frame(e,s),{x,y}=s.player||{};
   if(f?.phase!=='active'||!Number.isFinite(x)||!Number.isFinite(y))return false;
-  if(e.seg===13||e.seg===29||e.stage4Source||e.stage5Source||e.stage6Source||e.stage7Source||e.stage8Source){
+  if(e.seg===13||e.seg===29||e.stage4Source||e.stage5Source||e.stage6Source||e.stage7Source||e.stage8Source||e.stage9Source){
    const [dx,dy,w,h]=e.plan.draw,a=e.art;
    const ix=Math.floor((e.plan.side<0?dx+w-x:x-dx)*a.cellWidth/w),iy=Math.floor((y-dy)*a.cellHeight/h);
-   if(ix<0||iy<0||ix>=a.cellWidth||iy>=a.cellHeight||!((e.stage4Source||e.stage5Source||e.stage6Source||e.stage7Source||e.stage8Source)?castleHas(a.contactRuns[f.frame],ix,iy):a.contact[f.frame].includes(iy*a.cellWidth+ix)))return false;
+   if(ix<0||iy<0||ix>=a.cellWidth||iy>=a.cellHeight||!((e.stage4Source||e.stage5Source||e.stage6Source||e.stage7Source||e.stage8Source||e.stage9Source)?castleHas(a.contactRuns[f.frame],ix,iy):a.contact[f.frame].includes(iy*a.cellWidth+ix)))return false;
   }
   // Chromium DPR2 rendered the silk's fine fringe below the visible hit floor
   // even at predicted alpha 106. Keep contact in its more opaque source ink.
-  const threshold=e.seg===29?184:e.stage3Source?132:e.seg===13?158:e.seg===18?124:(e.stage4Source||e.stage5Source||e.stage6Source||e.stage7Source||e.stage8Source)?158:104;
+  const threshold=e.seg===29?184:e.stage3Source?132:e.seg===13?158:e.seg===18?124:(e.stage4Source||e.stage5Source||e.stage6Source||e.stage7Source||e.stage8Source||e.stage9Source)?158:104;
   return !!source?.test({event:e,state:s,painter:stage2Paint,x,y,threshold});
  }
  function paint(ctx,event,s){
-  if(event?.stage2Source||event?.stage3Source||event?.stage4Source||event?.stage5Source||event?.stage6Source||event?.stage7Source||event?.stage8Source)return stage2Paint(ctx,event,s);
+  if(event?.stage2Source||event?.stage3Source||event?.stage4Source||event?.stage5Source||event?.stage6Source||event?.stage7Source||event?.stage8Source||event?.stage9Source)return stage2Paint(ctx,event,s);
   if(event?.plan.theme!=='sequential-rootlets')return B.paint(ctx,event,s);
   const ph=B.phaseAt(event.plan,s.tick-event.start),group=B.impactIndex(event.plan,ph);
   const shim=new Proxy(ctx,{
@@ -240,5 +254,5 @@
   });
   return B.paint(shim,event,s);
  }
- return Object.freeze({specs,verified,identity,plan,make,hit:(e,s)=>(e?.stage2Source||e?.stage3Source||e?.stage4Source||e?.stage5Source||e?.stage6Source||e?.stage7Source||e?.stage8Source)?stage2Hit(e,s):B.hit(e,s,paint),paint,held:!nativeOnly});
+ return Object.freeze({specs,verified,identity,plan,make,hit:(e,s)=>(e?.stage2Source||e?.stage3Source||e?.stage4Source||e?.stage5Source||e?.stage6Source||e?.stage7Source||e?.stage8Source||e?.stage9Source)?stage2Hit(e,s):B.hit(e,s,paint),paint,held:!nativeOnly});
 });

@@ -1405,8 +1405,8 @@
     if((s.nudgeT=(s.nudgeT||0)+1)<NUDGE_IDLE)return;
     s.nudgeCue={from:s.tick,fire:s.tick+NUDGE_CUE};
   }
-  function calmLaser(s){
-    calmSoft(s);
+  function calmLaser(s,openingHeld){
+    calmSoft(s);if(openingHeld)return;
     if(!s.calm||s.difficulty!=='hell'||s.cardEnding||s.cardDown&&!rlPending(s)||!s.boss.present||(s.sp&&s.sp.cur)){s.calmT=0;return;} // 특수 페이즈(레이저 장단 등) 중에는 내지 않는다: 덮기 틈·음표 줄 위에 다른 광선이 서 있었다(11-20)
     var t=s.calmT=(s.calmT||0)+1;if(t<CALM_LASER_FIRST||(t-CALM_LASER_FIRST)%CALM_LASER_EVERY)return;
     var a=ACTORS[s.boss.actor],c=a&&a.c2!==WHITE&&a.c2!==RED?a.c2:CYAN,k=((t-CALM_LASER_FIRST)/CALM_LASER_EVERY)|0;
@@ -1445,11 +1445,11 @@
     var dx=(p.x-b.x)/(17+p.r),dy=(p.y-b.y+5)/(28+p.r);
     return dx*dx+dy*dy<1;
   }
-  function moveBoss(s){
+  function moveBoss(s,openingHeld){
     var b=s.boss;if(!b.present){s.wrathTraverse=null;return;}
     if(b.leaving){s.wrathTraverse=null;b.leaveT=(b.leaveT||0)+1;b.y-=Math.min(5,1+b.leaveT*.12);if(b.y<-70){b.leaving=false;b.present=false;b.leaveT=0;}return;} // 갑자기 사라지지 않게 천천히 가속하며 물러난다
     if(wrathTraverse(s))return;
-    if(s.stage==='card'&&s.segTick%150===0){b.targetX=W/2-BOSS_ROAM+rand(s)*BOSS_ROAM*2;var ty=BOSS_REST-6+rand(s)*BOSS_SWAY;if(!(s.entranceAll&&b.downHold>0))b.targetY=ty;}
+    if(!openingHeld&&s.stage==='card'&&s.segTick%150===0){b.targetX=W/2-BOSS_ROAM+rand(s)*BOSS_ROAM*2;var ty=BOSS_REST-6+rand(s)*BOSS_SWAY;if(!(s.entranceAll&&b.downHold>0))b.targetY=ty;}
     // 육망성·한자띠가 떠 있는 동안 보스가 화면 가운데보다 조금 아래까지 내려와 문양이 화면 아래 끝 가까이 닿는다(사용자 11-18). 끝나면 제자리로 돌아간다.
     if(s.stage==='card'&&s.entranceAll){if(bossDescends(s))b.downHold=DESCEND_HOLD;else if(b.downHold>0)b.downHold--;if(b.downHold>0){var wob=bossWobble(s);b.targetX=W/2+wob[0];b.targetY=BOSS_DESCEND+wob[1];b.descended=true;}else if(b.descended){b.descended=false;b.targetY=BOSS_REST;}} // 사용자 11-19 "보스가 아래로왔다가 금방위로가고 하니까 정신없어": 내려오면 문양이 끝난 뒤에도 DESCEND_HOLD 동안 머문다(다음 문양까지 이어지면 계속 아래) // 심사 반복 지적: 화면 위에 붙어 체력 띠·스펠 이름과 겹쳤다. 조금 내려 둔다(위 3분의 1 안).
     var ease=s.entranceAll?.022:.05;b.x+=(b.targetX-b.x)*.035;b.y+=(b.targetY-b.y)*ease; // 오르내림은 천천히
@@ -2749,9 +2749,9 @@
       if(s.tick>=s.bossClear.readyTick)advance(s);
       return s; // 격파 연출 2초 동안 공격·피격·아이템·필살을 모두 멈춘다. 다음 구간은 다음 틱부터 움직인다.
     }
-    var nativeP2=phase2Native(),signatureOn=phase2Step(nativeP2,s);
-    if(!signatureOn)moveBoss(s);
-    var sweeping=signatureOn||!!(s.wrathTraverse&&!s.wrathTraverse.done);
+    var nativeP2=phase2Native(),signatureOn=phase2Step(nativeP2,s),openingHeld=!!nativeP2?.holding?.(s);
+    if(!signatureOn)moveBoss(s,openingHeld);
+    var sweeping=signatureOn||openingHeld||!!(s.wrathTraverse&&!s.wrathTraverse.done);
     var introHold=s.entranceAll&&s.stage==='intro'&&pendingProjectiles(s)&&!(s.bossEntrance&&s.bossEntrance.segment===s.seg);if(introHold)s.stageTick=0; // (11-20) 탄은 걷지 않는다. 남은 탄이 저절로 다 나갈 때까지 판정·회피는 그대로 돌고 보스 입장만 기다린다. 보스·몹 없이 탄만 남으면 탄을 가속해 다 내보낸 뒤에 다음 보스가 들어선다(사용자 11-19)
     if(s.entranceAll&&s.stage==='intro'&&!introHold)prepareBossEntrance(s);
     var entrance=s.bossEntrance;
@@ -2761,13 +2761,13 @@
       // 준비를 마친 첫 카드만 이름 표시용 FIRE_DELAY를 생략한다. 이후 카드의 40틱 예고는 그대로다.
       clearBossEntranceHazards(s);beginCard(s);entrance.releasedTick=s.tick;
       // Exact follow-on cards may insert one warning before the first legacy volley, not over a live barrage.
-      if(!signatureOn&&(nativeP2?.slotFor(s.seg)?.extra||nativeP2?.slotFor(s.seg)?.p1)&&phase2Step(nativeP2,s)){signatureOn=true;sweeping=true;}
+      if(!signatureOn&&(nativeP2?.slotFor(s.seg)?.extra||nativeP2?.slotFor(s.seg)?.p1)){if(phase2Step(nativeP2,s)){signatureOn=true;sweeping=true;}else if(nativeP2?.holding?.(s)){openingHeld=true;sweeping=true;}}
     }
     if(input&&input.bomb)useBomb(s);
     bombPulse(s);
     s.paceBossVolleys=true;
-    var seg=segment(s),b=s.boss;s.calm=!sweeping&&s.entranceAll&&s.stage==='card'&&(bossDescends(s)||b.present&&b.y>BOSS_REST+BOSS_SWAY+CALM_BELOW);calmLaser(s);heroLaser(s);if(!sweeping){figurePending(s);lineGuard(s);}
-    if(!sweeping&&mobileBossShots(s))releaseBossVolley(s);
+    var seg=segment(s),b=s.boss;s.calm=(!sweeping||openingHeld)&&s.entranceAll&&s.stage==='card'&&(bossDescends(s)||b.present&&b.y>BOSS_REST+BOSS_SWAY+CALM_BELOW);calmLaser(s,openingHeld);heroLaser(s);if(!sweeping||openingHeld)figurePending(s);if(!sweeping)lineGuard(s);
+    if((!sweeping||openingHeld)&&mobileBossShots(s))releaseBossVolley(s);
     if(s.stage==='break'){if(s.stageTick>=(s.paced?24:BREAK_TICKS)){if(seg&&seg.kind==='card'&&b.present)beginCard(s);else advance(s);}}
     else if(s.stage==='intro'){if(introHold){}else
       if(!b.present)enter(s,seg.actor);
