@@ -470,5 +470,113 @@
         18
       ]
     ]
+  },
+  "pillar-messenger-scorched-quills": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "anchor": [
+      96,
+      96
+    ],
+    "theme": "pillar-messenger-scorched-quills",
+    "artId": "stage6-scorched-quills",
+    "sha256": "5844aea317b70c711876eaaf4e79f05537b95faf767c2b63194d6269f5a141ee",
+    "path": "media/phase2-p1/pillar-messenger-scorched-quills-seg62.webp",
+    "url": "media/phase2-p1/pillar-messenger-scorched-quills-seg62.webp?v=5844aea317b7",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        11
+      ],
+      "active": [
+        12,
+        17
+      ],
+      "decay": [
+        18,
+        23
+      ]
+    },
+    "contactWindows": [
+      [
+        12,
+        17
+      ]
+    ]
+  },
+  "pillar-gate-bank-of-embers": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "anchor": [
+      96,
+      96
+    ],
+    "theme": "pillar-gate-bank-of-embers",
+    "artId": "stage6-bank-of-embers",
+    "sha256": "e1ca9c9350f42af85434725ec628591d931e50254fa063950402eac9f65edfeb",
+    "path": "media/phase2-p1/pillar-gate-bank-of-embers-seg65.webp",
+    "url": "media/phase2-p1/pillar-gate-bank-of-embers-seg65.webp?v=e1ca9c9350f4",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        11
+      ],
+      "active": [
+        12,
+        17
+      ],
+      "decay": [
+        18,
+        23
+      ]
+    },
+    "contactWindows": [
+      [
+        12,
+        17
+      ]
+    ]
+  },
+  "pillar-gate-whip-gouges": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "anchor": [
+      96,
+      96
+    ],
+    "theme": "pillar-gate-whip-gouges",
+    "artId": "stage6-whip-gouges",
+    "sha256": "3840433f91670c88b5a5cec738a9ced6d069b78c2108e5f0abe13e306701d379",
+    "path": "media/phase2-p1/pillar-gate-whip-gouges-seg67.webp",
+    "url": "media/phase2-p1/pillar-gate-whip-gouges-seg67.webp?v=3840433f9167",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        12
+      ],
+      "active": [
+        13,
+        17
+      ],
+      "decay": [
+        18,
+        23
+      ]
+    },
+    "contactWindows": [
+      [
+        13,
+        17
+      ]
+    ]
   }
 }
