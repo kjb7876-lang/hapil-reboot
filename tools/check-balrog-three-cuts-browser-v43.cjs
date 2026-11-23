@@ -39,9 +39,12 @@ module.exports=async function verifyThreeCuts(browser,url,out){
       [s.player.x,s.player.y]=point;s.player.invulnerableUntil=0;baseHits=s.hits;result.point=point;result.clip=before.coverage;
       result.compact=s.compact;result.difficulty=s.difficulty;result.stage=s.stageIndex+1;
      }
+     const pre={stock:s.bombs,hp:s.player.hp,bombsUsed:s.bombsUsed,autoBombs:s.autoBombs};
      const r=raw(s,input),v=N.inspect(s);
      if(point&&v?.cuts){
-      result.trace.push({phase:v.phase,local:v.local,...v.cuts,hits:s.hits-baseHits,mask:N.hit(s),stock:s.bombs,iframes:s.player.invulnerableUntil,n:s.n});
+      result.trace.push({phase:v.phase,local:v.local,...v.cuts,hits:s.hits-baseHits,mask:N.hit(s),preStock:pre.stock,
+       postStock:s.bombs,lifeDelta:s.player.hp-pre.hp,bombUses:s.bombsUsed-pre.bombsUsed,autoBombs:s.autoBombs-pre.autoBombs,
+       iframes:s.player.invulnerableUntil,n:s.n});
       if(v.cuts.armed){
        const c=document.createElement('canvas');c.width=A.WIDTH;c.height=A.HEIGHT;const g=c.getContext('2d');N.paint(g,s);
        result.alphaAtProbe=g.getImageData(Math.floor(point[0]),Math.floor(point[1]),1,1).data[3];
@@ -76,7 +79,11 @@ module.exports=async function verifyThreeCuts(browser,url,out){
    assert.equal(arm.length,1);assert.equal(arm[0].full,3);assert.equal(arm[0].hits,mode==='inside'?1:0);
    assert(after.length>0&&after.every(x=>x.hits===(mode==='inside'?1:0)&&!x.mask));
    if(mode==='outside')assert(r.internalGap===true);
-   assert(r.trace.every(x=>x.stock===0));assert(mode==='inside'?r.alphaAtProbe>=75:r.alphaAtProbe<80);
+   assert(r.trace.every(x=>x.preStock===0&&x.bombUses===0&&x.autoBombs===0),'no bomb available/used at any measured tick');
+   assert(r.trace.every(x=>x.lifeDelta===(mode==='inside'&&x.armed?-1:0)),'ordinary native damage, not an auto-bomb');
+   // After ordinary damage the game restores base stock only if the player survived.
+   assert(r.trace.every(x=>x.postStock===0||mode==='inside'&&x.armed&&x.lifeDelta===-1),'only the native life-loss refill may occur');
+   assert(mode==='inside'?r.alphaAtProbe>=75:r.alphaAtProbe<80);
    for(const [key,bytes] of Object.entries(shots))fs.writeFileSync(path.join(out,prefix+'-'+key+'.jpg'),Buffer.from(bytes.split(',')[1],'base64'));
    report.push(r);
   }finally{await page.close();}
