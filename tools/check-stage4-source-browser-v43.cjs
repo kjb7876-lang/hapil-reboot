@@ -57,7 +57,7 @@ module.exports=async function stage4Browser(browser,uri,out){
     notes.push({seg,mode,started,late,actuallyDecoded:mode==='delayed'});
   }else{
     await ready();assert.equal(started.phase,'telegraph');assert.equal(started.n,0);
-    const measured=await page.evaluate(()=>{
+    const measured=await page.evaluate(({seg})=>{
       const A=window.HapilArcade,N=window.HapilPhase2Native,s=window.__stage4BrowserFixture;
       function until(name){for(let i=0;i<120&&N.inspect(s)?.phase!==name;i++)A.step(s,{});if(N.inspect(s)?.phase!==name)throw Error('phase '+name);}
       function probe(){
@@ -123,7 +123,7 @@ module.exports=async function stage4Browser(browser,uri,out){
       while(N.inspect(s)?.phase==='active'&&N.inspect(s).local<14)A.step(s,{});
       const closing=probe();until('decay');const decay=probe();
       return {early,opening,active,next,closing,decay,hurt,damage,preview};
-    });
+    },{seg});
     const {preview,...rest}=measured;
     run.measured=rest;report();
     if(preview)fs.writeFileSync(path.join(out,'stage4-'+seg+'-native-active.png'),Buffer.from(preview.split(',')[1],'base64'));
