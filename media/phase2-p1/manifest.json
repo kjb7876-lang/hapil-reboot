@@ -174,5 +174,95 @@
         23
       ]
     }
+  },
+  "swamp-horn-ripples": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "anchor": [
+      96,
+      110
+    ],
+    "theme": "swamp-horn-ripples",
+    "artId": "stage3-horn-ripples",
+    "path": "media/phase2-p1/swamp-horn-devil-ripples.webp",
+    "url": "media/phase2-p1/swamp-horn-devil-ripples.webp?v=3ce9ac4c3e2f",
+    "sha256": "3ce9ac4c3e2f51941910168d148ea00ea37e312095a540823bda7373b0389d77",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        13
+      ],
+      "active": [
+        14,
+        18
+      ],
+      "decay": [
+        19,
+        23
+      ]
+    }
+  },
+  "horn-face-reeds": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 288,
+    "cellHeight": 320,
+    "anchor": [
+      144,
+      160
+    ],
+    "theme": "horn-face-reeds",
+    "artId": "stage3-face-reeds",
+    "path": "media/phase2-p1/horn-face-reeds-seg32-r1.webp",
+    "url": "media/phase2-p1/horn-face-reeds-seg32-r1.webp?v=60c8ae0e2dc0",
+    "sha256": "60c8ae0e2dc0939a7296f2f4c3f0a7981fbd1575bdd0a0e2aedd3f1e68708828",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        8
+      ],
+      "active": [
+        9,
+        17
+      ],
+      "decay": [
+        18,
+        23
+      ]
+    }
+  },
+  "horn-water-hands": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 288,
+    "cellHeight": 320,
+    "anchor": [
+      144,
+      160
+    ],
+    "theme": "horn-water-hands",
+    "artId": "stage3-water-hands",
+    "path": "media/phase2-p1/horn-water-hands-seg34-r1.webp",
+    "url": "media/phase2-p1/horn-water-hands-seg34-r1.webp?v=2d8f162f64b6",
+    "sha256": "2d8f162f64b61b4637378cc54719a509efcffef7c2625c0f4a6d4130f679f8e9",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        9
+      ],
+      "active": [
+        10,
+        17
+      ],
+      "decay": [
+        18,
+        23
+      ]
+    }
   }
 }
