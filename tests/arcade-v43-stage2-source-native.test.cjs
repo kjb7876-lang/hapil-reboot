@@ -123,3 +123,24 @@ test('ordinary fresh Stage 1 reaches its first midboss: native cue appears with 
   }
  }
 });
+
+test('eight-leg silk excludes the two exact weak Chromium fringe contacts without removing opaque life loss',()=>{
+ const s=run(18,'hell');N.fixtureAtlas(s,t=>atlases.get(t));s.player.invulnerableUntil=100000;
+ until(s,()=>N.inspect(s)?.phase==='active');
+ for(let i=0;i<7;i++)A.step(s,{});
+ assert.equal(N.inspect(s)?.local,7);
+ const rec=Source.createRecorder();assert(N.paint(rec,s));assert(rec.complete);
+ for(const p of [[246.75,394.75],[142.75,272.75]]){
+  const predicted=Math.max(...rec.draws.map(q=>Source.sample(q,...p)));
+  assert(predicted>=104&&predicted<124,'addresses a real former positive fringe');
+  [s.player.x,s.player.y]=p;assert.equal(N.hit(s),false);
+ }
+ const start=s.tick;s.tick++;let point=null;
+ for(let y=100;y<546&&!point;y+=2)for(let x=32;x<328&&!point;x+=2){
+  s.player.x=x+.75;s.player.y=y+.75;if(N.hit(s))point=[s.player.x,s.player.y];
+ }
+ assert(point,'an opaque source contact remains');
+ s.tick=start;[s.player.x,s.player.y]=point;s.player.invulnerableUntil=0;
+ const before=s.player.hp,hits=s.hits;
+ A.step(s,{});assert.equal(s.player.hp,before-1);assert.equal(s.hits,hits+1);assert.equal(s.bombsUsed,0);assert.equal(s.autoBombs,0);
+});

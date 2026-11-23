@@ -120,7 +120,10 @@
    const ix=Math.floor((e.plan.side<0?dx+w-x:x-dx)*a.cellWidth/w),iy=Math.floor((y-dy)*a.cellHeight/h);
    if(ix<0||iy<0||ix>=a.cellWidth||iy>=a.cellHeight||!a.contact[f.frame].includes(iy*a.cellWidth+ix))return false;
   }
-  return !!source?.test({event:e,state:s,painter:stage2Paint,x,y,threshold:e.seg===13?158:104});
+  // Chromium DPR2 rendered the silk's fine fringe below the visible hit floor
+  // even at predicted alpha 106. Keep contact in its more opaque source ink.
+  const threshold=e.seg===13?158:e.seg===18?124:104;
+  return !!source?.test({event:e,state:s,painter:stage2Paint,x,y,threshold});
  }
  function paint(ctx,event,s){
   if(event?.stage2Source)return stage2Paint(ctx,event,s);

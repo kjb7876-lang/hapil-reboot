@@ -111,15 +111,22 @@ module.exports=async function stage2Browser(browser,uri,out){
     const {preview,...rest}=measured;
     run.measured=rest;report();
     if(preview)fs.writeFileSync(path.join(out,'stage2-'+seg+'-native-active.png'),Buffer.from(preview.split(',')[1],'base64'));
-    const a=measured.active,diagnostic={seg,mode,tick:a.tick,local:a.local,hits:a.hits,finalMin:a.min,rawMin:a.rawMin,
-      blank:a.blank,rawBlank:a.rawBlank,holes:a.holes,rawHoles:a.rawHoles,weakest:a.weakest,firstLow:a.low[0]??null,stamps:a.stamps};
-    console.log('STAGE2_SOURCE_DIAGNOSTIC '+JSON.stringify(diagnostic));
+    const a=measured.active,summary=(probe)=>({seg,mode,tick:probe.tick,local:probe.local,hits:probe.hits,finalMin:probe.min,rawMin:probe.rawMin,
+      blank:probe.blank,rawBlank:probe.rawBlank,holes:probe.holes,rawHoles:probe.rawHoles,weakest:probe.weakest,firstLow:probe.low[0]??null,stamps:probe.stamps});
+    console.log('STAGE2_SOURCE_DIAGNOSTIC '+JSON.stringify(summary(a)));
+    if(seg===18)console.log('STAGE2_SOURCE_NEXT_DIAGNOSTIC '+JSON.stringify(summary(measured.next)));
     assert.equal(measured.early.hits,0,prefix+': early imagery must not harm');
     assert(a.hits>10,prefix+': active probe must see >10 visible contact samples; actual '+a.hits);
     assert(a.min>=98,prefix+': active final-filter alpha must be ≥98 at every contact; '+JSON.stringify(a.weakest.final));
     assert(a.blank>15000,prefix+': large transparent area must remain; actual '+a.blank);
     assert.equal(a.holes,0,prefix+': no contact in a transparent rendered pixel');
     assert(measured.next.point,prefix+': following exact tick must still expose a sample for native life-loss test');
+    if(seg===18){
+      assert.equal(measured.next.local,8,prefix+': inspect the actual silk life-loss tick');
+      assert(measured.next.hits>10,prefix+': silk life-loss tick must retain visibly opaque contact samples');
+      assert(measured.next.min>=98,prefix+': silk life-loss tick final-filter alpha must be ≥98 at every contact; '+JSON.stringify(measured.next.weakest.final));
+      assert.equal(measured.next.holes,0,prefix+': silk life-loss tick must avoid transparent rendered pixels');
+    }
     assert.equal(measured.decay?.hits,0,prefix+': decay must not harm');
     assert.equal(measured.hurt,1,prefix+': exactly one ordinary native life lost');
     assert.deepEqual(measured.damage,{stock:0,hits:1,uses:0,auto:0},prefix+': no auto-bomb or stock shielding');
