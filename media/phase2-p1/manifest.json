@@ -614,5 +614,113 @@
         17
       ]
     ]
+  },
+  "ward-scream-phantom": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "anchor": [
+      96,
+      96
+    ],
+    "theme": "ward-scream-phantom",
+    "artId": "stage8-scream-phantom",
+    "sha256": "dca4d59aaea4332f6b7b204a1270ce418f8fb7d57a3da661419396fdc5151231",
+    "path": "media/phase2-p1/ward-scream-phantom-seg89.webp",
+    "url": "media/phase2-p1/ward-scream-phantom-seg89.webp?v=dca4d59aaea4",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        11
+      ],
+      "active": [
+        12,
+        17
+      ],
+      "decay": [
+        18,
+        23
+      ]
+    },
+    "contactWindows": [
+      [
+        12,
+        17
+      ]
+    ]
+  },
+  "ward-mask-thin-impulse": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "anchor": [
+      96,
+      96
+    ],
+    "theme": "ward-mask-thin-impulse",
+    "artId": "stage8-thin-impulse",
+    "sha256": "ea0f7819f5bc677499f5e61b8465df4ae13ab5d8315c3cc9572c000bb2ffbefa",
+    "path": "media/phase2-p1/ward-mask-thin-impulse-seg92.webp",
+    "url": "media/phase2-p1/ward-mask-thin-impulse-seg92.webp?v=ea0f7819f5bc",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        12
+      ],
+      "active": [
+        13,
+        17
+      ],
+      "decay": [
+        18,
+        23
+      ]
+    },
+    "contactWindows": [
+      [
+        13,
+        17
+      ]
+    ]
+  },
+  "ward-mask-ink-fragments": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "anchor": [
+      96,
+      96
+    ],
+    "theme": "ward-mask-ink-fragments",
+    "artId": "stage8-ink-fragments",
+    "sha256": "3388c2d99bad9d8f3193229518e30fd98f7ea3c9f389e5dbce4b7c9ae4a20b7a",
+    "path": "media/phase2-p1/ward-mask-ink-fragments-seg94.webp",
+    "url": "media/phase2-p1/ward-mask-ink-fragments-seg94.webp?v=3388c2d99bad",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        11
+      ],
+      "active": [
+        12,
+        17
+      ],
+      "decay": [
+        18,
+        23
+      ]
+    },
+    "contactWindows": [
+      [
+        12,
+        17
+      ]
+    ]
   }
 }
