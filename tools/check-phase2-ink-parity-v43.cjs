@@ -29,13 +29,15 @@ const lum=(a,i)=>.2126*a[i]+.7152*a[i+1]+.0722*a[i+2];
      s.tick=age;const ph=P.phaseAt(e.plan,age),land=P.impactIndex(e.plan,ph),c=createCanvas(360,640).getContext('2d');
      assert(P.paint(c,e,s));N.fixtureFinish(c,e,s);
      const rr=c.getImageData(0,0,360,640).data;
-     let expected=0,mismatch=0,hitMismatch=0;
+     let expected=0,mismatch=0,hitMismatch=0,notPainted=0,painted=0;
      for(let y=0;y<640;y++)for(let x=0;x<360;x++){
       const cell=P.contains(e.plan,x+.5,y+.5,land);if(cell)expected++;
-      if((rr[(y*360+x)*4+3]>0)!==cell)mismatch++;
+      const shown=rr[(y*360+x)*4+3]>0;if(shown)painted++;if(shown&&!cell)mismatch++;if(!shown&&cell)notPainted++;
       if(x%31===0&&y%23===0){s.player.x=x+.5;s.player.y=y+.5;if(P.hit(e,s)!==(cell&&ph.name==='active'))hitMismatch++;}
      }
      assert.equal(mismatch,0,theme+' '+ph.name+' paint/collision contour');
+     if(ph.name==='telegraph'){assert(painted>200,theme+' no early painted cues');assert(notPainted>1000,theme+' warning has a broad filled wash');}
+     else assert.equal(notPainted,0,theme+' visible active/recovery mask coverage');
      assert.equal(hitMismatch,0,theme+' '+ph.name+' active-only hit map');
      for(let y=40;y<626;y+=11)for(let x=e.plan.safeLane[0];x<e.plan.safeLane[1];x+=2){
       s.player.x=x+.5;s.player.y=y+.5;assert.equal(P.hit(e,s),false,theme+' protected lane');

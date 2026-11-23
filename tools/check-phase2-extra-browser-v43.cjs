@@ -31,8 +31,15 @@ module.exports=async function extraBrowser(browser,url,out){
      const q=N.inspect(s);if(s.stage==='card'||q)s.boss.hp=s.boss.maxHp; // prevent scripted fixture from killing the target card.
      s.bombs=0;
      if(q?.phase==='telegraph'&&!p){
-      p=E.plan(seg,s.difficulty,q.safeLane[0]<180?1:-1);
-      if(!p)throw Error('missing exact canonical browser geometry');
+      const planned=E.plan(seg,s.difficulty,q.safeLane[0]<180?1:-1);
+      if(!planned)throw Error('missing exact canonical browser geometry');
+      let entry=null;
+      for(const y of [520,480,430,555,590,390,350,310]){
+       for(let x=66;x<298;x+=2)if([-4,0,4].every(d=>P.contains(planned,x+d,y)&&P.contains(planned,x,y+d))){entry={x,y};break;}
+       if(entry)break;
+      }
+      if(!entry)throw Error('no interior hazard test point for '+seg);
+      p=planned;
       edgeSamples=[];
       for(let y=236;y<=520;y+=26){
        const row=p.rows[y-p.area.y0];
@@ -44,9 +51,7 @@ module.exports=async function extraBrowser(browser,url,out){
       report.coverage=q.coverage;report.safeLane=q.safeLane;report.difficulty=s.difficulty;report.compact=s.compact;
       report.staged={tick:s.tick,legacyBullets:s.n};report.card=HapilArcade.SEGMENTS[seg].name;
       // Seed only the starting point. Subsequent movement uses the engine's normal input path.
-      const y=520, row=p.rows[y-p.area.y0],x=row.find((a,i)=>i%2===0&&row[i+1]-a>=8&&a+4>64&&a+4<300);
-      if(x===undefined)throw Error('no interior hazard test point');
-      s.player.x=x+4;s.player.y=y;s.player.invulnerableUntil=0;
+      s.player.x=entry.x;s.player.y=entry.y;s.player.invulnerableUntil=0;report.entry=entry;
       target=(q.safeLane[0]+q.safeLane[1])/2;
      }
      if(p){
@@ -56,14 +61,15 @@ module.exports=async function extraBrowser(browser,url,out){
      }
      const result=step(s,input);
      if(p){
-      const v=N.inspect(s),a=v?.phase;if(a==='active'&&!report.phases.active)report.phases.active={at:s.tick-firstTick,hits:s.hits-firstHits,mask:N.hit(s),bullets:s.n};
-      if(a==='decay'&&!report.phases.decay)report.phases.decay={hits:s.hits-firstHits,mask:N.hit(s),bullets:s.n};
+      const v=N.inspect(s),a=v?.phase;if(a==='active'&&!report.phases.active)report.phases.active={at:s.tick-firstTick,hits:s.hits-firstHits,mask:N.hit(s),bullets:s.n,x:s.player.x,y:s.player.y,invulnerableUntil:s.player.invulnerableUntil};
+      if(a==='decay'&&!report.phases.decay)report.phases.decay={hits:s.hits-firstHits,mask:N.hit(s),bullets:s.n,x:s.player.x,y:s.player.y,invulnerableUntil:s.player.invulnerableUntil};
       if(a==='decay'&&report.image){report.done=true;HapilArcade.step=step;}
      }
      return result;
     };
     function loop(){
      const s=app.debugState(),q=s.signature;
+     if(q?.phase==='telegraph'&&q.local>=55&&!report.warningImage)report.warningImage=canvas.toDataURL('image/jpeg',.88);
      if(q?.phase==='active'&&!report.image&&window.__extraInk.filtered>priorInk){
       const image=ctx.getImageData(0,0,canvas.width,canvas.height),rgba=(x,y)=>{
        const i=(Math.floor(y*canvas.height/HapilArcade.HEIGHT)*canvas.width+Math.floor(x*canvas.width/HapilArcade.WIDTH))*4;
@@ -77,7 +83,13 @@ module.exports=async function extraBrowser(browser,url,out){
     requestAnimationFrame(loop);return true;
    },{seg,mode});assert(r);
    await page.waitForFunction(()=>window.__extraReport?.done,undefined,{timeout:30000});
-   const {image,...proof}=await page.evaluate(()=>window.__extraReport);
+   const {image,warningImage,...proof}=await page.evaluate(()=>window.__extraReport);
+   assert(warningImage?.startsWith('data:image/jpeg;base64,'));
+   fs.writeFileSync(path.join(out,'phase2-extra-mobile-'+seg+'-warning.jpg'),Buffer.from(warningImage.slice('data:image/jpeg;base64,'.length),'base64'));
+   fs.writeFileSync(path.join(out,'phase2-extra-mobile-'+seg+'-trace.json'),JSON.stringify(proof,null,2));
+   assert(Number.isFinite(proof.entry?.x)&&Number.isFinite(proof.entry?.y));
+   if(mode==='escape')assert(proof.phases.active.x>=proof.safeLane[0]&&proof.phases.active.x<proof.safeLane[1],'real native movement crossed exact lane');
+   assert.equal(proof.phases.active.bullets,0,'follow-on must not insert over a legacy volley');
    assert.equal(proof.ink.raw,0);assert(proof.ink.filtered>0&&proof.ink.wash>0);
    assert.equal(proof.difficulty,'hell');assert(proof.compact);assert.equal(proof.staged.legacyBullets,0);
    assert(Math.abs(proof.coverage-.70)<1e-5);

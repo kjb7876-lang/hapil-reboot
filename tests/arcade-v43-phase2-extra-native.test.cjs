@@ -42,3 +42,22 @@ test('actual adjacent native Hell cards drain their fired bullets before the fol
   a(shotCount>=45,'previous real card did not make its native shots');a(warning,'missing exact follow-on warning at '+id);a.equal(s.n,0);a.equal(s.segTick,0);
  }
 });
+test('cause-lock compact Hell starts on a real threatened point and reaches the selected safe lane on either side',()=>{
+ for(const startX of [178,182]){
+  const s=init(574,'hell');s.player.x=startX;s.bombs=0;
+  const w=until(s,q=>q.phase==='telegraph'),target=(w.safeLane[0]+w.safeLane[1])/2,p=E.plan(574,'hell',startX<=180?1:-1);
+  let entry=null;
+  for(const y of [520,480,430,555,590,390,350,310]){
+   for(let x=66;x<298;x+=2)if([-4,0,4].every(d=>P.contains(p,x+d,y)&&P.contains(p,x,y+d))){entry={x,y};break;}
+   if(entry)break;
+  }
+  a(entry);s.player.x=entry.x;s.player.y=entry.y;s.player.invulnerableUntil=0;
+  const first=s.tick;
+  for(let i=0;i<w.timing[0]+w.timing[1]+3;i++){
+   const v=N.inspect(s);
+   tick(s,{dx:s.tick-first>=15&&v?.phase==='telegraph'?target-s.player.x:0});
+   a.equal(s.hits,0);a.equal(s.bombs,0);a.equal(s.n,0);
+   if(N.inspect(s)?.phase==='active'){a.equal(s.player.x,target);a(!N.hit(s));}
+  }
+ }
+});
