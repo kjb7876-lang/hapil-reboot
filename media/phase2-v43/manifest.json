@@ -1,0 +1,42 @@
+{
+  "balrog-meteor-24-lossless.webp": {
+    "bytes": 407224,
+    "sha256": "bb29b8669e1d1206c35491e26a9480ae1ad4c97ef8fb1e1d7d29167aeccd0c52"
+  },
+  "balrog-spatial-slash-24-lossless.webp": {
+    "bytes": 242914,
+    "sha256": "21a67888ee3e2624f7236a60d85717a2c7c9fdb03388be22192b17176891d09d"
+  },
+  "executor-cargo-truck-fall-r1.webp": {
+    "bytes": 304498,
+    "sha256": "ad8b889cdda0c2389300b011cc7375cbead9d5455b79d0f33e651e9958b3eed4"
+  },
+  "executor-sedan-fall-r1.webp": {
+    "bytes": 235964,
+    "sha256": "11d21c61397542fd2b5d58b728daf028ec23402e5595690c2d95252fd76e8db5"
+  },
+  "lust-broken-heart-shatter-24f.webp": {
+    "bytes": 594594,
+    "sha256": "c7b6224424570e16e78d06eb9f9d9bb4bf09d18ba19fae721f13cd9aed010f34"
+  },
+  "lust-giant-kiss-imprint-24f.webp": {
+    "bytes": 477290,
+    "sha256": "2d3f97b6a5a7eea6bff176bdba367cbf4a0600158e7aa487d87e9477196a3486"
+  },
+  "p3-gate-mechanical-cables-r1.webp": {
+    "bytes": 661054,
+    "sha256": "7b3a4aad66eacf798b149e1e282260c761177c6d0ddc34dda7683309247c7196"
+  },
+  "siren-gravity-control-v2.webp": {
+    "bytes": 223072,
+    "sha256": "30959dbd63b6c79911a7f73e8bc98df092713dde0cc31c920912c2bfb8932f11"
+  },
+  "siren-time-acceleration.webp": {
+    "bytes": 257648,
+    "sha256": "4d05bcb3ce075dde0c9f755ff15b4c18e1f91a89c50b93db6b0117a8c87a106a"
+  },
+  "wrath-breath-v1.webp": {
+    "bytes": 269584,
+    "sha256": "4d9a4e95f310b42bea71d9f9059df993a100648b4aaeb65679f41f2566be2baa"
+  }
+}

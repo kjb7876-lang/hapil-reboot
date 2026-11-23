@@ -514,6 +514,9 @@ async function mobile(browser,width,height){
   try{browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_PATH?{executablePath:process.env.CHROMIUM_PATH}:{})});
     await desktop(browser);for(const size of [[390,844],[360,640],[844,390]])await mobile(browser,...size);
     const wrath=await require('./check-wrath-browser-v43.cjs')(browser,'http://127.0.0.1:'+server.address().port,out);reports.push({wrath});
+    const phase2=require('./check-phase2-native-browser-v43.cjs'),baseURL='http://127.0.0.1:'+server.address().port;
+    reports.push({phase2:await phase2(browser,baseURL,out)});
+    reports.push({phase2Mobile:await phase2(browser,baseURL,out,{mobile:true,only:['p2_wrath','siren']})});
     fs.writeFileSync(path.join(out,'report.json'),JSON.stringify({passed:true,reports},null,2));console.log(JSON.stringify(reports,null,2));
   }catch(e){fs.writeFileSync(path.join(out,'report.json'),JSON.stringify({passed:false,reports,error:e.stack},null,2));throw e;}
   finally{if(browser)await browser.close();await new Promise(r=>server.close(r));}
