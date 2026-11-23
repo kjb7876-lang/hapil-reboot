@@ -4,6 +4,9 @@
 })(typeof globalThis!=='undefined'?globalThis:this,function bind(B,A,{assets={},reservedHashes=[],offlineOnly=false,nativeOnly=false,source=null}={}){
  if(!B?.atlasSpec||!B?.impactIndex||!A?.SEGMENTS||!A?.STAGES)throw Error('exact base and native routes required');
  const rows=[
+  {seg:44,actor:'mb_04',role:'mid',stage:4,scene:'04',plain:'bell',card:'',form:undefined,formNo:undefined,theme:'castle-mid-claw-gouges',artId:'stage4-claw-gouges'},
+  {seg:47,actor:'p1_chaser',role:'main',stage:4,scene:'04',card:'검은 재',form:undefined,formNo:0,theme:'castle-black-ash',artId:'stage4-black-ash'},
+  {seg:49,actor:'p1_chaser',role:'main',stage:4,scene:'04',card:'끊어진 봉인 사슬',form:undefined,formNo:0,theme:'castle-broken-seal-chains',artId:'stage4-broken-seal-chains'},
   {seg:29,actor:'mb_03',role:'mid',stage:3,scene:'03',plain:'spiral',card:'',form:undefined,formNo:undefined,theme:'swamp-horn-ripples',artId:'stage3-horn-ripples'},
   {seg:32,actor:'p1_horn',role:'main',stage:3,scene:'03',card:'얼굴을 닮은 수초',form:undefined,formNo:0,theme:'horn-face-reeds',artId:'stage3-face-reeds'},
   {seg:34,actor:'p1_horn',role:'main',stage:3,scene:'03',card:'물속에서 올라온 손',form:undefined,formNo:0,theme:'horn-water-hands',artId:'stage3-water-hands'},
@@ -47,7 +50,7 @@
   }
  }
  function plan(seg,tier,side=1){
-  const q=identity(seg);if(!q||!Object.hasOwn(B.target,tier))return null;if(q.stage===2)return stage2Plan(q,{difficulty:tier},side);if(q.stage===3)return stage3Plan(q,{difficulty:tier},side);
+  const q=identity(seg);if(!q||!Object.hasOwn(B.target,tier))return null;if(q.stage===2)return stage2Plan(q,{difficulty:tier},side);if(q.stage===3)return stage3Plan(q,{difficulty:tier},side);if(q.stage===4)return stage4Plan(q,{difficulty:tier},side);
   const easy=tier==='gentle'||tier==='easy', sequential=q.theme==='sequential-rootlets';
   side=side>=0?1:-1;
   const lane=q.stage===1&&easy?64:q.stage===1&&tier==='normal'?49:42;
@@ -83,13 +86,14 @@
       (q.role!=='mid'&&s.formKey!==q.stage-1+'|'+q.actor+'|'+(q.formNo||0))))return null;
   if(priorEvent&&priorEvent.seg===s.seg&&B.phaseAt(priorEvent.plan,s.tick-priorEvent.start))return null;
   const a=verified[q.artId];if(!art||art.artId!==q.artId||art.path!==a.path||art.sha256!==a.sha256||art.frameCount<20||!B.atlasSpec(art,q.theme))return null;
-  const p=q.stage===2?stage2Plan(q,s,side):q.stage===3?stage3Plan(q,s,side):plan(q.seg,s.difficulty,side);if(!p)return null;
+  const p=q.stage===2?stage2Plan(q,s,side):q.stage===3?stage3Plan(q,s,side):q.stage===4?stage4Plan(q,s,side):plan(q.seg,s.difficulty,side);if(!p)return null;
   if(q.stage===2&&(!source?.ready(art.image)||art.frameCount!==24||art.columns!==6||!art.framesByPhase||
       (q.seg===13&&(!Array.isArray(art.contact)||art.contact.length!==24||art.contact[17]?.length!==350))))return null;
   if(q.stage===3&&(!source?.ready(art.image)||art.frameCount!==24||art.columns!==6||!art.framesByPhase||
       (q.seg===29&&(!Array.isArray(art.contact)||art.contact.length!==24||art.contact[16]?.length!==271))))return null;
-  const ar=Object.freeze({...art,cells:art.cells&&Object.freeze(art.cells.map(c=>Object.freeze([...c]))),framesByPhase:art.framesByPhase&&Object.freeze(Object.fromEntries(Object.entries(art.framesByPhase).map(([k,v])=>[k,Object.freeze([...v])])))}); 
-  return Object.freeze({actor:q.actor,seg:q.seg,start:s.tick,plan:p,art:ar,offlineOnly:!nativeOnly,p1Native:nativeOnly,stage2Source:q.stage===2,stage3Source:q.stage===3});
+  if(q.stage===4&&(!source?.ready(art.image)||art.frameCount!==24||art.columns!==6||!castleRuns(art,a)))return null;
+  const ar=Object.freeze({...art,cells:art.cells&&Object.freeze(art.cells.map(c=>Object.freeze([...c]))),framesByPhase:art.framesByPhase&&Object.freeze(Object.fromEntries(Object.entries(art.framesByPhase).map(([k,v])=>[k,Object.freeze([...v])])))});
+  return Object.freeze({actor:q.actor,seg:q.seg,start:s.tick,plan:p,art:ar,offlineOnly:!nativeOnly,p1Native:nativeOnly,stage2Source:q.stage===2,stage3Source:q.stage===3,...(q.stage===4?{stage4Source:true}:{})});
  }
  const fit=(x,a,b)=>Math.max(a,Math.min(b,x));
  function stage2Plan(q,s,side){
@@ -110,8 +114,28 @@
   return Object.freeze({ok:true,theme:q.theme,difficulty:s.difficulty,stage3Source:true,area,
    side:side>=0?1:-1,timing:Object.freeze(clock),draw:Object.freeze([x,y,w,h]),seg:q.seg});
  }
+ function stage4Plan(q,s,side){
+  if(!Object.hasOwn(B.target,s.difficulty))return null;
+  const clock=s.difficulty==='hell'?[65,16,25]:s.difficulty==='normal'?[76,19,28]:[88,22,32];
+  const claw=q.seg===44,w=claw?308:316,h=claw?356:q.seg===47?423:451;
+  const x=fit(Number(s.boss?.x)||180,claw?162:174,claw?198:186)-w/2;
+  const y=claw?fit((Number(s.boss?.y)||108)-44,61,119):q.seg===47?78:85;
+  return Object.freeze({ok:true,theme:q.theme,difficulty:s.difficulty,stage4Source:true,area,
+   side:side>=0?1:-1,timing:Object.freeze(clock),draw:Object.freeze([x,y,w,h]),seg:q.seg});
+ }
+ function castleRuns(art,expect){
+  if(art.cellWidth!==192||art.cellHeight!==192||!Array.isArray(expect.contactRuns)||expect.contactRuns.length!==24||art.contactRuns!==expect.contactRuns)return false;
+  return ['telegraph','active','decay'].every(k=>Array.isArray(art.framesByPhase?.[k])&&
+   art.framesByPhase[k][0]===expect.framesByPhase[k][0]&&art.framesByPhase[k][1]===expect.framesByPhase[k][1]);
+ }
+ function castleHas(ranges,ix,iy){
+  const point=iy*192+ix;
+  let lo=0,hi=ranges.length/2-1;
+  while(lo<=hi){const mid=(lo+hi)>>1,j=mid*2;if(point<ranges[j])hi=mid-1;else if(point>ranges[j+1])lo=mid+1;else return true;}
+  return false;
+ }
  function stage2Frame(e,s){
-  if(!(e?.stage2Source||e?.stage3Source)||s?.seg!==e.seg||s.stage!=='card'||s.cardEnding||s.cardDown||!(s.boss?.hp>0)||s.boss.actor!==e.actor)return null;
+  if(!(e?.stage2Source||e?.stage3Source||e?.stage4Source)||s?.seg!==e.seg||s.stage!=='card'||s.cardEnding||s.cardDown||!(s.boss?.hp>0)||s.boss.actor!==e.actor)return null;
   const f=B.phaseAt(e.plan,s.tick-e.start);if(!f)return null;
   const a=e.art.framesByPhase[f.name],p=f.local/Math.max(1,f.duration-1);
   return {phase:f.name,frame:Math.round(a[0]+p*(a[1]-a[0]))};
@@ -129,18 +153,18 @@
  function stage2Hit(e,s){
   const f=stage2Frame(e,s),{x,y}=s.player||{};
   if(f?.phase!=='active'||!Number.isFinite(x)||!Number.isFinite(y))return false;
-  if(e.seg===13||e.seg===29){
+  if(e.seg===13||e.seg===29||e.stage4Source){
    const [dx,dy,w,h]=e.plan.draw,a=e.art;
    const ix=Math.floor((e.plan.side<0?dx+w-x:x-dx)*a.cellWidth/w),iy=Math.floor((y-dy)*a.cellHeight/h);
-   if(ix<0||iy<0||ix>=a.cellWidth||iy>=a.cellHeight||!a.contact[f.frame].includes(iy*a.cellWidth+ix))return false;
+   if(ix<0||iy<0||ix>=a.cellWidth||iy>=a.cellHeight||!(e.stage4Source?castleHas(a.contactRuns[f.frame],ix,iy):a.contact[f.frame].includes(iy*a.cellWidth+ix)))return false;
   }
   // Chromium DPR2 rendered the silk's fine fringe below the visible hit floor
   // even at predicted alpha 106. Keep contact in its more opaque source ink.
-  const threshold=e.seg===29?184:e.stage3Source?132:e.seg===13?158:e.seg===18?124:104;
+  const threshold=e.seg===29?184:e.stage3Source?132:e.seg===13?158:e.seg===18?124:e.stage4Source?158:104;
   return !!source?.test({event:e,state:s,painter:stage2Paint,x,y,threshold});
  }
  function paint(ctx,event,s){
-  if(event?.stage2Source||event?.stage3Source)return stage2Paint(ctx,event,s);
+  if(event?.stage2Source||event?.stage3Source||event?.stage4Source)return stage2Paint(ctx,event,s);
   if(event?.plan.theme!=='sequential-rootlets')return B.paint(ctx,event,s);
   const ph=B.phaseAt(event.plan,s.tick-event.start),group=B.impactIndex(event.plan,ph);
   const shim=new Proxy(ctx,{
@@ -170,5 +194,5 @@
   });
   return B.paint(shim,event,s);
  }
- return Object.freeze({specs,verified,identity,plan,make,hit:(e,s)=>(e?.stage2Source||e?.stage3Source)?stage2Hit(e,s):B.hit(e,s,paint),paint,held:!nativeOnly});
+ return Object.freeze({specs,verified,identity,plan,make,hit:(e,s)=>(e?.stage2Source||e?.stage3Source||e?.stage4Source)?stage2Hit(e,s):B.hit(e,s,paint),paint,held:!nativeOnly});
 });
