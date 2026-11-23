@@ -604,6 +604,7 @@ async function mobile(browser,width,height){
     reports.push({stage5:await require('./check-stage5-source-browser-v43.cjs')(browser,baseURL,out)});
     reports.push({stage6:await require('./check-stage6-source-browser-v43.cjs')(browser,baseURL,out)});
     reports.push({stage7:await require('./check-stage7-source-browser-v43.cjs')(browser,baseURL,out)});
+    reports.push({stage8:await require('./check-stage8-source-browser-v43.cjs')(browser,baseURL,out)});
     fs.writeFileSync(path.join(out,'report.json'),JSON.stringify({passed:true,reports},null,2));console.log(JSON.stringify(reports,null,2));
   }catch(e){fs.writeFileSync(path.join(out,'report.json'),JSON.stringify({passed:false,reports,error:e.stack},null,2));throw e;}
   finally{if(browser)await browser.close();await new Promise(r=>server.close(r));}
