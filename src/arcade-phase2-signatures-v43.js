@@ -228,6 +228,15 @@
   // alpha ≥80, frames 2–6. Frames 0 and 1 contain no substantial brush stroke.
   const slashWarningPose=Object.freeze([null,null,[232.918,155.324,-.438,41],[210.594,164.192,-.318,80],
     [185.766,176.198,-.416,134],[168.314,184.372,-.409,184],[154.566,190.495,-.402,241]]);
+  // Same registered ink axis for the existing active blade frames (7–11).
+  const slashActivePose=Object.freeze([[152.935,191.625,-.404,278],[153.456,191.689,-.401,282],
+    [153.461,192.087,-.402,282],[152.849,192.686,-.400,282],[153.744,192.503,-.402,280]]);
+  // Register each original recovery frame to the same axis. Keep its
+  // natural contraction by using the active source span as the fade scale.
+  const slashDecayPose=Object.freeze([[153.657,192.552,-.401],[152.969,192.855,-.399],[153.127,192.484,-.399],
+    [152.888,192.572,-.398],[152.554,192.504,-.398],[153.475,192.120,-.396],[154.205,191.786,-.395],
+    [155.707,191.420,-.394],[157.903,191.141,-.388],[166.387,188.940,-.399],[170.972,187.624,-.457],
+    [170.469,187.463,-.505]].map(p=>Object.freeze([...p,280])));
   function slashPoint(p,v){
     const r=p.area;
     return [r.x0+(r.x1-r.x0)*(.51+p.side*(v-.45)*.74-.045*Math.sin(7*v)),r.y0+(r.y1-r.y0)*v];
@@ -331,15 +340,17 @@
       }else if(a.style==='impactTile') {
         const lobes=[[.27,.50],[.65,.70],[.62,.21]];
         lobes.forEach(([x,y],i)=>tile(r.x0+W*x,r.y0+H*y,0,W*(1.37-.20*i),W*(1.37-.20*i),frame));
-      }else if(p.theme==='spatial-slash'&&ph.name==='telegraph'&&a.cellWidth===288&&a.cellHeight===384){
-        const pose=slashWarningPose[frame];
+      }else if(p.theme==='spatial-slash'&&a.cellWidth===288&&a.cellHeight===384){
+        const warning=ph.name==='telegraph';
+        const pose=warning?slashWarningPose[frame]:ph.name==='active'?slashActivePose[frame-7]:slashDecayPose[frame-12];
         if(pose){
-          const [cx,cy,sourceAngle,span]=pose,reach=.36+.60*Math.sqrt(progress);
-          const [x0,y0]=slashPoint(p,.12),[x1,y1]=slashPoint(p,reach);
+          const [cx,cy,sourceAngle,span]=pose,reach=warning?.36+.60*Math.sqrt(progress):.94;
+          const [x0,y0]=slashPoint(p,warning?.12:.08),[x1,y1]=slashPoint(p,reach);
           const dx=x1-x0,dy=y1-y0;
           ctx.save();try{
             ctx.translate((x0+x1)/2,(y0+y1)/2);ctx.rotate(Math.atan2(-dy,-dx));
-            ctx.scale(Math.hypot(dx,dy)*.93/span,p.side>0?-.75:.75);ctx.rotate(-sourceAngle);ctx.translate(-cx,-cy);
+            const transverse=warning?.75:1.12;
+            ctx.scale(Math.hypot(dx,dy)*.93/span,p.side>0?-transverse:transverse);ctx.rotate(-sourceAngle);ctx.translate(-cx,-cy);
             src(frame,0,0,a.cellWidth,a.cellHeight);
           }finally{ctx.restore();}
         }
