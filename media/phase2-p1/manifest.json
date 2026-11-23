@@ -354,5 +354,121 @@
         23
       ]
     }
+  },
+  "grave-mid-stitched-shroud": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "anchor": [
+      96,
+      43
+    ],
+    "theme": "grave-mid-stitched-shroud",
+    "artId": "stage5-stitched-shroud",
+    "sha256": "eaf988e02d5e33a0fd8c9e4f97a60150e6252d40d7fd01b3bb57ac53b5e939f7",
+    "path": "media/phase2-p1/grave-mid-stitched-shroud-seg53.webp",
+    "url": "media/phase2-p1/grave-mid-stitched-shroud-seg53.webp?v=eaf988e02d5e",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        12
+      ],
+      "active": [
+        13,
+        18
+      ],
+      "decay": [
+        19,
+        23
+      ]
+    },
+    "contactWindows": [
+      [
+        13,
+        18
+      ]
+    ]
+  },
+  "grave-armor-mounds": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "anchor": [
+      96,
+      105
+    ],
+    "theme": "grave-armor-mounds",
+    "artId": "stage5-armor-mounds",
+    "sha256": "492ac4ea33f7e1e0488031a57ecb408b74ac5faefa7f73eadceeff26a2d5d265",
+    "path": "media/phase2-p1/grave-armor-mounds-seg56.webp",
+    "url": "media/phase2-p1/grave-armor-mounds-seg56.webp?v=492ac4ea33f7",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        12
+      ],
+      "active": [
+        13,
+        18
+      ],
+      "decay": [
+        19,
+        23
+      ]
+    },
+    "contactWindows": [
+      [
+        13,
+        18
+      ]
+    ]
+  },
+  "grave-comrade-delayed-echo": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "anchor": [
+      96,
+      55
+    ],
+    "theme": "grave-comrade-delayed-echo",
+    "artId": "stage5-delayed-echo",
+    "sha256": "1fb0e35c9dc7f1fcf738341201a4f2411445b324ce24de869f54646bf24aa107",
+    "path": "media/phase2-p1/grave-comrade-delayed-echo-seg58-v2.webp",
+    "url": "media/phase2-p1/grave-comrade-delayed-echo-seg58-v2.webp?v=1fb0e35c9dc7",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        8
+      ],
+      "active": [
+        9,
+        18
+      ],
+      "decay": [
+        19,
+        23
+      ]
+    },
+    "contactWindows": [
+      [
+        9,
+        11
+      ],
+      [
+        12,
+        14
+      ],
+      [
+        16,
+        18
+      ]
+    ]
   }
 }
