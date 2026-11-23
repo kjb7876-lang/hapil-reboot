@@ -1,0 +1,88 @@
+(function(root,art){if(typeof module==="object"&&module.exports)module.exports=art;else root.HapilPhase2P1Art=art;})(typeof globalThis==="undefined"?this:globalThis,Object.freeze({
+  "root-tracer": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 256,
+    "cellHeight": 256,
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        7
+      ],
+      "active": [
+        8,
+        15
+      ],
+      "decay": [
+        16,
+        23
+      ]
+    },
+    "theme": "root-tracer",
+    "artId": "root-tracer-r1",
+    "sha256": "a70bd5f35660fb4570c3b182da2318431f74629e05e850b6fe3580b07f349036",
+    "path": "media/phase2-p1/root-tracer-r1.webp",
+    "url": "media/phase2-p1/root-tracer-r1.webp?v=a70bd5f35660"
+  },
+  "sequential-rootlets": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 320,
+    "cellHeight": 320,
+    "theme": "sequential-rootlets",
+    "artId": "p1-approaching-roots",
+    "sha256": "53de373cb031d2944d9483bbec503a74b8ed1f6b9719bf3dd7ad2edf5c4bc6e1",
+    "path": "media/phase2-p1/p1-seg6-approaching-roots-r1.webp",
+    "url": "media/phase2-p1/p1-seg6-approaching-roots-r1.webp?v=53de373cb031"
+  },
+  "single-heavy-root": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 320,
+    "cellHeight": 320,
+    "theme": "single-heavy-root",
+    "artId": "p1-thick-root",
+    "sha256": "90ee12ccaf3ffe289e16e35a22a85cc9914d1e71b358ab6724624e4cfc962461",
+    "path": "media/phase2-p1/p1-seg8-thick-root-r1.webp",
+    "url": "media/phase2-p1/p1-seg8-thick-root-r1.webp?v=90ee12ccaf3f"
+  },
+  "feather-erasure": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 4,
+    "cellWidth": 256,
+    "cellHeight": 256,
+    "theme": "feather-erasure",
+    "artId": "lucifer-feather-erasure",
+    "sha256": "d12f2982d4c5f04bc1cc8f6342543ebb061932a1a6d50004991308b0c73f9a2b",
+    "path": "media/phase2-p1/lucifer-feather-erasure-24f.webp",
+    "url": "media/phase2-p1/lucifer-feather-erasure-24f.webp?v=d12f2982d4c5"
+  },
+  "inscription-collapse": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 4,
+    "cellWidth": 256,
+    "cellHeight": 256,
+    "theme": "inscription-collapse",
+    "artId": "lucifer-black-inscription",
+    "sha256": "e083e1ab7bcf95eb74f5860107353797a624fb5ba3e6e5cf31b607e1577fdb8d",
+    "path": "media/phase2-p1/lucifer-black-inscription-24f.webp",
+    "url": "media/phase2-p1/lucifer-black-inscription-24f.webp?v=e083e1ab7bcf"
+  },
+  "hope-mask-peel": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 4,
+    "cellWidth": 256,
+    "cellHeight": 256,
+    "theme": "hope-mask-peel",
+    "artId": "lucifer-hope-mask-peel",
+    "sha256": "8b7c2c7159373e13f6efdd7eb9404f8fae83e89337cd73738d551f6d7497af20",
+    "path": "media/phase2-p1/lucifer-hope-mask-peel-24f.webp",
+    "url": "media/phase2-p1/lucifer-hope-mask-peel-24f.webp?v=8b7c2c715937"
+  }
+}));

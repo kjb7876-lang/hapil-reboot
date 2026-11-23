@@ -25,7 +25,7 @@
     var g=segment(s),slot=native.slotFor(s.seg);
     if(!slot||slot.actor!==g.actor)return native.step(s,null);
     var here=STAGES[g.stage],p=livePhaseOf(s,s.seg);
-    return native.step(s,{actor:g.actor,stage:g.stage+1,scene:String(here.scene),mid:g.mid,role:g.mid?'midboss':g.stage===partFinalStage(here.part)?'episode':'main',ordinal:p?p.no-1:-1,
+    return native.step(s,{actor:g.actor,stage:g.stage+1,scene:String(here.scene),mid:g.mid,role:g.mid?'midboss':g.stage===partFinalStage(here.part)?'episode':'main',ordinal:p?p.no-1:-1,preFire:s.segTick<=cardFireDelay(s)||s.formHold===s.tick,
       legacyBusy:!!(s.sp&&s.sp.cur||s.boss.downHold>0||s.figures.length||s.lasers.length||s.weapons.length||s.cannons.length||s.risers&&s.risers.some(function(r){return !r.fade;}))});
   }
   var rhythmContext=null;
@@ -2760,7 +2760,7 @@
       // 준비를 마친 첫 카드만 이름 표시용 FIRE_DELAY를 생략한다. 이후 카드의 40틱 예고는 그대로다.
       clearBossEntranceHazards(s);beginCard(s);entrance.releasedTick=s.tick;
       // Exact follow-on cards may insert one warning before the first legacy volley, not over a live barrage.
-      if(!signatureOn&&nativeP2?.slotFor(s.seg)?.extra&&phase2Step(nativeP2,s)){signatureOn=true;sweeping=true;}
+      if(!signatureOn&&(nativeP2?.slotFor(s.seg)?.extra||nativeP2?.slotFor(s.seg)?.p1)&&phase2Step(nativeP2,s)){signatureOn=true;sweeping=true;}
     }
     if(input&&input.bomb)useBomb(s);
     bombPulse(s);
