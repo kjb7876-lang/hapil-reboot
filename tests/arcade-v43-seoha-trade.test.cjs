@@ -47,7 +47,7 @@ test('life heart with full lives turns into a bomb, then score (same order as se
 
 test('the app migrates old Seoha settings 1..7 to 1..3 and defaults to the top step',()=>{
  const app=read('src/arcade-app-v43.js'),sp=read('src/arcade-spirit-v43.js');
- assert(/abilitySeoha:3,abilityV:3/.test(app),'default top step, settings version 3');
+ assert(/abilitySeoha:3,abilitySeohaB:7,abilityV:4/.test(app),'separate default top steps, settings version 4');
  assert(/k==='abilitySeoha'&&!\(saved\.abilityV>=3\)\)settings\[k\]=Math\.ceil\(settings\[k\]\*SEOHA_MAX\/7\)/.test(app));
  const mig=v=>Math.ceil(v*3/7);assert.deepEqual([0,1,2,3,4,5,6,7].map(mig),[0,1,1,2,2,3,3,3]);
  assert(/e==='lifeHeart'/.test(sp)&&/목숨 \+1/.test(sp),'the life heart is announced on screen');
