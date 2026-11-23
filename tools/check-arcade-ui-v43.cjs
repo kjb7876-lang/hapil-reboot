@@ -520,6 +520,7 @@ async function mobile(browser,width,height){
     reports.push({phase2ExtraMobile:await require("./check-phase2-extra-browser-v43.cjs")(browser,baseURL,out)});
     reports.push({balrogThreeCuts:await require("./check-balrog-three-cuts-browser-v43.cjs")(browser,baseURL,out)});
     reports.push({phase2P1Mobile:await require("./check-phase2-extra-browser-v43.cjs")(browser,baseURL,out,{p1:true})});
+    reports.push({stage2:await require('./check-stage2-source-browser-v43.cjs')(browser,baseURL,out)});
     fs.writeFileSync(path.join(out,'report.json'),JSON.stringify({passed:true,reports},null,2));console.log(JSON.stringify(reports,null,2));
   }catch(e){fs.writeFileSync(path.join(out,'report.json'),JSON.stringify({passed:false,reports,error:e.stack},null,2));throw e;}
   finally{if(browser)await browser.close();await new Promise(r=>server.close(r));}
