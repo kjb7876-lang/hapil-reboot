@@ -214,7 +214,7 @@
      서하 시간제어: 단계마다 적탄이 11%씩 느려진다(7단계 77%), 서하 이동도 같은 비율로 느려진다.
      기억사수 저속: 적탄 둔화 대신 자기 피해 ×FOCUS_POWER, 필살 게이지 ×FOCUS_GAUGE. */
   /* 서하 3단계(사용자 11-20 20:57 KST "윤서하 수련생 초능력 3단계를 최고단계로하고 11-33프로로 맞춰 대신 하트수집 2배적용하고 보스 클리어시 큰하트가 나오는데 큰하트는 목숨을 추가로 1개더줘 그리고 레벨업이 2배로 빨라"):
-     서하 시간제어는 1~3단계(11·22·33%)만. 기억사수는 7단계 그대로. 대신 서하는 하트 값 SEOHA_HEART 배, 기억(exp) SEOHA_EXP 배,
+     수련생 및 여정 통합 폼의 시간제어는 1~3단계(11·22·33%). 별도 선택 각성 영웅과 기억사수는 7단계. 대신 서하는 하트 값 SEOHA_HEART 배, 기억(exp) SEOHA_EXP 배,
      보스(중간보스 아님) 마지막 패턴 격파 때 큰 하트가 꼭 떨어지고 그 큰 하트는 목숨 하나를 더 준다(목숨이 가득이면 필살기, 그것도 가득이면 점수: 봉인 조각과 같은 순서). */
   var SEOHA_ABILITY_MAX=3,SEOHA_HEART=2,SEOHA_EXP=2,SEOHA_TRAINEE_GAUGE=1.77;
   var ABILITY_MAX=7,ABILITY_POWER=.11,ABILITY_HASTE=.055,ABILITY_SLOW=.11,FOCUS_POWER=1.3,FOCUS_GAUGE=1.5;
@@ -232,7 +232,7 @@
      보스는 연쇄 과녁이 아니고, 보스 쪽 휨은 SEEK_BOSS·LOCK_BOSS 로 아주 약하게 건다(보스 체력 소모가 조준 실력과 무관하게 크게 늘지 않게). */
   var SEEK_R=64,SEEK_STEER=1.1,LOCK_R=300,LOCK_STEER=7,LOCK_BOSS=.4,SEEK_BOSS=.2,CHAIN_GAP=5,CHAIN_HOPS=3,CHAIN_REACH=118,CHAIN_DMG=.45,CHAIN_DECAY=.7;
   var CHARGE_EVERY=4,CHARGE_ARC=.35,CHARGE_REACH=96,TIMEBOMB_EVERY=36,TIMEBOMB_FUSE=42,TIMEBOMB_MULT=0,TIMEBOMB_SPLASH=.6,TIMEBOMB_R=52,TIMEBOMB_CAP=8,SHOT_HITS_CAP=96;
-  function abilityMax(s){return isSeohaHero(s)?SEOHA_ABILITY_MAX:ABILITY_MAX;}
+  function abilityMax(s){return s&&s.hero==='seoha'?SEOHA_ABILITY_MAX:ABILITY_MAX;}
   function abilityLevel(s){var l=s&&s.ability|0,m=abilityMax(s);return l<0?0:l>m?m:l;}
   function setAbility(s,level){s.ability=Math.max(0,Math.min(abilityMax(s),Math.round(Number(level)||0)));return s.ability;}
   /* 사용자 11-20 "서하 능력조절 시간제어는 저속 누르고 있을때만 발동 … 원밖에서는 설정발동 원안에서는 패시브+설정발동 중첩": 서하 시간제어는 초능력(저속)을 누른 동안에만 켜진다.
@@ -1077,11 +1077,12 @@
     var selectedHero=heroProfile(options);
     var s={revision:43,entranceAll:options.entranceAll===true,srng:((options.seed|0)*2246822519+374761393)>>>0||7,hero:selectedHero?selectedHero.id:'memory',rhythm:options.rhythm===true,paced:options.pacing===true||(options.pacing!==false&&!Number.isInteger(options.segment)),difficulty:difficulty,rules:rules,compact:compact,density:rules.density*(compact?COMPACT_DENSITY:1),sizeScale:(compact?COMPACT_SIZE:1)*(options.entranceAll===true?LIVE_GROW*(compact?LIVE_MOBILE.size:1):1),cap:compact?(options.entranceAll===true?Math.round(COMPACT_CAP*LIVE_MOBILE.cap):COMPACT_CAP):CAP,
       seed:(options.seed>>>0)||1,rng:(options.seed>>>0)||1,tick:0,stage:'break',stageTick:BREAK_TICKS-30,seg:startSeg-1,segTick:0,stageIndex:SEGMENTS[startSeg].stage,spellNumber:0,
-      ability:Math.max(0,Math.min(selectedHero&&(selectedHero.id==='seoha'||selectedHero.id==='seoha-b')?SEOHA_ABILITY_MAX:ABILITY_MAX,options.ability|0)),player:{x:W/2,y:H-84,hp:rules.hp,maxHp:rules.hp,invulnerableUntil:0,r:rules.radius,focus:false},
+      ability:0,player:{x:W/2,y:H-84,hp:rules.hp,maxHp:rules.hp,invulnerableUntil:0,r:rules.radius,focus:false},
       boss:{x:W/2,y:-60,targetX:W/2,targetY:132,hp:1,maxHp:1,actor:'',name:'',mid:false,hitTick:-99,leaving:false,present:false,down:null},
       bossOnly:!!options.bossOnly,spellOnly:!!(options.spellOnly&&SEGMENTS[startSeg].kind==='card'),spellSeg:startSeg,rushStage:SEGMENTS[startSeg].stage,bombs:rules.bombs,gauge:0,spellClean:false,captures:0,itemsTaken:0,lane:undefined,
       n:0,enemyShotsBorn:0,shotBudget:{seg:-1,wave:0,card:0,crowd:0},mobVolley:false,drifted:[],mobDrops:0,hearts:0,pieces:0,gets:[],lastCapture:null,jackpots:0,lastJackpot:null,dropped:0,peak:0,score:0,graze:0,hits:0,kills:0,cleared:0,timeouts:0,events:[],cancelled:[],pops:[],lasers:[],mobs:[],cannons:[],weapons:[],brood:null,warned:false,sn:0,itemCount:0,
       lastStage:STAGES.length-1,lastWipe:-1e9,started:false,results:[],bombsUsed:0,autoBombs:0,distorts:0,orbsBroken:0,orbSerial:0,orbFragments:0,bombPulse:null,pulseInfo:null,noDistort:options.distort===false,drng:((((options.seed>>>0)||1)*2246822519)^0x9e3779b9)>>>0||7,power:1,exp:0,expRemainder:0,bombLevel:1,fills:0,hasteUntil:-1,zaps:[],skillFx:[],fsSwords:[],fsNext:0,fsLabelTick:-1e9,fsCasts:0,fsHits:0,frng:((((options.seed>>>0)||1)*3266489917)^0x85ebca6b)>>>0||11,lastBomb:null,mark:{tick:0,score:0,hits:0,bombs:0,captures:0,spells:0}};
+    setAbility(s,options.ability|0);
     if(Number.isInteger(options.stages)&&options.stages>0)s.lastStage=Math.min(STAGES.length-1,s.stageIndex+options.stages-1);
     ['bx','by','ba','bs','bturn','bacc','bmin','bmax','barg','bs2','bspin','bhp'].forEach(function(k){s[k]=new Float32Array(CAP);});
     ['bage','blife','bat','bgrace'].forEach(function(k){s[k]=new Uint16Array(CAP);});

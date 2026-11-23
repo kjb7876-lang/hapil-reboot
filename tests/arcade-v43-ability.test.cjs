@@ -6,9 +6,9 @@ const h=require('./helpers/arcade-v43.cjs'),{idle,put,read}=h;
 const A=()=>h.need();
 const near=(x,y)=>Math.abs(x-y)<1e-4; // 탄 자리는 Float32
 
-test('ability defaults to off and is clamped: Memory 0..7, Seoha 0..3 (user 11-20 "3단계를 최고단계로")',()=>{
+test('ability defaults to off and is clamped: Memory/awakened 0..7, trainee 0..3 (user 11-20 "3단계를 최고단계로")',()=>{
  const a=A();assert.equal(a.ABILITY_MAX,7);assert.equal(a.SEOHA_ABILITY_MAX,3);
- for(const [hero,max] of [['memory',7],['seoha',3],['seoha-b',3]]){const s=idle({hero});assert.equal(s.ability,0);const o=a.abilityOf(s);assert(near(o.damage,1)&&near(o.bulletSpeed,1)&&near(o.move,1),hero+' off = unchanged game');
+ for(const [hero,max] of [['memory',7],['seoha',3],['seoha-b',7]]){const s=idle({hero});assert.equal(s.ability,0);const o=a.abilityOf(s);assert(near(o.damage,1)&&near(o.bulletSpeed,1)&&near(o.move,1),hero+' off = unchanged game');
   assert.equal(a.setAbility(s,99),max);assert.equal(a.setAbility(s,-3),0);assert.equal(idle({hero,ability:12}).ability,max);assert.equal(a.abilityMax(s),max);}
  const s=idle({hero:'seoha'});s.ability=7;assert(near(a.abilityOf(s,true).bulletSpeed,.67),'a stale 7 is read as the top step 3');
 });
@@ -31,7 +31,7 @@ test('Seoha time control works only while the psi (focus) button is held: 11/22/
  const inside0=fly(0,true,12),inside3=fly(3,true,12);assert(inside0<1&&near(inside3/inside0,.67),'held, inside the circle: passive slow × setting');
  const walk=(l,focus)=>{const t=idle({hero:'seoha',ability:l});const x0=t.player.x;a.step(t,{dx:50,dy:0,focus});return t.player.x-x0;};
  assert(near(walk(3,false)/walk(0,false),1)&&near(walk(3,true)/walk(0,true),.67),'Seoha slows only while held');
- assert(near(a.abilityOf(idle({hero:'seoha-b',ability:3}),true).bulletSpeed,.67),'Seoha (B) shares the trait');
+ assert(near(a.abilityOf(idle({hero:'seoha-b',ability:3}),true).bulletSpeed,.67),'existing awakened levels 1–3 are unchanged');
 });
 
 test('focus: Seoha keeps the stronger slow field; Memory Gunner gets damage and bomb charge instead',()=>{

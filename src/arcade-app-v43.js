@@ -36,7 +36,7 @@
   var state=null,mode='title',difficulty='normal',accumulator=0,lastStamp=0,visual=0,lastRun=null;
   var particles=[],spellDim=0,flash=0,hurtFlash=0,hurtRing=null,VERMILION='#a8382a',shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,SPELL_BANNER_TICKS=42,bannerSpell=false,bannerTitle='',bannerSub='',toast=null;
   var keys={},finger={active:false,id:null,x:0,y:0,relative:false,targetX:0,targetY:0},focusHeld=false,focusPointer=null,focusLatched=false,bombQueued=false;
-  var settings={music:true,sfx:true,hitSound:true,musicVolume:1,sfxVolume:1,screenShake:true,inkRedShots:true,lowQuality:false,abilityMemory:7,abilitySeoha:3,abilityV:3,keyFocus:'Shift',keyBomb:'KeyX'}; // 능력조절(사용자 11-20): 영웅별 0(끔)~7단계
+  var settings={music:true,sfx:true,hitSound:true,musicVolume:1,sfxVolume:1,screenShake:true,inkRedShots:true,lowQuality:false,abilityMemory:7,abilitySeoha:3,abilitySeohaB:7,abilityV:4,keyFocus:'Shift',keyBomb:'KeyX'}; // 능력조절(사용자 11-20): 영웅별 0(끔)~7단계
   var fx=null,music=null,best=0,bests={},lastSpell=null,drill=null,DRILL_KEY='hapil-arcade-v43-drill',lastItemSound=0,progress=Progress.fresh(),saveOk=true;
   var themeOverride=null,turbo=0,rushStage=false,oneCreditEligible=false;
   var Story=global.HapilArcadeStory||null,BossIntros=global.HapilArcadeBossIntros||null,story=null,storyQuiet=false,storySeen={},pauseReturn='playing',rulesReturn='title',storyArrivalActor='';
@@ -2382,19 +2382,34 @@
     ['abilityMemory','abilitySeoha'].forEach(function(k){if(typeof saved[k]==='number'&&isFinite(saved[k])){var v=Math.max(0,Math.min(7,Math.round(saved[k])));settings[k]=saved.abilityV>=2||v>0?v:7;
       if(k==='abilitySeoha'&&!(saved.abilityV>=3))settings[k]=Math.ceil(settings[k]*SEOHA_MAX/7);}}); // 서하 7단계→3단계(사용자 11-20): 옛 1~2→1, 3~4→2, 5~7→3, 끔은 끔
     settings.abilitySeoha=Math.min(SEOHA_MAX,settings.abilitySeoha);
+    // Keep a separate preference. v1/v2 had the original 0..7 scale; v3 shared the trainee cap.
+    // A v3 top-step choice returns to the awakened top step, but 0..2 and the trainee value stay unchanged.
+    if(typeof saved.abilitySeohaB==='number'&&isFinite(saved.abilitySeohaB))settings.abilitySeohaB=clampAbility(saved.abilitySeohaB,'seoha-b');
+    else if(!(saved.abilityV>=4)&&typeof saved.abilitySeoha==='number'&&isFinite(saved.abilitySeoha)){
+      var old=clampAbility(saved.abilitySeoha,'seoha-b');settings.abilitySeohaB=saved.abilityV>=3?(old>=SEOHA_MAX?clampAbility(7,'seoha-b'):old):saved.abilityV>=2||old>0?old:clampAbility(7,'seoha-b');}
     ['keyFocus','keyBomb'].forEach(function(k){if(typeof saved[k]==='string'&&keyOk(saved[k]))settings[k]=saved[k];});
     if(settings.keyFocus===settings.keyBomb){settings.keyFocus=KEY_DEFAULTS.keyFocus;settings.keyBomb=KEY_DEFAULTS.keyBomb;} // 저장값이 겹치면 기본값
     lite=settings.lowQuality;
   }
   /* 능력조절: 기억사수 출력조절(피해↑·적탄↑), 서하 시간제어(적탄↓·이동↓). 엔진 수치는 Arcade.abilityOf 가 정한다 */
   var SEOHA_MAX=Arcade.SEOHA_ABILITY_MAX||3; // 서하 시간제어 단계 수(엔진이 정한다)
-  function abilityFor(hero){return isSeoha(hero)?settings.abilitySeoha:settings.abilityMemory;}
-  function abilityText(k){var lv=settings[k]|0,o=$('value-'+k),n=$('note-'+k),seoha=k==='abilitySeoha';
+  function abilityKey(hero){return hero==='seoha-b'?'abilitySeohaB':hero==='seoha'?'abilitySeoha':'abilityMemory';}
+  function clampAbility(value,hero){return Math.max(0,Math.min(Arcade.abilityMax({hero:hero}),Math.round(Number(value)||0)));}
+  function abilityFor(hero){return settings[abilityKey(hero)];}
+  function controlHero(){return state?state.hero:selectedHero;}
+  function seohaControlHero(){return controlHero()==='seoha-b'?'seoha-b':'seoha';} // union uses the trainee control, not the separately selectable form
+  function abilityText(k,hero){var lv=abilityFor(hero)|0,o=$('value-'+k),n=$('note-'+k),seoha=isSeoha(hero);
     if(o)o.textContent=lv?T('abilityStep',{n:lv}):T('abilityOff');
-    if(n){if(!lv)n.textContent=T('abilityOffNote');else{var a=Arcade.abilityOf&&Arcade.abilityOf({hero:seoha?'seoha':'memory',ability:lv,player:{}},true);
+    if(n){if(!lv)n.textContent=T('abilityOffNote');else{var a=Arcade.abilityOf&&Arcade.abilityOf({hero:hero,ability:lv,player:{}},true);
       n.textContent=seoha?T('abilityTimeNote',{s:Math.round((1-(a?a.bulletSpeed:1))*100)}):T('abilityPowerNote',{d:Math.round(((a?a.damage:1)-1)*100),s:Math.round(((a?a.bulletSpeed:1)-1)*100)});}}}
-  function syncAbility(){['abilityMemory','abilitySeoha'].forEach(function(k){var e=$('setting-'+k);if(e)e.value=String(settings[k]|0);abilityText(k);});
-    var hero=state?state.hero:selectedHero,rm=$('ability-row-memory'),rs=$('ability-row-seoha');if(rm)rm.dataset.active=String(!isSeoha(hero)||!!(state&&state.union));if(rs)rs.dataset.active=String(isSeoha(hero));var rt=$('ability-trade-seoha');if(rt)rt.dataset.active=String(isSeoha(hero));
+  function syncAbility(){
+    var hero=controlHero(),sh=seohaControlHero(),rm=$('ability-row-memory'),rs=$('ability-row-seoha'),el=$('setting-abilitySeoha'),memory=$('setting-abilityMemory');
+    if(memory)memory.value=String(abilityFor('memory'));
+    if(el){var max=Arcade.abilityMax({hero:sh}),labelKey=sh==='seoha-b'?'abilityTimeAwakened':'abilityTime';
+      el.max=String(max);el.value=String(abilityFor(sh));el.style.setProperty('--steps',String(max));el.dataset.i18nLabel=labelKey;el.setAttribute('aria-label',T(labelKey));
+      var label=$('label-abilitySeoha');if(label){label.dataset.i18n=labelKey;label.textContent=T(labelKey);}}
+    abilityText('abilityMemory','memory');abilityText('abilitySeoha',sh);
+    if(rm)rm.dataset.active=String(!isSeoha(hero)||!!(state&&state.union));if(rs)rs.dataset.active=String(isSeoha(hero));var rt=$('ability-trade-seoha');if(rt)rt.dataset.active=String(isSeoha(hero));
     if(state&&Arcade.setAbility){Arcade.setAbility(state,abilityFor(state.hero));state.memoryAbility=settings.abilityMemory;}}
   function unlockAudio(){if(fx&&fx.unlock)fx.unlock();if(global.HapilMusic&&global.HapilMusic.unlock)global.HapilMusic.unlock();}
   function syncSettings(){
@@ -2418,7 +2433,7 @@
       if(k==='lowQuality'){lite=settings.lowQuality;if(Ink&&Ink.setLite)Ink.setLite(lite);framesSeen=0;frameMs=16;fit();buildSprites();if(state)initFx(themeOf(state.stageIndex).fx,state.stageIndex);}
       applySettings(true);if(k==='music'||k==='sfx')unlockAudio();});});
     ['musicVolume','sfxVolume'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('input',function(){settings[k]=Math.max(0,Math.min(1,Number(e.value)/100||0));applySettings(true);unlockAudio();});});
-    ['abilityMemory','abilitySeoha'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('input',function(){settings[k]=Math.max(0,Math.min(k==='abilitySeoha'?SEOHA_MAX:7,Math.round(Number(e.value)||0)));applySettings(true);});});
+    ['abilityMemory','abilitySeoha'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('input',function(){var hero=k==='abilitySeoha'?seohaControlHero():'memory';settings[abilityKey(hero)]=clampAbility(e.value,hero);applySettings(true);});});
   }
 
   /* 키 바꾸기(사용자 11-20 "초능력키랑 필살기(폭탄키) 임의로 다른키로 바꾸기 가능하게"): PC 키보드 전용. 키는 물리 위치(e.code)로 저장해 한글 입력기가 켜져도 같은 키로 읽는다.
