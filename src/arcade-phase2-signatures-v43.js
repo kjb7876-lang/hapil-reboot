@@ -1,7 +1,7 @@
 (function(root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory();
-  else root.HapilPhase2Local = factory();
-})(typeof globalThis === 'undefined' ? this : globalThis, function() {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./arcade-phase2-source-ink-v43.js'));
+  else root.HapilPhase2Local = factory(root.HapilPhase2Source);
+})(typeof globalThis === 'undefined' ? this : globalThis, function(Source) {
   'use strict';
   const limits=Object.freeze({mid:1,main:2,episode:3});
   const authored={
@@ -53,7 +53,6 @@
       return Math.min(a,b)+.05*Math.abs(u-.48+Math.sin(v*17)*.065)+.09*Math.max(v-.62,0);
     }
     if (key==='meteor') return Math.min(dist(.27,.50),dist(.65,.70),dist(.62,.21)+.045);
-    if (key==='spatial-slash') return Math.abs(u-(.51+side*(v-.45)*.74)+.045*Math.sin(7*v));
     if (key==='time-acceleration') return Math.abs(v-(.4+.29*u*side))*.65 + Math.abs(Math.sin(u*15+v*8))*.10;
     if (key==='falling-vehicles') return vehicleMetric(u,v,side)[0];
     if (key==='gravity') return Math.min(dist(.24,.36),dist(.73,.68));
@@ -72,6 +71,7 @@
     const a=safeBounds(w,side);
     const core={x:clamp(Math.round((boss?.x??(r.x0+r.x1)/2)-r.x0),0,w-1),
       y:clamp(Math.round((boss?.y??118)+10-r.y0),0,h-1)};
+    if(theme==='spatial-slash')return slashPlan(difficulty,r,a,side);
     if(theme==='flame-cone'&&core.x>=a[0]&&core.x<a[1])return {ok:false,reason:'root occupies safe corridor',theme};
     const rank=new Float32Array(N);const wanted=Math.round(target[difficulty]*N);
     let possible=0, max=0;
@@ -153,131 +153,111 @@
     return event&&s&&s.stage==='card'&&!s.cardEnding&&!s.cardDown&&!s.calm&&s.boss?.actor===event.actor&&s.boss.hp>0&&s.seg===event.seg&&event.art.image.complete&&event.art.image.naturalWidth>0&&(!event.art.alternateSpec||event.art.alternateSpec.image.complete&&event.art.alternateSpec.image.naturalWidth>0)&&phaseAt(event.plan,s.tick-event.start);
   }
   const impactIndex=(p,ph)=>p.landings&&ph?.name==='active'?Math.min(p.landings.length-1,Math.floor(ph.local/7)):null;
-  function hit(event,s) {
-    const ph=live(event,s);
-    return !!(ph&&ph.name==='active'&&contains(event.plan,s.player?.x,s.player?.y,impactIndex(event.plan,ph)));
+  function hit(event,s,painter=paint) {
+    const ph=live(event,s),x=s?.player?.x,y=s?.player?.y;
+    if(!ph||ph.name!=='active'||(event.plan.cuts&&ph.local!==0)||
+       !contains(event.plan,x,y,impactIndex(event.plan,ph)))return false;
+    return !!Source?.test({event,state:s,painter,x,y,threshold:104});
   }
-  // Trace the actual frozen hit-cell perimeter, rather than drawing a tinted fill.
-  // Closed directed paths (including holes) give SVG-like continuous strokes on Canvas.
-  const warningPaths=new WeakMap();
-  function warningLoops(rows,r) {
-    if(warningPaths.has(rows))return warningPaths.get(rows);
-    const w=r.x1-r.x0+1, edges=new Map();
-    const at=(x,y)=>(y-r.y0)*w+(x-r.x0),xy=id=>[r.x0+id%w,r.y0+Math.floor(id/w)];
-    function edge(x,y,d){const id=at(x,y);edges.set(id,(edges.get(id)||0)|(1<<d));}
-    function lacks(near,x){for(let i=0;i<near.length;i+=2){if(x<near[i])break;if(x<near[i+1])return false;}return true;}
-    for(let j=0;j<rows.length;j++){
-      const row=rows[j],y=r.y0+j,up=rows[j-1]||[],down=rows[j+1]||[];
-      for(let i=0;i<row.length;i+=2){
-        const a=row[i],b=row[i+1];edge(a,y+1,3);edge(b,y,1);
-        for(let x=a;x<b;x++){if(lacks(up,x))edge(x,y,0);if(lacks(down,x))edge(x+1,y+1,2);}
-      }
-    }
-    const moves=[1,w,-1,-w],out=[];
-    while(edges.size){
-      const [first,bits]=edges.entries().next().value;
-      let id=first,dir=Math.clz32(bits&-bits)^31;
-      const path=[...xy(first)];
-      do{
-        const remaining=edges.get(id)&~(1<<dir);
-        if(remaining)edges.set(id,remaining);else edges.delete(id);
-        id+=moves[dir];
-        if(id===first)break;
-        const next=edges.get(id)||0,n=[(dir+1)%4,dir,(dir+3)%4,(dir+2)%4].find(d=>next&(1<<d));
-        if(n===undefined)throw Error('open phase-two warning perimeter');
-        if(n!==dir)path.push(...xy(id));dir=n;
-      }while(id!==first);
-      if(path.length>=6)out.push(path);
-    }
-    warningPaths.set(rows,out);return out;
-  }
-  function paintWarning(ctx,p,ph) {
-    const age=ph.local, r=p.area, sets=p.theme==='falling-vehicles'?p.landings:[p.rows], opacity=ctx.globalAlpha;
-    // Do not cover the painted sheet: tightly dash opposing ink/paper lines
-    // over the existing background, in the same clip as the eventual damage.
-    for(let i=0;i<sets.length;i++){
-      const loops=warningLoops(sets[i],r);ctx.beginPath();
-      for(const a of loops){ctx.moveTo(a[0],a[1]);for(let j=2;j<a.length;j+=2)ctx.lineTo(a[j],a[j+1]);ctx.closePath();}
-      const current=Math.floor(age/Math.max(1,ph.duration/sets.length));
-      const strong=sets.length===1||i===current;
-      ctx.lineJoin='round';ctx.lineCap='round';
-      ctx.setLineDash?.([strong?8:5,strong?5:7]);ctx.lineDashOffset=-(age*.24+i*2);
-      ctx.globalAlpha=opacity*(strong?.84:.55);ctx.strokeStyle='#f2e9d6';ctx.lineWidth=strong?5:4;ctx.stroke();
-      ctx.globalAlpha=opacity*(strong?.97:.78);ctx.strokeStyle='#c2362a';ctx.lineWidth=strong?3.0:2.3;ctx.stroke();
-    }
-    ctx.setLineDash?.([]);ctx.globalAlpha=opacity;
-    if(sets.length>1){
-      // Strike order and landing center come from the same anchors used to
-      // draw the sedan/truck contact. Compact open corner marks, no carrier.
-      const w=r.x1-r.x0,h=r.y1-r.y0,next=Math.floor(age/Math.max(1,ph.duration/sets.length));
-      for(let i=0;i<sets.length;i++){
-        const [u,v]=truckCenters[i],x=r.x0+w*(p.side<0?1-u:u),y=r.y0+h*v;
-        if(!contains(p,x,y,i))continue;
-        const lead=i===next;
-        ctx.beginPath();
-        for(const z of [-1,1]){ctx.moveTo(x+z*16,y-8);ctx.lineTo(x+z*16,y+7);ctx.lineTo(x+z*9,y+13);}
-        ctx.globalAlpha=opacity*(lead?.72:.40);ctx.lineWidth=5;ctx.strokeStyle='#f2e9d6';ctx.stroke();
-        ctx.globalAlpha=opacity*(lead?1:.72);ctx.lineWidth=2.4;ctx.strokeStyle='#c2362a';ctx.stroke();
-        if(ctx.fillText){ctx.font='bold 17px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
-          ctx.strokeStyle='#f2e9d6';ctx.lineWidth=4;ctx.strokeText?.(String(i+1),x,y);ctx.fillStyle='#c2362a';ctx.fillText(String(i+1),x,y);}
-      }
-      ctx.globalAlpha=opacity;
-    }
-  }
-  // Source-frame center/axis/ink span measured from the actual slash donor,
-  // alpha ≥80, frames 2–6. Frames 0 and 1 contain no substantial brush stroke.
-  const slashWarningPose=Object.freeze([null,null,[232.918,155.324,-.438,41],[210.594,164.192,-.318,80],
-    [185.766,176.198,-.416,134],[168.314,184.372,-.409,184],[154.566,190.495,-.402,241]]);
-  // Same registered ink axis for the existing active blade frames (7–11).
-  const slashActivePose=Object.freeze([[152.935,191.625,-.404,278],[153.456,191.689,-.401,282],
-    [153.461,192.087,-.402,282],[152.849,192.686,-.400,282],[153.744,192.503,-.402,280]]);
-  // Register each original recovery frame to the same axis. Keep its
-  // natural contraction by using the active source span as the fade scale.
-  const slashDecayPose=Object.freeze([[153.657,192.552,-.401],[152.969,192.855,-.399],[153.127,192.484,-.399],
+  // Original unmodified atlas 21a67888ee3e…, frame 7: alpha≥120,
+  // a packed run per source row. No rectangular or padded contact envelope.
+  const slashDonorAlpha='//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7f.7h/7d.7f/79.7d/76.7a/6l.6o.70.71.73.78/6j.6n.6z.77/6k.6m.6y.75/6j.6m.6s.74/5i.5m.6i.6n.6q.72/5b.5c.5f.5i.6i.6z/59.5e.6i.6x/58.5c.6h.6w/56.5b.6f.6v/55.5a.68.6c.6d.6u/53.59.66.6u/52.59.69.6p/4s.4t.50.57.5i.5j.68.6n/4s.4u.4x.56.5g.5k.67.6m/4t.55.5b.5h.66.6l/4t.5f.64.6k/4t.5e.5t.5w.62.6j/4u.5e.5r.5u.60.6i/4u.5k.5o.5u.5v.6i.6q.6r/4u.6h.6o.6p/4t.6h.6m.6n/4s.6h.6k.6m/4r.6k/4q.6j/4o.6g/4m.6d/4m.4o.4t.6c/4s.6b/4s.5x.61.6a/4r.5w.60.6a/45.46.4q.5q.5w.5y.61.63.65.6a/44.45.4p.5n.60.62.65.69/44.45.4h.4i.4o.5k.65.68/43.45.4d.4h.4m.5i.64.67/43.45.4b.4f.4k.5g.64.67/42.45.4a.4e.4g.5f.63.66/42.44.46.5e.61.65/41.44.45.5d.60.61.63.65/40.5c.63.64/3z.5c.62.64/3y.5a.62.64/3w.59.61.62/3v.3y.40.58.60.61/3u.3w.3z.57/31.32.3z.57/2z.30.3y.5b/2x.2z.3x.50.51.58.59.5a/2t.2y.3w.4y.51.56/2s.2x.3r.3s.3u.4x.50.54/2r.2u.3q.4x.4y.53/2p.2t.3p.4v/2m.2s.3o.4u/2k.2q.3n.4t/2j.2o.3l.4t/2i.2m.3a.4s/2e.2l.3d.4r/2d.2l.3b.4r/2b.2k.2r.2t.30.32.36.4g.4l.4x/27.28.2a.2c.2d.2k.2p.4e.4m.4p.4u.4w/26.28.2d.2j.2n.4c.4m.4n/2c.2j.2l.41.44.49.4l.4m/2b.2j.2k.3z.45.47.4j.4l/2e.3v.44.46.4k.4l/2e.3q.43.44/2e.3o/2d.3m/2d.3k/2d.3j/2d.3c.3e.3i/2c.38.3e.3h/2c.36.3f.3j/2b.35.3f.3g.3h.3i/2a.34/29.33/1r.1s.27.32/26.31/1l.1o.1x.1y.24.30.31.32/1i.1l.1t.1y.1z.21.22.31/1e.1g.1h.1j.1t.2i.2m.2z/1d.1e.1u.2f.2n.2o.2u.2y/1b.1c.1t.2d.2u.2x/1a.1b.1s.2b.2t.2v/19.1a.1s.2d.2s.2u/18.19.1q.2a.2r.2s/17.18.1p.27/1n.26/1j.23.2n.2p/1a.1b.1h.22.2m.2n/14.15.1a.20/1b.1z/1b.1q.1u.1y/1a.1m.1u.1w/19.1k.1t.1v/17.1d.1g.1i.1s.1t/16.1a.1g.1h/13.18/z.16.1d.1e/z.14.1c.1d/x.10/v.y/t.w/r.t//m.o/k.m/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////';
+  const slashDonorRows=Object.freeze(slashDonorAlpha.split('/').map(r=>Object.freeze(r?r.split('.').map(v=>parseInt(v,36)):[])));
+  const slashWarnPose=[null,null,[232.918,155.324,-.438,41],[210.594,164.192,-.318,80],
+    [185.766,176.198,-.416,134],[168.314,184.372,-.409,184],[154.566,190.495,-.402,241]];
+  const slashImpactPoses=[[152.935,191.625,-.404,278],[153.456,191.689,-.401,282],
+    [153.461,192.087,-.402,282],[152.849,192.686,-.400,282],[153.744,192.503,-.402,280]];
+  const slashFadePoses=[[153.657,192.552,-.401],[152.969,192.855,-.399],[153.127,192.484,-.399],
     [152.888,192.572,-.398],[152.554,192.504,-.398],[153.475,192.120,-.396],[154.205,191.786,-.395],
     [155.707,191.420,-.394],[157.903,191.141,-.388],[166.387,188.940,-.399],[170.972,187.624,-.457],
-    [170.469,187.463,-.505]].map(p=>Object.freeze([...p,280])));
-  function slashPoint(p,v){
-    const r=p.area;
-    return [r.x0+(r.x1-r.x0)*(.51+p.side*(v-.45)*.74-.045*Math.sin(7*v)),r.y0+(r.y1-r.y0)*v];
+    [170.469,187.463,-.505]].map(p=>[...p,280]);
+  const slashTiming={gentle:[24,10,10,30,.70],easy:[24,10,10,30,.70],normal:[19,9,11,29,.89],hell:[16,8,11,28,1.07]};
+  function slashTransform(line,src,width,fraction=1){
+    const [x0,y0,x1,y1]=line,[sx,sy,angle,span]=src;
+    const dx=(x1-x0)*fraction,dy=(y1-y0)*fraction,t=Math.atan2(-dy,-dx);
+    return [x0+dx*.5,y0+dy*.5,Math.cos(t),Math.sin(t),Math.hypot(dx,dy)*.965/span,width,sx,sy,Math.cos(angle),Math.sin(angle)];
   }
-  function paintWarningMotion(ctx,p,progress) {
-    const r=p.area,w=r.x1-r.x0,h=r.y1-r.y0,t=p.theme,opacity=ctx.globalAlpha;
-    if(t!=='flame-cone'&&t!=='spatial-slash'&&t!=='gravity')return;
-    ctx.beginPath();
-    if(t==='flame-cone'){
-      const {x,y}=p.origin,reach=.25+.74*Math.sqrt(progress);
-      // The ribs share the actual five atlas projection endpoints and mouth.
-      for(const a of [-.48,-.30,-.085,.19,.45]){
-        const dx=r.x0+w*(.5+p.side*.12+a)-x,dy=r.y1-y;
-        ctx.moveTo(x,y);
-        for(let j=1;j<=18;j++){
-          const u=j/18*reach,s=Math.sin(u*10+a*17)*w*.014*u;
-          ctx.lineTo(x+dx*u+s,y+dy*u);
+  function slashMaskAt(t,x,y){
+    const [cx,cy,c,s,length,width,sx,sy,co,si]=t,dx=x-cx,dy=y-cy;
+    const along=(dx*c+dy*s)/length,cross=(-dx*s+dy*c)/width;
+    const u=Math.floor(sx+co*along-si*cross),v=Math.floor(sy+si*along+co*cross);
+    const row=slashDonorRows[v];if(!row)return false;
+    for(let i=0;i<row.length;i+=2)if(u>=row[i]&&u<row[i+1])return true;
+    return false;
+  }
+  function slashPlan(difficulty,r,a,side){
+    const w=r.x1-r.x0,h=r.y1-r.y0,off=(u)=>r.x0+w*(side>0?u:1-u);
+    const cuts=[[.19,.22,.42,.86],[.38,.15,.63,.92],[.61,.20,.86,.81]].map(([u,v,x,y])=>Object.freeze([off(u),r.y0+h*v,off(x),r.y0+h*y]));
+    const [beat,reveal,impact,decay,width]=slashTiming[difficulty];
+    const transforms=cuts.map(line=>slashTransform(line,slashImpactPoses[0],width));
+    const rows=[],byCut=cuts.map(()=>[]),countByCut=[0,0,0];let cells=0;
+    // Logical pixel-center sampling of the exact same affine donor transform used at the hit beat.
+    for(let y=r.y0;y<r.y1;y++){
+      const rr=[],per=[[],[],[]],starts=[-1,-1,-1];let start=-1;
+      for(let x=r.x0;x<r.x1;x++){
+        const safe=x>=r.x0+a[0]&&x<r.x0+a[1];let marked=false;
+        for(let k=0;k<3;k++){
+          const on=!safe&&slashMaskAt(transforms[k],x+.5,y+.5);
+          if(on){marked=true;countByCut[k]++;if(starts[k]<0)starts[k]=x;}
+          else if(starts[k]>=0){per[k].push(starts[k],x);starts[k]=-1;}
         }
+        if(marked){cells++;if(start<0)start=x;}
+        else if(start>=0){rr.push(start,x);start=-1;}
       }
-    }else if(t==='spatial-slash'){
-      // Use the exact diagonal mask axis; reveal in the actual atlas flip
-      // direction, not a generic center flash or a second hit region.
-      const reach=.44+.54*Math.sqrt(progress);
-      for(let j=0;j<=32;j++){
-        const [x,y]=slashPoint(p,.018+reach*j/32);
-        if(j===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
-      }
-    }else{
-      // Tiny converging ink strokes around each existing logical well.
-      for(const [u,v,flip] of [[.24,.36,1],[.73,.68,-1]]){
-        for(const d of [-1,1]){
-          const scale=.88+.10*Math.sin(progress*9+v*2),x=r.x0+w*u,y=r.y0+h*v;
-          ctx.moveTo(x+flip*d*27*scale,y+d*21*scale);
-          ctx.quadraticCurveTo(x+flip*d*15,y+d*32,x+flip*d*8,y+d*9);
-        }
-      }
+      for(let k=0;k<3;k++){if(starts[k]>=0)per[k].push(starts[k],r.x1);byCut[k].push(Object.freeze(per[k]));}
+      if(start>=0)rr.push(start,r.x1);rows.push(Object.freeze(rr));
     }
-    ctx.lineJoin='round';ctx.lineCap='round';ctx.setLineDash?.(t==='spatial-slash'?[10,6]:t==='flame-cone'?[6,8]:[]);
-    ctx.globalAlpha=opacity*(t==='spatial-slash'?.55:.30);ctx.lineWidth=t==='spatial-slash'?4.7:3.5;ctx.strokeStyle='#f2e9d6';ctx.stroke();
-    ctx.globalAlpha=opacity*(t==='spatial-slash'?.77:.51);ctx.lineWidth=t==='spatial-slash'?2.4:1.65;ctx.strokeStyle='#c2362a';ctx.stroke();
-    ctx.setLineDash?.([]);ctx.globalAlpha=opacity;
+    const coverage=cells/(w*h);
+    return Object.freeze({ok:true,theme:'spatial-slash',difficulty,area:Object.freeze(r),rows:Object.freeze(rows),
+      cuts:Object.freeze(cuts),cutRows:Object.freeze(byCut.map(Object.freeze)),countByCut:Object.freeze(countByCut),coverage,target:coverage,cells,
+      safeLane:Object.freeze([r.x0+a[0],r.x0+a[1]]),origin:null,side,landings:null,
+      revealBeat:beat,reveal,width,timing:Object.freeze([beat*2+reveal,impact,decay])});
+  }
+  function cutStatus(p,ph){
+    if(!p?.cuts||!ph)return null;
+    if(ph.name==='telegraph')return {visible:Math.max(0,Math.min(3,1+Math.floor(ph.local/p.revealBeat))),
+      full:Math.max(0,Math.min(3,1+Math.floor((ph.local-p.reveal)/p.revealBeat))),armed:false};
+    return {visible:3,full:3,armed:ph.name==='active'&&ph.local===0};
+  }
+  const exactCutPaths=new WeakMap();
+  function clipCutRows(ctx,rows,r){
+    if(typeof Path2D==='function'){
+      let path=exactCutPaths.get(rows);
+      if(!path){path=new Path2D();for(let y=0;y<rows.length;y++)for(let i=0;i<rows[y].length;i+=2)path.rect(rows[y][i],r.y0+y,rows[y][i+1]-rows[y][i],1);exactCutPaths.set(rows,path);}
+      ctx.clip(path);
+    }else{
+      ctx.beginPath();for(let y=0;y<rows.length;y++)for(let i=0;i<rows[y].length;i+=2)ctx.rect(rows[y][i],r.y0+y,rows[y][i+1]-rows[y][i],1);ctx.clip();
+    }
+  }
+  function paintSlash(ctx,p,ph,src) {
+    const hitBeat=ph.name==='active'&&ph.local===0, r=p.area, age=ph.local;
+    ctx.save();try{
+      // No separate telegraph, boxing, broad fill, or graphic outside the permitted arena.
+      ctx.beginPath();const lo=p.side>0?p.safeLane[1]:r.x0,hi=p.side>0?r.x1:p.safeLane[0];
+      ctx.rect(lo,r.y0,hi-lo,r.y1-r.y0);ctx.clip();
+      for(let i=0;i<3;i++){
+        let frame,fraction=1,opacity=1,pose;
+        if(ph.name==='telegraph'){
+          const u=(age-i*p.revealBeat)/p.reveal;
+          if(u<0)continue;
+          if(u>=1){frame=7;pose=slashImpactPoses[0];opacity=.86;}
+          else{frame=2+Math.min(4,Math.floor(u*5));pose=slashWarnPose[frame];fraction=.17+.82*u;opacity=.55+.31*u;}
+        }else if(ph.name==='active'){
+          frame=7+Math.min(4,Math.floor(age*5/ph.duration));pose=slashImpactPoses[frame-7];opacity=hitBeat?1:.90;
+        }else{
+          frame=12+Math.min(11,Math.floor(age*12/ph.duration));pose=slashFadePoses[frame-12];opacity=.57*(1-age/ph.duration);
+        }
+        const [cx,cy,c,s,len,w,sx,sy,co,si]=slashTransform(p.cuts[i],pose,p.width,fraction);
+        ctx.save();try{
+          if(hitBeat)clipCutRows(ctx,p.cutRows[i],r);
+          ctx.globalAlpha*=opacity;
+          if(hitBeat)ctx.imageSmoothingEnabled=false; // matches the source-alpha sample exactly on the logical grid.
+          ctx.transform(c*len,s*len,-s*w,c*w,cx,cy);ctx.transform(co,-si,si,co,0,0);ctx.translate(-sx,-sy);
+          src(frame,0,0,288,384);
+        }finally{ctx.restore();}
+      }
+    }finally{ctx.restore();}
+    return true;
   }
   function paint(ctx,event,s) {
     const ph=live(event,s); if(!ph)return false;
@@ -290,18 +270,15 @@
     const fspan=a.framesByPhase?.[ph.name]||span.map(v=>v*(a.frameCount-1));
     const frame=Math.min(a.frameCount-1,Math.round(fspan[0]+(fspan[1]-fspan[0])*u));
     function src(f,...to){f=clamp(f,0,a.frameCount-1);const cell=a.cells?a.cells[f]:[(f%a.columns)*a.cellWidth,Math.floor(f/a.columns)*a.cellHeight,a.cellWidth,a.cellHeight];ctx.drawImage(a.image,...cell,...to);}
+    if(p.cuts)return paintSlash(ctx,p,ph,src);
     function tile(x,y,angle,sx,sy,f){ctx.save();try{ctx.translate(x,y);ctx.rotate(angle);ctx.scale(sx/a.cellWidth,sy/a.cellHeight);src(f,-a.anchor[0],-a.anchor[1],a.cellWidth,a.cellHeight);}finally{ctx.restore();}}
     ctx.save();try{
       ctx.beginPath();
       const group=impactIndex(p,ph),rows=group===null?p.rows:p.landings[group];
       for(let y=0;y<rows.length;y++) {const l=rows[y];for(let i=0;i<l.length;i+=2)ctx.rect(l[i],r.y0+y,l[i+1]-l[i],1);}
       ctx.clip();
-      // A constant low backing is the exact threatened ground, even through transparent authored texture;
-      // visible emergency boundary/underlay is not an extra damage region outside the mask.
-      const before=ctx.globalAlpha;
-      if(ph.name!=='telegraph'){
-        ctx.globalAlpha*=tint;ctx.fillStyle=globalThis.HapilInk?.on?'#f2c46d':(a.boundaryTint||'#aa343b');ctx.fillRect(r.x0,r.y0,r.x1-r.x0,r.y1-r.y0);
-      }else{paintWarningMotion(ctx,p,progress);ctx.globalAlpha*=tint;}
+      // The actual inked atlas is the only visible attack footprint; no blanket underlay.
+      ctx.globalAlpha*=tint;
       ctx.globalAlpha=Math.min(1,ctx.globalAlpha*1.17);
       const W=r.x1-r.x0,H=r.y1-r.y0;
       if(a.style==='vehicleLand'&&ph.name!=='telegraph'){
@@ -316,7 +293,7 @@
           ctx.drawImage(spec.image,...c,r.x0+W*x-spec.anchor[0]*w/spec.cellWidth,r.y0+H*y-spec.anchor[1]*hh/spec.cellHeight,w,hh);
         }
       } else if(a.style==='vehicleLand'){
-        // Ground warning only; the visibly descending vehicles are a separate non-hit overlay.
+        // Cues are the real approaching vehicles, painted separately without a hit overlay.
       } else if(a.style==='coneFan'){
         // Stock plume grows left→right from the cell's declared mouth. Rotate each toward a point
         // along the projected bottom; all three share a real common root and frame-offset layered cadence.
@@ -340,25 +317,7 @@
       }else if(a.style==='impactTile') {
         const lobes=[[.27,.50],[.65,.70],[.62,.21]];
         lobes.forEach(([x,y],i)=>tile(r.x0+W*x,r.y0+H*y,0,W*(1.37-.20*i),W*(1.37-.20*i),frame));
-      }else if(p.theme==='spatial-slash'&&a.cellWidth===288&&a.cellHeight===384){
-        const warning=ph.name==='telegraph';
-        const pose=warning?slashWarningPose[frame]:ph.name==='active'?slashActivePose[frame-7]:slashDecayPose[frame-12];
-        if(pose){
-          const [cx,cy,sourceAngle,span]=pose,reach=warning?.36+.60*Math.sqrt(progress):.94;
-          const [x0,y0]=slashPoint(p,warning?.12:.08),[x1,y1]=slashPoint(p,reach);
-          const dx=x1-x0,dy=y1-y0;
-          ctx.save();try{
-            ctx.translate((x0+x1)/2,(y0+y1)/2);ctx.rotate(Math.atan2(-dy,-dx));
-            const transverse=warning?.75:1.12;
-            ctx.scale(Math.hypot(dx,dy)*.93/span,p.side>0?-transverse:transverse);ctx.rotate(-sourceAngle);ctx.translate(-cx,-cy);
-            src(frame,0,0,a.cellWidth,a.cellHeight);
-          }finally{ctx.restore();}
-        }
-      }else if(p.theme==='spatial-slash'&&p.side>0) {
-        // Authored upper-right→lower-left. Positive side places slash centre on a positive X slope.
-        ctx.save();try{ctx.translate(r.x0+r.x1,0);ctx.scale(-1,1);src(frame,r.x0,r.y0,W,H);}finally{ctx.restore();}
       }else src(frame,r.x0,r.y0,W,H);
-      if(ph.name==='telegraph'){ctx.globalAlpha=before;paintWarning(ctx,p,ph);}
     }finally{ctx.restore();}
     return true;
   }
@@ -370,13 +329,23 @@
     ctx.save();try {
       ctx.beginPath();ctx.rect(r.x0,r.y0,W,H);ctx.clip();
       for(let i=0;i<truckCenters.length;i++){
-        const impact=p.timing[0]+i*7, t=1+(age-impact)/38;
+        const impact=p.timing[0]+i*7, span=Math.max(38,Math.round(p.timing[0]*.79)),t=1+(age-impact)/span;
         if(t<0||t>=1)continue;
         let [u,v]=truckCenters[i];if(p.side<0)u=1-u;
         const a=i%2?art.alternateSpec:art, sw=W*.44,sh=sw*a.cellHeight/a.cellWidth;
-        const index=Math.round(6+9*t), cell=a.cells?a.cells[index]:[(index%a.columns)*a.cellWidth,Math.floor(index/a.columns)*a.cellHeight,a.cellWidth,a.cellHeight];
-        const y=r.y0-10+(v*H+10)*Math.pow(t,1.56);
-        ctx.drawImage(a.image,...cell,r.x0+u*W-a.anchor[0]*sw/a.cellWidth,y-a.anchor[1]*sh/a.cellHeight,sw,sh);
+        const cell=f=>a.cells?a.cells[f]:[(f%a.columns)*a.cellWidth,Math.floor(f/a.columns)*a.cellHeight,a.cellWidth,a.cellHeight];
+        const x=r.x0+u*W,ground=r.y0+v*H,y=r.y0-10+(v*H+10)*Math.pow(t,1.56);
+        const shadow=cell(15),shadowW=sw*(.36+.18*t),shadowH=sh*.12;
+        ctx.save();try{
+          // A squash of this exact sedan/truck silhouette gives a faint natural landing shadow.
+          // It is never collision criteria and has no ornamental boxes, numbers or strokes.
+          ctx.globalAlpha*=.15+.13*t;
+          ctx.drawImage(a.image,...shadow,x-a.anchor[0]*shadowW/a.cellWidth,ground-a.anchor[1]*shadowH/a.cellHeight,shadowW,shadowH);
+        }finally{ctx.restore();}
+        ctx.save();try{
+          ctx.globalAlpha*=.45+.55*t;
+          ctx.drawImage(a.image,...cell(Math.round(6+9*t)),x-a.anchor[0]*sw/a.cellWidth,y-a.anchor[1]*sh/a.cellHeight,sw,sh);
+        }finally{ctx.restore();}
         drew=true;
       }
     }finally {ctx.restore();}
@@ -390,5 +359,5 @@
     if(event.plan.theme==='gravity')return Object.freeze({phaseTextureRate:1,gravityVisual:.24});
     return Object.freeze({phaseTextureRate:1,gravityVisual:0});
   }
-  return Object.freeze({roster,limits,target,atlasKeys,defaultArena,plan,contains,phaseAt,make,hit,paint,paintApproach,impactIndex,localEffects,atlasSpec});
+  return Object.freeze({roster,limits,target,atlasKeys,defaultArena,plan,contains,phaseAt,make,hit,paint,paintApproach,impactIndex,localEffects,atlasSpec,cutStatus});
 });

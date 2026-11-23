@@ -2,7 +2,9 @@
 const {test}=require('node:test'),a=require('node:assert/strict'),fs=require('node:fs'),sha=require('node:crypto');
 const A=require('../src/arcade-v43.js'),N=require('../src/arcade-phase2-native-v43.js'),P=require('../src/arcade-phase2-signatures-v43.js'),art=require('../src/arcade-phase2-extra-art-v43.js'),E=require('../src/arcade-phase2-extra-v43.js')(P,A);
 const slots=[227,321,325,489,572,574],difficulties={gentle:.5,normal:.6,hell:.7};
-function spec(k){const d=art[k];return d&&{...d,image:{complete:true,naturalWidth:d.cellWidth*d.columns,naturalHeight:d.cellHeight*Math.ceil(d.frameCount/d.columns)}};}
+const {atlas,prepareAtlas,contact}=require('./helpers/phase2-source-image.cjs');
+test.before(async()=>{for(const d of Object.values(art))await prepareAtlas(d);});
+const spec=k=>atlas(art[k]);
 function init(id,d,load=true){const s=A.createRun({seed:12,hero:'seoha',entranceAll:true,difficulty:d,pacing:true,segment:id,compact:true,distort:false});if(load)N.fixtureAtlas(s,spec);return s;}
 function tick(s,input){s.events.length=0;A.step(s,input||{});}
 function until(s,p,n=580){for(let i=0;i<n;i++){tick(s);const q=N.inspect(s);if(q&&p(q))return q;}throw Error('state not reached '+s.seg+' '+s.tick);}
@@ -12,16 +14,15 @@ test('six exact native spells carry untouched unique atlas digests and 18 clean 
   const n=N.slotFor(id),d=art[n.theme];a.equal(sha.createHash('sha256').update(fs.readFileSync(d.path)).digest('hex'),d.sha256);a(!unique.has(d.sha256));unique.add(d.sha256);
   for(const [difficulty,cov] of Object.entries(difficulties)){
    const s=init(id,difficulty);s.player.invulnerableUntil=99999;
-   const t=until(s,v=>v.phase==='telegraph');a.equal(t.local,0);a.equal(s.n,0);a.equal(s.segTick,0);a(Math.abs(t.coverage-cov)<1e-5);
+   const t=until(s,v=>v.phase==='telegraph');a.equal(t.local,0);a.equal(s.n,0);a.equal(s.segTick,0);a(Math.abs(t.maxClip-cov)<1e-5);
    const lane=t.safeLane;s.player.x=(lane[0]+lane[1])/2;until(s,v=>v.phase==='active');a(!N.hit(s));a.equal(s.n,0,'native volley started during the signature');
   }
  }
 });
 test('the live Hell collision enters existing damage once, warning and safe cells harmless',()=>{
  const s=init(227,'hell');s.player.invulnerableUntil=999999;
- const w=until(s,v=>v.phase==='telegraph');const p=E.plan(s.seg,s.difficulty,w.safeLane[0]<180?1:-1);
- let x,y;for(let j=300;j<550&&!x;j++)for(let i=70;i<300;i++)if(P.contains(p,i,j)){x=i;y=j;break;}
- a(x);s.player.invulnerableUntil=0;s.bombs=0;s.player.x=x;s.player.y=y;tick(s);a.equal(s.hits,0);
+ until(s,v=>v.phase==='telegraph');const point=contact((x,y)=>N.firstContactAt(s,x,y));a(point);
+ s.player.invulnerableUntil=0;s.bombs=0;[s.player.x,s.player.y]=point;tick(s);a.equal(s.hits,0);
  until(s,u=>u.phase==='active');a.equal(s.hits,1);tick(s);a.equal(s.hits,1);
 });
 test('missing art leaves native fire and full original card route running',()=>{
