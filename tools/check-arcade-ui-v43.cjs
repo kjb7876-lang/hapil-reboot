@@ -442,6 +442,83 @@ async function sevenSinsClear(page){
   await page.locator('#arcade-resume').click();await stationary(page);
   return {actors:['p2_chairman','p2_core'],clearTicks:120,stageSaves:after.writes.length,rhythm:rhythm.description.motif,laserSource:laser.src.split('/').pop()};
 }
+
+async function seohaAwakenedAbility(browser,baseURL){
+  const mode=(p,name)=>p.waitForFunction(name=>window.HapilArcadeApp?.getState().mode===name,name);
+  const state=p=>p.evaluate(()=>{const d=HapilArcadeApp.debugState(),s=d.state;return {hero:s?.hero,tick:s?.tick,ability:s?.ability,stageIndex:s?.stageIndex,seg:s?.seg,difficulty:s?.difficulty,settings:d.app.settings};});
+  const near=(x,y,e=.001)=>assert.ok(Math.abs(x-y)<e,`${x} != ${y}`);
+  const pause=async p=>{await p.locator('#arcade-pause-button').click();await mode(p,'paused');};
+  const resume=async p=>{await p.locator('#arcade-resume').click();await mode(p,'playing');};
+  const slider=p=>p.locator('#setting-abilitySeoha');
+  async function select(p,id){
+   await p.locator('#arcade-start').click();await mode(p,'hero');
+   await p.locator('#hero-select-'+id).click();assert.equal(await p.locator('#hero-select-'+id).getAttribute('aria-pressed'),'true');await p.locator('#hero-select-confirm').click();
+   if(await p.evaluate(()=>HapilArcadeApp.getState().mode)==='chapter')await p.locator('#arcade-chapter-card .cc-skip').click();
+   await mode(p,'playing');assert.equal((await state(p)).hero,id);
+  }
+  async function paint(p,n,wantedMax){
+   const e=slider(p);assert.equal(await e.getAttribute('max'),String(wantedMax));
+   assert.equal(await e.inputValue(),String(n));
+   assert.equal(await e.evaluate(x=>x.style.getPropertyValue('--steps')),String(wantedMax));
+   const key=wantedMax===7?'abilityTimeAwakened':'abilityTime';
+   assert.equal(await e.getAttribute('data-i18n-label'),key);
+   assert.match(await e.getAttribute('aria-label'),wantedMax===7?/각성|Awakened/:/서하|Seoha/);
+   assert.equal(await p.locator('#label-abilitySeoha').getAttribute('data-i18n'),key);
+   if(n)assert.match(await p.locator('#value-abilitySeoha').textContent(),new RegExp(String(n)));
+   if(n)assert.match(await p.locator('#note-abilitySeoha').textContent(),new RegExp(String(11*n)+'%'));
+   assert.equal((await state(p)).ability,n);
+  }
+  async function sample(p,held,expected){
+   // Staging only: leave the public game loop and real renderer/input running, but stop hostile spawns
+   // and place one native bullet well outside the player's slow circle to measure the time modifier.
+   await p.evaluate(()=>{
+    const s=HapilArcadeApp.debugState().state; s.stage='break';s.stageTick=-1e7;
+    s.player.x=180;s.player.y=508;s.n=1;s.mobs.length=0;s.lasers.length=0;s.figures.length=0;
+    if(s.risers)s.risers.length=0;
+    for(const a of ['ba','bturn','bacc','bmin','barg','bs2','bspin','bat','bmode','bgen','bfragment','bbreakable','bcolor','bexit','bbounce','bmirror','bgrace'])s[a][0]=0;
+    s.bformation[0]=1; // suppress the legacy forced-descent turn; horizontal native control shot
+    s.bx[0]=35;s.by[0]=110;s.bs[0]=60;s.bmax[0]=400;s.bage[0]=100;s.blife[0]=60000;s.bsize[0]=1;
+   });
+   if(held)await p.keyboard.down('Shift');
+   await p.keyboard.down('ArrowRight');
+   try{
+    await p.waitForFunction(({held,expected})=>{const s=HapilArcadeApp.debugState().state;return s.player.focus===held&&Math.abs(s.enemyTimeRate-expected)<1e-6;},{held,expected});
+    const reading=await p.evaluate(async()=>{const s=HapilArcadeApp.debugState().state;
+     const t=s.tick,x=s.player.x,b=s.bx[0];
+     await new Promise(ok=>{const go=()=>s.tick>=t+12?ok():requestAnimationFrame(go);go();});
+     return {ticks:s.tick-t,move:(s.player.x-x)/(s.tick-t),bullet:(s.bx[0]-b)/(s.tick-t),rate:s.enemyTimeRate,focus:s.player.focus};});
+    assert.equal(reading.focus,held);near(reading.rate,expected);return reading;
+   }finally{await p.keyboard.up('ArrowRight');if(held)await p.keyboard.up('Shift');}
+  }
+  const c=await browser.newContext({viewport:{width:1280,height:900}});
+  const p=await c.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));
+  try{
+    await p.goto(baseURL+'/arcade.html?eyes=0&drill=0',{waitUntil:'domcontentloaded'});
+    await p.waitForFunction(()=>window.HapilArcadeApp&&!document.getElementById('arcade-start').disabled);
+    await p.locator('[data-difficulty=hell]').click();
+    await select(p,'seoha-b');await pause(p);await paint(p,7,7);
+    await slider(p).press('Home');await paint(p,0,7);await resume(p);const baselineHeld=await sample(p,true,1);
+    await pause(p);await slider(p).press('End');await paint(p,7,7);await resume(p);
+    const awakenedHeld=await sample(p,true,.23);const awakenedReleased=await sample(p,false,1);
+    near(baselineHeld.move,1.8);near(baselineHeld.bullet,1);
+    near(awakenedHeld.bullet/baselineHeld.bullet,.23);near(awakenedHeld.move,.46);
+    near(awakenedReleased.bullet,baselineHeld.bullet);near(awakenedReleased.move,4.2);
+    await pause(p);await slider(p).press('ArrowLeft');await paint(p,6,7);
+    const cp=await p.evaluate(()=>{const s=HapilArcadeApp.debugState().state,seg=HapilArcade.STAGES[0].first+1;
+     // Checkpoint writer fixture from an exact currently selected native hero. Not a naturally cleared boss.
+     if(!HapilMobile.commitBossClear({...s,stage:'bossClear',bossClear:{nextSegment:seg,stageCommitted:false}}))throw Error('native checkpoint fill');
+     return HapilMobile.checkpoint(0,s.difficulty);
+    });assert.equal(cp.hero,'seoha-b');assert.equal(cp.difficulty,'hell');
+    assert.deepEqual((await state(p)).settings.abilitySeohaB,6);
+    await p.reload({waitUntil:'domcontentloaded'});await p.waitForFunction(()=>window.HapilArcadeApp&&!document.getElementById('arcade-start').disabled);
+    await p.locator('#arcade-continue').click();await mode(p,'playing');assert.equal((await state(p)).hero,'seoha-b');await pause(p);await paint(p,6,7);
+    assert.equal((await state(p)).settings.abilitySeoha,3);
+    await p.locator('#arcade-quit').click();await mode(p,'title');await select(p,'seoha');await pause(p);await paint(p,3,3);
+    assert.equal((await state(p)).settings.abilitySeohaB,6);assert.deepEqual(errors,[]);
+    return {baselineHeld,awakenedHeld,awakenedReleased,continuedAbility:6,traineeCap:3};
+  }catch(e){await p.screenshot({path:path.join(out,'seoha-awakened-ability-failure.png'),fullPage:true});throw e;}
+  finally{await c.close();}
+}
 async function desktop(browser){
   const {context,page,errors,badRequests}=await setup(browser,{width:1280,height:900},false,'desktop');
   try{
@@ -512,6 +589,7 @@ async function mobile(browser,width,height){
 (async()=>{
   fs.mkdirSync(out,{recursive:true});await new Promise(r=>server.listen(0,'127.0.0.1',r));let browser;
   try{browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_PATH?{executablePath:process.env.CHROMIUM_PATH}:{})});
+    reports.push({seohaAwakenedAbility:await seohaAwakenedAbility(browser,'http://127.0.0.1:'+server.address().port)});
     await desktop(browser);for(const size of [[390,844],[360,640],[844,390]])await mobile(browser,...size);
     const wrath=await require('./check-wrath-browser-v43.cjs')(browser,'http://127.0.0.1:'+server.address().port,out);reports.push({wrath});
     const phase2=require('./check-phase2-native-browser-v43.cjs'),baseURL='http://127.0.0.1:'+server.address().port;
