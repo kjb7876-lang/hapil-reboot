@@ -24,7 +24,7 @@
       const reserved=Object.values(art||{}).flatMap(d=>[d,d.alternateSpec]).filter(Boolean).map(d=>d.url.split('?v=')[1]);
       const bindings=Object.fromEntries(Object.values(extraArt).map(d=>{
         if(reserved.includes(d.sha256.slice(0,12)))throw Error('duplicate priority art');
-        return [d.artId,{sha256:d.sha256,path:d.path}];
+        return [d.artId,{sha256:d.sha256,path:d.path,...(d.contactRuns?{contactRuns:d.contactRuns,framesByPhase:d.framesByPhase}:{})}];
       }));
       extra=bindExtra(P,native(),bindings);
       extraSlots=Object.values(extra.specs).map(e=>Object.freeze({...e,segment:e.seg,mid:false,themes:Object.freeze([e.theme]),extra:true}));
@@ -45,7 +45,7 @@
       const prior=Object.values(extraArt||{}).map(d=>d.sha256);
       const assets=Object.fromEntries(Object.values(p1Art).map(d=>{
         if(oldPaths.has(d.sha256.slice(0,12)))throw Error('duplicate prior art');
-        return [d.artId,{sha256:d.sha256,path:d.path}];
+        return [d.artId,{sha256:d.sha256,path:d.path,...(d.contactRuns?{contactRuns:d.contactRuns,framesByPhase:d.framesByPhase}:{})}];
       }));
       p1=bindP1(P,native(),{assets,reservedHashes:prior,nativeOnly:true,source:Source});
       p1Slots=Object.values(p1.specs).map(e=>Object.freeze({...e,segment:e.seg,role:e.role==='mid'?'midboss':e.role,mid:e.role==='mid',themes:Object.freeze([e.theme]),p1:true}));
@@ -136,7 +136,7 @@
     return true;
   }
   function eventPainter(e){return e.p1Native?p1Bundle().paint:e.extension?extension().paint:P.paint;}
-  function hit(s){const e=encounters.get(s)?.event;return !!e&&((e.stage2Source||e.stage3Source)?p1Bundle().hit(e,s):P.hit(e,s,eventPainter(e)));}
+  function hit(s){const e=encounters.get(s)?.event;return !!e&&((e.stage2Source||e.stage3Source||e.stage4Source)?p1Bundle().hit(e,s):P.hit(e,s,eventPainter(e)));}
   function paint(ctx,s){
     const e=encounters.get(s)?.event;
     if(!e||!eventPainter(e)(ctx,e,s))return false;
@@ -146,7 +146,7 @@
   // Read-only QA/diagnostic projection of the first contact beat; never affects the live clock or collision.
   function firstContactAt(s,x,y){
     const e=encounters.get(s)?.event;if(!e)return false;
-    const probe={...s,tick:e.start+e.plan.timing[0],player:{x,y}};return (e.stage2Source||e.stage3Source)?p1Bundle().hit(e,probe):P.hit(e,probe,eventPainter(e));
+    const probe={...s,tick:e.start+e.plan.timing[0],player:{x,y}};return (e.stage2Source||e.stage3Source||e.stage4Source)?p1Bundle().hit(e,probe):P.hit(e,probe,eventPainter(e));
   }
   function inspect(s){
     const r=encounters.get(s),p=r?.event?.plan,ph=phase(r,s);

@@ -264,5 +264,95 @@
         23
       ]
     }
+  },
+  "castle-mid-claw-gouges": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "anchor": [
+      96,
+      43
+    ],
+    "theme": "castle-mid-claw-gouges",
+    "artId": "stage4-claw-gouges",
+    "sha256": "a838294dacc83ca4d87210c55056728435d9189bcc6cad82a31a2eb541ca2a3e",
+    "path": "media/phase2-p1/castle-mid-claw-gouges-seg44.webp",
+    "url": "media/phase2-p1/castle-mid-claw-gouges-seg44.webp?v=a838294dacc8",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        12
+      ],
+      "active": [
+        13,
+        18
+      ],
+      "decay": [
+        19,
+        23
+      ]
+    }
+  },
+  "castle-black-ash": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "anchor": [
+      96,
+      60
+    ],
+    "theme": "castle-black-ash",
+    "artId": "stage4-black-ash",
+    "sha256": "23ff081b257d2124752f2fe91f351e0da210156fcaeb1be567895d7c272ff7af",
+    "path": "media/phase2-p1/castle-black-ash-seg47.webp",
+    "url": "media/phase2-p1/castle-black-ash-seg47.webp?v=23ff081b257d",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        11
+      ],
+      "active": [
+        12,
+        18
+      ],
+      "decay": [
+        19,
+        23
+      ]
+    }
+  },
+  "castle-broken-seal-chains": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "anchor": [
+      96,
+      45
+    ],
+    "theme": "castle-broken-seal-chains",
+    "artId": "stage4-broken-seal-chains",
+    "sha256": "16f856667a5896588dc24bd75f79a121151868bef0914a2f624c49f9b15f4e3c",
+    "path": "media/phase2-p1/castle-broken-seal-chains-seg49.webp",
+    "url": "media/phase2-p1/castle-broken-seal-chains-seg49.webp?v=16f856667a58",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        12
+      ],
+      "active": [
+        13,
+        18
+      ],
+      "decay": [
+        19,
+        23
+      ]
+    }
   }
 }
