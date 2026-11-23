@@ -17,6 +17,17 @@
     ?require('./arcade-boss-phases-v43.js'):root.HapilArcadePhases;
   var LASER_RHYTHM=typeof module==='object'&&module.exports&&typeof require==='function'
     ?require('./arcade-laser-rhythm-v43.js'):root.HapilLaserRhythm;
+  var P2_NATIVE=typeof module==='object'&&module.exports&&typeof require==='function'?require('./arcade-phase2-native-v43.js'):null;
+  function phase2Native(){return P2_NATIVE||root.HapilPhase2Native||null;}
+  function phase2Step(native,s){
+    if(!native||!s.entranceAll)return false;
+    if(s.stage!=='card')return native.step(s,null);
+    var g=segment(s),slot=native.slotFor(s.seg);
+    if(!slot||slot.actor!==g.actor)return native.step(s,null);
+    var here=STAGES[g.stage],p=livePhaseOf(s,s.seg);
+    return native.step(s,{actor:g.actor,stage:g.stage+1,scene:String(here.scene),mid:g.mid,role:g.mid?'midboss':g.stage===partFinalStage(here.part)?'episode':'main',ordinal:p?p.no-1:-1,
+      legacyBusy:!!(s.sp&&s.sp.cur||s.boss.downHold>0||s.figures.length||s.lasers.length||s.weapons.length||s.cannons.length||s.risers&&s.risers.some(function(r){return !r.fade;}))});
+  }
   var rhythmContext=null;
   function heroProfile(s){return HEROES?HEROES.get(typeof s==='string'?s:s&&s.union?'seoha-b':s&&s.hero):null;}
   function isCinematicBoss(actor,mid){var intros=BOSS_INTROS||root.HapilArcadeBossIntros;return !mid||!!(intros&&intros.isSinBoss(actor));}
@@ -2737,8 +2748,9 @@
       if(s.tick>=s.bossClear.readyTick)advance(s);
       return s; // 격파 연출 2초 동안 공격·피격·아이템·필살을 모두 멈춘다. 다음 구간은 다음 틱부터 움직인다.
     }
-    moveBoss(s);
-    var sweeping=!!(s.wrathTraverse&&!s.wrathTraverse.done);
+    var nativeP2=phase2Native(),signatureOn=phase2Step(nativeP2,s);
+    if(!signatureOn)moveBoss(s);
+    var sweeping=signatureOn||!!(s.wrathTraverse&&!s.wrathTraverse.done);
     var introHold=s.entranceAll&&s.stage==='intro'&&pendingProjectiles(s)&&!(s.bossEntrance&&s.bossEntrance.segment===s.seg);if(introHold)s.stageTick=0; // (11-20) 탄은 걷지 않는다. 남은 탄이 저절로 다 나갈 때까지 판정·회피는 그대로 돌고 보스 입장만 기다린다. 보스·몹 없이 탄만 남으면 탄을 가속해 다 내보낸 뒤에 다음 보스가 들어선다(사용자 11-19)
     if(s.entranceAll&&s.stage==='intro'&&!introHold)prepareBossEntrance(s);
     var entrance=s.bossEntrance;
@@ -2798,7 +2810,7 @@
     var gaugeMult=s.hero==='seoha'&&!s.union?SEOHA_TRAINEE_GAUGE:(s.hero==='memory'||s.union)&&p.focus?FOCUS_GAUGE:1;
     updateItems(s);
     if(gaugeMult>1){var gained=s.fills*GAUGE_FULL+s.gauge-charge0;if(gained>0){s.gauge+=gained*(gaugeMult-1);fillGauge(s);}}
-    var touched=(byBeam||byFigure||byBullet||byFloor||wrathBodyTouch(s))&&s.tick>=p.invulnerableUntil&&s.stage!=='won'&&s.stage!=='lost';
+    var touched=(byBeam||byFigure||byBullet||byFloor||wrathBodyTouch(s)||signatureOn&&nativeP2.hit(s))&&s.tick>=p.invulnerableUntil&&s.stage!=='won'&&s.stage!=='lost';
     if(touched&&distortRoll(s)){
       // 시공간 왜곡(사용자 11-16, 기억사수 패시브): 닿기 직전 시간이 비틀려 탄이 빗겨 간다. 공격 단계 1에서 7%, 7에서 37%. 잠깐(DISTORT_TICKS) 닿지 않는다
       s.distorts++;p.invulnerableUntil=s.tick+DISTORT_TICKS;note(s,'distort');
