@@ -578,5 +578,41 @@
         17
       ]
     ]
+  },
+  "fall-mage-charred-columns": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "anchor": [
+      96,
+      96
+    ],
+    "theme": "fall-mage-charred-columns",
+    "artId": "stage7-charred-columns",
+    "sha256": "ac48b87e5eef92996452ab58e51bb423bca061ce914e472f9149dcc29a688557",
+    "path": "media/phase2-p1/fall-mage-charred-columns-seg74.webp",
+    "url": "media/phase2-p1/fall-mage-charred-columns-seg74.webp?v=ac48b87e5eef",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        11
+      ],
+      "active": [
+        12,
+        17
+      ],
+      "decay": [
+        18,
+        23
+      ]
+    },
+    "contactWindows": [
+      [
+        12,
+        17
+      ]
+    ]
   }
 }
