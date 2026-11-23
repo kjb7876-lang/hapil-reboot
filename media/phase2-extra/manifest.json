@@ -1,0 +1,78 @@
+{
+  "split-fire-corridor": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 288,
+    "cellHeight": 368,
+    "clearSourceX": [
+      92,
+      197
+    ],
+    "theme": "split-fire-corridor",
+    "artId": "wrath-ash-corridor",
+    "sha256": "103d58ae889b27e9bffd9949fc2b7381e6aa70191f1cf7b281b291d3f1a33e1f",
+    "path": "media/phase2-extra/wrath-ash-corridor-r1.webp",
+    "url": "media/phase2-extra/wrath-ash-corridor-r1.webp?v=103d58ae889b"
+  },
+  "asymmetric-memory-gates": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 320,
+    "cellHeight": 320,
+    "theme": "asymmetric-memory-gates",
+    "artId": "p3-gate-memory-wings",
+    "sha256": "8ea60eb3e8c6166d7eb3799bcf394b97b7141f565a86c0ccdd8b68756a76d9a3",
+    "path": "media/phase2-extra/p3-seg321-memory-gate-r1.webp",
+    "url": "media/phase2-extra/p3-seg321-memory-gate-r1.webp?v=8ea60eb3e8c6"
+  },
+  "return-coordinate-grid": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 320,
+    "cellHeight": 320,
+    "theme": "return-coordinate-grid",
+    "artId": "p3-gate-return-grid",
+    "sha256": "8c63e769b153b1e4d54e9f09f7b8e12bd71e702eaf1875d64dba8107d546baa1",
+    "path": "media/phase2-extra/p3-seg325-return-coordinate-r1.webp",
+    "url": "media/phase2-extra/p3-seg325-return-coordinate-r1.webp?v=8c63e769b153"
+  },
+  "asymmetric-noiron-cables": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "theme": "asymmetric-noiron-cables",
+    "artId": "siren-noiron-cables",
+    "sha256": "efd6dff8a00a77883ed53969c55362d44c80ba8b4f88841b739e2c5c6cf3f5cb",
+    "path": "media/phase2-extra/siren-neuron-cable.webp",
+    "url": "media/phase2-extra/siren-neuron-cable.webp?v=efd6dff8a00a"
+  },
+  "reversing-rooftop-route": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 4,
+    "cellWidth": 256,
+    "cellHeight": 256,
+    "theme": "reversing-rooftop-route",
+    "artId": "executor-rooftop-reversal",
+    "sha256": "db54de36f0271d87d61dbbb0fcd0310d58d3a3a813839036de279fd119246d12",
+    "path": "media/phase2-extra/executor-rooftop-loop-24f.webp",
+    "url": "media/phase2-extra/executor-rooftop-loop-24f.webp?v=db54de36f027"
+  },
+  "cause-lock-shutters": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 4,
+    "cellWidth": 256,
+    "cellHeight": 256,
+    "theme": "cause-lock-shutters",
+    "artId": "executor-cause-lock",
+    "sha256": "31355ee440632d7be65915e2f7d5d57a9b381ed59635989f590386c19b89dd2f",
+    "path": "media/phase2-extra/executor-causal-lock-24f.webp",
+    "url": "media/phase2-extra/executor-causal-lock-24f.webp?v=31355ee44063"
+  }
+}

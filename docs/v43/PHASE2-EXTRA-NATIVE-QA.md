@@ -1,0 +1,7 @@
+# Six exact phase-two follow-ons
+
+New spells are confined to segments 227/321/325/489/572/574, with their title/actor/scene verified against the real encounter data. Existing nine signatures remain in place. No visual substitution on missing art, no HP/game-wide difficulty changes, and no midboss or other parked attack is claimed. All six atlas digests are pinned in the new manifest. The original Ink wrapper sees real HTMLImageElement atlas draws, including both independent halves of Wrath's split art.
+
+The follow-ons insert once before a native card's initial volley and only in a clean on-screen hazard window. Residual hazards are not erased for the new attacks. If the window or atlas is missing, the original card continues. Warning and recovery are harmless. The active hit geometry and Ink footprint share the same mask (50/60/70% of the legal arena). Native i-frames, bombs and damage rules apply. The marked side lane is protected only against the new effect.
+
+Local evidence: 954 actual machine-route searches and replays completed; six preceding real Hell cards drained native bullets before the new warning; all 18 new difficulty/card schedules, positive/negative damage and fail-closed art checks passed. Offline app output retains both atlas sets and scripts. Official browser fixture uses Chromium mobile emulation and normal engine movement inputs with a seeded card/player position. It checks real warmed Ink renders, visible boundary samples, exact damage, harmless warning/decay and no-bomb escape. This is not hardware or an unassisted playthrough.
