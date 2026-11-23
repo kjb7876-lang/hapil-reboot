@@ -30,7 +30,7 @@
   // 난이도 설명은 실제 규칙(목숨·폭탄)에서 만든다. 예전 고정 문구(목숨 7·3·1)가 11-14 규칙(9·5·3, 스테이지마다 회복)과 달랐다.
   var NOTES={gentle:'noteGentle',normal:'noteNormal',hell:'noteHell'};
 
-  var images={},loading={},failed={},want={},manifest=null,orbs=[],shotSprite=null,redShotSprite=null,homingSprite=null,circleSprite=null,itemSprites=[],background=null,backgroundStage=-1,loadedStage=-1;
+  var images={},loading={},failed={},want={},manifest=null,orbs=[],shotSprite=null,redShotSprite=null,homingSprite=null,circleSprite=null,wrathCircleSprite=null,itemSprites=[],background=null,backgroundStage=-1,loadedStage=-1;
   var scale=1,lite=false,frameMs=16,framesSeen=0,offsetX=0,offsetY=0;
   var state=null,mode='title',difficulty='normal',accumulator=0,lastStamp=0,visual=0,lastRun=null;
   var particles=[],spellDim=0,flash=0,hurtFlash=0,hurtRing=null,VERMILION='#a8382a',shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,SPELL_BANNER_TICKS=42,bannerSpell=false,bannerTitle='',bannerSub='',toast=null;
@@ -403,11 +403,14 @@
       q.fillStyle=c[0];q.fill();q.lineWidth=1.6*u;q.strokeStyle=c[2];q.lineJoin='round';q.stroke();
       q.fillStyle=c[1];q.globalAlpha=.9;q.beginPath();q.ellipse(-3.6*u,-4.6*u,1.9*u,1.2*u,-.6,0,Math.PI*2);q.fill();return d;});
     // 보스 뒤 마법진: 동심원 셋 + 눈금 + 육각별
-    var c=offscreen(220*scale,220*scale),g=c.getContext('2d');g.scale(scale,scale);g.translate(110,110);g.strokeStyle='#ffffff';g.lineWidth=1.6;
+    function bossWheel(bold){
+    var c=offscreen(220*scale,220*scale),g=c.getContext('2d');g.scale(scale,scale);g.translate(110,110);g.strokeStyle='#ffffff';g.lineWidth=1.6*bold;
     [104,92,60].forEach(function(r){g.beginPath();g.arc(0,0,r,0,TAU);g.stroke();});
-    g.lineWidth=1;for(var i=0;i<36;i++){var a=TAU*i/36;g.beginPath();g.moveTo(Math.cos(a)*92,Math.sin(a)*92);g.lineTo(Math.cos(a)*(i%3?98:104),Math.sin(a)*(i%3?98:104));g.stroke();}
+    g.lineWidth=bold;for(var i=0;i<36;i++){var a=TAU*i/36;g.beginPath();g.moveTo(Math.cos(a)*92,Math.sin(a)*92);g.lineTo(Math.cos(a)*(i%3?98:104),Math.sin(a)*(i%3?98:104));g.stroke();}
     for(var k=0;k<2;k++){g.beginPath();for(var j=0;j<3;j++){var b=TAU*j/3+k*Math.PI/3-Math.PI/2;g[j?'lineTo':'moveTo'](Math.cos(b)*92,Math.sin(b)*92);}g.closePath();g.stroke();}
-    circleSprite=c;
+    return c;
+    }
+    circleSprite=bossWheel(1);wrathCircleSprite=bossWheel(1.28);
     fxSprite=null;skinSprites={};runeRings={};
   }
 
@@ -1160,7 +1163,7 @@
   function buildRuneRing(radius,band,seed,ink,actor){
     var pad=band+6,m=radius+pad,c=offscreen(m*2*scale,m*2*scale),g=c.getContext('2d');g.scale(scale,scale);g.translate(m,m);
     g.lineCap='round';g.lineJoin='round';g.shadowColor=mix(ink,'#000000',.35);g.shadowBlur=5;
-    g.strokeStyle=ink;g.lineWidth=band>12?1.5:1;[-band/2,band/2].forEach(function(o){g.beginPath();g.arc(0,0,radius+o,0,TAU);g.stroke();});
+    g.strokeStyle=ink;g.lineWidth=(band>12?1.5:1)*(actor==='p2_wrath'?1.22:1);[-band/2,band/2].forEach(function(o){g.beginPath();g.arc(0,0,radius+o,0,TAU);g.stroke();});
     var n=Math.floor(TAU*radius/(band*1.15)),h=band*.66,light=mix(ink,'#ffffff',.55);g.strokeStyle=light;g.lineWidth=band>12?1.8:1.05;
     if(actor){g.shadowBlur=0;writeVerse(g,radius,band,actor,light);}
     else for(var i=0;i<n;i++){var a=TAU*i/n;g.save();g.rotate(a);g.translate(0,-radius);
@@ -1251,7 +1254,12 @@
     // 마법진: 방금 쐈으면(bossPose.until) 한 번 크게 밝아지며 부푼다 → 발사 순간이 읽힌다
     var fired=bossPose.actor===b.actor&&s.tick<bossPose.until?(bossPose.until-s.tick)/56:0,pulse=1+.1*fired;
     ctx.save();ctx.translate(bx,by);ctx.rotate(visual*.5);ctx.scale(pulse,pulse);ctx.globalAlpha=((s.stage==='card'?.45:.2)+.4*fired)*(sigilOn?.22:1)*(Cues?Cues.decorFade(s):1);ctx.globalCompositeOperation='lighter';
-    ctx.drawImage(circleSprite,-size/2,-size/2,size,size);ctx.restore();
+    ctx.drawImage(b.actor==='p2_wrath'?wrathCircleSprite:circleSprite,-size/2,-size/2,size,size);ctx.restore();
+    var tr=s.wrathTraverse;if(tr&&!tr.done&&tr.seg===s.seg&&b.actor==='p2_wrath'&&Arcade.WRATH_WAYPOINTS){
+      var dst=Arcade.WRATH_WAYPOINTS[tr.index];if(dst){var ang=Math.atan2(dst[1]-by,dst[0]-bx),ex=dst[0],ey=dst[1];
+        ctx.save();ctx.strokeStyle='#bf382a';ctx.globalAlpha=tr.active?.4:.82;ctx.lineWidth=1.8;ctx.setLineDash([7,6]);ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(ex,ey);ctx.stroke();
+        ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(ex-10*Math.cos(ang-.55),ey-10*Math.sin(ang-.55));ctx.lineTo(ex,ey);ctx.lineTo(ex-10*Math.cos(ang+.55),ey-10*Math.sin(ang+.55));ctx.stroke();ctx.restore();}
+    }
     var bp=bossPose;if(bp.actor!==b.actor){bp.actor=b.actor;bp.x=bx;bp.n=s.n;bp.until=-1;bp.side=0;}
     var bdx=bx-bp.x;bp.x=bx;if(Math.abs(bdx)>.3){bp.side=10;bp.dir=bdx<0?-1:1;}else if(bp.side>0)bp.side--;
     if(s.stage==='card'&&s.n-bp.n>=6)bp.until=s.tick+56;bp.n=s.n; // 탄을 한꺼번에 뿌린 순간이 공격 동작
@@ -1486,6 +1494,13 @@
     var prop=Arcade.PROPS[s.bcolor[i]];if(!prop)return;
     var img=images[prop.key],x=s.bx[i],y=s.by[i];
     if(!img)requestProp(prop.key); // 기물은 처음 화면에 나타날 때 받는다
+    // 분노의 귀 불꽃: 원본 그림만 회전. 로딩 실패도 구슬이나 대체 도형으로 그리지 않는다.
+    if(prop.key==='p2_flame'){
+      if(img){var fs=sheetOf(prop.key,img),fl=propLong(prop)*s.sizeScale*grow,fk=fl/Math.max(fs.cw,fs.ch),fw=fs.cw*fk,fh=fs.ch*fk;
+        ctx.save();ctx.translate(x,y);ctx.rotate(s.bspin[i]?s.bage[i]*s.bspin[i]:s.ba[i]);ctx.globalAlpha=alpha;
+        drawCell(prop.key,img,0,true,-fw*.5,-fh*.5,fw,fh);ctx.restore();}
+      return;
+    }
     // 육망성처럼 upright인 기물은 절대 돌리지 않는다. 도는 기물은 제자리에서 돌고, 그 밖에는 끝이 진행 방향을 본다.
     var turn=prop.upright?0:s.bspin[i]?s.bage[i]*s.bspin[i]:s.ba[i],cos=Math.cos(turn),sin=Math.sin(turn),core=orbs[0][8],glow=orbs[2][propGlow(prop)]||orbs[2][8],reach=glow.half*1.5*grow,long=propLong(prop)*s.sizeScale*grow;
     ctx.globalAlpha=alpha*.5;ctx.drawImage(glow.image,x-reach,y-reach,reach*2,reach*2);
@@ -1611,7 +1626,7 @@
     var bloom=Arcade.BLOOM_TICKS,i,o,half,size,x,y,variant=skinVariant(s),sf=s.player.focus&&Arcade.slowField?Arcade.slowField(s):null,slowR=sf?sf[0]:0,slowK=sf?sf[1]:0;
     for(i=0;i<s.n;i++){
       x=s.bx[i];y=s.by[i];if(s.bage[i]<bloom||x!==x||y!==y)continue;
-      size=s.bsize[i];if(size===SHAPE_PROP){drawProp(s,i,1,1);drawBreakableMark(s,i);continue;}
+      size=s.bsize[i];if(size===SHAPE_PROP){drawProp(s,i,1,1);if(Arcade.PROPS[s.bcolor[i]].key!=='p2_flame')drawBreakableMark(s,i);continue;}
       o=orbs[size]&&orbs[size][s.bcolor[i]];if(!o)continue;half=o.half;var faint=nearBoss(s,x,y)||nearMob(s,x,y),grace=s.bfragment&&s.bfragment[i]&&s.bage[i]<s.bgrace[i];var gone=s.bexit&&s.bexit[i];var mir=s.bmirror&&s.bmirror[i];ctx.globalAlpha=gone?.36:grace?.28+.2*s.bage[i]/s.bgrace[i]:faint?(mir?.72:.38):1; // 나가는 탄(판정 없음)은 반투명
       var skin=bulletSkin(s,i,variant);
       if(slowR&&!gone){var sdx=x-s.player.x,sdy=y-s.player.y,sd=Math.sqrt(sdx*sdx+sdy*sdy);if(sd<slowR){var sk=slowK*(1-sd/slowR)/.777,ga=ctx.globalAlpha,ca=Math.cos(s.ba[i]),sa=Math.sin(s.ba[i]),st=s.bs[i]*.05; // 저속 둔화(사용자 11-20 최대 77.7%): 느려진 탄은 뒤로 먹 잔상 두 겹을 끈다. 진할수록 많이 느려진 탄
@@ -2029,7 +2044,7 @@
       adaptQuality(rawMs>STALL_FRAME_MS?rawMs:elapsed*1000);if(devMode)showDevBadge();accumulator=Math.min(accumulator+elapsed,4/60);if(devMode)accumulator=Math.min(accumulator+elapsed*(DEV_SPEED-1),4*DEV_SPEED/60); // 개발자 모드는 같은 60Hz 틱을 두 배로 돌린다
       var steps=0,limit=turbo||rushStage?Math.max(4,turbo||60):devMode?4*DEV_SPEED:4;if(turbo||rushStage)accumulator=limit/60;
       if(drill){while(accumulator>=1/60&&steps<4){drillTick(inputForStep());accumulator-=1/60;steps++;}accumulator=Math.min(accumulator,1/60);}
-      else while(accumulator>=1/60&&steps<limit&&mode==='playing'){if(beginStory())break;if(rushStage)rushTick(state);if(devMode)state.player.hp=state.player.maxHp;Arcade.step(state,inputForStep());accumulator-=1/60;steps++;consume();if(mode==='playing')beginStory();}
+      else while(accumulator>=1/60&&steps<limit&&mode==='playing'){if(beginStory())break;if(rushStage)rushTick(state);if(devMode)state.player.hp=state.player.maxHp;state.flameArtReady=!!images.p2_flame;Arcade.step(state,inputForStep());accumulator-=1/60;steps++;consume();if(mode==='playing')beginStory();}
       if(Mobile&&state)Mobile.tick(state,mode,rawMs); // 진단은 잘리기 전 실제 프레임 시간(1초 넘는 복귀 프레임은 tick이 버림)
     }
     if(mode==='chapter'&&chapterCard&&!document.hidden)chapterCard.tick(elapsed*1000);
