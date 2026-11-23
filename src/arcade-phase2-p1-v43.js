@@ -1,9 +1,12 @@
 (function(root,factory){
  if(typeof module==='object'&&module.exports)module.exports=factory;
  else root.HapilPhase2P1=factory;
-})(typeof globalThis!=='undefined'?globalThis:this,function bind(B,A,{assets={},reservedHashes=[],offlineOnly=false,nativeOnly=false}={}){
+})(typeof globalThis!=='undefined'?globalThis:this,function bind(B,A,{assets={},reservedHashes=[],offlineOnly=false,nativeOnly=false,source=null}={}){
  if(!B?.atlasSpec||!B?.impactIndex||!A?.SEGMENTS||!A?.STAGES)throw Error('exact base and native routes required');
  const rows=[
+  {seg:13,actor:'mb_02',role:'mid',stage:2,scene:'02',plain:'cardioid',card:'',form:undefined,formNo:undefined,theme:'eggkeeper-silk',artId:'stage2-eggkeeper-silk'},
+  {seg:16,actor:'violet',role:'main',stage:2,scene:'02',card:'흰 날개',form:undefined,formNo:0,theme:'violet-white-wings',artId:'stage2-violet-wings'},
+  {seg:18,actor:'violet',role:'main',stage:2,scene:'02',card:'여덟 다리의 실',form:undefined,formNo:0,theme:'violet-eight-leg-silk',artId:'stage2-violet-silk'},
   {seg:3,actor:'mb_01',role:'mid',stage:1,scene:'01',plain:'hypocycloid',card:'',form:undefined,formNo:undefined,theme:'root-tracer',artId:'root-tracer-r1'},
   {seg:6,actor:'p1_tree',role:'main',stage:1,scene:'01',card:'다가오는 뿌리',form:undefined,formNo:0,theme:'sequential-rootlets',artId:'p1-approaching-roots'},
   {seg:8,actor:'p1_tree',role:'main',stage:1,scene:'01',card:'가장 굵은 뿌리',form:undefined,formNo:0,theme:'single-heavy-root',artId:'p1-thick-root'},
@@ -41,7 +44,7 @@
   }
  }
  function plan(seg,tier,side=1){
-  const q=identity(seg);if(!q||!Object.hasOwn(B.target,tier))return null;
+  const q=identity(seg);if(!q||!Object.hasOwn(B.target,tier))return null;if(q.stage===2)return stage2Plan(q,{difficulty:tier},side);
   const easy=tier==='gentle'||tier==='easy', sequential=q.theme==='sequential-rootlets';
   side=side>=0?1:-1;
   const lane=q.stage===1&&easy?64:q.stage===1&&tier==='normal'?49:42;
@@ -77,11 +80,53 @@
       (q.role!=='mid'&&s.formKey!==q.stage-1+'|'+q.actor+'|'+(q.formNo||0))))return null;
   if(priorEvent&&priorEvent.seg===s.seg&&B.phaseAt(priorEvent.plan,s.tick-priorEvent.start))return null;
   const a=verified[q.artId];if(!art||art.artId!==q.artId||art.path!==a.path||art.sha256!==a.sha256||art.frameCount<20||!B.atlasSpec(art,q.theme))return null;
-  const p=plan(q.seg,s.difficulty,side);if(!p)return null;
+  const p=q.stage===2?stage2Plan(q,s,side):plan(q.seg,s.difficulty,side);if(!p)return null;
+  if(q.stage===2&&(!source?.ready(art.image)||art.frameCount!==24||art.columns!==6||!art.framesByPhase||
+      (q.seg===13&&(!Array.isArray(art.contact)||art.contact.length!==24||art.contact[17]?.length!==350))))return null;
   const ar=Object.freeze({...art,cells:art.cells&&Object.freeze(art.cells.map(c=>Object.freeze([...c]))),framesByPhase:art.framesByPhase&&Object.freeze(Object.fromEntries(Object.entries(art.framesByPhase).map(([k,v])=>[k,Object.freeze([...v])])))}); 
-  return Object.freeze({actor:q.actor,seg:q.seg,start:s.tick,plan:p,art:ar,offlineOnly:!nativeOnly,p1Native:nativeOnly});
+  return Object.freeze({actor:q.actor,seg:q.seg,start:s.tick,plan:p,art:ar,offlineOnly:!nativeOnly,p1Native:nativeOnly,stage2Source:q.stage===2});
+ }
+ const fit=(x,a,b)=>Math.max(a,Math.min(b,x));
+ function stage2Plan(q,s,side){
+  if(!Object.hasOwn(B.target,s.difficulty))return null;
+  const clock=s.difficulty==='hell'?[64,16,24]:s.difficulty==='normal'?[74,19,27]:[86,22,31];
+  const egg=q.seg===13,sw=egg?286:q.seg===16?315:312,sh=egg?303:q.seg===16?350:455;
+  const x=fit(Number(s.boss?.x)||180, egg?153:167,egg?207:193)-sw/2;
+  const y=egg?fit((Number(s.boss?.y)||102)-303*62/192+18,58,141):q.seg===16?58:93;
+  return Object.freeze({ok:true,theme:q.theme,difficulty:s.difficulty,stage2Source:true,area,
+   side:side>=0?1:-1,timing:Object.freeze(clock),draw:Object.freeze([x,y,sw,sh]),seg:q.seg});
+ }
+ function stage2Frame(e,s){
+  if(!e?.stage2Source||s?.seg!==e.seg||s.stage!=='card'||s.cardEnding||s.cardDown||!(s.boss?.hp>0)||s.boss.actor!==e.actor)return null;
+  const f=B.phaseAt(e.plan,s.tick-e.start);if(!f)return null;
+  const a=e.art.framesByPhase[f.name],p=f.local/Math.max(1,f.duration-1);
+  return {phase:f.name,frame:Math.round(a[0]+p*(a[1]-a[0]))};
+ }
+ function stage2Paint(ctx,e,s){
+  const it=stage2Frame(e,s);if(!it)return false;
+  const a=e.art,f=it.frame,[x,y,w,h]=e.plan.draw,{x0,y0,x1,y1}=area;
+  ctx.save();try{
+   ctx.beginPath();ctx.rect(x0,y0,x1-x0,y1-y0);ctx.clip();
+   if(e.plan.side<0){ctx.translate(x*2+w,0);ctx.scale(-1,1);}
+   ctx.drawImage(a.image,(f%a.columns)*a.cellWidth,Math.floor(f/a.columns)*a.cellHeight,a.cellWidth,a.cellHeight,x,y,w,h);
+  }finally{ctx.restore();}
+  return true;
+ }
+ function stage2Hit(e,s){
+  const f=stage2Frame(e,s),{x,y}=s.player||{};
+  if(f?.phase!=='active'||!Number.isFinite(x)||!Number.isFinite(y))return false;
+  if(e.seg===13){
+   const [dx,dy,w,h]=e.plan.draw,a=e.art;
+   const ix=Math.floor((e.plan.side<0?dx+w-x:x-dx)*a.cellWidth/w),iy=Math.floor((y-dy)*a.cellHeight/h);
+   if(ix<0||iy<0||ix>=a.cellWidth||iy>=a.cellHeight||!a.contact[f.frame].includes(iy*a.cellWidth+ix))return false;
+  }
+  // Chromium DPR2 rendered the silk's fine fringe below the visible hit floor
+  // even at predicted alpha 106. Keep contact in its more opaque source ink.
+  const threshold=e.seg===13?158:e.seg===18?124:104;
+  return !!source?.test({event:e,state:s,painter:stage2Paint,x,y,threshold});
  }
  function paint(ctx,event,s){
+  if(event?.stage2Source)return stage2Paint(ctx,event,s);
   if(event?.plan.theme!=='sequential-rootlets')return B.paint(ctx,event,s);
   const ph=B.phaseAt(event.plan,s.tick-event.start),group=B.impactIndex(event.plan,ph);
   const shim=new Proxy(ctx,{
@@ -111,5 +156,5 @@
   });
   return B.paint(shim,event,s);
  }
- return Object.freeze({specs,verified,identity,plan,make,hit:(e,s)=>B.hit(e,s,paint),paint,held:!nativeOnly});
+ return Object.freeze({specs,verified,identity,plan,make,hit:(e,s)=>e?.stage2Source?stage2Hit(e,s):B.hit(e,s,paint),paint,held:!nativeOnly});
 });

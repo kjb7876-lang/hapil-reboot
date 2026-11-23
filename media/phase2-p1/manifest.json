@@ -84,5 +84,95 @@
     "sha256": "8b7c2c7159373e13f6efdd7eb9404f8fae83e89337cd73738d551f6d7497af20",
     "path": "media/phase2-p1/lucifer-hope-mask-peel-24f.webp",
     "url": "media/phase2-p1/lucifer-hope-mask-peel-24f.webp?v=8b7c2c715937"
+  },
+  "eggkeeper-silk": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 192,
+    "cellHeight": 192,
+    "anchor": [
+      96,
+      62
+    ],
+    "theme": "eggkeeper-silk",
+    "artId": "stage2-eggkeeper-silk",
+    "path": "media/phase2-p1/spider-eggkeeper-silk.webp",
+    "url": "media/phase2-p1/spider-eggkeeper-silk.webp?v=647b3c173651",
+    "sha256": "647b3c1736516a589169686168aefcdf3c33a3cda5385b03d9cb0318e54c757a",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        11
+      ],
+      "active": [
+        12,
+        18
+      ],
+      "decay": [
+        19,
+        23
+      ]
+    }
+  },
+  "violet-white-wings": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 288,
+    "cellHeight": 320,
+    "anchor": [
+      144,
+      160
+    ],
+    "theme": "violet-white-wings",
+    "artId": "stage2-violet-wings",
+    "path": "media/phase2-p1/violet-white-wings-seg16-r1.webp",
+    "url": "media/phase2-p1/violet-white-wings-seg16-r1.webp?v=15dda6bb16b6",
+    "sha256": "15dda6bb16b6c0f706253e3461c52e6b8d979937fa1bf18b049f086300fe8db0",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        9
+      ],
+      "active": [
+        10,
+        17
+      ],
+      "decay": [
+        18,
+        23
+      ]
+    }
+  },
+  "violet-eight-leg-silk": {
+    "style": "arena",
+    "frameCount": 24,
+    "columns": 6,
+    "cellWidth": 288,
+    "cellHeight": 320,
+    "anchor": [
+      144,
+      160
+    ],
+    "theme": "violet-eight-leg-silk",
+    "artId": "stage2-violet-silk",
+    "path": "media/phase2-p1/violet-eight-leg-silk-seg18-r1.webp",
+    "url": "media/phase2-p1/violet-eight-leg-silk-seg18-r1.webp?v=c2131e026a60",
+    "sha256": "c2131e026a6044828618869620e0bd6c04f0c15d1bd938f5c7e36039480e81b1",
+    "framesByPhase": {
+      "telegraph": [
+        0,
+        7
+      ],
+      "active": [
+        8,
+        17
+      ],
+      "decay": [
+        18,
+        23
+      ]
+    }
   }
 }

@@ -47,7 +47,7 @@
         if(oldPaths.has(d.sha256.slice(0,12)))throw Error('duplicate prior art');
         return [d.artId,{sha256:d.sha256,path:d.path}];
       }));
-      p1=bindP1(P,native(),{assets,reservedHashes:prior,nativeOnly:true});
+      p1=bindP1(P,native(),{assets,reservedHashes:prior,nativeOnly:true,source:Source});
       p1Slots=Object.values(p1.specs).map(e=>Object.freeze({...e,segment:e.seg,role:e.role==='mid'?'midboss':e.role,mid:e.role==='mid',themes:Object.freeze([e.theme]),p1:true}));
       const counts=new Map();
       for(const e of [...bySegment.values(),...(extraSlots||[]),...p1Slots]){
@@ -136,7 +136,7 @@
     return true;
   }
   function eventPainter(e){return e.p1Native?p1Bundle().paint:e.extension?extension().paint:P.paint;}
-  function hit(s){const e=encounters.get(s)?.event;return !!e&&P.hit(e,s,eventPainter(e));}
+  function hit(s){const e=encounters.get(s)?.event;return !!e&&(e.stage2Source?p1Bundle().hit(e,s):P.hit(e,s,eventPainter(e)));}
   function paint(ctx,s){
     const e=encounters.get(s)?.event;
     if(!e||!eventPainter(e)(ctx,e,s))return false;
@@ -146,7 +146,7 @@
   // Read-only QA/diagnostic projection of the first contact beat; never affects the live clock or collision.
   function firstContactAt(s,x,y){
     const e=encounters.get(s)?.event;if(!e)return false;
-    return P.hit(e,{...s,tick:e.start+e.plan.timing[0],player:{x,y}},eventPainter(e));
+    const probe={...s,tick:e.start+e.plan.timing[0],player:{x,y}};return e.stage2Source?p1Bundle().hit(e,probe):P.hit(e,probe,eventPainter(e));
   }
   function inspect(s){
     const r=encounters.get(s),p=r?.event?.plan,ph=phase(r,s);
