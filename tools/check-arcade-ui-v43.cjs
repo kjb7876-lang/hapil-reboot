@@ -4,6 +4,7 @@
 // media lifecycle and viewport screenshots.
 // Run: npm install && npx playwright install chromium && npm run test:ui
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http');
+const {createHash}=require('node:crypto');
 const {chromium}=require('playwright');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'artifacts/arcade-ui');
 const mime={'.html':'text/html','.js':'text/javascript','.json':'application/json','.webp':'image/webp','.jpg':'image/jpeg','.png':'image/png','.mp3':'audio/mpeg','.css':'text/css'};
@@ -42,6 +43,36 @@ async function confirmHero(page,id,mobile){
   assert.equal(await page.evaluate(()=>HapilArcadeApp.debugState().state.hero),id);
   assert.equal(await page.locator('#arcade-hero-select').isVisible(),false);
 }
+// Verify the actual decoded selection and same-origin response, not just the
+// profile label. Returning to A also covers cached portrait reuse after B.
+async function verifySeohaPortrait(page,id){
+  const files={seoha:'seoha-portrait.webp','seoha-b':'seoha-portrait-v2.webp'};
+  assert(Object.hasOwn(files,id),'expected a Seoha appearance');
+  const relative='media/arcade-v43-heroes/'+files[id];
+  await page.waitForFunction(file=>{
+    const img=document.getElementById('hero-select-portrait');
+    return img?.complete&&img.naturalWidth===768&&img.naturalHeight===1152&&
+      img.currentSrc===new URL(file,document.baseURI).href;
+  },relative);
+  const resolved=await page.evaluate(hero=>{
+    const img=document.getElementById('hero-select-portrait'),profile=HapilArcadeHeroes.get(hero);
+    return {actual:img.currentSrc,portrait:new URL(profile.portrait,document.baseURI).href,
+      cutin:new URL(profile.cutin,document.baseURI).href,origin:location.origin};
+  },id);
+  assert.equal(new URL(resolved.actual).origin,resolved.origin);
+  assert.equal(resolved.portrait,resolved.actual,id+' selection profile resolves to selected bytes');
+  assert.equal(resolved.cutin,resolved.actual,id+' native cut-in uses the same portrait URL');
+  const response=await page.request.get(resolved.actual);
+  try{
+    assert.equal(response.status(),200,id+' portrait served successfully');
+    assert.match(response.headers()['content-type']||'',/^image\/webp(?:;|$)/i);
+    const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
+    const got=hash(await response.body());
+    assert.equal(got,hash(fs.readFileSync(path.join(root,relative))),id+' portrait response matches its checked-in bytes');
+    return got;
+  }finally{await response.dispose();}
+}
+
 async function heroSelection(page,name,mobile){
   await activate(page,'#arcade-start',mobile);
   await page.waitForFunction(()=>HapilArcadeApp.getState().mode==='hero');
@@ -58,11 +89,14 @@ async function heroSelection(page,name,mobile){
   assert.equal(await page.locator('#hero-select-seoha').getAttribute('aria-pressed'),'true','keyboard selects the original Seoha A');
   assert.equal(await page.locator('#hero-select-name').innerText(),await page.evaluate(()=>HapilArcadeHeroes.get('seoha').name));
   await page.waitForFunction(()=>{const p=document.getElementById('hero-select-portrait');return p.src.endsWith('/seoha-portrait.webp')&&p.complete&&p.naturalWidth>0;});
+  const portraitA=await verifySeohaPortrait(page,'seoha');
   await page.waitForTimeout(750);await page.screenshot({path:path.join(out,name+'-hero-seoha-a.png'),fullPage:true});
   await page.keyboard.press('ArrowRight');
   assert.equal(await page.locator('#hero-select-seoha-b').getAttribute('aria-pressed'),'true','keyboard advances to the new Seoha B');
   assert.equal(await page.locator('#hero-select-name').innerText(),await page.evaluate(()=>HapilArcadeHeroes.get('seoha-b').name));
   await page.waitForFunction(()=>{const p=document.getElementById('hero-select-portrait');return p.src.includes('seoha-portrait-v2.webp')&&p.complete&&p.naturalWidth>0;});
+  const portraitB=await verifySeohaPortrait(page,'seoha-b');
+  assert.notEqual(portraitA,portraitB,'A and B must not serve the same portrait');
   assert.equal(await page.locator('#hero-select-abilities li').count(),3);
   assert((await page.locator('#hero-select-description').innerText()).trim().length>0);
   await page.waitForTimeout(750);
@@ -71,6 +105,10 @@ async function heroSelection(page,name,mobile){
   await page.screenshot({path:path.join(out,name+'-hero-seoha-b.png'),fullPage:true});
   await page.keyboard.press('ArrowRight');assert.equal(await page.locator('#hero-select-memory').getAttribute('aria-pressed'),'true','right wraps across all three heroes');
   await page.keyboard.press('ArrowLeft');assert.equal(await page.locator('#hero-select-seoha-b').getAttribute('aria-pressed'),'true','left cycles in reverse');
+  await page.keyboard.press('ArrowLeft');
+  assert.equal(await page.locator('#hero-select-seoha').getAttribute('aria-pressed'),'true','left returns from B to A');
+  assert.equal(await verifySeohaPortrait(page,'seoha'),portraitA,'A bytes unchanged after selecting B');
+  console.log(name+' Seoha A/B portrait SHA256: '+portraitA+' / '+portraitB);
   if(mobile)await activate(page,'#hero-select-cancel',true);else await page.keyboard.press('Escape');
   assert.equal((await state(page)).mode,'title');
   assert.equal(await page.evaluate(()=>HapilArcadeApp.debugState().state),null,'cancel does not start or save a run');
