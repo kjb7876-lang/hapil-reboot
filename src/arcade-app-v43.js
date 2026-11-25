@@ -759,8 +759,10 @@
   function addParticle(x,y,vx,vy,life,color,size){if(particles.length<MAX_PARTICLES)particles.push({x:x,y:y,vx:vx,vy:vy,life:life,max:life,color:color,size:size});}
   var BANNER_Y=60;
   /* 보스 페이즈 표시(사용자 11-17): 'PHASE 3 / 6'과 그 페이즈의 수학 도형 이름. */
+  // 화면에 적는 페이즈 번호는 오른쪽 위 'n / N 페이즈'(livePhase: 이번 난이도에서 실제로 치르는 카드)와 같은 값을 쓴다(11-25 실플레이 검수: 띠에는 'PHASE 1 / 8', 오른쪽 위에는 '1 / 5'로 어긋났다)
+  function shownPhase(s){return (s.entranceAll&&livePhase(s))||(Arcade.phaseOf&&Arcade.phaseOf(s.seg))||null;}
   function phaseLabel(s,withNo){
-    var pi=Arcade.phaseOf&&Arcade.phaseOf(s.seg),kind=Arcade.phaseKind&&Arcade.phaseKind(Arcade.SEGMENTS[s.seg],s.seg),out=s.boss.name;
+    var pi=shownPhase(s),kind=Arcade.phaseKind&&Arcade.phaseKind(Arcade.SEGMENTS[s.seg],s.seg),out=s.boss.name;
     if(pi&&pi.count>1&&s.entranceAll){if(withNo)out+=' · PHASE '+pi.no+'/'+pi.count;if(kind)out+=' · '+kind.name;}
     return out;
   }
@@ -805,7 +807,7 @@
       else if(HeroFx&&(e==='powerUp'||e==='bombLevelUp'||e==='distort')){HeroFx.onEvent(e,s,visual);if(e==='distort')play('clockSlow');else play('seal');}
       else if(e==='card'){spellDim=1;inkBloom(s);play(/시간|시계|초침|째깍|태엽/.test(Arcade.SEGMENTS[s.seg].name||'')?'clockTick':'charge',s.boss.x);castFx(s,true);showBanner(Arcade.SEGMENTS[s.seg].name,s.boss.name,true);if(s.entranceAll)bannerSub=phaseLabel(s,true);}
       else if(e==='formShift'){beginFormShift(s);wantFx(sheetWho(s));}
-      else if(e==='plain'){var ppi=Arcade.phaseOf&&Arcade.phaseOf(s.seg);if(ppi&&ppi.count>1&&s.entranceAll)showBanner('PHASE '+ppi.no+' / '+ppi.count,phaseLabel(s,false),false);}
+      else if(e==='plain'){var ppi=shownPhase(s);if(ppi&&ppi.count>1&&s.entranceAll)showBanner('PHASE '+ppi.no+' / '+ppi.count,phaseLabel(s,false),false);}
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,'제'+g.part+'부 · STAGE '+(s.stageIndex+1));play('seal');}}
       else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);showToast(r);rushStage=false;}
       else if(e==='map'){var fromPart=s.results.length?Arcade.STAGES[s.results[s.results.length-1].stage].part:0;loadStage(s.stageIndex);if(fromPart&&fromPart!==Arcade.STAGES[s.stageIndex].part)openChapterCard(fromPart,Arcade.STAGES[s.stageIndex].part,null);}
@@ -867,7 +869,7 @@
     if(flip)ctx.restore();
   }
   /* 움직임으로 동작을 고른다(시뮬은 건드리지 않는다). 방금 쏜 몹은 공격, 옆으로 가는 몹은 옆 걷기(스트립은 오른쪽을 본다), 그 밖에는 아래로 걷기. */
-  var poses=typeof WeakMap==='function'?new WeakMap():null,bossPose={x:0,n:0,until:0,dir:0,actor:''};
+  var poses=typeof WeakMap==='function'?new WeakMap():null,bossPose={x:0,n:0,until:0,start:0,dir:0,actor:''};
   function poseOf(s,m){
     if(!poses)return null;var p=poses.get(m);
     if(!p){p={x:m.x,y:m.y,shots:m.shots|0,until:-1,dir:0,side:0};poses.set(m,p);}
@@ -1217,7 +1219,7 @@
     var b=s.boss;if(!bossDraw.on||!b.present||b.leaving||s.stage!=='card'){bossDraw.on=false;return;}
     var tall=tallOf(bossKey(s)),main=meltBegin(bossDraw.x,bossDraw.y,tall);
     ctx.save();ctx.globalAlpha=main?1:.55;ctx.translate(bossDraw.x,bossDraw.y);if(bossDraw.tilt)ctx.rotate(bossDraw.tilt);ctx.scale(bossDraw.sx,bossDraw.sy);
-    drawArt(bossKey(s),0,0,false,themeColor(s),0,bossDraw.motion,bossDraw.face);ctx.restore();
+    drawArt(bossKey(s),0,0,false,themeColor(s),bossDraw.motion==='attack'?bossDraw.phase|0:0,bossDraw.motion,bossDraw.face);ctx.restore();
     if(main)meltEnd(main,bossDraw.x,bossDraw.y,tall,.55);ctx.globalAlpha=1;bossDraw.on=false; // 먹구름에 녹은 아랫몸은 탄 위로도 녹은 채 비친다(곧게 자르지 않는다)
   }
   /* 유혹의 장막(색욕 보스, 11-14): 화면 양옆에 드리운 분홍 비단. 그림일 뿐 맞지 않는다(엔진의 충돌에 없다). 탄보다 먼저(아래에) 옅게 그린다. */
@@ -1241,6 +1243,7 @@
     ctx.globalAlpha=1;
   }
   var BACKLIGHT_BRIGHT='26'; // 금빛·흰빛 테마는 역광이 가산되면 보스 뒤가 하얗게 탄다(심사: 탐욕 보스 금빛 과노출)
+  var BOSS_BEAM_POSE=96; // 레이저·문양을 부르는 공격 자세 길이(틱)
   var bossArt={actor:'',keep:{}}; // 지금 보스 그림을 쥐어 둔다: 마지막 패턴이 깨진 그 틱에 다음 스테이지로 넘어가며 그림을 놓아도 쓰러짐은 이 그림으로 그린다
   function drawBoss(s){
     bossDraw.on=false;
@@ -1255,7 +1258,7 @@
     var sigilOn=false;for(var si=0;si<s.figures.length;si++)if(s.figures[si].sigil&&s.figures[si].age>=s.figures[si].warn*.5){sigilOn=true;break;}
     if(!sigilOn)drawRuneBarrier(s,bx,by,size); // 마법진 바깥을 감싸는 룬 결계
     // 마법진: 방금 쐈으면(bossPose.until) 한 번 크게 밝아지며 부푼다 → 발사 순간이 읽힌다
-    var fired=bossPose.actor===b.actor&&s.tick<bossPose.until?(bossPose.until-s.tick)/56:0,pulse=1+.1*fired;
+    var fired=bossPose.actor===b.actor&&s.tick<bossPose.until?Math.min(1,(bossPose.until-s.tick)/56):0,pulse=1+.1*fired;
     ctx.save();ctx.translate(bx,by);ctx.rotate(visual*.5);ctx.scale(pulse,pulse);ctx.globalAlpha=((s.stage==='card'?.45:.2)+.4*fired)*(sigilOn?.22:1)*(Cues?Cues.decorFade(s):1);ctx.globalCompositeOperation='lighter';
     ctx.drawImage(b.actor==='p2_wrath'?wrathCircleSprite:circleSprite,-size/2,-size/2,size,size);ctx.restore();
     var tr=s.wrathTraverse;if(tr&&!tr.done&&tr.seg===s.seg&&b.actor==='p2_wrath'&&Arcade.WRATH_WAYPOINTS){
@@ -1267,17 +1270,21 @@
         ctx.setLineDash([7,6]);ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(ex,ey);cueStroke();
         ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(ex-10*Math.cos(ang-.55),ey-10*Math.sin(ang-.55));ctx.lineTo(ex,ey);ctx.lineTo(ex-10*Math.cos(ang+.55),ey-10*Math.sin(ang+.55));cueStroke();ctx.restore();}
     }
-    var bp=bossPose;if(bp.actor!==b.actor){bp.actor=b.actor;bp.x=bx;bp.n=s.n;bp.until=-1;bp.side=0;}
+    var bp=bossPose;if(bp.actor!==b.actor){bp.actor=b.actor;bp.x=bx;bp.n=s.n;bp.until=-1;bp.start=0;bp.side=0;bp.born=s.enemyShotsBorn|0;bp.nl=s.lasers.length;bp.nf=s.figures.length;bp.acc=0;bp.at=s.tick;}if(s.tick<bp.start){bp.until=-1;bp.start=0;} // 같은 보스로 다시 시작하면 시계가 되돌아간다
     var bdx=bx-bp.x;bp.x=bx;if(Math.abs(bdx)>.3){bp.side=10;bp.dir=bdx<0?-1:1;}else if(bp.side>0)bp.side--;
-    if(s.stage==='card'&&s.n-bp.n>=6)bp.until=s.tick+56;bp.n=s.n; // 탄을 한꺼번에 뿌린 순간이 공격 동작
-    var bm=s.tick<bp.until&&images[ak+'@attack']?'attack':bp.side>0?'side':'';
-    var since=56-(bp.until-s.tick),punch=bm==='attack'&&since>=0&&since<16?1+.14*(1-since/16):1; // 공격 순간 몸이 한 번 커졌다 돌아온다. 탄에 가려도 윤곽으로 읽힌다.
+    var fresh=Math.max(0,(s.enemyShotsBorn|0)-(bp.born|0))+(s.lasers.length>(bp.nl|0)?6:0)+(s.figures.length>(bp.nf|0)?6:0),gap=Math.max(0,Math.min(30,s.tick-(bp.at|0)));
+    bp.acc=s.stage==='card'?(bp.acc||0)*Math.pow(.9,gap)+fresh:0;bp.born=s.enemyShotsBorn|0;bp.nl=s.lasers.length;bp.nf=s.figures.length;bp.at=s.tick;
+    var beam=s.lasers.length>(bp.nl0|0)||s.figures.length>(bp.nf0|0);bp.nl0=s.lasers.length;bp.nf0=s.figures.length;
+    if(s.stage==='card'&&(s.n-bp.n>=6||bp.acc>=6)&&!(s.tick<bp.until&&s.tick>=bp.start)){bp.start=s.tick;bp.until=s.tick+(beam?BOSS_BEAM_POSE:56);bp.acc=0;}bp.n=s.n; // 공격 동작: 탄을 한꺼번에 뿌린 순간, 짧은 틈에 6발 넘게 이어 쏜 순간(줄줄이 쏘는 패턴), 레이저·문양을 새로 부른 순간. 동작이 도는 동안 다시 쏴도 처음부터 다시 시작하지 않는다(11-25 실플레이 검수: 아스모데우스처럼 이어 쏘는 보스는 공격 자세가 카드 시간의 11%만 나왔다)
+    var bm=s.tick<bp.until&&images[ak+'@attack']?'attack':bp.side>0?'side':'',bphase=0;
+    if(bm==='attack'){var ash=sheetOf(ak+'@attack',images[ak+'@attack']);if(ash.frames>1){var el=Math.max(0,s.tick-bp.start),dur=bp.until-bp.start,af=Math.min(ash.frames-1,Math.floor(el*ash.fps/60));if(dur>56){var peak=Math.floor((ash.frames-1)*.6),tail=(ash.frames-1-peak)*60/ash.fps,left=bp.until-s.tick;af=left<=tail?Math.min(ash.frames-1,peak+1+Math.floor((tail-left)*ash.fps/60)):Math.min(peak,af);} /* 레이저·문양을 부를 때는 팔을 뻗은 칸에서 멈춰 빛줄기가 서는 동안 붙잡고, 끝에 남은 칸으로 거둔다(11-25 심사: 0.5초 만에 대기로 돌아감) */bphase=af-Math.floor(visual*ash.fps);}} // 공격 칸은 쏜 순간 첫 칸부터 끝 칸까지 한 번 재생한다(11-25 실플레이 검수: 전역 시계로 칸을 골라 아무 칸에서나 시작·되감겨 팔 뻗는 칸이 잘 안 보였다, 아스모데우스)
+    var since=s.tick-bp.start,punch=bm==='attack'&&since>=0&&since<16?1+.07*(1-since/16):1; // 공격 순간 몸이 한 번 커졌다 돌아온다. 탄에 가려도 윤곽으로 읽힌다.
     var rc=recoilOf(s,b);if(rc&&images[ak+'@hit'])bm='hit'; // 피격 그림이 있으면 그 칸을, 없으면 같은 그림을 젖혀 피격을 보인다
-    bossDraw.on=true;bossDraw.x=bx;bossDraw.y=by+(rc?rc.dy:0);bossDraw.tilt=rc?rc.tilt:0;bossDraw.sx=punch*(rc?rc.sx:1);bossDraw.sy=punch*(rc?rc.sy:1);bossDraw.motion=bm;bossDraw.face=bp.dir||(bx>W/2?-1:1);
+    bossDraw.on=true;bossDraw.x=bx;bossDraw.y=by+(rc?rc.dy:0);bossDraw.tilt=rc?rc.tilt:0;bossDraw.sx=punch*(rc?rc.sx:1);bossDraw.sy=punch*(rc?rc.sy:1);bossDraw.motion=bm;bossDraw.phase=bphase;bossDraw.face=bp.dir||(bx>W/2?-1:1);
     var tall=tallOf(bossKey(s)),fy=by+(rc?rc.dy:0),main=meltBegin(bx,fy,tall);
     if(!b.mid&&((Arcade.SEGMENTS[s.seg]||{}).formNo|0)>=2){var dk=ctx.createRadialGradient(bx,fy,tall*.12,bx,fy,tall*.78);dk.addColorStop(0,'rgba(22,16,20,.42)');dk.addColorStop(.6,'rgba(22,16,20,.2)');dk.addColorStop(1,'rgba(22,16,20,0)');ctx.fillStyle=dk;ctx.fillRect(bx-tall,fy-tall,tall*2,tall*2);} // 깊어진 모습 뒤의 짙은 먹 기운
     ctx.save();ctx.translate(bx,fy);if(rc)ctx.rotate(rc.tilt);ctx.scale(punch*(rc?rc.sx:1),punch*(rc?rc.sy:1));var fno=(Arcade.SEGMENTS[s.seg]||{}).formNo|0,deep=!b.mid&&fno>=2&&'filter' in ctx;if(deep)ctx.filter='brightness(.7) contrast(1.2)';else if(bright&&s.stage==='card'&&'filter' in ctx)ctx.filter=BRIGHT_ART_DIM; // 세 번째 모습부터는 먹을 한 단계 짙게: 같은 인물의 다음 모습이 '더 깊어졌다'로 읽힌다(심사 11-20) // 금빛·흰빛 보스 그림은 스펠 중 한 단계 어둡게: 그 위 탄이 묻힌다(심사 6.44)
-    drawArt(ak,0,0,s.tick-b.hitTick<3,themeColor(s),0,bm,bp.dir||(bx>W/2?-1:1));ctx.filter='none';ctx.restore();
+    drawArt(ak,0,0,s.tick-b.hitTick<3,themeColor(s),bm==='attack'?bphase:0,bm,bp.dir||(bx>W/2?-1:1));ctx.filter='none';ctx.restore();
     if(main)meltEnd(main,bx,fy,tall,1); // 아랫몸은 번진 먹 가장자리로 지워져 구름 속으로 스민다(사용자 11-16)
     if(Ink&&Ink.footCloud)Ink.footCloud(ctx,bx,fy,tall,visual); // 발치의 먹구름: 걷는 동작의 어색함을 가린다(사용자 11-15)
     if(Ink&&Ink.footVeil)Ink.footVeil(ctx,bx,fy,tall,visual,1,hash(b.actor)); // 몸 앞을 지나는 옅은 구름 한 겹: 구름 윗선이 곧은 띠로 남지 않게
