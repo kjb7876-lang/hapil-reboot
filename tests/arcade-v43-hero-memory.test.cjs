@@ -102,13 +102,13 @@ test('a hit with a bomb left fires the bomb instead of costing a life (auto bomb
  const t=idle();t.noDistort=true;t.bombs=0;put(t,t.player.x,t.player.y,{bage:100});a.step(t,{dx:0,dy:0});assert.equal(t.player.hp,hp-1);assert(!t.events.includes('autoBomb'));
 });
 
-test('space-time distortion: a touching bullet slips past at 7% (attack Lv.1) up to 37% (Lv.7), and a slip-past spends no bomb',()=>{
- const a=A();assert.equal(a.DISTORT_CHANCE[1],.07);assert.equal(a.DISTORT_CHANCE[7],.37);for(let l=2;l<=7;l++)assert(a.DISTORT_CHANCE[l]>a.DISTORT_CHANCE[l-1]&&a.DISTORT_CHANCE[l]<=.37);
- const rate=l=>{let ok=0,N=3000;const s=idle();s.power=l;s.exp=a.POWER_EXP[l-1];s.bombs=0;
+test('space-time distortion: a touching bullet slips past at 7% base whatever the attack level, +7% per equipped space-time fruit (77% with ten), and a slip-past spends no bomb',()=>{
+ const a=A();assert.equal(a.DISTORT_BASE,.07);assert.equal(a.DISTORT_FRUIT,.07); // 사용자 11-25: 공격 단계 7→37% 대신 기본 7% 고정 + 성장나무 열매(arcade-v43-grove.test)
+ const rate=(l,fruits)=>{let ok=0,N=3000;const s=idle({fruits});s.power=l;s.exp=a.POWER_EXP[l-1];s.bombs=0;
   for(let i=0;i<N;i++){s.power=l;s.player.hp=5;s.player.invulnerableUntil=0;s.n=0;s.stage='break';const d=s.distorts;put(s,s.player.x,s.player.y,{bage:100});a.step(s,{dx:0,dy:0});
    if(s.distorts>d){ok++;assert.equal(s.player.hp,5);assert(s.events.includes('distort'));assert(s.player.invulnerableUntil>=s.tick+a.DISTORT_TICKS-1);}clear(s);}
   return ok/N;};
- const r1=rate(1),r7=rate(7);assert(Math.abs(r1-.07)<.02,'Lv.1 '+r1);assert(Math.abs(r7-.37)<.03,'Lv.7 '+r7);
+ const r1=rate(1,0),r7=rate(7,0),f10=rate(1,10);assert(Math.abs(r1-.07)<.02,'Lv.1 '+r1);assert(Math.abs(r7-.07)<.02,'Lv.7 '+r7);assert(Math.abs(f10-.77)<.03,'ten fruits '+f10);
  const s=idle();s.bombs=2;s.power=7;let dist=0,auto=0;for(let i=0;i<400;i++){s.power=7;s.bombs=2;s.player.invulnerableUntil=0;s.n=0;const d=s.distorts,b=s.autoBombs;put(s,s.player.x,s.player.y,{bage:100});a.step(s,{dx:0,dy:0});if(s.distorts>d){dist++;assert.equal(s.autoBombs,b,'a slip-past does not also spend a bomb');}else auto++;clear(s);}
  assert(dist>0&&auto>0);const off=a.createRun({difficulty:'normal',seed:1,distort:false});assert.equal(off.noDistort,true);
  const app=fs.readFileSync(path.join(root,'src/arcade-app-v43.js'),'utf8'),fx=fs.readFileSync(path.join(root,'src/hero-memory-v43.js'),'utf8');assert(/'distort'/.test(app)&&/function drawWarps/.test(fx)&&/자동 필살/.test(fx));

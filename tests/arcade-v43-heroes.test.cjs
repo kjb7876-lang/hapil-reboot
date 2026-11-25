@@ -81,7 +81,7 @@ test('all three heroes share lives, hitbox, growth, normal automatic defense and
   A.gainExp(s,Math.ceil(A.POWER_EXP[6]*100/A.POWER_EXP_RATE));assert.equal(s.power,7);assert.deepEqual(A.slowField(s),A.SLOW_FIELD[7]);
   put(s,p.x,p.y,{bage:100});A.step(s,{});
   if(difficulty==='hell'){
-   assert.equal(s.autoBombs,0);assert.equal(s.distorts,0);assert.equal(p.hp,hp-1);assert.equal(s.bombs,bombs);assert.equal(A.distortChance(s),0);
+   assert.equal(s.autoBombs,0);assert.equal(s.distorts,0);assert.equal(p.hp,hp-1);assert.equal(s.bombs,bombs);assert.equal(A.distortChance(s),.07,'사용자 11-25: 시공간 왜곡 기본 7%는 헬에도(이 검사는 distort:false 로 끈 채 자동 필살 없음만 본다)');
    A.step(s,{bomb:true});assert.equal(s.bombsUsed,1,'manual bomb still works');
   }else{
    assert.equal(p.hp,hp);assert.equal(s.autoBombs,1);assert.equal(s.bombs,bombs-1);assert.equal(s.lastBomb.hero,hero);assert.equal(s.lastBomb.auto,true);
