@@ -14,7 +14,7 @@
   var PART8={title:'하나로 묶인 악몽',speaker:'환도의 기억',lines:[
     {speaker:'환도의 기억',text:'그 보이지 않는 끝을 따라가자 다시 ‘흑장미단’의 흔적이 드러났다.'},
     {speaker:'환도의 기억',text:'더 깊은 안쪽으로 들어가자 수많은 이의 몽세가 거미줄처럼 한데 묶여 있었다.'}]};
-  var RANK={gentle:1,normal:2,hell:3},RANK_NAME=['','이지','노멀','헬'];
+  var RANK={gentle:1,normal:2,hell:3,handicap:4},RANK_NAME=['','이지','노멀','헬','핸디캡'];
   var LOG_KEY='hapil-arcade-chapters-v43';
 
   function story(){return root&&root.HapilArcadeStory||null;}
@@ -43,13 +43,13 @@
   function migrateLog(raw){
     if(!raw||typeof raw!=='object'||Array.isArray(raw)||raw.v!==1)return raw;var L=layout();if(!L)return raw;
     var lv=raw.levels&&typeof raw.levels==='object'?raw.levels:{},out={v:2,levels:{},done:raw.done};
-    L.NEW_FROM.forEach(function(from,n){var low=3;from.forEach(function(o){var r=Number(lv[o]);low=Math.min(low,whole(r)&&r>=1&&r<=3?r:0);});if(low>0)out.levels[n]=low;});
+    L.NEW_FROM.forEach(function(from,n){var low=4;from.forEach(function(o){var r=Number(lv[o]);low=Math.min(low,whole(r)&&r>=1&&r<=4?r:0);});if(low>0)out.levels[n]=low;});
     return out;
   }
   function whole(v){return typeof v==='number'&&isFinite(v)&&Math.floor(v)===v;}
   function cleanLog(raw,stages){
     var log=freshLog(),n=(stages||[]).length;raw=migrateLog(raw);if(!raw||typeof raw!=='object'||Array.isArray(raw))return log;
-    var lv=raw.levels&&typeof raw.levels==='object'?raw.levels:{};Object.keys(lv).forEach(function(k){var i=Number(k),r=Number(lv[k]);if(whole(i)&&i>=0&&i<n&&whole(r)&&r>=1&&r<=3)log.levels[i]=r;});
+    var lv=raw.levels&&typeof raw.levels==='object'?raw.levels:{};Object.keys(lv).forEach(function(k){var i=Number(k),r=Number(lv[k]);if(whole(i)&&i>=0&&i<n&&whole(r)&&r>=1&&r<=4)log.levels[i]=r;});
     var dn=raw.done&&typeof raw.done==='object'?raw.done:{};Object.keys(dn).forEach(function(k){var p=Number(k),t=Number(dn[k]);if(whole(p)&&p>=1&&p<=count()&&isFinite(t)&&t>0)log.done[p]=Math.floor(t);});
     return log;
   }
