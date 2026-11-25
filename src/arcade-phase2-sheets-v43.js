@@ -69,8 +69,20 @@
   const a=e.art,k=f.frame;
   ctx.save();try{
    ctx.beginPath();ctx.rect(area.x0,area.y0,AW,AH);ctx.clip();
-   if(f.phase==='decay')ctx.globalAlpha=Math.max(0,1-phase(e,s).local/phase(e,s).duration*.6);
-   ctx.drawImage(a.image,(k%a.columns)*a.cellWidth,Math.floor(k/a.columns)*a.cellHeight,a.cellWidth,a.cellHeight,area.x0,area.y0,AW,AH);
+   const ph=phase(e,s),cell=n=>[(n%a.columns)*a.cellWidth,Math.floor(n/a.columns)*a.cellHeight,a.cellWidth,a.cellHeight,area.x0,area.y0,AW,AH];
+   if(f.phase==='telegraph'){
+    // 예고(심사 11-25 "예고가 너무 옅다"): 곧 닫힐 벽(공격 첫 칸)의 그림자를 점점 짙게 미리 보이고, 피할 길 양 끝에 인주색 안내 눈금(플레이어를 돕는 표시).
+    const u=ph.local/ph.duration;
+    ctx.globalAlpha=.12+.3*u;ctx.drawImage(a.image,...cell(a.framesByPhase.active[0]));
+    ctx.globalAlpha=1;ctx.drawImage(a.image,...cell(k));
+    const [l0,l1]=e.plan.safeLane,blink=.55+.45*Math.abs(Math.sin(ph.local*.18));
+    ctx.globalAlpha=blink*(.5+.5*u);ctx.fillStyle='#c8442f';
+    for(let y=area.y0+40;y<area.y1;y+=58){ctx.fillRect(l0-1,y,3,16);ctx.fillRect(l1-2,y,3,16);}
+   }else{
+    if(f.phase==='decay')ctx.globalAlpha=Math.max(0,1-ph.local/ph.duration*.6);
+    ctx.drawImage(a.image,...cell(k));
+    if(f.phase==='active'){ctx.globalAlpha=.35;ctx.globalCompositeOperation='multiply';ctx.drawImage(a.image,...cell(k));} // 공격 칸은 한 번 더 곱해 짙게: 맞는 먹이 무해한 바탕보다 확실히 어둡다
+   }
   }finally{ctx.restore();}
   return true;
  }
