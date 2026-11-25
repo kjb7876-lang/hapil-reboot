@@ -1244,6 +1244,8 @@
   }
   var BACKLIGHT_BRIGHT='26'; // 금빛·흰빛 테마는 역광이 가산되면 보스 뒤가 하얗게 탄다(심사: 탐욕 보스 금빛 과노출)
   var BOSS_BEAM_POSE=96; // 레이저·문양을 부르는 공격 자세 길이(틱)
+  var BOSS_BEAM_HOLD=240,BOSS_POSE_FADE=5; // 빛줄기 동안 자세를 붙드는 최대 길이, 동작이 바뀔 때 겹쳐 녹이는 틱
+  function beamsLive(s){var i;for(i=0;i<s.lasers.length;i++){var l=s.lasers[i];if(l.age<l.warn+(l.active||0))return true;}for(i=0;i<s.figures.length;i++){var f=s.figures[i];if(f.age<(f.warn||0)+(f.active||0))return true;}return false;}
   var bossArt={actor:'',keep:{}}; // 지금 보스 그림을 쥐어 둔다: 마지막 패턴이 깨진 그 틱에 다음 스테이지로 넘어가며 그림을 놓아도 쓰러짐은 이 그림으로 그린다
   function drawBoss(s){
     bossDraw.on=false;
@@ -1270,12 +1272,13 @@
         ctx.setLineDash([7,6]);ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(ex,ey);cueStroke();
         ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(ex-10*Math.cos(ang-.55),ey-10*Math.sin(ang-.55));ctx.lineTo(ex,ey);ctx.lineTo(ex-10*Math.cos(ang+.55),ey-10*Math.sin(ang+.55));cueStroke();ctx.restore();}
     }
-    var bp=bossPose;if(bp.actor!==b.actor){bp.actor=b.actor;bp.x=bx;bp.n=s.n;bp.until=-1;bp.start=0;bp.side=0;bp.born=s.enemyShotsBorn|0;bp.nl=s.lasers.length;bp.nf=s.figures.length;bp.acc=0;bp.at=s.tick;}if(s.tick<bp.start){bp.until=-1;bp.start=0;} // 같은 보스로 다시 시작하면 시계가 되돌아간다
+    var bp=bossPose;if(bp.actor!==b.actor){bp.actor=b.actor;bp.x=bx;bp.n=s.n;bp.until=-1;bp.start=0;bp.side=0;bp.born=s.enemyShotsBorn|0;bp.nl=s.lasers.length;bp.nf=s.figures.length;bp.acc=0;bp.at=s.tick;bp.beam=false;bp.m='';bp.pm='';bp.mt=-99;}if(s.tick<bp.start){bp.until=-1;bp.start=0;} // 같은 보스로 다시 시작하면 시계가 되돌아간다
     var bdx=bx-bp.x;bp.x=bx;if(Math.abs(bdx)>.3){bp.side=10;bp.dir=bdx<0?-1:1;}else if(bp.side>0)bp.side--;
     var fresh=Math.max(0,(s.enemyShotsBorn|0)-(bp.born|0))+(s.lasers.length>(bp.nl|0)?6:0)+(s.figures.length>(bp.nf|0)?6:0),gap=Math.max(0,Math.min(30,s.tick-(bp.at|0)));
     bp.acc=s.stage==='card'?(bp.acc||0)*Math.pow(.9,gap)+fresh:0;bp.born=s.enemyShotsBorn|0;bp.nl=s.lasers.length;bp.nf=s.figures.length;bp.at=s.tick;
     var beam=s.lasers.length>(bp.nl0|0)||s.figures.length>(bp.nf0|0);bp.nl0=s.lasers.length;bp.nf0=s.figures.length;
-    if(s.stage==='card'&&(s.n-bp.n>=6||bp.acc>=6)&&!(s.tick<bp.until&&s.tick>=bp.start)){bp.start=s.tick;bp.until=s.tick+(beam?BOSS_BEAM_POSE:56);bp.acc=0;}bp.n=s.n; // 공격 동작: 탄을 한꺼번에 뿌린 순간, 짧은 틈에 6발 넘게 이어 쏜 순간(줄줄이 쏘는 패턴), 레이저·문양을 새로 부른 순간. 동작이 도는 동안 다시 쏴도 처음부터 다시 시작하지 않는다(11-25 실플레이 검수: 아스모데우스처럼 이어 쏘는 보스는 공격 자세가 카드 시간의 11%만 나왔다)
+    if(s.stage==='card'&&(s.n-bp.n>=6||bp.acc>=6)&&!(s.tick<bp.until&&s.tick>=bp.start)){bp.start=s.tick;bp.until=s.tick+(beam?BOSS_BEAM_POSE:56);bp.beam=beam;bp.acc=0;}bp.n=s.n; // 공격 동작: 탄을 한꺼번에 뿌린 순간, 짧은 틈에 6발 넘게 이어 쏜 순간(줄줄이 쏘는 패턴), 레이저·문양을 새로 부른 순간. 동작이 도는 동안 다시 쏴도 처음부터 다시 시작하지 않는다(11-25 실플레이 검수: 아스모데우스처럼 이어 쏘는 보스는 공격 자세가 카드 시간의 11%만 나왔다)
+    if(bp.beam&&s.tick<bp.until&&s.tick-bp.start<BOSS_BEAM_HOLD&&images[ak+'@attack']&&beamsLive(s)){var hs=sheetOf(ak+'@attack',images[ak+'@attack']),htail=Math.ceil((hs.frames-1-Math.floor((hs.frames-1)*.6))*60/hs.fps)+1;if(bp.until-s.tick<=htail)bp.until=s.tick+htail;} // 빛줄기가 서 있는 동안은 팔 뻗은 칸을 붙든 채 거두지 않는다(11-25 재심사·사용자 '개선적용': 레이저가 끝나기 전에 자세가 풀림). 리듬 레이저처럼 길게 이어지면 4초에서 거둔다
     var bm=s.tick<bp.until&&images[ak+'@attack']?'attack':bp.side>0?'side':'',bphase=0;
     if(bm==='attack'){var ash=sheetOf(ak+'@attack',images[ak+'@attack']);if(ash.frames>1){var el=Math.max(0,s.tick-bp.start),dur=bp.until-bp.start,af=Math.min(ash.frames-1,Math.floor(el*ash.fps/60));if(dur>56){var peak=Math.floor((ash.frames-1)*.6),tail=(ash.frames-1-peak)*60/ash.fps,left=bp.until-s.tick;af=left<=tail?Math.min(ash.frames-1,peak+1+Math.floor((tail-left)*ash.fps/60)):Math.min(peak,af);} /* 레이저·문양을 부를 때는 팔을 뻗은 칸에서 멈춰 빛줄기가 서는 동안 붙잡고, 끝에 남은 칸으로 거둔다(11-25 심사: 0.5초 만에 대기로 돌아감) */bphase=af-Math.floor(visual*ash.fps);}} // 공격 칸은 쏜 순간 첫 칸부터 끝 칸까지 한 번 재생한다(11-25 실플레이 검수: 전역 시계로 칸을 골라 아무 칸에서나 시작·되감겨 팔 뻗는 칸이 잘 안 보였다, 아스모데우스)
     var since=s.tick-bp.start,punch=bm==='attack'&&since>=0&&since<16?1+.07*(1-since/16):1; // 공격 순간 몸이 한 번 커졌다 돌아온다. 탄에 가려도 윤곽으로 읽힌다.
@@ -1284,7 +1287,10 @@
     var tall=tallOf(bossKey(s)),fy=by+(rc?rc.dy:0),main=meltBegin(bx,fy,tall);
     if(!b.mid&&((Arcade.SEGMENTS[s.seg]||{}).formNo|0)>=2){var dk=ctx.createRadialGradient(bx,fy,tall*.12,bx,fy,tall*.78);dk.addColorStop(0,'rgba(22,16,20,.42)');dk.addColorStop(.6,'rgba(22,16,20,.2)');dk.addColorStop(1,'rgba(22,16,20,0)');ctx.fillStyle=dk;ctx.fillRect(bx-tall,fy-tall,tall*2,tall*2);} // 깊어진 모습 뒤의 짙은 먹 기운
     ctx.save();ctx.translate(bx,fy);if(rc)ctx.rotate(rc.tilt);ctx.scale(punch*(rc?rc.sx:1),punch*(rc?rc.sy:1));var fno=(Arcade.SEGMENTS[s.seg]||{}).formNo|0,deep=!b.mid&&fno>=2&&'filter' in ctx;if(deep)ctx.filter='brightness(.7) contrast(1.2)';else if(bright&&s.stage==='card'&&'filter' in ctx)ctx.filter=BRIGHT_ART_DIM; // 세 번째 모습부터는 먹을 한 단계 짙게: 같은 인물의 다음 모습이 '더 깊어졌다'로 읽힌다(심사 11-20) // 금빛·흰빛 보스 그림은 스펠 중 한 단계 어둡게: 그 위 탄이 묻힌다(심사 6.44)
-    drawArt(ak,0,0,s.tick-b.hitTick<3,themeColor(s),bm==='attack'?bphase:0,bm,bp.dir||(bx>W/2?-1:1));ctx.filter='none';ctx.restore();
+    var curPh=bm==='attack'?bphase:0;if(bm!==bp.m){bp.pm=bp.m||'';bp.pph=bp.ph|0;bp.mt=s.tick;bp.m=bm;}bp.ph=curPh;
+    drawArt(ak,0,0,s.tick-b.hitTick<3,themeColor(s),curPh,bm,bp.dir||(bx>W/2?-1:1));
+    var xf=s.tick-(bp.mt|0);if(xf>=0&&xf<BOSS_POSE_FADE&&bp.pm!==bm&&bp.pm!=='hit'&&bm!=='hit'){var ka=ctx.globalAlpha;ctx.globalAlpha=ka*(1-xf/BOSS_POSE_FADE);drawArt(ak,0,0,false,themeColor(s),bp.pph,bp.pm,bp.dir||(bx>W/2?-1:1));ctx.globalAlpha=ka;} // 대기↔공격 칸이 바뀔 때 앞 그림을 0.08초 동안 옅게 덮어 실루엣이 한 번에 튀지 않게(11-25 재심사)
+    ctx.filter='none';ctx.restore();
     if(main)meltEnd(main,bx,fy,tall,1); // 아랫몸은 번진 먹 가장자리로 지워져 구름 속으로 스민다(사용자 11-16)
     if(Ink&&Ink.footCloud)Ink.footCloud(ctx,bx,fy,tall,visual); // 발치의 먹구름: 걷는 동작의 어색함을 가린다(사용자 11-15)
     if(Ink&&Ink.footVeil)Ink.footVeil(ctx,bx,fy,tall,visual,1,hash(b.actor)); // 몸 앞을 지나는 옅은 구름 한 겹: 구름 윗선이 곧은 띠로 남지 않게
