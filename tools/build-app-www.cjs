@@ -17,6 +17,7 @@ const html=fs.readFileSync(path.join(root,'arcade.html'),'utf8');
 const scripts=[...html.matchAll(/<script src="([^"?]+)/g)].map(m=>m[1]);
 if(!scripts.includes('src/arcade-app-v43.js'))throw new Error('arcade.html does not load src/arcade-app-v43.js');
 for(const s of scripts)copy(s);
+copy('privacy.html'); // 앱 안 개인정보처리방침 링크(스토어 제출용 공개 주소는 따로 필요)
 copy('docs/v43/canonical-story.txt'); // 규칙 메뉴의 정본 원문: 오프라인 앱에서도 읽을 수 있게 포함한다.
 copy('media/combat/boss01-purple-sword-spider-angel-cutin.webp'); // 보라검 천사 본보스 전용 컷인.
 for(const m of MEDIA)copy(m);
