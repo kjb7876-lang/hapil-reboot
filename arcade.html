@@ -107,6 +107,20 @@
     #arcade-title .note{word-break:keep-all;text-wrap:balance}
     #arcade-dev{min-height:34px;min-width:0;padding:6px 14px;font-size:12.5px;border:1px dashed #b98a2a;background:rgba(40,28,6,.55);color:#ffc65a}#arcade-dev[aria-pressed="true"]{border-style:solid;background:#3a2806;color:#ffd98a}
     #arcade-dev-badge{position:fixed;top:max(6px,env(safe-area-inset-top));right:8px;z-index:4;pointer-events:none;padding:3px 8px;border:1px solid #ffc65a;border-radius:6px;background:rgba(20,12,2,.92);color:#ffc65a;font:600 11px/1.3 system-ui,sans-serif;max-width:72vw;text-align:right}#arcade-dev-badge[hidden]{display:none}
+    /* 성장나무(src/arcade-grove-v43.js): 수묵 나무 캔버스 + 열매 10칸. 열매는 쪽빛, 인주색은 쓰지 않는다 */
+    #arcade-grove-screen{justify-content:flex-start;gap:10px;padding:18px max(14px,4%)}#arcade-grove-screen>*{flex-shrink:0}
+    .grove{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;max-width:340px}
+    .grove-tree{width:100%;height:min(240px,31dvh);border-radius:10px 7px 11px 6px/7px 11px 6px 10px;border:1.5px solid #8a7c68;background:#f2e9d6}
+    .grove-pct{margin:0;font:600 15px/1.3 "Noto Serif KR","Nanum Myeongjo",serif}.grove-pct b{font-size:26px;color:#2f4577;margin:0 2px}.grove-pct small{font-size:12px;opacity:.75}
+    .grove-info,.grove-msg,.grove-how{word-break:keep-all;text-wrap:balance}.grove-msg{min-height:1.5em;color:#2f4577}.grove-how{font-size:12px;opacity:.9;max-width:300px}
+    .grove-bar{width:100%;height:6px;border-radius:3px;background:rgba(138,124,104,.3);overflow:hidden}.grove-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#5a5048,#2f4577);transition:width .3s}
+    .grove .row{flex-wrap:wrap;justify-content:center}
+    .grove-slots{display:grid;grid-template-columns:repeat(5,46px);gap:8px 10px;justify-content:center;width:100%}
+    .grove-slot{min-width:0;font-size:16px;min-height:0;width:46px;height:46px;padding:0;border-radius:50%!important;font:600 16px/1 "Noto Serif KR",serif}
+    .grove-slot[data-state="on"]{background:radial-gradient(circle at 35% 30%,#6f86b8,#3d5488 55%,#1c2747)!important;border-color:#1c2747!important;color:#e8d6a6!important;box-shadow:0 0 8px rgba(61,84,136,.55)}
+    .grove-slot[data-state="off"]{background:transparent!important;border-style:dashed!important;border-color:#3d5488!important;color:#3d5488!important}
+    .grove-slot[data-state="empty"]{opacity:.35}
+    html:not(.ink) .grove-pct b{color:#9fb4e6}html:not(.ink) .grove-msg{color:#9fb4e6}
     /* 수묵화풍(기본. ?ink=0 이면 html.ink 가 붙지 않아 옛 화풍) */
     html.ink,html.ink body{color:#2a2420}
     html.ink canvas{background:#f2e9d6}
@@ -260,6 +274,7 @@
       <p class="note" id="continue-note" hidden></p>
       <button id="arcade-start" class="primary" type="button" data-mode="full" data-i18n="loading" disabled>불러오는 중…</button>
       <button id="arcade-chapters" type="button" style="min-width:220px">챕터 기록</button>
+      <button id="arcade-grove" type="button" style="min-width:220px">성장나무</button>
       <div class="row pick">
         <select id="arcade-stage-select" aria-label="스테이지 선택" data-i18n-label="stageSelect"></select>
         <button id="arcade-stage-go" type="button" data-i18n="here">여기서</button>
@@ -308,6 +323,13 @@
         <div class="row"><button id="chapter-import-go" type="button" hidden>이 코드로 불러오기</button></div>
       </div>
       <button id="arcade-chapter-back" type="button" data-i18n="back">돌아가기</button>
+    </div>
+
+    <div id="arcade-grove-screen" class="screen" hidden>
+      <p class="kicker">GROWTH TREE · 시공간 열매</p>
+      <h2>성장나무</h2>
+      <div id="arcade-grove-body" class="grove"></div>
+      <button id="arcade-grove-back" type="button" data-i18n="back">돌아가기</button>
     </div>
 
     <div id="arcade-keepsake-screen" class="screen" hidden>
@@ -402,46 +424,47 @@
       <button id="arcade-home" type="button" data-i18n="toTitle">처음 화면으로</button>
     </div>
   </div>
-  <script src="src/rain-hit-bank-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/audio-v37.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-parts-v43/p1.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-parts-v43/p2.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-parts-v43/p3.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-parts-v43/p4.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-parts-v43/p5.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-parts-v43/p6.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-parts-v43/p7.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-parts-v43/p8.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-boss-intros-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-boss-lines-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-heroes-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-boss-rhythm-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-encounter-phases-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-boss-phases-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-laser-rhythm-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-skins-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/ink-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-phase2-art-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-phase2-source-ink-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-phase2-signatures-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-phase2-extra-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-phase2-extra-art-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-phase2-p1-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-phase2-p1-art-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-phase2-native-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/ink-motifs-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/hero-memory-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-i18n-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-music-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-mobile-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-eyes-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-story-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-chapters-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-hero-select-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-hero-visibility-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-spirit-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-cues-v43.js?v=20261125-boss-pose-hold"></script>
-  <script src="src/arcade-app-v43.js?v=20261125-boss-pose-hold"></script>
+  <script src="src/rain-hit-bank-v43.js?v=20261125-grove"></script>
+  <script src="src/audio-v37.js?v=20261125-grove"></script>
+  <script src="src/arcade-parts-v43/p1.js?v=20261125-grove"></script>
+  <script src="src/arcade-parts-v43/p2.js?v=20261125-grove"></script>
+  <script src="src/arcade-parts-v43/p3.js?v=20261125-grove"></script>
+  <script src="src/arcade-parts-v43/p4.js?v=20261125-grove"></script>
+  <script src="src/arcade-parts-v43/p5.js?v=20261125-grove"></script>
+  <script src="src/arcade-parts-v43/p6.js?v=20261125-grove"></script>
+  <script src="src/arcade-parts-v43/p7.js?v=20261125-grove"></script>
+  <script src="src/arcade-parts-v43/p8.js?v=20261125-grove"></script>
+  <script src="src/arcade-boss-intros-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-boss-lines-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-heroes-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-boss-rhythm-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-encounter-phases-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-boss-phases-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-laser-rhythm-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-skins-v43.js?v=20261125-grove"></script>
+  <script src="src/ink-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-phase2-art-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-phase2-source-ink-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-phase2-signatures-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-phase2-extra-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-phase2-extra-art-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-phase2-p1-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-phase2-p1-art-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-phase2-native-v43.js?v=20261125-grove"></script>
+  <script src="src/ink-motifs-v43.js?v=20261125-grove"></script>
+  <script src="src/hero-memory-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-i18n-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-music-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-mobile-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-eyes-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-story-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-chapters-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-grove-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-hero-select-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-hero-visibility-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-spirit-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-cues-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-app-v43.js?v=20261125-grove"></script>
 </body>
 </html>

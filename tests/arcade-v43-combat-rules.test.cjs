@@ -6,15 +6,15 @@ function shot(s,x,y,patch={}){const i=s.sn++;s.sx[i]=x;s.sy[i]=y;s.svx[i]=patch.
 function orb(s,x,y,type,hp,breakable){const size=typeof type==='string'?A.SHAPE_PROP:type,color=typeof type==='string'?A.PROPS.findIndex(p=>p.key===type):0;const i=h.put(s,x,y,{bsize:size,bcolor:color,bage:100});s.bbreakable[i]=A.bulletRenderSpan(size,color)>=A.BULLET_BREAK_MIN_SPAN&&breakable!==false?1:0;s.bhp[i]=s.bbreakable[i]?(hp===undefined?A.ORB_HP[size]:hp):0;s.bfragment[i]=0;s.bgrace[i]=A.BLOOM_TICKS;return i;}
 function step(s,input){A.step(s,input||{});}
 
-test('hell contact never rolls evasion or spends a bomb, while the manual bomb works',()=>{
+test('hell contact never spends an automatic bomb, while the manual bomb works',()=>{
  const s=h.idle({difficulty:'hell',seed:2});s.power=7;s.exp=A.POWER_EXP[6];
- assert.equal(A.distortChance(s),0);
- const rng=s.drng;
+ assert.equal(A.distortChance(s),.07,'사용자 11-25: 시공간 왜곡 기본 7%는 헬에도 적용(arcade-v43-grove.test 가 헬 실측)');
+ s.noDistort=true;const rng=s.drng;
  for(let k=0;k<100;k++){
   s.player.hp=3;s.player.invulnerableUntil=0;s.bombs=2;s.n=0;
   orb(s,s.player.x,s.player.y,1);step(s);
   assert.equal(s.player.hp,2);assert.equal(s.bombs,2);assert.equal(s.autoBombs,0);assert.equal(s.distorts,0);
-  assert.equal(s.drng,rng,'hell does not advance the evasion RNG');h.clear(s);
+  assert.equal(s.drng,rng,'with the distortion switched off the evasion RNG stays put');h.clear(s);
  }
  s.player.invulnerableUntil=0;s.bombs=2;orb(s,s.player.x,s.player.y,1);step(s,{bomb:true});
  assert.equal(s.player.hp,2);assert.equal(s.bombs,1);assert.equal(s.bombsUsed,1);assert(s.events.includes('bomb'));

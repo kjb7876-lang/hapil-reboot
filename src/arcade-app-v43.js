@@ -43,6 +43,8 @@
   var STORY_SEEN_KEY='hapil-arcade-boss-seen-v4',STORY_IMPACT_MS=1800;
   /* 챕터(정본 제1부~제8부, src/arcade-chapters-v43.js): 기록 화면·재도전·전환 카드. 진행 저장은 본 키 + 예비 키 두 곳에 쓰고 읽을 때 합친다(사용자 11-20 "저장 불러오기 꼭 잘되게"). */
   var Chapters=global.HapilArcadeChapters||null,chapterLog=Chapters?Chapters.freshLog():null,chapterCard=null,chapterReturn=null,lastSaveAt=0,BACKUP_KEY='hapil-arcade-save-v43-bak';
+  /* 성장나무(src/arcade-grove-v43.js, 사용자 11-25): 점수 → 양분 → 시공간 열매. 장착 개수를 createRun({fruits}) 로 넘긴다(왜곡 7% + 7%×n, 헬 포함). DEV 모드 점수는 양분이 되지 않는다 */
+  var Grove=global.HapilArcadeGrove||null,grove=Grove?Grove.load():null,groveView=null;
   var Heroes=global.HapilArcadeHeroes||null,heroPicker=null,selectedHero='memory',journeyHero='memory',HERO_KEY='hapil-arcade-hero-v43',JOURNEY_HERO_KEY='hapil-arcade-journey-hero-v43';
   function heroId(id){return Heroes?Heroes.get(id).id:id==='seoha'||id==='seoha-b'?id:'memory';}
   function isSeoha(id){return id==='seoha'||id==='seoha-b';}
@@ -728,16 +730,19 @@
     return r;
   }
   /* 기록 코드: 진행·챕터 기록·최고점을 한 줄로. 불러오기는 지금 기록과 합친다(덮어써서 잃지 않는다). */
-  function exportCode(){return Chapters?Chapters.encode({v:1,at:Date.now(),progress:progress,chapters:chapterLog,best:best,bests:bests}):'';}
+  function exportCode(){return Chapters?Chapters.encode({v:1,at:Date.now(),progress:progress,chapters:chapterLog,best:best,bests:bests,grove:grove||undefined}):'';}
   function importCode(text){
     var v=Chapters&&Chapters.decode(text);if(!v||!v.progress)return null;
     var before=progress.cleared.length;progress=mergeProgress(progress,v.progress);if(Chapters)chapterLog=Chapters.mergeLog(chapterLog,v.chapters,Arcade.STAGES);
     var vb=finite(Number(v.best),0);if(vb>best){best=Math.floor(vb);try{global.localStorage.setItem(BEST_KEY,String(best));}catch(e){}}
     if(v.bests&&typeof v.bests==='object'){['gentle','normal','hell'].forEach(function(d){var e=v.bests[d];if(!e||typeof e!=='object')return;var m=bests[d]||(bests[d]={one:0,practice:0});['one','practice'].forEach(function(k){var x=Math.max(0,finite(Number(e[k]),0))|0;if(x>m[k])m[k]=x;});});try{global.localStorage.setItem(BESTS_KEY,JSON.stringify(bests));}catch(e){}}
+    if(Grove&&v.grove){grove=Grove.merge(grove,v.grove);Grove.save(grove);}
     saveProgress();return {added:progress.cleared.length-before,total:progress.cleared.length};
   }
   /* 방금 맞은 스펠(외부 심사 11-20 "결과 화면에 '방금 맞은 스펠 다시 연습' … 같은 예고부터 바로 반복"): 이름 붙은 패턴에서 맞거나·자동 필살이 터지거나·봉인을 놓친 마지막 패턴 */
   function noteSpell(s){var seg=Arcade.SEGMENTS[s.seg];if((s.stage==='card'||s.stage==='lost'||s.cardEnding)&&seg&&seg.kind==='card'&&seg.spell)lastSpell={seg:s.seg,stage:seg.stage,name:seg.name,hero:s.hero};}
+  /* 이번 판 점수를 양분으로(남은 점수는 다음에 이어 센다). 스테이지를 깰 때·판이 끝날 때·타이틀로 나갈 때 */
+  function bankSap(s){if(!Grove||!grove||!s||!s.groveRun||devMode)return 0;var got=Grove.earn(grove,s.groveRun,s.score);if(got)Grove.save(grove);return got;}
   function recordResult(result){
     if(!result||state.bossOnly||state.spellOnly)return;
     progress=Progress.record(progress,result,state.difficulty);if(Chapters)chapterLog=Chapters.noteClear(chapterLog,Arcade.STAGES,progress,result.stage,state.difficulty);saveProgress();
@@ -809,7 +814,7 @@
       else if(e==='formShift'){beginFormShift(s);wantFx(sheetWho(s));}
       else if(e==='plain'){var ppi=shownPhase(s);if(ppi&&ppi.count>1&&s.entranceAll)showBanner('PHASE '+ppi.no+' / '+ppi.count,phaseLabel(s,false),false);}
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,'제'+g.part+'부 · STAGE '+(s.stageIndex+1));play('seal');}}
-      else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);showToast(r);rushStage=false;}
+      else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);bankSap(s);showToast(r);rushStage=false;}
       else if(e==='map'){var fromPart=s.results.length?Arcade.STAGES[s.results[s.results.length-1].stage].part:0;loadStage(s.stageIndex);if(fromPart&&fromPart!==Arcade.STAGES[s.stageIndex].part)openChapterCard(fromPart,Arcade.STAGES[s.stageIndex].part,null);}
       else if(e==='entrance'){if(storyArrivalActor!==s.boss.actor)play('warning');storyArrivalActor='';wantFx(sheetWho(s));showBanner(s.boss.name,s.boss.mid?'중간보스':'보스');} // 본보스 컷인은 enter() 전, 중간보스는 기존 입장만.
       else if(e==='figure')castFx(s,false);
@@ -2076,7 +2081,7 @@
 
   /* ── 메뉴 ── */
   function show(id,on){var el=$(id);if(el)el.hidden=!on;}
-  var SCREENS={title:'arcade-title',paused:'arcade-pause',result:'arcade-result',keepsakes:'arcade-keepsake-screen',boss:'arcade-boss-screen',story:'arcade-story',rules:'arcade-rules',hero:'arcade-hero-select',chapters:'arcade-chapter-screen',chapter:'arcade-chapter-card'};
+  var SCREENS={title:'arcade-title',paused:'arcade-pause',result:'arcade-result',keepsakes:'arcade-keepsake-screen',boss:'arcade-boss-screen',story:'arcade-story',rules:'arcade-rules',hero:'arcade-hero-select',chapters:'arcade-chapter-screen',chapter:'arcade-chapter-card',grove:'arcade-grove-screen'};
   function musicMode(){return mode==='story'||mode==='chapter'?'playing':mode==='rules'&&rulesReturn!=='title'?'paused':mode;}
   function syncStoryFx(){var el=$('arcade-story');if(!el)return;el.dataset.paused=String(mode!=='story');el.dataset.lite=String(settings.lowQuality);el.dataset.shake=String(settings.screenShake);}
   function revealStory(){if(!story||story.phase!=='impact')return;story.phase='memory';story.elapsed=0;$('arcade-story').dataset.phase='memory';if(fx&&fx.suspend)fx.suspend(true);}
@@ -2193,6 +2198,7 @@
   }
 
   function setMode(next){
+    if(next!=='grove'&&groveView){groveView.stop();groveView=null;}
     if(next!=='hero'&&heroPicker)heroPicker.hide();
     mode=next;var st=$('arcade-stage');if(st&&st.dataset)st.dataset.mode=next; // 플레이 중에만 판 둘레까지 touch-action:none(arcade.html)
     Object.keys(SCREENS).forEach(function(k){show(SCREENS[k],k===next);});
@@ -2224,10 +2230,11 @@
     var chapterPart=run&&Number.isInteger(run.chapter)?run.chapter:0;
     run={chapter:chapterPart,stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),spellOnly:!!(run&&run.spellOnly&&Number.isInteger(run.segment)),segment:run&&run.segment,carry:run&&run.carry,practice:!!(run&&run.practice),hero:heroId(run&&run.hero||selectedHero)};
     lastRun=run;lastSpell=run.spellOnly?lastSpell:null;oneCreditEligible=run.stage===0&&!run.bossOnly&&!run.spellOnly&&!Number.isInteger(run.segment)&&!run.carry&&!run.practice&&!quiet&&!devMode;
-    var options={ability:abilityFor(run.hero),entranceAll:true,difficulty:difficulty,seed:fixedSeed(difficulty,run.stage),stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,spellOnly:run.spellOnly,growth:true,pacing:!quiet,rhythm:!quiet}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
+    var options={ability:abilityFor(run.hero),entranceAll:true,difficulty:difficulty,seed:fixedSeed(difficulty,run.stage),stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,spellOnly:run.spellOnly,growth:true,pacing:!quiet,rhythm:!quiet,fruits:Grove&&grove?Grove.equipped(grove):0}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
     if(run.chapter&&Chapters){var ch=Chapters.list(Arcade.STAGES)[run.chapter-1];if(ch&&ch.last>=run.stage)options.stages=ch.last-run.stage+1;} // 챕터 재도전: 그 챕터 끝에서 멈춘다
     if(Number.isInteger(run.segment))options.segment=run.segment;if(grown&&(grown.exp||grown.expRemainder||grown.fills||grown.union||typeof grown.stock==='number')){options.grown={exp:grown.exp|0,fills:grown.fills|0,expRemainder:grown.expRemainder};if(typeof grown.stock==='number')options.grown.stock=grown.stock;if(grown.union===true)options.grown.union=true;}
-    state=Arcade.createRun(options);syncAbility();heroOpacity=1;if(Spirit)Spirit.reset();if(Cues)Cues.reset();
+    if(state)bankSap(state);
+    state=Arcade.createRun(options);state.groveRun={banked:0,sap:0};syncAbility();heroOpacity=1;if(Spirit)Spirit.reset();if(Cues)Cues.reset();
     if(isSeoha(state.hero))loadImage('hero-'+state.hero);
     if(state.hero==='seoha')loadImage('hero-seoha-b');
     if(!run.bossOnly&&!run.spellOnly&&!quiet){journeyHero=run.hero;try{global.localStorage.setItem(JOURNEY_HERO_KEY,journeyHero);}catch(e){}}
@@ -2244,12 +2251,13 @@
   }
   function finish(){
     var s=state,won=s.stage==='won';rushStage=false;
-    recordBestScore(s);
+    recordBestScore(s);bankSap(s);
     var stars=0;s.results.forEach(function(r){stars+=r.stars;});
     $('result-title').textContent=s.spellOnly?(s.captures?'봉인 성공':won?'봉인 놓침':'GAME OVER'):won?(s.bossOnly?'BOSS CLEAR':s.stageIndex>=Arcade.STAGES.length-1?'ALL CLEAR':'CLEAR'):'GAME OVER';
     $('result-score').textContent=pad(s.score);$('result-best').textContent=pad(best);
     var dn={gentle:'이지',normal:'노멀',hell:'헬'}[s.difficulty]||'',bl=$('result-bests');if(bl)var b1=bestOf(s.difficulty,'one'),b2=bestOf(s.difficulty,'practice');bl.textContent=dn+' 원코인 최고 '+(b1?pad(b1):'기록 없음')+' · 연습 최고 '+(b2?pad(b2):'기록 없음');
     $('result-detail').textContent=s.spellOnly?'스펠 연습 「'+(Arcade.SEGMENTS[s.spellSeg]||{}).name+'」 · 스침 '+s.graze+' · 피격 '+s.hits+' · 연습 점수는 최고점에 넣지 않는다':(won?'':'STAGE '+(s.stageIndex+1)+' '+Arcade.STAGES[s.stageIndex].name+' · ')+(oneCreditEligible?'원코인 여정 · ':'연습/이어하기 · ')+'깬 스테이지 '+s.results.length+' · 별 '+stars+' · 봉인 '+s.captures+' · 스침 '+s.graze+' · 피격 '+s.hits;
+    if(s.groveRun&&s.groveRun.sap&&!devMode)$('result-detail').textContent+=' · 성장나무 양분 +'+s.groveRun.sap;
     var retry=$('arcade-retry');
     if(!won){retry.hidden=false;retry.textContent=T('retryFallen');retry.dataset.stage=String(s.stageIndex);}
     else if(s.bossOnly){retry.hidden=false;retry.textContent=T('retryBoss');retry.dataset.stage=String(s.rushStage);}
@@ -2319,6 +2327,10 @@
     if(ok)setMode('chapter');return ok;
   }
   function chapterSound(kind){if(kind==='end'){play('seal');shake=0;}else play('phaseBreak',W/2);}
+  function openGrove(){
+    if(!Grove||!grove)return;setMode('grove');
+    groveView=Grove.mount(document,$('arcade-grove-body'),grove,{changed:function(g){Grove.save(g);},sound:function(k){play(k==='fruit'?'seal':k==='petal'?'graze':k==='feed'?'item':'clockChime');}});
+  }
   function openChapters(){
     if(!Chapters)return;var rows=Chapters.summary(Arcade.STAGES,progress,chapterLog,function(i){return Progress.canPlay(progress,i);});
     Chapters.renderList(document,$('arcade-chapter-list'),rows,{restart:function(part){var c=rows[part-1];if(c&&Progress.canPlay(progress,c.first))chooseHero({stage:c.first,practice:true,chapter:part});},resume:function(stage){if(Progress.canPlay(progress,stage))chooseHero({stage:stage,practice:true});}});
@@ -2332,7 +2344,7 @@
     var when=lastSaveAt?new Date(lastSaveAt):null,t=when?(when.getMonth()+1)+'/'+when.getDate()+' '+('0'+when.getHours()).slice(-2)+':'+('0'+when.getMinutes()).slice(-2):'';
     el.textContent=!saveOk?'이 브라우저에는 저장되지 않습니다. 기록 코드를 복사해 두면 다른 곳에서 불러올 수 있습니다.':'자동 저장 켜짐 · 스테이지를 깰 때마다, 보스를 쓰러뜨릴 때마다 저장'+(t?' · 마지막 저장 '+t:'')+'. 기록 코드로 다른 기기에 옮길 수 있습니다.';
   }
-  function goTitle(){story=null;storyArrivalActor='';if(global.HapilEyes)global.HapilEyes.clear();if(loadedStage>=0)releaseStage(loadedStage,-1);state=null;toast=null;refreshTitle();setMode('title');}
+  function goTitle(){bankSap(state);story=null;storyArrivalActor='';if(global.HapilEyes)global.HapilEyes.clear();if(loadedStage>=0)releaseStage(loadedStage,-1);state=null;toast=null;refreshTitle();setMode('title');}
   function bossStages(){return Arcade.STAGES.filter(function(g){return g.kind==='boss'&&progress.cleared.indexOf(g.index)>=0;});}
   function actorNames(index){var names=[];Arcade.SEGMENTS.forEach(function(seg){if(seg.stage===index&&seg.kind==='card'){var n=segName(seg);if(names.indexOf(n)<0)names.push(n);}});return names;}
   // 스테이지 선택: 부별로 묶고, 잠긴 스테이지는 고를 수 없다. 깬 스테이지에는 별을 단다.
@@ -2359,6 +2371,7 @@
     $('title-best').textContent=pad(best);$('title-stars').textContent=String(Progress.totalStars(progress));$('title-stars-max').textContent=String(Arcade.STAGES.length*3);
     $('arcade-keepsakes').textContent=T('keepsakesCount',{n:progress.rewards.length,max:Arcade.STAGES.length});
     if($('arcade-chapters')){if(Chapters){var cs=Chapters.summary(Arcade.STAGES,progress,chapterLog,function(i){return Progress.canPlay(progress,i);});$('arcade-chapters').textContent='챕터 기록 '+cs.filter(function(r){return r.complete;}).length+'/'+cs.length;}else $('arcade-chapters').hidden=true;}
+    if($('arcade-grove')){if(Grove&&grove){var gn=Grove.next(grove);$('arcade-grove').textContent='성장나무 · 왜곡 '+Grove.chancePct(grove)+'%'+(gn&&grove.sap>=gn.need?' · 꽃 준비':'');}else $('arcade-grove').hidden=true;}
     $('save-note').hidden=saveOk;
     fillStages();
   }
@@ -2535,6 +2548,8 @@
     });
     if($('arcade-chapters'))$('arcade-chapters').addEventListener('click',openChapters);
     if($('arcade-chapter-back'))$('arcade-chapter-back').addEventListener('click',function(){setMode('title');});
+    if($('arcade-grove'))$('arcade-grove').addEventListener('click',openGrove);
+    if($('arcade-grove-back'))$('arcade-grove-back').addEventListener('click',function(){refreshTitle();setMode('title');});
     if($('chapter-export'))$('chapter-export').addEventListener('click',function(){var code=exportCode(),box=$('chapter-code');box.hidden=false;box.value=code;$('chapter-import-go').hidden=true;try{box.select();}catch(e){}
       var done=function(ok){paintSaveState(ok?'기록 코드를 복사했습니다. 메모 앱 등에 붙여 두면 다른 기기에서 [기록 코드 불러오기]로 이어 할 수 있습니다.':'아래 기록 코드를 길게 눌러 복사해 두세요.');};
       try{if(global.navigator&&global.navigator.clipboard&&global.navigator.clipboard.writeText)global.navigator.clipboard.writeText(code).then(function(){done(true);},function(){done(false);});else done(false);}catch(e){done(false);}});
