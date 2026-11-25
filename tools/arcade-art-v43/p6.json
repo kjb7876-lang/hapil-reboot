@@ -10,6 +10,12 @@
      "strip": 4,
      "fps": 8,
      "size": 220
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p6_demons-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p6_demons-hit 4칸"
     }
    }
   },

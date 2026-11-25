@@ -11,6 +11,18 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p5_cult-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p5_cult-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p5_cult-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p5_cult-hit 4칸"
     }
    }
   },
@@ -24,6 +36,18 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p5_archon-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p5_archon-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p5_archon-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p5_archon-hit 4칸"
     }
    }
   },
@@ -37,6 +61,19 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p5_common-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p5_common-death 8칸",
+     "size": 232
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p5_common-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p5_common-hit 4칸"
     }
    }
   },
@@ -63,6 +100,18 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p5_grand-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p5_grand-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p5_grand-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p5_grand-hit 4칸"
     }
    }
   },
@@ -77,6 +126,18 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p5_furnace-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p5_furnace-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p5_furnace-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p5_furnace-hit 4칸"
     }
    }
   },
@@ -90,6 +151,18 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p5_neuron-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p5_neuron-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p5_neuron-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p5_neuron-hit 4칸"
     }
    }
   },
@@ -103,6 +176,18 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p5_keeper-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p5_keeper-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p5_keeper-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p5_keeper-hit 4칸"
     }
    }
   },
@@ -116,6 +201,18 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p5_rings-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p5_rings-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p5_rings-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p5_rings-hit 4칸"
     }
    }
   }

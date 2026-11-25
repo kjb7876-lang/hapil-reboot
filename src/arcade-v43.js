@@ -26,7 +26,7 @@
     if(!slot||slot.actor!==g.actor)return native.step(s,null);
     var here=STAGES[g.stage],p=livePhaseOf(s,s.seg);
     return native.step(s,{actor:g.actor,stage:g.stage+1,scene:String(here.scene),mid:g.mid,role:g.mid?'midboss':g.stage===partFinalStage(here.part)?'episode':'main',ordinal:p?p.no-1:-1,preFire:s.segTick<=cardFireDelay(s)||s.formHold===s.tick,
-      legacyBusy:!!(s.sp&&s.sp.cur||s.boss.downHold>0||s.figures.length||s.lasers.length||s.weapons.length||s.cannons.length||s.risers&&s.risers.some(function(r){return !r.fade;}))});
+      clearShots:function(){return cancelAll(s,true);},specialBusy:!!(s.sp&&s.sp.cur||s.boss.downHold>0),legacyBusy:!!(s.sp&&s.sp.cur||s.boss.downHold>0||s.figures.length||s.lasers.length||s.weapons.length||s.cannons.length||s.risers&&s.risers.some(function(r){return !r.fade;}))});
   }
   var rhythmContext=null;
   function heroProfile(s){return HEROES?HEROES.get(typeof s==='string'?s:s&&s.union?'seoha-b':s&&s.hero):null;}
@@ -121,6 +121,7 @@
     var aw=awakeNow(s),awD=aw?AWAKE_AS[s.difficulty]:'';s.awake=aw;s.awakeShape=aw&&s.difficulty==='gentle';s.awakeTempo=aw&&s.difficulty==='hell'?AWAKE_TEMPO:1;
     var L=s.entranceAll&&LIVE_TABLE[s.difficulty];if(L&&aw){var own=L;L={speed:LIVE_TABLE[awD].speed,density:LIVE_TABLE[awD].density*(s.difficulty==='hell'?AWAKE_HELL_DENSITY:1),radius:own.radius,hitScale:own.hitScale};}
     if(L){s.rules.speed=L.speed;s.density=(L.density+(L.end===undefined?0:(L.end-L.density)*u))*(s.compact?LIVE_MOBILE.density:1/COMPACT_DENSITY);s.rules.radius=L.radius;s.rules.hitScale=L.hitScale;if(s.player)s.player.r=L.radius;if(s.compact){s.rules.speed*=LIVE_MOBILE.speed;s.rules.warn=base.warn*LIVE_MOBILE.warn;s.rules.beam=base.beam*LIVE_MOBILE.beam;}}
+    var pr=s.entranceAll&&!aw&&!s.handicap&&STAGE_PRESS[s.stageIndex]||1;s.press=s.difficulty==='gentle'?Math.min(1,pr):pr; // 탄 수 몫(SHOT_KEEP)에 곱한다 — density 는 화면 붐빔 감축에 대부분 먹혀 효과가 작았다
     var tune=s.entranceAll&&!s.union&&HERO_TUNE[isSeohaHero(s)?'seoha':s.hero];if(tune){s.rules.speed*=tune.speed||1;s.density*=tune.density||1;}}
   /* 영웅별 난이도 보정(사용자 11-20 "서하로 플레이할때는 적 탄환패턴 많이 나와도됨 탄환난이도 조금더 높여도 될듯"): 실제 게임(entranceAll)에서 기준표(LIVE_TABLE) 위에 곱한다. 서하는 시간을 늦추는 능력이 있으니 탄 수 +20%, 탄속 +6% */
   var HERO_TUNE={seoha:{density:1.2,speed:1.06},memory:{laser:1.5,laserEvery:{gentle:300,normal:220,hell:185}}};
@@ -143,6 +144,9 @@
   }
   /* 실제 게임 난이도 기준표(사용자 11-19 "제안대로 계단 고르게"): 그동안 겹겹이 곱해지던 배율(표·이지노멀 완화·탄 수 -25%·-20%·탄속 +20%)을 최종값 한 줄로 합쳤다.
      탄 수는 휴대폰 기준값(PC는 ÷COMPACT_DENSITY), 이지는 첫 스테이지 density에서 마지막 end까지 오른다. 일반몹과 보스의 발사 비율은 SHOT_KEEP, 화면이 붐빌 때의 감축 기준은 CROWD_FROM을 쓴다. */
+  /* 스테이지별 압박 배율(사용자 11-25 "응" — 2·3스테이지 낮추고 후반(7·8부) 올리기): 노멀 모바일 실측 탄 수(audit-live-difficulty-v43)를 1스테이지 700 → 52스테이지 1100 직선에
+     반쯤 맞추는 값. 실제 게임(entranceAll)에서만, 쏜 탄을 남기는 몫(SHOT_KEEP)에 곱한다. 이지는 낮추는 쪽(1 미만)만 쓴다(이지는 이미 오르막이 있음). 1스테이지는 첫인상이라 1, 52(사몽각성)는 따로 규칙이 있어 1. */
+  var STAGE_PRESS=[1,.62,.6,1.46,1.32,1.02,.67,1.03,1,.68,1.31,1.07,.78,.95,.76,.92,1.05,.94,.95,1.13,1.14,1.34,.74,1.61,1.13,.86,.91,.82,.82,1.14,1.43,1.49,.99,1.07,1.27,1.36,1.22,.86,.73,.99,1.35,1.16,1.7,1.7,1.7,1.26,1.67,1.62,1.7,1.12,1.7,1];
   var LIVE_TABLE={
     // 사용자 11-19 21:22 "탄환속도와크기 전체적으로 30프로 늘려주고 그만큼 탄환 30프로 줄여줘": 탄속 ×1.3·탄 수 ×0.7(크기는 LIVE_GROW ×1.3)
     // 사용자 11-20 14:33 "모든탄 속도 16프로 상향 최대 탄환수 모든모드 20프로 하향": 탄속 ×1.16·탄 수 ×0.8(상한 CAP·COMPACT_CAP도 ×0.8)
@@ -392,7 +396,7 @@
     if(source!=='wave'&&source!=='card')return false;
     var budget=s.shotBudget;
     if(budget.seg!==s.seg){budget.seg=s.seg;budget.wave=budget.card=budget.crowd=0;}
-    var i=budget[source]++,keep=SHOT_KEEP[s.compact?'mobile':'desktop'][source][s.difficulty];
+    var i=budget[source]++,keep=Math.min(100,Math.round(SHOT_KEEP[s.compact?'mobile':'desktop'][source][s.difficulty]*(s.press||1)));
     // Carry fractional shots across volleys. Rotate the sample every hundred
     // candidates to avoid repeatedly dropping the same spoke from a fixed shape.
     var phase=(s.seg*17+Math.floor(i/100)*31+100)%100;

@@ -7,7 +7,7 @@
  * 사용: node tools/build-app-www.cjs [출력 폴더, 기본 app/www] [--exclude-held] */
 const fs=require('fs'),path=require('path');
 const root=path.join(__dirname,'..'),outArg=process.argv.slice(2).find(a=>!a.startsWith('--')),out=outArg?path.resolve(process.cwd(),outArg):path.join(root,'app/www'); // 인자는 지금 폴더 기준
-const MEDIA=['media/arcade-v43','media/arcade-v43-fx','media/arcade-v43-laser','media/arcade-v43-hero','media/arcade-v43-heroes','media/arcade-v43-cutin','media/phase2-v43','media/phase2-extra','media/phase2-p1','media/fonts','media/music.mp3','media/gunner.webp'];
+const MEDIA=['media/arcade-v43','media/arcade-v43-fx','media/arcade-v43-laser','media/arcade-v43-hero','media/arcade-v43-heroes','media/arcade-v43-cutin','media/phase2-v43','media/phase2-extra','media/phase2-p1','media/phase2-sheets','media/fonts','media/music.mp3','media/gunner.webp'];
 function copy(rel){const from=path.join(root,rel),to=path.join(out,rel);const st=fs.statSync(from);
   if(st.isDirectory()){for(const f of fs.readdirSync(from))copy(path.join(rel,f));return;}
   fs.mkdirSync(path.dirname(to),{recursive:true});fs.copyFileSync(from,to);bytes+=st.size;files++;}

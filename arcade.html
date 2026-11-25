@@ -158,12 +158,12 @@
     .hudx.mobile-player{text-align:right}
     .hudx.mobile-boss[hidden],.hudx.mobile-player[hidden]{display:none}
     .mobile-boss .name,.mobile-boss .spell,.mobile-boss .mobile-bonus{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .mobile-boss .name{font-size:13px}
+    .mobile-boss .name{font-size:13px}.mobile-boss .name.long{font-size:11.5px;letter-spacing:-.2px}.mobile-boss .name.longer{font-size:10.5px;letter-spacing:-.3px} /* 360폭에서 긴 스테이지·보스 이름이 잘리던 것(11-25 조사): 길이에 따라 글자를 줄인다 */
     .mobile-boss .mobile-meta,.mobile-player .graze,.mobile-player .levels{font-size:10px;opacity:.9;margin:0}
     .mobile-boss .bosshp{height:2px;margin:4px 0;background:rgba(244,236,218,.3)}
     .mobile-boss .bosshp i,.mobile-player .gauge i{display:block;height:100%;background:currentColor}
     .mobile-boss .mobile-meta{white-space:nowrap}
-    .mobile-boss .mobile-bonus{color:#f1cb86}
+    .mobile-boss .mobile-bonus{color:#f1cb86;font-size:9.5px;letter-spacing:-.3px} /* 봉인·기록 줄도 360폭에서 덜 잘리게(심사 11-25) */
     .mobile-player .score{font-size:17px;line-height:1;margin:0 0 2px}
     .mobile-player .mobile-stock{display:flex;justify-content:flex-end;align-items:center;gap:8px;white-space:nowrap}
     .mobile-player .mobile-stock .lives,.mobile-player .mobile-stock .bombs{font-size:12px;line-height:1.2;letter-spacing:0}
@@ -453,6 +453,8 @@
   <script src="src/arcade-phase2-extra-art-v43.js?v=20261125-grove"></script>
   <script src="src/arcade-phase2-p1-v43.js?v=20261125-grove"></script>
   <script src="src/arcade-phase2-p1-art-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-phase2-sheets-v43.js?v=20261125-grove"></script>
+  <script src="src/arcade-phase2-sheets-art-v43.js?v=20261125-grove"></script>
   <script src="src/arcade-phase2-native-v43.js?v=20261125-grove"></script>
   <script src="src/ink-motifs-v43.js?v=20261125-grove"></script>
   <script src="src/hero-memory-v43.js?v=20261125-grove"></script>

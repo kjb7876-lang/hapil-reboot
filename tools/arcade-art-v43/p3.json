@@ -12,6 +12,18 @@
      "fps": 8,
      "size": 184,
      "note": "닷츠 CX-0136BA v2 공격 6칸"
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p3_legion-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r2_p3_legion-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p3_legion-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p3_legion-hit 4칸"
     }
    }
   },
@@ -27,6 +39,18 @@
      "fps": 8,
      "size": 184,
      "note": "닷츠 CX-0136BA v2 공격 6칸"
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p3_rampart-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p3_rampart-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p3_rampart-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p3_rampart-hit 4칸"
     }
    }
   },
@@ -92,6 +116,18 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p3_body-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p3_body-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p3_body-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r2_p3_body-hit 4칸"
     }
    }
   },
@@ -105,6 +141,18 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p3_gate-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p3_gate-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p3_gate-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p3_gate-hit 4칸"
     }
    }
   }

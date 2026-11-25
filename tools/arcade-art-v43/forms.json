@@ -15,32 +15,118 @@
    "every": 2
   },
   "controller_alt27": {
-   "src": "media/chapter3-v18/controller-attack.webp"
+   "src": "media/drive-v43/cx0190/controller_alt27-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/drive-v43/cx0190/controller_alt27-attack.webp",
+     "strip": 6,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_controller_alt27-attack 6칸",
+     "size": 236
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/controller_alt27-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_controller_alt27-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/controller_alt27-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_controller_alt27-hit 4칸"
+    }
+   },
+   "note": "닷츠 CX-0190BM_r1_controller_alt27-down 4칸"
   },
   "controller_alt29": {
-   "src": "media/chapter3-v18/controller-rain.webp"
+   "src": "media/drive-v43/cx0190/controller_alt29-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/drive-v43/cx0190/controller_alt29-attack.webp",
+     "strip": 6,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_controller_alt29-attack 6칸"
+    }
+   },
+   "note": "닷츠 CX-0190BM_r1_controller_alt29-down 4칸"
   },
   "goblin_alt31": {
-   "src": "media/m0-v43/forms/goblin-flute-king.webp"
+   "src": "media/drive-v43/cx0190/goblin_alt31-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/drive-v43/cx0190/goblin_alt31-attack.webp",
+     "strip": 6,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_goblin_alt31-attack 6칸"
+    }
+   },
+   "note": "닷츠 CX-0190BM_r1_goblin_alt31-down 4칸"
   },
   "insomnia_alt34": {
-   "src": "media/m0-v43/forms/bulmyeongwi-p2.webp"
+   "src": "media/drive-v43/cx0190/insomnia_alt34-hover.webp",
+   "strip": 4,
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/drive-v43/cx0190/insomnia_alt34-attack.webp",
+     "strip": 6,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_insomnia_alt34-attack 6칸",
+     "size": 226
+    }
+   },
+   "note": "닷츠 CX-0190BM_r1_insomnia_alt34-hover 4칸"
   },
   "chief_alt50": {
    "src": "media/m0-v43/forms/h103-boss-p4.webp",
    "strip": 8,
    "fps": 4,
    "size": 260,
-   "every": 2
+   "every": 2,
+   "motions": {
+    "attack": {
+     "src": "media/drive-v43/cx0190/chief_alt50-attack.webp",
+     "strip": 6,
+     "fps": 8,
+     "note": "닷츠 CX-0192AF_r1_chief_alt50-attack 6칸",
+     "size": 198
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/chief_alt50-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r3_chief_alt50-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/chief_alt50-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_chief_alt50-hit 4칸"
+    }
+   }
   },
   "p6_demons_alt48": {
-   "src": "media/m0-v43/boss/mb-hando01-attack.webp",
-   "cell": [
-    2,
-    0,
-    4,
-    1
-   ]
+   "src": "media/drive-v43/cx0190/p6_demons_alt48-hover.webp",
+   "strip": 4,
+   "fps": 6,
+   "motions": {
+    "attack": {
+     "src": "media/drive-v43/cx0190/p6_demons_alt48-attack.webp",
+     "strip": 6,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p6_demons_alt48-attack 6칸",
+     "size": 182
+    }
+   },
+   "note": "닷츠 CX-0190BM_r1_p6_demons_alt48-hover 4칸",
+   "size": 244
   },
   "cultist_awake": {
    "src": "media/drive-v43/cx0157/cultist-awake-down.webp",
@@ -72,6 +158,18 @@
      "src": "media/drive-v43/cx0157/chief-swarm-attack.webp",
      "strip": 4,
      "fps": 8
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/chief_swarm-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_chief_swarm-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/chief_swarm-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_chief_swarm-hit 4칸"
     }
    }
   }
