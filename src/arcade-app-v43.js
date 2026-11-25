@@ -2011,6 +2011,7 @@
     }
     if(banner>0&&!(hudOut==='mobile'&&bannerSpell)){
       var t=1-banner,slide=t<.18?(1-t/.18)*W:bannerSpell&&t>.72?((t-.72)/.28)*((t-.72)/.28)*W:0,alpha=bannerSpell?1:t>.75?(1-t)/.25:1; // 스펠 띠는 흐려지지 않고 오른쪽으로 빠져나간다(반투명 잔상이 받침 글자와 겹치지 않게)
+      var sigOn=Phase2&&Phase2.inspect&&(Phase2.inspect(s)||{}).phase;if(sigOn)alpha*=.35; // 보스 스킬 시트가 도는 동안 띠를 옅게: 보스 머리·몸을 가리지 않는다(7전문가 11-25)
       ctx.save();ctx.globalAlpha=alpha;ctx.translate(slide,0);
       var band=ctx.createLinearGradient(0,0,W,0),by0=BANNER_Y;band.addColorStop(0,'rgba(0,0,0,0)');if(bannerSpell){band.addColorStop(.3,'rgba(6,4,16,.22)');band.addColorStop(.62,'rgba(6,4,16,.3)');band.addColorStop(.8,'rgba(6,4,16,.8)');}else band.addColorStop(.3,'rgba(6,4,16,.88)');band.addColorStop(1,'rgba(6,4,16,.88)');ctx.fillStyle=band;ctx.fillRect(0,by0,W,42);
       var lx=bannerSpell?W*.55:90;ctx.fillStyle=color;ctx.fillRect(lx,by0,W-lx,1.5);ctx.fillRect(lx,by0+40.5,W-lx,1.5);
