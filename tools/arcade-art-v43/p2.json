@@ -10,6 +10,19 @@
      "strip": 4,
      "fps": 8,
      "size": 220
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p2_demons-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p2_demons-death 8칸",
+     "size": 242
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p2_demons-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p2_demons-hit 4칸"
     }
    }
   },
@@ -24,6 +37,18 @@
      "strip": 4,
      "fps": 8,
      "size": 220
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p2_belphegor-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p2_belphegor-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p2_belphegor-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p2_belphegor-hit 4칸"
     }
    }
   },
@@ -37,6 +62,18 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p2_leviathan-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r2_p2_leviathan-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p2_leviathan-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p2_leviathan-hit 4칸"
     }
    }
   },
@@ -50,6 +87,18 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p2_beelzebub-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p2_beelzebub-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p2_beelzebub-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p2_beelzebub-hit 4칸"
     }
    }
   },
@@ -65,6 +114,18 @@
      "fps": 8,
      "size": 184,
      "note": "닷츠 CX-0136BA v2 공격 6칸"
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p2_greed-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p2_greed-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p2_greed-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p2_greed-hit 4칸"
     }
    }
   },
@@ -79,6 +140,18 @@
      "strip": 4,
      "fps": 8,
      "size": 220
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p2_mammon-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p2_mammon-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p2_mammon-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p2_mammon-hit 4칸"
     }
    }
   },
@@ -92,6 +165,18 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p2_wrath-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p2_wrath-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p2_wrath-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p2_wrath-hit 4칸"
     }
    }
   },
@@ -118,6 +203,18 @@
      "strip": 4,
      "fps": 8,
      "size": 220
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p2_core-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p2_core-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p2_core-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p2_core-hit 4칸"
     }
    }
   }

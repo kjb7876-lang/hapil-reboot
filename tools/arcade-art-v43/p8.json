@@ -10,6 +10,18 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p8_chip-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p8_chip-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p8_chip-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p8_chip-hit 4칸"
     }
    }
   },
@@ -23,19 +35,24 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p8_collective-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r3_p8_collective-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p8_collective-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p8_collective-hit 4칸"
     }
    }
   },
   "p8_lauren": {
-   "src": "media/actors-v7/guard-idle.png",
-   "frames": [
-    {
-     "src": "media/actors-v7/guard-idle.png"
-    },
-    {
-     "src": "media/actors-v7/guard-walk.png"
-    }
-   ],
+   "src": "media/drive-v43/cx0190/p8_lauren-down.webp",
+   "strip": 4,
    "fps": 6,
    "size": 184,
    "motions": {
@@ -44,8 +61,21 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p8_lauren-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p8_lauren-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p8_lauren-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p8_lauren-hit 4칸"
     }
-   }
+   },
+   "note": "닷츠 CX-0190BM_r1_p8_lauren-down 4칸"
   },
   "p8_ion": {
    "src": "media/boss-art-v43/p8_ion-down.webp",

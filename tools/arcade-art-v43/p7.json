@@ -11,19 +11,24 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p7_car-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p7_car-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p7_car-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p7_car-hit 4칸"
     }
    }
   },
   "p7_shadow": {
-   "src": "media/actors-v7/denial-idle.png",
-   "frames": [
-    {
-     "src": "media/actors-v7/denial-idle.png"
-    },
-    {
-     "src": "media/actors-v7/denial-walk.png"
-    }
-   ],
+   "src": "media/drive-v43/cx0190/p7_shadow-down.webp",
+   "strip": 4,
    "fps": 6,
    "size": 184,
    "motions": {
@@ -32,8 +37,21 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p7_shadow-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p7_shadow-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p7_shadow-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p7_shadow-hit 4칸"
     }
-   }
+   },
+   "note": "닷츠 CX-0190BM_r1_p7_shadow-down 4칸"
   },
   "p7_alarm": {
    "src": "media/boss-art-v43/p7_alarm-down.webp",
@@ -46,6 +64,18 @@
      "strip": 4,
      "fps": 8,
      "size": 184
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p7_alarm-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p7_alarm-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p7_alarm-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p7_alarm-hit 4칸"
     }
    }
   }

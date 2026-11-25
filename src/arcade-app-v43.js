@@ -32,7 +32,7 @@
   var NOTES={gentle:'noteGentle',normal:'noteNormal',hell:'noteHell'};
 
   var images={},loading={},failed={},want={},manifest=null,orbs=[],shotSprite=null,redShotSprite=null,homingSprite=null,circleSprite=null,wrathCircleSprite=null,itemSprites=[],background=null,backgroundStage=-1,loadedStage=-1;
-  var scale=1,lite=false,frameMs=16,framesSeen=0,offsetX=0,offsetY=0;
+  var scale=1,lite=false,frameMs=16,framesSeen=0,seenMs=0,offsetX=0,offsetY=0;
   var state=null,mode='title',difficulty='normal',accumulator=0,lastStamp=0,visual=0,lastRun=null;
   var particles=[],spellDim=0,flash=0,hurtFlash=0,hurtRing=null,VERMILION='#a8382a',shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,SPELL_BANNER_TICKS=42,bannerSpell=false,bannerTitle='',bannerSub='',toast=null;
   var keys={},finger={active:false,id:null,x:0,y:0,relative:false,targetX:0,targetY:0},focusHeld=false,focusPointer=null,focusLatched=false,bombQueued=false;
@@ -636,7 +636,7 @@
       bonus='<div class="mobile-bonus">'+esc(seal)+'</div>';
     }
     if(s.spellOnly)stageLabel='스펠 연습';
-    setHud(hi,'hi','<div class="name" title="'+esc(name)+'">'+esc(name)+'</div>'+meter+
+    setHud(hi,'hi','<div class="name'+(name.length>11?' longer':name.length>7?' long':'')+'" title="'+esc(name)+'">'+esc(name)+'</div>'+meter+
       '<div class="mobile-meta">'+stageLabel+phaseLabel+'</div>'+
       (card&&down?'<div class="mobile-meta">마지막 공격</div>':'')+spell+bonus);
 
@@ -687,10 +687,10 @@
   // 느린 기기에서는 먼저 해상도를, 그래도 느리면 빛무리와 날씨 입자 수를 내린다.
   function adaptQuality(elapsedMs){
     if(elapsedMs>STALL_FRAME_MS)return; // 멈춤(가려진 창·탭 전환·그림 굽기)은 느린 기기가 아니다: 평균에 넣지 않는다
-    frameMs+=(Math.min(80,elapsedMs)-frameMs)*.05;framesSeen++;
-    if(framesSeen<150||mode!=='playing'||turbo)return;
-    if(frameMs>VERY_SLOW_FRAME_MS&&!lite){lite=true;if(Ink&&Ink.setLite)Ink.setLite(true);framesSeen=0;frameMs=16;fit();buildSprites();if(state)initFx(themeOf(state.stageIndex).fx,state.stageIndex);}
-    else if(frameMs>SLOW_FRAME_MS&&scale>1){scale=1;canvas.width=W;canvas.height=H;buildSprites();framesSeen=0;frameMs=16;}
+    frameMs+=(Math.min(80,elapsedMs)-frameMs)*.05;framesSeen++;seenMs+=elapsedMs;
+    if((framesSeen<150&&(framesSeen<45||seenMs<2500))||mode!=='playing'||turbo)return; // 느린 폰은 150칸 채우는 데 10초 넘게 걸려 그동안 끊겼다(11-25 측정): 45칸·2.5초면 판단
+    if(frameMs>VERY_SLOW_FRAME_MS&&!lite){lite=true;if(Ink&&Ink.setLite)Ink.setLite(true);framesSeen=0;seenMs=0;frameMs=16;fit();buildSprites();if(state)initFx(themeOf(state.stageIndex).fx,state.stageIndex);}
+    else if(frameMs>SLOW_FRAME_MS&&scale>1){scale=1;canvas.width=W;canvas.height=H;buildSprites();framesSeen=0;seenMs=0;frameMs=16;}
   }
 
   /* ── 저장 ── */
@@ -1077,6 +1077,7 @@
       if(!Ink){ctx.beginPath();ctx.arc(f.x,f.y,r*.7,0,TAU);ctx.stroke();}if(++f.t>3)flashes.splice(i,1);} // 수묵: 감싸는 원은 그리지 않는다(사용자 11-15)
     ctx.restore();}
   function hitSpark(x,y,color,n){for(var q=0;q<n;q++){var a=-Math.PI/2+(Math.random()-.5)*2.2,v=1.6+Math.random()*2.2;addParticle(x+(Math.random()-.5)*10,y,Math.cos(a)*v,Math.sin(a)*v,9+(q%3)*3,q%2?'#ffffff':color,2.5);}}
+  var hitShow={actor:'',start:-999},HIT_SHOW_GAP=66;
   function recoilOf(s,b){ // 연사로 매 틱 맞으므로 18틱에 한 번만 크게 젖힌다(아래에서 쏘니 위·옆으로 젖혀진다)
     if(recoil.actor!==b.actor){recoil.actor=b.actor;recoil.start=-99;}
     if(s.tick-b.hitTick<2&&s.tick-recoil.start>=18){recoil.start=s.tick;hitSpark(b.x,b.y+30,themeColor(s),7);}
@@ -1287,12 +1288,16 @@
     var bm=s.tick<bp.until&&images[ak+'@attack']?'attack':bp.side>0?'side':'',bphase=0;
     if(bm==='attack'){var ash=sheetOf(ak+'@attack',images[ak+'@attack']);if(ash.frames>1){var el=Math.max(0,s.tick-bp.start),dur=bp.until-bp.start,af=Math.min(ash.frames-1,Math.floor(el*ash.fps/60));if(dur>56){var peak=Math.floor((ash.frames-1)*.6),tail=(ash.frames-1-peak)*60/ash.fps,left=bp.until-s.tick;af=left<=tail?Math.min(ash.frames-1,peak+1+Math.floor((tail-left)*ash.fps/60)):Math.min(peak,af);} /* 레이저·문양을 부를 때는 팔을 뻗은 칸에서 멈춰 빛줄기가 서는 동안 붙잡고, 끝에 남은 칸으로 거둔다(11-25 심사: 0.5초 만에 대기로 돌아감) */bphase=af-Math.floor(visual*ash.fps);}} // 공격 칸은 쏜 순간 첫 칸부터 끝 칸까지 한 번 재생한다(11-25 실플레이 검수: 전역 시계로 칸을 골라 아무 칸에서나 시작·되감겨 팔 뻗는 칸이 잘 안 보였다, 아스모데우스)
     var since=s.tick-bp.start,punch=bm==='attack'&&since>=0&&since<16?1+.07*(1-since/16):1; // 공격 순간 몸이 한 번 커졌다 돌아온다. 탄에 가려도 윤곽으로 읽힌다.
-    var rc=recoilOf(s,b);if(rc&&images[ak+'@hit'])bm='hit'; // 피격 그림이 있으면 그 칸을, 없으면 같은 그림을 젖혀 피격을 보인다
+    var rc=recoilOf(s,b),hitPh=0;if(images[ak+'@hit']&&bm!=='attack'){ // 피격 그림(닷츠 CX-0190BM): 쏘는 중이 아닐 때만, 1.1초에 한 번 처음 칸부터 끝 칸까지 한 번(영웅이 늘 쏘므로 매번 틀면 보스가 내내 움찔거린다)
+      if(hitShow.actor!==ak){hitShow.actor=ak;hitShow.start=-999;}
+      if(rc&&recoil.start-hitShow.start>=HIT_SHOW_GAP)hitShow.start=recoil.start;
+      var hsh=sheetOf(ak+'@hit',images[ak+'@hit']),hel=s.tick-hitShow.start,hlen=Math.ceil(hsh.frames*60/Math.max(1,hsh.fps));
+      if(hel>=0&&hel<hlen){bm='hit';hitPh=Math.min(hsh.frames-1,Math.floor(hel*hsh.fps/60))-Math.floor(visual*hsh.fps);}}
     bossDraw.on=true;bossDraw.x=bx;bossDraw.y=by+(rc?rc.dy:0);bossDraw.tilt=rc?rc.tilt:0;bossDraw.sx=punch*(rc?rc.sx:1);bossDraw.sy=punch*(rc?rc.sy:1);bossDraw.motion=bm;bossDraw.phase=bphase;bossDraw.face=bp.dir||(bx>W/2?-1:1);
     var tall=tallOf(bossKey(s)),fy=by+(rc?rc.dy:0),main=meltBegin(bx,fy,tall);
     if(!b.mid&&((Arcade.SEGMENTS[s.seg]||{}).formNo|0)>=2){var dk=ctx.createRadialGradient(bx,fy,tall*.12,bx,fy,tall*.78);dk.addColorStop(0,'rgba(22,16,20,.42)');dk.addColorStop(.6,'rgba(22,16,20,.2)');dk.addColorStop(1,'rgba(22,16,20,0)');ctx.fillStyle=dk;ctx.fillRect(bx-tall,fy-tall,tall*2,tall*2);} // 깊어진 모습 뒤의 짙은 먹 기운
     ctx.save();ctx.translate(bx,fy);if(rc)ctx.rotate(rc.tilt);ctx.scale(punch*(rc?rc.sx:1),punch*(rc?rc.sy:1));var fno=(Arcade.SEGMENTS[s.seg]||{}).formNo|0,deep=!b.mid&&fno>=2&&'filter' in ctx;if(deep)ctx.filter='brightness(.7) contrast(1.2)';else if(bright&&s.stage==='card'&&'filter' in ctx)ctx.filter=BRIGHT_ART_DIM; // 세 번째 모습부터는 먹을 한 단계 짙게: 같은 인물의 다음 모습이 '더 깊어졌다'로 읽힌다(심사 11-20) // 금빛·흰빛 보스 그림은 스펠 중 한 단계 어둡게: 그 위 탄이 묻힌다(심사 6.44)
-    var curPh=bm==='attack'?bphase:0;if(bm!==bp.m){bp.pm=bp.m||'';bp.pph=bp.ph|0;bp.mt=s.tick;bp.m=bm;}bp.ph=curPh;
+    var curPh=bm==='attack'?bphase:bm==='hit'?hitPh:0;if(bm!==bp.m){bp.pm=bp.m||'';bp.pph=bp.ph|0;bp.mt=s.tick;bp.m=bm;}bp.ph=curPh;
     drawArt(ak,0,0,s.tick-b.hitTick<3,themeColor(s),curPh,bm,bp.dir||(bx>W/2?-1:1));
     var xf=s.tick-(bp.mt|0);if(xf>=0&&xf<BOSS_POSE_FADE&&bp.pm!==bm&&bp.pm!=='hit'&&bm!=='hit'){var ka=ctx.globalAlpha;ctx.globalAlpha=ka*(1-xf/BOSS_POSE_FADE);drawArt(ak,0,0,false,themeColor(s),bp.pph,bp.pm,bp.dir||(bx>W/2?-1:1));ctx.globalAlpha=ka;} // 대기↔공격 칸이 바뀔 때 앞 그림을 0.08초 동안 옅게 덮어 실루엣이 한 번에 튀지 않게(11-25 재심사)
     ctx.filter='none';ctx.restore();
@@ -2244,7 +2249,7 @@
     if(dq)seenDrill=dq[1]==='0';else if(global.navigator&&global.navigator.webdriver)seenDrill=true; // 자동 검사 브라우저는 실습을 건너뛴다(?drill=1 이면 보인다): 기존 화면 검사가 1스테이지 진행을 본다
     if(!seenDrill&&!quiet&&!devMode&&run.stage===0&&!run.bossOnly&&!run.spellOnly&&!Number.isInteger(run.segment))drill={step:0,t:0,all:0,moved:0,focusT:0,bombs:0,done:-1,lx:state.player.x,ly:state.player.y};
     show('arcade-drill-skip',!!drill);
-    particles.length=0;drifts.length=0;inks.length=0;flash=hurtFlash=shake=banner=0;shock=null;hurtRing=null;toast=null;if(HeroFx)HeroFx.reset();accumulator=0;lastStamp=0;framesSeen=0;rushStage=false;setMode('playing');
+    particles.length=0;drifts.length=0;inks.length=0;flash=hurtFlash=shake=banner=0;shock=null;hurtRing=null;toast=null;if(HeroFx)HeroFx.reset();accumulator=0;lastStamp=0;framesSeen=0;seenMs=0;rushStage=false;setMode('playing');
     if(global.HapilEyes)global.HapilEyes[quiet?'clear':'open'](); // 눈 뜨기(arcade-eyes-v43.js). 디버그 건너뛰기는 연출 없이
     var firstOfPart=Chapters&&!quiet&&!run.bossOnly&&!run.spellOnly&&!Number.isInteger(run.segment)&&Chapters.list(Arcade.STAGES)[Arcade.STAGES[run.stage].part-1].first===run.stage;
     if(firstOfPart)openChapterCard(0,Arcade.STAGES[run.stage].part,function(){setMode('playing');if(global.HapilEyes)global.HapilEyes.open();}); // 챕터 첫 스테이지에서 시작하면 그 챕터의 문부터, 카드가 걷히면 눈을 다시 뜬다
@@ -2457,7 +2462,7 @@
   function bindSettings(){
     bindKeySettings();
     BOOLEAN_SETTINGS.forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('change',function(){settings[k]=!!e.checked;
-      if(k==='lowQuality'){lite=settings.lowQuality;if(Ink&&Ink.setLite)Ink.setLite(lite);framesSeen=0;frameMs=16;fit();buildSprites();if(state)initFx(themeOf(state.stageIndex).fx,state.stageIndex);}
+      if(k==='lowQuality'){lite=settings.lowQuality;if(Ink&&Ink.setLite)Ink.setLite(lite);framesSeen=0;seenMs=0;frameMs=16;fit();buildSprites();if(state)initFx(themeOf(state.stageIndex).fx,state.stageIndex);}
       applySettings(true);if(k==='music'||k==='sfx')unlockAudio();});});
     ['musicVolume','sfxVolume'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('input',function(){settings[k]=Math.max(0,Math.min(1,Number(e.value)/100||0));applySettings(true);unlockAudio();});});
     ['abilityMemory','abilitySeoha'].forEach(function(k){var e=$('setting-'+k);if(!e)return;e.addEventListener('input',function(){var hero=k==='abilitySeoha'?seohaControlHero():'memory';settings[abilityKey(hero)]=clampAbility(e.value,hero);applySettings(true);});});

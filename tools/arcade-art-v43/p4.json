@@ -10,6 +10,18 @@
      "strip": 4,
      "fps": 8,
      "size": 220
+    },
+    "death": {
+     "src": "media/drive-v43/cx0190/p4_knight-death.webp",
+     "strip": 8,
+     "fps": 8,
+     "note": "닷츠 CX-0190BM_r1_p4_knight-death 8칸"
+    },
+    "hit": {
+     "src": "media/drive-v43/cx0190/p4_knight-hit.webp",
+     "strip": 4,
+     "fps": 12,
+     "note": "닷츠 CX-0190BM_r1_p4_knight-hit 4칸"
     }
    }
   }

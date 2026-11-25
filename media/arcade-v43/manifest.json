@@ -9,7 +9,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    496,
@@ -38,6 +40,42 @@
   "stamp": "67b33e3e623a6a42",
   "table": "tools/arcade-art-v43/base.json"
  },
+ "arbelia@death.webp": {
+  "bytes": 89584,
+  "cell": [
+   222,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1776,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/arbelia-death.webp",
+  "sourceSha256": "d01103d9ca1466bbcc73a86e85bed6158df309950fcc874f9f9cc7e483b9a7c7",
+  "stamp": "70c8e391d7bda7f6",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "arbelia@hit.webp": {
+  "bytes": 80274,
+  "cell": [
+   159,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   636,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/arbelia-hit.webp",
+  "sourceSha256": "ba2008b84bff86b2e55ca5243f868974d38ec9dde4404efed41e91241f92e687",
+  "stamp": "c622d3d7b7096e81",
+  "table": "tools/arcade-art-v43/base.json"
+ },
  "asmodeus.webp": {
   "bytes": 41938,
   "cell": [
@@ -48,7 +86,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    468,
@@ -60,21 +100,57 @@
   "table": "tools/arcade-art-v43/base.json"
  },
  "asmodeus@attack.webp": {
-  "bytes": 31474,
+  "bytes": 52660,
   "cell": [
-   98,
-   165
+   127,
+   184
   ],
   "fps": 8,
   "frames": 6,
   "group": "actors",
   "size": [
-   588,
-   165
+   762,
+   184
   ],
-  "source": "media/drive-v43/cx0136/asmodeus-attack6.webp",
-  "sourceSha256": "6633d84f92439545ff95f5b6a8e4052e2ad778538cac87c7dde215333427bb58",
-  "stamp": "8b8280f3d3b3e18b",
+  "source": "media/drive-v43/cx0190/asmodeus-attack.webp",
+  "sourceSha256": "7c27020d1fc7c2c315e03c9acbdabca423e46074066e75af030a6fee2973e6ed",
+  "stamp": "6f3d729fcc1ce9da",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "asmodeus@death.webp": {
+  "bytes": 45886,
+  "cell": [
+   159,
+   184
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1272,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/asmodeus-death.webp",
+  "sourceSha256": "31c454a58239d96c7c85cc322139326ec5cacc8fab55cd5167062f8564fadd25",
+  "stamp": "fdbe678f6af6508d",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "asmodeus@hit.webp": {
+  "bytes": 36278,
+  "cell": [
+   135,
+   184
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   540,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/asmodeus-hit.webp",
+  "sourceSha256": "52065d6acd07aecfcdbf801bd2262a5d795eb4cf47c877ecc6c2fb068345cd1a",
+  "stamp": "5b669b41d66f6952",
   "table": "tools/arcade-art-v43/base.json"
  },
  "balrog.webp": {
@@ -87,7 +163,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    684,
@@ -114,6 +192,42 @@
   "source": "media/m0-v43/boss/dist06-boss-attack-tone.webp",
   "sourceSha256": "4f8490b672291df63ec18361b1779fb6f478a43e7f54e9b066237039e25489ee",
   "stamp": "1d54b2fa02e1ce28",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "balrog@death.webp": {
+  "bytes": 88650,
+  "cell": [
+   240,
+   238
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1920,
+   238
+  ],
+  "source": "media/drive-v43/cx0190/balrog-death.webp",
+  "sourceSha256": "71d03eba13da43640699daa7beafdc0724482f42da19a0418f43be16b8fe1b66",
+  "stamp": "2ba9bb34864eec9f",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "balrog@hit.webp": {
+  "bytes": 83552,
+  "cell": [
+   260,
+   249
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   1040,
+   249
+  ],
+  "source": "media/drive-v43/cx0190/balrog-hit.webp",
+  "sourceSha256": "00d628930584bf9b0bda02a33d36a6beed153ce870f801423892db7f7ab27a3e",
+  "stamp": "12adc7b29253b67d",
   "table": "tools/arcade-art-v43/base.json"
  },
  "belphegor.webp": {
@@ -1632,6 +1746,11 @@
   "fps": 4,
   "frames": 4,
   "group": "actors",
+  "motions": [
+   "attack",
+   "death",
+   "hit"
+  ],
   "size": [
    900,
    228
@@ -1639,6 +1758,60 @@
   "source": "media/m0-v43/forms/h103-boss-p4.webp",
   "sourceSha256": "01ce3874a8c41606f7295a27196aaf3e3aeac8d6fa4c7fdc886f8db95bb88167",
   "stamp": "69e6e8daff46fecb",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
+ "chief_alt50@attack.webp": {
+  "bytes": 88810,
+  "cell": [
+   195,
+   198
+  ],
+  "fps": 8,
+  "frames": 6,
+  "group": "actors",
+  "size": [
+   1170,
+   198
+  ],
+  "source": "media/drive-v43/cx0190/chief_alt50-attack.webp",
+  "sourceSha256": "017491e5a44c243c903b843ebdbf3d5f818e7118fe2a40bdf356d0c3dfdbfa76",
+  "stamp": "525da27741db5c58",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
+ "chief_alt50@death.webp": {
+  "bytes": 78520,
+  "cell": [
+   242,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1936,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/chief_alt50-death.webp",
+  "sourceSha256": "18594992169dce0083a7b039046166cc7bce1e0bb35fa5fd0ca9e743fe1f4f2c",
+  "stamp": "d7c8819d0fcab7aa",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
+ "chief_alt50@hit.webp": {
+  "bytes": 84224,
+  "cell": [
+   247,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   988,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/chief_alt50-hit.webp",
+  "sourceSha256": "faa7c4cad2980770625c33bc46a8d6c69c97d0340f33640f1cd754d9fcaf882c",
+  "stamp": "30d26726f4471314",
   "table": "tools/arcade-art-v43/forms.json"
  },
  "chief_swarm.webp": {
@@ -1651,7 +1824,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    992,
@@ -1678,6 +1853,42 @@
   "source": "media/drive-v43/cx0157/chief-swarm-attack.webp",
   "sourceSha256": "7631c29270e8f075eb229728f7fe06a235e0ed211c9929605a2b0eea34d16bf6",
   "stamp": "05068cbf272e7414",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
+ "chief_swarm@death.webp": {
+  "bytes": 87728,
+  "cell": [
+   248,
+   236
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1984,
+   236
+  ],
+  "source": "media/drive-v43/cx0190/chief_swarm-death.webp",
+  "sourceSha256": "4fbd79b36e1a0cedee9886815b35ea60ac9035220173835bc19f7c342f3ba980",
+  "stamp": "1293d0955765f1c0",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
+ "chief_swarm@hit.webp": {
+  "bytes": 86762,
+  "cell": [
+   248,
+   233
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   992,
+   233
+  ],
+  "source": "media/drive-v43/cx0190/chief_swarm-hit.webp",
+  "sourceSha256": "87a32087ba25aa539971619b2da45fcb64b71031b51ca1cc7f59a2b4369b513b",
+  "stamp": "9b769d57a41e4110",
   "table": "tools/arcade-art-v43/forms.json"
  },
  "cleaver.webp": {
@@ -1714,7 +1925,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    640,
@@ -1743,28 +1956,156 @@
   "stamp": "891447f4e0b2431a",
   "table": "tools/arcade-art-v43/base.json"
  },
- "controller_alt27.webp": {
-  "bytes": 33334,
-  "group": "actors",
-  "size": [
-   259,
-   260
+ "controller@death.webp": {
+  "bytes": 61404,
+  "cell": [
+   173,
+   184
   ],
-  "source": "media/chapter3-v18/controller-attack.webp",
-  "sourceSha256": "ee7a2d409dab8df05a1455f314d07ead6c507730e4c13f6fd1944701edcc56e5",
-  "stamp": "8fcf51ec56111a75",
-  "table": "tools/arcade-art-v43/forms.json"
- },
- "controller_alt29.webp": {
-  "bytes": 30614,
+  "fps": 8,
+  "frames": 8,
   "group": "actors",
   "size": [
+   1384,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/controller-death.webp",
+  "sourceSha256": "c870452c4e08562409c1b9f7d3b6d4eed261b225f69f1b6caec698bb45c26be5",
+  "stamp": "74c5e7254db00903",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "controller@hit.webp": {
+  "bytes": 51970,
+  "cell": [
+   156,
+   184
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   624,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/controller-hit.webp",
+  "sourceSha256": "d6bfad30e7b77a83d7a734c5b75337f4c070eaf49a7416976cf6bcfa752930af",
+  "stamp": "1eceffd4c8921a49",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "controller_alt27.webp": {
+  "bytes": 85668,
+  "cell": [
    255,
    260
   ],
-  "source": "media/chapter3-v18/controller-rain.webp",
-  "sourceSha256": "f883e208c90ed4e4173f23563f037eb75e4eb977297d7f5e64cebe936338da1c",
-  "stamp": "4fdb2eb15447c745",
+  "fps": 6,
+  "frames": 4,
+  "group": "actors",
+  "motions": [
+   "attack",
+   "death",
+   "hit"
+  ],
+  "size": [
+   1020,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/controller_alt27-down.webp",
+  "sourceSha256": "5fbf87b12922afe488c0a2d81aea84621d540a512b19bd2d2cbdecf646577600",
+  "stamp": "6bbe4e18b2916b43",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
+ "controller_alt27@attack.webp": {
+  "bytes": 87370,
+  "cell": [
+   199,
+   236
+  ],
+  "fps": 8,
+  "frames": 6,
+  "group": "actors",
+  "size": [
+   1194,
+   236
+  ],
+  "source": "media/drive-v43/cx0190/controller_alt27-attack.webp",
+  "sourceSha256": "336bde98d975d82d7329cd7bcd7b0cfa7c793423b9989957ef46a21efa587c97",
+  "stamp": "de5836af7db620a6",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
+ "controller_alt27@death.webp": {
+  "bytes": 82648,
+  "cell": [
+   260,
+   249
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   2080,
+   249
+  ],
+  "source": "media/drive-v43/cx0190/controller_alt27-death.webp",
+  "sourceSha256": "74ac889ff8f189e4c39382c7dc6c0d651892f34bfe439e65ccfb61cdeadaf071",
+  "stamp": "a0e7d1ba31b11b72",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
+ "controller_alt27@hit.webp": {
+  "bytes": 79352,
+  "cell": [
+   244,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   976,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/controller_alt27-hit.webp",
+  "sourceSha256": "b44954a3ec0e3e4e5be6b415933ed1b1b8b4cd57cd5d08622180f10e2014a40f",
+  "stamp": "59e0c9c5d5ea09f6",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
+ "controller_alt29.webp": {
+  "bytes": 46422,
+  "cell": [
+   136,
+   260
+  ],
+  "fps": 6,
+  "frames": 4,
+  "group": "actors",
+  "motions": [
+   "attack"
+  ],
+  "size": [
+   544,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/controller_alt29-down.webp",
+  "sourceSha256": "bb27c991f259317791df4dd690b9e856a7685d2019709665966fe9ba363f9fee",
+  "stamp": "9677b82d6b8316c7",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
+ "controller_alt29@attack.webp": {
+  "bytes": 81086,
+  "cell": [
+   146,
+   260
+  ],
+  "fps": 8,
+  "frames": 6,
+  "group": "actors",
+  "size": [
+   876,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/controller_alt29-attack.webp",
+  "sourceSha256": "baeea8289b9cc860ddb8d26556bb41bd89bf475be44888f4ab5952e009065e64",
+  "stamp": "bae99147a98ed216",
   "table": "tools/arcade-art-v43/forms.json"
  },
  "crescent.webp": {
@@ -1801,7 +2142,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    664,
@@ -1828,6 +2171,42 @@
   "source": "media/drive-v43/cx0136/cultist-attack6.webp",
   "sourceSha256": "c91cb0c61a27f764423ace4221b04a70980673742f99da7d1150cf26bb0bd6dd",
   "stamp": "4efdd1627f33aa1a",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "cultist@death.webp": {
+  "bytes": 82890,
+  "cell": [
+   154,
+   184
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1232,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/cultist-death.webp",
+  "sourceSha256": "f368c0588a6c04ba9c748a8e20195c763a9858e600a01790093d01ad1f27a6ab",
+  "stamp": "95a07b686ae7d35e",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "cultist@hit.webp": {
+  "bytes": 72978,
+  "cell": [
+   161,
+   184
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   644,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/cultist-hit.webp",
+  "sourceSha256": "d04e89c3cc24ce37134f4f124a4ca5421e1de190d9a199e78b7ce60370bc5eec",
+  "stamp": "3f92235f89e32f5d",
   "table": "tools/arcade-art-v43/base.json"
  },
  "cultist_awake.webp": {
@@ -1933,7 +2312,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    612,
@@ -1960,6 +2341,42 @@
   "source": "media/drive-v43/cx0136/executor-attack6.webp",
   "sourceSha256": "bddda65a919082decdc5d309b92f155e2862cf6103babf40da24be3d15ebc1be",
   "stamp": "1db4744b4f6fd9d6",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "executor@death.webp": {
+  "bytes": 88444,
+  "cell": [
+   184,
+   183
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1472,
+   183
+  ],
+  "source": "media/drive-v43/cx0190/executor-death.webp",
+  "sourceSha256": "d52f1f6f3fa684cf77a0e23ffa6bb029fa38cc8eb0e2b26c7b653b43899b685d",
+  "stamp": "64f420acaec4c052",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "executor@hit.webp": {
+  "bytes": 68078,
+  "cell": [
+   171,
+   184
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   684,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/executor-hit.webp",
+  "sourceSha256": "9d7dcd315a602bfaee8ee70c0ecb309c043cf327b206070cbd1b4eaa8dde5a6c",
+  "stamp": "c8d580f716eafb94",
   "table": "tools/arcade-art-v43/base.json"
  },
  "feather.webp": {
@@ -1996,7 +2413,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    604,
@@ -2025,16 +2444,79 @@
   "stamp": "ef18a1dfa9836279",
   "table": "tools/arcade-art-v43/base.json"
  },
- "goblin_alt31.webp": {
-  "bytes": 21788,
+ "goblin@death.webp": {
+  "bytes": 79976,
+  "cell": [
+   220,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
   "group": "actors",
   "size": [
-   260,
-   208
+   1760,
+   260
   ],
-  "source": "media/m0-v43/forms/goblin-flute-king.webp",
-  "sourceSha256": "c5fd7fd87d7984b5c9c125cc71f5b603b2b7540710b079a7d4d5a2ef198208eb",
-  "stamp": "8ca9992348a53a68",
+  "source": "media/drive-v43/cx0190/goblin-death.webp",
+  "sourceSha256": "48a3c81fbe5e1e15af4ad181af777da374dadaab9a3f97ddf390598b343dbb97",
+  "stamp": "c82d0ded26ad6b87",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "goblin@hit.webp": {
+  "bytes": 83592,
+  "cell": [
+   229,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   916,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/goblin-hit.webp",
+  "sourceSha256": "3713af8c90f2fda3f3cc41802874eca50b1a32e4d52985e2efcf7c314fd672e1",
+  "stamp": "eed3cca34a16089c",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "goblin_alt31.webp": {
+  "bytes": 65612,
+  "cell": [
+   157,
+   260
+  ],
+  "fps": 6,
+  "frames": 4,
+  "group": "actors",
+  "motions": [
+   "attack"
+  ],
+  "size": [
+   628,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/goblin_alt31-down.webp",
+  "sourceSha256": "2c19d3cc98176fb95cb2ace3fe513b6650d334e73500ed6c7dec97011ba2a6c6",
+  "stamp": "0fee5e88f353984b",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
+ "goblin_alt31@attack.webp": {
+  "bytes": 88514,
+  "cell": [
+   157,
+   260
+  ],
+  "fps": 8,
+  "frames": 6,
+  "group": "actors",
+  "size": [
+   942,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/goblin_alt31-attack.webp",
+  "sourceSha256": "651cc27322cecc2657f713f66383334a5707afefb141b3147d542f898be725a1",
+  "stamp": "b96e9f32552e9d7c",
   "table": "tools/arcade-art-v43/forms.json"
  },
  "guardian.webp": {
@@ -2087,7 +2569,7 @@
   ],
   "source": "media/drive-v43/m025-down.webp",
   "sourceSha256": "716b9563e204e56a067572302d756b80cab3e1fb3b5371190404c2c416933508",
-  "stamp": "81f83f99593e3149",
+  "stamp": "7bf82c25a916c6e1",
   "table": "tools/arcade-art-v43/base.json"
  },
  "insomnia.webp": {
@@ -2100,7 +2582,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    628,
@@ -2129,16 +2613,79 @@
   "stamp": "8aef48a6cf731c9f",
   "table": "tools/arcade-art-v43/base.json"
  },
- "insomnia_alt34.webp": {
-  "bytes": 31088,
-  "group": "actors",
-  "size": [
-   243,
+ "insomnia@death.webp": {
+  "bytes": 89232,
+  "cell": [
+   235,
    260
   ],
-  "source": "media/m0-v43/forms/bulmyeongwi-p2.webp",
-  "sourceSha256": "bbaa488914bf2b673a48e9a781dcc9307721c70d447e42b5b77082e65b7f9ae3",
-  "stamp": "26e2dbcb746d7765",
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1880,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/insomnia-death.webp",
+  "sourceSha256": "69c598fe606a06620f9fcd26e71011590fb0c9420c43f99cf05ee6c2c3169861",
+  "stamp": "c0aa715950cd4aa7",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "insomnia@hit.webp": {
+  "bytes": 81300,
+  "cell": [
+   216,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   864,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/insomnia-hit.webp",
+  "sourceSha256": "9e1bfd15c6591e3ecbf568e0c35d9a3fb23cdaa1563a72a6f9a2ebfb99cf3b1b",
+  "stamp": "3b9c4547ab0202d8",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "insomnia_alt34.webp": {
+  "bytes": 89734,
+  "cell": [
+   260,
+   242
+  ],
+  "fps": 6,
+  "frames": 4,
+  "group": "actors",
+  "motions": [
+   "attack"
+  ],
+  "size": [
+   1040,
+   242
+  ],
+  "source": "media/drive-v43/cx0190/insomnia_alt34-hover.webp",
+  "sourceSha256": "95f5a2a9e508ad690c0c3b287f6103202d658b641a6c6c6281244d878b4bc422",
+  "stamp": "957543f6a6740de4",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
+ "insomnia_alt34@attack.webp": {
+  "bytes": 88540,
+  "cell": [
+   222,
+   226
+  ],
+  "fps": 8,
+  "frames": 6,
+  "group": "actors",
+  "size": [
+   1332,
+   226
+  ],
+  "source": "media/drive-v43/cx0190/insomnia_alt34-attack.webp",
+  "sourceSha256": "456d07faeb86a46151ce51632070b054a77966acf2bfbe6f30c6745ed1c1e65f",
+  "stamp": "1250f4458cae882f",
   "table": "tools/arcade-art-v43/forms.json"
  },
  "knight.webp": {
@@ -2175,7 +2722,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    588,
@@ -2202,6 +2751,42 @@
   "source": "media/m0-v43/boss/a11-boss-attack-tone.webp",
   "sourceSha256": "76b692aaaa412da367401de47b3965c1857755d4f0078d52c9363e0583af528c",
   "stamp": "071f4126c7e6643a",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "lucifer@death.webp": {
+  "bytes": 89318,
+  "cell": [
+   211,
+   214
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1688,
+   214
+  ],
+  "source": "media/drive-v43/cx0190/lucifer-death.webp",
+  "sourceSha256": "7454301344ef76f2802e854219461fb3caa3870f656d2a7ebba130159b309454",
+  "stamp": "1cbf58002a4322b0",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "lucifer@hit.webp": {
+  "bytes": 86612,
+  "cell": [
+   232,
+   234
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   928,
+   234
+  ],
+  "source": "media/drive-v43/cx0190/lucifer-hit.webp",
+  "sourceSha256": "b7dfc4ddd707bf1c63f587b08a5511522baea6ba62661b7f185389f5ced4bb99",
+  "stamp": "214b0dbb1b6e7121",
   "table": "tools/arcade-art-v43/base.json"
  },
  "lucifer_alt11.webp": {
@@ -7654,7 +8239,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    736,
@@ -7681,6 +8268,42 @@
   "source": "media/m0-v43/boss/mb-ep1a11-attack-tone.webp",
   "sourceSha256": "e11bd9bb1eb18f48be49121c99b5482010b57baaa2bf7e67f7330d349a538ac6",
   "stamp": "885c4ae9a50baeed",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "mask@death.webp": {
+  "bytes": 82462,
+  "cell": [
+   190,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1520,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/mask-death.webp",
+  "sourceSha256": "12b5155b2f310f2a5285e2476257e08d3f2af3ca1afe36e2911c92335edb9f93",
+  "stamp": "3dbf600a941c5968",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "mask@hit.webp": {
+  "bytes": 79866,
+  "cell": [
+   192,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   768,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/mask-hit.webp",
+  "sourceSha256": "ed9db734739998b03cde099a5cad2f875455feae2759332bd5774eb3320f1763",
+  "stamp": "8c07b958fc7e625c",
   "table": "tools/arcade-art-v43/base.json"
  },
  "mask_alt11.webp": {
@@ -9616,7 +10239,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    608,
@@ -9643,6 +10268,42 @@
   "source": "media/m0-v43/boss/mb-dist03-attack.webp",
   "sourceSha256": "62b13a0faac76fa46f3311368ddc649f7d7ebe0a21a15d4a821ff8961411c443",
   "stamp": "bafae45c34c85e40",
+  "table": "tools/arcade-art-v43/p1.json"
+ },
+ "p1_chaser@death.webp": {
+  "bytes": 70768,
+  "cell": [
+   251,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   2008,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p1_chaser-death.webp",
+  "sourceSha256": "2ed48711b2ebfa52e766562eec5d7a1d640dfad529b7f9fa0fac3a942855a027",
+  "stamp": "81b5b35d0d18d62c",
+  "table": "tools/arcade-art-v43/p1.json"
+ },
+ "p1_chaser@hit.webp": {
+  "bytes": 78168,
+  "cell": [
+   252,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   1008,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p1_chaser-hit.webp",
+  "sourceSha256": "397b1c9f6553ae759ffb29ac4999b1864da607c6a6b1fe8562a870fa22998d4e",
+  "stamp": "1fa19ed2bc7e6635",
   "table": "tools/arcade-art-v43/p1.json"
  },
  "p1_comrade.webp": {
@@ -9731,7 +10392,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    592,
@@ -9760,6 +10423,42 @@
   "stamp": "b7e3c6b2394a3694",
   "table": "tools/arcade-art-v43/p1.json"
  },
+ "p1_gate@death.webp": {
+  "bytes": 87122,
+  "cell": [
+   255,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   2040,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p1_gate-death.webp",
+  "sourceSha256": "b47fcfe51f0fee260fb71c00202630a1a072c65918e4d0370dae9edbc9a55ead",
+  "stamp": "fc87e822bc2d569f",
+  "table": "tools/arcade-art-v43/p1.json"
+ },
+ "p1_gate@hit.webp": {
+  "bytes": 80852,
+  "cell": [
+   240,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   960,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p1_gate-hit.webp",
+  "sourceSha256": "54c7eeb81a7565a5a39d73496cd2175d8ae511ed1a242f265659d2202b6cb2bb",
+  "stamp": "ef2cc495f25bd216",
+  "table": "tools/arcade-art-v43/p1.json"
+ },
  "p1_horn.webp": {
   "bytes": 33572,
   "cell": [
@@ -9770,7 +10469,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    488,
@@ -9797,6 +10498,42 @@
   "source": "media/m0-v43/boss/mb-dist02-attack.webp",
   "sourceSha256": "8aecaa6cd04c74f60f000694ab8335d937a264b96cdd7becd4e11af48c996873",
   "stamp": "11ab2499b6d0f095",
+  "table": "tools/arcade-art-v43/p1.json"
+ },
+ "p1_horn@death.webp": {
+  "bytes": 79586,
+  "cell": [
+   226,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1808,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p1_horn-death.webp",
+  "sourceSha256": "2395a2021c81c7e8aa5f5011f03c29916f1ead01a28bd83eb3616d28f16e7494",
+  "stamp": "caf3f531371920ef",
+  "table": "tools/arcade-art-v43/p1.json"
+ },
+ "p1_horn@hit.webp": {
+  "bytes": 79718,
+  "cell": [
+   259,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   1036,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p1_horn-hit.webp",
+  "sourceSha256": "a962607496ce8fcc2bfc1b6099d97429d4d3c0b2650e535d4b2aac2382f59ed4",
+  "stamp": "dee5f3c12837f507",
   "table": "tools/arcade-art-v43/p1.json"
  },
  "p1_nurse.webp": {
@@ -9871,24 +10608,24 @@
   "table": "tools/arcade-art-v43/p1.json"
  },
  "p1_seraph.webp": {
-  "bytes": 35982,
+  "bytes": 72024,
   "cell": [
-   184,
-   138
+   175,
+   184
   ],
   "fps": 6,
-  "frames": 2,
+  "frames": 4,
   "group": "actors",
   "motions": [
    "attack"
   ],
   "size": [
-   368,
-   138
+   700,
+   184
   ],
-  "source": "media/actors-v7/lucifer-idle.png",
-  "sourceSha256": "50bbd9f861f41c2175cd388312d2f051814a05ae1d8a9079488b5adb63b7da0d",
-  "stamp": "b2db8088103a9df4",
+  "source": "media/drive-v43/cx0190/p1_seraph-down.webp",
+  "sourceSha256": "1b3119c53374c43677606d77c2b311cc7311b8753a589495c58126bed99d5faf",
+  "stamp": "c66bc8f4a883554e",
   "table": "tools/arcade-art-v43/p1.json"
  },
  "p1_seraph@attack.webp": {
@@ -9931,7 +10668,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    544,
@@ -9960,6 +10699,42 @@
   "stamp": "d05dc782860a34d2",
   "table": "tools/arcade-art-v43/p1.json"
  },
+ "p1_staff@death.webp": {
+  "bytes": 63934,
+  "cell": [
+   195,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1560,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p1_staff-death.webp",
+  "sourceSha256": "91a3b75a63d2636af3c0e5398a1011a3951ea5d09975b9bec030cc55e0e55d51",
+  "stamp": "da10f42ee89c7189",
+  "table": "tools/arcade-art-v43/p1.json"
+ },
+ "p1_staff@hit.webp": {
+  "bytes": 70010,
+  "cell": [
+   187,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   748,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p1_staff-hit.webp",
+  "sourceSha256": "d13fdaa9666f0d64ec5400684965e1cf29d76457f04b32d436c1b35814676ca4",
+  "stamp": "faaff662c043a960",
+  "table": "tools/arcade-art-v43/p1.json"
+ },
  "p1_syringe.webp": {
   "bytes": 752,
   "group": "props",
@@ -9982,7 +10757,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    552,
@@ -10009,6 +10786,42 @@
   "source": "media/m0-v43/boss/dist00-boss-attack.webp",
   "sourceSha256": "34f11ddd87e93d1785be9b0c7e5cff8e37afd238fb7d27913063b1d2d7fad6df",
   "stamp": "23b5275395c067dd",
+  "table": "tools/arcade-art-v43/p1.json"
+ },
+ "p1_tree@death.webp": {
+  "bytes": 81548,
+  "cell": [
+   247,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1976,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p1_tree-death.webp",
+  "sourceSha256": "bb0c61ba098f875c88c8acba4690634ca4461a08727e6dee0eec81af1d94b41d",
+  "stamp": "903bb10049d65a71",
+  "table": "tools/arcade-art-v43/p1.json"
+ },
+ "p1_tree@hit.webp": {
+  "bytes": 87294,
+  "cell": [
+   242,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   968,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p1_tree-hit.webp",
+  "sourceSha256": "ecbdffd29fdf6e07dc93559bb1ce13907493e0da5a0b3ab81f6d407ad7935107",
+  "stamp": "f48d1b8019cf34d1",
   "table": "tools/arcade-art-v43/p1.json"
  },
  "p1_vial.webp": {
@@ -10051,7 +10864,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    480,
@@ -10080,6 +10895,42 @@
   "stamp": "10f2c943bb1916d9",
   "table": "tools/arcade-art-v43/p2.json"
  },
+ "p2_beelzebub@death.webp": {
+  "bytes": 87406,
+  "cell": [
+   247,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1976,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p2_beelzebub-death.webp",
+  "sourceSha256": "bfddc7a73910ffc85c7e80da99ea989a8c2d2e84f2d96a08fea2a99d3b477072",
+  "stamp": "aca7bed3fe52647b",
+  "table": "tools/arcade-art-v43/p2.json"
+ },
+ "p2_beelzebub@hit.webp": {
+  "bytes": 77068,
+  "cell": [
+   226,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   904,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p2_beelzebub-hit.webp",
+  "sourceSha256": "81e2fa5190029bbbdb1be1658b1ba5d5feb68641946742e6e9d50b9831e6c6cc",
+  "stamp": "542f7297aeb5386b",
+  "table": "tools/arcade-art-v43/p2.json"
+ },
  "p2_belphegor.webp": {
   "bytes": 60048,
   "cell": [
@@ -10090,7 +10941,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    664,
@@ -10117,6 +10970,42 @@
   "source": "media/m0-v43/boss/b02-boss-attack.webp",
   "sourceSha256": "5fbda1c8d56fbfe32c8d8552a2a44ab56364542096075fdce2e38771736db1cb",
   "stamp": "cfec709563ca61ec",
+  "table": "tools/arcade-art-v43/p2.json"
+ },
+ "p2_belphegor@death.webp": {
+  "bytes": 86244,
+  "cell": [
+   182,
+   184
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1456,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/p2_belphegor-death.webp",
+  "sourceSha256": "cfaabc0484930b2500a47560acebd9cebf8f0ef011895e5a6dfc6beef70c930a",
+  "stamp": "d69725e31fa05b99",
+  "table": "tools/arcade-art-v43/p2.json"
+ },
+ "p2_belphegor@hit.webp": {
+  "bytes": 60764,
+  "cell": [
+   169,
+   184
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   676,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/p2_belphegor-hit.webp",
+  "sourceSha256": "8ba4e72fd71761ea428f6a9d1e4069d24b30446ec4490bcb5b7d5de67ec9d21d",
+  "stamp": "b56babda11e0a5c4",
   "table": "tools/arcade-art-v43/p2.json"
  },
  "p2_chairman.webp": {
@@ -10180,7 +11069,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    636,
@@ -10209,6 +11100,42 @@
   "stamp": "bc9b3b49d029c73b",
   "table": "tools/arcade-art-v43/p2.json"
  },
+ "p2_core@death.webp": {
+  "bytes": 86766,
+  "cell": [
+   237,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1896,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p2_core-death.webp",
+  "sourceSha256": "410091fe025eea97ae461e37c445facabc18d4863dac25b4d6e2972e529bab50",
+  "stamp": "1b41d926b8de245b",
+  "table": "tools/arcade-art-v43/p2.json"
+ },
+ "p2_core@hit.webp": {
+  "bytes": 88408,
+  "cell": [
+   235,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   940,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p2_core-hit.webp",
+  "sourceSha256": "1dd3bea94652be4ebc6d57517981aa308e720cf9b852d159c7cd58f2e00efe5c",
+  "stamp": "22023729d5ac7cc1",
+  "table": "tools/arcade-art-v43/p2.json"
+ },
  "p2_demons.webp": {
   "bytes": 63902,
   "cell": [
@@ -10219,7 +11146,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    604,
@@ -10246,6 +11175,42 @@
   "source": "media/m0-v43/boss/mb-ep1b01-attack.webp",
   "sourceSha256": "d1fa62fb731c4695cadfa372f6d52d88ad695a6c0e4688ed277e72229b3c44e3",
   "stamp": "6ae7662156cdf6e2",
+  "table": "tools/arcade-art-v43/p2.json"
+ },
+ "p2_demons@death.webp": {
+  "bytes": 89604,
+  "cell": [
+   180,
+   242
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1440,
+   242
+  ],
+  "source": "media/drive-v43/cx0190/p2_demons-death.webp",
+  "sourceSha256": "af9cc31ee68566d36798af60a170bb72b27878dff61a16ebabfcac77655bd75c",
+  "stamp": "d775b4192eb165a8",
+  "table": "tools/arcade-art-v43/p2.json"
+ },
+ "p2_demons@hit.webp": {
+  "bytes": 88666,
+  "cell": [
+   226,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   904,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p2_demons-hit.webp",
+  "sourceSha256": "18f659149264c831f78208ec1c56c03a4d4d861530db9cf1d9758ac154e32305",
+  "stamp": "9948e1b655571b37",
   "table": "tools/arcade-art-v43/p2.json"
  },
  "p2_electrode.webp": {
@@ -10294,7 +11259,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    524,
@@ -10321,6 +11288,42 @@
   "source": "media/drive-v43/cx0136/p2_greed-attack6.webp",
   "sourceSha256": "1859da5073cdf2bde971717647ada307946c7a7ef5106a5712042ed73dd2c9ea",
   "stamp": "a636de0de66724fe",
+  "table": "tools/arcade-art-v43/p2.json"
+ },
+ "p2_greed@death.webp": {
+  "bytes": 41594,
+  "cell": [
+   184,
+   178
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1472,
+   178
+  ],
+  "source": "media/drive-v43/cx0190/p2_greed-death.webp",
+  "sourceSha256": "54c9a4fe8fd8edb9b4a9def195dec448e7f0f7c63a9c9032467408ea7e0c9861",
+  "stamp": "e22faf44809e5529",
+  "table": "tools/arcade-art-v43/p2.json"
+ },
+ "p2_greed@hit.webp": {
+  "bytes": 31100,
+  "cell": [
+   140,
+   184
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   560,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/p2_greed-hit.webp",
+  "sourceSha256": "83eabc4d283ee808d3b227a1326ef76906c81886c1574b4ac4e64460dbe77a46",
+  "stamp": "1309bbf9abce8807",
   "table": "tools/arcade-art-v43/p2.json"
  },
  "p2_heart.webp": {
@@ -10363,7 +11366,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    372,
@@ -10392,6 +11397,42 @@
   "stamp": "ec764d2a739e9cb1",
   "table": "tools/arcade-art-v43/p2.json"
  },
+ "p2_leviathan@death.webp": {
+  "bytes": 64994,
+  "cell": [
+   174,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1392,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p2_leviathan-death.webp",
+  "sourceSha256": "4e2eef360cc8b0713b1bda4d7149d90c750b19045b38a2b3d212847cad6aa75d",
+  "stamp": "ff117252dac5b774",
+  "table": "tools/arcade-art-v43/p2.json"
+ },
+ "p2_leviathan@hit.webp": {
+  "bytes": 74244,
+  "cell": [
+   174,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   696,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p2_leviathan-hit.webp",
+  "sourceSha256": "6a52adb60e4ec1ed7e0765484145406e0ef258989113b893739d792bb6b15af8",
+  "stamp": "2929b35aa77286bd",
+  "table": "tools/arcade-art-v43/p2.json"
+ },
  "p2_mammon.webp": {
   "bytes": 31420,
   "cell": [
@@ -10402,7 +11443,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    368,
@@ -10429,6 +11472,42 @@
   "source": "media/m0-v43/boss/b06-boss-attack.webp",
   "sourceSha256": "e09f0df510bcbb8333c19ce632a534054192cf06e1bf16558a1b249eacc7517a",
   "stamp": "0678a1257bc7902a",
+  "table": "tools/arcade-art-v43/p2.json"
+ },
+ "p2_mammon@death.webp": {
+  "bytes": 48220,
+  "cell": [
+   137,
+   184
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1096,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/p2_mammon-death.webp",
+  "sourceSha256": "922d37c09eb14a039488341968c36060a4d565b7420632ae1cb5f158d063da32",
+  "stamp": "5d1111b35a18dddd",
+  "table": "tools/arcade-art-v43/p2.json"
+ },
+ "p2_mammon@hit.webp": {
+  "bytes": 29488,
+  "cell": [
+   104,
+   184
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   416,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/p2_mammon-hit.webp",
+  "sourceSha256": "8b737eaaf82ccb45bcb9430ee5f4ebaa394bfc0e0f4973b4ada776a7f894673d",
+  "stamp": "701dc57bcfab3618",
   "table": "tools/arcade-art-v43/p2.json"
  },
  "p2_maw.webp": {
@@ -10555,7 +11634,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    456,
@@ -10584,6 +11665,42 @@
   "stamp": "1f0879c4dc382a25",
   "table": "tools/arcade-art-v43/p2.json"
  },
+ "p2_wrath@death.webp": {
+  "bytes": 86940,
+  "cell": [
+   237,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1896,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p2_wrath-death.webp",
+  "sourceSha256": "eba0112f72949179f064847be64acc1268e55ad694734fef6e1aee19bb9044d7",
+  "stamp": "d1bf34dcc957852a",
+  "table": "tools/arcade-art-v43/p2.json"
+ },
+ "p2_wrath@hit.webp": {
+  "bytes": 75890,
+  "cell": [
+   211,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   844,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p2_wrath-hit.webp",
+  "sourceSha256": "f1031d3351c6f83ffb584c1dcfeb2a75d11298a93da3cdac05b64d92783b3f56",
+  "stamp": "1013d663cfd94125",
+  "table": "tools/arcade-art-v43/p2.json"
+ },
  "p3_body.webp": {
   "bytes": 36100,
   "cell": [
@@ -10594,7 +11711,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    736,
@@ -10621,6 +11740,42 @@
   "source": "media/boss-art-v43/p3_body-attack.webp",
   "sourceSha256": "721ad9b86f8410c140e090688b44cce2ee4c701e21a05c23706afcaa276db8af",
   "stamp": "d63ff827bc855f56",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p3_body@death.webp": {
+  "bytes": 48348,
+  "cell": [
+   184,
+   162
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1472,
+   162
+  ],
+  "source": "media/drive-v43/cx0190/p3_body-death.webp",
+  "sourceSha256": "eefec63b7bab4bb22aab8002330572a30070e5351b2302c8c2cd085b791076a7",
+  "stamp": "8184aa5c6716dc0c",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p3_body@hit.webp": {
+  "bytes": 49030,
+  "cell": [
+   181,
+   184
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   724,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/p3_body-hit.webp",
+  "sourceSha256": "7d134f8085bdccd5af383aa1435d9f553acda72bd37f5974f557dd0a97224dd2",
+  "stamp": "94befb50118453e7",
   "table": "tools/arcade-art-v43/p3.json"
  },
  "p3_bomber.webp": {
@@ -10708,7 +11863,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    476,
@@ -10737,6 +11894,42 @@
   "stamp": "c25a3b3047074035",
   "table": "tools/arcade-art-v43/p3.json"
  },
+ "p3_gate@death.webp": {
+  "bytes": 73414,
+  "cell": [
+   212,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1696,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p3_gate-death.webp",
+  "sourceSha256": "53963ed0f1b9c94b5c0d9d777a4220d20fbcdc571988e3fef0cab661cfff0845",
+  "stamp": "56f849f3ab6a78b1",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p3_gate@hit.webp": {
+  "bytes": 80466,
+  "cell": [
+   199,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   796,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p3_gate-hit.webp",
+  "sourceSha256": "ff25dc3b5ec8c7df7be5cee47ef74e3f2ad725785e8ac53754b83445eaf6f0a7",
+  "stamp": "3627c10cea8b64d7",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
  "p3_lance.webp": {
   "bytes": 6536,
   "group": "props",
@@ -10759,7 +11952,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    736,
@@ -10788,6 +11983,42 @@
   "stamp": "aaa4594d9dcaf5cb",
   "table": "tools/arcade-art-v43/p3.json"
  },
+ "p3_legion@death.webp": {
+  "bytes": 31532,
+  "cell": [
+   113,
+   184
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   904,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/p3_legion-death.webp",
+  "sourceSha256": "652272aab3dd4b0d0ec8025b5149372388707a63c21e79be3208ce479e920f67",
+  "stamp": "9155f59f200af0bf",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p3_legion@hit.webp": {
+  "bytes": 46236,
+  "cell": [
+   184,
+   173
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   736,
+   173
+  ],
+  "source": "media/drive-v43/cx0190/p3_legion-hit.webp",
+  "sourceSha256": "8d550a4e9d6ecb65df9a4079d63edc89f3655ede0318000ad28289f46e42beb1",
+  "stamp": "7a62d26823d3b84a",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
  "p3_pod.webp": {
   "bytes": 13348,
   "group": "mobs",
@@ -10810,7 +12041,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    640,
@@ -10837,6 +12070,42 @@
   "source": "media/drive-v43/cx0136/p3_rampart-attack6.webp",
   "sourceSha256": "6c6c73a4f40e3a96d5db1c6164733f8f8f99a7743121e0b0c9eb044306f564ad",
   "stamp": "661db7fb03b695c6",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p3_rampart@death.webp": {
+  "bytes": 60206,
+  "cell": [
+   184,
+   177
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1472,
+   177
+  ],
+  "source": "media/drive-v43/cx0190/p3_rampart-death.webp",
+  "sourceSha256": "27c5f17779bf08fbfe2d089bbaccb8aa5e047abe759718bfa799fcf1d3df3e3d",
+  "stamp": "3790e0ea8d08c275",
+  "table": "tools/arcade-art-v43/p3.json"
+ },
+ "p3_rampart@hit.webp": {
+  "bytes": 53890,
+  "cell": [
+   170,
+   184
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   680,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/p3_rampart-hit.webp",
+  "sourceSha256": "47d7ba7cd28606dc57c107f894b1448749a68e660f9c757d17193084cba93bb0",
+  "stamp": "5b0f794457a8efab",
   "table": "tools/arcade-art-v43/p3.json"
  },
  "p3_sentry.webp": {
@@ -10885,7 +12154,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    668,
@@ -10912,6 +12183,42 @@
   "source": "media/m0-v43/boss/l301-boss-attack.webp",
   "sourceSha256": "2e7779cedcba921e0daf3c414eb3d75f48a5fe62fcf349a92c5b43130c1303db",
   "stamp": "80516deff9c91dfc",
+  "table": "tools/arcade-art-v43/p4.json"
+ },
+ "p4_knight@death.webp": {
+  "bytes": 84448,
+  "cell": [
+   231,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1848,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p4_knight-death.webp",
+  "sourceSha256": "d5bad9548b6f42df07b61994bd30e6ee76a231e779be3aa8a95b8fca3eb63e1b",
+  "stamp": "be64ee42cbe9bad2",
+  "table": "tools/arcade-art-v43/p4.json"
+ },
+ "p4_knight@hit.webp": {
+  "bytes": 89910,
+  "cell": [
+   227,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   908,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p4_knight-hit.webp",
+  "sourceSha256": "9550682c91dd2979c82fbdbf7513d6e36dfafdaf4a66c0fff3c45c128e6f9dd5",
+  "stamp": "1ed6791d0d3d9e70",
   "table": "tools/arcade-art-v43/p4.json"
  },
  "p4_shade.webp": {
@@ -10990,7 +12297,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    600,
@@ -11019,6 +12328,42 @@
   "stamp": "6fd34cab9031ed7d",
   "table": "tools/arcade-art-v43/p5.json"
  },
+ "p5_archon@death.webp": {
+  "bytes": 79764,
+  "cell": [
+   256,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   2048,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p5_archon-death.webp",
+  "sourceSha256": "468c504dc10b687e1056fe7e983769fff59661f8b2a7295561611bd48caad780",
+  "stamp": "67eb8ada8db86cde",
+  "table": "tools/arcade-art-v43/p5.json"
+ },
+ "p5_archon@hit.webp": {
+  "bytes": 81780,
+  "cell": [
+   236,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   944,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p5_archon-hit.webp",
+  "sourceSha256": "d1cee8f429002cd14acefe9be9374d36c4d9841f17dc3b5c9138a48f713f5936",
+  "stamp": "39a180cc0304c3d3",
+  "table": "tools/arcade-art-v43/p5.json"
+ },
  "p5_common.webp": {
   "bytes": 61182,
   "cell": [
@@ -11029,7 +12374,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    596,
@@ -11058,6 +12405,42 @@
   "stamp": "3c0155d8567728f9",
   "table": "tools/arcade-art-v43/p5.json"
  },
+ "p5_common@death.webp": {
+  "bytes": 87352,
+  "cell": [
+   201,
+   232
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1608,
+   232
+  ],
+  "source": "media/drive-v43/cx0190/p5_common-death.webp",
+  "sourceSha256": "3090fc73b663f8f12280d5a2a5151fa29d27a98d54f2b03252fc84e3ba9af49d",
+  "stamp": "6a6ab2d5e32f5ec7",
+  "table": "tools/arcade-art-v43/p5.json"
+ },
+ "p5_common@hit.webp": {
+  "bytes": 88360,
+  "cell": [
+   198,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   792,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p5_common-hit.webp",
+  "sourceSha256": "af664d4acfb84d2557e4b77fd8b9a548e10d3bb05ecb7066c05eeb06d639a178",
+  "stamp": "3903e760c907ef73",
+  "table": "tools/arcade-art-v43/p5.json"
+ },
  "p5_cult.webp": {
   "bytes": 52300,
   "cell": [
@@ -11068,7 +12451,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    512,
@@ -11097,6 +12482,42 @@
   "stamp": "9d5932583792f82b",
   "table": "tools/arcade-art-v43/p5.json"
  },
+ "p5_cult@death.webp": {
+  "bytes": 63790,
+  "cell": [
+   184,
+   170
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1472,
+   170
+  ],
+  "source": "media/drive-v43/cx0190/p5_cult-death.webp",
+  "sourceSha256": "ea91752f20646cf23c722bfe54bca392590d0f546e2608fdc92878b527f4141c",
+  "stamp": "f992257621f9bdd5",
+  "table": "tools/arcade-art-v43/p5.json"
+ },
+ "p5_cult@hit.webp": {
+  "bytes": 49792,
+  "cell": [
+   148,
+   184
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   592,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/p5_cult-hit.webp",
+  "sourceSha256": "433524331d2b77bb87873650a1ef6f3782b9f614def10bed4be4593e037f5ea7",
+  "stamp": "1515bfa4f8d932a9",
+  "table": "tools/arcade-art-v43/p5.json"
+ },
  "p5_fragment.webp": {
   "bytes": 4722,
   "group": "mobs",
@@ -11119,7 +12540,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    736,
@@ -11148,6 +12571,42 @@
   "stamp": "eee91e2d69037a0a",
   "table": "tools/arcade-art-v43/p5.json"
  },
+ "p5_furnace@death.webp": {
+  "bytes": 48492,
+  "cell": [
+   184,
+   174
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1472,
+   174
+  ],
+  "source": "media/drive-v43/cx0190/p5_furnace-death.webp",
+  "sourceSha256": "326c4203294b9908c15d40206a4e6ab0a1cb1d70477294b89e42f8014f7fd6d0",
+  "stamp": "bac61cdd3d8f9f96",
+  "table": "tools/arcade-art-v43/p5.json"
+ },
+ "p5_furnace@hit.webp": {
+  "bytes": 62724,
+  "cell": [
+   184,
+   175
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   736,
+   175
+  ],
+  "source": "media/drive-v43/cx0190/p5_furnace-hit.webp",
+  "sourceSha256": "f4e0d3fd4aa0555aa729f7c862ffb5676ac22fd22a8c80be4d55b1ed693ee184",
+  "stamp": "7f383369aecfd9ba",
+  "table": "tools/arcade-art-v43/p5.json"
+ },
  "p5_grand.webp": {
   "bytes": 46892,
   "cell": [
@@ -11158,7 +12617,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    488,
@@ -11187,6 +12648,42 @@
   "stamp": "cfd33d53f8a5d79b",
   "table": "tools/arcade-art-v43/p5.json"
  },
+ "p5_grand@death.webp": {
+  "bytes": 85928,
+  "cell": [
+   260,
+   243
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   2080,
+   243
+  ],
+  "source": "media/drive-v43/cx0190/p5_grand-death.webp",
+  "sourceSha256": "879aa05227d26c2fb5923e00d666f83a0ae4182701c40370e3f09c043bdf6cd8",
+  "stamp": "21f8ff7a87d082a3",
+  "table": "tools/arcade-art-v43/p5.json"
+ },
+ "p5_grand@hit.webp": {
+  "bytes": 88330,
+  "cell": [
+   180,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   720,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p5_grand-hit.webp",
+  "sourceSha256": "41c3eff52f5b5a0a1317fcdeaa21e373e0df2c7312635285f404c4d546019947",
+  "stamp": "15c0f3dcc64f7de0",
+  "table": "tools/arcade-art-v43/p5.json"
+ },
  "p5_hand.webp": {
   "bytes": 7314,
   "group": "props",
@@ -11209,7 +12706,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    464,
@@ -11238,6 +12737,42 @@
   "stamp": "2616f1d0e698465d",
   "table": "tools/arcade-art-v43/p5.json"
  },
+ "p5_keeper@death.webp": {
+  "bytes": 84548,
+  "cell": [
+   239,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1912,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p5_keeper-death.webp",
+  "sourceSha256": "5134edfbb36e9da50135a4cd55a7e20e4d4eca5b5e91a44a97f7044f2d293d77",
+  "stamp": "2f37dcedc1e2a266",
+  "table": "tools/arcade-art-v43/p5.json"
+ },
+ "p5_keeper@hit.webp": {
+  "bytes": 84284,
+  "cell": [
+   214,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   856,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p5_keeper-hit.webp",
+  "sourceSha256": "3731949b6dff85c2a2fade18e77404455776d91d4d1a895957f4f6791021fb8c",
+  "stamp": "b5bb3b97237c2d65",
+  "table": "tools/arcade-art-v43/p5.json"
+ },
  "p5_neuron.webp": {
   "bytes": 60832,
   "cell": [
@@ -11248,7 +12783,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    704,
@@ -11275,6 +12812,42 @@
   "source": "media/boss-art-v43/p5_neuron-attack.webp",
   "sourceSha256": "31eeb1de9e8e67f820977e064a99e4a188dc28b28c5822da9e460d0e0946d6c7",
   "stamp": "b7c40b1e20c1fd8c",
+  "table": "tools/arcade-art-v43/p5.json"
+ },
+ "p5_neuron@death.webp": {
+  "bytes": 89148,
+  "cell": [
+   260,
+   234
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   2080,
+   234
+  ],
+  "source": "media/drive-v43/cx0190/p5_neuron-death.webp",
+  "sourceSha256": "5cf759d4fb211a0ec11c6c45a3971e9948c1783b7078b1541654d1e6bb4e4be7",
+  "stamp": "cc5bd39cbd784fcc",
+  "table": "tools/arcade-art-v43/p5.json"
+ },
+ "p5_neuron@hit.webp": {
+  "bytes": 89698,
+  "cell": [
+   229,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   916,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p5_neuron-hit.webp",
+  "sourceSha256": "a2f26536d11b2191c2394f77fc2f9644144f28ce4189d3c7f92f6b6bc79abe32",
+  "stamp": "990af3350872b181",
   "table": "tools/arcade-art-v43/p5.json"
  },
  "p5_reaper.webp": {
@@ -11311,7 +12884,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    484,
@@ -11338,6 +12913,42 @@
   "source": "media/boss-art-v43/p5_rings-attack.webp",
   "sourceSha256": "2fea18b72ad50dc0fa901502d2e6718b1e21262e9e748ee065bd80c21ef7b29f",
   "stamp": "6ebe1571eff08916",
+  "table": "tools/arcade-art-v43/p5.json"
+ },
+ "p5_rings@death.webp": {
+  "bytes": 89164,
+  "cell": [
+   260,
+   252
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   2080,
+   252
+  ],
+  "source": "media/drive-v43/cx0190/p5_rings-death.webp",
+  "sourceSha256": "e200b19a591963f4b2217589cf0dc8a980fefd4508a7d5c243ea66f8dbf7355d",
+  "stamp": "595d46f1775414ed",
+  "table": "tools/arcade-art-v43/p5.json"
+ },
+ "p5_rings@hit.webp": {
+  "bytes": 87952,
+  "cell": [
+   185,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   740,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p5_rings-hit.webp",
+  "sourceSha256": "63a5bfba8a94a3d86a2fd36419169266b76d75e48cce562cec8601f6b7e506d2",
+  "stamp": "9642b60ff89cd639",
   "table": "tools/arcade-art-v43/p5.json"
  },
  "p5_upper.webp": {
@@ -11440,7 +13051,8 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "hit"
   ],
   "size": [
    720,
@@ -11469,16 +13081,61 @@
   "stamp": "f0df7502c7489765",
   "table": "tools/arcade-art-v43/p6.json"
  },
- "p6_demons_alt48.webp": {
-  "bytes": 37240,
-  "group": "actors",
-  "size": [
-   234,
+ "p6_demons@hit.webp": {
+  "bytes": 81646,
+  "cell": [
+   255,
    260
   ],
-  "source": "media/m0-v43/boss/mb-hando01-attack.webp",
-  "sourceSha256": "706c1b96b0dca48a34e5891c4c6f69819ee870986418702e9defab745932c0fa",
-  "stamp": "92142da8edf77616",
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   1020,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p6_demons-hit.webp",
+  "sourceSha256": "e4283294280e20ceeac7334c79d397e8e075eff73daa10f8974b84fecc688349",
+  "stamp": "05cbb811d0973e32",
+  "table": "tools/arcade-art-v43/p6.json"
+ },
+ "p6_demons_alt48.webp": {
+  "bytes": 88292,
+  "cell": [
+   212,
+   244
+  ],
+  "fps": 6,
+  "frames": 4,
+  "group": "actors",
+  "motions": [
+   "attack"
+  ],
+  "size": [
+   848,
+   244
+  ],
+  "source": "media/drive-v43/cx0190/p6_demons_alt48-hover.webp",
+  "sourceSha256": "42fc74af87a052223945542a7bfbd37d20b036c990be5100924752e6501cfaa2",
+  "stamp": "cb424d8644159a9e",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
+ "p6_demons_alt48@attack.webp": {
+  "bytes": 88188,
+  "cell": [
+   168,
+   182
+  ],
+  "fps": 8,
+  "frames": 6,
+  "group": "actors",
+  "size": [
+   1008,
+   182
+  ],
+  "source": "media/drive-v43/cx0190/p6_demons_alt48-attack.webp",
+  "sourceSha256": "cec594ef82eeac95b791005e9509e8694e2e9c6399d94c481ecbbeef9ce691da",
+  "stamp": "784acc7f48e6564f",
   "table": "tools/arcade-art-v43/forms.json"
  },
  "p6_keeper.webp": {
@@ -11539,7 +13196,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    736,
@@ -11568,6 +13227,42 @@
   "stamp": "cdd005fc1ebd8731",
   "table": "tools/arcade-art-v43/p7.json"
  },
+ "p7_alarm@death.webp": {
+  "bytes": 33794,
+  "cell": [
+   184,
+   166
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1472,
+   166
+  ],
+  "source": "media/drive-v43/cx0190/p7_alarm-death.webp",
+  "sourceSha256": "be0ab0146ad71026a5ab759d00daa7c1a834b968c4f70d96f315271f51e28a09",
+  "stamp": "72b4d9bfdbadc240",
+  "table": "tools/arcade-art-v43/p7.json"
+ },
+ "p7_alarm@hit.webp": {
+  "bytes": 43314,
+  "cell": [
+   143,
+   184
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   572,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/p7_alarm-hit.webp",
+  "sourceSha256": "8835b742efe9ba4d52703cec66d42705c9b7e519cf53123efdd0122640d26367",
+  "stamp": "d132503d1739d602",
+  "table": "tools/arcade-art-v43/p7.json"
+ },
  "p7_bell.webp": {
   "bytes": 15584,
   "group": "mobs",
@@ -11590,7 +13285,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    704,
@@ -11617,6 +13314,42 @@
   "source": "media/boss-art-v43/p7_car-attack.webp",
   "sourceSha256": "6b26fb179d65c1c52c2a438560203ba9cb66a244b4704d8bf5592bb3afc912da",
   "stamp": "09493ba7c2e30206",
+  "table": "tools/arcade-art-v43/p7.json"
+ },
+ "p7_car@death.webp": {
+  "bytes": 75484,
+  "cell": [
+   184,
+   181
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1472,
+   181
+  ],
+  "source": "media/drive-v43/cx0190/p7_car-death.webp",
+  "sourceSha256": "57991a42e10561c52667a821c3ab02a35d8184f173a2b20dd2557bec8de53452",
+  "stamp": "91a3303e6900ade2",
+  "table": "tools/arcade-art-v43/p7.json"
+ },
+ "p7_car@hit.webp": {
+  "bytes": 79500,
+  "cell": [
+   184,
+   184
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   736,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/p7_car-hit.webp",
+  "sourceSha256": "19f1ff91b836a3118aff4d259f3a06f336ce4fd45de38b489ce8dd426c264cf4",
+  "stamp": "2fc519f22ce59d7c",
   "table": "tools/arcade-art-v43/p7.json"
  },
  "p7_fragment.webp": {
@@ -11662,24 +13395,26 @@
   "table": "tools/arcade-art-v43/p7.json"
  },
  "p7_shadow.webp": {
-  "bytes": 33594,
+  "bytes": 49740,
   "cell": [
-   145,
+   122,
    184
   ],
   "fps": 6,
-  "frames": 2,
+  "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
-   290,
+   488,
    184
   ],
-  "source": "media/actors-v7/denial-idle.png",
-  "sourceSha256": "60c3a216597ca0efbfca2ff01aaef78799094231aa5fd89f2cb8f96df5faa492",
-  "stamp": "3a8eed38388a786e",
+  "source": "media/drive-v43/cx0190/p7_shadow-down.webp",
+  "sourceSha256": "9ddc1720d6da7d21eb4887d197c1bd046400073bdd5560db709dff752ee0baf7",
+  "stamp": "a9c0555030f6e0a8",
   "table": "tools/arcade-art-v43/p7.json"
  },
  "p7_shadow@attack.webp": {
@@ -11698,6 +13433,42 @@
   "source": "media/boss-art-v43/p7_shadow-attack.webp",
   "sourceSha256": "38fa7cf608dbf7874781b69e6afc3785d646e918a1bf5b785b6f33da2dfc8a14",
   "stamp": "9b3dc95899e4d311",
+  "table": "tools/arcade-art-v43/p7.json"
+ },
+ "p7_shadow@death.webp": {
+  "bytes": 61448,
+  "cell": [
+   176,
+   184
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1408,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/p7_shadow-death.webp",
+  "sourceSha256": "c9badf56239851a92c9b562fa56f30ff48fe54d453606e9eaf0d026aec8cd9ec",
+  "stamp": "22ce48da65e35088",
+  "table": "tools/arcade-art-v43/p7.json"
+ },
+ "p7_shadow@hit.webp": {
+  "bytes": 62380,
+  "cell": [
+   146,
+   184
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   584,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/p7_shadow-hit.webp",
+  "sourceSha256": "4c450851aee4db939d2ac7f6309fd0fa9649227568d60afbfbfb8ac75990439b",
+  "stamp": "5569f447437b3a03",
   "table": "tools/arcade-art-v43/p7.json"
  },
  "p7_signal.webp": {
@@ -11740,7 +13511,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    440,
@@ -11769,6 +13542,42 @@
   "stamp": "e0583bc75bca9faf",
   "table": "tools/arcade-art-v43/p8.json"
  },
+ "p8_chip@death.webp": {
+  "bytes": 71282,
+  "cell": [
+   168,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1344,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p8_chip-death.webp",
+  "sourceSha256": "6a3f02295a2b99343b10af1bd3cff028c9d7e0516c37f901c6052ede7a42cb49",
+  "stamp": "64af9e01c67d5025",
+  "table": "tools/arcade-art-v43/p8.json"
+ },
+ "p8_chip@hit.webp": {
+  "bytes": 79004,
+  "cell": [
+   164,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   656,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p8_chip-hit.webp",
+  "sourceSha256": "70b1fbd15a7972992e451d2a323a3484bd5b8190f8262b772bb4268c6ed2588b",
+  "stamp": "13ff6be7281347fd",
+  "table": "tools/arcade-art-v43/p8.json"
+ },
  "p8_collective.webp": {
   "bytes": 56876,
   "cell": [
@@ -11779,7 +13588,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    540,
@@ -11806,6 +13617,42 @@
   "source": "media/boss-art-v43/p8_collective-attack.webp",
   "sourceSha256": "b07a50c2442bb621ae1a57147f9e4978f1b1851ddb73cbbbe0375f72493635f6",
   "stamp": "54fccc6dfdfa43f0",
+  "table": "tools/arcade-art-v43/p8.json"
+ },
+ "p8_collective@death.webp": {
+  "bytes": 83388,
+  "cell": [
+   206,
+   260
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1648,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p8_collective-death.webp",
+  "sourceSha256": "d9de9d448a391225feac98c122ea29a56bf293348982ee243379854c38b1314e",
+  "stamp": "ea7de9efaab7e930",
+  "table": "tools/arcade-art-v43/p8.json"
+ },
+ "p8_collective@hit.webp": {
+  "bytes": 88248,
+  "cell": [
+   205,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   820,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/p8_collective-hit.webp",
+  "sourceSha256": "40afbc5a0428aa77fb893c8d2c79e4d911ad0996aadec7af37a5d18cf81eadf9",
+  "stamp": "a2401b559e8a64d1",
   "table": "tools/arcade-art-v43/p8.json"
  },
  "p8_ion.webp": {
@@ -11848,24 +13695,26 @@
   "table": "tools/arcade-art-v43/p8.json"
  },
  "p8_lauren.webp": {
-  "bytes": 38604,
+  "bytes": 58998,
   "cell": [
-   184,
-   172
+   148,
+   184
   ],
   "fps": 6,
-  "frames": 2,
+  "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
-   368,
-   172
+   592,
+   184
   ],
-  "source": "media/actors-v7/guard-idle.png",
-  "sourceSha256": "a8b09b9597c3a66261acc38149109bdd12f5f8e4e2ee5ce9428cba6e3163bd76",
-  "stamp": "a13fbf5a0b049b6f",
+  "source": "media/drive-v43/cx0190/p8_lauren-down.webp",
+  "sourceSha256": "017a2b2ce3b284c33a9a003ee5602beab269497950d6e6f76aef196db9f0da5a",
+  "stamp": "2f19785a82692cc4",
   "table": "tools/arcade-art-v43/p8.json"
  },
  "p8_lauren@attack.webp": {
@@ -11884,6 +13733,42 @@
   "source": "media/boss-art-v43/p8_lauren-attack.webp",
   "sourceSha256": "66c996cbb20b1e8b6152ebe719914d643a5a711f8969d0bc5edb52d81f6bb7a0",
   "stamp": "b3f313018c7a2f27",
+  "table": "tools/arcade-art-v43/p8.json"
+ },
+ "p8_lauren@death.webp": {
+  "bytes": 86020,
+  "cell": [
+   184,
+   180
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1472,
+   180
+  ],
+  "source": "media/drive-v43/cx0190/p8_lauren-death.webp",
+  "sourceSha256": "f9328057a1ef9545795095f13dd5c4fd98fa90b4f8d77be8d34e3958af348b66",
+  "stamp": "1ac0a75d93e9a67d",
+  "table": "tools/arcade-art-v43/p8.json"
+ },
+ "p8_lauren@hit.webp": {
+  "bytes": 60554,
+  "cell": [
+   119,
+   184
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   476,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/p8_lauren-hit.webp",
+  "sourceSha256": "342ee6c04a02c562fedeb75b6717eb3a8689f686b9967f7cb3958add97b44ede",
+  "stamp": "2a539e329f9aed6d",
   "table": "tools/arcade-art-v43/p8.json"
  },
  "p8_priest.webp": {
@@ -11950,7 +13835,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    372,
@@ -11977,6 +13864,42 @@
   "source": "media/m0-v43/boss/b08-boss-attack.webp",
   "sourceSha256": "4f499591355ca852195ee177df717a9bdd17e0f08720f976365d197f506c983d",
   "stamp": "bf49ea87b47b1e34",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "pride@death.webp": {
+  "bytes": 48138,
+  "cell": [
+   135,
+   184
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1080,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/pride-death.webp",
+  "sourceSha256": "4631a6419a3082c6bab47c3ff8ba1e56fd14159543036cbe2c631343c4cdf822",
+  "stamp": "87ee1394fd678b74",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "pride@hit.webp": {
+  "bytes": 33226,
+  "cell": [
+   93,
+   184
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   372,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/pride-hit.webp",
+  "sourceSha256": "a0776514bf654903bbef354cece1191475fe1c416ac1e42cdd5532c3063585b5",
+  "stamp": "453960355f4df4a7",
   "table": "tools/arcade-art-v43/base.json"
  },
  "reward-p1_chainr.webp": {
@@ -12672,7 +14595,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    408,
@@ -12701,6 +14626,42 @@
   "stamp": "53e253a72d695c18",
   "table": "tools/arcade-art-v43/base.json"
  },
+ "rian@death.webp": {
+  "bytes": 47842,
+  "cell": [
+   137,
+   184
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1096,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/rian-death.webp",
+  "sourceSha256": "a4ad3102ec88b950d8a8478b915d31af5d0b480cf435c83d189d4f0cda9f06cf",
+  "stamp": "eb1f6297830ec161",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "rian@hit.webp": {
+  "bytes": 33642,
+  "cell": [
+   117,
+   184
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   468,
+   184
+  ],
+  "source": "media/drive-v43/cx0190/rian-hit.webp",
+  "sourceSha256": "780810aa5a87ad18bef15d85957d2fa9c34229b46036f9f6bdb4a99bfb7ab26d",
+  "stamp": "e0d48bbd7e720f19",
+  "table": "tools/arcade-art-v43/base.json"
+ },
  "siren.webp": {
   "bytes": 51470,
   "cell": [
@@ -12711,7 +14672,9 @@
   "frames": 4,
   "group": "actors",
   "motions": [
-   "attack"
+   "attack",
+   "death",
+   "hit"
   ],
   "size": [
    604,
@@ -12738,6 +14701,42 @@
   "source": "media/drive-v43/cx0136/siren-attack6.webp",
   "sourceSha256": "b4c5db2887dca0a7d107d34940e52b256cc3d9feaac51bef924e3fb1ee4a4679",
   "stamp": "78782c4634abf455",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "siren@death.webp": {
+  "bytes": 88052,
+  "cell": [
+   190,
+   238
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1520,
+   238
+  ],
+  "source": "media/drive-v43/cx0190/siren-death.webp",
+  "sourceSha256": "1b3ed0c6144afa5b5f0016f6cbeefa711a1d910af025de59e8a404c83166ad58",
+  "stamp": "fd9f44622e24c57d",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "siren@hit.webp": {
+  "bytes": 83522,
+  "cell": [
+   223,
+   260
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   892,
+   260
+  ],
+  "source": "media/drive-v43/cx0190/siren-hit.webp",
+  "sourceSha256": "75c5420aca921e5a9f6f25b1677247139b5885ecfd4625beb33be856783f8320",
+  "stamp": "b446cd3b4a33b460",
   "table": "tools/arcade-art-v43/base.json"
  },
  "skull.webp": {
