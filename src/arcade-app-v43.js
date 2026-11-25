@@ -89,6 +89,7 @@
     var no=list.indexOf(s.seg);return no<0?null:{no:no+1,count:list.length};}
   // 새 모습 그림의 키(사용자 11-20): 사몽각성 교주는 교주보다 훨씬 크게, 악몽 군집체는 여럿이 뭉친 덩어리라 넓고 크게(그림만, 판정 그대로)
   var FORM_TALL={cultist_awake:206,chief_swarm:204};
+  var FORM_CUTIN={cultist_awake:'media/arcade-v43-cutin/cultist-awake.webp',chief_swarm:'media/arcade-v43-cutin/chief-swarm.webp'}; // 다른 모습 보스의 등장 컷인 한 장
   function tallOf(key){
     if(FORM_TALL[key])return FORM_TALL[key];
     if(Arcade.FORM_BASE&&Arcade.FORM_BASE[key])key=Arcade.FORM_BASE[key]; // 다른 모습 그림은 원래 인물의 크기
@@ -2156,11 +2157,11 @@
     story={entry:entry,actor:actor,seenKey:seenKey,line:0,elapsed:0,lineMs:3000,phase:'impact',phaseMs:0};storyArrivalActor=actor;
     screen.dataset.phase='impact';screen.dataset.actor=actor;portrait.hidden=!actor||!listed(actor);
     if(!portrait.hidden){var info=manifest&&manifest[actor+'.webp'],frames=info&&info.frames||1,cell=info&&(info.cell||info.size),ratio=cell?cell[0]/cell[1]:.8;
-      var art=actor==='violet'?'media/combat/boss01-purple-sword-spider-angel-cutin.webp':fileOf(actor);if(actor==='violet'){frames=1;ratio=1;}
+      var form=Arcade.segArt?Arcade.segArt(seg):'',cut=FORM_CUTIN[form],art=cut||(actor==='violet'?'media/combat/boss01-purple-sword-spider-angel-cutin.webp':fileOf(actor));if(actor==='violet'||cut){frames=1;ratio=cut?.75:1;} // 다른 모습 보스(사몽각성 교주·악몽 군집체)는 그 모습의 컷인(닷츠 CX-0157AW)
       portrait.style.backgroundImage='url("'+art+'")';portrait.style.backgroundSize=frames>1?(frames*100)+'% 100%':'contain';portrait.style.aspectRatio=String(ratio);portrait.setAttribute('aria-label',who.name);
     }
     if(screen.style.setProperty)screen.style.setProperty('--boss-accent',COLORS[who.c1]||'#b95748');
-    if($('story-boss-name'))$('story-boss-name').textContent=who.name;
+    if($('story-boss-name'))$('story-boss-name').textContent=Arcade.actorName?Arcade.actorName(actor,state.stageIndex):who.name;
     if($('story-boss-role'))$('story-boss-role').textContent=T('storyMainBoss');
     paintStory();accumulator=0;lastStamp=0;setMode('story');play('bossCutin',W/2);$('story-skip').focus({preventScroll:true});return true;
   }

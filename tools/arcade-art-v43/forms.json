@@ -43,18 +43,37 @@
    ]
   },
   "cultist_awake": {
-   "src": "media/arcade-v43-temp/cultist-awake-temp.png",
+   "src": "media/drive-v43/cx0157/cultist-awake-down.webp",
    "strip": 4,
    "fps": 6,
    "size": 300,
-   "temp": "CX-0157AW 결과가 오면 바꾼다(임시)"
+   "note": "닷츠 CX-0157AW r1 걷기 4칸",
+   "motions": {
+    "attack": {
+     "src": "media/drive-v43/cx0157/cultist-awake-attack.webp",
+     "strip": 4,
+     "fps": 8
+    },
+    "death": {
+     "src": "media/drive-v43/cx0157/cultist-awake-death.webp",
+     "strip": 6,
+     "fps": 8
+    }
+   }
   },
   "chief_swarm": {
-   "src": "media/arcade-v43-temp/chief-swarm-temp.png",
+   "src": "media/drive-v43/cx0157/chief-swarm-down.webp",
    "strip": 4,
    "fps": 6,
-   "size": 330,
-   "temp": "CX-0157AW 결과가 오면 바꾼다(임시)"
+   "size": 248,
+   "note": "닷츠 CX-0157AW r1 걷기 4칸",
+   "motions": {
+    "attack": {
+     "src": "media/drive-v43/cx0157/chief-swarm-attack.webp",
+     "strip": 4,
+     "fps": 8
+    }
+   }
   }
  }
 }

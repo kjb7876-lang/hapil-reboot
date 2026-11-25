@@ -60,47 +60,11 @@
    "size": 184,
    "motions": {
     "attack": {
-     "src": "media/sins-v13/mammon-atlas-512.png",
-     "frames": [
-      {
-       "src": "media/sins-v13/mammon-atlas-512.png",
-       "cell": [
-        0,
-        0,
-        2,
-        2
-       ]
-      },
-      {
-       "src": "media/sins-v13/mammon-atlas-512.png",
-       "cell": [
-        1,
-        0,
-        2,
-        2
-       ]
-      },
-      {
-       "src": "media/sins-v13/mammon-atlas-512.png",
-       "cell": [
-        0,
-        1,
-        2,
-        2
-       ]
-      },
-      {
-       "src": "media/sins-v13/mammon-atlas-512.png",
-       "cell": [
-        1,
-        1,
-        2,
-        2
-       ]
-      }
-     ],
+     "src": "media/drive-v43/cx0136/p2_greed-attack6.webp",
+     "strip": 6,
      "fps": 8,
-     "size": 184
+     "size": 184,
+     "note": "닷츠 CX-0136BA v2 공격 6칸"
     }
    }
   },
