@@ -11,8 +11,8 @@
     ko:{
       kicker:'HAPIL · 원큐 여정 · 52 STAGES',controls:'끌어서 이동 · 공격은 자동<br><b>초능력</b>을 누른 채 다른 손가락으로 정밀 이동 · <b>폭탄</b>(필살기)으로 탄을 지웁니다<br>PC: 방향키·WASD · <span data-keyl=focus>Shift</span> 초능력 · <span data-keyl=bomb>X</span> 폭탄 · 키는 일시정지 설정에서 변경',
       continue:'이어하기',continueStage:'이어하기 · STAGE {n}',continueMid:'이어하기 · STAGE {n} 중간부터',loading:'불러오는 중…',fromStart:'처음부터',here:'여기서',stageSelect:'스테이지 선택',
-      difficulty:'난이도',gentle:'이지',normal:'노멀',hell:'헬',
-      noteGentle:'목숨 {hp} · 폭탄 {bombs} · 쉬운 패턴 · 느린 탄 · 작은 피격점 · 다음 부 진입 시 목숨 전부 회복 · 목표 약 {minutes}분',noteNormal:'목숨 {hp} · 폭탄 {bombs} · 이지보다 촘촘한 탄막 · 피격점 접촉 시 확률 회피·자동폭탄 · 다음 부 진입 시 목숨 전부 회복 · 목표 약 {minutes}분',noteHell:'목숨 {hp} · 폭탄 {bombs} · 가장 촘촘하고 빠른 탄막 · 수동폭탄만 · 자동회피 없음 · 다음 부 진입 시 목숨 전부 회복 · 목표 약 {minutes}분',
+      difficulty:'난이도',gentle:'이지',normal:'노멀',hell:'헬',handicap:'핸디캡',
+      noteGentle:'목숨 {hp} · 폭탄 {bombs} · 쉬운 패턴 · 느린 탄 · 작은 피격점 · 다음 부 진입 시 목숨 전부 회복 · 목표 약 {minutes}분',noteNormal:'목숨 {hp} · 폭탄 {bombs} · 이지보다 촘촘한 탄막 · 피격점 접촉 시 확률 회피·자동폭탄 · 다음 부 진입 시 목숨 전부 회복 · 목표 약 {minutes}분',noteHell:'목숨 {hp} · 폭탄 {bombs} · 가장 촘촘하고 빠른 탄막 · 수동폭탄만 · 자동회피 없음 · 다음 부 진입 시 목숨 전부 회복 · 목표 약 {minutes}분',noteHandicap:'목숨 {hp} · 폭탄 {bombs} · 헬과 같은 탄막 · 시공간 왜곡·성장나무 열매·자동 필살 없음 · 초능력은 그대로 · 순수 피지컬 · 목표 약 {minutes}분',
       keepsakes:'기념물',keepsakesCount:'기념물 {n}/{max}',bossPractice:'보스 체험',soundOn:'소리 켜짐',soundOff:'소리 꺼짐',
       starsBest:'별 <b id="title-stars">0</b> / <span id="title-stars-max">168</span> · 최고 점수 <b id="title-best">00000000</b>',noSave:'이 브라우저에서는 기록을 저장할 수 없습니다.',
       report:'기기 진단 복사',privacy:'개인정보처리방침',credit:'음악: 자체 작곡 · 악기 소리 Fluid R3 GM (Frank Wen, CC BY 3.0)',reportDone:'복사됨 · 스레드에 붙여 넣어 주세요',reportFail:'복사 안 됨 · 길게 눌러 선택',
@@ -25,8 +25,8 @@
     en:{
       kicker:'HAPIL · ONE-RUN JOURNEY · 52 STAGES',controls:'Drag to move · Shots fire automatically<br>Hold <b>Psi</b> and drag with another finger for precise movement · <b>Bomb</b> (ultimate) clears bullets<br>PC: arrows/WASD · <span data-keyl=focus>Shift</span> Psi · <span data-keyl=bomb>X</span> Bomb · rebind in the pause settings',
       continue:'Continue',continueStage:'Continue · STAGE {n}',continueMid:'Continue · STAGE {n} (checkpoint)',loading:'Loading…',fromStart:'New game',here:'Play',stageSelect:'Select stage',
-      difficulty:'Difficulty',gentle:'Easy',normal:'Normal',hell:'Hell',
-      noteGentle:'{hp} lives · {bombs} bombs · easy patterns · slow bullets · tiny hitbox · refill all lives on entering the next part · target ~{minutes} min',noteNormal:'{hp} lives · {bombs} bombs · denser volleys than Easy · chance dodge and auto-bomb on hitbox contact · refill all lives on entering the next part · target ~{minutes} min',noteHell:'{hp} lives · {bombs} bomb · the densest, fastest volleys · manual bombs only, no auto-dodge · refill all lives on entering the next part · target ~{minutes} min',
+      difficulty:'Difficulty',gentle:'Easy',normal:'Normal',hell:'Hell',handicap:'Handicap',
+      noteGentle:'{hp} lives · {bombs} bombs · easy patterns · slow bullets · tiny hitbox · refill all lives on entering the next part · target ~{minutes} min',noteNormal:'{hp} lives · {bombs} bombs · denser volleys than Easy · chance dodge and auto-bomb on hitbox contact · refill all lives on entering the next part · target ~{minutes} min',noteHell:'{hp} lives · {bombs} bomb · the densest, fastest volleys · manual bombs only, no auto-dodge · refill all lives on entering the next part · target ~{minutes} min',noteHandicap:'{hp} life · {bombs} bombs · Hell volleys · no time warp, no fruit bonus, no auto-bomb · Psi power kept · pure skill · target ~{minutes} min',
       keepsakes:'Keepsakes',keepsakesCount:'Keepsakes {n}/{max}',bossPractice:'Boss practice',soundOn:'Sound on',soundOff:'Sound off',
       starsBest:'Stars <b id="title-stars">0</b> / <span id="title-stars-max">168</span> · Best <b id="title-best">00000000</b>',noSave:'Progress cannot be saved in this browser.',
       report:'Copy device report',privacy:'Privacy Policy',credit:'Music: original score · Instrument samples Fluid R3 GM (Frank Wen, CC BY 3.0)',reportDone:'Copied · paste it to the developer',reportFail:'Copy failed · long-press to select',

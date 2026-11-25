@@ -103,7 +103,9 @@
     // 11-17 사용자 기준: 노멀과 헬은 탄 수·속도·공격 모양·판정이 같다. 노멀에는 피격점 접촉 시 자동 방어, 헬에는 수동 필살만 있다.
     gentle:{density:1.65,speed:.56,hp:5,mapHeal:0,partHeal:-1,bombs:3,radius:1,hitScale:.3,warn:1.6,beam:.72,label:'여유'},
     normal:{density:2.6,speed:.9,hp:3,mapHeal:0,partHeal:-1,bombs:2,radius:2.4,hitScale:.5,warn:1,beam:1,label:'기본'},
-    hell:{density:2.6,speed:.9,hp:2,mapHeal:0,partHeal:-1,bombs:1,radius:2.4,hitScale:.5,warn:1,beam:1,label:'지옥'}
+    hell:{density:2.6,speed:.9,hp:2,mapHeal:0,partHeal:-1,bombs:1,radius:2.4,hitScale:.5,warn:1,beam:1,label:'지옥'},
+    // 핸디캡(사용자 11-25 "헬모드 윗단계로 핸디캡모드 하트1에 필살기2 필살기및 시공간왜곡 자동사용 미적용 순수피지컬, 초능력은 있어야함"): 패턴·탄속·판정은 헬 그대로(엔진 안에서는 difficulty 'hell' + s.handicap). 목숨 1·필살 2(보관 상한도 2)·시공간 왜곡 없음(열매 효과도 0)·자동 필살 없음. 초능력(저속 버튼)은 영웅 그대로
+    handicap:{density:2.6,speed:.9,hp:1,mapHeal:0,partHeal:-1,bombs:2,radius:2.4,hitScale:.5,warn:1,beam:1,label:'핸디캡'}
   };
   /* 이전 리플레이의 이지 곡선. 실제 전투에는 아래 LIVE_TABLE을 적용한다. */
   var SOFT={gentle:{speed:.87,density:.8},normal:{speed:.88,density:.8}},SCATTER_ANGLE=.16,SCATTER_SPEED=.22,SCATTER_POS=7;
@@ -152,7 +154,7 @@
   // 사용자 11-20 21:58 KST "피시는 이지 목숨3 노멀목숨2 헬 목숨1로하자 모바일은 지금그대로": 실제 게임(entranceAll) PC(compact 아님)만 시작 목숨을 이 표로 쓴다. 휴대폰은 DIFFICULTY 표(5/3/2) 그대로.
   // 챕터 끝 회복·봉인 조각·큰 하트는 maxHp 를 기준으로 하니 이 표가 그 기기의 목숨 상한이다.
   var LIVE_LIVES_PC={gentle:3,normal:2,hell:1};
-  function livesFor(difficulty,compact,live){var d=DIFFICULTY[difficulty]||DIFFICULTY.normal;return live&&!compact&&LIVE_LIVES_PC[difficulty]?LIVE_LIVES_PC[difficulty]:d.hp;}
+  function livesFor(difficulty,compact,live){if(difficulty==='handicap')return DIFFICULTY.handicap.hp;var d=DIFFICULTY[difficulty]||DIFFICULTY.normal;return live&&!compact&&LIVE_LIVES_PC[difficulty]?LIVE_LIVES_PC[difficulty]:d.hp;}
   var LIVE_MOBILE={density:.7,cap:.5,speed:.72,size:1.2,hit:.8,warn:1.45,beam:.80,spin:.72,guard:1.5,move:.85,drag:.88,focusDrag:.60};
   // 휴대폰은 탄 그림을 크게 두면서 실제 판정과 회전·낙하 속도를 낮춘다.
   function mobileSpeed(s){return s.entranceAll&&s.compact?LIVE_MOBILE.speed:1;}
@@ -1057,6 +1059,7 @@
     normal:{nominalMinutes:90,waveMinutes:30,bossMinutes:55,presentationMinutes:5,hpScale:1.3,skipRepeatedPlain:true},
     hell:{nominalMinutes:120,waveMinutes:40,bossMinutes:75,presentationMinutes:5,hpScale:1.3,skipRepeatedPlain:false}
   };
+  PACING.handicap=PACING.hell; // 핸디캡은 헬과 같은 구성·분량
   var REPEATED_PLAIN={},pacingTotals={};
   (function(){var seen={};SEGMENTS.forEach(function(g,i){if(g.kind!=='card'||g.spell)return;var key=g.stage+':'+g.actor;if(seen[key])REPEATED_PLAIN[i]=true;seen[key]=true;});
     Object.keys(PACING).forEach(function(d){var p=PACING[d],wave=0,boss=0,waves=0,cards=0;SEGMENTS.forEach(function(g,i){if(p.skipRepeatedPlain&&REPEATED_PLAIN[i])return;if(g.kind==='wave'){wave+=g.duration;waves++;}else{boss+=g.time;cards++;}});pacingTotals[d]={waveTicks:wave,bossSeconds:boss,waves:waves,cards:cards};});})();
@@ -1072,16 +1075,16 @@
 
   /* options: {hero('memory' 또는 'seoha'), difficulty, seed, stage(시작 스테이지), segment(시작 구간), compact(휴대폰 모드), bossOnly(보스 체험: 그 스테이지의 보스전만), growth(중간에서 시작하면 그만큼 자란 공격·필살 단계로)} */
   function createRun(options){
-    options=options||{};var difficulty=DIFFICULTY[options.difficulty]?options.difficulty:'normal',rules=Object.assign({},DIFFICULTY[difficulty]),compact=!!options.compact;rules.hp=livesFor(difficulty,compact,options.entranceAll===true);
+    options=options||{};var handicap=options.difficulty==='handicap',difficulty=handicap?'hell':DIFFICULTY[options.difficulty]?options.difficulty:'normal',rules=Object.assign({},DIFFICULTY[handicap?'handicap':difficulty]),compact=!!options.compact;rules.hp=livesFor(handicap?'handicap':difficulty,compact,options.entranceAll===true);
     var startSeg=Number.isInteger(options.segment)&&SEGMENTS[options.segment]?options.segment:Number.isInteger(options.stage)&&STAGES[options.stage]?STAGES[options.stage].first:0;
     var selectedHero=heroProfile(options);
-    var s={revision:43,entranceAll:options.entranceAll===true,srng:((options.seed|0)*2246822519+374761393)>>>0||7,hero:selectedHero?selectedHero.id:'memory',rhythm:options.rhythm===true,paced:options.pacing===true||(options.pacing!==false&&!Number.isInteger(options.segment)),difficulty:difficulty,rules:rules,compact:compact,density:rules.density*(compact?COMPACT_DENSITY:1),sizeScale:(compact?COMPACT_SIZE:1)*(options.entranceAll===true?LIVE_GROW*(compact?LIVE_MOBILE.size:1):1),cap:compact?(options.entranceAll===true?Math.round(COMPACT_CAP*LIVE_MOBILE.cap):COMPACT_CAP):CAP,
+    var s={revision:43,entranceAll:options.entranceAll===true,srng:((options.seed|0)*2246822519+374761393)>>>0||7,hero:selectedHero?selectedHero.id:'memory',rhythm:options.rhythm===true,paced:options.pacing===true||(options.pacing!==false&&!Number.isInteger(options.segment)),difficulty:difficulty,handicap:handicap,mode:handicap?'handicap':difficulty,rules:rules,compact:compact,density:rules.density*(compact?COMPACT_DENSITY:1),sizeScale:(compact?COMPACT_SIZE:1)*(options.entranceAll===true?LIVE_GROW*(compact?LIVE_MOBILE.size:1):1),cap:compact?(options.entranceAll===true?Math.round(COMPACT_CAP*LIVE_MOBILE.cap):COMPACT_CAP):CAP,
       seed:(options.seed>>>0)||1,rng:(options.seed>>>0)||1,tick:0,stage:'break',stageTick:BREAK_TICKS-30,seg:startSeg-1,segTick:0,stageIndex:SEGMENTS[startSeg].stage,spellNumber:0,
       ability:0,player:{x:W/2,y:H-84,hp:rules.hp,maxHp:rules.hp,invulnerableUntil:0,r:rules.radius,focus:false},
       boss:{x:W/2,y:-60,targetX:W/2,targetY:132,hp:1,maxHp:1,actor:'',name:'',mid:false,hitTick:-99,leaving:false,present:false,down:null},
       bossOnly:!!options.bossOnly,spellOnly:!!(options.spellOnly&&SEGMENTS[startSeg].kind==='card'),spellSeg:startSeg,rushStage:SEGMENTS[startSeg].stage,bombs:rules.bombs,gauge:0,spellClean:false,captures:0,itemsTaken:0,lane:undefined,
       n:0,enemyShotsBorn:0,shotBudget:{seg:-1,wave:0,card:0,crowd:0},mobVolley:false,drifted:[],mobDrops:0,hearts:0,pieces:0,gets:[],lastCapture:null,jackpots:0,lastJackpot:null,dropped:0,peak:0,score:0,graze:0,hits:0,kills:0,cleared:0,timeouts:0,events:[],cancelled:[],pops:[],lasers:[],mobs:[],cannons:[],weapons:[],brood:null,warned:false,sn:0,itemCount:0,
-      lastStage:STAGES.length-1,lastWipe:-1e9,started:false,results:[],bombsUsed:0,autoBombs:0,distorts:0,orbsBroken:0,orbSerial:0,orbFragments:0,bombPulse:null,pulseInfo:null,noDistort:options.distort===false,fruits:fruitCount(options.fruits),drng:((((options.seed>>>0)||1)*2246822519)^0x9e3779b9)>>>0||7,power:1,exp:0,expRemainder:0,bombLevel:1,fills:0,hasteUntil:-1,zaps:[],skillFx:[],fsSwords:[],fsNext:0,fsLabelTick:-1e9,fsCasts:0,fsHits:0,frng:((((options.seed>>>0)||1)*3266489917)^0x85ebca6b)>>>0||11,lastBomb:null,mark:{tick:0,score:0,hits:0,bombs:0,captures:0,spells:0}};
+      lastStage:STAGES.length-1,lastWipe:-1e9,started:false,results:[],bombsUsed:0,autoBombs:0,distorts:0,orbsBroken:0,orbSerial:0,orbFragments:0,bombPulse:null,pulseInfo:null,noDistort:options.distort===false||handicap,fruits:handicap?0:fruitCount(options.fruits),drng:((((options.seed>>>0)||1)*2246822519)^0x9e3779b9)>>>0||7,power:1,exp:0,expRemainder:0,bombLevel:1,fills:0,hasteUntil:-1,zaps:[],skillFx:[],fsSwords:[],fsNext:0,fsLabelTick:-1e9,fsCasts:0,fsHits:0,frng:((((options.seed>>>0)||1)*3266489917)^0x85ebca6b)>>>0||11,lastBomb:null,mark:{tick:0,score:0,hits:0,bombs:0,captures:0,spells:0}};
     setAbility(s,options.ability|0);
     if(Number.isInteger(options.stages)&&options.stages>0)s.lastStage=Math.min(STAGES.length-1,s.stageIndex+options.stages-1);
     ['bx','by','ba','bs','bturn','bacc','bmin','bmax','barg','bs2','bspin','bhp'].forEach(function(k){s[k]=new Float32Array(CAP);});
@@ -1142,7 +1145,7 @@
     if(got==='life'){p.hp++;note(s,'extend');}else if(got==='bomb'){s.bombs++;note(s,'bombGain');}else s.score+=10000;s.lifeHearts=(s.lifeHearts||0)+1;s.lastLifeHeart={got:got,x:x,y:y,tick:s.tick};note(s,'lifeHeart');}
   /* 필살기 보관 최대치(사용자 11-20 "필살기는 최대 7개 -이지 5개 노멀 3개 헬 보관가능하게"): 난이도마다 다르다. 모든 획득(게이지·봉인 조각·격파 보상)이 이 값에서 멈춘다. */
   var BOMB_CAP={gentle:7,normal:5,hell:3};
-  function bombCap(s){return BOMB_CAP[s&&s.difficulty]||BOMB_CAP.normal;}
+  function bombCap(s){if(s&&s.handicap)return DIFFICULTY.handicap.bombs;return BOMB_CAP[s&&s.difficulty]||BOMB_CAP.normal;}
   function fillGauge(s){while(s.gauge>=GAUGE_FULL){s.gauge-=GAUGE_FULL;s.fills++;var bl=levelOf(BOMB_FILLS,s.fills);if(bl>s.bombLevel){s.bombLevel=bl;note(s,'bombLevelUp');awakenUnion(s,false);}if(s.bombs<bombCap(s)){s.bombs++;note(s,'bombGain');}}}
   /* 동방식 점수 순환(2026-11-20): 스침이 쌓일수록 하트 한 개의 값이 오르고(pointValue), 수집선(AUTO_COLLECT_Y) 위에서 거두면 그 값을 다 받는다.
      선 아래에서는 높이에 따라 30%~100%. 화면은 s.gets(x,y,값,최대?)로 받은 값을 띄운다(최대값은 금빛). 원작의 수치·그림이 아니라 '위험을 무릅쓰면 값이 오른다'는 원리만 가져왔다. */

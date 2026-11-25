@@ -55,7 +55,7 @@
   function storeCheckpoint(s,index,stage,retry){
     var nextStage=stage===undefined?s.stageIndex:stage,continuing=!retry&&nextStage===s.stageIndex;
     var data={v:1,layout:global.HapilArcade&&global.HapilArcade.LAYOUT?global.HapilArcade.LAYOUT.version:undefined,stage:nextStage,
-      seg:index,hero:checkpointHero(s.hero),difficulty:s.difficulty,at:Date.now(),
+      seg:index,hero:checkpointHero(s.hero),difficulty:s.mode||s.difficulty,at:Date.now(),
       hits:continuing?checkpointCount(s.hits-s.mark.hits):0,bombs:continuing?checkpointCount(s.bombsUsed-s.mark.bombs):0,
       exp:checkpointCount(s.exp),fills:checkpointCount(s.fills)};
     if(!retry)data.stock=checkpointCount(s.bombs);
@@ -103,16 +103,16 @@
     if(s!==seen){seen=s;seenStage=-1;seenResults=s.results.length;seenEnd='';seenSeg=-1;seenFills=-1;seenUnion=false;}
     var journey=!s.bossOnly&&!s.spellOnly;
     if(s.results.length>seenResults){ // 스테이지를 깼다
-      seenResults=s.results.length;var r=s.results[s.results.length-1],row=stageRow(r.stage!=null?r.stage:s.stageIndex,s.difficulty),took=Math.round(stageMs);
+      seenResults=s.results.length;var r=s.results[s.results.length-1],row=stageRow(r.stage!=null?r.stage:s.stageIndex,s.mode||s.difficulty),took=Math.round(stageMs);
       if(!s.bossOnly){row.clears++;row.ms+=took;row.bestMs=row.bestMs?Math.min(row.bestMs,took):took;}
       if(journey&&s.stage!=='bossClear')checkpointStageStart(s,(r.stage!=null?r.stage:s.stageIndex)+1,false);
       dirty=true;flush(true);
     }
     // 깬 스테이지 시간을 먼저 적은 뒤(엔진이 결과와 다음 스테이지 번호를 한 프레임에 바꾼다) 새 스테이지 시계를 잰다.
-    if(s.stageIndex!==seenStage){seenStage=s.stageIndex;stageMs=0;if(!s.bossOnly)stageRow(s.stageIndex,s.difficulty).tries++;dirty=true;}
+    if(s.stageIndex!==seenStage){seenStage=s.stageIndex;stageMs=0;if(!s.bossOnly)stageRow(s.stageIndex,s.mode||s.difficulty).tries++;dirty=true;}
     if((s.stage==='lost'||s.stage==='won')&&seenEnd!==s.stage){
       seenEnd=s.stage;
-      if(s.stage==='lost'&&!s.bossOnly){var lr=stageRow(s.stageIndex,s.difficulty);lr.losses++;lr.ms+=Math.round(stageMs);}
+      if(s.stage==='lost'&&!s.bossOnly){var lr=stageRow(s.stageIndex,s.mode||s.difficulty);lr.losses++;lr.ms+=Math.round(stageMs);}
       if(journey)checkpointStageStart(s,s.stageIndex+(s.stage==='won'?1:0),s.stage==='lost');
       dirty=true;flush(true);return;
     }

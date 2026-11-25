@@ -29,7 +29,7 @@
   var SHAPE_RICE=3,SHAPE_BUBBLE=4,SHAPE_PROP=Arcade.SHAPE_PROP;
   var I18n=global.HapilI18n||{t:function(k){return k;},apply:function(){}},T=I18n.t;
   // 난이도 설명은 실제 규칙(목숨·폭탄)에서 만든다. 예전 고정 문구(목숨 7·3·1)가 11-14 규칙(9·5·3, 스테이지마다 회복)과 달랐다.
-  var NOTES={gentle:'noteGentle',normal:'noteNormal',hell:'noteHell'};
+  var NOTES={gentle:'noteGentle',normal:'noteNormal',hell:'noteHell',handicap:'noteHandicap'};
 
   var images={},loading={},failed={},want={},manifest=null,orbs=[],shotSprite=null,redShotSprite=null,homingSprite=null,circleSprite=null,wrathCircleSprite=null,itemSprites=[],background=null,backgroundStage=-1,loadedStage=-1;
   var scale=1,lite=false,frameMs=16,framesSeen=0,offsetX=0,offsetY=0;
@@ -630,7 +630,7 @@
     var spell=card&&seg.spell?'<div class="spell" title="'+esc(seg.name)+'">'+esc(seg.name)+'</div>':'';
     var bonus='';
     if(spell&&Spirit){
-      var history=Spirit.history(seg.name,s.difficulty);
+      var history=Spirit.history(seg.name,s.mode||s.difficulty);
       var seal=s.spellClean?(down?'봉인 확정 +':'봉인 +')+Spirit.comma(Arcade.spellBonus(s)):'봉인 놓침';
       if(!down&&history[0]>0&&!s.bossOnly)seal+=' · 기록 '+history[1]+'/'+history[0];
       bonus='<div class="mobile-bonus">'+esc(seal)+'</div>';
@@ -672,7 +672,7 @@
       var prog=Math.round(100*(s.stageIndex+1)/Arcade.STAGES.length);
       var life2='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb(settings.keyBomb===KEY_DEFAULTS.keyBomb?'BOMB [X]':'BOMB ['+keyLabel(settings.keyBomb)+']')+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div>'+lvl+'</div><div>'+lb('JOURNEY')+'<div class="progress"><i style="width:'+prog+'%"></i></div>'+route+'<div class="graze">봉인 '+s.captures+' · 조각 '+(s.pieces||0)+'/'+(Arcade.LIFE_PIECES||3)+'</div></div>';
       var keys='<div class="keys">'+lb('CONTROLS')+'<div>이동 ←↑↓→ · WASD</div><div>초능력 '+keyLabel(settings.keyFocus)+' · 폭탄 '+keyLabel(settings.keyBomb)+'</div><div>일시정지 Esc</div></div>';
-      setHud(hi,'hi','<div class="stack">'+name+life2+'</div>'+keys);setHud(lo,'lo','<div class="stack">'+score+boss+'</div>'+'<div class="keys">'+lb('DIFFICULTY')+'<div>'+({gentle:'EASY',normal:'NORMAL',hell:'HELL'}[s.difficulty]||'')+'</div></div>');} // 패널 가운데: 왼쪽은 목숨·여정, 오른쪽은 보스 체력·스펠명·보너스(심사 6.46: 가운데가 비었다) // 아래쪽 빈자리: 왼쪽은 조작법, 오른쪽은 지금 스펠 이름(칸 안 이름표가 작아 읽기 어렵다는 지적)
+      setHud(hi,'hi','<div class="stack">'+name+life2+'</div>'+keys);setHud(lo,'lo','<div class="stack">'+score+boss+'</div>'+'<div class="keys">'+lb('DIFFICULTY')+'<div>'+({gentle:'EASY',normal:'NORMAL',hell:'HELL',handicap:'HANDICAP'}[s.mode||s.difficulty]||'')+'</div></div>');} // 패널 가운데: 왼쪽은 목숨·여정, 오른쪽은 보스 체력·스펠명·보너스(심사 6.46: 가운데가 비었다) // 아래쪽 빈자리: 왼쪽은 조작법, 오른쪽은 지금 스펠 이름(칸 안 이름표가 작아 읽기 어렵다는 지적)
   }
   var portraitKey='',portraitUrl='';
   function bossPortrait(actor,color){ // 오른쪽 패널의 보스 초상: 보스·그림 로드 상태가 바뀔 때만 한 번 굽는다(심사 6.60: 패널 가운데가 비었다)
@@ -713,7 +713,7 @@
     if(Chapters){var lg=null;try{lg=JSON.parse(global.localStorage.getItem(Chapters.LOG_KEY)||'null');}catch(e){lg=null;}chapterLog=Chapters.cleanLog(lg,Arcade.STAGES);if(bak&&bak.chapters)chapterLog=Chapters.mergeLog(chapterLog,bak.chapters,Arcade.STAGES);}
     if(progress.cleared.length>mainCount||(raw===null&&progress.cleared.length))saveProgress(); // 되살린 기록을 본 키에도 다시 쓴다
     try{best=Math.max(0,finite(Number(global.localStorage.getItem(BEST_KEY)),0))||0;}catch(e){best=0;}
-    bests={};try{var bv=JSON.parse(global.localStorage.getItem(BESTS_KEY)||'{}');if(bv&&typeof bv==='object'&&!Array.isArray(bv))['gentle','normal','hell'].forEach(function(d){var e=bv[d];if(e&&typeof e==='object')bests[d]={one:Math.max(0,finite(Number(e.one),0))|0,practice:Math.max(0,finite(Number(e.practice),0))|0};});}catch(e){bests={};}
+    bests={};try{var bv=JSON.parse(global.localStorage.getItem(BESTS_KEY)||'{}');if(bv&&typeof bv==='object'&&!Array.isArray(bv))['gentle','normal','hell','handicap'].forEach(function(d){var e=bv[d];if(e&&typeof e==='object')bests[d]={one:Math.max(0,finite(Number(e.one),0))|0,practice:Math.max(0,finite(Number(e.practice),0))|0};});}catch(e){bests={};}
   }
   /* 저장: 본 키에 쓰고 곧바로 다시 읽어 같은지 확인, 예비 키에도 같은 내용과 챕터 기록·시각을 쓴다. 둘 중 하나라도 남으면 다음 실행에서 되살린다. */
   function saveProgress(){
@@ -735,7 +735,7 @@
     var v=Chapters&&Chapters.decode(text);if(!v||!v.progress)return null;
     var before=progress.cleared.length;progress=mergeProgress(progress,v.progress);if(Chapters)chapterLog=Chapters.mergeLog(chapterLog,v.chapters,Arcade.STAGES);
     var vb=finite(Number(v.best),0);if(vb>best){best=Math.floor(vb);try{global.localStorage.setItem(BEST_KEY,String(best));}catch(e){}}
-    if(v.bests&&typeof v.bests==='object'){['gentle','normal','hell'].forEach(function(d){var e=v.bests[d];if(!e||typeof e!=='object')return;var m=bests[d]||(bests[d]={one:0,practice:0});['one','practice'].forEach(function(k){var x=Math.max(0,finite(Number(e[k]),0))|0;if(x>m[k])m[k]=x;});});try{global.localStorage.setItem(BESTS_KEY,JSON.stringify(bests));}catch(e){}}
+    if(v.bests&&typeof v.bests==='object'){['gentle','normal','hell','handicap'].forEach(function(d){var e=v.bests[d];if(!e||typeof e!=='object')return;var m=bests[d]||(bests[d]={one:0,practice:0});['one','practice'].forEach(function(k){var x=Math.max(0,finite(Number(e[k]),0))|0;if(x>m[k])m[k]=x;});});try{global.localStorage.setItem(BESTS_KEY,JSON.stringify(bests));}catch(e){}}
     if(Grove&&v.grove){grove=Grove.merge(grove,v.grove);Grove.save(grove);}
     saveProgress();return {added:progress.cleared.length-before,total:progress.cleared.length};
   }
@@ -745,12 +745,12 @@
   function bankSap(s){if(!Grove||!grove||!s||!s.groveRun||devMode)return 0;var got=Grove.earn(grove,s.groveRun,s.score);if(got)Grove.save(grove);return got;}
   function recordResult(result){
     if(!result||state.bossOnly||state.spellOnly)return;
-    progress=Progress.record(progress,result,state.difficulty);if(Chapters)chapterLog=Chapters.noteClear(chapterLog,Arcade.STAGES,progress,result.stage,state.difficulty);saveProgress();
+    progress=Progress.record(progress,result,state.mode||state.difficulty);if(Chapters)chapterLog=Chapters.noteClear(chapterLog,Arcade.STAGES,progress,result.stage,state.mode||state.difficulty);saveProgress();
   }
   function recordBestScore(s){
     if(s&&s.score>best){best=s.score;try{global.localStorage.setItem(BEST_KEY,String(best));}catch(e){}}
     // 난이도별 원코인·연습 최고점(외부 심사 11-20 "난이도별 원코인·연습 최고점을 분리하면 봉인과 점수 경쟁도 살아납니다"). 보스 체험·스펠 연습은 넣지 않는다(한 패턴 점수라 견줄 수 없다)
-    if(!s||s.bossOnly||s.spellOnly||devMode)return;var d=bests[s.difficulty]||(bests[s.difficulty]={one:0,practice:0}),k=oneCreditEligible?'one':'practice';
+    if(!s||s.bossOnly||s.spellOnly||devMode)return;var dk=s.mode||s.difficulty,d=bests[dk]||(bests[dk]={one:0,practice:0}),k=oneCreditEligible?'one':'practice';
     if(s.score>d[k]){d[k]=s.score;try{global.localStorage.setItem(BESTS_KEY,JSON.stringify(bests));}catch(e){}}
   }
   function bestOf(d,k){var e=bests[d];return e?e[k]|0:0;}
@@ -2255,7 +2255,7 @@
     var stars=0;s.results.forEach(function(r){stars+=r.stars;});
     $('result-title').textContent=s.spellOnly?(s.captures?'봉인 성공':won?'봉인 놓침':'GAME OVER'):won?(s.bossOnly?'BOSS CLEAR':s.stageIndex>=Arcade.STAGES.length-1?'ALL CLEAR':'CLEAR'):'GAME OVER';
     $('result-score').textContent=pad(s.score);$('result-best').textContent=pad(best);
-    var dn={gentle:'이지',normal:'노멀',hell:'헬'}[s.difficulty]||'',bl=$('result-bests');if(bl)var b1=bestOf(s.difficulty,'one'),b2=bestOf(s.difficulty,'practice');bl.textContent=dn+' 원코인 최고 '+(b1?pad(b1):'기록 없음')+' · 연습 최고 '+(b2?pad(b2):'기록 없음');
+    var dn={gentle:'이지',normal:'노멀',hell:'헬',handicap:'핸디캡'}[s.mode||s.difficulty]||'',bl=$('result-bests');if(bl)var b1=bestOf(s.mode||s.difficulty,'one'),b2=bestOf(s.mode||s.difficulty,'practice');bl.textContent=dn+' 원코인 최고 '+(b1?pad(b1):'기록 없음')+' · 연습 최고 '+(b2?pad(b2):'기록 없음');
     $('result-detail').textContent=s.spellOnly?'스펠 연습 「'+(Arcade.SEGMENTS[s.spellSeg]||{}).name+'」 · 스침 '+s.graze+' · 피격 '+s.hits+' · 연습 점수는 최고점에 넣지 않는다':(won?'':'STAGE '+(s.stageIndex+1)+' '+Arcade.STAGES[s.stageIndex].name+' · ')+(oneCreditEligible?'원코인 여정 · ':'연습/이어하기 · ')+'깬 스테이지 '+s.results.length+' · 별 '+stars+' · 봉인 '+s.captures+' · 스침 '+s.graze+' · 피격 '+s.hits;
     if(s.groveRun&&s.groveRun.sap&&!devMode)$('result-detail').textContent+=' · 성장나무 양분 +'+s.groveRun.sap;
     var retry=$('arcade-retry');
@@ -2371,7 +2371,7 @@
     $('title-best').textContent=pad(best);$('title-stars').textContent=String(Progress.totalStars(progress));$('title-stars-max').textContent=String(Arcade.STAGES.length*3);
     $('arcade-keepsakes').textContent=T('keepsakesCount',{n:progress.rewards.length,max:Arcade.STAGES.length});
     if($('arcade-chapters')){if(Chapters){var cs=Chapters.summary(Arcade.STAGES,progress,chapterLog,function(i){return Progress.canPlay(progress,i);});$('arcade-chapters').textContent='챕터 기록 '+cs.filter(function(r){return r.complete;}).length+'/'+cs.length;}else $('arcade-chapters').hidden=true;}
-    if($('arcade-grove')){if(Grove&&grove){var gn=Grove.next(grove);$('arcade-grove').textContent='성장나무 · 왜곡 '+Grove.chancePct(grove)+'%'+(gn&&grove.sap>=gn.need?' · 꽃 준비':'');}else $('arcade-grove').hidden=true;}
+    if($('arcade-grove')){if(Grove&&grove){var gn=Grove.next(grove);$('arcade-grove').textContent='성장나무 · 왜곡 '+(difficulty==='handicap'?'없음 (핸디캡)':Grove.chancePct(grove)+'%')+(gn&&grove.sap>=gn.need?' · 꽃 준비':'');}else $('arcade-grove').hidden=true;}
     $('save-note').hidden=saveOk;
     fillStages();
   }

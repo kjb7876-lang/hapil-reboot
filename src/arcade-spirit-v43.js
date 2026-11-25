@@ -33,8 +33,8 @@
     if(!s)return;
     if(e==='jackpot'&&s.lastJackpot){startJackpot(s,s.lastJackpot,sound);return;}
     if(e==='lifeHeart'&&s.lastLifeHeart){lifePop={got:s.lastLifeHeart.got,x:s.lastLifeHeart.x,t0:s.tick};return;} // 서하 보스 격파 큰 하트(사용자 11-20): 받은 것을 영웅 위에 크게 띄운다
-    if(e==='card'){var seg=A.SEGMENTS[s.seg];if(seg&&seg.name&&!s.bossOnly&&!s.spellOnly){entry(seg.name,s.difficulty)[0]++;saveBook();}}
-    else if(e==='capture'&&s.lastCapture){var c=s.lastCapture;if(c.name&&!s.bossOnly&&!s.spellOnly){var en=entry(c.name,s.difficulty);if(en[1]<en[0])en[1]++;saveBook();}
+    if(e==='card'){var seg=A.SEGMENTS[s.seg];if(seg&&seg.name&&!s.bossOnly&&!s.spellOnly){entry(seg.name,s.mode||s.difficulty)[0]++;saveBook();}}
+    else if(e==='capture'&&s.lastCapture){var c=s.lastCapture;if(c.name&&!s.bossOnly&&!s.spellOnly){var en=entry(c.name,s.mode||s.difficulty);if(en[1]<en[0])en[1]++;saveBook();}
       stamp={ok:true,bonus:c.bonus,tick:s.tick,pieces:s.pieces,of:A.LIFE_PIECES,gift:s.pieces===0,got:c.gift||'',y:stampY(s)};}
     else if(e==='captureMiss'&&stamp&&stamp.ok)stamp=null; // 놓친 패턴은 가운데에 따로 알리지 않는다(이름 아래 줄이 이미 회색): 못한 것을 되풀이해 띄우지 않는다
   }
@@ -158,7 +158,7 @@
     opt=opt||{};var seg=A.SEGMENTS[s.seg],c=tone(Ink);
     raw(Ink,1);ctx.save();ctx.globalCompositeOperation='source-over';ctx.textBaseline='alphabetic';
     if(s.stage==='card'&&seg&&seg.spell&&!opt.hideBonus){
-      var y=opt.bonusY||68,hist=history(seg.name,s.difficulty),clean=!!s.spellClean,val=clean?A.spellBonus(s):0;
+      var y=opt.bonusY||68,hist=history(seg.name,s.mode||s.difficulty),clean=!!s.spellClean,val=clean?A.spellBonus(s):0;
       if(clean)cleanSeg=s.seg;else if(cleanSeg===s.seg){cleanSeg=-1;lostAt=s.tick;} // 보너스를 잃는 순간 한 번 깜박인다
       var lost=s.tick-lostAt<LOST_TICKS&&((s.tick-lostAt)>>2)%2===0;
       var down=!!(s.cardDown||s.cardEnding); // 체력을 다 깎았다: 값이 굳었고, 남은 공격을 버티면 받는다(외부 심사 11-20)
