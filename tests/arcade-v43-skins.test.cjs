@@ -37,6 +37,7 @@ test('v43 skins: the page loads the skin table, bosses have attack poses, score 
  assert(/ArcadeSkins/.test(app)&&/skinOf\(/.test(app)&&/facesRight\(/.test(app));
  const bosses=Object.entries(manifest).filter(([n,e])=>e.group==='actors'&&(e.motions||[]).includes('attack'));
  assert(bosses.length>=20,'bosses with an attack motion: '+bosses.length);
- for(const [n] of bosses){const x=manifest[n.replace('.webp','@attack.webp')];assert(x&&x.frames===4&&x.bytes<90000,n);}
+ for(const [n] of bosses){const x=manifest[n.replace('.webp','@attack.webp')];assert(x&&(x.frames===4||x.frames===6)&&x.bytes<90000,n);} // 닷츠 CX-0136BA v2 공격은 6칸
+ for(const n of ['asmodeus','p2_greed','p3_legion','p3_rampart','controller','siren','arbelia','executor','cultist']){assert.equal(manifest[n+'@attack.webp'].frames,6,n);}
  assert(/heart/i.test(app),'heart items');
 });

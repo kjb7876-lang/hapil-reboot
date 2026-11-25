@@ -21,21 +21,21 @@
   "table": "tools/arcade-art-v43/base.json"
  },
  "arbelia@attack.webp": {
-  "bytes": 68776,
+  "bytes": 65718,
   "cell": [
-   160,
-   184
+   120,
+   177
   ],
   "fps": 8,
-  "frames": 4,
+  "frames": 6,
   "group": "actors",
   "size": [
-   640,
-   184
+   720,
+   177
   ],
-  "source": "media/story-v19/arbelia-idle.webp",
-  "sourceSha256": "e5d5026f859f6e6b0c9607c4b8883456fa13afa0fc22bc18ec9590d35e7fa134",
-  "stamp": "8e5916fab3c7ffc7",
+  "source": "media/drive-v43/cx0136/arbelia-attack6.webp",
+  "sourceSha256": "1809404d78d49a9acd46a51a38ff87322c7baf5ca5d4faa49b1a951ff1b375b6",
+  "stamp": "67b33e3e623a6a42",
   "table": "tools/arcade-art-v43/base.json"
  },
  "asmodeus.webp": {
@@ -60,21 +60,21 @@
   "table": "tools/arcade-art-v43/base.json"
  },
  "asmodeus@attack.webp": {
-  "bytes": 30762,
+  "bytes": 31474,
   "cell": [
-   148,
-   168
+   98,
+   165
   ],
   "fps": 8,
-  "frames": 4,
+  "frames": 6,
   "group": "actors",
   "size": [
-   592,
-   168
+   588,
+   165
   ],
-  "source": "media/sins-v13/asmodeus-atlas-512.png",
-  "sourceSha256": "67024242523da096619c27e5f09d97547c8301a9d5f76b0f6c5b8390081cbe49",
-  "stamp": "db746cf22a04a503",
+  "source": "media/drive-v43/cx0136/asmodeus-attack6.webp",
+  "sourceSha256": "6633d84f92439545ff95f5b6a8e4052e2ad778538cac87c7dde215333427bb58",
+  "stamp": "8b8280f3d3b3e18b",
   "table": "tools/arcade-art-v43/base.json"
  },
  "balrog.webp": {
@@ -1642,21 +1642,42 @@
   "table": "tools/arcade-art-v43/forms.json"
  },
  "chief_swarm.webp": {
-  "bytes": 117512,
+  "bytes": 88626,
   "cell": [
-   330,
-   274
+   248,
+   223
   ],
   "fps": 6,
   "frames": 4,
   "group": "actors",
-  "size": [
-   1320,
-   274
+  "motions": [
+   "attack"
   ],
-  "source": "media/arcade-v43-temp/chief-swarm-temp.png",
-  "sourceSha256": "cca072a63f0a68c2b2e3ee204c0154dde25b14c99ca66be167b5f444bc35bbe3",
-  "stamp": "d9dcae10fdceed64",
+  "size": [
+   992,
+   223
+  ],
+  "source": "media/drive-v43/cx0157/chief-swarm-down.webp",
+  "sourceSha256": "81118e730d84b7e4c69267ef004918dbe13d92be687df9dfe3ef9a1af432d9a8",
+  "stamp": "4c07d2035051f549",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
+ "chief_swarm@attack.webp": {
+  "bytes": 86962,
+  "cell": [
+   248,
+   222
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   992,
+   222
+  ],
+  "source": "media/drive-v43/cx0157/chief-swarm-attack.webp",
+  "sourceSha256": "7631c29270e8f075eb229728f7fe06a235e0ed211c9929605a2b0eea34d16bf6",
+  "stamp": "05068cbf272e7414",
   "table": "tools/arcade-art-v43/forms.json"
  },
  "cleaver.webp": {
@@ -1705,21 +1726,21 @@
   "table": "tools/arcade-art-v43/base.json"
  },
  "controller@attack.webp": {
-  "bytes": 56772,
+  "bytes": 89172,
   "cell": [
-   184,
-   153
+   147,
+   184
   ],
   "fps": 8,
-  "frames": 4,
+  "frames": 6,
   "group": "actors",
   "size": [
-   736,
-   153
+   882,
+   184
   ],
-  "source": "media/chapter3-v18/controller-idle.webp",
-  "sourceSha256": "57572d1817eb492873e20c771cb1a46f02acf7e2f8a9ddde84a46fdd893458ed",
-  "stamp": "da4f980c74179334",
+  "source": "media/drive-v43/cx0136/controller-attack6.webp",
+  "sourceSha256": "faefc838a5beb7ac5b30f8195f3dff06487f3124efa2b2b8f08eb74a864a2477",
+  "stamp": "891447f4e0b2431a",
   "table": "tools/arcade-art-v43/base.json"
  },
  "controller_alt27.webp": {
@@ -1792,39 +1813,79 @@
   "table": "tools/arcade-art-v43/base.json"
  },
  "cultist@attack.webp": {
-  "bytes": 68934,
+  "bytes": 87744,
   "cell": [
    184,
-   167
+   176
+  ],
+  "fps": 8,
+  "frames": 6,
+  "group": "actors",
+  "size": [
+   1104,
+   176
+  ],
+  "source": "media/drive-v43/cx0136/cultist-attack6.webp",
+  "sourceSha256": "c91cb0c61a27f764423ace4221b04a70980673742f99da7d1150cf26bb0bd6dd",
+  "stamp": "4efdd1627f33aa1a",
+  "table": "tools/arcade-art-v43/base.json"
+ },
+ "cultist_awake.webp": {
+  "bytes": 86676,
+  "cell": [
+   196,
+   290
+  ],
+  "fps": 6,
+  "frames": 4,
+  "group": "actors",
+  "motions": [
+   "attack",
+   "death"
+  ],
+  "size": [
+   784,
+   290
+  ],
+  "source": "media/drive-v43/cx0157/cultist-awake-down.webp",
+  "sourceSha256": "7cbe5a8b282df46280660ba986ac09f7965298a130f600b7f427303745074f1e",
+  "stamp": "bf956baa4e0a97ff",
+  "table": "tools/arcade-art-v43/forms.json"
+ },
+ "cultist_awake@attack.webp": {
+  "bytes": 79082,
+  "cell": [
+   201,
+   290
   ],
   "fps": 8,
   "frames": 4,
   "group": "actors",
   "size": [
-   736,
-   167
+   804,
+   290
   ],
-  "source": "media/cult-v17/cult-leader-atlas.png",
-  "sourceSha256": "d76c925bd52b367aaac41473b234b35a0b5aecde42201324b187af5408f1a2de",
-  "stamp": "59046df6595c4e97",
-  "table": "tools/arcade-art-v43/base.json"
+  "source": "media/drive-v43/cx0157/cultist-awake-attack.webp",
+  "sourceSha256": "76c06df4041df09974e7ff04de62ff5457594ff4d52a1b6a57f184ac77d852a4",
+  "stamp": "f31e4e2baf344baa",
+  "table": "tools/arcade-art-v43/forms.json"
  },
- "cultist_awake.webp": {
-  "bytes": 126418,
+ "cultist_awake@death.webp": {
+  "bytes": 87624,
   "cell": [
-   297,
-   294
+   261,
+   290
   ],
-  "fps": 6,
-  "frames": 4,
+  "fps": 8,
+  "frames": 6,
   "group": "actors",
   "size": [
-   1188,
-   294
+   1566,
+   290
   ],
-  "source": "media/arcade-v43-temp/cultist-awake-temp.png",
-  "sourceSha256": "08d6ebdbe0f616cf150d6a0577ce761f4958532fadb933aed894e6b822318e26",
-  "stamp": "bb475c9f0b89b79f",
+  "source": "media/drive-v43/cx0157/cultist-awake-death.webp",
+  "sourceSha256": "1ba51b85d54ddd88460ce075975e946cf9589b7ad793db5dd3f61ffe4129e163",
+  "stamp": "219682fa864e1989",
   "table": "tools/arcade-art-v43/forms.json"
  },
  "demon-hand.webp": {
@@ -1884,21 +1945,21 @@
   "table": "tools/arcade-art-v43/base.json"
  },
  "executor@attack.webp": {
-  "bytes": 85842,
+  "bytes": 89226,
   "cell": [
    184,
-   168
+   178
   ],
   "fps": 8,
-  "frames": 4,
+  "frames": 6,
   "group": "actors",
   "size": [
-   736,
-   168
+   1104,
+   178
   ],
-  "source": "media/story-v19/executor-idle.webp",
-  "sourceSha256": "13c0592eb3ff5e2f883f103c6cde62803aa4c3dc53c69f786db9364b1a921cd3",
-  "stamp": "d3c334e1a7fd6066",
+  "source": "media/drive-v43/cx0136/executor-attack6.webp",
+  "sourceSha256": "bddda65a919082decdc5d309b92f155e2862cf6103babf40da24be3d15ebc1be",
+  "stamp": "1db4744b4f6fd9d6",
   "table": "tools/arcade-art-v43/base.json"
  },
  "feather.webp": {
@@ -10245,21 +10306,21 @@
   "table": "tools/arcade-art-v43/p2.json"
  },
  "p2_greed@attack.webp": {
-  "bytes": 24562,
+  "bytes": 38058,
   "cell": [
-   109,
+   126,
    184
   ],
   "fps": 8,
-  "frames": 4,
+  "frames": 6,
   "group": "actors",
   "size": [
-   436,
+   756,
    184
   ],
-  "source": "media/sins-v13/mammon-atlas-512.png",
-  "sourceSha256": "d046db75c15f17fdf015f3cdffec4b213ac3ca209f14920182b34b103c26233f",
-  "stamp": "9211f0a2056127d5",
+  "source": "media/drive-v43/cx0136/p2_greed-attack6.webp",
+  "sourceSha256": "1859da5073cdf2bde971717647ada307946c7a7ef5106a5712042ed73dd2c9ea",
+  "stamp": "a636de0de66724fe",
   "table": "tools/arcade-art-v43/p2.json"
  },
  "p2_heart.webp": {
@@ -10710,21 +10771,21 @@
   "table": "tools/arcade-art-v43/p3.json"
  },
  "p3_legion@attack.webp": {
-  "bytes": 44302,
+  "bytes": 43918,
   "cell": [
    184,
-   161
+   103
   ],
   "fps": 8,
-  "frames": 4,
+  "frames": 6,
   "group": "actors",
   "size": [
-   736,
-   161
+   1104,
+   103
   ],
-  "source": "media/chapter3-v18/u201-atlas.png",
-  "sourceSha256": "80f7321f14b7ebcb199e752ee81c875c7f7e5d3ad522ed88d96f0a3e14d69080",
-  "stamp": "41c9bfb59d9b46a4",
+  "source": "media/drive-v43/cx0136/p3_legion-attack6.webp",
+  "sourceSha256": "1ad98f71ec58523da05fa8cec691241f04d2342f349cd907bfbe7f1dc2e50588",
+  "stamp": "aaa4594d9dcaf5cb",
   "table": "tools/arcade-art-v43/p3.json"
  },
  "p3_pod.webp": {
@@ -10761,21 +10822,21 @@
   "table": "tools/arcade-art-v43/p3.json"
  },
  "p3_rampart@attack.webp": {
-  "bytes": 47440,
+  "bytes": 53946,
   "cell": [
-   178,
-   184
+   184,
+   153
   ],
   "fps": 8,
-  "frames": 4,
+  "frames": 6,
   "group": "actors",
   "size": [
-   712,
-   184
+   1104,
+   153
   ],
-  "source": "media/chapter3-v18/u202-atlas.png",
-  "sourceSha256": "2996937c9ebd04cff93798d143ef7b51734e21385788b2dac0ed1c7b9009e8e5",
-  "stamp": "db396799c6f79ad8",
+  "source": "media/drive-v43/cx0136/p3_rampart-attack6.webp",
+  "sourceSha256": "6c6c73a4f40e3a96d5db1c6164733f8f8f99a7743121e0b0c9eb044306f564ad",
+  "stamp": "661db7fb03b695c6",
   "table": "tools/arcade-art-v43/p3.json"
  },
  "p3_sentry.webp": {
@@ -12662,21 +12723,21 @@
   "table": "tools/arcade-art-v43/base.json"
  },
  "siren@attack.webp": {
-  "bytes": 58866,
+  "bytes": 86038,
   "cell": [
-   184,
-   159
+   176,
+   184
   ],
   "fps": 8,
-  "frames": 4,
+  "frames": 6,
   "group": "actors",
   "size": [
-   736,
-   159
+   1056,
+   184
   ],
-  "source": "media/story-v19/siren-idle.webp",
-  "sourceSha256": "985137aa992b23610fe2cd11a0a5624bd49ef90b0d22a99896d7871072a0dcb0",
-  "stamp": "a1f58889d6305a10",
+  "source": "media/drive-v43/cx0136/siren-attack6.webp",
+  "sourceSha256": "b4c5db2887dca0a7d107d34940e52b256cc3d9feaac51bef924e3fb1ee4a4679",
+  "stamp": "78782c4634abf455",
   "table": "tools/arcade-art-v43/base.json"
  },
  "skull.webp": {

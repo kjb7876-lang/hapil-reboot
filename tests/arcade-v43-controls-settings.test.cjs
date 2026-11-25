@@ -327,9 +327,10 @@ test('all 56 main bosses qualify before their first engine tick, including road 
    const index=A.SEGMENTS.findIndex(g=>g.stage===stage.index&&g.kind==='card'&&!g.mid),seg=A.SEGMENTS[index];assert(index>=0);
    const s=A.createRun({difficulty:'normal',seed:11,segment:index,pacing:true});h.prepare(s,audio);
    assert.equal(h.beginStory(),true,stage.name);assert.equal(s.tick,0);assert.equal(s.boss.present,false);assert.equal(s.boss.actor,'');
-   assert.equal(w.HapilArcadeApp.getState().story.actor,seg.actor);assert.equal(nodes.get('story-boss-name').textContent,A.ACTORS[seg.actor].name);
-   const meta=manifest[seg.actor+'.webp'];
-   if(seg.actor!=='violet'&&meta.frames>1){assert.equal(nodes.get('story-portrait').style.backgroundSize,`${meta.frames*100}% 100%`);assert.equal(Number(nodes.get('story-portrait').style.aspectRatio),meta.cell[0]/meta.cell[1]);}
+   assert.equal(w.HapilArcadeApp.getState().story.actor,seg.actor);assert.equal(nodes.get('story-boss-name').textContent,A.actorName(seg.actor,stage.index)); // 다른 모습(악몽 군집체·사몽각성 교주)은 그 스테이지 이름으로
+   const meta=manifest[seg.actor+'.webp'],form=A.segArt(seg),cutin=form==='chief_swarm'||form==='cultist_awake';
+   if(cutin)assert.match(nodes.get('story-portrait').style.backgroundImage,new RegExp(form.replace('_','-')),'다른 모습은 제 초상(닷츠 CX-0157AW)');
+   if(seg.actor!=='violet'&&!cutin&&meta.frames>1){assert.equal(nodes.get('story-portrait').style.backgroundSize,`${meta.frames*100}% 100%`);assert.equal(Number(nodes.get('story-portrait').style.aspectRatio),meta.cell[0]/meta.cell[1]);}
    nodes.get('story-skip').click();assert.equal(h.beginStory(),false,'seen story is not repeated within the same intro');
  }
  const saved=harness({'hapil-arcade-boss-seen-v4':'{"1:violet":true}'}),index=A.SEGMENTS.findIndex(g=>g.stage===1&&g.kind==='card'&&!g.mid);

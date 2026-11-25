@@ -65,47 +65,11 @@
    "size": 184,
    "motions": {
     "attack": {
-     "src": "media/sins-v13/asmodeus-atlas-512.png",
-     "frames": [
-      {
-       "src": "media/sins-v13/asmodeus-atlas-512.png",
-       "cell": [
-        0,
-        0,
-        2,
-        2
-       ]
-      },
-      {
-       "src": "media/sins-v13/asmodeus-atlas-512.png",
-       "cell": [
-        1,
-        0,
-        2,
-        2
-       ]
-      },
-      {
-       "src": "media/sins-v13/asmodeus-atlas-512.png",
-       "cell": [
-        0,
-        1,
-        2,
-        2
-       ]
-      },
-      {
-       "src": "media/sins-v13/asmodeus-atlas-512.png",
-       "cell": [
-        1,
-        1,
-        2,
-        2
-       ]
-      }
-     ],
+     "src": "media/drive-v43/cx0136/asmodeus-attack6.webp",
+     "strip": 6,
      "fps": 8,
-     "size": 184
+     "size": 184,
+     "note": "닷츠 CX-0136BA v2 공격 6칸"
     }
    }
   },
@@ -130,23 +94,11 @@
    "size": 184,
    "motions": {
     "attack": {
-     "src": "media/chapter3-v18/controller-idle.webp",
-     "frames": [
-      {
-       "src": "media/chapter3-v18/controller-idle.webp"
-      },
-      {
-       "src": "media/chapter3-v18/controller-transition.webp"
-      },
-      {
-       "src": "media/chapter3-v18/controller-attack.webp"
-      },
-      {
-       "src": "media/chapter3-v18/controller-rain.webp"
-      }
-     ],
+     "src": "media/drive-v43/cx0136/controller-attack6.webp",
+     "strip": 6,
      "fps": 8,
-     "size": 184
+     "size": 184,
+     "note": "닷츠 CX-0136BA v2 공격 6칸"
     }
    }
   },
@@ -182,23 +134,11 @@
    "fps": 6,
    "motions": {
     "attack": {
-     "src": "media/story-v19/arbelia-idle.webp",
-     "frames": [
-      {
-       "src": "media/story-v19/arbelia-idle.webp"
-      },
-      {
-       "src": "media/story-v19/arbelia-charge.webp"
-      },
-      {
-       "src": "media/story-v19/arbelia-attack.webp"
-      },
-      {
-       "src": "media/story-v19/arbelia-recover.webp"
-      }
-     ],
+     "src": "media/drive-v43/cx0136/arbelia-attack6.webp",
+     "strip": 6,
      "fps": 8,
-     "size": 184
+     "size": 184,
+     "note": "닷츠 CX-0136BA v2 공격 6칸"
     }
    }
   },
@@ -208,23 +148,11 @@
    "fps": 6,
    "motions": {
     "attack": {
-     "src": "media/story-v19/siren-idle.webp",
-     "frames": [
-      {
-       "src": "media/story-v19/siren-idle.webp"
-      },
-      {
-       "src": "media/story-v19/siren-charge.webp"
-      },
-      {
-       "src": "media/story-v19/siren-attack.webp"
-      },
-      {
-       "src": "media/story-v19/siren-recover.webp"
-      }
-     ],
+     "src": "media/drive-v43/cx0136/siren-attack6.webp",
+     "strip": 6,
      "fps": 8,
-     "size": 184
+     "size": 184,
+     "note": "닷츠 CX-0136BA v2 공격 6칸"
     }
    }
   },
@@ -248,23 +176,11 @@
    "size": 184,
    "motions": {
     "attack": {
-     "src": "media/story-v19/executor-idle.webp",
-     "frames": [
-      {
-       "src": "media/story-v19/executor-idle.webp"
-      },
-      {
-       "src": "media/story-v19/executor-charge.webp"
-      },
-      {
-       "src": "media/story-v19/executor-attack.webp"
-      },
-      {
-       "src": "media/story-v19/executor-recover.webp"
-      }
-     ],
+     "src": "media/drive-v43/cx0136/executor-attack6.webp",
+     "strip": 6,
      "fps": 8,
-     "size": 184
+     "size": 184,
+     "note": "닷츠 CX-0136BA v2 공격 6칸"
     }
    }
   },
@@ -289,47 +205,11 @@
    "size": 184,
    "motions": {
     "attack": {
-     "src": "media/cult-v17/cult-leader-atlas.png",
-     "frames": [
-      {
-       "src": "media/cult-v17/cult-leader-atlas.png",
-       "cell": [
-        0,
-        0,
-        2,
-        2
-       ]
-      },
-      {
-       "src": "media/cult-v17/cult-leader-atlas.png",
-       "cell": [
-        1,
-        0,
-        2,
-        2
-       ]
-      },
-      {
-       "src": "media/cult-v17/cult-leader-atlas.png",
-       "cell": [
-        0,
-        1,
-        2,
-        2
-       ]
-      },
-      {
-       "src": "media/cult-v17/cult-leader-atlas.png",
-       "cell": [
-        1,
-        1,
-        2,
-        2
-       ]
-      }
-     ],
+     "src": "media/drive-v43/cx0136/cultist-attack6.webp",
+     "strip": 6,
      "fps": 8,
-     "size": 184
+     "size": 184,
+     "note": "닷츠 CX-0136BA v2 공격 6칸"
     }
    }
   }

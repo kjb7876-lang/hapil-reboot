@@ -9,7 +9,12 @@ TABLE = 'tools/arcade-art-v43/forms.json'
 OUT = art.OUT
 man = json.load(open(f'{OUT}/manifest.json'))
 problems = []
+todo = []
 for key, sp in json.load(open(TABLE))['actors'].items():
+    todo.append((key, sp))
+    for mname, msp in (sp.get('motions') or {}).items():  # 동작 그림(공격·쓰러짐) → <키>@<동작>.webp, 크기는 본 그림을 따른다
+        msp = dict(msp); msp.setdefault('size', sp.get('size', art.LONG['actors'])); todo.append((key + '@' + mname, msp))
+for key, sp in todo:
     name = key + '.webp'; out = f'{OUT}/{name}'
     long = sp.get('size', art.LONG['actors']); extra = {}
     if 'strip' in sp:
@@ -27,8 +32,9 @@ for key, sp in json.load(open(TABLE))['actors'].items():
         if os.path.getsize(out) < art.LIMIT['actors'] or q <= 40: break
         q -= 8
     if os.path.getsize(out) >= art.LIMIT['actors']: problems.append(f'{name}: {os.path.getsize(out)} bytes')
-    stamp = hashlib.sha256((json.dumps(sp, sort_keys=True) + art.sha(sp['src'])).encode()).hexdigest()[:16]
+    stamp = hashlib.sha256((json.dumps({k: v for k, v in sp.items() if k != 'motions'}, sort_keys=True) + art.sha(sp['src'])).encode()).hexdigest()[:16]
     man[name] = {'group': 'actors', 'source': sp['src'], 'sourceSha256': art.sha(sp['src']), 'size': list(im.size), 'bytes': os.path.getsize(out), 'table': TABLE, 'stamp': stamp, **extra}
+    if sp.get('motions'): man[name]['motions'] = sorted(sp['motions'])
     print(name, im.size, extra.get('cell'), os.path.getsize(out))
 json.dump(man, open(f'{OUT}/manifest.json', 'w'), indent=1, ensure_ascii=False, sort_keys=True)
 for p in problems: print('PROBLEM', p)
