@@ -17,6 +17,7 @@
     97,
     152
    ],
+   "placement": "impact",
    "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
    "source": {
     "driveId": "1fhlkF3D38lUJQ8BD9NSGtSm6mgcDRTi2",
@@ -41,6 +42,7 @@
     52,
     96
    ],
+   "placement": "release",
    "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
    "source": {
     "driveId": "1Ht0_wwSrS6L1quJJ_HQ0ZopYDfXjvr1X",
@@ -65,6 +67,7 @@
     97,
     139
    ],
+   "placement": "impact",
    "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
    "source": {
     "driveId": "1lnak7Twe2EAnltYTRxOc-fpMwvcLActa",
@@ -89,6 +92,7 @@
     95,
     91
    ],
+   "placement": "caster",
    "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
    "source": {
     "driveId": "1MP-jwrF32sakQmYvuGkdNKFPrNGmtTB_",
@@ -113,6 +117,8 @@
     52,
     173
    ],
+   "placement": "caster",
+   "softCutAfter": 3,
    "status": "REVIEW, not FINAL (원작자 표기, 자동적용 금지)",
    "source": {
     "driveId": "1uxK8onAtxUlUsysgo-tz_HSQ9ww36R55",
@@ -137,6 +143,8 @@
     92,
     92
    ],
+   "placement": "caster",
+   "softCutAfter": 3,
    "status": "REVIEW, not FINAL (원작자 표기, 자동적용 금지)",
    "source": {
     "driveId": "1ipJUvTbmzAHRUJ1aPCND1CpcdQ4yUtLv",
@@ -161,6 +169,7 @@
     89,
     87
    ],
+   "placement": "caster",
    "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
    "source": {
     "driveId": "1MQPfZOP4T9kgUPLXv0YAFBvlV5xtU1qe",
@@ -185,6 +194,7 @@
     96,
     166
    ],
+   "placement": "impact",
    "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
    "source": {
     "driveId": "1dbhxBAk_uZ5i1IvIgLHMCsWgVBSIOXW6",
@@ -209,6 +219,7 @@
     92,
     114
    ],
+   "placement": "impact",
    "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
    "source": {
     "driveId": "1w-iPkC416toqSZ9p3wZy1qdV-bc44se6",
@@ -233,6 +244,7 @@
     93,
     112
    ],
+   "placement": "release",
    "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
    "source": {
     "driveId": "1LM7cOroDyFqHoNKWJb2kvBEV2iRNHR46",
@@ -257,6 +269,7 @@
     87,
     173
    ],
+   "placement": "impact",
    "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
    "source": {
     "driveId": "1ZGEWY14jmwBvFvleNF6Q4foKswEf0dqr",
@@ -281,6 +294,7 @@
     85,
     172
    ],
+   "placement": "impact",
    "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
    "source": {
     "driveId": "18vDcPHqzrsaZ8oV-XgrAFSlYyJj5h7ki",
@@ -305,6 +319,7 @@
     95,
     113
    ],
+   "placement": "caster",
    "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
    "source": {
     "driveId": "16OT_XrKOTunz4Nnoo3gvDgK9GiinndJ_",
@@ -329,6 +344,7 @@
     92,
     166
    ],
+   "placement": "impact",
    "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
    "source": {
     "driveId": "1mTHRBXKypm5zjdACLVw4dFgw0PvUgSEt",
@@ -353,6 +369,7 @@
     79,
     152
    ],
+   "placement": "caster",
    "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
    "source": {
     "driveId": "1_atM_0An9fYRuRuSparPEc_t7gxS1jof",
@@ -377,6 +394,7 @@
     93,
     143
    ],
+   "placement": "caster",
    "status": "QA_HOLD (원작자 HOLD, 게임 자동적용 금지 명시)",
    "source": {
     "driveId": "1jFNStKl1Gv2pqXoGCViV3ghFXYE8u3zO",

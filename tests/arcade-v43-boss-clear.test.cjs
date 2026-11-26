@@ -67,7 +67,7 @@ test('last cinematic defeat clears all attacks with ordinary rewards exactly onc
  assert.equal(s.cleared,before.cleared+1);assert.equal(s.orbsBroken,before.broken);assert.equal(s.orbFragments,before.fragments);
  assert.equal(s.bombsUsed,before.bombsUsed);assert.equal(s.itemsTaken,before.itemsTaken);assert.equal(s.boss.present,false);
  assert.equal(s.boss.actor,oldActor);assert.equal(s.boss.down.actor,oldActor);assert.equal(s.bossClear.actor,oldActor);
- assert.equal(s.bossClear.segment,seg);assert.equal(s.bossClear.readyTick-s.bossClear.startedTick,120);
+ assert.equal(s.boss.down.seg,seg);assert.equal(s.bossClear.segment,seg);assert.equal(s.bossClear.readyTick-s.bossClear.startedTick,120);
  assert.equal(s.events.filter(e=>e==='bossClear').length,1);assert.equal(s.events.filter(e=>e==='bossDown').length,1);
  assert.equal(s.results.length,1);assert(s.events.includes('stageClear'));assert.equal(s.bossClear.stageCommitted,true);assert.equal(s.bossClear.nextSegment,A.nextSegmentIndex(s));
 });

@@ -44,7 +44,7 @@ test('a felled boss turns to ink and seeps away instead of tumbling as a picture
   assert.match(app,/if\(Ink&&Ink\.melt&&inkFall\(s,k\)\)return;/,'ink mode uses the ink fall');
 });
 test('the falling boss keeps its own picture even when the next stage releases it',()=>{
-  assert.match(app,/bossArt\.keep\[dn\.actor\+m\]/,'fall borrows the held boss art');
+  assert.match(app,/bossArt\.art===art&&bossArt\.keep\[art\+m\]/,'fall borrows the held art of the defeated form');
   assert.match(app,/finally\{for\(var li=0;li<lent\.length;li\+\+\)delete images\[lent\[li\]\];\}/,'the borrowed art is handed back after drawing');
 });
 // 남은 지적 개선(사용자 11-16 "녹는 경계가 … 가로 띠처럼 … 흰 섬광이 조금 과합니다 … 하트가 사라지는 몸 한가운데에 겹칩니다 /개선").

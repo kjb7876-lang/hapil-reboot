@@ -4,6 +4,7 @@
 자르기·줄이기 규칙은 build-arcade-art-v43.py의 함수를 그대로 쓴다. 실행: python3 tools/build-boss-forms-v43.py (저장소 루트)."""
 import importlib.util, json, os, sys, hashlib
 from PIL import Image
+from arcade_enemy_framing_v43 import update_framing
 spec = importlib.util.spec_from_file_location('art', 'tools/build-arcade-art-v43.py'); art = importlib.util.module_from_spec(spec); spec.loader.exec_module(art)
 TABLE = 'tools/arcade-art-v43/forms.json'
 OUT = art.OUT
@@ -36,6 +37,7 @@ for key, sp in todo:
     man[name] = {'group': 'actors', 'source': sp['src'], 'sourceSha256': art.sha(sp['src']), 'size': list(im.size), 'bytes': os.path.getsize(out), 'table': TABLE, 'stamp': stamp, **extra}
     if sp.get('motions'): man[name]['motions'] = sorted(sp['motions'])
     print(name, im.size, extra.get('cell'), os.path.getsize(out))
+update_framing(man, [name for name, _ in todo if '@' not in name])
 json.dump(man, open(f'{OUT}/manifest.json', 'w'), indent=1, ensure_ascii=False, sort_keys=True)
 for p in problems: print('PROBLEM', p)
 sys.exit(1 if problems else 0)

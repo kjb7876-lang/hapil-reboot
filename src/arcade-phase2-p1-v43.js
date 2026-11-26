@@ -195,7 +195,7 @@
   return false;
  }
  function stage2Frame(e,s){
-  if(!(e?.stage2Source||e?.stage3Source||e?.stage4Source||e?.stage5Source||e?.stage6Source||e?.stage7Source||e?.stage8Source||e?.stage9Source)||s?.seg!==e.seg||s.stage!=='card'||s.cardEnding||s.cardDown||!(s.boss?.hp>0)||s.boss.actor!==e.actor)return null;
+  if(!(e?.stage2Source||e?.stage3Source||e?.stage4Source||e?.stage5Source||e?.stage6Source||e?.stage7Source||e?.stage8Source||e?.stage9Source)||s?.seg!==e.seg||s.stage!=='card'||s.cardEnding||(s.cardDown&&s.cardDown<e.start)||!(s.boss?.hp>0)||s.boss.actor!==e.actor)return null;
   const f=B.phaseAt(e.plan,s.tick-e.start);if(!f)return null;
   const a=e.art.framesByPhase[f.name],p=f.local/Math.max(1,f.duration-1);
   return {phase:f.name,frame:Math.round(a[0]+p*(a[1]-a[0]))};

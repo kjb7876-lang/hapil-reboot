@@ -28,7 +28,7 @@
     if(!slot||slot.actor!==g.actor)return native.step(s,null);
     var here=STAGES[g.stage],p=livePhaseOf(s,s.seg);
     return native.step(s,{actor:g.actor,stage:g.stage+1,scene:String(here.scene),mid:g.mid,role:g.mid?'midboss':g.stage===partFinalStage(here.part)?'episode':'main',ordinal:p?p.no-1:-1,preFire:s.segTick<=cardFireDelay(s)||s.formHold===s.tick,
-      clearShots:function(){return cancelAll(s,true);},specialBusy:!!(s.sp&&s.sp.cur||s.boss.downHold>0),legacyBusy:!!(s.sp&&s.sp.cur||s.boss.downHold>0||s.figures.length||s.lasers.length||s.weapons.length||s.cannons.length||s.risers&&s.risers.some(function(r){return !r.fade;}))});
+      legacyBusy:!!(s.sp&&s.sp.cur||s.boss.downHold>0||s.figures.length||s.lasers.length||s.weapons.length||s.cannons.length||s.risers&&s.risers.some(function(r){return !r.fade;}))});
   }
   var rhythmContext=null;
   function heroProfile(s){return HEROES?HEROES.get(typeof s==='string'?s:s&&s.union?'seoha-b':s&&s.hero):null;}
@@ -1383,9 +1383,9 @@
     if(defeated&&!s.spellOnly&&(!next||next.kind!=='card'||next.actor!==card.actor)){bombReward(s,card,next);jackpot(s,!!card.mid,b.x,b.y);} // 이 인물의 마지막 패턴: 잭팟(스펠 연습은 제외)
     if(card.spell&&defeated&&s.spellClean){var sb=spellBonus(s);s.captures++;s.score+=sb;s.lastCapture={ok:true,bonus:sb,tick:s.tick,seg:s.seg,name:card.name};note(s,'capture');gainPiece(s);}
     else if(card.spell&&defeated){s.lastCapture={ok:false,bonus:0,tick:s.tick,seg:s.seg,name:card.name};note(s,'captureMiss');}
-    s.score+=wiped*10;note(s,'break');var who=b.actor,dx=b.x,dy=b.y;
+    s.score+=wiped*10;note(s,'break');var who=b.actor,defeatedSeg=s.seg,dx=b.x,dy=b.y;
     if(hold){
-      b.down={actor:who,x:dx,y:dy,tick:s.tick};b.present=false;b.leaving=false;
+      b.down={actor:who,seg:defeatedSeg,x:dx,y:dy,tick:s.tick};b.present=false;b.leaving=false;
       s.stage='bossClear';s.stageTick=0;s.bossClear={actor:who,stageIndex:card.stage,segment:s.seg,nextSegment:nextAt,startedTick:s.tick,readyTick:s.tick+BOSS_CLEAR_TICKS,stageCommitted:false};
       note(s,'bossClear');note(s,'bossDown');
       // 연출 중 홈/새로고침을 해도 맵 격파가 취소되지 않게 결과를 즉시 확정한다. 같은 맵의 후속 보스는 아직 완료가 아니다.
@@ -1394,7 +1394,7 @@
     }
     advance(s);
     // 이 보스의 마지막 패턴이 깨졌다(다른 보스나 잡몹 구간으로 넘어감): 화면은 이 자리에서 쓰러지는 동작을 그린다.
-    if(defeated&&(b.leaving||s.stage==='won')){b.down={actor:who,x:dx,y:dy,tick:s.tick};note(s,'bossDown');}
+    if(defeated&&(b.leaving||s.stage==='won')){b.down={actor:who,seg:defeatedSeg,x:dx,y:dy,tick:s.tick};note(s,'bossDown');}
   }
   var BOSS_DESCEND=342,DESCEND_HOLD=420;
   // 헬: 보스가 내려와 탄을 못 내는 동안 화면이 비지 않게 맵 끝에서 끝까지 닿는 가로·세로 광선을 판 가장자리에서 깐다(보스는 여전히 탄을 내지 않는다, 실플레이 심사 11-19)
@@ -2790,7 +2790,7 @@
     if(input&&input.bomb)useBomb(s);
     bombPulse(s);
     s.paceBossVolleys=true;
-    var seg=segment(s),b=s.boss;s.calm=(!sweeping||openingHeld)&&s.entranceAll&&s.stage==='card'&&(bossDescends(s)||b.present&&b.y>BOSS_REST+BOSS_SWAY+CALM_BELOW);calmLaser(s,openingHeld);heroLaser(s);if(!sweeping||openingHeld)figurePending(s);if(!sweeping)lineGuard(s);
+    var seg=segment(s),b=s.boss;s.calm=(!sweeping||openingHeld)&&s.entranceAll&&s.stage==='card'&&(bossDescends(s)||b.present&&b.y>BOSS_REST+BOSS_SWAY+CALM_BELOW);calmLaser(s,openingHeld);if(!sweeping)heroLaser(s);if(!sweeping||openingHeld)figurePending(s);if(!sweeping)lineGuard(s);
     if((!sweeping||openingHeld)&&mobileBossShots(s))releaseBossVolley(s);
     if(s.stage==='break'){if(s.stageTick>=(s.paced?24:BREAK_TICKS)){if(seg&&seg.kind==='card'&&b.present)beginCard(s);else advance(s);}}
     else if(s.stage==='intro'){if(introHold){}else
@@ -2828,7 +2828,7 @@
       if(seg.spell&&!s.entranceAll&&left<=10&&left>0&&s.segTick%60===0)note(s,left<=3?'countdownLast':'countdown');
     }
     themed(s);updateMobs(s);updateShots(s);focusSkill(s);
-    if(s.stage==='card'&&s.entranceAll&&!s.cardEnding&&(b.hp<=0||s.cardDown)){if(!s.cardDown)markDown(s);if(cardMayFall(s)){b.hp=0;beginCardEnding(s,true);}else b.hp=1;} // 시간이 다 된 카드는 쓰러짐이 아니라 그대로 넘어간다(남은 탄은 breakWipe가 밖으로 내보낸다)
+    if(s.stage==='card'&&s.entranceAll&&!s.cardEnding&&(b.hp<=0||s.cardDown)){if(!s.cardDown)markDown(s);if(!signatureOn&&cardMayFall(s)){b.hp=0;beginCardEnding(s,true);}else b.hp=1;} // 시간이 다 된 카드는 쓰러짐이 아니라 그대로 넘어간다(남은 탄은 breakWipe가 밖으로 내보낸다)
     else if(s.stage==='card'&&s.entranceAll&&s.cardEnding){if(s.boss.hp<0)s.boss.hp=0;if(cardEndingDone(s))endCard(s,s.cardEnding.defeated);}
     else if(s.stage==='card'&&b.hp<=0)endCard(s,true);
     else if(s.stage==='card'&&!s.entranceAll&&timeLeft(s)===0)endCard(s,false); // 실제 게임에서 보스·중간보스는 시간으로 사라지지 않는다(사용자 11-19): 체력이 다해야 쓰러진다
