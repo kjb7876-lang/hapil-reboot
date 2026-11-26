@@ -42,7 +42,8 @@ test('the cut-in serif font ships as a small woff2 with every glyph the cut-in d
 
 test('phone HUD level line sits above the hearts, clear of the slow-move button',()=>{
  const app=fs.readFileSync(path.join(root,'src/arcade-app-v43.js'),'utf8');
- const m=app.match(/fillText\('공격 Lv\.'\+\(s\.power\|\|1\)\+' · 필살 Lv\.'\+\(s\.bombLevel\|\|1\),12,H-(\d+)\)/);
+ assert.match(app,/var lvT=stockLevels\(s\)/);
+ const m=app.match(/fillText\(lvT,12,H-(\d+)\)/);
  assert(m,'level line drawn');assert(+m[1]>96,'drawn above the hearts row (H-96), got H-'+m[1]);
 });
 

@@ -42,7 +42,7 @@ test('v43 spell banner: it leaves by sliding out, its rules sit only behind the 
  const app=h.read('src/arcade-app-v43.js');
  assert(/alpha=bannerSpell\?1:/.test(app),'no half-transparent ghost of the spell name');
  assert(/var lx=bannerSpell\?W\*\.55:90/.test(app),'the band rules do not cross the boss');
- assert(/if\(!\(bannerSpell&&banner>0\)\)\{ctx\.font='italic 12px '\+SERIF;ctx\.fillStyle='#f3e3b5';ctx\.fillText\('「'\+seg\.name/.test(app),'the plate hides the name while the band shows');
+ assert(/if\(!\(bannerSpell&&banner>0\)\)\{ctx\.font='italic 12px '\+SERIF;ctx\.fillStyle='#f3e3b5';ctx\.fillText\('「'\+localText\(seg\.name\)/.test(app),'the plate hides the name while the band shows');
 });
 
 test('v43 shock ring: the break shockwave takes the scene colour and thins as it spreads',()=>{

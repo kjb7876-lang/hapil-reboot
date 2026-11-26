@@ -14,6 +14,10 @@
   else root.HapilCues=api;
 })(typeof globalThis!=='undefined'?globalThis:this,function(global){
   'use strict';
+  function localText(source,params){
+    if(global.HapilI18n&&global.HapilI18n.text)return global.HapilI18n.text(source,params);
+    return params?source.replace(/\{(\w+)\}/g,function(key,k){return params[k]===undefined?key:params[k];}):source;
+  }
   var W=360,H=640,TAU=Math.PI*2,INKC='#1e1a18',PAPER='#f3ead6',VERMILION='#a8382a',METAL='#4a4540';
   var WASH_TICKS=72,MEMORIAL_TICKS=300,MEMORIAL_DELAY=16,SPOT_TAIL=30,ROOT_FADE=.22,BOLT_SLIDE=14,STROKE_WINDOW=300;
   var st=null;
@@ -27,9 +31,9 @@
   function gainText(level){
     var a=A(),P=a&&a.POWER_SHOTS;if(!P||!P[level]||!P[level-1])return '';
     var p=P[level-1],c=P[level],out=[];
-    if(c[0]>p[0])out.push('주포 '+p[0]+'→'+c[0]+'발');
-    if(c[2]>p[2])out.push('유도탄 '+p[2]+'→'+c[2]+'발');
-    if(c[1]<p[1]||c[3]<p[3])out.push('연사 빨라짐');
+    if(c[0]>p[0])out.push(localText('주포 {a}→{b}발',{a:p[0],b:c[0]}));
+    if(c[2]>p[2])out.push(localText('유도탄 {a}→{b}발',{a:p[2],b:c[2]}));
+    if(c[1]<p[1]||c[3]<p[3])out.push(localText('연사 빨라짐'));
     return out.join(' · ');
   }
   function segName(s,a){var g=a&&a.SEGMENTS&&a.SEGMENTS[s.seg];return g&&g.name||'';}

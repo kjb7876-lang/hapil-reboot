@@ -5,12 +5,12 @@ const root=path.join(__dirname,'..'),read=f=>fs.readFileSync(path.join(root,f),'
 const A=require('../src/arcade-v43.js');
 function sandbox(search){
   const store={},listeners={};
-  const w={HapilArcade:A,location:{search:search||''},navigator:{userAgent:'test',language:'en-US'},screen:{width:390,height:844},innerWidth:390,innerHeight:844,devicePixelRatio:3,
+  const w={HapilArcade:A,location:{search:search||''},navigator:{userAgent:'test',language:'ko-KR'},screen:{width:390,height:844},innerWidth:390,innerHeight:844,devicePixelRatio:3,
     localStorage:{getItem:k=>k in store?store[k]:null,setItem:(k,v)=>{store[k]=String(v);},removeItem:k=>{delete store[k];}},
     addEventListener:(k,f)=>{(listeners[k]=listeners[k]||[]).push(f);},setTimeout:()=>0};
   w.window=w;w.globalThis=w;
   const ctx=vm.createContext(w);
-  vm.runInContext(read('src/arcade-i18n-v43.js'),ctx);vm.runInContext(read('src/arcade-mobile-v43.js'),ctx);
+  for(const m of read('arcade.html').matchAll(/<script src="(src\/arcade-i18n[^"?]+)/g))vm.runInContext(read(m[1]),ctx);vm.runInContext(read('src/arcade-mobile-v43.js'),ctx);
   return {w,store,listeners};
 }
 test('a checkpoint is left when a segment starts and resumes only in its own stage and difficulty',()=>{
@@ -93,7 +93,7 @@ test('the device report lists frames, stages and recorded errors',()=>{
   listeners.error[0]({message:'boom',filename:'https://x/src/a.js',lineno:3,colno:9,error:{stack:'s'}});
   const r=M.report();assert.match(r,/프레임: 100개/);assert.match(r,/느린5% \d+ms/);assert.match(r,/normal:1 1\/0\/0/);assert.match(r,/boom @a\.js:3:9 ×2/);
 });
-test('i18n: Korean by default, ?lang=en switches, {n} slots fill, missing keys fall back to Korean',()=>{
+test('i18n: a Korean device sees Korean; explicit English and interpolated stage numbers work',()=>{
   const ko=sandbox().w.HapilI18n,en=sandbox('?lang=en').w.HapilI18n;
   assert.equal(ko.lang,'ko');assert.equal(en.lang,'en');
   assert.equal(ko.t('continueStage',{n:4}),'이어하기 · STAGE 4');assert.equal(en.t('continueStage',{n:4}),'Continue · STAGE 4');
