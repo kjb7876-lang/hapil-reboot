@@ -76,7 +76,7 @@
 | 파란불 집행체 / executor | p7_signal, crescent | 청록·빨강 | 사선 쌍 | 3 / 5 | 68 / + |
 | 전자 칩 / p8_chip | 소탄 | 청록·빨강 | 문기둥 | 4 / 7 | 72 / − |
 | 집단 자아 / p8_collective | 소탄 | 보라·흰색 | 벌림 | 4 / 7 | 76 / + |
-| 라우렌 쌍둥이 기사 / p8_lauren | 소탄 | 흰색·빨강 | 교차 | 4 / 7 | 64 / − |
+| 세뇌된 장로 / p8_brainwashed_elder | 소탄 | 흰색·빨강 | 교차 | 4 / 7 | 64 / − |
 | 교주 / cultist | p8_stitch, sword-balrog, cleaver, gear, crescent, sword-violet, twin-blade, heel | 빨강·흰색 | 비대칭 교차 | 3 / 5 | 68 / + |
 | 한리안과 백이온 / rian | hexagram | 노랑·청록 | 교차 | 3 / 5 | 72 / + |
 

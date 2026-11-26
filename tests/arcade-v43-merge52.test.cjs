@@ -66,6 +66,24 @@ test('stage 40 is the nightmare swarm and the last boss is the awakened cult lea
  assert.equal(Lines.getLine('chief',swarm).text,'그들은 항상 의지만 할 걸, 여태 그래 왔듯이.');
 });
 
+test('stage 49 ends with the brainwashed elder and opens with his own name and art on every difficulty',()=>{
+ const stage=48,actor='p8_brainwashed_elder',cards=bossCards(stage);
+ assert.equal(A.STAGES[stage].scene,'58');
+ assert(cards.every(({g})=>g.actor===actor&&A.segArt(g)===actor));
+ assert.equal(A.actorName(actor,stage),'세뇌된 장로');
+ assert.deepEqual(spells(stage).map(({g})=>g.name),['봉인된 기억','되감기는 기억','복종의 각인']);
+ assert.equal(Lines.getLine(actor,stage).text,'기억이 돌아오는가? 이미 늦었음을 알게 해 주지!');
+ assert(!A.SEGMENTS.some(g=>g.kind==='card'&&g.actor==='p8_lauren'));
+ for(const difficulty of Object.keys(A.DIFFICULTY)){
+  const s=A.createRun({segment:cards[0].k,difficulty,entranceAll:true,pacing:true,rhythm:true,compact:true});
+  assert(A.prepareBossEntrance(s));
+  for(let i=0;i<600&&s.stage!=='card';i++)A.step(s,{});
+  assert.equal(s.stage,'card',difficulty);
+  assert.equal(s.boss.name,'세뇌된 장로',difficulty);
+  assert.equal(s.boss.actor,actor,difficulty);
+ }
+});
+
 test('the awakened cult leader plays one difficulty up: easy = normal table and shapes, normal = hell table, hell = every pattern at double tempo',()=>{
  const seg=bossCards(51)[1].k,ref=bossCards(50)[1].k;
  const at=(segment,difficulty)=>{const s=A.createRun({segment,difficulty,seed:9,entranceAll:true});for(let i=0;i<900&&s.stage!=='card';i++){s.player.invulnerableUntil=s.tick+60;A.step(s,{});}assert.equal(s.stage,'card');return s;};

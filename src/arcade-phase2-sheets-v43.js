@@ -28,7 +28,7 @@
   const named=mine.find(i=>A.SEGMENTS[i].name&&String(d.topic||'').includes(A.SEGMENTS[i].name));
   const seg=named??mine[0],n=A.SEGMENTS[seg];
   taken.add(seg);
-  specs[seg]=Object.freeze({seg,actor:n.actor,stage:d.stage,scene:String(st.scene),theme:d.theme,role:si===finals[st.part]?'episode':'main',mid:false});
+  specs[seg]=Object.freeze({seg,actor:n.actor,stage:d.stage,scene:String(st.scene),theme:d.theme,role:si===finals[st.part]?'episode':'main',mid:false,waitForClear:d.waitForClear===true});
   const fr={};for(const [k,v] of Object.entries(d.mask.frames))fr[k]=unpack(v);
   masks[d.theme]=Object.freeze({w:d.mask.w,h:d.mask.h,frames:Object.freeze(fr)});
  }
