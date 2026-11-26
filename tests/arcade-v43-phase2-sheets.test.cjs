@@ -6,10 +6,20 @@ const bind=require('../src/arcade-phase2-sheets-v43.js'),art=require('../src/arc
 
 const slots=[];for(let i=0;i<A.SEGMENTS.length;i++){const s=N.slotFor(i);if(s&&s.sheet)slots.push(s);}
 
-test('37 boss skill sheets each own one named spell card of their boss',()=>{
+test('37 boss skill sheets each play on two accessible spell cards of the same boss and form',()=>{
   assert.equal(Object.keys(art).length,37);
-  assert.equal(slots.length,37);
+  assert.equal(slots.length,74);
   const stages=new Set(slots.map(s=>s.stage));assert.equal(stages.size,37);
+  const routes=['gentle','normal','hell','handicap'].map(level=>new Set(A.plannedSegments(level)));
+  for(const d of Object.values(art)){
+    const pair=slots.filter(s=>s.theme===d.theme);
+    assert.equal(pair.length,2,d.theme);
+    const primary=pair.find(s=>!s.encore),repeat=pair.find(s=>s.encore);
+    assert.ok(primary&&repeat,d.theme+' retains its original spell');
+    assert.notEqual(primary.seg,repeat.seg,d.theme);
+    assert.equal(A.segArt(A.SEGMENTS[primary.seg]),A.segArt(A.SEGMENTS[repeat.seg]),d.theme+' form');
+    for(const route of routes)assert.ok(pair.every(s=>route.has(s.seg)),d.theme+' is reachable');
+  }
   for(const s of slots){
     const n=A.SEGMENTS[s.seg],d=art[s.theme];
     assert.equal(n.kind,'card');assert.ok(n.spell&&!n.mid,'spell card '+s.theme);
@@ -62,7 +72,7 @@ test('telegraph is long enough to walk from either edge to the lane',()=>{
 });
 
 test('the stage 49 seal waits for a flying round, uses the elder atlas, and leaves a safe centre',async()=>{
-  const d=art['sheet-49-p8_brainwashed_elder'],slot=slots.find(s=>s.stage===49);
+  const d=art['sheet-49-p8_brainwashed_elder'],slot=slots.find(s=>s.stage===49&&!s.encore);
   assert.equal(slot.theme,d.theme);
   assert.equal(A.SEGMENTS[slot.seg].name,'복종의 각인');
   const {atlas,prepareAtlas,contact}=require('./helpers/phase2-source-image.cjs');

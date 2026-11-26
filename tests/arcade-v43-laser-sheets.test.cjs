@@ -27,7 +27,9 @@ test('v43 laser sheets: the emblem shows only briefly at spell start behind the 
  const app=h.read('src/arcade-app-v43.js');
  const t=+/EMBLEM_TIME=([\d.]+)/.exec(app)[1];assert(t>0&&t<=1.2,'emblem lasts about a second: '+t);
  assert(/var ls=big&&laserSheet\(s\)/.test(app),'only a spell start (big cast) shows the emblem');
- const order=/drawSkillFx\(s\);drawEmblems\(s\);drawIllusions\(s\);drawBoss\(s\)/.test(app);assert(order,'the emblem is drawn behind the boss');
+ const draw=/function draw\(elapsed\)\{[\s\S]*?\n  \}/.exec(app)[0];
+ const layers=['drawEmblems(s)','drawBoss(s)','drawSkillFx(s)','drawLasers(s)','drawBullets(s)'].map(call=>draw.indexOf(call));
+ assert(layers.every((at,i)=>at>=0&&(i===0||at>layers[i-1])),'the emblem is behind the boss; cast art is visible over its owner and under hazards');
  const body=/function drawLasers[\s\S]*?\n  \}/.exec(app)[0];
  assert(/sheet\.e\.beam/.test(body),'active lasers use the boss beam texture');
  assert(/strokeStyle='#ffffff'/.test(body),'the white core that marks the hit width stays');

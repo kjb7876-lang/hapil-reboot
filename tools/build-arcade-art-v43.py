@@ -14,6 +14,7 @@
 실행: python3 tools/build-arcade-art-v43.py  (저장소 루트에서). 문제가 있으면 목록을 찍고 1로 끝난다."""
 import glob, hashlib, json, os, sys
 from PIL import Image
+from arcade_enemy_framing_v43 import update_framing
 
 OUT = 'media/arcade-v43'
 LONG = {'actors': 260, 'mobs': 150, 'props': 200, 'rewards': 96, 'items': 72}
@@ -154,6 +155,7 @@ def main():
     for f in os.listdir(OUT):
         if f != 'manifest.json' and f not in manifest:
             os.remove(f'{OUT}/{f}')
+    update_framing(manifest)
     json.dump(manifest, open(f'{OUT}/manifest.json', 'w'), indent=1, ensure_ascii=False, sort_keys=True)
     print(len(manifest), 'pictures,', sum(v['bytes'] for v in manifest.values()), 'bytes')
     for p in problems: print('PROBLEM', p)

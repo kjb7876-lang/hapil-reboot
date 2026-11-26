@@ -262,18 +262,26 @@ test('both mirrored bent 105 corridors can be followed vulnerable with legal mot
 });
 
 test('one seeded paced fight reaches both expanded cards on gentle and normal without health overrides',()=>{
- for(const [diff,y] of [['gentle',540],['normal',580],['normal',540]]){
+ // The left-side route keeps the legacy card alive long enough for the boss to descend.
+ for(const [diff,y,goal] of [['gentle',540,180],['normal',580,180],['normal',540,80]]){
   const s=A.createRun({segment:102,entranceAll:true,pacing:true,rhythm:true,difficulty:diff,compact:true,seed:5815,distort:false,hero:'seoha',growth:true});
-  N.fixtureAtlas(s,t=>atlases.get(t));s.bombs=0;const seen=new Set();let held=0;for(let i=0;i<15500&&s.stage!=='lost';i++){
+  N.fixtureAtlas(s,t=>atlases.get(t));s.bombs=0;const seen=new Set();let held=0,inheritedHold=0,released=false;for(let i=0;i<15500&&s.stage!=='lost';i++){
    if(N.inspect(s)?.phase==='active')seen.add(s.seg);
-   if(s.seg===105&&N.holding(s))held++;
+   if(s.seg===105&&N.holding(s)){
+    if(!held)inheritedHold=s.boss.downHold;
+    held++;assert.equal(s.segTick,0);assert(!N.inspect(s)?.phase);
+   }else if(held&&!released){
+    const rec=N.inspect(s);assert.equal(rec?.phase,'telegraph');
+    assert.equal(rec.opening.elapsed,held);assert.equal(rec.opening.fallback,false);
+    assert.equal(s.boss.downHold,0);assert(!s.calm);released=true;
+   }
    if(seen.has(103)&&seen.has(105))break;
    let x=180,targetY=y,threats=[];
    if(s.stage==='card'&&!N.inspect(s)?.phase){
     for(let z=0;z<s.n;z++){const bx=s.bx[z],by=s.by[z],vx=Math.cos(s.ba[z])*s.bs[z]/60,vy=Math.sin(s.ba[z])*s.bs[z]/60;
      if(Math.abs(by-s.player.y)<50&&Math.abs(bx-s.player.x)<60)threats.push([bx,by,vx,vy]);}
     const cs=[s.player.x-4.2,s.player.x,s.player.x+4.2].filter(w=>w>40&&w<320);let best=-1e10;
-    for(const c of cs){const score=-(Math.abs(c-180)*.18)+Math.min(55,...threats.map(z=>Math.min(...[0,3,6,10].map(t=>Math.hypot(c-z[0]-z[2]*t,s.player.y-z[1]-z[3]*t)))));if(score>best){x=c;best=score;}}
+    for(const c of cs){const score=-(Math.abs(c-goal)*.18)+Math.min(55,...threats.map(z=>Math.min(...[0,3,6,10].map(t=>Math.hypot(c-z[0]-z[2]*t,s.player.y-z[1]-z[3]*t)))));if(score>best){x=c;best=score;}}
    }else if(s.seg===105){targetY=520;}
    const dx=Math.max(-4.2,Math.min(4.2,x-s.player.x)),dy=Math.max(-2,Math.min(2,targetY-s.player.y)),k=Math.min(1,4.2/Math.hypot(dx,dy));
    const own=N.inspect(s),before=s.hits;
@@ -283,7 +291,10 @@ test('one seeded paced fight reaches both expanded cards on gentle and normal wi
   assert.deepEqual([...seen],[103,105]);
   assert.equal(s.boss.actor,'p1_staff');assert.equal(s.stageIndex,8);assert(s.player.hp>0);
   assert.equal(s.bombsUsed,s.autoBombs,'no manual or injected stock use; native ordinary-hit refills still apply');
-  if(diff==='normal'&&y===540)assert(held>=335&&held<=480,'now reaches second occurrence after real inherited recovery');
+  if(goal===80){
+   assert(inheritedHold>0,'the real boss descent carries into card 105');
+   assert(held>=inheritedHold&&held<=480);assert(released);
+  }
  }
 });
 

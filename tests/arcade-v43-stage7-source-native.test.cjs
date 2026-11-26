@@ -124,9 +124,10 @@ test('actual A.step player contact: attack reduces life only on visible source',
  }
 });
 
-test('untouched 75 still uses actual legacy bullets, and all exact Balrog scope remains',()=>{
+test('stage 7 keeps ordinary bullets on 75 and the Balrog cast on its original and repeat spell',()=>{
  for(const i of [70,71,72,73]){assert.equal(A.SEGMENTS[i].kind,'wave');assert.equal(N.slotFor(i),null);}
- for(const i of [75,76,78,79,80,81,82,83,84,85])assert.equal(N.slotFor(i),null);
+ for(const i of [75,76,78,79,80,81,82,83,84])assert.equal(N.slotFor(i),null);
+ assert.ok(N.slotFor(85)?.encore);assert.equal(N.slotFor(85).actor,'balrog');
  assert.deepEqual(N.slotFor(77).themes,['meteor','spatial-slash']);assert.equal(N.slotFor(77).actor,'balrog');
  for(const seg of [75]){
   const s=run(seg,'hell');N.fixtureAtlas(s,t=>atlases.get(t));

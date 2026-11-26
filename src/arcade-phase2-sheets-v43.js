@@ -3,7 +3,7 @@
  else root.HapilPhase2Sheets=factory;
 })(typeof globalThis!=='undefined'?globalThis:this,function bind(A,art,{taken=new Set()}={}){
  /* 닷츠 CX-0191BS 보스 스킬 시트(11~52스테이지, 사용자 11-25 "교만보스랑 연산핵등 여러보스 프레임애니메이션 이펙트 스킬패턴이 적용 안되어 있는데?").
-  * 보스마다 시트 주제와 이름이 같은 스펠 카드(없으면 그 보스의 첫 스펠)를 시작할 때 한 번: 예고(0~7칸, 판정 없음) → 공격(8~15칸) → 사라짐(16~23칸).
+  * 보스마다 시트 주제와 이름이 같은 스펠 카드(없으면 그 보스의 첫 스펠)를 및 같은 모습의 다른 스펠에서: 예고(0~7칸, 판정 없음) → 공격(8~15칸) → 사라짐(16~23칸).
   * 시트는 판 전체(8,40)~(352,626)에 펼친다. 가운데 세로 길(약 54px)은 24칸 내내 비어 있어 피할 수 있다.
   * 판정은 그림 알파(174 이상, 닷츠 규격)를 48×64 격자로 미리 줄인 비트표(art.mask)로 본다 → 노드·브라우저가 같은 결과.
   * 시그니처가 도는 동안 보스는 쏘지 않고 카드 시계도 멈춘다(엔진 sweeping). */
@@ -27,8 +27,15 @@
   if(!mine.length)continue;
   const named=mine.find(i=>A.SEGMENTS[i].name&&String(d.topic||'').includes(A.SEGMENTS[i].name));
   const seg=named??mine[0],n=A.SEGMENTS[seg];
-  taken.add(seg);
-  specs[seg]=Object.freeze({seg,actor:n.actor,stage:d.stage,scene:String(st.scene),theme:d.theme,role:si===finals[st.part]?'episode':'main',mid:false,waitForClear:d.waitForClear===true});
+  // Keep the themed card, then bookend it with a second spell of this exact visible form.
+  const other=mine.filter(i=>i!==seg&&art2(A.SEGMENTS[i])===art2(n))
+    .sort((a,b)=>Math.abs(b-seg)-Math.abs(a-seg)||b-a)[0];
+  for(const i of [seg,other]){
+   if(i===undefined)continue;
+   taken.add(i);
+   specs[i]=Object.freeze({seg:i,actor:n.actor,stage:d.stage,scene:String(st.scene),theme:d.theme,
+    role:si===finals[st.part]?'episode':'main',mid:false,encore:i!==seg,waitForClear:true});
+  }
   const fr={};for(const [k,v] of Object.entries(d.mask.frames))fr[k]=unpack(v);
   masks[d.theme]=Object.freeze({w:d.mask.w,h:d.mask.h,frames:Object.freeze(fr)});
  }
@@ -49,7 +56,7 @@
   return age<w?{name:'telegraph',local:age,duration:w}:age<w+a?{name:'active',local:age-w,duration:a}:age<w+a+d?{name:'decay',local:age-w-a,duration:d}:null;
  }
  function frameOf(e,s){
-  if(!e?.sheetSource||s?.seg!==e.seg||s.stage!=='card'||s.cardEnding||s.cardDown||!(s.boss?.hp>0)||s.boss.actor!==e.actor)return null;
+  if(!e?.sheetSource||s?.seg!==e.seg||s.stage!=='card'||s.cardEnding||(s.cardDown&&s.cardDown<e.start)||!(s.boss?.hp>0)||s.boss.actor!==e.actor)return null;
   const f=phase(e,s);if(!f)return null;
   const r=e.art.framesByPhase[f.name],u=f.local/Math.max(1,f.duration-1);
   return {phase:f.name,frame:Math.min(r[1],Math.round(r[0]+u*(r[1]-r[0])))};
@@ -72,14 +79,14 @@
    const ph=phase(e,s),cell=n=>[(n%a.columns)*a.cellWidth,Math.floor(n/a.columns)*a.cellHeight,a.cellWidth,a.cellHeight,area.x0,area.y0,AW,AH];
    if(f.phase==='telegraph'){
     // 예고(심사 11-25 "예고가 너무 옅다"): 곧 닫힐 벽(공격 첫 칸)의 그림자를 점점 짙게 미리 보이고, 피할 길 양 끝에 인주색 안내 눈금(플레이어를 돕는 표시).
-    const u=ph.local/ph.duration;
-    ctx.globalAlpha=.12+.3*u;ctx.drawImage(a.image,...cell(a.framesByPhase.active[0]));
+    const u=ph.local/Math.max(1,ph.duration-1);
+    ctx.globalAlpha=(.12+.3*u)*Math.min(1,(ph.local+1)/8);ctx.drawImage(a.image,...cell(a.framesByPhase.active[0]));
     ctx.globalAlpha=1;ctx.drawImage(a.image,...cell(k));
-    const [l0,l1]=e.plan.safeLane,blink=.55+.45*Math.abs(Math.sin(ph.local*.18));
+    const [l0,l1]=e.plan.safeLane,blink=.78-.22*Math.cos(ph.local*.10);
     ctx.globalAlpha=blink*(.5+.5*u);ctx.fillStyle='#c8442f';
     for(let y=area.y0+40;y<area.y1;y+=58){ctx.fillRect(l0-1,y,3,16);ctx.fillRect(l1-2,y,3,16);}
    }else{
-    if(f.phase==='decay')ctx.globalAlpha=Math.max(0,1-ph.local/ph.duration*.6);
+    if(f.phase==='decay'){const u=ph.local/Math.max(1,ph.duration-1);ctx.globalAlpha=1-u*u*(3-2*u);}
     ctx.drawImage(a.image,...cell(k));
     if(f.phase==='active'){ctx.globalAlpha=.35;ctx.globalCompositeOperation='multiply';ctx.drawImage(a.image,...cell(k));} // 공격 칸은 한 번 더 곱해 짙게: 맞는 먹이 무해한 바탕보다 확실히 어둡다
    }

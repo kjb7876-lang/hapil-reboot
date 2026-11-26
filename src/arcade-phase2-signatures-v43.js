@@ -150,7 +150,7 @@
     return p.ok?Object.freeze({plan:p,art:freezeArt(renderSpec),actor,seg:runtimeState.seg,start:runtimeState.tick}):null;
   }
   function live(event,s) {
-    return event&&s&&s.stage==='card'&&!s.cardEnding&&!s.cardDown&&!s.calm&&s.boss?.actor===event.actor&&s.boss.hp>0&&s.seg===event.seg&&event.art.image.complete&&event.art.image.naturalWidth>0&&(!event.art.alternateSpec||event.art.alternateSpec.image.complete&&event.art.alternateSpec.image.naturalWidth>0)&&phaseAt(event.plan,s.tick-event.start);
+    return event&&s&&s.stage==='card'&&!s.cardEnding&&(!s.cardDown||s.cardDown>=event.start)&&!s.calm&&s.boss?.actor===event.actor&&s.boss.hp>0&&s.seg===event.seg&&event.art.image.complete&&event.art.image.naturalWidth>0&&(!event.art.alternateSpec||event.art.alternateSpec.image.complete&&event.art.alternateSpec.image.naturalWidth>0)&&phaseAt(event.plan,s.tick-event.start);
   }
   const impactIndex=(p,ph)=>p.landings&&ph?.name==='active'?Math.min(p.landings.length-1,Math.floor(ph.local/7)):null;
   function hit(event,s,painter=paint) {

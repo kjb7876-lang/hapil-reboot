@@ -122,7 +122,7 @@ test('v43 boss hit/death: the engine marks the moment a boss falls, and the game
  while(s.stage!=='card'&&guard++<2000){s.player.invulnerableUntil=s.tick+999;a.step(s,{dx:0,dy:0});h.clear(s);}
  assert.equal(s.stage,'card');const actor=s.boss.actor,x=s.boss.x;s.boss.hp=0;s.player.invulnerableUntil=s.tick+999;a.step(s,{dx:0,dy:0});
  assert(s.events.includes('bossDown'),'bossDown event when the last pattern of a boss breaks: '+s.events.join(','));
- assert.equal(s.boss.down&&s.boss.down.actor,actor);assert(Math.abs(s.boss.down.x-x)<8);assert.equal(s.boss.down.tick,s.tick);
+ assert.equal(s.boss.down&&s.boss.down.actor,actor);assert.equal(s.boss.down.seg,i);assert(Math.abs(s.boss.down.x-x)<8);assert.equal(s.boss.down.tick,s.tick);
  // 같은 보스의 다음 패턴으로 넘어갈 때는 쓰러지지 않는다.
  const j=a.SEGMENTS.findIndex((g,k)=>g.kind==='card'&&a.SEGMENTS[k+1]&&a.SEGMENTS[k+1].kind==='card'&&a.SEGMENTS[k+1].actor===g.actor);assert(j>=0);
  const t=a.createRun({difficulty:'normal',seed:3,segment:j});guard=0;
@@ -147,7 +147,9 @@ test('v43 boss skill effects: drive frame animations are matched to bosses, ligh
   for(const b of e.bosses){assert(a.SIGNATURES[b],b+' is a boss');assert(!seen.has(b),b+' has one effect');seen.add(b);}}
  const app=h.read('src/arcade-app-v43.js');
  assert(/arcade-v43-fx\/index\.json/.test(app)&&/function drawSkillFx\(/.test(app)&&/drawSkillFx\(s\)/.test(app),'effects are drawn');
- assert(/e==='figure'/.test(app)&&/function castFx\(/.test(app),'played when a boss casts');
+ const consume=/function consume\(\)\{[\s\S]*?\n  \}/.exec(app)[0];
+ const trigger=/function updateBossCast\(s\)\{[\s\S]*?\n  \}/.exec(app)[0];
+ assert(consume.includes('updateBossCast(s)')&&trigger.includes("s.events.indexOf('figure')")&&trigger.includes('castFx(s,'),'a real figure cast is considered by the combat trigger');
 });
 
 test('v43 vertical maps: drive loop maps cover their scenes, wrap without a seam, and the game scrolls them at their own height',()=>{
