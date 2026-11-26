@@ -468,7 +468,8 @@ test('normal canvas entrances use the stage-specific speaker and dialogue across
       }
       sections.add(g.stage);
       assert.equal(line.text,book.LINES[book.ENTRANCE[g.stage]-1],name);newLines.add(line.text);
-      const at=state.bossEntrance.enteredTick+Math.ceil(.8*A.BOSS_ENTRANCE_SPEECH);
+      const reply=book.getReply(g.actor,g.stage),entry=state.bossEntrance;
+      const at=entry.enteredTick+Math.ceil((entry.readyTick-entry.enteredTick)*(reply ? .4 : .8));
       while(state.tick<at)A.step(state,{});
       assert.equal(A.entrancePhase(state).phase,'speech');
       calls.length=0;
@@ -476,6 +477,19 @@ test('normal canvas entrances use the stage-specific speaker and dialogue across
       const painted=calls.filter(c=>c[0]==='fillText').map(c=>c[1]);
       assert(painted.includes(name),name);
       assert(painted.includes(line.text),name);
+      if(reply){
+        assert(!painted.includes(reply),'the boss speaks before the hero');
+        const answerAt=entry.enteredTick+Math.ceil((entry.readyTick-entry.enteredTick)*.8);
+        while(state.tick<answerAt)A.step(state,{});
+        for(const [hero,union,speaker] of [['memory',false,'기억사수'],['seoha',false,'윤서하 · 수련생'],['seoha-b',false,'윤서하 · 각성'],['seoha',true,'윤서하 · 기억사수']]){
+          state.hero=hero;state.union=union;calls.length=0;
+          h.drawBossIntro(state);
+          const response=calls.filter(c=>c[0]==='fillText').map(c=>c[1]);
+          assert(response.includes(speaker),speaker);
+          assert(response.includes(reply));
+          assert(!response.includes(line.text));
+        }
+      }
     }
   }
   assert.equal(sections.size,52);

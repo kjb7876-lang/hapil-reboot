@@ -46,7 +46,7 @@ test('browser integration exposes the same API without changing the canonical st
 });
 
 
-test('boss entrance lines are the user-authored table: all 56 lines survive the 52-stage layout, none dropped or reworded',()=>{
+test('all 56 boss entrance lines stay mapped to the 52 stages and their form changes',()=>{
  const lines=require('../src/arcade-boss-lines-v43.js');
  assert.equal(lines.LINES.length,56);assert.equal(new Set(lines.LINES).size,56);assert.equal(lines.ENTRANCE.length,arcade.STAGES.length);assert.equal(arcade.STAGES.length,52);
  for(const t of lines.LINES){assert(t.length>=3&&t.length<=80,t);assert(!/,,|그떄|불가할/.test(t),t);}
@@ -63,4 +63,14 @@ test('boss entrance lines are the user-authored table: all 56 lines survive the 
  assert.equal(lines.getLine('rian',49).text,'언제나 죽음보다 삶이 낫지 않겠는가!');assert(arcade.SEGMENTS.some(g=>g.stage===49&&g.kind==='card'&&!g.mid&&g.actor==='rian'));assert(arcade.SEGMENTS.some(g=>g.stage===51&&g.kind==='card'&&g.actor==='cultist'));
  assert.equal(lines.getLine('cultist',50).text,'유토피아, 그것을 너희에게 선사해 주마!');
  assert.equal(lines.getLine('cultist',51).text,'고통을 없애 주겠다!');
+});
+
+test('only the Asmodeus entrance adds a player reply, with the requested wording',()=>{
+ const lines=require('../src/arcade-boss-lines-v43.js');
+ const visits=new Set(arcade.SEGMENTS.filter(g=>g.kind==='card'&&!g.mid&&lines.getReply(g.actor,g.stage)).map(g=>g.stage+':'+g.actor));
+ assert.deepEqual([...visits],['14:asmodeus']);
+ assert.equal(lines.getReply('asmodeus',13),null);
+ assert.equal(lines.getReply('p2_archon',14),null);
+ assert.equal(lines.getLine('asmodeus',14).text,'사랑이 뭘까?');
+ assert.equal(lines.getReply('asmodeus',14),'사랑은 돌아오는거야!');
 });

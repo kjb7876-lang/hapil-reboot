@@ -23,7 +23,7 @@
     "더 이상 내가 할 수 있는 건 아무것도 없어…",
     "누구보다 난 노력했다고! 최소한 그 애보다는 내가 더 잘나가야 맞는 거잖아!!!",
     "오직 최고급만이 그녀를 만족시킬 수 있단 말이다!!!",
-    "사랑이 뭘까요?",
+    "사랑이 뭘까?",
     "결핍? 그것은 돈이 부족해서 생기는 질병이라네.",
     "돈만 있었다면 우리 어무이도 같이 살아갈 수 있었을 텐데…",
     "버려진 음식조차 맘대로 먹을 수 없는 이런 뭐 같은 세상!",
@@ -78,11 +78,14 @@
     return Object.freeze({speaker: '', text: lines[ENTRANCE[stageIndex] - 1]});
 
   }
+  function getReply(actor, stageIndex) {
+    return actor === 'asmodeus' && stageIndex === 14 ? '사랑은 돌아오는거야!' : null;
+  }
   /* 합친 보스가 n번째로 모습을 바꿀 때(1부터)의 대사. 없으면 null. */
   function getShiftLine(stageIndex, n) {
     var list = SHIFT[stageIndex], number = list && list[n - 1];
     return number ? Object.freeze({speaker: '', text: lines[number - 1]}) : null;
   }
 
-  return Object.freeze({getLine: getLine, getShiftLine: getShiftLine, LINES: Object.freeze(lines.slice()), ENTRANCE: Object.freeze(ENTRANCE.slice()), SHIFT: SHIFT, STAGES: ENTRANCE.length});
+  return Object.freeze({getLine: getLine, getReply: getReply, getShiftLine: getShiftLine, LINES: Object.freeze(lines.slice()), ENTRANCE: Object.freeze(ENTRANCE.slice()), SHIFT: SHIFT, STAGES: ENTRANCE.length});
 });

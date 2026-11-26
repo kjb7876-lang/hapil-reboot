@@ -2109,7 +2109,10 @@
     var who=Arcade.ACTORS[seg.actor],entry=BossIntros&&BossIntros.getBoss(seg.actor,s.stageIndex);
     var BLs=global.HapilArcadeBossLines,line=!seg.mid&&BLs&&(seg.formNo>0&&BLs.getShiftLine&&BLs.getShiftLine(s.stageIndex,seg.formNo)||BLs.getLine(seg.actor,s.stageIndex)); // 바뀐 모습에서 바로 시작하면 그 모습의 대사
     if(seg.mid)introLines=[]; // 사용자 11-20: 중간보스는 컷인만, 대사는 보스만(대사표 = arcade-boss-lines-v43.js)
-    else if(line)introLines=[line];
+    else if(line){
+      var reply=BLs.getReply?.(seg.actor,s.stageIndex);
+      introLines=reply?[line,{hero:true,text:reply}]:[line];
+    }
     else if(entry)introLines=entry.lines;
     else if(BossIntros)introLines=BossIntros.fallbackLines(seg.actor,!!seg.mid,who&&who.name);
     else introLines=[{speaker:who&&who.name||'',text:'...'}];
@@ -2153,10 +2156,11 @@
       var n=lines.length;if(!n){ctx.restore();return;}var per=1/n,idx=Math.min(n-1,Math.floor(t/per)),lt=(t-idx*per)/per,line=lines[idx];
       var a=Math.min(1,t/.06)*(t>.94?(1-t)/.06:1);
       ctx.font='700 16px '+INK_SERIF;ctx.textAlign='left';
-      var rows=wrapText(line.text.slice(0,Math.max(1,Math.ceil(line.text.length*Math.min(1,lt/.55)))),286),bw=316,bh=46+rows.length*22,bx=(W-bw)/2,by=Math.max(250,Math.min(300,H*.43));
-      brushBox(bx,by,bw,bh,a);ctx.globalAlpha=a;ctx.font='600 12px '+INK_SERIF;ctx.fillStyle='rgba(30,26,24,.7)';ctx.fillText(line.speaker||segName(seg),bx+16,by+16);
+      var rows=wrapText(line.text.slice(0,Math.max(1,Math.ceil(line.text.length*Math.min(1,lt/.55)))),286),bw=316,bh=46+rows.length*22,bx=(W-bw)/2,by=line.hero?H*.59:Math.max(250,Math.min(300,H*.43));
+      var speaker=line.hero?(s.union?T('unionName'):Arcade.heroProfile(s)?.name||'영웅'):(line.speaker||segName(seg));
+      brushBox(bx,by,bw,bh,a);ctx.globalAlpha=a;ctx.font='600 12px '+INK_SERIF;ctx.fillStyle=line.hero?VERMILION:'rgba(30,26,24,.7)';ctx.fillText(speaker,bx+16,by+16);
       ctx.font='700 16px '+INK_SERIF;ctx.fillStyle=INK_DARK;for(var r=0;r<rows.length;r++)ctx.fillText(rows[r],bx+16,by+38+r*22);
-      if(t>.3){ctx.globalAlpha=a*.5;ctx.font='700 12px '+INK_SERIF;ctx.textAlign='right';ctx.fillText('탭·Enter 넘기기',bx+bw-12,by+bh-9);}
+      if(t>.3){ctx.globalAlpha=a*.5;ctx.font='700 12px '+INK_SERIF;ctx.textAlign='right';ctx.fillText(idx<n-1?'탭·Enter 다음 대사':'탭·Enter 넘기기',bx+bw-12,by+bh-9);}
     }
     ctx.restore();
   }
@@ -2644,7 +2648,7 @@
     ['pointerup','pointercancel','lostpointercapture'].forEach(function(type){stage.addEventListener(type,function(e){if(e.pointerId===finger.id){finger.active=false;finger.id=null;}});});
     document.addEventListener('keydown',function(e){var key=e.key.length===1?e.key.toLowerCase():e.key,form=e.target&&e.target.closest&&e.target.closest('input,select,textarea,button');
       if(mode==='rules'&&key==='Escape'){e.preventDefault();if(!e.repeat)closeRules();return;}
-      if(mode==='playing'&&!form&&(key==='Enter')&&state&&Arcade.entrancePhase&&Arcade.entrancePhase(state)){e.preventDefault();Arcade.skipEntrance(state);return;}
+      if(mode==='playing'&&!form&&(key==='Enter')&&state&&Arcade.entrancePhase&&Arcade.entrancePhase(state)){e.preventDefault();if(!e.repeat)Arcade.skipEntrance(state);return;}
       if(mode==='chapter'&&chapterCard){e.preventDefault();if(e.repeat)return;if(key==='Escape')chapterCard.skip();else if(key==='Enter'||key===' '||key==='z')chapterCard.next();return;}
       if(mode==='story'){if(key==='Escape'){e.preventDefault();if(!e.repeat)pause();return;}if(form)return;if(key==='Enter'||key===' '||key==='z'){e.preventDefault();if(!e.repeat)nextStory();}return;}
       if(key==='Escape'||(key===' '&&!form)){if(mode==='playing'||mode==='paused')e.preventDefault();if(e.repeat)return;if(mode==='playing')pause();else if(mode==='paused')$('arcade-resume').click();return;}
