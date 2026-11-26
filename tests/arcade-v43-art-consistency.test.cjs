@@ -3,6 +3,7 @@
  * 실제로 쓰이는 몹·중간보스·보스의 걷기·옆·공격 그림이 한 인물·한 화풍으로 이어지는지 본다. */
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {loadImage,createCanvas}=require('@napi-rs/canvas');
+const {createHash}=require('node:crypto');
 const root=path.join(__dirname,'..'),A=require('../src/arcade-v43.js'),skins=require('../src/arcade-skins-v43.js');
 const manifest=JSON.parse(fs.readFileSync(path.join(root,'media/arcade-v43/manifest.json'),'utf8'));
 const recast=JSON.parse(fs.readFileSync(path.join(root,'docs/v43/mob-recast.json'),'utf8'));
@@ -46,6 +47,30 @@ test('every arcade boss can move and attack, and scene 37 has its own character 
   const art=manifest['p5_cult'+action+'.webp'];
   assert.notEqual(art.sourceSha256,manifest['p3_rampart'+action+'.webp'].sourceSha256);
  }
+});
+
+test('the nightmare captain has distinct full-body frames for marching, orders, recoil and defeat',async()=>{
+ const actor='p6_nightmare_captain',motions=manifest[actor+'.webp'].motions;
+ assert.deepEqual(new Set(motions),new Set(['side','attack','hit','death']));
+ assert.equal(manifest[actor+'@side.webp'].facing,'right');
+ const fingerprints=new Set();
+ for(const motion of ['',...motions]){
+  const name=actor+(motion?'@'+motion:'')+'.webp',entry=manifest[name];
+  const image=await loadImage(path.join(root,'media/arcade-v43',name));
+  const [w,h]=entry.cell,ctx=createCanvas(w,h).getContext('2d');
+  assert.equal(entry.frames,4,name);
+  assert.deepEqual([image.width,image.height],[w*entry.frames,h],name);
+  for(let frame=0;frame<entry.frames;frame++){
+   ctx.clearRect(0,0,w,h);
+   ctx.drawImage(image,frame*w,0,w,h,0,0,w,h);
+   const pixels=ctx.getImageData(0,0,w,h).data;
+   let ink=0;
+   for(let i=3;i<pixels.length;i+=4)if(pixels[i]>64)ink++;
+   assert(ink>w*h*.01,name+' frame '+frame+' contains a visible drawing');
+   fingerprints.add(createHash('sha256').update(pixels).digest('hex'));
+  }
+ }
+ assert.equal(fingerprints.size,20,'each motion has its own four drawings');
 });
 
 test('v43 art consistency: the cartoon slime is out of every scene',()=>{

@@ -55,7 +55,7 @@
   register(39, 'mb_46', 'columns', 'siren', 'mirror rails goldrain sweep rose echo polygram fixed sierpinski gates ratchet');
   register(40, 'p6_demons', 'ratchet', 'chief', 'triangle echo spiro rails goldrain sweep wings');
   register(41, 'mb_49', 'sweep', 'p6_demons', 'rails echo wings');
-  register(42, 'p6_bind', 'gates', 'chief', 'sine echo sierpinski rails moire mirror branch');
+  register(42, 'p6_nightmare_captain', 'slant', 'chief', 'sine echo sierpinski rails moire mirror branch');
   register(43, 'mb_52', 'fixed', 'p7_car', 'rails gates slant');
   register(44, 'mb_53', 'echo', 'p7_shadow', 'fixed slant columns');
   register(45, 'mb_54', 'branch', 'p7_alarm', 'mirror gates echo');

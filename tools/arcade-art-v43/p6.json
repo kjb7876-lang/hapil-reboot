@@ -19,16 +19,32 @@
     }
    }
   },
-  "p6_bind": {
-   "src": "media/drive-v43/b48-down.webp",
+  "p6_nightmare_captain": {
+   "src": "media/boss-art-v43/p6_nightmare_captain-down.webp",
    "strip": 4,
    "fps": 6,
+   "size": 184,
    "motions": {
     "attack": {
-     "src": "media/m0-v43/boss/mb-hando02-attack.webp",
+     "src": "media/boss-art-v43/p6_nightmare_captain-attack.webp",
      "strip": 4,
-     "fps": 8,
-     "size": 220
+     "fps": 8
+    },
+    "hit": {
+     "src": "media/boss-art-v43/p6_nightmare_captain-hit.webp",
+     "strip": 4,
+     "fps": 12
+    },
+    "death": {
+     "src": "media/boss-art-v43/p6_nightmare_captain-death.webp",
+     "strip": 4,
+     "fps": 8
+    },
+    "side": {
+     "src": "media/boss-art-v43/p6_nightmare_captain-side.webp",
+     "strip": 4,
+     "fps": 7,
+     "facing": "right"
     }
    }
   }

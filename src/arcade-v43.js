@@ -762,12 +762,12 @@
     p2_demons:'horn',p2_belphegor:'moon',p2_leviathan:'fang',p2_beelzebub:'fly',asmodeus:'lips',p2_greed:'sword',p2_mammon:'key',p2_wrath:'flame',pride:'crown',p2_chairman:'gear',p2_core:'eye',
     p3_legion:'missile',p3_rampart:'fist',p3_defense:'key',controller:'chain',p3_body:'gear',p3_gate:'hourglass',goblin:'fang',p4_knight:'sword',insomnia:'eye',
     p5_cult:'fang',p5_archon:'scythe',p5_common:'hourglass',p5_upper:'key',p5_grand:'bell',p5_furnace:'flame',p5_neuron:'bolt',p5_keeper:'skull',p5_rings:'chain',arbelia:'feather',siren:'bell',
-    p6_demons:'horn',chief:'scythe',p6_bind:'web',p7_car:'missile',p7_shadow:'moon',p7_alarm:'bell',executor:'chain',p8_chip:'web',p8_collective:'mask',p8_brainwashed_elder:'chain',cultist:'clock',p8_ion:'bolt',rian:'rose',
+    p6_demons:'horn',chief:'scythe',p6_nightmare_captain:'pennon',p7_car:'missile',p7_shadow:'moon',p7_alarm:'bell',executor:'chain',p8_chip:'web',p8_collective:'mask',p8_brainwashed_elder:'chain',cultist:'clock',p8_ion:'bolt',rian:'rose',
     mb_01:'thorn',mb_02:'web',mb_03:'drop',mb_04:'fang',mb_05:'needle',mb_06:'feather',mb_07:'flame',mb_08:'drop',mb_09_1:'eye',mb_09_2:'sword',mb_10:'coin',mb_13:'key',mb_14:'leaf',mb_15:'eye',
     mb_16:'drop',mb_17:'rose',mb_18:'coin',mb_19:'fang',mb_20:'sword',mb_21:'skull',mb_24:'web',mb_25:'eye',mb_27:'key',mb_28:'bolt',mb_31:'thorn',mb_32:'rose',mb_33:'feather',mb_34:'moon',mb_35:'drop',
     mb_37:'hourglass',mb_38:'sword',mb_39:'leaf',mb_41:'gear',mb_42:'gear',mb_43:'sword',mb_44:'hourglass',mb_45:'key',mb_46:'key',mb_49:'sword',mb_52:'eye',mb_53:'key',mb_54:'chain',mb_56:'gear',
     mb_57:'thorn',mb_58:'fang',mb_59:'drop',mb_61:'chain'};
-  var SHOT_KINDS=['fist','clock','sword','missile','web','coin','gear','eye','flame','horn','feather','lips','chain','key','rose','bell','hourglass','needle','leaf','moon','skull','fang','drop','mask','bolt','scythe','fly','crown','thorn'];
+  var SHOT_KINDS=['fist','clock','sword','missile','web','coin','gear','eye','flame','horn','feather','lips','chain','key','rose','bell','hourglass','needle','leaf','moon','skull','fang','drop','mask','bolt','scythe','fly','crown','thorn','pennon'];
   function bossShotOf(actor){return BOSS_SHOTS[actor]||'';}
   /* ── 중간보스(사용자 11-16 "일반몹-중간보스-보스-다음맵"). 맵마다 잡몹 구간 다음에 보스와 다른 인물이 한 번 나와 일반 패턴 둘을 쏘고 쓰러진다.
    *    맵의 원래 중간 인물이 보스와 다르고 바로 앞 맵의 보스도 아니면 그 인물이 중간보스다. 아니면 아래 표의 인물이 나온다.
@@ -1011,14 +1011,14 @@
         if(spell.scene&&spell.scene!==row[0]&&(g.absorb||[]).indexOf(spell.scene)<0)throw new Error(row[2]+': pattern '+list[k]+' belongs to scene '+spell.scene);
         if(spell.used)throw new Error('pattern used twice: '+list[k]);spell.used=true;
         var lm=mid||light; // 길 맵의 보스는 예전 중간 인물의 체력·시간 그대로(맵 길이를 크게 늘리지 않는다)
-        var plainFire=PLAIN[pf](who.c1,who.c2);
+        var plainFire=spell.opening?spell.opening.fire:PLAIN[pf](who.c1,who.c2);
         // 초반 보스(1~6장, 사용자 11-18 "초반보스도 화려하게, 난이도는 조절"): 기본 패턴 자리에 이웃 기명 패턴의 화려한 모양을 40% 밀도·길어진 예고·가는 광선으로 미리 보여 준다(보스 맵에 한정, 중간보스 제외). 같은 모양이 바로 이어 반복되지 않게 다음(없으면 앞) 기명 패턴을 쓴다.
         if(index<=5&&!mid&&!light){var other=spells[list[k+1<list.length?k+1:k-1>=1?k-1:k]];if(other&&other.fire&&other!==spell)plainFire=(function(f){return function(s,tt){var d=s.density,r=s.rules,w=r.warn,bm=r.beam;s.density=s.entranceAll?d*.65:Math.max(.4,d*.4);r.warn=w*1.4;r.beam=bm*.8;try{f(s,tt);}finally{s.density=d;r.warn=w;r.beam=bm;}};})(other.fire);}
         // 합친 스테이지(사용자 11-20): 페이즈마다 모습이 정해져 있다(g.forms[i] = i번째 이름 패턴의 그림 키, g.titles[i] = 그때 불리는 이름). 인물 키·판정은 그대로.
         var form=!mid&&g.forms?g.forms[k-1]:undefined,title=!mid&&g.titles?g.titles[k-1]:undefined,formNo=0;
         // formNo = 이 보스의 몇 번째 모습인가(0 = 처음 모습). 모습이 바뀌는 순간과 그때의 대사 순번에 쓴다.
         if(form)for(var fk=1;fk<k;fk++)if(g.forms[fk]!==g.forms[fk-1])formNo++;
-        SEGMENTS.push({kind:'card',stage:index,actor:actor,mid:mid,spell:false,name:'',plain:PLAIN_NAMES[pf],hp:lm?200:170,time:lm?16:13,fire:plainFire,form:form,title:title,formNo:formNo});
+        SEGMENTS.push({kind:'card',stage:index,actor:actor,mid:mid,spell:false,name:'',plain:spell.opening?spell.opening.id:PLAIN_NAMES[pf],hp:lm?200:170,time:lm?16:13,fire:plainFire,form:form,title:title,formNo:formNo});
         SEGMENTS.push({kind:'card',stage:index,actor:actor,mid:mid,spell:true,name:spell.name,scene:row[0],hp:spell.hp||(lm?420:last?600:520),time:spell.time||(lm?26:last?36:30),fire:spell.fire,form:form,title:title,formNo:formNo});
       }
     }
@@ -1472,7 +1472,7 @@
     var b=s.boss;if(!b.present){s.wrathTraverse=null;return;}
     if(b.leaving){s.wrathTraverse=null;b.leaveT=(b.leaveT||0)+1;b.y-=Math.min(5,1+b.leaveT*.12);if(b.y<-70){b.leaving=false;b.present=false;b.leaveT=0;}return;} // 갑자기 사라지지 않게 천천히 가속하며 물러난다
     if(wrathTraverse(s))return;
-    if(!openingHeld&&s.stage==='card'&&s.segTick%150===0){b.targetX=W/2-BOSS_ROAM+rand(s)*BOSS_ROAM*2;var ty=BOSS_REST-6+rand(s)*BOSS_SWAY;if(!(s.entranceAll&&b.downHold>0))b.targetY=ty;}
+    if(!openingHeld&&s.stage==='card'&&b.actor!=='p6_nightmare_captain'&&s.segTick%150===0){b.targetX=W/2-BOSS_ROAM+rand(s)*BOSS_ROAM*2;var ty=BOSS_REST-6+rand(s)*BOSS_SWAY;if(!(s.entranceAll&&b.downHold>0))b.targetY=ty;}
     // 육망성·한자띠가 떠 있는 동안 보스가 화면 가운데보다 조금 아래까지 내려와 문양이 화면 아래 끝 가까이 닿는다(사용자 11-18). 끝나면 제자리로 돌아간다.
     if(s.stage==='card'&&s.entranceAll){if(bossDescends(s))b.downHold=DESCEND_HOLD;else if(b.downHold>0)b.downHold--;if(b.downHold>0){var wob=bossWobble(s);b.targetX=W/2+wob[0];b.targetY=BOSS_DESCEND+wob[1];b.descended=true;}else if(b.descended){b.descended=false;b.targetY=BOSS_REST;}} // 사용자 11-19 "보스가 아래로왔다가 금방위로가고 하니까 정신없어": 내려오면 문양이 끝난 뒤에도 DESCEND_HOLD 동안 머문다(다음 문양까지 이어지면 계속 아래) // 심사 반복 지적: 화면 위에 붙어 체력 띠·스펠 이름과 겹쳤다. 조금 내려 둔다(위 3분의 1 안).
     var ease=s.entranceAll?.022:.05;b.x+=(b.targetX-b.x)*.035;b.y+=(b.targetY-b.y)*ease; // 오르내림은 천천히
@@ -1938,7 +1938,7 @@
     p3_legion:['gear',WHITE,4,1],p3_rampart:['square',CYAN,5,1],p3_defense:['triangle',YELLOW,3,1],controller:['circuit',GREEN,5,1],p3_body:['gear',RED,3,0],p3_gate:['gate',CYAN,2,1],
     goblin:['thorns',GREEN,4,0],p4_knight:['wings',RED,4,1],insomnia:['eye',CYAN,4,1],p5_cult:['ouroboros',PURPLE,5,0],p5_archon:['hexagram',YELLOW,3,1],p5_common:['square',WHITE,2,0],
     p5_upper:['octagram',CYAN,4,0],p5_grand:['octagram',YELLOW,6,0],p5_furnace:['flame',YELLOW,4,1],p5_neuron:['circuit',PURPLE,4,0],p5_keeper:['hourglass',WHITE,2,1],p5_rings:['wheel',CYAN,6,1],
-    arbelia:['rose',WHITE,5,0],siren:['wave',PURPLE,3,0],p6_demons:['pentagram',PURPLE,3,1],chief:['horns',PURPLE,6,1],p6_bind:['ouroboros',RED,4,1],p7_car:['wheel',WHITE,3,0],
+    arbelia:['rose',WHITE,5,0],siren:['wave',PURPLE,3,0],p6_demons:['pentagram',PURPLE,3,1],chief:['horns',PURPLE,6,1],p6_nightmare_captain:['triangle',RED,3,1],p7_car:['wheel',WHITE,3,0],
     p7_shadow:['spiral',PURPLE,4,0],p7_alarm:['triangle',RED,6,1],executor:['key',CYAN,5,1],p8_chip:['circuit',YELLOW,2,1],p8_collective:['honeycomb',CYAN,6,0],p8_brainwashed_elder:['square',RED,2,1],
     cultist:['ouroboros',WHITE,6,1],p8_ion:['spiral',CYAN,3,1],rian:['rose',RED,4,0]
   };
@@ -2537,7 +2537,7 @@
     p2_demons:'horn',p2_belphegor:'moon',p2_leviathan:'mirror',p2_beelzebub:'cauldron',asmodeus:'lips',p2_greed:'sword',mb_18:'coin',p2_mammon:'coin',p2_wrath:'flame',pride:'crown',p2_chairman:'gear',p2_core:'eye',
     p3_legion:'spear',p3_rampart:'tower',p3_defense:'chain',controller:'chain',p3_body:'gear',p3_gate:'key',goblin:'sword',mb_32:'rose',p4_knight:'wing',insomnia:'eye',
     p5_cult:'hourglass',p5_archon:'key',p5_common:'scythe',p5_upper:'book',p5_grand:'book',p5_furnace:'gear',p5_neuron:'eye',p5_keeper:'tomb',p5_rings:'hexagram',arbelia:'rose',siren:'bell',
-    chief:'horn',p6_demons:'horn',p6_bind:'chain',p7_car:'sun',p7_shadow:'moon',p7_alarm:'bell',executor:'chain',p8_chip:'chain',p8_collective:'mask',p8_brainwashed_elder:'chain',cultist:'candle',p8_ion:'scythe',rian:'hexagram'};
+    chief:'horn',p6_demons:'horn',p6_nightmare_captain:'spear',p7_car:'sun',p7_shadow:'moon',p7_alarm:'bell',executor:'chain',p8_chip:'chain',p8_collective:'mask',p8_brainwashed_elder:'chain',cultist:'candle',p8_ion:'scythe',rian:'hexagram'};
   // 형식: [이름, 갈래 수(이지·노멀·헬), 벌림(라디안, 고리는 0)]
   var SPIT_FORM={web:['fan',[3,3,3],.62],coin:['ring',[4,5,6],0],gear:['ring',[4,6,6],0],eye:['ring',[3,4,5],0],sword:['lance',[2,3,3],0],spear:['lance',[2,3,3],0],scythe:['fan',[2,3,3],.9],
     flame:['fan',[3,5,5],.5],cauldron:['fan',[3,4,5],.55],candle:['fan',[3,4,5],.55],lips:['pincer',[2,2,2],.55],heel:['pincer',[2,2,2],.55],wing:['pincer',[2,2,2],.7],mask:['pincer',[2,2,2],.6],mirror:['pincer',[2,2,2],.5],hexagram:['ring',[3,6,6],0]};

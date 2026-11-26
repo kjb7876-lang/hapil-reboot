@@ -295,6 +295,12 @@
     else if(k==='scythe'){g.moveTo(u*1.0,-u*.15);g.quadraticCurveTo(u*.45,-u*1.1,-u*.75,-u*.75);g.quadraticCurveTo(u*.15,-u*.62,u*.62,-u*.02);g.lineTo(u*.18,u*.95);g.lineTo(u*.02,u*.88);g.lineTo(u*.5,-u*.05);g.closePath();}
     else if(k==='fly'){g.ellipse(-u*.1,0,u*.62,u*.3,0,0,TAU);g.moveTo(u*.78,0);g.arc(u*.62,0,u*.24,0,TAU);}
     else if(k==='crown'){g.moveTo(-u*.95,u*.65);g.lineTo(-u*.95,-u*.6);g.lineTo(-u*.45,-u*.05);g.lineTo(0,-u*.85);g.lineTo(u*.45,-u*.05);g.lineTo(u*.95,-u*.6);g.lineTo(u*.95,u*.65);g.closePath();}
+    else if(k==='pennon'){
+      g.moveTo(1.25*u,0);g.lineTo(.54*u,-.32*u);g.lineTo(.49*u,-.1*u);g.lineTo(.12*u,-.1*u);
+      g.quadraticCurveTo(-.42*u,-.66*u,-1.13*u,-.68*u);g.lineTo(-.84*u,-.35*u);g.lineTo(-1.22*u,-.18*u);
+      g.quadraticCurveTo(-.58*u,-.28*u,-.18*u,.05*u);g.lineTo(-.98*u,.1*u);g.lineTo(-.98*u,.23*u);
+      g.lineTo(.49*u,.12*u);g.lineTo(.54*u,.32*u);g.closePath();
+    }
     else if(k==='thorn'){g.moveTo(u*1.35,0);g.lineTo(u*.1,-u*.22);g.lineTo(-u*.35,-u*.7);g.lineTo(-u*.3,-u*.2);g.lineTo(-u*1.05,-u*.12);g.lineTo(-u*1.05,u*.12);g.lineTo(-u*.3,u*.2);g.lineTo(-u*.35,u*.7);g.lineTo(u*.1,u*.22);g.closePath();}
     else g.arc(0,0,u*.8,0,TAU);
   }
@@ -323,6 +329,7 @@
     else if(k==='mask'){g.beginPath();g.ellipse(-u*.3,-u*.2,u*.2,u*.09,-.25,0,TAU);g.ellipse(u*.3,-u*.2,u*.2,u*.09,.25,0,TAU);g.fill();g.beginPath();g.moveTo(-u*.38,u*.28);g.quadraticCurveTo(0,u*.62,u*.38,u*.28);g.stroke();}
     else if(k==='fly'){g.fillStyle=pale;g.globalAlpha=.75;g.beginPath();g.ellipse(-u*.2,-u*.55,u*.5,u*.24,-.35,0,TAU);g.ellipse(-u*.2,u*.55,u*.5,u*.24,.35,0,TAU);g.fill();g.globalAlpha=1;g.beginPath();for(i=0;i<3;i++){g.moveTo(-u*(.5-i*.25),-u*.28);g.lineTo(-u*(.5-i*.25),u*.28);}g.stroke();}
     else if(k==='crown'){g.beginPath();g.moveTo(-u*.95,u*.35);g.lineTo(u*.95,u*.35);g.stroke();g.fillStyle=pale;[[-.95,-.6],[0,-.85],[.95,-.6]].forEach(function(p){g.beginPath();g.arc(p[0]*u,p[1]*u,u*.16,0,TAU);g.fill();});}
+    else if(k==='pennon'){g.strokeStyle=pale;g.beginPath();g.moveTo(.49*u,0);g.lineTo(1.02*u,0);g.stroke();}
     else if(k==='chain'||k==='scythe'||k==='moon'||k==='drop'||k==='bolt'||k==='thorn'||k==='fang'){g.fillStyle=pale;g.globalAlpha=.8;g.beginPath();g.ellipse(k==='drop'?u*.42:u*.2,-u*.12,u*.18,u*.08,-.4,0,TAU);g.fill();g.globalAlpha=1;}
   }
   function buildShot(kind,radius,color,tint){
@@ -1247,7 +1254,7 @@
   // 보라에 그 장면 테마색을 조금 섞어 장면과 어울리게 한다. 탄보다 먼저(아래에) 그려지고 알파를 낮게 둬 탄 윤곽을 덮지 않는다.
   /* 한자문(사용자 11-15 "안에는 한자 적어놓고 죽음질병뭐 저주 이런거 적들 특성에 맞게", "한자문으로 만들어서 넣어 단순 한자 한글자 반복하지말고"): 보스마다 지은 여덟 글자 주문.
      뜻 풀이는 /mnt/project-files 보고(arcade-v43/hanja-rings). 장식 고리와 판정 고리(drawRunes) 둘 다 이 문장을 고리 따라 이어 쓴다. */
-  var RUNE_VERSES={p1_tree:'根噬血土 枝結死果',violet:'八足織網 不愛之心',p1_horn:'泥中有面 角下無魂',p1_chaser:'血跡不絶 鎖斷追魂',p1_comrade:'屍積成丘 故友爲魔',p1_gate:'七柱守門 鞭痕不滅',balrog:'業火焚天 墜者無歸',mask:'笑面藏血 病室無聲',p1_staff:'針入骨髓 藥化爲毒',p1_seraph:'熾天封印 存憶盡滅',lucifer:'傲極必墮 毒城無明',p2_demons:'七十二魔 所羅門印',p2_belphegor:'怠惰腐骨 光陰虛擲',p2_leviathan:'嫉妒如蛇 毒入心肝',p2_beelzebub:'貪食無厭 腹裏藏蠅',asmodeus:'色慾纏絲 紅唇蝕骨',p2_greed:'金如刀刃 貪者自割',p2_mammon:'財奪人位 雪葬童心',p2_wrath:'怒火燎原 辱積成災',pride:'欲立天上 驕者先崩',p2_chairman:'鐵足踐人 權驅萬機',p2_core:'收苦爲算 複製魂紋',p3_legion:'鋼鐵千軍 轟炸無止',p3_rampart:'以憐行暴 救而囚之',p3_defense:'守門拒人 首憶封閉',controller:'系統否決 人性廢棄',p3_body:'肉換爲機 命假選擇',p3_gate:'憶門輪迴 歸路已斷',goblin:'笛驅群狼 刃鳴不和',p4_knight:'墮天騎士 劍路已定',insomnia:'夜不成眠 傀儡懸絲',p5_cult:'噬時之蛇 首令汚染',p5_archon:'收穫生魂 黑沙流轉',p5_common:'奪人光陰 衆門相連',p5_upper:'十二守門 閉層之令',p5_grand:'令令相疊 寸隙難求',p5_furnace:'爐吞可能 命線不息',p5_neuron:'強植其文 腦爲奴門',p5_keeper:'埋夢於忘 時計碎裂',p5_rings:'六環鎖命 沙柱崩儀',arbelia:'窗外午後 未寄之書',siren:'歌收時光 命運已算',p6_demons:'城外魔潮 雙印俱破',chief:'夢魘之首 城陷一夜',p6_bind:'夢縛其核 共奪而還',p7_car:'青燈濕路 前照奪命',p7_shadow:'墜者無聲 黑影隨身',p7_alarm:'警鳴不止 防火門閉',executor:'因果固定 終始相循',p8_chip:'萬夢一網 神經相縛',p8_collective:'衆我爲一 末日之戰',p8_brainwashed_elder:'忘憶從令 赤絲縛魂',cultist:'停時曲空 初志已忘',p8_ion:'秩序之壁 萬法歸一',rian:'叛者二人 全死之門'};
+  var RUNE_VERSES={p1_tree:'根噬血土 枝結死果',violet:'八足織網 不愛之心',p1_horn:'泥中有面 角下無魂',p1_chaser:'血跡不絶 鎖斷追魂',p1_comrade:'屍積成丘 故友爲魔',p1_gate:'七柱守門 鞭痕不滅',balrog:'業火焚天 墜者無歸',mask:'笑面藏血 病室無聲',p1_staff:'針入骨髓 藥化爲毒',p1_seraph:'熾天封印 存憶盡滅',lucifer:'傲極必墮 毒城無明',p2_demons:'七十二魔 所羅門印',p2_belphegor:'怠惰腐骨 光陰虛擲',p2_leviathan:'嫉妒如蛇 毒入心肝',p2_beelzebub:'貪食無厭 腹裏藏蠅',asmodeus:'色慾纏絲 紅唇蝕骨',p2_greed:'金如刀刃 貪者自割',p2_mammon:'財奪人位 雪葬童心',p2_wrath:'怒火燎原 辱積成災',pride:'欲立天上 驕者先崩',p2_chairman:'鐵足踐人 權驅萬機',p2_core:'收苦爲算 複製魂紋',p3_legion:'鋼鐵千軍 轟炸無止',p3_rampart:'以憐行暴 救而囚之',p3_defense:'守門拒人 首憶封閉',controller:'系統否決 人性廢棄',p3_body:'肉換爲機 命假選擇',p3_gate:'憶門輪迴 歸路已斷',goblin:'笛驅群狼 刃鳴不和',p4_knight:'墮天騎士 劍路已定',insomnia:'夜不成眠 傀儡懸絲',p5_cult:'噬時之蛇 首令汚染',p5_archon:'收穫生魂 黑沙流轉',p5_common:'奪人光陰 衆門相連',p5_upper:'十二守門 閉層之令',p5_grand:'令令相疊 寸隙難求',p5_furnace:'爐吞可能 命線不息',p5_neuron:'強植其文 腦爲奴門',p5_keeper:'埋夢於忘 時計碎裂',p5_rings:'六環鎖命 沙柱崩儀',arbelia:'窗外午後 未寄之書',siren:'歌收時光 命運已算',p6_demons:'城外魔潮 雙印俱破',chief:'夢魘之首 城陷一夜',p6_nightmare_captain:'黑旗一揮 夢陣交火',p7_car:'青燈濕路 前照奪命',p7_shadow:'墜者無聲 黑影隨身',p7_alarm:'警鳴不止 防火門閉',executor:'因果固定 終始相循',p8_chip:'萬夢一網 神經相縛',p8_collective:'衆我爲一 末日之戰',p8_brainwashed_elder:'忘憶從令 赤絲縛魂',cultist:'停時曲空 初志已忘',p8_ion:'秩序之壁 萬法歸一',rian:'叛者二人 全死之門'};
   var RUNE_FONT='"Noto Serif CJK KR","Noto Serif KR","Nanum Myeongjo","Batang","Songti SC","SimSun","Noto Sans CJK KR",serif';
   function verseOf(actor){return (RUNE_VERSES[actor]||'生者必滅 會者定離').replace(/\s+/g,'');}
   // 고리 띠에 문장을 이어 쓴다: 글자는 고리 바깥을 머리로 세우고, 한 문장이 끝날 때마다 작은 고리 쉼표.
@@ -1388,10 +1395,20 @@
     var fresh=Math.max(0,(s.enemyShotsBorn|0)-(bp.born|0))+(s.lasers.length>(bp.nl|0)?6:0)+(s.figures.length>(bp.nf|0)?6:0),gap=Math.max(0,Math.min(30,s.tick-(bp.at|0)));
     bp.acc=s.stage==='card'?(bp.acc||0)*Math.pow(.9,gap)+fresh:0;bp.born=s.enemyShotsBorn|0;bp.nl=s.lasers.length;bp.nf=s.figures.length;bp.at=s.tick;
     var beam=s.lasers.length>(bp.nl0|0)||s.figures.length>(bp.nf0|0);bp.nl0=s.lasers.length;bp.nf0=s.figures.length;
-    if(s.stage==='card'&&(s.n-bp.n>=6||bp.acc>=6)&&!(s.tick<bp.until&&s.tick>=bp.start)){bp.start=s.tick;bp.until=s.tick+(beam?BOSS_BEAM_POSE:56);bp.beam=beam;bp.acc=0;}bp.n=s.n; // 공격 동작: 탄을 한꺼번에 뿌린 순간, 짧은 틈에 6발 넘게 이어 쏜 순간(줄줄이 쏘는 패턴), 레이저·문양을 새로 부른 순간. 동작이 도는 동안 다시 쏴도 처음부터 다시 시작하지 않는다(11-25 실플레이 검수: 아스모데우스처럼 이어 쏘는 보스는 공격 자세가 카드 시간의 11%만 나왔다)
+    // 깃발을 치켜드는 예비 동작은 분대 사격의 실제 지휘 신호에서 시작한다.
+    var captainCommand=b.actor==='p6_nightmare_captain'&&b.commandSeg===s.seg&&b.commandTick>0;
+    var captainOrder=captainCommand&&b.commandTick>bp.start&&s.tick-b.commandTick<56;
+    var captainFiring=captainCommand&&b.commandFireTick>=b.commandTick&&s.tick-b.commandFireTick<20;
+    if(s.stage==='card'&&(captainOrder||(s.n-bp.n>=6||bp.acc>=6)&&!(s.tick<bp.until&&s.tick>=bp.start))){bp.start=captainOrder?b.commandTick:s.tick;bp.beam=beam&&!captainOrder;bp.until=bp.start+(bp.beam?BOSS_BEAM_POSE:56);bp.acc=0;}bp.n=s.n; // 공격 동작: 탄을 한꺼번에 뿌린 순간, 짧은 틈에 6발 넘게 이어 쏜 순간(줄줄이 쏘는 패턴), 레이저·문양을 새로 부른 순간. 동작이 도는 동안 다시 쏴도 처음부터 다시 시작하지 않는다(11-25 실플레이 검수: 아스모데우스처럼 이어 쏘는 보스는 공격 자세가 카드 시간의 11%만 나왔다)
     if(bp.beam&&s.tick<bp.until&&s.tick-bp.start<BOSS_BEAM_HOLD&&images[ak+'@attack']&&beamsLive(s)){var hs=sheetOf(ak+'@attack',images[ak+'@attack']),htail=Math.ceil((hs.frames-1-Math.floor((hs.frames-1)*.6))*60/hs.fps)+1;if(bp.until-s.tick<=htail)bp.until=s.tick+htail;} // 빛줄기가 서 있는 동안은 팔 뻗은 칸을 붙든 채 거두지 않는다(11-25 재심사·사용자 '개선적용': 레이저가 끝나기 전에 자세가 풀림). 리듬 레이저처럼 길게 이어지면 4초에서 거둔다
-    var bm=s.tick<bp.until&&images[ak+'@attack']?'attack':bp.side>0?'side':'',bphase=0;
+    var bm=(s.tick<bp.until||captainFiring)&&images[ak+'@attack']?'attack':bp.side>0?'side':'',bphase=0;
     if(bm==='attack'){var ash=sheetOf(ak+'@attack',images[ak+'@attack']);if(ash.frames>1){var el=Math.max(0,s.tick-bp.start),dur=bp.until-bp.start,af=Math.min(ash.frames-1,Math.floor(el*ash.fps/60));if(dur>56){var peak=Math.floor((ash.frames-1)*.6),tail=(ash.frames-1-peak)*60/ash.fps,left=bp.until-s.tick;af=left<=tail?Math.min(ash.frames-1,peak+1+Math.floor((tail-left)*ash.fps/60)):Math.min(peak,af);} /* 레이저·문양을 부를 때는 팔을 뻗은 칸에서 멈춰 빛줄기가 서는 동안 붙잡고, 끝에 남은 칸으로 거둔다(11-25 심사: 0.5초 만에 대기로 돌아감) */bphase=af-Math.floor(visual*ash.fps);}} // 공격 칸은 쏜 순간 첫 칸부터 끝 칸까지 한 번 재생한다(11-25 실플레이 검수: 전역 시계로 칸을 골라 아무 칸에서나 시작·되감겨 팔 뻗는 칸이 잘 안 보였다, 아스모데우스)
+    if(bm==='attack'&&captainCommand&&(bp.start===b.commandTick||captainFiring)&&ash.frames===4){
+      // 들어 올린 창은 명령이 전달될 때까지 고정하고, 실제 일제 사격 때 찌르고 거둔다.
+      var releaseAge=s.tick-b.commandFireTick,reach=b.commandFireTick>=b.commandTick;
+      var cell=reach?(releaseAge<60/ash.fps?2:3):Math.min(1,Math.floor((s.tick-b.commandTick)*ash.fps/60));
+      bphase=cell-Math.floor(visual*ash.fps);
+    }
     var since=s.tick-bp.start,punch=bm==='attack'&&since>=0&&since<16?1+.07*(1-since/16):1; // 공격 순간 몸이 한 번 커졌다 돌아온다. 탄에 가려도 윤곽으로 읽힌다.
     var rc=recoilOf(s,b),hitPh=0;if(images[ak+'@hit']&&bm!=='attack'){ // 피격 그림(닷츠 CX-0190BM): 쏘는 중이 아닐 때만, 1.1초에 한 번 처음 칸부터 끝 칸까지 한 번(영웅이 늘 쏘므로 매번 틀면 보스가 내내 움찔거린다)
       if(hitShow.actor!==ak){hitShow.actor=ak;hitShow.start=-999;}

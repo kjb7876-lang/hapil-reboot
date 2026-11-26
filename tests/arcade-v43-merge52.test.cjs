@@ -66,6 +66,47 @@ test('stage 40 is the nightmare swarm and the last boss is the awakened cult lea
  assert.equal(Lines.getLine('chief',swarm).text,'그들은 항상 의지만 할 걸, 여태 그래 왔듯이.');
 });
 
+test('stage 42 uses the nightmare captain from arrival to defeat before handing off to its own chief',()=>{
+ const stage=41,actor='p6_nightmare_captain';
+ const mids=A.SEGMENTS.filter(g=>g.stage===stage&&g.kind==='card'&&g.mid);
+ assert.deepEqual(mids.map(g=>[g.spell,g.actor,A.segArt(g),g.name]),[
+  [false,actor,actor,''],[true,actor,actor,'악몽분대의 교차 사격']
+ ]);
+ assert(!A.SEGMENTS.some(g=>g.actor===actor&&g.stage!==stage));
+ assert.equal(A.bossShotOf(actor),'pennon');
+ const chief=bossCards(stage);
+ assert(chief.length&&chief.every(({g})=>g.actor==='chief'&&A.segArt(g)==='chief_alt50'));
+ assert(bossCards(39).every(({g})=>A.segArt(g)==='chief_swarm'));
+ assert(bossCards(40).every(({g})=>g.actor==='p6_demons'));
+ const first=A.SEGMENTS.indexOf(mids[0]),last=A.SEGMENTS.indexOf(mids[1]);
+ for(const difficulty of Object.keys(A.DIFFICULTY)){
+  const s=A.createRun({segment:first,difficulty,compact:true,pacing:true,entranceAll:true,rhythm:true,seed:42});
+  const seen=new Set(),firing=new Set(),commandDelays=[new Set(),new Set()];
+  let defeat;
+  for(let i=0;i<18000;i++){
+   // Keep the observer alive and follow the boss. Player fire and native boss HP decide both defeats.
+   s.player.invulnerableUntil=s.tick+2;
+   const previous=s.enemyShotsBorn;
+   A.step(s,{dx:Math.max(-2,Math.min(2,s.boss.x-s.player.x)),dy:0});
+   if(s.events.includes('bossDown'))defeat=s.boss.down;
+   s.events.length=0;
+   if(s.stage!=='card')continue;
+   if(s.seg===chief[0].k)break;
+   assert.equal(s.boss.actor,actor,difficulty);
+   assert.equal(s.boss.name,'악몽분대장',difficulty);
+   seen.add(s.seg);
+   if(s.enemyShotsBorn>previous)firing.add(s.seg);
+   if(s.boss.commandFireTick===s.tick)commandDelays[s.seg===first?0:1].add(s.tick-s.boss.commandTick);
+  }
+  assert.deepEqual([...seen],[first,last],difficulty+' visits both captain cards');
+  assert.deepEqual([...firing],[first,last],difficulty+' fires in both captain cards');
+  assert.deepEqual(commandDelays[0],new Set([30]),difficulty+' teaches one rank after its signal');
+  assert.deepEqual(commandDelays[1],new Set([30,{gentle:70,normal:64,hell:58,handicap:58}[difficulty]]),difficulty+' adds the delayed opposite flank');
+  assert(defeat&&defeat.actor===actor&&defeat.seg===last,difficulty+' defeats the captain in his own form');
+  assert.equal(s.boss.actor,'chief',difficulty);
+ }
+});
+
 test('stage 49 ends with the brainwashed elder and opens with his own name and art on every difficulty',()=>{
  const stage=48,actor='p8_brainwashed_elder',cards=bossCards(stage);
  assert.equal(A.STAGES[stage].scene,'58');
