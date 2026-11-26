@@ -87,7 +87,7 @@ async function heroSelection(page,name,mobile){
   }
 }
 async function setup(browser,viewport,mobile,name){
-  const context=await browser.newContext({viewport,isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1});
+  const context=await browser.newContext({locale:'ko-KR',viewport,isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1});
   const page=await context.newPage(),errors=[],badRequests=[];
   page.on('pageerror',e=>errors.push(e.message));
   page.on('response',r=>{if(r.status()>=400&&!r.url().endsWith('/favicon.ico'))badRequests.push(r.status()+' '+r.url());});
@@ -490,7 +490,7 @@ async function seohaAwakenedAbility(browser,baseURL){
     assert.equal(reading.focus,held);near(reading.rate,expected);return reading;
    }finally{await p.keyboard.up('ArrowRight');if(held)await p.keyboard.up('Shift');}
   }
-  const c=await browser.newContext({viewport:{width:1280,height:900}});
+  const c=await browser.newContext({locale:'ko-KR',viewport:{width:1280,height:900}});
   const p=await c.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));
   try{
     await p.goto(baseURL+'/arcade.html?eyes=0&drill=0',{waitUntil:'domcontentloaded'});
@@ -586,9 +586,47 @@ async function mobile(browser,width,height){
   }catch(e){await page.screenshot({path:path.join(out,name+'-failure.png'),fullPage:true});throw e;}
   finally{await context.close();}
 }
+// Switching the pause picker must preserve the exact live run and the chosen locale on reload.
+async function checkLanguageSwitch(browser, baseURL){
+  const context=await browser.newContext({locale:'ja-JP',viewport:{width:360,height:640},isMobile:true,hasTouch:true});
+  try{
+    const page=await context.newPage();
+    await page.goto(baseURL+'/arcade.html?drill=0');
+    const titlePicker=page.locator('#arcade-title [data-language-picker]');
+    await page.waitForFunction(()=>window.HapilArcadeApp&&!document.querySelector('#arcade-start').disabled);
+    assert.equal(await titlePicker.inputValue(),'ja');
+    await titlePicker.selectOption('pt-BR');
+    assert.equal(await page.locator('#arcade-start').textContent(),await page.evaluate(()=>HapilI18n.t('fromStart')));
+    assert(await page.locator('#title-best').isVisible());
+    await page.reload();
+    await page.waitForFunction(()=>window.HapilArcadeApp&&!document.querySelector('#arcade-start').disabled);
+    assert.equal(await titlePicker.inputValue(),'pt-BR');
+    // The long Portuguese loadout must leave the awakened hero's button clickable on desktop.
+    const desktop=await browser.newPage({locale:'pt-BR',viewport:{width:1280,height:900}});
+    try{
+      await desktop.goto(baseURL+'/arcade.html');
+      await desktop.locator('#arcade-start').click();
+      await desktop.locator('#hero-select-seoha').click();
+      await desktop.locator('#hero-select-seoha-b').click();
+      assert.equal(await desktop.locator('#hero-select-seoha-b').getAttribute('aria-pressed'),'true');
+    }finally{await desktop.close();}
+    await page.evaluate(()=>{HapilArcadeApp.debugState().jumpStage(48);HapilArcadeApp.pause();});
+    const snapshot=p=>p.evaluate(()=>{const s=HapilArcadeApp.debugState().state;return [s.tick,s.seg,s.hero,s.score,s.n];});
+    const before=await snapshot(page);
+    const pausePicker=page.locator('#arcade-pause [data-language-picker]');
+    await pausePicker.selectOption('zh-Hant');
+    assert.equal((await state(page)).mode,'paused');
+    assert.deepEqual(await snapshot(page),before);
+    assert.equal(await page.locator('#arcade-resume').textContent(),await page.evaluate(()=>HapilI18n.t('resume')));
+    assert.equal(await page.locator('html').getAttribute('lang'),'zh-Hant');
+    await page.locator('#arcade-resume').tap();
+    assert.equal((await state(page)).mode,'playing');
+  }finally{await context.close();}
+}
 (async()=>{
   fs.mkdirSync(out,{recursive:true});await new Promise(r=>server.listen(0,'127.0.0.1',r));let browser;
   try{browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_PATH?{executablePath:process.env.CHROMIUM_PATH}:{})});
+    await checkLanguageSwitch(browser,'http://127.0.0.1:'+server.address().port);
     reports.push({seohaAwakenedAbility:await seohaAwakenedAbility(browser,'http://127.0.0.1:'+server.address().port)});
     await desktop(browser);for(const size of [[390,844],[360,640],[844,390]])await mobile(browser,...size);
     const wrath=await require('./check-wrath-browser-v43.cjs')(browser,'http://127.0.0.1:'+server.address().port,out);reports.push({wrath});

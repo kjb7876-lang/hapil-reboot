@@ -144,7 +144,13 @@
   }
 
   /* ── 화면: root 안에 나무 캔버스·수치·단추·열매 칸을 만든다. hooks: {changed(g), sound(kind)} */
-  function fmt(n){return String(Math.floor(n)).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+
+  function tr(source,values){
+    var i18n=global.HapilI18n;
+    if(i18n)return i18n.text(source,values);
+    return values?source.replace(/\{(\w+)\}/g,function(slot,key){return values[key]==null?slot:String(values[key]);}):source;
+  }
+  function fmt(n){return Math.floor(n).toLocaleString(global.HapilI18n?global.HapilI18n.lang:'ko');}
   function mount(doc,root,g,hooks){
     hooks=hooks||{};root.innerHTML='';
     var cv=doc.createElement('canvas');cv.className='grove-tree';cv.setAttribute('role','img');root.appendChild(cv);
@@ -153,26 +159,34 @@
     var barLbl=doc.createElement('p');barLbl.className='note grove-bar-label';root.appendChild(barLbl);var bar=doc.createElement('div');bar.className='grove-bar';var fill=doc.createElement('i');bar.appendChild(fill);root.appendChild(bar);
     var row=doc.createElement('div');row.className='row';
     var b1=doc.createElement('button');b1.type='button';b1.id='grove-feed';row.appendChild(b1);
-    var b2=doc.createElement('button');b2.type='button';b2.id='grove-feed-all';b2.textContent='남은 양분으로 계속 피우기';row.appendChild(b2);root.appendChild(row);
+    var b2=doc.createElement('button');b2.type='button';b2.id='grove-feed-all';b2.textContent=tr('남은 양분으로 계속 피우기');row.appendChild(b2);root.appendChild(row);
     var msg=doc.createElement('p');msg.className='note grove-msg';msg.setAttribute('aria-live','polite');root.appendChild(msg);
-    var slots=doc.createElement('div');slots.className='grove-slots';slots.setAttribute('role','group');slots.setAttribute('aria-label','시공간 열매 장착');root.appendChild(slots);
+    var slots=doc.createElement('div');slots.className='grove-slots';slots.setAttribute('role','group');slots.setAttribute('aria-label',tr('시공간 열매 장착'));root.appendChild(slots);
     var btns=[];for(var i=0;i<SLOTS;i++){var b=doc.createElement('button');b.type='button';b.className='grove-slot';b.dataset.i=String(i);slots.appendChild(b);btns.push(b);
       b.addEventListener('click',function(){var j=Number(this.dataset.i);if(toggle(g,j)){if(hooks.sound)hooks.sound('toggle');changed();}});}
     var row2=doc.createElement('div');row2.className='row';
-    var all=doc.createElement('button');all.type='button';all.id='grove-all';all.textContent='모두 끼우기';row2.appendChild(all);
-    var none=doc.createElement('button');none.type='button';none.id='grove-none';none.textContent='모두 빼기';row2.appendChild(none);root.appendChild(row2);
-    var how=doc.createElement('p');how.className='note grove-how';how.textContent='점수 1만 점마다 양분 1. 꽃이 피면 열매가 맺히거나 꽃만 집니다. 여러 번 지면 꼭 맺히는 꽃이 옵니다. 열매 하나에 시공간 왜곡 +'+PER+'% (헬에서도).';root.appendChild(how);
+    var all=doc.createElement('button');all.type='button';all.id='grove-all';all.textContent=tr('모두 끼우기');row2.appendChild(all);
+    var none=doc.createElement('button');none.type='button';none.id='grove-none';none.textContent=tr('모두 빼기');row2.appendChild(none);root.appendChild(row2);
+    var how=doc.createElement('p');how.className='note grove-how';how.textContent=tr('점수 1만 점마다 양분 1. 꽃이 피면 열매가 맺히거나 꽃만 집니다. 여러 번 지면 꼭 맺히는 꽃이 옵니다. 열매 하나에 시공간 왜곡 +{pct}% (헬에서도).',{pct:PER});root.appendChild(how);
     var fx=null,raf=0,t0=0,alive=true;
     function changed(){paint();if(hooks.changed)hooks.changed(g);}
     function paint(){
       var n=next(g),eq=equipped(g);
-      pct.innerHTML='';var s1=doc.createElement('span');s1.textContent='시공간 왜곡 ';var b=doc.createElement('b');b.textContent=chancePct(g)+'%';var s2=doc.createElement('small');s2.textContent=' 기본 '+BASE+'% + 열매 '+eq+'×'+PER+'%';pct.appendChild(s1);pct.appendChild(b);pct.appendChild(s2);
-      info.textContent='양분 '+fmt(g.sap)+' · 열매 '+g.fruits+'/'+SLOTS+(n?' · 이번 꽃: '+(n.stage+1)+'번째 열매 확률 '+Math.round(n.chance*100)+'%'+(n.pity-n.tries<=1?' · 이번엔 꼭 맺힘':' · 늦어도 꽃 '+(n.pity-n.tries)+'번 안에'):' · 다 자란 나무');
-      fill.style.width=(n?Math.round(g.grow/n.cost*100):100)+'%';bar.setAttribute('aria-label','꽃 게이지 '+(n?g.grow+'/'+n.cost:'완성'));barLbl.textContent=n?'다음 꽃까지 양분 '+fmt(g.grow)+' / '+fmt(n.cost):'열매 10개 · 다 자란 나무';
-      b1.textContent=n?'양분 주기'+(g.sap>=n.need?' · 꽃 피우기':''):'다 자란 나무';b1.disabled=!n||g.sap<=0;b2.hidden=!n||g.sap<n.need+COST[g.fruits];
+      pct.innerHTML='';var s1=doc.createElement('span');s1.textContent=tr('시공간 왜곡')+' ';var b=doc.createElement('b');b.textContent=chancePct(g)+'%';var s2=doc.createElement('small');s2.textContent=' '+tr('기본 {base}% + 열매 {count}×{pct}%',{base:BASE,count:eq,pct:PER});pct.appendChild(s1);pct.appendChild(b);pct.appendChild(s2);
+      var details=[tr('양분 {sap} · 열매 {fruit}/{max}',{sap:fmt(g.sap),fruit:g.fruits,max:SLOTS})];
+      if(n){
+        details.push(tr('이번 꽃: {n}번째 열매 확률 {pct}%',{n:n.stage+1,pct:Math.round(n.chance*100)}));
+        details.push(n.pity-n.tries<=1?tr('이번엔 꼭 맺힘'):tr('늦어도 꽃 {n}번 안에',{n:n.pity-n.tries}));
+      }else details.push(tr('다 자란 나무'));
+      info.textContent=details.join(' · ');
+      fill.style.width=(n?Math.round(g.grow/n.cost*100):100)+'%';
+      bar.setAttribute('aria-label',tr('꽃 게이지 {value}',{value:n?g.grow+'/'+n.cost:tr('완성')}));
+      barLbl.textContent=n?tr('다음 꽃까지 양분 {a} / {b}',{a:fmt(g.grow),b:fmt(n.cost)}):tr('열매 10개 · 다 자란 나무');
+      b1.textContent=n?tr(g.sap>=n.need?'양분 주기 · 꽃 피우기':'양분 주기'):tr('다 자란 나무');
+      b1.disabled=!n||g.sap<=0;b2.hidden=!n||g.sap<n.need+COST[g.fruits];
       var ord=[];for(var q=0;q<g.fruits;q++)if(g.on[q])ord.push(q);for(q=0;q<g.fruits;q++)if(!g.on[q])ord.push(q);
-      btns.forEach(function(x,j){var i=j<ord.length?ord[j]:-1,own=i>=0,on=own&&!!g.on[i];x.dataset.i=String(i);x.disabled=!own;x.setAttribute('aria-pressed',String(on));x.setAttribute('aria-label',own?'시공간 열매 '+(i+1)+(on?' 장착됨':' 빠짐'):'빈 자리 '+(j+1));x.dataset.state=own?(on?'on':'off'):'empty';x.textContent=own?'時':'';});
-      all.disabled=none.disabled=g.fruits===0;cv.setAttribute('aria-label','성장나무 '+g.fruits+'단계, 시공간 열매 '+g.fruits+'개 중 '+eq+'개 장착');
+      btns.forEach(function(x,j){var i=j<ord.length?ord[j]:-1,own=i>=0,on=own&&!!g.on[i];x.dataset.i=String(i);x.disabled=!own;x.setAttribute('aria-pressed',String(on));x.setAttribute('aria-label',own?tr(on?'시공간 열매 {n} 장착됨':'시공간 열매 {n} 빠짐',{n:i+1}):tr('빈 자리 {n}',{n:j+1}));x.dataset.state=own?(on?'on':'off'):'empty';x.textContent=own?'時':'';});
+      all.disabled=none.disabled=g.fruits===0;cv.setAttribute('aria-label',tr('성장나무 {n}단계, 시공간 열매 {n}개 중 {on}개 장착',{n:g.fruits,on:eq}));
       draw();
     }
     function draw(){
@@ -185,13 +199,18 @@
     }
     function loop(){if(!alive)return;draw();raf=global.requestAnimationFrame?global.requestAnimationFrame(loop):0;}
     function feedOnce(){var at=g.fruits,r=feed(g,hooks.rng);if(r.bloom){fx={ok:r.bloom.ok,t:(global.performance?global.performance.now():Date.now())/1000,at:at,age:0};
-        msg.textContent=r.bloom.ok?(r.bloom.stage+1)+'번째 시공간 열매가 맺혔습니다'+(r.bloom.pity?' (보장)':' (방금 확률 '+Math.round(r.bloom.chance*100)+'%)')+' · 왜곡 +'+PER+'%':'꽃만 피고 졌습니다 (방금 확률 '+Math.round(r.bloom.chance*100)+'%) · 늦어도 꽃 '+(PITY[r.bloom.stage]-g.tries)+'번 안에 맺힘';
+        var odds=tr('방금 확률 {pct}%',{pct:Math.round(r.bloom.chance*100)});
+        if(r.bloom.ok){
+          msg.textContent=tr('{n}번째 시공간 열매가 맺혔습니다',{n:r.bloom.stage+1})+' ('+(r.bloom.pity?tr('보장'):odds)+') · '+tr('왜곡 +{pct}%',{pct:PER});
+        }else{
+          msg.textContent=tr('꽃만 피고 졌습니다')+' ('+odds+') · '+tr('늦어도 꽃 {n}번 안에',{n:PITY[r.bloom.stage]-g.tries});
+        }
         if(hooks.sound)hooks.sound(r.bloom.ok?'fruit':'petal');}
-      else if(r.poured){msg.textContent='양분 '+fmt(r.poured)+'을 주었습니다.';if(hooks.sound)hooks.sound('feed');}
+      else if(r.poured){msg.textContent=tr('양분 {n}을 주었습니다.',{n:fmt(r.poured)});if(hooks.sound)hooks.sound('feed');}
       return r;}
     b1.addEventListener('click',function(){feedOnce();changed();});
     b2.addEventListener('click',function(){var got=0,lost=0,guard=0,last=null;while(guard++<500){var n=next(g);if(!n||g.sap<n.need)break;var r=feedOnce();if(!r.bloom)break;last=r;if(r.bloom.ok)got++;else lost++;}
-      if(last&&got+lost>1)msg.textContent='꽃 '+(got+lost)+'번 · 열매 '+got+'개 맺힘'+(lost?' · '+lost+'번은 꽃만 짐':'');changed();});
+      if(last&&got+lost>1)msg.textContent=tr('꽃 {n}번 · 열매 {f}개 맺힘',{n:got+lost,f:got})+(lost?' · '+tr('{n}번은 꽃만 짐',{n:lost}):'');changed();});
     all.addEventListener('click',function(){setAll(g,true);changed();});none.addEventListener('click',function(){setAll(g,false);changed();});
     paint();loop();
     return {paint:paint,stop:function(){alive=false;if(raf&&global.cancelAnimationFrame)global.cancelAnimationFrame(raf);}};

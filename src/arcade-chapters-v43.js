@@ -203,6 +203,12 @@
   ].join('\n');
   function injectCss(doc){if(!doc||doc.getElementById('arcade-chapters-css')||!doc.head)return;var st=doc.createElement('style');st.id='arcade-chapters-css';st.textContent=CSS;doc.head.appendChild(st);}
 
+
+  function tr(source,values){
+    var i18n=root.HapilI18n;
+    if(i18n)return i18n.text(source,values);
+    return values?source.replace(/\{(\w+)\}/g,function(slot,key){return values[key]==null?slot:String(values[key]);}):source;
+  }
   function el(doc,tag,cls,text){var e=doc.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;}
   /* 챕터 전환 카드. spec: {end:{part,title,stats,saved}, begin:{part,title,numeral,lines,speaker}, lite} → 끝 낙관(2.4초) → 먹 번짐·제목(2.6초) → 정본 문장 한 줄씩(3.2초).
      탭·Enter 로 다음, [건너뛰기] 로 끝. 시간은 앱이 tick(ms) 으로 준다(백그라운드·일시정지에는 멈춘다). */
@@ -217,30 +223,30 @@
       var place=el(doc,'div','cc-place');host.appendChild(place);host.appendChild(el(doc,'div','cc-grain'));
       var num=el(doc,'div','cc-numeral');host.appendChild(num);
       var end=el(doc,'div','cc-end'),begin=el(doc,'div','cc-begin');host.appendChild(end);host.appendChild(begin);
-      var foot=el(doc,'div','cc-foot'),hint=el(doc,'span','cc-hint','화면을 누르면 다음'),skip=el(doc,'button','cc-skip','건너뛰기');skip.type='button';foot.appendChild(hint);foot.appendChild(skip);host.appendChild(foot);
+      var foot=el(doc,'div','cc-foot'),hint=el(doc,'span','cc-hint',tr('화면을 누르면 다음')),skip=el(doc,'button','cc-skip',tr('건너뛰기'));skip.type='button';foot.appendChild(hint);foot.appendChild(skip);host.appendChild(foot);
       return {num:num,place:place,end:end,begin:begin,skip:skip,hint:hint};
     }
     var parts=null;
     function paintEnd(e){
       var box=parts.end;box.textContent='';box.hidden=false;parts.begin.hidden=true;
-      box.appendChild(el(doc,'p','cc-kicker','제'+e.part+'부 · 終'));box.appendChild(el(doc,'h2','cc-name',e.title));
+      box.appendChild(el(doc,'p','cc-kicker',tr('제{n}부 · 終',{n:e.part})));box.appendChild(el(doc,'h2','cc-name',tr(e.title)));
       var sb=el(doc,'div','cc-sealbox'),seal=el(doc,'div','cc-seal',e.final?'完':'終');sb.setAttribute('aria-hidden','true');sb.appendChild(el(doc,'div','cc-splash'));sb.appendChild(seal);box.appendChild(sb);
       if(e.stats)box.appendChild(el(doc,'p','cc-stats',e.stats));
-      if(e.refill){var rf=el(doc,'p','cc-refill');var hs=el(doc,'span','cc-hearts');for(var hi=0;hi<Math.max(0,Math.min(12,e.refill.max|0));hi++){var hh=el(doc,'i','','♥');hh.style.animationDelay=(1+hi*.12).toFixed(2)+'s';hs.appendChild(hh);}rf.appendChild(hs);rf.appendChild(doc.createTextNode(' 목숨이 모두 회복되었습니다'));rf.setAttribute('aria-label','목숨 '+e.refill.hp+'/'+e.refill.max+' 모두 회복');box.appendChild(rf);
-        if(e.refill.power){var lv=el(doc,'p','cc-level','영웅 레벨 이어짐 · 공격 ');lv.appendChild(el(doc,'b','','Lv.'+e.refill.power));lv.appendChild(doc.createTextNode(' · 필살 '));lv.appendChild(el(doc,'b','','Lv.'+(e.refill.bomb||e.refill.power)));box.appendChild(lv);}}
-      box.appendChild(el(doc,'p','cc-saved',e.saved===false?'이 브라우저에 기록을 남기지 못했습니다 — 챕터 기록 화면에서 기록 코드를 복사해 두세요':'✓ 진행이 저장되었습니다'));
-      host.setAttribute('aria-label','제'+e.part+'부 '+e.title+' 끝');
+      if(e.refill){var rf=el(doc,'p','cc-refill');var hs=el(doc,'span','cc-hearts');for(var hi=0;hi<Math.max(0,Math.min(12,e.refill.max|0));hi++){var hh=el(doc,'i','','♥');hh.style.animationDelay=(1+hi*.12).toFixed(2)+'s';hs.appendChild(hh);}rf.appendChild(hs);rf.appendChild(doc.createTextNode(' '+tr('목숨이 모두 회복되었습니다')));rf.setAttribute('aria-label',tr('목숨 {hp}/{max} 모두 회복',{hp:e.refill.hp,max:e.refill.max}));box.appendChild(rf);
+        if(e.refill.power){var lv=el(doc,'p','cc-level',tr('영웅 레벨 이어짐 · 공격')+' ');lv.appendChild(el(doc,'b','','Lv.'+e.refill.power));lv.appendChild(doc.createTextNode(' · '+tr('필살')+' '));lv.appendChild(el(doc,'b','','Lv.'+(e.refill.bomb||e.refill.power)));box.appendChild(lv);}}
+      box.appendChild(el(doc,'p','cc-saved',tr(e.saved===false?'이 브라우저에 기록을 남기지 못했습니다 — 챕터 기록 화면에서 기록 코드를 복사해 두세요':'✓ 진행이 저장되었습니다')));
+      host.setAttribute('aria-label',tr('제{n}부 {title} 끝',{n:e.part,title:tr(e.title)}));
     }
     function paintBegin(b){
       var box=parts.begin;box.textContent='';box.hidden=false;parts.end.hidden=true;parts.num.textContent=b.numeral||'';
-      box.appendChild(el(doc,'p','cc-part',b.kicker||'제'+b.part+'부'));box.appendChild(el(doc,'h2','cc-title',b.title));box.appendChild(el(doc,'div','cc-rule'));if(b.firstStage)box.appendChild(el(doc,'p','cc-firststage','첫 무대 · '+b.firstStage));
+      box.appendChild(el(doc,'p','cc-part',b.kicker?tr(b.kicker):tr('제{n}부',{n:b.part})));box.appendChild(el(doc,'h2','cc-title',tr(b.title)));box.appendChild(el(doc,'div','cc-rule'));if(b.firstStage)box.appendChild(el(doc,'p','cc-firststage',tr('첫 무대 · {name}',{name:tr(b.firstStage)})));
       parts.place.style.backgroundImage=b.place?'url("'+String(b.place).replace(/["\\]/g,'')+'")':'';host.dataset.final=String(!!b.final);
       var mem=el(doc,'div','cc-memory');mem.appendChild(el(doc,'p','cc-speaker',''));mem.appendChild(el(doc,'p','cc-line',''));box.appendChild(mem);
-      host.setAttribute('aria-label','제'+b.part+'부 '+b.title);
+      host.setAttribute('aria-label',tr('제{n}부',{n:b.part})+' '+tr(b.title));
     }
     function paintLine(){
       var b=cur.spec.begin,line=b.lines[cur.line],mem=parts.begin.querySelector('.cc-memory');if(!mem||!line)return;
-      mem.classList.remove('on');void mem.offsetWidth;mem.querySelector('.cc-speaker').textContent=(line.speaker||b.speaker||'')+' · '+(cur.line+1)+'/'+b.lines.length;mem.querySelector('.cc-line').textContent=line.text;mem.classList.add('on');
+      mem.classList.remove('on');void mem.offsetWidth;mem.querySelector('.cc-speaker').textContent=tr(line.speaker||b.speaker||'')+' · '+(cur.line+1)+'/'+b.lines.length;mem.querySelector('.cc-line').textContent=tr(line.text);mem.classList.add('on');
     }
     function go(phase){
       cur.phase=phase;cur.t=0;host.dataset.phase=phase;
@@ -274,13 +280,13 @@
     rows.forEach(function(r){
       var row=el(doc,'div','ch-row'+(r.complete?' complete':'')+(r.open?'':' locked')+(r===current?' current':''));row.dataset.part=String(r.part);
       var num=el(doc,'div','ch-num',r.numeral);num.setAttribute('aria-hidden','true');row.appendChild(num);
-      var head=el(doc,'div','ch-head');head.appendChild(el(doc,'small',null,'제'+r.part+'부 · STAGE '+(r.first+1)+'–'+(r.last+1)));if(r.open)head.appendChild(doc.createTextNode(r.title));else{var veil=el(doc,'span','ch-veil v'+(r.part%3)+(rows[r.part-2]&&rows[r.part-2].open?' next':''));veil.setAttribute('role','img');veil.setAttribute('aria-label','잠긴 챕터 · 먹으로 가린 제목');head.appendChild(veil);} /* 사용자 11-20 "해금전에 챕터 제목 묵색으로 가려서 스포방지": 잠긴 챕터는 제목 글자를 화면에 아예 넣지 않고 먹 획으로 덮는다 */
-      if(r.complete){var bd=el(doc,'span','ch-badge',(r.levelName?r.levelName+' ':'')+'완주');head.appendChild(bd);}row.appendChild(head);
-      var bar=el(doc,'div','ch-bar');bar.setAttribute('role','img');bar.setAttribute('aria-label',r.cleared+' / '+r.total+' 스테이지');for(var i=0;i<r.total;i++)bar.appendChild(el(doc,'i',i<r.cleared?'on':''));row.appendChild(bar);
-      row.appendChild(el(doc,'div','ch-meta',r.open?('스테이지 '+r.cleared+'/'+r.total+' · 별 '+r.stars+'/'+r.maxStars+(r.score?' · 점수 합 '+r.score.toLocaleString('ko-KR'):'')):'잠김 — 제'+(r.part-1)+'부를 마치면 열립니다'));
+      var head=el(doc,'div','ch-head');head.appendChild(el(doc,'small',null,tr('제{n}부 · STAGE {first}–{last}',{n:r.part,first:r.first+1,last:r.last+1})));if(r.open)head.appendChild(doc.createTextNode(tr(r.title)));else{var veil=el(doc,'span','ch-veil v'+(r.part%3)+(rows[r.part-2]&&rows[r.part-2].open?' next':''));veil.setAttribute('role','img');veil.setAttribute('aria-label',tr('잠긴 챕터 · 먹으로 가린 제목'));head.appendChild(veil);} /* 사용자 11-20 "해금전에 챕터 제목 묵색으로 가려서 스포방지": 잠긴 챕터는 제목 글자를 화면에 아예 넣지 않고 먹 획으로 덮는다 */
+      if(r.complete){var bd=el(doc,'span','ch-badge',r.levelName?tr('{level} 완주',{level:tr(r.levelName)}):tr('완주'));head.appendChild(bd);}row.appendChild(head);
+      var bar=el(doc,'div','ch-bar');bar.setAttribute('role','img');bar.setAttribute('aria-label',tr('{cleared} / {total} 스테이지',{cleared:r.cleared,total:r.total}));for(var i=0;i<r.total;i++)bar.appendChild(el(doc,'i',i<r.cleared?'on':''));row.appendChild(bar);
+      row.appendChild(el(doc,'div','ch-meta',r.open?tr('스테이지 {cleared}/{total} · 별 {stars}/{max}',{cleared:r.cleared,total:r.total,stars:r.stars,max:r.maxStars})+(r.score?' · '+tr('점수 합 {score}',{score:r.score.toLocaleString(root.HapilI18n?root.HapilI18n.lang:'ko')}):''):tr('잠김 — 제{n}부를 마치면 열립니다',{n:r.part-1})));
       if(r.open){
-        var act=el(doc,'div','ch-actions'),a=el(doc,'button','ch-restart',r.complete?'이 챕터 다시':'처음부터');a.type='button';a.addEventListener('click',function(){on.restart(r.part);});act.appendChild(a);
-        if(r.next>=0&&r.cleared>0){var b=el(doc,'button','ch-resume primary-lite','이어서 · STAGE '+(r.next+1));b.type='button';b.addEventListener('click',function(){on.resume(r.next);});act.appendChild(b);}
+        var act=el(doc,'div','ch-actions'),a=el(doc,'button','ch-restart',tr(r.complete?'이 챕터 다시':'처음부터'));a.type='button';a.addEventListener('click',function(){on.restart(r.part);});act.appendChild(a);
+        if(r.next>=0&&r.cleared>0){var b=el(doc,'button','ch-resume primary-lite',tr('이어서 · STAGE {n}',{n:r.next+1}));b.type='button';b.addEventListener('click',function(){on.resume(r.next);});act.appendChild(b);}
         row.appendChild(act);
       }
       box.appendChild(row);

@@ -129,17 +129,20 @@
   function report(){
     var nav=global.navigator||{},scr=global.screen||{},app=global.HapilArcadeApp&&global.HapilArcadeApp.getState?global.HapilArcadeApp.getState():{},f=stats.frames,lines=[];
     flush(true);
-    lines.push('[합일 세로판 기기 진단] '+new Date().toISOString());
-    lines.push('기기: '+clip(nav.userAgent,220));
-    lines.push('화면: '+(scr.width|0)+'x'+(scr.height|0)+' 창 '+(global.innerWidth|0)+'x'+(global.innerHeight|0)+' 배율 '+(global.devicePixelRatio||1)+' 코어 '+(nav.hardwareConcurrency||'?')+' 메모리 '+(nav.deviceMemory||'?')+'GB');
-    lines.push('앱: '+(isNative()?'앱('+nativePlatform()+')':'웹')+' 휴대폰모드 '+!!app.compact+' 화질배율 '+app.scale+' 저사양 '+!!app.lite+' 저장 '+(app.saveOk!==false?'됨':'안 됨'));
-    if(f.n){lines.push('프레임: '+f.n+'개 평균 '+(f.sum/f.n).toFixed(1)+'ms 중앙 '+percentile(f.hist,f.n,.5)+'ms 느린5% '+percentile(f.hist,f.n,.95)+'ms 느린1% '+percentile(f.hist,f.n,.99)+'ms');}
-    lines.push('플레이 '+Math.round(stats.playMs/60000)+'분 (기록 시작 '+new Date(stats.since).toISOString().slice(0,10)+')');
+    var tr=(global.HapilI18n&&global.HapilI18n.text)||function(source,values){
+      return values?source.replace(/\{(\w+)\}/g,function(_,key){return values[key];}):source;
+    };
+    lines.push('['+tr('합일 세로판 기기 진단')+'] '+new Date().toISOString());
+    lines.push(tr('기기')+': '+clip(nav.userAgent,220));
+    lines.push(tr('화면')+': '+(scr.width|0)+'x'+(scr.height|0)+' '+tr('창')+' '+(global.innerWidth|0)+'x'+(global.innerHeight|0)+' '+tr('배율')+' '+(global.devicePixelRatio||1)+' '+tr('코어')+' '+(nav.hardwareConcurrency||'?')+' '+tr('메모리')+' '+(nav.deviceMemory||'?')+'GB');
+    lines.push(tr('앱')+': '+(isNative()?tr('앱')+'('+nativePlatform()+')':tr('웹'))+' '+tr('휴대폰모드')+' '+!!app.compact+' '+tr('화질배율')+' '+app.scale+' '+tr('저사양')+' '+!!app.lite+' '+tr('저장')+' '+tr(app.saveOk!==false?'됨':'안 됨'));
+    if(f.n)lines.push(tr('프레임: {n}개 평균 {avg}ms 중앙 {median}ms 느린5% {p95}ms 느린1% {p99}ms',{n:f.n,avg:(f.sum/f.n).toFixed(1),median:percentile(f.hist,f.n,.5),p95:percentile(f.hist,f.n,.95),p99:percentile(f.hist,f.n,.99)}));
+    lines.push(tr('플레이 {n}분 (기록 시작 {date})',{n:Math.round(stats.playMs/60000),date:new Date(stats.since).toISOString().slice(0,10)}));
     var keys=Object.keys(stats.stages).sort(function(a,b){var x=a.split(':'),y=b.split(':');return x[0]<y[0]?-1:x[0]>y[0]?1:x[1]-y[1];});
-    if(keys.length){lines.push('스테이지(난이도:번호 시도/클리어/게임오버 누적분 최단초):');keys.forEach(function(k){var r=stats.stages[k],p=k.split(':');lines.push(' '+p[0]+':'+(Number(p[1])+1)+' '+r.tries+'/'+r.clears+'/'+r.losses+' '+(r.ms/60000).toFixed(1)+' '+(r.bestMs?Math.round(r.bestMs/1000):'-'));});}
-    var cp=readCheckpoint();if(cp)lines.push('중간 저장: STAGE '+(cp.stage+1)+' 구간 '+cp.seg+' '+cp.difficulty);
-    if(errors.length){lines.push('오류 '+errors.length+'건:');errors.forEach(function(e){lines.push(' '+new Date(e.at).toISOString().slice(5,16)+' ['+e.kind+'] '+e.message+(e.where?' @'+e.where:'')+(e.count>1?' ×'+e.count:''));});}
-    else lines.push('오류 없음');
+    if(keys.length){lines.push(tr('스테이지(난이도:번호 시도/클리어/게임오버 누적분 최단초):'));keys.forEach(function(k){var r=stats.stages[k],p=k.split(':');lines.push(' '+p[0]+':'+(Number(p[1])+1)+' '+r.tries+'/'+r.clears+'/'+r.losses+' '+(r.ms/60000).toFixed(1)+' '+(r.bestMs?Math.round(r.bestMs/1000):'-'));});}
+    var cp=readCheckpoint();if(cp)lines.push(tr('중간 저장: STAGE {stage} 구간 {seg} {difficulty}',{stage:cp.stage+1,seg:cp.seg,difficulty:cp.difficulty}));
+    if(errors.length){lines.push(tr('오류 {n}건:',{n:errors.length}));errors.forEach(function(e){lines.push(' '+new Date(e.at).toISOString().slice(5,16)+' ['+e.kind+'] '+e.message+(e.where?' @'+e.where:'')+(e.count>1?' ×'+e.count:''));});}
+    else lines.push(tr('오류 없음'));
     return lines.join('\n');
   }
   function copyReport(done){

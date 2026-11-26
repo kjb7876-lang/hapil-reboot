@@ -8,7 +8,7 @@
  *   2) 화면(판정과 무관): draw(ctx,s,opt) 음표 줄·내려오는 음표머리·장단 점, sounds(s,play) 켜지는 순간의 북·가야금 소리.
  *  규칙(docs/v43/danmaku-rules.md 17~22): 모든 음표는 맵 끝에서 끝까지, 예고 2박(이지 3박), 한 박에 건너야 하는 거리는 한 줄(60px) 이하,
  *  좌우를 바꿔야 하는 음표 사이는 한 박 이상, 화면을 다 덮지 않는다. */
-(function(root,factory){var api=factory();if(typeof module==='object'&&module.exports)module.exports=api;root.HapilLaserRhythm=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){
+(function(root,factory){var api=factory(root);if(typeof module==='object'&&module.exports)module.exports=api;root.HapilLaserRhythm=api;})(typeof globalThis!=='undefined'?globalThis:this,function(global){
   'use strict';
   var LANES=6,BAND=64,TOP=120;
   var INFO={
@@ -129,7 +129,7 @@
     var y=opt.y||31,n=b.n%8,since=s.tick-b.tick,i,gap=14,x0=opt.x||20,acc=opt.accent||[1,0,.5,0,1,0,.5,.5];
     ctx.save();ctx.globalCompositeOperation='source-over';
     // 받침: 켜진 띠 위에서도 읽히게 종이색 판을 깐다
-    var nm=label(sp.motif);ctx.font='700 12px '+(opt.font||'sans-serif');var pw=gap*8+(nm?((ctx.measureText&&ctx.measureText(nm)||{width:nm.length*12}).width||nm.length*12)+8:0)+8,px=x0-10,py=y-11,ph=22,pr=11;
+    var motif=label(sp.motif),nm=global.HapilI18n&&global.HapilI18n.text?global.HapilI18n.text(motif):motif;ctx.font='700 12px '+(opt.font||'sans-serif');var pw=gap*8+(nm?((ctx.measureText&&ctx.measureText(nm)||{width:nm.length*12}).width||nm.length*12)+8:0)+8,px=x0-10,py=y-11,ph=22,pr=11;
     ctx.globalAlpha=.84;ctx.fillStyle=opt.plate||'#14100e';ctx.beginPath();ctx.moveTo(px+pr,py);ctx.lineTo(px+pw-pr,py);ctx.arc(px+pw-pr,py+pr,pr,-Math.PI/2,Math.PI/2);ctx.lineTo(px+pr,py+ph);ctx.arc(px+pr,py+pr,pr,Math.PI/2,Math.PI*1.5);ctx.fill();
     for(i=0;i<8;i++){var r=acc[i]>=1?4.4:acc[i]>0?3.4:2.8,on=i===n,pulse=on?Math.max(0,1-since/14):0;
       ctx.globalAlpha=on?1:.6;ctx.fillStyle=on?VERMILION:HANJI;ctx.beginPath();ctx.arc(x0+gap*i,y,r+pulse*2.2,0,TAU);ctx.fill();

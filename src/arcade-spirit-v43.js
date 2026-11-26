@@ -10,6 +10,10 @@
   else root.HapilSpirit=api;
 })(typeof globalThis!=='undefined'?globalThis:this,function(global){
   'use strict';
+  function localText(source,params){
+    if(global.HapilI18n&&global.HapilI18n.text)return global.HapilI18n.text(source,params);
+    return params?source.replace(/\{(\w+)\}/g,function(key,k){return params[k]===undefined?key:params[k];}):source;
+  }
   var W=360,H=640,TAU=Math.PI*2,VERMILION='#a8382a',GOLD='#ffd86a',PAPER='#f6ead2',INK='rgba(20,16,14,.78)';
   var SERIF='"HapilSerif","Noto Serif KR","Noto Serif CJK KR","Nanum Myeongjo",serif',SANS='system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif';
   var BOOK_KEY='hapil-arcade-v43-spellbook',POPUP_CAP=24,POPUP_TICKS=42,STAMP_TICKS=132,MISS_TICKS=84,LINE_INTRO=300;
@@ -98,8 +102,8 @@
     if(J.bglow>0){var bgl=J.bglow,big=J.bkind==='chapter'&&J.bgot===J.bs.length?1.5:1;ctx.globalAlpha=bgl*.85;ctx.strokeStyle=c.jadeFill;ctx.lineWidth=1+bgl*2;ctx.beginPath();ctx.arc(p.x,p.y,(10+(1-bgl)*24)*big,0,TAU);ctx.stroke();if(bgl>.6)star(ctx,p.x,p.y-26,9,0,(bgl-.6)*2.5,c);if(playing)J.bglow=Math.max(0,bgl-.075);} // 도착: 옥빛 고리가 퍼지고 머리 위에 별이 한 번 번쩍인다. 챕터 막보스의 마지막 별은 고리가 더 크다
     // 영웅 쪽 숫자: 하트가 하나 들어올 때마다 오른다. 영웅 머리 위(받은 값 줄보다 한 칸 위)
     if(J.got>0){var fade=J.done>=0?Math.max(0,Math.min(1,(JACK_TAIL-(J.t-J.done))/24)):1,pop=J.done>=0&&J.t-J.done<10?1+.25*(1-(J.t-J.done)/10):1,
-      side=p.x<W/2?1:-1,py=Math.max(118,Math.min(H-150,p.y-22)),title=J.mid?'하트 보상':J.bkind==='chapter'?'챕터 잭팟':'잭팟',cnt='하트 ×'+J.got,sum='+'+comma(J.got*J.worth),
-      bl=J.bwant>0?(J.bs.length?'필살기 +'+J.bs.length+(J.bfull?' (가득)':''):'필살기 가득'):'',ex=bl?16:0;
+      side=p.x<W/2?1:-1,py=Math.max(118,Math.min(H-150,p.y-22)),title=localText(J.mid?'하트 보상':J.bkind==='chapter'?'챕터 잭팟':'잭팟'),cnt=localText('하트 ×{n}',{n:J.got}),sum='+'+comma(J.got*J.worth),
+      bl=J.bwant>0?(J.bs.length?localText(J.bfull?'필살기 +{n} (가득)':'필살기 +{n}',{n:J.bs.length}):localText('필살기 가득')):'',ex=bl?16:0;
       ctx.save();ctx.globalAlpha=fade;ctx.textAlign='center';ctx.textBaseline='alphabetic';ctx.lineJoin='round';
       ctx.font='700 '+Math.round((J.mid?17:23)*pop)+'px '+SERIF;var w1=ctx.measureText(title).width;ctx.font='700 '+Math.round((J.mid?13:15)*pop)+'px '+SANS;var w2=ctx.measureText(cnt).width,w3=bl?ctx.measureText(bl).width+18:0,bw=Math.max(w1,w2,w3)+28,px=Math.max(bw/2+6,Math.min(W-bw/2-6,p.x+side*(bw/2+34))); // 하트는 위에서 영웅 머리로 내려온다: 표는 영웅 옆, 넓은 쪽에 둔다
       ctx.globalAlpha=fade*(ex?.96:.9);py-=ex;plate(ctx,px-bw/2,py-(J.mid?36:42),bw,(J.mid?58:66)+ex,8,c);ctx.globalAlpha=fade;
@@ -126,7 +130,7 @@
       ctx.globalAlpha=a;ctx.strokeStyle=on?c.gold:c.text;ctx.lineWidth=1.5;ctx.setLineDash([3,6]);ctx.lineDashOffset=on?-(s.tick%18)*.5:0; // 켜진 동안 점선이 흐른다
       ctx.beginPath();ctx.moveTo(10,y0);ctx.lineTo(W-10,y0);ctx.stroke();ctx.setLineDash([]);ctx.lineDashOffset=0;
       var la=opt.quiet||opt.dim||stamp?0:above?1:intro?1:Math.max(0,Math.min(1,(LABEL_TICKS-lineAge)/30)); // 안내 글은 처음 잠깐만(선은 남는다). 알림 띠·낙관이 떠 있는 동안에는 숨긴다
-      if(la>0){ctx.font='700 11px '+SANS;ctx.textAlign='left';ctx.textBaseline='alphabetic';var label=above?'모두 거두는 중 · 최대값':'선 위에 위치하는 자, 소소한 행복이 있으리.';
+      if(la>0){ctx.font='700 11px '+SANS;ctx.textAlign='left';ctx.textBaseline='alphabetic';var label=localText(above?'모두 거두는 중 · 최대값':'선 위에 위치하는 자, 소소한 행복이 있으리.');
         ctx.globalAlpha=Math.min(1,a*1.3)*la;ctx.lineWidth=3;ctx.strokeStyle=c.halo;ctx.strokeText(label,12,y0-6);ctx.fillStyle=above?c.gold:c.text;ctx.fillText(label,12,y0-6);
         ctx.textAlign='right';ctx.strokeText('▲',W-12,y0-6);ctx.fillText('▲',W-12,y0-6);}
     }
@@ -135,7 +139,7 @@
     // 받은 값: 영웅 머리 위로 띄운다(영웅 그림에 가리지 않게)
     ctx.textAlign='center';ctx.textBaseline='alphabetic';
     for(i=popups.length-1;i>=0;i--){var q=popups[i],u=q.t/POPUP_TICKS;if(playing)q.t++;if(q.t>POPUP_TICKS){popups.splice(i,1);continue;}
-      ctx.globalAlpha=u<.7?1:(1-u)/.3;ctx.font=(q.top?'700 14px ':'600 12px ')+SANS;var txt='+'+comma(q.v),sub=q.n>1?' '+q.n+'개':'',half=(ctx.measureText(txt).width+(sub?ctx.measureText(sub).width*.8:0))/2+4;
+      ctx.globalAlpha=u<.7?1:(1-u)/.3;ctx.font=(q.top?'700 14px ':'600 12px ')+SANS;var txt='+'+comma(q.v),sub=q.n>1?' '+localText('{n}개',{n:q.n}):'',half=(ctx.measureText(txt).width+(sub?ctx.measureText(sub).width*.8:0))/2+4;
       var py=Math.max(54,Math.min(q.y,p.y)-46-16*Math.sqrt(u)),px=Math.max(half,Math.min(W-half,q.x));
       ctx.lineJoin='round';ctx.lineWidth=2.6;ctx.strokeStyle='rgba(44,30,14,.9)';ctx.textAlign='left';var x0=px-half+4,tw=ctx.measureText(txt).width;ctx.strokeText(txt,x0,py);ctx.fillStyle=q.top?'#e8b530':PAPER;ctx.fillText(txt,x0,py);
       if(sub){ctx.font='600 10px '+SANS;ctx.strokeText(sub,x0+tw,py);ctx.fillStyle=PAPER;ctx.fillText(sub,x0+tw,py);}ctx.textAlign='center';} // 합계를 크게, 개수는 작게(합계×개수로 읽히지 않게)
@@ -144,7 +148,7 @@
       /* 서하 보스 격파 큰 하트 = 목숨 +1(심사 1차 7.49 반영): 잭팟 판이 먼저 뜨고 LIFE_POP_DELAY 뒤, 영웅 머리 바로 위에 인주 도장처럼 '찍힌다'
          (1.25배에서 눌려 .92 → 잠깐 멈춤 → 1), 찍히는 순간 인주 점이 튄다. 마지막 LIFE_FLY 틱은 아래 목숨 칸(◆) 쪽으로 작아지며 날아가 스민다.
          돕는 순간이라 인주색(사용자 11-16 규칙), 앞에 목숨 칸과 같은 ◆ 를 붙여 같은 '목숨'으로 읽힌다 */
-      var lt=({life:'목숨 +1',bomb:'목숨 가득 · 필살 +1',score:'목숨·필살 가득 · +10,000'})[lifePop.got]||'목숨 +1',
+      var lt=localText(({life:'목숨 +1',bomb:'목숨 가득 · 필살 +1',score:'목숨·필살 가득 · +10,000'})[lifePop.got]||'목숨 +1'),
         lk=la<5?1.25-.33*(la/5):la<11?.92:la<16?.92+.08*((la-11)/5):1,fly=Math.max(0,(la-(LIFE_POP_TICKS-LIFE_FLY))/LIFE_FLY),fe=fly*fly,
         hx=Math.max(70,Math.min(W-70,p.x-16)),hy=Math.max(78,p.y-46),tx=s.compact?W-50:60,ty=s.compact?8:H-100,lx=hx+(tx-hx)*fe,ly=hy+(ty-hy)*fe,sc=lk*(1-.55*fe);
       ctx.save();ctx.translate(lx,ly);ctx.scale(sc,sc);ctx.globalAlpha=fly>.7?(1-fly)/.3:1;ctx.textAlign='center';ctx.textBaseline='middle';
@@ -162,7 +166,7 @@
       if(clean)cleanSeg=s.seg;else if(cleanSeg===s.seg){cleanSeg=-1;lostAt=s.tick;} // 보너스를 잃는 순간 한 번 깜박인다
       var lost=s.tick-lostAt<LOST_TICKS&&((s.tick-lostAt)>>2)%2===0;
       var down=!!(s.cardDown||s.cardEnding); // 체력을 다 깎았다: 값이 굳었고, 남은 공격을 버티면 받는다(외부 심사 11-20)
-      var text=clean?(down?'봉인 확정 +':'봉인 +')+comma(val):'봉인 놓침',tail=clean&&down?'  버티면 지급':hist[0]>0&&!s.bossOnly?'  기록 '+hist[1]+'/'+hist[0]:'';
+      var text=clean?localText(down?'봉인 확정 +{n}':'봉인 +{n}',{n:comma(val)}):localText('봉인 놓침'),tail=clean&&down?'  '+localText('버티면 지급'):hist[0]>0&&!s.bossOnly?'  '+localText('기록 {n}/{total}',{n:hist[1],total:hist[0]}):'';
       ctx.font='700 12px '+SANS;var w1=ctx.measureText(text).width;ctx.font='600 10px '+SANS;var w2=ctx.measureText(tail).width,w=w1+w2+16;
       ctx.globalAlpha=down&&clean?.9:.62;plate(ctx,W-12-w,y-13,w,18,9,c);
       ctx.globalAlpha=1;ctx.textAlign='right';ctx.font='600 10px '+SANS;ctx.fillStyle=c.dim;ctx.fillText(tail,W-20,y);
@@ -170,7 +174,7 @@
       bonusShown=val;
     }
     drawDown(ctx,s,c);
-    if(!opt.hidePractice&&s.spellOnly&&s.stage!=='won'&&s.stage!=='lost'){ctx.font='700 11px '+SANS;var pt='스펠 연습 · 기록에 넣지 않음',pw2=ctx.measureText(pt).width+16;ctx.globalAlpha=.92;plate(ctx,12,(opt.bonusY||68)+10,pw2,18,9,c);ctx.globalAlpha=1;ctx.textAlign='left';ctx.fillStyle=c.text;ctx.fillText(pt,20,(opt.bonusY||68)+23);} // 연습 중임을 위쪽 봉인 줄 아래 왼편에 늘 보인다(영웅이 머무는 아래를 가리지 않게, 심사 2차)
+    if(!opt.hidePractice&&s.spellOnly&&s.stage!=='won'&&s.stage!=='lost'){ctx.font='700 11px '+SANS;var pt=localText('스펠 연습 · 기록에 넣지 않음'),pw2=ctx.measureText(pt).width+16;ctx.globalAlpha=.92;plate(ctx,12,(opt.bonusY||68)+10,pw2,18,9,c);ctx.globalAlpha=1;ctx.textAlign='left';ctx.fillStyle=c.text;ctx.fillText(pt,20,(opt.bonusY||68)+23);} // 연습 중임을 위쪽 봉인 줄 아래 왼편에 늘 보인다(영웅이 머무는 아래를 가리지 않게, 심사 2차)
     // 보스 위치 표식: 맨 아래 가장자리 눈금(바닥 안개·영웅 빛보다 위에 그려 묻히지 않게 화면 고정층에서). 맞는 동안 옅어지고, 체력이 20% 아래면 깜박인다.
     var b=s.boss;
     if(s.stage==='card'&&b&&b.present&&!s.cardEnding){
@@ -185,8 +189,8 @@
         // 쪽지(한지 띠)가 먼저 깔리고, 낙관이 크게 내려와 그 모서리에 찍힌다(8틱). 찍히는 순간 인주가 튄다. 끝에 옅어진다.
         var k=age<8?1.9-.9*(age/8):age<14?1-.06*(1-(age-8)/6):1,fade=age>life-24?(life-age)/24:1,cx=W/2-62,cy=opt.toast?Math.max(stamp.y,208):stamp.y,sz=50*k,art=seal(),tx=cx+38,pw=stamp.gift?(stamp.got==='score'?200:162):128;
         ctx.globalAlpha=fade*Math.min(1,age/6)*.94;plate(ctx,cx+8,cy-25,pw+26,50,4,c);
-        ctx.globalAlpha=fade*Math.min(1,age/6);ctx.textAlign='left';ctx.font='700 17px '+SERIF;ctx.fillStyle=c.text;ctx.fillText('봉인',tx,cy-4);ctx.font='700 17px '+SANS;ctx.fillStyle=c.gold;ctx.fillText('+'+comma(stamp.bonus),tx+42,cy-4);
-        ctx.font='600 11px '+SANS;ctx.fillStyle=c.dim;ctx.fillText(stamp.gift?'조각이 모였다 · '+({life:'목숨 +1',bomb:'필살 +1',score:'목숨·필살 가득 · 10,000점'}[stamp.got]||'목숨 또는 필살 +1'):'봉인 조각 '+stamp.pieces+' / '+stamp.of,tx,cy+14);
+        ctx.globalAlpha=fade*Math.min(1,age/6);ctx.textAlign='left';ctx.font='700 17px '+SERIF;ctx.fillStyle=c.text;var sealLabel=localText('봉인');ctx.fillText(sealLabel,tx,cy-4);var labelWidth=ctx.measureText(sealLabel).width;ctx.font='700 17px '+SANS;ctx.fillStyle=c.gold;ctx.fillText('+'+comma(stamp.bonus),tx+labelWidth+8,cy-4);
+        ctx.font='600 11px '+SANS;ctx.fillStyle=c.dim;ctx.fillText(stamp.gift?localText('조각이 모였다 · {reward}',{reward:localText({life:'목숨 +1',bomb:'필살 +1',score:'목숨·필살 가득 · 10,000점'}[stamp.got]||'목숨 또는 필살 +1')}):localText('봉인 조각 {n} / {total}',{n:stamp.pieces,total:stamp.of}),tx,cy+14,Math.min(pw-12,W-tx-8));
         if(age>=8&&age<34){var su=(age-8)/26;ctx.fillStyle='#b02a1c';ctx.globalAlpha=fade*(1-su)*.85;for(var d=0;d<9;d++){var an=d*2.399+.6,rr=30+su*16+(d%3)*5;ctx.beginPath();ctx.arc(cx+Math.cos(an)*rr,cy+Math.sin(an)*rr*.9,1.2+(d%3)*.9,0,TAU);ctx.fill();}}
         ctx.globalAlpha=fade*(age<8?.4+.6*age/8:1);ctx.translate(cx,cy);ctx.rotate(-.1);
         if(art)ctx.drawImage(art,-sz*.62,-sz*.62,sz*1.24,sz*1.24);
@@ -209,12 +213,12 @@
     ctx.globalAlpha=fade*.55;ctx.fillStyle=c.text;for(var q=0;q<5;q++){var qx=W/2-half+q*half*.5,qy=y+30-Math.abs(q-2)*4;ctx.fillRect(qx-1,qy,2+((q*7)%3),1.4);} // 붓 끝 비백 몇 점
     if(age<20){var bx2=finite(b.x,W/2);ctx.globalAlpha=(1-age/20)*.7;for(var d=0;d<7;d++){var an=d*2.399+.3,rr=20+age*2.2+(d%3)*6;ctx.beginPath();ctx.ellipse(bx2+Math.cos(an)*rr,by+Math.sin(an)*rr*.7,2.4-(d%3)*.5,1.6,an,0,TAU);ctx.fill();}} // 소진 순간 보스 둘레로 먹물이 튄다(고리 아님, 흩어진 점)
     ctx.globalAlpha=fade*k;ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='700 '+Math.round(20+6*(1-k))+'px '+SERIF;ctx.lineWidth=3;ctx.strokeStyle=c.halo;ctx.fillStyle=c.text;
-    var clean=!!s.spellClean&&s.bonusLock>0,t1='격파 · 마지막 공격';ctx.strokeText(t1,W/2,y-1);ctx.fillText(t1,W/2,y-1);
-    ctx.font='700 12px '+SANS;ctx.lineWidth=2.4;var t2=clean?'끝까지 버티면 봉인 ':'남은 공격이 끝나면 쓰러진다',t3=clean?'+'+comma(s.bonusLock):'',w2=ctx.measureText(t2).width,w3=ctx.measureText(t3).width,x2=W/2-(w2+w3)/2;ctx.textAlign='left';ctx.strokeText(t2,x2,y+19);ctx.fillStyle=c.text;ctx.fillText(t2,x2,y+19);if(t3){ctx.strokeText(t3,x2+w2,y+19);ctx.fillStyle=c.gold;ctx.fillText(t3,x2+w2,y+19);}
+    var clean=!!s.spellClean&&s.bonusLock>0,t1=localText('격파 · 마지막 공격');ctx.strokeText(t1,W/2,y-1);ctx.fillText(t1,W/2,y-1);
+    ctx.font='700 12px '+SANS;ctx.lineWidth=2.4;var t2=clean?localText('끝까지 버티면 봉인')+' ':localText('남은 공격이 끝나면 쓰러진다'),t3=clean?'+'+comma(s.bonusLock):'',w2=ctx.measureText(t2).width,w3=ctx.measureText(t3).width,x2=W/2-(w2+w3)/2;ctx.textAlign='left';ctx.strokeText(t2,x2,y+19);ctx.fillStyle=c.text;ctx.fillText(t2,x2,y+19);if(t3){ctx.strokeText(t3,x2+w2,y+19);ctx.fillStyle=c.gold;ctx.fillText(t3,x2+w2,y+19);}
     ctx.restore();ctx.textBaseline='alphabetic';
   }
   /* 스테이지 결산 한 줄(알림 띠 아래 줄) */
-  function tally(result){if(!result)return '';var out=[];if(result.spells>0)out.push('봉인 '+(result.captures||0)+'/'+result.spells);if(result.graze>=0)out.push('스침 '+result.graze);if(result.bonus>0)out.push('결산 +'+comma(result.bonus));return out.join(' · ');}
+  function tally(result){if(!result)return '';var out=[];if(result.spells>0)out.push(localText('봉인 {n}/{total}',{n:result.captures||0,total:result.spells}));if(result.graze>=0)out.push(localText('스침 {n}',{n:result.graze}));if(result.bonus>0)out.push(localText('결산 +{n}',{n:comma(result.bonus)}));return out.join(' · ');}
   return {SEAL_SRC:SEAL_SRC,useSound:useSound,onEvent:onEvent,consume:consume,drawWorld:drawWorld,drawHud:drawHud,reset:reset,history:history,tally:tally,comma:comma,BOOK_KEY:BOOK_KEY,
     state:function(){return {jackpot:jack?{n:jack.n,got:jack.got,t:jack.t,bombs:jack.bs.length,bombsGot:jack.bgot,bombsWanted:jack.bwant}:null,popups:popups.length,stamp:stamp?{ok:stamp.ok,bonus:stamp.bonus}:null,line:lineSeen,bonus:bonusShown};}};
 });

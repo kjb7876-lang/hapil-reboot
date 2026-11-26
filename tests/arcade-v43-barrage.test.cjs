@@ -325,7 +325,7 @@ test('v43 review fixes (round 9): hero shots step back, the boss gets a backligh
 test('v43 review fixes (round 10, PC): names wrap by word, the gauge and bomb key are labelled, the score panel shows the best score',()=>{
  const app=h.read('src/arcade-app-v43.js'),page=h.read('arcade.html');
  assert(/\.hudx\.side \.name\{[^}]*word-break:keep-all/.test(page),'stage names wrap between words');
- assert(/BOMB \[X\]/.test(app)&&/CHARGE/.test(app),'bomb key and gauge are labelled clearly');
+ assert(/localText\('BOMB \[\{key\}\]',\{key:keyLabel\(settings\.keyBomb\)\}\)/.test(app)&&/lb\('CHARGE'\)/.test(app),'bomb key and gauge are labelled clearly');
  assert(/lb\('BEST'\)/.test(app),'the score panel shows the best score');
  assert(/\.hudx\.side\{[^}]*min-height:/.test(page),'both side panels share a minimum height');
 });

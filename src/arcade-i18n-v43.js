@@ -1,12 +1,8 @@
-/* 세로판 화면 글자 다국어 준비(11-15 글로벌 동시 출시 방향).
- * - 언어: 주소 ?lang=en > 기기에 고른 언어(localStorage) > 기본 한국어. 번역이 다 차기 전까지 기기 언어로 자동 전환은 하지 않는다(AUTO=false).
- * - 화면 글자: HTML 요소에 data-i18n="키"(글자) · data-i18n-html="키"(굵은 글씨 포함, 이 파일의 고정 문구만) · data-i18n-label="키"(aria-label).
- * - 코드 글자: HapilI18n.t('키',{n:3}) — {n} 자리를 채운다. 없는 키는 한국어, 그것도 없으면 키 그대로.
- * - 스테이지·보스 이름은 정본 서사라 아직 번역하지 않는다(번역 표는 사용자 확인 뒤 STAGE_NAMES에 넣는다). */
+/* Bundled offline localization for the arcade release. Keep save data and simulation identifiers in the source language. */
 (function(global){
   'use strict';
-  var KEY='hapil-arcade-lang-v43',AUTO=false;
-  var LANGS={ko:'한국어',en:'English'}; // 다음 차례(제안): ja 日本語, zh-Hant 繁體中文, es Español, pt-BR Português
+  var KEY='hapil-arcade-lang-v43';
+  var LANGS={ko:'한국어', en:'English', ja:'日本語', 'zh-Hans':'简体中文', 'zh-Hant':'繁體中文', es:'Español', 'pt-BR':'Português (Brasil)'};
   var DICT={
     ko:{
       kicker:'HAPIL · 원큐 여정 · 52 STAGES',controls:'끌어서 이동 · 공격은 자동<br><b>초능력</b>을 누른 채 다른 손가락으로 정밀 이동 · <b>폭탄</b>(필살기)으로 탄을 지웁니다<br>PC: 방향키·WASD · <span data-keyl=focus>Shift</span> 초능력 · <span data-keyl=bomb>X</span> 폭탄 · 키는 일시정지 설정에서 변경',
@@ -37,25 +33,92 @@
       pause:'Pause',lifeLabel:'LIFE',bombLabel:'ULT',focus:'Psi',focusLabel:'Psi power (hold)',bomb:'Bomb',rules:'How to play',storyMainBoss:'MAIN BOSS',storyCanon:'CANONICAL STORY · MEMORY',storyDialogue:'BOSS ENTRANCE · DIALOGUE',storyNext:'Next',storyFight:'Begin battle',storySkip:'Skip',storyAuto:'Auto advance · Esc to pause',storyReplay:'Show memories again',storyReplayDone:'Memories will appear at the next boss',rulesBody:'<p><b>Move and fire</b> — Drag or use arrows/WASD. Fire is automatic. Hold Psi or <span data-keyl=focus>Shift</span> for precise movement and a visible hitbox. Psi and Bomb keys can be rebound under “Keyboard keys (PC)” in the pause settings.</p><p><b>Hitbox and graze</b> — The small hitbox determines damage. Graze nearby bullets to fill the gauge and earn bomb stock.</p><p><b>Seals, collection line and heart value</b> — Clear a named pattern without being hit or bombing to seal it. The seal bonus under the pattern name shrinks over time. Every third seal restores one life (or a bomb when full). Grazing raises the value of each heart, and rising above the collection line near the top gathers every heart at full value. The red marker on the bottom edge shows the boss’s horizontal position. Bullets never expire with time. While you are above the collection line, only bullets that have already passed below it and can no longer reach you retreat quickly; linger above it and bullets, horizontal beams and rising ink walls will press you.</p><p><b>Large bullets</b> — Only large bullets marked with a crack can be shot apart. Three small bullets remain; they start faint and briefly harmless, then become dangerous. Dodge small orbs, bubbles, rice and unmarked bullets.</p><p><b>From below</b> — Light and arrows along the floor warn of rising enemies. Rising ink pictures are obstacles: after their warning, contact hurts. Shoot them or move aside. Falling blocks can be shot too. Stacked blocks and rising ground push you upward without damage; watch the bullets above. Horizontal floor lasers turn dangerous after their warning: move above or below them.</p><p><b>Glyph lasers</b> — Bright means danger. Cross while dim. The brief recharge warning is harmless.</p><p><b>Bombs</b> — Use <span data-keyl=bomb>X</span> or the bomb button. Easy/Normal can dodge by chance or spend a bomb automatically on contact. Hell has manual bombs only and no automatic evasion. Defeats refill bombs: mid-boss +1, boss +2, chapter final boss +3. Stock holds up to 7 on Easy, 5 on Normal, 3 on Hell.</p><p><b>Lives</b> — Mobile: Easy 5 / Normal 3 / Hell 2. PC: Easy 3 / Normal 2 / Hell 1. Finishing a part (chapter) refills all lives as you enter the next. Attack and ultimate levels carry across chapters; part n starts at Lv.n or higher (Lv.7 max from part 7). Defeating enemies and patterns earns attack experience. Hits preserve your attack and ultimate levels and attack experience. Your earned ultimate level carries over when continuing or retrying. Ordinary stage clears do not refill lives.</p><p><b>On phones</b> — Drag anywhere on the field to move in that direction. Lift your finger and start another drag wherever it is comfortable. Mobile has fewer, slower enemy bullets and longer laser warnings than PC on the same difficulty.</p><p><b>One-credit clear</b> — Start from the beginning and finish without a game over. Continue, stage select, retries and developer mode are practice. Pauses and reading are allowed.</p><p><b>Heroes</b> — Choose the Memory Gunner, Seoha the Apprentice (her Academium days) or Seoha Awakened (after the First Command awakens in her). Both Seoha forms spread time swords and concentrate them while using Psi. Trainee Seoha charges her bomb gauge 1.77× as fast from grazing and bomb hearts. Enemies adapt to your hero: against Seoha bullets are denser and faster, against the Memory Gunner bosses use more lasers. Abilities (Off, Lv.1–7) in the pause settings tune each hero’s output and time control.</p><p><b>Memories</b> — A cinematic with a canonical excerpt or boss dialogue appears before the main boss arrives. Every deadly sin and follow-up form has its own lines. Combat freezes and bullets clear before the entrance; attacks begin about two seconds after arrival. Defeating a cinematic boss clears all bullets and waits about two seconds before advancing. Next/Skip or Enter/Space advances; turn off Auto to read at your pace. Seen memories are skipped on later attempts.</p><p><b>Psi skill</b> — While moving in focus (<span data-keyl=focus>Shift</span> / Focus button) a mini ultimate fires at random without clearing bullets: Memory Gunner casts &quot;Causal Reversal&quot; (a homing laser that may chain like lightning); Yoon Seoha casts &quot;Delayed Strike&quot; (a clock spins, then a thick time sword homes in). While Psi is held, the Memory Gunner gets attack ×1.3 and bomb gauge ×1.5, and Seoha slows bullets inside her circle heavily (time control works only while Psi is held).</p><p><b>Boss entrances and phases</b> — Every boss and mid-boss arrives with an ink cut-in, takes the field and speaks a short line before the fight (tap or Enter to skip). Boss bullets do not stay near the boss; they eventually curve down. Bosses have PHASE 1-N, and from phase 2 each phase layers a different math-shape barrage (golden angle, rose curve, Lissajous, star polygon).</p>',field:'Vertical bullet-hell field',bossStage:'Boss stage',language:'Language'
     }
   };
-  function pick(){
-    var m=/[?&]lang=([a-zA-Z-]+)/.exec(global.location?global.location.search:''),saved=null;
-    try{saved=global.localStorage.getItem(KEY);}catch(e){}
-    var want=m?m[1]:saved;if(!want&&AUTO&&global.navigator)want=String(global.navigator.language||'').slice(0,2);
-    return DICT[want]?want:'ko';
+  var codes=Object.keys(LANGS);
+  var extra=global.HapilLocaleUI||{};
+  codes.forEach(function(code){
+    DICT[code]=Object.assign({},DICT[code],extra[code]);
+  });
+  var sources=new Map();
+  // The row order matches the language picker. Index once, including the Korean text of keyed UI messages.
+  Object.keys(DICT.ko).forEach(function(key){
+    sources.set(DICT.ko[key],codes.map(function(code){return DICT[code][key];}));
+  });
+  [global.HapilLocaleWorld,global.HapilLocaleStory,global.HapilLocaleCombat,global.HapilLocaleMenus,global.HapilLocaleProgress,global.HapilLocalePrivacy].forEach(function(rows){
+    if(rows)rows.forEach(function(row){sources.set(row[0],row);});
+  });
+
+  function resolve(tag){
+    var parts=String(tag||'').trim().toLowerCase().replace(/_/g,'-').split('-'),base=parts[0];
+    if(base==='zh'){
+      if(parts.includes('hans'))return 'zh-Hans';
+      if(parts.some(function(p){return ['hant','tw','hk','mo'].includes(p);}))return 'zh-Hant';
+      return 'zh-Hans';
+    }
+    if(base==='pt')return 'pt-BR';
+    return codes.includes(base)?base:null;
   }
-  var lang=pick();
+  function pick(){
+    var query=/(?:^\?|&)lang=([A-Za-z_-]+)(?:&|$)/i.exec(global.location&&global.location.search||''),saved;
+    try{saved=global.localStorage.getItem(KEY);}catch(e){}
+    var chosen=resolve(query&&query[1])||resolve(saved);
+    if(chosen)return chosen;
+    var nav=global.navigator;
+    if(!nav)return 'ko';
+    var preferred=Array.from(nav.languages||[]).concat(nav.language||[]);
+    return preferred.map(resolve).find(Boolean)||(preferred.length?'en':'ko');
+  }
+  var lang=pick(),column=codes.indexOf(lang);
+  function format(value,vars){
+    return vars?value.replace(/\{(\w+)\}/g,function(all,key){return vars[key]==null?all:String(vars[key]);}):value;
+  }
   function t(key,vars){
-    var s=(DICT[lang]&&DICT[lang][key])!=null?DICT[lang][key]:DICT.ko[key]!=null?DICT.ko[key]:key;
-    if(vars)s=s.replace(/\{(\w+)\}/g,function(all,k){return vars[k]!=null?String(vars[k]):all;});
-    return s;
+    var value=DICT[lang][key]||DICT.ko[key]||key;
+    return format(value,vars);
+  }
+  function text(source,vars){
+    if(source==null)return '';
+    var row=lang==='ko'?null:sources.get(source);
+    return format(row&&row[column]||String(source),vars);
   }
   function apply(root){
-    if(lang==='ko'||!root||!root.querySelectorAll)return; // 한국어는 HTML에 쓴 그대로 둔다
-    root.querySelectorAll('[data-i18n]').forEach(function(el){el.textContent=t(el.getAttribute('data-i18n'));});
-    root.querySelectorAll('[data-i18n-html]').forEach(function(el){el.innerHTML=t(el.getAttribute('data-i18n-html'));}); // 이 파일의 고정 문구만 들어간다
-    root.querySelectorAll('[data-i18n-label]').forEach(function(el){el.setAttribute('aria-label',t(el.getAttribute('data-i18n-label')));});
+    if(!root||!root.querySelectorAll)return;
     if(root.documentElement)root.documentElement.lang=lang;
+    root.querySelectorAll('[data-i18n]').forEach(function(el){el.textContent=t(el.getAttribute('data-i18n'));});
+    // HTML translations contain only bundled markup. Interpolated/user text is never inserted here.
+    root.querySelectorAll('[data-i18n-html]').forEach(function(el){el.innerHTML=t(el.getAttribute('data-i18n-html'));});
+    root.querySelectorAll('[data-i18n-label]').forEach(function(el){el.setAttribute('aria-label',t(el.getAttribute('data-i18n-label')));});
+    root.querySelectorAll('[data-i18n-content]').forEach(function(el){el.setAttribute('content',t(el.getAttribute('data-i18n-content')));});
+    var policy=root.getElementById&&root.getElementById('arcade-privacy');
+    if(policy)policy.setAttribute('href','privacy.html?lang='+lang);
+    root.querySelectorAll('[data-language-picker]').forEach(function(select){
+      if(!select.options.length){
+        codes.forEach(function(code){
+          var option=select.ownerDocument.createElement('option');
+          option.value=code;option.lang=code;option.textContent=LANGS[code];select.appendChild(option);
+        });
+        select.addEventListener('change',function(){set(select.value);});
+      }
+      select.value=lang;
+    });
   }
-  function set(next){if(!DICT[next])return false;lang=next;try{global.localStorage.setItem(KEY,next);}catch(e){}return true;}
-  global.HapilI18n={t:t,apply:apply,set:set,get lang(){return lang;},LANGS:LANGS,DICT:DICT};
+  function set(next){
+    if(!codes.includes(next))return false;
+    // An explicit choice also supersedes a shared ?lang= link on the next reload.
+    try{global.localStorage.setItem(KEY,next);}catch(e){}
+    if(global.history&&global.location&&global.location.search){
+      try{
+        var url=new URL(global.location.href);
+        if(url.searchParams.has('lang')){
+          url.searchParams.set('lang',next);
+          global.history.replaceState(global.history.state,'',url.href);
+        }
+      }catch(e){/* Some embedded browsers restrict history while still allowing in-game preferences. */}
+    }
+    if(next!==lang){
+      lang=next;column=codes.indexOf(next);apply(global.document);
+      if(global.dispatchEvent)global.dispatchEvent(new global.Event('hapil-languagechange'));
+    }
+    return true;
+  }
+  global.HapilI18n={t:t,text:text,apply:apply,set:set,get lang(){return lang;},LANGS:LANGS,DICT:DICT};
 })(typeof window!=='undefined'?window:globalThis);

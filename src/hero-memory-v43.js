@@ -6,6 +6,10 @@
  *  플레이어 공격은 기본 인주색이며 설정에서 끌 수 있다. 영웅을 감싸는 원 고리는 그리지 않는다(둔화는 흩날리는 먹 붓끝으로). 십자가 없음.
  *  판정·피해는 엔진(arcade-v43.js)이 정한다. 이 파일은 그림만. */
 (function(global){'use strict';
+  function localText(source,params){
+    if(global.HapilI18n&&global.HapilI18n.text)return global.HapilI18n.text(source,params);
+    return params?source.replace(/\{(\w+)\}/g,function(key,k){return params[k]===undefined?key:params[k];}):source;
+  }
   var TAU=Math.PI*2,DIR='media/arcade-v43-hero/';
   var SHEETS={shard:{frames:8,cell:96,fps:14},shatter:{frames:6,cell:128,fps:16},bolt:{frames:8,cell:192,fps:26,ox:24},burst:{frames:12,cell:192,fps:16}};
   var img={},redAtlases={},inkRed=true,RED_INK='#a8382a',RED_DARK='#842c22',RED_LIGHT='#ce7360',inkOn=function(){return !!(global.HapilInk&&global.HapilInk.on);};
@@ -303,7 +307,7 @@
     if(lv>=7)B.push({x:W/2,y:H*.42,t0:t+1.05,size:240}); // 7단계는 큰 덩어리 대신 憶 획이 그어지는 박자(심사 1차: 5단계와 구분)
     quake=8+lv*1.6;
     if(duo&&ready('cutin')&&ready(cutinKey('seoha-b')))cut={t0:t,lv:lv,name:b.name,auto:!!b.auto,hero:'seoha-b',union:true,label:unionText('unionName','윤서하 · 기억사수')};
-    else if(!duo&&ready('cutin'))cut={t0:t,lv:lv,name:b.name,auto:!!b.auto};else texts.push({text:b.name,sub:'필살 Lv.'+lv,t0:t,x:b.x,y:b.y-70,big:true});
+    else if(!duo&&ready('cutin'))cut={t0:t,lv:lv,name:b.name,auto:!!b.auto};else texts.push({text:b.name.split(' · ').map(function(name){return localText(name);}).join(' · '),sub:localText('필살 Lv.{n}',{n:lv}),t0:t,x:b.x,y:b.y-70,big:true});
   }
   function timeBomb(b,s,t,W,H){
     var lv=b.level,targets=b.targets||[],x=targets.length>=2?targets[0]:W/2,y=targets.length>=2?targets[1]:H*.32;
@@ -311,7 +315,7 @@
     if(b.union)return;
     quake=7+lv*1.4;
     if(ready(cutinKey(heroId(s))))cut={t0:t,lv:lv,name:b.name||heroBombName(s,lv),auto:!!b.auto,hero:heroId(s),label:heroProfile(s).name};
-    else texts.push({text:b.name||heroBombName(s,lv),sub:heroProfile(s).name+' · 필살 Lv.'+lv,t0:t,x:b.x,y:b.y-70,big:true});
+    else texts.push({text:b.name||heroBombName(s,lv),sub:localText(heroProfile(s).name)+' · '+localText('필살 Lv.{n}',{n:lv}),t0:t,x:b.x,y:b.y-70,big:true});
   }
   /* ── 윤서하 필살 '시계 폭풍'(사용자 11-20 "시계들이 맵안에서 막 돌아가는게 몇초간 지속 맵전역에 피해 입히는 이펙트까지"):
    *  화면 곳곳에 수묵 시계가 피어나 바늘이 미친 듯 돌고(잔상 셋), 화면 가운데 축의 큰 시곗바늘이 전장 전체를 쓸고 지나간다.
@@ -479,11 +483,11 @@
     var tx=-W*.36+(1-ease)*60;g.globalAlpha=(1-close)*Math.min(1,Math.max(0,(age-.08)/.12));g.textAlign='left';g.textBaseline='middle';
     var fs=cut.union?(auto?16:24):(auto?17+lv:27+lv);
     g.font='700 '+fs+'px '+SERIF;
-    if(seoha&&!cut.union&&g.measureText){var tw=g.measureText(cut.name).width;if(tw>W*.63)g.font='700 '+Math.max(auto?14:20,Math.floor(fs*W*.63/tw))+'px '+SERIF;}
+    var titles=(cut.union?cut.name.split(' · '):[cut.name]).map(function(name){return localText(name);});
+    if(g.measureText){var tw=Math.max.apply(null,titles.map(function(name){return g.measureText(name).width;}));if(tw>W*.63)g.font='700 '+Math.max(12,Math.floor(fs*W*.63/tw))+'px '+SERIF;}
     g.lineWidth=cut.union?3:5;g.strokeStyle=ink?'rgba(244,236,218,.95)':'rgba(0,0,0,.8)';g.fillStyle=ink?'rgb(30,26,24)':'#dff8ff';
-    var titles=cut.union?cut.name.split(' · '):[cut.name];
-    for(var j=0;j<titles.length;j++){var ny=cut.union?(auto?-18+j*19:-23+j*30):auto?-4:-6;g.strokeText(titles[j],tx,ny);g.fillText(titles[j],tx,ny);}
-    g.font='700 '+(auto?11:13)+'px '+SERIF;g.lineWidth=3;var sub=(seoha?((cut.label||'윤서하')+(cut.auto?' · 자동 필살 Lv.':' · 필살 Lv.')):(cut.auto?'피격 직전 · 자동 필살 Lv.':'기억사수 · 필살 Lv.'))+lv;g.strokeText(sub,tx+2,subY);g.fillText(sub,tx+2,subY);
+    for(var j=0;j<titles.length;j++){var ny=cut.union?(auto?-18+j*19:-23+j*30):auto?-4:-6;g.strokeText(titles[j],tx,ny,W*.67);g.fillText(titles[j],tx,ny,W*.67);}
+    g.font='700 '+(auto?11:13)+'px '+SERIF;g.lineWidth=3;var sub=(seoha?localText(cut.label||'윤서하'):localText(cut.auto?'피격 직전':'기억사수'))+' · '+localText(cut.auto?'자동 필살 Lv.{n}':'필살 Lv.{n}',{n:lv});g.strokeText(sub,tx+2,subY,W*.82);g.fillText(sub,tx+2,subY,W*.82);
     g.restore();raw(-1);return true;
   }
   function unionText(key,fallback){return global.HapilI18n?global.HapilI18n.t(key):fallback;}
@@ -492,9 +496,9 @@
       texts=texts.filter(function(o){return !o.growth;});
       texts.push({text:unionText('unionAwakening','두 기억이 하나로'),sub:unionText('unionName','윤서하 · 기억사수'),t0:t,x:s.player.x,y:s.player.y-93,big:true});
     }
-    else if(e==='powerUp')texts.push({text:heroProfile(s).attackName+' Lv.'+s.power,sub:[global.HapilCues&&global.HapilCues.gainText?global.HapilCues.gainText(s.power):'',s.power>=5?(isSeoha(heroId(s))?'시계바늘 연쇄':'기억 번개'):''].filter(Boolean).join(' · '),t0:t,x:s.player.x,y:s.player.y-48,growth:true});
-    else if(e==='bombLevelUp')texts.push({text:'필살 Lv.'+s.bombLevel,sub:heroBombName(s,s.bombLevel),t0:t,x:s.player.x,y:s.player.y-62,growth:true});
-    else if(e==='focusSkill'){if(t-lastSkillLabel>2.4){lastSkillLabel=t;texts.push({text:s.fsLast&&s.fsLast.kind==='union'?'시간차 공격 · 인과의 역전':s.fsLast&&s.fsLast.kind==='sword'?'시간차 공격':'인과의 역전',sub:'',t0:t,x:s.player.x,y:s.player.y-34});}}
+    else if(e==='powerUp')texts.push({text:localText(heroProfile(s).attackName)+' Lv.'+s.power,sub:[global.HapilCues&&global.HapilCues.gainText?global.HapilCues.gainText(s.power):'',s.power>=5?localText(isSeoha(heroId(s))?'시계바늘 연쇄':'기억 번개'):''].filter(Boolean).join(' · '),t0:t,x:s.player.x,y:s.player.y-48,growth:true});
+    else if(e==='bombLevelUp')texts.push({text:localText('필살 Lv.{n}',{n:s.bombLevel}),sub:heroBombName(s,s.bombLevel).split(' · ').map(function(name){return localText(name);}).join(' · '),t0:t,x:s.player.x,y:s.player.y-62,growth:true});
+    else if(e==='focusSkill'){if(t-lastSkillLabel>2.4){lastSkillLabel=t;texts.push({text:s.fsLast&&s.fsLast.kind==='union'?localText('시간차 공격')+' · '+localText('인과의 역전'):s.fsLast&&s.fsLast.kind==='sword'?'시간차 공격':'인과의 역전',sub:'',t0:t,x:s.player.x,y:s.player.y-34});}}
     else if(e==='bomb')bomb(s.lastBomb,t,360,640,s);
     else if(e==='bombPulse'){
       var pi=s.pulseInfo;
@@ -555,8 +559,8 @@
     for(var i=texts.length-1;i>=0;i--){var o=texts[i],age=t-o.t0,life=o.big?1.6:1.1;if(age>life){texts.splice(i,1);continue;}
       var a=age<.12?age/.12:1-Math.max(0,age-life*.6)/(life*.4),y=o.y-age*16,x=Math.max(70,Math.min(290,o.x));
       raw(1);g.save();g.globalAlpha=a;g.textAlign='center';g.font=(o.big?'700 20px ':'700 13px ')+SERIF;g.lineWidth=3;g.strokeStyle='rgba(255,253,246,.9)';g.fillStyle='rgba(30,26,24,1)';
-      if(!inkOn()){g.strokeStyle='rgba(0,0,0,.7)';g.fillStyle='#bff6ff';}g.strokeText(o.text,x,y);g.fillText(o.text,x,y);
-      if(o.sub){g.font='600 11px '+SERIF;g.strokeText(o.sub,x,y+15);g.fillText(o.sub,x,y+15);}g.restore();raw(-1);}
+      if(!inkOn()){g.strokeStyle='rgba(0,0,0,.7)';g.fillStyle='#bff6ff';}var line=localText(o.text),width=Math.min(x,360-x)*2-8;g.strokeText(line,x,y,width);g.fillText(line,x,y,width);
+      if(o.sub){g.font='600 11px '+SERIF;var sub=localText(o.sub);g.strokeText(sub,x,y+15,width);g.fillText(sub,x,y+15,width);}g.restore();raw(-1);}
   }
 
   /* ── 구름 위 시계: 바늘은 보통 6초에 한 바퀴, 가속 4배, 둔화(저속) 4분의 1. 테두리 눈금 7개가 공격 단계만큼 짙어진다 ── */

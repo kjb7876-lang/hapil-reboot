@@ -18,7 +18,7 @@ test('v43 panels: wider PC panels list nearby stages and this boss\'s spells, wi
 
 test('v43 panels: on PC the in-field spell name is left to the panel',()=>{
  const app=h.read('src/arcade-app-v43.js'),hud=/function drawHud\(s\)[\s\S]*?\n  \}/.exec(app)[0];
- assert(/hudOut!=='side'[^\n]*?fillText\('「'\+seg\.name/.test(hud.replace(/\n/g,' ')),'in-field spell name drawn only without side panels');
+ assert(/hudOut!=='side'[^\n]*?fillText\('「'\+localText\(seg\.name\)/.test(hud.replace(/\n/g,' ')),'in-field spell name drawn only without side panels');
 });
 
 test('v43 framing: during spells the boss keeps to the middle so its sigil is not cut by the field edges',()=>{
