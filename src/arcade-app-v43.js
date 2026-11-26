@@ -1700,7 +1700,9 @@
     ctx.globalAlpha=.75*a;ctx.strokeStyle='#e8c77a';ctx.lineWidth=2;ctx.setLineDash([10,7]);ctx.lineDashOffset=-s.tick*.6;ctx.beginPath();
     if(c.vert){ctx.moveTo(lo+1,0);ctx.lineTo(lo+1,H);ctx.moveTo(hi-1,0);ctx.lineTo(hi-1,H);}else{ctx.moveTo(0,lo+1);ctx.lineTo(W,lo+1);ctx.moveTo(0,hi-1);ctx.lineTo(W,hi-1);}
     ctx.stroke();ctx.restore();}
-  var laserCuePass=false;function drawLaserCues(s){laserCuePass=true;try{drawLasers(s);}finally{laserCuePass=false;}drawCoverGap(s);if(Rhythm)Rhythm.drawBeats(ctx,s,{W:W,H:H,font:SANS});} // 바닥 줄·사다리·스위퍼 예고만 탄 위에 한 번 더
+  var laserCuePass=false;function drawLaserCues(s){laserCuePass=true;try{drawLasers(s);}finally{laserCuePass=false;}drawCoverGap(s);if(Rhythm&&s.special&&s.special.kind==='laser'&&s.beat)Rhythm.drawBeats(ctx,s,{W:W,H:H,font:SANS,y:beatsY()});}
+  /* 장단 점 띠 높이(11-26 실플레이 검수): 휴대폰은 윗줄 HUD(보스 이름·P·마지막 공격·카드 이름·봉인)가 판 위로 넘쳐 y31 의 점 띠와 '봉인 놓침' 줄이 겹쳤다 → HUD 아래로 내린다 */
+  function beatsY(){if(hudOut!=='mobile')return 31;try{var hi=$('arcade-hud-high'),r=canvas.getBoundingClientRect(),b=hi&&!hi.hidden?hi.getBoundingClientRect().bottom:0;if(!b||!r.height)return 31;return Math.max(31,Math.min(150,(b-r.top)/r.height*H+22));}catch(e){return 31;}} // 바닥 줄·사다리·스위퍼 예고만 탄 위에 한 번 더
   function drawLasers(s){
     if(!s.lasers.length)return;var cues=laserCuePass;
     if(Rhythm)Rhythm.draw(ctx,s,{COLORS:COLORS,W:W,H:H,fade:Arcade.BEAM_FADE,lite:lite,phase:cues?'over':'under'}); // 리듬 음표: 켜진 몸은 탄 아래, 예고와 음표머리는 탄 위
@@ -2113,7 +2115,18 @@
     else introLines=[{speaker:who&&who.name||'',text:'...'}];
     introLinesKey=key;return introLines;
   }
-  function wrapText(text,maxW){var out=[],row='',i;for(i=0;i<text.length;i++){var c=text[i];if(ctx.measureText(row+c).width>maxW&&row){out.push(row);row=c.trim()?c:'';}else row+=c;}if(row)out.push(row);return out;}
+  /* 띄어쓰기 단위로 줄을 나눈다(11-26 실플레이 검수: 글자 단위라 '않나' 다음 '?' 하나만 다음 줄로 떨어지고 낱말이 중간에서 끊겼다).
+     한 낱말이 한 줄보다 길면 그 낱말만 글자 단위로 자르고, 문장부호로 시작하는 줄은 앞줄 끝에 붙인다. */
+  var NO_START=/^[?!.,…~)」』'"·:;]/;
+  function wrapText(text,maxW){var out=[],row='',words=String(text).split(' '),i,j;
+    for(i=0;i<words.length;i++){var w=words[i],cand=row?row+' '+w:w;
+      if(ctx.measureText(cand).width<=maxW||!row&&!w){row=cand;continue;}
+      if(row){out.push(row);row='';}
+      if(ctx.measureText(w).width<=maxW){row=w;continue;}
+      for(j=0;j<w.length;j++){var c=w[j];if(row&&ctx.measureText(row+c).width>maxW&&!NO_START.test(c)){out.push(row);row=c;}else row+=c;}}
+    if(row)out.push(row);
+    for(i=1;i<out.length;i++)while(out[i]&&NO_START.test(out[i])){out[i-1]+=out[i][0];out[i]=out[i].slice(1);}
+    return out.filter(function(r){return r.length;});}
   function brushBox(x,y,w,h,alpha){ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle='rgba(244,236,218,.94)';ctx.beginPath();ctx.moveTo(x+4,y+1);ctx.lineTo(x+w-3,y);ctx.lineTo(x+w,y+h-3);ctx.lineTo(x+3,y+h);ctx.closePath();ctx.fill();ctx.fillStyle=INK_DARK;ctx.fillRect(x+4,y-1.5,w-8,2.4);ctx.fillRect(x+6,y+h-1,w-14,2);ctx.restore();}
   function drawBossIntro(s){
     var info=Arcade.entrancePhase?Arcade.entrancePhase(s):null;if(!info||mode!=='playing')return;
@@ -2359,13 +2372,13 @@
     Arcade.STAGES.forEach(function(g,i){
       var group=groups[g.part];if(!group){group=groups[g.part]=document.createElement('optgroup');group.label='제'+g.part+'부';select.appendChild(group);}
       var option=document.createElement('option'),done=progress.cleared.indexOf(i)>=0,can=Progress.canPlay(progress,i);option.value=String(i);
-      option.textContent=(i+1)+'. '+(can||done?g.name:'■■■■ · 잠김')+(done?' '+starText(progress.stars[i]||1):''); // 잠긴 스테이지 이름도 가린다(스포 방지, 사용자 11-20)option.disabled=!can;
+      option.textContent=(i+1)+'. '+(can||done?g.name:'■■■■ · 잠김')+(done?' '+starText(progress.stars[i]||1):''); option.disabled=!can; // 잠긴 스테이지 이름도 가린다(스포 방지, 사용자 11-20). 예전에는 disabled 가 주석 뒤에 붙어 잠긴 칸도 고를 수 있었다(11-26 실플레이 검수)
       group.appendChild(option);
     });
     select.value=String(Math.min(open,resume));
     var boss=$('arcade-boss-select'),list=bossStages();boss.textContent='';
     list.forEach(function(g){var option=document.createElement('option');option.value=String(g.index);option.textContent='제'+g.part+'부 · '+g.name+' — '+actorNames(g.index).join(' → ');boss.appendChild(option);});
-    boss.disabled=!list.length;$('arcade-boss-start').disabled=!list.length;
+    boss.disabled=!list.length;boss.hidden=!list.length;$('arcade-boss-start').disabled=!list.length;$('arcade-boss-start').hidden=!list.length; // 깬 보스가 없으면 빈 선택 칸·회색 시작 단추를 숨긴다(11-26)
     $('mode-note').textContent=list.length?'고른 스테이지의 중간 보스와 보스만 연달아 싸웁니다.':'보스 스테이지를 깨면 여기서 다시 싸울 수 있습니다.';
   }
   function midway(){return Mobile&&Mobile.checkpoint?Mobile.checkpoint(Progress.resume(progress),difficulty):null;}
