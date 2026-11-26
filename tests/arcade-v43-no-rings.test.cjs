@@ -6,7 +6,9 @@ test('ink style draws no wrapping rings',()=>{
  const bubble=ink.slice(ink.indexOf('// 큰 방울'),ink.indexOf('hold--;return {image:c,half:reach}'));
  assert(bubble.length>50);assert.doesNotMatch(bubble,/\.arc\(/,'the big bubble bullet is a wash blot, not a stroked ring');
  assert.match(app,/if\(!Ink\)\{ctx\.beginPath\(\);ctx\.arc\(f\.x,f\.y,r\*\.7,0,TAU\);ctx\.stroke\(\);\}/,'hit flash ring');
- assert.match(app,/q<\(Ink\?0:c\.big\?3:2\)/,'cast pulse rings');
+ const cast=/function drawSkillFx\(s\)\{[\s\S]*?\n  \}/.exec(app)[0];
+ assert.doesNotMatch(cast,/ctx\.(?:arc|ellipse|closePath)\(/,'cast accents do not draw a wrapping ring');
+ assert.match(cast,/ctx\.quadraticCurveTo\(/,'a release still has an open brushstroke when no sheet is available');
  assert.match(app,/if\(!Ink\)\{ctx\.save\(\);ctx\.translate\(p\.x,p\.y\);ctx\.rotate\(visual\*3\)/,'focus dashed ring');
 });
 test('ink is monochrome with vermilion accents by default, older looks stay reachable',()=>{assert.match(ink,/mono=monoQ\?\+monoQ\[1\]:2/);assert.match(ink,/\[\?&\]mono=\(\[012\]\)/);assert.match(ink,/s2=0;\}/);assert.match(ink,/!\(al<\.5\)\)l2=Math\.min\(l2,\.18\)/); // 사용자 11-16: 붉은 탄도 먹(옅은 붉은 빛만 먹으로 두던 규칙이 모든 적 붉은색으로 넓어졌다)
