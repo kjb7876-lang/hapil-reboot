@@ -11,6 +11,8 @@
     ?require('./arcade-heroes-v43.js'):root.HapilArcadeHeroes;
   var BOSS_INTROS=typeof module==='object'&&module.exports&&typeof require==='function'
     ?require('./arcade-boss-intros-v43.js'):root.HapilArcadeBossIntros;
+  var BOSS_LINES=typeof module==='object'&&module.exports&&typeof require==='function'
+    ?require('./arcade-boss-lines-v43.js'):root.HapilArcadeBossLines;
   var BOSS_RHYTHM=typeof module==='object'&&module.exports&&typeof require==='function'
     ?require('./arcade-boss-rhythm-v43.js'):root.HapilArcadeBossRhythm;
   var BOSS_PHASES=typeof module==='object'&&module.exports&&typeof require==='function'
@@ -32,7 +34,13 @@
   function heroProfile(s){return HEROES?HEROES.get(typeof s==='string'?s:s&&s.union?'seoha-b':s&&s.hero):null;}
   function isCinematicBoss(actor,mid){var intros=BOSS_INTROS||root.HapilArcadeBossIntros;return !mid||!!(intros&&intros.isSinBoss(actor));}
   // 11-17 사용자: 컷씬 화면과 본게임을 오가지 않고 모든 보스·중간보스가 같은 입장 연출(수묵 컷인 → 등장 → 대사 → 전투). 앱이 createRun({entranceAll:true})로 켠다(엔진 단독 시뮬은 기존 그대로).
-  function graceOf(s){if(!(s&&s.entranceAll))return BOSS_ENTRANCE_GRACE;var g=segment(s);return g&&g.mid?BOSS_ENTRANCE_MID:BOSS_ENTRANCE_SPEECH;} // 사용자 11-20: 중간보스는 컷인만(대사 없음) → 등장 뒤 짧게만 기다린다
+  function hasEntranceReply(s){var g=segment(s);return !!(s.entranceAll&&g&&!g.mid&&BOSS_LINES?.getReply?.(g.actor,g.stage));}
+  function graceOf(s){
+    if(!(s&&s.entranceAll))return BOSS_ENTRANCE_GRACE;
+    var g=segment(s);
+    if(g&&g.mid)return BOSS_ENTRANCE_MID;
+    return hasEntranceReply(s)?BOSS_REPLY_SPEECH:BOSS_ENTRANCE_SPEECH;
+  }
   function hasEntrance(s,g){return !!(s&&s.entranceAll)||isCinematicBoss(g.actor,g.mid);}
   /* 부별 파일. 노드에서는 require로, 브라우저에서는 먼저 읽힌 스크립트가 HapilArcadeParts에 쌓아 둔 것을 쓴다. */
   var PARTS=typeof module==='object'&&module.exports&&typeof require==='function'
@@ -1260,6 +1268,7 @@
     if(!prev||prev.kind!=='card'||prev.actor!==next.actor||!s.boss.present){s.boss.leaving=s.boss.present;s.stage='intro';}else s.stage='break';
   }
   var CALM_BELOW=20,BOSS_REST=156,BOSS_SWAY=40,BOSS_ROAM=58,BOSS_ENTRANCE_GRACE=120,BOSS_ENTRANCE_SPEECH=190,BOSS_ENTRANCE_MID=80,ENTRANCE_CUTIN=54,BOSS_CLEAR_TICKS=120; // 좌우는 가운데 3분의 1 안: 문양이 칸 가장자리에 잘리지 않게(심사 6.53)
+  var BOSS_REPLY_SPEECH=300; // 질문과 답변을 각각 2.5초씩 보여 준다.
   // 컷신 준비는 폭탄/격파가 아니다. 점수·아이템·경험치·쿨타임을 건드리지 않고 공격 잔재만 걷는다.
   // 지워지는 탄·잡몹 자리를 앱이 '먹물로 번져 스러짐'으로 그리도록 남긴다(사용자 11-18 "탄환이 갑자기 뜬금없이 사라질때 … 연출을 좀 납득가능하게"). 판정은 없다.
   var INK_DISSOLVE_CAP=480;
@@ -1296,12 +1305,17 @@
     var e=s.bossEntrance;if(!e||e.segment!==s.seg||s.stage!=='intro')return null;
     if(e.enteredTick===null||e.enteredTick===undefined||!s.boss.present||s.boss.leaving)return {phase:'cutin',t:Math.min(1,s.stageTick/ENTRANCE_CUTIN)};
     if(e.readyTick===null||s.tick>=e.readyTick)return null;
-    return {phase:'speech',t:Math.max(0,Math.min(1,(s.tick-e.enteredTick)/graceOf(s)))};
+    return {phase:'speech',t:Math.max(0,Math.min(1,(s.tick-e.enteredTick+(e.speechAdvance||0))/graceOf(s)))};
   }
   function skipEntrance(s){
     var ph=entrancePhase(s);if(!ph)return false;
     if(ph.phase==='cutin'){if(s.stageTick<ENTRANCE_CUTIN)s.stageTick=ENTRANCE_CUTIN;return true;}
-    var e=s.bossEntrance;e.readyTick=Math.min(e.readyTick,s.tick+24);return true;
+    var e=s.bossEntrance;
+    if(hasEntranceReply(s)&&ph.t<.5){
+      e.speechAdvance=BOSS_REPLY_SPEECH/2-(s.tick-e.enteredTick);
+      e.readyTick-=e.speechAdvance;
+    }else e.readyTick=Math.min(e.readyTick,s.tick+24);
+    return true;
   }
   function enter(s,actor){var b=s.boss;b.actor=actor;b.name=segment(s).title||actorName(actor,s.stageIndex);b.mid=!!segment(s).mid;b.present=true;b.leaving=false;b.x=W/2;b.y=-60;b.targetX=W/2;b.targetY=BOSS_REST;b.enteredTick=s.tick;s.stageTick=0;
     var e=s.bossEntrance;if(e&&e.segment===s.seg){e.enteredTick=s.tick;e.readyTick=s.tick+graceOf(s);}
