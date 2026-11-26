@@ -7,7 +7,7 @@
   'use strict';
   var part={part:6,
     // 색 번호: 0 빨강 2 보라 4 청록 5 초록 6 노랑 8 흰색
-    actors:{p6_demons:{name:'성 밖의 악마들',c1:0,c2:6},p6_bind:{name:'속박 코어',c1:2,c2:4}},
+    actors:{p6_demons:{name:'성 밖의 악마들',c1:0,c2:6},p6_nightmare_captain:{name:'악몽분대장',c1:0,c2:8}},
     mobs:{p6_demon:{hp:7,r:14,score:300},p6_raider:{hp:8,r:15,score:300},p6_keeper:{hp:90,r:22,score:4000,elite:true}},
     props:[{key:'p6_lance',radius:12},{key:'p6_spear',radius:12}],
     build:function(K){
@@ -23,6 +23,34 @@
         // 화면 가운데 아래(영웅이 지키는 자리)로 모이는 탄
         p6_converge:function(s,m){K.fan(s,m.x,m.y,K.count(s,4),Math.atan2(H-m.y,W/2-m.x),.5,80,{color:m.color,size:0});}
       };
+
+      // 분대장은 기를 들어 신호한 뒤 창끝 대열을 보내고, 다음 명령 전에 맞은편으로 행군한다.
+      // 첫 카드는 한쪽 대열만 가르친다. 기명 카드는 반대편 대열이 한 박자 뒤에 같은 길목을 가로지른다.
+      function captainOrders(s,crossfire){
+        if(s.calm||s.spHold||s.figPend||s.figHeldAt===s.tick)return;
+        var b=s.boss,period=K.pick(s,144,132,120),answer=K.pick(s,70,64,58);
+        // After any quiet window, raise the standard again. The returning flank must never arrive without its warning.
+        var newCard=b.commandSeg!==s.seg;
+        if(newCard||b.orderLastTick<s.tick-1||s.tick-b.commandTick>=period){
+          b.commandSide=newCard?-1:-b.commandSide;
+          b.commandTick=s.tick;b.commandSeg=s.seg;
+        }
+        b.orderLastTick=s.tick;
+        var beat=s.tick-b.commandTick,side=b.commandSide;
+        if(beat===period-42){b.targetX=W*(.5+side*.16);return;}
+        if(beat!==30&&!(crossfire&&beat===answer))return;
+        if(beat===answer)side=-side;
+        var ranks=K.pick(s,5,7,9),originX=b.x+side*22,originY=b.y+26;
+        var aimX=W*(.5-side*(crossfire?.16:.04)),angle=Math.atan2(H*.84-originY,aimX-originX);
+        var born=s.enemyShotsBorn,queued=s.bossVolley?s.bossVolley.queue.length:0;
+        for(var i=0;i<ranks;i++){
+          var rank=i-(ranks-1)/2;
+          // Preserve the leader on mobile Easy. The wings still obey difficulty thinning and the whole rank obeys screen coverage.
+          K.spawn(s,originX+rank*9,originY-Math.abs(rank)*5,angle+rank*.075,104,
+            {color:side<0?K.RED:K.WHITE,size:0,formation:true,keepShot:rank===0});
+        }
+        if(s.enemyShotsBorn>born||(s.bossVolley&&s.bossVolley.queue.length>queued))b.commandFireTick=s.tick;
+      }
 
       /* ── 이름 붙은 패턴. 순서대로 읽으면 장면의 사연이 된다. ── */
       var spells={
@@ -50,10 +78,9 @@
             for(k=0;k<n;k++){var a=base+TAU*k/n,d=Math.atan2(Math.sin(a-.75),Math.cos(a-.75));if(Math.abs(d)<gap)continue;
               K.spawn(s,W*.22,y,a,64,{color:K.PURPLE,size:1});K.spawn(s,W*.78,y,Math.PI-a,64,{color:K.WHITE,size:1});}}
           if(t%88===66){K.fan(s,W*.22,y,K.pick(s,2,3,3),HALF+.25,.3,104,{color:K.PURPLE,size:K.RICE});K.fan(s,W*.78,y,K.pick(s,2,3,3),HALF-.25,.3,104,{color:K.WHITE,size:K.RICE});}}},
-        // 50 중간 — 악몽이 코어에 걸어 둔 속박: 같은 자리에서 반대로 휘는 두 고리가 겹쳐 사슬처럼 엮이며 천천히 풀려 나간다.
-        bindChains:{name:'악몽이 걸어 둔 속박',scene:'50',fire:function(s,t){var b=s.boss,k,n=K.count(s,13);
-          if(t%K.pick(s,64,54,46)===0){var base=K.rand(s)*TAU;for(k=0;k<n;k++){var a=base+TAU*k/n;K.spawn(s,b.x,b.y,a,60,{color:K.PURPLE,size:0,turn:.62,accel:14,max:130,life:600});K.spawn(s,b.x,b.y,a+Math.PI/n,60,{color:K.CYAN,size:0,turn:-.62,accel:14,max:130,life:600});}}
-          if(t%120===90)K.fan(s,b.x,b.y,K.pick(s,2,3,3),K.aim(s,b.x,b.y),.36,104,{color:K.WHITE,size:K.RICE});}},
+        captainCrossfire:{name:'악몽분대의 교차 사격',scene:'50',
+          opening:{id:'squadOrder',fire:function(s){captainOrders(s,false);}},
+          fire:function(s){captainOrders(s,true);}},
         // 50 보스 첫째 — 환도의 공명: 화면 위 왼쪽과 오른쪽 두 자리에서 파문이 함께 퍼져 한가운데에서 겹친다. 우두머리 쪽에서는 세 번 울리는 고리.
         resonance:{name:'환도의 공명',scene:'50',fire:function(s,t){var b=s.boss,k,n;
           if(t%50===0){n=K.count(s,14);var off=(t/50)%2?.5:0;for(k=0;k<n;k++){var a=.12+(Math.PI-.24)*(k+off)/n;K.spawn(s,24,-12,a,66,{color:K.WHITE,size:1});K.spawn(s,W-24,-12,Math.PI-a,66,{color:K.CYAN,size:1});}}
@@ -149,7 +176,7 @@
           mid:['p6_demons','twoMasters','twinSeals']},
         {scene:'50',theme:{bg:'p6_core',tint:'#1e1030',fx:'sparks'},cast:['p6_demon','p6_raider','p6_keeper'],reward:{key:'p6_ego',name:'EGO 코어'},
           waves:[K.wave(w50a,760),K.wave(w50b,760),K.wave(w50c,760),K.wave(w50d,760)],
-          mid:['p6_bind','bindChains'],boss:['chief','resonance','sharedCore','lancers','twins']}
+          mid:['p6_nightmare_captain','captainCrossfire'],boss:['chief','resonance','sharedCore','lancers','twins']}
       ];
       return {spells:spells,mobFire:mobFire,stages:stages};
     }};

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "command": "node tools/audit-boss-rhythm-v43.cjs --output docs/v43/boss-rhythm-audit.json",
   "sourceHashes": {
-    "src/arcade-v43.js": "11f4ff657c57b3560696564f4cb5b9fb3f5536424dc34e4a5a45d2bda4b5382f",
+    "src/arcade-v43.js": "b86758f5c409f9d66186b45f7769d09d2b17bed9e33a7fe7d78402124ca9618c",
     "src/arcade-boss-rhythm-v43.js": "5d3232b7c61694f33e5a87dfffd0c602b64e70022f8417cb2849189d26d83dc9",
     "src/arcade-boss-intros-v43.js": "9240b3eeb23668663010e66676318b6468f32782a97febd4d6812f93e47fde46",
     "src/arcade-heroes-v43.js": "02bdf28bcf320a5e80036877a5f8db313f7caed63f2c5d8d3d3a47ea5bda9620",
@@ -11,7 +11,7 @@
     "src/arcade-parts-v43/p3.js": "d439727f802e9d9e4cdc5beff82ed5da145b48a4edaaec94b2c655c7f7ffb133",
     "src/arcade-parts-v43/p4.js": "081c54b3d87d2189c0172cf1183306dcef38fe954674f12b18d6969b78fcdf5a",
     "src/arcade-parts-v43/p5.js": "628129fd78c7f5673d690361877da6de224f694e6f12657d176c1870ee59911e",
-    "src/arcade-parts-v43/p6.js": "39e6bbe412f0c1934d68d955294bf248e3913d58dd33228e2c139683355add4b",
+    "src/arcade-parts-v43/p6.js": "a866bff039dabe47c2188f1ebd728948ed43bd0d769fd6fd3b81f2c585f89f0e",
     "src/arcade-parts-v43/p7.js": "104ac14d09db6a140b9a9759982b5900b0dcbbe1cfad640dffe459e8677ef5b8",
     "src/arcade-parts-v43/p8.js": "81cb6d1d319b4f538d817847090a0d03848767257445e0d9b41cba89b192947d"
   },

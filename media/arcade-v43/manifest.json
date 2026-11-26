@@ -14461,50 +14461,6 @@
   "stamp": "ab42a01e1ff3ffa3",
   "table": "tools/arcade-art-v43/p5.json"
  },
- "p6_bind.webp": {
-  "bytes": 43032,
-  "cell": [
-   133,
-   183
-  ],
-  "fps": 6,
-  "frames": 4,
-  "group": "actors",
-  "motions": [
-   "attack"
-  ],
-  "size": [
-   532,
-   183
-  ],
-  "source": "media/drive-v43/b48-down.webp",
-  "sourceSha256": "71fac50f1307a17c7a2c0a768b3d73724bb8cbc0e46d04745c543986b39ecea8",
-  "stamp": "83482d9f10da5455",
-  "table": "tools/arcade-art-v43/p6.json"
- },
- "p6_bind@attack.webp": {
-  "bytes": 77594,
-  "cell": [
-   163,
-   220
-  ],
-  "fps": 8,
-  "frames": 4,
-  "group": "actors",
-  "poseFit": [
-   0.971,
-   0.011,
-   0.004
-  ],
-  "size": [
-   652,
-   220
-  ],
-  "source": "media/m0-v43/boss/mb-hando02-attack.webp",
-  "sourceSha256": "114d9b8b87a66176509b93c9eb90d7850955647f2335ca922336cfcebd7c54ee",
-  "stamp": "f7306393dd565ac6",
-  "table": "tools/arcade-art-v43/p6.json"
- },
  "p6_demon.webp": {
   "bytes": 9220,
   "group": "mobs",
@@ -14651,6 +14607,123 @@
   "source": "media/cult-v17/lance.webp",
   "sourceSha256": "b1c98912111f3c661c418567e1d304d606705d7e3eb87c643caeaf8402f4acf7",
   "stamp": "05e1fa1ecc052ca3",
+  "table": "tools/arcade-art-v43/p6.json"
+ },
+ "p6_nightmare_captain.webp": {
+  "bytes": 52186,
+  "cell": [
+   146,
+   184
+  ],
+  "fps": 6,
+  "frames": 4,
+  "group": "actors",
+  "motions": [
+   "attack",
+   "death",
+   "hit",
+   "side"
+  ],
+  "size": [
+   584,
+   184
+  ],
+  "source": "media/boss-art-v43/p6_nightmare_captain-down.webp",
+  "sourceSha256": "01b7db0ba061f20649815d027c84c85b7e762fc4e888cdfbdc3ddc419e3b25a7",
+  "stamp": "50d03b39e9940d73",
+  "table": "tools/arcade-art-v43/p6.json"
+ },
+ "p6_nightmare_captain@attack.webp": {
+  "bytes": 52718,
+  "cell": [
+   184,
+   174
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "actors",
+  "poseFit": [
+   1.0,
+   0.083,
+   -0.019
+  ],
+  "size": [
+   736,
+   174
+  ],
+  "source": "media/boss-art-v43/p6_nightmare_captain-attack.webp",
+  "sourceSha256": "27db1551f335b22629c8a333835ad3b1fba2b9564d1f72f8f9dd80469f832da5",
+  "stamp": "5ada993e164ddcbe",
+  "table": "tools/arcade-art-v43/p6.json"
+ },
+ "p6_nightmare_captain@death.webp": {
+  "bytes": 45660,
+  "cell": [
+   184,
+   176
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "actors",
+  "poseFit": [
+   1.023,
+   0.01,
+   -0.054
+  ],
+  "size": [
+   736,
+   176
+  ],
+  "source": "media/boss-art-v43/p6_nightmare_captain-death.webp",
+  "sourceSha256": "914ceff36001df5d376ca3ef2ac345ff5ece3099b0d210fefd002eb1712401e0",
+  "stamp": "df1965ba60c9c763",
+  "table": "tools/arcade-art-v43/p6.json"
+ },
+ "p6_nightmare_captain@hit.webp": {
+  "bytes": 59432,
+  "cell": [
+   175,
+   184
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "poseFit": [
+   1.064,
+   -0.012,
+   -0.025
+  ],
+  "size": [
+   700,
+   184
+  ],
+  "source": "media/boss-art-v43/p6_nightmare_captain-hit.webp",
+  "sourceSha256": "d8121a903ebf7c76c8ad62e0420c8028a22ee17ed8811670801b0b0bfaecc37f",
+  "stamp": "0b511134830a19fe",
+  "table": "tools/arcade-art-v43/p6.json"
+ },
+ "p6_nightmare_captain@side.webp": {
+  "bytes": 44924,
+  "cell": [
+   144,
+   184
+  ],
+  "facing": "right",
+  "fps": 7,
+  "frames": 4,
+  "group": "actors",
+  "poseFit": [
+   1.011,
+   0.076,
+   -0.077
+  ],
+  "size": [
+   576,
+   184
+  ],
+  "source": "media/boss-art-v43/p6_nightmare_captain-side.webp",
+  "sourceSha256": "1c7e9ece6876528d157342eef943e3d08c10404d83d9c515dd384891877a1c07",
+  "stamp": "af8f6d302a90bc87",
   "table": "tools/arcade-art-v43/p6.json"
  },
  "p6_raider.webp": {
