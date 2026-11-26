@@ -3,6 +3,8 @@
   'use strict';
   global.HapilLocaleUI = {
     "ko": {
+      handicapSpeed: "적 탄속",
+      handicapSpeedNote: "적 탄 속도 ×{x} · 탄 수·피격점은 그대로 · ×1은 헬과 같은 속도(회피 보장은 ×1 기준)",
       pageTitle: "합일 — 총집본",
       pageDescription: "합일 ARCADE. 원작 56장면을 52스테이지로 잇는 원큐 여정 세로 탄막 슈팅.",
       gameTitle: "합일",
@@ -32,6 +34,8 @@
       gameOverTitle: "GAME OVER"
     },
     "en": {
+      handicapSpeed: "Enemy shot speed",
+      handicapSpeedNote: "Enemy bullets ×{x} speed · bullet count and hitbox unchanged · ×1 matches Hell (dodgeability is only guaranteed at ×1)",
       pageTitle: "Hapil — The Complete Journey",
       pageDescription: "Hapil Arcade is a vertical bullet hell that brings 56 scenes from the original story together across 52 stages.",
       gameTitle: "Hapil",
@@ -85,6 +89,8 @@
       field: "Vertical bullet hell playfield"
     },
     "ja": {
+      handicapSpeed: "敵弾速",
+      handicapSpeedNote: "敵弾の速さ ×{x}・弾数と当たり判定はそのまま・×1は地獄と同じ速さ（回避保証は×1のみ）",
       kicker: "HAPIL · 全52ステージを駆け抜ける旅",
       controls: "ドラッグで移動、ショットは自動。<br><b>超能力</b>を押しながら別の指で精密移動。<b>ボム</b>で敵弾を消せます。<br>PC：方向キー／WASDで移動、<span data-keyl=\"focus\">Shift</span>で超能力、<span data-keyl=\"bomb\">X</span>でボム。キーはポーズ中に変更できます。",
       continue: "つづきから",
@@ -227,6 +233,8 @@
       ].join('')
     },
     "zh-Hans": {
+      handicapSpeed: "敌弹速",
+      handicapSpeedNote: "敌弹速度 ×{x} · 弹数和判定不变 · ×1 与地狱相同（仅保证 ×1 可躲避）",
       kicker: "HAPIL · 踏上 52 关的旅程",
       controls: "拖动移动，自动射击。<br>按住<b>超能力</b>，用另一根手指微调位置。使用<b>炸弹</b>可消除敌弹。<br>电脑：方向键或 WASD 移动，<span data-keyl=\"focus\">Shift</span> 发动超能力，<span data-keyl=\"bomb\">X</span> 使用炸弹。可在暂停菜单中改键。",
       continue: "继续游戏",
@@ -369,6 +377,8 @@
       ].join('')
     },
     "zh-Hant": {
+      handicapSpeed: "敵彈速",
+      handicapSpeedNote: "敵彈速度 ×{x} · 彈數與判定不變 · ×1 與地獄相同（僅保證 ×1 可閃避）",
       kicker: "HAPIL · 踏上 52 關的旅程",
       controls: "拖曳移動，自動射擊。<br>按住<b>超能力</b>，用另一根手指微調位置。使用<b>炸彈</b>可消除敵彈。<br>電腦：方向鍵或 WASD 移動，<span data-keyl=\"focus\">Shift</span> 發動超能力，<span data-keyl=\"bomb\">X</span> 使用炸彈。可在暫停選單變更按鍵。",
       continue: "繼續遊戲",
@@ -511,6 +521,8 @@
       ].join('')
     },
     "es": {
+      handicapSpeed: "Velocidad enemiga",
+      handicapSpeedNote: "Balas enemigas ×{x} de velocidad · mismo número de balas y hitbox · ×1 equivale a Infierno (solo ×1 garantiza esquivar)",
       kicker: "HAPIL · 52 FASES EN UNA PARTIDA",
       controls: "Arrastra para moverte. El disparo es automático.<br>Mantén pulsado <b>Psi</b> y mueve otro dedo para afinar el movimiento. La <b>bomba</b> borra las balas enemigas.<br>PC: flechas o WASD para moverte, <span data-keyl=\"focus\">Shift</span> para Psi y <span data-keyl=\"bomb\">X</span> para la bomba. Puedes cambiar las teclas en pausa.",
       continue: "Continuar",
@@ -653,6 +665,8 @@
       ].join('')
     },
     "pt-BR": {
+      handicapSpeed: "Velocidade inimiga",
+      handicapSpeedNote: "Balas inimigas ×{x} de velocidade · mesma quantidade e hitbox · ×1 é igual ao Inferno (só ×1 garante desvio)",
       kicker: "HAPIL · 52 FASES EM UMA PARTIDA",
       controls: "Arraste para mover. Os disparos são automáticos.<br>Segure <b>Psi</b> e mova outro dedo para ajustar a posição. A <b>bomba</b> elimina os projéteis inimigos.<br>PC: setas ou WASD para mover, <span data-keyl=\"focus\">Shift</span> para Psi e <span data-keyl=\"bomb\">X</span> para a bomba. Altere as teclas no menu de pausa.",
       continue: "Continuar",

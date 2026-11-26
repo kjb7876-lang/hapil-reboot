@@ -43,7 +43,7 @@
   var state=null,mode='title',difficulty='normal',accumulator=0,lastStamp=0,visual=0,lastRun=null;
   var particles=[],spellDim=0,flash=0,hurtFlash=0,hurtRing=null,VERMILION='#a8382a',shake=0,shock=null,banner=0,bannerTick=0,BANNER_TICKS=80,SPELL_BANNER_TICKS=42,bannerSpell=false,bannerTitle='',bannerSub='',toast=null;
   var keys={},finger={active:false,id:null,x:0,y:0,relative:false,targetX:0,targetY:0},focusHeld=false,focusPointer=null,focusLatched=false,bombQueued=false;
-  var settings={music:true,sfx:true,hitSound:true,musicVolume:1,sfxVolume:1,screenShake:true,inkRedShots:true,lowQuality:false,abilityMemory:7,abilitySeoha:3,abilitySeohaB:7,abilityV:4,keyFocus:'Shift',keyBomb:'KeyX'}; // 능력조절(사용자 11-20): 영웅별 0(끔)~7단계
+  var settings={music:true,sfx:true,hitSound:true,musicVolume:1,sfxVolume:1,screenShake:true,inkRedShots:true,lowQuality:false,abilityMemory:7,abilitySeoha:3,abilitySeohaB:7,abilityV:4,keyFocus:'Shift',keyBomb:'KeyX',handicapSpeed:1}; // 능력조절(사용자 11-20): 영웅별 0(끔)~7단계
   var fx=null,music=null,best=0,bests={},lastSpell=null,drill=null,DRILL_KEY='hapil-arcade-v43-drill',lastItemSound=0,progress=Progress.fresh(),saveOk=true;
   var themeOverride=null,turbo=0,rushStage=false,oneCreditEligible=false;
   var Story=global.HapilArcadeStory||null,BossIntros=global.HapilArcadeBossIntros||null,story=null,storyQuiet=false,storySeen={},pauseReturn='playing',rulesReturn='title',storyArrivalActor='';
@@ -690,7 +690,7 @@
       var prog=Math.round(100*(s.stageIndex+1)/Arcade.STAGES.length);
       var life2='<div>'+lb('LIFE')+'<div class="lives">'+hearts+'</div>'+lb(localText('BOMB [{key}]',{key:keyLabel(settings.keyBomb)}))+'<div class="bombs">'+(bombs||'&nbsp;')+'</div>'+lb('CHARGE')+'<div class="gauge"><i style="width:'+g+'%"></i></div>'+lvl+'</div><div>'+lb('JOURNEY')+'<div class="progress"><i style="width:'+prog+'%"></i></div>'+route+'<div class="graze">'+localText('봉인 {n} · 조각 {pieces}/{total}',{n:s.captures,pieces:s.pieces||0,total:Arcade.LIFE_PIECES||3})+'</div></div>';
       var keys='<div class="keys">'+lb('CONTROLS')+'<div>'+localText('이동 ←↑↓→ · WASD')+'</div><div>'+esc(T('focus')+' '+keyLabel(settings.keyFocus)+' · '+T('bomb')+' '+keyLabel(settings.keyBomb))+'</div><div>'+T('pause')+' Esc</div></div>';
-      setHud(hi,'hi','<div class="stack">'+name+life2+'</div>'+keys);setHud(lo,'lo','<div class="stack">'+score+boss+'</div>'+'<div class="keys">'+lb('DIFFICULTY')+'<div>'+T(s.mode||s.difficulty)+'</div></div>');} // 패널 가운데: 왼쪽은 목숨·여정, 오른쪽은 보스 체력·스펠명·보너스(심사 6.46: 가운데가 비었다) // 아래쪽 빈자리: 왼쪽은 조작법, 오른쪽은 지금 스펠 이름(칸 안 이름표가 작아 읽기 어렵다는 지적)
+      setHud(hi,'hi','<div class="stack">'+name+life2+'</div>'+keys);setHud(lo,'lo','<div class="stack">'+score+boss+'</div>'+'<div class="keys">'+lb('DIFFICULTY')+'<div>'+T(s.mode||s.difficulty)+(s.speedMul>1?' ×'+s.speedMul:'')+'</div></div>');} // 패널 가운데: 왼쪽은 목숨·여정, 오른쪽은 보스 체력·스펠명·보너스(심사 6.46: 가운데가 비었다) // 아래쪽 빈자리: 왼쪽은 조작법, 오른쪽은 지금 스펠 이름(칸 안 이름표가 작아 읽기 어렵다는 지적)
   }
   var portraitKey='',portraitUrl='';
   function bossPortrait(actor,color){ // 오른쪽 패널의 보스 초상: 보스·그림 로드 상태가 바뀔 때만 한 번 굽는다(심사 6.60: 패널 가운데가 비었다)
@@ -2409,7 +2409,7 @@
     var chapterPart=run&&Number.isInteger(run.chapter)?run.chapter:0;
     run={chapter:chapterPart,stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),spellOnly:!!(run&&run.spellOnly&&Number.isInteger(run.segment)),segment:run&&run.segment,carry:run&&run.carry,practice:!!(run&&run.practice),hero:heroId(run&&run.hero||selectedHero)};
     lastRun=run;lastSpell=run.spellOnly?lastSpell:null;oneCreditEligible=run.stage===0&&!run.bossOnly&&!run.spellOnly&&!Number.isInteger(run.segment)&&!run.carry&&!run.practice&&!quiet&&!devMode;
-    var options={ability:abilityFor(run.hero),entranceAll:true,difficulty:difficulty,seed:fixedSeed(difficulty,run.stage),stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,spellOnly:run.spellOnly,growth:true,pacing:!quiet,rhythm:!quiet,fruits:Grove&&grove?Grove.equipped(grove):0}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
+    var options={ability:abilityFor(run.hero),entranceAll:true,difficulty:difficulty,seed:fixedSeed(difficulty,run.stage),stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,spellOnly:run.spellOnly,growth:true,pacing:!quiet,rhythm:!quiet,fruits:Grove&&grove?Grove.equipped(grove):0,bulletSpeed:settings.handicapSpeed}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
     if(run.chapter&&Chapters){var ch=Chapters.list(Arcade.STAGES)[run.chapter-1];if(ch&&ch.last>=run.stage)options.stages=ch.last-run.stage+1;} // 챕터 재도전: 그 챕터 끝에서 멈춘다
     if(Number.isInteger(run.segment))options.segment=run.segment;if(grown&&(grown.exp||grown.expRemainder||grown.fills||grown.union||typeof grown.stock==='number')){options.grown={exp:grown.exp|0,fills:grown.fills|0,expRemainder:grown.expRemainder};if(typeof grown.stock==='number')options.grown.stock=grown.stock;if(grown.union===true)options.grown.union=true;}
     if(state)bankSap(state);
@@ -2578,7 +2578,12 @@
   function setDifficulty(next){
     if(!Arcade.DIFFICULTY[next])next='normal';difficulty=next;var rule=Object.assign({},Arcade.DIFFICULTY[difficulty]);if(Arcade.livesFor)rule.hp=Arcade.livesFor(difficulty,compact,true);$('difficulty-note').textContent=T(NOTES[difficulty],{hp:rule.hp,bombs:rule.bombs,minutes:Arcade.PACING&&Arcade.PACING[difficulty]?Arcade.PACING[difficulty].nominalMinutes:({gentle:60,normal:90,hell:120})[difficulty]});
     document.querySelectorAll('[data-difficulty]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.difficulty===difficulty));});
+    syncHandicapSpeed();
   }
+  /* 핸디캡 적 탄속 배율(사용자 11-26): 핸디캡을 고르면 난이도 줄 아래에 ×1~×6 줄이 열린다. 값은 플레이 설정에 저장된다 */
+  function syncHandicapSpeed(){var row=$('handicap-speed');if(!row)return;row.hidden=difficulty!=='handicap';var v=settings.handicapSpeed||1;
+    row.querySelectorAll('[data-bullet-speed]').forEach(function(b){b.setAttribute('aria-pressed',String(+b.dataset.bulletSpeed===v));});
+    var n=$('handicap-speed-note');if(n){n.hidden=row.hidden;n.textContent=T('handicapSpeedNote',{x:v});}}
   // 기념물 격자: 얻은 것만 그림을 보이고, 못 얻은 칸은 가린다. 화면을 닫으면 그림을 버린다.
   function openKeepsakes(){
     var grid=$('arcade-keepsake-grid');grid.textContent='';
@@ -2615,6 +2620,7 @@
     else if(!(saved.abilityV>=4)&&typeof saved.abilitySeoha==='number'&&isFinite(saved.abilitySeoha)){
       var old=clampAbility(saved.abilitySeoha,'seoha-b');settings.abilitySeohaB=saved.abilityV>=3?(old>=SEOHA_MAX?clampAbility(7,'seoha-b'):old):saved.abilityV>=2||old>0?old:clampAbility(7,'seoha-b');}
     ['keyFocus','keyBomb'].forEach(function(k){if(typeof saved[k]==='string'&&keyOk(saved[k]))settings[k]=saved[k];});
+    if(typeof saved.handicapSpeed==='number')settings.handicapSpeed=Arcade.handicapSpeed?Arcade.handicapSpeed(saved.handicapSpeed):1; // 핸디캡 적 탄속 배율 1~6
     if(settings.keyFocus===settings.keyBomb){settings.keyFocus=KEY_DEFAULTS.keyFocus;settings.keyBomb=KEY_DEFAULTS.keyBomb;} // 저장값이 겹치면 기본값
     lite=settings.lowQuality;
   }
@@ -2729,6 +2735,7 @@
   function fieldPoint(e,fresh){if(fresh||!fieldRect||!fieldRect.width)fieldRect=canvas.getBoundingClientRect();var rect=fieldRect;return {x:(e.clientX-rect.left)*W/rect.width,y:(e.clientY-rect.top)*H/rect.height};}
   function devLabel(){var d=$('arcade-dev');d.textContent=T(devMode?'devOn':'devOff');d.setAttribute('aria-pressed',String(devMode));}
   function bind(){
+    document.querySelectorAll('[data-bullet-speed]').forEach(function(button){button.addEventListener('click',function(){settings.handicapSpeed=Arcade.handicapSpeed?Arcade.handicapSpeed(button.dataset.bulletSpeed):1;applySettings(true);syncHandicapSpeed();});});
     document.querySelectorAll('[data-difficulty]').forEach(function(button){button.addEventListener('click',function(){setDifficulty(button.dataset.difficulty);progress.difficulty=difficulty;saveProgress();if(state===null)refreshTitle();});});
     $('arcade-continue').addEventListener('click',function(){
       var mid=midway();
