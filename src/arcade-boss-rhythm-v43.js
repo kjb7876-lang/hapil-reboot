@@ -20,7 +20,7 @@
     goblin:['두목의 칼','p4_sword,cleaver',4],p4_knight:['엇갈린 검','p4_sword',0],insomnia:['잠들지 않는 눈','',2],
     p5_cult:['순환의 교단','',5],p5_archon:['육각 수문','',0],p5_common:['톱니 점사','gear',2],p5_grand:['오벨리스크','obelisk',3],p5_furnace:['열기와 톱니','gear',1],p5_neuron:['첨탑의 신경','spire',5],p5_keeper:['망각의 비석','obelisk',4],p5_rings:['명령 고리','p5_ring',2],arbelia:['초승달 꽃잎','crescent',1],siren:['초승달 음파','p5_hand,crescent',5],
     chief:['쌍날과 창','twin-blade,p6_lance,p6_spear',0],p6_demons:['성 밖의 불씨','',4],p7_car:['두 전조등','p7_sedan',2],p7_shadow:['뒤늦은 그림자','',4],p7_alarm:['세 번의 경보','',3],executor:['파란 신호','p7_signal,crescent',5],
-    p8_chip:['회로 점군','',3],p8_collective:['분산된 자아','',1],p8_lauren:['쌍둥이 날개','',0],cultist:['봉합과 회귀','p8_stitch,sword-balrog,cleaver,gear,crescent,sword-violet,twin-blade,heel',4],rian:['황청의 합일','hexagram',0]
+    p8_chip:['회로 점군','',3],p8_collective:['분산된 자아','',1],p8_brainwashed_elder:['교주의 명령','',0],cultist:['봉합과 회귀','p8_stitch,sword-balrog,cleaver,gear,crescent,sword-violet,twin-blade,heel',4],rian:['황청의 합일','hexagram',0]
   };
   var IDS=Object.keys(DEFINITIONS),firstCache=typeof WeakMap==='function'?new WeakMap():null;
   function own(o,k){return Object.prototype.hasOwnProperty.call(o,k);}

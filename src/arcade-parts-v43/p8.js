@@ -8,7 +8,7 @@
     actors:{
       p8_chip:{name:'전자 칩',c1:4,c2:0},
       p8_collective:{name:'집단 자아',c1:2,c2:8},
-      p8_lauren:{name:'라우렌 쌍둥이 기사',c1:8,c2:0},
+      p8_brainwashed_elder:{name:'세뇌된 장로',c1:8,c2:0},
       p8_ion:{name:'백이온',c1:4,c2:8}
     },
     mobs:{
@@ -63,15 +63,16 @@
             for(k=0;k<n;k++){var a=off+TAU*k/n,x=b.x+Math.cos(a)*86,y=b.y+Math.sin(a)*70;spawn(s,x,y,Math.atan2(cy-y,cx-x),82,{color:WHITE,size:0});}}
           if(t%112===84)ring(s,b.x,b.y,count(s,10),60,rand(s)*TAU,{color:PURPLE,size:2});}},
         // 58 — 돌아오는 현실의 기억
-        p8_rearranged:{name:'다시 배열한 전장',scene:'58',fire:function(s,t){var b=s.boss,q=Shapes.polygon(4,Math.max(2,count(s,3)));
-          // 두 성벽: 쌍둥이 자리에서 거울처럼 돈 네모가 퍼지다가, 한꺼번에 직각으로 꺾여 다시 배열된다.
-          if(t%96===0){var turn=t*.004;shape(s,b.x-70,b.y,q,66,turn,{color:WHITE,size:1,at:64,mode:K.MODE_TURN,arg:PI/2,speed2:62});shape(s,b.x+70,b.y,q,66,-turn,{color:RED,size:1,at:64,mode:K.MODE_TURN,arg:-PI/2,speed2:62});}
-          // 성가퀴: 톱니 모양 성벽 한 줄이 위에서 내려온다. 빈 문은 한 칸씩만 옮겨 간다.
+        p8_memorySeal:{name:'봉인된 기억',scene:'58',fire:function(s,t){var b=s.boss,beat=t%96;
+          // 장로의 양옆에서 인장이 한 박씩 어긋나 퍼지고, 서로 반대 방향으로 직각을 돈다.
+          if(beat===0||beat===16){var side=beat===0?-1:1,q=Shapes.polygon(4,Math.max(2,count(s,3)));
+            shape(s,b.x+side*60,b.y,q,66,side*t*.004,{color:side<0?WHITE:RED,size:1,at:64,mode:K.MODE_TURN,arg:-side*PI/2,speed2:62});}
+          // 봉인 자국이 위에서 내려온다. 빈 칸은 한 줄에 한 칸씩만 옮겨 간다.
           if(t%96===48){s.lane=Math.max(0,Math.min(13,(s.lane===undefined?7:s.lane)+Math.floor(rand(s)*3)-1));for(var i=0;i<16;i++){if(i>=s.lane&&i<s.lane+3)continue;spawn(s,W/16*(i+.5),i%2?-10:-30,PI/2,58,{color:i%2?WHITE:RED,size:i%2?0:1});}}}},
-        p8_straightStory:{name:'하나의 직선 서사',scene:'58',fire:function(s,t){var b=s.boss,k;
-          // 흩어진 기억: 사방으로 흩어진 고리가 멈춘 뒤, 모두 같은 방향(아래)으로 줄지어 이어진다.
-          if(t%110===0){var n=count(s,12),base=rand(s)*TAU;
-            for(k=0;k<n;k++){var a=base+TAU*k/n;spawn(s,b.x,b.y,a,130,{color:YELLOW,size:1,accel:-120,min:0,at:84,mode:K.MODE_TURN,arg:PI/2-a,speed2:60});spawn(s,b.x,b.y,a+PI/n,80,{color:WHITE,size:0,accel:-74,min:0,at:84,mode:K.MODE_TURN,arg:PI/2-a-PI/n,speed2:60});}}
+        p8_forcedObedience:{name:'복종의 각인',scene:'58',fire:function(s,t){var b=s.boss,beat=t%110;
+          // 붉고 흰 인장이 차례로 퍼졌다가, 같은 방향으로 내려오도록 강제된다.
+          if(beat===0||beat===18){var n=count(s,12),base=Math.floor(t/110)*K.GOLDEN_ANGLE+(beat?PI/n:0);
+            for(var k=0;k<n;k++){var a=base+TAU*k/n;spawn(s,b.x,b.y,a,beat?80:130,{color:beat?WHITE:RED,size:beat?0:1,accel:beat?-74:-120,min:0,at:84,mode:K.MODE_TURN,arg:PI/2-a,speed2:60});}}
           if(t%110===60)fan(s,b.x,b.y,count(s,3),aim(s,b.x,b.y),.5,104,{color:RED,size:K.RICE});}},
         // 59 — 처음 세웠던 목표
         p8_pastFuture:{name:'과거와 미래',scene:'59',fire:function(s,t){var b=s.boss,k;
@@ -229,7 +230,7 @@
           mid:['p8_collective','p8_antichrist','p8_armageddon','p8_greaterOne']},
         {scene:'58',theme:{bg:'p8_castle',tint:'#2a1420',fx:'ash'},cast:['nightmare','p8_believer'],reward:{key:'p8_hando',name:'환도'},
           waves:[wave(staircase,900),wave(mirrorPairs,900),wave(twoLayers,860)],
-          mid:['p8_lauren','p8_rearranged','returning','p8_straightStory']},
+          mid:['p8_brainwashed_elder','p8_memorySeal','returning','p8_forcedObedience']},
         {scene:'59',theme:{bg:'p8_approach',tint:'#200a1e',fx:'sparks'},cast:['leech','p8_rose','p8_believer','p8_priest'],reward:{key:'p8_union',name:'합일 회로'},
           waves:[wave(corridor,860),wave(chevrons,900),wave(coreGuard,900),wave(trios,840)],
           mid:['cultist','twoGoals','p8_pastFuture']},

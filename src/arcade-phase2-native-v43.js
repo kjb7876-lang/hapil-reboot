@@ -140,9 +140,14 @@
     // 그래도 안 끝나면 이번 카드는 건너뛴다 — 시트를 다른 위험 위에 겹쳐 피할 길을 막지 않는다.
     if(slot.sheet){
       if(!visualReady((overrides.get(s)||getSpec)(theme),theme))return false;
-      if(c.specialBusy){if(++rec.settle<=SHEET_SETTLE)return true;rec.skipped.push(theme);rec.index++;rec.settle=0;return false;}
-      // 남은 탄·레이저·문양은 판정 없이 제 길로 흘러가며 흐려진다(엔진 cancelAll drift) — 시트 예고 동안 화면이 비고, 피할 길이 막히지 않는다.
-      if((c.legacyBusy||residual)&&typeof c.clearShots==='function')c.clearShots();
+      if(slot.waitForClear){
+        // 장로의 각인은 기존 공격이 모두 끝난 뒤 후속 카드의 예고 시간에만 열린다.
+        if(!c.preFire||c.legacyBusy||residual)return false;
+      }else{
+        if(c.specialBusy){if(++rec.settle<=SHEET_SETTLE)return true;rec.skipped.push(theme);rec.index++;rec.settle=0;return false;}
+        // 기존 시트는 남은 공격을 엔진의 먹 번짐으로 걷고 예고를 연다.
+        if((c.legacyBusy||residual)&&typeof c.clearShots==='function')c.clearShots();
+      }
     }
     // Other authored cards keep their exact original early admission rules.
     else if(!expandedOpening(slot)&&(c.legacyBusy||

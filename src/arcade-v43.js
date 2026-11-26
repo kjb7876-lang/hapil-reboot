@@ -754,7 +754,7 @@
     p2_demons:'horn',p2_belphegor:'moon',p2_leviathan:'fang',p2_beelzebub:'fly',asmodeus:'lips',p2_greed:'sword',p2_mammon:'key',p2_wrath:'flame',pride:'crown',p2_chairman:'gear',p2_core:'eye',
     p3_legion:'missile',p3_rampart:'fist',p3_defense:'key',controller:'chain',p3_body:'gear',p3_gate:'hourglass',goblin:'fang',p4_knight:'sword',insomnia:'eye',
     p5_cult:'fang',p5_archon:'scythe',p5_common:'hourglass',p5_upper:'key',p5_grand:'bell',p5_furnace:'flame',p5_neuron:'bolt',p5_keeper:'skull',p5_rings:'chain',arbelia:'feather',siren:'bell',
-    p6_demons:'horn',chief:'scythe',p6_bind:'web',p7_car:'missile',p7_shadow:'moon',p7_alarm:'bell',executor:'chain',p8_chip:'web',p8_collective:'mask',p8_lauren:'sword',cultist:'clock',p8_ion:'bolt',rian:'rose',
+    p6_demons:'horn',chief:'scythe',p6_bind:'web',p7_car:'missile',p7_shadow:'moon',p7_alarm:'bell',executor:'chain',p8_chip:'web',p8_collective:'mask',p8_brainwashed_elder:'chain',cultist:'clock',p8_ion:'bolt',rian:'rose',
     mb_01:'thorn',mb_02:'web',mb_03:'drop',mb_04:'fang',mb_05:'needle',mb_06:'feather',mb_07:'flame',mb_08:'drop',mb_09_1:'eye',mb_09_2:'sword',mb_10:'coin',mb_13:'key',mb_14:'leaf',mb_15:'eye',
     mb_16:'drop',mb_17:'rose',mb_18:'coin',mb_19:'fang',mb_20:'sword',mb_21:'skull',mb_24:'web',mb_25:'eye',mb_27:'key',mb_28:'bolt',mb_31:'thorn',mb_32:'rose',mb_33:'feather',mb_34:'moon',mb_35:'drop',
     mb_37:'hourglass',mb_38:'sword',mb_39:'leaf',mb_41:'gear',mb_42:'gear',mb_43:'sword',mb_44:'hourglass',mb_45:'key',mb_46:'key',mb_49:'sword',mb_52:'eye',mb_53:'key',mb_54:'chain',mb_56:'gear',
@@ -954,7 +954,7 @@
       // 흩어졌던 탄이 한 점으로 묶여 든다.
       if(t%90===0){var n=count(s,28),base=rand(s)*TAU;for(var i=0;i<n;i++)spawn(s,b.x,b.y,base+TAU*i/n,170,{color:RED,size:0,accel:-180,min:0,at:64,mode:MODE_REAIM,arg:0,speed2:78});}
       if(t%90===45)ring(s,b.x,b.y,count(s,12),56,rand(s)*TAU,{color:WHITE,size:1});}},
-    returning:{name:'돌아오는 기억',scene:'58',fire:function(s,t){var b=s.boss;
+    returning:{name:'되감기는 기억',scene:'58',fire:function(s,t){var b=s.boss;
       // 아래로 내려갔던 탄이 멈췄다가 왔던 길로 되돌아온다.
       if(t%64===0){var n=count(s,11);for(var i=0;i<n;i++)spawn(s,b.x,b.y,Math.PI/2+(n>1?i/(n-1)-.5:0)*1.9,190,{color:WHITE,size:1,accel:-170,min:0,at:84,mode:MODE_TURN,arg:Math.PI,speed2:74});}
       if(t%128===96)ring(s,b.x,b.y,count(s,14),60,rand(s)*TAU,{color:RED,size:0});}},
@@ -1925,7 +1925,7 @@
     goblin:['thorns',GREEN,4,0],p4_knight:['wings',RED,4,1],insomnia:['eye',CYAN,4,1],p5_cult:['ouroboros',PURPLE,5,0],p5_archon:['hexagram',YELLOW,3,1],p5_common:['square',WHITE,2,0],
     p5_upper:['octagram',CYAN,4,0],p5_grand:['octagram',YELLOW,6,0],p5_furnace:['flame',YELLOW,4,1],p5_neuron:['circuit',PURPLE,4,0],p5_keeper:['hourglass',WHITE,2,1],p5_rings:['wheel',CYAN,6,1],
     arbelia:['rose',WHITE,5,0],siren:['wave',PURPLE,3,0],p6_demons:['pentagram',PURPLE,3,1],chief:['horns',PURPLE,6,1],p6_bind:['ouroboros',RED,4,1],p7_car:['wheel',WHITE,3,0],
-    p7_shadow:['spiral',PURPLE,4,0],p7_alarm:['triangle',RED,6,1],executor:['key',CYAN,5,1],p8_chip:['circuit',YELLOW,2,1],p8_collective:['honeycomb',CYAN,6,0],p8_lauren:['wings',CYAN,2,1],
+    p7_shadow:['spiral',PURPLE,4,0],p7_alarm:['triangle',RED,6,1],executor:['key',CYAN,5,1],p8_chip:['circuit',YELLOW,2,1],p8_collective:['honeycomb',CYAN,6,0],p8_brainwashed_elder:['square',RED,2,1],
     cultist:['ouroboros',WHITE,6,1],p8_ion:['spiral',CYAN,3,1],rian:['rose',RED,4,0]
   };
   // extra: 보스 셋 중 하나는 직선 레이저 난사를 더한다(물레방아·톱니 바퀴는 11-14에 뺐다).
@@ -2523,7 +2523,7 @@
     p2_demons:'horn',p2_belphegor:'moon',p2_leviathan:'mirror',p2_beelzebub:'cauldron',asmodeus:'lips',p2_greed:'sword',mb_18:'coin',p2_mammon:'coin',p2_wrath:'flame',pride:'crown',p2_chairman:'gear',p2_core:'eye',
     p3_legion:'spear',p3_rampart:'tower',p3_defense:'chain',controller:'chain',p3_body:'gear',p3_gate:'key',goblin:'sword',mb_32:'rose',p4_knight:'wing',insomnia:'eye',
     p5_cult:'hourglass',p5_archon:'key',p5_common:'scythe',p5_upper:'book',p5_grand:'book',p5_furnace:'gear',p5_neuron:'eye',p5_keeper:'tomb',p5_rings:'hexagram',arbelia:'rose',siren:'bell',
-    chief:'horn',p6_demons:'horn',p6_bind:'chain',p7_car:'sun',p7_shadow:'moon',p7_alarm:'bell',executor:'chain',p8_chip:'chain',p8_collective:'mask',p8_lauren:'sword',cultist:'candle',p8_ion:'scythe',rian:'hexagram'};
+    chief:'horn',p6_demons:'horn',p6_bind:'chain',p7_car:'sun',p7_shadow:'moon',p7_alarm:'bell',executor:'chain',p8_chip:'chain',p8_collective:'mask',p8_brainwashed_elder:'chain',cultist:'candle',p8_ion:'scythe',rian:'hexagram'};
   // 형식: [이름, 갈래 수(이지·노멀·헬), 벌림(라디안, 고리는 0)]
   var SPIT_FORM={web:['fan',[3,3,3],.62],coin:['ring',[4,5,6],0],gear:['ring',[4,6,6],0],eye:['ring',[3,4,5],0],sword:['lance',[2,3,3],0],spear:['lance',[2,3,3],0],scythe:['fan',[2,3,3],.9],
     flame:['fan',[3,5,5],.5],cauldron:['fan',[3,4,5],.55],candle:['fan',[3,4,5],.55],lips:['pincer',[2,2,2],.55],heel:['pincer',[2,2,2],.55],wing:['pincer',[2,2,2],.7],mask:['pincer',[2,2,2],.6],mirror:['pincer',[2,2,2],.5],hexagram:['ring',[3,6,6],0]};
@@ -2770,7 +2770,8 @@
       // 준비를 마친 첫 카드만 이름 표시용 FIRE_DELAY를 생략한다. 이후 카드의 40틱 예고는 그대로다.
       clearBossEntranceHazards(s);beginCard(s);entrance.releasedTick=s.tick;
       // Exact follow-on cards may insert one warning before the first legacy volley, not over a live barrage.
-      if(!signatureOn&&(nativeP2?.slotFor(s.seg)?.extra||nativeP2?.slotFor(s.seg)?.p1)){if(phase2Step(nativeP2,s)){signatureOn=true;sweeping=true;}else if(nativeP2?.holding?.(s)){openingHeld=true;sweeping=true;}}
+      var entranceSlot=nativeP2?.slotFor(s.seg);
+      if(!signatureOn&&(entranceSlot?.extra||entranceSlot?.p1||entranceSlot?.waitForClear)){if(phase2Step(nativeP2,s)){signatureOn=true;sweeping=true;}else if(nativeP2?.holding?.(s)){openingHeld=true;sweeping=true;}}
     }
     if(input&&input.bomb)useBomb(s);
     bombPulse(s);
