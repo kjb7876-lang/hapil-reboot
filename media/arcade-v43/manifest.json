@@ -13501,6 +13501,83 @@
   "stamp": "97c04d86ba93fa55",
   "table": "tools/arcade-art-v43/p8.json"
  },
+ "p8_brainwashed_elder.webp": {
+  "bytes": 50958,
+  "cell": [
+   101,
+   184
+  ],
+  "fps": 6,
+  "frames": 4,
+  "group": "actors",
+  "motions": [
+   "attack",
+   "death",
+   "hit"
+  ],
+  "size": [
+   404,
+   184
+  ],
+  "source": "media/boss-art-v43/p8_brainwashed_elder-down.webp",
+  "sourceSha256": "b76c640345c3d8a7d3bced30a3f4c5fa220049078416b5b29a47ab7e2828ee33",
+  "stamp": "b315a02b0d1fff43",
+  "table": "tools/arcade-art-v43/p8.json"
+ },
+ "p8_brainwashed_elder@attack.webp": {
+  "bytes": 63800,
+  "cell": [
+   161,
+   184
+  ],
+  "fps": 8,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   644,
+   184
+  ],
+  "source": "media/boss-art-v43/p8_brainwashed_elder-attack.webp",
+  "sourceSha256": "c9397c2c505f5571471efe40c08b346e6eb1107f65be0043b31f35495c768400",
+  "stamp": "d34fc1fe3f4f1d3c",
+  "table": "tools/arcade-art-v43/p8.json"
+ },
+ "p8_brainwashed_elder@death.webp": {
+  "bytes": 87888,
+  "cell": [
+   163,
+   184
+  ],
+  "fps": 8,
+  "frames": 8,
+  "group": "actors",
+  "size": [
+   1304,
+   184
+  ],
+  "source": "media/boss-art-v43/p8_brainwashed_elder-death.webp",
+  "sourceSha256": "d5bd0aacd874ac405e047bf2455b2579dd657905e7ec7b80e7b6a80a9a14c720",
+  "stamp": "878cd298c52e2976",
+  "table": "tools/arcade-art-v43/p8.json"
+ },
+ "p8_brainwashed_elder@hit.webp": {
+  "bytes": 57164,
+  "cell": [
+   143,
+   184
+  ],
+  "fps": 12,
+  "frames": 4,
+  "group": "actors",
+  "size": [
+   572,
+   184
+  ],
+  "source": "media/boss-art-v43/p8_brainwashed_elder-hit.webp",
+  "sourceSha256": "e9e1f98208c894f46b6a57c043759561f48373d2c89b3247af8962761123b073",
+  "stamp": "ff0d5871a04fb6b3",
+  "table": "tools/arcade-art-v43/p8.json"
+ },
  "p8_chip.webp": {
   "bytes": 35870,
   "cell": [

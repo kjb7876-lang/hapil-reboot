@@ -60,3 +60,30 @@ test('telegraph is long enough to walk from either edge to the lane',()=>{
     assert.ok(far/e.plan.timing[0]<2.2,'walk '+far+'px in '+e.plan.timing[0]+' ticks');
   }
 });
+
+test('the stage 49 seal waits for a flying round, uses the elder atlas, and leaves a safe centre',async()=>{
+  const d=art['sheet-49-p8_brainwashed_elder'],slot=slots.find(s=>s.stage===49);
+  assert.equal(slot.theme,d.theme);
+  assert.equal(A.SEGMENTS[slot.seg].name,'복종의 각인');
+  const {atlas,prepareAtlas,contact}=require('./helpers/phase2-source-image.cjs');
+  const {put}=require('./helpers/arcade-v43.cjs');
+  await prepareAtlas(d);
+  const s=A.createRun({seed:12,entranceAll:true,difficulty:'normal',pacing:true,segment:slot.seg,compact:true,distort:false});
+  for(let i=0;i<800&&s.stage!=='card';i++)A.step(s,{});
+  assert.equal(s.stage,'card');assert.equal(s.boss.actor,d.actor);
+  // Set up the follow-on card opening after the simulated direct entrance.
+  s.n=0;s.bossVolley=null;s.bossEntrance=null;s.segTick=0;
+  N.fixtureAtlas(s,theme=>theme===d.theme?atlas(d):null);
+  put(s,35,A.HEIGHT-4,{ba:Math.PI/2,bs:160,bage:100});
+  const y=s.by[0];
+  A.step(s,{});
+  assert.equal(s.n,1);assert.ok(s.by[0]>y,'the old round keeps flying');
+  assert.equal(N.inspect(s).phase,null);
+  for(let i=0;i<30&&!N.inspect(s).phase;i++)A.step(s,{});
+  assert.equal(s.n,0);assert.equal(N.inspect(s).phase,'telegraph');
+  assert.equal(N.inspect(s).theme,d.theme);
+  assert.ok(contact((x,y)=>N.firstContactAt(s,x,y)), 'the warning previews a real hit area');
+  for(let i=0;i<150&&N.inspect(s).phase!=='active';i++)A.step(s,{});
+  assert.equal(N.inspect(s).phase,'active');assert.equal(s.hits,0);
+  assert.equal(N.hit(s),false,'the starting centre lane remains safe');
+});

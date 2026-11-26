@@ -50,6 +50,29 @@
     }
    }
   },
+  "p8_brainwashed_elder": {
+   "src": "media/boss-art-v43/p8_brainwashed_elder-down.webp",
+   "strip": 4,
+   "fps": 6,
+   "size": 184,
+   "motions": {
+    "attack": {
+     "src": "media/boss-art-v43/p8_brainwashed_elder-attack.webp",
+     "strip": 4,
+     "fps": 8
+    },
+    "death": {
+     "src": "media/boss-art-v43/p8_brainwashed_elder-death.webp",
+     "strip": 8,
+     "fps": 8
+    },
+    "hit": {
+     "src": "media/boss-art-v43/p8_brainwashed_elder-hit.webp",
+     "strip": 4,
+     "fps": 12
+    }
+   }
+  },
   "p8_lauren": {
    "src": "media/drive-v43/cx0190/p8_lauren-down.webp",
    "strip": 4,

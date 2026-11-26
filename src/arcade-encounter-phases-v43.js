@@ -62,7 +62,7 @@
   register(46, 'p7_car', 'columns', 'executor', 'fixed echo phyllotaxis rails lissajous ratchet seal');
   register(47, 'mb_56', 'seal', 'p8_chip', 'columns rails branch');
   register(48, 'mb_57', 'wings', 'p8_collective', 'ripple echo fibfan mirror seal');
-  register(49, 'mb_58', 'seal', 'p8_lauren', 'rails echo sine mirror frame');
+  register(49, 'mb_58', 'seal', 'p8_brainwashed_elder', 'triangle echo ratchet mirror frame');
   register(50, 'p8_ion', 'mirror', 'rian', 'fixed wings sierpinski rails moire gates triangle');
   register(51, 'mb_59', 'mirror', 'cultist', 'archimedes echo seal');
   register(52, 'mb_61', 'triangle', 'cultist', 'sine branch polygram rails sierpinski mirror moire echo spiro fixed goldrain sweep seal');
