@@ -56,6 +56,13 @@
 @keyframes hs-dial{from{rotate:-28deg;opacity:0}to{rotate:0deg;opacity:.65}}
 #arcade-hero-select[data-lite="true"] *,#arcade-hero-select[data-lite="true"] *:before,#arcade-hero-select[data-lite="true"] *:after{animation:none!important;transition:none!important}
 #arcade-hero-select[data-lite="true"] #hero-select-portrait{filter:none}
+/* A translated profile can be taller than its portrait. Let it set the row height and keep controls in normal flow. */
+@media(min-width:601px) and (min-height:501px){
+#arcade-hero-select,html.ink #arcade-hero-select{align-items:flex-start}
+#arcade-hero-select .hs-shell{margin-block:auto}
+#arcade-hero-select .hs-stage{height:auto;min-height:clamp(300px,54dvh,560px)}
+#hero-select-portrait{position:absolute;inset:0}
+}
 @media(max-width:600px){
 #arcade-hero-select,html.ink #arcade-hero-select{padding:max(20px,env(safe-area-inset-top)) 18px max(16px,env(safe-area-inset-bottom));align-items:flex-start}
 #arcade-hero-select .hs-shell{gap:10px;height:calc(100dvh - max(20px,env(safe-area-inset-top)) - max(16px,env(safe-area-inset-bottom)));min-height:0}

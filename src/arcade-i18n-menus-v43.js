@@ -44,7 +44,7 @@
     ["원코인 여정", "Single-credit run", "1クレジットの旅", "一币挑战", "一幣挑戰", "Partida con un crédito", "Partida com um crédito"],
     ["연습/이어하기", "Practice / continue", "練習／途中から", "练习／继续游戏", "練習／繼續遊戲", "Práctica / continuación", "Treino / continuação"],
     ["깬 스테이지 {stages} · 별 {stars} · 봉인 {seals} · 스침 {graze} · 피격 {hits}", "Stages cleared {stages} · Stars {stars} · Captures {seals} · Grazes {graze} · Hits taken {hits}", "クリア {stages}面・星 {stars}・封印 {seals}・かすり {graze}・被弾 {hits}", "通关 {stages} · 星星 {stars} · 封印 {seals} · 擦弹 {graze} · 中弹 {hits}", "通關 {stages} · 星星 {stars} · 封印 {seals} · 擦彈 {graze} · 中彈 {hits}", "Niveles superados: {stages} · Estrellas: {stars} · Sellos: {seals} · Roces: {graze} · Impactos recibidos: {hits}", "Fases concluídas: {stages} · Estrelas: {stars} · Selos: {seals} · Rasantes: {graze} · Acertos sofridos: {hits}"],
-    ["성장나무 양분 +{n}", "Growth Tree nutrients +{n}", "成長の樹の養分 +{n}", "成长树养分 +{n}", "成長樹養分 +{n}", "Nutrientes del árbol +{n}", "Nutrientes da árvore +{n}"],
+    ["성장나무 양분 +{n}", "Growth Tree sap +{n}", "成長の樹の養分 +{n}", "成长树养分 +{n}", "成長樹養分 +{n}", "Nutrientes del árbol +{n}", "Nutrientes da árvore +{n}"],
     ["이 스펠 한 번 더 연습", "Practice this spell again", "もう一度このスペルを練習", "再次练习此符卡", "再次練習此符卡", "Volver a practicar este hechizo", "Treinar este feitiço de novo"],
     ["방금 맞은 스펠 다시 연습", "Practice the spell that hit you", "被弾したスペルを練習", "练习刚才击中你的符卡", "練習剛才擊中你的符卡", "Practicar el hechizo que te alcanzó", "Treinar o feitiço que atingiu você"],
     ["「{spell}」", "“{spell}”", "「{spell}」", "「{spell}」", "「{spell}」", "«{spell}»", "“{spell}”"],

@@ -601,6 +601,15 @@ async function checkLanguageSwitch(browser, baseURL){
     await page.reload();
     await page.waitForFunction(()=>window.HapilArcadeApp&&!document.querySelector('#arcade-start').disabled);
     assert.equal(await titlePicker.inputValue(),'pt-BR');
+    // The long Portuguese loadout must leave the awakened hero's button clickable on desktop.
+    const desktop=await browser.newPage({locale:'pt-BR',viewport:{width:1280,height:900}});
+    try{
+      await desktop.goto(baseURL+'/arcade.html');
+      await desktop.locator('#arcade-start').click();
+      await desktop.locator('#hero-select-seoha').click();
+      await desktop.locator('#hero-select-seoha-b').click();
+      assert.equal(await desktop.locator('#hero-select-seoha-b').getAttribute('aria-pressed'),'true');
+    }finally{await desktop.close();}
     await page.evaluate(()=>{HapilArcadeApp.debugState().jumpStage(48);HapilArcadeApp.pause();});
     const snapshot=p=>p.evaluate(()=>{const s=HapilArcadeApp.debugState().state;return [s.tick,s.seg,s.hero,s.score,s.n];});
     const before=await snapshot(page);
