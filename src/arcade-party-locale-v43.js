@@ -108,7 +108,7 @@
 문양을 눌러 고정할 동료를 고른 뒤 확정 또는 재회전을 선택하세요.|Tap an ally’s symbol. Then claim the guaranteed supply or hold the symbol and spin again.|仲間の紋様をタップし、確定補給か紋様を固定しての再回転を選びます。|点选同伴的纹样，然后领取保底补给，或锁定纹样重转。|點選夥伴的紋樣，然後領取保底補給，或鎖定紋樣重轉。|Toca el símbolo de un aliado. Recoge el suministro seguro o fija el símbolo y vuelve a girar.|Toque no símbolo de um aliado. Pegue o suprimento garantido ou trave o símbolo e gire de novo.
 다음 전투 · {name} 보급 +{n}|Next battle · {name} supplies +{n}|次の戦闘 · {name}の補給 +{n}|下一战 · {name} 补给 +{n}|下一戰 · {name} 補給 +{n}|Siguiente combate · {name} recibe +{n}|Próximo combate · {name} recebe +{n}
 {n}번 문양 · {name} 선택|Symbol {n} · select {name}|第{n}紋 · {name}を選択|纹样 {n} · 选择{name}|紋樣 {n} · 選擇{name}|Símbolo {n} · elegir a {name}|Símbolo {n} · escolher {name}
-재회전 시 고정|Hold on respin|再回転で固定|重转时锁定|重轉時鎖定|Se fija al repetir|Trava ao girar
+재회전 고정|Hold on respin|再回転で固定|重转时锁定|重轉時鎖定|Se fija al repetir|Trava ao girar
 확정 보급 대상|Guaranteed supply for|確定補給の相手|保底补给对象|保底補給對象|Destinatario del suministro|Destino do suprimento
 {name} +{n} 확정|Give {name} +{n}|{name}の +{n} を確定|{name} 确定获得 +{n}|{name} 確定獲得 +{n}|Dar +{n} a {name}|Dar +{n} a {name}
 두 칸 고정 · 재회전|Hold pair and respin|2枠固定して再回転|锁定一对重转|鎖定一對重轉|Fijar pareja y girar|Travar o par e girar

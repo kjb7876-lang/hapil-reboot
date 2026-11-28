@@ -232,7 +232,7 @@
       }
       if(kind)b.append(sprite(kind));else b.append(node('b','—'));
       b.append(node('span',kind?kindNames[kind]:'대기','place'));
-      if(fixed)b.append(node('small',choosing?'재회전 시 고정':'고정','reel-hold'));
+      if(fixed)b.append(node('small',choosing?'재회전 고정':'고정','reel-hold'));
       return b;
     }));
 
