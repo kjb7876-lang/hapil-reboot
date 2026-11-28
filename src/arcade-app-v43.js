@@ -773,7 +773,7 @@
   function bankSap(s){if(!Grove||!grove||!s||!s.groveRun||devMode)return 0;var got=Grove.earn(grove,s.groveRun,s.score);if(got)Grove.save(grove);return got;}
   function recordResult(result){
     if(!result||state.bossOnly||state.spellOnly)return;
-    if(state.party&&!devMode&&!rushStage&&global.HapilPartyCampaignCleared)global.HapilPartyCampaignCleared(result.stage+1,state.difficulty);
+    if(state.party&&!devMode&&!rushStage&&global.HapilPartyCampaignCleared)global.HapilPartyCampaignCleared(result.stage+1,state.mode||state.difficulty);
     progress=Progress.record(progress,result,state.mode||state.difficulty);if(Chapters)chapterLog=Chapters.noteClear(chapterLog,Arcade.STAGES,progress,result.stage,state.mode||state.difficulty);saveProgress();
   }
   function recordBestScore(s){
