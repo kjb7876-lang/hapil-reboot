@@ -3,7 +3,6 @@
   'use strict';
   const positions = {front:[-18,-72], wing:[58,-20], rear:[-43,26]};
   const types = ['archon','drone','angel','archer'];
-  const colours = {archon:'#b99fea',drone:'#69b9bc',angel:'#e6c477',archer:'#80baa9'};
   const clamp = (n,min,max) => Math.max(min,Math.min(max,n));
   const integer = (n,min,max) => Number.isFinite(n) ? clamp(Math.floor(n),min,max) : min;
   const neutralEffects = Object.freeze({droneDamage:1,archerDamage:1,archonCooldown:1,wardCapacity:0,powerCharge:1,reformTime:1,evadeSeconds:0});
@@ -381,18 +380,22 @@
   function draw(ctx,s,sprites) {
     const q=s.party;
     if(!q||s.stage==='lost'||s.stage==='won')return;
+    const cues=root.HapilPartyCues;
     ctx.save();ctx.lineWidth=1.2;
-    function circle(x,y,r){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.stroke();}
-    if(q.field){ctx.strokeStyle='#906da6';ctx.globalAlpha=.7;circle(q.field.x,q.field.y,q.field.radius);}
-    if(q.ward){ctx.strokeStyle='#d3a738';ctx.globalAlpha=.8;circle(q.ward.x,q.ward.y,q.ward.radius);}
+    if(cues&&q.field){ctx.globalAlpha=.59;cues.field(ctx,q.field.x,q.field.y,q.field.radius,q.field.lineage);}
+    if(cues&&q.ward){ctx.globalAlpha=.77;cues.field(ctx,q.ward.x,q.ward.y,q.ward.radius,'barrier');}
     if(q.boostUntil>s.tick||q.recoverUntil>s.tick){
-      ctx.strokeStyle=q.recoverUntil>s.tick?'#a94842':'#edc877';ctx.globalAlpha=.8;
-      ctx.beginPath();ctx.arc(s.player.x,s.player.y,12,-Math.PI/2,Math.PI*1.5);ctx.stroke();
+      const x=s.player.x,y=s.player.y,recover=q.recoverUntil>s.tick;
+      ctx.globalAlpha=.8;ctx.beginPath();
+      for(const side of [-1,1]){
+        ctx.moveTo(x+side*8,y+9);ctx.lineTo(x+side*12,y+(recover?12:5));
+      }
+      if(cues)cues.line(ctx,recover?'#6d6558':'#9c4638',1.4);
     }
     for(const a of q.allies){
       if(a.reform)continue;
       const key=a.kind==='archon'?{time:'archon',gravity:'archonGravity',neural:'archonNeural'}[q.lineage]:a.kind;
-      const col=colours[a.kind],img=sprites&&(sprites[key]||sprites[a.kind]);
+      const col=cues?cues.roles[a.kind]:'#534d43',img=sprites&&(sprites[key]||sprites[a.kind]);
       ctx.globalAlpha=s.tick<a.invuln?.58:.9;
       if(img && img.complete && img.naturalWidth){
         const size=a.kind==='drone'?38:43,ratio=img.naturalWidth/img.naturalHeight,h=size/Math.max(1,ratio),w=h*ratio;
@@ -407,9 +410,9 @@
           // Short allied tracers leave the continuous lines to enemy beam warnings.
           const dx=cue.x-a.x,dy=cue.y-a.y,scale=Math.min(1,8/(Math.hypot(dx,dy)||1));
           const x=a.x+dx*progress,y=a.y+dy*progress;
-          ctx.globalAlpha=.65;ctx.strokeStyle=col;ctx.beginPath();
-          ctx.moveTo(x-dx*scale,y-dy*scale);ctx.lineTo(x,y);ctx.stroke();
-        }else if(!root.HapilPartyCues||!root.HapilPartyCues.action(ctx,cue.kind,a.x,a.y,cue.x,cue.y,progress)){
+          ctx.globalAlpha=.67;ctx.beginPath();
+          ctx.moveTo(x-dx*scale,y-dy*scale);ctx.lineTo(x,y);if(cues)cues.line(ctx,col,1);
+        }else if(!cues||!cues.action(ctx,cue.kind,a.x,a.y,cue.x,cue.y,progress)){
           ctx.globalAlpha=.45*(1-progress);
           ctx.strokeStyle=col;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(cue.x,cue.y);ctx.stroke();
         }

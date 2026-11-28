@@ -3,13 +3,24 @@
   'use strict';
   const languages = ['ko', 'en', 'ja', 'zh-Hans', 'zh-Hant', 'es', 'pt-BR'];
   const words = {
-    cleared: ['STAGE {n} 클리어','Stage {n} cleared','ステージ{n}クリア','第 {n} 关已通过','第 {n} 關已通過','Fase {n} superada','Fase {n} concluída'],
+    cleared: ['{n}스테이지 클리어','Stage {n} cleared','ステージ{n}クリア','第 {n} 关已通过','第 {n} 關已通過','Fase {n} superada','Fase {n} concluída'],
     title: ['편대 정비','Regroup','編隊整備','编队整备','編隊整備','Reagrupar','Reagrupar'],
     next: ['다음 전투','Next encounter','次の戦闘','下一场战斗','下一場戰鬥','Próximo combate','Próximo combate'],
     choice: ['보상 하나 선택','Choose one reward','報酬をひとつ選択','选择一项奖励','選擇一項獎勵','Elige una recompensa','Escolha uma recompensa'],
     expedition: ['이번 원정','This run','遠征中','本轮远征','本輪遠征','Esta expedición','Nesta expedição'],
     nextOnly: ['다음 전투만','Next stage only','次の戦闘のみ','仅下场战斗','僅下場戰鬥','Solo la siguiente fase','Só na próxima fase'],
     owned: ['보유 효과 {n}종','Active upgrades ({n})','獲得効果（{n}種）','已有效果（{n}种）','已有效果（{n}種）','Mejoras activas ({n})','Melhorias ativas ({n})'],
+    formation: ['편성','Formation','編成','编队','編隊','Formación','Formação'],
+    newDraw: ['다시 뽑기','Redraw','引き直す','重抽','重抽','Volver a sacar','Sortear de novo'],
+    drawSpent: ['재추첨 사용함','Redraw used','引き直し済み','已重抽','已重抽','Cambio usado','Troca usada'],
+    drawHelp: ['원정당 한 번 무료로 세 장을 다시 뽑습니다. 현재 선택은 풀립니다.','Once per run, redraw all three for free. Your current selection will be cleared.','遠征中に1回だけ無料で3枚を引き直せます。選択中の報酬は解除されます。','每轮远征可免费重抽这三项奖励一次。当前选择会清除。','每輪遠征可免費重抽這三項獎勵一次。目前的選擇會清除。','Una vez por expedición puedes cambiar gratis las tres cartas. Se anulará tu selección.','Uma vez por expedição, sorteie as três cartas de novo sem custo. A seleção atual será desfeita.'],
+    rank: ['단계','Lv.','Lv.','级','級','Niv.','Nv.'],
+    reel: ['보급 릴','Supply reel','補給リール','补给转轮','補給轉輪','Suministros','Suprimentos'],
+    free: ['무료 1회','1 free spin','無料1回','免费1次','免費1次','1 giro gratis','1 giro grátis'],
+    settle: ['보급 결정','Choose payout','補給を決定','选择补给','選擇補給','Elegir premio','Escolher prêmio'],
+    settled: ['결과 보기','View result','結果を見る','查看结果','查看結果','Ver resultado','Ver resultado'],
+    resonance: ['다음 전투 보급 공명','Supply resonance next stage','次の戦闘の補給共鳴','下一场战斗的补给共鸣','下一場戰鬥的補給共鳴','Resonancia para la próxima fase','Ressonância na próxima fase'],
+    comboHelp: ['같은 동료의 릴 보급과 조합하면 다음 전투에 이 효과를 한 번 더 받습니다.','Match this upgrade with reel supplies for the same ally to gain its effect again next stage.','同じ仲間のリール補給と合わせると、次の戦闘でこの効果がもう1回加算されます。','搭配同一同伴的转轮补给，可在下一场战斗额外获得一次该效果。','搭配同一同伴的轉輪補給，可在下一場戰鬥額外獲得一次此效果。','Combina esta mejora con suministros de la tirada para ese aliado y su efecto se sumará otra vez en la próxima fase.','Combine esta melhoria com os suprimentos do giro para o mesmo aliado e ganhe o efeito mais uma vez na próxima fase.'],
     workshop: ['편성 · 보급','Formation & supplies','編成・補給','编队与补给','編隊與補給','Formación y suministros','Formação e suprimentos'],
     launch: ['{n}스테이지 출격','Start stage {n}','ステージ{n}へ','进入第 {n} 关','進入第 {n} 關','Iniciar fase {n}','Iniciar fase {n}'],
     failure: ['현재 원정 상태를 확인한 뒤 다시 선택하세요.','Check this run and try your selection again.','遠征の状態を確認し、もう一度選んでください。','请确认远征状态并重新选择。','請確認遠征狀態並重新選擇。','Comprueba el estado de la expedición y vuelve a elegir.','Confira o estado da expedição e escolha novamente.']
@@ -88,7 +99,9 @@
   };
   const fallbackArt = {
     archon:'media/arcade-v43-party/archon.webp', drone:'media/arcade-v43-party/drone.webp',
-    angel:'media/arcade-v43-party/angel.webp', archer:'media/arcade-v43-party/archer.webp', memory:'media/gunner.webp'
+    angel:'media/arcade-v43-party/angel.webp', archer:'media/arcade-v43-party/archer.webp', memory:'media/arcade-v43-party/ink-memory.webp',
+    seoha:'media/arcade-v43-party/ink-seoha.webp', awakened:'media/arcade-v43-party/ink-awakened.webp',
+    expeditionLandscape:'media/arcade-v43-party/expedition-landscape.webp'
   };
   const doc = root.document;
   let dialog = null;
@@ -106,14 +119,22 @@
     if (dialog) dialog.remove();
     dialog = null;
   }
-  function artwork(role) {
+  function artSource(key) {
+    const src = root.PARTY_ART?.[key] || fallbackArt[key];
+    return src && !src.startsWith('data:') && !src.includes('?') ? src+'?v=20261129-ink-expedition' : src;
+  }
+  function artwork(role, data) {
     const icon = node('span','pstop-art pstop-art-' + role);
     icon.setAttribute('aria-hidden','true');
-    const members = role === 'party' ? ['archon','drone','angel'] : [role === 'hero' ? 'memory' : role];
+    const hero = data.run?.hero;
+    const heroArt = (hero === 'seoha-b' || hero === 'awakened') ? 'awakened' : hero === 'seoha' ? 'seoha' : 'memory';
+    const squad = data.companions?.map(ally => ally.kind).filter(kind => !!fallbackArt[kind]);
+    const team = squad?.length ? squad : ['archon','drone','angel'];
+    const members = role === 'party' ? team : [role === 'hero' ? heroArt : role];
     for (const key of members) {
       const image = node('img','');
       image.alt = '';
-      image.src = root.PARTY_ART?.[key] || fallbackArt[key];
+      image.src = artSource(key);
       icon.append(image);
     }
     return icon;
@@ -124,6 +145,7 @@
     const idOf = card => typeof card === 'string' ? card : card?.id;
     const offers = (data.offers || []).map(idOf).filter(id => Object.hasOwn(rewards,id));
     const col = Math.max(0,languages.indexOf(data.lang || root.HapilI18n?.lang || doc.documentElement.lang));
+    const rules = root.PartyExpedition;
     const text = (key, n) => words[key][col].replace('{n}',String(n));
     const shell = dialog = node('dialog','pstop');
     shell.id = 'party-stop-dialog';
@@ -139,8 +161,13 @@
     const title = node('h1','pstop-title',text('title'));
     title.tabIndex = -1;
     title.id = 'party-stop-title';
-    content.append(status,title);
-    if (typeof data.summary === 'string' && data.summary) content.append(node('p','pstop-summary',data.summary));
+    const header = node('header','pstop-header');
+    const landscape = node('img','pstop-landscape');
+    landscape.alt = '';
+    landscape.src = artSource('expeditionLandscape');
+    header.append(landscape,status,title);
+    if (typeof data.summary === 'string' && data.summary) header.append(node('p','pstop-summary',data.summary));
+    content.append(header);
     const next = node('section','pstop-next');
     next.id = 'party-stop-forecast';
     next.append(node('span','pstop-next-label',text('next')));
@@ -154,20 +181,40 @@
     const choices = node('div','pstop-choices');
     choices.setAttribute('role','group');
     choices.setAttribute('aria-labelledby',legend.id);
-    content.append(legend,choices);
+    const bar = node('div','pstop-choice-bar');
+    bar.append(legend);
+    let redraft = null;
+    if (typeof data.onRedraft === 'function' && data.run && rules?.redraftsLeft) {
+      const left = rules.redraftsLeft(data.run);
+      redraft = node('button','pstop-redraft',left ? text('newDraw')+' · '+left+'/1' : text('drawSpent'));
+      redraft.id = 'party-stop-redraft'; redraft.type = 'button'; redraft.disabled = !left;
+      bar.append(redraft);
+      if (left) {
+        const help = node('p','pstop-redraft-help',text('drawHelp'));
+        help.id = 'party-stop-draw-help'; redraft.setAttribute('aria-describedby',help.id);
+        bar.append(help);
+      }
+    }
+    content.append(bar,choices);
     let selected = offers.includes(data.selected) ? data.selected : null;
     const ranks = Object.assign({},data.boons || {});
-    if (!data.boons) for (const pick of data.picks || []) {
+    if (!data.boons) for (const pick of data.picks || data.run?.picks || []) {
       if (pick.card && !pick.card.startsWith('supply-')) ranks[pick.card] = (ranks[pick.card] || 0) + 1;
     }
     const footer = node('div','pstop-actions');
-    const edit = node('button','pstop-workshop',text('workshop'));
+    const edit = node('button','pstop-workshop',text(data.onSupply ? 'formation' : 'workshop'));
     edit.type = 'button'; edit.id = 'party-stop-workshop';
+    const reel = node('button','pstop-reel');
+    reel.id = 'party-stop-supply'; reel.type = 'button';
+    reel.append(node('b','',text('reel')),node('small','',text(data.reelStatus === 'choose' ? 'settle' : data.reelStatus === 'awarded' ? 'settled' : 'free')));
     const launch = node('button','pstop-launch',text('launch',data.nextStage));
     launch.type = 'button'; launch.id = 'party-stop-launch';
     const notice = node('p','pstop-notice');
     notice.setAttribute('role','status');
     notice.hidden = true;
+    const combo = node('p','pstop-combo');
+    combo.id = 'party-stop-resonance'; combo.setAttribute('aria-live','polite');
+    combo.hidden = true;
     let busy = false;
     const report = () => { notice.textContent = text('failure'); notice.hidden = false; };
     function paint() {
@@ -176,8 +223,33 @@
         button.disabled = busy;
       }
       launch.disabled = !selected || busy;
-      edit.disabled = busy;
+      edit.disabled = busy; reel.disabled = busy;
+      if (redraft) redraft.disabled = busy || !rules.redraftsLeft(data.run);
+      const match = rules?.resonance?.(data.run,data.companions,selected);
+      combo.replaceChildren();
+      delete combo.dataset.resonanceKind;
+      if (match && rewards[match.cardId]) {
+        combo.dataset.resonanceKind = match.kind;
+        combo.append(node('b','',text('resonance')),node('span','',rewards[match.cardId].effect[col]));
+      } else if (selected && !selected.startsWith('supply-') && data.companions?.some(ally => ally.kind === rewards[selected].role)) {
+        combo.append(text('comboHelp'));
+      }
+      combo.hidden = !combo.childNodes.length;
     }
+    if (redraft) redraft.addEventListener('click',async () => {
+      if (busy || redraft.disabled) return;
+      busy = true; notice.hidden = true; paint();
+      try {
+        const result = await data.onRedraft();
+        if (result === false || result?.ok === false || dialog === shell) {
+          busy = false; paint(); report();
+        } else {
+          dialog?.querySelector('.pstop-choice')?.focus({preventScroll:false});
+        }
+      } catch (err) {
+        busy = false; paint(); report(); root.console?.error(err);
+      }
+    });
     for (const id of offers) {
       const info = rewards[id];
       const button = node('button','pstop-choice');
@@ -185,9 +257,16 @@
       const lines = node('span','pstop-card-copy');
       const top = node('span','pstop-card-top');
       top.append(node('b','pstop-card-name',info.label[col]));
-      top.append(node('small','pstop-scope',text(id.startsWith('supply-') ? 'nextOnly' : 'expedition')));
+      const temporary = id.startsWith('supply-');
+      const count = ranks[id] || 0;
+      const level = (count ? count + ' → ' + (count + 1) : '1');
+      const rank = ['ko','zh-Hans','zh-Hant'].includes(languages[col]) ? level+text('rank') : text('rank')+' '+level;
+      const scope = temporary ? text('nextOnly') : text('expedition')+' · '+rank;
+      top.append(node('small','pstop-scope',scope));
       lines.append(top,node('span','pstop-effect',info.effect[col]));
-      button.append(artwork(info.role),lines,node('span','pstop-radio'));
+      const seal = node('span','pstop-radio');
+      seal.setAttribute('aria-hidden','true');
+      button.append(artwork(info.role,data),lines,seal);
       button.addEventListener('click', () => {
         if (busy || id === selected) return;
         const result = data.onSelect?.(id);
@@ -196,6 +275,7 @@
       });
       choices.append(button);
     }
+    content.append(combo);
     const active = Object.keys(rewards).filter(id => !id.startsWith('supply-') && ranks[id] > 0);
     if (active.length) {
       const owned = node('details','pstop-owned'); owned.id = 'party-stop-owned';
@@ -207,6 +287,10 @@
     if (typeof data.onWorkshop === 'function') {
       edit.addEventListener('click',() => { if (!busy) data.onWorkshop(); });
       footer.append(edit);
+    }
+    if (typeof data.onSupply === 'function') {
+      reel.addEventListener('click',() => { if (!busy) data.onSupply(); });
+      footer.append(reel);
     }
     launch.addEventListener('click', async () => {
       if (!selected || busy) return;

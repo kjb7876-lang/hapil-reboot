@@ -12,7 +12,8 @@ function inlineScript(_, file) {
   let code = read(file);
   if (file === 'src/arcade-party-art-v43.js') {
     const assets = JSON.parse(code.replace(/^\s*window\.PARTY_ART\s*=\s*/, '').replace(/;\s*$/, ''));
-    for (const [key, relative] of Object.entries(assets)) {
+    for (const [key, url] of Object.entries(assets)) {
+      const relative = url.split('?')[0];
       const type = mediaTypes[path.extname(relative)];
       if (!type) throw new Error('Unexpected artwork format ' + relative);
       assets[key] = 'data:' + type + ';base64,' + fs.readFileSync(path.join(root, relative)).toString('base64');

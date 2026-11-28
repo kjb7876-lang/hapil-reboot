@@ -22,13 +22,18 @@
     .kicker{margin:0;font-size:11px;letter-spacing:.32em;color:#d8c49a}
     #arcade-title{gap:11px;background:radial-gradient(120% 70% at 50% 18%,rgba(74,52,110,.5),rgba(5,5,14,.86) 62%)}
     #party-auto-row[hidden]{display:none}
-    #arcade-party-settings{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+    #arcade-party-settings{display:flex;align-items:center;justify-content:center;gap:0 12px;flex-wrap:wrap;color:#302923;background:#f3ead7;border-block:1px solid #99866d;padding:2px 12px;width:min(100%,320px)}
     #arcade-party-settings label{display:inline-flex;align-items:center;gap:5px;min-height:44px}
-    #arcade-party-dialog{width:min(100vw,620px);height:100dvh;max-width:100vw;max-height:100dvh;margin:auto;padding:0;border:0;background:#141b17}
+    #arcade-party-settings input,#party-auto-row input{accent-color:#87392c}
+    #arcade-party-settings button,#party-pause-prepare{min-height:44px;color:#483325;background:#efe3cb;border:1px solid #86745e}
+    #party-mode-note{width:100%;margin:0 0 7px;font-size:12px;line-height:1.4;color:#51463b}
+    #arcade-party-dialog{width:min(100vw,620px);height:100dvh;max-width:100vw;max-height:100dvh;margin:auto;padding:0;border:0;background:#f2ead9;color:#302923;color-scheme:light}
     #arcade-party-dialog[open]{display:flex;flex-direction:column}
-    #arcade-party-dialog::backdrop{background:#07090de0}
-    #arcade-party-dialog iframe{min-height:0;flex:1;width:100%;border:0}
-    #arcade-party-dialog button{align-self:flex-end;min-width:44px;min-height:44px;padding:4px 14px;background:#18251d;color:#f5efdb}
+    #arcade-party-dialog::backdrop{background:rgba(31,27,23,.75)}
+    #arcade-party-dialog iframe{min-height:0;flex:1;width:100%;border:0;background:#f5eddd}
+    #arcade-party-dialog button{align-self:stretch;justify-content:flex-start;min-width:44px;min-height:44px;margin:0;padding:6px 16px;border:0;border-bottom:1px solid #a6967c;border-radius:0;background:#ece2cf;color:#4c3227;text-align:start}
+    #arcade-party-dialog button::before{content:'‹';margin-inline-end:7px;font-size:21px;line-height:1}
+    #arcade-party-dialog button:focus-visible{outline:2px solid #923c2e;outline-offset:-3px}
     #arcade-title h1{font-size:54px;text-shadow:0 0 28px rgba(216,196,154,.45)}
     .note{margin:0;font-size:12.5px;color:#b8b4c8}
     .score{font:600 34px/1 ui-monospace,Menlo,monospace;color:#fff}
@@ -268,7 +273,7 @@
     html:not(:lang(ko)) #arcade-title .note,html:not(:lang(ko)) #story-text{word-break:normal;overflow-wrap:anywhere}
     html:not(:lang(ko)) #arcade-boss-select{width:min(100%,320px)}
   </style>
-  <link rel="stylesheet" href="src/arcade-party-stop-v43.css?v=20261128-companion-roles">
+  <link rel="stylesheet" href="src/arcade-party-stop-v43.css?v=20261129-ink-expedition">
 </head>
 <body>
   <div id="arcade-bleed" aria-hidden="true"></div>
@@ -293,8 +298,9 @@
       <p class="note" id="continue-note" hidden></p>
       <button id="arcade-start" class="primary" type="button" data-mode="full" data-i18n="loading" disabled>불러오는 중…</button>
       <div id="arcade-party-settings">
-        <label><input type="checkbox" id="arcade-party-enabled"><span data-i18n="partyEnabled">AI 편대 원정</span></label>
+        <label><input type="checkbox" id="arcade-party-enabled" aria-describedby="party-mode-note"><span data-i18n="partyEnabled">AI 편대 원정</span></label>
         <button id="arcade-party-prepare" type="button" data-i18n="partyPrepare">편대 편성</button>
+        <p id="party-mode-note" hidden data-i18n="partyModeNote">동료 셋과 출격하고 스테이지마다 보급과 보상을 고릅니다.</p>
       </div>
       <button id="arcade-chapters" data-i18n="chapterLog" type="button" style="min-width:220px">챕터 기록</button>
       <button id="arcade-grove" data-i18n="groveTitle" type="button" style="min-width:220px">성장나무</button>
@@ -381,7 +387,7 @@
       <div class="pause-settings" role="group" aria-label="플레이 설정" data-i18n-label="settings">
         <label class="setting-line"><span data-i18n="language">언어</span><select id="pause-language" data-language-picker aria-label="언어" data-i18n-label="language"></select></label>
         <label class="setting-line" id="party-auto-row" hidden><span data-i18n="partyAuto">영웅 자동 회피</span><input type="checkbox" id="party-auto-setting"></label>
-        <button type="button" id="party-pause-prepare" data-i18n="partyPrepare" hidden>편대 편성</button>
+        <button type="button" id="party-pause-prepare" data-i18n="partyNextPrepare" hidden>다음 스테이지 편성</button>
         <label class="setting-line" for="setting-music"><span data-i18n="music">배경음악</span><input id="setting-music" type="checkbox" checked></label>
         <div class="setting-volume"><input id="setting-musicVolume" type="range" min="0" max="100" step="5" value="100" aria-label="배경음악 음량" data-i18n-label="musicVolume"><output id="value-musicVolume" for="setting-musicVolume">100%</output></div>
         <label class="setting-line" for="setting-sfx"><span data-i18n="sfx">효과음</span><input id="setting-sfx" type="checkbox" checked></label>
@@ -466,61 +472,61 @@
     <iframe id="arcade-party-workshop" title="편대 편성" data-i18n-label="partyPrepare"></iframe>
     <span hidden id="arcade-party-dialog-title" data-i18n="partyPrepare">편대 편성</span>
   </dialog>
-  <script src="src/rain-hit-bank-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/audio-v37.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-parts-v43/p1.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-parts-v43/p2.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-parts-v43/p3.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-parts-v43/p4.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-parts-v43/p5.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-parts-v43/p6.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-parts-v43/p7.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-parts-v43/p8.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-boss-intros-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-boss-lines-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-heroes-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-boss-rhythm-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-encounter-phases-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-boss-phases-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-laser-rhythm-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-party-forge-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-party-cues-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-party-expedition-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-party-stop-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-party-link-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-party-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-skins-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/ink-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-phase2-art-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-phase2-source-ink-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-phase2-signatures-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-phase2-extra-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-phase2-extra-art-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-phase2-p1-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-phase2-p1-art-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-phase2-sheets-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-phase2-sheets-art-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-phase2-native-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/ink-motifs-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/hero-memory-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-i18n-ui-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-i18n-story-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-i18n-world-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-i18n-combat-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-i18n-menus-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-i18n-progress-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-i18n-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-music-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-mobile-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-eyes-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-story-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-chapters-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-grove-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-hero-select-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-hero-visibility-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-spirit-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-cues-v43.js?v=20261128-companion-roles"></script>
-  <script src="src/arcade-app-v43.js?v=20261128-companion-roles"></script>
+  <script src="src/rain-hit-bank-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/audio-v37.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-parts-v43/p1.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-parts-v43/p2.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-parts-v43/p3.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-parts-v43/p4.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-parts-v43/p5.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-parts-v43/p6.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-parts-v43/p7.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-parts-v43/p8.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-boss-intros-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-boss-lines-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-heroes-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-boss-rhythm-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-encounter-phases-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-boss-phases-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-laser-rhythm-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-party-forge-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-party-cues-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-party-expedition-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-party-stop-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-party-link-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-party-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-skins-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/ink-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-phase2-art-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-phase2-source-ink-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-phase2-signatures-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-phase2-extra-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-phase2-extra-art-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-phase2-p1-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-phase2-p1-art-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-phase2-sheets-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-phase2-sheets-art-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-phase2-native-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/ink-motifs-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/hero-memory-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-i18n-ui-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-i18n-story-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-i18n-world-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-i18n-combat-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-i18n-menus-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-i18n-progress-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-i18n-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-music-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-mobile-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-eyes-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-story-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-chapters-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-grove-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-hero-select-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-hero-visibility-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-spirit-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-cues-v43.js?v=20261129-ink-expedition"></script>
+  <script src="src/arcade-app-v43.js?v=20261129-ink-expedition"></script>
 </body>
 </html>

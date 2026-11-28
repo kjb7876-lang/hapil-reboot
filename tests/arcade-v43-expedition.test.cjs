@@ -132,3 +132,91 @@ test('invalid actions do not damage the run and blocked storage keeps the sessio
   const other=E.open('campaign',storage());
   assert.equal(other.read(),null);
 });
+
+test('redraft spends one token per expedition and replaces a stored selection without granting it', () => {
+  const data=storage(), a=E.open('campaign',data), b=E.open('campaign',data);
+  const deployed=['angel','archer','archon'];
+  const run=a.start({seed:21,endStage:4});
+  assert.equal(E.redraftsLeft(run),1);
+  assert.deepEqual(a.redraft(run.id,1),run);
+  const first=a.clear(run.id,1,null,deployed);
+  a.select(run.id,1,first.offers[1]);
+  const second=b.redraft(run.id,1);
+  assert.equal(E.redraftsLeft(second),0);
+  assert.equal(second.selected,null);assert.deepEqual(second.picks,[]);
+  assert(second.offers.every(id=>!first.offers.includes(id)&&E.cards[id].role!=='drone'));
+  assert.equal(new Set(second.offers.map(id=>E.cards[id].stat)).size,3);
+  assert.deepEqual(a.redraft(run.id,1),second);
+  assert.deepEqual(a.choose(run.id,1,first.offers[1]),second);
+  assert.deepEqual(E.open('campaign',data).read(),second);
+  a.choose(run.id,1,second.offers[0]);
+  const later=a.clear(run.id,2,null,['drone','archer','archon']);
+  assert.deepEqual(b.redraft(run.id,2),later);
+  const next=b.start({seed:21,endStage:4});
+  b.clear(next.id,1,null,deployed);
+  assert.deepEqual(b.redraft(next.id,1).offers,second.offers);
+  assert.deepEqual(a.redraft(run.id,2),b.read());
+});
+
+test('redraft finds three other distinct supply cards even when the active party has maxed every permanent boon', () => {
+  const c=E.open('campaign',storage()), deployed=['drone','archer','angel'];
+  let run=c.start({seed:36});
+  for(let i=1;i<=40;i++){
+    run=c.clear(run.id,i,null,deployed);
+    const choice=run.offers.find(id=>!E.cards[id].temporary)||run.offers[0];
+    c.choose(run.id,i,choice);
+  }
+  const stop=c.clear(run.id,41,null,deployed);
+  assert(stop.offers.every(id=>E.cards[id].temporary));
+  const next=c.redraft(run.id,41);
+  assert.equal(E.redraftsLeft(next),0);
+  assert(next.offers.every(id=>!stop.offers.includes(id)&&E.cards[id].temporary&&E.cards[id].role!=='archon'));
+  assert.equal(new Set(next.offers.map(id=>E.cards[id].stat)).size,3);
+});
+
+test('a deployed v1 rest save retains its offers, earned boons and highlight on upgrade',()=>{
+  const s=storage(), c=E.open('campaign',s), kinds=['archon','archer','angel'];
+  const r=c.start({seed:9});
+  const first=c.clear(r.id,1,null,kinds);
+  c.choose(r.id,1,first.offers[0]);
+  const carry={party:{allies:kinds.map(kind=>({kind})).concat({kind:'drone'})},lives:2};
+  let old=c.clear(r.id,2,carry,kinds);
+  old=c.select(r.id,2,old.offers[1]);
+  delete old.deployed;delete old.rerollsLeft;
+  s.setItem(E.keys.campaign,JSON.stringify(old));
+  const restored=E.open('campaign',s);
+  assert.deepEqual(restored.read(),old);
+  assert.equal(E.redraftsLeft(restored.read()),1);
+  const upgraded=restored.redraft(r.id,2);
+  assert.equal(upgraded.rerollsLeft,0);assert.equal(upgraded.selected,null);
+  assert.deepEqual(upgraded.carry,carry);assert.deepEqual(upgraded.picks,old.picks);
+  assert.deepEqual(new Set(upgraded.deployed),new Set(kinds));
+  assert(upgraded.offers.every(id=>!old.offers.includes(id)&&E.cards[id].role!=='drone'));
+  assert.equal(E.open('trial',s).read(),null);
+});
+
+test('resonance previews the highlighted permanent role card and activates only on a supplied stage in the same run',()=>{
+  const ledger=E.open('campaign',storage()), supplied=[{kind:'drone',slot:'wing',supply:1}];
+  let run,stop;
+  for(let seed=0;seed<100;seed++){
+    run=ledger.start({seed});
+    stop=ledger.clear(run.id,1);
+    if(stop.offers.includes('drone-coil'))break;
+  }
+  assert(stop.offers.includes('drone-coil'));
+  const expected={kind:'drone',stat:'droneDamage',amount:.12,cardId:'drone-coil'};
+  assert.deepEqual(E.resonance(stop,supplied,'drone-coil'),expected);
+  assert.equal(E.resonance(stop,[{kind:'archer',slot:'rear',supply:1}],'archer-string'),null);
+  assert.equal(E.resonance(stop,supplied),null);
+  assert.equal(E.effects(stop,supplied).droneDamage,1);
+  const launched=ledger.choose(run.id,1,'drone-coil');
+  for(const level of [1,2,3]){
+    const config=[{kind:'drone',slot:'wing',supply:level}];
+    assert.deepEqual(E.resonance(launched,config),expected);
+    assert.equal(E.effects(launched,config).droneDamage,1.24);
+  }
+  assert.equal(E.effects(launched,[{kind:'drone',slot:'bench',supply:3}]).droneDamage,1.12);
+  assert.equal(E.effects(launched,[{kind:'drone',slot:'wing',supply:0}]).droneDamage,1.12);
+  assert.equal(E.resonance(ledger.lose(run.id,2),supplied),null);
+  assert.equal(E.resonance(ledger.start({seed:42}),supplied),null);
+});

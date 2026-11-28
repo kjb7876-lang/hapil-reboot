@@ -35,6 +35,9 @@
   Object.freeze(cards);
   const permanentIds = permanent.map(row => row[0]);
   const supplyIds = supplies.map(row => row[0]);
+  const kinds = ['archon','drone','angel','archer'];
+  const slots = ['front','wing','rear'];
+  const roleCards = new Map(permanent.filter(row => kinds.includes(row[3])).map(row => [row[3],cards[row[0]]]));
   const memory = Object.create(null);
   const stores = new WeakMap();
   let sequence = 0;
@@ -52,19 +55,34 @@
     }
     return run.picks.filter(p => p.card === id).length;
   }
-  function effects(run) {
+  function redraftsLeft(run) {
+    return run && (run.status === 'rest' || run.status === 'battle') ? (run.rerollsLeft ?? 1) : 0;
+  }
+  function resonance(run, companions, proposedCardId) {
+    if (!run || !['battle','rest'].includes(run.status) || !Array.isArray(companions)) return null;
+    const ally = companions.find(c => c && slots.includes(c.slot) && roleCards.has(c.kind) &&
+      Number.isInteger(c.supply) && c.supply > 0 && c.supply <= 3);
+    if (!ally) return null;
+    const card = roleCards.get(ally.kind);
+    const proposed = run.status === 'rest' && proposedCardId === card.id && run.offers.includes(card.id);
+    if (!proposed && rank(run,card.id) === 0) return null;
+    return {kind:ally.kind, stat:card.stat, amount:card.amount, cardId:card.id};
+  }
+  function effects(run, companions) {
     const result = {droneDamage:1, archerDamage:1, archonCooldown:1, wardCapacity:0, powerCharge:1, reformTime:1, evadeSeconds:0};
     if (!run || (run.status !== 'battle' && run.status !== 'rest')) return result;
     for (const pick of run.picks) {
       const card = cards[pick.card];
       if (card && (!card.temporary || pick.stage + 1 === run.stage)) result[card.stat] += card.amount;
     }
+    const bonus = resonance(run,companions);
+    if (bonus) result[bonus.stat] += bonus.amount;
     for (const stat of Object.keys(result)) result[stat] = Math.round(result[stat] * 100) / 100;
     return result;
   }
   // Stage-keyed PRNG separates drafting from shop rolls, battle timing and how often the menu reopens.
-  function draft(run, deployed) {
-    let state = (run.seed ^ Math.imul(run.stage, 0x9e3779b1)) >>> 0;
+  function draft(run, deployed, previous = []) {
+    let state = (run.seed ^ Math.imul(run.stage, 0x9e3779b1) ^ (previous.length ? 0x84a932d5 : 0)) >>> 0;
     function random() {
       state = (state + 0x6d2b79f5) >>> 0;
       let n = Math.imul(state ^ state >>> 15, state | 1);
@@ -78,22 +96,49 @@
       }
       return ids;
     }
-    const roles = new Set(['hero','party',...(deployed || ['archon','drone','angel'])]);
+    const roles = new Set(['hero','party',...deployed]);
     const available = shuffle(permanentIds.filter(id => roles.has(cards[id].role) && rank(run,id) < cards[id].maxRank));
     const temporary = shuffle(supplyIds.filter(id => roles.has(cards[id].role)));
     const mixed = run.stage > run.startStage && random() < .5;
-    const offers = available.splice(0, mixed ? 2 : 3);
-    for (const id of temporary.concat(available)) {
+    const preference = available.splice(0, mixed ? 2 : 3).concat(temporary,available);
+    const candidates = previous.length ? preference.filter(id => !previous.includes(id))
+      .concat(preference.filter(id => previous.includes(id))) : preference;
+    const offers = [];
+    for (const id of candidates) {
       if (offers.length === 3) break;
       if (!offers.some(other => cards[other].stat === cards[id].stat)) offers.push(id);
     }
     return shuffle(offers);
+  }
+  function lineup(values) {
+    return kinds.filter(kind => values.includes(kind));
+  }
+  function legacyLineup(run, deployed) {
+    // Old campaign checkpoints put the three deployed allies before any reserve.
+    const allies = run.carry?.party?.allies;
+    if (Array.isArray(allies)) {
+      const saved = lineup(allies.slice(0,3).map(a => a?.kind));
+      if (saved.length === 3) return saved;
+    }
+    if (Array.isArray(deployed) && lineup(deployed).length) return lineup(deployed);
+    const trial = lineup(Object.keys(run.carry?.companions || {}));
+    if (trial.length === 3) return trial;
+    // A v1 stop without a complete roster still has the original deterministic hand.
+    for (const reserve of ['archer','angel','drone','archon']) {
+      const active = kinds.filter(kind => kind !== reserve);
+      const hand = draft(run,active);
+      if (hand.every((id,i) => id === run.offers[i])) return active;
+    }
+    return lineup(run.offers.map(id => cards[id].role));
   }
   function valid(run) {
     if (!run || run.version !== 1 || typeof run.id !== 'string' || !run.id || run.id.length > 120 ||
         !Number.isInteger(run.seed) || run.seed < 0 || run.seed > 4294967295 ||
         !isStage(run.startStage) || !isStage(run.endStage) || !isStage(run.stage) ||
         run.stage < run.startStage || run.stage > run.endStage ||
+        (run.rerollsLeft !== undefined && run.rerollsLeft !== 0 && run.rerollsLeft !== 1) ||
+        (run.deployed !== undefined && (!Array.isArray(run.deployed) || run.deployed.length > 3 ||
+          !run.deployed.every(kind => kinds.includes(kind)) || new Set(run.deployed).size !== run.deployed.length)) ||
         !['battle','rest','won','lost'].includes(run.status) || !Array.isArray(run.offers) ||
         !Array.isArray(run.picks) || run.picks.length !== run.stage - run.startStage ||
         (run.status === 'won' && run.stage !== run.endStage)) return false;
@@ -162,7 +207,7 @@
       const id = [Date.now().toString(36), (++sequence).toString(36), randomSeed().toString(36)].join('-');
       return save({version:1,id,seed,startStage,endStage,stage:startStage,status:'battle',
         hero:String(options.hero || 'memory'),difficulty:String(options.difficulty || 'normal'),auto:options.auto === true,
-        offers:[],selected:null,picks:[],carry:null});
+        offers:[],selected:null,picks:[],carry:null,rerollsLeft:1});
     }
     // Every mutating action checks the identity, completed stage, and current phase again.
     function change(id, stage, status, update) {
@@ -174,7 +219,24 @@
       return change(id, stage, 'battle', run => {
         if (carry !== undefined) run.carry = cloneCarry(carry);
         if (stage === run.endStage) run.status = 'won';
-        else { run.status = 'rest'; run.offers = draft(run, deployed); }
+        else {
+          run.status = 'rest';
+          run.deployed = lineup(Array.isArray(deployed) ? deployed : kinds.slice(0,3)).slice(0,3);
+          run.offers = draft(run,run.deployed);
+        }
+        return true;
+      });
+    }
+    function redraft(id, stage, deployed) {
+      return change(id, stage, 'rest', run => {
+        if (!redraftsLeft(run)) return false;
+        const active = run.deployed ?? legacyLineup(run,deployed);
+        const offers = draft(run,active,run.offers);
+        if (offers.every(card => run.offers.includes(card))) return false;
+        run.deployed = active;
+        run.rerollsLeft = 0;
+        run.offers = offers;
+        run.selected = null;
         return true;
       });
     }
@@ -199,9 +261,9 @@
     function lose(id, stage) {
       return change(id, stage, 'battle', run => { run.status = 'lost'; return true; });
     }
-    return {read() { const run = current(); return run ? copy(run) : null; }, start, checkpoint, clear, select, choose, lose};
+    return {read() { const run = current(); return run ? copy(run) : null; }, start, checkpoint, clear, redraft, select, choose, lose};
   }
-  const api = {open, cards, rank, effects, keys};
+  const api = {open, cards, rank, effects, resonance, redraftsLeft, keys};
   root.PartyExpedition = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window === 'undefined' ? globalThis : window);

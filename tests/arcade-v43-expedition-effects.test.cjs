@@ -5,6 +5,7 @@ const assert = require('node:assert/strict');
 const {idle, put} = require('./helpers/arcade-v43.cjs');
 const Party = require('../src/arcade-party-v43.js');
 const Expedition = require('../src/arcade-party-expedition-v43.js');
+const Forge = require('../src/arcade-party-forge-v43.js');
 
 function fight(kind, cards, auto=false) {
   const run={status:'battle',stage:cards.length+1,picks:cards.map((card,i)=>({stage:i+1,card}))};
@@ -61,4 +62,26 @@ test('the evasion ribbon extends only a human dodge and reload keeps remaining a
     assert.equal(next.party.allies[0].ready,next.tick+103);
     assert.equal(next.party.allies[0].integrity,0);
   }
+});
+
+test('reel resonance changes actual campaign drone damage for the allocated stage including its resume',()=>{
+  const forge=Forge.fresh(8,'campaign');
+  Forge.spin(forge);
+  assert.equal(forge.reel.status,'choose');
+  assert(Forge.bank(forge,'drone').ok);
+  const run={status:'battle',stage:2,picks:[{stage:1,card:'drone-coil'}]};
+  const allocated=Forge.campaignEnter(forge,2);
+  function fire(config, effects){
+    const s=idle({party:{...config,effects}});
+    s.tick=4;s.stage='wave';s.mobs.push({x:120,y:96,hp:150});
+    Party.update(s,tools);
+    return s.party.allies.find(ally=>ally.kind==='drone').damage;
+  }
+  const plain=fire(allocated,Expedition.effects(run));
+  const resonant=fire(allocated,Expedition.effects(run,allocated.companions));
+  assert(plain>0);assert(Math.abs(resonant/plain-1.24/1.12)<1e-8);
+  const resumed=Forge.campaignEnter(forge,2,{resume:true});
+  assert.equal(fire(resumed,Expedition.effects(run,resumed.companions)),resonant);
+  const later=Forge.campaignEnter(forge,3);
+  assert.equal(Expedition.resonance(run,later.companions),null);
 });

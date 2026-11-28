@@ -1,7 +1,8 @@
 (() => {
   'use strict';
 
-  const colors = {hero:'#83eddb',archon:'#bea8f2',drone:'#79c7e5',angel:'#e3d99b',archer:'#9ed9bc'};
+  const brush=window.HapilPartyCues;
+  const paper='#f2e9d6', ink='#292622', seal='#9c4638';
   const images = new Map();
   const TAU = Math.PI * 2;
   const spriteHeight = {memory: 38, seoha: 39, awakened: 40};
@@ -20,7 +21,7 @@
   }
 
   function tint(kind) {
-    return colors[kind] || colors.hero;
+    return brush.roles[kind] || brush.roles.hero;
   }
 
   function circle(ctx, x, y, radius) {
@@ -30,14 +31,14 @@
 
   function stage(ctx, w, h, stageId) {
     const bg = loadImage(stageId === 40 ? 'siege' : stageId === 41 ? 'hall' : 'background');
-    ctx.fillStyle = '#181d24';
+    ctx.fillStyle = paper;
     ctx.fillRect(0, 0, w, h);
     if (!bg) return;
     const scale = Math.max(w / bg.width, h / bg.height);
     const dw = bg.width * scale;
     const dh = bg.height * scale;
     ctx.drawImage(bg, (w - dw) / 2, (h - dh) / 2, dw, dh);
-    ctx.fillStyle = 'rgba(12,18,24,.24)';
+    ctx.fillStyle = 'rgba(242,233,214,.20)';
     ctx.fillRect(0, 0, w, h);
   }
 
@@ -49,11 +50,8 @@
     const sprite = sheet || still;
     ctx.save();
     ctx.translate(boss.x, boss.y);
-    const light = ctx.createRadialGradient(0, 0, 2, 0, 0, 53);
-    light.addColorStop(0, 'rgba(255,191,133,.27)');
-    light.addColorStop(1, 'rgba(255,183,106,0)');
-    ctx.fillStyle = light;
-    ctx.fillRect(-53, -53, 106, 106);
+    ctx.beginPath();ctx.ellipse(0,33,26,3.4,-.05,0,TAU);
+    ctx.fillStyle='rgba(62,55,45,.15)';ctx.fill();
     if (sprite) {
       const frameW = sheet ? sheet.naturalWidth / 4 : still.naturalWidth;
       const frameH = sprite.naturalHeight;
@@ -62,7 +60,7 @@
       const dw = dh * frameW / frameH;
       ctx.drawImage(sprite, frame * frameW, 0, frameW, frameH, -dw / 2, -dh / 2, dw, dh);
     } else {
-      ctx.fillStyle = '#a79078';
+      ctx.fillStyle = '#64584c';
       ctx.beginPath();
       ctx.moveTo(0, 30); ctx.lineTo(-20, -21); ctx.lineTo(0, -12); ctx.lineTo(20, -21); ctx.closePath(); ctx.fill();
     }
@@ -77,8 +75,8 @@
     ctx.save();
     ctx.translate(mark.x, mark.y);
     ctx.rotate(rot);
-    ctx.strokeStyle = aim ? '#ff94ae' : '#ffb576';
-    ctx.globalAlpha = .27 + charge * .36;
+    ctx.strokeStyle = aim ? seal : '#705d4a';
+    ctx.globalAlpha = .40 + charge * .38;
     ctx.lineWidth = aim ? 1.35 : 1;
     ctx.setLineDash(aim ? [4, 7] : [10, 8]);
     if (aim) {
@@ -113,7 +111,7 @@
 
   function player(ctx, p, time, reduced) {
     if (p.lives <= 0 || p.respawn > 0 || !p.alive) return;
-    const col = colors.hero;
+    const col = seal;
     const sprite = loadImage(p.hero);
     const dh = spriteHeight[p.hero] || 38;
     ctx.save();
@@ -135,7 +133,7 @@
     }
     ctx.globalAlpha = 1;
     const r = p.hitRadius || p.hitR || 3;
-    ctx.strokeStyle = 'rgba(10,15,22,.92)';
+    ctx.strokeStyle = paper;
     ctx.lineWidth = 2.75;
     ctx.beginPath();
     ctx.arc(0, 0, r + 3, .85 * Math.PI, 1.32 * Math.PI);
@@ -146,34 +144,57 @@
     ctx.lineWidth = 1.5;
     ctx.stroke();
     heart(ctx, r);
-    ctx.lineWidth = 1.5; ctx.strokeStyle = '#1a1920'; ctx.stroke();
-    ctx.fillStyle = '#fff0e2'; ctx.fill();
+    ctx.fillStyle = ink;ctx.fill();
+    brush.line(ctx,seal,1);
     ctx.restore();
   }
 
-  function bullet(ctx, b) {
-    const aim = b.kind === 'aim', r = Math.max(1, b.r);
-    ctx.save();
-    ctx.translate(b.x, b.y);
-    if (aim) {
-      ctx.rotate(Math.atan2(b.vy || 1, b.vx || 0) - Math.PI / 2);
-      ctx.beginPath(); ctx.moveTo(0,-r-1); ctx.quadraticCurveTo(r*.72,-r*.36,r,0);
-      ctx.quadraticCurveTo(r*.8,r*.45,0,r+1); ctx.quadraticCurveTo(-r*.8,r*.45,-r,0);
-      ctx.quadraticCurveTo(-r*.72,-r*.36,0,-r-1); ctx.closePath();
-    } else {
-      circle(ctx, 0, 0, r);
+  // Two small ink stamps cover the whole training vocabulary. Enemy cores keep
+  // the simulator's radius; only the paper edge extends beyond the hit area.
+  const stamps=new Map();
+  function bulletStamp(aim,radius) {
+    const key=(aim?'aim':'rank')+radius;
+    if(stamps.has(key))return stamps.get(key);
+    const pad=Math.ceil(radius+3),size=2*pad;
+    const stamp=document.createElement('canvas');
+    stamp.width=stamp.height=2*size;
+    const g=stamp.getContext('2d');
+    g.scale(2,2);g.translate(pad,pad);
+    const r=radius;
+    g.beginPath();
+    if(aim){
+      g.moveTo(-r*1.25,0);
+      g.quadraticCurveTo(-r*.28,-r*.85,r*.45,-r*.68);
+      g.quadraticCurveTo(r*1.3,-r*.34,r,.25*r);
+      g.quadraticCurveTo(r*.63,r*1.1,-r*.25,r*.59);
+      g.closePath();
+    }else{
+      g.moveTo(-r,-.12*r);
+      g.bezierCurveTo(-r*.89,-r*1.06,.53*r,-r*1.17,r*.92,-r*.32);
+      g.bezierCurveTo(1.2*r,.5*r,r*.31,1.06*r,-.24*r,.96*r);
+      g.quadraticCurveTo(-r*.97,r*.82,-r,-.12*r);g.closePath();
     }
-    ctx.strokeStyle = '#311620'; ctx.lineWidth = 2.3; ctx.stroke();
-    ctx.fillStyle = aim ? '#f06586' : '#ed8652'; ctx.fill();
-    ctx.strokeStyle = aim ? '#ffbfd0' : '#ffe3a4'; ctx.lineWidth = .88; ctx.stroke();
-    circle(ctx, 0, 0, Math.max(.75, r * .37)); ctx.fillStyle = '#fff0da'; ctx.fill();
+    g.lineWidth=2.5;g.strokeStyle=paper;g.stroke();
+    g.fillStyle=ink;g.fill();
+    // One split in the drier end also distinguishes an aimed nib from a round drop.
+    g.beginPath();
+    if(aim){g.moveTo(-r*.87,-.06*r);g.quadraticCurveTo(-r*.28,-.25*r,.1*r,-.26*r);}
+    else{g.moveTo(-r*.58,-.33*r);g.quadraticCurveTo(-r*.30,-r*.68,.15*r,-.57*r);}
+    g.lineWidth=.8;g.strokeStyle='#aba294';g.stroke();
+    stamps.set(key,stamp);
+    return stamp;
+  }
+
+  function bullet(ctx,b) {
+    const aim=b.kind==='aim',stamp=bulletStamp(aim,Math.max(1,b.r));
+    const size=stamp.width/2;
+    ctx.save();ctx.translate(b.x,b.y);
+    if(aim)ctx.rotate(Math.atan2(b.vy,b.vx));
+    ctx.drawImage(stamp,-size/2,-size/2,size,size);
     ctx.restore();
   }
 
-
-  const allyNames = {archon:'아르콘',drone:'드론',angel:'천사',archer:'성궁수'};
   const allySize = {archon:25,drone:27,angel:31,archer:30};
-  const actionName = {assist:'엄호',intercept:'요격', barrier:'방벽', control:'제어', rescue:'구원', reform:'복귀', link:'공명'};
 
   function actionColor(s, slot) {
     const actor = s.players && s.players.find(p => p.slot === slot);
@@ -207,55 +228,25 @@
       ctx.globalAlpha = .98;
       ctx.drawImage(image, -w / 2, -h / 2 + bob, w, h);
     }
-    // A little engine light belongs under each support. Keep the pilot's heart unique.
+    // Role-specific brush strokes stay below the ally's feet.
     ctx.strokeStyle = tintColor;
     ctx.globalAlpha = .6;ctx.lineWidth=1;
     if (kind === 'archon') {
       ctx.beginPath();ctx.moveTo(-3,15);ctx.lineTo(0,17);ctx.lineTo(3,15);ctx.stroke();
     } else if (kind === 'drone') {
       ctx.beginPath();ctx.moveTo(-4,15);ctx.lineTo(-2,17);ctx.moveTo(2,17);ctx.lineTo(4,15);ctx.stroke();
+    } else if(kind==='archer'){
+      ctx.beginPath();ctx.moveTo(-5,16);ctx.lineTo(4,14);ctx.lineTo(2,16);ctx.stroke();
     } else {
       ctx.beginPath();ctx.arc(0,12,4,.22*Math.PI,.78*Math.PI);ctx.stroke();
     }
     ctx.restore();
   }
 
-  function field(ctx, f, state, reduced) {
-    const r = f.r;
-    if (!(r > 0)) return;
-    const type = f.kind || 'bomb';
-    const color = type === 'gravity' ? '#cbb7f6' : type === 'time' ? '#a3d1bf' : type === 'barrier' ? colors.angel : actionColor(state,f.slot);
-    const opacity = Math.min(1, Math.max(0, f.timeLeft) / Math.min(.25, f.duration || .25));
-    ctx.save();ctx.translate(f.x,f.y);
-    ctx.globalAlpha = opacity * .055;
-    ctx.fillStyle = color;
-    circle(ctx,0,0,r);ctx.fill();
-    ctx.globalAlpha = opacity * .72;ctx.strokeStyle = color;ctx.lineWidth = 1.35;
-    if (type === 'barrier') {
-      ctx.beginPath();
-      for(let i=0;i<7;i++) {
-        const angle=Math.PI*(i/3-.5), dx=Math.cos(angle)*r, dy=Math.sin(angle)*r;
-        if (!i) ctx.moveTo(dx,dy); else ctx.lineTo(dx,dy);
-      }
-      ctx.stroke();
-    } else {
-      if(type==='time') ctx.setLineDash([1,9]);
-      if(type==='gravity') ctx.setLineDash([8,5]);
-      circle(ctx,0,0,r);ctx.stroke();
-    }
-    if(type==='gravity' || type==='time') {
-      const offset = reduced ? 0 : (state.time || 0)*.35;
-      ctx.globalAlpha *= .63;ctx.setLineDash([]);
-      for(let i=0;i<4;i++) {
-        const a=offset+i*Math.PI/2;
-        if(type==='time'){
-          ctx.beginPath();ctx.moveTo(Math.cos(a)*(r-4),Math.sin(a)*(r-4));ctx.lineTo(Math.cos(a)*(r+1),Math.sin(a)*(r+1));ctx.stroke();
-        } else {
-          ctx.beginPath();ctx.arc(0,0,r*.83,a,a+.5);ctx.stroke();
-        }
-      }
-    }
-    ctx.restore();
+  function field(ctx,f) {
+    const opacity=Math.min(1,Math.max(0,f.timeLeft)/Math.min(.25,f.duration||.25));
+    ctx.save();ctx.globalAlpha=.69*opacity;
+    brush.field(ctx,f.x,f.y,f.r,f.kind||'bomb');ctx.restore();
   }
 
   function shot(ctx,s,state) {
@@ -268,18 +259,17 @@
     }
     const length=s.boost ? 12 : kind==='drone' ? 9 : 6;
     ctx.save();
-    ctx.strokeStyle=kind ? tint(kind) : actionColor(state,s.slot);
-    ctx.lineWidth=s.boost ? 2.3 : kind==='hero' ? 1.7 : 1.35;
     ctx.globalAlpha=s.boost ? .85 : kind==='hero' ? .59 : .51;
-    ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.lineTo(s.x-vx/speed*length,s.y-vy/speed*length);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.lineTo(s.x-vx/speed*length,s.y-vy/speed*length);
+    brush.line(ctx,kind?tint(kind):actionColor(state,s.slot),s.boost?1.8:1.1);
     ctx.restore();
   }
 
-  function effect(ctx, e, state, reduced, showText) {
+  function effect(ctx, e, state, reduced) {
     if (!(e.life>0) || !e.duration) return;
     const t=1-Math.min(1,e.life/e.duration);
     const slot=e.slot || 0;
-    const color=['hurt','out','bossDown'].includes(e.kind)?'#fba6a5':actionColor(state,slot);
+    const color=['hurt','out','bossDown'].includes(e.kind)?seal:actionColor(state,slot);
     ctx.save();ctx.strokeStyle=color;ctx.fillStyle=color;
     ctx.globalAlpha=(reduced?.58:.92)*(1-t);ctx.lineWidth=1.15;
     const actor=state.players && state.players.find(p=>p.slot===slot);
@@ -293,14 +283,6 @@
           ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x1,y1);ctx.stroke();ctx.setLineDash([]);
         }
         circle(ctx,x1,y1,3+(reduced?.4:t)*10);ctx.stroke();
-      }
-      if(showText && actionName[e.kind] && actor?.kind && allyNames[actor.kind]) {
-        const tx=Math.min(329,Math.max(31,startX)), ty=Math.max(15,startY-20);
-        const label=allyNames[actor.kind]+' '+actionName[e.kind];
-        ctx.globalAlpha=Math.min(1,e.life/.16);
-        ctx.font='bold 8px system-ui, sans-serif';ctx.textAlign='center';
-        ctx.lineWidth=3;ctx.strokeStyle='#122022';ctx.strokeText(label,tx,ty);
-        ctx.fillText(label,tx,ty);
       }
     } else if(['hurt','out','disrupt','bossDown','evade','reform','impact'].includes(e.kind)){
       const end=e.kind==='bossDown'?44:e.kind==='impact'?4:13;
@@ -322,19 +304,17 @@
     const reduced=!!options.reducedMotion,time=s.time || 0;
     const hero=s.hero || s.players?.[0], allies=s.allies || s.players?.slice(1) || [];
     const scale=Math.min(pw/w,ph/h);
-    ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#141923';ctx.fillRect(0,0,pw,ph);
+    ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle=paper;ctx.fillRect(0,0,pw,ph);
     ctx.setTransform(scale,0,0,scale,(pw-w*scale)/2,(ph-h*scale)/2);
     ctx.save();ctx.beginPath();ctx.rect(0,0,w,h);ctx.clip();
     stage(ctx,w,h,s.stage);
     for (const mark of s.warnings || []) warning(ctx,mark,w,h,s.difficulty);
     captain(ctx,s.boss,(s.warnings || []).length>0,time,reduced,s.stage);
-    for (const f of s.fields || []) field(ctx,f,s,reduced);
+    for (const f of s.fields || []) field(ctx,f);
     for (const a of s.shots || []) shot(ctx,a,s);
     for (const a of allies) companion(ctx,a,time,reduced,s.power?.lineage);
     if (hero) player(ctx,hero,time,reduced);
-    const fx=s.effects || [];
-    const display=fx.slice().reverse().find(e=>actionName[e.kind] && e.life>.06);
-    for(const e of fx) effect(ctx,e,s,reduced,e===display);
+    for(const e of s.effects || []) effect(ctx,e,s,reduced);
     for(const b of s.bullets || []) bullet(ctx,b);
     ctx.restore();
   }
