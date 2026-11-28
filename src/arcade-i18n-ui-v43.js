@@ -3,6 +3,7 @@
   'use strict';
   global.HapilLocaleUI = {
     "ko": {
+      partyEnabled: "AI 편대 원정", partyPrepare: "편대 편성", partyAuto: "영웅 자동 회피",
       handicapSpeed: "적 탄속",
       handicapSpeedNote: "적 탄 속도 ×{x} · 탄 수·피격점은 그대로 · ×1은 헬과 같은 속도(회피 보장은 ×1 기준)",
       pageTitle: "합일 — 총집본",
@@ -34,6 +35,7 @@
       gameOverTitle: "GAME OVER"
     },
     "en": {
+      partyEnabled: "AI squad expedition", partyPrepare: "Formation", partyAuto: "Hero auto-dodge",
       handicapSpeed: "Enemy shot speed",
       handicapSpeedNote: "Enemy bullets ×{x} speed · bullet count and hitbox unchanged · ×1 matches Hell (dodgeability is only guaranteed at ×1)",
       pageTitle: "Hapil — The Complete Journey",
@@ -89,6 +91,7 @@
       field: "Vertical bullet hell playfield"
     },
     "ja": {
+      partyEnabled: "AI小隊遠征", partyPrepare: "編成", partyAuto: "英雄の自動回避",
       handicapSpeed: "敵弾速",
       handicapSpeedNote: "敵弾の速さ ×{x}・弾数と当たり判定はそのまま・×1は地獄と同じ速さ（回避保証は×1のみ）",
       kicker: "HAPIL · 全52ステージを駆け抜ける旅",
@@ -233,6 +236,7 @@
       ].join('')
     },
     "zh-Hans": {
+      partyEnabled: "AI 小队远征", partyPrepare: "编队", partyAuto: "英雄自动闪避",
       handicapSpeed: "敌弹速",
       handicapSpeedNote: "敌弹速度 ×{x} · 弹数和判定不变 · ×1 与地狱相同（仅保证 ×1 可躲避）",
       kicker: "HAPIL · 踏上 52 关的旅程",
@@ -377,6 +381,7 @@
       ].join('')
     },
     "zh-Hant": {
+      partyEnabled: "AI 小隊遠征", partyPrepare: "編隊", partyAuto: "英雄自動閃避",
       handicapSpeed: "敵彈速",
       handicapSpeedNote: "敵彈速度 ×{x} · 彈數與判定不變 · ×1 與地獄相同（僅保證 ×1 可閃避）",
       kicker: "HAPIL · 踏上 52 關的旅程",
@@ -521,6 +526,7 @@
       ].join('')
     },
     "es": {
+      partyEnabled: "Expedición con aliados de IA", partyPrepare: "Formación", partyAuto: "Evasión automática del héroe",
       handicapSpeed: "Velocidad enemiga",
       handicapSpeedNote: "Balas enemigas ×{x} de velocidad · mismo número de balas y hitbox · ×1 equivale a Infierno (solo ×1 garantiza esquivar)",
       kicker: "HAPIL · 52 FASES EN UNA PARTIDA",
@@ -665,6 +671,7 @@
       ].join('')
     },
     "pt-BR": {
+      partyEnabled: "Expedição com aliados de IA", partyPrepare: "Formação", partyAuto: "Esquiva automática do herói",
       handicapSpeed: "Velocidade inimiga",
       handicapSpeedNote: "Balas inimigas ×{x} de velocidade · mesma quantidade e hitbox · ×1 é igual ao Inferno (só ×1 garante desvio)",
       kicker: "HAPIL · 52 FASES EM UMA PARTIDA",

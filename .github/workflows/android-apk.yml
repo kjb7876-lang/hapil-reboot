@@ -7,6 +7,7 @@ on:
     paths:
       - 'app/**'
       - 'arcade.html'
+      - 'party.html'
       - 'src/arcade-*'
       - 'src/arcade-parts-v43/**'
       - 'src/ink-v43.js'

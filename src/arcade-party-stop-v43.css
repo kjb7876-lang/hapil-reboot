@@ -1,0 +1,152 @@
+/* The same stop can open above the native canvas or inside the training page. */
+#party-stop-dialog {
+  --ps-paper: #f5ebd7;
+  --ps-muted: #afb8a9;
+  --ps-gold: #e7c98c;
+  --ps-line: #424d43;
+  --ps-media: "Source Sans 3", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  position: fixed;
+  inset: 0;
+  width: min(100%, 436px);
+  max-width: 100vw;
+  height: min(740px, 100vh);
+  height: min(740px, 100dvh);
+  max-height: 100dvh;
+  box-sizing: border-box;
+  padding: 0;
+  margin: auto;
+  overflow: hidden;
+  color: var(--ps-paper);
+  background: #19211e;
+  border: 1px solid #766851;
+  border-radius: 14px;
+  box-shadow: 0 18px 56px #090b0ac9;
+  font: 15px/1.4 var(--ps-media);
+  text-align: start;
+  overscroll-behavior: contain;
+  color-scheme: dark;
+}
+#party-stop-dialog:not([open]) { display: none; }
+#party-stop-dialog::backdrop { background: #070e0bbd; }
+#party-stop-dialog *, #party-stop-dialog *::before, #party-stop-dialog *::after { box-sizing: border-box; }
+#party-stop-dialog button { font-family: var(--ps-media); text-shadow: none; cursor: pointer; }
+#party-stop-dialog :is(button,summary):focus-visible {
+  outline: 2px solid #ffebb6;
+  outline-offset: -3px;
+}
+#party-stop-dialog .pstop-panel { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+#party-stop-dialog .pstop-content {
+  flex: 1 1 0;
+  min-height: 0;
+  padding: max(20px, env(safe-area-inset-top)) 21px 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}
+#party-stop-dialog .pstop-cleared {
+  color: var(--ps-gold);
+  margin: 0;
+  font: 700 12px/1.35 var(--ps-media);
+  letter-spacing: .07em;
+}
+#party-stop-dialog .pstop-title {
+  color: var(--ps-paper);
+  font: 600 clamp(28px, 5.7vw, 36px)/1.14 "Nanum Myeongjo", "AppleMyungjo", "Noto Serif CJK KR", Georgia, serif;
+  letter-spacing: -.04em;
+  text-shadow: none;
+  margin: 5px 0 14px;
+  outline: none;
+}
+#party-stop-dialog .pstop-summary, #party-stop-dialog .pstop-brief {
+  color: var(--ps-muted); font: 400 13px/1.4 var(--ps-media); margin: 5px 0 0;
+  overflow-wrap: anywhere;
+}
+#party-stop-dialog .pstop-summary { margin: -7px 0 11px; }
+#party-stop-dialog .pstop-next {
+  background: linear-gradient(105deg,#303930 0%,#252f29 76%);
+  border-inline-start: 3px solid #9eac83;
+  padding: 9px 11px;
+}
+#party-stop-dialog .pstop-next-label { display: block; color: #c5cebd; font-size: 11px; font-weight: 650; }
+#party-stop-dialog .pstop-destination { display: flex; align-items: baseline; gap: 8px; margin-top: 2px; }
+#party-stop-dialog .pstop-stage {
+  font: 600 18px/1.1 "IBM Plex Mono", ui-monospace, monospace;
+  color: var(--ps-gold);
+}
+#party-stop-dialog .pstop-target { font-size: 17px; line-height: 1.25; color: var(--ps-paper); }
+#party-stop-dialog .pstop-legend {
+  color: #f0e7d6; margin: 17px 0 8px; font: 700 15px/1.35 var(--ps-media); letter-spacing: -.02em;
+}
+#party-stop-dialog .pstop-choices { display: grid; gap: 6px; }
+#party-stop-dialog .pstop-choice {
+  display: grid;
+  grid-template-columns: 41px minmax(0, 1fr) 15px;
+  align-items: center;
+  gap: 10px;
+  appearance: none;
+  text-align: start;
+  width: 100%;
+  min-width: 0;
+  min-height: 59px;
+  padding: 8px 10px;
+  color: var(--ps-paper);
+  background: #242d28;
+  border: 1px solid var(--ps-line);
+  border-radius: 7px;
+  box-shadow: none;
+  touch-action: manipulation;
+}
+#party-stop-dialog .pstop-choice[aria-pressed="true"] {
+  background: #343d30; border-color: #d6bd7e; box-shadow: inset 3px 0 #d6bd7e;
+}
+#party-stop-dialog .pstop-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 41px;
+  height: 41px;
+  border-radius: 6px;
+  background: radial-gradient(ellipse,#514d39 0%,#1b241f 79%);
+}
+#party-stop-dialog .pstop-art-archon { background: radial-gradient(ellipse,#53485b 0%,#202323 79%); }
+#party-stop-dialog .pstop-art-drone { background: radial-gradient(ellipse,#315956 0%,#1b2523 79%); }
+#party-stop-dialog .pstop-art img { width: 94%; height: 94%; object-fit: contain; }
+#party-stop-dialog .pstop-art-party img { position: absolute; width: 20px; height: 25px; top: 5px; left: 1px; }
+#party-stop-dialog .pstop-art-party img:nth-child(2) { top: 11px; left: 19px; }
+#party-stop-dialog .pstop-art-party img:nth-child(3) { top: 18px; left: 8px; }
+#party-stop-dialog .pstop-card-copy { display: block; min-width: 0; }
+#party-stop-dialog .pstop-card-top { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 7px; }
+#party-stop-dialog .pstop-card-name { color: var(--ps-paper); font-size: 16px; font-weight: 700; line-height: 1.25; }
+#party-stop-dialog .pstop-scope { font-size: 10px; font-weight: 600; color: #cfbe96; white-space: nowrap; }
+#party-stop-dialog .pstop-effect { display: block; color: #c4c9ba; font-size: 13px; line-height: 1.35; margin-top: 3px; overflow-wrap: anywhere; }
+#party-stop-dialog .pstop-radio { border: 1.5px solid #869085; border-radius: 50%; width: 14px; height: 14px; }
+#party-stop-dialog .pstop-choice[aria-pressed="true"] .pstop-radio { background: #dfc17e; border: 3px solid #343d30; outline: 1px solid #d6bd7e; }
+#party-stop-dialog .pstop-owned { color: var(--ps-muted); margin-top: 5px; font-size: 13px; }
+#party-stop-dialog .pstop-owned summary { cursor: pointer; min-height: 44px; align-content: center; padding-block: 9px; }
+#party-stop-dialog .pstop-owned-list { display: flex; flex-wrap: wrap; gap: 3px 13px; list-style: none; padding: 0; margin: 0 0 5px; }
+#party-stop-dialog .pstop-notice { color: #f5bb9e; margin: 8px 0 0; }
+#party-stop-dialog .pstop-actions {
+  flex: none;
+  display: flex; align-items: stretch; gap: 7px;
+  background: #171f1b; border-top: 1px solid var(--ps-line);
+  padding: 11px 17px max(11px,env(safe-area-inset-bottom));
+}
+#party-stop-dialog .pstop-actions button {
+  min-height: 46px; min-width: 0; line-height: 1.25; border-radius: 6px;
+  padding: 7px 9px; font-size: 14px; font-weight: 700; box-shadow: none; touch-action: manipulation;
+}
+#party-stop-dialog .pstop-workshop { flex: .95; background: #263029; color: var(--ps-paper); border: 1px solid #667160; }
+#party-stop-dialog .pstop-launch { flex: 1.2; color: #22291e; background: #e5cb90; border: 1px solid #e5cb90; }
+#party-stop-dialog .pstop-launch:disabled { color: #a3a797; border-color: #586052; background: #343c33; opacity: 1; cursor: default; }
+@media (max-width: 460px) {
+  #party-stop-dialog { border-radius: 0; border-block: 0; }
+}
+@media (max-height: 610px), (max-width: 350px) {
+  #party-stop-dialog .pstop-content { padding: max(12px,env(safe-area-inset-top)) 13px 8px; }
+  #party-stop-dialog .pstop-title { margin-bottom: 10px; }
+  #party-stop-dialog .pstop-legend { margin: 11px 0 6px; }
+  #party-stop-dialog .pstop-choice { min-height: 55px; padding: 6px 8px; grid-template-columns: 35px minmax(0,1fr) 14px; gap: 7px; }
+  #party-stop-dialog .pstop-art { width: 35px; height: 35px; }
+  #party-stop-dialog .pstop-actions { padding: 8px 11px max(8px,env(safe-area-inset-bottom)); }
+}
