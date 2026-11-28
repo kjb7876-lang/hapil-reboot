@@ -7,7 +7,27 @@ function storage() {
   const items = new Map();
   return {getItem: key => items.get(key) ?? null, setItem: (key, value) => items.set(key, value)};
 }
-const baseline = {droneDamage:1, archonCooldown:1, wardCapacity:0, powerCharge:1, reformTime:1, evadeSeconds:0};
+const baseline = {droneDamage:1, archerDamage:1, archonCooldown:1, wardCapacity:0, powerCharge:1, reformTime:1, evadeSeconds:0};
+
+test('expedition drafts offer upgrades for the deployed wing and keep the drawn choices after a swap', () => {
+  const ledger = E.open('campaign',storage());
+  const lineup = ['archer','archon','angel'];
+  const offered = new Set();
+  for (let seed=1;seed<=24;seed++) {
+    const run = ledger.start({seed, difficulty:'hell'});
+    const stop = ledger.clear(run.id,1,null,lineup);
+    for (const id of stop.offers) {
+      assert.notEqual(E.cards[id].role,'drone');
+      offered.add(id);
+    }
+    assert.deepEqual(ledger.clear(run.id,1,null,['drone','angel','archon']).offers,stop.offers);
+    if (stop.offers.includes('archer-string')) {
+      const next = ledger.choose(run.id,1,'archer-string');
+      assert.equal(E.effects(next).archerDamage,1.12);
+    }
+  }
+  assert(offered.has('archer-string'));
+});
 
 test('a single clear yields three stat families, and the saved highlight survives without granting a boon', () => {
   const data = storage(), a = E.open('trial', data);

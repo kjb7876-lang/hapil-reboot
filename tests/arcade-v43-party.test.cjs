@@ -56,7 +56,7 @@ test('reassignment at a stage boundary preserves wounds, cooldowns and pilot sto
   assert.equal(refitted.x,198);assert.equal(s.party.charge,25);assert.equal(s.player.hp,1);
 });
 
-test('only rear angel saves of a real hero-bound bullet count towards lost life recovery', () => {
+test('only genuine rear angel ward saves contribute an immediate point towards lost life recovery', () => {
   const s=base({companions:[{kind:'angel',slot:'rear'}]});
   const angel=s.party.allies[0],p=s.player;
   s.player.hp=1;

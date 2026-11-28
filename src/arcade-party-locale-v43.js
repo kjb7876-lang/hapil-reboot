@@ -3,6 +3,47 @@
   'use strict';
   const languages=['ko','en','ja','zh-Hans','zh-Hant','es','pt-BR'];
   const terms=`
+성궁수|Star Archer|星弓の射手|星弓手|星弓手|Arquera estelar|Arqueira estelar
+전열 수호|Vanguard tank|前衛の盾役|前排坦克|前排坦克|Tanque de vanguardia|Tanque de vanguarda
+탄환 요격|Interceptor|迎撃役|弹幕拦截|彈幕攔截|Intercepción|Interceptação
+원거리 사격|Ranged attacker|遠距離火力|远程输出|遠程輸出|Ataque a distancia|Ataque à distância
+치유·충전|Healing & charge|回復・充填|治疗与充能|治療與充能|Curación y carga|Cura e recarga
+대기 동료|Reserve|控え|替补|替補|Reserva|Reserva
+후방 사격 +60%|Rear shot damage +60%|後方の射撃威力 +60%|后排射击伤害 +60%|後排射擊傷害 +60%|Daño de disparo en retaguardia +60%|Dano de tiro na retaguarda +60%
+동료 넷 중 셋이 출격합니다. 두 자리를 차례로 눌러 교대하세요.|Three of your four allies deploy. Tap two positions to swap their occupants.|仲間4人のうち3人が出撃します。入れ替えたい位置を順にタップしてください。|四名同伴中可以派出三名。依次点选两个位置即可互换。|四名同伴中可以派出三名。依序點選兩個位置即可互換。|Tres de tus cuatro aliados salen a combatir. Toca dos puestos para intercambiarlos.|Três dos quatro aliados entram em combate. Toque em duas posições para trocar os ocupantes.
+다음 전투에 쓰려면 대기 동료를 편성하세요.|Deploy this reserve ally to use the supplies in the next battle.|次の戦闘で補給を使うには、この控えの仲間を編成してください。|派出这名替补同伴，即可在下一场战斗使用补给。|派出這名替補同伴，即可在下一場戰鬥使用補給。|Despliega a este aliado de reserva para usar los suministros en la próxima batalla.|Escale este aliado da reserva para usar os suprimentos no próximo combate.
+전방에서 탄과 조준 기술을 대신 막고 계약 권능 사용|Guards against bullets and aimed skills from the front and uses its contracted power|前方で弾や狙い撃ち攻撃を受け止め、契約の権能を発動|在前排抵挡子弹和瞄准技能，并发动契约权能|在前排抵擋子彈和瞄準技能，並發動契約權能|En vanguardia bloquea balas y habilidades dirigidas y usa su poder de contrato|Na frente, bloqueia projéteis e habilidades direcionadas e usa o poder de contrato
+다가오는 적탄을 조준해 요격|Targets and shoots down incoming bullets|接近する敵弾を狙い撃ちして迎撃|瞄准并击落逼近的敌弹|瞄準並擊落逼近的敵彈|Apunta y derriba los proyectiles que se acercan|Mira e derruba projéteis que se aproximam
+적을 조준해 지속 사격 · 후방에서 화살 피해 60% 증가|Keeps firing at enemies. Arrows deal 60% more damage from the rear|敵を狙って連射。後方では矢の威力が60%上昇|锁定敌人持续射击，在后排时箭矢伤害提高 60%|鎖定敵人持續射擊，在後排時箭矢傷害提高 60%|Dispara sin descanso. Sus flechas infligen un 60% más de daño en retaguardia|Atira continuamente. As flechas causam 60% mais dano na retaguarda
+권능 충전을 돕고 실제 엄호 시 게이지 회복|Helps charge power and restores gauge when a shield saves the hero|権能の充填を助け、英雄をかばうとゲージを回復|协助权能充能，实际挡下射向英雄的子弹时恢复能量|協助權能充能，實際擋下射向英雄的子彈時恢復能量|Ayuda a cargar el poder y recupera energía al proteger al héroe de un impacto|Ajuda a carregar o poder e recupera energia ao proteger o herói de um impacto
+후방에서 탄을 막거나 다친 영웅을 전투 중 8초간 지키면 치유 1점. 3점으로 목숨 1 회복. 헬에서는 스테이지당 한 번.|From the rear, earn 1 healing point each time the angel blocks a shot for the hero or spends 8 seconds in combat protecting an injured hero. At 3 points, restore 1 lost life. Once per stage on Hell.|後衛で英雄への弾を防ぐか、負傷した英雄を戦闘中に8秒守るごとに回復点が1つたまります。3点で残機を1つ回復。ヘルでは各ステージ1回まで。|天使在后排为英雄挡下一发子弹，或在战斗中守护受伤的英雄 8 秒，都能获得 1 点治疗值。集满 3 点恢复一条生命。地狱难度每关限一次。|天使在後排為英雄擋下一發子彈，或在戰鬥中守護受傷的英雄 8 秒，都能獲得 1 點治療值。集滿 3 點恢復一條生命。地獄難度每關限一次。|Desde la retaguardia, el ángel gana 1 punto de curación cada vez que evita un impacto al héroe o lo protege durante 8 segundos de combate mientras está herido. Con 3 puntos recupera una vida. En Infierno, una vez por fase.|Na retaguarda, o anjo ganha 1 ponto de cura sempre que bloqueia um tiro que atingiria o herói ou protege o herói ferido por 8 segundos de combate. Com 3 pontos, recupera uma vida. No Inferno, uma vez por fase.
+엄호|Guards|かばった回数|掩护|掩護|Protecciones|Proteções
+스킬 방어|Skills blocked|防いだスキル|抵挡技能|抵擋技能|Habilidades bloqueadas|Habilidades bloqueadas
+사격|Shots|射撃|射击|射擊|Disparos|Disparos
+권능 충전|Power charge|権能充填|权能充能|權能充能|Carga de poder|Carga de poder
+폭탄 게이지 획득량 +20%. 엄호에 성공하면 편대 권능 +8.|Bomb gauge gains +20%. Saving the hero grants 8 squad power.|ボムゲージ獲得量が20%増加。英雄をかばうと編隊の権能が8回復。|炸弹能量获取量提高 20%。成功保护英雄时恢复 8 点编队权能。|炸彈能量獲取量提高 20%。成功保護英雄時恢復 8 點編隊權能。|Obtienes un 20% más de carga de bomba. Cada bloqueo que salve al héroe recupera 8 de poder de escuadrón.|Ganhe 20% mais carga de bomba. Cada bloqueio que salvar o herói recupera 8 de poder do esquadrão.
+성장 원정|Expedition|育成遠征|成长远征|成長遠征|Expedición|Expedição
+악몽분대 돌파전|Break the Nightmare Squad|悪夢部隊突破戦|突破梦魇小队|突破夢魘小隊|Asalto al Escuadrón Pesadilla|Ataque ao Esquadrão Pesadelo
+6성 아르콘과 출발합니다. 매 전투 뒤 보상 하나를 고르고, 42스테이지에서 악몽분대장과 맞섭니다.|Start with a 6★ Archon. Pick a reward after each victory and face the Nightmare Captain in stage 42.|星6のアルコンと出撃。戦闘ごとに報酬を選び、ステージ42で悪夢分隊長に挑みます。|与 6 星执政官出发。每场胜利后选择一项奖励，在第 42 关挑战梦魇队长。|與 6 星執政官出發。每場勝利後選擇一項獎勵，在第 42 關挑戰夢魘隊長。|Parte con un arconte de 6★. Elige una recompensa tras cada victoria y enfréntate al capitán pesadilla en la fase 42.|Parta com um arconte de 6★. Escolha uma recompensa a cada vitória e enfrente o capitão do pesadelo na fase 42.
+40스테이지 새 원정|Start expedition at stage 40|ステージ40から遠征を開始|从第 40 关开始远征|從第 40 關開始遠征|Iniciar expedición en la fase 40|Iniciar expedição na fase 40
+42스테이지 단독 연습 · 기존 훈련 편대|Practice stage 42 with your training squad|訓練編隊でステージ42を単独練習|用训练编队单独练习第 42 关|用訓練編隊單獨練習第 42 關|Practicar la fase 42 con el escuadrón de entrenamiento|Treinar a fase 42 com o esquadrão de treino
+다음 전투 준비|Prepare for battle|次の戦闘を準備|准备下一战|準備下一戰|Preparar el combate|Preparar o combate
+동료를 교대하거나 계약·보급에서 인장을 쓰세요. 같은 작전의 남은 목숨과 폭탄을 이어갑니다.|Swap allies or spend seals in Contracts & supplies. Your remaining lives and bombs carry over.|仲間を交代させたり、契約・補給で印章を使ったりできます。残機とボムは次の戦闘に引き継がれます。|可以更换队员，或在契约与补给中使用印章。剩余生命和炸弹会带入下一战。|可更換隊員，或在契約與補給中使用印章。剩餘生命和炸彈會帶入下一戰。|Intercambia aliados o gasta sellos en Contratos y suministros. Conservas las vidas y bombas restantes.|Troque aliados ou use selos em Contratos e suprimentos. Você conserva as vidas e bombas restantes.
+보상 선택으로 돌아가기|Back to rewards|報酬選択に戻る|返回奖励选择|返回獎勵選擇|Volver a las recompensas|Voltar às recompensas
+공명 인장 3개를 모았습니다. 계약·보급 › 동료 강화에서 아르콘을 7성으로 올릴 수 있습니다.|You have 3 resonance seals. Promote the Archon to 7★ in Contracts & supplies › Upgrade allies.|共鳴印章が3個集まりました。契約・補給の仲間強化でアルコンを星7に昇格できます。|已收集 3 枚共鸣印章。前往契约与补给的同伴强化，可将执政官升至 7 星。|已收集 3 枚共鳴印章。前往契約與補給的同伴強化，可將執政官升至 7 星。|Tienes 3 sellos de resonancia. Asciende al arconte a 7★ en Contratos y suministros, en la pestaña de mejora de aliados.|Você tem 3 selos de ressonância. Promova o arconte a 7★ na aba de melhoria de aliados em Contratos e suprimentos.
+저장하고 편대로|Save and return to squad|保存して編隊に戻る|保存并返回编队|儲存並返回編隊|Guardar y volver al escuadrón|Salvar e voltar ao esquadrão
+양쪽에서 교차하는 탄 뒤에 조준 예고가 뜹니다. 예고를 보고 옆으로 빠지세요.|After the crossfire, look for the aiming line and sidestep.|交差弾の後に照準の予告線が出ます。線を見て横に避けましょう。|两侧交叉弹过后会出现瞄准提示。看到提示后向侧面闪避。|兩側交叉彈過後會出現瞄準提示。看到提示後向側面閃避。|Tras el fuego cruzado aparecerá una línea de mira. Esquiva hacia un lado.|Após o fogo cruzado surge uma linha de mira. Desvie para o lado.
+분대장의 교차 사격이 빨라집니다. 공명 인장 3개로 7성 아르콘의 연계 권능을 열 수 있습니다.|The captain's crossfire gets faster. Three resonance seals unlock the 7★ Archon's linked power.|隊長の交差射撃が速くなります。共鳴印章3個で星7アルコンの連携権能を解放できます。|队长的交叉射击变快了。消耗 3 枚共鸣印章可解锁 7 星执政官的联动权能。|隊長的交叉射擊變快了。消耗 3 枚共鳴印章可解鎖 7 星執政官的連動權能。|El fuego cruzado del capitán se acelera. Con tres sellos de resonancia desbloqueas el poder combinado del arconte de 7★.|O fogo cruzado do capitão fica mais rápido. Três selos de ressonância liberam o poder combinado do arconte de 7★.
+3구간 원정 완주|Three-stage expedition complete|全3ステージの遠征を達成|三关远征完成|三關遠征完成|Expedición de tres fases completada|Expedição de três fases concluída
+원정 종료 · 영웅 격추|Expedition over · Hero down|遠征終了 · 英雄撃墜|远征结束 · 英雄被击落|遠征結束 · 英雄被擊落|Fin de la expedición · Héroe derribado|Fim da expedição · Herói abatido
+악몽분대장을 격파했습니다.|You defeated the Nightmare Captain.|悪夢分隊長を撃破しました。|已击败梦魇队长。|已擊敗夢魘隊長。|Has derrotado al capitán pesadilla.|Você derrotou o capitão do pesadelo.
+편대가 영웅의 마지막 목숨을 지키지 못했습니다.|Your squad lost the hero's last life.|英雄の最後の残機が尽きました。|编队没能守住英雄的最后一条生命。|編隊沒能守住英雄的最後一條生命。|Tu escuadrón perdió la última vida del héroe.|Seu esquadrão perdeu a última vida do herói.
+선택한 보상|Chosen rewards|選んだ報酬|已选奖励|已選獎勵|Recompensas elegidas|Recompensas escolhidas
+첫 보급 정거장에 도달하지 못했습니다.|The squad fell before the first supply stop.|最初の補給所に到達できませんでした。|未能到达第一座补给站。|未能抵達第一座補給站。|No llegaste al primer puesto de suministros.|Você não chegou ao primeiro posto de suprimentos.
+다음 원정은 40스테이지에서 새로운 보상 후보로 시작합니다.|Your next expedition starts at stage 40 with a new reward pool.|次の遠征は新しい報酬候補と共にステージ40から始まります。|下次远征将从第 40 关重新开始，奖励选项也会更新。|下次遠征將從第 40 關重新開始，獎勵選項也會更新。|La próxima expedición comienza en la fase 40 con nuevas recompensas posibles.|A próxima expedição começa na fase 40 com novas opções de recompensa.
+스테이지 {n} 이어하기|Resume stage {n}|ステージ{n}を再開|继续第 {n} 关|繼續第 {n} 關|Continuar la fase {n}|Continuar a fase {n}
+스테이지 {n} 클리어|Stage {n} cleared|ステージ{n}クリア|已通过第 {n} 关|已通過第 {n} 關|Fase {n} superada|Fase {n} concluída
+저장한 편대와 남은 목숨으로 전투를 이어갑니다.|Resume with your saved squad and remaining lives.|保存した編隊と残機で戦闘を再開します。|沿用已保存的编队和剩余生命继续战斗。|沿用已儲存的編隊和剩餘生命繼續戰鬥。|Continúa con tu escuadrón guardado y las vidas restantes.|Continue com o esquadrão salvo e as vidas restantes.
 합일 리부트|Hapil Reboot|合一リブート|合一重启|合一重啟|Hapil Reboot|Hapil Reboot
 편대 원정|Wing expedition|編隊遠征|编队远征|編隊遠征|Expedición de escuadrón|Expedição de esquadrão
 스토리 모드|Story mode|ストーリーモード|剧情模式|劇情模式|Modo historia|Modo história
@@ -45,7 +86,6 @@
 권능 충전 20% 가속|Power charges 20% faster|権能の充填速度 +20%|异能充能速度 +20%|異能充能速度 +20%|La habilidad carga un 20% más rápido|A habilidade carrega 20% mais rápido
 예고나 접근 중인 탄에 계약 권능 사용|Uses its contracted power against incoming fire or attack warnings|予告や接近する弾に契約権能を発動|在攻击预警或敌弹逼近时发动契约能力|在攻擊預警或敵彈逼近時發動契約能力|Activa su poder ante un aviso o disparos cercanos|Ativa o poder ao detectar avisos ou projéteis próximos
 영웅에게 향하는 탄을 요격|Intercepts shots aimed at the hero|英雄に向かう弾を迎撃|拦截飞向英雄的子弹|攔截飛向英雄的子彈|Intercepta balas dirigidas al héroe|Intercepta projéteis que vão atingir o herói
-방벽 2회 · 실제 엄호 3회로 잃은 목숨 1 회복|Blocks twice per shield. Three saves restore one lost life|防壁で2発防ぐ。3回救援で失った残機1回復|每道屏障可挡两发，成功掩护三次可恢复一条已损失的生命|每道屏障可擋兩發，成功掩護三次可恢復一條已損失的生命|Bloquea dos impactos por escudo. Tres rescates recuperan una vida perdida|Bloqueia dois impactos por escudo. Três resgates recuperam uma vida perdida
 방벽 1회로 영웅 엄호|Protects the hero against one hit per shield|防壁1回で英雄を援護|每道屏障为英雄挡下一击|每道屏障為英雄擋下一擊|Cada escudo protege al héroe de un impacto|Cada escudo protege o herói de um impacto
 전방|Front|前衛|前排|前排|Frente|Frente
 측면|Flank|側面|侧翼|側翼|Flanco|Flanco
@@ -61,7 +101,7 @@
 계약소|Contracts|契約所|契约所|契約所|Contratos|Contratos
 출격 보급|Sortie supplies|出撃補給|出击补给|出擊補給|Suministros de misión|Suprimentos de missão
 보급 확률|Supply odds|補給の確率|补给概率|補給機率|Probabilidades|Probabilidades
-세 릴에 각 문양이 ⅓ 확률로 나타납니다. 한 칸을 고정하고 다시 돌리면 모두 다름 2/9, 둘 일치 6/9, 셋 일치 1/9입니다.|Each symbol has a ⅓ chance on each reel. Hold one and spin again: no match 2/9, pair 6/9, triple 1/9.|各リールの各紋様は⅓。1枠を固定して回すと、全て異なる確率は2/9、2つ一致は6/9、3つ一致は1/9です。|每个符号在每个转轮上出现的概率均为⅓。锁定一个重转：全异2/9、两同6/9、三同1/9。|每個符號在每個轉輪上出現的機率均為⅓。鎖定一個重轉：全異2/9、兩同6/9、三同1/9。|Cada símbolo tiene ⅓ de probabilidad por carrete. Al fijar uno y repetir: distintos 2/9, pareja 6/9, trío 1/9.|Cada símbolo tem chance de ⅓ por bobina. Ao travar uma e girar de novo: sem par 2/9, par 6/9, trio 1/9.
+각 릴에는 네 문양이 같은 확률로 나옵니다. 한 칸을 고정하고 다시 돌리면 셋 일치 1/16, 둘 일치 9/16, 모두 다름 6/16입니다.|Each reel has four equally likely symbols. With one held, a respin yields three of a kind 1/16 of the time, a pair 9/16, and three different symbols 6/16.|各リールの4種類の絵柄は同じ確率で出ます。1枠固定で回し直すと、3つ一致は1/16、2つ一致は9/16、すべて異なる確率は6/16です。|每个转轮的四种图案出现概率相同。锁定一格重转后，三格相同的概率为 1/16，两格相同为 9/16，全部不同为 6/16。|每個轉輪的四種圖案出現機率相同。鎖定一格重轉後，三格相同的機率為 1/16，兩格相同為 9/16，全部不同為 6/16。|Cada carrete tiene cuatro símbolos equiprobables. Al fijar uno y repetir la tirada, la probabilidad de trío es 1/16, la de pareja 9/16 y la de tres símbolos distintos 6/16.|Cada rolo tem quatro símbolos com a mesma chance. Ao travar um deles e girar de novo, a chance de trinca é 1/16, de par é 9/16 e de três símbolos diferentes é 6/16.
 다음 전투에서 한 동료가 쓸 보급을 정합니다. 세 릴을 무료로 한 번 돌리세요.|Spin the three reels once for free to supply an ally for the next battle.|次の戦闘で仲間1人に補給します。3つのリールを1回無料で回せます。|免费转动三个转轮一次，为一名同伴准备下一场战斗的补给。|免費轉動三個轉輪一次，為一名同伴準備下一場戰鬥的補給。|Gira gratis los tres carretes para abastecer a un aliado en el próximo combate.|Gire as três bobinas de graça para abastecer um aliado na próxima batalha.
 확정 +1을 받을 동료를 선택하거나, 문양 한 칸을 고정해 나머지 두 칸을 다시 돌리세요.|Give any ally a guaranteed +1, or hold one symbol and spin the other two.|仲間1人に確定+1を渡すか、紋様1つを固定して残り2つを回してください。|选择一名同伴获得保底+1，或锁定一个符号后重转其余两个。|選擇一名同伴獲得保底+1，或鎖定一個符號後重轉其餘兩個。|Dale +1 garantizado a un aliado o fija un símbolo y vuelve a girar los otros dos.|Dê +1 garantido a um aliado ou trave um símbolo e gire os outros dois.
 이번 릴 보급은 0단계입니다.|No supply bonus this spin.|今回の補給は+0です。|本次补给加成为0。|本次補給加成為0。|Esta tirada no da bonificación.|Esta rodada não dá bônus.
@@ -179,11 +219,12 @@
   const bySource=new Map(terms.map(row=>[row[0],row]));
   const quote=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
   const fragments=new RegExp([...bySource.keys()].sort((a,b)=>b.length-a.length).map(quote).join('|'),'g');
-  const campaign=new URLSearchParams(location.search).get('campaign')==='1';
-  let lang='ko', native=null;
-  if(campaign){
-    try { native=root.parent.HapilI18n; lang=native?.lang||root.localStorage.getItem('hapil-arcade-lang-v43')||'ko'; }catch(_){}
-  }
+  const params=new URLSearchParams(location.search);
+  let native=null, lang=params.get('lang');
+  try {
+    if (params.get('campaign')==='1') native=root.parent.HapilI18n;
+    lang=native?.lang || lang || root.localStorage.getItem('hapil-arcade-lang-v43');
+  } catch (_) {}
   const col=Math.max(0,languages.indexOf(lang));
   function text(source){
     if(!col || typeof source!=='string' || !/[가-힣]/.test(source))return source;

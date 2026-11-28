@@ -1899,7 +1899,9 @@
       if(l.age<l.warn||l.age>=l.warn+l.active)continue;
       var px=p.x-l.x,py=p.y-l.y,along=px*cos+py*sin,dist=along<0&&!l.full?Math.sqrt(px*px+py*py):Math.abs(px*sin-py*cos);
       if(along>BEAM_LENGTH)continue;
-      if(dist<l.width*.5*(l.solid?1:BEAM_HIT)+p.r)struck=true; // 화면 덮기 띠(solid)는 보이는 폭 전체가 닿는다: 띠 사이 틈으로 빠져나가지 않게
+      if(dist<l.width*.5*(l.solid?1:BEAM_HIT)+p.r){
+        if(!s.party||!PARTY.guardLaser(s,l))struck=true;
+      } // 화면 덮기 띠(solid)는 보이는 폭 전체가 닿는다
       else if(!l.grazed&&dist<l.width*.5+GRAZE_MARGIN){l.grazed=true;grazed++;}
     }
     if(!s.lasers.length)s.warned=false;
@@ -2849,6 +2851,7 @@
     if(s.stage==='bossClear'){s.paceBossVolleys=false;return s;}
     var p=s.player,charge0=s.fills*GAUGE_FULL+s.gauge;if(!sweeping){bossSpecials(s);gentleNudge(s);}yieldMirror(s);composeLasers(s);var byFloor=updateFloor(s)|updateRisers(s),byBeam=updateLasers(s),byFigure=updateFigures(s),byBullet=updateBullets(s)|broodUpdate(s)|weaponsStep(s);
     var gaugeMult=s.hero==='seoha'&&!s.union?SEOHA_TRAINEE_GAUGE:(s.hero==='memory'||s.union)&&p.focus?FOCUS_GAUGE:1;
+    if(s.party&&s.party.healer&&!s.party.healer.reform)gaugeMult*=1.2;
     updateItems(s);
     if(gaugeMult>1){var gained=s.fills*GAUGE_FULL+s.gauge-charge0;if(gained>0){s.gauge+=gained*(gaugeMult-1);fillGauge(s);}}
     var touched=(byBeam||byFigure||byBullet||byFloor||wrathBodyTouch(s)||signatureOn&&nativeP2.hit(s))&&s.tick>=p.invulnerableUntil&&s.stage!=='won'&&s.stage!=='lost';

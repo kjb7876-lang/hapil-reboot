@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const colors = {hero:'#83eddb',archon:'#bea8f2',drone:'#79c7e5',angel:'#e3d99b'};
+  const colors = {hero:'#83eddb',archon:'#bea8f2',drone:'#79c7e5',angel:'#e3d99b',archer:'#9ed9bc'};
   const images = new Map();
   const TAU = Math.PI * 2;
   const spriteHeight = {memory: 38, seoha: 39, awakened: 40};
@@ -171,8 +171,8 @@
   }
 
 
-  const allyNames = {archon:'아르콘',drone:'드론',angel:'천사'};
-  const allySize = {archon:25,drone:27,angel:31};
+  const allyNames = {archon:'아르콘',drone:'드론',angel:'천사',archer:'성궁수'};
+  const allySize = {archon:25,drone:27,angel:31,archer:30};
   const actionName = {assist:'엄호',intercept:'요격', barrier:'방벽', control:'제어', rescue:'구원', reform:'복귀', link:'공명'};
 
   function actionColor(s, slot) {
@@ -261,6 +261,11 @@
   function shot(ctx,s,state) {
     const vx=s.vx || 0,vy=s.vy || -1,speed=Math.hypot(vx,vy)||1;
     const kind=s.kind || (s.slot===0?'hero':null);
+    if(kind==='archer' && window.HapilPartyCues){
+      ctx.save();ctx.globalAlpha=.82;
+      window.HapilPartyCues.arrow(ctx,s.x,s.y,Math.atan2(vy,vx));
+      ctx.restore();return;
+    }
     const length=s.boost ? 12 : kind==='drone' ? 9 : 6;
     ctx.save();
     ctx.strokeStyle=kind ? tint(kind) : actionColor(state,s.slot);
@@ -279,18 +284,16 @@
     ctx.globalAlpha=(reduced?.58:.92)*(1-t);ctx.lineWidth=1.15;
     const actor=state.players && state.players.find(p=>p.slot===slot);
     const startX=actor ? actor.x : e.x, startY=actor ? actor.y : e.y;
-    if(['assist','intercept','barrier','control','power','rescue','link'].includes(e.kind)){
+    if(['assist','intercept','barrier','control','power','rescue','link','guard','charge','heal'].includes(e.kind)){
       const hasEnd=Number.isFinite(e.endX)&&Number.isFinite(e.endY);
       const x0=hasEnd?e.x:startX, y0=hasEnd?e.y:startY, x1=hasEnd?e.endX:e.x, y1=hasEnd?e.endY:e.y;
-      if (Math.hypot(x1-x0,y1-y0)>6) {
-        if(e.kind!=='intercept')ctx.setLineDash([2,4]);
-        ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x1,y1);ctx.stroke();ctx.setLineDash([]);
+      if (!window.HapilPartyCues?.action(ctx,e.kind,x0,y0,x1,y1,reduced?.5:t)) {
+        if (Math.hypot(x1-x0,y1-y0)>6) {
+          ctx.setLineDash([2,4]);
+          ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x1,y1);ctx.stroke();ctx.setLineDash([]);
+        }
+        circle(ctx,x1,y1,3+(reduced?.4:t)*10);ctx.stroke();
       }
-      ctx.beginPath();
-      if(e.kind==='intercept'){
-        const d=3+t*4;
-        ctx.moveTo(x1-d,y1);ctx.lineTo(x1+d,y1);ctx.moveTo(x1,y1-d);ctx.lineTo(x1,y1+d);ctx.stroke();
-      }else{circle(ctx,x1,y1,3+(reduced?.4:t)*10);ctx.stroke();}
       if(showText && actionName[e.kind] && actor?.kind && allyNames[actor.kind]) {
         const tx=Math.min(329,Math.max(31,startX)), ty=Math.max(15,startY-20);
         const label=allyNames[actor.kind]+' '+actionName[e.kind];

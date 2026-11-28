@@ -1,10 +1,10 @@
 /* Contract marks, engineering plans and supplies for one pilot's AI formation. */
 (function (root) {
   'use strict';
-  const KINDS = ['archon', 'drone', 'angel'];
+  const KINDS = ['archon', 'drone', 'angel', 'archer'];
   const SLOTS = ['front', 'wing', 'rear'];
-  const names = {archon:'아르콘', drone:'드론', angel:'천사'};
-  const positions = {front:'전방', wing:'측면', rear:'후방'};
+  const names = {archon:'아르콘', drone:'드론', angel:'천사', archer:'성궁수'};
+  const positions = {front:'전방', wing:'측면', rear:'후방', bench:'대기'};
   const costByStar = {3:1, 4:2, 5:2, 6:3};
   const sealStages = [18,22,26,30,34,38,42,46];
   const keys = {trial:'hapil.ai-party.forge.v1', campaign:'hapil.ai-party.campaign.v1'};
@@ -17,12 +17,13 @@
   const fail = message => ({ok:false, message});
   const emptyReel = () => ({symbols:[], status:'idle', level:0, target:null, held:null});
   const firstSlot = (s, kind) => SLOTS.find(slot => s.board[slot] === kind);
+  const reserve = s => KINDS.find(kind => !firstSlot(s,kind));
   function randomSeed() {
     try { return root.crypto.getRandomValues(new Uint32Array(1))[0]; }
     catch (_) { return (Date.now() ^ Math.floor(Math.random()*4294967296)) >>> 0; }
   }
   function draw(s, count) {
-    // Use rejection sampling so three symbols really do have equal frequency.
+    // Use rejection sampling for equally likely shop and reel draws.
     const limit = 4294967296 - 4294967296 % count;
     do { s.rng = (Math.imul(s.rng, 1664525) + 1013904223) >>> 0; } while (s.rng >= limit);
     // The upper bits mix successive outputs even when count divides 2**32.
@@ -30,7 +31,7 @@
   }
   function shop(s) {
     return Array.from({length:5}, () => {
-      const kind = KINDS[draw(s,3)];
+      const kind = KINDS[draw(s,KINDS.length)];
       const rarity = draw(s,100);
       const qty = rarity < 70 ? 1 : rarity < 95 ? 2 : 3;
       return {id:++s.offerSeq, kind, qty, cost:qty, sold:false};
@@ -82,14 +83,21 @@
     if (given !== undefined) return given;
     try { return root.localStorage; } catch (_) { return null; }
   }
+  function addMissingArcher(s) {
+    if (s?.version!==1 || !s.units || typeof s.units!=='object' || Array.isArray(s.units) ||
+        Object.hasOwn(s.units,'archer')) return false;
+    s.units.archer={stars:1,copies:0,gear:0};
+    return true;
+  }
   function loadProfile(mode, storage) {
     storage=usableStorage(storage);
     let restored;
     try { restored=JSON.parse(storage.getItem(keys[mode])); } catch (_) {}
+    const migrated=addMissingArcher(restored);
     const s=validate(restored,mode) ? restored : fresh(randomSeed(),mode);
     if (storage) {
       saves.set(s,storage);
-      if (s !== restored) {
+      if (migrated || s !== restored) {
         try { storage.setItem(keys[mode],JSON.stringify(s)); } catch (_) {}
       }
     }
@@ -101,6 +109,7 @@
     if (storage) {
       try {
         const latest=JSON.parse(storage.getItem(keys[s.mode]));
+        addMissingArcher(latest);
         if (validate(latest,s.mode) && (latest.seed!==s.seed || latest.revision>s.revision)) {
           Object.assign(s,latest);
           if (!reconcile) return fail('다른 화면의 정비 기록을 가져왔습니다. 현재 선택을 다시 확인하세요.');
@@ -122,7 +131,8 @@
     return action(s,()=>{
       const previous=firstSlot(s,kind);
       if (previous===slot) return fail('이미 이 자리에 있습니다.');
-      s.board[previous]=s.board[slot]; s.board[slot]=kind;
+      if (previous) s.board[previous]=s.board[slot];
+      s.board[slot]=kind;
       return ok(names[kind]+' · '+positions[slot]+' 배치');
     });
   }
@@ -199,7 +209,7 @@
   function spin(s) {
     return action(s,()=>{
       if (s.reel.status!=='idle') return fail('이번 정비의 릴을 이미 돌렸습니다.');
-      const symbols=Array.from({length:3},()=>KINDS[draw(s,3)]);
+      const symbols=Array.from({length:3},()=>KINDS[draw(s,KINDS.length)]);
       s.reel.symbols=symbols;
       if (reelLevel(symbols)===3) return awardReel(s,symbols[0],3);
       s.reel.status='choose';
@@ -216,11 +226,11 @@
     return action(s,()=>{
       if (s.reel.status!=='choose' || !number(index,0,2)) return fail('고정할 릴 한 칸을 고르세요.');
       const kind=s.reel.symbols[index]; s.reel.held=index;
-      s.reel.symbols=s.reel.symbols.map((value,i)=>i===index?value:KINDS[draw(s,3)]);
+      s.reel.symbols=s.reel.symbols.map((value,i)=>i===index?value:KINDS[draw(s,KINDS.length)]);
       return awardReel(s,kind,reelLevel(s.reel.symbols));
     });
   }
-  function preview(s,kind,slot=firstSlot(s,kind)) {
+  function preview(s,kind,slot=firstSlot(s,kind)||'bench') {
     const unit=s.units[kind];
     return {kind,slot,stars:unit.stars,gear:unit.gear,supply:s.reel.target===kind && !s.reel.spent?s.reel.level:0,lineage:s.lineage};
   }
@@ -268,8 +278,10 @@
     const result=action(s,()=>{
       const previous=s.stageAllocation;
       if (options.resume && previous && previous.stage===stage && Array.isArray(previous.companions) &&
-          previous.companions.length===3 && previous.companions.every(c=>c && validKind(c.kind) && SLOTS.includes(c.slot) &&
+          previous.companions.length===SLOTS.length && previous.companions.every(c=>c && validKind(c.kind) && SLOTS.includes(c.slot) &&
             number(c.stars,1,7) && number(c.gear,0,2) && number(c.supply,0,3)) &&
+          new Set(previous.companions.map(c=>c.kind)).size===SLOTS.length &&
+          new Set(previous.companions.map(c=>c.slot)).size===SLOTS.length &&
           number(previous.seed,0,4294967295) && lineages.includes(previous.lineage)) {
         return ok('편대 복귀',{config:JSON.parse(JSON.stringify(previous))});
       }
@@ -313,7 +325,7 @@
     return action(s,()=>{ Object.assign(s,fresh()); return ok('새 훈련 편대를 준비했습니다.'); });
   }
   const api={names,positions,kinds:KINDS,slots:SLOTS,keys,fresh,load:storage=>loadProfile('trial',storage),
-    loadCampaign:storage=>loadProfile('campaign',storage),place,setLineage,buy,refresh,equip,promotion,promote,redeem,
+    loadCampaign:storage=>loadProfile('campaign',storage),reserve,place,setLineage,buy,refresh,equip,promotion,promote,redeem,
     reelLevel,spin,bank,reroll,preview,battleConfig,start,finish,campaignEnter,campaignClear,reset};
   root.PartyForge=api;
   if (typeof module!=='undefined' && module.exports) module.exports=api;

@@ -2,21 +2,25 @@
 (function (root) {
   'use strict';
   const prefKey = 'hapil.arcade.party-controls.v1';
-  let enabled = false, automatic = false;
+  const modes = ['gentle','normal','hell','handicap'];
+  let difficulty = 'normal', choices = {}, automatic = false;
   function readPrefs() {
     try {
-      const saved = JSON.parse(root.localStorage.getItem(prefKey));
-      if (saved) {
-        enabled = saved.enabled === true;
-        automatic = saved.auto === true;
+      const saved = JSON.parse(root.localStorage.getItem(prefKey)) || {};
+      choices = {};
+      for (const mode of modes) {
+        const value = saved.choices ? saved.choices[mode] : saved.enabled;
+        if (typeof value === 'boolean') choices[mode] = value;
       }
+      automatic = saved.auto === true;
     } catch (_) { /* Private browsing can still use the current session. */ }
   }
   function savePrefs() {
-    try { root.localStorage.setItem(prefKey, JSON.stringify({enabled, auto:automatic})); }
+    try { root.localStorage.setItem(prefKey, JSON.stringify({choices, auto:automatic})); }
     catch (_) { /* Keep the in-memory preference. */ }
   }
   readPrefs();
+  const enabled = () => choices[difficulty] ?? difficulty === 'hell';
   const forge = root.PartyForge;
   let ledger = null;
   function profile() {
@@ -25,10 +29,11 @@
     return ledger;
   }
   root.HapilPartyPilotAuto = () => automatic;
-  root.HapilPartyLoadout = () => enabled && forge ? forge.battleConfig(profile()) : null;
-  root.HapilPartyEnterStage = (stage, flags) => enabled && forge ? forge.campaignEnter(profile(), stage, flags) : null;
+  root.HapilPartyExplicitlyEnabled = () => choices[difficulty] === true;
+  root.HapilPartyLoadout = () => enabled() && forge ? forge.battleConfig(profile()) : null;
+  root.HapilPartyEnterStage = (stage, flags) => enabled() && forge ? forge.campaignEnter(profile(), stage, flags) : null;
   root.HapilPartyCampaignCleared = (stage, difficulty, runId) => {
-    if (enabled && forge) return forge.campaignClear(profile(), stage, difficulty, runId);
+    if (enabled() && forge) return forge.campaignClear(profile(), stage, difficulty, runId);
   };
 
   const doc = root.document;
@@ -39,9 +44,9 @@
   let opener;
   function sync() {
     if (!toggle) return;
-    toggle.checked = enabled;
+    toggle.checked = enabled();
     auto.checked = automatic;
-    const active = enabled && (typeof root.HapilPartyIsActive !== 'function' || root.HapilPartyIsActive());
+    const active = enabled() && (typeof root.HapilPartyIsActive !== 'function' || root.HapilPartyIsActive());
     el('party-auto-row').hidden = !active;
     el('party-pause-prepare').hidden = !active;
   }
@@ -51,21 +56,29 @@
     root.dispatchEvent(new CustomEvent('hapil-party-auto', {detail:automatic}));
     sync();
   }
+  root.HapilPartySetAuto = applyAuto;
   root.HapilPartyActivate = (options = {}) => {
-    enabled = true;
+    choices[difficulty] = true;
     ledger = null;
     applyAuto(typeof options.auto === 'boolean' ? options.auto : automatic);
   };
   if (!toggle) return; // The workshop also reads the same pilot preference.
   const launchUrl = new URL(root.location.href);
-  if (launchUrl.searchParams.get('expedition') === '1') {
-    enabled = true;
-    savePrefs();
-    launchUrl.searchParams.delete('expedition');
-    if (root.history) root.history.replaceState(root.history.state, '', launchUrl.href);
-  }
+  let launchExpedition = launchUrl.searchParams.get('expedition') === '1';
+  root.HapilPartySetDifficulty = next => {
+    if (!modes.includes(next)) return;
+    difficulty = next;
+    if (launchExpedition) {
+      choices[difficulty] = true;
+      savePrefs();
+      launchExpedition = false;
+      launchUrl.searchParams.delete('expedition');
+      if (root.history) root.history.replaceState(root.history.state, '', launchUrl.href);
+    }
+    sync();
+  };
   toggle.addEventListener('change', () => {
-    enabled = toggle.checked;
+    choices[difficulty] = toggle.checked;
     savePrefs();
     sync();
     root.dispatchEvent(new CustomEvent('hapil-party-preferences'));

@@ -11,6 +11,7 @@ window.PARTY_ART = {
   "archon": "media/arcade-v43-party/archon.webp",
   "drone": "media/arcade-v43-party/drone.webp",
   "angel": "media/arcade-v43-party/angel.webp",
+  "archer": "media/arcade-v43-party/archer.webp",
   "archonGravity": "media/arcade-v43-party/archonGravity.webp",
   "archonNeural": "media/arcade-v43-party/archonNeural.webp",
   "siege": "media/arcade-v43/bg-p6_siege.jpg",

@@ -4,7 +4,8 @@
   const W = 360, H = 520, FPS = 60, DT = 1 / FPS;
   const SHIELD_RADIUS = 66, SHIELD_TIME = 1.35, HIT_RADIUS = 3;
   const HERO_NAMES = {memory:'기억사수', seoha:'수련생 윤서하', awakened:'각성 윤서하'};
-  const KINDS = {archon:'아르콘', drone:'드론', angel:'천사'};
+  const KINDS = {archon:'아르콘', drone:'드론', angel:'천사', archer:'성궁수'};
+  const angelRecovery = '후방에서 탄을 막거나 다친 영웅을 전투 중 8초간 지키면 치유 1점. 3점으로 목숨 1 회복. 헬에서는 스테이지당 한 번';
   const POSITIONS = {front:[0,-67], wing:[64,-17], rear:[-40,26]};
   const RULES = {gentle:{lives:5,bombs:3,period:1.22,speed:.85,rank:2},normal:{lives:3,bombs:2,period:1,speed:1,rank:3},hell:{lives:2,bombs:1,period:.88,speed:1.12,rank:4}};
   const clamp = (x, lo, hi) => Math.max(lo, Math.min(hi, x));
@@ -16,14 +17,63 @@
   function describe(c) {
     if (!c || !KINDS[c.kind]) return '';
     const position = {front:'전방 · 고유 지원 재사용 25% 단축',wing:'측면 · 기본 사격 피해 45% 증가',rear:'후방 · 권능 충전 20% 가속'}[c.slot] || '';
-    const role = {archon:'예고나 접근 중인 탄에 계약 권능 사용',drone:'영웅에게 향하는 탄을 요격',angel:c.slot==='rear'?'방벽 2회 · 실제 엄호 3회로 잃은 목숨 1 회복':'방벽 1회로 영웅 엄호'}[c.kind];
-    const reading = c.slot === 'front' ? {archon:' · 자동 회피 장거리 예측',drone:' · 자동 회피 중거리 예측',angel:' · 자동 회피 근거리 예측'}[c.kind] : '';
-    return position + reading + '. ' + role + '.';
+    const role = {archon:'전방에서 탄과 조준 기술을 대신 막고 계약 권능 사용',drone:'다가오는 적탄을 조준해 요격',
+      archer:'적을 조준해 지속 사격 · 후방에서 화살 피해 60% 증가',angel:'권능 충전을 돕고 실제 엄호 시 게이지 회복'}[c.kind];
+    const reading = c.slot === 'front' ? {archon:' · 자동 회피 장거리 예측',drone:' · 자동 회피 중거리 예측',angel:' · 자동 회피 근거리 예측',archer:' · 자동 회피 근거리 예측'}[c.kind] : '';
+    return (position ? position + reading + '. ' : '') + role + (c.kind==='angel' && c.slot==='rear'?' · '+angelRecovery:'') + '.';
   }
   function makeActor(slot,x,y) {
     return {id:String(slot),slot,x,y,alive:true,bot:slot>0,auto:false, hits:0,evades:0,assists:0,bombsUsed:0,autoBombs:0,dmg:0,boost:0,invuln:0,
       respawn:0,recovery:0,focus:false,shotCd:.1+slot*.12,travel:0,moveTick:-60,unsafeTick:-1,shotsFired:0,distortions:0,
       casts:0,intercepts:0,blocks:0,rescues:0,disruptions:0,slowed:0,redirected:0,delayed:0};
+  }
+  // The previous training build already saved live flights. Their projectiles,
+  // remaining stocks and cooldowns can be retained while adding the new counters.
+  function restoreRoles(s) {
+    if (!s) return s;
+    s.boons.archerDamage ??= 1;
+    for (const p of s.allies) {
+      p.guards ??= 0; p.skillBlocks ??= 0; p.chargeGranted ??= 0;
+      if (p.kind === 'angel') p.careTicks ??= 0;
+      if (p.kind === 'archer') p.chargedArrow ??= false;
+      if (p.kind === 'archon') {
+        p.maxIntegrity = 2 + Math.floor((p.stars - 1) / 3) + (p.position === 'front' ? 2 : 0);
+        p.integrity ??= p.alive ? p.maxIntegrity : 0;
+        p.guardReady ??= 0;
+        p.excessWounds ??= 0;
+      }
+    }
+    return s;
+  }
+  function carryCompanions(s) {
+    const result={...s.bench};
+    for (const p of s.allies) {
+      result[p.kind]={reform:p.respawn,cooldown:p.cooldown,invuln:p.invuln,shot:p.shotCd,
+        guard:Math.max(0,(p.guardReady||0)-s.tick),wounds:p.kind==='archon'?p.maxIntegrity-p.integrity+p.excessWounds:0};
+      if (p.kind==='angel') result.angel.careTicks=p.careTicks;
+    }
+    return result;
+  }
+  function deployCompanions(s, previous) {
+    const duration=(value,max,initial=0)=>Number.isFinite(value)?clamp(value,0,max):initial;
+    s.bench={};
+    if (!previous) return;
+    for (const kind of Object.keys(KINDS)) {
+      const prior=previous[kind];
+      if (!prior || typeof prior!=='object') continue;
+      const p=s.allies.find(a=>a.kind===kind);
+      if (!p) {s.bench[kind]={...prior};continue;}
+      p.respawn=duration(prior.reform,4);p.alive=p.respawn<=0;
+      p.cooldown=duration(prior.cooldown,9,p.cooldown);
+      p.invuln=duration(prior.invuln,2);p.shotCd=duration(prior.shot,1,p.shotCd);
+      if (kind==='angel') p.careTicks=integer(prior.careTicks,0,8*FPS-1);
+      if (kind==='archon') {
+        p.guardReady=integer(prior.guard,0,150);
+        const wounds=integer(prior.wounds,0,6);
+        p.integrity=p.alive?Math.max(1,p.maxIntegrity-wounds):0;
+        p.excessWounds=Math.max(0,wounds-(p.maxIntegrity-p.integrity));
+      }
+    }
   }
   function create(config={}) {
     const heroKey = HERO_NAMES[config.hero] ? config.hero : 'memory';
@@ -55,10 +105,12 @@
     const seed=((config.seed==null?8243:config.seed)>>>0)||1;
     // Vary the opening flank and the crossing angle while retaining the stage's readable cadence.
     const opening=config.expedition ? {side:(seed & 1)?1:-1,offset:((seed>>>5)%17)-8} : {side:1,offset:0};
-    return {w:W,h:H,stage,difficulty,rules,boons,opening,tick:0,time:0,remaining:0,serial:0,rng:seed,
+    const s=restoreRoles({w:W,h:H,stage,difficulty,rules,boons,opening,tick:0,time:0,remaining:0,serial:0,rng:seed,
       phase:'battle',hero,allies,players:[hero,...allies],boss:{x:W/2,y:84,targetX:W/2,hp:maxHp,maxHp,alive:true},
       power:{charge,max:100,ready:charge>=100,used:0,autoUsed:0,lineage,active:0,policy:config.powerPolicy==='manual'?'manual':'danger'},linkUsed:false,
-      bullets:[],shots:[],warnings:[],fields:[],effects:[],volleys:[],nextTarget:0};
+      bullets:[],shots:[],warnings:[],fields:[],effects:[],volleys:[],nextTarget:0});
+    deployCompanions(s,config.carry?.companions);
+    return s;
   }
   function random(s) { s.rng = (Math.imul(s.rng, 1664525) + 1013904223) >>> 0; return s.rng / 4294967296; }
   function effect(s, kind, obj, slot, duration) {
@@ -89,6 +141,8 @@
   function hurt(s,p) {
     if(!p.alive||p.invuln>0)return;
     if(p.bot){
+      // The tank can hold the lane until its finite integrity is exhausted.
+      if(p.kind==='archon' && --p.integrity>0){p.hits++;p.invuln=.8;return;}
       p.hits++;p.disruptions++;p.respawn=2.6*s.boons.reformTime;p.alive=false;
       effect(s,'disrupt',p,p.slot,.7);return;
     }
@@ -141,12 +195,15 @@
   function strength(p) {return 1+(p.stars-1)*.095+p.gear*.08+p.supply*.06;}
   function fire(s,p) {
     if(!s.boss.alive)return;
-    const b=s.boss, spread=p.hero==='seoha'&&!p.focus?.09:.035;
-    const aimLimit=p.bot?(p.kind==='drone'?.67:.43):.23;
+    const b=s.boss, spread=p.kind==='archer'?.008:p.hero==='seoha'&&!p.focus?.09:.035;
+    const aimLimit=p.bot?(p.kind==='archer'?1.1:p.kind==='drone'?.67:.43):.23;
     const a=-Math.PI/2+clamp(Math.atan2(b.x-p.x,p.y-b.y),-aimLimit,aimLimit)+(p.shotsFired++%2?-1:1)*spread;
     const boost=!automated(p)&&p.boost>0;
-    const damage=p.bot?({archon:1.3,drone:2.5*s.boons.droneDamage,angel:1}[p.kind])*strength(p)*(p.position==='wing'?1.45:1):(boost?3:2);
-    s.shots.push({id:++s.serial,x:p.x,y:p.y-12,vx:Math.cos(a)*420,vy:Math.sin(a)*420,slot:p.slot,kind:p.kind,boost,damage});
+    const slotBonus=p.kind==='archer'&&p.position==='rear'?1.6:p.position==='wing'?1.45:1;
+    const damage=p.bot?({archon:1.1,drone:1.9*s.boons.droneDamage,angel:.75,archer:3.15*s.boons.archerDamage}[p.kind])*strength(p)*slotBonus:(boost?3:2);
+    const doubled=p.kind==='archer'&&p.chargedArrow;
+    if(doubled)p.chargedArrow=false;
+    s.shots.push({id:++s.serial,x:p.x,y:p.y-12,vx:Math.cos(a)*420,vy:Math.sin(a)*420,slot:p.slot,kind:p.kind,boost:boost||doubled,damage:damage*(doubled?2:1)});
   }
   function anchor(s,p) {
     if(!p.bot)return {x:s.boss.x,y:H*.81};
@@ -158,10 +215,19 @@
   const DIRS=[[0,0],[1,0],[-1,0],[0,-1],[0,1],[.707,-.707],[-.707,-.707],[.707,.707],[-.707,.707]];
   function pilotHorizon(front) {
     if(!front)return .07;
-    return {archon:.22,drone:.13,angel:.085}[front.kind]+(front.stars-1)*.008;
+    return {archon:.22,drone:.13,angel:.085,archer:.085}[front.kind]+(front.stars-1)*.008;
   }
   function autoMove(s,p) {
     const goal=anchor(s,p);
+    // Step into the predicted path in front of the pilot. Off-axis fire still passes.
+    if(p.kind==='archon' && p.position==='front' && s.tick>=p.guardReady && !p.invuln){
+      const b=threat(s,s.hero,1);
+      if(b&&b.vy>10&&b.y<=goal.y+20){
+        const at=(goal.y-b.y)/b.vy;
+        const x=b.x+b.vx*Math.max(0,at);
+        if(Math.abs(x-goal.x)<42) return {dx:clamp((x-p.x)/10,-1,1),dy:clamp((goal.y-p.y)/10,-1,1)};
+      }
+    }
     const front=s.allies.find(a=>a.position==='front'&&a.alive);
     const reach=p.bot ? .25+(p.stars-1)*.014 : pilotHorizon(front);
     const stride=p.bot?19:23;
@@ -190,9 +256,10 @@
     const t=((p.x-b.x)*b.vx+(p.y-b.y)*b.vy)/(speed2||1);
     return t>=0&&t<=horizon&&Math.hypot(b.x+b.vx*t-p.x,b.y+b.vy*t-p.y)<=b.r+margin ? t:Infinity;
   }
-  function threat(s,p,horizon) {
+  function threat(s,p,horizon,smallOnly=false) {
     let closest=null,when=Infinity;
     for(const b of s.bullets){
+      if(smallOnly && b.leader)continue;
       const t=incoming(b,p,horizon);
       if(t<when){closest=b;when=t;}
     }
@@ -204,9 +271,32 @@
   }
   function rewardRescue(s,owner) {
     const h=s.hero;
-    if(!h.alive||!h.lives||owner.kind!=='angel'||owner.position!=='rear'||h.lives>=h.maxLives)return;
+    if(!h.alive||!h.lives||!owner.alive||owner.kind!=='angel')return;
+    const charge=Math.min(8,s.power.max-s.power.charge);
+    if(charge>0){
+      s.power.charge+=charge;owner.chargeGranted+=charge;
+      s.power.ready=s.power.charge>=s.power.max;lineEffect(s,'charge',owner,h);
+    }
+    grantHealingPoint(s,owner);
+  }
+  function grantHealingPoint(s,owner) {
+    const h=s.hero;
+    if(!h.alive||h.lives<=0||owner.position!=='rear'||!owner.alive||h.lives>=h.maxLives||(s.difficulty==='hell'&&owner.rescues>=1))return;
     if(++h.fragments<3)return;
-    h.fragments=0;h.lives++;owner.rescues++;lineEffect(s,'rescue',owner,h);
+    h.fragments=0;h.lives++;owner.rescues++;lineEffect(s,'heal',owner,h);
+    if(h.lives===h.maxLives||s.difficulty==='hell')owner.careTicks=0;
+  }
+  function tendPilot(s,angel) {
+    const h=s.hero;
+    if(h.lives>=h.maxLives) {
+      h.fragments=0;
+      if(angel)angel.careTicks=0;
+      if(s.bench?.angel)s.bench.angel.careTicks=0;
+      return;
+    }
+    if(!s.boss.alive||!h.alive||!h.lives||h.respawn>0||!angel||angel.position!=='rear'||
+       !angel.alive||angel.respawn>0||(s.difficulty==='hell'&&angel.rescues>=1))return;
+    if(++angel.careTicks===8*FPS){angel.careTicks=0;grantHealingPoint(s,angel);}
   }
   function protect(s,f,b) {
     if((f.kind!=='barrier'&&f.kind!=='bomb')||f.capacity<=0||dist(f,b)>f.r+b.r)return false;
@@ -260,7 +350,7 @@
     const drone=s.allies.find(p=>p.kind==='drone'&&p.alive);
     const angel=s.allies.find(p=>p.kind==='angel'&&p.alive);
     const linked=!s.linkUsed&&archon&&drone&&(archon.stars===7||drone.stars===7);
-    const sanctuary=!s.linkUsed&&!linked&&angel&&(archon||drone)&&(angel.stars===7||archon?.stars===7||drone?.stars===7);
+    const sanctuary=!s.linkUsed&&!linked&&angel&&angel.stars===7&&s.allies.some(p=>p!==angel&&p.alive);
     const source=archon||s.hero;
     // A neural command entered between tells is held for the next announced volley.
     if(!activate(s,source,true,linked))return false;
@@ -268,26 +358,39 @@
     else if(sanctuary){
       s.linkUsed=true;angel.link=true;angel.casts++;
       field(s,'barrier',angel,s.hero.x,s.hero.y-12,49,1.7,2+s.boons.wardCapacity);
-      lineEffect(s,'link',angel,archon||drone);
+      lineEffect(s,'link',angel,s.hero);
+    }else if(!s.linkUsed){
+      const archer=s.allies.find(p=>p.kind==='archer'&&p.alive&&p.stars===7);
+      if(archer&&s.allies.some(p=>p!==archer&&p.alive)){
+        s.linkUsed=true;archer.link=true;archer.chargedArrow=true;lineEffect(s,'link',archer,s.hero);
+      }
     }
     s.power.charge=0;s.power.ready=false;s.power.used++;return true;
   }
   function support(s,p) {
     if(!s.boss.alive&& !s.bullets.length)return;
     const h=s.hero;
-    if(!h.alive||p.cooldown>0)return;
-    const near=threat(s,h,p.kind==='angel'?.7:1.55);
+    if(!h.alive||p.cooldown>0||p.kind==='archer')return;
+    const near=threat(s,h,p.kind==='angel'?.7:1.55,p.kind==='drone');
     const cadence=(p.position==='front'?.75:1)/(1+(p.stars-1)*.048+p.gear*.04+p.supply*.025);
     if(p.kind==='archon'){
       if((near||s.warnings.length)&&activate(s,p,false))p.cooldown=8*cadence*s.boons.archonCooldown;
     }else if(p.kind==='drone'){
       if(!near||dist(near,p)>132+3*p.stars||s.fields.some(f=>f.kind==='barrier'&&f.capacity>0&&dist(f,h)<f.r))return;
       s.bullets.splice(s.bullets.indexOf(near),1);
-      p.casts++;p.intercepts++;p.assists++;lineEffect(s,'intercept',p,near);p.cooldown=4.8*cadence;
+      p.casts++;p.intercepts++;p.assists++;lineEffect(s,'intercept',p,near);p.cooldown=2.1*cadence;
     }else if(near&&h.invuln<=0&&dist(h,p)<120){
       field(s,'barrier',p,h.x,h.y-12,35+p.stars*1.2,1.15,(p.position==='rear'?2:1)+s.boons.wardCapacity);
       p.casts++;lineEffect(s,'barrier',p,h);p.cooldown=8.5*cadence;
     }
+  }
+  function guard(s,tank,b){
+    if(!tank||!tank.alive||tank.invuln>0||s.hero.invuln>0||s.tick<tank.guardReady||tank.y>=s.hero.y-8||b.y>s.hero.y)return false;
+    if(Math.abs(b.x-tank.x)>20+b.r||Math.abs(b.y-tank.y)>18+b.r||incoming(b,s.hero,1,HIT_RADIUS+2)===Infinity)return false;
+    tank.guardReady=s.tick+150;tank.guards++;
+    if(b.leader)tank.skillBlocks++;
+    lineEffect(s,'guard',tank,b);hurt(s,tank);
+    return true;
   }
   // The centre spear has to reach the pilot's depth. Clearing all three rays early counts as a read.
   function checkAimedDodge(s, read, bullet) {
@@ -309,7 +412,13 @@
     const h=s.hero;
     h.auto=controls.auto===true;
     const rear=s.allies.some(p=>p.alive&&p.position==='rear');
-    s.power.charge=Math.min(100,s.power.charge+(rear?1.2:1)*s.boons.powerCharge*6*DT);
+    const medic=s.allies.find(p=>p.kind==='angel');
+    const angel=medic?.alive ? medic : null;
+    const flow=(rear?1.2:1)*s.boons.powerCharge*6*DT;
+    const beforeBonus=Math.min(s.power.max,s.power.charge+flow);
+    s.power.charge=Math.min(s.power.max,beforeBonus+(angel?flow*.2:0));
+    if(angel)angel.chargeGranted+=s.power.charge-beforeBonus;
+    tendPilot(s,medic);
     s.power.ready=s.power.charge>=100;s.power.active=Math.max(0,s.power.active-DT);
     for(const p of s.players){
       p.invuln=Math.max(0,p.invuln-DT);p.respawn=Math.max(0,p.respawn-DT);
@@ -317,13 +426,14 @@
       if(p.bot){
         p.cooldown=Math.max(0,p.cooldown-DT);
         if(!p.alive&&p.respawn<=0){
-          p.alive=true;const goal=anchor(s,p);p.x=goal.x;p.y=goal.y;p.invuln=1.15;effect(s,'reform',p,p.slot,.6);
+          p.alive=true;if(p.kind==='archon'){p.integrity=p.maxIntegrity;p.excessWounds=0;}
+          const goal=anchor(s,p);p.x=goal.x;p.y=goal.y;p.invuln=1.15;effect(s,'reform',p,p.slot,.6);
         }
       }
       if(!p.alive||p.respawn>0)continue;
       // A given AI formation makes one steering decision per 6 ticks; a weak automatic pilot reacts less often.
       const leader=s.allies.find(a=>a.position==='front'&&a.alive);
-      const reaction=p.bot?6:leader?{archon:8,drone:17,angel:23}[leader.kind]:26;
+      const reaction=p.bot?6:leader?{archon:8,drone:17,angel:23,archer:23}[leader.kind]:26;
       if(automated(p) && (!p.steer||s.tick%reaction===p.slot)){
         p.steer=autoMove(s,p);
       }
@@ -340,7 +450,7 @@
       p.shotCd-=DT;
       if(p.shotCd<=0){
         if(p.recovery<=0)fire(s,p);
-        p.shotCd=p.recovery>0?0:p.shotCd+(p.bot?{archon:.68,drone:.48,angel:.85}[p.kind]:.22);
+        p.shotCd=p.recovery>0?0:p.shotCd+(p.bot?{archon:.68,drone:.55,angel:.85,archer:.53}[p.kind]:.22);
       }
     }
     h.bombQueued=false;
@@ -361,9 +471,11 @@
       return b.y>=-12&&b.x>-12&&b.x<W+12;
     });
     const volleys=new Map(s.volleys.map(v=>[v.id,v]));
+    const tank=s.allies.find(a=>a.kind==='archon'&&a.position==='front');
     s.bullets=s.bullets.filter(b=>{
       const rate=adjustments(s,b);b.x+=b.vx*DT*rate;b.y+=b.vy*DT*rate;
       if(s.fields.some(f=>protect(s,f,b)))return false;
+      if(guard(s,tank,b))return false;
       const v=volleys.get(b.volley);
       if(b.leader&&v&&v.read)checkAimedDodge(s,v.read,b);
       for(const p of s.players){
@@ -409,7 +521,7 @@
   }
 
   function snapshot(s) {
-    const players=s.players.map(p=>pick(p,'id slot name hero kind position stars gear supply bot auto x y alive lives maxLives bombs hits bombsUsed autoBombs evades assists dmg boost invuln respawn recovery focus attackLevel bombLevel fragments casts intercepts blocks rescues disruptions slowed redirected delayed link'));
+    const players=s.players.map(p=>pick(p,'id slot name hero kind position stars gear supply bot auto x y alive lives maxLives bombs hits bombsUsed autoBombs evades assists dmg boost invuln respawn recovery focus attackLevel bombLevel fragments casts intercepts blocks rescues disruptions slowed redirected delayed link shotsFired guards skillBlocks chargeGranted integrity maxIntegrity'));
     return {w:W,h:H,time:round(s.time),tick:s.tick,stage:s.stage,difficulty:s.difficulty,phase:s.phase,hero:players[0],allies:players.slice(1),players,power:{...s.power},linkUsed:s.linkUsed,
       boss:pick(s.boss,'x y hp maxHp alive'),
       shots:s.shots.map(b=>pick(b,'id x y vx vy slot kind boost')),
@@ -418,6 +530,6 @@
       fields:s.fields.map(f=>pick(f,'id kind x y r timeLeft duration slot capacity')),
       effects:s.effects.map(e=>pick(e,'id kind x y slot life duration endX endY'))};
   }
-  root.WingSim={create,step,snapshot,describe};
+  root.WingSim={create,step,snapshot,describe,restoreRoles,carryCompanions,angelRecovery};
   if(typeof module!=='undefined'&&module.exports)module.exports=root.WingSim;
 })(typeof window==='undefined'?globalThis:window);

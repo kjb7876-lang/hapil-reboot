@@ -8,3 +8,21 @@
 
 #applied-pick{font-size:10px;font-weight:600;color:var(--mint);max-width:37vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .launch-row+.switch{display:inline-flex;min-height:44px;font-weight:650}
+
+.position { overflow-wrap:anywhere; }
+.position[data-pos="reserve"] {
+  grid-column:1/-1;
+  display:grid;
+  grid-template-columns:44px 1fr auto;
+  grid-template-rows:auto auto;
+  column-gap:9px;
+  align-items:center;
+  padding:6px 10px;
+  background:#1b2d32;
+}
+.position[data-pos="reserve"] .portrait { grid-column:1;grid-row:1/3;height:37px;margin:0; }
+.position[data-pos="reserve"] .place { grid-column:2;grid-row:1; }
+.position[data-pos="reserve"] .role { grid-column:2;grid-row:2; }
+.position[data-pos="reserve"] .rank { grid-column:3;grid-row:1/3;text-align:right; }
+.unit-picks { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.unit-picks button { overflow-wrap:anywhere; }

@@ -808,7 +808,7 @@
     var next=result.stage+1,end=next>s.lastStage,skipped=devMode||rushStage;
     if(skipped){campaign.lose(s.expeditionId,next);s.expeditionId=null;return;}
     var carry=end?null:carryPilot(s,next,Arcade.STAGES[next].first);
-    var run=campaign.clear(s.expeditionId,result.stage+1,carry);
+    var run=campaign.clear(s.expeditionId,result.stage+1,carry,s.party.allies.map(function(a){return a.kind;}));
     s.expeditionRest=!!run&&run.id===s.expeditionId&&run.status==='rest';
   }
   function arrive(s,fromPart){
@@ -846,18 +846,37 @@
   }
   function preparePartySprites(){
     if(!partyModule)return;
-    ['archon','archonGravity','archonNeural','drone','angel'].forEach(function(kind){
+    ['archon','archonGravity','archonNeural','drone','angel','archer'].forEach(function(kind){
       if(partySprites[kind])return;
       var image=new Image();partySprites[kind]=image;image.src='media/arcade-v43-party/'+kind+'.webp';
     });
   }
+  function discardSupersededSortie(){
+    var dialog=$('arcade-party-dialog');
+    state=null;
+    if(dialog&&dialog.open)dialog.close();
+    loadProgress();goTitle();
+  }
+  global.addEventListener('storage',function(e){
+    if(!state||!state.expeditionId||e.key!==expeditionRules.keys.campaign)return;
+    var latest=campaign.read();
+    if(!latest||latest.id!==state.expeditionId){discardSupersededSortie();return;}
+    if(mode==='partyRest'&&(latest.status!=='rest'||latest.stage!==state.stageIndex))discardSupersededSortie();
+    else if(!state.expeditionRest&&latest.status!=='battle'&&mode!=='result')discardSupersededSortie();
+  });
   global.HapilPartyIsActive=function(){return !!(state&&state.party&&(mode==='playing'||mode==='paused'));};
   global.addEventListener('hapil-party-auto',function(e){if(state&&state.party)state.party.auto=e.detail===true;if(mode==='title'&&progress)refreshTitle();});
   global.addEventListener('hapil-party-preferences',function(){if(mode==='title'&&progress)refreshTitle();});
   function bankSap(s){if(!Grove||!grove||!s||!s.groveRun||devMode)return 0;var got=Grove.earn(grove,s.groveRun,s.score);if(got)Grove.save(grove);return got;}
   function recordResult(result){
     if(!result||state.bossOnly||state.spellOnly)return;
-    if(state.party&&!devMode&&!rushStage&&global.HapilPartyCampaignCleared)global.HapilPartyCampaignCleared(result.stage+1,state.mode||state.difficulty,state.expeditionId);
+    if(state.expeditionId){
+      var run=campaign.read();
+      if(!run||run.id!==state.expeditionId||run.stage!==result.stage+1||run.status!=='battle')return;
+    }
+    if(state.party&&!devMode&&!rushStage&&global.HapilPartyCampaignCleared){
+      global.HapilPartyCampaignCleared(result.stage+1,state.mode||state.difficulty,state.expeditionId);
+    }
     progress=Progress.record(progress,result,state.mode||state.difficulty);if(Chapters)chapterLog=Chapters.noteClear(chapterLog,Arcade.STAGES,progress,result.stage,state.mode||state.difficulty);saveProgress();
   }
   function recordBestScore(s){
@@ -928,10 +947,15 @@
       else if(e==='formShift'){beginFormShift(s);wantFx(sheetWho(s));}
       else if(e==='plain'){var ppi=shownPhase(s);if(ppi&&ppi.count>1&&s.entranceAll)showBanner(localText('PHASE {n}/{total}',{n:ppi.no,total:ppi.count}),phaseLabel(s,false),false);}
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,localText('제{n}부 · STAGE {stage}',{n:g.part,stage:s.stageIndex+1}));play('seal');}}
-      else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);bankSap(s);settleExpedition(s,r);showToast(r);rushStage=false;}
+      else if(e==='stageClear'){
+        var r=s.results[s.results.length-1],live=s.expeditionId&&campaign.read();
+        if(s.expeditionId&&(!live||live.id!==s.expeditionId||live.stage!==r.stage+1||live.status!=='battle')){discardSupersededSortie();return;}
+        recordResult(r);bankSap(s);settleExpedition(s,r);showToast(r);rushStage=false;
+      }
       else if(e==='map'){
         if(s.expeditionRest&&openPartyRest(s))continue;
-        if(s.party&&global.HapilPartyEnterStage)partyModule.refit(s,global.HapilPartyEnterStage(s.stageIndex+1));
+        if(s.expeditionRest){discardSupersededSortie();return;}
+        if(s.party&&!s.expeditionId&&global.HapilPartyEnterStage)partyModule.refit(s,global.HapilPartyEnterStage(s.stageIndex+1));
         arrive(s,s.results.length?Arcade.STAGES[s.results[s.results.length-1].stage].part:0);
       }
       else if(e==='entrance'){if(storyArrivalActor!==s.boss.actor)play('warning');storyArrivalActor='';wantFx(sheetWho(s));showBanner(s.boss.name,s.boss.mid?'중간보스':'보스');} // 본보스 컷인은 enter() 전, 중간보스는 기존 입장만.
@@ -2293,7 +2317,7 @@
     offsetX=offsetY=0;if(shake>0){if(settings.screenShake){var amplitude=shake*(compact?.35:.7);offsetX=(Math.random()-.5)*amplitude;offsetY=(Math.random()-.5)*amplitude;}shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();if(hudOut!=='mobile')drawTopShade();drawVeil(s);drawCrowdWash(s);if(Cues)Cues.drawUnder(ctx,s,Arcade,Ink);drawFigures(s,true);drawEmblems(s);drawIllusions(s);drawBoss(s);drawSkillFx(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawCardCast(s);drawPatternCue(s);drawShots(s);if(s.party)partyModule.draw(ctx,s,partySprites);drawDrifts();drawInks();drawParticles();drawFlashes();drawItems(s);if(HeroFx&&HeroFx.drawUnder)HeroFx.drawUnder(ctx,s,visual);if(Spirit)Spirit.drawWorld(ctx,s,Arcade,Ink,mode==='playing',{quiet:!!toast,dim:s.formHold>s.tick,heart:itemSprites[0]});if(Cues)Cues.drawWorld(ctx,s,Arcade,Ink);drawLasers(s);drawFigures(s);if(Phase2)Phase2.paint(ctx,s);drawRipples(s);drawHeroLight(s);drawStormHalos(s);drawBullets(s);drawThrown(s);drawLaserCues(s);if(Cues)Cues.drawOver(ctx,s,Arcade,Ink);drawNudgeCue(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink))drawPlayer(s);if(s.union||!(flash>0&&Ink))drawHitbox(s);if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);drawFormShift(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();if(hudOut!=='mobile')drawTopShade();drawVeil(s);drawCrowdWash(s);if(Cues)Cues.drawUnder(ctx,s,Arcade,Ink);drawFigures(s,true);drawEmblems(s);drawIllusions(s);drawBoss(s);drawSkillFx(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawCardCast(s);drawPatternCue(s);if(s.party){if(Ink&&Ink.raw)Ink.raw(1);partyModule.draw(ctx,s,partySprites);if(Ink&&Ink.raw)Ink.raw(-1);}drawShots(s);drawDrifts();drawInks();drawParticles();drawFlashes();drawItems(s);if(HeroFx&&HeroFx.drawUnder)HeroFx.drawUnder(ctx,s,visual);if(Spirit)Spirit.drawWorld(ctx,s,Arcade,Ink,mode==='playing',{quiet:!!toast,dim:s.formHold>s.tick,heart:itemSprites[0]});if(Cues)Cues.drawWorld(ctx,s,Arcade,Ink);drawLasers(s);drawFigures(s);if(Phase2)Phase2.paint(ctx,s);drawRipples(s);drawHeroLight(s);drawStormHalos(s);drawBullets(s);drawThrown(s);drawLaserCues(s);if(Cues)Cues.drawOver(ctx,s,Arcade,Ink);drawNudgeCue(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink))drawPlayer(s);if(s.union||!(flash>0&&Ink))drawHitbox(s);if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);drawFormShift(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);
     // 스펠 선언 연출(사용자 11-18 "패턴·공격 미장센 강화"): 가장자리부터 먹이 번져 화면이 잠깐 조여졌다가 걷힌다. 보스에 시선이 모였다가 탄이 펼쳐진다(탄·영웅은 이 위에 그대로 읽힌다).
     if(spellDim>0&&Ink&&s.boss&&s.boss.present){var sd=spellDim,sx0=finite(s.boss.x,W/2),sy0=finite(s.boss.y,H/3),sg=ctx.createRadialGradient(sx0,sy0,H*.22,sx0,sy0,H*.85);if(Ink.raw)Ink.raw(1);sg.addColorStop(0,'rgba(24,20,16,0)');sg.addColorStop(.55,'rgba(24,20,16,'+(sd*.2)+')');sg.addColorStop(1,'rgba(24,20,16,'+(sd*.68)+')');ctx.fillStyle=sg;ctx.fillRect(0,0,W,H);if(Ink.raw)Ink.raw(-1);spellDim=Math.max(0,spellDim-Math.min(.05,elapsed)/1.6);}
@@ -2513,14 +2537,14 @@
   function start(run){
     clearInput();if(fx&&fx.reset)fx.reset();unlockAudio();
     var quiet=!!(run&&run.quiet);storyQuiet=quiet;story=null;storyArrivalActor='';pauseReturn='playing';
-    var continued=run&&run.expedition,expedition=null;
+    var continued=run&&run.expedition,soloCheckpoint=run&&run.soloCheckpoint,expedition=null;
     var grown=run&&run.grown; // 이어하기와 재도전에서 물려받는 공격·필살 성장
     var chapterPart=run&&Number.isInteger(run.chapter)?run.chapter:0;
     run={chapter:chapterPart,stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),spellOnly:!!(run&&run.spellOnly&&Number.isInteger(run.segment)),segment:run&&run.segment,carry:run&&run.carry,practice:!!(run&&run.practice),hero:heroId(run&&run.hero||selectedHero)};
     lastRun=run;lastSpell=run.spellOnly?lastSpell:null;oneCreditEligible=run.stage===0&&!run.bossOnly&&!run.spellOnly&&!Number.isInteger(run.segment)&&!run.carry&&!run.practice&&!quiet&&!devMode;
     var options={ability:abilityFor(run.hero),entranceAll:true,difficulty:difficulty,seed:fixedSeed(difficulty,run.stage),stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,spellOnly:run.spellOnly,growth:true,pacing:!quiet,rhythm:!quiet,fruits:Grove&&grove?Grove.equipped(grove):0,bulletSpeed:settings.handicapSpeed}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
     if(run.chapter&&Chapters){var ch=Chapters.list(Arcade.STAGES)[run.chapter-1];if(ch&&ch.last>=run.stage)options.stages=ch.last-run.stage+1;}
-    if(partyModule&&!quiet&&!devMode&&!run.bossOnly&&!run.spellOnly&&(!Number.isInteger(run.segment)||run.carry)&&global.HapilPartyLoadout&&global.HapilPartyLoadout()){
+    if(partyModule&&!quiet&&!devMode&&!soloCheckpoint&&!run.bossOnly&&!run.spellOnly&&(!Number.isInteger(run.segment)||run.carry)&&global.HapilPartyLoadout&&global.HapilPartyLoadout()){
       options.partyAuto=!!(global.HapilPartyPilotAuto&&global.HapilPartyPilotAuto());
       if(campaign&&global.HapilPartyStop){
         expedition=continued||campaign.start({startStage:run.stage+1,endStage:options.stages?run.stage+options.stages:Arcade.STAGES.length,hero:run.hero,difficulty:difficulty,auto:options.partyAuto});
@@ -2700,6 +2724,7 @@
   function setDifficulty(next){
     if(!Arcade.DIFFICULTY[next])next='normal';difficulty=next;var rule=Object.assign({},Arcade.DIFFICULTY[difficulty]);if(Arcade.livesFor)rule.hp=Arcade.livesFor(difficulty,compact,true);$('difficulty-note').textContent=T(NOTES[difficulty],{hp:rule.hp,bombs:rule.bombs,minutes:Arcade.PACING&&Arcade.PACING[difficulty]?Arcade.PACING[difficulty].nominalMinutes:({gentle:60,normal:90,hell:120})[difficulty]});
     document.querySelectorAll('[data-difficulty]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.difficulty===difficulty));});
+    if(global.HapilPartySetDifficulty)global.HapilPartySetDifficulty(difficulty);
     syncHandicapSpeed();
   }
   /* 핸디캡 적 탄속 배율(사용자 11-26): 핸디캡을 고르면 난이도 줄 아래에 ×1~×6 줄이 열린다. 값은 플레이 설정에 저장된다 */
@@ -2866,7 +2891,7 @@
         start({expedition:run,stage:stage,segment:seg,hero:run.hero,chapter:carry&&carry.chapter,practice:true,carry:{},grown:carry});return;
       }
       var mid=midway();
-      start(mid?{practice:true,stage:mid.stage,segment:mid.seg===Arcade.STAGES[mid.stage].first?undefined:mid.seg,hero:heroId(mid.hero),carry:{hits:mid.hits,bombs:mid.bombs},grown:mid}
+      start(mid?{practice:true,soloCheckpoint:!(global.HapilPartyExplicitlyEnabled&&global.HapilPartyExplicitlyEnabled()),stage:mid.stage,segment:mid.seg===Arcade.STAGES[mid.stage].first?undefined:mid.seg,hero:heroId(mid.hero),carry:{hits:mid.hits,bombs:mid.bombs},grown:mid}
         :{practice:true,stage:Progress.resume(progress),hero:journeyHero});
     });
     $('arcade-start').addEventListener('click',function(){chooseHero({stage:0});});

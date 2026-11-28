@@ -15,6 +15,16 @@
     failure: ['현재 원정 상태를 확인한 뒤 다시 선택하세요.','Check this run and try your selection again.','遠征の状態を確認し、もう一度選んでください。','请确认远征状态并重新选择。','請確認遠征狀態並重新選擇。','Comprueba el estado de la expedición y vuelve a elegir.','Confira o estado da expedição e escolha novamente.']
   };
   const rewards = {
+    'archer-string': {
+      role:'archer',
+      label:['별빛 활시위','Starlight bowstring','星明かりの弓弦','星光弓弦','星光弓弦','Cuerda estelar','Corda estelar'],
+      effect:['성궁수의 화살 피해 +12%','Star Archer arrow damage +12%','星弓の射手の矢の威力 +12%','星弓手的箭矢伤害 +12%','星弓手的箭矢傷害 +12%','Daño de las flechas de la arquera estelar +12%','Dano das flechas da arqueira estelar +12%']
+    },
+    'supply-quiver': {
+      role:'archer',
+      label:['은빛 화살통','Silver quiver','銀の矢筒','银色箭袋','銀色箭袋','Carcaj de plata','Aljava de prata'],
+      effect:['성궁수의 화살 피해 +24%','Star Archer arrow damage +24%','星弓の射手の矢の威力 +24%','星弓手的箭矢伤害 +24%','星弓手的箭矢傷害 +24%','Daño de las flechas de la arquera estelar +24%','Dano das flechas da arqueira estelar +24%']
+    },
     'drone-coil': {
       role:'drone',
       label:['동력 코일','Drive coil','動力コイル','动力线圈','動力線圈','Bobina motriz','Bobina motriz'],
@@ -78,7 +88,7 @@
   };
   const fallbackArt = {
     archon:'media/arcade-v43-party/archon.webp', drone:'media/arcade-v43-party/drone.webp',
-    angel:'media/arcade-v43-party/angel.webp', memory:'media/gunner.webp'
+    angel:'media/arcade-v43-party/angel.webp', archer:'media/arcade-v43-party/archer.webp', memory:'media/gunner.webp'
   };
   const doc = root.document;
   let dialog = null;
@@ -213,5 +223,11 @@
     panel.append(content,footer); shell.append(panel); doc.body.append(shell);
     paint(); shell.showModal(); title.focus({preventScroll:true});
   }
-  root.HapilPartyStop = {open,hide,close,visible:() => !!dialog?.open};
+  function cardText(id, lang) {
+    const info = rewards[id];
+    if (!Object.hasOwn(rewards,id)) return null;
+    const col = Math.max(0,languages.indexOf(lang));
+    return {name:info.label[col],detail:info.effect[col]};
+  }
+  root.HapilPartyStop = {open,hide,close,cardText,visible:() => !!dialog?.open};
 })(window);

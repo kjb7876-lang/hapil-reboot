@@ -8,6 +8,7 @@
   });
   const permanent = [
     ['drone-coil', '동력 코일', '드론 사격 피해 +12%', 'drone', 'droneDamage', 3, .12],
+    ['archer-string', '별빛 활시위', '성궁수의 화살 피해 +12%', 'archer', 'archerDamage', 3, .12],
     ['archon-clock', '예지 회로', '아르콘 지원 기술 대기시간 −8%', 'archon', 'archonCooldown', 3, -.08],
     ['angel-ward', '수호 깃털', '천사 방어막이 탄을 1발 더 막음', 'angel', 'wardCapacity', 2, 1],
     ['power-cell', '공명 축전지', '영웅 권능 충전 속도 +12%', 'hero', 'powerCharge', 3, .12],
@@ -16,6 +17,7 @@
   ];
   const supplies = [
     ['supply-ammo', '관통 탄창', '다음 스테이지에서 드론 사격 피해 +24%', 'drone', 'droneDamage', 1, .24],
+    ['supply-quiver', '은빛 화살통', '다음 스테이지에서 성궁수의 화살 피해 +24%', 'archer', 'archerDamage', 1, .24],
     ['supply-clock', '예지 동력팩', '다음 스테이지에서 아르콘 지원 기술 대기시간 −16%', 'archon', 'archonCooldown', 1, -.16],
     ['supply-ward', '수호 부적', '다음 스테이지에서 천사 방어막이 탄을 1발 더 막음', 'angel', 'wardCapacity', 1, 1],
     ['supply-charge', '예비 전지', '다음 스테이지에서 영웅 권능 충전 속도 +24%', 'hero', 'powerCharge', 1, .24],
@@ -51,7 +53,7 @@
     return run.picks.filter(p => p.card === id).length;
   }
   function effects(run) {
-    const result = {droneDamage:1, archonCooldown:1, wardCapacity:0, powerCharge:1, reformTime:1, evadeSeconds:0};
+    const result = {droneDamage:1, archerDamage:1, archonCooldown:1, wardCapacity:0, powerCharge:1, reformTime:1, evadeSeconds:0};
     if (!run || (run.status !== 'battle' && run.status !== 'rest')) return result;
     for (const pick of run.picks) {
       const card = cards[pick.card];
@@ -61,7 +63,7 @@
     return result;
   }
   // Stage-keyed PRNG separates drafting from shop rolls, battle timing and how often the menu reopens.
-  function draft(run) {
+  function draft(run, deployed) {
     let state = (run.seed ^ Math.imul(run.stage, 0x9e3779b1)) >>> 0;
     function random() {
       state = (state + 0x6d2b79f5) >>> 0;
@@ -76,8 +78,9 @@
       }
       return ids;
     }
-    const available = shuffle(permanentIds.filter(id => rank(run, id) < cards[id].maxRank));
-    const temporary = shuffle(supplyIds.slice());
+    const roles = new Set(['hero','party',...(deployed || ['archon','drone','angel'])]);
+    const available = shuffle(permanentIds.filter(id => roles.has(cards[id].role) && rank(run,id) < cards[id].maxRank));
+    const temporary = shuffle(supplyIds.filter(id => roles.has(cards[id].role)));
     const mixed = run.stage > run.startStage && random() < .5;
     const offers = available.splice(0, mixed ? 2 : 3);
     for (const id of temporary.concat(available)) {
@@ -167,11 +170,11 @@
       if (!run || run.id !== id || run.stage !== stage || run.status !== status || !update(run)) return run ? copy(run) : null;
       return save(run);
     }
-    function clear(id, stage, carry) {
+    function clear(id, stage, carry, deployed) {
       return change(id, stage, 'battle', run => {
         if (carry !== undefined) run.carry = cloneCarry(carry);
         if (stage === run.endStage) run.status = 'won';
-        else { run.status = 'rest'; run.offers = draft(run); }
+        else { run.status = 'rest'; run.offers = draft(run, deployed); }
         return true;
       });
     }
