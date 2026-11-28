@@ -760,12 +760,24 @@
   /* 방금 맞은 스펠(외부 심사 11-20 "결과 화면에 '방금 맞은 스펠 다시 연습' … 같은 예고부터 바로 반복"): 이름 붙은 패턴에서 맞거나·자동 필살이 터지거나·봉인을 놓친 마지막 패턴 */
   function noteSpell(s){var seg=Arcade.SEGMENTS[s.seg];if((s.stage==='card'||s.stage==='lost'||s.cardEnding)&&seg&&seg.kind==='card'&&seg.spell)lastSpell={seg:s.seg,stage:seg.stage,name:seg.name,hero:s.hero};}
   /* 이번 판 점수를 양분으로(남은 점수는 다음에 이어 센다). 스테이지를 깰 때·판이 끝날 때·타이틀로 나갈 때 */
+  var partySprites={},partyModule=global.HapilArcadeParty;
+  function preparePartySprites(){
+    if(!partyModule)return;
+    ['archon','archonGravity','archonNeural','drone','angel'].forEach(function(kind){
+      if(partySprites[kind])return;
+      var image=new Image();partySprites[kind]=image;image.src='media/arcade-v43-party/'+kind+'.webp';
+    });
+  }
+  global.HapilPartyIsActive=function(){return !!(state&&state.party&&(mode==='playing'||mode==='paused'));};
+  global.addEventListener('hapil-party-auto',function(e){if(state&&state.party)state.party.auto=e.detail===true;});
   function bankSap(s){if(!Grove||!grove||!s||!s.groveRun||devMode)return 0;var got=Grove.earn(grove,s.groveRun,s.score);if(got)Grove.save(grove);return got;}
   function recordResult(result){
     if(!result||state.bossOnly||state.spellOnly)return;
+    if(state.party&&!devMode&&!rushStage&&global.HapilPartyCampaignCleared)global.HapilPartyCampaignCleared(result.stage+1,state.difficulty);
     progress=Progress.record(progress,result,state.mode||state.difficulty);if(Chapters)chapterLog=Chapters.noteClear(chapterLog,Arcade.STAGES,progress,result.stage,state.mode||state.difficulty);saveProgress();
   }
   function recordBestScore(s){
+    if(s&&s.party)return;
     if(s&&s.score>best){best=s.score;try{global.localStorage.setItem(BEST_KEY,String(best));}catch(e){}}
     // 난이도별 원코인·연습 최고점(외부 심사 11-20 "난이도별 원코인·연습 최고점을 분리하면 봉인과 점수 경쟁도 살아납니다"). 보스 체험·스펠 연습은 넣지 않는다(한 패턴 점수라 견줄 수 없다)
     if(!s||s.bossOnly||s.spellOnly||devMode)return;var dk=s.mode||s.difficulty,d=bests[dk]||(bests[dk]={one:0,practice:0}),k=oneCreditEligible?'one':'practice';
@@ -833,7 +845,7 @@
       else if(e==='plain'){var ppi=shownPhase(s);if(ppi&&ppi.count>1&&s.entranceAll)showBanner(localText('PHASE {n}/{total}',{n:ppi.no,total:ppi.count}),phaseLabel(s,false),false);}
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,localText('제{n}부 · STAGE {stage}',{n:g.part,stage:s.stageIndex+1}));play('seal');}}
       else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);bankSap(s);showToast(r);rushStage=false;}
-      else if(e==='map'){var fromPart=s.results.length?Arcade.STAGES[s.results[s.results.length-1].stage].part:0;loadStage(s.stageIndex);if(fromPart&&fromPart!==Arcade.STAGES[s.stageIndex].part)openChapterCard(fromPart,Arcade.STAGES[s.stageIndex].part,null);}
+      else if(e==='map'){if(s.party&&global.HapilPartyEnterStage)partyModule.refit(s,global.HapilPartyEnterStage(s.stageIndex+1));var fromPart=s.results.length?Arcade.STAGES[s.results[s.results.length-1].stage].part:0;loadStage(s.stageIndex);if(fromPart&&fromPart!==Arcade.STAGES[s.stageIndex].part)openChapterCard(fromPart,Arcade.STAGES[s.stageIndex].part,null);}
       else if(e==='entrance'){if(storyArrivalActor!==s.boss.actor)play('warning');storyArrivalActor='';wantFx(sheetWho(s));showBanner(s.boss.name,s.boss.mid?'중간보스':'보스');} // 본보스 컷인은 enter() 전, 중간보스는 기존 입장만.
       else if(e==='bossClear'){clearCombatPresentation();if(Mobile&&Mobile.commitBossClear)Mobile.commitBossClear(s);
         // 마지막 승리는 2초 연출 중 나가도 최고점이 남아야 한다. 계속되는 여정은 기존 finish() 시점에 기록한다.
@@ -2193,7 +2205,7 @@
     offsetX=offsetY=0;if(shake>0){if(settings.screenShake){var amplitude=shake*(compact?.35:.7);offsetX=(Math.random()-.5)*amplitude;offsetY=(Math.random()-.5)*amplitude;}shake--;}
     ctx.save();ctx.setTransform(scale,0,0,scale,offsetX*scale,offsetY*scale);
     // 순서: 배경 → 날씨 → 인물·몹 → 영웅 탄 → 영웅 → 장식 이펙트 → 아이템 → 광선 → 적 탄 → 판정점
-    drawBackground(s);drawFx();if(hudOut!=='mobile')drawTopShade();drawVeil(s);drawCrowdWash(s);if(Cues)Cues.drawUnder(ctx,s,Arcade,Ink);drawFigures(s,true);drawEmblems(s);drawIllusions(s);drawBoss(s);drawSkillFx(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawCardCast(s);drawPatternCue(s);drawShots(s);drawDrifts();drawInks();drawParticles();drawFlashes();drawItems(s);if(HeroFx&&HeroFx.drawUnder)HeroFx.drawUnder(ctx,s,visual);if(Spirit)Spirit.drawWorld(ctx,s,Arcade,Ink,mode==='playing',{quiet:!!toast,dim:s.formHold>s.tick,heart:itemSprites[0]});if(Cues)Cues.drawWorld(ctx,s,Arcade,Ink);drawLasers(s);drawFigures(s);if(Phase2)Phase2.paint(ctx,s);drawRipples(s);drawHeroLight(s);drawStormHalos(s);drawBullets(s);drawThrown(s);drawLaserCues(s);if(Cues)Cues.drawOver(ctx,s,Arcade,Ink);drawNudgeCue(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink))drawPlayer(s);if(s.union||!(flash>0&&Ink))drawHitbox(s);if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);drawFormShift(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
+    drawBackground(s);drawFx();if(hudOut!=='mobile')drawTopShade();drawVeil(s);drawCrowdWash(s);if(Cues)Cues.drawUnder(ctx,s,Arcade,Ink);drawFigures(s,true);drawEmblems(s);drawIllusions(s);drawBoss(s);drawSkillFx(s);drawFall(s);if(Ink&&Ink.raw)Ink.raw(1);drawFloor(s);drawRisers(s,true);if(Ink&&Ink.raw)Ink.raw(-1);drawMobs(s);drawCardCast(s);drawPatternCue(s);drawShots(s);if(s.party)partyModule.draw(ctx,s,partySprites);drawDrifts();drawInks();drawParticles();drawFlashes();drawItems(s);if(HeroFx&&HeroFx.drawUnder)HeroFx.drawUnder(ctx,s,visual);if(Spirit)Spirit.drawWorld(ctx,s,Arcade,Ink,mode==='playing',{quiet:!!toast,dim:s.formHold>s.tick,heart:itemSprites[0]});if(Cues)Cues.drawWorld(ctx,s,Arcade,Ink);drawLasers(s);drawFigures(s);if(Phase2)Phase2.paint(ctx,s);drawRipples(s);drawHeroLight(s);drawStormHalos(s);drawBullets(s);drawThrown(s);drawLaserCues(s);if(Cues)Cues.drawOver(ctx,s,Arcade,Ink);drawNudgeCue(s);if(Ink&&Ink.raw)Ink.raw(1);drawPieceScores(s);if(Ink&&Ink.raw)Ink.raw(-1);if(HeroFx)HeroFx.draw(ctx,s,visual);if(Ink&&Ink.raw)Ink.raw(1);drawRisers(s);if(Ink&&Ink.raw)Ink.raw(-1);drawBossOver(s);drawHeroGuard(s);if(!(flash>0&&Ink))drawPlayer(s);if(s.union||!(flash>0&&Ink))drawHitbox(s);if(HeroFx)HeroFx.drawTexts(ctx,visual);if(Ink&&Ink.raw)Ink.raw(1);drawBossIntro(state);drawFormShift(state);if(Ink&&Ink.raw)Ink.raw(-1); // 영웅은 탄·레이저 위에 그려 늘 보이게 한다
     ctx.restore();ctx.setTransform(scale,0,0,scale,0,0);
     // 스펠 선언 연출(사용자 11-18 "패턴·공격 미장센 강화"): 가장자리부터 먹이 번져 화면이 잠깐 조여졌다가 걷힌다. 보스에 시선이 모였다가 탄이 펼쳐진다(탄·영웅은 이 위에 그대로 읽힌다).
     if(spellDim>0&&Ink&&s.boss&&s.boss.present){var sd=spellDim,sx0=finite(s.boss.x,W/2),sy0=finite(s.boss.y,H/3),sg=ctx.createRadialGradient(sx0,sy0,H*.22,sx0,sy0,H*.85);if(Ink.raw)Ink.raw(1);sg.addColorStop(0,'rgba(24,20,16,0)');sg.addColorStop(.55,'rgba(24,20,16,'+(sd*.2)+')');sg.addColorStop(1,'rgba(24,20,16,'+(sd*.68)+')');ctx.fillStyle=sg;ctx.fillRect(0,0,W,H);if(Ink.raw)Ink.raw(-1);spellDim=Math.max(0,spellDim-Math.min(.05,elapsed)/1.6);}
@@ -2416,6 +2428,11 @@
     run={chapter:chapterPart,stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),spellOnly:!!(run&&run.spellOnly&&Number.isInteger(run.segment)),segment:run&&run.segment,carry:run&&run.carry,practice:!!(run&&run.practice),hero:heroId(run&&run.hero||selectedHero)};
     lastRun=run;lastSpell=run.spellOnly?lastSpell:null;oneCreditEligible=run.stage===0&&!run.bossOnly&&!run.spellOnly&&!Number.isInteger(run.segment)&&!run.carry&&!run.practice&&!quiet&&!devMode;
     var options={ability:abilityFor(run.hero),entranceAll:true,difficulty:difficulty,seed:fixedSeed(difficulty,run.stage),stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,spellOnly:run.spellOnly,growth:true,pacing:!quiet,rhythm:!quiet,fruits:Grove&&grove?Grove.equipped(grove):0,bulletSpeed:settings.handicapSpeed}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
+    if(partyModule&&!quiet&&!devMode&&!run.bossOnly&&!run.spellOnly&&(!Number.isInteger(run.segment)||run.carry)&&global.HapilPartyLoadout&&global.HapilPartyLoadout()){
+      options.party=global.HapilPartyEnterStage?global.HapilPartyEnterStage(run.stage+1,{resume:!!run.carry}):global.HapilPartyLoadout();
+      options.partyAuto=!!(global.HapilPartyPilotAuto&&global.HapilPartyPilotAuto());
+      if(options.party){oneCreditEligible=false;preparePartySprites();}
+    }
     if(run.chapter&&Chapters){var ch=Chapters.list(Arcade.STAGES)[run.chapter-1];if(ch&&ch.last>=run.stage)options.stages=ch.last-run.stage+1;} // 챕터 재도전: 그 챕터 끝에서 멈춘다
     if(Number.isInteger(run.segment))options.segment=run.segment;if(grown&&(grown.exp||grown.expRemainder||grown.fills||grown.union||typeof grown.stock==='number')){options.grown={exp:grown.exp|0,fills:grown.fills|0,expRemainder:grown.expRemainder};if(typeof grown.stock==='number')options.grown.stock=grown.stock;if(grown.union===true)options.grown.union=true;}
     if(state)bankSap(state);
@@ -2424,7 +2441,7 @@
     if(isSeoha(state.hero))loadImage('hero-'+state.hero);
     if(state.hero==='seoha')loadImage('hero-seoha-b');
     if(!run.bossOnly&&!run.spellOnly&&!quiet){journeyHero=run.hero;try{global.localStorage.setItem(JOURNEY_HERO_KEY,journeyHero);}catch(e){}}
-    if(run.carry){state.hits+=run.carry.hits|0;state.bombsUsed+=run.carry.bombs|0;} // 중간 저장에서 이어 하면 앞 구간의 피격·폭탄도 별에 반영
+    if(run.carry){state.hits+=run.carry.hits|0;state.bombsUsed+=run.carry.bombs|0;if(state.party)state.party.hits=state.hits;} // 중간 저장에서 이어 하면 앞 구간의 피격·폭탄도 별에 반영
     buildSprites();loadStage(state.stageIndex);fxStage=-1;
     drill=null;var seenDrill=false,dq=/[?&]drill=([01])\b/.exec(global.location&&global.location.search||'');try{seenDrill=global.localStorage.getItem(DRILL_KEY)==='1';}catch(e){seenDrill=true;}
     if(dq)seenDrill=dq[1]==='0';else if(global.navigator&&global.navigator.webdriver)seenDrill=true; // 자동 검사 브라우저는 실습을 건너뛴다(?drill=1 이면 보인다): 기존 화면 검사가 1스테이지 진행을 본다

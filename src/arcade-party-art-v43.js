@@ -1,0 +1,22 @@
+window.PARTY_ART = {
+  "background": "media/arcade-v43/bg-p6_core.jpg",
+  "captainSheet": "media/arcade-v43/p6_nightmare_captain.webp",
+  "captainAttackSheet": "media/arcade-v43/p6_nightmare_captain@attack.webp",
+  "memory": "media/gunner.webp",
+  "seoha": "media/arcade-v43-heroes/seoha-player.webp",
+  "awakened": "media/arcade-v43-heroes/seoha-player-v2.webp",
+  "archonTime": "media/arcade-v43-party/archon.webp",
+  "captain": "media/arcade-v43-party/captain.webp",
+  "captainAttack": "media/arcade-v43-party/captainAttack.webp",
+  "archon": "media/arcade-v43-party/archon.webp",
+  "drone": "media/arcade-v43-party/drone.webp",
+  "angel": "media/arcade-v43-party/angel.webp",
+  "archonGravity": "media/arcade-v43-party/archonGravity.webp",
+  "archonNeural": "media/arcade-v43-party/archonNeural.webp",
+  "siege": "media/arcade-v43/bg-p6_siege.jpg",
+  "hall": "media/arcade-v43/bg-p6_hall.jpg",
+  "gateSheet": "media/arcade-v43/p6_demons_alt48.webp",
+  "gateAttackSheet": "media/arcade-v43/p6_demons_alt48@attack.webp",
+  "demonsSheet": "media/arcade-v43/p6_demons.webp",
+  "demonsAttackSheet": "media/arcade-v43/p6_demons@attack.webp"
+};

@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'arcade.html'
+      - 'party.html'
       - 'src/**'
       - 'tests/**'
       - 'tools/check-arcade-ui-v43.cjs'

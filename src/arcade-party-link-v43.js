@@ -1,0 +1,104 @@
+/* Shares the companion workshop with the single-player campaign and its pause menu. */
+(function (root) {
+  'use strict';
+  const prefKey = 'hapil.arcade.party-controls.v1';
+  let enabled = false, automatic = false;
+  function readPrefs() {
+    try {
+      const saved = JSON.parse(root.localStorage.getItem(prefKey));
+      if (saved) {
+        enabled = saved.enabled === true;
+        automatic = saved.auto === true;
+      }
+    } catch (_) { /* Private browsing can still use the current session. */ }
+  }
+  function savePrefs() {
+    try { root.localStorage.setItem(prefKey, JSON.stringify({enabled, auto:automatic})); }
+    catch (_) { /* Keep the in-memory preference. */ }
+  }
+  readPrefs();
+  const forge = root.PartyForge;
+  let ledger = null;
+  function profile() {
+    // The store reconciles its revision on each mutating operation.
+    if (!ledger) ledger = forge.loadCampaign();
+    return ledger;
+  }
+  root.HapilPartyPilotAuto = () => automatic;
+  root.HapilPartyLoadout = () => enabled && forge ? forge.battleConfig(profile()) : null;
+  root.HapilPartyEnterStage = (stage, flags) => enabled && forge ? forge.campaignEnter(profile(), stage, flags) : null;
+  root.HapilPartyCampaignCleared = (stage, difficulty) => {
+    if (enabled && forge) return forge.campaignClear(profile(), stage, difficulty);
+  };
+
+  const doc = root.document;
+  const el = id => doc.getElementById(id);
+  const dialog = el('arcade-party-dialog');
+  const toggle = el('arcade-party-enabled');
+  const auto = el('party-auto-setting');
+  let opener;
+  function sync() {
+    if (!toggle) return;
+    toggle.checked = enabled;
+    auto.checked = automatic;
+    const active = enabled && (typeof root.HapilPartyIsActive !== 'function' || root.HapilPartyIsActive());
+    el('party-auto-row').hidden = !active;
+    el('party-pause-prepare').hidden = !active;
+  }
+  function applyAuto(value) {
+    automatic = value === true;
+    savePrefs();
+    root.dispatchEvent(new CustomEvent('hapil-party-auto', {detail:automatic}));
+    sync();
+  }
+  root.HapilPartyActivate = (options = {}) => {
+    enabled = true;
+    ledger = null;
+    applyAuto(typeof options.auto === 'boolean' ? options.auto : automatic);
+  };
+  if (!toggle) return; // The workshop also reads the same pilot preference.
+  toggle.addEventListener('change', () => {
+    enabled = toggle.checked;
+    savePrefs();
+    sync();
+  });
+  auto.addEventListener('change', () => applyAuto(auto.checked));
+  const frame = el('arcade-party-workshop');
+  const close = el('arcade-party-dialog-close');
+  function open(event) {
+    opener = event.currentTarget;
+    const url = new URL('party.html', root.location.href);
+    url.searchParams.set('campaign', '1');
+    url.searchParams.set('embed', '1');
+    if (opener === el('party-pause-prepare')) url.searchParams.set('during', '1');
+    frame.src = url.href;
+    dialog.showModal();
+    close.focus();
+  }
+  el('arcade-party-prepare').addEventListener('click', open);
+  el('party-pause-prepare').addEventListener('click', open);
+  close.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('close', () => {
+    frame.removeAttribute('src');
+    ledger = null;
+    sync();
+    if (opener) opener.focus();
+  });
+  root.addEventListener('message', event => {
+    if (!dialog.open || event.source !== frame.contentWindow || !event.data) return;
+    if (root.location.origin !== 'null' && event.origin !== root.location.origin) return;
+    if (event.data.type === 'hapil-party-ready') {
+      root.HapilPartyActivate({auto:event.data.auto});
+      dialog.close();
+    } else if (event.data.type === 'hapil-party-close') {
+      dialog.close();
+    }
+  });
+  root.addEventListener('storage', event => {
+    if (event.key === prefKey) { readPrefs(); sync(); }
+    if (event.key === 'hapil.ai-party.campaign.v1') ledger = null;
+  });
+  const pause = el('arcade-pause');
+  if (pause && typeof MutationObserver === 'function') new MutationObserver(sync).observe(pause, {attributes:true, attributeFilter:['hidden']});
+  sync();
+})(window);

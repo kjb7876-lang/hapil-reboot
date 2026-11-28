@@ -19,6 +19,8 @@
     ?require('./arcade-boss-phases-v43.js'):root.HapilArcadePhases;
   var LASER_RHYTHM=typeof module==='object'&&module.exports&&typeof require==='function'
     ?require('./arcade-laser-rhythm-v43.js'):root.HapilLaserRhythm;
+  var PARTY=typeof module==='object'&&module.exports&&typeof require==='function'?require('./arcade-party-v43.js'):root.HapilArcadeParty;
+  var partyTools={hitFoe:hitFoe,removeBullet:removeBullet};
   var P2_NATIVE=typeof module==='object'&&module.exports&&typeof require==='function'?require('./arcade-phase2-native-v43.js'):null;
   function phase2Native(){return P2_NATIVE||root.HapilPhase2Native||null;}
   function phase2Step(native,s){
@@ -262,6 +264,7 @@
   function shotDamage(s,memorySide){
     var power=s.union&&memorySide?1+ABILITY_POWER*Math.max(0,Math.min(ABILITY_MAX,s.memoryAbility|0)):abilityOf(s).damage;
     var d=SHOT_DAMAGE[s.power]*power;
+    if(s.party&&s.tick<s.party.boostUntil)d*=1.5;
     return (s.hero==='memory'||s.union&&memorySide)&&s.player.focus?d*FOCUS_POWER:d;
   }
   var GAUGE_FULL=100,AUTO_COLLECT_Y=150,ITEM_REACH=24,ITEM_PULL=11,BOMB_BOSS_DAMAGE=40,BOMB_MOB_DAMAGE=25;
@@ -1102,6 +1105,7 @@
       bossOnly:!!options.bossOnly,spellOnly:!!(options.spellOnly&&SEGMENTS[startSeg].kind==='card'),spellSeg:startSeg,rushStage:SEGMENTS[startSeg].stage,bombs:rules.bombs,gauge:0,spellClean:false,captures:0,itemsTaken:0,lane:undefined,
       n:0,enemyShotsBorn:0,shotBudget:{seg:-1,wave:0,card:0,crowd:0},mobVolley:false,drifted:[],mobDrops:0,hearts:0,pieces:0,gets:[],lastCapture:null,jackpots:0,lastJackpot:null,dropped:0,peak:0,score:0,graze:0,hits:0,kills:0,cleared:0,timeouts:0,events:[],cancelled:[],pops:[],lasers:[],mobs:[],cannons:[],weapons:[],brood:null,warned:false,sn:0,itemCount:0,
       lastStage:STAGES.length-1,lastWipe:-1e9,started:false,results:[],bombsUsed:0,autoBombs:0,distorts:0,orbsBroken:0,orbSerial:0,orbFragments:0,bombPulse:null,pulseInfo:null,noDistort:options.distort===false||handicap,fruits:handicap?0:fruitCount(options.fruits),drng:((((options.seed>>>0)||1)*2246822519)^0x9e3779b9)>>>0||7,power:1,exp:0,expRemainder:0,bombLevel:1,fills:0,hasteUntil:-1,zaps:[],skillFx:[],fsSwords:[],fsNext:0,fsLabelTick:-1e9,fsCasts:0,fsHits:0,frng:((((options.seed>>>0)||1)*3266489917)^0x85ebca6b)>>>0||11,lastBomb:null,mark:{tick:0,score:0,hits:0,bombs:0,captures:0,spells:0}};
+    if(PARTY&&options.party)s.party=PARTY.create(options.party,s.player,options.partyAuto);
     setAbility(s,options.ability|0);
     if(Number.isInteger(options.stages)&&options.stages>0)s.lastStage=Math.min(STAGES.length-1,s.stageIndex+options.stages-1);
     ['bx','by','ba','bs','bturn','bacc','bmin','bmax','barg','bs2','bspin','bhp'].forEach(function(k){s[k]=new Float32Array(CAP);});
@@ -1814,8 +1818,10 @@
     var b=s.boss,p=s.player,i,k,target=homingX(s),plan=POWER_SHOTS[s.power],haste=s.tick<s.hasteUntil?1:0;
     var hero=heroProfile(s),clockHands=hero&&hero.shot.style==='clock-hands'?hero.shot:null,offset=s.union?UNION_OFFSET:0;
     var damage=shotDamage(s),memoryDamage=offset?shotDamage(s,true):damage;
-    emitHeroShots(s,plan,haste,clockHands,p.x-offset,false);
-    if(offset)emitHeroShots(s,plan,haste,null,p.x+offset,true);
+    if(!s.party||s.tick>=s.party.recoverUntil){
+      emitHeroShots(s,plan,haste,clockHands,p.x-offset,false);
+      if(offset)emitHeroShots(s,plan,haste,null,p.x+offset,true);
+    }
     for(i=s.sn-1;i>=0;i--){
       var sx0=s.sx[i],sy0=s.sy[i],memorySeek=s.hero==='memory'||s.memoryShots[i]===1,memoryLock=memorySeek&&p.focus,dmg=memorySeek?memoryDamage:damage;
       s.sy[i]-=s.sspd[i]||SHOT_SPEED;s.sx[i]+=s.svx[i];
@@ -1898,7 +1904,7 @@
     }
     if(!s.lasers.length)s.warned=false;
     if(fired)note(s,'laserFire');
-    if(grazed){s.graze+=grazed;s.gauge+=grazed*2;s.score+=grazed*40;note(s,'graze');}
+    if(grazed&&!(s.party&&s.party.auto)){s.graze+=grazed;s.gauge+=grazed*2;s.score+=grazed*40;note(s,'graze');}
     return struck;
   }
   /* ── 보스 고유 문양 광선(2026-11-14). 도형은 단위 원 안의 선(점 묶음)이고, 보스를 따라 돌며 줄었다 늘었다 한다.
@@ -2080,7 +2086,7 @@
         var d=Math.sqrt(Math.pow(p.x-g[0]-u*dx,2)+Math.pow(p.y-g[1]-u*dy,2));if(d<near)near=d;}
       if(near<reach)struck=true;else if(!f.grazed&&near<f.width*.5+GRAZE_MARGIN){f.grazed=true;grazed++;}
     }
-    if(grazed){s.graze+=grazed;s.gauge+=grazed*2;s.score+=grazed*40;note(s,'graze');}
+    if(grazed&&!(s.party&&s.party.auto)){s.graze+=grazed;s.gauge+=grazed*2;s.score+=grazed*40;note(s,'graze');}
     return struck;
   }
   var WALL_KICK_Y=.6,DOWN_LO=1.0,DOWN_SIN=.84,SOFT_DESCEND_AGE=95,DESCEND_AGE=150,LIVE_DESCEND_AGE=45,LIVE_DESCEND_AGE_HELL=60,DESCEND_Y=470,DESCEND_TURN=.05,DESCEND_SPEED=72;
@@ -2151,6 +2157,7 @@
       }
       if(s.bacc[i]){var v=s.bs[i]+s.bacc[i]*TICK;s.bs[i]=v<s.bmin[i]?s.bmin[i]:v>s.bmax[i]?s.bmax[i]:v;}
       var slow=tempo,fdx=s.bx[i]-px,fdy=s.by[i]-py;if(fdx<fr&&fdx>-fr&&fdy<fr&&fdy>-fr){var fd=Math.sqrt(fdx*fdx+fdy*fdy);if(fd<fr)slow=tempo*(1-fs*(1-fd/fr));} // 능력조절 빠르기(tempo)에 둘레 둔화를 곱한다 // 영웅 둘레 시간 둔화: 가까울수록 느리다(판정은 그대로)
+      if(s.party&&s.party.field)slow*=PARTY.fieldSpeed(s,i);
       var ox=s.bx[i],oy=s.by[i],x=s.bx[i]+=Math.cos(s.ba[i])*s.bs[i]*TICK*slow,y=s.by[i]+=Math.sin(s.ba[i])*s.bs[i]*TICK*slow;
       // 벽에서 되돌아오는 탄: 좌우 벽과 위 벽에서 한 번(남은 횟수만큼) 튕긴다. 아래로는 튕기지 않는다(영웅 뒤에서 오지 않게).
       if(s.bbounce[i]){var a0=s.ba[i];
@@ -2163,7 +2170,9 @@
         s.blife[i]=65535;s.bacc[i]=0;s.bturn[i]=0;if(s.bs[i]<EXPIRE_SPEED)s.bs[i]=EXPIRE_SPEED;if(s.bsize[i]!==SHAPE_PROP&&!s.bbounce[i])s.bbounce[i]=1;
       }
       if(age<Math.max(BLOOM_TICKS,s.bgrace[i]))continue; // 갓 피어난 탄과 파괴 직후의 잔탄은 아직 닿지 않는다
-      var dx=x-px,dy=y-py,radius=bulletRadius(s,i),d2=dx*dx+dy*dy,reach=radius+GRAZE_MARGIN,rim=s.bsize[i]===SHAPE_PROP?propHitOf(s.bcolor[i]):null;
+      var radius=bulletRadius(s,i);
+      if(s.party&&PARTY.contact(s,i,x,y,radius)){removeBullet(s,i);continue;}
+      var dx=x-px,dy=y-py,d2=dx*dx+dy*dy,reach=radius+GRAZE_MARGIN,rim=s.bsize[i]===SHAPE_PROP?propHitOf(s.bcolor[i]):null;
       if(rim)reach=Math.max(reach,rim.heroExtent*hitSize(s)+GRAZE_MARGIN);
       // 빠른 탄(한 틱에 4px 넘게 움직이는 탄)은 이전 위치→새 위치 선분에서 영웅에 가장 가까운 점으로 잰다: 한 틱 사이에 영웅을 건너뛰어도 맞는다.
       var mx=x-ox,my=y-oy,m2=mx*mx+my*my;
@@ -2189,7 +2198,7 @@
       if(d2<hitReach*hitReach)struck=true;
       else if(!s.bgrazed[i]){s.bgrazed[i]=1;grazed++;}
     }
-    if(grazed){s.graze+=grazed;s.gauge+=grazed;s.score+=grazed*20;note(s,'graze');}
+    if(grazed&&!(s.party&&s.party.auto)){s.graze+=grazed;s.gauge+=grazed;s.score+=grazed*20;note(s,'graze');}
     return struck;
   }
   /* 장면별 탄(사용자 요청 11-14): 늪(03)에서는 물결이 먼저 일고(예고) 그 자리에서 초록 악마 손이 천천히 솟아오른다.
@@ -2772,7 +2781,7 @@
   function enemyClock(s){var k=s.enemyTimeRate=abilityOf(s).bulletSpeed;if(k>=1){s.efire=true;s.eclock=0;return;}s.eclock=(s.eclock||0)+k;s.efire=s.eclock>=1;if(s.efire)s.eclock-=1;}
   function step(s,input){
     if(s.stage==='won'||s.stage==='lost'){s.stageTick++;return s;}
-    s.tick++;s.stageTick++;movePlayer(s,input);enemyClock(s);patternClock(s);
+    s.tick++;s.stageTick++;if(s.party)input=PARTY.steer(s,input);movePlayer(s,input);enemyClock(s);patternClock(s);
     if(s.stage==='bossClear'){
       if(s.tick>=s.bossClear.readyTick)advance(s);
       return s; // 격파 연출 2초 동안 공격·피격·아이템·필살을 모두 멈춘다. 다음 구간은 다음 틱부터 움직인다.
@@ -2815,9 +2824,9 @@
     }
     else if(s.stage==='card'&&s.cardEnding){cardEndingStep(s);}
     else if(s.stage==='card'){
-      var t=s.segTick;if(!sweeping)s.segTick++;
+      var t=s.segTick,partyDelay=s.party&&s.party.neuralUntil>s.tick;if(!sweeping&&!partyDelay)s.segTick++;
       var fireDelay=cardFireDelay(s);
-      if(!sweeping&&t>=fireDelay&&!spQuiet(s)&&downFiring(s)&&!(s.formHold>s.tick)){if(!s.cardDown)mirrorVolley(s,t-fireDelay);if(!soloHold(s)){
+      if(!sweeping&&!partyDelay&&t>=fireDelay&&!spQuiet(s)&&downFiring(s)&&!(s.formHold>s.tick)){if(!s.cardDown)mirrorVolley(s,t-fireDelay);if(!soloHold(s)){
         // 사몽각성 교주 헬: 패턴 시계를 두 배로 돌린다(한 틱에 대본 두 틱). 그 밖에는 tempo 1 = 예전과 같다.
         var tempo=s.awakeTempo>1?s.awakeTempo:1;
         for(var beat=0;beat<tempo;beat++){var ft=(t-fireDelay)*tempo+beat;
@@ -2832,7 +2841,7 @@
       var left=timeLeft(s);
       if(seg.spell&&!s.entranceAll&&left<=10&&left>0&&s.segTick%60===0)note(s,left<=3?'countdownLast':'countdown');
     }
-    themed(s);updateMobs(s);updateShots(s);focusSkill(s);
+    themed(s);updateMobs(s);if(s.party)PARTY.update(s,partyTools);updateShots(s);focusSkill(s);
     if(s.stage==='card'&&s.entranceAll&&!s.cardEnding&&(b.hp<=0||s.cardDown)){if(!s.cardDown)markDown(s);if(!signatureOn&&cardMayFall(s)){b.hp=0;beginCardEnding(s,true);}else b.hp=1;} // 시간이 다 된 카드는 쓰러짐이 아니라 그대로 넘어간다(남은 탄은 breakWipe가 밖으로 내보낸다)
     else if(s.stage==='card'&&s.entranceAll&&s.cardEnding){if(s.boss.hp<0)s.boss.hp=0;if(cardEndingDone(s))endCard(s,s.cardEnding.defeated);}
     else if(s.stage==='card'&&b.hp<=0)endCard(s,true);
@@ -2854,6 +2863,7 @@
       // 목숨이 남았으면 폭탄이 기본 개수까지 다시 찬다.
       if(p.hp<=0){s.stage='lost';s.stageTick=0;note(s,'lose');}else if(s.bombs<s.rules.bombs)s.bombs=s.rules.bombs;
     }
+    if(s.party)PARTY.finish(s);
     s.paceBossVolleys=false;
     if(s.n>s.peak)s.peak=s.n;
     return s;
