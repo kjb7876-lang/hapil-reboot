@@ -6,6 +6,7 @@
   const colours = {archon:'#b99fea',drone:'#69b9bc',angel:'#e6c477'};
   const clamp = (n,min,max) => Math.max(min,Math.min(max,n));
   const integer = (n,min,max) => Number.isFinite(n) ? clamp(Math.floor(n),min,max) : min;
+  const neutralEffects = Object.freeze({droneDamage:1,archonCooldown:1,wardCapacity:0,powerCharge:1,reformTime:1,evadeSeconds:0});
   function create(config, player, auto) {
     if (!config || !Array.isArray(config.companions)) return null;
     const allies = [], slots = new Set(), roster = new Set();
@@ -19,7 +20,7 @@
         integrity:health,maxIntegrity:health,ready:36+allies.length*12,nextShot:0,reform:0,invuln:0,
         evadeX:0,evadeY:0,action:null,blocks:0,damage:0,disabled:0,casts:0});
     }
-    return {allies,auto:!!auto,lineage:['time','gravity','neural'].includes(config.lineage)?config.lineage:'time',
+    return {allies,effects:config.effects||neutralEffects,auto:!!auto,lineage:['time','gravity','neural'].includes(config.lineage)?config.lineage:'time',
       charge:100,powerUses:0,autoPowers:0,linkUsed:false,neuralUntil:0,field:null,ward:null,rescue:0,extends:0,boostUntil:0,recoverUntil:0,evades:0,rewardNext:0,
       moveX:player.x,moveY:player.y,lastMove:-100,autoX:0,autoY:0,guardTick:-100,wasAuto:!!auto,
       laserRead:null,wasFocus:false,grazes:0,hits:0};
@@ -104,7 +105,7 @@
     else if(manual&&!q.linkUsed){
       const angel=q.allies.find(a=>a.kind==='angel'&&a.stars===7&&!a.reform);
       if(angel&&q.allies.some(a=>a!==angel&&!a.reform)){
-        q.linkUsed=true;q.ward={x:p.x,y:p.y-12,capacity:2,radius:42,until:s.tick+87,owner:angel};
+        q.linkUsed=true;q.ward={x:p.x,y:p.y-12,capacity:2+q.effects.wardCapacity,radius:42,until:s.tick+87,owner:angel};
       }
     }
     return true;
@@ -120,7 +121,27 @@
         integrity:old.reform?0:Math.max(1,n.maxIntegrity-wounds)});
       Object.assign(n,old);
     }
-    q.allies=next.allies;q.lineage=next.lineage;q.field=null;q.ward=null;q.linkUsed=false;q.laserRead=null;
+    q.allies=next.allies;q.lineage=next.lineage;q.effects=next.effects;q.field=null;q.ward=null;q.linkUsed=false;q.laserRead=null;
+  }
+  // Checkpoints reopen the current segment with the same remaining support resources.
+  // Store relative durations because the restored engine starts its clock at zero.
+  function checkpoint(s) {
+    const q=s.party, left=until=>Math.max(0,until-s.tick);
+    return {charge:q.charge,rescue:q.rescue,linkUsed:q.linkUsed,boost:left(q.boostUntil),recover:left(q.recoverUntil),
+      allies:q.allies.map(a=>({kind:a.kind,wounds:a.maxIntegrity-a.integrity,reform:left(a.reform),
+        ready:left(a.ready),shot:left(a.nextShot),invuln:left(a.invuln)}))};
+  }
+  function restore(s,carry) {
+    if(!carry||!Array.isArray(carry.allies))return;
+    const q=s.party,t=s.tick;
+    q.charge=clamp(Number(carry.charge)||0,0,100);q.rescue=integer(carry.rescue,0,2);q.linkUsed=carry.linkUsed===true;
+    q.boostUntil=q.auto?0:t+integer(carry.boost,0,400);q.recoverUntil=t+integer(carry.recover,0,60);
+    for(const a of q.allies){
+      const old=carry.allies.find(c=>c&&c.kind===a.kind);if(!old)continue;
+      a.reform=old.reform?t+integer(old.reform,0,240):0;
+      a.integrity=a.reform?0:Math.max(1,a.maxIntegrity-integer(old.wounds,0,8));
+      a.ready=t+integer(old.ready,0,510);a.nextShot=t+integer(old.shot,0,43);a.invuln=t+integer(old.invuln,0,80);
+    }
   }
   function cast(s,a,i,tools) {
     const q=s.party,p=s.player,bx=s.bx[i],by=s.by[i];
@@ -131,12 +152,12 @@
       if(!field(s,false,a))return false;
       mark(a,'control',s.tick,q.field.x,q.field.y);
     } else {
-      q.ward={x:p.x,y:p.y-12,capacity:a.slot==='rear'?2:1,radius:35+a.stars*1.2,
+      q.ward={x:p.x,y:p.y-12,capacity:(a.slot==='rear'?2:1)+q.effects.wardCapacity,radius:35+a.stars*1.2,
         until:s.tick+69,owner:a};
       mark(a,'ward',s.tick,p.x,p.y);
     }
     a.casts++;
-    const base=a.kind==='drone'?288:a.kind==='archon'?480:510;
+    const base=a.kind==='drone'?288:a.kind==='archon'?480*q.effects.archonCooldown:510;
     a.ready=s.tick+Math.max(38,Math.round(base*(a.slot==='front'?.75:1)/(1+.048*(a.stars-1)+.04*a.gear+.025*a.supply)));
     return true;
   }
@@ -159,7 +180,7 @@
     const active=s.stage==='wave'||s.stage==='card';
     if(active){
       const rear=q.allies.some(a=>a.slot==='rear'&&!a.reform);
-      q.charge=Math.min(100,q.charge+(rear?.12:.1));
+      q.charge=Math.min(100,q.charge+(rear?.12:.1)*q.effects.powerCharge);
       if(q.charge>=100){
         const command=p.focus&&!q.wasFocus;
         const alerted=!command&&q.auto&&s.tick%8===0&&s.tick>=p.invulnerableUntil&&(
@@ -200,7 +221,7 @@
       if(s.tick<a.nextShot)continue;
       const target=enemy(s,a);
       if(!target)continue;
-      const hit=(a.kind==='drone'?1.4:a.kind==='archon'?.65:.5)*(a.slot==='wing'?1.45:1)*(1+.095*(a.stars-1)+.08*a.gear+.06*a.supply);
+      const hit=(a.kind==='drone'?1.4*q.effects.droneDamage:a.kind==='archon'?.65:.5)*(a.slot==='wing'?1.45:1)*(1+.095*(a.stars-1)+.08*a.gear+.06*a.supply);
       a.damage+=Math.min(hit,target.hp);
       tools.hitFoe(s,target,hit);
       a.nextShot=s.tick+(a.kind==='drone'?23:43);
@@ -240,7 +261,7 @@
       if(a.reform||s.tick<a.invuln)continue;
       if((x-a.x)**2+(y-a.y)**2>(r+4)**2)continue;
       a.integrity--;a.invuln=s.tick+80;
-      if(a.integrity<=0){a.reform=s.tick+240;a.disabled++;a.action=null;}
+      if(a.integrity<=0){a.reform=s.tick+Math.round(240*q.effects.reformTime);a.disabled++;a.action=null;}
       return true;
     }
     return false;
@@ -262,7 +283,7 @@
     }
     if(!q.auto&&!hurt&&s.tick>=p.invulnerableUntil&&s.tick>=q.rewardNext&&s.tick-q.guardTick>18&&
         (cleanRead||(s.graze>q.grazes&&s.tick-q.lastMove<=8))){
-      q.evades++;q.boostUntil=s.tick+180;q.rewardNext=s.tick+42;
+      q.evades++;q.boostUntil=s.tick+180+Math.round(60*q.effects.evadeSeconds);q.rewardNext=s.tick+42;
     }
     q.grazes=s.graze;q.hits=s.hits;
   }
@@ -295,7 +316,7 @@
     }
     ctx.restore();
   }
-  const api={create,refit,steer,update,fieldSpeed,contact,finish,draw};
+  const api={create,refit,checkpoint,restore,steer,update,fieldSpeed,contact,finish,draw};
   if(typeof module==='object'&&module.exports)module.exports=api;
   root.HapilArcadeParty=api;
 })(typeof globalThis==='object'?globalThis:this);

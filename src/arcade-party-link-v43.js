@@ -27,8 +27,8 @@
   root.HapilPartyPilotAuto = () => automatic;
   root.HapilPartyLoadout = () => enabled && forge ? forge.battleConfig(profile()) : null;
   root.HapilPartyEnterStage = (stage, flags) => enabled && forge ? forge.campaignEnter(profile(), stage, flags) : null;
-  root.HapilPartyCampaignCleared = (stage, difficulty) => {
-    if (enabled && forge) return forge.campaignClear(profile(), stage, difficulty);
+  root.HapilPartyCampaignCleared = (stage, difficulty, runId) => {
+    if (enabled && forge) return forge.campaignClear(profile(), stage, difficulty, runId);
   };
 
   const doc = root.document;
@@ -57,32 +57,49 @@
     applyAuto(typeof options.auto === 'boolean' ? options.auto : automatic);
   };
   if (!toggle) return; // The workshop also reads the same pilot preference.
+  const launchUrl = new URL(root.location.href);
+  if (launchUrl.searchParams.get('expedition') === '1') {
+    enabled = true;
+    savePrefs();
+    launchUrl.searchParams.delete('expedition');
+    if (root.history) root.history.replaceState(root.history.state, '', launchUrl.href);
+  }
   toggle.addEventListener('change', () => {
     enabled = toggle.checked;
     savePrefs();
     sync();
+    root.dispatchEvent(new CustomEvent('hapil-party-preferences'));
   });
   auto.addEventListener('change', () => applyAuto(auto.checked));
   const frame = el('arcade-party-workshop');
   const close = el('arcade-party-dialog-close');
-  function open(event) {
-    opener = event.currentTarget;
+  let afterWorkshop = null;
+  function open(trigger, onReturn) {
+    if (dialog.open) return;
+    opener = trigger;
+    afterWorkshop = onReturn;
     const url = new URL('party.html', root.location.href);
     url.searchParams.set('campaign', '1');
     url.searchParams.set('embed', '1');
-    if (opener === el('party-pause-prepare')) url.searchParams.set('during', '1');
+    if (onReturn) url.searchParams.set('rest', '1');
+    else if (opener === el('party-pause-prepare')) url.searchParams.set('during', '1');
     frame.src = url.href;
     dialog.showModal();
     close.focus();
   }
-  el('arcade-party-prepare').addEventListener('click', open);
-  el('party-pause-prepare').addEventListener('click', open);
+  el('arcade-party-prepare').addEventListener('click', event => open(event.currentTarget, null));
+  el('party-pause-prepare').addEventListener('click', event => open(event.currentTarget, null));
+  root.HapilPartyOpenWorkshop = onReturn => open(null, onReturn);
   close.addEventListener('click', () => dialog.close());
   dialog.addEventListener('close', () => {
     frame.removeAttribute('src');
     ledger = null;
     sync();
-    if (opener) opener.focus();
+    const restore = afterWorkshop;
+    afterWorkshop = null;
+    if (restore) restore();
+    else if (opener && opener.isConnected) opener.focus();
+    opener = null;
   });
   root.addEventListener('message', event => {
     if (!dialog.open || event.source !== frame.contentWindow || !event.data) return;
@@ -95,7 +112,11 @@
     }
   });
   root.addEventListener('storage', event => {
-    if (event.key === prefKey) { readPrefs(); sync(); }
+    if (event.key === prefKey) {
+      readPrefs();
+      sync();
+      root.dispatchEvent(new CustomEvent('hapil-party-preferences'));
+    }
     if (event.key === 'hapil.ai-party.campaign.v1') ledger = null;
   });
   const pause = el('arcade-pause');

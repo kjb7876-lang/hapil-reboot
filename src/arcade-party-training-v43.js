@@ -31,6 +31,13 @@
     const difficulty = RULES[diffKey] ? diffKey : 'normal', rules=RULES[difficulty];
     const hero=Object.assign(makeActor(0,W*.5,H*.81),{hero:heroKey,kind:'hero',name:HERO_NAMES[heroKey],lives:rules.lives,bombs:rules.bombs,
       maxLives:rules.lives,attackLevel:1,bombLevel:1,fragments:0,bombHeld:false,bombQueued:false,powerHeld:false,powerQueued:false});
+    if(config.carry){
+      const c=config.carry;
+      hero.lives=integer(c.lives,1,rules.lives);
+      hero.bombs=integer(c.bombs,0,rules.bombs);
+      hero.fragments=integer(c.fragments,0,2);
+    }
+    const boons={droneDamage:1,archonCooldown:1,wardCapacity:0,powerCharge:1,reformTime:1,evadeSeconds:0,...config.boons};
     const defaults=[{kind:'archon',slot:'front'},{kind:'drone',slot:'wing'},{kind:'angel',slot:'rear'}];
     const lineup=Array.isArray(config.companions)?config.companions:defaults;
     const allies=[], slots=new Set(), kinds=new Set();
@@ -44,9 +51,13 @@
     const stage=[40,41,42].includes(config.stage)?config.stage:42;
     const maxHp=Math.round(({40:255,41:370,42:550})[stage]*(difficulty==='gentle'?.85:difficulty==='hell'?1.08:1));
     const lineage=['time','gravity','neural'].includes(config.lineage)?config.lineage:'time';
-    return {w:W,h:H,stage,difficulty,rules,tick:0,time:0,remaining:0,serial:0,rng:((config.seed==null?8243:config.seed)>>>0)||1,
+    const charge=Number.isFinite(config.carry?.charge)?clamp(config.carry.charge,0,100):100;
+    const seed=((config.seed==null?8243:config.seed)>>>0)||1;
+    // Vary the opening flank and the crossing angle while retaining the stage's readable cadence.
+    const opening=config.expedition ? {side:(seed & 1)?1:-1,offset:((seed>>>5)%17)-8} : {side:1,offset:0};
+    return {w:W,h:H,stage,difficulty,rules,boons,opening,tick:0,time:0,remaining:0,serial:0,rng:seed,
       phase:'battle',hero,allies,players:[hero,...allies],boss:{x:W/2,y:84,targetX:W/2,hp:maxHp,maxHp,alive:true},
-      power:{charge:100,max:100,ready:true,used:0,autoUsed:0,lineage,active:0,policy:config.powerPolicy==='manual'?'manual':'danger'},linkUsed:false,
+      power:{charge,max:100,ready:charge>=100,used:0,autoUsed:0,lineage,active:0,policy:config.powerPolicy==='manual'?'manual':'danger'},linkUsed:false,
       bullets:[],shots:[],warnings:[],fields:[],effects:[],volleys:[],nextTarget:0};
   }
   function random(s) { s.rng = (Math.imul(s.rng, 1664525) + 1013904223) >>> 0; return s.rng / 4294967296; }
@@ -78,7 +89,7 @@
   function hurt(s,p) {
     if(!p.alive||p.invuln>0)return;
     if(p.bot){
-      p.hits++;p.disruptions++;p.respawn=2.6;p.alive=false;
+      p.hits++;p.disruptions++;p.respawn=2.6*s.boons.reformTime;p.alive=false;
       effect(s,'disrupt',p,p.slot,.7);return;
     }
     if(p.hero==='memory'&&random(s)<.07){p.distortions++;p.invuln=.5;return;}
@@ -90,7 +101,7 @@
   }
   function warn(s, kind, side, target, lead, cross) {
     const x = s.boss.x + (kind === 'rank' ? side * 22 : 0), y = s.boss.y + 26;
-    const aimX = kind === 'aim' ? target.x : W * (.5 - side * (cross ? .16 : .04));
+    const aimX = kind === 'aim' ? target.x : W * (.5 - side * (cross ? .16 : .04)) + s.opening.offset;
     const aimY = kind === 'aim' ? target.y : H * .84;
     const cue = {id: ++s.serial, x, y, angle: Math.atan2(aimY - y, aimX - x), kind,
       targetSlot: target ? target.slot : -1, timeLeft: lead, lead, side};
@@ -105,7 +116,7 @@
     if(!s.boss.alive)return;
     const cycle=Math.round(({40:173,41:146,42:132})[s.stage]*s.rules.period);
     const t=s.tick-39;if(t<0)return;
-    const turn=Math.floor(t/cycle),beat=t%cycle,side=turn%2?1:-1;
+    const turn=Math.floor(t/cycle),beat=t%cycle,side=(turn%2?1:-1)*s.opening.side;
     if(beat===0)warn(s,'rank',side,null,.65,turn>0);
     if(s.stage>=41 && beat===Math.round(cycle*.29) && turn>0)warn(s,'rank',-side,null,.6,true);
     if(beat===Math.round(cycle*.74))s.boss.targetX=W*(.5+side*(s.stage===40?.09:.16));
@@ -134,7 +145,7 @@
     const aimLimit=p.bot?(p.kind==='drone'?.67:.43):.23;
     const a=-Math.PI/2+clamp(Math.atan2(b.x-p.x,p.y-b.y),-aimLimit,aimLimit)+(p.shotsFired++%2?-1:1)*spread;
     const boost=!automated(p)&&p.boost>0;
-    const damage=p.bot?({archon:1.3,drone:2.5,angel:1}[p.kind])*strength(p)*(p.position==='wing'?1.45:1):(boost?3:2);
+    const damage=p.bot?({archon:1.3,drone:2.5*s.boons.droneDamage,angel:1}[p.kind])*strength(p)*(p.position==='wing'?1.45:1):(boost?3:2);
     s.shots.push({id:++s.serial,x:p.x,y:p.y-12,vx:Math.cos(a)*420,vy:Math.sin(a)*420,slot:p.slot,kind:p.kind,boost,damage});
   }
   function anchor(s,p) {
@@ -256,7 +267,7 @@
     if(linked){s.linkUsed=true;source.link=true;lineEffect(s,'link',source,drone);}
     else if(sanctuary){
       s.linkUsed=true;angel.link=true;angel.casts++;
-      field(s,'barrier',angel,s.hero.x,s.hero.y-12,49,1.7,2);
+      field(s,'barrier',angel,s.hero.x,s.hero.y-12,49,1.7,2+s.boons.wardCapacity);
       lineEffect(s,'link',angel,archon||drone);
     }
     s.power.charge=0;s.power.ready=false;s.power.used++;return true;
@@ -268,13 +279,13 @@
     const near=threat(s,h,p.kind==='angel'?.7:1.55);
     const cadence=(p.position==='front'?.75:1)/(1+(p.stars-1)*.048+p.gear*.04+p.supply*.025);
     if(p.kind==='archon'){
-      if((near||s.warnings.length)&&activate(s,p,false))p.cooldown=8*cadence;
+      if((near||s.warnings.length)&&activate(s,p,false))p.cooldown=8*cadence*s.boons.archonCooldown;
     }else if(p.kind==='drone'){
       if(!near||dist(near,p)>132+3*p.stars||s.fields.some(f=>f.kind==='barrier'&&f.capacity>0&&dist(f,h)<f.r))return;
       s.bullets.splice(s.bullets.indexOf(near),1);
       p.casts++;p.intercepts++;p.assists++;lineEffect(s,'intercept',p,near);p.cooldown=4.8*cadence;
     }else if(near&&h.invuln<=0&&dist(h,p)<120){
-      field(s,'barrier',p,h.x,h.y-12,35+p.stars*1.2,1.15,p.position==='rear'?2:1);
+      field(s,'barrier',p,h.x,h.y-12,35+p.stars*1.2,1.15,(p.position==='rear'?2:1)+s.boons.wardCapacity);
       p.casts++;lineEffect(s,'barrier',p,h);p.cooldown=8.5*cadence;
     }
   }
@@ -298,7 +309,7 @@
     const h=s.hero;
     h.auto=controls.auto===true;
     const rear=s.allies.some(p=>p.alive&&p.position==='rear');
-    s.power.charge=Math.min(100,s.power.charge+(rear?1.2:1)*6*DT);
+    s.power.charge=Math.min(100,s.power.charge+(rear?1.2:1)*s.boons.powerCharge*6*DT);
     s.power.ready=s.power.charge>=100;s.power.active=Math.max(0,s.power.active-DT);
     for(const p of s.players){
       p.invuln=Math.max(0,p.invuln-DT);p.respawn=Math.max(0,p.respawn-DT);
@@ -369,7 +380,7 @@
       if(flying.has(v.id))return true;
       const m=v.marks[0],graze=m.close&&h.hits===m.hits&&h.unsafeTick<v.tick&&h.travel-m.travel>=14;
       const read=v.read&&v.read.clear&&h.hits===v.read.hits&&h.unsafeTick<v.read.tick;
-      if(h.alive&&!h.auto&&(graze||read)){h.evades++;h.boost=3;effect(s,'evade',h,0,.65);}
+      if(h.alive&&!h.auto&&(graze||read)){h.evades++;h.boost=3+s.boons.evadeSeconds;effect(s,'evade',h,0,.65);}
       return false;
     });
     for(const f of s.fields)f.timeLeft-=DT;

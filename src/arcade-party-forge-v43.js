@@ -36,6 +36,10 @@
       return {id:++s.offerSeq, kind, qty, cost:qty, sold:false};
     });
   }
+  function restock(s) {
+    s.reel=emptyReel();
+    s.shop=shop(s);
+  }
   function fresh(seed = randomSeed(), mode = 'trial') {
     const campaign = mode === 'campaign';
     const s = {version:1, mode:campaign?'campaign':'trial', revision:0, seed:seed>>>0, rng:seed>>>0,
@@ -69,6 +73,8 @@
     if (!Array.isArray(s.cleared) || !s.cleared.every(canStage) || !s.difficultyClears ||
         typeof s.difficultyClears!=='object' || Array.isArray(s.difficultyClears) ||
         !Object.values(s.difficultyClears).every(list=>Array.isArray(list)&&list.every(canStage))) return false;
+    if (s.restThrough!==undefined && (!s.restThrough || typeof s.restThrough!=='object' ||
+        Array.isArray(s.restThrough) || !Object.values(s.restThrough).every(canStage))) return false;
     if (s.active && (typeof s.active.id!=='string' || !number(s.active.stage,40,42) || typeof s.active.practice!=='boolean')) return false;
     return mode==='campaign' || s.stage>=40 && s.stage<=42;
   }
@@ -237,7 +243,6 @@
     if (s.mode==='trial' || sealStages.includes(stage)) reward.seals=1;
     if (s.mode==='campaign' && stage<=16 && stage%2===0) reward.vouchers=1;
     s.cleared.push(stage); s.credits+=reward.credits; s.seals+=reward.seals; s.vouchers+=reward.vouchers;
-    s.reel=emptyReel(); s.shop=shop(s);
     return reward;
   }
   function rewardText(r) {
@@ -253,6 +258,7 @@
       if (!won) return ok('재출격 시 같은 보급을 이어 씁니다.',{first:false});
       if (run.practice||s.cleared.includes(run.stage)) return ok('훈련을 마쳤습니다.',{first:false});
       const reward=firstClear(s,run.stage);
+      restock(s);
       s.stage=Math.min(42,run.stage+1);
       return ok(rewardText(reward),{first:true,reward});
     },false);
@@ -274,18 +280,32 @@
     },false,true);
     return result.config;
   }
-  function campaignClear(s,stage,difficulty='normal') {
+  function campaignClear(s,stage,difficulty='normal',runId) {
     if (s.mode!=='campaign'||!canStage(stage)) return fail('캠페인 스테이지를 확인하세요.');
     if (!['gentle','easy','normal','hell','handicap'].includes(difficulty)) difficulty='normal';
     if (difficulty==='easy') difficulty='gentle';
     return action(s,()=>{
       const records=s.difficultyClears[difficulty] || (s.difficultyClears[difficulty]=[]);
-      if (records.includes(stage)) return ok('이미 완료한 스테이지입니다.',{first:false});
-      records.push(stage);
-      if (s.cleared.includes(stage)) return ok('다른 난이도의 클리어를 기록했습니다.',{first:false});
+      const recorded=records.includes(stage);
+      if (!recorded) records.push(stage);
+      // Each expedition advances in order. Remember its furthest rest so repeated
+      // callbacks and reopened workshops cannot reroll the supplies or the shelf.
+      const runKey=typeof runId==='string' && runId.length>0 && runId.length<=128 ? 'run:'+runId : null;
+      const newRest=runKey!==null && stage>(s.restThrough?.[runKey]||0);
+      if (newRest) {
+        if (!s.restThrough) s.restThrough={};
+        s.restThrough[runKey]=stage;
+      }
+      const first=!s.cleared.includes(stage);
+      if (first || newRest) restock(s);
+      if (!first) {
+        const message=newRest ? '편대 보급과 상점 물자를 새로 준비했습니다.' :
+          recorded ? '이미 완료한 스테이지입니다.' : '다른 난이도의 클리어를 기록했습니다.';
+        return ok(message,{first:false,restocked:newRest});
+      }
       const reward=firstClear(s,stage);
       s.stage=Array.from({length:52},(_,i)=>i+1).find(n=>!s.cleared.includes(n))||52;
-      return ok(rewardText(reward),{first:true,reward});
+      return ok(rewardText(reward),{first:true,restocked:true,reward});
     },false,true);
   }
   function reset(s) {

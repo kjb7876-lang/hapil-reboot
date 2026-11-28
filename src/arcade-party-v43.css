@@ -5,3 +5,6 @@
 @media(max-width:334px){.home-body{padding:11px}.position .role{font-size:13px}.position .portrait{height:34px}.hero-panel,.hero-copy{min-height:131px}.hero-copy p{max-width:85%}.launch-row{margin-block:8px}.section-line{margin-top:9px}.battle-ctrl{padding-inline:7px}}
 .aux-actions{display:flex;align-items:center;justify-content:space-between;gap:8px}.aux-actions .text-button{font-size:12px;min-height:34px;padding:5px 0}
 .slot-effect{display:block;font-size:10px;line-height:1.55;color:#c6dbd0;letter-spacing:-.055em;font-weight:500}
+
+#applied-pick{font-size:10px;font-weight:600;color:var(--mint);max-width:37vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.launch-row+.switch{display:inline-flex;min-height:44px;font-weight:650}

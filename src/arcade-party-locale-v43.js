@@ -7,6 +7,8 @@
 편대 원정|Wing expedition|編隊遠征|编队远征|編隊遠征|Expedición de escuadrón|Expedição de esquadrão
 스토리 모드|Story mode|ストーリーモード|剧情模式|劇情模式|Modo historia|Modo história
 편대 준비|Prepare your wing|編隊準備|编队准备|編隊準備|Preparar escuadrón|Preparar esquadrão
+정비 마치기|Finish preparations|整備完了|完成整备|完成整備|Terminar los preparativos|Concluir preparativos
+선택으로 돌아가기|Back to rewards|報酬選択に戻る|返回奖励选择|返回獎勵選擇|Volver a las recompensas|Voltar às recompensas
 편대 출격|Launch wing|編隊出撃|编队出击|編隊出擊|Desplegar escuadrón|Lançar esquadrão
 영웅이 출격하면 세 동료가 편성한 자리에서 함께 싸웁니다.|Three allies will fight beside your hero in the positions you choose.|出撃すると、3人の仲間が指定した位置で共に戦います。|出击后，三名同伴会在指定位置与你并肩作战。|出擊後，三名同伴會在指定位置與你並肩作戰。|Tres aliados lucharán junto a tu héroe en los puestos que elijas.|Três aliados vão lutar ao lado do seu herói nas posições escolhidas.
 이 편대로 본편 출격|Enter story with this wing|この編隊で本編へ|以此编队进入正篇|以此編隊進入正篇|Jugar la historia con este escuadrón|Iniciar a história com este esquadrão
@@ -122,6 +124,8 @@
 동료 활동|Ally actions|仲間の活躍|同伴行动|同伴行動|Acciones aliadas|Ações dos aliados
 편대로 돌아가기|Return to formation|編隊に戻る|返回编队|返回編隊|Volver a la formación|Voltar à formação
 작전 성공|Mission clear|作戦成功|作战成功|作戰成功|Misión cumplida|Missão cumprida
+단독 훈련|Single-stage practice|単独ステージ訓練|单关训练|單關訓練|Práctica de una fase|Treino de uma fase
+영웅의 마지막 목숨을 모두 썼습니다.|Your hero lost their last life.|英雄の残機が尽きました。|英雄失去了最后一条命。|英雄失去了最後一條命。|Tu héroe ha perdido su última vida.|Seu herói perdeu a última vida.
 영웅 격추|Hero down|英雄撃墜|英雄被击落|英雄被擊落|Héroe derribado|Herói abatido
 다음 스테이지에 적용|Apply next stage|次のステージに適用|下一关生效|下一關生效|Aplicar en la fase siguiente|Aplicar na próxima fase
 바꾼 배치는 다음 스테이지부터 적용됩니다. 자동 회피 설정은 전투를 재개하면 바로 반영됩니다.|Formation changes take effect next stage. Auto-dodge changes as soon as you resume.|編成変更は次のステージから、自動回避の変更は戦闘再開時から反映されます。|新阵型将在下一关生效。自动闪避设置在恢复战斗时立即生效。|新陣形將在下一關生效。自動閃避設定在恢復戰鬥時立即生效。|La formación cambiará en la próxima fase. La esquiva automática se ajustará al reanudar.|A formação muda na próxima fase. A esquiva automática muda ao retomar a batalha.

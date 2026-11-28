@@ -761,6 +761,89 @@
   function noteSpell(s){var seg=Arcade.SEGMENTS[s.seg];if((s.stage==='card'||s.stage==='lost'||s.cardEnding)&&seg&&seg.kind==='card'&&seg.spell)lastSpell={seg:s.seg,stage:seg.stage,name:seg.name,hero:s.hero};}
   /* 이번 판 점수를 양분으로(남은 점수는 다음에 이어 센다). 스테이지를 깰 때·판이 끝날 때·타이틀로 나갈 때 */
   var partySprites={},partyModule=global.HapilArcadeParty;
+  var expeditionRules=global.PartyExpedition;
+  var campaign=expeditionRules&&expeditionRules.open('campaign');
+  function activeExpedition(){
+    if(!campaign||!global.HapilPartyStop||!global.HapilPartyLoadout||!global.HapilPartyLoadout())return null;
+    var run=campaign.read();
+    return run&&(run.status==='battle'||run.status==='rest')&&run.difficulty===difficulty&&!devMode?run:null;
+  }
+  function expeditionStage(run){return run.status==='rest'?run.stage+1:run.stage;}
+  function expeditionConfig(config,run){
+    return config&&run?Object.assign({},config,{effects:expeditionRules.effects(run)}):config;
+  }
+  function carryPilot(s,target,segment){
+    var next=target!==s.stageIndex,partChange=next&&Arcade.STAGES[target]&&Arcade.STAGES[target].part!==Arcade.STAGES[s.stageIndex].part;
+    var carry={stage:target,seg:segment,chapter:lastRun&&lastRun.chapter||0,lives:partChange&&s.rules.partHeal<0?s.player.maxHp:s.player.hp,
+      stock:s.bombs,exp:s.exp,expRemainder:s.expRemainder,fills:s.fills,union:!!s.union,score:s.score,
+      graze:s.graze,hits:s.hits,bombsUsed:s.bombsUsed,captures:s.captures,spellNumber:s.spellNumber,pieces:s.pieces,
+      gauge:s.gauge,banked:s.groveRun.banked,sap:s.groveRun.sap,party:partyModule.checkpoint(s),mark:Object.assign({},s.mark)};
+    // The engine resets its clock when reopening a saved segment.
+    carry.mark.tick=next?0:s.mark.tick-s.tick;
+    return carry;
+  }
+  function restorePilot(s,carry){
+    if(!carry||carry.stage!==s.stageIndex)return;
+    if(Number.isFinite(carry.lives))s.player.hp=Math.max(1,Math.min(s.player.maxHp,carry.lives));
+    if(Number.isFinite(carry.stock))s.bombs=Math.max(0,Math.min(Arcade.bombCap(s),carry.stock));
+    ['score','graze','hits','bombsUsed','captures','spellNumber','pieces','gauge'].forEach(function(key){
+      if(Number.isFinite(carry[key]))s[key]=Math.max(0,carry[key]);
+    });
+    if(carry.mark)Object.keys(s.mark).concat('graze').forEach(function(key){if(Number.isFinite(carry.mark[key]))s.mark[key]=carry.mark[key];});
+    s.party.hits=s.hits;s.party.grazes=s.graze;
+    partyModule.restore(s,carry.party);
+    s.groveRun.banked=carry.banked||0;s.groveRun.sap=carry.sap||0;
+  }
+  function saveExpedition(s,force){
+    if(!s||!s.expeditionId||s.stage==='lost'||s.stage==='won'||s.expeditionRest)return;
+    var stage=Arcade.STAGES[s.stageIndex],seg=s.started?s.seg:stage.first;
+    if(s.stage==='bossClear'&&s.bossClear)seg=s.bossClear.nextSegment;
+    if(!Arcade.SEGMENTS[seg]||Arcade.SEGMENTS[seg].stage!==s.stageIndex)return;
+    if(!force&&s.expeditionSavedSeg===seg)return;
+    s.expeditionSavedSeg=seg;
+    campaign.checkpoint(s.expeditionId,s.stageIndex+1,carryPilot(s,s.stageIndex,seg));
+  }
+  function settleExpedition(s,result){
+    if(!s.expeditionId)return;
+    var next=result.stage+1,end=next>s.lastStage,skipped=devMode||rushStage;
+    if(skipped){campaign.lose(s.expeditionId,next);s.expeditionId=null;return;}
+    var carry=end?null:carryPilot(s,next,Arcade.STAGES[next].first);
+    var run=campaign.clear(s.expeditionId,result.stage+1,carry);
+    s.expeditionRest=!!run&&run.id===s.expeditionId&&run.status==='rest';
+  }
+  function arrive(s,fromPart){
+    loadStage(s.stageIndex);
+    if(fromPart&&fromPart!==Arcade.STAGES[s.stageIndex].part)openChapterCard(fromPart,Arcade.STAGES[s.stageIndex].part,null);
+  }
+  function openPartyRest(s){
+    var run=campaign.read(),stop=global.HapilPartyStop;
+    if(!run||run.status!=='rest'||run.id!==s.expeditionId||run.stage!==s.stageIndex)return false;
+    s.expeditionRest=true;accumulator=0;lastStamp=0;setMode('partyRest');
+    var stage=run.stage,next=Arcade.STAGES[stage];
+    var spell=Arcade.SEGMENTS.find(function(g){return g.stage===stage&&g.kind==='card'&&g.spell&&!g.mid;});
+    function stillHere(){
+      if(state!==s||mode!=='partyRest'||s.expeditionId!==run.id)return false;
+      var latest=campaign.read();return !!latest&&latest.id===run.id&&latest.stage===stage&&latest.status==='rest';
+    }
+    stop.open({stage:stage,nextStage:stage+1,nextName:localText(next.name),
+      summary:'♥ '+s.player.hp+' / '+s.player.maxHp+' · '+T('bomb')+' ×'+s.bombs,
+      forecast:spell?localText(segName(spell))+' · '+localText(spell.name):'',lang:I18n.lang,offers:run.offers,selected:run.selected,picks:run.picks,
+      onSelect:function(id){
+        if(!stillHere())return false;
+        var selected=campaign.select(run.id,stage,id);return !!selected&&selected.id===run.id&&selected.stage===stage&&selected.selected===id;
+      },
+      onWorkshop:function(){if(!stillHere()||!global.HapilPartyOpenWorkshop)return;stop.hide();global.HapilPartyOpenWorkshop(function(){if(stillHere())openPartyRest(s);});},
+      onLaunch:function(id){
+        if(!stillHere())return false;
+        var nextRun=campaign.choose(run.id,stage,id);
+        if(!nextRun||nextRun.id!==run.id||nextRun.stage!==stage+1||nextRun.status!=='battle')return false;
+        var config=global.HapilPartyEnterStage(stage+1,{resume:true});
+        partyModule.refit(s,expeditionConfig(config,nextRun));s.party.auto=!!global.HapilPartyPilotAuto();
+        s.expeditionRest=false;stop.close();saveExpedition(s,true);accumulator=0;lastStamp=0;setMode('playing');
+        arrive(s,Arcade.STAGES[stage-1].part);
+      }});
+    return true;
+  }
   function preparePartySprites(){
     if(!partyModule)return;
     ['archon','archonGravity','archonNeural','drone','angel'].forEach(function(kind){
@@ -769,11 +852,12 @@
     });
   }
   global.HapilPartyIsActive=function(){return !!(state&&state.party&&(mode==='playing'||mode==='paused'));};
-  global.addEventListener('hapil-party-auto',function(e){if(state&&state.party)state.party.auto=e.detail===true;});
+  global.addEventListener('hapil-party-auto',function(e){if(state&&state.party)state.party.auto=e.detail===true;if(mode==='title'&&progress)refreshTitle();});
+  global.addEventListener('hapil-party-preferences',function(){if(mode==='title'&&progress)refreshTitle();});
   function bankSap(s){if(!Grove||!grove||!s||!s.groveRun||devMode)return 0;var got=Grove.earn(grove,s.groveRun,s.score);if(got)Grove.save(grove);return got;}
   function recordResult(result){
     if(!result||state.bossOnly||state.spellOnly)return;
-    if(state.party&&!devMode&&!rushStage&&global.HapilPartyCampaignCleared)global.HapilPartyCampaignCleared(result.stage+1,state.mode||state.difficulty);
+    if(state.party&&!devMode&&!rushStage&&global.HapilPartyCampaignCleared)global.HapilPartyCampaignCleared(result.stage+1,state.mode||state.difficulty,state.expeditionId);
     progress=Progress.record(progress,result,state.mode||state.difficulty);if(Chapters)chapterLog=Chapters.noteClear(chapterLog,Arcade.STAGES,progress,result.stage,state.mode||state.difficulty);saveProgress();
   }
   function recordBestScore(s){
@@ -844,8 +928,12 @@
       else if(e==='formShift'){beginFormShift(s);wantFx(sheetWho(s));}
       else if(e==='plain'){var ppi=shownPhase(s);if(ppi&&ppi.count>1&&s.entranceAll)showBanner(localText('PHASE {n}/{total}',{n:ppi.no,total:ppi.count}),phaseLabel(s,false),false);}
       else if(e==='wave'){var g=Arcade.STAGES[s.stageIndex];if(g.first===s.seg){showBanner(g.name,localText('제{n}부 · STAGE {stage}',{n:g.part,stage:s.stageIndex+1}));play('seal');}}
-      else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);bankSap(s);showToast(r);rushStage=false;}
-      else if(e==='map'){if(s.party&&global.HapilPartyEnterStage)partyModule.refit(s,global.HapilPartyEnterStage(s.stageIndex+1));var fromPart=s.results.length?Arcade.STAGES[s.results[s.results.length-1].stage].part:0;loadStage(s.stageIndex);if(fromPart&&fromPart!==Arcade.STAGES[s.stageIndex].part)openChapterCard(fromPart,Arcade.STAGES[s.stageIndex].part,null);}
+      else if(e==='stageClear'){var r=s.results[s.results.length-1];recordResult(r);bankSap(s);settleExpedition(s,r);showToast(r);rushStage=false;}
+      else if(e==='map'){
+        if(s.expeditionRest&&openPartyRest(s))continue;
+        if(s.party&&global.HapilPartyEnterStage)partyModule.refit(s,global.HapilPartyEnterStage(s.stageIndex+1));
+        arrive(s,s.results.length?Arcade.STAGES[s.results[s.results.length-1].stage].part:0);
+      }
       else if(e==='entrance'){if(storyArrivalActor!==s.boss.actor)play('warning');storyArrivalActor='';wantFx(sheetWho(s));showBanner(s.boss.name,s.boss.mid?'중간보스':'보스');} // 본보스 컷인은 enter() 전, 중간보스는 기존 입장만.
       else if(e==='bossClear'){clearCombatPresentation();if(Mobile&&Mobile.commitBossClear)Mobile.commitBossClear(s);
         // 마지막 승리는 2초 연출 중 나가도 최고점이 남아야 한다. 계속되는 여정은 기존 finish() 시점에 기록한다.
@@ -2243,12 +2331,14 @@
   }
   function frame(stamp){
     requestAnimationFrame(frame);
+    if(mode==='partyRest'){lastStamp=stamp;return;} // The full-screen workshop owns the display on phones.
     if(!lastStamp)lastStamp=stamp;var rawMs=stamp-lastStamp,elapsed=finite(Math.min(.1,Math.max(0,(stamp-lastStamp)/1000)),0);lastStamp=stamp;visual+=elapsed;
     if(mode==='playing'&&state){
       adaptQuality(rawMs>STALL_FRAME_MS?rawMs:elapsed*1000);if(devMode)showDevBadge();accumulator=Math.min(accumulator+elapsed,4/60);if(devMode)accumulator=Math.min(accumulator+elapsed*(DEV_SPEED-1),4*DEV_SPEED/60); // 개발자 모드는 같은 60Hz 틱을 두 배로 돌린다
       var steps=0,limit=turbo||rushStage?Math.max(4,turbo||60):devMode?4*DEV_SPEED:4;if(turbo||rushStage)accumulator=limit/60;
       if(drill){while(accumulator>=1/60&&steps<4){drillTick(inputForStep());accumulator-=1/60;steps++;}accumulator=Math.min(accumulator,1/60);}
       else while(accumulator>=1/60&&steps<limit&&mode==='playing'){if(beginStory())break;if(rushStage)rushTick(state);if(devMode)state.player.hp=state.player.maxHp;state.flameArtReady=!!images.p2_flame;Arcade.step(state,inputForStep());accumulator-=1/60;steps++;consume();if(mode==='playing')beginStory();}
+      if(mode==='playing'&&state&&state.expeditionId&&!state.expeditionRest)saveExpedition(state,false);
       if(Mobile&&state)Mobile.tick(state,mode,rawMs); // 진단은 잘리기 전 실제 프레임 시간(1초 넘는 복귀 프레임은 tick이 버림)
     }
     if(mode==='chapter'&&chapterCard&&!document.hidden)chapterCard.tick(elapsed*1000);
@@ -2261,7 +2351,7 @@
   /* ── 메뉴 ── */
   function show(id,on){var el=$(id);if(el)el.hidden=!on;}
   var SCREENS={title:'arcade-title',paused:'arcade-pause',result:'arcade-result',keepsakes:'arcade-keepsake-screen',boss:'arcade-boss-screen',story:'arcade-story',rules:'arcade-rules',hero:'arcade-hero-select',chapters:'arcade-chapter-screen',chapter:'arcade-chapter-card',grove:'arcade-grove-screen'};
-  function musicMode(){return mode==='story'||mode==='chapter'?'playing':mode==='rules'&&rulesReturn!=='title'?'paused':mode;}
+  function musicMode(){return mode==='partyRest'?'paused':mode==='story'||mode==='chapter'?'playing':mode==='rules'&&rulesReturn!=='title'?'paused':mode;}
   function syncStoryFx(){var el=$('arcade-story');if(!el)return;el.dataset.paused=String(mode!=='story');el.dataset.lite=String(settings.lowQuality);el.dataset.shake=String(settings.screenShake);}
   function revealStory(){if(!story||story.phase!=='impact')return;story.phase='memory';story.elapsed=0;$('arcade-story').dataset.phase='memory';if(fx&&fx.suspend)fx.suspend(true);}
   function paintStory(){
@@ -2406,7 +2496,7 @@
     var hh=$('arcade-hud-high'),hl=$('arcade-hud-low');if(hh&&hl)hh.hidden=hl.hidden=!(hudOut&&next==='playing');
     if(next!=='playing')clearInput();
     else if(document.activeElement&&document.activeElement.blur)document.activeElement.blur();
-    syncStoryFx();if(fx&&fx.suspend)fx.suspend(next==='paused'||next==='rules'||(next==='story'&&(!story||story.phase!=='impact')));
+    syncStoryFx();if(fx&&fx.suspend)fx.suspend(next==='partyRest'||next==='paused'||next==='rules'||(next==='story'&&(!story||story.phase!=='impact')));
     if(next==='paused'){syncSettings();var resume=$('arcade-resume');if(resume&&resume.focus)resume.focus({preventScroll:true});}
     if(next!=='keepsakes')clearKeepsakes();
     if(global.HapilMusic)global.HapilMusic.update(musicMode(),state,settings.music); // 구간별 곡(arcade-music-v43.js). 없으면 예전 한 곡
@@ -2423,17 +2513,22 @@
   function start(run){
     clearInput();if(fx&&fx.reset)fx.reset();unlockAudio();
     var quiet=!!(run&&run.quiet);storyQuiet=quiet;story=null;storyArrivalActor='';pauseReturn='playing';
+    var continued=run&&run.expedition,expedition=null;
     var grown=run&&run.grown; // 이어하기와 재도전에서 물려받는 공격·필살 성장
     var chapterPart=run&&Number.isInteger(run.chapter)?run.chapter:0;
     run={chapter:chapterPart,stage:Math.max(0,Math.min(Arcade.STAGES.length-1,run&&run.stage|0)),bossOnly:!!(run&&run.bossOnly),spellOnly:!!(run&&run.spellOnly&&Number.isInteger(run.segment)),segment:run&&run.segment,carry:run&&run.carry,practice:!!(run&&run.practice),hero:heroId(run&&run.hero||selectedHero)};
     lastRun=run;lastSpell=run.spellOnly?lastSpell:null;oneCreditEligible=run.stage===0&&!run.bossOnly&&!run.spellOnly&&!Number.isInteger(run.segment)&&!run.carry&&!run.practice&&!quiet&&!devMode;
     var options={ability:abilityFor(run.hero),entranceAll:true,difficulty:difficulty,seed:fixedSeed(difficulty,run.stage),stage:run.stage,hero:run.hero,compact:compact,bossOnly:run.bossOnly,spellOnly:run.spellOnly,growth:true,pacing:!quiet,rhythm:!quiet,fruits:Grove&&grove?Grove.equipped(grove):0,bulletSpeed:settings.handicapSpeed}; // 중간 스테이지에서 시작하면 그만큼 성장한 영웅으로.
+    if(run.chapter&&Chapters){var ch=Chapters.list(Arcade.STAGES)[run.chapter-1];if(ch&&ch.last>=run.stage)options.stages=ch.last-run.stage+1;}
     if(partyModule&&!quiet&&!devMode&&!run.bossOnly&&!run.spellOnly&&(!Number.isInteger(run.segment)||run.carry)&&global.HapilPartyLoadout&&global.HapilPartyLoadout()){
-      options.party=global.HapilPartyEnterStage?global.HapilPartyEnterStage(run.stage+1,{resume:!!run.carry}):global.HapilPartyLoadout();
       options.partyAuto=!!(global.HapilPartyPilotAuto&&global.HapilPartyPilotAuto());
+      if(campaign&&global.HapilPartyStop){
+        expedition=continued||campaign.start({startStage:run.stage+1,endStage:options.stages?run.stage+options.stages:Arcade.STAGES.length,hero:run.hero,difficulty:difficulty,auto:options.partyAuto});
+      }
+      var config=expedition&&expedition.status==='rest'?global.HapilPartyLoadout():global.HapilPartyEnterStage?global.HapilPartyEnterStage(run.stage+1,{resume:!!(continued||run.carry)}):global.HapilPartyLoadout();
+      options.party=expeditionConfig(config,expedition);
       if(options.party){oneCreditEligible=false;preparePartySprites();}
     }
-    if(run.chapter&&Chapters){var ch=Chapters.list(Arcade.STAGES)[run.chapter-1];if(ch&&ch.last>=run.stage)options.stages=ch.last-run.stage+1;} // 챕터 재도전: 그 챕터 끝에서 멈춘다
     if(Number.isInteger(run.segment))options.segment=run.segment;if(grown&&(grown.exp||grown.expRemainder||grown.fills||grown.union||typeof grown.stock==='number')){options.grown={exp:grown.exp|0,fills:grown.fills|0,expRemainder:grown.expRemainder};if(typeof grown.stock==='number')options.grown.stock=grown.stock;if(grown.union===true)options.grown.union=true;}
     if(state)bankSap(state);
     castBeat=null;casts.length=emblems.length=0;
@@ -2441,14 +2536,17 @@
     if(isSeoha(state.hero))loadImage('hero-'+state.hero);
     if(state.hero==='seoha')loadImage('hero-seoha-b');
     if(!run.bossOnly&&!run.spellOnly&&!quiet){journeyHero=run.hero;try{global.localStorage.setItem(JOURNEY_HERO_KEY,journeyHero);}catch(e){}}
-    if(run.carry){state.hits+=run.carry.hits|0;state.bombsUsed+=run.carry.bombs|0;if(state.party)state.party.hits=state.hits;} // 중간 저장에서 이어 하면 앞 구간의 피격·폭탄도 별에 반영
+    if(continued&&state.party){restorePilot(state,continued.carry);}else if(run.carry){state.hits+=run.carry.hits|0;state.bombsUsed+=run.carry.bombs|0;if(state.party)state.party.hits=state.hits;} // 중간 저장에서 이어 하면 앞 구간의 피격·폭탄도 별에 반영
+    if(expedition&&state.party)state.expeditionId=expedition.id;
     buildSprites();loadStage(state.stageIndex);fxStage=-1;
     drill=null;var seenDrill=false,dq=/[?&]drill=([01])\b/.exec(global.location&&global.location.search||'');try{seenDrill=global.localStorage.getItem(DRILL_KEY)==='1';}catch(e){seenDrill=true;}
     if(dq)seenDrill=dq[1]==='0';else if(global.navigator&&global.navigator.webdriver)seenDrill=true; // 자동 검사 브라우저는 실습을 건너뛴다(?drill=1 이면 보인다): 기존 화면 검사가 1스테이지 진행을 본다
-    if(!seenDrill&&!quiet&&!devMode&&run.stage===0&&!run.bossOnly&&!run.spellOnly&&!Number.isInteger(run.segment))drill={step:0,t:0,all:0,moved:0,focusT:0,bombs:0,done:-1,lx:state.player.x,ly:state.player.y};
+    if(!continued&&!seenDrill&&!quiet&&!devMode&&run.stage===0&&!run.bossOnly&&!run.spellOnly&&!Number.isInteger(run.segment))drill={step:0,t:0,all:0,moved:0,focusT:0,bombs:0,done:-1,lx:state.player.x,ly:state.player.y};
     show('arcade-drill-skip',!!drill);
     particles.length=0;drifts.length=0;inks.length=0;flash=hurtFlash=shake=banner=0;shock=null;hurtRing=null;toast=null;if(HeroFx)HeroFx.reset();accumulator=0;lastStamp=0;framesSeen=0;seenMs=0;rushStage=false;setMode('playing');
     if(global.HapilEyes)global.HapilEyes[quiet?'clear':'open'](); // 눈 뜨기(arcade-eyes-v43.js). 디버그 건너뛰기는 연출 없이
+    if(continued&&continued.status==='rest'&&openPartyRest(state))return;
+    if(expedition)saveExpedition(state,true);
     var firstOfPart=Chapters&&!quiet&&!run.bossOnly&&!run.spellOnly&&!Number.isInteger(run.segment)&&Chapters.list(Arcade.STAGES)[Arcade.STAGES[run.stage].part-1].first===run.stage;
     if(firstOfPart)openChapterCard(0,Arcade.STAGES[run.stage].part,function(){setMode('playing');if(global.HapilEyes)global.HapilEyes.open();}); // 챕터 첫 스테이지에서 시작하면 그 챕터의 문부터, 카드가 걷히면 눈을 다시 뜬다
   }
@@ -2487,6 +2585,7 @@
   }
   function finish(){
     var s=state,won=s.stage==='won';rushStage=false;
+    if(!won&&s.expeditionId)campaign.lose(s.expeditionId,s.stageIndex+1);
     recordBestScore(s);bankSap(s);
     var chapterEnd=paintResult(s,won);
     var eyes=!won&&global.HapilEyes;if(eyes)eyes.close(); // 목숨이 다하면 눈을 감고, 다 감긴 뒤 결과 화면
@@ -2567,7 +2666,7 @@
     var t=lastSaveAt?new Date(lastSaveAt).toLocaleString(I18n.lang||'ko',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}):'';
     el.textContent=!saveOk?localText('이 브라우저에는 저장되지 않습니다. 기록 코드를 복사해 두면 다른 곳에서 불러올 수 있습니다.'):localText('스테이지를 깨거나 보스를 쓰러뜨리면 자동 저장됩니다. 기록 코드로 다른 기기에 옮길 수 있습니다.')+(t?' · '+localText('마지막 저장 {time}',{time:t}):'');
   }
-  function goTitle(){castBeat=null;casts.length=emblems.length=0;wantFx('');bankSap(state);story=null;storyArrivalActor='';if(global.HapilEyes)global.HapilEyes.clear();if(loadedStage>=0)releaseStage(loadedStage,-1);state=null;toast=null;refreshTitle();setMode('title');}
+  function goTitle(){bankSap(state);saveExpedition(state,true);if(mode==='partyRest'&&global.HapilPartyStop)global.HapilPartyStop.close();castBeat=null;casts.length=emblems.length=0;wantFx('');story=null;storyArrivalActor='';if(global.HapilEyes)global.HapilEyes.clear();if(loadedStage>=0)releaseStage(loadedStage,-1);state=null;toast=null;refreshTitle();setMode('title');}
   function bossStages(){return Arcade.STAGES.filter(function(g){return g.kind==='boss'&&progress.cleared.indexOf(g.index)>=0;});}
   function actorNames(index){var names=[];Arcade.SEGMENTS.forEach(function(seg){if(seg.stage===index&&seg.kind==='card'){var n=segName(seg);if(names.indexOf(n)<0)names.push(n);}});return names;}
   // 스테이지 선택: 부별로 묶고, 잠긴 스테이지는 고를 수 없다. 깬 스테이지에는 별을 단다.
@@ -2587,7 +2686,7 @@
   }
   function midway(){return Mobile&&Mobile.checkpoint?Mobile.checkpoint(Progress.resume(progress),difficulty):null;}
   function refreshTitle(){
-    var resume=Progress.resume(progress),mid=midway(),any=progress.cleared.length>0||!!mid,cont=$('arcade-continue'),begin=$('arcade-start');
+    var run=activeExpedition(),resume=run?expeditionStage(run)-1:Progress.resume(progress),mid=run?null:midway(),any=!!run||progress.cleared.length>0||!!mid,cont=$('arcade-continue'),begin=$('arcade-start');
     cont.hidden=!any;cont.textContent=T(mid&&mid.seg!==Arcade.STAGES[resume].first?'continueMid':'continueStage',{n:resume+1});
     $('continue-note').textContent=any?localText(Arcade.STAGES[resume].name):'';$('continue-note').hidden=!any;
     cont.className=any?'primary':'';begin.className=any?'':'primary';
@@ -2761,6 +2860,11 @@
     document.querySelectorAll('[data-bullet-speed]').forEach(function(button){button.addEventListener('click',function(){settings.handicapSpeed=Arcade.handicapSpeed?Arcade.handicapSpeed(button.dataset.bulletSpeed):1;applySettings(true);syncHandicapSpeed();});});
     document.querySelectorAll('[data-difficulty]').forEach(function(button){button.addEventListener('click',function(){setDifficulty(button.dataset.difficulty);progress.difficulty=difficulty;saveProgress();if(state===null)refreshTitle();});});
     $('arcade-continue').addEventListener('click',function(){
+      var run=global.PartyExpedition&&activeExpedition();
+      if(run){
+        var stage=expeditionStage(run)-1,carry=run.carry,seg=carry&&carry.stage===stage&&carry.seg!==Arcade.STAGES[stage].first?carry.seg:undefined;
+        start({expedition:run,stage:stage,segment:seg,hero:run.hero,chapter:carry&&carry.chapter,practice:true,carry:{},grown:carry});return;
+      }
       var mid=midway();
       start(mid?{practice:true,stage:mid.stage,segment:mid.seg===Arcade.STAGES[mid.stage].first?undefined:mid.seg,hero:heroId(mid.hero),carry:{hits:mid.hits,bombs:mid.bombs},grown:mid}
         :{practice:true,stage:Progress.resume(progress),hero:journeyHero});
@@ -2866,7 +2970,8 @@
       if(tok===settings.keyFocus){e.preventDefault();keys.focus=true;syncFocusButton();return;}
       if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','w','a','s','d'].indexOf(key)>=0){e.preventDefault();keys[key]=true;syncFocusButton();}});
     document.addEventListener('keyup',function(e){delete keys[e.key.length===1?e.key.toLowerCase():e.key];if(keyToken(e)===settings.keyFocus)delete keys.focus;syncFocusButton();});
-    document.addEventListener('visibilitychange',function(){if(document.hidden)pause();});
+    document.addEventListener('visibilitychange',function(){if(document.hidden){saveExpedition(state,true);pause();}});
+    global.addEventListener('pagehide',function(){saveExpedition(state,true);});
     global.addEventListener('blur',function(){clearInput();pause();});global.addEventListener('resize',fit);
   }
   function ready(){var b=$('arcade-start');if(!b.disabled)return;b.disabled=false;b.dataset.i18n='fromStart';b.textContent=T('fromStart');}
@@ -2884,6 +2989,7 @@
       $('story-boss-name').textContent=localText(name);
       $('story-portrait').setAttribute('aria-label',localText(name));
     }
+    if(mode==='partyRest'&&state&&(!$('arcade-party-dialog')||!$('arcade-party-dialog').open))openPartyRest(state);
     if(mode==='chapters'){drawChapters();paintSaveState();}
     if(mode==='grove'&&groveView){groveView.stop();openGrove();}
     if(mode==='keepsakes')openKeepsakes();
@@ -2914,7 +3020,7 @@
   /* 디버그 훅(헤드리스 검증용): 상태를 읽고, 스테이지·구간으로 건너뛰고, 진행 기록을 본다. */
   global.HapilArcadeApp={
     getState:snapshot,devDiag:devDiag,drawPropArt:drawPropArt, // tools/build-drawn-props-v43.cjs가 그림 파일을 구울 때 쓴다
-    pause:pause,back:function(){if(mode==='chapter'&&chapterCard)chapterCard.skip();else if(mode==='story')pause();else if(mode==='rules')closeRules();else if(mode==='paused')$('arcade-resume').click();else if(mode!=='title'&&mode!=='playing')goTitle();}, // 앱의 뒤로가기(arcade-mobile-v43.js)
+    pause:pause,back:function(){if(mode==='partyRest'&&$('arcade-party-dialog')&&$('arcade-party-dialog').open){$('arcade-party-dialog').close();return;}if(mode==='chapter'&&chapterCard)chapterCard.skip();else if(mode==='story')pause();else if(mode==='rules')closeRules();else if(mode==='paused')$('arcade-resume').click();else if(mode!=='title'&&mode!=='playing')goTitle();}, // 앱의 뒤로가기(arcade-mobile-v43.js)
     drill:function(){return drill?JSON.parse(JSON.stringify(drill)):null;},skipDrill:function(){if(drill)endDrill();},
     debugState:function(){
       return {state:state,app:snapshot(),signature:Phase2&&state?Phase2.inspect(state):null,progress:JSON.parse(JSON.stringify(progress)),saved:(function(){try{return global.localStorage.getItem(SAVE_KEY);}catch(e){return null;}})(),

@@ -20,7 +20,8 @@ if(!scripts.includes('src/arcade-app-v43.js'))throw new Error('arcade.html does 
 const partyHtml=fs.readFileSync(path.join(root,'party.html'),'utf8');
 const partyScripts=[...partyHtml.matchAll(/<script src="([^"?]+)/g)].map(m=>m[1]);
 for(const s of new Set([...scripts,...partyScripts]))copy(s);
-copy('src/arcade-party-v43.css');
+const styles=[...(html+'\n'+partyHtml).matchAll(/<link rel="stylesheet" href="([^"?]+)/g)].map(m=>m[1]);
+for(const style of new Set(styles))copy(style);
 const appParty=partyHtml.replaceAll('./arcade.html','./index.html');
 fs.writeFileSync(path.join(out,'party.html'),appParty);bytes+=Buffer.byteLength(appParty);files++;
 copy('src/arcade-i18n-privacy-v43.js');
