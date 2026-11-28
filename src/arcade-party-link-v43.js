@@ -31,6 +31,7 @@
   root.HapilPartyPilotAuto = () => automatic;
   root.HapilPartyExplicitlyEnabled = () => choices[difficulty] === true;
   root.HapilPartyLoadout = () => enabled() && forge ? forge.battleConfig(profile()) : null;
+  root.HapilPartyReelStatus = () => enabled() && forge ? profile().reel.status : null;
   root.HapilPartyEnterStage = (stage, flags) => enabled() && forge ? forge.campaignEnter(profile(), stage, flags) : null;
   root.HapilPartyCampaignCleared = (stage, difficulty, runId) => {
     if (enabled() && forge) return forge.campaignClear(profile(), stage, difficulty, runId);
@@ -45,6 +46,7 @@
   function sync() {
     if (!toggle) return;
     toggle.checked = enabled();
+    el('party-mode-note').hidden = !toggle.checked;
     auto.checked = automatic;
     const active = enabled() && (typeof root.HapilPartyIsActive !== 'function' || root.HapilPartyIsActive());
     el('party-auto-row').hidden = !active;
@@ -87,22 +89,24 @@
   const frame = el('arcade-party-workshop');
   const close = el('arcade-party-dialog-close');
   let afterWorkshop = null;
-  function open(trigger, onReturn) {
+  function open(trigger, onReturn, pane) {
     if (dialog.open) return;
     opener = trigger;
     afterWorkshop = onReturn;
     const url = new URL('party.html', root.location.href);
     url.searchParams.set('campaign', '1');
     url.searchParams.set('embed', '1');
+    url.searchParams.set('v','20261129-ink-expedition');
     if (onReturn) url.searchParams.set('rest', '1');
     else if (opener === el('party-pause-prepare')) url.searchParams.set('during', '1');
+    if (onReturn && pane === 'supply') url.searchParams.set('pane', 'supply');
     frame.src = url.href;
     dialog.showModal();
     close.focus();
   }
   el('arcade-party-prepare').addEventListener('click', event => open(event.currentTarget, null));
   el('party-pause-prepare').addEventListener('click', event => open(event.currentTarget, null));
-  root.HapilPartyOpenWorkshop = onReturn => open(null, onReturn);
+  root.HapilPartyOpenWorkshop = (onReturn, pane) => open(null, onReturn, pane);
   close.addEventListener('click', () => dialog.close());
   dialog.addEventListener('close', () => {
     frame.removeAttribute('src');

@@ -770,7 +770,7 @@
   }
   function expeditionStage(run){return run.status==='rest'?run.stage+1:run.stage;}
   function expeditionConfig(config,run){
-    return config&&run?Object.assign({},config,{effects:expeditionRules.effects(run)}):config;
+    return config&&run?Object.assign({},config,{effects:expeditionRules.effects(run,config.companions)}):config;
   }
   function carryPilot(s,target,segment){
     var next=target!==s.stageIndex,partChange=next&&Arcade.STAGES[target]&&Arcade.STAGES[target].part!==Arcade.STAGES[s.stageIndex].part;
@@ -825,14 +825,27 @@
       if(state!==s||mode!=='partyRest'||s.expeditionId!==run.id)return false;
       var latest=campaign.read();return !!latest&&latest.id===run.id&&latest.stage===stage&&latest.status==='rest';
     }
+    function visitWorkshop(pane){
+      if(!stillHere()||!global.HapilPartyOpenWorkshop)return;
+      stop.hide();
+      global.HapilPartyOpenWorkshop(function(){if(stillHere())openPartyRest(s);},pane);
+    }
+    var formation=global.HapilPartyLoadout();
     stop.open({stage:stage,nextStage:stage+1,nextName:localText(next.name),
+      run:run,companions:formation?formation.companions:[],reelStatus:global.HapilPartyReelStatus(),
       summary:'♥ '+s.player.hp+' / '+s.player.maxHp+' · '+T('bomb')+' ×'+s.bombs,
       forecast:spell?localText(segName(spell))+' · '+localText(spell.name):'',lang:I18n.lang,offers:run.offers,selected:run.selected,picks:run.picks,
       onSelect:function(id){
         if(!stillHere())return false;
         var selected=campaign.select(run.id,stage,id);return !!selected&&selected.id===run.id&&selected.stage===stage&&selected.selected===id;
       },
-      onWorkshop:function(){if(!stillHere()||!global.HapilPartyOpenWorkshop)return;stop.hide();global.HapilPartyOpenWorkshop(function(){if(stillHere())openPartyRest(s);});},
+      onWorkshop:function(){visitWorkshop();},
+      onSupply:function(){visitWorkshop('supply');},
+      onRedraft:function(){
+        if(!stillHere()||!expeditionRules.redraftsLeft(campaign.read()))return false;
+        var fresh=campaign.redraft(run.id,stage,s.party.allies.map(function(ally){return ally.kind;}));
+        return !!fresh&&fresh.id===run.id&&fresh.stage===stage&&fresh.status==='rest'&&!expeditionRules.redraftsLeft(fresh)&&openPartyRest(s);
+      },
       onLaunch:function(id){
         if(!stillHere())return false;
         var nextRun=campaign.choose(run.id,stage,id);
@@ -848,7 +861,7 @@
     if(!partyModule)return;
     ['archon','archonGravity','archonNeural','drone','angel','archer'].forEach(function(kind){
       if(partySprites[kind])return;
-      var image=new Image();partySprites[kind]=image;image.src='media/arcade-v43-party/'+kind+'.webp';
+      var image=new Image();partySprites[kind]=image;image.src='media/arcade-v43-party/'+kind+'.webp?v=20261129-ink-expedition';
     });
   }
   function discardSupersededSortie(){

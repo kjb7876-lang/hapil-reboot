@@ -55,6 +55,10 @@
     const count = new Set(symbols).size;
     return count === 1 ? 3 : count === 2 ? 1 : 0;
   }
+  function pairKind(symbols) {
+    if (symbols.length!==3 || new Set(symbols).size!==2) return null;
+    return symbols.find((kind,index)=>symbols.indexOf(kind)!==index);
+  }
   function validate(s, mode) {
     if (!s || s.version!==1 || s.mode!==mode || !number(s.revision,0,1e9) ||
         !number(s.seed,0,4294967295) || !number(s.rng,0,4294967295) || !canStage(s.stage) ||
@@ -70,7 +74,11 @@
         !(r.held===null || number(r.held,0,2))) return false;
     if (!(r.status==='idle' && !r.symbols.length && !r.level && r.target===null ||
           r.status==='choose' && r.symbols.length===3 && !r.level && r.target===null ||
-          r.status==='awarded' && r.symbols.length===3 && validKind(r.target) && [0,1,3].includes(r.level))) return false;
+          r.status==='awarded' && r.symbols.length===3 && validKind(r.target))) return false;
+    if (r.level===2 && (r.status!=='awarded' || r.target!==pairKind(r.symbols))) return false;
+    if (r.recipient!=null && !validKind(r.recipient)) return false;
+    if (r.heldPair!=null && (!Array.isArray(r.heldPair) || r.heldPair.length!==2 ||
+        new Set(r.heldPair).size!==2 || !r.heldPair.every(i=>number(i,0,2) && r.symbols[i]===r.target))) return false;
     if (!Array.isArray(s.cleared) || !s.cleared.every(canStage) || !s.difficultyClears ||
         typeof s.difficultyClears!=='object' || Array.isArray(s.difficultyClears) ||
         !Object.values(s.difficultyClears).every(list=>Array.isArray(list)&&list.every(canStage))) return false;
@@ -213,14 +221,21 @@
       s.reel.symbols=symbols;
       if (reelLevel(symbols)===3) return awardReel(s,symbols[0],3);
       s.reel.status='choose';
-      return ok('확정 +1 보급 또는 한 칸 고정 후 재회전을 고르세요.');
+      return ok('');
     });
   }
   function bank(s,kind) {
     return action(s,()=>{
       if (!validKind(kind) || s.reel.status!=='choose') return fail('정산할 릴이 없습니다.');
-      return awardReel(s,kind,1);
+      return awardReel(s,kind,pairKind(s.reel.symbols)===kind?2:1);
     });
+  }
+  function selectRecipient(s,kind) {
+    return action(s,()=>{
+      if (s.reel.status!=='choose' || !validKind(kind)) return fail('동료를 선택하세요.');
+      s.reel.recipient=kind;
+      return ok('');
+    },false);
   }
   function reroll(s,index) {
     return action(s,()=>{
@@ -228,6 +243,16 @@
       const kind=s.reel.symbols[index]; s.reel.held=index;
       s.reel.symbols=s.reel.symbols.map((value,i)=>i===index?value:KINDS[draw(s,KINDS.length)]);
       return awardReel(s,kind,reelLevel(s.reel.symbols));
+    });
+  }
+  function rerollPair(s) {
+    return action(s,()=>{
+      const r=s.reel, kind=pairKind(r.symbols);
+      if (r.status!=='choose' || !kind) return fail('정산할 릴이 없습니다.');
+      r.heldPair=[0,1,2].filter(i=>r.symbols[i]===kind);
+      const open=r.symbols.findIndex(symbol=>symbol!==kind);
+      r.symbols[open]=KINDS[draw(s,KINDS.length)];
+      return awardReel(s,kind,r.symbols[open]===kind?3:1);
     });
   }
   function preview(s,kind,slot=firstSlot(s,kind)||'bench') {
@@ -326,7 +351,7 @@
   }
   const api={names,positions,kinds:KINDS,slots:SLOTS,keys,fresh,load:storage=>loadProfile('trial',storage),
     loadCampaign:storage=>loadProfile('campaign',storage),reserve,place,setLineage,buy,refresh,equip,promotion,promote,redeem,
-    reelLevel,spin,bank,reroll,preview,battleConfig,start,finish,campaignEnter,campaignClear,reset};
+    reelLevel,pairKind,selectRecipient,spin,bank,reroll,rerollPair,preview,battleConfig,start,finish,campaignEnter,campaignClear,reset};
   root.PartyForge=api;
   if (typeof module!=='undefined' && module.exports) module.exports=api;
 })(typeof window==='undefined'?globalThis:window);

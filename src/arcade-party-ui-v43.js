@@ -40,7 +40,9 @@
     });
   }
   let save = campaign ? F.loadCampaign() : routeEquipment(running() ? expedition.id : 'ready');
-  let editingStop = false;
+  let editingStop = false, directRestSupply = false;
+  const nativeRestSupply = campRest && new URLSearchParams(location.search).get('pane') === 'supply';
+  let reelReadyAt = 0;
   const prefs = campaign ? {} : (recall('controls') || {});
   const embedded = window.parent !== window;
   const duringSortie = campaign && new URLSearchParams(location.search).get('during') === '1';
@@ -109,9 +111,8 @@
     $('hero-choice').value=selectedHero;$('hero-choice').hidden=campaign;$('hero-label').hidden=campaign;
     $('home-auto').checked=autoPilot;
     $('lineage-hint').textContent=lineageInfo[save.lineage];
-    const heroArt=art[campaign?'angel':selectedHero]||art.memory;
-    if(art.background)document.documentElement.style.setProperty('--art','url("'+new URL(art.background,document.baseURI).href+'")');
-    if(heroArt)document.documentElement.style.setProperty('--actor','url("'+new URL(heroArt,document.baseURI).href+'")');
+    const landscape=art.expeditionLandscape || art.background;
+    if(landscape)document.documentElement.style.setProperty('--art','url("'+new URL(landscape,document.baseURI).href+'")');
     const cards=[...slots,'reserve'].map(pos=>{
       const kind=kindAt(pos),data=save.units[kind],selected=chosenSlot===pos;
       const b=action('',()=>clickPosition(pos),'position'+(selected?' active':chosenSlot?' destination':''));
@@ -160,33 +161,129 @@
     message=result?.message||'';
     workshop();
   }
-  function unitChooser(after,label) {
-    const group=node('div',undefined,'reel-option');
-    for(const k of kinds)group.append(action(label(k),()=>workshopAction(()=>after(k)),'outline'));
-    return group;
+  const reelText = (phrase,values) => locale.text(phrase).replace(/\{(\w+)\}/g,(_,key)=>values[key]);
+  function settleReel(fn, moving=[]) {
+    if (performance.now()<reelReadyAt) return;
+    const result=fn();
+    message=result.ok?'':result.message;
+    if (result.ok && moving.length) {
+      reelReadyAt=performance.now()+(motion.matches?180:450);
+    }
+    workshop();
+    if (result.ok && moving.length) {
+      if (!motion.matches) for (const i of moving) {
+        $('reels').children[i]?.classList.add('is-rolling');
+      }
+      window.setTimeout(()=>{
+        if(page==='workshop' && tab==='supply' && $('reel-bank')){
+          $('reel-bank').disabled=false;
+          $('reel-reroll').disabled=$('reel-reroll').dataset.available!=='true';
+        }
+      },Math.max(0,Math.ceil(reelReadyAt-performance.now())));
+    }
+    $('reel-help').focus({preventScroll:true});
+  }
+  function selectReel(kind) {
+    // This only previews a recipient. Banking or rolling always takes a separate press.
+    const result=F.selectRecipient(save,kind);
+    message=result.ok?'':result.message;
+    workshop();
   }
   function workshop() {
+    $('forge-back').textContent=directRestSupply||nativeRestSupply?'← 선택으로 돌아가기':'← 편대로';
     $('credits').textContent='정비비 '+save.credits;$('seals').textContent='인장 '+save.seals;
     for(const t of ['supply','units','shop']){
       $('pane-'+t).hidden=tab!==t;$('tab-'+t).setAttribute('aria-pressed',String(tab===t));
     }
     $('forge-notice').textContent=message;
-    if(tab==='units'){renderUnits();localize($('workshop'));return;}
-    if(tab==='shop'){renderShop();localize($('workshop'));return;}
-    const r=save.reel;
-    $('reel-help').textContent=r.spent?'보급을 사용했습니다. 새 스테이지 격파 후 다시 회전할 수 있습니다.':r.status==='idle'?'다음 전투에서 한 동료가 쓸 보급을 정합니다. 세 릴을 무료로 한 번 돌리세요.':r.status==='choose'?'확정 +1을 받을 동료를 선택하거나, 문양 한 칸을 고정해 나머지 두 칸을 다시 돌리세요.':(r.level>0?kindNames[r.target]+' 보급 +'+r.level+' · '+(slotFor(r.target)==='reserve'?'다음 전투에 쓰려면 대기 동료를 편성하세요.':'다음 전투에 투입합니다.'):'이번 릴 보급은 0단계입니다.');
-    $('reels').replaceChildren(...[0,1,2].map(i=>{
-      const k=r.symbols?.[i], name=kindNames[k]||k;
-      const b=r.status==='choose'?action('',()=>workshopAction(()=>F.reroll(save,i)),'reel'):node('div',undefined,'reel');
-      if(r.status==='choose')b.setAttribute('aria-label',(i+1)+'번째 '+name+' 고정 후 재회전');
-      if(k)b.append(sprite(k));else b.append(node('b','—'));
-      b.append(node('span',k?(name+(r.status==='choose'?' 고정':'')):'대기','place'));
+    if(tab==='units')renderUnits();
+    else if(tab==='shop')renderShop();
+    else renderReel();
+    localize($('workshop'));
+  }
+  function renderReel() {
+    const r=save.reel, choosing=r.status==='choose', idle=r.status==='idle';
+    const pair=F.pairKind(r.symbols), recipient=r.recipient || pair || r.symbols[0];
+    const target=choosing?recipient:r.target;
+    const held=choosing ? (pair || recipient) : null;
+    const single=r.symbols.indexOf(recipient);
+    const level=choosing?(recipient===pair?2:1):r.level;
+    const help=$('reel-help');
+    help.tabIndex=-1;
+    if (idle) help.textContent='세 문양이 모두 같으면 해당 동료에게 다음 전투 보급 +3.';
+    else if (choosing) help.textContent=pair?'두 문양이 일치했습니다. 확정하거나 나머지 한 칸에 도전하세요.':'문양을 눌러 고정할 동료를 고른 뒤 확정 또는 재회전을 선택하세요.';
+    else if (r.spent) help.textContent='보급을 사용했습니다. 새 스테이지 격파 후 다시 회전할 수 있습니다.';
+    else if (!level) help.textContent='이번 릴 보급은 0단계입니다.';
+    else help.textContent=reelText('다음 전투 · {name} 보급 +{n}',{name:locale.text(kindNames[target]),n:level});
+
+    const reels=$('reels');
+    reels.replaceChildren(...[0,1,2].map(i=>{
+      const kind=r.symbols[i];
+      const fixed=choosing ? kind===held : r.held===i || !!r.heldPair?.includes(i);
+      const b=choosing?action('',()=>{
+        selectReel(kind);reels.children[i]?.focus({preventScroll:true});
+      },'reel'):node('div',undefined,'reel');
+      b.dataset.reelIndex=i;b.style.setProperty('--reel-order',i);
+      b.classList.toggle('is-match',!!kind && (kind===pair || F.reelLevel(r.symbols)===3));
+      b.classList.toggle('is-held',fixed);
+      if (choosing) {
+        b.setAttribute('aria-pressed',String(recipient===kind));
+        b.setAttribute('aria-label',reelText('{n}번 문양 · {name} 선택',{n:i+1,name:locale.text(kindNames[kind])}));
+      }
+      if(kind)b.append(sprite(kind));else b.append(node('b','—'));
+      b.append(node('span',kind?kindNames[kind]:'대기','place'));
+      if(fixed)b.append(node('small',choosing?'재회전 시 고정':'고정','reel-hold'));
       return b;
     }));
+
     const actions=[];
-    if(r.status==='idle'){const b=action('무료 회전',()=>workshopAction(()=>F.spin(save)),'primary');b.id='spin';actions.push(b);}
-    else if(r.status==='choose')actions.push(unitChooser(k=>F.bank(save,k),k=>kindNames[k]+' +1'));
-    $('reel-actions').replaceChildren(...actions);localize($('workshop'));
+    if(idle) {
+      const spin=action('무료 회전',()=>settleReel(()=>F.spin(save),[0,1,2]),'primary');
+      spin.id='spin';actions.push(spin);
+    } else if(choosing) {
+      const recipientLabel=node('label',undefined,'reel-recipient');
+      recipientLabel.htmlFor='reel-recipient';
+      recipientLabel.append(node('span','확정 보급 대상'));
+      const select=node('select');select.id='reel-recipient';
+      for(const k of kinds) {
+        const rank=k===pair?2:1;
+        const opt=node('option',kindNames[k]+' +'+rank+' · '+positions[slotFor(k)]);
+        opt.value=k;select.append(opt);
+      }
+      select.value=recipient;select.addEventListener('change',()=>{selectReel(select.value);$('reel-recipient')?.focus({preventScroll:true});});
+      recipientLabel.append(select);actions.push(recipientLabel);
+      const options=node('div',undefined,'reel-options');
+      const bank=action(reelText('{name} +{n} 확정',{name:locale.text(kindNames[recipient]),n:level}),()=>settleReel(()=>F.bank(save,recipient)),'primary');
+      bank.id='reel-bank';bank.disabled=performance.now()<reelReadyAt;options.append(bank);
+      const locked=pair || recipient;
+      const gamble=action(pair?'두 칸 고정 · 재회전':'한 칸 고정 · 재회전',()=>{
+        const open=[0,1,2].filter(i=>r.symbols[i]!==locked);
+        settleReel(()=>pair?F.rerollPair(save):F.reroll(save,single),open);
+      },'outline',performance.now()<reelReadyAt || !pair && single<0);
+      gamble.dataset.available=String(!!pair || single>=0);
+      gamble.id='reel-reroll';gamble.setAttribute('aria-describedby','reel-risk');options.append(gamble);
+      const risk=node('p',pair?'재회전 결과 · +3 (25%) / +1 (75%)':'재회전 결과 · +3 (1/16) / +1 (9/16) / +0 (6/16)','reel-odds-line small');
+      if(pair && pair!==recipient)risk.prepend(locale.text(kindNames[pair])+' · ');
+      risk.id='reel-risk';
+      actions.push(options,risk);
+    }
+    if(target && level>0 && !r.spent) {
+      const active=slotFor(target)!=='reserve';
+      const bonus=node('p',reelText('다음 전투 기본 사격 피해 +{n}%',{n:6*level}),'reel-benefit small');
+      if(!active)bonus.append(' · '+locale.text('다음 전투에 쓰려면 대기 동료를 편성하세요.'));
+      actions.push(bonus);
+      const current=campaign && (campRest || duringSortie) ? E.open('campaign').read() : !campaign?expedition:null;
+      if(active && current) {
+        const formation=F.battleConfig(save).companions.map(c=>({...c,supply:c.kind===target?level:0}));
+        const resonance=E.resonance(current,formation,current.selected);
+        if(resonance) {
+          const detail=stop.cardText(resonance.cardId,locale.lang).detail;
+          actions.push(node('p',locale.text('출격 시 문양 공명')+' · '+detail,'reel-resonance'));
+        }
+      }
+    }
+    $('reel-actions').replaceChildren(...actions);
+    $('reel-odds').textContent='네 문양은 같은 확률입니다. 첫 회전은 셋 일치 1/16, 둘 일치 9/16, 모두 다름 6/16입니다.';
   }
   function renderUnits(){
     $('unit-picks').replaceChildren(...kinds.map(k=>{const b=action('',()=>{unit=k;message='';workshop();},unit===k?'active':'');b.dataset.kind=k;b.setAttribute('aria-pressed',String(unit===k));b.append(sprite(k),node('b',kindNames[k]+' ★'+save.units[k].stars));return b;}));
@@ -207,7 +304,14 @@
   ['supply','units','shop'].forEach(t=>$('tab-'+t).addEventListener('click',()=>{tab=t;message='';workshop();}));
   $('shop-refresh').addEventListener('click',()=>workshopAction(()=>F.refresh(save)));
   $('forge-open').addEventListener('click',()=>{message='';chosenSlot=null;show('workshop');workshop();});
-  $('forge-back').addEventListener('click',()=>{message='';show('home');home();});
+  $('forge-back').addEventListener('click',()=>{
+    message='';
+    if (directRestSupply){directRestSupply=false;openRest();return;}
+    if (nativeRestSupply && embedded){
+      window.parent.postMessage({type:'hapil-party-close'},location.origin==='null'?'*':location.origin);return;
+    }
+    show('home');home();
+  });
   function fitArena(){
     const parent=document.querySelector('.stagewell'), box=document.querySelector('.arena-box');
     const w=Math.min(parent.clientWidth,parent.clientHeight*360/520);
@@ -241,7 +345,7 @@
       if(!run.ok){message=run.message;show('home');home();return false;}
       config=run.config;
       config.seed=(expedition.seed ^ Math.imul(stage,2654435761))>>>0;
-      config.expedition=true;config.boons=E.effects(expedition);config.carry=expedition.carry;
+      config.expedition=true;config.boons=E.effects(expedition,config.companions);config.carry=expedition.carry;
     }
     gameStage=stage;
     const last=practice ? null : recall('flight');
@@ -264,7 +368,8 @@
     editingStop=false;chosenSlot=null;message='';show('rest');
     stop.open({
       stage,nextStage:stage+1,nextName:locale.text(missions[stage+1]),offers:expedition.offers,
-      selected:expedition.selected,picks:expedition.picks,lang:locale.lang,
+      selected:expedition.selected,picks:expedition.picks,lang:locale.lang,run:expedition,
+      companions:F.battleConfig(save,stage+1).companions,reelStatus:save.reel.status,
       summary:locale.text((c?'목숨 '+c.lives+' · 폭탄 '+c.bombs+' · ':'')+'공명 인장 ×'+save.seals),
       forecast:locale.text(stage===40?'양쪽에서 교차하는 탄 뒤에 조준 예고가 뜹니다. 예고를 보고 옆으로 빠지세요.':
         '분대장의 교차 사격이 빨라집니다. 공명 인장 3개로 7성 아르콘의 연계 권능을 열 수 있습니다.'),
@@ -273,6 +378,16 @@
         return expedition?.id===id && expedition.selected===card;
       },
       onWorkshop(){stop.hide();editingStop=true;show('home');home();$('launch').focus({preventScroll:true});},
+      onSupply(){
+        stop.hide();editingStop=true;directRestSupply=true;tab='supply';show('workshop');workshop();$('forge-back').focus({preventScroll:true});
+      },
+      onRedraft(){
+        const current=ledger.read();
+        if(current?.id!==id||current.stage!==stage||current.status!=='rest'||!E.redraftsLeft(current))return false;
+        expedition=ledger.redraft(id,stage,F.battleConfig(save).companions.map(ally=>ally.kind));
+        if(expedition?.id!==id||expedition.stage!==stage||expedition.status!=='rest'||E.redraftsLeft(expedition))return false;
+        openRest();return true;
+      },
       onLaunch(card){
         expedition=ledger.choose(id,stage,card);
         if(expedition?.id!==id || expedition.stage!==stage+1 || expedition.status!=='battle')return false;
@@ -438,7 +553,8 @@
   window.addEventListener('pagehide',checkpoint);
   home();localize(document.body);
   const report=campaign?null:recall('result');
-  if(expedition?.status==='rest')openRest();
+  if(nativeRestSupply){show('workshop');workshop();}
+  else if(expedition?.status==='rest')openRest();
   else if(report && expedition?.id===report.id && ['won','lost'].includes(expedition.status)){
     view=report.view;gameStage=report.stage;finishScreen(report.reward);
   }

@@ -124,6 +124,51 @@ test('a stage 42 training clear never credits campaign resources', () => {
   assert.deepEqual(forge.loadCampaign(storage), campaign);
 });
 
+test('an initial pair pays +2 to its ally; safe choices survive reload and never draw again', () => {
+  const data=memoryStorage(), start=forge.fresh(19,'campaign');
+  start.reel={status:'choose',held:null,level:0,target:null,symbols:['angel','archer','angel']};
+  data.setItem(forge.keys.campaign,JSON.stringify(start));
+  const a=forge.loadCampaign(data), other=forge.loadCampaign(data);
+  assert(forge.selectRecipient(a,'angel').ok);
+  assert.equal(forge.loadCampaign(data).reel.recipient,'angel');
+  assert(forge.bank(a,'angel').ok);
+  assert.equal(a.reel.level,2);
+  assert(!forge.rerollPair(other).ok);
+  assert.equal(forge.loadCampaign(data).rng,start.rng);
+  const allocation=forge.campaignEnter(a,5);
+  assert.equal(allocation.companions.find(unit=>unit.kind==='angel').supply,2);
+  assert.deepEqual(forge.campaignEnter(forge.loadCampaign(data),5,{resume:true}),allocation);
+  assert(forge.campaignEnter(a,6).companions.every(unit=>unit.supply===0));
+  assert(forge.bank(start,'archer').ok);
+  assert.equal(start.reel.level,1);
+});
+
+test('a pair respin keeps exactly its two symbols and awards only once for all four third-symbol outcomes', () => {
+  const data=memoryStorage(), outcomes=new Set();
+  for(let seed=0;seed<60 && outcomes.size<4;seed++){
+    const sample=forge.fresh(seed,'campaign');
+    sample.reel={status:'choose',level:0,held:null,target:null,symbols:['drone','angel','drone']};
+    data.setItem(forge.keys.campaign,JSON.stringify(sample));
+    const s=forge.loadCampaign(data), stale=forge.loadCampaign(data);
+    assert(forge.rerollPair(s).ok);
+    const r=forge.loadCampaign(data).reel;
+    assert.deepEqual(r.heldPair,[0,2]);
+    assert.equal(r.level,r.symbols[1]==='drone'?3:1);
+    assert.equal(r.target,'drone');assert.equal(r.symbols[0],'drone');assert.equal(r.symbols[2],'drone');
+    outcomes.add(r.symbols[1]);
+    const rng=s.rng;
+    assert(!forge.rerollPair(s).ok);assert(!forge.rerollPair(stale).ok);assert(!forge.bank(stale,'angel').ok);
+    assert.equal(forge.loadCampaign(data).rng,rng);
+  }
+  assert.deepEqual(outcomes,new Set(forge.kinds));
+  const noPair=forge.fresh(41);
+  noPair.reel={status:'choose',level:0,held:null,target:null,symbols:['drone','angel','archer']};
+  assert.equal(forge.pairKind(noPair.reel.symbols),null);
+  assert(!forge.rerollPair(noPair).ok);
+  assert(forge.selectRecipient(noPair,'archer').ok); assert(forge.bank(noPair,'archer').ok);
+  assert.equal(noPair.reel.level,1);
+});
+
 test('each expedition rest restocks once on replay while permanent rewards stay first-clear only', () => {
   const storage = memoryStorage();
   const campaign = forge.loadCampaign(storage);

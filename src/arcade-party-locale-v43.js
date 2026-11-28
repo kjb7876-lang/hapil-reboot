@@ -101,11 +101,23 @@
 계약소|Contracts|契約所|契约所|契約所|Contratos|Contratos
 출격 보급|Sortie supplies|出撃補給|出击补给|出擊補給|Suministros de misión|Suprimentos de missão
 보급 확률|Supply odds|補給の確率|补给概率|補給機率|Probabilidades|Probabilidades
-각 릴에는 네 문양이 같은 확률로 나옵니다. 한 칸을 고정하고 다시 돌리면 셋 일치 1/16, 둘 일치 9/16, 모두 다름 6/16입니다.|Each reel has four equally likely symbols. With one held, a respin yields three of a kind 1/16 of the time, a pair 9/16, and three different symbols 6/16.|各リールの4種類の絵柄は同じ確率で出ます。1枠固定で回し直すと、3つ一致は1/16、2つ一致は9/16、すべて異なる確率は6/16です。|每个转轮的四种图案出现概率相同。锁定一格重转后，三格相同的概率为 1/16，两格相同为 9/16，全部不同为 6/16。|每個轉輪的四種圖案出現機率相同。鎖定一格重轉後，三格相同的機率為 1/16，兩格相同為 9/16，全部不同為 6/16。|Cada carrete tiene cuatro símbolos equiprobables. Al fijar uno y repetir la tirada, la probabilidad de trío es 1/16, la de pareja 9/16 y la de tres símbolos distintos 6/16.|Cada rolo tem quatro símbolos com a mesma chance. Ao travar um deles e girar de novo, a chance de trinca é 1/16, de par é 9/16 e de três símbolos diferentes é 6/16.
-다음 전투에서 한 동료가 쓸 보급을 정합니다. 세 릴을 무료로 한 번 돌리세요.|Spin the three reels once for free to supply an ally for the next battle.|次の戦闘で仲間1人に補給します。3つのリールを1回無料で回せます。|免费转动三个转轮一次，为一名同伴准备下一场战斗的补给。|免費轉動三個轉輪一次，為一名同伴準備下一場戰鬥的補給。|Gira gratis los tres carretes para abastecer a un aliado en el próximo combate.|Gire as três bobinas de graça para abastecer um aliado na próxima batalha.
-확정 +1을 받을 동료를 선택하거나, 문양 한 칸을 고정해 나머지 두 칸을 다시 돌리세요.|Give any ally a guaranteed +1, or hold one symbol and spin the other two.|仲間1人に確定+1を渡すか、紋様1つを固定して残り2つを回してください。|选择一名同伴获得保底+1，或锁定一个符号后重转其余两个。|選擇一名同伴獲得保底+1，或鎖定一個符號後重轉其餘兩個。|Dale +1 garantizado a un aliado o fija un símbolo y vuelve a girar los otros dos.|Dê +1 garantido a um aliado ou trave um símbolo e gire os outros dois.
 이번 릴 보급은 0단계입니다.|No supply bonus this spin.|今回の補給は+0です。|本次补给加成为0。|本次補給加成為0。|Esta tirada no da bonificación.|Esta rodada não dá bônus.
 다음 전투에 투입합니다.|Ready for the next battle.|次の戦闘に投入します。|将在下一场战斗中使用。|將在下一場戰鬥中使用。|Listo para el próximo combate.|Pronto para o próximo combate.
+세 문양이 모두 같으면 해당 동료에게 다음 전투 보급 +3.|Match all three symbols to give that ally +3 supplies for the next battle.|紋様が3つ揃うと、次の戦闘でその仲間の補給が+3。|三个纹样相同，对应同伴在下一战获得 +3 补给。|三個紋樣相同，對應夥伴在下一戰獲得 +3 補給。|Si coinciden los tres símbolos, ese aliado recibe +3 de suministros para el próximo combate.|Se os três símbolos coincidirem, esse aliado recebe +3 de suprimentos no próximo combate.
+두 문양이 일치했습니다. 확정하거나 나머지 한 칸에 도전하세요.|A pair! Claim the supplies or spin the last reel again.|紋様が2つ揃いました。補給を受け取るか、残り1枠を回し直せます。|两个纹样相同。可以收下补给，也可以重转剩下的一格。|兩個紋樣相同。可以收下補給，也可以重轉剩下的一格。|Tienes una pareja. Recoge los suministros o vuelve a girar el carrete restante.|Você tem um par. Pegue os suprimentos ou gire o último rolo de novo.
+문양을 눌러 고정할 동료를 고른 뒤 확정 또는 재회전을 선택하세요.|Tap an ally’s symbol. Then claim the guaranteed supply or hold the symbol and spin again.|仲間の紋様をタップし、確定補給か紋様を固定しての再回転を選びます。|点选同伴的纹样，然后领取保底补给，或锁定纹样重转。|點選夥伴的紋樣，然後領取保底補給，或鎖定紋樣重轉。|Toca el símbolo de un aliado. Recoge el suministro seguro o fija el símbolo y vuelve a girar.|Toque no símbolo de um aliado. Pegue o suprimento garantido ou trave o símbolo e gire de novo.
+다음 전투 · {name} 보급 +{n}|Next battle · {name} supplies +{n}|次の戦闘 · {name}の補給 +{n}|下一战 · {name} 补给 +{n}|下一戰 · {name} 補給 +{n}|Siguiente combate · {name} recibe +{n}|Próximo combate · {name} recebe +{n}
+{n}번 문양 · {name} 선택|Symbol {n} · select {name}|第{n}紋 · {name}を選択|纹样 {n} · 选择{name}|紋樣 {n} · 選擇{name}|Símbolo {n} · elegir a {name}|Símbolo {n} · escolher {name}
+재회전 시 고정|Hold on respin|再回転で固定|重转时锁定|重轉時鎖定|Se fija al repetir|Trava ao girar
+확정 보급 대상|Guaranteed supply for|確定補給の相手|保底补给对象|保底補給對象|Destinatario del suministro|Destino do suprimento
+{name} +{n} 확정|Give {name} +{n}|{name}の +{n} を確定|{name} 确定获得 +{n}|{name} 確定獲得 +{n}|Dar +{n} a {name}|Dar +{n} a {name}
+두 칸 고정 · 재회전|Hold pair and respin|2枠固定して再回転|锁定一对重转|鎖定一對重轉|Fijar pareja y girar|Travar o par e girar
+한 칸 고정 · 재회전|Hold one and respin|1枠固定して再回転|锁定一格重转|鎖定一格重轉|Fijar uno y girar|Travar um e girar
+재회전 결과 · +3 (25%) / +1 (75%)|Respin · +3 (25%) / +1 (75%)|再回転 · +3 (25%) / +1 (75%)|重转结果 · +3 (25%) / +1 (75%)|重轉結果 · +3 (25%) / +1 (75%)|Al girar · +3 (25%) / +1 (75%)|Ao girar · +3 (25%) / +1 (75%)
+재회전 결과 · +3 (1/16) / +1 (9/16) / +0 (6/16)|Respin · +3 (1/16) / +1 (9/16) / +0 (6/16)|再回転 · +3 (1/16) / +1 (9/16) / +0 (6/16)|重转结果 · +3 (1/16) / +1 (9/16) / +0 (6/16)|重轉結果 · +3 (1/16) / +1 (9/16) / +0 (6/16)|Al girar · +3 (1/16) / +1 (9/16) / +0 (6/16)|Ao girar · +3 (1/16) / +1 (9/16) / +0 (6/16)
+다음 전투 기본 사격 피해 +{n}%|Next battle · +{n}% of base shot damage|次の戦闘 · 基礎射撃ダメージ +{n}%|下一战基础射击伤害 +{n}%|下一戰基礎射擊傷害 +{n}%|Próximo combate · daño de tiro base +{n}%|Próximo combate · dano de tiro base +{n}%
+출격 시 문양 공명|Symbol resonance on launch|出撃時の紋様共鳴|出击时纹样共鸣|出擊時紋樣共鳴|Resonancia al desplegar|Ressonância ao partir
+네 문양은 같은 확률입니다. 첫 회전은 셋 일치 1/16, 둘 일치 9/16, 모두 다름 6/16입니다.|All four symbols are equally likely. On the first spin, the odds are 1/16 for a triple, 9/16 for a pair and 6/16 for all different.|4種類の紋様は等確率です。初回は3つ一致が1/16、2つ一致が9/16、すべて異なるのは6/16です。|四种纹样出现的概率相同。首次转动时，三个相同为 1/16，两个相同为 9/16，全部不同为 6/16。|四種紋樣出現的機率相同。首次轉動時，三個相同為 1/16，兩個相同為 9/16，全部不同為 6/16。|Los cuatro símbolos son equiprobables. En el primer giro, el trío sale 1 de cada 16 veces, la pareja 9 de 16 y tres distintos 6 de 16.|Os quatro símbolos têm a mesma chance. No primeiro giro, a probabilidade de trinca é 1/16, de par 9/16 e de três diferentes 6/16.
 무료 회전|Free spin|無料で回す|免费转动|免費轉動|Giro gratis|Giro grátis
 고정 후 재회전|hold and spin again|を固定して再回転|锁定并重转|鎖定並重轉|fijar y volver a girar|travar e girar de novo
 고정|Hold|固定|锁定|鎖定|Fijar|Travar
@@ -134,7 +146,6 @@
 정비비가 부족합니다.|Not enough credits.|整備費が足りません。|整备点不足。|整備點不足。|Faltan créditos.|Créditos insuficientes.
 3성부터는 공명 인장으로 승격합니다.|From 3★ onward, promotion costs resonance seals.|3★以降の昇格には共鳴の印が必要です。|自3★起，升星需消耗共鸣印记。|自3★起，升星需消耗共鳴印記。|A partir de 3★ se asciende con sellos de resonancia.|A partir de 3★, a promoção usa selos de ressonância.
 조기 합성 실패 · 기존 별과 증표를 보존했습니다.|Fusion failed. Your stars and tokens are safe.|合成失敗。星と契約証は保持されます。|合成失败。星级与凭证已保留。|合成失敗。星級與憑證已保留。|Falló la fusión. Conservas las estrellas y fichas.|A fusão falhou. Suas estrelas e fichas foram mantidas.
-확정 +1 보급 또는 한 칸 고정 후 재회전을 고르세요.|Claim +1 or hold a reel and spin again.|確定+1か、1枠固定の再回転を選んでください。|领取保底+1，或锁定一轮后重转。|領取保底+1，或鎖定一輪後重轉。|Cobra +1 o fija un carrete para volver a girar.|Receba +1 ou trave uma bobina e gire de novo.
 추가 보급 없음|No supply bonus|追加補給なし|无额外补给|無額外補給|Sin suministro extra|Sem suprimento extra
 출격 보급|Sortie supplies|出撃補給|出击补给|出擊補給|Suministros de misión|Suprimentos de missão
 성 승격|★ promotion|★に昇格|★升星|★升星|★ de ascenso|★ de promoção
